@@ -1,4 +1,4 @@
-import anthropic
+import subprocess
 
 SYSTEM_PROMPT = """Tu es un expert influent en intelligence artificielle qui gère un compte Twitter très suivi en français.
 
@@ -28,37 +28,19 @@ Réponds UNIQUEMENT avec le texte final du tweet, sans guillemets ni explication
 
 
 def generate_tweet() -> str:
-    """Run the Claude agent: autonomously search the web for AI news, then write a French tweet."""
-    client = anthropic.Anthropic()
-
-    tools = [{"type": "web_search_20260209", "name": "web_search"}]
-    messages = [{"role": "user", "content": USER_PROMPT}]
-
-    max_continuations = 5
-    for _ in range(max_continuations):
-        response = client.messages.create(
-            model="claude-opus-4-6",
-            max_tokens=4096,
-            thinking={"type": "adaptive"},
-            system=SYSTEM_PROMPT,
-            tools=tools,
-            messages=messages,
-        )
-
-        if response.stop_reason == "end_turn":
-            for block in response.content:
-                if block.type == "text":
-                    return block.text.strip()
-
-        elif response.stop_reason == "pause_turn":
-            # Server-side search loop hit its iteration limit — resume
-            messages.append({"role": "assistant", "content": response.content})
-            continue
-
-        # Any other stop reason — extract whatever text we have
-        for block in response.content:
-            if block.type == "text":
-                return block.text.strip()
-        break
-
-    raise RuntimeError("Agent did not produce a tweet after max continuations.")
+    """Invoke the Claude Code CLI to search the web for AI news and write a French tweet."""
+    result = subprocess.run(
+        [
+            "claude",
+            "-p", USER_PROMPT,
+            "--system", SYSTEM_PROMPT,
+            "--allowedTools", "web_search",
+        ],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    tweet = result.stdout.strip()
+    if not tweet:
+        raise RuntimeError("Claude CLI returned empty output.")
+    return tweet
