@@ -31,7 +31,7 @@ The bot is a Claude agent that autonomously tweets in English about AI news, tar
 - **`src/bot.py`** — Thin orchestration: calls agent, prints result, posts tweet, saves to history. Skips the cycle silently if agent returns `None`.
 - **`src/twitter_client.py`** — Posts tweets via the Twitter web intent URL (`https://x.com/intent/post?text=...`), opens it in the browser, then uses AppleScript (`osascript`) to send Cmd+Enter to auto-submit. **macOS only.**
 - **`src/history.py`** — Persists posted tweets to `tweet_history.json` (JSON array with `text` + `timestamp`). Exposes `get_recent_tweets(hours=24)` used by the agent for dedup, and `save_tweet()` called after each successful post.
-- **`main.py`** — APScheduler `BlockingScheduler` with a randomized 15–18 minute interval that reschedules itself after each run.
+- **`main.py`** — APScheduler `BlockingScheduler` with a randomized 15–18 minute interval that reschedules itself after each run. Checks `is_peak_hour_est()` before each cycle and skips posting outside peak EST windows (8–11am, 1–3pm, 6–9pm).
 
 ## Key design notes
 
@@ -44,4 +44,9 @@ The bot is a Claude agent that autonomously tweets in English about AI news, tar
 - Dedup: the agent is given the last 24h of posted tweets and told to pick a different topic.
 - Tweet history is stored locally in `tweet_history.json` at the repo root (gitignored).
 - The prompt includes a self-scoring system (rewrite if average < 8/10) and a scroll-stop test before outputting.
-- Post formats rotate: breaking news, explainer, bold take, witty, prediction — never the same format twice in a row.
+- Post formats rotate: breaking news, explainer, bold take, witty, prediction, contrarian take, ratio bait.
+- Numbers engine: always uses specific figures ("$2.3B", "94% on MMLU") for credibility.
+- Mention engine: tags official X handles (@OpenAI, @AnthropicAI, etc.) for distribution.
+- Power openers: BREAKING, HOT TAKE, Unpopular opinion, etc. mixed into hook rotation.
+- URL char budget: prompt instructs 257 chars for text (Twitter counts URLs as 23 chars, total = 280).
+- Peak hour gating: bot only posts during 8–11am, 1–3pm, 6–9pm EST for max reach per tweet.
