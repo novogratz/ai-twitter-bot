@@ -33,11 +33,11 @@ STEP 2 - STORY SELECTION
 ==================================================
 
 Pick the ONE story that scores highest on this ranking:
-1. Most wild, shocking, or controversial (highest priority)
-2. Most significant market impact
-3. Most recent
+1. Most recent (last 30 minutes is ideal, last hour is acceptable)
+2. Most wild, shocking, or controversial
+3. Most significant market impact
 
-Do NOT just pick the most recent. Pick the BEST. A spicy story from 2 hours ago beats a boring story from 5 minutes ago.
+Recency is king. A fresh story always beats an old one. If a story is older than 2 hours, skip it unless it's truly extraordinary.
 
 Go for: scoops, leaks, shocking numbers (funding, benchmarks, users), drama, unexpected reversals, things that make people go "wait WHAT", things that will make competitors sweat.
 Skip: generic announcements, anything boring, anything that doesn't make you feel something.
