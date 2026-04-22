@@ -1,39 +1,42 @@
 # ai-twitter-bot
 
-A Twitter bot that autonomously searches the web for the latest AI news and tweets about it in French, powered by Claude Code.
+An autonomous AI news bot for X/Twitter, powered by Claude Code. It scouts the freshest and most wild AI stories, then posts sharp, funny, occasionally savage takes as @kzer_ai.
 
 ## How it works
 
-On each scheduled run, the bot invokes the `claude` CLI with web search enabled. Claude finds recent AI news, picks the most interesting story, and writes a French tweet (≤280 chars) with relevant hashtags. No Anthropic API key or external news API required — it runs on your Claude Code subscription.
+On each scheduled run, the bot invokes the `claude` CLI with web search enabled. Claude finds the best AI news, picks the most shocking or juicy story, and writes an English tweet (280 chars max) with attitude. No API keys of any kind required — posting happens via your browser + AppleScript.
 
-The bot fires every 15–20 minutes (randomized) using APScheduler.
+The bot fires every 35-45 minutes (randomized), only during 6am-11pm EST.
 
 ## Setup
 
 ```bash
 pip install -r requirements.txt
-cp .env.example .env
 ```
 
-Fill in `.env` with your credentials:
-
-| Variable | Where to get it |
-|---|---|
-| `TWITTER_API_KEY` / `TWITTER_API_SECRET` | [developer.twitter.com](https://developer.twitter.com) |
-| `TWITTER_ACCESS_TOKEN` / `TWITTER_ACCESS_TOKEN_SECRET` | Twitter Developer Portal |
-| `TWITTER_BEARER_TOKEN` | Twitter Developer Portal |
-
-You also need the Claude Code CLI installed and authenticated:
+Install and authenticate the Claude Code CLI:
 
 ```bash
 npm install -g @anthropic-ai/claude-code
 claude login
 ```
 
+That's it. No Twitter API keys, no Anthropic API key, nothing else.
+
 ## Usage
 
 ```bash
+# Run the bot (posts on a schedule)
 python main.py
+
+# Post a single tweet manually
+python test_tweet.py
 ```
 
-The bot will log the generated tweet and its ID each time it posts. Stop with `Ctrl+C`.
+Stop with `Ctrl+C`.
+
+## Requirements
+
+- macOS (posting uses AppleScript to auto-click the tweet button)
+- Claude Code CLI installed and authenticated
+- X/Twitter logged in on your default browser
