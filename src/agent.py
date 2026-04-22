@@ -68,6 +68,7 @@ Choisis une actualité DIFFÉRENTE de celles ci-dessus."""
             "claude",
             "-p", prompt,
             "--allowedTools", "WebSearch",
+            "--model", "claude-sonnet-4-6",
         ],
         capture_output=True,
         text=True,
