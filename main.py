@@ -14,7 +14,6 @@ REQUIRED_ENV_VARS = [
     "TWITTER_ACCESS_TOKEN_SECRET",
     "TWITTER_BEARER_TOKEN",
     "ANTHROPIC_API_KEY",
-    "NEWS_API_KEY",
 ]
 
 
@@ -28,7 +27,6 @@ def check_env():
 
 
 def random_interval_minutes() -> int:
-    """Pick a random interval between 15 and 20 minutes."""
     return random.randint(15, 20)
 
 
@@ -38,9 +36,7 @@ if __name__ == "__main__":
     scheduler = BlockingScheduler()
 
     def reschedule_and_run():
-        """Post a tweet then reschedule at a new random interval."""
         safe_run_bot_cycle()
-        # Reschedule with a new random delay
         next_minutes = random_interval_minutes()
         print(f"Next tweet in {next_minutes} minutes.")
         scheduler.reschedule_job(
@@ -50,6 +46,7 @@ if __name__ == "__main__":
 
     first_interval = random_interval_minutes()
     print(f"Bot started. First tweet in {first_interval} minutes.")
+    print("Claude will autonomously search the web for AI news before each tweet.")
 
     scheduler.add_job(
         reschedule_and_run,

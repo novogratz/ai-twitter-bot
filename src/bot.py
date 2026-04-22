@@ -1,21 +1,13 @@
 import traceback
-from .news_fetcher import fetch_ai_news
-from .tweet_generator import generate_tweet
+from .agent import generate_tweet
 from .twitter_client import post_tweet
 
 
 def run_bot_cycle():
-    """Fetch news, generate a tweet, and post it."""
-    print("Fetching AI news...")
-    articles = fetch_ai_news()
-    if not articles:
-        print("No articles found, skipping cycle.")
-        return
-
-    print(f"Found {len(articles)} articles. Generating tweet...")
-    tweet = generate_tweet(articles)
+    """Let Claude search the web, generate a French AI tweet, and post it."""
+    print("Agent searching for AI news and generating tweet...")
+    tweet = generate_tweet()
     print(f"Generated tweet: {tweet}")
-
     post_tweet(tweet)
 
 
