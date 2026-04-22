@@ -4,7 +4,7 @@ An autonomous AI news bot for X/Twitter, powered by Claude Code. It scouts the f
 
 ## How it works
 
-On each scheduled run, the bot invokes the `claude` CLI with web search enabled. Claude finds the best AI news, picks the most shocking or juicy story, and writes an English tweet (280 chars max) with attitude. No API keys of any kind required — posting happens via your browser + AppleScript.
+On each scheduled run, the bot invokes the `claude` CLI with web search enabled. Claude finds the best AI news, picks the most shocking or juicy story, and writes an English tweet (280 chars max) with attitude. No API keys of any kind required. Posting happens via your browser + AppleScript.
 
 The bot fires every 35-45 minutes (randomized), only during 6am-11pm EST.
 
