@@ -7,7 +7,7 @@ from src.bot import safe_run_bot_cycle
 
 
 def random_interval_minutes() -> int:
-    return random.randint(5, 7)
+    return random.randint(35, 45)
 
 
 def is_peak_hour_est() -> bool:
