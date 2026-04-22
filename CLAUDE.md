@@ -19,7 +19,7 @@ No Anthropic API key needed — the bot shells out to the `claude` CLI, which us
 python main.py
 ```
 
-The bot runs one tweet immediately on start, then schedules the next run every 2 minutes (hardcoded in `random_interval_minutes()`). Each tick calls `safe_run_bot_cycle()`, which catches all exceptions so the scheduler stays alive.
+The bot runs one tweet immediately on start, then schedules the next run every 35 minutes (hardcoded in `random_interval_minutes()`). Each tick calls `safe_run_bot_cycle()`, which catches all exceptions so the scheduler stays alive.
 
 ## Architecture
 
@@ -31,7 +31,7 @@ The bot is a Claude agent that autonomously tweets in French about AI news.
 - **`src/bot.py`** — Thin orchestration: calls agent, prints result, posts tweet, saves to history. Skips the cycle silently if agent returns `None`.
 - **`src/twitter_client.py`** — Posts tweets via the Twitter web intent URL (`https://x.com/intent/post?text=...`), opens it in the browser, then uses AppleScript (`osascript`) to send Cmd+Enter to auto-submit. **macOS only.**
 - **`src/history.py`** — Persists posted tweets to `tweet_history.json` (JSON array with `text` + `timestamp`). Exposes `get_recent_tweets(hours=24)` used by the agent for dedup, and `save_tweet()` called after each successful post.
-- **`main.py`** — APScheduler `BlockingScheduler` with a fixed 2-minute interval that reschedules itself after each run.
+- **`main.py`** — APScheduler `BlockingScheduler` with a fixed 35-minute interval that reschedules itself after each run.
 
 ## Key design notes
 
