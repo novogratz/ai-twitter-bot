@@ -5,7 +5,7 @@ from src.bot import safe_run_bot_cycle
 
 
 def random_interval_minutes() -> int:
-    return 35
+    return 30
 
 
 if __name__ == "__main__":
