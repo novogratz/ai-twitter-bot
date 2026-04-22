@@ -1,51 +1,31 @@
 import random
-import os
-from dotenv import load_dotenv
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from src.bot import safe_run_bot_cycle
 
-load_dotenv()
-
-REQUIRED_ENV_VARS = [
-    "TWITTER_API_KEY",
-    "TWITTER_API_SECRET",
-    "TWITTER_ACCESS_TOKEN",
-    "TWITTER_ACCESS_TOKEN_SECRET",
-    "TWITTER_BEARER_TOKEN",
-]
-
-
-def check_env():
-    missing = [v for v in REQUIRED_ENV_VARS if not os.environ.get(v)]
-    if missing:
-        raise EnvironmentError(
-            f"Missing required environment variables: {', '.join(missing)}\n"
-            "Copy .env.example to .env and fill in your credentials."
-        )
-
 
 def random_interval_minutes() -> int:
-    return random.randint(15, 20)
+    return 2
 
 
 if __name__ == "__main__":
-    check_env()
-
     scheduler = BlockingScheduler()
 
     def reschedule_and_run():
         safe_run_bot_cycle()
         next_minutes = random_interval_minutes()
-        print(f"Next tweet in {next_minutes} minutes.")
+        print(f"\nNext tweet in {next_minutes} minutes.\n")
         scheduler.reschedule_job(
             "bot_job",
             trigger=IntervalTrigger(minutes=next_minutes),
         )
 
+    # Run immediately on start, then every 35-40 minutes
+    print("Bot started! Running first tweet now...")
+    safe_run_bot_cycle()
+
     first_interval = random_interval_minutes()
-    print(f"Bot started. First tweet in {first_interval} minutes.")
-    print("Claude will autonomously search the web for AI news before each tweet.")
+    print(f"\nNext tweet in {first_interval} minutes.\n")
 
     scheduler.add_job(
         reschedule_and_run,
