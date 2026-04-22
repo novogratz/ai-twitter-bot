@@ -19,7 +19,7 @@ No Anthropic API key needed — the bot shells out to the `claude` CLI, which us
 python main.py
 ```
 
-The bot runs one tweet immediately on start, then schedules the next run every 20 minutes (hardcoded in `random_interval_minutes()`). Each tick calls `safe_run_bot_cycle()`, which catches all exceptions so the scheduler stays alive.
+The bot runs one tweet immediately on start, then schedules the next run every 45–60 minutes (randomized) (hardcoded in `random_interval_minutes()`). Each tick calls `safe_run_bot_cycle()`, which catches all exceptions so the scheduler stays alive.
 
 ## Architecture
 
