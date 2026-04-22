@@ -15,7 +15,7 @@ def is_peak_hour_est() -> bool:
     Peak windows: 8-11am, 1-3pm, 6-9pm Eastern.
     """
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    return (8 <= hour < 11) or (13 <= hour < 15) or (18 <= hour < 21)
+    return 6 <= hour < 23
 
 
 if __name__ == "__main__":

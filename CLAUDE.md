@@ -21,7 +21,7 @@ claude login
 python main.py
 ```
 
-The bot runs one tweet immediately on start (if within peak EST hours), then checks every 15-18 minutes. It only posts during peak EST engagement windows: 8-11am, 1-3pm, 6-9pm. Each tick calls `safe_run_bot_cycle()`, which catches all exceptions so the scheduler stays alive.
+The bot runs one tweet immediately on start (if within peak EST hours), then checks every 15-18 minutes. It only posts during peak EST engagement windows: 6am-11pm. Each tick calls `safe_run_bot_cycle()`, which catches all exceptions so the scheduler stays alive.
 
 You can also run a single tweet manually:
 ```bash
@@ -38,7 +38,7 @@ The bot is a Claude agent that autonomously tweets in English about AI news, tar
 - **`src/bot.py`** - Thin orchestration: calls agent, prints result, posts tweet, saves to history. Skips the cycle silently if agent returns `None`.
 - **`src/twitter_client.py`** - Posts tweets via the Twitter web intent URL (`https://x.com/intent/post?text=...`), opens it in the browser, then uses AppleScript (`osascript`) to send Cmd+Enter to auto-submit. macOS only. No Twitter API credentials needed.
 - **`src/history.py`** - Persists posted tweets to `tweet_history.json` (JSON array with `text` + `timestamp`). Exposes `get_recent_tweets(hours=24)` used by the agent for dedup, and `save_tweet()` called after each successful post.
-- **`main.py`** - APScheduler `BlockingScheduler` with a randomized 15-18 minute interval. Checks `is_peak_hour_est()` before each cycle and skips posting outside peak EST windows (8-11am, 1-3pm, 6-9pm).
+- **`main.py`** - APScheduler `BlockingScheduler` with a randomized 15-18 minute interval. Checks `is_peak_hour_est()` before each cycle and skips posting outside peak EST windows (6am-11pm).
 
 ## Key design notes
 
@@ -51,4 +51,4 @@ The bot is a Claude agent that autonomously tweets in English about AI news, tar
 - Tweet history is stored locally in `tweet_history.json` at the repo root (gitignored).
 - The prompt includes: hook engine, numbers engine (specific figures), mention engine (@handles), emotion engine, contrarian/ratio-bait formats, self-scoring (rewrite if avg < 8/10), and scroll-stop test.
 - Post formats rotate: breaking news, explainer, bold take, witty, prediction, contrarian, ratio bait.
-- Peak hour gating: only posts during 8-11am, 1-3pm, 6-9pm EST for max reach per tweet.
+- Peak hour gating: only posts during 6am-11pm EST for max reach per tweet.
