@@ -31,9 +31,17 @@ def get_recent_tweets(hours: int = 24) -> list[str]:
     return recent
 
 
-def get_last_topic() -> str:
-    """Return the topic of the most recent tweet ('ai' or 'crypto')."""
+TOPIC_ROTATION = ["ai", "crypto", "invest", "gambling"]
+
+
+def get_next_topic() -> str:
+    """Return the next topic in the rotation: ai -> crypto -> invest -> gambling -> ai..."""
     history = load_history()
     if not history:
-        return "crypto"  # so first post will be AI
-    return history[-1].get("topic", "ai")
+        return "ai"
+    last = history[-1].get("topic", "ai")
+    try:
+        idx = TOPIC_ROTATION.index(last)
+        return TOPIC_ROTATION[(idx + 1) % len(TOPIC_ROTATION)]
+    except ValueError:
+        return "ai"
