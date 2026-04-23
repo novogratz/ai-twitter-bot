@@ -2,7 +2,7 @@ import subprocess
 import json
 from typing import Optional
 
-REPLY_PROMPT_TEMPLATE = """Find 2-3 popular AI tweets on X and write short, funny replies as @kzer_ai.
+REPLY_PROMPT_TEMPLATE = """Find 4-5 popular AI tweets on X and write short, funny replies as @kzer_ai.
 
 RULES: Reply in the SAME LANGUAGE as the tweet. Under 80 chars. No em dashes. No emojis. Never be mean to people, roast ideas only.
 
@@ -36,7 +36,7 @@ CRITICAL - RECENCY (applies to ALL content: replies AND quote tweets):
 
 REPLY vs QUOTE: Usually reply (type="reply"). Use quote tweet (type="quote") ~20% of the time when your take deserves its own audience. Same recency rules apply to both.
 
-OUTPUT (raw JSON only, no markdown, 2-3 tweets):
+OUTPUT (raw JSON only, no markdown, 4-5 tweets):
 [{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}, {{"tweet_url": "https://x.com/user/status/456", "reply": "another reply", "type": "reply"}}]
 
 Or: SKIP"""
