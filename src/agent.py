@@ -351,6 +351,7 @@ Pick something COMPLETELY DIFFERENT."""
             "-p", prompt,
             "--allowedTools", "WebSearch",
             "--model", "claude-opus-4-6",
+            "--max-turns", "1",
         ],
         capture_output=True,
         text=True,
