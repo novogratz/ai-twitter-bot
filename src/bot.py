@@ -1,19 +1,23 @@
 import traceback
 from .agent import generate_tweet
 from .twitter_client import post_tweet
-from .history import save_tweet
+from .history import save_tweet, get_last_topic
 
 
 def run_bot_cycle():
-    """Let Claude search the web, generate a French AI tweet, and post it."""
-    print("Agent searching for AI news and generating tweet...")
-    tweet = generate_tweet()
+    """Alternate between AI and Crypto news each cycle."""
+    last = get_last_topic()
+    topic = "ai" if last == "crypto" else "crypto"
+    label = "IA" if topic == "ai" else "Crypto"
+
+    print(f"[{label}] Recherche de news et generation du tweet...")
+    tweet = generate_tweet(topic=topic)
     if tweet is None:
-        print("No fresh news found — skipping this cycle.")
+        print(f"[{label}] Pas de news fraiche - on skip ce cycle.")
         return
-    print(f"Generated tweet ({len(tweet)} chars):\n{tweet}")
+    print(f"[{label}] Tweet ({len(tweet)} chars):\n{tweet}")
     post_tweet(tweet)
-    save_tweet(tweet)
+    save_tweet(tweet, topic=topic)
 
 
 def safe_run_bot_cycle():
