@@ -41,7 +41,7 @@ CRITICAL RECENCY RULES (NON-NEGOTIABLE):
 REPLY vs QUOTE: Usually reply (type="reply"). Quote tweet (type="quote") ~20% of the time.
 
 OUTPUT (raw JSON only, no markdown, 10-12 tweets):
-[{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}, {{"tweet_url": "https://x.com/user/status/456", "reply": "another reply", "type": "quote"}}]
+[{{{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}}}, {{{{"tweet_url": "https://x.com/user/status/456", "reply": "another reply", "type": "quote"}}}}]
 
 Or: SKIP"""
 
