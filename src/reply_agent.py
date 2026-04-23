@@ -48,10 +48,10 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
 
     skip_urls_section = ""
     if already_replied:
-        # Pass the last 20 replied URLs so the agent skips them
-        recent_urls = list(already_replied)[-20:]
+        # Pass only last 10 replied URLs to keep prompt short
+        recent_urls = list(already_replied)[-10:]
         urls_list = "\n".join(f"- {u}" for u in recent_urls)
-        skip_urls_section = f"DO NOT reply to these tweets (already replied):\n{urls_list}"
+        skip_urls_section = f"SKIP these (already replied):\n{urls_list}"
 
     prompt = REPLY_PROMPT_TEMPLATE.format(
         dedup_section=dedup_section,
@@ -63,7 +63,7 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
             "claude",
             "-p", prompt,
             "--allowedTools", "WebSearch",
-            "--model", "claude-sonnet-4-6",
+            "--model", "claude-haiku-4-5-20251001",
         ],
         capture_output=True,
         text=True,
