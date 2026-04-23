@@ -1,16 +1,16 @@
 # ai-twitter-bot
 
-Le compte IA le plus tranchant de X/Twitter. Les news les plus rapides. Les takes les plus durs. 0% bullshit. Powered by Claude Code. Tout en francais.
+L'actu IA, Crypto et Bourse avant tout le monde. Des prises de position tranchees. Zero bullshit. Tu me detesteras jusqu'a ce que j'aie raison. Powered by Claude Code. Tout en francais.
 
 ## How it works
 
 The bot runs 4 autonomous systems:
 
-**Post bot** - Finds the freshest AI news via web search (Opus) and writes sharp French tweets (280 chars max). ~20% of posts are hot takes (Sonnet, no web search) for engagement. Posts threads for big stories. Falls back to hot takes when news is slow. All posts in French.
+**Post bot** - Finds the freshest IA/Crypto/Bourse news via web search (Opus) and writes sharp French tweets (280 chars max). ~20% of posts are hot takes (Sonnet, no web search) covering all 3 topics. Posts threads for big stories. All posts in French.
 
-**Reply bot** - Drops 10-12 hilarious troll replies per cycle (Sonnet). French Twitter is #1 priority, any topic (tech, startups, dev life, AI, whatever is trending). Then English. Any account size. Full comedy mode. Auto-likes before replying. 20-30% are quote tweets (always in French). Replies match the language of the original tweet. STRICT recency: last 30 min preferred, today only, NEVER older.
+**Reply bot** - Drops 30-36 hilarious troll replies per cycle (Sonnet). 3x volume across IA + Crypto + Investissement. French Twitter is #1 priority. FULL TROLL MODE. Any account size. Auto-likes before replying. 20-30% are quote tweets (always in French). STRICT recency: last 30 min preferred, today only, NEVER older.
 
-**Engage bot** - Visits 3-5 target AI accounts every 25 minutes and likes their latest tweet. ~25 accounts including AI companies, leaders, influencers, and French tech. Builds reciprocity.
+**Engage bot** - Visits 3-5 target accounts every 25 minutes and likes their latest tweet. ~40 accounts across AI, crypto, finance, and French tech. Builds reciprocity.
 
 **Notify bot** - Every 20 minutes, visits own latest tweet and likes up to 5 replies. People feel seen, come back, become regulars. Signals active engagement to the algorithm.
 
@@ -32,8 +32,10 @@ Engage bot: every 25 min. Notify bot: every 20 min.
 
 ## Growth features
 
+- **3 topics** - IA, Crypto, Investissement/Bourse. All covered in news, replies, and hot takes
 - **Full French mode** - All posts, hot takes, and quote tweets in French. Replies match original tweet language
-- **Hot takes** - Engagement bait posts in French (opinions impopulaires, classements, predictions) with zero web search latency
+- **3x reply volume** - 30-36 replies per cycle (~10-12 per topic) in FULL TROLL MODE
+- **Hot takes** - Engagement bait in French across all 3 topics with zero web search latency
 - **French priority** - French Twitter is #1 priority, any topic. Searches "IA", "tech", "startup", "dev" first
 - **High volume replies** - 10-12 replies per cycle in full troll/comedy mode
 - **Strict recency** - All content must be from today, last 30 min preferred. NEVER yesterday or older. Date injected into prompts

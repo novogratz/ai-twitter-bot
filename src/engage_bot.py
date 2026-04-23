@@ -30,8 +30,15 @@ TARGET_ACCOUNTS = [
     # AI influencers
     "DrJimFan", "GaryMarcus", "bindureddy", "AravSrinivas",
     "emollison", "swyx",
-    # French tech
-    "Numerama", "FrenchWeb",
+    # Crypto
+    "VitalikButerin", "caborasheedz_binance", "brian_armstrong",
+    "saborasheedylor", "APompliano", "CoinDesk", "Cointelegraph",
+    "WuBlockchain", "CryptoCapo_",
+    # Investissement / Bourse
+    "jimcramer", "StockMKTNewz", "unusual_whales",
+    "GRDecter", "TikrTerminal",
+    # French tech / finance
+    "Numerama", "FrenchWeb", "LesEchos", "Boursorama",
 ]
 
 
