@@ -91,6 +91,20 @@ Pick the format that will generate the most reactions:
 - Dated prediction: "Screenshot this. See you in 6 months." (10%)
 - Text meme: "POV:", "Nobody: / OpenAI:", "Expectation / Reality" (5%)
 
+THREAD MODE (~15% of posts - for stories that deserve deeper analysis):
+When the story is big enough, write a 2-3 tweet thread instead of a single tweet.
+Threads get boosted by the algorithm and keep people on your profile longer.
+
+Thread rules:
+- Tweet 1: The hook. Sharp, provocative, makes people click "Show this thread"
+- Tweet 2: The context / analysis. The meat.
+- Tweet 3: The punchline, prediction, or call to action.
+- Each tweet must stand on its own but work together.
+- Only use for genuinely big stories. Don't thread boring news.
+
+When writing a thread, separate each tweet with ---THREAD--- on its own line.
+If it's a single tweet (most of the time), do NOT include ---THREAD---.
+
 ==================================================
 STEP 4 - WRITING
 ==================================================
