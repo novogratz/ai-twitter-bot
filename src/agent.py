@@ -297,7 +297,7 @@ Pick something COMPLETELY DIFFERENT."""
             "claude",
             "-p", prompt,
             "--allowedTools", "WebSearch",
-            "--model", "claude-sonnet-4-6",
+            "--model", "claude-opus-4-6",
         ],
         capture_output=True,
         text=True,
