@@ -10,18 +10,18 @@ from src.notify_bot import safe_run_notify_cycle
 
 
 def post_interval_minutes() -> int:
-    """Return post interval based on current EST hour."""
+    """Return post interval - 5-7x more frequent than before."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 23 <= hour or hour < 6:
-        return random.randint(45, 75)
+        return random.randint(10, 15)
     elif 6 <= hour < 10:
-        return random.randint(15, 20)
+        return random.randint(3, 5)
     elif 10 <= hour < 17:
-        return 40
+        return random.randint(5, 8)
     elif 17 <= hour < 19:
-        return 15
+        return random.randint(3, 5)
     else:
-        return 40
+        return random.randint(5, 8)
 
 
 def reply_interval_minutes() -> int:
