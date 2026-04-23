@@ -54,11 +54,7 @@ TOPIC_IA = REPLY_BASE.format(
 - "We're building AGI" -> "you're building a chatbot with a marketing budget"
 - "AI will replace 50% of jobs" -> "the other 50% will be fixing what the AI broke"
 - "$2B raise, 8 employees" -> "$250M per hoodie" """,
-    search_section="""1. French first (priority):
-   - "IA" (latest)
-   - "intelligence artificielle" OR "startup IA" (latest)
-2. Then English:
-   - "AI" OR "OpenAI" OR "Anthropic" (latest)""",
+    search_section="""Search X for "IA" (latest, French first). If not enough, try "AI" OR "OpenAI" (latest). ONE search max.""",
 )
 
 TOPIC_CRYPTO = REPLY_BASE.format(
@@ -71,11 +67,7 @@ TOPIC_CRYPTO = REPLY_BASE.format(
 - "To the moon" -> "la lune est a -90% par rapport a son ATH aussi"
 - "DYOR" -> "traduction: j'ai lu un thread Twitter"
 - "Nouveau memecoin qui fait x100" -> "le white paper c'est un emoji chien" """,
-    search_section="""1. French first (priority):
-   - "crypto" OR "Bitcoin" OR "BTC" (latest, French Twitter)
-   - "Ethereum" OR "Solana" OR "memecoin" (latest, French Twitter)
-2. Then English:
-   - "crypto" OR "Bitcoin" OR "BTC" (latest)""",
+    search_section="""Search X for "crypto" OR "Bitcoin" (latest, French first). ONE search max.""",
 )
 
 TOPIC_INVEST = REPLY_BASE.format(
@@ -87,11 +79,7 @@ TOPIC_INVEST = REPLY_BASE.format(
 - "La Fed va baisser les taux" -> "source: ton espoir"
 - "IPO a 10 milliards, pas de revenus" -> "le business model c'est l'espoir"
 - "Tesla chute de 8%" -> "Elon a tweete. Correlation? Coincidence? Les deux." """,
-    search_section="""1. French first (priority):
-   - "bourse" OR "investissement" OR "trading" (latest, French Twitter)
-   - "CAC 40" OR "action" OR "portefeuille" (latest, French Twitter)
-2. Then English:
-   - "stock market" OR "NVIDIA stock" OR "investing" (latest)""",
+    search_section="""Search X for "bourse" OR "investissement" OR "trading" (latest, French first). ONE search max.""",
 )
 
 ALL_TOPICS = [
@@ -147,6 +135,7 @@ def _run_topic(topic_name: str, prompt_template: str, dedup_section: str,
         [
             "claude",
             "-p", prompt,
+            "--bare",
             "--allowedTools", "WebSearch",
             "--model", "claude-sonnet-4-6",
         ],

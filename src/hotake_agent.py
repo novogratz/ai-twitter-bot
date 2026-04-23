@@ -67,6 +67,7 @@ def generate_hotake() -> Optional[str]:
         [
             "claude",
             "-p", HOTAKE_PROMPT,
+            "--bare",
             "--model", "claude-sonnet-4-6",
         ],
         capture_output=True,
