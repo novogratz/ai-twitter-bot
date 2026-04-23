@@ -30,13 +30,14 @@ EXAMPLES EN:
 
 {skip_urls_section}
 
-SEARCH STRATEGY - cast a WIDE net, do 2-3 searches:
-1. "site:x.com IA crypto bourse GPT" (French tweets)
-2. "site:x.com AI crypto Bitcoin NVIDIA OpenAI" (English tweets)
-3. If needed: "site:x.com trading startup funding LLM blockchain"
-Be creative. There are MILLIONS of AI/crypto tweets every day. You WILL find some.
+SEARCH STRATEGY - do 2-3 searches with DIFFERENT angles to find FRESH content:
+1. "site:x.com IA OR intelligence artificielle OR crypto OR bourse {today_month}" (French)
+2. "site:x.com AI news OR crypto news OR Bitcoin OR OpenAI OR NVIDIA {today_month}" (English)
+3. Try trending topics: "site:x.com GPT OR Claude OR Gemini OR Solana OR ETH OR trading {today_month}"
+4. Try specific people: "site:x.com from:elonmusk OR from:sama OR from:VitalikButerin OR from:Hasheur"
+Be creative with keywords. Try different angles. The goal is finding the FRESHEST tweets possible.
 
-RECENCY: Today ({today_date}) or yesterday OK. Nothing older than 30 hours.
+RECENCY IS CRITICAL: We are in {today_month_name} {today_year}. ONLY reply to tweets from {today_month_name} {today_year}. Check the date on every tweet. If it says March, February, January, or any older month: SKIP THAT TWEET. Today is {today_date}. Prefer tweets from the last few days but anything this month is OK.
 
 NEVER RETURN SKIP. NEVER. There are always tweets to reply to. If your first search fails, try different terms. Try specific accounts: @elonmusk @sama @VitalikButerin @coindesk @OpenAI. You MUST return 5-7 replies every single time.
 
@@ -60,11 +61,18 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
         urls_list = "\n".join(f"- {u}" for u in recent_urls)
         skip_urls_section = f"SKIP these (already replied):\n{urls_list}"
 
-    today_date = datetime.now().strftime("%Y-%m-%d")
+    now = datetime.now()
+    today_date = now.strftime("%Y-%m-%d")
+    today_month = now.strftime("%Y-%m")
+    today_month_name = now.strftime("%B")
+    today_year = now.strftime("%Y")
     prompt = REPLY_PROMPT_TEMPLATE.format(
         dedup_section=dedup_section,
         skip_urls_section=skip_urls_section,
         today_date=today_date,
+        today_month=today_month,
+        today_month_name=today_month_name,
+        today_year=today_year,
     )
 
     print("[REPLY] Running Claude CLI (searching X)...")
