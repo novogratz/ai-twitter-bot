@@ -4,64 +4,36 @@ import re
 from datetime import datetime
 from typing import Optional
 
-REPLY_PROMPT_TEMPLATE = """Find 5-10 tweets on X (IA, crypto, bourse, tech) and write HILARIOUS troll replies as @kzer_ai. GO HARD. Be FAST. MAKE THEM LAUGH.
+REPLY_PROMPT_TEMPLATE = """Find 5-10 tweets on X and write troll replies as @kzer_ai. FAST.
 
-PRIORITIZE BIG FRENCH ACCOUNTS (10k+ followers):
-- CRYPTO: @FranceCryptos @Hasheur @JournalDuCoin @CryptoastMedia
-- FINANCE: @ABaradez @Graphseo @NCheron_bourse @BourseDirect @LesEchos
-- TECH/IA: @Capetlevrai @Numerama @FrenchWeb @Siecledigital @01net
-- Any French account with lots of engagement
+TARGETS (French accounts first):
+@FranceCryptos @Hasheur @JournalDuCoin @CryptoastMedia @ABaradez @Graphseo @NCheron_bourse @LesEchos @Capetlevrai @Numerama @01net
 
-RULES: ALWAYS reply in FRENCH. You are a French influencer. Under 80 chars. No em dashes. No emojis. Roast ideas not people.
+RULES: FRENCH only. Under 80 chars. No em dashes. No emojis. Roast ideas not people. FULL TROLL.
 
-STYLE: FULL TROLL MODE. Continue the joke. Add to the story. Be specific. Be absurd but believable.
-
-BEST EXAMPLE (10k+ views):
-Tweet: "Je vois pas l'interet de payer un dev 80k en 2026"
-Reply: "prompt 1 : centre le bouton / prompt 14 : ok laisse tomber mets-le a gauche"
-
-MORE EXAMPLES:
-- "Levee de fonds de 500M" -> "le produit c'est le pitch deck"
+EXAMPLES:
+- "Levee de 500M" -> "le produit c'est le pitch deck"
 - "Bitcoin va a 200k" -> "source: un mec qui a achete a 69k"
-- "NVIDIA est surcoté" -> "c'est ce qu'on disait a 200$. et a 400$. et a 800$."
-- "J'investis pour le long terme" -> "traduction: je suis en moins-value"
+- "NVIDIA surcote" -> "c'est ce qu'on disait a 200$. et a 400$. et a 800$."
 - "Ce token va x100" -> "le x100 c'est le nombre de victimes"
-- "Le marche va crasher" -> "ca fait 3 ans que tu dis ca, t'as rate un +80%"
-
-NEVER: generic reactions ("lol", "based"), forced catchphrases, long replies.
 
 {dedup_section}
 
 {skip_urls_section}
 
-TREND SURFING: Before searching for tweets, do ONE quick search for "trending" or "tendance" on X to spot what's hot RIGHT NOW. If there's a trending topic related to IA, crypto, or bourse, prioritize replying to tweets about that trend. Trending = more views = more followers.
+SEARCH: "IA" OR "crypto" OR "Bitcoin" OR "bourse" OR "GPT" (latest). ONE search. Be FAST.
 
-SEARCH: Search X for "IA" OR "crypto" OR "Bitcoin" OR "bourse" OR "GPT" OR "trading" (latest). French tweets priority. ONE search. Be FAST.
+!!! TODAY ({today_date}) ONLY. Check timestamps. Skip "1d", "2d", "1w", any old date. SKIP if nothing fresh. !!!
 
-!!!!!!!!!! RECENCY - THE #1 RULE - NOTHING IS MORE IMPORTANT !!!!!!!!!!
-Today's date is: {today_date}
-- ONLY tweets from TODAY ({today_date}). ZERO EXCEPTIONS.
-- Priority: last 30 minutes > last hour > last few hours > earlier today.
-- Before selecting ANY tweet, CHECK ITS TIMESTAMP. If the tweet shows "1d", "2d", "3d", "1w", "Apr 8", "Apr 9", "Apr 10", or ANY date that is NOT {today_date}: DO NOT INCLUDE IT. SKIP IT.
-- If the tweet URL contains a status ID, open the tweet page and verify the date.
-- NEVER reply to a tweet older than today. EVER. This is the most important rule.
-- If you can only find old tweets, return SKIP. Do NOT include old tweets just to fill the list.
-- Sort by "Latest" on X search. ALWAYS.
-- RECENCY > influence > engagement > everything else.
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-REPLY vs QUOTE: Usually reply. Quote tweet ~20% of the time.
-
-OUTPUT (raw JSON only, no markdown, 5-10 tweets):
-[{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}, {{"tweet_url": "https://x.com/user/status/456", "reply": "another reply", "type": "quote"}}]
+OUTPUT (raw JSON, no markdown):
+[{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}]
 
 Or: SKIP"""
 
 
 def generate_replies(recent_topics: Optional[list[str]] = None,
                      already_replied: Optional[set] = None) -> Optional[list[dict]]:
-    """Search for tweets and generate funny replies.
-    Returns list of dicts with 'tweet_url', 'reply', and 'type', or None."""
+    """Search for tweets and generate funny replies."""
 
     dedup_section = ""
     if recent_topics:
@@ -89,6 +61,7 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
             "-p", prompt,
             "--allowedTools", "WebSearch",
             "--model", "claude-sonnet-4-6",
+            "--max-tokens", "1024",
         ],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
