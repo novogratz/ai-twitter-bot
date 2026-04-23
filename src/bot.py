@@ -15,9 +15,9 @@ def run_bot_cycle():
     """Post either a news tweet or a hot take (alternating)."""
     global _last_was_hotake
 
-    # Mostly news, occasional hot take (~20%) to mix it up
+    # 50/50 news and hot takes for maximum volume
     # Never two hot takes in a row
-    do_hotake = not _last_was_hotake and random.random() < 0.2
+    do_hotake = not _last_was_hotake and random.random() < 0.5
 
     if do_hotake:
         print("[HOTAKE] Generating hot take (no web search)...")
