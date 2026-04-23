@@ -4,15 +4,16 @@ from zoneinfo import ZoneInfo
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from src.bot import safe_run_bot_cycle
+from src.reply_bot import safe_run_reply_cycle
 
 
-def random_interval_minutes() -> int:
-    """Return interval based on current EST hour.
+def post_interval_minutes() -> int:
+    """Return post interval based on current EST hour.
     11pm-6am:  45-75 min (night mode)
     6am-10am:  15-20 min (morning rush)
-    10am-5pm:  40-40 min (midday)
-    5pm-7pm:   15-15 min (evening rush)
-    7pm-11pm:  40-40 min (wind down)
+    10am-5pm:  40 min (midday)
+    5pm-7pm:   15 min (evening rush)
+    7pm-11pm:  40 min (wind down)
     """
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 23 <= hour or hour < 6:
@@ -27,29 +28,59 @@ def random_interval_minutes() -> int:
         return 40
 
 
+def reply_interval_minutes() -> int:
+    """Reply every 20-30 minutes during the day, slower at night."""
+    hour = datetime.now(ZoneInfo("America/New_York")).hour
+    if 23 <= hour or hour < 6:
+        return random.randint(60, 90)
+    else:
+        return random.randint(20, 30)
+
+
 if __name__ == "__main__":
     scheduler = BlockingScheduler()
 
-    def reschedule_and_run():
+    # --- POST BOT ---
+    def reschedule_and_post():
         safe_run_bot_cycle()
-        next_minutes = random_interval_minutes()
+        next_min = post_interval_minutes()
         hour = datetime.now(ZoneInfo("America/New_York")).hour
-        print(f"\n[EST {hour}:xx] Next tweet in {next_minutes} minutes.\n")
+        print(f"\n[POST][EST {hour}:xx] Next post in {next_min} minutes.\n")
         scheduler.reschedule_job(
-            "bot_job",
-            trigger=IntervalTrigger(minutes=next_minutes),
+            "post_job",
+            trigger=IntervalTrigger(minutes=next_min),
         )
 
-    print("Bot started! Running first tweet now...")
+    # --- REPLY BOT ---
+    def reschedule_and_reply():
+        safe_run_reply_cycle()
+        next_min = reply_interval_minutes()
+        hour = datetime.now(ZoneInfo("America/New_York")).hour
+        print(f"\n[REPLY][EST {hour}:xx] Next reply scan in {next_min} minutes.\n")
+        scheduler.reschedule_job(
+            "reply_job",
+            trigger=IntervalTrigger(minutes=next_min),
+        )
+
+    print("Bot started! Running first post now...")
     safe_run_bot_cycle()
 
-    first_interval = random_interval_minutes()
-    print(f"\nNext tweet in {first_interval} minutes.\n")
-
+    # Schedule posts
+    first_post = post_interval_minutes()
+    print(f"\nNext post in {first_post} minutes.\n")
     scheduler.add_job(
-        reschedule_and_run,
-        trigger=IntervalTrigger(minutes=first_interval),
-        id="bot_job",
+        reschedule_and_post,
+        trigger=IntervalTrigger(minutes=first_post),
+        id="post_job",
+    )
+
+    # Schedule replies (start after 5 min offset so they don't overlap)
+    first_reply = 5
+    print(f"Reply bot starts in {first_reply} minutes.\n")
+    scheduler.add_job(
+        reschedule_and_reply,
+        trigger=IntervalTrigger(minutes=first_reply),
+        id="reply_job",
     )
 
     try:
