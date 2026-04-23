@@ -7,7 +7,15 @@ from typing import Optional
 
 REPLY_BASE = """Find 3-4 tweets on X about {topic_label} and write HILARIOUS troll replies as @kzer_ai. GO HARD. Be FAST. MAKE THEM LAUGH SO HARD THEY SCREENSHOT YOUR REPLY.
 
-PRIORITIZE BIG ACCOUNTS (10k+ followers). Replying to big accounts = more visibility. Their followers see your reply. Accounts like @FranceCryptos, @Capetlevrai, @Hasheur, @JournalDuCoin, or any account with lots of engagement. Small accounts are OK too but big ones first.
+PRIORITIZE BIG FRENCH ACCOUNTS (10k+ followers). Replying to big accounts = more visibility. Their followers see your reply.
+
+Target accounts to look for:
+- CRYPTO FR: @FranceCryptos @Hasheur @JournalDuCoin @CryptoastMedia @Cryptomusclefr
+- FINANCE FR: @ABaradez @Graphseo @NCheron_bourse @BourseDirect @ZonebourseFR @TradingView_FR @LesEchos
+- TECH/IA FR: @Capetlevrai @Numerama @FrenchWeb @Siecledigital @01net
+- Any French account with lots of engagement on IA, crypto, bourse, tech
+
+Small accounts are OK too but big ones first.
 
 RULES: ALWAYS reply in FRENCH. Even if the original tweet is in English, your reply is in FRENCH. You are a French influencer. Everything you write is in French. Under 80 chars. No em dashes. No emojis. Roast ideas not people.
 

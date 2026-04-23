@@ -37,8 +37,11 @@ TARGET_ACCOUNTS = [
     # Investissement / Bourse
     "jimcramer", "StockMKTNewz", "unusual_whales",
     "GRDecter", "TikrTerminal",
-    # French tech / finance
+    # French tech / finance / crypto
     "Numerama", "FrenchWeb", "LesEchos", "Boursorama",
+    "FranceCryptos", "Hasheur", "JournalDuCoin", "CryptoastMedia",
+    "ABaradez", "Graphseo", "NCheron_bourse",
+    "Capetlevrai", "Siecledigital", "01net",
 ]
 
 
