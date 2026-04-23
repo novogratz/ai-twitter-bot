@@ -1,18 +1,49 @@
+import random
 import traceback
 from .agent import generate_tweet
+from .hotake_agent import generate_hotake
 from .twitter_client import post_tweet, post_thread
 from .history import save_tweet
 
 THREAD_SEPARATOR = "---THREAD---"
 
+# Track last post type to alternate
+_last_was_hotake = False
+
 
 def run_bot_cycle():
-    """Search for AI news and post a tweet (or thread)."""
+    """Post either a news tweet or a hot take (alternating)."""
+    global _last_was_hotake
+
+    # Mostly news, occasional hot take (~20%) to mix it up
+    # Never two hot takes in a row
+    do_hotake = not _last_was_hotake and random.random() < 0.2
+
+    if do_hotake:
+        print("[HOTAKE] Generating hot take (no web search)...")
+        tweet = generate_hotake()
+        if tweet is None:
+            print("[HOTAKE] Failed, falling back to news...")
+            tweet = generate_tweet()
+        else:
+            _last_was_hotake = True
+            print(f"[HOTAKE] ({len(tweet)} chars):\n{tweet}")
+            post_tweet(tweet)
+            save_tweet(tweet)
+            return
+    else:
+        _last_was_hotake = False
+
     print("Searching for AI news...")
     tweet = generate_tweet()
     if tweet is None:
-        print("No fresh news - skipping this cycle.")
-        return
+        # No news? Post a hot take instead
+        print("No fresh news - trying a hot take instead...")
+        tweet = generate_hotake()
+        if tweet is None:
+            print("Nothing to post - skipping this cycle.")
+            return
+        _last_was_hotake = True
 
     # Check if it's a thread
     if THREAD_SEPARATOR in tweet:
@@ -21,7 +52,6 @@ def run_bot_cycle():
         for i, part in enumerate(parts, 1):
             print(f"  [{i}] ({len(part)} chars): {part[:80]}...")
         post_thread(parts)
-        # Save the full thread as one entry for dedup
         save_tweet(tweet)
     else:
         print(f"Tweet ({len(tweet)} chars):\n{tweet}")

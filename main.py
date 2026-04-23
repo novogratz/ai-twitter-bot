@@ -6,6 +6,7 @@ from apscheduler.triggers.interval import IntervalTrigger
 from src.bot import safe_run_bot_cycle
 from src.reply_bot import safe_run_reply_cycle
 from src.engage_bot import safe_run_engage_cycle
+from src.notify_bot import safe_run_notify_cycle
 
 
 def post_interval_minutes() -> int:
@@ -97,12 +98,20 @@ if __name__ == "__main__":
         id="reply_job",
     )
 
-    # Schedule engagement bot every 30 minutes
-    print("Engage bot: liking target accounts every 30 minutes.\n")
+    # Schedule engagement bot every 25 minutes
+    print("Engage bot: liking target accounts every 25 minutes.")
     scheduler.add_job(
         safe_run_engage_cycle,
-        trigger=IntervalTrigger(minutes=30),
+        trigger=IntervalTrigger(minutes=25),
         id="engage_job",
+    )
+
+    # Schedule notification farmer every 20 minutes
+    print("Notify bot: liking replies on own tweets every 20 minutes.\n")
+    scheduler.add_job(
+        safe_run_notify_cycle,
+        trigger=IntervalTrigger(minutes=20),
+        id="notify_job",
     )
 
     try:
