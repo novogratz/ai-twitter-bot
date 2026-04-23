@@ -29,9 +29,9 @@ The bot autonomously tweets AI news, drops funny replies, posts hot takes, likes
 
 ### 4 Bots
 
-**Post bot** - AI news tweets (Sonnet, with web search) + occasional hot takes (Haiku, no web search, ~20% of posts). Threads for big stories. Follow CTA on ~25% of posts.
+**Post bot** - AI news tweets (Opus, with web search) + occasional hot takes (Sonnet, no web search, ~20% of posts). Threads for big stories. Follow CTA on ~25% of posts.
 
-**Reply bot** - Finds popular AI tweets, writes short funny replies (Haiku). Auto-likes before replying. 20-30% are quote tweets. Cross-dedup with post bot. Passes already-replied URLs to avoid duplicates.
+**Reply bot** - Finds popular AI tweets, writes short funny replies (Sonnet). Auto-likes before replying. 20-30% are quote tweets. Cross-dedup with post bot. Passes already-replied URLs to avoid duplicates.
 
 **Engage bot** - Visits 3-5 target AI accounts every 25 min, likes their latest tweet. Builds reciprocity. ~25 accounts: AI companies, leaders, influencers, French tech.
 
@@ -39,9 +39,9 @@ The bot autonomously tweets AI news, drops funny replies, posts hot takes, likes
 
 ### Files
 
-- **`src/agent.py`** - News tweet agent. Sonnet + WebSearch. Multi-engine prompt (hook, troll, debate, numbers, mention, self-scoring). Returns `SKIP` if no fresh news.
-- **`src/hotake_agent.py`** - Hot take agent. Haiku, no web search (instant). Generates engagement bait: unpopular opinions, rankings, predictions, VS battles.
-- **`src/reply_agent.py`** - Reply agent. Haiku + WebSearch. Finds 2-3 tweets, writes short funny replies. Targets big accounts and rising tweets.
+- **`src/agent.py`** - News tweet agent. Opus + WebSearch. Multi-engine prompt (hook, troll, debate, numbers, mention, self-scoring). Returns `SKIP` if no fresh news.
+- **`src/hotake_agent.py`** - Hot take agent. Sonnet, no web search. Generates engagement bait: unpopular opinions, rankings, predictions, VS battles.
+- **`src/reply_agent.py`** - Reply agent. Sonnet + WebSearch. Finds 2-3 tweets, writes short funny replies. Targets big accounts and rising tweets.
 - **`src/bot.py`** - Post orchestration. 80% news, 20% hot takes. Falls back to hot take when no news. Handles threads.
 - **`src/reply_bot.py`** - Reply orchestration. Refreshes feed, generates replies with cross-dedup, auto-likes, posts replies or quote tweets.
 - **`src/engage_bot.py`** - Reciprocity engine. Visits target accounts, likes their latest tweet.
@@ -71,7 +71,7 @@ Engage bot: every 25 min. Notify bot: every 20 min. Both 24/7.
 - No API keys needed (no Twitter API, no Anthropic API).
 - Posts in English, 280 chars max. Replies match original tweet language.
 - AI news is the core content (~80%). Hot takes fill gaps (~20%).
-- News agent: Sonnet (better analysis). Reply + hot take agents: Haiku (faster).
+- News agent: Opus (deep analysis, better research). Reply + hot take agents: Sonnet.
 - Browser automation via `webbrowser.open` + AppleScript. macOS only.
 - Safari tabs auto-close after every action.
 - Auto-likes tweets before replying (double notification).
