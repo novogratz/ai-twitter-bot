@@ -57,42 +57,34 @@ TOPIC_IA = REPLY_BASE.format(
     search_section="""Search X for "IA" (latest, French first). If not enough, try "AI" OR "OpenAI" (latest). ONE search max.""",
 )
 
-TOPIC_CRYPTO = REPLY_BASE.format(
-    topic_label="CRYPTO / Bitcoin / Blockchain (French tweets first, then English)",
-    examples_section="""EXAMPLES:
+TOPIC_CRYPTO_INVEST = REPLY_BASE.format(
+    topic_label="CRYPTO + INVESTISSEMENT / Bourse / Finance (French and English)",
+    examples_section="""EXAMPLES CRYPTO:
 - "Bitcoin va a 200k" -> "source: un mec qui a achete a 69k"
 - "J'ai mis mes economies en crypto" -> "mes condoleances a tes economies"
 - "Ce token va x100" -> "le x100 c'est le nombre de victimes"
 - "HODL" -> "facile de hodl quand t'as plus rien a vendre"
 - "To the moon" -> "la lune est a -90% par rapport a son ATH aussi"
 - "DYOR" -> "traduction: j'ai lu un thread Twitter"
-- "Nouveau memecoin qui fait x100" -> "le white paper c'est un emoji chien" """,
-    search_section="""Search X for "crypto" OR "Bitcoin" (latest, French first). ONE search max.""",
-)
 
-TOPIC_INVEST = REPLY_BASE.format(
-    topic_label="INVESTISSEMENT / Bourse / Finance (French tweets first, then English)",
-    examples_section="""EXAMPLES:
+EXAMPLES INVESTISSEMENT:
 - "NVIDIA est surcoté" -> "c'est ce qu'on disait a 200$. et a 400$. et a 800$."
 - "Le marche va crasher" -> "ca fait 3 ans que tu dis ca, t'as rate un +80%"
 - "J'investis pour le long terme" -> "traduction: je suis en moins-value"
-- "La Fed va baisser les taux" -> "source: ton espoir"
-- "IPO a 10 milliards, pas de revenus" -> "le business model c'est l'espoir"
 - "Tesla chute de 8%" -> "Elon a tweete. Correlation? Coincidence? Les deux." """,
-    search_section="""Search X for "NVIDIA" OR "Tesla" OR "stock" OR "trading" OR "investing" (latest). French and English both fine. ONE search max.""",
+    search_section="""Search X for "crypto" OR "Bitcoin" OR "NVIDIA" OR "Tesla" OR "trading" OR "stock market" (latest). French AND English both fine. ONE search max.""",
 )
 
 ALL_TOPICS = [
     ("IA", TOPIC_IA),
-    ("CRYPTO", TOPIC_CRYPTO),
-    ("INVEST", TOPIC_INVEST),
+    ("CRYPTO+INVEST", TOPIC_CRYPTO_INVEST),
 ]
 
 
 def _parse_json_output(output: str) -> Optional[list[dict]]:
     """Extract JSON array from mixed text output."""
     cleaned = output.strip()
-    if not cleaned or cleaned.upper() == "SKIP":
+    if not cleaned or cleaned.upper().startswith("SKIP"):
         return None
 
     # Try markdown code block first
@@ -172,10 +164,10 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
         urls_list = "\n".join(f"- {u}" for u in recent_urls)
         skip_urls_section = f"SKIP these (already replied):\n{urls_list}"
 
-    print("[REPLY] Launching 3 parallel searches (IA + Crypto + Invest)...")
+    print("[REPLY] Launching 2 parallel searches (IA + Crypto/Invest)...")
     all_replies = []
 
-    with ThreadPoolExecutor(max_workers=3) as executor:
+    with ThreadPoolExecutor(max_workers=2) as executor:
         futures = {
             executor.submit(
                 _run_topic, name, template, dedup_section, skip_urls_section
