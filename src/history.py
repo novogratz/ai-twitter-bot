@@ -31,17 +31,15 @@ def get_recent_tweets(hours: int = 24) -> list[str]:
     return recent
 
 
-TOPIC_ROTATION = ["ai", "crypto", "invest", "gambling"]
+# 2 AI posts for every 1 crypto/invest/gambling post
+TOPIC_ROTATION = ["ai", "ai", "crypto", "ai", "ai", "invest", "ai", "ai", "gambling"]
 
 
 def get_next_topic() -> str:
-    """Return the next topic in the rotation: ai -> crypto -> invest -> gambling -> ai..."""
+    """Return the next topic in the rotation. AI appears 2x more than other topics."""
     history = load_history()
     if not history:
         return "ai"
-    last = history[-1].get("topic", "ai")
-    try:
-        idx = TOPIC_ROTATION.index(last)
-        return TOPIC_ROTATION[(idx + 1) % len(TOPIC_ROTATION)]
-    except ValueError:
-        return "ai"
+    # Count total posts to determine position in rotation
+    count = len(history)
+    return TOPIC_ROTATION[count % len(TOPIC_ROTATION)]
