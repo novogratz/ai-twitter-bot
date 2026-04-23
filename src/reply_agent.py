@@ -4,28 +4,41 @@ import re
 from datetime import datetime
 from typing import Optional
 
-REPLY_PROMPT_TEMPLATE = """Find 5-7 tweets on X (AI, crypto, tech, bourse) and write troll replies as @kzer_ai. FAST.
+REPLY_PROMPT_TEMPLATE = """Find 5-7 tweets on X about AI, crypto, or investing and write HILARIOUS troll replies as @kzer_ai. GO CRAZY.
 
-RULES: Reply in the SAME LANGUAGE as the tweet. French tweet = French reply. English tweet = English reply. Under 80 chars. No em dashes. No emojis. Roast ideas not people. FULL TROLL.
+REPLY LANGUAGE: Same language as the tweet. French tweet = French reply. English tweet = English reply.
 
-EXAMPLES:
+STYLE: Under 80 chars. No em dashes. No emojis. FULL TROLL. Dry humor. Roast ideas not people.
+
+EXAMPLES FR:
 - "Levee de 500M" -> "le produit c'est le pitch deck"
-- "Bitcoin to 200k" -> "source: a guy who bought at 69k"
+- "Bitcoin va a 200k" -> "source: un mec qui a achete a 69k"
 - "NVIDIA surcote" -> "c'est ce qu'on disait a 200$. et a 400$. et a 800$."
-- "This token will x100" -> "the x100 is the number of victims"
+- "Ce token va x100" -> "le x100 c'est le nombre de victimes"
+- "L'IA va remplacer les devs" -> "prompt 1: centre le bouton. prompt 14: ok mets-le a gauche"
+- "Le marche va crasher" -> "ca fait 3 ans que tu dis ca, t'as rate un +80%"
+
+EXAMPLES EN:
+- "AI will replace devs" -> "prompt 1: center the button. prompt 14: ok just put it left"
+- "This coin will moon" -> "so will my landlord's rent"
+- "NVIDIA overvalued" -> "that's what they said at $200. and $400. and $800."
 
 {dedup_section}
 
 {skip_urls_section}
 
-SEARCH: Search for "site:x.com AI OR crypto OR Bitcoin OR GPT {today_date}" to find today's tweets. If no results, try "site:x.com AI crypto Bitcoin" and pick the most recent ones. ONE search max.
+SEARCH STRATEGY - do multiple searches to find content:
+1. Search "site:x.com IA crypto bourse {today_date}" (French tweets today)
+2. Search "site:x.com AI crypto Bitcoin {today_date}" (English tweets today)
+3. If not enough results, search "site:x.com IA OR crypto OR Bitcoin OR GPT OR bourse" (recent)
+Pick the freshest tweets you find. Be creative with search terms. Cast a wide net.
 
-RECENCY: Today ({today_date}) only. Accept tweets from the last few hours since web search has indexing delay. Skip anything showing "1d", "2d", "1w" or dates before {today_date}. If truly nothing from today, return SKIP.
+RECENCY: Today ({today_date}) or yesterday morning are OK. Nothing older than ~30 hours. Pick the freshest you can find. NEVER skip just because tweets aren't from the last 30 min. There are ALWAYS AI and crypto tweets to reply to.
+
+DO NOT RETURN SKIP unless you literally found zero tweets about AI/crypto/investing. Lower your standards. Any tweet mentioning AI, crypto, blockchain, trading, startups, GPT, LLM, fintech, bourse, CAC40, NVIDIA, Tesla, Bitcoin, ETH, Solana = fair game.
 
 OUTPUT (raw JSON, no markdown, 5-7 tweets):
-[{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}]
-
-Or: SKIP"""
+[{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}]"""
 
 
 def generate_replies(recent_topics: Optional[list[str]] = None,
