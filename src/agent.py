@@ -252,6 +252,12 @@ Rules:
 - Vary your format every post
 - If no fresh news: post a take, prediction, or industry roast that starts a debate
 - If truly nothing: reply SKIP only
+- No em dashes (do not use the character)
+
+FOLLOW CTA (use on ~25% of posts, rotate these):
+- "Follow @kzer_ai for the fastest AI takes"
+- "More at @kzer_ai"
+Only add if it fits naturally at the end. Never force it.
 
 Output ONLY the final text. No quotes, no explanation, no score."""
 
