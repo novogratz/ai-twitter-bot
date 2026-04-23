@@ -40,12 +40,12 @@ Output ONLY the tweet text. Nothing else."""
 
 
 def generate_hotake() -> Optional[str]:
-    """Generate a hot take tweet using Haiku (fast, no web search)."""
+    """Generate a hot take tweet using Sonnet (no web search)."""
     result = subprocess.run(
         [
             "claude",
             "-p", HOTAKE_PROMPT,
-            "--model", "claude-haiku-4-5-20251001",
+            "--model", "claude-sonnet-4-6",
         ],
         capture_output=True,
         text=True,
