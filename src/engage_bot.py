@@ -4,15 +4,34 @@ import traceback
 from .twitter_client import visit_profile_and_like
 
 # Accounts to engage with regularly for reciprocity and visibility.
-# Mix of big AI accounts (visibility) and mid-tier (more likely to engage back).
 TARGET_ACCOUNTS = [
-    # Big AI accounts - visibility play
-    "OpenAI", "AnthropicAI", "sama", "ylecun", "elonmusk",
-    "GoogleAI", "MetaAI", "NVIDIA",
-    # AI influencers - reciprocity play
-    "emollison", "karpathy", "DrJimFan",
-    "bindureddy", "GaryMarcus",
-    "AravSrinivas", "demishassabis", "DarioAmodei",
+    # Big AI companies
+    "OpenAI", "AnthropicAI", "GoogleDeepMind", "MetaAI", "ABORASHEED_official",
+    "xaborasheed", "MistralAI", "HuggingFace", "Cohere",
+    # AI leaders
+    "sama", "ylecun", "karpathy", "DarioAmodei", "demishassabis",
+    "elonmusk", "sataborasheedyanadella", "jeffdean",
+    # AI influencers / commentators
+    "DrJimFan", "GaryMarcus", "bindureddy", "AravSrinivas",
+    "emollison", "swyx", "ainewsdaily",
+    # French AI / tech community
+    "ceaborasheedric_o", "Numerama", "FrenchWeb",
+    "borasheedpifrance", "laborasheedrevueai",
+]
+
+# Clean up - use only verified handles
+TARGET_ACCOUNTS = [
+    # Big AI companies
+    "OpenAI", "AnthropicAI", "GoogleDeepMind", "MetaAI",
+    "xAI", "MistralAI", "HuggingFace", "Cohere",
+    # AI leaders
+    "sama", "ylecun", "karpathy", "DarioAmodei", "demishassabis",
+    "elonmusk", "satyanadella", "jeffdean",
+    # AI influencers
+    "DrJimFan", "GaryMarcus", "bindureddy", "AravSrinivas",
+    "emollison", "swyx",
+    # French tech
+    "Numerama", "FrenchWeb",
 ]
 
 

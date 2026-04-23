@@ -240,3 +240,46 @@ def post_thread(tweets: list[str]):
 
     close_front_tab()
     print("[THREAD] Thread complete!")
+
+
+def like_own_tweet_replies():
+    """Visit own profile, open latest tweet, and like replies to build loyalty."""
+    print("[NOTIFY] Opening own profile...")
+    webbrowser.open("https://x.com/kzer_ai")
+    time.sleep(5)
+
+    # Click on the latest tweet
+    click_first_script = '''
+    tell application "System Events"
+        keystroke tab
+        delay 0.2
+        keystroke tab
+        delay 0.2
+        keystroke tab
+        delay 0.2
+        keystroke return
+    end tell
+    '''
+    print("[NOTIFY] Opening latest tweet...")
+    subprocess.run(["osascript", "-e", click_first_script], check=True)
+    time.sleep(4)
+
+    # Scroll down to see replies, then like them using keyboard
+    # On X, scrolling down reveals replies. We use 'j' to navigate
+    # between tweets and 'l' to like each one.
+    like_replies_script = '''
+    tell application "System Events"
+        -- Navigate down to replies and like them
+        repeat 5 times
+            keystroke "j"
+            delay 0.5
+            keystroke "l"
+            delay 0.8
+        end repeat
+    end tell
+    '''
+    print("[NOTIFY] Liking replies...")
+    subprocess.run(["osascript", "-e", like_replies_script], check=True)
+    time.sleep(2)
+    print("[NOTIFY] Liked up to 5 replies!")
+    close_front_tab()

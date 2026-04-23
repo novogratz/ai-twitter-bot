@@ -21,73 +21,61 @@ claude login
 python main.py
 ```
 
-The bot runs three systems on launch: reply bot first (scan for tweets to reply to), then post bot (first news tweet), then schedules all three bots (posts, replies, engagement). Each cycle is wrapped in error handling so the scheduler stays alive.
-
-You can also run a single tweet manually:
-```bash
-python test_tweet.py
-```
+The bot runs 4 systems: reply bot first (scan for tweets), then post bot, then schedules all four jobs (posts, replies, engagement, notification farming). Each cycle is wrapped in error handling so the scheduler stays alive.
 
 ## Architecture
 
-The bot is a Claude agent that autonomously tweets in English about AI news, replies to popular AI tweets with sharp funny one-liners, quote tweets for visibility, posts threads for big stories, and engages with target accounts for reciprocity on X/Twitter as @kzer_ai.
+The bot autonomously tweets AI news, drops funny replies, posts hot takes, likes target accounts, and farms notifications on X/Twitter as @kzer_ai.
 
-### Post flow
-`main.py` (scheduler) -> `src/bot.py` (`run_bot_cycle`) -> `src/agent.py` (`generate_tweet`) -> `src/twitter_client.py` (`post_tweet` or `post_thread`)
+### 4 Bots
 
-### Reply flow
-`main.py` (scheduler) -> `src/reply_bot.py` (`run_reply_cycle`) -> `src/reply_agent.py` (`generate_replies`) -> `src/twitter_client.py` (`reply_to_tweet` or `quote_tweet`)
+**Post bot** - AI news tweets (Sonnet, with web search) + occasional hot takes (Haiku, no web search, ~20% of posts). Threads for big stories. Follow CTA on ~25% of posts.
 
-### Engage flow
-`main.py` (scheduler) -> `src/engage_bot.py` (`run_engage_cycle`) -> `src/twitter_client.py` (`visit_profile_and_like`)
+**Reply bot** - Finds popular AI tweets, writes short funny replies (Haiku). Auto-likes before replying. 20-30% are quote tweets. Cross-dedup with post bot. Passes already-replied URLs to avoid duplicates.
+
+**Engage bot** - Visits 3-5 target AI accounts every 25 min, likes their latest tweet. Builds reciprocity. ~25 accounts: AI companies, leaders, influencers, French tech.
+
+**Notify bot** - Every 20 min, visits own latest tweet and likes up to 5 replies. Builds loyalty (people feel seen, come back). Signals active engagement to the algorithm.
 
 ### Files
 
-- **`src/agent.py`** - Shells out to the `claude` CLI (`subprocess.run`) with `--allowedTools WebSearch --model claude-sonnet-4-6`. The agent searches for the freshest AI news (last hour first, then today), picks the best story, and writes a high-engagement English tweet or 2-3 tweet thread. Uses multi-engine prompt (hook, troll, debate, numbers, mention, self-scoring, scroll-stop test). ~15% of posts are threads for big stories. ~25% include a follow CTA. Returns `None` if no fresh news (`SKIP`).
-- **`src/reply_agent.py`** - Shells out to `claude` CLI to search X/Twitter for popular AI tweets and generates a sharp, funny reply. Targets rising tweets (10-30 min old, early engagement) and big accounts (10k+ followers) for max visibility. Replies match the language of the original tweet. 20-30% are quote tweets instead of replies. Cross-dedup with recent posts. Returns a list of dicts with `tweet_url`, `reply`, and `type` ("reply" or "quote"), or `None`.
-- **`src/bot.py`** - Orchestration: calls agent, detects threads (split by `---THREAD---`), posts single tweet or thread, saves to history.
-- **`src/reply_bot.py`** - Reply orchestration: refreshes feed, generates replies with cross-dedup, auto-likes tweets before replying, posts replies or quote tweets, tracks replied URLs in `replied_tweets.json`.
-- **`src/engage_bot.py`** - Reciprocity engine: visits 3-5 random target accounts every 30 minutes, likes their latest tweet. Builds relationships and signals activity to the algorithm.
-- **`src/twitter_client.py`** - Browser automation functions: `post_tweet()`, `post_thread()`, `reply_to_tweet()` (with auto-like), `quote_tweet()`, `visit_profile_and_like()`, `refresh_feed()`, `like_tweet()`, `close_front_tab()`. All via intent URLs + AppleScript. macOS only. No Twitter API credentials.
-- **`src/history.py`** - Persists posted tweets to `tweet_history.json` (JSON array with `text` + `timestamp`). Exposes `get_recent_tweets(hours=24)` for dedup, and `save_tweet()` called after each post.
-- **`main.py`** - APScheduler `BlockingScheduler` with three scheduled jobs: time-based posts, dynamic reply intervals, and 30-minute engagement cycles.
+- **`src/agent.py`** - News tweet agent. Sonnet + WebSearch. Multi-engine prompt (hook, troll, debate, numbers, mention, self-scoring). Returns `SKIP` if no fresh news.
+- **`src/hotake_agent.py`** - Hot take agent. Haiku, no web search (instant). Generates engagement bait: unpopular opinions, rankings, predictions, VS battles.
+- **`src/reply_agent.py`** - Reply agent. Haiku + WebSearch. Finds 2-3 tweets, writes short funny replies. Targets big accounts and rising tweets.
+- **`src/bot.py`** - Post orchestration. 80% news, 20% hot takes. Falls back to hot take when no news. Handles threads.
+- **`src/reply_bot.py`** - Reply orchestration. Refreshes feed, generates replies with cross-dedup, auto-likes, posts replies or quote tweets.
+- **`src/engage_bot.py`** - Reciprocity engine. Visits target accounts, likes their latest tweet.
+- **`src/notify_bot.py`** - Notification farmer. Visits own latest tweet, likes replies.
+- **`src/twitter_client.py`** - Browser automation: `post_tweet()`, `post_thread()`, `reply_to_tweet()`, `quote_tweet()`, `visit_profile_and_like()`, `like_own_tweet_replies()`, `refresh_feed()`, `like_tweet()`, `close_front_tab()`.
+- **`src/history.py`** - Tweet history persistence and dedup.
+- **`main.py`** - APScheduler with 4 jobs: posts (time-based), replies (peak-aware), engagement (25 min), notifications (20 min).
 
-## Posting schedule (EST)
+## Schedule (EST)
 
 | Time (EST)   | Post interval        | Reply interval       |
 |--------------|----------------------|----------------------|
-| 11pm - 2am   | 45-75 min (random)   | 15-20 min            |
+| 11pm - 2am   | 45-75 min            | 15-20 min            |
 | 2am - 4am    | 45-75 min            | 3-5 min (FR morning) |
 | 4am - 6am    | 45-75 min            | 10-15 min            |
-| 6am - 9am    | 15-20 min (random)   | 3-5 min (US morning) |
+| 6am - 9am    | 15-20 min            | 3-5 min (US morning) |
 | 9am - 10am   | 15-20 min            | 8 min                |
 | 10am - 2pm   | 40 min               | 8 min                |
 | 2pm - 5pm    | 40 min               | 3-5 min (US afternoon) |
 | 5pm - 7pm    | 15 min               | 8 min                |
 | 7pm - 11pm   | 40 min               | 8 min                |
 
-Engagement bot runs every 30 minutes, 24/7.
+Engage bot: every 25 min. Notify bot: every 20 min. Both 24/7.
 
 ## Key design notes
 
-- No API keys of any kind needed (no Twitter API, no Anthropic API).
-- Posts are in English, 280 chars max (257 chars text + 23 for URL, which Twitter auto-shortens).
-- Replies match the language of the original tweet. Keep them short (under 80 chars ideal).
-- Account identity: @kzer_ai - the sharpest AI account on X. Sharp, funny, 0% bullshit.
-- AI news only. No crypto, no general tech.
-- Model is pinned to `claude-sonnet-4-6` via the `--model` flag.
-- Posting is macOS-only: uses `webbrowser.open` + AppleScript for browser automation.
-- Safari tabs auto-close after every action to prevent memory buildup.
-- Auto-likes tweets before replying (double notification for the author).
-- Quote tweets used 20-30% of the time for replies (shows on YOUR timeline).
-- Threads (2-3 tweets) for big stories (~15%), boosted by algorithm.
-- Engagement bot likes tweets from target AI accounts every 30 min (reciprocity).
-- Post dedup: agent is given last 24h of posted tweets to avoid repeating topics.
-- Reply dedup: tracks replied tweet URLs in `replied_tweets.json` (last 500).
-- Cross-dedup: reply bot avoids topics the post bot just covered (last 6h).
-- Tweet history stored locally in `tweet_history.json` at repo root (gitignored).
-- Strict recency: prioritizes news from the last hour, then today. Older stories are last resort.
-- No em dashes anywhere in the codebase.
-- ~25% of posts include a follow CTA ("Follow @kzer_ai for the fastest AI takes").
-- Targets rising tweets (10-30 min old, 20-100 likes) for early reply position.
-- Prioritizes big accounts (10k+ followers) for maximum visibility.
+- No API keys needed (no Twitter API, no Anthropic API).
+- Posts in English, 280 chars max. Replies match original tweet language.
+- AI news is the core content (~80%). Hot takes fill gaps (~20%).
+- News agent: Sonnet (better analysis). Reply + hot take agents: Haiku (faster).
+- Browser automation via `webbrowser.open` + AppleScript. macOS only.
+- Safari tabs auto-close after every action.
+- Auto-likes tweets before replying (double notification).
+- Quote tweets 20-30% of replies (visible on own timeline).
+- Notification farming: likes replies on own tweets every 20 min.
+- Cross-dedup between reply bot and post bot.
+- No em dashes anywhere.
