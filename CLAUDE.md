@@ -25,23 +25,25 @@ The bot runs 4 systems: reply bot first (scan for tweets), then post bot, then s
 
 ## Architecture
 
-The bot autonomously tweets AI news in French, drops funny replies, posts hot takes in French, likes target accounts, and farms notifications on X/Twitter as @kzer_ai. All original content (news posts, hot takes, quote tweets) is in French. Replies match the language of the original tweet.
+L'actu IA, Crypto et Bourse avant tout le monde. Des prises de position tranchees. Zero bullshit. Tu me detesteras jusqu'a ce que j'aie raison.
+
+The bot autonomously covers 3 topics: IA, Crypto, and Investissement/Bourse. Posts news, drops hilarious troll replies, posts hot takes, likes target accounts, and farms notifications on X/Twitter as @kzer_ai. All original content in French. Replies match the language of the original tweet. FULL TROLL MODE.
 
 ### 4 Bots
 
-**Post bot** - AI news tweets (Opus, with web search) + occasional hot takes (Sonnet, no web search, ~20% of posts). Threads for big stories. Follow CTA on ~25% of posts.
+**Post bot** - IA/Crypto/Bourse news tweets (Opus, with web search) + occasional hot takes (Sonnet, no web search, ~20% of posts). Threads for big stories. Follow CTA on ~25% of posts. All in French.
 
-**Reply bot** - Finds 10-12 tweets per cycle (French first, any topic), writes HILARIOUS troll replies (Sonnet). Full comedy mode. French Twitter is #1 priority, then English. Any account size. Auto-likes before replying. 20-30% are quote tweets. Cross-dedup with post bot.
+**Reply bot** - Finds 30-36 tweets per cycle (French first), writes HILARIOUS troll replies (Sonnet). FULL TROLL MODE. Covers IA (~10-12), crypto (~10-12), investissement (~10-12). French Twitter is #1 priority, then English. Any account size. Auto-likes before replying. 20-30% are quote tweets. Cross-dedup with post bot.
 
-**Engage bot** - Visits 3-5 target AI accounts every 25 min, likes their latest tweet. Builds reciprocity. ~25 accounts: AI companies, leaders, influencers, French tech.
+**Engage bot** - Visits 3-5 target accounts every 25 min, likes their latest tweet. Builds reciprocity. ~40 accounts: AI companies, crypto leaders, finance influencers, French tech.
 
 **Notify bot** - Every 20 min, visits own latest tweet and likes up to 5 replies. Builds loyalty (people feel seen, come back). Signals active engagement to the algorithm.
 
 ### Files
 
-- **`src/agent.py`** - News tweet agent. Opus + WebSearch. Full French prompt (hook, troll, debate, numbers, mention, self-scoring). All tweets in French. Returns `SKIP` if no fresh news.
-- **`src/hotake_agent.py`** - Hot take agent. Sonnet, no web search. Full French prompt. Generates engagement bait in French: opinions impopulaires, classements, predictions, battles VS.
-- **`src/reply_agent.py`** - Reply agent. Sonnet + WebSearch. Finds 10-12 tweets per cycle, full troll mode. French tweets #1 priority (any topic: tech, startups, dev life, AI). Then English. Any account size. Strict recency: today only, last 30 min preferred.
+- **`src/agent.py`** - News tweet agent. Opus + WebSearch. Full French prompt covering IA + Crypto + Bourse (hook, troll, debate, numbers, mention, self-scoring). Returns `SKIP` if no fresh news.
+- **`src/hotake_agent.py`** - Hot take agent. Sonnet, no web search. Full French prompt. Generates engagement bait across IA (~40%), Crypto (~30%), Investissement (~30%).
+- **`src/reply_agent.py`** - Reply agent. Sonnet + WebSearch. Finds 30-36 tweets per cycle (3x volume), full troll mode across IA + Crypto + Bourse. French first, then English. Strict recency: today only, last 30 min preferred.
 - **`src/bot.py`** - Post orchestration. 80% news, 20% hot takes. Falls back to hot take when no news. Handles threads.
 - **`src/reply_bot.py`** - Reply orchestration. Refreshes feed, generates replies with cross-dedup, auto-likes, posts replies or quote tweets.
 - **`src/engage_bot.py`** - Reciprocity engine. Visits target accounts, likes their latest tweet.
@@ -70,7 +72,8 @@ Engage bot: every 25 min. Notify bot: every 20 min. Both 24/7.
 
 - No API keys needed (no Twitter API, no Anthropic API).
 - All posts in French, 280 chars max. Quote tweets always in French. Replies match original tweet language.
-- AI news is the core content (~80%). Hot takes fill gaps (~20%).
+- 3 topics: IA, Crypto, Investissement/Bourse. All covered equally in news, replies, and hot takes.
+- News is the core content (~80%). Hot takes fill gaps (~20%).
 - News agent: Opus (deep analysis, better research). Reply + hot take agents: Sonnet.
 - Browser automation via `webbrowser.open` + AppleScript. macOS only.
 - Safari tabs auto-close after every action.
@@ -80,6 +83,6 @@ Engage bot: every 25 min. Notify bot: every 20 min. Both 24/7.
 - Cross-dedup between reply bot and post bot.
 - No em dashes anywhere.
 - Strict recency on all content: today only, last 30 min preferred. Never yesterday or older.
-- French tweets are #1 priority for replies. Any topic (tech, startups, dev life, AI, whatever is trending).
-- Reply volume: 10-12 replies per cycle in full troll/comedy mode.
+- French tweets are #1 priority for replies. 3 topics: IA, crypto, investissement.
+- Reply volume: 30-36 replies per cycle (3x) in full troll/comedy mode. ~10-12 per topic.
 - Any account size is fine for replies. Small accounts engage back, big accounts give visibility.
