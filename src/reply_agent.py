@@ -64,7 +64,7 @@ TOPIC_IA = REPLY_BASE.format(
 - "We're building AGI" -> "you're building a chatbot with a marketing budget"
 - "AI will replace 50% of jobs" -> "the other 50% will be fixing what the AI broke"
 - "$2B raise, 8 employees" -> "$250M per hoodie" """,
-    search_section="""Search X for French tech tweets (latest). Use broad terms: "IA" OR "GPT" OR "Claude" OR "Qwen" OR "LLM" OR "Mistral" OR "OpenAI" OR "dev" OR "code" OR "modele" OR "agent IA" OR "prompt". Look for French people discussing AI, testing models, coding, tech opinions. PRIORITIZE FRENCH TWEETS from real people (not brands). ONE search max.""",
+    search_section="""Search X for "IA" OR "GPT" OR "LLM" OR "OpenAI" (latest). Pick French tweets from big accounts. ONE search max. Be FAST.""",
 )
 
 TOPIC_CRYPTO_INVEST = REPLY_BASE.format(
