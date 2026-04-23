@@ -33,7 +33,7 @@ The bot autonomously covers 3 topics: IA, Crypto, and Investissement/Bourse. Pos
 
 **Post bot** - IA/Crypto/Bourse news tweets (Opus, with web search) + occasional hot takes (Sonnet, no web search, ~20% of posts). Threads for big stories. Follow CTA on ~25% of posts. All in French.
 
-**Reply bot** - Finds 30-36 tweets per cycle (French first), writes HILARIOUS troll replies (Sonnet). FULL TROLL MODE. Covers IA (~10-12), crypto (~10-12), investissement (~10-12). French Twitter is #1 priority, then English. Any account size. Auto-likes before replying. 20-30% are quote tweets. Cross-dedup with post bot.
+**Reply bot** - 3 parallel agents (IA, Crypto, Invest), 3-4 replies each (~10 total per cycle). Runs every 1-3 min for constant fresh content. FULL TROLL MODE. French first, then English. Any account size. Auto-likes before replying. 20-30% are quote tweets. Cross-dedup with post bot.
 
 **Engage bot** - Visits 3-5 target accounts every 25 min, likes their latest tweet. Builds reciprocity. ~40 accounts: AI companies, crypto leaders, finance influencers, French tech.
 
@@ -43,7 +43,7 @@ The bot autonomously covers 3 topics: IA, Crypto, and Investissement/Bourse. Pos
 
 - **`src/agent.py`** - News tweet agent. Opus + WebSearch. Full French prompt covering IA + Crypto + Bourse (hook, troll, debate, numbers, mention, self-scoring). Returns `SKIP` if no fresh news.
 - **`src/hotake_agent.py`** - Hot take agent. Sonnet, no web search. Full French prompt. Generates engagement bait across IA (~40%), Crypto (~30%), Investissement (~30%).
-- **`src/reply_agent.py`** - Reply agent. Sonnet + WebSearch. Finds 30-36 tweets per cycle (3x volume), full troll mode across IA + Crypto + Bourse. French first, then English. Strict recency: today only, last 30 min preferred.
+- **`src/reply_agent.py`** - Reply agent. 3 parallel Sonnet + WebSearch agents (IA, Crypto, Invest). 3-4 tweets per topic, runs fast. Full troll mode. French first, then English. Strict recency: today only, last 30 min preferred. Uses `--bare` for speed.
 - **`src/bot.py`** - Post orchestration. 80% news, 20% hot takes. Falls back to hot take when no news. Handles threads.
 - **`src/reply_bot.py`** - Reply orchestration. Refreshes feed, generates replies with cross-dedup, auto-likes, posts replies or quote tweets.
 - **`src/engage_bot.py`** - Reciprocity engine. Visits target accounts, likes their latest tweet.
@@ -56,15 +56,15 @@ The bot autonomously covers 3 topics: IA, Crypto, and Investissement/Bourse. Pos
 
 | Time (EST)   | Post interval        | Reply interval       |
 |--------------|----------------------|----------------------|
-| 11pm - 2am   | 45-75 min            | 15-20 min            |
-| 2am - 4am    | 45-75 min            | 3-5 min (FR morning) |
-| 4am - 6am    | 45-75 min            | 10-15 min            |
-| 6am - 9am    | 15-20 min            | 3-5 min (US morning) |
-| 9am - 10am   | 15-20 min            | 8 min                |
-| 10am - 2pm   | 40 min               | 8 min                |
-| 2pm - 5pm    | 40 min               | 3-5 min (US afternoon) |
-| 5pm - 7pm    | 15 min               | 8 min                |
-| 7pm - 11pm   | 40 min               | 8 min                |
+| 11pm - 2am   | 45-75 min            | 8-12 min             |
+| 2am - 4am    | 45-75 min            | 1-2 min (FR morning) |
+| 4am - 6am    | 45-75 min            | 5-8 min              |
+| 6am - 9am    | 15-20 min            | 1-2 min (US morning) |
+| 9am - 10am   | 15-20 min            | 2-3 min              |
+| 10am - 2pm   | 40 min               | 2-3 min              |
+| 2pm - 5pm    | 40 min               | 1-2 min (US afternoon) |
+| 5pm - 7pm    | 15 min               | 2-3 min              |
+| 7pm - 11pm   | 40 min               | 2-3 min              |
 
 Engage bot: every 25 min. Notify bot: every 20 min. Both 24/7.
 
@@ -84,5 +84,6 @@ Engage bot: every 25 min. Notify bot: every 20 min. Both 24/7.
 - No em dashes anywhere.
 - Strict recency on all content: today only, last 30 min preferred. Never yesterday or older.
 - French tweets are #1 priority for replies. 3 topics: IA, crypto, investissement.
-- Reply volume: 30-36 replies per cycle (3x) in full troll/comedy mode. ~10-12 per topic.
+- Reply volume: 3-4 per topic (~10 total) per cycle, runs every 1-3 min. Small fast batches.
+- Reply agents use 1 search max per topic for speed.
 - Any account size is fine for replies. Small accounts engage back, big accounts give visibility.
