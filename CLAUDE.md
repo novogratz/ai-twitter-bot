@@ -31,7 +31,7 @@ The bot autonomously tweets AI news, drops funny replies, posts hot takes, likes
 
 **Post bot** - AI news tweets (Opus, with web search) + occasional hot takes (Sonnet, no web search, ~20% of posts). Threads for big stories. Follow CTA on ~25% of posts.
 
-**Reply bot** - Finds 8-10 popular AI tweets per cycle, writes short hilarious replies in full troll mode (Sonnet). French tweets are top priority. Auto-likes before replying. 20-30% are quote tweets. Cross-dedup with post bot. Passes already-replied URLs to avoid duplicates.
+**Reply bot** - Finds 10-12 tweets per cycle (French first, any topic), writes HILARIOUS troll replies (Sonnet). Full comedy mode. French Twitter is #1 priority, then English. Any account size. Auto-likes before replying. 20-30% are quote tweets. Cross-dedup with post bot.
 
 **Engage bot** - Visits 3-5 target AI accounts every 25 min, likes their latest tweet. Builds reciprocity. ~25 accounts: AI companies, leaders, influencers, French tech.
 
@@ -41,7 +41,7 @@ The bot autonomously tweets AI news, drops funny replies, posts hot takes, likes
 
 - **`src/agent.py`** - News tweet agent. Opus + WebSearch. Multi-engine prompt (hook, troll, debate, numbers, mention, self-scoring). Returns `SKIP` if no fresh news.
 - **`src/hotake_agent.py`** - Hot take agent. Sonnet, no web search. Generates engagement bait: unpopular opinions, rankings, predictions, VS battles.
-- **`src/reply_agent.py`** - Reply agent. Sonnet + WebSearch. Finds 8-10 tweets per cycle, full troll mode. French tweets prioritized. Targets big accounts and rising tweets. Strict recency: today only, last 30 min preferred.
+- **`src/reply_agent.py`** - Reply agent. Sonnet + WebSearch. Finds 10-12 tweets per cycle, full troll mode. French tweets #1 priority (any topic: tech, startups, dev life, AI). Then English. Any account size. Strict recency: today only, last 30 min preferred.
 - **`src/bot.py`** - Post orchestration. 80% news, 20% hot takes. Falls back to hot take when no news. Handles threads.
 - **`src/reply_bot.py`** - Reply orchestration. Refreshes feed, generates replies with cross-dedup, auto-likes, posts replies or quote tweets.
 - **`src/engage_bot.py`** - Reciprocity engine. Visits target accounts, likes their latest tweet.
@@ -80,5 +80,6 @@ Engage bot: every 25 min. Notify bot: every 20 min. Both 24/7.
 - Cross-dedup between reply bot and post bot.
 - No em dashes anywhere.
 - Strict recency on all content: today only, last 30 min preferred. Never yesterday or older.
-- French tweets are top priority for replies. Searches "IA" and "intelligence artificielle" first.
-- Reply volume: 8-10 replies per cycle in full troll/comedy mode.
+- French tweets are #1 priority for replies. Any topic (tech, startups, dev life, AI, whatever is trending).
+- Reply volume: 10-12 replies per cycle in full troll/comedy mode.
+- Any account size is fine for replies. Small accounts engage back, big accounts give visibility.
