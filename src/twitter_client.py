@@ -25,6 +25,13 @@ def post_tweet(text: str):
     print("Tweet posted!")
 
 
+def refresh_feed():
+    """Open X home feed and refresh it so new tweets load."""
+    print("Refreshing X feed...")
+    webbrowser.open("https://x.com/home")
+    time.sleep(3)
+
+
 def reply_to_tweet(tweet_url: str, reply_text: str):
     """Open a tweet, click reply, type the reply, and submit via AppleScript."""
     print(f"Opening tweet: {tweet_url}")

@@ -3,7 +3,7 @@ import os
 import time
 import traceback
 from .reply_agent import generate_replies
-from .twitter_client import reply_to_tweet
+from .twitter_client import reply_to_tweet, refresh_feed
 
 REPLIED_FILE = os.path.join(os.path.dirname(__file__), "..", "replied_tweets.json")
 
@@ -26,6 +26,7 @@ def save_replied(urls: set):
 
 def run_reply_cycle():
     """Search for popular AI tweets and reply to 2-3 with troll one-liners."""
+    refresh_feed()
     print("[REPLY] Scanning for tweets to reply to...")
     replies = generate_replies()
     if replies is None:
