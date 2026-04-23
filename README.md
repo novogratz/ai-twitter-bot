@@ -1,14 +1,14 @@
 # ai-twitter-bot
 
-The sharpest AI account on X/Twitter. Fastest news. Hardest takes. 0% bullshit. Powered by Claude Code.
+Le compte IA le plus tranchant de X/Twitter. Les news les plus rapides. Les takes les plus durs. 0% bullshit. Powered by Claude Code. Tout en francais.
 
 ## How it works
 
 The bot runs 4 autonomous systems:
 
-**Post bot** - Finds the freshest AI news via web search (Opus) and writes sharp English tweets (280 chars max). ~20% of posts are hot takes (Sonnet, no web search) for engagement. Posts threads for big stories. Falls back to hot takes when news is slow.
+**Post bot** - Finds the freshest AI news via web search (Opus) and writes sharp French tweets (280 chars max). ~20% of posts are hot takes (Sonnet, no web search) for engagement. Posts threads for big stories. Falls back to hot takes when news is slow. All posts in French.
 
-**Reply bot** - Drops 10-12 hilarious troll replies per cycle (Sonnet). French Twitter is #1 priority, any topic (tech, startups, dev life, AI, whatever is trending). Then English. Any account size. Full comedy mode. Auto-likes before replying. 20-30% are quote tweets. Replies match the language of the original tweet. Today only, last 30 min preferred.
+**Reply bot** - Drops 10-12 hilarious troll replies per cycle (Sonnet). French Twitter is #1 priority, any topic (tech, startups, dev life, AI, whatever is trending). Then English. Any account size. Full comedy mode. Auto-likes before replying. 20-30% are quote tweets (always in French). Replies match the language of the original tweet. STRICT recency: last 30 min preferred, today only, NEVER older.
 
 **Engage bot** - Visits 3-5 target AI accounts every 25 minutes and likes their latest tweet. ~25 accounts including AI companies, leaders, influencers, and French tech. Builds reciprocity.
 
@@ -32,10 +32,11 @@ Engage bot: every 25 min. Notify bot: every 20 min.
 
 ## Growth features
 
-- **Hot takes** - Engagement bait posts (unpopular opinions, rankings, predictions) with zero web search latency
+- **Full French mode** - All posts, hot takes, and quote tweets in French. Replies match original tweet language
+- **Hot takes** - Engagement bait posts in French (opinions impopulaires, classements, predictions) with zero web search latency
 - **French priority** - French Twitter is #1 priority, any topic. Searches "IA", "tech", "startup", "dev" first
 - **High volume replies** - 10-12 replies per cycle in full troll/comedy mode
-- **Strict recency** - All content must be from today, last 30 min preferred
+- **Strict recency** - All content must be from today, last 30 min preferred. NEVER yesterday or older. Date injected into prompts
 - **Rising tweet targeting** - Replies to tweets posted 10-30 min ago for top-of-thread placement
 - **Big account filter** - Prioritizes 10k+ follower accounts for replies
 - **Quote tweets** - 20-30% of replies visible on own timeline
