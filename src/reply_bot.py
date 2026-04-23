@@ -1,10 +1,12 @@
 import json
 import os
+import random
 import time
 import traceback
 from .reply_agent import generate_replies
 from .twitter_client import reply_to_tweet, quote_tweet, refresh_feed
 from .history import get_recent_tweets
+from .engagement_log import log_reply
 
 REPLIED_FILE = os.path.join(os.path.dirname(__file__), "..", "replied_tweets.json")
 
@@ -64,6 +66,7 @@ def run_reply_cycle():
                 reply_to_tweet(url, data["reply"])
             replied.add(url)
             posted_count += 1
+            log_reply(url, data["reply"], action_type)
             # Wait between replies so browser can catch up
             if posted_count < len(replies):
                 print("[REPLY] Waiting 15 seconds before next action...")

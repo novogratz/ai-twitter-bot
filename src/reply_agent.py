@@ -34,6 +34,8 @@ NEVER: generic reactions ("lol", "based"), forced catchphrases, long replies.
 
 {skip_urls_section}
 
+TREND SURFING: Before searching for tweets, do ONE quick search for "trending" or "tendance" on X to spot what's hot RIGHT NOW. If there's a trending topic related to IA, crypto, or bourse, prioritize replying to tweets about that trend. Trending = more views = more followers.
+
 SEARCH: Search X for "IA" OR "crypto" OR "Bitcoin" OR "bourse" OR "GPT" OR "trading" (latest). French tweets priority. ONE search. Be FAST.
 
 RECENCY (NON-NEGOTIABLE):
