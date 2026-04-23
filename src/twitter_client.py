@@ -38,19 +38,17 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     webbrowser.open(tweet_url)
 
     # Wait for tweet page to load
-    time.sleep(5)
+    time.sleep(6)
 
-    # Click the reply box - on X, the reply input is in the tweet thread
-    # We use AppleScript to click reply and type
+    # Click the reply box using the reply input area on the tweet page
     click_reply_script = '''
     tell application "System Events"
-        -- Tab to the reply box area and click
         keystroke "r"
     end tell
     '''
     print("Clicking reply...")
     subprocess.run(["osascript", "-e", click_reply_script], check=True)
-    time.sleep(2)
+    time.sleep(3)
 
     # Type the reply text using AppleScript
     # Escape special characters for AppleScript
@@ -62,15 +60,19 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     '''
     print("Typing reply...")
     subprocess.run(["osascript", "-e", type_script], check=True)
-    time.sleep(1)
+    time.sleep(2)
 
-    # Submit with Cmd+Enter
-    submit_script = '''
+    # Click the Reply button using JavaScript in the browser
+    # This is more reliable than Cmd+Enter which can save as draft
+    click_post_script = '''
     tell application "System Events"
-        keystroke return using command down
+        -- Use Tab to reach the Reply button, then Enter to click it
+        keystroke tab
+        delay 0.3
+        keystroke return
     end tell
     '''
-    print("Submitting reply...")
-    subprocess.run(["osascript", "-e", submit_script], check=True)
-    time.sleep(2)
+    print("Clicking Reply button...")
+    subprocess.run(["osascript", "-e", click_post_script], check=True)
+    time.sleep(3)
     print("Reply posted!")

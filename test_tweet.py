@@ -6,7 +6,7 @@ from src.history import save_tweet
 print("Searching for AI news and generating tweet...\n")
 tweet = generate_tweet()
 if tweet is None:
-    print("No fresh news found — nothing to post.")
+    print("No fresh news found - nothing to post.")
 else:
     print(f"Tweet ({len(tweet)} chars):\n")
     print(tweet)
