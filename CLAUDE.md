@@ -21,7 +21,7 @@ claude login
 python main.py
 ```
 
-The bot runs one tweet immediately on start (if within active hours), then checks every 10-15 minutes (randomized). It only posts during 6am-11pm EST. Each tick calls `safe_run_bot_cycle()`, which catches all exceptions so the scheduler stays alive.
+The bot runs both the reply bot and post bot immediately on start, then schedules them on different intervals. The reply bot runs every 8 minutes. The post bot uses a time-based schedule (see below). Each cycle is wrapped in error handling so the scheduler stays alive.
 
 You can also run a single tweet manually:
 ```bash
@@ -30,26 +30,48 @@ python test_tweet.py
 
 ## Architecture
 
-The bot is a Claude agent that autonomously tweets in French about AI and Crypto news, targeting maximum engagement on X/Twitter as @kzer_ai - the #1 French AI and Crypto account.
+The bot is a Claude agent that autonomously tweets in English about AI news and replies to popular AI tweets with sharp, funny one-liners on X/Twitter as @kzer_ai.
 
-**Flow:** `main.py` (scheduler) -> `src/bot.py` (`run_bot_cycle`) -> `src/agent.py` (`generate_tweet`) -> `src/twitter_client.py` (`post_tweet`)
+### Post flow
+`main.py` (scheduler) -> `src/bot.py` (`run_bot_cycle`) -> `src/agent.py` (`generate_tweet`) -> `src/twitter_client.py` (`post_tweet`)
 
-- **`src/agent.py`** - Shells out to the `claude` CLI (`subprocess.run`) with `--allowedTools WebSearch --model claude-sonnet-4-6`. The agent searches for fresh AI and Crypto news published TODAY, picks the best story, and writes a high-engagement French tweet using a multi-engine prompt (hook engine, troll engine, numbers engine, mention engine, self-scoring, scroll-stop test). Returns `None` if no fresh news exists today (`SKIP`).
+### Reply flow
+`main.py` (scheduler) -> `src/reply_bot.py` (`run_reply_cycle`) -> `src/reply_agent.py` (`generate_replies`) -> `src/twitter_client.py` (`reply_to_tweet`)
+
+### Files
+
+- **`src/agent.py`** - Shells out to the `claude` CLI (`subprocess.run`) with `--allowedTools WebSearch --model claude-sonnet-4-6`. The agent searches for the freshest AI news (last hour first, then today), picks the best story, and writes a high-engagement English tweet using a multi-engine prompt (hook engine, troll engine, debate engine, numbers engine, mention engine, self-scoring, scroll-stop test). Returns `None` if no fresh news exists (`SKIP`).
+- **`src/reply_agent.py`** - Shells out to `claude` CLI to search X/Twitter for popular AI tweets and generates a sharp, funny reply. Replies match the language of the original tweet (French tweet = French reply, English tweet = English reply). Returns a list of dicts with `tweet_url` and `reply`, or `None`.
 - **`src/bot.py`** - Thin orchestration: calls agent, prints result, posts tweet, saves to history. Skips silently if agent returns `None`.
-- **`src/twitter_client.py`** - Posts tweets via the Twitter web intent URL (`https://x.com/intent/post?text=...`), opens it in the browser, then uses AppleScript (`osascript`) to send Cmd+Enter to auto-submit. macOS only. No Twitter API credentials needed.
+- **`src/reply_bot.py`** - Reply orchestration: refreshes the X feed, generates replies, posts them via browser automation, tracks replied tweet URLs in `replied_tweets.json` to avoid duplicates.
+- **`src/twitter_client.py`** - Three functions: `post_tweet()` (via intent URL + AppleScript), `reply_to_tweet()` (opens tweet, presses `r` to reply, types text, Tab+Enter to submit), `refresh_feed()` (opens X home to load new tweets). macOS only. No Twitter API credentials needed.
 - **`src/history.py`** - Persists posted tweets to `tweet_history.json` (JSON array with `text` + `timestamp`). Exposes `get_recent_tweets(hours=24)` for dedup, and `save_tweet()` called after each post.
-- **`main.py`** - APScheduler `BlockingScheduler` with a randomized 10-15 minute interval. Checks `is_peak_hour_est()` before each cycle and skips outside 6am-11pm EST.
+- **`main.py`** - APScheduler `BlockingScheduler` with time-based posting intervals and 8-minute reply cycles. On launch: runs reply bot first (scan for tweets to reply to), then posts first news tweet, then schedules both.
+
+## Posting schedule (EST)
+
+| Time (EST)   | Post interval        |
+|--------------|----------------------|
+| 11pm - 6am   | 45-75 min (random)   |
+| 6am - 10am   | 15-20 min (random)   |
+| 10am - 5pm   | 40 min               |
+| 5pm - 7pm    | 15 min               |
+| 7pm - 11pm   | 40 min               |
+
+Reply bot runs every 8 minutes, 24/7.
 
 ## Key design notes
 
 - No API keys of any kind needed (no Twitter API, no Anthropic API).
-- Tweets are in French, 280 chars max (257 chars text + 23 for URL, which Twitter auto-shortens).
-- Account identity: @kzer_ai - #1 French AI and Crypto account, sharp, funny, 0% bullshit.
-- Covers both AI and Crypto news with equal priority.
+- Posts are in English, 280 chars max (257 chars text + 23 for URL, which Twitter auto-shortens).
+- Replies match the language of the original tweet.
+- Account identity: @kzer_ai - the sharpest AI account on X. Sharp, funny, 0% bullshit.
+- AI news only. No crypto, no general tech.
 - Model is pinned to `claude-sonnet-4-6` via the `--model` flag.
-- Posting is macOS-only: uses `webbrowser.open` + AppleScript to click the Post button.
-- Dedup: agent is given last 24h of posted tweets to avoid repeating topics.
+- Posting is macOS-only: uses `webbrowser.open` + AppleScript for browser automation.
+- Post dedup: agent is given last 24h of posted tweets to avoid repeating topics.
+- Reply dedup: tracks replied tweet URLs in `replied_tweets.json` (last 500).
 - Tweet history stored locally in `tweet_history.json` at repo root (gitignored).
-- Strict recency: only news published TODAY is accepted. Older stories are discarded.
-- Prompt includes: hook engine, troll engine (dry/deadpan), numbers engine, mention engine, self-scoring (rewrite if avg < 8/10), scroll-stop test, format rotation.
-- Active hours: 6am-11pm EST only.
+- Strict recency: prioritizes news from the last hour, then today. Older stories are last resort.
+- No em dashes anywhere in the codebase.
+- Prompt includes: hook engine, troll engine (dry/deadpan), debate engine, numbers engine, mention engine, self-scoring (rewrite if avg < 8.5/10), scroll-stop test, format rotation.

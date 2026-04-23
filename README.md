@@ -1,12 +1,25 @@
 # ai-twitter-bot
 
-Le compte IA et Crypto numero 1 en francais sur X/Twitter. Tranchant, drole, sans filtre. Propulse par Claude Code.
+The sharpest AI account on X/Twitter. Fastest news. Hardest takes. 0% bullshit. Powered by Claude Code.
 
-## Comment ca marche
+## How it works
 
-A chaque cycle, le bot invoque le CLI `claude` avec la recherche web activee. Claude trouve la news IA ou Crypto la plus fraiche du jour, choisit l'angle le plus savoureux, et redige un tweet en francais (280 chars max) avec du caractere. Aucune cle API requise - le post se fait via le navigateur + AppleScript.
+The bot runs two systems:
 
-Le bot poste toutes les 10-15 minutes (aleatoire), uniquement entre 6h et 23h EST.
+**Post bot** - Every cycle, invokes the `claude` CLI with web search enabled. Claude finds the freshest AI news (last hour first), picks the best angle, and writes a sharp English tweet (280 chars max). Posts via browser + AppleScript. No API keys needed.
+
+**Reply bot** - Every 8 minutes, searches X for popular AI tweets and drops a funny, sharp one-liner reply. Replies match the language of the original tweet. The goal: be quotable, make people curious enough to check the profile.
+
+## Schedule
+
+Posts follow a time-based schedule (EST):
+- Night (11pm-6am): every 45-75 min
+- Morning rush (6am-10am): every 15-20 min
+- Midday (10am-5pm): every 40 min
+- Evening rush (5pm-7pm): every 15 min
+- Wind down (7pm-11pm): every 40 min
+
+Reply bot runs every 8 minutes, 24/7.
 
 ## Setup
 
@@ -14,29 +27,29 @@ Le bot poste toutes les 10-15 minutes (aleatoire), uniquement entre 6h et 23h ES
 pip install -r requirements.txt
 ```
 
-Installe et authentifie le CLI Claude Code :
+Install and authenticate the Claude Code CLI:
 
 ```bash
 npm install -g @anthropic-ai/claude-code
 claude login
 ```
 
-C'est tout. Pas de cles Twitter, pas de cle Anthropic, rien d'autre.
+That's it. No Twitter API keys, no Anthropic API key, nothing else.
 
 ## Usage
 
 ```bash
-# Lancer le bot (poste en continu)
+# Run the bot (posts and replies continuously)
 python main.py
 
-# Poster un seul tweet manuellement
+# Post a single tweet manually
 python test_tweet.py
 ```
 
-Stopper avec `Ctrl+C`.
+Stop with `Ctrl+C`.
 
-## Prerequis
+## Requirements
 
-- macOS (le post utilise AppleScript pour cliquer automatiquement sur le bouton Tweet)
-- CLI Claude Code installe et authentifie
-- X/Twitter connecte sur ton navigateur par defaut
+- macOS (posting uses AppleScript to automate browser clicks)
+- Claude Code CLI installed and authenticated
+- X/Twitter logged in on your default browser
