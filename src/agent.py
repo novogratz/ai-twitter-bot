@@ -349,6 +349,7 @@ Pick something COMPLETELY DIFFERENT."""
         [
             "claude",
             "-p", prompt,
+            "--bare",
             "--allowedTools", "WebSearch",
             "--model", "claude-opus-4-6",
         ],
