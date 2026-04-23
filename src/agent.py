@@ -56,10 +56,13 @@ STEP 2 - STORY SELECTION
 Speed is your edge. You want to be FIRST.
 
 Pick ONE story using this priority order:
-1. Published in the LAST HOUR (top priority - this is where you beat everyone)
-2. Published in the last few hours today (good, still fast)
-3. Published earlier today (acceptable fallback)
-4. Published yesterday (last resort - only if absolutely nothing from today exists AND the story is incredible)
+1. Published in the LAST 30 MINUTES (top priority - this is where you beat everyone)
+2. Published in the last hour (still great)
+3. Published in the last few hours today (acceptable)
+4. Published earlier today (last resort)
+
+NEVER post news from yesterday or older. If you can only find old news, reply SKIP.
+Always verify the publication date. If the article doesn't show today's date, skip it.
 
 Among stories of similar recency, pick the one with:
 - Maximum debate potential (people will WANT to argue about this)
