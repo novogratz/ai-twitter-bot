@@ -8,7 +8,7 @@ The bot runs 4 autonomous systems:
 
 **Post bot** - Finds the freshest AI news via web search (Opus) and writes sharp English tweets (280 chars max). ~20% of posts are hot takes (Sonnet, no web search) for engagement. Posts threads for big stories. Falls back to hot takes when news is slow.
 
-**Reply bot** - Searches X for popular AI tweets and drops funny, short one-liner replies (Sonnet). Targets rising tweets and big accounts (10k+ followers). Auto-likes before replying. 20-30% are quote tweets. Replies match the language of the original tweet.
+**Reply bot** - Searches X for popular AI tweets and drops 8-10 hilarious one-liner replies per cycle in full troll mode (Sonnet). French tweets are top priority. Targets rising tweets and big accounts (10k+ followers). Auto-likes before replying. 20-30% are quote tweets. Replies match the language of the original tweet. Strict recency: today only, last 30 min preferred.
 
 **Engage bot** - Visits 3-5 target AI accounts every 25 minutes and likes their latest tweet. ~25 accounts including AI companies, leaders, influencers, and French tech. Builds reciprocity.
 
@@ -33,6 +33,9 @@ Engage bot: every 25 min. Notify bot: every 20 min.
 ## Growth features
 
 - **Hot takes** - Engagement bait posts (unpopular opinions, rankings, predictions) with zero web search latency
+- **French priority** - Searches French AI tweets first ("IA", "intelligence artificielle")
+- **High volume replies** - 8-10 replies per cycle in full troll/comedy mode
+- **Strict recency** - All content must be from today, last 30 min preferred
 - **Rising tweet targeting** - Replies to tweets posted 10-30 min ago for top-of-thread placement
 - **Big account filter** - Prioritizes 10k+ follower accounts for replies
 - **Quote tweets** - 20-30% of replies visible on own timeline
