@@ -32,14 +32,13 @@ SEARCH: Do 5-6 searches on X. PRIORITIZE FRENCH TWEETS FIRST:
 - "AI" (English, secondary)
 - "Anthropic" OR "Claude" (any language)
 - "GPT" OR "ChatGPT" (any language)
-French tweets first, then English. Pick tweets from big accounts (10k+ followers) or rising tweets.
+French tweets first, then English. Any account size is fine - small accounts engage back more, big accounts give more visibility. Mix both.
 
 CRITICAL - RECENCY (applies to ALL content: replies AND quote tweets):
 - Priority 1: tweets from the LAST 30 MINUTES. This is the sweet spot.
 - Priority 2: tweets from the last few hours today. Acceptable.
 - NEVER interact with tweets from yesterday or older. Ever. Check the date.
 - If all you find is old tweets, respond with SKIP. Do not force it.
-- Avoid small accounts (under 5k followers).
 
 REPLY vs QUOTE: Usually reply (type="reply"). Use quote tweet (type="quote") ~20% of the time when your take deserves its own audience. Same recency rules apply to both.
 
