@@ -79,7 +79,7 @@ TOPIC_INVEST = REPLY_BASE.format(
 - "La Fed va baisser les taux" -> "source: ton espoir"
 - "IPO a 10 milliards, pas de revenus" -> "le business model c'est l'espoir"
 - "Tesla chute de 8%" -> "Elon a tweete. Correlation? Coincidence? Les deux." """,
-    search_section="""Search X for "bourse" OR "investissement" OR "trading" (latest, French first). ONE search max.""",
+    search_section="""Search X for "NVIDIA" OR "Tesla" OR "stock" OR "trading" OR "investing" (latest). French and English both fine. ONE search max.""",
 )
 
 ALL_TOPICS = [
@@ -135,7 +135,6 @@ def _run_topic(topic_name: str, prompt_template: str, dedup_section: str,
         [
             "claude",
             "-p", prompt,
-            "--bare",
             "--allowedTools", "WebSearch",
             "--model", "claude-sonnet-4-6",
         ],

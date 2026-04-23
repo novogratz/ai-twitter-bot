@@ -8,7 +8,7 @@ The bot runs 4 autonomous systems:
 
 **Post bot** - Finds the freshest IA/Crypto/Bourse news via web search (Opus) and writes sharp French tweets (280 chars max). ~20% of posts are hot takes (Sonnet, no web search) covering all 3 topics. Posts threads for big stories. All posts in French.
 
-**Reply bot** - Drops 30-36 hilarious troll replies per cycle (Sonnet). 3x volume across IA + Crypto + Investissement. French Twitter is #1 priority. FULL TROLL MODE. Any account size. Auto-likes before replying. 20-30% are quote tweets (always in French). STRICT recency: last 30 min preferred, today only, NEVER older.
+**Reply bot** - 3 parallel agents (IA, Crypto, Invest), 3-4 replies each (~10 total). Runs every 1-3 min. FULL TROLL MODE. French first. Any account size. Auto-likes before replying. 20-30% quote tweets (French). STRICT recency: last 30 min preferred, today only, NEVER older.
 
 **Engage bot** - Visits 3-5 target accounts every 25 minutes and likes their latest tweet. ~40 accounts across AI, crypto, finance, and French tech. Builds reciprocity.
 
@@ -24,9 +24,9 @@ Posts:
 - Wind down (7pm-11pm): every 40 min
 
 Replies adapt to peak hours:
-- Peak (6-9am, 2-5pm EST, 2-4am for France): every 3-5 min
-- Default: every 8 min
-- Late night: every 15-20 min
+- Peak (6-9am, 2-5pm EST, 2-4am for France): every 1-2 min
+- Default: every 2-3 min
+- Late night: every 8-12 min
 
 Engage bot: every 25 min. Notify bot: every 20 min.
 
@@ -34,7 +34,7 @@ Engage bot: every 25 min. Notify bot: every 20 min.
 
 - **3 topics** - IA, Crypto, Investissement/Bourse. All covered in news, replies, and hot takes
 - **Full French mode** - All posts, hot takes, and quote tweets in French. Replies match original tweet language
-- **3x reply volume** - 30-36 replies per cycle (~10-12 per topic) in FULL TROLL MODE
+- **Fast reply cycles** - 3 parallel agents, ~10 replies per cycle, every 1-3 min. FULL TROLL MODE
 - **Hot takes** - Engagement bait in French across all 3 topics with zero web search latency
 - **French priority** - French Twitter is #1 priority, any topic. Searches "IA", "tech", "startup", "dev" first
 - **High volume replies** - 10-12 replies per cycle in full troll/comedy mode
