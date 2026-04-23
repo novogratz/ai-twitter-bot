@@ -3,7 +3,8 @@ import os
 import time
 import traceback
 from .reply_agent import generate_replies
-from .twitter_client import reply_to_tweet, refresh_feed
+from .twitter_client import reply_to_tweet, quote_tweet, refresh_feed
+from .history import get_recent_tweets
 
 REPLIED_FILE = os.path.join(os.path.dirname(__file__), "..", "replied_tweets.json")
 
@@ -25,10 +26,14 @@ def save_replied(urls: set):
 
 
 def run_reply_cycle():
-    """Search for popular AI tweets and reply to 2-3 with troll one-liners."""
+    """Search for popular AI tweets and reply with a sharp one-liner."""
     refresh_feed()
     print("[REPLY] Scanning for tweets to reply to...")
-    replies = generate_replies()
+
+    # Cross-dedup: pass recent post topics so replies don't overlap
+    recent_posts = get_recent_tweets(hours=6)
+    replies = generate_replies(recent_topics=recent_posts if recent_posts else None)
+
     if replies is None:
         print("[REPLY] No good tweets found - skipping this cycle.")
         return
@@ -38,6 +43,7 @@ def run_reply_cycle():
 
     for data in replies:
         url = data["tweet_url"]
+        action_type = data.get("type", "reply")
 
         # Skip tweets we already replied to
         if url in replied:
@@ -45,22 +51,25 @@ def run_reply_cycle():
             continue
 
         print(f"[REPLY] Target: {url}")
-        print(f"[REPLY] Reply ({len(data['reply'])} chars): {data['reply']}")
+        print(f"[REPLY] {action_type.upper()} ({len(data['reply'])} chars): {data['reply']}")
 
         try:
-            reply_to_tweet(url, data["reply"])
+            if action_type == "quote":
+                quote_tweet(url, data["reply"])
+            else:
+                reply_to_tweet(url, data["reply"])
             replied.add(url)
             posted_count += 1
             # Wait between replies so browser can catch up
             if posted_count < len(replies):
-                print("[REPLY] Waiting 15 seconds before next reply...")
+                print("[REPLY] Waiting 15 seconds before next action...")
                 time.sleep(15)
         except Exception:
-            print(f"[REPLY] Failed to reply to {url}:")
+            print(f"[REPLY] Failed to {action_type} {url}:")
             traceback.print_exc()
 
     save_replied(replied)
-    print(f"[REPLY] Posted {posted_count} replies this cycle.")
+    print(f"[REPLY] Posted {posted_count} replies/quotes this cycle.")
 
 
 def safe_run_reply_cycle():

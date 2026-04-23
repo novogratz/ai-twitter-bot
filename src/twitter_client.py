@@ -54,13 +54,32 @@ def refresh_feed():
     close_front_tab()
 
 
+def like_tweet():
+    """Like the currently open tweet using the 'l' keyboard shortcut."""
+    like_script = '''
+    tell application "System Events"
+        keystroke "l"
+    end tell
+    '''
+    print("Liking tweet...")
+    try:
+        subprocess.run(["osascript", "-e", like_script], check=True)
+        time.sleep(1)
+        print("Tweet liked!")
+    except Exception:
+        print("Failed to like tweet, continuing...")
+
+
 def reply_to_tweet(tweet_url: str, reply_text: str):
-    """Open a tweet, click reply, type the reply, and submit via AppleScript."""
+    """Open a tweet, like it, click reply, type the reply, and submit."""
     print(f"Opening tweet: {tweet_url}")
     webbrowser.open(tweet_url)
 
     # Wait for tweet page to load
     time.sleep(6)
+
+    # Like the tweet first (double notification for the author)
+    like_tweet()
 
     # Click the reply box using the reply input area on the tweet page
     click_reply_script = '''
@@ -94,4 +113,26 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     subprocess.run(["osascript", "-e", submit_script], check=True)
     time.sleep(2)
     print("Reply posted!")
+    close_front_tab()
+
+
+def quote_tweet(tweet_url: str, comment: str):
+    """Quote tweet by posting a new tweet with the tweet URL embedded."""
+    # Twitter auto-embeds URLs as quote tweets
+    full_text = f"{comment}\n\n{tweet_url}"
+    url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": full_text})
+    print(f"Quote tweeting: {tweet_url}")
+    webbrowser.open(url)
+
+    time.sleep(4)
+
+    script = '''
+    tell application "System Events"
+        keystroke return using command down
+    end tell
+    '''
+    print("Posting quote tweet...")
+    subprocess.run(["osascript", "-e", script], check=True)
+    time.sleep(2)
+    print("Quote tweet posted!")
     close_front_tab()
