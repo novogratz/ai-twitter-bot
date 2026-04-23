@@ -75,7 +75,7 @@ Engage bot: every 25 min. Notify bot: every 20 min. Both 24/7.
 ## Key design notes
 
 - No API keys needed (no Twitter API, no Anthropic API).
-- All posts in French, 280 chars max. Quote tweets always in French. ALL replies in French, even to English tweets.
+- All posts in French, 280 chars max. Replies match the language of the tweet (French reply to French tweet, English reply to English tweet).
 - 3 topics: IA, Crypto, Investissement/Bourse. All covered all the time.
 - News and hot takes 50/50. Hot takes fill gaps when no news.
 - News agent: Opus (deep analysis, better research). Reply + hot take agents: Sonnet.

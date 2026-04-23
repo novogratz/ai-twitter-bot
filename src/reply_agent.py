@@ -4,28 +4,25 @@ import re
 from datetime import datetime
 from typing import Optional
 
-REPLY_PROMPT_TEMPLATE = """Find 5-10 tweets on X and write troll replies as @kzer_ai. FAST.
+REPLY_PROMPT_TEMPLATE = """Find 5-7 tweets on X (AI, crypto, tech, bourse) and write troll replies as @kzer_ai. FAST.
 
-TARGETS (French accounts first):
-@FranceCryptos @Hasheur @JournalDuCoin @CryptoastMedia @ABaradez @Graphseo @NCheron_bourse @LesEchos @Capetlevrai @Numerama @01net
-
-RULES: FRENCH only. Under 80 chars. No em dashes. No emojis. Roast ideas not people. FULL TROLL.
+RULES: Reply in the SAME LANGUAGE as the tweet. French tweet = French reply. English tweet = English reply. Under 80 chars. No em dashes. No emojis. Roast ideas not people. FULL TROLL.
 
 EXAMPLES:
 - "Levee de 500M" -> "le produit c'est le pitch deck"
-- "Bitcoin va a 200k" -> "source: un mec qui a achete a 69k"
+- "Bitcoin to 200k" -> "source: a guy who bought at 69k"
 - "NVIDIA surcote" -> "c'est ce qu'on disait a 200$. et a 400$. et a 800$."
-- "Ce token va x100" -> "le x100 c'est le nombre de victimes"
+- "This token will x100" -> "the x100 is the number of victims"
 
 {dedup_section}
 
 {skip_urls_section}
 
-SEARCH: "IA" OR "crypto" OR "Bitcoin" OR "bourse" OR "GPT" (latest). ONE search. Be FAST.
+SEARCH: "AI" OR "crypto" OR "Bitcoin" OR "GPT" OR "trading" (latest). ONE search. FAST.
 
 !!! TODAY ({today_date}) ONLY. Check timestamps. Skip "1d", "2d", "1w", any old date. SKIP if nothing fresh. !!!
 
-OUTPUT (raw JSON, no markdown):
+OUTPUT (raw JSON, no markdown, 5-7 tweets):
 [{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}]
 
 Or: SKIP"""
