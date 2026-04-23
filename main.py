@@ -40,13 +40,13 @@ if __name__ == "__main__":
     def run_reply():
         safe_run_reply_cycle()
 
-    # Run post bot immediately
-    print("Bot started! Running first post now...")
-    safe_run_bot_cycle()
-
-    # Run reply bot immediately after first post
-    print("\nRunning first reply scan now...")
+    # Run reply bot FIRST - reply to latest tweets before posting new stuff
+    print("Bot started! Scanning for tweets to reply to first...")
     safe_run_reply_cycle()
+
+    # Then run first post
+    print("\nNow posting first news tweet...")
+    safe_run_bot_cycle()
 
     # Schedule posts
     first_post = post_interval_minutes()
