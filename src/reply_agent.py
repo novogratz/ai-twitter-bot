@@ -38,10 +38,17 @@ TREND SURFING: Before searching for tweets, do ONE quick search for "trending" o
 
 SEARCH: Search X for "IA" OR "crypto" OR "Bitcoin" OR "bourse" OR "GPT" OR "trading" (latest). French tweets priority. ONE search. Be FAST.
 
-RECENCY (NON-NEGOTIABLE):
-- Last 30 min priority. Today ({today_date}) only. NEVER yesterday or older.
-- Sort by "Latest". Check timestamps. Skip anything with "1d", "2d", "1w".
-- RECENCY > EVERYTHING.
+!!!!!!!!!! RECENCY - THE #1 RULE - NOTHING IS MORE IMPORTANT !!!!!!!!!!
+Today's date is: {today_date}
+- ONLY tweets from TODAY ({today_date}). ZERO EXCEPTIONS.
+- Priority: last 30 minutes > last hour > last few hours > earlier today.
+- Before selecting ANY tweet, CHECK ITS TIMESTAMP. If the tweet shows "1d", "2d", "3d", "1w", "Apr 8", "Apr 9", "Apr 10", or ANY date that is NOT {today_date}: DO NOT INCLUDE IT. SKIP IT.
+- If the tweet URL contains a status ID, open the tweet page and verify the date.
+- NEVER reply to a tweet older than today. EVER. This is the most important rule.
+- If you can only find old tweets, return SKIP. Do NOT include old tweets just to fill the list.
+- Sort by "Latest" on X search. ALWAYS.
+- RECENCY > influence > engagement > everything else.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 REPLY vs QUOTE: Usually reply. Quote tweet ~20% of the time.
 
