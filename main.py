@@ -22,6 +22,29 @@ def post_interval_minutes() -> int:
         return 40
 
 
+def reply_interval_minutes() -> int:
+    """Return reply interval based on current EST hour.
+    More aggressive during peak engagement windows."""
+    hour = datetime.now(ZoneInfo("America/New_York")).hour
+    if 2 <= hour < 4:
+        # 2-4am EST = 8-10am France. French audience waking up.
+        return random.randint(3, 5)
+    elif 6 <= hour < 9:
+        # US morning rush
+        return random.randint(3, 5)
+    elif 14 <= hour < 17:
+        # US afternoon peak
+        return random.randint(3, 5)
+    elif 23 <= hour or hour < 2:
+        # Late night, slow down
+        return random.randint(15, 20)
+    elif 4 <= hour < 6:
+        # Early morning gap
+        return random.randint(10, 15)
+    else:
+        return 8
+
+
 if __name__ == "__main__":
     scheduler = BlockingScheduler()
 
@@ -37,8 +60,15 @@ if __name__ == "__main__":
         )
 
     # --- REPLY BOT ---
-    def run_reply():
+    def reschedule_and_reply():
         safe_run_reply_cycle()
+        next_min = reply_interval_minutes()
+        hour = datetime.now(ZoneInfo("America/New_York")).hour
+        print(f"[REPLY][EST {hour}:xx] Next reply scan in {next_min} minutes.")
+        scheduler.reschedule_job(
+            "reply_job",
+            trigger=IntervalTrigger(minutes=next_min),
+        )
 
     # Run reply bot FIRST - reply to latest tweets before posting new stuff
     print("Bot started! Scanning for tweets to reply to first...")
@@ -57,11 +87,12 @@ if __name__ == "__main__":
         id="post_job",
     )
 
-    # Schedule replies every 8 minutes
-    print("Reply bot scanning every 8 minutes.\n")
+    # Schedule replies with dynamic intervals
+    first_reply = reply_interval_minutes()
+    print(f"Reply bot: next scan in {first_reply} minutes.\n")
     scheduler.add_job(
-        run_reply,
-        trigger=IntervalTrigger(minutes=8),
+        reschedule_and_reply,
+        trigger=IntervalTrigger(minutes=first_reply),
         id="reply_job",
     )
 
