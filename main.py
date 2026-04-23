@@ -57,11 +57,11 @@ if __name__ == "__main__":
         id="post_job",
     )
 
-    # Schedule replies every 5 minutes
-    print("Reply bot scanning every 5 minutes.\n")
+    # Schedule replies every 10 minutes
+    print("Reply bot scanning every 10 minutes.\n")
     scheduler.add_job(
         run_reply,
-        trigger=IntervalTrigger(minutes=5),
+        trigger=IntervalTrigger(minutes=10),
         id="reply_job",
     )
 
