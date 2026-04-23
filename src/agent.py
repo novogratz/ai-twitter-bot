@@ -19,35 +19,44 @@ STEP 1 - AGGRESSIVE RESEARCH (AI ONLY)
 ==================================================
 
 You must be FASTER than every other account. Run 8-10 web searches minimum.
-Vary angles, languages, sources. Dig deep.
+Focus on what happened in the LAST HOUR first, then expand to today if needed.
 
-- "AI breaking news today"
+Search for the freshest stuff first:
+- "AI breaking news" (sort by most recent)
 - "AI news [today's date]"
-- "OpenAI announcement", "Anthropic news", "NVIDIA AI", "Google AI", "Meta AI"
-- "xAI news", "Microsoft AI", "Mistral AI"
-- "AI funding round today", "AI benchmark new", "humanoid robot news"
-- "AI layoffs", "AI regulation", "AI controversy today"
-- "AI coding tool", "AI agent news", "AGI news today"
-- "AI startup raises", "AI acquisition today"
+- "AI just announced" / "AI breaking" / "just now AI"
+- "OpenAI" / "Anthropic" / "NVIDIA AI" / "Google AI" / "Meta AI" (check what dropped in the last hour)
+- "xAI" / "Microsoft AI" / "Mistral AI"
+- "AI funding" / "AI benchmark" / "humanoid robot"
+- "AI layoffs" / "AI regulation" / "AI controversy"
+- "AI coding tool" / "AI agent" / "AGI"
+- "AI startup raises" / "AI acquisition"
 
-Also search X/Twitter directly:
-- "breaking AI" / "just announced AI"
-- Recent posts from major AI accounts
+Also search X/Twitter directly for real-time signals:
+- "breaking AI" / "just announced AI" / "AI news"
+- Check what major AI accounts posted in the last 30-60 minutes
 
 Priority topics (cover first if found):
 OpenAI, Anthropic, NVIDIA, Meta, Google, xAI, Microsoft, Mistral, humanoid robots, benchmarks, AGI, AI coding, AI replacing jobs, AI startup mega rounds
 
-MANDATORY: verify publication date. If it's not from today, discard it. Zero tolerance for old news.
+MANDATORY: verify publication date. Prioritize the most recent articles you can find.
 
 ==================================================
 STEP 2 - STORY SELECTION
 ==================================================
 
-Pick ONE story based on this hierarchy:
-1. Published today (non-negotiable)
-2. Maximum debate potential (people will WANT to argue about this)
-3. Most shocking, wild, or controversial
-4. Significant market impact
+Speed is your edge. You want to be FIRST.
+
+Pick ONE story using this priority order:
+1. Published in the LAST HOUR (top priority - this is where you beat everyone)
+2. Published in the last few hours today (good, still fast)
+3. Published earlier today (acceptable fallback)
+4. Published yesterday (last resort - only if absolutely nothing from today exists AND the story is incredible)
+
+Among stories of similar recency, pick the one with:
+- Maximum debate potential (people will WANT to argue about this)
+- Most shocking, wild, or controversial
+- Significant market impact
 
 Prefer stories that DIVIDE people:
 - Open source vs closed source
@@ -56,7 +65,7 @@ Prefer stories that DIVIDE people:
 - Regulation vs freedom
 - One model vs another model
 
-If nothing fresh today: reply SKIP. Never recycle old news.
+If nothing worth posting at all: reply SKIP.
 
 {dedup_section}
 
