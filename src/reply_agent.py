@@ -23,6 +23,8 @@ NEVER: generic reactions ("lol", "based"), forced catchphrases ("well well well"
 
 {dedup_section}
 
+{skip_urls_section}
+
 SEARCH: Do 3-4 quick searches on X for "AI", "OpenAI", "Anthropic", "IA" (French). Pick tweets from big accounts (10k+ followers) or rising tweets (posted <30 min ago, 20-100 likes). Avoid small accounts and tweets older than 3 hours.
 
 REPLY vs QUOTE: Usually reply (type="reply"). Use quote tweet (type="quote") ~20% of the time when your take deserves its own audience.
@@ -33,18 +35,28 @@ OUTPUT (raw JSON only, no markdown, 2-3 tweets):
 Or: SKIP"""
 
 
-def generate_replies(recent_topics: Optional[list[str]] = None) -> Optional[list[dict]]:
+def generate_replies(recent_topics: Optional[list[str]] = None,
+                     already_replied: Optional[set] = None) -> Optional[list[dict]]:
     """Search for popular AI tweets and generate a funny reply.
     Returns list of dicts with 'tweet_url', 'reply', and 'type', or None."""
 
     dedup_section = ""
     if recent_topics:
-        # Only pass last 3 topics to keep prompt short
         short_topics = recent_topics[-3:]
         topics_list = "\n".join(f"- {t[:80]}" for t in short_topics)
         dedup_section = f"AVOID these topics (already posted):\n{topics_list}"
 
-    prompt = REPLY_PROMPT_TEMPLATE.format(dedup_section=dedup_section)
+    skip_urls_section = ""
+    if already_replied:
+        # Pass the last 20 replied URLs so the agent skips them
+        recent_urls = list(already_replied)[-20:]
+        urls_list = "\n".join(f"- {u}" for u in recent_urls)
+        skip_urls_section = f"DO NOT reply to these tweets (already replied):\n{urls_list}"
+
+    prompt = REPLY_PROMPT_TEMPLATE.format(
+        dedup_section=dedup_section,
+        skip_urls_section=skip_urls_section,
+    )
 
     result = subprocess.run(
         [

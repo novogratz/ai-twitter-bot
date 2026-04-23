@@ -30,15 +30,19 @@ def run_reply_cycle():
     refresh_feed()
     print("[REPLY] Scanning for tweets to reply to...")
 
+    # Load already-replied URLs so the agent avoids them
+    replied = load_replied()
+
     # Cross-dedup: pass recent post topics so replies don't overlap
     recent_posts = get_recent_tweets(hours=6)
-    replies = generate_replies(recent_topics=recent_posts if recent_posts else None)
+    replies = generate_replies(
+        recent_topics=recent_posts if recent_posts else None,
+        already_replied=replied,
+    )
 
     if replies is None:
         print("[REPLY] No good tweets found - skipping this cycle.")
         return
-
-    replied = load_replied()
     posted_count = 0
 
     for data in replies:
