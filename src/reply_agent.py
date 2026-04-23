@@ -2,11 +2,11 @@ import subprocess
 import json
 from typing import Optional
 
-REPLY_PROMPT_TEMPLATE = """Find 4-5 popular AI tweets on X and write short, funny replies as @kzer_ai.
+REPLY_PROMPT_TEMPLATE = """Find 8-10 popular AI tweets on X and write short, HILARIOUS replies as @kzer_ai. GO HARD.
 
 RULES: Reply in the SAME LANGUAGE as the tweet. Under 80 chars. No em dashes. No emojis. Never be mean to people, roast ideas only.
 
-STYLE: Continue the story, play a character, or say the obvious truth nobody said. Like improv comedy: "yes, and..."
+STYLE: GO FULL TROLL MODE. Be the funniest person on the internet today. Continue the story, play a character, say the thing everyone is thinking but nobody has the guts to say. Like a standup comedian doing crowd work. Make people spit out their coffee.
 
 BEST EXAMPLE (70+ likes):
 Tweet: "Je vois pas l'interet de payer un dev 80k en 2026" - Gaetan, alternant, 14 prompts pour centrer un bouton
@@ -25,7 +25,14 @@ NEVER: generic reactions ("lol", "based"), forced catchphrases ("well well well"
 
 {skip_urls_section}
 
-SEARCH: Do 3-4 quick searches on X for "AI", "OpenAI", "Anthropic", "IA" (French). Pick tweets from big accounts (10k+ followers) or rising tweets.
+SEARCH: Do 5-6 searches on X. PRIORITIZE FRENCH TWEETS FIRST:
+- "IA" (French AI tweets - TOP PRIORITY)
+- "intelligence artificielle" (French)
+- "OpenAI" (look for French accounts tweeting about it)
+- "AI" (English, secondary)
+- "Anthropic" OR "Claude" (any language)
+- "GPT" OR "ChatGPT" (any language)
+French tweets first, then English. Pick tweets from big accounts (10k+ followers) or rising tweets.
 
 CRITICAL - RECENCY (applies to ALL content: replies AND quote tweets):
 - Priority 1: tweets from the LAST 30 MINUTES. This is the sweet spot.
@@ -36,7 +43,7 @@ CRITICAL - RECENCY (applies to ALL content: replies AND quote tweets):
 
 REPLY vs QUOTE: Usually reply (type="reply"). Use quote tweet (type="quote") ~20% of the time when your take deserves its own audience. Same recency rules apply to both.
 
-OUTPUT (raw JSON only, no markdown, 4-5 tweets):
+OUTPUT (raw JSON only, no markdown, 8-10 tweets, go wild):
 [{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}, {{"tweet_url": "https://x.com/user/status/456", "reply": "another reply", "type": "reply"}}]
 
 Or: SKIP"""
