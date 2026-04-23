@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from typing import Optional
 
-REPLY_BASE = """Find 10-12 tweets on X about {topic_label} and write HILARIOUS troll replies as @kzer_ai. GO HARD. Be FAST. MAKE THEM LAUGH SO HARD THEY SCREENSHOT YOUR REPLY.
+REPLY_BASE = """Find 3-4 tweets on X about {topic_label} and write HILARIOUS troll replies as @kzer_ai. GO HARD. Be FAST. MAKE THEM LAUGH SO HARD THEY SCREENSHOT YOUR REPLY.
 
 RULES: For replies (type="reply"), reply in the SAME LANGUAGE as the tweet. For quote tweets (type="quote"), ALWAYS write in FRENCH even if the original tweet is in English. Under 80 chars. No em dashes. No emojis. Roast ideas not people.
 
@@ -40,7 +40,7 @@ CRITICAL RECENCY RULES (NON-NEGOTIABLE):
 
 REPLY vs QUOTE: Usually reply (type="reply"). Quote tweet (type="quote") ~20% of the time.
 
-OUTPUT (raw JSON only, no markdown, 10-12 tweets):
+OUTPUT (raw JSON only, no markdown, 3-4 tweets):
 [{{{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}}}, {{{{"tweet_url": "https://x.com/user/status/456", "reply": "another reply", "type": "quote"}}}}]
 
 Or: SKIP"""
