@@ -25,26 +25,8 @@ def post_interval_minutes() -> int:
 
 
 def reply_interval_minutes() -> int:
-    """Return reply interval based on current EST hour.
-    Smaller batches, more frequent cycles."""
-    hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 2 <= hour < 4:
-        # 2-4am EST = 8-10am France. French audience waking up.
-        return random.randint(1, 2)
-    elif 6 <= hour < 9:
-        # US morning rush
-        return random.randint(1, 2)
-    elif 14 <= hour < 17:
-        # US afternoon peak
-        return random.randint(1, 2)
-    elif 23 <= hour or hour < 2:
-        # Late night, slow down
-        return random.randint(8, 12)
-    elif 4 <= hour < 6:
-        # Early morning gap
-        return random.randint(5, 8)
-    else:
-        return random.randint(2, 3)
+    """Fixed 2 min interval for replies."""
+    return 2
 
 
 if __name__ == "__main__":
