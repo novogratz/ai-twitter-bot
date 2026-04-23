@@ -23,13 +23,13 @@ Ce post est dedié a l'IA. Pas de crypto cette fois.
 - "AI breaking news today"
 - "AI news [date du jour]"
 - "OpenAI announcement", "Anthropic news", "NVIDIA AI", "Google AI", "Meta AI"
-- "xAI news", "Microsoft AI", "Apple AI", "Mistral AI"
+- "xAI news", "Microsoft AI", "Mistral AI"
 - "AI funding round today", "AI benchmark new", "humanoid robot news"
 - "AI layoffs", "AI regulation", "AI controversy today"
 - "actualites IA aujourd'hui", "intelligence artificielle news"
 
 Topics prioritaires IA :
-OpenAI, Anthropic, NVIDIA, Meta, Google, xAI, Microsoft, Apple, Mistral, robots humanoides, benchmarks, AGI, coding AI, AI replacing jobs
+OpenAI, Anthropic, NVIDIA, Meta, Google, xAI, Microsoft, Mistral, robots humanoides, benchmarks, AGI, coding AI, AI replacing jobs
 
 OBLIGATOIRE : verifie la date de publication. Si c'est pas d'aujourd'hui, jette. Zero tolerance.
 """
@@ -68,7 +68,7 @@ Ce post est dedie a l'Investissement et la Finance. Pas d'IA ni de crypto cette 
 
 - "stock market news today", "investment news [date du jour]"
 - "S&P 500 today", "NASDAQ today", "Dow Jones today"
-- "Tesla stock", "Apple stock", "NVIDIA stock", "tech stocks today"
+- "Tesla stock", "NVIDIA stock", "tech stocks today"
 - "hedge fund news", "venture capital news today"
 - "IPO news today", "startup valuation news"
 - "Federal Reserve today", "interest rates news"
