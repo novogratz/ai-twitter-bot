@@ -1,12 +1,12 @@
 # ai-twitter-bot
 
-An autonomous AI news bot for X/Twitter, powered by Claude Code. It scouts the freshest and most wild AI stories, then posts sharp, funny, occasionally savage takes as @kzer_ai.
+Le compte IA et Crypto numero 1 en francais sur X/Twitter. Tranchant, drole, sans filtre. Propulse par Claude Code.
 
-## How it works
+## Comment ca marche
 
-On each scheduled run, the bot invokes the `claude` CLI with web search enabled. Claude finds the best AI news, picks the most shocking or juicy story, and writes an English tweet (280 chars max) with attitude. No API keys of any kind required. Posting happens via your browser + AppleScript.
+A chaque cycle, le bot invoque le CLI `claude` avec la recherche web activee. Claude trouve la news IA ou Crypto la plus fraiche du jour, choisit l'angle le plus savoureux, et redige un tweet en francais (280 chars max) avec du caractere. Aucune cle API requise - le post se fait via le navigateur + AppleScript.
 
-The bot fires every 35-45 minutes (randomized), only during 6am-11pm EST.
+Le bot poste toutes les 10-15 minutes (aleatoire), uniquement entre 6h et 23h EST.
 
 ## Setup
 
@@ -14,29 +14,29 @@ The bot fires every 35-45 minutes (randomized), only during 6am-11pm EST.
 pip install -r requirements.txt
 ```
 
-Install and authenticate the Claude Code CLI:
+Installe et authentifie le CLI Claude Code :
 
 ```bash
 npm install -g @anthropic-ai/claude-code
 claude login
 ```
 
-That's it. No Twitter API keys, no Anthropic API key, nothing else.
+C'est tout. Pas de cles Twitter, pas de cle Anthropic, rien d'autre.
 
 ## Usage
 
 ```bash
-# Run the bot (posts on a schedule)
+# Lancer le bot (poste en continu)
 python main.py
 
-# Post a single tweet manually
+# Poster un seul tweet manuellement
 python test_tweet.py
 ```
 
-Stop with `Ctrl+C`.
+Stopper avec `Ctrl+C`.
 
-## Requirements
+## Prerequis
 
-- macOS (posting uses AppleScript to auto-click the tweet button)
-- Claude Code CLI installed and authenticated
-- X/Twitter logged in on your default browser
+- macOS (le post utilise AppleScript pour cliquer automatiquement sur le bouton Tweet)
+- CLI Claude Code installe et authentifie
+- X/Twitter connecte sur ton navigateur par defaut
