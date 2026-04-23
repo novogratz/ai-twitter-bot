@@ -18,9 +18,9 @@ EXAMPLES:
 
 {skip_urls_section}
 
-SEARCH: "AI" OR "crypto" OR "Bitcoin" OR "GPT" OR "trading" (latest). ONE search. FAST.
+SEARCH: Search for "site:x.com AI OR crypto OR Bitcoin OR GPT {today_date}" to find today's tweets. If no results, try "site:x.com AI crypto Bitcoin" and pick the most recent ones. ONE search max.
 
-!!! TODAY ({today_date}) ONLY. Check timestamps. Skip "1d", "2d", "1w", any old date. SKIP if nothing fresh. !!!
+RECENCY: Today ({today_date}) only. Accept tweets from the last few hours since web search has indexing delay. Skip anything showing "1d", "2d", "1w" or dates before {today_date}. If truly nothing from today, return SKIP.
 
 OUTPUT (raw JSON, no markdown, 5-7 tweets):
 [{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}]
