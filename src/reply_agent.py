@@ -2,7 +2,7 @@ import subprocess
 import json
 from typing import Optional
 
-REPLY_PROMPT_TEMPLATE = """Find 8-10 popular AI tweets on X and write short, HILARIOUS replies as @kzer_ai. GO HARD.
+REPLY_PROMPT_TEMPLATE = """Find 5-6 popular AI tweets on X and write short, HILARIOUS replies as @kzer_ai. GO HARD. Be FAST.
 
 RULES: Reply in the SAME LANGUAGE as the tweet. Under 80 chars. No em dashes. No emojis. Never be mean to people, roast ideas only.
 
@@ -25,14 +25,10 @@ NEVER: generic reactions ("lol", "based"), forced catchphrases ("well well well"
 
 {skip_urls_section}
 
-SEARCH: Do 5-6 searches on X. PRIORITIZE FRENCH TWEETS FIRST:
-- "IA" (French AI tweets - TOP PRIORITY)
-- "intelligence artificielle" (French)
-- "OpenAI" (look for French accounts tweeting about it)
-- "AI" (English, secondary)
-- "Anthropic" OR "Claude" (any language)
-- "GPT" OR "ChatGPT" (any language)
-French tweets first, then English. Any account size is fine - small accounts engage back more, big accounts give more visibility. Mix both.
+SEARCH: Do 2-3 FAST searches on X. Be quick, don't overthink it:
+- "IA" OR "intelligence artificielle" (French - TOP PRIORITY)
+- "AI" OR "OpenAI" OR "Anthropic" (English)
+French tweets first, then English. Any account size is fine. Be fast.
 
 CRITICAL - RECENCY (applies to ALL content: replies AND quote tweets):
 - Priority 1: tweets from the LAST 30 MINUTES. This is the sweet spot.
@@ -42,7 +38,7 @@ CRITICAL - RECENCY (applies to ALL content: replies AND quote tweets):
 
 REPLY vs QUOTE: Usually reply (type="reply"). Use quote tweet (type="quote") ~20% of the time when your take deserves its own audience. Same recency rules apply to both.
 
-OUTPUT (raw JSON only, no markdown, 8-10 tweets, go wild):
+OUTPUT (raw JSON only, no markdown, 5-6 tweets):
 [{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}, {{"tweet_url": "https://x.com/user/status/456", "reply": "another reply", "type": "reply"}}]
 
 Or: SKIP"""
@@ -71,21 +67,24 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
         skip_urls_section=skip_urls_section,
     )
 
-    result = subprocess.run(
+    print("[REPLY] Running Claude CLI (searching X)...")
+    proc = subprocess.Popen(
         [
             "claude",
             "-p", prompt,
             "--allowedTools", "WebSearch",
             "--model", "claude-sonnet-4-6",
         ],
-        capture_output=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
         text=True,
     )
-    if result.returncode != 0:
-        print(f"[REPLY] CLI stderr: {result.stderr}")
-        raise RuntimeError(f"Reply agent CLI failed (exit {result.returncode}): {result.stderr}")
+    stdout, stderr = proc.communicate()
+    if proc.returncode != 0:
+        print(f"[REPLY] CLI stderr: {stderr}")
+        raise RuntimeError(f"Reply agent CLI failed (exit {proc.returncode}): {stderr}")
 
-    output = result.stdout.strip()
+    output = stdout.strip()
     if not output or output.upper() == "SKIP":
         return None
 
