@@ -66,11 +66,11 @@ Respond with a JSON array. Nothing else. Format:
 ]
 
 Include 2-3 tweets. Each tweet_url must be a real URL you found.
-Each reply must be a short one-liner under 100 characters.
+Each reply must be a short one-liner under 100 characters, in ENGLISH.
 
 If you cannot find any good tweets, respond with: SKIP
 
-Output ONLY the JSON array or SKIP. Nothing else."""
+Output ONLY the raw JSON array or SKIP. Do NOT wrap it in markdown code blocks. No ```json. Just the raw JSON."""
 
 
 def generate_replies() -> Optional[list[dict]]:
@@ -94,12 +94,22 @@ def generate_replies() -> Optional[list[dict]]:
     if not output or output.upper() == "SKIP":
         return None
 
+    # Strip markdown code blocks if the agent wrapped the JSON
+    cleaned = output
+    if cleaned.startswith("```"):
+        # Remove opening ```json or ``` line
+        lines = cleaned.split("\n")
+        lines = lines[1:]  # drop first line (```json)
+        if lines and lines[-1].strip() == "```":
+            lines = lines[:-1]  # drop last line (```)
+        cleaned = "\n".join(lines).strip()
+
     try:
-        data = json.loads(output)
+        data = json.loads(cleaned)
         if isinstance(data, list) and len(data) > 0:
             valid = [d for d in data if "tweet_url" in d and "reply" in d]
             return valid if valid else None
-        print(f"[REPLY] Invalid JSON structure: {output}")
+        print(f"[REPLY] Invalid JSON structure: {cleaned}")
         return None
     except json.JSONDecodeError:
         print(f"[REPLY] Non-JSON output: {output}")
