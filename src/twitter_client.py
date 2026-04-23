@@ -62,17 +62,13 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     subprocess.run(["osascript", "-e", type_script], check=True)
     time.sleep(2)
 
-    # Click the Reply button using JavaScript in the browser
-    # This is more reliable than Cmd+Enter which can save as draft
-    click_post_script = '''
+    # Submit with Cmd+Enter
+    submit_script = '''
     tell application "System Events"
-        -- Use Tab to reach the Reply button, then Enter to click it
-        keystroke tab
-        delay 0.3
-        keystroke return
+        keystroke return using command down
     end tell
     '''
-    print("Clicking Reply button...")
-    subprocess.run(["osascript", "-e", click_post_script], check=True)
-    time.sleep(3)
+    print("Submitting reply...")
+    subprocess.run(["osascript", "-e", submit_script], check=True)
+    time.sleep(2)
     print("Reply posted!")
