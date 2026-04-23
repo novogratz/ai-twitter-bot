@@ -1,14 +1,20 @@
 import traceback
 from .agent import generate_tweet
 from .twitter_client import post_tweet
-from .history import save_tweet, get_last_topic
+from .history import save_tweet, get_next_topic
+
+TOPIC_LABELS = {
+    "ai": "IA",
+    "crypto": "Crypto",
+    "invest": "Investissement",
+    "gambling": "Gambling",
+}
 
 
 def run_bot_cycle():
-    """Alternate between AI and Crypto news each cycle."""
-    last = get_last_topic()
-    topic = "ai" if last == "crypto" else "crypto"
-    label = "IA" if topic == "ai" else "Crypto"
+    """Rotate through AI, Crypto, Investment, and Gambling each cycle."""
+    topic = get_next_topic()
+    label = TOPIC_LABELS[topic]
 
     print(f"[{label}] Recherche de news et generation du tweet...")
     tweet = generate_tweet(topic=topic)
