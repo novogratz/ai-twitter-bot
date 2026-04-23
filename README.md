@@ -6,9 +6,9 @@ The sharpest AI account on X/Twitter. Fastest news. Hardest takes. 0% bullshit. 
 
 The bot runs 4 autonomous systems:
 
-**Post bot** - Finds the freshest AI news via web search (Sonnet) and writes sharp English tweets (280 chars max). ~20% of posts are hot takes (Haiku, no web search - instant) for engagement. Posts threads for big stories. Falls back to hot takes when news is slow.
+**Post bot** - Finds the freshest AI news via web search (Opus) and writes sharp English tweets (280 chars max). ~20% of posts are hot takes (Sonnet, no web search) for engagement. Posts threads for big stories. Falls back to hot takes when news is slow.
 
-**Reply bot** - Searches X for popular AI tweets and drops funny, short one-liner replies (Haiku). Targets rising tweets and big accounts (10k+ followers). Auto-likes before replying. 20-30% are quote tweets. Replies match the language of the original tweet.
+**Reply bot** - Searches X for popular AI tweets and drops funny, short one-liner replies (Sonnet). Targets rising tweets and big accounts (10k+ followers). Auto-likes before replying. 20-30% are quote tweets. Replies match the language of the original tweet.
 
 **Engage bot** - Visits 3-5 target AI accounts every 25 minutes and likes their latest tweet. ~25 accounts including AI companies, leaders, influencers, and French tech. Builds reciprocity.
 

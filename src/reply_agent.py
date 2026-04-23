@@ -76,14 +76,24 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
     if not output or output.upper() == "SKIP":
         return None
 
-    # Strip markdown code blocks if the agent wrapped the JSON
+    # Extract JSON from anywhere in the output (model may add reasoning text)
     cleaned = output
-    if cleaned.startswith("```"):
-        lines = cleaned.split("\n")
-        lines = lines[1:]
-        if lines and lines[-1].strip() == "```":
-            lines = lines[:-1]
-        cleaned = "\n".join(lines).strip()
+
+    # Try to find JSON array in markdown code block first
+    if "```" in cleaned:
+        import re
+        code_match = re.search(r"```(?:json)?\s*\n?(.*?)```", cleaned, re.DOTALL)
+        if code_match:
+            cleaned = code_match.group(1).strip()
+
+    # If still not valid JSON, try to find a JSON array anywhere in the text
+    if not cleaned.startswith("["):
+        bracket_start = cleaned.find("[")
+        if bracket_start != -1:
+            # Find the matching closing bracket
+            bracket_end = cleaned.rfind("]")
+            if bracket_end > bracket_start:
+                cleaned = cleaned[bracket_start:bracket_end + 1]
 
     try:
         data = json.loads(cleaned)
@@ -93,5 +103,5 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
         print(f"[REPLY] Invalid JSON structure: {cleaned}")
         return None
     except json.JSONDecodeError:
-        print(f"[REPLY] Non-JSON output: {output}")
+        print(f"[REPLY] Could not parse JSON from output: {output[:200]}...")
         return None
