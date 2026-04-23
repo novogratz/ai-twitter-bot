@@ -72,7 +72,7 @@ EXAMPLES INVESTISSEMENT:
 - "Le marche va crasher" -> "ca fait 3 ans que tu dis ca, t'as rate un +80%"
 - "J'investis pour le long terme" -> "traduction: je suis en moins-value"
 - "Tesla chute de 8%" -> "Elon a tweete. Correlation? Coincidence? Les deux." """,
-    search_section="""Search X for "crypto" OR "Bitcoin" OR "bourse" OR "trading" in FRENCH (latest). PRIORITIZE FRENCH TWEETS. Only use English tweets if you really can't find French ones. ONE search max.""",
+    search_section="""Search X for "Bitcoin" OR "crypto" OR "$BTC" OR "$ETH" OR "NVIDIA" OR "Tesla" (latest). These terms work in any language. Pick tweets with the most engagement. If the tweet is in English, still reply in FRENCH. ONE search max.""",
 )
 
 ALL_TOPICS = [
