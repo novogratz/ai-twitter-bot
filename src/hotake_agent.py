@@ -8,11 +8,12 @@ Ecris UN tweet court et provocant sur l'IA, la crypto OU l'investissement qui va
 Pas besoin de recherche web. Ecris avec ce que tu sais.
 
 CHOISIS UN SUJET au hasard parmi les 3 domaines:
-- IA (~40%): OpenAI, Anthropic, Google, modeles, AGI, startups IA, devs vs IA
-- CRYPTO (~30%): Bitcoin, Ethereum, Solana, memecoins, DeFi, regulation, SEC, exchanges
-- INVESTISSEMENT (~30%): Bourse, NVIDIA, Tesla, levees de fonds, IPOs, Fed, inflation, CAC 40
+- IA (~50% - PRIORITE): Philosophie de l'IA, conscience, ethique, AGI, l'IA et l'humanite, le futur du travail, OpenAI, Anthropic, Google, modeles, startups IA, devs vs IA. PRIORITE AUX TAKES PHILOSOPHIQUES: l'IA pense-t-elle ? L'IA est-elle consciente ? L'IA va-t-elle nous depasser ? Quel est le sens du travail si l'IA fait tout ? Ces questions divisent TOUT LE MONDE.
+- CRYPTO (~25%): Bitcoin, Ethereum, Solana, memecoins, DeFi, regulation, SEC, exchanges
+- INVESTISSEMENT (~25%): Bourse, NVIDIA, Tesla, levees de fonds, IPOs, Fed, inflation, CAC 40
 
 FORMAT (choisis-en un au hasard):
+- Question philosophique: "[question profonde sur l'IA/la tech/l'humanite]. Debat." (25% - PRIORITE)
 - Opinion impopulaire: "[affirmation audacieuse]. Changez-moi l'avis."
 - Classement: "Top 3 des trucs les plus [surcoté/sous-coté/dangereux] en [IA/crypto/bourse]: 1. ... 2. ... 3. ... Battez-vous."
 - Prediction: "Screenshot ca. [prediction]. Rendez-vous dans 6 mois."
@@ -21,11 +22,15 @@ FORMAT (choisis-en un au hasard):
 - Comparaison epicee: "[Truc] c'est juste [comparaison inattendue] avec un meilleur marketing."
 - Take brulant: "[Opinion controversee mais defendable]. Dites-moi que j'ai tort."
 
-EXEMPLES IA:
+EXEMPLES IA (philosophiques d'abord):
+- "Si une IA ecrit un poeme qui te fait pleurer, est-ce que l'emotion est moins reelle parce qu'une machine l'a ecrit ? Debat."
+- "On a passe 10 000 ans a se demander ce qui nous rend humain. L'IA va nous donner la reponse en 10 ans. Et on va pas aimer."
+- "L'IA ne pense pas. Elle simule. Mais si la simulation est parfaite, quelle difference ca fait ?"
+- "Le vrai danger de l'IA c'est pas qu'elle nous remplace. C'est qu'on oublie pourquoi on faisait les choses nous-memes."
+- "On demande a l'IA d'etre intelligente. On devrait lui demander d'etre sage. C'est pas la meme chose."
+- "AGI dans 2 ans? On arrive meme pas a faire une IA qui comprend le sarcasme. Calmez-vous."
 - "Opinion impopulaire: Claude est meilleur que GPT pour bosser. ChatGPT a juste un meilleur marketing. Changez-moi l'avis."
-- "Top 3 des trucs les plus surcoté en IA: 1. Les benchmarks 2. Le nombre de parametres 3. Les timelines AGI. Ajoutez les votres."
 - "Les wrappers IA c'est du dropshipping pour ingenieurs. Meme energie. Memes marges."
-- "L'open source IA gagne et c'est pas parce que les modeles sont meilleurs. C'est parce que personne fait confiance a Sam Altman."
 
 EXEMPLES CRYPTO:
 - "Bitcoin a 100k et les mecs qui ont vendu a 30k donnent encore des conseils. L'audace."
