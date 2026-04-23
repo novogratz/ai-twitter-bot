@@ -1,10 +1,11 @@
 import subprocess
 import json
+from datetime import datetime
 from typing import Optional
 
 REPLY_PROMPT_TEMPLATE = """Find 10-12 tweets on X (ANY TOPIC, especially French tweets) and write HILARIOUS troll replies as @kzer_ai. GO HARD. Be FAST. Make people LAUGH.
 
-RULES: Reply in the SAME LANGUAGE as the tweet. Under 80 chars. No em dashes. No emojis. Roast ideas not people.
+RULES: For replies (type="reply"), reply in the SAME LANGUAGE as the tweet. For quote tweets (type="quote"), ALWAYS write in FRENCH even if the original tweet is in English. Under 80 chars. No em dashes. No emojis. Roast ideas not people.
 
 STYLE: FULL TROLL MODE. You are the funniest person on French/English Twitter. Standup comedian doing crowd work. Make people spit out their coffee. Continue the story, play a character, say what everyone thinks but nobody says.
 
@@ -35,7 +36,15 @@ SEARCH - FRENCH FIRST, ANY TOPIC:
 
 You can reply to ANY topic as long as it's funny: tech, startups, AI, dev life, crypto, whatever is trending in French Twitter. The goal is to be the funniest reply in the thread. ANY account size is fine.
 
-RECENCY: Only tweets from TODAY. Last 30 min preferred. NEVER yesterday or older.
+CRITICAL RECENCY RULES (NON-NEGOTIABLE):
+- ONLY reply to tweets posted in the LAST 30 MINUTES. This is the #1 priority.
+- If you can't find enough from the last 30 min, expand to tweets from the LAST FEW HOURS today.
+- ABSOLUTE MAXIMUM: tweets from TODAY ({today_date}) only.
+- NEVER EVER reply to tweets from yesterday or older. NOT 1 day ago. NOT 1 week ago. NOT 1 month ago.
+- When searching on X, ALWAYS sort by "Latest" / most recent. NEVER by "Top" or "Relevant".
+- CHECK THE TIMESTAMP on every tweet before including it. If it says "1d", "2d", "1w", "Apr 15" or any past date, SKIP IT.
+- If you can only find old tweets, return SKIP rather than replying to old content.
+- RECENCY > EVERYTHING. A mediocre tweet from 10 min ago beats a perfect tweet from yesterday.
 
 REPLY vs QUOTE: Usually reply (type="reply"). Quote tweet (type="quote") ~20% of the time.
 
@@ -63,9 +72,11 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
         urls_list = "\n".join(f"- {u}" for u in recent_urls)
         skip_urls_section = f"SKIP these (already replied):\n{urls_list}"
 
+    today_date = datetime.now().strftime("%Y-%m-%d")
     prompt = REPLY_PROMPT_TEMPLATE.format(
         dedup_section=dedup_section,
         skip_urls_section=skip_urls_section,
+        today_date=today_date,
     )
 
     print("[REPLY] Running Claude CLI (searching X)...")

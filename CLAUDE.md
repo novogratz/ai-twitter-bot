@@ -25,7 +25,7 @@ The bot runs 4 systems: reply bot first (scan for tweets), then post bot, then s
 
 ## Architecture
 
-The bot autonomously tweets AI news, drops funny replies, posts hot takes, likes target accounts, and farms notifications on X/Twitter as @kzer_ai.
+The bot autonomously tweets AI news in French, drops funny replies, posts hot takes in French, likes target accounts, and farms notifications on X/Twitter as @kzer_ai. All original content (news posts, hot takes, quote tweets) is in French. Replies match the language of the original tweet.
 
 ### 4 Bots
 
@@ -39,8 +39,8 @@ The bot autonomously tweets AI news, drops funny replies, posts hot takes, likes
 
 ### Files
 
-- **`src/agent.py`** - News tweet agent. Opus + WebSearch. Multi-engine prompt (hook, troll, debate, numbers, mention, self-scoring). Returns `SKIP` if no fresh news.
-- **`src/hotake_agent.py`** - Hot take agent. Sonnet, no web search. Generates engagement bait: unpopular opinions, rankings, predictions, VS battles.
+- **`src/agent.py`** - News tweet agent. Opus + WebSearch. Full French prompt (hook, troll, debate, numbers, mention, self-scoring). All tweets in French. Returns `SKIP` if no fresh news.
+- **`src/hotake_agent.py`** - Hot take agent. Sonnet, no web search. Full French prompt. Generates engagement bait in French: opinions impopulaires, classements, predictions, battles VS.
 - **`src/reply_agent.py`** - Reply agent. Sonnet + WebSearch. Finds 10-12 tweets per cycle, full troll mode. French tweets #1 priority (any topic: tech, startups, dev life, AI). Then English. Any account size. Strict recency: today only, last 30 min preferred.
 - **`src/bot.py`** - Post orchestration. 80% news, 20% hot takes. Falls back to hot take when no news. Handles threads.
 - **`src/reply_bot.py`** - Reply orchestration. Refreshes feed, generates replies with cross-dedup, auto-likes, posts replies or quote tweets.
@@ -69,7 +69,7 @@ Engage bot: every 25 min. Notify bot: every 20 min. Both 24/7.
 ## Key design notes
 
 - No API keys needed (no Twitter API, no Anthropic API).
-- Posts in English, 280 chars max. Replies match original tweet language.
+- All posts in French, 280 chars max. Quote tweets always in French. Replies match original tweet language.
 - AI news is the core content (~80%). Hot takes fill gaps (~20%).
 - News agent: Opus (deep analysis, better research). Reply + hot take agents: Sonnet.
 - Browser automation via `webbrowser.open` + AppleScript. macOS only.
