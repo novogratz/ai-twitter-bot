@@ -5,6 +5,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from src.bot import safe_run_bot_cycle
 from src.reply_bot import safe_run_reply_cycle
+from src.engage_bot import safe_run_engage_cycle
 
 
 def post_interval_minutes() -> int:
@@ -94,6 +95,14 @@ if __name__ == "__main__":
         reschedule_and_reply,
         trigger=IntervalTrigger(minutes=first_reply),
         id="reply_job",
+    )
+
+    # Schedule engagement bot every 30 minutes
+    print("Engage bot: liking target accounts every 30 minutes.\n")
+    scheduler.add_job(
+        safe_run_engage_cycle,
+        trigger=IntervalTrigger(minutes=30),
+        id="engage_job",
     )
 
     try:

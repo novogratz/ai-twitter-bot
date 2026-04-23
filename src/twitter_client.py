@@ -136,3 +136,107 @@ def quote_tweet(tweet_url: str, comment: str):
     time.sleep(2)
     print("Quote tweet posted!")
     close_front_tab()
+
+
+def visit_profile_and_like(username: str):
+    """Visit a user's profile and like their latest tweet for reciprocity."""
+    profile_url = f"https://x.com/{username}"
+    print(f"Visiting profile: {profile_url}")
+    webbrowser.open(profile_url)
+
+    # Wait for profile to load
+    time.sleep(5)
+
+    # Scroll down slightly to ensure first tweet is in view, then click it
+    # Use Tab to navigate to the first tweet, then Enter to open it
+    navigate_script = '''
+    tell application "System Events"
+        -- Press Tab a few times to reach the first tweet
+        keystroke tab
+        delay 0.2
+        keystroke tab
+        delay 0.2
+        keystroke tab
+        delay 0.2
+        keystroke return
+    end tell
+    '''
+    print("Opening latest tweet...")
+    subprocess.run(["osascript", "-e", navigate_script], check=True)
+    time.sleep(3)
+
+    # Like the tweet
+    like_tweet()
+    time.sleep(1)
+    close_front_tab()
+
+
+def post_thread(tweets: list[str]):
+    """Post a thread by posting the first tweet, then replying to it."""
+    if not tweets:
+        return
+
+    # Post the first tweet
+    print(f"[THREAD] Posting tweet 1/{len(tweets)}...")
+    post_tweet(tweets[0])
+
+    if len(tweets) < 2:
+        return
+
+    # Wait a bit, then open own profile to find the tweet we just posted
+    time.sleep(3)
+    print("[THREAD] Opening own profile to find the tweet...")
+    webbrowser.open("https://x.com/kzer_ai")
+    time.sleep(5)
+
+    # Click on the latest tweet (first one on profile)
+    click_first_script = '''
+    tell application "System Events"
+        -- Navigate to first tweet on profile
+        keystroke tab
+        delay 0.2
+        keystroke tab
+        delay 0.2
+        keystroke tab
+        delay 0.2
+        keystroke return
+    end tell
+    '''
+    subprocess.run(["osascript", "-e", click_first_script], check=True)
+    time.sleep(4)
+
+    # Now reply with each subsequent tweet
+    for i, tweet_text in enumerate(tweets[1:], start=2):
+        print(f"[THREAD] Posting tweet {i}/{len(tweets)}...")
+
+        # Click reply
+        reply_script = '''
+        tell application "System Events"
+            keystroke "r"
+        end tell
+        '''
+        subprocess.run(["osascript", "-e", reply_script], check=True)
+        time.sleep(2)
+
+        # Type the reply
+        escaped = tweet_text.replace("\\", "\\\\").replace('"', '\\"')
+        type_script = f'''
+        tell application "System Events"
+            keystroke "{escaped}"
+        end tell
+        '''
+        subprocess.run(["osascript", "-e", type_script], check=True)
+        time.sleep(1)
+
+        # Submit
+        submit_script = '''
+        tell application "System Events"
+            keystroke return using command down
+        end tell
+        '''
+        subprocess.run(["osascript", "-e", submit_script], check=True)
+        time.sleep(3)
+        print(f"[THREAD] Tweet {i} posted!")
+
+    close_front_tab()
+    print("[THREAD] Thread complete!")
