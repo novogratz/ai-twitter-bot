@@ -30,7 +30,7 @@ L'actu IA, Crypto et Bourse avant tout le monde. Des prises de position tranchee
 The bot autonomously covers 3 topics: IA, Crypto, and Investissement/Bourse. Posts news, drops hilarious troll replies, posts hot takes, likes target accounts, and farms notifications on X/Twitter as @kzer_ai. All original content in French. ALL replies in French, even to English tweets. FULL TROLL MODE.
 
 ### Smart Features
-- **Time-zone content optimization**: Crypto during Asian/late-night hours, IA during EU morning, Bourse during US market hours
+- **All topics all the time**: IA, Crypto, and Bourse covered in every cycle regardless of time of day
 - **Trend surfing**: Reply agent searches for trending topics before picking tweets to reply to
 - **Engagement tracking**: All posts, replies, and hot takes logged to `engagement_log.csv` for performance analysis
 - **Reply-back agent**: `replyback_agent.py` generates witty follow-ups (ready for future integration)
@@ -62,13 +62,13 @@ The bot autonomously covers 3 topics: IA, Crypto, and Investissement/Bourse. Pos
 
 ## Schedule (EST)
 
-| Time (EST)   | Post interval | Reply interval | Topic hint |
-|--------------|---------------|----------------|------------|
-| 11pm - 6am   | 10-15 min     | 2 min          | Crypto     |
-| 6am - 9am    | 3-5 min       | 2 min          | IA         |
-| 9am - 4pm    | 5-8 min       | 2 min          | Bourse     |
-| 5pm - 7pm    | 3-5 min       | 2 min          | IA/Crypto  |
-| 7pm - 11pm   | 5-8 min       | 2 min          | IA/Crypto  |
+| Time (EST)   | Post interval | Reply interval |
+|--------------|---------------|----------------|
+| 11pm - 6am   | 10-15 min     | 2 min          |
+| 6am - 9am    | 3-5 min       | 2 min          |
+| 9am - 4pm    | 5-8 min       | 2 min          |
+| 5pm - 7pm    | 3-5 min       | 2 min          |
+| 7pm - 11pm   | 5-8 min       | 2 min          |
 
 Engage bot: every 25 min. Notify bot: every 20 min. Both 24/7.
 
@@ -76,7 +76,7 @@ Engage bot: every 25 min. Notify bot: every 20 min. Both 24/7.
 
 - No API keys needed (no Twitter API, no Anthropic API).
 - All posts in French, 280 chars max. Quote tweets always in French. ALL replies in French, even to English tweets.
-- 3 topics: IA, Crypto, Investissement/Bourse. Time-zone optimized topic selection.
+- 3 topics: IA, Crypto, Investissement/Bourse. All covered all the time.
 - News and hot takes 50/50. Hot takes fill gaps when no news.
 - News agent: Opus (deep analysis, better research). Reply + hot take agents: Sonnet.
 - Browser automation via `webbrowser.open` + AppleScript. macOS only.
