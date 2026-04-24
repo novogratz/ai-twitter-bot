@@ -1,7 +1,6 @@
 ---
 name: reset
 description: Reset daily posting counters to start fresh
-disable-model-invocation: true
 allowed-tools: Read Write
 ---
 

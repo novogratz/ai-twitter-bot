@@ -1,7 +1,6 @@
 ---
 name: tweet
 description: Post a specific tweet right now
-disable-model-invocation: true
 arguments: [text]
 allowed-tools: Bash
 ---

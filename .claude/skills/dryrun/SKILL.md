@@ -1,7 +1,6 @@
 ---
 name: dryrun
 description: Run a full bot cycle in preview mode - generate everything without posting
-disable-model-invocation: true
 allowed-tools: Bash Read
 ---
 

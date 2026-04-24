@@ -1,7 +1,6 @@
 ---
 name: hotake
 description: Generate a hot take, preview it, then optionally post
-disable-model-invocation: true
 allowed-tools: Bash
 ---
 

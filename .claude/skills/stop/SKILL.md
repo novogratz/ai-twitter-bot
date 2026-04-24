@@ -1,7 +1,6 @@
 ---
 name: stop
 description: Stop the bot gracefully via SIGTERM
-disable-model-invocation: true
 allowed-tools: Bash
 ---
 

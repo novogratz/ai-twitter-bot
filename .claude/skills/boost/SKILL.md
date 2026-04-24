@@ -1,7 +1,6 @@
 ---
 name: boost
 description: Self-retweet the latest tweet for extra exposure
-disable-model-invocation: true
 allowed-tools: Bash
 ---
 

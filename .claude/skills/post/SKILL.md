@@ -1,7 +1,6 @@
 ---
 name: post
 description: Manually trigger a post cycle - generates and posts an AI news tweet or hot take
-disable-model-invocation: true
 allowed-tools: Bash Read
 ---
 

@@ -1,7 +1,6 @@
 ---
 name: like
 description: Visit a profile and like their latest tweets
-disable-model-invocation: true
 arguments: [username]
 allowed-tools: Bash
 ---

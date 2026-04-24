@@ -17,11 +17,40 @@ claude login
 
 ## Running
 
-```bash
-python main.py              # Run all bots
-python main.py --post-only  # Run only the post bot
-python main.py --reply-only # Run only the reply bot
-python main.py --dry-run    # Print actions without posting
+Use skills (slash commands) to control the bot:
+
+```
+/start              # Start full bot in background (all systems)
+/stop               # Stop the bot gracefully
+/restart            # Stop then start
+/status             # Quick health check - running?, counters, errors
+/run-agent          # Run as Claude Code agent (replaces python main.py)
+```
+
+### Manual triggers
+```
+/post               # Trigger one post cycle (news or hot take)
+/reply              # Trigger one reply cycle
+/engage             # Trigger one engage cycle (follow + like)
+/boost              # Self-retweet latest tweet
+/hotake             # Generate a hot take, preview, then post
+/news               # Generate a news tweet preview
+/tweet              # Post a specific tweet right now
+/thread             # Post a multi-tweet thread
+/follow             # Follow a specific account
+/like               # Visit a profile and like their tweets
+/dryrun             # Preview what the bot would do without posting
+```
+
+### Monitoring & config
+```
+/stats              # Full engagement dashboard
+/logs               # Recent bot logs
+/history            # Recent tweet history
+/accounts           # View/manage target accounts
+/config             # View/edit bot configuration
+/reset              # Reset daily counters
+/improve            # Self-improvement cycle from performance data
 ```
 
 The bot runs 4 systems: reply bot first (scan for tweets), then post bot, then schedules all jobs (posts, replies, engagement, notification farming). Each cycle is wrapped in error handling so the scheduler stays alive. Graceful shutdown via Ctrl+C or SIGTERM.

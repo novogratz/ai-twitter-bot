@@ -1,7 +1,6 @@
 ---
 name: improve
 description: Self-improvement cycle. Evaluates tweet performance, discovers what works, and updates the bot's prompts and strategy based on data. Run this periodically to make the bot smarter.
-disable-model-invocation: true
 allowed-tools: Bash Read Write Edit Grep WebSearch
 ---
 

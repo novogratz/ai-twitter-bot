@@ -1,7 +1,6 @@
 ---
 name: restart
 description: Restart the bot - stop then start
-disable-model-invocation: true
 allowed-tools: Bash Read
 ---
 
