@@ -49,6 +49,8 @@ TARGET_ACCOUNTS = [
     # === Bourse/Finance: FR ===
     "Graphseo", "ABaradez", "FinTales_",
     "ZonebourseFR", "BFMBourse",
+    "NCheron_bourse", "RodolpheSteffan", "IVTrading",
+    "DereeperVivre",
 
     # === Bourse/Finance: US ===
     "chamath", "jimcramer", "unusual_whales",
