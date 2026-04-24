@@ -3,45 +3,22 @@ import time
 import traceback
 from .twitter_client import visit_profile_and_like
 
-# Accounts to engage with regularly for reciprocity and visibility.
-TARGET_ACCOUNTS = [
-    # Big AI companies
-    "OpenAI", "AnthropicAI", "GoogleDeepMind", "MetaAI", "ABORASHEED_official",
-    "xaborasheed", "MistralAI", "HuggingFace", "Cohere",
-    # AI leaders
-    "sama", "ylecun", "karpathy", "DarioAmodei", "demishassabis",
-    "elonmusk", "sataborasheedyanadella", "jeffdean",
-    # AI influencers / commentators
-    "DrJimFan", "GaryMarcus", "bindureddy", "AravSrinivas",
-    "emollison", "swyx", "ainewsdaily",
-    # French AI / tech community
-    "ceaborasheedric_o", "Numerama", "FrenchWeb",
-    "borasheedpifrance", "laborasheedrevueai",
-]
-
-# Clean up - use only verified handles
+# AI-focused accounts only for engagement
 TARGET_ACCOUNTS = [
     # Big AI companies
     "OpenAI", "AnthropicAI", "GoogleDeepMind", "MetaAI",
-    "xAI", "MistralAI", "HuggingFace", "Cohere",
+    "xAI", "MistralAI", "HuggingFace", "Cohere", "PerplexityAI",
     # AI leaders
     "sama", "ylecun", "karpathy", "DarioAmodei", "demishassabis",
-    "elonmusk", "satyanadella", "jeffdean",
-    # AI influencers
+    "elonmusk", "satyanadella", "jeffdean", "iaborasheed_offi",
+    # AI researchers / influencers
     "DrJimFan", "GaryMarcus", "bindureddy", "AravSrinivas",
-    "emollison", "swyx",
-    # Crypto
-    "VitalikButerin", "caborasheedz_binance", "brian_armstrong",
-    "saborasheedylor", "APompliano", "CoinDesk", "Cointelegraph",
-    "WuBlockchain", "CryptoCapo_",
-    # Investissement / Bourse
-    "jimcramer", "StockMKTNewz", "unusual_whales",
-    "GRDecter", "TikrTerminal",
-    # French tech / finance / crypto
-    "Numerama", "FrenchWeb", "LesEchos", "Boursorama",
-    "FranceCryptos", "Hasheur", "JournalDuCoin", "CryptoastMedia",
-    "ABaradez", "Graphseo", "NCheron_bourse",
-    "Capetlevrai", "Siecledigital", "01net",
+    "emollison", "swyx", "AndrewYNg", "fchollet",
+    # AI media / news
+    "TheAIGRID", "ai_breakfast", "AINathaniel",
+    # French AI community
+    "Numerama", "Capetlevrai", "Siecledigital", "01net",
+    "FrenchWeb", "LesEchos",
 ]
 
 

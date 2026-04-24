@@ -10,23 +10,23 @@ from src.notify_bot import safe_run_notify_cycle
 
 
 def post_interval_minutes() -> int:
-    """~12 posts/day spread across the day. Post more during peak hours."""
+    """~3-4 posts per hour during the day, slower at night."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 23 <= hour or hour < 6:
-        # Night: skip most cycles
-        return random.randint(180, 240)
+        # Night: slow down
+        return random.randint(30, 45)
     elif 6 <= hour < 10:
         # Morning peak
-        return random.randint(60, 90)
+        return random.randint(15, 20)
     elif 10 <= hour < 17:
         # Daytime
-        return random.randint(75, 120)
+        return random.randint(15, 20)
     elif 17 <= hour < 19:
         # Evening peak
-        return random.randint(60, 90)
+        return random.randint(15, 20)
     else:
         # Late evening
-        return random.randint(90, 120)
+        return random.randint(20, 30)
 
 
 def reply_interval_minutes() -> int:
