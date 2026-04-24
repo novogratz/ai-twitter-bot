@@ -113,24 +113,24 @@ def main():
         )
 
     if not args.post_only and not args.reply_only:
-        log.info("Engage bot: following + liking target accounts every 15 minutes.")
+        log.info("Engage bot: following + liking target accounts every 10 minutes.")
         scheduler.add_job(
             safe_run_engage_cycle,
-            trigger=IntervalTrigger(minutes=15),
+            trigger=IntervalTrigger(minutes=10),
             id="engage_job",
         )
 
-        log.info("Notify bot: liking replies on own tweets every 10 minutes.")
+        log.info("Notify bot: liking replies on own tweets every 8 minutes.")
         scheduler.add_job(
             safe_run_notify_cycle,
-            trigger=IntervalTrigger(minutes=10),
+            trigger=IntervalTrigger(minutes=8),
             id="notify_job",
         )
 
-        log.info("Boost bot: retweeting own latest tweet every 60 minutes.")
+        log.info("Boost bot: retweeting own latest tweet every 45 minutes.")
         scheduler.add_job(
             safe_run_boost_cycle,
-            trigger=IntervalTrigger(minutes=60),
+            trigger=IntervalTrigger(minutes=45),
             id="boost_job",
         )
 

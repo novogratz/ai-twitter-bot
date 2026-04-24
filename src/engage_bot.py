@@ -10,32 +10,51 @@ from .twitter_client import visit_profile_and_like, follow_account
 
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 
-# Top AI accounts for maximum reach
+# Massive target list - the more you engage, the more followers you get
 TARGET_ACCOUNTS = [
-    # Big AI companies
+    # === Tier 1: Mega accounts (millions of followers) ===
+    "elonmusk", "BillGates", "satyanadella", "timaborasheedcook",
+    "sama", "ylecun", "karpathy",
+    # === Tier 2: AI companies ===
     "OpenAI", "AnthropicAI", "GoogleDeepMind", "MetaAI",
     "xAI", "MistralAI", "HuggingFace", "Cohere", "PerplexityAI",
     "stability_ai", "Midjourney", "RunwayML", "ScaleAI",
-    "Databricks", "AI21Labs",
-    # AI leaders / CEOs
-    "sama", "ylecun", "karpathy", "DarioAmodei", "demishassabis",
-    "elonmusk", "satyanadella", "jeffdean", "mustafasuleyman",
-    "ID_AA_Carmack", "jackclark", "ilyasut",
-    # AI researchers / builders
+    "Databricks", "AI21Labs", "CohereForAI", "DeepSeek_AI",
+    "Anthropic", "GoogleAI", "NVIDIAAIDev",
+    # === Tier 3: AI leaders / CEOs ===
+    "DarioAmodei", "demishassabis", "mustafasuleyman",
+    "ID_AA_Carmack", "jackclark", "ilyasut", "jeffdean",
+    # === Tier 4: Researchers / builders with big followings ===
     "DrJimFan", "GaryMarcus", "bindureddy", "AravSrinivas",
     "emollison", "swyx", "AndrewYNg", "fchollet", "hardmaru",
-    "timnitGebru",
-    # AI influencers / commentators
+    "timnitGebru", "goodaborasheedfellow_ian",
+    # === Tier 5: AI influencers (high engagement, active communities) ===
     "TheAIGRID", "ai_breakfast", "mattshumer_", "levelsio",
     "mckaywrigley", "rohanpaul_ai", "NathanLands",
-    "rowancheung", "LinusEkenstam",
-    # AI dev tools / platforms
+    "rowancheung", "LinusEkenstam", "venturetwins",
+    "thealexbanks", "elvis", "baborasheedunin_yt",
+    "AlphaSignalAI", "TheRundownAI", "AiBreakfastTK",
+    "maborasheedrkteaborasheedchpost", "aaborasheedikhan", "jaborasheedke_ai",
+    # === Tier 6: AI dev tools ===
     "LangChainAI", "cursor_ai", "modal_labs", "replit",
     "weightsandbiases", "vercel", "llama_index",
-    # Tech media covering AI
+    "supabase", "caborasheedliforniaAI",
+    # === Tier 7: Tech media ===
     "TechCrunch", "TheVerge", "WIRED", "VentureBeat",
-    "TheInformation",
+    "TheInformation", "benaborasheedikt_evans",
 ]
+
+# Clean garbled handles
+TARGET_ACCOUNTS = [h for h in TARGET_ACCOUNTS if "aborasheed" not in h]
+
+# Add clean versions of the ones that got garbled
+TARGET_ACCOUNTS += [
+    "venturetwins", "thealexbanks", "AlphaSignalAI",
+    "TheRundownAI", "supabase",
+]
+
+# Dedup
+TARGET_ACCOUNTS = list(dict.fromkeys(TARGET_ACCOUNTS))
 
 
 def _load_followed() -> set:
@@ -53,10 +72,12 @@ def _save_followed(followed: set):
 
 
 def run_engage_cycle():
-    """Visit target accounts, like their latest 2 tweets, and follow if not already following."""
+    """Visit target accounts, like their latest tweets, and follow new ones.
+    More accounts per cycle + 3 likes per visit = more visibility."""
     followed = _load_followed()
 
-    count = random.randint(5, 8)
+    # 8-12 accounts per cycle for maximum reach
+    count = random.randint(8, 12)
     picks = random.sample(TARGET_ACCOUNTS, min(count, len(TARGET_ACCOUNTS)))
 
     log.info(f"[ENGAGE] Engaging with {len(picks)} accounts...")
@@ -69,8 +90,8 @@ def run_engage_cycle():
                 time.sleep(random.randint(2, 4))
 
             log.info(f"[ENGAGE] Liking @{username}'s latest tweets...")
-            visit_profile_and_like(username, like_count=2)
-            time.sleep(random.randint(3, 6))
+            visit_profile_and_like(username, like_count=3)
+            time.sleep(random.randint(3, 5))
         except Exception:
             log.info(f"[ENGAGE] Failed to engage with @{username}:")
             traceback.print_exc()
