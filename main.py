@@ -102,10 +102,10 @@ def main():
             trigger=IntervalTrigger(minutes=next_min),
         )
 
-    # Run reply bot FIRST - this is the growth engine
+    # Run direct reply bot FIRST - visits influencer profiles directly
     if not args.post_only:
-        log.info("Bot started! Scanning for viral tweets to reply to...")
-        safe_run_reply_cycle()
+        log.info("Bot started! Replying to influencer tweets...")
+        safe_run_direct_reply_cycle()
 
     # Then run first post
     if not args.reply_only:
