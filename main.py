@@ -25,6 +25,7 @@ from src.engage_bot import safe_run_engage_cycle
 from src.notify_bot import safe_run_notify_cycle, safe_run_boost_cycle, safe_run_replyback_cycle
 from src.direct_reply import safe_run_direct_reply_cycle
 from src.discover_bot import safe_run_discovery_cycle
+from src.roast_pgm_bot import safe_run_roast_pgm_cycle
 from src.performance import evaluate_and_learn
 
 
@@ -180,6 +181,14 @@ def main():
             safe_run_discovery_cycle,
             trigger=IntervalTrigger(hours=6),
             id="discover_job",
+        )
+
+        # Roast bot - sarcastic 1x reply per @pgm_pm tweet (anti-bot retort)
+        log.info("Roast bot: sarcastically replying to @pgm_pm tweets every 3 hours.")
+        scheduler.add_job(
+            safe_run_roast_pgm_cycle,
+            trigger=IntervalTrigger(hours=3),
+            id="roast_pgm_job",
         )
 
         # Performance tracking

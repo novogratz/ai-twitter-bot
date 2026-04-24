@@ -11,9 +11,15 @@ import re
 import subprocess
 import traceback
 from datetime import datetime
-from .config import REPLY_MODEL, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE
+from .config import REPLY_MODEL, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE, _PROJECT_ROOT
 from .logger import log
-from .twitter_client import scrape_x_search
+from .twitter_client import scrape_x_search, follow_account
+
+# Persisted set of handles we already auto-followed via discovery
+FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
+
+# Categories that count as "best FR AI/crypto/bourse" — those get auto-followed
+AUTO_FOLLOW_CATEGORIES = {"ai", "crypto", "bourse"}
 
 
 # Search queries — mix niches and languages, FR-leaning
@@ -57,6 +63,60 @@ def _save_discovered(accounts: list):
         json.dump(accounts[-500:], f, indent=2)
 
 
+def _load_followed() -> set:
+    if not os.path.exists(FOLLOWED_FILE):
+        return set()
+    try:
+        with open(FOLLOWED_FILE, "r") as f:
+            return set(json.load(f))
+    except (json.JSONDecodeError, IOError):
+        return set()
+
+
+def _save_followed(followed: set):
+    with open(FOLLOWED_FILE, "w") as f:
+        json.dump(list(followed), f, indent=2)
+
+
+def _auto_follow_best(approved: list, discovered_state: list) -> list:
+    """Follow approved FR ai/crypto/bourse handles we haven't followed yet.
+
+    Returns the list of newly-followed handles (also flagged in discovered_state).
+    """
+    followed = _load_followed()
+    newly_followed = []
+
+    for k in approved:
+        handle = (k.get("handle") or "").strip().lower()
+        category = (k.get("category") or "").lower()
+        lang = (k.get("lang") or "").lower()
+        if not handle:
+            continue
+        if lang != "fr":
+            continue  # FR-only auto-follow, per request
+        if category not in AUTO_FOLLOW_CATEGORIES:
+            continue
+        if handle in followed:
+            continue
+
+        log.info(f"[DISCOVER] Auto-following @{handle} ({category}, fr)...")
+        try:
+            follow_account(handle)
+            followed.add(handle)
+            newly_followed.append(handle)
+            # Mark in discovered state so the JSON shows we acted on this entry
+            for entry in discovered_state:
+                if entry.get("handle", "").lower() == handle:
+                    entry["followed"] = True
+                    break
+        except Exception as e:
+            log.info(f"[DISCOVER] Follow failed for @{handle}: {e}")
+
+    if newly_followed:
+        _save_followed(followed)
+    return newly_followed
+
+
 def _existing_handles() -> set:
     """All handles we already know about (engage + reply targets + blocklist + already-discovered)."""
     from .engage_bot import TARGET_ACCOUNTS as ENGAGE_TARGETS
@@ -86,19 +146,24 @@ def _score_candidates(candidates: list) -> list:
 
 Ton job: garder UNIQUEMENT les comptes pertinents pour @kzer_ai (un compte FR qui couvre IA + crypto + bourse avec des analyses sharp et drôles).
 
-CRITÈRES DE SÉLECTION:
+CRITÈRES DE SÉLECTION (sois exigeant — qualité avant quantité):
 - Le compte parle régulièrement de: IA, crypto, bourse/finance/trading, ou tech.
 - Le compte a l'air actif et de qualité (pas un bot, pas un spam, pas un compte mort).
-- Pas de comptes promo / arnaque / vente de signaux à 99€/mois.
+- Pas de comptes promo / arnaque / vente de signaux à 99€/mois / formations à 2000€.
 - Pas de comptes politiques.
+- PRIORITÉ aux comptes francophones de qualité (vrais analystes/founders/traders FR).
 
 CANDIDATS:
 {sample_blob}
 
-Output UNIQUEMENT un JSON array avec les handles à garder, chacun catégorisé:
-[{{"handle": "elonmusk", "category": "ai"}}, ...]
+Output UNIQUEMENT un JSON array. Pour chaque handle gardé, deux champs:
+- "handle": le pseudo sans @
+- "category": "ai" | "crypto" | "bourse" | "tech"
+- "lang": "fr" | "en" (langue principale du compte d'après le tweet)
 
-Categories valides: "ai", "crypto", "bourse", "tech".
+Exemple:
+[{{"handle": "elonmusk", "category": "ai", "lang": "en"}}, {{"handle": "PowerHasheur", "category": "crypto", "lang": "fr"}}]
+
 Output rien d'autre que le JSON."""
 
     try:
@@ -185,6 +250,12 @@ def run_discovery_cycle():
     _save_discovered(discovered)
     new_handles = [k.get("handle") for k in keepers if k.get("handle")]
     log.info(f"[DISCOVER] Added {len(new_handles)} new handles: {', '.join(new_handles)}")
+
+    # Auto-follow the best new FR ai/crypto/bourse accounts so they show up in our feed.
+    followed = _auto_follow_best(keepers, discovered)
+    if followed:
+        _save_discovered(discovered)  # persist `followed: true` flags
+        log.info(f"[DISCOVER] Auto-followed {len(followed)} FR account(s): {', '.join(followed)}")
 
 
 def safe_run_discovery_cycle():

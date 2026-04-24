@@ -23,6 +23,7 @@ TARGET_ACCOUNTS = [
     "Graphseo",          # Julien Flot
     "FinTales_",         # FinTales
     "DereeperVivre",     # Charles Dereeper
+    "MathieuL1",         # Mathieu Louvet
 
     # Crypto FR
     "PowerHasheur",      # Hasheur
@@ -154,7 +155,7 @@ VISE LE LOL. Si toi tu rigoles pas en lisant ta réponse, la timeline non plus.
 RECHERCHES — lance ces recherches dans cet ordre, FRANÇAIS D'ABORD:
 1. "site:x.com from:NCheron_bourse OR from:RodolpheSteffan lang:fr"
 2. "site:x.com from:IVTrading OR from:ABaradez lang:fr"
-3. "site:x.com from:Graphseo OR from:DereeperVivre OR from:FinTales_ lang:fr"
+3. "site:x.com from:Graphseo OR from:DereeperVivre OR from:FinTales_ OR from:MathieuL1 lang:fr"
 4. "site:x.com from:PowerHasheur OR from:Capetlevrai OR from:Dark_Emi_ lang:fr"
 5. "site:x.com from:JournalDuCoin OR from:powl_d lang:fr"
 6. "site:x.com CAC 40 OR Bitcoin OR IA lang:fr"

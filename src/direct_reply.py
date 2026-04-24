@@ -22,6 +22,7 @@ FR_ACCOUNTS = [
     "Graphseo",          # Julien Flot
     "DereeperVivre",     # Charles Dereeper
     "FinTales_",         # FinTales
+    "MathieuL1",         # Mathieu Louvet
 
     # Crypto FR
     "PowerHasheur",      # Hasheur
