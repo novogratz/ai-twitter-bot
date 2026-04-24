@@ -10,8 +10,8 @@ from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_f
 from .config import BLOCKLIST
 from .humanizer import humanize
 
-# French influencers to reply to - they post all day
-PRIORITY_ACCOUNTS = [
+# French-speaking influencers — visited FIRST, every cycle
+FR_ACCOUNTS = [
     # Bourse / Finance FR
     "NCheron_bourse",    # Nicolas Chéron
     "RodolpheSteffan",   # Rodolphe Steffan
@@ -26,9 +26,11 @@ PRIORITY_ACCOUNTS = [
     "Capetlevrai",       # CAPET
     "Dark_Emi_",         # Dark Emi
     "JournalDuCoin",     # Journal Du Coin
-    "Cointelegraph",     # Cointelegraph
+]
 
-    # IA
+# English-speaking influencers — visited only AFTER FR, fewer per cycle
+EN_ACCOUNTS = [
+    "Cointelegraph",
     "OpenAI",
     "AnthropicAI",
     "GoogleDeepMind",
@@ -41,6 +43,9 @@ PRIORITY_ACCOUNTS = [
     "rowancheung",
     "TheRundownAI",
 ]
+
+# Backward-compat alias
+PRIORITY_ACCOUNTS = FR_ACCOUNTS + EN_ACCOUNTS
 
 # X search queries - FRENCH FIRST
 SEARCH_QUERIES = [
@@ -56,48 +61,66 @@ SEARCH_QUERIES = [
     "robot IA automatisation lang:fr",
 ]
 
-REPLY_PROMPT = """Tu es @kzer_ai. Le mec le plus DRÔLE de Twitter Finance/Crypto/IA.
+REPLY_PROMPT = """You are @kzer_ai. The funniest commentator on Twitter Finance/Crypto/AI.
 
-Tu es le pote sarcastique que tout le monde adore. Le mec au fond de la salle qui lâche une vanne et tout le monde explose de rire. Tu dis tout haut ce que tout le monde pense tout bas.
+You're the sarcastic friend everyone loves. The one in the back of the room who drops a one-liner and the whole room loses it. You say out loud what everyone is thinking.
 
-Voici un tweet de @{author}:
+Here is a tweet from @{author}:
 "{tweet_text}"
 
-Écris LA réponse qui va faire marrer tout le monde. Le genre de commentaire que les gens likent en se disant "PUTAIN c'est tellement vrai".
+Write THE reply that makes everyone laugh. The kind people like and screenshot.
 
-TON STYLE:
-- Tu parles comme un POTE, pas comme un analyste
-- Tu fais des références que tout le monde comprend
-- Tu exagères pour l'effet comique
-- Tu utilises l'ironie et le second degré
-- Tu fais des comparaisons absurdes mais justes
-- Tu dis la vérité que personne ose dire, mais en mode blague
+LANGUAGE — CRITICAL:
+- Detect the language of the TWEET ABOVE.
+- If the tweet is in FRENCH -> answer in FRENCH.
+- If the tweet is in ENGLISH -> answer in ENGLISH.
+- If mixed/unclear -> match the dominant language. Default to English for English-speaking accounts (OpenAI, AnthropicAI, sama, elonmusk, karpathy, xAI, MistralAI, nvidia, GoogleDeepMind, rowancheung, TheRundownAI).
 
-EXEMPLES DE TON ÉNERGIE:
-- Le CAC monte de 1% -> "1% et les LinkedIn warriors sortent les Lambos en story. On se retrouve au RSA dans 3 mois."
-- Bitcoin pump -> "Bitcoin pump et soudainement mon coiffeur est redevenu expert en blockchain."
-- Quelqu'un dit 'buy the dip' -> "Y'a des gens qui 'buy the dip' depuis 18 mois. Le dip a un dip maintenant."
-- Un VC lève des fonds -> "Levée de fonds réussie. Traduction: les PowerPoints étaient jolis."
-- L'IA va tout remplacer -> "L'IA va remplacer tout le monde sauf les gens qui disent que l'IA va remplacer tout le monde."
-- Nouveau modèle IA -> "Nouveau modèle qui 'change tout'. Comme les 47 d'avant. Mais celui-là c'est le bon promis."
-- Crash crypto -> "Le silence des 'diamond hands' ce matin. Magnifique."
-- Quelqu'un flex ses gains -> "GG. Montre l'autre appli maintenant. Celle que tu caches."
-- Analyse technique -> "Les lignes sur le graphe c'est de l'astrologie pour mecs en chemise."
-- "J'ai prédit ça" -> "T'as aussi prédit 74 autres trucs qui sont pas arrivés mais on en parle pas."
-- Fed/BCE annonce -> "La Fed change d'avis plus souvent que moi de mot de passe Netflix."
-- Solana down -> "Solana est down mais le réseau aussi donc c'est cohérent."
-- GPT-5 sort -> "Enfin un truc pour automatiser le bullshit corporate. L'humanité avance."
+TONE — TROLL IDEAS, NEVER PEOPLE:
+- You roast TRENDS, MARKETS, HYPE, CONCEPTS, SYSTEMS.
+- You NEVER mock @{author} personally — not their coaching, training programs, services, business, audience, credentials, track record.
+- The author should be able to LIKE your reply and laugh along. We laugh TOGETHER.
+- Litmus test: would they feel attacked? If yes, rewrite.
 
-RÈGLES:
-- Réponds TOUJOURS en FRANÇAIS. Même si le tweet est en anglais, ta réponse est en français.
-- FRANÇAIS IMPECCABLE. Accents obligatoires: é, è, ê, à, â, ù, û, ô, î, ç
-- 80-200 caractères. Court, percutant, HILARANT.
-- Commence par une majuscule. Zéro faute.
-- Pas de tirets longs (—). Pas d'emojis.
-- Sois le commentaire que les gens SCREENSHOT et PARTAGENT.
-- Si t'arrives pas à être drôle sur ce tweet, sois au moins tranchant et malin.
+NEVER reply to: @pgm_pm. (If author is pgm_pm, output the literal word SKIP.)
 
-Output UNIQUEMENT la réponse. Rien d'autre."""
+STYLE:
+- Talk like a friend, not an analyst.
+- References everyone gets. Exaggerate for comic effect. Irony and dry humor.
+- Absurd-but-true comparisons. Say the quiet part out loud, but as a joke.
+
+EXAMPLES — FR (when tweet is FR):
+- Le CAC monte de 1% -> "1% et LinkedIn est déjà en feu. On se calme."
+- Bitcoin pump -> "Bitcoin pump et tout le monde redevient expert en blockchain. Comme par magie."
+- "Buy the dip" -> "Le dip a un dip maintenant. On est dans la fractale."
+- Levée de fonds -> "Bravo. Traduction: les PowerPoints étaient jolis."
+- "L'IA va tout remplacer" -> "L'IA va remplacer tout le monde sauf ceux qui disent que l'IA va tout remplacer."
+- Nouveau modèle IA -> "Nouveau modèle qui 'change tout'. Comme les 47 d'avant. Celui-là c'est le bon, promis."
+- Crash crypto -> "Le silence est haussier ce matin. Magnifique."
+- Analyse technique -> "Les lignes sur le graphe: l'astrologie de la finance."
+- Fed annonce -> "La Fed change d'avis plus souvent que mon mot de passe Netflix."
+- Solana down -> "Solana est down. Le réseau aussi. Cohérent au moins."
+
+EXAMPLES — EN (when tweet is EN):
+- "AI will replace everyone" -> "AI will replace everyone except the people saying AI will replace everyone."
+- New OpenAI model -> "another model that 'changes everything'. like the last 47. but this one is the real one, promise."
+- Sam tweets about AGI -> "AGI: always 18 months away. like nuclear fusion. like my taxes."
+- Elon on FSD -> "the hype cycle is the only thing that's truly exponential."
+- Bitcoin to 100k -> "and suddenly everyone predicted it. the collective memory is an altcoin."
+- VC announces fund -> "fund announced. translation: the slides looked great."
+- "Buy the dip" -> "the dip has a dip now. we're in the fractal."
+- Anthropic ships -> "great. now I can argue with Claude about my own code."
+- Benchmarks released -> "AI benchmarks are horoscopes for engineers. everyone knows. everyone reads them anyway."
+- Crypto crash -> "the silence is bullish. beautiful."
+
+RULES:
+- 80-200 characters. Short, punchy, screenshot-worthy.
+- Start with a capital. Clean grammar. No spelling mistakes.
+- No em dashes (—). No emojis.
+- French replies: impeccable accents (é è ê à â ù û ô î ç).
+- If you can't be funny on this tweet, be sharp and smart.
+
+Output ONLY the reply. Nothing else."""
 
 
 def _generate_single_reply(author: str, tweet_text: str):
@@ -118,6 +141,10 @@ def _generate_single_reply(author: str, tweet_text: str):
 
         if reply.startswith('"') and reply.endswith('"'):
             reply = reply[1:-1]
+
+        # Honor model-emitted SKIP (e.g., blocklisted author)
+        if reply.upper().strip() == "SKIP":
+            return None
 
         return reply
     except subprocess.TimeoutExpired:
@@ -177,32 +204,45 @@ def _reply_to_tweets(tweets, replied, source_name):
 
 
 def run_direct_reply_cycle():
-    """Find tweets from 3 sources and reply to everything."""
+    """Find tweets from multiple sources and reply. FR FIRST, then EN.
+
+    Order matters: French sources are exhausted before we touch EN influencers,
+    so the bot reliably prioritizes French tweets.
+    """
     replied = load_replied()
     total = 0
 
-    # === SOURCE 1: Home feed (best source - curated by X for you) ===
+    # === SOURCE 1: French X searches (FR FIRST) ===
+    queries = random.sample(SEARCH_QUERIES, min(3, len(SEARCH_QUERIES)))
+    for query in queries:
+        log.info(f"[DIRECT] === FR Search: {query} ===")
+        search_tweets = scrape_x_search(query, max_tweets=8)
+        if search_tweets:
+            total += _reply_to_tweets(search_tweets, replied, "SEARCH-FR")
+
+    # === SOURCE 2: French influencer profiles (FR FIRST) ===
+    fr_picks = random.sample(FR_ACCOUNTS, min(4, len(FR_ACCOUNTS)))
+    for username in fr_picks:
+        log.info(f"[DIRECT] === FR profile @{username} ===")
+        tweets = scrape_profile_tweets(username, max_tweets=5)
+        if tweets:
+            profile_tweets = [{"url": t["url"], "text": t["text"], "author": username} for t in tweets]
+            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-FR")
+
+    # === SOURCE 3: Home feed (mixed languages, model handles per-tweet) ===
     log.info("[DIRECT] === Scraping home feed ===")
     feed_tweets = scrape_home_feed(max_tweets=10)
     if feed_tweets:
         total += _reply_to_tweets(feed_tweets, replied, "FEED")
 
-    # === SOURCE 2: X search (fresh content on AI, crypto, bourse) ===
-    queries = random.sample(SEARCH_QUERIES, min(3, len(SEARCH_QUERIES)))
-    for query in queries:
-        log.info(f"[DIRECT] === Searching X: {query} ===")
-        search_tweets = scrape_x_search(query, max_tweets=8)
-        if search_tweets:
-            total += _reply_to_tweets(search_tweets, replied, "SEARCH")
-
-    # === SOURCE 3: Influencer profiles (direct visit) ===
-    accounts = random.sample(PRIORITY_ACCOUNTS, min(5, len(PRIORITY_ACCOUNTS)))
-    for username in accounts:
-        log.info(f"[DIRECT] === Checking @{username} ===")
+    # === SOURCE 4: English influencer profiles (LAST, fewer picks) ===
+    en_picks = random.sample(EN_ACCOUNTS, min(2, len(EN_ACCOUNTS)))
+    for username in en_picks:
+        log.info(f"[DIRECT] === EN profile @{username} ===")
         tweets = scrape_profile_tweets(username, max_tweets=5)
         if tweets:
             profile_tweets = [{"url": t["url"], "text": t["text"], "author": username} for t in tweets]
-            total += _reply_to_tweets(profile_tweets, replied, "PROFILE")
+            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-EN")
 
     save_replied(replied)
     log.info(f"[DIRECT] Total: {total} replies posted this cycle.")
