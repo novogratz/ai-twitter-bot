@@ -52,8 +52,11 @@ RECENCY: This week only. Today is {today_date}. Only reply to tweets from the cu
 
 NEVER RETURN SKIP. There are MILLIONS of AI tweets every day. You MUST return 10-14 replies every time. If a search fails, try different terms. Be creative.
 
+QUOTE TWEETS (~15% of actions): Instead of replying, QUOTE TWEET the post with your take. Quote tweets show on YOUR timeline = your followers see it = more reach. Use "type": "quote" for these. Best for posts where your take is strong enough to stand alone.
+
 OUTPUT (raw JSON, no markdown, 10-14 tweets):
-[{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}]"""
+[{{"tweet_url": "https://x.com/user/status/123", "reply": "short reply", "type": "reply"}}]
+Use "type": "quote" for quote tweets (~15%), "type": "reply" for the rest."""
 
 
 def generate_replies(recent_topics: Optional[list[str]] = None,

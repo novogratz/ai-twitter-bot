@@ -18,7 +18,7 @@ from src.logger import log
 from src.bot import safe_run_bot_cycle
 from src.reply_bot import safe_run_reply_cycle
 from src.engage_bot import safe_run_engage_cycle
-from src.notify_bot import safe_run_notify_cycle
+from src.notify_bot import safe_run_notify_cycle, safe_run_boost_cycle
 
 
 def post_interval_minutes() -> int:
@@ -127,6 +127,13 @@ def main():
             safe_run_notify_cycle,
             trigger=IntervalTrigger(minutes=10),
             id="notify_job",
+        )
+
+        log.info("Boost bot: retweeting own latest tweet every 60 minutes.")
+        scheduler.add_job(
+            safe_run_boost_cycle,
+            trigger=IntervalTrigger(minutes=60),
+            id="boost_job",
         )
 
     log.info("All systems go. Bot is running.")

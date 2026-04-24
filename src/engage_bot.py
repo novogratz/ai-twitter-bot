@@ -10,65 +10,31 @@ from .twitter_client import visit_profile_and_like, follow_account
 
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 
-# Top AI accounts - massive list for maximum reach
-TARGET_ACCOUNTS = [
-    # === Tier 1: Big AI companies (must engage daily) ===
-    "OpenAI", "AnthropicAI", "GoogleDeepMind", "MetaAI",
-    "xAI", "MistralAI", "HuggingFace", "Cohere", "PerplexityAI",
-    "stability_ai", "Midjourney", "RunwayML", "adaborasheedept",
-    "CohereForAI", "AI21Labs", "inflaborasheedection_ai",
-    # === Tier 2: AI leaders / CEOs ===
-    "sama", "ylecun", "karpathy", "DarioAmodei", "demishassabis",
-    "elonmusk", "satyanadella", "jeffdean", "iaborasheed_ofi",
-    "mustafasuleyman", "ID_AA_Carmack", "jackclark",
-    # === Tier 3: AI researchers / builders ===
-    "DrJimFan", "GaryMarcus", "bindureddy", "AravSrinivas",
-    "emollison", "swyx", "AndrewYNg", "fchollet",
-    "goodaborasheedfellow_ian", "hardmaru", "shiaborasheedppy",
-    "polyaborasheednoia_AI", "tsaborasheedotuchin",
-    # === Tier 4: AI influencers / commentators ===
-    "TheAIGRID", "ai_breakfast", "roaborasheedhanpaul",
-    "mattshumer_", "mcaborasheedkaywrigley", "levelsio",
-    "maborasheedttvideoai", "raborasheedchel_woods",
-    "haborasheedrrison_chase", "vababorasheedrai",
-    # === Tier 5: AI dev tools / platforms ===
-    "LangChainAI", "llama_index", "veraborasheedcel",
-    "cursor_ai", "replitaborasheed", "modal_labs",
-    "weightsandbiases", "WandbAI",
-    # === Tier 6: Tech media covering AI ===
-    "TechCrunch", "TheVerge", "WIRED", "ArsTechnica",
-    "VentureBeat", "TheInformation",
-    # === Tier 7: French AI community ===
-    "Numerama", "Capetlevrai", "Siecledigital", "01net",
-    "FrenchWeb", "LesEchos",
-]
-
-# Clean up garbled handles - only keep verified ones
+# Top AI accounts for maximum reach
 TARGET_ACCOUNTS = [
     # Big AI companies
     "OpenAI", "AnthropicAI", "GoogleDeepMind", "MetaAI",
     "xAI", "MistralAI", "HuggingFace", "Cohere", "PerplexityAI",
-    "stability_ai", "Midjourney", "RunwayML",
+    "stability_ai", "Midjourney", "RunwayML", "ScaleAI",
+    "Databricks", "AI21Labs",
     # AI leaders / CEOs
     "sama", "ylecun", "karpathy", "DarioAmodei", "demishassabis",
-    "elonmusk", "satyanadella", "jeffdean",
-    "mustafasuleyman", "ID_AA_Carmack", "jackclark",
+    "elonmusk", "satyanadella", "jeffdean", "mustafasuleyman",
+    "ID_AA_Carmack", "jackclark", "ilyasut",
     # AI researchers / builders
     "DrJimFan", "GaryMarcus", "bindureddy", "AravSrinivas",
-    "emollison", "swyx", "AndrewYNg", "fchollet",
-    "hardmaru",
+    "emollison", "swyx", "AndrewYNg", "fchollet", "hardmaru",
+    "timnitGebru",
     # AI influencers / commentators
-    "TheAIGRID", "ai_breakfast",
-    "mattshumer_", "levelsio",
-    # AI dev tools
-    "LangChainAI", "cursor_ai", "modal_labs",
-    "weightsandbiases",
+    "TheAIGRID", "ai_breakfast", "mattshumer_", "levelsio",
+    "mckaywrigley", "rohanpaul_ai", "NathanLands",
+    "rowancheung", "LinusEkenstam",
+    # AI dev tools / platforms
+    "LangChainAI", "cursor_ai", "modal_labs", "replit",
+    "weightsandbiases", "vercel", "llama_index",
     # Tech media covering AI
-    "TechCrunch", "TheVerge", "WIRED",
-    "VentureBeat",
-    # French AI community
-    "Numerama", "Capetlevrai", "Siecledigital", "01net",
-    "FrenchWeb", "LesEchos",
+    "TechCrunch", "TheVerge", "WIRED", "VentureBeat",
+    "TheInformation",
 ]
 
 
@@ -87,25 +53,21 @@ def _save_followed(followed: set):
 
 
 def run_engage_cycle():
-    """Visit target accounts, like their latest 2 tweets, and follow if not already following.
-    Builds reciprocity and signals activity to the algorithm."""
+    """Visit target accounts, like their latest 2 tweets, and follow if not already following."""
     followed = _load_followed()
 
-    # Pick 5-8 accounts per cycle (more aggressive)
     count = random.randint(5, 8)
     picks = random.sample(TARGET_ACCOUNTS, min(count, len(TARGET_ACCOUNTS)))
 
     log.info(f"[ENGAGE] Engaging with {len(picks)} accounts...")
     for username in picks:
         try:
-            # Follow if we haven't already
             if username not in followed:
                 log.info(f"[ENGAGE] Following + liking @{username}...")
                 follow_account(username)
                 followed.add(username)
                 time.sleep(random.randint(2, 4))
 
-            # Like their latest 2 tweets
             log.info(f"[ENGAGE] Liking @{username}'s latest tweets...")
             visit_profile_and_like(username, like_count=2)
             time.sleep(random.randint(3, 6))
