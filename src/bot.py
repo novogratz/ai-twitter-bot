@@ -11,6 +11,7 @@ from .hotake_agent import generate_hotake
 from .twitter_client import post_tweet, post_thread
 from .history import save_tweet
 from .engagement_log import log_post, log_hotake
+from .humanizer import humanize
 
 THREAD_SEPARATOR = "---THREAD---"
 
@@ -78,6 +79,7 @@ def run_bot_cycle():
                     _increment_counter("news")
         else:
             _increment_counter("hotakes")
+            tweet = humanize(tweet)
             log.info(f"[HOTAKE] ({len(tweet)} chars): {tweet[:100]}...")
             post_tweet(tweet)
             save_tweet(tweet)
@@ -100,6 +102,7 @@ def run_bot_cycle():
 
     if THREAD_SEPARATOR in tweet:
         parts = [p.strip() for p in tweet.split(THREAD_SEPARATOR) if p.strip()]
+        parts = [humanize(p) for p in parts]
         log.info(f"[THREAD] Got {len(parts)}-tweet thread")
         for i, part in enumerate(parts, 1):
             log.info(f"  [{i}] ({len(part)} chars): {part[:80]}...")
@@ -107,6 +110,7 @@ def run_bot_cycle():
         save_tweet(tweet)
         log_post(tweet)
     else:
+        tweet = humanize(tweet)
         log.info(f"Tweet ({len(tweet)} chars): {tweet[:100]}...")
         post_tweet(tweet)
         save_tweet(tweet)
