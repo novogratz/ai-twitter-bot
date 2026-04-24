@@ -24,13 +24,21 @@ PRIORITY_ACCOUNTS = [
     "PowerHasheur",      # Hasheur
     "Capetlevrai",       # CAPET
     "Dark_Emi_",         # Dark Emi
+    "JournalDuCoin",     # Journal Du Coin
+    "Cointelegraph",     # Cointelegraph
 
     # IA
     "OpenAI",
     "AnthropicAI",
+    "GoogleDeepMind",
     "sama",
     "elonmusk",
     "karpathy",
+    "xAI",
+    "MistralAI",
+    "nvidia",
+    "rowancheung",
+    "TheRundownAI",
 ]
 
 REPLY_PROMPT = """Tu es @kzer_ai. Le mec le plus DRÔLE de Twitter Finance/Crypto/IA.
@@ -108,8 +116,9 @@ def run_direct_reply_cycle():
     replied = load_replied()
     posted = 0
 
-    # Pick 4-6 random accounts per cycle
-    accounts = random.sample(PRIORITY_ACCOUNTS, min(5, len(PRIORITY_ACCOUNTS)))
+    # Check ALL accounts every cycle
+    accounts = PRIORITY_ACCOUNTS[:]
+    random.shuffle(accounts)
 
     for username in accounts:
         log.info(f"[DIRECT] Checking @{username}...")
@@ -150,8 +159,8 @@ def run_direct_reply_cycle():
                 log.info(f"[DIRECT] Failed to reply to {url}")
                 traceback.print_exc()
 
-            # Max 3 replies per account per cycle
-            if posted >= 3:
+            # Max 5 replies per account per cycle
+            if posted >= 5:
                 break
 
         # Small pause between accounts
