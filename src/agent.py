@@ -78,8 +78,9 @@ Choisis UN sujet. Le plus frais, le plus chaud.
 1. Publié dans les 30 DERNIÈRES MINUTES (priorité absolue)
 2. Publié dans la dernière heure (encore bon)
 3. Publié aujourd'hui (acceptable)
+4. Publié hier (dernier recours)
 
-JAMAIS de news d'hier. Si y'a rien de frais, réponds SKIP.
+JAMAIS de news de plus de 2 jours. Si y'a rien de frais, réponds SKIP.
 
 Préfère les sujets qui DIVISENT:
 - Open source vs closed source
