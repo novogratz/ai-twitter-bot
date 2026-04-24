@@ -76,12 +76,12 @@ def run_reply_cycle():
             log.info(f"[REPLY] Already replied to {url} - skipping.")
             continue
 
-        # HARD RECENCY CHECK: reject tweets older than 2 hours
+        # HARD RECENCY CHECK: reject tweets older than 3 days (4320 min)
         age = _tweet_age_minutes(url)
-        if age > 120:
-            log.info(f"[REPLY] Tweet is {age} min old (~{age // 60}h) - TOO OLD, skipping: {url}")
+        if age > 4320:
+            log.info(f"[REPLY] Tweet is {age} min old (~{age // 1440}d) - TOO OLD, skipping: {url}")
             continue
-        log.info(f"[REPLY] Tweet age: {age} min - fresh enough")
+        log.info(f"[REPLY] Tweet age: {age} min (~{age // 60}h) - ok")
 
         reply_text = humanize(data["reply"])
         log.info(f"[REPLY] Target: {url}")
