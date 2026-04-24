@@ -41,9 +41,9 @@ The bot autonomously covers AI news, drops hilarious troll replies, posts AI phi
 
 **Reply bot** - Single agent finds 10-14 tweets per cycle. Runs every 2 min. FULL TROLL MODE. Bilingual (matches tweet language). Targets big AI posts with high engagement. Auto-likes before replying. Cross-dedup with post bot.
 
-**Engage bot** - Visits 3-5 target accounts every 25 min, likes their latest tweet. Builds reciprocity. AI-focused accounts only (~30 accounts).
+**Engage bot** - Visits 5-8 target accounts every 15 min, follows new accounts + likes their latest 2 tweets. Tracks followed accounts to avoid re-following. ~45 top AI accounts (companies, CEOs, researchers, influencers, media, French AI).
 
-**Notify bot** - Every 20 min, visits own latest tweet and likes up to 5 replies. Builds loyalty.
+**Notify bot** - Every 10 min, visits own latest tweet and likes up to 8 replies. Aggressive loyalty building.
 
 ### Files
 
