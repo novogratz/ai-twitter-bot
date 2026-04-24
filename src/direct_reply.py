@@ -5,7 +5,7 @@ import time
 import traceback
 from .logger import log
 from .config import REPLY_MODEL
-from .twitter_client import scrape_profile_tweets, reply_to_tweet
+from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, reply_to_tweet
 from .reply_bot import load_replied, save_replied, _tweet_age_minutes
 from .humanizer import humanize
 
@@ -39,6 +39,18 @@ PRIORITY_ACCOUNTS = [
     "nvidia",
     "rowancheung",
     "TheRundownAI",
+]
+
+# X search queries to find fresh content
+SEARCH_QUERIES = [
+    "IA intelligence artificielle",
+    "Bitcoin crypto",
+    "bourse CAC 40",
+    "ChatGPT Claude Gemini",
+    "crypto france",
+    "trading bourse investissement",
+    "AI news",
+    "DeFi Ethereum Solana",
 ]
 
 REPLY_PROMPT = """Tu es @kzer_ai. Le mec le plus DRÔLE de Twitter Finance/Crypto/IA.
@@ -111,63 +123,74 @@ def _generate_single_reply(author: str, tweet_text: str):
         return None
 
 
-def run_direct_reply_cycle():
-    """Visit influencer profiles, scrape tweets, generate and post replies."""
-    replied = load_replied()
+def _reply_to_tweets(tweets, replied, source_name):
+    """Reply to a list of scraped tweets. Returns number of replies posted."""
     posted = 0
+    for tweet in tweets:
+        url = tweet["url"]
+        text = tweet["text"]
+        author = tweet.get("author", "someone")
 
-    # Check ALL accounts every cycle
-    accounts = PRIORITY_ACCOUNTS[:]
-    random.shuffle(accounts)
-
-    for username in accounts:
-        log.info(f"[DIRECT] Checking @{username}...")
-        tweets = scrape_profile_tweets(username, max_tweets=5)
-
-        if not tweets:
-            log.info(f"[DIRECT] No tweets found for @{username}")
+        # Skip if already replied
+        if url in replied:
             continue
 
-        for tweet in tweets:
-            url = tweet["url"]
-            text = tweet["text"]
+        # Skip if older than 7 days
+        age = _tweet_age_minutes(url)
+        if age > 10080:
+            continue
 
-            # Skip if already replied
-            if url in replied:
-                continue
+        # Generate reply
+        log.info(f"[{source_name}] Replying to @{author}: {text[:60]}...")
+        reply = _generate_single_reply(author, text)
+        if not reply:
+            continue
 
-            # Skip if older than 7 days
-            age = _tweet_age_minutes(url)
-            if age > 10080:
-                continue
+        reply = humanize(reply)
+        log.info(f"[{source_name}] Reply ({len(reply)} chars): {reply}")
 
-            # Generate reply
-            log.info(f"[DIRECT] Replying to @{username}: {text[:60]}...")
-            reply = _generate_single_reply(username, text)
-            if not reply:
-                continue
+        try:
+            reply_to_tweet(url, reply)
+            replied.add(url)
+            posted += 1
+            time.sleep(random.randint(10, 20))
+        except Exception:
+            log.info(f"[{source_name}] Failed to reply to {url}")
+            traceback.print_exc()
 
-            reply = humanize(reply)
-            log.info(f"[DIRECT] Reply ({len(reply)} chars): {reply}")
+    return posted
 
-            try:
-                reply_to_tweet(url, reply)
-                replied.add(url)
-                posted += 1
-                time.sleep(random.randint(10, 20))
-            except Exception:
-                log.info(f"[DIRECT] Failed to reply to {url}")
-                traceback.print_exc()
 
-            # Max 5 replies per account per cycle
-            if posted >= 5:
-                break
+def run_direct_reply_cycle():
+    """Find tweets from 3 sources and reply to everything."""
+    replied = load_replied()
+    total = 0
 
-        # Small pause between accounts
-        time.sleep(random.randint(3, 6))
+    # === SOURCE 1: Home feed (best source - curated by X for you) ===
+    log.info("[DIRECT] === Scraping home feed ===")
+    feed_tweets = scrape_home_feed(max_tweets=10)
+    if feed_tweets:
+        total += _reply_to_tweets(feed_tweets, replied, "FEED")
+
+    # === SOURCE 2: X search (fresh content on AI, crypto, bourse) ===
+    queries = random.sample(SEARCH_QUERIES, min(3, len(SEARCH_QUERIES)))
+    for query in queries:
+        log.info(f"[DIRECT] === Searching X: {query} ===")
+        search_tweets = scrape_x_search(query, max_tweets=8)
+        if search_tweets:
+            total += _reply_to_tweets(search_tweets, replied, "SEARCH")
+
+    # === SOURCE 3: Influencer profiles (direct visit) ===
+    accounts = random.sample(PRIORITY_ACCOUNTS, min(5, len(PRIORITY_ACCOUNTS)))
+    for username in accounts:
+        log.info(f"[DIRECT] === Checking @{username} ===")
+        tweets = scrape_profile_tweets(username, max_tweets=5)
+        if tweets:
+            profile_tweets = [{"url": t["url"], "text": t["text"], "author": username} for t in tweets]
+            total += _reply_to_tweets(profile_tweets, replied, "PROFILE")
 
     save_replied(replied)
-    log.info(f"[DIRECT] Posted {posted} direct replies this cycle.")
+    log.info(f"[DIRECT] Total: {total} replies posted this cycle.")
 
 
 def safe_run_direct_reply_cycle():
