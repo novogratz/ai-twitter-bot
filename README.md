@@ -1,54 +1,41 @@
-# ai-twitter-bot
+# @kzer_ai - The Sharpest AI Account on X
 
-L'actu IA, Crypto et Bourse avant tout le monde. Des prises de position tranchees. Zero bullshit. Tu me detesteras jusqu'a ce que j'aie raison. Powered by Claude Code. Tout en francais.
+The fastest AI news. The hardest takes. 0% bullshit. Powered by Claude Code.
 
-## How it works
+## What It Does
 
-The bot runs 4 autonomous systems:
+4 autonomous bots running 24/7:
 
-**Post bot** - Finds the freshest IA/Crypto/Bourse news via web search (Opus) and writes sharp French tweets (280 chars max). ~20% of posts are hot takes (Sonnet, no web search) covering all 3 topics. Posts threads for big stories. All posts in French.
+**Post Bot** - Finds breaking AI news via web search (Opus) and writes sharp English tweets. ~70 news posts + ~20 hot takes per day. Hot takes mix: AI philosophy, industry trolling, and personal AI tool reviews ("Just tested Claude Code and..."). Threads for big stories.
 
-**Reply bot** - 3 parallel agents (IA, Crypto, Invest), 3-4 replies each (~10 total). Runs every 1-3 min. FULL TROLL MODE. French first. Any account size. Auto-likes before replying. 20-30% quote tweets (French). STRICT recency: last 30 min preferred, today only, NEVER older.
+**Reply Bot** - Finds 10-14 AI tweets every 2 minutes and drops devastating one-liner replies. Matches tweet language (English or French). Targets big posts with high engagement + replies to top comments on viral threads. Auto-likes before replying.
 
-**Engage bot** - Visits 3-5 target accounts every 25 minutes and likes their latest tweet. ~40 accounts across AI, crypto, finance, and French tech. Builds reciprocity.
+**Engage Bot** - Auto-follows top AI accounts. Visits 5-8 profiles every 15 minutes, likes their latest 2 tweets. ~45 accounts: OpenAI, Anthropic, Google DeepMind, Sam Altman, Yann LeCun, Karpathy, and more. Tracks who's been followed.
 
-**Notify bot** - Every 20 minutes, visits own latest tweet and likes up to 5 replies. People feel seen, come back, become regulars. Signals active engagement to the algorithm.
+**Notify Bot** - Likes up to 8 replies on own tweets every 10 minutes. People feel seen, come back, become regulars.
 
 ## Schedule (EST)
 
-Posts:
-- Night (11pm-6am): every 45-75 min
-- Morning rush (6am-10am): every 15-20 min
-- Midday (10am-5pm): every 40 min
-- Evening rush (5pm-7pm): every 15 min
-- Wind down (7pm-11pm): every 40 min
+| Time         | Post interval | Reply interval | Engage     | Notify     |
+|--------------|---------------|----------------|------------|------------|
+| 11pm - 6am   | 30-45 min     | 2 min          | 15 min     | 10 min     |
+| 6am - 7pm    | 15-20 min     | 2 min          | 15 min     | 10 min     |
+| 7pm - 11pm   | 20-30 min     | 2 min          | 15 min     | 10 min     |
 
-Replies adapt to peak hours:
-- Peak (6-9am, 2-5pm EST, 2-4am for France): every 1-2 min
-- Default: every 2-3 min
-- Late night: every 8-12 min
+## Growth Features
 
-Engage bot: every 25 min. Notify bot: every 20 min.
-
-## Growth features
-
-- **3 topics** - IA, Crypto, Investissement/Bourse. All covered in news, replies, and hot takes
-- **Full French mode** - All posts, hot takes, and quote tweets in French. Replies match original tweet language
-- **Fast reply cycles** - 3 parallel agents, ~10 replies per cycle, every 1-3 min. FULL TROLL MODE
-- **Hot takes** - Engagement bait in French across all 3 topics with zero web search latency
-- **French priority** - French Twitter is #1 priority, any topic. Searches "IA", "tech", "startup", "dev" first
-- **High volume replies** - 10-12 replies per cycle in full troll/comedy mode
-- **Strict recency** - All content must be from today, last 30 min preferred. NEVER yesterday or older. Date injected into prompts
-- **Rising tweet targeting** - Replies to tweets posted 10-30 min ago for top-of-thread placement
-- **Big account filter** - Prioritizes 10k+ follower accounts for replies
-- **Quote tweets** - 20-30% of replies visible on own timeline
-- **Like + reply combo** - Double notification for tweet authors
+- **AI-only focus** - Pure AI authority. No dilution.
+- **High volume** - ~90 posts/day + ~400 replies/day
+- **Auto-follow** - Follows top AI accounts automatically
+- **Double-like** - Likes 2 tweets per profile visit
+- **Personal experience tweets** - "Just tested [tool] and..." feels authentic, drives engagement
+- **Big post targeting** - Replies to high-engagement tweets for max visibility
+- **Auto-like before reply** - Double notification for tweet authors
+- **Notification farming** - Likes 8 replies every 10 min, builds loyalty
 - **Thread posting** - 2-3 tweet threads for big stories (algorithm boost)
-- **Engagement pods** - Auto-likes target AI accounts for reciprocity
-- **Notification farming** - Likes replies on own tweets to build loyalty
-- **Cross-dedup** - Reply bot avoids topics the post bot just covered
 - **Follow CTA** - ~25% of posts include "Follow @kzer_ai"
-- **Safari cleanup** - Auto-closes tabs after every action
+- **Cross-dedup** - Reply bot avoids topics the post bot just covered
+- **Structured logging** - Rotating file logs + engagement CSV
 
 ## Setup
 
@@ -63,22 +50,33 @@ npm install -g @anthropic-ai/claude-code
 claude login
 ```
 
-No Twitter API keys, no Anthropic API key, nothing else.
+No Twitter API keys. No Anthropic API key. Nothing else.
 
 ## Usage
 
 ```bash
-# Run the bot (all 4 systems)
-python main.py
-
-# Post a single tweet manually
-python test_tweet.py
+python main.py              # Run all 4 bots
+python main.py --post-only  # Only post news + hot takes
+python main.py --reply-only # Only reply to tweets
+python main.py --dry-run    # Print without posting
 ```
 
-Stop with `Ctrl+C`.
+Stop with `Ctrl+C` (graceful shutdown).
+
+## Configuration
+
+Environment variables (all optional):
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `MAX_NEWS_PER_DAY` | 70 | Max news posts per day |
+| `MAX_HOTAKES_PER_DAY` | 20 | Max hot takes per day |
+| `NEWS_MODEL` | claude-opus-4-6 | Model for news tweets |
+| `REPLY_MODEL` | claude-sonnet-4-6 | Model for replies |
+| `HOTAKE_MODEL` | claude-sonnet-4-6 | Model for hot takes |
 
 ## Requirements
 
-- macOS (posting uses AppleScript to automate browser clicks)
+- macOS (posting uses AppleScript to automate Safari)
 - Claude Code CLI installed and authenticated
-- X/Twitter logged in on your default browser (Safari)
+- X/Twitter logged in on Safari

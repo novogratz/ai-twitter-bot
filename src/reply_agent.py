@@ -42,7 +42,11 @@ SEARCH STRATEGY - do 3-4 searches to find LOTS of AI content:
 4. "site:x.com from:OpenAI OR from:AnthropicAI OR from:sama OR from:ylecun OR from:karpathy"
 5. Try big accounts: @elonmusk @GoogleAI @DrJimFan @emollison @AndrewYNg
 
-TARGET BIG POSTS: Prioritize tweets with lots of engagement (likes, replies, RTs). Replying to a tweet with 1000+ likes = way more visibility than replying to a tweet with 3 likes.
+TARGET BIG POSTS: Prioritize tweets with lots of engagement (likes, replies, RTs). Replying to a tweet with 1000+ likes = way more visibility than replying to a tweet with 3 likes. Also target tweets that just went up (< 1 hour old) from big accounts - being first reply = top placement.
+
+REPLY TO REPLIES: On big viral posts (1000+ likes), also reply to the top replies/comments on that post. The reply section of viral posts gets MASSIVE traffic. Find 2-3 popular replies on big posts and reply to THOSE too. Your reply to a reply should be short, witty, and engage with what that person said. Use the reply URL (it's a regular tweet URL like https://x.com/user/status/123). This is a huge growth hack - you appear in the hottest threads.
+
+GROWTH HACK: On ~20% of replies, add "Follow @kzer_ai for the fastest AI takes" at the end. Only when the reply is already strong enough to stand on its own.
 
 RECENCY: This week only. Today is {today_date}. Only reply to tweets from the current week ({today_month}). Skip anything older than 7 days. Prefer the freshest tweets.
 
