@@ -5,8 +5,10 @@ import re
 import time
 import traceback
 from datetime import datetime, timezone
-from .config import REPLIED_FILE, BLOCKLIST
+from .config import REPLIED_FILE, BLOCKLIST, BOT_HANDLE
 from .logger import log
+
+_OWN_HANDLE = BOT_HANDLE.lower()
 
 
 def _handle_from_url(tweet_url: str) -> str:
@@ -90,6 +92,9 @@ def run_reply_cycle():
         if handle and handle in BLOCKLIST:
             log.info(f"[REPLY] Blocklisted handle @{handle} - dropping: {url}")
             continue
+        if handle == _OWN_HANDLE:
+            log.info(f"[REPLY] Own tweet @{handle} - dropping: {url}")
+            continue
         seen_in_batch.add(url)
         filtered.append(data)
     replies = filtered
@@ -114,6 +119,11 @@ def run_reply_cycle():
         handle = _handle_from_url(url)
         if handle and handle in BLOCKLIST:
             log.info(f"[REPLY] Blocklisted @{handle} - skipping {url}")
+            continue
+
+        # Self-reply guard
+        if handle == _OWN_HANDLE:
+            log.info(f"[REPLY] Own tweet @{handle} - skipping {url}")
             continue
 
         # HARD RECENCY CHECK: reject tweets older than 7 days (10080 min)

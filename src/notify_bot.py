@@ -2,7 +2,7 @@
 import json
 import os
 import traceback
-from .config import _PROJECT_ROOT, BLOCKLIST
+from .config import _PROJECT_ROOT, BLOCKLIST, BOT_HANDLE
 from .logger import log
 from .twitter_client import (
     like_own_tweet_replies,
@@ -15,6 +15,7 @@ from .replyback_agent import generate_replyback
 from .humanizer import humanize
 
 REPLIED_BACK_FILE = os.path.join(_PROJECT_ROOT, "replied_back.json")
+_OWN_HANDLE = BOT_HANDLE.lower()
 
 
 def _influencer_handles() -> set:
@@ -86,8 +87,9 @@ def run_replyback_cycle():
             log.info(f"[REPLYBACK] Blocklisted @{handle} - skipping.")
             continue
 
-        # Skip our own replies
-        if "kzer_ai" in user.lower() or handle == "kzer_ai":
+        # Skip our own replies (never reply to ourselves)
+        if handle == _OWN_HANDLE or _OWN_HANDLE in user.lower():
+            log.info(f"[REPLYBACK] Own reply — skipping.")
             continue
 
         # Skip very short or empty replies

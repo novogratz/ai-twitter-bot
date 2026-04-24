@@ -7,8 +7,10 @@ from .logger import log
 from .config import REPLY_MODEL
 from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, reply_to_tweet
 from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url
-from .config import BLOCKLIST
+from .config import BLOCKLIST, BOT_HANDLE
 from .humanizer import humanize
+
+_OWN_HANDLE = BOT_HANDLE.lower()
 
 # French-speaking influencers — visited FIRST, every cycle
 FR_ACCOUNTS = [
@@ -172,6 +174,11 @@ def _reply_to_tweets(tweets, replied, source_name):
             continue
         if author and author.lower() in BLOCKLIST:
             log.info(f"[{source_name}] Blocklisted author @{author} - skipping {url}")
+            continue
+
+        # Skip our OWN tweets — never reply to ourselves
+        if url_handle == _OWN_HANDLE or (author and author.lower() == _OWN_HANDLE):
+            log.info(f"[{source_name}] Own tweet — skipping {url}")
             continue
 
         # Skip if older than 7 days
