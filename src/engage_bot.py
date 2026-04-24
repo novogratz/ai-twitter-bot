@@ -53,7 +53,7 @@ TARGET_ACCOUNTS = [
 
     # === Crypto: Influencers FR ===
     "PowerHasheur", "Capetlevrai", "Dark_Emi_",
-    "CryptoMusic_fr", "JournalDuCoin",
+    "CryptoMusic_fr", "JournalDuCoin", "powl_d",
 
     # === Crypto: Media & accounts ===
     "CoinDesk", "Cointelegraph", "coin_bureau",

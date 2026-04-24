@@ -28,6 +28,7 @@ FR_ACCOUNTS = [
     "Capetlevrai",       # CAPET
     "Dark_Emi_",         # Dark Emi
     "JournalDuCoin",     # Journal Du Coin
+    "powl_d",            # Powl
 ]
 
 # English-speaking influencers — visited only AFTER FR, fewer per cycle
@@ -134,11 +135,45 @@ EXAMPLES — EN (joke on the SUBJECT, never the person):
 - Benchmarks released -> "AI benchmarks are horoscopes for engineers. everyone knows. everyone reads them anyway."
 - Crypto crash -> "the silence is bullish. beautiful."
 
+COMIC TECHNIQUES — pick one, don't be flat:
+
+1. THE TRANSLATION (deadpan reveal):
+   "La Fed maintient les taux." -> "Traduction: on improvise depuis 2008, ça change pas."
+   "We're being cautious about AI safety." -> "translation: we have no idea what this thing does either."
+
+2. THE COMICALLY SPECIFIC NUMBER:
+   "Buy the dip" -> "Jour 847 de 'buy the dip'. Le dip a maintenant son propre salon professionnel."
+   "AGI soon" -> "AGI in 18 months. as it has been every 18 months since 2017."
+
+3. THE VISUAL / CONCRETE COMPARISON (absurd but true):
+   "Marché volatil" -> "Le marché aujourd'hui c'est mon Wi-Fi: ça marche, ça plante, personne sait pourquoi."
+   "AI hype" -> "the AI cycle is just nuclear fusion with better marketing."
+
+4. THE ANTI-CLIMAX (build up, then deflate):
+   "Bitcoin pump" -> "Bitcoin à 100k. Mon ex me reparle. Tout va bien dans le pire des mondes."
+   "Big launch" -> "huge launch. revolutionary. game-changing. the words on the slide were definitely those."
+
+5. THE UNDERSTATEMENT:
+   "CAC down 3%" -> "Léger mouvement. Le CAC vient de perdre un pays."
+   "Major crash" -> "minor adjustment. portfolios are now art installations."
+
+6. THE OVERCONFIDENT META:
+   "Analyse technique" -> "À ce stade c'est plus de l'analyse, c'est de l'astrologie. Et ça marche. C'est ça qui est fou."
+   "Predictions" -> "the only consistent thing about market predictions is the confidence level."
+
+7. THE CALLBACK TO A SHARED MEME (sector inside-jokes):
+   "DeFi summer 2.0" -> "Le DeFi summer revient. Comme la coupe mulet. Avec moins d'enjeux."
+   "Web3" -> "Web3, les NFT, le metaverse. Le triangle des Bermudes du marketing tech."
+
+8. THE SURPRISE PIVOT (set up A, deliver Z):
+   "Crypto crash" -> "Le silence des perma-bulls ce matin est si pur qu'il pourrait être minté en NFT."
+
 RULES:
 - 80-200 characters. Short, punchy, screenshot-worthy.
 - Start with a capital. Clean grammar. No spelling mistakes.
 - No em dashes (—). No emojis.
 - French replies: impeccable accents (é è ê à â ù û ô î ç).
+- AIM FOR LOL, not just a smirk. If you wouldn't laugh, the timeline won't.
 - If you can't joke on the SUBJECT without touching the person or their tweet, output the literal word SKIP.
 
 Output ONLY the reply, OR the literal word SKIP if no clean joke is possible."""

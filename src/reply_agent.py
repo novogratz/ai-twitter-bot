@@ -29,6 +29,7 @@ TARGET_ACCOUNTS = [
     "Capetlevrai",       # CAPET
     "Dark_Emi_",         # Dark Emi
     "JournalDuCoin",     # Journal Du Coin
+    "powl_d",            # Powl
 
     # IA / Tech (mostly EN)
     "OpenAI", "AnthropicAI", "GoogleDeepMind",
@@ -123,6 +124,27 @@ LITMUS TEST avant de soumettre une réponse:
 3. Est-ce que la personne va liker ma réponse? Si pas certain -> SUPPRIME.
 4. Si tu peux pas faire de vanne sur le SUJET (marché/concept/trend), n'envoie PAS de réponse pour ce tweet. Mieux vaut zéro réponse qu'une réponse blessante.
 
+TECHNIQUES COMIQUES — vise le LOL, pas juste le sourire:
+
+1. LA TRADUCTION (deadpan):
+   "La Fed maintient les taux" -> "Traduction: on improvise depuis 2008, ça change pas."
+2. LE NUMÉRO ABSURDEMENT PRÉCIS:
+   "Buy the dip" -> "Jour 847 de 'buy the dip'. Le dip a son propre salon pro maintenant."
+3. LA COMPARAISON VISUELLE absurde mais vraie:
+   "Marché volatil" -> "Le marché aujourd'hui c'est mon Wi-Fi: ça marche, ça plante, personne sait pourquoi."
+4. L'ANTI-CLIMAX:
+   "Bitcoin à 100k" -> "Bitcoin à 100k. Mon ex me reparle. Tout va bien dans le pire des mondes."
+5. L'UNDERSTATEMENT (minimiser une catastrophe):
+   "CAC -3%" -> "Léger mouvement. Le CAC vient de perdre un pays."
+6. LE META OVERCONFIDENT:
+   "Analyse technique" -> "À ce stade c'est plus de l'analyse, c'est de l'astrologie. Et ça marche, c'est ça qui est fou."
+7. LE CALLBACK MEME (inside jokes du secteur):
+   "DeFi summer 2.0" -> "Le DeFi summer revient. Comme la coupe mulet. Avec moins d'enjeux."
+8. LE SURPRISE PIVOT (setup classique, chute absurde):
+   "Crypto crash" -> "Le silence des perma-bulls ce matin est si pur qu'il pourrait être minté en NFT."
+
+VISE LE LOL. Si toi tu rigoles pas en lisant ta réponse, la timeline non plus.
+
 {discovered_section}
 
 {dedup_section}
@@ -134,7 +156,7 @@ RECHERCHES — lance ces recherches dans cet ordre, FRANÇAIS D'ABORD:
 2. "site:x.com from:IVTrading OR from:ABaradez lang:fr"
 3. "site:x.com from:Graphseo OR from:DereeperVivre OR from:FinTales_ lang:fr"
 4. "site:x.com from:PowerHasheur OR from:Capetlevrai OR from:Dark_Emi_ lang:fr"
-5. "site:x.com from:JournalDuCoin lang:fr"
+5. "site:x.com from:JournalDuCoin OR from:powl_d lang:fr"
 6. "site:x.com CAC 40 OR Bitcoin OR IA lang:fr"
 7. "site:x.com crypto OR bourse OR trading lang:fr"
 8. "site:x.com from:OpenAI OR from:AnthropicAI OR from:GoogleDeepMind"

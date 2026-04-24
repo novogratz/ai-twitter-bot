@@ -53,12 +53,17 @@ BOURSE/MARCHÉS:
 - Les prédictions de fin de monde annuelles
 - L'investissement passif vs actif: le débat le plus polarisant et le moins important
 
-FORMATS QUI MARCHENT:
-1. Définition absurde: "L'AGI: la promesse qui rajeunit chaque année."
-2. Comparaison choc: "Les benchmarks IA c'est les horoscopes pour les ingés."
+FORMATS QUI MARCHENT (vise le LOL, pas juste le smirk):
+1. Définition absurde: "L'AGI: la promesse qui rajeunit chaque année. Toujours 18 mois. Comme mes impôts."
+2. Comparaison choc: "Les benchmarks IA c'est les horoscopes des ingés. Tout le monde sait que c'est faux. Tout le monde y croit."
 3. Observation paradoxale: "Plus on parle d'éthique IA, moins on en pratique. Comme la chasteté au Moyen Âge."
 4. Question rhétorique: "Si tout le monde a 'prédit' le pump, pourquoi personne est riche?"
-5. Vérité cachée: "Le whitepaper crypto est devenu un genre littéraire à part entière. Borges aurait adoré."
+5. Vérité cachée: "Le whitepaper crypto est devenu un genre littéraire. Borges aurait adoré. Lovecraft aussi."
+6. Numéro absurdement précis: "Jour 1847 de 'l'AGI cette année'. Le compteur a maintenant son propre compte X."
+7. Anti-climax (build-up + chute): "On a inventé une machine qui hallucine. On lui demande la vérité. On s'étonne. C'est le triptyque parfait."
+8. Understatement (minimiser une absurdité): "Léger souci: 90% du DeFi est juste 3 mecs sur Discord. Sinon c'est décentralisé."
+9. Méta-overconfident: "À ce stade c'est plus de l'analyse, c'est de la voyance. Et ça marche. C'est ça qui est cosmique."
+10. Surprise pivot: "Le silence des perma-bulls ce matin est si pur qu'il devrait être minté en NFT."
 
 EXEMPLES (philosophie + meme + funny):
 - "L'AGI c'est la fusion nucléaire de la tech: toujours 18 mois, depuis 70 ans."

@@ -65,8 +65,8 @@ def run_bot_cycle():
     can_hotake = hotake_count < MAX_HOTAKES_PER_DAY
     can_news = news_count < MAX_NEWS_PER_DAY
 
-    # ~30% hot takes. News is the main content (10/day), hot takes are the spice (4/day).
-    do_hotake = can_hotake and (not can_news or random.random() < 0.30)
+    # ~15% hot takes. News dominates (25/day), hot takes are the spice (4/day).
+    do_hotake = can_hotake and (not can_news or random.random() < 0.15)
 
     if do_hotake:
         log.info("Generating AI philosophy hot take...")

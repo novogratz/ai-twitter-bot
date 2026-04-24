@@ -31,26 +31,27 @@ from src.performance import evaluate_and_learn
 def post_interval_minutes() -> int:
     """Cluster posts during peak engagement windows.
     Peak hours: 9-11am EST, 1-3pm EST (US tech workers scrolling).
-    These windows get 3-5x more impressions than off-peak."""
+    These windows get 3-5x more impressions than off-peak.
+    Tightened intervals to push more news posts per day (user wants more news)."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 23 <= hour or hour < 8:
         # Night: sleep like a human
-        return random.randint(240, 420)
+        return random.randint(180, 300)
     elif 9 <= hour < 11:
-        # PEAK: Morning window - post more often
-        return random.randint(60, 90)
+        # PEAK: Morning window
+        return random.randint(45, 75)
     elif 13 <= hour < 15:
-        # PEAK: Afternoon window - post more often
-        return random.randint(60, 90)
+        # PEAK: Afternoon window
+        return random.randint(45, 75)
     elif 8 <= hour < 12:
         # Near-peak morning
-        return random.randint(100, 160)
+        return random.randint(70, 110)
     elif 12 <= hour < 18:
         # Afternoon
-        return random.randint(100, 160)
+        return random.randint(70, 110)
     else:
         # Evening: winding down
-        return random.randint(150, 240)
+        return random.randint(110, 180)
 
 
 def reply_interval_minutes() -> int:
