@@ -70,13 +70,20 @@ RECENCY - NON-NEGOTIABLE:
 - ONLY tweets from TODAY ({today_date}). Nothing from yesterday.
 - The MOST RECENT tweets are the most valuable. Being early = being seen.
 
-SEARCH: Find the BIGGEST AI posts right now. Run 5-6 targeted searches:
+SEARCH: Find the BIGGEST AI posts right now. Run 8-10 targeted searches:
 1. "site:x.com from:OpenAI OR from:AnthropicAI OR from:GoogleAI {today_date}"
 2. "site:x.com from:sama OR from:elonmusk OR from:karpathy AI {today_date}"
 3. "site:x.com from:DarioAmodei OR from:demishassabis OR from:satyanadella AI {today_date}"
 4. "site:x.com AI announcement OR AI launch OR AI release {today_date}"
 5. "site:x.com AI breaking OR GPT OR Claude OR Gemini {today_date}"
 6. "site:x.com from:ABORASHEEDNVIDIA OR from:xAI OR from:MistralAI {today_date}"
+7. "site:x.com #AI OR #ArtificialIntelligence OR #GPT trending {today_date}"
+8. "site:x.com AI viral tweet {today_date}" (catch trending discussions you'd miss otherwise)
+9. "site:x.com #AINews OR #OpenAI OR #Claude OR #LLM {today_date}"
+10. "site:x.com AI controversy OR AI drama OR AI fired OR AI lawsuit {today_date}"
+
+TRENDING HIJACK: If a hashtag or topic is trending related to AI, PRIORITIZE IT.
+Trending tweets get 10-100x more views. Being early on a trending topic = maximum growth.
 
 RECENCY TARGETING:
 - BEST: tweets 5-30 min old (you'll be among the first replies = top position)

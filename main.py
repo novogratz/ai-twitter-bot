@@ -22,24 +22,30 @@ from src.logger import log
 from src.bot import safe_run_bot_cycle
 from src.reply_bot import safe_run_reply_cycle
 from src.engage_bot import safe_run_engage_cycle
-from src.notify_bot import safe_run_notify_cycle, safe_run_boost_cycle
+from src.notify_bot import safe_run_notify_cycle, safe_run_boost_cycle, safe_run_replyback_cycle
 from src.performance import evaluate_and_learn
 
 
 def post_interval_minutes() -> int:
-    """Few posts per day, only bangers. ~3-5 total.
-    Original posts from a small account get almost no organic reach.
-    Only post when you have something genuinely sharp to say."""
+    """Cluster posts during peak engagement windows.
+    Peak hours: 9-11am EST, 1-3pm EST (US tech workers scrolling).
+    These windows get 3-5x more impressions than off-peak."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 23 <= hour or hour < 8:
-        # Don't post at night. Sleep like a human.
+        # Night: sleep like a human
         return random.randint(240, 420)
+    elif 9 <= hour < 11:
+        # PEAK: Morning window - post more often
+        return random.randint(60, 90)
+    elif 13 <= hour < 15:
+        # PEAK: Afternoon window - post more often
+        return random.randint(60, 90)
     elif 8 <= hour < 12:
-        # Morning: maybe one good post
-        return random.randint(120, 200)
+        # Near-peak morning
+        return random.randint(100, 160)
     elif 12 <= hour < 18:
-        # Afternoon: peak hours, but still selective
-        return random.randint(90, 160)
+        # Afternoon
+        return random.randint(100, 160)
     else:
         # Evening: winding down
         return random.randint(150, 240)
@@ -139,6 +145,14 @@ def main():
             safe_run_notify_cycle,
             trigger=IntervalTrigger(minutes=45),
             id="notify_job",
+        )
+
+        # Reply-back bot - reply to people who reply to our tweets (creates threads)
+        log.info("Reply-back bot: replying to followers every 60 minutes.")
+        scheduler.add_job(
+            safe_run_replyback_cycle,
+            trigger=IntervalTrigger(minutes=60),
+            id="replyback_job",
         )
 
         # Boost bot - one self-retweet per day is enough

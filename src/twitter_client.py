@@ -339,3 +339,87 @@ def like_own_tweet_replies():
         time.sleep(2)
         log.info("[NOTIFY] Liked up to 8 replies!")
         close_front_tab()
+
+
+def scrape_own_tweet_and_replies() -> dict | None:
+    """Visit own profile, open latest tweet, scrape the tweet text and reply texts.
+    Returns {"own_tweet": str, "replies": [{"user": str, "text": str}]} or None."""
+    with _safari_lock:
+        log.info("[REPLYBACK] Opening own profile...")
+        webbrowser.open(BOT_PROFILE_URL)
+        time.sleep(5)
+
+        log.info("[REPLYBACK] Opening latest tweet...")
+        _navigate_to_first_tweet()
+        time.sleep(5)
+
+        # Scroll down to load replies
+        _run_applescript('''
+        tell application "System Events"
+            repeat 3 times
+                key code 125
+                delay 0.5
+            end repeat
+        end tell
+        ''')
+        time.sleep(2)
+
+        js_script = '''
+        tell application "Safari"
+            set result to do JavaScript "
+                (function() {
+                    var articles = document.querySelectorAll('article[data-testid=\\"tweet\\"]');
+                    if (articles.length < 2) return JSON.stringify({own_tweet: '', replies: []});
+                    var ownEl = articles[0].querySelector('[data-testid=\\"tweetText\\"]');
+                    var ownText = ownEl ? ownEl.textContent.trim() : '';
+                    var replies = [];
+                    for (var i = 1; i < Math.min(articles.length, 6); i++) {
+                        var a = articles[i];
+                        var textEl = a.querySelector('[data-testid=\\"tweetText\\"]');
+                        var text = textEl ? textEl.textContent.trim() : '';
+                        if (!text) continue;
+                        var userEl = a.querySelector('[data-testid=\\"User-Name\\"] a[role=\\"link\\"]');
+                        var user = userEl ? userEl.textContent.trim() : '';
+                        replies.push({user: user, text: text.substring(0, 200)});
+                    }
+                    return JSON.stringify({own_tweet: ownText.substring(0, 200), replies: replies});
+                })()
+            " in current tab of front window
+        end tell
+        '''
+        import json
+        try:
+            result = subprocess.run(
+                ["osascript", "-e", js_script],
+                capture_output=True, text=True, timeout=15,
+            )
+            if result.returncode == 0 and result.stdout.strip():
+                data = json.loads(result.stdout.strip())
+                log.info(f"[REPLYBACK] Found {len(data.get('replies', []))} replies on latest tweet")
+                close_front_tab()
+                return data
+        except Exception as e:
+            log.info(f"[REPLYBACK] Scraping failed: {e}")
+
+        close_front_tab()
+        return None
+
+
+def reply_to_reply(reply_text: str):
+    """Reply to the currently visible reply on own tweet.
+    Assumes the tweet page is already open and we're positioned on a reply."""
+    # Press 'r' to open reply box, paste, submit
+    _run_applescript('''
+    tell application "System Events"
+        keystroke "r"
+    end tell
+    ''')
+    time.sleep(2)
+    _paste_text(reply_text)
+    time.sleep(1)
+    _run_applescript('''
+    tell application "System Events"
+        keystroke return using command down
+    end tell
+    ''')
+    time.sleep(2)
