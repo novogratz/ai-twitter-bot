@@ -10,63 +10,108 @@ from .twitter_client import visit_profile_and_like, follow_account
 
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 
-# Target list: AI + Crypto + Finance, with French accounts prioritized
+# Massive target list: AI + Crypto + Finance, French accounts FIRST
 TARGET_ACCOUNTS = [
-    # === FRENCH ACCOUNTS (PRIORITY) ===
-    # French AI / Tech
-    "MistralAI", "HuggingFace", "Aborasheedlephia_ai",
-    "levelsio", "guillaumepalayer", "taraborasheedze",
-    "olivierrolaborasheednd", "Hashaborasheedeur", "startupaborasheedlley",
-    # French Crypto / Finance
-    "JournalDuCoin", "CointribuneNews", "CryptoastMedia",
-    "TheBigWhale_", "crypto_music", "CryptoFR_",
-    "BFMBourse", "LesEchos", "Aborasheedlternatives_Eco",
-    # French Tech Media
-    "faborasheedrandroid", "01net", "Numerama", "Sieclaborashede_Digital",
-    # French Influencers Tech/Crypto
-    "OwenSiaborasheedrl", "CedricO_", "florianburnel",
+    # =============================================================
+    # FRENCH INFLUENCERS (PRIORITY - grow francophone base)
+    # =============================================================
 
-    # === TIER 1: Mega accounts ===
+    # --- French Crypto / Bitcoin influencers ---
+    "PowerHasheur",       # Hasheur (Owen Simonin) - #1 crypto FR, 400k+ followers
+    "crypto_futur",       # Crypto Futur (Mattéo) - 240k+ followers
+    "CryptoMatrix2",      # Crypto Matrix - #1 chaîne crypto FR daily
+    "Capetlevrai",        # Crypto influenceur FR majeur
+    "Dark_Emi_",          # Dark Emi - crypto influenceur FR
+    "FinTales_",          # FinTales - finance/crypto FR
+    "CryptoGourmetFR",    # Crypto Gourmet - analyses marché FR
+    "FranceCryptos",      # France Cryptos - actu Bitcoin FR
+    "BeInCrypto_fr",      # BeInCrypto France
+    "cryptofranceFR",     # Crypto Trading France
+    "cryptonews_FR",      # Cryptonews FR
+    "Paul_Theway",        # Cryptonorth - formation crypto FR
+    "BTC_CRYPTO_fr",      # bitcoin-crypto.fr
+    "CryptoFR_",          # Communauté crypto FR
+
+    # --- French Finance / Bourse influencers ---
+    "ABaradez",           # Alexandre Baradez - analyste macro IG France
+    "NCheron_bourse",     # Nicolas Chéron - stratégiste bourse indépendant
+    "Graphseo",           # Julien Flot - trader/analyste technique
+    "Tradosaure",         # Tradosaure - trader pro, formateur
+    "MatthieuLouvet",     # Matthieu Louvet - investissement ETF/bourse
+    "ZoneBourse",         # Zonebourse - actu marchés FR
+    "CafeDelaBourse",     # Café de la Bourse - média finance FR
+
+    # --- French Crypto Médias ---
+    "LeJournalDuCoin",    # Journal du Coin - #1 média crypto FR
+    "CointribuneNews",    # Cointribune - actu crypto FR
+    "CryptoastMedia",     # Cryptoast - analyses crypto FR
+    "TheBigWhale_",       # The Big Whale - crypto/Web3 FR
+
+    # --- French AI / Tech ---
+    "MistralAI",          # Mistral AI - startup IA française
+    "HuggingFace",        # Hugging Face - fondé en France
+    "fchollet",           # François Chollet - créateur de Keras, français
+    "tariqkrim",          # Tariq Krim - fondateur Netvibes
+    "CedricO_",           # Cédric O - ex-secrétaire d'État au numérique
+    "flaborasheedeurpellerin",    # Fleur Pellerin - VC, ex-ministre numérique
+    "ActuIA_",            # Actu IA - média IA FR
+
+    # --- French Tech Média ---
+    "frandroid",          # Frandroid - tech FR
+    "01net",              # 01net - tech FR
+    "Numerama",           # Numerama - tech/science FR
+    "Siecle_Digital",     # Siècle Digital - tech FR
+    "BFMBourse",          # BFM Bourse
+    "LesEchos",           # Les Echos
+    "LaTribune",          # La Tribune
+    "FrenchWeb",          # FrenchWeb - startup/tech FR
+
+    # --- French Tech/Startup influencers ---
+    "guillaumepalayer",   # Guillaume Palayer - tech FR
+    "OlivierRolandFR",    # Olivier Roland - entrepreneur FR
+    "florianburnel",      # Florian Burnel - tech FR
+    "levelsio",           # Pieter Levels - indie maker (parle de la France)
+
+    # =============================================================
+    # INTERNATIONAL (big accounts for visibility)
+    # =============================================================
+
+    # --- Mega accounts ---
     "elonmusk", "BillGates", "satyanadella", "sama", "ylecun", "karpathy",
 
-    # === TIER 2: AI companies ===
+    # --- AI companies ---
     "OpenAI", "AnthropicAI", "GoogleDeepMind", "MetaAI",
     "xAI", "Cohere", "PerplexityAI", "DeepSeek_AI",
     "stability_ai", "Midjourney", "RunwayML", "ScaleAI",
 
-    # === TIER 3: AI leaders ===
+    # --- AI leaders ---
     "DarioAmodei", "demishassabis", "mustafasuleyman",
     "ID_AA_Carmack", "ilyasut",
 
-    # === TIER 4: Crypto / Web3 ===
-    "VitalikButerin", "caborasheedz_oficial", "brian_armstrong",
+    # --- Crypto / Web3 international ---
+    "VitalikButerin", "cz_binance", "brian_armstrong",
     "Binance", "coinbase", "solana",
     "CoinDesk", "Cointelegraph", "WuBlockchain",
-    "inversaborasheedr_", "APompliano",
+    "APompliano", "100trillionUSD",
 
-    # === TIER 5: Finance / Investissement ===
+    # --- Finance / Markets ---
     "markets", "Bloomberg", "ReutersBiz",
     "TechCrunch", "TheVerge", "VentureBeat",
 
-    # === TIER 6: AI influencers ===
+    # --- AI influencers ---
     "TheAIGRID", "mattshumer_", "rowancheung",
     "AlphaSignalAI", "TheRundownAI", "DrJimFan",
-    "AndrewYNg", "fchollet", "swyx",
+    "AndrewYNg", "swyx",
 
-    # === TIER 7: Dev tools ===
+    # --- Dev tools ---
     "LangChainAI", "cursor_ai", "replit", "vercel", "supabase",
 ]
 
-# Clean garbled handles
+# Clean any garbled handles (Safari keyboard issue)
 TARGET_ACCOUNTS = [h for h in TARGET_ACCOUNTS if "aborasheed" not in h]
 
-# Add clean versions
-TARGET_ACCOUNTS += [
-    "Alephia_ai", "tarazze", "OlivierRolandFR", "Hasheur",
-    "startupvalley", "Alternatives_Eco", "frandroid",
-    "Siecle_Digital", "OwenSiarl", "cz_oficial", "investor_",
-    "AlphaSignalAI", "TheRundownAI", "supabase",
-]
+# Add clean versions of garbled ones
+TARGET_ACCOUNTS += ["fleurpellerin"]
 
 # Dedup
 TARGET_ACCOUNTS = list(dict.fromkeys(TARGET_ACCOUNTS))
