@@ -183,11 +183,13 @@ def main():
             id="discover_job",
         )
 
-        # Roast bot - sarcastic 1x reply per @pgm_pm tweet (anti-bot retort)
-        log.info("Roast bot: sarcastically replying to @pgm_pm tweets every 3 hours.")
+        # Roast bot - sarcastic 1x reply per @pgm_pm tweet (anti-bot retort).
+        # He tweets every ~minute, so check often. URL dedup hard-caps to 1 per
+        # tweet, MAX_PER_CYCLE caps burst rate.
+        log.info("Roast bot: sarcastically replying to @pgm_pm tweets every 10 minutes.")
         scheduler.add_job(
             safe_run_roast_pgm_cycle,
-            trigger=IntervalTrigger(hours=3),
+            trigger=IntervalTrigger(minutes=10),
             id="roast_pgm_job",
         )
 

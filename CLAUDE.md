@@ -70,8 +70,9 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **News**: 18/day cap (configurable), only real stories.
 - **Humanizer on everything**: Every post goes through a human-pass.
 - **Self-improving**: Scrapes own metrics every 2h and adapts prompts.
-- **Autonomous discovery**: Every 6h, finds new crypto/AI/bourse influencers and adds them to monitoring.
-- **Blocklist**: `BLOCKLIST` in `src/config.py` — currently `@pgm_pm` (La Pique). Never reply.
+- **Autonomous discovery**: Every 6h, finds new crypto/AI/bourse influencers and adds them to monitoring. Approved FR ai/crypto/bourse accounts get auto-followed.
+- **Blocklist**: `BLOCKLIST` in `src/config.py` — `@pgm_pm` (La Pique). Skipped in reply/replyback paths so we never get sucked into a bot-vs-bot loop.
+- **Roast bot**: Dedicated path for `@pgm_pm` — visits his profile every 10 min and posts ONE sarcastic reply per ORIGINAL tweet (URL dedup hard-caps to 1 per tweet). Roasts the *phenomenon* (auto-replies, scripted prises), never the person.
 - **Anti-spam**: Moderate frequencies to avoid shadow bans.
 
 ### Bots
@@ -84,7 +85,9 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 
 **Notify + Boost bot** - Like replies on own tweets every 45 min. When an INFLUENCER replies under our tweet, reply IN-THREAD (lands under their reply) — otherwise standalone @mention. Self-retweet every 8 hours.
 
-**Discover bot** - Every 6h: searches X, scores candidates with Claude, appends approved handles to `discovered_accounts.json`.
+**Discover bot** - Every 6h: searches X, scores candidates with Claude, appends approved handles to `discovered_accounts.json`. Also auto-follows the best new FR ai/crypto/bourse handles (persisted in `followed_accounts.json`).
+
+**Roast bot** - Every 10 min: visits @pgm_pm's profile, posts up to 3 sarcastic replies on his original tweets (1 per URL via existing dedup). Jittered between posts. His replies on our tweets stay blocked via BLOCKLIST so no loop.
 
 **Performance bot** - Scrapes likes/views every 2h. Identifies top/worst performers. Injects learnings into prompts.
 
@@ -100,7 +103,8 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **`src/reply_bot.py`** - Reply orchestration. Pre-filter dedup + blocklist + intra-batch dedup. Cap 2000.
 - **`src/engage_bot.py`** - Growth engine. Static list + discovered handles merged at load.
 - **`src/notify_bot.py`** - Reply-back + boost. Influencer replies get nested in-thread responses.
-- **`src/discover_bot.py`** - Autonomous influencer discovery (search X -> score with Claude -> persist).
+- **`src/discover_bot.py`** - Autonomous influencer discovery (search X -> score with Claude -> persist). Auto-follows approved FR ai/crypto/bourse handles.
+- **`src/roast_pgm_bot.py`** - Dedicated 1-roast-per-tweet bot for @pgm_pm. URL dedup hard-cap.
 - **`src/performance.py`** - Self-improving. Scrapes metrics every 2h.
 - **`src/engagement_log.py`** - CSV engagement logging.
 - **`src/twitter_client.py`** - Browser automation with Safari lock + retry. `reply_to_tweet_in_thread()` for nested replies.
@@ -119,7 +123,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 | 12pm - 6pm   | 90-160 min    | 20 min         |
 | 6pm - 11pm   | 150-240 min   | 20 min         |
 
-Engage bot: every 30 min (3-5 accounts, 3 likes each). Notify bot: every 45 min. Replyback: every 60 min. Boost: every 8h. Discover: every 6h. Performance: every 2h.
+Engage bot: every 30 min (3-5 accounts, 3 likes each). Notify bot: every 45 min. Replyback: every 60 min. Boost: every 8h. Discover: every 6h. Roast (@pgm_pm): every 10 min. Performance: every 2h.
 
 ## Key design notes
 
