@@ -5,6 +5,7 @@ from typing import Optional
 from .config import NEWS_MODEL
 from .logger import log
 from .history import get_recent_tweets
+from .performance import get_learnings_for_prompt
 
 PROMPT_TEMPLATE = """You are a real person who works in tech and follows AI closely. You tweet like someone who genuinely cares about this stuff, not like a news aggregator or a content bot.
 
@@ -95,6 +96,8 @@ Prefer topics that DIVIDE:
 - AGI is near vs AGI is decades away
 
 If nothing is worth posting: respond SKIP.
+
+{performance_section}
 
 {dedup_section}
 
@@ -195,8 +198,24 @@ Pick something COMPLETELY DIFFERENT."""
     else:
         dedup_section = ""
 
+    # Get performance learnings
+    perf = get_learnings_for_prompt()
+    performance_section = ""
+    if perf:
+        performance_section = f"""==================================================
+LEARN FROM YOUR PAST PERFORMANCE
+==================================================
+
+{perf}
+
+USE THIS DATA. Write more like your top performers. Avoid patterns from your worst."""
+
     today_date = datetime.now().strftime("%Y-%m-%d")
-    prompt = PROMPT_TEMPLATE.format(dedup_section=dedup_section, today_date=today_date)
+    prompt = PROMPT_TEMPLATE.format(
+        dedup_section=dedup_section,
+        today_date=today_date,
+        performance_section=performance_section,
+    )
 
     result = subprocess.run(
         [

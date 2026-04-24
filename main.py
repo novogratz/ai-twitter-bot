@@ -10,6 +10,7 @@ import argparse
 import random
 import signal
 import sys
+import traceback
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from apscheduler.schedulers.blocking import BlockingScheduler
@@ -19,6 +20,7 @@ from src.bot import safe_run_bot_cycle
 from src.reply_bot import safe_run_reply_cycle
 from src.engage_bot import safe_run_engage_cycle
 from src.notify_bot import safe_run_notify_cycle, safe_run_boost_cycle
+from src.performance import evaluate_and_learn
 
 
 def post_interval_minutes() -> int:
@@ -132,6 +134,19 @@ def main():
             safe_run_boost_cycle,
             trigger=IntervalTrigger(minutes=45),
             id="boost_job",
+        )
+
+        def safe_evaluate():
+            try:
+                evaluate_and_learn()
+            except Exception:
+                log.error(f"[PERF] Evaluation failed: {traceback.format_exc()}")
+
+        log.info("Performance bot: evaluating tweet performance every 2 hours.")
+        scheduler.add_job(
+            safe_evaluate,
+            trigger=IntervalTrigger(hours=2),
+            id="perf_job",
         )
 
     log.info("All systems go. Bot is running.")
