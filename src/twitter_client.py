@@ -124,12 +124,25 @@ def like_tweet():
 def reply_to_tweet(tweet_url: str, reply_text: str):
     """Open a tweet, like it, click reply, type the reply, and submit."""
     with _safari_lock:
+        # Make sure Safari is focused first
+        _run_applescript('''
+        tell application "Safari" to activate
+        ''')
+        time.sleep(1)
+
         log.info(f"Opening tweet: {tweet_url}")
         webbrowser.open(tweet_url)
-        time.sleep(6)
+        time.sleep(8)  # Wait longer for tweet page to fully load
+
+        # Make sure Safari is in front
+        _run_applescript('''
+        tell application "Safari" to activate
+        ''')
+        time.sleep(1)
 
         # Like the tweet first (double notification for the author)
         like_tweet()
+        time.sleep(1)
 
         # Click reply
         log.info("Clicking reply...")
@@ -138,12 +151,12 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
             keystroke "r"
         end tell
         ''')
-        time.sleep(3)
+        time.sleep(4)  # Wait for reply box to open
 
         # Paste the reply (clipboard handles accents correctly)
         log.info("Pasting reply...")
         _paste_text(reply_text)
-        time.sleep(2)
+        time.sleep(3)  # Wait for paste to complete
 
         # Submit with Cmd+Enter
         log.info("Submitting reply...")
@@ -152,7 +165,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
             keystroke return using command down
         end tell
         ''')
-        time.sleep(2)
+        time.sleep(3)  # Wait for submission
         log.info("Reply posted!")
         close_front_tab()
 
