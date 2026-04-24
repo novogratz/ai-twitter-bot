@@ -6,7 +6,8 @@ import traceback
 from .logger import log
 from .config import REPLY_MODEL
 from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, reply_to_tweet
-from .reply_bot import load_replied, save_replied, _tweet_age_minutes
+from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url
+from .config import BLOCKLIST
 from .humanizer import humanize
 
 # French influencers to reply to - they post all day
@@ -137,6 +138,15 @@ def _reply_to_tweets(tweets, replied, source_name):
         if url in replied:
             continue
 
+        # Skip blocklisted authors (URL handle OR scraped author)
+        url_handle = _handle_from_url(url)
+        if url_handle and url_handle in BLOCKLIST:
+            log.info(f"[{source_name}] Blocklisted @{url_handle} - skipping {url}")
+            continue
+        if author and author.lower() in BLOCKLIST:
+            log.info(f"[{source_name}] Blocklisted author @{author} - skipping {url}")
+            continue
+
         # Skip if older than 7 days
         age = _tweet_age_minutes(url)
         if age > 10080:
@@ -151,9 +161,12 @@ def _reply_to_tweets(tweets, replied, source_name):
         reply = humanize(reply)
         log.info(f"[{source_name}] Reply ({len(reply)} chars): {reply}")
 
+        # Lock URL in BEFORE posting so an interrupted/retried run can't double-reply.
+        replied.add(url)
+        save_replied(replied)
+
         try:
             reply_to_tweet(url, reply)
-            replied.add(url)
             posted += 1
             time.sleep(random.randint(10, 20))
         except Exception:

@@ -126,12 +126,17 @@ def run_reply_cycle():
         log.info(f"[REPLY] Target: {url}")
         log.info(f"[REPLY] {action_type.upper()} ({len(reply_text)} chars): {reply_text}")
 
+        # Lock the URL in BEFORE posting. If the post call gets interrupted
+        # (network blip, AppleScript hang, OS kill) after the tweet went
+        # through, we still won't re-reply on the next cycle.
+        replied.add(url)
+        save_replied(replied)
+
         try:
             if action_type == "quote":
                 quote_tweet(url, reply_text)
             else:
                 reply_to_tweet(url, reply_text)
-            replied.add(url)
             posted_count += 1
             log_reply(url, data["reply"], action_type)
             # Wait between replies so browser can catch up
