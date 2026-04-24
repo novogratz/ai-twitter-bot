@@ -1,10 +1,29 @@
 """Reply bot: finds AI tweets and posts troll replies."""
 import json
 import os
+import re
 import time
 import traceback
+from datetime import datetime, timezone
 from .config import REPLIED_FILE
 from .logger import log
+
+
+# Twitter snowflake epoch (ms since 2010-11-04T01:42:54.657Z)
+_TWITTER_EPOCH = 1288834974657
+
+
+def _tweet_age_minutes(tweet_url: str) -> int:
+    """Extract tweet age in minutes from the tweet ID (Twitter snowflake).
+    Returns 9999 if we can't parse it."""
+    match = re.search(r"/status/(\d+)", tweet_url)
+    if not match:
+        return 9999
+    tweet_id = int(match.group(1))
+    timestamp_ms = (tweet_id >> 22) + _TWITTER_EPOCH
+    tweet_time = datetime.fromtimestamp(timestamp_ms / 1000, tz=timezone.utc)
+    age = datetime.now(tz=timezone.utc) - tweet_time
+    return int(age.total_seconds() / 60)
 from .reply_agent import generate_replies
 from .twitter_client import reply_to_tweet, quote_tweet, refresh_feed
 from .history import get_recent_tweets
@@ -56,6 +75,13 @@ def run_reply_cycle():
         if url in replied:
             log.info(f"[REPLY] Already replied to {url} - skipping.")
             continue
+
+        # HARD RECENCY CHECK: reject tweets older than 2 hours
+        age = _tweet_age_minutes(url)
+        if age > 120:
+            log.info(f"[REPLY] Tweet is {age} min old (~{age // 60}h) - TOO OLD, skipping: {url}")
+            continue
+        log.info(f"[REPLY] Tweet age: {age} min - fresh enough")
 
         reply_text = humanize(data["reply"])
         log.info(f"[REPLY] Target: {url}")
