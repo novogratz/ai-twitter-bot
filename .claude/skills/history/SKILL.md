@@ -1,7 +1,6 @@
 ---
 name: history
 description: Show recent tweet history and replied tweets
-disable-model-invocation: true
 allowed-tools: Read
 ---
 

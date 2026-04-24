@@ -1,7 +1,6 @@
 ---
 name: accounts
 description: View and manage the target accounts list for engagement
-disable-model-invocation: true
 allowed-tools: Read Write Bash Edit
 ---
 

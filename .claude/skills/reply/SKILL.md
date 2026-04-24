@@ -1,7 +1,6 @@
 ---
 name: reply
 description: Manually trigger a reply cycle - finds AI tweets and posts witty replies
-disable-model-invocation: true
 allowed-tools: Bash Read
 ---
 

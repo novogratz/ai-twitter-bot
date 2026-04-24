@@ -1,7 +1,6 @@
 ---
 name: follow
 description: Follow a specific Twitter account
-disable-model-invocation: true
 arguments: [username]
 allowed-tools: Bash Read Write
 ---

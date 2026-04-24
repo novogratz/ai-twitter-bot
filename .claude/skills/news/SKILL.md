@@ -1,7 +1,6 @@
 ---
 name: news
 description: Generate a news tweet preview without posting - review first
-disable-model-invocation: true
 allowed-tools: Bash
 ---
 

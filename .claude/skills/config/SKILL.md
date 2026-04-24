@@ -1,7 +1,6 @@
 ---
 name: config
 description: View and edit bot configuration - limits, models, settings
-disable-model-invocation: true
 allowed-tools: Read Edit
 ---
 

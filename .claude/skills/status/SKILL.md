@@ -1,7 +1,6 @@
 ---
 name: status
 description: Quick bot health check - is it running, counters, errors
-disable-model-invocation: true
 allowed-tools: Bash Read
 ---
 

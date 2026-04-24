@@ -1,7 +1,6 @@
 ---
 name: engage
 description: Trigger an engage cycle - follow and like target AI accounts
-disable-model-invocation: true
 allowed-tools: Bash
 ---
 

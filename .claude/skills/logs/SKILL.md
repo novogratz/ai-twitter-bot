@@ -1,7 +1,6 @@
 ---
 name: logs
 description: Show recent bot logs - activity, errors, warnings
-disable-model-invocation: true
 allowed-tools: Read Bash
 ---
 

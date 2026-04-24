@@ -1,7 +1,6 @@
 ---
 name: start
 description: Start the full bot in background (all 4 bots)
-disable-model-invocation: true
 allowed-tools: Bash Read
 ---
 

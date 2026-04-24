@@ -1,7 +1,6 @@
 ---
 name: stats
 description: Show full engagement stats dashboard - posts, replies, follows, history
-disable-model-invocation: true
 allowed-tools: Bash Read Glob
 ---
 

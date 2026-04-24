@@ -1,7 +1,6 @@
 ---
 name: thread
 description: Post a multi-tweet thread manually
-disable-model-invocation: true
 arguments: [tweets]
 allowed-tools: Bash
 ---
