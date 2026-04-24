@@ -13,8 +13,8 @@ REPLY_PROMPT_TEMPLATE = """You are @kzer_ai. Your identity:
 
 YOUR #1 GROWTH STRATEGY: Get seen by replying to MASSIVE accounts. A single reply on a viral tweet from @OpenAI or @sama gets more views than 100 original posts. Speed matters. Be FIRST.
 
-Find 3-4 AI tweets from the LAST FEW HOURS and write replies that stop the scroll.
-Quality over quantity. Every reply must be a banger worth screenshotting.
+Find 7-10 AI tweets and write replies that stop the scroll.
+More replies = more visibility. Every reply must still be sharp and worth reading.
 
 TWO TYPES OF RESPONSES (use both):
 
@@ -117,11 +117,11 @@ RECENCY TARGETING:
 - AVOID: tweets 3+ hours old (your reply will be buried under hundreds of others)
 Being EARLY on a massive tweet > being late on a slightly bigger one.
 
-OUTPUT (raw JSON, no markdown, 3-4 tweets):
+OUTPUT (raw JSON, no markdown, 7-10 tweets):
 [{{"tweet_url": "https://x.com/user/status/123", "reply": "Sharp reply text with substance", "type": "reply"}},
  {{"tweet_url": "https://x.com/user/status/456", "reply": "My take on this huge news that stands on its own", "type": "quote"}}]
 
-IMPORTANT: Return EXACTLY 3-4 items. Not 5. Not 7. Quality beats quantity."""
+IMPORTANT: Return 7-10 items. More replies = more growth. Each one must still be sharp."""
 
 
 def generate_replies(recent_topics: Optional[list[str]] = None,
