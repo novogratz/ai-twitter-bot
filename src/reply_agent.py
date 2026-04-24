@@ -122,12 +122,29 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
             if bracket_end > bracket_start:
                 cleaned = cleaned[bracket_start:bracket_end + 1]
 
+    # Try parsing as-is first
+    for attempt_text in [cleaned, output]:
+        try:
+            data = json.loads(attempt_text)
+            if isinstance(data, list) and len(data) > 0:
+                valid = [d for d in data if "tweet_url" in d and "reply" in d]
+                if valid:
+                    return valid
+        except json.JSONDecodeError:
+            pass
+
+    # Last resort: find all JSON objects individually with regex
     try:
-        data = json.loads(cleaned)
-        if isinstance(data, list) and len(data) > 0:
-            valid = [d for d in data if "tweet_url" in d and "reply" in d]
-            return valid if valid else None
-        return None
-    except json.JSONDecodeError:
-        log.info(f"[REPLY] Could not parse JSON: {output[:200]}...")
-        return None
+        items = re.findall(
+            r'\{\s*"tweet_url"\s*:\s*"([^"]+)"\s*,\s*"reply"\s*:\s*"([^"]+)"\s*,\s*"type"\s*:\s*"([^"]+)"\s*\}',
+            output,
+        )
+        if items:
+            results = [{"tweet_url": url, "reply": reply, "type": t} for url, reply, t in items]
+            log.info(f"[REPLY] Recovered {len(results)} replies via regex fallback")
+            return results
+    except Exception:
+        pass
+
+    log.info(f"[REPLY] Could not parse JSON: {output[:300]}...")
+    return None
