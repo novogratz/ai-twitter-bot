@@ -267,6 +267,36 @@ def post_thread(tweets: list[str]):
     log.info("[THREAD] Thread complete!")
 
 
+def retweet_own_latest():
+    """Visit own profile and retweet the latest tweet for extra exposure."""
+    log.info("[BOOST] Opening own profile to retweet latest tweet...")
+    webbrowser.open(BOT_PROFILE_URL)
+    time.sleep(5)
+
+    _navigate_to_first_tweet()
+    time.sleep(3)
+
+    # Press 't' to retweet (X keyboard shortcut)
+    script = '''
+    tell application "System Events"
+        keystroke "t"
+    end tell
+    '''
+    if _run_applescript(script):
+        time.sleep(1)
+        # Confirm retweet by pressing Enter
+        _run_applescript('''
+        tell application "System Events"
+            keystroke return
+        end tell
+        ''')
+        time.sleep(2)
+        log.info("[BOOST] Retweeted own latest tweet!")
+    else:
+        log.info("[BOOST] Failed to retweet.")
+    close_front_tab()
+
+
 def like_own_tweet_replies():
     """Visit own profile, open latest tweet, and like replies to build loyalty."""
     log.info("[NOTIFY] Opening own profile...")
