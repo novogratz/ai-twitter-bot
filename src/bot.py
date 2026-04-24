@@ -64,8 +64,8 @@ def run_bot_cycle():
     can_hotake = hotake_count < MAX_HOTAKES_PER_DAY
     can_news = news_count < MAX_NEWS_PER_DAY
 
-    # ~22% hot takes (1 per hour out of ~4-5 posts per hour)
-    do_hotake = can_hotake and (not can_news or random.random() < 0.22)
+    # ~30% hot takes (1 per hour out of ~3-4 posts per hour)
+    do_hotake = can_hotake and (not can_news or random.random() < 0.30)
 
     if do_hotake:
         log.info("Generating AI philosophy hot take...")
