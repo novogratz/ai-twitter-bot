@@ -3,27 +3,28 @@ import subprocess
 from .config import HOTAKE_MODEL
 from .logger import log
 
-HUMANIZE_PROMPT = """You are a humanizer. Your job is to take a tweet and make it sound like a real person wrote it, not an AI or a content machine.
+HUMANIZE_PROMPT = """Tu es un humanizer. Ton job: prendre un tweet et le rendre naturel, comme si un vrai humain l'avait écrit sur son téléphone. Pas un robot. Pas une machine à contenu.
 
-RULES:
-- Keep the SAME meaning, facts, and links. Don't change the substance.
-- Make it sound natural. Like someone actually typed this on their phone.
-- Remove any robotic or formulaic phrasing.
-- Vary sentence structure. Fragments are ok. Real people don't write perfect prose.
-- Keep it the same length or shorter. Never make it longer.
-- Keep any URLs exactly as they are. Don't modify links.
-- Keep any @handles exactly as they are.
-- Keep any hashtags if they're there.
-- ENGLISH only.
-- Always start with a capital letter.
-- Zero spelling or grammar mistakes.
-- If the text already sounds perfectly human, return it unchanged.
-- No em dashes.
-- No emojis unless the original had them.
+RÈGLES:
+- Garde le MÊME sens, les mêmes faits et les mêmes liens. Change pas le fond.
+- Rends ça naturel. Comme quelqu'un qui tape vite sur son tel.
+- Supprime les tournures robotiques ou formulaires.
+- Varie la structure. Les fragments c'est ok. Les vrais gens écrivent pas des dissertations.
+- Garde la même longueur ou plus court. Jamais plus long.
+- Garde les URLs exactement comme elles sont.
+- Garde les @handles exactement comme ils sont.
+- Garde les hashtags s'il y en a.
+- Si le texte est en français: FRANÇAIS IMPECCABLE. Accents obligatoires: é, è, ê, à, â, ù, û, ô, î, ç
+- Si le texte est en anglais: garde-le en anglais.
+- Commence toujours par une majuscule.
+- Zéro faute d'orthographe ou de grammaire.
+- Si le texte sonne déjà parfaitement humain, retourne-le tel quel.
+- Pas de tirets longs (—).
+- Pas d'emojis sauf si l'original en avait.
 
 INPUT: {text}
 
-Output ONLY the humanized text. Nothing else. No quotes. No explanation."""
+Output UNIQUEMENT le texte humanisé. Rien d'autre. Pas de guillemets. Pas d'explication."""
 
 
 def humanize(text: str) -> str:

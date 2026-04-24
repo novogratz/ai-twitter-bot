@@ -10,37 +10,51 @@ from .twitter_client import visit_profile_and_like, follow_account
 
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 
-# AI-focused target accounts
+# IA + Crypto + Bourse target accounts
 TARGET_ACCOUNTS = [
-    # === Tier 1: Mega accounts ===
+    # === IA: Mega accounts ===
     "elonmusk", "BillGates", "satyanadella",
     "sama", "ylecun", "karpathy",
 
-    # === Tier 2: AI companies ===
+    # === IA: Companies ===
     "OpenAI", "AnthropicAI", "GoogleDeepMind", "MetaAI",
     "xAI", "MistralAI", "HuggingFace", "Cohere", "PerplexityAI",
     "stability_ai", "Midjourney", "RunwayML", "ScaleAI",
-    "Databricks", "DeepSeek_AI", "GoogleAI", "NVIDIAAIDev",
 
-    # === Tier 3: AI leaders / CEOs ===
+    # === IA: Leaders / CEOs ===
     "DarioAmodei", "demishassabis", "mustafasuleyman",
-    "ID_AA_Carmack", "jackclark", "ilyasut", "jeffdean",
+    "ID_AA_Carmack", "jackclark", "ilyasut",
 
-    # === Tier 4: Researchers / builders ===
-    "DrJimFan", "GaryMarcus", "AravSrinivas",
-    "swyx", "AndrewYNg", "fchollet", "hardmaru",
+    # === IA: Researchers / builders ===
+    "DrJimFan", "GaryMarcus", "AndrewYNg", "fchollet",
+    "swyx", "hardmaru", "AravSrinivas",
 
-    # === Tier 5: AI influencers ===
+    # === IA: Influencers ===
     "TheAIGRID", "mattshumer_", "levelsio",
     "rowancheung", "AlphaSignalAI", "TheRundownAI",
     "thealexbanks", "NathanLands",
 
-    # === Tier 6: AI dev tools ===
-    "LangChainAI", "cursor_ai", "modal_labs", "replit",
-    "vercel", "supabase",
+    # === Crypto: Mega accounts ===
+    "VitalikButerin", "APompliano", "CryptoCapo_",
+    "caborashedzaborashedles", "brian_armstrong",
 
-    # === Tier 7: Tech media ===
-    "TechCrunch", "TheVerge", "WIRED", "VentureBeat",
+    # === Crypto: Influencers FR ===
+    "PowerHasheur", "Capetlevrai", "Dark_Emi_",
+    "CryptoMusic_fr", "JournalDuCoin",
+
+    # === Crypto: Media & accounts ===
+    "CoinDesk", "Cointelegraph", "coin_bureau",
+    "WuBlockchain", "tier10k",
+
+    # === Bourse/Finance: FR ===
+    "Graphseo", "ABaradez", "FinTales_",
+    "ZonebourseFR", "BFMBourse",
+
+    # === Bourse/Finance: US ===
+    "chamath", "jimcramer", "unusual_whales",
+
+    # === Tech media ===
+    "TechCrunch", "TheVerge", "WIRED",
 ]
 
 # Dedup

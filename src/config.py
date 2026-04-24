@@ -13,8 +13,8 @@ ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
 # Daily posting limits - hot takes are the differentiator, news only for huge stories
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "10"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "4"))
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "15"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "0"))
 
 # Models
 NEWS_MODEL = os.environ.get("NEWS_MODEL", "claude-opus-4-6")
