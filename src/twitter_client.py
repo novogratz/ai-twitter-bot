@@ -341,7 +341,7 @@ def like_own_tweet_replies():
         close_front_tab()
 
 
-def scrape_own_tweet_and_replies() -> dict | None:
+def scrape_own_tweet_and_replies():
     """Visit own profile, open latest tweet, scrape the tweet text and reply texts.
     Returns {"own_tweet": str, "replies": [{"user": str, "text": str}]} or None."""
     with _safari_lock:
