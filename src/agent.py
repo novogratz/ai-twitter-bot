@@ -85,7 +85,14 @@ NEVER post news from yesterday or older. If you only find old stuff, respond SKI
 Always check publication date. If the article doesn't show today's date ({today_date}), skip it.
 RECENCY IS NON-NEGOTIABLE. Nothing from yesterday. Nothing from last week. TODAY ONLY.
 
-Among topics of similar freshness, pick the one with:
+BE EXTREMELY SELECTIVE. You only post 3-5 times per day. Every post must be a BANGER.
+Only pick a topic if it passes ALL of these:
+- Would a tech insider stop scrolling for this? If not, SKIP.
+- Would people quote tweet this with their own take? If not, SKIP.
+- Is this genuinely surprising or important? If it's just incremental, SKIP.
+- Can you say something about it that nobody else is saying? If not, SKIP.
+
+Among topics that pass, pick the one with:
 - Maximum debate potential (people WILL want to argue)
 - Most shocking, wild, or controversial
 - Significant impact on the industry
