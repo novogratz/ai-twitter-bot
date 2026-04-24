@@ -31,6 +31,19 @@ def _escape_for_applescript(text: str) -> str:
     return text.replace("\\", "\\\\").replace('"', '\\"')
 
 
+def _paste_text(text: str):
+    """Copy text to clipboard and paste it. Handles accented characters correctly."""
+    escaped = _escape_for_applescript(text)
+    script = f'''
+    set the clipboard to "{escaped}"
+    delay 0.3
+    tell application "System Events"
+        keystroke "v" using command down
+    end tell
+    '''
+    _run_applescript(script)
+
+
 def _navigate_to_first_tweet():
     """Use Tab+Enter to navigate to the first tweet on a profile/page."""
     script = '''
@@ -127,14 +140,9 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
         ''')
         time.sleep(3)
 
-        # Type the reply
-        escaped = _escape_for_applescript(reply_text)
-        log.info("Typing reply...")
-        _run_applescript(f'''
-        tell application "System Events"
-            keystroke "{escaped}"
-        end tell
-        ''')
+        # Paste the reply (clipboard handles accents correctly)
+        log.info("Pasting reply...")
+        _paste_text(reply_text)
         time.sleep(2)
 
         # Submit with Cmd+Enter
@@ -262,12 +270,7 @@ def post_thread(tweets: list[str]):
             ''')
             time.sleep(2)
 
-            escaped = _escape_for_applescript(tweet_text)
-            _run_applescript(f'''
-            tell application "System Events"
-                keystroke "{escaped}"
-            end tell
-            ''')
+            _paste_text(tweet_text)
             time.sleep(1)
 
             _run_applescript('''
