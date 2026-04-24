@@ -42,6 +42,10 @@ EXEMPLES (remarque comme ça sonne vrai, pas comme du contenu):
 - "Les VCs: 'On investit dans le futur.' Le futur: un chatbot avec un logo gradient"
 
 RÈGLES:
+- FRANÇAIS IMPECCABLE. Zéro faute d'orthographe, zéro faute de grammaire. Écriture professionnelle.
+- Accents obligatoires: é, è, ê, à, â, ô, î, ç. TOUJOURS. Vérifie chaque mot accentué.
+- Ponctuation correcte: points, virgules, apostrophes. Rien ne manque.
+- RELIS-TOI. Si un mot semble mal écrit, corrige-le.
 - FRANÇAIS uniquement. Ton audience est francophone.
 - Max 250 caractères
 - Pas de tirets cadratins, pas d'URLs
