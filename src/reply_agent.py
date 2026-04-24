@@ -51,20 +51,29 @@ EXEMPLES INVESTISSEMENTS:
 
 {skip_urls_section}
 
-RECHERCHE: Trouve des GROS posts francophones (50+ likes) des dernières 48h. Fais 5-6 recherches:
+RECENCY - NON NÉGOCIABLE:
+- UNIQUEMENT des tweets d'AUJOURD'HUI ({today_date}). Rien d'hier. Rien de la semaine dernière.
+- Vérifie la date de publication. Si c'est pas aujourd'hui, SKIP.
+- On veut du contenu FRAIS. Répondre à un vieux tweet c'est cringe.
+
+RECHERCHE: Ratisse LARGE. Fais 8-10 recherches minimum pour trouver tout le contenu frais du jour:
 1. "site:x.com intelligence artificielle OR IA OR ChatGPT {today_date}" (FRANÇAIS)
 2. "site:x.com crypto OR Bitcoin OR Ethereum OR DeFi {today_date}" (FRANÇAIS)
 3. "site:x.com bourse OR investissement OR trading OR CAC40 {today_date}" (FRANÇAIS)
-4. "site:x.com from:elaborasheedricwalter OR from:OlivierRolandFR OR from:hashaborasheedeur {today_date}" (comptes FR)
-5. "site:x.com AI OR OpenAI OR Anthropic {today_date}" (gros comptes anglophones)
-6. "site:x.com startup OR levée de fonds OR fintech {today_date}" (FRANÇAIS)
+4. "site:x.com from:PowerHasheur OR from:LeJournalDuCoin OR from:CryptoastMedia {today_date}"
+5. "site:x.com from:ABaradez OR from:NCheron_bourse OR from:Graphseo {today_date}"
+6. "site:x.com AI OR OpenAI OR Anthropic OR Claude {today_date}" (gros comptes)
+7. "site:x.com startup OR levée de fonds OR fintech français {today_date}"
+8. "site:x.com from:MistralAI OR from:HuggingFace OR from:fchollet {today_date}"
+9. "site:x.com Solana OR memecoin OR NFT OR Web3 {today_date}" (FRANÇAIS)
+10. "site:x.com NVIDIA OR Tesla OR Apple OR marché {today_date}" (FRANÇAIS)
 
-PRIORITÉ: Tweets francophones > tweets anglophones. Ton audience est francophone.
-CIBLE: Uniquement des tweets avec du vrai engagement. Priorise les comptes francophones à 10k+ followers et les anglophones à 100k+.
+PRIORITÉ: Tweets francophones d'aujourd'hui > tout le reste. Ton audience est francophone.
+CIBLE: Tout tweet francophone avec du contenu IA/crypto/finance posté AUJOURD'HUI. Pas de seuil minimum de likes - si c'est frais et pertinent, réponds.
 
-~15% en quote tweets ("type": "quote") - quand ta take est assez forte pour ton propre timeline.
+~20% en quote tweets ("type": "quote") - quand ta take est assez forte pour ton propre timeline. Les quote tweets te donnent de la visibilité sur TON profil.
 
-OUTPUT (JSON brut, pas de markdown, 12-15 tweets):
+OUTPUT (JSON brut, pas de markdown, 12-15 tweets MINIMUM):
 [{{"tweet_url": "https://x.com/user/status/123", "reply": "Réponse courte et dévastatrice", "type": "reply"}}]"""
 
 
