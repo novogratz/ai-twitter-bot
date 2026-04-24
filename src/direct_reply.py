@@ -41,16 +41,18 @@ PRIORITY_ACCOUNTS = [
     "TheRundownAI",
 ]
 
-# X search queries to find fresh content
+# X search queries - FRENCH FIRST
 SEARCH_QUERIES = [
-    "IA intelligence artificielle",
-    "Bitcoin crypto",
-    "bourse CAC 40",
-    "ChatGPT Claude Gemini",
-    "crypto france",
-    "trading bourse investissement",
-    "AI news",
-    "DeFi Ethereum Solana",
+    "IA intelligence artificielle lang:fr",
+    "Bitcoin crypto lang:fr",
+    "bourse CAC 40 lang:fr",
+    "crypto france lang:fr",
+    "trading bourse investissement lang:fr",
+    "ChatGPT Claude Gemini lang:fr",
+    "DeFi Ethereum Solana lang:fr",
+    "marchés financiers lang:fr",
+    "startup levée de fonds lang:fr",
+    "robot IA automatisation lang:fr",
 ]
 
 REPLY_PROMPT = """Tu es @kzer_ai. Le mec le plus DRÔLE de Twitter Finance/Crypto/IA.
@@ -86,8 +88,8 @@ EXEMPLES DE TON ÉNERGIE:
 - GPT-5 sort -> "Enfin un truc pour automatiser le bullshit corporate. L'humanité avance."
 
 RÈGLES:
-- Réponds dans la même langue que le tweet
-- FRANÇAIS IMPECCABLE si français. Accents: é, è, ê, à, â, ù, û, ô, î, ç
+- Réponds TOUJOURS en FRANÇAIS. Même si le tweet est en anglais, ta réponse est en français.
+- FRANÇAIS IMPECCABLE. Accents obligatoires: é, è, ê, à, â, ù, û, ô, î, ç
 - 80-200 caractères. Court, percutant, HILARANT.
 - Commence par une majuscule. Zéro faute.
 - Pas de tirets longs (—). Pas d'emojis.
