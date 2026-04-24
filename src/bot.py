@@ -1,6 +1,6 @@
 import random
 import traceback
-from datetime import datetime, date
+from datetime import date
 from .agent import generate_tweet
 from .hotake_agent import generate_hotake
 from .twitter_client import post_tweet, post_thread
@@ -14,8 +14,8 @@ _today = None
 _news_count = 0
 _hotake_count = 0
 
-MAX_NEWS_PER_DAY = 10
-MAX_HOTAKES_PER_DAY = 2
+MAX_NEWS_PER_DAY = 70      # ~3-4 per hour across 18 active hours
+MAX_HOTAKES_PER_DAY = 20   # ~1 per hour
 
 
 def _reset_if_new_day():
@@ -44,11 +44,11 @@ def run_bot_cycle():
     can_hotake = _hotake_count < MAX_HOTAKES_PER_DAY
     can_news = _news_count < MAX_NEWS_PER_DAY
 
-    # Hot take ~17% of the time (2 out of 12 total posts)
-    do_hotake = can_hotake and (not can_news or random.random() < 0.17)
+    # ~22% hot takes (1 per hour out of ~4-5 posts per hour)
+    do_hotake = can_hotake and (not can_news or random.random() < 0.22)
 
     if do_hotake:
-        print("[HOTAKE] Generating hot take (no web search)...")
+        print("[HOTAKE] Generating AI philosophy hot take...")
         tweet = generate_hotake()
         if tweet is None:
             print("[HOTAKE] Failed, falling back to news...")
