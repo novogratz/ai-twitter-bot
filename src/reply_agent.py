@@ -58,7 +58,16 @@ Today is {today_date}. ONLY reply to tweets from the LAST 48 HOURS. Nothing olde
 - Add "{today_date}" or "{today_month}" to EVERY search query to force recent results.
 - NEVER reply to tweets from last week, last month, or last year. This is embarrassing and makes the account look like a bot.
 
-NEVER RETURN SKIP. There are MILLIONS of AI tweets every day. You MUST return 10-14 replies every time. If a search fails, try different terms. Be creative.
+NEVER RETURN SKIP. There are MILLIONS of AI tweets every day. You MUST return 10-14 replies every time.
+
+IF YOU CAN'T FIND FRESH TWEETS, SEARCH HARDER:
+- Try different keywords: "AI launch", "AI update", "new model", "AI product", "AI demo"
+- Try specific companies: "OpenAI today", "Anthropic new", "Google AI", "Meta Llama", "NVIDIA"
+- Try people: "Sam Altman", "Elon Musk AI", "Yann LeCun", "Andrej Karpathy"
+- Try trending topics: "AI agent", "AI coding", "vibe coding", "AI startup", "AI regulation"
+- Try French: "intelligence artificielle", "IA actualité", "ChatGPT", "IA emploi"
+- Try broader: "x.com artificial intelligence", "x.com machine learning", "x.com deep learning"
+- Do 6-8 searches if needed. DO NOT GIVE UP. DO NOT RETURN OLD TWEETS. FIND FRESH ONES.
 
 QUOTE TWEETS (~15% of actions): Instead of replying, QUOTE TWEET the post with your take. Quote tweets show on YOUR timeline = your followers see it = more reach. Use "type": "quote" for these. Best for posts where your take is strong enough to stand alone.
 
