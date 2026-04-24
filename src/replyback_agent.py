@@ -10,6 +10,7 @@ Your original tweet: "{original_tweet}"
 Their reply: "{their_reply}"
 
 LANGUAGE: Reply in the SAME language as their reply. English = English. French = French.
+FRENCH ACCENTS: When replying in French, ALWAYS use proper accents: é, è, ê, à, â, ù, û, ô, î, ç. Never skip them.
 
 RULES:
 - Max 80 characters. Ultra short.
