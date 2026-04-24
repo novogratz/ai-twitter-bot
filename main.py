@@ -24,16 +24,16 @@ from src.performance import evaluate_and_learn
 
 
 def post_interval_minutes() -> int:
-    """3-4 posts per hour during the day, less at night."""
+    """~1 post per hour during the day, less at night. ~18 posts/day."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 23 <= hour or hour < 6:
-        return random.randint(30, 45)
+        return random.randint(90, 150)
     elif 6 <= hour < 10:
-        return random.randint(15, 20)
+        return random.randint(45, 70)
     elif 10 <= hour < 19:
-        return random.randint(15, 20)
+        return random.randint(40, 65)
     else:
-        return random.randint(20, 30)
+        return random.randint(55, 80)
 
 
 def reply_interval_minutes() -> int:
