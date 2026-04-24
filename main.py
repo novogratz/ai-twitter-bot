@@ -24,16 +24,26 @@ from src.performance import evaluate_and_learn
 
 
 def post_interval_minutes() -> int:
-    """~1 post per hour during the day, less at night. ~18 posts/day."""
+    """Human pace: ~8 posts spread across the day with natural gaps."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 23 <= hour or hour < 6:
-        return random.randint(90, 150)
-    elif 6 <= hour < 10:
-        return random.randint(45, 70)
-    elif 10 <= hour < 19:
-        return random.randint(40, 65)
+    if 23 <= hour or hour < 7:
+        # Sleeping. Real humans don't tweet at 3am.
+        return random.randint(180, 300)
+    elif 7 <= hour < 10:
+        # Morning scroll. Maybe one tweet with coffee.
+        return random.randint(80, 140)
+    elif 10 <= hour < 13:
+        # Most active. News drops, hot takes flow.
+        return random.randint(60, 100)
+    elif 13 <= hour < 17:
+        # Afternoon. Still engaged but has a job.
+        return random.randint(70, 120)
+    elif 17 <= hour < 21:
+        # Evening wind-down. Occasional tweet.
+        return random.randint(80, 140)
     else:
-        return random.randint(55, 80)
+        # Late night. Getting sleepy.
+        return random.randint(120, 180)
 
 
 def reply_interval_minutes() -> int:
