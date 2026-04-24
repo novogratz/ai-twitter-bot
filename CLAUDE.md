@@ -35,7 +35,7 @@ Bot autonome qui couvre l'actu IA, crypto et marchés/investissements. Balance d
 ### Smart Features
 - **Tout en français**: Posts, réponses, hot takes - tout en français avec accents obligatoires
 - **3 domaines**: IA + Crypto + Investissements/Marchés
-- **Volume agressif**: ~50 news + ~20 hot takes par jour (3-4 posts/heure). Chaque post doit être tranchant
+- **Qualité élite**: ~12 news + ~6 hot takes par jour (~1/heure). Chaque post doit être tranchant
 - **TROLL MODE**: Le plus tranchant, le plus drôle, le plus provocateur
 - **Self-improving**: Scrape ses propres métriques (likes/vues) et adapte son style automatiquement
 - **Auto-follow**: Suit les top comptes IA/crypto/finance, priorité aux comptes francophones
@@ -46,7 +46,7 @@ Bot autonome qui couvre l'actu IA, crypto et marchés/investissements. Balance d
 
 ### 5 Bots
 
-**Post bot** - News IA/crypto/finance en français (Opus, avec web search) + hot takes (Sonnet, sans web search). ~50 news + ~20 hot takes par jour (3-4/heure). Threads pour les grosses stories.
+**Post bot** - News IA/crypto/finance en français (Opus, avec web search) + hot takes (Sonnet, sans web search). ~12 news + ~6 hot takes par jour (~1/heure). Threads pour les grosses stories.
 
 **Reply bot** - 5-7 réponses de haute qualité par cycle. Tourne toutes les 5 min. TROLL MODE MAXIMUM. Cherche des tweets francophones en priorité, répond toujours en français. Cible les gros posts IA/crypto/finance. Quote tweets sur ~15%.
 
@@ -64,7 +64,7 @@ Bot autonome qui couvre l'actu IA, crypto et marchés/investissements. Balance d
 - **`src/hotake_agent.py`** - Hot take agent. Sonnet, no web search. French. IA + Crypto + Investissements trolling.
 - **`src/reply_agent.py`** - Reply agent. Single Sonnet + WebSearch. 5-7 tweets per cycle. French only. IA + Crypto + Investissements. Targets big francophone posts. This week only.
 - **`src/replyback_agent.py`** - Reply-back agent. Sonnet, no web search. Generates witty replies to people who reply to our tweets.
-- **`src/bot.py`** - Post orchestration. ~70% news, ~30% hot takes. Persistent daily limits (50 news, 20 hot takes). Falls back to hot take when no news. Handles threads. Engagement logging.
+- **`src/bot.py`** - Post orchestration. ~70% news, ~30% hot takes. Persistent daily limits (12 news, 6 hot takes). Falls back to hot take when no news. Handles threads. Engagement logging.
 - **`src/reply_bot.py`** - Reply orchestration. Refreshes feed, generates replies with cross-dedup, auto-likes, posts replies. Engagement logging.
 - **`src/engage_bot.py`** - Growth engine. Auto-follows AI/crypto/finance accounts, priorité francophones. Likes their latest 3 tweets.
 - **`src/notify_bot.py`** - Notification farmer. Visits own latest tweet, likes up to 8 replies. Self-retweet every 45 min.
@@ -78,10 +78,10 @@ Bot autonome qui couvre l'actu IA, crypto et marchés/investissements. Balance d
 
 | Time (EST)   | Post interval | Reply interval |
 |--------------|---------------|----------------|
-| 11pm - 6am   | 30-45 min     | 5 min          |
-| 6am - 10am   | 15-20 min     | 5 min          |
-| 10am - 7pm   | 15-20 min     | 5 min          |
-| 7pm - 11pm   | 20-30 min     | 5 min          |
+| 11pm - 6am   | 90-150 min    | 5 min          |
+| 6am - 10am   | 45-70 min     | 5 min          |
+| 10am - 7pm   | 40-65 min     | 5 min          |
+| 7pm - 11pm   | 55-80 min     | 5 min          |
 
 Engage bot: every 10 min (follow + like 3 tweets). Notify bot: every 8 min (like 8 replies). Boost bot: every 45 min (self-retweet). Performance: every 2h. All 24/7.
 
@@ -90,7 +90,7 @@ Engage bot: every 10 min (follow + like 3 tweets). Notify bot: every 8 min (like
 - No API keys needed (no Twitter API, no Anthropic API).
 - Tout en FRANÇAIS, 280 chars max. Audience francophone.
 - IA + CRYPTO + INVESTISSEMENTS. Les 3 domaines qui bougent le plus.
-- ~50 news + ~20 hot takes par jour (3-4/heure). Volume agressif, contenu tranchant.
+- ~12 news + ~6 hot takes par jour (~1/heure). Qualité tranchante, pas de spam.
 - TROLL MODE: le plus tranchant, le plus drôle, le plus provocateur.
 - News agent: Opus (deep analysis, better research). Reply + hot take agents: Sonnet.
 - Browser automation via `webbrowser.open` + AppleScript with retry logic. macOS only.
