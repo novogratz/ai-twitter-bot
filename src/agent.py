@@ -1,7 +1,9 @@
+"""News agent: searches for breaking AI news and generates English tweets."""
 import subprocess
 from datetime import datetime
 from typing import Optional
 from .config import NEWS_MODEL
+from .logger import log
 from .history import get_recent_tweets
 
 PROMPT_TEMPLATE = """You are @kzer_ai. The sharpest AI account on X. Fastest on news. Hardest takes. 0% bullshit.
@@ -283,7 +285,7 @@ Pick something COMPLETELY DIFFERENT."""
         text=True,
     )
     if result.returncode != 0:
-        print(f"Claude CLI stderr: {result.stderr}")
+        log.info(f"Claude CLI stderr: {result.stderr}")
         raise RuntimeError(f"Claude CLI failed (exit {result.returncode}): {result.stderr}")
     tweet = result.stdout.strip()
     if not tweet:

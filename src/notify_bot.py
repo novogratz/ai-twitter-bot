@@ -1,4 +1,6 @@
+"""Notify bot: likes replies on own tweets to build loyalty."""
 import traceback
+from .logger import log
 from .twitter_client import like_own_tweet_replies
 
 
@@ -6,9 +8,9 @@ def run_notify_cycle():
     """Visit own latest tweet, like replies, and build loyalty.
     Liking replies = people feel seen, come back, reply more.
     Signals active engagement to the algorithm."""
-    print("[NOTIFY] Checking replies on latest tweet...")
+    log.info("[NOTIFY] Checking replies on latest tweet...")
     like_own_tweet_replies()
-    print("[NOTIFY] Done.")
+    log.info("[NOTIFY] Done.")
 
 
 def safe_run_notify_cycle():
@@ -16,5 +18,5 @@ def safe_run_notify_cycle():
     try:
         run_notify_cycle()
     except Exception:
-        print("[NOTIFY] Error during notify cycle:")
+        log.info("[NOTIFY] Error during notify cycle:")
         traceback.print_exc()
