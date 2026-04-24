@@ -46,9 +46,9 @@ def post_interval_minutes() -> int:
 
 
 def reply_interval_minutes() -> int:
-    """Replies are the growth engine. Run frequently to catch viral tweets early.
-    Being first on a big tweet = thousands of views."""
-    return 5
+    """Replies are the growth engine but too fast = shadow ban.
+    Every 20 min = ~72 replies/day max. Enough to grow, not enough to get flagged."""
+    return 20
 
 
 def _graceful_shutdown(signum, frame):
@@ -126,26 +126,26 @@ def main():
 
     if not args.post_only and not args.reply_only:
         # Engage bot - follow and like AI accounts for reciprocity
-        log.info("Engage bot: following + liking target accounts every 15 minutes.")
+        log.info("Engage bot: following + liking target accounts every 30 minutes.")
         scheduler.add_job(
             safe_run_engage_cycle,
-            trigger=IntervalTrigger(minutes=15),
+            trigger=IntervalTrigger(minutes=30),
             id="engage_job",
         )
 
         # Notify bot - like replies on own tweets to build community
-        log.info("Notify bot: liking replies on own tweets every 10 minutes.")
+        log.info("Notify bot: liking replies on own tweets every 45 minutes.")
         scheduler.add_job(
             safe_run_notify_cycle,
-            trigger=IntervalTrigger(minutes=10),
+            trigger=IntervalTrigger(minutes=45),
             id="notify_job",
         )
 
-        # Boost bot - occasional self-retweet (not too often, looks spammy)
-        log.info("Boost bot: retweeting own latest tweet every 3 hours.")
+        # Boost bot - one self-retweet per day is enough
+        log.info("Boost bot: retweeting own latest tweet every 8 hours.")
         scheduler.add_job(
             safe_run_boost_cycle,
-            trigger=IntervalTrigger(hours=3),
+            trigger=IntervalTrigger(hours=8),
             id="boost_job",
         )
 

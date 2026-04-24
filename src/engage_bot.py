@@ -66,8 +66,8 @@ def run_engage_cycle():
     More accounts per cycle + 3 likes per visit = more visibility."""
     followed = _load_followed()
 
-    # 8-12 accounts per cycle for maximum reach
-    count = random.randint(8, 12)
+    # 3-5 accounts per cycle - stay under Twitter's radar
+    count = random.randint(3, 5)
     picks = random.sample(TARGET_ACCOUNTS, min(count, len(TARGET_ACCOUNTS)))
 
     log.info(f"[ENGAGE] Engaging with {len(picks)} accounts...")
