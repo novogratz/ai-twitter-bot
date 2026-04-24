@@ -66,38 +66,50 @@ EXAMPLES (sharp, memorable, worth following for):
 
 {skip_urls_section}
 
-RECENCY - NON-NEGOTIABLE:
-- ONLY tweets from TODAY ({today_date}). Nothing from yesterday.
-- The MOST RECENT tweets are the most valuable. Being early = being seen.
+RECENCY: Prefer tweets from the last few hours, but anything from the last 3 days is fine.
+Newer = better position in replies. But a great reply on a 2-day-old viral tweet still works.
 
-SEARCH STRATEGY: You MUST find FRESH tweets (last 2 hours). Cast a WIDE net.
-Run ALL of these searches. If the first few return stuff you've seen, KEEP GOING.
+SEARCH STRATEGY: Cast the WIDEST net possible. Run ALL of these searches.
+You need to find tweets you haven't seen before. If early searches return duplicates, KEEP GOING.
 
-TIER 1 - Big AI companies (check ALL of them):
-1. "site:x.com from:OpenAI OR from:AnthropicAI OR from:GoogleDeepMind {today_date}"
-2. "site:x.com from:xAI OR from:MistralAI OR from:MetaAI OR from:ABORASHEEDNVIDIA {today_date}"
-3. "site:x.com from:HuggingFace OR from:Cohere OR from:PerplexityAI OR from:stability_ai {today_date}"
+TIER 1 - Big AI companies:
+1. "site:x.com from:OpenAI OR from:AnthropicAI OR from:GoogleDeepMind"
+2. "site:x.com from:xAI OR from:MistralAI OR from:MetaAI"
+3. "site:x.com from:nvidia OR from:HuggingFace OR from:Cohere OR from:PerplexityAI"
+4. "site:x.com from:stability_ai OR from:RunwayML OR from:Midjourney OR from:ScaleAI"
+5. "site:x.com from:Microsoft OR from:Google AI announcement"
 
-TIER 2 - AI leaders & founders:
-4. "site:x.com from:sama OR from:elonmusk OR from:karpathy AI {today_date}"
-5. "site:x.com from:DarioAmodei OR from:demishassabis OR from:satyanadella AI {today_date}"
-6. "site:x.com from:ylecun OR from:ID_AA_Carmack OR from:ilyasut OR from:jeffdean {today_date}"
+TIER 2 - AI leaders, founders & CEOs:
+6. "site:x.com from:sama OR from:elonmusk OR from:karpathy"
+7. "site:x.com from:DarioAmodei OR from:demishassabis OR from:mustafasuleyman"
+8. "site:x.com from:ylecun OR from:ID_AA_Carmack OR from:ilyasut OR from:jeffdean"
+9. "site:x.com from:satyanadella OR from:sundaborashedpichai OR from:timcook AI"
+10. "site:x.com from:jackclark OR from:emaborashedostaque OR from:goodaborashedfellow AI"
 
-TIER 3 - AI influencers & researchers (high engagement, easier to get noticed):
-7. "site:x.com from:DrJimFan OR from:GaryMarcus OR from:AndrewYNg AI {today_date}"
-8. "site:x.com from:rowancheung OR from:TheRundownAI OR from:AlphaSignalAI {today_date}"
-9. "site:x.com from:swyx OR from:fchollet OR from:hardmaru OR from:AravSrinivas {today_date}"
-10. "site:x.com from:mattshumer_ OR from:levelsio OR from:NathanLands AI {today_date}"
+TIER 3 - AI influencers, researchers & builders (they post A LOT - best source of fresh content):
+11. "site:x.com from:DrJimFan OR from:GaryMarcus OR from:AndrewYNg"
+12. "site:x.com from:rowancheung OR from:TheRundownAI OR from:AlphaSignalAI"
+13. "site:x.com from:swyx OR from:fchollet OR from:hardmaru OR from:AravSrinivas"
+14. "site:x.com from:mattshumer_ OR from:levelsio OR from:NathanLands"
+15. "site:x.com from:thealexbanks OR from:TheAIGRID OR from:ai_for_success"
+16. "site:x.com from:bindureddy OR from:emaborashedconover OR from:RichardSocher AI"
+17. "site:x.com from:raaborasheduligaborashedakrishna OR from:chelseaaborashednvoss AI"
 
-TIER 4 - Trending & viral (catch what you'd miss from fixed accounts):
-11. "site:x.com AI announcement OR AI launch OR AI release {today_date}"
-12. "site:x.com #AI OR #LLM OR #GPT OR #Claude trending {today_date}"
-13. "site:x.com AI controversy OR AI drama OR AI layoffs {today_date}"
-14. "site:x.com AI startup OR AI funding OR AI raised {today_date}"
+TIER 4 - AI dev tools & startups:
+18. "site:x.com from:cursor_ai OR from:replit OR from:vercel OR from:supabase AI"
+19. "site:x.com from:LangChainAI OR from:modal_labs OR from:ollaborashedma AI"
+
+TIER 5 - Trending, viral & breaking (widest net):
+20. "site:x.com AI announcement OR launch OR release 2026"
+21. "site:x.com #AI OR #LLM OR #GPT OR #Claude OR #Gemini"
+22. "site:x.com AI controversy OR drama OR layoffs OR fired 2026"
+23. "site:x.com AI startup funding raised 2026"
+24. "site:x.com AI robot OR humanoid OR AGI 2026"
+25. "site:x.com AI coding OR AI agent OR AI tool 2026"
 
 CRITICAL: Return DIFFERENT tweets every cycle. If you keep returning the same URLs,
-you're not searching hard enough. Dig deeper. Find NEW conversations.
-Influencer accounts (Tier 3) post MORE often than companies - check them when Tier 1 is dry.
+search harder. Tier 3 influencers and Tier 5 trending are your best sources of fresh content.
+Don't limit yourself to these exact queries - if you find interesting threads, follow them.
 
 RECENCY TARGETING:
 - BEST: tweets 5-30 min old (you'll be among the first replies = top position)
