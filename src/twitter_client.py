@@ -154,18 +154,56 @@ def quote_tweet(tweet_url: str, comment: str):
     close_front_tab()
 
 
-def visit_profile_and_like(username: str):
-    """Visit a user's profile and like their latest tweet for reciprocity."""
+def follow_account(username: str):
+    """Visit a user's profile and click the Follow button."""
+    profile_url = f"https://x.com/{username}"
+    print(f"[FOLLOW] Visiting profile: {profile_url}")
+    webbrowser.open(profile_url)
+    time.sleep(5)
+
+    # On X, the Follow button can be clicked via JavaScript
+    follow_script = '''
+    tell application "Safari"
+        do JavaScript "
+            var btns = document.querySelectorAll('[data-testid=\"placementTracking\"] [role=\"button\"]');
+            for (var b of btns) {
+                if (b.textContent.trim() === 'Follow') { b.click(); break; }
+            }
+        " in current tab of front window
+    end tell
+    '''
+    if _run_applescript(follow_script):
+        time.sleep(2)
+        print(f"[FOLLOW] Followed @{username}!")
+    else:
+        # Fallback: try keyboard shortcut or just skip
+        print(f"[FOLLOW] Could not follow @{username} via JS, skipping.")
+    close_front_tab()
+
+
+def visit_profile_and_like(username: str, like_count: int = 2):
+    """Visit a user's profile and like their latest tweets for reciprocity."""
     profile_url = f"https://x.com/{username}"
     print(f"Visiting profile: {profile_url}")
     webbrowser.open(profile_url)
     time.sleep(5)
 
-    print("Opening latest tweet...")
+    print(f"Opening latest tweet and liking {like_count} tweets...")
     _navigate_to_first_tweet()
     time.sleep(3)
 
+    # Like multiple tweets using j (next) and l (like)
     like_tweet()
+    for _ in range(like_count - 1):
+        time.sleep(1)
+        _run_applescript('''
+        tell application "System Events"
+            keystroke "j"
+        end tell
+        ''')
+        time.sleep(1)
+        like_tweet()
+
     time.sleep(1)
     close_front_tab()
 
@@ -237,7 +275,7 @@ def like_own_tweet_replies():
     print("[NOTIFY] Liking replies...")
     _run_applescript('''
     tell application "System Events"
-        repeat 5 times
+        repeat 8 times
             keystroke "j"
             delay 0.5
             keystroke "l"
@@ -246,5 +284,5 @@ def like_own_tweet_replies():
     end tell
     ''')
     time.sleep(2)
-    print("[NOTIFY] Liked up to 5 replies!")
+    print("[NOTIFY] Liked up to 8 replies!")
     close_front_tab()

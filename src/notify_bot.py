@@ -3,7 +3,9 @@ from .twitter_client import like_own_tweet_replies
 
 
 def run_notify_cycle():
-    """Visit own latest tweet, like replies, and build loyalty."""
+    """Visit own latest tweet, like replies, and build loyalty.
+    Liking replies = people feel seen, come back, reply more.
+    Signals active engagement to the algorithm."""
     print("[NOTIFY] Checking replies on latest tweet...")
     like_own_tweet_replies()
     print("[NOTIFY] Done.")

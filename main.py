@@ -85,19 +85,19 @@ if __name__ == "__main__":
         id="reply_job",
     )
 
-    # Schedule engagement bot every 25 minutes
-    print("Engage bot: liking target accounts every 25 minutes.")
+    # Schedule engagement bot every 15 minutes (aggressive)
+    print("Engage bot: following + liking target accounts every 15 minutes.")
     scheduler.add_job(
         safe_run_engage_cycle,
-        trigger=IntervalTrigger(minutes=25),
+        trigger=IntervalTrigger(minutes=15),
         id="engage_job",
     )
 
-    # Schedule notification farmer every 20 minutes
-    print("Notify bot: liking replies on own tweets every 20 minutes.\n")
+    # Schedule notification farmer every 10 minutes (aggressive)
+    print("Notify bot: liking replies on own tweets every 10 minutes.\n")
     scheduler.add_job(
         safe_run_notify_cycle,
-        trigger=IntervalTrigger(minutes=20),
+        trigger=IntervalTrigger(minutes=10),
         id="notify_job",
     )
 
