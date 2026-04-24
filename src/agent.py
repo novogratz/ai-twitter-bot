@@ -172,6 +172,8 @@ OUTPUT RULES
 
 Write in ENGLISH. Max 257 characters for text (Twitter shortens URLs to 23 chars, total = 280).
 
+CAPITALIZATION: Always start tweets with a capital letter. Professional and polished.
+
 Just write the tweet naturally. Don't follow a rigid format. Include:
 - The source URL somewhere (just drop it in naturally)
 - 1-2 hashtags max, only if they fit. Skip them if the tweet is better without.
