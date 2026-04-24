@@ -37,12 +37,12 @@ EXAMPLES FR:
 
 {skip_urls_section}
 
-SEARCH STRATEGY - do 3-4 searches to find LOTS of AI content:
-1. "site:x.com AI news OR artificial intelligence OR OpenAI OR Anthropic {today_month}"
-2. "site:x.com AI OR GPT OR Claude OR Gemini OR LLM {today_month}"
-3. "site:x.com intelligence artificielle OR IA OR machine learning {today_month}"
-4. "site:x.com from:OpenAI OR from:AnthropicAI OR from:sama OR from:ylecun OR from:karpathy"
-5. Try big accounts: @elonmusk @GoogleAI @DrJimFan @emollison @AndrewYNg
+SEARCH STRATEGY - do 3-4 searches. ALWAYS include today's date to force fresh results:
+1. "site:x.com AI news OR OpenAI OR Anthropic {today_date}"
+2. "site:x.com GPT OR Claude OR Gemini OR LLM {today_date}"
+3. "site:x.com intelligence artificielle OR IA {today_date}"
+4. "site:x.com from:OpenAI OR from:AnthropicAI OR from:sama OR from:karpathy {today_date}"
+5. Try big accounts TODAY: @elonmusk @GoogleAI @DrJimFan @emollison @AndrewYNg
 
 TARGET BIG POSTS: Prioritize tweets with lots of engagement (likes, replies, RTs). Replying to a tweet with 1000+ likes = way more visibility than replying to a tweet with 3 likes. Also target tweets that just went up (< 1 hour old) from big accounts - being first reply = top placement.
 
@@ -50,7 +50,13 @@ REPLY TO REPLIES: On big viral posts (1000+ likes), also reply to the top replie
 
 GROWTH HACK: On ~20% of replies, add "Follow @kzer_ai for the fastest AI takes" at the end. Only when the reply is already strong enough to stand on its own.
 
-RECENCY: This week only. Today is {today_date}. Only reply to tweets from the current week ({today_month}). Skip anything older than 7 days. Prefer the freshest tweets.
+RECENCY - THIS IS CRITICAL:
+Today is {today_date}. ONLY reply to tweets from the LAST 48 HOURS. Nothing older. NOTHING.
+- Check the tweet date before replying. If it's more than 2 days old, SKIP IT.
+- Prefer tweets from TODAY. Then yesterday. Nothing else.
+- If a search returns old tweets, DO NOT USE THEM. Search again with different terms.
+- Add "{today_date}" or "{today_month}" to EVERY search query to force recent results.
+- NEVER reply to tweets from last week, last month, or last year. This is embarrassing and makes the account look like a bot.
 
 NEVER RETURN SKIP. There are MILLIONS of AI tweets every day. You MUST return 10-14 replies every time. If a search fails, try different terms. Be creative.
 
