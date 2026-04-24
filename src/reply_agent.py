@@ -70,20 +70,34 @@ RECENCY - NON-NEGOTIABLE:
 - ONLY tweets from TODAY ({today_date}). Nothing from yesterday.
 - The MOST RECENT tweets are the most valuable. Being early = being seen.
 
-SEARCH: Find the BIGGEST AI posts right now. Run 8-10 targeted searches:
-1. "site:x.com from:OpenAI OR from:AnthropicAI OR from:GoogleAI {today_date}"
-2. "site:x.com from:sama OR from:elonmusk OR from:karpathy AI {today_date}"
-3. "site:x.com from:DarioAmodei OR from:demishassabis OR from:satyanadella AI {today_date}"
-4. "site:x.com AI announcement OR AI launch OR AI release {today_date}"
-5. "site:x.com AI breaking OR GPT OR Claude OR Gemini {today_date}"
-6. "site:x.com from:ABORASHEEDNVIDIA OR from:xAI OR from:MistralAI {today_date}"
-7. "site:x.com #AI OR #ArtificialIntelligence OR #GPT trending {today_date}"
-8. "site:x.com AI viral tweet {today_date}" (catch trending discussions you'd miss otherwise)
-9. "site:x.com #AINews OR #OpenAI OR #Claude OR #LLM {today_date}"
-10. "site:x.com AI controversy OR AI drama OR AI fired OR AI lawsuit {today_date}"
+SEARCH STRATEGY: You MUST find FRESH tweets (last 2 hours). Cast a WIDE net.
+Run ALL of these searches. If the first few return stuff you've seen, KEEP GOING.
 
-TRENDING HIJACK: If a hashtag or topic is trending related to AI, PRIORITIZE IT.
-Trending tweets get 10-100x more views. Being early on a trending topic = maximum growth.
+TIER 1 - Big AI companies (check ALL of them):
+1. "site:x.com from:OpenAI OR from:AnthropicAI OR from:GoogleDeepMind {today_date}"
+2. "site:x.com from:xAI OR from:MistralAI OR from:MetaAI OR from:ABORASHEEDNVIDIA {today_date}"
+3. "site:x.com from:HuggingFace OR from:Cohere OR from:PerplexityAI OR from:stability_ai {today_date}"
+
+TIER 2 - AI leaders & founders:
+4. "site:x.com from:sama OR from:elonmusk OR from:karpathy AI {today_date}"
+5. "site:x.com from:DarioAmodei OR from:demishassabis OR from:satyanadella AI {today_date}"
+6. "site:x.com from:ylecun OR from:ID_AA_Carmack OR from:ilyasut OR from:jeffdean {today_date}"
+
+TIER 3 - AI influencers & researchers (high engagement, easier to get noticed):
+7. "site:x.com from:DrJimFan OR from:GaryMarcus OR from:AndrewYNg AI {today_date}"
+8. "site:x.com from:rowancheung OR from:TheRundownAI OR from:AlphaSignalAI {today_date}"
+9. "site:x.com from:swyx OR from:fchollet OR from:hardmaru OR from:AravSrinivas {today_date}"
+10. "site:x.com from:mattshumer_ OR from:levelsio OR from:NathanLands AI {today_date}"
+
+TIER 4 - Trending & viral (catch what you'd miss from fixed accounts):
+11. "site:x.com AI announcement OR AI launch OR AI release {today_date}"
+12. "site:x.com #AI OR #LLM OR #GPT OR #Claude trending {today_date}"
+13. "site:x.com AI controversy OR AI drama OR AI layoffs {today_date}"
+14. "site:x.com AI startup OR AI funding OR AI raised {today_date}"
+
+CRITICAL: Return DIFFERENT tweets every cycle. If you keep returning the same URLs,
+you're not searching hard enough. Dig deeper. Find NEW conversations.
+Influencer accounts (Tier 3) post MORE often than companies - check them when Tier 1 is dry.
 
 RECENCY TARGETING:
 - BEST: tweets 5-30 min old (you'll be among the first replies = top position)
