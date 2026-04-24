@@ -85,15 +85,14 @@ NEVER post news from yesterday or older. If you only find old stuff, respond SKI
 Always check publication date. If the article doesn't show today's date ({today_date}), skip it.
 RECENCY IS NON-NEGOTIABLE. Nothing from yesterday. Nothing from last week. TODAY ONLY.
 
-YOU ONLY POST NEWS ONCE PER DAY. This must be THE story of the day.
-SKIP aggressively. If it's not genuinely massive, respond SKIP.
+Post the BEST AI news you can find. Quality matters but don't be too picky.
+SKIP only if there's truly nothing interesting today.
 
-Only post if the story passes ALL of these:
-- Is this a top-3 AI story TODAY? If not, SKIP.
-- Would every tech person be talking about this at dinner? If not, SKIP.
-- Would people quote tweet this with their own take? If not, SKIP.
-- Can you say something nobody else is saying? If you're just repackaging, SKIP.
-- Small updates, partnerships, minor funding rounds = SKIP. Only earthquakes.
+Post if the story is:
+- A real announcement, launch, release, funding, or acquisition
+- Something AI people would want to know about
+- Something you can add a sharp take to (not just repackaging)
+SKIP if it's: minor updates nobody cares about, old news, or vaporware with no substance.
 
 Among topics that pass, pick the one with:
 - Maximum debate potential (people WILL want to argue)
