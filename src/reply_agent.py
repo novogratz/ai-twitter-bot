@@ -115,7 +115,11 @@ OUTPUT (raw JSON, no markdown, 30-50 tweets):
 [{{"tweet_url": "https://x.com/user/status/123", "reply": "Réponse sarcastique", "type": "reply"}},
  {{"tweet_url": "https://x.com/user/status/456", "reply": "Mon take là-dessus", "type": "quote"}}]
 
-IMPORTANT: Retourne 30-50 items MINIMUM. TROLL TOUT. Plus y'en a mieux c'est. GO CRAZY."""
+CRITICAL RULES:
+- Output ONLY the raw JSON array. NOTHING ELSE.
+- No stats. No explanation. No markdown. No commentary. No "voici" or "here are".
+- Just the [ ... ] array. That's it. If you add ANYTHING else, the system breaks.
+- Retourne 30-50 items MINIMUM. TROLL TOUT. GO CRAZY."""
 
 
 def generate_replies(recent_topics: Optional[list[str]] = None,
