@@ -12,9 +12,15 @@ REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
-# Daily posting limits - hot takes are the differentiator, news only for huge stories
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "15"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "0"))
+# Daily posting limits - news is the bulk, hot takes are sharp memes
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "18"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "4"))
+
+# Accounts we never reply to (lowercase handles, no @)
+BLOCKLIST = {"pgm_pm"}
+
+# Discovered accounts file (autonomous influencer discovery)
+DISCOVERED_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "discovered_accounts.json")
 
 # Models
 NEWS_MODEL = os.environ.get("NEWS_MODEL", "claude-opus-4-6")

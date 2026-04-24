@@ -5,10 +5,23 @@ import random
 import time
 import traceback
 from .logger import log
-from .config import _PROJECT_ROOT
+from .config import _PROJECT_ROOT, DISCOVERED_ACCOUNTS_FILE, BLOCKLIST
 from .twitter_client import visit_profile_and_like, follow_account
 
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
+
+
+def _load_discovered_handles() -> list:
+    """Read autonomously-discovered handles, skipping blocklisted ones."""
+    if not os.path.exists(DISCOVERED_ACCOUNTS_FILE):
+        return []
+    try:
+        with open(DISCOVERED_ACCOUNTS_FILE, "r") as f:
+            data = json.load(f)
+        return [d.get("handle") for d in data
+                if d.get("handle") and d["handle"].lower() not in BLOCKLIST]
+    except (json.JSONDecodeError, IOError):
+        return []
 
 # IA + Crypto + Bourse target accounts
 TARGET_ACCOUNTS = [
@@ -59,8 +72,8 @@ TARGET_ACCOUNTS = [
     "TechCrunch", "TheVerge", "WIRED",
 ]
 
-# Dedup
-TARGET_ACCOUNTS = list(dict.fromkeys(TARGET_ACCOUNTS))
+# Append discovered handles, then dedup
+TARGET_ACCOUNTS = list(dict.fromkeys(TARGET_ACCOUNTS + _load_discovered_handles()))
 
 
 def _load_followed() -> set:

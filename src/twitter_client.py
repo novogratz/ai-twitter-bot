@@ -522,14 +522,23 @@ def scrape_own_tweet_and_replies():
                     var ownEl = articles[0].querySelector('[data-testid=\\"tweetText\\"]');
                     var ownText = ownEl ? ownEl.textContent.trim() : '';
                     var replies = [];
-                    for (var i = 1; i < Math.min(articles.length, 6); i++) {
+                    for (var i = 1; i < Math.min(articles.length, 8); i++) {
                         var a = articles[i];
                         var textEl = a.querySelector('[data-testid=\\"tweetText\\"]');
                         var text = textEl ? textEl.textContent.trim() : '';
                         if (!text) continue;
                         var userEl = a.querySelector('[data-testid=\\"User-Name\\"] a[role=\\"link\\"]');
                         var user = userEl ? userEl.textContent.trim() : '';
-                        replies.push({user: user, text: text.substring(0, 200)});
+                        var url = '';
+                        var links = a.querySelectorAll('a[href*=\\"/status/\\"]');
+                        for (var l of links) {
+                            var h = l.getAttribute('href');
+                            if (h && h.match(/\\\\/status\\\\/\\\\d+$/)) {
+                                url = 'https://x.com' + h;
+                                break;
+                            }
+                        }
+                        replies.push({user: user, text: text.substring(0, 200), url: url});
                     }
                     return JSON.stringify({own_tweet: ownText.substring(0, 200), replies: replies});
                 })()
@@ -552,6 +561,16 @@ def scrape_own_tweet_and_replies():
 
         close_front_tab()
         return None
+
+
+def reply_to_tweet_in_thread(reply_url: str, reply_text: str):
+    """Reply to a specific reply (nested), so our reply lands UNDER theirs in the thread.
+
+    Works because navigating to a reply's own status URL puts that reply in focus, so
+    pressing 'r' replies to *that* reply. Reuses reply_to_tweet's flow.
+    """
+    log.info(f"[REPLYBACK] Replying in-thread to: {reply_url}")
+    reply_to_tweet(reply_url, reply_text)
 
 
 def reply_to_reply(reply_text: str):

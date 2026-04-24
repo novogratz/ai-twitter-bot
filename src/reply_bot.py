@@ -5,8 +5,14 @@ import re
 import time
 import traceback
 from datetime import datetime, timezone
-from .config import REPLIED_FILE
+from .config import REPLIED_FILE, BLOCKLIST
 from .logger import log
+
+
+def _handle_from_url(tweet_url: str) -> str:
+    """Extract @handle (lowercase, no @) from a tweet URL. Empty string if not found."""
+    m = re.search(r"x\.com/([^/]+)/status/", tweet_url)
+    return m.group(1).lower() if m else ""
 
 
 # Twitter snowflake epoch (ms since 2010-11-04T01:42:54.657Z)
@@ -41,8 +47,8 @@ def load_replied() -> set:
 
 def save_replied(urls: set):
     """Save the set of replied tweet URLs."""
-    # Keep only the last 500 to avoid file bloat
-    url_list = list(urls)[-500:]
+    # Keep only the last 2000 - URLs are tiny, longer memory = stronger dedup
+    url_list = list(urls)[-2000:]
     with open(REPLIED_FILE, "w") as f:
         json.dump(url_list, f, indent=2)
 
@@ -65,15 +71,49 @@ def run_reply_cycle():
     if replies is None:
         log.info("[REPLY] No good tweets found - skipping this cycle.")
         return
+
+    # Pre-filter pass: drop blocklisted handles, already-replied URLs, and intra-batch dupes.
+    # The in-loop check below is the final safety net.
+    seen_in_batch = set()
+    filtered = []
+    for data in replies:
+        url = data.get("tweet_url", "")
+        if not url:
+            continue
+        if url in seen_in_batch:
+            log.info(f"[REPLY] Duplicate URL in batch - dropping: {url}")
+            continue
+        if url in replied:
+            log.info(f"[REPLY] Already replied (pre-filter) - dropping: {url}")
+            continue
+        handle = _handle_from_url(url)
+        if handle and handle in BLOCKLIST:
+            log.info(f"[REPLY] Blocklisted handle @{handle} - dropping: {url}")
+            continue
+        seen_in_batch.add(url)
+        filtered.append(data)
+    replies = filtered
+
+    if not replies:
+        log.info("[REPLY] All replies filtered (dedup/blocklist) - skipping cycle.")
+        save_replied(replied)
+        return
+
     posted_count = 0
 
     for data in replies:
         url = data["tweet_url"]
         action_type = data.get("type", "reply")
 
-        # Skip tweets we already replied to
+        # Skip tweets we already replied to (final safety net)
         if url in replied:
             log.info(f"[REPLY] Already replied to {url} - skipping.")
+            continue
+
+        # Blocklist final safety net
+        handle = _handle_from_url(url)
+        if handle and handle in BLOCKLIST:
+            log.info(f"[REPLY] Blocklisted @{handle} - skipping {url}")
             continue
 
         # HARD RECENCY CHECK: reject tweets older than 7 days (10080 min)

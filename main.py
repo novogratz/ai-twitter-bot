@@ -24,6 +24,7 @@ from src.reply_bot import safe_run_reply_cycle
 from src.engage_bot import safe_run_engage_cycle
 from src.notify_bot import safe_run_notify_cycle, safe_run_boost_cycle, safe_run_replyback_cycle
 from src.direct_reply import safe_run_direct_reply_cycle
+from src.discover_bot import safe_run_discovery_cycle
 from src.performance import evaluate_and_learn
 
 
@@ -170,6 +171,14 @@ def main():
             safe_run_boost_cycle,
             trigger=IntervalTrigger(hours=8),
             id="boost_job",
+        )
+
+        # Discovery bot - autonomously find new crypto/AI/bourse influencers
+        log.info("Discover bot: searching for new influencers every 6 hours.")
+        scheduler.add_job(
+            safe_run_discovery_cycle,
+            trigger=IntervalTrigger(hours=6),
+            id="discover_job",
         )
 
         # Performance tracking

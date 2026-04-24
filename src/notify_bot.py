@@ -2,18 +2,37 @@
 import json
 import os
 import traceback
-from .config import _PROJECT_ROOT
+from .config import _PROJECT_ROOT, BLOCKLIST
 from .logger import log
 from .twitter_client import (
     like_own_tweet_replies,
     retweet_own_latest,
     scrape_own_tweet_and_replies,
-    reply_to_tweet,
+    reply_to_tweet_in_thread,
+    post_tweet,
 )
 from .replyback_agent import generate_replyback
 from .humanizer import humanize
 
 REPLIED_BACK_FILE = os.path.join(_PROJECT_ROOT, "replied_back.json")
+
+
+def _influencer_handles() -> set:
+    """Merge engage + reply-target lists into a single lowercase set."""
+    from .engage_bot import TARGET_ACCOUNTS as ENGAGE_TARGETS
+    from .reply_agent import TARGET_ACCOUNTS as REPLY_TARGETS
+    return {h.lower() for h in list(ENGAGE_TARGETS) + list(REPLY_TARGETS)}
+
+
+def _extract_handle(user_string: str) -> str:
+    """Extract @handle (lowercase, no @) from a User-Name text blob."""
+    if not user_string:
+        return ""
+    parts = user_string.split("@")
+    if len(parts) >= 2:
+        # take the last @-prefixed token, strip whitespace
+        return parts[-1].split()[0].strip().lower()
+    return user_string.strip().lower()
 
 
 def _load_replied_back() -> set:
@@ -28,7 +47,7 @@ def _load_replied_back() -> set:
 
 def _save_replied_back(replied: set):
     with open(REPLIED_BACK_FILE, "w") as f:
-        json.dump(list(replied)[-200:], f, indent=2)
+        json.dump(list(replied)[-500:], f, indent=2)
 
 
 def run_notify_cycle():
@@ -40,7 +59,9 @@ def run_notify_cycle():
 
 def run_replyback_cycle():
     """Scrape replies on own tweets and reply back to create conversation threads.
-    Threads boost both tweets in the algorithm."""
+    Threads boost both tweets in the algorithm. Influencer replies get nested
+    in-thread responses (lands UNDER their reply); others get a standalone @mention.
+    """
     log.info("[REPLYBACK] Scanning for replies to engage with...")
 
     data = scrape_own_tweet_and_replies()
@@ -51,26 +72,38 @@ def run_replyback_cycle():
     own_tweet = data["own_tweet"]
     replies = data["replies"]
     replied_back = _load_replied_back()
+    influencers = _influencer_handles()
     count = 0
 
-    for reply_info in replies[:3]:  # Max 3 reply-backs per cycle
+    for reply_info in replies[:5]:  # Max 5 reply-backs per cycle
         user = reply_info.get("user", "")
         text = reply_info.get("text", "")
+        reply_url = reply_info.get("url", "")
+        handle = _extract_handle(user)
 
-        # Dedup key: first 50 chars of their reply
-        dedup_key = text[:50]
-        if dedup_key in replied_back:
+        # Skip blocklisted handles (e.g., @pgm_pm)
+        if handle and handle in BLOCKLIST:
+            log.info(f"[REPLYBACK] Blocklisted @{handle} - skipping.")
             continue
 
         # Skip our own replies
-        if "kzer_ai" in user.lower():
+        if "kzer_ai" in user.lower() or handle == "kzer_ai":
             continue
 
         # Skip very short or empty replies
         if len(text) < 5:
             continue
 
-        log.info(f"[REPLYBACK] Replying to: {user}: {text[:60]}...")
+        # Dedup key: prefer reply URL (stable, unique); fall back to text snippet
+        dedup_key = reply_url or f"text:{text[:50]}"
+        if dedup_key in replied_back:
+            continue
+
+        is_influencer = handle in influencers
+        log.info(
+            f"[REPLYBACK] {'[INFLUENCER] ' if is_influencer else ''}"
+            f"Replying to @{handle}: {text[:60]}..."
+        )
         reply = generate_replyback(own_tweet, text)
         if not reply:
             continue
@@ -78,19 +111,14 @@ def run_replyback_cycle():
         reply = humanize(reply)
         log.info(f"[REPLYBACK] Reply ({len(reply)} chars): {reply}")
 
-        # We can't easily reply to a specific reply via URL, so we post as a
-        # new reply on our own tweet. This still creates a thread effect.
-        # The reply-back shows up in the conversation.
         try:
-            # Post as a reply-style tweet mentioning the user
-            from .twitter_client import post_tweet
-            # Include @mention so they get notified
-            handle = user.split("@")[-1].strip() if "@" in user else ""
-            if handle:
-                full_reply = f"@{handle} {reply}"
+            if is_influencer and reply_url:
+                # Nested in-thread reply — lands directly under their reply
+                reply_to_tweet_in_thread(reply_url, reply)
             else:
-                full_reply = reply
-            post_tweet(full_reply)
+                # Standalone @mention tweet (existing fallback)
+                full_reply = f"@{handle} {reply}" if handle else reply
+                post_tweet(full_reply)
             replied_back.add(dedup_key)
             count += 1
         except Exception:
