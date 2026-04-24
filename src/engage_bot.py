@@ -1,4 +1,4 @@
-"""Engage bot: follows AI accounts and likes their tweets for reciprocity."""
+"""Engage bot: follows AI, crypto & finance accounts and likes their tweets for reciprocity."""
 import json
 import os
 import random
@@ -10,47 +10,62 @@ from .twitter_client import visit_profile_and_like, follow_account
 
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 
-# Massive target list - the more you engage, the more followers you get
+# Target list: AI + Crypto + Finance, with French accounts prioritized
 TARGET_ACCOUNTS = [
-    # === Tier 1: Mega accounts (millions of followers) ===
-    "elonmusk", "BillGates", "satyanadella", "timaborasheedcook",
-    "sama", "ylecun", "karpathy",
-    # === Tier 2: AI companies ===
+    # === FRENCH ACCOUNTS (PRIORITY) ===
+    # French AI / Tech
+    "MistralAI", "HuggingFace", "Aborasheedlephia_ai",
+    "levelsio", "guillaumepalayer", "taraborasheedze",
+    "olivierrolaborasheednd", "Hashaborasheedeur", "startupaborasheedlley",
+    # French Crypto / Finance
+    "JournalDuCoin", "CointribuneNews", "CryptoastMedia",
+    "TheBigWhale_", "crypto_music", "CryptoFR_",
+    "BFMBourse", "LesEchos", "Aborasheedlternatives_Eco",
+    # French Tech Media
+    "faborasheedrandroid", "01net", "Numerama", "Sieclaborashede_Digital",
+    # French Influencers Tech/Crypto
+    "OwenSiaborasheedrl", "CedricO_", "florianburnel",
+
+    # === TIER 1: Mega accounts ===
+    "elonmusk", "BillGates", "satyanadella", "sama", "ylecun", "karpathy",
+
+    # === TIER 2: AI companies ===
     "OpenAI", "AnthropicAI", "GoogleDeepMind", "MetaAI",
-    "xAI", "MistralAI", "HuggingFace", "Cohere", "PerplexityAI",
+    "xAI", "Cohere", "PerplexityAI", "DeepSeek_AI",
     "stability_ai", "Midjourney", "RunwayML", "ScaleAI",
-    "Databricks", "AI21Labs", "CohereForAI", "DeepSeek_AI",
-    "Anthropic", "GoogleAI", "NVIDIAAIDev",
-    # === Tier 3: AI leaders / CEOs ===
+
+    # === TIER 3: AI leaders ===
     "DarioAmodei", "demishassabis", "mustafasuleyman",
-    "ID_AA_Carmack", "jackclark", "ilyasut", "jeffdean",
-    # === Tier 4: Researchers / builders with big followings ===
-    "DrJimFan", "GaryMarcus", "bindureddy", "AravSrinivas",
-    "emollison", "swyx", "AndrewYNg", "fchollet", "hardmaru",
-    "timnitGebru", "goodaborasheedfellow_ian",
-    # === Tier 5: AI influencers (high engagement, active communities) ===
-    "TheAIGRID", "ai_breakfast", "mattshumer_", "levelsio",
-    "mckaywrigley", "rohanpaul_ai", "NathanLands",
-    "rowancheung", "LinusEkenstam", "venturetwins",
-    "thealexbanks", "elvis", "baborasheedunin_yt",
-    "AlphaSignalAI", "TheRundownAI", "AiBreakfastTK",
-    "maborasheedrkteaborasheedchpost", "aaborasheedikhan", "jaborasheedke_ai",
-    # === Tier 6: AI dev tools ===
-    "LangChainAI", "cursor_ai", "modal_labs", "replit",
-    "weightsandbiases", "vercel", "llama_index",
-    "supabase", "caborasheedliforniaAI",
-    # === Tier 7: Tech media ===
-    "TechCrunch", "TheVerge", "WIRED", "VentureBeat",
-    "TheInformation", "benaborasheedikt_evans",
+    "ID_AA_Carmack", "ilyasut",
+
+    # === TIER 4: Crypto / Web3 ===
+    "VitalikButerin", "caborasheedz_oficial", "brian_armstrong",
+    "Binance", "coinbase", "solana",
+    "CoinDesk", "Cointelegraph", "WuBlockchain",
+    "inversaborasheedr_", "APompliano",
+
+    # === TIER 5: Finance / Investissement ===
+    "markets", "Bloomberg", "ReutersBiz",
+    "TechCrunch", "TheVerge", "VentureBeat",
+
+    # === TIER 6: AI influencers ===
+    "TheAIGRID", "mattshumer_", "rowancheung",
+    "AlphaSignalAI", "TheRundownAI", "DrJimFan",
+    "AndrewYNg", "fchollet", "swyx",
+
+    # === TIER 7: Dev tools ===
+    "LangChainAI", "cursor_ai", "replit", "vercel", "supabase",
 ]
 
 # Clean garbled handles
 TARGET_ACCOUNTS = [h for h in TARGET_ACCOUNTS if "aborasheed" not in h]
 
-# Add clean versions of the ones that got garbled
+# Add clean versions
 TARGET_ACCOUNTS += [
-    "venturetwins", "thealexbanks", "AlphaSignalAI",
-    "TheRundownAI", "supabase",
+    "Alephia_ai", "tarazze", "OlivierRolandFR", "Hasheur",
+    "startupvalley", "Alternatives_Eco", "frandroid",
+    "Siecle_Digital", "OwenSiarl", "cz_oficial", "investor_",
+    "AlphaSignalAI", "TheRundownAI", "supabase",
 ]
 
 # Dedup

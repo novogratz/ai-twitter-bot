@@ -1,20 +1,22 @@
 # AI Twitter Bot
 
-An autonomous Twitter/X bot powered by Claude Code. No API keys needed. Two modes: Python scheduler or Claude Code agent with slash commands.
+An autonomous Twitter/X bot powered by Claude Code. No API keys needed. Posts via browser automation (Safari + AppleScript on macOS).
 
 ## How It Works
 
-Uses Claude Code for AI generation and Safari + AppleScript for browser automation. No Twitter API, no Anthropic API key. Just log into X on Safari and go.
+Uses Claude Code CLI for AI generation and Safari + AppleScript for browser automation. No Twitter API, no Anthropic API key. Just log into X on Safari and go.
 
-### 4 Bots
+### 5 Bots
 
-**Post Bot** - Searches the web for breaking news in your niche, writes sharp tweets, and posts them automatically. Supports threads for big stories. Mix of news posts (~78%) and hot takes (~22%).
+**Post Bot** - Searches the web for breaking news (AI, crypto, markets), writes sharp tweets in French, and posts them automatically. Supports threads for big stories. Mix of news posts (~67%) and hot takes (~33%).
 
-**Reply Bot** - Finds high-engagement tweets and drops witty one-liner replies every 2 minutes. Targets viral posts and replies to top comments on big threads. Auto-likes before replying. Matches tweet language.
+**Reply Bot** - Finds high-engagement francophone tweets and drops witty one-liner replies every 5 minutes. Targets viral posts on AI, crypto, and markets. Auto-likes before replying. Always replies in French.
 
-**Engage Bot** - Auto-follows target accounts and likes their latest tweets. Visits 5-8 profiles every 15 minutes, likes 2 tweets per visit. Tracks who's been followed.
+**Engage Bot** - Auto-follows target accounts and likes their latest tweets. Visits 8-12 profiles every 10 minutes, likes 3 tweets per visit. Prioritizes French-speaking accounts. Tracks who's been followed.
 
-**Notify + Boost Bot** - Likes replies on your own tweets every 10 minutes. Self-retweets every 60 minutes. Builds loyalty and reach.
+**Notify + Boost Bot** - Likes replies on your own tweets every 8 minutes. Self-retweets every 45 minutes. Builds loyalty and reach.
+
+**Performance Bot** - Scrapes own tweet metrics (likes/views) every 2 hours. Identifies top and worst performers. Injects learnings into AI prompts for self-improvement.
 
 ## Setup
 
@@ -75,6 +77,7 @@ Full bot control from Claude Code:
 | `/start` | Start the bot in background |
 | `/stop` | Stop the bot gracefully |
 | `/restart` | Restart the bot |
+| `/improve` | Run performance evaluation |
 
 ## Configuration
 
@@ -82,15 +85,15 @@ All settings in `src/config.py`, overridable with environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MAX_NEWS_PER_DAY` | 70 | Max news posts per day |
-| `MAX_HOTAKES_PER_DAY` | 20 | Max hot takes per day |
+| `MAX_NEWS_PER_DAY` | 8 | Max news posts per day |
+| `MAX_HOTAKES_PER_DAY` | 4 | Max hot takes per day |
 | `NEWS_MODEL` | claude-opus-4-6 | Model for news posts |
 | `REPLY_MODEL` | claude-sonnet-4-6 | Model for replies |
 | `HOTAKE_MODEL` | claude-sonnet-4-6 | Model for hot takes |
 
 ### Customizing for Your Niche
 
-Configured for AI/tech but adaptable to any topic:
+Configured for AI/crypto/finance but adaptable to any topic:
 
 1. **`src/agent.py`** - News prompt: search terms, examples, tone
 2. **`src/hotake_agent.py`** - Hot take prompt: topics, formats, examples
@@ -99,33 +102,16 @@ Configured for AI/tech but adaptable to any topic:
 5. **`src/config.py`** - Bot handle and limits
 6. **`.claude/skills/run-agent/SKILL.md`** - Agent behavior and personality
 
-## Growth Features
-
-- **High volume** - ~90 posts/day + ~400 replies/day
-- **Quote tweets** - ~15% of replies are quote tweets (show on your timeline)
-- **Self-retweet** - Boosts own content every 60 minutes
-- **Auto-follow** - Follows target accounts, tracks state
-- **Double-like** - Likes 2 tweets per profile visit
-- **Big post targeting** - Replies to high-engagement tweets
-- **Reply-to-replies** - Replies to top comments on viral threads
-- **Auto-like before reply** - Double notification for tweet authors
-- **Notification farming** - Likes replies on own tweets
-- **Thread posting** - Multi-tweet threads for big stories
-- **Follow CTA** - ~20% of replies include follow call-to-action
-- **Cross-dedup** - Reply bot avoids topics the post bot just covered
-- **Persistent state** - Counters and follows survive restarts
-
 ## Architecture
 
 ```
 main.py                      # Python entry point, APScheduler
 .claude/
   skills/                    # 22 slash commands for Claude Code
-    run-agent/SKILL.md       # Main agent loop (replaces main.py)
+    run-agent/SKILL.md       # Main agent loop
     post/SKILL.md            # Manual post trigger
     reply/SKILL.md           # Manual reply trigger
     ...
-  settings.json              # Hooks (pre-commit doc reminder)
 src/
   config.py                  # Central config, env var overrides
   logger.py                  # Rotating file logs (5MB, 3 backups)
@@ -137,6 +123,7 @@ src/
   reply_bot.py               # Reply orchestration, dedup
   engage_bot.py              # Auto-follow + like engine
   notify_bot.py              # Notification + boost
+  performance.py             # Self-improving metrics system
   twitter_client.py          # Safari/AppleScript browser automation
   history.py                 # Tweet history, dedup (capped at 500)
   engagement_log.py          # CSV engagement tracking
