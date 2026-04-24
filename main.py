@@ -37,8 +37,8 @@ def post_interval_minutes() -> int:
 
 
 def reply_interval_minutes() -> int:
-    """Fixed 2 min interval for replies."""
-    return 2
+    """5 min interval for quality replies."""
+    return 5
 
 
 def _graceful_shutdown(signum, frame):
