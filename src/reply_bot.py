@@ -9,6 +9,7 @@ from .reply_agent import generate_replies
 from .twitter_client import reply_to_tweet, quote_tweet, refresh_feed
 from .history import get_recent_tweets
 from .engagement_log import log_reply
+from .humanizer import humanize
 
 
 def load_replied() -> set:
@@ -56,14 +57,15 @@ def run_reply_cycle():
             log.info(f"[REPLY] Already replied to {url} - skipping.")
             continue
 
+        reply_text = humanize(data["reply"])
         log.info(f"[REPLY] Target: {url}")
-        log.info(f"[REPLY] {action_type.upper()} ({len(data['reply'])} chars): {data['reply']}")
+        log.info(f"[REPLY] {action_type.upper()} ({len(reply_text)} chars): {reply_text}")
 
         try:
             if action_type == "quote":
-                quote_tweet(url, data["reply"])
+                quote_tweet(url, reply_text)
             else:
-                reply_to_tweet(url, data["reply"])
+                reply_to_tweet(url, reply_text)
             replied.add(url)
             posted_count += 1
             log_reply(url, data["reply"], action_type)
