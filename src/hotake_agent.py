@@ -3,6 +3,7 @@ import subprocess
 from typing import Optional
 from .config import HOTAKE_MODEL
 from .logger import log
+from .performance import get_learnings_for_prompt
 
 HOTAKE_PROMPT = """You're a person who works in tech, thinks about AI a lot, and tweets your honest thoughts. Not a content creator. Not a brand. Just someone with opinions.
 
@@ -43,15 +44,28 @@ RULES:
 - Lowercase is fine. Fragments are fine. Imperfect is human.
 - No emojis unless it genuinely adds something
 
-Output ONLY the tweet text. Nothing else."""
+Output ONLY the tweet text. Nothing else.
+
+{performance_section}"""
 
 
 def generate_hotake() -> Optional[str]:
     """Generate a hot take tweet using Sonnet (no web search)."""
+    perf = get_learnings_for_prompt()
+    performance_section = ""
+    if perf:
+        performance_section = f"""LEARN FROM YOUR PAST PERFORMANCE:
+
+{perf}
+
+Write more like your top performers. Avoid patterns from your worst."""
+
+    prompt = HOTAKE_PROMPT.format(performance_section=performance_section)
+
     result = subprocess.run(
         [
             "claude",
-            "-p", HOTAKE_PROMPT,
+            "-p", prompt,
             "--model", HOTAKE_MODEL,
         ],
         capture_output=True,

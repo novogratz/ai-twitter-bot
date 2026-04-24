@@ -13,5 +13,7 @@ tweet_history.json
 replied_tweets.json
 followed_accounts.json
 daily_state.json
+performance_log.json
+learnings.json
 bot.log
 bot.log.*
