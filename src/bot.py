@@ -1,6 +1,7 @@
 import random
 import traceback
 from datetime import date
+from .config import MAX_NEWS_PER_DAY, MAX_HOTAKES_PER_DAY
 from .agent import generate_tweet
 from .hotake_agent import generate_hotake
 from .twitter_client import post_tweet, post_thread
@@ -13,9 +14,6 @@ THREAD_SEPARATOR = "---THREAD---"
 _today = None
 _news_count = 0
 _hotake_count = 0
-
-MAX_NEWS_PER_DAY = 70      # ~3-4 per hour across 18 active hours
-MAX_HOTAKES_PER_DAY = 20   # ~1 per hour
 
 
 def _reset_if_new_day():

@@ -1,5 +1,6 @@
 import subprocess
 from typing import Optional
+from .config import HOTAKE_MODEL
 
 HOTAKE_PROMPT = """You are @kzer_ai. The sharpest AI account on X. Your hot takes get screenshotted and quoted. You make people think AND laugh.
 
@@ -60,7 +61,7 @@ def generate_hotake() -> Optional[str]:
         [
             "claude",
             "-p", HOTAKE_PROMPT,
-            "--model", "claude-sonnet-4-6",
+            "--model", HOTAKE_MODEL,
         ],
         capture_output=True,
         text=True,

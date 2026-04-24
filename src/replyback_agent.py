@@ -1,5 +1,6 @@
 import subprocess
 from typing import Optional
+from .config import REPLY_MODEL
 
 REPLYBACK_PROMPT = """Tu es @kzer_ai. Quelqu'un a repondu a ton tweet. Ecris une reponse COURTE et DROLE en francais.
 
@@ -36,7 +37,7 @@ def generate_replyback(original_tweet: str, their_reply: str) -> Optional[str]:
         [
             "claude",
             "-p", prompt,
-            "--model", "claude-sonnet-4-6",
+            "--model", REPLY_MODEL,
         ],
         capture_output=True,
         text=True,

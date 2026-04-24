@@ -10,7 +10,7 @@ TARGET_ACCOUNTS = [
     "xAI", "MistralAI", "HuggingFace", "Cohere", "PerplexityAI",
     # AI leaders
     "sama", "ylecun", "karpathy", "DarioAmodei", "demishassabis",
-    "elonmusk", "satyanadella", "jeffdean", "iaborasheed_offi",
+    "elonmusk", "satyanadella", "jeffdean",
     # AI researchers / influencers
     "DrJimFan", "GaryMarcus", "bindureddy", "AravSrinivas",
     "emollison", "swyx", "AndrewYNg", "fchollet",
