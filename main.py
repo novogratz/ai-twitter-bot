@@ -1,4 +1,7 @@
-"""@kzer_ai Twitter bot - AI news, hot takes, and troll replies.
+"""@kzer_ai Twitter bot - AI news, sharp takes, strategic replies.
+
+Growth strategy: replies on massive accounts > original posts.
+Quality over quantity. Every interaction must earn a follow.
 
 Usage:
     python main.py              Run all bots
@@ -24,30 +27,27 @@ from src.performance import evaluate_and_learn
 
 
 def post_interval_minutes() -> int:
-    """Human pace: ~8 posts spread across the day with natural gaps."""
+    """Few posts per day, only bangers. ~3-5 total.
+    Original posts from a small account get almost no organic reach.
+    Only post when you have something genuinely sharp to say."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 23 <= hour or hour < 7:
-        # Sleeping. Real humans don't tweet at 3am.
-        return random.randint(180, 300)
-    elif 7 <= hour < 10:
-        # Morning scroll. Maybe one tweet with coffee.
-        return random.randint(80, 140)
-    elif 10 <= hour < 13:
-        # Most active. News drops, hot takes flow.
-        return random.randint(60, 100)
-    elif 13 <= hour < 17:
-        # Afternoon. Still engaged but has a job.
-        return random.randint(70, 120)
-    elif 17 <= hour < 21:
-        # Evening wind-down. Occasional tweet.
-        return random.randint(80, 140)
+    if 23 <= hour or hour < 8:
+        # Don't post at night. Sleep like a human.
+        return random.randint(240, 420)
+    elif 8 <= hour < 12:
+        # Morning: maybe one good post
+        return random.randint(120, 200)
+    elif 12 <= hour < 18:
+        # Afternoon: peak hours, but still selective
+        return random.randint(90, 160)
     else:
-        # Late night. Getting sleepy.
-        return random.randint(120, 180)
+        # Evening: winding down
+        return random.randint(150, 240)
 
 
 def reply_interval_minutes() -> int:
-    """5 min interval for quality replies."""
+    """Replies are the growth engine. Run frequently to catch viral tweets early.
+    Being first on a big tweet = thousands of views."""
     return 5
 
 
@@ -73,7 +73,7 @@ def main():
 
     scheduler = BlockingScheduler()
 
-    # --- POST BOT ---
+    # --- POST BOT (secondary - few posts, only bangers) ---
     def reschedule_and_post():
         safe_run_bot_cycle()
         next_min = post_interval_minutes()
@@ -84,7 +84,7 @@ def main():
             trigger=IntervalTrigger(minutes=next_min),
         )
 
-    # --- REPLY BOT ---
+    # --- REPLY BOT (primary growth engine) ---
     def reschedule_and_reply():
         safe_run_reply_cycle()
         next_min = reply_interval_minutes()
@@ -95,9 +95,9 @@ def main():
             trigger=IntervalTrigger(minutes=next_min),
         )
 
-    # Run reply bot FIRST
+    # Run reply bot FIRST - this is the growth engine
     if not args.post_only:
-        log.info("Bot started! Scanning for tweets to reply to first...")
+        log.info("Bot started! Scanning for viral tweets to reply to...")
         safe_run_reply_cycle()
 
     # Then run first post
@@ -125,27 +125,31 @@ def main():
         )
 
     if not args.post_only and not args.reply_only:
-        log.info("Engage bot: following + liking target accounts every 10 minutes.")
+        # Engage bot - follow and like AI accounts for reciprocity
+        log.info("Engage bot: following + liking target accounts every 15 minutes.")
         scheduler.add_job(
             safe_run_engage_cycle,
-            trigger=IntervalTrigger(minutes=10),
+            trigger=IntervalTrigger(minutes=15),
             id="engage_job",
         )
 
-        log.info("Notify bot: liking replies on own tweets every 8 minutes.")
+        # Notify bot - like replies on own tweets to build community
+        log.info("Notify bot: liking replies on own tweets every 10 minutes.")
         scheduler.add_job(
             safe_run_notify_cycle,
-            trigger=IntervalTrigger(minutes=8),
+            trigger=IntervalTrigger(minutes=10),
             id="notify_job",
         )
 
-        log.info("Boost bot: retweeting own latest tweet every 45 minutes.")
+        # Boost bot - occasional self-retweet (not too often, looks spammy)
+        log.info("Boost bot: retweeting own latest tweet every 3 hours.")
         scheduler.add_job(
             safe_run_boost_cycle,
-            trigger=IntervalTrigger(minutes=45),
+            trigger=IntervalTrigger(hours=3),
             id="boost_job",
         )
 
+        # Performance tracking
         def safe_evaluate():
             try:
                 evaluate_and_learn()

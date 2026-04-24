@@ -12,9 +12,9 @@ REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
-# Daily posting limits - realistic human pace, ~8 total per day
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "5"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "3"))
+# Daily posting limits - fewer but KILLER posts. Quality is everything.
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "3"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "2"))
 
 # Models
 NEWS_MODEL = os.environ.get("NEWS_MODEL", "claude-opus-4-6")
