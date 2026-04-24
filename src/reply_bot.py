@@ -1,14 +1,12 @@
 import json
 import os
-import random
 import time
 import traceback
+from .config import REPLIED_FILE
 from .reply_agent import generate_replies
 from .twitter_client import reply_to_tweet, quote_tweet, refresh_feed
 from .history import get_recent_tweets
 from .engagement_log import log_reply
-
-REPLIED_FILE = os.path.join(os.path.dirname(__file__), "..", "replied_tweets.json")
 
 
 def load_replied() -> set:

@@ -3,6 +3,7 @@ import json
 import re
 from datetime import datetime
 from typing import Optional
+from .config import REPLY_MODEL
 
 REPLY_PROMPT_TEMPLATE = """You are @kzer_ai, the funniest AI troll on X. Find 10-14 tweets about AI and write KILLER replies. HAVE FUN. GO HARD. MAKE PEOPLE LAUGH.
 
@@ -37,7 +38,7 @@ SEARCH STRATEGY - do 3-4 searches to find LOTS of AI content:
 2. "site:x.com AI OR GPT OR Claude OR Gemini OR LLM {today_month}"
 3. "site:x.com intelligence artificielle OR IA OR machine learning {today_month}"
 4. "site:x.com from:OpenAI OR from:AnthropicAI OR from:sama OR from:ylecun OR from:karpathy"
-5. Try big accounts: @elonmusk @GoogleAI @ABORASHEED_official @DrJimFan @emollison
+5. Try big accounts: @elonmusk @GoogleAI @DrJimFan @emollison @AndrewYNg
 
 TARGET BIG POSTS: Prioritize tweets with lots of engagement (likes, replies, RTs). Replying to a tweet with 1000+ likes = way more visibility than replying to a tweet with 3 likes.
 
@@ -81,7 +82,7 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
             "claude",
             "-p", prompt,
             "--allowedTools", "WebSearch",
-            "--model", "claude-sonnet-4-6",
+            "--model", REPLY_MODEL,
         ],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,

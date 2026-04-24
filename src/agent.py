@@ -1,6 +1,7 @@
 import subprocess
 from datetime import datetime
 from typing import Optional
+from .config import NEWS_MODEL
 from .history import get_recent_tweets
 
 PROMPT_TEMPLATE = """You are @kzer_ai. The sharpest AI account on X. Fastest on news. Hardest takes. 0% bullshit.
@@ -276,7 +277,7 @@ Pick something COMPLETELY DIFFERENT."""
             "claude",
             "-p", prompt,
             "--allowedTools", "WebSearch",
-            "--model", "claude-opus-4-6",
+            "--model", NEWS_MODEL,
         ],
         capture_output=True,
         text=True,
