@@ -23,6 +23,7 @@ from src.bot import safe_run_bot_cycle
 from src.reply_bot import safe_run_reply_cycle
 from src.engage_bot import safe_run_engage_cycle
 from src.notify_bot import safe_run_notify_cycle, safe_run_boost_cycle, safe_run_replyback_cycle
+from src.direct_reply import safe_run_direct_reply_cycle
 from src.performance import evaluate_and_learn
 
 
@@ -145,6 +146,14 @@ def main():
             safe_run_notify_cycle,
             trigger=IntervalTrigger(minutes=45),
             id="notify_job",
+        )
+
+        # Direct reply bot - visits influencer profiles and replies to their tweets
+        log.info("Direct reply bot: replying to influencer tweets every 15 minutes.")
+        scheduler.add_job(
+            safe_run_direct_reply_cycle,
+            trigger=IntervalTrigger(minutes=15),
+            id="direct_reply_job",
         )
 
         # Reply-back bot - reply to people who reply to our tweets (creates threads)
