@@ -238,7 +238,17 @@ def scrape_profile_tweets(username: str, max_tweets: int = 5):
         profile_url = f"https://x.com/{username}"
         log.info(f"[SCRAPE] Visiting profile: {profile_url}")
         webbrowser.open(profile_url)
-        time.sleep(5)
+        time.sleep(8)  # Wait longer for page to fully load
+
+        # Scroll down a tiny bit to trigger lazy loading
+        _run_applescript('''
+        tell application "System Events"
+            key code 125
+            delay 0.5
+            key code 125
+        end tell
+        ''')
+        time.sleep(3)
 
         js_script = f'''
         tell application "Safari"
@@ -246,6 +256,7 @@ def scrape_profile_tweets(username: str, max_tweets: int = 5):
                 (function() {{
                     var tweets = [];
                     var articles = document.querySelectorAll('article[data-testid=\\"tweet\\"]');
+                    if (articles.length === 0) return 'NO_ARTICLES';
                     for (var i = 0; i < Math.min(articles.length, {max_tweets}); i++) {{
                         var a = articles[i];
                         var textEl = a.querySelector('[data-testid=\\"tweetText\\"]');
@@ -262,6 +273,7 @@ def scrape_profile_tweets(username: str, max_tweets: int = 5):
                         }}
                         if (url) tweets.push(JSON.stringify({{u: url, t: text.substring(0, 200)}}));
                     }}
+                    if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_BUT_NO_URLS';
                     return '[' + tweets.join(',') + ']';
                 }})()
             " in current tab of front window
@@ -272,15 +284,32 @@ def scrape_profile_tweets(username: str, max_tweets: int = 5):
                 ["osascript", "-e", js_script],
                 capture_output=True, text=True, timeout=15,
             )
-            if result.returncode == 0 and result.stdout.strip():
-                raw = result.stdout.strip()
-                data = _json.loads(raw)
-                tweets = [{"url": t["u"], "text": t["t"]} for t in data]
-                log.info(f"[SCRAPE] Found {len(tweets)} tweets from @{username}")
+            raw = result.stdout.strip()
+            stderr = result.stderr.strip()
+
+            if result.returncode != 0:
+                log.info(f"[SCRAPE] JS failed for @{username}: rc={result.returncode} stderr={stderr[:200]}")
                 close_front_tab()
-                return tweets
+                return []
+
+            if not raw or raw == 'NO_ARTICLES':
+                log.info(f"[SCRAPE] No articles found on @{username} page (page may not have loaded)")
+                close_front_tab()
+                return []
+
+            if raw.startswith('ARTICLES_'):
+                log.info(f"[SCRAPE] @{username}: {raw} (found articles but couldn't extract URLs)")
+                close_front_tab()
+                return []
+
+            data = _json.loads(raw)
+            tweets = [{"url": t["u"], "text": t["t"]} for t in data]
+            log.info(f"[SCRAPE] Found {len(tweets)} tweets from @{username}")
+            close_front_tab()
+            return tweets
+
         except Exception as e:
-            log.info(f"[SCRAPE] Failed for @{username}: {e}")
+            log.info(f"[SCRAPE] Exception for @{username}: {e}")
 
         close_front_tab()
         return []
