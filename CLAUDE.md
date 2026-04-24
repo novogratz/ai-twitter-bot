@@ -57,50 +57,58 @@ The bot runs 4 systems: reply bot first (scan for tweets), then post bot, then s
 
 ## Architecture
 
-AI news before everyone else. Sharp takes. Zero bullshit. You'll hate me until I'm right. Follow @kzer_ai.
+AI, crypto and bourse news. Sharp takes. Zero bullshit. Tu vas me détester jusqu'à ce que j'aie raison. Follow @kzer_ai.
 
-Autonomous bot that covers AI news with sharp criticism and trolling energy. The AI CRITIC - sees what others miss, calls out what others won't. English only. Quality over quantity.
+Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-style commentary. The sharpest critic in the room — but always trolls IDEAS, never PEOPLE.
 
 ### Strategy
-- **ENGLISH only**: All posts, replies, hot takes in English
-- **AI only**: No crypto, no finance. Pure AI focus.
-- **AI CRITIC identity**: Not a news aggregator. The sharpest critic in the room.
-- **Replies are the growth engine**: 3-4 replies every 20 min on massive accounts (500k+ followers)
-- **Hot takes are the differentiator**: 4/day - original criticism, trolling, predictions
-- **News only for earthquakes**: 1/day max, must be THE story of the day
-- **Humanizer on everything**: Every post goes through a human-pass before publishing
-- **Self-improving**: Scrapes own metrics and adapts style automatically
-- **Anti-spam**: Moderate frequencies to avoid shadow bans
+- **French priority, bilingual**: Replies match the tweet's language (FR -> FR, EN -> EN). Aim ~60-70% French replies. Hot takes mostly French.
+- **AI + crypto + bourse**: Three niches. Engage list and reply targets cover all three.
+- **Troll ideas, never people**: Roast trends, hype, concepts, systems. NEVER mock the influencer's coaching, training, business, audience. Influencer should be able to like our reply.
+- **Replies are the growth engine**: 3-4 replies every 20 min, French priority.
+- **Hot takes are memes**: 4/day - smart, sharp, philosophical, laugh-out-loud, screenshot-worthy.
+- **News**: 18/day cap (configurable), only real stories.
+- **Humanizer on everything**: Every post goes through a human-pass.
+- **Self-improving**: Scrapes own metrics every 2h and adapts prompts.
+- **Autonomous discovery**: Every 6h, finds new crypto/AI/bourse influencers and adds them to monitoring.
+- **Blocklist**: `BLOCKLIST` in `src/config.py` — currently `@pgm_pm` (La Pique). Never reply.
+- **Anti-spam**: Moderate frequencies to avoid shadow bans.
 
-### 5 Bots
+### Bots
 
-**Post bot** - 1 news/day (Opus + WebSearch, only massive stories) + 4 hot takes/day (Sonnet, AI critic commentary). 80% hot takes. Humanizer on all output.
+**Post bot** - up to 18 news + 4 hot takes/day. ~30% hot take ratio. Humanizer on all output.
 
-**Reply bot** - 3-4 quality replies per cycle, every 20 min. Targets tweets from 500k+ follower accounts. ~85% replies, ~15% quote tweets. Be early on viral tweets. Humanizer on all output.
+**Reply bot** - 3-4 replies per cycle, every 20 min. French priority, bilingual. Pre-filter dedup + blocklist. Persisted memory of 2000 replied URLs.
 
-**Engage bot** - 3-5 accounts per cycle, every 30 min. Auto-follow + 3 likes per visit. AI companies, leaders, researchers, influencers.
+**Engage bot** - 3-5 accounts per cycle, every 30 min. Targets merge static list + autonomously discovered handles.
 
-**Notify + Boost bot** - Like replies on own tweets every 45 min. Self-retweet every 8 hours.
+**Notify + Boost bot** - Like replies on own tweets every 45 min. When an INFLUENCER replies under our tweet, reply IN-THREAD (lands under their reply) — otherwise standalone @mention. Self-retweet every 8 hours.
+
+**Discover bot** - Every 6h: searches X, scores candidates with Claude, appends approved handles to `discovered_accounts.json`.
 
 **Performance bot** - Scrapes likes/views every 2h. Identifies top/worst performers. Injects learnings into prompts.
 
 ### Files
 
-- **`src/config.py`** - Central config: handle, paths, limits (1 news, 4 hot takes), models, retry settings.
-- **`src/agent.py`** - News agent. Opus + WebSearch. English. AI only. Strict quality gate - only THE story of the day.
-- **`src/hotake_agent.py`** - Hot take agent. Sonnet, no web search. AI CRITIC identity. Commentary + trolling.
-- **`src/reply_agent.py`** - Reply agent. Sonnet + WebSearch. 3-4 replies per cycle. Targets 500k+ accounts. 85% replies, 15% QTs.
-- **`src/replyback_agent.py`** - Reply-back agent. Sonnet, no web search. Witty replies to people who reply to our tweets.
-- **`src/humanizer.py`** - Humanizer. Sonnet pass to make AI-generated text sound human. Applied to all output.
-- **`src/bot.py`** - Post orchestration. 80% hot takes, 20% news. Persistent daily limits. Humanizer on all output.
-- **`src/reply_bot.py`** - Reply orchestration. Generates replies, cross-dedup, humanizer, posts. Every 20 min.
-- **`src/engage_bot.py`** - Growth engine. Auto-follows AI accounts. 3-5 accounts per cycle, every 30 min.
-- **`src/notify_bot.py`** - Notification farmer. Likes replies every 45 min. Self-retweet every 8 hours.
-- **`src/performance.py`** - Self-improving. Scrapes metrics every 2h. Injects learnings into prompts.
+- **`src/config.py`** - Central config: handle, paths, limits (18 news, 4 hot takes), models, retry settings, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE.
+- **`src/agent.py`** - News agent. Opus + WebSearch.
+- **`src/hotake_agent.py`** - Hot take agent. Sonnet. Smart/sharp/philosophical memes. Trolls ideas, never people.
+- **`src/reply_agent.py`** - Reply agent. Sonnet + WebSearch. Bilingual (FR priority). Pulls discovered handles into prompt.
+- **`src/replyback_agent.py`** - Reply-back agent. Sonnet, no web search. Matches reply's language.
+- **`src/humanizer.py`** - Humanizer. Sonnet pass to make AI-generated text sound human.
+- **`src/bot.py`** - Post orchestration. ~30% hot takes. Persistent daily limits.
+- **`src/reply_bot.py`** - Reply orchestration. Pre-filter dedup + blocklist + intra-batch dedup. Cap 2000.
+- **`src/engage_bot.py`** - Growth engine. Static list + discovered handles merged at load.
+- **`src/notify_bot.py`** - Reply-back + boost. Influencer replies get nested in-thread responses.
+- **`src/discover_bot.py`** - Autonomous influencer discovery (search X -> score with Claude -> persist).
+- **`src/performance.py`** - Self-improving. Scrapes metrics every 2h.
 - **`src/engagement_log.py`** - CSV engagement logging.
-- **`src/twitter_client.py`** - Browser automation with Safari lock and retry logic.
-- **`src/history.py`** - Tweet history persistence, dedup, capped at 500 entries.
-- **`main.py`** - CLI entry point. APScheduler with 6 jobs. Signal handlers. Graceful shutdown.
+- **`src/twitter_client.py`** - Browser automation with Safari lock + retry. `reply_to_tweet_in_thread()` for nested replies.
+- **`src/history.py`** - Tweet history persistence.
+- **`main.py`** - CLI entry point. APScheduler. Signal handlers. Graceful shutdown.
+- **`discovered_accounts.json`** - Persisted autonomously-discovered handles.
+- **`replied_tweets.json`** - Persisted reply dedup (cap 2000).
+- **`replied_back.json`** - Persisted reply-back dedup (by URL).
 
 ## Schedule (EST)
 
@@ -111,23 +119,24 @@ Autonomous bot that covers AI news with sharp criticism and trolling energy. The
 | 12pm - 6pm   | 90-160 min    | 20 min         |
 | 6pm - 11pm   | 150-240 min   | 20 min         |
 
-Engage bot: every 30 min (3-5 accounts, 3 likes each). Notify bot: every 45 min. Boost: every 8h. Performance: every 2h.
+Engage bot: every 30 min (3-5 accounts, 3 likes each). Notify bot: every 45 min. Replyback: every 60 min. Boost: every 8h. Discover: every 6h. Performance: every 2h.
 
 ## Key design notes
 
 - No API keys needed (no Twitter API, no Anthropic API).
-- ENGLISH only. AI only. 280 chars max.
-- AI CRITIC identity: sharp commentary, criticism, trolling on AI news.
-- 1 news + 4 hot takes per day. Quality elite.
-- Replies are the #1 growth engine: target massive accounts (500k+ followers).
-- Humanizer pass on ALL output (posts, replies, hot takes).
-- News agent: Opus. Reply + hot take agents: Sonnet.
-- Browser automation via `webbrowser.open` + AppleScript. macOS only.
-- Safari lock prevents concurrent browser access.
-- Anti-spam: moderate frequencies to avoid shadow bans.
-- Reply targeting: 5-30 min old tweets for best position.
-- Cross-dedup between reply bot and post bot.
+- French priority, bilingual (replies match tweet language). Scope: AI + crypto + bourse. 280 chars max.
+- Troll IDEAS / TRENDS / CONCEPTS, never the person. Influencer should be able to like our reply.
+- 18 news + 4 hot takes per day (defaults, configurable via env).
+- Hot takes = smart, sharp, philosophical memes. Screenshot-worthy.
+- Replies are the #1 growth engine: French priority, then EN influencers.
+- BLOCKLIST in `src/config.py` (currently `@pgm_pm`). Enforced everywhere.
+- Reply dedup: persisted last 2000 URLs in `replied_tweets.json`. Pre-filter + intra-batch dedup.
+- Replyback: influencer replies get NESTED in-thread responses (lands under their reply).
+- Autonomous discovery: every 6h, populates `discovered_accounts.json`.
+- Humanizer pass on ALL output.
+- News agent: Opus. Reply + hot take + replyback + discovery: Sonnet.
+- Browser automation via `webbrowser.open` + AppleScript. macOS only. Safari lock.
 - No em dashes anywhere.
-- Self-improving: scrapes own metrics every 2h, adapts prompts.
+- Self-improving: scrapes own metrics every 2h.
 - Persistent daily state survives process restarts.
 - All limits configurable via environment variables.
