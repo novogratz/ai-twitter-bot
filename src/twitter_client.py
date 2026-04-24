@@ -315,6 +315,144 @@ def scrape_profile_tweets(username: str, max_tweets: int = 5):
         return []
 
 
+def scrape_home_feed(max_tweets: int = 10):
+    """Scrape tweets from the home feed. Returns list of {"url": str, "text": str, "author": str}."""
+    import json as _json
+    with _safari_lock:
+        log.info("[SCRAPE] Opening home feed...")
+        webbrowser.open("https://x.com/home")
+        time.sleep(8)
+
+        # Scroll down to load more tweets
+        _run_applescript('''
+        tell application "System Events"
+            repeat 4 times
+                key code 125
+                delay 0.5
+            end repeat
+        end tell
+        ''')
+        time.sleep(3)
+
+        js_script = f'''
+        tell application "Safari"
+            set result to do JavaScript "
+                (function() {{
+                    var tweets = [];
+                    var articles = document.querySelectorAll('article[data-testid=\\"tweet\\"]');
+                    for (var i = 0; i < Math.min(articles.length, {max_tweets}); i++) {{
+                        var a = articles[i];
+                        var textEl = a.querySelector('[data-testid=\\"tweetText\\"]');
+                        var text = textEl ? textEl.textContent.trim() : '';
+                        if (!text) continue;
+                        var links = a.querySelectorAll('a[href*=\\"/status/\\"]');
+                        var url = '';
+                        for (var l of links) {{
+                            var h = l.getAttribute('href');
+                            if (h && h.match(/\\/status\\/\\d+$/)) {{
+                                url = 'https://x.com' + h;
+                                break;
+                            }}
+                        }}
+                        var authorEl = a.querySelector('[data-testid=\\"User-Name\\"] a[role=\\"link\\"]');
+                        var author = authorEl ? authorEl.textContent.trim().replace('@','') : '';
+                        if (url && author) tweets.push(JSON.stringify({{u: url, t: text.substring(0, 200), a: author}}));
+                    }}
+                    return '[' + tweets.join(',') + ']';
+                }})()
+            " in current tab of front window
+        end tell
+        '''
+        try:
+            result = subprocess.run(
+                ["osascript", "-e", js_script],
+                capture_output=True, text=True, timeout=15,
+            )
+            if result.returncode == 0 and result.stdout.strip():
+                raw = result.stdout.strip()
+                if raw.startswith("["):
+                    data = _json.loads(raw)
+                    tweets = [{"url": t["u"], "text": t["t"], "author": t["a"]} for t in data]
+                    log.info(f"[SCRAPE] Found {len(tweets)} tweets in home feed")
+                    close_front_tab()
+                    return tweets
+        except Exception as e:
+            log.info(f"[SCRAPE] Home feed scrape failed: {e}")
+
+        close_front_tab()
+        return []
+
+
+def scrape_x_search(query: str, max_tweets: int = 8):
+    """Search X directly in Safari and scrape results. Returns list of {"url": str, "text": str, "author": str}."""
+    import json as _json
+    import urllib.parse
+    with _safari_lock:
+        search_url = f"https://x.com/search?q={urllib.parse.quote(query)}&src=typed_query&f=live"
+        log.info(f"[SCRAPE] Searching X for: {query}")
+        webbrowser.open(search_url)
+        time.sleep(8)
+
+        # Scroll to load results
+        _run_applescript('''
+        tell application "System Events"
+            repeat 3 times
+                key code 125
+                delay 0.5
+            end repeat
+        end tell
+        ''')
+        time.sleep(2)
+
+        js_script = f'''
+        tell application "Safari"
+            set result to do JavaScript "
+                (function() {{
+                    var tweets = [];
+                    var articles = document.querySelectorAll('article[data-testid=\\"tweet\\"]');
+                    for (var i = 0; i < Math.min(articles.length, {max_tweets}); i++) {{
+                        var a = articles[i];
+                        var textEl = a.querySelector('[data-testid=\\"tweetText\\"]');
+                        var text = textEl ? textEl.textContent.trim() : '';
+                        if (!text) continue;
+                        var links = a.querySelectorAll('a[href*=\\"/status/\\"]');
+                        var url = '';
+                        for (var l of links) {{
+                            var h = l.getAttribute('href');
+                            if (h && h.match(/\\/status\\/\\d+$/)) {{
+                                url = 'https://x.com' + h;
+                                break;
+                            }}
+                        }}
+                        var authorEl = a.querySelector('[data-testid=\\"User-Name\\"] a[role=\\"link\\"]');
+                        var author = authorEl ? authorEl.textContent.trim().replace('@','') : '';
+                        if (url && author) tweets.push(JSON.stringify({{u: url, t: text.substring(0, 200), a: author}}));
+                    }}
+                    return '[' + tweets.join(',') + ']';
+                }})()
+            " in current tab of front window
+        end tell
+        '''
+        try:
+            result = subprocess.run(
+                ["osascript", "-e", js_script],
+                capture_output=True, text=True, timeout=15,
+            )
+            if result.returncode == 0 and result.stdout.strip():
+                raw = result.stdout.strip()
+                if raw.startswith("["):
+                    data = _json.loads(raw)
+                    tweets = [{"url": t["u"], "text": t["t"], "author": t["a"]} for t in data]
+                    log.info(f"[SCRAPE] Found {len(tweets)} tweets for '{query}'")
+                    close_front_tab()
+                    return tweets
+        except Exception as e:
+            log.info(f"[SCRAPE] Search scrape failed for '{query}': {e}")
+
+        close_front_tab()
+        return []
+
+
 def post_thread(tweets: list[str]):
     """Post a thread by posting the first tweet, then replying to it."""
     if not tweets:
