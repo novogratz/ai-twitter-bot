@@ -230,227 +230,140 @@ def visit_profile_and_like(username: str, like_count: int = 2):
         close_front_tab()
 
 
-def scrape_profile_tweets(username: str, max_tweets: int = 5):
-    """Visit a profile and scrape their recent tweet URLs and text via JavaScript.
-    Returns list of {"url": str, "text": str} or empty list."""
+def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
+    """Run JS on the current Safari page to extract tweets. Returns list of dicts."""
     import json as _json
+    import tempfile
+    import os
+
+    # Write JS to temp file to avoid AppleScript quote escaping hell
+    js_code = """
+    (function() {
+        var tweets = [];
+        var articles = document.querySelectorAll('article[data-testid="tweet"]');
+        if (articles.length === 0) return 'NO_ARTICLES';
+        for (var i = 0; i < Math.min(articles.length, MAX_TWEETS); i++) {
+            var a = articles[i];
+            var textEl = a.querySelector('[data-testid="tweetText"]');
+            var text = textEl ? textEl.textContent.trim() : '';
+            if (!text) continue;
+            var links = a.querySelectorAll('a[href*="/status/"]');
+            var url = '';
+            for (var l of links) {
+                var h = l.getAttribute('href');
+                if (h && h.match(/\\/status\\/\\d+$/)) {
+                    url = 'https://x.com' + h;
+                    break;
+                }
+            }
+            var authorEl = a.querySelector('[data-testid="User-Name"] a[role="link"]');
+            var author = authorEl ? authorEl.textContent.trim().replace('@','') : '';
+            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, 200), a: author || 'unknown'}));
+        }
+        if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
+        return '[' + tweets.join(',') + ']';
+    })()
+    """.replace("MAX_TWEETS", str(max_tweets))
+
+    # Write JS to temp file
+    tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False)
+    tmp.write(js_code)
+    tmp.close()
+
+    applescript = f'''
+    set jsCode to (read POSIX file "{tmp.name}")
+    tell application "Safari"
+        set result to do JavaScript jsCode in current tab of front window
+    end tell
+    '''
+
+    try:
+        result = subprocess.run(
+            ["osascript", "-e", applescript],
+            capture_output=True, text=True, timeout=15,
+        )
+        os.unlink(tmp.name)
+
+        raw = result.stdout.strip()
+        if result.returncode != 0:
+            log.info(f"[SCRAPE] JS failed for {label}: {result.stderr[:200]}")
+            return []
+        if not raw or raw == 'NO_ARTICLES':
+            log.info(f"[SCRAPE] No articles on {label} (page not loaded?)")
+            return []
+        if raw.startswith('ARTICLES_'):
+            log.info(f"[SCRAPE] {label}: {raw}")
+            return []
+
+        data = _json.loads(raw)
+        tweets = [{"url": t["u"], "text": t["t"], "author": t["a"]} for t in data]
+        log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")
+        return tweets
+    except Exception as e:
+        log.info(f"[SCRAPE] Exception for {label}: {e}")
+        try:
+            os.unlink(tmp.name)
+        except OSError:
+            pass
+        return []
+
+
+def _scroll_page():
+    """Scroll down the page to load more content."""
+    _run_applescript('''
+    tell application "System Events"
+        repeat 5 times
+            key code 125
+            delay 0.4
+        end repeat
+    end tell
+    ''')
+    time.sleep(2)
+
+
+def scrape_profile_tweets(username: str, max_tweets: int = 5):
+    """Visit a profile and scrape their recent tweet URLs and text."""
     with _safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"[SCRAPE] Visiting profile: {profile_url}")
         webbrowser.open(profile_url)
-        time.sleep(8)  # Wait longer for page to fully load
+        time.sleep(8)
+        _scroll_page()
 
-        # Scroll down a tiny bit to trigger lazy loading
-        _run_applescript('''
-        tell application "System Events"
-            key code 125
-            delay 0.5
-            key code 125
-        end tell
-        ''')
-        time.sleep(3)
-
-        js_script = f'''
-        tell application "Safari"
-            set result to do JavaScript "
-                (function() {{
-                    var tweets = [];
-                    var articles = document.querySelectorAll('article[data-testid=\\"tweet\\"]');
-                    if (articles.length === 0) return 'NO_ARTICLES';
-                    for (var i = 0; i < Math.min(articles.length, {max_tweets}); i++) {{
-                        var a = articles[i];
-                        var textEl = a.querySelector('[data-testid=\\"tweetText\\"]');
-                        var text = textEl ? textEl.textContent.trim() : '';
-                        if (!text) continue;
-                        var links = a.querySelectorAll('a[href*=\\"/status/\\"]');
-                        var url = '';
-                        for (var l of links) {{
-                            var h = l.getAttribute('href');
-                            if (h && h.match(/\\/status\\/\\d+$/)) {{
-                                url = 'https://x.com' + h;
-                                break;
-                            }}
-                        }}
-                        if (url) tweets.push(JSON.stringify({{u: url, t: text.substring(0, 200)}}));
-                    }}
-                    if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_BUT_NO_URLS';
-                    return '[' + tweets.join(',') + ']';
-                }})()
-            " in current tab of front window
-        end tell
-        '''
-        try:
-            result = subprocess.run(
-                ["osascript", "-e", js_script],
-                capture_output=True, text=True, timeout=15,
-            )
-            raw = result.stdout.strip()
-            stderr = result.stderr.strip()
-
-            if result.returncode != 0:
-                log.info(f"[SCRAPE] JS failed for @{username}: rc={result.returncode} stderr={stderr[:200]}")
-                close_front_tab()
-                return []
-
-            if not raw or raw == 'NO_ARTICLES':
-                log.info(f"[SCRAPE] No articles found on @{username} page (page may not have loaded)")
-                close_front_tab()
-                return []
-
-            if raw.startswith('ARTICLES_'):
-                log.info(f"[SCRAPE] @{username}: {raw} (found articles but couldn't extract URLs)")
-                close_front_tab()
-                return []
-
-            data = _json.loads(raw)
-            tweets = [{"url": t["u"], "text": t["t"]} for t in data]
-            log.info(f"[SCRAPE] Found {len(tweets)} tweets from @{username}")
-            close_front_tab()
-            return tweets
-
-        except Exception as e:
-            log.info(f"[SCRAPE] Exception for @{username}: {e}")
-
+        tweets = _scrape_tweets_from_page(f"@{username}", max_tweets)
         close_front_tab()
-        return []
+        return tweets
 
 
-def scrape_home_feed(max_tweets: int = 10):
-    """Scrape tweets from the home feed. Returns list of {"url": str, "text": str, "author": str}."""
-    import json as _json
+def scrape_home_feed(max_tweets: int = 15):
+    """Scrape tweets from the home feed."""
     with _safari_lock:
         log.info("[SCRAPE] Opening home feed...")
         webbrowser.open("https://x.com/home")
         time.sleep(8)
 
-        # Scroll down to load more tweets
-        _run_applescript('''
-        tell application "System Events"
-            repeat 4 times
-                key code 125
-                delay 0.5
-            end repeat
-        end tell
-        ''')
-        time.sleep(3)
+        # Scroll down a LOT to load many tweets
+        _scroll_page()
+        _scroll_page()
 
-        js_script = f'''
-        tell application "Safari"
-            set result to do JavaScript "
-                (function() {{
-                    var tweets = [];
-                    var articles = document.querySelectorAll('article[data-testid=\\"tweet\\"]');
-                    for (var i = 0; i < Math.min(articles.length, {max_tweets}); i++) {{
-                        var a = articles[i];
-                        var textEl = a.querySelector('[data-testid=\\"tweetText\\"]');
-                        var text = textEl ? textEl.textContent.trim() : '';
-                        if (!text) continue;
-                        var links = a.querySelectorAll('a[href*=\\"/status/\\"]');
-                        var url = '';
-                        for (var l of links) {{
-                            var h = l.getAttribute('href');
-                            if (h && h.match(/\\/status\\/\\d+$/)) {{
-                                url = 'https://x.com' + h;
-                                break;
-                            }}
-                        }}
-                        var authorEl = a.querySelector('[data-testid=\\"User-Name\\"] a[role=\\"link\\"]');
-                        var author = authorEl ? authorEl.textContent.trim().replace('@','') : '';
-                        if (url && author) tweets.push(JSON.stringify({{u: url, t: text.substring(0, 200), a: author}}));
-                    }}
-                    return '[' + tweets.join(',') + ']';
-                }})()
-            " in current tab of front window
-        end tell
-        '''
-        try:
-            result = subprocess.run(
-                ["osascript", "-e", js_script],
-                capture_output=True, text=True, timeout=15,
-            )
-            if result.returncode == 0 and result.stdout.strip():
-                raw = result.stdout.strip()
-                if raw.startswith("["):
-                    data = _json.loads(raw)
-                    tweets = [{"url": t["u"], "text": t["t"], "author": t["a"]} for t in data]
-                    log.info(f"[SCRAPE] Found {len(tweets)} tweets in home feed")
-                    close_front_tab()
-                    return tweets
-        except Exception as e:
-            log.info(f"[SCRAPE] Home feed scrape failed: {e}")
-
+        tweets = _scrape_tweets_from_page("home feed", max_tweets)
         close_front_tab()
-        return []
+        return tweets
 
 
-def scrape_x_search(query: str, max_tweets: int = 8):
-    """Search X directly in Safari and scrape results. Returns list of {"url": str, "text": str, "author": str}."""
-    import json as _json
+def scrape_x_search(query: str, max_tweets: int = 10):
+    """Search X directly in Safari and scrape results."""
     import urllib.parse
     with _safari_lock:
         search_url = f"https://x.com/search?q={urllib.parse.quote(query)}&src=typed_query&f=live"
         log.info(f"[SCRAPE] Searching X for: {query}")
         webbrowser.open(search_url)
         time.sleep(8)
+        _scroll_page()
 
-        # Scroll to load results
-        _run_applescript('''
-        tell application "System Events"
-            repeat 3 times
-                key code 125
-                delay 0.5
-            end repeat
-        end tell
-        ''')
-        time.sleep(2)
-
-        js_script = f'''
-        tell application "Safari"
-            set result to do JavaScript "
-                (function() {{
-                    var tweets = [];
-                    var articles = document.querySelectorAll('article[data-testid=\\"tweet\\"]');
-                    for (var i = 0; i < Math.min(articles.length, {max_tweets}); i++) {{
-                        var a = articles[i];
-                        var textEl = a.querySelector('[data-testid=\\"tweetText\\"]');
-                        var text = textEl ? textEl.textContent.trim() : '';
-                        if (!text) continue;
-                        var links = a.querySelectorAll('a[href*=\\"/status/\\"]');
-                        var url = '';
-                        for (var l of links) {{
-                            var h = l.getAttribute('href');
-                            if (h && h.match(/\\/status\\/\\d+$/)) {{
-                                url = 'https://x.com' + h;
-                                break;
-                            }}
-                        }}
-                        var authorEl = a.querySelector('[data-testid=\\"User-Name\\"] a[role=\\"link\\"]');
-                        var author = authorEl ? authorEl.textContent.trim().replace('@','') : '';
-                        if (url && author) tweets.push(JSON.stringify({{u: url, t: text.substring(0, 200), a: author}}));
-                    }}
-                    return '[' + tweets.join(',') + ']';
-                }})()
-            " in current tab of front window
-        end tell
-        '''
-        try:
-            result = subprocess.run(
-                ["osascript", "-e", js_script],
-                capture_output=True, text=True, timeout=15,
-            )
-            if result.returncode == 0 and result.stdout.strip():
-                raw = result.stdout.strip()
-                if raw.startswith("["):
-                    data = _json.loads(raw)
-                    tweets = [{"url": t["u"], "text": t["t"], "author": t["a"]} for t in data]
-                    log.info(f"[SCRAPE] Found {len(tweets)} tweets for '{query}'")
-                    close_front_tab()
-                    return tweets
-        except Exception as e:
-            log.info(f"[SCRAPE] Search scrape failed for '{query}': {e}")
-
+        tweets = _scrape_tweets_from_page(f"search '{query}'", max_tweets)
         close_front_tab()
-        return []
+        return tweets
 
 
 def post_thread(tweets: list[str]):
