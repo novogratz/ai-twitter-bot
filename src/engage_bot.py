@@ -1,8 +1,10 @@
+"""Engage bot: follows AI accounts and likes their tweets for reciprocity."""
 import json
 import os
 import random
 import time
 import traceback
+from .logger import log
 from .config import _PROJECT_ROOT
 from .twitter_client import visit_profile_and_like, follow_account
 
@@ -93,26 +95,26 @@ def run_engage_cycle():
     count = random.randint(5, 8)
     picks = random.sample(TARGET_ACCOUNTS, min(count, len(TARGET_ACCOUNTS)))
 
-    print(f"[ENGAGE] Engaging with {len(picks)} accounts...")
+    log.info(f"[ENGAGE] Engaging with {len(picks)} accounts...")
     for username in picks:
         try:
             # Follow if we haven't already
             if username not in followed:
-                print(f"[ENGAGE] Following + liking @{username}...")
+                log.info(f"[ENGAGE] Following + liking @{username}...")
                 follow_account(username)
                 followed.add(username)
                 time.sleep(random.randint(2, 4))
 
             # Like their latest 2 tweets
-            print(f"[ENGAGE] Liking @{username}'s latest tweets...")
+            log.info(f"[ENGAGE] Liking @{username}'s latest tweets...")
             visit_profile_and_like(username, like_count=2)
             time.sleep(random.randint(3, 6))
         except Exception:
-            print(f"[ENGAGE] Failed to engage with @{username}:")
+            log.info(f"[ENGAGE] Failed to engage with @{username}:")
             traceback.print_exc()
 
     _save_followed(followed)
-    print(f"[ENGAGE] Done. Engaged with {len(picks)} accounts. Following {len(followed)} total.")
+    log.info(f"[ENGAGE] Done. Engaged with {len(picks)} accounts. Following {len(followed)} total.")
 
 
 def safe_run_engage_cycle():
@@ -120,5 +122,5 @@ def safe_run_engage_cycle():
     try:
         run_engage_cycle()
     except Exception:
-        print("[ENGAGE] Error during engage cycle:")
+        log.info("[ENGAGE] Error during engage cycle:")
         traceback.print_exc()

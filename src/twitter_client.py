@@ -1,18 +1,24 @@
+"""Browser automation for X/Twitter via Safari + AppleScript (macOS only)."""
 import subprocess
 import time
 import urllib.parse
 import webbrowser
-from .config import BOT_PROFILE_URL
+from .config import BOT_PROFILE_URL, MAX_RETRIES, RETRY_DELAY_SECONDS
+from .logger import log
 
 
-def _run_applescript(script: str) -> bool:
-    """Run an AppleScript command. Returns True on success."""
-    try:
-        subprocess.run(["osascript", "-e", script], check=True,
-                       capture_output=True, text=True)
-        return True
-    except subprocess.CalledProcessError:
-        return False
+def _run_applescript(script: str, retries: int = 1) -> bool:
+    """Run an AppleScript command with optional retries. Returns True on success."""
+    for attempt in range(retries):
+        try:
+            subprocess.run(["osascript", "-e", script], check=True,
+                           capture_output=True, text=True)
+            return True
+        except subprocess.CalledProcessError:
+            if attempt < retries - 1:
+                log.warning(f"AppleScript failed (attempt {attempt + 1}/{retries}), retrying...")
+                time.sleep(RETRY_DELAY_SECONDS)
+    return False
 
 
 def _escape_for_applescript(text: str) -> str:
@@ -50,13 +56,13 @@ def close_front_tab():
     end tell
     '''
     if _run_applescript(script):
-        print("Tab closed.")
+        log.debug("Tab closed.")
 
 
 def post_tweet(text: str):
     """Open Twitter intent URL and auto-click Post using AppleScript."""
     url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
-    print("Opening Twitter in your browser...")
+    log.info("Opening Twitter in your browser...")
     webbrowser.open(url)
     time.sleep(4)
 
@@ -65,16 +71,16 @@ def post_tweet(text: str):
         keystroke return using command down
     end tell
     '''
-    print("Auto-clicking Post...")
+    log.info("Auto-clicking Post...")
     _run_applescript(script)
     time.sleep(2)
-    print("Tweet posted!")
+    log.info("Tweet posted!")
     close_front_tab()
 
 
 def refresh_feed():
     """Open X home feed and refresh it so new tweets load."""
-    print("Refreshing X feed...")
+    log.info("Refreshing X feed...")
     webbrowser.open("https://x.com/home")
     time.sleep(3)
     close_front_tab()
@@ -87,17 +93,17 @@ def like_tweet():
         keystroke "l"
     end tell
     '''
-    print("Liking tweet...")
+    log.info("Liking tweet...")
     if _run_applescript(script):
         time.sleep(1)
-        print("Tweet liked!")
+        log.info("Tweet liked!")
     else:
-        print("Failed to like tweet, continuing...")
+        log.info("Failed to like tweet, continuing...")
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str):
     """Open a tweet, like it, click reply, type the reply, and submit."""
-    print(f"Opening tweet: {tweet_url}")
+    log.info(f"Opening tweet: {tweet_url}")
     webbrowser.open(tweet_url)
     time.sleep(6)
 
@@ -105,7 +111,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     like_tweet()
 
     # Click reply
-    print("Clicking reply...")
+    log.info("Clicking reply...")
     _run_applescript('''
     tell application "System Events"
         keystroke "r"
@@ -115,7 +121,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
 
     # Type the reply
     escaped = _escape_for_applescript(reply_text)
-    print("Typing reply...")
+    log.info("Typing reply...")
     _run_applescript(f'''
     tell application "System Events"
         keystroke "{escaped}"
@@ -124,14 +130,14 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     time.sleep(2)
 
     # Submit with Cmd+Enter
-    print("Submitting reply...")
+    log.info("Submitting reply...")
     _run_applescript('''
     tell application "System Events"
         keystroke return using command down
     end tell
     ''')
     time.sleep(2)
-    print("Reply posted!")
+    log.info("Reply posted!")
     close_front_tab()
 
 
@@ -139,25 +145,25 @@ def quote_tweet(tweet_url: str, comment: str):
     """Quote tweet by posting a new tweet with the tweet URL embedded."""
     full_text = f"{comment}\n\n{tweet_url}"
     url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": full_text})
-    print(f"Quote tweeting: {tweet_url}")
+    log.info(f"Quote tweeting: {tweet_url}")
     webbrowser.open(url)
     time.sleep(4)
 
-    print("Posting quote tweet...")
+    log.info("Posting quote tweet...")
     _run_applescript('''
     tell application "System Events"
         keystroke return using command down
     end tell
     ''')
     time.sleep(2)
-    print("Quote tweet posted!")
+    log.info("Quote tweet posted!")
     close_front_tab()
 
 
 def follow_account(username: str):
     """Visit a user's profile and click the Follow button."""
     profile_url = f"https://x.com/{username}"
-    print(f"[FOLLOW] Visiting profile: {profile_url}")
+    log.info(f"[FOLLOW] Visiting profile: {profile_url}")
     webbrowser.open(profile_url)
     time.sleep(5)
 
@@ -174,21 +180,21 @@ def follow_account(username: str):
     '''
     if _run_applescript(follow_script):
         time.sleep(2)
-        print(f"[FOLLOW] Followed @{username}!")
+        log.info(f"[FOLLOW] Followed @{username}!")
     else:
         # Fallback: try keyboard shortcut or just skip
-        print(f"[FOLLOW] Could not follow @{username} via JS, skipping.")
+        log.info(f"[FOLLOW] Could not follow @{username} via JS, skipping.")
     close_front_tab()
 
 
 def visit_profile_and_like(username: str, like_count: int = 2):
     """Visit a user's profile and like their latest tweets for reciprocity."""
     profile_url = f"https://x.com/{username}"
-    print(f"Visiting profile: {profile_url}")
+    log.info(f"Visiting profile: {profile_url}")
     webbrowser.open(profile_url)
     time.sleep(5)
 
-    print(f"Opening latest tweet and liking {like_count} tweets...")
+    log.info(f"Opening latest tweet and liking {like_count} tweets...")
     _navigate_to_first_tweet()
     time.sleep(3)
 
@@ -214,7 +220,7 @@ def post_thread(tweets: list[str]):
         return
 
     # Post the first tweet
-    print(f"[THREAD] Posting tweet 1/{len(tweets)}...")
+    log.info(f"[THREAD] Posting tweet 1/{len(tweets)}...")
     post_tweet(tweets[0])
 
     if len(tweets) < 2:
@@ -222,7 +228,7 @@ def post_thread(tweets: list[str]):
 
     # Open own profile to find the tweet we just posted
     time.sleep(3)
-    print("[THREAD] Opening own profile to find the tweet...")
+    log.info("[THREAD] Opening own profile to find the tweet...")
     webbrowser.open(BOT_PROFILE_URL)
     time.sleep(5)
 
@@ -232,7 +238,7 @@ def post_thread(tweets: list[str]):
 
     # Reply with each subsequent tweet
     for i, tweet_text in enumerate(tweets[1:], start=2):
-        print(f"[THREAD] Posting tweet {i}/{len(tweets)}...")
+        log.info(f"[THREAD] Posting tweet {i}/{len(tweets)}...")
 
         _run_applescript('''
         tell application "System Events"
@@ -255,24 +261,24 @@ def post_thread(tweets: list[str]):
         end tell
         ''')
         time.sleep(3)
-        print(f"[THREAD] Tweet {i} posted!")
+        log.info(f"[THREAD] Tweet {i} posted!")
 
     close_front_tab()
-    print("[THREAD] Thread complete!")
+    log.info("[THREAD] Thread complete!")
 
 
 def like_own_tweet_replies():
     """Visit own profile, open latest tweet, and like replies to build loyalty."""
-    print("[NOTIFY] Opening own profile...")
+    log.info("[NOTIFY] Opening own profile...")
     webbrowser.open(BOT_PROFILE_URL)
     time.sleep(5)
 
-    print("[NOTIFY] Opening latest tweet...")
+    log.info("[NOTIFY] Opening latest tweet...")
     _navigate_to_first_tweet()
     time.sleep(4)
 
     # Navigate down to replies and like them
-    print("[NOTIFY] Liking replies...")
+    log.info("[NOTIFY] Liking replies...")
     _run_applescript('''
     tell application "System Events"
         repeat 8 times
@@ -284,5 +290,5 @@ def like_own_tweet_replies():
     end tell
     ''')
     time.sleep(2)
-    print("[NOTIFY] Liked up to 8 replies!")
+    log.info("[NOTIFY] Liked up to 8 replies!")
     close_front_tab()

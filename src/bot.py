@@ -1,7 +1,11 @@
+"""Post bot: publishes AI news tweets and philosophy hot takes."""
+import json
+import os
 import random
 import traceback
 from datetime import date
-from .config import MAX_NEWS_PER_DAY, MAX_HOTAKES_PER_DAY
+from .config import MAX_NEWS_PER_DAY, MAX_HOTAKES_PER_DAY, DAILY_STATE_FILE
+from .logger import log
 from .agent import generate_tweet
 from .hotake_agent import generate_hotake
 from .twitter_client import post_tweet, post_thread
@@ -10,83 +14,100 @@ from .engagement_log import log_post, log_hotake
 
 THREAD_SEPARATOR = "---THREAD---"
 
-# Daily counters - reset each day
-_today = None
-_news_count = 0
-_hotake_count = 0
+
+def _load_daily_state() -> dict:
+    """Load persistent daily counters from disk."""
+    if os.path.exists(DAILY_STATE_FILE):
+        try:
+            with open(DAILY_STATE_FILE, "r") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError):
+            pass
+    return {"date": None, "news": 0, "hotakes": 0}
 
 
-def _reset_if_new_day():
-    """Reset counters at midnight."""
-    global _today, _news_count, _hotake_count
-    today = date.today()
-    if _today != today:
-        _today = today
-        _news_count = 0
-        _hotake_count = 0
+def _save_daily_state(state: dict):
+    """Persist daily counters to disk (survives restarts)."""
+    with open(DAILY_STATE_FILE, "w") as f:
+        json.dump(state, f)
+
+
+def _get_counters() -> tuple[int, int]:
+    """Get today's counters, resetting if it's a new day."""
+    state = _load_daily_state()
+    today = date.today().isoformat()
+    if state.get("date") != today:
+        state = {"date": today, "news": 0, "hotakes": 0}
+        _save_daily_state(state)
+    return state["news"], state["hotakes"]
+
+
+def _increment_counter(counter_name: str):
+    """Increment a daily counter and persist."""
+    state = _load_daily_state()
+    today = date.today().isoformat()
+    if state.get("date") != today:
+        state = {"date": today, "news": 0, "hotakes": 0}
+    state[counter_name] = state.get(counter_name, 0) + 1
+    _save_daily_state(state)
 
 
 def run_bot_cycle():
     """Post a news tweet or hot take, respecting daily limits."""
-    global _news_count, _hotake_count
-    _reset_if_new_day()
+    news_count, hotake_count = _get_counters()
+    log.info(f"Today: {news_count}/{MAX_NEWS_PER_DAY} news, {hotake_count}/{MAX_HOTAKES_PER_DAY} hot takes")
 
-    print(f"[POST] Today: {_news_count}/{MAX_NEWS_PER_DAY} news, {_hotake_count}/{MAX_HOTAKES_PER_DAY} hot takes")
-
-    # Check if we've hit both limits
-    if _news_count >= MAX_NEWS_PER_DAY and _hotake_count >= MAX_HOTAKES_PER_DAY:
-        print("[POST] Daily limits reached. Skipping.")
+    if news_count >= MAX_NEWS_PER_DAY and hotake_count >= MAX_HOTAKES_PER_DAY:
+        log.info("Daily limits reached. Skipping.")
         return
 
-    # Decide what to post
-    can_hotake = _hotake_count < MAX_HOTAKES_PER_DAY
-    can_news = _news_count < MAX_NEWS_PER_DAY
+    can_hotake = hotake_count < MAX_HOTAKES_PER_DAY
+    can_news = news_count < MAX_NEWS_PER_DAY
 
     # ~22% hot takes (1 per hour out of ~4-5 posts per hour)
     do_hotake = can_hotake and (not can_news or random.random() < 0.22)
 
     if do_hotake:
-        print("[HOTAKE] Generating AI philosophy hot take...")
+        log.info("Generating AI philosophy hot take...")
         tweet = generate_hotake()
         if tweet is None:
-            print("[HOTAKE] Failed, falling back to news...")
+            log.warning("Hot take failed, falling back to news...")
             if can_news:
                 tweet = generate_tweet()
                 if tweet:
-                    _news_count += 1
+                    _increment_counter("news")
         else:
-            _hotake_count += 1
-            print(f"[HOTAKE] ({len(tweet)} chars):\n{tweet}")
+            _increment_counter("hotakes")
+            log.info(f"[HOTAKE] ({len(tweet)} chars): {tweet[:100]}...")
             post_tweet(tweet)
             save_tweet(tweet)
             log_hotake(tweet)
             return
     else:
-        print("Searching for AI news...")
+        log.info("Searching for AI news...")
         tweet = generate_tweet()
         if tweet:
-            _news_count += 1
+            _increment_counter("news")
         elif can_hotake:
-            print("No fresh news - trying a hot take instead...")
+            log.info("No fresh news - trying a hot take instead...")
             tweet = generate_hotake()
             if tweet:
-                _hotake_count += 1
+                _increment_counter("hotakes")
 
     if tweet is None:
-        print("Nothing to post - skipping this cycle.")
+        log.info("Nothing to post - skipping this cycle.")
         return
 
-    # Check if it's a thread
     if THREAD_SEPARATOR in tweet:
         parts = [p.strip() for p in tweet.split(THREAD_SEPARATOR) if p.strip()]
-        print(f"[THREAD] Got {len(parts)}-tweet thread:")
+        log.info(f"[THREAD] Got {len(parts)}-tweet thread")
         for i, part in enumerate(parts, 1):
-            print(f"  [{i}] ({len(part)} chars): {part[:80]}...")
+            log.info(f"  [{i}] ({len(part)} chars): {part[:80]}...")
         post_thread(parts)
         save_tweet(tweet)
         log_post(tweet)
     else:
-        print(f"Tweet ({len(tweet)} chars):\n{tweet}")
+        log.info(f"Tweet ({len(tweet)} chars): {tweet[:100]}...")
         post_tweet(tweet)
         save_tweet(tweet)
         log_post(tweet)
@@ -97,5 +118,4 @@ def safe_run_bot_cycle():
     try:
         run_bot_cycle()
     except Exception:
-        print("Error during bot cycle:")
-        traceback.print_exc()
+        log.error(f"Error during bot cycle: {traceback.format_exc()}")

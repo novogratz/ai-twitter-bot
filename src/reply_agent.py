@@ -1,8 +1,10 @@
+"""Reply agent: finds AI tweets on X and generates troll replies."""
 import subprocess
 import json
 import re
 from datetime import datetime
 from typing import Optional
+from .logger import log
 from .config import REPLY_MODEL
 
 REPLY_PROMPT_TEMPLATE = """You are @kzer_ai, the funniest AI troll on X. Find 10-14 tweets about AI and write KILLER replies. HAVE FUN. GO HARD. MAKE PEOPLE LAUGH.
@@ -76,7 +78,7 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
         today_month=today_month,
     )
 
-    print("[REPLY] Running Claude CLI (searching X)...")
+    log.info("[REPLY] Running Claude CLI (searching X)...")
     proc = subprocess.Popen(
         [
             "claude",
@@ -90,7 +92,7 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
     )
     stdout, stderr = proc.communicate()
     if proc.returncode != 0:
-        print(f"[REPLY] CLI error: {stderr[:200]}")
+        log.info(f"[REPLY] CLI error: {stderr[:200]}")
         return None
 
     output = stdout.strip()
@@ -120,5 +122,5 @@ def generate_replies(recent_topics: Optional[list[str]] = None,
             return valid if valid else None
         return None
     except json.JSONDecodeError:
-        print(f"[REPLY] Could not parse JSON: {output[:200]}...")
+        log.info(f"[REPLY] Could not parse JSON: {output[:200]}...")
         return None

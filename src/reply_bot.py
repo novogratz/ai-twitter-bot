@@ -1,8 +1,10 @@
+"""Reply bot: finds AI tweets and posts troll replies."""
 import json
 import os
 import time
 import traceback
 from .config import REPLIED_FILE
+from .logger import log
 from .reply_agent import generate_replies
 from .twitter_client import reply_to_tweet, quote_tweet, refresh_feed
 from .history import get_recent_tweets
@@ -28,7 +30,7 @@ def save_replied(urls: set):
 def run_reply_cycle():
     """Search for popular AI tweets and reply with a sharp one-liner."""
     refresh_feed()
-    print("[REPLY] Scanning for tweets to reply to...")
+    log.info("[REPLY] Scanning for tweets to reply to...")
 
     # Load already-replied URLs so the agent avoids them
     replied = load_replied()
@@ -41,7 +43,7 @@ def run_reply_cycle():
     )
 
     if replies is None:
-        print("[REPLY] No good tweets found - skipping this cycle.")
+        log.info("[REPLY] No good tweets found - skipping this cycle.")
         return
     posted_count = 0
 
@@ -51,11 +53,11 @@ def run_reply_cycle():
 
         # Skip tweets we already replied to
         if url in replied:
-            print(f"[REPLY] Already replied to {url} - skipping.")
+            log.info(f"[REPLY] Already replied to {url} - skipping.")
             continue
 
-        print(f"[REPLY] Target: {url}")
-        print(f"[REPLY] {action_type.upper()} ({len(data['reply'])} chars): {data['reply']}")
+        log.info(f"[REPLY] Target: {url}")
+        log.info(f"[REPLY] {action_type.upper()} ({len(data['reply'])} chars): {data['reply']}")
 
         try:
             if action_type == "quote":
@@ -67,14 +69,14 @@ def run_reply_cycle():
             log_reply(url, data["reply"], action_type)
             # Wait between replies so browser can catch up
             if posted_count < len(replies):
-                print("[REPLY] Waiting 15 seconds before next action...")
+                log.info("[REPLY] Waiting 15 seconds before next action...")
                 time.sleep(15)
         except Exception:
-            print(f"[REPLY] Failed to {action_type} {url}:")
+            log.info(f"[REPLY] Failed to {action_type} {url}:")
             traceback.print_exc()
 
     save_replied(replied)
-    print(f"[REPLY] Posted {posted_count} replies/quotes this cycle.")
+    log.info(f"[REPLY] Posted {posted_count} replies/quotes this cycle.")
 
 
 def safe_run_reply_cycle():
@@ -82,5 +84,5 @@ def safe_run_reply_cycle():
     try:
         run_reply_cycle()
     except Exception:
-        print("[REPLY] Error during reply cycle:")
+        log.info("[REPLY] Error during reply cycle:")
         traceback.print_exc()
