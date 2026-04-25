@@ -78,7 +78,7 @@ def run_replyback_cycle():
     influencers = _influencer_handles()
     count = 0
 
-    for reply_info in replies[:5]:  # Max 5 reply-backs per cycle
+    for reply_info in replies[:3]:  # Cap 3 reply-backs per cycle (was 5 — anti-spam)
         user = reply_info.get("user", "")
         text = reply_info.get("text", "")
         reply_url = reply_info.get("url", "")

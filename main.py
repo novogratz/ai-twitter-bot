@@ -32,37 +32,68 @@ from src.quote_tweet_bot import safe_run_quote_tweet_cycle
 from src.early_bird_bot import safe_run_early_bird_cycle
 
 
+def quiet_hours_paris() -> bool:
+    """True between 1am-7am Paris. Real humans sleep — bots that don't are
+    obvious. Used to skip replies/engages/roasts/early-bird at night.
+    News posts still flow (info doesn't sleep) but at the slowest cadence."""
+    hour = datetime.now(ZoneInfo("Europe/Paris")).hour
+    return 1 <= hour < 7
+
+
 def post_interval_minutes() -> int:
-    """Cluster posts during peak engagement windows.
-    Peak hours: 9-11am EST, 1-3pm EST (US tech workers scrolling).
-    These windows get 3-5x more impressions than off-peak.
-    Tightened intervals to push more news posts per day (user wants more news)."""
+    """Cluster posts during peak engagement windows. With cap = 10 news + 4
+    hot takes per day, intervals are slower than before — quality > volume."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 23 <= hour or hour < 8:
-        # Night: still post, news flows 24/7. Slightly slower than daytime but
-        # not "asleep" — too long an interval = users wake up to no fresh content.
-        return random.randint(90, 150)
+        # Night (Paris asleep): slow cadence so we drift into the morning
+        # with fresh content without spamming overnight.
+        return random.randint(150, 240)
     elif 9 <= hour < 11:
-        # PEAK: Morning window
-        return random.randint(45, 75)
+        # PEAK: Morning EST window
+        return random.randint(60, 100)
     elif 13 <= hour < 15:
-        # PEAK: Afternoon window
-        return random.randint(45, 75)
+        # PEAK: Afternoon EST window
+        return random.randint(60, 100)
     elif 8 <= hour < 12:
         # Near-peak morning
-        return random.randint(70, 110)
+        return random.randint(90, 150)
     elif 12 <= hour < 18:
         # Afternoon
-        return random.randint(70, 110)
+        return random.randint(90, 150)
     else:
         # Evening: winding down
-        return random.randint(110, 180)
+        return random.randint(140, 220)
 
 
 def reply_interval_minutes() -> int:
-    """Replies are the growth engine but too fast = shadow ban.
-    Every 20 min = ~72 replies/day max. Enough to grow, not enough to get flagged."""
-    return 20
+    """Replies are the growth engine but volume = bot smell. ~30min with
+    jitter (was 20). With cap=2/cycle this is ~60-80 replies/day max — high
+    but plausibly human. Quiet hours skip these entirely."""
+    return random.randint(25, 38)
+
+
+def engage_interval_minutes() -> int:
+    """Follow + like cadence. Was 30min. Slowed to ~45min with jitter to
+    avoid the 'this account follows 50 ppl/day' bot signal."""
+    return random.randint(40, 55)
+
+
+def direct_reply_interval_minutes() -> int:
+    """Was 15min. Slowed to ~25min jittered. Pairs with reply_bot to keep
+    total reply volume sane (~target 60-100 actions/day across both paths)."""
+    return random.randint(22, 32)
+
+
+def early_bird_interval_minutes() -> int:
+    """Was 5min. Slowed to ~8min jittered. Still inside the 12-min freshness
+    window for top-5-reply on viral tweets, but less Safari pressure."""
+    return random.randint(7, 10)
+
+
+def roast_interval_minutes() -> int:
+    """Was 10min. Slowed to ~20min jittered. @pgm_pm tweets every minute so
+    we still catch plenty — and 1 roast per URL via existing dedup hard caps."""
+    return random.randint(18, 25)
 
 
 def _graceful_shutdown(signum, frame):
@@ -98,9 +129,17 @@ def main():
             trigger=IntervalTrigger(minutes=next_min),
         )
 
+    def _quiet_skip(label: str) -> bool:
+        """Skip-and-reschedule helper for engagement cycles during quiet hours."""
+        if quiet_hours_paris():
+            log.info(f"[{label}] Quiet hours (1am-7am Paris) — skipping cycle.")
+            return True
+        return False
+
     # --- REPLY BOT (primary growth engine) ---
     def reschedule_and_reply():
-        safe_run_reply_cycle()
+        if not _quiet_skip("REPLY"):
+            safe_run_reply_cycle()
         next_min = reply_interval_minutes()
         hour = datetime.now(ZoneInfo("America/New_York")).hour
         log.info(f"[REPLY][EST {hour}:xx] Next reply scan in {next_min} minutes.")
@@ -108,6 +147,46 @@ def main():
             "reply_job",
             trigger=IntervalTrigger(minutes=next_min),
         )
+
+    def reschedule_and_engage():
+        if not _quiet_skip("ENGAGE"):
+            safe_run_engage_cycle()
+        scheduler.reschedule_job(
+            "engage_job",
+            trigger=IntervalTrigger(minutes=engage_interval_minutes()),
+        )
+
+    def reschedule_and_direct_reply():
+        if not _quiet_skip("DIRECT-REPLY"):
+            safe_run_direct_reply_cycle()
+        scheduler.reschedule_job(
+            "direct_reply_job",
+            trigger=IntervalTrigger(minutes=direct_reply_interval_minutes()),
+        )
+
+    def reschedule_and_early_bird():
+        if not _quiet_skip("EARLYBIRD"):
+            safe_run_early_bird_cycle()
+        scheduler.reschedule_job(
+            "early_bird_job",
+            trigger=IntervalTrigger(minutes=early_bird_interval_minutes()),
+        )
+
+    def reschedule_and_roast():
+        if not _quiet_skip("ROAST"):
+            safe_run_roast_pgm_cycle()
+        scheduler.reschedule_job(
+            "roast_pgm_job",
+            trigger=IntervalTrigger(minutes=roast_interval_minutes()),
+        )
+
+    def quiet_safe_notify():
+        if not _quiet_skip("NOTIFY"):
+            safe_run_notify_cycle()
+
+    def quiet_safe_replyback():
+        if not _quiet_skip("REPLYBACK"):
+            safe_run_replyback_cycle()
 
     # Run direct reply bot FIRST - visits influencer profiles directly
     if not args.post_only:
@@ -139,34 +218,39 @@ def main():
         )
 
     if not args.post_only and not args.reply_only:
-        # Engage bot - follow and like AI accounts for reciprocity
-        log.info("Engage bot: following + liking target accounts every 30 minutes.")
+        # Engage bot - follow and like AI accounts for reciprocity.
+        # Slowed from 30 -> ~45min jittered. Skipped during quiet hours.
+        # Initial offset = 7min so it doesn't fire at the same tick as other jobs.
+        log.info("Engage bot: follow + like target accounts every ~45 min (jittered, quiet 1am-7am Paris).")
         scheduler.add_job(
-            safe_run_engage_cycle,
-            trigger=IntervalTrigger(minutes=30),
+            reschedule_and_engage,
+            trigger=IntervalTrigger(minutes=engage_interval_minutes()),
             id="engage_job",
         )
 
-        # Notify bot - like replies on own tweets to build community
-        log.info("Notify bot: liking replies on own tweets every 45 minutes.")
+        # Notify bot - like replies on own tweets to build community.
+        # Quiet hours skip; cadence kept at 45min (cheap operation).
+        log.info("Notify bot: liking replies on own tweets every 45 min (quiet 1am-7am Paris).")
         scheduler.add_job(
-            safe_run_notify_cycle,
+            quiet_safe_notify,
             trigger=IntervalTrigger(minutes=45),
             id="notify_job",
         )
 
-        # Direct reply bot - visits influencer profiles and replies to their tweets
-        log.info("Direct reply bot: replying to influencer tweets every 15 minutes.")
+        # Direct reply bot - visits influencer profiles and replies to their tweets.
+        # Slowed from 15 -> ~25min jittered. Skipped during quiet hours.
+        log.info("Direct reply bot: replying to influencer tweets every ~25 min (jittered, quiet 1am-7am Paris).")
         scheduler.add_job(
-            safe_run_direct_reply_cycle,
-            trigger=IntervalTrigger(minutes=15),
+            reschedule_and_direct_reply,
+            trigger=IntervalTrigger(minutes=direct_reply_interval_minutes()),
             id="direct_reply_job",
         )
 
-        # Reply-back bot - reply to people who reply to our tweets (creates threads)
-        log.info("Reply-back bot: replying to followers every 60 minutes.")
+        # Reply-back bot - reply to people who reply to our tweets (creates threads).
+        # Cadence unchanged (60min) but skipped during quiet hours.
+        log.info("Reply-back bot: replying to followers every 60 min (quiet 1am-7am Paris).")
         scheduler.add_job(
-            safe_run_replyback_cycle,
+            quiet_safe_replyback,
             trigger=IntervalTrigger(minutes=60),
             id="replyback_job",
         )
@@ -180,13 +264,12 @@ def main():
             id="boost_job",
         )
 
-        # Early-bird bot — scrape mega accounts every 5 min, reply within
-        # minutes to fresh tweets. Being top-5 reply on a viral tweet is a
-        # 10-100x impressions multiplier. Hard cap: 1 reply per cycle.
-        log.info("Early-bird bot: catching fresh mega-account tweets every 5 minutes.")
+        # Early-bird bot — slowed from 5 -> ~8min jittered (still inside the
+        # 12-min freshness window for top-5-reply). Quiet hours skip.
+        log.info("Early-bird bot: catching fresh mega-account tweets every ~8 min (jittered, quiet 1am-7am Paris).")
         scheduler.add_job(
-            safe_run_early_bird_cycle,
-            trigger=IntervalTrigger(minutes=5),
+            reschedule_and_early_bird,
+            trigger=IntervalTrigger(minutes=early_bird_interval_minutes()),
             id="early_bird_job",
         )
 
@@ -198,13 +281,12 @@ def main():
             id="discover_job",
         )
 
-        # Roast bot - sarcastic 1x reply per @pgm_pm tweet (anti-bot retort).
-        # He tweets every ~minute, so check often. URL dedup hard-caps to 1 per
-        # tweet, MAX_PER_CYCLE caps burst rate.
-        log.info("Roast bot: sarcastically replying to @pgm_pm tweets every 10 minutes.")
+        # Roast bot - slowed from 10 -> ~20min jittered. He tweets every ~minute
+        # so we still catch plenty; URL dedup hard-caps to 1 per tweet. Quiet skip.
+        log.info("Roast bot: replying to @pgm_pm tweets every ~20 min (jittered, quiet 1am-7am Paris).")
         scheduler.add_job(
-            safe_run_roast_pgm_cycle,
-            trigger=IntervalTrigger(minutes=10),
+            reschedule_and_roast,
+            trigger=IntervalTrigger(minutes=roast_interval_minutes()),
             id="roast_pgm_job",
         )
 

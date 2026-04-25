@@ -97,7 +97,12 @@ def run_reply_cycle():
             continue
         seen_in_batch.add(url)
         filtered.append(data)
-    replies = filtered
+
+    # Hard cap: 2 replies per cycle. Reply bot fires every ~30min so this caps
+    # us at ~80 replies/day which is plausibly human. The agent sometimes
+    # returns 4-5 candidates — we keep only the top 2 (preserves agent ordering,
+    # which we've prompted to be impact-ranked).
+    replies = filtered[:2]
 
     if not replies:
         log.info("[REPLY] All replies filtered (dedup/blocklist) - skipping cycle.")
