@@ -188,15 +188,17 @@ def main():
         if not _quiet_skip("REPLYBACK"):
             safe_run_replyback_cycle()
 
-    # Run direct reply bot FIRST - visits influencer profiles directly
-    if not args.post_only:
-        log.info("Bot started! Replying to influencer tweets...")
-        safe_run_direct_reply_cycle()
-
-    # Then run first post
+    # Run news post FIRST so the bot opens its session with a banger.
+    # User preference: AI news + sharp comment is the brand DNA — that's what
+    # we want to lead with, not a reply. Replies follow once the post is up.
     if not args.reply_only:
-        log.info("Now posting first news tweet...")
+        log.info("Bot started! Posting first news tweet...")
         safe_run_bot_cycle()
+
+    # Then warm up the engagement loop with a direct-reply cycle.
+    if not args.post_only:
+        log.info("Now warming up the reply loop...")
+        safe_run_direct_reply_cycle()
 
     # Schedule jobs
     if not args.reply_only:
