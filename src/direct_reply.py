@@ -14,9 +14,12 @@ from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
-# French-speaking influencers — visited FIRST, every cycle
+# French-speaking influencers — visited FIRST, every cycle.
+# Curated list of FR super-users (high-volume, high-engagement) in our 3 niches.
+# Discover bot autonomously appends more to discovered_accounts.json — these are
+# the verified hand-picked anchors.
 FR_ACCOUNTS = [
-    # Bourse / Finance FR
+    # === Bourse / Finance / Macro FR ===
     "NCheron_bourse",    # Nicolas Chéron
     "RodolpheSteffan",   # Rodolphe Steffan
     "IVTrading",         # Interactiv Trading
@@ -25,13 +28,34 @@ FR_ACCOUNTS = [
     "DereeperVivre",     # Charles Dereeper
     "FinTales_",         # FinTales
     "MathieuL1",         # Mathieu Louvet
+    "ThomasVeillet",     # Morning Bell — tres actif, tres FR
+    "YoannLOPEZ",        # Snowball — investing FR
+    "Capital",           # Capital magazine
+    "LesEchos",          # Les Echos
+    "BFMBourse",         # BFM Bourse
+    "InvestirLeJournal", # Investir
+    "LeRevenu_fr",       # Le Revenu
 
-    # Crypto FR
+    # === Crypto FR ===
     "PowerHasheur",      # Hasheur
     "Capetlevrai",       # CAPET
     "Dark_Emi_",         # Dark Emi
     "JournalDuCoin",     # Journal Du Coin
     "powl_d",            # Powl
+    "owen_simonin",      # Owen Simonin (Hasheur partner)
+    "Cryptoast",         # Cryptoast media
+    "TheBigWhale_",      # The Big Whale media FR
+    "CointribuneFR",     # Cointribune FR
+    "Coin_Academy",      # Coin Academy FR
+
+    # === Tech / IA FR ===
+    "cyrildiagne",       # Cyril Diagne — AI artist FR très suivi
+    "KorbenInfo",        # Korben — tech FR mainstream
+    "Frandroid",         # FrAndroid — tech FR
+    "Numerama",          # Numerama
+    "01net",             # 01net
+    "JournalDuGeek",     # Journal du Geek
+    "GuillaumeBesson",   # FR tech entrepreneur
 ]
 
 # English-speaking influencers — visited only AFTER FR, fewer per cycle
