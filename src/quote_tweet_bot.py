@@ -23,7 +23,10 @@ from .engagement_log import log_reply
 
 QUOTED_FILE = os.path.join(_PROJECT_ROOT, "quoted_tweets.json")
 QUOTE_STATE_FILE = os.path.join(_PROJECT_ROOT, "quote_daily_state.json")
-MAX_QUOTES_PER_DAY = 2
+# Bumped 2 → 5/day. Quote tweets are a *different* distribution surface
+# (lands in our followers' feed AND notifies the original author), so
+# scaling them up is pure additive growth — not redundant with replies.
+MAX_QUOTES_PER_DAY = 5
 _OWN_HANDLE = BOT_HANDLE.lower()
 
 # Pull only HOT FR tweets (X "Top" tab) with high engagement floor — quote

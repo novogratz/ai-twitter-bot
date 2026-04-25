@@ -64,11 +64,21 @@ TARGET_ACCOUNTS = [
     "ZonebourseFR", "BFMBourse",
     "NCheron_bourse", "RodolpheSteffan", "IVTrading",
     "DereeperVivre", "MathieuL1",
+    "ThomasVeillet", "YoannLOPEZ",
+    "InvestirLeJournal", "LeRevenu_fr", "Capital",
 
     # === Bourse/Finance: US ===
     "chamath", "jimcramer", "unusual_whales",
 
-    # === Tech media ===
+    # === Tech media FR (mass distribution) ===
+    "BFMTV", "lemondefr", "lesechos", "Le_Figaro", "France24",
+    "Frandroid", "Numerama", "JournalDuGeek", "KorbenInfo",
+    "cyrildiagne", "Underscore_", "micode", "GuillaumeBesson",
+
+    # === Crypto FR (extra) ===
+    "owen_simonin", "Cryptoast", "TheBigWhale_", "CointribuneFR", "Coin_Academy",
+
+    # === Tech media EN ===
     "TechCrunch", "TheVerge", "WIRED",
 ]
 

@@ -319,12 +319,13 @@ def main():
         )
 
         # Quote-tweet bot — picks the most viral FR tweet in our niche and
-        # quote-tweets it with a sharp meme observation. Cap 2/day (tiny on
-        # purpose: this is a signal feature, not a volume feature).
-        log.info("Quote-tweet bot: amplifying viral FR tweets every 4 hours.")
+        # quote-tweets it with a sharp meme observation. Cap 5/day (was 2),
+        # cadence 2.5h (was 4h). Different distribution surface than replies
+        # — bumping it up is pure additive growth, not redundant volume.
+        log.info("Quote-tweet bot: amplifying viral FR tweets every 2.5 hours (cap 5/day).")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(hours=4),
+            trigger=IntervalTrigger(minutes=150),
             id="quote_tweet_job",
         )
 

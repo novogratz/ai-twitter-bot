@@ -102,11 +102,11 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 
 **Strategy agent** - Every 6h: agentic Claude run with Read + WebSearch + Bash tools. Reads engagement_log.csv (per-source ROI), looks up live FR AI/crypto/bourse trends, proposes new search queries + accounts. Python wrapper APPLIES additions only — never removes. Outputs land in `dynamic_queries.json` / `dynamic_accounts.json` and are merged at runtime by direct_reply. Audit trail in `strategy_log.json`. Fully autonomous, no human in the loop.
 
-**Quote-tweet bot** - Every 4h, cap 2/day: scrapes HOT FR tweets (min_faves:30), picks the single most-liked candidate, generates a sharp meme observation, posts it as a quote-tweet. New distribution surface (followers' feed + author notification).
+**Quote-tweet bot** - Every 2.5h, cap 5/day (was 4h/2): scrapes HOT FR tweets (min_faves:30), picks the single most-liked candidate, generates a sharp meme observation, posts it as a quote-tweet. New distribution surface (followers' feed + author notification). Bumped because it's pure additive growth — different surface than replies.
 
-**Early-bird bot** - Every ~8 min jittered (still inside the 12-min freshness window). Scrapes 3 random mega accounts, replies to any tweet < 12 min old. Hard cap 1 reply/cycle. Quiet 1am-7am Paris. Top-5 reply on a viral tweet = 10-100x impressions multiplier. Source-tagged `EARLYBIRD/<handle>`.
+**Early-bird bot** - Every ~7 min jittered (12-min freshness window). Scrapes 3 random accounts from a 75-account roster (FR media + crypto/bourse FR + AI mega EN), replies to any tweet < 12 min old. Hard cap 1 reply/cycle. Quiet 1am-7am Paris. Top-5 reply on a viral tweet = 10-100x impressions multiplier. Source-tagged `EARLYBIRD/<handle>`.
 
-**Reciprocity loop** - Inside notify_bot replyback: after handling influencer/standalone replies, picks up to 2 non-influencer engagers at random (50% probability per candidate so the pattern isn't mechanical) and visits their profile to like 1 tweet. Triggers a notification on their side; often converts to follow-back.
+**Reciprocity loop** - Inside notify_bot replyback: after handling influencer/standalone replies, picks up to 3 non-influencer engagers at random (60% probability per candidate so the pattern isn't mechanical) and visits their profile to LIKE one tweet AND FOLLOW BACK if not already following. Reply = strongest follow-back signal there is.
 
 ### Files
 
@@ -149,7 +149,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 | 12pm - 6pm   | 90-150 min    | ~25-38 min jittered                  |
 | 6pm - 11pm   | 140-220 min   | ~25-38 min jittered                  |
 
-Engage: ~45 min jittered (3-5 accounts/cycle), quiet 1am-7am Paris. Notify: 45 min, quiet hours. Replyback: 60 min, cap 3, quiet hours. Boost: every 6h (validated). Discover: every 6h. Roast (@pgm_pm): ~20 min jittered, quiet hours. Performance: every 2h. **Strategy agent: every 6h. Quote-tweet bot: every 4h. Early-bird bot: ~8 min jittered, quiet hours.**
+Engage: ~45 min jittered (3-5 accounts/cycle, expanded list w/ FR media), quiet 1am-7am Paris. Notify: 45 min, quiet hours. Replyback: 60 min, cap 4, quiet hours. Reciprocity loop now FOLLOWS BACK engagers (not just likes). Boost: every 6h (validated). Discover: every 6h. Roast (@pgm_pm): ~20 min jittered, quiet hours. Performance: every 2h. **Strategy agent: every 6h. Quote-tweet bot: every 2.5h (cap 5/day). Early-bird bot: ~7 min jittered (75-account roster), quiet hours.**
 
 Quiet hours = 1am-7am Paris time = ~7pm-1am EST. ALL engagement cycles (replies, engage, direct-reply, early-bird, roast, notify, replyback) skip entirely. News posts continue at slowest cadence.
 

@@ -30,20 +30,40 @@ _OWN_HANDLE = BOT_HANDLE.lower()
 # Mega accounts that consistently produce viral tweets in our niches. FR-leaning
 # but EN megas included — being early on Sam Altman pulls more reach than being
 # early on a niche FR account. Order-agnostic; we sample.
+# MASSIVE expansion (was 25 → now ~75). With 3 picks/cycle every ~7min, this
+# rotates through every account roughly every ~3h — meaning a fresh tweet
+# anywhere in this list has a real shot of being caught inside the 12-min
+# top-5-reply window. FR media is HEAVY because that's our audience.
 EARLY_BIRD_ACCOUNTS = [
-    # IA mega EN
+    # === IA mega EN ===
     "sama", "OpenAI", "AnthropicAI", "elonmusk", "karpathy", "ylecun",
     "GoogleDeepMind", "MistralAI", "DarioAmodei", "AravSrinivas",
-    # IA EN niche
-    "TheRundownAI", "rowancheung",
-    # Crypto mega
-    "VitalikButerin", "APompliano", "cz_binance",
-    # Crypto FR
+    "demishassabis", "gdb", "miramurati", "ID_AA_Carmack", "geoffreyhinton",
+    "AndrewYNg", "fchollet", "jeffdean", "simonw", "swyx",
+    # === IA EN niche / dev ===
+    "TheRundownAI", "rowancheung", "mckaywrigley", "levelsio",
+    "AlphaSignalAI", "TheAIGRID", "DrJimFan", "GaryMarcus",
+    # === IA FR ===
+    "cyrildiagne", "KorbenInfo", "Underscore_", "micode",
+    "GuillaumeBesson", "Frandroid", "Numerama", "JournalDuGeek",
+    # === Crypto mega EN ===
+    "VitalikButerin", "APompliano", "cz_binance", "brian_armstrong",
+    "WuBlockchain", "tier10k", "CryptoCapo_", "saylor",
+    # === Crypto FR (heavy — our audience) ===
     "PowerHasheur", "Capetlevrai", "JournalDuCoin", "powl_d",
-    # Bourse FR (high signal)
+    "owen_simonin", "Cryptoast", "TheBigWhale_", "CointribuneFR",
+    "Coin_Academy", "Dark_Emi_", "CryptoMusic_fr",
+    # === Bourse FR (heavy — high signal, low noise) ===
     "MathieuL1", "Graphseo", "NCheron_bourse", "ABaradez", "DereeperVivre",
-    # Markets EN
-    "unusual_whales",
+    "ThomasVeillet", "YoannLOPEZ", "RodolpheSteffan", "IVTrading",
+    "FinTales_", "ZonebourseFR",
+    # === FR media (mass distribution + breaking news) ===
+    "BFMTV", "BFMBourse", "lemondefr", "lesechos", "Capital",
+    "InvestirLeJournal", "LeRevenu_fr", "Le_Figaro", "France24",
+    # === Markets EN ===
+    "unusual_whales", "chamath", "jimcramer",
+    # === Tech media EN ===
+    "TechCrunch", "TheVerge", "WIRED",
 ]
 
 # A tweet is "early-bird eligible" if it's at most this many minutes old.
