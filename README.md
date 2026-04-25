@@ -93,7 +93,7 @@ All settings in `src/config.py`, overridable with environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MAX_NEWS_PER_DAY` | 25 | Max news posts per day |
+| `MAX_NEWS_PER_DAY` | 8 | Max news posts per day |
 | `MAX_HOTAKES_PER_DAY` | 4 | Max hot takes per day |
 | `NEWS_MODEL` | claude-opus-4-6 | Model for news posts |
 | `REPLY_MODEL` | claude-sonnet-4-6 | Model for replies |

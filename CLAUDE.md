@@ -67,7 +67,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **Troll ideas, never people**: Roast trends, hype, concepts, systems. NEVER mock the influencer's coaching, training, business, audience. Influencer should be able to like our reply.
 - **Replies are the growth engine**: 3-4 replies every 20 min, French priority.
 - **Hot takes are memes**: 4/day - smart, sharp, philosophical, laugh-out-loud, screenshot-worthy.
-- **News**: 25/day cap (configurable), only real stories. News-first policy: first 3 posts of the day MUST be news.
+- **News**: 8/day cap (configurable), only real stories. News-first policy: first 3 posts of the day MUST be news.
 - **Humanizer on everything**: Every post goes through a human-pass.
 - **Self-improving**: Scrapes own metrics every 2h and adapts prompts.
 - **Autonomous discovery**: Every 6h, finds new crypto/AI/bourse influencers and adds them to monitoring. Approved FR ai/crypto/bourse accounts get auto-followed.
