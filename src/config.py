@@ -13,7 +13,7 @@ ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
 # Daily posting limits - news is the bulk, hot takes are sharp memes
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "8"))
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "10"))
 MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "4"))
 
 # Accounts we never reply to (lowercase handles, no @)

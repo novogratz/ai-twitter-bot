@@ -8,7 +8,7 @@ Uses Claude Code CLI for AI generation and Safari + AppleScript for browser auto
 
 ### Bots
 
-**Post Bot** - Searches the web for breaking news (AI, crypto, bourse), writes sharp FR tweets, posts them. Threads supported. Mix of news (majority) + hot-take memes. News-first policy: first 3 posts/day must be news. Hot takes ship with a generated PNG quote-card for screenshot-worthy feed presence.
+**Post Bot** - Searches the web for breaking news (AI, crypto, bourse), writes sharp FR tweets in SETUP→PUNCH format (factual setup, sarcastic punch — sourced article without a joke = failure). Threads supported. Mix of news (10/day) + hot-take memes (4/day). News-first policy: first 3 posts/day must be news. Hot takes ship with a generated PNG quote-card for screenshot-worthy feed presence.
 
 **Reply Bot** - Direct + search reply paths. Finds high-engagement FR tweets (with EN fallback), drops sharp one-liner replies every 20 min. Skips dead tweets (0 likes AND 0 replies). FR priority, bilingual (matches tweet language).
 
@@ -93,7 +93,7 @@ All settings in `src/config.py`, overridable with environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MAX_NEWS_PER_DAY` | 8 | Max news posts per day |
+| `MAX_NEWS_PER_DAY` | 10 | Max news posts per day |
 | `MAX_HOTAKES_PER_DAY` | 4 | Max hot takes per day |
 | `NEWS_MODEL` | claude-opus-4-6 | Model for news posts |
 | `REPLY_MODEL` | claude-sonnet-4-6 | Model for replies |

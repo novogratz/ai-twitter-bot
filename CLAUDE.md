@@ -67,7 +67,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **Troll ideas, never people**: Roast trends, hype, concepts, systems. NEVER mock the influencer's coaching, training, business, audience. Influencer should be able to like our reply.
 - **Replies are the growth engine**: 3-4 replies every 20 min, French priority.
 - **Hot takes are memes**: 4/day - smart, sharp, philosophical, laugh-out-loud, screenshot-worthy.
-- **News**: 8/day cap (configurable), only real stories. News-first policy: first 3 posts of the day MUST be news.
+- **News**: 10/day cap (configurable). 3 niches (AI + crypto + bourse) so volume is shared across them. News-first policy: first 3 posts of the day MUST be news. Every news post needs a PUNCH — sourced article without a joke = failure. SETUP → PUNCH format, troll the idea/trend/market.
 - **Humanizer on everything**: Every post goes through a human-pass.
 - **Self-improving**: Scrapes own metrics every 2h and adapts prompts.
 - **Autonomous discovery**: Every 6h, finds new crypto/AI/bourse influencers and adds them to monitoring. Approved FR ai/crypto/bourse accounts get auto-followed.
@@ -84,7 +84,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 
 ### Bots
 
-**Post bot** - up to 18 news + 4 hot takes/day. ~30% hot take ratio. Humanizer on all output.
+**Post bot** - up to 10 news + 4 hot takes/day. ~30% hot take ratio. News must FOLLOW the SETUP→PUNCH format and make people laugh — sourced article without a joke = failure. Humanizer on all output.
 
 **Reply bot** - 3-4 replies per cycle, every 20 min. French priority, bilingual. Pre-filter dedup + blocklist. Persisted memory of 2000 replied URLs.
 
@@ -108,7 +108,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 
 ### Files
 
-- **`src/config.py`** - Central config: handle, paths, limits (18 news, 4 hot takes), models, retry settings, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE.
+- **`src/config.py`** - Central config: handle, paths, limits (10 news, 4 hot takes), models, retry settings, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE.
 - **`src/agent.py`** - News agent. Opus + WebSearch.
 - **`src/hotake_agent.py`** - Hot take agent. Sonnet. Smart/sharp/philosophical memes. Trolls ideas, never people.
 - **`src/reply_agent.py`** - Reply agent. Sonnet + WebSearch. Bilingual (FR priority). Pulls discovered handles into prompt.
@@ -154,7 +154,7 @@ Engage bot: every 30 min (3-5 accounts, 3 likes each). Notify bot: every 45 min.
 - No API keys needed (no Twitter API, no Anthropic API).
 - French priority, bilingual (replies match tweet language). Scope: AI + crypto + bourse. 280 chars max.
 - Troll IDEAS / TRENDS / CONCEPTS, never the person. Influencer should be able to like our reply.
-- 18 news + 4 hot takes per day (defaults, configurable via env).
+- 10 news + 4 hot takes per day (defaults, configurable via env). News must troll hard — SETUP→PUNCH format.
 - Hot takes = smart, sharp, philosophical memes. Screenshot-worthy.
 - Replies are the #1 growth engine: French priority, then EN influencers.
 - BLOCKLIST in `src/config.py` (currently `@pgm_pm`). Enforced everywhere.
