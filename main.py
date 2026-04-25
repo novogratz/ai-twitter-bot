@@ -66,34 +66,35 @@ def post_interval_minutes() -> int:
 
 
 def reply_interval_minutes() -> int:
-    """Replies are the growth engine but volume = bot smell. ~30min with
-    jitter (was 20). With cap=2/cycle this is ~60-80 replies/day max — high
-    but plausibly human. Quiet hours skip these entirely."""
-    return random.randint(25, 38)
+    """Super-user cadence: ~22min jittered (was 30). With cap=3/cycle this
+    is ~120 replies/day max in awake hours — heavy but plausibly human
+    (Mathieu Louvet posts at this volume). Quiet hours still skip."""
+    return random.randint(18, 28)
 
 
 def engage_interval_minutes() -> int:
-    """Follow + like cadence. Was 30min. Slowed to ~45min with jitter to
-    avoid the 'this account follows 50 ppl/day' bot signal."""
-    return random.randint(40, 55)
+    """Follow + like cadence. ~40min jittered (was 45). Still well below
+    the bot threshold but more present in influencers' notifications."""
+    return random.randint(35, 50)
 
 
 def direct_reply_interval_minutes() -> int:
-    """Was 15min. Slowed to ~25min jittered. Pairs with reply_bot to keep
-    total reply volume sane (~target 60-100 actions/day across both paths)."""
-    return random.randint(22, 32)
+    """~20min jittered (was 25). Tighter to land more replies on the FR
+    influencer profiles where we convert best. Per-cycle cap (in
+    direct_reply.py) prevents bursts."""
+    return random.randint(18, 26)
 
 
 def early_bird_interval_minutes() -> int:
-    """Was 5min. Slowed to ~8min jittered. Still inside the 12-min freshness
-    window for top-5-reply on viral tweets, but less Safari pressure."""
-    return random.randint(7, 10)
+    """~7min jittered (was 8). Inside the 12-min freshness window so we
+    catch more viral tweets in their top-5-reply moment."""
+    return random.randint(6, 9)
 
 
 def roast_interval_minutes() -> int:
-    """Was 10min. Slowed to ~20min jittered. @pgm_pm tweets every minute so
-    we still catch plenty — and 1 roast per URL via existing dedup hard caps."""
-    return random.randint(18, 25)
+    """~18min jittered (was 20). @pgm_pm tweets every minute; URL dedup
+    still hard-caps to 1 roast per tweet."""
+    return random.randint(15, 22)
 
 
 def _graceful_shutdown(signum, frame):
