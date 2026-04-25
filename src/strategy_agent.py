@@ -157,15 +157,20 @@ def _run_agent() -> dict:
     JSON proposal, or {} on failure."""
     prompt = _build_agent_prompt()
 
-    # Allow the agent to actually investigate. Read for files, WebSearch for
-    # live trends, Bash for git/log inspection if useful, Grep to scan code,
-    # WebFetch for deeper article reads. Write is intentionally excluded — only
-    # the Python wrapper writes to the dynamic stores (safety boundary).
+    # Allow the agent to actually investigate. Read-only tools only:
+    # Read (files), Grep + Glob (search), WebSearch + WebFetch (live signal).
+    # NO Bash and NO Write — the wrapper applies changes via Python (safety
+    # boundary), and Bash on an autonomous loop is too wide a foot-gun.
+    # --permission-mode bypassPermissions: required in -p mode or tool use
+    # blocks on the permission gate and the run hangs until timeout.
+    # --no-session-persistence: keep these autonomous runs out of /resume.
     cmd = [
         "claude",
         "-p", prompt,
         "--model", REPLY_MODEL,
-        "--allowedTools", "Read", "WebSearch", "WebFetch", "Bash", "Grep", "Glob",
+        "--allowedTools", "Read", "WebSearch", "WebFetch", "Grep", "Glob",
+        "--permission-mode", "bypassPermissions",
+        "--no-session-persistence",
     ]
 
     try:
