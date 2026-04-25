@@ -27,6 +27,8 @@ from src.direct_reply import safe_run_direct_reply_cycle
 from src.discover_bot import safe_run_discovery_cycle
 from src.roast_pgm_bot import safe_run_roast_pgm_cycle
 from src.performance import evaluate_and_learn
+from src.strategy_agent import safe_run_strategy_cycle
+from src.quote_tweet_bot import safe_run_quote_tweet_cycle
 
 
 def post_interval_minutes() -> int:
@@ -206,6 +208,27 @@ def main():
             safe_evaluate,
             trigger=IntervalTrigger(hours=2),
             id="perf_job",
+        )
+
+        # Strategy agent — fully autonomous self-improvement. Reads engagement
+        # log + uses tools (WebSearch, Read) to find new queries / accounts;
+        # ADDS them to dynamic_queries.json and dynamic_accounts.json which
+        # direct_reply merges with its static lists at runtime. Runs 4x/day.
+        log.info("Strategy agent: autonomous self-improvement every 6 hours.")
+        scheduler.add_job(
+            safe_run_strategy_cycle,
+            trigger=IntervalTrigger(hours=6),
+            id="strategy_job",
+        )
+
+        # Quote-tweet bot — picks the most viral FR tweet in our niche and
+        # quote-tweets it with a sharp meme observation. Cap 2/day (tiny on
+        # purpose: this is a signal feature, not a volume feature).
+        log.info("Quote-tweet bot: amplifying viral FR tweets every 4 hours.")
+        scheduler.add_job(
+            safe_run_quote_tweet_cycle,
+            trigger=IntervalTrigger(hours=4),
+            id="quote_tweet_job",
         )
 
     log.info("All systems go. Bot is running.")

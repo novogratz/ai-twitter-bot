@@ -6,17 +6,25 @@ An autonomous Twitter/X bot powered by Claude Code. No API keys needed. Posts vi
 
 Uses Claude Code CLI for AI generation and Safari + AppleScript for browser automation. No Twitter API, no Anthropic API key. Just log into X on Safari and go.
 
-### 5 Bots
+### Bots
 
-**Post Bot** - Searches the web for breaking news (AI, crypto, markets), writes sharp tweets in French, and posts them automatically. Supports threads for big stories. Mix of news posts (~67%) and hot takes (~33%).
+**Post Bot** - Searches the web for breaking news (AI, crypto, bourse), writes sharp FR tweets, posts them. Threads supported. Mix of news (majority) + hot-take memes. News-first policy: first 3 posts/day must be news. Hot takes ship with a generated PNG quote-card for screenshot-worthy feed presence.
 
-**Reply Bot** - Finds high-engagement francophone tweets and drops witty one-liner replies every 5 minutes. Targets viral posts on AI, crypto, and markets. Auto-likes before replying. Always replies in French.
+**Reply Bot** - Direct + search reply paths. Finds high-engagement FR tweets (with EN fallback), drops sharp one-liner replies every 20 min. Skips dead tweets (0 likes AND 0 replies). FR priority, bilingual (matches tweet language).
 
-**Engage Bot** - Auto-follows target accounts and likes their latest tweets. Visits 8-12 profiles every 10 minutes, likes 3 tweets per visit. Prioritizes French-speaking accounts. Tracks who's been followed.
+**Engage Bot** - Auto-follows target accounts and likes their latest tweets. Static list + autonomously discovered handles + strategy-agent additions, all merged at runtime.
 
-**Notify + Boost Bot** - Likes replies on your own tweets every 8 minutes. Self-retweets every 45 minutes. Builds loyalty and reach.
+**Notify + Boost Bot** - Likes replies on own tweets every 45 min. Replies in-thread to influencer replies. Self-retweets every 8h (validated growth lever — pulled 200 views from one boost).
 
-**Performance Bot** - Scrapes own tweet metrics (likes/views) every 2 hours. Identifies top and worst performers. Injects learnings into AI prompts for self-improvement.
+**Discover Bot** - Every 6h: searches X for new FR AI/crypto/bourse handles, scores with Claude, persists approved ones, auto-follows the best FR ones.
+
+**Roast Bot** - Every 10 min: 1-roast-per-tweet sarcastic reply on @pgm_pm's original tweets. URL-deduped hard cap.
+
+**Performance Bot** - Scrapes own tweet metrics every 2h. Identifies top/worst performers, injects learnings into prompts.
+
+**Strategy Agent (autonomous self-improvement)** - Every 6h: agentic Claude run with Read + WebSearch + Bash tools. Reads `engagement_log.csv` (per-source ROI), looks up live FR AI/crypto/bourse trends, proposes new search queries + accounts. Python applies ADDITIONS only — never removes. Outputs land in `dynamic_queries.json` / `dynamic_accounts.json` and are merged at runtime by the reply bot. **No human in the loop.** Audit trail in `strategy_log.json`.
+
+**Quote-Tweet Bot** - Every 4h, cap 2/day: picks the most viral FR tweet in our niches (min_faves:30, top tab) and quote-tweets it with a sharp meme observation. Different distribution surface than replies.
 
 ## Setup
 
@@ -85,7 +93,7 @@ All settings in `src/config.py`, overridable with environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MAX_NEWS_PER_DAY` | 8 | Max news posts per day |
+| `MAX_NEWS_PER_DAY` | 25 | Max news posts per day |
 | `MAX_HOTAKES_PER_DAY` | 4 | Max hot takes per day |
 | `NEWS_MODEL` | claude-opus-4-6 | Model for news posts |
 | `REPLY_MODEL` | claude-sonnet-4-6 | Model for replies |
@@ -123,10 +131,16 @@ src/
   reply_bot.py               # Reply orchestration, dedup
   engage_bot.py              # Auto-follow + like engine
   notify_bot.py              # Notification + boost
-  performance.py             # Self-improving metrics system
+  performance.py             # Self-improving metrics system (every 2h)
+  strategy_agent.py          # Autonomous self-improvement (agentic, every 6h)
+  dynamic_strategy.py        # Append-only stores for strategy-agent additions
+  quote_tweet_bot.py         # Quote-tweet path (cap 2/day)
+  discover_bot.py            # Autonomous handle discovery (every 6h)
+  roast_pgm_bot.py           # Dedicated 1-roast-per-tweet for @pgm_pm
+  image_gen.py               # PNG quote-card generator (Pillow)
   twitter_client.py          # Safari/AppleScript browser automation
   history.py                 # Tweet history, dedup (capped at 500)
-  engagement_log.py          # CSV engagement tracking
+  engagement_log.py          # CSV engagement tracking with source attribution
 ```
 
 ## Requirements

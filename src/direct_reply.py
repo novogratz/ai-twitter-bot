@@ -9,6 +9,8 @@ from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_se
 from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url
 from .config import BLOCKLIST, BOT_HANDLE
 from .humanizer import humanize
+from .engagement_log import log_reply
+from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -292,7 +294,7 @@ def _generate_single_reply(author: str, tweet_text: str):
         return None
 
 
-def _reply_to_tweets(tweets, replied, source_name):
+def _reply_to_tweets(tweets, replied, source_name, source_detail=""):
     """Reply to a list of scraped tweets. Returns number of replies posted."""
     posted = 0
     for tweet in tweets:
@@ -345,6 +347,12 @@ def _reply_to_tweets(tweets, replied, source_name):
 
         try:
             reply_to_tweet(url, reply)
+            # Tag with source so the strategy agent can compute per-source ROI later.
+            tag = f"{source_name}/{source_detail}" if source_detail else source_name
+            try:
+                log_reply(url, reply, action_type="reply", source=tag)
+            except Exception:
+                pass  # logging failures must never block the bot
             posted += 1
             time.sleep(random.randint(10, 20))
         except Exception:
@@ -363,28 +371,36 @@ def run_direct_reply_cycle():
     replied = load_replied()
     total = 0
 
+    # Merge agent-proposed dynamic queries + accounts. Strategy agent appends to
+    # these JSON files every cycle; we just consume them here. Append-only.
+    dyn_queries = get_dynamic_queries()
+    dyn_accounts = get_dynamic_accounts()
+
     # === SOURCE 1: French X Live searches (chronological, with min_faves) ===
-    queries = random.sample(SEARCH_QUERIES, min(5, len(SEARCH_QUERIES)))
+    all_search = SEARCH_QUERIES + dyn_queries.get("live", [])
+    queries = random.sample(all_search, min(5, len(all_search)))
     for query in queries:
         log.info(f"[DIRECT] === FR Search (live): {query} ===")
         search_tweets = scrape_x_search(query, max_tweets=15, tab="live")
         if search_tweets:
-            total += _reply_to_tweets(search_tweets, replied, "SEARCH-FR-LIVE")
+            total += _reply_to_tweets(search_tweets, replied, "SEARCH-FR-LIVE", source_detail=query)
 
     # === SOURCE 1b: HOT FR tweets (X's "Top" algorithmic tab) ===
-    hot_picks = random.sample(HOT_TAB_QUERIES, min(3, len(HOT_TAB_QUERIES)))
+    all_hot = HOT_TAB_QUERIES + dyn_queries.get("hot", [])
+    hot_picks = random.sample(all_hot, min(3, len(all_hot)))
     for query in hot_picks:
         log.info(f"[DIRECT] === FR Search (HOT/top): {query} ===")
         try:
             hot_tweets = scrape_x_search(query, max_tweets=12, tab="top")
             if hot_tweets:
-                total += _reply_to_tweets(hot_tweets, replied, "SEARCH-FR-HOT")
+                total += _reply_to_tweets(hot_tweets, replied, "SEARCH-FR-HOT", source_detail=query)
         except Exception:
             log.info(f"[DIRECT] HOT search failed for {query}:")
             traceback.print_exc()
 
     # === SOURCE 2: French influencer profiles (FR FIRST) - more accounts, more tweets
-    fr_picks = random.sample(FR_ACCOUNTS, min(6, len(FR_ACCOUNTS)))
+    all_fr = FR_ACCOUNTS + dyn_accounts.get("fr", [])
+    fr_picks = random.sample(all_fr, min(6, len(all_fr)))
     for username in fr_picks:
         log.info(f"[DIRECT] === FR profile @{username} ===")
         tweets = scrape_profile_tweets(username, max_tweets=10)
@@ -393,7 +409,7 @@ def run_direct_reply_cycle():
                 "url": t["url"], "text": t["text"], "author": username,
                 "likes": t.get("likes", 0), "replies": t.get("replies", 0),
             } for t in tweets]
-            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-FR")
+            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-FR", source_detail=username)
 
     # === SOURCE 3: Home feed (For You / algorithmic) ===
     log.info("[DIRECT] === Scraping home feed (For You) ===")
@@ -412,7 +428,8 @@ def run_direct_reply_cycle():
         traceback.print_exc()
 
     # === SOURCE 4: English influencer profiles - more accounts, more tweets ===
-    en_picks = random.sample(EN_ACCOUNTS, min(4, len(EN_ACCOUNTS)))
+    all_en = EN_ACCOUNTS + dyn_accounts.get("en", [])
+    en_picks = random.sample(all_en, min(4, len(all_en)))
     for username in en_picks:
         log.info(f"[DIRECT] === EN profile @{username} ===")
         tweets = scrape_profile_tweets(username, max_tweets=10)
@@ -421,7 +438,7 @@ def run_direct_reply_cycle():
                 "url": t["url"], "text": t["text"], "author": username,
                 "likes": t.get("likes", 0), "replies": t.get("replies", 0),
             } for t in tweets]
-            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-EN")
+            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-EN", source_detail=username)
 
     save_replied(replied)
     log.info(f"[DIRECT] Total: {total} replies posted this cycle.")

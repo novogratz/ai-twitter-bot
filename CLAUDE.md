@@ -77,6 +77,10 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **Skip dead tweets**: Scraper extracts likes + replies counts via aria-label parsing; tweets with 0 likes AND 0 replies are skipped everywhere (direct_reply, roast_pgm_bot). No point replying where no one's looking.
 - **Hot-tweet sources**: Search queries use `min_faves:N` to surface already-engaged tweets. New `scrape_x_search(tab="top")` hits X's algorithmic Top tab. HOT_TAB_QUERIES list adds a guaranteed-hot pass per cycle. Claude / Claude Code surfaced as the hot topic.
 - **Quote cards on hot takes**: Hot takes ship with a generated PNG quote-card (clean dark background, @kzer_ai branded, random palette). Pasted via clipboard into /compose/post. Requires Pillow — falls back to text-only if missing.
+- **Autonomous strategy agent**: Every 6h, an agentic Claude run reads the engagement log + uses tools (WebSearch, Read, Bash) to investigate what's actually working AND what's trending in FR AI/crypto/bourse RIGHT NOW. Proposes JSON; the Python wrapper APPLIES additions only (queries → `dynamic_queries.json`, accounts → `dynamic_accounts.json`). Direct_reply merges these with its static lists at runtime. Removals stay manual (safety boundary). Audit trail in `strategy_log.json`.
+- **Source attribution**: Every reply written to `engagement_log.csv` carries a `source` tag (e.g. `PROFILE-FR/MathieuL1`, `SEARCH-FR-HOT/Bitcoin lang:fr`). The strategy agent uses this to compute per-source ROI.
+- **Quote tweets**: Cap 2/day. Picks the most-liked viral FR tweet in our niches and posts a sharp meme observation as a quote-tweet (lands in followers' feed AND notifies the original author). Different distribution surface than replies.
+- **Boost (validated lever)**: Self-retweet of latest tweet every 8h. Confirmed: one boost pulled 200 views + 6 likes. Free distribution multiplier — keep the cadence.
 
 ### Bots
 
@@ -93,6 +97,10 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 **Roast bot** - Every 10 min: visits @pgm_pm's profile, posts up to 3 sarcastic replies on his original tweets (1 per URL via existing dedup). Jittered between posts. His replies on our tweets stay blocked via BLOCKLIST so no loop.
 
 **Performance bot** - Scrapes likes/views every 2h. Identifies top/worst performers. Injects learnings into prompts.
+
+**Strategy agent** - Every 6h: agentic Claude run with Read + WebSearch + Bash tools. Reads engagement_log.csv (per-source ROI), looks up live FR AI/crypto/bourse trends, proposes new search queries + accounts. Python wrapper APPLIES additions only — never removes. Outputs land in `dynamic_queries.json` / `dynamic_accounts.json` and are merged at runtime by direct_reply. Audit trail in `strategy_log.json`. Fully autonomous, no human in the loop.
+
+**Quote-tweet bot** - Every 4h, cap 2/day: scrapes HOT FR tweets (min_faves:30), picks the single most-liked candidate, generates a sharp meme observation, posts it as a quote-tweet. New distribution surface (followers' feed + author notification).
 
 ### Files
 
@@ -112,11 +120,18 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **`src/engagement_log.py`** - CSV engagement logging.
 - **`src/twitter_client.py`** - Browser automation with Safari lock + retry. `reply_to_tweet_in_thread()` for nested replies. `scrape_following_feed()` for the chronological Following tab. `scrape_x_search(tab="top")` for X's algorithmic Top results. `post_tweet(text, image_path=...)` attaches PNG via clipboard paste on /compose/post. Scraper returns likes/replies counts.
 - **`src/image_gen.py`** - Generates PNG quote cards for hot takes (dark bg, accent bar, branded handle, random palette). Pillow-based; no-op if PIL missing.
+- **`src/strategy_agent.py`** - **Autonomous self-improvement (agentic).** Every 6h: spawns a Claude agent with Read+WebSearch+Bash tools, reads engagement log, investigates trends, proposes JSON. Python applies additions only.
+- **`src/dynamic_strategy.py`** - Append-only stores: `dynamic_queries.json` (live + hot tabs) and `dynamic_accounts.json` (FR + EN). Read by direct_reply at runtime.
+- **`src/quote_tweet_bot.py`** - Quote-tweet path. Cap 2/day. Picks the single most-liked viral FR tweet and amplifies it with a sharp observation.
 - **`src/history.py`** - Tweet history persistence.
 - **`main.py`** - CLI entry point. APScheduler. Signal handlers. Graceful shutdown.
 - **`discovered_accounts.json`** - Persisted autonomously-discovered handles.
+- **`dynamic_queries.json`** - Strategy-agent-added search queries (live + hot). Append-only.
+- **`dynamic_accounts.json`** - Strategy-agent-added monitor handles (FR + EN). Append-only.
+- **`strategy_log.json`** - Audit trail of every strategy-agent cycle.
 - **`replied_tweets.json`** - Persisted reply dedup (cap 2000).
 - **`replied_back.json`** - Persisted reply-back dedup (by URL).
+- **`quoted_tweets.json`** - Persisted quote-tweet dedup.
 
 ## Schedule (EST)
 
@@ -127,7 +142,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 | 12pm - 6pm   | 90-160 min    | 20 min         |
 | 6pm - 11pm   | 150-240 min   | 20 min         |
 
-Engage bot: every 30 min (3-5 accounts, 3 likes each). Notify bot: every 45 min. Replyback: every 60 min. Boost: every 8h. Discover: every 6h. Roast (@pgm_pm): every 10 min. Performance: every 2h.
+Engage bot: every 30 min (3-5 accounts, 3 likes each). Notify bot: every 45 min. Replyback: every 60 min. Boost: every 8h. Discover: every 6h. Roast (@pgm_pm): every 10 min. Performance: every 2h. **Strategy agent: every 6h (autonomous self-improvement). Quote-tweet bot: every 4h.**
 
 ## Key design notes
 
@@ -145,6 +160,8 @@ Engage bot: every 30 min (3-5 accounts, 3 likes each). Notify bot: every 45 min.
 - News agent: Opus. Reply + hot take + replyback + discovery: Sonnet.
 - Browser automation via `webbrowser.open` + AppleScript. macOS only. Safari lock.
 - No em dashes anywhere.
-- Self-improving: scrapes own metrics every 2h.
+- Self-improving: scrapes own metrics every 2h **AND runs an autonomous agentic strategy cycle every 6h** that adds new queries/accounts based on per-source ROI + live trend research.
+- Source attribution on every reply (`engagement_log.csv` source column) feeds the strategy agent's analysis.
+- Append-only safety boundary on the strategy agent: it can ADD queries/accounts but never REMOVE — bad runs degrade gracefully.
 - Persistent daily state survives process restarts.
 - All limits configurable via environment variables.
