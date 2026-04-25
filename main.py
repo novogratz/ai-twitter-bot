@@ -28,6 +28,7 @@ from src.discover_bot import safe_run_discovery_cycle
 from src.roast_pgm_bot import safe_run_roast_pgm_cycle
 from src.performance import evaluate_and_learn
 from src.strategy_agent import safe_run_strategy_cycle
+from src.evolution_agent import safe_run_evolution_cycle
 from src.quote_tweet_bot import safe_run_quote_tweet_cycle
 from src.early_bird_bot import safe_run_early_bird_cycle
 
@@ -307,15 +308,31 @@ def main():
             id="perf_job",
         )
 
-        # Strategy agent — fully autonomous self-improvement. Reads engagement
-        # log + uses tools (WebSearch, Read) to find new queries / accounts;
-        # ADDS them to dynamic_queries.json and dynamic_accounts.json which
-        # direct_reply merges with its static lists at runtime. Runs 4x/day.
+        # Strategy agent — fully autonomous self-improvement (INPUT side).
+        # Reads engagement log + uses tools (WebSearch, Read) to find new
+        # queries / accounts; ADDS them to dynamic_queries.json and
+        # dynamic_accounts.json which direct_reply merges with its static
+        # lists at runtime. Runs 4x/day.
         log.info("Strategy agent: autonomous self-improvement every 6 hours.")
         scheduler.add_job(
             safe_run_strategy_cycle,
             trigger=IntervalTrigger(hours=6),
             id="strategy_job",
+        )
+
+        # Evolution agent — autonomous self-improvement (OUTPUT side).
+        # Reads engagement_log + performance_log; analyses what content
+        # patterns win, prunes accounts that produced 0 engagement, doubles
+        # down on accounts whose tweets converted into our top posts.
+        # Writes directives.md (loaded by all generation agents) +
+        # pruned_accounts.json + reinforced_accounts.json. Hard caps:
+        # max 3 prunes/cycle (TTL 30d), max 5 reinforcements/cycle (no TTL).
+        # Runs 2x/day. The bot literally rewrites its style guide every 12h.
+        log.info("Evolution agent: content-quality self-improvement every 12 hours.")
+        scheduler.add_job(
+            safe_run_evolution_cycle,
+            trigger=IntervalTrigger(hours=12),
+            id="evolution_job",
         )
 
         # Quote-tweet bot — picks the most viral FR tweet in our niche and

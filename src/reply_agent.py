@@ -325,6 +325,13 @@ def generate_replies(recent_topics=None, already_replied=None):
             f"Ajoute une recherche: \"site:x.com {handles}\""
         )
 
+    # Autonomous evolution-agent directives — appended to discovered_section
+    # so they don't disturb the prompt template's required keys.
+    from .evolution_store import get_directives_block
+    directives_block = get_directives_block()
+    if directives_block:
+        discovered_section = (discovered_section or "") + directives_block
+
     prompt = REPLY_PROMPT_TEMPLATE.format(
         dedup_section=dedup_section,
         skip_urls_section=skip_urls_section,

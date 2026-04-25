@@ -17,3 +17,9 @@ performance_log.json
 learnings.json
 bot.log
 bot.log.*
+
+# Evolution agent runtime artifacts (regenerated)
+directives.md
+pruned_accounts.json
+reinforced_accounts.json
+evolution_log.json

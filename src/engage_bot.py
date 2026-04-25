@@ -103,11 +103,15 @@ def _save_followed(followed: set):
 def run_engage_cycle():
     """Visit target accounts, like their latest tweets, and follow new ones.
     More accounts per cycle + 3 likes per visit = more visibility."""
+    from .evolution_store import filter_and_weight
     followed = _load_followed()
+
+    # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
+    pool = filter_and_weight(TARGET_ACCOUNTS)
 
     # 3-5 accounts per cycle - stay under Twitter's radar
     count = random.randint(3, 5)
-    picks = random.sample(TARGET_ACCOUNTS, min(count, len(TARGET_ACCOUNTS)))
+    picks = random.sample(pool, min(count, len(pool)))
 
     log.info(f"[ENGAGE] Engaging with {len(picks)} accounts...")
     for username in picks:

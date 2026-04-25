@@ -77,9 +77,13 @@ def run_early_bird_cycle():
     replied = load_replied()
     posted = 0
 
+    # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
+    from .evolution_store import filter_and_weight
+    pool = filter_and_weight(EARLY_BIRD_ACCOUNTS)
+
     # 3 random accounts per cycle. With 5-min cadence that's 36 scrapes/hour
     # — enough coverage without flooding Safari (each scrape ~6-8s).
-    picks = random.sample(EARLY_BIRD_ACCOUNTS, k=min(3, len(EARLY_BIRD_ACCOUNTS)))
+    picks = random.sample(pool, k=min(3, len(pool)))
 
     for username in picks:
         if posted >= 1:

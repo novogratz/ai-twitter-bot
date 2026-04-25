@@ -323,6 +323,13 @@ APPRENDS DE TES PERFORMANCES
 
 UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les patterns de tes pires."""
 
+    # Autonomous evolution agent's directives (regenerated every 12h from
+    # actual engagement data). Loaded at runtime — empty on first run.
+    from .evolution_store import get_directives_block
+    directives_block = get_directives_block()
+    if directives_block:
+        performance_section = (performance_section or "") + directives_block
+
     today_date = datetime.now().strftime("%Y-%m-%d")
     prompt = PROMPT_TEMPLATE.format(
         dedup_section=dedup_section,

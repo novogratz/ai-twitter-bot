@@ -100,7 +100,13 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 
 **Performance bot** - Scrapes likes/views every 2h. Identifies top/worst performers. Injects learnings into prompts.
 
-**Strategy agent** - Every 6h: agentic Claude run with Read + WebSearch + Bash tools. Reads engagement_log.csv (per-source ROI), looks up live FR AI/crypto/bourse trends, proposes new search queries + accounts. Python wrapper APPLIES additions only — never removes. Outputs land in `dynamic_queries.json` / `dynamic_accounts.json` and are merged at runtime by direct_reply. Audit trail in `strategy_log.json`. Fully autonomous, no human in the loop.
+**Strategy agent (INPUT side)** - Every 6h: agentic Claude run with Read + WebSearch + Bash tools. Reads engagement_log.csv (per-source ROI), looks up live FR AI/crypto/bourse trends, proposes new search queries + accounts. Python wrapper APPLIES additions only — never removes. Outputs land in `dynamic_queries.json` / `dynamic_accounts.json` and are merged at runtime by direct_reply. Audit trail in `strategy_log.json`. Fully autonomous, no human in the loop.
+
+**Evolution agent (OUTPUT side)** - Every 12h: agentic Claude run that reads engagement_log + performance_log, identifies what content patterns WIN and what dies, then ADAPTS:
+  - Writes `directives.md` (overwritten each cycle) — short actionable rules ("toujours finir sur une chute", "drop 🚀, garde 🔥", "format mini-dialogue cartonne — refais"). Loaded by ALL generation agents (news/reply/hot take) at runtime.
+  - Adds to `pruned_accounts.json` — handles that produced 0 engagement after ≥5 sollicitations get filtered from selectors. TTL 30 days (auto-expires so a slow week isn't a death sentence). Hard cap 3 prunes/cycle.
+  - Adds to `reinforced_accounts.json` — handles whose tweets converted into our top posts get 2x weight in selectors. No TTL. Hard cap 5 reinforcements/cycle.
+  Audit trail in `evolution_log.json`. The bot literally rewrites its own style guide twice a day.
 
 **Quote-tweet bot** - Every 2.5h, cap 5/day (was 4h/2): scrapes HOT FR tweets (min_faves:30), picks the single most-liked candidate, generates a sharp meme observation, posts it as a quote-tweet. New distribution surface (followers' feed + author notification). Bumped because it's pure additive growth — different surface than replies.
 
@@ -126,7 +132,9 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **`src/engagement_log.py`** - CSV engagement logging.
 - **`src/twitter_client.py`** - Browser automation with Safari lock + retry. `reply_to_tweet_in_thread()` for nested replies. `scrape_following_feed()` for the chronological Following tab. `scrape_x_search(tab="top")` for X's algorithmic Top results. `post_tweet(text, image_path=...)` attaches PNG via clipboard paste on /compose/post. Scraper returns likes/replies counts.
 - **`src/image_gen.py`** - Generates PNG quote cards for hot takes (dark bg, accent bar, branded handle, random palette). Pillow-based; no-op if PIL missing.
-- **`src/strategy_agent.py`** - **Autonomous self-improvement (agentic).** Every 6h: spawns a Claude agent with Read+WebSearch+Bash tools, reads engagement log, investigates trends, proposes JSON. Python applies additions only.
+- **`src/strategy_agent.py`** - **Autonomous self-improvement INPUT side (agentic).** Every 6h: spawns a Claude agent with Read+WebSearch+Bash tools, reads engagement log, investigates trends, proposes JSON. Python applies additions only.
+- **`src/evolution_agent.py`** - **Autonomous self-improvement OUTPUT side (agentic).** Every 12h: spawns a Claude agent with Read tools, analyzes engagement_log + performance_log, identifies winning/losing patterns + dead/hot accounts. Outputs directives + prune list + reinforce list. Python applies with hard caps + TTL.
+- **`src/evolution_store.py`** - Append-only/TTL stores for the evolution agent: `directives.md` (overwritten each cycle), `pruned_accounts.json` (TTL 30d), `reinforced_accounts.json`. Helper `filter_and_weight(accounts)` used by all selectors.
 - **`src/dynamic_strategy.py`** - Append-only stores: `dynamic_queries.json` (live + hot tabs) and `dynamic_accounts.json` (FR + EN). Read by direct_reply at runtime.
 - **`src/quote_tweet_bot.py`** - Quote-tweet path. Cap 2/day. Picks the single most-liked viral FR tweet and amplifies it with a sharp observation.
 - **`src/early_bird_bot.py`** - Early-bird reply path. Every 5 min, scans 3 mega accounts for tweets < 12 min old. Cap 1 reply per cycle. Top-5-reply is 10-100x impressions vs. late-reply.
@@ -139,6 +147,10 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **`replied_tweets.json`** - Persisted reply dedup (cap 2000).
 - **`replied_back.json`** - Persisted reply-back dedup (by URL).
 - **`quoted_tweets.json`** - Persisted quote-tweet dedup.
+- **`directives.md`** - Evolution-agent's current style guide (overwritten every 12h). Auto-injected into all generation prompts.
+- **`pruned_accounts.json`** - Accounts the evolution agent has demoted (TTL 30d, max 3 added per cycle). Filtered from selectors.
+- **`reinforced_accounts.json`** - Accounts the evolution agent has confirmed work (no TTL). Get 2x weight in selectors.
+- **`evolution_log.json`** - Audit trail of every evolution cycle.
 
 ## Schedule (EST + Paris quiet hours)
 

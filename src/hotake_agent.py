@@ -140,6 +140,12 @@ def generate_hotake() -> Optional[str]:
 
 Écris plus comme tes meilleurs tweets. Évite les patterns de tes pires."""
 
+    # Autonomous evolution-agent directives (regenerated every 12h)
+    from .evolution_store import get_directives_block
+    directives_block = get_directives_block()
+    if directives_block:
+        performance_section = (performance_section or "") + directives_block
+
     prompt = HOTAKE_PROMPT.format(performance_section=performance_section)
 
     result = subprocess.run(

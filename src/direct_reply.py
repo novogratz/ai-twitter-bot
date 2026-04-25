@@ -437,7 +437,9 @@ def run_direct_reply_cycle():
             traceback.print_exc()
 
     # === SOURCE 2: French influencer profiles (FR FIRST) - more accounts, more tweets
-    all_fr = FR_ACCOUNTS + dyn_accounts.get("fr", [])
+    # Apply autonomous evolution: filter pruned + double-weight reinforced
+    from .evolution_store import filter_and_weight
+    all_fr = filter_and_weight(FR_ACCOUNTS + dyn_accounts.get("fr", []))
     fr_picks = random.sample(all_fr, min(6, len(all_fr)))
     for username in fr_picks:
         if _budget() <= 0:
@@ -470,7 +472,7 @@ def run_direct_reply_cycle():
             traceback.print_exc()
 
     # === SOURCE 4: English influencer profiles - more accounts, more tweets ===
-    all_en = EN_ACCOUNTS + dyn_accounts.get("en", [])
+    all_en = filter_and_weight(EN_ACCOUNTS + dyn_accounts.get("en", []))
     en_picks = random.sample(all_en, min(4, len(all_en)))
     for username in en_picks:
         if _budget() <= 0:
