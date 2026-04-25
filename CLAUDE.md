@@ -102,6 +102,10 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 
 **Quote-tweet bot** - Every 4h, cap 2/day: scrapes HOT FR tweets (min_faves:30), picks the single most-liked candidate, generates a sharp meme observation, posts it as a quote-tweet. New distribution surface (followers' feed + author notification).
 
+**Early-bird bot** - Every 5 min: scrapes 3 random mega accounts (sama, OpenAI, AnthropicAI, elonmusk, MathieuL1, etc.), replies within minutes to any tweet < 12 min old. Hard cap 1 reply per cycle. Being a top-5 reply on a viral tweet is a 10-100x impressions multiplier vs. landing #50 an hour later. Source-tagged `EARLYBIRD/<handle>`.
+
+**Reciprocity loop** - Inside notify_bot replyback: after handling influencer/standalone replies, picks up to 2 non-influencer engagers at random (50% probability per candidate so the pattern isn't mechanical) and visits their profile to like 1 tweet. Triggers a notification on their side; often converts to follow-back.
+
 ### Files
 
 - **`src/config.py`** - Central config: handle, paths, limits (18 news, 4 hot takes), models, retry settings, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE.
@@ -123,6 +127,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **`src/strategy_agent.py`** - **Autonomous self-improvement (agentic).** Every 6h: spawns a Claude agent with Read+WebSearch+Bash tools, reads engagement log, investigates trends, proposes JSON. Python applies additions only.
 - **`src/dynamic_strategy.py`** - Append-only stores: `dynamic_queries.json` (live + hot tabs) and `dynamic_accounts.json` (FR + EN). Read by direct_reply at runtime.
 - **`src/quote_tweet_bot.py`** - Quote-tweet path. Cap 2/day. Picks the single most-liked viral FR tweet and amplifies it with a sharp observation.
+- **`src/early_bird_bot.py`** - Early-bird reply path. Every 5 min, scans 3 mega accounts for tweets < 12 min old. Cap 1 reply per cycle. Top-5-reply is 10-100x impressions vs. late-reply.
 - **`src/history.py`** - Tweet history persistence.
 - **`main.py`** - CLI entry point. APScheduler. Signal handlers. Graceful shutdown.
 - **`discovered_accounts.json`** - Persisted autonomously-discovered handles.
@@ -142,7 +147,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 | 12pm - 6pm   | 90-160 min    | 20 min         |
 | 6pm - 11pm   | 150-240 min   | 20 min         |
 
-Engage bot: every 30 min (3-5 accounts, 3 likes each). Notify bot: every 45 min. Replyback: every 60 min. Boost: every 8h. Discover: every 6h. Roast (@pgm_pm): every 10 min. Performance: every 2h. **Strategy agent: every 6h (autonomous self-improvement). Quote-tweet bot: every 4h.**
+Engage bot: every 30 min (3-5 accounts, 3 likes each). Notify bot: every 45 min. Replyback: every 60 min (includes reciprocity loop). Boost: every 6h (validated). Discover: every 6h. Roast (@pgm_pm): every 10 min. Performance: every 2h. **Strategy agent: every 6h (autonomous self-improvement). Quote-tweet bot: every 4h. Early-bird bot: every 5 min.**
 
 ## Key design notes
 

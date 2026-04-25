@@ -29,6 +29,7 @@ from src.roast_pgm_bot import safe_run_roast_pgm_cycle
 from src.performance import evaluate_and_learn
 from src.strategy_agent import safe_run_strategy_cycle
 from src.quote_tweet_bot import safe_run_quote_tweet_cycle
+from src.early_bird_bot import safe_run_early_bird_cycle
 
 
 def post_interval_minutes() -> int:
@@ -170,12 +171,23 @@ def main():
             id="replyback_job",
         )
 
-        # Boost bot - one self-retweet per day is enough
-        log.info("Boost bot: retweeting own latest tweet every 8 hours.")
+        # Boost bot - validated growth lever (200 views / 6 likes per cycle).
+        # Bumped from 8h -> 6h since we know it works.
+        log.info("Boost bot: retweeting own latest tweet every 6 hours.")
         scheduler.add_job(
             safe_run_boost_cycle,
-            trigger=IntervalTrigger(hours=8),
+            trigger=IntervalTrigger(hours=6),
             id="boost_job",
+        )
+
+        # Early-bird bot — scrape mega accounts every 5 min, reply within
+        # minutes to fresh tweets. Being top-5 reply on a viral tweet is a
+        # 10-100x impressions multiplier. Hard cap: 1 reply per cycle.
+        log.info("Early-bird bot: catching fresh mega-account tweets every 5 minutes.")
+        scheduler.add_job(
+            safe_run_early_bird_cycle,
+            trigger=IntervalTrigger(minutes=5),
+            id="early_bird_job",
         )
 
         # Discovery bot - autonomously find new crypto/AI/bourse influencers

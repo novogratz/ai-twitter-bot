@@ -1,0 +1,139 @@
+"""Early-bird bot: catch fresh tweets from mega accounts within minutes.
+
+Why this matters more than any other reply path: being in the TOP 5 replies
+on a viral tweet is a 10-100x impressions multiplier vs. landing as reply
+#50 an hour later. The standard reply bot fires every 20 min — too slow to
+consistently land top-5 on a fresh banger from sama / OpenAI / Mathieu.
+
+Strategy:
+- Every 5 min, pick a few mega accounts at random.
+- Scrape their latest tweets (existing scraper).
+- If any tweet is < 12 min old AND we haven't replied yet → reply NOW.
+- Hard cap 1 reply per cycle. Lock-before-post URL dedup. Same dead-tweet
+  filter as direct_reply (won't reply to tweets with 0 engagement YET — but
+  the threshold is loose because fresh tweets often have 0 likes).
+- Source-tagged "EARLYBIRD/<handle>" so the strategy agent sees it.
+"""
+import random
+import time
+import traceback
+from .config import BLOCKLIST, BOT_HANDLE
+from .logger import log
+from .twitter_client import scrape_profile_tweets, reply_to_tweet
+from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url
+from .direct_reply import _generate_single_reply
+from .engagement_log import log_reply
+from .humanizer import humanize
+
+_OWN_HANDLE = BOT_HANDLE.lower()
+
+# Mega accounts that consistently produce viral tweets in our niches. FR-leaning
+# but EN megas included — being early on Sam Altman pulls more reach than being
+# early on a niche FR account. Order-agnostic; we sample.
+EARLY_BIRD_ACCOUNTS = [
+    # IA mega EN
+    "sama", "OpenAI", "AnthropicAI", "elonmusk", "karpathy", "ylecun",
+    "GoogleDeepMind", "MistralAI", "DarioAmodei", "AravSrinivas",
+    # IA EN niche
+    "TheRundownAI", "rowancheung",
+    # Crypto mega
+    "VitalikButerin", "APompliano", "cz_binance",
+    # Crypto FR
+    "PowerHasheur", "Capetlevrai", "JournalDuCoin", "powl_d",
+    # Bourse FR (high signal)
+    "MathieuL1", "Graphseo", "NCheron_bourse", "ABaradez", "DereeperVivre",
+    # Markets EN
+    "unusual_whales",
+]
+
+# A tweet is "early-bird eligible" if it's at most this many minutes old.
+# Goal: land in top ~5 replies. Sweet spot is ~5-15 min depending on the
+# account's audience size. 12 is a balance.
+EARLY_BIRD_AGE_MAX_MIN = 12
+
+
+def run_early_bird_cycle():
+    """One scan: pick a few mega accounts, reply to ANY fresh tweet found."""
+    replied = load_replied()
+    posted = 0
+
+    # 3 random accounts per cycle. With 5-min cadence that's 36 scrapes/hour
+    # — enough coverage without flooding Safari (each scrape ~6-8s).
+    picks = random.sample(EARLY_BIRD_ACCOUNTS, k=min(3, len(EARLY_BIRD_ACCOUNTS)))
+
+    for username in picks:
+        if posted >= 1:
+            break  # one early-bird reply per cycle, max — quality over quantity
+
+        log.info(f"[EARLYBIRD] Scanning @{username} for fresh tweets...")
+        try:
+            # Only the top 3 tweets — anything older isn't fresh anyway.
+            tweets = scrape_profile_tweets(username, max_tweets=3)
+        except Exception:
+            log.info(f"[EARLYBIRD] Scrape failed for @{username}:")
+            traceback.print_exc()
+            continue
+
+        if not tweets:
+            continue
+
+        for tweet in tweets:
+            url = tweet.get("url", "")
+            text = tweet.get("text", "")
+            if not url or url in replied:
+                continue
+
+            # Block self + blocklisted
+            url_handle = _handle_from_url(url)
+            if url_handle in BLOCKLIST or url_handle == _OWN_HANDLE:
+                continue
+            if username.lower() in BLOCKLIST or username.lower() == _OWN_HANDLE:
+                continue
+
+            age = _tweet_age_minutes(url)
+            if age > EARLY_BIRD_AGE_MAX_MIN:
+                continue  # too late — drops down to standard reply bot territory
+            if age < 0 or age > 9000:
+                continue  # parse failure / clock skew
+
+            log.info(f"[EARLYBIRD] FRESH ({age}min) @{username}: {text[:80]}...")
+            reply = _generate_single_reply(username, text)
+            if not reply:
+                log.info(f"[EARLYBIRD] Generation returned SKIP for @{username}.")
+                # Don't add to replied — we want to retry next cycle if we generate
+                # a better take then. The 5-min cadence will catch it again.
+                continue
+
+            reply = humanize(reply)
+            log.info(f"[EARLYBIRD] Reply ({len(reply)} chars): {reply}")
+
+            # Lock URL in BEFORE posting (no double-reply on retry/crash)
+            replied.add(url)
+            save_replied(replied)
+
+            try:
+                reply_to_tweet(url, reply)
+                try:
+                    log_reply(url, reply, action_type="reply", source=f"EARLYBIRD/{username}")
+                except Exception:
+                    pass
+                posted += 1
+                time.sleep(random.randint(5, 12))
+                break  # one reply per scanned account = move on
+            except Exception:
+                log.info(f"[EARLYBIRD] Post failed for {url}:")
+                traceback.print_exc()
+
+    if posted:
+        log.info(f"[EARLYBIRD] Posted {posted} fresh reply this cycle.")
+    else:
+        log.info("[EARLYBIRD] No fresh tweets in window this cycle.")
+
+
+def safe_run_early_bird_cycle():
+    """Wrapper that catches errors so the scheduler keeps running."""
+    try:
+        run_early_bird_cycle()
+    except Exception:
+        log.info("[EARLYBIRD] Error during early-bird cycle:")
+        traceback.print_exc()

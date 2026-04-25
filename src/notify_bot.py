@@ -10,9 +10,11 @@ from .twitter_client import (
     scrape_own_tweet_and_replies,
     reply_to_tweet_in_thread,
     post_tweet,
+    visit_profile_and_like,
 )
 from .replyback_agent import generate_replyback
 from .humanizer import humanize
+import random
 
 REPLIED_BACK_FILE = os.path.join(_PROJECT_ROOT, "replied_back.json")
 _OWN_HANDLE = BOT_HANDLE.lower()
@@ -129,6 +131,49 @@ def run_replyback_cycle():
 
     _save_replied_back(replied_back)
     log.info(f"[REPLYBACK] Replied back to {count} people.")
+
+    # Reciprocity loop: for non-influencer engagers, visit their profile and
+    # like 1 of their tweets. Triggers a notification on their side, often
+    # converts to follow-back. Cap small (max 2/cycle) to avoid spam patterns.
+    _reciprocate_engagers(replies, influencers)
+
+
+def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 2):
+    """Visit a few engagers' profiles and like a tweet (reciprocity loop).
+
+    Skip influencers (they don't need our reciprocity, and visiting them
+    doesn't move our follower count). Skip blocklist + self. 50% probability
+    per eligible engager so the pattern doesn't look mechanical.
+    """
+    visited = 0
+    seen_handles = set()
+    candidates = list(replies)
+    random.shuffle(candidates)  # don't always hit the same top-of-list person
+
+    for r in candidates:
+        if visited >= max_visits:
+            break
+        handle = _extract_handle(r.get("user", ""))
+        if not handle or handle in seen_handles:
+            continue
+        seen_handles.add(handle)
+        if handle in BLOCKLIST or handle == _OWN_HANDLE:
+            continue
+        if handle in influencers:
+            continue  # influencers already notice us via the in-thread reply
+        if random.random() > 0.5:
+            continue  # randomize so the pattern isn't mechanical
+
+        log.info(f"[RECIPROCATE] Visiting @{handle} to like a tweet back...")
+        try:
+            visit_profile_and_like(handle, like_count=1)
+            visited += 1
+        except Exception:
+            log.info(f"[RECIPROCATE] Failed to reciprocate @{handle}:")
+            traceback.print_exc()
+
+    if visited:
+        log.info(f"[RECIPROCATE] Liked back {visited} engager(s).")
 
 
 def run_boost_cycle():
