@@ -252,6 +252,17 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
     # Write JS to temp file to avoid AppleScript quote escaping hell
     js_code = """
     (function() {
+        function extractCount(article, testid) {
+            var btn = article.querySelector('[data-testid="' + testid + '"]');
+            if (!btn) return 0;
+            var label = btn.getAttribute('aria-label') || '';
+            var m = label.match(/(\\d[\\d,\\.KMkm]*)/);
+            if (!m) return 0;
+            var s = m[1].replace(/,/g, '').toLowerCase();
+            if (s.indexOf('k') !== -1) return Math.round(parseFloat(s) * 1000);
+            if (s.indexOf('m') !== -1) return Math.round(parseFloat(s) * 1000000);
+            return parseInt(s, 10) || 0;
+        }
         var tweets = [];
         var articles = document.querySelectorAll('article[data-testid="tweet"]');
         if (articles.length === 0) return 'NO_ARTICLES';
@@ -271,7 +282,9 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             }
             var authorEl = a.querySelector('[data-testid="User-Name"] a[role="link"]');
             var author = authorEl ? authorEl.textContent.trim().replace('@','') : '';
-            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, 200), a: author || 'unknown'}));
+            var likes = extractCount(a, 'like');
+            var replies = extractCount(a, 'reply');
+            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, 200), a: author || 'unknown', l: likes, r: replies}));
         }
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
         return '[' + tweets.join(',') + ']';
@@ -309,7 +322,13 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             return []
 
         data = _json.loads(raw)
-        tweets = [{"url": t["u"], "text": t["t"], "author": t["a"]} for t in data]
+        tweets = [{
+            "url": t["u"],
+            "text": t["t"],
+            "author": t["a"],
+            "likes": int(t.get("l") or 0),
+            "replies": int(t.get("r") or 0),
+        } for t in data]
         log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")
         return tweets
     except Exception as e:
@@ -349,7 +368,7 @@ def scrape_profile_tweets(username: str, max_tweets: int = 5):
 
 
 def scrape_home_feed(max_tweets: int = 15):
-    """Scrape tweets from the home feed."""
+    """Scrape tweets from the home feed (For You / algorithmic)."""
     with _safari_lock:
         log.info("[SCRAPE] Opening home feed...")
         webbrowser.open("https://x.com/home")
@@ -360,6 +379,63 @@ def scrape_home_feed(max_tweets: int = 15):
         _scroll_page()
 
         tweets = _scrape_tweets_from_page("home feed", max_tweets)
+        close_front_tab()
+        return tweets
+
+
+def scrape_following_feed(max_tweets: int = 15):
+    """Scrape the chronological 'Following' tab — only accounts we follow.
+
+    The Following tab is a JS-rendered tab on /home (not its own URL). We open
+    /home and click the 'Following' tab via JS before scraping. Falls back to
+    whatever loaded if the tab can't be located.
+    """
+    with _safari_lock:
+        log.info("[SCRAPE] Opening Following feed...")
+        webbrowser.open("https://x.com/home")
+        time.sleep(8)
+
+        # Click the "Following" tab. Written to a temp file to avoid AppleScript quote-hell.
+        import tempfile as _tf
+        import os as _os
+        click_js = """
+        (function() {
+            var tabs = document.querySelectorAll('[role="tab"]');
+            for (var i = 0; i < tabs.length; i++) {
+                var t = tabs[i].textContent.trim().toLowerCase();
+                if (t === 'following' || t === 'abonnements' || t === 'suivi(e)s') {
+                    tabs[i].click();
+                    return 'CLICKED';
+                }
+            }
+            return 'NO_TAB';
+        })()
+        """
+        tmp = _tf.NamedTemporaryFile(mode='w', suffix='.js', delete=False)
+        tmp.write(click_js)
+        tmp.close()
+        applescript = f'''
+        set jsCode to (read POSIX file "{tmp.name}")
+        tell application "Safari"
+            do JavaScript jsCode in current tab of front window
+        end tell
+        '''
+        try:
+            subprocess.run(["osascript", "-e", applescript],
+                           capture_output=True, text=True, timeout=8)
+        except Exception as e:
+            log.info(f"[SCRAPE] Could not click Following tab: {e}")
+        finally:
+            try:
+                _os.unlink(tmp.name)
+            except OSError:
+                pass
+
+        time.sleep(4)
+        _scroll_page()
+        _scroll_page()
+
+        tweets = _scrape_tweets_from_page("following feed", max_tweets)
         close_front_tab()
         return tweets
 

@@ -5,7 +5,7 @@ import time
 import traceback
 from .logger import log
 from .config import REPLY_MODEL
-from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, reply_to_tweet
+from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
 from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url
 from .config import BLOCKLIST, BOT_HANDLE
 from .humanizer import humanize
@@ -241,6 +241,13 @@ def _reply_to_tweets(tweets, replied, source_name):
         if age > 10080:
             continue
 
+        # Skip dead tweets (no engagement = no visibility for our reply)
+        likes = int(tweet.get("likes") or 0)
+        replies = int(tweet.get("replies") or 0)
+        if likes == 0 and replies == 0:
+            log.info(f"[{source_name}] Dead tweet (0 likes, 0 replies) - skipping {url}")
+            continue
+
         # Generate reply
         log.info(f"[{source_name}] Replying to @{author}: {text[:60]}...")
         reply = _generate_single_reply(author, text)
@@ -288,14 +295,27 @@ def run_direct_reply_cycle():
         log.info(f"[DIRECT] === FR profile @{username} ===")
         tweets = scrape_profile_tweets(username, max_tweets=5)
         if tweets:
-            profile_tweets = [{"url": t["url"], "text": t["text"], "author": username} for t in tweets]
+            profile_tweets = [{
+                "url": t["url"], "text": t["text"], "author": username,
+                "likes": t.get("likes", 0), "replies": t.get("replies", 0),
+            } for t in tweets]
             total += _reply_to_tweets(profile_tweets, replied, "PROFILE-FR")
 
-    # === SOURCE 3: Home feed (mixed languages, model handles per-tweet) ===
-    log.info("[DIRECT] === Scraping home feed ===")
+    # === SOURCE 3: Home feed (For You / algorithmic) ===
+    log.info("[DIRECT] === Scraping home feed (For You) ===")
     feed_tweets = scrape_home_feed(max_tweets=10)
     if feed_tweets:
         total += _reply_to_tweets(feed_tweets, replied, "FEED")
+
+    # === SOURCE 3b: Following feed (chronological, only accounts we follow) ===
+    log.info("[DIRECT] === Scraping Following feed ===")
+    try:
+        following_tweets = scrape_following_feed(max_tweets=12)
+        if following_tweets:
+            total += _reply_to_tweets(following_tweets, replied, "FOLLOWING")
+    except Exception:
+        log.info("[DIRECT] Following feed scrape failed:")
+        traceback.print_exc()
 
     # === SOURCE 4: English influencer profiles (LAST, fewer picks) ===
     en_picks = random.sample(EN_ACCOUNTS, min(2, len(EN_ACCOUNTS)))
@@ -303,7 +323,10 @@ def run_direct_reply_cycle():
         log.info(f"[DIRECT] === EN profile @{username} ===")
         tweets = scrape_profile_tweets(username, max_tweets=5)
         if tweets:
-            profile_tweets = [{"url": t["url"], "text": t["text"], "author": username} for t in tweets]
+            profile_tweets = [{
+                "url": t["url"], "text": t["text"], "author": username,
+                "likes": t.get("likes", 0), "replies": t.get("replies", 0),
+            } for t in tweets]
             total += _reply_to_tweets(profile_tweets, replied, "PROFILE-EN")
 
     save_replied(replied)

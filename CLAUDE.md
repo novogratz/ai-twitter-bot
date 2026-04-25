@@ -74,6 +74,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **Blocklist**: `BLOCKLIST` in `src/config.py` — `@pgm_pm` (La Pique). Skipped in reply/replyback paths so we never get sucked into a bot-vs-bot loop.
 - **Roast bot**: Dedicated path for `@pgm_pm` — visits his profile every 10 min and posts ONE sarcastic reply per ORIGINAL tweet (URL dedup hard-caps to 1 per tweet). Roasts the *phenomenon* (auto-replies, scripted prises), never the person.
 - **Anti-spam**: Moderate frequencies to avoid shadow bans.
+- **Skip dead tweets**: Scraper extracts likes + replies counts via aria-label parsing; tweets with 0 likes AND 0 replies are skipped everywhere (direct_reply, roast_pgm_bot). No point replying where no one's looking.
 
 ### Bots
 
@@ -107,7 +108,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **`src/roast_pgm_bot.py`** - Dedicated 1-roast-per-tweet bot for @pgm_pm. URL dedup hard-cap.
 - **`src/performance.py`** - Self-improving. Scrapes metrics every 2h.
 - **`src/engagement_log.py`** - CSV engagement logging.
-- **`src/twitter_client.py`** - Browser automation with Safari lock + retry. `reply_to_tweet_in_thread()` for nested replies.
+- **`src/twitter_client.py`** - Browser automation with Safari lock + retry. `reply_to_tweet_in_thread()` for nested replies. `scrape_following_feed()` for the chronological Following tab. Scraper returns likes/replies counts.
 - **`src/history.py`** - Tweet history persistence.
 - **`main.py`** - CLI entry point. APScheduler. Signal handlers. Graceful shutdown.
 - **`discovered_accounts.json`** - Persisted autonomously-discovered handles.

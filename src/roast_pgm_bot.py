@@ -112,6 +112,13 @@ def run_roast_pgm_cycle():
         if url in replied:
             continue  # already roasted this one — strict 1-time rule
 
+        # Skip dead tweets — no point roasting where no one's looking
+        likes = int(t.get("likes") or 0)
+        replies_count = int(t.get("replies") or 0)
+        if likes == 0 and replies_count == 0:
+            log.info(f"[ROAST] Dead tweet (0 likes, 0 replies) - skipping {url}")
+            continue
+
         roast = _generate_roast(text)
         if not roast:
             continue
