@@ -12,6 +12,7 @@ from .twitter_client import post_tweet, post_thread
 from .history import save_tweet
 from .engagement_log import log_post, log_hotake
 from .humanizer import humanize
+from .image_gen import make_quote_card
 
 THREAD_SEPARATOR = "---THREAD---"
 
@@ -65,8 +66,13 @@ def run_bot_cycle():
     can_hotake = hotake_count < MAX_HOTAKES_PER_DAY
     can_news = news_count < MAX_NEWS_PER_DAY
 
-    # ~15% hot takes. News dominates (25/day), hot takes are the spice (4/day).
-    do_hotake = can_hotake and (not can_news or random.random() < 0.15)
+    # News-first policy: the first 3 posts of the day MUST be news (avoids the
+    # "no news visible" problem when an early dice roll lands on a hot take).
+    # After that: ~10% hot take ratio. News dominates by a huge margin.
+    if can_news and news_count < 3:
+        do_hotake = False
+    else:
+        do_hotake = can_hotake and (not can_news or random.random() < 0.10)
 
     if do_hotake:
         log.info("Generating AI philosophy hot take...")
@@ -81,9 +87,23 @@ def run_bot_cycle():
             _increment_counter("hotakes")
             tweet = humanize(tweet)
             log.info(f"[HOTAKE] ({len(tweet)} chars): {tweet[:100]}...")
-            post_tweet(tweet)
+            # Hot takes get a quote-card image for screenshot-worthy feed presence.
+            card_path = None
+            try:
+                card_path = make_quote_card(tweet)
+                if card_path:
+                    log.info(f"[HOTAKE] Generated quote-card: {card_path}")
+            except Exception as e:
+                log.info(f"[HOTAKE] Card generation failed (posting text-only): {e}")
+            post_tweet(tweet, image_path=card_path)
             save_tweet(tweet)
             log_hotake(tweet)
+            # Best-effort cleanup of the temp image
+            if card_path:
+                try:
+                    os.remove(card_path)
+                except OSError:
+                    pass
             return
     else:
         log.info("Searching for AI news...")

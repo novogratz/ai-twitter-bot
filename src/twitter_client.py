@@ -77,9 +77,18 @@ def close_front_tab():
         log.debug("Tab closed.")
 
 
-def post_tweet(text: str):
-    """Open Twitter intent URL and auto-click Post using AppleScript."""
+def post_tweet(text: str, image_path: str = None):
+    """Open Twitter and auto-post. If `image_path` is given, attaches the PNG.
+
+    Without image: uses the lightweight intent URL (text only).
+    With image: uses the full /compose/post composer + clipboard paste — the
+    intent URL doesn't support media uploads.
+    """
     with _safari_lock:
+        if image_path:
+            _post_tweet_with_image(text, image_path)
+            return
+
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
         log.info("Opening Twitter in your browser...")
         webbrowser.open(url)
@@ -95,6 +104,45 @@ def post_tweet(text: str):
         time.sleep(2)
         log.info("Tweet posted!")
         close_front_tab()
+
+
+def _post_tweet_with_image(text: str, image_path: str):
+    """Compose a tweet with an attached image. Caller must already hold _safari_lock."""
+    import os as _os
+    if not _os.path.exists(image_path):
+        log.info(f"[POST] Image not found at {image_path} — falling back to text-only.")
+        # Fall back to text-only via the intent flow
+        url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
+        webbrowser.open(url)
+        time.sleep(4)
+        _run_applescript('tell application "System Events" to keystroke return using command down')
+        time.sleep(2)
+        close_front_tab()
+        return
+
+    log.info(f"[POST] Composing tweet with image {image_path}...")
+    webbrowser.open("https://x.com/compose/post")
+    time.sleep(6)  # composer needs a moment to fully render
+
+    # Step 1: paste the text (focus is auto on the textarea on /compose/post)
+    _paste_text(text)
+    time.sleep(1)
+
+    # Step 2: copy the PNG to the clipboard, then Cmd+V to attach.
+    abs_path = _os.path.abspath(image_path)
+    copy_script = f'set the clipboard to (read POSIX file "{abs_path}" as «class PNGf»)'
+    if not _run_applescript(copy_script):
+        log.info("[POST] Could not copy image to clipboard — posting text-only.")
+    else:
+        time.sleep(0.5)
+        _run_applescript('tell application "System Events" to keystroke "v" using command down')
+        time.sleep(3)  # X needs a few seconds to upload + render the image preview
+
+    # Step 3: submit
+    _run_applescript('tell application "System Events" to keystroke return using command down')
+    time.sleep(3)
+    log.info("[POST] Tweet with image posted!")
+    close_front_tab()
 
 
 def refresh_feed():
@@ -440,17 +488,24 @@ def scrape_following_feed(max_tweets: int = 15):
         return tweets
 
 
-def scrape_x_search(query: str, max_tweets: int = 10):
-    """Search X directly in Safari and scrape results."""
+def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "live"):
+    """Search X and scrape results.
+
+    tab: "live" = chronological (default, current behavior), "top" = X's hot/algorithmic
+    ranking. Use "top" to surface tweets that ALREADY have engagement (avoids the
+    dead-tweet filter dropping everything).
+    """
     import urllib.parse
     with _safari_lock:
-        search_url = f"https://x.com/search?q={urllib.parse.quote(query)}&src=typed_query&f=live"
-        log.info(f"[SCRAPE] Searching X for: {query}")
+        f_param = "top" if tab == "top" else "live"
+        search_url = f"https://x.com/search?q={urllib.parse.quote(query)}&src=typed_query&f={f_param}"
+        log.info(f"[SCRAPE] Searching X ({f_param}) for: {query}")
         webbrowser.open(search_url)
         time.sleep(8)
         _scroll_page()
+        _scroll_page()
 
-        tweets = _scrape_tweets_from_page(f"search '{query}'", max_tweets)
+        tweets = _scrape_tweets_from_page(f"search '{query}' ({f_param})", max_tweets)
         close_front_tab()
         return tweets
 

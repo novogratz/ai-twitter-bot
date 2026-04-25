@@ -1,1 +1,2 @@
 apscheduler==3.10.4
+Pillow>=10.0.0

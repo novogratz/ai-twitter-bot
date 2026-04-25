@@ -36,8 +36,9 @@ def post_interval_minutes() -> int:
     Tightened intervals to push more news posts per day (user wants more news)."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 23 <= hour or hour < 8:
-        # Night: sleep like a human
-        return random.randint(180, 300)
+        # Night: still post, news flows 24/7. Slightly slower than daytime but
+        # not "asleep" — too long an interval = users wake up to no fresh content.
+        return random.randint(90, 150)
     elif 9 <= hour < 11:
         # PEAK: Morning window
         return random.randint(45, 75)

@@ -1,1 +1,43 @@
-[]
+[
+  {
+    "handle": "joshua walker",
+    "category": "bourse",
+    "added": "2026-04-25",
+    "followed": true
+  },
+  {
+    "handle": "victor baissait",
+    "category": "crypto",
+    "added": "2026-04-25",
+    "followed": true
+  },
+  {
+    "handle": "xtb france",
+    "category": "bourse",
+    "added": "2026-04-25",
+    "followed": true
+  },
+  {
+    "handle": "lonqua option",
+    "category": "bourse",
+    "added": "2026-04-25",
+    "followed": true
+  },
+  {
+    "handle": "ind\u00e9pendance financi\u00e8re",
+    "category": "bourse",
+    "added": "2026-04-25",
+    "followed": true
+  },
+  {
+    "handle": "antoine andreani",
+    "category": "bourse",
+    "added": "2026-04-25",
+    "followed": true
+  },
+  {
+    "handle": "namecoinnews",
+    "category": "ai",
+    "added": "2026-04-25"
+  }
+]

@@ -51,18 +51,36 @@ EN_ACCOUNTS = [
 # Backward-compat alias
 PRIORITY_ACCOUNTS = FR_ACCOUNTS + EN_ACCOUNTS
 
-# X search queries - FRENCH FIRST
+# X search queries — FR FIRST. min_faves: surfaces tweets that already have heat
+# (so the dead-tweet filter doesn't kill our entire pipeline).
 SEARCH_QUERIES = [
-    "IA intelligence artificielle lang:fr",
-    "Bitcoin crypto lang:fr",
-    "bourse CAC 40 lang:fr",
-    "crypto france lang:fr",
-    "trading bourse investissement lang:fr",
-    "ChatGPT Claude Gemini lang:fr",
-    "DeFi Ethereum Solana lang:fr",
+    # Hot tweets (already engaged, guaranteed alive)
+    "IA OR ChatGPT OR Claude lang:fr min_faves:30",
+    "Bitcoin OR crypto OR Ethereum lang:fr min_faves:30",
+    "bourse OR CAC40 OR trading lang:fr min_faves:20",
+    "OpenAI OR Anthropic OR Mistral lang:fr min_faves:20",
+    "BFM OR Bercy OR Fed lang:fr min_faves:20",
+    "DeFi OR Solana OR memecoin lang:fr min_faves:15",
+    # Broader queries (catch fresh + niche)
+    "intelligence artificielle lang:fr",
+    "crypto français analyse lang:fr",
     "marchés financiers lang:fr",
     "startup levée de fonds lang:fr",
-    "robot IA automatisation lang:fr",
+    "investissement long terme lang:fr",
+    "trading bourse lang:fr",
+]
+
+# HOT-TAB queries — hit X's "Top" ranking (algorithmic) to grab the absolute
+# hottest French tweets right now in our niches. Claude / Claude Code added —
+# major hot topic right now.
+HOT_TAB_QUERIES = [
+    "Claude OR ClaudeCode lang:fr",
+    "IA lang:fr",
+    "Bitcoin lang:fr",
+    "bourse lang:fr",
+    "crypto lang:fr",
+    "trading lang:fr",
+    "ChatGPT lang:fr",
 ]
 
 REPLY_PROMPT = """You are @kzer_ai. The SHARPEST shitposter on Finance/Crypto/AI Twitter.
@@ -345,19 +363,31 @@ def run_direct_reply_cycle():
     replied = load_replied()
     total = 0
 
-    # === SOURCE 1: French X searches (FR FIRST) ===
-    queries = random.sample(SEARCH_QUERIES, min(3, len(SEARCH_QUERIES)))
+    # === SOURCE 1: French X Live searches (chronological, with min_faves) ===
+    queries = random.sample(SEARCH_QUERIES, min(5, len(SEARCH_QUERIES)))
     for query in queries:
-        log.info(f"[DIRECT] === FR Search: {query} ===")
-        search_tweets = scrape_x_search(query, max_tweets=8)
+        log.info(f"[DIRECT] === FR Search (live): {query} ===")
+        search_tweets = scrape_x_search(query, max_tweets=15, tab="live")
         if search_tweets:
-            total += _reply_to_tweets(search_tweets, replied, "SEARCH-FR")
+            total += _reply_to_tweets(search_tweets, replied, "SEARCH-FR-LIVE")
 
-    # === SOURCE 2: French influencer profiles (FR FIRST) ===
-    fr_picks = random.sample(FR_ACCOUNTS, min(4, len(FR_ACCOUNTS)))
+    # === SOURCE 1b: HOT FR tweets (X's "Top" algorithmic tab) ===
+    hot_picks = random.sample(HOT_TAB_QUERIES, min(3, len(HOT_TAB_QUERIES)))
+    for query in hot_picks:
+        log.info(f"[DIRECT] === FR Search (HOT/top): {query} ===")
+        try:
+            hot_tweets = scrape_x_search(query, max_tweets=12, tab="top")
+            if hot_tweets:
+                total += _reply_to_tweets(hot_tweets, replied, "SEARCH-FR-HOT")
+        except Exception:
+            log.info(f"[DIRECT] HOT search failed for {query}:")
+            traceback.print_exc()
+
+    # === SOURCE 2: French influencer profiles (FR FIRST) - more accounts, more tweets
+    fr_picks = random.sample(FR_ACCOUNTS, min(6, len(FR_ACCOUNTS)))
     for username in fr_picks:
         log.info(f"[DIRECT] === FR profile @{username} ===")
-        tweets = scrape_profile_tweets(username, max_tweets=5)
+        tweets = scrape_profile_tweets(username, max_tweets=10)
         if tweets:
             profile_tweets = [{
                 "url": t["url"], "text": t["text"], "author": username,
@@ -367,25 +397,25 @@ def run_direct_reply_cycle():
 
     # === SOURCE 3: Home feed (For You / algorithmic) ===
     log.info("[DIRECT] === Scraping home feed (For You) ===")
-    feed_tweets = scrape_home_feed(max_tweets=10)
+    feed_tweets = scrape_home_feed(max_tweets=20)
     if feed_tweets:
         total += _reply_to_tweets(feed_tweets, replied, "FEED")
 
     # === SOURCE 3b: Following feed (chronological, only accounts we follow) ===
     log.info("[DIRECT] === Scraping Following feed ===")
     try:
-        following_tweets = scrape_following_feed(max_tweets=12)
+        following_tweets = scrape_following_feed(max_tweets=20)
         if following_tweets:
             total += _reply_to_tweets(following_tweets, replied, "FOLLOWING")
     except Exception:
         log.info("[DIRECT] Following feed scrape failed:")
         traceback.print_exc()
 
-    # === SOURCE 4: English influencer profiles (LAST, fewer picks) ===
-    en_picks = random.sample(EN_ACCOUNTS, min(2, len(EN_ACCOUNTS)))
+    # === SOURCE 4: English influencer profiles - more accounts, more tweets ===
+    en_picks = random.sample(EN_ACCOUNTS, min(4, len(EN_ACCOUNTS)))
     for username in en_picks:
         log.info(f"[DIRECT] === EN profile @{username} ===")
-        tweets = scrape_profile_tweets(username, max_tweets=5)
+        tweets = scrape_profile_tweets(username, max_tweets=10)
         if tweets:
             profile_tweets = [{
                 "url": t["url"], "text": t["text"], "author": username,

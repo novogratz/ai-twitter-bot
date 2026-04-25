@@ -67,7 +67,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **Troll ideas, never people**: Roast trends, hype, concepts, systems. NEVER mock the influencer's coaching, training, business, audience. Influencer should be able to like our reply.
 - **Replies are the growth engine**: 3-4 replies every 20 min, French priority.
 - **Hot takes are memes**: 4/day - smart, sharp, philosophical, laugh-out-loud, screenshot-worthy.
-- **News**: 18/day cap (configurable), only real stories.
+- **News**: 25/day cap (configurable), only real stories. News-first policy: first 3 posts of the day MUST be news.
 - **Humanizer on everything**: Every post goes through a human-pass.
 - **Self-improving**: Scrapes own metrics every 2h and adapts prompts.
 - **Autonomous discovery**: Every 6h, finds new crypto/AI/bourse influencers and adds them to monitoring. Approved FR ai/crypto/bourse accounts get auto-followed.
@@ -75,6 +75,8 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **Roast bot**: Dedicated path for `@pgm_pm` — visits his profile every 10 min and posts ONE sarcastic reply per ORIGINAL tweet (URL dedup hard-caps to 1 per tweet). Roasts the *phenomenon* (auto-replies, scripted prises), never the person.
 - **Anti-spam**: Moderate frequencies to avoid shadow bans.
 - **Skip dead tweets**: Scraper extracts likes + replies counts via aria-label parsing; tweets with 0 likes AND 0 replies are skipped everywhere (direct_reply, roast_pgm_bot). No point replying where no one's looking.
+- **Hot-tweet sources**: Search queries use `min_faves:N` to surface already-engaged tweets. New `scrape_x_search(tab="top")` hits X's algorithmic Top tab. HOT_TAB_QUERIES list adds a guaranteed-hot pass per cycle. Claude / Claude Code surfaced as the hot topic.
+- **Quote cards on hot takes**: Hot takes ship with a generated PNG quote-card (clean dark background, @kzer_ai branded, random palette). Pasted via clipboard into /compose/post. Requires Pillow — falls back to text-only if missing.
 
 ### Bots
 
@@ -108,7 +110,8 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **`src/roast_pgm_bot.py`** - Dedicated 1-roast-per-tweet bot for @pgm_pm. URL dedup hard-cap.
 - **`src/performance.py`** - Self-improving. Scrapes metrics every 2h.
 - **`src/engagement_log.py`** - CSV engagement logging.
-- **`src/twitter_client.py`** - Browser automation with Safari lock + retry. `reply_to_tweet_in_thread()` for nested replies. `scrape_following_feed()` for the chronological Following tab. Scraper returns likes/replies counts.
+- **`src/twitter_client.py`** - Browser automation with Safari lock + retry. `reply_to_tweet_in_thread()` for nested replies. `scrape_following_feed()` for the chronological Following tab. `scrape_x_search(tab="top")` for X's algorithmic Top results. `post_tweet(text, image_path=...)` attaches PNG via clipboard paste on /compose/post. Scraper returns likes/replies counts.
+- **`src/image_gen.py`** - Generates PNG quote cards for hot takes (dark bg, accent bar, branded handle, random palette). Pillow-based; no-op if PIL missing.
 - **`src/history.py`** - Tweet history persistence.
 - **`main.py`** - CLI entry point. APScheduler. Signal handlers. Graceful shutdown.
 - **`discovered_accounts.json`** - Persisted autonomously-discovered handles.
