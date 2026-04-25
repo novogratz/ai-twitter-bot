@@ -10,11 +10,11 @@ Uses Claude Code CLI for AI generation and Safari + AppleScript for browser auto
 
 **Post Bot** - Searches the web for breaking news (AI, crypto, bourse), writes sharp FR tweets in SETUP→PUNCH format (factual setup, sarcastic punch — sourced article without a joke = failure). Threads supported. Mix of news (10/day) + hot-take memes (4/day). News-first policy: first 3 posts/day must be news. Hot takes ship with a generated PNG quote-card for screenshot-worthy feed presence.
 
-**Reply Bot** - Direct + search reply paths. Finds high-engagement FR tweets (with EN fallback), drops sharp one-liner replies every 20 min. Skips dead tweets (0 likes AND 0 replies). FR priority, bilingual (matches tweet language).
+**Reply Bot** - Direct + search reply paths. Finds high-engagement FR tweets (with EN fallback), drops sharp one-liner replies every ~30 min jittered (cap 2/cycle, impact-ranked). Skips dead tweets (0 likes AND 0 replies). FR priority, bilingual. **Quiet hours 1am-7am Paris** — engagement cycles skip overnight so the account looks human.
 
 **Engage Bot** - Auto-follows target accounts and likes their latest tweets. Static list + autonomously discovered handles + strategy-agent additions, all merged at runtime.
 
-**Notify + Boost Bot** - Likes replies on own tweets every 45 min. Replies in-thread to influencer replies. Self-retweets every 8h (validated growth lever — pulled 200 views from one boost).
+**Notify + Boost Bot** - Likes replies on own tweets every 45 min. Replies in-thread to influencer replies (cap 3/cycle). Self-retweets every 6h (validated growth lever — pulled 200 views from one boost).
 
 **Discover Bot** - Every 6h: searches X for new FR AI/crypto/bourse handles, scores with Claude, persists approved ones, auto-follows the best FR ones.
 

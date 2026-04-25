@@ -73,7 +73,8 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **Autonomous discovery**: Every 6h, finds new crypto/AI/bourse influencers and adds them to monitoring. Approved FR ai/crypto/bourse accounts get auto-followed.
 - **Blocklist**: `BLOCKLIST` in `src/config.py` — `@pgm_pm` (La Pique). Skipped in reply/replyback paths so we never get sucked into a bot-vs-bot loop.
 - **Roast bot**: Dedicated path for `@pgm_pm` — visits his profile every 10 min and posts ONE sarcastic reply per ORIGINAL tweet (URL dedup hard-caps to 1 per tweet). Roasts the *phenomenon* (auto-replies, scripted prises), never the person.
-- **Anti-spam**: Moderate frequencies to avoid shadow bans.
+- **Anti-spam**: Slower cadences + jitter + quiet hours (1am-7am Paris). Engagement cycles (replies, engage, direct-reply, early-bird, roast, notify, replyback) are SKIPPED during quiet hours so the account looks human. News still flows but at slowest cadence (info doesn't sleep). Target: ~80-100 actions/day total (was 250+).
+- **Impact filter**: News + reply prompts force the agent to SCORE 3-5 candidates 1-10 (surprise + angle + stakes + division) and SKIP unless best ≥ 7. Mid > silence on the timeline.
 - **Skip dead tweets**: Scraper extracts likes + replies counts via aria-label parsing; tweets with 0 likes AND 0 replies are skipped everywhere (direct_reply, roast_pgm_bot). No point replying where no one's looking.
 - **Hot-tweet sources**: Search queries use `min_faves:N` to surface already-engaged tweets. New `scrape_x_search(tab="top")` hits X's algorithmic Top tab. HOT_TAB_QUERIES list adds a guaranteed-hot pass per cycle. Claude / Claude Code surfaced as the hot topic.
 - **Quote cards on hot takes**: Hot takes ship with a generated PNG quote-card (clean dark background, @kzer_ai branded, random palette). Pasted via clipboard into /compose/post. Requires Pillow — falls back to text-only if missing.
@@ -86,15 +87,15 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 
 **Post bot** - up to 10 news + 4 hot takes/day. ~30% hot take ratio. News must FOLLOW the SETUP→PUNCH format and make people laugh — sourced article without a joke = failure. Humanizer on all output.
 
-**Reply bot** - 3-4 replies per cycle, every 20 min. French priority, bilingual. Pre-filter dedup + blocklist. Persisted memory of 2000 replied URLs.
+**Reply bot** - Cap 2 replies/cycle, every ~30 min jittered. French priority, bilingual. Impact-ranked (agent picks best 2 of 6-8 candidates). Pre-filter dedup + blocklist. Persisted memory of 2000 replied URLs. Quiet 1am-7am Paris.
 
-**Engage bot** - 3-5 accounts per cycle, every 30 min. Targets merge static list + autonomously discovered handles.
+**Engage bot** - 3-5 accounts/cycle, every ~45 min jittered. Targets merge static list + autonomously discovered handles. Quiet 1am-7am Paris.
 
-**Notify + Boost bot** - Like replies on own tweets every 45 min. When an INFLUENCER replies under our tweet, reply IN-THREAD (lands under their reply) — otherwise standalone @mention. Self-retweet every 8 hours.
+**Notify + Boost bot** - Like replies on own tweets every 45 min (quiet 1am-7am Paris). When an INFLUENCER replies under our tweet, reply IN-THREAD (lands under their reply) — otherwise standalone @mention. Self-retweet every 6 hours.
 
 **Discover bot** - Every 6h: searches X, scores candidates with Claude, appends approved handles to `discovered_accounts.json`. Also auto-follows the best new FR ai/crypto/bourse handles (persisted in `followed_accounts.json`).
 
-**Roast bot** - Every 10 min: visits @pgm_pm's profile, posts up to 3 sarcastic replies on his original tweets (1 per URL via existing dedup). Jittered between posts. His replies on our tweets stay blocked via BLOCKLIST so no loop.
+**Roast bot** - Every ~20 min jittered: visits @pgm_pm's profile, posts up to 3 sarcastic replies on his original tweets (1 per URL via existing dedup). Quiet 1am-7am Paris. His replies on our tweets stay blocked via BLOCKLIST so no loop.
 
 **Performance bot** - Scrapes likes/views every 2h. Identifies top/worst performers. Injects learnings into prompts.
 
@@ -102,7 +103,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 
 **Quote-tweet bot** - Every 4h, cap 2/day: scrapes HOT FR tweets (min_faves:30), picks the single most-liked candidate, generates a sharp meme observation, posts it as a quote-tweet. New distribution surface (followers' feed + author notification).
 
-**Early-bird bot** - Every 5 min: scrapes 3 random mega accounts (sama, OpenAI, AnthropicAI, elonmusk, MathieuL1, etc.), replies within minutes to any tweet < 12 min old. Hard cap 1 reply per cycle. Being a top-5 reply on a viral tweet is a 10-100x impressions multiplier vs. landing #50 an hour later. Source-tagged `EARLYBIRD/<handle>`.
+**Early-bird bot** - Every ~8 min jittered (still inside the 12-min freshness window). Scrapes 3 random mega accounts, replies to any tweet < 12 min old. Hard cap 1 reply/cycle. Quiet 1am-7am Paris. Top-5 reply on a viral tweet = 10-100x impressions multiplier. Source-tagged `EARLYBIRD/<handle>`.
 
 **Reciprocity loop** - Inside notify_bot replyback: after handling influencer/standalone replies, picks up to 2 non-influencer engagers at random (50% probability per candidate so the pattern isn't mechanical) and visits their profile to like 1 tweet. Triggers a notification on their side; often converts to follow-back.
 
@@ -138,16 +139,18 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **`replied_back.json`** - Persisted reply-back dedup (by URL).
 - **`quoted_tweets.json`** - Persisted quote-tweet dedup.
 
-## Schedule (EST)
+## Schedule (EST + Paris quiet hours)
 
-| Time (EST)   | Post interval | Reply interval |
-|--------------|---------------|----------------|
-| 11pm - 8am   | 240-420 min   | 20 min         |
-| 8am - 12pm   | 120-200 min   | 20 min         |
-| 12pm - 6pm   | 90-160 min    | 20 min         |
-| 6pm - 11pm   | 150-240 min   | 20 min         |
+| Time (EST)   | Post interval | Reply interval (Paris awake)         |
+|--------------|---------------|--------------------------------------|
+| 11pm - 8am   | 150-240 min   | SKIP between 1am-7am Paris (~7pm-1am EST) |
+| 8am - 12pm   | 90-150 min    | ~25-38 min jittered                  |
+| 12pm - 6pm   | 90-150 min    | ~25-38 min jittered                  |
+| 6pm - 11pm   | 140-220 min   | ~25-38 min jittered                  |
 
-Engage bot: every 30 min (3-5 accounts, 3 likes each). Notify bot: every 45 min. Replyback: every 60 min (includes reciprocity loop). Boost: every 6h (validated). Discover: every 6h. Roast (@pgm_pm): every 10 min. Performance: every 2h. **Strategy agent: every 6h (autonomous self-improvement). Quote-tweet bot: every 4h. Early-bird bot: every 5 min.**
+Engage: ~45 min jittered (3-5 accounts/cycle), quiet 1am-7am Paris. Notify: 45 min, quiet hours. Replyback: 60 min, cap 3, quiet hours. Boost: every 6h (validated). Discover: every 6h. Roast (@pgm_pm): ~20 min jittered, quiet hours. Performance: every 2h. **Strategy agent: every 6h. Quote-tweet bot: every 4h. Early-bird bot: ~8 min jittered, quiet hours.**
+
+Quiet hours = 1am-7am Paris time = ~7pm-1am EST. ALL engagement cycles (replies, engage, direct-reply, early-bird, roast, notify, replyback) skip entirely. News posts continue at slowest cadence.
 
 ## Key design notes
 
