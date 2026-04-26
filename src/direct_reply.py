@@ -148,13 +148,13 @@ SEARCH_QUERIES = [
 # hottest French tweets right now in our niches. Claude / Claude Code added —
 # major hot topic right now.
 HOT_TAB_QUERIES = [
-    "Claude OR ClaudeCode lang:fr",
-    "IA lang:fr",
-    "Bitcoin lang:fr",
-    "bourse lang:fr",
-    "crypto lang:fr",
-    "trading lang:fr",
-    "ChatGPT lang:fr",
+    "Claude OR ClaudeCode lang:fr min_faves:10",
+    "IA lang:fr min_faves:20",
+    "Bitcoin lang:fr min_faves:20",
+    "bourse lang:fr min_faves:10",
+    "crypto lang:fr min_faves:20",
+    "trading lang:fr min_faves:10",
+    "ChatGPT lang:fr min_faves:20",
 ]
 
 REPLY_PROMPT = """You are @kzer_ai. The SHARPEST shitposter on Finance/Crypto/AI Twitter.
