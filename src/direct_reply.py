@@ -386,6 +386,12 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
     `remaining` caps how many we'll send in this call (used to enforce the
     cycle-wide DIRECT_REPLY_MAX_PER_CYCLE)."""
     posted = 0
+    # Per-author cap inside this single call: 2 replies max to the same
+    # handle. Without this, a heavily-active account (e.g. @Tradosaure
+    # posting an ETF thread) eats half the cycle budget and looks spammy
+    # to the recipient.
+    PER_AUTHOR_CAP = 2
+    per_author_count = {}
     for tweet in tweets:
         if remaining is not None and posted >= remaining:
             break
@@ -395,6 +401,12 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
 
         # Skip if already replied
         if url in replied:
+            continue
+
+        # Per-author cap inside this batch
+        author_key = (author or "").lower().strip()
+        if author_key and per_author_count.get(author_key, 0) >= PER_AUTHOR_CAP:
+            log.info(f"[{source_name}] Per-author cap reached for @{author} — skipping {url}")
             continue
 
         # Skip blocklisted authors (URL handle OR scraped author)
@@ -542,6 +554,8 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             except Exception:
                 pass  # logging failures must never block the bot
             posted += 1
+            if author_key:
+                per_author_count[author_key] = per_author_count.get(author_key, 0) + 1
             time.sleep(random.randint(10, 20))
         except Exception:
             log.info(f"[{source_name}] Failed to reply to {url}")
