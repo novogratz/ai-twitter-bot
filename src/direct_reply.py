@@ -496,6 +496,11 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
                 r"agent|agents|robot|robots|humanoide|humanoïde|llm|"
                 r"machine\s*learning|ml|deep\s*learning|neural|"
                 r"saas|software|cloud|datacenter|"
+                # AI coding tools / dev — exploding sub-niche
+                r"codex|copilot|cursor|windsurf|replit|"
+                r"programmer|programmers|programmeur|programmeurs|"
+                r"coding|coder|coders|développeur|developpeur|developers?|devs?|"
+                r"ide|api|sdk|"
                 # Crypto
                 r"crypto|btc|bitcoin|eth|ethereum|sol|solana|xrp|"
                 r"blockchain|defi|stablecoin|token|altcoin|memecoin|nft|"
