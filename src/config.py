@@ -12,13 +12,18 @@ REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
-# Daily posting limits — bumped 5→8 each (+50%) on user directive
-# 2026-04-26: more presence = more touchpoints with the FR audience.
-# Floor remains 5 if quality drops; this is a ceiling lift, not a quota.
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "8"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "8"))
-# Quote-tweet cap (used by quote_tweet_bot) — bumped 5 → 8.
-MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "8"))
+# Daily posting limits — bumped again 8→12 (+50%) on user directive
+# 2026-04-26 PM: bot was hitting 7/8 news by 7am EST, choking the peak
+# afternoon window. Per-tweet quality stays gated by the impact filter
+# in directives.md + first-derivative rule in agent.py. This is a
+# CEILING lift so the bot can keep firing through 9-11am + 1-3pm EST
+# peaks. Quality first, then volume.
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "12"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "12"))
+# Quote-tweet cap — bumped 8 → 12. Different distribution surface than
+# replies (lands in followers' feed AND notifies original author),
+# so additive growth, not redundant volume.
+MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "12"))
 # Reply cap per cycle (reply_bot path) — bumped 3→5 (+50%) on user directive 2026-04-26.
 MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "5"))
 

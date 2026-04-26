@@ -261,11 +261,13 @@ def main():
         )
 
         # Boost bot — validated growth lever (200 views / 6 likes per cycle).
-        # Bumped 6h → 4h: this is our cheapest, most-confirmed action.
-        log.info("Boost bot: retweeting own latest tweet every 4 hours.")
+        # 4h → 3h on user directive 2026-04-26 PM: the cheapest validated
+        # action we have, push it to 8 boosts/day. Risk of algo suppression
+        # exists but is dwarfed by the confirmed lift.
+        log.info("Boost bot: retweeting own latest tweet every 3 hours.")
         scheduler.add_job(
             safe_run_boost_cycle,
-            trigger=IntervalTrigger(hours=4),
+            trigger=IntervalTrigger(hours=3),
             id="boost_job",
         )
 
@@ -278,11 +280,14 @@ def main():
             id="early_bird_job",
         )
 
-        # Discovery bot - autonomously find new crypto/AI/bourse influencers
-        log.info("Discover bot: searching for new influencers every 6 hours.")
+        # Discovery bot - autonomously find new crypto/AI/bourse influencers.
+        # 6h → 3h on user directive 2026-04-26 PM ("auto update list of
+        # people to follow"). The bot evolves faster — fresh FR handles
+        # join the orbit every 3h instead of 4x/day.
+        log.info("Discover bot: searching for new influencers every 3 hours.")
         scheduler.add_job(
             safe_run_discovery_cycle,
-            trigger=IntervalTrigger(hours=6),
+            trigger=IntervalTrigger(hours=3),
             id="discover_job",
         )
 
@@ -313,11 +318,13 @@ def main():
         # Reads engagement log + uses tools (WebSearch, Read) to find new
         # queries / accounts; ADDS them to dynamic_queries.json and
         # dynamic_accounts.json which direct_reply merges with its static
-        # lists at runtime. Runs 4x/day.
-        log.info("Strategy agent: autonomous self-improvement every 6 hours.")
+        # lists at runtime. 6h → 3h: user directive 2026-04-26 wants the
+        # bot to auto-adjust strategy MULTIPLE TIMES per day. Append-only
+        # safety boundary still holds (additions never removals).
+        log.info("Strategy agent: autonomous self-improvement every 3 hours.")
         scheduler.add_job(
             safe_run_strategy_cycle,
-            trigger=IntervalTrigger(hours=6),
+            trigger=IntervalTrigger(hours=3),
             id="strategy_job",
         )
 
@@ -328,11 +335,15 @@ def main():
         # Writes directives.md (loaded by all generation agents) +
         # pruned_accounts.json + reinforced_accounts.json. Hard caps:
         # max 3 prunes/cycle (TTL 30d), max 5 reinforcements/cycle (no TTL).
-        # Runs 2x/day. The bot literally rewrites its style guide every 12h.
-        log.info("Evolution agent: content-quality self-improvement every 12 hours.")
+        # 12h → 6h: user directive 2026-04-26 wants the bot to auto-adjust
+        # OUTPUT-side strategy multiple times per day. Hard caps (3 prunes,
+        # 5 reinforcements per cycle) still bound damage if a cycle goes
+        # rogue, and prune TTL is still 30d so doubling the cadence doesn't
+        # double the damage — it just makes the style guide more responsive.
+        log.info("Evolution agent: content-quality self-improvement every 6 hours.")
         scheduler.add_job(
             safe_run_evolution_cycle,
-            trigger=IntervalTrigger(hours=12),
+            trigger=IntervalTrigger(hours=6),
             id="evolution_job",
         )
 
@@ -348,13 +359,13 @@ def main():
         )
 
         # Quote-tweet bot — picks the most viral FR tweet in our niche and
-        # quote-tweets it with a sharp meme observation. Cap 8/day (was 5),
-        # cadence 2h (was 2.5h). Different distribution surface than replies
-        # — bumping it up is pure additive growth, not redundant volume.
-        log.info("Quote-tweet bot: amplifying viral FR tweets every 2 hours (cap 8/day).")
+        # quote-tweets it with a sharp meme observation. Cap 12/day, cadence
+        # 90 min (was 120 min) on user directive 2026-04-26 PM. Different
+        # distribution surface than replies — pure additive growth.
+        log.info("Quote-tweet bot: amplifying viral FR tweets every 90 min (cap 12/day).")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=120),
+            trigger=IntervalTrigger(minutes=90),
             id="quote_tweet_job",
         )
 

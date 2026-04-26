@@ -15,7 +15,7 @@ import subprocess
 import time
 import traceback
 from datetime import datetime, date
-from .config import REPLY_MODEL, BLOCKLIST, _PROJECT_ROOT, BOT_HANDLE
+from .config import REPLY_MODEL, BLOCKLIST, _PROJECT_ROOT, BOT_HANDLE, MAX_QUOTES_PER_DAY
 from .logger import log
 from .twitter_client import scrape_x_search, quote_tweet
 from .humanizer import humanize
@@ -23,10 +23,10 @@ from .engagement_log import log_reply
 
 QUOTED_FILE = os.path.join(_PROJECT_ROOT, "quoted_tweets.json")
 QUOTE_STATE_FILE = os.path.join(_PROJECT_ROOT, "quote_daily_state.json")
-# Bumped 2 → 5/day. Quote tweets are a *different* distribution surface
-# (lands in our followers' feed AND notifies the original author), so
-# scaling them up is pure additive growth — not redundant with replies.
-MAX_QUOTES_PER_DAY = 5
+# MAX_QUOTES_PER_DAY now lives in config (12/day on user directive 2026-04-26 PM).
+# Quote tweets are a *different* distribution surface (lands in our followers'
+# feed AND notifies the original author), so scaling them up is pure additive
+# growth — not redundant with replies.
 _OWN_HANDLE = BOT_HANDLE.lower()
 
 # Pull only HOT FR tweets (X "Top" tab) with high engagement floor — quote

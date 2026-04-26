@@ -86,8 +86,11 @@ def run_early_bird_cycle():
     picks = random.sample(pool, k=min(3, len(pool)))
 
     for username in picks:
-        if posted >= 1:
-            break  # one early-bird reply per cycle, max — quality over quantity
+        if posted >= 2:
+            break  # two early-bird replies per cycle, max — bumped 1→2 on
+            # user directive 2026-04-26 PM. When 2 viral tweets are fresh,
+            # both get the top-5-reply 10-100x impression boost. Per-URL
+            # dedup + quiet hours still bound damage.
 
         log.info(f"[EARLYBIRD] Scanning @{username} for fresh tweets...")
         try:
