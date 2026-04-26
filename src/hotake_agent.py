@@ -7,11 +7,37 @@ Goal: makes people LAUGH OUT LOUD and screenshot the tweet.
 - FUNNY: laugh-out-loud, not just nod
 - Troll the IDEAS, the TRENDS, the SYSTEM. NEVER mock the audience or specific people.
 """
+import re
 import subprocess
 from typing import Optional
 from .config import HOTAKE_MODEL
 from .logger import log
 from .performance import get_learnings_for_prompt
+
+
+# Module-level side-channel for the most-recent hot take's image topic
+# (a Wikipedia slug like "Elon_Musk" or "Bitcoin"). bot.py reads this
+# right after generate_hotake() to fetch the wiki og:image and attach it.
+_last_image_topic: Optional[str] = None
+
+
+def last_image_topic() -> Optional[str]:
+    """Return the [IMAGE: slug] topic from the most recent generate_hotake()
+    call, or None if the model emitted SKIP or omitted the line."""
+    return _last_image_topic
+
+
+def _extract_image_topic(text: str):
+    """Pull `[IMAGE: slug]` off the bottom of a hot take.
+    Returns (cleaned_tweet, slug_or_None). slug=None if SKIP or missing."""
+    m = re.search(r"\[\s*IMAGE\s*:\s*([^\]]+?)\s*\]", text, flags=re.IGNORECASE)
+    if not m:
+        return text, None
+    slug = m.group(1).strip()
+    cleaned = (text[:m.start()] + text[m.end():]).strip()
+    if slug.upper() == "SKIP" or not slug:
+        return cleaned, None
+    return cleaned, slug
 
 HOTAKE_PROMPT = """Tu es @kzer_ai. Le meilleur compte memes/observations sur l'IA, la crypto et la bourse. Mi-philosophe, mi-troll. Toujours drôle.
 
@@ -137,7 +163,36 @@ RÈGLES:
 - Pas d'emojis sauf si vraiment essentiel.
 - BOLD. PHILOSOPHIQUE. DRÔLE. SCREENSHOT-WORTHY.
 
-Output UNIQUEMENT le texte du tweet. Rien d'autre.
+==================================================
+IMAGE D'ANCRAGE (recommandé — augmente reach × engagement)
+==================================================
+Après le tweet, AJOUTE une ligne unique au format:
+[IMAGE: <slug-wikipedia>]
+
+Le slug = le path d'une page Wikipedia EN qui correspond visuellement au sujet.
+Le bot va fetch sa lead photo (og:image) et l'attacher au tweet.
+
+Choisis le meilleur ancrage visuel:
+- Personne nommée → "Elon_Musk", "Jerome_Powell", "Christine_Lagarde", "Sam_Altman"
+- Entreprise → "OpenAI", "Anthropic", "Mistral_AI", "Nvidia", "Tesla,_Inc."
+- Concept iconique → "Bitcoin", "S%26P_500", "CAC_40", "Federal_Reserve"
+- Lieu/symbole → "Wall_Street", "Bercy", "Eurotunnel"
+
+Exemples complets:
+"L'AGI c'est la fusion nucléaire de la tech: toujours 18 mois, depuis 70 ans.
+[IMAGE: Artificial_general_intelligence]"
+
+"Bitcoin à 100k et soudain tout le monde l'avait prédit.
+[IMAGE: Bitcoin]"
+
+"Le S&P porté par 7 méga caps. C'est un groupe WhatsApp qui se like tout seul.
+[IMAGE: S%26P_500]"
+
+⚠️ Si le hot take est ABSTRAIT / philosophique sans figure ou objet identifiable
+→ écris [IMAGE: SKIP] et le post part text-only. Mieux text-only qu'une image
+qui n'a rien à voir avec le punchline.
+
+Output UNIQUEMENT le tweet + la ligne IMAGE. Rien d'autre.
 
 {performance_section}"""
 
@@ -187,5 +242,11 @@ def generate_hotake() -> Optional[str]:
 
     if tweet.startswith('"') and tweet.endswith('"'):
         tweet = tweet[1:-1]
+
+    # Strip the [IMAGE: slug] line and stash the slug for bot.py to pick up.
+    tweet, slug = _extract_image_topic(tweet)
+    globals()["_last_image_topic"] = slug
+    if slug:
+        log.info(f"[HOTAKE] Image topic: {slug}")
 
     return tweet

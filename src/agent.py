@@ -345,43 +345,40 @@ Inclus:
 Pour un thread (15% des posts, sujets majeurs), sépare chaque tweet avec ---THREAD---
 
 ==================================================
-SOURCE LINE (optionnelle — JUDGMENT CALL critique)
+LIEN ARTICLE (recommandé pour les news — X rend une card native)
 ==================================================
-Si tu attaches un [SOURCE: <url>], le bot va fetcher l'article et coller
-sa preview-image (og:image) sous le tweet. C'est ÇA qui peut transformer
-un post moyen en partage crédible style journaliste.
+Si la news vient d'un vrai article, COLLE l'URL DIRECTE à la FIN du tweet,
+sur sa propre ligne. Twitter va automatiquement render une preview-card
+native (titre + image + domaine) sous le tweet — exactement comme un
+journaliste qui partage son scoop.
 
-⚠️ AVANT D'INCLURE UNE SOURCE, POSE-TOI LA QUESTION:
-"Cette image va-t-elle apporter plus de vues / likes / commentaires
-que le tweet text-only ?"
+C'est ÇA qui:
+- rend le post visuellement crédible (vraie image, vraie source affichée)
+- donne au lecteur un click-through (engagement signal)
+- te distingue d'un bot qui retape juste du texte
 
-INCLUS la source SI:
-- L'article a une vraie photo journalistique (Musk en photo, écran de cours,
-  graphique frappant, scoop visuel, headline d'un média respecté) qui
-  RENFORCE la crédibilité du post.
-- Le média est respecté en France (Le Figaro, Les Echos, Le Monde, BFM,
-  Bloomberg, Reuters, FT, WSJ, The Information, TechCrunch).
-- Un lecteur FR voyant la card va se dire "c'est une vraie news pas du blabla AI".
+Twitter raccourcit toute URL à 23 caractères (t.co), donc l'URL ne mange
+quasi rien sur ton budget de 280 chars.
 
-OMETS la source SI:
-- L'article est paywallé sans preview accessible.
-- L'image probable est une stock photo générique (mains qui tapent au clavier,
-  logo flou) qui n'ajoute RIEN.
-- C'est une analyse / opinion / hot take déguisé en news → text-only c'est mieux.
-- Le tweet se suffit à lui-même et l'image va diluer le punch.
+Format à respecter exactement:
+<punchline>
 
-Format si inclus, après le tweet, ligne unique:
-[SOURCE: <URL complète et directe de l'article>]
+<URL complète et directe de l'article>
 
-Exemples:
-[SOURCE: https://www.bloomberg.com/news/articles/2026-04-26/musk-xai-mistral-deal]
-[SOURCE: https://www.lefigaro.fr/conjoncture/...]
+Exemple complet de tweet à output:
+Morgan Stanley devient gestionnaire de réserves stablecoins. La banque qui shortait Bitcoin en 2017 fait maintenant la garde du fort. Le pivot le plus silencieux de Wall Street.
 
-Pas d'URL inventée. Pas d'URL homepage (que des liens directs vers L'article).
-Si pas sûr → omets la ligne, le post part text-only (c'est OK).
+https://www.coindesk.com/markets/2026/04/24/morgan-stanley-stablecoin-reserve
 
-Output UNIQUEMENT le texte final (+ optionnellement la ligne SOURCE).
-Pas de guillemets, pas d'explication, pas de commentaire."""
+⚠️ JUDGMENT CALL: omets l'URL UNIQUEMENT si:
+- C'est une opinion / analyse / hot take pure (pas un fait sourçable)
+- L'article est paywallé hard (le lecteur va se prendre un mur → frustration)
+- Tu n'as pas un lien DIRECT vers l'article (pas d'URL homepage)
+Sinon → toujours coller le lien. Le bénéfice (card native + click-through
++ crédibilité) bat le coût (très léger deboost si tant est qu'il existe).
+
+Output UNIQUEMENT le tweet final (texte + URL si applicable).
+Pas de guillemets, pas d'explication, pas de ligne [SOURCE: ...] séparée."""
 
 
 # Module-level side-channel for the most recent news source URL,
@@ -481,15 +478,13 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         raise RuntimeError("Claude CLI returned empty output.")
     if tweet.upper() == "SKIP":
         return None
-    # Pull the [SOURCE: url] line off the bottom and stash the URL in the
-    # module-level side-channel so bot.py can fetch the article's og:image.
-    tweet, src = _extract_source(tweet)
-    globals()["_last_source_url"] = src
-    if src:
-        log.info(f"[NEWS] Source URL: {src[:120]}")
-    # Defense-in-depth: strip any URL the model still glued in despite the
-    # explicit no-URL rule. X deboosts off-platform links.
-    cleaned = _strip_urls(tweet)
-    if cleaned != tweet:
-        log.info(f"[NEWS] Stripped URL(s) from output. Before/after lengths: {len(tweet)} → {len(cleaned)}")
-    return cleaned
+    # Back-compat: tolerate a legacy [SOURCE: url] line if the model still
+    # emits one (some prompt versions taught it that format). Treat it as
+    # the article URL and append it to the body so X can render a card.
+    tweet, legacy_src = _extract_source(tweet)
+    if legacy_src and legacy_src not in tweet:
+        tweet = (tweet.rstrip() + "\n\n" + legacy_src).strip()
+    globals()["_last_source_url"] = legacy_src
+    if legacy_src:
+        log.info(f"[NEWS] Article URL: {legacy_src[:120]}")
+    return tweet
