@@ -1,7 +1,7 @@
 """News agent: searches for breaking AI/Crypto/Bourse news and generates tweets in French."""
 import re
 import subprocess
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional
 from .config import NEWS_MODEL
 from .logger import log
@@ -704,7 +704,6 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     if src_url:
         try:
             from .hotake_agent import _url_publication_date
-            from datetime import datetime, timedelta
             pub_date = _url_publication_date(src_url)
             if pub_date is not None:
                 age = datetime.now() - pub_date
