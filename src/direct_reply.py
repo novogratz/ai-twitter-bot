@@ -290,7 +290,15 @@ Output ONLY the reply, OR the literal word SKIP if no clean joke is possible."""
 
 def _generate_single_reply(author: str, tweet_text: str):
     """Generate a single reply for a specific tweet."""
-    prompt = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200])
+    from . import personality_store
+    persona_block = personality_store.render_account_block(author)
+    hard_rules = personality_store.HARD_RULES_BLOCK
+    base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200])
+    extras = []
+    if persona_block:
+        extras.append(persona_block)
+    extras.append(hard_rules)
+    prompt = base + "\n\n" + "\n\n".join(extras)
 
     try:
         result = subprocess.run(

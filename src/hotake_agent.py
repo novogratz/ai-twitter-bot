@@ -153,6 +153,13 @@ def generate_hotake() -> Optional[str]:
     if directives_block:
         performance_section = (performance_section or "") + directives_block
 
+    # Personality store — global mood from dossiers + hard rules.
+    from . import personality_store
+    mood = personality_store.render_global_mood()
+    if mood:
+        performance_section = (performance_section or "") + "\n\n" + mood
+    performance_section = (performance_section or "") + "\n\n" + personality_store.HARD_RULES_BLOCK
+
     prompt = HOTAKE_PROMPT.format(performance_section=performance_section)
 
     result = subprocess.run(

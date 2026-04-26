@@ -365,6 +365,13 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     if directives_block:
         performance_section = (performance_section or "") + directives_block
 
+    # Personality store — global mood from accumulated dossiers + hard rules.
+    from . import personality_store
+    mood = personality_store.render_global_mood()
+    if mood:
+        performance_section = (performance_section or "") + "\n\n" + mood
+    performance_section = (performance_section or "") + "\n\n" + personality_store.HARD_RULES_BLOCK
+
     today_date = datetime.now().strftime("%Y-%m-%d")
     prompt = PROMPT_TEMPLATE.format(
         dedup_section=dedup_section,

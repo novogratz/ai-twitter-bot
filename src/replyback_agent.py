@@ -43,12 +43,21 @@ EXAMPLES (FR):
 Output ONLY the reply. Nothing else."""
 
 
-def generate_replyback(original_tweet: str, their_reply: str) -> Optional[str]:
-    """Generate a witty reply-back to someone who replied to our tweet."""
-    prompt = REPLYBACK_PROMPT.format(
+def generate_replyback(original_tweet: str, their_reply: str, author: str = "") -> Optional[str]:
+    """Generate a witty reply-back to someone who replied to our tweet.
+    `author` is the @handle of the person we're replying to — used to load
+    their personality dossier so the response is personal."""
+    from . import personality_store
+    base = REPLYBACK_PROMPT.format(
         original_tweet=original_tweet[:200],
         their_reply=their_reply[:200],
     )
+    extras = []
+    persona_block = personality_store.render_account_block(author) if author else ""
+    if persona_block:
+        extras.append(persona_block)
+    extras.append(personality_store.HARD_RULES_BLOCK)
+    prompt = base + "\n\n" + "\n\n".join(extras)
     result = subprocess.run(
         [
             "claude",

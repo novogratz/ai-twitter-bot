@@ -332,6 +332,15 @@ def generate_replies(recent_topics=None, already_replied=None):
     if directives_block:
         discovered_section = (discovered_section or "") + directives_block
 
+    # Personality store — global mood + hard rules. Per-author dossiers are
+    # injected by direct_reply.py (which knows the author). This path searches
+    # broadly so we attach the global state of mind only.
+    from . import personality_store
+    mood = personality_store.render_global_mood()
+    if mood:
+        discovered_section = (discovered_section or "") + "\n\n" + mood
+    discovered_section = (discovered_section or "") + "\n\n" + personality_store.HARD_RULES_BLOCK
+
     prompt = REPLY_PROMPT_TEMPLATE.format(
         dedup_section=dedup_section,
         skip_urls_section=skip_urls_section,

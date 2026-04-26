@@ -61,6 +61,13 @@ AI, crypto and bourse news. Sharp takes. Zero bullshit. Tu vas me détester jusq
 
 Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-style commentary. The sharpest critic in the room — but always trolls IDEAS, never PEOPLE.
 
+### HARD RULES (only two — everything else is mutable strategy the bot can evolve)
+
+1. **Aucun contenu illegal.** Sous aucune forme.
+2. **Aucun troll / mocking / attaque du gouvernement americain** (US gov, administrations, presidents passes ou actuels, agences federales: Fed, SEC, CFTC, IRS, FBI, DOJ). Commenter les FAITS de leurs decisions OK, troller / mocker / attaquer NON. En cas de doute -> SKIP.
+
+These two rules are stamped into every generation prompt via `personality_store.HARD_RULES_BLOCK` and into the reflection agent's dossier-writing prompt. Everything else below (BLOCKLIST, troll-ideas-not-people, no em dashes, FR priority, niches, cadences, etc.) is **defaultstrategy that the bot is authorized to evolve** via the operator layer / strategy agent / evolution agent / reflection agent.
+
 ### Strategy
 - **French-near-exclusive**: Audience is 100% francophone. Aim **90%+ French replies** (was 60-70%). EN tweets only when the news is huge AND the FR commentary adds a unique franco-french angle. Hot takes mostly French.
 - **Comedy DNA — 6 patterns + FR cultural anchors**: Every news/reply must use ≥1 of: (1) répétition qui tue, (2) mini-dialogue FR, (3) métaphore tueuse, (4) renaming, (5) callback culturel FR (RER B, Bercy, syndicat, BFM, "et les charges?", Macron, tonton à Noël, café-clope, coach Tesla, formations à 2k€), (6) understatement brutal. Validated by user feedback ("Getafe. Getafe.", "S&P 7", "syndicat: oui mais qui tamponne le bon de sortie?").
@@ -102,6 +109,8 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 
 **Performance bot** - Scrapes likes/views every 2h. Identifies top/worst performers. Injects learnings into prompts.
 
+**Reflection agent (personality / autobiographical brain)** - Every 6h: agentic Claude run reads engagement_log + replied_back + history + learnings, builds and updates `personality.json` — per-account dossiers (category: builder/predator/retail/media/influencer/institution/unknown; stance: respect/skeptical/hostile/neutral/pity/curious/fond; feelings; notes; predictions track-record; do; dont) + per-topic positions (stance, frame, accumulated evidence). Replies/quotes become PERSONAL because the bot remembers each account it interacts with. Read at prompt-time by `direct_reply` (per-author dossier) and by `agent`/`hotake_agent`/`reply_agent` (global mood). `engagement_log.log_reply` auto-bumps `interaction_count` per author so dossiers grow organically. Hard rules (no illegal / no US-gov troll) are baked in.
+
 **Strategy agent (INPUT side)** - Every 6h: agentic Claude run with Read + WebSearch + Bash tools. Reads engagement_log.csv (per-source ROI), looks up live FR AI/crypto/bourse trends, proposes new search queries + accounts. Python wrapper APPLIES additions only — never removes. Outputs land in `dynamic_queries.json` / `dynamic_accounts.json` and are merged at runtime by direct_reply. Audit trail in `strategy_log.json`. Fully autonomous, no human in the loop.
 
 **Evolution agent (OUTPUT side)** - Every 12h: agentic Claude run that reads engagement_log + performance_log, identifies what content patterns WIN and what dies, then ADAPTS:
@@ -137,6 +146,10 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **`src/strategy_agent.py`** - **Autonomous self-improvement INPUT side (agentic).** Every 6h: spawns a Claude agent with Read+WebSearch+Bash tools, reads engagement log, investigates trends, proposes JSON. Python applies additions only.
 - **`src/evolution_agent.py`** - **Autonomous self-improvement OUTPUT side (agentic).** Every 12h: spawns a Claude agent with Read tools, analyzes engagement_log + performance_log, identifies winning/losing patterns + dead/hot accounts. Outputs directives + prune list + reinforce list. Python applies with hard caps + TTL.
 - **`src/evolution_store.py`** - Append-only/TTL stores for the evolution agent: `directives.md` (overwritten each cycle), `pruned_accounts.json` (TTL 30d), `reinforced_accounts.json`. Helper `filter_and_weight(accounts)` used by all selectors.
+- **`src/personality_store.py`** - Personality / autobiographical brain. Per-account + per-topic dossiers in `personality.json`. Helpers: `upsert_account`, `record_interaction`, `render_account_block(handle)` (per-author prompt block), `render_global_mood()` (aggregate state of mind), `HARD_RULES_BLOCK` (the two hard rules — stamped into every generation prompt).
+- **`src/reflection_agent.py`** - Agentic Claude run every 6h that reads engagement / history / learnings and writes JSON patches applied via personality_store. The bot grows a relationship with each account in its orbit. Hard caps: 30 account updates / 10 topic updates per cycle.
+- **`personality.json`** - Per-account dossiers + per-topic positions. Grows over time. Read at prompt-time.
+- **`reflection_log.json`** - Audit trail of every reflection cycle.
 - **`src/dynamic_strategy.py`** - Append-only stores: `dynamic_queries.json` (live + hot tabs) and `dynamic_accounts.json` (FR + EN). Read by direct_reply at runtime.
 - **`src/quote_tweet_bot.py`** - Quote-tweet path. Cap 2/day. Picks the single most-liked viral FR tweet and amplifies it with a sharp observation.
 - **`src/early_bird_bot.py`** - Early-bird reply path. Every 5 min, scans 3 mega accounts for tweets < 12 min old. Cap 1 reply per cycle. Top-5-reply is 10-100x impressions vs. late-reply.

@@ -29,6 +29,7 @@ from src.roast_pgm_bot import safe_run_roast_pgm_cycle
 from src.performance import evaluate_and_learn
 from src.strategy_agent import safe_run_strategy_cycle
 from src.evolution_agent import safe_run_evolution_cycle
+from src.reflection_agent import safe_run_reflection_cycle
 from src.quote_tweet_bot import safe_run_quote_tweet_cycle
 from src.early_bird_bot import safe_run_early_bird_cycle
 
@@ -333,6 +334,17 @@ def main():
             safe_run_evolution_cycle,
             trigger=IntervalTrigger(hours=12),
             id="evolution_job",
+        )
+
+        # Reflection agent — autobiographical brain. Every 6h, agentic Claude
+        # run reads engagement + history, updates personality.json: per-account
+        # dossiers (category, stance, feelings, notes) + per-topic positions.
+        # Replies become PERSONAL because the bot remembers each account.
+        log.info("Reflection agent: personality / memory update every 6 hours.")
+        scheduler.add_job(
+            safe_run_reflection_cycle,
+            trigger=IntervalTrigger(hours=6),
+            id="reflection_job",
         )
 
         # Quote-tweet bot — picks the most viral FR tweet in our niche and
