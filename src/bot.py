@@ -92,31 +92,34 @@ def run_bot_cycle():
             _increment_counter("hotakes")
             tweet = humanize(tweet)
             log.info(f"[HOTAKE] ({len(tweet)} chars): {tweet[:100]}...")
-            # Hot takes attach a Wikipedia lead-photo as visual anchor when
-            # the topic is a real person/company/concept (Musk → Wikipedia
-            # photo of Musk, Bitcoin → Bitcoin logo). Wiki og:image is a
-            # reliable, public, license-clean source. Falls back to text-only
-            # when the topic is too abstract (model emits [IMAGE: SKIP]).
+            # User directive 2026-04-26 PM: hot takes MUST cite a source URL.
+            # When the URL is present, X renders a native link-card (article
+            # image + headline + domain) — DON'T attach a separate image, it
+            # competes with the card and kills credibility.
             img_path = None
             try:
-                from .hotake_agent import last_image_topic
-                slug = last_image_topic()
-                if slug:
-                    wiki_url = f"https://en.wikipedia.org/wiki/{slug}"
-                    img_path = fetch_article_image(wiki_url)
-                    if img_path:
-                        log.info(f"[HOTAKE] Wiki image attached for '{slug}': {img_path}")
-                    else:
-                        log.info(f"[HOTAKE] Wiki had no og:image for '{slug}' - trying quote card")
+                from .hotake_agent import last_source_url, last_image_topic
+                src_url = last_source_url()
+                if src_url:
+                    log.info(f"[HOTAKE] URL in body — X will render link-card, no image attached")
+                else:
+                    slug = last_image_topic()
+                    if slug:
+                        wiki_url = f"https://en.wikipedia.org/wiki/{slug}"
+                        img_path = fetch_article_image(wiki_url)
+                        if img_path:
+                            log.info(f"[HOTAKE] Wiki image attached for '{slug}': {img_path}")
+                        else:
+                            log.info(f"[HOTAKE] Wiki had no og:image for '{slug}' - trying quote card")
+                            img_path = make_quote_card(tweet)
+                            if img_path:
+                                log.info(f"[HOTAKE] Generated quote-card: {img_path}")
+                    if not img_path:
                         img_path = make_quote_card(tweet)
                         if img_path:
-                            log.info(f"[HOTAKE] Generated quote-card: {img_path}")
+                            log.info(f"[HOTAKE] Fallback quote-card: {img_path}")
             except Exception as e:
                 log.info(f"[HOTAKE] Image fetch failed (text-only): {e}")
-            if not img_path:
-                img_path = make_quote_card(tweet)
-                if img_path:
-                    log.info(f"[HOTAKE] Fallback quote-card: {img_path}")
             post_tweet(tweet, image_path=img_path)
             save_tweet(tweet)
             try:

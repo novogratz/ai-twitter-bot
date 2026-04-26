@@ -399,12 +399,15 @@ OUTPUT
 Écris en FRANÇAIS. Max 240 chars de TEXTE (l'URL prend ~23 chars en plus via t.co).
 Commence toujours par une majuscule. Accents obligatoires.
 
-⚠️ TU DOIS COLLER L'URL DE L'ARTICLE EN BAS DU TWEET (voir section LIEN ARTICLE plus bas).
+🚨🚨🚨 RÈGLE ABSOLUE — URL OBLIGATOIRE 🚨🚨🚨
+TU DOIS COLLER L'URL DE L'ARTICLE EN BAS DU TWEET. PAS NÉGOCIABLE.
+Le user a explicitement dit: "YOU CANT POST WITHOUT SOURCE."
+Si tu n'as PAS un lien direct vers un article récent (≤72h) → réponds SKIP.
+PAS de "judgment call". PAS d'analyse-pure. PAS d'opinion sans source. SOURCE OU SKIP.
+
 X rend une card native (image + titre + domaine) — c'est ÇA qui rend le post crédible.
-Si pas d'URL d'article disponible (analyse pure, pas de fait sourçable), AJOUTE une ligne
-[IMAGE: <slug-wikipedia-en-anglais>] tout à la fin pour que le bot attache la photo
-Wikipedia du sujet principal (ex: [IMAGE: Elon_Musk], [IMAGE: Bitcoin], [IMAGE: Nvidia]).
-Si vraiment aucun visuel ne fait sens, mets [IMAGE: SKIP].
+La ligne [IMAGE: <slug>] reste utile MAIS uniquement EN PLUS de l'URL article (image de fallback).
+Format final: punchline + \\n\\n + URL article + [IMAGE: slug] + [PATTERN: id].
 
 Inclus:
 - 0 hashtag par défaut. 1 max, seulement si la pointe est dedans (ex: #SaaSpocalypse).
@@ -445,12 +448,11 @@ Morgan Stanley devient gestionnaire de réserves stablecoins. La banque qui shor
 
 https://www.coindesk.com/markets/2026/04/24/morgan-stanley-stablecoin-reserve
 
-⚠️ JUDGMENT CALL: omets l'URL UNIQUEMENT si:
-- C'est une opinion / analyse / hot take pure (pas un fait sourçable)
-- L'article est paywallé hard (le lecteur va se prendre un mur → frustration)
-- Tu n'as pas un lien DIRECT vers l'article (pas d'URL homepage)
-Sinon → toujours coller le lien. Le bénéfice (card native + click-through
-+ crédibilité) bat le coût (très léger deboost si tant est qu'il existe).
+🚨 RÈGLE DURE: PAS DE LIEN DIRECT → SKIP. PAS DE NÉGOCIATION.
+- Pas d'URL article direct → SKIP (pas d'analyse pure autorisée).
+- Article paywallé hard → cherche un autre article (Reuters/AFP gratuit) ou SKIP.
+- Lien homepage seulement → SKIP.
+Le user a été explicite: "YOU CANT POST OR HOT TAKE WITHOUT SOURCE."
 
 ==================================================
 PATTERN ID (obligatoire — métadonnée invisible, 1 ligne en plus)

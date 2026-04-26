@@ -20,11 +20,15 @@ from .topic_dedup import extract_recent_topics
 _extract_recent_topics = extract_recent_topics
 
 
-# Module-level side-channel for the most-recent hot take's image topic
-# (a Wikipedia slug like "Elon_Musk" or "Bitcoin"). bot.py reads this
-# right after generate_hotake() to fetch the wiki og:image and attach it.
+# Module-level side-channels for the most-recent hot take output.
+#  - _last_image_topic: Wikipedia slug for fallback visual.
+#  - _last_pattern: comedy-bucket id for the bandit loop.
+#  - _last_source_url: article URL pasted in the tweet body. When set, X
+#    renders a native link-card and bot.py SKIPS attaching an image (image
+#    + URL competes with the card).
 _last_image_topic: Optional[str] = None
 _last_pattern: Optional[str] = None
+_last_source_url: Optional[str] = None
 
 
 def last_image_topic() -> Optional[str]:
@@ -38,6 +42,16 @@ def last_pattern() -> Optional[str]:
     output. Used by bot.py to populate engagement_log's pattern_id column
     (drives the per-pattern ROI signal the evolution agent learns from)."""
     return _last_pattern
+
+
+def last_source_url() -> Optional[str]:
+    """Return the article URL the agent embedded in the hot take body, or
+    None if no URL was found. When set, X renders a native link-card from
+    the URL — bot.py should NOT attach a separate image."""
+    return _last_source_url
+
+
+_HOTAKE_URL_RE = re.compile(r"https?://\S+")
 
 
 def _extract_image_topic(text: str):
@@ -169,12 +183,43 @@ LANGUE:
 - Zéro faute. Écriture pro.
 
 RÈGLES:
-- Max 250 caractères.
-- Pas de tirets longs (—). Pas d'URLs.
+- Max 240 caractères de TEXTE (l'URL prend ~23 chars en plus via t.co).
+- Pas de tirets longs (—).
 - Max 1 hashtag, et seulement si naturel.
 - Commence par une majuscule.
 - Pas d'emojis sauf si vraiment essentiel.
 - BOLD. PHILOSOPHIQUE. DRÔLE. SCREENSHOT-WORTHY.
+
+==================================================
+🚨🚨🚨 RÈGLE ABSOLUE — SOURCE OBLIGATOIRE 🚨🚨🚨
+==================================================
+Le user a été explicite: "YOU CANT POST OR HOT TAKE WITHOUT SOURCE."
+
+UTILISE WebSearch pour trouver un VRAI article (≤72h) qui ancre ton hot take.
+Le hot take = punchline meme RÉACTION à un fait réel sourçable.
+Pas d'article récent crédible → réponds SKIP. PAS de meme abstrait sans source.
+
+Format final OBLIGATOIRE:
+<punchline meme>
+
+<URL article complète et directe>
+[IMAGE: slug]
+[PATTERN: id]
+
+Ex:
+"DeepSeek décale son V4 pour passer 100% Huawei. L'embargo devait tuer l'IA chinoise. Il l'a juste recâblée.
+
+https://cryptobriefing.com/deepseek-delays-v4-...
+[IMAGE: DeepSeek]
+[PATTERN: UNDERSTATEMENT]"
+
+Critères de validation source:
+- Date ≤ 72h (vérifie la date de publication, pas juste l'URL)
+- Lien DIRECT vers l'article (pas homepage, pas tag-page)
+- Pas paywallé hard
+- Source crédible (Reuters / AFP / Bloomberg / Coindesk / Les Échos / Le Figaro / FT / WSJ / TechCrunch / The Information / Theverge…)
+
+PAS de source qui valide ces critères → SKIP. Mid + sans source = double échec.
 
 ==================================================
 IMAGE D'ANCRAGE (recommandé — augmente reach × engagement)
@@ -345,5 +390,18 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     globals()["_last_image_topic"] = slug
     if slug:
         log.info(f"[HOTAKE] Image topic: {slug}")
+
+    # Detect article URL embedded in body so bot.py can skip image attach
+    # and let X render its native link-card. The URL stays IN the body.
+    url_match = _HOTAKE_URL_RE.search(tweet)
+    if url_match:
+        globals()["_last_source_url"] = url_match.group(0)
+        log.info(f"[HOTAKE] Source URL detected (X will render card): {url_match.group(0)}")
+    else:
+        globals()["_last_source_url"] = None
+        # User directive 2026-04-26 PM: hot takes WITHOUT a source are not
+        # acceptable. Drop the post rather than ship a sourceless meme.
+        log.info("[HOTAKE] No source URL in output — SKIPPING (user rule: no post without source)")
+        return None
 
     return tweet
