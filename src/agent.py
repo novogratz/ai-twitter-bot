@@ -477,11 +477,27 @@ def generate_tweet() -> Optional[str]:
     recent = get_recent_tweets(hours=24)
 
     if recent:
+        # Cross-format hard banlist — same module hot-take uses, so news
+        # can't recycle a topic the audience just saw as a hot take (or
+        # vice versa). Without this we got "Claude" twice in 30 min via
+        # two different agents, neither one knowing about the other.
+        from .topic_dedup import extract_recent_topics
+        banned = extract_recent_topics(recent)
         tweets_list = "\n".join(f"- {t}" for t in recent)
+        banned_block = ""
+        if banned:
+            banned_list = ", ".join(sorted(banned))
+            banned_block = (
+                f"\n\n⛔ HARD BANLIST (sujets vus dans les 24h, news OU hot take — "
+                f"INTERDITS, va ailleurs): {banned_list}\n"
+                "Si ton meilleur sujet est dans cette liste, FORCE un autre angle "
+                "ou SKIP. Recycler = perdre des followers (ils voient deux fois la "
+                "même chose en 30 min).\n"
+            )
         dedup_section = f"""Déjà posté dans les dernières 24h - ne couvre PAS le même sujet:
-{tweets_list}
+{tweets_list}{banned_block}
 
-Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT."""
+Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     else:
         dedup_section = ""
 
