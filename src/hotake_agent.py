@@ -9,10 +9,64 @@ Goal: makes people LAUGH OUT LOUD and screenshot the tweet.
 """
 import re
 import subprocess
+from collections import Counter
 from typing import Optional
 from .config import HOTAKE_MODEL
 from .logger import log
 from .performance import get_learnings_for_prompt
+from .history import get_recent_tweets
+
+# Topic dedup — entities recurring 2+ times in recent hot takes are
+# *banned* from the next generation. This kills the "Claude Code 6
+# tweets in a row" failure mode caught live 2026-04-26. Pre-loaded
+# with niche-specific known entities; we also extract any capitalized
+# multi-word phrase from history (catches new players we haven't
+# hard-coded). Stopwords filter prevents false positives on common
+# sentence-initial words.
+_KNOWN_ENTITIES = {
+    "Anthropic", "Claude", "Claude Code", "OpenAI", "GPT", "ChatGPT",
+    "Mistral", "xAI", "Grok", "Gemini", "Google", "DeepMind", "Meta",
+    "Llama", "Microsoft", "Copilot", "Nvidia", "AMD", "Intel", "TSMC",
+    "Bitcoin", "BTC", "Ethereum", "ETH", "Solana", "Tether", "USDC",
+    "Binance", "Coinbase", "Kraken", "FTX", "MicroStrategy",
+    "S&P", "S&P 500", "CAC 40", "NASDAQ", "Bercy", "BCE", "Fed",
+    "Mistral AI", "Hugging Face", "ServiceNow", "Salesforce",
+    "Macron", "Lagarde", "Powell", "Musk", "Altman", "Zuckerberg",
+    "PSG", "RER B", "BFM", "Pôle Emploi", "URSSAF",
+}
+_STOPWORD_CAPS = {
+    "Le", "La", "Les", "Un", "Une", "Des", "Du", "De", "Et", "Ou", "Mais",
+    "On", "Tu", "Vous", "Nous", "Ils", "Elles", "Je", "Il", "Elle", "Ce",
+    "Cette", "Ces", "Mon", "Ma", "Mes", "Ton", "Ta", "Tes", "Son", "Sa",
+    "Ses", "Quand", "Si", "Comme", "Pour", "Sans", "Avec", "Dans", "Sur",
+    "Sous", "Par", "Vers", "Chez", "Tout", "Tous", "Toute", "Toutes",
+    "Plus", "Moins", "Bien", "Mal", "Très", "Encore", "Déjà", "Toujours",
+    "Jamais", "Aussi", "Donc", "Alors", "Puis", "Voilà", "Voici", "Oui",
+    "Non", "Bon", "OK", "Bref", "Magnifique", "Sublime", "Bonjour",
+    "The", "A", "An", "This", "That", "I", "You", "He", "She", "It", "We",
+    "They", "Just", "Now", "When", "Where", "What", "Who", "Why", "How",
+}
+
+
+def _extract_recent_topics(recent: list[str]) -> set[str]:
+    """Pull entities (proper-noun-ish tokens) from the most-recent tweets.
+    Anything appearing 2+ times across the window OR matching a known
+    AI/crypto/bourse brand is returned as 'banned'. Used to build the
+    hot-take prompt's hard topic-banlist."""
+    if not recent:
+        return set()
+    counter = Counter()
+    for tweet in recent:
+        # known-entity match (case-insensitive substring) — single hit is enough
+        for ent in _KNOWN_ENTITIES:
+            if re.search(rf"\b{re.escape(ent)}\b", tweet, flags=re.IGNORECASE):
+                counter[ent] += 2  # weighted so 1 hit = banned
+        # opportunistic capitalized-phrase extraction (e.g. new players)
+        for cap in re.findall(r"\b[A-ZÉÈÊÀ][a-zéèêà]+(?:\s+[A-ZÉÈÊÀ][a-zéèêà]+)?\b", tweet):
+            if cap not in _STOPWORD_CAPS and len(cap) >= 3:
+                counter[cap] += 1
+    # Anything weighted ≥ 2 (= 1 known-entity hit OR 2 capitalized hits) is banned.
+    return {ent for ent, c in counter.items() if c >= 2}
 
 
 # Module-level side-channel for the most-recent hot take's image topic
@@ -194,11 +248,45 @@ qui n'a rien à voir avec le punchline.
 
 Output UNIQUEMENT le tweet + la ligne IMAGE. Rien d'autre.
 
+{dedup_section}
+
 {performance_section}"""
 
 
 def generate_hotake() -> Optional[str]:
     """Generate a meme-style hot take (smart, sharp, philosophical, funny)."""
+    # Dedup: pull recent hot takes (48h window — hot takes are sparser than
+    # news, longer memory) and build a banned-topics list. Without this the
+    # model recycles the same entity (e.g. Claude Code) over and over.
+    recent = get_recent_tweets(hours=48)
+    banned = _extract_recent_topics(recent)
+    if banned:
+        banned_list = ", ".join(sorted(banned))
+        recent_block = "\n".join(f"  - {t[:120]}" for t in recent[-8:])
+        dedup_section = f"""==================================================
+INTERDIT — sujets que tu viens de couvrir (NE PAS RÉCIDIVER)
+==================================================
+
+Tu as déjà fait des hot takes sur: {banned_list}.
+
+VA AILLEURS. Pas un seul mot sur ces sujets cette fois.
+Si t'as envie d'écrire encore sur Claude/Anthropic/Bitcoin parce que c'est
+"l'actu chaude", c'est exactement le piège: ton audience a vu 5 takes là-dessus
+de toi cette semaine. PIVOT ABSOLU.
+
+Va chercher: bourse française, CAC 40, immobilier, fiscalité, Banque de France,
+trading retail FR, IPO française, scandale corporate FR, énergie/nucléaire,
+décroissance, syndicats, BFM, RER, Bercy, Pôle Emploi, formations à 2k€,
+crypto autres que BTC/ETH (Solana, meme coins, DeFi, stablecoins euro), AI
+hardware (Nvidia/AMD/TSMC), AI applis verticales, robots humanoïdes, Tesla,
+SpaceX, scandale tech non-US (Atos, OVH, Capgemini), licorne FR qui meurt,
+levée de fonds bidon, etc.
+
+Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
+{recent_block}"""
+    else:
+        dedup_section = ""
+
     perf = get_learnings_for_prompt()
     performance_section = ""
     if perf:
@@ -225,7 +313,10 @@ def generate_hotake() -> Optional[str]:
         performance_section = (performance_section or "") + "\n\n" + core_identity
     performance_section = (performance_section or "") + "\n\n" + personality_store.HARD_RULES_BLOCK
 
-    prompt = HOTAKE_PROMPT.format(performance_section=performance_section)
+    prompt = HOTAKE_PROMPT.format(
+        performance_section=performance_section,
+        dedup_section=dedup_section,
+    )
 
     result = subprocess.run(
         [
