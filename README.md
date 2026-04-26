@@ -8,23 +8,39 @@ Uses Claude Code CLI for AI generation and Safari + AppleScript for browser auto
 
 ### Bots
 
-**Post Bot** - Searches the web for breaking news (AI, crypto, bourse), writes sharp FR tweets in SETUP→PUNCH format (factual setup, sarcastic punch — sourced article without a joke = failure). Threads supported. Mix of news (10/day) + hot-take memes (4/day). News-first policy: first 3 posts/day must be news. Hot takes ship with a generated PNG quote-card for screenshot-worthy feed presence.
+**Post Bot** - Searches the web for breaking news (AI, crypto, bourse), writes sharp FR tweets in SETUP→PUNCH format (factual setup, sarcastic punch — sourced article without a joke = failure). FIRST-DERIVATIVE rule: reject angles BFM/Bloomberg would post as-is, find the second-order implication. Threads supported. Mix of news (12/day) + hot-take memes (12/day). News-first policy: first 3 posts/day must be news. Hot takes ship with a generated PNG quote-card for screenshot-worthy feed presence.
 
-**Reply Bot** - Direct + search reply paths. Finds high-engagement FR tweets (with EN fallback), drops sharp one-liner replies every ~30 min jittered (cap 2/cycle, impact-ranked). Skips dead tweets (0 likes AND 0 replies). FR priority, bilingual. **Quiet hours 1am-7am Paris** — engagement cycles skip overnight so the account looks human.
+**Reply Bot** - Direct + search reply paths. Finds high-engagement FR tweets (with EN fallback), drops sharp one-liner replies (cap 5/cycle, impact-ranked). **Engagement floor: skips tweets below `REPLY_MIN_LIKES` (default 5)** + content blocklist (e.g. "se poser") — so the bot doesn't waste replies on dead/low-quality tweets. FR priority, bilingual. **Quiet hours 1am-7am Paris** — engagement cycles skip overnight so the account looks human.
 
 **Engage Bot** - Auto-follows target accounts and likes their latest tweets. Static list + autonomously discovered handles + strategy-agent additions, all merged at runtime.
 
-**Notify + Boost Bot** - Likes replies on own tweets every 45 min. Replies in-thread to influencer replies (cap 3/cycle). Self-retweets every 6h (validated growth lever — pulled 200 views from one boost).
+**Notify + Boost Bot** - Likes replies on own tweets every 45 min. Replies in-thread to influencer replies (cap 3/cycle). Self-retweets every 3h (validated growth lever — pulled 200 views from one boost; cadence pushed 6h→4h→3h as the lever kept working).
 
-**Discover Bot** - Every 6h: searches X for new FR AI/crypto/bourse handles, scores with Claude, persists approved ones, auto-follows the best FR ones.
+**Discover Bot** - Every 3h: searches X for new FR AI/crypto/bourse handles, scores with Claude, persists approved ones, auto-follows the best FR ones.
 
-**Roast Bot** - Every 10 min: 1-roast-per-tweet sarcastic reply on @pgm_pm's original tweets. URL-deduped hard cap.
+**Roast Bot** - Every ~20 min jittered: 1-roast-per-tweet sarcastic reply on @pgm_pm's original tweets. URL-deduped hard cap. Quiet hours skip.
 
 **Performance Bot** - Scrapes own tweet metrics every 2h. Identifies top/worst performers, injects learnings into prompts.
 
-**Strategy Agent (autonomous self-improvement)** - Every 6h: agentic Claude run with Read + WebSearch + Bash tools. Reads `engagement_log.csv` (per-source ROI), looks up live FR AI/crypto/bourse trends, proposes new search queries + accounts. Python applies ADDITIONS only — never removes. Outputs land in `dynamic_queries.json` / `dynamic_accounts.json` and are merged at runtime by the reply bot. **No human in the loop.** Audit trail in `strategy_log.json`.
+**Strategy Agent (autonomous self-improvement, INPUT side)** - Every 3h: agentic Claude run with Read + WebSearch + Bash tools. Reads `engagement_log.csv` (per-source ROI), looks up live FR AI/crypto/bourse trends, proposes new search queries + accounts. Python applies ADDITIONS only — never removes. Outputs land in `dynamic_queries.json` / `dynamic_accounts.json` and are merged at runtime by the reply bot. **No human in the loop.** Audit trail in `strategy_log.json`.
 
-**Quote-Tweet Bot** - Every 4h, cap 2/day: picks the most viral FR tweet in our niches (min_faves:30, top tab) and quote-tweets it with a sharp meme observation. Different distribution surface than replies.
+**Evolution Agent (autonomous self-improvement, OUTPUT side)** - Every 6h: reads engagement_log + performance_log, identifies winning/losing patterns + dead/hot accounts, rewrites `directives.md` (loaded by all generation prompts), prunes accounts that produced 0 engagement (TTL 30d, max 3/cycle), reinforces accounts whose tweets converted into our top posts (max 5/cycle). Audit trail in `evolution_log.json`.
+
+**Reflection Agent (autobiographical brain)** - Every 6h: reads engagement + history, updates `personality.json` — per-account dossiers (category, stance, feelings, notes) + per-topic positions. Replies become PERSONAL because the bot remembers each account.
+
+**Quote-Tweet Bot** - Every 90 min, cap 12/day: picks the most viral FR tweet in our niches (min_faves:30, top tab) and quote-tweets it with a sharp meme observation. Different distribution surface than replies.
+
+**Early-Bird Bot** - Every ~7 min jittered (12-min freshness window). Scans 3 random accounts from a 75-account roster, replies to any tweet < 12 min old. Cap 2 replies/cycle. Top-5 reply on a viral tweet = 10-100x impressions multiplier. Quiet hours skip.
+
+### Cross-format topic dedup
+
+`src/topic_dedup.py` is shared by news + hot take agents — entities (Claude, Bitcoin, OpenAI, etc.) recurring in the last 24-48h get hard-banned across BOTH formats so the audience never sees the same topic twice in two different posts.
+
+### Hard rules (immutable)
+
+Two rules stamped into every generation prompt via `personality_store.HARD_RULES_BLOCK`:
+1. Aucun contenu illegal sous aucune forme.
+2. Aucun troll / mocking / attaque du gouvernement americain (US government, Fed, SEC, CFTC, IRS, FBI, DOJ, presidents). Commenter des FAITS OK, attaquer NON.
 
 ## Setup
 
@@ -93,8 +109,11 @@ All settings in `src/config.py`, overridable with environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MAX_NEWS_PER_DAY` | 10 | Max news posts per day |
-| `MAX_HOTAKES_PER_DAY` | 4 | Max hot takes per day |
+| `MAX_NEWS_PER_DAY` | 12 | Max news posts per day |
+| `MAX_HOTAKES_PER_DAY` | 12 | Max hot takes per day |
+| `MAX_QUOTES_PER_DAY` | 12 | Max quote-tweets per day |
+| `MAX_REPLIES_PER_CYCLE` | 5 | Max replies per cycle |
+| `REPLY_MIN_LIKES` | 5 | Min likes on a tweet before the bot will reply |
 | `NEWS_MODEL` | claude-opus-4-6 | Model for news posts |
 | `REPLY_MODEL` | claude-sonnet-4-6 | Model for replies |
 | `HOTAKE_MODEL` | claude-sonnet-4-6 | Model for hot takes |
@@ -132,10 +151,16 @@ src/
   engage_bot.py              # Auto-follow + like engine
   notify_bot.py              # Notification + boost
   performance.py             # Self-improving metrics system (every 2h)
-  strategy_agent.py          # Autonomous self-improvement (agentic, every 6h)
+  strategy_agent.py          # Autonomous self-improvement INPUT side (agentic, every 3h)
+  evolution_agent.py         # Autonomous self-improvement OUTPUT side (agentic, every 6h)
+  evolution_store.py         # directives.md + pruned/reinforced account stores
+  reflection_agent.py        # Autobiographical brain — personality.json (every 6h)
+  personality_store.py       # Per-account/per-topic dossiers + HARD_RULES_BLOCK
+  topic_dedup.py             # Shared cross-format banlist (news + hot take)
   dynamic_strategy.py        # Append-only stores for strategy-agent additions
-  quote_tweet_bot.py         # Quote-tweet path (cap 2/day)
-  discover_bot.py            # Autonomous handle discovery (every 6h)
+  quote_tweet_bot.py         # Quote-tweet path (cap 12/day, every 90 min)
+  early_bird_bot.py          # Top-5-reply path on fresh viral tweets
+  discover_bot.py            # Autonomous handle discovery (every 3h)
   roast_pgm_bot.py           # Dedicated 1-roast-per-tweet for @pgm_pm
   image_gen.py               # PNG quote-card generator (Pillow)
   twitter_client.py          # Safari/AppleScript browser automation

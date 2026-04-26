@@ -95,9 +95,9 @@ These two rules are stamped into every generation prompt via `personality_store.
 
 ### Bots
 
-**Post bot** - 5 news + 5 hot takes/day (was 10+4). ~45% hot take roll on each cycle. News must FOLLOW the SETUP→PUNCH format AND have the hook in first 6 words AND drop URLs (X deboosts off-platform links). Every news post now ships with a quote-card image (mirrors hot-take path — image posts pull more reach). Humanizer on all output.
+**Post bot** - 12 news + 12 hot takes/day (caps tripled 2026-04-26 PM — bot was choking at 8/day before EST peak). ~45% hot take roll on each cycle. News must FOLLOW the SETUP→PUNCH format AND have the hook in first 6 words AND drop URLs (X deboosts off-platform links). Every news post now ships with a quote-card image (mirrors hot-take path — image posts pull more reach). News prompt enforces FIRST-DERIVATIVE rule (reject angles BFM/Bloomberg would post as-is) + IMPACT FILTER (4×NO → SKIP). Humanizer on all output.
 
-**Reply bot** - Cap 2 replies/cycle, every ~30 min jittered. French priority, bilingual. Impact-ranked (agent picks best 2 of 6-8 candidates). Pre-filter dedup + blocklist. Persisted memory of 2000 replied URLs. Quiet 1am-7am Paris.
+**Reply bot** - Cap 5 replies/cycle (was 2), every ~22 min jittered. French priority, bilingual. Impact-ranked (agent picks best of 6-8 candidates). Pre-filter dedup + blocklist + **engagement floor `REPLY_MIN_LIKES` (default 5)** + content blocklist (e.g. "se poser") so the bot doesn't burn replies on dead/low-quality tweets. Persisted memory of 2000 replied URLs. Quiet 1am-7am Paris.
 
 **Engage bot** - 3-5 accounts/cycle, every ~45 min jittered. Targets merge static list + autonomously discovered handles. Quiet 1am-7am Paris.
 
@@ -119,7 +119,7 @@ These two rules are stamped into every generation prompt via `personality_store.
   - Adds to `reinforced_accounts.json` — handles whose tweets converted into our top posts get 2x weight in selectors. No TTL. Hard cap 5 reinforcements/cycle.
   Audit trail in `evolution_log.json`. The bot literally rewrites its own style guide twice a day.
 
-**Quote-tweet bot** - Every 2h, cap 8/day (was 2.5h/5): scrapes HOT FR tweets (min_faves:30), picks the single most-liked candidate, generates a sharp meme observation, posts it as a quote-tweet. New distribution surface (followers' feed + author notification). Pure additive growth — different surface than replies.
+**Quote-tweet bot** - Every 90 min, cap 12/day (was 2h/8): scrapes HOT FR tweets (min_faves:30), picks the single most-liked candidate, generates a sharp meme observation, posts it as a quote-tweet. New distribution surface (followers' feed + author notification). Pure additive growth — different surface than replies.
 
 **Early-bird bot** - Every ~7 min jittered (12-min freshness window). Scrapes 3 random accounts from a 75-account roster (FR media + crypto/bourse FR + AI mega EN), replies to any tweet < 12 min old. Hard cap 1 reply/cycle. Quiet 1am-7am Paris. Top-5 reply on a viral tweet = 10-100x impressions multiplier. Source-tagged `EARLYBIRD/<handle>`.
 
@@ -143,8 +143,10 @@ These two rules are stamped into every generation prompt via `personality_store.
 - **`src/engagement_log.py`** - CSV engagement logging.
 - **`src/twitter_client.py`** - Browser automation with Safari lock + retry. `reply_to_tweet_in_thread()` for nested replies. `scrape_following_feed()` for the chronological Following tab. `scrape_x_search(tab="top")` for X's algorithmic Top results. `post_tweet(text, image_path=...)` attaches PNG via clipboard paste on /compose/post. Scraper returns likes/replies counts.
 - **`src/image_gen.py`** - Generates PNG quote cards for hot takes (dark bg, accent bar, branded handle, random palette). Pillow-based; no-op if PIL missing.
-- **`src/strategy_agent.py`** - **Autonomous self-improvement INPUT side (agentic).** Every 6h: spawns a Claude agent with Read+WebSearch+Bash tools, reads engagement log, investigates trends, proposes JSON. Python applies additions only.
-- **`src/evolution_agent.py`** - **Autonomous self-improvement OUTPUT side (agentic).** Every 12h: spawns a Claude agent with Read tools, analyzes engagement_log + performance_log, identifies winning/losing patterns + dead/hot accounts. Outputs directives + prune list + reinforce list. Python applies with hard caps + TTL.
+- **`src/strategy_agent.py`** - **Autonomous self-improvement INPUT side (agentic).** Every 3h: spawns a Claude agent with Read+WebSearch+Bash tools, reads engagement log, investigates trends, proposes JSON. Python applies additions only.
+- **`src/evolution_agent.py`** - **Autonomous self-improvement OUTPUT side (agentic).** Every 6h: spawns a Claude agent with Read tools, analyzes engagement_log + performance_log, identifies winning/losing patterns + dead/hot accounts. Outputs directives + prune list + reinforce list. Python applies with hard caps + TTL.
+
+- **`src/topic_dedup.py`** - **Cross-format topic banlist (shared by news + hot take).** `extract_recent_topics()` returns a set of entities (Claude/Bitcoin/OpenAI/etc.) recurring in the last 24-48h. Both `agent.py` and `hotake_agent.py` import this so a topic can't appear once as a news post AND once as a hot take in the same 30 min window — would otherwise look like recycling.
 - **`src/evolution_store.py`** - Append-only/TTL stores for the evolution agent: `directives.md` (overwritten each cycle), `pruned_accounts.json` (TTL 30d), `reinforced_accounts.json`. Helper `filter_and_weight(accounts)` used by all selectors.
 - **`src/personality_store.py`** - Personality / autobiographical brain. Per-account + per-topic dossiers in `personality.json`. Helpers: `upsert_account`, `record_interaction`, `render_account_block(handle)` (per-author prompt block), `render_global_mood()` (aggregate state of mind), `HARD_RULES_BLOCK` (the two hard rules — stamped into every generation prompt).
 - **`src/reflection_agent.py`** - Agentic Claude run every 6h that reads engagement / history / learnings and writes JSON patches applied via personality_store. The bot grows a relationship with each account in its orbit. Hard caps: 30 account updates / 10 topic updates per cycle.
@@ -176,7 +178,7 @@ These two rules are stamped into every generation prompt via `personality_store.
 | 12pm - 6pm   | 90-150 min    | ~25-38 min jittered                  |
 | 6pm - 11pm   | 140-220 min   | ~25-38 min jittered                  |
 
-Engage: ~45 min jittered (3-5 accounts/cycle, expanded list w/ FR media), quiet 1am-7am Paris. Notify: 45 min, quiet hours. Replyback: 60 min, cap 4, quiet hours. Reciprocity loop now FOLLOWS BACK engagers (not just likes). Boost: every 6h (validated). Discover: every 6h. Roast (@pgm_pm): ~20 min jittered, quiet hours. Performance: every 2h. **Strategy agent: every 6h. Quote-tweet bot: every 2.5h (cap 5/day). Early-bird bot: ~7 min jittered (75-account roster), quiet hours.**
+Engage: ~45 min jittered (3-5 accounts/cycle, expanded list w/ FR media), quiet 1am-7am Paris. Notify: 45 min, quiet hours. Replyback: 60 min, cap 4, quiet hours. Reciprocity loop now FOLLOWS BACK engagers (not just likes). **Boost: every 3h (was 6h→4h→3h, validated lever, kept earning lift). Discover: every 3h (was 6h). Roast (@pgm_pm): ~20 min jittered, quiet hours. Performance: every 2h. Strategy agent: every 3h (was 6h — bot self-adjusts INPUT side multiple times/day). Evolution agent: every 6h (was 12h — auto-rewrites style guide more often). Quote-tweet bot: every 90 min (cap 12/day). Early-bird bot: ~7 min jittered (75-account roster), cap 2/cycle, quiet hours.**
 
 Quiet hours = 1am-7am Paris time = ~7pm-1am EST. ALL engagement cycles (replies, engage, direct-reply, early-bird, roast, notify, replyback) skip entirely. News posts continue at slowest cadence.
 
