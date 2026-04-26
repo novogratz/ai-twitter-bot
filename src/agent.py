@@ -323,13 +323,15 @@ Une fois ces 4 checks faits → POSTE. Pas de 5ème relecture. La perfection tue
 OUTPUT
 ==================================================
 
-Écris en FRANÇAIS. Max 280 chars (zéro URL, on a tout l'espace).
+Écris en FRANÇAIS. Max 240 chars de TEXTE (l'URL prend ~23 chars en plus via t.co).
 Commence toujours par une majuscule. Accents obligatoires.
 
-⚠️ ZÉRO URL DANS LE TWEET. Le tweet ressort en tant qu'image-card.
-Les liens externes font perdre de la portée sur X (algo qui pénalise off-platform).
-La source est dans ton WebSearch — tu n'as PAS besoin de la coller.
-Tu balances le scoop + la chute. Point.
+⚠️ TU DOIS COLLER L'URL DE L'ARTICLE EN BAS DU TWEET (voir section LIEN ARTICLE plus bas).
+X rend une card native (image + titre + domaine) — c'est ÇA qui rend le post crédible.
+Si pas d'URL d'article disponible (analyse pure, pas de fait sourçable), AJOUTE une ligne
+[IMAGE: <slug-wikipedia-en-anglais>] tout à la fin pour que le bot attache la photo
+Wikipedia du sujet principal (ex: [IMAGE: Elon_Musk], [IMAGE: Bitcoin], [IMAGE: Nvidia]).
+Si vraiment aucun visuel ne fait sens, mets [IMAGE: SKIP].
 
 Inclus:
 - 0 hashtag par défaut. 1 max, seulement si la pointe est dedans (ex: #SaaSpocalypse).
@@ -381,17 +383,31 @@ Output UNIQUEMENT le tweet final (texte + URL si applicable).
 Pas de guillemets, pas d'explication, pas de ligne [SOURCE: ...] séparée."""
 
 
-# Module-level side-channel for the most recent news source URL,
-# so we don't have to change generate_tweet's return type. bot.py reads
-# this immediately after generate_tweet() to fetch the article's og:image
-# and attach it to the tweet — same preview people see when a link is shared.
+# Module-level side-channels for the most recent news output, so we don't
+# have to change generate_tweet's return type. bot.py reads these right
+# after generate_tweet() to decide what visual to attach.
+# - _last_source_url: an article URL already in the tweet body (X renders
+#   a native link-card from it — no extra image to attach).
+# - _last_image_topic: a Wikipedia slug (e.g. "Elon_Musk") to use as a
+#   fallback visual when no article URL is available.
 _last_source_url: Optional[str] = None
+_last_image_topic: Optional[str] = None
 
 
 def last_source_url() -> Optional[str]:
-    """Return the source article URL extracted from the most recent
-    generate_tweet() call, or None if the model didn't emit one."""
+    """Return the source article URL detected in the most recent
+    generate_tweet() output, or None if the agent didn't include one.
+    When set, the URL is already inside the tweet body — X will render a
+    native card, so bot.py should NOT attach a separate image."""
     return _last_source_url
+
+
+def last_image_topic() -> Optional[str]:
+    """Return the Wikipedia slug emitted by the agent when no article URL
+    was available. bot.py uses this to fetch the topic's lead photo as a
+    fallback visual (e.g. Musk's Wikipedia portrait when the news is
+    about Musk but no clean article URL exists). None means text-only."""
+    return _last_image_topic
 
 
 # Back-compat alias — older callers may import last_source_domain.
@@ -400,15 +416,43 @@ def last_source_domain() -> Optional[str]:
 
 
 def _extract_source(text: str):
-    """Pull a `[SOURCE: url]` line out of the agent's raw output.
-    Returns (cleaned_text_without_source_line, source_url_or_None)."""
+    """Detect an article URL the agent included in the body.
+
+    Two formats are accepted:
+    1. Legacy `[SOURCE: url]` block (older prompt versions).
+    2. A raw URL on its own line at the end of the tweet (current prompt).
+
+    Returns (text_unchanged_or_with_legacy_block_stripped, url_or_None).
+    Format-2 URLs are LEFT IN PLACE so X can render the native link-card."""
     import re as _re
+    # Format 1 — legacy [SOURCE: url] block: extract and strip.
     m = _re.search(r"\[\s*SOURCE\s*:\s*([^\]\s]+)\s*\]", text, flags=_re.IGNORECASE)
+    if m:
+        url = m.group(1).strip()
+        cleaned = (text[:m.start()] + text[m.end():]).strip()
+        return cleaned, url
+    # Format 2 — raw URL on the last non-empty line: keep in body, just report it.
+    lines = [ln.strip() for ln in text.strip().splitlines() if ln.strip()]
+    if lines:
+        last = lines[-1]
+        if _re.fullmatch(r"https?://\S+", last):
+            return text, last
+    return text, None
+
+
+def _extract_image_topic(text: str):
+    """Pull an `[IMAGE: <slug>]` line out of the agent's raw output.
+    Returns (cleaned_text_without_image_line, slug_or_None).
+    `[IMAGE: SKIP]` and an empty slug both yield None (text-only)."""
+    import re as _re
+    m = _re.search(r"\[\s*IMAGE\s*:\s*([^\]]+?)\s*\]", text, flags=_re.IGNORECASE)
     if not m:
         return text, None
-    url = m.group(1).strip()
+    slug = m.group(1).strip()
     cleaned = (text[:m.start()] + text[m.end():]).strip()
-    return cleaned, url
+    if slug.upper() == "SKIP" or not slug:
+        return cleaned, None
+    return cleaned, slug
 
 
 def generate_tweet() -> Optional[str]:
@@ -478,13 +522,24 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         raise RuntimeError("Claude CLI returned empty output.")
     if tweet.upper() == "SKIP":
         return None
-    # Back-compat: tolerate a legacy [SOURCE: url] line if the model still
-    # emits one (some prompt versions taught it that format). Treat it as
-    # the article URL and append it to the body so X can render a card.
-    tweet, legacy_src = _extract_source(tweet)
-    if legacy_src and legacy_src not in tweet:
-        tweet = (tweet.rstrip() + "\n\n" + legacy_src).strip()
-    globals()["_last_source_url"] = legacy_src
-    if legacy_src:
-        log.info(f"[NEWS] Article URL: {legacy_src[:120]}")
+    # Pull the [IMAGE: <slug>] hint out of the body first (it's metadata
+    # for the image fallback, never meant to be tweeted).
+    tweet, image_topic = _extract_image_topic(tweet)
+    # Detect article URL. Legacy [SOURCE: url] gets stripped + re-appended
+    # on its own line so X can render a card; raw URL-on-last-line stays
+    # in place untouched.
+    tweet, src_url = _extract_source(tweet)
+    if src_url and src_url not in tweet:
+        tweet = (tweet.rstrip() + "\n\n" + src_url).strip()
+    globals()["_last_source_url"] = src_url
+    # Only honour the image-topic fallback when there's NO article URL —
+    # otherwise X's native link-card already covers the visual and an
+    # attached image would suppress the card preview.
+    globals()["_last_image_topic"] = image_topic if not src_url else None
+    if src_url:
+        log.info(f"[NEWS] Article URL detected (X will render card): {src_url[:120]}")
+    elif image_topic:
+        log.info(f"[NEWS] No URL — Wikipedia fallback topic: {image_topic}")
+    else:
+        log.info("[NEWS] No URL and no image topic — will post text-only")
     return tweet

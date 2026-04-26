@@ -145,27 +145,33 @@ def run_bot_cycle():
     else:
         tweet = humanize(tweet)
         log.info(f"Tweet ({len(tweet)} chars): {tweet[:100]}...")
-        # News posts attach the article's actual og:image — the same preview
-        # picture you'd see if someone shared the link normally. This makes
-        # the post look like a real journalist sharing a story, not an AI
-        # bot retyping its own words on a slide. The article URL itself
-        # never goes in the tweet body (X deboosts off-platform links), but
-        # the preview image lives on our timeline as proof-of-source.
-        # Falls back to text-only on any fetch failure — never blocks the post.
+        # News visual policy (per user directive 2026-04-26):
+        #   1. If the agent included an article URL in the body → leave it
+        #      there and DON'T attach an image. X auto-renders a native
+        #      link-card (image + headline + domain) which is the most
+        #      credible "real journalist sharing a scoop" surface.
+        #   2. If no URL but agent emitted [IMAGE: <slug>] → fetch that
+        #      Wikipedia page's lead photo (e.g. Musk portrait, Bitcoin
+        #      logo) so the post still has a visual anchor.
+        #   3. Else → text-only. Beats bot-noise text-on-slide cards.
         img_path = None
         try:
-            from .agent import last_source_url
+            from .agent import last_source_url, last_image_topic
             src_url = last_source_url()
+            topic = last_image_topic()
             if src_url:
-                img_path = fetch_article_image(src_url)
+                log.info(f"[NEWS] URL in body — X will render link-card, no image attached")
+            elif topic:
+                wiki_url = f"https://en.wikipedia.org/wiki/{topic}"
+                img_path = fetch_article_image(wiki_url)
                 if img_path:
-                    log.info(f"[NEWS] Article image attached: {img_path}")
+                    log.info(f"[NEWS] Wiki image attached for '{topic}': {img_path}")
                 else:
-                    log.info(f"[NEWS] No article image for {src_url[:80]} - posting text-only")
+                    log.info(f"[NEWS] Wiki had no og:image for '{topic}' — text-only")
             else:
-                log.info("[NEWS] No source URL provided - posting text-only")
+                log.info("[NEWS] No URL and no image topic — text-only")
         except Exception as e:
-            log.info(f"[NEWS] Article image fetch failed (text-only): {e}")
+            log.info(f"[NEWS] Image fallback failed (text-only): {e}")
         post_tweet(tweet, image_path=img_path)
         save_tweet(tweet)
         log_post(tweet)
