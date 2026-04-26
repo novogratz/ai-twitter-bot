@@ -480,11 +480,12 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             # plaisir/vrai/j'ai/vais and falsely passes off-niche tweets.
             _NICHE_PATTERN = re.compile(
                 r"\b("
-                # AI
+                # AI / tech-as-equity
                 r"ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|"
                 r"gemini|grok|xai|deepseek|huggingface|nvidia|cuda|gpu|tpu|"
                 r"agent|agents|robot|robots|humanoide|humanoïde|llm|"
                 r"machine\s*learning|ml|deep\s*learning|neural|"
+                r"saas|software|cloud|datacenter|"
                 # Crypto
                 r"crypto|btc|bitcoin|eth|ethereum|sol|solana|xrp|"
                 r"blockchain|defi|stablecoin|token|altcoin|memecoin|nft|"
@@ -499,7 +500,7 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
                 r"obligations?|rendement|dividendes?|ipo|valuation|valo|"
                 r"levée|fund|funding|vc|venture|startups?|scale-?up|"
                 r"banques?|fintech|néobanques?|neobanques?|revolut|boursorama|"
-                r"immo|immobilier|real\s*estate|rentab\w*|"
+                r"immo|immobilier|logement|locatif|real\s*estate|rentab\w*|"
                 r"inflation|récession|recession|"
                 r"earnings|résultats?|deal|acquisition|merger|m&a|"
                 r"finance\w*|financi\w*|cotation|"
