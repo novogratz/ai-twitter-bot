@@ -434,8 +434,20 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         # floor since random authors can be 0-follower accounts.
         _CURATED_SOURCES = ("PROFILE-FR", "FEED", "FOLLOWING")
         is_curated = any(source_name.startswith(s) for s in _CURATED_SOURCES)
+        # 2026-04-26 PM user reminder: "for accounts you follow OR big
+        # accounts with lots of followers, ok to comment when 0 likes".
+        # Even if the SOURCE is a search path, if the AUTHOR is in our
+        # curated FR roster (or dynamically-added FR accounts), they
+        # qualify as a big account → bypass the floor.
+        author_lc = (author or "").lower().lstrip("@")
+        try:
+            from .dynamic_strategy import get_dynamic_accounts as _gda
+            _curated_authors = {a.lower() for a in FR_ACCOUNTS} | {a.lower() for a in _gda().get("fr", [])}
+        except Exception:
+            _curated_authors = {a.lower() for a in FR_ACCOUNTS}
+        author_is_curated = author_lc in _curated_authors
         min_likes = int(os.environ.get("REPLY_MIN_LIKES", "5"))
-        if not is_curated and likes < min_likes:
+        if not is_curated and not author_is_curated and likes < min_likes:
             log.info(f"[{source_name}] Low-engagement tweet ({likes}<{min_likes} likes) - skipping {url}")
             continue
 
