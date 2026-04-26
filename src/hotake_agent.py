@@ -24,7 +24,15 @@ from .topic_dedup import extract_recent_topics
 # reliable signal for publication date and we can hard-enforce the 48h
 # freshness rule that the LLM keeps bending. Returns the parsed datetime
 # or None if no date is found in the URL.
-_URL_DATE_RE = re.compile(r"/(20\d{2})/(\d{1,2})/(\d{1,2})/")
+# Common URL date encodings:
+#   /YYYY/MM/DD/       — most newsrooms (Reuters, NYT, WaPo, fool.com…)
+#   /YYYY-MM-DD/       — Bloomberg (e.g. /news/articles/2026-04-22/…)
+#   /YYYY/MM-DD/       — rare hybrid
+# Match any of them with a single regex so the freshness gate doesn't
+# leak. Tested against bloomberg.com, reuters.com, fool.com, siliconangle.
+_URL_DATE_RE = re.compile(
+    r"/(20\d{2})[/-](\d{1,2})[/-](\d{1,2})(?:[/-]|$)"
+)
 
 
 def _url_publication_date(url: str) -> Optional[datetime]:
