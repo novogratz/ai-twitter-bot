@@ -282,6 +282,20 @@ EXEMPLES À VISER (le user a confirmé que ce niveau marche)
 - "Le médecin : « l'IA m'a diagnostiqué un cancer en 3 min. » Le syndicat : « oui mais qui tamponne le bon de sortie ? »"
 - "Les marchés pilotés par 7 boîtes tech américaines. Le capitalisme a finalement trouvé son indice de référence : le S&P 7."
 
+⭐ GOLD STANDARD ABSOLU (user a dit "the only thing that worked"):
+"Musk négocie un deal xAI + Mistral + Cursor pour rattraper OpenAI. Budget : 20 milliards. Résultat : on appelle une startup parisienne. L'IA c'est la Ligue des Champions, le budget suffit pas. Demandez au PSG."
+
+Pourquoi ça tue:
+- SETUP factuel propre (le deal, le chiffre 20Md€)
+- REFRAME du fait ("on appelle une startup parisienne" = ironie: 20Md aboutit à un appel à une boîte FR)
+- CALLBACK culturel FR sport ("L'IA c'est la Ligue des Champions")
+- CHUTE en 3 mots impératif ("Demandez au PSG.") — le lecteur complète la blague tout seul
+
+Quand un fait IA/crypto/bourse a un gros budget/promesse vs un résultat décevant ou ridicule:
+→ utilise PSG / Ligue des Champions / Bercy / Coupe de France / France de 98 / les Bleus comme analogue
+→ termine sur 2-4 mots impératif ou question courte ("Demandez au PSG.", "Demandez à Bercy.", "On a vu pareil aux Bleus.")
+→ NE termine PAS sur une phrase plate explicative — le punch DOIT laisser le lecteur faire le dernier pas
+
 EXEMPLE PASSABLE MAIS FAIBLE (à dépasser — le user a dit "pas assez sarcastique"):
 - "ServiceNow -18%. Pire journée de son histoire. 2 000 milliards de SaaS partis en fumée. Le modèle par siège s'effondre parce que les agents IA paient pas de licences. Bienvenue dans le SaaSpocalypse."
 - Pourquoi c'est faible: trop d'info, pas assez de chute. "SaaSpocalypse" = jeu de mot tiède. Le punch arrive jamais vraiment.
