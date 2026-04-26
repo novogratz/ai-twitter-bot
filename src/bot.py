@@ -138,13 +138,17 @@ def run_bot_cycle():
         log.info(f"Tweet ({len(tweet)} chars): {tweet[:100]}...")
         # News tweets ship with a quote-card image — same playbook as hot takes.
         # Image posts get more reach + the card carries the brand even when
-        # screenshotted off-platform. Best-effort: text-only fallback if PIL
-        # is missing or generation fails.
+        # screenshotted off-platform. The card now also stamps "VIA <domain>"
+        # bottom-left when the agent supplied a source — visually anchors it
+        # as real news commentary (the user's "make it more visual" request).
+        # Best-effort: text-only fallback if PIL is missing or generation fails.
         card_path = None
         try:
-            card_path = make_quote_card(tweet)
+            from .agent import last_source_domain
+            src = last_source_domain()
+            card_path = make_quote_card(tweet, source=src)
             if card_path:
-                log.info(f"[NEWS] Generated quote-card: {card_path}")
+                log.info(f"[NEWS] Generated quote-card{' with source ' + src if src else ''}: {card_path}")
         except Exception as e:
             log.info(f"[NEWS] Card generation failed (posting text-only): {e}")
         post_tweet(tweet, image_path=card_path)

@@ -344,12 +344,56 @@ Inclus:
 
 Pour un thread (15% des posts, sujets majeurs), sépare chaque tweet avec ---THREAD---
 
-Output UNIQUEMENT le texte final. Pas de guillemets, pas d'explication."""
+==================================================
+SOURCE LINE (obligatoire pour les news, bannie pour les hot takes)
+==================================================
+Après le tweet, AJOUTE une ligne unique au format exact:
+[SOURCE: <domaine.com>]
+
+Exemples:
+[SOURCE: bloomberg.com]
+[SOURCE: lefigaro.fr]
+[SOURCE: theinformation.com]
+
+Le domaine = la source principale de la news (issue de ton WebSearch).
+Pas d'URL complète, juste le domaine. Cette ligne ne sera PAS dans le tweet posté —
+elle sera affichée discrètement dans la quote-card pour signaler "c'est une vraie news".
+Si la news est purement spéculative ou opinion (pas de source vérifiable), réponds SKIP.
+
+Output UNIQUEMENT le texte final + la ligne SOURCE. Pas de guillemets, pas d'explication."""
+
+
+# Module-level side-channel for the most recent news source domain,
+# so we don't have to change generate_tweet's return type. bot.py reads
+# this immediately after generate_tweet() to attach a "via <domain>" badge
+# on the quote-card.
+_last_source_domain: Optional[str] = None
+
+
+def last_source_domain() -> Optional[str]:
+    """Return the source domain extracted from the most recent generate_tweet()
+    call, or None if the model didn't emit one."""
+    return _last_source_domain
+
+
+def _extract_source(text: str):
+    """Pull a `[SOURCE: domain]` line out of the agent's raw output.
+    Returns (cleaned_text_without_source_line, source_domain_or_None)."""
+    import re as _re
+    m = _re.search(r"\[\s*SOURCE\s*:\s*([^\]\s]+)\s*\]", text, flags=_re.IGNORECASE)
+    if not m:
+        return text, None
+    domain = m.group(1).strip().rstrip("/").lower()
+    cleaned = (text[:m.start()] + text[m.end():]).strip()
+    return cleaned, domain
 
 
 def generate_tweet() -> Optional[str]:
     """Invoke the Claude Code CLI to search for news and write a tweet.
-    Returns None if no fresh news is found."""
+    Returns None if no fresh news is found. The source domain (if any) is
+    exposed via `last_source_domain()` for the caller to render on the card."""
+    global _last_source_domain
+    _last_source_domain = None
     recent = get_recent_tweets(hours=24)
 
     if recent:
@@ -411,6 +455,13 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         raise RuntimeError("Claude CLI returned empty output.")
     if tweet.upper() == "SKIP":
         return None
+    # Pull the [SOURCE: domain] line off the bottom of the output and stash
+    # the domain in the module-level side-channel for bot.py to read.
+    tweet, src = _extract_source(tweet)
+    _last_source_domain = src
+    globals()["_last_source_domain"] = src  # belt-and-braces — module assignment
+    if src:
+        log.info(f"[NEWS] Source domain: {src}")
     # Defense-in-depth: strip any URL the model still glued in despite the
     # explicit no-URL rule. X deboosts off-platform links.
     cleaned = _strip_urls(tweet)

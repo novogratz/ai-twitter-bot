@@ -86,8 +86,15 @@ def _pick_font_size(text: str) -> int:
     return 42
 
 
-def make_quote_card(text: str, output_path: Optional[str] = None) -> Optional[str]:
-    """Render `text` as a quote-card PNG. Returns the file path, or None if PIL missing."""
+def make_quote_card(text: str, output_path: Optional[str] = None, source: Optional[str] = None) -> Optional[str]:
+    """Render `text` as a quote-card PNG. Returns the file path, or None if PIL missing.
+
+    `source` (optional) is a news-source domain like "bloomberg.com". When
+    provided, a small "VIA <DOMAIN>" badge is rendered bottom-left so the card
+    visually telegraphs "this is real news commentary" instead of opinion.
+    Off-platform links in the IMAGE don't trigger X's link-deboost — they're
+    pixels, not URLs.
+    """
     if not _PIL_AVAILABLE:
         return None
 
@@ -124,6 +131,19 @@ def make_quote_card(text: str, output_path: Optional[str] = None) -> Optional[st
         fill=accent,
         font=handle_font,
     )
+
+    # Optional news-source badge in bottom-left. Visually anchors the card
+    # as news commentary (vs opinion), which is what the user asked for:
+    # "make it more visual / link to the news".
+    if source:
+        src_label = f"📰 VIA {source.upper()}"
+        src_font = _find_font(24)
+        draw.text(
+            (PADDING, CARD_H - 60),
+            src_label,
+            fill=fg,
+            font=src_font,
+        )
 
     # Persist
     if output_path is None:
