@@ -129,7 +129,7 @@ PRIORITY_ACCOUNTS = FR_ACCOUNTS + EN_ACCOUNTS
 # (so the dead-tweet filter doesn't kill our entire pipeline).
 SEARCH_QUERIES = [
     # Hot tweets (already engaged, guaranteed alive)
-    "IA OR ChatGPT OR Claude lang:fr min_faves:30",
+    "IA OR ChatGPT lang:fr min_faves:30",
     "Bitcoin OR crypto OR Ethereum lang:fr min_faves:30",
     "bourse OR CAC40 OR trading lang:fr min_faves:20",
     "OpenAI OR Anthropic OR Mistral lang:fr min_faves:20",
@@ -145,10 +145,10 @@ SEARCH_QUERIES = [
 ]
 
 # HOT-TAB queries — hit X's "Top" ranking (algorithmic) to grab the absolute
-# hottest French tweets right now in our niches. Claude / Claude Code added —
-# major hot topic right now.
+# hottest French tweets right now in our niches. "Claude AI" quoted phrase
+# avoids matching the common French first name (CNEWS false positives).
 HOT_TAB_QUERIES = [
-    "Claude OR ClaudeCode lang:fr min_faves:10",
+    "\"Claude AI\" OR \"Claude Code\" OR ClaudeCode OR \"Claude Anthropic\" lang:fr min_faves:10",
     "IA lang:fr min_faves:20",
     "Bitcoin lang:fr min_faves:20",
     "bourse lang:fr min_faves:10",
