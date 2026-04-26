@@ -13,6 +13,7 @@ from .history import save_tweet
 from .engagement_log import log_post, log_hotake
 from .humanizer import humanize
 from .article_image import fetch_article_image
+from .image_gen import make_quote_card
 
 THREAD_SEPARATOR = "---THREAD---"
 
@@ -106,9 +107,16 @@ def run_bot_cycle():
                     if img_path:
                         log.info(f"[HOTAKE] Wiki image attached for '{slug}': {img_path}")
                     else:
-                        log.info(f"[HOTAKE] Wiki had no og:image for '{slug}' - text-only")
+                        log.info(f"[HOTAKE] Wiki had no og:image for '{slug}' - trying quote card")
+                        img_path = make_quote_card(tweet)
+                        if img_path:
+                            log.info(f"[HOTAKE] Generated quote-card: {img_path}")
             except Exception as e:
                 log.info(f"[HOTAKE] Image fetch failed (text-only): {e}")
+            if not img_path:
+                img_path = make_quote_card(tweet)
+                if img_path:
+                    log.info(f"[HOTAKE] Fallback quote-card: {img_path}")
             post_tweet(tweet, image_path=img_path)
             save_tweet(tweet)
             log_hotake(tweet)
@@ -167,9 +175,15 @@ def run_bot_cycle():
                 if img_path:
                     log.info(f"[NEWS] Wiki image attached for '{topic}': {img_path}")
                 else:
-                    log.info(f"[NEWS] Wiki had no og:image for '{topic}' — text-only")
+                    log.info(f"[NEWS] Wiki had no og:image for '{topic}' — trying quote card")
+                    img_path = make_quote_card(tweet)
+                    if img_path:
+                        log.info(f"[NEWS] Generated quote-card: {img_path}")
             else:
-                log.info("[NEWS] No URL and no image topic — text-only")
+                log.info("[NEWS] No URL and no image topic — trying quote card")
+                img_path = make_quote_card(tweet)
+                if img_path:
+                    log.info(f"[NEWS] Fallback quote-card: {img_path}")
         except Exception as e:
             log.info(f"[NEWS] Image fallback failed (text-only): {e}")
         post_tweet(tweet, image_path=img_path)
