@@ -112,7 +112,7 @@ All settings in `src/config.py`, overridable with environment variables:
 | `MAX_NEWS_PER_DAY` | 12 | Max news posts per day |
 | `MAX_HOTAKES_PER_DAY` | 12 | Max hot takes per day |
 | `MAX_QUOTES_PER_DAY` | 12 | Max quote-tweets per day |
-| `MAX_REPLIES_PER_CYCLE` | 5 | Max replies per cycle |
+| `MAX_REPLIES_PER_CYCLE` | 7 | Max replies per cycle |
 | `REPLY_MIN_LIKES` | 5 | Min likes on a tweet before the bot will reply |
 | `NEWS_MODEL` | claude-opus-4-6 | Model for news posts |
 | `REPLY_MODEL` | claude-sonnet-4-6 | Model for replies |

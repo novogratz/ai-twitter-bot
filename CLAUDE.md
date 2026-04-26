@@ -97,7 +97,7 @@ These two rules are stamped into every generation prompt via `personality_store.
 
 **Post bot** - 12 news + 12 hot takes/day (caps tripled 2026-04-26 PM — bot was choking at 8/day before EST peak). ~45% hot take roll on each cycle. News must FOLLOW the SETUP→PUNCH format AND have the hook in first 6 words AND drop URLs (X deboosts off-platform links). Every news post now ships with a quote-card image (mirrors hot-take path — image posts pull more reach). News prompt enforces FIRST-DERIVATIVE rule (reject angles BFM/Bloomberg would post as-is) + IMPACT FILTER (4×NO → SKIP). Humanizer on all output.
 
-**Reply bot** - Cap 5 replies/cycle (was 2), every ~22 min jittered. French priority, bilingual. Impact-ranked (agent picks best of 6-8 candidates). Pre-filter dedup + blocklist + **engagement floor `REPLY_MIN_LIKES` (default 5)** + content blocklist (e.g. "se poser") so the bot doesn't burn replies on dead/low-quality tweets. Persisted memory of 2000 replied URLs. Quiet 1am-7am Paris.
+**Reply bot** - Cap 7 replies/cycle (3→5→7), every ~22 min jittered. French priority, bilingual. Impact-ranked (agent picks best of 6-8 candidates). Pre-filter dedup + blocklist + **engagement floor `REPLY_MIN_LIKES` (default 5)** + content blocklist (e.g. "se poser") so the bot doesn't burn replies on dead/low-quality tweets. Persisted memory of 2000 replied URLs. Quiet 1am-7am Paris.
 
 **Engage bot** - 3-5 accounts/cycle, every ~45 min jittered. Targets merge static list + autonomously discovered handles. Quiet 1am-7am Paris.
 

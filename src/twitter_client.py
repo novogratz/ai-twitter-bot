@@ -240,6 +240,12 @@ def quote_tweet(tweet_url: str, comment: str):
 
 def follow_account(username: str):
     """Visit a user's profile and click the Follow button."""
+    # Sanitize: strip whitespace + leading @, reject display-name garbage
+    # (e.g. "aisha mansion" with internal space — that's not a handle).
+    username = (username or "").strip().lstrip("@")
+    if not username or " " in username or "/" in username:
+        log.info(f"[FOLLOW] Invalid handle '{username}' — skipping.")
+        return
     with _safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"[FOLLOW] Visiting profile: {profile_url}")
