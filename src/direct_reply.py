@@ -490,19 +490,24 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
                 r"blockchain|defi|stablecoin|token|altcoin|memecoin|nft|"
                 r"wallet|binance|coinbase|kraken|satoshi|halving|"
                 r"web3|dao|staking|yield|dex|cex|"
-                # Investment / markets
+                # Investment / markets / macro
                 r"bourse|action|actions|stock|stocks|marché|marchés|"
                 r"trading|trader|traders|invest|investir|investiss\w*|"
                 r"portefeuille|etf|pea|cto|"
                 r"cac|cac40|s&p|nasdaq|dow|dax|nikkei|"
                 r"fed|bce|taux|powell|lagarde|"
-                r"obligation|rendement|dividende|ipo|valuation|valo|"
-                r"levée|fund|funding|vc|venture|startup|startups|scale-?up|"
-                r"banque|banques|fintech|néobanque|neobanque|revolut|boursorama|"
+                r"obligations?|rendement|dividendes?|ipo|valuation|valo|"
+                r"levée|fund|funding|vc|venture|startups?|scale-?up|"
+                r"banques?|fintech|néobanques?|neobanques?|revolut|boursorama|"
                 r"immo|immobilier|real\s*estate|rentab\w*|"
                 r"inflation|récession|recession|"
-                r"earnings|résultat|résultats|deal|acquisition|merger|m&a|"
-                r"finance|financier|bourse|cotation|"
+                r"earnings|résultats?|deal|acquisition|merger|m&a|"
+                r"finance\w*|financi\w*|cotation|"
+                # Macro / fiscal / sovereign — public finances are
+                # market-relevant (OAT spreads, taxation, deficit → bonds).
+                r"dette\w*|déficit|fiscal\w*|fiscalité|impôts?|impot|impots|"
+                r"budget\w*|déflation|monétaire|monetaire|souverain\w*|"
+                r"oat|spread|notation|moody|moody's|s&p\s*global|"
                 # Crypto/AI brands that don't match generic words
                 r"openai|anthropic|tesla|meta|microsoft|google|amazon"
                 r")\b",
