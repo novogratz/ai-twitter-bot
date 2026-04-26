@@ -81,8 +81,7 @@ FR_ACCOUNTS = [
     "Capital",           # Capital magazine
     "LesEchos",          # Les Echos
     "BFMBourse",         # BFM Bourse
-    "InvestirLeJournal", # Investir
-    "LeRevenu_fr",       # Le Revenu
+    # InvestirLeJournal, LeRevenu_fr removed 2026-04-26 — 0% scrape success (page never loads)
 
     # === Crypto FR ===
     "PowerHasheur",      # Hasheur
@@ -90,15 +89,14 @@ FR_ACCOUNTS = [
     "Dark_Emi_",         # Dark Emi
     "JournalDuCoin",     # Journal Du Coin
     "powl_d",            # Powl
-    "owen_simonin",      # Owen Simonin (Hasheur partner)
+    # owen_simonin, Coin_Academy removed 2026-04-26 — 0% scrape success (page never loads)
     "Cryptoast",         # Cryptoast media
     "TheBigWhale_",      # The Big Whale media FR
     "CointribuneFR",     # Cointribune FR
-    "Coin_Academy",      # Coin Academy FR
 
     # === Tech / IA FR ===
     "cyrildiagne",       # Cyril Diagne — AI artist FR très suivi
-    "KorbenInfo",        # Korben — tech FR mainstream
+    # KorbenInfo removed 2026-04-26 — 0% scrape success (page never loads)
     "Frandroid",         # FrAndroid — tech FR
     "Numerama",          # Numerama
     "01net",             # 01net
