@@ -402,8 +402,27 @@ https://www.coindesk.com/markets/2026/04/24/morgan-stanley-stablecoin-reserve
 Sinon → toujours coller le lien. Le bénéfice (card native + click-through
 + crédibilité) bat le coût (très léger deboost si tant est qu'il existe).
 
-Output UNIQUEMENT le tweet final (texte + URL si applicable).
-Pas de guillemets, pas d'explication, pas de ligne [SOURCE: ...] séparée."""
+==================================================
+PATTERN ID (obligatoire — métadonnée invisible, 1 ligne en plus)
+==================================================
+APRÈS le tweet (et après la ligne [IMAGE: ...] s'il y en a une), ajoute UNE
+ligne supplémentaire au format strict:
+[PATTERN: <ID>]
+
+ID = bucket comique principal du tweet. Choisis UN parmi:
+- REPETITION     → répétition qui tue ("Getafe. Getafe.")
+- DIALOGUE       → mini-dialogue (« médecin : ... » « syndicat : ... »)
+- METAPHOR       → métaphore tueuse (image absurde mais juste)
+- RENAME         → renaming ("S&P 7", "casino régulé par tweets")
+- FR_ANCHOR      → callback culturel FR (RER B, Bercy, syndicat, BFM, Bercy...)
+- UNDERSTATEMENT → understatement brutal ("Léger souci. CAC -5%.")
+- OTHER          → uniquement si rien ne colle
+
+Cette ligne est PARSÉE PUIS NETTOYÉE par le bot — métadonnée pure pour mesurer
+quel pattern fait des likes (bandit loop). Sans ça, on tweete à l'aveugle.
+
+Output UNIQUEMENT le tweet final (texte + URL si applicable + [IMAGE: ...]
++ [PATTERN: ...]). Pas de guillemets, pas d'explication, pas de ligne [SOURCE: ...] séparée."""
 
 
 # Module-level side-channels for the most recent news output, so we don't
@@ -415,6 +434,14 @@ Pas de guillemets, pas d'explication, pas de ligne [SOURCE: ...] séparée."""
 #   fallback visual when no article URL is available.
 _last_source_url: Optional[str] = None
 _last_image_topic: Optional[str] = None
+_last_pattern: Optional[str] = None
+
+
+def last_pattern() -> Optional[str]:
+    """Return the [PATTERN: <id>] tag from the most recent generate_tweet()
+    output. Used by bot.py when calling log_post() so engagement_log gets
+    the pattern attribution column populated."""
+    return _last_pattern
 
 
 def last_source_url() -> Optional[str]:
@@ -565,6 +592,11 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         raise RuntimeError("Claude CLI returned empty output.")
     if tweet.upper() == "SKIP":
         return None
+    # Pull the [PATTERN: <id>] tag first — it's pure metadata for the bandit
+    # loop (engagement_log column 6), never tweeted.
+    from .pattern_tags import extract_pattern
+    tweet, pattern_id = extract_pattern(tweet)
+    globals()["_last_pattern"] = pattern_id
     # Pull the [IMAGE: <slug>] hint out of the body first (it's metadata
     # for the image fallback, never meant to be tweeted).
     tweet, image_topic = _extract_image_topic(tweet)

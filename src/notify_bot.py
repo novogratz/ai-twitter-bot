@@ -79,7 +79,23 @@ def run_replyback_cycle():
     influencers = _influencer_handles()
     count = 0
 
-    for reply_info in replies[:4]:  # Cap 4 reply-backs per cycle (super-user, was 3)
+    # Conversation depth: when our parent tweet went viral (>20 incoming
+    # replies), the algo is rewarding it — sustained back-and-forth pumps it
+    # further. Scale the cap with engagement up to a hard ceiling of 8 so a
+    # single thread can carry more depth without becoming spam. Below 20
+    # replies, keep the existing super-user cap of 4.
+    incoming = len(replies)
+    if incoming >= 50:
+        cycle_cap = 8
+    elif incoming >= 30:
+        cycle_cap = 6
+    elif incoming >= 20:
+        cycle_cap = 5
+    else:
+        cycle_cap = 4
+    log.info(f"[REPLYBACK] Parent has {incoming} replies — cap {cycle_cap} this cycle.")
+
+    for reply_info in replies[:cycle_cap]:
         user = reply_info.get("user", "")
         text = reply_info.get("text", "")
         reply_url = reply_info.get("url", "")
@@ -205,26 +221,35 @@ def run_boost_cycle():
 
 def safe_run_notify_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
+    from . import health
     try:
         run_notify_cycle()
+        health.record_success("notify")
     except Exception:
         log.info("[NOTIFY] Error during notify cycle:")
         traceback.print_exc()
+        health.record_failure("notify")
 
 
 def safe_run_replyback_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
+    from . import health
     try:
         run_replyback_cycle()
+        health.record_success("replyback")
     except Exception:
         log.info("[REPLYBACK] Error during replyback cycle:")
         traceback.print_exc()
+        health.record_failure("replyback")
 
 
 def safe_run_boost_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
+    from . import health
     try:
         run_boost_cycle()
+        health.record_success("boost")
     except Exception:
         log.info("[BOOST] Error during boost cycle:")
         traceback.print_exc()
+        health.record_failure("boost")

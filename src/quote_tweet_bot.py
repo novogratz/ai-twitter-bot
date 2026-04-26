@@ -15,7 +15,7 @@ import subprocess
 import time
 import traceback
 from datetime import datetime, date
-from .config import REPLY_MODEL, BLOCKLIST, _PROJECT_ROOT, BOT_HANDLE, MAX_QUOTES_PER_DAY
+from .config import QUOTE_MODEL, BLOCKLIST, _PROJECT_ROOT, BOT_HANDLE, MAX_QUOTES_PER_DAY
 from .logger import log
 from .twitter_client import scrape_x_search, quote_tweet
 from .humanizer import humanize
@@ -109,7 +109,7 @@ def _generate_quote(author: str, tweet_text: str):
     prompt = QUOTE_PROMPT.format(author=author, tweet_text=tweet_text[:200])
     try:
         result = subprocess.run(
-            ["claude", "-p", prompt, "--model", REPLY_MODEL],
+            ["claude", "-p", prompt, "--model", QUOTE_MODEL],
             capture_output=True, text=True, timeout=30,
         )
         if result.returncode != 0:
@@ -203,8 +203,11 @@ def run_quote_tweet_cycle():
 
 def safe_run_quote_tweet_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
+    from . import health
     try:
         run_quote_tweet_cycle()
+        health.record_success("quote")
     except Exception:
         log.info("[QUOTE] Error during quote tweet cycle:")
         traceback.print_exc()
+        health.record_failure("quote")

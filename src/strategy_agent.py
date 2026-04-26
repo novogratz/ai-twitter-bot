@@ -33,14 +33,29 @@ STRATEGY_LOG_FILE = os.path.join(_PROJECT_ROOT, "strategy_log.json")
 
 
 def _known_handles() -> set:
-    """All handles already monitored — used to dedup proposals."""
+    """All handles the strategy agent must NOT re-propose.
+
+    Includes:
+      - hand-curated lists (engage / reply / direct_reply FR + EN)
+      - BLOCKLIST
+      - already-added dynamic handles
+      - currently-pruned handles (evolution agent's de-thrash boundary)
+
+    The pruned set is the key part: without it, the strategy agent (every 3h)
+    would happily re-add a handle the evolution agent (every 6h) just pruned
+    after 5 dud cycles. That's a thrash. Treating prunes as "known" — for
+    their TTL window — closes the loop. They auto-expire (30d standard, 7d
+    fast-feedback) so a slow week doesn't blacklist a source forever.
+    """
     from .engage_bot import TARGET_ACCOUNTS as ENG
     from .reply_agent import TARGET_ACCOUNTS as REP
     from .direct_reply import FR_ACCOUNTS, EN_ACCOUNTS
+    from .evolution_store import get_pruned_handles
     handles = {h.lower() for h in list(ENG) + list(REP) + list(FR_ACCOUNTS) + list(EN_ACCOUNTS)}
     handles |= {h.lower() for h in BLOCKLIST}
     dyn = get_dynamic_accounts()
     handles |= {h.lower() for h in dyn["fr"] + dyn["en"]}
+    handles |= get_pruned_handles()  # don't re-add what evolution just pruned
     handles.discard("")
     return handles
 

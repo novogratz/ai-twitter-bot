@@ -584,8 +584,11 @@ def run_direct_reply_cycle():
 
 def safe_run_direct_reply_cycle():
     """Wrapper that catches errors."""
+    from . import health
     try:
         run_direct_reply_cycle()
+        health.record_success("direct_reply")
     except Exception:
         log.info("[DIRECT] Error during direct reply cycle:")
         traceback.print_exc()
+        health.record_failure("direct_reply")

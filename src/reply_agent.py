@@ -296,7 +296,12 @@ Renvoie 3 max. Si t'as au moins 1 reply vraiment savage → renvoie-la (+ les au
 
 Output UNIQUEMENT le JSON brut. Pas de markdown. Pas d'explication. JUSTE le tableau JSON.
 
-[{{"tweet_url": "https://x.com/user/status/123", "reply": "Réponse fun", "type": "reply"}}]"""
+CHAMP `pattern` (obligatoire) — étiquette ta reply avec UN ID parmi:
+REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER.
+C'est le bucket comique principal de ta reply (correspond aux 6 patterns ci-dessus).
+Sert à mesurer quel pattern fait des likes — bandit loop. Pas optionnel.
+
+[{{"tweet_url": "https://x.com/user/status/123", "reply": "Réponse fun", "type": "reply", "pattern": "FR_ANCHOR"}}]"""
 
 
 def generate_replies(recent_topics=None, already_replied=None):
@@ -399,8 +404,21 @@ def generate_replies(recent_topics=None, already_replied=None):
         except json.JSONDecodeError:
             pass
 
-    # Last resort: find all JSON objects individually with regex
+    # Last resort: find all JSON objects individually with regex.
+    # Two passes — with and without `pattern` field — so we still recover if
+    # the model dropped the bandit tag (it's important but not load-bearing).
     try:
+        items = re.findall(
+            r'\{\s*"tweet_url"\s*:\s*"([^"]+)"\s*,\s*"reply"\s*:\s*"([^"]+)"\s*,\s*"type"\s*:\s*"([^"]+)"\s*,\s*"pattern"\s*:\s*"([^"]+)"\s*\}',
+            output,
+        )
+        if items:
+            results = [
+                {"tweet_url": url, "reply": reply, "type": t, "pattern": p}
+                for url, reply, t, p in items
+            ]
+            log.info(f"[REPLY] Recovered {len(results)} replies via regex fallback (with pattern)")
+            return results
         items = re.findall(
             r'\{\s*"tweet_url"\s*:\s*"([^"]+)"\s*,\s*"reply"\s*:\s*"([^"]+)"\s*,\s*"type"\s*:\s*"([^"]+)"\s*\}',
             output,

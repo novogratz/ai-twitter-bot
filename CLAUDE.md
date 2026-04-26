@@ -154,7 +154,10 @@ These two rules are stamped into every generation prompt via `personality_store.
 - **`reflection_log.json`** - Audit trail of every reflection cycle.
 - **`src/dynamic_strategy.py`** - Append-only stores: `dynamic_queries.json` (live + hot tabs) and `dynamic_accounts.json` (FR + EN). Read by direct_reply at runtime.
 - **`src/quote_tweet_bot.py`** - Quote-tweet path. Cap 2/day. Picks the single most-liked viral FR tweet and amplifies it with a sharp observation.
-- **`src/early_bird_bot.py`** - Early-bird reply path. Every 5 min, scans 3 mega accounts for tweets < 12 min old. Cap 1 reply per cycle. Top-5-reply is 10-100x impressions vs. late-reply.
+- **`src/early_bird_bot.py`** - Early-bird reply path. ~7 min jittered, scans 3 of ~92 mega accounts (FR/QC/EN AI+crypto+bourse) for tweets < 12 min old. Cap 2 replies per cycle. Top-5-reply is 10-100x impressions vs. late-reply.
+- **`src/health.py`** - Safari watchdog. Each safe_run_*_cycle calls `record_success(label)` / `record_failure(label)`. After 3 consecutive failures (10-min cooldown), force-restart Safari via osascript. Audit trail in `autonomous_log.md`, state in `safari_health.json`.
+- **`src/pattern_tags.py`** - 6-pattern bandit attribution: REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER. Generation prompts emit `[PATTERN: <id>]` line, extracted server-side and logged into `engagement_log.csv` 6th column. Evolution agent computes per-pattern ROI from this.
+- **`src/roast_pgm_bot.py`** - 1-roast-per-tweet bot for @pgm_pm. URL dedup. **Circuit breaker**: 8 consecutive empty scrapes → 24h pause (auto-resets). Stops burning cycles when target suspends/blocks/private. State in `roast_state.json`.
 - **`src/history.py`** - Tweet history persistence.
 - **`main.py`** - CLI entry point. APScheduler. Signal handlers. Graceful shutdown.
 - **`discovered_accounts.json`** - Persisted autonomously-discovered handles.
@@ -180,7 +183,12 @@ These two rules are stamped into every generation prompt via `personality_store.
 
 Engage: ~45 min jittered (3-5 accounts/cycle, expanded list w/ FR media), quiet 1am-7am Paris. Notify: 45 min, quiet hours. Replyback: 60 min, cap 4, quiet hours. Reciprocity loop now FOLLOWS BACK engagers (not just likes). **Boost: every 3h (was 6h→4h→3h, validated lever, kept earning lift). Discover: every 3h (was 6h). Roast (@pgm_pm): ~20 min jittered, quiet hours. Performance: every 2h. Strategy agent: every 3h (was 6h — bot self-adjusts INPUT side multiple times/day). Evolution agent: every 6h (was 12h — auto-rewrites style guide more often). Quote-tweet bot: every 90 min (cap 12/day). Early-bird bot: ~7 min jittered (75-account roster), cap 2/cycle, quiet hours.**
 
-Quiet hours = 1am-7am Paris time = ~7pm-1am EST. ALL engagement cycles (replies, engage, direct-reply, early-bird, roast, notify, replyback) skip entirely. News posts continue at slowest cadence.
+**Graceful quiet-hour fade (FR + QC dual targeting)** — replaced the hard cliff with `should_skip_engagement()`:
+- 04-07 Paris: 95% skip (deepest quiet — 4 of 6 hours dark, light pulse OK)
+- 00-04 Paris (= QC primetime 18-22 ET): 25% skip (light-active, captures Quebec audience)
+- weekend Sat/Sun 8-11 Paris: 30% skip (slow weekend mornings)
+- else: 0% skip
+- Cadences also accelerated for 16h-active profile: post 45-80min peak, reply 12-20min, direct-reply 13-19min, engage 26-38min, roast 12-17min, early-bird 5-7min.
 
 ## Key design notes
 

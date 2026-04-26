@@ -135,8 +135,11 @@ def run_engage_cycle():
 
 def safe_run_engage_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
+    from . import health
     try:
         run_engage_cycle()
+        health.record_success("engage")
     except Exception:
         log.info("[ENGAGE] Error during engage cycle:")
         traceback.print_exc()
+        health.record_failure("engage")

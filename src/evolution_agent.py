@@ -54,10 +54,11 @@ Ta mission: analyser ce qui MARCHE et ce qui ne marche PAS, et proposer des chan
 PHASE 1 — OBSERVE (utilise tes tools Read):
 ============================================================
 
-1. Lis le log d'engagement (tweets envoyés + sources):
+1. Lis le log d'engagement (tweets envoyés + sources + pattern):
    {eng_path}
-   → CSV: timestamp, type, text, target_url, source.
+   → CSV: timestamp, type, text, target_url, source, pattern_id.
    → Regarde les 300 dernières lignes minimum. Compte par `source` combien on a posté sur chaque cible. Identifie les sources ZÉRO et les sources qui dominent.
+   → Compte AUSSI par `pattern_id` (REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER). Croise avec performance_log: quel pattern apparaît le plus souvent dans le TOP des likes? Quel pattern domine le BOTTOM? La directive principale doit refléter ce signal.
 
 2. Lis les métriques de performance scrapées (likes/views des nos tweets):
    {perf_path}
@@ -81,6 +82,7 @@ A. PATTERNS DE CONTENU — Pour les tweets du TOP, identifie:
    - Format (setup→punch, definition absurde, mini-dialogue, callback FR, métaphore, etc.)?
    - Sujet (IA / crypto / bourse / mix)?
    - Ton (deadpan, savage, philosophique, observation)?
+   - PATTERN_ID dominant: quel(s) pattern(s) reviennent dans le TOP? Si un pattern domine clairement, l'une de tes directives doit dire "fais plus de <pattern>". Si un pattern dort dans le bottom, dis "moins de <pattern>".
 
 B. PATTERNS À ÉVITER — Pour les tweets du BOTTOM, identifie:
    - Quels patterns reviennent? (Trop long? Pas de hook? Trop générique? Trop "smart sans chute"?)

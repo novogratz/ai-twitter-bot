@@ -64,6 +64,10 @@ EARLY_BIRD_ACCOUNTS = [
     "unusual_whales", "chamath", "jimcramer",
     # === Tech media EN ===
     "TechCrunch", "TheVerge", "WIRED",
+    # === FR/QC additions 2026-04-26 — big AI/crypto/bourse voices ===
+    "Yoshua_Bengio", "Montreal_AI", "defendintelligence", "ActuIAFr",
+    "Tradosaure", "InvestQuebec", "FI_Quebec", "investirfr", "cryptoqc",
+    "lesaffaires", "BourseFrance",
 ]
 
 # A tweet is "early-bird eligible" if it's at most this many minutes old.
@@ -159,8 +163,11 @@ def run_early_bird_cycle():
 
 def safe_run_early_bird_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
+    from . import health
     try:
         run_early_bird_cycle()
+        health.record_success("early_bird")
     except Exception:
         log.info("[EARLYBIRD] Error during early-bird cycle:")
         traceback.print_exc()
+        health.record_failure("early_bird")

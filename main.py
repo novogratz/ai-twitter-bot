@@ -32,71 +32,123 @@ from src.evolution_agent import safe_run_evolution_cycle
 from src.reflection_agent import safe_run_reflection_cycle
 from src.quote_tweet_bot import safe_run_quote_tweet_cycle
 from src.early_bird_bot import safe_run_early_bird_cycle
+from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 
 
-def quiet_hours_paris() -> bool:
-    """True between 1am-7am Paris. Real humans sleep — bots that don't are
-    obvious. Used to skip replies/engages/roasts/early-bird at night.
-    News posts still flow (info doesn't sleep) but at the slowest cadence."""
-    hour = datetime.now(ZoneInfo("Europe/Paris")).hour
-    return 1 <= hour < 7
+def _engagement_skip_rate() -> float:
+    """Probability of skipping an engagement cycle right now.
+
+    Replaces the old hard 1am-7am Paris cliff with a graceful fade tuned for
+    a DUAL FR + QUEBEC audience and a 16h-active human profile.
+
+    Paris hour | Montreal hour | What's happening                | Skip rate
+    -----------+---------------+----------------------------------+----------
+    07-23      | 01-17         | FR primary day                   | 0.0
+    23-00      | 17-18         | FR winding down, QC pre-evening  | 0.0
+    00-04      | 18-22         | QC PRIMETIME (FR night)          | 0.25
+                                  → light cadence so we still surf QC peak
+                                    without looking like a 24/7 bot
+    04-07      | 22-01         | both audiences off                | 0.95
+                                  → deep quiet (real humans sleep)
+
+    Weekend tweak: Sat/Sun morning Paris 8-11h Paris audience sleeps in,
+    posts get less reach — bump skip rate to 0.30 there. Pure Paris-side
+    optimization, doesn't hurt QC.
+
+    The probabilistic skip ALSO adds jitter — two consecutive cycles at the
+    same time-of-day get different decisions. That's exactly the
+    non-mechanical pattern we want (vs hard cliff = obvious bot signal).
+    """
+    now = datetime.now(ZoneInfo("Europe/Paris"))
+    hour = now.hour
+    is_weekend = now.weekday() in (5, 6)
+
+    if 4 <= hour < 7:
+        rate = 0.95
+    elif 0 <= hour < 4:
+        rate = 0.25  # QC primetime — light pass, not silence
+    else:
+        rate = 0.0
+
+    if is_weekend and 8 <= hour < 11:
+        rate = max(rate, 0.30)
+
+    return rate
+
+
+def should_skip_engagement() -> bool:
+    """Probabilistic engagement gate. Replaces quiet_hours_paris(). See
+    _engagement_skip_rate() for the curve and rationale."""
+    return random.random() < _engagement_skip_rate()
 
 
 def post_interval_minutes() -> int:
-    """Cluster posts during peak engagement windows. With cap = 10 news + 4
-    hot takes per day, intervals are slower than before — quality > volume."""
+    """Cluster posts during peak engagement windows. Caps at 24 news + 24
+    hot takes/day allow tighter cadences. Now tuned for FR + QC dual
+    audience: Paris night = QC primetime, so we keep posting overnight.
+
+    Hours are EST. Paris = EST + 6, Montreal = EST.
+    """
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 23 <= hour or hour < 8:
-        # Night (Paris asleep): slow cadence so we drift into the morning
-        # with fresh content without spamming overnight.
-        return random.randint(150, 240)
+    if 18 <= hour < 23:
+        # QC primetime EST evening (Paris 0-5am): keep cadence reasonable
+        # so we surf the QC peak without spamming.
+        return random.randint(70, 120)
+    elif 23 <= hour or hour < 4:
+        # Deep quiet for both audiences (Paris 5-10am still arriving):
+        # slow but not silent so we wake up with fresh content.
+        return random.randint(110, 180)
     elif 9 <= hour < 11:
-        # PEAK: Morning EST window
-        return random.randint(60, 100)
+        # PEAK: Morning EST window (Paris 15-17h afternoon active)
+        return random.randint(45, 80)
     elif 13 <= hour < 15:
-        # PEAK: Afternoon EST window
-        return random.randint(60, 100)
+        # PEAK: Afternoon EST window (Paris 19-21h evening prime)
+        return random.randint(45, 80)
+    elif 4 <= hour < 8:
+        # Paris morning ramp (10-14h Paris): pick up cadence
+        return random.randint(70, 110)
     elif 8 <= hour < 12:
-        # Near-peak morning
-        return random.randint(90, 150)
+        # Paris afternoon (14-18h)
+        return random.randint(60, 100)
     elif 12 <= hour < 18:
-        # Afternoon
-        return random.randint(90, 150)
+        # Paris evening (18-24h) + QC daytime
+        return random.randint(60, 100)
     else:
-        # Evening: winding down
-        return random.randint(140, 220)
+        return random.randint(80, 130)
 
 
 def reply_interval_minutes() -> int:
-    """Super-user cadence: ~22min jittered (was 30). With cap=3/cycle this
-    is ~120 replies/day max in awake hours — heavy but plausibly human
-    (Mathieu Louvet posts at this volume). Quiet hours still skip."""
-    return random.randint(18, 28)
+    """Tighter cadence for 16h-active human profile: ~16min jittered (was
+    22). With cap=7/cycle this lands ~150 replies/day max in awake hours —
+    heavy but in line with high-volume FR influencers (Mathieu Louvet,
+    Hasheur). Engagement gate (probabilistic skip) handles overnight."""
+    return random.randint(12, 20)
 
 
 def engage_interval_minutes() -> int:
-    """Follow + like cadence. ~40min jittered (was 45). Still well below
-    the bot threshold but more present in influencers' notifications."""
-    return random.randint(35, 50)
+    """Follow + like cadence. ~32min jittered (was 40). More frequent
+    presence in influencer notifications without crossing the bot
+    threshold. Engagement gate handles QC-primetime light pass."""
+    return random.randint(26, 38)
 
 
 def direct_reply_interval_minutes() -> int:
-    """~20min jittered (was 25). Tighter to land more replies on the FR
-    influencer profiles where we convert best. Per-cycle cap (in
-    direct_reply.py) prevents bursts."""
-    return random.randint(18, 26)
+    """~16min jittered (was 22). Tighter to land more replies on FR + QC
+    influencer profiles where we convert best. Per-cycle cap in
+    direct_reply.py prevents bursts."""
+    return random.randint(13, 19)
 
 
 def early_bird_interval_minutes() -> int:
-    """~7min jittered (was 8). Inside the 12-min freshness window so we
-    catch more viral tweets in their top-5-reply moment."""
-    return random.randint(6, 9)
+    """~6min jittered (was 7). Stay deep inside the 12-min freshness
+    window so we catch viral tweets in their top-5-reply moment more often."""
+    return random.randint(5, 7)
 
 
 def roast_interval_minutes() -> int:
-    """~18min jittered (was 20). @pgm_pm tweets every minute; URL dedup
+    """~14min jittered (was 18). @pgm_pm tweets every minute; URL dedup
     still hard-caps to 1 roast per tweet."""
-    return random.randint(15, 22)
+    return random.randint(12, 17)
 
 
 def _graceful_shutdown(signum, frame):
@@ -133,9 +185,13 @@ def main():
         )
 
     def _quiet_skip(label: str) -> bool:
-        """Skip-and-reschedule helper for engagement cycles during quiet hours."""
-        if quiet_hours_paris():
-            log.info(f"[{label}] Quiet hours (1am-7am Paris) — skipping cycle.")
+        """Skip-and-reschedule helper for engagement cycles. Uses the
+        probabilistic fade (16h-active human profile, FR + QC dual audience)
+        so individual decisions vary cycle-to-cycle instead of cliffing on
+        a hard hour boundary."""
+        if should_skip_engagement():
+            rate = _engagement_skip_rate()
+            log.info(f"[{label}] Engagement gate skip (skip_rate={rate:.2f} now) — passing this cycle.")
             return True
         return False
 

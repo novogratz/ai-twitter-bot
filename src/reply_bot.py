@@ -152,7 +152,7 @@ def run_reply_cycle():
             else:
                 reply_to_tweet(url, reply_text)
             posted_count += 1
-            log_reply(url, data["reply"], action_type)
+            log_reply(url, data["reply"], action_type, pattern_id=data.get("pattern", ""))
             # Wait between replies so browser can catch up
             if posted_count < len(replies):
                 log.info("[REPLY] Waiting 15 seconds before next action...")
@@ -167,8 +167,11 @@ def run_reply_cycle():
 
 def safe_run_reply_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
+    from . import health
     try:
         run_reply_cycle()
+        health.record_success("reply")
     except Exception:
         log.info("[REPLY] Error during reply cycle:")
         traceback.print_exc()
+        health.record_failure("reply")

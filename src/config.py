@@ -39,6 +39,11 @@ DISCOVERED_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "discovered_accounts.json
 NEWS_MODEL = os.environ.get("NEWS_MODEL", "claude-opus-4-6")
 REPLY_MODEL = os.environ.get("REPLY_MODEL", "claude-sonnet-4-6")
 HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", "claude-sonnet-4-6")
+# Roast + quote-tweet meme-gen don't need Sonnet — they're one-liners off a
+# fixed pattern. Haiku is plenty and frees Sonnet/Opus budget for the
+# news/reply/hotake paths where the model actually matters.
+ROAST_MODEL = os.environ.get("ROAST_MODEL", "claude-haiku-4-5-20251001")
+QUOTE_MODEL = os.environ.get("QUOTE_MODEL", "claude-haiku-4-5-20251001")
 
 # Retry settings
 MAX_RETRIES = 3

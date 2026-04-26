@@ -119,7 +119,12 @@ def run_bot_cycle():
                     log.info(f"[HOTAKE] Fallback quote-card: {img_path}")
             post_tweet(tweet, image_path=img_path)
             save_tweet(tweet)
-            log_hotake(tweet)
+            try:
+                from .hotake_agent import last_pattern as _last_hotake_pattern
+                _pattern = _last_hotake_pattern() or ""
+            except Exception:
+                _pattern = ""
+            log_hotake(tweet, pattern_id=_pattern)
             if img_path:
                 try:
                     os.remove(img_path)
@@ -141,6 +146,13 @@ def run_bot_cycle():
         log.info("Nothing to post - skipping this cycle.")
         return
 
+    # Pull pattern_id from the news agent — same side-channel as URL/image.
+    try:
+        from .agent import last_pattern as _last_news_pattern
+        _news_pattern = _last_news_pattern() or ""
+    except Exception:
+        _news_pattern = ""
+
     if THREAD_SEPARATOR in tweet:
         parts = [p.strip() for p in tweet.split(THREAD_SEPARATOR) if p.strip()]
         parts = [humanize(p) for p in parts]
@@ -149,7 +161,7 @@ def run_bot_cycle():
             log.info(f"  [{i}] ({len(part)} chars): {part[:80]}...")
         post_thread(parts)
         save_tweet(tweet)
-        log_post(tweet)
+        log_post(tweet, pattern_id=_news_pattern)
     else:
         tweet = humanize(tweet)
         log.info(f"Tweet ({len(tweet)} chars): {tweet[:100]}...")
@@ -188,7 +200,7 @@ def run_bot_cycle():
             log.info(f"[NEWS] Image fallback failed (text-only): {e}")
         post_tweet(tweet, image_path=img_path)
         save_tweet(tweet)
-        log_post(tweet)
+        log_post(tweet, pattern_id=_news_pattern)
         if img_path:
             try:
                 os.remove(img_path)
@@ -197,8 +209,13 @@ def run_bot_cycle():
 
 
 def safe_run_bot_cycle():
-    """Wrapper that catches errors so the scheduler keeps running."""
+    """Wrapper that catches errors so the scheduler keeps running.
+    Reports outcome to health watchdog so 3 consecutive Safari-touching
+    failures across any bots trigger a Safari restart."""
+    from . import health
     try:
         run_bot_cycle()
+        health.record_success("post")
     except Exception:
         log.error(f"Error during bot cycle: {traceback.format_exc()}")
+        health.record_failure("post")

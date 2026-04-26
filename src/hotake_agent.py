@@ -24,12 +24,20 @@ _extract_recent_topics = extract_recent_topics
 # (a Wikipedia slug like "Elon_Musk" or "Bitcoin"). bot.py reads this
 # right after generate_hotake() to fetch the wiki og:image and attach it.
 _last_image_topic: Optional[str] = None
+_last_pattern: Optional[str] = None
 
 
 def last_image_topic() -> Optional[str]:
     """Return the [IMAGE: slug] topic from the most recent generate_hotake()
     call, or None if the model emitted SKIP or omitted the line."""
     return _last_image_topic
+
+
+def last_pattern() -> Optional[str]:
+    """Return the [PATTERN: id] tag from the most recent generate_hotake()
+    output. Used by bot.py to populate engagement_log's pattern_id column
+    (drives the per-pattern ROI signal the evolution agent learns from)."""
+    return _last_pattern
 
 
 def _extract_image_topic(text: str):
@@ -197,7 +205,25 @@ Exemples complets:
 → écris [IMAGE: SKIP] et le post part text-only. Mieux text-only qu'une image
 qui n'a rien à voir avec le punchline.
 
-Output UNIQUEMENT le tweet + la ligne IMAGE. Rien d'autre.
+==================================================
+PATTERN ID (obligatoire — métadonnée invisible)
+==================================================
+APRÈS la ligne [IMAGE: ...], ajoute UNE ligne de plus au format strict:
+[PATTERN: <ID>]
+
+ID = bucket comique principal du hot take. Choisis UN parmi:
+- REPETITION     → répétition qui tue ("Getafe. Getafe.")
+- DIALOGUE       → mini-dialogue (« médecin : ... » « syndicat : ... »)
+- METAPHOR       → métaphore tueuse (image absurde mais juste)
+- RENAME         → renaming ("S&P 7", "casino régulé par tweets")
+- FR_ANCHOR      → callback culturel FR (RER B, Bercy, syndicat, BFM, Macron...)
+- UNDERSTATEMENT → understatement brutal ("Léger souci. CAC -5%.")
+- OTHER          → seulement si rien ne colle vraiment
+
+Cette ligne est PARSÉE PUIS NETTOYÉE par le bot — métadonnée pure pour mesurer
+quel pattern fait des likes (bandit loop). Sans ça, on tweete à l'aveugle.
+
+Output UNIQUEMENT le tweet + la ligne IMAGE + la ligne PATTERN. Rien d'autre.
 
 {dedup_section}
 
@@ -288,6 +314,12 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
 
     if tweet.startswith('"') and tweet.endswith('"'):
         tweet = tweet[1:-1]
+
+    # Strip the [PATTERN: id] line first — it's pure attribution metadata
+    # for the bandit loop, never tweeted.
+    from .pattern_tags import extract_pattern
+    tweet, pattern_id = extract_pattern(tweet)
+    globals()["_last_pattern"] = pattern_id
 
     # Strip the [IMAGE: slug] line and stash the slug for bot.py to pick up.
     tweet, slug = _extract_image_topic(tweet)

@@ -11,8 +11,9 @@ import random
 import subprocess
 import time
 import traceback
+from datetime import datetime, timedelta
 from typing import Optional
-from .config import REPLIED_FILE, REPLY_MODEL
+from .config import REPLIED_FILE, ROAST_MODEL, _PROJECT_ROOT
 from .logger import log
 from .twitter_client import scrape_profile_tweets, reply_to_tweet
 
@@ -21,6 +22,70 @@ TARGET_HANDLE = "pgm_pm"
 # flag us as a burst-spam bot. ~3 roasts every 10 min = ~18/h ceiling, well
 # under the spam threshold for replies to a single account.
 MAX_PER_CYCLE = 3
+
+# Circuit-breaker state. If pgm_pm blocks us / suspends / goes private, the
+# scrape returns 0 articles forever. Track consecutive empty scrapes; after
+# CB_THRESHOLD trip a 24h pause so we stop burning ~72 cycles/day on a dead
+# target. The breaker self-resets after the cooldown so an un-block / un-suspend
+# is detected within a day.
+ROAST_STATE_FILE = os.path.join(_PROJECT_ROOT, "roast_state.json")
+CB_THRESHOLD = 8
+CB_COOLDOWN_HOURS = 24
+
+
+def _load_state() -> dict:
+    if os.path.exists(ROAST_STATE_FILE):
+        try:
+            with open(ROAST_STATE_FILE, "r") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError):
+            pass
+    return {"empty_streak": 0, "paused_until": None}
+
+
+def _save_state(state: dict):
+    try:
+        with open(ROAST_STATE_FILE, "w") as f:
+            json.dump(state, f)
+    except IOError:
+        pass
+
+
+def _circuit_open() -> bool:
+    """True if breaker is currently tripped (we should skip the cycle)."""
+    state = _load_state()
+    paused_until = state.get("paused_until")
+    if not paused_until:
+        return False
+    try:
+        until = datetime.fromisoformat(paused_until)
+    except ValueError:
+        return False
+    if datetime.now() < until:
+        return True
+    # Cooldown expired — reset and try again.
+    _save_state({"empty_streak": 0, "paused_until": None})
+    return False
+
+
+def _record_empty_scrape():
+    state = _load_state()
+    state["empty_streak"] = state.get("empty_streak", 0) + 1
+    if state["empty_streak"] >= CB_THRESHOLD:
+        until = datetime.now() + timedelta(hours=CB_COOLDOWN_HOURS)
+        state["paused_until"] = until.isoformat()
+        log.info(
+            f"[ROAST] Circuit breaker TRIPPED: {state['empty_streak']} consecutive empty "
+            f"scrapes of @{TARGET_HANDLE}. Paused until {until.isoformat()} "
+            f"(account likely suspended/blocked us/private)."
+        )
+    _save_state(state)
+
+
+def _record_scrape_success():
+    state = _load_state()
+    if state.get("empty_streak") or state.get("paused_until"):
+        _save_state({"empty_streak": 0, "paused_until": None})
 
 
 ROAST_PROMPT = """Tu es @kzer_ai. Le compte @pgm_pm (La Pique) gère un bot qui spam des
@@ -71,7 +136,7 @@ def _generate_roast(tweet_text: str) -> Optional[str]:
     prompt = ROAST_PROMPT.format(tweet=safe)
     try:
         result = subprocess.run(
-            ["claude", "-p", prompt, "--model", REPLY_MODEL],
+            ["claude", "-p", prompt, "--model", ROAST_MODEL],
             capture_output=True, text=True, timeout=120,
         )
         if result.returncode != 0:
@@ -88,16 +153,24 @@ def _generate_roast(tweet_text: str) -> Optional[str]:
 
 def run_roast_pgm_cycle():
     """Visit @pgm_pm, roast up to MAX_PER_CYCLE new tweets. Dedup by URL."""
+    if _circuit_open():
+        log.info(f"[ROAST] Circuit breaker open — @{TARGET_HANDLE} unreachable. Skipping cycle.")
+        return
+
     log.info(f"[ROAST] Visiting @{TARGET_HANDLE}...")
     try:
         tweets = scrape_profile_tweets(TARGET_HANDLE, max_tweets=8) or []
     except Exception as e:
         log.info(f"[ROAST] Scrape failed: {e}")
+        _record_empty_scrape()
         return
 
     if not tweets:
         log.info("[ROAST] No tweets scraped.")
+        _record_empty_scrape()
         return
+
+    _record_scrape_success()
 
     replied = _load_replied()
     posted = 0
@@ -141,8 +214,11 @@ def run_roast_pgm_cycle():
 
 
 def safe_run_roast_pgm_cycle():
+    from . import health
     try:
         run_roast_pgm_cycle()
+        health.record_success("roast")
     except Exception:
         log.info("[ROAST] Error during roast cycle:")
         traceback.print_exc()
+        health.record_failure("roast")
