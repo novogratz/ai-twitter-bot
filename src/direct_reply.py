@@ -498,6 +498,8 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
                 r"cac|cac40|s&p|nasdaq|dow|dax|nikkei|"
                 r"fed|bce|taux|powell|lagarde|"
                 r"obligations?|rendement|dividendes?|ipo|valuation|valo|"
+                r"per|p/e|pe\s*ratio|peg|ebitda|fcf|roe|roic|"
+                r"livret\s*a|livret|assurance[\s-]vie|"
                 r"levée|fund|funding|vc|venture|startups?|scale-?up|"
                 r"banques?|fintech|néobanques?|neobanques?|revolut|boursorama|"
                 r"immo|immobilier|logement|locatif|real\s*estate|rentab\w*|"
