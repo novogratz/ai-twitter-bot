@@ -1,4 +1,5 @@
 """Direct reply: visits influencer profiles, scrapes tweets, generates replies, posts them."""
+import os
 import re
 import subprocess
 import random
@@ -415,11 +416,27 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         if age > 10080:
             continue
 
-        # Skip dead tweets (no engagement = no visibility for our reply)
+        # Engagement floor — user directive 2026-04-26 PM: "you reply to
+        # stupid things, need at least a few likes". Min likes default 5,
+        # env-tunable via REPLY_MIN_LIKES. Replies on tweets that nobody
+        # has engaged with go nowhere — wastes a Claude call AND looks
+        # spammy in the author's notifications. Note: this gate is for
+        # direct_reply ONLY — early_bird intentionally targets fresh
+        # tweets (<12 min, often 0 likes) for the top-5-reply boost.
         likes = int(tweet.get("likes") or 0)
         replies = int(tweet.get("replies") or 0)
-        if likes == 0 and replies == 0:
-            log.info(f"[{source_name}] Dead tweet (0 likes, 0 replies) - skipping {url}")
+        min_likes = int(os.environ.get("REPLY_MIN_LIKES", "5"))
+        if likes < min_likes:
+            log.info(f"[{source_name}] Low-engagement tweet ({likes}<{min_likes} likes) - skipping {url}")
+            continue
+
+        # Content blocklist — phrases that pattern-match low-quality reply
+        # bait (rhetorical "Se poser la question…" musings, etc.). User-
+        # flagged 2026-04-26 PM. Substring + case-insensitive.
+        _CONTENT_BAN = ("se poser",)
+        text_lower = text.lower()
+        if any(phrase in text_lower for phrase in _CONTENT_BAN):
+            log.info(f"[{source_name}] Content-banned phrase — skipping @{author}: {text[:60]}")
             continue
 
         # Language gate — drop anything clearly not FR/EN before we burn
