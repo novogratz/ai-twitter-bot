@@ -476,28 +476,39 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         # already vetted; SEARCH is anchored to niche queries; FOLLOWING is
         # the only path that needs an inline scope filter.
         if source_name.startswith("FOLLOWING"):
-            _NICHE_KEYWORDS = (
+            # Word-boundary matching only — substring "ai" matches French
+            # plaisir/vrai/j'ai/vais and falsely passes off-niche tweets.
+            _NICHE_PATTERN = re.compile(
+                r"\b("
                 # AI
-                "ai", "i.a", "ia ", " ia,", " ia.", "ia,", "ia.", "agi", "llm", "gpt",
-                "claude", "openai", "anthropic", "mistral", "gemini", "grok", "xai",
-                "model", "modèle", "agent", "robot", "neural", "deepseek", "huggingface",
-                "machine learning", "ml ", "deep learning", "nvidia", "compute",
+                r"ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|"
+                r"gemini|grok|xai|deepseek|huggingface|nvidia|cuda|gpu|tpu|"
+                r"agent|agents|robot|robots|humanoide|humanoïde|llm|"
+                r"machine\s*learning|ml|deep\s*learning|neural|"
                 # Crypto
-                "crypto", "btc", "bitcoin", "eth", "ethereum", "sol", "solana",
-                "blockchain", "defi", "stablecoin", "token", "altcoin", "memecoin",
-                "wallet", "binance", "coinbase", "kraken", "satoshi", "halving",
+                r"crypto|btc|bitcoin|eth|ethereum|sol|solana|xrp|"
+                r"blockchain|defi|stablecoin|token|altcoin|memecoin|nft|"
+                r"wallet|binance|coinbase|kraken|satoshi|halving|"
+                r"web3|dao|staking|yield|dex|cex|"
                 # Investment / markets
-                "bourse", "action", "stock", "marché", "marche ", "trading", "trader",
-                "investiss", "portefeuille", "etf", "pea", "cto", "av ",
-                "cac", "s&p", "nasdaq", "dow ", "fed ", "bce", "taux",
-                "obligation", "rendement", "dividende", "ipo", "valuation", "valo",
-                "levée", "fund", "vc ", "venture", "startup", "scale-up",
-                "banque", "fintech", "néobanque", "neobanque", "revolut", "boursorama",
-                "immo", "real estate", "rentab", "inflation", "récession", "recession",
-                "earnings", "résultat", "deal", "acquisition", "merger",
+                r"bourse|action|actions|stock|stocks|marché|marchés|"
+                r"trading|trader|traders|invest|investir|investiss\w*|"
+                r"portefeuille|etf|pea|cto|"
+                r"cac|cac40|s&p|nasdaq|dow|dax|nikkei|"
+                r"fed|bce|taux|powell|lagarde|"
+                r"obligation|rendement|dividende|ipo|valuation|valo|"
+                r"levée|fund|funding|vc|venture|startup|startups|scale-?up|"
+                r"banque|banques|fintech|néobanque|neobanque|revolut|boursorama|"
+                r"immo|immobilier|real\s*estate|rentab\w*|"
+                r"inflation|récession|recession|"
+                r"earnings|résultat|résultats|deal|acquisition|merger|m&a|"
+                r"finance|financier|bourse|cotation|"
+                # Crypto/AI brands that don't match generic words
+                r"openai|anthropic|tesla|meta|microsoft|google|amazon"
+                r")\b",
+                re.IGNORECASE,
             )
-            text_lc = text.lower()
-            if not any(kw in text_lc for kw in _NICHE_KEYWORDS):
+            if not _NICHE_PATTERN.search(text):
                 log.info(f"[{source_name}] Off-niche topic — skipping @{author}: {text[:60]}")
                 continue
 
