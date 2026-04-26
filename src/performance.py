@@ -205,6 +205,15 @@ Look at what makes the top ones work: topic? format? tone? length? humor style?"
     log.info(f"[PERF] Updated learnings. Avg: {avg_likes:.0f} likes, {avg_views:.0f} views. "
              f"Top tweet: {top_5[0].get('likes', 0)} likes.")
 
+    # Fast-feedback pass: kill dead strategy-agent-added sources within 2h
+    # instead of waiting 12h for the evolution agent. Best-effort — never
+    # block the perf cycle.
+    try:
+        from .fast_feedback import scan_and_demote_dead_sources
+        scan_and_demote_dead_sources()
+    except Exception as e:
+        log.info(f"[PERF] Fast-feedback scan failed (non-fatal): {e}")
+
     return learnings
 
 

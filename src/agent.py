@@ -1,4 +1,5 @@
 """News agent: searches for breaking AI/Crypto/Bourse news and generates tweets in French."""
+import re
 import subprocess
 from datetime import datetime
 from typing import Optional
@@ -6,6 +7,21 @@ from .config import NEWS_MODEL
 from .logger import log
 from .history import get_recent_tweets
 from .performance import get_learnings_for_prompt
+
+
+_URL_RE = re.compile(r"https?://\S+")
+
+
+def _strip_urls(text: str) -> str:
+    """Drop URLs from final tweet text. X deboosts off-platform links and the
+    image card carries the brand — source can go in a self-reply later. Also
+    collapses the double-spaces and stray punctuation a removed URL leaves."""
+    cleaned = _URL_RE.sub("", text)
+    # Collapse runs of whitespace
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    # Trim hanging punctuation that introduced the URL ("voir: " → "voir")
+    cleaned = re.sub(r"\s*([:\-\(\[])\s*$", "", cleaned).strip()
+    return cleaned
 
 PROMPT_TEMPLATE = """Tu es @kzer_ai. Le compte IA/Crypto/Finance le plus tranchant de X.
 
@@ -160,6 +176,21 @@ LinkedIn, le tonton à Noël, le coach trading dans sa Tesla, Macron qui découv
 Une news bien sourcée + commentaire correct = échec. On vise le LOL, le screenshot,
 le "ah ouais bien vu" partagé en story.
 
+⚠️⚠️⚠️ HOOK DANS LES 6 PREMIERS MOTS — NON-NÉGOCIABLE ⚠️⚠️⚠️
+Sur X, le scroll s'arrête en 0.4s ou jamais. Les 6 premiers MOTS doivent
+soit choquer, soit promettre un punch. INTERDIT de commencer par:
+- "Aujourd'hui..." / "Cette semaine..." / "On apprend que..." / "Selon..."
+- Un nom de boîte sans verbe d'action ("OpenAI annonce...")
+- Une mise en contexte ("Dans un communiqué...")
+COMMENCE par:
+- Un chiffre choc: "100 millions de dollars partis dans..."
+- Un verbe brutal: "Coulé. ServiceNow vient de..."
+- Un renaming sec: "Le SaaS-debout est mort."
+- Une question piège: "Vous croyez encore au S&P? Regardez ça."
+- Un nom isolé en répétition: "Getafe. Getafe utilise l'IA pour..."
+Le HOOK est ton arrêt-de-scroll. Si la 1ère phrase pourrait être dans Le Monde,
+RÉÉCRIS.
+
 ==================================================
 LES 6 PATTERNS COMIQUES QUI MARCHENT (utilise-les)
 ==================================================
@@ -278,12 +309,16 @@ Une fois ces 4 checks faits → POSTE. Pas de 5ème relecture. La perfection tue
 OUTPUT
 ==================================================
 
-Écris en FRANÇAIS. Max 257 chars (Twitter raccourcit les URLs à 23 chars, total = 280).
+Écris en FRANÇAIS. Max 280 chars (zéro URL, on a tout l'espace).
 Commence toujours par une majuscule. Accents obligatoires.
 
+⚠️ ZÉRO URL DANS LE TWEET. Le tweet ressort en tant qu'image-card.
+Les liens externes font perdre de la portée sur X (algo qui pénalise off-platform).
+La source est dans ton WebSearch — tu n'as PAS besoin de la coller.
+Tu balances le scoop + la chute. Point.
+
 Inclus:
-- L'URL source (glisse-la naturellement)
-- 1-2 hashtags max, seulement si ça fit naturellement
+- 0 hashtag par défaut. 1 max, seulement si la pointe est dedans (ex: #SaaSpocalypse).
 - Pas de tirets longs (—)
 - 1-2 emojis MAX, et SEULEMENT s'ils ajoutent du PUNCH ou de l'émotion: 🔥 banger / 💀 carnage / 📉 crash / 📈 pump / 🤡 absurde / 🚨 breaking / ⚡ fast / 🇫🇷 spécifique FR. INTERDIT: emojis décoratifs (🚀✨💯🎯🙌👀💸 = bot energy). Le bon emoji = ponctuation visuelle, jamais du blabla. 0 emoji vaut mieux que 3 emojis cringe.
 - HOOK D'ENGAGEMENT: termine ~50% des posts par un truc qui DONNE ENVIE de commenter. Pas systématique sinon ça devient un script. Exemples:
@@ -355,4 +390,9 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         raise RuntimeError("Claude CLI returned empty output.")
     if tweet.upper() == "SKIP":
         return None
-    return tweet
+    # Defense-in-depth: strip any URL the model still glued in despite the
+    # explicit no-URL rule. X deboosts off-platform links.
+    cleaned = _strip_urls(tweet)
+    if cleaned != tweet:
+        log.info(f"[NEWS] Stripped URL(s) from output. Before/after lengths: {len(tweet)} → {len(cleaned)}")
+    return cleaned

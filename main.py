@@ -259,12 +259,12 @@ def main():
             id="replyback_job",
         )
 
-        # Boost bot - validated growth lever (200 views / 6 likes per cycle).
-        # Bumped from 8h -> 6h since we know it works.
-        log.info("Boost bot: retweeting own latest tweet every 6 hours.")
+        # Boost bot — validated growth lever (200 views / 6 likes per cycle).
+        # Bumped 6h → 4h: this is our cheapest, most-confirmed action.
+        log.info("Boost bot: retweeting own latest tweet every 4 hours.")
         scheduler.add_job(
             safe_run_boost_cycle,
-            trigger=IntervalTrigger(hours=6),
+            trigger=IntervalTrigger(hours=4),
             id="boost_job",
         )
 
@@ -336,13 +336,13 @@ def main():
         )
 
         # Quote-tweet bot — picks the most viral FR tweet in our niche and
-        # quote-tweets it with a sharp meme observation. Cap 5/day (was 2),
-        # cadence 2.5h (was 4h). Different distribution surface than replies
+        # quote-tweets it with a sharp meme observation. Cap 8/day (was 5),
+        # cadence 2h (was 2.5h). Different distribution surface than replies
         # — bumping it up is pure additive growth, not redundant volume.
-        log.info("Quote-tweet bot: amplifying viral FR tweets every 2.5 hours (cap 5/day).")
+        log.info("Quote-tweet bot: amplifying viral FR tweets every 2 hours (cap 8/day).")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=150),
+            trigger=IntervalTrigger(minutes=120),
             id="quote_tweet_job",
         )
 

@@ -66,13 +66,17 @@ def run_bot_cycle():
     can_hotake = hotake_count < MAX_HOTAKES_PER_DAY
     can_news = news_count < MAX_NEWS_PER_DAY
 
-    # News-first policy: the first 3 posts of the day MUST be news (avoids the
-    # "no news visible" problem when an early dice roll lands on a hot take).
-    # After that: ~10% hot take ratio. News dominates by a huge margin.
-    if can_news and news_count < 3:
+    # Mix: hot takes pull more engagement (memes screenshot, news doesn't), so
+    # we let them lead instead of forcing news-first. Roughly 50/50 with a
+    # slight news lean — the cap (5/day each) keeps both feeds quality-first.
+    # Old news-first policy was forcing low-engagement news posts at session
+    # start; killing it lets a banger meme open the day instead.
+    if not can_news:
+        do_hotake = can_hotake
+    elif not can_hotake:
         do_hotake = False
     else:
-        do_hotake = can_hotake and (not can_news or random.random() < 0.10)
+        do_hotake = random.random() < 0.45
 
     if do_hotake:
         log.info("Generating AI philosophy hot take...")
@@ -132,9 +136,25 @@ def run_bot_cycle():
     else:
         tweet = humanize(tweet)
         log.info(f"Tweet ({len(tweet)} chars): {tweet[:100]}...")
-        post_tweet(tweet)
+        # News tweets ship with a quote-card image — same playbook as hot takes.
+        # Image posts get more reach + the card carries the brand even when
+        # screenshotted off-platform. Best-effort: text-only fallback if PIL
+        # is missing or generation fails.
+        card_path = None
+        try:
+            card_path = make_quote_card(tweet)
+            if card_path:
+                log.info(f"[NEWS] Generated quote-card: {card_path}")
+        except Exception as e:
+            log.info(f"[NEWS] Card generation failed (posting text-only): {e}")
+        post_tweet(tweet, image_path=card_path)
         save_tweet(tweet)
         log_post(tweet)
+        if card_path:
+            try:
+                os.remove(card_path)
+            except OSError:
+                pass
 
 
 def safe_run_bot_cycle():

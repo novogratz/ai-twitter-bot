@@ -28,6 +28,11 @@ EVOLUTION_LOG_FILE = os.path.join(_PROJECT_ROOT, "evolution_log.json")
 PRUNE_TTL_DAYS = 30
 MAX_PRUNES_PER_CYCLE = 3   # safety cap so one bad run can't gut the roster
 MAX_REINFORCEMENTS_PER_CYCLE = 5
+# Fast-feedback path: when a recently-added source produces 0 engagement on
+# ≥3 attempts, demote it with a SHORT TTL (7d) so it can come back if the
+# situation changes. Distinct from the 30d evolution-agent prune.
+FAST_PRUNE_TTL_DAYS = 7
+MAX_FAST_PRUNES_PER_CYCLE = 5
 
 
 def _load_json(path: str, default):
@@ -102,6 +107,35 @@ def add_pruned_accounts(handles: list, reason: str = ""):
         data["entries"].append({
             "handle": h,
             "reason": reason[:200],
+            "added": _now_iso(),
+            "until": until,
+        })
+        existing.add(h)
+        added += 1
+    if added:
+        _save_json(PRUNED_FILE, data)
+    return added
+
+
+def fast_demote(handles: list, reason: str = "") -> int:
+    """Short-TTL prune for the fast-feedback path. Same store as the 30d prunes
+    but with a 7d expiry so a bad week doesn't blacklist a source forever.
+    Returns count of NEW demotions."""
+    if not handles:
+        return 0
+    data = _load_json(PRUNED_FILE, {"entries": []})
+    data.setdefault("entries", [])
+    existing = {e.get("handle", "").lower() for e in data["entries"]}
+
+    until = (datetime.now() + timedelta(days=FAST_PRUNE_TTL_DAYS)).isoformat()
+    added = 0
+    for h in handles[:MAX_FAST_PRUNES_PER_CYCLE]:
+        h = h.strip().lstrip("@").lower()
+        if not h or h in existing:
+            continue
+        data["entries"].append({
+            "handle": h,
+            "reason": f"[FAST] {reason}"[:200],
             "added": _now_iso(),
             "until": until,
         })
