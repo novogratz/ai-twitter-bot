@@ -12,7 +12,7 @@ from .twitter_client import post_tweet, post_thread
 from .history import save_tweet
 from .engagement_log import log_post, log_hotake
 from .humanizer import humanize
-from .image_gen import make_quote_card
+from .article_image import fetch_article_image
 
 THREAD_SEPARATOR = "---THREAD---"
 
@@ -91,23 +91,13 @@ def run_bot_cycle():
             _increment_counter("hotakes")
             tweet = humanize(tweet)
             log.info(f"[HOTAKE] ({len(tweet)} chars): {tweet[:100]}...")
-            # Hot takes get a quote-card image for screenshot-worthy feed presence.
-            card_path = None
-            try:
-                card_path = make_quote_card(tweet)
-                if card_path:
-                    log.info(f"[HOTAKE] Generated quote-card: {card_path}")
-            except Exception as e:
-                log.info(f"[HOTAKE] Card generation failed (posting text-only): {e}")
-            post_tweet(tweet, image_path=card_path)
+            # Hot takes ship text-only. A slide that retypes the same words is
+            # AI-content noise to the audience — worse than no image. If we
+            # ever want a visual for hot takes it has to be a real picture
+            # (meme, generated art), never a text-on-slide duplicate.
+            post_tweet(tweet)
             save_tweet(tweet)
             log_hotake(tweet)
-            # Best-effort cleanup of the temp image
-            if card_path:
-                try:
-                    os.remove(card_path)
-                except OSError:
-                    pass
             return
     else:
         log.info("Searching for AI news...")
@@ -136,27 +126,33 @@ def run_bot_cycle():
     else:
         tweet = humanize(tweet)
         log.info(f"Tweet ({len(tweet)} chars): {tweet[:100]}...")
-        # News tweets ship with a quote-card image — same playbook as hot takes.
-        # Image posts get more reach + the card carries the brand even when
-        # screenshotted off-platform. The card now also stamps "VIA <domain>"
-        # bottom-left when the agent supplied a source — visually anchors it
-        # as real news commentary (the user's "make it more visual" request).
-        # Best-effort: text-only fallback if PIL is missing or generation fails.
-        card_path = None
+        # News posts attach the article's actual og:image — the same preview
+        # picture you'd see if someone shared the link normally. This makes
+        # the post look like a real journalist sharing a story, not an AI
+        # bot retyping its own words on a slide. The article URL itself
+        # never goes in the tweet body (X deboosts off-platform links), but
+        # the preview image lives on our timeline as proof-of-source.
+        # Falls back to text-only on any fetch failure — never blocks the post.
+        img_path = None
         try:
-            from .agent import last_source_domain
-            src = last_source_domain()
-            card_path = make_quote_card(tweet, source=src)
-            if card_path:
-                log.info(f"[NEWS] Generated quote-card{' with source ' + src if src else ''}: {card_path}")
+            from .agent import last_source_url
+            src_url = last_source_url()
+            if src_url:
+                img_path = fetch_article_image(src_url)
+                if img_path:
+                    log.info(f"[NEWS] Article image attached: {img_path}")
+                else:
+                    log.info(f"[NEWS] No article image for {src_url[:80]} - posting text-only")
+            else:
+                log.info("[NEWS] No source URL provided - posting text-only")
         except Exception as e:
-            log.info(f"[NEWS] Card generation failed (posting text-only): {e}")
-        post_tweet(tweet, image_path=card_path)
+            log.info(f"[NEWS] Article image fetch failed (text-only): {e}")
+        post_tweet(tweet, image_path=img_path)
         save_tweet(tweet)
         log_post(tweet)
-        if card_path:
+        if img_path:
             try:
-                os.remove(card_path)
+                os.remove(img_path)
             except OSError:
                 pass
 
