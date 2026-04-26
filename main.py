@@ -30,6 +30,7 @@ from src.performance import evaluate_and_learn
 from src.strategy_agent import safe_run_strategy_cycle
 from src.evolution_agent import safe_run_evolution_cycle
 from src.reflection_agent import safe_run_reflection_cycle
+from src.daily_digest import safe_run_daily_digest
 from src.quote_tweet_bot import safe_run_quote_tweet_cycle
 from src.early_bird_bot import safe_run_early_bird_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
@@ -423,6 +424,17 @@ def main():
             safe_run_quote_tweet_cycle,
             trigger=IntervalTrigger(minutes=90),
             id="quote_tweet_job",
+        )
+
+        # Daily digest — append yesterday's rollup to daily_digest.md.
+        # Idempotent (won't double-write same day). Fires hourly so a missed
+        # cron after a restart still catches up; the dedup state guards it.
+        # Used for the 2-week post-mission review.
+        log.info("Daily digest: appending yesterday's rollup to daily_digest.md (hourly idempotent check).")
+        scheduler.add_job(
+            safe_run_daily_digest,
+            trigger=IntervalTrigger(hours=1),
+            id="daily_digest_job",
         )
 
     log.info("All systems go. Bot is running.")
