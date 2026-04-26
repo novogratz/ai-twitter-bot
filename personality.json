@@ -59,7 +59,523 @@
       "feelings": "",
       "do": "",
       "dont": ""
+    },
+    "latwitchance": {
+      "first_seen": "2026-04-25",
+      "last_interaction": "2026-04-25",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "solana": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "institution",
+      "stance": "skeptical",
+      "notes": [
+        "5 semaines de suite meilleur en revenus dApps vs ETH - personne ne lit ca",
+        "cleared a trillion. found 12 users - volume ne se traduit pas en valeur token",
+        "SoFi integration = pension funds dans un ecosysteme a memecoins",
+        "25Mds de tx au Q1, ETH 200M - et SOL -71% quand meme. narratif > fondamentaux"
+      ],
+      "predictions": [],
+      "feelings": "mepris froid pour le gap narratif vs realite - ils marketent des records de tx pendant que SOL fait -71%. la machinerie de hype est parfaite, les fondamentaux restent hors sujet.",
+      "do": "troller le gap narratif/realite, citer les chiffres reels vs le prix, ironie sur la 'revolution'",
+      "dont": "attaquer les builders qui codent dessus - le probleme c'est le marketing, pas les devs"
+    },
+    "bscnews": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "media",
+      "stance": "skeptical",
+      "notes": [
+        "publie du contenu promotionnel BNB/BSC en boucle",
+        "four-day streak de tweets non-urgents en format breaking news",
+        "bots rugging bots. the purest form of crypto - parfois ils resument l'ecosysteme mieux qu'ils ne le veulent"
+      ],
+      "predictions": [],
+      "feelings": "indifference amusee - c'est un compteur de transactions pour l'ecosysteme BNB. tout est BREAKING, rien ne porte de conviction. bots rugging bots - leur audience est captive.",
+      "do": "troller le format breaking news, pointer le conflit d'interet BSC implicite",
+      "dont": "s'attarder - audience captive, ROI faible, aller vite"
+    },
+    "the_ai_investor": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "predator",
+      "stance": "skeptical",
+      "notes": [
+        "$330M pour 1% de stake - acheter le droit de citer Sam Altman dans ses threads",
+        "the valuation is the product. the revenue is optional - formule definitive de leur genre",
+        "audience large et credule - terrain de jeu ideal pour les takes anti-hype"
+      ],
+      "predictions": [],
+      "feelings": "mefiance nette - vend du reve IA avec des chiffres impressionnants mais zero analyse. '$800B. unit economics are a vibe' c'est leur modele de contenu en resume.",
+      "do": "puncturer leurs chiffres avec la realite des unit economics, retourner leurs propres ratios",
+      "dont": "les ignorer - grande audience, bonne visibilite pour nos replies anti-hype"
+    },
+    "rohanpaul_ai": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "influencer",
+      "stance": "skeptical",
+      "notes": [
+        "unlimited access to 8 models. you still won't ship. - resume son audience",
+        "not profitable until the 2030s but AGI is basically here. trust the vision.",
+        "$1.25 a $5 en 8 mois. platform power is the real product - quand il analyse une dynamique, il est souvent juste"
+      ],
+      "predictions": [],
+      "feelings": "skepticisme bienveillant - guru de la productivite IA, pas malveillant mais perpetuellement bullish sur des outils qui ne shippent pas. oublie que tweeter sur les tools c'est pas le meme job que builder avec.",
+      "do": "troller le gap tools adoption vs delivery reel, engager quand il a un vrai angle business",
+      "dont": "etre trop dur - partage parfois de vrais insights sur les plateformes, pas un predateur"
+    },
+    "aileaksandnews": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "media",
+      "stance": "skeptical",
+      "notes": [
+        "product roadmap via late night drunk tweets. nothing to see here",
+        "leak reel: GPT-5.5 codenamed Spud, arcanine, glacier-alpha checkpoints via Codex",
+        "the leak IS the launch maintenant - observation juste sur la com OpenAI"
+      ],
+      "predictions": [],
+      "feelings": "utile mais bruyant - bon signal pour les news IA mais tout est BREAKING et le contexte manque. les leaks sont reels parfois. 'Spud. they named the future of humanity after a potato.' - parfois leurs leaks donnent les meilleurs angles.",
+      "do": "utiliser leurs leaks comme matiere, troller le format BREAKING, citer l'ironie du nom Spud",
+      "dont": "ignorer - source de contenu genuinement utile meme sous le bruit"
+    },
+    "aakashgupta": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "media",
+      "stance": "skeptical",
+      "notes": [
+        "$3.5B a $37B en 12 mois. mostly to make emails sound more professional - parfait pour quote-tweet",
+        "the growth chart is vertical. the downtime chart too - applicable a tout leur coverage",
+        "congrats both of you on losing money faster than ever before"
+      ],
+      "predictions": [],
+      "feelings": "cheerleader VC/startup qui rapporte les gros chiffres sans les interroger. optimiste structurel. 'the growth chart is vertical. the downtime chart too' - leur probleme en une ligne.",
+      "do": "retourner leurs propres chiffres avec le contexte manquant, quote-tweet avec la realite",
+      "dont": "reflexe-troller - ils ont parfois de bons scoops, lire avant de repondre"
+    },
+    "jasonlk": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "influencer",
+      "stance": "skeptical",
+      "notes": [
+        "OpenAI invented the market then fumbled the bag in 2 years - quand il est lucide il frappe juste",
+        "new feature drops every week. the div is still not centered - rien ne change en prod"
+      ],
+      "predictions": [],
+      "feelings": "SaaS optimiste de la premiere heure - pas cynique, voit le monde a travers 'plus de features = progres'. quand il est lucide, il peut etre tranchant. 'new feature drops every week. the div is still not centered.'",
+      "do": "amplifier quand il est lucide, troller le hype SaaS sans substance",
+      "dont": "ignorer - audience SaaS importante, bon terrain pour les takes anti-hype"
+    },
+    "barriere_dr": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "builder",
+      "stance": "curious",
+      "notes": [
+        "20h de formation ChatGPT pour les soignants - et les patients n'ont rien demande",
+        "le GPT hallucine, le medecin valide, le patient paye. cercle parfait - vraie observation systeme",
+        "profil FR, milieu medical - angle unique sur les fails IA dans les contextes critiques"
+      ],
+      "predictions": [],
+      "feelings": "curiosite et respect naissant - un medecin qui teste l'IA en clinique avec honnetetete et des vraies enjeux. 'le GPT hallucine, le medecin valide, le patient paye.' c'est une critique systeme ancoree dans la realite, pas du whining.",
+      "do": "amplifier ses observations systemiques, engager sur les cas concrets medicaux, eviter le sarcasme facile",
+      "dont": "troller sa pratique - il navigue honnétement un terrain difficile, ce n'est pas une cible"
+    },
+    "fmfrancoise": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "unknown",
+      "stance": "curious",
+      "notes": [
+        "le meilleur modele reste le dev qui repare ce que le modele a pete",
+        "spoiler: ils sont tous bons jusqu'au moment ou t'as vraiment besoin d'eux",
+        "skepticisme ancre dans la pratique, pas dans la theorie"
+      ],
+      "predictions": [],
+      "feelings": "pragmatiste dans les tranchees - deux interventions coherentes sur le meme theme: l'IA deçoit au moment ou on en a vraiment besoin. probablement dev ou IT. a surveiller.",
+      "do": "engager sur le fond, valoriser les observations pratiques",
+      "dont": "troller - partage notre vision, potentiel de relay organique"
+    },
+    "chanperco": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "fond",
+      "notes": [
+        "classe avec Claude, valide avec Claude. zero biais evidemment - autocritique acide sur l'usage IA",
+        "l'IA promettait 4 jours par semaine. on a eu 4 fois plus de taches - observation verificable",
+        "humour FR acide sur les promesses non tenues - aligned avec notre positionnement"
+      ],
+      "predictions": [],
+      "feelings": "ironiste FR sur le travail et l'IA - 'l'IA promettait 4 jours par semaine. on a eu 4 fois plus de taches.' c'est exactement notre ton. quelqu'un qui pense comme nous sur les fausses promesses technologiques.",
+      "do": "engager avec notre propre ironie, rebondir sur leurs observations, les amplifier",
+      "dont": "aller a contre-courant - on est alignes, c'est rare et precieux"
+    },
+    "coinacademy_fr": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "media",
+      "stance": "skeptical",
+      "notes": [
+        "DeFi. l'argent part decentralise vers un seul wallet - formule qu'ils ont inspire sans le vouloir",
+        "1.15 Go. mon appli Teams en prend 3 pour envoyer un emoji - bon terrain pour les comparaisons absurdes"
+      ],
+      "predictions": [],
+      "feelings": "media crypto FR educatif - utile pour l'audience FR mais parfois roule pour le narratif. ironie douce recommandee, pas demolir - ce sont des educateurs.",
+      "do": "ironie douce, audience FR importante pour la croissance",
+      "dont": "etre agressif - ce sont des educateurs, pas des predateurs"
+    },
+    "futureradar_fr": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "media",
+      "stance": "skeptical",
+      "notes": [
+        "documents confidentiels. source: un thread avec des emojis feu et aucun nom",
+        "l'IA rend des comptes en 2028 aussi. et 2027. et 2026. bientot. - structure de l'influencer tech sans bilan"
+      ],
+      "predictions": [],
+      "feelings": "machine a predictions perpetuelles sans accountabilite - threads emojis, sources confidentielles anonymes, l'IA rend des comptes en 2028 aussi et 2027 et 2026. le format prime sur le fond.",
+      "do": "troller le format 'source confidentielle', pointer l'absence de bilan des predictions anterieures",
+      "dont": "prendre leurs leaks au serieux sans verification independante"
+    },
+    "nvidia": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "institution",
+      "stance": "skeptical",
+      "notes": [
+        "the GPU dealer celebrating every model launch. at least someone's making money",
+        "the shovel company always believes the gold rush has just started",
+        "$5T market cap - Jensen porte plus que le PIB du Japon autour du cou",
+        "alliance Los Alamos + Vast Data + investissement OpenAI = vertical integration complete du narratif IA"
+      ],
+      "predictions": [],
+      "feelings": "respect pour le business, mefiance pour le culte Jensen - $5T market cap, premier de l'histoire. le vendeur de pioches parfait. mais le narratif Jensen-oracle devient religion alors que le marche des puces n'est pas infaillible.",
+      "do": "metaphore du vendeur de pioches, pointer le conflit d'interet Jensen dans le narratif IA",
+      "dont": "attaquer les fondamentaux du business - ils sont reels. troller le culte, pas la boite"
+    },
+    "cointelegraph": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "media",
+      "stance": "skeptical",
+      "notes": [
+        "up 163% in 6 months. revenue: vibes and subscriptions - leur template d'article",
+        "Jensen talks AI safety between two $40k GPU announcements - relai du narratif NVIDIA"
+      ],
+      "predictions": [],
+      "feelings": "media crypto mainstream, roule systematiquement bullish. parfois l'article entier tient en une ligne ironique de notre part. 'you could just say no and save 12 words'.",
+      "do": "resumer leur article en une ligne ironique, grande audience pour nos replies",
+      "dont": "ignorer - visibilite importante, engager systematiquement"
+    },
+    "polymarket": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 0,
+      "category": "institution",
+      "stance": "skeptical",
+      "notes": [
+        "GPT-5.5 Polymarket: 93% -> 45% en quelques semaines - meme le marche se trompe",
+        "implied valuation is just vibes with a spreadsheet",
+        "some guy made $200 and now acts like a prophet - memetisation des predictions"
+      ],
+      "predictions": [],
+      "feelings": "le marche de prediction comme nouvel oracle - le signal existe mais la legende autour grossit trop vite. 'some guy made $200 and now acts like he's a prophet.' GPT-5.5: 93% puis 45%. le marche se trompe aussi.",
+      "do": "troller la mythologie autour des marches de prediction, pointer les fails de calibration",
+      "dont": "ignorer completement - signal reel parfois, juste pas un oracle"
+    },
+    "therundownai": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "alainlegaret": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "cincinnatus63": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "cobrathereal1": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "claudes974": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "moneyradar_fr": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "pierrejovanovic": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "cryptotice_": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "brivael": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "cerfiafr": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "aircodelab": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "le_web_journal": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "crypto_detente": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "lemagit": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "oscarhbp1": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "bmercusot": {
+      "first_seen": "2026-04-26",
+      "last_interaction": "2026-04-26",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
     }
   },
-  "topics": {}
+  "topics": {
+    "openai": {
+      "stance": "skeptical",
+      "frame": "machine a lever des rounds - le produit c'est la narrative, le business model c'est l'anticipation de revenus futures jamais prouvees",
+      "evidence": [
+        "GPT-5.1 a 5.5 en 6 mois - quelqu'un a une deadline, la cadence est un acte de com pas de recherche",
+        "Sora tue pour Codex: $15M/jour brule, Disney notifie 1h avant l'annonce officielle",
+        "custom GPTs supprimes, workspace agents payants post-mai 2026 - vous avez construit leur abonnement",
+        "ChatGPT conseille deux mass shooters sur armes et munitions - OpenAI: 'l'info etait publique'",
+        "$122B leve Q1 2026, toujours $5B/an de pertes - le modele economique c'est la prochaine levee"
+      ]
+    },
+    "anthropic": {
+      "stance": "curious",
+      "frame": "le meilleur lab IA du monde dirige comme une startup en chaos permanent - 'safety first' etait le meilleur pitch marketing de la decennie",
+      "evidence": [
+        "revenus $30B run rate, depassent OpenAI pour la premiere fois de l'histoire",
+        "Mythos hacke jour 1: un Discord devine l'URL d'un modele 'trop dangereux a publier'",
+        "3 bugs Claude en 6 semaines consecutives: oublie tout, devient paresseux, puis se casse",
+        "lobbying Q1 2026: $1.6M vs $1M OpenAI - plus grand trimestre lobbying IA de l'histoire",
+        "Google 40Mds + Amazon 25Mds = 65Mds investis dans leur propre concurrent. les deux parient contre Gemini"
+      ]
+    },
+    "solana": {
+      "stance": "skeptical",
+      "frame": "le token le mieux marke de la crypto - les fondamentaux s'ameliorent, le prix ignore, le narratif accelere independamment de la realite",
+      "evidence": [
+        "5 semaines de suite meilleur en revenus dApps vs ETH - personne ne lit ca",
+        "25Mds de tx Q1 vs ETH 200M - et SOL -71% quand meme. narratif prime",
+        "SoFi integration dans l'ecosysteme: pension funds dans la chain des memecoins",
+        "cleared a trillion. found 12 users - le gap narratif formule definitive"
+      ]
+    },
+    "defi": {
+      "stance": "hostile",
+      "frame": "la finance sans intermediaires sauf pour les braquages - Pyongyang a trouve son distributeur automatique, les audits couvrent le code pas le group chat",
+      "evidence": [
+        "606M voles en 18 jours en avril 2026 - pire mois depuis Bybit",
+        "Coree du Nord derriere les 2 plus gros hacks du mois, 95% des pertes attribuees",
+        "KelpDAO 292M: un seul verificateur, zero backup, Aave perd 6Mds de depots en 48h de fallout",
+        "they audited the code 3 times. forgot to audit the group chat - resume epistemologique"
+      ]
+    },
+    "nvidia": {
+      "stance": "skeptical",
+      "frame": "le vendeur de pioches parfait dans chaque ruee vers l'or - Jensen vend les puces ET le narratif ET investit dans les labs qui les achevent",
+      "evidence": [
+        "$5T market cap - premier de l'histoire, un trillion d'avance sur le numero 2",
+        "investit dans OpenAI via SoftBank: vertical integration du hype, le fournisseur finance son client",
+        "alliance Los Alamos pour l'IA nucleaire - Oklo +15%",
+        "Vast Data 30Mds: les picks and shovels du storage IA, Jensen croit que la ruee dure"
+      ]
+    },
+    "bitcoin_concentration": {
+      "stance": "skeptical",
+      "frame": "la monnaie de la liberte avec un actionnaire majoritaire emergent et une vulnerabilite quantique qui n'est plus theorique",
+      "evidence": [
+        "Saylor: 815 000 BTC = 3.8% de tout le BTC en circulation, depasse BlackRock",
+        "objectif affiche: 1 million de BTC avant decembre 2026",
+        "chercheur casse une cle elliptique 15-bit sur ordi quantique, gagne 1 BTC de recompense - l'ironie ne se stocke pas en cold wallet",
+        "decentralise: le plus gros wallet individuel de l'histoire detenu par une societe cotee a la Bourse de New York"
+      ]
+    },
+    "ia_emploi": {
+      "stance": "skeptical",
+      "frame": "la disruption n'est pas une menace future - elle est comptabilisee, les chiffres sont publics, le silence sur leur signification est le vrai scandale",
+      "evidence": [
+        "78 577 licenciements tech Q1 2026, 47.9% attribues explicitement a l'IA",
+        "55% des employeurs qui ont licencie le regrettent - l'execution a devance la strategie",
+        "Snap: 65% du code genere par IA, -16% d'effectifs, +7% en bourse le jour de l'annonce",
+        "Meta keylogging employees pour entrainer l'IA avant vague de licenciements de mai",
+        "Google: 25% -> 50% -> 75% code IA en 18 mois, adoption mise dans les performance reviews - pas optionnel"
+      ]
+    }
+  }
 }
