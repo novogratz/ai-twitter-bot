@@ -467,6 +467,40 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             log.info(f"[{source_name}] Non-FR/EN tweet — skipping @{author}: {text[:60]}")
             continue
 
+        # Topic-scope gate for FOLLOWING feed only.
+        # User directive 2026-04-26 PM: "ON AI AND OR CRYPTO AND OR INVESTMENT.
+        # THATS YOUR JOB". The Following feed pulls a chronological dump of
+        # everyone we follow (including auto-followed reciprocity follows
+        # who post off-niche stuff: motos, gas prices, DJ sets). Random off-
+        # topic replies waste budget and drift the brand. PROFILE-FR is
+        # already vetted; SEARCH is anchored to niche queries; FOLLOWING is
+        # the only path that needs an inline scope filter.
+        if source_name.startswith("FOLLOWING"):
+            _NICHE_KEYWORDS = (
+                # AI
+                "ai", "i.a", "ia ", " ia,", " ia.", "ia,", "ia.", "agi", "llm", "gpt",
+                "claude", "openai", "anthropic", "mistral", "gemini", "grok", "xai",
+                "model", "modèle", "agent", "robot", "neural", "deepseek", "huggingface",
+                "machine learning", "ml ", "deep learning", "nvidia", "compute",
+                # Crypto
+                "crypto", "btc", "bitcoin", "eth", "ethereum", "sol", "solana",
+                "blockchain", "defi", "stablecoin", "token", "altcoin", "memecoin",
+                "wallet", "binance", "coinbase", "kraken", "satoshi", "halving",
+                # Investment / markets
+                "bourse", "action", "stock", "marché", "marche ", "trading", "trader",
+                "investiss", "portefeuille", "etf", "pea", "cto", "av ",
+                "cac", "s&p", "nasdaq", "dow ", "fed ", "bce", "taux",
+                "obligation", "rendement", "dividende", "ipo", "valuation", "valo",
+                "levée", "fund", "vc ", "venture", "startup", "scale-up",
+                "banque", "fintech", "néobanque", "neobanque", "revolut", "boursorama",
+                "immo", "real estate", "rentab", "inflation", "récession", "recession",
+                "earnings", "résultat", "deal", "acquisition", "merger",
+            )
+            text_lc = text.lower()
+            if not any(kw in text_lc for kw in _NICHE_KEYWORDS):
+                log.info(f"[{source_name}] Off-niche topic — skipping @{author}: {text[:60]}")
+                continue
+
         # Generate reply
         log.info(f"[{source_name}] Replying to @{author}: {text[:60]}...")
         reply = _generate_single_reply(author, text)
