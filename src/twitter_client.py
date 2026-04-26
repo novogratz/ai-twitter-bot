@@ -344,18 +344,41 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
     tmp.write(js_code)
     tmp.close()
 
+    # Activate Safari first. Without this, "current tab of front window" can
+    # block waiting on a different app being frontmost — that was causing the
+    # 15s timeouts to dominate the entire engagement loop.
     applescript = f'''
+    tell application "Safari" to activate
     set jsCode to (read POSIX file "{tmp.name}")
     tell application "Safari"
         set result to do JavaScript jsCode in current tab of front window
     end tell
     '''
 
-    try:
-        result = subprocess.run(
+    def _try_once(timeout_s: int):
+        return subprocess.run(
             ["osascript", "-e", applescript],
-            capture_output=True, text=True, timeout=15,
+            capture_output=True, text=True, timeout=timeout_s,
         )
+
+    raw = ""
+    result = None
+    try:
+        # First attempt: 30s. Safari can be slow on first JS injection after
+        # a fresh tab load (was 15s — too tight, dominant failure mode).
+        try:
+            result = _try_once(30)
+        except subprocess.TimeoutExpired:
+            # One retry: bring Safari to front explicitly, settle, try again.
+            log.info(f"[SCRAPE] First JS attempt timed out for {label}; retrying after activate.")
+            _run_applescript('tell application "Safari" to activate')
+            time.sleep(2)
+            try:
+                result = _try_once(30)
+            except subprocess.TimeoutExpired:
+                log.info(f"[SCRAPE] Both attempts timed out for {label}.")
+                return []
+
         os.unlink(tmp.name)
 
         raw = result.stdout.strip()
@@ -645,6 +668,7 @@ def scrape_own_tweet_and_replies():
         time.sleep(2)
 
         js_script = '''
+        tell application "Safari" to activate
         tell application "Safari"
             set result to do JavaScript "
                 (function() {
@@ -680,7 +704,7 @@ def scrape_own_tweet_and_replies():
         try:
             result = subprocess.run(
                 ["osascript", "-e", js_script],
-                capture_output=True, text=True, timeout=15,
+                capture_output=True, text=True, timeout=30,
             )
             if result.returncode == 0 and result.stdout.strip():
                 data = json.loads(result.stdout.strip())
