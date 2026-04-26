@@ -39,6 +39,25 @@ def _extract_handle(user_string: str) -> str:
     return user_string.strip().lower()
 
 
+def _is_blocklisted(user_string: str, handle: str) -> bool:
+    """Hardened blocklist check.
+
+    Bug 2026-04-26: scraper sometimes returned a display name ("la pique")
+    instead of the @handle ("pgm_pm"), so `handle in BLOCKLIST` missed and
+    we replied to + followed back @pgm_pm — the exact bot-vs-bot loop the
+    blocklist exists to prevent. Now we also scan the raw user string for
+    any blocklisted token, so display-name variants are caught even if
+    only the @handle is in BLOCKLIST.
+    """
+    if handle and handle in BLOCKLIST:
+        return True
+    user_lower = (user_string or "").lower()
+    for blocked in BLOCKLIST:
+        if blocked and blocked in user_lower:
+            return True
+    return False
+
+
 def _load_replied_back() -> set:
     if os.path.exists(REPLIED_BACK_FILE):
         try:
@@ -101,9 +120,11 @@ def run_replyback_cycle():
         reply_url = reply_info.get("url", "")
         handle = _extract_handle(user)
 
-        # Skip blocklisted handles (e.g., @pgm_pm)
-        if handle and handle in BLOCKLIST:
-            log.info(f"[REPLYBACK] Blocklisted @{handle} - skipping.")
+        # Skip blocklisted handles (e.g., @pgm_pm). Hardened to catch
+        # display-name variants ("la pique") that the scraper sometimes
+        # hands us instead of the @handle.
+        if _is_blocklisted(user, handle):
+            log.info(f"[REPLYBACK] Blocklisted user={user!r} handle={handle!r} - skipping.")
             continue
 
         # Skip our own replies (never reply to ourselves)
@@ -178,11 +199,13 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 3):
     for r in candidates:
         if visited >= max_visits:
             break
-        handle = _extract_handle(r.get("user", ""))
+        user_str = r.get("user", "")
+        handle = _extract_handle(user_str)
         if not handle or handle in seen_handles:
             continue
         seen_handles.add(handle)
-        if handle in BLOCKLIST or handle == _OWN_HANDLE:
+        # Hardened blocklist: catches display-name variants from scraper.
+        if _is_blocklisted(user_str, handle) or handle == _OWN_HANDLE:
             continue
         if handle in influencers:
             continue  # influencers already notice us via the in-thread reply

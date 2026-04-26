@@ -29,8 +29,18 @@ MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "12"))
 # sources (Frandroid/Boursorama/CoinTribuneFR) to make every cycle land more.
 MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "7"))
 
-# Accounts we never reply to (lowercase handles, no @)
-BLOCKLIST = {"pgm_pm"}
+# Accounts we never reply to. Includes both @handles AND display-name
+# variants so the blocklist still catches us when the scraper returns the
+# display name (e.g. "la pique" / "La Pique") instead of the @handle.
+# All lowercased, no @. The scraper's user-name field can be either form
+# depending on which surface we're on (replies feed vs. profile vs. search).
+BLOCKLIST = {
+    "pgm_pm",
+    "la pique",
+    "lapique",
+    "la_pique",
+    "la-pique",
+}
 
 # Discovered accounts file (autonomous influencer discovery)
 DISCOVERED_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "discovered_accounts.json")

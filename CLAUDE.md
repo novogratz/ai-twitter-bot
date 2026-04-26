@@ -79,7 +79,7 @@ These two rules are stamped into every generation prompt via `personality_store.
 - **Humanizer on everything**: Every post goes through a human-pass.
 - **Self-improving**: Scrapes own metrics every 2h and adapts prompts.
 - **Autonomous discovery**: Every 6h, finds new crypto/AI/bourse influencers and adds them to monitoring. Approved FR ai/crypto/bourse accounts get auto-followed.
-- **Blocklist**: `BLOCKLIST` in `src/config.py` — `@pgm_pm` (La Pique). Skipped in reply/replyback paths so we never get sucked into a bot-vs-bot loop.
+- **Blocklist**: `BLOCKLIST` in `src/config.py` — `@pgm_pm` (La Pique) + display-name variants ("la pique", "lapique", etc.). Skipped in reply/replyback paths so we never get sucked into a bot-vs-bot loop. **Bug 2026-04-26 PM**: scraper handed back display name "la pique" instead of @handle, blocklist missed → bot replied + followed back. Fix: BLOCKLIST now contains both forms, and `notify_bot._is_blocklisted()` scans the raw user string for ANY blocklisted token.
 - **Roast bot**: Dedicated path for `@pgm_pm` — visits his profile every 10 min and posts ONE sarcastic reply per ORIGINAL tweet (URL dedup hard-caps to 1 per tweet). Roasts the *phenomenon* (auto-replies, scripted prises), never the person.
 - **Anti-spam**: Slower cadences + jitter + quiet hours (1am-7am Paris). Engagement cycles (replies, engage, direct-reply, early-bird, roast, notify, replyback) are SKIPPED during quiet hours so the account looks human. News still flows but at slowest cadence (info doesn't sleep). Target: ~80-100 actions/day total (was 250+).
 - **Impact filter**: News + reply prompts force the agent to SCORE 3-5 candidates 1-10 (surprise + angle + stakes + division) and SKIP unless best ≥ 7. Mid > silence on the timeline.
