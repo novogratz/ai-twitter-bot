@@ -1,4 +1,65 @@
 {
-  "accounts": {},
+  "accounts": {
+    "yejigumi": {
+      "first_seen": "2026-04-25",
+      "last_interaction": "2026-04-25",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "shzukuuu": {
+      "first_seen": "2026-04-25",
+      "last_interaction": "2026-04-25",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "yvesgolden3": {
+      "first_seen": "2026-04-25",
+      "last_interaction": "2026-04-25",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "lafotaki": {
+      "first_seen": "2026-04-25",
+      "last_interaction": "2026-04-25",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "flasheurinvest": {
+      "first_seen": "2026-04-25",
+      "last_interaction": "2026-04-25",
+      "interaction_count": 2,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    }
+  },
   "topics": {}
 }
