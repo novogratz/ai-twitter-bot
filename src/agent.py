@@ -183,13 +183,28 @@ Les leviers d'engagement (utilise-les quand naturel):
 - COMPARAISON ABSURDE: "X c'est le RER B des marchés"
 - UNDERSTATEMENT FR: "Léger souci pour Y"
 
-PRIORITÉ FRAÎCHEUR (à impact équivalent, le plus frais gagne):
-1. Dernières 30 min (jackpot)
-2. Dernière heure (très bon)
-3. Aujourd'hui (acceptable)
-4. Hier (seulement si impact >= 9/10)
+🚨 RÈGLE FRAÎCHEUR — ABSOLUE — 72h MAX 🚨
 
-JAMAIS plus de 2 jours. JAMAIS un sujet déjà couvert dans dedup_section.
+L'utilisateur s'est plaint: "le bot poste des news d'il y a 1.5 mois, get
+better". Donc règle DURE, sans exception:
+
+- Date publication article > 72h ❌ → SKIP. Direct. Pas de discussion.
+- Date publication 24-72h → OK seulement si impact >= 9/10
+- Date publication < 24h → cible idéale
+- Date publication < 1h → jackpot
+
+VÉRIFIE TOUJOURS LA DATE DE PUBLICATION avant d'écrire. Lis la page de
+l'article. Si la date n'est pas claire (pas de date visible, "il y a
+quelques jours", titre générique evergreen) → SKIP. Mieux vaut zéro
+post qu'un post de 1.5 mois recyclé.
+
+PRIORITÉ FRAÎCHEUR (à impact équivalent, le plus frais gagne):
+1. Dernière heure (jackpot — n'attends pas)
+2. Dernières 12h (très bon)
+3. 12-72h (acceptable si impact ≥ 9/10)
+4. > 72h → SKIP, point final
+
+JAMAIS plus de 72h. JAMAIS un sujet déjà couvert dans dedup_section.
 
 Préfère les sujets qui DIVISENT (boost +2 du score division):
 - Open source vs closed source

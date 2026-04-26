@@ -502,18 +502,47 @@ def run_direct_reply_cycle():
     def _budget():
         return DIRECT_REPLY_MAX_PER_CYCLE - total
 
-    # === SOURCE 1: French X Live searches (chronological, with min_faves) ===
-    all_search = SEARCH_QUERIES + dyn_queries.get("live", [])
-    queries = random.sample(all_search, min(5, len(all_search)))
-    for query in queries:
+    # User directive 2026-04-26 PM: "target big accounts in french, if you
+    # cant fallback on smaller". Reordered so the curated FR roster runs
+    # FIRST and burns the budget on big accounts. Random search becomes the
+    # fallback only if curated paths don't fill the cap.
+
+    # === SOURCE 1: French influencer profiles (BIG CURATED FR — FIRST PRIORITY) ===
+    # Apply autonomous evolution: filter pruned + double-weight reinforced
+    from .evolution_store import filter_and_weight
+    all_fr = filter_and_weight(FR_ACCOUNTS + dyn_accounts.get("fr", []))
+    fr_picks = random.sample(all_fr, min(8, len(all_fr)))  # was 6 → 8: more curated coverage
+    for username in fr_picks:
         if _budget() <= 0:
             break
-        log.info(f"[DIRECT] === FR Search (live): {query} ===")
-        search_tweets = scrape_x_search(query, max_tweets=15, tab="live")
-        if search_tweets:
-            total += _reply_to_tweets(search_tweets, replied, "SEARCH-FR-LIVE", source_detail=query, remaining=_budget())
+        log.info(f"[DIRECT] === FR profile @{username} ===")
+        tweets = scrape_profile_tweets(username, max_tweets=10)
+        if tweets:
+            profile_tweets = [{
+                "url": t["url"], "text": t["text"], "author": username,
+                "likes": t.get("likes", 0), "replies": t.get("replies", 0),
+            } for t in tweets]
+            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-FR", source_detail=username, remaining=_budget())
 
-    # === SOURCE 1b: HOT FR tweets (X's "Top" algorithmic tab) ===
+    # === SOURCE 2: Following feed (chronological, only accounts we follow — also big-account leaning) ===
+    if _budget() > 0:
+        log.info("[DIRECT] === Scraping Following feed ===")
+        try:
+            following_tweets = scrape_following_feed(max_tweets=20)
+            if following_tweets:
+                total += _reply_to_tweets(following_tweets, replied, "FOLLOWING", remaining=_budget())
+        except Exception:
+            log.info("[DIRECT] Following feed scrape failed:")
+            traceback.print_exc()
+
+    # === SOURCE 3: Home feed (For You / algorithmic) ===
+    if _budget() > 0:
+        log.info("[DIRECT] === Scraping home feed (For You) ===")
+        feed_tweets = scrape_home_feed(max_tweets=20)
+        if feed_tweets:
+            total += _reply_to_tweets(feed_tweets, replied, "FEED", remaining=_budget())
+
+    # === SOURCE 4: HOT FR tweets (X's "Top" tab, min_faves) — fallback if curated didn't fill ===
     all_hot = HOT_TAB_QUERIES + dyn_queries.get("hot", [])
     hot_picks = random.sample(all_hot, min(3, len(all_hot)))
     for query in hot_picks:
@@ -528,40 +557,16 @@ def run_direct_reply_cycle():
             log.info(f"[DIRECT] HOT search failed for {query}:")
             traceback.print_exc()
 
-    # === SOURCE 2: French influencer profiles (FR FIRST) - more accounts, more tweets
-    # Apply autonomous evolution: filter pruned + double-weight reinforced
-    from .evolution_store import filter_and_weight
-    all_fr = filter_and_weight(FR_ACCOUNTS + dyn_accounts.get("fr", []))
-    fr_picks = random.sample(all_fr, min(6, len(all_fr)))
-    for username in fr_picks:
+    # === SOURCE 5: French X Live searches (random discovery — LAST RESORT) ===
+    all_search = SEARCH_QUERIES + dyn_queries.get("live", [])
+    queries = random.sample(all_search, min(5, len(all_search)))
+    for query in queries:
         if _budget() <= 0:
             break
-        log.info(f"[DIRECT] === FR profile @{username} ===")
-        tweets = scrape_profile_tweets(username, max_tweets=10)
-        if tweets:
-            profile_tweets = [{
-                "url": t["url"], "text": t["text"], "author": username,
-                "likes": t.get("likes", 0), "replies": t.get("replies", 0),
-            } for t in tweets]
-            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-FR", source_detail=username, remaining=_budget())
-
-    # === SOURCE 3: Home feed (For You / algorithmic) ===
-    if _budget() > 0:
-        log.info("[DIRECT] === Scraping home feed (For You) ===")
-        feed_tweets = scrape_home_feed(max_tweets=20)
-        if feed_tweets:
-            total += _reply_to_tweets(feed_tweets, replied, "FEED", remaining=_budget())
-
-    # === SOURCE 3b: Following feed (chronological, only accounts we follow) ===
-    if _budget() > 0:
-        log.info("[DIRECT] === Scraping Following feed ===")
-        try:
-            following_tweets = scrape_following_feed(max_tweets=20)
-            if following_tweets:
-                total += _reply_to_tweets(following_tweets, replied, "FOLLOWING", remaining=_budget())
-        except Exception:
-            log.info("[DIRECT] Following feed scrape failed:")
-            traceback.print_exc()
+        log.info(f"[DIRECT] === FR Search (live): {query} ===")
+        search_tweets = scrape_x_search(query, max_tweets=15, tab="live")
+        if search_tweets:
+            total += _reply_to_tweets(search_tweets, replied, "SEARCH-FR-LIVE", source_detail=query, remaining=_budget())
 
     # === SOURCE 4: English influencer profiles - more accounts, more tweets ===
     all_en = filter_and_weight(EN_ACCOUNTS + dyn_accounts.get("en", []))

@@ -27,7 +27,7 @@ MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "12"))
 # Reply cap per cycle — 3→5→7 over user directives 2026-04-26.
 # User flagged stagnation at 260 followers; bumping volume + pruning dead
 # sources (Frandroid/Boursorama/CoinTribuneFR) to make every cycle land more.
-MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "7"))
+MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "12"))
 
 # Accounts we never reply to. Includes both @handles AND display-name
 # variants so the blocklist still catches us when the scraper returns the
