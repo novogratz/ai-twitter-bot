@@ -1,4 +1,5 @@
 """Direct reply: visits influencer profiles, scrapes tweets, generates replies, posts them."""
+import re
 import subprocess
 import random
 import time
@@ -13,6 +14,52 @@ from .engagement_log import log_reply
 from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
 
 _OWN_HANDLE = BOT_HANDLE.lower()
+
+# === Language gate — added 2026-04-26 after DE/TR replies leaked through ===
+# X's `lang:fr` operator is best-effort: it returns DE / TR / ES / RU tweets
+# matching keywords like "crypto" or "Bitcoin" because those are language-
+# neutral. We need a second-line filter that drops anything clearly NOT
+# French or English BEFORE we waste a Claude call generating a reply we
+# wouldn't ship anyway. Strategy is FR-near-exclusive (per autonomous mandate).
+_NON_LATIN_RE = re.compile(r"[\u0400-\u04FF\u0600-\u06FF\u0900-\u097F\u3040-\u30FF\u4E00-\u9FFF\uAC00-\uD7AF]")
+_DE_MARKERS = re.compile(
+    r"\b(ich|nicht|auch|zwischen|für|sind|sein|haben|werden|wurde|wenn|"
+    r"gestreut|oder|aber|noch|schon|sehr|dann|jetzt|wieder|über|durch|"
+    r"und|nur|ein|eine|kein|keine|bin|bist|mit|auf|bei|nach|vor|seit|"
+    r"viele|alle|etwas|alles|nichts|immer|niemals|wirklich)\b",
+    re.IGNORECASE,
+)
+_TR_MARKERS = re.compile(
+    r"\b(için|değil|olarak|haline|büyük|yazıyoruz|şey|olmuş|var|takvime|"
+    r"aslında|gelmiş|kripto|öyle|şimdi|herkes|önemli|gibi|kendi|bütün)\b",
+    re.IGNORECASE,
+)
+_ES_MARKERS = re.compile(
+    r"\b(porque|también|aquí|está|estás|esto|esta|cómo|qué|todavía|"
+    r"siempre|nunca|hacer|hacia|sobre|entre|desde|cuando|donde)\b",
+    re.IGNORECASE,
+)
+_PT_MARKERS = re.compile(
+    r"\b(você|está|então|porque|também|aqui|isso|isto|nunca|sempre|"
+    r"sobre|entre|quando|desde|fazer|tudo|nada|muito|aquele|aquela)\b",
+    re.IGNORECASE,
+)
+
+
+def _is_fr_or_en(text: str) -> bool:
+    """Return True only if `text` looks like French or English. Drops
+    Cyrillic / Arabic / CJK / Hindi / Korean unconditionally, plus tweets
+    with 2+ language-distinctive markers from German / Turkish / Spanish /
+    Portuguese. Cheap, no-dependency, biased toward false negatives (we'd
+    rather skip a borderline FR-with-loanwords tweet than reply in DE)."""
+    if not text:
+        return True  # empty = no signal, let downstream handle
+    if _NON_LATIN_RE.search(text):
+        return False
+    for rx in (_DE_MARKERS, _TR_MARKERS, _ES_MARKERS, _PT_MARKERS):
+        if len(rx.findall(text)) >= 2:
+            return False
+    return True
 
 # French-speaking influencers — visited FIRST, every cycle.
 # Curated list of FR super-users (high-volume, high-engagement) in our 3 niches.
@@ -373,6 +420,13 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         replies = int(tweet.get("replies") or 0)
         if likes == 0 and replies == 0:
             log.info(f"[{source_name}] Dead tweet (0 likes, 0 replies) - skipping {url}")
+            continue
+
+        # Language gate — drop anything clearly not FR/EN before we burn
+        # a Claude call. X's `lang:fr` returns DE/TR/ES/RU on keywords
+        # like "crypto" / "Bitcoin"; this is the second-line defence.
+        if not _is_fr_or_en(text):
+            log.info(f"[{source_name}] Non-FR/EN tweet — skipping @{author}: {text[:60]}")
             continue
 
         # Generate reply
