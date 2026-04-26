@@ -262,6 +262,14 @@ def main():
         log.info("Now warming up the reply loop...")
         safe_run_direct_reply_cycle()
 
+        # Warm up reply-to-replies path immediately on startup so people
+        # who replied to our latest tweets get a response NOW, not after
+        # the bot has been up for 35-45 min.
+        log.info("Warming up notify (like replies on our tweets)...")
+        quiet_safe_notify()
+        log.info("Warming up replyback (reply to people who replied to us)...")
+        quiet_safe_replyback()
+
     # Schedule jobs
     if not args.reply_only:
         first_post = post_interval_minutes()
@@ -294,10 +302,10 @@ def main():
 
         # Notify bot - like replies on own tweets to build community.
         # Quiet hours skip; cadence kept at 45min (cheap operation).
-        log.info("Notify bot: liking replies on own tweets every 35 min (quiet 1am-7am Paris).")
+        log.info("Notify bot: liking replies on own tweets every 20 min (quiet 1am-7am Paris).")
         scheduler.add_job(
             quiet_safe_notify,
-            trigger=IntervalTrigger(minutes=35),
+            trigger=IntervalTrigger(minutes=20),
             id="notify_job",
         )
 
@@ -312,10 +320,10 @@ def main():
 
         # Reply-back bot - reply to people who reply to our tweets (creates threads).
         # Cadence unchanged (60min) but skipped during quiet hours.
-        log.info("Reply-back bot: replying to followers every 45 min (quiet 1am-7am Paris).")
+        log.info("Reply-back bot: replying to followers every 20 min (quiet 1am-7am Paris).")
         scheduler.add_job(
             quiet_safe_replyback,
-            trigger=IntervalTrigger(minutes=45),
+            trigger=IntervalTrigger(minutes=20),
             id="replyback_job",
         )
 

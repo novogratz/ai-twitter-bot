@@ -101,7 +101,7 @@ These two rules are stamped into every generation prompt via `personality_store.
 
 **Engage bot** - 3-5 accounts/cycle, every ~45 min jittered. Targets merge static list + autonomously discovered handles. Quiet 1am-7am Paris.
 
-**Notify + Boost bot** - Like replies on own tweets every 45 min (quiet 1am-7am Paris). When an INFLUENCER replies under our tweet, reply IN-THREAD (lands under their reply) — otherwise standalone @mention. Self-retweet every 6 hours.
+**Notify + Boost bot** - Like replies on own tweets every 20 min (was 45→35→20, accelerated 2026-04-26 PM with WARMUP-on-startup so reply-to-replies fires immediately, not after 35-45 min cold-start). When an INFLUENCER replies under our tweet, reply IN-THREAD (lands under their reply) — otherwise standalone @mention. Self-retweet every 6 hours.
 
 **Discover bot** - Every 6h: searches X, scores candidates with Claude, appends approved handles to `discovered_accounts.json`. Also auto-follows the best new FR ai/crypto/bourse handles (persisted in `followed_accounts.json`).
 
@@ -185,7 +185,7 @@ These two rules are stamped into every generation prompt via `personality_store.
 | 12pm - 6pm   | 90-150 min    | ~25-38 min jittered                  |
 | 6pm - 11pm   | 140-220 min   | ~25-38 min jittered                  |
 
-Engage: ~27 min jittered (was 32, accelerated 2026-04-26 PM, 3-5 accounts/cycle, expanded list w/ FR media), quiet 1am-7am Paris. Notify: 35 min (was 45), quiet hours. Replyback: 45 min (was 60), cap 4 (dynamic 4-8 by virality), quiet hours. Reciprocity loop FOLLOWS BACK engagers. **Boost: every 2h (was 3h, validated lever pulled to max safe cadence). Discover: every 2h (was 3h). Roast (@pgm_pm): ~12 min jittered (was 14, with circuit breaker). Performance: every 2h. Strategy agent: every 2h (was 3h — bot self-adjusts INPUT side every 2h). Evolution agent: every 4h (was 6h — auto-rewrites style guide ~6x/day). Reflection agent: every 4h (was 6h). Quote-tweet bot: every 75 min (was 90, cap 12/day). Early-bird bot: ~5 min jittered (was 6, 92-account roster), cap 2/cycle, quiet hours. Daily digest: hourly idempotent check, writes yesterday's rollup to `daily_digest.md` once per day for the 2-week post-mission review.**
+Engage: ~27 min jittered (was 32, accelerated 2026-04-26 PM, 3-5 accounts/cycle, expanded list w/ FR media), quiet 1am-7am Paris. Notify: 20 min (was 45→35→20, + warmup on startup), quiet hours. Replyback: 20 min (was 60→45→20, + warmup on startup so reply-to-replies happens NOW not after 45min cold-start), cap 4 (dynamic 4-8 by virality), quiet hours. Reciprocity loop FOLLOWS BACK engagers. **Boost: every 2h (was 3h, validated lever pulled to max safe cadence). Discover: every 2h (was 3h). Roast (@pgm_pm): ~12 min jittered (was 14, with circuit breaker). Performance: every 2h. Strategy agent: every 2h (was 3h — bot self-adjusts INPUT side every 2h). Evolution agent: every 4h (was 6h — auto-rewrites style guide ~6x/day). Reflection agent: every 4h (was 6h). Quote-tweet bot: every 75 min (was 90, cap 12/day). Early-bird bot: ~5 min jittered (was 6, 92-account roster), cap 2/cycle, quiet hours. Daily digest: hourly idempotent check, writes yesterday's rollup to `daily_digest.md` once per day for the 2-week post-mission review.**
 
 **Graceful quiet-hour fade (FR + QC dual targeting)** — replaced the hard cliff with `should_skip_engagement()`:
 - 04-07 Paris: 95% skip (deepest quiet — 4 of 6 hours dark, light pulse OK)
