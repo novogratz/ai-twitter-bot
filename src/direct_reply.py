@@ -293,10 +293,14 @@ def _generate_single_reply(author: str, tweet_text: str):
     from . import personality_store
     persona_block = personality_store.render_account_block(author)
     hard_rules = personality_store.HARD_RULES_BLOCK
+    # Hand-curated ideological core (core_identity.md) — voice anchor.
+    core_identity = personality_store.render_core_identity()
     base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200])
     extras = []
     if persona_block:
         extras.append(persona_block)
+    if core_identity:
+        extras.append(core_identity)
     extras.append(hard_rules)
     prompt = base + "\n\n" + "\n\n".join(extras)
 
@@ -326,7 +330,7 @@ def _generate_single_reply(author: str, tweet_text: str):
         return None
 
 
-DIRECT_REPLY_MAX_PER_CYCLE = 6  # global cap so a hot scrape can't burst (super-user mode)
+DIRECT_REPLY_MAX_PER_CYCLE = 9  # bumped 6→9 (+50%) on user directive 2026-04-26 — replies are the growth engine
 
 
 def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=None):

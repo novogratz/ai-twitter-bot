@@ -44,6 +44,10 @@ from typing import Optional
 from .config import _PROJECT_ROOT
 
 PERSONALITY_FILE = os.path.join(_PROJECT_ROOT, "personality.json")
+# Hand-curated ideological core. Loaded into EVERY generation prompt so the
+# bot's takes stay coherent across news, hot takes, replies, replybacks and
+# direct replies. NEVER overwritten by any agent — only the human edits it.
+CORE_IDENTITY_FILE = os.path.join(_PROJECT_ROOT, "core_identity.md")
 
 ALLOWED_CATEGORIES = {
     "builder", "predator", "retail", "media", "influencer", "institution", "unknown"
@@ -233,6 +237,27 @@ def render_account_block(handle: str) -> str:
         "l'IDEE, le SYSTEME, le CLAIM. Pas la personne."
     )
     return "\n".join(lines)
+
+
+def render_core_identity() -> str:
+    """Load the hand-curated ideological core (core_identity.md) and wrap it
+    so the model treats it as ground truth. Empty string if the file is
+    missing — the bot still runs, just without the curated voice anchor."""
+    try:
+        with open(CORE_IDENTITY_FILE, "r", encoding="utf-8") as f:
+            raw = f.read().strip()
+    except (OSError, FileNotFoundError):
+        return ""
+    if not raw:
+        return ""
+    return (
+        "==================================================\n"
+        "IDENTITE NOYAU (NON NEGOCIABLE — c'est qui tu es)\n"
+        "==================================================\n"
+        "Ces opinions et ce ton sont stables. Quand un sujet ci-dessous\n"
+        "tombe sur la table, tu as deja un avis. Tu le balances.\n\n"
+        + raw
+    )
 
 
 def render_global_mood() -> str:

@@ -22,29 +22,38 @@ FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 AUTO_FOLLOW_CATEGORIES = {"ai", "crypto", "bourse"}
 
 
-# Search queries — mix niches and languages, FR-leaning
+# Search queries — bumped 2026-04-26 on user directive: double the FR
+# discovery throughput. Was 7 FR / 8 EN; now 18 FR / 4 EN. Auto-follow
+# is already FR-only, so growing the FR query surface directly grows the
+# rate of new FR followers.
 DISCOVERY_QUERIES = [
-    # FR — bourse / trading
+    # FR — bourse / trading / finance (was 3, now 7)
     "bourse trading français",
     "CAC 40 analyse",
     "investissement long terme",
-    # FR — crypto
+    "PEA bourse",
+    "trader Paris",
+    "ETF français",
+    "analyse marché français",
+    # FR — crypto (was 2, now 5)
     "crypto français analyse",
     "Bitcoin analyse FR",
-    # FR — IA
+    "crypto Paris",
+    "DeFi français",
+    "stablecoin français",
+    # FR — IA (was 2, now 4)
     "intelligence artificielle français",
     "IA actualité",
-    # EN — AI
+    "Mistral AI français",
+    "LLM français",
+    # FR — tech / startup (new bucket, 2)
+    "startup française tech",
+    "VC français AI",
+    # EN — keep just top-signal queries (was 8, now 4)
     "AI founder",
-    "AGI",
-    "LLM benchmark",
     "AI startup",
-    # EN — crypto
-    "crypto trader",
     "Bitcoin macro",
-    # EN — markets
-    "macro markets",
-    "S&P 500 analysis",
+    "AGI",
 ]
 
 

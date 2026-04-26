@@ -495,6 +495,10 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     mood = personality_store.render_global_mood()
     if mood:
         performance_section = (performance_section or "") + "\n\n" + mood
+    # Hand-curated ideological core (core_identity.md) — voice anchor.
+    core_identity = personality_store.render_core_identity()
+    if core_identity:
+        performance_section = (performance_section or "") + "\n\n" + core_identity
     performance_section = (performance_section or "") + "\n\n" + personality_store.HARD_RULES_BLOCK
 
     today_date = datetime.now().strftime("%Y-%m-%d")

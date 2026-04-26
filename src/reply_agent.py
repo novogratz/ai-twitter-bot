@@ -339,6 +339,10 @@ def generate_replies(recent_topics=None, already_replied=None):
     mood = personality_store.render_global_mood()
     if mood:
         discovered_section = (discovered_section or "") + "\n\n" + mood
+    # Hand-curated ideological core (core_identity.md) — voice anchor.
+    core_identity = personality_store.render_core_identity()
+    if core_identity:
+        discovered_section = (discovered_section or "") + "\n\n" + core_identity
     discovered_section = (discovered_section or "") + "\n\n" + personality_store.HARD_RULES_BLOCK
 
     prompt = REPLY_PROMPT_TEMPLATE.format(

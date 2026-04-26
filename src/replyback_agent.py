@@ -56,6 +56,10 @@ def generate_replyback(original_tweet: str, their_reply: str, author: str = "") 
     persona_block = personality_store.render_account_block(author) if author else ""
     if persona_block:
         extras.append(persona_block)
+    # Hand-curated ideological core (core_identity.md) — voice anchor.
+    core_identity = personality_store.render_core_identity()
+    if core_identity:
+        extras.append(core_identity)
     extras.append(personality_store.HARD_RULES_BLOCK)
     prompt = base + "\n\n" + "\n\n".join(extras)
     result = subprocess.run(
