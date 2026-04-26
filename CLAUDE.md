@@ -82,11 +82,13 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 - **Autonomous strategy agent**: Every 6h, an agentic Claude run reads the engagement log + uses tools (WebSearch, Read, Bash) to investigate what's actually working AND what's trending in FR AI/crypto/bourse RIGHT NOW. Proposes JSON; the Python wrapper APPLIES additions only (queries → `dynamic_queries.json`, accounts → `dynamic_accounts.json`). Direct_reply merges these with its static lists at runtime. Removals stay manual (safety boundary). Audit trail in `strategy_log.json`.
 - **Source attribution**: Every reply written to `engagement_log.csv` carries a `source` tag (e.g. `PROFILE-FR/MathieuL1`, `SEARCH-FR-HOT/Bitcoin lang:fr`). The strategy agent uses this to compute per-source ROI.
 - **Quote tweets**: Cap 2/day. Picks the most-liked viral FR tweet in our niches and posts a sharp meme observation as a quote-tweet (lands in followers' feed AND notifies the original author). Different distribution surface than replies.
-- **Boost (validated lever)**: Self-retweet of latest tweet every 8h. Confirmed: one boost pulled 200 views + 6 likes. Free distribution multiplier — keep the cadence.
+- **Boost (validated lever)**: Self-retweet of latest tweet every 4h (was 6h/8h). Confirmed: one boost pulled 200 views + 6 likes. Free distribution multiplier — cheapest action we have.
+- **Fast feedback kill-switch**: `src/fast_feedback.py` runs every 2h via the perf cycle. Strategy-agent-added handles with ≥5 outbound attempts in 8h that aren't reinforced get fast-demoted with a 7d TTL (vs the 30d evolution-agent prune). Closes the gap between strategy_agent (6h additions) and evolution_agent (12h audits).
+- **Autonomous operator mode**: when the user is away, a remote cron may run higher-level meta-improvements every few hours. Audit trail in `autonomous_log.md` (committed). Operator can push code + restart the bot autonomously. Never touches BLOCKLIST or quiet-hours boundaries.
 
 ### Bots
 
-**Post bot** - up to 10 news + 4 hot takes/day. ~30% hot take ratio. News must FOLLOW the SETUP→PUNCH format and make people laugh — sourced article without a joke = failure. Humanizer on all output.
+**Post bot** - 5 news + 5 hot takes/day (was 10+4). ~45% hot take roll on each cycle. News must FOLLOW the SETUP→PUNCH format AND have the hook in first 6 words AND drop URLs (X deboosts off-platform links). Every news post now ships with a quote-card image (mirrors hot-take path — image posts pull more reach). Humanizer on all output.
 
 **Reply bot** - Cap 2 replies/cycle, every ~30 min jittered. French priority, bilingual. Impact-ranked (agent picks best 2 of 6-8 candidates). Pre-filter dedup + blocklist. Persisted memory of 2000 replied URLs. Quiet 1am-7am Paris.
 
@@ -108,7 +110,7 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
   - Adds to `reinforced_accounts.json` — handles whose tweets converted into our top posts get 2x weight in selectors. No TTL. Hard cap 5 reinforcements/cycle.
   Audit trail in `evolution_log.json`. The bot literally rewrites its own style guide twice a day.
 
-**Quote-tweet bot** - Every 2.5h, cap 5/day (was 4h/2): scrapes HOT FR tweets (min_faves:30), picks the single most-liked candidate, generates a sharp meme observation, posts it as a quote-tweet. New distribution surface (followers' feed + author notification). Bumped because it's pure additive growth — different surface than replies.
+**Quote-tweet bot** - Every 2h, cap 8/day (was 2.5h/5): scrapes HOT FR tweets (min_faves:30), picks the single most-liked candidate, generates a sharp meme observation, posts it as a quote-tweet. New distribution surface (followers' feed + author notification). Pure additive growth — different surface than replies.
 
 **Early-bird bot** - Every ~7 min jittered (12-min freshness window). Scrapes 3 random accounts from a 75-account roster (FR media + crypto/bourse FR + AI mega EN), replies to any tweet < 12 min old. Hard cap 1 reply/cycle. Quiet 1am-7am Paris. Top-5 reply on a viral tweet = 10-100x impressions multiplier. Source-tagged `EARLYBIRD/<handle>`.
 
