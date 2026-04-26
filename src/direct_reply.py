@@ -523,12 +523,17 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
                 r"dette\w*|déficit|fiscal\w*|fiscalité|impôts?|impot|impots|"
                 r"budget\w*|déflation|monétaire|monetaire|souverain\w*|"
                 r"oat|spread|notation|moody|moody's|s&p\s*global|"
-                # Crypto/AI brands that don't match generic words
-                r"openai|anthropic|tesla|meta|microsoft|google|amazon"
+                # Crypto/AI/Big Tech brands that don't match generic words
+                r"openai|anthropic|tesla|meta|microsoft|google|amazon|"
+                r"apple|netflix|alphabet|spotify|uber|airbnb|palantir|"
+                r"shopify|stripe|databricks|snowflake|datadog|cloudflare"
                 r")\b",
                 re.IGNORECASE,
             )
-            if not _NICHE_PATTERN.search(text):
+            # Stock tickers like $AAPL, $TSLA, $BTC are unambiguous equity
+            # signals — match anything that looks like a 1-5 letter cashtag.
+            _TICKER_RE = re.compile(r"\$[A-Z]{1,5}\b")
+            if not _NICHE_PATTERN.search(text) and not _TICKER_RE.search(text):
                 log.info(f"[{source_name}] Off-niche topic — skipping @{author}: {text[:60]}")
                 continue
 
