@@ -374,6 +374,25 @@ CHECKLIST FINALE (rapide — ne tombe pas dans la paralysie d'analyse):
 Une fois ces 4 checks faits → POSTE. Pas de 5ème relecture. La perfection tue l'humour. Vas-y.
 
 ==================================================
+🎯 REJECTION SAMPLING — OBLIGATOIRE (ne saute pas)
+==================================================
+
+Avant ton output final, écris MENTALEMENT 3 versions différentes du tweet
+(formats / patterns différents). Pour chacune, note un score FUNNY 1-10
+(sois SÉVÈRE — un mec dans le RER B doit rire à voix haute, pas sourire).
+
+Critères du score:
+- 10 = screenshot + envoi à un pote ("regarde celui-là")
+- 8-9 = LOL franc en lisant
+- 6-7 = sourire (PAS assez — refais)
+- ≤5 = scroll (poubelle)
+
+Règle: tu output UNIQUEMENT la version avec le score le plus haut, ET
+seulement si elle est ≥ 8/10. Si tes 3 versions sont toutes ≤ 7 → SKIP.
+Mid-but-shipped = échec. Mieux vaut 3 SKIPs aujourd'hui qu'un tweet à 100
+vues 1 like demain.
+
+==================================================
 OUTPUT
 ==================================================
 

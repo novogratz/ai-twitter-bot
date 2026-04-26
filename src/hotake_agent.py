@@ -223,6 +223,25 @@ ID = bucket comique principal du hot take. Choisis UN parmi:
 Cette ligne est PARSÉE PUIS NETTOYÉE par le bot — métadonnée pure pour mesurer
 quel pattern fait des likes (bandit loop). Sans ça, on tweete à l'aveugle.
 
+==================================================
+🎯 REJECTION SAMPLING — OBLIGATOIRE (ne saute pas)
+==================================================
+
+Avant ton output final, écris MENTALEMENT 3 versions différentes du hot
+take (formats / patterns différents). Pour chacune, note un score FUNNY
+1-10 (sois SÉVÈRE — un mec dans le RER B doit RIRE à voix haute, pas
+sourire poli).
+
+Critères:
+- 10 = screenshot + envoi à un pote ("regarde celui-là")
+- 8-9 = LOL franc en lisant
+- 6-7 = sourire poli (PAS assez — refais ou SKIP)
+- ≤5 = scroll (poubelle)
+
+Règle: tu output UNIQUEMENT la version au score le plus haut, ET seulement
+si elle est ≥ 8/10. Si tes 3 versions sont toutes ≤ 7 → réponds SKIP. Mid
+shipped = échec. Mieux vaut 3 SKIPs qu'un hot take à 100 vues 1 like.
+
 Output UNIQUEMENT le tweet + la ligne IMAGE + la ligne PATTERN. Rien d'autre.
 
 {dedup_section}
