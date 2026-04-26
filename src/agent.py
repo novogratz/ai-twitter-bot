@@ -714,15 +714,17 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
                     return None
         except Exception:
             pass
+    # HARD RULE 2026-04-26 PM (user directive): "YOU CANT POST OR HOT TAKE
+    # WITHOUT SOURCE." If no article URL made it through, SKIP the cycle
+    # rather than ship a sourceless post. Replies stay exempt; news doesn't.
+    if not src_url:
+        log.info("[NEWS] No source URL in output — SKIPPING (user rule: no post without source)")
+        globals()["_last_source_url"] = None
+        globals()["_last_image_topic"] = None
+        return None
     globals()["_last_source_url"] = src_url
-    # Only honour the image-topic fallback when there's NO article URL —
-    # otherwise X's native link-card already covers the visual and an
-    # attached image would suppress the card preview.
-    globals()["_last_image_topic"] = image_topic if not src_url else None
-    if src_url:
-        log.info(f"[NEWS] Article URL detected (X will render card): {src_url[:120]}")
-    elif image_topic:
-        log.info(f"[NEWS] No URL — Wikipedia fallback topic: {image_topic}")
-    else:
-        log.info("[NEWS] No URL and no image topic — will post text-only")
+    # X's native link-card covers the visual; an attached image would
+    # suppress the card preview, so always null the image topic.
+    globals()["_last_image_topic"] = None
+    log.info(f"[NEWS] Article URL detected (X will render card): {src_url[:120]}")
     return tweet
