@@ -8,9 +8,9 @@ Uses Claude Code CLI for AI generation and Safari + AppleScript for browser auto
 
 ### Bots
 
-**Post Bot** - Searches the web for breaking news (AI, crypto, bourse), writes sharp FR tweets in SETUP→PUNCH format (factual setup, sarcastic punch — sourced article without a joke = failure). FIRST-DERIVATIVE rule: reject angles BFM/Bloomberg would post as-is, find the second-order implication. Threads supported. Mix of news (12/day) + hot-take memes (12/day). News-first policy: first 3 posts/day must be news. Hot takes ship with a generated PNG quote-card for screenshot-worthy feed presence.
+**Post Bot** - Searches the web for breaking news (AI, crypto, bourse), writes sharp FR tweets. **News format = MEME HOT TAKE + URL**: a screenshot-worthy punchline first, raw article URL on its own line so X renders the link card. No "Selon X..." / "Breaking:" / news-report style — if the news doesn't lend itself to a meme, the bot SKIPs. FIRST-DERIVATIVE rule: reject angles BFM/Bloomberg would post as-is, find the second-order implication. Threads supported. Mix of news (24/day) + hot-take memes (24/day). News-first policy: first 3 posts/day must be news. Hot takes ship with a generated PNG quote-card for screenshot-worthy feed presence.
 
-**Reply Bot** - Direct + search reply paths. Finds high-engagement FR tweets (with EN fallback), drops sharp one-liner replies (cap 5/cycle, impact-ranked). **Engagement floor: skips tweets below `REPLY_MIN_LIKES` (default 5)** + content blocklist (e.g. "se poser") — so the bot doesn't waste replies on dead/low-quality tweets. FR priority, bilingual. **Quiet hours 1am-7am Paris** — engagement cycles skip overnight so the account looks human.
+**Reply Bot** - Direct + search reply paths. Finds high-engagement FR tweets (with EN fallback), drops sharp one-liner replies (cap 7/cycle, impact-ranked). **Source-aware engagement floor**: random-discovery sources (SEARCH-FR-LIVE, SEARCH-FR-HOT) skip tweets below `REPLY_MIN_LIKES` (default 5); curated paths (PROFILE-FR, FEED, FOLLOWING) bypass the floor entirely so the bot replies on EVERYTHING from the vetted 1k+ FR roster. Content blocklist (e.g. "se poser") still applies. FR priority, bilingual. **Quiet hours 1am-7am Paris** — engagement cycles skip overnight so the account looks human.
 
 **Engage Bot** - Auto-follows target accounts and likes their latest tweets. Static list + autonomously discovered handles + strategy-agent additions, all merged at runtime.
 
@@ -109,11 +109,11 @@ All settings in `src/config.py`, overridable with environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MAX_NEWS_PER_DAY` | 12 | Max news posts per day |
-| `MAX_HOTAKES_PER_DAY` | 12 | Max hot takes per day |
+| `MAX_NEWS_PER_DAY` | 24 | Max news posts per day |
+| `MAX_HOTAKES_PER_DAY` | 24 | Max hot takes per day |
 | `MAX_QUOTES_PER_DAY` | 12 | Max quote-tweets per day |
 | `MAX_REPLIES_PER_CYCLE` | 7 | Max replies per cycle |
-| `REPLY_MIN_LIKES` | 5 | Min likes on a tweet before the bot will reply |
+| `REPLY_MIN_LIKES` | 5 | Min likes on a tweet before the bot will reply (random-search sources only — curated paths bypass) |
 | `NEWS_MODEL` | claude-opus-4-6 | Model for news posts |
 | `REPLY_MODEL` | claude-sonnet-4-6 | Model for replies |
 | `HOTAKE_MODEL` | claude-sonnet-4-6 | Model for hot takes |

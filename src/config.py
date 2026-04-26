@@ -12,14 +12,14 @@ REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
-# Daily posting limits — bumped again 8→12 (+50%) on user directive
-# 2026-04-26 PM: bot was hitting 7/8 news by 7am EST, choking the peak
-# afternoon window. Per-tweet quality stays gated by the impact filter
-# in directives.md + first-derivative rule in agent.py. This is a
-# CEILING lift so the bot can keep firing through 9-11am + 1-3pm EST
-# peaks. Quality first, then volume.
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "12"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "12"))
+# Daily posting limits — bumped 12→24 (2x) per user directive 2026-04-26 PM
+# "post 2 times more" — bot stagnating at 260 followers, 2-week mission
+# targeting 1k. News format also converted to meme-hot-take + URL (see
+# agent.py PROMPT_TEMPLATE). Quality stays gated by impact filter +
+# first-derivative rule. This is a CEILING lift so the bot can fire
+# through both EU and EST peaks without choking.
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "24"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "24"))
 # Quote-tweet cap — bumped 8 → 12. Different distribution surface than
 # replies (lands in followers' feed AND notifies original author),
 # so additive growth, not redundant volume.

@@ -95,9 +95,9 @@ These two rules are stamped into every generation prompt via `personality_store.
 
 ### Bots
 
-**Post bot** - 12 news + 12 hot takes/day (caps tripled 2026-04-26 PM — bot was choking at 8/day before EST peak). ~45% hot take roll on each cycle. News must FOLLOW the SETUP→PUNCH format AND have the hook in first 6 words AND drop URLs (X deboosts off-platform links). Every news post now ships with a quote-card image (mirrors hot-take path — image posts pull more reach). News prompt enforces FIRST-DERIVATIVE rule (reject angles BFM/Bloomberg would post as-is) + IMPACT FILTER (4×NO → SKIP). Humanizer on all output.
+**Post bot** - 24 news + 24 hot takes/day (2x bump 2026-04-26 PM — user wants 1k followers in 2 weeks, "post 2 times more"). ~45% hot take roll on each cycle. **News format = MEME HOT TAKE + URL** (mandate 2026-04-26 PM): a screenshot-worthy punchline, then `\n\n` + raw article URL on its own line so X renders the link card. No "Selon X..." / "Breaking:" / news-report style. If the news doesn't lend itself to a meme → SKIP. News prompt also keeps FIRST-DERIVATIVE rule (reject angles BFM/Bloomberg would post as-is) + IMPACT FILTER (4×NO → SKIP). Humanizer on all output.
 
-**Reply bot** - Cap 7 replies/cycle (3→5→7), every ~22 min jittered. French priority, bilingual. Impact-ranked (agent picks best of 6-8 candidates). Pre-filter dedup + blocklist + **engagement floor `REPLY_MIN_LIKES` (default 5)** + content blocklist (e.g. "se poser") so the bot doesn't burn replies on dead/low-quality tweets. Persisted memory of 2000 replied URLs. Quiet 1am-7am Paris.
+**Reply bot** - Cap 7 replies/cycle (3→5→7), every ~22 min jittered. French priority, bilingual. Impact-ranked (agent picks best of 6-8 candidates). Pre-filter dedup + blocklist + **source-aware engagement floor**: `REPLY_MIN_LIKES` (default 5) applies to random-discovery sources (SEARCH-FR-LIVE, SEARCH-FR-HOT) but is **bypassed for curated paths** (PROFILE-FR, FEED, FOLLOWING) per user directive 2026-04-26 PM ("GO CRAZY, comment everything from 1k+ FR accounts"). Content blocklist (e.g. "se poser") still active. Persisted memory of 2000 replied URLs. Quiet 1am-7am Paris.
 
 **Engage bot** - 3-5 accounts/cycle, every ~45 min jittered. Targets merge static list + autonomously discovered handles. Quiet 1am-7am Paris.
 

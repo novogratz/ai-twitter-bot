@@ -425,8 +425,17 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         # tweets (<12 min, often 0 likes) for the top-5-reply boost.
         likes = int(tweet.get("likes") or 0)
         replies = int(tweet.get("replies") or 0)
+        # 2026-04-26 PM user directive: "Comment everything where the
+        # account has a good amount of followers in french, lets see at
+        # least 1k followers. Comment everything literally. GO CRAZY."
+        # → Curated paths (PROFILE-FR, FEED, FOLLOWING) bypass the floor:
+        # those are vetted 1k+ FR handles, we want to land EVERYWHERE.
+        # Random-discovery paths (SEARCH-FR-LIVE, SEARCH-FR-HOT) keep the
+        # floor since random authors can be 0-follower accounts.
+        _CURATED_SOURCES = ("PROFILE-FR", "FEED", "FOLLOWING")
+        is_curated = any(source_name.startswith(s) for s in _CURATED_SOURCES)
         min_likes = int(os.environ.get("REPLY_MIN_LIKES", "5"))
-        if likes < min_likes:
+        if not is_curated and likes < min_likes:
             log.info(f"[{source_name}] Low-engagement tweet ({likes}<{min_likes} likes) - skipping {url}")
             continue
 
