@@ -91,6 +91,13 @@ FORMATS QUI MARCHENT (vise le LOL, pas juste le smirk):
 9. Méta-overconfident: "À ce stade c'est plus de l'analyse, c'est de la voyance. Et ça marche. C'est ça qui est cosmique."
 10. Surprise pivot: "Le silence des perma-bulls ce matin est si pur qu'il devrait être minté en NFT."
 
+⭐ GOLD STANDARD (validé par le user — vise CE niveau de chute sèche):
+- "The full web3 tech stack in four hashtags. At least the pitch deck loaded fast."
+  → setup deadpan ("four hashtags" = la blague est dans le chiffre absurde)
+  → chute brutale qui re-roaste sans citer personne ("au moins X… a marché vite")
+  → understatement total. Zéro émoji. Zéro hashtag. Zéro lien. Zéro effort visible.
+  Adaptation FR du même pattern: "La full stack web3 en quatre hashtags. Au moins le pitch deck a chargé vite." / "Toute la thèse macro de Bercy en deux slides PowerPoint. Au moins le PDF est lourd."
+
 EXEMPLES (philosophie + meme + funny):
 - "L'AGI c'est la fusion nucléaire de la tech: toujours 18 mois, depuis 70 ans."
 - "Le wrapper IA, c'est le dropshipping de l'ingénierie. Mêmes marges. Même fin tragique."
