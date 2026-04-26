@@ -30,6 +30,7 @@ from src.performance import evaluate_and_learn
 from src.strategy_agent import safe_run_strategy_cycle
 from src.evolution_agent import safe_run_evolution_cycle
 from src.reflection_agent import safe_run_reflection_cycle
+from src.scout_agent import safe_run_scout_cycle
 from src.daily_digest import safe_run_daily_digest
 from src.quote_tweet_bot import safe_run_quote_tweet_cycle
 from src.early_bird_bot import safe_run_early_bird_cycle
@@ -91,65 +92,66 @@ def post_interval_minutes() -> int:
     Hours are EST. Paris = EST + 6, Montreal = EST.
     """
     hour = datetime.now(ZoneInfo("America/New_York")).hour
+    # Cadences shaved ~15-20% on user directive 2026-04-26 PM ("accelerate
+    # all timelines and cycles"). 2-week mission to 1k followers = volume push.
     if 18 <= hour < 23:
         # QC primetime EST evening (Paris 0-5am): keep cadence reasonable
         # so we surf the QC peak without spamming.
-        return random.randint(70, 120)
+        return random.randint(55, 95)
     elif 23 <= hour or hour < 4:
         # Deep quiet for both audiences (Paris 5-10am still arriving):
         # slow but not silent so we wake up with fresh content.
-        return random.randint(110, 180)
+        return random.randint(90, 150)
     elif 9 <= hour < 11:
         # PEAK: Morning EST window (Paris 15-17h afternoon active)
-        return random.randint(45, 80)
+        return random.randint(35, 65)
     elif 13 <= hour < 15:
         # PEAK: Afternoon EST window (Paris 19-21h evening prime)
-        return random.randint(45, 80)
+        return random.randint(35, 65)
     elif 4 <= hour < 8:
         # Paris morning ramp (10-14h Paris): pick up cadence
-        return random.randint(70, 110)
+        return random.randint(55, 90)
     elif 8 <= hour < 12:
         # Paris afternoon (14-18h)
-        return random.randint(60, 100)
+        return random.randint(48, 80)
     elif 12 <= hour < 18:
         # Paris evening (18-24h) + QC daytime
-        return random.randint(60, 100)
+        return random.randint(48, 80)
     else:
-        return random.randint(80, 130)
+        return random.randint(65, 105)
 
 
 def reply_interval_minutes() -> int:
-    """Tighter cadence for 16h-active human profile: ~16min jittered (was
-    22). With cap=7/cycle this lands ~150 replies/day max in awake hours —
-    heavy but in line with high-volume FR influencers (Mathieu Louvet,
-    Hasheur). Engagement gate (probabilistic skip) handles overnight."""
-    return random.randint(12, 20)
+    """~13min jittered (was 16). Acceleration push 2026-04-26 PM for the
+    2-week 1k-follower mission. With cap=7/cycle this lands ~190 replies/day
+    max in awake hours. Engagement gate (probabilistic skip) handles overnight."""
+    return random.randint(10, 16)
 
 
 def engage_interval_minutes() -> int:
-    """Follow + like cadence. ~32min jittered (was 40). More frequent
-    presence in influencer notifications without crossing the bot
-    threshold. Engagement gate handles QC-primetime light pass."""
-    return random.randint(26, 38)
+    """~27min jittered (was 32). More frequent presence in influencer
+    notifications. Engagement gate handles QC-primetime light pass."""
+    return random.randint(22, 32)
 
 
 def direct_reply_interval_minutes() -> int:
-    """~16min jittered (was 22). Tighter to land more replies on FR + QC
+    """~13min jittered (was 16). Tighter to land more replies on FR + QC
     influencer profiles where we convert best. Per-cycle cap in
     direct_reply.py prevents bursts."""
-    return random.randint(13, 19)
+    return random.randint(11, 16)
 
 
 def early_bird_interval_minutes() -> int:
-    """~6min jittered (was 7). Stay deep inside the 12-min freshness
+    """~5min jittered (was 6). Stay deep inside the 12-min freshness
     window so we catch viral tweets in their top-5-reply moment more often."""
-    return random.randint(5, 7)
+    return random.randint(4, 6)
 
 
 def roast_interval_minutes() -> int:
-    """~14min jittered (was 18). @pgm_pm tweets every minute; URL dedup
-    still hard-caps to 1 roast per tweet."""
-    return random.randint(12, 17)
+    """~12min jittered (was 14). @pgm_pm tweets every minute; URL dedup
+    still hard-caps to 1 roast per tweet. Circuit breaker pauses if scrape
+    keeps returning empty."""
+    return random.randint(10, 14)
 
 
 def _graceful_shutdown(signum, frame):
@@ -292,10 +294,10 @@ def main():
 
         # Notify bot - like replies on own tweets to build community.
         # Quiet hours skip; cadence kept at 45min (cheap operation).
-        log.info("Notify bot: liking replies on own tweets every 45 min (quiet 1am-7am Paris).")
+        log.info("Notify bot: liking replies on own tweets every 35 min (quiet 1am-7am Paris).")
         scheduler.add_job(
             quiet_safe_notify,
-            trigger=IntervalTrigger(minutes=45),
+            trigger=IntervalTrigger(minutes=35),
             id="notify_job",
         )
 
@@ -310,10 +312,10 @@ def main():
 
         # Reply-back bot - reply to people who reply to our tweets (creates threads).
         # Cadence unchanged (60min) but skipped during quiet hours.
-        log.info("Reply-back bot: replying to followers every 60 min (quiet 1am-7am Paris).")
+        log.info("Reply-back bot: replying to followers every 45 min (quiet 1am-7am Paris).")
         scheduler.add_job(
             quiet_safe_replyback,
-            trigger=IntervalTrigger(minutes=60),
+            trigger=IntervalTrigger(minutes=45),
             id="replyback_job",
         )
 
@@ -321,10 +323,10 @@ def main():
         # 4h → 3h on user directive 2026-04-26 PM: the cheapest validated
         # action we have, push it to 8 boosts/day. Risk of algo suppression
         # exists but is dwarfed by the confirmed lift.
-        log.info("Boost bot: retweeting own latest tweet every 3 hours.")
+        log.info("Boost bot: retweeting own latest tweet every 2 hours.")
         scheduler.add_job(
             safe_run_boost_cycle,
-            trigger=IntervalTrigger(hours=3),
+            trigger=IntervalTrigger(hours=2),
             id="boost_job",
         )
 
@@ -341,10 +343,10 @@ def main():
         # 6h → 3h on user directive 2026-04-26 PM ("auto update list of
         # people to follow"). The bot evolves faster — fresh FR handles
         # join the orbit every 3h instead of 4x/day.
-        log.info("Discover bot: searching for new influencers every 3 hours.")
+        log.info("Discover bot: searching for new influencers every 2 hours.")
         scheduler.add_job(
             safe_run_discovery_cycle,
-            trigger=IntervalTrigger(hours=3),
+            trigger=IntervalTrigger(hours=2),
             id="discover_job",
         )
 
@@ -378,10 +380,10 @@ def main():
         # lists at runtime. 6h → 3h: user directive 2026-04-26 wants the
         # bot to auto-adjust strategy MULTIPLE TIMES per day. Append-only
         # safety boundary still holds (additions never removals).
-        log.info("Strategy agent: autonomous self-improvement every 3 hours.")
+        log.info("Strategy agent: autonomous self-improvement every 2 hours.")
         scheduler.add_job(
             safe_run_strategy_cycle,
-            trigger=IntervalTrigger(hours=3),
+            trigger=IntervalTrigger(hours=2),
             id="strategy_job",
         )
 
@@ -397,10 +399,10 @@ def main():
         # 5 reinforcements per cycle) still bound damage if a cycle goes
         # rogue, and prune TTL is still 30d so doubling the cadence doesn't
         # double the damage — it just makes the style guide more responsive.
-        log.info("Evolution agent: content-quality self-improvement every 6 hours.")
+        log.info("Evolution agent: content-quality self-improvement every 4 hours.")
         scheduler.add_job(
             safe_run_evolution_cycle,
-            trigger=IntervalTrigger(hours=6),
+            trigger=IntervalTrigger(hours=4),
             id="evolution_job",
         )
 
@@ -408,21 +410,36 @@ def main():
         # run reads engagement + history, updates personality.json: per-account
         # dossiers (category, stance, feelings, notes) + per-topic positions.
         # Replies become PERSONAL because the bot remembers each account.
-        log.info("Reflection agent: personality / memory update every 6 hours.")
+        log.info("Reflection agent: personality / memory update every 4 hours.")
         scheduler.add_job(
             safe_run_reflection_cycle,
-            trigger=IntervalTrigger(hours=6),
+            trigger=IntervalTrigger(hours=4),
             id="reflection_job",
+        )
+
+        # Scout agent — open-web FR-speaker recruitment. Every 4h, an agentic
+        # Claude run uses WebSearch + WebFetch to find the BEST FR-speaking AI /
+        # crypto / bourse accounts in France, Quebec, and the USA, filters by
+        # follower count (≥5k), appends to dynamic_accounts.json FR bucket, and
+        # auto-follows the top picks. Different from strategy_agent (which
+        # mines our engagement log) and discover_bot (which scrapes X search):
+        # this one investigates the open web for hidden gems we'd never see
+        # via X-internal signals. Hard caps: 8 added per cycle, 3 auto-follows.
+        log.info("Scout agent: open-web FR-speaker recruitment every 4 hours.")
+        scheduler.add_job(
+            safe_run_scout_cycle,
+            trigger=IntervalTrigger(hours=4),
+            id="scout_job",
         )
 
         # Quote-tweet bot — picks the most viral FR tweet in our niche and
         # quote-tweets it with a sharp meme observation. Cap 12/day, cadence
         # 90 min (was 120 min) on user directive 2026-04-26 PM. Different
         # distribution surface than replies — pure additive growth.
-        log.info("Quote-tweet bot: amplifying viral FR tweets every 90 min (cap 12/day).")
+        log.info("Quote-tweet bot: amplifying viral FR tweets every 75 min (cap 12/day).")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=90),
+            trigger=IntervalTrigger(minutes=75),
             id="quote_tweet_job",
         )
 

@@ -14,7 +14,7 @@ Uses Claude Code CLI for AI generation and Safari + AppleScript for browser auto
 
 **Engage Bot** - Auto-follows target accounts and likes their latest tweets. Static list + autonomously discovered handles + strategy-agent additions, all merged at runtime.
 
-**Notify + Boost Bot** - Likes replies on own tweets every 45 min. Replies in-thread to influencer replies (cap 3/cycle). Self-retweets every 3h (validated growth lever — pulled 200 views from one boost; cadence pushed 6h→4h→3h as the lever kept working).
+**Notify + Boost Bot** - Likes replies on own tweets every 35 min. Replies in-thread to influencer replies (dynamic 4-8/cycle by parent virality). Self-retweets every 2h (validated growth lever — pulled 200 views from one boost; cadence pushed 6h→4h→3h→2h as the lever kept working).
 
 **Discover Bot** - Every 3h: searches X for new FR AI/crypto/bourse handles, scores with Claude, persists approved ones, auto-follows the best FR ones.
 
@@ -26,11 +26,15 @@ Uses Claude Code CLI for AI generation and Safari + AppleScript for browser auto
 
 **Strategy Agent (autonomous self-improvement, INPUT side)** - Every 3h: agentic Claude run with Read + WebSearch + Bash tools. Reads `engagement_log.csv` (per-source ROI), looks up live FR AI/crypto/bourse trends, proposes new search queries + accounts. Python applies ADDITIONS only — never removes. Outputs land in `dynamic_queries.json` / `dynamic_accounts.json` and are merged at runtime by the reply bot. **No human in the loop.** Audit trail in `strategy_log.json`.
 
+**Scout Agent (open-web FR-speaker recruitment)** - Every 4h: agentic Claude run with WebSearch + WebFetch tools. Investigates the open web for the BEST FR-speaking AI / crypto / bourse / fintech / tech accounts in **France, Quebec, and the USA**. Filters by ≥5k followers, dedups against every known list, appends keepers to `dynamic_accounts.json` FR bucket, and AUTO-FOLLOWS the top picks (cap 3/cycle). Different signal than the Strategy Agent (engagement-log-based) and Discover Bot (X-search-based) — this one finds hidden gems via classements, blogs, lists. Audit trail in `scout_log.json`.
+
 **Evolution Agent (autonomous self-improvement, OUTPUT side)** - Every 6h: reads engagement_log + performance_log, identifies winning/losing patterns + dead/hot accounts, rewrites `directives.md` (loaded by all generation prompts), prunes accounts that produced 0 engagement (TTL 30d, max 3/cycle), reinforces accounts whose tweets converted into our top posts (max 5/cycle). Audit trail in `evolution_log.json`.
 
 **Reflection Agent (autobiographical brain)** - Every 6h: reads engagement + history, updates `personality.json` — per-account dossiers (category, stance, feelings, notes) + per-topic positions. Replies become PERSONAL because the bot remembers each account.
 
-**Quote-Tweet Bot** - Every 90 min, cap 12/day: picks the most viral FR tweet in our niches (min_faves:30, top tab) and quote-tweets it with a sharp meme observation. Different distribution surface than replies. Quote model: Haiku.
+**Quote-Tweet Bot** - Every 75 min, cap 12/day: picks the most viral FR tweet in our niches (min_faves:30, top tab) and quote-tweets it with a sharp meme observation. Different distribution surface than replies. Quote model: Haiku.
+
+**Daily Digest** - Hourly idempotent cron, writes one section per day to `daily_digest.md`: total actions, by-type breakdown, top sources, comedy patterns, top reply targets, top-perf posts, follow count delta. Built specifically for the 2-week post-mission review.
 
 **Early-Bird Bot** - Every ~7 min jittered (12-min freshness window). Scans 3 random accounts from a 75-account roster, replies to any tweet < 12 min old. Cap 2 replies/cycle. Top-5 reply on a viral tweet = 10-100x impressions multiplier. Quiet hours skip.
 
