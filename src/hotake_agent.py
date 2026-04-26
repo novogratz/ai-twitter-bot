@@ -10,12 +10,31 @@ Goal: makes people LAUGH OUT LOUD and screenshot the tweet.
 import re
 import subprocess
 from collections import Counter
+from datetime import datetime, timedelta
 from typing import Optional
 from .config import HOTAKE_MODEL
 from .logger import log
 from .performance import get_learnings_for_prompt
 from .history import get_recent_tweets
 from .topic_dedup import extract_recent_topics
+
+
+# URL date sniffer — many news outlets stamp /YYYY/MM/DD/ in their article
+# paths (CoinDesk, CNBC, NYT, Reuters, etc.). When present, this is a
+# reliable signal for publication date and we can hard-enforce the 48h
+# freshness rule that the LLM keeps bending. Returns the parsed datetime
+# or None if no date is found in the URL.
+_URL_DATE_RE = re.compile(r"/(20\d{2})/(\d{1,2})/(\d{1,2})/")
+
+
+def _url_publication_date(url: str) -> Optional[datetime]:
+    m = _URL_DATE_RE.search(url or "")
+    if not m:
+        return None
+    try:
+        return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+    except ValueError:
+        return None
 # Backwards-compat alias for any external code that imported the underscore name.
 _extract_recent_topics = extract_recent_topics
 
@@ -421,8 +440,20 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     # and let X render its native link-card. The URL stays IN the body.
     url_match = _HOTAKE_URL_RE.search(tweet)
     if url_match:
-        globals()["_last_source_url"] = url_match.group(0)
-        log.info(f"[HOTAKE] Source URL detected (X will render card): {url_match.group(0)}")
+        url = url_match.group(0)
+        # Defense-in-depth: many newsrooms stamp /YYYY/MM/DD/ in URLs. If
+        # the URL date is > 48h old, the LLM violated the freshness rule —
+        # reject the post Python-side. This is HARD enforcement; the LLM
+        # has shown it'll bend "ne dépasse pas 48h" when prompted softly.
+        pub_date = _url_publication_date(url)
+        if pub_date is not None:
+            age = datetime.now() - pub_date
+            if age > timedelta(hours=48):
+                log.info(f"[HOTAKE] URL is {age.days}d old (>48h) — SKIPPING stale source: {url}")
+                globals()["_last_source_url"] = None
+                return None
+        globals()["_last_source_url"] = url
+        log.info(f"[HOTAKE] Source URL detected (X will render card): {url}")
     else:
         globals()["_last_source_url"] = None
         # User directive 2026-04-26 PM: hot takes WITHOUT a source are not

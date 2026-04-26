@@ -697,6 +697,24 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     tweet, src_url = _extract_source(tweet)
     if src_url and src_url not in tweet:
         tweet = (tweet.rstrip() + "\n\n" + src_url).strip()
+    # Defense-in-depth 48h freshness check. Many newsrooms stamp
+    # /YYYY/MM/DD/ in URL paths; when they do, parse it and reject the
+    # tweet if the article is > 48h old — the LLM keeps soft-bending the
+    # rule. Imported lazily so the helper lives in hotake_agent only.
+    if src_url:
+        try:
+            from .hotake_agent import _url_publication_date
+            from datetime import datetime, timedelta
+            pub_date = _url_publication_date(src_url)
+            if pub_date is not None:
+                age = datetime.now() - pub_date
+                if age > timedelta(hours=48):
+                    log.info(f"[NEWS] URL is {age.days}d old (>48h) — SKIPPING stale source: {src_url}")
+                    globals()["_last_source_url"] = None
+                    globals()["_last_image_topic"] = None
+                    return None
+        except Exception:
+            pass
     globals()["_last_source_url"] = src_url
     # Only honour the image-topic fallback when there's NO article URL —
     # otherwise X's native link-card already covers the visual and an
