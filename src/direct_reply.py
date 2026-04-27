@@ -506,6 +506,15 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         # tweets (<12 min, often 0 likes) for the top-5-reply boost.
         likes = int(tweet.get("likes") or 0)
         replies = int(tweet.get("replies") or 0)
+        # Trust X's min_faves filter when scraper can't parse likes from
+        # search result pages (aria-label often empty on search DOM).
+        # If the query already guarantees N likes via min_faves:N, use that
+        # as floor so we don't discard valid high-engagement tweets.
+        if likes == 0 and source_detail:
+            import re as _re
+            _mf = _re.search(r'min_faves:(\d+)', source_detail)
+            if _mf:
+                likes = int(_mf.group(1))
         # 2026-04-26 PM user directive: "Comment everything where the
         # account has a good amount of followers in french, lets see at
         # least 1k followers. Comment everything literally. GO CRAZY."
