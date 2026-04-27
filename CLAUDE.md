@@ -125,6 +125,8 @@ These two rules are stamped into every generation prompt via `personality_store.
 
 **Early-bird bot** - Every ~7 min jittered (12-min freshness window). Scrapes 3 random accounts from a 75-account roster (FR media + crypto/bourse FR + AI mega EN), replies to any tweet < 12 min old. Hard cap 1 reply/cycle. Quiet 1am-7am Paris. Top-5 reply on a viral tweet = 10-100x impressions multiplier. Source-tagged `EARLYBIRD/<handle>`.
 
+**Retweet bot** - Every 95 min, cap 8/day. Selective amplifier of ELITE AI/crypto/bourse news from trusted outlets only (Reuters/Bloomberg/AFP/TechCrunch/The Information/Coindesk/Les Échos/Le Monde/FT/WSJ + curated FR journalists). Scrapes the trusted-handle roster, scores each candidate 1-10 on "is-this-worth-a-slot-in-tomorrow's-YouTube-video", retweets only if best ≥ 9/10. Side effect: every pick ≥ 8/10 is appended to `daily_news_picks.md` — that file IS the daily YouTube show research doc. Side benefit: notifies the original author (relationship signal with top-tier journalists / outlets). Distinct from boost (own tweet) and quote-tweet (our voice on top). Persistent dedup in `retweeted.json` (cap 1000).
+
 **Reciprocity loop** - Inside notify_bot replyback: after handling influencer/standalone replies, picks up to 3 non-influencer engagers at random (60% probability per candidate so the pattern isn't mechanical) and visits their profile to LIKE one tweet AND FOLLOW BACK if not already following. Reply = strongest follow-back signal there is.
 
 ### Files
@@ -158,6 +160,7 @@ These two rules are stamped into every generation prompt via `personality_store.
 - **`src/dynamic_strategy.py`** - Append-only stores: `dynamic_queries.json` (live + hot tabs) and `dynamic_accounts.json` (FR + EN). Read by direct_reply at runtime.
 - **`src/quote_tweet_bot.py`** - Quote-tweet path. Cap 2/day. Picks the single most-liked viral FR tweet and amplifies it with a sharp observation.
 - **`src/early_bird_bot.py`** - Early-bird reply path. ~5 min jittered (12-min freshness window), scans 3 of ~92 mega accounts (FR/QC/EN AI+crypto+bourse). Cap 2 replies per cycle. Top-5-reply is 10-100x impressions vs. late-reply.
+- **`src/retweet_bot.py`** - Selective retweet path. Every 95 min, cap 8/day. Trusted-source-only amplifier; picks ≥9/10 -> retweet, picks ≥8/10 -> appended to `daily_news_picks.md` (YouTube show research). Uses `twitter_client.retweet_post(url)` (presses 't'+Enter on tweet detail page). Persistent dedup `retweeted.json`.
 - **`src/daily_digest.py`** - Hourly idempotent job. Appends yesterday's rollup to `daily_digest.md`: per-day actions, top sources, comedy patterns, top reply targets, top-perf posts, follow count delta. Built for the 2-week post-mission review.
 - **`src/health.py`** - Safari watchdog. Each safe_run_*_cycle calls `record_success(label)` / `record_failure(label)`. After 3 consecutive failures (10-min cooldown), force-restart Safari via osascript. Audit trail in `autonomous_log.md`, state in `safari_health.json`.
 - **`src/pattern_tags.py`** - 6-pattern bandit attribution: REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER. Generation prompts emit `[PATTERN: <id>]` line, extracted server-side and logged into `engagement_log.csv` 6th column. Evolution agent computes per-pattern ROI from this.

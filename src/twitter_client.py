@@ -598,6 +598,34 @@ def post_thread(tweets: list[str]):
         log.info("[THREAD] Thread complete!")
 
 
+def retweet_post(tweet_url: str):
+    """Retweet an arbitrary tweet by URL.
+
+    Opens the tweet detail page, presses 't' (X retweet shortcut), then Enter
+    to confirm the 'Repost' menu item. Uses the same Safari lock as everything
+    else so it can't race with reply/post cycles.
+    """
+    with _safari_lock:
+        log.info(f"[RETWEET] Opening tweet: {tweet_url}")
+        webbrowser.open(tweet_url)
+        time.sleep(7)
+
+        _run_applescript('tell application "Safari" to activate')
+        time.sleep(1)
+
+        # Press 't' to open the retweet menu, then Enter to confirm "Repost".
+        _run_applescript('''
+        tell application "System Events"
+            keystroke "t"
+            delay 1.2
+            keystroke return
+        end tell
+        ''')
+        time.sleep(2)
+        log.info(f"[RETWEET] Reposted: {tweet_url}")
+        close_front_tab()
+
+
 def retweet_own_latest():
     """Visit own profile and retweet the latest tweet for extra exposure."""
     with _safari_lock:

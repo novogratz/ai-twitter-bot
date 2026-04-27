@@ -166,6 +166,7 @@ src/
   dynamic_strategy.py        # Append-only stores for strategy-agent additions
   quote_tweet_bot.py         # Quote-tweet path (cap 12/day, every 90 min)
   early_bird_bot.py          # Top-5-reply path on fresh viral tweets
+  retweet_bot.py             # Selective retweets of trusted news (cap 8/day, every 95 min)
   discover_bot.py            # Autonomous handle discovery (every 3h)
   roast_pgm_bot.py           # Dedicated 1-roast-per-tweet for @pgm_pm
   image_gen.py               # PNG quote-card generator (Pillow)

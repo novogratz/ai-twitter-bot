@@ -34,6 +34,7 @@ from src.scout_agent import safe_run_scout_cycle
 from src.daily_digest import safe_run_daily_digest
 from src.quote_tweet_bot import safe_run_quote_tweet_cycle
 from src.early_bird_bot import safe_run_early_bird_cycle
+from src.retweet_bot import safe_run_retweet_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 
 
@@ -449,6 +450,18 @@ def main():
             safe_run_quote_tweet_cycle,
             trigger=IntervalTrigger(minutes=75),
             id="quote_tweet_job",
+        )
+
+        # Retweet bot — selective amplifier for ELITE AI/crypto/bourse news
+        # from trusted outlets (Reuters/Bloomberg/TechCrunch/Coindesk/lesechos
+        # etc.). Cap 8/day. Picks single best candidate per cycle, only
+        # retweets if score ≥ 9/10. Side-effect: appends ≥8/10 picks to
+        # daily_news_picks.md — that file IS the YouTube show research doc.
+        log.info("Retweet bot: selective amplification of trusted news every 95 min (cap 8/day).")
+        scheduler.add_job(
+            safe_run_retweet_cycle,
+            trigger=IntervalTrigger(minutes=95),
+            id="retweet_job",
         )
 
         # Daily digest — append yesterday's rollup to daily_digest.md.
