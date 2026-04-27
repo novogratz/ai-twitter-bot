@@ -446,12 +446,14 @@ def _generate_single_reply(author: str, tweet_text: str):
 
 
 DIRECT_REPLY_MAX_PER_CYCLE = 9  # bumped 6→9 (+50%) on user directive 2026-04-26 — replies are the growth engine
+MAX_EN_REPLIES_PER_CYCLE = 2    # hard cap — forces 78%+ FR ratio (was ~50% without cap)
 
 
-def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=None):
+def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=None, en_counter=None):
     """Reply to a list of scraped tweets. Returns number of replies posted.
     `remaining` caps how many we'll send in this call (used to enforce the
-    cycle-wide DIRECT_REPLY_MAX_PER_CYCLE)."""
+    cycle-wide DIRECT_REPLY_MAX_PER_CYCLE).
+    `en_counter` is a mutable [int] tracking EN replies across the cycle."""
     posted = 0
     # Per-author cap inside this single call: 2 replies max to the same
     # handle. Without this, a heavily-active account (e.g. @Tradosaure
@@ -556,6 +558,14 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
                 log.info(f"[{source_name}] Off-niche topic — skipping @{author}: {text[:60]}")
                 continue
 
+        # Hard EN cap — 90%+ FR ratio mandate. Skip EN tweets once the
+        # cycle-wide EN budget is exhausted. PROFILE-EN is excluded from
+        # this check (it runs last and has its own budget awareness).
+        is_en_tweet = not _looks_french(text)
+        if is_en_tweet and en_counter is not None and en_counter[0] >= MAX_EN_REPLIES_PER_CYCLE:
+            log.info(f"[{source_name}] EN cap reached ({en_counter[0]}/{MAX_EN_REPLIES_PER_CYCLE}) — skipping EN tweet @{author}: {text[:60]}")
+            continue
+
         # Generate reply
         log.info(f"[{source_name}] Replying to @{author}: {text[:60]}...")
         reply = _generate_single_reply(author, text)
@@ -578,6 +588,8 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             except Exception:
                 pass  # logging failures must never block the bot
             posted += 1
+            if is_en_tweet and en_counter is not None:
+                en_counter[0] += 1
             if author_key:
                 per_author_count[author_key] = per_author_count.get(author_key, 0) + 1
             time.sleep(random.randint(10, 20))
@@ -596,6 +608,7 @@ def run_direct_reply_cycle():
     """
     replied = load_replied()
     total = 0
+    en_counter = [0]  # mutable — tracks EN replies across the cycle for the hard cap
 
     # Merge agent-proposed dynamic queries + accounts. Strategy agent appends to
     # these JSON files every cycle; we just consume them here. Append-only.
@@ -625,7 +638,7 @@ def run_direct_reply_cycle():
                 "url": t["url"], "text": t["text"], "author": username,
                 "likes": t.get("likes", 0), "replies": t.get("replies", 0),
             } for t in tweets]
-            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-FR", source_detail=username, remaining=_budget())
+            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-FR", source_detail=username, remaining=_budget(), en_counter=en_counter)
 
     # === SOURCE 2: Following feed (chronological, only accounts we follow — also big-account leaning) ===
     # Sort FR tweets first — same rationale as FEED below.
@@ -635,7 +648,7 @@ def run_direct_reply_cycle():
             following_tweets = scrape_following_feed(max_tweets=20)
             if following_tweets:
                 following_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
-                total += _reply_to_tweets(following_tweets, replied, "FOLLOWING", remaining=_budget())
+                total += _reply_to_tweets(following_tweets, replied, "FOLLOWING", remaining=_budget(), en_counter=en_counter)
         except Exception:
             log.info("[DIRECT] Following feed scrape failed:")
             traceback.print_exc()
@@ -648,7 +661,7 @@ def run_direct_reply_cycle():
         feed_tweets = scrape_home_feed(max_tweets=20)
         if feed_tweets:
             feed_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
-            total += _reply_to_tweets(feed_tweets, replied, "FEED", remaining=_budget())
+            total += _reply_to_tweets(feed_tweets, replied, "FEED", remaining=_budget(), en_counter=en_counter)
 
     # === SOURCE 4: HOT FR tweets (X's "Top" tab, min_faves) — fallback if curated didn't fill ===
     all_hot = HOT_TAB_QUERIES + dyn_queries.get("hot", [])
@@ -660,7 +673,7 @@ def run_direct_reply_cycle():
         try:
             hot_tweets = scrape_x_search(query, max_tweets=12, tab="top")
             if hot_tweets:
-                total += _reply_to_tweets(hot_tweets, replied, "SEARCH-FR-HOT", source_detail=query, remaining=_budget())
+                total += _reply_to_tweets(hot_tweets, replied, "SEARCH-FR-HOT", source_detail=query, remaining=_budget(), en_counter=en_counter)
         except Exception:
             log.info(f"[DIRECT] HOT search failed for {query}:")
             traceback.print_exc()
@@ -674,7 +687,7 @@ def run_direct_reply_cycle():
         log.info(f"[DIRECT] === FR Search (live): {query} ===")
         search_tweets = scrape_x_search(query, max_tweets=15, tab="live")
         if search_tweets:
-            total += _reply_to_tweets(search_tweets, replied, "SEARCH-FR-LIVE", source_detail=query, remaining=_budget())
+            total += _reply_to_tweets(search_tweets, replied, "SEARCH-FR-LIVE", source_detail=query, remaining=_budget(), en_counter=en_counter)
 
     # === SOURCE 4: English influencer profiles - more accounts, more tweets ===
     all_en = filter_and_weight(EN_ACCOUNTS + dyn_accounts.get("en", []))
@@ -692,7 +705,8 @@ def run_direct_reply_cycle():
             total += _reply_to_tweets(profile_tweets, replied, "PROFILE-EN", source_detail=username, remaining=_budget())
 
     save_replied(replied)
-    log.info(f"[DIRECT] Total: {total} replies posted this cycle (cap {DIRECT_REPLY_MAX_PER_CYCLE}).")
+    fr_count = total - en_counter[0]
+    log.info(f"[DIRECT] Total: {total} replies (FR:{fr_count} EN:{en_counter[0]}, cap {DIRECT_REPLY_MAX_PER_CYCLE}).")
 
 
 def safe_run_direct_reply_cycle():
