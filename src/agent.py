@@ -742,6 +742,7 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
             "--allowedTools", "WebSearch",
             "--model", NEWS_MODEL,
             "--output-format", "json",
+            "--no-session-persistence",
         ],
         capture_output=True,
         text=True,

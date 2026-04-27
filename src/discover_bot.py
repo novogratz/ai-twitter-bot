@@ -181,7 +181,7 @@ Output rien d'autre que le JSON."""
 
     try:
         result = subprocess.run(
-            ["claude", "-p", prompt, "--model", REPLY_MODEL],
+            ["claude", "-p", prompt, "--model", REPLY_MODEL, "--no-session-persistence"],
             capture_output=True, text=True, timeout=120,
         )
         if result.returncode != 0:

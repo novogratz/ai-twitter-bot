@@ -136,7 +136,7 @@ def _generate_roast(tweet_text: str) -> Optional[str]:
     prompt = ROAST_PROMPT.format(tweet=safe)
     try:
         result = subprocess.run(
-            ["claude", "-p", prompt, "--model", ROAST_MODEL, "--output-format", "json"],
+            ["claude", "-p", prompt, "--model", ROAST_MODEL, "--output-format", "json", "--no-session-persistence"],
             capture_output=True, text=True, timeout=120,
         )
         if result.returncode != 0:

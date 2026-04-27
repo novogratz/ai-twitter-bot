@@ -422,7 +422,7 @@ def _generate_single_reply(author: str, tweet_text: str):
 
     try:
         result = subprocess.run(
-            ["claude", "-p", prompt, "--model", REPLY_MODEL, "--output-format", "json"],
+            ["claude", "-p", prompt, "--model", REPLY_MODEL, "--output-format", "json", "--no-session-persistence"],
             capture_output=True, text=True, timeout=30,
         )
         if result.returncode != 0:

@@ -257,7 +257,7 @@ def _score_candidates(candidates: list):
     prompt = SCORE_PROMPT.format(candidates="\n".join(listing))
     try:
         result = subprocess.run(
-            ["claude", "-p", prompt, "--model", QUOTE_MODEL, "--output-format", "json"],
+            ["claude", "-p", prompt, "--model", QUOTE_MODEL, "--output-format", "json", "--no-session-persistence"],
             capture_output=True, text=True, timeout=45,
         )
         if result.returncode != 0:

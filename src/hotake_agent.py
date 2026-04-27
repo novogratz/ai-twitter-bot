@@ -464,6 +464,7 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
             "-p", prompt,
             "--model", HOTAKE_MODEL,
             "--output-format", "json",
+            "--no-session-persistence",
         ],
         capture_output=True,
         text=True,

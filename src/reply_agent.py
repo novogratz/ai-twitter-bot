@@ -379,6 +379,7 @@ def generate_replies(recent_topics=None, already_replied=None):
             "--allowedTools", "WebSearch",
             "--model", REPLY_MODEL,
             "--output-format", "json",
+            "--no-session-persistence",
         ],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,

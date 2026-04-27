@@ -69,6 +69,7 @@ def generate_replyback(original_tweet: str, their_reply: str, author: str = "") 
             "-p", prompt,
             "--model", REPLY_MODEL,
             "--output-format", "json",
+            "--no-session-persistence",
         ],
         capture_output=True,
         text=True,
