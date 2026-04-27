@@ -372,6 +372,13 @@ def generate_replies(recent_topics=None, already_replied=None):
     )
 
     log.info("[REPLY] Running Claude CLI (searching X)...")
+    # cwd=/tmp: when Claude CLI is invoked from inside a project dir with
+    # CLAUDE.md and git context, parallel REPLY-search threads occasionally
+    # hallucinate prose responses ("1 reply postée:") instead of returning
+    # the requested JSON envelope — likely the project context cross-bleeds
+    # between concurrent CLI sessions. Running from /tmp gives each call a
+    # neutral CWD with no CLAUDE.md / git repo to leak in. Hit 7
+    # hallucinations between 16:00-19:34 (2026-04-27) → escalation threshold.
     proc = subprocess.Popen(
         [
             "claude",
@@ -384,6 +391,7 @@ def generate_replies(recent_topics=None, already_replied=None):
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
+        cwd="/tmp",
     )
     stdout, stderr = proc.communicate()
     if proc.returncode != 0:
