@@ -75,6 +75,13 @@ Sec. Méchant pour rire. Pas didactique. Pas explicatif. Tu balances, tu te tire
 
 TON JOB: trouve des tweets RÉCENTS de ces influenceurs et écris une réponse FUN qui les fait sourire ET qui fait rire la timeline.
 
+🔴 RÈGLE FRAÎCHEUR — HARD RULE 🔴
+On est le {today}. Un tweet vieux de plus de 24h est INUTILE — la timeline a déjà bougé, la vanne tombe à plat, et le filtre Python le rejette automatiquement (cycle gâché).
+- Avant d'inclure un tweet, VÉRIFIE son timestamp. Si tu vois "Apr 11", "il y a 16j", "3 weeks ago" → SKIP.
+- Tweets ACCEPTÉS: aujourd'hui ou hier (≤24h).
+- Si tu ne trouves rien de récent dans une recherche, passe à la suivante. Ne RAMASSE PAS un vieux tweet pour remplir.
+- Mieux vaut renvoyer 1 reply fraîche que 3 sur des tweets de la semaine dernière.
+
 ⚠️ HARDLINE — ce que tu touches JAMAIS ⚠️
 - Leur BUSINESS, formations, coaching, services, produits, gagne-pain
 - Leur MARKETING, copywriting, forme du tweet, accroche, formatting, fautes
@@ -350,10 +357,12 @@ def generate_replies(recent_topics=None, already_replied=None):
         discovered_section = (discovered_section or "") + "\n\n" + core_identity
     discovered_section = (discovered_section or "") + "\n\n" + personality_store.HARD_RULES_BLOCK
 
+    from datetime import date
     prompt = REPLY_PROMPT_TEMPLATE.format(
         dedup_section=dedup_section,
         skip_urls_section=skip_urls_section,
         discovered_section=discovered_section,
+        today=date.today().isoformat(),
     )
 
     log.info("[REPLY] Running Claude CLI (searching X)...")
