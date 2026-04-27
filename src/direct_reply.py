@@ -591,6 +591,18 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         reply = humanize(reply)
         log.info(f"[{source_name}] Reply ({len(reply)} chars): {reply}")
 
+        # Race-condition guard: REPLY-search / EARLYBIRD / QUOTE run in
+        # parallel APScheduler threads and write to replied_tweets.json,
+        # but our in-memory `replied` set was loaded once at cycle start
+        # (line ~625) and doesn't see their mid-cycle writes. Re-check
+        # disk right before locking. Bug 2026-04-27 17:51: REPLY-search
+        # and PROFILE-FR both replied to theinformation/2048114856746787094
+        # within 30s — same URL surfaced via @PowerHasheur retweet.
+        disk_replied = load_replied()
+        if url in disk_replied:
+            log.info(f"[{source_name}] Cross-path dedup: {url} replied via another bot mid-cycle — skipping.")
+            continue
+
         # Lock URL in BEFORE posting so an interrupted/retried run can't double-reply.
         replied.add(url)
         save_replied(replied)
