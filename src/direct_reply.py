@@ -1,4 +1,5 @@
 """Direct reply: visits influencer profiles, scrapes tweets, generates replies, posts them."""
+import json
 import os
 import re
 import subprocess

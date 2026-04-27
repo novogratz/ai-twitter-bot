@@ -1,4 +1,5 @@
 """Browser automation for X/Twitter via Safari + AppleScript (macOS only)."""
+import json
 import subprocess
 import threading
 import time

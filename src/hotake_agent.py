@@ -7,6 +7,7 @@ Goal: makes people LAUGH OUT LOUD and screenshot the tweet.
 - FUNNY: laugh-out-loud, not just nod
 - Troll the IDEAS, the TRENDS, the SYSTEM. NEVER mock the audience or specific people.
 """
+import json
 import re
 import subprocess
 from collections import Counter
