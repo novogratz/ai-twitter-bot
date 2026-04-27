@@ -59,13 +59,13 @@ EARLY_BIRD_ACCOUNTS = [
     "FinTales_", "ZonebourseFR",
     # === FR media (mass distribution + breaking news) ===
     "BFMTV", "BFMBourse", "lemondefr", "lesechos", "Capital",
-    "InvestirLeJournal", "LeRevenu_fr", "Le_Figaro", "France24",
+    "Le_Figaro", "France24",  # InvestirLeJournal (>15 char) + LeRevenu_fr (0% scrape) removed 2026-04-27
     # === Markets EN ===
     "unusual_whales", "chamath", "jimcramer",
     # === Tech media EN ===
     "TechCrunch", "TheVerge", "WIRED",
     # === FR/QC additions 2026-04-26 — big AI/crypto/bourse voices ===
-    "Yoshua_Bengio", "Montreal_AI", "defendintelligence", "ActuIAFr",
+    "Yoshua_Bengio", "Montreal_AI", "ActuIAFr",  # defendintelligence (>15 char) removed 2026-04-27
     "Tradosaure", "InvestQuebec", "FI_Quebec", "investirfr", "cryptoqc",
     "lesaffaires", "BourseFrance",
 ]

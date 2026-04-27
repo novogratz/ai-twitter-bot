@@ -49,7 +49,7 @@ TARGET_ACCOUNTS = [
 
     # === Crypto: Mega accounts ===
     "VitalikButerin", "APompliano", "CryptoCapo_",
-    "caborashedzaborashedles", "brian_armstrong",
+    "brian_armstrong",
 
     # === Crypto: Influencers FR ===
     "PowerHasheur", "Capetlevrai", "Dark_Emi_",
@@ -65,7 +65,7 @@ TARGET_ACCOUNTS = [
     "NCheron_bourse", "RodolpheSteffan", "IVTrading",
     "DereeperVivre", "MathieuL1",
     "ThomasVeillet", "YoannLOPEZ",
-    "InvestirLeJournal", "LeRevenu_fr", "Capital",
+    "Capital",  # InvestirLeJournal (>15 char) + LeRevenu_fr (0% scrape) removed 2026-04-27
 
     # === Bourse/Finance: US ===
     "chamath", "jimcramer", "unusual_whales",

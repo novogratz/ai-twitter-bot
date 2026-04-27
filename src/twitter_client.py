@@ -240,10 +240,14 @@ def quote_tweet(tweet_url: str, comment: str):
 
 def follow_account(username: str):
     """Visit a user's profile and click the Follow button."""
-    # Sanitize: strip whitespace + leading @, reject display-name garbage
-    # (e.g. "aisha mansion" with internal space — that's not a handle).
+    # Sanitize: strip whitespace + leading @, reject display-name garbage.
+    # X handles are [A-Za-z0-9_]{1,15}. Anything else (spaces, slashes, > 15 chars,
+    # accents, punctuation) is a scraper artifact like "aisha mansion" or
+    # "caborashedzaborashedles" and would just burn a profile-visit + 5s sleep.
     username = (username or "").strip().lstrip("@")
-    if not username or " " in username or "/" in username:
+    if not username or len(username) > 15 or not all(
+        c.isascii() and (c.isalnum() or c == "_") for c in username
+    ):
         log.info(f"[FOLLOW] Invalid handle '{username}' — skipping.")
         return
     with _safari_lock:
