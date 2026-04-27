@@ -118,8 +118,10 @@ def run_engage_cycle():
         try:
             if username not in followed:
                 log.info(f"[ENGAGE] Following + liking @{username}...")
-                follow_account(username)
-                followed.add(username)
+                if follow_account(username):
+                    followed.add(username)
+                # If JS-click didn't fire, skip the followed.add so we retry next cycle.
+                # The like-pass below still runs regardless — engagement happens either way.
                 time.sleep(random.randint(2, 4))
 
             log.info(f"[ENGAGE] Liking @{username}'s latest tweets...")

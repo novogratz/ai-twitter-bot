@@ -238,8 +238,14 @@ def quote_tweet(tweet_url: str, comment: str):
         close_front_tab()
 
 
-def follow_account(username: str):
-    """Visit a user's profile and click the Follow button."""
+def follow_account(username: str) -> bool:
+    """Visit a user's profile and click the Follow button.
+
+    Returns True only when the JS click actually fired (best-effort signal).
+    Callers MUST check the return value before marking a handle as followed,
+    otherwise transient AppleScript/Safari hiccups will pollute
+    followed_accounts.json with false-positives we never retry.
+    """
     # Sanitize: strip whitespace + leading @, reject display-name garbage.
     # X handles are [A-Za-z0-9_]{1,15}. Anything else (spaces, slashes, > 15 chars,
     # accents, punctuation) is a scraper artifact like "aisha mansion" or
@@ -249,7 +255,7 @@ def follow_account(username: str):
         c.isascii() and (c.isalnum() or c == "_") for c in username
     ):
         log.info(f"[FOLLOW] Invalid handle '{username}' — skipping.")
-        return
+        return False
     with _safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"[FOLLOW] Visiting profile: {profile_url}")
@@ -266,12 +272,14 @@ def follow_account(username: str):
             " in current tab of front window
         end tell
         '''
-        if _run_applescript(follow_script):
+        ok = _run_applescript(follow_script)
+        if ok:
             time.sleep(2)
             log.info(f"[FOLLOW] Followed @{username}!")
         else:
             log.info(f"[FOLLOW] Could not follow @{username} via JS, skipping.")
         close_front_tab()
+        return ok
 
 
 def visit_profile_and_like(username: str, like_count: int = 2):

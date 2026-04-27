@@ -244,7 +244,9 @@ def _auto_follow(top_picks: list) -> list:
             continue
         try:
             log.info(f"[SCOUT-AGENT] Auto-following @{h} ({pick['region']}, {pick['niche']}, ~{pick['followers']:,} followers)...")
-            follow_account(h)
+            ok = follow_account(h)
+            if not ok:
+                continue  # JS-click didn't fire — leave for retry next cycle
             followed.add(h)
             newly.append(h)
         except Exception as e:

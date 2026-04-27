@@ -103,7 +103,7 @@ These two rules are stamped into every generation prompt via `personality_store.
 
 **Notify + Boost bot** - Like replies on own tweets every 20 min (was 45→35→20, accelerated 2026-04-26 PM with WARMUP-on-startup so reply-to-replies fires immediately, not after 35-45 min cold-start). When an INFLUENCER replies under our tweet, reply IN-THREAD (lands under their reply) — otherwise standalone @mention. Self-retweet every 6 hours.
 
-**Discover bot** - Every 6h: searches X, scores candidates with Claude, appends approved handles to `discovered_accounts.json`. Also auto-follows the best new FR ai/crypto/bourse handles (persisted in `followed_accounts.json`).
+**Discover bot** - Every 6h: searches X, scores candidates with Claude, appends approved handles to `discovered_accounts.json`. Also auto-follows the best new FR ai/crypto/bourse handles (persisted in `followed_accounts.json`). **2026-04-27 follow-success bug**: `twitter_client.follow_account()` used to return `None` whether the JS-click fired or not, and every caller (discover/scout/engage/notify-reciprocate) blindly added the handle to `followed_accounts.json`. When 7 jobs collided at 13:25:59 and Safari's front-window context went stale, 3 follows silently failed yet were marked done, blocking future retries. Fix: `follow_account` now returns `bool`; all 4 callers check it and only persist on true successes, so transient JS-fails get retried next cycle instead of being lost.
 
 **Roast bot** - Every ~20 min jittered: visits @pgm_pm's profile, posts up to 3 sarcastic replies on his original tweets (1 per URL via existing dedup). Quiet 1am-7am Paris. His replies on our tweets stay blocked via BLOCKLIST so no loop.
 

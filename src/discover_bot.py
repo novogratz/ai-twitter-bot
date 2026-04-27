@@ -110,7 +110,11 @@ def _auto_follow_best(approved: list, discovered_state: list) -> list:
 
         log.info(f"[DISCOVER] Auto-following @{handle} ({category}, fr)...")
         try:
-            follow_account(handle)
+            ok = follow_account(handle)
+            if not ok:
+                # JS click didn't fire (transient Safari race or stale selector).
+                # Don't pollute followed_accounts.json — leave it out so we retry next cycle.
+                continue
             followed.add(handle)
             newly_followed.append(handle)
             # Mark in discovered state so the JSON shows we acted on this entry

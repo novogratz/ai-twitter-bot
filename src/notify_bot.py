@@ -219,9 +219,10 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 3):
             # this is the highest-conversion follow we can make.
             if handle not in followed:
                 try:
-                    follow_account(handle)
-                    followed.add(handle)
-                    log.info(f"[RECIPROCATE] Followed back @{handle}.")
+                    if follow_account(handle):
+                        followed.add(handle)
+                        log.info(f"[RECIPROCATE] Followed back @{handle}.")
+                    # If JS-click didn't fire, leave it out so we retry next reciprocity pass.
                 except Exception:
                     log.info(f"[RECIPROCATE] Follow @{handle} failed:")
                     traceback.print_exc()
