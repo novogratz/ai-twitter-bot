@@ -12,6 +12,14 @@ def setup_logging(level: str = "INFO") -> logging.Logger:
     """Configure structured logging with rotation. Returns root logger."""
     logger = logging.getLogger("bot")
     logger.setLevel(getattr(logging, level.upper(), logging.INFO))
+    # Prevent duplicate lines: don't propagate to root logger (APScheduler
+    # or other libs may add a StreamHandler there via basicConfig).
+    logger.propagate = False
+
+    # Guard against duplicate handlers if this function is called more than once
+    # (e.g. module reimport, test setup).
+    if logger.handlers:
+        return logger
 
     fmt = logging.Formatter(
         "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
