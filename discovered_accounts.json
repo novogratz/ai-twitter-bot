@@ -1,47 +1,6 @@
 [
   {
-    "handle": "joshua walker",
-    "category": "bourse",
-    "added": "2026-04-25",
-    "followed": true
-  },
-  {
-    "handle": "victor baissait",
-    "category": "crypto",
-    "added": "2026-04-25",
-    "followed": true
-  },
-  {
-    "handle": "xtb france",
-    "category": "bourse",
-    "added": "2026-04-25",
-    "followed": true
-  },
-  {
-    "handle": "lonqua option",
-    "category": "bourse",
-    "added": "2026-04-25",
-    "followed": true
-  },
-  {
-    "handle": "ind\u00e9pendance financi\u00e8re",
-    "category": "bourse",
-    "added": "2026-04-25",
-    "followed": true
-  },
-  {
-    "handle": "antoine andreani",
-    "category": "bourse",
-    "added": "2026-04-25",
-    "followed": true
-  },
-  {
     "handle": "namecoinnews",
-    "category": "ai",
-    "added": "2026-04-25"
-  },
-  {
-    "handle": "b. northern",
     "category": "ai",
     "added": "2026-04-25"
   },
@@ -51,33 +10,58 @@
     "added": "2026-04-25"
   },
   {
-    "handle": "yannick nick",
-    "category": "ai",
-    "added": "2026-04-25"
-  },
-  {
-    "handle": "leo is bringing ai to main st",
-    "category": "ai",
-    "added": "2026-04-25"
-  },
-  {
-    "handle": "let's data science",
-    "category": "ai",
-    "added": "2026-04-25"
-  },
-  {
-    "handle": "manzoor strange",
-    "category": "ai",
-    "added": "2026-04-25"
-  },
-  {
-    "handle": "dan kornas",
-    "category": "ai",
-    "added": "2026-04-25"
-  },
-  {
     "handle": "cliff101",
     "category": "ai",
     "added": "2026-04-25"
+  },
+  {
+    "handle": "maddyness",
+    "category": "tech",
+    "added": "2026-04-26"
+  },
+  {
+    "handle": "media24fr",
+    "category": "ai",
+    "added": "2026-04-26",
+    "followed": true
+  },
+  {
+    "handle": "boubacar36",
+    "category": "tech",
+    "added": "2026-04-26"
+  },
+  {
+    "handle": "gillesklein",
+    "category": "ai",
+    "added": "2026-04-26",
+    "followed": true
+  },
+  {
+    "handle": "kakoum",
+    "category": "ai",
+    "added": "2026-04-27",
+    "followed": true
+  },
+  {
+    "handle": "lachaineaudio",
+    "category": "ai",
+    "added": "2026-04-27",
+    "followed": true
+  },
+  {
+    "handle": "fraudbrief",
+    "category": "crypto",
+    "added": "2026-04-27",
+    "followed": true
+  },
+  {
+    "handle": "rabs",
+    "category": "crypto",
+    "added": "2026-04-27"
+  },
+  {
+    "handle": "dekos",
+    "category": "crypto",
+    "added": "2026-04-27"
   }
 ]

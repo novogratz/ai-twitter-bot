@@ -221,9 +221,15 @@ def run_discovery_cycle():
             continue
 
         for t in tweets or []:
-            handle = (t.get("author") or "").strip().lower()
+            handle = (t.get("author") or "").strip().lstrip("@").lower()
             text = t.get("text") or ""
             if not handle or handle == "unknown":
+                continue
+            # Reject display-name leaks ("btc inflow", "jerome colombain | monde numérique")
+            # — the scraper occasionally hands back the rendered name instead of the @handle.
+            # A real X handle is [A-Za-z0-9_]{1,15}; anything with whitespace or punctuation
+            # other than underscore is a display-name and would just burn follow attempts.
+            if any(c not in "abcdefghijklmnopqrstuvwxyz0123456789_" for c in handle) or len(handle) > 15:
                 continue
             if handle in known or handle in candidates_by_handle:
                 continue
