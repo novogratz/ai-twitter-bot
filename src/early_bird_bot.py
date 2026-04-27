@@ -21,7 +21,7 @@ from .config import BLOCKLIST, BOT_HANDLE
 from .logger import log
 from .twitter_client import scrape_profile_tweets, reply_to_tweet
 from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url
-from .direct_reply import _generate_single_reply
+from .direct_reply import _generate_single_reply, _is_on_niche
 from .engagement_log import log_reply
 from .humanizer import humanize
 
@@ -126,6 +126,16 @@ def run_early_bird_cycle():
                 continue  # too late — drops down to standard reply bot territory
             if age < 0 or age > 9000:
                 continue  # parse failure / clock skew
+
+            # Niche gate — earlybird scans broad media accounts (BFMTV, France24,
+            # unusual_whales, etc.), so fresh tweets are often off-mission
+            # (aviation pricing, foreign politics, sports). The bot still produced
+            # OK punchlines but it drifts the account brand and burns cap budget on
+            # tweets that won't convert FR AI/crypto/bourse readers. Reuse the same
+            # word-boundary regex direct_reply uses for FOLLOWING/FEED.
+            if not _is_on_niche(text):
+                log.info(f"[EARLYBIRD] Off-niche topic — skipping @{username}: {text[:60]}")
+                continue
 
             log.info(f"[EARLYBIRD] FRESH ({age}min) @{username}: {text[:80]}...")
             reply = _generate_single_reply(username, text)
