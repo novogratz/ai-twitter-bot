@@ -16,7 +16,7 @@ Uses Claude Code CLI for AI generation and Safari + AppleScript for browser auto
 
 **Notify + Boost Bot** - Likes replies on own tweets every 35 min. Replies in-thread to influencer replies (dynamic 4-8/cycle by parent virality). Self-retweets every 2h (validated growth lever — pulled 200 views from one boost; cadence pushed 6h→4h→3h→2h as the lever kept working).
 
-**Discover Bot** - Every 3h: searches X for new FR AI/crypto/bourse handles, scores with Claude, persists approved ones, auto-follows the best FR ones.
+**Discover Bot** - Every 3h: searches X for new FR AI/crypto/bourse handles, scores with Claude, persists approved ones, auto-follows the best FR ones. `follow_account` returns a bool so a transient JS-click failure (Safari race) leaves the handle out of `followed_accounts.json` and gets retried next cycle instead of being silently dropped.
 
 **Roast Bot** - Every ~12-17 min jittered: 1-roast-per-tweet sarcastic reply on @pgm_pm's original tweets. URL-deduped hard cap. **Circuit breaker** — 8 consecutive empty scrapes (target suspended/blocking us/private) → 24h pause, auto-resets so a recovery is detected within a day. Quiet hours skip. Roast model: Haiku (one-liners off fixed pattern, frees Sonnet/Opus budget).
 
