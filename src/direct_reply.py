@@ -47,6 +47,75 @@ _PT_MARKERS = re.compile(
 )
 
 
+# === Niche scope regex (shared by FOLLOWING + FEED filters) ===
+# Word-boundary matching only — substring "ai" matches French
+# plaisir/vrai/j'ai/vais and falsely passes off-niche tweets.
+_NICHE_PATTERN = re.compile(
+    r"\b("
+    # AI / tech-as-equity
+    r"ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|"
+    r"gemini|grok|xai|deepseek|huggingface|nvidia|cuda|gpu|tpu|"
+    r"agent|agents|robot|robots|humanoide|humanoïde|llm|"
+    r"machine\s*learning|ml|deep\s*learning|neural|"
+    r"saas|software|cloud|datacenter|"
+    # AI coding tools / dev — exploding sub-niche
+    r"codex|copilot|cursor|windsurf|replit|"
+    r"programmer|programmers|programmeur|programmeurs|"
+    r"coding|coder|coders|développeur|developpeur|developers?|devs?|"
+    r"ide|api|sdk|"
+    # Crypto
+    r"crypto|btc|bitcoin|eth|ethereum|sol|solana|xrp|"
+    r"blockchain|defi|stablecoin|token|altcoin|memecoin|nft|"
+    r"wallet|binance|coinbase|kraken|satoshi|halving|"
+    r"web3|dao|staking|yield|dex|cex|"
+    # Investment / markets / macro
+    r"bourse|action|actions|stock|stocks|marché|marchés|"
+    r"trading|trader|traders|invest|investir|investiss\w*|"
+    r"portefeuille|etf|pea|cto|"
+    r"cac|cac40|s&p|nasdaq|dow|dax|nikkei|"
+    r"fed|bce|taux|powell|lagarde|"
+    r"obligations?|rendement|dividendes?|ipo|valuation|valo|"
+    r"per|p/e|pe\s*ratio|peg|ebitda|fcf|roe|roic|"
+    r"livret\s*a|livret|assurance[\s-]vie|"
+    r"levée|fund|funding|vc|venture|startups?|scale-?up|"
+    r"banques?|bancaire|fintech|néobanques?|neobanques?|revolut|boursorama|"
+    r"carte\s*bancaire|paiement|paiements|virement|swift|sepa|"
+    r"immo|immobilier|logement|locatif|real\s*estate|rentab\w*|"
+    r"inflation|récession|recession|"
+    r"earnings|résultats?|deal|acquisition|merger|m&a|"
+    r"finance\w*|financi\w*|cotation|"
+    # Macro / fiscal / sovereign
+    r"dette\w*|déficit|fiscal\w*|fiscalité|impôts?|impot|impots|"
+    r"budget\w*|déflation|monétaire|monetaire|souverain\w*|"
+    r"oat|spread|notation|moody|moody's|s&p\s*global|"
+    # Crypto/AI/Big Tech brands
+    r"openai|anthropic|tesla|meta|microsoft|google|amazon|"
+    r"apple|netflix|alphabet|spotify|uber|airbnb|palantir|"
+    r"shopify|stripe|databricks|snowflake|datadog|cloudflare"
+    r")\b",
+    re.IGNORECASE,
+)
+_TICKER_RE = re.compile(r"\$[A-Z]{1,5}\b")
+
+def _is_on_niche(text: str) -> bool:
+    """Return True if tweet text matches AI/crypto/bourse niche."""
+    return bool(_NICHE_PATTERN.search(text) or _TICKER_RE.search(text))
+
+# === FR detection — used to sort FEED tweets FR-first ===
+_FR_MARKERS = re.compile(
+    r"\b(le|la|les|un|une|des|du|dans|pour|sur|avec|pas|est|sont|"
+    r"mais|aussi|très|tout|cette|qui|que|quand|comme|entre|depuis|"
+    r"faire|faut|peut|encore|selon|même|après|avant|bien|sans|"
+    r"nous|vous|ils|elles|notre|votre|leur|ces|son|ses|ses|"
+    r"marché|bourse|taux|année|être|avoir|rien|jamais|toujours)\b",
+    re.IGNORECASE,
+)
+
+def _looks_french(text: str) -> bool:
+    """Quick heuristic: >=3 FR marker words → likely French."""
+    return len(_FR_MARKERS.findall(text)) >= 3
+
+
 def _is_fr_or_en(text: str) -> bool:
     """Return True only if `text` looks like French or English. Drops
     Cyrillic / Arabic / CJK / Hindi / Korean unconditionally, plus tweets
@@ -477,67 +546,13 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             log.info(f"[{source_name}] Non-FR/EN tweet — skipping @{author}: {text[:60]}")
             continue
 
-        # Topic-scope gate for FOLLOWING feed only.
-        # User directive 2026-04-26 PM: "ON AI AND OR CRYPTO AND OR INVESTMENT.
-        # THATS YOUR JOB". The Following feed pulls a chronological dump of
-        # everyone we follow (including auto-followed reciprocity follows
-        # who post off-niche stuff: motos, gas prices, DJ sets). Random off-
-        # topic replies waste budget and drift the brand. PROFILE-FR is
-        # already vetted; SEARCH is anchored to niche queries; FOLLOWING is
-        # the only path that needs an inline scope filter.
-        if source_name.startswith("FOLLOWING"):
-            # Word-boundary matching only — substring "ai" matches French
-            # plaisir/vrai/j'ai/vais and falsely passes off-niche tweets.
-            _NICHE_PATTERN = re.compile(
-                r"\b("
-                # AI / tech-as-equity
-                r"ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|"
-                r"gemini|grok|xai|deepseek|huggingface|nvidia|cuda|gpu|tpu|"
-                r"agent|agents|robot|robots|humanoide|humanoïde|llm|"
-                r"machine\s*learning|ml|deep\s*learning|neural|"
-                r"saas|software|cloud|datacenter|"
-                # AI coding tools / dev — exploding sub-niche
-                r"codex|copilot|cursor|windsurf|replit|"
-                r"programmer|programmers|programmeur|programmeurs|"
-                r"coding|coder|coders|développeur|developpeur|developers?|devs?|"
-                r"ide|api|sdk|"
-                # Crypto
-                r"crypto|btc|bitcoin|eth|ethereum|sol|solana|xrp|"
-                r"blockchain|defi|stablecoin|token|altcoin|memecoin|nft|"
-                r"wallet|binance|coinbase|kraken|satoshi|halving|"
-                r"web3|dao|staking|yield|dex|cex|"
-                # Investment / markets / macro
-                r"bourse|action|actions|stock|stocks|marché|marchés|"
-                r"trading|trader|traders|invest|investir|investiss\w*|"
-                r"portefeuille|etf|pea|cto|"
-                r"cac|cac40|s&p|nasdaq|dow|dax|nikkei|"
-                r"fed|bce|taux|powell|lagarde|"
-                r"obligations?|rendement|dividendes?|ipo|valuation|valo|"
-                r"per|p/e|pe\s*ratio|peg|ebitda|fcf|roe|roic|"
-                r"livret\s*a|livret|assurance[\s-]vie|"
-                r"levée|fund|funding|vc|venture|startups?|scale-?up|"
-                r"banques?|bancaire|fintech|néobanques?|neobanques?|revolut|boursorama|"
-                r"carte\s*bancaire|paiement|paiements|virement|swift|sepa|"
-                r"immo|immobilier|logement|locatif|real\s*estate|rentab\w*|"
-                r"inflation|récession|recession|"
-                r"earnings|résultats?|deal|acquisition|merger|m&a|"
-                r"finance\w*|financi\w*|cotation|"
-                # Macro / fiscal / sovereign — public finances are
-                # market-relevant (OAT spreads, taxation, deficit → bonds).
-                r"dette\w*|déficit|fiscal\w*|fiscalité|impôts?|impot|impots|"
-                r"budget\w*|déflation|monétaire|monetaire|souverain\w*|"
-                r"oat|spread|notation|moody|moody's|s&p\s*global|"
-                # Crypto/AI/Big Tech brands that don't match generic words
-                r"openai|anthropic|tesla|meta|microsoft|google|amazon|"
-                r"apple|netflix|alphabet|spotify|uber|airbnb|palantir|"
-                r"shopify|stripe|databricks|snowflake|datadog|cloudflare"
-                r")\b",
-                re.IGNORECASE,
-            )
-            # Stock tickers like $AAPL, $TSLA, $BTC are unambiguous equity
-            # signals — match anything that looks like a 1-5 letter cashtag.
-            _TICKER_RE = re.compile(r"\$[A-Z]{1,5}\b")
-            if not _NICHE_PATTERN.search(text) and not _TICKER_RE.search(text):
+        # Topic-scope gate for FOLLOWING + FEED.
+        # The Following feed and For You feed pull tweets from accounts we
+        # follow or X recommends — many are off-niche (motos, gas prices,
+        # DJ sets). PROFILE-FR is already vetted; SEARCH is anchored to
+        # niche queries; FOLLOWING and FEED need the scope filter.
+        if source_name.startswith(("FOLLOWING", "FEED")):
+            if not _is_on_niche(text):
                 log.info(f"[{source_name}] Off-niche topic — skipping @{author}: {text[:60]}")
                 continue
 
@@ -613,21 +628,26 @@ def run_direct_reply_cycle():
             total += _reply_to_tweets(profile_tweets, replied, "PROFILE-FR", source_detail=username, remaining=_budget())
 
     # === SOURCE 2: Following feed (chronological, only accounts we follow — also big-account leaning) ===
+    # Sort FR tweets first — same rationale as FEED below.
     if _budget() > 0:
         log.info("[DIRECT] === Scraping Following feed ===")
         try:
             following_tweets = scrape_following_feed(max_tweets=20)
             if following_tweets:
+                following_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
                 total += _reply_to_tweets(following_tweets, replied, "FOLLOWING", remaining=_budget())
         except Exception:
             log.info("[DIRECT] Following feed scrape failed:")
             traceback.print_exc()
 
     # === SOURCE 3: Home feed (For You / algorithmic) ===
+    # Sort FR tweets first so the budget is consumed by French content before
+    # EN — drives the 90%+ FR ratio mandate. Also niche-filtered (see above).
     if _budget() > 0:
         log.info("[DIRECT] === Scraping home feed (For You) ===")
         feed_tweets = scrape_home_feed(max_tweets=20)
         if feed_tweets:
+            feed_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
             total += _reply_to_tweets(feed_tweets, replied, "FEED", remaining=_budget())
 
     # === SOURCE 4: HOT FR tweets (X's "Top" tab, min_faves) — fallback if curated didn't fill ===
