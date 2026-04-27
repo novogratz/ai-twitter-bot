@@ -407,10 +407,10 @@ def main():
         # 5 reinforcements per cycle) still bound damage if a cycle goes
         # rogue, and prune TTL is still 30d so doubling the cadence doesn't
         # double the damage — it just makes the style guide more responsive.
-        log.info("Evolution agent: content-quality self-improvement every 4 hours.")
+        log.info("Evolution agent: content-quality self-improvement every 2 hours.")
         scheduler.add_job(
             safe_run_evolution_cycle,
-            trigger=IntervalTrigger(hours=4),
+            trigger=IntervalTrigger(hours=2),
             id="evolution_job",
         )
 
