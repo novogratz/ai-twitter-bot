@@ -58,6 +58,16 @@ def humanize(text: str) -> str:
         if humanized.startswith('"') and humanized.endswith('"'):
             humanized = humanized[1:-1]
 
+        # Hard rule: no em dashes anywhere. The model occasionally ignores
+        # the prompt rule, so we strip them deterministically here. " — "
+        # / " – " sit between two clauses 99% of the time, so a period is
+        # the natural replacement; bare "—"/"–" without spaces becomes a
+        # comma so we don't break compounds like "long-term".
+        for sep in (" — ", " – ", " —", "— ", " –", "– "):
+            humanized = humanized.replace(sep, ". ")
+        humanized = humanized.replace("—", ",").replace("–", ",")
+        humanized = humanized.replace("..", ".").replace(" ,", ",")
+
         log.info(f"[HUMANIZE] Before: {text[:80]}...")
         log.info(f"[HUMANIZE] After:  {humanized[:80]}...")
         return humanized
