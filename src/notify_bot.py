@@ -204,6 +204,15 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 3):
         if not handle or handle in seen_handles:
             continue
         seen_handles.add(handle)
+        # Reject display-name leaks: when the scraper hands us "haruka takamori"
+        # instead of the @handle, _extract_handle falls back to the whole string
+        # and we end up visiting https://x.com/haruka takamori (malformed) and
+        # polluting followed_accounts.json with bogus entries. A real X handle
+        # is [A-Za-z0-9_]{1,15} — anything with whitespace, punctuation, or
+        # length >15 is a display-name leak. Skip it.
+        if any(c not in "abcdefghijklmnopqrstuvwxyz0123456789_" for c in handle) or len(handle) > 15:
+            log.info(f"[RECIPROCATE] Display-name leak {handle!r} — skipping.")
+            continue
         # Hardened blocklist: catches display-name variants from scraper.
         if _is_blocklisted(user_str, handle) or handle == _OWN_HANDLE:
             continue
