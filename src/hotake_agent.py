@@ -237,13 +237,13 @@ random sur un truc absurde. Tu as un POV (bullish/bearish/sceptique/écœuré)
 et tu le déballes. Le lecteur doit comprendre TON ANGLE — pas juste "haha
 c'est drôle", mais "ah ouais, il a raison, c'est exactement ça".
 
-UTILISE WebSearch pour trouver un VRAI article (≤48h, AI/crypto/investissement)
+UTILISE WebSearch pour trouver un VRAI article (≤24h, AI/crypto/investissement)
 qui ancre ton hot take. Le hot take = punchline meme RÉACTION CRITIQUE à un
 fait réel sourçable. Pas d'article récent crédible → réponds SKIP.
 
 NOUVELLES RÈGLES DURES (sinon = SKIP):
 1. **SCOPE = IA/crypto/investissement.** Hors-scope → SKIP.
-2. **FRAÎCHEUR ≤ 48h.** Au-delà → SKIP.
+2. **FRAÎCHEUR ≤ 24h** (durci 2026-04-27 sur user complaint "not the latest and greatest"). Au-delà → SKIP.
 3. **OUVRE L'ARTICLE** (WebFetch si besoin). Pas seulement le titre.
 4. **CITE UN FAIT VÉRIFIABLE** présent DANS l'article: chiffre exact, nom,
    date, citation. Si l'article dit "489M$" → tu écris "489M$", pas "49M$".
@@ -266,11 +266,12 @@ https://cryptobriefing.com/deepseek-delays-v4-...
 [IMAGE: DeepSeek]
 [PATTERN: UNDERSTATEMENT]"
 
-Critères de validation source:
-- Date ≤ 72h (vérifie la date de publication, pas juste l'URL)
+Critères de validation source (durci 2026-04-27):
+- **Date ≤ 24h** (vérifie la date de publication dans la PAGE, pas juste l'URL)
 - Lien DIRECT vers l'article (pas homepage, pas tag-page)
 - Pas paywallé hard
-- Source crédible (Reuters / AFP / Bloomberg / Coindesk / Les Échos / Le Figaro / FT / WSJ / TechCrunch / The Information / Theverge…)
+- ✅ TOP-TIER: Reuters / AFP / Bloomberg / Les Échos / Le Figaro / FT / WSJ / TechCrunch / The Information / The Verge / Wired / CNBC / Axios / Coindesk / Le Monde
+- ❌ REJET: crypto.news / cryptonews.net / cryptopotato / beincrypto / u.today / bitcoinist / ambcrypto — content farms, pas du vrai journalisme
 
 PAS de source qui valide ces critères → SKIP. Mid + sans source = double échec.
 
@@ -450,14 +451,14 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     if url_match:
         url = url_match.group(0)
         # Defense-in-depth: many newsrooms stamp /YYYY/MM/DD/ in URLs. If
-        # the URL date is > 48h old, the LLM violated the freshness rule —
-        # reject the post Python-side. This is HARD enforcement; the LLM
-        # has shown it'll bend "ne dépasse pas 48h" when prompted softly.
+        # the URL date is > 24h old, the LLM violated the freshness rule —
+        # reject the post Python-side. Tightened 48h→24h on 2026-04-27
+        # after user "you suck with news... not the latest and greatest".
         pub_date = _url_publication_date(url)
         if pub_date is not None:
             age = datetime.now() - pub_date
-            if age > timedelta(hours=48):
-                log.info(f"[HOTAKE] URL is {age.days}d old (>48h) — SKIPPING stale source: {url}")
+            if age > timedelta(hours=24):
+                log.info(f"[HOTAKE] URL is {age.total_seconds()/3600:.1f}h old (>24h) — SKIPPING stale source: {url}")
                 globals()["_last_source_url"] = None
                 return None
         globals()["_last_source_url"] = url
