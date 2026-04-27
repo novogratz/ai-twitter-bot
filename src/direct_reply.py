@@ -421,13 +421,19 @@ def _generate_single_reply(author: str, tweet_text: str):
 
     try:
         result = subprocess.run(
-            ["claude", "-p", prompt, "--model", REPLY_MODEL],
+            ["claude", "-p", prompt, "--model", REPLY_MODEL, "--output-format", "json"],
             capture_output=True, text=True, timeout=30,
         )
         if result.returncode != 0:
             return None
 
-        reply = result.stdout.strip()
+        # Extract model text from --output-format json envelope
+        raw = result.stdout.strip()
+        try:
+            envelope = json.loads(raw)
+            reply = envelope.get("result", raw).strip()
+        except (json.JSONDecodeError, AttributeError):
+            reply = raw
         if not reply:
             return None
 

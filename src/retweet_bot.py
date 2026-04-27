@@ -257,13 +257,18 @@ def _score_candidates(candidates: list):
     prompt = SCORE_PROMPT.format(candidates="\n".join(listing))
     try:
         result = subprocess.run(
-            ["claude", "-p", prompt, "--model", QUOTE_MODEL],
+            ["claude", "-p", prompt, "--model", QUOTE_MODEL, "--output-format", "json"],
             capture_output=True, text=True, timeout=45,
         )
         if result.returncode != 0:
             log.info(f"[RETWEET] Scorer subprocess failed: {result.stderr[:200]}")
             return None
-        out = result.stdout.strip()
+        raw = result.stdout.strip()
+        try:
+            envelope = json.loads(raw)
+            out = envelope.get("result", raw).strip()
+        except (json.JSONDecodeError, AttributeError):
+            out = raw
         # Strip code fences if any
         m = re.search(r"\{[^{}]*\"best_index\"[^{}]*\}", out, re.DOTALL)
         if not m:

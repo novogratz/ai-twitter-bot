@@ -740,6 +740,7 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
             "-p", prompt,
             "--allowedTools", "WebSearch",
             "--model", NEWS_MODEL,
+            "--output-format", "json",
         ],
         capture_output=True,
         text=True,
@@ -747,7 +748,12 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     if result.returncode != 0:
         log.info(f"Claude CLI stderr: {result.stderr}")
         raise RuntimeError(f"Claude CLI failed (exit {result.returncode}): {result.stderr}")
-    tweet = result.stdout.strip()
+    raw = result.stdout.strip()
+    try:
+        envelope = json.loads(raw)
+        tweet = envelope.get("result", raw).strip()
+    except (json.JSONDecodeError, AttributeError):
+        tweet = raw
     if not tweet:
         raise RuntimeError("Claude CLI returned empty output.")
     if tweet.upper() == "SKIP":

@@ -434,6 +434,7 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
             "claude",
             "-p", prompt,
             "--model", HOTAKE_MODEL,
+            "--output-format", "json",
         ],
         capture_output=True,
         text=True,
@@ -442,7 +443,13 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
         log.info(f"[HOTAKE] CLI stderr: {result.stderr}")
         raise RuntimeError(f"Hot take CLI failed (exit {result.returncode}): {result.stderr}")
 
-    tweet = result.stdout.strip()
+    # Extract model text from --output-format json envelope
+    raw = result.stdout.strip()
+    try:
+        envelope = json.loads(raw)
+        tweet = envelope.get("result", raw).strip()
+    except (json.JSONDecodeError, AttributeError):
+        tweet = raw
     if not tweet or tweet.upper() == "SKIP":
         return None
 

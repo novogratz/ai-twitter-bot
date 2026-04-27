@@ -136,13 +136,18 @@ def _generate_roast(tweet_text: str) -> Optional[str]:
     prompt = ROAST_PROMPT.format(tweet=safe)
     try:
         result = subprocess.run(
-            ["claude", "-p", prompt, "--model", ROAST_MODEL],
+            ["claude", "-p", prompt, "--model", ROAST_MODEL, "--output-format", "json"],
             capture_output=True, text=True, timeout=120,
         )
         if result.returncode != 0:
             log.info(f"[ROAST] Claude error: {result.stderr[:200]}")
             return None
-        out = (result.stdout or "").strip().strip('"').strip("'")
+        raw = (result.stdout or "").strip()
+        try:
+            envelope = json.loads(raw)
+            out = envelope.get("result", raw).strip().strip('"').strip("'")
+        except (json.JSONDecodeError, AttributeError):
+            out = raw.strip('"').strip("'")
         if not out:
             return None
         return out[:280]

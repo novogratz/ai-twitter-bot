@@ -109,12 +109,17 @@ def _generate_quote(author: str, tweet_text: str):
     prompt = QUOTE_PROMPT.format(author=author, tweet_text=tweet_text[:200])
     try:
         result = subprocess.run(
-            ["claude", "-p", prompt, "--model", QUOTE_MODEL],
+            ["claude", "-p", prompt, "--model", QUOTE_MODEL, "--output-format", "json"],
             capture_output=True, text=True, timeout=30,
         )
         if result.returncode != 0:
             return None
-        out = result.stdout.strip()
+        raw = result.stdout.strip()
+        try:
+            envelope = json.loads(raw)
+            out = envelope.get("result", raw).strip()
+        except (json.JSONDecodeError, AttributeError):
+            out = raw
         if not out or out.upper().strip() == "SKIP":
             return None
         if out.startswith('"') and out.endswith('"'):

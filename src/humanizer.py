@@ -1,4 +1,5 @@
 """Humanizer: runs text through a quick pass to make it sound like a real person."""
+import json
 import subprocess
 from .config import HOTAKE_MODEL
 from .logger import log
@@ -41,6 +42,7 @@ def humanize(text: str) -> str:
                 "claude",
                 "-p", prompt,
                 "--model", HOTAKE_MODEL,
+                "--output-format", "json",
             ],
             capture_output=True,
             text=True,
@@ -50,7 +52,12 @@ def humanize(text: str) -> str:
             log.warning(f"[HUMANIZE] CLI failed, using original text")
             return text
 
-        humanized = result.stdout.strip()
+        raw = result.stdout.strip()
+        try:
+            envelope = json.loads(raw)
+            humanized = envelope.get("result", raw).strip()
+        except (json.JSONDecodeError, AttributeError):
+            humanized = raw
         if not humanized:
             return text
 

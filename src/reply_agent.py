@@ -363,6 +363,7 @@ def generate_replies(recent_topics=None, already_replied=None):
             "-p", prompt,
             "--allowedTools", "WebSearch",
             "--model", REPLY_MODEL,
+            "--output-format", "json",
         ],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -373,7 +374,14 @@ def generate_replies(recent_topics=None, already_replied=None):
         log.info(f"[REPLY] CLI error: {stderr[:200]}")
         return None
 
-    output = stdout.strip()
+    # Extract the model's text from the --output-format json envelope
+    raw_stdout = stdout.strip()
+    try:
+        envelope = json.loads(raw_stdout)
+        output = envelope.get("result", raw_stdout)
+    except (json.JSONDecodeError, AttributeError):
+        output = raw_stdout
+
     if not output or output.upper().startswith("SKIP"):
         return None
 

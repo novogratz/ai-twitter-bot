@@ -1,4 +1,5 @@
 """Reply-back agent: generates witty replies to people who reply to our tweets."""
+import json
 import subprocess
 from typing import Optional
 from .config import REPLY_MODEL
@@ -67,6 +68,7 @@ def generate_replyback(original_tweet: str, their_reply: str, author: str = "") 
             "claude",
             "-p", prompt,
             "--model", REPLY_MODEL,
+            "--output-format", "json",
         ],
         capture_output=True,
         text=True,
@@ -75,7 +77,12 @@ def generate_replyback(original_tweet: str, their_reply: str, author: str = "") 
         log.info(f"[REPLYBACK] CLI error: {result.stderr[:200]}")
         return None
 
-    reply = result.stdout.strip()
+    raw = result.stdout.strip()
+    try:
+        envelope = json.loads(raw)
+        reply = envelope.get("result", raw).strip()
+    except (json.JSONDecodeError, AttributeError):
+        reply = raw
     if not reply:
         return None
 
