@@ -120,7 +120,14 @@ def _generate_quote(author: str, tweet_text: str):
             out = envelope.get("result", raw).strip()
         except (json.JSONDecodeError, AttributeError):
             out = raw
-        if not out or out.upper().strip() == "SKIP":
+        # Hardened SKIP detection: agent occasionally returns "SKIP", "SKIP.",
+        # "SKIP\n", or " SKIP " with stray chars. Strip punctuation/whitespace
+        # before comparing — bug 2026-04-27 17:09 shipped a 4-char "SKIP" quote
+        # on Elon's Sam Altman tweet because the strict equality check missed.
+        if not out:
+            return None
+        cleaned = out.strip().rstrip(".!?,;:").strip().upper()
+        if cleaned == "SKIP" or cleaned.startswith("SKIP "):
             return None
         if out.startswith('"') and out.endswith('"'):
             out = out[1:-1]
@@ -186,6 +193,15 @@ def run_quote_tweet_cycle():
         return
 
     quote = humanize(quote)
+
+    # Last-line defense: even if SKIP slipped past _generate_quote AND the
+    # humanizer preserved it, do NOT ship a 4-char "SKIP" tweet on someone's
+    # viral post. Min-length floor catches any sentinel-like leak.
+    cleaned = quote.strip().rstrip(".!?,;:").strip().upper()
+    if cleaned == "SKIP" or cleaned.startswith("SKIP ") or len(quote.strip()) < 15:
+        log.info(f"[QUOTE] Final guard: refusing to post {quote!r} (sentinel/too short).")
+        return
+
     log.info(f"[QUOTE] Posting ({len(quote)} chars): {quote}")
 
     # Lock URL in BEFORE posting so a crash can't double-quote
