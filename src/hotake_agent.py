@@ -43,6 +43,34 @@ def _url_publication_date(url: str) -> Optional[datetime]:
         return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)))
     except ValueError:
         return None
+
+
+# Content-farm rejectlist (per CLAUDE.md): the prompt tells the agent to
+# avoid these, but the LLM keeps slipping them through (saw cryptonews.net
+# land in a hot take on 2026-04-27). This is the deterministic Python-side
+# gate: any URL hosted on these domains → SKIP, no exceptions.
+_REJECTED_SOURCE_DOMAINS = (
+    "crypto.news",
+    "cryptonews.net",
+    "cryptopotato.com",
+    "beincrypto.com",
+    "u.today",
+    "bitcoinist.com",
+    "ambcrypto.com",
+)
+
+
+def _is_rejected_source(url: str) -> bool:
+    """True if `url` is hosted on a content-farm rejected by CLAUDE.md."""
+    if not url:
+        return False
+    u = url.lower()
+    for dom in _REJECTED_SOURCE_DOMAINS:
+        if f"//{dom}/" in u or f"//www.{dom}/" in u or f".{dom}/" in u:
+            return True
+    return False
+
+
 # Backwards-compat alias for any external code that imported the underscore name.
 _extract_recent_topics = extract_recent_topics
 
@@ -473,6 +501,12 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     url_match = _HOTAKE_URL_RE.search(tweet)
     if url_match:
         url = url_match.group(0)
+        # Source rejectlist (CLAUDE.md content-farm list). Prompt-side rule
+        # leaks ~once a day, so this is the deterministic backstop.
+        if _is_rejected_source(url):
+            log.info(f"[HOTAKE] Source on content-farm rejectlist — SKIPPING: {url}")
+            globals()["_last_source_url"] = None
+            return None
         # Defense-in-depth: many newsrooms stamp /YYYY/MM/DD/ in URLs. If
         # the URL date is > 24h old, the LLM violated the freshness rule —
         # reject the post Python-side. Tightened 48h→24h on 2026-04-27

@@ -779,7 +779,14 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     # rule. Imported lazily so the helper lives in hotake_agent only.
     if src_url:
         try:
-            from .hotake_agent import _url_publication_date
+            from .hotake_agent import _url_publication_date, _is_rejected_source
+            # Source rejectlist (CLAUDE.md content-farm list). Prompt-side
+            # rule leaks ~once a day, so this is the deterministic backstop.
+            if _is_rejected_source(src_url):
+                log.info(f"[NEWS] Source on content-farm rejectlist — SKIPPING: {src_url}")
+                globals()["_last_source_url"] = None
+                globals()["_last_image_topic"] = None
+                return None
             pub_date = _url_publication_date(src_url)
             if pub_date is not None:
                 age = datetime.now() - pub_date
