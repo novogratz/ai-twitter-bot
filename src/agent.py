@@ -1,4 +1,5 @@
 """News agent: searches for breaking AI/Crypto/Bourse news and generates tweets in French."""
+import json
 import re
 import subprocess
 from datetime import datetime, timedelta
