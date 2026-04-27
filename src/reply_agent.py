@@ -233,17 +233,18 @@ EXEMPLES SAVAGE (sur l'idée/marché/hype, JAMAIS la personne):
 
 {skip_urls_section}
 
-RECHERCHES — lance ces recherches dans cet ordre, FRANÇAIS D'ABORD:
-1. "site:x.com from:NCheron_bourse OR from:RodolpheSteffan lang:fr"
-2. "site:x.com from:IVTrading OR from:ABaradez lang:fr"
-3. "site:x.com from:Graphseo OR from:DereeperVivre OR from:FinTales_ OR from:MathieuL1 lang:fr"
-4. "site:x.com from:PowerHasheur OR from:Capetlevrai OR from:Dark_Emi_ lang:fr"
-5. "site:x.com from:JournalDuCoin OR from:powl_d lang:fr"
-6. "site:x.com CAC 40 OR Bitcoin OR IA lang:fr"
-7. "site:x.com crypto OR bourse OR trading lang:fr"
-8. "site:x.com from:OpenAI OR from:AnthropicAI OR from:GoogleDeepMind"
-9. "site:x.com from:sama OR from:elonmusk OR from:karpathy"
-10. "site:x.com from:xAI OR from:MistralAI OR from:nvidia"
+RECHERCHES — lance ces recherches dans cet ordre, FRANÇAIS D'ABORD.
+⚠️ OBLIGATOIRE: ajoute `since:{since_date}` à CHAQUE requête. Sans ce filtre tu vas tomber sur du cache vieux de plusieurs semaines, le filtre Python rejette tout, cycle gâché.
+1. "site:x.com from:NCheron_bourse OR from:RodolpheSteffan lang:fr since:{since_date}"
+2. "site:x.com from:IVTrading OR from:ABaradez lang:fr since:{since_date}"
+3. "site:x.com from:Graphseo OR from:DereeperVivre OR from:FinTales_ OR from:MathieuL1 lang:fr since:{since_date}"
+4. "site:x.com from:PowerHasheur OR from:Capetlevrai OR from:Dark_Emi_ lang:fr since:{since_date}"
+5. "site:x.com from:JournalDuCoin OR from:powl_d lang:fr since:{since_date}"
+6. "site:x.com CAC 40 OR Bitcoin OR IA lang:fr since:{since_date}"
+7. "site:x.com crypto OR bourse OR trading lang:fr since:{since_date}"
+8. "site:x.com from:OpenAI OR from:AnthropicAI OR from:GoogleDeepMind since:{since_date}"
+9. "site:x.com from:sama OR from:elonmusk OR from:karpathy since:{since_date}"
+10. "site:x.com from:xAI OR from:MistralAI OR from:nvidia since:{since_date}"
 
 VISE 90%+ de réponses sur des tweets FRANÇAIS. Audience 100% francophone — c'est sur les tweets FR qu'on convertit en followers. Les tweets EN ne servent que si la news est ÉNORME (sama, OpenAI majeur, crash du marché US) ET que le commentaire en FR ajoute un angle franco-français unique.
 
@@ -357,12 +358,17 @@ def generate_replies(recent_topics=None, already_replied=None):
         discovered_section = (discovered_section or "") + "\n\n" + core_identity
     discovered_section = (discovered_section or "") + "\n\n" + personality_store.HARD_RULES_BLOCK
 
-    from datetime import date
+    from datetime import date, timedelta
+    today = date.today()
+    # since:YYYY-MM-DD on X = STRICTLY AFTER that day. So passing yesterday
+    # captures yesterday + today (≤24h-ish) at search time.
+    since_date = (today - timedelta(days=1)).isoformat()
     prompt = REPLY_PROMPT_TEMPLATE.format(
         dedup_section=dedup_section,
         skip_urls_section=skip_urls_section,
         discovered_section=discovered_section,
-        today=date.today().isoformat(),
+        today=today.isoformat(),
+        since_date=since_date,
     )
 
     log.info("[REPLY] Running Claude CLI (searching X)...")
