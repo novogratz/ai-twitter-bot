@@ -57,6 +57,8 @@ _NICHE_PATTERN = re.compile(
     r"ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|"
     r"gemini|grok|xai|deepseek|huggingface|nvidia|cuda|gpu|tpu|"
     r"agent|agents|robot|robots|humanoide|humanoïde|llm|"
+    r"intelligence\s*artificielle|artificial\s*intelligence|"
+    r"altman|musk|"
     r"machine\s*learning|ml|deep\s*learning|neural|"
     r"saas|software|cloud|datacenter|"
     # AI coding tools / dev — exploding sub-niche
