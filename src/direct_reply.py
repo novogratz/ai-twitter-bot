@@ -564,12 +564,17 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             log.info(f"[{source_name}] Non-FR/EN tweet — skipping @{author}: {text[:60]}")
             continue
 
-        # Topic-scope gate for FOLLOWING + FEED.
+        # Topic-scope gate for FOLLOWING + FEED + PROFILE-FR.
         # The Following feed and For You feed pull tweets from accounts we
         # follow or X recommends — many are off-niche (motos, gas prices,
-        # DJ sets). PROFILE-FR is already vetted; SEARCH is anchored to
-        # niche queries; FOLLOWING and FEED need the scope filter.
-        if source_name.startswith(("FOLLOWING", "FEED")):
+        # DJ sets). SEARCH is anchored to niche queries.
+        # PROFILE-FR was assumed vetted but isn't — curated FR accounts
+        # also post off-niche (vacuum reviews on @JournalDuGeek 2026-04-27
+        # 19:46, Pays Basque on @powl_d 20:11, Covid/FR politics on
+        # @MathieuL1 20:46 — 3 confirmed slips in one window). Port the
+        # same niche gate so curated profiles aren't a free pass for
+        # off-niche commentary.
+        if source_name.startswith(("FOLLOWING", "FEED", "PROFILE-FR")):
             if not _is_on_niche(text):
                 log.info(f"[{source_name}] Off-niche topic — skipping @{author}: {text[:60]}")
                 continue
