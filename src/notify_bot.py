@@ -153,14 +153,18 @@ def run_replyback_cycle():
         reply = humanize(reply)
         log.info(f"[REPLYBACK] Reply ({len(reply)} chars): {reply}")
 
+        # IN-THREAD-ONLY rule (user directive 2026-04-27 PM, before 2-week
+        # away mission): NEVER post standalone @mention tweets — they land
+        # as new posts on our profile and look like spam. If we don't have
+        # a reply_url to nest under, SKIP the engager. Loyalty-building is
+        # only worth it when it stays inside the conversation.
+        if not reply_url:
+            log.info(f"[REPLYBACK] No reply_url for @{handle} — skipping (in-thread-only rule).")
+            continue
+
         try:
-            if is_influencer and reply_url:
-                # Nested in-thread reply — lands directly under their reply
-                reply_to_tweet_in_thread(reply_url, reply)
-            else:
-                # Standalone @mention tweet (existing fallback)
-                full_reply = f"@{handle} {reply}" if handle else reply
-                post_tweet(full_reply)
+            # All reply-backs are nested in-thread now (influencer or not).
+            reply_to_tweet_in_thread(reply_url, reply)
             replied_back.add(dedup_key)
             count += 1
         except Exception:
