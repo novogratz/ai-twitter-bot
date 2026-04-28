@@ -47,6 +47,31 @@ _PT_MARKERS = re.compile(
     re.IGNORECASE,
 )
 
+# Strong-signal SP/PT/IT markers — any 1 hit = skip (vs the soft ES/PT
+# lists above which require 2+). These are words/chars that appear in
+# Spanish/Portuguese/Italian/Catalan and basically NEVER in French. Added
+# 2026-04-27 PM after the bot replied in Spanish to @OchoMono77 — the
+# original tweet was "Claro que sí bb ... 5 meses de puto acoso del
+# sistema..." which had ZERO hits in the soft _ES_MARKERS list because
+# common Spanish words like "del/sí/meses/sistema" weren't in it.
+_STRONG_NON_FR_MARKERS = re.compile(
+    # ñ char alone is enough (SP/Catalan only, never in standard FR text)
+    r"ñ|"
+    # SP-specific contractions / pronouns / verbs that have no FR analog
+    r"\b(del|más|sí|años|meses|hacia|hacer|hacemos|"
+    r"puedo|puedes|puede|pueden|tengo|tienes|tiene|tienen|"
+    r"estoy|estás|estamos|están|soy|eres|somos|"
+    r"muy|todos|todas|nuestro|nuestra|nuestros|nuestras|"
+    r"esto|eso|aquello|este|ese|aquel|"
+    # PT-specific
+    r"você|está|então|isso|isto|"
+    # IT-specific
+    r"perché|però|sempre|però|grazie|qualche|"
+    # SP/PT/IT-shared particles absent from FR
+    r"para|sobre)\b",
+    re.IGNORECASE,
+)
+
 
 # === Niche scope regex (shared by FOLLOWING + FEED filters) ===
 # Word-boundary matching only — substring "ai" matches French
@@ -128,6 +153,10 @@ def _is_fr_or_en(text: str) -> bool:
     if not text:
         return True  # empty = no signal, let downstream handle
     if _NON_LATIN_RE.search(text):
+        return False
+    # Strong-signal markers (SP/PT/IT/Catalan): 1 hit = skip. These words/
+    # chars don't exist in FR so any one of them flags the tweet.
+    if _STRONG_NON_FR_MARKERS.search(text):
         return False
     for rx in (_DE_MARKERS, _TR_MARKERS, _ES_MARKERS, _PT_MARKERS):
         if len(rx.findall(text)) >= 2:
