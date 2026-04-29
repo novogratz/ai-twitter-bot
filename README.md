@@ -10,7 +10,7 @@ Uses Claude Code CLI for AI generation and Safari + AppleScript for browser auto
 
 **Post Bot** - Searches the web for breaking news (AI, crypto, bourse), writes sharp FR tweets. **News format = MEME HOT TAKE + URL**: a screenshot-worthy punchline first, raw article URL on its own line so X renders the link card. No "Selon X..." / "Breaking:" / news-report style — if the news doesn't lend itself to a meme, the bot SKIPs. FIRST-DERIVATIVE rule: reject angles BFM/Bloomberg would post as-is, find the second-order implication. Threads supported. Mix of news (24/day) + hot-take memes (24/day). News-first policy: first 3 posts/day must be news. **HARD RULE 2026-04-26 PM — SOURCE OR SKIP**: per user directive, both news AND hot takes require a real article URL (≤72h, direct link, not paywalled). Hot take agent uses WebSearch to anchor every meme on a real recent event; without a URL the cycle SKIPs rather than ship a sourceless meme. Hot takes WITH a URL skip the image attach so X renders the native link-card cleanly (image+headline+domain). Replies are EXEMPT from this rule.
 
-**Reply Bot** - Direct + search reply paths. Finds high-engagement FR tweets (with EN fallback), drops sharp one-liner replies (cap 7/cycle, impact-ranked). **Source-aware engagement floor**: random-discovery sources (SEARCH-FR-LIVE, SEARCH-FR-HOT) skip tweets below `REPLY_MIN_LIKES` (default 5); curated paths (PROFILE-FR, FEED, FOLLOWING) bypass the floor entirely so the bot replies on EVERYTHING from the vetted 1k+ FR roster. Content blocklist (e.g. "se poser") still applies. FR priority, bilingual. **Replies are tagged with one of 6 comedy patterns** (REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER) and logged into `engagement_log.csv` so the evolution agent can compute per-pattern ROI and steer style. **Graceful FR + QC quiet-hour fade**: Paris 04-07 = 95% skip (deepest dark), Paris 00-04 = 25% skip (= QC primetime, light-active for francophone Quebec audience), weekend Sat/Sun 8-11 = 30% skip.
+**Reply Bot** - Direct + search reply paths. Finds high-engagement FR tweets (with EN fallback), drops sharp one-liner replies (cap 18/cycle, impact-ranked — bumped from 7 on 2026-04-29 strategy pivot: replies are the only surface earning likes, so we max-out volume). **Source-aware engagement floor**: random-discovery sources (SEARCH-FR-LIVE, SEARCH-FR-HOT) skip tweets below `REPLY_MIN_LIKES` (default 5); curated paths (PROFILE-FR, FEED, FOLLOWING) bypass the floor entirely so the bot replies on EVERYTHING from the vetted 1k+ FR roster. Content blocklist (e.g. "se poser") still applies. FR priority, bilingual. **Replies are tagged with one of 6 comedy patterns** (REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER) and logged into `engagement_log.csv` so the evolution agent can compute per-pattern ROI and steer style. **Graceful FR + QC quiet-hour fade**: Paris 04-07 = 95% skip (deepest dark), Paris 00-04 = 25% skip (= QC primetime, light-active for francophone Quebec audience), weekend Sat/Sun 8-11 = 30% skip.
 
 **Engage Bot** - Auto-follows target accounts and likes their latest tweets. Static list + autonomously discovered handles + strategy-agent additions, all merged at runtime.
 
@@ -115,14 +115,14 @@ All settings in `src/config.py`, overridable with environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MAX_NEWS_PER_DAY` | 24 | Max news posts per day |
-| `MAX_HOTAKES_PER_DAY` | 24 | Max hot takes per day |
+| `MAX_NEWS_PER_DAY` | 4 | Max news posts per day (cut 24→4 on 2026-04-29 — replies are the only converting surface, news/hot takes were 0-engagement noise) |
+| `MAX_HOTAKES_PER_DAY` | 4 | Max hot takes per day (same cut as news) |
 | `MAX_QUOTES_PER_DAY` | 12 | Max quote-tweets per day |
-| `MAX_REPLIES_PER_CYCLE` | 7 | Max replies per cycle |
-| `REPLY_MIN_LIKES` | 5 | Min likes on a tweet before the bot will reply (random-search sources only — curated paths bypass) |
+| `MAX_REPLIES_PER_CYCLE` | 18 | Max replies per cycle (bumped 12→18 — replies are the engine) |
+| `REPLY_MIN_LIKES` | 2 | Min likes on a tweet before the bot will reply (random-search sources only — curated paths bypass) |
 | `NEWS_MODEL` | claude-opus-4-6 | Model for news posts |
-| `REPLY_MODEL` | claude-sonnet-4-6 | Model for replies |
-| `HOTAKE_MODEL` | claude-sonnet-4-6 | Model for hot takes |
+| `REPLY_MODEL` | claude-opus-4-6 | Model for replies (upgraded from sonnet-4-6 on 2026-04-29 — replies convert, FR humor benefits from Opus) |
+| `HOTAKE_MODEL` | claude-opus-4-6 | Model for hot takes |
 
 ### Customizing for Your Niche
 
