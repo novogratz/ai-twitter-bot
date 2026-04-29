@@ -209,8 +209,8 @@ Engage: ~27 min jittered (was 32, accelerated 2026-04-26 PM, 3-5 accounts/cycle,
 - Reply dedup: persisted last 2000 URLs in `replied_tweets.json`. Pre-filter + intra-batch dedup.
 - Replyback: influencer replies get NESTED in-thread responses (lands under their reply).
 - Autonomous discovery: every 6h, populates `discovered_accounts.json`.
-- Humanizer pass on ALL output.
-- News agent: Opus. Reply + hot take + replyback + discovery: Sonnet.
+- Humanizer pass on ALL output — pure Python (no LLM call): strips em dashes, robotic openers, double punctuation.
+- News agent: Opus. Reply + hot take + replyback + discovery: Sonnet. Evolution directives: Haiku (pre-computed stats passed inline). Reflection: Sonnet (files pre-read by Python, passed inline — no file-Read tools).
 - Browser automation via `webbrowser.open` + AppleScript. macOS only. Safari lock.
 - No em dashes anywhere.
 - Self-improving: scrapes own metrics every 2h **AND runs an autonomous agentic strategy cycle every 6h** that adds new queries/accounts based on per-source ROI + live trend research.

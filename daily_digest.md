@@ -25,3 +25,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top reply targets: @FranceCryptos=6, @Numerama=6, @ChanPerco=5, @NCheron_bourse=5, @MatthiasBaccino=5
 
 **Followers we follow** (running total): 154
+
+## 2026-04-27
+
+**Activity** — total actions: 436
+  - by type: reply=409, post=12, hotake=9, quote=4, retweet=2
+  - top sources: PROFILE-FR=163, FOLLOWING=89, FEED=49, SEARCH-FR-HOT=40, SEARCH-FR-LIVE=26, PROFILE-EN=13, EARLYBIRD=8, QUOTE=4
+  - comedy patterns: FR_ANCHOR=16, UNDERSTATEMENT=11, METAPHOR=9, RENAME=5, DIALOGUE=1
+  - top reply targets: @JournalDuGeek=12, @G_ONTrading=12, @BFMBourse=11, @ChanPerco=10, @AgefiFrance=10
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 200 likes / 42000 views: JUST IN:  US Senator Cynthia Lummis announces Bitcoin and crypto market structure legislation will g
+  - 55 likes / 75000 views: NEW: @Gemini launches Agentic Trading, allowing users to connect AI models including Claude and Chat
+  - 0 likes / 26 views: 69 000 agents IA qui paient leurs propres APIs sans demander la permission à personne. 165 millions 

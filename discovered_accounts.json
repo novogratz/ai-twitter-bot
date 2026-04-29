@@ -63,5 +63,53 @@
     "handle": "dekos",
     "category": "crypto",
     "added": "2026-04-27"
+  },
+  {
+    "handle": "yesclem",
+    "category": "bourse",
+    "added": "2026-04-27",
+    "followed": true
+  },
+  {
+    "handle": "tonydb",
+    "category": "crypto",
+    "added": "2026-04-27",
+    "followed": true
+  },
+  {
+    "handle": "agnstudio",
+    "category": "bourse",
+    "added": "2026-04-27",
+    "followed": true
+  },
+  {
+    "handle": "gulistantimes",
+    "category": "crypto",
+    "added": "2026-04-27"
+  },
+  {
+    "handle": "0xozymandias",
+    "category": "crypto",
+    "added": "2026-04-27"
+  },
+  {
+    "handle": "gugaonchain",
+    "category": "crypto",
+    "added": "2026-04-27"
+  },
+  {
+    "handle": "ecoinometrics",
+    "category": "crypto",
+    "added": "2026-04-27"
+  },
+  {
+    "handle": "steelldy",
+    "category": "bourse",
+    "added": "2026-04-27"
+  },
+  {
+    "handle": "economiematin",
+    "category": "bourse",
+    "added": "2026-04-27"
   }
 ]

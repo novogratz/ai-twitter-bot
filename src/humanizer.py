@@ -1,88 +1,67 @@
-"""Humanizer: runs text through a quick pass to make it sound like a real person."""
-import json
-import subprocess
-from .config import HOTAKE_MODEL
+"""Humanizer: deterministic text cleanup — no LLM needed.
+
+Strips AI artifacts (em dashes, robotic openers, double punctuation) with
+pure Python rules. Fast, free, and predictable.
+"""
+import re
+
 from .logger import log
 
-HUMANIZE_PROMPT = """Tu es un humanizer. Ton job: prendre un tweet et le rendre naturel, comme si un vrai humain l'avait écrit sur son téléphone. Pas un robot. Pas une machine à contenu.
+# em/en dash → cleaner punctuation
+_DASH_PAIRS = [
+    (" — ", ". "),
+    (" – ", ". "),
+    (" —", "."),
+    ("— ", ". "),
+    (" –", "."),
+    ("– ", ". "),
+]
 
-RÈGLES:
-- Garde le MÊME sens, les mêmes faits et les mêmes liens. Change pas le fond.
-- Rends ça naturel. Comme quelqu'un qui tape vite sur son tel.
-- Supprime les tournures robotiques ou formulaires.
-- Varie la structure. Les fragments c'est ok. Les vrais gens écrivent pas des dissertations.
-- Garde la même longueur ou plus court. Jamais plus long.
-- Garde les URLs exactement comme elles sont.
-- Garde les @handles exactement comme ils sont.
-- Garde les hashtags s'il y en a.
-- Si le texte est en français: FRANÇAIS IMPECCABLE. Accents obligatoires: é, è, ê, à, â, ù, û, ô, î, ç
-- Si le texte est en anglais: garde-le en anglais.
-- Commence toujours par une majuscule.
-- Zéro faute d'orthographe ou de grammaire.
-- Si le texte sonne déjà parfaitement humain, retourne-le tel quel.
-- Pas de tirets longs (—).
-- Pas d'emojis sauf si l'original en avait.
-
-INPUT: {text}
-
-Output UNIQUEMENT le texte humanisé. Rien d'autre. Pas de guillemets. Pas d'explication."""
+# Robotic opener phrases to strip (FR + EN)
+_ROBOTIC_OPENERS = [
+    "Il est important de noter que ",
+    "Il convient de souligner que ",
+    "Il est à noter que ",
+    "Il faut souligner que ",
+    "Il est essentiel de noter que ",
+    "En conclusion, ",
+    "En résumé, ",
+    "It's worth noting that ",
+    "It's important to note that ",
+    "It is worth noting that ",
+    "Notably, ",
+    "Furthermore, ",
+    "Moreover, ",
+]
 
 
 def humanize(text: str) -> str:
-    """Run text through a quick Claude pass to humanize it.
-    Returns the original text if humanization fails."""
+    """Deterministic cleanup: strip AI artifacts, fix punctuation.
+    No LLM call — fast and free. Returns original on short/empty input."""
     if not text or len(text) < 10:
         return text
 
-    prompt = HUMANIZE_PROMPT.format(text=text)
+    result = text
 
-    try:
-        result = subprocess.run(
-            [
-                "claude",
-                "-p", prompt,
-                "--model", HOTAKE_MODEL,
-                "--output-format", "json",
-                "--no-session-persistence",
-            ],
-            capture_output=True,
-            text=True,
-            timeout=30,
-        )
-        if result.returncode != 0:
-            log.warning(f"[HUMANIZE] CLI failed, using original text")
-            return text
+    # Strip em/en dashes
+    for pat, rep in _DASH_PAIRS:
+        result = result.replace(pat, rep)
+    result = result.replace("—", ",").replace("–", ",")
 
-        raw = result.stdout.strip()
-        try:
-            envelope = json.loads(raw)
-            humanized = envelope.get("result", raw).strip()
-        except (json.JSONDecodeError, AttributeError):
-            humanized = raw
-        if not humanized:
-            return text
+    # Remove robotic openers
+    for pat in _ROBOTIC_OPENERS:
+        if result.startswith(pat):
+            stripped = result[len(pat):]
+            result = stripped[0].upper() + stripped[1:] if stripped else stripped
+            break
 
-        # Strip quotes if wrapped
-        if humanized.startswith('"') and humanized.endswith('"'):
-            humanized = humanized[1:-1]
+    # Clean up double punctuation and extra spaces
+    result = re.sub(r'\.{2,}', '.', result)
+    result = re.sub(r' {2,}', ' ', result)
+    result = result.replace(' ,', ',').replace(' .', '.').strip()
 
-        # Hard rule: no em dashes anywhere. The model occasionally ignores
-        # the prompt rule, so we strip them deterministically here. " — "
-        # / " – " sit between two clauses 99% of the time, so a period is
-        # the natural replacement; bare "—"/"–" without spaces becomes a
-        # comma so we don't break compounds like "long-term".
-        for sep in (" — ", " – ", " —", "— ", " –", "– "):
-            humanized = humanized.replace(sep, ". ")
-        humanized = humanized.replace("—", ",").replace("–", ",")
-        humanized = humanized.replace("..", ".").replace(" ,", ",")
+    # Ensure capital first letter
+    if result and not result[0].isupper() and result[0].isalpha():
+        result = result[0].upper() + result[1:]
 
-        log.info(f"[HUMANIZE] Before: {text[:80]}...")
-        log.info(f"[HUMANIZE] After:  {humanized[:80]}...")
-        return humanized
-
-    except subprocess.TimeoutExpired:
-        log.warning("[HUMANIZE] Timed out, using original text")
-        return text
-    except Exception as e:
-        log.warning(f"[HUMANIZE] Error: {e}, using original text")
-        return text
+    return result

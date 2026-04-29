@@ -27,7 +27,11 @@
     "pressecitron",
     "Clubic",
     "brutofficiel",
-    "LeRevenuFR"
+    "LeRevenuFR",
+    "lebigdata_fr",
+    "JDNebusiness",
+    "Cryptimiste",
+    "75secondes"
   ],
   "en": [
     "aeyakovenko",
@@ -41,7 +45,9 @@
     "whale_alert",
     "zachxbt",
     "dwarkesh_sp",
-    "TrungTPhan"
+    "TrungTPhan",
+    "cz_binance",
+    "pmarca"
   ],
   "history": [
     {
@@ -223,6 +229,36 @@
       "lang": "en",
       "handle": "TrungTPhan",
       "added": "2026-04-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "lebigdata_fr",
+      "added": "2026-04-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JDNebusiness",
+      "added": "2026-04-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "Cryptimiste",
+      "added": "2026-04-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "75secondes",
+      "added": "2026-04-28"
+    },
+    {
+      "lang": "en",
+      "handle": "cz_binance",
+      "added": "2026-04-28"
+    },
+    {
+      "lang": "en",
+      "handle": "pmarca",
+      "added": "2026-04-28"
     }
   ]
 }
