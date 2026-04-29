@@ -111,5 +111,40 @@
     "handle": "economiematin",
     "category": "bourse",
     "added": "2026-04-27"
+  },
+  {
+    "handle": "narvic",
+    "category": "ai",
+    "added": "2026-04-29"
+  },
+  {
+    "handle": "brivael",
+    "category": "bourse",
+    "added": "2026-04-29"
+  },
+  {
+    "handle": "maads",
+    "category": "crypto",
+    "added": "2026-04-29"
+  },
+  {
+    "handle": "alphateam",
+    "category": "crypto",
+    "added": "2026-04-29"
+  },
+  {
+    "handle": "d_naakamoto",
+    "category": "crypto",
+    "added": "2026-04-29"
+  },
+  {
+    "handle": "glitch",
+    "category": "crypto",
+    "added": "2026-04-29"
+  },
+  {
+    "handle": "alphabetablog",
+    "category": "bourse",
+    "added": "2026-04-29"
   }
 ]

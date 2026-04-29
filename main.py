@@ -123,10 +123,10 @@ def post_interval_minutes() -> int:
 
 
 def reply_interval_minutes() -> int:
-    """~13min jittered (was 16). Acceleration push 2026-04-26 PM for the
-    2-week 1k-follower mission. With cap=7/cycle this lands ~190 replies/day
-    max in awake hours. Engagement gate (probabilistic skip) handles overnight."""
-    return random.randint(10, 16)
+    """~9min jittered (bumped 13→9 on 2026-04-29). User: "only thing that
+    works is your reply". With cap=6/cycle and ~9min cadence this lands
+    ~250+ replies/day in awake hours. Engagement gate handles overnight."""
+    return random.randint(7, 11)
 
 
 def engage_interval_minutes() -> int:
@@ -136,10 +136,10 @@ def engage_interval_minutes() -> int:
 
 
 def direct_reply_interval_minutes() -> int:
-    """~13min jittered (was 16). Tighter to land more replies on FR + QC
-    influencer profiles where we convert best. Per-cycle cap in
-    direct_reply.py prevents bursts."""
-    return random.randint(11, 16)
+    """~9min jittered (bumped 13→9 on 2026-04-29). Direct-reply path lands
+    on big FR curated accounts where we convert best. Per-cycle cap (16)
+    in direct_reply.py prevents bursts. User pivot: replies are the engine."""
+    return random.randint(7, 11)
 
 
 def early_bird_interval_minutes() -> int:

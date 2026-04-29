@@ -583,15 +583,15 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
             log.info(f"[HOTAKE] Source on content-farm rejectlist — SKIPPING: {url}")
             globals()["_last_source_url"] = None
             return None
-        # Defense-in-depth: many newsrooms stamp /YYYY/MM/DD/ in URLs. If
-        # the URL date is > 24h old, the LLM violated the freshness rule —
-        # reject the post Python-side. Tightened 48h→24h on 2026-04-27
-        # after user "you suck with news... not the latest and greatest".
+        # Defense-in-depth: many newsrooms stamp /YYYY/MM/DD/ in URLs. Gate
+        # at 48h. History: 48h → 24h (2026-04-27) → 48h (2026-04-29). The
+        # 24h gate killed back-to-back cycles (31.7h CoinDesk source rejected
+        # twice in a row, posting=0). Volume cut (4/day) gates quality now.
         pub_date = _url_publication_date(url)
         if pub_date is not None:
             age = datetime.now() - pub_date
-            if age > timedelta(hours=24):
-                log.info(f"[HOTAKE] URL is {age.total_seconds()/3600:.1f}h old (>24h) — SKIPPING stale source: {url}")
+            if age > timedelta(hours=48):
+                log.info(f"[HOTAKE] URL is {age.total_seconds()/3600:.1f}h old (>48h) — SKIPPING stale source: {url}")
                 globals()["_last_source_url"] = None
                 return None
         globals()["_last_source_url"] = url

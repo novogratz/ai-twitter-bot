@@ -40,3 +40,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 200 likes / 42000 views: JUST IN:  US Senator Cynthia Lummis announces Bitcoin and crypto market structure legislation will g
   - 55 likes / 75000 views: NEW: @Gemini launches Agentic Trading, allowing users to connect AI models including Claude and Chat
   - 0 likes / 26 views: 69 000 agents IA qui paient leurs propres APIs sans demander la permission à personne. 165 millions 
+
+## 2026-04-28
+
+**Activity** — total actions: 32
+  - by type: reply=28, post=2, quote=1, hotake=1
+  - top sources: PROFILE-FR=16, FOLLOWING=7, SEARCH-FR-LIVE=3, QUOTE=1, FEED=1, SEARCH-FR-HOT=1
+  - comedy patterns: FR_ANCHOR=2, UNDERSTATEMENT=1
+  - top reply targets: @Dark_Emi_=3, @JDNebusiness=2, @FI_Quebec=2, @FranceCryptos=2, @Nicolasexaspere=1
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 71 likes / 0 views: - Pas de frais de compte - Possible d'investir dans des actions ETF crypto Or au même endroit en 1 c
+  - 31 likes / 0 views: Comment Revolut et BoursoBank ont pulvérisé les géants bancaires dans la course aux nouveaux clients
+  - 11 likes / 14000 views: J'ai par contre du mal à comprendre pourquoi Bourso semble s'en tirer tellement mieux que Fortuneo. 

@@ -13,3 +13,11 @@
 - **@verge** (39 likes, score 8/10) — Google employees ask Sundar Pichai to say no to classified military AI use
   - https://x.com/verge/status/2048831940149813265
   - **WHY**: Éthique IA militaire: appel des employés Google contre l'IA classifiée.
+
+## 2026-04-29
+- **@googledeepmind** (0 likes, score 8/10) — This is Decoupled DiLoCo: our new resilient and flexible way to train advanced AI models across multiple data centres.
+  - https://x.com/GoogleDeepMind/status/2047330981145669790
+  - **WHY**: Decoupled DiLoCo: technique IA nouvelle de Google DeepMind, impact technique majeur sur l'entraînement distribué.
+- **@coindesk** (39 likes, score 8/10) — LATEST: Paul Tudor Jones calls bitcoin the 'best inflation hedge,' warns of overvalued stocks
+  - https://x.com/CoinDesk/status/2049395260845920558
+  - **WHY**: Paul Tudor Jones légitime Bitcoin comme hedge inflation — voix autorité en finance, impact crypto fort

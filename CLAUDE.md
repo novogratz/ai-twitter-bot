@@ -69,6 +69,28 @@ Autonomous bot covering AI + crypto + bourse with smart, philosophical, meme-sty
 These two rules are stamped into every generation prompt via `personality_store.HARD_RULES_BLOCK` and into the reflection agent's dossier-writing prompt. Everything else below (BLOCKLIST, troll-ideas-not-people, no em dashes, FR priority, niches, cadences, etc.) is **defaultstrategy that the bot is authorized to evolve** via the operator layer / strategy agent / evolution agent / reflection agent.
 
 ### Strategy
+
+🚨 **STRATEGY PIVOT 2026-04-29 — REPLIES ARE EVERYTHING** 🚨
+User verbatim: "You get 0 news and 0 likes on your news man.... only thing
+that works is your reply where you are hillarious... you got to change
+something". Diagnosis: replies convert (humor lands, comments come back),
+news/hot takes get 0 engagement and pollute the profile. Decisions taken:
+1. **News + hot take volume CUT 24/day → 4/day each** (87% reduction). Only
+   the very best ships. Volume was actively hurting — 0-like posts on the
+   profile signal low quality and depress reach.
+2. **Reply caps BUMPED**: direct_reply 9→16/cycle, reply_bot 3→6/cycle,
+   MAX_REPLIES_PER_CYCLE 12→18.
+3. **Reply cadences ACCELERATED**: reply_bot 13→9min, direct_reply 13→9min.
+4. **All generation models → claude-opus-4-6** (was opus-4-7 / sonnet-4-6).
+   Replies are nuanced FR humor — Opus pays for itself on the working surface.
+5. **REPLY_MIN_LIKES floor 5→2** (random-discovery paths). Curated paths +
+   curated authors already bypass the floor entirely.
+6. **PROFILE-FR removed from niche-gate** — landing on a 100k-follower FR
+   account on ANY topic > skipping for niche purity.
+7. **News/hotake URL freshness gate 24h → 48h** — the 24h gate killed
+   back-to-back cycles (31.7h then 31.8h CoinDesk sources both rejected,
+   posting=0). Quality is now gated by VOLUME CUT, not by freshness alone.
+
 - **French-near-exclusive**: Audience is 100% francophone. Aim **90%+ French replies** (was 60-70%). EN tweets only when the news is huge AND the FR commentary adds a unique franco-french angle. Hot takes mostly French.
 - **Comedy DNA — 6 patterns + FR cultural anchors**: Every news/reply must use ≥1 of: (1) répétition qui tue, (2) mini-dialogue FR, (3) métaphore tueuse, (4) renaming, (5) callback culturel FR (RER B, Bercy, syndicat, BFM, "et les charges?", Macron, tonton à Noël, café-clope, coach Tesla, formations à 2k€), (6) understatement brutal. Validated by user feedback ("Getafe. Getafe.", "S&P 7", "syndicat: oui mais qui tamponne le bon de sortie?").
 - **AI + crypto + bourse**: Three niches. Engage list and reply targets cover all three.

@@ -98,10 +98,10 @@ def run_reply_cycle():
         seen_in_batch.add(url)
         filtered.append(data)
 
-    # Cap 3 per cycle (super-user mode, was 2). Reply bot fires every ~22min
-    # so this caps at ~120/day in awake hours — heavy but plausibly human.
-    # Agent is prompted to impact-rank, so the top 3 are the strongest.
-    replies = filtered[:3]
+    # Cap 6 per cycle (bumped 3→6 on 2026-04-29 user directive — replies
+    # are the only working surface, push volume hard). Reply bot fires every
+    # ~9min in peak hours, agent impact-ranks so the top 6 are the strongest.
+    replies = filtered[:6]
 
     if not replies:
         log.info("[REPLY] All replies filtered (dedup/blocklist) - skipping cycle.")

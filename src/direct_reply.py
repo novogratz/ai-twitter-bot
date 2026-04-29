@@ -497,8 +497,8 @@ def _generate_single_reply(author: str, tweet_text: str):
         return None
 
 
-DIRECT_REPLY_MAX_PER_CYCLE = 9  # bumped 6→9 (+50%) on user directive 2026-04-26 — replies are the growth engine
-MAX_EN_REPLIES_PER_CYCLE = 2    # hard cap — forces 78%+ FR ratio (was ~50% without cap)
+DIRECT_REPLY_MAX_PER_CYCLE = 16  # bumped 9→16 (2026-04-29) — user "only thing that works is your reply"; floor the gas on the only surface earning likes
+MAX_EN_REPLIES_PER_CYCLE = 3     # hard cap — keeps ~80% FR ratio while leaving room for big EN influencers
 
 
 def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=None, en_counter=None):
@@ -588,7 +588,12 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         except Exception:
             _curated_authors = {a.lower() for a in FR_ACCOUNTS}
         author_is_curated = author_lc in _curated_authors
-        min_likes = int(os.environ.get("REPLY_MIN_LIKES", "5"))
+        # 2026-04-29 user directive: replies are the only working surface;
+        # cut the engagement floor 5→2 so we land more bets. Random-discovery
+        # paths (SEARCH-FR-LIVE/HOT) keep a floor — just a tiny one — so we
+        # don't reply to dead 0-engagement randoms; curated/author paths
+        # already bypass the floor entirely.
+        min_likes = int(os.environ.get("REPLY_MIN_LIKES", "2"))
         if not is_curated and not author_is_curated and likes < min_likes:
             log.info(f"[{source_name}] Low-engagement tweet ({likes}<{min_likes} likes) - skipping {url}")
             continue
@@ -609,17 +614,16 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             log.info(f"[{source_name}] Non-FR/EN tweet — skipping @{author}: {text[:60]}")
             continue
 
-        # Topic-scope gate for FOLLOWING + FEED + PROFILE-FR.
-        # The Following feed and For You feed pull tweets from accounts we
-        # follow or X recommends — many are off-niche (motos, gas prices,
-        # DJ sets). SEARCH is anchored to niche queries.
-        # PROFILE-FR was assumed vetted but isn't — curated FR accounts
-        # also post off-niche (vacuum reviews on @JournalDuGeek 2026-04-27
-        # 19:46, Pays Basque on @powl_d 20:11, Covid/FR politics on
-        # @MathieuL1 20:46 — 3 confirmed slips in one window). Port the
-        # same niche gate so curated profiles aren't a free pass for
-        # off-niche commentary.
-        if source_name.startswith(("FOLLOWING", "FEED", "PROFILE-FR")):
+        # Topic-scope gate for FOLLOWING + FEED only. PROFILE-FR was added
+        # to this gate on 2026-04-27 PM after 3 off-niche slips in one
+        # window, but the user pivot 2026-04-29 ("the only thing that works
+        # is your reply") makes volume the priority — landing on a 100k
+        # curated FR account on ANY topic is more valuable than skipping
+        # for niche-purity. We accept occasional off-niche replies as the
+        # cost of being more present on big curated profiles. SEARCH paths
+        # are anchored by query, FOLLOWING/FEED are NOT vetted at all so
+        # the gate stays for those.
+        if source_name.startswith(("FOLLOWING", "FEED")):
             if not _is_on_niche(text):
                 log.info(f"[{source_name}] Off-niche topic — skipping @{author}: {text[:60]}")
                 continue

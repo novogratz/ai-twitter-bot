@@ -31,7 +31,14 @@
     "lebigdata_fr",
     "JDNebusiness",
     "Cryptimiste",
-    "75secondes"
+    "75secondes",
+    "actu_ia",
+    "nicrypto",
+    "cryptonaute_btc",
+    "brivael",
+    "LaTribune",
+    "Bpifrance",
+    "lafrenchtech"
   ],
   "en": [
     "aeyakovenko",
@@ -47,7 +54,12 @@
     "dwarkesh_sp",
     "TrungTPhan",
     "cz_binance",
-    "pmarca"
+    "pmarca",
+    "RaoulGMI",
+    "CryptoHayes",
+    "hasufl",
+    "glassnode",
+    "nic__carter"
   ],
   "history": [
     {
@@ -259,6 +271,66 @@
       "lang": "en",
       "handle": "pmarca",
       "added": "2026-04-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "actu_ia",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "nicrypto",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptonaute_btc",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "brivael",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "RaoulGMI",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "CryptoHayes",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "hasufl",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaTribune",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Bpifrance",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "lafrenchtech",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "glassnode",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "nic__carter",
+      "added": "2026-04-29"
     }
   ]
 }

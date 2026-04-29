@@ -12,22 +12,22 @@ REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
-# Daily posting limits — bumped 12→24 (2x) per user directive 2026-04-26 PM
-# "post 2 times more" — bot stagnating at 260 followers, 2-week mission
-# targeting 1k. News format also converted to meme-hot-take + URL (see
-# agent.py PROMPT_TEMPLATE). Quality stays gated by impact filter +
-# first-derivative rule. This is a CEILING lift so the bot can fire
-# through both EU and EST peaks without choking.
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "24"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "24"))
+# Daily posting limits — STRATEGY PIVOT 2026-04-29 (user verbatim: "You get
+# 0 news and 0 likes on your news man.... only thing that works is your reply
+# where you are hillarious"). Volume of news/hotakes was actively hurting:
+# 0-like posts pile up on the profile and signal low-quality. CUT HARD from
+# 24/day → 4/day each. Reply path is the only surface that converts; we put
+# the budget there. News/hot takes still ship for occasional reach but only
+# the absolute best (impact ≥ 9/10).
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "4"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "4"))
 # Quote-tweet cap — bumped 8 → 12. Different distribution surface than
 # replies (lands in followers' feed AND notifies original author),
 # so additive growth, not redundant volume.
 MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "12"))
-# Reply cap per cycle — 3→5→7 over user directives 2026-04-26.
-# User flagged stagnation at 260 followers; bumping volume + pruning dead
-# sources (Frandroid/Boursorama/CoinTribuneFR) to make every cycle land more.
-MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "12"))
+# Reply cap per cycle — bumped 7→12→18 (2026-04-29). Replies are the ONLY
+# surface earning likes/follows per user directive; volume is the move.
+MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "18"))
 
 # Accounts we never reply to. Includes both @handles AND display-name
 # variants so the blocklist still catches us when the scraper returns the
@@ -45,10 +45,13 @@ BLOCKLIST = {
 # Discovered accounts file (autonomous influencer discovery)
 DISCOVERED_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "discovered_accounts.json")
 
-# Models
-NEWS_MODEL = os.environ.get("NEWS_MODEL", "claude-opus-4-7")
-REPLY_MODEL = os.environ.get("REPLY_MODEL", "claude-sonnet-4-6")
-HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", "claude-opus-4-7")
+# Models — 2026-04-29 user directive ("just use opus normal 4.6 for now"):
+# all generation surfaces upgraded to claude-opus-4-6. Replies are where
+# we win, and the model choice matters for nuanced FR humor. News/hotake
+# also benefit (better recency + reasoning) even though we cap volume hard.
+NEWS_MODEL = os.environ.get("NEWS_MODEL", "claude-opus-4-6")
+REPLY_MODEL = os.environ.get("REPLY_MODEL", "claude-opus-4-6")
+HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", "claude-opus-4-6")
 # Roast + quote-tweet meme-gen don't need Sonnet — they're one-liners off a
 # fixed pattern. Haiku is plenty and frees Sonnet/Opus budget for the
 # news/reply/hotake paths where the model actually matters.

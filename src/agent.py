@@ -849,11 +849,12 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     tweet, src_url = _extract_source(tweet)
     if src_url and src_url not in tweet:
         tweet = (tweet.rstrip() + "\n\n" + src_url).strip()
-    # Defense-in-depth 24h freshness check (was 48h, tightened 2026-04-27
-    # after user complaint "its not the latest and greatest"). Many newsrooms
-    # stamp /YYYY/MM/DD/ in URL paths; when they do, parse it and reject the
-    # tweet if the article is > 24h old — the LLM keeps soft-bending the
-    # rule. Imported lazily so the helper lives in hotake_agent only.
+    # Defense-in-depth 48h freshness check. History: 48h → 24h on 2026-04-27,
+    # → 48h again on 2026-04-29 after the gate killed back-to-back cycles
+    # (CoinDesk source @ 31.7h, then 31.8h — both rejected, post = 0).
+    # Prompt still asks for ≤24h, but the Python gate is lenient by 24h to
+    # avoid total starvation when fresh sources are scarce. The deeper fix
+    # is volume cut (4/day) — only the very best news ships.
     if src_url:
         try:
             from .hotake_agent import _url_publication_date, _is_rejected_source
@@ -867,8 +868,8 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
             pub_date = _url_publication_date(src_url)
             if pub_date is not None:
                 age = datetime.now() - pub_date
-                if age > timedelta(hours=24):
-                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>24h) — SKIPPING stale source: {src_url}")
+                if age > timedelta(hours=48):
+                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>48h) — SKIPPING stale source: {src_url}")
                     globals()["_last_source_url"] = None
                     globals()["_last_image_topic"] = None
                     return None
