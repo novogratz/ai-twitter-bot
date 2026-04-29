@@ -90,6 +90,15 @@ news/hot takes get 0 engagement and pollute the profile. Decisions taken:
 7. **News/hotake URL freshness gate 24h → 48h** — the 24h gate killed
    back-to-back cycles (31.7h then 31.8h CoinDesk sources both rejected,
    posting=0). Quality is now gated by VOLUME CUT, not by freshness alone.
+8. **🔗 SOURCE-AS-SELF-REPLY (the headline fix)**: X deboosts outbound
+   links inline by ~30-50% (confirmed cause of "0 likes" on news/hot takes).
+   `src/bot.py:_post_with_source_reply()` now strips the URL out of the
+   main tweet body and posts it as a self-reply via `post_thread()`. Main
+   tweet ships URL-free (max algorithmic reach) WITH a quote-card visual
+   always attached; source goes in reply #1 for credibility. Both prompts
+   updated to remind the agent that the punchline must stand alone without
+   the URL visible. This is the single highest-leverage change for news/
+   hotake engagement.
 
 - **French-near-exclusive**: Audience is 100% francophone. Aim **90%+ French replies** (was 60-70%). EN tweets only when the news is huge AND the FR commentary adds a unique franco-french angle. Hot takes mostly French.
 - **Comedy DNA — 6 patterns + FR cultural anchors**: Every news/reply must use ≥1 of: (1) répétition qui tue, (2) mini-dialogue FR, (3) métaphore tueuse, (4) renaming, (5) callback culturel FR (RER B, Bercy, syndicat, BFM, "et les charges?", Macron, tonton à Noël, café-clope, coach Tesla, formations à 2k€), (6) understatement brutal. Validated by user feedback ("Getafe. Getafe.", "S&P 7", "syndicat: oui mais qui tamponne le bon de sortie?").

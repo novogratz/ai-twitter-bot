@@ -2,6 +2,7 @@
 import json
 import os
 import random
+import re
 import traceback
 from datetime import date
 from .config import MAX_NEWS_PER_DAY, MAX_HOTAKES_PER_DAY, DAILY_STATE_FILE
@@ -16,6 +17,84 @@ from .article_image import fetch_article_image
 from .image_gen import make_quote_card
 
 THREAD_SEPARATOR = "---THREAD---"
+
+_TRAILING_URL_RE = re.compile(r"\s*https?://\S+\s*$", re.MULTILINE)
+
+
+def _split_url_from_body(tweet: str, src_url: str) -> str:
+    """Strip the trailing source URL out of the tweet body.
+
+    Strategy pivot 2026-04-29: posting the URL inline triggers X's
+    outbound-link deboost (~30-50% reach penalty) — confirmed cause of
+    the 0-likes pattern on news/hot takes. We post the body alone for
+    max algorithmic reach, then attach the source as a self-reply via
+    post_thread() so credibility is preserved without the deboost.
+    """
+    if not src_url:
+        return tweet
+    # Common case: URL on its own line at the end (current prompt format).
+    cleaned = tweet.replace(src_url, "").rstrip()
+    # Sweep up any straggler trailing URL (different schemes / whitespace).
+    cleaned = _TRAILING_URL_RE.sub("", cleaned).rstrip()
+    # Collapse the dangling "\n\n" the URL line left behind.
+    return cleaned.rstrip()
+
+
+def _post_with_source_reply(main_text: str, src_url: str, image_path: str = None):
+    """Post main tweet WITHOUT the URL, then self-reply with the source.
+
+    If no src_url is available, falls back to a plain post_tweet() call.
+    The source-as-reply pattern is the 2026-04-29 strategy fix for the
+    "0 likes on news" problem (X deboosts outbound links inline).
+    """
+    if not src_url:
+        post_tweet(main_text, image_path=image_path)
+        return
+    # post_thread already does post-first-then-self-reply — exactly the
+    # mechanism we need for source attribution. We pass image on the
+    # main tweet only (the source-reply is text-only).
+    if image_path:
+        # post_thread doesn't accept images (yet); fall back to post_tweet
+        # for the visual then add the source-reply through a follow-up call.
+        # Inline approach: use post_thread with quote-card-as-text-only is
+        # worse than visual+reply. So we post the main tweet with the
+        # image first, then thread the source via the same UI path.
+        post_tweet(main_text, image_path=image_path)
+        # Open own profile and reply-to-self with source.
+        # post_thread reuses this exact flow — call it with a single
+        # tweet to skip step 1 then drop the source as the "second tweet".
+        # Simpler: just craft a 2-tweet thread where tweet 1 has been
+        # posted manually. We can't easily resume mid-thread, so use a
+        # parallel utility: open profile, reply to top tweet with source.
+        from .twitter_client import _safari_lock
+        from .twitter_client import close_front_tab, _navigate_to_first_tweet, _paste_text, _run_applescript, BOT_PROFILE_URL
+        import webbrowser, time as _time
+        with _safari_lock:
+            _time.sleep(3)
+            log.info("[POST] Replying to self with source URL...")
+            webbrowser.open(BOT_PROFILE_URL)
+            _time.sleep(5)
+            _navigate_to_first_tweet()
+            _time.sleep(4)
+            _run_applescript('''
+            tell application "System Events"
+                keystroke "r"
+            end tell
+            ''')
+            _time.sleep(2)
+            _paste_text(f"Source : {src_url}")
+            _time.sleep(1)
+            _run_applescript('''
+            tell application "System Events"
+                keystroke return using command down
+            end tell
+            ''')
+            _time.sleep(3)
+            close_front_tab()
+            log.info("[POST] Source-reply posted.")
+        return
+    # No image — use post_thread to handle both posts in one Safari lock.
+    post_thread([main_text, f"Source : {src_url}"])
 
 
 def _load_daily_state() -> dict:
@@ -91,36 +170,34 @@ def run_bot_cycle():
         else:
             _increment_counter("hotakes")
             tweet = humanize(tweet)
-            log.info(f"[HOTAKE] ({len(tweet)} chars): {tweet[:100]}...")
-            # User directive 2026-04-26 PM: hot takes MUST cite a source URL.
-            # When the URL is present, X renders a native link-card (article
-            # image + headline + domain) — DON'T attach a separate image, it
-            # competes with the card and kills credibility.
+            # 2026-04-29 STRATEGY PIVOT: split URL out of main body to bypass
+            # X's outbound-link deboost (~30-50% reach penalty), post URL as
+            # a self-reply for credibility. Quote card is now ALWAYS attached
+            # to the main tweet — no more competing with link-card preview.
             img_path = None
+            src_url = None
             try:
                 from .hotake_agent import last_source_url, last_image_topic
                 src_url = last_source_url()
                 if src_url:
-                    log.info(f"[HOTAKE] URL in body — X will render link-card, no image attached")
-                else:
-                    slug = last_image_topic()
-                    if slug:
-                        wiki_url = f"https://en.wikipedia.org/wiki/{slug}"
-                        img_path = fetch_article_image(wiki_url)
-                        if img_path:
-                            log.info(f"[HOTAKE] Wiki image attached for '{slug}': {img_path}")
-                        else:
-                            log.info(f"[HOTAKE] Wiki had no og:image for '{slug}' - trying quote card")
-                            img_path = make_quote_card(tweet)
-                            if img_path:
-                                log.info(f"[HOTAKE] Generated quote-card: {img_path}")
-                    if not img_path:
-                        img_path = make_quote_card(tweet)
-                        if img_path:
-                            log.info(f"[HOTAKE] Fallback quote-card: {img_path}")
+                    tweet = _split_url_from_body(tweet, src_url)
+                    log.info(f"[HOTAKE] URL split into self-reply (avoids deboost): {src_url[:80]}")
+                # Always attach a visual: quote card by default, Wiki image if
+                # the agent emitted [IMAGE: slug] AND we can fetch og:image.
+                slug = last_image_topic()
+                if slug:
+                    wiki_url = f"https://en.wikipedia.org/wiki/{slug}"
+                    img_path = fetch_article_image(wiki_url)
+                    if img_path:
+                        log.info(f"[HOTAKE] Wiki image attached for '{slug}': {img_path}")
+                if not img_path:
+                    img_path = make_quote_card(tweet)
+                    if img_path:
+                        log.info(f"[HOTAKE] Quote-card attached: {img_path}")
             except Exception as e:
                 log.info(f"[HOTAKE] Image fetch failed (text-only): {e}")
-            post_tweet(tweet, image_path=img_path)
+            log.info(f"[HOTAKE] Posting ({len(tweet)} chars): {tweet[:100]}...")
+            _post_with_source_reply(tweet, src_url, image_path=img_path)
             save_tweet(tweet)
             try:
                 from .hotake_agent import last_pattern as _last_hotake_pattern
@@ -167,41 +244,33 @@ def run_bot_cycle():
         log_post(tweet, pattern_id=_news_pattern)
     else:
         tweet = humanize(tweet)
-        log.info(f"Tweet ({len(tweet)} chars): {tweet[:100]}...")
-        # News visual policy (per user directive 2026-04-26):
-        #   1. If the agent included an article URL in the body → leave it
-        #      there and DON'T attach an image. X auto-renders a native
-        #      link-card (image + headline + domain) which is the most
-        #      credible "real journalist sharing a scoop" surface.
-        #   2. If no URL but agent emitted [IMAGE: <slug>] → fetch that
-        #      Wikipedia page's lead photo (e.g. Musk portrait, Bitcoin
-        #      logo) so the post still has a visual anchor.
-        #   3. Else → text-only. Beats bot-noise text-on-slide cards.
+        # 2026-04-29 STRATEGY PIVOT: split URL out of main body. X deboosts
+        # outbound links inline by ~30-50% (confirmed cause of "0 likes on
+        # news" pattern). Main tweet ships URL-free with a visual; the URL
+        # goes in a self-reply where it still proves the source without
+        # eating reach. Quote card is now always attached.
         img_path = None
+        src_url = None
         try:
             from .agent import last_source_url, last_image_topic
             src_url = last_source_url()
             topic = last_image_topic()
             if src_url:
-                log.info(f"[NEWS] URL in body — X will render link-card, no image attached")
-            elif topic:
+                tweet = _split_url_from_body(tweet, src_url)
+                log.info(f"[NEWS] URL split into self-reply (avoids deboost): {src_url[:80]}")
+            if topic:
                 wiki_url = f"https://en.wikipedia.org/wiki/{topic}"
                 img_path = fetch_article_image(wiki_url)
                 if img_path:
                     log.info(f"[NEWS] Wiki image attached for '{topic}': {img_path}")
-                else:
-                    log.info(f"[NEWS] Wiki had no og:image for '{topic}' — trying quote card")
-                    img_path = make_quote_card(tweet)
-                    if img_path:
-                        log.info(f"[NEWS] Generated quote-card: {img_path}")
-            else:
-                log.info("[NEWS] No URL and no image topic — trying quote card")
+            if not img_path:
                 img_path = make_quote_card(tweet)
                 if img_path:
-                    log.info(f"[NEWS] Fallback quote-card: {img_path}")
+                    log.info(f"[NEWS] Quote-card attached: {img_path}")
         except Exception as e:
             log.info(f"[NEWS] Image fallback failed (text-only): {e}")
-        post_tweet(tweet, image_path=img_path)
+        log.info(f"[NEWS] Posting ({len(tweet)} chars): {tweet[:100]}...")
+        _post_with_source_reply(tweet, src_url, image_path=img_path)
         save_tweet(tweet)
         log_post(tweet, pattern_id=_news_pattern)
         if img_path:

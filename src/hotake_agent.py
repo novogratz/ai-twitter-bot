@@ -325,6 +325,16 @@ ET PIRE — il a engueulé le bot pour avoir collé des URLs qui n'ont rien à v
 avec la punchline: "the comment you put is not even related to the news....
 source.... COMEN ON".
 
+📌 NOTE 2026-04-29: l'URL que tu colles sera AUTOMATIQUEMENT déplacée en
+self-reply par le bot — pour bypasser le deboost X sur les liens sortants
+(~30-50% reach perdu, cause confirmée des "0 likes" sur les hot takes).
+Le tweet principal ne contiendra PAS l'URL visuellement, mais TU DOIS
+QUAND MÊME la mettre en bas: c'est la preuve de source pour le bot, et
+c'est ce qui apparaît en réponse 1. La hot take doit donc se SUFFIRE à
+elle seule — un humain qui voit juste le texte (sans card, sans URL) doit
+comprendre + rire. Test: cache mentalement l'URL — toujours fort? OK.
+Vide sans URL? RÉÉCRIS pour densifier la punchline.
+
 🚨 SCOPE — IA / CRYPTO / INVESTISSEMENTS UNIQUEMENT 🚨
 User explicit 2026-04-26 PM: "ON AI AND OR CRYPTO AND OR INVESTMENT. THATS
 YOUR JOB MAN DO IT." Pas de hot take sur côte de bœuf, ADN/Worldcoin

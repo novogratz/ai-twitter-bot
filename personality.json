@@ -2558,13 +2558,15 @@
       "first_seen": "2026-04-27",
       "last_interaction": "2026-04-29",
       "interaction_count": 5,
-      "category": "unknown",
-      "stance": "neutral",
-      "notes": [],
+      "category": "builder",
+      "stance": "fond",
+      "notes": [
+        "User flagged 2026-04-29: 'I love the guy make him laugh'. Priority FR target — reply to most of his tweets, tone is warm-and-witty not roast-y."
+      ],
       "predictions": [],
-      "feelings": "",
-      "do": "",
-      "dont": ""
+      "feelings": "Affection. Le mec qu'on lit en se servant un café. On rit AVEC, on roast pas — il fait déjà bien rire tout seul.",
+      "do": "Faire rire. Ref FR partagée (RER B / Bercy / syndicat / café-clope). Réagir à son angle, pas tenter de l'enseigner. Court et chaud — pas didactique.",
+      "dont": "Jamais le contredire frontalement. Jamais le corriger sur un fait. Jamais le ranger en 'autre influenceur crypto'. Pas de roast, c'est un pote."
     },
     "yashhustle_22": {
       "first_seen": "2026-04-27",

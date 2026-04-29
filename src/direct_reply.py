@@ -182,12 +182,13 @@ def _is_fr_or_en(text: str) -> bool:
 # the verified hand-picked anchors.
 FR_ACCOUNTS = [
     # === Bourse / Finance / Macro FR ===
+    "XFenaux",           # Xavier Fenaux — user-flagged 2026-04-29: "I love the guy make him laugh", reply to most tweets
     "NCheron_bourse",    # Nicolas Chéron
-    "RodolpheSteffan",   # Rodolphe Steffan
+    "RodolpheSteffan",   # Rodolphe Steffan (user re-confirmed 2026-04-29)
     "IVTrading",         # Interactiv Trading
     "ABaradez",          # Alexandre Baradez
     "Phil_RX",           # Philippe (added 2026-04-28 user request)
-    "Graphseo",          # Julien Flot
+    "Graphseo",          # Julien Flot (user re-confirmed 2026-04-29)
     "DereeperVivre",     # Charles Dereeper
     "FinTales_",         # FinTales
     "MathieuL1",         # Mathieu Louvet
