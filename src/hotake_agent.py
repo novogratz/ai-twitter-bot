@@ -529,17 +529,20 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
         dedup_section=dedup_section,
     )
 
-    result = subprocess.run(
-        [
-            "claude",
-            "-p", prompt,
-            "--model", HOTAKE_MODEL,
-            "--output-format", "json",
-            "--no-session-persistence",
-        ],
-        capture_output=True,
-        text=True,
-    )
+    cli_cmd = [
+        "claude",
+        "-p", prompt,
+        "--model", HOTAKE_MODEL,
+        "--output-format", "json",
+        "--no-session-persistence",
+    ]
+    result = subprocess.run(cli_cmd, capture_output=True, text=True)
+    # Retry once on transient CLI failure (exit 1 + empty stderr = API hiccup)
+    if result.returncode != 0 and not result.stderr.strip():
+        log.warning(f"[HOTAKE] CLI transient failure (exit {result.returncode}), retrying in 10s...")
+        import time
+        time.sleep(10)
+        result = subprocess.run(cli_cmd, capture_output=True, text=True)
     if result.returncode != 0:
         log.info(f"[HOTAKE] CLI stderr: {result.stderr}")
         raise RuntimeError(f"Hot take CLI failed (exit {result.returncode}): {result.stderr}")

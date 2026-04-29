@@ -807,18 +807,21 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         performance_section=performance_section,
     )
 
-    result = subprocess.run(
-        [
-            "claude",
-            "-p", prompt,
-            "--allowedTools", "WebSearch",
-            "--model", NEWS_MODEL,
-            "--output-format", "json",
-            "--no-session-persistence",
-        ],
-        capture_output=True,
-        text=True,
-    )
+    cli_cmd = [
+        "claude",
+        "-p", prompt,
+        "--allowedTools", "WebSearch",
+        "--model", NEWS_MODEL,
+        "--output-format", "json",
+        "--no-session-persistence",
+    ]
+    result = subprocess.run(cli_cmd, capture_output=True, text=True)
+    # Retry once on transient CLI failure (exit 1 + empty stderr = API hiccup)
+    if result.returncode != 0 and not result.stderr.strip():
+        log.warning(f"Claude CLI transient failure (exit {result.returncode}), retrying in 10s...")
+        import time
+        time.sleep(10)
+        result = subprocess.run(cli_cmd, capture_output=True, text=True)
     if result.returncode != 0:
         log.info(f"Claude CLI stderr: {result.stderr}")
         raise RuntimeError(f"Claude CLI failed (exit {result.returncode}): {result.stderr}")
