@@ -46,9 +46,9 @@ BLOCKLIST = {
 DISCOVERED_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "discovered_accounts.json")
 
 # Models
-NEWS_MODEL = os.environ.get("NEWS_MODEL", "claude-opus-4-6")
+NEWS_MODEL = os.environ.get("NEWS_MODEL", "claude-opus-4-7")
 REPLY_MODEL = os.environ.get("REPLY_MODEL", "claude-sonnet-4-6")
-HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", "claude-sonnet-4-6")
+HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", "claude-opus-4-7")
 # Roast + quote-tweet meme-gen don't need Sonnet — they're one-liners off a
 # fixed pattern. Haiku is plenty and frees Sonnet/Opus budget for the
 # news/reply/hotake paths where the model actually matters.
