@@ -112,6 +112,19 @@ _NICHE_PATTERN = re.compile(
     r"inflation|récession|recession|"
     r"earnings|résultats?|deal|acquisition|merger|m&a|"
     r"finance\w*|financi\w*|cotation|"
+    # Commodities / energy / metals
+    r"pétrole|petrole|brent|wti|opep|opec|"
+    r"xau|xag|silver|argent\s*métal|argent\s*metal|"
+    r"matières?\s*premières?|commodit\w*|"
+    # Technical analysis / market direction
+    r"semi.?conducteur\w*|semiconductor\w*|"
+    r"analyse\s*technique|technical\s*analysis|"
+    r"baissier|baissière|haussier|haussière|bullish|bearish|"
+    r"surach\w*|survendu|overbought|oversold|"
+    r"résistance|support|rsi\b|macd|moyenne\s*mobile|"
+    r"volatilité|volatility|correction|krach|"
+    # Major banks / financial institutions
+    r"goldman|jpmorgan|morgan\s*stanley|bank\s*of\s*america|"
     # Macro / fiscal / sovereign
     r"dette\w*|déficit|fiscal\w*|fiscalité|impôts?|impot|impots|"
     r"budget\w*|déflation|monétaire|monetaire|souverain\w*|"
