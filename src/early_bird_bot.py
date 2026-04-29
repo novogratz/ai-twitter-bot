@@ -56,7 +56,7 @@ EARLY_BIRD_ACCOUNTS = [
     # === Bourse FR (heavy — high signal, low noise) ===
     "MathieuL1", "Graphseo", "NCheron_bourse", "ABaradez", "DereeperVivre",
     "ThomasVeillet", "YoannLOPEZ", "RodolpheSteffan", "IVTrading",
-    "FinTales_", "ZonebourseFR",
+    "FinTales_", "ZonebourseFR", "Phil_RX",
     # === FR media (mass distribution + breaking news) ===
     "BFMTV", "BFMBourse", "lemondefr", "lesechos", "Capital",
     "Le_Figaro", "France24",  # InvestirLeJournal (>15 char) + LeRevenu_fr (0% scrape) removed 2026-04-27

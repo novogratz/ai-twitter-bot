@@ -60,7 +60,7 @@ TARGET_ACCOUNTS = [
     "WuBlockchain", "tier10k",
 
     # === Bourse/Finance: FR ===
-    "Graphseo", "ABaradez", "FinTales_",
+    "Graphseo", "ABaradez", "Phil_RX", "FinTales_",
     "ZonebourseFR", "BFMBourse",
     "NCheron_bourse", "RodolpheSteffan", "IVTrading",
     "DereeperVivre", "MathieuL1",

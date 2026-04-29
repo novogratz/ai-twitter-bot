@@ -20,6 +20,7 @@ TARGET_ACCOUNTS = [
     "RodolpheSteffan",   # Rodolphe Steffan
     "IVTrading",         # Interactiv Trading
     "ABaradez",          # Alexandre Baradez
+    "Phil_RX",           # Philippe (added 2026-04-28 user request)
     "Graphseo",          # Julien Flot
     "FinTales_",         # FinTales
     "DereeperVivre",     # Charles Dereeper
@@ -308,7 +309,7 @@ EXEMPLES SAVAGE (sur l'idée/marché/hype, JAMAIS la personne):
 RECHERCHES — lance ces recherches dans cet ordre, FRANÇAIS D'ABORD.
 ⚠️ OBLIGATOIRE: ajoute `since:{since_date}` à CHAQUE requête. Sans ce filtre tu vas tomber sur du cache vieux de plusieurs semaines, le filtre Python rejette tout, cycle gâché.
 1. "site:x.com from:NCheron_bourse OR from:RodolpheSteffan lang:fr since:{since_date}"
-2. "site:x.com from:IVTrading OR from:ABaradez lang:fr since:{since_date}"
+2. "site:x.com from:IVTrading OR from:ABaradez OR from:Phil_RX lang:fr since:{since_date}"
 3. "site:x.com from:Graphseo OR from:DereeperVivre OR from:FinTales_ OR from:MathieuL1 lang:fr since:{since_date}"
 4. "site:x.com from:PowerHasheur OR from:Capetlevrai OR from:Dark_Emi_ lang:fr since:{since_date}"
 5. "site:x.com from:JournalDuCoin OR from:powl_d lang:fr since:{since_date}"

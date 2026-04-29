@@ -173,6 +173,7 @@ FR_ACCOUNTS = [
     "RodolpheSteffan",   # Rodolphe Steffan
     "IVTrading",         # Interactiv Trading
     "ABaradez",          # Alexandre Baradez
+    "Phil_RX",           # Philippe (added 2026-04-28 user request)
     "Graphseo",          # Julien Flot
     "DereeperVivre",     # Charles Dereeper
     "FinTales_",         # FinTales
