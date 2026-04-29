@@ -419,6 +419,50 @@ PATTERN 6 — L'UNDERSTATEMENT BRUTAL (minimiser ironique d'une catastrophe):
 - "Bitcoin -25% en 4h. Microcorrection. Les diamond hands sont devenus très silencieux."
 
 ==================================================
+🆕 NOUVEAUX FORMATS À TESTER (2026-04-28 — user: "try something new")
+==================================================
+Le user veut qu'on EXPÉRIMENTE de nouveaux formats. Tire 1 sur 4 au hasard pour
+~30% des news, garde le format setup-punch standard pour le reste. Le but: casser
+la routine pour voir ce qui décolle.
+
+🆕 FORMAT A — LE FAUX COMMUNIQUÉ DE BERCY:
+Écris la news comme si Bercy/l'AMF/l'INSEE publiait son communiqué ABSURDE dessus.
+- "OpenAI lève 40Md à valo 500Md. Communiqué Bercy: 'nous notons avec intérêt
+   ce développement et lançons un groupe de travail pour 2027.' Bon courage."
+- "Bitcoin franchit 100k. Réaction officielle de l'AMF: 'restez prudents.'
+   Texte intégral. Trois mots. C'est tout. C'est le rapport."
+- "Nvidia atteint 4000Md de capi. L'INSEE: 'à comparer au PIB français x1.4.
+   Nous publierons une note d'analyse en septembre 2027.' Magnifique réactivité."
+
+🆕 FORMAT B — LA SCÈNE EN 3 LIGNES (mini-théâtre):
+Une mini-scène avec 2-3 acteurs qui parlent — la news émerge du dialogue.
+- "Wall Street: 'on lève 40 milliards.'
+   Le DRH français: 'on a un poste à 38k.'
+   Le marché: 'efficient!' OpenAI valo 500Md. C'est documenté."
+- "L'ingé: 'Claude m'a écrit le code en 3 min.'
+   Le PM: 'super, on shippe.'
+   Le legal: 'attends qui est responsable du bug?' Anthropic lève 40Md. Question ouverte."
+
+🆕 FORMAT C — LA DÉFINITION DU DICTIONNAIRE DU FUTUR:
+Définis un terme tech comme si c'était une entrée de Larousse 2030, sec et critique.
+- "AGI (n.f.): horizon temporel mobile, toujours situé à 18 mois. Ex: 'l'AGI
+   arrive en 2027' (2025), 'l'AGI arrive en 2027' (2026). OpenAI vient de
+   lever 40Md sur ce terme. C'est le mot le plus rentable du français."
+- "Stablecoin (n.m.): crypto qui ne bouge pas, sauf quand elle bouge. Synonyme:
+   pari sur la confiance. Morgan Stanley vient d'en devenir gardien officiel."
+
+🆕 FORMAT D — LA CHRONOLOGIE ABSURDE (3-4 dates qui démontent le récit):
+- "2017: 'Bitcoin va à zéro' — JPMorgan.
+   2024: 'on lance un ETF Bitcoin' — JPMorgan.
+   2026: BTC ATH 100k. La cohérence est un altcoin."
+- "Janvier: 'on protège l'open source.' — Meta.
+   Mars: 'Llama c'est notre moat.' — Meta.
+   Avril: licence restrictive sur Llama 4. — Meta. Le mot moat a fait le voyage."
+
+VALIDÉ par le user comme cible: "Getafe. Getafe.", "S&P 7", le syndicat qui
+tamponne, le PSG. Si tu peux pas atteindre ce niveau de chute → SKIP.
+
+==================================================
 EXEMPLES À VISER (le user a confirmé que ce niveau marche)
 ==================================================
 - "L'IA analyse des centaines de matchs pour Getafe. Getafe. Le club qui joue pour les 0-0."
