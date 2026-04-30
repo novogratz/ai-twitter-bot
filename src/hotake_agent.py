@@ -634,6 +634,15 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     if not tweet or tweet.upper() == "SKIP":
         return None
 
+    # Defense against skip-rationale leaks (bug 2026-04-30 PM: quote-tweet
+    # agent posted prose explaining its skip decision). The word "skip" is
+    # never legitimately tweeted by us; refuse anything that contains it or
+    # other meta-commentary markers.
+    from .quote_tweet_bot import _looks_like_skip_or_rationale
+    if _looks_like_skip_or_rationale(tweet):
+        log.info(f"[HOTAKE] Skip-rationale detected, refusing: {tweet[:120]!r}")
+        return None
+
     if tweet.startswith('"') and tweet.endswith('"'):
         tweet = tweet[1:-1]
 

@@ -29,9 +29,12 @@ QUOTE_STATE_FILE = os.path.join(_PROJECT_ROOT, "quote_daily_state.json")
 # growth — not redundant with replies.
 _OWN_HANDLE = BOT_HANDLE.lower()
 
-# Pull only HOT FR tweets (X "Top" tab) with high engagement floor — quote
+# Pull HOT tweets (X "Top" tab) with high engagement floor — quote
 # bait should be at least somewhat viral or there's no audience to capture.
+# 2026-04-30 PM (user directive): "biggest tweets from france or english".
+# So queries now span FR and EN — the prompt forces FR commentary either way.
 QUOTE_QUERIES = [
+    # FR pool — primary
     "Claude OR ClaudeCode lang:fr min_faves:50",
     "ChatGPT OR OpenAI lang:fr min_faves:50",
     "Bitcoin lang:fr min_faves:50",
@@ -39,22 +42,30 @@ QUOTE_QUERIES = [
     "crypto lang:fr min_faves:50",
     "IA lang:fr min_faves:50",
     "trading lang:fr min_faves:30",
+    # EN pool — only the biggest viral hits qualify (high min_faves floor)
+    "OpenAI OR Anthropic OR Claude lang:en min_faves:1000",
+    "Bitcoin OR Ethereum lang:en min_faves:1000",
+    "AGI OR \"AI safety\" lang:en min_faves:500",
+    "stock market OR S&P500 lang:en min_faves:500",
+    "Nvidia OR NVDA lang:en min_faves:500",
 ]
 
 QUOTE_PROMPT = """Tu es @kzer_ai. Tu vas QUOTE-TWEETER ce tweet:
 
 @{author}: "{tweet_text}"
 
-Ton job: écrire UNE phrase courte en FRANÇAIS qui ajoute une couche meme/sharp/philosophique au-dessus. Pas une réponse, une OBSERVATION qui complète. Comme si tu faisais un "this." mais en mille fois plus drôle.
+Ton job: écrire UNE phrase courte EN FRANÇAIS qui ajoute une couche meme/sarcastique/sharp au-dessus. Même si le tweet original est en anglais, TA QUOTE est en FRANÇAIS — c'est notre voix. Comme un commentaire BFM IA/crypto/bourse en mode coup-de-pied.
 
 RÈGLES:
 - Maximum 200 caractères (X coupe à 280 mais le tweet original est intégré, donc on a la place).
-- DEADPAN. SEC. SCREENSHOT-WORTHY.
+- DEADPAN. SEC. SCREENSHOT-WORTHY. Sarcastique mais intelligent.
 - Troll les IDÉES, jamais la personne. @{author} doit pouvoir liker ta quote.
 - Pas d'emojis. Pas de hashtags. Pas d'em dashes (—).
-- Si tu peux pas faire mieux que silence, output SKIP.
+- Si tu peux pas faire mieux que silence, output EXACTEMENT le mot SKIP, rien d'autre. Aucune explication, aucune phrase. Juste "SKIP".
 
-Output UNIQUEMENT le texte de la quote, OU le mot SKIP."""
+CRITIQUE: Tout output qui contient le mot SKIP est traité comme un skip silencieux. N'écris JAMAIS une phrase qui contient le mot "skip" — soit tu écris la quote pure, soit tu écris uniquement "SKIP". Pas de méta-commentaire, pas d'explication de ta décision, pas de "ce tweet est hors scope" — un humain ne verra jamais ton raisonnement, donc l'expliquer c'est shipper le raisonnement.
+
+Output UNIQUEMENT le texte de la quote en FR, OU le mot SKIP seul."""
 
 
 def _load_state() -> dict:
@@ -105,6 +116,45 @@ def _save_quoted(s: set):
         json.dump(list(s)[-500:], f, indent=2)
 
 
+_SKIP_WORD_RE = re.compile(r"\bskip\b", re.IGNORECASE)
+_SKIP_RATIONALE_MARKERS = (
+    "hors scope",
+    "hors-scope",
+    "en dehors du scope",
+    "→ skip",
+    "-> skip",
+    "= skip",
+    "ce tweet est hors",
+    "scope du bot",
+    "scope ai/crypto",
+)
+
+
+def _looks_like_skip_or_rationale(text: str) -> bool:
+    """Catch any output that is — or contains — skip-reasoning prose.
+
+    Bug 2026-04-30 PM: the agent quote-tweeted "Le tweet original touche à
+    de la politique identitaire... \"En cas de doute → SKIP\" s'applique"
+    on @marcelenplace because the prior guard only matched literal "SKIP"
+    or "SKIP " prefix. The agent had output a full paragraph explaining
+    *why* it was skipping, and that prose got posted publicly.
+
+    Defense: the word "skip" never legitimately appears in any tweet we'd
+    ship (it's not a French word, it's only ever our sentinel). Word-
+    boundary match anywhere → reject. Plus a list of meta-commentary
+    markers that signal the agent is reasoning about its own decision.
+    """
+    if not text:
+        return True
+    lower = text.lower()
+    if _SKIP_WORD_RE.search(text):
+        return True
+    for marker in _SKIP_RATIONALE_MARKERS:
+        if marker in lower:
+            return True
+    return False
+
+
 def _generate_quote(author: str, tweet_text: str):
     prompt = QUOTE_PROMPT.format(author=author, tweet_text=tweet_text[:200])
     try:
@@ -120,14 +170,10 @@ def _generate_quote(author: str, tweet_text: str):
             out = envelope.get("result", raw).strip()
         except (json.JSONDecodeError, AttributeError):
             out = raw
-        # Hardened SKIP detection: agent occasionally returns "SKIP", "SKIP.",
-        # "SKIP\n", or " SKIP " with stray chars. Strip punctuation/whitespace
-        # before comparing — bug 2026-04-27 17:09 shipped a 4-char "SKIP" quote
-        # on Elon's Sam Altman tweet because the strict equality check missed.
         if not out:
             return None
-        cleaned = out.strip().rstrip(".!?,;:").strip().upper()
-        if cleaned == "SKIP" or cleaned.startswith("SKIP "):
+        if _looks_like_skip_or_rationale(out):
+            log.info(f"[QUOTE] SKIP-or-rationale detected, refusing to post: {out[:120]!r}")
             return None
         if out.startswith('"') and out.endswith('"'):
             out = out[1:-1]
@@ -174,6 +220,41 @@ def run_quote_tweet_cycle():
                 continue  # not viral enough to be worth amplifying
             candidates.append(t)
 
+    # Trusted-news pass (2026-04-30 PM): user wants quote-tweets of "biggest
+    # news in AI/crypto/bourse from last 36h". Pull from the same trusted
+    # handles as retweet_bot — the most-liked recent tweet from a top outlet
+    # is exactly what the user described, and our FR sarcastic commentary on
+    # top is the bot's voice.
+    try:
+        from .retweet_bot import TRUSTED_NEWS_HANDLES
+        from .twitter_client import scrape_profile_tweets
+        sampled = random.sample(TRUSTED_NEWS_HANDLES, k=min(3, len(TRUSTED_NEWS_HANDLES)))
+        for handle in sampled:
+            log.info(f"[QUOTE] Scraping trusted-news handle: @{handle}")
+            try:
+                tweets = scrape_profile_tweets(handle, max_tweets=10)
+            except Exception:
+                log.info(f"[QUOTE] Scrape failed for @{handle}:")
+                traceback.print_exc()
+                continue
+            for t in tweets or []:
+                url = t.get("url")
+                if not url or url in quoted:
+                    continue
+                author = (t.get("author") or handle).lower()
+                url_handle = _handle_from_url(url)
+                if author in BLOCKLIST or url_handle in BLOCKLIST:
+                    continue
+                if author == _OWN_HANDLE or url_handle == _OWN_HANDLE:
+                    continue
+                likes = int(t.get("likes") or 0)
+                if likes < 20:
+                    continue  # trusted outlets break news fast — lower floor
+                candidates.append(t)
+    except Exception:
+        log.info("[QUOTE] Trusted-news pass failed:")
+        traceback.print_exc()
+
     if not candidates:
         log.info("[QUOTE] No viable candidates this cycle.")
         return
@@ -194,12 +275,11 @@ def run_quote_tweet_cycle():
 
     quote = humanize(quote)
 
-    # Last-line defense: even if SKIP slipped past _generate_quote AND the
-    # humanizer preserved it, do NOT ship a 4-char "SKIP" tweet on someone's
-    # viral post. Min-length floor catches any sentinel-like leak.
-    cleaned = quote.strip().rstrip(".!?,;:").strip().upper()
-    if cleaned == "SKIP" or cleaned.startswith("SKIP ") or len(quote.strip()) < 15:
-        log.info(f"[QUOTE] Final guard: refusing to post {quote!r} (sentinel/too short).")
+    # Last-line defense: even if SKIP-or-rationale slipped past _generate_quote
+    # AND the humanizer preserved it, refuse to post anything that looks like
+    # the agent reasoning aloud. Min-length floor catches any short sentinel.
+    if _looks_like_skip_or_rationale(quote) or len(quote.strip()) < 15:
+        log.info(f"[QUOTE] Final guard: refusing to post {quote!r} (skip-rationale/too short).")
         return
 
     log.info(f"[QUOTE] Posting ({len(quote)} chars): {quote}")

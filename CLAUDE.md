@@ -70,6 +70,32 @@ These two rules are stamped into every generation prompt via `personality_store.
 
 ### Strategy
 
+🚨 **STRATEGY PIVOT 2026-04-30 PM — NEWS = QUOTE/RETWEET, NOT STANDALONE** 🚨
+User verbatim: "yo news are trash: please remove the source as reply of yourself
+this is ridiculous.. put it directly in the news if needed - secondly you showed
+a SKIP message ITS REALLY bad SKIP [...] All you have to do is to take the
+biggest news in AI crypto bourse from last 36h or biggest tweets from france or
+english and retweet with sarcastic french messages.... thats all I want from
+you push it". Three changes shipped:
+1. **Source-as-self-reply REVERTED**. URL goes back inline in news/hotake
+   tweets; X renders the native link-card. `_post_with_source_reply` and
+   `_split_url_from_body` deleted from `src/bot.py`.
+2. **SKIP-prose leak guard hardened**. The quote-tweet bot publicly posted
+   the agent's skip rationale ("Le tweet original touche à de la politique
+   identitaire... 'En cas de doute → SKIP' s'applique") on @marcelenplace
+   because the prior guard only matched literal "SKIP". New guard
+   (`_looks_like_skip_or_rationale` in `src/quote_tweet_bot.py`) rejects any
+   output containing the word "skip" anywhere (case-insensitive, word
+   boundary) plus a marker list ("hors scope", "→ skip", "ce tweet est
+   hors", etc.). Reused from news + hot take generators.
+3. **News strategy pivot**: standalone news caps cut hard (12 → 4 news,
+   12 → 6 hot takes); quote-tweet cap raised (12 → 18) and is now THE
+   primary news surface. New EN viral queries added to `QUOTE_QUERIES`
+   (high `min_faves` floor) so we capture biggest EN news with FR sarcastic
+   commentary. New trusted-news pass in `run_quote_tweet_cycle` pulls from
+   `retweet_bot.TRUSTED_NEWS_HANDLES` so the biggest news drops from top
+   outlets get a sarcastic FR quote-tweet on top.
+
 🚨 **STRATEGY PIVOT 2026-04-29 — REPLIES ARE EVERYTHING** 🚨
 User verbatim: "You get 0 news and 0 likes on your news man.... only thing
 that works is your reply where you are hillarious... you got to change
@@ -90,13 +116,12 @@ news/hot takes get 0 engagement and pollute the profile. Decisions taken:
 7. **News/hotake URL freshness gate 24h → 48h** — the 24h gate killed
    back-to-back cycles (31.7h then 31.8h CoinDesk sources both rejected,
    posting=0). Quality is now gated by VOLUME CUT, not by freshness alone.
-8. **🔗 SOURCE-AS-SELF-REPLY (the headline fix)**: X deboosts outbound
-   links inline by ~30-50% (confirmed cause of "0 likes" on news/hot takes).
-   `src/bot.py:_post_with_source_reply()` now strips the URL out of the
-   main tweet body and posts it as a self-reply via `post_thread()`. Main
-   tweet ships URL-free (max algorithmic reach); source goes in reply #1
-   for credibility. Both prompts updated to remind the agent that the
-   punchline must stand alone without the URL visible.
+8. **🔗 ~~SOURCE-AS-SELF-REPLY~~ REVERTED 2026-04-30 PM**: User verbatim
+   "remove the source as reply of yourself this is ridiculous.. put it
+   directly in the news if needed". The split was producing weird-looking
+   self-reply chains on the profile. URL is back inline in the tweet body
+   and X renders the native link-card. `_post_with_source_reply` and
+   `_split_url_from_body` deleted from `src/bot.py`.
 
 🚨 **STRATEGY PIVOT 2026-04-29 PM — NEWS/HOT TAKE SECOND PASS** 🚨
 User verbatim: "this bot sucks... specifically the news flow and hot take...

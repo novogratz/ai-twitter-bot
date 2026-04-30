@@ -12,19 +12,21 @@ REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
-# Daily posting limits — TUNED 2026-04-29 PM. History: 24 → 4 (over-cut) →
-# 12 (now). User verbatim: "4 a day is crap... refresh your thing also
-# post more". The earlier 4/day cut was a reaction to 0-like posts; the
-# real fix shipped the same day (URL → self-reply, prompt rewrite, real
-# article photos via og:image). Volume comes back, but at 12 not 24 — the
-# bot still has to ship BOMBS, not filler. News + retweet + hot take +
-# quote-tweet together = ~40-50 outbound feed actions/day at peak.
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "12"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "12"))
-# Quote-tweet cap — bumped 8 → 12. Different distribution surface than
-# replies (lands in followers' feed AND notifies original author),
-# so additive growth, not redundant volume.
-MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "12"))
+# Daily posting limits — RECUT 2026-04-30 PM. User: "yo news are trash...
+# All you have to do is to take the biggest news in AI/crypto/bourse from
+# last 36h or biggest tweets from france or english and retweet with
+# sarcastic french messages.... thats all I want from you push it". So:
+# standalone news/hotake is no longer the news surface — the news strategy
+# IS retweet (retweet_bot, cap 16) + quote-tweet with sarcastic FR commentary
+# (quote_tweet_bot, cap raised to 18). Standalone news drops to a trickle —
+# only ships when a story is so big neither path can carry the joke alone.
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "4"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "6"))
+# Quote-tweet cap — bumped 12 → 18. Now THE primary news surface (per user
+# 2026-04-30 PM directive): biggest news from 36h or biggest viral tweets
+# (FR or EN) get a sarcastic FR quote-tweet on top. Different distribution
+# than replies (lands in followers' feed AND notifies original author).
+MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "18"))
 # Reply cap per cycle — bumped 7→12→18 (2026-04-29). Replies are the ONLY
 # surface earning likes/follows per user directive; volume is the move.
 MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "18"))

@@ -10,7 +10,7 @@ Uses Claude Code CLI for AI generation and Safari + AppleScript for browser auto
 
 **Post Bot** - Searches the web for breaking news (AI, crypto, bourse), writes sharp FR tweets. **News format = MEME HOT TAKE + URL**: a screenshot-worthy punchline first, raw article URL on its own line so X renders the link card. No "Selon X..." / "Breaking:" / news-report style — if the news doesn't lend itself to a meme, the bot SKIPs. FIRST-DERIVATIVE rule: reject angles BFM/Bloomberg would post as-is, find the second-order implication. Threads supported. Mix of news (24/day) + hot-take memes (24/day). News-first policy: first 3 posts/day must be news. **HARD RULE 2026-04-26 PM — SOURCE OR SKIP**: per user directive, both news AND hot takes require a real article URL (≤72h, direct link, not paywalled). Hot take agent uses WebSearch to anchor every meme on a real recent event; without a URL the cycle SKIPs rather than ship a sourceless meme. Hot takes WITH a URL skip the image attach so X renders the native link-card cleanly (image+headline+domain). Replies are EXEMPT from this rule.
 
-**Post Bot** - News + hot take publisher (cap 4/day each — cut hard 2026-04-29 because 51% of original posts got 0 likes). **Source-as-self-reply pattern** (2026-04-29): the URL is stripped out of the main tweet body and posted as a self-reply via `post_thread()`. X deboosts inline outbound links by ~30-50% (confirmed cause of the 0-likes pattern); the main tweet now ships URL-free with a quote-card visual for max algorithmic reach, and the source URL appears as reply #1 to preserve credibility. Quote card is always attached on news + hot takes.
+**Post Bot** - News + hot take publisher. Caps cut hard 2026-04-30 PM (12→4 news, 12→6 hot takes) — user said standalone news/hot takes are "trash" and the new news strategy is retweet + quote-tweet with sarcastic FR commentary (see Quote-tweet bot below). Standalone news/hot takes still ship for the absolute best stories that need our voice front-and-center. URL stays inline in the body so X renders the native link-card (the 2026-04-29 source-as-self-reply experiment was reverted on user directive: "remove the source as reply of yourself this is ridiculous").
 
 **Reply Bot** - Direct + search reply paths. Finds high-engagement FR tweets (with EN fallback), drops sharp one-liner replies (cap 18/cycle, impact-ranked — bumped from 7 on 2026-04-29 strategy pivot: replies are the only surface earning likes, so we max-out volume). **Source-aware engagement floor**: random-discovery sources (SEARCH-FR-LIVE, SEARCH-FR-HOT) skip tweets below `REPLY_MIN_LIKES` (default 5); curated paths (PROFILE-FR, FEED, FOLLOWING) bypass the floor entirely so the bot replies on EVERYTHING from the vetted 1k+ FR roster. Content blocklist (e.g. "se poser") still applies. FR priority, bilingual. **Replies are tagged with one of 6 comedy patterns** (REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER) and logged into `engagement_log.csv` so the evolution agent can compute per-pattern ROI and steer style. **Graceful FR + QC quiet-hour fade**: Paris 04-07 = 95% skip (deepest dark), Paris 00-04 = 25% skip (= QC primetime, light-active for francophone Quebec audience), weekend Sat/Sun 8-11 = 30% skip.
 
@@ -34,7 +34,7 @@ Uses Claude Code CLI for AI generation and Safari + AppleScript for browser auto
 
 **Reflection Agent (autobiographical brain)** - Every 6h: reads engagement + history, updates `personality.json` — per-account dossiers (category, stance, feelings, notes) + per-topic positions. Replies become PERSONAL because the bot remembers each account.
 
-**Quote-Tweet Bot** - Every 75 min, cap 12/day: picks the most viral FR tweet in our niches (min_faves:30, top tab) and quote-tweets it with a sharp meme observation. Different distribution surface than replies. Quote model: Haiku.
+**Quote-Tweet Bot** - Every 75 min, cap 18/day (bumped 12→18 on 2026-04-30 PM — now THE primary news surface). Two candidate sources merge each cycle: (1) viral FR/EN search queries (`min_faves` floor; EN floor is much higher so only mega-viral EN tweets qualify), (2) trusted-news handles from `retweet_bot.TRUSTED_NEWS_HANDLES` (Reuters, Bloomberg, TechCrunch, The Information, CoinDesk, Les Échos, Le Monde, etc. — biggest news from last 36h). Picks the single most-liked candidate, generates a sarcastic FR observation (always FR, even when the original tweet is EN), posts as quote. Hardened SKIP guard via `_looks_like_skip_or_rationale` rejects any output containing the word "skip" or skip-rationale prose markers (after a 2026-04-30 PM leak shipped the agent's skip reasoning publicly).
 
 **Daily Digest** - Hourly idempotent cron, writes one section per day to `daily_digest.md`: total actions, by-type breakdown, top sources, comedy patterns, top reply targets, top-perf posts, follow count delta. Built specifically for the 2-week post-mission review.
 
@@ -117,11 +117,11 @@ All settings in `src/config.py`, overridable with environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MAX_NEWS_PER_DAY` | 12 | Max news posts per day (settled at 12 after 24→4→12 on 2026-04-29 — prompt rewrite + URL self-reply + real photos let volume come back) |
-| `MAX_HOTAKES_PER_DAY` | 12 | Max hot takes per day (same path as news) |
-| `MAX_RETWEETS_PER_DAY` | 16 | Max selective retweets per day (bumped 8→16 on 2026-04-29 PM — was choking) |
+| `MAX_NEWS_PER_DAY` | 4 | Max standalone news posts per day (recut 12→4 on 2026-04-30 PM — user said news flow is trash, news strategy is now retweet+quote with sarcastic FR commentary) |
+| `MAX_HOTAKES_PER_DAY` | 6 | Max hot takes per day (recut 12→6 alongside the news cut) |
+| `MAX_RETWEETS_PER_DAY` | 16 | Max selective retweets per day (one of the two main news surfaces alongside quote-tweets) |
 | `RETWEET_MIN_LIKES` | 10 | Min likes on a candidate retweet (lowered 25→10 — top-tier outlets break news fast but don't always rocket past 25 in the first hour) |
-| `MAX_QUOTES_PER_DAY` | 12 | Max quote-tweets per day |
+| `MAX_QUOTES_PER_DAY` | 18 | Max quote-tweets per day (raised 12→18 on 2026-04-30 PM — now THE primary news surface, biggest FR/EN news + viral tweets get sarcastic FR commentary on top) |
 | `MAX_REPLIES_PER_CYCLE` | 18 | Max replies per cycle (bumped 12→18 — replies are the engine) |
 | `REPLY_MIN_LIKES` | 2 | Min likes on a tweet before the bot will reply (random-search sources only — curated paths bypass) |
 | `NEWS_MODEL` | claude-opus-4-6 | Model for news posts |

@@ -919,6 +919,13 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         raise RuntimeError("Claude CLI returned empty output.")
     if tweet.upper() == "SKIP":
         return None
+    # Defense against skip-rationale leaks (bug 2026-04-30 PM: quote-tweet
+    # agent posted prose explaining its skip decision on @marcelenplace).
+    # The word "skip" never legitimately appears in a tweet we'd ship.
+    from .quote_tweet_bot import _looks_like_skip_or_rationale
+    if _looks_like_skip_or_rationale(tweet):
+        log.info(f"[NEWS] Skip-rationale detected, refusing: {tweet[:120]!r}")
+        return None
     # Pull the [PATTERN: <id>] tag first — it's pure metadata for the bandit
     # loop (engagement_log column 6), never tweeted.
     from .pattern_tags import extract_pattern
