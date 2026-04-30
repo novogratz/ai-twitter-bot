@@ -83,6 +83,7 @@ def run_bot_cycle():
     else:
         do_hotake = random.random() < 0.45
 
+    tweet_source = "news"  # which module owns last_source_url for this tweet
     if do_hotake:
         log.info("Generating AI philosophy hot take...")
         tweet = generate_hotake()
@@ -92,6 +93,7 @@ def run_bot_cycle():
                 tweet = generate_tweet()
                 if tweet:
                     _increment_counter("news")
+                    tweet_source = "news"
         else:
             _increment_counter("hotakes")
             tweet = humanize(tweet)
@@ -145,14 +147,19 @@ def run_bot_cycle():
             tweet = generate_hotake()
             if tweet:
                 _increment_counter("hotakes")
+                tweet_source = "hotake"
 
     if tweet is None:
         log.info("Nothing to post - skipping this cycle.")
         return
 
-    # Pull pattern_id from the news agent — same side-channel as URL/image.
+    # Pull pattern_id from whichever agent generated this tweet (same side-
+    # channel as URL/image). News-falls-back-to-hotake must read from hotake.
     try:
-        from .agent import last_pattern as _last_news_pattern
+        if tweet_source == "hotake":
+            from .hotake_agent import last_pattern as _last_news_pattern
+        else:
+            from .agent import last_pattern as _last_news_pattern
         _news_pattern = _last_news_pattern() or ""
     except Exception:
         _news_pattern = ""
@@ -175,7 +182,13 @@ def run_bot_cycle():
         img_path = None
         src_url = None
         try:
-            from .agent import last_source_url, last_image_topic
+            # If the news path fell back to a hot take, the URL/topic side-
+            # channel lives on hotake_agent, not agent. Pull from the right
+            # module or the URL gets dropped and the tweet ships text-only.
+            if tweet_source == "hotake":
+                from .hotake_agent import last_source_url, last_image_topic
+            else:
+                from .agent import last_source_url, last_image_topic
             src_url = last_source_url()
             topic = last_image_topic()
             # When a source URL is present, let X render the native link-card.
@@ -195,7 +208,12 @@ def run_bot_cycle():
         log.info(f"[NEWS] Posting ({len(tweet)} chars): {tweet[:100]}...")
         post_tweet(tweet, image_path=img_path)
         save_tweet(tweet)
-        log_post(tweet, pattern_id=_news_pattern)
+        # Engagement-log routing must match the actual generator so the
+        # bandit attribution stays correct.
+        if tweet_source == "hotake":
+            log_hotake(tweet, pattern_id=_news_pattern)
+        else:
+            log_post(tweet, pattern_id=_news_pattern)
         if img_path:
             try:
                 os.remove(img_path)
