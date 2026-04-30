@@ -117,9 +117,9 @@ All settings in `src/config.py`, overridable with environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MAX_NEWS_PER_DAY` | 4 | Max standalone news posts per day (recut 12→4 on 2026-04-30 PM — user said news flow is trash, news strategy is now retweet+quote with sarcastic FR commentary) |
-| `MAX_HOTAKES_PER_DAY` | 6 | Max hot takes per day (recut 12→6 alongside the news cut) |
-| `MAX_RETWEETS_PER_DAY` | 16 | Max selective retweets per day (one of the two main news surfaces alongside quote-tweets) |
+| `MAX_NEWS_PER_DAY` | 10 | Max standalone news posts per day (4 → 10 on 2026-04-30 PM second pass — user "do more news and more retweet... 10 per day push it") |
+| `MAX_HOTAKES_PER_DAY` | 6 | Max hot takes per day (recut 12→6 on 2026-04-30 PM, holds at 6 — hot takes ride alongside the bigger news flow) |
+| `MAX_RETWEETS_PER_DAY` | 10 | Max selective retweets per day (16 → 10 on 2026-04-30 PM second pass — aligned with news cap per user "10 per day" directive) |
 | `RETWEET_MIN_LIKES` | 10 | Min likes on a candidate retweet (lowered 25→10 — top-tier outlets break news fast but don't always rocket past 25 in the first hour) |
 | `MAX_QUOTES_PER_DAY` | 18 | Max quote-tweets per day (raised 12→18 on 2026-04-30 PM — now THE primary news surface, biggest FR/EN news + viral tweets get sarcastic FR commentary on top) |
 | `MAX_REPLIES_PER_CYCLE` | 18 | Max replies per cycle (bumped 12→18 — replies are the engine) |

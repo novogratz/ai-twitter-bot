@@ -12,15 +12,14 @@ REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
-# Daily posting limits — RECUT 2026-04-30 PM. User: "yo news are trash...
-# All you have to do is to take the biggest news in AI/crypto/bourse from
-# last 36h or biggest tweets from france or english and retweet with
-# sarcastic french messages.... thats all I want from you push it". So:
-# standalone news/hotake is no longer the news surface — the news strategy
-# IS retweet (retweet_bot, cap 16) + quote-tweet with sarcastic FR commentary
-# (quote_tweet_bot, cap raised to 18). Standalone news drops to a trickle —
-# only ships when a story is so big neither path can carry the joke alone.
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "4"))
+# Daily posting limits — RECALIBRATED 2026-04-30 PM (second pass). User:
+# "do more news and more retweet... 10 per day push it". After cutting news
+# to 4/day earlier today the user wants more volume back on news AND retweet
+# at a 10/day target. Standalone news goes 4 → 10. Retweet cap also moves
+# to 10 (see retweet_bot.MAX_RETWEETS_PER_DAY). Quote-tweet stays at 18 (the
+# primary news surface — biggest news + biggest viral tweets with FR
+# sarcastic commentary on top).
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "10"))
 MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "6"))
 # Quote-tweet cap — bumped 12 → 18. Now THE primary news surface (per user
 # 2026-04-30 PM directive): biggest news from 36h or biggest viral tweets

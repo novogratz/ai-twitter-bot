@@ -57,10 +57,11 @@ RETWEETED_FILE = os.path.join(_PROJECT_ROOT, "retweeted.json")
 RETWEET_STATE_FILE = os.path.join(_PROJECT_ROOT, "retweet_daily_state.json")
 DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 
-# Hard cap per day. User 2026-04-29 PM: "retweet is important... post more".
-# Bumped 8→16 + threshold lowered (see _retweet_threshold below) to surface
-# real news flow instead of choking at score ≥ 9.
-MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "16"))
+# Hard cap per day. History: 8 → 16 (2026-04-29) → 10 (2026-04-30 PM, user
+# directive "do more news and more retweet... 10 per day push it"). The 16
+# cap was rarely hit anyway given the ≥7/10 quality bar, so 10 reflects the
+# actual ceiling and aligns with the news cap for symmetry.
+MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "10"))
 
 # Min likes to even consider a candidate. Lowered 25→10 (2026-04-29 PM):
 # was starving the path — only 2 retweets in 4 days. Top-tier outlets

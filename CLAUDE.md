@@ -90,7 +90,10 @@ you push it". Three changes shipped:
    hors", etc.). Reused from news + hot take generators.
 3. **News strategy pivot**: standalone news caps cut hard (12 → 4 news,
    12 → 6 hot takes); quote-tweet cap raised (12 → 18) and is now THE
-   primary news surface. New EN viral queries added to `QUOTE_QUERIES`
+   primary news surface. **Second pass same day** (user: "do more news and
+   more retweet... 10 per day push it") — news bumped back 4 → 10,
+   retweet cap recalibrated 16 → 10 for symmetry; hot take stays 6,
+   quote-tweet stays 18. New EN viral queries added to `QUOTE_QUERIES`
    (high `min_faves` floor) so we capture biggest EN news with FR sarcastic
    commentary. New trusted-news pass in `run_quote_tweet_cycle` pulls from
    `retweet_bot.TRUSTED_NEWS_HANDLES` so the biggest news drops from top
