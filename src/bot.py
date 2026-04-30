@@ -170,10 +170,11 @@ def run_bot_cycle():
         else:
             _increment_counter("hotakes")
             tweet = humanize(tweet)
-            # 2026-04-29 STRATEGY PIVOT: split URL out of main body to bypass
-            # X's outbound-link deboost (~30-50% reach penalty), post URL as
-            # a self-reply for credibility. Quote card is now ALWAYS attached
-            # to the main tweet — no more competing with link-card preview.
+            # Visual policy 2026-04-29 PM (user: "shitty image generated"):
+            # NO MORE Pillow quote cards — they look bot-y. Real photos only.
+            # Priority: source-article og:image > Wiki og:image > text-only.
+            # The article's own hero photo is the most credible visual (it's
+            # what a journalist sharing the scoop would surface).
             img_path = None
             src_url = None
             try:
@@ -182,18 +183,19 @@ def run_bot_cycle():
                 if src_url:
                     tweet = _split_url_from_body(tweet, src_url)
                     log.info(f"[HOTAKE] URL split into self-reply (avoids deboost): {src_url[:80]}")
-                # Always attach a visual: quote card by default, Wiki image if
-                # the agent emitted [IMAGE: slug] AND we can fetch og:image.
-                slug = last_image_topic()
-                if slug:
-                    wiki_url = f"https://en.wikipedia.org/wiki/{slug}"
-                    img_path = fetch_article_image(wiki_url)
+                    # Pull the article's og:image — real journalism photo.
+                    img_path = fetch_article_image(src_url)
                     if img_path:
-                        log.info(f"[HOTAKE] Wiki image attached for '{slug}': {img_path}")
+                        log.info(f"[HOTAKE] Article og:image attached: {img_path}")
                 if not img_path:
-                    img_path = make_quote_card(tweet)
-                    if img_path:
-                        log.info(f"[HOTAKE] Quote-card attached: {img_path}")
+                    slug = last_image_topic()
+                    if slug:
+                        wiki_url = f"https://en.wikipedia.org/wiki/{slug}"
+                        img_path = fetch_article_image(wiki_url)
+                        if img_path:
+                            log.info(f"[HOTAKE] Wiki photo attached for '{slug}': {img_path}")
+                if not img_path:
+                    log.info("[HOTAKE] No real photo available — text-only (better than fake card)")
             except Exception as e:
                 log.info(f"[HOTAKE] Image fetch failed (text-only): {e}")
             log.info(f"[HOTAKE] Posting ({len(tweet)} chars): {tweet[:100]}...")
@@ -244,11 +246,10 @@ def run_bot_cycle():
         log_post(tweet, pattern_id=_news_pattern)
     else:
         tweet = humanize(tweet)
-        # 2026-04-29 STRATEGY PIVOT: split URL out of main body. X deboosts
-        # outbound links inline by ~30-50% (confirmed cause of "0 likes on
-        # news" pattern). Main tweet ships URL-free with a visual; the URL
-        # goes in a self-reply where it still proves the source without
-        # eating reach. Quote card is now always attached.
+        # Visual policy 2026-04-29 PM (user: "shitty image generated"):
+        # NO Pillow quote cards. Article's own og:image first (real journalism
+        # photo, the one a journalist sharing the scoop would surface), Wiki
+        # photo as fallback when [IMAGE: slug] is set, else text-only.
         img_path = None
         src_url = None
         try:
@@ -258,15 +259,16 @@ def run_bot_cycle():
             if src_url:
                 tweet = _split_url_from_body(tweet, src_url)
                 log.info(f"[NEWS] URL split into self-reply (avoids deboost): {src_url[:80]}")
-            if topic:
+                img_path = fetch_article_image(src_url)
+                if img_path:
+                    log.info(f"[NEWS] Article og:image attached: {img_path}")
+            if not img_path and topic:
                 wiki_url = f"https://en.wikipedia.org/wiki/{topic}"
                 img_path = fetch_article_image(wiki_url)
                 if img_path:
-                    log.info(f"[NEWS] Wiki image attached for '{topic}': {img_path}")
+                    log.info(f"[NEWS] Wiki photo attached for '{topic}': {img_path}")
             if not img_path:
-                img_path = make_quote_card(tweet)
-                if img_path:
-                    log.info(f"[NEWS] Quote-card attached: {img_path}")
+                log.info("[NEWS] No real photo available — text-only (better than fake card)")
         except Exception as e:
             log.info(f"[NEWS] Image fallback failed (text-only): {e}")
         log.info(f"[NEWS] Posting ({len(tweet)} chars): {tweet[:100]}...")

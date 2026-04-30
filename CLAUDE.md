@@ -94,11 +94,39 @@ news/hot takes get 0 engagement and pollute the profile. Decisions taken:
    links inline by ~30-50% (confirmed cause of "0 likes" on news/hot takes).
    `src/bot.py:_post_with_source_reply()` now strips the URL out of the
    main tweet body and posts it as a self-reply via `post_thread()`. Main
-   tweet ships URL-free (max algorithmic reach) WITH a quote-card visual
-   always attached; source goes in reply #1 for credibility. Both prompts
-   updated to remind the agent that the punchline must stand alone without
-   the URL visible. This is the single highest-leverage change for news/
-   hotake engagement.
+   tweet ships URL-free (max algorithmic reach); source goes in reply #1
+   for credibility. Both prompts updated to remind the agent that the
+   punchline must stand alone without the URL visible.
+
+🚨 **STRATEGY PIVOT 2026-04-29 PM — NEWS/HOT TAKE SECOND PASS** 🚨
+User verbatim: "this bot sucks... specifically the news flow and hot take...
+its horrible!!!! make it like a real influencer that brings news... just
+stick to sources that are hot topic in next 36h in AI crypto and
+investissement, and drop a bomb tweet that everyone will like in french."
+Then: "retweet is important, repost with citation is good too, and new
+fresh news is good too... refresh your thing also post more 4 a day is crap".
+Decisions:
+1. **News + hot take prompts REWRITTEN** — old prompts were 600 lines of
+   bloat (3-bloc format, rejection sampling, impact filter, 6 patterns,
+   feral mode, etc.) that paralyzed the agent into shipping mid output.
+   New prompts: ~80 lines, single instruction ("drop a bomb in FR"), 7
+   gold-standard examples, strict source rules. Old prompts archived as
+   `_ARCHIVE_OLD_PROMPT` / `_ARCHIVE_OLD_HOTAKE_PROMPT`.
+2. **Daily caps BUMPED 4 → 12** for news + hot takes. The 4/day cut
+   earlier today was over-corrected; with the prompt rewrite + URL split
+   + real photos, volume can come back. Still nowhere near the original
+   24/day — quality bar (≥8/10 score, ≤36h source) gates everything.
+3. **Freshness window TIGHTENED 48h → 36h**. User explicit: "hot topic in
+   next 36h". Aligned across both agents' Python freshness gates.
+4. **Quote-card image generation REMOVED** — user verbatim: "shitty image
+   generated". `make_quote_card` no longer called from `bot.py`. New
+   visual policy: source-article og:image first (real journalism photo,
+   the one a journalist sharing the scoop would surface) → Wiki og:image
+   if the agent emitted `[IMAGE: slug]` → text-only fallback. NO MORE
+   AI-generated cards.
+5. **Retweet path UNSTUCK**: threshold dropped 9/10 → 7/10, MIN_LIKES
+   floor 25 → 10, daily cap 8 → 16. Was firing 2x/4 days; now should
+   actually amplify the 5-10 trustworthy news drops/day in our niches.
 
 - **French-near-exclusive**: Audience is 100% francophone. Aim **90%+ French replies** (was 60-70%). EN tweets only when the news is huge AND the FR commentary adds a unique franco-french angle. Hot takes mostly French.
 - **Comedy DNA — 6 patterns + FR cultural anchors**: Every news/reply must use ≥1 of: (1) répétition qui tue, (2) mini-dialogue FR, (3) métaphore tueuse, (4) renaming, (5) callback culturel FR (RER B, Bercy, syndicat, BFM, "et les charges?", Macron, tonton à Noël, café-clope, coach Tesla, formations à 2k€), (6) understatement brutal. Validated by user feedback ("Getafe. Getafe.", "S&P 7", "syndicat: oui mais qui tamponne le bon de sortie?").

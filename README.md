@@ -117,8 +117,10 @@ All settings in `src/config.py`, overridable with environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MAX_NEWS_PER_DAY` | 4 | Max news posts per day (cut 24→4 on 2026-04-29 — replies are the only converting surface, news/hot takes were 0-engagement noise) |
-| `MAX_HOTAKES_PER_DAY` | 4 | Max hot takes per day (same cut as news) |
+| `MAX_NEWS_PER_DAY` | 12 | Max news posts per day (settled at 12 after 24→4→12 on 2026-04-29 — prompt rewrite + URL self-reply + real photos let volume come back) |
+| `MAX_HOTAKES_PER_DAY` | 12 | Max hot takes per day (same path as news) |
+| `MAX_RETWEETS_PER_DAY` | 16 | Max selective retweets per day (bumped 8→16 on 2026-04-29 PM — was choking) |
+| `RETWEET_MIN_LIKES` | 10 | Min likes on a candidate retweet (lowered 25→10 — top-tier outlets break news fast but don't always rocket past 25 in the first hour) |
 | `MAX_QUOTES_PER_DAY` | 12 | Max quote-tweets per day |
 | `MAX_REPLIES_PER_CYCLE` | 18 | Max replies per cycle (bumped 12→18 — replies are the engine) |
 | `REPLY_MIN_LIKES` | 2 | Min likes on a tweet before the bot will reply (random-search sources only — curated paths bypass) |

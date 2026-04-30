@@ -12,15 +12,15 @@ REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
-# Daily posting limits — STRATEGY PIVOT 2026-04-29 (user verbatim: "You get
-# 0 news and 0 likes on your news man.... only thing that works is your reply
-# where you are hillarious"). Volume of news/hotakes was actively hurting:
-# 0-like posts pile up on the profile and signal low-quality. CUT HARD from
-# 24/day → 4/day each. Reply path is the only surface that converts; we put
-# the budget there. News/hot takes still ship for occasional reach but only
-# the absolute best (impact ≥ 9/10).
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "4"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "4"))
+# Daily posting limits — TUNED 2026-04-29 PM. History: 24 → 4 (over-cut) →
+# 12 (now). User verbatim: "4 a day is crap... refresh your thing also
+# post more". The earlier 4/day cut was a reaction to 0-like posts; the
+# real fix shipped the same day (URL → self-reply, prompt rewrite, real
+# article photos via og:image). Volume comes back, but at 12 not 24 — the
+# bot still has to ship BOMBS, not filler. News + retweet + hot take +
+# quote-tweet together = ~40-50 outbound feed actions/day at peak.
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "12"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "12"))
 # Quote-tweet cap — bumped 8 → 12. Different distribution surface than
 # replies (lands in followers' feed AND notifies original author),
 # so additive growth, not redundant volume.

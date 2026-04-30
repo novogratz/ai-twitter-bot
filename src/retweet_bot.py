@@ -57,13 +57,16 @@ RETWEETED_FILE = os.path.join(_PROJECT_ROOT, "retweeted.json")
 RETWEET_STATE_FILE = os.path.join(_PROJECT_ROOT, "retweet_daily_state.json")
 DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 
-# Hard cap per day. Selective != silent. 8 lets us cover one banger every
-# ~2 hours during awake windows; the bar is so high we'll often hit fewer.
-MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "8"))
+# Hard cap per day. User 2026-04-29 PM: "retweet is important... post more".
+# Bumped 8→16 + threshold lowered (see _retweet_threshold below) to surface
+# real news flow instead of choking at score ≥ 9.
+MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "16"))
 
-# Min likes to even consider a candidate — skips dead tweets without
-# punishing accounts that genuinely break news (their tweets get likes fast).
-MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "25"))
+# Min likes to even consider a candidate. Lowered 25→10 (2026-04-29 PM):
+# was starving the path — only 2 retweets in 4 days. Top-tier outlets
+# break news fast but don't always rocket past 25 likes in the first hour;
+# retweeting a Reuters scoop at 12 likes is still a quality amplification.
+MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "10"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -400,10 +403,12 @@ def run_retweet_cycle():
             log.info("[RETWEET] Failed to write daily picks file:")
             traceback.print_exc()
 
-    # Hard threshold for an actual retweet: 9/10. The user said
-    # "extremely high value content" — bar must be brutal.
-    if score < 9:
-        log.info(f"[RETWEET] Score {score}/10 below retweet threshold (9). Logged only.")
+    # Threshold lowered 9→7 (2026-04-29 PM): "retweet is important...
+    # post more". The 9/10 bar fired only 2 times in 4 days — far below
+    # the 16/day cap. 7/10 still skips genuinely-mid news; daily-picks
+    # logging still triggers at ≥8 for the YouTube research doc.
+    if score < 7:
+        log.info(f"[RETWEET] Score {score}/10 below retweet threshold (7). Logged only.")
         return
 
     # Lock URL in BEFORE posting so a crash can't double-retweet.
