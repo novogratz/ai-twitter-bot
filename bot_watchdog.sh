@@ -12,6 +12,24 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PAT
 
 cd "$PROJECT_DIR"
 
+if [ -f "$PROJECT_DIR/.env" ]; then
+    set -a
+    # shellcheck disable=SC1091
+    source "$PROJECT_DIR/.env"
+    set +a
+fi
+
+export AI_CLI="${AI_CLI:-codex}"
+export NEWS_MODEL="${NEWS_MODEL:-gpt-5.4-mini}"
+export REPLY_MODEL="${REPLY_MODEL:-gpt-5.4-mini}"
+export HOTAKE_MODEL="${HOTAKE_MODEL:-gpt-5.4-mini}"
+export QUOTE_MODEL="${QUOTE_MODEL:-gpt-5.4-mini}"
+export ROAST_MODEL="${ROAST_MODEL:-gpt-5.4-mini}"
+export LLM_MIN_SECONDS_BETWEEN_CALLS="${LLM_MIN_SECONDS_BETWEEN_CALLS:-90}"
+export LLM_MAX_CALLS_PER_HOUR="${LLM_MAX_CALLS_PER_HOUR:-12}"
+export ENABLE_AI_MAINTENANCE="${ENABLE_AI_MAINTENANCE:-0}"
+export ENABLE_AI_DISCOVERY="${ENABLE_AI_DISCOVERY:-0}"
+
 # Manual kill-switch: if /stop (or the user) created .bot_disabled, do
 # NOT restart. Otherwise the watchdog defeats /stop within 5 minutes.
 # /start removes this file before launching.

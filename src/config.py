@@ -1,12 +1,33 @@
 """Central configuration for the @kzer_ai Twitter bot."""
 import os
 
+_PROJECT_ROOT = os.path.join(os.path.dirname(__file__), "..")
+
+def _load_dotenv(path: str = os.path.join(_PROJECT_ROOT, ".env")) -> None:
+    """Load simple KEY=VALUE pairs without adding a dependency."""
+    if not os.path.exists(path):
+        return
+    try:
+        with open(path) as f:
+            for raw in f:
+                line = raw.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, value = line.split("=", 1)
+                key = key.strip()
+                value = value.strip().strip('"').strip("'")
+                if key and key not in os.environ:
+                    os.environ[key] = value
+    except OSError:
+        pass
+
+_load_dotenv()
+
 # Bot identity
 BOT_HANDLE = "kzer_ai"
 BOT_PROFILE_URL = f"https://x.com/{BOT_HANDLE}"
 
 # Data file paths
-_PROJECT_ROOT = os.path.join(os.path.dirname(__file__), "..")
 HISTORY_FILE = os.path.join(_PROJECT_ROOT, "tweet_history.json")
 REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
