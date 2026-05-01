@@ -98,10 +98,8 @@ def run_reply_cycle():
         seen_in_batch.add(url)
         filtered.append(data)
 
-    # Cap 6 per cycle (bumped 3→6 on 2026-04-29 user directive — replies
-    # are the only working surface, push volume hard). Reply bot fires every
-    # ~9min in peak hours, agent impact-ranks so the top 6 are the strongest.
-    replies = filtered[:6]
+    # Plus-safe cap. The model already ranked the batch; only ship the best.
+    replies = filtered[:3]
 
     if not replies:
         log.info("[REPLY] All replies filtered (dedup/blocklist) - skipping cycle.")

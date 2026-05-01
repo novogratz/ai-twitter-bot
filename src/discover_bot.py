@@ -1,19 +1,13 @@
-"""Discover bot: autonomously find new crypto/AI/bourse influencers and add them to monitoring.
-
-Runs every ~6h. Uses the existing X search scraper, then asks Claude to score the
-candidates. Approved handles get appended to discovered_accounts.json, which is
-merged into both the engage targets and the reply agent's prompt at runtime.
-"""
+"""Discover bot: find new crypto/AI/bourse influencers and add them to monitoring."""
 import json
 import os
 import random
 import re
 import traceback
 from datetime import datetime
-from .config import REPLY_MODEL, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE, _PROJECT_ROOT
+from .config import BLOCKLIST, DISCOVERED_ACCOUNTS_FILE, _PROJECT_ROOT
 from .logger import log
 from .twitter_client import scrape_x_search, follow_account
-from .llm_client import run_llm, unwrap_text
 
 # Persisted set of handles we already auto-followed via discovery
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
@@ -142,73 +136,40 @@ def _existing_handles() -> set:
 
 
 def _score_candidates(candidates: list) -> list:
-    """Ask Claude to pick the high-quality crypto/AI/bourse handles.
-
-    candidates: [{"handle": "...", "sample": "..."}]
-    Returns a filtered list of dicts with an added "category" key.
-    """
+    """Heuristic account filter. No model call."""
     if not candidates:
         return []
 
-    # Truncate samples to keep prompt small
-    sample_blob = "\n".join(
-        f"- @{c['handle']}: {c['sample'][:140]}" for c in candidates[:25]
-    )
+    spam = re.compile(r"signal|formation|promo|airdrop|giveaway|whatsapp|telegram|100x|garanti|coach", re.I)
+    buckets = {
+        "ai": re.compile(r"\b(ai|ia|llm|gpt|openai|anthropic|mistral|nvidia|agent)\b", re.I),
+        "crypto": re.compile(r"\b(crypto|bitcoin|btc|ethereum|eth|solana|defi|blockchain)\b", re.I),
+        "bourse": re.compile(r"\b(bourse|finance|trading|invest|actions|marché|sp500|nasdaq|cac40)\b", re.I),
+        "tech": re.compile(r"\b(tech|startup|software|saas|cloud|cyber)\b", re.I),
+    }
+    fr_markers = re.compile(r"\b(le|la|les|des|une|pour|avec|marché|bourse|france|québec|ia)\b", re.I)
 
-    prompt = f"""Tu es un curateur. Voici des comptes X candidats avec un de leurs tweets récents.
-
-Ton job: garder UNIQUEMENT les comptes pertinents pour @kzer_ai (un compte FR qui couvre IA + crypto + bourse avec des analyses sharp et drôles).
-
-CRITÈRES DE SÉLECTION (sois exigeant — qualité avant quantité):
-- Le compte parle régulièrement de: IA, crypto, bourse/finance/trading, ou tech.
-- Le compte a l'air actif et de qualité (pas un bot, pas un spam, pas un compte mort).
-- Pas de comptes promo / arnaque / vente de signaux à 99€/mois / formations à 2000€.
-- Pas de comptes politiques.
-- PRIORITÉ aux comptes francophones de qualité (vrais analystes/founders/traders FR).
-
-CANDIDATS:
-{sample_blob}
-
-Output UNIQUEMENT un JSON array. Pour chaque handle gardé, deux champs:
-- "handle": le pseudo sans @
-- "category": "ai" | "crypto" | "bourse" | "tech"
-- "lang": "fr" | "en" (langue principale du compte d'après le tweet)
-
-Exemple:
-[{{"handle": "elonmusk", "category": "ai", "lang": "en"}}, {{"handle": "PowerHasheur", "category": "crypto", "lang": "fr"}}]
-
-Output rien d'autre que le JSON."""
-
-    try:
-        result = run_llm(prompt, REPLY_MODEL, label="DISCOVER_SCORE", output_json=False, timeout=120)
-        if result.returncode != 0:
-            log.info(f"[DISCOVER] Scoring CLI error: {result.stderr[:200]}")
-            return []
-
-        out = unwrap_text(result.stdout)
-        # Strip markdown fences if present
-        if "```" in out:
-            m = re.search(r"```(?:json)?\s*\n?(.*?)```", out, re.DOTALL)
-            if m:
-                out = m.group(1).strip()
-        # Find JSON array
-        if not out.startswith("["):
-            i = out.find("[")
-            j = out.rfind("]")
-            if i != -1 and j > i:
-                out = out[i:j + 1]
-
-        data = json.loads(out)
-        if not isinstance(data, list):
-            return []
-        return [d for d in data if isinstance(d, dict) and d.get("handle")]
-    except Exception as e:
-        log.info(f"[DISCOVER] Scoring failed: {e}")
-        return []
+    keepers = []
+    seen = set()
+    for c in candidates[:25]:
+        handle = (c.get("handle") or "").strip().lstrip("@")
+        sample = c.get("sample") or ""
+        if not handle or handle.lower() in seen or spam.search(sample):
+            continue
+        category = next((name for name, rx in buckets.items() if rx.search(sample)), "")
+        if not category:
+            continue
+        seen.add(handle.lower())
+        keepers.append({
+            "handle": handle,
+            "category": category,
+            "lang": "fr" if fr_markers.search(sample) else "en",
+        })
+    return keepers
 
 
 def run_discovery_cycle():
-    """One discovery pass: search X, dedup, score with Claude, persist new handles."""
+    """One discovery pass: search X, dedup, heuristic-filter, persist new handles."""
     log.info("[DISCOVER] Starting discovery cycle...")
     queries = random.sample(DISCOVERY_QUERIES, k=min(3, len(DISCOVERY_QUERIES)))
     known = _existing_handles()
@@ -244,7 +205,7 @@ def run_discovery_cycle():
         return
 
     keepers = _score_candidates(candidates)
-    log.info(f"[DISCOVER] Claude kept {len(keepers)} of {len(candidates)} candidates.")
+    log.info(f"[DISCOVER] Heuristic filter kept {len(keepers)} of {len(candidates)} candidates.")
 
     if not keepers:
         return

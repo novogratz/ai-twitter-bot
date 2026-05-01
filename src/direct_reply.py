@@ -488,7 +488,7 @@ def _generate_single_reply(author: str, tweet_text: str):
         return None
 
 
-DIRECT_REPLY_MAX_PER_CYCLE = 16  # bumped 9→16 (2026-04-29) — user "only thing that works is your reply"; floor the gas on the only surface earning likes
+DIRECT_REPLY_MAX_PER_CYCLE = 3  # Plus-safe: each reply costs a model call.
 MAX_EN_REPLIES_PER_CYCLE = 3     # hard cap — keeps ~80% FR ratio while leaving room for big EN influencers
 
 

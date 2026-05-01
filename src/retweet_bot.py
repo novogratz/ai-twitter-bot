@@ -44,12 +44,10 @@ from datetime import datetime, date
 from .config import (
     BLOCKLIST,
     BOT_HANDLE,
-    QUOTE_MODEL,
     _PROJECT_ROOT,
 )
 from .logger import log
 from .twitter_client import retweet_post, scrape_profile_tweets
-from .llm_client import run_llm, unwrap_text
 from .engagement_log import log_reply
 
 # State files
@@ -224,58 +222,30 @@ def _has_trusted_source(handle: str, text: str) -> bool:
 
 # --- selection ---
 
-SCORE_PROMPT = """Tu es l'éditeur d'un journal vidéo YouTube quotidien sur l'IA, la crypto et la bourse. Voici des tweets candidats. Note CHAQUE tweet sur 10 selon UN SEUL critère: "vraie news, neuve, à fort impact, digne d'un slot dans la vidéo de demain."
-
-Critères de scoring (chaque tweet, 0-10):
-- 10 = breaking, source de premier rang, info qu'aucun autre média n'a encore relayée
-- 8-9 = info importante de source crédible, mérite la vidéo
-- 6-7 = update intéressant mais déjà couvert ailleurs
-- 4-5 = analyse / opinion / commentaire de marché
-- 0-3 = promo, hype, meme, thread perso, vide
-
-REJETER (note 0):
-- Threads marketing / "buy my course"
-- Spéculation sans source
-- Repost d'une info de >24h
-- Posts de comptes promotionnels qui se font passer pour de la news
-
-CANDIDATS:
-{candidates}
-
-Réponds UNIQUEMENT en JSON, sans préambule, sous la forme:
-{{"best_index": <int>, "best_score": <int 0-10>, "why_it_matters": "<une phrase FR de 15 mots max expliquant pourquoi c'est important pour une vidéo news>"}}"""
-
-
 def _score_candidates(candidates: list):
-    """Run a single Claude pass over all candidates, return the winner.
-
-    Output shape: {"best_index": int, "best_score": int, "why_it_matters": str}
-    Returns None on parse / subprocess failure (caller skips the cycle).
-    """
-    listing = []
-    for i, c in enumerate(candidates):
-        listing.append(
-            f"[{i}] @{c.get('author', '?')} ({c.get('likes', 0)} likes): "
-            f"{(c.get('text') or '')[:240]}"
-        )
-    prompt = SCORE_PROMPT.format(candidates="\n".join(listing))
-    try:
-        result = run_llm(prompt, QUOTE_MODEL, label="RETWEET_SCORE", timeout=45)
-        if result.returncode != 0:
-            log.info(f"[RETWEET] Scorer subprocess failed: {result.stderr[:200]}")
-            return None
-        out = unwrap_text(result.stdout)
-        # Strip code fences if any
-        m = re.search(r"\{[^{}]*\"best_index\"[^{}]*\}", out, re.DOTALL)
-        if not m:
-            log.info(f"[RETWEET] Scorer returned no JSON: {out[:200]}")
-            return None
-        data = json.loads(m.group(0))
-        return data
-    except Exception:
-        log.info("[RETWEET] Scorer exception:")
-        traceback.print_exc()
+    """Pick the best trusted-source candidate without spending a model call."""
+    if not candidates:
         return None
+
+    def rank(c: dict) -> tuple:
+        text = (c.get("text") or "").lower()
+        breaking = any(k in text for k in (
+            "breaking", "exclusif", "exclusive", "annonce", "launch",
+            "raises", "lève", "sec", "fed", "bitcoin", "openai", "nvidia",
+        ))
+        return (
+            1 if breaking else 0,
+            int(c.get("likes") or 0) + (2 * int(c.get("replies") or 0)),
+        )
+
+    idx, pick = max(enumerate(candidates), key=lambda item: rank(item[1]))
+    engagement = int(pick.get("likes") or 0) + (2 * int(pick.get("replies") or 0))
+    score = 8 if engagement >= 50 else 7
+    return {
+        "best_index": idx,
+        "best_score": score,
+        "why_it_matters": "Source fiable + signal engagement suffisant.",
+    }
 
 
 def _append_to_daily_picks(tweet: dict, score: int, why: str):
@@ -374,7 +344,7 @@ def run_retweet_cycle():
         }
         log.info("[RETWEET] One viable candidate — using deterministic pick, no model call.")
     else:
-        log.info(f"[RETWEET] Scoring {len(candidates)} candidates with LLM...")
+        log.info(f"[RETWEET] Scoring {len(candidates)} candidates deterministically (no model call).")
         decision = _score_candidates(candidates)
     if not decision:
         log.info("[RETWEET] Scoring failed — skipping cycle.")

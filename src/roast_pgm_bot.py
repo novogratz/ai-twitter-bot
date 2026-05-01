@@ -21,7 +21,7 @@ TARGET_HANDLE = "pgm_pm"
 # He tweets ~every minute. We check often, but cap per-cycle so Twitter doesn't
 # flag us as a burst-spam bot. ~3 roasts every 10 min = ~18/h ceiling, well
 # under the spam threshold for replies to a single account.
-MAX_PER_CYCLE = 3
+MAX_PER_CYCLE = 1
 
 # Circuit-breaker state. If pgm_pm blocks us / suspends / goes private, the
 # scrape returns 0 articles forever. Track consecutive empty scrapes; after

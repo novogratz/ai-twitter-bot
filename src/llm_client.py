@@ -29,7 +29,7 @@ _STATE_FILE = Path(_PROJECT_ROOT) / ".llm_rate_state.json"
 
 
 def _provider() -> str:
-    requested = os.environ.get("AI_CLI", "auto").strip().lower()
+    requested = os.environ.get("AI_CLI", "codex").strip().lower()
     if requested in {"claude", "codex"}:
         return requested
     if shutil.which("claude"):
@@ -97,10 +97,17 @@ def _build_cmd(
 ) -> list[str]:
     provider = _provider()
     if provider == "codex":
-        cmd = ["codex", "exec", "--model", model]
-        # Codex does not use Claude's allowedTools flag. The prompt remains
-        # the source of truth; unsupported provider-specific options stay out.
-        cmd.append(prompt)
+        cmd = [
+            "codex",
+            "exec",
+            "--model", model,
+            "--sandbox", "read-only",
+            "--ask-for-approval", "never",
+            "--ephemeral",
+        ]
+        if allowed_tools and any(t.lower() in {"websearch", "webfetch"} for t in allowed_tools):
+            cmd.append("--search")
+        cmd.append("-")
         return cmd
 
     cmd = ["claude", "-p", prompt, "--model", model, "--no-session-persistence"]
@@ -129,9 +136,11 @@ def run_llm(
         return gate
 
     cmd = _build_cmd(prompt, model, output_json, allowed_tools, permission_mode)
+    input_text = prompt if _provider() == "codex" else None
     try:
         result = subprocess.run(
             cmd,
+            input=input_text,
             capture_output=True,
             text=True,
             timeout=timeout,

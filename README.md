@@ -4,7 +4,9 @@ An autonomous Twitter/X bot powered by Claude Code or Codex CLI. Posts via brows
 
 ## How It Works
 
-Uses an installed AI CLI for generation (`AI_CLI=auto`, `claude`, or `codex`) and Safari + AppleScript for browser automation. No Twitter API. Just log into X on Safari and go.
+Uses an installed AI CLI for generation (`AI_CLI=codex` by default, or `claude`) and Safari + AppleScript for browser automation. No Twitter API. Just log into X on Safari and go.
+
+Default mode is Plus-safe: AI is used for content that actually ships (news, hot takes, replies, reply-backs, roasts, quote-tweets). Background scouting, strategy, reflection, discovery scoring, and retweet scoring are disabled or deterministic unless explicitly enabled.
 
 ### Bots
 
@@ -18,7 +20,7 @@ Uses an installed AI CLI for generation (`AI_CLI=auto`, `claude`, or `codex`) an
 
 **Notify + Boost Bot** - Likes replies on own tweets every 35 min. Replies in-thread to influencer replies (dynamic 4-8/cycle by parent virality). Self-retweets every 2h (validated growth lever — pulled 200 views from one boost; cadence pushed 6h→4h→3h→2h as the lever kept working).
 
-**Discover Bot** - Every 3h: searches X for new FR AI/crypto/bourse handles, scores with Claude, persists approved ones, auto-follows the best FR ones. `follow_account` returns a bool so a transient JS-click failure (Safari race) leaves the handle out of `followed_accounts.json` and gets retried next cycle instead of being silently dropped.
+**Discover Bot** - Disabled by default in Plus-safe mode. If enabled, searches X for new FR AI/crypto/bourse handles and filters them with Python heuristics, no model call.
 
 **Roast Bot** - Every ~12-17 min jittered: 1-roast-per-tweet sarcastic reply on @pgm_pm's original tweets. URL-deduped hard cap. **Circuit breaker** — 8 consecutive empty scrapes (target suspended/blocking us/private) → 24h pause, auto-resets so a recovery is detected within a day. Quiet hours skip. Roast model: Haiku (one-liners off fixed pattern, frees Sonnet/Opus budget).
 
@@ -26,9 +28,9 @@ Uses an installed AI CLI for generation (`AI_CLI=auto`, `claude`, or `codex`) an
 
 **Performance Bot** - Scrapes own tweet metrics every 2h. Identifies top/worst performers, injects learnings into prompts.
 
-**Strategy Agent (autonomous self-improvement, INPUT side)** - Every 3h: agentic Claude run with Read + WebSearch + Bash tools. Reads `engagement_log.csv` (per-source ROI), looks up live FR AI/crypto/bourse trends, proposes new search queries + accounts. Python applies ADDITIONS only — never removes. Outputs land in `dynamic_queries.json` / `dynamic_accounts.json` and are merged at runtime by the reply bot. **No human in the loop.** Audit trail in `strategy_log.json`.
+**Strategy / Reflection / Evolution Agents** - Disabled by default in Plus-safe mode. Set `ENABLE_AI_MAINTENANCE=1` if you want the old autonomous analysis loops.
 
-**Scout Agent (open-web FR-speaker recruitment)** - Every 4h: agentic Claude run with WebSearch + WebFetch tools. Investigates the open web for the BEST FR-speaking AI / crypto / bourse / fintech / tech accounts in **France, Quebec, and the USA**. Filters by ≥5k followers, dedups against every known list, appends keepers to `dynamic_accounts.json` FR bucket, and AUTO-FOLLOWS the top picks (cap 3/cycle). Different signal than the Strategy Agent (engagement-log-based) and Discover Bot (X-search-based) — this one finds hidden gems via classements, blogs, lists. Audit trail in `scout_log.json`.
+**Scout Agent** - Disabled by default in Plus-safe mode. Set `ENABLE_AI_DISCOVERY=1` to re-enable discovery/scouting.
 
 **Evolution Agent (autonomous self-improvement, OUTPUT side)** - Every 6h: reads engagement_log + performance_log, identifies winning/losing patterns + dead/hot accounts, rewrites `directives.md` (loaded by all generation prompts), prunes accounts that produced 0 engagement (TTL 30d, max 3/cycle), reinforces accounts whose tweets converted into our top posts (max 5/cycle). Audit trail in `evolution_log.json`.
 
@@ -58,14 +60,10 @@ npm install -g @anthropic-ai/claude-code
 claude login
 ```
 
-For Codex CLI, set `AI_CLI=codex` and override models with Codex model names, for example:
+For ChatGPT Plus / Codex CLI:
 
 ```bash
-export AI_CLI=codex
-export NEWS_MODEL=gpt-5.4
-export REPLY_MODEL=gpt-5.4
-export HOTAKE_MODEL=gpt-5.4
-export QUOTE_MODEL=gpt-5.4-mini
+codex login
 ```
 
 Log into X/Twitter on Safari. That's it.
@@ -127,19 +125,21 @@ All settings in `src/config.py`, overridable with environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MAX_NEWS_PER_DAY` | 10 | Max standalone news posts per day (4 → 10 on 2026-04-30 PM second pass — user "do more news and more retweet... 10 per day push it") |
-| `MAX_HOTAKES_PER_DAY` | 6 | Max hot takes per day (recut 12→6 on 2026-04-30 PM, holds at 6 — hot takes ride alongside the bigger news flow) |
+| `MAX_NEWS_PER_DAY` | 4 | Max standalone news posts per day |
+| `MAX_HOTAKES_PER_DAY` | 2 | Max hot takes per day |
 | `MAX_RETWEETS_PER_DAY` | 10 | Max selective retweets per day (16 → 10 on 2026-04-30 PM second pass — aligned with news cap per user "10 per day" directive) |
 | `RETWEET_MIN_LIKES` | 10 | Min likes on a candidate retweet (lowered 25→10 — top-tier outlets break news fast but don't always rocket past 25 in the first hour) |
-| `MAX_QUOTES_PER_DAY` | 18 | Max quote-tweets per day (raised 12→18 on 2026-04-30 PM — now THE primary news surface, biggest FR/EN news + viral tweets get sarcastic FR commentary on top) |
-| `MAX_REPLIES_PER_CYCLE` | 18 | Max replies per cycle (bumped 12→18 — replies are the engine) |
+| `MAX_QUOTES_PER_DAY` | 6 | Max quote-tweets per day |
+| `MAX_REPLIES_PER_CYCLE` | 6 | Max search replies per cycle |
 | `REPLY_MIN_LIKES` | 2 | Min likes on a tweet before the bot will reply (random-search sources only — curated paths bypass) |
-| `AI_CLI` | auto | `auto`, `claude`, or `codex` |
-| `NEWS_MODEL` | claude-sonnet-4-6 | Model for news posts |
-| `REPLY_MODEL` | claude-sonnet-4-6 | Model for replies |
-| `HOTAKE_MODEL` | claude-sonnet-4-6 | Model for hot takes |
-| `LLM_MIN_SECONDS_BETWEEN_CALLS` | 25 | Local spacing between model calls to avoid burst rate limits |
-| `LLM_MAX_CALLS_PER_HOUR` | 40 | Local hourly model-call budget across bot threads |
+| `AI_CLI` | codex | `codex`, `claude`, or `auto` |
+| `NEWS_MODEL` | gpt-5.4-mini | Model for news posts in Codex mode |
+| `REPLY_MODEL` | gpt-5.4-mini | Model for replies in Codex mode |
+| `HOTAKE_MODEL` | gpt-5.4-mini | Model for hot takes in Codex mode |
+| `LLM_MIN_SECONDS_BETWEEN_CALLS` | 90 | Local spacing between model calls to avoid burst rate limits |
+| `LLM_MAX_CALLS_PER_HOUR` | 12 | Local hourly model-call budget across bot threads |
+| `ENABLE_AI_MAINTENANCE` | 0 | Re-enable strategy/evolution/reflection model calls |
+| `ENABLE_AI_DISCOVERY` | 0 | Re-enable discovery/scout jobs |
 
 ### Customizing for Your Niche
 

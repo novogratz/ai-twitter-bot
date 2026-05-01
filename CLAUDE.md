@@ -8,14 +8,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 pip install -r requirements.txt
 ```
 
-No API keys needed for Claude Code mode. The bot posts via browser + AppleScript (macOS only) and uses the configured AI CLI for generation (`AI_CLI=auto`, `claude`, or `codex`).
+No API keys needed in subscription mode. The bot posts via browser + AppleScript (macOS only) and uses the configured AI CLI for generation (`AI_CLI=codex` by default, or `claude`).
+
+Default mode is ChatGPT Plus-safe: model calls are reserved for content generation. Retweet scoring is deterministic, discovery/scout jobs are off by default, and strategy/evolution/reflection loops only run with `ENABLE_AI_MAINTENANCE=1`.
 
 For Claude Code mode, install and authenticate the `claude` CLI:
 ```bash
 claude login
 ```
 
-For Codex mode, set `AI_CLI=codex` and use Codex model names in `NEWS_MODEL`, `REPLY_MODEL`, `HOTAKE_MODEL`, and `QUOTE_MODEL`.
+For Codex mode, authenticate the Codex CLI:
+```bash
+codex login
+```
 
 ## Running
 
@@ -192,7 +197,7 @@ Decisions:
 
 **Notify + Boost bot** - Like replies on own tweets every 20 min (was 45→35→20, accelerated 2026-04-26 PM with WARMUP-on-startup so reply-to-replies fires immediately, not after 35-45 min cold-start). **IN-THREAD-ONLY rule (2026-04-27 PM, user directive before 2-week away)**: ALL reply-backs are now nested in-thread (influencer or not). Standalone @mention tweets were the old fallback for non-influencers but they polluted our profile feed and looked like spam — removed. If no reply_url, SKIP the engager. **2026-04-27 PM lang-detector tightening**: bot replied in Spanish on @OchoMono77 ("El tokenizer los parte en 47 tokens...") — original tweet had ZERO hits in soft `_ES_MARKERS` despite being clearly SP. Added `_STRONG_NON_FR_MARKERS` (ñ + del/más/sí/años/meses/muy/para/sobre/SP-PT-IT verbs) with threshold-1 = skip, in `direct_reply.py:_is_fr_or_en`. Also blocks PT/IT/Catalan slips for free. Self-retweet every 6 hours. **2026-04-27 PM reciprocity display-name guard**: scraper handed back display names ("haruka takamori", "macro bombastic", "blok assets - tokenization firm") for 3 consecutive RECIPROCATE engagers in one cycle; `_extract_handle` falls back to the whole user_string when there's no @, so the bot was visiting `https://x.com/haruka takamori` (malformed) and polluting `followed_accounts.json`. Fix: `_reciprocate_engagers` rejects any handle with whitespace, punctuation, or length>15 (same logic discover_bot uses) before visiting the profile.
 
-**Discover bot** - Every 6h: searches X, scores candidates with Claude, appends approved handles to `discovered_accounts.json`. Also auto-follows the best new FR ai/crypto/bourse handles (persisted in `followed_accounts.json`). **2026-04-27 follow-success bug**: `twitter_client.follow_account()` used to return `None` whether the JS-click fired or not, and every caller (discover/scout/engage/notify-reciprocate) blindly added the handle to `followed_accounts.json`. When 7 jobs collided at 13:25:59 and Safari's front-window context went stale, 3 follows silently failed yet were marked done, blocking future retries. Fix: `follow_account` now returns `bool`; all 4 callers check it and only persist on true successes, so transient JS-fails get retried next cycle instead of being lost.
+**Discover bot** - Disabled by default in Plus-safe mode (`ENABLE_AI_DISCOVERY=0`). When enabled, searches X, filters candidates with Python heuristics (no model call), appends approved handles to `discovered_accounts.json`, and auto-follows the best new FR ai/crypto/bourse handles.
 
 **Roast bot** - Every ~20 min jittered: visits @pgm_pm's profile, posts up to 3 sarcastic replies on his original tweets (1 per URL via existing dedup). Quiet 1am-7am Paris. His replies on our tweets stay blocked via BLOCKLIST so no loop.
 
@@ -230,7 +235,7 @@ Decisions:
 - **`src/reply_bot.py`** - Reply orchestration. Pre-filter dedup + blocklist + intra-batch dedup. Cap 2000.
 - **`src/engage_bot.py`** - Growth engine. Static list + discovered handles merged at load.
 - **`src/notify_bot.py`** - Reply-back + boost. Influencer replies get nested in-thread responses.
-- **`src/discover_bot.py`** - Autonomous influencer discovery (search X -> score with Claude -> persist). Auto-follows approved FR ai/crypto/bourse handles.
+- **`src/discover_bot.py`** - Optional influencer discovery (search X -> heuristic filter -> persist). Auto-follows approved FR ai/crypto/bourse handles when `ENABLE_AI_DISCOVERY=1`.
 - **`src/roast_pgm_bot.py`** - Dedicated 1-roast-per-tweet bot for @pgm_pm. URL dedup hard-cap.
 - **`src/performance.py`** - Self-improving. Scrapes metrics every 2h.
 - **`src/engagement_log.py`** - CSV engagement logging.

@@ -36,6 +36,7 @@ from src.quote_tweet_bot import safe_run_quote_tweet_cycle
 from src.early_bird_bot import safe_run_early_bird_cycle
 from src.retweet_bot import safe_run_retweet_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
+from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
 
 def _engagement_skip_rate() -> float:
@@ -123,10 +124,8 @@ def post_interval_minutes() -> int:
 
 
 def reply_interval_minutes() -> int:
-    """~9min jittered (bumped 13→9 on 2026-04-29). User: "only thing that
-    works is your reply". With cap=6/cycle and ~9min cadence this lands
-    ~250+ replies/day in awake hours. Engagement gate handles overnight."""
-    return random.randint(7, 11)
+    """Plus-safe cadence. Replies use AI, so keep them valuable and spaced."""
+    return random.randint(25, 40)
 
 
 def engage_interval_minutes() -> int:
@@ -136,23 +135,18 @@ def engage_interval_minutes() -> int:
 
 
 def direct_reply_interval_minutes() -> int:
-    """~9min jittered (bumped 13→9 on 2026-04-29). Direct-reply path lands
-    on big FR curated accounts where we convert best. Per-cycle cap (16)
-    in direct_reply.py prevents bursts. User pivot: replies are the engine."""
-    return random.randint(7, 11)
+    """Plus-safe cadence for direct replies."""
+    return random.randint(30, 45)
 
 
 def early_bird_interval_minutes() -> int:
-    """~5min jittered (was 6). Stay deep inside the 12-min freshness
-    window so we catch viral tweets in their top-5-reply moment more often."""
-    return random.randint(4, 6)
+    """Early-bird replies use AI; scan less often on Plus."""
+    return random.randint(15, 25)
 
 
 def roast_interval_minutes() -> int:
-    """~12min jittered (was 14). @pgm_pm tweets every minute; URL dedup
-    still hard-caps to 1 roast per tweet. Circuit breaker pauses if scrape
-    keeps returning empty."""
-    return random.randint(10, 14)
+    """Roasts use AI; keep them occasional."""
+    return random.randint(45, 75)
 
 
 def _graceful_shutdown(signum, frame):
@@ -348,16 +342,15 @@ def main():
             id="early_bird_job",
         )
 
-        # Discovery bot - autonomously find new crypto/AI/bourse influencers.
-        # 6h → 3h on user directive 2026-04-26 PM ("auto update list of
-        # people to follow"). The bot evolves faster — fresh FR handles
-        # join the orbit every 3h instead of 4x/day.
-        log.info("Discover bot: searching for new influencers every 2 hours.")
-        scheduler.add_job(
-            safe_run_discovery_cycle,
-            trigger=IntervalTrigger(hours=2),
-            id="discover_job",
-        )
+        if ENABLE_AI_DISCOVERY:
+            log.info("Discover bot: searching for new influencers every 6 hours.")
+            scheduler.add_job(
+                safe_run_discovery_cycle,
+                trigger=IntervalTrigger(hours=6),
+                id="discover_job",
+            )
+        else:
+            log.info("Discover bot: disabled by default in Plus-safe mode.")
 
         # Roast bot - slowed from 10 -> ~20min jittered. He tweets every ~minute
         # so we still catch plenty; URL dedup hard-caps to 1 per tweet. Quiet skip.
@@ -389,12 +382,15 @@ def main():
         # lists at runtime. 6h → 3h: user directive 2026-04-26 wants the
         # bot to auto-adjust strategy MULTIPLE TIMES per day. Append-only
         # safety boundary still holds (additions never removals).
-        log.info("Strategy agent: autonomous self-improvement every 2 hours.")
-        scheduler.add_job(
-            safe_run_strategy_cycle,
-            trigger=IntervalTrigger(hours=2),
-            id="strategy_job",
-        )
+        if ENABLE_AI_MAINTENANCE:
+            log.info("Strategy agent: autonomous self-improvement every 12 hours.")
+            scheduler.add_job(
+                safe_run_strategy_cycle,
+                trigger=IntervalTrigger(hours=12),
+                id="strategy_job",
+            )
+        else:
+            log.info("Strategy agent: disabled by default in Plus-safe mode.")
 
         # Evolution agent — autonomous self-improvement (OUTPUT side).
         # Reads engagement_log + performance_log; analyses what content
@@ -408,23 +404,29 @@ def main():
         # 5 reinforcements per cycle) still bound damage if a cycle goes
         # rogue, and prune TTL is still 30d so doubling the cadence doesn't
         # double the damage — it just makes the style guide more responsive.
-        log.info("Evolution agent: content-quality self-improvement every 2 hours.")
-        scheduler.add_job(
-            safe_run_evolution_cycle,
-            trigger=IntervalTrigger(hours=2),
-            id="evolution_job",
-        )
+        if ENABLE_AI_MAINTENANCE:
+            log.info("Evolution agent: content-quality self-improvement every 12 hours.")
+            scheduler.add_job(
+                safe_run_evolution_cycle,
+                trigger=IntervalTrigger(hours=12),
+                id="evolution_job",
+            )
+        else:
+            log.info("Evolution agent: disabled by default in Plus-safe mode.")
 
         # Reflection agent — autobiographical brain. Every 6h, agentic Claude
         # run reads engagement + history, updates personality.json: per-account
         # dossiers (category, stance, feelings, notes) + per-topic positions.
         # Replies become PERSONAL because the bot remembers each account.
-        log.info("Reflection agent: personality / memory update every 4 hours.")
-        scheduler.add_job(
-            safe_run_reflection_cycle,
-            trigger=IntervalTrigger(hours=4),
-            id="reflection_job",
-        )
+        if ENABLE_AI_MAINTENANCE:
+            log.info("Reflection agent: personality / memory update every 12 hours.")
+            scheduler.add_job(
+                safe_run_reflection_cycle,
+                trigger=IntervalTrigger(hours=12),
+                id="reflection_job",
+            )
+        else:
+            log.info("Reflection agent: disabled by default in Plus-safe mode.")
 
         # Scout agent — open-web FR-speaker recruitment. Every 4h, an agentic
         # Claude run uses WebSearch + WebFetch to find the BEST FR-speaking AI /
@@ -434,12 +436,15 @@ def main():
         # mines our engagement log) and discover_bot (which scrapes X search):
         # this one investigates the open web for hidden gems we'd never see
         # via X-internal signals. Hard caps: 8 added per cycle, 3 auto-follows.
-        log.info("Scout agent: open-web FR-speaker recruitment every 4 hours.")
-        scheduler.add_job(
-            safe_run_scout_cycle,
-            trigger=IntervalTrigger(hours=4),
-            id="scout_job",
-        )
+        if ENABLE_AI_DISCOVERY:
+            log.info("Scout agent: open-web FR-speaker recruitment every 12 hours.")
+            scheduler.add_job(
+                safe_run_scout_cycle,
+                trigger=IntervalTrigger(hours=12),
+                id="scout_job",
+            )
+        else:
+            log.info("Scout agent: disabled by default in Plus-safe mode.")
 
         # Quote-tweet bot — picks the most viral FR tweet in our niche and
         # quote-tweets it with a sharp meme observation. Cap 12/day, cadence
