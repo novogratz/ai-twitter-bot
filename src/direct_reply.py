@@ -7,7 +7,7 @@ import time
 import traceback
 from .logger import log
 from .config import REPLY_MODEL
-from .llm_client import run_llm, unwrap_text
+from .llm_client import LLM_RATE_LIMIT_CODE, llm_hourly_limit_status, run_llm, unwrap_text
 from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
 from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url
 from .config import BLOCKLIST, BOT_HANDLE
@@ -16,6 +16,7 @@ from .engagement_log import log_reply
 from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
 
 _OWN_HANDLE = BOT_HANDLE.lower()
+_LLM_RATE_LIMITED = object()
 
 # === Language gate — added 2026-04-26 after DE/TR replies leaked through ===
 # X's `lang:fr` operator is best-effort: it returns DE / TR / ES / RU tweets
@@ -468,6 +469,8 @@ def _generate_single_reply(author: str, tweet_text: str):
 
     try:
         result = run_llm(prompt, REPLY_MODEL, label="DIRECT_REPLY", timeout=30)
+        if result.returncode == LLM_RATE_LIMIT_CODE:
+            return _LLM_RATE_LIMITED
         if result.returncode != 0:
             return None
 
@@ -628,8 +631,23 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             continue
 
         # Generate reply
-        log.info(f"[{source_name}] Replying to @{author}: {text[:60]}...")
+        limited, used, max_hour, reset_seconds = llm_hourly_limit_status()
+        if limited:
+            log.info(
+                f"[{source_name}] LLM hourly cap reached ({used}/{max_hour}); "
+                f"stopping reply scan for ~{reset_seconds // 60}m instead of pretending to reply."
+            )
+            break
+
+        log.info(f"[{source_name}] Generating reply for @{author}: {text[:60]}...")
         reply = _generate_single_reply(author, text)
+        if reply is _LLM_RATE_LIMITED:
+            limited, used, max_hour, reset_seconds = llm_hourly_limit_status()
+            log.info(
+                f"[{source_name}] LLM hourly cap hit during generation ({used}/{max_hour}); "
+                f"stopping reply scan for ~{reset_seconds // 60}m."
+            )
+            break
         if not reply:
             continue
 
@@ -665,6 +683,7 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
                 en_counter[0] += 1
             if author_key:
                 per_author_count[author_key] = per_author_count.get(author_key, 0) + 1
+            log.info(f"[{source_name}] Posted reply to {url}")
             time.sleep(random.randint(10, 20))
         except Exception:
             log.info(f"[{source_name}] Failed to reply to {url}")
@@ -682,6 +701,19 @@ def run_direct_reply_cycle():
     replied = load_replied()
     total = 0
     en_counter = [0]  # mutable — tracks EN replies across the cycle for the hard cap
+
+    def _llm_exhausted() -> bool:
+        limited, used, max_hour, reset_seconds = llm_hourly_limit_status()
+        if limited:
+            log.info(
+                f"[DIRECT] LLM hourly cap already reached ({used}/{max_hour}); "
+                f"skipping direct replies for ~{reset_seconds // 60}m."
+            )
+            return True
+        return False
+
+    if _llm_exhausted():
+        return
 
     # Merge agent-proposed dynamic queries + accounts. Strategy agent appends to
     # these JSON files every cycle; we just consume them here. Append-only.
@@ -712,6 +744,11 @@ def run_direct_reply_cycle():
                 "likes": t.get("likes", 0), "replies": t.get("replies", 0),
             } for t in tweets]
             total += _reply_to_tweets(profile_tweets, replied, "PROFILE-FR", source_detail=username, remaining=_budget(), en_counter=en_counter)
+            if _llm_exhausted():
+                break
+    if _llm_exhausted():
+        save_replied(replied)
+        return
 
     # === SOURCE 2: Following feed (chronological, only accounts we follow — also big-account leaning) ===
     # Sort FR tweets first — same rationale as FEED below.
@@ -722,6 +759,9 @@ def run_direct_reply_cycle():
             if following_tweets:
                 following_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
                 total += _reply_to_tweets(following_tweets, replied, "FOLLOWING", remaining=_budget(), en_counter=en_counter)
+                if _llm_exhausted():
+                    save_replied(replied)
+                    return
         except Exception:
             log.info("[DIRECT] Following feed scrape failed:")
             traceback.print_exc()
@@ -735,6 +775,9 @@ def run_direct_reply_cycle():
         if feed_tweets:
             feed_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
             total += _reply_to_tweets(feed_tweets, replied, "FEED", remaining=_budget(), en_counter=en_counter)
+            if _llm_exhausted():
+                save_replied(replied)
+                return
 
     # === SOURCE 4: HOT FR tweets (X's "Top" tab, min_faves) — fallback if curated didn't fill ===
     all_hot = HOT_TAB_QUERIES + dyn_queries.get("hot", [])
@@ -747,9 +790,14 @@ def run_direct_reply_cycle():
             hot_tweets = scrape_x_search(query, max_tweets=12, tab="top")
             if hot_tweets:
                 total += _reply_to_tweets(hot_tweets, replied, "SEARCH-FR-HOT", source_detail=query, remaining=_budget(), en_counter=en_counter)
+                if _llm_exhausted():
+                    break
         except Exception:
             log.info(f"[DIRECT] HOT search failed for {query}:")
             traceback.print_exc()
+    if _llm_exhausted():
+        save_replied(replied)
+        return
 
     # === SOURCE 5: French X Live searches (random discovery — LAST RESORT) ===
     all_search = SEARCH_QUERIES + dyn_queries.get("live", [])
@@ -761,6 +809,11 @@ def run_direct_reply_cycle():
         search_tweets = scrape_x_search(query, max_tweets=15, tab="live")
         if search_tweets:
             total += _reply_to_tweets(search_tweets, replied, "SEARCH-FR-LIVE", source_detail=query, remaining=_budget(), en_counter=en_counter)
+            if _llm_exhausted():
+                break
+    if _llm_exhausted():
+        save_replied(replied)
+        return
 
     # === SOURCE 4: English influencer profiles - more accounts, more tweets ===
     all_en = filter_and_weight(EN_ACCOUNTS + dyn_accounts.get("en", []))
@@ -776,6 +829,8 @@ def run_direct_reply_cycle():
                 "likes": t.get("likes", 0), "replies": t.get("replies", 0),
             } for t in tweets]
             total += _reply_to_tweets(profile_tweets, replied, "PROFILE-EN", source_detail=username, remaining=_budget())
+            if _llm_exhausted():
+                break
 
     save_replied(replied)
     fr_count = total - en_counter[0]

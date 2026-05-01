@@ -73,8 +73,8 @@ QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "clau
 
 # Local guardrail against scheduler bursts and provider rate limits. The
 # wrapper spaces model calls and refuses new ones once the hourly budget is hit.
-LLM_MIN_SECONDS_BETWEEN_CALLS = int(os.environ.get("LLM_MIN_SECONDS_BETWEEN_CALLS", "90"))
-LLM_MAX_CALLS_PER_HOUR = int(os.environ.get("LLM_MAX_CALLS_PER_HOUR", "12"))
+LLM_MIN_SECONDS_BETWEEN_CALLS = int(os.environ.get("LLM_MIN_SECONDS_BETWEEN_CALLS", "60"))
+LLM_MAX_CALLS_PER_HOUR = int(os.environ.get("LLM_MAX_CALLS_PER_HOUR", "30"))
 
 # Plus-safe mode: no AI for scoring, scouting, reflection, evolution, or
 # account discovery unless explicitly enabled.

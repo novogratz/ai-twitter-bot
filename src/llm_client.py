@@ -13,7 +13,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional, Sequence
 
-from .config import _PROJECT_ROOT
+from .config import (
+    LLM_MAX_CALLS_PER_HOUR,
+    LLM_MIN_SECONDS_BETWEEN_CALLS,
+    _PROJECT_ROOT,
+)
 from .logger import log
 
 
@@ -24,6 +28,7 @@ class LLMResult:
     stderr: str = ""
 
 
+LLM_RATE_LIMIT_CODE = 75
 _LOCK = threading.Lock()
 _STATE_FILE = Path(_PROJECT_ROOT) / ".llm_rate_state.json"
 
@@ -56,14 +61,32 @@ def _save_state(state: dict):
         pass
 
 
+def _rate_limits() -> tuple[float, int]:
+    min_gap = float(os.environ.get("LLM_MIN_SECONDS_BETWEEN_CALLS", str(LLM_MIN_SECONDS_BETWEEN_CALLS)))
+    max_hour = int(os.environ.get("LLM_MAX_CALLS_PER_HOUR", str(LLM_MAX_CALLS_PER_HOUR)))
+    return min_gap, max_hour
+
+
+def llm_hourly_limit_status() -> tuple[bool, int, int, int]:
+    """Return (limited, used, max_hour, seconds_until_oldest_call_expires)."""
+    now = time.time()
+    _, max_hour = _rate_limits()
+    with _LOCK:
+        state = _load_state()
+        calls = sorted(float(t) for t in state.get("calls", []) if now - float(t) < 3600)
+    if len(calls) < max_hour:
+        return False, len(calls), max_hour, 0
+    reset_seconds = max(1, int(3600 - (now - calls[0]))) if calls else 3600
+    return True, len(calls), max_hour, reset_seconds
+
+
 def _wait_for_slot(label: str):
     """Throttle all local CLI calls across bot threads.
 
     This does not replace provider limits, but it prevents bursty scheduler
     overlap from firing 5-10 model calls at once.
     """
-    min_gap = float(os.environ.get("LLM_MIN_SECONDS_BETWEEN_CALLS", "25"))
-    max_hour = int(os.environ.get("LLM_MAX_CALLS_PER_HOUR", "40"))
+    min_gap, max_hour = _rate_limits()
     now = time.time()
 
     with _LOCK:
@@ -72,7 +95,7 @@ def _wait_for_slot(label: str):
         if len(calls) >= max_hour:
             msg = f"local LLM rate limit reached ({len(calls)}/{max_hour} calls in 1h)"
             log.info(f"[LLM] {label}: {msg}")
-            return LLMResult(75, "", msg)
+            return LLMResult(LLM_RATE_LIMIT_CODE, "", msg)
 
         last_call = float(state.get("last_call", 0) or 0)
         sleep_for = max(0.0, min_gap - (now - last_call))
