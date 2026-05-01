@@ -97,17 +97,34 @@ def _build_cmd(
 ) -> list[str]:
     provider = _provider()
     if provider == "codex":
+        # Codex CLI exec in this environment does not expose the same web
+        # search/tooling flags as Claude. For search-backed tasks, fall back
+        # to Claude if it is available; pure generation can stay on Codex.
+        if allowed_tools and any(t.lower() in {"websearch", "webfetch"} for t in allowed_tools):
+            if shutil.which("claude") and os.environ.get("CODEX_WEB_FALLBACK", "1") == "1":
+                provider = "claude"
+            else:
+                log.info("[LLM] Codex exec does not support web-search flags here; running without them.")
+        else:
+            cmd = [
+                "codex",
+                "exec",
+                "--model", model,
+                "--sandbox", "read-only",
+                "--ephemeral",
+                prompt,
+            ]
+            return cmd
+
+    if provider == "codex":
         cmd = [
             "codex",
             "exec",
             "--model", model,
             "--sandbox", "read-only",
-            "--ask-for-approval", "never",
             "--ephemeral",
+            prompt,
         ]
-        if allowed_tools and any(t.lower() in {"websearch", "webfetch"} for t in allowed_tools):
-            cmd.append("--search")
-        cmd.append("-")
         return cmd
 
     cmd = ["claude", "-p", prompt, "--model", model, "--no-session-persistence"]
@@ -136,11 +153,9 @@ def run_llm(
         return gate
 
     cmd = _build_cmd(prompt, model, output_json, allowed_tools, permission_mode)
-    input_text = prompt if _provider() == "codex" else None
     try:
         result = subprocess.run(
             cmd,
-            input=input_text,
             capture_output=True,
             text=True,
             timeout=timeout,
