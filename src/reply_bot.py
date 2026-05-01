@@ -5,7 +5,7 @@ import re
 import time
 import traceback
 from datetime import datetime, timezone
-from .config import REPLIED_FILE, BLOCKLIST, BOT_HANDLE
+from .config import MAX_REPLIES_PER_CYCLE, REPLIED_FILE, BLOCKLIST, BOT_HANDLE
 from .logger import log
 
 _OWN_HANDLE = BOT_HANDLE.lower()
@@ -57,6 +57,10 @@ def save_replied(urls: set):
 
 def run_reply_cycle():
     """Search for popular AI tweets and reply with a sharp one-liner."""
+    if MAX_REPLIES_PER_CYCLE <= 0:
+        log.info("[REPLY] Reply cap is 0. No search/model call this cycle.")
+        return
+
     refresh_feed()
     log.info("[REPLY] Scanning for tweets to reply to...")
 
@@ -99,7 +103,7 @@ def run_reply_cycle():
         filtered.append(data)
 
     # Plus-safe cap. The model already ranked the batch; only ship the best.
-    replies = filtered[:3]
+    replies = filtered[:min(3, MAX_REPLIES_PER_CYCLE)]
 
     if not replies:
         log.info("[REPLY] All replies filtered (dedup/blocklist) - skipping cycle.")

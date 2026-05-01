@@ -19,7 +19,7 @@ from zoneinfo import ZoneInfo
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from src.logger import log
-from src.bot import safe_run_bot_cycle
+from src.bot import has_post_slot, post_slot_status, safe_run_bot_cycle
 from src.reply_bot import safe_run_reply_cycle
 from src.engage_bot import safe_run_engage_cycle
 from src.notify_bot import safe_run_notify_cycle, safe_run_boost_cycle, safe_run_replyback_cycle
@@ -173,7 +173,10 @@ def main():
 
     # --- POST BOT (secondary - few posts, only bangers) ---
     def reschedule_and_post():
-        safe_run_bot_cycle()
+        if has_post_slot():
+            safe_run_bot_cycle()
+        else:
+            log.info(f"[POST] Daily post caps full ({post_slot_status()}). No news/hot-take search this cycle.")
         next_min = post_interval_minutes()
         hour = datetime.now(ZoneInfo("America/New_York")).hour
         log.info(f"[POST][EST {hour}:xx] Next post in {next_min} minutes.")
@@ -249,8 +252,11 @@ def main():
     # User preference: AI news + sharp comment is the brand DNA — that's what
     # we want to lead with, not a reply. Replies follow once the post is up.
     if not args.reply_only:
-        log.info("Bot started! Posting first news tweet...")
-        safe_run_bot_cycle()
+        if has_post_slot():
+            log.info("Bot started! Posting first news tweet...")
+            safe_run_bot_cycle()
+        else:
+            log.info(f"Bot started with daily post caps full ({post_slot_status()}). Skipping startup news search.")
 
     # Then warm up the engagement loop with a direct-reply cycle.
     if not args.post_only:

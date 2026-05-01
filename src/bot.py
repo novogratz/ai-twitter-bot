@@ -49,6 +49,22 @@ def _get_counters() -> tuple[int, int]:
     return state["news"], state["hotakes"]
 
 
+def has_post_slot() -> bool:
+    """Cheap cap check for schedulers: true if any post format can still ship.
+
+    Keep this outside `run_bot_cycle()` so main.py can avoid even entering the
+    news/hot-take generation path once both daily buckets are full.
+    """
+    news_count, hotake_count = _get_counters()
+    return news_count < MAX_NEWS_PER_DAY or hotake_count < MAX_HOTAKES_PER_DAY
+
+
+def post_slot_status() -> str:
+    """Human-readable daily post cap state for logs."""
+    news_count, hotake_count = _get_counters()
+    return f"{news_count}/{MAX_NEWS_PER_DAY} news, {hotake_count}/{MAX_HOTAKES_PER_DAY} hot takes"
+
+
 def _increment_counter(counter_name: str):
     """Increment a daily counter and persist."""
     state = _load_daily_state()
