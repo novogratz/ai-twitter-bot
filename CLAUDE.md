@@ -8,12 +8,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 pip install -r requirements.txt
 ```
 
-No API keys needed. The bot posts via browser + AppleScript (macOS only) and uses the Claude Code CLI subscription for AI generation.
+No API keys needed for Claude Code mode. The bot posts via browser + AppleScript (macOS only) and uses the configured AI CLI for generation (`AI_CLI=auto`, `claude`, or `codex`).
 
-The only requirement is that the `claude` CLI is installed and authenticated:
+For Claude Code mode, install and authenticate the `claude` CLI:
 ```bash
 claude login
 ```
+
+For Codex mode, set `AI_CLI=codex` and use Codex model names in `NEWS_MODEL`, `REPLY_MODEL`, `HOTAKE_MODEL`, and `QUOTE_MODEL`.
 
 ## Running
 

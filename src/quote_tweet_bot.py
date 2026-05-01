@@ -11,7 +11,6 @@ import json
 import os
 import random
 import re
-import subprocess
 import time
 import traceback
 from datetime import datetime, date
@@ -20,6 +19,7 @@ from .logger import log
 from .twitter_client import scrape_x_search, quote_tweet
 from .humanizer import humanize
 from .engagement_log import log_reply
+from .llm_client import run_llm, unwrap_text
 
 QUOTED_FILE = os.path.join(_PROJECT_ROOT, "quoted_tweets.json")
 QUOTE_STATE_FILE = os.path.join(_PROJECT_ROOT, "quote_daily_state.json")
@@ -158,18 +158,10 @@ def _looks_like_skip_or_rationale(text: str) -> bool:
 def _generate_quote(author: str, tweet_text: str):
     prompt = QUOTE_PROMPT.format(author=author, tweet_text=tweet_text[:200])
     try:
-        result = subprocess.run(
-            ["claude", "-p", prompt, "--model", QUOTE_MODEL, "--output-format", "json", "--no-session-persistence"],
-            capture_output=True, text=True, timeout=30,
-        )
+        result = run_llm(prompt, QUOTE_MODEL, label="QUOTE", timeout=30)
         if result.returncode != 0:
             return None
-        raw = result.stdout.strip()
-        try:
-            envelope = json.loads(raw)
-            out = envelope.get("result", raw).strip()
-        except (json.JSONDecodeError, AttributeError):
-            out = raw
+        out = unwrap_text(result.stdout)
         if not out:
             return None
         if _looks_like_skip_or_rationale(out):

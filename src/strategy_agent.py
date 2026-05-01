@@ -15,11 +15,11 @@ Schedule: every 6h. Always-on. The bot rewrites its own strategy 4x/day.
 import json
 import os
 import re
-import subprocess
 import traceback
 from datetime import datetime
 from .config import REPLY_MODEL, BLOCKLIST, ENGAGEMENT_LOG_FILE, REPLIED_FILE, _PROJECT_ROOT
 from .logger import log
+from .llm_client import run_llm
 from .dynamic_strategy import (
     add_dynamic_queries,
     add_dynamic_accounts,
@@ -179,20 +179,13 @@ def _run_agent() -> dict:
     # --permission-mode bypassPermissions: required in -p mode or tool use
     # blocks on the permission gate and the run hangs until timeout.
     # --no-session-persistence: keep these autonomous runs out of /resume.
-    cmd = [
-        "claude",
-        "-p", prompt,
-        "--model", REPLY_MODEL,
-        "--allowedTools", "Read", "WebSearch", "WebFetch", "Grep", "Glob",
-        "--permission-mode", "bypassPermissions",
-        "--no-session-persistence",
-    ]
-
     try:
-        result = subprocess.run(
-            cmd,
-            capture_output=True,
-            text=True,
+        result = run_llm(
+            prompt,
+            REPLY_MODEL,
+            label="STRATEGY_AGENT",
+            allowed_tools=["Read", "WebSearch", "WebFetch", "Grep", "Glob"],
+            permission_mode="bypassPermissions",
             timeout=420,  # 7 min — agent runs are slower than one-shots
         )
         if result.returncode != 0:
@@ -200,11 +193,8 @@ def _run_agent() -> dict:
             return {}
 
         return _parse_json_proposal(result.stdout)
-    except subprocess.TimeoutExpired:
-        log.info("[STRATEGY-AGENT] Agent timed out after 7 min.")
-        return {}
     except Exception as e:
-        log.info(f"[STRATEGY-AGENT] Agent invocation failed: {e}")
+        log.info(f"[STRATEGY-AGENT] Agent failed: {e}")
         return {}
 
 

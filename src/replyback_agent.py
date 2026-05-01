@@ -1,9 +1,8 @@
 """Reply-back agent: generates witty replies to people who reply to our tweets."""
-import json
-import subprocess
 from typing import Optional
 from .config import REPLY_MODEL
 from .logger import log
+from .llm_client import run_llm, unwrap_text
 
 REPLYBACK_PROMPT = """You are @kzer_ai. Someone replied to your tweet. Write a SHORT, WITTY reply that keeps the conversation going.
 
@@ -63,27 +62,12 @@ def generate_replyback(original_tweet: str, their_reply: str, author: str = "") 
         extras.append(core_identity)
     extras.append(personality_store.HARD_RULES_BLOCK)
     prompt = base + "\n\n" + "\n\n".join(extras)
-    result = subprocess.run(
-        [
-            "claude",
-            "-p", prompt,
-            "--model", REPLY_MODEL,
-            "--output-format", "json",
-            "--no-session-persistence",
-        ],
-        capture_output=True,
-        text=True,
-    )
+    result = run_llm(prompt, REPLY_MODEL, label="REPLYBACK")
     if result.returncode != 0:
         log.info(f"[REPLYBACK] CLI error: {result.stderr[:200]}")
         return None
 
-    raw = result.stdout.strip()
-    try:
-        envelope = json.loads(raw)
-        reply = envelope.get("result", raw).strip()
-    except (json.JSONDecodeError, AttributeError):
-        reply = raw
+    reply = unwrap_text(result.stdout)
     if not reply:
         return None
 

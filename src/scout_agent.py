@@ -25,11 +25,11 @@ Schedule: every 4h. Append-only. Bad runs add noise; never delete curated target
 import json
 import os
 import re
-import subprocess
 import traceback
 from datetime import datetime
 from .config import REPLY_MODEL, BLOCKLIST, _PROJECT_ROOT
 from .logger import log
+from .llm_client import run_llm
 from .dynamic_strategy import (
     add_dynamic_accounts,
     get_dynamic_accounts,
@@ -177,27 +177,21 @@ def _parse_json_proposal(text: str) -> dict:
 
 
 def _run_agent() -> dict:
-    """Invoke the Claude CLI as an agent with web tools. Returns parsed JSON."""
+    """Invoke the configured LLM CLI as an agent with web tools."""
     prompt = _build_agent_prompt()
-    cmd = [
-        "claude",
-        "-p", prompt,
-        "--model", REPLY_MODEL,
-        "--allowedTools", "Read", "WebSearch", "WebFetch", "Grep", "Glob",
-        "--permission-mode", "bypassPermissions",
-        "--no-session-persistence",
-    ]
     try:
-        result = subprocess.run(
-            cmd, capture_output=True, text=True, timeout=540,  # 9 min — web research is slow
+        result = run_llm(
+            prompt,
+            REPLY_MODEL,
+            label="SCOUT_AGENT",
+            allowed_tools=["Read", "WebSearch", "WebFetch", "Grep", "Glob"],
+            permission_mode="bypassPermissions",
+            timeout=540,  # 9 min — web research is slow
         )
         if result.returncode != 0:
             log.info(f"[SCOUT-AGENT] CLI exit {result.returncode}: {result.stderr[:300]}")
             return {}
         return _parse_json_proposal(result.stdout)
-    except subprocess.TimeoutExpired:
-        log.info("[SCOUT-AGENT] Agent timed out after 9 min.")
-        return {}
     except Exception as e:
         log.info(f"[SCOUT-AGENT] Agent invocation failed: {e}")
         return {}

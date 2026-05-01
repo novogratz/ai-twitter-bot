@@ -2,12 +2,12 @@
 import json
 import os
 import re
-import subprocess
 import random
 import time
 import traceback
 from .logger import log
 from .config import REPLY_MODEL
+from .llm_client import run_llm, unwrap_text
 from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
 from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url
 from .config import BLOCKLIST, BOT_HANDLE
@@ -467,20 +467,12 @@ def _generate_single_reply(author: str, tweet_text: str):
     prompt = base + "\n\n" + "\n\n".join(extras)
 
     try:
-        result = subprocess.run(
-            ["claude", "-p", prompt, "--model", REPLY_MODEL, "--output-format", "json", "--no-session-persistence"],
-            capture_output=True, text=True, timeout=30,
-        )
+        result = run_llm(prompt, REPLY_MODEL, label="DIRECT_REPLY", timeout=30)
         if result.returncode != 0:
             return None
 
         # Extract model text from --output-format json envelope
-        raw = result.stdout.strip()
-        try:
-            envelope = json.loads(raw)
-            reply = envelope.get("result", raw).strip()
-        except (json.JSONDecodeError, AttributeError):
-            reply = raw
+        reply = unwrap_text(result.stdout)
         if not reply:
             return None
 
@@ -492,8 +484,6 @@ def _generate_single_reply(author: str, tweet_text: str):
             return None
 
         return reply
-    except subprocess.TimeoutExpired:
-        return None
     except Exception:
         return None
 

@@ -8,7 +8,6 @@ This guarantees we never get sucked into a bot-vs-bot infinite loop.
 import json
 import os
 import random
-import subprocess
 import time
 import traceback
 from datetime import datetime, timedelta
@@ -16,6 +15,7 @@ from typing import Optional
 from .config import REPLIED_FILE, ROAST_MODEL, _PROJECT_ROOT
 from .logger import log
 from .twitter_client import scrape_profile_tweets, reply_to_tweet
+from .llm_client import run_llm, unwrap_text
 
 TARGET_HANDLE = "pgm_pm"
 # He tweets ~every minute. We check often, but cap per-cycle so Twitter doesn't
@@ -135,19 +135,11 @@ def _generate_roast(tweet_text: str) -> Optional[str]:
     safe = tweet_text[:400].replace('"', "'")
     prompt = ROAST_PROMPT.format(tweet=safe)
     try:
-        result = subprocess.run(
-            ["claude", "-p", prompt, "--model", ROAST_MODEL, "--output-format", "json", "--no-session-persistence"],
-            capture_output=True, text=True, timeout=120,
-        )
+        result = run_llm(prompt, ROAST_MODEL, label="ROAST", timeout=120)
         if result.returncode != 0:
             log.info(f"[ROAST] Claude error: {result.stderr[:200]}")
             return None
-        raw = (result.stdout or "").strip()
-        try:
-            envelope = json.loads(raw)
-            out = envelope.get("result", raw).strip().strip('"').strip("'")
-        except (json.JSONDecodeError, AttributeError):
-            out = raw.strip('"').strip("'")
+        out = unwrap_text(result.stdout).strip('"').strip("'")
         if not out:
             return None
         return out[:280]

@@ -9,7 +9,6 @@ Safety boundary: Python applies updates, Claude only proposes JSON.
 import json
 import os
 import re
-import subprocess
 import traceback
 from datetime import datetime
 
@@ -21,6 +20,7 @@ from .config import (
     _PROJECT_ROOT,
 )
 from .logger import log
+from .llm_client import run_llm, unwrap_text
 from . import personality_store
 
 REFLECTION_LOG_FILE = os.path.join(_PROJECT_ROOT, "reflection_log.json")
@@ -156,28 +156,13 @@ def _parse_json(text: str) -> dict:
 
 def _run_agent() -> dict:
     prompt = _build_prompt()
-    cmd = [
-        "claude",
-        "-p", prompt,
-        "--model", REPLY_MODEL,
-        "--output-format", "json",
-        "--no-session-persistence",
-    ]
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        result = run_llm(prompt, REPLY_MODEL, label="REFLECTION", timeout=120)
         if result.returncode != 0:
             log.info(f"[REFLECTION] CLI exit {result.returncode}: {result.stderr[:200]}")
             return {}
-        raw = result.stdout.strip()
-        try:
-            envelope = json.loads(raw)
-            raw = envelope.get("result", raw)
-        except Exception:
-            pass
+        raw = unwrap_text(result.stdout)
         return _parse_json(raw)
-    except subprocess.TimeoutExpired:
-        log.info("[REFLECTION] Timed out after 120s.")
-        return {}
     except Exception as e:
         log.info(f"[REFLECTION] Failed: {e}")
         return {}

@@ -1,10 +1,10 @@
 # AI Twitter Bot
 
-An autonomous Twitter/X bot powered by Claude Code. No API keys needed. Posts via browser automation (Safari + AppleScript on macOS).
+An autonomous Twitter/X bot powered by Claude Code or Codex CLI. Posts via browser automation (Safari + AppleScript on macOS).
 
 ## How It Works
 
-Uses Claude Code CLI for AI generation and Safari + AppleScript for browser automation. No Twitter API, no Anthropic API key. Just log into X on Safari and go.
+Uses an installed AI CLI for generation (`AI_CLI=auto`, `claude`, or `codex`) and Safari + AppleScript for browser automation. No Twitter API. Just log into X on Safari and go.
 
 ### Bots
 
@@ -56,6 +56,16 @@ Two rules stamped into every generation prompt via `personality_store.HARD_RULES
 pip install -r requirements.txt
 npm install -g @anthropic-ai/claude-code
 claude login
+```
+
+For Codex CLI, set `AI_CLI=codex` and override models with Codex model names, for example:
+
+```bash
+export AI_CLI=codex
+export NEWS_MODEL=gpt-5.4
+export REPLY_MODEL=gpt-5.4
+export HOTAKE_MODEL=gpt-5.4
+export QUOTE_MODEL=gpt-5.4-mini
 ```
 
 Log into X/Twitter on Safari. That's it.
@@ -124,9 +134,12 @@ All settings in `src/config.py`, overridable with environment variables:
 | `MAX_QUOTES_PER_DAY` | 18 | Max quote-tweets per day (raised 12→18 on 2026-04-30 PM — now THE primary news surface, biggest FR/EN news + viral tweets get sarcastic FR commentary on top) |
 | `MAX_REPLIES_PER_CYCLE` | 18 | Max replies per cycle (bumped 12→18 — replies are the engine) |
 | `REPLY_MIN_LIKES` | 2 | Min likes on a tweet before the bot will reply (random-search sources only — curated paths bypass) |
-| `NEWS_MODEL` | claude-opus-4-6 | Model for news posts |
-| `REPLY_MODEL` | claude-opus-4-6 | Model for replies (upgraded from sonnet-4-6 on 2026-04-29 — replies convert, FR humor benefits from Opus) |
-| `HOTAKE_MODEL` | claude-opus-4-6 | Model for hot takes |
+| `AI_CLI` | auto | `auto`, `claude`, or `codex` |
+| `NEWS_MODEL` | claude-sonnet-4-6 | Model for news posts |
+| `REPLY_MODEL` | claude-sonnet-4-6 | Model for replies |
+| `HOTAKE_MODEL` | claude-sonnet-4-6 | Model for hot takes |
+| `LLM_MIN_SECONDS_BETWEEN_CALLS` | 25 | Local spacing between model calls to avoid burst rate limits |
+| `LLM_MAX_CALLS_PER_HOUR` | 40 | Local hourly model-call budget across bot threads |
 
 ### Customizing for Your Niche
 

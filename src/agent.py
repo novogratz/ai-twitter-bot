@@ -1,13 +1,13 @@
 """News agent: searches for breaking AI/Crypto/Bourse news and generates tweets in French."""
 import json
 import re
-import subprocess
 from datetime import datetime, timedelta
 from typing import Optional
 from .config import NEWS_MODEL
 from .logger import log
 from .history import get_recent_tweets
 from .performance import get_learnings_for_prompt
+from .llm_client import run_llm, unwrap_text
 
 
 _URL_RE = re.compile(r"https?://\S+")
@@ -891,30 +891,27 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         performance_section=performance_section,
     )
 
-    cli_cmd = [
-        "claude",
-        "-p", prompt,
-        "--allowedTools", "WebSearch",
-        "--model", NEWS_MODEL,
-        "--output-format", "json",
-        "--no-session-persistence",
-    ]
-    result = subprocess.run(cli_cmd, capture_output=True, text=True)
+    result = run_llm(
+        prompt,
+        NEWS_MODEL,
+        label="NEWS",
+        allowed_tools=["WebSearch"],
+    )
     # Retry once on transient CLI failure (exit 1 + empty stderr = API hiccup)
     if result.returncode != 0 and not result.stderr.strip():
-        log.warning(f"Claude CLI transient failure (exit {result.returncode}), retrying in 10s...")
+        log.warning(f"LLM transient failure (exit {result.returncode}), retrying in 10s...")
         import time
         time.sleep(10)
-        result = subprocess.run(cli_cmd, capture_output=True, text=True)
+        result = run_llm(
+            prompt,
+            NEWS_MODEL,
+            label="NEWS",
+            allowed_tools=["WebSearch"],
+        )
     if result.returncode != 0:
-        log.info(f"Claude CLI stderr: {result.stderr}")
-        raise RuntimeError(f"Claude CLI failed (exit {result.returncode}): {result.stderr}")
-    raw = result.stdout.strip()
-    try:
-        envelope = json.loads(raw)
-        tweet = envelope.get("result", raw).strip()
-    except (json.JSONDecodeError, AttributeError):
-        tweet = raw
+        log.info(f"LLM stderr: {result.stderr}")
+        raise RuntimeError(f"LLM failed (exit {result.returncode}): {result.stderr}")
+    tweet = unwrap_text(result.stdout)
     if not tweet:
         raise RuntimeError("Claude CLI returned empty output.")
     if tweet.upper() == "SKIP":

@@ -37,7 +37,6 @@ import json
 import os
 import random
 import re
-import subprocess
 import time
 import traceback
 from datetime import datetime, date
@@ -50,6 +49,7 @@ from .config import (
 )
 from .logger import log
 from .twitter_client import retweet_post, scrape_profile_tweets
+from .llm_client import run_llm, unwrap_text
 from .engagement_log import log_reply
 
 # State files
@@ -260,19 +260,11 @@ def _score_candidates(candidates: list):
         )
     prompt = SCORE_PROMPT.format(candidates="\n".join(listing))
     try:
-        result = subprocess.run(
-            ["claude", "-p", prompt, "--model", QUOTE_MODEL, "--output-format", "json", "--no-session-persistence"],
-            capture_output=True, text=True, timeout=45,
-        )
+        result = run_llm(prompt, QUOTE_MODEL, label="RETWEET_SCORE", timeout=45)
         if result.returncode != 0:
             log.info(f"[RETWEET] Scorer subprocess failed: {result.stderr[:200]}")
             return None
-        raw = result.stdout.strip()
-        try:
-            envelope = json.loads(raw)
-            out = envelope.get("result", raw).strip()
-        except (json.JSONDecodeError, AttributeError):
-            out = raw
+        out = unwrap_text(result.stdout)
         # Strip code fences if any
         m = re.search(r"\{[^{}]*\"best_index\"[^{}]*\}", out, re.DOTALL)
         if not m:
@@ -373,8 +365,17 @@ def run_retweet_cycle():
         log.info("[RETWEET] No viable candidates this cycle.")
         return
 
-    log.info(f"[RETWEET] Scoring {len(candidates)} candidates with Claude...")
-    decision = _score_candidates(candidates)
+    if len(candidates) == 1:
+        only = candidates[0]
+        decision = {
+            "best_index": 0,
+            "best_score": 8 if only.get("likes", 0) >= 50 else 7,
+            "why_it_matters": "Unique actu viable issue des sources fiables.",
+        }
+        log.info("[RETWEET] One viable candidate — using deterministic pick, no model call.")
+    else:
+        log.info(f"[RETWEET] Scoring {len(candidates)} candidates with LLM...")
+        decision = _score_candidates(candidates)
     if not decision:
         log.info("[RETWEET] Scoring failed — skipping cycle.")
         return

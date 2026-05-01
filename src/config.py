@@ -46,18 +46,23 @@ BLOCKLIST = {
 # Discovered accounts file (autonomous influencer discovery)
 DISCOVERED_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "discovered_accounts.json")
 
-# Models — 2026-04-29 user directive ("just use opus normal 4.6 for now"):
-# all generation surfaces upgraded to claude-opus-4-6. Replies are where
-# we win, and the model choice matters for nuanced FR humor. News/hotake
-# also benefit (better recency + reasoning) even though we cap volume hard.
-NEWS_MODEL = os.environ.get("NEWS_MODEL", "claude-opus-4-6")
-REPLY_MODEL = os.environ.get("REPLY_MODEL", "claude-opus-4-6")
-HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", "claude-opus-4-6")
-# Roast + quote-tweet meme-gen don't need Sonnet — they're one-liners off a
-# fixed pattern. Haiku is plenty and frees Sonnet/Opus budget for the
-# news/reply/hotake paths where the model actually matters.
+# CLI/provider selection. AI_CLI=auto tries Claude Code first, then Codex CLI.
+AI_CLI = os.environ.get("AI_CLI", "auto")
+
+# Models. Defaults avoid the biggest tier: Sonnet for core generation, Haiku
+# for cheap one-liners/scoring. For Codex CLI, override with e.g.
+# NEWS_MODEL=gpt-5.4 REPLY_MODEL=gpt-5.4 HOTAKE_MODEL=gpt-5.4 and
+# QUOTE_MODEL=gpt-5.4-mini.
+NEWS_MODEL = os.environ.get("NEWS_MODEL", "claude-sonnet-4-6")
+REPLY_MODEL = os.environ.get("REPLY_MODEL", "claude-sonnet-4-6")
+HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", "claude-sonnet-4-6")
 ROAST_MODEL = os.environ.get("ROAST_MODEL", "claude-haiku-4-5-20251001")
 QUOTE_MODEL = os.environ.get("QUOTE_MODEL", "claude-haiku-4-5-20251001")
+
+# Local guardrail against scheduler bursts and provider rate limits. The
+# wrapper spaces model calls and refuses new ones once the hourly budget is hit.
+LLM_MIN_SECONDS_BETWEEN_CALLS = int(os.environ.get("LLM_MIN_SECONDS_BETWEEN_CALLS", "25"))
+LLM_MAX_CALLS_PER_HOUR = int(os.environ.get("LLM_MAX_CALLS_PER_HOUR", "40"))
 
 # Retry settings
 MAX_RETRIES = 3

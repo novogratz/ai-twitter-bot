@@ -10,13 +10,13 @@ import csv
 import json
 import os
 import re
-import subprocess
 import traceback
 from collections import defaultdict
 from datetime import datetime, timedelta
 
 from .config import QUOTE_MODEL, ENGAGEMENT_LOG_FILE, _PROJECT_ROOT
 from .logger import log
+from .llm_client import run_llm, unwrap_text
 from .evolution_store import (
     write_directives,
     add_pruned_accounts,
@@ -151,28 +151,13 @@ def _parse_json(text: str) -> dict:
 
 def _run_agent(stats: dict) -> dict:
     prompt = _build_prompt(stats)
-    cmd = [
-        "claude",
-        "-p", prompt,
-        "--model", QUOTE_MODEL,          # Haiku — fast + cheap
-        "--output-format", "json",
-        "--no-session-persistence",
-    ]
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
+        result = run_llm(prompt, QUOTE_MODEL, label="EVOLUTION", timeout=90)
         if result.returncode != 0:
             log.info(f"[EVOLUTION-AGENT] CLI exit {result.returncode}: {result.stderr[:200]}")
             return {}
-        raw = result.stdout.strip()
-        try:
-            envelope = json.loads(raw)
-            raw = envelope.get("result", raw)
-        except Exception:
-            pass
+        raw = unwrap_text(result.stdout)
         return _parse_json(raw)
-    except subprocess.TimeoutExpired:
-        log.info("[EVOLUTION-AGENT] Timed out after 90s.")
-        return {}
     except Exception as e:
         log.info(f"[EVOLUTION-AGENT] Failed: {e}")
         return {}

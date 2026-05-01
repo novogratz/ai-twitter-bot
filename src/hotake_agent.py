@@ -9,7 +9,6 @@ Goal: makes people LAUGH OUT LOUD and screenshot the tweet.
 """
 import json
 import re
-import subprocess
 from collections import Counter
 from datetime import datetime, timedelta
 from typing import Optional
@@ -18,6 +17,7 @@ from .logger import log
 from .performance import get_learnings_for_prompt
 from .history import get_recent_tweets
 from .topic_dedup import extract_recent_topics
+from .llm_client import run_llm, unwrap_text
 
 
 # URL date sniffer — many news outlets stamp /YYYY/MM/DD/ in their article
@@ -606,31 +606,19 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
         dedup_section=dedup_section,
     )
 
-    cli_cmd = [
-        "claude",
-        "-p", prompt,
-        "--model", HOTAKE_MODEL,
-        "--output-format", "json",
-        "--no-session-persistence",
-    ]
-    result = subprocess.run(cli_cmd, capture_output=True, text=True)
+    result = run_llm(prompt, HOTAKE_MODEL, label="HOTAKE")
     # Retry once on transient CLI failure (exit 1 + empty stderr = API hiccup)
     if result.returncode != 0 and not result.stderr.strip():
         log.warning(f"[HOTAKE] CLI transient failure (exit {result.returncode}), retrying in 10s...")
         import time
         time.sleep(10)
-        result = subprocess.run(cli_cmd, capture_output=True, text=True)
+        result = run_llm(prompt, HOTAKE_MODEL, label="HOTAKE")
     if result.returncode != 0:
         log.info(f"[HOTAKE] CLI stderr: {result.stderr}")
         raise RuntimeError(f"Hot take CLI failed (exit {result.returncode}): {result.stderr}")
 
     # Extract model text from --output-format json envelope
-    raw = result.stdout.strip()
-    try:
-        envelope = json.loads(raw)
-        tweet = envelope.get("result", raw).strip()
-    except (json.JSONDecodeError, AttributeError):
-        tweet = raw
+    tweet = unwrap_text(result.stdout)
     if not tweet or tweet.upper() == "SKIP":
         return None
 

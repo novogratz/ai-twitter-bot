@@ -7,11 +7,11 @@ the person. Make influencers laugh with us, not feel attacked.
 import json
 import os
 import re
-import subprocess
 from datetime import datetime
 from typing import Optional
 from .logger import log
 from .config import REPLY_MODEL, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE
+from .llm_client import run_llm, unwrap_text
 
 # Core influencers — French priority but EN accounts included
 TARGET_ACCOUNTS = [
@@ -444,7 +444,7 @@ def generate_replies(recent_topics=None, already_replied=None):
         since_date=since_date,
     )
 
-    log.info("[REPLY] Running Claude CLI (searching X)...")
+    log.info("[REPLY] Running LLM CLI (searching X)...")
     # cwd=/tmp: when Claude CLI is invoked from inside a project dir with
     # CLAUDE.md and git context, parallel REPLY-search threads occasionally
     # hallucinate prose responses ("1 reply postée:") instead of returning
@@ -452,32 +452,19 @@ def generate_replies(recent_topics=None, already_replied=None):
     # between concurrent CLI sessions. Running from /tmp gives each call a
     # neutral CWD with no CLAUDE.md / git repo to leak in. Hit 7
     # hallucinations between 16:00-19:34 (2026-04-27) → escalation threshold.
-    proc = subprocess.Popen(
-        [
-            "claude",
-            "-p", prompt,
-            "--allowedTools", "WebSearch",
-            "--model", REPLY_MODEL,
-            "--output-format", "json",
-            "--no-session-persistence",
-        ],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
+    result = run_llm(
+        prompt,
+        REPLY_MODEL,
+        label="REPLY_SEARCH",
+        allowed_tools=["WebSearch"],
         cwd="/tmp",
     )
-    stdout, stderr = proc.communicate()
-    if proc.returncode != 0:
-        log.info(f"[REPLY] CLI error: {stderr[:200]}")
+    if result.returncode != 0:
+        log.info(f"[REPLY] CLI error: {result.stderr[:200]}")
         return None
 
     # Extract the model's text from the --output-format json envelope
-    raw_stdout = stdout.strip()
-    try:
-        envelope = json.loads(raw_stdout)
-        output = envelope.get("result", raw_stdout)
-    except (json.JSONDecodeError, AttributeError):
-        output = raw_stdout
+    output = unwrap_text(result.stdout)
 
     if not output or output.upper().startswith("SKIP"):
         return None

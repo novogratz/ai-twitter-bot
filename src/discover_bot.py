@@ -8,12 +8,12 @@ import json
 import os
 import random
 import re
-import subprocess
 import traceback
 from datetime import datetime
 from .config import REPLY_MODEL, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE, _PROJECT_ROOT
 from .logger import log
 from .twitter_client import scrape_x_search, follow_account
+from .llm_client import run_llm, unwrap_text
 
 # Persisted set of handles we already auto-followed via discovery
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
@@ -180,15 +180,12 @@ Exemple:
 Output rien d'autre que le JSON."""
 
     try:
-        result = subprocess.run(
-            ["claude", "-p", prompt, "--model", REPLY_MODEL, "--no-session-persistence"],
-            capture_output=True, text=True, timeout=120,
-        )
+        result = run_llm(prompt, REPLY_MODEL, label="DISCOVER_SCORE", output_json=False, timeout=120)
         if result.returncode != 0:
             log.info(f"[DISCOVER] Scoring CLI error: {result.stderr[:200]}")
             return []
 
-        out = result.stdout.strip()
+        out = unwrap_text(result.stdout)
         # Strip markdown fences if present
         if "```" in out:
             m = re.search(r"```(?:json)?\s*\n?(.*?)```", out, re.DOTALL)
