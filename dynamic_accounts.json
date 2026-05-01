@@ -38,7 +38,103 @@
     "brivael",
     "LaTribune",
     "Bpifrance",
-    "lafrenchtech"
+    "lafrenchtech",
+    "SimpleETF",
+    "siliconcarnesf",
+    "analystecurieux",
+    "FlasheurInvest",
+    "ODelamarche",
+    "ia7fr",
+    "LaGazetteIA",
+    "bitcoinpointfr",
+    "Tino_Bourse",
+    "Loris_Dalleau",
+    "ChanPerco",
+    "CryptoMatrix2",
+    "NicolasDOZE",
+    "Mila_Quebec",
+    "xavier_delmas",
+    "crypto__Goku",
+    "sinvestir_",
+    "CyrilleLachevre",
+    "FrugalisteFutee",
+    "lechatenbourse",
+    "GregInvestFr",
+    "arnaudmercier",
+    "Metamorphose_47",
+    "BlockPulseNew",
+    "CryptoPoulpe",
+    "ClemDelangue",
+    "CryptoPicsou",
+    "francispouliot_",
+    "CFarmeur",
+    "julialuc",
+    "KarenPeloille",
+    "Raph_Bloch",
+    "fuckthedip",
+    "BitcoinCouteau",
+    "BoursicoteSmall",
+    "Stellaire_FR",
+    "MRadarCrypto",
+    "actuenvif",
+    "vittart75",
+    "JulienROMAN13",
+    "VincentGanne",
+    "GregoireFavet",
+    "StephaneMallard",
+    "canaborseuse",
+    "crypto_detente",
+    "AltcoinsFrance",
+    "ZoneBourse",
+    "Portes_Thomas",
+    "crypto_futur",
+    "babgi",
+    "lemiscate",
+    "Nicolas_Colin",
+    "tariqkrim",
+    "Sachakin",
+    "MoneyRadar_FR",
+    "MiningTk",
+    "ConnaitreCrypto",
+    "lescoutboursier",
+    "BitcoinPolicyFr",
+    "Div_Croissant",
+    "Challenges",
+    "FranceFintech",
+    "FabricePelosi",
+    "Ericmusic75",
+    "Eric_Lewin",
+    "marcfiorentino",
+    "FraudBrief_FR",
+    "MatthieuStefani",
+    "epelboin",
+    "FredCavazza",
+    "MonsieuRabbit",
+    "DrTilt2",
+    "JordanMontel_",
+    "le_investisseur",
+    "MiloMusic",
+    "beez_invest",
+    "olivez",
+    "nicolasbouzou",
+    "ContexteTech",
+    "NoviaNewsGroup",
+    "Yg_Invest",
+    "BourseAsieFR",
+    "AlainGoudey",
+    "egocgp",
+    "bowsaq",
+    "classcnbc",
+    "roxannevarza",
+    "_pgauthier",
+    "ThisIsYoann",
+    "Aboringdystopia",
+    "BertolaLudo",
+    "ReadyForTrading",
+    "MarcTouati",
+    "LucJulia",
+    "TrendFrance",
+    "sachapouget"
   ],
   "en": [
     "aeyakovenko",
@@ -59,7 +155,41 @@
     "CryptoHayes",
     "hasufl",
     "glassnode",
-    "nic__carter"
+    "nic__carter",
+    "AutismCapital",
+    "shiri_shh",
+    "StockMKTNewz",
+    "brewmarkets",
+    "KobeissiLetter",
+    "charliebilello",
+    "Kalshi",
+    "tier1alpha",
+    "munster_gene",
+    "FirstSquawk",
+    "MilkRoad",
+    "PolymarketMoney",
+    "TheTranscript_",
+    "earnings_watch",
+    "AlphaSenseInc",
+    "business",
+    "Investingcom",
+    "EricBalchunas",
+    "DeItaone",
+    "MacroAlf",
+    "simonw",
+    "abshkbh",
+    "gaborcselle",
+    "jackmallers",
+    "CryptoMichNL",
+    "NickTimiraos",
+    "Benzinga",
+    "dividendology",
+    "CryptoCred",
+    "a16z",
+    "BitcoinNews",
+    "coinbureau",
+    "theaboringdysty",
+    "CryptoTimesHQ"
   ],
   "history": [
     {
@@ -331,6 +461,656 @@
       "lang": "en",
       "handle": "nic__carter",
       "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "SimpleETF",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "siliconcarnesf",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "analystecurieux",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "FlasheurInvest",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "AutismCapital",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "shiri_shh",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "ODelamarche",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "ia7fr",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaGazetteIA",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "bitcoinpointfr",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Tino_Bourse",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "StockMKTNewz",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "brewmarkets",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Loris_Dalleau",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "ChanPerco",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "KobeissiLetter",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "charliebilello",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMatrix2",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasDOZE",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Mila_Quebec",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "xavier_delmas",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "crypto__Goku",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "sinvestir_",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilleLachevre",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "FrugalisteFutee",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "lechatenbourse",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "GregInvestFr",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "Kalshi",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "tier1alpha",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "arnaudmercier",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Metamorphose_47",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "BlockPulseNew",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoPoulpe",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "munster_gene",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "en",
+      "handle": "FirstSquawk",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClemDelangue",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoPicsou",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "francispouliot_",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "CFarmeur",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "julialuc",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "KarenPeloille",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Raph_Bloch",
+      "added": "2026-04-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "fuckthedip",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "BitcoinCouteau",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "BoursicoteSmall",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Stellaire_FR",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MRadarCrypto",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "actuenvif",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "vittart75",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "MilkRoad",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "PolymarketMoney",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienROMAN13",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentGanne",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "GregoireFavet",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "StephaneMallard",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "canaborseuse",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "crypto_detente",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "AltcoinsFrance",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "ZoneBourse",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Portes_Thomas",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "TheTranscript_",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "crypto_futur",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "babgi",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "lemiscate",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Nicolas_Colin",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "tariqkrim",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Sachakin",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MoneyRadar_FR",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MiningTk",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "ConnaitreCrypto",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "lescoutboursier",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "earnings_watch",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "AlphaSenseInc",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "BitcoinPolicyFr",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Div_Croissant",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "business",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "Investingcom",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Challenges",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "FranceFintech",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "FabricePelosi",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Ericmusic75",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "EricBalchunas",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "DeItaone",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Eric_Lewin",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "marcfiorentino",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "FraudBrief_FR",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MatthieuStefani",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "MacroAlf",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "epelboin",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "simonw",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "FredCavazza",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "abshkbh",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MonsieuRabbit",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "DrTilt2",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JordanMontel_",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "le_investisseur",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MiloMusic",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "beez_invest",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "gaborcselle",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "olivez",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "nicolasbouzou",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "jackmallers",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "CryptoMichNL",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "ContexteTech",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "NoviaNewsGroup",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "NickTimiraos",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "Benzinga",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Yg_Invest",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourseAsieFR",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlainGoudey",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "dividendology",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "CryptoCred",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "egocgp",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "bowsaq",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "classcnbc",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "a16z",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "en",
+      "handle": "BitcoinNews",
+      "added": "2026-04-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "roxannevarza",
+      "added": "2026-05-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "_pgauthier",
+      "added": "2026-05-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThisIsYoann",
+      "added": "2026-05-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "Aboringdystopia",
+      "added": "2026-05-01"
+    },
+    {
+      "lang": "en",
+      "handle": "coinbureau",
+      "added": "2026-05-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "BertolaLudo",
+      "added": "2026-05-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "ReadyForTrading",
+      "added": "2026-05-01"
+    },
+    {
+      "lang": "en",
+      "handle": "theaboringdysty",
+      "added": "2026-05-01"
+    },
+    {
+      "lang": "en",
+      "handle": "CryptoTimesHQ",
+      "added": "2026-05-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcTouati",
+      "added": "2026-05-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucJulia",
+      "added": "2026-05-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "TrendFrance",
+      "added": "2026-05-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "sachapouget",
+      "added": "2026-05-01"
     }
   ]
 }

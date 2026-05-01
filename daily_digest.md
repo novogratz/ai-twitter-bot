@@ -55,3 +55,33 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 71 likes / 0 views: - Pas de frais de compte - Possible d'investir dans des actions ETF crypto Or au même endroit en 1 c
   - 31 likes / 0 views: Comment Revolut et BoursoBank ont pulvérisé les géants bancaires dans la course aux nouveaux clients
   - 11 likes / 14000 views: J'ai par contre du mal à comprendre pourquoi Bourso semble s'en tirer tellement mieux que Fortuneo. 
+
+## 2026-04-29
+
+**Activity** — total actions: 627
+  - by type: reply=604, post=10, quote=6, hotake=4, retweet=3
+  - top sources: PROFILE-FR=213, FOLLOWING=109, FEED=71, SEARCH-FR-HOT=70, SEARCH-FR-LIVE=52, EARLYBIRD=15, PROFILE-EN=12, QUOTE=6
+  - comedy patterns: FR_ANCHOR=25, METAPHOR=25, UNDERSTATEMENT=10, DIALOGUE=7, RENAME=5, REPETITION=3, OTHER=1
+  - top reply targets: @LeJournalDuCoin=16, @FlasheurInvest=15, @coinacademy_fr=15, @FranceCryptos=13, @bfmbusiness=12
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 426 likes / 0 views: ELON MUSK DECLARE LA GUERRE À OPENAI AU TRIBUNAL   Ce matin, Musk est venu témoigner et il balance s
+  - 166 likes / 0 views: #CriminalitéOrganisée  Les #gendarmes frappent fort contre l'organisation dite de la "DZ mafia" !  4
+  - 75 likes / 292000 views: Spoke with a former colleague of mine who is currently at a hedge fund and involved in new analyst r
+
+## 2026-04-30
+
+**Activity** — total actions: 691
+  - by type: reply=664, retweet=10, quote=6, post=6, hotake=5
+  - top sources: PROFILE-FR=249, SEARCH-FR-LIVE=99, FOLLOWING=87, FEED=52, SEARCH-FR-HOT=52, PROFILE-EN=27, EARLYBIRD=16, RETWEET=10
+  - comedy patterns: METAPHOR=31, FR_ANCHOR=29, UNDERSTATEMENT=9, REPETITION=8, RENAME=6, DIALOGUE=3, OTHER=1
+  - top reply targets: @ChanPerco=21, @LeJournalDuCoin=14, @CryptoastMedia=12, @bfmbusiness=12, @BFMTV=12
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 210 likes / 0 views: How to Play Long Term Games:  Systems > Goals Discipline > Motivation Trust > Distrust Principles > 
+  - 98 likes / 85000 views: am i crazy or why has nobody seemed to make an open source dropbox on cloudflare r2? i had just assu
+  - 51 likes / 0 views: AI co-clinician is our new research initiative to help explore how multimodal agents could better su
