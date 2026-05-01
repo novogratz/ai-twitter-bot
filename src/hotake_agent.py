@@ -51,6 +51,7 @@ def _url_publication_date(url: str) -> Optional[datetime]:
 # land in a hot take on 2026-04-27). This is the deterministic Python-side
 # gate: any URL hosted on these domains → SKIP, no exceptions.
 _REJECTED_SOURCE_DOMAINS = (
+    "breakingviews.com",
     "crypto.news",
     "cryptonews.net",
     "cryptopotato.com",

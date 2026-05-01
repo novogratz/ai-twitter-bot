@@ -11,6 +11,7 @@ from .llm_client import run_llm, unwrap_text
 
 
 _URL_RE = re.compile(r"https?://\S+")
+_SOURCE_URL_RE = re.compile(r"https?://[^\s\]\)>\"]+")
 
 
 def _strip_urls(text: str) -> str:
@@ -43,7 +44,8 @@ Source TOP-TIER obligatoire (≤36h, date vérifiée par WebFetch):
 ✅ Reuters, Bloomberg, AFP, FT, WSJ, Les Échos, Le Monde, Le Figaro,
    TechCrunch, The Information, Coindesk, CNBC, BFM Business, Capital.
 ❌ JAMAIS: crypto.news, u.today, bitcoinist, ambcrypto, beincrypto,
-   cryptopotato, cryptonews.net, "*.io" sans rédac connue.
+   cryptopotato, cryptonews.net, Breakingviews/columns/opinion,
+   "*.io" sans rédac connue.
 
 UNE seule story domine ce moment? C'est ELLE.
 Plusieurs candidats? Score 1-10 (surprise + chute évidente + enjeux + division).
@@ -782,6 +784,16 @@ def last_source_domain() -> Optional[str]:
     return _last_source_url
 
 
+def _clean_source_url(url: str) -> str:
+    """Normalize URLs emitted by LLMs in tweet text.
+
+    Models often add sentence punctuation after a raw URL. Keep the source
+    rule strict, but do not reject a good article link because it ended with
+    "." or "," in generated prose.
+    """
+    return (url or "").strip().strip("<>").rstrip(".,;:!?")
+
+
 def _extract_source(text: str):
     """Detect an article URL the agent included in the body.
 
@@ -793,17 +805,36 @@ def _extract_source(text: str):
     Format-2 URLs are LEFT IN PLACE so X can render the native link-card."""
     import re as _re
     # Format 1 — legacy [SOURCE: url] block: extract and strip.
-    m = _re.search(r"\[\s*SOURCE\s*:\s*([^\]\s]+)\s*\]", text, flags=_re.IGNORECASE)
+    m = _re.search(r"\[\s*SOURCE\s*:\s*(https?://[^\]\s]+)\s*\]", text, flags=_re.IGNORECASE)
     if m:
-        url = m.group(1).strip()
+        url = _clean_source_url(m.group(1))
         cleaned = (text[:m.start()] + text[m.end():]).strip()
         return cleaned, url
+
     # Format 2 — raw URL on the last non-empty line: keep in body, just report it.
+    # Be tolerant of "Source: <url>" or trailing punctuation on that line.
     lines = [ln.strip() for ln in text.strip().splitlines() if ln.strip()]
     if lines:
         last = lines[-1]
-        if _re.fullmatch(r"https?://\S+", last):
-            return text, last
+        matches = list(_SOURCE_URL_RE.finditer(last))
+        if matches:
+            raw_url = matches[-1].group(0)
+            url = _clean_source_url(raw_url)
+            if url:
+                cleaned = text.replace(raw_url, url, 1) if raw_url != url else text
+                return cleaned, url
+
+    # Format 3 — provider drift: Codex/Claude may include the URL earlier,
+    # especially after adding metadata lines like [PATTERN: ...]. Accept the
+    # last URL anywhere in the final answer and let the caller append it on a
+    # clean line if it was only present in a legacy/awkward format.
+    matches = list(_SOURCE_URL_RE.finditer(text))
+    if matches:
+        raw_url = matches[-1].group(0)
+        url = _clean_source_url(raw_url)
+        if url:
+            cleaned = text.replace(raw_url, url, 1) if raw_url != url else text
+            return cleaned, url
     return text, None
 
 
@@ -826,8 +857,10 @@ def generate_tweet() -> Optional[str]:
     """Invoke the Claude Code CLI to search for news and write a tweet.
     Returns None if no fresh news is found. The source domain (if any) is
     exposed via `last_source_domain()` for the caller to render on the card."""
-    global _last_source_domain
-    _last_source_domain = None
+    global _last_source_url, _last_image_topic, _last_pattern
+    _last_source_url = None
+    _last_image_topic = None
+    _last_pattern = None
     recent = get_recent_tweets(hours=24)
 
     if recent:
@@ -967,7 +1000,8 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     # WITHOUT SOURCE." If no article URL made it through, SKIP the cycle
     # rather than ship a sourceless post. Replies stay exempt; news doesn't.
     if not src_url:
-        log.info("[NEWS] No source URL in output — SKIPPING (user rule: no post without source)")
+        preview = " ".join(tweet.split())[:220]
+        log.info(f"[NEWS] No source URL in output — SKIPPING (user rule: no post without source). Output preview: {preview!r}")
         globals()["_last_source_url"] = None
         globals()["_last_image_topic"] = None
         return None

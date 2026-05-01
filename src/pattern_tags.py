@@ -49,11 +49,15 @@ Cette ligne est NETTOYÉE avant le post (métadonnée pure pour mesurer ce qui m
 """
 
 
-_TAG_RE = re.compile(r"\[\s*PATTERN\s*:\s*([A-Z_]+)\s*\]", re.IGNORECASE)
+_PATTERN_ALT = "|".join(sorted(PATTERN_IDS))
+_TAG_RE = re.compile(
+    rf"\[\s*(?:PATTERN\s*:\s*)?({_PATTERN_ALT})\s*\]",
+    re.IGNORECASE,
+)
 
 
 def extract_pattern(text: str) -> tuple[str, Optional[str]]:
-    """Pull `[PATTERN: <id>]` out of generated text.
+    """Pull `[PATTERN: <id>]` or bare `[FR_ANCHOR]` out of generated text.
 
     Returns (cleaned_text_with_tag_line_stripped, pattern_id_or_None).
     pattern_id is uppercase, validated against PATTERN_IDS — anything
