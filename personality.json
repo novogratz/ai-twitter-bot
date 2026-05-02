@@ -50,8 +50,8 @@
     },
     "flasheurinvest": {
       "first_seen": "2026-04-25",
-      "last_interaction": "2026-04-30",
-      "interaction_count": 25,
+      "last_interaction": "2026-05-02",
+      "interaction_count": 26,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -234,8 +234,8 @@
     },
     "coinacademy_fr": {
       "first_seen": "2026-04-26",
-      "last_interaction": "2026-05-01",
-      "interaction_count": 32,
+      "last_interaction": "2026-05-02",
+      "interaction_count": 33,
       "category": "media",
       "stance": "skeptical",
       "notes": [
@@ -876,8 +876,8 @@
     },
     "crypto__goku": {
       "first_seen": "2026-04-26",
-      "last_interaction": "2026-05-01",
-      "interaction_count": 27,
+      "last_interaction": "2026-05-02",
+      "interaction_count": 28,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -888,8 +888,8 @@
     },
     "cryptoastmedia": {
       "first_seen": "2026-04-26",
-      "last_interaction": "2026-04-30",
-      "interaction_count": 20,
+      "last_interaction": "2026-05-02",
+      "interaction_count": 21,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -1045,7 +1045,7 @@
     "rodolphesteffan": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-05-02",
-      "interaction_count": 16,
+      "interaction_count": 18,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -1381,7 +1381,7 @@
     "graphseo": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-05-02",
-      "interaction_count": 28,
+      "interaction_count": 30,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -1608,8 +1608,8 @@
     },
     "lejournalducoin": {
       "first_seen": "2026-04-26",
-      "last_interaction": "2026-04-30",
-      "interaction_count": 35,
+      "last_interaction": "2026-05-02",
+      "interaction_count": 36,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -2582,8 +2582,8 @@
     },
     "vision_ia": {
       "first_seen": "2026-04-27",
-      "last_interaction": "2026-04-27",
-      "interaction_count": 2,
+      "last_interaction": "2026-05-02",
+      "interaction_count": 3,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -6482,8 +6482,8 @@
     },
     "crypto_futur": {
       "first_seen": "2026-04-30",
-      "last_interaction": "2026-04-30",
-      "interaction_count": 1,
+      "last_interaction": "2026-05-02",
+      "interaction_count": 2,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -8881,6 +8881,42 @@
       "dont": ""
     },
     "pulkitology": {
+      "first_seen": "2026-05-02",
+      "last_interaction": "2026-05-02",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "novogratz": {
+      "first_seen": "2026-05-02",
+      "last_interaction": "2026-05-02",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "jbelizaireceo": {
+      "first_seen": "2026-05-02",
+      "last_interaction": "2026-05-02",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "finneko_prgrm": {
       "first_seen": "2026-05-02",
       "last_interaction": "2026-05-02",
       "interaction_count": 1,
