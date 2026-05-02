@@ -121,8 +121,9 @@ def run_engage_cycle():
     # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
     pool = filter_and_weight(TARGET_ACCOUNTS)
 
-    # 3-5 accounts per cycle - stay under Twitter's radar
-    count = random.randint(3, 5)
+    # Growth push: hit more accounts per cycle, with priority accounts already
+    # duplicated in the pool via filter_and_weight/reinforcement.
+    count = random.randint(5, 7)
     picks = random.sample(pool, min(count, len(pool)))
 
     log.info(f"[ENGAGE] Engaging with {len(picks)} accounts...")
@@ -136,8 +137,9 @@ def run_engage_cycle():
                 # The like-pass below still runs regardless — engagement happens either way.
                 time.sleep(random.randint(2, 4))
 
+            like_count = 5 if username in TARGET_ACCOUNTS[:40] else 3
             log.info(f"[ENGAGE] Liking @{username}'s latest tweets...")
-            visit_profile_and_like(username, like_count=3)
+            visit_profile_and_like(username, like_count=like_count)
             time.sleep(random.randint(3, 5))
         except Exception:
             log.info(f"[ENGAGE] Failed to engage with @{username}:")

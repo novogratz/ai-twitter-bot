@@ -82,7 +82,8 @@ EARLY_BIRD_ACCOUNTS = [
 # A tweet is "early-bird eligible" if it's at most this many minutes old.
 # Goal: land in top ~5 replies. Sweet spot is ~5-15 min depending on the
 # account's audience size. 12 is a balance.
-EARLY_BIRD_AGE_MAX_MIN = 12
+EARLY_BIRD_AGE_MAX_MIN = 18
+EARLY_BIRD_MAX_REPLIES_PER_CYCLE = 2
 
 
 def run_early_bird_cycle():
@@ -92,14 +93,20 @@ def run_early_bird_cycle():
 
     # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
     from .evolution_store import filter_and_weight
+    from .direct_reply import ALWAYS_REPLY_ACCOUNTS
     pool = filter_and_weight(EARLY_BIRD_ACCOUNTS)
+    always_pool = filter_and_weight(ALWAYS_REPLY_ACCOUNTS)
 
-    # 3 random accounts per cycle. With 5-min cadence that's 36 scrapes/hour
-    # — enough coverage without flooding Safari (each scrape ~6-8s).
-    picks = random.sample(pool, k=min(3, len(pool)))
+    # Growth push: scan the always-reply accounts first, then fill with random
+    # mega accounts. Early replies under big accounts are the highest upside
+    # surface, so avoid pure random sampling.
+    priority_picks = random.sample(always_pool, k=min(4, len(always_pool)))
+    filler = [h for h in pool if h not in priority_picks]
+    random_picks = random.sample(filler, k=min(3, len(filler)))
+    picks = list(dict.fromkeys(priority_picks + random_picks))
 
     for username in picks:
-        if posted >= 1:
+        if posted >= EARLY_BIRD_MAX_REPLIES_PER_CYCLE:
             break
 
         log.info(f"[EARLYBIRD] Scanning @{username} for fresh tweets...")

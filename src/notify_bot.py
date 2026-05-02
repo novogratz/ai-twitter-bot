@@ -98,20 +98,20 @@ def run_replyback_cycle():
     influencers = _influencer_handles()
     count = 0
 
-    # Conversation depth: when our parent tweet went viral (>20 incoming
-    # replies), the algo is rewarding it — sustained back-and-forth pumps it
-    # further. Scale the cap with engagement up to a hard ceiling of 8 so a
-    # single thread can carry more depth without becoming spam. Below 20
-    # replies, keep the existing super-user cap of 4.
+    # Conversation depth: when our parent tweet gets replies, the algo is
+    # rewarding it. Sustained back-and-forth pumps it further and converts
+    # warm engagers into followers.
     incoming = len(replies)
     if incoming >= 50:
-        cycle_cap = 8
+        cycle_cap = 12
     elif incoming >= 30:
-        cycle_cap = 6
+        cycle_cap = 10
     elif incoming >= 20:
-        cycle_cap = 5
+        cycle_cap = 8
+    elif incoming >= 10:
+        cycle_cap = 6
     else:
-        cycle_cap = 4
+        cycle_cap = 5
     log.info(f"[REPLYBACK] Parent has {incoming} replies — cap {cycle_cap} this cycle.")
 
     for reply_info in replies[:cycle_cap]:
@@ -177,10 +177,10 @@ def run_replyback_cycle():
     # Reciprocity loop: for non-influencer engagers, visit their profile and
     # like 1 of their tweets. Triggers a notification on their side, often
     # converts to follow-back. Cap small (max 2/cycle) to avoid spam patterns.
-    _reciprocate_engagers(replies, influencers)
+    _reciprocate_engagers(replies, influencers, max_visits=5)
 
 
-def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 3):
+def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
     """Visit a few engagers' profiles and reciprocate (like + follow-back).
 
     Skip influencers (they don't need our reciprocity, and visiting them
@@ -222,12 +222,12 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 3):
             continue
         if handle in influencers:
             continue  # influencers already notice us via the in-thread reply
-        if random.random() > 0.6:
+        if random.random() > 0.85:
             continue  # randomize so the pattern isn't mechanical
 
         log.info(f"[RECIPROCATE] Visiting @{handle} (like + follow-back)...")
         try:
-            visit_profile_and_like(handle, like_count=1)
+            visit_profile_and_like(handle, like_count=2)
             # Follow-back if not already following — they just engaged with us,
             # this is the highest-conversion follow we can make.
             if handle not in followed:

@@ -120,19 +120,18 @@ def reply_interval_minutes() -> int:
 
 
 def engage_interval_minutes() -> int:
-    """~27min jittered (was 32). More frequent presence in influencer
-    notifications. Engagement gate handles QC-primetime light pass."""
-    return random.randint(22, 32)
+    """More frequent presence in influencer notifications."""
+    return random.randint(16, 24)
 
 
 def direct_reply_interval_minutes() -> int:
     """Primary response path: visit targets often enough to land early."""
-    return random.randint(20, 32)
+    return random.randint(14, 24)
 
 
 def early_bird_interval_minutes() -> int:
-    """Early-bird replies use AI; scan less often on Plus."""
-    return random.randint(10, 18)
+    """Early-bird replies are highest-upside; scan aggressively."""
+    return random.randint(7, 12)
 
 
 def roast_interval_minutes() -> int:
@@ -323,10 +322,10 @@ def main():
         # 4h → 3h on user directive 2026-04-26 PM: the cheapest validated
         # action we have, push it to 8 boosts/day. Risk of algo suppression
         # exists but is dwarfed by the confirmed lift.
-        log.info("Boost bot: retweeting own latest tweet every 2 hours.")
+        log.info("Boost bot: retweeting own latest tweet every 90 minutes.")
         scheduler.add_job(
             safe_run_boost_cycle,
-            trigger=IntervalTrigger(hours=2),
+            trigger=IntervalTrigger(minutes=90),
             id="boost_job",
         )
 
