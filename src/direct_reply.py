@@ -30,6 +30,36 @@ VIP_REPLY_ACCOUNTS = [
 ]
 _VIP_REPLY_ACCOUNTS_LC = {h.lower() for h in VIP_REPLY_ACCOUNTS}
 
+HIGH_TRACTION_REPLY_ACCOUNTS = [
+    # French crypto mega / media accounts
+    "PowerHasheur",
+    "LeJournalDuCoin",
+    "CryptoastMedia",
+    "coinacademy_fr",
+    "CryptoPicsou",
+    "crypto_futur",
+    "TheCrypt0Matrix",
+    "TagadoBTC",
+    "Crypto__Goku",
+    "MiningTk",
+    "MoneyRadar_FR",
+    "Capetlevrai",
+    "Dark_Emi_",
+    # French investing / bourse
+    "Divs_King",
+    "MathieuL1",
+    "NCheron_bourse",
+    "ABaradez",
+    "Phil_RX",
+    # French AI / tech builders
+    "arthurmensch",
+    "GuillaumeLample",
+    "GaelVaroquaux",
+    "fchollet",
+    "MistralAI",
+]
+ALWAYS_REPLY_ACCOUNTS = list(dict.fromkeys(VIP_REPLY_ACCOUNTS + HIGH_TRACTION_REPLY_ACCOUNTS))
+
 # === Language gate — added 2026-04-26 after DE/TR replies leaked through ===
 # X's `lang:fr` operator is best-effort: it returns DE / TR / ES / RU tweets
 # matching keywords like "crypto" or "Bitcoin" because those are language-
@@ -220,13 +250,26 @@ FR_ACCOUNTS = [
     "Capetlevrai",       # CAPET
     "Dark_Emi_",         # Dark Emi
     "JournalDuCoin",     # Journal Du Coin
+    "LeJournalDuCoin",   # Journal du Coin — high-traction FR crypto
     "powl_d",            # Powl
     # owen_simonin, Coin_Academy removed 2026-04-26 — 0% scrape success (page never loads)
     "Cryptoast",         # Cryptoast media
+    "CryptoastMedia",    # Cryptoast X handle — high-traction FR crypto
+    "coinacademy_fr",    # Coin Academy — high-traction FR crypto
+    "CryptoPicsou",      # Coin Academy cofounder — high-traction FR crypto
+    "crypto_futur",      # high-traction FR crypto
+    "TheCrypt0Matrix",   # high-traction FR crypto
+    "TagadoBTC",         # high-traction FR crypto
+    "Crypto__Goku",      # high-traction FR crypto news
+    "MiningTk",          # Monsieur-TK
+    "MoneyRadar_FR",     # finance/crypto vulgarisation
     "TheBigWhale_",      # The Big Whale media FR
     "CointribuneFR",     # Cointribune FR
 
     # === Tech / IA FR ===
+    "arthurmensch",      # Mistral AI
+    "GuillaumeLample",   # Mistral AI
+    "GaelVaroquaux",     # scikit-learn / Probabl
     "cyrildiagne",       # Cyril Diagne — AI artist FR très suivi
     # KorbenInfo removed 2026-04-26 — 0% scrape success (page never loads)
     "Frandroid",         # FrAndroid — tech FR
@@ -358,6 +401,9 @@ STYLE — HARDCORE TROLL MODE:
 - IMPACT TEST: would a stranger follow us from this single reply? If not, SKIP.
 - Use one of: renaming, brutal understatement, absurd concrete comparison,
   mini-dialogue, or "translation:" reveal. Plain commentary is banned.
+- CONTEXTUALIZE THE JOKE. Use the tweet's exact subject, number, ticker, company,
+  or claim. Generic "market is weird" replies are banned. The joke must only
+  work under THIS tweet.
 - BE SPECIFIC. "everyone" is weak — "the guys with rose pfps" is funny. "people"
   is weak — "the LinkedIn crowd" is funny. Concrete > abstract.
 - ROAST the IDEA HARD. The harder you roast the concept, the funnier — as long
@@ -519,7 +565,7 @@ def _generate_single_reply(author: str, tweet_text: str):
         return None
 
 
-DIRECT_REPLY_MAX_PER_CYCLE = 7  # VIP push: cover the full user-priority list each pass.
+DIRECT_REPLY_MAX_PER_CYCLE = 12  # Always-scan VIP + high-traction accounts first.
 MAX_EN_REPLIES_PER_CYCLE = 3     # hard cap — keeps ~80% FR ratio while leaving room for big EN influencers
 
 
@@ -533,7 +579,7 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
     # handle. Without this, a heavily-active account (e.g. @Tradosaure
     # posting an ETF thread) eats half the cycle budget and looks spammy
     # to the recipient.
-    PER_AUTHOR_CAP = 1 if source_name == "PROFILE-VIP" else 2
+    PER_AUTHOR_CAP = 1 if source_name == "PROFILE-ALWAYS" else 2
     per_author_count = {}
     for tweet in tweets:
         if remaining is not None and posted >= remaining:
@@ -751,20 +797,21 @@ def run_direct_reply_cycle():
     def _budget():
         return DIRECT_REPLY_MAX_PER_CYCLE - total
 
-    # User VIP list 2026-05-02: follow them and reply to all their fresh tweets
-    # first, using PRIORITY_REPLY_MODEL for sharper jokes. These bypass random
-    # sampling so they are checked every direct-reply cycle.
-    for username in VIP_REPLY_ACCOUNTS:
+    # User VIP + high-traction FR crypto/AI/bourse accounts. They bypass random
+    # sampling so they are checked every direct-reply cycle; only the user's
+    # VIP handles use PRIORITY_REPLY_MODEL, while the larger traction pool uses
+    # the cheaper reply model to protect budget.
+    for username in ALWAYS_REPLY_ACCOUNTS:
         if _budget() <= 0:
             break
-        log.info(f"[DIRECT] === VIP profile @{username} ===")
+        log.info(f"[DIRECT] === ALWAYS profile @{username} ===")
         tweets = scrape_profile_tweets(username, max_tweets=12)
         if tweets:
             profile_tweets = [{
                 "url": t["url"], "text": t["text"], "author": username,
                 "likes": t.get("likes", 0), "replies": t.get("replies", 0),
             } for t in tweets]
-            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-VIP", source_detail=username, remaining=_budget(), en_counter=en_counter)
+            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-ALWAYS", source_detail=username, remaining=_budget(), en_counter=en_counter)
             if _llm_exhausted():
                 break
     if _llm_exhausted():

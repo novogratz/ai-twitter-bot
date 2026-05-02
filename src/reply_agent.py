@@ -24,6 +24,11 @@ TARGET_ACCOUNTS = [
     "jbelizaireCEO",     # John Belizaire
     "FlasheurInvest",    # Flasheur
     "MatthiasBaccino",   # Matthias Baccino
+    # High-traction French crypto / AI / investing
+    "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr", "CryptoPicsou",
+    "crypto_futur", "TheCrypt0Matrix", "TagadoBTC", "Crypto__Goku",
+    "MiningTk", "MoneyRadar_FR", "Divs_King", "arthurmensch",
+    "GuillaumeLample", "GaelVaroquaux",
 
     # Bourse / Finance FR
     "NCheron_bourse",    # Nicolas Chéron
@@ -109,6 +114,9 @@ Le seuil monte: une reply 8/10 est refusée. Il faut 9/10 ou SKIP.
 Chaque reply doit avoir une CHUTE visible: renaming, comparaison absurde,
 understatement brutal, mini-dialogue, ou traduction cynique. Commentaire simple = interdit.
 Test final: "Est-ce qu'un inconnu peut follow juste après cette reply?" Non → SKIP.
+La vanne doit utiliser le détail précis du tweet: chiffre, ticker, boîte, thèse,
+graphique, mot bizarre. Si elle pourrait marcher sous 20 tweets différents,
+c'est générique → SKIP.
 
 ═══════════════════════════════════════════════════════════
 🚫 RÈGLE D'OR — NON-NÉGOCIABLE

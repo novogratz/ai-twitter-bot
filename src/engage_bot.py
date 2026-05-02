@@ -29,6 +29,14 @@ TARGET_ACCOUNTS = [
     "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz", "jbelizaireCEO",
     "FlasheurInvest", "MatthiasBaccino",
 
+    # === High-traction French crypto / AI / investing ===
+    "PowerHasheur", "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr",
+    "CryptoPicsou", "crypto_futur", "TheCrypt0Matrix", "TagadoBTC",
+    "Crypto__Goku", "MiningTk", "MoneyRadar_FR", "Capetlevrai",
+    "Dark_Emi_", "Divs_King", "MathieuL1", "NCheron_bourse",
+    "ABaradez", "Phil_RX", "arthurmensch", "GuillaumeLample",
+    "GaelVaroquaux", "fchollet", "MistralAI",
+
     # === IA: Mega accounts ===
     "elonmusk", "BillGates", "satyanadella",
     "sama", "ylecun", "karpathy",
