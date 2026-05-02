@@ -10,9 +10,7 @@ Default mode is Plus-safe: AI is used for content that actually ships (news, hot
 
 ### Bots
 
-**Post Bot** - Searches the web for breaking news (AI, crypto, bourse), writes sharp FR tweets. **News format = MEME HOT TAKE + URL**: a screenshot-worthy punchline first, raw article URL on its own line so X renders the link card. No "Selon X..." / "Breaking:" / news-report style — if the news doesn't lend itself to a meme, the bot SKIPs. FIRST-DERIVATIVE rule: reject angles BFM/Bloomberg would post as-is, find the second-order implication. Threads supported. Mix of news (24/day) + hot-take memes (24/day). News-first policy: first 3 posts/day must be news. **HARD RULE 2026-04-26 PM — SOURCE OR SKIP**: per user directive, both news AND hot takes require a real article URL (≤72h, direct link, not paywalled). Hot take agent uses WebSearch to anchor every meme on a real recent event; without a URL the cycle SKIPs rather than ship a sourceless meme. Hot takes WITH a URL skip the image attach so X renders the native link-card cleanly (image+headline+domain). Replies are EXEMPT from this rule.
-
-**Post Bot** - News + hot take publisher. Caps cut hard 2026-04-30 PM (12→4 news, 12→6 hot takes) — user said standalone news/hot takes are "trash" and the new news strategy is retweet + quote-tweet with sarcastic FR commentary (see Quote-tweet bot below). Standalone news/hot takes still ship for the absolute best stories that need our voice front-and-center. URL stays inline in the body so X renders the native link-card (the 2026-04-29 source-as-self-reply experiment was reverted on user directive: "remove the source as reply of yourself this is ridiculous").
+**Post Bot** - News + hot take publisher. News is capped at 4/day, uses the stronger Codex model, and ships only if the story clears a 9/10 impact + comedy bar. Format = sarcastic FR punchline + direct article URL so X renders the native link-card. No "Selon X..." / "Breaking:" / wire-service tone. Hot takes are capped at 1/day. Replies are the growth engine; standalone posts are only for the absolute best stories.
 
 **Reply Bot** - Direct + search reply paths. Finds high-engagement FR tweets (with EN fallback), drops sharp one-liner replies (cap 18/cycle, impact-ranked — bumped from 7 on 2026-04-29 strategy pivot: replies are the only surface earning likes, so we max-out volume). **Source-aware engagement floor**: random-discovery sources (SEARCH-FR-LIVE, SEARCH-FR-HOT) skip tweets below `REPLY_MIN_LIKES` (default 5); curated paths (PROFILE-FR, FEED, FOLLOWING) bypass the floor entirely so the bot replies on EVERYTHING from the vetted 1k+ FR roster. Content blocklist (e.g. "se poser") still applies. FR priority, bilingual. **Replies are tagged with one of 6 comedy patterns** (REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER) and logged into `engagement_log.csv` so the evolution agent can compute per-pattern ROI and steer style. **Graceful FR + QC quiet-hour fade**: Paris 04-07 = 95% skip (deepest dark), Paris 00-04 = 25% skip (= QC primetime, light-active for francophone Quebec audience), weekend Sat/Sun 8-11 = 30% skip.
 
@@ -36,7 +34,7 @@ Default mode is Plus-safe: AI is used for content that actually ships (news, hot
 
 **Reflection Agent (autobiographical brain)** - Every 6h: reads engagement + history, updates `personality.json` — per-account dossiers (category, stance, feelings, notes) + per-topic positions. Replies become PERSONAL because the bot remembers each account.
 
-**Quote-Tweet Bot** - Every 75 min, cap 18/day (bumped 12→18 on 2026-04-30 PM — now THE primary news surface). Two candidate sources merge each cycle: (1) viral FR/EN search queries (`min_faves` floor; EN floor is much higher so only mega-viral EN tweets qualify), (2) trusted-news handles from `retweet_bot.TRUSTED_NEWS_HANDLES` (Reuters, Bloomberg, TechCrunch, The Information, CoinDesk, Les Échos, Le Monde, etc. — biggest news from last 36h). Picks the single most-liked candidate, generates a sarcastic FR observation (always FR, even when the original tweet is EN), posts as quote. Hardened SKIP guard via `_looks_like_skip_or_rationale` rejects any output containing the word "skip" or skip-rationale prose markers (after a 2026-04-30 PM leak shipped the agent's skip reasoning publicly).
+**Quote-Tweet Bot** - Every 3h, cap 2/day. Only the biggest viral setups get a sarcastic FR quote; otherwise the bot saves model calls and attention for replies.
 
 **Daily Digest** - Hourly idempotent cron, writes one section per day to `daily_digest.md`: total actions, by-type breakdown, top sources, comedy patterns, top reply targets, top-perf posts, follow count delta. Built specifically for the 2-week post-mission review.
 
@@ -126,14 +124,14 @@ All settings in `src/config.py`, overridable with environment variables:
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `MAX_NEWS_PER_DAY` | 4 | Max standalone news posts per day |
-| `MAX_HOTAKES_PER_DAY` | 2 | Max hot takes per day |
-| `MAX_RETWEETS_PER_DAY` | 10 | Max selective retweets per day (16 → 10 on 2026-04-30 PM second pass — aligned with news cap per user "10 per day" directive) |
-| `RETWEET_MIN_LIKES` | 10 | Min likes on a candidate retweet (lowered 25→10 — top-tier outlets break news fast but don't always rocket past 25 in the first hour) |
-| `MAX_QUOTES_PER_DAY` | 6 | Max quote-tweets per day |
+| `MAX_HOTAKES_PER_DAY` | 1 | Max hot takes per day |
+| `MAX_RETWEETS_PER_DAY` | 3 | Max selective retweets per day |
+| `RETWEET_MIN_LIKES` | 50 | Min likes on a candidate retweet |
+| `MAX_QUOTES_PER_DAY` | 2 | Max quote-tweets per day |
 | `MAX_REPLIES_PER_CYCLE` | 6 | Max search replies per cycle |
 | `REPLY_MIN_LIKES` | 2 | Min likes on a tweet before the bot will reply (random-search sources only — curated paths bypass) |
 | `AI_CLI` | codex | `codex`, `claude`, or `auto` |
-| `NEWS_MODEL` | gpt-5.4-mini | Model for news posts in Codex mode |
+| `NEWS_MODEL` | gpt-5.4 | Model for high-impact news posts in Codex mode |
 | `REPLY_MODEL` | gpt-5.4-mini | Model for replies in Codex mode |
 | `HOTAKE_MODEL` | gpt-5.4-mini | Model for hot takes in Codex mode |
 | `LLM_MIN_SECONDS_BETWEEN_CALLS` | 60 | Local spacing between model calls to avoid burst rate limits |

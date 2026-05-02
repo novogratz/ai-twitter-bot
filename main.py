@@ -87,45 +87,36 @@ def should_skip_engagement() -> bool:
 
 
 def post_interval_minutes() -> int:
-    """Cluster posts during peak engagement windows. Caps at 24 news + 24
-    hot takes/day allow tighter cadences. Now tuned for FR + QC dual
-    audience: Paris night = QC primetime, so we keep posting overnight.
+    """Quality-first original-post cadence.
+
+    Standalone news is capped at 4/day and uses the stronger model. We check
+    often enough to find real news windows, but the prompt should SKIP anything
+    that is not follower-worthy.
 
     Hours are EST. Paris = EST + 6, Montreal = EST.
     """
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    # Cadences shaved ~15-20% on user directive 2026-04-26 PM ("accelerate
-    # all timelines and cycles"). 2-week mission to 1k followers = volume push.
     if 18 <= hour < 23:
-        # QC primetime EST evening (Paris 0-5am): keep cadence reasonable
-        # so we surf the QC peak without spamming.
-        return random.randint(55, 95)
-    elif 23 <= hour or hour < 4:
-        # Deep quiet for both audiences (Paris 5-10am still arriving):
-        # slow but not silent so we wake up with fresh content.
         return random.randint(90, 150)
+    elif 23 <= hour or hour < 4:
+        return random.randint(180, 300)
     elif 9 <= hour < 11:
-        # PEAK: Morning EST window (Paris 15-17h afternoon active)
-        return random.randint(35, 65)
+        return random.randint(75, 120)
     elif 13 <= hour < 15:
-        # PEAK: Afternoon EST window (Paris 19-21h evening prime)
-        return random.randint(35, 65)
+        return random.randint(75, 120)
     elif 4 <= hour < 8:
-        # Paris morning ramp (10-14h Paris): pick up cadence
-        return random.randint(55, 90)
+        return random.randint(120, 210)
     elif 8 <= hour < 12:
-        # Paris afternoon (14-18h)
-        return random.randint(48, 80)
+        return random.randint(90, 150)
     elif 12 <= hour < 18:
-        # Paris evening (18-24h) + QC daytime
-        return random.randint(48, 80)
+        return random.randint(90, 150)
     else:
-        return random.randint(65, 105)
+        return random.randint(120, 210)
 
 
 def reply_interval_minutes() -> int:
-    """Plus-safe cadence. Replies use AI, so keep them valuable and spaced."""
-    return random.randint(25, 40)
+    """Primary growth cadence: more response scans, still jittered."""
+    return random.randint(18, 30)
 
 
 def engage_interval_minutes() -> int:
@@ -135,13 +126,13 @@ def engage_interval_minutes() -> int:
 
 
 def direct_reply_interval_minutes() -> int:
-    """Plus-safe cadence for direct replies."""
-    return random.randint(30, 45)
+    """Primary response path: visit targets often enough to land early."""
+    return random.randint(20, 32)
 
 
 def early_bird_interval_minutes() -> int:
     """Early-bird replies use AI; scan less often on Plus."""
-    return random.randint(15, 25)
+    return random.randint(10, 18)
 
 
 def roast_interval_minutes() -> int:
@@ -452,14 +443,13 @@ def main():
         else:
             log.info("Scout agent: disabled by default in Plus-safe mode.")
 
-        # Quote-tweet bot — picks the most viral FR tweet in our niche and
-        # quote-tweets it with a sharp meme observation. Cap 12/day, cadence
-        # 90 min (was 120 min) on user directive 2026-04-26 PM. Different
-        # distribution surface than replies — pure additive growth.
-        log.info("Quote-tweet bot: amplifying viral FR tweets every 75 min (cap 12/day).")
+        # Quote-tweet bot — now deliberately scarce. Too many news-like
+        # surfaces made the profile feel like a wire service; keep only the
+        # biggest viral setups and spend cadence on replies instead.
+        log.info("Quote-tweet bot: amplifying only top viral setups every 3 hours (cap 2/day).")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=75),
+            trigger=IntervalTrigger(hours=3),
             id="quote_tweet_job",
         )
 
@@ -468,10 +458,10 @@ def main():
         # etc.). Cap 8/day. Picks single best candidate per cycle, only
         # retweets if score ≥ 9/10. Side-effect: appends ≥8/10 picks to
         # daily_news_picks.md — that file IS the YouTube show research doc.
-        log.info("Retweet bot: selective amplification of trusted news every 95 min (cap 8/day).")
+        log.info("Retweet bot: selective amplification of trusted news every 4 hours (cap 3/day).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(minutes=95),
+            trigger=IntervalTrigger(hours=4),
             id="retweet_job",
         )
 

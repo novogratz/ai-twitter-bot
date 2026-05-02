@@ -36,8 +36,8 @@ DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 # Daily posting limits. Defaults are tuned for ChatGPT Plus / Codex usage:
 # spend model calls on content that ships, not on background analysis.
 MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "4"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "2"))
-MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "6"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "1"))
+MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "2"))
 MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "6"))
 
 # Accounts we never reply to. Includes both @handles AND display-name
@@ -65,7 +65,7 @@ def _default_model(codex_model: str, claude_model: str) -> str:
 
 # Models. Codex defaults use the Mini model to fit a $20 Plus plan.
 # Claude defaults stay mid/cheap tier, not Opus.
-NEWS_MODEL = os.environ.get("NEWS_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6"))
+NEWS_MODEL = os.environ.get("NEWS_MODEL", _default_model("gpt-5.4", "claude-sonnet-4-6"))
 REPLY_MODEL = os.environ.get("REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6"))
 HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6"))
 ROAST_MODEL = os.environ.get("ROAST_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001"))

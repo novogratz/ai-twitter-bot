@@ -20,7 +20,7 @@ if [ -f "$PROJECT_DIR/.env" ]; then
 fi
 
 export AI_CLI="${AI_CLI:-codex}"
-export NEWS_MODEL="${NEWS_MODEL:-gpt-5.4-mini}"
+export NEWS_MODEL="${NEWS_MODEL:-gpt-5.4}"
 export REPLY_MODEL="${REPLY_MODEL:-gpt-5.4-mini}"
 export HOTAKE_MODEL="${HOTAKE_MODEL:-gpt-5.4-mini}"
 export QUOTE_MODEL="${QUOTE_MODEL:-gpt-5.4-mini}"

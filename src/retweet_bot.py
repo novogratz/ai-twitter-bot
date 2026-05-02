@@ -59,13 +59,13 @@ DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 # directive "do more news and more retweet... 10 per day push it"). The 16
 # cap was rarely hit anyway given the ≥7/10 quality bar, so 10 reflects the
 # actual ceiling and aligns with the news cap for symmetry.
-MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "10"))
+MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "3"))
 
 # Min likes to even consider a candidate. Lowered 25→10 (2026-04-29 PM):
 # was starving the path — only 2 retweets in 4 days. Top-tier outlets
 # break news fast but don't always rocket past 25 likes in the first hour;
 # retweeting a Reuters scoop at 12 likes is still a quality amplification.
-MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "10"))
+MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "50"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -375,12 +375,10 @@ def run_retweet_cycle():
             log.info("[RETWEET] Failed to write daily picks file:")
             traceback.print_exc()
 
-    # Threshold lowered 9→7 (2026-04-29 PM): "retweet is important...
-    # post more". The 9/10 bar fired only 2 times in 4 days — far below
-    # the 16/day cap. 7/10 still skips genuinely-mid news; daily-picks
-    # logging still triggers at ≥8 for the YouTube research doc.
-    if score < 7:
-        log.info(f"[RETWEET] Score {score}/10 below retweet threshold (7). Logged only.")
+    # Quality reset 2026-05-02: too much low-signal news made the feed feel
+    # like a wire service. Retweets are now only for obvious bangers.
+    if score < 9:
+        log.info(f"[RETWEET] Score {score}/10 below retweet threshold (9). Logged only.")
         return
 
     # Lock URL in BEFORE posting so a crash can't double-retweet.
