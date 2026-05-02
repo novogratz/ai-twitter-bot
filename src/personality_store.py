@@ -108,6 +108,22 @@ def get_account(handle: str) -> Optional[dict]:
     key = _normalize(handle)
     if not key:
         return None
+    if key == "mcnalliem":
+        return {
+            "first_seen": "2026-05-02",
+            "last_interaction": "2026-05-02",
+            "interaction_count": 0,
+            "category": "builder",
+            "stance": "fond",
+            "notes": [
+                "User loves this account: McNallie Money shows results on AI, crypto, data centers, and companies.",
+                "Priority VIP: reply often, make him laugh, and avoid anything that could feel like a dunk on him.",
+            ],
+            "predictions": [],
+            "feelings": "Warm respect. Treat him as a useful operator sharing real results.",
+            "do": "Be playful, impressed, specific, and funny about the AI/data-center/crypto market absurdity.",
+            "dont": "Do not mock him, his work, his results, or his credibility. Never make him upset.",
+        }
     return load()["accounts"].get(key)
 
 

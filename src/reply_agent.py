@@ -24,6 +24,7 @@ TARGET_ACCOUNTS = [
     "jbelizaireCEO",     # John Belizaire
     "FlasheurInvest",    # Flasheur
     "MatthiasBaccino",   # Matthias Baccino
+    "McnallieM",         # McNallie Money — warm VIP, AI/crypto data centers
     # High-traction French crypto / AI / investing
     "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr", "CryptoPicsou",
     "crypto_futur", "TheCrypt0Matrix", "TagadoBTC", "Crypto__Goku",

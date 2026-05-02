@@ -27,7 +27,7 @@ def _load_discovered_handles() -> list:
 TARGET_ACCOUNTS = [
     # === User VIP follows/replies 2026-05-02 ===
     "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz", "jbelizaireCEO",
-    "FlasheurInvest", "MatthiasBaccino",
+    "FlasheurInvest", "MatthiasBaccino", "McnallieM",
 
     # === High-traction French crypto / AI / investing ===
     "PowerHasheur", "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr",

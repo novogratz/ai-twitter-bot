@@ -37,7 +37,7 @@ _OWN_HANDLE = BOT_HANDLE.lower()
 EARLY_BIRD_ACCOUNTS = [
     # === User VIP list 2026-05-02 ===
     "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz", "jbelizaireCEO",
-    "FlasheurInvest", "MatthiasBaccino",
+    "FlasheurInvest", "MatthiasBaccino", "McnallieM",
     # === High-traction French crypto / AI / investing ===
     "PowerHasheur", "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr",
     "CryptoPicsou", "crypto_futur", "TheCrypt0Matrix", "TagadoBTC",

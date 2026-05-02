@@ -27,6 +27,7 @@ VIP_REPLY_ACCOUNTS = [
     "jbelizaireCEO",     # John Belizaire
     "FlasheurInvest",
     "MatthiasBaccino",
+    "McnallieM",         # McNallie Money — warm VIP, AI/crypto data centers
 ]
 _VIP_REPLY_ACCOUNTS_LC = {h.lower() for h in VIP_REPLY_ACCOUNTS}
 
@@ -392,6 +393,9 @@ LITMUS TEST before submitting:
    most a light poke at their public take, output the literal word SKIP.
 
 NEVER reply to: @pgm_pm. (If author is pgm_pm, output the literal word SKIP.)
+SPECIAL WARM VIP: @McnallieM / McNallie Money. User loves him because he shows
+AI + crypto data-center company results. Make him laugh, never make him upset.
+Tone: warm, impressed, playful. Roast the market/data-center absurdity, not him.
 
 STYLE — HARDCORE TROLL MODE:
 - DEADPAN > excited. DRY > flowery. Lower-case feels truer than over-punctuated.
