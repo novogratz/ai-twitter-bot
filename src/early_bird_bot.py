@@ -36,7 +36,7 @@ _OWN_HANDLE = BOT_HANDLE.lower()
 # top-5-reply window. FR media is HEAVY because that's our audience.
 EARLY_BIRD_ACCOUNTS = [
     # === User VIP list 2026-05-02 ===
-    "Graphseo", "vision_ia", "FinTales_", "novogratz", "jbelizaireCEO",
+    "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz", "jbelizaireCEO",
     "FlasheurInvest", "MatthiasBaccino",
 
     # === IA mega EN ===

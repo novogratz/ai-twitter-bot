@@ -20,6 +20,7 @@ _LLM_RATE_LIMITED = object()
 
 VIP_REPLY_ACCOUNTS = [
     "Graphseo",          # Julien Flot
+    "RodolpheSteffan",
     "vision_ia",         # VISION IA
     "FinTales_",
     "novogratz",         # Mike Novogratz

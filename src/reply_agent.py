@@ -17,6 +17,7 @@ from .llm_client import run_llm, unwrap_text
 TARGET_ACCOUNTS = [
     # User VIP list 2026-05-02 — prioritize for funny replies
     "Graphseo",          # Julien Flot
+    "RodolpheSteffan",   # Rodolphe Steffan
     "vision_ia",         # VISION IA
     "FinTales_",         # FinTales
     "novogratz",         # Mike Novogratz
