@@ -35,6 +35,10 @@ _OWN_HANDLE = BOT_HANDLE.lower()
 # anywhere in this list has a real shot of being caught inside the 12-min
 # top-5-reply window. FR media is HEAVY because that's our audience.
 EARLY_BIRD_ACCOUNTS = [
+    # === User VIP list 2026-05-02 ===
+    "Graphseo", "vision_ia", "FinTales_", "novogratz", "jbelizaireCEO",
+    "FlasheurInvest", "MatthiasBaccino",
+
     # === IA mega EN ===
     "sama", "OpenAI", "AnthropicAI", "elonmusk", "karpathy", "ylecun",
     "GoogleDeepMind", "MistralAI", "DarioAmodei", "AravSrinivas",

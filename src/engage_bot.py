@@ -25,6 +25,10 @@ def _load_discovered_handles() -> list:
 
 # IA + Crypto + Bourse target accounts
 TARGET_ACCOUNTS = [
+    # === User VIP follows/replies 2026-05-02 ===
+    "Graphseo", "vision_ia", "FinTales_", "novogratz", "jbelizaireCEO",
+    "FlasheurInvest", "MatthiasBaccino",
+
     # === IA: Mega accounts ===
     "elonmusk", "BillGates", "satyanadella",
     "sama", "ylecun", "karpathy",

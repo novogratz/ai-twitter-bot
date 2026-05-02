@@ -6,7 +6,7 @@ import random
 import time
 import traceback
 from .logger import log
-from .config import REPLY_MODEL
+from .config import PRIORITY_REPLY_MODEL, REPLY_MODEL
 from .llm_client import LLM_RATE_LIMIT_CODE, llm_hourly_limit_status, run_llm, unwrap_text
 from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
 from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url
@@ -17,6 +17,17 @@ from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 _LLM_RATE_LIMITED = object()
+
+VIP_REPLY_ACCOUNTS = [
+    "Graphseo",          # Julien Flot
+    "vision_ia",         # VISION IA
+    "FinTales_",
+    "novogratz",         # Mike Novogratz
+    "jbelizaireCEO",     # John Belizaire
+    "FlasheurInvest",
+    "MatthiasBaccino",
+]
+_VIP_REPLY_ACCOUNTS_LC = {h.lower() for h in VIP_REPLY_ACCOUNTS}
 
 # === Language gate — added 2026-04-26 after DE/TR replies leaked through ===
 # X's `lang:fr` operator is best-effort: it returns DE / TR / ES / RU tweets
@@ -190,9 +201,12 @@ FR_ACCOUNTS = [
     "ABaradez",          # Alexandre Baradez
     "Phil_RX",           # Philippe (added 2026-04-28 user request)
     "Graphseo",          # Julien Flot (user re-confirmed 2026-04-29)
+    "vision_ia",         # VISION IA — user VIP 2026-05-02
     "DereeperVivre",     # Charles Dereeper
     "FinTales_",         # FinTales
     "MathieuL1",         # Mathieu Louvet
+    "FlasheurInvest",    # Flasheur — user VIP 2026-05-02
+    "MatthiasBaccino",   # Matthias Baccino — user VIP 2026-05-02
     "ThomasVeillet",     # Morning Bell — tres actif, tres FR
     "YoannLOPEZ",        # Snowball — investing FR
     "Capital",           # Capital magazine
@@ -223,6 +237,8 @@ FR_ACCOUNTS = [
 
 # English-speaking influencers — visited only AFTER FR, fewer per cycle
 EN_ACCOUNTS = [
+    "novogratz",         # Mike Novogratz — user VIP 2026-05-02
+    "jbelizaireCEO",     # John Belizaire — user VIP 2026-05-02
     "Cointelegraph",
     "OpenAI",
     "AnthropicAI",
@@ -471,7 +487,10 @@ def _generate_single_reply(author: str, tweet_text: str):
     prompt = base + "\n\n" + "\n\n".join(extras)
 
     try:
-        result = run_llm(prompt, REPLY_MODEL, label="DIRECT_REPLY", timeout=30)
+        author_key = (author or "").lower().lstrip("@")
+        model = PRIORITY_REPLY_MODEL if author_key in _VIP_REPLY_ACCOUNTS_LC else REPLY_MODEL
+        label = "DIRECT_REPLY_VIP" if author_key in _VIP_REPLY_ACCOUNTS_LC else "DIRECT_REPLY"
+        result = run_llm(prompt, model, label=label, timeout=45 if model == PRIORITY_REPLY_MODEL else 30)
         if result.returncode == LLM_RATE_LIMIT_CODE:
             return _LLM_RATE_LIMITED
         if result.returncode != 0:
@@ -494,7 +513,7 @@ def _generate_single_reply(author: str, tweet_text: str):
         return None
 
 
-DIRECT_REPLY_MAX_PER_CYCLE = 3  # Plus-safe: each reply costs a model call.
+DIRECT_REPLY_MAX_PER_CYCLE = 7  # VIP push: cover the full user-priority list each pass.
 MAX_EN_REPLIES_PER_CYCLE = 3     # hard cap — keeps ~80% FR ratio while leaving room for big EN influencers
 
 
@@ -508,7 +527,7 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
     # handle. Without this, a heavily-active account (e.g. @Tradosaure
     # posting an ETF thread) eats half the cycle budget and looks spammy
     # to the recipient.
-    PER_AUTHOR_CAP = 2
+    PER_AUTHOR_CAP = 1 if source_name == "PROFILE-VIP" else 2
     per_author_count = {}
     for tweet in tweets:
         if remaining is not None and posted >= remaining:
@@ -725,6 +744,26 @@ def run_direct_reply_cycle():
 
     def _budget():
         return DIRECT_REPLY_MAX_PER_CYCLE - total
+
+    # User VIP list 2026-05-02: follow them and reply to all their fresh tweets
+    # first, using PRIORITY_REPLY_MODEL for sharper jokes. These bypass random
+    # sampling so they are checked every direct-reply cycle.
+    for username in VIP_REPLY_ACCOUNTS:
+        if _budget() <= 0:
+            break
+        log.info(f"[DIRECT] === VIP profile @{username} ===")
+        tweets = scrape_profile_tweets(username, max_tweets=12)
+        if tweets:
+            profile_tweets = [{
+                "url": t["url"], "text": t["text"], "author": username,
+                "likes": t.get("likes", 0), "replies": t.get("replies", 0),
+            } for t in tweets]
+            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-VIP", source_detail=username, remaining=_budget(), en_counter=en_counter)
+            if _llm_exhausted():
+                break
+    if _llm_exhausted():
+        save_replied(replied)
+        return
 
     # User directive 2026-04-26 PM: "target big accounts in french, if you
     # cant fallback on smaller". Reordered so the curated FR roster runs

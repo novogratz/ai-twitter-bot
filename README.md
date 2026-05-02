@@ -133,6 +133,7 @@ All settings in `src/config.py`, overridable with environment variables:
 | `AI_CLI` | codex | `codex`, `claude`, or `auto` |
 | `NEWS_MODEL` | gpt-5.4 | Model for high-impact news posts in Codex mode |
 | `REPLY_MODEL` | gpt-5.4-mini | Model for replies in Codex mode |
+| `PRIORITY_REPLY_MODEL` | gpt-5.4 | Model for user-VIP account replies |
 | `HOTAKE_MODEL` | gpt-5.4-mini | Model for hot takes in Codex mode |
 | `LLM_MIN_SECONDS_BETWEEN_CALLS` | 60 | Local spacing between model calls to avoid burst rate limits |
 | `LLM_MAX_CALLS_PER_HOUR` | 30 | Local hourly model-call budget across bot threads |

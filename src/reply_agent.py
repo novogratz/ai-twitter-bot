@@ -15,6 +15,15 @@ from .llm_client import run_llm, unwrap_text
 
 # Core influencers — French priority but EN accounts included
 TARGET_ACCOUNTS = [
+    # User VIP list 2026-05-02 — prioritize for funny replies
+    "Graphseo",          # Julien Flot
+    "vision_ia",         # VISION IA
+    "FinTales_",         # FinTales
+    "novogratz",         # Mike Novogratz
+    "jbelizaireCEO",     # John Belizaire
+    "FlasheurInvest",    # Flasheur
+    "MatthiasBaccino",   # Matthias Baccino
+
     # Bourse / Finance FR
     "NCheron_bourse",    # Nicolas Chéron
     "RodolpheSteffan",   # Rodolphe Steffan
