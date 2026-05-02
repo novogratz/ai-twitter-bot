@@ -233,18 +233,38 @@ def _score_candidates(candidates: list):
             "breaking", "exclusif", "exclusive", "annonce", "launch",
             "raises", "lève", "sec", "fed", "bitcoin", "openai", "nvidia",
         ))
+        money_or_power = any(k in text for k in (
+            "$", "billion", "billion", "milliard", "mds", "million", "acquire",
+            "acquisition", "merger", "ipo", "bankrupt", "faillite", "lawsuit",
+            "ban", "interdiction", "regulator", "régulateur", "sec", "fed",
+            "valuation", "valo", "earnings", "revenue", "profit", "loss",
+        ))
+        strategic = any(k in text for k in (
+            "openai", "anthropic", "nvidia", "mistral", "bitcoin", "ethereum",
+            "coinbase", "google", "microsoft", "meta", "apple", "tesla",
+            "rates", "inflation", "tariff", "chips", "gpu",
+        ))
+        numbers = len(re.findall(r"(\$?\d+(?:[.,]\d+)?\s?(?:%|bn|billion|m|million|md|mds|k)?)", text))
+        engagement = int(c.get("likes") or 0) + (2 * int(c.get("replies") or 0))
+        impact_points = (2 if breaking else 0) + (3 if money_or_power else 0) + (2 if strategic else 0) + min(numbers, 3)
         return (
-            1 if breaking else 0,
-            int(c.get("likes") or 0) + (2 * int(c.get("replies") or 0)),
+            impact_points,
+            engagement,
         )
 
     idx, pick = max(enumerate(candidates), key=lambda item: rank(item[1]))
     engagement = int(pick.get("likes") or 0) + (2 * int(pick.get("replies") or 0))
-    score = 8 if engagement >= 50 else 7
+    impact_points = rank(pick)[0]
+    if impact_points >= 7 and engagement >= 100:
+        score = 9
+    elif impact_points >= 6 and engagement >= 50:
+        score = 8
+    else:
+        score = 7
     return {
         "best_index": idx,
         "best_score": score,
-        "why_it_matters": "Source fiable + signal engagement suffisant.",
+        "why_it_matters": f"Source fiable + impact concret (score signal {impact_points}, engagement {engagement}).",
     }
 
 
@@ -337,12 +357,8 @@ def run_retweet_cycle():
 
     if len(candidates) == 1:
         only = candidates[0]
-        decision = {
-            "best_index": 0,
-            "best_score": 8 if only.get("likes", 0) >= 50 else 7,
-            "why_it_matters": "Unique actu viable issue des sources fiables.",
-        }
-        log.info("[RETWEET] One viable candidate — using deterministic pick, no model call.")
+        decision = _score_candidates(candidates)
+        log.info("[RETWEET] One viable candidate — scoring impact deterministically.")
     else:
         log.info(f"[RETWEET] Scoring {len(candidates)} candidates deterministically (no model call).")
         decision = _score_candidates(candidates)
