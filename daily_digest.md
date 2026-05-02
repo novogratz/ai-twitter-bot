@@ -85,3 +85,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 210 likes / 0 views: How to Play Long Term Games:  Systems > Goals Discipline > Motivation Trust > Distrust Principles > 
   - 98 likes / 85000 views: am i crazy or why has nobody seemed to make an open source dropbox on cloudflare r2? i had just assu
   - 51 likes / 0 views: AI co-clinician is our new research initiative to help explore how multimodal agents could better su
+
+## 2026-05-01
+
+**Activity** — total actions: 237
+  - by type: reply=211, retweet=10, quote=6, hotake=5, post=5
+  - top sources: PROFILE-FR=123, SEARCH-FR-LIVE=35, SEARCH-FR-HOT=16, PROFILE-EN=14, RETWEET=10, FEED=6, QUOTE=6, FOLLOWING=2
+  - comedy patterns: FR_ANCHOR=11, METAPHOR=7, UNDERSTATEMENT=5
+  - top reply targets: @ReadyForTrading=5, @nicrypto=4, @LesEchos=4, @AnankeGroup=4, @ChanPerco=4
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 431 likes / 283000 views: The Yahoo Agricultural Interface is HERE. Touch grass like never before. 1PM EST in our TikTok Shop.
+  - 257 likes / 0 views: Want to secure an early ticket to OpenAI DevDay? Build something with GPT-5.5 and Image Gen.  Each w
+  - 234 likes / 615000 views: ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interactive 

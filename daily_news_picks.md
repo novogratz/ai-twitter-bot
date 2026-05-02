@@ -88,3 +88,34 @@ We looked at 1M conversations to understand what questions people ask, how Claud
 - **@bitcoinmagazine** (1500 likes, score 9/10) — JUST IN:  US Secretary of Defense Pete Hegseth says the US should secure a strategic advantage in Bitcoin and that he's a "long enthusiast" of BTC.
   - https://x.com/BitcoinMagazine/status/2049951115270381654
   - **WHY**: Déclaration officielle du Secrétaire à la Défense US reconnaît Bitcoin comme enjeu stratégique national.
+- **@openai** (2183 likes, score 8/10) — Want to secure an early ticket to OpenAI DevDay? Build something with GPT-5.5 and Image Gen.
+
+Each week, we’ll select 2–3 favorites to win free tickets to OpenAI DevDay 2026. Codex will help us find t
+  - https://x.com/OpenAI/status/2049535650626785334
+  - **WHY**: Source fiable + signal engagement suffisant.
+- **@bitcoinmagazine** (874 likes, score 8/10) — JUST IN: Fox Business reports the Bitcoin and crypto market structure bill is suggested "to be headed toward a markup soon." 
+
+"It's going really well...votes on the republican side onboard now."
+  - https://x.com/BitcoinMagazine/status/2049892854810788110
+  - **WHY**: Source fiable + signal engagement suffisant.
+- **@mit_csail** (2717 likes, score 8/10) — 61 years ago this month, the Fast Fourier Transform was created, a powerful tool for image compression & data analysis.
+
+Watch a classic MIT breakdown of FFT, perhaps the most-taught algorithm at the
+  - https://x.com/MIT_CSAIL/status/2048431989670265296
+  - **WHY**: Source fiable + signal engagement suffisant.
+
+## 2026-05-02
+- **@openai** (6838 likes, score 8/10) — One week since the launch of GPT-5.5, and it’s already our strongest model launch yet. 
+
+API revenue is growing more than 2x faster than any prior release, while Codex doubled revenue in under seven d
+  - https://x.com/OpenAI/status/2050250926888468929
+  - **WHY**: Source fiable + signal engagement suffisant.
+- **@bitcoinmagazine** (1773 likes, score 8/10) — Bitcoin: $1.5 trillion
+
+Gold: $34.4 trillion
+
+Global stock market: $140 trillion
+
+We are so early.
+  - https://x.com/BitcoinMagazine/status/2050276647484727556
+  - **WHY**: Source fiable + signal engagement suffisant.
