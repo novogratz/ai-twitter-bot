@@ -87,9 +87,8 @@ def run_bot_cycle():
     can_hotake = hotake_count < MAX_HOTAKES_PER_DAY
     can_news = news_count < MAX_NEWS_PER_DAY
 
-    # News is the brand backbone. Force the first half of the daily news quota
-    # through the news path before spending the single hot-take slot, otherwise
-    # one hot-take miss can make the profile look quiet on actual news.
+    # AI news is the brand backbone. Force the first half of the daily news
+    # quota through the AI news path before spending the single AI hot-take slot.
     news_floor_before_hotake = min(3, MAX_NEWS_PER_DAY)
     if can_news and news_count < news_floor_before_hotake:
         do_hotake = False
@@ -102,7 +101,7 @@ def run_bot_cycle():
 
     tweet_source = "news"  # which module owns last_source_url for this tweet
     if do_hotake:
-        log.info("Generating AI philosophy hot take...")
+        log.info("Generating AI hot take...")
         tweet = generate_hotake()
         if tweet is None:
             log.warning("Hot take failed, falling back to news...")
