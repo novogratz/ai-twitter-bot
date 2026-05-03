@@ -19,6 +19,7 @@ _OWN_HANDLE = BOT_HANDLE.lower()
 _LLM_RATE_LIMITED = object()
 
 VIP_REPLY_ACCOUNTS = [
+    "FrugalisteFutee",   # La Frugaliste Futee — user VIP 2026-05-02
     "Graphseo",          # Julien Flot
     "RodolpheSteffan",
     "vision_ia",         # VISION IA
@@ -32,6 +33,7 @@ VIP_REPLY_ACCOUNTS = [
 _VIP_REPLY_ACCOUNTS_LC = {h.lower() for h in VIP_REPLY_ACCOUNTS}
 
 HIGH_TRACTION_REPLY_ACCOUNTS = [
+    "FrugalisteFutee",   # La Frugaliste Futee — user-requested account to follow/reply
     # French crypto mega / media accounts
     "PowerHasheur",
     "LeJournalDuCoin",
@@ -226,6 +228,7 @@ def _is_fr_or_en(text: str) -> bool:
 # the verified hand-picked anchors.
 FR_ACCOUNTS = [
     # === Bourse / Finance / Macro FR ===
+    "FrugalisteFutee",   # La Frugaliste Futee — @FrugalisteFutee, user-requested 2026-05-02
     "XFenaux",           # Xavier Fenaux — user-flagged 2026-04-29: "I love the guy make him laugh", reply to most tweets
     "NCheron_bourse",    # Nicolas Chéron
     "RodolpheSteffan",   # Rodolphe Steffan (user re-confirmed 2026-04-29)
@@ -346,10 +349,11 @@ that @{author} would still happily LIKE because you're laughing WITH them at the
 world, not AT them.
 
 LAUGH FLOOR — non-negotiable:
-- If it's not LAUGH OUT LOUD funny, output the literal word SKIP. We do not post
-  "fine" or "smart-but-flat" replies. Mid is worse than silent.
-- If it's just an observation with no joke, SKIP.
-- If you'd give it an 8/10, SKIP. Aim for 9/10+ or skip.
+- Default to POSTING a reply when the tweet is on-topic and safe. Only output
+  SKIP if there is no factual hook, it is off-niche, or the only joke would hit
+  the person/business instead of the idea.
+- If the first draft is only smart, rewrite it into a joke instead of skipping.
+- 7/10 with a clean punchline gets posted. Perfect-but-never-shipped loses.
 - BE WEIRD. Absurdist > polite. Surreal > smart. Specific > generic.
 - Every reply needs a punchline, not just agreement. If the reply could start
   with "oui" or "exact", delete it and find the joke.
@@ -396,6 +400,11 @@ NEVER reply to: @pgm_pm. (If author is pgm_pm, output the literal word SKIP.)
 SPECIAL WARM VIP: @McnallieM / McNallie Money. User loves him because he shows
 AI + crypto data-center company results. Make him laugh, never make him upset.
 Tone: warm, impressed, playful. Roast the market/data-center absurdity, not him.
+SPECIAL WARM VIP: @FrugalisteFutee / La Frugaliste Futee. Reply to her on-topic
+finance/frugalité/investing tweets whenever there is a safe joke. Warm, sharp,
+playful. Roast consumer finance absurdity, inflation, banks, fees, Bercy, PEL,
+Livret A, budgeting theatre, or the market system. Never mock her lifestyle,
+business, audience, or personal choices.
 
 STYLE — HARDCORE TROLL MODE:
 - DEADPAN > excited. DRY > flowery. Lower-case feels truer than over-punctuated.
@@ -569,7 +578,7 @@ def _generate_single_reply(author: str, tweet_text: str):
         return None
 
 
-DIRECT_REPLY_MAX_PER_CYCLE = 12  # Always-scan VIP + high-traction accounts first.
+DIRECT_REPLY_MAX_PER_CYCLE = 18  # Always-scan VIP + high-traction accounts first.
 MAX_EN_REPLIES_PER_CYCLE = 3     # hard cap — keeps ~80% FR ratio while leaving room for big EN influencers
 
 

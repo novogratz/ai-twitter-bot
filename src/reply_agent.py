@@ -16,6 +16,7 @@ from .llm_client import run_llm, unwrap_text
 # Core influencers — French priority but EN accounts included
 TARGET_ACCOUNTS = [
     # User VIP list 2026-05-02 — prioritize for funny replies
+    "FrugalisteFutee",   # La Frugaliste Futee — user-requested 2026-05-02
     "Graphseo",          # Julien Flot
     "RodolpheSteffan",   # Rodolphe Steffan
     "vision_ia",         # VISION IA
@@ -109,9 +110,11 @@ Pousse la vanne: si ta première version est "sympa", rends-la 30% plus sèche,
 plus sarcastique, plus française, plus screenshot. Le compte doit gagner des
 followers à froid sous les tweets des autres.
 
-Si ta reply ne fait pas RIRE FORT (pas sourire) → SKIP. Pas de "réponse correcte mais
-plate". Le mid pendant 2 semaines = on rate la mission.
-Le seuil monte: une reply 8/10 est refusée. Il faut 9/10 ou SKIP.
+Par défaut, POSTE une reply quand le tweet est récent, on-topic et safe. Si ta
+première version est trop plate, réécris-la en vanne au lieu de skip. SKIP
+seulement si le tweet est hors-niche, sans prise factuelle, ou si la seule vanne
+possible attaque la personne/le business. Un 7/10 drôle publié bat un 10/10
+jamais posté.
 Chaque reply doit avoir une CHUTE visible: renaming, comparaison absurde,
 understatement brutal, mini-dialogue, ou traduction cynique. Commentaire simple = interdit.
 Test final: "Est-ce qu'un inconnu peut follow juste après cette reply?" Non → SKIP.
