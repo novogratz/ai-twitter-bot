@@ -89,29 +89,28 @@ def should_skip_engagement() -> bool:
 def post_interval_minutes() -> int:
     """Quality-first original-post cadence.
 
-    Standalone news is capped at 4/day and uses the stronger model. We check
-    often enough to find real news windows, but the prompt should SKIP anything
-    that is not follower-worthy.
+    Standalone news is capped at 6/day and uses the stronger model. Check often
+    enough that a few model SKIPs don't starve the timeline.
 
     Hours are EST. Paris = EST + 6, Montreal = EST.
     """
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 18 <= hour < 23:
-        return random.randint(90, 150)
+        return random.randint(55, 95)
     elif 23 <= hour or hour < 4:
-        return random.randint(180, 300)
+        return random.randint(120, 210)
     elif 9 <= hour < 11:
-        return random.randint(75, 120)
+        return random.randint(45, 80)
     elif 13 <= hour < 15:
-        return random.randint(75, 120)
+        return random.randint(45, 80)
     elif 4 <= hour < 8:
-        return random.randint(120, 210)
+        return random.randint(90, 150)
     elif 8 <= hour < 12:
-        return random.randint(90, 150)
+        return random.randint(55, 95)
     elif 12 <= hour < 18:
-        return random.randint(90, 150)
+        return random.randint(55, 95)
     else:
-        return random.randint(120, 210)
+        return random.randint(90, 150)
 
 
 def reply_interval_minutes() -> int:

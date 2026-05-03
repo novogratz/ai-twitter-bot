@@ -87,17 +87,18 @@ def run_bot_cycle():
     can_hotake = hotake_count < MAX_HOTAKES_PER_DAY
     can_news = news_count < MAX_NEWS_PER_DAY
 
-    # Mix: hot takes pull more engagement (memes screenshot, news doesn't), so
-    # we let them lead instead of forcing news-first. Roughly 50/50 with a
-    # slight news lean — the cap (5/day each) keeps both feeds quality-first.
-    # Old news-first policy was forcing low-engagement news posts at session
-    # start; killing it lets a banger meme open the day instead.
-    if not can_news:
+    # News is the brand backbone. Force the first half of the daily news quota
+    # through the news path before spending the single hot-take slot, otherwise
+    # one hot-take miss can make the profile look quiet on actual news.
+    news_floor_before_hotake = min(3, MAX_NEWS_PER_DAY)
+    if can_news and news_count < news_floor_before_hotake:
+        do_hotake = False
+    elif not can_news:
         do_hotake = can_hotake
     elif not can_hotake:
         do_hotake = False
     else:
-        do_hotake = random.random() < 0.45
+        do_hotake = random.random() < 0.25
 
     tweet_source = "news"  # which module owns last_source_url for this tweet
     if do_hotake:

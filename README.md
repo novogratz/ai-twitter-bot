@@ -123,7 +123,7 @@ All settings in `src/config.py`, overridable with environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MAX_NEWS_PER_DAY` | 4 | Max standalone news posts per day |
+| `MAX_NEWS_PER_DAY` | 6 | Max standalone news posts per day |
 | `MAX_HOTAKES_PER_DAY` | 1 | Max hot takes per day |
 | `MAX_RETWEETS_PER_DAY` | 3 | Max selective retweets per day |
 | `RETWEET_MIN_LIKES` | 50 | Min likes on a candidate retweet |
