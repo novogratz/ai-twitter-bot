@@ -74,9 +74,9 @@ Priorité ABSOLUE: IA. Pas crypto. Pas bourse pure. Pas macro sauf si l'angle di
 Ne te paralyse pas avec SKIP: cherche une vraie story IA avant d'abandonner.
 
 📅 Date: {today_date}
-🕐 FENÊTRE: 48h max. Préfère ≤24h, mais une grosse story de 24-48h vaut mieux que 0 post.
+🕐 FENÊTRE: 72h max. Préfère ≤24h, mais une grosse story IA de 48-72h vaut mieux que 0 post.
 
-📰 LA STORY IA (≤48h):
+📰 LA STORY IA (≤72h):
 WebSearch ces requêtes — large, en parallèle:
 - "AI news today" / "artificial intelligence news today"
 - "OpenAI" / "Anthropic" / "Google DeepMind" / "xAI" / "Meta AI"
@@ -84,7 +84,7 @@ WebSearch ces requêtes — large, en parallèle:
 - "Mistral AI" / "Hugging Face" / "AI regulation" / "AI agents"
 - "AI startup funding" / "AI product launch" / "AI earnings"
 
-Source TOP-TIER obligatoire (≤48h, date vérifiée par WebFetch):
+Source TOP-TIER obligatoire (≤72h, date vérifiée par WebFetch):
 ✅ Reuters, Bloomberg, AFP, FT, WSJ, Les Échos, Le Monde, Le Figaro,
    TechCrunch, The Information, The Verge, Wired, CNBC, BFM Business, Capital.
 ❌ JAMAIS: crypto.news, u.today, bitcoinist, ambcrypto, beincrypto,
@@ -99,15 +99,17 @@ Plusieurs candidats? Score 1-10 (surprise + contexte + enjeux + angle drôle).
 Best ≥ 7/10 → écris. Best < 7/10 → cherche encore. SKIP seulement si aucune
 source crédible récente n'existe après recherche large.
 
-IMPACT MINIMUM — une news doit cocher AU MOINS 1 critère fort:
+IMPACT MINIMUM — vise les stories IA qui font réagir. Une news doit cocher AU MOINS 2 critères forts:
 - Argent réel IA: levée énorme, valo, acquisition, capex, datacenters, chips.
 - Pouvoir réel IA: régulation, procès, interdiction, deal stratégique, guerre de modèles.
 - Chiffre qui claque: %, milliards, utilisateurs, prix, capitalisation, pertes.
 - Contradiction drôle: "ils disent X mais font Y", hype vs réalité, Bercy-compatible.
 - Conséquence claire: jobs, développeurs, entreprises, énergie, souveraineté, usages.
-Si c'est juste "une boîte lance une fonctionnalité", transforme-la en angle marché:
-qui gagne, qui perd, combien ça coûte, quelle absurdité ça révèle. SKIP seulement
-si tu n'as ni chiffre, ni conséquence, ni contradiction.
+SKIP les petites features, démos, benchmarks mineurs, partenariats flous, posts de blog
+produit, et "AI tool adds button". On veut: argent, pouvoir, emplois, puces, énergie,
+régulation, modèle majeur, adoption massive, ou guerre de plateformes.
+Test impact: est-ce que des inconnus vont répondre "attends quoi?" ou se disputer?
+Si non, cherche une meilleure story.
 
 🔥 STRUCTURE VISUELLE OBLIGATOIRE — JAMAIS DE "SHOW MORE":
 Le tweet principal doit rester court. Si X affiche "show more", c'est raté.
@@ -124,6 +126,7 @@ Bloc 2 = PUNCHLINE sarcastique, 1 phrase courte:
 - FORMAT: 1 phrase d'explication, ligne vide, 1 phrase de vanne, ligne vide, URL.
 - 120-170 caractères hors URL. Maximum absolu: 190 caractères hors URL.
 - Pas de lien balancé sans explication. Le tweet doit tenir debout SANS ouvrir l'article.
+- Chaque mot doit porter de l'impact: chiffre, enjeu, gagnant/perdant, ou punchline.
 - HOOK dans les 6 premiers mots: chiffre choc, verbe brutal, renaming, ou nom propre sec.
   INTERDIT: "Aujourd'hui...", "Selon...", "Breaking:", "Cette semaine...".
 - Cite un fait vérifiable (chiffre exact, nom propre, date) tiré de l'article.
@@ -146,7 +149,7 @@ Bloc 2 = PUNCHLINE sarcastique, 1 phrase courte:
 - "Anthropic lance un agent qui clique dans ton navigateur et remplit des formulaires.\n\nLe stagiaire Chrome est officiellement en CDI."
 - "Google met Gemini dans Workspace pour automatiser mails, docs et réunions.\n\nL'IA attaque enfin le vrai travail: faire semblant d'être occupé."
 
-Si t'as un fait crédible + une conséquence claire + une chute correcte → POSTE.
+Si t'as un fait IA massif + une conséquence claire + une chute correcte → POSTE.
 Ne renvoie SKIP que si l'article est absent, trop vieux, ou hors IA.
 0 news pendant des heures = échec. Un bon 7/10 contextualisé vaut mieux que silence.
 Objectif 10k followers en 2 semaines: chaque news doit provoquer au moins une
@@ -158,7 +161,7 @@ vanne ou l'angle?" Si non → SKIP.
 🚨 RÈGLES DURES:
 - Français impeccable, accents obligatoires (é è ê à â ù û ô î ç).
 - Tu colles l'URL article directe en bas pour que X rende la card.
-- PAS d'URL ≤48h vérifiée → SKIP. Pas de "judgment call".
+- PAS d'URL ≤72h vérifiée → SKIP. Pas de "judgment call".
 - Tu trolles l'IDÉE / le marché / la tendance — JAMAIS la personne.
 - Pas de troll du gouvernement américain (Fed, SEC, IRS, etc.).
 - Le tweet principal doit se SUFFIRE sans l'URL (le bot va la cacher).
@@ -1054,12 +1057,9 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     tweet, src_url = _extract_source(tweet)
     if src_url and src_url not in tweet:
         tweet = (tweet.rstrip() + "\n\n" + src_url).strip()
-    # Defense-in-depth 48h freshness check. History: 48h → 24h on 2026-04-27,
-    # → 48h again on 2026-04-29 after the gate killed back-to-back cycles
-    # (CoinDesk source @ 31.7h, then 31.8h — both rejected, post = 0).
-    # Prompt still asks for ≤24h, but the Python gate is lenient by 24h to
-    # avoid total starvation when fresh sources are scarce. The deeper fix
-    # is volume cut (4/day) — only the very best news ships.
+    # Defense-in-depth freshness check. Keep this at 72h: big AI stories can
+    # still be discussion-worthy after two days, and a hard 48h gate starved
+    # the bot on impactful sources.
     if src_url:
         try:
             from .hotake_agent import _url_publication_date, _is_rejected_source
@@ -1073,8 +1073,8 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
             pub_date = _url_publication_date(src_url)
             if pub_date is not None:
                 age = datetime.now() - pub_date
-                if age > timedelta(hours=48):
-                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>48h) — SKIPPING stale source: {src_url}")
+                if age > timedelta(hours=72):
+                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>72h) — SKIPPING stale source: {src_url}")
                     globals()["_last_source_url"] = None
                     globals()["_last_image_topic"] = None
                     return None
