@@ -12,6 +12,16 @@ from .llm_client import run_llm, unwrap_text
 
 _URL_RE = re.compile(r"https?://\S+")
 _SOURCE_URL_RE = re.compile(r"https?://[^\s\]\)>\"]+")
+_LEAKED_META_LINE_RE = re.compile(
+    r"^\s*(?:mot[-\s]?cl[eé]s?|keywords?|keyword|sujet|topic|th[eè]me|theme|"
+    r"angle|source|image|pattern)\s*[:：].*$",
+    re.IGNORECASE,
+)
+_LEAKED_BRACKET_LINE_RE = re.compile(
+    r"^\s*\[\s*(?:mot[-\s]?cl[eé]s?|keywords?|keyword|sujet|topic|th[eè]me|"
+    r"theme|angle|source|image|pattern)\b[^\]]*\]\s*$",
+    re.IGNORECASE,
+)
 
 
 def _strip_urls(text: str) -> str:
@@ -24,6 +34,26 @@ def _strip_urls(text: str) -> str:
     # Trim hanging punctuation that introduced the URL ("voir: " → "voir")
     cleaned = re.sub(r"\s*([:\-\(\[])\s*$", "", cleaned).strip()
     return cleaned
+
+
+def _finalize_news_tweet(text: str, src_url: str) -> str:
+    """Remove provider metadata leaks and leave exactly one clean URL line."""
+    body = _URL_RE.sub("", text or "")
+    cleaned_lines = []
+    for raw in body.splitlines():
+        line = raw.strip()
+        if not line:
+            if cleaned_lines and cleaned_lines[-1] != "":
+                cleaned_lines.append("")
+            continue
+        if _LEAKED_META_LINE_RE.match(line) or _LEAKED_BRACKET_LINE_RE.match(line):
+            continue
+        cleaned_lines.append(line)
+
+    body = "\n".join(cleaned_lines).strip()
+    body = re.sub(r"\n{3,}", "\n\n", body)
+    body = re.sub(r"\s*(?:source|url|lien)\s*[:：]\s*$", "", body, flags=re.IGNORECASE).strip()
+    return (body.rstrip() + "\n\n" + src_url).strip()
 
 PROMPT_TEMPLATE = """Tu es @kzer_ai. La voix française la plus sharp sur l'IA.
 
@@ -125,10 +155,13 @@ vanne ou l'angle?" Si non → SKIP.
 {dedup_section}
 
 OUTPUT — strictement ce format, rien d'autre:
-<la bombe française 2 phrases avec contexte + punchline>
+<la news IA en français: explication + contexte + conséquence + blague>
 
 <URL article>
 [PATTERN: REPETITION|DIALOGUE|METAPHOR|RENAME|FR_ANCHOR|UNDERSTATEMENT|OTHER]
+
+N'ajoute JAMAIS de ligne "mot-clé", "keyword", "sujet", "topic", "angle",
+"source:" ou autre metadata visible. La seule ligne finale visible doit être l'URL.
 """
 
 # Old 600-line bloated prompt (kept here as _ARCHIVE_OLD_PROMPT for reference,
@@ -1044,5 +1077,6 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     # X's native link-card covers the visual; an attached image would
     # suppress the card preview, so always null the image topic.
     globals()["_last_image_topic"] = None
+    tweet = _finalize_news_tweet(tweet, src_url)
     log.info(f"[NEWS] Article URL detected (X will render card): {src_url[:120]}")
     return tweet
