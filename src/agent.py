@@ -22,6 +22,7 @@ _LEAKED_BRACKET_LINE_RE = re.compile(
     r"theme|angle|source|image|pattern)\b[^\]]*\]\s*$",
     re.IGNORECASE,
 )
+_MAX_NEWS_BODY_CHARS = 190
 
 
 def _strip_urls(text: str) -> str:
@@ -54,6 +55,13 @@ def _finalize_news_tweet(text: str, src_url: str) -> str:
     body = re.sub(r"\n{3,}", "\n\n", body)
     body = re.sub(r"\s*(?:source|url|lien)\s*[:：]\s*$", "", body, flags=re.IGNORECASE).strip()
     return (body.rstrip() + "\n\n" + src_url).strip()
+
+
+def _news_body_too_long(tweet: str, src_url: str) -> bool:
+    """Keep news posts below X's collapsed-text threshold."""
+    body = (tweet or "").replace(src_url or "", "")
+    body = re.sub(r"\s+", " ", body).strip()
+    return len(body) > _MAX_NEWS_BODY_CHARS
 
 PROMPT_TEMPLATE = """Tu es @kzer_ai. La voix française la plus sharp sur l'IA.
 
@@ -101,20 +109,20 @@ Si c'est juste "une boîte lance une fonctionnalité", transforme-la en angle ma
 qui gagne, qui perd, combien ça coûte, quelle absurdité ça révèle. SKIP seulement
 si tu n'as ni chiffre, ni conséquence, ni contradiction.
 
-🔥 STRUCTURE VISUELLE OBLIGATOIRE — PAS DE "SHOW MORE":
+🔥 STRUCTURE VISUELLE OBLIGATOIRE — JAMAIS DE "SHOW MORE":
 Le tweet principal doit rester court. Si X affiche "show more", c'est raté.
 
-Bloc 1 = EXPLIQUER LA NEWS en français, 1-2 phrases courtes:
-- phrase 1: qui + quoi + chiffre/date exact.
-- phrase 2 optionnelle: pourquoi ça compte OU qui gagne/perd. Pas les deux si ça rallonge.
+Bloc 1 = EXPLIQUER LA NEWS en français, 1 phrase courte:
+- qui + quoi + chiffre/date exact + mini-contexte si possible.
+- PAS de 2e phrase sauf si indispensable.
 
 LIGNE VIDE.
 
 Bloc 2 = PUNCHLINE sarcastique, 1 phrase courte:
 - drôle, française, mémorable, faite pour obtenir likes, réponses, RT et follows.
 - elle doit être compréhensible grâce au bloc 1, pas une private joke.
-- FORMAT: 1-2 phrases d'explication, ligne vide, 1 phrase de vanne, ligne vide, URL.
-- 180-240 caractères hors URL. Maximum absolu: 260 caractères hors URL.
+- FORMAT: 1 phrase d'explication, ligne vide, 1 phrase de vanne, ligne vide, URL.
+- 120-170 caractères hors URL. Maximum absolu: 190 caractères hors URL.
 - Pas de lien balancé sans explication. Le tweet doit tenir debout SANS ouvrir l'article.
 - HOOK dans les 6 premiers mots: chiffre choc, verbe brutal, renaming, ou nom propre sec.
   INTERDIT: "Aujourd'hui...", "Selon...", "Breaking:", "Cette semaine...".
@@ -123,7 +131,7 @@ Bloc 2 = PUNCHLINE sarcastique, 1 phrase courte:
   légende de lien. Si BFM pourrait dire la même chose sans perdre son plateau,
   c'est trop mou → réécris ou SKIP.
 - FORMAT OBLIGATOIRE:
-  "<fait + mini-contexte en 1-2 phrases>.\n\n<chute FR qui pique>."
+  "<fait + mini-contexte en 1 phrase>.\n\n<chute FR qui pique>."
 - CONTEXTE SANS ENNUYER: le lecteur doit comprendre l'enjeu sans ouvrir l'article.
   Si le tweet est juste une vanne privée sur un lien, réécris.
 - CHUTE française obligatoire. Réf culturelle française:
@@ -134,9 +142,9 @@ Bloc 2 = PUNCHLINE sarcastique, 1 phrase courte:
 - Zero hashtag. Zero emoji décoratif. Zero tiret long (—). Zero "Game-changer".
 
 🎯 LA NEWS PARFAITE = contexte + angle + vanne:
-- "OpenAI lève 40Md à valo 500Md, mené par SoftBank. Le pari: devenir l'électricité de l'IA avant que la facture arrive.\n\nC'est plus une boîte, c'est un PEL avec un GPU."
-- "Anthropic lance un agent qui clique dans ton navigateur et remplit des formulaires. Le SaaS vient de découvrir le chômage technique.\n\nLe stagiaire Chrome est officiellement en CDI."
-- "Google met Gemini dans Workspace pour automatiser mails, docs et réunions. L'IA attaque enfin le vrai travail: faire semblant d'être occupé.\n\nLa réunion de suivi demande un point RH."
+- "OpenAI lève 40Md à valo 500Md pour devenir l'électricité de l'IA.\n\nC'est plus une boîte, c'est un PEL avec un GPU."
+- "Anthropic lance un agent qui clique dans ton navigateur et remplit des formulaires.\n\nLe stagiaire Chrome est officiellement en CDI."
+- "Google met Gemini dans Workspace pour automatiser mails, docs et réunions.\n\nL'IA attaque enfin le vrai travail: faire semblant d'être occupé."
 
 Si t'as un fait crédible + une conséquence claire + une chute correcte → POSTE.
 Ne renvoie SKIP que si l'article est absent, trop vieux, ou hors IA.
@@ -161,7 +169,7 @@ vanne ou l'angle?" Si non → SKIP.
 {dedup_section}
 
 OUTPUT — strictement ce format, rien d'autre:
-<1-2 phrases courtes qui expliquent la news IA + mini-contexte>
+<1 phrase courte qui explique la news IA + mini-contexte>
 
 <1 phrase de punchline sarcastique>
 
@@ -1086,5 +1094,10 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     # suppress the card preview, so always null the image topic.
     globals()["_last_image_topic"] = None
     tweet = _finalize_news_tweet(tweet, src_url)
+    if _news_body_too_long(tweet, src_url):
+        preview = " ".join(tweet.replace(src_url, "").split())
+        log.info(f"[NEWS] Body too long ({len(preview)} chars > {_MAX_NEWS_BODY_CHARS}) — SKIPPING to avoid Show more: {preview[:180]!r}")
+        globals()["_last_source_url"] = None
+        return None
     log.info(f"[NEWS] Article URL detected (X will render card): {src_url[:120]}")
     return tweet
