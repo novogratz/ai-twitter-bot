@@ -22,7 +22,8 @@ _LEAKED_BRACKET_LINE_RE = re.compile(
     r"theme|angle|source|image|pattern)\b[^\]]*\]\s*$",
     re.IGNORECASE,
 )
-_MAX_NEWS_BODY_CHARS = 190
+_MAX_NEWS_BODY_CHARS = 95
+_MAX_NEWS_LINE_CHARS = 62
 
 
 def _strip_urls(text: str) -> str:
@@ -62,6 +63,17 @@ def _news_body_too_long(tweet: str, src_url: str) -> bool:
     body = (tweet or "").replace(src_url or "", "")
     body = re.sub(r"\s+", " ", body).strip()
     return len(body) > _MAX_NEWS_BODY_CHARS
+
+
+def _news_body_bad_format(tweet: str, src_url: str) -> bool:
+    """Require short two-block news: fact line, blank line, punchline."""
+    body = (tweet or "").replace(src_url or "", "").strip()
+    if "\n\n" not in body:
+        return True
+    non_empty = [ln.strip() for ln in body.splitlines() if ln.strip()]
+    if len(non_empty) != 2:
+        return True
+    return any(len(line) > _MAX_NEWS_LINE_CHARS for line in non_empty)
 
 PROMPT_TEMPLATE = """Tu es @kzer_ai. La voix française la plus sharp sur l'IA.
 
@@ -114,9 +126,10 @@ Si non, cherche une meilleure story.
 🔥 STRUCTURE VISUELLE OBLIGATOIRE — JAMAIS DE "SHOW MORE":
 Le tweet principal doit rester court. Si X affiche "show more", c'est raté.
 
-Bloc 1 = EXPLIQUER LA NEWS en français, 1 phrase courte:
-- qui + quoi + chiffre/date exact + mini-contexte si possible.
-- PAS de 2e phrase sauf si indispensable.
+Bloc 1 = EXPLIQUER LA NEWS en français, 1 seule phrase ultra-courte:
+- qui + quoi + chiffre/date exact. Point.
+- 62 caractères max.
+- PAS de contexte long. PAS de deuxième phrase.
 
 LIGNE VIDE.
 
@@ -124,7 +137,9 @@ Bloc 2 = PUNCHLINE sarcastique, 1 phrase courte:
 - drôle, française, mémorable, faite pour obtenir likes, réponses, RT et follows.
 - elle doit être compréhensible grâce au bloc 1, pas une private joke.
 - FORMAT: 1 phrase d'explication, ligne vide, 1 phrase de vanne, ligne vide, URL.
-- 120-170 caractères hors URL. Maximum absolu: 190 caractères hors URL.
+- 70-90 caractères hors URL. Maximum absolu: 95 caractères hors URL.
+- Chaque ligne visible doit faire ≤62 caractères.
+- 2 lignes visibles seulement avant l'URL: ligne 1 = news, ligne 2 = blague.
 - Pas de lien balancé sans explication. Le tweet doit tenir debout SANS ouvrir l'article.
 - Chaque mot doit porter de l'impact: chiffre, enjeu, gagnant/perdant, ou punchline.
 - HOOK dans les 6 premiers mots: chiffre choc, verbe brutal, renaming, ou nom propre sec.
@@ -145,9 +160,9 @@ Bloc 2 = PUNCHLINE sarcastique, 1 phrase courte:
 - Zero hashtag. Zero emoji décoratif. Zero tiret long (—). Zero "Game-changer".
 
 🎯 LA NEWS PARFAITE = contexte + angle + vanne:
-- "OpenAI lève 40Md à valo 500Md pour devenir l'électricité de l'IA.\n\nC'est plus une boîte, c'est un PEL avec un GPU."
-- "Anthropic lance un agent qui clique dans ton navigateur et remplit des formulaires.\n\nLe stagiaire Chrome est officiellement en CDI."
-- "Google met Gemini dans Workspace pour automatiser mails, docs et réunions.\n\nL'IA attaque enfin le vrai travail: faire semblant d'être occupé."
+- "OpenAI lève 40Md à valo 500Md.\n\nPEL avec un GPU."
+- "Anthropic lance un agent navigateur.\n\nLe stagiaire Chrome est en CDI."
+- "Google met Gemini dans Workspace.\n\nLe bullshit administratif tremble."
 
 Si t'as un fait IA massif + une conséquence claire + une chute correcte → POSTE.
 Ne renvoie SKIP que si l'article est absent, trop vieux, ou hors IA.
@@ -172,7 +187,7 @@ vanne ou l'angle?" Si non → SKIP.
 {dedup_section}
 
 OUTPUT — strictement ce format, rien d'autre:
-<1 phrase courte qui explique la news IA + mini-contexte>
+<1 phrase ultra-courte qui explique la news IA>
 
 <1 phrase de punchline sarcastique>
 
@@ -1094,6 +1109,11 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     # suppress the card preview, so always null the image topic.
     globals()["_last_image_topic"] = None
     tweet = _finalize_news_tweet(tweet, src_url)
+    if _news_body_bad_format(tweet, src_url):
+        preview = " ".join(tweet.replace(src_url, "").split())
+        log.info(f"[NEWS] Bad body format — SKIPPING to avoid unreadable block: {preview[:180]!r}")
+        globals()["_last_source_url"] = None
+        return None
     if _news_body_too_long(tweet, src_url):
         preview = " ".join(tweet.replace(src_url, "").split())
         log.info(f"[NEWS] Body too long ({len(preview)} chars > {_MAX_NEWS_BODY_CHARS}) — SKIPPING to avoid Show more: {preview[:180]!r}")
