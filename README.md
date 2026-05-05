@@ -125,8 +125,8 @@ All settings in `src/config.py`, overridable with environment variables:
 |----------|---------|-------------|
 | `MAX_NEWS_PER_DAY` | 6 | Max standalone news posts per day |
 | `MAX_HOTAKES_PER_DAY` | 1 | Max hot takes per day |
-| `MAX_RETWEETS_PER_DAY` | 3 | Max selective retweets per day |
-| `RETWEET_MIN_LIKES` | 50 | Min likes on a candidate retweet |
+| `MAX_RETWEETS_PER_DAY` | 12 | Max selective retweets per day |
+| `RETWEET_MIN_LIKES` | 10 | Min likes on a candidate retweet |
 | `MAX_QUOTES_PER_DAY` | 2 | Max quote-tweets per day |
 | `MAX_REPLIES_PER_CYCLE` | 6 | Max search replies per cycle |
 | `REPLY_MIN_LIKES` | 2 | Min likes on a tweet before the bot will reply (random-search sources only — curated paths bypass) |
@@ -182,7 +182,7 @@ src/
   dynamic_strategy.py        # Append-only stores for strategy-agent additions
   quote_tweet_bot.py         # Quote-tweet path (cap 12/day, every 90 min)
   early_bird_bot.py          # Top-5-reply path on fresh viral tweets
-  retweet_bot.py             # Selective retweets of trusted news (cap 8/day, every 95 min)
+  retweet_bot.py             # Selective retweets of trusted news (cap 12/day, every 60 min)
   discover_bot.py            # Autonomous handle discovery (every 3h)
   roast_pgm_bot.py           # Dedicated 1-roast-per-tweet for @pgm_pm
   image_gen.py               # PNG quote-card generator (Pillow)

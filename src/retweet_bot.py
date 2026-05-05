@@ -7,8 +7,8 @@ YouTube news show. Every retweet must clear two bars:
      CoinDesk / Les Échos / Le Monde / FT / WSJ / etc. — the same whitelist
      the news agent already trusts).
 
-So: NOT a volume play. We aim for ~6-10 retweets/day, each one a banger
-the user could screenshot for the next YouTube intro.
+So: still source-first, but much higher volume. We aim for ~10-15 retweets/day,
+each one a useful amplification the user could screenshot for the next YouTube intro.
 
 Side effect that matters: every accepted retweet also gets appended to
 `daily_news_picks.md` with the URL, source handle, and a one-line
@@ -55,17 +55,14 @@ RETWEETED_FILE = os.path.join(_PROJECT_ROOT, "retweeted.json")
 RETWEET_STATE_FILE = os.path.join(_PROJECT_ROOT, "retweet_daily_state.json")
 DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 
-# Hard cap per day. History: 8 → 16 (2026-04-29) → 10 (2026-04-30 PM, user
-# directive "do more news and more retweet... 10 per day push it"). The 16
-# cap was rarely hit anyway given the ≥7/10 quality bar, so 10 reflects the
-# actual ceiling and aligns with the news cap for symmetry.
-MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "3"))
+# Hard cap per day. Raised aggressively because the user wants far more
+# amplification and the path is deterministic/no-AI. Keep a ceiling, but
+# let the scheduler actually move.
+MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "12"))
 
-# Min likes to even consider a candidate. Lowered 25→10 (2026-04-29 PM):
-# was starving the path — only 2 retweets in 4 days. Top-tier outlets
-# break news fast but don't always rocket past 25 likes in the first hour;
-# retweeting a Reuters scoop at 12 likes is still a quality amplification.
-MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "50"))
+# Min likes to even consider a candidate. Keep it low so fresh elite news
+# actually gets amplified instead of waiting for engagement to accumulate.
+MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "10"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -303,9 +300,9 @@ def run_retweet_cycle():
 
     retweeted = _load_retweeted()
 
-    # Sample 4 trusted handles per cycle. With 8 cycles/day and 38 handles
-    # we get strong coverage without burning Safari time on every source.
-    sample = random.sample(TRUSTED_NEWS_HANDLES, k=min(4, len(TRUSTED_NEWS_HANDLES)))
+    # Sample more handles per cycle so the bot can actually sustain a higher
+    # retweet rate without waiting for one lucky source.
+    sample = random.sample(TRUSTED_NEWS_HANDLES, k=min(8, len(TRUSTED_NEWS_HANDLES)))
     log.info(f"[RETWEET] Scraping trusted news handles: {sample}")
 
     candidates = []
@@ -335,7 +332,7 @@ def run_retweet_cycle():
                 continue
             likes = int(t.get("likes") or 0)
             replies = int(t.get("replies") or 0)
-            if likes < MIN_LIKES_FLOOR and replies < 5:
+            if likes < MIN_LIKES_FLOOR and replies < 3:
                 continue
             # Belt-and-suspenders source check — even though the handle
             # came from our whitelist, pull it through _has_trusted_source
@@ -380,10 +377,10 @@ def run_retweet_cycle():
     )
     log.info(f"[RETWEET] WHY (for YouTube doc): {why}")
 
-    # YouTube research doc: log anything ≥ 8/10 even if we don't actually
+    # YouTube research doc: log anything ≥ 7/10 even if we don't actually
     # retweet it (gives the user a wider research surface than the retweet
     # cap would).
-    if score >= 8 and why:
+    if score >= 7 and why:
         try:
             _append_to_daily_picks(pick, score, why)
             log.info(f"[RETWEET] Logged to {os.path.basename(DAILY_PICKS_FILE)}")
@@ -393,8 +390,8 @@ def run_retweet_cycle():
 
     # Quality reset 2026-05-02: too much low-signal news made the feed feel
     # like a wire service. Retweets are now only for obvious bangers.
-    if score < 9:
-        log.info(f"[RETWEET] Score {score}/10 below retweet threshold (9). Logged only.")
+    if score < 8:
+        log.info(f"[RETWEET] Score {score}/10 below retweet threshold (8). Logged only.")
         return
 
     # Lock URL in BEFORE posting so a crash can't double-retweet.

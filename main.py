@@ -453,13 +453,13 @@ def main():
 
         # Retweet bot — selective amplifier for ELITE AI/crypto/bourse news
         # from trusted outlets (Reuters/Bloomberg/TechCrunch/Coindesk/lesechos
-        # etc.). Cap 8/day. Picks single best candidate per cycle, only
-        # retweets if score ≥ 9/10. Side-effect: appends ≥8/10 picks to
+        # etc.). Cap 12/day. Picks single best candidate per cycle, only
+        # retweets if score ≥ 8/10. Side-effect: appends ≥7/10 picks to
         # daily_news_picks.md — that file IS the YouTube show research doc.
-        log.info("Retweet bot: selective amplification of trusted news every 4 hours (cap 3/day).")
+        log.info("Retweet bot: selective amplification of trusted news every hour (cap 12/day).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(hours=4),
+            trigger=IntervalTrigger(hours=1),
             id="retweet_job",
         )
 
