@@ -77,6 +77,19 @@ EARLY_BIRD_ACCOUNTS = [
     "Yoshua_Bengio", "Montreal_AI", "ActuIAFr",  # defendintelligence (>15 char) removed 2026-04-27
     "Tradosaure", "InvestQuebec", "FI_Quebec", "investirfr", "cryptoqc",
     "lesaffaires", "BourseFrance",
+    # === Mega VC + builder voices 2026-05-06 (top-of-feed fresh viral hits) ===
+    "naval", "paulg", "balajis", "pmarca", "garrytan", "levie",
+    "soumithchintala", "drum_vp", "swyx", "fchollet",
+    "shaneguML", "_jasonwei", "polynoamial", "BorisMPower",
+    # === FR finance / fintech / startup ===
+    "AlexandreBompard", "MicrobsoftFR", "Lazefoot", "Olivierbabeau",
+    "AlbertEinstein51", "MaitreEolas", "FrenchFoundersFR",
+    "TheFamilyFR", "PartechPartners", "elaia_partners",
+    "stanislas_d", "SiparexCapital", "Parisien_Eco",
+    # === FR macro / banque centrale (high-signal) ===
+    "FrancoisVilleroy", "BanqueDeFrance", "CroissancePlus",
+    # === Crypto mega EN (more deep-pocketed VCs) ===
+    "_a16zCrypto", "tetranode", "punk6529", "0xMaki",
 ]
 
 # A tweet is "early-bird eligible" if it's at most this many minutes old.

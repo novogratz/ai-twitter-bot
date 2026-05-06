@@ -35,6 +35,9 @@ from src.daily_digest import safe_run_daily_digest
 from src.quote_tweet_bot import safe_run_quote_tweet_cycle
 from src.early_bird_bot import safe_run_early_bird_cycle
 from src.retweet_bot import safe_run_retweet_cycle
+from src.thread_bot import safe_run_thread_cycle
+from src.promote_bot import safe_run_promote_cycle
+from src.followback_bot import safe_run_followback_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -471,6 +474,40 @@ def main():
             safe_run_daily_digest,
             trigger=IntervalTrigger(hours=1),
             id="daily_digest_job",
+        )
+
+        # Thread bot — 1 well-crafted FR thread per day on the biggest IA story.
+        # Different distribution surface than single-tweet news (lifespan = days,
+        # high screenshot+RT rate). Idempotent state in thread_daily_state.json.
+        # Fires every 4h so a missed cron after restart still catches up;
+        # the daily-state file guards against double-posting.
+        log.info("Thread bot: 1 FR thread/day on the biggest IA story (every 4h, idempotent).")
+        scheduler.add_job(
+            safe_run_thread_cycle,
+            trigger=IntervalTrigger(hours=4),
+            id="thread_job",
+        )
+
+        # Promote-best-reply bot — quote-RTs our highest-engagement reply
+        # so it appears on the profile feed instead of buried in a thread.
+        # Cap 3/day. Different from quote_tweet_bot (which quotes external
+        # tweets) — this one repackages OUR proven content.
+        log.info("Promote bot: quote-RT top recent reply every 3h (cap 3/day).")
+        scheduler.add_job(
+            safe_run_promote_cycle,
+            trigger=IntervalTrigger(hours=3),
+            id="promote_job",
+        )
+
+        # Follow-back bot — scrape /kzer_ai/followers and follow back fresh
+        # ones (capped 8/cycle, every 2h). Reciprocity is the highest-leverage
+        # follower-growth tactic; the existing reciprocity loop only catches
+        # repliers — this catches lurkers + likers + everyone else.
+        log.info("Follow-back bot: follow back fresh followers every 2h (cap 8/cycle).")
+        scheduler.add_job(
+            safe_run_followback_cycle,
+            trigger=IntervalTrigger(hours=2),
+            id="followback_job",
         )
 
     log.info("All systems go. Bot is running.")
