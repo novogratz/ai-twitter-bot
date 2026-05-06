@@ -38,6 +38,7 @@ from src.retweet_bot import safe_run_retweet_cycle
 from src.thread_bot import safe_run_thread_cycle
 from src.promote_bot import safe_run_promote_cycle
 from src.followback_bot import safe_run_followback_cycle
+from src.pin_bot import safe_run_pin_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -508,6 +509,17 @@ def main():
             safe_run_followback_cycle,
             trigger=IntervalTrigger(hours=2),
             id="followback_job",
+        )
+
+        # Pin bot — daily idempotent. Picks our highest-engagement post of
+        # the recent window and pins it via JS menu click. A strong pinned
+        # tweet is the #1 follow-conversion lever for first-time visitors.
+        # Best-effort: if the JS menu DOM has shifted, logs + moves on.
+        log.info("Pin bot: pinning best own post once a day (every 6h, idempotent).")
+        scheduler.add_job(
+            safe_run_pin_cycle,
+            trigger=IntervalTrigger(hours=6),
+            id="pin_job",
         )
 
     log.info("All systems go. Bot is running.")

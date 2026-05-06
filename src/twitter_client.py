@@ -635,6 +635,111 @@ def retweet_post(tweet_url: str):
         close_front_tab()
 
 
+def pin_own_tweet(tweet_url: str) -> bool:
+    """Pin one of our own tweets to the profile via the More menu.
+
+    Best-effort. X's tweet-action menu DOM is stable but the wording of the
+    'Pin' item varies (FR: 'Épingler à votre profil' / EN: 'Pin to your
+    profile'). We click via JS by matching either string. Returns True if
+    the pin appeared to succeed (menu item found + clicked + confirm dialog
+    handled), False otherwise.
+
+    Note: X surfaces a confirmation modal on first pin per session; we
+    handle it by clicking the confirm button (data-testid="confirmationSheetConfirm").
+    """
+    import json as _json
+    import tempfile
+
+    js_code = """
+    (function() {
+        var article = document.querySelector('article[data-testid="tweet"]');
+        if (!article) return 'NO_ARTICLE';
+        var moreBtn = article.querySelector('[data-testid="caret"]');
+        if (!moreBtn) return 'NO_MORE_BTN';
+        moreBtn.click();
+        return 'MORE_CLICKED';
+    })()
+    """
+    js_pin_item = """
+    (function() {
+        var menuItems = document.querySelectorAll('[role="menuitem"]');
+        for (var i = 0; i < menuItems.length; i++) {
+            var t = (menuItems[i].textContent || '').trim().toLowerCase();
+            if (t.indexOf('pin to your profile') !== -1 ||
+                t.indexOf('épingler à votre profil') !== -1 ||
+                t.indexOf('epingler a votre profil') !== -1) {
+                menuItems[i].click();
+                return 'PIN_CLICKED';
+            }
+            // Older variant: "Pin"
+            if (t === 'pin' || t === 'épingler' || t === 'epingler') {
+                menuItems[i].click();
+                return 'PIN_CLICKED';
+            }
+        }
+        return 'PIN_NOT_FOUND_' + menuItems.length;
+    })()
+    """
+    js_confirm = """
+    (function() {
+        var btn = document.querySelector('[data-testid="confirmationSheetConfirm"]');
+        if (btn) { btn.click(); return 'CONFIRMED'; }
+        return 'NO_CONFIRM';
+    })()
+    """
+
+    def _exec_js(js: str, timeout_s: int = 15) -> str:
+        tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False)
+        tmp.write(js)
+        tmp.close()
+        applescript = f'''
+        tell application "Safari" to activate
+        set jsCode to (read POSIX file "{tmp.name}")
+        tell application "Safari"
+            set result to do JavaScript jsCode in current tab of front window
+        end tell
+        '''
+        try:
+            r = subprocess.run(
+                ["osascript", "-e", applescript],
+                capture_output=True, text=True, timeout=timeout_s,
+            )
+            return (r.stdout or "").strip()
+        except Exception:
+            return "EXCEPTION"
+        finally:
+            try:
+                os.unlink(tmp.name)
+            except OSError:
+                pass
+
+    with _safari_lock:
+        log.info(f"[PIN] Opening tweet to pin: {tweet_url}")
+        webbrowser.open(tweet_url)
+        time.sleep(7)
+
+        step1 = _exec_js(js_code)
+        log.info(f"[PIN] More-menu open: {step1}")
+        if step1 != "MORE_CLICKED":
+            close_front_tab()
+            return False
+        time.sleep(1.2)
+
+        step2 = _exec_js(js_pin_item)
+        log.info(f"[PIN] Pin item click: {step2}")
+        if step2 != "PIN_CLICKED":
+            close_front_tab()
+            return False
+        time.sleep(1.5)
+
+        step3 = _exec_js(js_confirm)
+        log.info(f"[PIN] Confirm modal: {step3}")
+        # Whether the confirm modal appeared or not, we leave the page.
+        time.sleep(1)
+        close_front_tab()
+        return step3 in ("CONFIRMED", "NO_CONFIRM")
+
+
 def retweet_own_latest():
     """Visit own profile and retweet the latest tweet for extra exposure."""
     with _safari_lock:

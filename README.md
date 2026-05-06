@@ -36,7 +36,15 @@ Default mode is Plus-safe: AI is used for content that actually ships (news, hot
 
 **Quote-Tweet Bot** - Every 75 min, cap 10/day. FR-biased query pool (Mistral, Anthropic, Hugging Face, CAC40, Bercy/AMF/BdF) with one EN viral fallback. Lands in followers' feed AND notifies the original author — different distribution surface than replies.
 
-**Retweet Bot** - Every 40 min, cap 20/day. Selective amplifier of trusted news (Reuters/Bloomberg/AFP/FT/WSJ + 17 FR press handles: Numerama, Usine Digitale, Siècle Digital, 01net, Frandroid, Presse-Citron, BFMcrypto, CointelegraphFR, Cryptoast, Boursorama, Capital, Challenges, L'Express). Score ≥7/10 → retweet, ≥7/10 → also logged to `daily_news_picks.md` for the YouTube show research doc.
+**Retweet Bot** - Every 20 min, cap 60/day. FR-biased trusted-handle amplifier (26 FR press + 25 EN wires; per-cycle sample 14 FR + 4 EN). Scorer adds +2 for FR-language signal in tweet text and -1 to EN picks → EN must clear score ≥8 to retweet, FR ≥7. Picks ≥6 → retweet, ≥7 → logged to `daily_news_picks.md`.
+
+**Thread Bot** - 1 well-crafted 4-tweet FR thread per day on the biggest IA/crypto/bourse story. Hook → fait → angle → chute + URL. Different distribution surface than single news (longer lifespan, screenshot RTs). Idempotent daily state.
+
+**Promote Bot** - Quote-RTs our top recent reply onto the profile feed (cap 3/day, MIN_LIKES=5). Repackages proven content onto a different surface — replies hit but live inside other people's threads, this puts them on /kzer_ai.
+
+**Follow-back Bot** - Scrapes /kzer_ai/followers and follows back fresh accounts (cap 8/cycle, every 2h). Reciprocity is the highest-leverage follower-growth tactic.
+
+**Pin Bot** - Daily idempotent. Picks our highest-engagement own POST and pins it via JS menu click (FR + EN strings). Best-effort; falls back silently if the X menu DOM has shifted. A strong pinned tweet is the #1 follow-conversion lever.
 
 **Daily Digest** - Hourly idempotent cron, writes one section per day to `daily_digest.md`: total actions, by-type breakdown, top sources, comedy patterns, top reply targets, top-perf posts, follow count delta. Built specifically for the 2-week post-mission review.
 
@@ -183,9 +191,13 @@ src/
   personality_store.py       # Per-account/per-topic dossiers + HARD_RULES_BLOCK
   topic_dedup.py             # Shared cross-format banlist (news + hot take)
   dynamic_strategy.py        # Append-only stores for strategy-agent additions
-  quote_tweet_bot.py         # Quote-tweet path (cap 10/day, every 75 min)
-  early_bird_bot.py          # Top-5-reply path on fresh viral tweets
-  retweet_bot.py             # Selective retweets of trusted news (cap 20/day, every 40 min)
+  quote_tweet_bot.py         # Quote-tweet path (cap 30/day, every 35 min)
+  early_bird_bot.py          # Top-5-reply path on fresh viral tweets (cap 4/cycle)
+  retweet_bot.py             # Selective retweets of trusted news (cap 60/day, every 20 min)
+  thread_bot.py              # 1 FR thread/day on biggest IA story (idempotent, every 4h)
+  promote_bot.py             # Quote-RT our top recent reply (cap 3/day, every 3h)
+  followback_bot.py          # Scrape followers, follow back (cap 8/cycle, every 2h)
+  pin_bot.py                 # Auto-pin best own post (daily idempotent, every 6h)
   discover_bot.py            # Autonomous handle discovery (every 3h)
   roast_pgm_bot.py           # Dedicated 1-roast-per-tweet for @pgm_pm
   image_gen.py               # PNG quote-card generator (Pillow)
