@@ -121,9 +121,10 @@ def run_engage_cycle():
     # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
     pool = filter_and_weight(TARGET_ACCOUNTS)
 
-    # Growth push: hit more accounts per cycle, with priority accounts already
-    # duplicated in the pool via filter_and_weight/reinforcement.
-    count = random.randint(5, 7)
+    # Growth push 2026-05-06: hit more accounts per cycle (5-7 → 7-10).
+    # Likes are cheap and trigger a notification → highest-leverage way
+    # to land on a stranger's profile + earn a reciprocity-follow.
+    count = random.randint(7, 10)
     picks = random.sample(pool, min(count, len(pool)))
 
     log.info(f"[ENGAGE] Engaging with {len(picks)} accounts...")
