@@ -45,6 +45,9 @@ from src.digest_thread_bot import safe_run_digest_thread_cycle
 from src.follow_blast_bot import safe_run_follow_blast_cycle
 from src.auto_tune_bot import safe_run_auto_tune_cycle
 from src.self_evolution_agent import safe_run_self_evolution_cycle
+from src.breakout_bot import safe_run_breakout_cycle
+from src.spike_bot import safe_run_spike_cycle
+from src.spicy_bot import safe_run_spicy_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -605,6 +608,41 @@ def main():
             safe_run_self_evolution_cycle,
             trigger=IntervalTrigger(hours=4),
             id="self_evolution_job",
+        )
+
+        # Breakout bot — fast trend jacker. Every 8 min scrapes niche
+        # search Top tab; if a tweet has >= BREAKOUT_VELOCITY_LIKES likes
+        # (default 100) it counts as breaking — generates a fast FR take
+        # in <30 sec via Opus and ships immediately. Cap 8/day. Designed
+        # to put us in the first 50 FR voices on a viral story.
+        log.info("Breakout bot: fast trend jacker every 8 min (cap 8/day).")
+        scheduler.add_job(
+            safe_run_breakout_cycle,
+            trigger=IntervalTrigger(minutes=8),
+            id="breakout_job",
+        )
+
+        # Spike orchestrator — when one of OUR posts crosses SPIKE_LIKES
+        # (default 25), all bots converge: auto-pin, self-RT, in-thread
+        # follow-up, quote-RT promo, like top replies. Most growth
+        # happens AROUND the viral moment; this bot ensures we ride it.
+        log.info("Spike orchestrator: amplifying viral own posts every 8 min.")
+        scheduler.add_job(
+            safe_run_spike_cycle,
+            trigger=IntervalTrigger(minutes=8),
+            id="spike_job",
+        )
+
+        # Spicy bot — deliberately polarizing FR takes + question bait.
+        # Cap 6/day. Replies > likes for algo signal; spicy + question
+        # mode both maximize replies-per-impression. Different from
+        # regular news (no source, no impact filter) — pure engagement
+        # velocity.
+        log.info("Spicy bot: polarizing/question takes every ~80 min (cap 6/day).")
+        scheduler.add_job(
+            safe_run_spicy_cycle,
+            trigger=IntervalTrigger(minutes=80),
+            id="spicy_job",
         )
 
     log.info("All systems go. Bot is running.")

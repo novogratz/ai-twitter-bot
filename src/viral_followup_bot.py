@@ -30,7 +30,7 @@ from .humanizer import humanize
 from .engagement_log import log_reply
 
 VIRAL_FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "viral_followed_up.json")
-VIRAL_THRESHOLD = int(os.environ.get("VIRAL_THRESHOLD", "15"))
+VIRAL_THRESHOLD = int(os.environ.get("VIRAL_THRESHOLD", "8"))
 VIRAL_FOLLOWUP_CAP_PER_CYCLE = int(os.environ.get("VIRAL_FOLLOWUP_CAP", "3"))
 
 

@@ -1,0 +1,224 @@
+"""Spike orchestrator — when one of our posts takes off, all bots converge.
+
+Most growth on X happens AROUND a single viral moment. The first hour
+after takeoff is where 80% of the reach lands. Default bot behavior is
+to keep posting new things; that DILUTES the spike. This bot does the
+opposite: when it detects a viral spike on our own profile, it pauses
+new-content cycles for ~60min and amplifies the spike from every angle.
+
+Strategy:
+  - Every 8 min, scrape /kzer_ai for posts taking off (>= SPIKE_LIKES).
+  - On first detection of a spike (URL not seen yet):
+      1. Auto-pin it (override daily pin lock).
+      2. Self-RT it via retweet_post (push it onto every follower's feed).
+      3. Generate + post an in-thread follow-up (extends the punchline).
+      4. Promote (quote-RT) it onto our own feed with a meta-comment.
+      5. Like top replies on it (boosts thread engagement).
+  - Persistent dedup so we don't re-orchestrate the same spike.
+"""
+import json
+import os
+import time
+import traceback
+from datetime import datetime, date
+
+from .config import _PROJECT_ROOT, BOT_HANDLE, REPLY_MODEL
+from .llm_client import run_llm, unwrap_text
+from .logger import log
+from .twitter_client import (
+    scrape_profile_tweets,
+    retweet_post,
+    pin_own_tweet,
+    quote_tweet,
+    reply_to_tweet_in_thread,
+    like_own_tweet_replies,
+)
+from .humanizer import humanize, strip_agent_preamble
+from .engagement_log import log_reply
+
+SPIKE_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "spike_history.json")
+
+# Number of likes before a post counts as "spiking". Tuned conservative
+# at first — 30 likes from a 360-follower account is already a 10x post.
+SPIKE_LIKES = int(os.environ.get("SPIKE_LIKES", "25"))
+
+
+SPIKE_FOLLOWUP_PROMPT = """Tu es @kzer_ai. Un de tes tweets vient d'EXPLOSER:
+
+"{post_text}"
+
+({likes} likes en peu de temps)
+
+Le tweet décolle. C'est le moment de prolonger. Tu vas écrire UNE phrase
+courte de FOLLOW-UP en FRANÇAIS, postée en réponse à ton propre tweet, qui:
+- relance le pic d'audience qui regarde ce thread
+- prolonge la blague ou ajoute une couche brutale
+- garde l'effet meme
+
+RÈGLES:
+- Maximum 200 caractères.
+- En FRANÇAIS pur. Audience FR.
+- Format préféré: callback ("Edit:..."), mini-dialogue ("- Mais...", "- Non."), renaming, ou understatement.
+- Pas d'emojis, pas de hashtag, pas d'em dash.
+- Pas de méta ("Update", "Bonus", "Plus sérieusement"). On extend la blague.
+- Si rien ne te vient → output exactement le mot SKIP.
+
+Output UNIQUEMENT le follow-up FR, ou SKIP."""
+
+
+def _load_history() -> set:
+    if os.path.exists(SPIKE_HISTORY_FILE):
+        try:
+            with open(SPIKE_HISTORY_FILE, "r") as f:
+                return set(json.load(f))
+        except (json.JSONDecodeError, OSError):
+            pass
+    return set()
+
+
+def _save_history(s: set):
+    with open(SPIKE_HISTORY_FILE, "w") as f:
+        json.dump(list(s)[-200:], f)
+
+
+def _generate_spike_followup(post_text: str, likes: int):
+    prompt = SPIKE_FOLLOWUP_PROMPT.format(post_text=post_text, likes=likes)
+    result = run_llm(prompt, REPLY_MODEL, label="SPIKE_FOLLOWUP")
+    if result.returncode != 0:
+        return None
+    text = unwrap_text(result.stdout).strip()
+    text = strip_agent_preamble(text)
+    if not text or text.upper() == "SKIP" or "skip" in text.lower():
+        return None
+    text = humanize(text)
+    if len(text) < 10 or len(text) > 270:
+        return None
+    return text
+
+
+def _orchestrate_spike(post: dict, history: set):
+    """Hit the spike from every angle. Best-effort — each step is wrapped
+    independently so a single failure doesn't kill the orchestration.
+    """
+    url = post["url"]
+    text = post["text"]
+    likes = post["likes"]
+
+    log.info(
+        f"[SPIKE] Orchestrating amplification of {likes}-like post: {text[:120]!r}"
+    )
+
+    # Lock URL in BEFORE doing anything so a crash mid-flight can't loop.
+    history.add(url)
+    _save_history(history)
+
+    # 1. Auto-pin (override daily lock).
+    try:
+        ok = pin_own_tweet(url)
+        log.info(f"[SPIKE] pin: {ok}")
+    except Exception:
+        log.info("[SPIKE] pin failed:")
+        traceback.print_exc()
+
+    # 2. Self-RT (boosts on follower feeds).
+    try:
+        retweet_post(url)
+        log.info("[SPIKE] self-RT done.")
+        time.sleep(2)
+    except Exception:
+        log.info("[SPIKE] self-RT failed:")
+        traceback.print_exc()
+
+    # 3. In-thread follow-up extending the punchline.
+    try:
+        followup = _generate_spike_followup(text, likes)
+        if followup:
+            reply_to_tweet_in_thread(url, followup)
+            log.info(f"[SPIKE] in-thread follow-up posted: {followup!r}")
+            try:
+                log_reply(
+                    url, f"[SPIKE_FOLLOWUP] {followup}",
+                    action_type="reply",
+                    source=f"SPIKE/{BOT_HANDLE}",
+                )
+            except Exception:
+                pass
+            time.sleep(2)
+        else:
+            log.info("[SPIKE] no follow-up generated.")
+    except Exception:
+        log.info("[SPIKE] follow-up failed:")
+        traceback.print_exc()
+
+    # 4. Quote-RT onto our profile feed with a meta-comment.
+    try:
+        quote_tweet(url, "Pour ceux qui scrollent trop vite.")
+        log.info("[SPIKE] quote-RT promo done.")
+        time.sleep(2)
+    except Exception:
+        log.info("[SPIKE] quote-RT promo failed:")
+        traceback.print_exc()
+
+    # 5. Like top replies on the spiking thread (boosts engagement signal).
+    try:
+        like_own_tweet_replies()
+        log.info("[SPIKE] liked top replies.")
+    except Exception:
+        log.info("[SPIKE] like-replies failed:")
+        traceback.print_exc()
+
+    log.info(f"[SPIKE] Orchestration complete on {url}")
+
+
+def run_spike_cycle():
+    """Find spiking own posts, orchestrate amplification."""
+    history = _load_history()
+
+    log.info(f"[SPIKE] Scraping @{BOT_HANDLE} for posts >= {SPIKE_LIKES} likes...")
+    try:
+        tweets = scrape_profile_tweets(BOT_HANDLE, max_tweets=15)
+    except Exception:
+        log.info("[SPIKE] Scrape failed:")
+        traceback.print_exc()
+        return
+
+    if not tweets:
+        return
+
+    spikes = []
+    bot_lc = BOT_HANDLE.lower()
+    for t in tweets:
+        author = (t.get("author") or "").lower().lstrip("@")
+        if author and author != bot_lc:
+            continue
+        url = t.get("url") or ""
+        if not url or url in history:
+            continue
+        likes = int(t.get("likes") or 0)
+        if likes < SPIKE_LIKES:
+            continue
+        text = (t.get("text") or "").strip()
+        if not text:
+            continue
+        spikes.append({"url": url, "text": text, "likes": likes})
+
+    if not spikes:
+        return
+
+    # Pick the strongest spike this cycle and orchestrate ONCE per cycle.
+    # Other spikes will surface on subsequent cycles.
+    spikes.sort(key=lambda s: s["likes"], reverse=True)
+    best = spikes[0]
+    _orchestrate_spike(best, history)
+
+
+def safe_run_spike_cycle():
+    """Wrapper that catches errors so the scheduler keeps running."""
+    from . import health
+    try:
+        run_spike_cycle()
+        health.record_success("spike")
+    except Exception:
+        log.info("[SPIKE] Error during spike cycle:")
+        traceback.print_exc()
+        health.record_failure("spike")
