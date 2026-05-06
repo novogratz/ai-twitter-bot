@@ -643,6 +643,15 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     if not tweet or tweet.upper() == "SKIP":
         return None
 
+    # 2026-05-06: strip any rationale prose the agent leaked BEFORE the
+    # actual tweet. User-reported bug: agent shipped its own commentary
+    # ("Parfait. Air Street Press du 4 mai (≤36h)... ---\n<tweet>") as
+    # one combined post.
+    from .humanizer import strip_agent_preamble
+    tweet = strip_agent_preamble(tweet)
+    if not tweet or tweet.upper() == "SKIP":
+        return None
+
     # Defense against skip-rationale leaks (bug 2026-04-30 PM: quote-tweet
     # agent posted prose explaining its skip decision). The word "skip" is
     # never legitimately tweeted by us; refuse anything that contains it or

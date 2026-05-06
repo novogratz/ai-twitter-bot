@@ -1081,6 +1081,12 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         raise RuntimeError("Claude CLI returned empty output.")
     if tweet.upper() == "SKIP":
         return None
+    # 2026-05-06: strip any rationale prose the agent leaked BEFORE the
+    # actual tweet (e.g. "Parfait. Source X (≤36h)... ---\n<actual tweet>").
+    from .humanizer import strip_agent_preamble
+    tweet = strip_agent_preamble(tweet)
+    if not tweet or tweet.upper() == "SKIP":
+        return None
     # Defense against skip-rationale leaks (bug 2026-04-30 PM: quote-tweet
     # agent posted prose explaining its skip decision on @marcelenplace).
     # The word "skip" never legitimately appears in a tweet we'd ship.
