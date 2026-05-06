@@ -123,11 +123,14 @@ def _extract_image_topic(text: str):
         return cleaned, None
     return cleaned, slug
 
-HOTAKE_PROMPT = """Tu es @kzer_ai. La voix française la plus tranchante sur l'IA. Mi-philosophe, mi-troll. Toujours drôle.
+HOTAKE_PROMPT = """You are @kzer_ai. The sharpest voice on AI. Half-philosopher, half-troll. Always funny.
 
-🎯 OBJECTIF: drop UNE observation-bombe française sur un truc IA chaud (≤36h).
-1-2 phrases. Une chute qui fait rire fort + une réf française qui pique.
-Test ultime: un mec dans le RER B doit rire à voix haute, pas sourire. Sinon SKIP.
+{lang_directive}
+
+🎯 GOAL: drop ONE bomb-observation on a hot AI story (≤36h).
+1-2 sentences. A punchline that makes people laugh out loud + an exotic
+French cultural anchor (RER B, Bercy, syndicat) used as deadpan flavor.
+Ultimate test: a stranger should laugh out loud, not just smile. Otherwise SKIP.
 
 📰 TROUVE L'ÉVÉNEMENT IA (≤36h):
 RÈGLE — COMMENTAIRE FR OBLIGATOIRE, SOURCE FR OU EN.
@@ -626,8 +629,12 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
         performance_section = (performance_section or "") + "\n\n" + core_identity
     performance_section = (performance_section or "") + "\n\n" + personality_store.hard_rules_block()
 
+    from . import lang_mode
+    _ht_lang = lang_mode.pick_content_lang()
+    log.info(f"[HOTAKE] Generating in lang={_ht_lang}")
     prompt = HOTAKE_PROMPT.format(
         performance_section=performance_section,
+        lang_directive=lang_mode.lang_directive(_ht_lang),
         dedup_section=dedup_section,
     )
 

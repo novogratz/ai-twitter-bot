@@ -27,7 +27,9 @@ from . import personality_store
 
 THREAD_STATE_FILE = os.path.join(_PROJECT_ROOT, "thread_daily_state.json")
 
-THREAD_PROMPT = """Tu es @kzer_ai. Tu écris UN thread X de 4 tweets en FRANÇAIS sur LA story IA / crypto / bourse la plus importante des dernières 36h.
+THREAD_PROMPT = """You are @kzer_ai. You write ONE X thread of 4 tweets on THE most important AI / crypto / bourse story of the last 36h.
+
+{lang_directive}
 
 📅 Date: {today_date}
 
@@ -117,9 +119,13 @@ def run_thread_cycle():
     today_date = datetime.now().strftime("%Y-%m-%d")
     performance_section = personality_store.hard_rules_block()
 
+    from . import lang_mode
+    _t_lang = lang_mode.pick_content_lang()
+    log.info(f"[THREAD] Generating in lang={_t_lang}")
     prompt = THREAD_PROMPT.format(
         today_date=today_date,
         performance_section=performance_section,
+        lang_directive=lang_mode.lang_directive(_t_lang),
     )
 
     log.info("[THREAD] Generating daily FR thread...")

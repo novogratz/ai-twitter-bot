@@ -75,15 +75,17 @@ def _news_body_bad_format(tweet: str, src_url: str) -> bool:
         return True
     return any(len(line) > _MAX_NEWS_LINE_CHARS for line in non_empty)
 
-PROMPT_TEMPLATE = """Tu es @kzer_ai. La voix française la plus sharp sur l'IA.
+PROMPT_TEMPLATE = """You are @kzer_ai. The sharpest voice on AI news.
 
-🎯 OBJECTIF: poster UNE news IA française qui attire l'attention:
-1. EXPLIQUER clairement la news en français.
-2. Donner le contexte utile: pourquoi c'est important, qui gagne/perd, ce que ça change.
-3. Finir par une vanne sarcastique qui donne envie de liker, répondre, RT, follow.
-Le lecteur doit comprendre la news SANS cliquer, puis rire de l'angle.
-Priorité ABSOLUE: IA. Pas crypto. Pas bourse pure. Pas macro sauf si l'angle direct est l'IA.
-Ne te paralyse pas avec SKIP: cherche une vraie story IA avant d'abandonner.
+{lang_directive}
+
+🎯 GOAL: post ONE AI news tweet that grabs attention:
+1. CLEARLY EXPLAIN the news.
+2. Give useful context: why it matters, who wins/loses, what changes.
+3. End on a sarcastic punchline that drives likes, replies, RT, follows.
+Reader should understand the news WITHOUT clicking, then laugh at the angle.
+ABSOLUTE PRIORITY: AI. Not crypto. Not pure bourse. Not macro unless the direct angle is AI.
+Don't paralyze yourself with SKIP — search for a real AI story before bailing.
 
 📅 Date: {today_date}
 🕐 FENÊTRE: 48h max. Préfère ≤24h. Au-delà de 48h c'est de l'archive, pas de la news.
@@ -1056,11 +1058,15 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     performance_section = (performance_section or "") + "\n\n" + personality_store.hard_rules_block()
 
     today_date = datetime.now().strftime("%Y-%m-%d")
+    from . import lang_mode
+    lang = lang_mode.pick_content_lang()
     prompt = PROMPT_TEMPLATE.format(
         dedup_section=dedup_section,
         today_date=today_date,
         performance_section=performance_section,
+        lang_directive=lang_mode.lang_directive(lang),
     )
+    log.info(f"[NEWS] Generating in lang={lang}")
 
     result = run_llm(
         prompt,

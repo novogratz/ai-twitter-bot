@@ -29,7 +29,9 @@ from . import personality_store
 
 DIGEST_STATE_FILE = os.path.join(_PROJECT_ROOT, "digest_thread_state.json")
 
-DIGEST_PROMPT = """Tu es @kzer_ai. Tu écris LE thread récap quotidien — un thread X de 6 tweets en FRANÇAIS qui couvre les 5 plus grosses stories IA / crypto / bourse des dernières 36h. C'est notre format SIGNATURE: l'audience FR vient ici parce qu'elle n'a pas le temps de scroller 30 outlets.
+DIGEST_PROMPT = """You are @kzer_ai. You write THE daily recap thread — an X thread of 6 tweets covering the 5 biggest AI / crypto / bourse stories of the last 36h. This is our SIGNATURE format: people come here because they don't have time to scroll 30 outlets.
+
+{lang_directive}
 
 📅 Date: {today_date}
 
@@ -126,9 +128,13 @@ def run_digest_thread_cycle():
 
     today_date = datetime.now().strftime("%Y-%m-%d")
     performance_section = personality_store.hard_rules_block()
+    from . import lang_mode
+    _d_lang = lang_mode.pick_content_lang()
+    log.info(f"[DIGEST] Generating in lang={_d_lang}")
     prompt = DIGEST_PROMPT.format(
         today_date=today_date,
         performance_section=performance_section,
+        lang_directive=lang_mode.lang_directive(_d_lang),
     )
 
     log.info("[DIGEST] Generating daily 5-story FR thread...")

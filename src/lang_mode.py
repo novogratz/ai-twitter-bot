@@ -12,12 +12,21 @@ language flips — anchors in EN read as exotic flavor, not as
 broken English. Example: "OpenAI raises 40Bn. PEL with a GPU."
 
 Mode controlled by CONTENT_LANG_PRIMARY env:
-  - "en"     → 100% English content
-  - "fr"     → 100% French content (legacy default)
-  - "mixed"  → ~70% EN / 30% FR per cycle (DEFAULT — best of both)
+  - "en"     → 100% English content (DEFAULT — user directive 2026-05-06)
+  - "fr"     → 100% French content (legacy)
+  - "mixed"  → ~70% EN / 30% FR per cycle (deprecated)
 
-Reply paths (direct_reply, reply_bot, replyback_agent, viral_followup,
-spike follow-ups) intentionally do NOT use this — they're FR-locked.
+User directive 2026-05-06 PM: "actual english news with post in english,
+then we reply troll in french and english with focus on french." So:
+  - ALL standalone posts (news, hotake, breakout, spicy, threads) → EN.
+  - ALL replies (direct_reply, reply_bot, replyback, viral_followup,
+    spike follow-ups, mega_watch) → FR-focused, mixed FR/EN, never use
+    pick_content_lang() — they have their own FR-locked logic.
+
+The bot's distinctive FR cultural anchors (RER B, Bercy, syndicat,
+café-clope) survive the language switch — they read as deadpan exotic
+flavor in EN ("PEL with a GPU", "Bercy is taking notes for a 2027
+white paper").
 """
 import os
 import random
@@ -27,7 +36,7 @@ Lang = Literal["en", "fr"]
 
 
 def _mode() -> str:
-    return os.environ.get("CONTENT_LANG_PRIMARY", "mixed").strip().lower()
+    return os.environ.get("CONTENT_LANG_PRIMARY", "en").strip().lower()
 
 
 def pick_content_lang() -> Lang:
@@ -37,8 +46,7 @@ def pick_content_lang() -> Lang:
         return "en"
     if m == "fr":
         return "fr"
-    # mixed — 70% EN, 30% FR. EN gets the breakout shot; FR keeps the
-    # niche identity / cultural-anchor signature alive.
+    # mixed (legacy) — 70% EN, 30% FR.
     return "en" if random.random() < 0.70 else "fr"
 
 
