@@ -34,25 +34,25 @@ _OWN_HANDLE = BOT_HANDLE.lower()
 # 2026-04-30 PM (user directive): "biggest tweets from france or english".
 # So queries now span FR and EN — the prompt forces FR commentary either way.
 QUOTE_QUERIES = [
-    # FR pool — primary (broadened 2026-05-05 to push #1 FR AI/crypto/bourse).
-    # Lower min_faves on niche FR queries because high-quality FR niche tweets
-    # rarely break 50 likes but their authors are exactly our target audience.
-    "Claude OR ClaudeCode lang:fr min_faves:30",
-    "ChatGPT OR OpenAI lang:fr min_faves:30",
-    "Anthropic lang:fr min_faves:20",
-    "Mistral OR \"LightOn\" OR \"Hugging Face\" lang:fr min_faves:20",
-    "Nvidia OR NVDA lang:fr min_faves:30",
-    "Bitcoin lang:fr min_faves:30",
-    "Ethereum OR ETH lang:fr min_faves:20",
-    "bourse OR CAC40 lang:fr min_faves:20",
-    "crypto lang:fr min_faves:30",
-    "IA lang:fr min_faves:30",
-    "AGI OR \"intelligence artificielle\" lang:fr min_faves:20",
-    "trading lang:fr min_faves:20",
-    "Bercy OR AMF OR \"banque de france\" lang:fr min_faves:20",
-    # EN viral fallback — only the biggest hits qualify (kept narrow on purpose).
-    "OpenAI OR Anthropic OR Claude lang:en min_faves:2000",
-    "Bitcoin OR Ethereum lang:en min_faves:2000",
+    # FR-EXCLUSIVE 2026-05-06 — audience est 100% FR. On ne quote-tweet PAS
+    # de tweets EN parce que ça pollue le feed FR. Les tweets EN qui valent
+    # vraiment le coup repassent par le retweet bot (FR-biased) ou par les
+    # bots de réponse en thread.
+    "Claude OR ClaudeCode lang:fr min_faves:20",
+    "ChatGPT OR OpenAI lang:fr min_faves:20",
+    "Anthropic lang:fr min_faves:15",
+    "Mistral OR \"LightOn\" OR \"Hugging Face\" lang:fr min_faves:15",
+    "Nvidia OR NVDA lang:fr min_faves:20",
+    "Bitcoin lang:fr min_faves:20",
+    "Ethereum OR ETH lang:fr min_faves:15",
+    "bourse OR CAC40 lang:fr min_faves:15",
+    "crypto lang:fr min_faves:20",
+    "IA lang:fr min_faves:20",
+    "AGI OR \"intelligence artificielle\" lang:fr min_faves:15",
+    "trading lang:fr min_faves:15",
+    "Bercy OR AMF OR \"banque de france\" lang:fr min_faves:15",
+    "tech OR startup lang:fr min_faves:30",
+    "Tesla OR SpaceX OR Musk lang:fr min_faves:30",
 ]
 
 QUOTE_PROMPT = """Tu es @kzer_ai. Tu vas QUOTE-TWEETER ce tweet:

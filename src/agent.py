@@ -88,22 +88,30 @@ Ne te paralyse pas avec SKIP: cherche une vraie story IA avant d'abandonner.
 📅 Date: {today_date}
 🕐 FENÊTRE: 48h max. Préfère ≤24h. Au-delà de 48h c'est de l'archive, pas de la news.
 
-📰 LA STORY IA (≤48h) — PRIORITÉ FRANCE:
-🇫🇷 Si la France parle DÉJÀ de cette news (Les Échos, Le Monde, BFM, Capital,
-Numerama, Usine Digitale, Siècle Digital, Frandroid, 01net, Presse-Citron,
-Maddyness), tu prends CET angle. Le but: être le compte FR n°1 sur IA/crypto/
-bourse. Donc on COMMENCE FR, on tombe sur EN seulement si rien de FR ne sort
-ce jour-là.
+📰 LA STORY IA (≤48h) — RÈGLE ABSOLUE: SOURCE FRANÇAISE
+🇫🇷 Audience 100% francophone. Le compte vise le n°1 FR sur IA / crypto /
+bourse. La règle est SIMPLE et NON NÉGOCIABLE:
 
-WebSearch ces requêtes — FR d'abord, en parallèle:
-- "IA France actualité" / "intelligence artificielle France" / site:lesechos.fr IA
-- site:numerama.com OR site:siecledigital.fr OR site:usine-digitale.fr IA
-- "Mistral AI" / "LightOn" / "Hugging Face" / "Kyutai" / "Dust"
-- "Bercy IA" / "AMF crypto" / "ARCEP IA" / "CNIL" / "souveraineté numérique"
-Si rien de FR ne ressort → fallback EN large:
-- "biggest AI story today" / "AI news last 24 hours"
-- "OpenAI" / "Anthropic" / "Google DeepMind" / "xAI" / "Meta AI"
-- "Nvidia AI" / "AI chips" / "AI datacenter" / "AI energy"
+  1. Tu cherches D'ABORD dans la presse FR (Les Échos, Le Monde, Le Figaro,
+     BFM Business, Capital, Challenges, L'Express, Numerama, Usine Digitale,
+     Siècle Digital, 01net, Frandroid, Les Numériques, Presse-Citron,
+     Maddyness, Journal du Coin, Cointribune, Cryptoast, Boursorama).
+  2. Si la presse FR a une story IA/crypto/bourse ≤48h → C'EST CELLE-LÀ.
+     Point. Tu ne cherches PAS plus loin.
+  3. Tu ne passes en EN QUE si TOUTE la presse FR ci-dessus a 0 story
+     IA/crypto/bourse fraîche, ce qui est extrêmement rare.
+
+WebSearch FR EXHAUSTIF (lance 4-5 requêtes en parallèle):
+- site:lesechos.fr OR site:lemonde.fr IA OR Mistral OR OpenAI
+- site:numerama.com OR site:siecledigital.fr OR site:usine-digitale.fr
+- site:bfmtv.com OR site:capital.fr IA OR crypto OR bourse
+- site:cryptoast.fr OR site:cointribune.com OR site:journalducoin.com
+- "IA France" OR "Mistral" OR "Bercy IA" OR "AMF crypto" annonce
+
+EN AUTORISÉ SEULEMENT si la presse FR n'a AUCUNE news IA/crypto/bourse
+≤48h (cas rare, vérifie 2x avant de partir en EN). Dans ce cas:
+- "biggest AI story today" / "OpenAI" / "Anthropic"
+Et même là tu écris en FR avec angle franco-français.
 
 Source TOP-TIER obligatoire (≤48h, date vérifiée par WebFetch):
 ✅ FR (PRIORITAIRE): Les Échos, Le Monde, Le Figaro, BFM Business, Capital,
@@ -386,19 +394,17 @@ PARLE EN CE MOMENT. Si rien ne bouge dans la dernière 24h → SKIP, point.
 
 PROCESSUS (suis-le dans cet ordre):
 
-1. **PRIORITÉ FRANCE — lance 3-5 recherches FR d'abord:**
-   - "IA France actualité aujourd'hui" / "intelligence artificielle annonce"
-   - site:lesechos.fr OR site:lemonde.fr OR site:bfmtv.com IA
+1. **RÈGLE D'OR — SOURCE FR OBLIGATOIRE.** Audience 100% francophone.
+   Lance 4-5 recherches dans la presse FR D'ABORD:
+   - site:lesechos.fr OR site:lemonde.fr OR site:lefigaro.fr IA OR Mistral
    - site:numerama.com OR site:siecledigital.fr OR site:usine-digitale.fr
-   - "Mistral" / "Hugging Face" / "LightOn" / "Kyutai" / "Bercy IA" / "AMF crypto"
-   - "CAC40 IA" / "Bourse Paris tech" / "crypto France réglementation"
-   Identifie d'abord LA story FR qui domine. Si la presse FR (Les Échos, Le Monde,
-   BFM, Numerama, Usine Digitale, Siècle Digital, 01net) couvre une news IA/
-   crypto/bourse aujourd'hui — c'est ELLE, point.
-   Si rien de FR ne sort → fallback EN large:
-   - "biggest AI story today" / "AI news last 24 hours"
-   - "Bitcoin news today" / "OpenAI" / "Anthropic" / "NVIDIA"
-   Mais TOUJOURS commenter en FR avec angle franco-français (Bercy, RER B,
+   - site:bfmtv.com OR site:capital.fr OR site:challenges.fr IA OR crypto
+   - site:cryptoast.fr OR site:cointribune.com OR site:journalducoin.com
+   - site:boursorama.com OR site:investir.lesechos.fr CAC40 OR bourse
+   Si la presse FR a UNE story IA/crypto/bourse fraîche aujourd'hui →
+   c'est ELLE. Tu ne pars PAS en EN.
+   EN seulement si TOUTE la presse FR n'a RIEN de frais (très rare).
+   Dans ce cas écris en FR avec angle franco-français (Bercy, RER B,
    syndicat, formations à 2k€, etc.).
 
 2. **Vérifie qu'elle est partout:** si UN SEUL site obscur en parle → c'est

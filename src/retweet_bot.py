@@ -66,40 +66,11 @@ MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "5"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
-# Trusted news handles. Curated, not auto-discovered — we want the YouTube
-# show to source from REAL outlets, not crypto-twitter rumors. FR + EN.
-# A retweet from one of these = automatic source attribution win.
-TRUSTED_NEWS_HANDLES = [
-    # Wires / global financial press
-    "Reuters",
-    "ReutersBiz",
-    "business",          # Bloomberg
-    "markets",           # Bloomberg Markets
-    "FT",
-    "WSJ",
-    "WSJmarkets",
-    "AFP",
-    "AFPbusiness",
-    # AI press
-    "TechCrunch",
-    "TheInformation",
-    "verge",             # The Verge
-    "WIRED",
-    "MIT_CSAIL",
-    "deepmind",
-    "OpenAI",
-    "AnthropicAI",
-    "GoogleDeepMind",
-    # Crypto press
-    "CoinDesk",
-    "TheBlock__",
-    "BitcoinMagazine",
-    "decryptmedia",
-    # Bourse / macro press
-    "CNBC",
-    "axios",
-    "BloombergTV",
-    "YahooFinance",
+# Trusted news handles split by language. 2026-05-06 user pivot: audience is
+# FR, so the feed must look FR. Sample heavily from FR, only top-tier EN
+# (wires) qualify as fallback when nothing FR is fresh enough.
+
+FR_TRUSTED_HANDLES = [
     # FR generalist press
     "lesechos",
     "LeMondeFR",
@@ -112,7 +83,7 @@ TRUSTED_NEWS_HANDLES = [
     "FrenchWeb",
     "MaddyNess",
     "JournalDuNet",
-    # FR tech press (added 2026-05-05 — primary FR AI signal lives here)
+    # FR tech press (primary FR AI signal lives here)
     "presse_citron",
     "siecledigital",
     "usine_digitale",
@@ -131,6 +102,27 @@ TRUSTED_NEWS_HANDLES = [
     "Challenges",
     "LExpress",
 ]
+
+EN_TRUSTED_HANDLES = [
+    # Wires / global financial press — only the absolute top tier; EN
+    # retweets are now the exception, not the rule.
+    "Reuters",
+    "ReutersBiz",
+    "business",          # Bloomberg
+    "markets",           # Bloomberg Markets
+    "FT",
+    "WSJ",
+    "AFP",
+    "AFPbusiness",
+    # AI press — kept narrow (TechCrunch + The Information are the two
+    # the FR ecosystem actually treats as canonical sources).
+    "TechCrunch",
+    "TheInformation",
+]
+
+# Combined list kept for the source-trust check (a tweet from any of these
+# clears the "trusted source" gate). Sampling logic below biases FR.
+TRUSTED_NEWS_HANDLES = FR_TRUSTED_HANDLES + EN_TRUSTED_HANDLES
 
 # Trusted domains — if the tweet embeds a link to one of these, we count
 # the embedded article as the source even if the handle isn't on our list
@@ -248,7 +240,8 @@ def _score_candidates(candidates: list):
         return None
 
     def rank(c: dict) -> tuple:
-        text = (c.get("text") or "").lower()
+        text_raw = c.get("text") or ""
+        text = text_raw.lower()
         breaking = any(k in text for k in (
             "breaking", "exclusif", "exclusive", "annonce", "launch",
             "raises", "lève", "sec", "fed", "bitcoin", "openai", "nvidia",
@@ -266,21 +259,46 @@ def _score_candidates(candidates: list):
         ))
         numbers = len(re.findall(r"(\$?\d+(?:[.,]\d+)?\s?(?:%|bn|billion|m|million|md|mds|k)?)", text))
         engagement = int(c.get("likes") or 0) + (2 * int(c.get("replies") or 0))
-        impact_points = (2 if breaking else 0) + (3 if money_or_power else 0) + (2 if strategic else 0) + min(numbers, 3)
-        return (
-            impact_points,
-            engagement,
+        # FR signal: accents or FR-only words. Bonus +2 (audience is 100% FR).
+        fr_signal = (
+            any(ch in text_raw for ch in "éèêàâùûôîçÉÈÊÀÂÙÛÔÎÇ")
+            or any(w in text for w in (
+                " et ", " est ", " une ", " des ", " avec ",
+                "lève", "milliard", "annonce", "français", "française",
+                "bourse", "régulateur", "marché", "cours", "actions",
+                "intelligence", "valorisation",
+            ))
         )
+        impact_points = (
+            (2 if breaking else 0)
+            + (3 if money_or_power else 0)
+            + (2 if strategic else 0)
+            + min(numbers, 3)
+            + (2 if fr_signal else 0)
+        )
+        return (impact_points, engagement)
 
     idx, pick = max(enumerate(candidates), key=lambda item: rank(item[1]))
     engagement = int(pick.get("likes") or 0) + (2 * int(pick.get("replies") or 0))
     impact_points = rank(pick)[0]
-    if impact_points >= 7 and engagement >= 100:
+    pick_text_raw = pick.get("text") or ""
+    pick_is_fr = (
+        any(ch in pick_text_raw for ch in "éèêàâùûôîçÉÈÊÀÂÙÛÔÎÇ")
+        or any(w in pick_text_raw.lower() for w in (
+            " est ", " une ", " des ", "lève", "milliard", "annonce",
+            "français", "marché", "actions",
+        ))
+    )
+    # 2026-05-06: penalize EN picks. Audience is FR — an EN retweet only
+    # passes if the impact is undeniable. Drop a tier for non-FR text.
+    if impact_points >= 9 and engagement >= 100:
         score = 9
-    elif impact_points >= 6 and engagement >= 50:
+    elif impact_points >= 7 and engagement >= 50:
         score = 8
     else:
         score = 7
+    if not pick_is_fr:
+        score -= 1
     return {
         "best_index": idx,
         "best_score": score,
@@ -323,10 +341,18 @@ def run_retweet_cycle():
 
     retweeted = _load_retweeted()
 
-    # Sample more handles per cycle so the bot can actually sustain a higher
-    # retweet rate without waiting for one lucky source. 8 → 12 (2026-05-05).
-    sample = random.sample(TRUSTED_NEWS_HANDLES, k=min(12, len(TRUSTED_NEWS_HANDLES)))
-    log.info(f"[RETWEET] Scraping trusted news handles: {sample}")
+    # FR-biased sample. 2026-05-06: user audience is 100% FR, so the
+    # feed must speak FR. We pull 9 FR handles + 2 EN handles per cycle —
+    # EN gets the slot only as a fallback for mega-news the FR press
+    # hasn't caught yet.
+    fr_sample = random.sample(
+        FR_TRUSTED_HANDLES, k=min(9, len(FR_TRUSTED_HANDLES))
+    )
+    en_sample = random.sample(
+        EN_TRUSTED_HANDLES, k=min(2, len(EN_TRUSTED_HANDLES))
+    )
+    sample = fr_sample + en_sample
+    log.info(f"[RETWEET] Scraping FR-biased news handles: {sample}")
 
     candidates = []
     for handle in sample:
