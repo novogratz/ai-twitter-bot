@@ -1,16 +1,16 @@
 # AI Twitter Bot
 
-An autonomous Twitter/X bot powered by Claude Code or Codex CLI. Posts via browser automation (Safari + AppleScript on macOS).
+An autonomous Twitter/X bot powered by Claude Code (default) or Codex CLI. Posts via browser automation (Safari + AppleScript on macOS).
 
 ## How It Works
 
-Uses an installed AI CLI for generation (`AI_CLI=codex` by default, or `claude`) and Safari + AppleScript for browser automation. No Twitter API. Just log into X on Safari and go.
+Uses an installed AI CLI for generation (`AI_CLI=claude` by default, or `codex` / `gemini`) and Safari + AppleScript for browser automation. No Twitter API. Just log into X on Safari and go.
 
 Default mode is Plus-safe: AI is used for content that actually ships (news, hot takes, replies, reply-backs, roasts, quote-tweets). Background scouting, strategy, reflection, discovery scoring, and retweet scoring are disabled or deterministic unless explicitly enabled.
 
 ### Bots
 
-**Post Bot** - News + hot take publisher. News is capped at 4/day, uses the stronger Codex model, and ships only if the story clears a 9/10 impact + comedy bar. Format = sarcastic FR punchline + direct article URL so X renders the native link-card. No "Selon X..." / "Breaking:" / wire-service tone. Hot takes are capped at 1/day. Replies are the growth engine; standalone posts are only for the absolute best stories.
+**Post Bot** - News + hot take publisher. News is capped at 12/day, hot takes at 4/day, both ship only if the story clears a 9/10 impact + comedy bar AND the source is in the FR-priority whitelist (Les Échos, Le Monde, BFM, Numerama, Usine Digitale, Siècle Digital, 01net, Frandroid, Presse-Citron, Maddyness, Cryptoast, Cointribune, Boursorama — EN fallback only if no FR angle exists in the last 48h). Format = sarcastic FR punchline + direct article URL so X renders the native link-card. No "Selon X..." / "Breaking:" / wire-service tone.
 
 **Reply Bot** - Direct + search reply paths. Finds high-engagement FR tweets (with EN fallback), drops sharp one-liner replies (cap 18/cycle, impact-ranked — bumped from 7 on 2026-04-29 strategy pivot: replies are the only surface earning likes, so we max-out volume). **Source-aware engagement floor**: random-discovery sources (SEARCH-FR-LIVE, SEARCH-FR-HOT) skip tweets below `REPLY_MIN_LIKES` (default 5); curated paths (PROFILE-FR, FEED, FOLLOWING) bypass the floor entirely so the bot replies on EVERYTHING from the vetted 1k+ FR roster. Content blocklist (e.g. "se poser") still applies. FR priority, bilingual. **Replies are tagged with one of 6 comedy patterns** (REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER) and logged into `engagement_log.csv` so the evolution agent can compute per-pattern ROI and steer style. **Graceful FR + QC quiet-hour fade**: Paris 04-07 = 95% skip (deepest dark), Paris 00-04 = 25% skip (= QC primetime, light-active for francophone Quebec audience), weekend Sat/Sun 8-11 = 30% skip.
 
@@ -34,7 +34,9 @@ Default mode is Plus-safe: AI is used for content that actually ships (news, hot
 
 **Reflection Agent (autobiographical brain)** - Every 6h: reads engagement + history, updates `personality.json` — per-account dossiers (category, stance, feelings, notes) + per-topic positions. Replies become PERSONAL because the bot remembers each account.
 
-**Quote-Tweet Bot** - Every 3h, cap 2/day. Only the biggest viral setups get a sarcastic FR quote; otherwise the bot saves model calls and attention for replies.
+**Quote-Tweet Bot** - Every 75 min, cap 10/day. FR-biased query pool (Mistral, Anthropic, Hugging Face, CAC40, Bercy/AMF/BdF) with one EN viral fallback. Lands in followers' feed AND notifies the original author — different distribution surface than replies.
+
+**Retweet Bot** - Every 40 min, cap 20/day. Selective amplifier of trusted news (Reuters/Bloomberg/AFP/FT/WSJ + 17 FR press handles: Numerama, Usine Digitale, Siècle Digital, 01net, Frandroid, Presse-Citron, BFMcrypto, CointelegraphFR, Cryptoast, Boursorama, Capital, Challenges, L'Express). Score ≥7/10 → retweet, ≥7/10 → also logged to `daily_news_picks.md` for the YouTube show research doc.
 
 **Daily Digest** - Hourly idempotent cron, writes one section per day to `daily_digest.md`: total actions, by-type breakdown, top sources, comedy patterns, top reply targets, top-perf posts, follow count delta. Built specifically for the 2-week post-mission review.
 
@@ -123,20 +125,21 @@ All settings in `src/config.py`, overridable with environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MAX_NEWS_PER_DAY` | 6 | Max standalone news posts per day |
-| `MAX_HOTAKES_PER_DAY` | 1 | Max hot takes per day |
-| `MAX_RETWEETS_PER_DAY` | 12 | Max selective retweets per day |
-| `RETWEET_MIN_LIKES` | 10 | Min likes on a candidate retweet |
-| `MAX_QUOTES_PER_DAY` | 2 | Max quote-tweets per day |
+| `MAX_NEWS_PER_DAY` | 12 | Max standalone news posts per day |
+| `MAX_HOTAKES_PER_DAY` | 4 | Max hot takes per day |
+| `MAX_RETWEETS_PER_DAY` | 20 | Max selective retweets per day |
+| `RETWEET_MIN_LIKES` | 5 | Min likes on a candidate retweet |
+| `MAX_QUOTES_PER_DAY` | 10 | Max quote-tweets per day |
 | `MAX_REPLIES_PER_CYCLE` | 6 | Max search replies per cycle |
 | `REPLY_MIN_LIKES` | 2 | Min likes on a tweet before the bot will reply (random-search sources only — curated paths bypass) |
-| `AI_CLI` | codex | `codex`, `claude`, or `auto` |
-| `NEWS_MODEL` | gpt-5.4 | Model for high-impact news posts in Codex mode |
-| `REPLY_MODEL` | gpt-5.4-mini | Model for replies in Codex mode |
-| `PRIORITY_REPLY_MODEL` | gpt-5.4 | Model for user-VIP account replies |
-| `HOTAKE_MODEL` | gpt-5.4-mini | Model for hot takes in Codex mode |
-| `LLM_MIN_SECONDS_BETWEEN_CALLS` | 60 | Local spacing between model calls to avoid burst rate limits |
-| `LLM_MAX_CALLS_PER_HOUR` | 30 | Local hourly model-call budget across bot threads |
+| `AI_CLI` | claude | `claude`, `codex`, or `gemini` |
+| `NEWS_MODEL` | claude-sonnet-4-6 | Model for high-impact news posts |
+| `REPLY_MODEL` | claude-sonnet-4-6 | Model for replies |
+| `PRIORITY_REPLY_MODEL` | claude-sonnet-4-6 | Model for user-VIP account replies |
+| `HOTAKE_MODEL` | claude-sonnet-4-6 | Model for hot takes |
+| `QUOTE_MODEL` | claude-haiku-4-5 | Model for quote-tweets (cheap one-liners) |
+| `LLM_MIN_SECONDS_BETWEEN_CALLS` | 45 | Local spacing between model calls |
+| `LLM_MAX_CALLS_PER_HOUR` | 60 | Local hourly model-call budget across bot threads |
 | `ENABLE_AI_MAINTENANCE` | 0 | Re-enable strategy/evolution/reflection model calls |
 | `ENABLE_AI_DISCOVERY` | 0 | Re-enable discovery/scout jobs |
 
@@ -180,9 +183,9 @@ src/
   personality_store.py       # Per-account/per-topic dossiers + HARD_RULES_BLOCK
   topic_dedup.py             # Shared cross-format banlist (news + hot take)
   dynamic_strategy.py        # Append-only stores for strategy-agent additions
-  quote_tweet_bot.py         # Quote-tweet path (cap 12/day, every 90 min)
+  quote_tweet_bot.py         # Quote-tweet path (cap 10/day, every 75 min)
   early_bird_bot.py          # Top-5-reply path on fresh viral tweets
-  retweet_bot.py             # Selective retweets of trusted news (cap 12/day, every 60 min)
+  retweet_bot.py             # Selective retweets of trusted news (cap 20/day, every 40 min)
   discover_bot.py            # Autonomous handle discovery (every 3h)
   roast_pgm_bot.py           # Dedicated 1-roast-per-tweet for @pgm_pm
   image_gen.py               # PNG quote-card generator (Pillow)
