@@ -71,15 +71,40 @@ DEFAULT_ACCOUNT = {
 
 # These two rules are ALWAYS injected into every generation prompt.
 # They are the only hard floor — everything else is mutable strategy.
-HARD_RULES_BLOCK = """REGLES ABSOLUES (non negociables, jamais a contourner):
+_BASE_HARD_RULES = """REGLES ABSOLUES (non negociables, jamais a contourner):
 1. AUCUN contenu illegal sous aucune forme (incitation, contrefacon, fraude, etc.).
 2. AUCUN troll / mocking / attaque du gouvernement americain (US government,
    administration US, presidents US passes ou actuels, agences federales:
    Fed, SEC, CFTC, IRS, FBI, DOJ, etc.). Tu peux commenter les FAITS de leurs
    decisions de maniere neutre, jamais troller / mocker / attaquer.
    En cas de doute -> SKIP.
+3. RESPECT LIST: certains comptes FR sont a NE JAMAIS critiquer nommement
+   (voir bloc dedie ci-dessous). En cas de doute -> SKIP.
 
 Tout le reste est negociable — voix, style, cibles, humeur."""
+
+
+def _render_hard_rules() -> str:
+    """Compose the base hard rules + the dynamic respect list block.
+
+    Renders fresh on every prompt assembly so the respect list updates
+    take effect immediately without restart.
+    """
+    out = _BASE_HARD_RULES
+    try:
+        from . import respect_list
+        block = respect_list.render_block()
+        if block:
+            out = out + "\n\n" + block
+    except Exception:
+        pass
+    return out
+
+
+# Module-level constant kept for backwards-compat with code that imports
+# the bare string. Prefer `hard_rules_block()` for fresh-rendered content
+# (it includes the respect list dynamically).
+HARD_RULES_BLOCK = _render_hard_rules()
 
 
 def _normalize(handle: str) -> str:
@@ -377,4 +402,6 @@ def render_topic_block(name: str) -> str:
 
 
 def hard_rules_block() -> str:
-    return HARD_RULES_BLOCK
+    """Return the full hard-rules block, freshly rendered (includes
+    the dynamic respect list)."""
+    return _render_hard_rules()

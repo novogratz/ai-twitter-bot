@@ -539,7 +539,7 @@ def _generate_single_reply(author: str, tweet_text: str):
     """Generate a single reply for a specific tweet."""
     from . import personality_store
     persona_block = personality_store.render_account_block(author)
-    hard_rules = personality_store.HARD_RULES_BLOCK
+    hard_rules = personality_store.hard_rules_block()
     # Hand-curated ideological core (core_identity.md) — voice anchor.
     core_identity = personality_store.render_core_identity()
     base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200])

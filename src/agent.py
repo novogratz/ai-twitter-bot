@@ -1053,7 +1053,7 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     core_identity = personality_store.render_core_identity()
     if core_identity:
         performance_section = (performance_section or "") + "\n\n" + core_identity
-    performance_section = (performance_section or "") + "\n\n" + personality_store.HARD_RULES_BLOCK
+    performance_section = (performance_section or "") + "\n\n" + personality_store.hard_rules_block()
 
     today_date = datetime.now().strftime("%Y-%m-%d")
     prompt = PROMPT_TEMPLATE.format(
@@ -1162,5 +1162,14 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         log.info(f"[NEWS] Body too long ({len(preview)} chars > {_MAX_NEWS_BODY_CHARS}) — SKIPPING to avoid Show more: {preview[:180]!r}")
         globals()["_last_source_url"] = None
         return None
+    # Respect-list defense: refuse to ship news that names a protected
+    # handle in a derisive context.
+    from . import respect_list
+    cleaned, reason = respect_list.scrub_text_or_skip(tweet)
+    if cleaned is None:
+        log.info(f"[NEWS] Refused — {reason}: {tweet[:120]!r}")
+        globals()["_last_source_url"] = None
+        return None
+    tweet = cleaned
     log.info(f"[NEWS] Article URL detected (X will render card): {src_url[:120]}")
     return tweet

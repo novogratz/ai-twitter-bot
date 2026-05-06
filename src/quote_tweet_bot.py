@@ -257,6 +257,13 @@ def run_quote_tweet_cycle():
         return
 
     # Pick the single most-liked candidate (max ROI on the one quote we post).
+    # Filter out protected (respect-list) authors first — quote-tweeting them
+    # with our voice on top reads as a public callout and gets us blocked.
+    from . import respect_list
+    candidates = [c for c in candidates if not respect_list.is_protected(c.get("author", ""))]
+    if not candidates:
+        log.info("[QUOTE] All candidates are on the respect list. Skipping.")
+        return
     candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
     best = candidates[0]
     url = best["url"]
@@ -271,6 +278,12 @@ def run_quote_tweet_cycle():
         return
 
     quote = humanize(quote)
+    # Final defense: refuse if our quote text names a protected handle.
+    cleaned, reason = respect_list.scrub_text_or_skip(quote)
+    if cleaned is None:
+        log.info(f"[QUOTE] Refused — {reason}: {quote[:120]!r}")
+        return
+    quote = cleaned
 
     # Last-line defense: even if SKIP-or-rationale slipped past _generate_quote
     # AND the humanizer preserved it, refuse to post anything that looks like

@@ -624,7 +624,7 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     core_identity = personality_store.render_core_identity()
     if core_identity:
         performance_section = (performance_section or "") + "\n\n" + core_identity
-    performance_section = (performance_section or "") + "\n\n" + personality_store.HARD_RULES_BLOCK
+    performance_section = (performance_section or "") + "\n\n" + personality_store.hard_rules_block()
 
     prompt = HOTAKE_PROMPT.format(
         performance_section=performance_section,

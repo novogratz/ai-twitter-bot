@@ -62,7 +62,7 @@ def generate_replyback(original_tweet: str, their_reply: str, author: str = "") 
     core_identity = personality_store.render_core_identity()
     if core_identity:
         extras.append(core_identity)
-    extras.append(personality_store.HARD_RULES_BLOCK)
+    extras.append(personality_store.hard_rules_block())
     prompt = base + "\n\n" + "\n\n".join(extras)
     result = run_llm(prompt, REPLY_MODEL, label="REPLYBACK")
     if result.returncode != 0:

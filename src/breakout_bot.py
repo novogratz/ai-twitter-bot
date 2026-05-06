@@ -54,27 +54,29 @@ BREAKOUT_QUERIES = [
 ]
 
 
-BREAKOUT_PROMPT = """Tu es @kzer_ai. Une story est en train d'EXPLOSER en ce moment sur X. Tu vas la commenter en FRANÇAIS, ULTRA RAPIDE, ULTRA SHARP.
+BREAKOUT_PROMPT = """Tu es @kzer_ai. Une story est en train d'EXPLOSER en ce moment sur X. Tu vas la commenter, ULTRA RAPIDE, ULTRA SHARP.
+
+{lang_directive}
 
 Story qui prend la lumière (échantillon des tweets qui montent):
 {trend_context}
 
 📅 Date: {today_date}
 
-OBJECTIF: ÊTRE PARMI LES 50 PREMIÈRES VOIX FR à commenter cette story.
-Pas de SKIP. Pas de rejection sampling. Tu shipes un take FR qui claque.
+OBJECTIF: ÊTRE PARMI LES 50 PREMIÈRES VOIX à commenter cette story.
+Pas de SKIP. Pas de rejection sampling. Tu shipes un take qui claque.
 
-FORMAT (≤270 chars TOTAL, FR pur, screenshot-worthy):
+FORMAT (≤270 chars TOTAL, screenshot-worthy):
 - 1-2 phrases sec.
 - Une chute qui pique. Pas de news-report tone.
-- Réf culturelle FR autorisée (RER B, Bercy, syndicat, café-clope).
+- Une réf culturelle FR (RER B, Bercy, syndicat, café-clope) est BIENVENUE — même en EN, c'est une signature.
 - Pas d'emojis, pas de hashtag, pas d'em dash.
-- Pas de "Selon X..." / "Breaking:" / "Aujourd'hui...".
+- Pas de "Selon X..." / "Breaking:" / "Aujourd'hui..." / "According to..." / "Today...".
 
 {performance_section}
 
-OUTPUT — strictement le tweet en FR, rien d'autre. Pas de préface.
-Pas de "Voici", pas de "Le tweet:", pas de "---". JUSTE LE TWEET FR.
+OUTPUT — strictement le tweet, rien d'autre. Pas de préface.
+Pas de "Voici", pas de "Le tweet:", pas de "---". JUSTE LE TWEET.
 """
 
 
@@ -190,7 +192,7 @@ def run_breakout_cycle():
         f"\"{topic['text'][:400]}\""
     )
 
-    performance_section = personality_store.HARD_RULES_BLOCK
+    performance_section = personality_store.hard_rules_block()
     bot_self = personality_store.render_bot_self()
     if bot_self:
         performance_section = bot_self + "\n\n" + performance_section
@@ -198,11 +200,15 @@ def run_breakout_cycle():
     if core:
         performance_section = core + "\n\n" + performance_section
 
+    from . import lang_mode
+    lang = lang_mode.pick_content_lang()
     prompt = BREAKOUT_PROMPT.format(
         trend_context=trend_context[:1500],
         today_date=datetime.now().strftime("%Y-%m-%d"),
         performance_section=performance_section,
+        lang_directive=lang_mode.lang_directive(lang),
     )
+    log.info(f"[BREAKOUT] Generating in lang={lang}...")
 
     result = run_llm(
         prompt,
@@ -222,6 +228,18 @@ def run_breakout_cycle():
     text = humanize(text)
     if len(text) < 20 or len(text) > 280:
         log.info(f"[BREAKOUT] Output length out of bounds ({len(text)}); skipping.")
+        return
+
+    # Respect-list defense: never ship content that names a protected handle.
+    from . import respect_list
+    cleaned, reason = respect_list.scrub_text_or_skip(text)
+    if cleaned is None:
+        log.info(f"[BREAKOUT] Refused — {reason}: {text[:120]!r}")
+        return
+    text = cleaned
+    # Also: don't pile on the protected author themselves.
+    if respect_list.is_protected(topic.get("author", "")):
+        log.info(f"[BREAKOUT] Topic author @{topic.get('author')!r} is on respect list; skipping breakout post.")
         return
 
     # Lock URL in BEFORE posting so a crash can't double-fire.

@@ -458,7 +458,7 @@ def generate_replies(recent_topics=None, already_replied=None):
     core_identity = personality_store.render_core_identity()
     if core_identity:
         discovered_section = (discovered_section or "") + "\n\n" + core_identity
-    discovered_section = (discovered_section or "") + "\n\n" + personality_store.HARD_RULES_BLOCK
+    discovered_section = (discovered_section or "") + "\n\n" + personality_store.hard_rules_block()
 
     from datetime import date, timedelta
     today = date.today()

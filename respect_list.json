@@ -1,0 +1,132 @@
+{
+  "handles": {
+    "korbeninfo": {
+      "reason": "Influence FR tech massive — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.865985"
+    },
+    "underscore_": {
+      "reason": "Tech FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.865992"
+    },
+    "micode": {
+      "reason": "Tech FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.865993"
+    },
+    "frandroid": {
+      "reason": "Média FR tech — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.865994"
+    },
+    "numerama": {
+      "reason": "Média FR tech — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.865995"
+    },
+    "presse_citron": {
+      "reason": "Média FR tech — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.865995"
+    },
+    "siecledigital": {
+      "reason": "Média FR tech — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.865996"
+    },
+    "01net": {
+      "reason": "Média FR tech — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.865997"
+    },
+    "usine_digitale": {
+      "reason": "Média FR tech — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.865997"
+    },
+    "lesechos": {
+      "reason": "Presse financière FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.865998"
+    },
+    "lemondefr": {
+      "reason": "Presse FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.865999"
+    },
+    "lefigaro": {
+      "reason": "Presse FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866000"
+    },
+    "bfmtv": {
+      "reason": "Média FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866000"
+    },
+    "bfmbusiness": {
+      "reason": "Média FR finance — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866001"
+    },
+    "lejournalducoin": {
+      "reason": "Crypto FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866002"
+    },
+    "cryptoastmedia": {
+      "reason": "Crypto FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866002"
+    },
+    "cointribune": {
+      "reason": "Crypto FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866003"
+    },
+    "coinacademy_fr": {
+      "reason": "Crypto FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866004"
+    },
+    "powerhasheur": {
+      "reason": "Influenceur FR crypto — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866004"
+    },
+    "owen_simonin": {
+      "reason": "Influenceur FR crypto — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866005"
+    },
+    "mathieul1": {
+      "reason": "Bourse FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866006"
+    },
+    "graphseo": {
+      "reason": "Bourse FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866006"
+    },
+    "fintales_": {
+      "reason": "Bourse FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866007"
+    },
+    "flasheurinvest": {
+      "reason": "Bourse FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866008"
+    },
+    "cryptopicsou": {
+      "reason": "Crypto FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866009"
+    },
+    "rodolphesteffan": {
+      "reason": "Bourse FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866009"
+    },
+    "matthiasbaccino": {
+      "reason": "Bourse FR — éviter critique par nom.",
+      "added": "2026-05-06T18:54:27.866010"
+    },
+    "yoshua_bengio": {
+      "reason": "Légende IA québécoise — never criticize.",
+      "added": "2026-05-06T18:54:27.866011"
+    },
+    "arthurmensch": {
+      "reason": "CEO Mistral, FR AI star — never criticize.",
+      "added": "2026-05-06T18:54:27.866011"
+    },
+    "guillaumelample": {
+      "reason": "FR AI researcher (ex-Mistral) — never criticize.",
+      "added": "2026-05-06T18:54:27.866012"
+    },
+    "gaelvaroquaux": {
+      "reason": "FR AI scikit-learn — never criticize.",
+      "added": "2026-05-06T18:54:27.866013"
+    },
+    "cyrildiagne": {
+      "reason": "FR AI artist — never criticize.",
+      "added": "2026-05-06T18:54:27.866013"
+    }
+  }
+}

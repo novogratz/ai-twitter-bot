@@ -35,7 +35,9 @@ SPICY_STATE_FILE = os.path.join(_PROJECT_ROOT, "spicy_state.json")
 MAX_SPICY_PER_DAY = int(os.environ.get("MAX_SPICY_PER_DAY", "6"))
 
 
-SPICY_PROMPT = """Tu es @kzer_ai. Tu vas poster UN tweet ULTRA SHARP en FRANÇAIS, audience 100% francophone, niche IA / crypto / bourse.
+SPICY_PROMPT = """Tu es @kzer_ai. Tu vas poster UN tweet ULTRA SHARP, niche IA / crypto / bourse.
+
+{lang_directive}
 
 Mode: {mode}
 
@@ -43,16 +45,15 @@ Mode: {mode}
 
 RÈGLES DURES:
 - ≤270 caractères.
-- TOUT EN FRANÇAIS.
 - ZÉRO emoji. ZÉRO hashtag. ZÉRO em dash (—).
-- Pas de "Selon X...", pas de "Aujourd'hui...", pas de "Breaking:".
+- Pas de "Selon X..." / "Aujourd'hui..." / "Breaking:" / "According to..." / "Today...".
 - Tu trolles les IDÉES / TRENDS / SYSTÈMES, jamais une personne nommée.
 - Ne jamais cibler le gouvernement américain (Fed, SEC, IRS, etc.).
 - Pas de URL. Pas de source. Ce tweet est PUREMENT un take ou une question.
 
 {performance_section}
 
-OUTPUT — strictement le tweet FR, rien d'autre.
+OUTPUT — strictement le tweet, rien d'autre.
 JAMAIS de "Voici", "Le tweet:", "---", ou méta-commentaire."""
 
 SPICY_INSTRUCTIONS = """SPICY MODE — Tu balances une OPINION TRANCHÉE qui va faire débattre.
@@ -119,7 +120,7 @@ def run_spicy_cycle():
     mode = "SPICY" if random.random() < 0.6 else "QUESTION"
     instructions = SPICY_INSTRUCTIONS if mode == "SPICY" else QUESTION_INSTRUCTIONS
 
-    perf = personality_store.HARD_RULES_BLOCK
+    perf = personality_store.hard_rules_block()
     bot_self = personality_store.render_bot_self()
     if bot_self:
         perf = bot_self + "\n\n" + perf
@@ -127,13 +128,16 @@ def run_spicy_cycle():
     if core:
         perf = core + "\n\n" + perf
 
+    from . import lang_mode
+    lang = lang_mode.pick_content_lang()
     prompt = SPICY_PROMPT.format(
         mode=mode,
         mode_instructions=instructions,
         performance_section=perf,
+        lang_directive=lang_mode.lang_directive(lang),
     )
 
-    log.info(f"[SPICY] Generating ({mode})...")
+    log.info(f"[SPICY] Generating ({mode}, lang={lang})...")
     result = run_llm(prompt, HOTAKE_MODEL, label=f"SPICY_{mode}")
     if result.returncode != 0:
         log.info(f"[SPICY] LLM failed: {result.stderr[:200]}")
@@ -148,6 +152,14 @@ def run_spicy_cycle():
     if len(text) < 25 or len(text) > 280:
         log.info(f"[SPICY] Output length out of bounds ({len(text)}); skipping.")
         return
+
+    # Respect-list defense: refuse to ship if output names a protected handle.
+    from . import respect_list
+    cleaned, reason = respect_list.scrub_text_or_skip(text)
+    if cleaned is None:
+        log.info(f"[SPICY] Refused — {reason}: {text[:120]!r}")
+        return
+    text = cleaned
 
     log.info(f"[SPICY] Posting [{mode}]: {text!r}")
     try:

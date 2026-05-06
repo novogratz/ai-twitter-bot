@@ -125,7 +125,7 @@ def run_digest_thread_cycle():
         return
 
     today_date = datetime.now().strftime("%Y-%m-%d")
-    performance_section = personality_store.HARD_RULES_BLOCK
+    performance_section = personality_store.hard_rules_block()
     prompt = DIGEST_PROMPT.format(
         today_date=today_date,
         performance_section=performance_section,
