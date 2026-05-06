@@ -206,6 +206,21 @@ def run_evolution_cycle():
 def safe_run_evolution_cycle():
     try:
         run_evolution_cycle()
+        # Autonomous git push for state files this agent writes.
+        try:
+            from .git_ops import auto_push
+            auto_push(
+                [
+                    "directives.md",
+                    "pruned_accounts.json",
+                    "reinforced_accounts.json",
+                    "evolution_log.json",
+                ],
+                "Autonomous evolution update — directives + prune/reinforce list",
+            )
+        except Exception:
+            log.info("[EVOLUTION-AGENT] auto_push failed (non-fatal):")
+            traceback.print_exc()
     except Exception:
         log.info("[EVOLUTION-AGENT] Error during evolution cycle:")
         traceback.print_exc()

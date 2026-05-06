@@ -228,6 +228,16 @@ def run_reflection_cycle():
 def safe_run_reflection_cycle():
     try:
         run_reflection_cycle()
+        # Autonomous git push for state files this agent writes.
+        try:
+            from .git_ops import auto_push
+            auto_push(
+                ["personality.json", "reflection_log.json"],
+                "Autonomous reflection update — per-account dossiers + topic positions",
+            )
+        except Exception:
+            log.info("[REFLECTION] auto_push failed (non-fatal):")
+            traceback.print_exc()
     except Exception:
         log.info("[REFLECTION] Error during reflection cycle:")
         traceback.print_exc()

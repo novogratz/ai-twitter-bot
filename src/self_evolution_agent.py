@@ -250,6 +250,16 @@ def safe_run_self_evolution_cycle():
     try:
         run_self_evolution_cycle()
         health.record_success("self_evolution")
+        # Autonomous git push for the bot's evolving self-narrative.
+        try:
+            from .git_ops import auto_push
+            auto_push(
+                ["bot_self.json", "self_evolution_log.json"],
+                "Autonomous personality update — mood, obsession, voice tweaks, drift",
+            )
+        except Exception:
+            log.info("[SELF] auto_push failed (non-fatal):")
+            traceback.print_exc()
     except Exception:
         log.info("[SELF] Error during self-evolution cycle:")
         traceback.print_exc()

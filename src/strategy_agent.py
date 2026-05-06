@@ -272,6 +272,16 @@ def safe_run_strategy_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
     try:
         run_strategy_cycle()
+        # Autonomous git push for state files this agent writes.
+        try:
+            from .git_ops import auto_push
+            auto_push(
+                ["dynamic_queries.json", "dynamic_accounts.json", "strategy_log.json"],
+                "Autonomous strategy update — new queries/accounts based on per-source ROI",
+            )
+        except Exception:
+            log.info("[STRATEGY-AGENT] auto_push failed (non-fatal):")
+            traceback.print_exc()
     except Exception:
         log.info("[STRATEGY-AGENT] Error during strategy cycle:")
         traceback.print_exc()

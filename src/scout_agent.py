@@ -312,6 +312,16 @@ def safe_run_scout_cycle():
     """Wrapper that catches errors so the scheduler keeps running."""
     try:
         run_scout_cycle()
+        # Autonomous git push for state files this agent writes.
+        try:
+            from .git_ops import auto_push
+            auto_push(
+                ["dynamic_accounts.json", "scout_log.json", "followed_accounts.json"],
+                "Autonomous scout update — new FR-speaker handles + auto-follows",
+            )
+        except Exception:
+            log.info("[SCOUT-AGENT] auto_push failed (non-fatal):")
+            traceback.print_exc()
     except Exception:
         log.info("[SCOUT-AGENT] Error during scout cycle:")
         traceback.print_exc()
