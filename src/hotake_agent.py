@@ -613,6 +613,10 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
 
     # Personality store — global mood from dossiers + hard rules.
     from . import personality_store
+    # Self-evolving bot identity (written by self_evolution_agent every few hrs).
+    bot_self = personality_store.render_bot_self()
+    if bot_self:
+        performance_section = (performance_section or "") + "\n\n" + bot_self
     mood = personality_store.render_global_mood()
     if mood:
         performance_section = (performance_section or "") + "\n\n" + mood

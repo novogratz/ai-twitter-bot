@@ -1040,6 +1040,12 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
 
     # Personality store — global mood from accumulated dossiers + hard rules.
     from . import personality_store
+    # Self-evolving bot identity (written by self_evolution_agent every few hrs).
+    # This is the bot's ACTUAL state-of-mind, not a static voice anchor — it
+    # drifts daily based on what the bot lived + what's happening in the world.
+    bot_self = personality_store.render_bot_self()
+    if bot_self:
+        performance_section = (performance_section or "") + "\n\n" + bot_self
     mood = personality_store.render_global_mood()
     if mood:
         performance_section = (performance_section or "") + "\n\n" + mood

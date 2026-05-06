@@ -771,6 +771,21 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             if author_key:
                 per_author_count[author_key] = per_author_count.get(author_key, 0) + 1
             log.info(f"[{source_name}] Posted reply to {url}")
+            # 2026-05-06 PM: auto-follow on reply. The reply already proved
+            # interest; following the author is now FREE reciprocity-bait
+            # since the like+notification went to them anyway. Best-effort.
+            if author_key:
+                try:
+                    from .engage_bot import _load_followed, _save_followed
+                    from .twitter_client import follow_account as _follow
+                    fset = _load_followed()
+                    if author_key not in fset and len(author_key) <= 15 and "/" not in author_key and " " not in author_key:
+                        if _follow(author_key):
+                            fset.add(author_key)
+                            _save_followed(fset)
+                            log.info(f"[{source_name}] Auto-followed @{author_key} after reply.")
+                except Exception:
+                    pass
             time.sleep(random.randint(10, 20))
         except Exception:
             log.info(f"[{source_name}] Failed to reply to {url}")

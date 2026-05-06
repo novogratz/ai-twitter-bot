@@ -276,6 +276,56 @@ def render_core_identity() -> str:
     )
 
 
+BOT_SELF_FILE = os.path.join(_PROJECT_ROOT, "bot_self.json")
+
+
+def render_bot_self() -> str:
+    """Inject the bot's CURRENT self-narrative into prompts.
+
+    Written by self_evolution_agent.py every few hours. The agent
+    rewrites this file based on recent activity + WebSearch on the
+    state of the world. Empty string if the file is missing or
+    malformed (the bot still runs, just without the drift signal).
+    """
+    if not os.path.exists(BOT_SELF_FILE):
+        return ""
+    try:
+        with open(BOT_SELF_FILE, "r") as f:
+            d = json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return ""
+    if not isinstance(d, dict):
+        return ""
+
+    parts = []
+    parts.append("==================================================")
+    parts.append("ETAT DU MOMENT (ton humeur reelle, mise a jour autonome)")
+    parts.append("==================================================")
+    if d.get("mood"):
+        parts.append(f"Humeur: {d['mood']}")
+    if d.get("obsession"):
+        parts.append(f"Obsession en ce moment: {d['obsession']}")
+    if d.get("recent_learning"):
+        parts.append(f"Constat recent: {d['recent_learning']}")
+    if d.get("self_narrative"):
+        parts.append("")
+        parts.append(d["self_narrative"])
+    if d.get("voice_tweaks"):
+        parts.append("")
+        parts.append("Reglages de voix pour aujourd'hui:")
+        for t in d["voice_tweaks"]:
+            parts.append(f"- {t}")
+    if d.get("drift"):
+        parts.append("")
+        parts.append("Positions qui ont bouge:")
+        for topic, stance in d["drift"].items():
+            parts.append(f"- {topic}: {stance}")
+    parts.append("")
+    parts.append("Ce bloc decrit ton etat actuel — pas une regle stricte.")
+    parts.append("Tu es libre de t'en eloigner si l'instant le demande.")
+    return "\n".join(parts)
+
+
 def render_global_mood() -> str:
     """High-level state of mind across all dossiers — for news/hot take prompts
     that aren't aimed at a specific account. Empty if store is sparse."""

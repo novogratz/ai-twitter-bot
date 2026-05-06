@@ -42,6 +42,9 @@ from src.pin_bot import safe_run_pin_cycle
 from src.like_bot import safe_run_like_cycle
 from src.viral_followup_bot import safe_run_viral_followup_cycle
 from src.digest_thread_bot import safe_run_digest_thread_cycle
+from src.follow_blast_bot import safe_run_follow_blast_cycle
+from src.auto_tune_bot import safe_run_auto_tune_cycle
+from src.self_evolution_agent import safe_run_self_evolution_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -398,10 +401,10 @@ def main():
         # bot to auto-adjust strategy MULTIPLE TIMES per day. Append-only
         # safety boundary still holds (additions never removals).
         if ENABLE_AI_MAINTENANCE:
-            log.info("Strategy agent: autonomous self-improvement every 12 hours.")
+            log.info("Strategy agent: autonomous self-improvement every 3 hours.")
             scheduler.add_job(
                 safe_run_strategy_cycle,
-                trigger=IntervalTrigger(hours=12),
+                trigger=IntervalTrigger(hours=3),
                 id="strategy_job",
             )
         else:
@@ -420,10 +423,10 @@ def main():
         # rogue, and prune TTL is still 30d so doubling the cadence doesn't
         # double the damage — it just makes the style guide more responsive.
         if ENABLE_AI_MAINTENANCE:
-            log.info("Evolution agent: content-quality self-improvement every 12 hours.")
+            log.info("Evolution agent: content-quality self-improvement every 3 hours.")
             scheduler.add_job(
                 safe_run_evolution_cycle,
-                trigger=IntervalTrigger(hours=12),
+                trigger=IntervalTrigger(hours=3),
                 id="evolution_job",
             )
         else:
@@ -434,10 +437,10 @@ def main():
         # dossiers (category, stance, feelings, notes) + per-topic positions.
         # Replies become PERSONAL because the bot remembers each account.
         if ENABLE_AI_MAINTENANCE:
-            log.info("Reflection agent: personality / memory update every 12 hours.")
+            log.info("Reflection agent: personality / memory update every 6 hours.")
             scheduler.add_job(
                 safe_run_reflection_cycle,
-                trigger=IntervalTrigger(hours=12),
+                trigger=IntervalTrigger(hours=6),
                 id="reflection_job",
             )
         else:
@@ -452,10 +455,10 @@ def main():
         # this one investigates the open web for hidden gems we'd never see
         # via X-internal signals. Hard caps: 8 added per cycle, 3 auto-follows.
         if ENABLE_AI_DISCOVERY:
-            log.info("Scout agent: open-web FR-speaker recruitment every 12 hours.")
+            log.info("Scout agent: open-web FR-speaker recruitment every 4 hours.")
             scheduler.add_job(
                 safe_run_scout_cycle,
-                trigger=IntervalTrigger(hours=12),
+                trigger=IntervalTrigger(hours=4),
                 id="scout_job",
             )
         else:
@@ -568,6 +571,40 @@ def main():
             safe_run_digest_thread_cycle,
             trigger=IntervalTrigger(hours=4),
             id="digest_thread_job",
+        )
+
+        # Follow blast bot — bulk-follow ~30 FR niche accounts every 30 min.
+        # Highest-leverage net-new follower acquisition: ~120/hour follow
+        # attempts, with 10-20% reciprocity = ~12-25 followers/hour gain.
+        log.info("Follow-blast bot: bulk-following FR niche accounts every 30 min (~30/cycle).")
+        scheduler.add_job(
+            safe_run_follow_blast_cycle,
+            trigger=IntervalTrigger(minutes=30),
+            id="follow_blast_job",
+        )
+
+        # Auto-tune bot — real-time strategy gauge. Reads engagement_log
+        # every 30 min, writes auto_tune_state.json with per-source velocity
+        # snapshot + cadence factor. Other bots can opt-in to read it.
+        # Complement to the slower 12h strategy/evolution agents.
+        log.info("Auto-tune bot: writing real-time strategy state every 30 min.")
+        scheduler.add_job(
+            safe_run_auto_tune_cycle,
+            trigger=IntervalTrigger(minutes=30),
+            id="auto_tune_job",
+        )
+
+        # Self-evolution agent — bot rewrites its OWN personality every 4h.
+        # Reads recent activity + uses WebSearch to investigate the world,
+        # writes bot_self.json (mood, obsession, recent_learning, voice_tweaks,
+        # drift, self_narrative) which personality_store.render_bot_self()
+        # injects into every generation prompt. The bot's identity drifts
+        # day-to-day like a real person.
+        log.info("Self-evolution agent: bot rewrites own personality every 4h (agentic).")
+        scheduler.add_job(
+            safe_run_self_evolution_cycle,
+            trigger=IntervalTrigger(hours=4),
+            id="self_evolution_job",
         )
 
     log.info("All systems go. Bot is running.")
