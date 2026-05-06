@@ -104,20 +104,35 @@ FR_TRUSTED_HANDLES = [
 ]
 
 EN_TRUSTED_HANDLES = [
-    # Wires / global financial press — only the absolute top tier; EN
-    # retweets are now the exception, not the rule.
+    # Wires / global financial press
     "Reuters",
     "ReutersBiz",
     "business",          # Bloomberg
     "markets",           # Bloomberg Markets
     "FT",
     "WSJ",
+    "WSJmarkets",
     "AFP",
     "AFPbusiness",
-    # AI press — kept narrow (TechCrunch + The Information are the two
-    # the FR ecosystem actually treats as canonical sources).
+    "CNBC",
+    "axios",
+    "BloombergTV",
+    "YahooFinance",
+    # AI press — broadened back 2026-05-06: EN tweets still carry the
+    # FR-language penalty in the scorer (-1 final), so volume is fine.
     "TechCrunch",
     "TheInformation",
+    "verge",
+    "WIRED",
+    "OpenAI",
+    "AnthropicAI",
+    "GoogleDeepMind",
+    "deepmind",
+    # Crypto press
+    "CoinDesk",
+    "TheBlock__",
+    "BitcoinMagazine",
+    "decryptmedia",
 ]
 
 # Combined list kept for the source-trust check (a tweet from any of these
@@ -341,15 +356,14 @@ def run_retweet_cycle():
 
     retweeted = _load_retweeted()
 
-    # FR-biased sample. 2026-05-06: user audience is 100% FR, so the
-    # feed must speak FR. We pull 9 FR handles + 2 EN handles per cycle —
-    # EN gets the slot only as a fallback for mega-news the FR press
-    # hasn't caught yet.
+    # FR-biased sample. 14 FR + 4 EN per cycle (2026-05-06 PM volume
+    # bump): we want the cycle to find SOMETHING worth amplifying every
+    # 20 min, while still leaning heavy on FR press.
     fr_sample = random.sample(
-        FR_TRUSTED_HANDLES, k=min(9, len(FR_TRUSTED_HANDLES))
+        FR_TRUSTED_HANDLES, k=min(14, len(FR_TRUSTED_HANDLES))
     )
     en_sample = random.sample(
-        EN_TRUSTED_HANDLES, k=min(2, len(EN_TRUSTED_HANDLES))
+        EN_TRUSTED_HANDLES, k=min(4, len(EN_TRUSTED_HANDLES))
     )
     sample = fr_sample + en_sample
     log.info(f"[RETWEET] Scraping FR-biased news handles: {sample}")
@@ -437,11 +451,12 @@ def run_retweet_cycle():
             log.info("[RETWEET] Failed to write daily picks file:")
             traceback.print_exc()
 
-    # 2026-05-05: relaxed 8 → 7. User wants way more reshares, retweets from
-    # trusted handles are the cheapest distribution lever. Source-trust gate
-    # already filters out low-signal handles, so the bar can come down.
-    if score < 7:
-        log.info(f"[RETWEET] Score {score}/10 below retweet threshold (7). Logged only.")
+    # 2026-05-06 PM: relaxed 7 → 6. User wants 10x more reshares.
+    # The source-trust gate (TRUSTED_NEWS_HANDLES) + FR-bias scorer + EN
+    # penalty already keep low-quality content out; the threshold doesn't
+    # need to do that work too. Volume is the lever.
+    if score < 6:
+        log.info(f"[RETWEET] Score {score}/10 below retweet threshold (6). Logged only.")
         return
 
     # Lock URL in BEFORE posting so a crash can't double-retweet.

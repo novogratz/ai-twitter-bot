@@ -321,10 +321,10 @@ def main():
         # 4h → 3h on user directive 2026-04-26 PM: the cheapest validated
         # action we have, push it to 8 boosts/day. Risk of algo suppression
         # exists but is dwarfed by the confirmed lift.
-        log.info("Boost bot: retweeting own latest tweet every 75 minutes.")
+        log.info("Boost bot: retweeting own latest tweet every 60 minutes.")
         scheduler.add_job(
             safe_run_boost_cycle,
-            trigger=IntervalTrigger(minutes=75),
+            trigger=IntervalTrigger(minutes=60),
             id="boost_job",
         )
 
@@ -444,10 +444,10 @@ def main():
         # Quote-tweet bot — accelerated 2026-05-05 (user: "reshare way more").
         # Daily cap is 10 (env), so cadence sets the upper bound on attempts;
         # bumped 3h → 75min so cap actually binds instead of cycle frequency.
-        log.info("Quote-tweet bot: amplifying viral FR setups every 75 min (cap 10/day).")
+        log.info("Quote-tweet bot: amplifying viral FR setups every 35 min (cap 30/day).")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=75),
+            trigger=IntervalTrigger(minutes=35),
             id="quote_tweet_job",
         )
 
@@ -455,10 +455,10 @@ def main():
         # 7/10). User: "reshare way more posts". TRUSTED_NEWS_HANDLES expanded
         # with FR press (Numerama, Usine Digitale, Siècle Digital, etc.) so
         # the FR news flow gets prioritized amplification. Daily cap binds.
-        log.info("Retweet bot: selective amplification of trusted news every 40 min (cap 20/day).")
+        log.info("Retweet bot: amplifying trusted news every 20 min (cap 60/day).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(minutes=40),
+            trigger=IntervalTrigger(minutes=20),
             id="retweet_job",
         )
 
