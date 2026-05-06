@@ -249,11 +249,90 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
         log.info(f"[RECIPROCATE] Engaged back with {visited} engager(s).")
 
 
+_BOOST_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "boost_history.json")
+
+
+def _load_boost_history() -> set:
+    if os.path.exists(_BOOST_HISTORY_FILE):
+        try:
+            with open(_BOOST_HISTORY_FILE, "r") as f:
+                return set(json.load(f))
+        except (json.JSONDecodeError, IOError):
+            pass
+    return set()
+
+
+def _save_boost_history(s: set):
+    with open(_BOOST_HISTORY_FILE, "w") as f:
+        # Cap at 500 — far above any realistic 90-day window.
+        json.dump(list(s)[-500:], f)
+
+
 def run_boost_cycle():
-    """Retweet own latest tweet for extra exposure in followers' feeds."""
-    log.info("[BOOST] Boosting latest tweet...")
-    retweet_own_latest()
-    log.info("[BOOST] Done.")
+    """Smart boost (2026-05-06): pick our highest-engagement recent post and
+    retweet THAT, not just the latest. The latest may be stale or low-signal;
+    the cheapest distribution lever should ride our actual viral content.
+
+    Falls back to retweet_own_latest() if scraping fails (so we never miss a
+    cycle if X's profile DOM hiccups).
+    """
+    from .twitter_client import scrape_profile_tweets, retweet_post
+
+    history = _load_boost_history()
+    log.info("[BOOST] Scraping own profile to pick best recent post...")
+    try:
+        tweets = scrape_profile_tweets(BOT_HANDLE, max_tweets=12)
+    except Exception:
+        log.info("[BOOST] Scrape failed — falling back to retweet_own_latest:")
+        traceback.print_exc()
+        retweet_own_latest()
+        log.info("[BOOST] Fallback done.")
+        return
+
+    if not tweets:
+        log.info("[BOOST] No tweets scraped — falling back to retweet_own_latest.")
+        retweet_own_latest()
+        log.info("[BOOST] Fallback done.")
+        return
+
+    # Filter: must be ours, must have a URL, must not have been boosted before.
+    own = []
+    bot_lc = BOT_HANDLE.lower()
+    for t in tweets:
+        author = (t.get("author") or "").lower().lstrip("@")
+        if author and author != bot_lc:
+            continue
+        url = t.get("url") or ""
+        if not url or url in history:
+            continue
+        own.append({
+            "url": url,
+            "likes": int(t.get("likes") or 0),
+            "replies": int(t.get("replies") or 0),
+            "text": (t.get("text") or "").strip(),
+        })
+
+    if not own:
+        log.info("[BOOST] All recent posts already boosted — using retweet_own_latest.")
+        retweet_own_latest()
+        log.info("[BOOST] Latest re-boosted as fallback.")
+        return
+
+    # Best = highest likes, ties broken by replies. With ties on both, the
+    # most recent wins implicitly (scrape order = newest-first).
+    best = max(own, key=lambda c: (c["likes"], c["replies"]))
+    log.info(
+        f"[BOOST] Best post: {best['likes']} likes / {best['replies']} replies "
+        f"— {best['text'][:120]!r}"
+    )
+    history.add(best["url"])
+    _save_boost_history(history)
+    try:
+        retweet_post(best["url"])
+        log.info(f"[BOOST] Boosted: {best['url']}")
+    except Exception:
+        log.info("[BOOST] Boost failed:")
+        traceback.print_exc()
 
 
 def safe_run_notify_cycle():

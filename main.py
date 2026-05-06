@@ -39,6 +39,9 @@ from src.thread_bot import safe_run_thread_cycle
 from src.promote_bot import safe_run_promote_cycle
 from src.followback_bot import safe_run_followback_cycle
 from src.pin_bot import safe_run_pin_cycle
+from src.like_bot import safe_run_like_cycle
+from src.viral_followup_bot import safe_run_viral_followup_cycle
+from src.digest_thread_bot import safe_run_digest_thread_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -91,39 +94,52 @@ def should_skip_engagement() -> bool:
 
 
 def post_interval_minutes() -> int:
-    """Quality-first original-post cadence.
+    """Post cadence tuned for FR audience peak hours (Paris time).
 
-    Standalone news is capped at 6/day and uses the stronger model. Check often
-    enough that a few model SKIPs don't starve the timeline.
-
-    Hours are EST. Paris = EST + 6, Montreal = EST.
+    Hours are EST; Paris = EST + 6.
+    Paris peaks: 12-14h (lunch) + 19-22h (evening) + 7-9h (morning commute).
     """
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 18 <= hour < 23:
-        return random.randint(55, 95)
-    elif 23 <= hour or hour < 4:
+    # Paris 19-22h = EST 13-16h — ABSOLUTE PEAK FR engagement window.
+    if 13 <= hour < 16:
+        return random.randint(28, 50)
+    # Paris 12-14h = EST 6-8h — lunch peak.
+    elif 6 <= hour < 8:
+        return random.randint(35, 60)
+    # Paris 7-9h = EST 1-3h — morning commute (was quiet before).
+    elif 1 <= hour < 3:
+        return random.randint(45, 80)
+    # Paris 14-19h = EST 8-13h — afternoon, still high engagement.
+    elif 8 <= hour < 13:
+        return random.randint(40, 70)
+    # Paris 22-00h = EST 16-18h — evening winddown but still active.
+    elif 16 <= hour < 18:
+        return random.randint(45, 80)
+    # Paris 00-07h = EST 18-01h — night for FR, primetime for QC (light cadence).
+    elif 18 <= hour < 23:
+        return random.randint(60, 110)
+    elif 23 <= hour or hour < 1:
         return random.randint(120, 210)
-    elif 9 <= hour < 11:
-        return random.randint(45, 80)
-    elif 13 <= hour < 15:
-        return random.randint(45, 80)
-    elif 4 <= hour < 8:
-        return random.randint(90, 150)
-    elif 8 <= hour < 12:
-        return random.randint(55, 95)
-    elif 12 <= hour < 18:
-        return random.randint(55, 95)
+    # Paris 03-07h = EST 21-01h handled above. Catch-all.
     else:
-        return random.randint(90, 150)
+        return random.randint(70, 130)
 
 
 def reply_interval_minutes() -> int:
-    """Primary growth cadence: more response scans, still jittered."""
-    return random.randint(18, 30)
+    """Primary growth cadence — accelerated 2026-05-06 PM. Replies are the
+    working surface; we want maximum scan frequency."""
+    hour = datetime.now(ZoneInfo("America/New_York")).hour
+    # Paris 19-22h peak: 8-15min cadence.
+    if 13 <= hour < 16:
+        return random.randint(8, 15)
+    return random.randint(14, 24)
 
 
 def engage_interval_minutes() -> int:
     """More frequent presence in influencer notifications."""
+    hour = datetime.now(ZoneInfo("America/New_York")).hour
+    if 13 <= hour < 16:  # Paris peak
+        return random.randint(12, 20)
     return random.randint(16, 24)
 
 
@@ -520,6 +536,38 @@ def main():
             safe_run_pin_cycle,
             trigger=IntervalTrigger(hours=6),
             id="pin_job",
+        )
+
+        # Like bot — bulk-like FR niche tweets. Each like = 1 outbound
+        # notification. ~18 likes × 4 cycles/hour = ~70 notifications/hour.
+        # Strangers get pinged → click through to /kzer_ai → see strong
+        # pinned + active feed → follow.
+        log.info("Like bot: bulk-liking FR niche tweets every 15 min (~18 per cycle).")
+        scheduler.add_job(
+            safe_run_like_cycle,
+            trigger=IntervalTrigger(minutes=15),
+            id="like_job",
+        )
+
+        # Viral follow-up bot — when own post hits >= VIRAL_THRESHOLD likes,
+        # post a follow-up reply in-thread. Capitalize on the algorithm push
+        # window (first ~hour after takeoff is the highest-leverage moment).
+        log.info("Viral follow-up bot: replying to own viral posts every 30 min (cap 3/cycle).")
+        scheduler.add_job(
+            safe_run_viral_followup_cycle,
+            trigger=IntervalTrigger(minutes=30),
+            id="viral_followup_job",
+        )
+
+        # Daily digest thread — once/day, idempotent, fires every 4h to
+        # catch up after restart. Different from thread_bot (single-story)
+        # — this one bundles 5 stories into a recap thread. Highly shareable
+        # format on FR Twitter.
+        log.info("Digest thread bot: 1 daily 5-story FR recap thread (every 4h, idempotent).")
+        scheduler.add_job(
+            safe_run_digest_thread_cycle,
+            trigger=IntervalTrigger(hours=4),
+            id="digest_thread_job",
         )
 
     log.info("All systems go. Bot is running.")

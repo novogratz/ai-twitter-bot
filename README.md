@@ -46,6 +46,12 @@ Default mode is Plus-safe: AI is used for content that actually ships (news, hot
 
 **Pin Bot** - Daily idempotent. Picks our highest-engagement own POST and pins it via JS menu click (FR + EN strings). Best-effort; falls back silently if the X menu DOM has shifted. A strong pinned tweet is the #1 follow-conversion lever.
 
+**Like Bot** - Bulk-likes FR niche tweets every 15 min (~18 per cycle, ~70 notifications/hour outbound). Each like is a notification → recipient clicks through to /kzer_ai → strong pinned + active feed → follow. Cheapest social signal we have.
+
+**Viral Follow-up Bot** - When our own post crosses VIRAL_THRESHOLD likes (default 15), auto-generates a short FR follow-up reply that extends the punchline. Capitalize on the algorithm-push window. Cap 3/cycle, every 30 min.
+
+**Digest Thread Bot** - One 6-tweet "top 5 IA/crypto/bourse" recap thread per day. Different format than thread_bot (which dissects ONE story): the digest bundles 5 for shareability. Positions @kzer_ai as THE one-stop FR source.
+
 **Daily Digest** - Hourly idempotent cron, writes one section per day to `daily_digest.md`: total actions, by-type breakdown, top sources, comedy patterns, top reply targets, top-perf posts, follow count delta. Built specifically for the 2-week post-mission review.
 
 **Early-Bird Bot** - Every ~7 min jittered (12-min freshness window). Scans 3 random accounts from a 75-account roster, replies to any tweet < 12 min old. Cap 2 replies/cycle. Top-5 reply on a viral tweet = 10-100x impressions multiplier. Quiet hours skip.
@@ -195,9 +201,12 @@ src/
   early_bird_bot.py          # Top-5-reply path on fresh viral tweets (cap 4/cycle)
   retweet_bot.py             # Selective retweets of trusted news (cap 60/day, every 20 min)
   thread_bot.py              # 1 FR thread/day on biggest IA story (idempotent, every 4h)
+  digest_thread_bot.py       # 1 daily 5-story recap thread (idempotent, every 4h)
   promote_bot.py             # Quote-RT our top recent reply (cap 3/day, every 3h)
   followback_bot.py          # Scrape followers, follow back (cap 8/cycle, every 2h)
   pin_bot.py                 # Auto-pin best own post (daily idempotent, every 6h)
+  like_bot.py                # Bulk-like FR niche tweets (~18/cycle, every 15 min)
+  viral_followup_bot.py      # Reply to own viral posts (cap 3/cycle, every 30 min)
   discover_bot.py            # Autonomous handle discovery (every 3h)
   roast_pgm_bot.py           # Dedicated 1-roast-per-tweet for @pgm_pm
   image_gen.py               # PNG quote-card generator (Pillow)
