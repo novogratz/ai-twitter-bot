@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 pip install -r requirements.txt
 ```
 
-No API keys needed in subscription mode. The bot posts via browser + AppleScript (macOS only) and uses the configured AI CLI for generation (`AI_CLI=codex` by default, or `claude`).
+No API keys needed in subscription mode. The bot posts via browser + AppleScript (macOS only) and uses the configured AI CLI for generation (`AI_CLI=claude` by default, or `codex` / `gemini`).
 
 Default mode is ChatGPT Plus-safe: model calls are reserved for content generation. Retweet scoring is deterministic, discovery/scout jobs are off by default, and strategy/evolution/reflection loops only run with `ENABLE_AI_MAINTENANCE=1`.
 
@@ -20,6 +20,11 @@ claude login
 For Codex mode, authenticate the Codex CLI:
 ```bash
 codex login
+```
+
+For Gemini mode, authenticate the Gemini CLI:
+```bash
+gemini login
 ```
 
 ## Running
@@ -225,7 +230,8 @@ Decisions:
 
 ### Files
 
-- **`src/config.py`** - Central config: handle, paths, limits (10 news, 4 hot takes), models, retry settings, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE.
+- **`src/config.py`** - Central config: handle, paths, limits (10 news, 4 hot takes), models, retry settings, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE. Supports `AI_CLI=gemini`.
+- **`src/llm_client.py`** - Small CLI adapter for generation calls. Supports Codex, Claude, and Gemini.
 - **`src/agent.py`** - News agent. Opus + WebSearch.
 - **`src/hotake_agent.py`** - Hot take agent. Sonnet. Smart/sharp/philosophical memes. Trolls ideas, never people.
 - **`src/reply_agent.py`** - Reply agent. Sonnet + WebSearch. Bilingual (FR priority). Pulls discovered handles into prompt.

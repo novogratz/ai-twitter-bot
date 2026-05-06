@@ -130,13 +130,19 @@ HOTAKE_PROMPT = """Tu es @kzer_ai. La voix française la plus tranchante sur l'I
 Test ultime: un mec dans le RER B doit rire à voix haute, pas sourire. Sinon SKIP.
 
 📰 TROUVE L'ÉVÉNEMENT IA (≤36h):
-WebSearch large: "AI news today" / "OpenAI" / "Anthropic" / "Nvidia AI" /
-"Mistral AI" / "Google DeepMind" / "xAI" / "AI agents" / "AI datacenter" /
-"AI regulation" / "AI startup funding".
+WebSearch FR D'ABORD: "IA France" / "Mistral" / "Hugging Face" / "Kyutai" /
+site:lesechos.fr OR site:numerama.com OR site:siecledigital.fr OR
+site:usine-digitale.fr / "Bercy IA" / "AMF crypto" / "ARCEP".
+Fallback EN si rien FR ne sort: "AI news today" / "OpenAI" / "Anthropic" /
+"Nvidia AI" / "Google DeepMind" / "xAI" / "AI agents" / "AI datacenter" /
+"AI regulation".
 
 Source TOP-TIER obligatoire (≤36h, date vérifiée par WebFetch):
-✅ Reuters, Bloomberg, AFP, FT, WSJ, Les Échos, Le Monde, Le Figaro,
-   TechCrunch, The Information, The Verge, Wired, CNBC, BFM Business, Capital.
+✅ FR PRIORITAIRE: Les Échos, Le Monde, Le Figaro, BFM Business, Capital,
+   Numerama, Usine Digitale, Siècle Digital, 01net, Frandroid, Les Numériques,
+   Presse-Citron, Maddyness, Journal du Coin, Cointribune, Cryptoast, Boursorama.
+✅ EN fallback: Reuters, Bloomberg, AFP, FT, WSJ, TechCrunch, The Information,
+   The Verge, Wired, CNBC, Axios.
 ❌ JAMAIS: crypto.news, u.today, bitcoinist, ambcrypto, beincrypto,
    cryptopotato, cryptonews.net.
 ❌ Pas de crypto/bourse standalone. Nvidia/markets OK seulement si la thèse est
@@ -467,7 +473,8 @@ Critères de validation source (durci 2026-04-27):
 - **Date ≤ 24h** (vérifie la date de publication dans la PAGE, pas juste l'URL)
 - Lien DIRECT vers l'article (pas homepage, pas tag-page)
 - Pas paywallé hard
-- ✅ TOP-TIER: Reuters / AFP / Bloomberg / Les Échos / Le Figaro / FT / WSJ / TechCrunch / The Information / The Verge / Wired / CNBC / Axios / Coindesk / Le Monde
+- ✅ TOP-TIER FR (priorité): Les Échos / Le Monde / Le Figaro / BFM Business / Capital / Numerama / Usine Digitale / Siècle Digital / 01net / Frandroid / Les Numériques / Presse-Citron / Maddyness / Journal du Coin / Cointribune / Cryptoast / Boursorama
+- ✅ TOP-TIER EN (fallback): Reuters / AFP / Bloomberg / FT / WSJ / TechCrunch / The Information / The Verge / Wired / CNBC / Axios / Coindesk
 - ❌ REJET: crypto.news / cryptonews.net / cryptopotato / beincrypto / u.today / bitcoinist / ambcrypto — content farms, pas du vrai journalisme
 
 PAS de source qui valide ces critères → SKIP. Mid + sans source = double échec.

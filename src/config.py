@@ -56,21 +56,26 @@ BLOCKLIST = {
 # Discovered accounts file (autonomous influencer discovery)
 DISCOVERED_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "discovered_accounts.json")
 
-# CLI/provider selection. Default is Codex for ChatGPT Plus compatibility.
-# Set AI_CLI=claude to run the exact same bot via Claude Code.
-AI_CLI = os.environ.get("AI_CLI", "codex").strip().lower()
+# CLI/provider selection. Default is Claude (user reverted from Codex 2026-05-05
+# — sharper FR humor for replies + content). Set AI_CLI=codex or AI_CLI=gemini
+# to override at the env level.
+AI_CLI = os.environ.get("AI_CLI", "claude").strip().lower()
 
-def _default_model(codex_model: str, claude_model: str) -> str:
-    return codex_model if AI_CLI == "codex" else claude_model
+def _default_model(codex_model: str, claude_model: str, gemini_model: str = "gemini-2.0-flash") -> str:
+    if AI_CLI == "codex":
+        return codex_model
+    if AI_CLI == "gemini":
+        return gemini_model
+    return claude_model
 
 # Models. Codex defaults use the Mini model to fit a $20 Plus plan.
 # Claude defaults stay mid/cheap tier, not Opus.
-NEWS_MODEL = os.environ.get("NEWS_MODEL", _default_model("gpt-5.4", "claude-sonnet-4-6"))
-REPLY_MODEL = os.environ.get("REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6"))
-PRIORITY_REPLY_MODEL = os.environ.get("PRIORITY_REPLY_MODEL", _default_model("gpt-5.4", "claude-sonnet-4-6"))
-HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6"))
-ROAST_MODEL = os.environ.get("ROAST_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001"))
-QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001"))
+NEWS_MODEL = os.environ.get("NEWS_MODEL", _default_model("gpt-5.4", "claude-sonnet-4-6", "gemini-2.0-flash"))
+REPLY_MODEL = os.environ.get("REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6", "gemini-1.5-flash"))
+PRIORITY_REPLY_MODEL = os.environ.get("PRIORITY_REPLY_MODEL", _default_model("gpt-5.4", "claude-sonnet-4-6", "gemini-2.0-flash"))
+HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6", "gemini-1.5-flash"))
+ROAST_MODEL = os.environ.get("ROAST_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
+QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
 
 # Local guardrail against scheduler bursts and provider rate limits. The
 # wrapper spaces model calls and refuses new ones once the hourly budget is hit.

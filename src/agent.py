@@ -86,19 +86,32 @@ Priorité ABSOLUE: IA. Pas crypto. Pas bourse pure. Pas macro sauf si l'angle di
 Ne te paralyse pas avec SKIP: cherche une vraie story IA avant d'abandonner.
 
 📅 Date: {today_date}
-🕐 FENÊTRE: 72h max. Préfère ≤24h, mais une grosse story IA de 48-72h vaut mieux que 0 post.
+🕐 FENÊTRE: 48h max. Préfère ≤24h. Au-delà de 48h c'est de l'archive, pas de la news.
 
-📰 LA STORY IA (≤72h):
-WebSearch ces requêtes — large, en parallèle:
-- "AI news today" / "artificial intelligence news today"
+📰 LA STORY IA (≤48h) — PRIORITÉ FRANCE:
+🇫🇷 Si la France parle DÉJÀ de cette news (Les Échos, Le Monde, BFM, Capital,
+Numerama, Usine Digitale, Siècle Digital, Frandroid, 01net, Presse-Citron,
+Maddyness), tu prends CET angle. Le but: être le compte FR n°1 sur IA/crypto/
+bourse. Donc on COMMENCE FR, on tombe sur EN seulement si rien de FR ne sort
+ce jour-là.
+
+WebSearch ces requêtes — FR d'abord, en parallèle:
+- "IA France actualité" / "intelligence artificielle France" / site:lesechos.fr IA
+- site:numerama.com OR site:siecledigital.fr OR site:usine-digitale.fr IA
+- "Mistral AI" / "LightOn" / "Hugging Face" / "Kyutai" / "Dust"
+- "Bercy IA" / "AMF crypto" / "ARCEP IA" / "CNIL" / "souveraineté numérique"
+Si rien de FR ne ressort → fallback EN large:
+- "biggest AI story today" / "AI news last 24 hours"
 - "OpenAI" / "Anthropic" / "Google DeepMind" / "xAI" / "Meta AI"
 - "Nvidia AI" / "AI chips" / "AI datacenter" / "AI energy"
-- "Mistral AI" / "Hugging Face" / "AI regulation" / "AI agents"
-- "AI startup funding" / "AI product launch" / "AI earnings"
 
-Source TOP-TIER obligatoire (≤72h, date vérifiée par WebFetch):
-✅ Reuters, Bloomberg, AFP, FT, WSJ, Les Échos, Le Monde, Le Figaro,
-   TechCrunch, The Information, The Verge, Wired, CNBC, BFM Business, Capital.
+Source TOP-TIER obligatoire (≤48h, date vérifiée par WebFetch):
+✅ FR (PRIORITAIRE): Les Échos, Le Monde, Le Figaro, BFM Business, Capital,
+   Challenges, L'Express, Numerama, Usine Digitale, Siècle Digital, 01net,
+   Frandroid, Les Numériques, Presse-Citron, Maddyness, FrenchWeb,
+   Journal du Net, Journal du Coin, Cointribune, Cryptoast, Boursorama.
+✅ EN (fallback): Reuters, Bloomberg, AFP, FT, WSJ, TechCrunch, The Information,
+   The Verge, Wired, CNBC, Axios.
 ❌ JAMAIS: crypto.news, u.today, bitcoinist, ambcrypto, beincrypto,
    cryptopotato, cryptonews.net, Breakingviews/columns/opinion,
    "*.io" sans rédac connue.
@@ -176,7 +189,7 @@ vanne ou l'angle?" Si non → SKIP.
 🚨 RÈGLES DURES:
 - Français impeccable, accents obligatoires (é è ê à â ù û ô î ç).
 - Tu colles l'URL article directe en bas pour que X rende la card.
-- PAS d'URL ≤72h vérifiée → SKIP. Pas de "judgment call".
+- PAS d'URL ≤48h vérifiée → SKIP. Pas de "judgment call".
 - Tu trolles l'IDÉE / le marché / la tendance — JAMAIS la personne.
 - Pas de troll du gouvernement américain (Fed, SEC, IRS, etc.).
 - Le tweet principal doit se SUFFIRE sans l'URL (le bot va la cacher).
@@ -373,13 +386,20 @@ PARLE EN CE MOMENT. Si rien ne bouge dans la dernière 24h → SKIP, point.
 
 PROCESSUS (suis-le dans cet ordre):
 
-1. **Lance 3-5 recherches LARGES sur ce qui se passe MAINTENANT:**
+1. **PRIORITÉ FRANCE — lance 3-5 recherches FR d'abord:**
+   - "IA France actualité aujourd'hui" / "intelligence artificielle annonce"
+   - site:lesechos.fr OR site:lemonde.fr OR site:bfmtv.com IA
+   - site:numerama.com OR site:siecledigital.fr OR site:usine-digitale.fr
+   - "Mistral" / "Hugging Face" / "LightOn" / "Kyutai" / "Bercy IA" / "AMF crypto"
+   - "CAC40 IA" / "Bourse Paris tech" / "crypto France réglementation"
+   Identifie d'abord LA story FR qui domine. Si la presse FR (Les Échos, Le Monde,
+   BFM, Numerama, Usine Digitale, Siècle Digital, 01net) couvre une news IA/
+   crypto/bourse aujourd'hui — c'est ELLE, point.
+   Si rien de FR ne sort → fallback EN large:
    - "biggest AI story today" / "AI news last 24 hours"
-   - "Bitcoin news today" / "crypto market today"
-   - "stock market today" / "tech earnings this week"
-   - "OpenAI" / "Anthropic" / "NVIDIA" + cherche les dernières dépêches
-   Identifie LA story (ou top-2) qui domine — celle que Reuters, Bloomberg,
-   FT, AFP, Les Échos, TechCrunch, The Information, Wired traitent en ce moment.
+   - "Bitcoin news today" / "OpenAI" / "Anthropic" / "NVIDIA"
+   Mais TOUJOURS commenter en FR avec angle franco-français (Bercy, RER B,
+   syndicat, formations à 2k€, etc.).
 
 2. **Vérifie qu'elle est partout:** si UN SEUL site obscur en parle → c'est
    probablement faux ou pas important. Cherche la même news sur 2-3 sources
@@ -391,9 +411,12 @@ PROCESSUS (suis-le dans cet ordre):
    - L'angle sous-couvert que tout le monde rate
 
 ✅ SOURCES TOP-TIER (auto-OK si ≤24h):
-Reuters, Bloomberg, AFP, Les Échos, Financial Times, WSJ, TechCrunch,
-The Information, The Verge, Wired, CNBC, Le Monde, Le Figaro Bourse,
-BFM Business, Capital, FT, Axios, Semafor, Stratechery, Decoder.
+🇫🇷 PRIORITAIRES: Les Échos, Le Monde, Le Figaro, BFM Business, Capital,
+   Challenges, L'Express, Numerama, Usine Digitale, Siècle Digital, 01net,
+   Frandroid, Les Numériques, Presse-Citron, Maddyness, FrenchWeb,
+   Journal du Net, Journal du Coin, Cointribune, Cryptoast, Boursorama.
+🌐 FALLBACK EN: Reuters, Bloomberg, AFP, Financial Times, WSJ, TechCrunch,
+   The Information, The Verge, Wired, CNBC, Axios, Semafor, Stratechery, Decoder.
 
 ⚠️ SOURCES À ÉVITER (souvent recyclage SEO):
 crypto.news, cryptonews.net, cryptopotato, beincrypto, u.today,
@@ -1072,9 +1095,10 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     tweet, src_url = _extract_source(tweet)
     if src_url and src_url not in tweet:
         tweet = (tweet.rstrip() + "\n\n" + src_url).strip()
-    # Defense-in-depth freshness check. Keep this at 72h: big AI stories can
-    # still be discussion-worthy after two days, and a hard 48h gate starved
-    # the bot on impactful sources.
+    # Defense-in-depth freshness check. Tightened 72h → 48h (2026-05-05):
+    # the news pipeline was the weak surface and the 9/10 quality gate already
+    # acts as the volume brake. 48h is the right ceiling for "actually news"
+    # without forcing skips on weekend bangers carried over to Monday.
     if src_url:
         try:
             from .hotake_agent import _url_publication_date, _is_rejected_source
@@ -1088,8 +1112,8 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
             pub_date = _url_publication_date(src_url)
             if pub_date is not None:
                 age = datetime.now() - pub_date
-                if age > timedelta(hours=72):
-                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>72h) — SKIPPING stale source: {src_url}")
+                if age > timedelta(hours=48):
+                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>48h) — SKIPPING stale source: {src_url}")
                     globals()["_last_source_url"] = None
                     globals()["_last_image_topic"] = None
                     return None

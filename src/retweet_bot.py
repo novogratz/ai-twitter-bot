@@ -55,14 +55,14 @@ RETWEETED_FILE = os.path.join(_PROJECT_ROOT, "retweeted.json")
 RETWEET_STATE_FILE = os.path.join(_PROJECT_ROOT, "retweet_daily_state.json")
 DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 
-# Hard cap per day. Raised aggressively because the user wants far more
-# amplification and the path is deterministic/no-AI. Keep a ceiling, but
-# let the scheduler actually move.
-MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "12"))
+# Hard cap per day. Bumped 12 → 20 (2026-05-05) — user verbatim
+# "reshare way more posts". Path is deterministic/no-AI, so volume is cheap.
+MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "20"))
 
-# Min likes to even consider a candidate. Keep it low so fresh elite news
-# actually gets amplified instead of waiting for engagement to accumulate.
-MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "10"))
+# Min likes to even consider a candidate. Lowered 10 → 5 (2026-05-05) so
+# fresh elite news from trusted handles gets amplified BEFORE engagement
+# accumulates — being early on the wire is the whole point.
+MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "5"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -100,7 +100,7 @@ TRUSTED_NEWS_HANDLES = [
     "axios",
     "BloombergTV",
     "YahooFinance",
-    # FR press
+    # FR generalist press
     "lesechos",
     "LeMondeFR",
     "lefigaro",
@@ -108,10 +108,28 @@ TRUSTED_NEWS_HANDLES = [
     "bfmbusiness",
     "Investir",
     "JournalduCoin",
-    "Cointribune",       # FR crypto outlet (not on contentfarm reject list)
+    "Cointribune",
     "FrenchWeb",
     "MaddyNess",
     "JournalDuNet",
+    # FR tech press (added 2026-05-05 — primary FR AI signal lives here)
+    "presse_citron",
+    "siecledigital",
+    "usine_digitale",
+    "numerama",
+    "01net",
+    "LesNumeriques",
+    "frandroid",
+    "LADN_EU",
+    # FR crypto press
+    "BFMcrypto",
+    "CointelegraphFR",
+    "cryptoast_fr",
+    # FR bourse / macro
+    "BoursoraMag",
+    "Capital",
+    "Challenges",
+    "LExpress",
 ]
 
 # Trusted domains — if the tweet embeds a link to one of these, we count
@@ -124,6 +142,11 @@ TRUSTED_DOMAINS = {
     "lesechos.fr", "lemonde.fr", "lefigaro.fr", "bfmtv.com",
     "investir.lesechos.fr", "journalducoin.com", "cointribune.com",
     "frenchweb.fr", "maddyness.com", "journaldunet.com",
+    # FR additions 2026-05-05
+    "presse-citron.net", "siecledigital.fr", "usine-digitale.fr",
+    "numerama.com", "01net.com", "lesnumeriques.com", "frandroid.com",
+    "ladn.eu", "cryptoast.fr", "bfmtv.com/crypto", "boursorama.com",
+    "capital.fr", "challenges.fr", "lexpress.fr",
 }
 
 # Content blocklist — handles to never retweet even if scraped here. Safety
@@ -301,8 +324,8 @@ def run_retweet_cycle():
     retweeted = _load_retweeted()
 
     # Sample more handles per cycle so the bot can actually sustain a higher
-    # retweet rate without waiting for one lucky source.
-    sample = random.sample(TRUSTED_NEWS_HANDLES, k=min(8, len(TRUSTED_NEWS_HANDLES)))
+    # retweet rate without waiting for one lucky source. 8 → 12 (2026-05-05).
+    sample = random.sample(TRUSTED_NEWS_HANDLES, k=min(12, len(TRUSTED_NEWS_HANDLES)))
     log.info(f"[RETWEET] Scraping trusted news handles: {sample}")
 
     candidates = []
@@ -388,10 +411,11 @@ def run_retweet_cycle():
             log.info("[RETWEET] Failed to write daily picks file:")
             traceback.print_exc()
 
-    # Quality reset 2026-05-02: too much low-signal news made the feed feel
-    # like a wire service. Retweets are now only for obvious bangers.
-    if score < 8:
-        log.info(f"[RETWEET] Score {score}/10 below retweet threshold (8). Logged only.")
+    # 2026-05-05: relaxed 8 → 7. User wants way more reshares, retweets from
+    # trusted handles are the cheapest distribution lever. Source-trust gate
+    # already filters out low-signal handles, so the bar can come down.
+    if score < 7:
+        log.info(f"[RETWEET] Score {score}/10 below retweet threshold (7). Logged only.")
         return
 
     # Lock URL in BEFORE posting so a crash can't double-retweet.
