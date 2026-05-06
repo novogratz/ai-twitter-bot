@@ -1,5 +1,6 @@
 """Browser automation for X/Twitter via Safari + AppleScript (macOS only)."""
 import json
+import re
 import subprocess
 import threading
 import time
@@ -78,6 +79,37 @@ def close_front_tab():
         log.debug("Tab closed.")
 
 
+def _scrub_metadata_leaks(text: str) -> str:
+    """Last line of defense before any tweet hits Safari.
+
+    Strips any leaked `[PATTERN ...]`, `[IMAGE: ...]`, `[SOURCE: ...]` or
+    similar metadata tags that should have been pulled out by the agent's
+    extract_* helpers. Bug 2026-05-06: the agent emitted multi-id
+    `[PATTERN: FR_ANCHOR|UNDERSTATEMENT]` which the extract_pattern
+    regex didn't match → tag leaked into the live tweet.
+    """
+    if not text:
+        return text
+    # Whole-line metadata tags
+    for tag in ("PATTERN", "IMAGE", "SOURCE", "KEYWORD", "TOPIC", "ANGLE"):
+        text = re.sub(
+            rf"^[ \t]*\[\s*{tag}[^\n\r]*\]\s*$\n?",
+            "",
+            text,
+            flags=re.IGNORECASE | re.MULTILINE,
+        )
+    # Inline catch — strip "[PATTERN: ...]" wherever it appears.
+    text = re.sub(
+        r"\[\s*(?:PATTERN|IMAGE|SOURCE|KEYWORD|TOPIC|ANGLE)[^\]\n\r]*\]",
+        "",
+        text,
+        flags=re.IGNORECASE,
+    )
+    # Collapse blank-line gaps the strip may have left behind.
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+    return text
+
+
 def post_tweet(text: str, image_path: str = None):
     """Open Twitter and auto-post. If `image_path` is given, attaches the PNG.
 
@@ -85,6 +117,7 @@ def post_tweet(text: str, image_path: str = None):
     With image: uses the full /compose/post composer + clipboard paste — the
     intent URL doesn't support media uploads.
     """
+    text = _scrub_metadata_leaks(text)
     with _safari_lock:
         if image_path:
             _post_tweet_with_image(text, image_path)

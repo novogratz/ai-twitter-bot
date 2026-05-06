@@ -31,12 +31,17 @@ PATTERN_IDS = {
 
 
 PATTERN_PROMPT_BLOCK = """==================================================
-PATTERN ID (obligatoire — 1 ligne en plus, métadonnée)
+PATTERN ID (obligatoire — 1 ligne en plus, métadonnée pure)
 ==================================================
 Après ton tweet, ajoute UNE seule ligne au format strict:
-[PATTERN: <ID>]
+[PATTERN: <UN_SEUL_ID>]
 
-ID = celui des 6 patterns que ton tweet utilise principalement:
+⚠️ CRITIQUE: <UN_SEUL_ID> est UN seul mot parmi cette liste. Tu choisis le
+pattern PRINCIPAL de ton tweet. JAMAIS plusieurs patterns séparés par des |.
+Exemples valides: [PATTERN: FR_ANCHOR] / [PATTERN: UNDERSTATEMENT] / [PATTERN: RENAME]
+Exemple INVALIDE: [PATTERN: FR_ANCHOR|UNDERSTATEMENT]  ← INTERDIT
+
+Patterns disponibles (choisis-en UN):
 - REPETITION     → répétition qui tue ("Getafe. Getafe.")
 - DIALOGUE       → mini-dialogue (« médecin : ... » « syndicat : ... »)
 - METAPHOR       → métaphore tueuse (image absurde mais juste)
@@ -50,14 +55,28 @@ Cette ligne est NETTOYÉE avant le post (métadonnée pure pour mesurer ce qui m
 
 
 _PATTERN_ALT = "|".join(sorted(PATTERN_IDS))
+# Match a [PATTERN: ...] (or bare [FR_ANCHOR]) tag line — including the
+# multi-id case where the agent literally copies the prompt's options
+# list ("[PATTERN: FR_ANCHOR|UNDERSTATEMENT]"). The body of the tag
+# captures any string of pattern IDs separated by "|", "/", "+", " ",
+# or "," — we just take the first valid one.
+_PATTERN_TOKEN = rf"(?:{_PATTERN_ALT})"
 _TAG_RE = re.compile(
-    rf"\[\s*(?:PATTERN\s*:\s*)?({_PATTERN_ALT})\s*\]",
+    rf"\[\s*(?:PATTERN\s*:\s*)?({_PATTERN_TOKEN}(?:\s*[|/+,\s]\s*{_PATTERN_TOKEN})*)\s*\]",
     re.IGNORECASE,
 )
+# Last-line fallback: any line that LOOKS like a pattern tag — even if
+# the IDs inside aren't in our canonical set ("[PATTERN: WTF]"). The
+# substring "[PATTERN" should never legitimately appear in a tweet, so
+# strip the whole line if we see it.
+_PATTERN_LINE_RE = re.compile(r"^[ \t]*\[\s*PATTERN[^\n\r]*\]\s*$", re.IGNORECASE | re.MULTILINE)
 
 
 def extract_pattern(text: str) -> tuple[str, Optional[str]]:
     """Pull `[PATTERN: <id>]` or bare `[FR_ANCHOR]` out of generated text.
+
+    Handles single-ID, multi-ID (`[PATTERN: FR_ANCHOR|UNDERSTATEMENT]`),
+    and "shape-only" lines that don't match a canonical ID.
 
     Returns (cleaned_text_with_tag_line_stripped, pattern_id_or_None).
     pattern_id is uppercase, validated against PATTERN_IDS — anything
@@ -66,12 +85,36 @@ def extract_pattern(text: str) -> tuple[str, Optional[str]]:
     if not text:
         return text, None
     m = _TAG_RE.search(text)
-    if not m:
-        return text, None
-    raw = m.group(1).strip().upper()
-    pattern_id = raw if raw in PATTERN_IDS else "OTHER"
-    cleaned = (text[:m.start()] + text[m.end():]).strip()
-    # Collapse any trailing blank line we just left behind
+    pattern_id: Optional[str] = None
+    if m:
+        # Take the first valid token from the group (e.g. "FR_ANCHOR"
+        # from "FR_ANCHOR|UNDERSTATEMENT").
+        body = m.group(1).upper()
+        for tok in re.split(r"[|/+,\s]+", body):
+            tok = tok.strip()
+            if tok in PATTERN_IDS:
+                pattern_id = tok
+                break
+        if pattern_id is None:
+            pattern_id = "OTHER"
+        cleaned = (text[:m.start()] + text[m.end():])
+    else:
+        cleaned = text
+
+    # Defensive backstop: kill any leftover [PATTERN ...] line that the
+    # main regex missed (e.g. invalid IDs, weird formatting). A tweet
+    # should NEVER contain "[PATTERN" — full stop.
+    cleaned = _PATTERN_LINE_RE.sub("", cleaned)
+    # Final substring sweep: if "[PATTERN" still leaks into a non-line
+    # context, slice it to the next "]" + 1.
+    if "[PATTERN" in cleaned.upper():
+        upper = cleaned.upper()
+        idx = upper.index("[PATTERN")
+        end = cleaned.find("]", idx)
+        if end != -1:
+            cleaned = cleaned[:idx] + cleaned[end + 1:]
+
+    cleaned = cleaned.strip()
     cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
     return cleaned, pattern_id
 

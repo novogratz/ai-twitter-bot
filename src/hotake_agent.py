@@ -198,7 +198,12 @@ OUTPUT — strictement ce format, rien d'autre:
 <la hot take française 1-2 phrases>
 
 <URL article>
-[PATTERN: REPETITION|DIALOGUE|METAPHOR|RENAME|FR_ANCHOR|UNDERSTATEMENT|OTHER]
+[PATTERN: <UN_SEUL_ID>]
+
+⚠️ CRITIQUE: <UN_SEUL_ID> est UN seul mot pris dans la liste:
+REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER.
+JAMAIS plusieurs séparés par des |. Exemple valide: "[PATTERN: UNDERSTATEMENT]".
+Exemple INTERDIT: "[PATTERN: FR_ANCHOR|UNDERSTATEMENT]".
 """
 
 # Old bloated prompt kept here as _ARCHIVE_OLD_HOTAKE_PROMPT for reference.

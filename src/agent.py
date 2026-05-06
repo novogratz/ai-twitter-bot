@@ -208,7 +208,12 @@ OUTPUT — strictement ce format, rien d'autre:
 <1 phrase de punchline sarcastique>
 
 <URL article>
-[PATTERN: REPETITION|DIALOGUE|METAPHOR|RENAME|FR_ANCHOR|UNDERSTATEMENT|OTHER]
+[PATTERN: <UN_SEUL_ID>]
+
+⚠️ CRITIQUE: <UN_SEUL_ID> est UN seul mot pris dans la liste:
+REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER.
+JAMAIS plusieurs séparés par des |. Exemple valide: "[PATTERN: FR_ANCHOR]".
+Exemple INTERDIT: "[PATTERN: FR_ANCHOR|UNDERSTATEMENT]".
 
 N'ajoute JAMAIS de ligne "mot-clé", "keyword", "sujet", "topic", "angle",
 "source:" ou autre metadata visible. La seule ligne finale visible doit être l'URL.
