@@ -109,6 +109,15 @@ def _click_follow_buttons(max_clicks: int) -> int:
 
 def run_follow_blast_cycle():
     """Open a FR niche search, scroll, JS-click N visible Follow buttons."""
+    # Skip if X is suppressing us — bulk follows during a shadowban
+    # phase trip the spam detector even harder.
+    try:
+        from .suppression_watch_bot import is_paused
+        if is_paused():
+            log.info("[FOLLOW-BLAST] Suppression cooldown active — skipping cycle.")
+            return
+    except Exception:
+        pass
     query = random.choice(BLAST_QUERIES)
     encoded = urllib.parse.quote(query)
     # /search?f=people = profile-card list, dense Follow CTAs.

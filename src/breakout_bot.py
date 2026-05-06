@@ -172,6 +172,15 @@ def run_breakout_cycle():
     if _today_count() >= MAX_BREAKOUTS_PER_DAY:
         log.info(f"[BREAKOUT] Daily cap reached ({MAX_BREAKOUTS_PER_DAY}). Skipping.")
         return
+    # Skip if X is suppressing us right now — chasing trends while
+    # shadowbanned just looks like spam.
+    try:
+        from .suppression_watch_bot import is_paused
+        if is_paused():
+            log.info("[BREAKOUT] Suppression cooldown active — skipping cycle.")
+            return
+    except Exception:
+        pass
 
     history = _load_history()
 

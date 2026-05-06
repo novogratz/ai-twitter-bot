@@ -48,6 +48,8 @@ from src.self_evolution_agent import safe_run_self_evolution_cycle
 from src.breakout_bot import safe_run_breakout_cycle
 from src.spike_bot import safe_run_spike_cycle
 from src.spicy_bot import safe_run_spicy_cycle
+from src.suppression_watch_bot import safe_run_suppression_watch_cycle
+from src.mega_watch_bot import safe_run_mega_watch_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -643,6 +645,28 @@ def main():
             safe_run_spicy_cycle,
             trigger=IntervalTrigger(minutes=80),
             id="spicy_job",
+        )
+
+        # Suppression watchdog — scrape last 20 own posts hourly, if avg
+        # likes drop below SUPPRESSION_AVG_LIKES_FLOOR (default 1.0) flag
+        # suppression and pause aggressive bots (spicy/breakout/follow_blast)
+        # for 4h. Death-spiral protection.
+        log.info("Suppression watchdog: hourly engagement health check.")
+        scheduler.add_job(
+            safe_run_suppression_watch_cycle,
+            trigger=IntervalTrigger(hours=1),
+            id="suppression_watch_job",
+        )
+
+        # Mega-account fast watcher — polls top-10 mega accounts every
+        # 90 sec to catch fresh tweets within the 60-second top-5-reply
+        # window. Different from early_bird (5-7 min, ~125 accounts):
+        # this is targeted high-frequency on the highest-reach accounts.
+        log.info("Mega-account watcher: top-10 polling every 90s for first-5-reply window.")
+        scheduler.add_job(
+            safe_run_mega_watch_cycle,
+            trigger=IntervalTrigger(seconds=90),
+            id="mega_watch_job",
         )
 
     log.info("All systems go. Bot is running.")

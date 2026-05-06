@@ -114,6 +114,15 @@ def run_spicy_cycle():
     if _today_count() >= MAX_SPICY_PER_DAY:
         log.info(f"[SPICY] Daily cap reached ({MAX_SPICY_PER_DAY}). Skipping.")
         return
+    # Skip if X is suppressing us right now — adding more spammy-looking
+    # signals would extend the shadowban.
+    try:
+        from .suppression_watch_bot import is_paused
+        if is_paused():
+            log.info("[SPICY] Suppression cooldown active — skipping cycle.")
+            return
+    except Exception:
+        pass
 
     # 60% spicy, 40% question. Spicy drives more replies but question is
     # more inclusive — mix is healthier than 100% spicy.
