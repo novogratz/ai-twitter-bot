@@ -119,3 +119,172 @@ Global stock market: $140 trillion
 We are so early.
   - https://x.com/BitcoinMagazine/status/2050276647484727556
   - **WHY**: Source fiable + signal engagement suffisant.
+
+## 2026-05-04
+- **@coindesk** (55 likes, score 8/10) — NEW: The SEC delays 24 prediction market ETFs from @Bitwise, @RoundHill and @GraniteShares at the last minute, requesting further review of how the products fit within securities law.
+  - https://x.com/CoinDesk/status/2051365183910555907
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 91).
+
+## 2026-05-05
+- **@cnbc** (35 likes, score 8/10) — U.S. oil exports have jumped to 5.2 million barrels per day (bpd) in April, a more than 30% increase over the 3.9 million bpd exported in February before the war, according to data from Kpler.
+
+Full d
+  - https://x.com/CNBC/status/2051466950035767767
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 59).
+- **@techcrunch** (47 likes, score 8/10) — OpenAI’s cozy partner Cerebras is on track for a blockbuster IPO
+  - https://x.com/TechCrunch/status/2051420918782787714
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 59).
+- **@coindesk** (23 likes, score 7/10) — JUST IN: @BurwickLaw files federal class action against Iggy Azalea over MOTHER token.
+
+The complaint alleges buyers were induced by promises of real-world utility that never materialized.
+
+MOTHER is
+  - https://x.com/CoinDesk/status/2051666706821439758
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 59).
+- **@reutersbiz** (103 likes, score 9/10) — European regulators raise concerns about Tesla's ‘Full Self-Driving’ system ahead of key EU committee discussions over safety concerns like speeding and icy roads https://reut.rs/4w9Np0j
+  - https://x.com/ReutersBiz/status/2051636778759582089
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 155).
+- **@bitcoinmagazine** (2210 likes, score 9/10) — $81,000 Bitcoin
+  - https://x.com/BitcoinMagazine/status/2051634456012726417
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2584).
+- **@coindesk** (52 likes, score 8/10) — JUST IN: @Anchorage Digital launches agentic banking, partnering with Google Cloud to build infrastructure for AI agents to transact and manage funds.
+  - https://x.com/CoinDesk/status/2051710473985224865
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 76).
+
+## 2026-05-06
+- **@bitcoinmagazine** (1886 likes, score 9/10) — $82,000 is the next victim. #Bitcoin
+  - https://x.com/BitcoinMagazine/status/2051752794323857704
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2124).
+- **@verge** (422 likes, score 8/10) — Apple agrees to pay iPhone owners $250 million for not delivering AI Siri
+  - https://x.com/verge/status/2051774888579584025
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 474).
+- **@reuters** (13 likes, score 7/10) — Senate Republicans seek $1 billion for Secret Service upgrades, including Trump's ballroom http://reut.rs/42goXNq
+  - https://x.com/Reuters/status/2051898510522359870
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 29).
+- **@reuters** (13 likes, score 7/10) — US to close watchdog office for federal immigration detention abuses http://reut.rs/3OKmebV
+  - https://x.com/Reuters/status/2051911093736374451
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 41).
+- **@bfmcrypto** (5 likes, score 7/10) — L'essor de l'IA n'épargne pas non plus le secteur des cryptos: en pleine baisse du marché, le géant américain Coinbase réduit de 14% ses effectifs dans le monde
+  - https://x.com/BfmCrypto/status/2051658485645873276
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 5).
+- **@ft** (37 likes, score 7/10) — China’s biggest state-backed semiconductor investment vehicle is in talks to lead the financing of DeepSeek’s first fundraising that could value the AI group at about $45bn. https://ft.trib.al/k2iA5KQ
+  - https://x.com/FT/status/2051913837708710170
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 49).
+- **@decryptmedia** (54 likes, score 7/10) — Kelp Blames LayerZero for $292 Million Hack, Plans Switch to Chainlink
+  - https://x.com/DecryptMedia/status/2051792185020780623
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 64).
+- **@bloombergtv** (10 likes, score 7/10) — The US military is reviving its jungle training school in Panama after a 25-year hiatus. It's part of President Donald Trump's aggressive push to secure "American dominance" in the region http://bloom
+  - https://x.com/BloombergTV/status/2051770301545881893
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 14).
+- **@yahoofinance** (102 likes, score 8/10) — GameStop is offering to buy eBay for $56 billion in cash and stock. http://yhoo.it/4eN8YOn
+  - https://x.com/YahooFinance/status/2051793065614958874
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 122).
+- **@yahoofinance** (224 likes, score 7/10) — GameStop CEO Ryan Cohen really wants to own eBay, even if there are doubts about how he'll pull off the mega acquisition. http://yhoo.it/4urYE2B
+  - https://x.com/YahooFinance/status/2051762866487718233
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 258).
+- **@coindesk** (28 likes, score 7/10) — Arthur Hayes says at @Consensus2026 he thinks $HYPE will reach $150 by August.
+
+Do you agree with @CryptoHayes's prediction? 
+
+CoinDesk Live sponsored by @Moonpay
+  - https://x.com/CoinDesk/status/2051960290737078480
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 58).
+- **@journaldunet** (3 likes, score 7/10) — Cet avantage fiscal pour les parents risque de disparaître – 4,5 millions de familles vont payer plus d'impôts https://short.journaldunet.com/3449028053
+  - https://x.com/journaldunet/status/1850778240811422099
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 5).
+- **@challenges** (8 likes, score 7/10) — Pour son second mandat Donald Trump tentera une nouvelle fois de réduire l’immigration légale et de stopper l’immigration illégale à grands coups de politiques radicales.
+  - https://x.com/Challenges/status/1881029582603661370
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 16).
+- **@lesechos** (11 likes, score 7/10) — Les recettes fiscales du malus auto atteignent un niveau record  https://trib.al/NXRPnmy
+
+ Les recettes des malus CO2 et masse pourraient frôler le milliard d'euros cette année. Les modèles populaires
+  - https://x.com/LesEchos/status/2051972742094930039
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 21).
+- **@openai** (73 likes, score 7/10) — Listen to the OpenAI Podcast on—
+Spotify
+https://open.spotify.com/show/0zojMEDizKMh3aTxnGLENP…
+Apple
+https://podcasts.apple.com/us/podcast/openai-podcast/id1820330260…
+YouTube
+https://youtube.com/watc
+  - https://x.com/OpenAI/status/2052039804288946368
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 85).
+- **@bitcoinmagazine** (913 likes, score 8/10) — JUST IN: There's now a 71% chance Bitcoin hits $90,000 in 2026, according to Polymarket
+  - https://x.com/BitcoinMagazine/status/2052056002145444152
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1095).
+- **@ft** (211 likes, score 8/10) — Breaking news: Anthropic has struck a deal with Elon Musk’s SpaceX to access computing power from its Colossus 1 data centre, which houses more than 220,000 advanced Nvidia processors. https://ft.trib
+  - https://x.com/FT/status/2052070532778971443
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 247).
+- **@frenchweb** (5 likes, score 7/10) — Google menacé à la racine par Atlas : le navigateur d’OpenAI reprogramme le web.
+
+@Polytechnique Ventures : quand les anciens de l’X financent la prochaine génération de deeptechs. Retrouvez mon inter
+  - https://x.com/frenchweb/status/1980915523807322356
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 21).
+- **@journaldunet** (4 likes, score 7/10) — Les impôts vont baisser en 2025 pour des millions de Français : il y a une seule condition à respecter
+  - https://x.com/journaldunet/status/1859549462701453548
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 4).
+- **@lemondefr** (168 likes, score 7/10) — Comment le gouvernement Bayrou compte économiser des milliards d’euros grâce à la loi spéciale
+  - https://x.com/lemondefr/status/1881283074857590955
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 606).
+- **@bitcoinmagazine** (299 likes, score 8/10) — JUST IN: $199 billion VanEck's Matthew Sigel predicts $1,000,000 Bitcoin "over the next several years"
+  - https://x.com/BitcoinMagazine/status/2052103880079516010
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 369).
+- **@frenchweb** (7 likes, score 7/10) — NRF 2026 : Google pose les bases d’un standard pour le commerce à l’ère des agents, avec le soutien de Walmart et Shopify
+  - https://x.com/frenchweb/status/2010977729902969281
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 23).
+- **@01net** (7 likes, score 7/10) — L'été arrive et Tesla a une solution innovante pour garder votre voiture fraîche !  En aspirant la chaleur, on économise l'énergie. Fini les pertes d'autonomie !   https://01net.com/actualites/tesla-l
+  - https://x.com/01net/status/2052045918115967159
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 9).
+- **@challenges** (3 likes, score 7/10) — Retrouvez-nous dès maintenant sur :
+
+Bluesky  https://bit.ly/3PJS6Ku
+
+LinkedIn  https://bit.ly/3Cpcz43
+
+Threads  https://bit.ly/40keTBz
+  - https://x.com/Challenges/status/1881279827208257844
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 7).
+- **@bfmbusiness** (3 likes, score 7/10) — Les Actus Tech du 6 Mai
+
+- Amazon investit 15 Mds$ en France 
+- Terafab : Elon Musk va investir 55 Mds$
+- Le retard de l'IA coûte 250 M$ à Apple
+- Samsung franchit les 1 000 Mds$ de valorisation
+- BYD
+  - https://x.com/bfmbusiness/status/2052096525866508391
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 3).
+- **@lesechos** (68 likes, score 7/10) — Combien ya t-il de data-centers en France 
+
+ Les centres de données n'étaient que 200 en 2020 et ont pratiquement doublé en cinq ans à cause de la course à l’IA et des demandes toujours plus fortes en
+  - https://x.com/LesEchos/status/2051716147502837921
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 76).
+- **@bfmtv** (4 likes, score 7/10) — "Vol de nuit pour Los Angeles": John Travolta passe derrière la caméra et dévoile une première bande-annonce
+https://l.bfmtv.com/uNDM
+  - https://x.com/BFMTV/status/2052139581349220484
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4).
+
+## 2026-05-07
+- **@bfmbusiness** (6 likes, score 7/10) — "Une transaction de 19 milliards de dollars qui pourrait atteindre 38 milliards": Airbus vend 150 Airbus A220-300, la plus grande commande de l'histoire pour cet avion
+  - https://x.com/bfmbusiness/status/2052275181125509317
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 6).
+- **@bitcoinmagazine** (1311 likes, score 7/10) — JUST IN:  Congressman Thomas Massie says Bitcoin "is closer to real money than Federal Reserve notes." 
+
+"We're eventually going to lose reserve status for the dollar. But if you got any bitcoin, we a
+  - https://x.com/BitcoinMagazine/status/2052129757320409186
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1399).
+- **@01net** (3 likes, score 7/10) — Meta va analyser la structure osseuse des jeunes utilisateurs d'Instagram et Facebook afin d'estimer leur âge. Qu'en pensez-vous ?    https://01net.com/actualites/facebook-instagram-nouvelle-solution-
+  - https://x.com/01net/status/2052056069317276148
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 3).
+- **@journalducoin** (3 likes, score 7/10) — JUSTIN BIEBER VOMIT SUR SCÈNE EN PLEIN CONCERT ! (vidéo) http://fb.me/1pZKwa1ua
+  - https://x.com/JournalduCoin/status/252459807234199552
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 3).
+- **@challenges** (11 likes, score 7/10) — Vous cherchez des fonds pour faire croître votre start-up ? Postulez pour tenter d'intégrer notre sélection des "100 start-up où investir" 
+
+ Candidatures ouvertes jusqu’au 3 février.
+
+Retrouvez toute
+  - https://x.com/Challenges/status/1881235328737894583
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 17).
+- **@lefigaro** (86 likes, score 7/10) — 6ans depuis mon dernier tweet ! Il était temps de le réveiller
+  - https://x.com/lefigaro/status/569486889201340417
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 88).
