@@ -582,6 +582,17 @@ def safe_run_retweet_cycle():
     try:
         run_retweet_cycle()
         health.record_success("retweet")
+        # Autonomous git push of the news picks log + retweeted dedup state.
+        # daily_news_picks.md is the user's YouTube show research doc.
+        try:
+            from .git_ops import auto_push
+            auto_push(
+                ["daily_news_picks.md", "retweeted.json", "retweet_daily_state.json"],
+                "Autonomous retweet update — picks + dedup state",
+            )
+        except Exception:
+            log.info("[RETWEET] auto_push failed (non-fatal):")
+            traceback.print_exc()
     except Exception:
         log.info("[RETWEET] Error during retweet cycle:")
         traceback.print_exc()

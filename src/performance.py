@@ -148,6 +148,21 @@ def scrape_own_metrics() -> list:
     return []
 
 
+def _push_perf_state():
+    """Auto-push performance state files so the agents downstream can
+    reproduce the bot's reads of itself. Best-effort, never raises."""
+    try:
+        from .git_ops import auto_push
+        auto_push(
+            ["performance_log.json", "learnings.json"],
+            "Autonomous performance update — top/worst posts + learnings",
+        )
+    except Exception:
+        log.info("[PERF] auto_push failed (non-fatal):")
+        import traceback as _tb
+        _tb.print_exc()
+
+
 def evaluate_and_learn():
     """Scrape metrics, compare performance, generate learnings for the AI."""
     tweets = scrape_own_metrics()
@@ -213,6 +228,9 @@ Look at what makes the top ones work: topic? format? tone? length? humor style?"
         scan_and_demote_dead_sources()
     except Exception as e:
         log.info(f"[PERF] Fast-feedback scan failed (non-fatal): {e}")
+
+    # Autonomous git push of performance state.
+    _push_perf_state()
 
     return learnings
 

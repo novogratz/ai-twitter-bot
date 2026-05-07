@@ -706,6 +706,25 @@ def main():
             id="meta_strategy_job",
         )
 
+    # Autonomy audit — print which adapt + push hooks are active so the
+    # user can see at a glance what the bot is going to do on its own.
+    log.info("=" * 60)
+    log.info("AUTONOMY AUDIT — bot self-modifies + auto-pushes the following:")
+    log.info("  STRATEGIC ADAPTATION (auto-decides + auto-pushes to git):")
+    log.info("    [4h] meta_strategy_agent  → live_strategy.json (caps + cadence + topic focus)")
+    log.info("    [3h] strategy_agent       → dynamic_queries / dynamic_accounts")
+    log.info("    [3h] evolution_agent      → directives.md / pruned / reinforced")
+    log.info("    [4h] self_evolution_agent → bot_self.json (mood / obsession / drift)")
+    log.info("    [6h] reflection_agent     → personality.json (per-account dossiers)")
+    log.info("    [4h] scout_agent          → dynamic_accounts.json + auto-follows")
+    log.info("  REAL-TIME ADAPTATION (no LLM, no push):")
+    log.info("    [30m] auto_tune_bot       → real-time velocity gauge")
+    log.info("    [1h]  suppression_watch   → shadowban detection + pause")
+    log.info("    [2h]  performance.py      → metric scrape + auto-push")
+    log.info("    [1h]  daily_digest        → user review doc + auto-push")
+    log.info("    [40m] retweet_bot         → daily_news_picks + auto-push")
+    log.info("    [1h]  cleanup_bot         → state hygiene")
+    log.info("=" * 60)
     log.info("All systems go. Bot is running.")
 
     try:

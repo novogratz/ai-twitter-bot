@@ -217,6 +217,18 @@ def safe_run_daily_digest():
     try:
         write_yesterday_digest()
         health.record_success("digest")
+        # Autonomous git push: the digest is the user's review doc; keep
+        # it in version control so each day's rollup is recoverable.
+        try:
+            from .git_ops import auto_push
+            auto_push(
+                ["daily_digest.md", "daily_digest_state.json"],
+                "Autonomous daily digest update",
+            )
+        except Exception:
+            log.info("[DIGEST] auto_push failed (non-fatal):")
+            import traceback as _tb
+            _tb.print_exc()
     except Exception as e:
         log.info(f"[DIGEST] Error: {e}")
         health.record_failure("digest")
