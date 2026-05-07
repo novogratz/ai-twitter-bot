@@ -54,15 +54,16 @@ def has_post_slot() -> bool:
 
     Keep this outside `run_bot_cycle()` so main.py can avoid even entering the
     news/hot-take generation path once both daily buckets are full.
+    Reads LIVE caps via meta_strategy_agent's live_strategy.json.
     """
     news_count, hotake_count = _get_counters()
-    return news_count < MAX_NEWS_PER_DAY or hotake_count < MAX_HOTAKES_PER_DAY
+    return news_count < _live_news_cap() or hotake_count < _live_hotake_cap()
 
 
 def post_slot_status() -> str:
     """Human-readable daily post cap state for logs."""
     news_count, hotake_count = _get_counters()
-    return f"{news_count}/{MAX_NEWS_PER_DAY} news, {hotake_count}/{MAX_HOTAKES_PER_DAY} hot takes"
+    return f"{news_count}/{_live_news_cap()} news, {hotake_count}/{_live_hotake_cap()} hot takes"
 
 
 def _increment_counter(counter_name: str):
@@ -78,18 +79,20 @@ def _increment_counter(counter_name: str):
 def run_bot_cycle():
     """Post a news tweet or hot take, respecting daily limits."""
     news_count, hotake_count = _get_counters()
-    log.info(f"Today: {news_count}/{MAX_NEWS_PER_DAY} news, {hotake_count}/{MAX_HOTAKES_PER_DAY} hot takes")
+    news_cap = _live_news_cap()
+    hotake_cap = _live_hotake_cap()
+    log.info(f"Today: {news_count}/{news_cap} news, {hotake_count}/{hotake_cap} hot takes")
 
-    if news_count >= MAX_NEWS_PER_DAY and hotake_count >= MAX_HOTAKES_PER_DAY:
+    if news_count >= news_cap and hotake_count >= hotake_cap:
         log.info("Daily limits reached. Skipping.")
         return
 
-    can_hotake = hotake_count < MAX_HOTAKES_PER_DAY
-    can_news = news_count < MAX_NEWS_PER_DAY
+    can_hotake = hotake_count < hotake_cap
+    can_news = news_count < news_cap
 
     # AI news is the brand backbone. Force the first half of the daily news
     # quota through the AI news path before spending the single AI hot-take slot.
-    news_floor_before_hotake = min(3, MAX_NEWS_PER_DAY)
+    news_floor_before_hotake = min(3, news_cap)
     if can_news and news_count < news_floor_before_hotake:
         do_hotake = False
     elif not can_news:

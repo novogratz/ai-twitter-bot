@@ -90,3 +90,55 @@ ENABLE_AI_DISCOVERY = os.environ.get("ENABLE_AI_DISCOVERY", "0") == "1"
 # Retry settings
 MAX_RETRIES = 3
 RETRY_DELAY_SECONDS = 5
+
+
+# Live strategy reader — read dynamic caps written by meta_strategy_agent.
+# Bots use get_live_cap(name) instead of the static env values so the
+# agent's strategic decisions actually flex behavior.
+_LIVE_STRATEGY_FILE = os.path.join(_PROJECT_ROOT, "live_strategy.json")
+
+
+def get_live_cap(name: str, default: int) -> int:
+    """Return the live cap for `name` from live_strategy.json, or `default`
+    (from env / module-level constant) if the agent hasn't run yet or the
+    file is malformed. Best-effort, never raises."""
+    if not os.path.exists(_LIVE_STRATEGY_FILE):
+        return default
+    try:
+        import json as _j
+        with open(_LIVE_STRATEGY_FILE, "r") as f:
+            d = _j.load(f) or {}
+        v = (d.get("caps") or {}).get(name)
+        return int(v) if v is not None else default
+    except Exception:
+        return default
+
+
+def get_live_cadence_factor(default: float = 1.0) -> float:
+    """Live cadence multiplier (1.0 = neutral). Bots multiply their
+    sleep/interval by this. < 1 = faster, > 1 = slower."""
+    if not os.path.exists(_LIVE_STRATEGY_FILE):
+        return default
+    try:
+        import json as _j
+        with open(_LIVE_STRATEGY_FILE, "r") as f:
+            d = _j.load(f) or {}
+        v = d.get("cadence_factor")
+        return float(v) if v is not None else default
+    except Exception:
+        return default
+
+
+def get_live_topic_focus() -> list:
+    """Top topics the meta-strategy agent says we should lean into.
+    Empty list if agent hasn't run yet."""
+    if not os.path.exists(_LIVE_STRATEGY_FILE):
+        return []
+    try:
+        import json as _j
+        with open(_LIVE_STRATEGY_FILE, "r") as f:
+            d = _j.load(f) or {}
+        v = d.get("topic_focus") or []
+        return [str(t) for t in v][:5]
+    except Exception:
+        return []

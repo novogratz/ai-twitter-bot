@@ -186,8 +186,10 @@ def _handle_from_url(url: str) -> str:
 
 def run_quote_tweet_cycle():
     """Pick the most viral FR tweet from our queries and quote-tweet it."""
-    if _today_count() >= MAX_QUOTES_PER_DAY:
-        log.info(f"[QUOTE] Daily cap reached ({MAX_QUOTES_PER_DAY}). Skipping.")
+    from .config import get_live_cap
+    cap = get_live_cap("MAX_QUOTES_PER_DAY", MAX_QUOTES_PER_DAY)
+    if _today_count() >= cap:
+        log.info(f"[QUOTE] Daily cap reached ({cap}). Skipping.")
         return
 
     quoted = _load_quoted()

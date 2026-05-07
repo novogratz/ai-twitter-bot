@@ -420,8 +420,10 @@ def run_retweet_cycle():
     """Pick the single highest-signal tweet of the cycle and retweet it
     (only if it clears 9/10 score). Append to daily_news_picks.md regardless
     of score if it clears 8/10 — that file is the YouTube research doc."""
-    if _today_count() >= MAX_RETWEETS_PER_DAY:
-        log.info(f"[RETWEET] Daily cap reached ({MAX_RETWEETS_PER_DAY}). Skipping.")
+    from .config import get_live_cap
+    cap = get_live_cap("MAX_RETWEETS_PER_DAY", MAX_RETWEETS_PER_DAY)
+    if _today_count() >= cap:
+        log.info(f"[RETWEET] Daily cap reached ({cap}). Skipping.")
         return
 
     retweeted = _load_retweeted()

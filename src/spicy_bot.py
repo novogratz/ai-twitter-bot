@@ -111,8 +111,10 @@ def _increment_count():
 
 
 def run_spicy_cycle():
-    if _today_count() >= MAX_SPICY_PER_DAY:
-        log.info(f"[SPICY] Daily cap reached ({MAX_SPICY_PER_DAY}). Skipping.")
+    from .config import get_live_cap
+    cap = get_live_cap("MAX_SPICY_PER_DAY", MAX_SPICY_PER_DAY)
+    if _today_count() >= cap:
+        log.info(f"[SPICY] Daily cap reached ({cap}). Skipping.")
         return
     # Skip if X is suppressing us right now — adding more spammy-looking
     # signals would extend the shadowban.

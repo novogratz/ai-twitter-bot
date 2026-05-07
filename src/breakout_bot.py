@@ -169,8 +169,10 @@ def _detect_breakout_topic() -> dict:
 
 def run_breakout_cycle():
     """Detect a viral breaking topic, post a fast FR hot take on it."""
-    if _today_count() >= MAX_BREAKOUTS_PER_DAY:
-        log.info(f"[BREAKOUT] Daily cap reached ({MAX_BREAKOUTS_PER_DAY}). Skipping.")
+    from .config import get_live_cap
+    cap = get_live_cap("MAX_BREAKOUTS_PER_DAY", MAX_BREAKOUTS_PER_DAY)
+    if _today_count() >= cap:
+        log.info(f"[BREAKOUT] Daily cap reached ({cap}). Skipping.")
         return
     # Skip if X is suppressing us right now — chasing trends while
     # shadowbanned just looks like spam.

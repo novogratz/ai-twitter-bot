@@ -52,6 +52,7 @@ from src.suppression_watch_bot import safe_run_suppression_watch_cycle
 from src.mega_watch_bot import safe_run_mega_watch_cycle
 from src.cleanup_bot import safe_run_cleanup_cycle
 from src.heartbeat_bot import safe_run_heartbeat
+from src.meta_strategy_agent import safe_run_meta_strategy_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -691,6 +692,18 @@ def main():
             safe_run_heartbeat,
             trigger=IntervalTrigger(seconds=60),
             id="heartbeat_job",
+        )
+
+        # Meta-strategy agent — every 4h, reads 7d engagement + state +
+        # WebSearch on world events, decides daily caps + cadence factor
+        # + topic focus, writes live_strategy.json. Bots read the live
+        # caps via config.get_live_cap() so strategic decisions actually
+        # flex behavior. Auto-pushes to git.
+        log.info("Meta-strategy agent: agentic cap + focus + cadence decisions every 4h.")
+        scheduler.add_job(
+            safe_run_meta_strategy_cycle,
+            trigger=IntervalTrigger(hours=4),
+            id="meta_strategy_job",
         )
 
     log.info("All systems go. Bot is running.")
