@@ -93,11 +93,11 @@ def run_mega_watch_cycle():
                 continue
 
             # Generate FR reply via the shared single-reply pipeline.
+            # _generate_single_reply only takes (author, tweet_text);
+            # source tagging happens in log_reply later.
             reply_text = _generate_single_reply(
-                tweet_text=text,
                 author=author,
-                source_name="MEGA",
-                source_detail=username,
+                tweet_text=text,
             )
             if not reply_text:
                 continue
