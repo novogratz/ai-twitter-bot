@@ -307,3 +307,6 @@ With BTC's high volatility, "a little bitcoin can go a long way."
 A vote on the bill may happen next
   - https://x.com/BitcoinMagazine/status/2052446772346142905
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 1267).
+- **@bfmtv** (98 likes, score 7/10) — Détroit d'Ormuz: trois navires de guerre américains ont été touchés par l'Iran, selon des médias iraniens
+  - https://x.com/BFMTV/status/2052508353394295035
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 114).
