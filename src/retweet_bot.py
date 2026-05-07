@@ -66,6 +66,76 @@ MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "5"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
+# Niche keyword whitelist — a candidate tweet MUST contain at least one of
+# these tokens to be retweet-eligible. User incident 2026-05-07: bot
+# retweeted a 2012 Reuters tweet about Justin Bieber because Reuters posts
+# everything, the trusted-handle whitelist alone wasn't enough to scope us
+# to AI / crypto / bourse. Match is substring + case-insensitive.
+NICHE_KEYWORDS = (
+    # AI
+    "ai", "a.i.", "artificial intelligence", "machine learning", "ml ",
+    "openai", "anthropic", "claude", "chatgpt", "gpt", "gemini", "llama",
+    "mistral", "llm", "nvidia", "nvda", "deepmind", "agi",
+    "datacenter", "data center", "gpu", "tpu", "chip", "semiconductor",
+    "hugging face", "huggingface", "perplexity", "copilot",
+    # Crypto
+    "bitcoin", "btc", "ethereum", "eth", "crypto", "stablecoin",
+    "tether", "usdc", "coinbase", "binance", "kraken", "blockchain",
+    "defi", "nft", "ordinals", "solana", "ripple", "xrp",
+    "etf bitcoin", "etf btc", "etf ether", "spot etf", "halving",
+    "sec lawsuit", "ofac", "mt gox",
+    # Bourse / macro
+    "stock", "shares", "nasdaq", "s&p", "s&p 500", "dow ",
+    "cac40", "cac ", "ipo", "earnings", "guidance",
+    "fed ", "fomc", "rate hike", "rate cut", "inflation", "cpi",
+    "treasury yield", "bond ", "merger", "acquisition", "buyout",
+    "tesla", "apple", "google", "alphabet", "meta", "amazon",
+    "microsoft", "msft", "aapl", "googl", "tsla", "amzn",
+    "valuation", "billion", "trillion", "milliard", "valo",
+    "bourse", "marché", "action", "investissement", "trading",
+)
+
+# Off-topic blocklist — common Reuters/Bloomberg/AP topics that have
+# nothing to do with our niche. Even if the niche-keyword check passes
+# accidentally, the off-topic check vetoes.
+OFF_TOPIC_KEYWORDS = (
+    "justin bieber", "taylor swift", "kardashian", "drake ",
+    "world cup", "olympics", "super bowl", "nfl", "nba",
+    "marathon", "premier league", "football match",
+    "celebrity", "red carpet", "oscar", "grammy",
+    "weather", "hurricane", "earthquake", "tornado",
+    "wildfire", "flood", "missing person",
+    "royal wedding", "queen elizabeth", "king charles",
+    "horoscope", "zodiac", "recipe", "cooking",
+)
+
+# Max age in hours for a retweet candidate. Anything older is stale —
+# we shouldn't be amplifying week-old or year-old news.
+MAX_CANDIDATE_AGE_HOURS = int(os.environ.get("RETWEET_MAX_AGE_HOURS", "24"))
+
+
+def _is_on_niche(text: str) -> bool:
+    """Tweet must contain at least one niche keyword AND no off-topic keyword."""
+    t = (text or "").lower()
+    if any(off in t for off in OFF_TOPIC_KEYWORDS):
+        return False
+    return any(kw in t for kw in NICHE_KEYWORDS)
+
+
+def _scrape_age_hours(t: dict) -> float:
+    """Best-effort age check from the scraper's timestamp field. Returns
+    a large number when unavailable so the caller skips ambiguous tweets
+    (better safe than retweeting Justin Bieber 2012)."""
+    ts_raw = t.get("timestamp") or t.get("ts") or t.get("datetime")
+    if not ts_raw:
+        return 999_999.0
+    try:
+        ts = datetime.fromisoformat(ts_raw.replace("Z", "+00:00"))
+        return max(0.0, (datetime.now(ts.tzinfo or None) - ts).total_seconds() / 3600.0)
+    except (ValueError, TypeError):
+        return 999_999.0
+
+
 # Trusted news handles split by language. 2026-05-06 user pivot: audience is
 # FR, so the feed must look FR. Sample heavily from FR, only top-tier EN
 # (wires) qualify as fallback when nothing FR is fresh enough.
@@ -397,6 +467,28 @@ def run_retweet_cycle():
             replies = int(t.get("replies") or 0)
             if likes < MIN_LIKES_FLOOR and replies < 3:
                 continue
+            # 2026-05-07 user incident: bot retweeted Reuters' 2012 Justin
+            # Bieber tweet. Reuters/Bloomberg post EVERYTHING — trusted
+            # handle alone isn't enough. Hard niche-keyword + off-topic
+            # gate before scoring. Tweet text MUST contain an AI/crypto/
+            # bourse keyword AND no celebrity/sports/weather marker.
+            if not _is_on_niche(text):
+                continue
+            # Same-day freshness — when scraper exposes a timestamp,
+            # skip anything older than MAX_CANDIDATE_AGE_HOURS. When
+            # it's missing the helper returns 999_999 → we skip
+            # because we'd rather miss a candidate than retweet 2012.
+            age_hours = _scrape_age_hours(t)
+            if age_hours > MAX_CANDIDATE_AGE_HOURS:
+                # Many scraper paths don't expose a timestamp at all,
+                # so 999_999 hits everything. Fall back: tweets with
+                # 0 timestamp + low engagement get skipped; tweets
+                # from trusted handles WITH 50+ likes (modern signal,
+                # not a 2012 dead post) we let pass.
+                if age_hours >= 999_000 and likes >= 50:
+                    pass  # likely fresh, let it through
+                else:
+                    continue
             # Belt-and-suspenders source check — even though the handle
             # came from our whitelist, pull it through _has_trusted_source
             # so embedded-article logic stays consistent.

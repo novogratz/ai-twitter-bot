@@ -219,6 +219,24 @@ Exemple INTERDIT: "[PATTERN: FR_ANCHOR|UNDERSTATEMENT]".
 
 N'ajoute JAMAIS de ligne "mot-clé", "keyword", "sujet", "topic", "angle",
 "source:" ou autre metadata visible. La seule ligne finale visible doit être l'URL.
+
+⚠️ FINAL LANGUAGE OVERRIDE — read this LAST, it beats everything above:
+The {lang_directive} block at the TOP of this prompt is the GROUND TRUTH for
+output language. When that directive says ENGLISH:
+  - You write 100% English. ZERO French words.
+  - ZERO French cultural references (no Bercy, no RER B, no syndicat,
+    no café-clope, no PEL, no BFM, no tonton, no Coupe de France,
+    no Macron, no AMF, no INSEE, no Pôle Emploi, no URSSAF, no Doctolib,
+    no SNCF, no Bleus, no Getafe — IGNORE every French anchor mentioned
+    earlier in this prompt, those were tuned for FR mode and are
+    ILL-FITTING examples for an English audience).
+  - Use US / global frames instead: Wall Street, Stanford CS, YC demo
+    day, the Hamptons, a Whole Foods checkout line, Cybertruck owners,
+    a Series A pitch deck, the Form 10-K footnote, the Twitter for
+    Business dashboard.
+  - You write as a native English-speaking US founder/operator would.
+When the directive says FRANÇAIS, you write 100% French with the FR
+anchors as in the examples above.
 """
 
 # Old 600-line bloated prompt (kept here as _ARCHIVE_OLD_PROMPT for reference,
@@ -464,12 +482,11 @@ PROCESSUS — fais-le mentalement avant d'écrire:
    - ENJEUX: ça affecte vraiment l'industrie / le marché / le portefeuille
      du lecteur? (+0 à +2)
    - DIVISION: ça va faire DÉBATTRE en commentaires? (+0 à +2)
-3. **SEUIL ASSOUPLI 2026-05-06 (user: "do 10x more... be more active"):**
-   Si ton meilleur candidat est ≥ 7/10 → écris. <7 → SKIP.
-   On veut le VOLUME en FR. Mid + drôle + en FR > silence. Le bot
-   est là pour ALIMENTER une audience FR active sur IA/crypto/bourse,
-   pas pour viser le perfect tweet une fois par jour.
-4. Si ≥ 7/10 → écris. ET sois sarcastique, fais rire, balance la chute.
+3. **SEUIL DURCI 2026-05-07 (user: "Quality over quantity"):**
+   Si ton meilleur candidat est < 8/10 → SKIP. Pas 7. Huit ou rien.
+   Mid posté = bot grillé. Mieux vaut 0 post pendant 4h et 1 post
+   à 8/10 que 4 posts à 6-7/10 qui font 0 likes.
+4. Si ≥ 8/10 → écris. ET sois 1.5x plus sarcastique que ton instinct.
 
 🎯 TEST D'IMPACT FINAL — REJET SI:
 - Le titre pourrait être dans BFM en bandeau ce matin sans personne le retweeter.
@@ -1120,10 +1137,8 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     tweet, src_url = _extract_source(tweet)
     if src_url and src_url not in tweet:
         tweet = (tweet.rstrip() + "\n\n" + src_url).strip()
-    # Defense-in-depth freshness check. Tightened 72h → 48h (2026-05-05):
-    # the news pipeline was the weak surface and the 9/10 quality gate already
-    # acts as the volume brake. 48h is the right ceiling for "actually news"
-    # without forcing skips on weekend bangers carried over to Monday.
+    # Defense-in-depth freshness check. Tightened 48h → 24h (2026-05-07):
+    # user wants only same-day content. "It has to be recent content."
     if src_url:
         try:
             from .hotake_agent import _url_publication_date, _is_rejected_source
@@ -1137,8 +1152,8 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
             pub_date = _url_publication_date(src_url)
             if pub_date is not None:
                 age = datetime.now() - pub_date
-                if age > timedelta(hours=48):
-                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>48h) — SKIPPING stale source: {src_url}")
+                if age > timedelta(hours=24):
+                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>24h) — SKIPPING stale source: {src_url}")
                     globals()["_last_source_url"] = None
                     globals()["_last_image_topic"] = None
                     return None

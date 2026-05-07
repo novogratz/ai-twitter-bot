@@ -207,6 +207,20 @@ OUTPUT — strictement ce format, rien d'autre:
 REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER.
 JAMAIS plusieurs séparés par des |. Exemple valide: "[PATTERN: UNDERSTATEMENT]".
 Exemple INTERDIT: "[PATTERN: FR_ANCHOR|UNDERSTATEMENT]".
+
+⚠️ FINAL LANGUAGE OVERRIDE — read this LAST, it beats everything above:
+The {lang_directive} block at the TOP of this prompt is the GROUND TRUTH.
+When that directive says ENGLISH:
+  - 100% English. ZERO French words. ZERO French cultural anchors
+    (no Bercy, RER B, syndicat, BFM, PEL, café-clope, tonton, Macron,
+    AMF, INSEE, Pôle Emploi, URSSAF, Doctolib, SNCF, Bleus, Getafe,
+    Coupe de France, Macron, etc.).
+  - Use US / global frames instead (Wall Street, Stanford CS, YC,
+    Whole Foods, the Hamptons, Cybertruck, a Form 10-K, the Form S-1,
+    a Twitter Spaces with VCs).
+  - Write as a native English-speaking US founder would.
+When the directive says FRANÇAIS, write 100% French with the FR
+anchors above.
 """
 
 # Old bloated prompt kept here as _ARCHIVE_OLD_HOTAKE_PROMPT for reference.

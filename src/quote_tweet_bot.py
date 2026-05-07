@@ -215,6 +215,19 @@ def run_quote_tweet_cycle():
             likes = int(t.get("likes") or 0)
             if likes < 30:
                 continue  # not viral enough to be worth amplifying
+            # 2026-05-07: same-day reshare rule + niche gate. We shouldn't
+            # quote-tweet a 2-week-old tweet, even from a trusted handle.
+            text = (t.get("text") or "").strip()
+            try:
+                from .retweet_bot import _is_on_niche, _scrape_age_hours
+                if not _is_on_niche(text):
+                    continue
+                age = _scrape_age_hours(t)
+                if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "18")):
+                    if not (age >= 999_000 and likes >= 100):
+                        continue
+            except Exception:
+                pass
             candidates.append(t)
 
     # Trusted-news pass (2026-04-30 PM): user wants quote-tweets of "biggest
@@ -247,6 +260,18 @@ def run_quote_tweet_cycle():
                 likes = int(t.get("likes") or 0)
                 if likes < 20:
                     continue  # trusted outlets break news fast — lower floor
+                # 2026-05-07: same-day + niche gate (no Justin Bieber 2012).
+                text = (t.get("text") or "").strip()
+                try:
+                    from .retweet_bot import _is_on_niche, _scrape_age_hours
+                    if not _is_on_niche(text):
+                        continue
+                    age = _scrape_age_hours(t)
+                    if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "18")):
+                        if not (age >= 999_000 and likes >= 100):
+                            continue
+                except Exception:
+                    pass
                 candidates.append(t)
     except Exception:
         log.info("[QUOTE] Trusted-news pass failed:")
