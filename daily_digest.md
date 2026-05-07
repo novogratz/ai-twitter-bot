@@ -100,3 +100,78 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 431 likes / 283000 views: The Yahoo Agricultural Interface is HERE. Touch grass like never before. 1PM EST in our TikTok Shop.
   - 257 likes / 0 views: Want to secure an early ticket to OpenAI DevDay? Build something with GPT-5.5 and Image Gen.  Each w
   - 234 likes / 615000 views: ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interactive 
+
+## 2026-05-02
+
+**Activity** — total actions: 196
+  - by type: reply=175, post=8, quote=6, retweet=4, hotake=3
+  - top sources: PROFILE-ALWAYS=123, PROFILE-FR=40, QUOTE=6, RETWEET=4, EARLYBIRD=3, FOLLOWING=3, FEED=3, PROFILE-VIP=2
+  - comedy patterns: FR_ANCHOR=7, METAPHOR=2
+  - top reply targets: @LeJournalDuCoin=12, @CryptoastMedia=11, @McnallieM=11, @Graphseo=8, @CryptoPicsou=8
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 205 likes / 93000 views: T&Cs: https://nvda.ws/4too5C8
+  - 180 likes / 0 views: Bitcoin: $1.5 trillion  Gold: $34.4 trillion  Global stock market: $140 trillion  We are so early.
+  - 30 likes / 0 views: PRAGMATA has launched with #RTXON, featuring path tracing and DLSS 4!   To celebrate, we are giving 
+
+## 2026-05-03
+
+**Activity** — total actions: 361
+  - by type: reply=354, post=4, quote=2, hotake=1
+  - top sources: PROFILE-ALWAYS=169, PROFILE-FR=90, FOLLOWING=30, FEED=22, SEARCH-FR-LIVE=21, SEARCH-FR-HOT=11, EARLYBIRD=9, QUOTE=2
+  - comedy patterns: DIALOGUE=1, METAPHOR=1, FR_ANCHOR=1
+  - top reply targets: @LeJournalDuCoin=17, @MathieuL1=16, @Graphseo=12, @RodolpheSteffan=12, @McnallieM=11
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 28 likes / 0 views: Instead of watching an hour of Netflix, watch this 2 hour hour Stanford lecture will teach you more 
+  - 2 likes / 277 views: SLNH will 100 to 1000x by end of 2030 imo One of the few data center stocks that has the potential t
+  - 1 likes / 3000 views: Best AI Courses and Certificates :
+
+## 2026-05-04
+
+**Activity** — total actions: 435
+  - by type: reply=425, post=7, quote=2, hotake=1
+  - top sources: PROFILE-ALWAYS=224, PROFILE-FR=98, FOLLOWING=38, EARLYBIRD=25, FEED=22, SEARCH-FR-LIVE=9, SEARCH-FR-HOT=6, PROFILE-EN=3
+  - comedy patterns: FR_ANCHOR=3, METAPHOR=1
+  - top reply targets: @LeJournalDuCoin=35, @coinacademy_fr=23, @CryptoastMedia=19, @TagadoBTC=19, @Dark_Emi_=17
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 2 likes / 53 views: Cerebras lance une IPO IA à 3,5 Md$ ce 4 mai.  Le vrai prompt rentable, c’est la facture EDF.
+  - 1 likes / 10 views: Hey, are you open for collaborations or promo right now?
+  - 1 likes / 20 views: Your success story starts here connect
+
+## 2026-05-05
+
+**Activity** — total actions: 234
+  - by type: reply=224, post=3, retweet=3, hotake=2, quote=2
+  - top sources: PROFILE-ALWAYS=158, PROFILE-FR=49, EARLYBIRD=13, FOLLOWING=4, RETWEET=3, QUOTE=2
+  - comedy patterns: FR_ANCHOR=4
+  - top reply targets: @LeJournalDuCoin=18, @CryptoastMedia=17, @coinacademy_fr=14, @FrugalisteFutee=13, @McnallieM=11
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 421 likes / 211000 views: JUST IN: $81,000 Bitcoin
+  - 346 likes / 282000 views: BREAKING: President Trump says Fed Chair Powell is a "disaster for America" and that interest rates 
+  - 197 likes / 39000 views: $81,000 Bitcoin
+
+## 2026-05-06
+
+**Activity** — total actions: 413
+  - by type: reply=352, retweet=38, hotake=10, quote=7, post=6
+  - top sources: PROFILE-ALWAYS=181, PROFILE-FR=63, RETWEET=38, SEARCH-FR-LIVE=20, PROFILE-EN=17, EARLYBIRD=16, SEARCH-FR-HOT=8, QUOTE=7
+  - comedy patterns: FR_ANCHOR=17, DIALOGUE=13, UNDERSTATEMENT=8, RENAME=5, METAPHOR=5, REPETITION=3, OTHER=1
+  - top reply targets: @FlasheurInvest=19, @LeJournalDuCoin=18, @McnallieM=15, @coinacademy_fr=15, @NCheron_bourse=12
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 125 likes / 0 views: $82,000 is the next victim. #Bitcoin
+  - 59 likes / 12000 views: Don’t miss the $BMIC presale. Quantum-first security, real utility, and a long-term vision.   Join h
+  - 56 likes / 0 views: HUGE: Uniswap hits $3T all-time volume on Ethereum.
