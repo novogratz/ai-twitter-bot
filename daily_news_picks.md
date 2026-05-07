@@ -288,3 +288,6 @@ Retrouvez toute
 - **@lefigaro** (86 likes, score 7/10) — 6ans depuis mon dernier tweet ! Il était temps de le réveiller
   - https://x.com/lefigaro/status/569486889201340417
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 88).
+- **@lemondefr** (4212 likes, score 7/10) — Le Monde fait le choix d’interrompre la publication de ses contenus sur X, tant que ce réseau social fonctionnera ainsi. Voici pourquoi
+  - https://x.com/lemondefr/status/1881341885718966388
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 11948).
