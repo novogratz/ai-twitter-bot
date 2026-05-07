@@ -291,3 +291,8 @@ Retrouvez toute
 - **@lemondefr** (4212 likes, score 7/10) — Le Monde fait le choix d’interrompre la publication de ses contenus sur X, tant que ce réseau social fonctionnera ainsi. Voici pourquoi
   - https://x.com/lemondefr/status/1881341885718966388
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 11948).
+- **@bitcoinmagazine** (1074 likes, score 7/10) — JUST IN: $14 trillion BlackRock publishes report stating that adding bitcoin to your portfolio produces "compelling" results. 
+
+With BTC's high volatility, "a little bitcoin can go a long way."
+  - https://x.com/BitcoinMagazine/status/2052372126720524713
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1454).
