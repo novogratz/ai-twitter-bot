@@ -299,3 +299,6 @@ With BTC's high volatility, "a little bitcoin can go a long way."
 - **@bitcoinmagazine** (87 likes, score 7/10) — JUST IN: JPMorgan reports that Michael Saylor's Strategy might buy $30 BILLION worth of bitcoin this year
   - https://x.com/BitcoinMagazine/status/2052439055690842600
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 111).
+- **@lesechos** (52 likes, score 8/10) — 38 kilomètres de rails, 28 ponts et trois viaducs : le montant du marché de travaux est estimé à 1,2 milliard d'euros.  https://trib.al/7gL1FEA
+  - https://x.com/LesEchos/status/2052396416954171555
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 60).
