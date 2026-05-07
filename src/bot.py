@@ -4,7 +4,7 @@ import os
 import random
 import traceback
 from datetime import date
-from .config import MAX_NEWS_PER_DAY, MAX_HOTAKES_PER_DAY, DAILY_STATE_FILE
+from .config import MAX_NEWS_PER_DAY, MAX_HOTAKES_PER_DAY, DAILY_STATE_FILE, get_live_cap
 from .logger import log
 from .agent import generate_tweet
 from .hotake_agent import generate_hotake
@@ -14,6 +14,17 @@ from .engagement_log import log_post, log_hotake
 from .humanizer import humanize
 from .article_image import fetch_article_image
 from .image_gen import make_quote_card
+
+
+def _live_news_cap() -> int:
+    """Live cap from meta_strategy_agent's live_strategy.json, env fallback."""
+    return get_live_cap("MAX_NEWS_PER_DAY", MAX_NEWS_PER_DAY)
+
+
+def _live_hotake_cap() -> int:
+    """Live cap from meta_strategy_agent's live_strategy.json, env fallback."""
+    return get_live_cap("MAX_HOTAKES_PER_DAY", MAX_HOTAKES_PER_DAY)
+
 
 THREAD_SEPARATOR = "---THREAD---"
 
