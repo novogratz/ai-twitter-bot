@@ -50,6 +50,8 @@ from src.spike_bot import safe_run_spike_cycle
 from src.spicy_bot import safe_run_spicy_cycle
 from src.suppression_watch_bot import safe_run_suppression_watch_cycle
 from src.mega_watch_bot import safe_run_mega_watch_cycle
+from src.cleanup_bot import safe_run_cleanup_cycle
+from src.heartbeat_bot import safe_run_heartbeat
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -667,6 +669,28 @@ def main():
             safe_run_mega_watch_cycle,
             trigger=IntervalTrigger(seconds=90),
             id="mega_watch_job",
+        )
+
+        # Daily housekeeping — rotate bot.log if oversized, trim 90+ day
+        # rows from engagement_log.csv, cap JSON arrays. Keeps the bot
+        # running smoothly when fully autonomous (no human babysitter
+        # to clean up state). Hourly idempotent check; the daily-state
+        # file guards the actual work to once-per-day.
+        log.info("Cleanup bot: daily state housekeeping (hourly idempotent check).")
+        scheduler.add_job(
+            safe_run_cleanup_cycle,
+            trigger=IntervalTrigger(hours=1),
+            id="cleanup_job",
+        )
+
+        # Heartbeat — one log line every 60s so a glance at bot.log
+        # always shows fresh activity, proving the bot is alive even
+        # when all 28 other schedulers happen to be mid-sleep.
+        log.info("Heartbeat: alive-tick every 60s.")
+        scheduler.add_job(
+            safe_run_heartbeat,
+            trigger=IntervalTrigger(seconds=60),
+            id="heartbeat_job",
         )
 
     log.info("All systems go. Bot is running.")

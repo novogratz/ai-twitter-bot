@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.kzer.ai-twitter-bot</string>
+
+    <!-- The actual command. python3 main.py from the repo root. -->
+    <key>ProgramArguments</key>
+    <array>
+      <string>/usr/bin/python3</string>
+      <string>/Users/benoitfloch/ai-twitter-bot/main.py</string>
+    </array>
+
+    <!-- cwd for relative-path file IO (history.json, daily_state.json, etc.) -->
+    <key>WorkingDirectory</key>
+    <string>/Users/benoitfloch/ai-twitter-bot</string>
+
+    <!-- Boot the bot when the user logs in. Without this, it only starts
+         when launchctl load is called. -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- Auto-respawn if the bot exits for any reason (crash, SIGTERM,
+         Python error). This is the autonomous recovery mechanism —
+         after this is loaded, the bot is effectively immortal until
+         we explicitly unload. -->
+    <key>KeepAlive</key>
+    <true/>
+
+    <!-- Don't respawn faster than every 30 seconds. Prevents a tight
+         crash loop from burning CPU + filling logs if a config breaks. -->
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+
+    <!-- Pipe stdout + stderr to the existing bot.log + bot.err so the
+         user's tail-the-logs flow keeps working. -->
+    <key>StandardOutPath</key>
+    <string>/Users/benoitfloch/ai-twitter-bot/bot.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/benoitfloch/ai-twitter-bot/bot.err</string>
+
+    <!-- Ensure PATH has Homebrew binaries (claude, codex, gemini CLIs
+         live in /opt/homebrew/bin on Apple Silicon). -->
+    <key>EnvironmentVariables</key>
+    <dict>
+      <key>PATH</key>
+      <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+      <key>LANG</key>
+      <string>en_US.UTF-8</string>
+    </dict>
+
+    <!-- Run as a background agent — DO NOT activate Safari for it
+         (the bot already manages Safari activation explicitly). -->
+    <key>ProcessType</key>
+    <string>Background</string>
+  </dict>
+</plist>
