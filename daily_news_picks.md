@@ -331,3 +331,8 @@ A vote on the bill may happen next
 Des modèles comme Claude parlent en mots mais pensent en nombres. Les nombres — appelés activations — encodent les pensées de Claude
   - https://x.com/AnthropicAI/status/2052435436157452769
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 13114).
+- **@googledeepmind** (637 likes, score 7/10) — Pensez que votre vibe en coding et créativité pourrait être sur la scène principale du #GoogleIO ? Montrez-nous.
+
+Alors que nous comptons à rebours jusqu’au début du spectacle, les meilleures idées co
+  - https://x.com/GoogleDeepMind/status/2050244179163295985
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 773).
