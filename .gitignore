@@ -39,3 +39,8 @@ strategy_log.json
 # Manual kill-switch for /stop (must NOT be tracked or it would
 # permanently disable the watchdog after a fresh clone).
 .bot_disabled
+
+# Ephemeral local state — never useful in git.
+bot.err
+.llm_rate_state.json
+test_gemini_integration.py

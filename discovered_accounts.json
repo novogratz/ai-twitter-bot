@@ -271,5 +271,25 @@
     "handle": "fab",
     "category": "bourse",
     "added": "2026-05-01"
+  },
+  {
+    "handle": "andrew",
+    "category": "bourse",
+    "added": "2026-05-06"
+  },
+  {
+    "handle": "depinballer",
+    "category": "crypto",
+    "added": "2026-05-06"
+  },
+  {
+    "handle": "megacryptonews",
+    "category": "crypto",
+    "added": "2026-05-07"
+  },
+  {
+    "handle": "maestrox",
+    "category": "crypto",
+    "added": "2026-05-07"
   }
 ]

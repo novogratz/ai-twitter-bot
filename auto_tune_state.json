@@ -1,0 +1,34 @@
+{
+  "ts": "2026-05-08T05:11:01.757478",
+  "window_min": 90,
+  "total_actions": 24,
+  "by_type": {
+    "hotake": 1,
+    "reply": 24
+  },
+  "winners": {
+    "PROFILE-ALWAYS/Graphseo": 2,
+    "PROFILE-FR/AgefiFrance": 2,
+    "FEED": 2,
+    "SEARCH-FR-LIVE/\"Brent 122\" OR \"p\u00e9trole record\" OR \"crise p\u00e9troli\u00e8re\" OR \"OPEP \u00e9clatement\" lang:fr min_faves:15": 2,
+    "MEGA/lesechos": 2
+  },
+  "losers": {
+    "PROFILE-ALWAYS/RodolpheSteffan": 1,
+    "PROFILE-ALWAYS/PowerHasheur": 1,
+    "PROFILE-ALWAYS/Crypto__Goku": 1,
+    "PROFILE-ALWAYS/Capetlevrai": 1,
+    "PROFILE-ALWAYS/MathieuL1": 1,
+    "PROFILE-ALWAYS/fchollet": 1,
+    "PROFILE-FR/DrTilt2": 1,
+    "PROFILE-FR/75secondes": 1,
+    "FOLLOWING": 1,
+    "SEARCH-FR-HOT/PayPal crypto stablecoin PYUSD Bitcoin paiement": 1,
+    "SEARCH-FR-LIVE/\"proc\u00e8s Musk\" OR \"Musk Altman\" OR \"OpenAI proc\u00e8s\" lang:fr min_faves:15": 1,
+    "MEGA/elonmusk": 1,
+    "MEGA/LeJournalDuCoin": 1,
+    "PROFILE-ALWAYS/vision_ia": 1
+  },
+  "post_cadence_factor": 1.0,
+  "boost_cadence_factor": 1.0
+}

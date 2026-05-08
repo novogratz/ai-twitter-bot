@@ -27,3 +27,55 @@ Format: `[ISO timestamp] decision — commit-sha`
 - [2026-04-29 06:25] **NICHE-GATE EXPANSION**: added 30+ missing bourse/commodity/TA terms (semi-conducteurs, silver/XAG, OPEP/pétrole, analyse technique, baissier/haussier, RSI/MACD, Goldman/JPMorgan, volatilité, correction, krach). 7+ curated-FR reply opportunities were being rejected per cycle — hundreds/day lost. Bot restarted PID 77403. — `42725ee`
 
 - 2026-05-01T08:59 ⚠️ HEALTH: Safari recovery #1 after consecutive failures (trigger=post, success=True).
+
+- 2026-05-06T20:25 ⚠️ HEALTH: Safari recovery #1 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-06T21:00 ⚠️ HEALTH: Safari recovery #2 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-06T22:50 ⚠️ HEALTH: Safari recovery #3 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-06T23:06 ⚠️ HEALTH: Safari recovery #4 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-06T23:22 ⚠️ HEALTH: Safari recovery #5 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-06T23:41 ⚠️ HEALTH: Safari recovery #6 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T00:03 ⚠️ HEALTH: Safari recovery #7 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T00:18 ⚠️ HEALTH: Safari recovery #8 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T00:29 ⚠️ HEALTH: Safari recovery #9 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T00:42 ⚠️ HEALTH: Safari recovery #10 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T00:59 ⚠️ HEALTH: Safari recovery #11 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T01:22 ⚠️ HEALTH: Safari recovery #12 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T01:41 ⚠️ HEALTH: Safari recovery #13 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T02:13 ⚠️ HEALTH: Safari recovery #14 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T03:13 ⚠️ HEALTH: Safari recovery #15 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T04:19 ⚠️ HEALTH: Safari recovery #16 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T04:44 ⚠️ HEALTH: Safari recovery #17 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T04:58 ⚠️ HEALTH: Safari recovery #18 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T05:15 ⚠️ HEALTH: Safari recovery #19 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T05:29 ⚠️ HEALTH: Safari recovery #20 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T06:41 ⚠️ HEALTH: Safari recovery #21 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T06:51 ⚠️ HEALTH: Safari recovery #22 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T07:05 ⚠️ HEALTH: Safari recovery #23 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T07:21 ⚠️ HEALTH: Safari recovery #24 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T07:47 ⚠️ HEALTH: Safari recovery #25 after consecutive failures (trigger=mega_watch, success=True).
+
+- 2026-05-07T09:25 ⚠️ HEALTH: Safari recovery #26 after consecutive failures (trigger=mega_watch, success=True).
