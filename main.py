@@ -105,63 +105,65 @@ def should_skip_engagement() -> bool:
 
 
 def post_interval_minutes() -> int:
-    """Post cadence tuned for FR audience peak hours (Paris time).
-
-    Hours are EST; Paris = EST + 6.
-    Paris peaks: 12-14h (lunch) + 19-22h (evening) + 7-9h (morning commute).
+    """Post cadence — 2026-05-08 user: 'I want more content real time, you're
+    too slow.' Now EN-content + global audience, so the schedule isn't
+    Paris-locked. US prime time (EST 09-22) gets the tightest cadence.
+    Hours are EST.
     """
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    # Paris 19-22h = EST 13-16h — ABSOLUTE PEAK FR engagement window.
-    if 13 <= hour < 16:
-        return random.randint(28, 50)
-    # Paris 12-14h = EST 6-8h — lunch peak.
-    elif 6 <= hour < 8:
-        return random.randint(35, 60)
-    # Paris 7-9h = EST 1-3h — morning commute (was quiet before).
-    elif 1 <= hour < 3:
-        return random.randint(45, 80)
-    # Paris 14-19h = EST 8-13h — afternoon, still high engagement.
-    elif 8 <= hour < 13:
-        return random.randint(40, 70)
-    # Paris 22-00h = EST 16-18h — evening winddown but still active.
-    elif 16 <= hour < 18:
-        return random.randint(45, 80)
-    # Paris 00-07h = EST 18-01h — night for FR, primetime for QC (light cadence).
-    elif 18 <= hour < 23:
+    # US business hours peak — EST 09-12 + 13-16 = absolute prime.
+    if 9 <= hour < 12 or 13 <= hour < 16:
+        return random.randint(15, 28)
+    # US shoulder hours — early morning + late afternoon.
+    elif 7 <= hour < 9 or 16 <= hour < 19:
+        return random.randint(20, 35)
+    # US evening — Cali + East Coast still scrolling.
+    elif 19 <= hour < 23:
+        return random.randint(30, 55)
+    # Overnight / EU morning ramp — slower but still active for global news.
+    elif 23 <= hour or hour < 4:
         return random.randint(60, 110)
-    elif 23 <= hour or hour < 1:
-        return random.randint(120, 210)
-    # Paris 03-07h = EST 21-01h handled above. Catch-all.
+    # EU mid-morning — pickup before US opens.
+    elif 4 <= hour < 7:
+        return random.randint(35, 60)
     else:
-        return random.randint(70, 130)
+        return random.randint(30, 60)
 
 
 def reply_interval_minutes() -> int:
-    """Primary growth cadence — accelerated 2026-05-06 PM. Replies are the
-    working surface; we want maximum scan frequency."""
+    """Primary growth cadence — accelerated 2026-05-08. EN content + global
+    audience: peak in US business hours, not Paris."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    # Paris 19-22h peak: 8-15min cadence.
-    if 13 <= hour < 16:
-        return random.randint(8, 15)
-    return random.randint(14, 24)
+    # US business peak EST 09-16 = absolute reply window.
+    if 9 <= hour < 16:
+        return random.randint(6, 12)
+    if 16 <= hour < 23:
+        return random.randint(10, 18)
+    return random.randint(15, 25)
 
 
 def engage_interval_minutes() -> int:
     """More frequent presence in influencer notifications."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 13 <= hour < 16:  # Paris peak
-        return random.randint(12, 20)
-    return random.randint(16, 24)
+    if 9 <= hour < 16:
+        return random.randint(8, 15)
+    return random.randint(14, 22)
 
 
 def direct_reply_interval_minutes() -> int:
     """Primary response path: visit targets often enough to land early."""
-    return random.randint(14, 24)
+    hour = datetime.now(ZoneInfo("America/New_York")).hour
+    if 9 <= hour < 16:
+        return random.randint(8, 14)
+    return random.randint(13, 22)
 
 
 def early_bird_interval_minutes() -> int:
     """Early-bird replies are highest-upside; scan aggressively."""
-    return random.randint(7, 12)
+    hour = datetime.now(ZoneInfo("America/New_York")).hour
+    if 9 <= hour < 16:
+        return random.randint(4, 8)
+    return random.randint(6, 12)
 
 
 def roast_interval_minutes() -> int:
@@ -620,10 +622,10 @@ def main():
         # (default 100) it counts as breaking — generates a fast FR take
         # in <30 sec via Opus and ships immediately. Cap 8/day. Designed
         # to put us in the first 50 FR voices on a viral story.
-        log.info("Breakout bot: fast trend jacker every 8 min (cap 8/day).")
+        log.info("Breakout bot: fast trend jacker every 5 min (cap 8/day).")
         scheduler.add_job(
             safe_run_breakout_cycle,
-            trigger=IntervalTrigger(minutes=8),
+            trigger=IntervalTrigger(minutes=5),
             id="breakout_job",
         )
 
