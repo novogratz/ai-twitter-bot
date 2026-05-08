@@ -355,3 +355,6 @@ L'univers complexe et dirigé par les joueurs d'EVE est le terrain d'essai
 - **@wsj** (129 likes, score 7/10) — Whirlpool a versé un dividende à travers 10 récessions américaines et chaque crise mondiale depuis les années 1950. Mais la pénurie de liquidités du fabricant américain est devenue si grave qu’il susp
   - https://x.com/WSJ/status/2052725834956325078
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 163).
+- **@coindesk** (56 likes, score 7/10) — JUST IN: European Central Bank President Christine Lagarde says stablecoins have moved “from the periphery to the centre” of global monetary policy discussions.
+  - https://x.com/CoinDesk/status/2052751674406490364
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 114).
