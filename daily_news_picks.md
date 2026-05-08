@@ -318,3 +318,6 @@ A vote on the bill may happen next
 - **@bitcoinmagazine** (732 likes, score 8/10) — E*Trade de Morgan Stanley a publié un rapport montrant que « le Bitcoin a grimpé bien plus vite que les autres actifs au cours des 10 dernières années »
   - https://x.com/BitcoinMagazine/status/2052415990068060439
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 866).
+- **@techcrunch** (52 likes, score 8/10) — Ramp en discussions pour atteindre une valorisation de plus de 40 milliards de dollars, 6 mois après avoir atteint 32 milliards
+  - https://x.com/TechCrunch/status/2052527547876016332
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 68).
