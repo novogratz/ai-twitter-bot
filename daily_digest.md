@@ -175,3 +175,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 125 likes / 0 views: $82,000 is the next victim. #Bitcoin
   - 59 likes / 12000 views: Don’t miss the $BMIC presale. Quantum-first security, real utility, and a long-term vision.   Join h
   - 56 likes / 0 views: HUGE: Uniswap hits $3T all-time volume on Ethereum.
+
+## 2026-05-07
+
+**Activity** — total actions: 443
+  - by type: reply=401, retweet=29, quote=5, post=4, hotake=4
+  - top sources: PROFILE-ALWAYS=139, MEGA=130, PROFILE-FR=49, RETWEET=29, FOLLOWING=12, SEARCH-FR-HOT=11, PROFILE-EN=9, FEED=8
+  - comedy patterns: FR_ANCHOR=17, DIALOGUE=10, UNDERSTATEMENT=4, RENAME=4, METAPHOR=3, REPETITION=1
+  - top reply targets: @LeJournalDuCoin=30, @AnthropicAI=26, @OpenAI=21, @sama=18, @BFMBourse=14
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 126 likes / 195000 views: Today marks a major milestone for MYRIAD.  We’re accelerating our vision in building sharper, deeper
+  - 113 likes / 387000 views: AI supercomputers need a new kind of network to stay in sync at massive scale.  OpenAI’s @markjhandl
+  - 78 likes / 268000 views: Today, we're releasing the public preview of Workflows, the orchestration layer for enterprise AI.  
