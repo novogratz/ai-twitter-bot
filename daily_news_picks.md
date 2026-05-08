@@ -339,3 +339,8 @@ Alors que nous comptons à rebours jusqu’au début du spectacle, les meilleure
 - **@techcrunch** (67 likes, score 7/10) — OpenAI launches new voice intelligence features in its API
   - https://x.com/TechCrunch/status/2052515964407918862
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 89).
+- **@anthropicai** (3606 likes, score 7/10) — Notre programme de chasse aux bugs de sécurité est désormais public sur HackerOne.
+
+Nous avons exécuté le programme en privé au sein de la communauté de recherche en sécurité, et leurs découvertes ont
+  - https://x.com/AnthropicAI/status/2052466175540629965
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 3938).
