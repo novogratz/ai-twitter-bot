@@ -310,3 +310,8 @@ A vote on the bill may happen next
 - **@bfmtv** (98 likes, score 7/10) — Détroit d'Ormuz: trois navires de guerre américains ont été touchés par l'Iran, selon des médias iraniens
   - https://x.com/BFMTV/status/2052508353394295035
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 114).
+
+## 2026-05-08
+- **@decryptmedia** (55 likes, score 8/10) — Solv Protocol va déverser LayerZero, migrer la technologie Bitcoin tokenisée de 700 M$ vers Chainlink
+  - https://x.com/DecryptMedia/status/2052516736071545172
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 63).
