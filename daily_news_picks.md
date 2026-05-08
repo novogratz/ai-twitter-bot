@@ -366,3 +366,6 @@ L'univers complexe et dirigé par les joueurs d'EVE est le terrain d'essai
 CoinDesk Live closes out the biggest event in crypto with Donald Trump Jr., Amy Oldenburg, Mike Belshe & more.
   - https://x.com/CoinDesk/status/2052384479579136484
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 275).
+- **@bitcoinmagazine** (381 likes, score 7/10) — LIVE: Strategy (MSTR) Earnings Call | Q1 2026
+  - https://x.com/BitcoinMagazine/status/2051769557074026724
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 447).
