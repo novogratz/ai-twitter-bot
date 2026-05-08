@@ -54,6 +54,7 @@ from src.cleanup_bot import safe_run_cleanup_cycle
 from src.heartbeat_bot import safe_run_heartbeat
 from src.meta_strategy_agent import safe_run_meta_strategy_cycle
 from src.hn_signal_bot import safe_run_signal_cycle
+from src.smart_unfollow_bot import safe_run_unfollow_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -719,6 +720,17 @@ def main():
             safe_run_signal_cycle,
             trigger=IntervalTrigger(minutes=20),
             id="hn_signal_job",
+        )
+
+        # Smart unfollow — every 4h, diff /following vs /followers,
+        # unfollow non-reciprocal accounts (cap 15/cycle). Keeps the
+        # follow-ratio healthy as follow_blast adds ~700-1500/day.
+        # Respect list + engage/early_bird/mega rosters are protected.
+        log.info("Smart unfollow: prune non-reciprocal follows every 4h (cap 15/cycle).")
+        scheduler.add_job(
+            safe_run_unfollow_cycle,
+            trigger=IntervalTrigger(hours=4),
+            id="smart_unfollow_job",
         )
 
     # Autonomy audit — print which adapt + push hooks are active so the

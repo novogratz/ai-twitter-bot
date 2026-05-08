@@ -272,6 +272,59 @@ def quote_tweet(tweet_url: str, comment: str):
         close_front_tab()
 
 
+def unfollow_account(username: str) -> bool:
+    """Visit a user's profile and click Following → confirm Unfollow.
+
+    Best-effort. Returns True if the unfollow flow appeared to complete
+    (Following button found + clicked + confirm clicked). False otherwise.
+    Used by smart_unfollow_bot to keep follow-ratio healthy.
+    """
+    username = (username or "").strip().lstrip("@")
+    if not username or len(username) > 15 or not all(
+        c.isascii() and (c.isalnum() or c == "_") for c in username
+    ):
+        log.info(f"[UNFOLLOW] Invalid handle '{username}' — skipping.")
+        return False
+
+    with _safari_lock:
+        profile_url = f"https://x.com/{username}"
+        log.info(f"[UNFOLLOW] Visiting profile: {profile_url}")
+        webbrowser.open(profile_url)
+        time.sleep(5)
+
+        # Step 1: click the "Following" button (only visible if we follow them).
+        click_following = '''
+        tell application "Safari"
+            do JavaScript "
+                var btns = document.querySelectorAll('[data-testid$=\"-unfollow\"]');
+                if (btns.length) { btns[0].click(); return 'CLICKED'; }
+                return 'NO_FOLLOWING_BTN';
+            " in current tab of front window
+        end tell
+        '''
+        if not _run_applescript(click_following):
+            log.info(f"[UNFOLLOW] JS step 1 failed for @{username}.")
+            close_front_tab()
+            return False
+        time.sleep(1.2)
+
+        # Step 2: click the confirm in the modal.
+        click_confirm = '''
+        tell application "Safari"
+            do JavaScript "
+                var btn = document.querySelector('[data-testid=\"confirmationSheetConfirm\"]');
+                if (btn) { btn.click(); return 'CONFIRMED'; }
+                return 'NO_CONFIRM';
+            " in current tab of front window
+        end tell
+        '''
+        _run_applescript(click_confirm)
+        time.sleep(1.5)
+        close_front_tab()
+        log.info(f"[UNFOLLOW] Unfollowed @{username}.")
+        return True
+
+
 def follow_account(username: str) -> bool:
     """Visit a user's profile and click the Follow button.
 

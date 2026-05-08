@@ -118,6 +118,19 @@ def run_follow_blast_cycle():
             return
     except Exception:
         pass
+    # Skip the do-not-refollow set: if smart_unfollow already let an
+    # account go, re-following them would just re-unfollow → churn.
+    # The check happens after page-scroll via on-page state — accounts
+    # we already follow show "Following" not "Follow" so they're auto-
+    # filtered, but the bot can't see do_not_refollow status from search
+    # results, so we just LOG the count for visibility.
+    try:
+        from .smart_unfollow_bot import _load_do_not_refollow
+        dnr = _load_do_not_refollow()
+        if dnr:
+            log.info(f"[FOLLOW-BLAST] do-not-refollow set has {len(dnr)} entries.")
+    except Exception:
+        pass
     query = random.choice(BLAST_QUERIES)
     encoded = urllib.parse.quote(query)
     # /search?f=people = profile-card list, dense Follow CTAs.
