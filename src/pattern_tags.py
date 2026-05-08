@@ -20,12 +20,13 @@ from typing import Optional
 
 # Canonical pattern IDs. Mirror the 6 in CLAUDE.md / personality / prompts.
 PATTERN_IDS = {
-    "REPETITION",      # 1. répétition qui tue ("Getafe. Getafe.")
-    "DIALOGUE",        # 2. mini-dialogue FR (médecin / syndicat)
-    "METAPHOR",        # 3. métaphore tueuse ("groupe WhatsApp qui se like")
-    "RENAME",          # 4. renaming ("S&P 7", "casino régulé par tweets")
-    "FR_ANCHOR",       # 5. callback culturel FR (RER B, Bercy, syndicat...)
-    "UNDERSTATEMENT",  # 6. understatement brutal ("Léger souci")
+    "REPETITION",      # 1. kill repetition ("OpenAI raised. Then raised.")
+    "DIALOGUE",        # 2. two-line dialogue (investor/founder, médecin/syndicat)
+    "METAPHOR",        # 3. absurd-but-accurate image
+    "RENAME",          # 4. re-label ("S&P 7", "401(k) with extra steps")
+    "EN_ANCHOR",       # 5. anglo cultural anchor (Bloomberg, FTSE, Hamptons)
+    "FR_ANCHOR",       # 5'. FR cultural anchor (RER B, Bercy, syndicat) — FR mode only
+    "UNDERSTATEMENT",  # 6. understatement brutal ("Mild concern at the all-hands")
     "OTHER",           # fallback
 }
 
