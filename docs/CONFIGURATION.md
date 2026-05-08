@@ -21,8 +21,8 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 | `HOTAKE_MODEL` | `claude-opus-4-7` | Model for hot takes + breakouts + spicy. |
 | `REPLY_MODEL` | `claude-sonnet-4-6` | Model for replies. Sonnet sufficient for the volume surface. |
 | `PRIORITY_REPLY_MODEL` | `claude-opus-4-7` | Model for VIP-account replies (curated `ALWAYS_PROFILES`). |
-| `QUOTE_MODEL` | `claude-haiku-4-5` | Model for quote-tweet commentary. Haiku is fine — it's a one-liner. |
-| `ROAST_MODEL` | `claude-haiku-4-5` | Model for the @pgm_pm roast bot. |
+| `QUOTE_MODEL` | `claude-haiku-4-5-20251001` | Model for quote-tweet commentary. Haiku is fine — it's a one-liner. |
+| `ROAST_MODEL` | `claude-haiku-4-5-20251001` | Model for the @pgm_pm roast bot. |
 | `LLM_MIN_SECONDS_BETWEEN_CALLS` | `45` | Local rate-limit guardrail. |
 | `LLM_MAX_CALLS_PER_HOUR` | `60` | Local hourly model-call budget. |
 
@@ -137,8 +137,8 @@ NEWS_MODEL=claude-opus-4-7
 HOTAKE_MODEL=claude-opus-4-7
 REPLY_MODEL=claude-sonnet-4-6
 PRIORITY_REPLY_MODEL=claude-opus-4-7
-QUOTE_MODEL=claude-haiku-4-5
-ROAST_MODEL=claude-haiku-4-5
+QUOTE_MODEL=claude-haiku-4-5-20251001
+ROAST_MODEL=claude-haiku-4-5-20251001
 
 MAX_NEWS_PER_DAY=12
 MAX_HOTAKES_PER_DAY=6

@@ -10,17 +10,17 @@ Project context for **Codex CLI** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md). 
 
 This repo is **kzer**, an autonomous Twitter/X growth agent. ~30 concurrent micro-bots managed by APScheduler in `main.py`. Browser-driven via Safari + AppleScript — no Twitter API key.
 
-**Default AI provider: Codex CLI** (`AI_CLI=codex`). Authenticate with:
+**Default AI provider: Claude CLI** (`AI_CLI=claude`). Authenticate with:
 
 ```bash
-codex login
+claude login
 ```
 
-Switch to Claude or Gemini at any time:
+Switch to Codex or Gemini at any time:
 
 ```bash
-AI_CLI=claude  ./bin/run.sh    # one-off
-echo "AI_CLI=claude" >> .env   # persistent
+AI_CLI=codex  ./bin/run.sh    # one-off
+echo "AI_CLI=codex" >> .env   # persistent
 ```
 
 The same models run across all generation surfaces (news, replies, hot takes, threads, breakouts). The CLI adapter (`src/llm_client.py`) handles each provider transparently.
@@ -34,7 +34,7 @@ git clone <repo>
 cd ai-twitter-bot
 pip install -r requirements.txt
 cp .env.example .env       # then edit caps + handle
-codex login                # authenticate Codex
+claude login               # or codex/gemini login — set AI_CLI accordingly
 ./bin/run.sh               # foreground start, Ctrl-C to stop
 ```
 

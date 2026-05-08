@@ -56,10 +56,10 @@ BLOCKLIST = {
 # Discovered accounts file (autonomous influencer discovery)
 DISCOVERED_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "discovered_accounts.json")
 
-# CLI/provider selection. Default is Codex (user 2026-05-08: "use codex for the
-# bot content; I'll use claude for code"). Set AI_CLI=claude / AI_CLI=gemini to
-# override at the env level. Setup is the same — `codex login` to authenticate.
-AI_CLI = os.environ.get("AI_CLI", "codex").strip().lower()
+# CLI/provider selection. Default is Claude (user 2026-05-08 PM: rate-limited
+# on Codex, reverted). Set AI_CLI=codex / AI_CLI=gemini at the env level to
+# switch. Authenticate with `claude login` (or codex/gemini login).
+AI_CLI = os.environ.get("AI_CLI", "claude").strip().lower()
 
 def _default_model(codex_model: str, claude_model: str, gemini_model: str = "gemini-2.0-flash") -> str:
     if AI_CLI == "codex":
