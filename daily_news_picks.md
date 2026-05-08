@@ -358,3 +358,6 @@ L'univers complexe et dirigé par les joueurs d'EVE est le terrain d'essai
 - **@coindesk** (56 likes, score 7/10) — JUST IN: European Central Bank President Christine Lagarde says stablecoins have moved “from the periphery to the centre” of global monetary policy discussions.
   - https://x.com/CoinDesk/status/2052751674406490364
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 114).
+- **@bitcoinmagazine** (341 likes, score 7/10) — JUSTE ARRIVÉ : Les chances que la législation sur la structure du marché Bitcoin et crypto soit signée en loi cette année dépassent 73 % — Polymarket
+  - https://x.com/BitcoinMagazine/status/2052765024796492069
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 403).
