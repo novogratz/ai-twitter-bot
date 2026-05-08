@@ -321,3 +321,8 @@ A vote on the bill may happen next
 - **@techcrunch** (52 likes, score 8/10) — Ramp en discussions pour atteindre une valorisation de plus de 40 milliards de dollars, 6 mois après avoir atteint 32 milliards
   - https://x.com/TechCrunch/status/2052527547876016332
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 68).
+- **@bitcoinmagazine** (1821 likes, score 7/10) — NOUVEAU :  La sénatrice américaine Angela Alsobrooks déclare « nous avons résolu le problème de rendement » qui freinait l'adoption de la législation sur la structure du marché Bitcoin et crypto 
+
+« J
+  - https://x.com/BitcoinMagazine/status/2052487182649008160
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1965).
