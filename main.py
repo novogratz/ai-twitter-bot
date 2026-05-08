@@ -54,6 +54,7 @@ from src.cleanup_bot import safe_run_cleanup_cycle
 from src.heartbeat_bot import safe_run_heartbeat
 from src.meta_strategy_agent import safe_run_meta_strategy_cycle
 from src.hn_signal_bot import safe_run_signal_cycle
+from src.rss_signal_bot import safe_run_rss_signal_cycle
 from src.smart_unfollow_bot import safe_run_unfollow_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
@@ -720,6 +721,20 @@ def main():
             safe_run_signal_cycle,
             trigger=IntervalTrigger(minutes=20),
             id="hn_signal_job",
+        )
+
+        # RSS signal — fetch ~20 trusted outlets' RSS feeds every 5 min.
+        # RSS publishes within seconds of the article going live; Google
+        # (and therefore WebSearch) lags by 30-60 min. So this is the
+        # 'before everyone else' lever — we see Bloomberg / Reuters /
+        # TechCrunch / The Information scoops 20-50 min before WebSearch
+        # would surface them. Merges with HN/Reddit into the same
+        # external_signal.json the news pipeline already reads.
+        log.info("RSS signal: trusted-outlet RSS scrape every 5 min (parallel).")
+        scheduler.add_job(
+            safe_run_rss_signal_cycle,
+            trigger=IntervalTrigger(minutes=5),
+            id="rss_signal_job",
         )
 
         # Smart unfollow — every 4h, diff /following vs /followers,
