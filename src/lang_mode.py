@@ -36,25 +36,29 @@ Lang = Literal["en", "fr"]
 
 
 def _mode() -> str:
-    # 2026-05-07 user clarification: "I want the bot to ONLY speak french.
-    # It's OK to reshare English content but the bot itself only writes FR."
-    # Default flipped back to fr.
-    return os.environ.get("CONTENT_LANG_PRIMARY", "fr").strip().lower()
+    # 2026-05-08 user re-clarification: "talk in english only for news and
+    # repost and reshare — then when he replies he can continue to reply
+    # in french or english depending on the tweet he replies to."
+    # Default = en for ALL content surfaces. Reply bots have their own
+    # language-matching logic (parent-tweet language) — they don't read
+    # this mode.
+    return os.environ.get("CONTENT_LANG_PRIMARY", "en").strip().lower()
 
 
 def pick_content_lang() -> Lang:
     """Return the language for THIS cycle of content generation.
 
-    User mandate 2026-05-07: "FRENCH ONLY for the language the bot talks."
-    fr is the only allowed mode unless someone explicitly sets en/mixed.
+    User mandate 2026-05-08: "english only for news, repost, reshare."
+    en is the default; replies don't call this and have their own
+    parent-language matching.
     """
     m = _mode()
-    if m == "en":
-        return "en"
     if m == "fr":
         return "fr"
-    # mixed (legacy) — kept for completeness but should not be the default.
-    return "fr"
+    if m == "en":
+        return "en"
+    # mixed (legacy) — 70% EN, 30% FR.
+    return "en" if random.random() < 0.70 else "fr"
 
 
 def lang_directive(lang: Lang) -> str:
@@ -77,19 +81,40 @@ def lang_directive(lang: Lang) -> str:
         "==================================================\n"
         "OUTPUT LANGUAGE: ENGLISH (STRICT — NO FRENCH WORDS)\n"
         "==================================================\n"
-        "Write the tweet in 100% ENGLISH. The reader is a global\n"
-        "AI / crypto / finance audience.\n\n"
-        "STRICT RULES:\n"
-        "- NO French words. Not 'Bercy', not 'RER B', not 'syndicat',\n"
-        "  not 'café-clope', not 'PEL', not 'tonton', not 'BFM',\n"
-        "  not 'Coupe de France'. These are untranslated French —\n"
-        "  they read as broken English to a US/UK reader.\n"
-        "- NO French cultural references AT ALL. If you reference\n"
-        "  a place / institution / habit, use a US or global one\n"
-        "  (Wall Street, Fortune 500, the Hamptons, Stanford CS,\n"
-        "  the Y Combinator demo day, a Whole Foods checkout line).\n"
-        "- NO 'translated' French structures ('one says it', etc.).\n"
-        "  Write as a native US founder/operator would write.\n"
-        "- No em dashes. No hashtags. No emojis (except 🧵 on thread\n"
-        "  openers). No 'According to...' / 'Breaking:' / 'Today...'.\n"
+        "Write the tweet in 100% ENGLISH. Reader is a global AI / crypto /\n"
+        "finance audience. Voice = dry, sarcastic, pragmatic — half VC\n"
+        "Twitter, half FT op-ed, half British understatement. The kind of\n"
+        "tweet that earns 'this guy gets it' from a Goldman intern AND a\n"
+        "16-year-old Solana degen.\n\n"
+        "🚫 STRICT — NO FRENCH ANCHORS:\n"
+        "Forget 'Bercy', 'RER B', 'syndicat', 'café-clope', 'PEL',\n"
+        "'Livret A', 'tonton', 'BFM', 'Macron', 'AMF', 'INSEE',\n"
+        "'Pôle Emploi', 'URSSAF', 'Doctolib', 'SNCF', 'Bleus',\n"
+        "'Getafe', 'Coupe de France', 'CGT', '49.3'. These are\n"
+        "untranslated French and read as gibberish to an Anglo reader.\n\n"
+        "✅ ENGLISH CULTURAL TOOLKIT — pick 1 per tweet, used as deadpan\n"
+        "flavor (NOT a forced punchline):\n"
+        "• Wall Street / Bloomberg terminal / CNBC chyron / Jim Cramer\n"
+        "  hand gesture / S&P 500 / 401(k) / Robinhood notification\n"
+        "• Stanford CS / MIT / Y Combinator demo day / Series A pitch\n"
+        "  deck / Form 10-K footnote / Form S-1 / IPO roadshow\n"
+        "• Whole Foods checkout line / a Brooklyn coffee shop / the\n"
+        "  Hamptons / a Cybertruck owner / a Tesla showroom\n"
+        "• British dry: BBC News chyron / FTSE / a Lloyd's underwriter /\n"
+        "  the FT comment section / a Treasury memo / Liz Truss lettuce /\n"
+        "  council tax / a Pret sandwich queue\n"
+        "• Tech-Twitter cliché: a16z partner letter / SBF GQ profile /\n"
+        "  a LinkedIn 'thrilled to announce' post / a Notion doc with\n"
+        "  47 nested toggles / a Slack #general announcement\n"
+        "• Macro / market: the Fed dot plot / a CPI print / the VIX /\n"
+        "  the 10-year yield / oil at $X / gold at $Y\n\n"
+        "STYLE RULES:\n"
+        "- No em dashes (—). No hashtags. No emojis (except 🧵 on thread\n"
+        "  openers). No 'According to...' / 'Breaking:' / 'Today...' /\n"
+        "  'Here's why...'.\n"
+        "- Sarcastic but never cruel. Troll the IDEA / the system /\n"
+        "  the trend, never the named individual.\n"
+        "- Write as a native English-speaking operator/founder. No\n"
+        "  literal-French translations ('one says that', 'the said\n"
+        "  company').\n"
     )

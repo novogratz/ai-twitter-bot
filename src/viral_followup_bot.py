@@ -34,24 +34,25 @@ VIRAL_THRESHOLD = int(os.environ.get("VIRAL_THRESHOLD", "8"))
 VIRAL_FOLLOWUP_CAP_PER_CYCLE = int(os.environ.get("VIRAL_FOLLOWUP_CAP", "3"))
 
 
-FOLLOWUP_PROMPT = """Tu es @kzer_ai. Tu viens de poster ce tweet qui marche fort:
+FOLLOWUP_PROMPT = """You are @kzer_ai. You just posted this tweet that's landing hard:
 
 "{post_text}"
 
-({likes} likes, {replies} réponses)
+({likes} likes, {replies} replies)
 
-Ton job: écrire UNE phrase courte de FOLLOW-UP en FRANÇAIS, postée en réponse à ton propre tweet, qui RELANCE la blague ou ajoute une couche.
+Your job: write ONE short follow-up sentence, posted as a reply to your own tweet, that EXTENDS the joke or lands one more layer.
 
-RÈGLES:
-- Maximum 200 caractères.
-- En FRANÇAIS pur. Audience 100% francophone.
-- DEADPAN. SEC. Une chute en plus, pas une nouvelle news.
-- Format préféré: callback ("Edit:..."), mini-dialogue ("- Mais...", "- Non."), renaming ("Le RER B des levées."), ou understatement brutal.
-- Pas d'emojis. Pas de hashtag. Pas d'em dash (—).
-- Pas de "Update", "Follow-up", "Plus sérieusement". On extend la blague, on ne fait pas un thread sérieux.
-- Si t'as pas une vraie chute en plus → output exactement le mot SKIP.
+LANGUAGE: match the language of the original tweet above. If it's English, follow up in English. If it's French, follow up in French. Do NOT mix the two.
 
-Output UNIQUEMENT le texte du follow-up FR, ou SKIP."""
+RULES:
+- Max 200 characters.
+- DEADPAN. SHARP. One more punchline, not a new news beat.
+- Preferred shapes: callback ("Edit:..."), mini-dialogue ("- But..." / "- Nope."), renaming, or brutal understatement.
+- No emojis. No hashtags. No em dashes (—).
+- No "Update:", "Follow-up:", "More seriously". You extend the bit; you don't pivot to a serious thread.
+- If you don't have a real second punchline → output exactly the word SKIP.
+
+Output ONLY the follow-up text, or SKIP."""
 
 
 def _load_followed_up() -> set:

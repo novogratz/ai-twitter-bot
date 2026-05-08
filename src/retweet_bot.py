@@ -328,62 +328,42 @@ def _score_candidates(candidates: list):
         text_raw = c.get("text") or ""
         text = text_raw.lower()
         breaking = any(k in text for k in (
-            "breaking", "exclusif", "exclusive", "annonce", "launch",
-            "raises", "lève", "sec", "fed", "bitcoin", "openai", "nvidia",
+            "breaking", "exclusive", "announces", "announced", "launch",
+            "raises", "raised", "sec", "fed", "bitcoin", "openai", "nvidia",
         ))
         money_or_power = any(k in text for k in (
-            "$", "billion", "billion", "milliard", "mds", "million", "acquire",
-            "acquisition", "merger", "ipo", "bankrupt", "faillite", "lawsuit",
-            "ban", "interdiction", "regulator", "régulateur", "sec", "fed",
-            "valuation", "valo", "earnings", "revenue", "profit", "loss",
+            "$", "billion", "trillion", "million", "acquire",
+            "acquisition", "merger", "ipo", "bankrupt", "lawsuit",
+            "ban", "regulator", "sec", "fed",
+            "valuation", "earnings", "revenue", "profit", "loss",
         ))
         strategic = any(k in text for k in (
             "openai", "anthropic", "nvidia", "mistral", "bitcoin", "ethereum",
             "coinbase", "google", "microsoft", "meta", "apple", "tesla",
             "rates", "inflation", "tariff", "chips", "gpu",
         ))
-        numbers = len(re.findall(r"(\$?\d+(?:[.,]\d+)?\s?(?:%|bn|billion|m|million|md|mds|k)?)", text))
+        numbers = len(re.findall(r"(\$?\d+(?:[.,]\d+)?\s?(?:%|bn|billion|m|million|k)?)", text))
         engagement = int(c.get("likes") or 0) + (2 * int(c.get("replies") or 0))
-        # FR signal: accents or FR-only words. Bonus +2 (audience is 100% FR).
-        fr_signal = (
-            any(ch in text_raw for ch in "éèêàâùûôîçÉÈÊÀÂÙÛÔÎÇ")
-            or any(w in text for w in (
-                " et ", " est ", " une ", " des ", " avec ",
-                "lève", "milliard", "annonce", "français", "française",
-                "bourse", "régulateur", "marché", "cours", "actions",
-                "intelligence", "valorisation",
-            ))
-        )
         impact_points = (
             (2 if breaking else 0)
             + (3 if money_or_power else 0)
             + (2 if strategic else 0)
             + min(numbers, 3)
-            + (2 if fr_signal else 0)
         )
         return (impact_points, engagement)
 
     idx, pick = max(enumerate(candidates), key=lambda item: rank(item[1]))
     engagement = int(pick.get("likes") or 0) + (2 * int(pick.get("replies") or 0))
     impact_points = rank(pick)[0]
-    pick_text_raw = pick.get("text") or ""
-    pick_is_fr = (
-        any(ch in pick_text_raw for ch in "éèêàâùûôîçÉÈÊÀÂÙÛÔÎÇ")
-        or any(w in pick_text_raw.lower() for w in (
-            " est ", " une ", " des ", "lève", "milliard", "annonce",
-            "français", "marché", "actions",
-        ))
-    )
-    # 2026-05-06: penalize EN picks. Audience is FR — an EN retweet only
-    # passes if the impact is undeniable. Drop a tier for non-FR text.
+    # 2026-05-08: dropped the FR-language bonus. The bot's voice is EN
+    # now and we explicitly want to reshare English-source content, so
+    # scoring should be language-agnostic on source.
     if impact_points >= 9 and engagement >= 100:
         score = 9
     elif impact_points >= 7 and engagement >= 50:
         score = 8
     else:
         score = 7
-    if not pick_is_fr:
-        score -= 1
     return {
         "best_index": idx,
         "best_score": score,
@@ -428,17 +408,18 @@ def run_retweet_cycle():
 
     retweeted = _load_retweeted()
 
-    # FR-biased sample. 14 FR + 4 EN per cycle (2026-05-06 PM volume
-    # bump): we want the cycle to find SOMETHING worth amplifying every
-    # 20 min, while still leaning heavy on FR press.
-    fr_sample = random.sample(
-        FR_TRUSTED_HANDLES, k=min(14, len(FR_TRUSTED_HANDLES))
-    )
+    # 2026-05-08 user pivot: "reshare english posts." Sample flipped
+    # EN-heavy. We pull 14 EN wires + 4 FR press per cycle. EN gets the
+    # primary slot now; FR stays in for the rare French-only scoop
+    # (Mistral, Bercy, AMF) we don't want to miss.
     en_sample = random.sample(
-        EN_TRUSTED_HANDLES, k=min(4, len(EN_TRUSTED_HANDLES))
+        EN_TRUSTED_HANDLES, k=min(14, len(EN_TRUSTED_HANDLES))
     )
-    sample = fr_sample + en_sample
-    log.info(f"[RETWEET] Scraping FR-biased news handles: {sample}")
+    fr_sample = random.sample(
+        FR_TRUSTED_HANDLES, k=min(4, len(FR_TRUSTED_HANDLES))
+    )
+    sample = en_sample + fr_sample
+    log.info(f"[RETWEET] Scraping EN-biased news handles: {sample}")
 
     candidates = []
     for handle in sample:

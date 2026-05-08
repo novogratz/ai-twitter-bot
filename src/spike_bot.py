@@ -43,27 +43,28 @@ SPIKE_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "spike_history.json")
 SPIKE_LIKES = int(os.environ.get("SPIKE_LIKES", "25"))
 
 
-SPIKE_FOLLOWUP_PROMPT = """Tu es @kzer_ai. Un de tes tweets vient d'EXPLOSER:
+SPIKE_FOLLOWUP_PROMPT = """You are @kzer_ai. One of your tweets is EXPLODING right now:
 
 "{post_text}"
 
-({likes} likes en peu de temps)
+({likes} likes in a short window)
 
-Le tweet décolle. C'est le moment de prolonger. Tu vas écrire UNE phrase
-courte de FOLLOW-UP en FRANÇAIS, postée en réponse à ton propre tweet, qui:
-- relance le pic d'audience qui regarde ce thread
-- prolonge la blague ou ajoute une couche brutale
-- garde l'effet meme
+The tweet is taking off. Time to extend. Write ONE short FOLLOW-UP
+sentence, posted as a reply to your own tweet, that:
+- rides the audience peak watching this thread
+- extends the joke or adds one more brutal layer
+- keeps the meme effect
 
-RÈGLES:
-- Maximum 200 caractères.
-- En FRANÇAIS pur. Audience FR.
-- Format préféré: callback ("Edit:..."), mini-dialogue ("- Mais...", "- Non."), renaming, ou understatement.
-- Pas d'emojis, pas de hashtag, pas d'em dash.
-- Pas de méta ("Update", "Bonus", "Plus sérieusement"). On extend la blague.
-- Si rien ne te vient → output exactement le mot SKIP.
+LANGUAGE: match the original tweet above. English original → English follow-up. French original → French follow-up. No mixing.
 
-Output UNIQUEMENT le follow-up FR, ou SKIP."""
+RULES:
+- Max 200 characters.
+- Preferred shapes: callback ("Edit:..."), mini-dialogue ("- But..." / "- Nope."), renaming, or understatement.
+- No emojis. No hashtags. No em dashes (—).
+- No meta words ("Update:", "Bonus:", "More seriously"). You extend the bit.
+- If nothing strong → output exactly the word SKIP.
+
+Output ONLY the follow-up text, or SKIP."""
 
 
 def _load_history() -> set:

@@ -34,43 +34,46 @@ _OWN_HANDLE = BOT_HANDLE.lower()
 # 2026-04-30 PM (user directive): "biggest tweets from france or english".
 # So queries now span FR and EN — the prompt forces FR commentary either way.
 QUOTE_QUERIES = [
-    # FR-EXCLUSIVE 2026-05-06 — audience est 100% FR. On ne quote-tweet PAS
-    # de tweets EN parce que ça pollue le feed FR. Les tweets EN qui valent
-    # vraiment le coup repassent par le retweet bot (FR-biased) ou par les
-    # bots de réponse en thread.
-    "Claude OR ClaudeCode lang:fr min_faves:20",
-    "ChatGPT OR OpenAI lang:fr min_faves:20",
-    "Anthropic lang:fr min_faves:15",
-    "Mistral OR \"LightOn\" OR \"Hugging Face\" lang:fr min_faves:15",
-    "Nvidia OR NVDA lang:fr min_faves:20",
-    "Bitcoin lang:fr min_faves:20",
-    "Ethereum OR ETH lang:fr min_faves:15",
-    "bourse OR CAC40 lang:fr min_faves:15",
-    "crypto lang:fr min_faves:20",
-    "IA lang:fr min_faves:20",
-    "AGI OR \"intelligence artificielle\" lang:fr min_faves:15",
-    "trading lang:fr min_faves:15",
-    "Bercy OR AMF OR \"banque de france\" lang:fr min_faves:15",
-    "tech OR startup lang:fr min_faves:30",
-    "Tesla OR SpaceX OR Musk lang:fr min_faves:30",
+    # 2026-05-08 pivot: bot now writes in EN, audience for quote-tweet
+    # commentary is the wider EN AI/crypto/finance crowd. Queries flipped
+    # EN-heavy with viral floors. A small FR pool stays for Mistral /
+    # Bercy / AMF scoops we don't want to miss.
+    # EN — primary
+    "OpenAI OR ChatGPT lang:en min_faves:500",
+    "Anthropic OR Claude lang:en min_faves:300",
+    "Mistral OR \"LightOn\" OR \"Hugging Face\" lang:en min_faves:200",
+    "Nvidia OR NVDA OR GPU lang:en min_faves:500",
+    "Bitcoin OR BTC lang:en min_faves:500",
+    "Ethereum OR ETH lang:en min_faves:300",
+    "AGI OR \"AI safety\" lang:en min_faves:400",
+    "AI agents OR \"AI startup\" lang:en min_faves:300",
+    "S&P500 OR Nasdaq lang:en min_faves:300",
+    "Tesla OR Musk lang:en min_faves:1000",
+    "earnings OR IPO OR acquisition lang:en min_faves:200",
+    "stablecoin OR ETF OR \"spot ETF\" lang:en min_faves:300",
+    # FR — fallback for Mistral / Bercy / AMF scoops
+    "Mistral lang:fr min_faves:30",
+    "Bercy OR AMF lang:fr min_faves:30",
+    "IA France lang:fr min_faves:30",
 ]
 
-QUOTE_PROMPT = """Tu es @kzer_ai. Tu vas QUOTE-TWEETER ce tweet:
+QUOTE_PROMPT = """You are @kzer_ai. You're about to QUOTE-TWEET this tweet:
 
 @{author}: "{tweet_text}"
 
-Ton job: écrire UNE phrase courte EN FRANÇAIS qui ajoute une couche meme/sarcastique/sharp au-dessus. Même si le tweet original est en anglais, TA QUOTE est en FRANÇAIS — c'est notre voix. Comme un commentaire BFM IA/crypto/bourse en mode coup-de-pied.
+Your job: write ONE short sentence IN ENGLISH that adds a sharp / sarcastic / meme observation on top. Even if the original tweet is French, YOUR quote is in English — that's our voice for content amplification. Think of it as a sharp Bloomberg-meets-Twitter take.
 
-RÈGLES:
-- Maximum 200 caractères (X coupe à 280 mais le tweet original est intégré, donc on a la place).
-- DEADPAN. SEC. SCREENSHOT-WORTHY. Sarcastique mais intelligent.
-- Troll les IDÉES, jamais la personne. @{author} doit pouvoir liker ta quote.
-- Pas d'emojis. Pas de hashtags. Pas d'em dashes (—).
-- Si tu peux pas faire mieux que silence, output EXACTEMENT le mot SKIP, rien d'autre. Aucune explication, aucune phrase. Juste "SKIP".
+RULES:
+- Max 200 characters (X cuts at 280 but the original tweet renders below, so we have room).
+- DEADPAN. SHARP. SCREENSHOT-WORTHY. Sarcastic but intelligent.
+- Troll the IDEAS, never the person. @{author} should be able to like your quote.
+- No emojis. No hashtags. No em dashes (—).
+- No French words. The output is 100% English.
+- If you can't do better than silence, output EXACTLY the word SKIP. Nothing else.
 
-CRITIQUE: Tout output qui contient le mot SKIP est traité comme un skip silencieux. N'écris JAMAIS une phrase qui contient le mot "skip" — soit tu écris la quote pure, soit tu écris uniquement "SKIP". Pas de méta-commentaire, pas d'explication de ta décision, pas de "ce tweet est hors scope" — un humain ne verra jamais ton raisonnement, donc l'expliquer c'est shipper le raisonnement.
+CRITICAL: Any output containing the word "skip" is treated as a silent skip. NEVER write a sentence that contains "skip" — either output the pure quote OR output ONLY "SKIP". No meta-commentary, no explanation, no "this tweet is out of scope" — a human will never read your reasoning, so explaining it = shipping the reasoning.
 
-Output UNIQUEMENT le texte de la quote en FR, OU le mot SKIP seul."""
+Output ONLY the quote text in English, OR the word SKIP alone."""
 
 
 def _load_state() -> dict:
