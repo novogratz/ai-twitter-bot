@@ -344,3 +344,8 @@ Alors que nous comptons à rebours jusqu’au début du spectacle, les meilleure
 Nous avons exécuté le programme en privé au sein de la communauté de recherche en sécurité, et leurs découvertes ont
   - https://x.com/AnthropicAI/status/2052466175540629965
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 3938).
+- **@googledeepmind** (1841 likes, score 7/10) — Nous nous associons aux développeurs de @EveOnline pour explorer la prochaine frontière de la recherche en IA dans les jeux.
+
+L'univers complexe et dirigé par les joueurs d'EVE est le terrain d'essai
+  - https://x.com/GoogleDeepMind/status/2052011542707630461
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 2067).
