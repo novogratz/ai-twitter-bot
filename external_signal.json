@@ -1,7 +1,21 @@
 {
-  "ts": "2026-05-08T05:57:01.175196",
-  "count": 20,
+  "ts": "2026-05-08T06:06:36.274408",
+  "count": 22,
   "items": [
+    {
+      "src": "The Verge",
+      "title": "SpaceX has a $55 billion plan to build AI chips in Texas",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/926356/spacex-terafab-plant-cost-ai-chips",
+      "score": 0,
+      "ts": "2026-05-08T06:00:54"
+    },
+    {
+      "src": "The Verge",
+      "title": "Apple&#8217;s AirPods with cameras for AI are apparently close to production",
+      "url": "https://www.theverge.com/tech/926376/apple-airpods-cameras-ai-production",
+      "score": 0,
+      "ts": "2026-05-08T05:59:04"
+    },
     {
       "src": "r/CC",
       "title": "X user tricks Grok into sending them $200,000 in crypto using morse code",

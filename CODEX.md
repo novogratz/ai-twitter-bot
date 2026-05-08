@@ -1,0 +1,147 @@
+# CODEX.md
+
+Project context for **Codex CLI** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md). Use whichever CLI you have authenticated.
+
+> 🤖 **AI, Crypto, and Stock Market news, before anyone else. In-depth analysis. Zero bullshit, zero fluff. You'll hate me until I'm right.** ⚡
+
+---
+
+## Quick context
+
+This repo is **kzer**, an autonomous Twitter/X growth agent. ~30 concurrent micro-bots managed by APScheduler in `main.py`. Browser-driven via Safari + AppleScript — no Twitter API key.
+
+**Default AI provider: Codex CLI** (`AI_CLI=codex`). Authenticate with:
+
+```bash
+codex login
+```
+
+Switch to Claude or Gemini at any time:
+
+```bash
+AI_CLI=claude  ./bin/run.sh    # one-off
+echo "AI_CLI=claude" >> .env   # persistent
+```
+
+The same models run across all generation surfaces (news, replies, hot takes, threads, breakouts). The CLI adapter (`src/llm_client.py`) handles each provider transparently.
+
+---
+
+## Setup
+
+```bash
+git clone <repo>
+cd ai-twitter-bot
+pip install -r requirements.txt
+cp .env.example .env       # then edit caps + handle
+codex login                # authenticate Codex
+./bin/run.sh               # foreground start, Ctrl-C to stop
+```
+
+For full operations playbook see [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
+
+---
+
+## Skills
+
+User-invokable slash commands live under `.codex/skills/` (mirror of `.claude/skills/`). 24 skills, each is a directory with a `SKILL.md` file:
+
+- **Lifecycle**: `start`, `stop`, `restart`, `status`, `run-agent`
+- **Manual triggers**: `post`, `reply`, `engage`, `boost`, `hotake`, `news`, `tweet`, `thread`, `dryrun`
+- **Account ops**: `follow`, `like`, `accounts`, `history`
+- **Telemetry**: `logs`, `stats`, `config`, `reset`, `improve`
+
+Skill format (frontmatter YAML):
+
+```markdown
+---
+name: post
+description: Trigger one post cycle
+allowed-tools: Bash Read
+---
+
+Trigger one post cycle:
+1. ...
+2. ...
+```
+
+The `.codex/skills/` directory is a verbatim mirror of `.claude/skills/`. If/when Codex's CLI adopts a different skill format, update both directories together.
+
+---
+
+## Project conventions
+
+(Identical across CLI providers — see [`CLAUDE.md`](CLAUDE.md) for the full set; quick reference below.)
+
+### Hard rules — stamped into every prompt
+
+1. No illegal content of any kind.
+2. No trolling US government / federal agencies (Fed, SEC, IRS, etc.).
+3. No criticism by name of anyone in `respect_list.json`.
+
+### Safety lattice
+
+- **`BLOCKLIST`** in `src/config.py` — hard list (never engage).
+- **`respect_list.py`** — soft list (engage but never criticize by name). Output scrubs at every content bot's post path.
+- **`personality_store.HARD_RULES_BLOCK`** — hard rules block injected into every generation prompt.
+- **`suppression_watch_bot`** — pauses aggressive bots if engagement collapses.
+- **`health.py`** — Safari watchdog auto-restarts after 3 cycle failures.
+
+### Voice
+
+Defined in `core_identity.md`. Stable. Never auto-rewritten. Loaded into every prompt as the ideological spine. Four pillars:
+
+1. **Before anyone else** — ship first or SKIP.
+2. **In-depth analysis** — sharp angle, exact figure, named causality.
+3. **Zero bullshit, zero fluff** — every word earns its slot.
+4. **You'll hate me until I'm right** — confident-arrogant, signs the take.
+
+### Comedy patterns (`pattern_tags.py`)
+
+Every generated tweet carries `[PATTERN: <ID>]` metadata. Six patterns:
+- `REPETITION` / `DIALOGUE` / `METAPHOR` / `RENAME` / `EN_ANCHOR` / `UNDERSTATEMENT`
+
+Plus `FR_ANCHOR` for FR-mode runs and `OTHER` as fallback. The metadata line is stripped before posting and logged into `engagement_log.csv` column 6 for bandit attribution.
+
+---
+
+## Files of note
+
+| File | Purpose |
+|---|---|
+| `main.py` | Scheduler entry point — boots all bots |
+| `src/config.py` | Central config + live-cap reader |
+| `src/llm_client.py` | CLI adapter (Codex / Claude / Gemini) |
+| `src/twitter_client.py` | Safari + AppleScript browser automation |
+| `src/agent.py`, `hotake_agent.py`, etc. | Generation modules |
+| `core_identity.md` | Stable voice anchor |
+| `personality.json` | Per-account dossiers (auto-rewritten by reflection_agent) |
+| `bot_self.json` | Bot's evolving mood (auto-rewritten by self_evolution_agent) |
+| `live_strategy.json` | Daily caps + cadence (auto-rewritten by meta_strategy_agent) |
+| `directives.md` | Style guide (auto-rewritten by evolution_agent) |
+| `engagement_log.csv` | Append-only action log (the source of truth for ROI math) |
+
+For the full module catalog see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
+---
+
+## Adding a new bot
+
+See [`docs/ARCHITECTURE.md#adding-a-new-bot`](docs/ARCHITECTURE.md#6-adding-a-new-bot).
+
+---
+
+## Differences vs Claude
+
+The runtime behavior is identical regardless of CLI provider — `src/llm_client.py` normalises the JSON envelopes, command flags, and tool-permission semantics so generation modules don't care which CLI is wrapping the model.
+
+Codex-specific notes:
+- Default models are `gpt-5.4` / `gpt-5.4-mini` (`gpt-5.4` for news/hotake/priority-reply, `gpt-5.4-mini` for everything else).
+- Codex's `--output-format json` produces an envelope that `unwrap_text` extracts via the `result` field (same as Claude).
+- WebSearch tool permission flag is the same `--allowed-tools` flag.
+
+---
+
+## Memory model
+
+This file is read by Codex CLI agentic sessions when working on the bot's source. It exists to give the AI context about the project so first-time edits don't break invariants. The same content lives in `CLAUDE.md` for Claude Code sessions. Keep them in sync when you edit either.
