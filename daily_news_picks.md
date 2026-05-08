@@ -372,3 +372,6 @@ CoinDesk Live closes out the biggest event in crypto with Donald Trump Jr., Amy 
 - **@bitcoinmagazine** (155 likes, score 8/10) — JUST IN:  SEC Crypto Task Force Chief Counsel says the Bitcoin & crypto market structure legislation will "supercharge" the SEC to bring more clarity into the market
   - https://x.com/BitcoinMagazine/status/2052789128488481238
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 185).
+- **@coindesk** (53 likes, score 7/10) — JUST IN : Le président de la SEC, Paul Atkins, déclare que l'agence explore des modifications réglementaires pour les marchés onchain, y compris les systèmes de trading, les courtiers, les agences de
+  - https://x.com/CoinDesk/status/2052799089922773343
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 105).
