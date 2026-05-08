@@ -56,6 +56,8 @@ from src.meta_strategy_agent import safe_run_meta_strategy_cycle
 from src.hn_signal_bot import safe_run_signal_cycle
 from src.rss_signal_bot import safe_run_rss_signal_cycle
 from src.smart_unfollow_bot import safe_run_unfollow_cycle
+from src.follower_tracker_bot import safe_run_follower_tracker_cycle
+from src.x_home_scout_bot import safe_run_home_scout_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -746,6 +748,27 @@ def main():
             safe_run_unfollow_cycle,
             trigger=IntervalTrigger(hours=4),
             id="smart_unfollow_job",
+        )
+
+        # Follower-count tracker — every 30 min, scrape /kzer_ai header,
+        # log to follower_history.json. Powers the growth scoreboard
+        # block injected into news/hotake prompts. Without this signal,
+        # the bot can't measure if its decisions are working.
+        log.info("Follower tracker: scraping count every 30 min.")
+        scheduler.add_job(
+            safe_run_follower_tracker_cycle,
+            trigger=IntervalTrigger(minutes=30),
+            id="follower_tracker_job",
+        )
+
+        # X home-feed scout — every 7 min, scrape /home, niche-filter,
+        # merge into external_signal.json. Stronger niche signal than
+        # search (people we follow + their network reacting RIGHT NOW).
+        log.info("X home scout: niche-filtered home-feed scrape every 7 min.")
+        scheduler.add_job(
+            safe_run_home_scout_cycle,
+            trigger=IntervalTrigger(minutes=7),
+            id="x_home_scout_job",
         )
 
     # Autonomy audit — print which adapt + push hooks are active so the

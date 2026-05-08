@@ -1079,14 +1079,33 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     if directives_block:
         performance_section = (performance_section or "") + directives_block
 
-    # External-signal injection — HN front page + Reddit hot. Leads
-    # Bloomberg/TechCrunch by 6-12h on AI/crypto stories so this is
-    # often the first place we see what tomorrow's wire will cover.
+    # External-signal injection — RSS + HN + Reddit + X home merged into
+    # external_signal.json. Leads Google/WebSearch by 20-50 min so this
+    # is often the first place we see what tomorrow's wire will cover.
     try:
         from . import hn_signal_bot
-        ext = hn_signal_bot.render_signal_block(max_items=8)
+        ext = hn_signal_bot.render_signal_block(max_items=10)
         if ext:
             performance_section = (performance_section or "") + "\n\n" + ext
+    except Exception:
+        pass
+
+    # Follower growth scoreboard — concrete number the agent sees so it
+    # can self-evaluate "is what I'm doing actually working".
+    try:
+        from . import follower_tracker_bot
+        growth = follower_tracker_bot.get_growth_block()
+        if growth:
+            performance_section = (performance_section or "") + "\n\n" + growth
+    except Exception:
+        pass
+
+    # Closed-loop pattern bandit — last 7 days of pattern winners/losers.
+    try:
+        from .performance import get_pattern_stats_block
+        bandit = get_pattern_stats_block()
+        if bandit:
+            performance_section = (performance_section or "") + "\n\n" + bandit
     except Exception:
         pass
 

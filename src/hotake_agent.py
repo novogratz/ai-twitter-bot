@@ -628,6 +628,24 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     if directives_block:
         performance_section = (performance_section or "") + directives_block
 
+    # External-signal + growth + pattern bandit injection.
+    try:
+        from . import hn_signal_bot, follower_tracker_bot
+        from .performance import get_pattern_stats_block
+        for block_fn, kwargs in (
+            (hn_signal_bot.render_signal_block, {"max_items": 8}),
+            (follower_tracker_bot.get_growth_block, {}),
+            (get_pattern_stats_block, {}),
+        ):
+            try:
+                block = block_fn(**kwargs)
+                if block:
+                    performance_section = (performance_section or "") + "\n\n" + block
+            except Exception:
+                pass
+    except Exception:
+        pass
+
     # Personality store — global mood from dossiers + hard rules.
     from . import personality_store
     # Self-evolving bot identity (written by self_evolution_agent every few hrs).

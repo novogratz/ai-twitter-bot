@@ -241,3 +241,103 @@ def get_learnings_for_prompt() -> str:
     if not learnings.get("insights"):
         return ""
     return learnings["insights"]
+
+
+def get_pattern_stats_block() -> str:
+    """Closed-loop bandit: read engagement_log column 6 (pattern_id) +
+    performance_log (likes per scraped tweet text), compute average
+    likes per pattern over the last ~7 days, render a winners/losers
+    block injected into news/hotake/breakout prompts.
+
+    Without this, the comedy patterns are guessed rules. With it, every
+    cycle SEES which patterns landed last week and can lean into them.
+    Best-effort — empty string if data is sparse.
+    """
+    import csv
+    from collections import defaultdict
+    from datetime import datetime, timedelta
+
+    from .config import ENGAGEMENT_LOG_FILE
+
+    if not os.path.exists(ENGAGEMENT_LOG_FILE):
+        return ""
+
+    perf = _load_performance()
+    if not perf:
+        return ""
+
+    # Build text → likes map from performance_log.
+    text_to_likes = {}
+    for p in perf:
+        text = (p.get("text") or "").strip()
+        if not text:
+            continue
+        likes = int(p.get("likes") or 0)
+        # If we've scraped the same text twice, take the higher count.
+        text_to_likes[text[:120]] = max(text_to_likes.get(text[:120], 0), likes)
+
+    # Walk engagement_log: for each post-type row with a pattern_id,
+    # try to look up the like count via prefix match on text.
+    cutoff = datetime.now() - timedelta(days=7)
+    by_pattern = defaultdict(list)
+
+    try:
+        with open(ENGAGEMENT_LOG_FILE, "r") as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if not row or len(row) < 6:
+                    continue
+                try:
+                    ts = datetime.fromisoformat(row[0])
+                except (ValueError, IndexError):
+                    continue
+                if ts < cutoff:
+                    continue
+                row_type = row[1] if len(row) > 1 else ""
+                if row_type not in ("post", "hotake", "thread"):
+                    continue
+                pattern = (row[5] or "").strip().upper()
+                if not pattern or pattern == "OTHER":
+                    continue
+                text = (row[2] or "").strip()[:120]
+                if not text:
+                    continue
+                likes = text_to_likes.get(text, 0)
+                by_pattern[pattern].append(likes)
+    except Exception:
+        return ""
+
+    if not by_pattern:
+        return ""
+
+    # Compute average likes per pattern, rank.
+    stats = []
+    for pat, likes_list in by_pattern.items():
+        if len(likes_list) < 2:
+            continue  # too thin to draw a conclusion
+        avg = sum(likes_list) / len(likes_list)
+        stats.append((pat, avg, len(likes_list)))
+    if not stats:
+        return ""
+
+    stats.sort(key=lambda s: s[1], reverse=True)
+    winners = stats[:3]
+    losers = stats[-3:] if len(stats) > 3 else []
+
+    lines = [
+        "==================================================",
+        "COMEDY PATTERN SCOREBOARD (last 7 days, closed-loop)",
+        "==================================================",
+        "Average likes per tweet by pattern. Lean into winners,",
+        "avoid losers when possible.",
+        "",
+        "WINNERS:",
+    ]
+    for pat, avg, n in winners:
+        lines.append(f"  {pat}: {avg:.1f} likes/tweet ({n} samples)")
+    if losers and losers != winners:
+        lines.append("")
+        lines.append("LOSERS (use sparingly):")
+        for pat, avg, n in losers:
+            lines.append(f"  {pat}: {avg:.1f} likes/tweet ({n} samples)")
+    return "\n".join(lines)
