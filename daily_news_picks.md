@@ -369,3 +369,6 @@ CoinDesk Live closes out the biggest event in crypto with Donald Trump Jr., Amy 
 - **@bitcoinmagazine** (381 likes, score 7/10) — LIVE: Strategy (MSTR) Earnings Call | Q1 2026
   - https://x.com/BitcoinMagazine/status/2051769557074026724
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 447).
+- **@bitcoinmagazine** (155 likes, score 8/10) — JUST IN:  SEC Crypto Task Force Chief Counsel says the Bitcoin & crypto market structure legislation will "supercharge" the SEC to bring more clarity into the market
+  - https://x.com/BitcoinMagazine/status/2052789128488481238
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 185).
