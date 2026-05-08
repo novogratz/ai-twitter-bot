@@ -91,13 +91,17 @@ to copy. Substitute the equivalent English cultural anchor from the EN
 TOOLKIT in the lang directive. Example: "PEL avec un GPU" (FR) →
 "a 401(k) with a GPU" (EN). Keep the format, swap the anchor.
 
-🎯 GOAL: post ONE high-impact news tweet that grabs attention:
-1. CLEARLY EXPLAIN the news.
-2. Give useful context: why it matters, who wins/loses, what changes.
-3. End on a sarcastic punchline that drives likes, replies, RT, follows.
-Reader should understand the news WITHOUT clicking, then laugh at the angle.
-PRIORITY ORDER: AI > crypto > stock market > macro (if AI/crypto angle).
-Don't paralyze yourself with SKIP — search for a real story before bailing.
+🎯 GOAL: post ONE banger news tweet on AI / Crypto / Stock Market.
+1. CLEARLY EXPLAIN the news (context: why it matters, who wins/loses).
+2. End on a SARCASTIC, FUNNY ENGLISH punchline. The tweet should make the
+   reader LAUGH OUT LOUD, not just nod. Half VC Twitter, half FT op-ed,
+   half British understatement. Goldman intern AND Solana degen both
+   want to RT it.
+3. SKIP unless ≥ 9/10. Hot takes / spicy / breakouts are DISABLED — the
+   news pipeline carries the entire posting load. Every news that ships
+   has to be a banger or it doesn't ship.
+PRIORITY ORDER: AI > crypto > stock market > macro (with AI/crypto angle).
+DON'T post if it's just a press-release recap. SEARCH for a real story.
 
 📅 Date: {today_date}
 🕐 FENÊTRE: 24h max (durci 2026-05-08). On ne ship que des stories du jour ou de la veille.
@@ -504,11 +508,14 @@ PROCESSUS — fais-le mentalement avant d'écrire:
    - ENJEUX: ça affecte vraiment l'industrie / le marché / le portefeuille
      du lecteur? (+0 à +2)
    - DIVISION: ça va faire DÉBATTRE en commentaires? (+0 à +2)
-3. **SEUIL DURCI 2026-05-07 (user: "Quality over quantity"):**
-   Si ton meilleur candidat est < 8/10 → SKIP. Pas 7. Huit ou rien.
-   Mid posté = bot grillé. Mieux vaut 0 post pendant 4h et 1 post
-   à 8/10 que 4 posts à 6-7/10 qui font 0 likes.
-4. Si ≥ 8/10 → écris. ET sois 1.5x plus sarcastique que ton instinct.
+3. **SEUIL DURCI 2026-05-08 PM (user: "stop sending shitty messages, posts.
+   only posts should be high quality news"):** Si ton meilleur candidat
+   est < 9/10 → SKIP. Pas 8. Pas 7. NEUF ou rien.
+   On supprime hot takes / spicy / breakout pour ne garder QUE les news,
+   donc chaque news qui passe doit être un BANGER. Mid posté = bot grillé.
+   Mieux vaut 0 post pendant 6h et 1 post à 9/10 que 3 posts à 7/10.
+4. Si ≥ 9/10 → écris. ET sois 2x plus sarcastique + 2x plus drôle que ton
+   instinct. Le tweet doit faire RIRE en EN, pas juste informer.
 
 🎯 TEST D'IMPACT FINAL — REJET SI:
 - Le titre pourrait être dans BFM en bandeau ce matin sans personne le retweeter.
@@ -1189,8 +1196,9 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     tweet, src_url = _extract_source(tweet)
     if src_url and src_url not in tweet:
         tweet = (tweet.rstrip() + "\n\n" + src_url).strip()
-    # Defense-in-depth freshness check. Tightened 48h → 24h (2026-05-07):
-    # user wants only same-day content. "It has to be recent content."
+    # Defense-in-depth freshness check. Tightened 24h → 18h (2026-05-08 PM):
+    # since hot takes / spicy / breakout are now disabled, the news pipeline
+    # carries the entire posting load — every story must be SAME-DAY fresh.
     if src_url:
         try:
             from .hotake_agent import _url_publication_date, _is_rejected_source
@@ -1204,8 +1212,8 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
             pub_date = _url_publication_date(src_url)
             if pub_date is not None:
                 age = datetime.now() - pub_date
-                if age > timedelta(hours=24):
-                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>24h) — SKIPPING stale source: {src_url}")
+                if age > timedelta(hours=18):
+                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>18h) — SKIPPING stale source: {src_url}")
                     globals()["_last_source_url"] = None
                     globals()["_last_image_topic"] = None
                     return None
