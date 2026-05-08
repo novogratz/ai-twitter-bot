@@ -318,13 +318,23 @@ def run_boost_cycle():
         log.info("[BOOST] Latest re-boosted as fallback.")
         return
 
-    # Best = highest likes, ties broken by replies. With ties on both, the
-    # most recent wins implicitly (scrape order = newest-first).
-    best = max(own, key=lambda c: (c["likes"], c["replies"]))
-    log.info(
-        f"[BOOST] Best post: {best['likes']} likes / {best['replies']} replies "
-        f"— {best['text'][:120]!r}"
-    )
+    # Smart boost timing 2026-05-08: prefer the FRESHEST post (top-of-list
+    # in scrape order) rather than the highest-likes one. Algo push window
+    # is the first 30-60 min after publish — that's when self-RT lifts the
+    # most. The historical winners we already boosted; the new one we
+    # haven't. Highest-likes fallback if the freshest is identical.
+    fresh_top = own[0]  # scraper returns newest-first
+    if fresh_top["likes"] >= 1 or len(own) == 1:
+        best = fresh_top
+        log.info(
+            f"[BOOST] Boosting FRESHEST post (algo window): "
+            f"{fresh_top['likes']} likes / {fresh_top['replies']} replies — "
+            f"{fresh_top['text'][:120]!r}"
+        )
+    else:
+        # Freshest has 0 engagement signal — fall back to highest-likes
+        # in the visible window (still better than retweet_own_latest).
+        best = max(own, key=lambda c: (c["likes"], c["replies"]))
     history.add(best["url"])
     _save_boost_history(history)
     try:

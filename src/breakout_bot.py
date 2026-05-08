@@ -210,6 +210,14 @@ def run_breakout_cycle():
     core = personality_store.render_core_identity()
     if core:
         performance_section = core + "\n\n" + performance_section
+    # External-signal injection — HN + Reddit pulse for "trending NOW".
+    try:
+        from . import hn_signal_bot
+        ext = hn_signal_bot.render_signal_block(max_items=6)
+        if ext:
+            performance_section = ext + "\n\n" + performance_section
+    except Exception:
+        pass
 
     from . import lang_mode
     lang = lang_mode.pick_content_lang()

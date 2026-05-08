@@ -53,6 +53,7 @@ from src.mega_watch_bot import safe_run_mega_watch_cycle
 from src.cleanup_bot import safe_run_cleanup_cycle
 from src.heartbeat_bot import safe_run_heartbeat
 from src.meta_strategy_agent import safe_run_meta_strategy_cycle
+from src.hn_signal_bot import safe_run_signal_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -706,6 +707,18 @@ def main():
             safe_run_meta_strategy_cycle,
             trigger=IntervalTrigger(hours=4),
             id="meta_strategy_job",
+        )
+
+        # External-signal bot — scrape Hacker News + Reddit hot every 20 min.
+        # No LLM, no Twitter. Writes external_signal.json which news +
+        # breakout + hotake agents inject into their prompts. HN front
+        # page leads Bloomberg/TC by 6-12h on AI/crypto stories; this is
+        # the cheap real-time signal we were missing.
+        log.info("External signal: HN + Reddit niche scrape every 20 min.")
+        scheduler.add_job(
+            safe_run_signal_cycle,
+            trigger=IntervalTrigger(minutes=20),
+            id="hn_signal_job",
         )
 
     # Autonomy audit — print which adapt + push hooks are active so the

@@ -1079,6 +1079,17 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     if directives_block:
         performance_section = (performance_section or "") + directives_block
 
+    # External-signal injection — HN front page + Reddit hot. Leads
+    # Bloomberg/TechCrunch by 6-12h on AI/crypto stories so this is
+    # often the first place we see what tomorrow's wire will cover.
+    try:
+        from . import hn_signal_bot
+        ext = hn_signal_bot.render_signal_block(max_items=8)
+        if ext:
+            performance_section = (performance_section or "") + "\n\n" + ext
+    except Exception:
+        pass
+
     # Personality store — global mood from accumulated dossiers + hard rules.
     from . import personality_store
     # Self-evolving bot identity (written by self_evolution_agent every few hrs).
