@@ -326,3 +326,8 @@ A vote on the bill may happen next
 « J
   - https://x.com/BitcoinMagazine/status/2052487182649008160
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 1965).
+- **@anthropicai** (12264 likes, score 7/10) — Nouvelle recherche d'Anthropic : Autoencodeurs de langage naturel.
+
+Des modèles comme Claude parlent en mots mais pensent en nombres. Les nombres — appelés activations — encodent les pensées de Claude
+  - https://x.com/AnthropicAI/status/2052435436157452769
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 13114).
