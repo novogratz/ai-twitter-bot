@@ -315,3 +315,6 @@ A vote on the bill may happen next
 - **@decryptmedia** (55 likes, score 8/10) — Solv Protocol va déverser LayerZero, migrer la technologie Bitcoin tokenisée de 700 M$ vers Chainlink
   - https://x.com/DecryptMedia/status/2052516736071545172
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 63).
+- **@bitcoinmagazine** (732 likes, score 8/10) — E*Trade de Morgan Stanley a publié un rapport montrant que « le Bitcoin a grimpé bien plus vite que les autres actifs au cours des 10 dernières années »
+  - https://x.com/BitcoinMagazine/status/2052415990068060439
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 866).
