@@ -349,3 +349,6 @@ Nous avons exécuté le programme en privé au sein de la communauté de recherc
 L'univers complexe et dirigé par les joueurs d'EVE est le terrain d'essai
   - https://x.com/GoogleDeepMind/status/2052011542707630461
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 2067).
+- **@bitcoinmagazine** (473 likes, score 7/10) — INFO URGENTE : Le Bitcoin a surpassé l'or de 36 % depuis le début de la guerre en Iran
+  - https://x.com/BitcoinMagazine/status/2052734181034082387
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 593).
