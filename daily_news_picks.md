@@ -424,3 +424,8 @@ Vous pouvez trouver le rapport
 - **@coindesk** (117 likes, score 7/10) — NOUVEAU : la société mère de @krakenfx, @Payward, a demandé une charte de fiducie nationale OCC dans le cadre d'une démarche visant à devenir une banque crypto réglementée au niveau fédéral,
   - https://x.com/CoinDesk/status/2052836097550422446
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 163).
+- **@coindesk** (70 likes, score 7/10) — « Le Venmo mondial arrivera, probablement dans les 5 à 10 prochaines années, et cela se produira sur @Celo. »
+
+Cofondateur @marek_ sur l'avenir des paiements à @consensus2026, présenté par @moonpay.
+  - https://x.com/CoinDesk/status/2052908033886302549
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 108).
