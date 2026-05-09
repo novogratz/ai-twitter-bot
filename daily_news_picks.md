@@ -416,3 +416,8 @@ Submit by May 6 → http://goo.gle/4eNsr15
 - **@verge** (172 likes, score 7/10) — Le juge statue que DOGE a utilisé ChatGPT d'une manière à la fois stupide et illégale
   - https://x.com/verge/status/2052813095710634273
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 184).
+- **@openai** (164 likes, score 7/10) — Nous avons également fait appel à trois organisations tierces de sécurité de l'IA pour obtenir des retours sur notre analyse : @redwood_ai, @apolloaievals, @METR_Evals.
+
+Vous pouvez trouver le rapport
+  - https://x.com/OpenAI/status/2052845768567066907
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 182).
