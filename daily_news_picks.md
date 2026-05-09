@@ -464,3 +464,6 @@ C’est une importante mise à niveau, qui vous offre des réponses plus intelli
 - **@techcrunch** (50 likes, score 7/10) — Nvidia s’est déjà engagé à hauteur de 40 milliards de dollars dans des accords d’équité en IA cette année
   - https://x.com/TechCrunch/status/2053124140538949987
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 60).
+- **@wired** (80 likes, score 7/10) — L'Institut pour les Faits Primaires a compilé plus de 3,5 millions de pages des dossiers Epstein pour une exposition publique dans la salle de lecture commémorative Donald J. Trump et Jeffrey Epstein
+  - https://x.com/WIRED/status/2053131642382745756
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 94).
