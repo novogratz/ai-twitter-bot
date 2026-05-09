@@ -470,3 +470,6 @@ C’est une importante mise à niveau, qui vous offre des réponses plus intelli
 - **@wsj** (252 likes, score 7/10) — Exclusif : Israël a construit un poste militaire secret en Irak pour soutenir sa campagne contre l’Iran et a lancé des frappes sur des troupes irakiennes qui l’avaient presque découvert au début de la
   - https://x.com/WSJ/status/2053177069752713649
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 316).
+- **@axios** (179 likes, score 7/10) — Les chances républicaines de conserver la Chambre augmentent, alors que les démocrates paniqués s'efforcent de compenser les coups successifs de redécoupage électoral.
+  - https://x.com/axios/status/2053147503680237856
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 275).
