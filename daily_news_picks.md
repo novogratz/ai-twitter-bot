@@ -453,3 +453,6 @@ C’est une importante mise à niveau, qui vous offre des réponses plus intelli
 - **@anthropicai** (556 likes, score 7/10) — Enfin, de simples mises à jour qui diversifient les données d'entraînement d'un modèle peuvent faire une différence. Nous avons ajouté des outils non liés et des invites système à un ensemble de donné
   - https://x.com/AnthropicAI/status/2052808806782964072
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 614).
+- **@ft** (370 likes, score 7/10) — La start-up de drones Helsing vise une valorisation de 18 milliards de dollars alors que les investisseurs se ruent sur la défense
+  - https://x.com/FT/status/2053074872423625067
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 414).
