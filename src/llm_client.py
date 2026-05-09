@@ -35,13 +35,15 @@ _STATE_FILE = Path(_PROJECT_ROOT) / ".llm_rate_state.json"
 
 def _provider() -> str:
     requested = os.environ.get("AI_CLI", "codex").strip().lower()
-    if requested in {"claude", "codex"}:
+    if requested in {"claude", "codex", "gemini"}:
         return requested
+    if shutil.which("gemini"):
+        return "gemini"
     if shutil.which("claude"):
         return "claude"
     if shutil.which("codex"):
         return "codex"
-    return "claude"
+    return "gemini"
 
 
 def _load_state() -> dict:
@@ -134,6 +136,20 @@ def _build_cmd(
         ])
         return cmd
 
+    if provider == "gemini":
+        cmd = ["gemini", "-p", prompt, "--model", model, "--skip-trust"]
+        if output_json:
+            cmd.extend(["--output-format", "json"])
+        if permission_mode:
+            # gemini uses --approval-mode: default, auto_edit, yolo, plan
+            # map 'read-only' (claude) to 'plan' (gemini)
+            mode = "plan" if permission_mode == "read-only" else permission_mode
+            cmd.extend(["--approval-mode", mode])
+        elif allowed_tools:
+            # If tools are requested but no explicit mode, use yolo for headless automation
+            cmd.extend(["--approval-mode", "yolo"])
+        return cmd
+
     cmd = ["claude", "-p", prompt, "--model", model, "--no-session-persistence"]
     if output_json:
         cmd.extend(["--output-format", "json"])
@@ -174,14 +190,24 @@ def run_llm(
 
 
 def unwrap_text(stdout: str) -> str:
-    """Return model text from Claude JSON envelopes or raw Codex output."""
+    """Return model text from Claude/Gemini JSON envelopes or raw Codex output."""
     raw = (stdout or "").strip()
     if not raw:
         return ""
     try:
-        envelope = json.loads(raw)
+        # Gemini/Claude CLI can output multiple lines before the JSON
+        # but --output-format json usually forces it to be the only thing or the last thing.
+        # If there's extra text (like 'Ripgrep is not available'), we might need to find the JSON.
+        if "{" in raw:
+            json_start = raw.find("{")
+            json_data = raw[json_start:]
+            envelope = json.loads(json_data)
+        else:
+            envelope = json.loads(raw)
+
         if isinstance(envelope, dict):
-            return str(envelope.get("result", raw)).strip()
+            # Try 'response' (Gemini) or 'result' (Claude)
+            return str(envelope.get("response") or envelope.get("result") or raw).strip()
     except (json.JSONDecodeError, TypeError):
         pass
     return raw

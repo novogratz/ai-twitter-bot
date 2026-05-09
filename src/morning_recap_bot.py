@@ -46,7 +46,7 @@ MORNING_HOUR_START_EST = 1
 MORNING_HOUR_END_EST = 4
 
 
-RECAP_PROMPT = """Tu es @kzer_ai. C'est le matin et tu écris LE thread du
+RECAP_PROMPT = """Tu es @cryptoiadecode. C'est le matin et tu écris LE thread du
 réveil pour ton audience FR crypto + IA.
 
 📅 {today_date}

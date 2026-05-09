@@ -20,7 +20,7 @@ except ImportError:
 CARD_W = 1200
 CARD_H = 675
 PADDING = 80
-BRAND_HANDLE = "@kzer_ai"
+BRAND_HANDLE = "@cryptoiadecode"
 
 # Color palettes — picked at random per card so the feed doesn't look repetitive.
 PALETTES = [

@@ -5,7 +5,7 @@ Different from src/thread_bot.py:
   - digest_thread_bot = FIVE stories of the day in a recap thread
 
 The digest format is highly shareable on FR Twitter (saves people from
-scrolling 30 outlets). It also positions @kzer_ai as THE one-stop FR
+scrolling 30 outlets). It also positions @cryptoiadecode as THE one-stop FR
 source for IA / crypto / bourse — exactly what the user wants.
 
 Strategy:
@@ -29,7 +29,7 @@ from . import personality_store
 
 DIGEST_STATE_FILE = os.path.join(_PROJECT_ROOT, "digest_thread_state.json")
 
-DIGEST_PROMPT = """You are @kzer_ai. You write THE daily recap thread — an X thread of 6 tweets covering the 5 biggest AI / crypto / bourse stories of the last 36h. This is our SIGNATURE format: people come here because they don't have time to scroll 30 outlets.
+DIGEST_PROMPT = """You are @cryptoiadecode. You write THE daily recap thread — an X thread of 6 tweets covering the 5 biggest AI / crypto / bourse stories of the last 36h. This is our SIGNATURE format: people come here because they don't have time to scroll 30 outlets.
 
 {lang_directive}
 

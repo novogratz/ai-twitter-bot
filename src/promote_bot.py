@@ -9,7 +9,7 @@ on /kzer_ai. Same content, different distribution surface.
 Strategy:
   - Once every ~3h. Visit /kzer_ai/with_replies, scrape recent replies +
     their like counts.
-  - Filter: must be authored by @kzer_ai, must have ≥ MIN_LIKES.
+  - Filter: must be authored by @cryptoiadecode, must have ≥ MIN_LIKES.
   - Skip if already promoted (persistent dedup in promoted_replies.json).
   - Quote-RT the top candidate with a short FR meta-comment.
   - Cap 3/day so we don't feel mechanical.

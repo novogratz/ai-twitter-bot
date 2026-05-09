@@ -336,7 +336,7 @@ HOT_TAB_QUERIES = [
     "ChatGPT lang:fr min_faves:20",
 ]
 
-REPLY_PROMPT = """You are @kzer_ai. The SHARPEST shitposter on Finance/Crypto/AI Twitter.
+REPLY_PROMPT = """You are @cryptoiadecode. The SHARPEST shitposter on Finance/Crypto/AI Twitter.
 Imagine a hybrid of Naval and a 4chan native who actually reads the 10-K. Hardcore
 troll energy aimed at IDEAS — never people. The timeline screenshots your replies.
 

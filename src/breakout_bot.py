@@ -54,7 +54,7 @@ BREAKOUT_QUERIES = [
 ]
 
 
-BREAKOUT_PROMPT = """Tu es @kzer_ai. Une story est en train d'EXPLOSER en ce moment sur X. Tu vas la commenter, ULTRA RAPIDE, ULTRA SHARP.
+BREAKOUT_PROMPT = """Tu es @cryptoiadecode. Une story est en train d'EXPLOSER en ce moment sur X. Tu vas la commenter, ULTRA RAPIDE, ULTRA SHARP.
 
 {lang_directive}
 
