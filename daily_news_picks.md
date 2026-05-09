@@ -445,3 +445,8 @@ L'ancien président par intérim de la CFTC rejoint CoinDesk Live à @consensus2
 C’est une importante mise à niveau, qui vous offre des réponses plus intelligentes, plus claires et plus personnalisées, dans un ton plus chaleu
   - https://x.com/OpenAI/status/2051709028250915275
   - **WHY**: Source fiable + impact concret (score signal 1, engagement 12023).
+- **@bitcoinmagazine** (610 likes, score 8/10) — NEW:  Senator Lummis puts back on her laser eyes as Senate Banking Committee will officially vote on Bitcoin & crypto market structure bill next week  
+
+"Let's pass the Clarity Act out of the Banking
+  - https://x.com/BitcoinMagazine/status/2053111883578720586
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 776).
