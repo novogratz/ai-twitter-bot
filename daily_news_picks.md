@@ -429,3 +429,6 @@ Vous pouvez trouver le rapport
 Cofondateur @marek_ sur l'avenir des paiements à @consensus2026, présenté par @moonpay.
   - https://x.com/CoinDesk/status/2052908033886302549
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 108).
+- **@ft** (172 likes, score 7/10) — La « flotte moustique » iranienne défiant la puissante marine américaine
+  - https://x.com/FT/status/2052980554996359598
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 214).
