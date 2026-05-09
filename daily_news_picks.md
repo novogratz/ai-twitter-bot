@@ -467,3 +467,6 @@ C’est une importante mise à niveau, qui vous offre des réponses plus intelli
 - **@wired** (80 likes, score 7/10) — L'Institut pour les Faits Primaires a compilé plus de 3,5 millions de pages des dossiers Epstein pour une exposition publique dans la salle de lecture commémorative Donald J. Trump et Jeffrey Epstein
   - https://x.com/WIRED/status/2053131642382745756
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 94).
+- **@wsj** (252 likes, score 7/10) — Exclusif : Israël a construit un poste militaire secret en Irak pour soutenir sa campagne contre l’Iran et a lancé des frappes sur des troupes irakiennes qui l’avaient presque découvert au début de la
+  - https://x.com/WSJ/status/2053177069752713649
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 316).
