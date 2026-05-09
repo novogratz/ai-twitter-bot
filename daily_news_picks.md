@@ -461,3 +461,6 @@ C’est une importante mise à niveau, qui vous offre des réponses plus intelli
 « Je suis dure comme les clous maintenant. Vous ne pouvez vraiment pas me faire de mal. Mon action chute de 40 %, elle remonte de 40 % — je cont
   - https://x.com/axios/status/2053097656210137221
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 64).
+- **@techcrunch** (50 likes, score 7/10) — Nvidia s’est déjà engagé à hauteur de 40 milliards de dollars dans des accords d’équité en IA cette année
+  - https://x.com/TechCrunch/status/2053124140538949987
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 60).
