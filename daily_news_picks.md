@@ -432,3 +432,8 @@ Cofondateur @marek_ sur l'avenir des paiements à @consensus2026, présenté par
 - **@ft** (172 likes, score 7/10) — La « flotte moustique » iranienne défiant la puissante marine américaine
   - https://x.com/FT/status/2052980554996359598
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 214).
+- **@coindesk** (134 likes, score 7/10) — Moonpay CLO/CAO @CarolineDPham sur la conformité agentique : la technologie n'est qu'un outil, l'humain est responsable.
+
+L'ancien président par intérim de la CFTC rejoint CoinDesk Live à @consensus20
+  - https://x.com/CoinDesk/status/2052850207595913533
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 174).
