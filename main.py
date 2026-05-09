@@ -58,6 +58,7 @@ from src.rss_signal_bot import safe_run_rss_signal_cycle
 from src.smart_unfollow_bot import safe_run_unfollow_cycle
 from src.follower_tracker_bot import safe_run_follower_tracker_cycle
 from src.x_home_scout_bot import safe_run_home_scout_cycle
+from src.chain_reply_bot import safe_run_chain_reply_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -769,6 +770,17 @@ def main():
             safe_run_home_scout_cycle,
             trigger=IntervalTrigger(minutes=7),
             id="x_home_scout_job",
+        )
+
+        # Chain-reply bot — respond to replies on OUR REPLIES (not just
+        # on our original posts, which notify_bot already handles). Cap
+        # 4 chain-replies/cycle + max 3 our-turns per thread to prevent
+        # infinite ping-pong loops.
+        log.info("Chain-reply bot: respond to nested replies every 15 min (cap 4/cycle).")
+        scheduler.add_job(
+            safe_run_chain_reply_cycle,
+            trigger=IntervalTrigger(minutes=15),
+            id="chain_reply_job",
         )
 
     # Autonomy audit — print which adapt + push hooks are active so the
