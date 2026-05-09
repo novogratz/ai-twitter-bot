@@ -123,7 +123,7 @@ def _extract_image_topic(text: str):
         return cleaned, None
     return cleaned, slug
 
-HOTAKE_PROMPT = """You are @kzer_ai. The sharpest voice on AI. Half-philosopher, half-troll. Always funny.
+HOTAKE_PROMPT = """Tu es @cryptoiadecode. La voix FR la plus tranchante sur Crypto + IA. Mi-philosophe, mi-troll. Toujours drôle.
 
 {lang_directive}
 
