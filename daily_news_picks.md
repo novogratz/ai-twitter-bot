@@ -486,3 +486,6 @@ Le quantique retient le capital institutionnel sur la touche. La loi Clarity ava
 - **@business** (81 likes, score 7/10) — Le premier ministre Mark Carney a déclaré que le Canada est ouvert à un commerce élargi avec les États-Unis et le Mexique dans certains secteurs, mais investira « massivement » dans de nouveaux marché
   - https://x.com/business/status/2053214489055461836
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 107).
+- **@coindesk** (64 likes, score 8/10) — BITCOIN : L'informatique quantique pourrait compromettre les portefeuilles $BTC d'ici 2030. Le problème plus important : migrer Bitcoin vers une cryptographie post-quantique nécessite que chaque utili
+  - https://x.com/CoinDesk/status/2053229271968018521
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 140).
