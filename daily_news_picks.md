@@ -478,3 +478,8 @@ C’est une importante mise à niveau, qui vous offre des réponses plus intelli
 Le quantique retient le capital institutionnel sur la touche. La loi Clarity avance enfin, et le Pentagone vient de confi
   - https://x.com/BitcoinMagazine/status/2053159847340986386
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 58).
+- **@bitcoinmagazine** (143 likes, score 8/10) — JUST IN : Michael Saylor dit que si Strategy vend du bitcoin, ils achèteront plusieurs fois plus de BTC qu'ils n'en auront vendu :
+
+« Même si nous devions vendre 1 bitcoin, nous en achèterions 10 à 20
+  - https://x.com/BitcoinMagazine/status/2053228373845877115
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 207).
