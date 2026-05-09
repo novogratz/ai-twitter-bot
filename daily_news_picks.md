@@ -421,3 +421,6 @@ Submit by May 6 → http://goo.gle/4eNsr15
 Vous pouvez trouver le rapport
   - https://x.com/OpenAI/status/2052845768567066907
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 182).
+- **@coindesk** (117 likes, score 7/10) — NOUVEAU : la société mère de @krakenfx, @Payward, a demandé une charte de fiducie nationale OCC dans le cadre d'une démarche visant à devenir une banque crypto réglementée au niveau fédéral,
+  - https://x.com/CoinDesk/status/2052836097550422446
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 163).
