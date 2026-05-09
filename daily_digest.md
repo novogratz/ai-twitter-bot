@@ -190,3 +190,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 126 likes / 195000 views: Today marks a major milestone for MYRIAD.  We’re accelerating our vision in building sharper, deeper
   - 113 likes / 387000 views: AI supercomputers need a new kind of network to stay in sync at massive scale.  OpenAI’s @markjhandl
   - 78 likes / 268000 views: Today, we're releasing the public preview of Workflows, the orchestration layer for enterprise AI.  
+
+## 2026-05-08
+
+**Activity** — total actions: 385
+  - by type: reply=344, retweet=22, quote=10, hotake=6, post=3
+  - top sources: PROFILE-ALWAYS=107, MEGA=95, PROFILE-FR=61, RETWEET=22, FOLLOWING=15, FEED=11, SEARCH-FR-HOT=11, QUOTE=10
+  - comedy patterns: FR_ANCHOR=12, UNDERSTATEMENT=9, RENAME=8, DIALOGUE=4, METAPHOR=4
+  - top reply targets: @LeJournalDuCoin=36, @BFMBourse=25, @LesEchos=17, @AnthropicAI=13, @elonmusk=12
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 167 likes / 512000 views: Notre programme de chasse aux bugs de sécurité est désormais public sur HackerOne.  Nous avons exécu
+  - 82 likes / 21000 views: JUSTE ARRIVÉ : Les chances que la législation sur la structure du marché Bitcoin et crypto soit sign
+  - 68 likes / 93000 views: Pensez que votre vibe en coding et créativité pourrait être sur la scène principale du #GoogleIO ? M
