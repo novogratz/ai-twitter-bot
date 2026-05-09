@@ -375,3 +375,6 @@ CoinDesk Live closes out the biggest event in crypto with Donald Trump Jr., Amy 
 - **@coindesk** (53 likes, score 7/10) — JUST IN : Le président de la SEC, Paul Atkins, déclare que l'agence explore des modifications réglementaires pour les marchés onchain, y compris les systèmes de trading, les courtiers, les agences de
   - https://x.com/CoinDesk/status/2052799089922773343
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 105).
+- **@cnbc** (69 likes, score 7/10) — Projet de loi majeur sur les cryptomonnaies prévu pour un vote au Sénat, Commission bancaire, le 14 mai
+  - https://x.com/CNBC/status/2052894957900325371
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 89).
