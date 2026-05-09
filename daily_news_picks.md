@@ -483,3 +483,6 @@ Le quantique retient le capital institutionnel sur la touche. La loi Clarity ava
 « Même si nous devions vendre 1 bitcoin, nous en achèterions 10 à 20
   - https://x.com/BitcoinMagazine/status/2053228373845877115
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 207).
+- **@business** (81 likes, score 7/10) — Le premier ministre Mark Carney a déclaré que le Canada est ouvert à un commerce élargi avec les États-Unis et le Mexique dans certains secteurs, mais investira « massivement » dans de nouveaux marché
+  - https://x.com/business/status/2053214489055461836
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 107).
