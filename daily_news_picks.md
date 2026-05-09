@@ -388,3 +388,8 @@ Depuis lo
 - **@bitcoinmagazine** (1041 likes, score 8/10) — INFO URGENTE :  La société mère de l'exchange Bitcoin Kraken, Payward, demande à devenir une banque fédérale pour offrir des services de garde de BTC et de cryptos
   - https://x.com/BitcoinMagazine/status/2052840152465096756
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 1151).
+- **@bitcoinmagazine** (599 likes, score 7/10) — JUST IN : Le PDG de Strategy, Phong Le, déclare à CNBC qu’ils pourraient vendre des BTC contre des actions pour augmenter le « bitcoin par action » 
+
+« Nous vendrons notre bitcoin pour payer le rendem
+  - https://x.com/BitcoinMagazine/status/2052858527618617379
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 713).
