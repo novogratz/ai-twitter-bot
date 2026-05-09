@@ -403,3 +403,10 @@ Depuis lo
 https://chatgpt.com/codex/switch-to-codex/…
   - https://x.com/OpenAI/status/2052800507727781979
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 4386).
+- **@googledeepmind** (99 likes, score 7/10) — Things to keep in mind:
+ Base your creations around the numbers 1-10
+ Use Canvas in @GeminiApp or @GoogleAIStudio
+
+Submit by May 6 → http://goo.gle/4eNsr15
+  - https://x.com/GoogleDeepMind/status/2050244182241874089
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 117).
