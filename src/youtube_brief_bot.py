@@ -217,6 +217,25 @@ def _build_brief() -> str:
         out.append(f"- {t}: **{len(items)}**")
     out.append("")
 
+    # === Viral candidates flagged for video ===
+    viral_threshold = int(os.environ.get("VIRAL_VIDEO_THRESHOLD", "10"))
+    viral = [p for p in posts if int(p.get("likes") or 0) >= viral_threshold]
+    if viral:
+        out.append("## 🎥 VIDEO CANDIDATES — these popped, make a video on them")
+        out.append("")
+        out.append(
+            f"*Posts with ≥ {viral_threshold} likes. This is your shortlist "
+            "of stories the audience already validated. Each one is a "
+            "ready-to-shoot video angle.*"
+        )
+        out.append("")
+        for it in viral:
+            likes = int(it.get("likes") or 0)
+            views = int(it.get("views") or 0)
+            text = (it.get("text") or "").strip()[:200].replace("\n", " ")
+            out.append(f"- 🎥 **{likes} likes / {views} views** — {text}")
+        out.append("")
+
     # === Top posts by theme ===
     out.append("## 🥇 Top own posts (by likes)")
     out.append("")

@@ -60,6 +60,7 @@ from src.follower_tracker_bot import safe_run_follower_tracker_cycle
 from src.x_home_scout_bot import safe_run_home_scout_cycle
 from src.chain_reply_bot import safe_run_chain_reply_cycle
 from src.youtube_brief_bot import safe_run_youtube_brief_cycle
+from src.morning_recap_bot import safe_run_morning_recap_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -793,6 +794,16 @@ def main():
             safe_run_youtube_brief_cycle,
             trigger=IntervalTrigger(hours=1),
             id="youtube_brief_job",
+        )
+
+        # Morning recap thread — fires every hour but only ships once
+        # in the 07:00-10:00 Paris window (idempotent daily). Daily
+        # ritual + ready video opener.
+        log.info("Morning recap: 4-tweet FR thread daily ~8am Paris (hourly check).")
+        scheduler.add_job(
+            safe_run_morning_recap_cycle,
+            trigger=IntervalTrigger(hours=1),
+            id="morning_recap_job",
         )
 
     # Autonomy audit — print which adapt + push hooks are active so the
