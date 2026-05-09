@@ -410,3 +410,6 @@ https://chatgpt.com/codex/switch-to-codex/…
 Submit by May 6 → http://goo.gle/4eNsr15
   - https://x.com/GoogleDeepMind/status/2050244182241874089
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 117).
+- **@coindesk** (129 likes, score 7/10) — LATEST : Le fondateur de Telegram Pavel @durov publie sur X que TON est n°1 en matière de récompenses de staking parmi les 50 plus grandes cryptomonnaies, avec un APR de 18,80 %.
+  - https://x.com/CoinDesk/status/2052820678353531266
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 191).
