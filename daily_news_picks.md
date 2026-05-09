@@ -440,3 +440,8 @@ L'ancien président par intérim de la CFTC rejoint CoinDesk Live à @consensus2
 - **@techcrunch** (57 likes, score 7/10) — Le marché immobilier de San Francisco a perdu la raison
   - https://x.com/TechCrunch/status/2052879518378176826
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 75).
+- **@openai** (10563 likes, score 7/10) — GPT-5.5 Instant commence son déploiement dans ChatGPT.
+
+C’est une importante mise à niveau, qui vous offre des réponses plus intelligentes, plus claires et plus personnalisées, dans un ton plus chaleu
+  - https://x.com/OpenAI/status/2051709028250915275
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 12023).
