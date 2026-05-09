@@ -413,3 +413,6 @@ Submit by May 6 → http://goo.gle/4eNsr15
 - **@coindesk** (129 likes, score 7/10) — LATEST : Le fondateur de Telegram Pavel @durov publie sur X que TON est n°1 en matière de récompenses de staking parmi les 50 plus grandes cryptomonnaies, avec un APR de 18,80 %.
   - https://x.com/CoinDesk/status/2052820678353531266
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 191).
+- **@verge** (172 likes, score 7/10) — Le juge statue que DOGE a utilisé ChatGPT d'une manière à la fois stupide et illégale
+  - https://x.com/verge/status/2052813095710634273
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 184).
