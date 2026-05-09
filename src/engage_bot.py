@@ -92,6 +92,28 @@ TARGET_ACCOUNTS = [
 
     # === Tech media EN ===
     "TechCrunch", "TheVerge", "WIRED",
+
+    # === Batch ajouté 2026-05-09 — francophones IA/crypto/bourse ===
+    # Crypto / DeFi
+    "JulienBouteloup", "cryptaa", "JFR_Crypto", "BitcoinerFR",
+    "CharlesGuillemet", "PascalGauthier", "LedgerHQ",
+    "0xCryptoLab", "MisterCrypto_FR", "CrypTAlphaFR",
+    "MaxOpti_", "BastienBronnec", "JeromeAtangana",
+    # AI / Tech
+    "clemdelangue", "gilles_babinet", "stanislaspolu",
+    "aurelien_geron", "luc_julia", "lex_lhomme",
+    "datageek_FR", "BorisJabes", "KIVU_AI",
+    # Finance / Macro
+    "marc_touati", "PatrickArtus", "Charles_Gave",
+    "TheoTrader_", "HappyTradingFR", "FrenchMacro",
+    "CafeDeLaBourse", "Marc_Fiorentino", "thomas_porcher",
+    "Charles_Sannat", "OlivierBabeau", "CMS_Bordier",
+    # Media / outlets
+    "ContexteTech", "Le_Figaro_Eco", "FrenchWeb",
+    "LesEchos", "Capital", "Challenges",
+    "Maddyness", "MaddyNess",
+    # FR/QC AI
+    "Yoshua_Bengio", "Montreal_AI",
 ]
 
 # Append discovered handles, then dedup
