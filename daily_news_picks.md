@@ -437,3 +437,6 @@ Cofondateur @marek_ sur l'avenir des paiements à @consensus2026, présenté par
 L'ancien président par intérim de la CFTC rejoint CoinDesk Live à @consensus20
   - https://x.com/CoinDesk/status/2052850207595913533
   - **WHY**: Source fiable + impact concret (score signal 1, engagement 174).
+- **@techcrunch** (57 likes, score 7/10) — Le marché immobilier de San Francisco a perdu la raison
+  - https://x.com/TechCrunch/status/2052879518378176826
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 75).
