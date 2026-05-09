@@ -489,3 +489,6 @@ Le quantique retient le capital institutionnel sur la touche. La loi Clarity ava
 - **@coindesk** (64 likes, score 8/10) — BITCOIN : L'informatique quantique pourrait compromettre les portefeuilles $BTC d'ici 2030. Le problème plus important : migrer Bitcoin vers une cryptographie post-quantique nécessite que chaque utili
   - https://x.com/CoinDesk/status/2053229271968018521
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 140).
+- **@business** (51 likes, score 7/10) — Le juge de la Cour suprême Alexandre de Moraes a suspendu l'application d'une législation réduisant la durée de la peine que l'ancien président Jair Bolsonaro devra purger pour avoir comploté un coup
+  - https://x.com/business/status/2053238774667018589
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 113).
