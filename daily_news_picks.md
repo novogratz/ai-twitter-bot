@@ -393,3 +393,8 @@ Depuis lo
 « Nous vendrons notre bitcoin pour payer le rendem
   - https://x.com/BitcoinMagazine/status/2052858527618617379
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 713).
+
+## 2026-05-09
+- **@coindesk** (231 likes, score 7/10) — MARKET: $ZEC reclaims $600
+  - https://x.com/CoinDesk/status/2052884747991314459
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 277).
