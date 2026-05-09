@@ -450,3 +450,6 @@ C’est une importante mise à niveau, qui vous offre des réponses plus intelli
 "Let's pass the Clarity Act out of the Banking
   - https://x.com/BitcoinMagazine/status/2053111883578720586
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 776).
+- **@anthropicai** (556 likes, score 7/10) — Enfin, de simples mises à jour qui diversifient les données d'entraînement d'un modèle peuvent faire une différence. Nous avons ajouté des outils non liés et des invites système à un ensemble de donné
+  - https://x.com/AnthropicAI/status/2052808806782964072
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 614).
