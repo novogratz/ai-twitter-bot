@@ -378,3 +378,10 @@ CoinDesk Live closes out the biggest event in crypto with Donald Trump Jr., Amy 
 - **@cnbc** (69 likes, score 7/10) — Projet de loi majeur sur les cryptomonnaies prévu pour un vote au Sénat, Commission bancaire, le 14 mai
   - https://x.com/CNBC/status/2052894957900325371
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 89).
+- **@anthropicai** (5329 likes, score 7/10) — Nouvelle recherche d'Anthropic : Enseigner à Claude pourquoi.
+
+L'année dernière, nous avons rapporté que, dans certaines conditions expérimentales, Claude 4 ferait chanter les utilisateurs.
+
+Depuis lo
+  - https://x.com/AnthropicAI/status/2052808787514228772
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 5879).
