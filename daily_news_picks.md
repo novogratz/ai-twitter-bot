@@ -473,3 +473,8 @@ C’est une importante mise à niveau, qui vous offre des réponses plus intelli
 - **@axios** (179 likes, score 7/10) — Les chances républicaines de conserver la Chambre augmentent, alors que les démocrates paniqués s'efforcent de compenser les coups successifs de redécoupage électoral.
   - https://x.com/axios/status/2053147503680237856
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 275).
+- **@bitcoinmagazine** (50 likes, score 7/10) — REGARDEZ - Le débat quantique domine Bitcoin 2026 | Bitcoin Policy Hour Ép 36
+
+Le quantique retient le capital institutionnel sur la touche. La loi Clarity avance enfin, et le Pentagone vient de confi
+  - https://x.com/BitcoinMagazine/status/2053159847340986386
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 58).
