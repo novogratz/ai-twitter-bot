@@ -36,13 +36,11 @@ Lang = Literal["en", "fr"]
 
 
 def _mode() -> str:
-    # 2026-05-08 user re-clarification: "talk in english only for news and
-    # repost and reshare — then when he replies he can continue to reply
-    # in french or english depending on the tweet he replies to."
-    # Default = en for ALL content surfaces. Reply bots have their own
-    # language-matching logic (parent-tweet language) — they don't read
-    # this mode.
-    return os.environ.get("CONTENT_LANG_PRIMARY", "en").strip().lower()
+    # 2026-05-09 user pivot: "go back to french language only for news.
+    # reposting with quote can repost en or fr but COMMENT in fr."
+    # Default = fr for content. Reply bots match parent-tweet language
+    # with FR priority (their own logic).
+    return os.environ.get("CONTENT_LANG_PRIMARY", "fr").strip().lower()
 
 
 def pick_content_lang() -> Lang:
