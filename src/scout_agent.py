@@ -41,15 +41,15 @@ SCOUT_LOG_FILE = os.path.join(_PROJECT_ROOT, "scout_log.json")
 # Minimum follower count for a recruit to be worth our time. Estimates from
 # the agent are noisy — set the bar high enough that even a 50% over-estimate
 # still leaves a real audience.
-MIN_FOLLOWERS = 5000
+MIN_FOLLOWERS = 3000  # 5000 → 3000 (2026-05-09 PM): wider net for FR niche.
 
 # Hard cap on additions per cycle so a hallucinating run can't dump 50 fake
-# handles into the roster.
-MAX_NEW_PER_CYCLE = 8
+# handles into the roster. Bumped 8 → 15 (user wants daily new-FR find).
+MAX_NEW_PER_CYCLE = 15
 
 # Auto-follow at most this many of the top picks per cycle. Slow and steady —
-# X flags burst-follow patterns.
-MAX_AUTO_FOLLOW_PER_CYCLE = 3
+# X flags burst-follow patterns. Bumped 3 → 6.
+MAX_AUTO_FOLLOW_PER_CYCLE = 6
 
 
 def _known_handles() -> set:

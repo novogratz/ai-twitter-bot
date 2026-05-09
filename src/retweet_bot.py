@@ -526,12 +526,11 @@ def run_retweet_cycle():
             log.info("[RETWEET] Failed to write daily picks file:")
             traceback.print_exc()
 
-    # 2026-05-06 PM: relaxed 7 → 6. User wants 10x more reshares.
-    # The source-trust gate (TRUSTED_NEWS_HANDLES) + FR-bias scorer + EN
-    # penalty already keep low-quality content out; the threshold doesn't
-    # need to do that work too. Volume is the lever.
-    if score < 6:
-        log.info(f"[RETWEET] Score {score}/10 below retweet threshold (6). Logged only.")
+    # 2026-05-09 PM: relaxed 6 → 5. User wants TRACK EVERYONE + retweet
+    # viral things aggressively. Source-trust + niche + age gates already
+    # filter; the score threshold becomes mostly a tiebreaker.
+    if score < 5:
+        log.info(f"[RETWEET] Score {score}/10 below retweet threshold (5). Logged only.")
         return
 
     # Lock URL in BEFORE posting so a crash can't double-retweet.

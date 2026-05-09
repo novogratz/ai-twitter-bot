@@ -476,7 +476,7 @@ def main():
             log.info("Scout agent: open-web FR-speaker recruitment every 4 hours.")
             scheduler.add_job(
                 safe_run_scout_cycle,
-                trigger=IntervalTrigger(hours=4),
+                trigger=IntervalTrigger(hours=2),
                 id="scout_job",
             )
         else:
