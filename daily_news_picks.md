@@ -456,3 +456,8 @@ C’est une importante mise à niveau, qui vous offre des réponses plus intelli
 - **@ft** (370 likes, score 7/10) — La start-up de drones Helsing vise une valorisation de 18 milliards de dollars alors que les investisseurs se ruent sur la défense
   - https://x.com/FT/status/2053074872423625067
   - **WHY**: Source fiable + impact concret (score signal 1, engagement 414).
+- **@axios** (50 likes, score 7/10) — La PDG de Bumble, Whitney Wolfe Herd, à @sarafischer :
+
+« Je suis dure comme les clous maintenant. Vous ne pouvez vraiment pas me faire de mal. Mon action chute de 40 %, elle remonte de 40 % — je cont
+  - https://x.com/axios/status/2053097656210137221
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 64).
