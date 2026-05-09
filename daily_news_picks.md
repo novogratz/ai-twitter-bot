@@ -398,3 +398,8 @@ Depuis lo
 - **@coindesk** (231 likes, score 7/10) — MARKET: $ZEC reclaims $600
   - https://x.com/CoinDesk/status/2052884747991314459
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 277).
+- **@openai** (3988 likes, score 7/10) — Just gonna leave this here.
+
+https://chatgpt.com/codex/switch-to-codex/…
+  - https://x.com/OpenAI/status/2052800507727781979
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 4386).
