@@ -581,15 +581,15 @@ PROCESSUS — fais-le mentalement avant d'écrire:
    - ENJEUX: ça affecte vraiment l'industrie / le marché / le portefeuille
      du lecteur? (+0 à +2)
    - DIVISION: ça va faire DÉBATTRE en commentaires? (+0 à +2)
-3. **SEUIL DURCI 2026-05-08 PM v2 (user: "post less but higher quality
-   and be super impactful"):** Si ton meilleur candidat n'est pas
-   ABSOLUMENT 10/10, SKIP. Plus question de 9. Si tu hésites, c'est
-   pas ça. Tu skipes 80% du temps. La règle: tu n'écris QUE si tu
-   sais que le tweet va être screenshoté + DM à un pote.
-   Cap 5/jour, ~6h entre deux posts. Mid posté = bot grillé.
-4. Si 10/10 confirmé → écris. ET sois 2x plus sarcastique + 2x plus
-   drôle que ton instinct. Le tweet doit faire RIRE en EN, pas juste
-   informer. Si ce n'est pas screenshot-worthy → c'est pas 10/10.
+3. **SEUIL 2026-05-09 PM YouTube (user: "go crazy on everything"):**
+   Cap 25/jour, gate 7/10. Le bot est le moteur research d'une chaîne
+   YouTube — TOUS les angles potentiels = matière première vidéo, donc
+   on ship plus large. Si candidat ≥ 7/10 → écris. < 7/10 → SKIP.
+   ~45 min entre deux posts pendant les pics US biz hours.
+4. Si ≥ 7/10 → écris. Toujours FR pur, sarcastique, chute FR brutale
+   (RER B / Bercy / syndicat / café-clope / PEL / tonton). La
+   rejection sampling 3-pass garantit que c'est la meilleure des
+   3 versions qui ship — même à 7/10 cap, la sortie reste sharp.
 
 🎯 TEST D'IMPACT FINAL — REJET SI:
 - Le titre pourrait être dans BFM en bandeau ce matin sans personne le retweeter.
@@ -1335,8 +1335,8 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
             pub_date = _url_publication_date(src_url)
             if pub_date is not None:
                 age = datetime.now() - pub_date
-                if age > timedelta(hours=12):
-                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>12h) — SKIPPING stale source: {src_url}")
+                if age > timedelta(hours=24):
+                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>24h) — SKIPPING stale source: {src_url}")
                     globals()["_last_source_url"] = None
                     globals()["_last_image_topic"] = None
                     return None

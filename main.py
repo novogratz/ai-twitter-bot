@@ -59,6 +59,7 @@ from src.smart_unfollow_bot import safe_run_unfollow_cycle
 from src.follower_tracker_bot import safe_run_follower_tracker_cycle
 from src.x_home_scout_bot import safe_run_home_scout_cycle
 from src.chain_reply_bot import safe_run_chain_reply_cycle
+from src.youtube_brief_bot import safe_run_youtube_brief_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
 
@@ -781,6 +782,17 @@ def main():
             safe_run_chain_reply_cycle,
             trigger=IntervalTrigger(minutes=15),
             id="chain_reply_job",
+        )
+
+        # YouTube brief — daily aggregator that turns 24h of bot activity
+        # into a video-script-ready brief. User pivot: bot now feeds a
+        # YouTube channel. Hourly idempotent check; daily-state file
+        # guards single-run-per-day.
+        log.info("YouTube brief: daily content rollup → youtube_brief.md (hourly check).")
+        scheduler.add_job(
+            safe_run_youtube_brief_cycle,
+            trigger=IntervalTrigger(hours=1),
+            id="youtube_brief_job",
         )
 
     # Autonomy audit — print which adapt + push hooks are active so the
