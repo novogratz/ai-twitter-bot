@@ -532,3 +532,10 @@ We’re improving real-time CoT-grading detection, safeguards against accid
 0:36 - Pourquoi Strategy pourrait
   - https://x.com/saylor/status/2053225568871780548
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 4929).
+- **@cryptoslate** (1 likes, score 7/10) — Top #CryptoNews: Sat, May 9 (24H)
+
+ #Bitcoin briefly slips below $80,000, but options traders are betting the dip won’t last
+
+ Bankers are scrambling as Senate schedules CLARITY Act markup for May 14
+  - https://x.com/CryptoSlate/status/2053177969292804600
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1).
