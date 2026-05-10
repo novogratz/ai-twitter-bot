@@ -23,7 +23,8 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 | `PRIORITY_REPLY_MODEL` | `gpt-5.4-mini` | Model for VIP-account replies. |
 | `QUOTE_MODEL` | `gpt-5.4-mini` | Model for quote-tweet commentary. |
 | `ROAST_MODEL` | `gpt-5.4-mini` | Model for the @pgm_pm roast bot. |
-| `NEWS_CANDIDATES` | `1` in Codex mode, `2` otherwise | Number of news generations before optional judge selection. Raising this spends extra model calls. |
+| `NEWS_POSTS_PER_CYCLE` | `3` | Number of separate news posts to publish per post cycle. |
+| `NEWS_POST_SPACING_SECONDS` | `120` | Delay between burst news posts. |
 | `ENABLE_CODEX_OPERATOR` | `0` | Allow the 4-hour `operator_cycle.sh` to spend a Codex CLI agent run when `ENABLE_AI_MAINTENANCE` is off. |
 
 ---
@@ -147,7 +148,8 @@ REPLY_MODEL=gpt-5.4-mini
 PRIORITY_REPLY_MODEL=gpt-5.4-mini
 QUOTE_MODEL=gpt-5.4-mini
 ROAST_MODEL=gpt-5.4-mini
-NEWS_CANDIDATES=1
+NEWS_POSTS_PER_CYCLE=3
+NEWS_POST_SPACING_SECONDS=120
 
 MAX_NEWS_PER_DAY=10
 MAX_HOTAKES_PER_DAY=0

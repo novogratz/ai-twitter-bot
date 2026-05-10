@@ -2,6 +2,7 @@
 import json
 import os
 import random
+import time
 import traceback
 from datetime import date
 from .config import MAX_NEWS_PER_DAY, MAX_HOTAKES_PER_DAY, DAILY_STATE_FILE, get_live_cap
@@ -27,6 +28,8 @@ def _live_hotake_cap() -> int:
 
 
 THREAD_SEPARATOR = "---THREAD---"
+NEWS_POSTS_PER_CYCLE = int(os.environ.get("NEWS_POSTS_PER_CYCLE", "3"))
+NEWS_POST_SPACING_SECONDS = int(os.environ.get("NEWS_POST_SPACING_SECONDS", "120"))
 
 # Source-as-self-reply was reverted 2026-04-30 PM (user: "remove the source as
 # reply of yourself this is ridiculous.. put it directly in the news if needed").
@@ -87,7 +90,7 @@ def _increment_counter(counter_name: str):
     _save_daily_state(state)
 
 
-def run_bot_cycle():
+def _run_single_bot_cycle():
     """Post a news tweet or hot take, respecting daily limits."""
     news_count, hotake_count = _get_counters()
     news_cap = _live_news_cap()
@@ -249,6 +252,20 @@ def run_bot_cycle():
                 os.remove(img_path)
             except OSError:
                 pass
+
+
+def run_bot_cycle():
+    """Post a burst of news tweets, spaced out so X sees separate posts."""
+    count = max(1, NEWS_POSTS_PER_CYCLE)
+    for i in range(count):
+        if not has_post_slot():
+            log.info("[NEWS] No post slot left for burst. Stopping.")
+            break
+        log.info(f"[NEWS] Burst post {i + 1}/{count}")
+        _run_single_bot_cycle()
+        if i < count - 1:
+            log.info(f"[NEWS] Waiting {NEWS_POST_SPACING_SECONDS}s before next post.")
+            time.sleep(NEWS_POST_SPACING_SECONDS)
 
 
 def safe_run_bot_cycle():

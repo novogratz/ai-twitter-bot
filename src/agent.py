@@ -1253,11 +1253,7 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         performance_section=performance_section,
         lang_directive=lang_mode.lang_directive(lang),
     )
-    log.info(f"[NEWS] Generating in lang={lang} — rejection sampling 3 candidates")
-
-    # Rejection sampling. Generate a small candidate set, then ask
-    # the model to pick the single best one. Standard quality-boost
-    # technique, but keep the default lean enough to reach 10 posts/day.
+    log.info(f"[NEWS] Generating in lang={lang}")
 
     def _gen_one() -> str:
         r = run_llm(
@@ -1279,53 +1275,10 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
             return ""
         return unwrap_text(r.stdout) or ""
 
-    import os as _os
-    default_candidates = "1" if _os.environ.get("AI_CLI", "codex").strip().lower() == "codex" else "2"
-    candidate_count = max(1, min(3, int(_os.environ.get("NEWS_CANDIDATES", default_candidates))))
-    raw_candidates = []
-    for i in range(candidate_count):
-        c = _gen_one()
-        if c and c.upper() != "SKIP":
-            raw_candidates.append(c.strip())
-            log.info(f"[NEWS] Candidate {i+1} ({len(c)} chars): {c[:100]!r}")
-        else:
-            log.info(f"[NEWS] Candidate {i+1}: SKIP/empty")
-
-    if not raw_candidates:
-        log.info(f"[NEWS] All {candidate_count} candidates skipped — bailing.")
+    tweet = _gen_one().strip()
+    if not tweet or tweet.upper() == "SKIP":
+        log.info("[NEWS] SKIP/empty — bailing.")
         return None
-
-    if len(raw_candidates) == 1:
-        tweet = raw_candidates[0]
-        log.info("[NEWS] Single candidate survived — shipping it.")
-    else:
-        # Judge prompt: pick the screenshot-worthy winner.
-        joined = "\n\n---CANDIDATE-SEPARATOR---\n\n".join(
-            f"[Candidate {i+1}]\n{c}" for i, c in enumerate(raw_candidates)
-        )
-        judge_prompt = (
-            "You are an editor. Below are " + str(len(raw_candidates)) +
-            " candidate tweets your bot wrote on the same news story.\n\n"
-            "Pick the SINGLE BEST one — the most screenshot-worthy, the "
-            "funniest sarcastic punchline, the sharpest angle. Score "
-            "criteria: surprise, angle, exact figure, laugh-out-loud "
-            "potential, screenshot-shareability.\n\n"
-            "Return ONLY the chosen tweet's text VERBATIM (with its URL "
-            "and [PATTERN: ID] line). No commentary, no markdown, no "
-            "'Candidate 2:' prefix.\n\n" + joined
-        )
-        judge = run_llm(judge_prompt, NEWS_MODEL, label="NEWS_JUDGE")
-        if judge.returncode == 0:
-            chosen = unwrap_text(judge.stdout).strip()
-            # The judge sometimes echoes back the candidate verbatim,
-            # sometimes wraps in quotes. Normalize.
-            if chosen.startswith('"') and chosen.endswith('"'):
-                chosen = chosen[1:-1]
-            tweet = chosen if chosen else raw_candidates[0]
-            log.info(f"[NEWS] Judge picked best of {len(raw_candidates)}: {tweet[:120]!r}")
-        else:
-            tweet = raw_candidates[0]
-            log.info("[NEWS] Judge call failed — defaulting to first candidate.")
 
     if not tweet:
         raise RuntimeError("Claude CLI returned empty output.")
