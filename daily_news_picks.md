@@ -544,3 +544,8 @@ We’re improving real-time CoT-grading detection, safeguards against accid
 Le géant du minage de Bitcoin a tout de même révélé une augmentation de son chiffre d’affaires, atteignant 115 millions $ au prem
   - https://x.com/LeJournalDuCoin/status/2053429723208790107
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 8).
+- **@lejournalducoin** (0 likes, score 7/10) — Anthropic s’associe à SpaceX pour accéder à Colossus 1, un supercalculateur de plus de 220 000 GPU Nvidia situé à Memphis, Tennessee.
+
+L’accord fournit 300 mégawatts de capacité de calcul supplémentai
+  - https://x.com/LeJournalDuCoin/status/2052322465519403139
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 10).
