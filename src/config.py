@@ -58,7 +58,7 @@ DISCOVERED_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "discovered_accounts.json
 
 # CLI/provider selection. Default is Codex; set AI_CLI=claude / gemini / opencode at
 # the env level to switch. Authenticate with the matching local CLI first.
-AI_CLI = os.environ.get("AI_CLI", "opencode").strip().lower()
+AI_CLI = os.environ.get("AI_CLI", "codex").strip().lower()
 
 def _default_model(codex_model: str, claude_model: str, gemini_model: str = "gemini-2.0-flash", opencode_model: str = "opencode/big-pickle") -> str:
     if AI_CLI == "codex":

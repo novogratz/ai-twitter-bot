@@ -17,19 +17,27 @@ class LLMResult:
     stderr: str = ""
 
 
+LLM_RATE_LIMIT_CODE = 75
+
+
+def llm_hourly_limit_status() -> tuple[bool, int, int, int]:
+    """Compatibility shim: LLM budget limits are disabled."""
+    return False, 0, 0, 0
+
+
 def _provider() -> str:
-    requested = os.environ.get("AI_CLI", "opencode").strip().lower()
+    requested = os.environ.get("AI_CLI", "codex").strip().lower()
     if requested in {"claude", "codex", "gemini", "opencode"}:
         return requested
+    if shutil.which("codex"):
+        return "codex"
     if shutil.which("opencode"):
         return "opencode"
     if shutil.which("gemini"):
         return "gemini"
     if shutil.which("claude"):
         return "claude"
-    if shutil.which("codex"):
-        return "codex"
-    return "opencode"
+    return "codex"
 
 
 def _build_cmd(
@@ -116,11 +124,41 @@ def run_llm(
     return LLMResult(result.returncode, result.stdout or "", result.stderr or "")
 
 
+def _text_from_event(obj: dict) -> str:
+    if obj.get("type") == "text":
+        part = obj.get("part")
+        if isinstance(part, dict):
+            return str(part.get("text") or "")
+        return str(obj.get("text") or "")
+
+    # Some OpenCode versions emit assistant/message-style JSON events instead
+    # of the older {type:"text", part:{text:"..."}} shape.
+    message = obj.get("message")
+    if isinstance(message, dict):
+        content = message.get("content")
+        if isinstance(content, str):
+            return content
+        if isinstance(content, list):
+            parts = []
+            for item in content:
+                if isinstance(item, dict):
+                    text = item.get("text") or item.get("content")
+                    if text:
+                        parts.append(str(text))
+            return "".join(parts)
+
+    content = obj.get("content")
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        return "".join(str(item.get("text") or item.get("content") or "") for item in content if isinstance(item, dict))
+
+    return ""
+
+
 def _unwrap_ndjson(raw: str) -> str | None:
-    """Try parsing NDJSON (opencode --format json) and return concatenated text."""
+    """Try parsing OpenCode JSON events and return concatenated text."""
     lines = raw.strip().splitlines()
-    if len(lines) < 2:
-        return None
     parts: list[str] = []
     for line in lines:
         line = line.strip()
@@ -132,10 +170,9 @@ def _unwrap_ndjson(raw: str) -> str | None:
             return None
         if not isinstance(obj, dict):
             return None
-        if obj.get("type") == "text":
-            text = obj.get("part", {}).get("text", "")
-            if text:
-                parts.append(text)
+        text = _text_from_event(obj)
+        if text:
+            parts.append(text)
     if parts:
         return "".join(parts)
     return None
@@ -165,6 +202,9 @@ def unwrap_text(stdout: str) -> str:
             envelope = json.loads(raw)
 
         if isinstance(envelope, dict):
+            event_text = _text_from_event(envelope)
+            if event_text:
+                return event_text.strip()
             return str(envelope.get("response") or envelope.get("result") or raw).strip()
     except (json.JSONDecodeError, TypeError):
         pass

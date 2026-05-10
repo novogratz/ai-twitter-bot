@@ -16,17 +16,13 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `AI_CLI` | `opencode` | `opencode` / `claude` / `codex` / `gemini`. The CLI must be authenticated. |
+| `AI_CLI` | `codex` | `codex` / `opencode` / `claude` / `gemini`. The CLI must be authenticated or locally configured. |
 | `NEWS_MODEL` | `gpt-5.4-mini` | Model for real sourced news posts. Override to `gpt-5.4` only for high-quality manual cycles. |
 | `HOTAKE_MODEL` | `gpt-5.4-mini` | Model for hot takes + breakouts + spicy. |
 | `REPLY_MODEL` | `gpt-5.4-mini` | Model for replies. Mini keeps the volume surface cheaper. |
 | `PRIORITY_REPLY_MODEL` | `gpt-5.4-mini` | Model for VIP-account replies. |
 | `QUOTE_MODEL` | `gpt-5.4-mini` | Model for quote-tweet commentary. |
 | `ROAST_MODEL` | `gpt-5.4-mini` | Model for the @pgm_pm roast bot. |
-| `LLM_ENFORCE_BUDGET` | `0` | Set to `1` only to hard-stop model calls at the local budget. Default is soft accounting so production content does not starve. |
-| `LLM_MIN_SECONDS_BETWEEN_CALLS` | `15` | Local spacing guardrail to avoid bursty overlapping CLI calls. |
-| `LLM_MAX_CALLS_PER_HOUR` | `40` | Local hourly model-call telemetry budget. Hard-stops only when `LLM_ENFORCE_BUDGET=1`. |
-| `LLM_MAX_CALLS_PER_DAY` | `120` | Local daily model-call telemetry budget. Hard-stops only when `LLM_ENFORCE_BUDGET=1`. |
 | `NEWS_CANDIDATES` | `1` in Codex mode, `2` otherwise | Number of news generations before optional judge selection. Raising this spends extra model calls. |
 | `ENABLE_CODEX_OPERATOR` | `0` | Allow the 4-hour `operator_cycle.sh` to spend a Codex CLI agent run when `ENABLE_AI_MAINTENANCE` is off. |
 
@@ -144,7 +140,7 @@ These are best-effort: the file may not exist on first boot or after a fresh clo
 
 ```env
 BOT_HANDLE=kzer_ai
-AI_CLI=opencode
+AI_CLI=codex
 NEWS_MODEL=gpt-5.4-mini
 HOTAKE_MODEL=gpt-5.4-mini
 REPLY_MODEL=gpt-5.4-mini
@@ -167,11 +163,6 @@ LIKE_BOT_PER_CYCLE=22
 RETWEET_MIN_LIKES=10
 RETWEET_MAX_AGE_HOURS=18
 QUOTE_MAX_AGE_HOURS=18
-
-LLM_ENFORCE_BUDGET=0
-LLM_MIN_SECONDS_BETWEEN_CALLS=15
-LLM_MAX_CALLS_PER_HOUR=40
-LLM_MAX_CALLS_PER_DAY=120
 
 ENABLE_AI_MAINTENANCE=0
 ENABLE_AI_DISCOVERY=0

@@ -75,7 +75,7 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full lattice.
 
 - macOS (Safari + AppleScript automation, browser-driven, no API key)
 - Python 3.10+
-- One of: OpenCode (`opencode`), Claude Code CLI (`claude`), Codex CLI (`codex`), or Gemini CLI (`gemini`) — authenticated
+- One of: Codex CLI (`codex`), OpenCode (`opencode`), Claude Code CLI (`claude`), or Gemini CLI (`gemini`) — authenticated/configured
 - Twitter/X account logged into Safari
 
 **Install**
@@ -116,7 +116,7 @@ Every knob is an environment variable in `.env`. Defaults are tuned for an Engli
 | Variable | Default | What it does |
 |---|---|---|
 | `BOT_HANDLE` | `kzer_ai` | Your X handle (without `@`) |
-| `AI_CLI` | `opencode` | `opencode` / `claude` / `codex` / `gemini` |
+| `AI_CLI` | `codex` | `codex` / `opencode` / `claude` / `gemini` |
 | `NEWS_MODEL` | `gpt-5.4-mini` | Model for news + threads; override for manual quality runs |
 | `HOTAKE_MODEL` | `gpt-5.4-mini` | Model for hot takes + breakouts |
 | `REPLY_MODEL` | `gpt-5.4-mini` | Model for replies (volume surface) |
