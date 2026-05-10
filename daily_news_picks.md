@@ -526,3 +526,9 @@ We found a limited amount of accide
 We’re improving real-time CoT-grading detection, safeguards against accid
   - https://x.com/OpenAI/status/2052845770056073216
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 175).
+- **@saylor** (4389 likes, score 9/10) — Mes dernières réflexions sur $BTC, $STRC et $MSTR avec @TheBonnieChang et @davidlin_TV au Consensus 2026.
+
+0:00 - La controverse sur la vente de Bitcoin par Strategy
+0:36 - Pourquoi Strategy pourrait
+  - https://x.com/saylor/status/2053225568871780548
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 4929).
