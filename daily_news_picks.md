@@ -549,3 +549,10 @@ Le géant du minage de Bitcoin a tout de même révélé une augmentation de son
 L’accord fournit 300 mégawatts de capacité de calcul supplémentai
   - https://x.com/LeJournalDuCoin/status/2052322465519403139
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 10).
+- **@kobeissiletter** (766 likes, score 8/10) — Ceci est une divergence historique :
+
+Le ratio du secteur de l'information technologique du S&P 500 par rapport à l'indice S&P 500 atteint un record de 0,87.
+
+Ce ratio a augmenté de +50 % depuis le pl
+  - https://x.com/KobeissiLetter/status/2053515990651007386
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1056).
