@@ -497,3 +497,6 @@ Le quantique retient le capital institutionnel sur la touche. La loi Clarity ava
 « Faisons de l'Amérique la capitale mondiale de la crypto. »
   - https://x.com/CoinDesk/status/2053276084771099113
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 124).
+- **@afp** (60 likes, score 7/10) — #URGENT Au moins 69 personnes tuées dans une attaque de milice en RDCongo : sources locales et sécuritaires
+  - https://x.com/AFP/status/2053198989919478116
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 80).
