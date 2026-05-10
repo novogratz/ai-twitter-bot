@@ -46,18 +46,10 @@ if pgrep -if "python.*main\.py" > /dev/null 2>&1; then
     exit 0
 fi
 
-# Dead. Restart.
+# Dead. Restart. Do not background the bot from a launchd-managed watchdog:
+# launchd can terminate child processes when the watchdog job exits. `exec`
+# replaces this watchdog process with the bot so the supervised process stays
+# alive and receives signals directly.
 TS=$(date -Iseconds)
-echo "[$TS] Bot dead — restarting" >> "$LOG_FILE"
-nohup python3 main.py > /tmp/kzer_bot.out 2>&1 &
-NEW_PID=$!
-
-sleep 3
-
-if ps -p "$NEW_PID" > /dev/null 2>&1; then
-    echo "[$TS] Restart OK — new PID $NEW_PID" >> "$LOG_FILE"
-    exit 0
-else
-    echo "[$TS] RESTART FAILED — investigate /tmp/kzer_bot.out" >> "$LOG_FILE"
-    exit 1
-fi
+echo "[$TS] Bot dead — execing main.py" >> "$LOG_FILE"
+exec python3 main.py >> "$PROJECT_DIR/bot.log" 2>> "$PROJECT_DIR/bot.err"
