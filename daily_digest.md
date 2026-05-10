@@ -205,3 +205,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 167 likes / 512000 views: Notre programme de chasse aux bugs de sécurité est désormais public sur HackerOne.  Nous avons exécu
   - 82 likes / 21000 views: JUSTE ARRIVÉ : Les chances que la législation sur la structure du marché Bitcoin et crypto soit sign
   - 68 likes / 93000 views: Pensez que votre vibe en coding et créativité pourrait être sur la scène principale du #GoogleIO ? M
+
+## 2026-05-09
+
+**Activity** — total actions: 183
+  - by type: reply=143, retweet=29, quote=6, post=5
+  - top sources: PROFILE-ALWAYS=55, MEGA=38, RETWEET=29, PROFILE-FR=14, SEARCH-FR-LIVE=11, QUOTE=6, FOLLOWING=4, FEED=4
+  - comedy patterns: UNDERSTATEMENT=6, FR_ANCHOR=4, RENAME=2, DIALOGUE=1, METAPHOR=1, REPETITION=1, EN_ANCHOR=1
+  - top reply targets: @LeJournalDuCoin=21, @CoinDesk=8, @OpenAI=7, @FlasheurInvest=7, @MistralAI=6
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 69 likes / 24000 views: JUST IN : Michael Saylor dit que si Strategy vend du bitcoin, ils achèteront plusieurs fois plus de 
+  - 59 likes / 18000 views: Le juge de la Cour suprême Alexandre de Moraes a suspendu l'application d'une législation réduisant 
+  - 50 likes / 20000 views: Les chances républicaines de conserver la Chambre augmentent, alors que les démocrates paniqués s'ef
