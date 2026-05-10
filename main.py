@@ -492,14 +492,13 @@ def main():
             id="quote_tweet_job",
         )
 
-        # Retweet bot — accelerated 2026-05-05 to 40 min (cap 20/day, threshold
-        # 7/10). User: "reshare way more posts". TRUSTED_NEWS_HANDLES expanded
-        # with FR press (Numerama, Usine Digitale, Siècle Digital, etc.) so
-        # the FR news flow gets prioritized amplification. Daily cap binds.
-        log.info("Retweet bot: amplifying trusted news every 20 min (cap 60/day).")
+        # Retweet bot — high-volume deterministic amplifier. Retweets are
+        # cheap/no-LLM and feed the YouTube research doc, so let the daily cap
+        # bind while source/niche/age/dedup filters keep quality bounded.
+        log.info("Retweet bot: amplifying trusted news every 8 min (cap binds via MAX_RETWEETS_PER_DAY).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(minutes=20),
+            trigger=IntervalTrigger(minutes=8),
             id="retweet_job",
         )
 
