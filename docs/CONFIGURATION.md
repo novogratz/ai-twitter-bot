@@ -17,14 +17,16 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 | Variable | Default | Purpose |
 |---|---|---|
 | `AI_CLI` | `codex` | `claude` / `codex` / `gemini`. The CLI must be authenticated. |
-| `NEWS_MODEL` | `gpt-5.4` | Model for real sourced news posts. |
+| `NEWS_MODEL` | `gpt-5.4-mini` | Model for real sourced news posts. Override to `gpt-5.4` only for high-quality manual cycles. |
 | `HOTAKE_MODEL` | `gpt-5.4-mini` | Model for hot takes + breakouts + spicy. |
 | `REPLY_MODEL` | `gpt-5.4-mini` | Model for replies. Mini keeps the volume surface cheaper. |
 | `PRIORITY_REPLY_MODEL` | `gpt-5.4-mini` | Model for VIP-account replies. |
 | `QUOTE_MODEL` | `gpt-5.4-mini` | Model for quote-tweet commentary. |
 | `ROAST_MODEL` | `gpt-5.4-mini` | Model for the @pgm_pm roast bot. |
-| `LLM_MIN_SECONDS_BETWEEN_CALLS` | `75` | Local rate-limit guardrail. |
-| `LLM_MAX_CALLS_PER_HOUR` | `32` | Local hourly model-call budget. |
+| `LLM_MIN_SECONDS_BETWEEN_CALLS` | `120` | Local rate-limit guardrail. |
+| `LLM_MAX_CALLS_PER_HOUR` | `18` | Local hourly model-call budget. |
+| `NEWS_CANDIDATES` | `1` in Codex mode, `2` otherwise | Number of news generations before optional judge selection. Raising this spends extra model calls. |
+| `ENABLE_CODEX_OPERATOR` | `0` | Allow the 4-hour `operator_cycle.sh` to spend a Codex CLI agent run when `ENABLE_AI_MAINTENANCE` is off. |
 
 ---
 
@@ -139,21 +141,22 @@ These are best-effort: the file may not exist on first boot or after a fresh clo
 
 ```env
 BOT_HANDLE=kzer_ai
-AI_CLI=claude
-NEWS_MODEL=claude-opus-4-7
-HOTAKE_MODEL=claude-opus-4-7
-REPLY_MODEL=claude-sonnet-4-6
-PRIORITY_REPLY_MODEL=claude-opus-4-7
-QUOTE_MODEL=claude-haiku-4-5-20251001
-ROAST_MODEL=claude-haiku-4-5-20251001
+AI_CLI=codex
+NEWS_MODEL=gpt-5.4-mini
+HOTAKE_MODEL=gpt-5.4-mini
+REPLY_MODEL=gpt-5.4-mini
+PRIORITY_REPLY_MODEL=gpt-5.4-mini
+QUOTE_MODEL=gpt-5.4-mini
+ROAST_MODEL=gpt-5.4-mini
+NEWS_CANDIDATES=1
 
-MAX_NEWS_PER_DAY=12
-MAX_HOTAKES_PER_DAY=6
+MAX_NEWS_PER_DAY=10
+MAX_HOTAKES_PER_DAY=0
 MAX_BREAKOUTS_PER_DAY=4
 MAX_SPICY_PER_DAY=4
-MAX_QUOTES_PER_DAY=30
-MAX_RETWEETS_PER_DAY=60
-MAX_REPLIES_PER_CYCLE=25
+MAX_QUOTES_PER_DAY=80
+MAX_RETWEETS_PER_DAY=220
+MAX_REPLIES_PER_CYCLE=8
 
 FOLLOW_BLAST_PER_CYCLE=30
 LIKE_BOT_PER_CYCLE=22
@@ -161,11 +164,12 @@ RETWEET_MIN_LIKES=10
 RETWEET_MAX_AGE_HOURS=18
 QUOTE_MAX_AGE_HOURS=18
 
-LLM_MIN_SECONDS_BETWEEN_CALLS=45
-LLM_MAX_CALLS_PER_HOUR=60
+LLM_MIN_SECONDS_BETWEEN_CALLS=120
+LLM_MAX_CALLS_PER_HOUR=18
 
-ENABLE_AI_MAINTENANCE=1
-ENABLE_AI_DISCOVERY=1
+ENABLE_AI_MAINTENANCE=0
+ENABLE_AI_DISCOVERY=0
+ENABLE_CODEX_OPERATOR=0
 
-CONTENT_LANG_PRIMARY=en
+CONTENT_LANG_PRIMARY=fr
 ```

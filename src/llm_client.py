@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Optional, Sequence
 
 from .config import (
+    LLM_MAX_CALLS_PER_DAY,
     LLM_MAX_CALLS_PER_HOUR,
     LLM_MIN_SECONDS_BETWEEN_CALLS,
     _PROJECT_ROOT,
@@ -66,20 +67,26 @@ def _save_state(state: dict):
 def _rate_limits() -> tuple[float, int]:
     min_gap = float(os.environ.get("LLM_MIN_SECONDS_BETWEEN_CALLS", str(LLM_MIN_SECONDS_BETWEEN_CALLS)))
     max_hour = int(os.environ.get("LLM_MAX_CALLS_PER_HOUR", str(LLM_MAX_CALLS_PER_HOUR)))
-    return min_gap, max_hour
+    max_day = int(os.environ.get("LLM_MAX_CALLS_PER_DAY", str(LLM_MAX_CALLS_PER_DAY)))
+    return min_gap, max_hour, max_day
 
 
 def llm_hourly_limit_status() -> tuple[bool, int, int, int]:
-    """Return (limited, used, max_hour, seconds_until_oldest_call_expires)."""
+    """Return (limited, used, max_hour, seconds_until_oldest_hourly_call_expires)."""
     now = time.time()
-    _, max_hour = _rate_limits()
+    _, max_hour, max_day = _rate_limits()
     with _LOCK:
         state = _load_state()
-        calls = sorted(float(t) for t in state.get("calls", []) if now - float(t) < 3600)
-    if len(calls) < max_hour:
-        return False, len(calls), max_hour, 0
-    reset_seconds = max(1, int(3600 - (now - calls[0]))) if calls else 3600
-    return True, len(calls), max_hour, reset_seconds
+        raw_calls = state.get("calls", [])
+        hour_calls = sorted(float(t) for t in raw_calls if now - float(t) < 3600)
+        day_calls = sorted(float(t) for t in raw_calls if now - float(t) < 86400)
+    if len(day_calls) >= max_day:
+        reset_seconds = max(1, int(86400 - (now - day_calls[0]))) if day_calls else 86400
+        return True, len(day_calls), max_day, reset_seconds
+    if len(hour_calls) >= max_hour:
+        reset_seconds = max(1, int(3600 - (now - hour_calls[0]))) if hour_calls else 3600
+        return True, len(hour_calls), max_hour, reset_seconds
+    return False, len(hour_calls), max_hour, 0
 
 
 def _wait_for_slot(label: str):
@@ -88,14 +95,19 @@ def _wait_for_slot(label: str):
     This does not replace provider limits, but it prevents bursty scheduler
     overlap from firing 5-10 model calls at once.
     """
-    min_gap, max_hour = _rate_limits()
+    min_gap, max_hour, max_day = _rate_limits()
     now = time.time()
 
     with _LOCK:
         state = _load_state()
-        calls = [t for t in state.get("calls", []) if now - float(t) < 3600]
-        if len(calls) >= max_hour:
-            msg = f"local LLM rate limit reached ({len(calls)}/{max_hour} calls in 1h)"
+        calls = [t for t in state.get("calls", []) if now - float(t) < 86400]
+        hour_calls = [t for t in calls if now - float(t) < 3600]
+        if len(calls) >= max_day:
+            msg = f"local LLM daily budget reached ({len(calls)}/{max_day} calls in 24h)"
+            log.info(f"[LLM] {label}: {msg}")
+            return LLMResult(LLM_RATE_LIMIT_CODE, "", msg)
+        if len(hour_calls) >= max_hour:
+            msg = f"local LLM hourly budget reached ({len(hour_calls)}/{max_hour} calls in 1h)"
             log.info(f"[LLM] {label}: {msg}")
             return LLMResult(LLM_RATE_LIMIT_CODE, "", msg)
 

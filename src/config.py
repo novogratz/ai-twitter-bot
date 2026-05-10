@@ -35,10 +35,10 @@ DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
 # Daily posting limits. Defaults are tuned for a news-first account:
 # 10 real sourced news posts/day, reposts as the high-volume surface.
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "10"))
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "6"))
 MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "0"))
-MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "80"))
-MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "8"))
+MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "12"))
+MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "3"))
 
 # Accounts we never reply to. Includes both @handles AND display-name
 # variants so the blocklist still catches us when the scraper returns the
@@ -67,19 +67,22 @@ def _default_model(codex_model: str, claude_model: str, gemini_model: str = "gem
         return gemini_model
     return claude_model
 
-# Models. Codex defaults use the Mini model to fit a $20 Plus plan.
+# Models. Codex defaults use the Mini model across every routine surface to
+# fit a Plus-plan style budget. Override NEWS_MODEL / PRIORITY_REPLY_MODEL when
+# a specific cycle genuinely needs the heavier model.
 # Claude defaults stay mid/cheap tier, not Opus.
-NEWS_MODEL = os.environ.get("NEWS_MODEL", _default_model("gpt-5.4", "claude-sonnet-4-6", "gemini-2.0-flash"))
+NEWS_MODEL = os.environ.get("NEWS_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6", "gemini-2.0-flash"))
 REPLY_MODEL = os.environ.get("REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6", "gemini-1.5-flash"))
-PRIORITY_REPLY_MODEL = os.environ.get("PRIORITY_REPLY_MODEL", _default_model("gpt-5.4", "claude-sonnet-4-6", "gemini-2.0-flash"))
+PRIORITY_REPLY_MODEL = os.environ.get("PRIORITY_REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6", "gemini-2.0-flash"))
 HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6", "gemini-1.5-flash"))
 ROAST_MODEL = os.environ.get("ROAST_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
 QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
 
 # Local guardrail against scheduler bursts and provider rate limits. The
 # wrapper spaces model calls and refuses new ones once the hourly budget is hit.
-LLM_MIN_SECONDS_BETWEEN_CALLS = int(os.environ.get("LLM_MIN_SECONDS_BETWEEN_CALLS", "75"))
-LLM_MAX_CALLS_PER_HOUR = int(os.environ.get("LLM_MAX_CALLS_PER_HOUR", "32"))
+LLM_MIN_SECONDS_BETWEEN_CALLS = int(os.environ.get("LLM_MIN_SECONDS_BETWEEN_CALLS", "900"))
+LLM_MAX_CALLS_PER_HOUR = int(os.environ.get("LLM_MAX_CALLS_PER_HOUR", "4"))
+LLM_MAX_CALLS_PER_DAY = int(os.environ.get("LLM_MAX_CALLS_PER_DAY", "20"))
 
 # Plus-safe mode: no AI for scoring, scouting, reflection, evolution, or
 # account discovery unless explicitly enabled.

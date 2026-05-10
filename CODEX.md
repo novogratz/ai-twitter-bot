@@ -10,17 +10,17 @@ Project context for **Codex CLI** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md). 
 
 This repo is **kzer**, an autonomous Twitter/X growth agent. ~30 concurrent micro-bots managed by APScheduler in `main.py`. Browser-driven via Safari + AppleScript — no Twitter API key.
 
-**Default AI provider: Claude CLI** (`AI_CLI=claude`). Authenticate with:
+**Default AI provider: Codex CLI** (`AI_CLI=codex`). Authenticate with:
 
 ```bash
-claude login
+codex login
 ```
 
-Switch to Codex or Gemini at any time:
+Switch to Claude or Gemini at any time:
 
 ```bash
-AI_CLI=codex  ./bin/run.sh    # one-off
-echo "AI_CLI=codex" >> .env   # persistent
+AI_CLI=claude  ./bin/run.sh    # one-off
+echo "AI_CLI=claude" >> .env   # persistent
 ```
 
 The same models run across all generation surfaces (news, replies, hot takes, threads, breakouts). The CLI adapter (`src/llm_client.py`) handles each provider transparently.
@@ -34,7 +34,7 @@ git clone <repo>
 cd ai-twitter-bot
 pip install -r requirements.txt
 cp .env.example .env       # then edit caps + handle
-claude login               # or codex/gemini login — set AI_CLI accordingly
+codex login                # or claude/gemini login — set AI_CLI accordingly
 ./bin/run.sh               # foreground start, Ctrl-C to stop
 ```
 
@@ -136,7 +136,9 @@ See [`docs/ARCHITECTURE.md#adding-a-new-bot`](docs/ARCHITECTURE.md#6-adding-a-ne
 The runtime behavior is identical regardless of CLI provider — `src/llm_client.py` normalises the JSON envelopes, command flags, and tool-permission semantics so generation modules don't care which CLI is wrapping the model.
 
 Codex-specific notes:
-- Default models are `gpt-5.4` / `gpt-5.4-mini` (`gpt-5.4` for news/hotake/priority-reply, `gpt-5.4-mini` for everything else).
+- Default models are `gpt-5.4-mini` across routine surfaces. Set `NEWS_MODEL=gpt-5.4` or `PRIORITY_REPLY_MODEL=gpt-5.4` only for a deliberate high-quality run.
+- In Codex mode, `NEWS_CANDIDATES` defaults to `1` so one news post costs one generation call. Raising it to `2` or `3` also enables the judge call when multiple candidates survive.
+- The 4-hour `operator_cycle.sh` Codex agent is skipped unless `ENABLE_AI_MAINTENANCE=1` or `ENABLE_CODEX_OPERATOR=1`.
 - Codex's `--output-format json` produces an envelope that `unwrap_text` extracts via the `result` field (same as Claude).
 - WebSearch tool permission flag is the same `--allowed-tools` flag.
 

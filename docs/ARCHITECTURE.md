@@ -48,7 +48,7 @@ main.py
         │                                                           │
         └────────────┬──────────────────────────────────────────────┘
                      ▼
-              run_llm() → Claude Code CLI
+              run_llm() → configured CLI provider
                      ▼
               humanizer + strip_agent_preamble + scrub_metadata_leaks
                      ▼

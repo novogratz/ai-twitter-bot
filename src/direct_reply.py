@@ -806,10 +806,10 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             continue
 
         # Generate reply
-        limited, used, max_hour, reset_seconds = llm_hourly_limit_status()
+        limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
         if limited:
             log.info(
-                f"[{source_name}] LLM hourly cap reached ({used}/{max_hour}); "
+                f"[{source_name}] LLM budget cap reached ({used}/{max_calls}); "
                 f"stopping reply scan for ~{reset_seconds // 60}m instead of pretending to reply."
             )
             break
@@ -817,9 +817,9 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         log.info(f"[{source_name}] Generating reply for @{author}: {text[:60]}...")
         reply = _generate_single_reply(author, text)
         if reply is _LLM_RATE_LIMITED:
-            limited, used, max_hour, reset_seconds = llm_hourly_limit_status()
+            limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
             log.info(
-                f"[{source_name}] LLM hourly cap hit during generation ({used}/{max_hour}); "
+                f"[{source_name}] LLM budget cap hit during generation ({used}/{max_calls}); "
                 f"stopping reply scan for ~{reset_seconds // 60}m."
             )
             break
@@ -899,10 +899,10 @@ def run_direct_reply_cycle():
         retweeted = set()
 
     def _llm_exhausted() -> bool:
-        limited, used, max_hour, reset_seconds = llm_hourly_limit_status()
+        limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
         if limited:
             log.info(
-                f"[DIRECT] LLM hourly cap already reached ({used}/{max_hour}); "
+                f"[DIRECT] LLM budget cap already reached ({used}/{max_calls}); "
                 f"skipping direct replies for ~{reset_seconds // 60}m."
             )
             return True

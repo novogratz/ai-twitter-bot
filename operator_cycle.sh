@@ -28,19 +28,27 @@ if [ -f "$PROJECT_DIR/.env" ]; then
 fi
 
 export AI_CLI="${AI_CLI:-codex}"
-export NEWS_MODEL="${NEWS_MODEL:-gpt-5.4}"
+export NEWS_MODEL="${NEWS_MODEL:-gpt-5.4-mini}"
 export REPLY_MODEL="${REPLY_MODEL:-gpt-5.4-mini}"
+export PRIORITY_REPLY_MODEL="${PRIORITY_REPLY_MODEL:-gpt-5.4-mini}"
 export HOTAKE_MODEL="${HOTAKE_MODEL:-gpt-5.4-mini}"
 export QUOTE_MODEL="${QUOTE_MODEL:-gpt-5.4-mini}"
 export ROAST_MODEL="${ROAST_MODEL:-gpt-5.4-mini}"
-export LLM_MIN_SECONDS_BETWEEN_CALLS="${LLM_MIN_SECONDS_BETWEEN_CALLS:-60}"
-export LLM_MAX_CALLS_PER_HOUR="${LLM_MAX_CALLS_PER_HOUR:-30}"
+export LLM_MIN_SECONDS_BETWEEN_CALLS="${LLM_MIN_SECONDS_BETWEEN_CALLS:-900}"
+export LLM_MAX_CALLS_PER_HOUR="${LLM_MAX_CALLS_PER_HOUR:-4}"
+export LLM_MAX_CALLS_PER_DAY="${LLM_MAX_CALLS_PER_DAY:-20}"
 export ENABLE_AI_MAINTENANCE="${ENABLE_AI_MAINTENANCE:-0}"
 export ENABLE_AI_DISCOVERY="${ENABLE_AI_DISCOVERY:-0}"
 
 TS=$(date -Iseconds)
 echo "" >> "$LOG_FILE"
 echo "===== OPERATOR CYCLE START $TS =====" >> "$LOG_FILE"
+
+if [ "${ENABLE_CODEX_OPERATOR:-0}" != "1" ] && [ "$ENABLE_AI_MAINTENANCE" != "1" ]; then
+  echo "[operator_cycle.sh] skipped: set ENABLE_CODEX_OPERATOR=1 or ENABLE_AI_MAINTENANCE=1 to spend a Codex CLI cycle" >> "$LOG_FILE"
+  echo "===== OPERATOR CYCLE END $(date -Iseconds) =====" >> "$LOG_FILE"
+  exit 0
+fi
 
 PROMPT="$(cat "$PROJECT_DIR/operator_prompt.md")"
 

@@ -1145,7 +1145,7 @@ def _extract_image_topic(text: str):
 
 
 def generate_tweet() -> Optional[str]:
-    """Invoke the Claude Code CLI to search for news and write a tweet.
+    """Invoke the configured AI CLI to search for news and write a tweet.
     Returns None if no fresh news is found. The source domain (if any) is
     exposed via `last_source_domain()` for the caller to render on the card."""
     global _last_source_url, _last_image_topic, _last_pattern
@@ -1280,7 +1280,8 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         return unwrap_text(r.stdout) or ""
 
     import os as _os
-    candidate_count = max(1, min(3, int(_os.environ.get("NEWS_CANDIDATES", "2"))))
+    default_candidates = "1" if _os.environ.get("AI_CLI", "codex").strip().lower() == "codex" else "2"
+    candidate_count = max(1, min(3, int(_os.environ.get("NEWS_CANDIDATES", default_candidates))))
     raw_candidates = []
     for i in range(candidate_count):
         c = _gen_one()

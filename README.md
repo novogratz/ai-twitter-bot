@@ -116,15 +116,15 @@ Every knob is an environment variable in `.env`. Defaults are tuned for an Engli
 | Variable | Default | What it does |
 |---|---|---|
 | `BOT_HANDLE` | `kzer_ai` | Your X handle (without `@`) |
-| `AI_CLI` | `claude` | `claude` / `codex` / `gemini` |
-| `NEWS_MODEL` | `claude-opus-4-7` | Model for news + threads |
-| `HOTAKE_MODEL` | `claude-opus-4-7` | Model for hot takes + breakouts |
-| `REPLY_MODEL` | `claude-sonnet-4-6` | Model for replies (volume surface) |
-| `MAX_NEWS_PER_DAY` | `12` | Cap on news posts |
-| `MAX_HOTAKES_PER_DAY` | `6` | Cap on hot takes |
-| `MAX_QUOTES_PER_DAY` | `30` | Cap on quote-tweets |
-| `MAX_RETWEETS_PER_DAY` | `60` | Cap on retweets |
-| `MAX_REPLIES_PER_CYCLE` | `25` | Cap per reply cycle |
+| `AI_CLI` | `codex` | `claude` / `codex` / `gemini` |
+| `NEWS_MODEL` | `gpt-5.4-mini` | Model for news + threads; override for manual quality runs |
+| `HOTAKE_MODEL` | `gpt-5.4-mini` | Model for hot takes + breakouts |
+| `REPLY_MODEL` | `gpt-5.4-mini` | Model for replies (volume surface) |
+| `MAX_NEWS_PER_DAY` | `10` | Cap on news posts |
+| `MAX_HOTAKES_PER_DAY` | `0` | Cap on hot takes |
+| `MAX_QUOTES_PER_DAY` | `80` | Cap on quote-tweets |
+| `MAX_RETWEETS_PER_DAY` | `220` | Cap on retweets |
+| `MAX_REPLIES_PER_CYCLE` | `8` | Cap per reply cycle |
 | `CONTENT_LANG_PRIMARY` | `en` | `en` / `fr` / `mixed` (replies always match parent) |
 | `RETWEET_MAX_AGE_HOURS` | `18` | Skip retweet candidates older than this |
 | `SUPPRESSION_AVG_LIKES_FLOOR` | `1.0` | Trigger shadowban-pause if avg drops below |
