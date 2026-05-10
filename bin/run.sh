@@ -26,4 +26,4 @@ echo "────────────────────────�
 
 # Foreground execution. Output to terminal AND tee'd to bot.log so the
 # existing log-tail flow works.
-exec python3 main.py 2>&1 | tee -a "$REPO_DIR/bot.log"
+exec "$REPO_DIR/.venv/bin/python3" main.py 2>&1 | tee -a "$REPO_DIR/bot.log"

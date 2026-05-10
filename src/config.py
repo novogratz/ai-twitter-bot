@@ -56,15 +56,17 @@ BLOCKLIST = {
 # Discovered accounts file (autonomous influencer discovery)
 DISCOVERED_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "discovered_accounts.json")
 
-# CLI/provider selection. Default is Codex; set AI_CLI=claude / gemini at
+# CLI/provider selection. Default is Codex; set AI_CLI=claude / gemini / opencode at
 # the env level to switch. Authenticate with the matching local CLI first.
-AI_CLI = os.environ.get("AI_CLI", "codex").strip().lower()
+AI_CLI = os.environ.get("AI_CLI", "opencode").strip().lower()
 
-def _default_model(codex_model: str, claude_model: str, gemini_model: str = "gemini-2.0-flash") -> str:
+def _default_model(codex_model: str, claude_model: str, gemini_model: str = "gemini-2.0-flash", opencode_model: str = "opencode/big-pickle") -> str:
     if AI_CLI == "codex":
         return codex_model
     if AI_CLI == "gemini":
         return gemini_model
+    if AI_CLI == "opencode":
+        return opencode_model
     return claude_model
 
 # Models. Codex defaults use the Mini model across every routine surface to

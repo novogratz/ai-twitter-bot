@@ -1,7 +1,7 @@
 """Small CLI adapter for generation calls.
 
-The bot can run against either Claude Code or Codex CLI. Keep provider
-differences and local rate limiting here so agents only ask for text.
+The bot can run against Claude Code, Codex CLI, Gemini CLI, or OpenCode CLI.
+Keep provider differences and local rate limiting here so agents only ask for text.
 """
 import json
 import os
@@ -35,16 +35,18 @@ _STATE_FILE = Path(_PROJECT_ROOT) / ".llm_rate_state.json"
 
 
 def _provider() -> str:
-    requested = os.environ.get("AI_CLI", "codex").strip().lower()
-    if requested in {"claude", "codex", "gemini"}:
+    requested = os.environ.get("AI_CLI", "opencode").strip().lower()
+    if requested in {"claude", "codex", "gemini", "opencode"}:
         return requested
+    if shutil.which("opencode"):
+        return "opencode"
     if shutil.which("gemini"):
         return "gemini"
     if shutil.which("claude"):
         return "claude"
     if shutil.which("codex"):
         return "codex"
-    return "gemini"
+    return "opencode"
 
 
 def _load_state() -> dict:
@@ -181,6 +183,18 @@ def _build_cmd(
             cmd.extend(["--approval-mode", "yolo"])
         return cmd
 
+    if provider == "opencode":
+        cmd = [
+            "opencode", "run",
+            "--model", model,
+        ]
+        if allowed_tools or permission_mode:
+            cmd.append("--dangerously-skip-permissions")
+        if output_json:
+            cmd.extend(["--format", "json"])
+        cmd.append(prompt)
+        return cmd
+
     cmd = ["claude", "-p", prompt, "--model", model, "--no-session-persistence"]
     if output_json:
         cmd.extend(["--output-format", "json"])
@@ -220,15 +234,47 @@ def run_llm(
     return LLMResult(result.returncode, result.stdout or "", result.stderr or "")
 
 
+def _unwrap_ndjson(raw: str) -> str | None:
+    """Try parsing NDJSON (opencode --format json) and return concatenated text."""
+    lines = raw.strip().splitlines()
+    if len(lines) < 2:
+        return None
+    parts: list[str] = []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            obj = json.loads(line)
+        except json.JSONDecodeError:
+            return None
+        if not isinstance(obj, dict):
+            return None
+        if obj.get("type") == "text":
+            text = obj.get("part", {}).get("text", "")
+            if text:
+                parts.append(text)
+    if parts:
+        return "".join(parts)
+    return None
+
+
 def unwrap_text(stdout: str) -> str:
-    """Return model text from Claude/Gemini JSON envelopes or raw Codex output."""
+    """Return model text from provider CLI output.
+
+    Handles NDJSON (opencode --format json), JSON envelopes
+    (Gemini --output-format json, Claude --output-format json),
+    and raw text (Codex, opencode default, pipe-through).
+    """
     raw = (stdout or "").strip()
     if not raw:
         return ""
+
+    ndjson_result = _unwrap_ndjson(raw)
+    if ndjson_result is not None:
+        return ndjson_result
+
     try:
-        # Gemini/Claude CLI can output multiple lines before the JSON
-        # but --output-format json usually forces it to be the only thing or the last thing.
-        # If there's extra text (like 'Ripgrep is not available'), we might need to find the JSON.
         if "{" in raw:
             json_start = raw.find("{")
             json_data = raw[json_start:]
@@ -237,7 +283,6 @@ def unwrap_text(stdout: str) -> str:
             envelope = json.loads(raw)
 
         if isinstance(envelope, dict):
-            # Try 'response' (Gemini) or 'result' (Claude)
             return str(envelope.get("response") or envelope.get("result") or raw).strip()
     except (json.JSONDecodeError, TypeError):
         pass

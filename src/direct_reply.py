@@ -22,7 +22,6 @@ FAVORITE_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FAVORITE_REPOST_MIN_ENGAGEM
 FAVORITE_REPOST_MAX_AGE_MINUTES = int(os.environ.get("FAVORITE_REPOST_MAX_AGE_MINUTES", "2880"))
 
 VIP_REPLY_ACCOUNTS = [
-    "FrugalisteFutee",   # La Frugaliste Futee — user VIP 2026-05-02
     "Graphseo",          # Julien Flot
     "RodolpheSteffan",
     "vision_ia",         # VISION IA
@@ -36,7 +35,6 @@ VIP_REPLY_ACCOUNTS = [
 _VIP_REPLY_ACCOUNTS_LC = {h.lower() for h in VIP_REPLY_ACCOUNTS}
 
 HIGH_TRACTION_REPLY_ACCOUNTS = [
-    "FrugalisteFutee",   # La Frugaliste Futee — user-requested account to follow/reply
     # French crypto mega / media accounts
     "PowerHasheur",
     "LeJournalDuCoin",
@@ -231,7 +229,6 @@ def _is_fr_or_en(text: str) -> bool:
 # the verified hand-picked anchors.
 FR_ACCOUNTS = [
     # === Bourse / Finance / Macro FR ===
-    "FrugalisteFutee",   # La Frugaliste Futee — @FrugalisteFutee, user-requested 2026-05-02
     "XFenaux",           # Xavier Fenaux — user-flagged 2026-04-29: "I love the guy make him laugh", reply to most tweets
     "NCheron_bourse",    # Nicolas Chéron
     "RodolpheSteffan",   # Rodolphe Steffan (user re-confirmed 2026-04-29)

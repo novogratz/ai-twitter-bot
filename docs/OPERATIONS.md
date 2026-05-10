@@ -16,13 +16,13 @@ cp .env.example .env
 Edit `.env`:
 
 - Set `BOT_HANDLE` to your X username (without `@`)
-- Set `AI_CLI` to `claude`, `codex`, or `gemini`
+- Set `AI_CLI` to `opencode`, `claude`, `codex`, or `gemini`
 - Set the model defaults (defaults assume Claude Opus 4.7)
 - Adjust caps to match your tier
 
 Authenticate the AI CLI:
 ```bash
-claude login        # or: codex login / gemini login
+opencode auth        # or: claude login / codex login / gemini login
 ```
 
 Open Safari, log into x.com, accept all cookies, dismiss any onboarding modals.

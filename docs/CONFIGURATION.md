@@ -16,7 +16,7 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `AI_CLI` | `codex` | `claude` / `codex` / `gemini`. The CLI must be authenticated. |
+| `AI_CLI` | `opencode` | `opencode` / `claude` / `codex` / `gemini`. The CLI must be authenticated. |
 | `NEWS_MODEL` | `gpt-5.4-mini` | Model for real sourced news posts. Override to `gpt-5.4` only for high-quality manual cycles. |
 | `HOTAKE_MODEL` | `gpt-5.4-mini` | Model for hot takes + breakouts + spicy. |
 | `REPLY_MODEL` | `gpt-5.4-mini` | Model for replies. Mini keeps the volume surface cheaper. |
@@ -144,7 +144,7 @@ These are best-effort: the file may not exist on first boot or after a fresh clo
 
 ```env
 BOT_HANDLE=kzer_ai
-AI_CLI=codex
+AI_CLI=opencode
 NEWS_MODEL=gpt-5.4-mini
 HOTAKE_MODEL=gpt-5.4-mini
 REPLY_MODEL=gpt-5.4-mini

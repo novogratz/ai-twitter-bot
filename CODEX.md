@@ -10,13 +10,9 @@ Project context for **Codex CLI** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md). 
 
 This repo is **kzer**, an autonomous Twitter/X growth agent. ~30 concurrent micro-bots managed by APScheduler in `main.py`. Browser-driven via Safari + AppleScript — no Twitter API key.
 
-**Default AI provider: Codex CLI** (`AI_CLI=codex`). Authenticate with:
+**Default AI provider: OpenCode** (`AI_CLI=opencode`). No auth needed — free and ready to go.
 
-```bash
-codex login
-```
-
-Switch to Claude or Gemini at any time:
+Switch providers at any time:
 
 ```bash
 AI_CLI=claude  ./bin/run.sh    # one-off
@@ -40,7 +36,7 @@ git clone <repo>
 cd ai-twitter-bot
 pip install -r requirements.txt
 cp .env.example .env       # then edit caps + handle
-codex login                # or claude/gemini login — set AI_CLI accordingly
+opencode auth              # or claude/gemini login — set AI_CLI accordingly
 ./bin/run.sh               # foreground start, Ctrl-C to stop
 ```
 
@@ -117,7 +113,7 @@ Plus `FR_ANCHOR` for FR-mode runs and `OTHER` as fallback. The metadata line is 
 |---|---|
 | `main.py` | Scheduler entry point — boots all bots |
 | `src/config.py` | Central config + live-cap reader |
-| `src/llm_client.py` | CLI adapter (Codex / Claude / Gemini) |
+| `src/llm_client.py` | CLI adapter (OpenCode / Codex / Claude / Gemini) |
 | `src/twitter_client.py` | Safari + AppleScript browser automation |
 | `src/agent.py`, `hotake_agent.py`, etc. | Generation modules |
 | `core_identity.md` | Stable voice anchor |
