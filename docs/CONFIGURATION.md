@@ -55,6 +55,7 @@ Reshare paths don't burn LLM cycles (deterministic scoring) so caps can be much 
 |---|---|---|
 | `MAX_QUOTES_PER_DAY` | `80` | Quote-tweets (LLM commentary on viral content). |
 | `MAX_RETWEETS_PER_DAY` | `220` | Selective crypto / AI / bourse reposts. |
+| `RETWEETS_PER_CYCLE` | `5` | Max external retweets shipped after each deterministic candidate scrape. |
 | `MAX_REPLIES_PER_CYCLE` | `8` | Replies per `reply_bot` / `direct_reply` cycle. |
 | `MAX_PROMOTES_PER_DAY` | `3` | Promote-best-reply (quote-RT own top reply). |
 | `MAX_BOOSTS_PER_DAY` | (no cap) | Self-RT scheduled by cadence only. |
@@ -158,6 +159,7 @@ MAX_BREAKOUTS_PER_DAY=4
 MAX_SPICY_PER_DAY=4
 MAX_QUOTES_PER_DAY=80
 MAX_RETWEETS_PER_DAY=220
+RETWEETS_PER_CYCLE=5
 MAX_REPLIES_PER_CYCLE=8
 
 FOLLOW_BLAST_PER_CYCLE=30

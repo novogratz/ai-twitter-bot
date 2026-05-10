@@ -126,6 +126,7 @@ Every knob is an environment variable in `.env`. Defaults are tuned for an Engli
 | `MAX_HOTAKES_PER_DAY` | `0` | Cap on hot takes |
 | `MAX_QUOTES_PER_DAY` | `80` | Cap on quote-tweets |
 | `MAX_RETWEETS_PER_DAY` | `220` | Cap on retweets |
+| `RETWEETS_PER_CYCLE` | `5` | Max external retweets shipped after each candidate scrape |
 | `MAX_REPLIES_PER_CYCLE` | `8` | Cap per reply cycle |
 | `CONTENT_LANG_PRIMARY` | `en` | `en` / `fr` / `mixed` (replies always match parent) |
 | `RETWEET_MAX_AGE_HOURS` | `18` | Skip retweet candidates older than this |

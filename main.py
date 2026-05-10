@@ -486,7 +486,7 @@ def main():
         # Retweet bot — high-volume deterministic amplifier. Retweets are
         # cheap/no-LLM and feed the YouTube research doc, so let the daily cap
         # bind while source/niche/age/dedup filters keep quality bounded.
-        log.info("Retweet bot: amplifying trusted news every 8 min (cap binds via MAX_RETWEETS_PER_DAY).")
+        log.info("Retweet bot: amplifying trusted news every 8 min (multi-RT cycle, cap binds via MAX_RETWEETS_PER_DAY).")
         scheduler.add_job(
             safe_run_retweet_cycle,
             trigger=IntervalTrigger(minutes=8),

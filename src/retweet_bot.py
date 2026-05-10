@@ -58,6 +58,7 @@ DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 
 # Hard cap per day. Path is deterministic/no-AI, so volume is cheap.
 MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "220"))
+RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "5")))
 
 # Min likes to even consider a candidate. Lowered 10 → 5 (2026-05-05) so
 # fresh elite news from trusted handles gets amplified BEFORE engagement
@@ -425,42 +426,39 @@ def _collect_feed_repost_candidates(retweeted: set) -> list:
 
     return out
 
-def _score_candidates(candidates: list):
-    """Pick the best trusted-source candidate without spending a model call."""
-    if not candidates:
-        return None
+def _candidate_rank(c: dict) -> tuple:
+    """Deterministic impact rank. Higher tuple wins."""
+    text_raw = c.get("text") or ""
+    text = text_raw.lower()
+    breaking = any(k in text for k in (
+        "breaking", "exclusive", "announces", "announced", "launch",
+        "raises", "raised", "sec", "fed", "bitcoin", "openai", "nvidia",
+    ))
+    money_or_power = any(k in text for k in (
+        "$", "billion", "trillion", "million", "acquire",
+        "acquisition", "merger", "ipo", "bankrupt", "lawsuit",
+        "ban", "regulator", "sec", "fed",
+        "valuation", "earnings", "revenue", "profit", "loss",
+    ))
+    strategic = any(k in text for k in (
+        "openai", "anthropic", "nvidia", "mistral", "bitcoin", "ethereum",
+        "coinbase", "google", "microsoft", "meta", "apple", "tesla",
+        "rates", "inflation", "tariff", "chips", "gpu",
+    ))
+    numbers = len(re.findall(r"(\$?\d+(?:[.,]\d+)?\s?(?:%|bn|billion|m|million|k)?)", text))
+    engagement = int(c.get("likes") or 0) + (2 * int(c.get("replies") or 0))
+    impact_points = (
+        (2 if breaking else 0)
+        + (3 if money_or_power else 0)
+        + (2 if strategic else 0)
+        + min(numbers, 3)
+    )
+    return (impact_points, engagement)
 
-    def rank(c: dict) -> tuple:
-        text_raw = c.get("text") or ""
-        text = text_raw.lower()
-        breaking = any(k in text for k in (
-            "breaking", "exclusive", "announces", "announced", "launch",
-            "raises", "raised", "sec", "fed", "bitcoin", "openai", "nvidia",
-        ))
-        money_or_power = any(k in text for k in (
-            "$", "billion", "trillion", "million", "acquire",
-            "acquisition", "merger", "ipo", "bankrupt", "lawsuit",
-            "ban", "regulator", "sec", "fed",
-            "valuation", "earnings", "revenue", "profit", "loss",
-        ))
-        strategic = any(k in text for k in (
-            "openai", "anthropic", "nvidia", "mistral", "bitcoin", "ethereum",
-            "coinbase", "google", "microsoft", "meta", "apple", "tesla",
-            "rates", "inflation", "tariff", "chips", "gpu",
-        ))
-        numbers = len(re.findall(r"(\$?\d+(?:[.,]\d+)?\s?(?:%|bn|billion|m|million|k)?)", text))
-        engagement = int(c.get("likes") or 0) + (2 * int(c.get("replies") or 0))
-        impact_points = (
-            (2 if breaking else 0)
-            + (3 if money_or_power else 0)
-            + (2 if strategic else 0)
-            + min(numbers, 3)
-        )
-        return (impact_points, engagement)
 
-    idx, pick = max(enumerate(candidates), key=lambda item: rank(item[1]))
+def _score_candidate(pick: dict) -> dict:
     engagement = int(pick.get("likes") or 0) + (2 * int(pick.get("replies") or 0))
-    impact_points = rank(pick)[0]
+    impact_points = _candidate_rank(pick)[0]
     # 2026-05-08: dropped the FR-language bonus. The bot's voice is EN
     # now and we explicitly want to reshare English-source content, so
     # scoring should be language-agnostic on source.
@@ -471,10 +469,19 @@ def _score_candidates(candidates: list):
     else:
         score = 7
     return {
-        "best_index": idx,
         "best_score": score,
         "why_it_matters": f"Source fiable + impact concret (score signal {impact_points}, engagement {engagement}).",
     }
+
+
+def _score_candidates(candidates: list):
+    """Pick the best trusted-source candidate without spending a model call."""
+    if not candidates:
+        return None
+    idx, pick = max(enumerate(candidates), key=lambda item: _candidate_rank(item[1]))
+    decision = _score_candidate(pick)
+    decision["best_index"] = idx
+    return decision
 
 
 def _append_to_daily_picks(tweet: dict, score: int, why: str):
@@ -503,9 +510,11 @@ def _append_to_daily_picks(tweet: dict, score: int, why: str):
 # --- main cycle ---
 
 def run_retweet_cycle():
-    """Pick the single highest-signal tweet of the cycle and retweet it
-    (only if it clears 9/10 score). Append to daily_news_picks.md regardless
-    of score if it clears 8/10 — that file is the YouTube research doc."""
+    """Retweet the highest-signal tweets of the cycle.
+
+    The scrape is the expensive part. Once we have a viable candidate pool,
+    ship several reposts while preserving niche/source/dedup gates.
+    """
     from .config import get_live_cap
     cap = get_live_cap("MAX_RETWEETS_PER_DAY", MAX_RETWEETS_PER_DAY)
     if _today_count() >= cap:
@@ -597,70 +606,72 @@ def run_retweet_cycle():
         log.info("[RETWEET] No viable candidates this cycle.")
         return
 
-    if len(candidates) == 1:
-        only = candidates[0]
-        decision = _score_candidates(candidates)
-        log.info("[RETWEET] One viable candidate — scoring impact deterministically.")
-    else:
-        log.info(f"[RETWEET] Scoring {len(candidates)} candidates deterministically (no model call).")
-        decision = _score_candidates(candidates)
-    if not decision:
-        log.info("[RETWEET] Scoring failed — skipping cycle.")
-        return
-
-    idx = int(decision.get("best_index", -1))
-    score = int(decision.get("best_score", 0))
-    why = (decision.get("why_it_matters") or "").strip()
-    if idx < 0 or idx >= len(candidates):
-        log.info(f"[RETWEET] Scorer returned invalid index {idx} — skipping.")
-        return
-
-    pick = candidates[idx]
     log.info(
-        f"[RETWEET] Best pick: @{pick['author']} score={score}/10 "
-        f"(likes={pick['likes']}) — {pick['text'][:100]}"
+        f"[RETWEET] Scoring {len(candidates)} candidates deterministically "
+        f"(no model call), target up to {RETWEETS_PER_CYCLE} retweets."
     )
-    log.info(f"[RETWEET] WHY (for YouTube doc): {why}")
 
-    # YouTube research doc: log anything ≥ 7/10 even if we don't actually
-    # retweet it (gives the user a wider research surface than the retweet
-    # cap would).
-    if score >= 7 and why:
+    posted = 0
+    logged = 0
+    for pick in sorted(candidates, key=_candidate_rank, reverse=True):
+        if posted >= RETWEETS_PER_CYCLE:
+            break
+        if _today_count() >= cap:
+            log.info(f"[RETWEET] Daily cap reached mid-cycle ({cap}).")
+            break
+        if pick["url"] in retweeted:
+            continue
+
+        decision = _score_candidate(pick)
+        score = int(decision.get("best_score", 0))
+        why = (decision.get("why_it_matters") or "").strip()
+        log.info(
+            f"[RETWEET] Pick: @{pick['author']} score={score}/10 "
+            f"(likes={pick['likes']}) — {pick['text'][:100]}"
+        )
+
+        # YouTube research doc: log anything ≥ 7/10.
+        if score >= 7 and why:
+            try:
+                _append_to_daily_picks(pick, score, why)
+                logged += 1
+            except Exception:
+                log.info("[RETWEET] Failed to write daily picks file:")
+                traceback.print_exc()
+
+        # 2026-05-09 PM: relaxed 6 → 5. User wants TRACK EVERYONE + retweet
+        # viral things aggressively. Source-trust + niche + age gates already
+        # filter; the score threshold becomes mostly a tiebreaker.
+        if score < 5:
+            log.info(f"[RETWEET] Score {score}/10 below retweet threshold (5). Logged only.")
+            continue
+
+        # Lock URL in BEFORE posting so a crash can't double-retweet.
+        retweeted.add(pick["url"])
+        _save_retweeted(retweeted)
+
         try:
-            _append_to_daily_picks(pick, score, why)
-            log.info(f"[RETWEET] Logged to {os.path.basename(DAILY_PICKS_FILE)}")
+            retweet_post(pick["url"])
+            _increment_count()
+            try:
+                log_reply(
+                    pick["url"],
+                    f"[RT] {pick['text'][:200]}",
+                    action_type="retweet",
+                    source=f"RETWEET/{pick['author']}",
+                )
+            except Exception:
+                pass
+            posted += 1
+            time.sleep(random.randint(5, 10))
         except Exception:
-            log.info("[RETWEET] Failed to write daily picks file:")
+            log.info("[RETWEET] Posting failed:")
             traceback.print_exc()
 
-    # 2026-05-09 PM: relaxed 6 → 5. User wants TRACK EVERYONE + retweet
-    # viral things aggressively. Source-trust + niche + age gates already
-    # filter; the score threshold becomes mostly a tiebreaker.
-    if score < 5:
-        log.info(f"[RETWEET] Score {score}/10 below retweet threshold (5). Logged only.")
-        return
-
-    # Lock URL in BEFORE posting so a crash can't double-retweet.
-    retweeted.add(pick["url"])
-    _save_retweeted(retweeted)
-
-    try:
-        retweet_post(pick["url"])
-        _increment_count()
-        try:
-            log_reply(
-                pick["url"],
-                f"[RT] {pick['text'][:200]}",
-                action_type="retweet",
-                source=f"RETWEET/{pick['author']}",
-            )
-        except Exception:
-            pass
-        time.sleep(random.randint(5, 10))
-        log.info(f"[RETWEET] DONE. Today's count: {_today_count()}/{MAX_RETWEETS_PER_DAY}")
-    except Exception:
-        log.info("[RETWEET] Posting failed:")
-        traceback.print_exc()
+    log.info(
+        f"[RETWEET] DONE. Posted {posted}, logged {logged}. "
+        f"Today's count: {_today_count()}/{cap}"
+    )
 
 
 def safe_run_retweet_cycle():
