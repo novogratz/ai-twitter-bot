@@ -25,6 +25,12 @@ echo "AI_CLI=claude" >> .env   # persistent
 
 The same models run across all generation surfaces (news, replies, hot takes, threads, breakouts). The CLI adapter (`src/llm_client.py`) handles each provider transparently.
 
+LLM budgets are soft by default: `LLM_ENFORCE_BUDGET=0` means usage is logged
+but production content is not blocked by local hourly/daily counters. Set it to
+`1` only when you explicitly want hard caps. News/replies should use the LLM;
+research, scoring, RSS/HN/X signal collection, and maintenance should stay
+deterministic or feature-gated.
+
 ---
 
 ## Setup
@@ -115,10 +121,10 @@ Plus `FR_ANCHOR` for FR-mode runs and `OTHER` as fallback. The metadata line is 
 | `src/twitter_client.py` | Safari + AppleScript browser automation |
 | `src/agent.py`, `hotake_agent.py`, etc. | Generation modules |
 | `core_identity.md` | Stable voice anchor |
-| `personality.json` | Per-account dossiers (auto-rewritten by reflection_agent) |
-| `bot_self.json` | Bot's evolving mood (auto-rewritten by self_evolution_agent) |
-| `live_strategy.json` | Daily caps + cadence (auto-rewritten by meta_strategy_agent) |
-| `directives.md` | Style guide (auto-rewritten by evolution_agent) |
+| `personality.json` | Per-account dossiers (rewritten by reflection_agent when maintenance is enabled) |
+| `bot_self.json` | Bot's evolving mood (rewritten by self_evolution_agent when maintenance is enabled) |
+| `live_strategy.json` | Daily caps + cadence (rewritten by meta_strategy_agent when maintenance is enabled) |
+| `directives.md` | Style guide (rewritten by evolution_agent when maintenance is enabled) |
 | `engagement_log.csv` | Append-only action log (the source of truth for ROI math) |
 
 For the full module catalog see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).

@@ -2,7 +2,7 @@
 
 > 🤖 **AI, Crypto, and Stock Market news, before anyone else. In-depth analysis. Zero bullshit, zero fluff. You'll hate me until I'm right.** ⚡
 
-A self-evolving, fully autonomous Twitter/X agent. Posts breaking news, replies in real time, amplifies signal, manages its own follower-ratio, and rewrites its own strategy every few hours. Driven by Claude Code (or Codex / Gemini CLI). No Twitter API key. Browser automation only.
+A self-evolving Twitter/X agent. Posts breaking news, replies in real time, amplifies signal, and manages its own follower-ratio. Agentic strategy/persona rewrites are available but disabled by default so LLM calls are spent on production content first. Driven by Claude Code (or Codex / Gemini CLI). No Twitter API key. Browser automation only.
 
 ---
 
@@ -19,7 +19,7 @@ The bot operates **30+ concurrent micro-bots** orchestrated by an APScheduler lo
 | **Like** | `like_bot`, `notify_bot` | Bulk likes for outbound notifications |
 | **Promote** | `pin_bot`, `promote_bot` | Auto-pin best post, quote-RT top reply onto profile |
 | **Real-time signal** | `rss_signal_bot`, `hn_signal_bot`, `x_home_scout_bot`, `auto_tune_bot` | Aggregate trends from RSS + HN + Reddit + X home; 20-50 min ahead of WebSearch |
-| **Self-evolution** | `meta_strategy_agent`, `strategy_agent`, `evolution_agent`, `reflection_agent`, `self_evolution_agent` | Agentic Claude runs that rewrite strategy, persona, dossiers; auto-push to git |
+| **Self-evolution** | `meta_strategy_agent`, `strategy_agent`, `evolution_agent`, `reflection_agent`, `self_evolution_agent` | Optional agentic runs that rewrite strategy, persona, dossiers; gated by `ENABLE_AI_MAINTENANCE` / `ENABLE_AI_DISCOVERY` |
 | **Safety** | `suppression_watch_bot`, `health.py`, `respect_list` | Shadowban detection + Safari watchdog + protected-handle list |
 | **Hygiene** | `cleanup_bot`, `heartbeat_bot`, `daily_digest`, `follower_tracker_bot`, `performance.py` | State rotation, alive ticks, growth metrics, learnings |
 
@@ -120,6 +120,8 @@ Every knob is an environment variable in `.env`. Defaults are tuned for an Engli
 | `NEWS_MODEL` | `gpt-5.4-mini` | Model for news + threads; override for manual quality runs |
 | `HOTAKE_MODEL` | `gpt-5.4-mini` | Model for hot takes + breakouts |
 | `REPLY_MODEL` | `gpt-5.4-mini` | Model for replies (volume surface) |
+| `LLM_ENFORCE_BUDGET` | `0` | `0` = soft accounting only; `1` = hard-stop local LLM calls at configured budgets |
+| `LLM_MIN_SECONDS_BETWEEN_CALLS` | `15` | Spacing guardrail to avoid bursty overlapping CLI calls |
 | `MAX_NEWS_PER_DAY` | `10` | Cap on news posts |
 | `MAX_HOTAKES_PER_DAY` | `0` | Cap on hot takes |
 | `MAX_QUOTES_PER_DAY` | `80` | Cap on quote-tweets |
@@ -175,7 +177,7 @@ ai-twitter-bot/
 ## Design principles
 
 1. **Process safety > feature parity.** Every cycle is wrapped in `safe_run_*` so a single-cycle exception cannot crash the scheduler. Health watchdog auto-restarts Safari after 3 consecutive cycle failures.
-2. **Autonomous self-modification with bounded blast radius.** The `meta_strategy_agent` can rewrite daily caps but only within hard-coded ranges (`news 4-40`, `retweet 8-120`). Every self-modifying agent auto-commits + pushes its state files to git so every change is audit-trailed.
+2. **Autonomous self-modification with bounded blast radius.** Agentic maintenance is disabled by default. When enabled, `meta_strategy_agent` can rewrite daily caps only within hard-coded ranges (`news 4-40`, `retweet 8-120`). Every self-modifying agent auto-commits + pushes its state files to git so every change is audit-trailed.
 3. **Idempotent state.** All daily-counter files (`thread_daily_state`, `pin_daily_state`, etc.) are JSON-keyed by date. A restart mid-day picks up exactly where it left off; the bot never double-posts.
 4. **Best-effort UI automation.** Every JS-click into the X DOM is wrapped in try/except with a fallback path. When X reshuffles its DOM, the bot logs and skips that one cycle — it never crashes.
 5. **Bandit attribution baked in.** Every generated tweet carries a `[PATTERN: <ID>]` metadata line that's stripped pre-post and logged to `engagement_log.csv` column 6. The `evolution_agent` reads these to compute per-pattern ROI and rewrite the style guide.
@@ -203,7 +205,7 @@ WebSearch (Google indexing) lags publication by 30-60 min. RSS publishes within 
 
 ## Autonomous self-modification
 
-Six agents run on cron schedules. Each writes its decisions to a JSON/MD state file AND auto-pushes to git so every adjustment is version-controlled:
+Six maintenance agents can run on cron schedules when enabled. They are off by default because they spend LLM calls; deterministic research/signal bots keep running without them. Each enabled agent writes its decisions to a JSON/MD state file AND auto-pushes to git so every adjustment is version-controlled:
 
 | Agent | Cadence | Decides | State file |
 |---|---|---|---|

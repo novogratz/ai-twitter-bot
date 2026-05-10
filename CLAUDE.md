@@ -21,6 +21,12 @@ echo "AI_CLI=claude" >> .env  # or: AI_CLI=gemini
 
 The `src/llm_client.py` adapter handles each provider transparently.
 
+LLM budgets are soft by default: `LLM_ENFORCE_BUDGET=0` means usage is logged
+but production content is not blocked by local hourly/daily counters. Set it to
+`1` only when you explicitly want hard caps. News/replies should use the LLM;
+research, scoring, RSS/HN/X signal collection, and maintenance should stay
+deterministic or feature-gated.
+
 ---
 
 ## Setup
@@ -104,7 +110,10 @@ Reply paths (`direct_reply`, `reply_bot`, `replyback_agent`, `viral_followup`, `
 
 ### Self-modification boundary
 
-Agents that auto-rewrite project state (and auto-push to git):
+Agentic maintenance is disabled by default. These agents auto-rewrite project
+state only when the matching feature flags are enabled (`ENABLE_AI_MAINTENANCE`
+for strategy/evolution/reflection/meta/self-evolution, `ENABLE_AI_DISCOVERY`
+for discovery/scout):
 
 | Agent | Cadence | What it modifies |
 |---|---|---|
@@ -136,10 +145,10 @@ Agents CANNOT touch:
 | `src/twitter_client.py` | Safari + AppleScript browser automation |
 | `src/agent.py` etc. | Generation modules (one per content surface) |
 | `core_identity.md` | Stable voice anchor |
-| `personality.json` | Per-account dossiers (rewritten by reflection_agent) |
-| `bot_self.json` | Bot's evolving mood (rewritten by self_evolution_agent) |
-| `live_strategy.json` | Daily caps + cadence (rewritten by meta_strategy_agent) |
-| `directives.md` | Style guide (rewritten by evolution_agent) |
+| `personality.json` | Per-account dossiers (rewritten by reflection_agent when maintenance is enabled) |
+| `bot_self.json` | Bot's evolving mood (rewritten by self_evolution_agent when maintenance is enabled) |
+| `live_strategy.json` | Daily caps + cadence (rewritten by meta_strategy_agent when maintenance is enabled) |
+| `directives.md` | Style guide (rewritten by evolution_agent when maintenance is enabled) |
 | `engagement_log.csv` | Append-only action log (source of truth for ROI math) |
 
 For the full module catalog see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
