@@ -1,16 +1,16 @@
-"""X home-feed scout — read OUR network's pulse for real-time signal.
+"""X feed scout — read and train OUR network's pulse for real-time signal.
 
-The home feed shows what the accounts we follow + their network are
-reacting to RIGHT NOW. This is the strongest niche signal we can get
-inside X — stronger than search (where everyone's posting random stuff)
-and stronger than trends (which are noisy across topics).
+Home/For You shows what X is pushing. Following shows what our chosen graph
+is posting. Targeted searches pull the account back toward crypto / AI /
+bourse when the feed drifts.
 
 Strategy:
-  - Every 7 min, scrape /home (existing twitter_client.scrape_home_feed).
+  - Every cycle, scrape /home and the Following tab.
+  - Also scrape targeted X searches for crypto / AI / bourse.
   - Filter to AI/crypto/finance niche via the same regex used by
     rss_signal_bot + hn_signal_bot.
   - Sort by likes desc.
-  - Merge into external_signal.json under a 'X_HOME' source label so
+  - Merge into external_signal.json under X_* source labels so
     the news prompt sees what our circle is actually engaging with.
 
 Different from breakout_bot (which scrapes search Top tab for viral)
@@ -19,13 +19,26 @@ this is the unfiltered home-network pulse.
 """
 import json
 import os
+import random
 import traceback
 from datetime import datetime
 
 from .config import _PROJECT_ROOT
 from .logger import log
-from .twitter_client import scrape_home_feed
+from .twitter_client import scrape_following_feed, scrape_home_feed, scrape_x_search
 from .rss_signal_bot import NICHE_HITS, SIGNAL_FILE
+
+SEARCH_QUERIES = [
+    "Bitcoin OR BTC lang:fr min_faves:2",
+    "Ethereum OR ETH lang:fr min_faves:2",
+    "crypto OR stablecoin OR DeFi lang:fr min_faves:2",
+    "OpenAI OR ChatGPT OR Claude lang:fr min_faves:2",
+    "IA OR intelligence artificielle OR Mistral lang:fr min_faves:2",
+    "Nvidia OR GPU OR datacenter lang:fr min_faves:2",
+    "bourse OR CAC40 OR actions lang:fr min_faves:2",
+    "NASDAQ OR Tesla OR Microsoft lang:fr min_faves:2",
+]
+SEARCHES_PER_CYCLE = int(os.environ.get("X_FEED_SEARCHES_PER_CYCLE", "2"))
 
 
 def _load_existing() -> dict:
@@ -38,21 +51,46 @@ def _load_existing() -> dict:
         return {"items": []}
 
 
-def run_home_scout_cycle():
-    log.info("[X-HOME] Scraping home feed for niche-matched signal...")
-    try:
-        tweets = scrape_home_feed(max_tweets=20)
-    except Exception:
-        log.info("[X-HOME] Home feed scrape failed:")
-        traceback.print_exc()
-        return
+def _collect_feed_items() -> list[tuple[str, dict]]:
+    """Scrape Home, Following, and targeted searches. Each client helper owns
+    the Safari lock, so keep this sequential and bounded."""
+    collected = []
 
-    if not tweets:
-        log.info("[X-HOME] No tweets scraped from home feed.")
+    try:
+        log.info("[X-FEED] Scraping Home / For You for niche-matched signal...")
+        collected.extend(("X_HOME", t) for t in scrape_home_feed(max_tweets=20) or [])
+    except Exception:
+        log.info("[X-FEED] Home feed scrape failed:")
+        traceback.print_exc()
+
+    try:
+        log.info("[X-FEED] Scraping Following tab for niche-matched signal...")
+        collected.extend(("X_FOLLOWING", t) for t in scrape_following_feed(max_tweets=25) or [])
+    except Exception:
+        log.info("[X-FEED] Following feed scrape failed:")
+        traceback.print_exc()
+
+    queries = random.sample(SEARCH_QUERIES, k=min(SEARCHES_PER_CYCLE, len(SEARCH_QUERIES)))
+    for query in queries:
+        try:
+            tab = "top" if random.random() < 0.6 else "live"
+            log.info(f"[X-FEED] Searching X {tab}: {query}")
+            collected.extend((f"X_SEARCH/{tab}/{query}", t) for t in scrape_x_search(query, max_tweets=12, tab=tab) or [])
+        except Exception:
+            log.info(f"[X-FEED] Search scrape failed for {query!r}:")
+            traceback.print_exc()
+    return collected
+
+
+def run_home_scout_cycle():
+    scraped = _collect_feed_items()
+
+    if not scraped:
+        log.info("[X-FEED] No tweets scraped from Home/Following/search.")
         return
 
     items = []
-    for t in tweets:
+    for source, t in scraped:
         text = (t.get("text") or "").strip()
         if not text:
             continue
@@ -64,7 +102,7 @@ def run_home_scout_cycle():
             continue
         author = (t.get("author") or "").lstrip("@")
         items.append({
-            "src": f"X_HOME/{author}" if author else "X_HOME",
+            "src": f"{source}/{author}" if author else source,
             "title": text[:200],
             "url": url,
             "score": likes,
@@ -72,7 +110,7 @@ def run_home_scout_cycle():
         })
 
     if not items:
-        log.info("[X-HOME] No niche-matched items in this home-feed pass.")
+        log.info("[X-FEED] No niche-matched items in this feed/search pass.")
         return
 
     items.sort(key=lambda i: i["score"], reverse=True)
@@ -95,10 +133,10 @@ def run_home_scout_cycle():
     try:
         with open(SIGNAL_FILE, "w") as f:
             json.dump(payload, f, indent=2, ensure_ascii=False)
-        log.info(f"[X-HOME] Wrote {len(items)} home-feed items, "
+        log.info(f"[X-FEED] Wrote {len(items)} feed/search items, "
                  f"{len(merged)} total in signal.")
     except Exception:
-        log.info("[X-HOME] Failed to write signal file:")
+        log.info("[X-FEED] Failed to write signal file:")
         traceback.print_exc()
 
 
@@ -108,6 +146,6 @@ def safe_run_home_scout_cycle():
         run_home_scout_cycle()
         health.record_success("x_home_scout")
     except Exception:
-        log.info("[X-HOME] Error during home-feed scout cycle:")
+        log.info("[X-FEED] Error during feed scout cycle:")
         traceback.print_exc()
         health.record_failure("x_home_scout")

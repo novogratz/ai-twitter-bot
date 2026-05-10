@@ -48,7 +48,7 @@ from .config import (
     _PROJECT_ROOT,
 )
 from .logger import log
-from .twitter_client import retweet_post, scrape_profile_tweets
+from .twitter_client import retweet_post, scrape_following_feed, scrape_home_feed, scrape_profile_tweets, scrape_x_search
 from .engagement_log import log_reply
 
 # State files
@@ -115,6 +115,19 @@ OFF_TOPIC_KEYWORDS = (
 # Max age in hours for a retweet candidate. Anything older is stale —
 # we shouldn't be amplifying week-old or year-old news.
 MAX_CANDIDATE_AGE_HOURS = int(os.environ.get("RETWEET_MAX_AGE_HOURS", "24"))
+FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "5"))
+FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "2"))
+
+FEED_REPOST_SEARCH_QUERIES = [
+    "Bitcoin OR BTC lang:fr min_faves:3",
+    "Ethereum OR ETH lang:fr min_faves:3",
+    "crypto OR stablecoin OR DeFi lang:fr min_faves:3",
+    "OpenAI OR ChatGPT OR Claude lang:fr min_faves:3",
+    "IA OR intelligence artificielle OR Mistral lang:fr min_faves:3",
+    "Nvidia OR GPU OR datacenter lang:fr min_faves:3",
+    "bourse OR CAC40 OR actions lang:fr min_faves:3",
+    "NASDAQ OR Tesla OR Microsoft lang:fr min_faves:3",
+]
 
 
 def _is_on_niche(text: str) -> bool:
@@ -343,6 +356,75 @@ def _has_trusted_source(handle: str, text: str) -> bool:
 
 # --- selection ---
 
+def _feed_candidate_ok(t: dict) -> bool:
+    """Allow feed-native reposts from For You / Following / search when they
+    are on-niche and have at least some visible engagement. This is looser than
+    the trusted-news-handle path because the point is to actively train the
+    account's feed toward crypto / AI / bourse."""
+    text = (t.get("text") or "").strip()
+    if not text or text.startswith("@") or not _is_on_niche(text):
+        return False
+    likes = int(t.get("likes") or 0)
+    replies = int(t.get("replies") or 0)
+    return likes + (2 * replies) >= FEED_REPOST_MIN_ENGAGEMENT
+
+
+def _collect_feed_repost_candidates(retweeted: set) -> list:
+    """Scrape For You/Home, Following, and targeted X searches for repostable
+    crypto / AI / bourse content."""
+    out = []
+
+    def add(source: str, tweets: list):
+        for t in tweets or []:
+            url = t.get("url")
+            if not url or url in retweeted:
+                continue
+            url_handle = _handle_from_url(url)
+            author = (t.get("author") or url_handle or "").lower()
+            if author in RETWEET_HANDLE_BLOCKLIST or url_handle in RETWEET_HANDLE_BLOCKLIST:
+                continue
+            if author == _OWN_HANDLE or url_handle == _OWN_HANDLE:
+                continue
+            if not _feed_candidate_ok(t):
+                continue
+            out.append({
+                "url": url,
+                "text": (t.get("text") or "").strip(),
+                "author": url_handle or author or source,
+                "likes": int(t.get("likes") or 0),
+                "replies": int(t.get("replies") or 0),
+                "source": source,
+            })
+
+    try:
+        log.info("[RETWEET] Scraping For You/Home feed for repost candidates...")
+        add("FEED_HOME", scrape_home_feed(max_tweets=25))
+    except Exception:
+        log.info("[RETWEET] Home feed candidate scrape failed:")
+        traceback.print_exc()
+
+    try:
+        log.info("[RETWEET] Scraping Following feed for repost candidates...")
+        add("FEED_FOLLOWING", scrape_following_feed(max_tweets=25))
+    except Exception:
+        log.info("[RETWEET] Following feed candidate scrape failed:")
+        traceback.print_exc()
+
+    queries = random.sample(
+        FEED_REPOST_SEARCH_QUERIES,
+        k=min(FEED_SEARCHES_PER_CYCLE, len(FEED_REPOST_SEARCH_QUERIES)),
+    )
+    for query in queries:
+        try:
+            tab = "top" if random.random() < 0.7 else "live"
+            log.info(f"[RETWEET] Searching X {tab} for repost candidates: {query}")
+            add(f"FEED_SEARCH/{tab}", scrape_x_search(query, max_tweets=15, tab=tab))
+        except Exception:
+            log.info(f"[RETWEET] Feed search candidate scrape failed for {query!r}:")
+            traceback.print_exc()
+
+    return out
+
 def _score_candidates(candidates: list):
     """Pick the best trusted-source candidate without spending a model call."""
     if not candidates:
@@ -431,6 +513,7 @@ def run_retweet_cycle():
         return
 
     retweeted = _load_retweeted()
+    candidates = _collect_feed_repost_candidates(retweeted)
 
     # High-volume crypto/AI/bourse repost surface. Scrape wide every cycle;
     # source/niche/age/dedup gates keep the feed on topic.
@@ -443,7 +526,6 @@ def run_retweet_cycle():
     sample = en_sample + fr_sample
     log.info(f"[RETWEET] Scraping crypto/AI/bourse handles: {sample}")
 
-    candidates = []
     for handle in sample:
         try:
             tweets = scrape_profile_tweets(handle, max_tweets=8)
@@ -508,6 +590,7 @@ def run_retweet_cycle():
                 "author": url_handle or handle,
                 "likes": likes,
                 "replies": replies,
+                "source": "TRUSTED_HANDLE",
             })
 
     if not candidates:

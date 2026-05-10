@@ -754,10 +754,9 @@ def main():
             id="follower_tracker_job",
         )
 
-        # X home-feed scout — every 7 min, scrape /home, niche-filter,
-        # merge into external_signal.json. Stronger niche signal than
-        # search (people we follow + their network reacting RIGHT NOW).
-        log.info("X home scout: niche-filtered home-feed scrape every 7 min.")
+        # X feed scout — scrape For You/Home, Following, and targeted
+        # crypto/AI/bourse searches, then merge into external_signal.json.
+        log.info("X feed scout: Home + Following + niche searches every 7 min.")
         scheduler.add_job(
             safe_run_home_scout_cycle,
             trigger=IntervalTrigger(minutes=7),
