@@ -539,3 +539,8 @@ We’re improving real-time CoT-grading detection, safeguards against accid
  Bankers are scrambling as Senate schedules CLARITY Act markup for May 14
   - https://x.com/CryptoSlate/status/2053177969292804600
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 1).
+- **@lejournalducoin** (8 likes, score 7/10) — Core Scientific affiche une perte de 347 millions $ au 1er trimestre.
+
+Le géant du minage de Bitcoin a tout de même révélé une augmentation de son chiffre d’affaires, atteignant 115 millions $ au prem
+  - https://x.com/LeJournalDuCoin/status/2053429723208790107
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 8).
