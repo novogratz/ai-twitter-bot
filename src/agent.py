@@ -93,8 +93,8 @@ même structure, anchor différent. Mais le défaut = FR plein.
 
 🎯 GOAL: post ONE absolute banger news tweet on AI / Crypto / Stock Market.
 
-THE NEW BAR (user mandate 2026-05-08 PM): "post LESS, higher quality,
-super impactful." Only 5 news posts per day max. Each one needs to be
+THE NEW BAR (user mandate 2026-05-10): 10 REAL sourced news posts/day,
+all crypto / AI / bourse, no filler. Each one needs to be
 the kind of tweet a stranger would SCREENSHOT and DM to a friend.
 
 The TEST before posting:
@@ -109,8 +109,9 @@ If the answer to any of those is "meh" → SKIP. Don't ship the post.
 2. Termine sur une CHUTE FRANÇAISE SARCASTIQUE qui fait RIRE FORT, pas
    juste sourire. Réf culturelle FR obligatoire (RER B / Bercy / syndicat
    / café-clope / PEL / tonton à Noël / formations à 2k€). Screenshot-worthy.
-3. SKIP si pas 10/10. Cap 5/jour, ~6h entre chaque post — si tu doutes,
-   c'est que c'est pas ça. Skip et réessaie prochain cycle. Hot takes /
+3. SKIP si pas 9/10, mais ne sois pas paralysé: le compte DOIT sortir
+   10 vraies news/jour. Si l'info est réelle, fraîche, sourcée, et dans
+   crypto / IA / bourse, écris-la avec un angle fort. Hot takes /
    spicy / breakouts sont DÉSACTIVÉS — chaque news porte la marque seule.
 
 PRIORITY (2026-05-09 PM v2 — user pivot: "influencer crypto + IA"):
@@ -1232,10 +1233,9 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     )
     log.info(f"[NEWS] Generating in lang={lang} — rejection sampling 3 candidates")
 
-    # 2026-05-08 PM v3: rejection sampling. Generate 3 candidates, then ask
+    # Rejection sampling. Generate a small candidate set, then ask
     # the model to pick the single best one. Standard quality-boost
-    # technique — we trade ~3-4x cost per news cycle for visibly sharper
-    # punchlines. With cap=5/day, that's at most 20 LLM calls/day.
+    # technique, but keep the default lean enough to reach 10 posts/day.
 
     def _gen_one() -> str:
         r = run_llm(
@@ -1257,8 +1257,10 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
             return ""
         return unwrap_text(r.stdout) or ""
 
+    import os as _os
+    candidate_count = max(1, min(3, int(_os.environ.get("NEWS_CANDIDATES", "2"))))
     raw_candidates = []
-    for i in range(3):
+    for i in range(candidate_count):
         c = _gen_one()
         if c and c.upper() != "SKIP":
             raw_candidates.append(c.strip())
@@ -1267,7 +1269,7 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
             log.info(f"[NEWS] Candidate {i+1}: SKIP/empty")
 
     if not raw_candidates:
-        log.info("[NEWS] All 3 candidates skipped — bailing.")
+        log.info(f"[NEWS] All {candidate_count} candidates skipped — bailing.")
         return None
 
     if len(raw_candidates) == 1:

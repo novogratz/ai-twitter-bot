@@ -33,12 +33,12 @@ REPLIED_FILE = os.path.join(_PROJECT_ROOT, "replied_tweets.json")
 ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
-# Daily posting limits. Defaults are tuned for ChatGPT Plus / Codex usage:
-# spend model calls on content that ships, not on background analysis.
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "6"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "1"))
-MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "2"))
-MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "6"))
+# Daily posting limits. Defaults are tuned for a news-first account:
+# 10 real sourced news posts/day, reposts as the high-volume surface.
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "10"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "0"))
+MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "80"))
+MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "8"))
 
 # Accounts we never reply to. Includes both @handles AND display-name
 # variants so the blocklist still catches us when the scraper returns the
@@ -56,10 +56,9 @@ BLOCKLIST = {
 # Discovered accounts file (autonomous influencer discovery)
 DISCOVERED_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "discovered_accounts.json")
 
-# CLI/provider selection. Default is Claude (user 2026-05-08 PM: rate-limited
-# on Codex, reverted). Set AI_CLI=codex / AI_CLI=gemini at the env level to
-# switch. Authenticate with `claude login` (or codex/gemini login).
-AI_CLI = os.environ.get("AI_CLI", "claude").strip().lower()
+# CLI/provider selection. Default is Codex; set AI_CLI=claude / gemini at
+# the env level to switch. Authenticate with the matching local CLI first.
+AI_CLI = os.environ.get("AI_CLI", "codex").strip().lower()
 
 def _default_model(codex_model: str, claude_model: str, gemini_model: str = "gemini-2.0-flash") -> str:
     if AI_CLI == "codex":
@@ -79,8 +78,8 @@ QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "clau
 
 # Local guardrail against scheduler bursts and provider rate limits. The
 # wrapper spaces model calls and refuses new ones once the hourly budget is hit.
-LLM_MIN_SECONDS_BETWEEN_CALLS = int(os.environ.get("LLM_MIN_SECONDS_BETWEEN_CALLS", "60"))
-LLM_MAX_CALLS_PER_HOUR = int(os.environ.get("LLM_MAX_CALLS_PER_HOUR", "30"))
+LLM_MIN_SECONDS_BETWEEN_CALLS = int(os.environ.get("LLM_MIN_SECONDS_BETWEEN_CALLS", "75"))
+LLM_MAX_CALLS_PER_HOUR = int(os.environ.get("LLM_MAX_CALLS_PER_HOUR", "32"))
 
 # Plus-safe mode: no AI for scoring, scouting, reflection, evolution, or
 # account discovery unless explicitly enabled.

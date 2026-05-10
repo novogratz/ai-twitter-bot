@@ -7,8 +7,9 @@ YouTube news show. Every retweet must clear two bars:
      CoinDesk / Les Échos / Le Monde / FT / WSJ / etc. — the same whitelist
      the news agent already trusts).
 
-So: still source-first, but much higher volume. We aim for ~10-15 retweets/day,
-each one a useful amplification the user could screenshot for the next YouTube intro.
+So: still source-first, but much higher volume. We aim for constant crypto /
+AI / bourse coverage, each one a useful amplification the user could screenshot
+for the next YouTube intro.
 
 Side effect that matters: every accepted retweet also gets appended to
 `daily_news_picks.md` with the URL, source handle, and a one-line
@@ -55,14 +56,13 @@ RETWEETED_FILE = os.path.join(_PROJECT_ROOT, "retweeted.json")
 RETWEET_STATE_FILE = os.path.join(_PROJECT_ROOT, "retweet_daily_state.json")
 DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 
-# Hard cap per day. Bumped 12 → 20 (2026-05-05) — user verbatim
-# "reshare way more posts". Path is deterministic/no-AI, so volume is cheap.
-MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "20"))
+# Hard cap per day. Path is deterministic/no-AI, so volume is cheap.
+MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "220"))
 
 # Min likes to even consider a candidate. Lowered 10 → 5 (2026-05-05) so
 # fresh elite news from trusted handles gets amplified BEFORE engagement
 # accumulates — being early on the wire is the whole point.
-MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "5"))
+MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "0"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -83,6 +83,8 @@ NICHE_KEYWORDS = (
     "tether", "usdc", "coinbase", "binance", "kraken", "blockchain",
     "defi", "nft", "ordinals", "solana", "ripple", "xrp",
     "etf bitcoin", "etf btc", "etf ether", "spot etf", "halving",
+    "tokenization", "tokenized", "rwa", "prediction market",
+    "polymarket", "circle", "usdt", "saylor", "mstr",
     "sec lawsuit", "ofac", "mt gox",
     # Bourse / macro
     "stock", "shares", "nasdaq", "s&p", "s&p 500", "dow ",
@@ -92,7 +94,8 @@ NICHE_KEYWORDS = (
     "tesla", "apple", "google", "alphabet", "meta", "amazon",
     "microsoft", "msft", "aapl", "googl", "tsla", "amzn",
     "valuation", "billion", "trillion", "milliard", "valo",
-    "bourse", "marché", "action", "investissement", "trading",
+    "bourse", "marché", "marche", "action", "actions",
+    "investissement", "trading", "pea", "cac 40", "cac40",
 )
 
 # Off-topic blocklist — common Reuters/Bloomberg/AP topics that have
@@ -202,7 +205,28 @@ EN_TRUSTED_HANDLES = [
     "CoinDesk",
     "TheBlock__",
     "BitcoinMagazine",
+    "Cointelegraph",
     "decryptmedia",
+    "blockworks_",
+    "CryptoSlate",
+    "CoinMarketCap",
+    "WatcherGuru",
+    "DocumentingBTC",
+    "saylor",
+    "MicroStrategy",
+    "Polymarket",
+    "circle",
+    # Bourse / market signal
+    "MarketWatch",
+    "Investingcom",
+    "SquawkCNBC",
+    "KobeissiLetter",
+    "unusual_whales",
+    # Official AI / big-tech news
+    "MistralAI",
+    "nvidia",
+    "Microsoft",
+    "Meta",
 ]
 
 # Combined list kept for the source-trust check (a tweet from any of these
@@ -408,23 +432,21 @@ def run_retweet_cycle():
 
     retweeted = _load_retweeted()
 
-    # 2026-05-08 user pivot: "reshare english posts." Sample flipped
-    # EN-heavy. We pull 14 EN wires + 4 FR press per cycle. EN gets the
-    # primary slot now; FR stays in for the rare French-only scoop
-    # (Mistral, Bercy, AMF) we don't want to miss.
+    # High-volume crypto/AI/bourse repost surface. Scrape wide every cycle;
+    # source/niche/age/dedup gates keep the feed on topic.
     en_sample = random.sample(
-        EN_TRUSTED_HANDLES, k=min(14, len(EN_TRUSTED_HANDLES))
+        EN_TRUSTED_HANDLES, k=min(24, len(EN_TRUSTED_HANDLES))
     )
     fr_sample = random.sample(
-        FR_TRUSTED_HANDLES, k=min(4, len(FR_TRUSTED_HANDLES))
+        FR_TRUSTED_HANDLES, k=min(10, len(FR_TRUSTED_HANDLES))
     )
     sample = en_sample + fr_sample
-    log.info(f"[RETWEET] Scraping EN-biased news handles: {sample}")
+    log.info(f"[RETWEET] Scraping crypto/AI/bourse handles: {sample}")
 
     candidates = []
     for handle in sample:
         try:
-            tweets = scrape_profile_tweets(handle, max_tweets=5)
+            tweets = scrape_profile_tweets(handle, max_tweets=8)
         except Exception:
             log.info(f"[RETWEET] Scrape failed for @{handle}:")
             traceback.print_exc()
@@ -448,7 +470,7 @@ def run_retweet_cycle():
                 continue
             likes = int(t.get("likes") or 0)
             replies = int(t.get("replies") or 0)
-            if likes < MIN_LIKES_FLOOR and replies < 3:
+            if likes < MIN_LIKES_FLOOR and replies < 1:
                 continue
             # 2026-05-07 user incident: bot retweeted Reuters' 2012 Justin
             # Bieber tweet. Reuters/Bloomberg post EVERYTHING — trusted
@@ -466,9 +488,11 @@ def run_retweet_cycle():
                 # Many scraper paths don't expose a timestamp at all,
                 # so 999_999 hits everything. Fall back: tweets with
                 # 0 timestamp + low engagement get skipped; tweets
-                # from trusted handles WITH 50+ likes (modern signal,
-                # not a 2012 dead post) we let pass.
-                if age_hours >= 999_000 and likes >= 50:
+                # from trusted handles WITH any visible engagement we let
+                # pass; wide sampling + dedup makes this the difference
+                # between seeing enough fresh crypto/AI/bourse reposts and
+                # starving the feed.
+                if age_hours >= 999_000 and (likes >= 1 or replies >= 1):
                     pass  # likely fresh, let it through
                 else:
                     continue

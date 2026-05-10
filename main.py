@@ -113,29 +113,20 @@ def should_skip_engagement() -> bool:
 
 
 def post_interval_minutes() -> int:
-    """Post cadence — 2026-05-08 user: 'I want more content real time, you're
-    too slow.' Now EN-content + global audience, so the schedule isn't
-    Paris-locked. US prime time (EST 09-22) gets the tightest cadence.
-    Hours are EST.
-    """
+    """News cadence. Target: enough attempts to reliably ship 10 sourced
+    news posts/day even when freshness/source gates reject candidates."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    # US business hours peak — EST 09-12 + 13-16 = absolute prime.
     if 9 <= hour < 12 or 13 <= hour < 16:
-        return random.randint(15, 28)
-    # US shoulder hours — early morning + late afternoon.
+        return random.randint(45, 70)
     elif 7 <= hour < 9 or 16 <= hour < 19:
-        return random.randint(20, 35)
-    # US evening — Cali + East Coast still scrolling.
+        return random.randint(55, 85)
     elif 19 <= hour < 23:
-        return random.randint(30, 55)
-    # Overnight / EU morning ramp — slower but still active for global news.
+        return random.randint(65, 100)
     elif 23 <= hour or hour < 4:
-        return random.randint(60, 110)
-    # EU mid-morning — pickup before US opens.
+        return random.randint(110, 160)
     elif 4 <= hour < 7:
-        return random.randint(35, 60)
-    else:
-        return random.randint(30, 60)
+        return random.randint(75, 110)
+    return random.randint(60, 95)
 
 
 def reply_interval_minutes() -> int:
