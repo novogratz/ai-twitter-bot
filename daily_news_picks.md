@@ -518,3 +518,6 @@ We found a limited amount of accide
 - **@cnbc** (117 likes, score 7/10) — U.S. and Iran are no closer to ending war; Tehran's response awaited
   - https://x.com/CNBC/status/2053114680734843061
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 169).
+- **@axios** (95 likes, score 7/10) — The Trump administration's claim of "zero" border crossings is falling apart
+  - https://x.com/axios/status/2053089043588526130
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 133).
