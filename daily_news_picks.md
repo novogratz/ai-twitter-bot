@@ -508,3 +508,10 @@ Sur CoinDesk Live
 - **@business** (51 likes, score 7/10) — Les investisseurs recherchent d'autres signes d'apaisement des tensions entre le président Donald Trump et son homologue Xi Jinping pour aider à lever l'incertitude pesant sur les marchés chinois
   - https://x.com/business/status/2053279528307273752
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 83).
+
+## 2026-05-10
+- **@openai** (2678 likes, score 7/10) — Chain of thought monitors are a key layer of defense against AI agent misalignment. To preserve monitorability, we avoid penalizing misaligned reasoning during RL.
+
+We found a limited amount of accide
+  - https://x.com/OpenAI/status/2052845764507062349
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 3234).
