@@ -500,3 +500,8 @@ Le quantique retient le capital institutionnel sur la touche. La loi Clarity ava
 - **@afp** (60 likes, score 7/10) — #URGENT Au moins 69 personnes tuées dans une attaque de milice en RDCongo : sources locales et sécuritaires
   - https://x.com/AFP/status/2053198989919478116
   - **WHY**: Source fiable + impact concret (score signal 1, engagement 80).
+- **@coindesk** (50 likes, score 7/10) — .@scottmelker réagit contre les marchés de prédiction : « chaque fois que nous avons vu une spéculation effrénée dans la société, c’est un signe que de mauvaises choses arrivent. »
+
+Sur CoinDesk Live
+  - https://x.com/CoinDesk/status/2053282291317616691
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 92).
