@@ -17,6 +17,9 @@ from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 _LLM_RATE_LIMITED = object()
+FAVORITE_REPOSTS_PER_CYCLE = int(os.environ.get("FAVORITE_REPOSTS_PER_CYCLE", "3"))
+FAVORITE_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FAVORITE_REPOST_MIN_ENGAGEMENT", "3"))
+FAVORITE_REPOST_MAX_AGE_MINUTES = int(os.environ.get("FAVORITE_REPOST_MAX_AGE_MINUTES", "2880"))
 
 VIP_REPLY_ACCOUNTS = [
     "FrugalisteFutee",   # La Frugaliste Futee — user VIP 2026-05-02
@@ -582,6 +585,76 @@ DIRECT_REPLY_MAX_PER_CYCLE = 18  # Always-scan VIP + high-traction accounts firs
 MAX_EN_REPLIES_PER_CYCLE = 3     # hard cap — keeps ~80% FR ratio while leaving room for big EN influencers
 
 
+def _maybe_repost_best_profile_tweet(username: str, tweets: list, retweeted: set) -> bool:
+    """When visiting a favorite account, repost their best recent on-niche post.
+
+    This piggybacks on profile visits we already pay for in Safari. It keeps
+    favorite accounts visible on our profile and trains the feed toward
+    crypto / AI / bourse without spending an LLM call.
+    """
+    if not tweets:
+        return False
+    try:
+        from .retweet_bot import _save_retweeted
+        from .twitter_client import retweet_post
+    except Exception:
+        return False
+
+    username_lc = (username or "").lower().lstrip("@")
+    candidates = []
+    for t in tweets:
+        url = t.get("url") or ""
+        text = (t.get("text") or "").strip()
+        if not url or url in retweeted or not text:
+            continue
+        if text.startswith("@"):
+            continue
+        url_handle = _handle_from_url(url)
+        author = (t.get("author") or username or url_handle or "").lower().lstrip("@")
+        if url_handle == _OWN_HANDLE or author == _OWN_HANDLE:
+            continue
+        if url_handle and url_handle != username_lc:
+            continue
+        if not _is_on_niche(text):
+            continue
+        age = _tweet_age_minutes(url)
+        if age > FAVORITE_REPOST_MAX_AGE_MINUTES:
+            continue
+        likes = int(t.get("likes") or 0)
+        replies = int(t.get("replies") or 0)
+        engagement = likes + (2 * replies)
+        if engagement < FAVORITE_REPOST_MIN_ENGAGEMENT:
+            continue
+        candidates.append((engagement, likes, replies, url, text))
+
+    if not candidates:
+        return False
+
+    engagement, likes, replies, url, text = max(candidates, key=lambda item: item[:3])
+    retweeted.add(url)
+    _save_retweeted(retweeted)
+    try:
+        log.info(
+            f"[FAVORITE-REPOST] Reposting best recent @{username} post "
+            f"({likes} likes, {replies} replies): {text[:100]}"
+        )
+        retweet_post(url)
+        try:
+            log_reply(
+                url,
+                f"[FAVORITE-RT] {text[:200]}",
+                action_type="retweet",
+                source=f"FAVORITE_PROFILE/{username}",
+            )
+        except Exception:
+            pass
+        return True
+    except Exception:
+        log.info(f"[FAVORITE-REPOST] Failed to repost @{username}: {url}")
+        traceback.print_exc()
+        return False
+
+
 def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=None, en_counter=None):
     """Reply to a list of scraped tweets. Returns number of replies posted.
     `remaining` caps how many we'll send in this call (used to enforce the
@@ -803,6 +876,12 @@ def run_direct_reply_cycle():
     replied = load_replied()
     total = 0
     en_counter = [0]  # mutable — tracks EN replies across the cycle for the hard cap
+    favorite_reposts = 0
+    try:
+        from .retweet_bot import _load_retweeted
+        retweeted = _load_retweeted()
+    except Exception:
+        retweeted = set()
 
     def _llm_exhausted() -> bool:
         limited, used, max_hour, reset_seconds = llm_hourly_limit_status()
@@ -835,6 +914,10 @@ def run_direct_reply_cycle():
         log.info(f"[DIRECT] === ALWAYS profile @{username} ===")
         tweets = scrape_profile_tweets(username, max_tweets=12)
         if tweets:
+            if favorite_reposts < FAVORITE_REPOSTS_PER_CYCLE:
+                if _maybe_repost_best_profile_tweet(username, tweets, retweeted):
+                    favorite_reposts += 1
+                    time.sleep(random.randint(4, 8))
             profile_tweets = [{
                 "url": t["url"], "text": t["text"], "author": username,
                 "likes": t.get("likes", 0), "replies": t.get("replies", 0),
