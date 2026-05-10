@@ -603,17 +603,18 @@ def main():
         )
 
         # Self-evolution agent — bot rewrites its OWN personality every 4h.
-        # Reads recent activity + uses WebSearch to investigate the world,
-        # writes bot_self.json (mood, obsession, recent_learning, voice_tweaks,
-        # drift, self_narrative) which personality_store.render_bot_self()
-        # injects into every generation prompt. The bot's identity drifts
-        # day-to-day like a real person.
-        log.info("Self-evolution agent: bot rewrites own personality every 4h (agentic).")
-        scheduler.add_job(
-            safe_run_self_evolution_cycle,
-            trigger=IntervalTrigger(hours=4),
-            id="self_evolution_job",
-        )
+        # This spends an LLM call, so keep it behind the same maintenance
+        # switch as strategy/evolution/reflection. News + replies get first
+        # claim on the local CLI budget.
+        if ENABLE_AI_MAINTENANCE:
+            log.info("Self-evolution agent: bot rewrites own personality every 4h (agentic).")
+            scheduler.add_job(
+                safe_run_self_evolution_cycle,
+                trigger=IntervalTrigger(hours=4),
+                id="self_evolution_job",
+            )
+        else:
+            log.info("Self-evolution agent: disabled by default in Plus-safe mode.")
 
         # Breakout bot — fast trend jacker. Every 8 min scrapes niche
         # search Top tab; if a tweet has >= BREAKOUT_VELOCITY_LIKES likes
@@ -696,15 +697,17 @@ def main():
 
         # Meta-strategy agent — every 4h, reads 7d engagement + state +
         # WebSearch on world events, decides daily caps + cadence factor
-        # + topic focus, writes live_strategy.json. Bots read the live
-        # caps via config.get_live_cap() so strategic decisions actually
-        # flex behavior. Auto-pushes to git.
-        log.info("Meta-strategy agent: agentic cap + focus + cadence decisions every 4h.")
-        scheduler.add_job(
-            safe_run_meta_strategy_cycle,
-            trigger=IntervalTrigger(hours=4),
-            id="meta_strategy_job",
-        )
+        # + topic focus, writes live_strategy.json. This is LLM-backed, so
+        # do not run it when maintenance is disabled.
+        if ENABLE_AI_MAINTENANCE:
+            log.info("Meta-strategy agent: agentic cap + focus + cadence decisions every 4h.")
+            scheduler.add_job(
+                safe_run_meta_strategy_cycle,
+                trigger=IntervalTrigger(hours=4),
+                id="meta_strategy_job",
+            )
+        else:
+            log.info("Meta-strategy agent: disabled by default in Plus-safe mode.")
 
         # External-signal bot — scrape Hacker News + Reddit hot every 20 min.
         # No LLM, no Twitter. Writes external_signal.json which news +

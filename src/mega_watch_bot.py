@@ -24,7 +24,7 @@ from .config import _PROJECT_ROOT, BOT_HANDLE, BLOCKLIST
 from .logger import log
 from .twitter_client import scrape_profile_tweets, reply_to_tweet
 from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url
-from .direct_reply import _generate_single_reply, _is_on_niche
+from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche
 from .engagement_log import log_reply
 from .humanizer import humanize
 
@@ -99,6 +99,9 @@ def run_mega_watch_cycle():
                 author=author,
                 tweet_text=text,
             )
+            if reply_text is _LLM_RATE_LIMITED:
+                log.info("[MEGA] LLM budget reached; stopping this cycle before posting attempts.")
+                return
             if not reply_text:
                 continue
             reply_text = humanize(reply_text)

@@ -23,8 +23,10 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 | `PRIORITY_REPLY_MODEL` | `gpt-5.4-mini` | Model for VIP-account replies. |
 | `QUOTE_MODEL` | `gpt-5.4-mini` | Model for quote-tweet commentary. |
 | `ROAST_MODEL` | `gpt-5.4-mini` | Model for the @pgm_pm roast bot. |
-| `LLM_MIN_SECONDS_BETWEEN_CALLS` | `120` | Local rate-limit guardrail. |
-| `LLM_MAX_CALLS_PER_HOUR` | `18` | Local hourly model-call budget. |
+| `LLM_ENFORCE_BUDGET` | `0` | Set to `1` only to hard-stop model calls at the local budget. Default is soft accounting so production content does not starve. |
+| `LLM_MIN_SECONDS_BETWEEN_CALLS` | `15` | Local spacing guardrail to avoid bursty overlapping CLI calls. |
+| `LLM_MAX_CALLS_PER_HOUR` | `40` | Local hourly model-call telemetry budget. Hard-stops only when `LLM_ENFORCE_BUDGET=1`. |
+| `LLM_MAX_CALLS_PER_DAY` | `120` | Local daily model-call telemetry budget. Hard-stops only when `LLM_ENFORCE_BUDGET=1`. |
 | `NEWS_CANDIDATES` | `1` in Codex mode, `2` otherwise | Number of news generations before optional judge selection. Raising this spends extra model calls. |
 | `ENABLE_CODEX_OPERATOR` | `0` | Allow the 4-hour `operator_cycle.sh` to spend a Codex CLI agent run when `ENABLE_AI_MAINTENANCE` is off. |
 
@@ -164,8 +166,10 @@ RETWEET_MIN_LIKES=10
 RETWEET_MAX_AGE_HOURS=18
 QUOTE_MAX_AGE_HOURS=18
 
-LLM_MIN_SECONDS_BETWEEN_CALLS=120
-LLM_MAX_CALLS_PER_HOUR=18
+LLM_ENFORCE_BUDGET=0
+LLM_MIN_SECONDS_BETWEEN_CALLS=15
+LLM_MAX_CALLS_PER_HOUR=40
+LLM_MAX_CALLS_PER_DAY=120
 
 ENABLE_AI_MAINTENANCE=0
 ENABLE_AI_DISCOVERY=0

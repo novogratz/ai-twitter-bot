@@ -71,6 +71,15 @@ def _rate_limits() -> tuple[float, int]:
     return min_gap, max_hour, max_day
 
 
+def _enforce_budget() -> bool:
+    """Hard-stop local LLM calls only when explicitly requested.
+
+    Default is soft accounting: production content can keep shipping, while
+    high-waste paths should be controlled by scheduling and feature flags.
+    """
+    return os.environ.get("LLM_ENFORCE_BUDGET", "0") == "1"
+
+
 def llm_hourly_limit_status() -> tuple[bool, int, int, int]:
     """Return (limited, used, max_hour, seconds_until_oldest_hourly_call_expires)."""
     now = time.time()
@@ -80,6 +89,8 @@ def llm_hourly_limit_status() -> tuple[bool, int, int, int]:
         raw_calls = state.get("calls", [])
         hour_calls = sorted(float(t) for t in raw_calls if now - float(t) < 3600)
         day_calls = sorted(float(t) for t in raw_calls if now - float(t) < 86400)
+    if not _enforce_budget():
+        return False, len(hour_calls), max_hour, 0
     if len(day_calls) >= max_day:
         reset_seconds = max(1, int(86400 - (now - day_calls[0]))) if day_calls else 86400
         return True, len(day_calls), max_day, reset_seconds
@@ -102,14 +113,22 @@ def _wait_for_slot(label: str):
         state = _load_state()
         calls = [t for t in state.get("calls", []) if now - float(t) < 86400]
         hour_calls = [t for t in calls if now - float(t) < 3600]
-        if len(calls) >= max_day:
-            msg = f"local LLM daily budget reached ({len(calls)}/{max_day} calls in 24h)"
-            log.info(f"[LLM] {label}: {msg}")
-            return LLMResult(LLM_RATE_LIMIT_CODE, "", msg)
-        if len(hour_calls) >= max_hour:
-            msg = f"local LLM hourly budget reached ({len(hour_calls)}/{max_hour} calls in 1h)"
-            log.info(f"[LLM] {label}: {msg}")
-            return LLMResult(LLM_RATE_LIMIT_CODE, "", msg)
+        over_day = len(calls) >= max_day
+        over_hour = len(hour_calls) >= max_hour
+        if _enforce_budget():
+            if over_day:
+                msg = f"local LLM daily budget reached ({len(calls)}/{max_day} calls in 24h)"
+                log.info(f"[LLM] {label}: {msg}")
+                return LLMResult(LLM_RATE_LIMIT_CODE, "", msg)
+            if over_hour:
+                msg = f"local LLM hourly budget reached ({len(hour_calls)}/{max_hour} calls in 1h)"
+                log.info(f"[LLM] {label}: {msg}")
+                return LLMResult(LLM_RATE_LIMIT_CODE, "", msg)
+        elif over_day or over_hour:
+            log.info(
+                f"[LLM] {label}: soft budget exceeded "
+                f"(hour={len(hour_calls)}/{max_hour}, day={len(calls)}/{max_day}); continuing."
+            )
 
         last_call = float(state.get("last_call", 0) or 0)
         sleep_for = max(0.0, min_gap - (now - last_call))

@@ -89,6 +89,11 @@ def strip_agent_preamble(text: str) -> str:
 def humanize(text: str) -> str:
     """Deterministic cleanup: strip AI artifacts, fix punctuation.
     No LLM call — fast and free. Returns original on short/empty input."""
+    if text is None:
+        return ""
+    if not isinstance(text, str):
+        log.info(f"[HUMANIZER] Non-string input {type(text).__name__}; treating as empty text.")
+        return ""
     if not text or len(text) < 10:
         return text
 
