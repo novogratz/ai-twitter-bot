@@ -515,3 +515,6 @@ Sur CoinDesk Live
 We found a limited amount of accide
   - https://x.com/OpenAI/status/2052845764507062349
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 3234).
+- **@cnbc** (117 likes, score 7/10) — U.S. and Iran are no closer to ending war; Tehran's response awaited
+  - https://x.com/CNBC/status/2053114680734843061
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 169).
