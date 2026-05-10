@@ -521,3 +521,8 @@ We found a limited amount of accide
 - **@axios** (95 likes, score 7/10) — The Trump administration's claim of "zero" border crossings is falling apart
   - https://x.com/axios/status/2053089043588526130
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 133).
+- **@openai** (133 likes, score 7/10) — Training models involves many technical and social processes, so prevention of CoT grading has to be built into the process. 
+
+We’re improving real-time CoT-grading detection, safeguards against accid
+  - https://x.com/OpenAI/status/2052845770056073216
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 175).
