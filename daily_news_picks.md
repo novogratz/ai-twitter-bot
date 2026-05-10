@@ -505,3 +505,6 @@ Le quantique retient le capital institutionnel sur la touche. La loi Clarity ava
 Sur CoinDesk Live
   - https://x.com/CoinDesk/status/2053282291317616691
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 92).
+- **@business** (51 likes, score 7/10) — Les investisseurs recherchent d'autres signes d'apaisement des tensions entre le président Donald Trump et son homologue Xi Jinping pour aider à lever l'incertitude pesant sur les marchés chinois
+  - https://x.com/business/status/2053279528307273752
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 83).
