@@ -1,33 +1,31 @@
 {
-  "ts": "2026-05-08T05:11:01.757478",
+  "ts": "2026-05-10T13:17:06.280292",
   "window_min": 90,
-  "total_actions": 24,
+  "total_actions": 28,
   "by_type": {
-    "hotake": 1,
-    "reply": 24
+    "reply": 22,
+    "retweet": 6
   },
   "winners": {
+    "PROFILE-ALWAYS/FrugalisteFutee": 2,
+    "FAVORITE_PROFILE/Graphseo": 2,
     "PROFILE-ALWAYS/Graphseo": 2,
-    "PROFILE-FR/AgefiFrance": 2,
-    "FEED": 2,
-    "SEARCH-FR-LIVE/\"Brent 122\" OR \"p\u00e9trole record\" OR \"crise p\u00e9troli\u00e8re\" OR \"OPEP \u00e9clatement\" lang:fr min_faves:15": 2,
-    "MEGA/lesechos": 2
+    "FAVORITE_PROFILE/vision_ia": 2,
+    "PROFILE-FR/JDNebusiness": 2
   },
   "losers": {
-    "PROFILE-ALWAYS/RodolpheSteffan": 1,
-    "PROFILE-ALWAYS/PowerHasheur": 1,
-    "PROFILE-ALWAYS/Crypto__Goku": 1,
-    "PROFILE-ALWAYS/Capetlevrai": 1,
-    "PROFILE-ALWAYS/MathieuL1": 1,
-    "PROFILE-ALWAYS/fchollet": 1,
-    "PROFILE-FR/DrTilt2": 1,
-    "PROFILE-FR/75secondes": 1,
-    "FOLLOWING": 1,
-    "SEARCH-FR-HOT/PayPal crypto stablecoin PYUSD Bitcoin paiement": 1,
-    "SEARCH-FR-LIVE/\"proc\u00e8s Musk\" OR \"Musk Altman\" OR \"OpenAI proc\u00e8s\" lang:fr min_faves:15": 1,
-    "MEGA/elonmusk": 1,
-    "MEGA/LeJournalDuCoin": 1,
-    "PROFILE-ALWAYS/vision_ia": 1
+    "FAVORITE_PROFILE/FinTales_": 1,
+    "PROFILE-ALWAYS/FlasheurInvest": 1,
+    "PROFILE-ALWAYS/MatthiasBaccino": 1,
+    "PROFILE-ALWAYS/McnallieM": 1,
+    "PROFILE-ALWAYS/CryptoastMedia": 1,
+    "PROFILE-ALWAYS/coinacademy_fr": 1,
+    "PROFILE-ALWAYS/TagadoBTC": 1,
+    "PROFILE-ALWAYS/MiningTk": 1,
+    "PROFILE-ALWAYS/Divs_King": 1,
+    "PROFILE-ALWAYS/NCheron_bourse": 1,
+    "PROFILE-FR/Loris_Dalleau": 1,
+    "FAVORITE_PROFILE/FrugalisteFutee": 1
   },
   "post_cadence_factor": 1.0,
   "boost_cadence_factor": 1.0

@@ -80,11 +80,7 @@ HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", _default_model("gpt-5.4-mini", "cl
 ROAST_MODEL = os.environ.get("ROAST_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
 QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
 
-# Local guardrail against scheduler bursts and provider rate limits. Budgets
-# are soft telemetry by default; set LLM_ENFORCE_BUDGET=1 to hard-stop calls.
-LLM_MIN_SECONDS_BETWEEN_CALLS = int(os.environ.get("LLM_MIN_SECONDS_BETWEEN_CALLS", "15"))
-LLM_MAX_CALLS_PER_HOUR = int(os.environ.get("LLM_MAX_CALLS_PER_HOUR", "40"))
-LLM_MAX_CALLS_PER_DAY = int(os.environ.get("LLM_MAX_CALLS_PER_DAY", "120"))
+# No budget limits — the bot calls the LLM freely.
 
 # Plus-safe mode: no AI for scoring, scouting, reflection, evolution, or
 # account discovery unless explicitly enabled.
