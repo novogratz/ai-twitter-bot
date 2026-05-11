@@ -667,3 +667,22 @@ His advice: “Buy the BTC dip, think 10 years because it’s a limited asset. D
 Through Project Arc and Vibe Coding, we are integrating the NVIDIA A
   - https://x.com/nvidia/status/2052892173910098053
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 138).
+- **@lejournalducoin** (0 likes, score 7/10) — En Suisse, la campagne visant à imposer une réserve en #Bitcoin à la banque centrale est abandonnée, faute d’avoir atteint le seuil requis de signatures pour déclencher un référendum.
+  - https://x.com/LeJournalDuCoin/status/2052723388083278303
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 10).
+- **@karimbeker03** (2 likes, score 7/10) — C’est se que j’essaye d’expliquer depuis. 
+Peut importe que le bitcoin soit haussier et s’apprête à aller vers les 90 - 100k. Une correction est imminente. 
+Le marché n’évolue pas qu’en bougie blanche
+  - https://x.com/karimbeker03/status/2053665488522101013
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 10).
+- **@squawkcnbc** (22 likes, score 7/10) — Fmr. Fed Vice Chair Roger Ferguson explains why he wouldn’t be surprised with an interest rate hike later this year:
+  - https://x.com/SquawkCNBC/status/2052757953141248380
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 42).
+- **@reuters** (20 likes, score 7/10) — Des panaches de fumée épaisse ont été vus s'élevant du sud du Liban après une série de frappes aériennes israéliennes https://reut.rs/4wkI9Hp
+  - https://x.com/Reuters/status/2053678234915525001
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 38).
+- **@cryptoslate** (3 likes, score 7/10) — Firefox découvre un bug vieux de 20 ans et applique 14 mois de correctifs en 30 jours en utilisant l’IA Mythos d’Anthropic
+
+via @akibablade
+  - https://x.com/CryptoSlate/status/2053461301196640729
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 5).
