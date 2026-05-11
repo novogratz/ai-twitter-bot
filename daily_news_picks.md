@@ -865,3 +865,22 @@ Core Automation is d
 - **@bfmcrypto** (7 likes, score 7/10) — Le bitcoin atteindra le million de dollars d'ici 5 ans: ses partisans en sont de plus en plus convaincus, même si certains l’anticipaient beaucoup plus tôt
   - https://x.com/BfmCrypto/status/2053823846742888479
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 11).
+- **@saylor** (10894 likes, score 9/10) — Strategy has acquired 535 BTC for ~$43.0 million at ~$80,340 per bitcoin and has achieved BTC Yield of 9.4% YTD 2026. As of 5/10/2026, we hodl 818,869 $BTC acquired for ~$61.86 billion at ~$75,540 per
+  - https://x.com/saylor/status/2053807998993150151
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 12486).
+- **@pete_rizzo_** (219 likes, score 9/10) — BREAKING: MICHAEL SAYLOR'S STRATEGY JUST BOUGHT 500 MORE #BITCOIN FOR $43,000,000
+
+4% OF THE CIRCULATING BTC SUPPLY SECURED
+
+WE ARE WATCHING HISTORY
+  - https://x.com/pete_rizzo_/status/2053807828926660803
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 251).
+- **@watcherguru** (3292 likes, score 9/10) — JUST IN: Michael Saylor's 'Strategy' buys 535 Bitcoin worth $43.4 million.
+  - https://x.com/WatcherGuru/status/2053807860921028897
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 3926).
+- **@kalshi** (920 likes, score 9/10) — JUST IN: 50% chance Bitcoin hits $100K this year
+  - https://x.com/Kalshi/status/2053841307097829663
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1126).
+- **@cointelegraph** (90 likes, score 8/10) — MISE À JOUR : la capitalisation boursière de xStocks sur Ethereum bondit de près de 1 000 % depuis le début de l'année, dépassant les 100 M$, selon Token Terminal.
+  - https://x.com/Cointelegraph/status/2053857816482390111
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 166).
