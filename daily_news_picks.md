@@ -823,3 +823,26 @@ Les acheteurs as
 - **@coinmarketcap** (155 likes, score 7/10) — DERNIER:  Michael Saylor a signalé que Strategy reprendra les achats de Bitcoin cette semaine après la pause de la semaine dernière.
   - https://x.com/CoinMarketCap/status/2053738672017559684
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 255).
+- **@cointelegraph** (137 likes, score 7/10) — MISE À JOUR : Circle a frappé 2 500 000 000 $ en USDC sur Solana la semaine dernière.
+  - https://x.com/Cointelegraph/status/2053765963938508941
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 233).
+- **@coinmarketcap** (57 likes, score 7/10) — DERNIER:  Le développeur du Canton Network, Digital Asset Holdings, lève environ 300 millions de dollars à une valorisation de 2 milliards de dollars, menée par a16z crypto, selon Bloomberg.
+  - https://x.com/CoinMarketCap/status/2053768116665004308
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 103).
+- **@xfenaux** (7 likes, score 7/10) — OR -1% 4 665 $ alors que l'Iran escalade
+
+L'or recule ce matin alors que le pétrole explose de +4%. Paradoxe apparent.
+
+En réalité ce que ça veut dire : le marché ne price pas un risque systémique, il
+  - https://x.com/XFenaux/status/2053767232392482975
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7).
+- **@circle** (118 likes, score 7/10) — Are you a verified Circle stockholder? Submit your questions through Say by Friday, May 8 at 9 a.m. ET for upcoming earnings call next week.
+
+A selection of questions will be addressed by management d
+  - https://x.com/circle/status/2052418184733495775
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 134).
+- **@coinmarketcap** (28 likes, score 7/10) — Levées de fonds crypto les plus importantes de la semaine dernière  
+ Equiniti (@equiniti) - 4,2 Md$ ; Fiscalité et comptabilité  
+ Mirantis (@MirantisIT) - 625,0 M$ ; Services cloud, Outils pour déve
+  - https://x.com/CoinMarketCap/status/2053770864336736590
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 80).
