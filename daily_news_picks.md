@@ -846,3 +846,22 @@ A selection of questions will be addressed by management d
  Mirantis (@MirantisIT) - 625,0 M$ ; Services cloud, Outils pour déve
   - https://x.com/CoinMarketCap/status/2053770864336736590
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 80).
+- **@coinmarketcap** (104 likes, score 9/10) — DERNIER:  Capital B a levé 17,8 millions de dollars auprès d'investisseurs incluant Adam Back et TOBAM pour acheter 182 Bitcoins supplémentaires, ce qui pourrait porter ses avoirs totaux à 3 125 BTC.
+  - https://x.com/CoinMarketCap/status/2053846635097022540
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 182).
+- **@coindesk** (70 likes, score 9/10) — DERNIER: Michael @saylor's @Strategy acquiert 535 $BTC pour 43 M$ à 80 340 $ par Bitcoin, portant les avoirs totaux à 818 869 $BTC.
+  - https://x.com/CoinDesk/status/2053821314704523733
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 124).
+- **@bitcoinmagazine** (738 likes, score 9/10) — JUST IN : Le STRC de Michael Saylor est de retour à 100 $ et accumule activement plus de bitcoin 
+
+On estime qu'ils ont déjà acheté 112 BTC aujourd'hui
+  - https://x.com/BitcoinMagazine/status/2053823690895212945
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 866).
+- **@theinformation** (29 likes, score 7/10) — Exclusive: A six-week-old startup founded by ex-OpenAI researcher Jerry Tworek is already seeking funding at a $4 billion valuation, highlighting investor demand for new AI labs.
+
+Core Automation is d
+  - https://x.com/theinformation/status/2053837714131165610
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 37).
+- **@bfmcrypto** (7 likes, score 7/10) — Le bitcoin atteindra le million de dollars d'ici 5 ans: ses partisans en sont de plus en plus convaincus, même si certains l’anticipaient beaucoup plus tôt
+  - https://x.com/BfmCrypto/status/2053823846742888479
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 11).
