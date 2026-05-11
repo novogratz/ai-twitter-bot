@@ -711,3 +711,34 @@ You can find used Models in the $20K range and they STILL get future software up
 - **@decryptmedia** (5 likes, score 7/10) — Australian Police Seize Millions in Bitcoin From Alleged Darknet Marketplace Operator
   - https://x.com/DecryptMedia/status/2053164270603424030
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 9).
+- **@coinbureau** (37 likes, score 7/10) — DERNIER: Les employés d'OpenAI viennent de se désengager pour 6,6 MILLIARDS DE DOLLARS en ventes d'actions, selon le WSJ.
+
+Plus de 600 employés actuels et anciens ont vendu des actions en octobre.
+
+Mo
+  - https://x.com/coinbureau/status/2053690310689997083
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 67).
+- **@cryptorover** (812 likes, score 7/10) — BREAKING:
+
+ Banking groups are reportedly pushing last-minute changes to the stablecoin yield compromise, per Bloomberg.
+
+THE BANKING CARTEL IS TRYING TO STOP CRYPTO!
+  - https://x.com/cryptorover/status/2053652504970232085
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 962).
+- **@blast_france** (118 likes, score 7/10) — IA : la fin de l'emploi ? (mais pas des profits pour les patrons)
+
+ https://youtu.be/zJqx2lfi58o
+
+"Quand on entend parler de l’Intelligence Artificielle et du boulot en ce moment c’est un peu la paniq
+  - https://x.com/blast_france/status/2046986669933416659
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 158).
+- **@theinformation** (42 likes, score 7/10) — Exclusive: Cursor staffers are already inside xAI offices as layoffs and exits mount at Elon Musk’s AI company.
+
+The shake-up comes amid uncertainty over whether xAI will ultimately acquire the coding
+  - https://x.com/theinformation/status/2053490340238164364
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 56).
+- **@afp** (3 likes, score 7/10) — Trump says US Supreme Court justices should be "loyal" to his executive order banning birthright citizenship, while bashing the court's recent ruling against his tariffs
+
+https://u.afp.com/SRwQ
+  - https://x.com/AFP/status/2053688394572595486
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 3).
