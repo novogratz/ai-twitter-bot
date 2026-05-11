@@ -616,3 +616,31 @@ Bi
 - **@bitcoinmagazine** (1887 likes, score 8/10) — JUST IN: $82,000 Bitcoin
   - https://x.com/BitcoinMagazine/status/2053608673285382592
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 2103).
+- **@documentingbtc** (1286 likes, score 9/10) — Le Prix d’un Bitcoin le Jour de la Fête des Mères 
+
+2026 = 80 785 $
+2025 = 104 002 $
+2024 = 60 800 $
+2023 = 26 785 $
+2022 = 29 646 $
+2021 = 49 832 $
+2020 = 9 596 $
+2019 = 7 985 $
+2018 = 8 582 $
+2017 =
+  - https://x.com/DocumentingBTC/status/2053440264996372656
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1378).
+- **@cointelegraph** (78 likes, score 9/10) — AUJOURD'HUI : Un OG Bitcoin qui a acheté 500 $BTC à ~914 $ il y a douze ans vient de déplacer ses pièces pour la première fois, avec un retour sur investissement de 88x valant plus de 40 M$.
+  - https://x.com/Cointelegraph/status/2053661520223941117
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 108).
+- **@bulltheoryio** (1132 likes, score 9/10) — BREAKING: Bitcoin just closed its daily and weekly candles above $82,000 for the first time since January 26th.
+  - https://x.com/BullTheoryio/status/2053629068398985698
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1272).
+- **@bitcoin** (463 likes, score 9/10) — $81,572.07
+
+#Bitcoin
+  - https://x.com/Bitcoin/status/2053637183748079895
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 675).
+- **@documentingbtc** (556552 likes, score 8/10) — Expliquer #bitcoin à 100 $ à une salle vide.
+  - https://x.com/DocumentingBTC/status/1363481580786835458
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 563680).
