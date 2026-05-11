@@ -765,3 +765,27 @@ And it did this even as the US rejected the latest Iran peace proposal
 - **@business** (6 likes, score 7/10) — Une récente vague de demandes de rachat par les investisseurs à travers le marché de 1,8 billion de dollars pour le crédit privé a incité Blackstone à enrôler des cadres supérieurs pour apporter du ca
   - https://x.com/business/status/2053704857119277509
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
+- **@flasheurinvest** (20 likes, score 7/10) — Le PDG de NVIDIA, Jensen Huang, avait déjà évoqué plusieurs entreprises liées à l’IA et aux infrastructures technologiques avant leurs énormes envolées en Bourse :
+
+• $NBIS → +840 %  
+• $APLD → +1400
+  - https://x.com/FlasheurInvest/status/2053720862650503225
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 28).
+- **@fiatarchive** (10 likes, score 7/10) — FED GOVERNOR WALLER: Crypto dips have "happened before" and big crashes are normal.    
+
+"Years ago if you said Bitcoin was $10,000, you'd say oh my god this is crazy."
+  - https://x.com/fiatarchive/status/2053712707162083381
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 14).
+- **@mradarcrypto** (0 likes, score 7/10) — L'institutionnel a choisi son camp. Et ce n’est pas celui que vous croyez.
+
+Pendant que le "Crypto Twitter" s’excite sur un potentiel Altseason, les chiffres disent la vérité :
+
+-Bitcoin : +92 000 BTC
+  - https://x.com/MRadarCrypto/status/2052676796458446997
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 10).
+- **@lejournalducoin** (0 likes, score 7/10) — La capitalisation des bons du Trésor américains tokenisés sur Ethereum atteint un record d’environ 8 milliards $, doublant en six mois sous l’impulsion de plusieurs acteurs de la tokenisation.
+  - https://x.com/LeJournalDuCoin/status/2052621904947634342
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 8).
+- **@documentingbtc** (59 likes, score 7/10) — Il y a 15 ans aujourd'hui, le premier économineur d'écran Bitcoin a été inventé. L'application se mettait automatiquement à extraire du Bitcoin dès que votre ordinateur était laissé inactif et s'arrêt
+  - https://x.com/DocumentingBTC/status/2053664777390457213
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 69).
