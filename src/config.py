@@ -34,11 +34,11 @@ ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 
 # Daily posting limits. Defaults are tuned for a news-first account:
-# 10 real sourced news posts/day, reposts as the high-volume surface.
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "6"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "0"))
-MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "12"))
-MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "3"))
+# 10-15 real sourced news posts/day, reposts as the high-volume surface.
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "15"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "5"))
+MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "20"))
+MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "5"))
 
 # Accounts we never reply to. Includes both @handles AND display-name
 # variants so the blocklist still catches us when the scraper returns the
@@ -86,6 +86,13 @@ QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "clau
 # account discovery unless explicitly enabled.
 ENABLE_AI_MAINTENANCE = os.environ.get("ENABLE_AI_MAINTENANCE", "0") == "1"
 ENABLE_AI_DISCOVERY = os.environ.get("ENABLE_AI_DISCOVERY", "0") == "1"
+ENABLE_CODEX_OPERATOR = os.environ.get("ENABLE_CODEX_OPERATOR", "0") == "1"
+
+# Growth optimization settings
+GROWTH_ENHANCEMENT = os.environ.get("GROWTH_ENHANCEMENT", "0") == "1"
+FOLLOW_BACK_RATIO = float(os.environ.get("FOLLOW_BACK_RATIO", "0.3"))
+RETWEET_ENGAGEMENT_THRESHOLD = int(os.environ.get("RETWEET_ENGAGEMENT_THRESHOLD", "5"))
+BOOST_ENGAGEMENT_POSTS = int(os.environ.get("BOOST_ENGAGEMENT_POSTS", "1"))
 
 # Retry settings
 MAX_RETRIES = 3
