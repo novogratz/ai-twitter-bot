@@ -601,3 +601,18 @@ Bi
 @Sharplink CEO @joechalom se prononce sur Bitcoin en tant que couverture contre les crises, lors de CoinDesk Live à @cons
   - https://x.com/CoinDesk/status/2053555299743588481
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 108).
+- **@cointelegraph** (6 likes, score 7/10) — DERNIÈRE MINUTE : OpenAI a permis à plus de 600 employés de retirer jusqu'à 30 millions de dollars chacun lors d'un récent tour de financement, engrangeant collectivement 6,6 milliards de dollars, rap
+  - https://x.com/Cointelegraph/status/2053656495431057417
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 18).
+- **@coinmarketcap** (359 likes, score 9/10) — LATEST :  Bitcoin a franchi le mur des 80 000 $, alors qu'une markup de la loi CLARTY semble imminente, tandis que deux semaines d'entrées de milliards de dollars dans les ETF spot BTC montrent que le
+  - https://x.com/CoinMarketCap/status/2053499636451889541
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 543).
+- **@bfmbusiness** (6 likes, score 7/10) — "Sur Google, vous avez 50 résultats", sur ChatGPT "on vous donne 5 hôtels" et c'est tout : l'IA bouleverse le secteur du tourisme qui doit comprendre ce que veulent vraiment les clients
+  - https://x.com/bfmbusiness/status/2053528151188230632
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 6).
+- **@bitcoinmagazine** (3158 likes, score 8/10) — $81,400 Bitcoin
+  - https://x.com/BitcoinMagazine/status/2053526635983278260
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3556).
+- **@bitcoinmagazine** (1887 likes, score 8/10) — JUST IN: $82,000 Bitcoin
+  - https://x.com/BitcoinMagazine/status/2053608673285382592
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2103).
