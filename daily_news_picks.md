@@ -556,3 +556,48 @@ Le ratio du secteur de l'information technologique du S&P 500 par rapport à l'i
 Ce ratio a augmenté de +50 % depuis le pl
   - https://x.com/KobeissiLetter/status/2053515990651007386
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 1056).
+- **@watcherguru** (0 likes, score 9/10) — Prix du Bitcoin le jour de la Fête des Mères :
+
+2011 : 8 $
+2012 : 5 $
+2013 : 115 $
+2014 : 444 $
+2015 : 240 $
+2016 : 450 $
+2017 : 1 850 $
+2018 : 8 440 $
+2019 : 7 200 $
+2020 : 8 600 $
+2021 : 56 700 $
+20
+  - https://x.com/WatcherGuru/status/2053604561290510468
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 320).
+- **@bitcoinarchive** (361 likes, score 9/10) — DERNIER: Bitcoin a atteint 82 515 $ aujourd'hui, ligne de défense critique n° 2 pour les baissiers.
+
+Prochaine étape : 83 000 $
+  - https://x.com/BitcoinArchive/status/2053630914844868996
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 421).
+- **@stockmktnewz** (542 likes, score 9/10) — Bitcoin $BTC est de retour au-dessus de 82 000 $
+  - https://x.com/StockMKTNewz/status/2053604977612931389
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 636).
+- **@btcnewsalerts** (11 likes, score 7/10) — $10M Bitcoin won’t be driven by retail FOMO.
+
+It gets repriced when AI agents…
+institutions…
+and global payment rails…
+
+start competing for the same finite supply.
+
+Visa + Lightspark.
+David Marcus.
+Bi
+  - https://x.com/btcnewsalerts/status/2053608847009366492
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 15).
+- **@saylor** (27549 likes, score 8/10) — Bitcoin a gagné. Le consensus mondial est que $BTC est un capital numérique. Le cycle de quatre ans est mort. Le prix est désormais déterminé par les flux de capitaux. Les banques et le crédit numériq
+  - https://x.com/saylor/status/2040438683380146574
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 33095).
+- **@coindesk** (54 likes, score 8/10) — $Bitcoin « n'a pas été de l'or numérique lorsque les choses ont mal tourné. »
+
+@Sharplink CEO @joechalom se prononce sur Bitcoin en tant que couverture contre les crises, lors de CoinDesk Live à @cons
+  - https://x.com/CoinDesk/status/2053555299743588481
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 108).
