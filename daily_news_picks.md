@@ -686,3 +686,28 @@ Le marché n’évolue pas qu’en bougie blanche
 via @akibablade
   - https://x.com/CryptoSlate/status/2053461301196640729
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 5).
+
+## 2026-05-11
+- **@kobeissiletter** (2348 likes, score 9/10) — BREAKING: OpenAI allowed more than 600 current and former employees to sell stock in October 2025, per WSJ.
+
+These employees collectively sold $6.6 billion worth of stock.
+
+That’s $11 million per pers
+  - https://x.com/KobeissiLetter/status/2053666147585712158
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 2702).
+- **@decryptmedia** (2 likes, score 7/10) — Publicly traded Bitcoin miner and data center operator TeraWulf reported a hefty net loss in Q1 as its AI revenue took over from BTC.
+  - https://x.com/DecryptMedia/status/2052878522981449886
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 6).
+- **@watcherguru** (4176 likes, score 8/10) — JUST IN : Michael Saylor laisse entendre qu'il va acheter plus de Bitcoin.
+
+« Retour au travail. $BTC »
+  - https://x.com/WatcherGuru/status/2053456582550385059
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4960).
+- **@lamarmk** (75 likes, score 8/10) — Get a Tesla. New or used, it doesn't matter.
+
+You can find used Models in the $20K range and they STILL get future software updates that keep making them better over time. Try finding that on a 5 year
+  - https://x.com/LamarMK/status/2053606794216243280
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 97).
+- **@decryptmedia** (5 likes, score 7/10) — Australian Police Seize Millions in Bitcoin From Alleged Darknet Marketplace Operator
+  - https://x.com/DecryptMedia/status/2053164270603424030
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 9).
