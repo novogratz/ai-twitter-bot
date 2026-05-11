@@ -742,3 +742,26 @@ The shake-up comes amid uncertainty over whether xAI will ultimately acquire the
 https://u.afp.com/SRwQ
   - https://x.com/AFP/status/2053688394572595486
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 3).
+- **@bfmcrypto** (5 likes, score 7/10) — Le bitcoin flambe au-dessus des 80.000 dollars : la valeur de la reine des cryptomonnaies a augmenté de 18% depuis un mois, contre 1,5% pour l'or
+  - https://x.com/BfmCrypto/status/2051255979845534019
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 7).
+- **@kobeissiletter** (1399 likes, score 7/10) — La Chine redessine discrètement le marché mondial du pétrole :
+
+Les importations de pétrole brut de la Chine ont chuté de -20 % en glissement mensuel en avril, à 8,2 millions de barils par jour, le ni
+  - https://x.com/KobeissiLetter/status/2053627228223631658
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1659).
+- **@techcrunch** (17 likes, score 7/10) — Startup Battlefield n’est pas seulement une question d’un prix final et de 100 000 $. Il s’agit d’accès, de préparation, de visibilité et de la chance d’être vu tôt par les personnes qui comptent.
+
+Po
+  - https://x.com/TechCrunch/status/2053551898511220851
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 29).
+- **@cryptorover** (164 likes, score 7/10) — BULLISH 
+
+South Korean KOSPI hit another all‑time high today, adding about ₩280 trillion to its market cap in a single session.
+
+And it did this even as the US rejected the latest Iran peace proposal
+  - https://x.com/cryptorover/status/2053688266432655435
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 246).
+- **@business** (6 likes, score 7/10) — Une récente vague de demandes de rachat par les investisseurs à travers le marché de 1,8 billion de dollars pour le crédit privé a incité Blackstone à enrôler des cadres supérieurs pour apporter du ca
+  - https://x.com/business/status/2053704857119277509
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
