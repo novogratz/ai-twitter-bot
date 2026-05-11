@@ -644,3 +644,26 @@ Bi
 - **@documentingbtc** (556552 likes, score 8/10) — Expliquer #bitcoin à 100 $ à une salle vide.
   - https://x.com/DocumentingBTC/status/1363481580786835458
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 563680).
+- **@saylordocs** (48 likes, score 8/10) — Mexican Billionaire Ricardo Salinas shares portfolio: 70% Bitcoin, 30% gold. No bonds, no stocks.
+
+His advice: “Buy the BTC dip, think 10 years because it’s a limited asset. Dollar cost average monthl
+  - https://x.com/saylordocs/status/2053665647230398770
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 54).
+- **@theinformation** (8 likes, score 7/10) — Qui gagne réellement dans le procès Musk c. OpenAI ?
+
+« Je pense qu'Anthropic en tire le plus grand profit — de la distraction d'OpenAI. »
+
+« Et nous aussi… nous avons eu cette alliance vraiment fasci
+  - https://x.com/theinformation/status/2053611214974882174
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 8).
+- **@microstrategy** (29 likes, score 7/10) — Le 28 mai, Strategy et Carahsoft accueillent Mini World Public Sector à Reston, un événement d'une demi-journée conçu spécifiquement pour les dirigeants des agences fédérales, de défense et civiles qu
+  - https://x.com/MicroStrategy/status/2052445925205852229
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 29).
+- **@documentingbtc** (179 likes, score 7/10) — Le minage de Bitcoin avec des GPU a commencé il y a 16 ans aujourd'hui, lorsqu'un programmeur a découvert comment calculer efficacement l'algorithme de hachage avec la carte graphique d'un ordinateur.
+  - https://x.com/DocumentingBTC/status/2053574410632667349
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 229).
+- **@nvidia** (0 likes, score 7/10) — At #Knowledge26, our CEO Jensen Huang and @ServiceNow Chairman and CEO Bill McDermott unveiled the next chapter of enterprise AI. 
+
+Through Project Arc and Vibe Coding, we are integrating the NVIDIA A
+  - https://x.com/nvidia/status/2052892173910098053
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 138).
