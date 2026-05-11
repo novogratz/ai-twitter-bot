@@ -282,5 +282,43 @@
       }
     ],
     "summary": "7 comptes FR de qualit\u00e9 non encore suivis: LeCun (monstre IA mondial, fran\u00e7ais d'origine), MarcTouati + NCheron_bourse (analystes bourse BFM-tier), LesEchos (source news \u00e9co #1 FR), LucJulia (co-cr\u00e9ateur Siri, vulgarisateur IA), sachapouget + TrendFrance (analystes techniques sp\u00e9cialis\u00e9s). Focus France car le Qu\u00e9bec est d\u00e9j\u00e0 bien couvert avec francispouliot_, cryptoqc et Mila_Quebec."
+  },
+  {
+    "ts": "2026-05-11T15:13:20.746732",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "bon_laetitia",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 62000,
+        "reason": "Analyste ind\u00e9pendante des march\u00e9s US bas\u00e9e \u00e0 Montr\u00e9al, tweets en fran\u00e7ais sur macro, taux et actions."
+      },
+      {
+        "handle": "SebGouspillou",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 38000,
+        "reason": "CEO BigBlock, angle BTC/mining/\u00e9nergie, posts FR r\u00e9cents et r\u00e9guliers, vrai profil terrain."
+      },
+      {
+        "handle": "OAK_Res",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Plateforme de research crypto FR, analyses r\u00e9guli\u00e8res et r\u00e9centes, format market intelligence plut\u00f4t que shill."
+      },
+      {
+        "handle": "profchaine",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Analyste on-chain francophone, contenu technique propre sur BTC/altcoins, actif r\u00e9cemment et sans bruit commercial."
+      }
+    ],
+    "summary": "J\u2019ai retenu surtout des profils France tr\u00e8s solides, plus une vraie option qu\u00e9b\u00e9coise qui colle au cahier des charges. Je n\u2019ai pas gard\u00e9 de compte USA assez propre et assez v\u00e9rifiable en fran\u00e7ais sans risquer un faux positif."
   }
 ]

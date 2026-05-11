@@ -913,3 +913,29 @@ On teste d’
 - **@coinmarketcap** (115 likes, score 7/10) — DERNIER:  Michael Saylor dit que Strategy achèterait 10 à 20 Bitcoins pour chacun qu'elle vend.
   - https://x.com/CoinMarketCap/status/2053871827186073641
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 215).
+- **@theaiportfolios** (1759 likes, score 9/10) — Urgent : Claude vient d’effectuer sa plus grande refonte du portefeuille à ce jour
+
+Voici ce qu’il a fait avec les 50 000 $ que nous lui avons donnés
+
+1. Clôture de la position Nvidia pour un gain de
+  - https://x.com/theaiportfolios/status/2052793492993372242
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1933).
+- **@reutersbiz** (4 likes, score 7/10) — OpenAI creates new unit with $4 billion investment to aid corporate AI push http://reut.rs/4dnMUaJ
+  - https://x.com/ReutersBiz/status/2053901771454505230
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 6).
+- **@kobeissiletter** (1192 likes, score 8/10) — URGENT : La valorisation pré-IPO implicite d'Anthropic sur le marché grimpe à un record de 1,4 billion de dollars, augmentant encore de +40 % en 24 jours.
+
+Cela porte la valorisation implicite d'Anthr
+  - https://x.com/KobeissiLetter/status/2053896786142789725
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1490).
+- **@decryptmedia** (0 likes, score 7/10) — Keel Infrastructure enregistre une perte de 145 millions de dollars alors que l'entreprise achève sa transition du minage de Bitcoin vers l'IA
+  - https://x.com/DecryptMedia/status/2053889441840672903
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2).
+- **@mrmikeinvesting** (958 likes, score 8/10) — ServiceNow restera dans l’histoire comme la plus grande opportunité d’achat au creux de la vague que beaucoup ont négligée…
+
+Au cours des derniers mois, $NOW s’est associé avec :
+
+- Nvidia
+- Anthropic
+  - https://x.com/MrMikeInvesting/status/2053673066123735460
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1066).

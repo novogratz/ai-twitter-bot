@@ -227,7 +227,11 @@
     "tech_FR_news",
     "thomas_porcher",
     "vittart75",
-    "xavier_delmas"
+    "xavier_delmas",
+    "bon_laetitia",
+    "SebGouspillou",
+    "OAK_Res",
+    "profchaine"
   ],
   "en": [
     "aeyakovenko",
@@ -1204,6 +1208,26 @@
       "lang": "fr",
       "handle": "sachapouget",
       "added": "2026-05-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "bon_laetitia",
+      "added": "2026-05-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "SebGouspillou",
+      "added": "2026-05-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "OAK_Res",
+      "added": "2026-05-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "profchaine",
+      "added": "2026-05-11"
     }
   ]
 }
