@@ -960,3 +960,33 @@ Partners include Goldman Sachs, Bain, McKinsey, and SoftBank.
 Peu de temps après ces flux, la nouvelle a éclaté que Musk rejoindrait Trump et d'autres PDG lors d
   - https://x.com/unusual_whales/status/2053914325404770675
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 193).
+- **@bitcoinmagazine** (2375 likes, score 8/10) — JUST IN: Bitcoin pumps back above $82,000!
+  - https://x.com/BitcoinMagazine/status/2053894274907836805
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2765).
+- **@coindesk** (161 likes, score 8/10) — JUST IN: @saylor sits down with CoinDesk's @btcjvs to discuss being the world’s largest Bitcoin buyer with $62B purchased and describe the convergence of TradFi and DeFi via their digital credit produ
+  - https://x.com/CoinDesk/status/2053931417671737770
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 213).
+- **@unusual_whales** (196 likes, score 7/10) — URGENT : Résultats financiers de $HIMS :
+
+- EPS : -0,4 $, estimation : 0,03 $
+- Chiffre d'affaires : 608 millions $, estimation : 616 millions $
+
+Résultats financiers de $PLUG :
+- EPS : -0,18 $, estim
+  - https://x.com/unusual_whales/status/2053929917017153965
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 296).
+- **@unusual_whales** (66 likes, score 7/10) — Archer, $ACHR, résultats financiers :
+
+- EPS : -0,28 $, prévision : -0,31 $
+- Chiffre d'affaires : 1,6 million $, prévision : 1,66 million $
+
+$MARA résultats financiers :
+
+- EPS : -3,31 $, prévision :
+  - https://x.com/unusual_whales/status/2053931716142829902
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 126).
+- **@beincrypto** (61 likes, score 7/10) — When will this Bitcoin bear market end?
+
+@benjamincowen joins @JakubDziadkowie to break down why Bitcoin’s 4-year cycle may still be intact, why October 2026 is his base-case bottom, and why most altc
+  - https://x.com/beincrypto/status/2053849467494023178
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 69).
