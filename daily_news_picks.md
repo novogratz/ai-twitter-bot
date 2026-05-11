@@ -806,3 +806,20 @@ Pendant que le "Crypto Twitter" s’excite sur un potentiel Altseason, les chiff
 GPT-Realtime-2 pour les conversations, Translate pour la traduction temps réel et Whisper pour la transcription
   - https://x.com/coinacademy_fr/status/2052768952275640746
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 5).
+- **@lejournalducoin** (0 likes, score 7/10) — Les marchés de prédiction deviennent la 4eme plus grande catégorie crypto en termes de revenus, avec 25,1 millions $ générés sur les 30 derniers jours.
+  - https://x.com/LeJournalDuCoin/status/2053709166267580720
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 8).
+- **@coinmarketcap** (70 likes, score 7/10) — LATEST :  Les avoirs en cryptomonnaies des investisseurs sud-coréens ont plus que doublé en un an, tombant de 83,3 milliards de dollars à 41,4 milliards de dollars alors que les investisseurs se tourn
+  - https://x.com/CoinMarketCap/status/2053753519992140008
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 164).
+- **@bluetouff** (4 likes, score 7/10) — Le marché physique est en train de passer de la panique  à une logique de rationnement. Certains cargos se traitaient avec un premium au baril de 20 à 60 $ au-dessus du papier.
+Mais :
+Les acheteurs as
+  - https://x.com/bluetouff/status/2053755534428233846
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6).
+- **@bitcoinmagazine** (1944 likes, score 7/10) — JUST IN: Michael Saylor hints Strategy is “back to work” buying more bitcoin
+  - https://x.com/BitcoinMagazine/status/2053437354883354885
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 2200).
+- **@coinmarketcap** (155 likes, score 7/10) — DERNIER:  Michael Saylor a signalé que Strategy reprendra les achats de Bitcoin cette semaine après la pause de la semaine dernière.
+  - https://x.com/CoinMarketCap/status/2053738672017559684
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 255).
