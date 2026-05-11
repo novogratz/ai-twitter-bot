@@ -884,3 +884,32 @@ WE ARE WATCHING HISTORY
 - **@cointelegraph** (90 likes, score 8/10) — MISE À JOUR : la capitalisation boursière de xStocks sur Ethereum bondit de près de 1 000 % depuis le début de l'année, dépassant les 100 M$, selon Token Terminal.
   - https://x.com/Cointelegraph/status/2053857816482390111
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 166).
+- **@bitcoinmagazine** (1158 likes, score 8/10) — BREAKING:  American Bankers Association are desperately trying to stop the Bitcoin & crypto market structure bill, Senator Bernie Moreno reveals.
+
+"The banking cartel is in full panic mode," and are d
+  - https://x.com/BitcoinMagazine/status/2053850749352677632
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1432).
+- **@loris_dalleau** (65 likes, score 8/10) — Nvidia $NVDA
+
+Au-delà de son leadership dans l'IA, Nvidia est aussi un véritable fonds d'investissement, possédant des participations intéressantes
+
+Revolut
+Mistral AI
+Intel
+Synopsys
+Anthropic
+Agility
+  - https://x.com/Loris_Dalleau/status/2051750888142680127
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 79).
+- **@camille_moscow** (0 likes, score 7/10) — Bill Gates et OpenAI lancent Horizon 1000 : IA dans 1 000 centres africains pour doubler l’efficacité des soins. Résultat annoncé : la santé du Sud va dépasser celle du Nord en deux ans. 
+
+On teste d’
+  - https://x.com/camille_moscow/status/2053731494229598648
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 26).
+- **@afp** (16 likes, score 7/10) — French President Emmanuel Macron announces 23 billion euros ($27 billion) of investment for Africa during a major summit on the future of the continent hosted by Kenya
+ https://u.afp.com/SRcP
+  - https://x.com/AFP/status/2053877732975493214
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 20).
+- **@coinmarketcap** (115 likes, score 7/10) — DERNIER:  Michael Saylor dit que Strategy achèterait 10 à 20 Bitcoins pour chacun qu'elle vend.
+  - https://x.com/CoinMarketCap/status/2053871827186073641
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 215).
