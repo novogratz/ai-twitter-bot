@@ -46,8 +46,9 @@ def _build_cmd(
     output_json: bool,
     allowed_tools: Optional[Sequence[str]],
     permission_mode: Optional[str],
+    provider: Optional[str] = None,
 ) -> list[str]:
-    provider = _provider()
+    provider = provider or _provider()
     if provider == "codex":
         cmd = [
             "codex",
@@ -99,6 +100,58 @@ def _build_cmd(
     return cmd
 
 
+def _fallback_provider(primary_provider: str) -> Optional[str]:
+    fallback = os.environ.get("LLM_FALLBACK_CLI", "opencode").strip().lower()
+    if os.environ.get("LLM_DISABLE_FALLBACK", "0") == "1":
+        return None
+    if not fallback or fallback == primary_provider:
+        return None
+    if fallback not in {"claude", "codex", "gemini", "opencode"}:
+        return None
+    if not shutil.which(fallback):
+        return None
+    return fallback
+
+
+def _fallback_model(primary_model: str, fallback_provider: str) -> str:
+    env_model = os.environ.get("LLM_FALLBACK_MODEL", "").strip()
+    if env_model:
+        return env_model
+    if fallback_provider == "opencode":
+        return os.environ.get("OPENCODE_FALLBACK_MODEL", "").strip() or "opencode/big-pickle"
+    return primary_model
+
+
+def _run_cmd(
+    cmd: list[str],
+    *,
+    label: str,
+    timeout: Optional[int],
+    cwd: Optional[str],
+) -> LLMResult:
+    try:
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            cwd=cwd,
+        )
+    except FileNotFoundError as exc:
+        return LLMResult(127, "", f"{label} command not found: {exc.filename}")
+    except subprocess.TimeoutExpired:
+        return LLMResult(124, "", f"{label} timed out after {timeout}s")
+    return LLMResult(result.returncode, result.stdout or "", result.stderr or "")
+
+
+def _should_fallback(result: LLMResult) -> bool:
+    # Consider fallback if:
+    # 1. The command failed (non-zero return code) OR
+    # 2. The command succeeded but returned empty output OR
+    # 3. The command failed with a specific rate limiting error code (LLM_RATE_LIMIT_CODE)
+    return result.returncode != 0 or not (result.stdout or "").strip() or result.returncode == LLM_RATE_LIMIT_CODE
+
+
 def run_llm(
     prompt: str,
     model: str,
@@ -110,18 +163,34 @@ def run_llm(
     timeout: Optional[int] = None,
     cwd: Optional[str] = None,
 ) -> LLMResult:
-    cmd = _build_cmd(prompt, model, output_json, allowed_tools, permission_mode)
-    try:
-        result = subprocess.run(
-            cmd,
-            capture_output=True,
-            text=True,
-            timeout=timeout,
-            cwd=cwd,
-        )
-    except subprocess.TimeoutExpired:
-        return LLMResult(124, "", f"{label} timed out after {timeout}s")
-    return LLMResult(result.returncode, result.stdout or "", result.stderr or "")
+    provider = _provider()
+    cmd = _build_cmd(prompt, model, output_json, allowed_tools, permission_mode, provider)
+    result = _run_cmd(cmd, label=label, timeout=timeout, cwd=cwd)
+    if not _should_fallback(result):
+        return result
+
+    fallback_provider = _fallback_provider(provider)
+    if not fallback_provider:
+        return result
+
+    fallback_model = _fallback_model(model, fallback_provider)
+    fallback_cmd = _build_cmd(
+        prompt,
+        fallback_model,
+        output_json,
+        allowed_tools,
+        permission_mode,
+        fallback_provider,
+    )
+    fallback_result = _run_cmd(fallback_cmd, label=f"{label} fallback", timeout=timeout, cwd=cwd)
+    fallback_note = (
+        f"{label} primary {provider}/{model} failed "
+        f"(exit {result.returncode}); tried {fallback_provider}/{fallback_model}."
+    )
+    combined_stderr = "\n".join(
+        part for part in [result.stderr.strip(), fallback_note, fallback_result.stderr.strip()] if part
+    )
+    return LLMResult(fallback_result.returncode, fallback_result.stdout, combined_stderr)
 
 
 def _text_from_event(obj: dict) -> str:
