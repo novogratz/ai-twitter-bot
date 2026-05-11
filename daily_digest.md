@@ -220,3 +220,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 69 likes / 24000 views: JUST IN : Michael Saylor dit que si Strategy vend du bitcoin, ils achèteront plusieurs fois plus de 
   - 59 likes / 18000 views: Le juge de la Cour suprême Alexandre de Moraes a suspendu l'application d'une législation réduisant 
   - 50 likes / 20000 views: Les chances républicaines de conserver la Chambre augmentent, alors que les démocrates paniqués s'ef
+
+## 2026-05-10
+
+**Activity** — total actions: 312
+  - by type: reply=223, retweet=73, quote=15, post=1
+  - top sources: PROFILE-ALWAYS=111, MEGA=41, FAVORITE_PROFILE=39, PROFILE-FR=37, RETWEET=34, FOLLOWING=19, QUOTE=15, SEARCH-FR-HOT=12
+  - comedy patterns: RENAME=1
+  - top reply targets: @LeJournalDuCoin=28, @Graphseo=18, @OpenAI=17, @McnallieM=12, @FrugalisteFutee=12
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 287 likes / 376000 views: Les moniteurs de chaîne de pensée sont une couche clé de défense contre le désalignement des agents 
+  - 199 likes / 423000 views: JUST IN: Nintendo stock crashes -12%.
+  - 35 likes / 2000000 views: Start with one idea. End with a feed full of content.  1000+ videos. Get unlimited Seedance 2.0: htt
