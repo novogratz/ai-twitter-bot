@@ -789,3 +789,20 @@ Pendant que le "Crypto Twitter" s’excite sur un potentiel Altseason, les chiff
 - **@documentingbtc** (59 likes, score 7/10) — Il y a 15 ans aujourd'hui, le premier économineur d'écran Bitcoin a été inventé. L'application se mettait automatiquement à extraire du Bitcoin dès que votre ordinateur était laissé inactif et s'arrêt
   - https://x.com/DocumentingBTC/status/2053664777390457213
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 69).
+- **@coinacademy_fr** (29 likes, score 7/10) — Mistral a obtenu 830 millions de dollars de financement par dette auprès de sept banques pour équiper un data center près de Paris avec 13 800 GPU Nvidia GB300
+  - https://x.com/coinacademy_fr/status/2038584981375570251
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 33).
+- **@coinmarketcap** (0 likes, score 8/10) — LATEST :  Trump Media a enregistré une perte de 405,9 millions de dollars au premier trimestre, due en grande partie à des pertes non réalisées sur ses avoirs en Bitcoin et Cronos.
+  - https://x.com/CoinMarketCap/status/2053725586413982153
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 66).
+- **@coinmarketcap** (1597 likes, score 7/10) — DERNIER:  Le PDG de Nvidia, Jensen Huang, déclare que l'IA agentique nécessite 1000 fois plus de puissance de calcul que l'IA générative, comparant ce changement au monde ayant soudain besoin de 1000
+  - https://x.com/CoinMarketCap/status/2053402708418101697
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1923).
+- **@cointelegraph** (146 likes, score 7/10) — ÉNORME : Alphabet de Google est sur le point de dépasser Nvidia en tant que plus grande entreprise mondiale, son action ayant grimpé de 43 % depuis octobre alors que Nvidia n’a progressé que de 6,3 %.
+  - https://x.com/Cointelegraph/status/2053651453063909850
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 206).
+- **@coinacademy_fr** (5 likes, score 7/10) — OpenAI lance trois nouveaux modèles vocaux dans son API 
+
+GPT-Realtime-2 pour les conversations, Translate pour la traduction temps réel et Whisper pour la transcription
+  - https://x.com/coinacademy_fr/status/2052768952275640746
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 5).
