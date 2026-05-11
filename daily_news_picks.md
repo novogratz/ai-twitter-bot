@@ -939,3 +939,24 @@ Au cours des derniers mois, $NOW s’est associé avec :
 - Anthropic
   - https://x.com/MrMikeInvesting/status/2053673066123735460
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 1066).
+- **@coinacademy_fr** (0 likes, score 7/10) — OpenAI a permis à plus de 600 employés de vendre des actions en octobre dernier, pour un total de 6,6 milliards $, soit environ 11 M$ par personne, selon le WSJ.
+  - https://x.com/coinacademy_fr/status/2053745988112646155
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 6).
+- **@cointelegraph** (91 likes, score 8/10) — JUST IN: OpenAI launches the $4B “OpenAI Deployment Company” to help enterprises deploy AI at scale.
+
+Partners include Goldman Sachs, Bain, McKinsey, and SoftBank.
+  - https://x.com/Cointelegraph/status/2053840202964066732
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 157).
+- **@coinmarketcap** (8 likes, score 7/10) — Restez informé, restez en avance : https://coinmarketcap.com/academy/article/ai-sector-roars-back-as-tao-hits-solana-and-confidential-compute-pops-off…
+
+2/2
+  - https://x.com/CoinMarketCap/status/2053901760985751718
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 8).
+- **@cnbc** (3 likes, score 7/10) — OpenAI revenue chief Dresser says enterprise AI adoption is 'at a tipping point'
+  - https://x.com/CNBC/status/2053921761578648006
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 7).
+- **@unusual_whales** (115 likes, score 7/10) — De forts flux d'options d'achat $TSLA observés ce matin, notamment les 420c 5/20 et les 465c 6/5...
+
+Peu de temps après ces flux, la nouvelle a éclaté que Musk rejoindrait Trump et d'autres PDG lors d
+  - https://x.com/unusual_whales/status/2053914325404770675
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 193).
