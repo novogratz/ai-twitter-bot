@@ -18,6 +18,7 @@ class LLMResult:
 
 
 LLM_RATE_LIMIT_CODE = 75
+DEFAULT_LLM_TIMEOUT_SECONDS = int(os.environ.get("LLM_TIMEOUT_SECONDS", "180"))
 
 
 def llm_hourly_limit_status() -> tuple[bool, int, int, int]:
@@ -101,7 +102,8 @@ def _build_cmd(
 
 
 def _fallback_provider(primary_provider: str) -> Optional[str]:
-    fallback = os.environ.get("LLM_FALLBACK_CLI", "opencode").strip().lower()
+    default_fallback = "codex" if primary_provider == "opencode" else "opencode"
+    fallback = os.environ.get("LLM_FALLBACK_CLI", default_fallback).strip().lower()
     if os.environ.get("LLM_DISABLE_FALLBACK", "0") == "1":
         return None
     if not fallback or fallback == primary_provider:
@@ -117,8 +119,14 @@ def _fallback_model(primary_model: str, fallback_provider: str) -> str:
     env_model = os.environ.get("LLM_FALLBACK_MODEL", "").strip()
     if env_model:
         return env_model
+    if fallback_provider == "codex":
+        return os.environ.get("CODEX_FALLBACK_MODEL", "").strip() or "gpt-5.4-mini"
+    if fallback_provider == "gemini":
+        return os.environ.get("GEMINI_FALLBACK_MODEL", "").strip() or "gemini-2.0-flash"
+    if fallback_provider == "claude":
+        return os.environ.get("CLAUDE_FALLBACK_MODEL", "").strip() or "claude-sonnet-4-6"
     if fallback_provider == "opencode":
-        return os.environ.get("OPENCODE_FALLBACK_MODEL", "").strip() or "opencode/big-pickle"
+        return os.environ.get("OPENCODE_FALLBACK_MODEL", "").strip() or "opencode/ring-2.6-1t-free"
     return primary_model
 
 
@@ -129,18 +137,20 @@ def _run_cmd(
     timeout: Optional[int],
     cwd: Optional[str],
 ) -> LLMResult:
+    effective_timeout = timeout if timeout is not None else DEFAULT_LLM_TIMEOUT_SECONDS
     try:
         result = subprocess.run(
             cmd,
+            stdin=subprocess.DEVNULL,
             capture_output=True,
             text=True,
-            timeout=timeout,
+            timeout=effective_timeout,
             cwd=cwd,
         )
     except FileNotFoundError as exc:
         return LLMResult(127, "", f"{label} command not found: {exc.filename}")
     except subprocess.TimeoutExpired:
-        return LLMResult(124, "", f"{label} timed out after {timeout}s")
+        return LLMResult(124, "", f"{label} timed out after {effective_timeout}s")
     return LLMResult(result.returncode, result.stdout or "", result.stderr or "")
 
 
