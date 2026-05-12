@@ -235,3 +235,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 287 likes / 376000 views: Les moniteurs de chaîne de pensée sont une couche clé de défense contre le désalignement des agents 
   - 199 likes / 423000 views: JUST IN: Nintendo stock crashes -12%.
   - 35 likes / 2000000 views: Start with one idea. End with a feed full of content.  1000+ videos. Get unlimited Seedance 2.0: htt
+
+## 2026-05-11
+
+**Activity** — total actions: 395
+  - by type: reply=265, retweet=94, quote=22, post=12, hotake=2
+  - top sources: MEGA=120, PROFILE-ALWAYS=98, RETWEET=65, FAVORITE_PROFILE=29, QUOTE=22, PROFILE-FR=21, SEARCH-FR-HOT=11, EARLYBIRD=7
+  - comedy patterns: FR_ANCHOR=14, DIALOGUE=1, UNDERSTATEMENT=1, METAPHOR=1, OTHER=1
+  - top reply targets: @BFMBourse=44, @LeJournalDuCoin=41, @FlasheurInvest=18, @coinacademy_fr=13, @MatthiasBaccino=11
+
+**Followers we follow** (running total): 166
+
+**Top-performing posts scraped today**:
+  - 69 likes / 387000 views: Honnêtement j’aurais pas été capable de dire si c’était fait par IA ou par un studio d’animation tra
+  - 41 likes / 10000 views: DERNIER:  Capital B a levé 17,8 millions de dollars auprès d'investisseurs incluant Adam Back et TOB
+  - 28 likes / 8000 views: DERNIER: Michael @saylor's @Strategy acquiert 535 $BTC pour 43 M$ à 80 340 $ par Bitcoin, portant le
