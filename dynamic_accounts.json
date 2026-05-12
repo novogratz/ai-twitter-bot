@@ -231,7 +231,13 @@
     "bon_laetitia",
     "SebGouspillou",
     "OAK_Res",
-    "profchaine"
+    "profchaine",
+    "StachAlex",
+    "ClaireBalva",
+    "EricLarch",
+    "NCheron_bourse",
+    "TokenBrice",
+    "e_petit"
   ],
   "en": [
     "aeyakovenko",
@@ -286,9 +292,46 @@
     "BitcoinNews",
     "coinbureau",
     "theaboringdysty",
-    "CryptoTimesHQ"
+    "CryptoTimesHQ",
+    "romainhuet"
   ],
   "history": [
+    {
+      "lang": "fr",
+      "handle": "StachAlex",
+      "added": "2026-05-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClaireBalva",
+      "added": "2026-05-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricLarch",
+      "added": "2026-05-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "NCheron_bourse",
+      "added": "2026-05-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "TokenBrice",
+      "added": "2026-05-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "e_petit",
+      "added": "2026-05-12"
+    },
+    {
+      "lang": "en",
+      "handle": "romainhuet",
+      "added": "2026-05-12"
+    },
+    {
     {
       "lang": "fr",
       "handle": "MatthiasBaccino",
