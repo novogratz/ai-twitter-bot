@@ -1062,3 +1062,23 @@ Ce pourcen
 - **@techcrunch** (136 likes, score 7/10) — Daniel Ek-backed defense tech Helsing to raise $1.2B at $18B valuation
   - https://x.com/TechCrunch/status/2053893482943807878
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 152).
+- **@forbes** (158 likes, score 9/10) — Nvidia’s Jensen Huang Nears $200 Billion Club—Overtakes Michael Dell As 7th Richest
+https://go.forbes.com/Y7AOWo
+  - https://x.com/Forbes/status/2053890406241259544
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 186).
+- **@arkham** (140 likes, score 9/10) — Le Bhoutan vend du Bitcoin.
+
+Le Bhoutan vient de transférer 100 BTC (8,1 M$) hors de ses portefeuilles de détention.
+
+À leur rythme actuel de vente, ils épuiseraient leurs BTC avant la fin du mois de
+  - https://x.com/arkham/status/2054105079050101162
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 214).
+- **@saylor** (3732 likes, score 8/10) — L'or est un capital analogique. Bitcoin est un capital numérique. La transparence est une fonctionnalité, pas un bug, rendant $BTC adapté en tant que garantie mondiale. Depuis que nous avons adopté l'
+  - https://x.com/saylor/status/2053977368071393530
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4022).
+- **@coinmarketcap** (152 likes, score 8/10) — DERNIER:  Tom Lee dit qu'Ethereum pourrait atteindre 62 000 $ s'il devient les rails de paiement de l'avenir, un scénario qu'il pense qui sera le cas.
+  - https://x.com/CoinMarketCap/status/2054113392231588303
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 304).
+- **@coinmarketcap** (90 likes, score 7/10) — LATEST :  Les ETP crypto ont enregistré 858 M$ d'entrées de capitaux la semaine dernière, une sixième semaine consécutive de gains totalisant 4,9 G$, selon CoinShares.
+  - https://x.com/CoinMarketCap/status/2054075873175667040
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 190).
