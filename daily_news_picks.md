@@ -990,3 +990,22 @@ $MARA résultats financiers :
 @benjamincowen joins @JakubDziadkowie to break down why Bitcoin’s 4-year cycle may still be intact, why October 2026 is his base-case bottom, and why most altc
   - https://x.com/beincrypto/status/2053849467494023178
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 69).
+
+## 2026-05-12
+- **@watcherguru** (2016 likes, score 8/10) — INFO URGENTE :  Le PDG de Nvidia $NVDA, Jensen Huang, n'est pas invité à accompagner le président Trump avec d'autres dirigeants d'entreprises lors du voyage en Chine.
+  - https://x.com/WatcherGuru/status/2053979640868278568
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2548).
+- **@watcherguru** (264 likes, score 8/10) — Le nouveau projet compte 309 pages, plus long que le projet de 278 pages publié par la Commission bancaire du Sénat en janvier.
+
+Les principaux points restent les mêmes, la SEC supervisant de nombreus
+  - https://x.com/WatcherGuru/status/2054063943971192863
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 298).
+- **@cointelegraph** (34 likes, score 7/10) — JUST IN: Cathie Wood's Ark Invest snapped up $5.5 million worth of Circle shares across three ETFs as the stock surged 16% following its Q1 2026 earnings results.
+  - https://x.com/Cointelegraph/status/2054074315247673672
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 74).
+- **@bfmcrypto** (3 likes, score 7/10) — Pour cet analyste, le bitcoin doit dépasser les 98.000 dollars pour rentrer dans une "nouvelle tendance haussière de long terme" (il vient d'enchaîner une 6e semaine consécutive de hausse)
+  - https://x.com/BfmCrypto/status/2053835201898312155
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 3).
+- **@lowkeyfr** (129 likes, score 7/10) — 100 défaites + 1 victoire = Millionnaire
+  - https://x.com/lowkeyfr/status/2053971693790527493
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 257).
