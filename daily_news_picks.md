@@ -1026,3 +1026,39 @@ Les principaux points restent les mêmes, la SEC supervisant de nombreus
 - **@yahoofinance** (19 likes, score 7/10) — Sony's $4 billion deal to buy Recognition Music's catalog includes over 45,000 songs and over 150 catalogs. Here are some of the legacy artists included; @justinbieber @Beyonce @rihanna.
   - https://x.com/YahooFinance/status/2053947162665341262
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 27).
+- **@cryptoslate** (3 likes, score 7/10) — Top #CryptoNews: Mon, May 11 (24H)
+
+ #Chainlink emerges as the unlikely $3B winner of KelpDAO exploit as DeFi projects dump LayerZero
+
+ Morgan Stanley’s MSBT ends first trading month with 0 outflows a
+  - https://x.com/CryptoSlate/status/2053863047215886419
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 3).
+- **@cryptoslate** (0 likes, score 7/10) — Top #CryptoGainers & Losers: Mon, May 11 (24H)
+
+ Biggest Gainers
+
+BUILDon $B +53.49%
+TROLL (SOL) $TROLL +42.59%
+Yooldo $ESPORTS +21.92%
+ 
+ Biggest Losers 
+
+SKYAI $SKYAI -25.27%
+Genius Terminal $GENIUS
+  - https://x.com/CryptoSlate/status/2053864657518227700
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 2).
+- **@openai** (0 likes, score 7/10) — Aujourd'hui, nous lançons la OpenAI Deployment Company pour aider les entreprises à construire et déployer l'IA.
+
+Elle est majoritairement détenue et contrôlée par OpenAI. Elle réunit 19 cabinets d'in
+  - https://x.com/OpenAI/status/2053824997777457651
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1066).
+- **@kobeissiletter** (689 likes, score 7/10) — Les actions de semi-conducteurs n'ont jamais été aussi importantes :
+
+L'indice des semi-conducteurs, $SOX, représente désormais un record de 23 % de la capitalisation boursière du S&P 500.
+
+Ce pourcen
+  - https://x.com/KobeissiLetter/status/2054010699848778111
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 873).
+- **@techcrunch** (136 likes, score 7/10) — Daniel Ek-backed defense tech Helsing to raise $1.2B at $18B valuation
+  - https://x.com/TechCrunch/status/2053893482943807878
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 152).
