@@ -1009,3 +1009,20 @@ Les principaux points restent les mêmes, la SEC supervisant de nombreus
 - **@lowkeyfr** (129 likes, score 7/10) — 100 défaites + 1 victoire = Millionnaire
   - https://x.com/lowkeyfr/status/2053971693790527493
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 257).
+- **@reuters** (6 likes, score 7/10) — La dette liée à OpenAI de SoftBank au centre de l'attention alors qu'un autre trimestre solide est attendu http://reut.rs/4d5sxjF
+  - https://x.com/Reuters/status/2054091723232473562
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 18).
+- **@sawyermerritt** (1934 likes, score 8/10) — Quelques options/fonctionnalités liées à FSD que je pense seraient cool si @Tesla les proposait :
+
+1) Abonnement annuel FSD : à partir de 999 $/an (le prix augmentera à l’avenir à mesure que FSD s’amé
+  - https://x.com/SawyerMerritt/status/2054005778210512981
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2410).
+- **@decryptmedia** (8 likes, score 7/10) — OpenAI Launches Daybreak as AI Firms Expand Into Cybersecurity
+  - https://x.com/DecryptMedia/status/2053966174166122710
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 10).
+- **@coinmarketcap** (64 likes, score 7/10) — DERNIER :  Michael Saylor dit qu'il « achète le sommet pour toujours », déclarant qu'il achèterait avec plaisir de 60 000 $ jusqu'à 16 millions de $.
+  - https://x.com/CoinMarketCap/status/2054091728106181025
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 136).
+- **@yahoofinance** (19 likes, score 7/10) — Sony's $4 billion deal to buy Recognition Music's catalog includes over 45,000 songs and over 150 catalogs. Here are some of the legacy artists included; @justinbieber @Beyonce @rihanna.
+  - https://x.com/YahooFinance/status/2053947162665341262
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 27).
