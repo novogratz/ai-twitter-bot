@@ -126,8 +126,15 @@ def _fallback_model(primary_model: str, fallback_provider: str) -> str:
     if fallback_provider == "claude":
         return os.environ.get("CLAUDE_FALLBACK_MODEL", "").strip() or "claude-sonnet-4-6"
     if fallback_provider == "opencode":
-        return os.environ.get("OPENCODE_FALLBACK_MODEL", "").strip() or "opencode/ring-2.6-1t-free"
+        return os.environ.get("OPENCODE_FALLBACK_MODEL", "").strip() or "opencode/big-pickle"
     return primary_model
+
+
+def _fallback_model2(fallback_provider: str) -> Optional[str]:
+    """Second-level fallback model — used when the first fallback also fails."""
+    if fallback_provider == "opencode":
+        return os.environ.get("OPENCODE_FALLBACK2_MODEL", "").strip() or "ollama/qwen3-coder"
+    return None
 
 
 def _run_cmd(
@@ -219,10 +226,30 @@ def run_llm(
         f"{label} primary {provider}/{model} failed "
         f"(exit {result.returncode}); tried {fallback_provider}/{fallback_model}."
     )
-    combined_stderr = "\n".join(
-        part for part in [result.stderr.strip(), fallback_note, fallback_result.stderr.strip()] if part
+    if not _should_fallback(fallback_result):
+        combined_stderr = "\n".join(
+            part for part in [result.stderr.strip(), fallback_note, fallback_result.stderr.strip()] if part
+        )
+        return LLMResult(fallback_result.returncode, fallback_result.stdout, combined_stderr)
+
+    # Second fallback — opencode safety net (qwen)
+    model2 = _fallback_model2(fallback_provider)
+    if not model2:
+        combined_stderr = "\n".join(
+            part for part in [result.stderr.strip(), fallback_note, fallback_result.stderr.strip()] if part
+        )
+        return LLMResult(fallback_result.returncode, fallback_result.stdout, combined_stderr)
+
+    fallback2_cmd = _build_cmd(prompt, model2, output_json, allowed_tools, permission_mode, fallback_provider)
+    fallback2_result = _run_cmd(fallback2_cmd, label=f"{label} fallback2", timeout=timeout, cwd=cwd)
+    fallback2_note = (
+        f"{fallback_note} {fallback_provider}/{fallback_model} also failed "
+        f"(exit {fallback_result.returncode}); tried {fallback_provider}/{model2}."
     )
-    return LLMResult(fallback_result.returncode, fallback_result.stdout, combined_stderr)
+    combined_stderr = "\n".join(
+        part for part in [result.stderr.strip(), fallback2_note, fallback2_result.stderr.strip()] if part
+    )
+    return LLMResult(fallback2_result.returncode, fallback2_result.stdout, combined_stderr)
 
 
 def _text_from_event(obj: dict) -> str:
