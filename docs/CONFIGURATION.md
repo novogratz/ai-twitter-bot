@@ -17,6 +17,10 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 | Variable | Default | Purpose |
 |---|---|---|
 | `AI_CLI` | `codex` | `codex` / `opencode` / `claude` / `gemini`. The CLI must be authenticated or locally configured. |
+| `LLM_FALLBACK_CLI` | `opencode` | Fallback CLI used when the primary LLM CLI fails, times out, is missing, or returns empty output. |
+| `LLM_FALLBACK_MODEL` | (unset) | Optional universal model for fallback calls. Overrides provider-specific fallback defaults. |
+| `OPENCODE_FALLBACK_MODEL` | `opencode/big-pickle` | OpenCode model used by fallback calls when `LLM_FALLBACK_MODEL` is unset. |
+| `LLM_DISABLE_FALLBACK` | `0` | Set to `1` to disable automatic LLM fallback. |
 | `NEWS_MODEL` | `gpt-5.4-mini` | Model for real sourced news posts. Override to `gpt-5.4` only for high-quality manual cycles. |
 | `HOTAKE_MODEL` | `gpt-5.4-mini` | Model for hot takes + breakouts + spicy. |
 | `REPLY_MODEL` | `gpt-5.4-mini` | Model for replies. Mini keeps the volume surface cheaper. |

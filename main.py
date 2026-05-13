@@ -113,56 +113,56 @@ def should_skip_engagement() -> bool:
 
 
 def post_interval_minutes() -> int:
-    """News cadence. Target: enough attempts to reliably ship 10 sourced
+    """News cadence. Target: enough attempts to reliably ship 15 sourced
     news posts/day even when freshness/source gates reject candidates."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 12 or 13 <= hour < 16:
-        return random.randint(45, 70)
+        return random.randint(35, 55)
     elif 7 <= hour < 9 or 16 <= hour < 19:
-        return random.randint(55, 85)
+        return random.randint(45, 70)
     elif 19 <= hour < 23:
-        return random.randint(65, 100)
+        return random.randint(55, 85)
     elif 23 <= hour or hour < 4:
-        return random.randint(110, 160)
+        return random.randint(90, 130)
     elif 4 <= hour < 7:
-        return random.randint(75, 110)
-    return random.randint(60, 95)
+        return random.randint(60, 95)
+    return random.randint(50, 80)
 
 
 def reply_interval_minutes() -> int:
-    """Primary growth cadence — accelerated 2026-05-08. EN content + global
+    """Primary growth cadence — accelerated for 10k target. EN content + global
     audience: peak in US business hours, not Paris."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     # US business peak EST 09-16 = absolute reply window.
     if 9 <= hour < 16:
-        return random.randint(6, 12)
+        return random.randint(4, 8)
     if 16 <= hour < 23:
-        return random.randint(10, 18)
-    return random.randint(15, 25)
+        return random.randint(8, 14)
+    return random.randint(12, 20)
 
 
 def engage_interval_minutes() -> int:
     """More frequent presence in influencer notifications."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return random.randint(8, 15)
-    return random.randint(14, 22)
+        return random.randint(6, 12)
+    return random.randint(12, 18)
 
 
 def direct_reply_interval_minutes() -> int:
     """Primary response path: visit targets often enough to land early."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return random.randint(8, 14)
-    return random.randint(13, 22)
+        return random.randint(6, 12)
+    return random.randint(12, 18)
 
 
 def early_bird_interval_minutes() -> int:
     """Early-bird replies are highest-upside; scan aggressively."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return random.randint(4, 8)
-    return random.randint(6, 12)
+        return random.randint(3, 6)
+    return random.randint(5, 10)
 
 
 def roast_interval_minutes() -> int:
@@ -640,14 +640,14 @@ def main():
         )
 
         # Spicy bot — deliberately polarizing FR takes + question bait.
-        # Cap 6/day. Replies > likes for algo signal; spicy + question
+        # Cap 12/day. Replies > likes for algo signal; spicy + question
         # mode both maximize replies-per-impression. Different from
         # regular news (no source, no impact filter) — pure engagement
         # velocity.
-        log.info("Spicy bot: polarizing/question takes every ~80 min (cap 6/day).")
+        log.info("Spicy bot: polarizing/question takes every ~40 min (cap 12/day).")
         scheduler.add_job(
             safe_run_spicy_cycle,
-            trigger=IntervalTrigger(minutes=80),
+            trigger=IntervalTrigger(minutes=40),
             id="spicy_job",
         )
 
