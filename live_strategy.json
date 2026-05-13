@@ -1,0 +1,19 @@
+{
+  "caps": {
+    "MAX_NEWS_PER_DAY": 20,
+    "MAX_HOTAKES_PER_DAY": 8,
+    "MAX_BREAKOUTS_PER_DAY": 4,
+    "MAX_SPICY_PER_DAY": 4,
+    "MAX_QUOTES_PER_DAY": 150,
+    "MAX_RETWEETS_PER_DAY": 400,
+    "MAX_REPLIES_PER_CYCLE": 20,
+    "FOLLOW_BLAST_PER_CYCLE": 80,
+    "LIKE_BOT_PER_CYCLE": 80
+  },
+  "cadence_factor": 0.85,
+  "topic_focus": ["IA", "crypto", "Bitcoin", "OpenAI", "Mistral"],
+  "language": "fr",
+  "scope": "ai_crypto_only",
+  "updated_at": "2026-05-13",
+  "note": "Mandate 2026-05-13 — user asked for thousands of followers + likes. FR only, AI+Crypto only, push engagement surfaces hard."
+}
