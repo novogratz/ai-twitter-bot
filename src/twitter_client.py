@@ -121,6 +121,7 @@ def post_tweet(text: str, image_path: str = None):
     with _safari_lock:
         if image_path:
             _post_tweet_with_image(text, image_path)
+            _like_own_latest_tweet()
             return
 
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
@@ -138,6 +139,7 @@ def post_tweet(text: str, image_path: str = None):
         time.sleep(2)
         log.info("Tweet posted!")
         close_front_tab()
+        _like_own_latest_tweet()
 
 
 def _post_tweet_with_image(text: str, image_path: str):
@@ -186,6 +188,16 @@ def refresh_feed():
         webbrowser.open("https://x.com/home")
         time.sleep(3)
         close_front_tab()
+
+
+def _like_own_latest_tweet():
+    """Open own profile, navigate into the latest tweet, like it. Caller must hold _safari_lock."""
+    webbrowser.open(BOT_PROFILE_URL)
+    time.sleep(5)
+    _navigate_to_first_tweet()
+    time.sleep(3)
+    like_tweet()
+    close_front_tab()
 
 
 def like_tweet():
@@ -269,6 +281,11 @@ def quote_tweet(tweet_url: str, comment: str):
         ''')
         time.sleep(2)
         log.info("Quote tweet posted!")
+        close_front_tab()
+        # Like the original tweet we quoted
+        webbrowser.open(tweet_url)
+        time.sleep(5)
+        like_tweet()
         close_front_tab()
 
 
@@ -718,6 +735,7 @@ def retweet_post(tweet_url: str):
         ''')
         time.sleep(2)
         log.info(f"[RETWEET] Reposted: {tweet_url}")
+        like_tweet()
         close_front_tab()
 
 
