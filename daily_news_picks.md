@@ -1130,3 +1130,27 @@ Un étudiant américain de 21 ans a créé “Maya”, une fausse créatrice sur
 @aaronpholmes explique l'importance : « C'est notable parce que Microsoft a évide
   - https://x.com/theinformation/status/2054308315371393526
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 27).
+- **@bitcoinmagazine** (694 likes, score 9/10) — Pour l'instant cette semaine :
+
+- BTC a atteint 82 000 $
+- STRC de Michael Saylor reprend l'achat de plus de BTC
+- Le pro-Bitcoin Kevin Warsh sera voté pour la présidence de la Fed
+- Le projet de loi
+  - https://x.com/BitcoinMagazine/status/2054311934921441298
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 854).
+- **@kobeissiletter** (2132 likes, score 8/10) — URGENT : Nvidia, $NVDA, atteint son plus haut niveau historique alors que le président Trump confirme que Jensen Huang est à bord de l’Air Force One en route vers la Chine.
+
+Nvidia vaut désormais 5,4
+  - https://x.com/KobeissiLetter/status/2054402232070627766
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2328).
+- **@bfmcrypto** (17 likes, score 7/10) — On pouvait y acheter des livres et des vêtements avec des bitcoins: après 2 ans d'existence, la boutique parisienne le Bitcoin Bazar ferme ses portes dans un contexte anxiogène pour le secteur
+  - https://x.com/BfmCrypto/status/2054127687099105654
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 33).
+- **@cnbc** (16 likes, score 7/10) — SoftBank posts $46 billion gain at Vision Fund driven mainly by massive OpenAI bet
+  - https://x.com/CNBC/status/2054461005313298747
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 28).
+- **@openai** (11017 likes, score 8/10) — Introducing Daybreak: frontier AI for cyber defenders.
+
+Daybreak brings together the most capable OpenAI models, Codex, and our security partners to accelerate cyber defense and continuously secure so
+  - https://x.com/OpenAI/status/2053939702110269822
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12199).
