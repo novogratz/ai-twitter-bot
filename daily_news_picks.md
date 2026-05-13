@@ -1107,3 +1107,26 @@ Il a injecté 38 millions de do
 $NVDA $TSLA
   - https://x.com/Investingcom/status/2054449542439804941
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 24).
+- **@pete_rizzo_** (30 likes, score 8/10) — JUST IN: BILLIONAIRE ARTHUR HAYES JUST SAID #BITCOIN WILL SET NEW ALL-TIME HIGHS OVER $126,000 "THIS YEAR"
+
+BTC WILL "EXPLODE" PAST $90,000
+
+"THIS IS A FOREGONE CONCLUSION"
+  - https://x.com/pete_rizzo_/status/2054456860867223752
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 50).
+- **@_3emeoeil** (406 likes, score 7/10) — Il a gagné 43 000 $ en 30 jours sur OnlyFan grâce à l'IA.
+
+Un étudiant américain de 21 ans a créé “Maya”, une fausse créatrice sur OnlyFans entièrement pilotée par IA : Claude pour les messages, Flux
+  - https://x.com/_3emeOeil/status/2050649050698105040
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 452).
+- **@cointelegraph** (113 likes, score 7/10) — MISE À JOUR : Les probabilités de l'Acte CLARITY sur Polymarket chutent à 60 %, en baisse de 5 % avant la markup du Comité sénatorial des banques jeudi.
+  - https://x.com/Cointelegraph/status/2054456611394007453
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 211).
+- **@finneko_prgrm** (39 likes, score 7/10) — Les MAG7 ont émis près de 220 milliards de dollars de dette obligataire depuis janvier 2025. Avec Google qui vient de lancer son premier deal obligataire en yen, à partir de quel moment le financement
+  - https://x.com/finneko_prgrm/status/2054450887691538711
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 47).
+- **@theinformation** (23 likes, score 7/10) — Microsoft a généré environ 30 milliards de dollars de nouveaux revenus à partir de ses flux de revenus liés à OpenAI.
+
+@aaronpholmes explique l'importance : « C'est notable parce que Microsoft a évide
+  - https://x.com/theinformation/status/2054308315371393526
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 27).
