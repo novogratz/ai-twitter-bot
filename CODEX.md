@@ -2,7 +2,9 @@
 
 Project context for **Codex CLI** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md). Use whichever CLI you have authenticated.
 
-> 🤖 **AI, Crypto, and Stock Market news, before anyone else. In-depth analysis. Zero bullshit, zero fluff. You'll hate me until I'm right.** ⚡
+> 🤖 **Infos IA et Crypto, avant tout le monde. Analyses pointues. Zéro bullshit, zéro blabla. Vous me détesterez jusqu'à ce que j'aie raison.** ⚡
+
+> **Mandate 2026-05-13:** FR only. Scope = IA + Crypto only (no bourse / actions / macro). Goal = thousands of followers + likes.
 
 ---
 
