@@ -87,6 +87,7 @@ These three are baked into `personality_store.HARD_RULES_BLOCK` and injected int
 - **`respect_list.py`** — soft list (engage but never criticize by name). Output scrubs at every content bot's post path. Default-seeded with 30 high-traction handles.
 - **`suppression_watch_bot`** — hourly health check; pauses aggressive bots (`spicy`, `breakout`, `follow_blast`) if avg likes drop below the floor.
 - **`health.py`** — Safari watchdog auto-restarts after 3 consecutive cycle failures.
+- **`safari_hygiene.py`** — preventive Safari quit+relaunch every 2h. Stops Safari from wedging after hours of `webbrowser.open()` + AppleScript JS. Cookies / localStorage / IndexedDB are file-based so login survives the restart.
 
 ### Voice — `core_identity.md`
 
