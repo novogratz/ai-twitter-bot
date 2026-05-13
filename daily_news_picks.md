@@ -1082,3 +1082,28 @@ Le Bhoutan vient de transférer 100 BTC (8,1 M$) hors de ses portefeuilles de d�
 - **@coinmarketcap** (90 likes, score 7/10) — LATEST :  Les ETP crypto ont enregistré 858 M$ d'entrées de capitaux la semaine dernière, une sixième semaine consécutive de gains totalisant 4,9 G$, selon CoinShares.
   - https://x.com/CoinMarketCap/status/2054075873175667040
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 190).
+
+## 2026-05-13
+- **@blackbondptv** (3353 likes, score 9/10) — JOUR 2 DU PROCÈS MUSK vs OPENAI : ELON LÂCHE DES BOMBES !
+
+Pendant 3,5 heures de témoignage, Elon Musk balance tout sur ce qu’il considère comme une trahison d’OpenAI :
+
+Il a injecté 38 millions de do
+  - https://x.com/BlackBondPtv/status/2049777745836527796
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 3453).
+- **@coinmarketcap** (232 likes, score 9/10) — LATEST :  L'indicateur de cycle haussier-baissier du Bitcoin de CryptoQuant est passé au vert pour la première fois depuis mars 2023, les analystes surveillant les 82 000 $ comme un niveau de confirma
+  - https://x.com/CoinMarketCap/status/2054401791815463348
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 336).
+- **@cointelegraph** (59 likes, score 8/10) — NOUVEAU : Anthropic est en discussions avancées pour acquérir la startup de outils de développement Stainless, utilisée par OpenAI et Google, pour au moins 300 millions de dollars, selon The Informati
+  - https://x.com/Cointelegraph/status/2054436701464936958
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 111).
+- **@watcherguru** (3411 likes, score 8/10) — JUST IN:  Nvidia $NVDA CEO Jensen Huang is joining President Trump on trip to China, White House announces.
+  - https://x.com/WatcherGuru/status/2054376414011384249
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 3853).
+- **@investingcom** (14 likes, score 7/10) — *NVIDIA CEO JENSEN HUANG SEEN ON BOARD AIR FORCE ONE TO BEIJING
+
+*ELON MUSK ALSO ON BOARD AIR FORCE ONE TO BEIJING - WHITE HOUSE SPOKESPERSON
+
+$NVDA $TSLA
+  - https://x.com/Investingcom/status/2054449542439804941
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 24).
