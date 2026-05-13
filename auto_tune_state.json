@@ -1,32 +1,40 @@
 {
-  "ts": "2026-05-10T13:17:06.280292",
+  "ts": "2026-05-13T04:57:42.209157",
   "window_min": 90,
-  "total_actions": 28,
+  "total_actions": 31,
   "by_type": {
-    "reply": 22,
-    "retweet": 6
+    "reply": 24,
+    "quote": 2,
+    "retweet": 5,
+    "post": 1
   },
   "winners": {
-    "PROFILE-ALWAYS/FrugalisteFutee": 2,
-    "FAVORITE_PROFILE/Graphseo": 2,
-    "PROFILE-ALWAYS/Graphseo": 2,
-    "FAVORITE_PROFILE/vision_ia": 2,
-    "PROFILE-FR/JDNebusiness": 2
+    "MEGA/BFMBourse": 6,
+    "MEGA/LeJournalDuCoin": 3,
+    "MEGA/sama": 2,
+    "PROFILE-FR/01net": 2,
+    "PROFILE-ALWAYS/TagadoBTC": 1
   },
   "losers": {
-    "FAVORITE_PROFILE/FinTales_": 1,
-    "PROFILE-ALWAYS/FlasheurInvest": 1,
-    "PROFILE-ALWAYS/MatthiasBaccino": 1,
-    "PROFILE-ALWAYS/McnallieM": 1,
-    "PROFILE-ALWAYS/CryptoastMedia": 1,
-    "PROFILE-ALWAYS/coinacademy_fr": 1,
     "PROFILE-ALWAYS/TagadoBTC": 1,
+    "PROFILE-ALWAYS/Crypto__Goku": 1,
     "PROFILE-ALWAYS/MiningTk": 1,
+    "PROFILE-ALWAYS/MoneyRadar_FR": 1,
+    "QUOTE/Merlijn The Trader": 1,
+    "PROFILE-ALWAYS/Capetlevrai": 1,
+    "PROFILE-ALWAYS/Dark_Emi_": 1,
     "PROFILE-ALWAYS/Divs_King": 1,
-    "PROFILE-ALWAYS/NCheron_bourse": 1,
-    "PROFILE-FR/Loris_Dalleau": 1,
-    "FAVORITE_PROFILE/FrugalisteFutee": 1
+    "PROFILE-ALWAYS/MathieuL1": 1,
+    "RETWEET/pete_rizzo_": 1,
+    "RETWEET/_3emeoeil": 1,
+    "RETWEET/cointelegraph": 1,
+    "RETWEET/finneko_prgrm": 1,
+    "RETWEET/theinformation": 1,
+    "PROFILE-ALWAYS/fchollet": 1,
+    "QUOTE/Sam Altman": 1,
+    "PROFILE-FR/Capetlevrai": 1,
+    "PROFILE-ALWAYS/RodolpheSteffan": 1
   },
-  "post_cadence_factor": 1.0,
+  "post_cadence_factor": 0.85,
   "boost_cadence_factor": 1.0
 }

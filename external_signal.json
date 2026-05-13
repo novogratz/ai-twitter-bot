@@ -1,126 +1,210 @@
 {
-  "ts": "2026-05-10T14:54:10.733354",
-  "count": 20,
+  "ts": "2026-05-13T06:37:44.131954",
+  "count": 30,
   "items": [
     {
-      "src": "r/CC",
-      "title": "$14 Trillion BlackRock Picks Ethereum for Tokenized Funds",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t8otxl/14_trillion_blackrock_picks_ethereum_for/",
-      "score": 446
+      "src": "The Verge",
+      "title": "Meta won’t let you block its AI account on Threads",
+      "url": "https://www.theverge.com/tech/929091/meta-ai-threads-account-block",
+      "score": 0,
+      "ts": "2026-05-13T05:54:55"
+    },
+    {
+      "src": "The Verge",
+      "title": "Amazon&#8217;s Panos Panay addresses new Fire phone rumors",
+      "url": "https://www.theverge.com/tech/929412/amazon-panos-panay-interview-phone-transformer",
+      "score": 0,
+      "ts": "2026-05-13T05:32:51"
+    },
+    {
+      "src": "X_FOLLOWING/The Kobeissi Letter",
+      "title": "This is absolutely insane.\n\nPresident Trump is currently flying to China with all of the following people to request \"deals\" with China's President Xi:\n\n1. Elon Musk, Tesla and SpaceX CEO\n2. Jensen Hu",
+      "url": "https://x.com/KobeissiLetter/status/2054411496344420520",
+      "score": 21821,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/Ethereum OR ETH lang:fr min_faves:2/Watcher.Guru",
+      "title": "JUSTE EN: JPMorgan va lancer un fonds monétaire tokenisé sur Ethereum.",
+      "url": "https://x.com/WatcherGuru/status/2054305568265740358",
+      "score": 6445,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/Watcher.Guru",
+      "title": "JUSTE ARRIVÉ :  Le « Golden Dome » proposé par le président Trump est maintenant estimé à 1,2 billion de dollars.\n\nPrès de 7 fois plus élevé que son estimation initiale de 175 milliards de dollars.",
+      "url": "https://x.com/WatcherGuru/status/2054269838038585404",
+      "score": 5604,
+      "ts": ""
     },
     {
       "src": "r/CC",
-      "title": "Bitcoin outperforms gold by roughly 36% since Iran war began",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t8t2pq/bitcoin_outperforms_gold_by_roughly_36_since_iran/",
-      "score": 135
+      "title": "Someone bought Jack Dorsey’s first ever tweet NFT for $2.9 million in 2021 - Today, it is worth less than $5",
+      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1ta2uqb/someone_bought_jack_dorseys_first_ever_tweet_nft/",
+      "score": 5224
+    },
+    {
+      "src": "r/CC",
+      "title": "Someone Just Used A Free NFT to Steal $174,000 From Grok.",
+      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1taf29h/someone_just_used_a_free_nft_to_steal_174000_from/",
+      "score": 1077
     },
     {
       "src": "HN",
-      "title": "Task Paralysis and AI",
-      "url": "https://g5t.de/articles/20260510-task-paralysis-and-ai/index.html",
-      "score": 128
+      "title": "Show HN: Needle: We Distilled Gemini Tool Calling into a 26M Model",
+      "url": "https://github.com/cactus-compute/needle",
+      "score": 465
+    },
+    {
+      "src": "X_SEARCH/top/Ethereum OR ETH lang:fr min_faves:2/CoinMarketCap",
+      "title": "DERNÈRES NOUVELLES :  La Fondation Ethereum a repoussé la mise à niveau Glamsterdam au T3 2026 et fixé un plancher de limite de gaz à 200 millions, contre 60 millions actuellement.",
+      "url": "https://x.com/CoinMarketCap/status/2054263888577790210",
+      "score": 452,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/Ethereum OR ETH lang:fr min_faves:2/Cointelegraph",
+      "title": "MAINTENANT : Charles Schwab a commencé à déployer les comptes Schwab Crypto pour les clients particuliers, leur permettant d'acheter Bitcoin et Ethereum directement aux côtés de leurs investissements",
+      "url": "https://x.com/Cointelegraph/status/2054376303470538902",
+      "score": 436,
+      "ts": ""
     },
     {
       "src": "r/CC",
-      "title": "AWS and Google Cloud both gave AI Agents a stablecoin wallet this past week!",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t83v05/aws_and_google_cloud_both_gave_ai_agents_a/",
-      "score": 110
+      "title": "White House reveals US banks 'refused' to attend meetings to resolve stablecoin rewards issue in CLARITY Act",
+      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tamjrr/white_house_reveals_us_banks_refused_to_attend/",
+      "score": 376
     },
     {
       "src": "HN",
-      "title": "Academic Research Skills for Claude Code",
-      "url": "https://github.com/Imbad0202/academic-research-skills",
-      "score": 59
+      "title": "Reimagining the mouse pointer for the AI era",
+      "url": "https://deepmind.google/blog/ai-pointer/",
+      "score": 204
     },
     {
-      "src": "HN",
-      "title": "Chrome's AI features may be hogging 4GB of your computer storage",
-      "url": "https://www.theverge.com/tech/924933/google-chrome-4gb-gemini-nano-ai-features",
-      "score": 58
+      "src": "X_SEARCH/top/Ethereum OR ETH lang:fr min_faves:2/Cointelegraph",
+      "title": "MISE À JOUR : Plus de 3 millions de $ETH ont été retirés de Binance depuis début mai, ce qui pourrait réduire la pression de vente au comptant, selon l'analyste @ArabxChain.",
+      "url": "https://x.com/Cointelegraph/status/2054310869266227494",
+      "score": 177,
+      "ts": ""
     },
     {
-      "src": "r/CC",
-      "title": "The Best Trade of the Month Wasn’t Crypto or Oil, It Was Potatoes",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t8kfx5/the_best_trade_of_the_month_wasnt_crypto_or_oil/",
-      "score": 37
-    },
-    {
-      "src": "r/CC",
-      "title": "Boston Fed president Collins warns Iran conflict energy shocks could keep rates elevated, pressuring crypto",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t83txd/boston_fed_president_collins_warns_iran_conflict/",
-      "score": 25
+      "src": "X_FOLLOWING/BC BlackMiror",
+      "title": "Dans une conversation avec Joe Rogan en 2019, Edward Snowden a révélé la vérité sur les smartphones.\n\n« Malheureusement, les appareils Apple et Android ne sont pas particulièrement bons pour protéger",
+      "url": "https://x.com/BC_BlackMiror/status/2054321929138651294",
+      "score": 116,
+      "ts": ""
     },
     {
       "src": "r/CC",
-      "title": "What’s one crypto tool or app you use regularly now?",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t81tai/whats_one_crypto_tool_or_app_you_use_regularly_now/",
-      "score": 24
+      "title": "Switzerland’s Largest Bank Just Joined the Crypto Race of 2026",
+      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tbdihb/switzerlands_largest_bank_just_joined_the_crypto/",
+      "score": 97
     },
     {
-      "src": "r/CC",
-      "title": "Zcash Targeting Post-Quantum Crypto Milestone by 2027",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t832s4/zcash_targeting_postquantum_crypto_milestone_by/",
-      "score": 12
+      "src": "X_HOME/Mario Nawfal",
+      "title": "BlackRock could control most AI data centers in the U.S.\n\nWhy? “The government can’t afford to fund them.”\n\nCEO Larry Fink also warned that resistance to these facilities could escalate into “domestic",
+      "url": "https://x.com/MarioNawfal/status/2054494357739446423",
+      "score": 27,
+      "ts": ""
     },
     {
-      "src": "r/CC",
-      "title": "Daily Crypto Discussion - May 9, 2026 (GMT+0)",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t8pu15/daily_crypto_discussion_may_9_2026_gmt0/",
-      "score": 8
+      "src": "X_FOLLOWING/Wu Blockchain",
+      "title": "Selon les données de SoSoValue, le 12 mai (ET), les ETF spot Bitcoin ont enregistré un flux net total sortant de 233 millions de dollars, Fidelity’s FBTC en tête des sorties avec 86,13 millions de dol",
+      "url": "https://x.com/WuBlockchain/status/2054474685224816898",
+      "score": 26,
+      "ts": ""
     },
     {
-      "src": "r/CC",
-      "title": "CZ Says Crypto Exchange Rivals Opposed His Pardon Bid",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t8t480/cz_says_crypto_exchange_rivals_opposed_his_pardon/",
-      "score": 7
+      "src": "X_SEARCH/top/IA OR intelligence artificielle OR Mistral lang:fr min_faves:2/BFM Business",
+      "title": "Arthur Mensch (Mistral AI) : vulnérabilité de l'IA \n\n\"L'IA, c'est des coûts, des dépenses et un déficit commercial potentiel qui est de l'ordre des 10% de la masse salariale européenne, donc on ne par",
+      "url": "https://x.com/bfmbusiness/status/2054473086527844825",
+      "score": 16,
+      "ts": ""
     },
     {
-      "src": "r/CC",
-      "title": "Is AI Search killing organic discovery? How AEO is changing the way we find new protocols.",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t83h21/is_ai_search_killing_organic_discovery_how_aeo_is/",
-      "score": 7
+      "src": "X_SEARCH/top/IA OR intelligence artificielle OR Mistral lang:fr min_faves:2/fabienne billat",
+      "title": "Après son départ d’OpenAI, \nMira Murati dévoile le 1er vrai modèle de ThinkingMachines\nPas un concurrent de GPT, mais une #IA conçue pour écouter, voir et répondre simultanément\n\nIl découpe la convers",
+      "url": "https://x.com/fadouce/status/2054451172103102532",
+      "score": 13,
+      "ts": ""
     },
     {
-      "src": "r/CC",
-      "title": "Kevin Warsh's First 30 Days: The Bitcoin Playbook",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t893l6/kevin_warshs_first_30_days_the_bitcoin_playbook/",
-      "score": 4
+      "src": "X_SEARCH/top/IA OR intelligence artificielle OR Mistral lang:fr min_faves:2/Brivael Le Pogam",
+      "title": "Hier je discutais avec un chercheur IA assez connu chez Meta. Je lui pose ma thèse sur la créativité. Il me sort l'argument classique : \"AlphaGo, le coup 37 contre Lee Sedol. Aucun humain ne l'avait j",
+      "url": "https://x.com/brivael/status/2054480827589730336",
+      "score": 9,
+      "ts": ""
     },
     {
-      "src": "r/ML",
-      "title": "Signals: finding the most informative agent traces without LLM judges [R]",
-      "url": "https://www.reddit.com/r/MachineLearning/comments/1t9d3et/signals_finding_the_most_informative_agent_traces/",
-      "score": 1
+      "src": "X_FOLLOWING/dunik",
+      "title": "Karpathy said one sentence at AI Ascent 2026 worth $4,000/month to anyone running Claude Code.\n\n\"context engineering is the new vibe coding.\"\n\nevery cost-cutting article on dev-X is downstream of that",
+      "url": "https://x.com/dunik_7/status/2054502522895716627",
+      "score": 8,
+      "ts": ""
     },
     {
-      "src": "r/ML",
-      "title": "LLM rankings are not a ladder: experimental results from a transitive benchmark graph [D]",
-      "url": "https://www.reddit.com/r/MachineLearning/comments/1t8f61o/llm_rankings_are_not_a_ladder_experimental/",
-      "score": 0
+      "src": "X_SEARCH/live/bourse OR CAC40 OR actions lang:fr min_faves:2/OAK Research",
+      "title": "Anthropic et OpenAI viennent de détruire les marchés “Pre-IPO” tokenisés.\n\nHier, les deux entreprises ont mis à jour leurs stock transfer policies afin de clarifier un point essentiel : les représenta",
+      "url": "https://x.com/OAK_Res_FR/status/2054507243861631438",
+      "score": 7,
+      "ts": ""
     },
     {
-      "src": "r/CC",
-      "title": "HOLY a whale just opened a $42M ETH short. could this be insider activity?",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t9enel/holy_a_whale_just_opened_a_42m_eth_short_could/",
-      "score": 0
+      "src": "X_SEARCH/top/IA OR intelligence artificielle OR Mistral lang:fr min_faves:2/Journal du Coin",
+      "title": "L’IA devient une arme industrielle pour les cybercriminels.\n\nGoogle alerte sur l’explosion des attaques dopées à l’intelligence artificielle : phishing, deepfakes, malwares… Les outils deviennent plus",
+      "url": "https://x.com/LeJournalDuCoin/status/2054501789710307613",
+      "score": 4,
+      "ts": ""
     },
     {
-      "src": "r/CC",
-      "title": "Can one of you ai gods make a burry vs tom Lee mtv celebrity death match video? Pls",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t91ub6/can_one_of_you_ai_gods_make_a_burry_vs_tom_lee/",
-      "score": 0
+      "src": "X_HOME/Coin Academy",
+      "title": "Charles Schwab lance le trading spot de Bitcoin et Ethereum pour ses clients particuliers",
+      "url": "https://x.com/coinacademy_fr/status/2054505682808848599",
+      "score": 2,
+      "ts": ""
     },
     {
-      "src": "r/CC",
-      "title": "CZ Says Bitcoin Is ‘Global Money’ But Could Be Replaced In The Future",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t8vq9q/cz_says_bitcoin_is_global_money_but_could_be/",
-      "score": 0
+      "src": "X_FOLLOWING/Crypto IA Décodé",
+      "title": "Schwab ouvre le trading Bitcoin direct à 39M de clients.\n\nPendant 10 ans c'était une arnaque. Maintenant c'est le livret A du tonton.",
+      "url": "https://x.com/cryptoiadecode/status/2054506603382993018",
+      "score": 0,
+      "ts": ""
     },
     {
-      "src": "r/CC",
-      "title": "“Download the StreamYard app”: the new scam targeting crypto",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1t8m4ar/download_the_streamyard_app_the_new_scam/",
-      "score": 0
+      "src": "X_FOLLOWING/Crypto IA Décodé",
+      "title": "Dorsey NFT: $2.9M to under $5 in five years. Clean angle, strong understatement.\n\nJack Dorsey's first tweet NFT sold for $2.9M in 2021. High bid today: under $5.\n\nA 99.99% drawdown. The S&P 500 would",
+      "url": "https://x.com/cryptoiadecode/status/2054504398735176070",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/Cointelegraph",
+      "title": "NOUVEAU : La Ethereum Foundation lance Clear Signing, une norme ouverte qui remplace la signature aveugle par des transactions lisibles par l'humain, apportant une importante mise à niveau de sécurité",
+      "url": "https://x.com/Cointelegraph/status/2054346100815827096",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/live/bourse OR CAC40 OR actions lang:fr min_faves:2/Caméléon",
+      "title": "Et les package pour les pdg du cac40",
+      "url": "https://x.com/Cameleon999/status/2054506019884093598",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/live/Nvidia OR GPU OR datacenter lang:fr min_faves:2/Eko kripto",
+      "title": "Just 3-4 months ago, people were talking about a \"trade war\" between the US and China, sanctions, chip embargoes...\n\nNow, there's a completely different picture. \n\nUS President Donald Trump,\nis headin",
+      "url": "https://x.com/EkoKripto/status/2054507668052590710",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/live/Nvidia OR GPU OR datacenter lang:fr min_faves:2/MarketScreener Italia",
+      "title": "Il CEO di Nvidia, Jensen Huang, si unirà al presidente Donald Trump durante la sua visita a Pechino, alimentando le speranze in Cina che il viaggio possa sbloccare gli sforzi del colosso tecnologico p",
+      "url": "https://x.com/MarketscreenerI/status/2054507651128533137",
+      "score": 0,
+      "ts": ""
     }
   ]
 }

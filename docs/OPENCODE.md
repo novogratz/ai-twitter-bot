@@ -42,6 +42,20 @@ HOTAKE_MODEL=ollama/qwen3-coder:30b
 
 This runs the APScheduler-based bot from `main.py`. All LLM calls go through `src/llm_client.py` which now speaks opencode.
 
+## Automatic fallback
+
+When the primary provider fails, times out, is missing, or returns empty output,
+`src/llm_client.py` automatically retries the same prompt through OpenCode:
+
+```env
+LLM_FALLBACK_CLI=opencode
+OPENCODE_FALLBACK_MODEL=opencode/big-pickle
+```
+
+Use `LLM_FALLBACK_MODEL` to force one fallback model for every fallback provider,
+or `LLM_DISABLE_FALLBACK=1` to turn fallback off. This is central, so it covers
+news, replies, hot takes, quote commentary, and every other `run_llm()` caller.
+
 ## Running as an agent (replace main.py)
 
 Use the `run-agent` skill. OpenCode runs the bot loop itself with native WebSearch + Bash:
