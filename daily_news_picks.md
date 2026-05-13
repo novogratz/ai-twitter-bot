@@ -1192,3 +1192,20 @@ Google n'est qu'à moins de 4 % de devenir la d
 - **@unusual_whales** (180 likes, score 8/10) — Microsoft, $MSFT, has said that it has spent over $100 billion on OpenAI partnership, per FP
   - https://x.com/unusual_whales/status/2054639564585931185
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 278).
+- **@watcherguru** (3351 likes, score 8/10) — JUST IN: Bitcoin falls under $79,000
+  - https://x.com/WatcherGuru/status/2054592177129373887
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 4413).
+- **@watcherguru** (279 likes, score 8/10) — Kevin Warsh has officially been confirmed as the next Federal Reserve chair, winning Senate approval in a 54-45 vote, the most divided confirmation ever for the role.
+
+Warsh, 56, will replace Jerome P
+  - https://x.com/WatcherGuru/status/2054644120485077038
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 331).
+- **@kalshi_crypto** (19 likes, score 7/10) — JUST IN: Michael Saylor's 'Strategy' buys ~$386M worth of Bitcoin today
+  - https://x.com/Kalshi_Crypto/status/2054656667929772077
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 23).
+- **@yahoofinance** (33 likes, score 7/10) — The US Senate confirmed Kevin Warsh as the new chairman of the Federal Reserve. http://yhoo.it/4dsnd8Z
+  - https://x.com/YahooFinance/status/2054639317859885177
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 41).
+- **@bloombergtv** (15 likes, score 7/10) — Anthropic is in discussions to raise $30 billion of new capital at a valuation of more than $900 billion, not including the investment, according to people familiar with the matter. The round is expec
+  - https://x.com/BloombergTV/status/2054619959397921260
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 15).
