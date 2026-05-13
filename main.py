@@ -51,6 +51,7 @@ from src.spicy_bot import safe_run_spicy_cycle
 from src.suppression_watch_bot import safe_run_suppression_watch_cycle
 from src.mega_watch_bot import safe_run_mega_watch_cycle
 from src.cleanup_bot import safe_run_cleanup_cycle
+from src.safari_hygiene import safe_run_session_refresh
 from src.heartbeat_bot import safe_run_heartbeat
 from src.meta_strategy_agent import safe_run_meta_strategy_cycle
 from src.hn_signal_bot import safe_run_signal_cycle
@@ -683,6 +684,18 @@ def main():
             safe_run_cleanup_cycle,
             trigger=IntervalTrigger(hours=1),
             id="cleanup_job",
+        )
+
+        # Safari hygiene: preventive quit+relaunch every ~2h. After hours of
+        # webbrowser.open() + AppleScript JS, Safari wedges and x.com
+        # (and other tabs like Telegram Web) stop loading. Restarting Safari
+        # before it freezes keeps the bot autonomous — cookies survive on
+        # disk, so login is preserved.
+        log.info("Safari hygiene: preventive restart every 2h to keep x.com loading.")
+        scheduler.add_job(
+            safe_run_session_refresh,
+            trigger=IntervalTrigger(hours=2),
+            id="safari_hygiene_job",
         )
 
         # Heartbeat — one log line every 60s so a glance at bot.log
