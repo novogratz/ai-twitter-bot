@@ -1209,3 +1209,21 @@ Warsh, 56, will replace Jerome P
 - **@bloombergtv** (15 likes, score 7/10) — Anthropic is in discussions to raise $30 billion of new capital at a valuation of more than $900 billion, not including the investment, according to people familiar with the matter. The round is expec
   - https://x.com/BloombergTV/status/2054619959397921260
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 15).
+- **@tomleetracker** (6 likes, score 7/10) — Charles Schwab $SCHW (Who is very late on adding this ... how was this not there already has rolled out direct spot Bitcoin and Ethereum trading to its retail clients
+  - https://x.com/TomLeeTracker/status/2054662193673613739
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 6).
+- **@unusual_whales** (157 likes, score 7/10) — Cisco, $CSCO, earnings:
+
+- EPS: $1.06, est: $1.04
+- Rev: $15.8 billion, est: $15.5 billion
+  - https://x.com/unusual_whales/status/2054655144617480534
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 253).
+- **@reutersbiz** (4 likes, score 7/10) — Gold Miner Agnico Eagle commits to spend $10.2 billion in Ontario, Canada by 2030 http://reut.rs/4dswZrH
+  - https://x.com/ReutersBiz/status/2054656713165349162
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 8).
+- **@wsjmarkets** (3 likes, score 7/10) — The U.K. chip startup Fractile said it has raised a $220 million Series B funding round led by Factorial Funds, Accel and Peter Thiel’s Founders Fund
+  - https://x.com/WSJmarkets/status/2054562650399391818
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5).
+- **@unusual_whales** (424 likes, score 7/10) — BREAKING: Vice President JD Vance announces the federal government is deferring over a billion dollars in Medicaid reimbursements to California, citing a failure by the state to combat systemic fraud.
+  - https://x.com/unusual_whales/status/2054660703957532813
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 560).
