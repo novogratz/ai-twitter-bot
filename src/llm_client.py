@@ -154,12 +154,34 @@ def _run_cmd(
     return LLMResult(result.returncode, result.stdout or "", result.stderr or "")
 
 
+_CODEX_LIMIT_PATTERNS = (
+    "context length exceeded",
+    "context_length_exceeded",
+    "maximum context",
+    "max tokens",
+    "token limit",
+    "too many tokens",
+    "input is too long",
+    "rate limit",
+    "rate_limit",
+    "quota exceeded",
+    "no output",
+)
+
+
 def _should_fallback(result: LLMResult) -> bool:
-    # Consider fallback if:
-    # 1. The command failed (non-zero return code) OR
-    # 2. The command succeeded but returned empty output OR
-    # 3. The command failed with a specific rate limiting error code (LLM_RATE_LIMIT_CODE)
-    return result.returncode != 0 or not (result.stdout or "").strip() or result.returncode == LLM_RATE_LIMIT_CODE
+    if result.returncode != 0 or result.returncode == LLM_RATE_LIMIT_CODE:
+        return True
+    combined = ((result.stdout or "") + (result.stderr or "")).lower()
+    if not combined.strip():
+        return True
+    # Catch token/context-limit and rate-limit errors returned with exit 0
+    if any(pat in combined for pat in _CODEX_LIMIT_PATTERNS):
+        return True
+    # Empty useful content in stdout
+    if not (result.stdout or "").strip():
+        return True
+    return False
 
 
 def run_llm(
