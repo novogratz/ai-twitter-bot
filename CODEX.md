@@ -90,6 +90,7 @@ The `.codex/skills/` directory is a verbatim mirror of `.claude/skills/`. If/whe
 - **`personality_store.HARD_RULES_BLOCK`** — hard rules block injected into every generation prompt.
 - **`suppression_watch_bot`** — pauses aggressive bots if engagement collapses.
 - **`health.py`** — Safari watchdog auto-restarts after 3 cycle failures.
+- **`safari_hygiene.py`** — preventive Safari quit+relaunch every 2h. Stops Safari from wedging after hours of automation; cookies + localStorage persist so login survives.
 
 ### Voice
 

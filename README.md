@@ -230,6 +230,7 @@ Each is bounded: the meta-strategy agent can only set caps within `[lo, hi]` ran
 - **`personality_store.HARD_RULES_BLOCK`** — two non-negotiable rules stamped into every generation prompt: (1) no illegal content, (2) no trolling US government / federal agencies.
 - **`suppression_watch_bot`** — hourly engagement health check; if avg likes drop below floor, pauses aggressive bots (`spicy`, `breakout`, `follow_blast`) for 4h.
 - **`health.py`** — Safari watchdog; force-restarts Safari after 3 consecutive cycle failures.
+- **`safari_hygiene.py`** — preventive Safari quit+relaunch every 2h to stop Safari from wedging after hours of automation. Force-kills lingering WebKit helpers; cookies/localStorage persist so login survives.
 
 ---
 
