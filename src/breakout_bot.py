@@ -33,24 +33,24 @@ from . import personality_store
 BREAKOUT_STATE_FILE = os.path.join(_PROJECT_ROOT, "breakout_state.json")
 BREAKOUT_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "breakout_history.json")
 
-MAX_BREAKOUTS_PER_DAY = int(os.environ.get("MAX_BREAKOUTS_PER_DAY", "8"))
+MAX_BREAKOUTS_PER_DAY = int(os.environ.get("MAX_BREAKOUTS_PER_DAY", "15"))
 HIGH_VELOCITY_LIKES = int(os.environ.get("BREAKOUT_VELOCITY_LIKES", "100"))
 MIN_LIKES_TO_CONSIDER = int(os.environ.get("BREAKOUT_MIN_LIKES", "30"))
 
 # Search queries that surface high-velocity FR + EN content in our niches.
 # We want the FRESH viral pulse, not yesterday's already-hot tweets.
 BREAKOUT_QUERIES = [
-    # FR niche viral
+    # FR niche viral — AI + Crypto ONLY
     "IA OR ChatGPT OR OpenAI OR Mistral lang:fr min_faves:50",
-    "Bitcoin OR crypto OR ETF lang:fr min_faves:50",
-    "bourse OR CAC40 OR action lang:fr min_faves:30",
+    "Bitcoin OR crypto OR ETF OR Ethereum lang:fr min_faves:50",
     "Anthropic OR Claude lang:fr min_faves:30",
-    "Nvidia OR NVDA lang:fr min_faves:30",
+    "Nvidia OR GPU OR datacenter lang:fr min_faves:30",
+    "Solana OR stablecoin OR DeFi lang:fr min_faves:30",
     # EN mega-viral (we comment in FR over them)
     "OpenAI OR Anthropic lang:en min_faves:5000",
     "Bitcoin OR Ethereum lang:en min_faves:5000",
     "AI OR AGI lang:en min_faves:8000",
-    "Nvidia OR NVDA lang:en min_faves:5000",
+    "Nvidia OR GPU lang:en min_faves:5000",
 ]
 
 

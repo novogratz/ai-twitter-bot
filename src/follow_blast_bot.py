@@ -33,11 +33,12 @@ from .config import _PROJECT_ROOT, BOT_HANDLE
 from .logger import log
 from .twitter_client import _safari_lock, close_front_tab, _scroll_page
 
-FOLLOWS_PER_CYCLE = int(os.environ.get("FOLLOW_BLAST_PER_CYCLE", "30"))
+FOLLOWS_PER_CYCLE = int(os.environ.get("FOLLOW_BLAST_PER_CYCLE", "40"))
 
 # FR niche search queries. Rotated per cycle. The min_faves floor keeps
 # us out of bot-farm zones — we want real FR users in the niche.
 BLAST_QUERIES = [
+    # AI + Crypto only — FR audience (mandate 2026-05-13)
     "IA lang:fr min_faves:3",
     "ChatGPT lang:fr min_faves:3",
     "Claude lang:fr min_faves:2",
@@ -45,17 +46,19 @@ BLAST_QUERIES = [
     "OpenAI lang:fr min_faves:3",
     "Anthropic lang:fr min_faves:2",
     "intelligence artificielle lang:fr",
+    "agent IA lang:fr min_faves:2",
+    "GPT lang:fr min_faves:3",
+    "LLM lang:fr min_faves:2",
     "Bitcoin lang:fr min_faves:3",
     "Ethereum lang:fr min_faves:2",
     "crypto lang:fr min_faves:3",
     "BTC lang:fr min_faves:2",
-    "CAC40 lang:fr",
-    "bourse lang:fr min_faves:2",
-    "trading lang:fr min_faves:2",
-    "investissement lang:fr min_faves:2",
+    "Solana lang:fr min_faves:2",
+    "stablecoin lang:fr min_faves:2",
+    "DeFi lang:fr min_faves:2",
+    "ETF Bitcoin lang:fr min_faves:2",
     "Nvidia lang:fr min_faves:2",
-    "fintech lang:fr min_faves:2",
-    "startup tech lang:fr min_faves:2",
+    "GPU lang:fr min_faves:2",
 ]
 
 

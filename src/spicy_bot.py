@@ -9,7 +9,7 @@ Two modes, picked at random per cycle:
     inside hard rules (no illegal, no US-gov troll) but pushes harder
     on private targets (corporate hype, retail traders, influencer
     coaching, OPINIONATED takes on the niche).
-  - QUESTION: an open FR question on AI / crypto / bourse designed to
+  - QUESTION: an open FR question on AI / crypto designed to
     trigger replies from followers + lurkers. "Honest question" framing.
 
 Cap 6/day total. Posts via post_tweet(). Different from regular news
@@ -32,10 +32,10 @@ from . import personality_store
 
 SPICY_STATE_FILE = os.path.join(_PROJECT_ROOT, "spicy_state.json")
 
-MAX_SPICY_PER_DAY = int(os.environ.get("MAX_SPICY_PER_DAY", "6"))
+MAX_SPICY_PER_DAY = int(os.environ.get("MAX_SPICY_PER_DAY", "12"))
 
 
-SPICY_PROMPT = """Tu es @kzer_ai. Tu vas poster UN tweet ULTRA SHARP, niche IA / crypto / bourse.
+SPICY_PROMPT = """Tu es @kzer_ai. Tu vas poster UN tweet ULTRA SHARP, niche IA / crypto UNIQUEMENT.
 
 {lang_directive}
 
@@ -57,7 +57,7 @@ OUTPUT — strictement le tweet, rien d'autre.
 JAMAIS de "Voici", "Le tweet:", "---", ou méta-commentaire."""
 
 SPICY_INSTRUCTIONS = """SPICY MODE — Tu balances une OPINION TRANCHÉE qui va faire débattre.
-- Choisis 1 sujet IA / crypto / bourse où une majorité pense X.
+- Choisis 1 sujet IA OU crypto (STRICT — pas de bourse/macro) où une majorité pense X.
 - Tu dis le contraire avec une chute qui pique.
 - C'est OK d'être divisif tant qu'il y a un argument.
 - Format préféré: déclaration + chute. Ex: "Tout le monde célèbre le RAG. C'est juste un Ctrl-F qui parle français."
@@ -66,11 +66,11 @@ SPICY_INSTRUCTIONS = """SPICY MODE — Tu balances une OPINION TRANCHÉE qui va 
 Exemples de positions spicy valides:
 - "L'IA générative a tué l'apprentissage. Les juniors n'écrivent plus de code, ils prient ChatGPT."
 - "Le ETF Bitcoin a transformé le BTC en obligation pour fonds de pension. Toute la promesse de la dé-centralisation est morte là."
-- "Le CAC40 monte de 8% par an depuis 5 ans. C'est pas du marché qui performe, c'est de l'argent qui n'a nulle part où aller."
+- "Mistral lève encore. À ce rythme on financera la souveraineté française avant qu'elle ait shippé un modèle."
 """
 
 QUESTION_INSTRUCTIONS = """QUESTION MODE — Tu poses UNE question ouverte qui invite la réponse.
-- Sujet: IA / crypto / bourse. Position polite, pas accusatoire.
+- Sujet: IA OU crypto UNIQUEMENT. Position polite, pas accusatoire.
 - Format: une seule question + un cadre court qui justifie la question.
 - L'audience doit lire et avoir envie de RÉPONDRE.
 - Évite les questions vagues. Préfère: choix entre 2 options, ou question qui force un classement.
