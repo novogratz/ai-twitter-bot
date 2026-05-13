@@ -17,7 +17,6 @@ ANY mix of bots is the trigger, since they all share Safari.
 """
 import json
 import os
-import subprocess
 import time
 from datetime import datetime
 from .config import _PROJECT_ROOT
@@ -90,20 +89,15 @@ def record_failure(label: str = "") -> bool:
 
 
 def _restart_safari() -> bool:
-    """Force-quit Safari and reopen a fresh window. Best-effort, never raises."""
+    """Force-quit Safari and reopen a fresh window. Best-effort, never raises.
+
+    Delegates to safari_hygiene.restart_safari which also force-kills
+    lingering WebKit helper processes (graceful quit sometimes leaves them
+    holding network state). Cookies / localStorage survive — login persists.
+    """
     try:
-        subprocess.run(
-            ["osascript", "-e", 'tell application "Safari" to quit'],
-            capture_output=True, text=True, timeout=15,
-        )
-        time.sleep(2)
-        subprocess.run(
-            ["osascript", "-e", 'tell application "Safari" to activate'],
-            capture_output=True, text=True, timeout=15,
-        )
-        time.sleep(2)
-        log.info("[HEALTH] Safari restarted.")
-        return True
+        from . import safari_hygiene
+        return safari_hygiene.restart_safari(reason="health_recovery")
     except Exception as e:
         log.warning(f"[HEALTH] Safari restart failed: {e}")
         return False
