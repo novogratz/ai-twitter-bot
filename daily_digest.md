@@ -250,3 +250,13 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 69 likes / 387000 views: Honnêtement j’aurais pas été capable de dire si c’était fait par IA ou par un studio d’animation tra
   - 41 likes / 10000 views: DERNIER:  Capital B a levé 17,8 millions de dollars auprès d'investisseurs incluant Adam Back et TOB
   - 28 likes / 8000 views: DERNIER: Michael @saylor's @Strategy acquiert 535 $BTC pour 43 M$ à 80 340 $ par Bitcoin, portant le
+
+## 2026-05-12
+
+**Activity** — total actions: 108
+  - by type: reply=57, retweet=35, post=9, quote=5, hotake=2
+  - top sources: PROFILE-ALWAYS=26, RETWEET=20, FAVORITE_PROFILE=15, MEGA=11, PROFILE-EN=6, QUOTE=5, PROFILE-FR=4, SEARCH-FR-HOT=4
+  - comedy patterns: FR_ANCHOR=7, UNDERSTATEMENT=3, METAPHOR=2, DIALOGUE=1
+  - top reply targets: @LeJournalDuCoin=13, @CryptoastMedia=6, @McnallieM=4, @ABaradez=3, @CoinMarketCap=3
+
+**Followers we follow** (running total): 166
