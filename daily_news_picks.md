@@ -1154,3 +1154,22 @@ Nvidia vaut désormais 5,4
 Daybreak brings together the most capable OpenAI models, Codex, and our security partners to accelerate cyber defense and continuously secure so
   - https://x.com/OpenAI/status/2053939702110269822
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 12199).
+- **@coindesk** (34 likes, score 8/10) — ANALYSE : $BTC chute à 79 879 $ sur des données CPI brûlantes avant de se redresser à 81 200 $.
+
+Les produits d'investissement en Bitcoin ont attiré 706 M$ la semaine dernière alors que les positions
+  - https://x.com/CoinDesk/status/2054490106518487227
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 70).
+- **@wublockchain** (0 likes, score 7/10) — According to SoSoValue data, on May 12 (ET), Bitcoin spot ETFs recorded a total net outflow of $233 million, with Fidelity’s FBTC leading outflows at $86.13 million. Ethereum spot ETFs recorded a tota
+  - https://x.com/WuBlockchain/status/2054474685224816898
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 8).
+- **@cointelegraph** (365 likes, score 8/10) — NEW: Ethereum Foundation rolls out Clear Signing, an open standard that replaces blind signing with human-readable transactions, bringing a major security upgrade to Ethereum.
+  - https://x.com/Cointelegraph/status/2054346100815827096
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 463).
+- **@watcherguru** (5559 likes, score 7/10) — JUSTE ARRIVÉ :  Le « Golden Dome » proposé par le président Trump est maintenant estimé à 1,2 billion de dollars.
+
+Près de 7 fois plus élevé que son estimation initiale de 175 milliards de dollars.
+  - https://x.com/WatcherGuru/status/2054269838038585404
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6517).
+- **@polymarket** (178 likes, score 7/10) — JUST IN : Tesla va investir 250 millions de dollars supplémentaires dans une usine de cellules de batterie à l'extérieur de Berlin.
+  - https://x.com/Polymarket/status/2054468688565424361
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 280).
