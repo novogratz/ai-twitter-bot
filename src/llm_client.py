@@ -5,6 +5,7 @@ Keep provider differences and local rate limiting here so agents only ask for te
 """
 import json
 import os
+import signal
 import shutil
 import subprocess
 from dataclasses import dataclass
@@ -103,14 +104,19 @@ def _build_cmd(
 
 def _fallback_provider(primary_provider: str) -> Optional[str]:
     default_fallback = "codex" if primary_provider == "opencode" else "opencode"
-    fallback = os.environ.get("LLM_FALLBACK_CLI", default_fallback).strip().lower()
+    env_fallback = os.environ.get("LLM_FALLBACK_CLI", "").strip().lower()
+    fallback = env_fallback or default_fallback
     if os.environ.get("LLM_DISABLE_FALLBACK", "0") == "1":
         return None
-    if not fallback or fallback == primary_provider:
+    if not fallback:
         return None
     if fallback not in {"claude", "codex", "gemini", "opencode"}:
         return None
     if not shutil.which(fallback):
+        return None
+    # Same-provider fallback only allowed when explicitly requested via env
+    # (different model, e.g. opencode/big-pickle → opencode/qwen)
+    if fallback == primary_provider and not env_fallback:
         return None
     return fallback
 
@@ -146,19 +152,28 @@ def _run_cmd(
 ) -> LLMResult:
     effective_timeout = timeout if timeout is not None else DEFAULT_LLM_TIMEOUT_SECONDS
     try:
-        result = subprocess.run(
+        proc = subprocess.Popen(
             cmd,
             stdin=subprocess.DEVNULL,
-            capture_output=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
             text=True,
-            timeout=effective_timeout,
             cwd=cwd,
+            start_new_session=True,  # isolate process group so children can be reaped
         )
+        try:
+            stdout, stderr = proc.communicate(timeout=effective_timeout)
+        except subprocess.TimeoutExpired:
+            # Kill the entire process group (catches search/child workers that hold pipes)
+            try:
+                os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+            except (ProcessLookupError, PermissionError):
+                proc.kill()
+            proc.communicate()
+            return LLMResult(124, "", f"{label} timed out after {effective_timeout}s")
     except FileNotFoundError as exc:
         return LLMResult(127, "", f"{label} command not found: {exc.filename}")
-    except subprocess.TimeoutExpired:
-        return LLMResult(124, "", f"{label} timed out after {effective_timeout}s")
-    return LLMResult(result.returncode, result.stdout or "", result.stderr or "")
+    return LLMResult(proc.returncode, stdout or "", stderr or "")
 
 
 _CODEX_LIMIT_PATTERNS = (
@@ -172,6 +187,9 @@ _CODEX_LIMIT_PATTERNS = (
     "rate limit",
     "rate_limit",
     "quota exceeded",
+    "usage limit",
+    "hit your usage",
+    "upgrade to pro",
     "no output",
 )
 
