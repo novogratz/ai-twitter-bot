@@ -1173,3 +1173,22 @@ Près de 7 fois plus élevé que son estimation initiale de 175 milliards de dol
 - **@polymarket** (178 likes, score 7/10) — JUST IN : Tesla va investir 250 millions de dollars supplémentaires dans une usine de cellules de batterie à l'extérieur de Berlin.
   - https://x.com/Polymarket/status/2054468688565424361
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 280).
+- **@polymarket** (1181 likes, score 9/10) — INFO URGENTE : Nvidia devient officiellement la première entreprise à atteindre une capitalisation boursière de 5 500 000 000 000,00 $.
+  - https://x.com/Polymarket/status/2054598081228743022
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1403).
+- **@pubity** (143 likes, score 9/10) — Nvidia has just become the first company in history to reach a market cap of $5,500,000,000,000.
+  - https://x.com/pubity/status/2054607473118507365
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 157).
+- **@kobeissiletter** (1685 likes, score 9/10) — C'est officiel :
+
+Nvidia, $NVDA, a dépassé l'argent pour devenir le deuxième actif le plus important au monde, d'une valeur de 5,52 billions de dollars.
+
+Google n'est qu'à moins de 4 % de devenir la d
+  - https://x.com/KobeissiLetter/status/2054629212854624329
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2055).
+- **@watcherguru** (5556 likes, score 8/10) — INFO URGENTE : Nvidia $NVDA devient la première entreprise de l'histoire à atteindre une capitalisation boursière de 5,5 billions de dollars.
+  - https://x.com/WatcherGuru/status/2054568359342026851
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 6438).
+- **@unusual_whales** (180 likes, score 8/10) — Microsoft, $MSFT, has said that it has spent over $100 billion on OpenAI partnership, per FP
+  - https://x.com/unusual_whales/status/2054639564585931185
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 278).
