@@ -21,7 +21,16 @@ claude login                 # or: gemini login
 echo "AI_CLI=claude" >> .env  # or: AI_CLI=gemini
 ```
 
-The `src/llm_client.py` adapter handles each provider transparently.
+The `src/llm_client.py` adapter handles each provider transparently. If the
+primary returns a hard failure (non-zero exit, empty stdout) **or a soft
+refusal** (exit 0 but body like `[no need to search for external sources…]`),
+the same fallback ladder fires: `LLM_FALLBACK_CLI` / `LLM_FALLBACK_MODEL`,
+then `OPENCODE_FALLBACK2_MODEL`. Refusal patterns live in
+`_REFUSAL_PATTERNS` in `src/llm_client.py`.
+
+News bursts are tuned via `NEWS_POSTS_PER_CYCLE` (default `3`); set to `1`
+when the LLM is flaky so each cycle skips fast instead of grinding for 6+ min
+on bad output.
 
 LLM budgets are soft by default: `LLM_ENFORCE_BUDGET=0` means usage is logged
 but production content is not blocked by local hourly/daily counters. Set it to

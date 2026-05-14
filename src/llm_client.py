@@ -254,6 +254,23 @@ _CODEX_LIMIT_PATTERNS = (
     "no output",
 )
 
+# Soft-failure markers: exit 0 but the model returned meta-commentary
+# instead of doing the task (refusing WebSearch, narrating instead of
+# producing a tweet). 2026-05-13: opencode/big-pickle started emitting
+# "[no need to search for external sources...]" — exit 0, but useless.
+# These trip the same fallback ladder as hard failures.
+_REFUSAL_PATTERNS = (
+    "no need to search",
+    "no need to look up",
+    "as the user has provided",
+    "as you have provided",
+    "i don't need to search",
+    "i do not need to search",
+    "i cannot search",
+    "i'm unable to search",
+    "i am unable to search",
+)
+
 
 def _should_fallback(result: LLMResult) -> bool:
     if result.returncode != 0 or result.returncode == LLM_RATE_LIMIT_CODE:
@@ -266,6 +283,10 @@ def _should_fallback(result: LLMResult) -> bool:
         return True
     # Empty useful content in stdout
     if not (result.stdout or "").strip():
+        return True
+    # Soft refusal: model returned meta-commentary instead of doing the task.
+    stdout_low = (result.stdout or "").lower()
+    if any(pat in stdout_low for pat in _REFUSAL_PATTERNS):
         return True
     return False
 
