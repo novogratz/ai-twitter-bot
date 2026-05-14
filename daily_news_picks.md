@@ -1389,3 +1389,24 @@ via @pelicamatos
 - **@reutersbiz** (0 likes, score 7/10) — Exclusive: Wizz Air expects revenue bump for summer despite Iran war http://reut.rs/437E0cs
   - https://x.com/ReutersBiz/status/2054853008165388500
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 4).
+- **@ncheron_bourse** (66 likes, score 8/10) — NVIDIA se dirige vers de nouveaux records !
+
+Le titre évoluait dans une large zone de consolidation comprise entre 166$ et 212$.
+
+Après plusieurs échecs sous cette résistance, le marché réussi à s’ext
+  - https://x.com/NCheron_bourse/status/2054822015777820714
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 88).
+- **@cointelegraph** (190 likes, score 7/10) — DERNIÈRE MINUTE : JPMorgan a augmenté ses avoirs dans l'IBIT de BlackRock à 8,3 millions d'actions au T1 2026, en hausse d'environ 175 %.
+  - https://x.com/Cointelegraph/status/2054855181322387497
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 292).
+- **@cointelegraph** (89 likes, score 7/10) — AUJOURD'HUI : Circle émet 500 000 000 $USDC sur Solana.
+  - https://x.com/Cointelegraph/status/2054866825616200162
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 153).
+- **@wsj** (18 likes, score 7/10) — La Chine domine de plus en plus les industries de haute technologie, tandis que les secteurs de la fabrication à faible valeur ajoutée qui ont propulsé l'essor du pays deviennent des moteurs économiqu
+  - https://x.com/WSJ/status/2054863950995505474
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 44).
+- **@cointelegraph** (14 likes, score 7/10) — ALERTE : Un NFT gratuit aurait apparemment permis de vider 174 000 $ d’un portefeuille crypto connecté à Grok via une exploitation d’injection de prompt.
+
+Ce cas met en lumière les risques croissants
+  - https://x.com/Cointelegraph/status/2054871863898046603
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 36).
