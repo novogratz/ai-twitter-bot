@@ -1292,3 +1292,18 @@ Au cours des 2 dernières années, l'offre monétaire a bondi de +17,1 billion
 - **@squawkcnbc** (240 likes, score 7/10) — DEMAIN : @SecScottBessent rejoint @JoeSquawk pour une interview exclusive afin de discuter du voyage du Président en Chine. Réglez vos montres !
   - https://x.com/SquawkCNBC/status/2054580566872236478
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 306).
+- **@bitcoinmagazine** (1677 likes, score 8/10) — BREAKING:  Pro-Bitcoin Kevin Warsh officially confirmed as Federal Reserve Chair in Senate vote.
+  - https://x.com/BitcoinMagazine/status/2054636129077342466
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1807).
+- **@cointelegraph** (114 likes, score 8/10) — MISE À JOUR : Ethereum vient de atteindre un sommet sur 3 semaines en bénéfices réalisés sur le réseau à 74,58 M$, selon Santiment.
+  - https://x.com/Cointelegraph/status/2054819062509625589
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 216).
+- **@cointelegraph** (113 likes, score 7/10) — URGENT : Les États-Unis ont autorisé environ 10 entreprises chinoises, dont Alibaba et Tencent, à acheter les puces H200 de Nvidia, bien que aucune livraison n'ait encore été effectuée, selon Reuters.
+  - https://x.com/Cointelegraph/status/2054824046009672174
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 191).
+- **@techcrunch** (11 likes, score 7/10) — Clio’s $500M milestone arrives just as Anthropic ups the ante
+  - https://x.com/TechCrunch/status/2054795404919869789
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 17).
+- **@reuters** (3 likes, score 7/10) — Alors que la guerre en Iran secoue Air India, Lufthansa et Cathay se jettent sur le marché en pleine croissance rapide http://reut.rs/4doNLro
+  - https://x.com/Reuters/status/2054831587770896466
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 9).
