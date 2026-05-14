@@ -1271,3 +1271,24 @@ via @hardeyjumoh
 - **@santimentdata** (11 likes, score 7/10) — Ethereum vient d'enregistrer ses plus hauts profits réalisés sur le réseau en 3 semaines. Cela peut sembler contre-intuitif de voir une flambée de 74,58 M$ en profits réalisés alors que le prix de $ET
   - https://x.com/SantimentData/status/2054782500560367698
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 11).
+- **@cointelegraph** (93 likes, score 8/10) — BIG: Microsoft has spent over $100 billion on its OpenAI partnership, according to testimony in Elon Musk's lawsuit.
+  - https://x.com/Cointelegraph/status/2054798877618831514
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 147).
+- **@bitcoinmagazine** (841 likes, score 8/10) — JUSTE ARRIVÉ : Fidelity soutient le passage au Sénat du projet de loi sur la structure du marché Bitcoin et crypto :
+
+« Fidelity félicite la Commission bancaire du Sénat pour avoir fait avancer la loi
+  - https://x.com/BitcoinMagazine/status/2054668650968166679
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 985).
+- **@kobeissiletter** (3636 likes, score 7/10) — L'offre monétaire explose en flèche :
+
+L'offre monétaire mondiale atteint désormais un record de 121,9 billions de dollars.
+
+Au cours des 2 dernières années, l'offre monétaire a bondi de +17,1 billion
+  - https://x.com/KobeissiLetter/status/2054698900632502367
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 4320).
+- **@coindesk** (1539 likes, score 7/10) — MARCHÉS : $XRP est l'actif le plus échangé sur la plateforme sud-coréenne @Official_Upbit avec un volume de 110,9 millions de dollars sur 24 heures, surpassant $BTC et $ETH.
+  - https://x.com/CoinDesk/status/2054474464729972832
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1699).
+- **@squawkcnbc** (240 likes, score 7/10) — DEMAIN : @SecScottBessent rejoint @JoeSquawk pour une interview exclusive afin de discuter du voyage du Président en Chine. Réglez vos montres !
+  - https://x.com/SquawkCNBC/status/2054580566872236478
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 306).
