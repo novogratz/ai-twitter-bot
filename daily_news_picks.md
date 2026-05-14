@@ -1227,3 +1227,28 @@ Warsh, 56, will replace Jerome P
 - **@unusual_whales** (424 likes, score 7/10) — BREAKING: Vice President JD Vance announces the federal government is deferring over a billion dollars in Medicaid reimbursements to California, citing a failure by the state to combat systemic fraud.
   - https://x.com/unusual_whales/status/2054660703957532813
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 560).
+
+## 2026-05-14
+- **@coindesk** (1161 likes, score 9/10) — NOUVEAU : Un homme a récupéré 5 BTC (~395 000 $) après avoir utilisé Claude pour craquer un portefeuille Bitcoin dont il était exclu depuis près d'une décennie.
+
+Après avoir essayé 3,5 billions de mot
+  - https://x.com/CoinDesk/status/2054670569799401495
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1377).
+- **@cryptogoos** (21 likes, score 7/10) — Eric Trump thinks Bitcoin will surpass $1,000,000 "in time" and Q4 of this year will be "unbelievable."
+
+"The future is bright, the future is incredible."
+  - https://x.com/cryptogoos/status/2054773700474573219
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 27).
+- **@cointelegraph** (182 likes, score 9/10) — GROS : NVIDIA a dépassé l'argent pour devenir le deuxième actif le plus important au monde avec une valorisation de 5,52 billions de dollars, tandis que Google se rapproche à 4 % d'une capitalisation
+  - https://x.com/Cointelegraph/status/2054678291563376936
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 276).
+- **@cryptoslate** (3 likes, score 7/10) — Global financial crisis fears grow as bond yields hit 1998 levels and Bitcoin drops below $80,000
+
+via @akibablade
+  - https://x.com/CryptoSlate/status/2054630254212456571
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 3).
+- **@cryptoslate** (4 likes, score 7/10) — Trump’s CEO-filled China visit can decide whether Bitcoin’s $80,000 risk rally survives this week
+
+via @hardeyjumoh
+  - https://x.com/CryptoSlate/status/2054680585063260506
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 6).
