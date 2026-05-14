@@ -27,6 +27,8 @@ News bursts are tuned via `NEWS_POSTS_PER_CYCLE` (default `3`); set to `1` when 
 
 **Hard post-flight guard** (`contains_post_unsafe_leak` in `src/llm_client.py`, wired into `twitter_client.post_tweet`): refuses to post anything containing tool-call XML (`<function=…>`), NDJSON envelope keys (`"sessionID":`, `"step_start"`, etc.), or text that opens with `{` / `[{`. Added after a 163k-char `{"type":"step_start",…}` blob got pushed to Safari on 2026-05-14 because the previous guard only caught XML, not JSON streams.
 
+**Codex usage-limit lockout cache** (`codex_lockout.json` at repo root): when codex returns "hit your usage limit, try again at …", `run_llm` parses the date and caches it. Until that timestamp passes, codex is bypassed entirely and calls go straight to the opencode fallback (`LLM_FALLBACK_CLI` / `LLM_FALLBACK_MODEL`). Self-cleaning — the cache file is deleted when the lockout window expires. Avoids the 6+ min per-cycle ladder cost while codex is unavailable for days.
+
 LLM budgets are soft by default: `LLM_ENFORCE_BUDGET=0` means usage is logged
 but production content is not blocked by local hourly/daily counters. Set it to
 `1` only when you explicitly want hard caps. News/replies should use the LLM;
