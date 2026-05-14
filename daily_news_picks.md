@@ -1490,3 +1490,24 @@ Cette levée de fonds folle n’a de sens que si quelque chose d’énorme se pr
 - Rev: $333 million, $316 million
   - https://x.com/unusual_whales/status/2055020720066043962
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 175).
+- **@kalshi_crypto** (544 likes, score 9/10) — JUST IN: Bitcoin reclaims $81,000
+
+50% chance it hits $85,000 this month
+  - https://x.com/Kalshi_Crypto/status/2054941366690447398
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 618).
+- **@coinmarketcap** (220 likes, score 9/10) — LATEST:  Bitcoin may reverse after hitting the 200-day moving average at $82,400, a level that preceded a sharp decline in the 2022 bear market, according to CryptoQuant.
+  - https://x.com/CoinMarketCap/status/2054950411245691050
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 342).
+- **@capetlevrai** (76 likes, score 9/10) — Pour info les prochain earnings de NVIDIA c’est le 20 mai
+
+1ere annonce de Trump qui arrive en Chine : 10 boîtes chinois peuvent acheter jusqu’à 75000 GPU NVIDIA H200
+
+Si ça c’est pas un live pour per
+  - https://x.com/Capetlevrai/status/2054814320526254494
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 124).
+- **@coinmarketcap** (83 likes, score 9/10) — LATEST:  US spot Bitcoin ETFs recorded $635 million in outflows on May 13, the largest single-day exit since January.
+  - https://x.com/CoinMarketCap/status/2054984132950638810
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 143).
+- **@kalshi_crypto** (985 likes, score 8/10) — JUST IN: Michael Saylor's 'Strategy' buys ~$1B worth of Bitcoin today
+  - https://x.com/Kalshi_Crypto/status/2055013216980201564
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1061).
