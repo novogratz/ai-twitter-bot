@@ -10,7 +10,10 @@ import signal
 import shutil
 import subprocess
 from dataclasses import dataclass
+from datetime import datetime, timedelta
 from typing import Optional, Sequence
+
+from .logger import log
 
 
 # Tool-call markup that codex (and occasionally other CLIs) leak into raw
@@ -116,6 +119,90 @@ class LLMResult:
 
 LLM_RATE_LIMIT_CODE = 75
 DEFAULT_LLM_TIMEOUT_SECONDS = int(os.environ.get("LLM_TIMEOUT_SECONDS", "180"))
+
+
+# Codex usage-limit lockout cache. When codex CLI returns
+# "You've hit your usage limit ... try again at May 16th, 2026 9:22 PM",
+# we cache that timestamp and skip codex entirely until it passes — going
+# straight to the opencode fallback. Avoids paying the 6+ min ladder cost
+# every cycle when codex is locked out for days.
+_CODEX_LOCKOUT_FILE = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "codex_lockout.json",
+)
+_CODEX_USAGE_LIMIT_RE = re.compile(
+    r"try again at (\w+)\s+(\d+)\w*,\s+(\d{4})\s+(\d+):(\d+)\s*([APap][Mm])",
+)
+_MONTHS = {
+    "january": 1, "february": 2, "march": 3, "april": 4, "may": 5, "june": 6,
+    "july": 7, "august": 8, "september": 9, "october": 10, "november": 11, "december": 12,
+}
+
+
+def _parse_codex_lockout_end(text: str) -> Optional[datetime]:
+    """Parse 'try again at May 16th, 2026 9:22 PM' → datetime."""
+    m = _CODEX_USAGE_LIMIT_RE.search(text or "")
+    if not m:
+        return None
+    month_name, day, year, hour, minute, ampm = m.groups()
+    month = _MONTHS.get(month_name.lower())
+    if month is None:
+        return None
+    try:
+        h = int(hour)
+        if ampm.upper() == "PM" and h != 12:
+            h += 12
+        elif ampm.upper() == "AM" and h == 12:
+            h = 0
+        return datetime(int(year), month, int(day), h, int(minute))
+    except (ValueError, TypeError):
+        return None
+
+
+def _read_codex_lockout() -> Optional[datetime]:
+    """Return datetime when codex lockout expires (future), or None."""
+    try:
+        with open(_CODEX_LOCKOUT_FILE) as f:
+            data = json.load(f)
+        end = datetime.fromisoformat(data.get("locked_until", ""))
+    except (FileNotFoundError, json.JSONDecodeError, ValueError, TypeError):
+        return None
+    if end > datetime.now():
+        return end
+    # Lockout window passed — clean up the stale file.
+    try:
+        os.remove(_CODEX_LOCKOUT_FILE)
+    except OSError:
+        pass
+    return None
+
+
+def _write_codex_lockout(end: datetime, reason: str = "usage_limit") -> None:
+    try:
+        with open(_CODEX_LOCKOUT_FILE, "w") as f:
+            json.dump(
+                {
+                    "locked_until": end.isoformat(),
+                    "reason": reason,
+                    "stamped_at": datetime.now().isoformat(),
+                },
+                f,
+                indent=2,
+            )
+    except OSError:
+        pass
+
+
+def _detect_codex_lockout(result: "LLMResult") -> Optional[datetime]:
+    """Return the lockout-end datetime if the codex response contains a usage-limit error."""
+    blob = ((result.stdout or "") + "\n" + (result.stderr or "")).lower()
+    if "hit your usage limit" not in blob:
+        return None
+    parsed = _parse_codex_lockout_end((result.stdout or "") + "\n" + (result.stderr or ""))
+    if parsed:
+        return parsed
+    # Couldn't parse the precise date — assume 24h lockout as a safety floor.
+    return datetime.now() + timedelta(hours=24)
 
 
 def llm_hourly_limit_status() -> tuple[bool, int, int, int]:
@@ -338,8 +425,39 @@ def run_llm(
     cwd: Optional[str] = None,
 ) -> LLMResult:
     provider = _provider()
-    cmd = _build_cmd(prompt, model, output_json, allowed_tools, permission_mode, provider)
+    chosen_model = model
+
+    # Codex usage-limit bypass: if a prior cycle cached a lockout window,
+    # skip codex entirely and go straight to the fallback provider+model.
+    # Auto-recovers once the lockout timestamp passes.
+    if provider == "codex":
+        lockout = _read_codex_lockout()
+        if lockout is not None:
+            fb = _fallback_provider(provider)
+            if fb:
+                fb_model = _fallback_model(model, fb)
+                log.info(
+                    f"[LLM] {label}: codex locked out until "
+                    f"{lockout.isoformat(timespec='minutes')} — using "
+                    f"{fb}/{fb_model} directly."
+                )
+                provider = fb
+                chosen_model = fb_model
+
+    cmd = _build_cmd(prompt, chosen_model, output_json, allowed_tools, permission_mode, provider)
     result = _run_cmd(cmd, label=label, timeout=timeout, cwd=cwd)
+
+    # If we actually ran codex this cycle and it returned a usage-limit
+    # error, cache the lockout window for future cycles.
+    if provider == "codex":
+        end = _detect_codex_lockout(result)
+        if end is not None:
+            _write_codex_lockout(end)
+            log.info(
+                f"[LLM] Codex usage limit detected — locking out until "
+                f"{end.isoformat(timespec='minutes')}."
+            )
+
     if not _should_fallback(result):
         return result
 

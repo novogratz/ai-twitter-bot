@@ -39,6 +39,14 @@ tool-call XML (`<function=…>`), NDJSON envelope keys (`"sessionID":`,
 163k-char `{"type":"step_start",…}` blob got pushed to Safari on 2026-05-14
 because the previous guard only caught XML, not JSON streams.
 
+**Codex usage-limit lockout cache** (`codex_lockout.json` at repo root):
+when codex returns "hit your usage limit, try again at …", `run_llm` parses
+the date and caches it. Until that timestamp passes, codex is bypassed
+entirely and calls go straight to the opencode fallback (`LLM_FALLBACK_CLI` /
+`LLM_FALLBACK_MODEL`). Self-cleaning — the cache file is deleted when the
+lockout window expires. Avoids the 6+ min per-cycle ladder cost while codex
+is unavailable for days.
+
 LLM budgets are soft by default: `LLM_ENFORCE_BUDGET=0` means usage is logged
 but production content is not blocked by local hourly/daily counters. Set it to
 `1` only when you explicitly want hard caps. News/replies should use the LLM;
