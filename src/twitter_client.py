@@ -134,12 +134,13 @@ def post_tweet(text: str, image_path: str = None):
     """
     text = _scrub_metadata_leaks(text)
 
-    # Hard reject — if tool-call markup survived scrubbing, refuse to post.
-    # Posting "<function=bash>..." to Twitter once was enough.
-    from .llm_client import contains_tool_call_leak
-    if contains_tool_call_leak(text):
-        log.error(f"[POST] Tool-call leak detected after scrub — refusing to post. Text: {text[:200]!r}")
-        raise ToolCallLeakError("tool-call markup in tweet text")
+    # Hard reject — if tool-call markup OR a JSON stream envelope survived
+    # scrubbing, refuse to post. Both of these went live in prod 2026-05-13
+    # / 2026-05-14 ("<function=bash>" and `{"type":"step_start",...}`).
+    from .llm_client import contains_post_unsafe_leak
+    if contains_post_unsafe_leak(text):
+        log.error(f"[POST] Unsafe leak detected after scrub — refusing to post. Text: {text[:200]!r}")
+        raise ToolCallLeakError("tool-call / stream-envelope markup in tweet text")
 
     with _safari_lock:
         if image_path:

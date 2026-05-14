@@ -32,6 +32,13 @@ News bursts are tuned via `NEWS_POSTS_PER_CYCLE` (default `3`); set to `1`
 when the LLM is flaky so each cycle skips fast instead of grinding for 6+ min
 on bad output.
 
+**Hard post-flight guard** (`contains_post_unsafe_leak` in `src/llm_client.py`,
+wired into `twitter_client.post_tweet`): refuses to post anything containing
+tool-call XML (`<function=…>`), NDJSON envelope keys (`"sessionID":`,
+`"step_start"`, etc.), or text that opens with `{` / `[{`. Added after a
+163k-char `{"type":"step_start",…}` blob got pushed to Safari on 2026-05-14
+because the previous guard only caught XML, not JSON streams.
+
 LLM budgets are soft by default: `LLM_ENFORCE_BUDGET=0` means usage is logged
 but production content is not blocked by local hourly/daily counters. Set it to
 `1` only when you explicitly want hard caps. News/replies should use the LLM;
