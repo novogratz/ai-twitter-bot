@@ -1307,3 +1307,37 @@ Au cours des 2 dernières années, l'offre monétaire a bondi de +17,1 billion
 - **@reuters** (3 likes, score 7/10) — Alors que la guerre en Iran secoue Air India, Lufthansa et Cathay se jettent sur le marché en pleine croissance rapide http://reut.rs/4doNLro
   - https://x.com/Reuters/status/2054831587770896466
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 9).
+- **@tedpillows** (29 likes, score 8/10) — Sortie de fonds de l'ETF $ETH de 36 300 000 $  hier.
+
+BlackRock a vendu 22 300 000 $ en Ethereum.
+  - https://x.com/TedPillows/status/2054836062850060653
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 63).
+- **@cryptorover** (820 likes, score 8/10) — URGENT :
+
+  Des sources indiquent que des acheteurs chinois ont été autorisés à acheter des puces Nvidia ($NVDA).
+
+• Alibaba
+• ByteDance
+• Tencent
+• JD 
+
+Si c’est vrai, cela change tout.
+
+Des mois de
+  - https://x.com/cryptorover/status/2054814597186781546
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1046).
+- **@cryptoastmedia** (8 likes, score 7/10) — Que s'est-il passé cette nuit sur le marché crypto ?
+
+• L’action de l’entreprise Nvidia devient le 2e actif mondial avec une valorisation de 5 520 milliards de dollars, devant l’argent, tandis que Goo
+  - https://x.com/CryptoastMedia/status/2054796391688368433
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 10).
+- **@reuters** (9 likes, score 7/10) — Warsh a de grands projets pour la Fed, mais les résultats pourraient prendre du temps http://reut.rs/3REWDlt
+  - https://x.com/Reuters/status/2054835360056664359
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 19).
+- **@theinformation** (6 likes, score 7/10) — A $2B valuation for a startup with no product?
+
+@jingyanghk breaks down why star researcher Junyang Lin left Alibaba to launch a new AI lab:
+
+"He spent three years as a lead researcher at Alibaba's Qw
+  - https://x.com/theinformation/status/2054698364860522830
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 10).
