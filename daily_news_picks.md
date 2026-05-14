@@ -1410,3 +1410,35 @@ Après plusieurs échecs sous cette résistance, le marché réussi à s’ext
 Ce cas met en lumière les risques croissants
   - https://x.com/Cointelegraph/status/2054871863898046603
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 36).
+- **@watcherguru** (7175 likes, score 8/10) — JUST IN: Bitcoin reclaims $82,000 as Senate Banking Committee officially advances crypto Clarity Act.
+  - https://x.com/WatcherGuru/status/2054971382992089282
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 8141).
+- **@loris_dalleau** (163 likes, score 8/10) — Le président Trump vient de révéler son portefeuille 
+
+Parmi les plus grosses positions, on retrouve :
+
+Nvidia $NVDA
+Oracle $ORCL 
+Costco $COST
+Apple $AAPL
+Dell $DELL 
+Microsoft $MSFT 
+Adobe $ADBE 
+Bo
+  - https://x.com/Loris_Dalleau/status/2054963984332103823
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 175).
+- **@mradarcrypto** (17 likes, score 7/10) — S&P : 7500 points nouveau record
+Dow Jones : 50 000 points nouveau record
+Nasdaq : 30 000 points (bientôt)
+
+Bitcoin : 81 000 dollars....
+
+Et pour nous, il est quand le record ?
+  - https://x.com/MRadarCrypto/status/2054944785518014815
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 23).
+- **@saylor** (4937 likes, score 7/10) — 1,8 % de volatilité. 4,35 Sharpe. 11,5 % de rendement. Date-référence demain. Aujourd'hui, c'est le Jour Étiré. $STRC
+  - https://x.com/saylor/status/2054897251047117270
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5573).
+- **@documentingbtc** (204 likes, score 7/10) — Bitcoin Atteint avec Succès son 6 340e Jour en Ligne
+  - https://x.com/DocumentingBTC/status/2054925226643738660
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 252).
