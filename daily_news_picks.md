@@ -1341,3 +1341,28 @@ Des mois de
 "He spent three years as a lead researcher at Alibaba's Qw
   - https://x.com/theinformation/status/2054698364860522830
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 10).
+- **@cryptorover** (330 likes, score 9/10) — TRÈS BAISSIER 
+
+Les ETF Bitcoin ont vendu pour 635 MILLIONS de dollars de BTC hier.
+
+C'était la plus grande sortie en une seule journée depuis 105 jours.
+  - https://x.com/cryptorover/status/2054802470174630346
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 502).
+- **@cointelegraph** (52 likes, score 9/10) — PERSPECTIVE : Les marges de profit non réalisé des traders de Bitcoin ont grimpé à 17,7 %, le niveau le plus élevé depuis juin 2025, selon CryptoQuant.
+  - https://x.com/Cointelegraph/status/2054842526515736747
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 126).
+- **@cryptorover** (2700 likes, score 7/10) — URGENT :
+
+ LE SÉNAT AMÉRICAIN VOTERA SUR LA LOI CLARITY AUJOURD'HUI À 10H30 HEURE DE L'EST
+
+DES INFORMATEURS RAPPORTE QUE CE PROJET DE LOI INJECTERA PLUS DE 2,5 BILLIONS DE DOLLARS SUR LE MARCHÉ  
+
+ES
+  - https://x.com/cryptorover/status/2054778228267491344
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 3008).
+- **@unusual_whales** (1173 likes, score 7/10) — URGENT : Les États-Unis ont autorisé environ 10 entreprises chinoises à acheter la puce d'IA la plus puissante après la première, la H200, de Nvidia, mais aucune livraison n'a encore été effectuée, se
+  - https://x.com/unusual_whales/status/2054812957104582827
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1419).
+- **@cointelegraph** (753 likes, score 7/10) — AUJOURD'HUI : La réunion de la Commission bancaire du Sénat pour le projet de loi CLARITY est prévue à 10h30 HE.
+  - https://x.com/Cointelegraph/status/2054829077278667010
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 921).
