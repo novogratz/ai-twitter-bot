@@ -72,6 +72,41 @@ def contains_tool_call_leak(text: str) -> bool:
         for marker in ("<function=", "</function>", "<parameter=", "</parameter>")
     )
 
+
+# OpenCode/Claude NDJSON envelope leaks. These never appear in a real tweet,
+# only in raw provider stdout when the CLI got killed mid-stream and the
+# downstream parser fell back to returning raw. Seen in prod 2026-05-14:
+# a hot take shipped as literally `{"type":"step_start","timestamp":...`.
+_STREAM_ENVELOPE_MARKERS = (
+    '"type":"step_',
+    '"sessionID":',
+    '"messageID":',
+    '"part":{"id":',
+    '"step_start"',
+    '"step_finish"',
+    'tool_call_id',
+    '"tool_use_id"',
+)
+
+
+def contains_post_unsafe_leak(text: str) -> bool:
+    """Pre-flight post check. True if text contains ANY leak shape — tool-call
+    XML, NDJSON envelope keys, or starts with a raw JSON object/array. Tweets
+    never legitimately match these. Rejecting is always safer than posting.
+    """
+    if not text:
+        return False
+    if contains_tool_call_leak(text):
+        return True
+    stripped = text.strip()
+    # A tweet that opens with `{` or `[{` is a JSON shape, not a tweet.
+    if stripped.startswith("{") or stripped.startswith("[{"):
+        return True
+    low = stripped.lower()
+    if any(marker.lower() in low for marker in _STREAM_ENVELOPE_MARKERS):
+        return True
+    return False
+
 @dataclass
 class LLMResult:
     returncode: int
@@ -385,23 +420,39 @@ def _text_from_event(obj: dict) -> str:
 
 
 def _unwrap_ndjson(raw: str) -> str | None:
-    """Try parsing OpenCode JSON events and return concatenated text."""
+    """Try parsing OpenCode JSON events and return concatenated text.
+
+    Tolerant of truncated tails: if the stream was cut mid-line (provider
+    killed by timeout), drop the partial line and return whatever text the
+    earlier valid events produced — never fall back to raw JSON.
+    """
     lines = raw.strip().splitlines()
     parts: list[str] = []
+    saw_any_json = False
     for line in lines:
         line = line.strip()
         if not line:
             continue
+        if not (line.startswith("{") or line.startswith("[")):
+            # First non-JSON line means this isn't NDJSON at all.
+            if not saw_any_json:
+                return None
+            # Otherwise: data after JSON events, just skip it (codex tail).
+            continue
         try:
             obj = json.loads(line)
         except json.JSONDecodeError:
+            # Truncated last line — stop parsing but keep what we got.
+            if saw_any_json:
+                break
             return None
+        saw_any_json = True
         if not isinstance(obj, dict):
-            return None
+            continue
         text = _text_from_event(obj)
         if text:
             parts.append(text)
-    if parts:
+    if saw_any_json:
         return "".join(parts)
     return None
 
@@ -441,4 +492,10 @@ def unwrap_text(stdout: str) -> str:
             )
     except (json.JSONDecodeError, TypeError):
         pass
-    return strip_tool_calls(raw)
+    cleaned = strip_tool_calls(raw)
+    # Final guard: if the raw looks like a stream envelope or starts with
+    # `{`/`[{`, refuse to return it — caller will treat as empty and skip
+    # rather than ship `{"type":"step_start",...}` as a tweet.
+    if contains_post_unsafe_leak(cleaned):
+        return ""
+    return cleaned
