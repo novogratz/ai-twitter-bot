@@ -5,11 +5,72 @@ Keep provider differences and local rate limiting here so agents only ask for te
 """
 import json
 import os
+import re
 import signal
 import shutil
 import subprocess
 from dataclasses import dataclass
 from typing import Optional, Sequence
+
+
+# Tool-call markup that codex (and occasionally other CLIs) leak into raw
+# stdout when the model attempts to call an unauthorized tool. Example seen
+# in prod 2026-05-13:
+#   <function=bash>
+#   <parameter=command>
+#   curl -s https://api.github.com/...
+#   </parameter>
+#   </function>
+# Stripping aggressively because a leaked <function=...> block once cost
+# us a posted tweet that read "<function=bash>\n<parameter=command>...".
+_TOOL_CALL_BLOCK = re.compile(
+    r"<\s*function\s*=[^>]*>.*?<\s*/\s*function\s*>",
+    re.IGNORECASE | re.DOTALL,
+)
+_TOOL_CALL_OPEN = re.compile(
+    r"<\s*function\s*=[^>]*>.*",
+    re.IGNORECASE | re.DOTALL,
+)
+_PARAMETER_BLOCK = re.compile(
+    r"<\s*parameter\s*=[^>]*>.*?<\s*/\s*parameter\s*>",
+    re.IGNORECASE | re.DOTALL,
+)
+_PARAMETER_OPEN = re.compile(
+    r"<\s*parameter\s*=[^>]*>.*",
+    re.IGNORECASE | re.DOTALL,
+)
+
+
+def strip_tool_calls(text: str) -> str:
+    """Remove leaked <function=...>...</function> and <parameter=...>...</parameter>
+    blocks from model output. Strips unterminated openers too — codex
+    sometimes truncates mid-tool-call when the sandbox refuses execution.
+
+    Idempotent. Safe to call on already-clean text.
+    """
+    if not text or "<" not in text:
+        return text
+    cleaned = _TOOL_CALL_BLOCK.sub("", text)
+    cleaned = _PARAMETER_BLOCK.sub("", cleaned)
+    cleaned = _TOOL_CALL_OPEN.sub("", cleaned)
+    cleaned = _PARAMETER_OPEN.sub("", cleaned)
+    return cleaned.strip()
+
+
+def contains_tool_call_leak(text: str) -> bool:
+    """Returns True if the text looks like it still contains tool-call markup.
+
+    Use as a post-scrub guard — if this returns True after strip_tool_calls,
+    the safest action is to reject the post entirely rather than ship
+    half-stripped garbage.
+    """
+    if not text:
+        return False
+    lower = text.lower()
+    return any(
+        marker in lower
+        for marker in ("<function=", "</function>", "<parameter=", "</parameter>")
+    )
 
 @dataclass
 class LLMResult:
@@ -330,6 +391,9 @@ def unwrap_text(stdout: str) -> str:
     Handles NDJSON (opencode --format json), JSON envelopes
     (Gemini --output-format json, Claude --output-format json),
     and raw text (Codex, opencode default, pipe-through).
+
+    Always runs strip_tool_calls() before returning so codex tool-use
+    XML never leaks downstream into tweets.
     """
     raw = (stdout or "").strip()
     if not raw:
@@ -337,7 +401,7 @@ def unwrap_text(stdout: str) -> str:
 
     ndjson_result = _unwrap_ndjson(raw)
     if ndjson_result is not None:
-        return ndjson_result
+        return strip_tool_calls(ndjson_result)
 
     try:
         if "{" in raw:
@@ -350,8 +414,10 @@ def unwrap_text(stdout: str) -> str:
         if isinstance(envelope, dict):
             event_text = _text_from_event(envelope)
             if event_text:
-                return event_text.strip()
-            return str(envelope.get("response") or envelope.get("result") or raw).strip()
+                return strip_tool_calls(event_text.strip())
+            return strip_tool_calls(
+                str(envelope.get("response") or envelope.get("result") or raw).strip()
+            )
     except (json.JSONDecodeError, TypeError):
         pass
-    return raw
+    return strip_tool_calls(raw)

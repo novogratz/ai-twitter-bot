@@ -87,9 +87,17 @@ def _scrub_metadata_leaks(text: str) -> str:
     extract_* helpers. Bug 2026-05-06: the agent emitted multi-id
     `[PATTERN: FR_ANCHOR|UNDERSTATEMENT]` which the extract_pattern
     regex didn't match → tag leaked into the live tweet.
+
+    Also strips codex tool-call XML (`<function=bash>...<parameter=...>`)
+    that leaked into a hot take 2026-05-13.
     """
     if not text:
         return text
+    # Tool-call XML — strip first because the URL extractor and other
+    # downstream sanitizers will fish bogus URLs out of these blocks.
+    from .llm_client import strip_tool_calls
+    text = strip_tool_calls(text)
+
     # Whole-line metadata tags
     for tag in ("PATTERN", "IMAGE", "SOURCE", "KEYWORD", "TOPIC", "ANGLE"):
         text = re.sub(
@@ -110,6 +118,13 @@ def _scrub_metadata_leaks(text: str) -> str:
     return text
 
 
+class ToolCallLeakError(Exception):
+    """Raised when a tweet still contains tool-call markup after scrubbing.
+
+    Better to crash the cycle than to post '<function=bash>...' as a tweet.
+    """
+
+
 def post_tweet(text: str, image_path: str = None):
     """Open Twitter and auto-post. If `image_path` is given, attaches the PNG.
 
@@ -118,6 +133,14 @@ def post_tweet(text: str, image_path: str = None):
     intent URL doesn't support media uploads.
     """
     text = _scrub_metadata_leaks(text)
+
+    # Hard reject — if tool-call markup survived scrubbing, refuse to post.
+    # Posting "<function=bash>..." to Twitter once was enough.
+    from .llm_client import contains_tool_call_leak
+    if contains_tool_call_leak(text):
+        log.error(f"[POST] Tool-call leak detected after scrub — refusing to post. Text: {text[:200]!r}")
+        raise ToolCallLeakError("tool-call markup in tweet text")
+
     with _safari_lock:
         if image_path:
             _post_tweet_with_image(text, image_path)
