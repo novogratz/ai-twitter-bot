@@ -425,11 +425,12 @@ def run_llm(
     cwd: Optional[str] = None,
 ) -> LLMResult:
     provider = _provider()
-    chosen_model = model
 
     # Codex usage-limit bypass: if a prior cycle cached a lockout window,
-    # skip codex entirely and go straight to the fallback provider+model.
-    # Auto-recovers once the lockout timestamp passes.
+    # skip codex entirely AND skip the rest of the fallback ladder. Just
+    # run opencode once and return — no opencode→opencode retry, no ollama
+    # second fallback. User mandate 2026-05-14: "JUST SEARCH ON opencode".
+    # Auto-recovers once the lockout timestamp passes (file self-deletes).
     if provider == "codex":
         lockout = _read_codex_lockout()
         if lockout is not None:
@@ -437,18 +438,19 @@ def run_llm(
             if fb:
                 fb_model = _fallback_model(model, fb)
                 log.info(
-                    f"[LLM] {label}: codex locked out until "
-                    f"{lockout.isoformat(timespec='minutes')} — using "
-                    f"{fb}/{fb_model} directly."
+                    f"[LLM] {label}: codex locked until "
+                    f"{lockout.isoformat(timespec='minutes')} — "
+                    f"using {fb}/{fb_model} only (no further fallback)."
                 )
-                provider = fb
-                chosen_model = fb_model
+                fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, permission_mode, fb)
+                return _run_cmd(fb_cmd, label=label, timeout=timeout, cwd=cwd)
 
-    cmd = _build_cmd(prompt, chosen_model, output_json, allowed_tools, permission_mode, provider)
+    cmd = _build_cmd(prompt, model, output_json, allowed_tools, permission_mode, provider)
     result = _run_cmd(cmd, label=label, timeout=timeout, cwd=cwd)
 
     # If we actually ran codex this cycle and it returned a usage-limit
-    # error, cache the lockout window for future cycles.
+    # error, cache the lockout window AND collapse this cycle to a single
+    # opencode call (no ollama second fallback).
     if provider == "codex":
         end = _detect_codex_lockout(result)
         if end is not None:
@@ -457,6 +459,11 @@ def run_llm(
                 f"[LLM] Codex usage limit detected — locking out until "
                 f"{end.isoformat(timespec='minutes')}."
             )
+            fb = _fallback_provider(provider)
+            if fb:
+                fb_model = _fallback_model(model, fb)
+                fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, permission_mode, fb)
+                return _run_cmd(fb_cmd, label=f"{label} (codex locked)", timeout=timeout, cwd=cwd)
 
     if not _should_fallback(result):
         return result
