@@ -1465,3 +1465,28 @@ IL ACHÈTE 1 BTC TOUTES LES 7 S
 - **@nvidia** (582 likes, score 8/10) — NVIDIA and SAP are making specialized AI agents ready for enterprise work, with security, governance and execution controls built into SAP Business AI Platform. Learn how NVIDIA OpenShell is helping t
   - https://x.com/nvidia/status/2054622706465702339
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 674).
+- **@bitcoinarchive** (33 likes, score 7/10) — L'IA déclenchera le « Big Print » par la Fed, et cela alimentera la plus grande course haussière du Bitcoin de tous les temps !
+
+YouTube : https://youtu.be/VHI1YOrD41Y
+
+Je parle avec @JoeConsorti de :
+  - https://x.com/BitcoinArchive/status/2055025850857246977
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 47).
+- **@unusual_whales** (464 likes, score 8/10) — Call your Nvidia, $NVDA.
+  - https://x.com/unusual_whales/status/2055015586657452511
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 572).
+- **@lisaabramowicz1** (145 likes, score 8/10) — En seulement sept jours de trading, Nvidia a gagné 900 milliards de dollars de capitalisation boursière et vaut désormais près de 6 000 milliards de dollars. https://bloomberg.com/news/articles/2026-0
+  - https://x.com/lisaabramowicz1/status/2055014342395891737
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 177).
+- **@thetechinvest** (261 likes, score 7/10) — URGENT : $IREN FINALISE UNE ÉMISSION DE 3 % DE 3 MILLIARDS DE DOLLARS DE BONDS CONVERTIBLES
+
+Aucune dilution avant 110,30 $
+
+Cette levée de fonds folle n’a de sens que si quelque chose d’énorme se pré
+  - https://x.com/TheTechInvest/status/2055019533237194916
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 293).
+- **@unusual_whales** (113 likes, score 7/10) — Figma, $FIG, earnings:
+- EPS: $0.1, est: $0.06
+- Rev: $333 million, $316 million
+  - https://x.com/unusual_whales/status/2055020720066043962
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 175).
