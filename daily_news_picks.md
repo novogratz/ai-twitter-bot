@@ -1252,3 +1252,22 @@ via @akibablade
 via @hardeyjumoh
   - https://x.com/CryptoSlate/status/2054680585063260506
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 6).
+- **@wublockchain** (11 likes, score 7/10) — US Spot Bitcoin ETFs See $635M Net Outflows on May 13 as IBIT Leads
+
+According to SoSoValue data, U.S. spot Bitcoin ETFs recorded total net outflows of $635 million on May 13 (ET), led by BlackRock’s
+  - https://x.com/WuBlockchain/status/2054778931379892633
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 21).
+- **@reuters** (16 likes, score 7/10) — La fondation du PDG de Nvidia achète 108 millions de dollars d'informatique IA à CoreWeave, la donne aux chercheurs http://reut.rs/42xucII
+  - https://x.com/Reuters/status/2054796438140277187
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 22).
+- **@cryptoslate** (0 likes, score 7/10) — Trump’s CEO-filled China visit can decide whether Bitcoin’s $80,000 risk rally survives this week
+
+via @hardeyjumoh
+  - https://x.com/CryptoSlate/status/2054680585063260506
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2).
+- **@coinmarketcap** (73 likes, score 8/10) — DERNIER:  Les actions préférentielles STRC de Strategy pourraient alimenter les rallyes de Bitcoin mi-mois, selon K33, avec les achats liés à STRC passant de 4 467 BTC en janvier à 46 872 BTC en avril
+  - https://x.com/CoinMarketCap/status/2054768206078677210
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 107).
+- **@santimentdata** (11 likes, score 7/10) — Ethereum vient d'enregistrer ses plus hauts profits réalisés sur le réseau en 3 semaines. Cela peut sembler contre-intuitif de voir une flambée de 74,58 M$ en profits réalisés alors que le prix de $ET
+  - https://x.com/SantimentData/status/2054782500560367698
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11).
