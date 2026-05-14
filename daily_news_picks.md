@@ -1366,3 +1366,26 @@ ES
 - **@cointelegraph** (753 likes, score 7/10) — AUJOURD'HUI : La réunion de la Commission bancaire du Sénat pour le projet de loi CLARITY est prévue à 10h30 HE.
   - https://x.com/Cointelegraph/status/2054829077278667010
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 921).
+- **@pete_rizzo_** (160 likes, score 9/10) — URGENT : JP MORGAN DE 5 000 MILLIARDS DE DOLLARS VIENT DE DIVULGUER QU'ILS ONT AUGMENTÉ LEURS RÉSERVES DE #BITCOIN DE 170 % À 400 000 000 $
+
+JAMIE DIMON A PLIÉ LE GENOU
+  - https://x.com/pete_rizzo_/status/2054843604099637516
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 214).
+- **@francecryptos** (5 likes, score 7/10) — Les recherches Google pour "buy bitcoin" viennent de tomber à leur plus bas niveau depuis 12 mois.
+
+Le retail est statistiquement le moins intéressé à acheter du $BTC depuis un an.
+
+Historiquement, ce
+  - https://x.com/FranceCryptos/status/2054845421143654455
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 13).
+- **@decryptmedia** (7 likes, score 7/10) — Bitcoin Owner Claims Claude AI Cracked Lost Wallet Password, Netting $400K in BTC
+  - https://x.com/DecryptMedia/status/2054684884615012639
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 11).
+- **@cryptoslate** (3 likes, score 7/10) — JPMorgan’s $30 billion Strategy call exposes Bitcoin’s new market fault line
+
+via @pelicamatos
+  - https://x.com/CryptoSlate/status/2054847998048555328
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 5).
+- **@reutersbiz** (0 likes, score 7/10) — Exclusive: Wizz Air expects revenue bump for summer despite Iran war http://reut.rs/437E0cs
+  - https://x.com/ReutersBiz/status/2054853008165388500
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4).
