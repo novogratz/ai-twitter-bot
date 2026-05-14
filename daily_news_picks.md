@@ -1442,3 +1442,26 @@ Et pour nous, il est quand le record ?
 - **@documentingbtc** (204 likes, score 7/10) — Bitcoin Atteint avec Succès son 6 340e Jour en Ligne
   - https://x.com/DocumentingBTC/status/2054925226643738660
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 252).
+- **@polymarket** (79 likes, score 9/10) — JUST IN : Malgré des records historiques du S&P 500, il est toujours peu probable que Bitcoin retrouve les 100 000 $ d'ici la fin de l'année.
+
+48 % de chances.
+  - https://x.com/Polymarket/status/2055012520587383166
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 177).
+- **@pete_rizzo_** (119 likes, score 9/10) — URGENT : LA STRATÉGIE DE MICHAEL SAYLOR VIENT D'ACHETER PLUS DE 1 000 000 000 $ EN #BITCOIN AUJOURD'HUI
+
+C'EST PLUS DE 13 000 BTC
+
+LE DEUXIÈME RECORD QUOTIDIEN DE $STRC
+
+IL ACHÈTE 1 BTC TOUTES LES 7 S
+  - https://x.com/pete_rizzo_/status/2055012400571519288
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 135).
+- **@kalshi** (1810 likes, score 8/10) — INFO URGENTE : Trump posséderait plus de 1 million de dollars en actions Nvidia
+  - https://x.com/Kalshi/status/2054967323568599229
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2028).
+- **@watcherguru** (7031 likes, score 8/10) — JUSTE ARRIVÉ :  Le PDG de Nvidia $NVDA, Jensen Huang, déclare que le sommet Chine du président Trump est « l'un des sommets les plus importants de l'histoire humaine ».
+  - https://x.com/WatcherGuru/status/2054953945890476369
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 7579).
+- **@nvidia** (582 likes, score 8/10) — NVIDIA and SAP are making specialized AI agents ready for enterprise work, with security, governance and execution controls built into SAP Business AI Platform. Learn how NVIDIA OpenShell is helping t
+  - https://x.com/nvidia/status/2054622706465702339
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 674).
