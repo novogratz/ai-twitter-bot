@@ -1674,3 +1674,28 @@ siren $SIREN -54.05%
 BUILDon
   - https://x.com/CryptoSlate/status/2054967155976962337
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 5).
+- **@wublockchain** (18 likes, score 7/10) — Les ETF Bitcoin spot ont enregistré 131 millions de dollars d'entrées nettes le 14 mai
+
+Le 14 mai (ET), les ETF Bitcoin spot ont enregistré des entrées nettes totales de 131 millions de dollars, avec
+  - https://x.com/WuBlockchain/status/2055138216425210041
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 30).
+- **@dfintelligence** (0 likes, score 7/10) — Mistral AI s’est fait hacker. Environ 5 Go de données internes seraient actuellement en vente pour 25 000 $.
+
+Mistral a confirmé un incident de sécurité.
+
+Tout serait parti d’une attaque « supply chai
+  - https://x.com/DFintelligence/status/2054774696210469292
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 14).
+- **@bscnews** (6 likes, score 7/10) — L'OFFRE D'ÉTHEREUM SUR LES ÉCHANGES CONNAÎT UNE HAUSSE EN SEULEMENT 10 JOURS
+
+L'offre d'Ethereum $ETH détenue sur les échanges a grimpé à 4,6 %, contre 4,2 % il y a seulement dix jours.
+
+Cette augment
+  - https://x.com/BSCNews/status/2055150682525642930
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 6).
+- **@business** (5 likes, score 7/10) — Abu Dhabi’s sovereign-wealth manager is launching a $13 billion LNG export terminal being developed on the US Gulf Coast by Kimmeridge Energy Management as the Iran war upends global supplies of the f
+  - https://x.com/business/status/2055157779115971064
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 9).
+- **@cnbc** (113 likes, score 7/10) — SUIVEZ-NOUS : Le secrétaire au Trésor Scott Bessent s'est entretenu avec Joe Kernen de CNBC pour discuter du voyage du président Donald Trump à Pékin. Suivez CNBC pour regarder en direct et suivez ce
+  - https://x.com/CNBC/status/2054867002322190420
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 175).
