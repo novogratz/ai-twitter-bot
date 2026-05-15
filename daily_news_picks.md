@@ -1862,3 +1862,22 @@ Gold: +255%
 - **@apompliano** (0 likes, score 8/10) — J'ai parlé à Consensus de la mort de l'industrie crypto, de la prospérité du bitcoin, de l'IA qui crée des emplois, de la Fed qui ruine financièrement les citoyens, et de pourquoi tout le monde devrai
   - https://x.com/APompliano/status/2055303530601136615
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 70).
+- **@pete_rizzo_** (580 likes, score 9/10) — BREAKING: MICHAEL SAYLOR JUST ANNOUNCED STRATEGY WILL RETIRE $1,500,000,000 DEBT YEARS AHEAD OF SCHEDULE
+
+STRENGTHENING HIS BALANCE SHEET TO BUY MORE #BITCOIN
+
+THE GREATEST ACCUMULATION IN HISTORY CON
+  - https://x.com/pete_rizzo_/status/2055261834203312609
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 628).
+- **@business** (5 likes, score 7/10) — Nvidia director Mark Stevens and his wife are donating $175 million to help build the first new medical school in the San Francisco Bay Area in more than a century.
+  - https://x.com/business/status/2055350097278324739
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 7).
+- **@yahoofinance** (19 likes, score 7/10) — La sénatrice Elizabeth Warren exige un reçu complet des désinvestissements d'actifs du futur président de la Fed, Kevin Warsh. http://yhoo.it/4dqp5id
+  - https://x.com/YahooFinance/status/2055333895831167026
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 43).
+- **@kobeissiletter** (2129 likes, score 7/10) — BREAKING: The US 10Y Note Yield extends gains to 4.59%, the highest level since May 22nd, 2025.
+  - https://x.com/KobeissiLetter/status/2055313429733183595
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2563).
+- **@coindesk** (55 likes, score 7/10) — ANALYSE : Le fonds fiduciaire de la famille Trump a effectué environ 50 transactions sur des actions liées aux cryptomonnaies, incluant $COIN, $MSTR, $MARA et $HOOD, au premier trimestre 2026, selon u
+  - https://x.com/CoinDesk/status/2055315577632112910
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 105).
