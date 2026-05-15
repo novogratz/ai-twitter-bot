@@ -465,10 +465,21 @@ def run_llm(
 ) -> LLMResult:
     provider = _provider()
 
+    # When the user has set AI_CLI=opencode, skip codex entirely and route
+    # everything through the local ollama HTTP path. opencode CLI subprocess
+    # hangs ~130s after generation (CLI bug), so we use HTTP directly to
+    # the same underlying ollama model. ~2-130s warm, no subprocess overhead.
+    if provider == "opencode":
+        effective_timeout = timeout if timeout is not None else DEFAULT_LLM_TIMEOUT_SECONDS
+        log.info(
+            f"[LLM] {label}: opencode primary → ollama HTTP / "
+            f"{OLLAMA_MODEL} (timeout {effective_timeout}s)."
+        )
+        return _run_ollama_http(prompt, label=label, timeout=effective_timeout)
+
     # Codex usage-limit bypass: if a prior cycle cached a lockout window,
-    # go straight to local ollama HTTP. The opencode CLI subprocess hangs
-    # ~130s after generation finishes (CLI bug, generation itself is fast)
-    # so we skip it and hit ollama directly. Same model, ~50× faster.
+    # go straight to local ollama HTTP. Same model, ~50× faster than the
+    # opencode CLI fallback.
     if provider == "codex":
         lockout = _read_codex_lockout()
         if lockout is not None:
