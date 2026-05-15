@@ -1600,3 +1600,26 @@ Ouverture d’une petite ligne sur Veeva $VEEV
 - **@frandroid** (5 likes, score 7/10) — Nvidia franchit les 5 500 milliards en Bourse, du jamais-vu dans l’histoire
   - https://x.com/Frandroid/status/2054809269506044119
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 5).
+- **@moneyradar_fr** (68 likes, score 8/10) — OpenAI rate ses objectifs de revenus et d'utilisateurs. 
+
+La CFO s'inquiète de ne pas pouvoir honorer 1 500 milliards $ d'engagements. 
+
+La cause est simple, elle s'appelle Claude.
+
+Et Gemini aussi...
+  - https://x.com/MoneyRadar_FR/status/2049034668352184744
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 78).
+- **@flasheurinvest** (116 likes, score 8/10) — L’action Microsoft $MSFT recule en post-market (-2,20 %) après un changement majeur dans son partenariat avec OpenAI.
+
+La licence devient non exclusive et Microsoft ne versera plus de part des revenus
+  - https://x.com/FlasheurInvest/status/2048752477101584501
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 138).
+- **@reuters** (3 likes, score 7/10) — A federal judge pressed lawyers for more information on several points of artificial intelligence company Anthropic’s proposed $1.5 billion settlement with authors who accused it of misusing their boo
+  - https://x.com/Reuters/status/2055131081280516423
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3).
+- **@unusual_whales** (292 likes, score 8/10) — Le partenariat d'Apple, $AAPL, vieux de deux ans avec OpenAI s'est tendu, selon Bloomberg, une bataille juridique étant possible.
+  - https://x.com/unusual_whales/status/2055044985917931840
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 408).
+- **@marketwatch** (2 likes, score 7/10) — The bond market is already hiking rates as Kevin Warsh takes over Fed
+  - https://x.com/MarketWatch/status/2055049472208523523
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 8).
