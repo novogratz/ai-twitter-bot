@@ -270,3 +270,13 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top reply targets: @FlasheurInvest=15, @LeJournalDuCoin=14, @BFMBourse=13, @MatthiasBaccino=10, @McnallieM=9
 
 **Followers we follow** (running total): 166
+
+## 2026-05-14
+
+**Activity** — total actions: 246
+  - by type: reply=119, retweet=110, quote=8, post=6, hotake=3
+  - top sources: RETWEET=85, MEGA=48, PROFILE-ALWAYS=41, FAVORITE_PROFILE=25, PROFILE-FR=13, QUOTE=8, FOLLOWING=6, FEED=3
+  - comedy patterns: FR_ANCHOR=6, OTHER=1, METAPHOR=1
+  - top reply targets: @MistralAI=14, @LeJournalDuCoin=13, @Cointelegraph=11, @FlasheurInvest=10, @unusual_whales=7
+
+**Followers we follow** (running total): 166
