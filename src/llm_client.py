@@ -264,10 +264,11 @@ def _build_cmd(
         return cmd
 
     if provider == "opencode":
-        cmd = [
-            "opencode", "run",
-            "--model", model,
-        ]
+        # User mandate 2026-05-15: never pass --model to opencode. Let
+        # opencode use the user's locally-configured default (qwen via
+        # ollama). The `model` arg is preserved for logging upstream but
+        # is intentionally ignored here.
+        cmd = ["opencode", "run"]
         if allowed_tools or permission_mode:
             cmd.append("--dangerously-skip-permissions")
         if output_json:
