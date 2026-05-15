@@ -1791,3 +1791,28 @@ Le m
 BTC +1,31 %, ETH -0,89 %. La capitalisation boursière de 2,68 billions de dollars progresse légèrement alors que les actions atteignent de nouveaux s
   - https://x.com/CoinMarketCap/status/2055194125759398096
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 126).
+- **@kalshi_crypto** (204 likes, score 9/10) — URGENT : 85 % de chances que le Bitcoin atteigne 75 000 $ avant 100 000 $
+  - https://x.com/Kalshi_Crypto/status/2055297118617616600
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 274).
+- **@bitcoinmagazine** (45 likes, score 8/10) — 52% chance #Bitcoin reclaims $100,000 in 2026 
+
+What do you think?
+  - https://x.com/BitcoinMagazine/status/2055310086730404193
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 61).
+- **@bitcoinmagazine** (30 likes, score 7/10) — Think you know what happens next?
+
+Your first @DuelbitsPredict bet is risk-free! Get 100% cashback up to $100 if you're wrong! 
+
+ https://bitcoinmagazine.com/duelbits-predict…
+  - https://x.com/BitcoinMagazine/status/2055305363021337081
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 46).
+- **@theinformation** (10 likes, score 7/10) — OpenAI is turning its purchasing power into equity stakes in major AI suppliers. 
+
+Its deals with CoreWeave and Cerebras could soon be worth about $2.6 billion combined. 
+
+Read more:
+  - https://x.com/theinformation/status/2055294663636963502
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 18).
+- **@bloombergtv** (6 likes, score 7/10) — Bloomberg's Mike McKee discusses the challenges facing incoming Federal Reserve Chair Kevin Warsh https://bloom.bg/42C7mQ8
+  - https://x.com/BloombergTV/status/2055296346052030933
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 8).
