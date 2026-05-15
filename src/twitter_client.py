@@ -113,6 +113,31 @@ def _scrub_metadata_leaks(text: str) -> str:
         text,
         flags=re.IGNORECASE,
     )
+    # Prompt-instruction bleed (local-model output sometimes echoes the
+    # rules back). qwen3.6 posted "⚠️ CRITIQUE: FR_ANCHOR" verbatim on
+    # 2026-05-15. Strip whole lines starting with the warning emoji OR
+    # containing common prompt-instruction keywords on their own line.
+    text = re.sub(
+        r"^[ \t]*[⚠❗🚨]️?[^\n\r]*(?:\n|$)",
+        "",
+        text,
+        flags=re.MULTILINE,
+    )
+    text = re.sub(
+        r"^[ \t]*(?:CRITIQUE|INTERDIT|RÈGLES?|RÈGLE|HARD\s+RULE|OUTPUT)\s*[:：][^\n\r]*(?:\n|$)",
+        "",
+        text,
+        flags=re.IGNORECASE | re.MULTILINE,
+    )
+    # Inline placeholder bleeds like "<UN_SEUL_ID>" or "<la hot take française>"
+    text = re.sub(r"<[A-Z_]{3,}[^\n\r>]{0,80}>", "", text)
+    # Stray standalone pattern IDs at end of post (the bracket is gone but
+    # the bare word remains — e.g. "tweet body\n\nFR_ANCHOR").
+    text = re.sub(
+        r"\n+\s*(?:REPETITION|DIALOGUE|METAPHOR|RENAME|FR_ANCHOR|EN_ANCHOR|UNDERSTATEMENT|OTHER)\s*$",
+        "",
+        text,
+    )
     # Collapse blank-line gaps the strip may have left behind.
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
     return text
