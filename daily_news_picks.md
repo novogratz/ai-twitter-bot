@@ -1835,3 +1835,30 @@ via @pelicamatos
 By the time a popup appears, the user is already connected, trust is already forming and the final
   - https://x.com/Cointelegraph/status/2055327419498745997
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 39).
+- **@cryptogoos** (11 likes, score 7/10) — Le sén. Bernie Moreno a déclaré qu'il avait payé 3 000 $ d'impôts avec 2 $BTC en 2016.
+
+Aujourd'hui, ces bitcoins vaudraient 158 000 $.
+  - https://x.com/cryptogoos/status/2055332438516089331
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 19).
+- **@bitcoinmagazine** (650 likes, score 8/10) — JUST IN:  Abu Dhabi sovereign wealth fund Mubadala bought more of BlackRock's Bitcoin ETF and now owns over $565 million of it.
+  - https://x.com/BitcoinMagazine/status/2055319625315783090
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 758).
+- **@theinformation** (16 likes, score 7/10) — Exclusive: Microsoft has made about $30 billion from OpenAI-related business, not counting its paper stake in the startup.
+
+Full story:
+  - https://x.com/theinformation/status/2055309763345293709
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 18).
+- **@bitcoinmagazine** (721 likes, score 8/10) — Asset prices over the last 10 years:
+
+Bitcoin: +17,240%
+Tesla: +3,122%
+Apple: +1,355%
+Google: +1,015%
+Amazon: +654%
+S&P500: +323%
+Gold: +255%
+  - https://x.com/BitcoinMagazine/status/2055297485996687483
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 927).
+- **@apompliano** (0 likes, score 8/10) — J'ai parlé à Consensus de la mort de l'industrie crypto, de la prospérité du bitcoin, de l'IA qui crée des emplois, de la Fed qui ruine financièrement les citoyens, et de pourquoi tout le monde devrai
+  - https://x.com/APompliano/status/2055303530601136615
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 70).
