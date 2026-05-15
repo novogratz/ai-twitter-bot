@@ -20,6 +20,17 @@ if pgrep -f "python.*main.py" >/dev/null; then
   fi
 fi
 
+# Pre-warm the local LLM (qwen3.6:35b-a3b) and pin it in memory for 24h.
+# Cold-loading the 23GB model takes ~170s — longer than the bot's
+# per-call LLM timeout. Pre-warming here so the bot's first generation
+# call hits a hot model. Silent fail if ollama isn't running.
+if command -v curl >/dev/null 2>&1; then
+  echo "[run] Pre-warming qwen3.6:35b-a3b (keep_alive=24h)..."
+  curl -fsS --max-time 240 http://localhost:11434/api/generate \
+    -d '{"model":"qwen3.6:35b-a3b","prompt":"ok","stream":false,"keep_alive":"24h"}' \
+    >/dev/null 2>&1 && echo "[run] Model warm." || echo "[run] Pre-warm failed (ollama not running?), bot will warm on first call."
+fi
+
 echo "[run] Starting @kzer_ai bot. Press Ctrl-C to stop."
 echo "[run] Logs also stream to bot.log (tail -F bot.log)."
 echo "────────────────────────────────────────"

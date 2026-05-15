@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "model": "ollama/qwen3.6",
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
@@ -8,6 +9,10 @@
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
+        "qwen3.6": {
+          "id": "qwen3.6:35b-a3b",
+          "name": "Qwen 3.6 35B-A3B"
+        },
         "qwen3-coder:30b": {
           "name": "Qwen3 Coder 30B"
         }

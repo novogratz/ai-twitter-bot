@@ -110,6 +110,44 @@ def contains_post_unsafe_leak(text: str) -> bool:
         return True
     return False
 
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen3.6:35b-a3b")
+OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
+
+
+def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
+    """Hit ollama's HTTP API directly. opencode CLI was hanging ~130s after
+    each generation completed (CLI bug 2026-05-15); going straight to ollama
+    is ~2s warm. Same underlying model, no subprocess overhead.
+    """
+    import urllib.request
+    import urllib.error
+    payload = json.dumps({
+        "model": OLLAMA_MODEL,
+        "prompt": prompt,
+        "stream": False,
+        "keep_alive": "24h",
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        f"{OLLAMA_BASE_URL}/api/generate",
+        data=payload,
+        headers={"Content-Type": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            raw = resp.read().decode("utf-8")
+        data = json.loads(raw)
+    except urllib.error.URLError as e:
+        return LLMResult(1, "", f"{label}: ollama HTTP error: {e}")
+    except (json.JSONDecodeError, ValueError) as e:
+        return LLMResult(1, "", f"{label}: ollama returned non-JSON: {e}")
+    except TimeoutError:
+        return LLMResult(124, "", f"{label}: ollama HTTP timed out after {timeout}s")
+    except Exception as e:
+        return LLMResult(1, "", f"{label}: ollama unexpected error: {e}")
+    text = (data.get("response") or "").strip()
+    return LLMResult(0, text, "")
+
+
 @dataclass
 class LLMResult:
     returncode: int
@@ -428,23 +466,19 @@ def run_llm(
     provider = _provider()
 
     # Codex usage-limit bypass: if a prior cycle cached a lockout window,
-    # skip codex entirely AND skip the rest of the fallback ladder. Just
-    # run opencode once and return — no opencode→opencode retry, no ollama
-    # second fallback. User mandate 2026-05-14: "JUST SEARCH ON opencode".
-    # Auto-recovers once the lockout timestamp passes (file self-deletes).
+    # go straight to local ollama HTTP. The opencode CLI subprocess hangs
+    # ~130s after generation finishes (CLI bug, generation itself is fast)
+    # so we skip it and hit ollama directly. Same model, ~50× faster.
     if provider == "codex":
         lockout = _read_codex_lockout()
         if lockout is not None:
-            fb = _fallback_provider(provider)
-            if fb:
-                fb_model = _fallback_model(model, fb)
-                log.info(
-                    f"[LLM] {label}: codex locked until "
-                    f"{lockout.isoformat(timespec='minutes')} — "
-                    f"using {fb}/{fb_model} only (no further fallback)."
-                )
-                fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, permission_mode, fb)
-                return _run_cmd(fb_cmd, label=label, timeout=timeout, cwd=cwd)
+            effective_timeout = timeout if timeout is not None else DEFAULT_LLM_TIMEOUT_SECONDS
+            log.info(
+                f"[LLM] {label}: codex locked until "
+                f"{lockout.isoformat(timespec='minutes')} — "
+                f"using ollama HTTP / {OLLAMA_MODEL} (timeout {effective_timeout}s)."
+            )
+            return _run_ollama_http(prompt, label=label, timeout=effective_timeout)
 
     cmd = _build_cmd(prompt, model, output_json, allowed_tools, permission_mode, provider)
     result = _run_cmd(cmd, label=label, timeout=timeout, cwd=cwd)
