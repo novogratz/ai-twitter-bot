@@ -1699,3 +1699,35 @@ Cette augment
 - **@cnbc** (113 likes, score 7/10) — SUIVEZ-NOUS : Le secrétaire au Trésor Scott Bessent s'est entretenu avec Joe Kernen de CNBC pour discuter du voyage du président Donald Trump à Pékin. Suivez CNBC pour regarder en direct et suivez ce
   - https://x.com/CNBC/status/2054867002322190420
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 175).
+- **@thebitcoinconf** (1729 likes, score 9/10) — Senator Bernie Moreno says he was the first American to pay taxes with #Bitcoin in 2016 
+
+Sen. Moreno: "I paid $3,000 in taxes with 2 BTC"
+
+Sen. Scott: "The $3,000 would today be worth how much?"
+
+Sen
+  - https://x.com/TheBitcoinConf/status/2054952013390115087
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1773).
+- **@mdbitcoin** (89 likes, score 8/10) — Honestly,
+
+Not going to lie…
+
+Bitcoin looks exactly as it should before making a run to $100K. 
+
+Hope you are prepared! 
+
+These next year will get insane...
+  - https://x.com/MDBitcoin/status/2055095609867034725
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 103).
+- **@btcprice** (35 likes, score 7/10) — Bitcoin Price: $80,500
+  - https://x.com/BTCPrice/status/2055160094535356661
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 39).
+- **@zynxbtc** (554 likes, score 8/10) — The American banks scored a spectacular own goal today.
+
+In lobbying aggressively to suppress stablecoin yield, they have inadvertently pushed capital towards Bitcoin backed fixed income products that
+  - https://x.com/ZynxBTC/status/2055035944391114789
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 602).
+- **@gsmferrari** (10 likes, score 7/10) — Croyez-moi, le clarity act est un sell the news event 
+La hausse du $BTC et des Bitcoin stock s'est faite sur l'annonce du clarity act, le piège qui permettra aux gros acteurs de décharger quand le re
+  - https://x.com/gsmferrari/status/2054994034981036263
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 14).
