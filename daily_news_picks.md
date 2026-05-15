@@ -1816,3 +1816,22 @@ Read more:
 - **@bloombergtv** (6 likes, score 7/10) — Bloomberg's Mike McKee discusses the challenges facing incoming Federal Reserve Chair Kevin Warsh https://bloom.bg/42C7mQ8
   - https://x.com/BloombergTV/status/2055296346052030933
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 8).
+- **@decryptmedia** (2 likes, score 7/10) — La plateforme d'échange de cryptomonnaies Gemini a obtenu un investissement de 100 millions de dollars en Bitcoin provenant du fonds de ses fondateurs, et a annoncé une augmentation de 42 % des revenu
+  - https://x.com/DecryptMedia/status/2055320237327765571
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 4).
+- **@kalshi_crypto** (22 likes, score 7/10) — JUST IN: Abu Dhabi sovereign wealth fund buys $550M worth of BlackRock's Bitcoin ETF
+  - https://x.com/Kalshi_Crypto/status/2055321177380294675
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 30).
+- **@cryptoslate** (3 likes, score 7/10) — Bitcoin is caught between a $177 billion risk-on boom and the return of Fed rate-hike fears
+
+via @pelicamatos
+  - https://x.com/CryptoSlate/status/2055314763781964136
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 5).
+- **@kobeissiletter** (2926 likes, score 7/10) — BREAKING: After 3,018 days as Fed Chair, today is Jerome Powell’s final day in the position before his term expires.
+  - https://x.com/KobeissiLetter/status/2055296701800366208
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 3532).
+- **@cointelegraph** (17 likes, score 7/10) — INSIGHT: Most crypto security alerts arrive too late, @web3_antivirus helps move protection earlier.
+
+By the time a popup appears, the user is already connected, trust is already forming and the final
+  - https://x.com/Cointelegraph/status/2055327419498745997
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 39).
