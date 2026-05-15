@@ -136,18 +136,50 @@ OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen3.6:35b-a3b")
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 
 
+_FUNNY_FORCER = (
+    "TON DE SORTIE OBLIGATOIRE: drôle, mordant, irrévérencieux. "
+    "Pas d'explication. Pas de mise en garde. Pas de 'mais ça dépend'. "
+    "Un constat sec + une chute qui pique. Réfs FR concrètes obligatoires "
+    "(RER B, Bercy, URSSAF, syndicat, tonton à Noël, café-clope, Livret A). "
+    "Si la phrase ne te ferait pas rire à voix haute, RÉÉCRIS. "
+    "Aucune phrase neutre ou bilan-prudent. Aucune méta-instruction "
+    "(pas de '⚠️', 'CRITIQUE:', 'OUTPUT:', 'PATTERN:'). "
+    "Tu écris UNE ligne ou DEUX max, point.\n\n"
+    "Exemples du niveau attendu:\n"
+    "- \"OpenAI ouvre Paris. Bercy prépare déjà l'amende. La commission "
+    "se réunit jeudi. Bon courage.\"\n"
+    "- \"Nvidia à 4000Md. C'est le mec en soirée qui a déjà bu tout le "
+    "champagne et te dit qu'il est sobre.\"\n"
+    "- \"Le S&P porté par 7 méga caps, c'est pas un marché. C'est un "
+    "groupe WhatsApp qui se like tout seul.\"\n\n"
+    "MAINTENANT, ta tâche:\n\n"
+)
+
+
 def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
     """Hit ollama's HTTP API directly. opencode CLI was hanging ~130s after
     each generation completed (CLI bug 2026-05-15); going straight to ollama
     is ~2s warm. Same underlying model, no subprocess overhead.
+
+    Front-loads a comedy forcer + 3 gold-standard examples (2026-05-15) —
+    qwen3.6 was producing bland balanced-take output otherwise; small
+    models anchor hard on what comes first.
+
+    Temperature 1.0 (vs default ~0.8) for sharper / less safe outputs.
     """
     import urllib.request
     import urllib.error
+    full_prompt = _FUNNY_FORCER + prompt
     payload = json.dumps({
         "model": OLLAMA_MODEL,
-        "prompt": prompt,
+        "prompt": full_prompt,
         "stream": False,
         "keep_alive": "24h",
+        "options": {
+            "temperature": 1.0,
+            "top_p": 0.95,
+            "repeat_penalty": 1.15,
+        },
     }).encode("utf-8")
     req = urllib.request.Request(
         f"{OLLAMA_BASE_URL}/api/generate",
