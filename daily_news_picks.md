@@ -1572,3 +1572,31 @@ Nvidia scales by linking GPUs, memory, and NVLink. Cerebras put
 - **@unusual_whales** (143 likes, score 7/10) — URGENT : Gautam Adani a accepté de payer 6 millions de dollars pour régler les allégations de la SEC selon lesquelles il a violé les règles boursières américaines en faisant de fausses et trompeuses d
   - https://x.com/unusual_whales/status/2055088954848968845
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 211).
+- **@metamorphose_47** (86 likes, score 8/10) — Nvidia vaut actuellement 5.5 trillions de dollars !
+
+L'entreprise a gagné 1.5 trillions de dollars de valorisation en à peine 45 jours (+37%) !
+
+La Bourse = Opportunités constantes !
+  - https://x.com/Metamorphose_47/status/2054597622082551912
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 96).
+- **@kobeissiletter** (879 likes, score 7/10) — URGENT : Le ETF 3x à effet de levier long sur les semi-conducteurs, $SOXL, a attiré un record de +1,03 milliard de dollars d'entrées nettes mardi.
+
+Parallèlement, le ETF 3x à effet de levier short sur
+  - https://x.com/KobeissiLetter/status/2055038930978746415
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1107).
+- **@microstrategy** (23 likes, score 7/10) — On May 28th, Jamie Grant breaks down AI governance that actually holds the policies, oversight structures, and accountability frameworks enterprises need before they scale at Mini World Public Sector
+  - https://x.com/MicroStrategy/status/2054894861468172445
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 25).
+- **@alphabourse_** (0 likes, score 7/10) — Achat du jour
+
+Ouverture d’une petite ligne sur Veeva $VEEV 
+
+4 actions à 157$ 
+À peine 1.5 % du portefeuille pour l’instant 
+
+ J’ai l’entreprise en watchlist depuis longtemps, le prix actuel me sembl
+  - https://x.com/AlphaBourse_/status/2054982016555192819
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 8).
+- **@frandroid** (5 likes, score 7/10) — Nvidia franchit les 5 500 milliards en Bourse, du jamais-vu dans l’histoire
+  - https://x.com/Frandroid/status/2054809269506044119
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5).
