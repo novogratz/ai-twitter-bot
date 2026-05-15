@@ -1623,3 +1623,22 @@ La licence devient non exclusive et Microsoft ne versera plus de part des revenu
 - **@marketwatch** (2 likes, score 7/10) — The bond market is already hiking rates as Kevin Warsh takes over Fed
   - https://x.com/MarketWatch/status/2055049472208523523
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 8).
+
+## 2026-05-15
+- **@bitcoinmagazine** (4125 likes, score 7/10) — Le nouveau président de la Réserve fédérale, Kevin Warsh :
+
+« Si vous avez moins de 40 ans, le Bitcoin est votre nouvel or. »
+  - https://x.com/BitcoinMagazine/status/2055034412568322322
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 4369).
+- **@unusual_whales** (294 likes, score 7/10) — Trump is expected to drop his $10 billion lawsuit against the Internal Revenue Service in exchange for the creation of a $1.7 billion fund to compensate allies who claim they were wrongfully targeted
+  - https://x.com/unusual_whales/status/2055128788275478869
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 378).
+- **@afp** (28 likes, score 7/10) — US prosecutors are set to drop charges against billionaire Indian industrialist Gautam Adani, who was accused of paying hundreds of millions of dollars of bribes and hiding the payments, the New York
+  - https://x.com/AFP/status/2055115633495343595
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 32).
+- **@bloombergtv** (10 likes, score 7/10) — The US Supreme Court let a widely used abortion pill continue to be dispensed by mail, putting on hold a federal appeals court decision that had briefly required patients to make an in-person visit to
+  - https://x.com/BloombergTV/status/2055061720259809451
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 12).
+- **@bfmcrypto** (7 likes, score 7/10) — L'une d'entre elles a gagné 400%, une autre a atteint 16 millions de dollars de capitalisation : les cryptomonnaies hantavirus se propagent (mais leur prix chute aussi vite qu'il a explosé)
+  - https://x.com/BfmCrypto/status/2054217728987222465
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 9).
