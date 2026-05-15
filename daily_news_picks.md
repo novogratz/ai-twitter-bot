@@ -1731,3 +1731,28 @@ In lobbying aggressively to suppress stablecoin yield, they have inadvertently p
 La hausse du $BTC et des Bitcoin stock s'est faite sur l'annonce du clarity act, le piège qui permettra aux gros acteurs de décharger quand le re
   - https://x.com/gsmferrari/status/2054994034981036263
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 14).
+- **@cryptorover** (123 likes, score 8/10) — HAUSSER 
+
+Le plus grand fonds spéculatif au monde, BlackRock, vient d'acheter pour 144 MILLIONS de dollars de Bitcoin hier.
+  - https://x.com/cryptorover/status/2055178940353036307
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 215).
+- **@mradarcrypto** (5 likes, score 7/10) — CA RESTERA LE PLUS GROS RETOURNEMENT DE VESTE DU SIÈCLE !
+
+JPMorgan Chase & Co. vient de déclarer ses positions à la SEC : la banque a augmenté de +174% son exposition à l'ETF Bitcoin de BlackRock (IB
+  - https://x.com/MRadarCrypto/status/2055176603270066634
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 7).
+- **@ashcrypto** (5356 likes, score 8/10) — URGENT :  PROJET DE LOI SUR LA STRUCTURE DU MARCHÉ CRYPTO ADOPTÉ PAR LA COMMISSION BANCAIRE ET AVANCE MAINTENANT VERS LE SÉNAT AMÉRICAIN AU COMPLET.
+
+GIGA HAUSSER POUR BITCOIN ET CRYPTO
+  - https://x.com/AshCrypto/status/2054968064580440232
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 5806).
+- **@mark_cullen** (33 likes, score 7/10) — #Bitcoin Liquidity Sandwich 
+
+$BTC took that lower liquidity first and now sits just under that juicy upper slice...
+
+#Crypto #BTC
+  - https://x.com/mark_cullen/status/2055128677860421805
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 37).
+- **@gsmferrari** (7 likes, score 7/10) — Paire $HOOD vs $IREN : $HOOD est sur un bottom face à $IREN et présente des divergences bullish de RSI. Cette paire te permet de comprendre les rotations de capitaux de la smart money sur les "Bitcoin
+  - https://x.com/gsmferrari/status/2054315029776789952
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11).
