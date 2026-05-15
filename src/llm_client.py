@@ -92,10 +92,30 @@ _STREAM_ENVELOPE_MARKERS = (
 )
 
 
+# Prompt-instruction bleed — qwen3.6 echoed "⚠️ CRITIQUE: FR_ANCHOR" verbatim
+# into a posted tweet on 2026-05-15. If any of these strings survive the
+# scrubber, refuse to post rather than ship instruction text as content.
+_PROMPT_BLEED_MARKERS = (
+    "⚠️ critique",
+    "⚠️critique",
+    "critique:",
+    "un_seul_id",
+    "interdit:",
+    "hard rule",
+    "<un_seul",
+    "<la hot take",
+    "<la news",
+    "<la reply",
+    "[pattern:",  # raw bracket should already be stripped, double check
+    "output —",
+    "output:",
+)
+
+
 def contains_post_unsafe_leak(text: str) -> bool:
     """Pre-flight post check. True if text contains ANY leak shape — tool-call
-    XML, NDJSON envelope keys, or starts with a raw JSON object/array. Tweets
-    never legitimately match these. Rejecting is always safer than posting.
+    XML, NDJSON envelope keys, raw JSON object/array, or prompt-instruction
+    text the model echoed. Tweets never legitimately match these.
     """
     if not text:
         return False
@@ -107,6 +127,8 @@ def contains_post_unsafe_leak(text: str) -> bool:
         return True
     low = stripped.lower()
     if any(marker.lower() in low for marker in _STREAM_ENVELOPE_MARKERS):
+        return True
+    if any(marker in low for marker in _PROMPT_BLEED_MARKERS):
         return True
     return False
 
