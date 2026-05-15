@@ -1642,3 +1642,35 @@ La licence devient non exclusive et Microsoft ne versera plus de part des revenu
 - **@bfmcrypto** (7 likes, score 7/10) — L'une d'entre elles a gagné 400%, une autre a atteint 16 millions de dollars de capitalisation : les cryptomonnaies hantavirus se propagent (mais leur prix chute aussi vite qu'il a explosé)
   - https://x.com/BfmCrypto/status/2054217728987222465
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 9).
+- **@unusual_whales** (91 likes, score 8/10) — Anthropic agrees terms of $30 billion funding deal at $900 billion valuation, per FT
+  - https://x.com/unusual_whales/status/2055145900767613325
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 145).
+- **@cryptoslate** (2 likes, score 7/10) — Top #CryptoNews: Thu, May 14 (24H)
+
+ Crypto markets are massively underpricing Clarity Act passing – Hashdex warns
+
+ Global financial crisis fears grow as bond yields hit 1998 levels and #Bitcoin drop
+  - https://x.com/CryptoSlate/status/2054966191056454008
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4).
+- **@investingcom** (162 likes, score 7/10) — *S&P 500 TERMINE À UN NOUVEAU RECORD ABSOLU AU-DESSUS DE 7 500
+
+$SPY
+  - https://x.com/Investingcom/status/2055047855224521050
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 186).
+- **@cnbc** (11 likes, score 7/10) — Billionaire Gautam Adani and nephew agree to pay $18 million in SEC settlement over fraud allegations
+  - https://x.com/CNBC/status/2055137656665682409
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 19).
+- **@cryptoslate** (3 likes, score 7/10) — Top #CryptoGainers & Losers: Thu, May 14 (24H)
+
+ Biggest Gainers
+
+Yooldo $ESPORTS +27.54%
+TROLL (SOL) $TROL +27.35%
+BILL Billions Network $BILL +19.31%
+ 
+ Biggest Losers 
+
+siren $SIREN -54.05%
+BUILDon
+  - https://x.com/CryptoSlate/status/2054967155976962337
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5).
