@@ -1534,3 +1534,24 @@ CELA VA RÉSONNER À L'É
 The Japanese automaker said total EV-related losses for the fiscal year ended March 2026 came in 1.579 trillion yen ($10 billion), leading to
   - https://x.com/YahooFinance/status/2055054554052362459
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 84).
+- **@kalshi_crypto** (441 likes, score 9/10) — JUST IN: Bitcoin reclaims $82,000
+
+60% chance it hits $85,000 this month
+  - https://x.com/Kalshi_Crypto/status/2054971411442143261
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 507).
+- **@cointelegraph** (94 likes, score 8/10) — DERNIER: Les déclarations financières du président Trump révèlent qu'il a acheté jusqu'à 5 millions de dollars de chacune des actions suivantes, incluant Nvidia, Oracle, Microsoft, Boeing et Costco, a
+  - https://x.com/Cointelegraph/status/2055107374466113674
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 128).
+- **@themoonshow** (6 likes, score 7/10) — Fidelity and Bitwise have collectively bought $21.2M worth of #Bitcoin!
+  - https://x.com/TheMoonShow/status/2055102771796365485
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 8).
+- **@polymarket** (5 likes, score 7/10) — 53% chance the Anthropic IPO closes above $1,500,000,000,000.00.
+  - https://x.com/Polymarket/status/2055112541399830780
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 5).
+- **@pete_rizzo_** (625 likes, score 8/10) — LE MILLIARDAIRE ANTHONY SCARAMUCCI A LÂCHÉ UNE BOMBE EN DIRECT À LA TÉLÉ :
+
+LA STRUCTURE DU MARCHÉ DÉBLOQUERA DES TRILLIONS DE DOLLARS « QUI ATTENDENT DE LA CLARTÉ » POUR ACHETER #BITCOIN
+
+CE SERA LE
+  - https://x.com/pete_rizzo_/status/2055004339983306809
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 673).
