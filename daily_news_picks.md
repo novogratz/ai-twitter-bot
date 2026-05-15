@@ -1756,3 +1756,38 @@ $BTC took that lower liquidity first and now sits just under that juicy upper sl
 - **@gsmferrari** (7 likes, score 7/10) — Paire $HOOD vs $IREN : $HOOD est sur un bottom face à $IREN et présente des divergences bullish de RSI. Cette paire te permet de comprendre les rotations de capitaux de la smart money sur les "Bitcoin
   - https://x.com/gsmferrari/status/2054315029776789952
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 11).
+- **@analystecurieux** (0 likes, score 7/10) — Les IPO les plus attendues de 2026 sont là !
+
+SpaceX, OpenAI, ByteDance, Anthropic, Databricks, Stripe… Ça va secouer le marché cette année.
+
+Je ne suis pas adepte des IPO, je regarde ça de loin mais
+  - https://x.com/analystecurieux/status/2039378143182508317
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 46).
+- **@appleinsider** (6 likes, score 7/10) — OpenAI considering suing Apple because ChatGPT integrations weren't a money fountain https://appleinsider.com/articles/26/05/14/openai-considering-suing-apple-because-chatgpt-integrations-werent-a-mon
+  - https://x.com/appleinsider/status/2055173910434308431
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 8).
+- **@cointelegraph** (224 likes, score 8/10) — TODAY: This is Jerome Powell's last day in office.
+
+Bitcoin is up $76,000 since he started.
+
+Where will it go with Warsh?
+  - https://x.com/Cointelegraph/status/2055226894337896928
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 306).
+- **@cointelegraph** (39 likes, score 8/10) — ALERT: Thorchain has been exploited on Bitcoin, Ethereum, BSC, Base for $10M+, per ZachXBT.
+  - https://x.com/Cointelegraph/status/2055231865473077634
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 81).
+- **@roundtablespace** (12 likes, score 7/10) — ZACHXBT SAYS THORCHAIN WAS LIKELY EXPLOITED ACROSS BITCOIN ETHEREUM BSC AND BASE FOR $10.7M+
+  - https://x.com/RoundtableSpace/status/2055232758801162379
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 24).
+- **@altcoinsfrance** (5 likes, score 7/10) — THORCHAIN VICTIME D’UN HACK À PLUS DE 7 MILLIONS DE DOLLARS
+
+Selon l’enquêteur ZachXBT, THORChain aurait subi une attaque exploitant plusieurs réseaux, dont Bitcoin, Ethereum, BNB Chain et Base.
+
+Le m
+  - https://x.com/AltcoinsFrance/status/2055226827925233772
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 7).
+- **@coinmarketcap** (76 likes, score 7/10) — Pouls du marché CMC : Cerebras, USDH, Hyperliquid
+
+BTC +1,31 %, ETH -0,89 %. La capitalisation boursière de 2,68 billions de dollars progresse légèrement alors que les actions atteignent de nouveaux s
+  - https://x.com/CoinMarketCap/status/2055194125759398096
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 126).
