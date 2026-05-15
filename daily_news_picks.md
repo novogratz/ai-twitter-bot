@@ -1555,3 +1555,20 @@ LA STRUCTURE DU MARCHÉ DÉBLOQUERA DES TRILLIONS DE DOLLARS « QUI ATTENDENT DE
 CE SERA LE
   - https://x.com/pete_rizzo_/status/2055004339983306809
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 673).
+- **@wsj** (31 likes, score 8/10) — Les emplois dans le secteur de la santé maintiennent le marché du travail américain en effervescence. Et ils maintiennent la Californie à flot.  https://on.wsj.com/3Ro8OmB
+  - https://x.com/WSJ/status/2055106692602359843
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 55).
+- **@mtslive** (8 likes, score 7/10) — SITUATION EXPLAINED: We had @StevenGlinert, CEO of Sphere Semi, on the show to talk the technology behind the blockbuster Cerebras IPO.
+
+Nvidia scales by linking GPUs, memory, and NVLink. Cerebras put
+  - https://x.com/MTSlive/status/2055113283049554125
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 8).
+- **@decryptmedia** (5 likes, score 7/10) — Security startup Calif says researchers used a preview version of Anthropic's Claude Mythos AI to help build an Apple macOS kernel exploit.
+  - https://x.com/DecryptMedia/status/2055064869943099508
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 7).
+- **@decryptmedia** (4 likes, score 7/10) — OpenAI Pushes New ChatGPT Safety Features as Lawsuits Mount
+  - https://x.com/DecryptMedia/status/2055041570626216198
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4).
+- **@unusual_whales** (143 likes, score 7/10) — URGENT : Gautam Adani a accepté de payer 6 millions de dollars pour régler les allégations de la SEC selon lesquelles il a violé les règles boursières américaines en faisant de fausses et trompeuses d
+  - https://x.com/unusual_whales/status/2055088954848968845
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 211).
