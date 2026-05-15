@@ -1511,3 +1511,26 @@ Si ça c’est pas un live pour per
 - **@kalshi_crypto** (985 likes, score 8/10) — JUST IN: Michael Saylor's 'Strategy' buys ~$1B worth of Bitcoin today
   - https://x.com/Kalshi_Crypto/status/2055013216980201564
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 1061).
+- **@coinmarketcap** (132 likes, score 8/10) — LATEST:  Kraken has replaced LayerZero with Chainlink CCIP for its wrapped Bitcoin token after the $292M Kelp bridge exploit.
+  - https://x.com/CoinMarketCap/status/2055058118250279199
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 192).
+- **@pete_rizzo_** (236 likes, score 8/10) — LE MONDE VIENT DE CHANGER À JAMAIS
+
+ PRÉSIDENT DE LA FED PRO-BITCOIN 
+ LA LOI CLARITY ADOPTÉE EN COMMISSION
+ LES ÉTATS-UNIS MAINTENANT LA CAPITALE MONDIALE DES CRYPTO-MONNAIES 
+
+CELA VA RÉSONNER À L'É
+  - https://x.com/pete_rizzo_/status/2055072890450808984
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 258).
+- **@marketwatch** (8 likes, score 7/10) — The bond market is already hiking rates as Kevin Warsh takes over as Fed’s new chair
+  - https://x.com/MarketWatch/status/2055055985509605580
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 16).
+- **@ft** (7 likes, score 7/10) — Anthropic agrees terms of $30bn funding deal at $900bn valuation
+  - https://x.com/FT/status/2055084703527370796
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 9).
+- **@yahoofinance** (68 likes, score 7/10) — Honda reported its first annual loss in nearly 70 years. 
+
+The Japanese automaker said total EV-related losses for the fiscal year ended March 2026 came in 1.579 trillion yen ($10 billion), leading to
+  - https://x.com/YahooFinance/status/2055054554052362459
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 84).
