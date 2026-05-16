@@ -2276,3 +2276,28 @@ Bla
 Le concept : laisser une IA créer son propre magasin avec un budget de 100 000 dollars. Elle gère l
   - https://x.com/LelloucheNico/status/2055705893962920312
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 139).
+- **@bitcoin** (1360 likes, score 9/10) — $79,105.33
+
+#Bitcoin
+  - https://x.com/Bitcoin/status/2055449303355633888
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1860).
+- **@cryptofergani** (623 likes, score 8/10) — URGENT : 20 000 000 BITCOIN VIENNT D'ÊTRE OFFICIELLEMENT MINÉ 
+
+IL NE RESTE PLUS QUE 1 000 000 BITCOIN À MINER POUR LES PROCHAINS 114 ANS 
+
+L'ACTIF LE PLUS RARE DE L'HISTOIRE DE L'HUMANITÉ
+  - https://x.com/cryptofergani/status/2055656442355450100
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 789).
+- **@robynhd** (92 likes, score 8/10) — Trump kaufte in Q1 2026 in über 3.600 Transaktionen vor allem massiv KI-Aktien, Bitcoin steht an einer kritischen Unterstützung und sehr viele verstehen globale Liquidität gerade falsch.
+
+Im heutigen
+  - https://x.com/RobynHD/status/2055676148676186518
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 104).
+- **@greencandleit** (17 likes, score 7/10) — CNBC just announced live to MILLIONS of viewers that the Bitcoin Clarity Act will drive TRILLIONS in institutional capital into Bitcoin!!! 
+
+IS AMERICA'S WAR ON BITCOIN OFFICIALLY OVER?!!!
+  - https://x.com/Greencandleit/status/2055724970526040488
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 19).
+- **@danheld** (397 likes, score 7/10) — Comment les normies se sentent par rapport au Bitcoin
+  - https://x.com/danheld/status/2055661045579132994
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 447).
