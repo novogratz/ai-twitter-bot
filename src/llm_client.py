@@ -643,6 +643,18 @@ def run_llm(
     if not fallback_provider:
         return result
 
+    # When the fallback is opencode, skip the broken opencode CLI subprocess
+    # (hangs ~130s post-generation) and go straight to ollama HTTP. Matches
+    # the existing behavior for codex-locked / opencode-primary paths.
+    if fallback_provider == "opencode":
+        effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
+        log.info(
+            f"[LLM] {label}: primary {provider}/{model} failed "
+            f"(exit {result.returncode}) — falling back to ollama HTTP / "
+            f"{OLLAMA_MODEL} (timeout {effective_timeout}s)."
+        )
+        return _run_ollama_http(prompt, label=f"{label} (fallback)", timeout=effective_timeout)
+
     fallback_model = _fallback_model(model, fallback_provider)
     fallback_cmd = _build_cmd(
         prompt,
@@ -689,6 +701,14 @@ def _text_from_event(obj: dict) -> str:
         if isinstance(part, dict):
             return str(part.get("text") or "")
         return str(obj.get("text") or "")
+
+    # Claude CLI's --output-format json envelope: {"type":"result",
+    # "subtype":"success", "result":"<the text>", ...}. Without this, the
+    # NDJSON parser parses the envelope but finds no recognized text key
+    # and returns empty string → news + hot take silently broke when we
+    # switched primary to Claude on 2026-05-15.
+    if obj.get("type") == "result":
+        return str(obj.get("result") or "")
 
     # Some OpenCode versions emit assistant/message-style JSON events instead
     # of the older {type:"text", part:{text:"..."}} shape.
