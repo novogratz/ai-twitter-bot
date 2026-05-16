@@ -2211,3 +2211,26 @@ Elle permet aux utilisateurs de connecter leurs comptes bancaires, de suivre leu
 Elle permet aux utilisateurs de connecter leurs comptes bancaires, suivre leurs dépenses, analyser leurs investissements et
   - https://x.com/Crypto__Goku/status/2055698035615596915
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 9).
+- **@fiatarchive** (26 likes, score 7/10) — JACK DORSEY: Bitcoin will be worth more than $1,000,000 by 2030.
+  - https://x.com/fiatarchive/status/2055713138755129686
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 32).
+- **@pete_rizzo_** (234 likes, score 8/10) — JUSTE EN: BANQUE PROPRIÉTÉ DU GOUVERNEMENT SAOUDIEN GULF INTERNATIONAL VIENT D'AUGMENTER SON EXPOSITION AU #BITCOIN DE PLUS DE 50%
+
+LES NATIONS LES PLUS PUISSANTES S'ACCUMULENT DISCRÈTEMENT
+
+C'EST PAR
+  - https://x.com/pete_rizzo_/status/2055691686303728124
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 274).
+- **@loris_dalleau** (96 likes, score 7/10) — Bill Ackman à propos de son achat sur Microsoft $MSFT 
+
+Sur les dernières années, nous avons acquis Alphabet lors de la forte chute du titre à la sortie de ChatGPT fin 2022, Amazon dans les semaines q
+  - https://x.com/Loris_Dalleau/status/2055277850597482661
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 108).
+- **@xfreeze** (380 likes, score 7/10) — Le Tesla Semi a un potentiel facile à saisir pour conquérir un marché de 1 000 milliards de dollars en prenant le contrôle de l'industrie du camionnage.
+
+La plupart des gens ne comprennent toujours pa
+  - https://x.com/XFreeze/status/2055655799481848088
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 524).
+- **@testingcatalog** (232 likes, score 7/10) — OPENAI  : À l'avenir, Codex pourra contrôler d'autres appareils de bureau équipés de l'installation Codex. Tous vos Mac Minis, votre station de bureau au travail, ou même les anciens ordinateurs de vo
+  - https://x.com/testingcatalog/status/2055708109343994335
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 254).
