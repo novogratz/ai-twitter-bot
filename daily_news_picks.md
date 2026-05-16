@@ -2116,3 +2116,32 @@ It also holds significant positions in sector stocks. Investments registered in 
 Il doit maintenant grimper de 130 % juste pour atteindre son ATH.
   - https://x.com/Cointelegraph/status/2055554543308644558
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 315).
+- **@mcuban** (2561 likes, score 8/10) — We should federally tax Tokens at the Provider level.  
+
+Not a lot. Less than 50c per million tokens.  
+
+It will accomplish 4 things (at least )
+
+1.  It will push the big AI players to optimize tokeni
+  - https://x.com/mcuban/status/2055399906127344068
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 5661).
+- **@tedpillows** (91 likes, score 8/10) — Sortie de fonds de l'ETF $ETH de 65 700 000 $  hier.
+
+BlackRock a vendu pour 50 400 000 $ en Ethereum.
+  - https://x.com/TedPillows/status/2055561094995808754
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 163).
+- **@decryptmedia** (6 likes, score 7/10) — Le protocole DeFi Bitcoin Lombard Finance déplace ses actifs loin de LayerZero à la suite de l'exploit de Kelp DAO qui a entraîné la perte de 292 millions de dollars.
+  - https://x.com/DecryptMedia/status/2055558370602434658
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 8).
+- **@smartdropfarmer** (1 likes, score 7/10) — The highest revenue-generating blockchain isn’t Hyperliquid.
+It’s not Ethereum.
+And it’s not Solana either.
+
+It’s @CantonNetwork  and almost nobody in crypto is talking about it.
+
+Canton is generating
+  - https://x.com/SmartDropFarmer/status/2055566422672064564
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 5).
+- **@anthropicai** (2689 likes, score 7/10) — Nous nous associons à la Fondation Gates, en nous engageant à hauteur de 200 millions de dollars en subventions, crédits Claude et soutien technique pour des programmes dans les domaines de la santé m
+  - https://x.com/AnthropicAI/status/2054941901900611787
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 3491).
