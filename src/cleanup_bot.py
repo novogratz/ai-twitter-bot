@@ -34,11 +34,14 @@ _TAIL_LOG_BYTES = 30 * 1024 * 1024  # keep last 30 MB after rotation
 _ENGAGEMENT_LOG_KEEP_DAYS = 90
 
 # Per-file caps for various JSON arrays.
+# 2026-05-16: replied_tweets 5000 → 50000 (matches reply_bot._REPLIED_CAP).
+# A profile re-shares old tweets often enough that 5000 wasn't enough memory
+# to avoid duplicate replies a month apart.
 _JSON_CAPS = {
-    "replied_tweets.json": 5000,
-    "replied_back.json": 2000,
-    "retweeted.json": 1000,
-    "quoted_tweets.json": 1000,
+    "replied_tweets.json": 50000,
+    "replied_back.json": 10000,
+    "retweeted.json": 5000,
+    "quoted_tweets.json": 5000,
     "promoted_replies.json": 500,
     "breakout_history.json": 500,
     "spike_history.json": 200,
