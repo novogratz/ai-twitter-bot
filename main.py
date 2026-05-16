@@ -482,20 +482,22 @@ def main():
         # Quote-tweet bot — accelerated 2026-05-05 (user: "reshare way more").
         # Daily cap is 10 (env), so cadence sets the upper bound on attempts;
         # bumped 3h → 75min so cap actually binds instead of cycle frequency.
-        log.info("Quote-tweet bot: amplifying viral FR setups every 35 min (cap 30/day).")
+        # 2026-05-15: 35 → 20 min (user mandate "quote more things, be active").
+        log.info("Quote-tweet bot: amplifying viral FR setups every 20 min (cap binds via MAX_QUOTES_PER_DAY).")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=35),
+            trigger=IntervalTrigger(minutes=20),
             id="quote_tweet_job",
         )
 
         # Retweet bot — high-volume deterministic amplifier. Retweets are
         # cheap/no-LLM and feed the YouTube research doc, so let the daily cap
         # bind while source/niche/age/dedup filters keep quality bounded.
-        log.info("Retweet bot: amplifying trusted news every 8 min (multi-RT cycle, cap binds via MAX_RETWEETS_PER_DAY).")
+        # 2026-05-15: 8 → 5 min ("retweet more things").
+        log.info("Retweet bot: amplifying trusted news every 5 min (multi-RT cycle, cap binds via MAX_RETWEETS_PER_DAY).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(minutes=8),
+            trigger=IntervalTrigger(minutes=5),
             id="retweet_job",
         )
 

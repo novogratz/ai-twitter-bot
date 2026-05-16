@@ -31,6 +31,20 @@ VIP_REPLY_ACCOUNTS = [
     "FlasheurInvest",
     "MatthiasBaccino",
     "McnallieM",         # McNallie Money — warm VIP, AI/crypto data centers
+    # 2026-05-15 — AI/Crypto megafounders (user mandate: "be the master at
+    # AI crypto and investments in france, the number 1"). FR audience
+    # follows these. Replying to them puts us in their reply pool.
+    "ylecun",            # Yann LeCun — Meta AI Chief, French AI flagship
+    "arthurmensch",      # Mistral CEO (respect-list — comment on IDEAS only)
+    "GuillaumeLample",   # Mistral co-founder
+    "fchollet",          # François Chollet, Keras / Google → Anthropic
+    "karpathy",          # Andrej Karpathy
+    "demishassabis",     # Demis Hassabis — Google DeepMind
+    "sama",              # Sam Altman
+    "VitalikButerin",    # Vitalik Buterin
+    "saylor",            # Michael Saylor
+    "brian_armstrong",   # Coinbase
+    "cz_binance",        # Changpeng Zhao
 ]
 _VIP_REPLY_ACCOUNTS_LC = {h.lower() for h in VIP_REPLY_ACCOUNTS}
 
