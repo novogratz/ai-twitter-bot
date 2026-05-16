@@ -1936,3 +1936,24 @@ Coverage by @micahvzimmerman:
 - **@watcherguru** (20797 likes, score 7/10) — BREAKING:  Jerome Powell officially steps down after 8 years as Federal Reserve Chair.
   - https://x.com/WatcherGuru/status/2055377690522161221
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 23841).
+
+## 2026-05-16
+- **@lejournalducoin** (71 likes, score 8/10) — Le tracker STRC ATM estime que Strategy a acheté 13 491 BTC (1,08 milliard $) hier via son programme STRC, soit 30 fois la production minière quotidienne du Bitcoin.
+  - https://x.com/LeJournalDuCoin/status/2055175667499626973
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 73).
+- **@coinmarketcap** (192 likes, score 8/10) — LATEST :  Lombard migre plus d'un milliard de dollars d'actifs adossés au Bitcoin de LayerZero vers Chainlink CCIP suite à l'exploit de pont de 292 millions de dollars de Kelp DAO.
+  - https://x.com/CoinMarketCap/status/2055428558332252408
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 284).
+- **@tagadobtc** (68 likes, score 8/10) — Le potentiel d'une correction saine enverrait le Bitcoin autour des 70k$ dans les prochains jours, dans le cas d'un scénario baissier avant la suite de la hausse.
+
+Imaginez les gens bearish si on repa
+  - https://x.com/TagadoBTC/status/2055331423406506002
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 82).
+- **@business** (0 likes, score 7/10) — Le directeur de Nvidia, Mark Stevens, et sa femme font un don de 175 millions de dollars pour aider à construire la première nouvelle école de médecine dans la région de la baie de San Francisco depui
+  - https://x.com/business/status/2055350097278324739
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 42).
+- **@lejournalducoin** (22 likes, score 7/10) — THORChain suspend les swaps et la signature des transactions après une attaque potentielle multi-chaînes estimée à plus de 10 millions $.
+
+ZachXBT et PeckShield évoquent des fonds déplacés sur Bitcoin
+  - https://x.com/LeJournalDuCoin/status/2055238585406677321
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 28).
