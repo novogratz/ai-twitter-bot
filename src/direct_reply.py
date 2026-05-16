@@ -955,6 +955,39 @@ def run_direct_reply_cycle():
         save_replied(replied)
         return
 
+    # === SOURCE 0: For You + Following feeds — ALWAYS scan first.
+    # User mandate 2026-05-16: "make sure bot always refreshes the for
+    # you page and following page... look there and retweet, comments
+    # all the interesting ones". Moved BEFORE FR/HOT profiles so feed
+    # discoveries always get a slice of the reply budget instead of
+    # getting starved when VIP + FR profiles consume it all.
+    if _budget() > 0:
+        log.info("[DIRECT] === Scraping Following feed (chronological) ===")
+        try:
+            following_tweets = scrape_following_feed(max_tweets=30)
+            if following_tweets:
+                following_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
+                total += _reply_to_tweets(following_tweets, replied, "FOLLOWING", remaining=_budget(), en_counter=en_counter)
+                if _llm_exhausted():
+                    save_replied(replied)
+                    return
+        except Exception:
+            log.info("[DIRECT] Following feed scrape failed:")
+            traceback.print_exc()
+    if _budget() > 0:
+        log.info("[DIRECT] === Scraping home feed (For You / algorithmic) ===")
+        try:
+            feed_tweets = scrape_home_feed(max_tweets=30)
+            if feed_tweets:
+                feed_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
+                total += _reply_to_tweets(feed_tweets, replied, "FEED", remaining=_budget(), en_counter=en_counter)
+                if _llm_exhausted():
+                    save_replied(replied)
+                    return
+        except Exception:
+            log.info("[DIRECT] Home feed scrape failed:")
+            traceback.print_exc()
+
     # User directive 2026-04-26 PM: "target big accounts in french, if you
     # cant fallback on smaller". Reordered so the curated FR roster runs
     # FIRST and burns the budget on big accounts. Random search becomes the
@@ -982,34 +1015,8 @@ def run_direct_reply_cycle():
         save_replied(replied)
         return
 
-    # === SOURCE 2: Following feed (chronological, only accounts we follow — also big-account leaning) ===
-    # Sort FR tweets first — same rationale as FEED below.
-    if _budget() > 0:
-        log.info("[DIRECT] === Scraping Following feed ===")
-        try:
-            following_tweets = scrape_following_feed(max_tweets=20)
-            if following_tweets:
-                following_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
-                total += _reply_to_tweets(following_tweets, replied, "FOLLOWING", remaining=_budget(), en_counter=en_counter)
-                if _llm_exhausted():
-                    save_replied(replied)
-                    return
-        except Exception:
-            log.info("[DIRECT] Following feed scrape failed:")
-            traceback.print_exc()
-
-    # === SOURCE 3: Home feed (For You / algorithmic) ===
-    # Sort FR tweets first so the budget is consumed by French content before
-    # EN — drives the 90%+ FR ratio mandate. Also niche-filtered (see above).
-    if _budget() > 0:
-        log.info("[DIRECT] === Scraping home feed (For You) ===")
-        feed_tweets = scrape_home_feed(max_tweets=20)
-        if feed_tweets:
-            feed_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
-            total += _reply_to_tweets(feed_tweets, replied, "FEED", remaining=_budget(), en_counter=en_counter)
-            if _llm_exhausted():
-                save_replied(replied)
-                return
+    # SOURCE 2 + 3 (Following + For You) — moved to SOURCE 0 above so feeds
+    # always get budget. This stub kept as a doc marker; no logic here.
 
     # === SOURCE 4: HOT FR tweets (X's "Top" tab, min_faves) — fallback if curated didn't fill ===
     all_hot = HOT_TAB_QUERIES + dyn_queries.get("hot", [])
