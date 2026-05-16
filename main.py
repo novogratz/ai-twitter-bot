@@ -354,10 +354,15 @@ def main():
         # 4h → 3h on user directive 2026-04-26 PM: the cheapest validated
         # action we have, push it to 8 boosts/day. Risk of algo suppression
         # exists but is dwarfed by the confirmed lift.
-        log.info("Boost bot: retweeting own latest tweet every 60 minutes.")
+        # 2026-05-15: 60 → 30 min. Boost is the confirmed-working growth lever
+        # (memory: ~200 views + 6 likes per self-RT). Doubling cadence for
+        # the same impressions-per-hour lift. Each boost is dedup'd by URL
+        # so no risk of re-RT'ing the same post; if the boost queue is dry
+        # the cycle just no-ops.
+        log.info("Boost bot: retweeting own latest tweet every 30 minutes.")
         scheduler.add_job(
             safe_run_boost_cycle,
-            trigger=IntervalTrigger(minutes=60),
+            trigger=IntervalTrigger(minutes=30),
             id="boost_job",
         )
 
