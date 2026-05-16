@@ -589,7 +589,12 @@ def run_llm(
     # hangs ~130s after generation (CLI bug), so we use HTTP directly to
     # the same underlying ollama model. ~2-130s warm, no subprocess overhead.
     if provider == "opencode":
-        effective_timeout = timeout if timeout is not None else DEFAULT_LLM_TIMEOUT_SECONDS
+        # Caller-side timeouts (e.g. direct_reply passes 45s for VIP, 30s
+        # for regular) were tuned for codex's ~5s response time and KILL
+        # the local model mid-generation. Floor at DEFAULT so qwen3.6 has
+        # enough room to actually finish. 2026-05-15: 26 replies generated,
+        # 0 posted in one hour because every call hit the 45s wall.
+        effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
         log.info(
             f"[LLM] {label}: opencode primary → ollama HTTP / "
             f"{OLLAMA_MODEL} (timeout {effective_timeout}s)."
@@ -602,7 +607,8 @@ def run_llm(
     if provider == "codex":
         lockout = _read_codex_lockout()
         if lockout is not None:
-            effective_timeout = timeout if timeout is not None else DEFAULT_LLM_TIMEOUT_SECONDS
+            # Floor at DEFAULT — same reason as the opencode branch above.
+            effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
             log.info(
                 f"[LLM] {label}: codex locked until "
                 f"{lockout.isoformat(timespec='minutes')} — "
