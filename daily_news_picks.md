@@ -2081,3 +2081,38 @@ Stable $STAB
 Berkshire Hathaway has also exited its entire position in Amazon, $AMZN, UnitedHealth,
   - https://x.com/KobeissiLetter/status/2055382232592728335
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 4644).
+- **@crypto__goku** (23 likes, score 7/10) — GM Saiyans ! 
+
+«La meilleure réponse reste parfois le calme.»
+----
+$BTC : 79.068 $
+$ETH : 2.228 $
+#BTC Fear & Greed index : 31
+#Bitcoin Dominance : 60%
+  - https://x.com/Crypto__Goku/status/2055498208021827760
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 29).
+- **@cramertracker** (306 likes, score 8/10) — The year is 2040
+
+Gas is $50/gallon
+A starter home costs $1.5 million
+Ethereum is still $2,200
+  - https://x.com/CramerTracker/status/2055362476880064864
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 326).
+- **@criptovalutai** (4 likes, score 7/10) — Intesa Sanpaolo @intesasanpaolo has invested more than 200 million in:
+
+ Bitcoin
+ Ethereum
+ Ripple
+ Solana
+
+It also holds significant positions in sector stocks. Investments registered in the USA and
+  - https://x.com/CriptovalutaI/status/2055536245250433357
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 6).
+- **@cointelegraph** (0 likes, score 8/10) — ÉNORME : Les sociétés cotées en bourse ont ajouté environ 369 000 Bitcoins au cours des 12 derniers mois.
+  - https://x.com/Cointelegraph/status/2055513724975280193
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 96).
+- **@cointelegraph** (165 likes, score 7/10) — MAINTENANT : ETH vient de chuter sous 2 200 $.  
+
+Il doit maintenant grimper de 130 % juste pour atteindre son ATH.
+  - https://x.com/Cointelegraph/status/2055554543308644558
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 315).
