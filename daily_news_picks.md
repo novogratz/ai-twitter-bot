@@ -2184,3 +2184,30 @@ $ONDO controlling ~74% of the market this early is a massive positioning advanta
 W
   - https://x.com/SherifDefi/status/2055617297977319601
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 107).
+- **@dfintelligence** (116 likes, score 9/10) — On a analysé 1,7 million d’URLs consultées par des IA à travers 70 000 conversations, couvrant les principaux acteurs comme @OpenAI , @AnthropicAI , @perplexity_ai , @Google  ou encore @xai .
+
+Objecti
+  - https://x.com/DFintelligence/status/2044054006859780452
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 142).
+- **@eloiljf** (28 likes, score 7/10) — Le CEO d’Anthropic quand il a vu cette formation Claude d’2 heure qui a fuité, 
+
+où un gars montre littéralement comment il a automatisé tout son business avec les agents Claude  
+
+et gagne 100 000 $
+  - https://x.com/EloiLJF/status/2055668511469343030
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 28).
+- **@leaboursefr** (6 likes, score 7/10) — Ils ont avancé au 12 juin. Raison officielle : la SEC a traité le dossier plus vite que prévu.
+
+Mais cette "rapidité" tombe à pic. OpenAI et Anthropic prévoient des levées massives cette année. Le mar
+  - https://x.com/LeaBourseFR/status/2055436462305181801
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 6).
+- **@cointelegraph** (107 likes, score 8/10) — ÉNORME : OpenAI vient de lancer une nouvelle expérience de gestion financière personnelle dans ChatGPT.
+
+Elle permet aux utilisateurs de connecter leurs comptes bancaires, de suivre leurs dépenses, d’
+  - https://x.com/Cointelegraph/status/2055694944665297291
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 189).
+- **@crypto__goku** (7 likes, score 7/10) — OpenAI lance une nouvelle expérience de finances personnelles dans ChatGPT.
+
+Elle permet aux utilisateurs de connecter leurs comptes bancaires, suivre leurs dépenses, analyser leurs investissements et
+  - https://x.com/Crypto__Goku/status/2055698035615596915
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 9).
