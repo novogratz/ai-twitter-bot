@@ -572,21 +572,14 @@ def run_retweet_cycle():
                 continue
             # Same-day freshness — when scraper exposes a timestamp,
             # skip anything older than MAX_CANDIDATE_AGE_HOURS. When
-            # it's missing the helper returns 999_999 → we skip
-            # because we'd rather miss a candidate than retweet 2012.
+            # it's missing the helper returns 999_999 → SKIP.
+            # 2026-05-16: removed the "engagement-implies-fresh" escape
+            # hatch — was letting 2025 tweets through because a 1-year-old
+            # crypto post can still have 1 like / 1 reply. User complaint:
+            # "stop reposting things from 2025". No timestamp = no retweet.
             age_hours = _scrape_age_hours(t)
             if age_hours > MAX_CANDIDATE_AGE_HOURS:
-                # Many scraper paths don't expose a timestamp at all,
-                # so 999_999 hits everything. Fall back: tweets with
-                # 0 timestamp + low engagement get skipped; tweets
-                # from trusted handles WITH any visible engagement we let
-                # pass; wide sampling + dedup makes this the difference
-                # between seeing enough fresh crypto/AI/bourse reposts and
-                # starving the feed.
-                if age_hours >= 999_000 and (likes >= 1 or replies >= 1):
-                    pass  # likely fresh, let it through
-                else:
-                    continue
+                continue
             # Belt-and-suspenders source check — even though the handle
             # came from our whitelist, pull it through _has_trusted_source
             # so embedded-article logic stays consistent.
