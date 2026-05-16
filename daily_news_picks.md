@@ -2046,3 +2046,38 @@ Source: CNBC
 - **@01net** (3 likes, score 7/10) — Guerre des #puces #US/#Chine : le gouvernement Trump fait des concessions mais les ventes de #Nvidia vers Pékin ne repartent pas. #semiconducteurs #exportations   https://01net.com/actualites/guerre-d
   - https://x.com/01net/status/2055287569106034847
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 3).
+- **@cryptoslate** (2 likes, score 7/10) — US Treasury yields surge to new highs as liquidity tightens, pushing Bitcoin back below $82,000 resistance
+
+via @hardeyjumoh
+  - https://x.com/CryptoSlate/status/2055486396035731589
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 8).
+- **@decryptmedia** (2 likes, score 7/10) — OpenAI launched a personal finance tool that connects ChatGPT to your bank accounts, giving spending advice based on your actual habits.
+  - https://x.com/DecryptMedia/status/2055389380680810873
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4).
+- **@kobeissiletter** (706 likes, score 7/10) — The market has never been this dependent on tech:
+
+A record 115 companies in the S&P 500 now trade above a $100 billion market cap.
+
+This figure has nearly TRIPLED since the 2020 pandemic low of 42.
+  - https://x.com/KobeissiLetter/status/2055451381176188968
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 964).
+- **@cryptoslate** (3 likes, score 7/10) — Top #CryptoGainers & Losers: Fri, May 15 (24H)
+
+ Biggest Gainers
+
+ETHGas $GWEI +23.79%
+Falcon Finance $FF +13.68%
+Irys $IRYS +10.08%
+ 
+ Biggest Losers 
+
+LAB $LAB -32.13%
+Jito $JTO -14.26%
+Stable $STAB
+  - https://x.com/CryptoSlate/status/2055327756972626402
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7).
+- **@kobeissiletter** (3944 likes, score 7/10) — BREAKING: Berkshire Hathaway discloses new purchases of Alphabet, $GOOGL, Macy's, $M, and Delta Airlines, $DAL.
+
+Berkshire Hathaway has also exited its entire position in Amazon, $AMZN, UnitedHealth,
+  - https://x.com/KobeissiLetter/status/2055382232592728335
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 4644).
