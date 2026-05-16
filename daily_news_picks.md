@@ -1978,3 +1978,38 @@ Il ne reste pas beaucoup de raisons d’être bearish lorsqu’on regarde le tab
 - **@saylor** (6519 likes, score 7/10) — Stratégie de rachat de 1,5 milliard de dollars de montant principal d'obligations convertibles de 2029. $MSTR $STRC
   - https://x.com/saylor/status/2055258815319134459
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 7375).
+- **@crypto__goku** (41 likes, score 8/10) — GM Saiyans ! 
+
+«La vraie compréhension de ce qui nous entoure naît souvent dans les pires moments. »
+----
+$BTC : 81.112 $
+$ETH : 2.298 $
+#BTC Fear & Greed index : 42
+#Bitcoin Dominance : 60%
+  - https://x.com/Crypto__Goku/status/2054437854982393957
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 55).
+- **@coinmarketcap** (53 likes, score 8/10) — LATEST:  IREN closed a $3 billion convertible notes offering as the Bitcoin miner accelerates its push into AI cloud infrastructure.
+  - https://x.com/CoinMarketCap/status/2055500279915655384
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 99).
+- **@crypto__goku** (0 likes, score 7/10) — Les pertes dues à l'exploit de THORChain pourraient dépasser les 10 millions de dollars.
+
+Selon l'enquêteur onchain ZachXBT, THORChain a probablement été exploité sur Bitcoin, Ethereum, BSC et Base.
+  - https://x.com/Crypto__Goku/status/2055250708102799430
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 6).
+- **@kalshi_crypto** (694 likes, score 8/10) — S&P 500 plus haut historique
+NASDAQ plus haut historique
+NVDA plus haut historique
+
+Bitcoin en baisse de 36 % par rapport au plus haut historique
+Ethereum en baisse de 54 % par rapport au plus haut hi
+  - https://x.com/Kalshi_Crypto/status/2054943572772766049
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 810).
+- **@mradarcrypto** (27 likes, score 7/10) — "Seul le Bitcoin est institutionnel."
+
+Ce mythe vient de mourir aujourd'hui.
+
+Le 8 juin 2026, le CME Group lance les futures sur l'indice NCI.
+
+Fini le temps où Wall Street ne jurait que par le Bitcoi
+  - https://x.com/MRadarCrypto/status/2055240712136917287
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 39).
