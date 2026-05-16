@@ -153,19 +153,21 @@ def engage_interval_minutes() -> int:
 
 
 def direct_reply_interval_minutes() -> int:
-    """Primary response path: visit targets often enough to land early."""
+    """Primary response path: visit targets often enough to land early.
+    2026-05-16: tighter cadence (was 6-12 peak / 12-18 off) — Claude is
+    fast (3s/call) and replies are the highest-leverage follower mover."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return random.randint(6, 12)
-    return random.randint(12, 18)
+        return random.randint(4, 7)
+    return random.randint(8, 13)
 
 
 def early_bird_interval_minutes() -> int:
     """Early-bird replies are highest-upside; scan aggressively."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return random.randint(3, 6)
-    return random.randint(5, 10)
+        return random.randint(2, 4)
+    return random.randint(4, 7)
 
 
 def roast_interval_minutes() -> int:
@@ -541,10 +543,13 @@ def main():
         # ones (capped 8/cycle, every 2h). Reciprocity is the highest-leverage
         # follower-growth tactic; the existing reciprocity loop only catches
         # repliers — this catches lurkers + likers + everyone else.
-        log.info("Follow-back bot: follow back fresh followers every 2h (cap 8/cycle).")
+        # 2026-05-16: 2h → 45min, cap 8 → 15 via FOLLOWBACK_CAP env.
+        # Reciprocity is the single highest-conversion follower mover —
+        # crank.
+        log.info("Follow-back bot: follow back fresh followers every 45 min.")
         scheduler.add_job(
             safe_run_followback_cycle,
-            trigger=IntervalTrigger(hours=2),
+            trigger=IntervalTrigger(minutes=45),
             id="followback_job",
         )
 
@@ -552,31 +557,30 @@ def main():
         # the recent window and pins it via JS menu click. A strong pinned
         # tweet is the #1 follow-conversion lever for first-time visitors.
         # Best-effort: if the JS menu DOM has shifted, logs + moves on.
-        log.info("Pin bot: pinning best own post once a day (every 6h, idempotent).")
+        # 2026-05-16: 6h → 3h. Re-pin the freshest viral post sooner so
+        # the pinned tweet stays representative of current quality.
+        log.info("Pin bot: pinning best own post every 3h (idempotent).")
         scheduler.add_job(
             safe_run_pin_cycle,
-            trigger=IntervalTrigger(hours=6),
+            trigger=IntervalTrigger(hours=3),
             id="pin_job",
         )
 
         # Like bot — bulk-like FR niche tweets. Each like = 1 outbound
-        # notification. ~18 likes × 4 cycles/hour = ~70 notifications/hour.
-        # Strangers get pinged → click through to /kzer_ai → see strong
-        # pinned + active feed → follow.
-        log.info("Like bot: bulk-liking FR niche tweets every 15 min (~18 per cycle).")
+        # notification. 2026-05-16: 15 → 10 min. Faster outbound pings.
+        log.info("Like bot: bulk-liking FR niche tweets every 10 min (~18 per cycle).")
         scheduler.add_job(
             safe_run_like_cycle,
-            trigger=IntervalTrigger(minutes=15),
+            trigger=IntervalTrigger(minutes=10),
             id="like_job",
         )
 
-        # Viral follow-up bot — when own post hits >= VIRAL_THRESHOLD likes,
-        # post a follow-up reply in-thread. Capitalize on the algorithm push
-        # window (first ~hour after takeoff is the highest-leverage moment).
-        log.info("Viral follow-up bot: replying to own viral posts every 30 min (cap 3/cycle).")
+        # Viral follow-up bot — 2026-05-16: 30 → 15 min. The algo push
+        # window for follow-ups is small; check more often.
+        log.info("Viral follow-up bot: replying to own viral posts every 15 min.")
         scheduler.add_job(
             safe_run_viral_followup_cycle,
-            trigger=IntervalTrigger(minutes=30),
+            trigger=IntervalTrigger(minutes=15),
             id="viral_followup_job",
         )
 
