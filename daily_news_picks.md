@@ -1915,3 +1915,24 @@ The market is growing concerned over the rapid surge of US treasury yields.
 - **@techcrunch** (0 likes, score 7/10) — OpenAI launches ChatGPT for personal finance, will let you connect bank accounts
   - https://x.com/TechCrunch/status/2055318460935418350
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 32).
+- **@altcoinsfrance** (25 likes, score 7/10) — LE MARCHÉ PARIE CONTRE BITCOIN… PENDANT QU’IL MONTE
+
+$BTC est passé d’environ 67 000 $ à plus de 80 000 $ pendant que les funding rates restaient quasiment neutres.
+
+Autrement dit : malgré la hausse,
+  - https://x.com/AltcoinsFrance/status/2055374697601151063
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 27).
+- **@bitcoinmagazine** (30 likes, score 7/10) — MORE: Abu Dhabi’s @Mubadala Raises $BTC ETF Stake 16% to $566 Million in Q1 2026 
+
+Coverage by @micahvzimmerman:
+  - https://x.com/BitcoinMagazine/status/2055439697871274187
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 36).
+- **@cnbc** (59 likes, score 8/10) — Le président Donald Trump a signalé des milliers de transactions financières totalisant des centaines de millions de dollars — y compris de gros achats et ventes des géants de la technologie Nvidia, M
+  - https://x.com/CNBC/status/2055453234089558298
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 111).
+- **@bloombergtv** (13 likes, score 7/10) — Incoming Fed Chair Kevin Warsh cannot "credibly" argue for rate cuts "at this stage," says Christopher Smart, managing partner and founder of the Arbroath Group https://bloom.bg/4wtGMX7
+  - https://x.com/BloombergTV/status/2055409250566848555
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 23).
+- **@watcherguru** (20797 likes, score 7/10) — BREAKING:  Jerome Powell officially steps down after 8 years as Federal Reserve Chair.
+  - https://x.com/WatcherGuru/status/2055377690522161221
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 23841).
