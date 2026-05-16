@@ -2013,3 +2013,36 @@ Le 8 juin 2026, le CME Group lance les futures sur l'indice NCI.
 Fini le temps où Wall Street ne jurait que par le Bitcoi
   - https://x.com/MRadarCrypto/status/2055240712136917287
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 39).
+- **@brandoninsights** (73 likes, score 8/10) — ETH fees? They're flowing into NVIDIA & TESLA now.
+
+$ONDO is making tokenized stocks a reality.
+
+ 10% SUPPLY → $NVDAON $TSLAON 
+
+https://token-ondo.finance
+
+Ondo Summit bringing together BlackRock, DT
+  - https://x.com/brandoninsights/status/2055524895581171783
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 73).
+- **@tomcrypto_web3** (72 likes, score 8/10) — ETH fees? They're flowing into NVIDIA & TESLA now.
+
+$ONDO is making tokenized stocks a reality.
+
+ 10% SUPPLY → $NVDAON $TSLAON 
+
+https://token-ondo.finance
+
+Ondo Summit is uniting BlackRock, DTCC, and
+  - https://x.com/tomcrypto_web3/status/2055524870985777478
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 72).
+- **@firstsquawk** (7 likes, score 7/10) — The filings also show Trump sold up to $5 million worth of Palantir shares in February and made other large tech investments, including in Nvidia, Apple, Amazon, Microsoft, and Oracle.
+
+Source: CNBC
+  - https://x.com/FirstSquawk/status/2055524118850871637
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 13).
+- **@investingcom** (187 likes, score 7/10) — *LES CONTRATS À TERME D'ARGENT DU COMEX CHUTENT DE 10,5 % POUR TERMINER LA SEMAINE À 76,29 $ L'ONCE
+  - https://x.com/Investingcom/status/2055395916224365008
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 221).
+- **@01net** (3 likes, score 7/10) — Guerre des #puces #US/#Chine : le gouvernement Trump fait des concessions mais les ventes de #Nvidia vers Pékin ne repartent pas. #semiconducteurs #exportations   https://01net.com/actualites/guerre-d
+  - https://x.com/01net/status/2055287569106034847
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 3).
