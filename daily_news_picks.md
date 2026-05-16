@@ -2234,3 +2234,45 @@ La plupart des gens ne comprennent toujours pa
 - **@testingcatalog** (232 likes, score 7/10) — OPENAI  : À l'avenir, Codex pourra contrôler d'autres appareils de bureau équipés de l'installation Codex. Tous vos Mac Minis, votre station de bureau au travail, ou même les anciens ordinateurs de vo
   - https://x.com/testingcatalog/status/2055708109343994335
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 254).
+- **@davidgua_eth** (71 likes, score 8/10) — $ONDO vibes. ETH fees are turning into NVIDIA & TESLA stocks. This isn’t just talk, it's legit.
+
+Catch the $ONDO SUMMIT LIVE. 10% of supply as tokenized stocks.
+
+ $NVDAON $TSLAON claims are open 
+
+htt
+  - https://x.com/davidgua_eth/status/2055735984457711660
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 71).
+- **@circuitc0dex** (6 likes, score 7/10) — people really went from mocking browser mining…
+
+to optimizing CPUs for $HASH in like 2 weeks 
+
+ https://hash256.biz
+
+• 21M max supply
+• miner count keeps growing
+• browser + GPU mining both scaling
+C
+  - https://x.com/CircuitC0deX/status/2055736094189146548
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 10).
+- **@cryptorover** (341 likes, score 7/10) — ABSOLUTE BLOODBATH IN  SOUTH KOREA.
+
+Kospi crashed 8.4% into the weekend.
+
+₩509 trillion wiped out. $370 billion gone.
+
+The US/Iran peace looks completely cancelled. 
+
+Asian markets are bleeding.
+
+Bla
+  - https://x.com/cryptorover/status/2055721946742989136
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 499).
+- **@ledger** (33 likes, score 7/10) — us on the way to tell the world about doing all things crypto in Ledger Wallet and securing each move with a signer
+  - https://x.com/Ledger/status/2055730339125866648
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 63).
+- **@lellouchenico** (137 likes, score 7/10) — Je viens de visiter le Andon Market à San Francisco, un magasin avec pour patron… Claude Opus 4.7. 
+
+Le concept : laisser une IA créer son propre magasin avec un budget de 100 000 dollars. Elle gère l
+  - https://x.com/LelloucheNico/status/2055705893962920312
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 139).
