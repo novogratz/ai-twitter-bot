@@ -39,20 +39,59 @@ from .engagement_log import log_reply
 from .humanizer import humanize
 
 
+_REPLIED_CAP = 50000
+
+
 def load_replied() -> set:
     """Load set of tweet URLs we already replied to."""
     if os.path.exists(REPLIED_FILE):
-        with open(REPLIED_FILE, "r") as f:
-            return set(json.load(f))
+        try:
+            with open(REPLIED_FILE, "r") as f:
+                data = json.load(f)
+            if isinstance(data, list):
+                return set(data)
+            if isinstance(data, dict):
+                return set(data.get("urls") or [])
+        except (json.JSONDecodeError, OSError):
+            pass
     return set()
 
 
 def save_replied(urls: set):
-    """Save the set of replied tweet URLs."""
-    # Keep only the last 2000 - URLs are tiny, longer memory = stronger dedup
-    url_list = list(urls)[-2000:]
+    """Save replied URLs preserving insertion order.
+
+    Bug 2026-05-16: previous impl was `list(urls)[-2000:]` which slices a
+    Python SET. Sets are unordered → each save randomly dropped ~half of
+    the URLs. URLs fell out of the cache, then another bot rediscovered
+    the same tweet days later and replied again. Engagement_log shows 414
+    duplicate-reply URLs from this bug.
+
+    Fix: re-read the on-disk ordered list, append any URLs the in-memory
+    set has but the file doesn't, cap at 50k from the TAIL (newest), and
+    write back as a list. Also re-reading at save time handles parallel
+    APScheduler cycles cleanly (last writer merges with whatever landed
+    in between).
+    """
+    existing_list: list[str] = []
+    if os.path.exists(REPLIED_FILE):
+        try:
+            with open(REPLIED_FILE, "r") as f:
+                data = json.load(f)
+            if isinstance(data, list):
+                existing_list = [u for u in data if isinstance(u, str)]
+            elif isinstance(data, dict):
+                existing_list = [u for u in (data.get("urls") or []) if isinstance(u, str)]
+        except (json.JSONDecodeError, OSError):
+            existing_list = []
+    existing_set = set(existing_list)
+    for u in urls:
+        if isinstance(u, str) and u not in existing_set:
+            existing_list.append(u)
+            existing_set.add(u)
+    if len(existing_list) > _REPLIED_CAP:
+        existing_list = existing_list[-_REPLIED_CAP:]
     with open(REPLIED_FILE, "w") as f:
-        json.dump(url_list, f, indent=2)
+        json.dump(existing_list, f, indent=2)
 
 
 def run_reply_cycle():
