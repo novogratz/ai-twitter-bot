@@ -1898,3 +1898,20 @@ Il y a désormais plus de chances que la Fed augmente les taux
 - **@wsjmarkets** (4 likes, score 7/10) — Heard on the Street: For Cerebras, growing into its ambitious valuation against strong competitors like Nvidia will be a challenge and likely won’t go smoothly
   - https://x.com/WSJmarkets/status/2055319817628889423
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 4).
+- **@kobeissiletter** (3075 likes, score 8/10) — BREAKING: Nasdaq 100 futures extend losses to over -1.7%, now on track for the biggest daily decline since March 27th.
+
+The market is growing concerned over the rapid surge of US treasury yields.
+  - https://x.com/KobeissiLetter/status/2055264519446786249
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3791).
+- **@kobeissiletter** (2110 likes, score 8/10) — BREAKING: The Nasdaq 100 extends losses to -2% on the day, now on track for its biggest daily decline since March 26th.
+  - https://x.com/KobeissiLetter/status/2055284216120648190
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2636).
+- **@reuters** (8 likes, score 7/10) — Fed names Powell as chair pro tempore until Warsh is sworn in http://reut.rs/4ue13y6
+  - https://x.com/Reuters/status/2055470819803840592
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 12).
+- **@yahoofinance** (35 likes, score 7/10) — Billionaire investor Bill Ackman is suddenly bullish on OpenAI partner Microsoft
+  - https://x.com/YahooFinance/status/2055454691350270460
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 39).
+- **@techcrunch** (0 likes, score 7/10) — OpenAI launches ChatGPT for personal finance, will let you connect bank accounts
+  - https://x.com/TechCrunch/status/2055318460935418350
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 32).
