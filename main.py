@@ -52,6 +52,7 @@ from src.suppression_watch_bot import safe_run_suppression_watch_cycle
 from src.mega_watch_bot import safe_run_mega_watch_cycle
 from src.cleanup_bot import safe_run_cleanup_cycle
 from src.safari_hygiene import safe_run_session_refresh
+from src.strategy_lab_bot import safe_run_strategy_lab_cycle
 from src.heartbeat_bot import safe_run_heartbeat
 from src.meta_strategy_agent import safe_run_meta_strategy_cycle
 from src.hn_signal_bot import safe_run_signal_cycle
@@ -732,8 +733,19 @@ def main():
                 trigger=IntervalTrigger(hours=4),
                 id="meta_strategy_job",
             )
+            # Strategy lab — proposes ONE small change/hour, measures the
+            # outcome 4h later (Δfollowers + Δlikes/post vs baseline),
+            # keeps if it helped, reverts if not. Closed-loop, Claude-
+            # driven, fully autonomous. Writes strategy_ledger.md so the
+            # decisions are auditable. Added 2026-05-16.
+            log.info("Strategy lab: autonomous A/B tuning of live_strategy.json every hour.")
+            scheduler.add_job(
+                safe_run_strategy_lab_cycle,
+                trigger=IntervalTrigger(hours=1),
+                id="strategy_lab_job",
+            )
         else:
-            log.info("Meta-strategy agent: disabled by default in Plus-safe mode.")
+            log.info("Meta-strategy agent + strategy lab: disabled in Plus-safe mode.")
 
         # External-signal bot — scrape Hacker News + Reddit hot every 20 min.
         # No LLM, no Twitter. Writes external_signal.json which news +
