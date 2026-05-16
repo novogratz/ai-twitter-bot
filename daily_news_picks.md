@@ -1881,3 +1881,20 @@ THE GREATEST ACCUMULATION IN HISTORY CON
 - **@coindesk** (55 likes, score 7/10) — ANALYSE : Le fonds fiduciaire de la famille Trump a effectué environ 50 transactions sur des actions liées aux cryptomonnaies, incluant $COIN, $MSTR, $MARA et $HOOD, au premier trimestre 2026, selon u
   - https://x.com/CoinDesk/status/2055315577632112910
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 105).
+- **@unusual_whales** (3279 likes, score 8/10) — $META is preparing to cut about 10% of staff on May 20, nearly 8,000 people, per YF
+  - https://x.com/unusual_whales/status/2054944071114789129
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3671).
+- **@saylor** (6237 likes, score 8/10) — We turn Bitcoin into Money. $STRC
+  - https://x.com/saylor/status/2055344564890640597
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 7499).
+- **@kobeissiletter** (4195 likes, score 8/10) — URGENT : La Fondation Bill et Melinda Gates a vendu 100 % de sa position dans Microsoft, $MSFT, qui représentait un total de 7,7 millions d'actions.
+  - https://x.com/KobeissiLetter/status/2055405911074607288
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 5029).
+- **@kobeissiletter** (1699 likes, score 8/10) — URGENT : Les probabilités d'une baisse des taux d'intérêt par la Fed en 2026 se sont effondrées à un nouveau plus bas de seulement 27 %.
+
+Il y a désormais plus de chances que la Fed augmente les taux
+  - https://x.com/KobeissiLetter/status/2055342975543111941
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2013).
+- **@wsjmarkets** (4 likes, score 7/10) — Heard on the Street: For Cerebras, growing into its ambitious valuation against strong competitors like Nvidia will be a challenge and likely won’t go smoothly
+  - https://x.com/WSJmarkets/status/2055319817628889423
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4).
