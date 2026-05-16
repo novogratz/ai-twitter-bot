@@ -2145,3 +2145,42 @@ Canton is generating
 - **@anthropicai** (2689 likes, score 7/10) — Nous nous associons à la Fondation Gates, en nous engageant à hauteur de 200 millions de dollars en subventions, crédits Claude et soutien technique pour des programmes dans les domaines de la santé m
   - https://x.com/AnthropicAI/status/2054941901900611787
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 3491).
+- **@1914ad** (45 likes, score 8/10) — The same firm behind the 10am Bitcoin dumps, the Terra short, and the $567M Indian freeze just rotated $800M out of Bitcoin and into Ethereum in one quarter.
+
+If you haven’t read my article that got 6
+  - https://x.com/1914ad/status/2055643556845334732
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 55).
+- **@deepwhale** (17 likes, score 7/10) — ETF Flows | Week 20 (11/05 - 15/05) 
+
+ ETF $BTC : -1 B$
+ ETF $ETH : -255.11 M$
+
+ ETF $XRP : +60.5 M$
+ ETF $SOL : +58.12 M$
+ ETF $LINK : +4.34 M$
+ ETF $HYPE : +2.52 M$
+ ETF $HBAR : +1.14 M$
+ ETF $DOGE
+  - https://x.com/DeepWhale/status/2055599137341468863
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 17).
+- **@coinvotrading** (104 likes, score 7/10) — POURQUOI PERSONNE NE PARLE PAS DE LA SORTIE DE TESLA EN CE MOMENT.
+
+Il s'agit d'un schéma en Tasse et Poignée sur plusieurs années et $TSLA vient de s'en extraire.
+
+Historiquement, une fois que la poi
+  - https://x.com/CoinvoTrading/status/2055640136457556416
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 116).
+- **@liderfiscal** (4637 likes, score 7/10) — DERNIÈRE HEURE  
+
+ La Chine vient de rejeter les puces Nvidia, malgré l'optimisme de Trump, président des États-Unis.
+
+Xi JinPing a décidé de parier sur le développement continu de ses propres semi-co
+  - https://x.com/liderfiscal/status/2055412177314697373
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 4813).
+- **@sherifdefi** (83 likes, score 7/10) — Tokenized ETFs are starting to look less like an experiment and more like a new distribution layer for equities
+
+$ONDO controlling ~74% of the market this early is a massive positioning advantage. 
+
+W
+  - https://x.com/SherifDefi/status/2055617297977319601
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 107).
