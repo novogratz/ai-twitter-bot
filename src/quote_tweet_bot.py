@@ -240,8 +240,11 @@ def run_quote_tweet_cycle():
                     continue
                 age = _scrape_age_hours(t)
                 if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "18")):
-                    if not (age >= 999_000 and likes >= 100):
-                        continue
+                    # 2026-05-16: removed "high engagement implies fresh"
+                    # escape hatch. 100+ likes on a tweet means nothing
+                    # about its age — viral 2024 tweets get quoted as
+                    # if they're news. No timestamp = no quote.
+                    continue
             except Exception:
                 pass
             candidates.append(t)
