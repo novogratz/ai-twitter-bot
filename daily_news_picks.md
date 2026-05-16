@@ -1957,3 +1957,24 @@ Imaginez les gens bearish si on repa
 ZachXBT et PeckShield évoquent des fonds déplacés sur Bitcoin
   - https://x.com/LeJournalDuCoin/status/2055238585406677321
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 28).
+- **@decryptmedia** (34 likes, score 7/10) — Lombard Finance Dumps LayerZero, Will Use Chainlink to Power $1 Billion in Bitcoin Assets
+  - https://x.com/DecryptMedia/status/2055391430835622227
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 38).
+- **@lejournalducoin** (13 likes, score 7/10) — Wall Street est-elle en train d’adopter Bitcoin… ou de l’absorber ?
+
+Né en opposition au système bancaire, le roi des cryptos grandit désormais main dans la main avec la finance traditionnelle.
+
+Pour
+  - https://x.com/LeJournalDuCoin/status/2055317270734200964
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 13).
+- **@coindesk** (65 likes, score 7/10) — HISTORY: 9 years ago today in 2017, 300,000 computers in 150 countries were locked by WannaCry ransomware. Variant two was just released.  The ransom demand: $300+ in $BTC. For most of the world, it w
+  - https://x.com/CoinDesk/status/2055363952314347786
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 109).
+- **@mradarcrypto** (62 likes, score 7/10) — La loi américaine CLARITY ACT avance d’une étape ce qui propulse le Bitcoin au-dessus de 82 000 !
+
+Il ne reste pas beaucoup de raisons d’être bearish lorsqu’on regarde le tableau dans son ensemble.
+  - https://x.com/MRadarCrypto/status/2054974536181776673
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 64).
+- **@saylor** (6519 likes, score 7/10) — Stratégie de rachat de 1,5 milliard de dollars de montant principal d'obligations convertibles de 2029. $MSTR $STRC
+  - https://x.com/saylor/status/2055258815319134459
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 7375).
