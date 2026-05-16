@@ -68,11 +68,18 @@ def run_mega_watch_cycle():
             url = t.get("url")
             if not url or url in replied:
                 continue
-            url_handle = _handle_from_url(url)
-            author = (t.get("author") or url_handle or "").lower()
+            url_handle = (_handle_from_url(url) or "").lower().lstrip("@")
+            author = (t.get("author") or url_handle or "").lower().lstrip("@")
             if author in {b.lower() for b in BLOCKLIST}:
                 continue
-            if author == _OWN_HANDLE:
+            # Self-reply guard — check BOTH author AND the URL handle.
+            # Bug 2026-05-16: scraper sometimes labels the tweet's author
+            # as the mega account being watched while the URL points to
+            # OUR status (because we replied to that mega tweet). Without
+            # checking url_handle, the bot was replying to its own past
+            # replies in the @sama thread. Confirmed in engagement_log:
+            # MEGA/sama source replying to x.com/cryptoiadecode/status/...
+            if author == _OWN_HANDLE or url_handle == _OWN_HANDLE:
                 continue
             text = (t.get("text") or "").strip()
             if not text:
