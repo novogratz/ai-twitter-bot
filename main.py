@@ -114,20 +114,22 @@ def should_skip_engagement() -> bool:
 
 
 def post_interval_minutes() -> int:
-    """News cadence. Target: enough attempts to reliably ship 15 sourced
-    news posts/day even when freshness/source gates reject candidates."""
+    """News cadence. 2026-05-16: cranked roughly 40% across the board —
+    user wants more shots on goal (target 40 news/day, 16 hot takes/day).
+    Same-day freshness cap (24h) still binds quality so this just buys
+    more attempts during prime windows."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 12 or 13 <= hour < 16:
-        return random.randint(35, 55)
+        return random.randint(20, 35)
     elif 7 <= hour < 9 or 16 <= hour < 19:
-        return random.randint(45, 70)
+        return random.randint(28, 45)
     elif 19 <= hour < 23:
-        return random.randint(55, 85)
+        return random.randint(35, 55)
     elif 23 <= hour or hour < 4:
-        return random.randint(90, 130)
+        return random.randint(60, 90)
     elif 4 <= hour < 7:
-        return random.randint(60, 95)
-    return random.randint(50, 80)
+        return random.randint(40, 65)
+    return random.randint(30, 50)
 
 
 def reply_interval_minutes() -> int:
@@ -482,11 +484,11 @@ def main():
         # Quote-tweet bot — accelerated 2026-05-05 (user: "reshare way more").
         # Daily cap is 10 (env), so cadence sets the upper bound on attempts;
         # bumped 3h → 75min so cap actually binds instead of cycle frequency.
-        # 2026-05-15: 35 → 20 min (user mandate "quote more things, be active").
-        log.info("Quote-tweet bot: amplifying viral FR setups every 20 min (cap binds via MAX_QUOTES_PER_DAY).")
+        # 2026-05-15 → 16: 35 → 20 → 12 min. Quote more.
+        log.info("Quote-tweet bot: amplifying viral FR setups every 12 min (cap binds via MAX_QUOTES_PER_DAY).")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=20),
+            trigger=IntervalTrigger(minutes=12),
             id="quote_tweet_job",
         )
 
