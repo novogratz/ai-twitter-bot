@@ -209,43 +209,34 @@ def _split_for_chat(prompt: str) -> tuple[str, str]:
 
 
 def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
-    """Hit ollama's /api/chat directly. Splits the monolithic prompt so the
-    stable identity/persona block lands in the system role (KV-cached
-    across calls) and only the dynamic tail goes in the user role —
-    gives 30-50% speedup on subsequent calls vs /api/generate.
+    """Hit ollama's /api/generate directly — simple stateless single-shot.
 
-    Front-loaded comedy forcer + 3 gold-standard examples (small models
-    anchor on what comes first). Temperature 1.0 for sharper outputs.
+    Previously used /api/chat with system+user split for KV cache reuse,
+    but the uncensored qwen3.6 variant returned empty `message.content`
+    via that path (80 tokens generated, all stripped — model doesn't
+    speak the chat template correctly). /api/generate is reliable.
+
+    Front-loaded comedy forcer + temperature 1.0 for sharper outputs.
+    num_predict caps generation at ~600 chars so the model doesn't
+    ramble for minutes when codex/claude are unavailable.
     """
     import urllib.request
     import urllib.error
-    stable, dynamic = _split_for_chat(prompt)
-    if stable:
-        # Comedy forcer goes inside the stable system message so it gets
-        # cached too. Saves re-tokenizing it every call.
-        system_msg = _FUNNY_FORCER + stable
-        user_msg = dynamic
-    else:
-        # No split point found — whole prompt is user, no caching benefit.
-        system_msg = ""
-        user_msg = _FUNNY_FORCER + prompt
-    messages = []
-    if system_msg:
-        messages.append({"role": "system", "content": system_msg})
-    messages.append({"role": "user", "content": user_msg})
+    full_prompt = _FUNNY_FORCER + prompt
     payload = json.dumps({
         "model": OLLAMA_MODEL,
-        "messages": messages,
+        "prompt": full_prompt,
         "stream": False,
         "keep_alive": "24h",
         "options": {
             "temperature": 1.0,
             "top_p": 0.95,
             "repeat_penalty": 1.15,
+            "num_predict": 256,
         },
     }).encode("utf-8")
     req = urllib.request.Request(
-        f"{OLLAMA_BASE_URL}/api/chat",
+        f"{OLLAMA_BASE_URL}/api/generate",
         data=payload,
         headers={"Content-Type": "application/json"},
     )
@@ -261,9 +252,8 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
         return LLMResult(124, "", f"{label}: ollama HTTP timed out after {timeout}s")
     except Exception as e:
         return LLMResult(1, "", f"{label}: ollama unexpected error: {e}")
-    # /api/chat returns {"message": {"role": "assistant", "content": "..."}, ...}
-    msg = data.get("message") or {}
-    text = (msg.get("content") or "").strip()
+    # /api/generate returns {"response": "..."}
+    text = (data.get("response") or "").strip()
     return LLMResult(0, text, "")
 
 
