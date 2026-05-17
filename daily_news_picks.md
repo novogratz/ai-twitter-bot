@@ -2549,3 +2549,44 @@ https://youtu.be/mpcYojohzBU
 - **@lp_actionnaire** (3 likes, score 7/10) — Si même le grand Gourou de NVIDIA (je n'ai rien contre lui, je "tacle" juste - gentillement - tous ceux qui boivent, en général  jusqu'à plus soif, les paroles de ces grands dirigeants d'entreprises)
   - https://x.com/LP_Actionnaire/status/2055912608859893987
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 5).
+- **@cryptohzr** (108 likes, score 9/10) — #ALTSEASON 2026 
+
+THE NEXT 6–12 MONTHS WILL BE LIFE-CHANGING.
+
+$BITCOIN IS GOING TO $250,000.
+
+$ETH WILL BREAK $10,000.
+
+$BNB WILL REACH $5000.
+
+$SOL WILL REACH $1,000.
+
+ALTCOINS WILL EXPLODE.
+
+IT'S J
+  - https://x.com/CryptoHzr/status/2055701793640706357
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 132).
+- **@peterwildeford** (88 likes, score 8/10) — SECRÉTAIRE AU TRÉSOR BESSENT : « Les trois principales entreprises, Anthropic, OpenAI et Google/Gemini, leurs grands modèles de langage augmentent en puissance très, très rapidement. [...] 
+
+La bonne
+  - https://x.com/peterwildeford/status/2055793142465769950
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 98).
+- **@le_investisseur** (30 likes, score 7/10) — 1 000 milliards de dollars de capitalisation ont été ajoutés au marché boursier américain aujourd'hui 
+
+Nvidia +5,68 %
+Google +2,56 %
+Apple +1,25 %
+  - https://x.com/le_investisseur/status/2052121767984988639
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 32).
+- **@francecryptos** (0 likes, score 7/10) — ChatGPT peut désormais se connecter à votre compte bancaire.
+
+OpenAI déploie aux États-Unis une nouvelle expérience de finance personnelle, en avant-première pour les abonnés Pro.
+
+Ce que l'utilisateu
+  - https://x.com/FranceCryptos/status/2055338420520534462
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 6).
+- **@_3emeoeil** (7 likes, score 7/10) — Voici ce que certains travailleurs des plateformes pétrolières offshore endurent… pour environ 18 000 $ par mois 
+
+Isolement total, tempêtes, bruit permanent, rotations de plusieurs semaines loin de l
+  - https://x.com/_3emeOeil/status/2055926116695650721
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 11).
