@@ -2375,3 +2375,30 @@ Cela ne met pas encore fin à la tenda
 PARALLÈLEMENT, LE JETON $REAL, ALIMENTÉ PAR XRPL — AVEC UN SEUL SUPPLY TOTAL DE 9
   - https://x.com/RippleXrpie/status/2055818875661381759
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 5).
+- **@wublockchain** (13 likes, score 7/10) — Dotation de Harvard se désengage de l'ETF Ethereum et réduit sa participation dans IBIT de 43 %
+
+Les dépôts SEC 13F du premier trimestre 2026 montrent que la dotation de Harvard a réduit sa position d
+  - https://x.com/WuBlockchain/status/2055832287665856552
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 23).
+- **@randgroup** (157 likes, score 8/10) — Il y a un an, la Réserve stratégique ETH était un mème avec 23 participants.
+
+Aujourd'hui, elle détient 6,7 millions de $ETH et presque 6 % de l'offre totale d'Ethereum.
+  - https://x.com/randgroup/status/2055618515151831156
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 193).
+- **@bithubpl** (15 likes, score 7/10) — Największe kryptowaluty według kapitalizacji całkowitej. Ile są poniżej historycznych szczytów (ATH)?
+
+1. Bitcoin (BTC): -38,0%
+2. Ethereum (ETH): -56,0%
+3. BNB (BNB): -52,1%
+4. XRP (XRP): -63,2%
+5. S
+  - https://x.com/BithubPl/status/2055746622970089937
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 15).
+- **@pete_rizzo_** (980 likes, score 7/10) — À VOIR ABSOLUMENT : LA SÉNATRICE LUMMIS DIT QUE LA CHINE ET LA RUSSIE SERONT OBLIGÉES D’ACHETER #BITCOIN SI LES ÉTATS-UNIS EN ACHÈTENT
+
+« LA PROCHAINE COURSE AUX ARMEMENTS NE CONCERNERA PAS LES ARMES
+  - https://x.com/pete_rizzo_/status/2055655929279115613
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1074).
+- **@tedpillows** (453 likes, score 7/10) — Imaginez le marché sans Saylor et Tom Lee achetant $BTC et $ETH.
+  - https://x.com/TedPillows/status/2055626041985540120
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 771).
