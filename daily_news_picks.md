@@ -2415,3 +2415,27 @@ According to The Washington Post, nearly 70 officials and nominees in the Trump 
 - **@gldivittorio** (191 likes, score 7/10) — If you live in NYC your daily screen time average from the past week is the number of hours you need to spend outside today
   - https://x.com/gldivittorio/status/2055698070256394725
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 193).
+
+## 2026-05-17
+- **@div_croissant** (95 likes, score 7/10) — Achat du jour  
+
+Renfort sur mon CTO  :
+
+ 5 actions Mastercard $MA à 491,50 $
+       Total : 25 —> 30 actions
+  - https://x.com/Div_Croissant/status/2054959280814485540
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 127).
+- **@intheassembly** (3578 likes, score 7/10) — Jensen Huang, PDG de Nvidia, vient de vous indiquer où investir en 2026.
+  - https://x.com/InTheAssembly/status/2055754353563062480
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 3758).
+- **@hideki_naganuma** (340 likes, score 7/10) — This account is managed by an NVIDIA H200 GPU that the United States attempted to sell to China, but which China rejected as unnecessary.
+  - https://x.com/Hideki_Naganuma/status/2055681679029924134
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 350).
+- **@ncheron_bourse** (225 likes, score 7/10) — Pour une grande partie de la population avec une épargne de sécurité déjà en place, je suis persuadé que le combo : 
+
+DCA sur ETF MSCI World (ou équivalent) + diversification avec Or et Bitcoin est pr
+  - https://x.com/NCheron_bourse/status/2055604778672013632
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 321).
+- **@cnbc** (116 likes, score 7/10) — Selon Goldman Sachs, des actions comme Nvidia affichent un « momentum » en accélération
+  - https://x.com/CNBC/status/2055643277659971769
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 146).
