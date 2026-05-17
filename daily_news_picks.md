@@ -2875,3 +2875,30 @@ $ETH: 10 years to rank #62
 « Dit
   - https://x.com/roxom/status/2056047442513285482
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 22).
+- **@addictcryptoboy** (17 likes, score 7/10) — 99% des gens pensent que le BTC c'est "trop tard".
+
+Les 1% restants comprennent qu'ils sont en train de devenir les distilleurs d'après-guerre du système monétaire.
+
+Tu détiens l'actif. Les autres tra
+  - https://x.com/AddictCryptoBoy/status/2055978485064352026
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 25).
+- **@polymarket** (677 likes, score 7/10) — JUSTE EN: Elon Musk annonce que 𝕏 a dépassé 1 milliard de téléchargements.
+  - https://x.com/Polymarket/status/2056106724721914224
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 973).
+- **@wallstreetbets** (221 likes, score 7/10) — X vient de dépasser 1 milliard de téléchargements
+
+tout le monde disait que l'application était morte
+
+maintenant c'est le lieu pour les actualités, les marchés, le trading, l'IA, les mèmes et la libe
+  - https://x.com/wallstreetbets/status/2056114580288360497
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 343).
+- **@du_dggg** (4 likes, score 7/10) — D'après une idée de @Grouchenka2
+
+le racisme se définit de manière claire : c’est rejeter ou haïr une personne uniquement en raison de sa couleur de peau ou de son origine ethnique, sans aucun lien av
+  - https://x.com/Du_dggg/status/2056111707978883408
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 8).
+- **@vishaltweetup** (83 likes, score 7/10) — What do you think? 
+
+Claude                    vs                 ChatGPT
+  - https://x.com/vishaltweetup/status/2055885866061734181
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 241).
