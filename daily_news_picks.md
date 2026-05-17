@@ -2615,3 +2615,33 @@ Mais capitalisation boursière ?
 Sola
   - https://x.com/marinonchain/status/2055906483313713337
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 93).
+- **@bitcoin_teddy** (428 likes, score 9/10) — Cathie Wood exhorte les investisseurs à vendre de l'or pour acheter du Bitcoin, affirmant que le BTC atteindra 1 500 000 $.      
+
+C'est parti
+  - https://x.com/Bitcoin_Teddy/status/2055892319707251076
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 528).
+- **@cryptotice_** (84 likes, score 9/10) — J'AI CARTOGRAPHIÉ LA ROUTE EXACTE DE BITCOIN VERS 500 000 $.
+
+Et la chaîne vient de confirmer chaque étape.
+
+Premier contact. TERMINÉ. 
+Rallye intermédiaire. TERMINÉ. 
+Rejet retour au support. TERMINÉ
+  - https://x.com/CryptoTice_/status/2055951466066526709
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 112).
+- **@bitcoin_teddy** (187 likes, score 8/10) — BITCOIN IS GOING TO $250,000
+  - https://x.com/Bitcoin_Teddy/status/2055922015216017446
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 271).
+- **@whaleinsider** (244 likes, score 8/10) — JUST IN: Fed to inject $6,576,000,000 into the market tomorrow.
+  - https://x.com/WhaleInsider/status/2055958677043974547
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 384).
+- **@cryptotice_** (0 likes, score 8/10) — ANALYSES :
+
+Vitalik vient de dire ce que les données montraient déjà.
+
+Pendant des années, les banques ont dit : nous voulons la blockchain. 
+Mais pas Bitcoin. Pas Ethereum.
+
+Nous construirons la nôtr
+  - https://x.com/CryptoTice_/status/2055543774605177210
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 216).
