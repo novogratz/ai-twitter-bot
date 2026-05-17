@@ -2672,3 +2672,34 @@ Institutions are quietly accumulating ETH while the crowd still watches Bitcoin
 From ETF optimism to scaling upgrades and growing on-chain activity, Ethereum is buildi
   - https://x.com/DavidMorganXBT/status/2055951981210964435
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 51).
+- **@randgroup** (116 likes, score 9/10) — Semiconductors vs Crypto: race to global relevance:
+
+$ASML: 42 years to rank #28
+$TSMC: 39 years to rank #8
+$NVIDIA: 33 years to rank #2
+
+$BTC: 17 years to rank #11
+$ETH: 10 years to rank #62
+  - https://x.com/randgroup/status/2055980148130771088
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 134).
+- **@flasheurinvest** (18 likes, score 7/10) — Pourquoi je pense que Kraken Robotics est l’une des small caps qui va le plus exploser dans les années qui arrivent ?
+
+ Nom : Kraken Robotics $PNG  
+ ISIN : CA50077N1024  
+ Secteur : Défense / Technol
+  - https://x.com/FlasheurInvest/status/2055996775819890764
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 24).
+- **@jessecoheninv** (19 likes, score 7/10) — Veille Hebdomadaire du Marché Boursier :
+
+• Lundi : Actualités sur la guerre USA-Iran ; Résultats $BIDU
+
+• Mardi : Ventes de logements en attente ; 2 intervenants de la Fed ; Résultats $HD $CAVA $TOL
+  - https://x.com/JesseCohenInv/status/2055994784255229990
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 53).
+- **@adam3us** (20 likes, score 7/10) — Bitcoin doesn't use encryption, rather it uses signature schemes. And yes there is work underway to propose PQ signatures for bitcoin, SHRINCS already implemented on @Liquid_BTC
+  - https://x.com/adam3us/status/2055991169062944848
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 22).
+- **@peroluwara1** (29 likes, score 7/10) — 17 mai aujourd'hui, journée memorable pour la Kabilie et pourtant... Entre la gloire et le souvenir, J.Kabila est pris entre deux feux. L
+Ses caciques le poignardent. JKK pris en otage, révélations su
+  - https://x.com/peroluwara1/status/2055993466987901085
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 33).
