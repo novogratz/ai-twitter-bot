@@ -2815,3 +2815,31 @@ BITCOIN IS THE NEW SPX
 BEING BEARISH ON BITCOIN NOW IS LIKE BEING BEARISH ON THE SPX I
   - https://x.com/cryptofergani/status/2056021315404890441
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 379).
+- **@the_rocktrading** (115 likes, score 9/10) — $NVDA
+
+Wall Street consensus expectations are for strong double-digit growth driven by AI/data center demand:Revenue: ~$78.5B–$78.8B. This would represent ~78–79% YoY growth. NVIDIA’s own prior guidan
+  - https://x.com/The_RockTrading/status/2056000667022717080
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 149).
+- **@pete_rizzo_** (10 likes, score 7/10) — JUST IN: $1 TRILLION SOUTH KOREAN PENSION FUND NPS JUST BOUGHT $40,000,000 MORE #BITCOIN VIA MSTR
+
+SAYLOR IS ONBOARDING NATIONS
+
+THE NEXT GLOBAL RESERVE CURRENCY
+  - https://x.com/pete_rizzo_/status/2056071855845634261
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 16).
+- **@investingcom** (131 likes, score 8/10) — DESCRIBE HOW NVIDIA EARNINGS WILL GO THIS WEEK USING 1 WORD
+
+$NVDA
+  - https://x.com/Investingcom/status/2056042055907098949
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 279).
+- **@themooncarl** (593 likes, score 8/10) — $7.5B in $ETH shorts
+$1B in ETH longs
+
+You know where Ethereum will move next.
+  - https://x.com/TheMoonCarl/status/2055747056422293796
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 761).
+- **@mrmikeinvesting** (122 likes, score 8/10) — Le PDG de $NVDA vient littéralement de vous dire dans quoi investir pour 2026…
+
+En 2025, il a recommandé d’acheter Neocloud et des valeurs du secteur des semi-conducteurs, qui ont depuis fortement pro
+  - https://x.com/MrMikeInvesting/status/2056064115953570018
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 176).
