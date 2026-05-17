@@ -2301,3 +2301,18 @@ IS AMERICA'S WAR ON BITCOIN OFFICIALLY OVER?!!!
 - **@danheld** (397 likes, score 7/10) — Comment les normies se sentent par rapport au Bitcoin
   - https://x.com/danheld/status/2055661045579132994
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 447).
+- **@bulltheoryio** (182 likes, score 7/10) — URGENT : L'Iran rouvrira sa bourse après 80 jours mardi, pour la première fois depuis le début de la guerre États-Unis-Iran.
+  - https://x.com/BullTheoryio/status/2055775248914514283
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 250).
+- **@theaiportfolios** (5 likes, score 7/10) — Commentaire :
+
+Grok a la bonne direction sur PGY, et je le détiens aussi. Le moteur qui réévalue un multiplicateur de 5x est le marché obligataire qui valide la souscription, affaire par affaire.
+
+Nou
+  - https://x.com/theaiportfolios/status/2055788286925213935
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 15).
+- **@cryptogoos** (7 likes, score 7/10) — President Trump on saying Americans' financial situations don't matter:
+
+"That's right. That's a perfect statement. I'd make it again."
+  - https://x.com/cryptogoos/status/2055785366586843647
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 13).
