@@ -2521,3 +2521,31 @@ Voici ce que 9 ans de détention réelle à travers le chaos m’ont appris, et 
 - **@simplybitcoin** (197 likes, score 7/10) — Bitcoin is the new retirement plan.
   - https://x.com/SimplyBitcoin/status/2055837706698068294
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 243).
+- **@cryptorover** (138 likes, score 9/10) — CE N'EST PAS UNE COÏNCIDENCE :
+
+En 2018, $BTC a touché la SMA 200D après exactement 220 jours.
+
+En 2026, Bitcoin a touché la SMA 200D après exactement 220 jours.
+
+$82 500 était le sommet local ?
+  - https://x.com/cryptorover/status/2055910690305736910
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 260).
+- **@cryptosymbiiote** (110 likes, score 8/10) — En attente du second balayage de liquidité sous les niveaux de 60 000 $
+
+Cela marquera le vrai plancher
+
+$BTC
+  - https://x.com/cryptosymbiiote/status/2055783853835288742
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 160).
+- **@cryptorover** (147 likes, score 7/10) — WARNING TO ALL #BITCOIN HOLDERS... (This Is it)
+
+Watch NOW:
+https://youtu.be/mpcYojohzBU
+  - https://x.com/cryptorover/status/2055883367485427916
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 241).
+- **@danheld** (0 likes, score 7/10) — Comment les normies se sentent par rapport au Bitcoin
+  - https://x.com/danheld/status/2055661045579132994
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 70).
+- **@lp_actionnaire** (3 likes, score 7/10) — Si même le grand Gourou de NVIDIA (je n'ai rien contre lui, je "tacle" juste - gentillement - tous ceux qui boivent, en général  jusqu'à plus soif, les paroles de ces grands dirigeants d'entreprises)
+  - https://x.com/LP_Actionnaire/status/2055912608859893987
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 5).
