@@ -2775,3 +2775,43 @@ Les mouvements du trimestre sont clairs :
 Is Saylor going to add another big dot?
   - https://x.com/Cointelegraph/status/2056016353492910378
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 448).
+- **@ezelanaliz** (176 likes, score 9/10) — The 20 millionth $Bitcoin has been mined as of now.  
+Only 1 million #Bitcoin mining rights remain for the next 114 years.  
+Do you think Bitcoin will become the world's most reliable and valuable inv
+  - https://x.com/Ezelanaliz/status/2056016319003123842
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 178).
+- **@frankcurzio** (6 likes, score 7/10) — People rip @saylor for going all-in on #Bitcoin.
+
+Yet, $MSTR was at a $1.5B market cap in 2020 before he changed the model to a $BTC holding company.
+
+Today it sits at $63B… and software companies are
+  - https://x.com/FrankCurzio/status/2056042699283738879
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 16).
+- **@robynhd** (91 likes, score 8/10) — Bitcoin is currently facing its third major test.
+
+The price is once again battling for the zone of the short-term whale cost basis at around $80,000 USD.
+
+The last two times, this exact range ended w
+  - https://x.com/RobynHD/status/2056025396185796810
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 105).
+- **@cyrilxbt** (82 likes, score 8/10) — THE AI RACE OVER THE LAST 3 YEARS VISUALIZED IN ONE CHART.
+
+And the picture tells a story most people have not fully processed yet.
+
+3 years ago there was one serious player.
+
+OpenAI had GPT-3 and the
+  - https://x.com/cyrilXBT/status/2055872498315796832
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 118).
+- **@cryptofergani** (267 likes, score 7/10) — STOP BEING BEARISH ON BITCOIN
+
+WE ARE NO LONGER IN A 4-YEAR CYCLE
+
+THERE IS NO BULL RUN
+THERE IS NO BEAR MARKET
+
+BITCOIN IS THE NEW SPX
+
+BEING BEARISH ON BITCOIN NOW IS LIKE BEING BEARISH ON THE SPX I
+  - https://x.com/cryptofergani/status/2056021315404890441
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 379).
