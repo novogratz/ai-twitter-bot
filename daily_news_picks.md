@@ -2902,3 +2902,25 @@ le racisme se définit de manière claire : c’est rejeter ou haïr une personn
 Claude                    vs                 ChatGPT
   - https://x.com/vishaltweetup/status/2055885866061734181
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 241).
+- **@loris_dalleau** (73 likes, score 8/10) — Microsoft $MSFT 
+
+ Microsoft vient de clôturer le T1 en baisse de -23% son pire trimestre depuis 2008..
+  - https://x.com/Loris_Dalleau/status/2039101199119479208
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 83).
+- **@roundtablespace** (36 likes, score 7/10) — QUELQU'UN A COPIÉ LES OPÉRATIONS D'UN QUANT CHINOIS QUI A TRANSFORMÉ 200 $ EN 354 000 $ EN 48 HEURES ET A GAGNÉ 19 000 $ EN 18 JOURS.
+
+Claude est le cerveau. MiroFish exécute 10 000 simulations avant
+  - https://x.com/RoundtableSpace/status/2056128878007968242
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 42).
+- **@gsmferrari** (9 likes, score 7/10) — Vous avez vu toute cette FUD sur MICROSOFT depuis jeudi? C'est bizarre car l'analyse technique raconte une toute autre histoire 
+Un GAP à combler à 479$ et un bull flag avec retest bullish du haut de
+  - https://x.com/gsmferrari/status/2056033102812582261
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 11).
+- **@dillonloomis** (393 likes, score 7/10) — Had an awesome conversation with @munster_gene about all things Tesla. And yes, that includes when $TSLA stock is finally going to breakout. Link to full interview below. Enjoy!
+  - https://x.com/DillonLoomis/status/2056050402718527790
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 437).
+- **@garymarcus** (86 likes, score 7/10) — Ce que je m’apprête à décrire n’est pas de l’AGI ; c’est le signe d’un désastre à un billion de dollars.
+
+Si je vous avais dit en 2022 que la version 2026 de GPT (qui, soit dit en passant, ne serait q
+  - https://x.com/GaryMarcus/status/2056123794016879092
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 120).
