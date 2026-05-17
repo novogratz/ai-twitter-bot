@@ -2736,3 +2736,42 @@ Meta $META poursuit cette semaine ses investissements massifs dans l'IA avec de 
 Le groupe accélère ses dépenses dans les infr
   - https://x.com/beez_invest/status/2056002814472573422
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 9).
+- **@bitcoinprof0637** (103 likes, score 9/10) — ITALY’S LARGEST BANK, INTESA SANPAOLO JUST DISCLOSED BUYING $235,000,000 WORTH OF BITCOIN AND CRYPTO 
+
+Bitcoin will continue to grow
+  - https://x.com/Bitcoinprof0637/status/2056000274037108934
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 141).
+- **@financialernie** (4 likes, score 7/10) — BITCOIN MINING Day 16 
+
+BTDR weekly AVG 28.33 (As of 5/15)
+MARA drops to 18 
+CLSK dips to low 20 
+IREN holds 10 
+ABTC keeps 10 
+CORZ pops to 3 
+Hash jumps above 1000 
+
+Note: Self mining only 
+Doesn’t
+  - https://x.com/FinancialErnie/status/2056027640474030313
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 6).
+- **@watcherguru** (2260 likes, score 7/10) — JUST IN : Michael Saylor laisse entendre qu'il va acheter plus de Bitcoin.
+
+« ₿ig Dot Energy. »
+  - https://x.com/WatcherGuru/status/2056004634943312311
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 3072).
+- **@greginvestfr** (2 likes, score 7/10) — Bill Ackman a profondément réorganisé son portefeuille.
+
+Les mouvements du trimestre sont clairs :
+
+ Vente quasi totale d’Alphabet $GOOGL
+ Vente de Hilton $HLT et réduction de Brookfield $BN
+
+ Renforc
+  - https://x.com/GregInvestFr/status/2056029046807642424
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 6).
+- **@cointelegraph** (268 likes, score 7/10) — SAYLOR: Big dot energy.
+
+Is Saylor going to add another big dot?
+  - https://x.com/Cointelegraph/status/2056016353492910378
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 448).
