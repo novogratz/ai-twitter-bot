@@ -2402,3 +2402,16 @@ Aujourd'hui, elle détient 6,7 millions de $ETH et presque 6 % de l'offre totale
 - **@tedpillows** (453 likes, score 7/10) — Imaginez le marché sans Saylor et Tom Lee achetant $BTC et $ETH.
   - https://x.com/TedPillows/status/2055626041985540120
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 771).
+- **@techmeme** (3 likes, score 7/10) — Nectar Social, which offers an agentic OS for marketers, raised a $30M Series A led by Menlo Ventures, with GV and True Ventures among investors (@dominicmadori / TechCrunch)
+
+(Visit Techmeme dot com
+  - https://x.com/Techmeme/status/2055831065676415074
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5).
+- **@wublockchain** (7 likes, score 7/10) — Washington Post: More Than One-Fifth of Trump Administration Officials Hold Crypto  
+
+According to The Washington Post, nearly 70 officials and nominees in the Trump administration disclosed holdings
+  - https://x.com/WuBlockchain/status/2055844531518722418
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 15).
+- **@gldivittorio** (191 likes, score 7/10) — If you live in NYC your daily screen time average from the past week is the number of hours you need to spend outside today
+  - https://x.com/gldivittorio/status/2055698070256394725
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 193).
