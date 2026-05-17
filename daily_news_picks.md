@@ -2316,3 +2316,26 @@ Nou
 "That's right. That's a perfect statement. I'd make it again."
   - https://x.com/cryptogoos/status/2055785366586843647
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 13).
+- **@coinbureau** (19 likes, score 7/10) — INSIGHT : Si 60 000 $ tient comme le plus bas du cycle du Bitcoin, ce serait le marché baissier le plus faible de son histoire.
+  - https://x.com/coinbureau/status/2055804238924513741
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 39).
+- **@bitcoinmagazine** (54 likes, score 8/10) — REGARDEZ - Les Banques Perdent la Bataille du Rendement : Dans les Coulisses de la Bataille du Stablecoin de la Loi CLARITY | Bitcoin Policy Hour EP 37 
+
+La Loi CLARITY est à la ligne d'arrivée et les
+  - https://x.com/BitcoinMagazine/status/2055702688650952911
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 74).
+- **@noctiscrypto** (0 likes, score 7/10) — UPDATE $BTC 
+
+Pour le moment, le pull back sur la boîte de Bilale le Bilingue a plutôt l’air de tenir malgré le FUD d’hier et la micro panique. #Bitcoin rebondit parfaitement pour l’instant 
+
+ À obser
+  - https://x.com/NoctisCrypto/status/2054812124119974090
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 8).
+- **@roundtablespace** (7 likes, score 7/10) — RING 2.6 1T IS A FREE CHINESE AI AGENT WITH 1 TRILLION PARAMETERS THAT DOESN'T ANSWER QUESTIONS. IT COMPLETES MISSIONS.
+
+Built by Ant Group, the company behind Alipay. Most AI models reply. This one e
+  - https://x.com/RoundtableSpace/status/2055804238798970945
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7).
+- **@drkornflake** (1 likes, score 7/10) — How come there is no tax attorneys warning traders about taxes on their gains? @theaiportfolios @grkportfolio maybe if the AI trader thing doesn’t shake out, maybe you dudes can be LLM tax attorneys f
+  - https://x.com/DrKornFlake/status/2055796789673153000
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 5).
