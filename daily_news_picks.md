@@ -2339,3 +2339,39 @@ Built by Ant Group, the company behind Alipay. Most AI models reply. This one e
 - **@drkornflake** (1 likes, score 7/10) — How come there is no tax attorneys warning traders about taxes on their gains? @theaiportfolios @grkportfolio maybe if the AI trader thing doesn’t shake out, maybe you dudes can be LLM tax attorneys f
   - https://x.com/DrKornFlake/status/2055796789673153000
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 5).
+- **@_masterinvestor** (3952 likes, score 9/10) — The Power of IPO Investing 
+
+1. NVIDIA - 599,000%
+2. Microsoft - 691,000%
+3. Apple - 304,000% 
+4. Amazon - 272,700%
+5. Cisco - 231,800%
+6. Adobe - 154,300% 
+7. ASML -  89,700% 
+8. Tesla - 27,600%
+  - https://x.com/_masterinvestor/status/2055433428519076244
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 4100).
+- **@coinbureau** (409 likes, score 8/10) — Le PDG de NVIDIA, Jensen Huang, a été aperçu en train d'essayer le téléphone tri-fold Mate XT de Huawei lors d'un événement NVIDIA à Pékin.
+
+Cet appareil se plie en trois sections et s'ouvre sur un éc
+  - https://x.com/coinbureau/status/2055519839201206274
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 493).
+- **@virtualbacon** (31 likes, score 8/10) — Bonjour ! Voici les événements les plus importants du marché au cours des dernières 24 heures :
+
+Aperçu du marché :
+
+ NVIDIA publiera ses résultats du T1 FY27 mercredi 20 mai après la clôture. Consens
+  - https://x.com/virtualbacon/status/2055674047074279902
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 51).
+- **@ecoinometrics** (34 likes, score 7/10) — Les flux des ETF Bitcoin stagnent alors même que le BTC teste sa moyenne mobile sur 200 jours.
+
+~17K BTC de sorties nettes des ETF au cours des 8 derniers jours.
+
+Cela ne met pas encore fin à la tenda
+  - https://x.com/ecoinometrics/status/2055609788743258621
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 46).
+- **@ripplexrpie** (3 likes, score 7/10) — LE SYSTÈME FINANCIER ÉVOLUE RAPIDEMENT ! L'ADOPTION INSTITUTIONNELLE SUR LE $XRP LEDGER S'ACCÉLÈRE EN VUE DU 25 MAI !
+
+PARALLÈLEMENT, LE JETON $REAL, ALIMENTÉ PAR XRPL — AVEC UN SEUL SUPPLY TOTAL DE 9
+  - https://x.com/RippleXrpie/status/2055818875661381759
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 5).
