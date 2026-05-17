@@ -2496,3 +2496,28 @@ Bring along your family and enjoy fun activities, receive a gift and exper
 - **@cryptodotnews** (8 likes, score 7/10) — JUST IN: Senator Lummis says risks raised by the Ranking Member already exist because there is no regulatory framework. Clarity Act creates clear SEC and CFTC rules to protect good actors, punish bad
   - https://x.com/cryptodotnews/status/2055879484793057535
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 8).
+- **@martiniguyyt** (195 likes, score 9/10) — Bitcoin possède un énorme bloc de liquidité à 82 000 $
+
+Mais d'abord, il doit arrêter l'hémorragie, ensuite nous pourrions voir une hausse
+  - https://x.com/MartiniGuyYT/status/2055759173745271105
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 279).
+- **@le_investisseur** (4 likes, score 7/10) — Bitcoin à 80 000 $ 
+
+Opportunité ou trop tôt pour en acheter ? Quelle est votre stratégie ?
+  - https://x.com/le_investisseur/status/2055242810945585531
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 8).
+- **@martiniguyyt** (44 likes, score 8/10) — URGENT : La plus grande banque d'Italie, Intesa Sanpaolo, a annoncé l'achat de bitcoins d'une valeur de 235 millions de dollars.
+
+Les banques à travers le monde adoptent les cryptomonnaies.
+  - https://x.com/MartiniGuyYT/status/2055876168210075683
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 84).
+- **@bitcoinrachy** (56 likes, score 7/10) — J’ai acheté mon premier Bitcoin en 2016 et je pensais le comprendre.
+
+Je ne le comprenais pas.
+
+Voici ce que 9 ans de détention réelle à travers le chaos m’ont appris, et dont personne ne parle
+  - https://x.com/BitcoinRachy/status/2055767027394953230
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 66).
+- **@simplybitcoin** (197 likes, score 7/10) — Bitcoin is the new retirement plan.
+  - https://x.com/SimplyBitcoin/status/2055837706698068294
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 243).
