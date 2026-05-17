@@ -2843,3 +2843,35 @@ You know where Ethereum will move next.
 En 2025, il a recommandé d’acheter Neocloud et des valeurs du secteur des semi-conducteurs, qui ont depuis fortement pro
   - https://x.com/MrMikeInvesting/status/2056064115953570018
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 176).
+- **@bulltheoryio** (86 likes, score 9/10) — Le Bitcoin est-il manipulé ?
+
+Le Bitcoin a chuté de 5 % après l'adoption de la législation crypto la plus haussière de l'histoire des États-Unis.
+
+Il a perdu 4 100 $ depuis que la loi CLARITY a avancé
+  - https://x.com/BullTheoryio/status/2056086114574954695
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 158).
+- **@kabukistory** (49 likes, score 8/10) — Bitcoin montre la même structure que celle que nous avons observée pendant le marché baissier de 2022.
+
+Le cycle de 4 ans est toujours en cours, et $BTC va chuter à $42 000 en juin.
+
+L'histoire se rép
+  - https://x.com/kabukistory/status/2056069144320114763
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 73).
+- **@randgroup** (0 likes, score 7/10) — Semiconductors vs Crypto: race to global relevance:
+
+$ASML: 42 years to rank #28
+$TSMC: 39 years to rank #8
+$NVIDIA: 33 years to rank #2
+
+$BTC: 17 years to rank #11
+$ETH: 10 years to rank #62
+  - https://x.com/randgroup/status/2055980148130771088
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 22).
+- **@investments_ceo** (236 likes, score 9/10) — ÉNORME :  Le président Trump a récemment acheté pour un montant allant jusqu'à 100 000 $ en Bitcoin via Strategy.
+  - https://x.com/Investments_CEO/status/2056063637173768556
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 298).
+- **@roxom** (18 likes, score 7/10) — Eric Trump a déclaré : « Vous pourriez m'envoyer un million de dollars en Bitcoin dès maintenant et cela arriverait dans mon portefeuille en 3 secondes, et vous payez pratiquement zéro frais. »
+
+« Dit
+  - https://x.com/roxom/status/2056047442513285482
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 22).
