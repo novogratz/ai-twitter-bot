@@ -2466,3 +2466,33 @@ En savoir pl
 Giant companies entering the space simply validates that simulation-driven roboti
   - https://x.com/axisrobotics/status/2055860540531183663
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 6).
+- **@mohamadsaleh** (33 likes, score 7/10) — قائمة بأكبر 50 شركة في اميركا حاليًا  
+(المبلغ بالتريليون دولار)
+
+Nvidia $NVDA: $5.5T
+Google $GOOGL: $4.8T
+Apple $AAPL: $4.4T
+Microsoft $MSFT: $3.1T
+Amazon $AMZN: $2.8T
+Broadcom $AVGO: $2.0T
+Tesla $TS
+  - https://x.com/MohamadSaleh/status/2055738643441168577
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 37).
+- **@sawyermerritt** (2643 likes, score 8/10) — Tesla vient d’augmenter les prix du Model Y aux États-Unis pour la première fois en deux ans.
+
+Nouveaux prix :
+• Model Y Premium RWD : 45 990 $ (augmentation de 1 000 $)
+• Model Y AWD : 49 990 $ (augm
+  - https://x.com/SawyerMerritt/status/2055632440236904647
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2939).
+- **@zacksjerryrig** (745 likes, score 7/10) — Quelqu’un a-t-il vu le robot @Tesla Optimus faire quoi que ce soit de réel ? … Vous me dites qu’ils ont annulé deux modèles de S3XY pour construire un robot qui sert exclusivement du popcorn ?
+  - https://x.com/ZacksJerryRig/status/2055708861336830197
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 955).
+- **@driveteslaca** (64 likes, score 7/10) — Tesla is hosting a series of "Celebrate Electric Summer" events as stores across Canada and the U.S. on May 23 and 30, 2026 
+
+Bring along your family and enjoy fun activities, receive a gift and exper
+  - https://x.com/DriveTeslaca/status/2055719647459398067
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 68).
+- **@cryptodotnews** (8 likes, score 7/10) — JUST IN: Senator Lummis says risks raised by the Ranking Member already exist because there is no regulatory framework. Clarity Act creates clear SEC and CFTC rules to protect good actors, punish bad
+  - https://x.com/cryptodotnews/status/2055879484793057535
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 8).
