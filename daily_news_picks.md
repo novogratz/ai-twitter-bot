@@ -2590,3 +2590,28 @@ Ce que l'utilisateu
 Isolement total, tempêtes, bruit permanent, rotations de plusieurs semaines loin de l
   - https://x.com/_3emeOeil/status/2055926116695650721
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 11).
+- **@arkham** (77 likes, score 8/10) — Cela fait 1 833 jours qu'Ethereum a franchi pour la première fois la barre des 4 000 $.
+  - https://x.com/arkham/status/2055944640650674495
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 133).
+- **@tedpillows** (99 likes, score 8/10) — $ETH a touché la zone de support à 2 150 $ comme prévu.
+
+Maintenant, un rebond pourrait se produire ici pour Ethereum si cette zone tient.
+  - https://x.com/TedPillows/status/2055944006413287814
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 187).
+- **@ashcrypto** (434 likes, score 7/10) — « Tu es dans la crypto depuis 10 ans, tu dois être tellement riche ! »
+
+Ils ne savent pas que j’ai vendu mon Bitcoin pour me lancer tête baissée dans cette merde.
+  - https://x.com/AshCrypto/status/2055929983714115786
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 760).
+- **@coinbureau** (72 likes, score 7/10) — INFO URGENTE : Les SBI et Rakuten du Japon se préparent à vendre des fonds d'investissement crypto internes pour une exposition à $BTC et à ethereum:native.
+  - https://x.com/coinbureau/status/2055936486042980735
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 114).
+- **@marinonchain** (53 likes, score 7/10) — Solana : ~2 000 000 adresses actives quotidiennes  
+Ethereum : ~527 000 adresses actives quotidiennes
+
+Solana a presque 4 fois plus d'utilisateurs quotidiens…  
+
+Mais capitalisation boursière ?  
+Sola
+  - https://x.com/marinonchain/status/2055906483313713337
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 93).
