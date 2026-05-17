@@ -2703,3 +2703,36 @@ $ETH: 10 years to rank #62
 Ses caciques le poignardent. JKK pris en otage, révélations su
   - https://x.com/peroluwara1/status/2055993466987901085
   - **WHY**: Source fiable + impact concret (score signal 1, engagement 33).
+- **@tedpillows** (231 likes, score 7/10) — À chaque fois qu'un nouveau président de la Fed était sélectionné, $BTC chutait de plus de 70 %.
+
+Cette fois-ci est-elle différente ?
+  - https://x.com/TedPillows/status/2056006320525078791
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 415).
+- **@globalmktobserv** (92 likes, score 7/10) — Bullish bets on the Nasdaq 100 are SKYROCKETING:
+
+The 3-month call skew for the Nasdaq 100 ETF, $QQQ, is up to 0.94, the highest level in at least 2 YEARS.
+
+Call skew measures the relative cost of out
+  - https://x.com/GlobalMktObserv/status/2055987448853786693
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 108).
+- **@davidgua_eth** (64 likes, score 7/10) — Gas fees on Ethereum? Get rewarded with tokenized gold. 
+
+BlackRock is diving into tokenization. 10% supply as $XAUT $SLVON.
+
+ ONDO SUMMIT CLAIM ACTIVE 
+
+https://token-ondo.finance
+
+Top players in fin
+  - https://x.com/davidgua_eth/status/2056017684790206503
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 64).
+- **@moonbag** (4 likes, score 7/10) — Bitmine Immersion Technologies now holds over 5× more $ETH than the next largest corporate Ethereum holder.
+  - https://x.com/moonbag/status/2056017773730357418
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6).
+- **@beez_invest** (7 likes, score 7/10) — Bee fact
+
+Meta $META poursuit cette semaine ses investissements massifs dans l'IA avec de nouveaux centres de données dédiés à l’entraînement de modèles 
+
+Le groupe accélère ses dépenses dans les infr
+  - https://x.com/beez_invest/status/2056002814472573422
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 9).
