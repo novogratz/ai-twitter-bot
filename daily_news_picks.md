@@ -2645,3 +2645,30 @@ Mais pas Bitcoin. Pas Ethereum.
 Nous construirons la nôtr
   - https://x.com/CryptoTice_/status/2055543774605177210
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 216).
+- **@tedpillows** (269 likes, score 9/10) — $BTC tient toujours la zone de support à 78 000 $.
+
+Si cela échoue, Bitcoin pourrait chuter à 75 000 $, où je pense qu'un fort rebond aura lieu.
+  - https://x.com/TedPillows/status/2055949697374679265
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 427).
+- **@greginvestfr** (1 likes, score 7/10) — La plus grande IPO de l’histoire approche 
+
+SpaceX $SPCX prévoit une introduction en bourse au Nasdaq le 12 juin prochain avec une valorisation estimée à 1 750 milliards de $.
+
+Wall Street n’a probabl
+  - https://x.com/GregInvestFr/status/2055982287661961642
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7).
+- **@marionawfal** (91 likes, score 7/10) — Chaque Tesla est équipée de 8 caméras extérieures, observant votre environnement à 360°.
+
+Pendant ce temps, d'autres marques se comportent encore comme si une caméra de recul méritait une ovation debo
+  - https://x.com/MarioNawfal/status/2055972095335776736
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 163).
+- **@toolysol** (32 likes, score 7/10) — Bitcoin:
+  - https://x.com/ToolySOL/status/2055954730564866408
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 54).
+- **@davidmorganxbt** (23 likes, score 7/10) — Ethereum is heating up again.
+
+Institutions are quietly accumulating ETH while the crowd still watches Bitcoin 
+
+From ETF optimism to scaling upgrades and growing on-chain activity, Ethereum is buildi
+  - https://x.com/DavidMorganXBT/status/2055951981210964435
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 51).
