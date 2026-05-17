@@ -2439,3 +2439,30 @@ DCA sur ETF MSCI World (ou équivalent) + diversification avec Or et Bitcoin est
 - **@cnbc** (116 likes, score 7/10) — Selon Goldman Sachs, des actions comme Nvidia affichent un « momentum » en accélération
   - https://x.com/CNBC/status/2055643277659971769
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 146).
+- **@marionawfal** (276 likes, score 8/10) — BlackRock is considering putting $5–10 billion into SpaceX's IPO next month
+
+The numbers: SpaceX is targeting $75 billion raised at a $1.75 trillion valuation, the largest IPO in history. Saudi Aramco
+  - https://x.com/MarioNawfal/status/2055712887243759835
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 360).
+- **@cryptorover** (1027 likes, score 8/10) — URGENT :   LA CHINE REJETTE OFFICIELLEMENT LES PUCES NVIDIA.
+
+Les États-Unis ont approuvé la vente. Pékin a dit non merci.
+
+Ils misent tout sur les semi-conducteurs nationaux.
+
+$NVDA saigne.
+  - https://x.com/cryptorover/status/2055499984053981354
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1299).
+- **@kalshi** (0 likes, score 7/10) — INFO URGENTE : L'action Nvidia a grimpé de 500 000 % depuis son introduction en bourse
+  - https://x.com/Kalshi/status/2055300655540011060
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 218).
+- **@unusual_whales** (67 likes, score 7/10) — Bryan Catanzaro, vice-président de Nvidia chargé de l'apprentissage profond appliqué, a déclaré à Axios que « Pour mon équipe, le coût du calcul dépasse de loin les coûts des employés. »
+
+En savoir pl
+  - https://x.com/unusual_whales/status/2055853564447334691
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 93).
+- **@axisrobotics** (2 likes, score 7/10) — If major companies like NVIDIA or Tesla enter this market aggressively, what will remain Axis’ competitive advantage?
+
+Giant companies entering the space simply validates that simulation-driven roboti
+  - https://x.com/axisrobotics/status/2055860540531183663
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 6).
