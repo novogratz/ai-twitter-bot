@@ -2961,3 +2961,14 @@ Muse Spark fait son entrée auprès de Gemini, Chat GPT et Claude..
  @ArtificialAnlys
   - https://x.com/Loris_Dalleau/status/2041926595061924173
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 26).
+- **@sama** (314 likes, score 7/10) — ChatGPT Images 2.0  India.
+
+Already more than 1 billion images created there; awesome to see.
+  - https://x.com/sama/status/2056165722804654196
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 584).
+- **@bitcoinjunkies** (39 likes, score 7/10) — WHAT TF JUST HAPPENED TO BITCOIN
+  - https://x.com/BitcoinJunkies/status/2056159968273854721
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 47).
+- **@mariotesteur** (5 likes, score 7/10) — Je me doute que ça laissera de la place à des actions personnelles ou à d'autres événements caritatifs de plus petites tailles, mais je crains que l'absence d'un événement fédérateur d'une telle ample
+  - https://x.com/MarioTesteur/status/2056147168101106006
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 7).
