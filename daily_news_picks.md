@@ -3105,3 +3105,26 @@ Il montre des positions importantes incluant Intel, Nokia, CoreWeave, Coherent, 
 Voici la liste complète :
   - https://x.com/NoLimitGains/status/2056076310867267716
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 1926).
+- **@cryptooindia** (21 likes, score 7/10) — UPDATE:  US spot crypto ETF flows (May 11-15)
+
+Bitcoin: -$1B
+Ethereum: -$255M
+XRP: +$60M
+Solana: +$58M
+  - https://x.com/CryptooIndia/status/2056224840986816835
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 37).
+- **@saylordocs** (3 likes, score 7/10) — People who bought bitcoin at $126,000
+  - https://x.com/saylordocs/status/2056236067528089956
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 7).
+- **@whaleinsider** (233 likes, score 7/10) — JUST IN : Plus de 588 000 000 $ en positions longues en crypto liquidées au cours des dernières 24 heures.
+  - https://x.com/WhaleInsider/status/2056227367039758404
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 329).
+- **@cryptorover** (27 likes, score 7/10) — THIS IS WHY #BITCOIN DUMPED...
+
+Watch NOW:
+https://youtu.be/ON-jJ8BYyWg
+  - https://x.com/cryptorover/status/2056238032270033114
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 59).
+- **@cointelegraph** (13 likes, score 7/10) — JUST IN: Anthropic will brief the G20's Financial Stability Board on cyber vulnerabilities exposed by its Claude Mythos AI model, per FT.
+  - https://x.com/Cointelegraph/status/2056238439809331334
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 19).
