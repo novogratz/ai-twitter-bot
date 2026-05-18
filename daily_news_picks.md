@@ -2924,3 +2924,40 @@ Un GAP à combler à 479$ et un bull flag avec retest bullish du haut de
 Si je vous avais dit en 2022 que la version 2026 de GPT (qui, soit dit en passant, ne serait q
   - https://x.com/GaryMarcus/status/2056123794016879092
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 120).
+- **@coinbureau** (34 likes, score 8/10) — 16 ans plus tard, c'est toujours INCROYABLE...
+
+Aujourd'hui marque l'ANNIVERSAIRE de la commande de pizza à 10 000 $BTC.
+
+Ce jour-là en 2010, Laszlo Hanyecz a posté sur BitcoinTalk :
+
+« J'achèterai 10
+  - https://x.com/coinbureau/status/2056147758998831169
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 54).
+- **@loris_dalleau** (97 likes, score 8/10) — Alphabet $GOOGL 
+
+Gemini continue de gagner des parts de marché. En l'espace de 12 mois, la solution de Google est passée de 6 % à 25 % ! 
+
+De son côté, ChatGPT est passé de 77 % à 57 %. À mon avis, i
+  - https://x.com/Loris_Dalleau/status/2045516189405774284
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 121).
+- **@loris_dalleau** (16 likes, score 7/10) — Alphabet $GOOGL
+
+Sundar Pichai, déclare que le cloud  a connu une croissance accélérée grâce à l'intelligence artificielle générative
+
+Microsoft 1 - 1 Alphabet
+  - https://x.com/Loris_Dalleau/status/1752445669367824406
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 18).
+- **@loris_dalleau** (35 likes, score 7/10) — APPLE $APPL
+
+L'entreprise de Cupertino prépare un outil d'intelligence artificielle pour rivaliser avec Github Copilot de Microsoft 
+
+La course à l'IA ne fait que commencer..
+  - https://x.com/Loris_Dalleau/status/1758234722990231829
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 37).
+- **@loris_dalleau** (24 likes, score 7/10) — Meta $META
+
+Muse Spark fait son entrée auprès de Gemini, Chat GPT et Claude..
+
+ @ArtificialAnlys
+  - https://x.com/Loris_Dalleau/status/2041926595061924173
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 26).
