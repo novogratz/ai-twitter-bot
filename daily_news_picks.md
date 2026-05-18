@@ -3199,3 +3199,26 @@ It’s not even close bro
 - **@vivoplt** (33 likes, score 7/10) — Is paying for ChatGPT, Gemini, or Claude actually worth it in your experience? And what do you mainly use these AI tools for day to day??
   - https://x.com/vivoplt/status/2056259188180099413
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 97).
+- **@tommydouziech** (40 likes, score 7/10) — L'action Nvidia $NVDA a réalisé 7 drawdowns de plus de 50% depuis son IPO. Pour sa part, le titre Apple $AAPL a baissé 5 fois de plus de 50%. Amazon $AMZN quant à elle a chuté 4 fois de plus de 50% au
+  - https://x.com/tommydouziech/status/1937088963363164497
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 46).
+- **@tommydouziech** (34 likes, score 7/10) — Broadcom défie Nvidia : la nouvelle arme secrète des hyperscalers 
+
+Dans un marché déjà en ébullition autour de l'intelligence artificielle, Broadcom $AVGO vient de frapper un grand coup. La publicati
+  - https://x.com/tommydouziech/status/1963894025447985334
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 40).
+- **@tommydouziech** (15 likes, score 7/10) — Nvidia a vu son chiffre d'affaires trimestriel sur le segment data center multiplié par 20 en seulement 4 ans ! 
+
+Le segment data center qui pesait 36% du CA au premier trimestre 2022 pèse désormais 8
+  - https://x.com/tommydouziech/status/1927991035352764880
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 17).
+- **@bfmtv** (8 likes, score 7/10) — LES ÉCLAIREURS - Amazon, Apple, Boeing... Les transactions effectuées par Donald Trump au premier trimestre 2026 dépassent 200 millions de dollars
+  - https://x.com/BFMTV/status/2056291617854701639
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 14).
+- **@futureradar_fr** (5154 likes, score 7/10) — VOTRE PDG VOUS MENT : L'IA N'EST PAS LA CAUSE DES LICENCIEMENTS.
+
+Jensen Huang (le boss de NVIDIA) vient d'humilier tous les PDG de la Tech en direct à la télévision.
+
+On vous vend que l'IA sert à "op
+  - https://x.com/futureradar_FR/status/2034909443880611889
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 5446).
