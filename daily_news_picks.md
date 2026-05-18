@@ -3002,3 +3002,24 @@ Already more than 1 billion images created there; awesome to see.
 Les expressions faciales du robot humanoïde sont d’un réalisme troublant, clignant des yeux, réagissant et exprimant des émotions au moment opportun.
   - https://x.com/MarioNawfal/status/2056178958241055168
   - **WHY**: Source fiable + impact concret (score signal 1, engagement 102).
+- **@polymarket** (146 likes, score 8/10) — JUST IN : L'Ethereum est projeté pour chuter en dessous de 2 000 $ d'ici la fin du mois.
+
+56 % de chances.
+  - https://x.com/Polymarket/status/2056183997235859574
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 246).
+- **@general_sancho** (43 likes, score 8/10) — C'était tellement putain d'évident que cette merde allait exploser. Il fallait être légalement RÉTARDÉ pour ne pas se jeter sur $SPCX 4200 sur Ethereum à un misérable market cap de 2M$...
+
+BRAVO À TOU
+  - https://x.com/General_Sancho/status/2055933968382414948
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 75).
+- **@shahh** (70 likes, score 7/10) — Ethereum belongs at $800
+  - https://x.com/shahh/status/2056171505940123967
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 150).
+- **@cointelegraph** (78 likes, score 7/10) — ALERTE : Blockaid a détecté une exploitation en cours sur le pont Verus-Ethereum, avec environ 11,58 M$ drainés jusqu'à présent.
+  - https://x.com/Cointelegraph/status/2056193133436653634
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 144).
+- **@powerhasheur** (92 likes, score 7/10) — [Nouvelle vidéo] Un bug sur Kelp DAO permet le mint de 280M$ affecte @aave.  "Bad debt" de ~200M$, vault ETH gelé, stablecoins bloqués. 
+
+6,6 milliards quittent la plateforme leader dans le lending en
+  - https://x.com/PowerHasheur/status/2046218009660846520
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 124).
