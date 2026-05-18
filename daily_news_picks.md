@@ -3157,3 +3157,34 @@ Il a affirmé que les agents IA créeront une demande future significative pour 
 Elon Musk
   - https://x.com/teslaownersSV/status/2056252600299991226
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 29).
+- **@ash_twtz** (34 likes, score 8/10) — AI Companies and their Valuations
+
+• Google  - ~$4.7T
+• Meta  - ~$1.6T
+• Anthropic  - ~$900B
+• OpenAI  - ~$852B
+• Alibaba  - ~$320B
+• xAI  - ~$230B
+• Baidu  - ~$40B
+• Perplexity  - ~$21B
+• Moonshot AI
+  - https://x.com/ash_twtz/status/2056246740324630878
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 84).
+- **@franknolf** (1 likes, score 7/10) — Mooie technologie maar al die Tesla fanboys leven in hun eigen fantasiewereld van fsd en Optimus robots. Het is echt een cult. Ik rij ook Tesla en die hebben dus echt niet door dat de meesten geen 100
+  - https://x.com/FrankNolf/status/2056255624736838065
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 5).
+- **@mckearnmarcie** (8 likes, score 7/10) — D endlessly thank him, hug him, and invite him to go for a ride in the car with me and show me how to drive a Tesla!!!
+  - https://x.com/MckearnMarcie/status/2056234360278561002
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 10).
+- **@chairulridjal** (1 likes, score 7/10) — Hmmm, that’d actually be a pretty great idea.
+
+Wouldn't be the first time Elon has opened up technology from his companies to help accelerate human progress, Tesla did something similar with its paten
+  - https://x.com/chairulridjal/status/2056266035339383206
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 5).
+- **@openai** (0 likes, score 7/10) — Vous l'attendiez...
+
+Maintenant en aperçu : Codex dans l'application mobile ChatGPT.
+
+Démarrez un nouveau travail, passez en revue les sorties, orientez l'exécution et approuvez les étapes suivantes,
+  - https://x.com/OpenAI/status/2055016850849993072
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 3206).
