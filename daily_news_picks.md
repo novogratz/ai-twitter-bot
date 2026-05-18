@@ -3188,3 +3188,14 @@ Maintenant en aperçu : Codex dans l'application mobile ChatGPT.
 Démarrez un nouveau travail, passez en revue les sorties, orientez l'exécution et approuvez les étapes suivantes,
   - https://x.com/OpenAI/status/2055016850849993072
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 3206).
+- **@cb_doge** (43 likes, score 7/10) — ELON MUSK : « L'innovation par habitant, celle d'Israël doit être de loin la numéro un au monde. Je suis un grand admirateur de l'innovation qui vient d'Israël. Je pense qu'il est objectivement vrai q
+  - https://x.com/cb_doge/status/2056287361563328686
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 119).
+- **@ravikiran_dev7** (43 likes, score 7/10) — ChatGPT vs Claude weekly users.
+
+It’s not even close bro
+  - https://x.com/ravikiran_dev7/status/2056275435240186020
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 107).
+- **@vivoplt** (33 likes, score 7/10) — Is paying for ChatGPT, Gemini, or Claude actually worth it in your experience? And what do you mainly use these AI tools for day to day??
+  - https://x.com/vivoplt/status/2056259188180099413
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 97).
