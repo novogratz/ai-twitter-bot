@@ -2972,3 +2972,33 @@ Already more than 1 billion images created there; awesome to see.
 - **@mariotesteur** (5 likes, score 7/10) — Je me doute que ça laissera de la place à des actions personnelles ou à d'autres événements caritatifs de plus petites tailles, mais je crains que l'absence d'un événement fédérateur d'une telle ample
   - https://x.com/MarioTesteur/status/2056147168101106006
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 7).
+- **@cryptogoos** (26 likes, score 7/10) — DÉTROIT D'ORMUZ : LES PéAGES SERONT PAYÉS EN BITCOIN
+
+ L'Iran lance la plateforme d'assurance « Hormuz Safe » pour les navires traversant le détroit d'Ormuz, avec des règlements payés en Bitcoin.
+  - https://x.com/cryptogoos/status/2056174176524960024
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 38).
+- **@misspeelemma** (420 likes, score 7/10) — Une belle douche froide pour les gauchos, et surtout une belle claque dans leurs comptes bancaires  A mordre la main qui les nourrit en partie !
+  - https://x.com/MissPeelEmma/status/2056105181138330007
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 450).
+- **@petitrentier** (191 likes, score 7/10) — Alors que le S&P 500 et le Nasdaq sont sur des records historiques, certaines actions quality en sont encore éloignées  :
+
+ BlackRock : -12,5 %
+ MSCI : -13,5 %
+ Visa : -14,4 %
+ Moody’s : -16,4 %
+ Mast
+  - https://x.com/PetitRentier/status/2052686491151708517
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 239).
+- **@petitrentier** (0 likes, score 7/10) — Mes 2 meilleures performances sur PEA proviennent d’actions achetées il y a moins d’un an :
+
+ Nebius : +150 % en 5 mois
+ ASML : +125 % en 10 mois
+
+Ça permet de compenser les contre-performances de Nem
+  - https://x.com/PetitRentier/status/2054982319862366295
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 24).
+- **@marionawfal** (40 likes, score 7/10) — Origine chinoise F1 « ressent » comme un humain.
+
+Les expressions faciales du robot humanoïde sont d’un réalisme troublant, clignant des yeux, réagissant et exprimant des émotions au moment opportun.
+  - https://x.com/MarioNawfal/status/2056178958241055168
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 102).
