@@ -3303,3 +3303,55 @@ It could reportedly generate more than $10 BILLION in r
 - **@cointelegraph** (22 likes, score 7/10) — LATEST: Crypto investment products saw $1.07B in outflows last week.
   - https://x.com/Cointelegraph/status/2056354179942150365
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 40).
+- **@ashcrypto** (640 likes, score 8/10) — URGENT : Tom Lee’s Bitmine a acheté pour 153,66 MILLIONS de dollars de $ETH.
+
+Ils détiennent désormais un total de 11,32 MILLIARDS de dollars en Ethereum.
+  - https://x.com/AshCrypto/status/2056433301225693321
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 972).
+- **@polymarketmoney** (49 likes, score 8/10) — OpenAI and CEO Sam Altman found not liable in Elon Musk lawsuit
+  - https://x.com/PolymarketMoney/status/2056429051590607320
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 71).
+- **@prismemedia** (46 likes, score 8/10) — INCROYABLE
+
+OpenAI annonce un projet permettant de connecter ChatGPT de façon sécurisée à des comptes bancaires via Plaid.
+
+L’objectif est de fournir des conseils financiers personnalisés directement
+  - https://x.com/PrismeMedia/status/2056381290253795720
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 58).
+- **@coinmarketcap** (76 likes, score 7/10) — LATEST :  Goldman Sachs a quitté ses positions ETF XRP et Solana au T1, tout en réduisant son exposition aux ETF Bitcoin et Ethereum et en augmentant ses participations dans Circle et Galaxy Digital.
+  - https://x.com/CoinMarketCap/status/2056437223050936807
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 156).
+- **@coindesk** (6 likes, score 7/10) — On CoinDesk's Public Keys at @NYSE:
+
+• @21Shares' @elindinga makes the bull case for HYPE and sets a $75 target
+
+• @Fundstrat's @SeanMFarrell on why crypto IPOs are stalling
+
+• @NuvaLabs CEO Anthony M
+  - https://x.com/CoinDesk/status/2056452754365718996
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 20).
+- **@thebitcoinconf** (108 likes, score 9/10) — LA SEC DÉCLARE QU'ELLE SE PRÉPARE MAINTENANT À AUTORISER LE TRADING D'ACTIONS TOKENISÉES 
+
+LE MARCHÉ DES CAPITAUX AMÉRICAIN DE 69 000 MILLIARDS DE DOLLARS S'APPRÊTE À INONDER LA CRYPTO & #BITCOIN
+  - https://x.com/TheBitcoinConf/status/2056483033973141727
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 132).
+- **@pete_rizzo_** (20 likes, score 7/10) — JUST IN: CNBC ANALYST JUST SAID #BITCOIN IS GOING TO $1,000,000 AND THE BANKS CAN'T STOP IT
+
+“YOU CAN’T HOLD BACK INNOVATION”
+
+“BTC FOLLOWS THE LAWS OF NATURE”
+
+IT’S COMING
+  - https://x.com/pete_rizzo_/status/2056490440556175736
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 20).
+- **@apples_jimmy** (33 likes, score 7/10) — He also lost another case in February when he accused openai of poaching his employees.
+
+You’re not going to have a better lab by trying crap lawsuits bro.
+  - https://x.com/apples_jimmy/status/2056485560127238177
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 41).
+- **@cointelegraph** (112 likes, score 7/10) — NOUVEAU : La Securities and Exchange Commission des États-Unis se prépare à autoriser le trading basé sur la blockchain d'actions tokenisées.
+  - https://x.com/Cointelegraph/status/2056483444683940245
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 174).
+- **@solidintel_x** (101 likes, score 7/10) — INFO : LA SEC SE PRÉPARE À AUTORISER LE TRADING D'ACTIONS TOKENISÉES BASÉES SUR LA BLOCKCHAIN.
+  - https://x.com/solidintel_x/status/2056481960193642725
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 119).
