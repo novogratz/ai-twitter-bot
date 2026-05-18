@@ -3222,3 +3222,34 @@ Jensen Huang (le boss de NVIDIA) vient d'humilier tous les PDG de la Tech en dir
 On vous vend que l'IA sert à "op
   - https://x.com/futureradar_FR/status/2034909443880611889
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 5446).
+- **@philarekt** (837 likes, score 8/10) — BREAKING
+
+ THE BANK OF JAPAN IS ABOUT TO SELL $2.86 BILLION IN U.S. TREASURIES
+
+THIS COULD BE THE LARGEST TREASURY LIQUIDATION BY JAPAN IN 30 YEARS
+
+THE LAST TIME JAPAN DUMPED U.S. BONDS, THE STOCK MA
+  - https://x.com/philarekt/status/2056111353102815473
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 923).
+- **@xtexchange** (65 likes, score 8/10) — Bitcoin and Ethereum ETF weekly outflows just hit multi-month highs as the market rally slows down 
+
+Are institutions simply taking profits — or is market sentiment starting to shift?
+
+Drop your thoug
+  - https://x.com/XTexchange/status/2056291834578739534
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 79).
+- **@wublockchain** (16 likes, score 7/10) — Goldman Sachs se désengage des positions ETF XRP et Solana, réduit ses avoirs ETF Ethereum de 70 %  
+
+La dernière déclaration 13F de Goldman Sachs montre que la banque a entièrement quitté ses positio
+  - https://x.com/WuBlockchain/status/2056319658265837646
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 30).
+- **@cryptopotato_tr** (3 likes, score 7/10) — Tom Lee: Ethereum'daki Düşüşün Sebebi Kripto Piyasası Değil
+
+ https://cryptopotato.com/tr/tom-lee-ethereumdaki-dususun-sebebi-kripto-piyasasi-degil/…
+
+#Ethereum #ETH $ETH
+  - https://x.com/Cryptopotato_TR/status/2056305455178084783
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 5).
+- **@saylordocs** (5 likes, score 7/10) — FORMER JAPANESE PRIME MINISTER SAID BITCOIN AND CRYPTO ARE A "ONCE IN A CENTURY" OPPORTUNITY
+  - https://x.com/saylordocs/status/2056315860189680002
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 9).
