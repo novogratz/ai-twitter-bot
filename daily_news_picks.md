@@ -3023,3 +3023,31 @@ BRAVO À TOU
 6,6 milliards quittent la plateforme leader dans le lending en
   - https://x.com/PowerHasheur/status/2046218009660846520
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 124).
+- **@lookonchain** (69 likes, score 8/10) — Le pont Verus-Ethereum (@VerusCoin) semble avoir été exploité, avec environ 11,5 millions de dollars volés.
+
+L'exploiteur a déjà échangé tous les fonds en 5 402 $ETH (11,5 millions de dollars).
+
+https
+  - https://x.com/lookonchain/status/2056200736082714973
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 97).
+- **@whaleinsider** (27 likes, score 8/10) — JUST IN : Le pont Verus-Ethereum semble avoir été exploité, avec 11,5 M$ volés.
+
+L'exploitant a déjà échangé tous les fonds en 5 402 $ETH (11,5 M$) - Lookonchain.
+  - https://x.com/WhaleInsider/status/2056205096602489275
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 53).
+- **@babgi** (1281 likes, score 7/10) — Je n'ai pas.le souvenir d'avoir lu un article aussi alarmiste sur l'ia dans le NYT. 
+'Je me prépare à survivre', a avoué Sam Altman d'OpenAI en 2016. "J'ai des fusils, de l'iodure de potassium doré, d
+  - https://x.com/babgi/status/2053425031561044470
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1379).
+- **@tommydouziech** (30 likes, score 7/10) — Le problème avec l'écosystème circulaire de l'IA
+
+L'accord récent entre OpenAI et AMD illustre parfaitement la circularité croissante qui structure aujourd'hui l'écosystème de l'intelligence artificie
+  - https://x.com/tommydouziech/status/1975505909137686944
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 40).
+- **@kobeissiletter** (2978 likes, score 7/10) — Ça ne veut tout simplement pas s’arrêter.
+
+C’est dimanche soir et le rendement des obligations américaines à 10 ans vient de dépasser nonchalamment les 4,63 %, le plus haut depuis février 2025.
+
+Nous
+  - https://x.com/KobeissiLetter/status/2056184339390419205
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 3466).
