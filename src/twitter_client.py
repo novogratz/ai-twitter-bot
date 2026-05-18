@@ -1,5 +1,6 @@
 """Browser automation for X/Twitter via Safari + AppleScript (macOS only)."""
 import json
+import os
 import re
 import subprocess
 import threading
@@ -249,8 +250,92 @@ def _like_own_latest_tweet():
     close_front_tab()
 
 
-def like_tweet():
-    """Like the currently open tweet using the 'l' keyboard shortcut."""
+LIKED_TWEETS_FILE = os.path.join(_PROJECT_ROOT, "liked_tweets.json") if "_PROJECT_ROOT" in globals() else None
+
+
+def _liked_cache_path() -> str:
+    """Lazy-resolve the liked_tweets.json path to avoid import-order issues."""
+    from .config import _PROJECT_ROOT as _PR
+    return os.path.join(_PR, "liked_tweets.json")
+
+
+def _load_liked_set():
+    """Return a CanonReplied set of canonical IDs we've already liked.
+    Cross-bot dedup via canonical status ID prevents the 'l' shortcut
+    from toggling-OFF a like we set in an earlier cycle."""
+    from .reply_bot import _CanonReplied
+    s = _CanonReplied()
+    path = _liked_cache_path()
+    if not os.path.exists(path):
+        return s
+    try:
+        with open(path) as f:
+            data = json.load(f)
+        for u in (data if isinstance(data, list) else []):
+            if isinstance(u, str):
+                s.add(u)
+    except (json.JSONDecodeError, OSError):
+        pass
+    return s
+
+
+def _save_liked_set(s) -> None:
+    """Persist liked set as ordered list, cap at 50k from the tail."""
+    from .reply_bot import _canonical_tweet_id
+    path = _liked_cache_path()
+    existing = []
+    existing_set = set()
+    if os.path.exists(path):
+        try:
+            with open(path) as f:
+                data = json.load(f)
+            if isinstance(data, list):
+                existing = [str(u) for u in data if isinstance(u, str)]
+                existing_set = set(existing)
+        except (json.JSONDecodeError, OSError):
+            pass
+    for u in s:
+        cid = _canonical_tweet_id(u)
+        if cid and cid not in existing_set:
+            existing.append(cid)
+            existing_set.add(cid)
+    if len(existing) > 50000:
+        existing = existing[-50000:]
+    try:
+        with open(path, "w") as f:
+            json.dump(existing, f, indent=2)
+    except OSError as e:
+        log.info(f"[LIKE] save failed: {e}")
+
+
+def _already_liked(url: str) -> bool:
+    if not url:
+        return False
+    return url in _load_liked_set()
+
+
+def _mark_liked(url: str) -> None:
+    if not url:
+        return
+    s = _load_liked_set()
+    s.add(url)
+    _save_liked_set(s)
+
+
+def like_tweet(tweet_url: str = ""):
+    """Like the currently open tweet using the 'l' keyboard shortcut.
+
+    The 'l' shortcut TOGGLES — pressing it on an already-liked tweet
+    will UNLIKE. User incident 2026-05-18: bot retweeted+liked a tweet
+    on one cycle, then replied to it later and the reply path's like
+    call un-liked the original.
+
+    Fix: if tweet_url is provided AND it's already in our liked-cache,
+    skip the press. Callers should pass the URL whenever known.
+    """
+    if tweet_url and _already_liked(tweet_url):
+        log.info(f"[LIKE] already liked {tweet_url[-50:]} — skipping (would toggle OFF).")
+        return
     script = '''
     tell application "System Events"
         keystroke "l"
@@ -260,6 +345,8 @@ def like_tweet():
     if _run_applescript(script):
         time.sleep(1)
         log.info("Tweet liked!")
+        if tweet_url:
+            _mark_liked(tweet_url)
     else:
         log.info("Failed to like tweet, continuing...")
 
@@ -283,8 +370,10 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
         ''')
         time.sleep(1)
 
-        # Like the tweet first (double notification for the author)
-        like_tweet()
+        # Like the tweet (idempotent — won't toggle off if already liked
+        # from a prior retweet/quote cycle). Bug 2026-05-18: bot was
+        # un-liking previously-liked tweets here.
+        like_tweet(tweet_url)
         time.sleep(1)
 
         # Click reply
@@ -343,10 +432,11 @@ def quote_tweet(tweet_url: str, comment: str):
 
         # 2) Also like the original tweet we quoted — courtesy + lifts
         # our notification in the original author's notification feed.
+        # Idempotent: skips if already liked.
         try:
             webbrowser.open(tweet_url)
             time.sleep(5)
-            like_tweet()
+            like_tweet(tweet_url)
             close_front_tab()
         except Exception as e:
             log.info(f"[QUOTE] parent-like failed: {e}")
@@ -804,7 +894,7 @@ def retweet_post(tweet_url: str):
         ''')
         time.sleep(2)
         log.info(f"[RETWEET] Reposted: {tweet_url}")
-        like_tweet()
+        like_tweet(tweet_url)
         close_front_tab()
 
 
