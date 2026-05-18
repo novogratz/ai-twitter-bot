@@ -120,19 +120,52 @@ def _increment_count():
     _save_state(state)
 
 
-def _load_quoted() -> set:
-    if os.path.exists(QUOTED_FILE):
-        try:
-            with open(QUOTED_FILE, "r") as f:
-                return set(json.load(f))
-        except (json.JSONDecodeError, IOError):
-            pass
-    return set()
+RETWEETED_FILE_QUOTE = os.path.join(_PROJECT_ROOT, "retweeted.json")
+_QUOTED_CAP = 5000
 
 
-def _save_quoted(s: set):
+def _read_id_list_q(path: str) -> list[str]:
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, "r") as f:
+            data = json.load(f)
+        if isinstance(data, list):
+            return [str(u) for u in data if u]
+        if isinstance(data, dict):
+            return [str(u) for u in (data.get("urls") or []) if u]
+    except (json.JSONDecodeError, IOError):
+        pass
+    return []
+
+
+def _load_quoted():
+    """Return CanonReplied set of tweets we've already quoted OR retweeted.
+    Cross-bot dedup: 2026-05-18 user feedback — "If you quote retweet a
+    post, then dont retweet as well on top of it, it looks bad"."""
+    from .reply_bot import _CanonReplied
+    s = _CanonReplied()
+    for item in _read_id_list_q(QUOTED_FILE):
+        s.add(item)
+    for item in _read_id_list_q(RETWEETED_FILE_QUOTE):
+        s.add(item)
+    return s
+
+
+def _save_quoted(s):
+    """Persist insertion order, cap at 5000. Mirrors reply_bot pattern."""
+    from .reply_bot import _canonical_tweet_id
+    existing = _read_id_list_q(QUOTED_FILE)
+    existing_set = set(existing)
+    for u in s:
+        cid = _canonical_tweet_id(u)
+        if cid and cid not in existing_set:
+            existing.append(cid)
+            existing_set.add(cid)
+    if len(existing) > _QUOTED_CAP:
+        existing = existing[-_QUOTED_CAP:]
     with open(QUOTED_FILE, "w") as f:
-        json.dump(list(s)[-500:], f, indent=2)
+        json.dump(existing, f, indent=2)
 
 
 _SKIP_WORD_RE = re.compile(r"\bskip\b", re.IGNORECASE)

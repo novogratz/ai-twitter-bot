@@ -304,21 +304,57 @@ def _increment_count():
     _save_state(state)
 
 
-def _load_retweeted() -> set:
-    if os.path.exists(RETWEETED_FILE):
-        try:
-            with open(RETWEETED_FILE, "r") as f:
-                return set(json.load(f))
-        except (json.JSONDecodeError, IOError):
-            pass
-    return set()
+QUOTED_FILE = os.path.join(_PROJECT_ROOT, "quoted_tweets.json")
+_RETWEETED_CAP = 5000
 
 
-def _save_retweeted(s: set):
+def _read_id_list(path: str) -> list[str]:
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, "r") as f:
+            data = json.load(f)
+        if isinstance(data, list):
+            return [str(u) for u in data if u]
+        if isinstance(data, dict):
+            return [str(u) for u in (data.get("urls") or []) if u]
+    except (json.JSONDecodeError, IOError):
+        pass
+    return []
+
+
+def _load_retweeted():
+    """Return a CanonReplied set containing canonical IDs of tweets we
+    already retweeted OR quoted. Cross-bot dedup so we don't both quote
+    AND retweet the same tweet (looks bad on the timeline). 2026-05-18."""
+    from .reply_bot import _CanonReplied
+    s = _CanonReplied()
+    for item in _read_id_list(RETWEETED_FILE):
+        s.add(item)
+    for item in _read_id_list(QUOTED_FILE):
+        s.add(item)
+    return s
+
+
+def _save_retweeted(s):
+    """Persist insertion order, cap at 5000 from the tail (newest).
+
+    Bug 2026-05-16 (same shape as reply_bot pre-fix): previous impl was
+    `list(s)[-1000:]` which slices a SET → non-deterministic drop, URLs
+    fell out, re-retweet happened later. Fix mirrors reply_bot.save_replied.
+    """
+    existing = _read_id_list(RETWEETED_FILE)
+    existing_set = set(existing)
+    from .reply_bot import _canonical_tweet_id
+    for u in s:
+        cid = _canonical_tweet_id(u)
+        if cid and cid not in existing_set:
+            existing.append(cid)
+            existing_set.add(cid)
+    if len(existing) > _RETWEETED_CAP:
+        existing = existing[-_RETWEETED_CAP:]
     with open(RETWEETED_FILE, "w") as f:
-        # Keep the most recent 1000 entries — set order isn't preserved but
-        # for dedup we don't care; size cap matters.
-        json.dump(list(s)[-1000:], f, indent=2)
+        json.dump(existing, f, indent=2)
 
 
 def _handle_from_url(url: str) -> str:
