@@ -3051,3 +3051,28 @@ C’est dimanche soir et le rendement des obligations américaines à 10 ans vie
 Nous
   - https://x.com/KobeissiLetter/status/2056184339390419205
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 3466).
+- **@cryptogoos** (25500 likes, score 8/10) — MAUVAISES NOUVELLES DU SOMMET USA-CHINE
+
+ Le président Trump a déclaré que la Chine « a choisi de ne pas acheter » les puces NVIDIA $NVDA H200 malgré l'approbation des États-Unis.
+
+La Chine préfère dé
+  - https://x.com/cryptogoos/status/2055272672263549259
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 28128).
+- **@fuckthedip** (22 likes, score 7/10) — Rost Stores 
+Ce n'est pas Nvidia mais je l'aime toujours autant
+  - https://x.com/fuckthedip/status/2045206980155822144
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 26).
+- **@tommydouziech** (33 likes, score 7/10) — Perplexity tente un coup d'éclat avec une offre de 34,5 milliards de dollars pour racheter Chrome 
+
+Cette nouvelle du Wall Street Journal est tombée ce jour même à 17h30. L'entreprise américaine Perpl
+  - https://x.com/tommydouziech/status/1955297051685609671
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 37).
+- **@pushpendrajifan** (10 likes, score 7/10) — BREAKING : White House crypto advisor Patrick Witt says passing the Clarity Act would give the crypto industry “roughly 90%” of what it needs.
+  - https://x.com/pushpendrajifan/status/2056198810951626760
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 12).
+- **@cointelegraph** (112 likes, score 7/10) — URGENT : La Maison Blanche publie une fiche d'information sur les accords historiques de Trump avec la Chine, incluant :
+
+• 200 avions Boeing fabriqués aux États-Unis achetés par la Chine
+• 17 milliar
+  - https://x.com/Cointelegraph/status/2056203185279160683
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 178).
