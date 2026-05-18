@@ -331,11 +331,25 @@ def quote_tweet(tweet_url: str, comment: str):
         time.sleep(2)
         log.info("Quote tweet posted!")
         close_front_tab()
-        # Like the original tweet we quoted
-        webbrowser.open(tweet_url)
-        time.sleep(5)
-        like_tweet()
-        close_front_tab()
+
+        # 1) Self-like our own quote-tweet (user mandate 2026-05-18:
+        # "Always auto like your own tweets or quotes... always").
+        # Algo lifts: own-like is a positive signal in the first-second
+        # engagement vector that decides For You distribution.
+        try:
+            _like_own_latest_tweet()
+        except Exception as e:
+            log.info(f"[QUOTE] self-like failed: {e}")
+
+        # 2) Also like the original tweet we quoted — courtesy + lifts
+        # our notification in the original author's notification feed.
+        try:
+            webbrowser.open(tweet_url)
+            time.sleep(5)
+            like_tweet()
+            close_front_tab()
+        except Exception as e:
+            log.info(f"[QUOTE] parent-like failed: {e}")
 
 
 def unfollow_account(username: str) -> bool:
@@ -757,6 +771,12 @@ def post_thread(tweets: list[str]):
 
         close_front_tab()
         log.info("[THREAD] Thread complete!")
+        # Self-like the thread head — user mandate 2026-05-18:
+        # "Always auto like your own tweets or quotes... always".
+        try:
+            _like_own_latest_tweet()
+        except Exception as e:
+            log.info(f"[THREAD] self-like failed: {e}")
 
 
 def retweet_post(tweet_url: str):
