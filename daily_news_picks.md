@@ -3253,3 +3253,28 @@ La dernière déclaration 13F de Goldman Sachs montre que la banque a entièreme
 - **@saylordocs** (5 likes, score 7/10) — FORMER JAPANESE PRIME MINISTER SAID BITCOIN AND CRYPTO ARE A "ONCE IN A CENTURY" OPPORTUNITY
   - https://x.com/saylordocs/status/2056315860189680002
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 9).
+- **@pete_rizzo_** (343 likes, score 8/10) — RAOUL PAL A DIT QUE LA LOI CLARITY SERA ADOPTÉE ET QUE « TOUTES LES BANQUES » ADOPTERONT RAPIDEMENT #BITCOIN ET LES CRYPTO   
+
+« C'EST LE FEU VERT QU'ILS ATTENDENT »
+
+C'EST PARTI
+  - https://x.com/pete_rizzo_/status/2056263515036328269
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 389).
+- **@ashcrypto** (274 likes, score 7/10) — C'est incroyable.
+
+Depuis l'approbation de la loi Clarity, $BTC a chuté de -$5 400, effaçant 110 MILLIARDS de sa capitalisation boursière.
+
+1,4 MILLIARD en positions longues ont été liquidés en 5 jour
+  - https://x.com/AshCrypto/status/2056330967200010267
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 528).
+- **@coindesk** (348 likes, score 7/10) — NOUVEAU : Les sociétés japonaises SBI Securities et Rakuten Securities prévoient d’offrir des fonds d’investissement en cryptomonnaies une fois que les régulateurs auront finalisé les règles, 11 autre
+  - https://x.com/CoinDesk/status/2056241856539693137
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 414).
+- **@kalshi_crypto** (151 likes, score 7/10) — JUSTE EN: Les ETF Bitcoin enregistrent ~1 milliard de dollars de sorties hebdomadaires, mettant fin à une série de 6 semaines d'entrées
+  - https://x.com/Kalshi_Crypto/status/2056310494655332477
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 197).
+- **@mradarcrypto** (12 likes, score 7/10) — L’IRAN S’APPRÊTE À CHANGER LE BITCOIN EN MONNAIE DE GUERRE.
+
+Téhéran étudie un plan pour lever un droit de passage sur le détroit d'Hormuz via un système d'assurance numérique. Le prix de la sécurité
+  - https://x.com/MRadarCrypto/status/2056306549002473668
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 12).
