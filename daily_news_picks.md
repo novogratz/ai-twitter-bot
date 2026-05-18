@@ -3076,3 +3076,32 @@ Cette nouvelle du Wall Street Journal est tombée ce jour même à 17h30. L'entr
 • 17 milliar
   - https://x.com/Cointelegraph/status/2056203185279160683
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 178).
+
+## 2026-05-18
+- **@financelancelot** (54 likes, score 8/10) — Bitcoin a entamé sa descente dans le chaos.
+
+Si le schéma se déroule comme prévu, bitcoin:native touchera le fond à 19 000 $ en octobre 2026.
+
+Ceci est un signal d'alerte indiquant que la liquidité du
+  - https://x.com/FinanceLancelot/status/2056215690227368370
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 82).
+- **@mcnalliem** (104 likes, score 8/10) — Quelque chose vient de se passer sur le marché spot des GPU — les prix des H200 viennent de devenir paraboliques 
+
+ Tarif spot H200 : 6,40 $/heure/GPU — en hausse +29 % du jour au lendemain — maintena
+  - https://x.com/McnallieM/status/2056109122152714715
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 128).
+- **@loris_dalleau** (83 likes, score 8/10) — Nvidia $NVDA
+
++$240 milliards de capitalisation
+  - https://x.com/Loris_Dalleau/status/2047702879155220840
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 89).
+- **@unusual_whales** (0 likes, score 8/10) — URGENT : Nvidia, $NVIDA, a mis à jour son portefeuille.
+
+Il montre des positions importantes incluant Intel, Nokia, CoreWeave, Coherent, Synopsys, Nebius et Generate Biosciences.
+  - https://x.com/unusual_whales/status/2055385982921568501
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 202).
+- **@nolimitgains** (1518 likes, score 7/10) — Nvidia vient d'investir DES MILLIARDS dans 7 entreprises différentes.
+
+Voici la liste complète :
+  - https://x.com/NoLimitGains/status/2056076310867267716
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1926).
