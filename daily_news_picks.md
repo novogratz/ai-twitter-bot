@@ -3355,3 +3355,38 @@ You’re not going to have a better lab by trying crap lawsuits bro.
 - **@solidintel_x** (101 likes, score 7/10) — INFO : LA SEC SE PRÉPARE À AUTORISER LE TRADING D'ACTIONS TOKENISÉES BASÉES SUR LA BLOCKCHAIN.
   - https://x.com/solidintel_x/status/2056481960193642725
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 119).
+- **@trendingbitcoin** (26 likes, score 7/10) — JACK MALLERS BROKE THE BULL METER ON LIVE TV  
+
+“Bitcoin isn’t going for $150K, it’s going for everything.”  
+
+A $400-$500 trillion savings market… and we’re only at $2.43T today.  
+
+That’s a 100x to
+  - https://x.com/TrendingBitcoin/status/2056495544416014829
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 36).
+- **@coinbureau** (57 likes, score 7/10) — C'est absolument insensé.
+
+9 comptes Polymarket connectés viennent de remporter +2,4 millions de dollars en pariant sur la guerre en Iran.
+
+Le taux de réussite ? 98 % sur plus de 80 paris.
+
+Ces compte
+  - https://x.com/coinbureau/status/2056491266368532623
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 79).
+- **@investingcom** (24 likes, score 7/10) — *LA SEC SERAIT EN TRAIN DE FINALISER UN PLAN POUR LE TRADING DE VERSIONS CRYPTO DES ACTIONS
+
+*LA COMMISSION DES VALEURS MOBILIÈRES ET DES CHANGES DEVRAIT PUBLIER DÈS CETTE SEMAINE SON EXEMPTION D'INNO
+  - https://x.com/Investingcom/status/2056496377438363944
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 42).
+- **@bitcoinconfasia** (14 likes, score 7/10) — 100 DAYS UNTIL BITCOIN ASIA 
+
+ARE YOU READY?
+  - https://x.com/Bitcoinconfasia/status/2056496332437684465
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 20).
+- **@bfmbusiness** (10 likes, score 7/10) — OpenAI reproche à Apple son intégration IA
+
+"OpenAI espérait des conversions payantes, en se disant que les gens vont être tellement accros à ChatGPT qu'ils vont prendre des abonnements payants"
+
+@Cle
+  - https://x.com/bfmbusiness/status/2056441118393254109
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 12).
