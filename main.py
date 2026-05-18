@@ -66,7 +66,7 @@ from src.chain_reply_bot import safe_run_chain_reply_cycle
 from src.youtube_brief_bot import safe_run_youtube_brief_cycle
 from src.morning_recap_bot import safe_run_morning_recap_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
-from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE
+from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE, _LIVE_STRATEGY_FILE as LIVE_STRATEGY_FILE
 
 
 def _engagement_skip_rate() -> float:
@@ -116,23 +116,31 @@ def should_skip_engagement() -> bool:
     return random.random() < _engagement_skip_rate()
 
 
+def _cadence(minutes: int) -> int:
+    """Apply live_strategy.cadence_factor so changes take effect WITHOUT
+    a restart. The strategy file is re-read on every call (config.py).
+    factor < 1 = faster, > 1 = slower. Floored at 1 minute."""
+    from src.config import get_live_cadence_factor
+    factor = get_live_cadence_factor(1.0)
+    return max(1, int(round(minutes * factor)))
+
+
 def post_interval_minutes() -> int:
-    """News cadence. 2026-05-16: cranked roughly 40% across the board —
-    user wants more shots on goal (target 40 news/day, 16 hot takes/day).
-    Same-day freshness cap (24h) still binds quality so this just buys
-    more attempts during prime windows."""
+    """News cadence. cadence_factor from live_strategy.json applied LIVE
+    via _cadence() — change the file and the next reschedule picks it up
+    with no bot restart needed."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 12 or 13 <= hour < 16:
-        return random.randint(20, 35)
+        return _cadence(random.randint(20, 35))
     elif 7 <= hour < 9 or 16 <= hour < 19:
-        return random.randint(28, 45)
+        return _cadence(random.randint(28, 45))
     elif 19 <= hour < 23:
-        return random.randint(35, 55)
+        return _cadence(random.randint(35, 55))
     elif 23 <= hour or hour < 4:
-        return random.randint(60, 90)
+        return _cadence(random.randint(60, 90))
     elif 4 <= hour < 7:
-        return random.randint(40, 65)
-    return random.randint(30, 50)
+        return _cadence(random.randint(40, 65))
+    return _cadence(random.randint(30, 50))
 
 
 def reply_interval_minutes() -> int:
@@ -148,34 +156,32 @@ def reply_interval_minutes() -> int:
 
 
 def engage_interval_minutes() -> int:
-    """More frequent presence in influencer notifications."""
+    """More frequent presence in influencer notifications. cadence applied."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return random.randint(6, 12)
-    return random.randint(12, 18)
+        return _cadence(random.randint(6, 12))
+    return _cadence(random.randint(12, 18))
 
 
 def direct_reply_interval_minutes() -> int:
-    """Primary response path: visit targets often enough to land early.
-    2026-05-16: tighter cadence (was 6-12 peak / 12-18 off) — Claude is
-    fast (3s/call) and replies are the highest-leverage follower mover."""
+    """Primary response path. cadence_factor applied LIVE."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return random.randint(4, 7)
-    return random.randint(8, 13)
+        return _cadence(random.randint(4, 7))
+    return _cadence(random.randint(8, 13))
 
 
 def early_bird_interval_minutes() -> int:
-    """Early-bird replies are highest-upside; scan aggressively."""
+    """Early-bird replies — highest-upside, scan aggressively. cadence applied."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return random.randint(2, 4)
-    return random.randint(4, 7)
+        return _cadence(random.randint(2, 4))
+    return _cadence(random.randint(4, 7))
 
 
 def roast_interval_minutes() -> int:
-    """Roasts use AI; keep them occasional."""
-    return random.randint(45, 75)
+    """Roasts use AI; keep them occasional. cadence applied."""
+    return _cadence(random.randint(45, 75))
 
 
 def _graceful_shutdown(signum, frame):
@@ -855,6 +861,89 @@ def main():
             safe_run_morning_recap_cycle,
             trigger=IntervalTrigger(hours=1),
             id="morning_recap_job",
+        )
+
+        # ============================================================
+        # HOT-RELOAD WATCHDOG (user mandate 2026-05-18 "I want the
+        # strategy to auto adjust while bot is running — I dont want
+        # to need to restart the script to have the new strategy bro,
+        # like fully autonomous").
+        # ============================================================
+        # Fixed-interval jobs that don't self-reschedule still need to
+        # respond to live_strategy.json changes. This watchdog checks
+        # the file's mtime every 2 min; on change it re-applies
+        # cadence_factor to every fixed-interval job's trigger via
+        # scheduler.reschedule_job(). Self-rescheduling jobs (post,
+        # reply, engage, early_bird, roast, direct_reply) already pick
+        # up changes via _cadence() on their next reschedule.
+        FIXED_JOB_BASE_MINUTES = {
+            "quote_tweet_job": 12,
+            "retweet_job": 5,
+            "like_job": 10,
+            "boost_job": 30,
+            "viral_followup_job": 15,
+            "followback_job": 45,
+            "pin_job": 180,            # 3h
+            "spike_job": 8,
+            "breakout_job": 5,
+            "spicy_job": 40,
+            "mega_watch_job": 1.5,
+            "chain_reply_job": 30,
+            "follow_blast_job": 20,
+            "replyback_job": 5,
+        }
+        from src.config import get_live_cadence_factor as _gcf
+        _strategy_watchdog_state = {"mtime": 0.0, "last_factor": _gcf(1.0)}
+
+        def safe_apply_strategy_changes():
+            """Hot-reload: detect live_strategy.json edits and reschedule
+            fixed-interval jobs with the new cadence_factor."""
+            try:
+                m = os.path.getmtime(LIVE_STRATEGY_FILE)
+            except OSError:
+                return
+            if m == _strategy_watchdog_state["mtime"]:
+                return
+            _strategy_watchdog_state["mtime"] = m
+            factor = _gcf(1.0)
+            if abs(factor - _strategy_watchdog_state["last_factor"]) < 0.01:
+                # mtime changed but cadence_factor didn't — caps/topic_focus
+                # may have changed and those are already hot-read on every
+                # get_live_cap call, no rescheduling needed.
+                _strategy_watchdog_state["last_factor"] = factor
+                log.info(
+                    f"[STRATEGY-RELOAD] live_strategy.json changed but "
+                    f"cadence_factor stable at {factor} — caps refresh is automatic."
+                )
+                return
+            _strategy_watchdog_state["last_factor"] = factor
+            log.info(
+                f"[STRATEGY-RELOAD] cadence_factor → {factor} — "
+                f"rescheduling {len(FIXED_JOB_BASE_MINUTES)} fixed-interval jobs."
+            )
+            for job_id, base in FIXED_JOB_BASE_MINUTES.items():
+                new_int = max(1, round(base * factor, 2))
+                try:
+                    scheduler.reschedule_job(
+                        job_id, trigger=IntervalTrigger(minutes=new_int)
+                    )
+                    log.info(f"[STRATEGY-RELOAD]   {job_id}: {base}min × {factor} = {new_int}min")
+                except Exception as e:
+                    # Job may not exist if its enabling flag was off — fine.
+                    log.info(f"[STRATEGY-RELOAD]   {job_id}: skipped ({e})")
+
+        def _safe_strategy_watchdog_outer():
+            try:
+                safe_apply_strategy_changes()
+            except Exception:
+                log.info("[STRATEGY-RELOAD] watchdog error:")
+                traceback.print_exc()
+
+        log.info("Strategy hot-reload watchdog: live_strategy.json → live cadence changes (every 2 min, no restart).")
+        scheduler.add_job(
+            _safe_strategy_watchdog_outer,
+            trigger=IntervalTrigger(minutes=2),
+            id="strategy_reload_job",
         )
 
     # Autonomy audit — print which adapt + push hooks are active so the
