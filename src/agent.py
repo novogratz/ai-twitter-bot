@@ -66,20 +66,24 @@ def _news_body_too_long(tweet: str, src_url: str) -> bool:
 
 
 def _news_body_bad_format(tweet: str, src_url: str) -> bool:
-    """Accept a tight single block OR 2-3 blocks separated by a blank line.
-    2026-05-14: relaxed — when the model writes one screenshot-worthy sentence
-    with the punchline baked in, reject was throwing away the better version
-    and forcing a slow hot-take fallback. _news_body_too_long is the real
-    length guard."""
+    """Require 2 or 3 blocks separated by a blank line. 2026-05-18: re-tightened
+    from the 2026-05-14 'tight single block OK' loosening because the bot was
+    shipping walls of text that read badly. User feedback: "first you need to
+    \\n between two sentences". A single-block tweet is allowed ONLY if it's
+    one short sentence (< 90 chars after URL-strip)."""
     body = (tweet or "").replace(src_url or "", "").strip()
     if not body:
         return True
     non_empty = [ln.strip() for ln in body.splitlines() if ln.strip()]
-    if "\n\n" in body:
-        if len(non_empty) < 2 or len(non_empty) > 3:
-            return True
-        return any(len(line) > _MAX_NEWS_LINE_CHARS for line in non_empty)
-    return False
+    compact_len = len(re.sub(r"\s+", " ", body).strip())
+    if "\n\n" not in body:
+        # Allow only short single-sentence tweets without a break.
+        if compact_len <= 90 and len(non_empty) == 1:
+            return False
+        return True
+    if len(non_empty) < 2 or len(non_empty) > 3:
+        return True
+    return any(len(line) > _MAX_NEWS_LINE_CHARS for line in non_empty)
 
 PROMPT_TEMPLATE = """Tu es @cryptoiadecode. La voix FR la plus sharp sur Crypto + IA — et tu en es CONSCIENT. Tu écris comme un influenceur reconnu, pas comme un bot timide. Tu prends position. Tu signes. Tu assumes.
 

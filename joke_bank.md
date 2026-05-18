@@ -1,8 +1,9 @@
-# Joke bank — auto-curated from @cryptoiadecode's own winners.
-# Generated 2026-05-18T09:58. Top 30 of last 14d (≥4 likes).
-# Prompts pull 5 random entries from this file each cycle so the
-# voice EVOLVES with what hits, instead of recycling 7 hardcoded
-# exemplars forever.
+# Joke bank — auto-curated from top-engagement tweets the bot WATCHED
+# (i.e. real tweets by other accounts in our niche, NOT our own posts).
+# Generated 2026-05-18T12:32. Top 30 of last 14d (≥4 likes).
+# Filtered to exclude our own posts so we don't recycle our own
+# hallucinations as exemplars (bug 2026-05-18: 'DeFi United' was
+# invented in April, then re-injected via this bank for weeks).
 
 - (287 likes / 376000 views) "Les moniteurs de chaîne de pensée sont une couche clé de défense contre le désalignement des agents d'IA. Pour préserver la surveillabilité, nous évitons de pénaliser le raisonnement désaligné pendant"
 - (199 likes / 423000 views) "JUST IN: Nintendo stock crashes -12%."

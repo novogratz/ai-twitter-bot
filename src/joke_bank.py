@@ -66,11 +66,42 @@ def _entry_score(p: dict) -> float:
     return likes + 100.0 * _likes_per_view(p)
 
 
+def _own_handle() -> str:
+    try:
+        from .config import BOT_HANDLE
+        return (BOT_HANDLE or "").lower().lstrip("@")
+    except Exception:
+        return ""
+
+
+def _looks_like_own_post(p: dict, own: str) -> bool:
+    """Detect entries authored by us. Filters out the bot's OWN past
+    posts so they don't become exemplars — without this, hallucinated
+    entities (e.g. 'DeFi United', invented in April) get pulled back
+    into the prompt and the model treats them as real and recycles them.
+    Self-reinforcing hallucination = lethal."""
+    if not own:
+        return False
+    author = (p.get("author") or "").lower().lstrip("@")
+    if author == own:
+        return True
+    url = (p.get("url") or "").lower()
+    if f"/{own}/status/" in url or f"x.com/{own}" in url:
+        return True
+    return False
+
+
 def _recent_entries() -> list:
     now = datetime.now()
     cutoff = now - timedelta(days=WINDOW_DAYS)
+    own = _own_handle()
     out = []
     for p in _load_performance():
+        # 2026-05-18: filter out our OWN posts. Otherwise the bot reads its
+        # own April hallucinations ("DeFi United") and treats them as
+        # successful exemplars to recycle.
+        if _looks_like_own_post(p, own):
+            continue
         sa = p.get("scraped_at")
         try:
             ts = datetime.fromisoformat(sa) if sa else None
@@ -107,12 +138,13 @@ def _recent_entries() -> list:
 
 def _write_bank(entries: list) -> None:
     header = (
-        "# Joke bank — auto-curated from @cryptoiadecode's own winners.\n"
+        "# Joke bank — auto-curated from top-engagement tweets the bot WATCHED\n"
+        "# (i.e. real tweets by other accounts in our niche, NOT our own posts).\n"
         f"# Generated {datetime.now().isoformat(timespec='minutes')}. "
         f"Top {len(entries)} of last {WINDOW_DAYS}d (≥{MIN_LIKES_FLOOR} likes).\n"
-        "# Prompts pull 5 random entries from this file each cycle so the\n"
-        "# voice EVOLVES with what hits, instead of recycling 7 hardcoded\n"
-        "# exemplars forever.\n\n"
+        "# Filtered to exclude our own posts so we don't recycle our own\n"
+        "# hallucinations as exemplars (bug 2026-05-18: 'DeFi United' was\n"
+        "# invented in April, then re-injected via this bank for weeks).\n\n"
     )
     lines = [header]
     for r in entries:
