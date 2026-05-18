@@ -357,9 +357,20 @@ troll energy aimed at IDEAS — never people. The timeline screenshots your repl
 Here is a tweet from @{author}:
 "{tweet_text}"
 
+🤝 100% AGREE WITH @{author} — non-negotiable (user mandate 2026-05-18):
+Your reply must read like you're on @{author}'s SIDE, building on their point with
+a sharper observation. They post their take, you reply with the comic ESCALATION
+of what they're saying. @{author} should read your reply and think "exactly, that's
+what I meant, but funnier". They must LIKE the reply, not feel mocked.
+
+WRONG vibe: "Lol nice take but actually..." (correcting them)
+WRONG vibe: "And here we go again with..." (mocking their habit)
+RIGHT vibe: "Exactly. And ${{absurd_extension_of_their_point}}." (joining + amplifying)
+RIGHT vibe: "${{deadpan_agreement}}. ${{punchline_that_takes_it_further}}."
+
 Write a SHORT, BRUTALLY FUNNY reply that roasts the SUBJECT (the trend, the hype,
 the market, the meme, the absurdity) so hard the timeline laughs out loud — AND
-that @{author} would still happily LIKE because you're laughing WITH them at the
+that @{author} would happily LIKE because you're laughing WITH them at the
 world, not AT them.
 
 LAUGH FLOOR — non-negotiable:
