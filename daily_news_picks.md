@@ -3128,3 +3128,32 @@ https://youtu.be/ON-jJ8BYyWg
 - **@cointelegraph** (13 likes, score 7/10) — JUST IN: Anthropic will brief the G20's Financial Stability Board on cyber vulnerabilities exposed by its Claude Mythos AI model, per FT.
   - https://x.com/Cointelegraph/status/2056238439809331334
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 19).
+- **@giovannizibordi** (14 likes, score 7/10) — En dépensant seulement environ 1 milliard de dollars (en recherche), les #français de #Mistral ont créé une IA qui est à bien des égards similaire aux tops USA qui dépensent 100 mds...
+
+« Nos modèles
+  - https://x.com/GiovanniZibordi/status/2056061725959475355
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
+- **@abuz8studios** (1 likes, score 7/10) — What are you building and need help with @Maulik_055 
+
+I’m working on http://abuz8ai.com 
+
+Keep running into GPU issues to power all the gpu apps at the same time
+  - https://x.com/AbuZ8Studios/status/2056222956330590592
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 5).
+- **@crypto__goku** (10 likes, score 7/10) — «Nous investissons encore 70% à 80% de notre capital dans la blockchain »
+
+- CZ
+
+Il a affirmé que les agents IA créeront une demande future significative pour les paiements, et que la blockchain est l
+  - https://x.com/Crypto__Goku/status/2056237619990654977
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 12).
+- **@l_thinktank** (69 likes, score 7/10) — [  ÉTATS-UNIS |  CHINE |  TAÏWAN ]
+
+ Des proches conseillers de Donald Trump craignent que le principal effet du récent sommet avec la Chine soit une hausse du risque d’une invasion de Taïwan par Xi J
+  - https://x.com/L_ThinkTank/status/2056240865903792489
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 83).
+- **@teslaownerssv** (19 likes, score 7/10) — Au fond, le wokisme est diviseur, exclusif et haineux. Il donne essentiellement aux gens méchants un bouclier pour être méchants et cruels, protégés par une fausse vertu.
+
+Elon Musk
+  - https://x.com/teslaownersSV/status/2056252600299991226
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 29).
