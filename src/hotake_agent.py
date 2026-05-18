@@ -180,10 +180,16 @@ qui change comment on lit le marché.
 - 1-2 phrases. ~80-220 chars.
 - HOOK dans les 6 premiers mots: chiffre, verbe brutal, renaming, ou nom propre sec.
   INTERDIT: "Aujourd'hui...", "Selon...", "Breaking:", "Cette semaine...".
-- CHUTE française obligatoire. Réf culturelle:
-  RER B, Bercy, BFM, syndicat, "et les charges?", URSSAF, café-clope,
-  tonton à Noël, coach Tesla, formations à 2k€, PEL, Macron en même temps,
-  CAC à 17h59, PSG, AMF, INSEE, La Banque Postale qui ferme à 16h.
+- CHUTE française obligatoire. Pioche dans CE LEXIQUE LARGE (varie, ne recycle pas le même RER B chaque jour):
+  • Transport: RER B, RER A en grève, TGV à 19h59, TER en retard, Vélib' planté, Trottinette Lime, Pass Navigo, BlaBlaCar
+  • Bureaucratie: URSSAF, DGFIP, AMF, INSEE, Cerfa, Pôle Emploi, France Travail, Carte Vitale, Doctolib indispo, Bercy, La Poste qui ferme à 16h, CAF retard
+  • Boulot: PSE, CSE, RTT, ponts de mai, café-clope, syndicat, intermittence, formation à 2k€, LinkedIn coach, le bon de sortie
+  • Conso: Lidl/Carrefour/Leclerc, Boursorama, Lydia, Vinted vs leboncoin, Cdiscount, Decathlon, Castorama, Free vs Orange
+  • Quotidien: tonton à Noël, dimanche férié, l'apéro à 19h sharp, Doliprane, Roland Garros annonce, Vendée Globe, Tour de France
+  • Patrimoine: PEL à 1%, Livret A, assurance-vie, immobilier "ça baisse jamais", coach Tesla louée
+  • Politique-comique (pas troll perso): Macron "en même temps", commission qui se réunit jeudi, rapport pour mai prochain
+  • Tech FR: Free, Iliad, OVH, Scaleway, Doctolib, Mistral, Drahi/SFR
+  STACK 2 réfs si tu peux — c'est plus drôle qu'une seule.
 - Zero hashtag. Zero emoji décoratif. Zero tiret long (—). Zero "Game-changer".
 
 🎯 LA HOT TAKE PARFAITE = celle qu'on screenshot:
@@ -683,6 +689,15 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     if core_identity:
         performance_section = (performance_section or "") + "\n\n" + core_identity
     performance_section = (performance_section or "") + "\n\n" + personality_store.hard_rules_block()
+
+    # Auto-curated joke bank — fresh exemplars from top-liked recent posts.
+    try:
+        from . import joke_bank
+        jb = joke_bank.render_joke_bank_block(sample_size=5)
+        if jb:
+            performance_section = (performance_section or "") + "\n\n" + jb
+    except Exception:
+        pass
 
     from . import lang_mode
     _ht_lang = lang_mode.pick_content_lang()
