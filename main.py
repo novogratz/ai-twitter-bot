@@ -54,6 +54,7 @@ from src.cleanup_bot import safe_run_cleanup_cycle
 from src.safari_hygiene import safe_run_session_refresh
 from src.strategy_lab_bot import safe_run_strategy_lab_cycle
 from src.joke_bank import safe_run_joke_bank_cycle
+from src.manu_bercy_bot import safe_run_manu_bercy_cycle
 from src.heartbeat_bot import safe_run_heartbeat
 from src.meta_strategy_agent import safe_run_meta_strategy_cycle
 from src.hn_signal_bot import safe_run_signal_cycle
@@ -753,6 +754,16 @@ def main():
                 safe_run_joke_bank_cycle,
                 trigger=IntervalTrigger(hours=1),
                 id="joke_bank_job",
+            )
+            # Manu de Bercy — once a day, fictional bureaucratic press
+            # release reacting to the day's AI/crypto news. Recurring
+            # signature format that becomes a meme. Internal state dedup
+            # ensures one post per day even if the job fires multiple times.
+            log.info("Manu de Bercy: daily fictional press release (signature format).")
+            scheduler.add_job(
+                safe_run_manu_bercy_cycle,
+                trigger=IntervalTrigger(hours=4),
+                id="manu_bercy_job",
             )
         else:
             log.info("Meta-strategy agent + strategy lab: disabled in Plus-safe mode.")
