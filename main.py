@@ -53,6 +53,7 @@ from src.mega_watch_bot import safe_run_mega_watch_cycle
 from src.cleanup_bot import safe_run_cleanup_cycle
 from src.safari_hygiene import safe_run_session_refresh
 from src.strategy_lab_bot import safe_run_strategy_lab_cycle
+from src.joke_bank import safe_run_joke_bank_cycle
 from src.heartbeat_bot import safe_run_heartbeat
 from src.meta_strategy_agent import safe_run_meta_strategy_cycle
 from src.hn_signal_bot import safe_run_signal_cycle
@@ -743,6 +744,15 @@ def main():
                 safe_run_strategy_lab_cycle,
                 trigger=IntervalTrigger(hours=1),
                 id="strategy_lab_job",
+            )
+            # Joke bank — rebuild joke_bank.md from top-performing recent
+            # posts every hour. News + hotake prompts pull 5 random fresh
+            # exemplars so the voice evolves with what's actually working.
+            log.info("Joke bank: auto-curate top-liked posts as live exemplars every hour.")
+            scheduler.add_job(
+                safe_run_joke_bank_cycle,
+                trigger=IntervalTrigger(hours=1),
+                id="joke_bank_job",
             )
         else:
             log.info("Meta-strategy agent + strategy lab: disabled in Plus-safe mode.")

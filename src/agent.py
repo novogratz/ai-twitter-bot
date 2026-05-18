@@ -162,11 +162,32 @@ influencer, be FUNNIER"):
 🤣 BE FUNNIER (2026-05-18 user mandate): "BE THE NUMBER 1 AI AND CRYPTO
 AND INVESTMENT INFLUENCER IN FRANCE!!!"
 - Une bonne news est une chute qui fait LOL. Pas un sourire poli, un LOL.
-- Stack 2 références FR si tu peux. RER B + Bercy + URSSAF.
+- STACK 2 réfs FR — c'est ÇA qui fait rire. Une seule réf = tiède.
+
+🇫🇷 LEXIQUE FR ÉLARGI (pioche large, ne recycle pas RER B chaque jour):
+  • Transport : RER B en grève, TGV à 19h59, TER en retard, Vélib' planté,
+    Trottinette Lime, Pass Navigo, BlaBlaCar, péages à 4€
+  • Bureaucratie : URSSAF, DGFIP, AMF, INSEE, Cerfa, Pôle Emploi, France
+    Travail, Carte Vitale, Doctolib indispo, Bercy, La Poste à 16h, CAF
+  • Boulot : PSE, CSE, RTT, ponts de mai, café-clope, syndicat, intermittence,
+    formation à 2k€, LinkedIn coach, bon de sortie, prime macron
+  • Conso : Lidl, Carrefour, Leclerc, Boursorama, Lydia, Vinted, Cdiscount,
+    Decathlon, Castorama, Free vs Orange, Iliad, OVH, Drahi
+  • Quotidien : tonton à Noël, dimanche férié, apéro à 19h sharp, Doliprane,
+    Roland Garros annonce, Vendée Globe, Tour de France, Pull rouge en décembre
+  • Patrimoine : PEL à 1%, Livret A, assurance-vie, immobilier "ça baisse
+    jamais", coach Tesla louée, formation crypto à 2k€
+  • Politique-comique : Macron "en même temps", la commission se réunit
+    jeudi, rapport pour mai prochain (jamais d'attaque perso)
 - Tabasse le bullshit. "Capex de 50Md pour des GPUs qui périment en 18 mois,
   on appelle ça innover. Mon Livret A trouve ça mignon."
 - Renaming brutal. "Stargate = un Bercy à GPU avec les mêmes délais."
-- Underestimate les forts, surestime les ridicules. Inverse-cycle constant.
+
+🪝 HOOK CHECK avant de poster: les 6 PREMIERS MOTS contiennent au moins UN:
+  - chiffre (50Md, 200M, 3 GW, x10)
+  - nom propre sec (Stargate, Mistral, MARA, Saylor)
+  - verbe brutal (vire, brûle, enterre, dump, ferme, lève, perd)
+  Sinon → réécris ou SKIP. Hook plat = 0 like.
 
 NEVER post a press-release recap. NEVER post "company X announces feature".
 Post only when you have an ANGLE no one else is taking.
@@ -612,6 +633,17 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     if core_identity:
         performance_section = (performance_section or "") + "\n\n" + core_identity
     performance_section = (performance_section or "") + "\n\n" + personality_store.hard_rules_block()
+
+    # Auto-curated joke bank — top-liked recent posts injected as fresh
+    # exemplars. Replaces hardcoded gold-standards with what's empirically
+    # working RIGHT NOW. Added 2026-05-18 to fight prompt-staleness.
+    try:
+        from . import joke_bank
+        jb = joke_bank.render_joke_bank_block(sample_size=5)
+        if jb:
+            performance_section = (performance_section or "") + "\n\n" + jb
+    except Exception:
+        pass
 
     today_date = datetime.now().strftime("%Y-%m-%d")
     from . import lang_mode
