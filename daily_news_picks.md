@@ -3278,3 +3278,28 @@ Depuis l'approbation de la loi Clarity, $BTC a chuté de -$5 400, effaçant 110 
 Téhéran étudie un plan pour lever un droit de passage sur le détroit d'Hormuz via un système d'assurance numérique. Le prix de la sécurité
   - https://x.com/MRadarCrypto/status/2056306549002473668
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 12).
+- **@wublockchain** (9 likes, score 7/10) — Bitmine ETH Holdings Reach 5.28M Tokens, Acquires 71,672 ETH in One Week  
+
+Bitmine Immersion Technologies announced its ETH holdings have increased to 5.28 million ETH, representing 4.37% of Ethereum
+  - https://x.com/WuBlockchain/status/2056353224248955313
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 21).
+- **@cryptogoos** (38 likes, score 8/10) — BITCOIN JUST GOT REJECTED FROM THE BEAR FLAG.
+
+Last time this happened, $BTC dumped $40,000 in 21 days.
+
+Three weeks. Straight down.
+
+Longing here is playing dangerous games.
+  - https://x.com/cryptogoos/status/2056348575635026422
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 56).
+- **@bitcoinmagazine** (46 likes, score 8/10) — JUST IN: Bloomberg reports that Iran started a Bitcoin-backed insurance service for shipping companies wanting to transit the Strait of Hormuz 
+
+It could reportedly generate more than $10 BILLION in r
+  - https://x.com/BitcoinMagazine/status/2056354484532428877
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 68).
+- **@polymarketmoney** (8 likes, score 7/10) — $META is reportedly preparing to cut ~8,000 jobs and cancel 6,000 open roles as it redirects spending toward its massive AI infrastructure buildout.
+  - https://x.com/PolymarketMoney/status/2056353826035384757
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 20).
+- **@cointelegraph** (22 likes, score 7/10) — LATEST: Crypto investment products saw $1.07B in outflows last week.
+  - https://x.com/Cointelegraph/status/2056354179942150365
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 40).
