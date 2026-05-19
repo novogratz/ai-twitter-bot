@@ -3415,3 +3415,32 @@ The next halving is estimated to happen in late March/early April 2028.
 THEY HAVE OVER 7,500 BITCOIN IN THEIR RESERVE
   - https://x.com/Bitcoinconfasia/status/2056514350840426801
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 7).
+- **@lookonchain** (60 likes, score 8/10) — Trois piratages majeurs en seulement 4 jours !
+
+Le 15 mai, #THORChain a été exploité, avec des fonds volés dépassant 10 M$.
+
+Le 18 mai, le pont Verus-Ethereum (@VerusCoin) a été piraté, avec environ 1
+  - https://x.com/lookonchain/status/2056529579813343720
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 88).
+- **@wliang** (94 likes, score 7/10) — Plenty of people ignored me.
+
+If you didn’t, you made an insane amount.
+
+I hope you never doubt me again…
+
+March 30th $SATL was at $2.96.
+
+May 18th $SATL is at $9.54.
+
+I wouldn’t miss the next trade.
+  - https://x.com/wliang/status/2056534667965165886
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 118).
+- **@coinmarketcap** (136 likes, score 7/10) — DERNIER:  Le jeton HYPE de Hyperliquid a grimpé d'environ 5 % alors que son marché de contrats futures perpétuels pré-IPO dépasse les 120 milliards de dollars en volume total avant les inscriptions de
+  - https://x.com/CoinMarketCap/status/2056469165079138448
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 210).
+- **@cointelegraph** (75 likes, score 7/10) — URGENT : Meta prévoit de réduire de 20 % ses effectifs mondiaux et de réaffecter 7 000 employés à des initiatives d'IA dans le cadre d'une restructuration majeure prévue pour le 20 mai, selon Reuters.
+  - https://x.com/Cointelegraph/status/2056530341523792239
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 115).
+- **@watcherguru** (5009 likes, score 7/10) — INFO URGENTE :  OpenAI et son PDG Sam Altman déclarés non responsables dans le procès intenté par Elon Musk.
+  - https://x.com/WatcherGuru/status/2056428022941778043
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 6327).
