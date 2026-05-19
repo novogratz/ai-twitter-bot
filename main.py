@@ -126,21 +126,21 @@ def _cadence(minutes: int) -> int:
 
 
 def post_interval_minutes() -> int:
-    """News cadence. cadence_factor from live_strategy.json applied LIVE
-    via _cadence() — change the file and the next reschedule picks it up
-    with no bot restart needed."""
+    """News cadence — 2026-05-19: pivoted to 3 LONG deep-dives/day in
+    'Le Décode #N' series. Target windows in Paris time:
+      - Morning brief  ~8h Paris (2h EST)
+      - Midday update  ~13h Paris (7h EST)
+      - Evening recap  ~19h Paris (13h EST)
+    Polling cadence: every ~2h during waking hours, ~4h overnight.
+    MAX_NEWS_PER_DAY=3 caps actual posts; the cadence just defines
+    when the bot CHECKS whether to ship today's next deep-dive."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 9 <= hour < 12 or 13 <= hour < 16:
-        return _cadence(random.randint(20, 35))
-    elif 7 <= hour < 9 or 16 <= hour < 19:
-        return _cadence(random.randint(28, 45))
-    elif 19 <= hour < 23:
+    # Paris peaks: 8am=2h EST, 1pm=7h EST, 7pm=13h EST
+    if hour in (1, 2, 3, 6, 7, 8, 12, 13, 14):
         return _cadence(random.randint(35, 55))
-    elif 23 <= hour or hour < 4:
+    if 0 <= hour < 18:
         return _cadence(random.randint(60, 90))
-    elif 4 <= hour < 7:
-        return _cadence(random.randint(40, 65))
-    return _cadence(random.randint(30, 50))
+    return _cadence(random.randint(120, 180))  # overnight check rarely
 
 
 def reply_interval_minutes() -> int:
