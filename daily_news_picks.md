@@ -3813,3 +3813,23 @@ Nvidia, seule  :
 Disponible dès maintenant avec le Ray tracing et le NVIDIA DLSS 4 avec la Génération Multi-Images.
   - https://x.com/NVIDIAGeForceFR/status/2056761122695377287
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 8).
+- **@stockmktnewz** (150 likes, score 7/10) — GOOGLE $GOOGL VIENT D'ANNONCER QU'IL *BIENTÔT RIRA DE NOUVELLES LUNETTES INTELLIGENTES AVEC UN ÉCRAN SUR L'ÉCRAN
+  - https://x.com/StockMKTNewz/status/2056805937466450226
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 198).
+- **@polynoamial** (1879 likes, score 7/10) — Andrej @karpathy est de retour dans la course ! J’aurais adoré qu’il réintègre @OpenAI, mais je suis ravi qu’il soit dans n’importe quel laboratoire de pointe qui fait avancer le domaine. Il est facil
+  - https://x.com/polynoamial/status/2056768036837949914
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1947).
+- **@boyer_gille** (9 likes, score 7/10) — Absorb trading insights from many senior market players, @3X_ABC has super sharp market insight. His timely market tips make trend capturing effortless 
+
+stock Dividend $AMST  
+#QQQ #NASDAQ $SBUX $MCD
+  - https://x.com/boyer_gille/status/2056816167071735876
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 27).
+- **@cryptogoos** (17 likes, score 7/10) — TENSIONS CROISSANTES :
+
+ La France déclare que cette guerre marque essentiellement la fin du siècle américain.
+  - https://x.com/cryptogoos/status/2056808355151409311
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 33).
+- **@boris_gauty** (5 likes, score 7/10) — J'aime tellement le fait d'être un ingénieur logiciel  je n'aurai pas rêvé mieux comme métier
+  - https://x.com/Boris_Gauty/status/2056810353552454095
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 5).
