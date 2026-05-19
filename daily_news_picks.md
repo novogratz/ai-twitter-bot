@@ -3596,3 +3596,50 @@ En plus de tout ce que je vous ai expliqué dans les deux précédents tweets, v
 Le gap CME, c'est comme un aimant,
   - https://x.com/AlanTradingYT/status/2056600874248810903
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 7).
+- **@cryptotice_** (40 likes, score 7/10) — BREAKING:
+
+Kevin Warsh just turned on the money printer.
+
+$6,576,000,000.
+Today. 9:00 AM ET.
+
+Right before market open.
+
+The new Fed Chair. In his first week.
+Already injecting billions before the ope
+  - https://x.com/CryptoTice_/status/2056615837281525993
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 48).
+- **@cryptorover** (111 likes, score 7/10) — IRREEL :
+
+L'initié de Trump, le gros investisseur, vient d'ouvrir une position courte de 12,5 millions de dollars.
+
+Juste avant l'échéance de 2-3 jours sur l'Iran.
+
+Taux de réussite de 100 %. Jamais e
+  - https://x.com/cryptorover/status/2056626406373642727
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 195).
+- **@deepwhale** (4 likes, score 7/10) — ETF FLOWS | 18 May 2026
+
+ ETF $BTC : -648.64 M$
+ ETF $ETH : -86.31 M$
+
+ ETF $HYPE : +4.42 M$
+ ETF $SOL : +2.06 M$
+ ETF $DOGE : +0.86 M$
+ ETF $XRP : +0.75 M$
+ ETF $LINK : +0.34 M$
+
+ ETF $HBAR : 0
+ ETF
+  - https://x.com/DeepWhale/status/2056621487205781677
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6).
+- **@reuters** (10 likes, score 7/10) — Since 2023, Iran’s largest crypto exchange Nobitex processed at least $317 million on BNB Chain, a blockchain formerly known as Binance Smart Chain founded by Binance, the world’s biggest crypto excha
+  - https://x.com/Reuters/status/2056626356847321538
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 20).
+- **@evanluthra** (13 likes, score 7/10) — ALERTE
+
+Un autre exploit majeur vient de faire surface, et celui-ci impliquerait prétendument 76,6 M$ sur le protocole Echo de Monad.
+
+L'attaquant détiendrait encore plus de 73 M$ après avoir déplacé
+  - https://x.com/EvanLuthra/status/2056625243008233927
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 17).
