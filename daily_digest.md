@@ -310,3 +310,13 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top reply targets: @Graphseo=15, @FlasheurInvest=13, @NCheron_bourse=11, @LeJournalDuCoin=10, @LesEchos=10
 
 **Followers we follow** (running total): 166
+
+## 2026-05-18
+
+**Activity** — total actions: 409
+  - by type: reply=244, retweet=119, quote=22, post=16, hotake=8
+  - top sources: PROFILE-ALWAYS=120, RETWEET=83, MEGA=46, FAVORITE_PROFILE=36, QUOTE=22, SEARCH-FR-HOT=20, FOLLOWING=14, FEED=12
+  - comedy patterns: FR_ANCHOR=18, RENAME=6, DIALOGUE=4, METAPHOR=3, UNDERSTATEMENT=1
+  - top reply targets: @LeJournalDuCoin=17, @McnallieM=15, @LesEchos=14, @Graphseo=14, @FlasheurInvest=12
+
+**Followers we follow** (running total): 166
