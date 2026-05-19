@@ -3444,3 +3444,27 @@ I wouldn’t miss the next trade.
 - **@watcherguru** (5009 likes, score 7/10) — INFO URGENTE :  OpenAI et son PDG Sam Altman déclarés non responsables dans le procès intenté par Elon Musk.
   - https://x.com/WatcherGuru/status/2056428022941778043
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 6327).
+- **@bitcoin** (282 likes, score 9/10) — $76,977.08
+
+#Bitcoin
+  - https://x.com/Bitcoin/status/2056536462233866276
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 448).
+- **@bitcoinfear** (72 likes, score 8/10) — Bitcoin Fear and Greed Index is 25. Fear
+Current price: $77,206
+  - https://x.com/BitcoinFear/status/2056532824174239961
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 76).
+- **@cryptogoos** (9 likes, score 7/10) — "I've never been more bullish on Bitcoin in my life."
+
+Eric Trump says Bitcoin will reach $1,000,000.
+  - https://x.com/cryptogoos/status/2056551664321192186
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 11).
+- **@coinbureau** (200 likes, score 8/10) — LES BANQUES DU MINNESOTA PEUVENT DÉSORMAIS GARDER LE BITCOIN EN CONSIGNE
+
+Le gouverneur du Minnesota, Tim Walz, a signé le projet de loi de la Chambre 3709, autorisant les banques et les caisses de cr
+  - https://x.com/coinbureau/status/2056498816019300383
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 252).
+- **@wolf_bitcoin_** (4 likes, score 7/10) — ERIC TRUMP ON WHY EVERY FINANCIAL INSTITUTION ON EARTH HATES BITCOIN
+
+"You could send me a million dollars in Bitcoin right now, it'd hit my wallet in 3 seconds, and you practically pay zero fees."
+  - https://x.com/WOLF_Bitcoin_/status/2056540344301306354
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 10).
