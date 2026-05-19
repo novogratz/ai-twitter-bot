@@ -3522,3 +3522,22 @@ Le protocole Echo sur Monad a été apparemment exploité après qu’un attaqua
 - **@coinmarketcap** (203 likes, score 7/10) — DERNières NOUVELLES :  Bernstein affirme que le compromis sur le rendement de la loi CLARITY favorise le modèle de revenus de flottement de Circle alors que l'offre de stablecoins dépasse les 300 mill
   - https://x.com/CoinMarketCap/status/2056421857771782622
   - **WHY**: Source fiable + impact concret (score signal 1, engagement 281).
+
+## 2026-05-19
+- **@pete_rizzo_** (128 likes, score 7/10) — 5 000 MILLIARDS DE DOLLARS LE PDG DE NVIDIA JENSEN HUANG A DÉCLARÉ EN DIRECT SUR CNBC QUE L'IA AURA BESOIN D'UN « SYSTÈME DE RÉFÉRENCE » POUR VÉRIFIER CE QUI EST VRAI
+
+DIRE À VOIX HAUTE CE QUI EST TEN
+  - https://x.com/pete_rizzo_/status/2056559465185636474
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 152).
+- **@cointelegraph** (76 likes, score 7/10) — TODAY: Nvidia delivers its first Vera CPUs built for AI agents to Anthropic, OpenAI, Oracle, and SpaceXAI.
+  - https://x.com/Cointelegraph/status/2056570550861053967
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 126).
+- **@techdevnotes** (48 likes, score 7/10) — Elon with NVIDIA Vera CPU
+  - https://x.com/techdevnotes/status/2056543694245744763
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 52).
+- **@cryptogoos** (14 likes, score 7/10) — Le conseiller crypto de la Maison Blanche, Patrick Witt, déclare que l'adoption de la loi CLARITY permettrait à l'industrie crypto d'obtenir environ 90 % de ce dont elle a besoin.
+  - https://x.com/cryptogoos/status/2056582617839935496
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 18).
+- **@iren_ltd** (494 likes, score 7/10) — « L'opportunité avec ces partenaires est de travailler en étroite collaboration et de développer l'ensemble de l'écosystème — de la terre, de l'acier, du béton, jusqu'aux utilisateurs finaux de cette
+  - https://x.com/IREN_Ltd/status/2056540650254852110
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 526).
