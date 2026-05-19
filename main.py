@@ -10,6 +10,7 @@ Usage:
     python main.py --dry-run    Print what would happen without posting
 """
 import argparse
+import os
 import random
 import signal
 import sys
