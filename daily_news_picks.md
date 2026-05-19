@@ -3390,3 +3390,28 @@ ARE YOU READY?
 @Cle
   - https://x.com/bfmbusiness/status/2056441118393254109
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 12).
+- **@coinmarketcap** (430 likes, score 9/10) — LATEST :  La deuxième plus grande société de trésorerie Bitcoin en Europe, Capital B, a acquis 192 Bitcoin pour 15,2 millions de dollars, portant ses avoirs totaux à 3 135 BTC.
+  - https://x.com/CoinMarketCap/status/2056391163255370091
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 566).
+- **@fundstrat** (0 likes, score 7/10) — 1/
+Si l'on se demande pourquoi Ethereum $ETH subit une pression vendeuse :
+
+- pour moi, la hausse des prix du pétrole est le plus gros obstacle
+- la corrélation inverse entre ETH et le pétrole est la
+  - https://x.com/fundstrat/status/2056208452897174003
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 508).
+- **@timwarrentrades** (36 likes, score 7/10) — Je ne vais pas citer de noms, mais quelqu’un que je respecte vraiment vraiment vient de me dire qu’Ethereum se dirige vers 400 $…
+
+Sont-ils fous ou géniaux ?
+  - https://x.com/TimWarrenTrades/status/2056398420269490367
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 130).
+- **@bitcoinnewscom** (29 likes, score 7/10) — We are less than 100,000 blocks away from the next Bitcoin halving. 
+
+The next halving is estimated to happen in late March/early April 2028.
+  - https://x.com/BitcoinNewsCom/status/2056508321561977224
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 35).
+- **@bitcoinconfasia** (5 likes, score 7/10) — ERIC TRUMP'S AMERICAN BITCOIN JUST BECAME THE 15TH LARGEST PUBLIC BITCOIN TREASURY IN THE WORLD 
+
+THEY HAVE OVER 7,500 BITCOIN IN THEIR RESERVE
+  - https://x.com/Bitcoinconfasia/status/2056514350840426801
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7).
