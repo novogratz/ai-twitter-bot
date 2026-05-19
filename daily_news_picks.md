@@ -3564,3 +3564,35 @@ TRÈS HAUSSIER POUR BTC
 - **@zeffmax** (624 likes, score 7/10) — I'm seeing lots of confusion about why the statute of limitations issue came to a trial at all. Musk and OpenAI disagreed about when Musk could have reasonably become convinced that OpenAI was "steali
   - https://x.com/ZeffMax/status/2056476111459213511
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 686).
+- **@crypto__goku** (13 likes, score 7/10) — GM Saiyans ! 
+
+«Profite du voyage avant de penser à l’arrivée. »
+----
+$BTC : 76.868 $
+$ETH : 2.133 $
+#BTC Fear & Greed index : 25
+#Bitcoin Dominance : 60%
+  - https://x.com/Crypto__Goku/status/2056598898832011550
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 21).
+- **@nvidiageforce** (1141 likes, score 7/10) — In 007 First Light, there’s always more than one way upstairs.
+
+What’s your Bond move?
+
+A) Charm your way past security
+B) Bluff your way in thanks to a tardy guard
+C) Slip by with a well-timed gadget
+  - https://x.com/NVIDIAGeForce/status/2056404564434186517
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 2981).
+- **@business** (148 likes, score 7/10) — The Trump administration is poised to roll out a plan for trading digital versions of securities that could reshape the landscape of the American stock market as it continues to loosen the rules for f
+  - https://x.com/business/status/2056529259431133273
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 178).
+- **@ft** (11 likes, score 7/10) — SpaceX IPO adds air to the Silicon Valley ‘genius bubble’ https://ft.trib.al/RgRng1h  | opinion
+  - https://x.com/FT/status/2056606967506911620
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 17).
+- **@alantradingyt** (7 likes, score 7/10) — #Bitcoin CME
+
+En plus de tout ce que je vous ai expliqué dans les deux précédents tweets, voici un autre point qui peut nous aider à valider la semaine rapidement.
+
+Le gap CME, c'est comme un aimant,
+  - https://x.com/AlanTradingYT/status/2056600874248810903
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 7).
