@@ -3755,3 +3755,21 @@ Un niveau qui soutenait le titre depuis plusieurs mois
 Techniquement, cette incursion marque une dégradation de la structure
   - https://x.com/NCheron_bourse/status/2056722428764578148
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 50).
+- **@tedpillows** (128 likes, score 9/10) — En mars 2020, $BTC a touché un plus bas à 10 % sous la moyenne mobile exponentielle 300 semaines.
+
+En novembre 2022, Bitcoin a touché un plus bas à 15 % sous la moyenne mobile exponentielle 300 semain
+  - https://x.com/TedPillows/status/2056752459633025236
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 244).
+- **@coinmarketcap** (93 likes, score 8/10) — DERNIER :  Les ETF Bitcoin spot américains ont enregistré 648,6 millions de dollars de sorties nettes lundi, la plus importante figure sur une seule journée depuis janvier, selon SoSoValue.
+  - https://x.com/CoinMarketCap/status/2056739205271736656
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 205).
+- **@cointelegraph** (142 likes, score 7/10) — URGENT : Strive a acheté 382 $BTC pour 30,3 M$, portant le total des avoirs à 15 391 $BTC.
+  - https://x.com/Cointelegraph/status/2056751935127007693
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 222).
+- **@cointelegraph** (42 likes, score 7/10) — MISE À JOUR : Elon Musk prévoit de faire appel après qu’un jury américain a statué contre lui dans son procès contre OpenAI.
+  - https://x.com/Cointelegraph/status/2056756833579122894
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 70).
+- **@dr__bourse** (13 likes, score 7/10) — HERMES
+On fait quoi avec les 1600 ?
+  - https://x.com/DR__Bourse/status/2056658492795019448
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 23).
