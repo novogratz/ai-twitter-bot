@@ -3689,3 +3689,69 @@ Then in Shanghai, a truck rear-ended a Model Y. The Tesla barely moved.
 Safe and icon
   - https://x.com/MarioNawfal/status/2056664910248169889
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 10).
+- **@coinbureau** (35 likes, score 8/10) — LUCK ALONE CAN'T EXPLAIN THIS...
+
+9 connected Polymarket accounts.
+$2.4M in profits.
+Bets almost exclusively on U.S. military operations.
+A 98% win rate.
+
+Now convince me it isn’t insider trading.
+  - https://x.com/coinbureau/status/2056678751484985677
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 55).
+- **@namcios** (30 likes, score 7/10) — O criador do ChatGPT colocou $180 milhões de dólares do próprio bolso numa única empresa.
+
+E não tem nada a ver com IA.
+
+A empresa se chama Retro Biosciences. A missão: adicionar 10 anos saudáveis à v
+  - https://x.com/namcios/status/2056651493445366264
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 30).
+- **@wolf_bitcoin_** (2 likes, score 7/10) — $CRCL CEO JEREMY ALLAIRE (@jerallaire) ON WHAT THE NEXT 3-5 YEARS LOOKS LIKE 
+
+"We're going to see literally BILLIONS of AI agents using crypto and stablecoins to move value at lightning speed."
+
+
+Bil
+  - https://x.com/WOLF_Bitcoin_/status/2056676244125843783
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6).
+- **@alexsoyes** (0 likes, score 7/10) — "Les ingénieurs chez #Mistral n'écrivent plus une seule ligne de code."
+
+> Arthur Mensch, devant l'Assemblée Nationale. 12 mai 2026.
+
+Le CEO du champion français de l'IA devant les députés :
+
+- Les in
+  - https://x.com/alexsoyes/status/2056255335988383979
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 10).
+- **@graphseo** (12 likes, score 7/10) — Moins les gens ont d'enfants et plus ils sont sujet à la spéculation en bourse et à prendre plus de risques que la moyenne avec enfants. 
+
+En Corée du Sud, les comptes bancaires se vident pour acheter
+  - https://x.com/Graphseo/status/2056671006022869417
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 20).
+- **@24hpujadas** (97 likes, score 7/10) — : « Scandale du périscolaire : qui savait ? », le parti pris politique Ruth Elkrief @ruthelkrief
+
+« 1/5e de la totalité des établissements parisiens savait. » 
+
+#24hPujadas #LCI #Ecole #Périscolaire
+  - https://x.com/24hPujadas/status/2056438121810829368
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 133).
+- **@analystecurieux** (57 likes, score 7/10) — Air Liquide procédera à son attribution d’actions gratuites le 10 juin 2026. 
+
+L’assemblée générale du 5 mai 2026 a validé une attribution à raison de 1 action gratuite pour 10 détenues.
+
+Pour en béné
+  - https://x.com/analystecurieux/status/2056679926028284206
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 79).
+- **@cab2626** (9 likes, score 7/10) — Un milliard et 1/2 en moins à McKinsey sur les 41 versés à vos ami et vous pouvez payer l’amende au lieu de penser à des inutilités pareils pensez à ce que les français ont besoin pour survivre et sur
+  - https://x.com/cab2626/status/2056735010388955621
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 11).
+- **@lebinancefr** (3 likes, score 7/10) — Sur quel niveau vous attendez le $BTC dans les prochains jours ?
+  - https://x.com/LeBinanceFR/status/2056736533013569602
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 5).
+- **@ncheron_bourse** (40 likes, score 7/10) — Hermès vient de casser une importante zone de support autour des 1 650€.
+
+Un niveau qui soutenait le titre depuis plusieurs mois
+
+Techniquement, cette incursion marque une dégradation de la structure
+  - https://x.com/NCheron_bourse/status/2056722428764578148
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 50).
