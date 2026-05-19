@@ -3468,3 +3468,36 @@ Le gouverneur du Minnesota, Tim Walz, a signé le projet de loi de la Chambre 37
 "You could send me a million dollars in Bitcoin right now, it'd hit my wallet in 3 seconds, and you practically pay zero fees."
   - https://x.com/WOLF_Bitcoin_/status/2056540344301306354
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 10).
+- **@dallehollywood** (21 likes, score 7/10) — $GWEI airdrop is officially live! 
+
+https://ethgas-foundation.net/token
+
+All those gas fees on Ethereum are finally paying off. Proof of pain = proof of rewards. 
+
+To qualify:  
+→ Met the Gas ID thres
+  - https://x.com/dallehollywood/status/2056568399610749246
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 21).
+- **@lmarecl** (9 likes, score 7/10) — Randomly followed @az__GZ5aZCqy and it’s been a game changer. Consistent profits with his clear, logical guidance.Following him was one of the best decisions I’ve made.
+
+#stock #Trading $AAPL 
+#AAPL #
+  - https://x.com/LMarecl/status/2056568582113218952
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 27).
+- **@trendingbitcoin** (5 likes, score 7/10) — A farm in the Netherlands is using Bitcoin mining to maintain stable temperatures inside its greenhouse.  
+
+By repurposing heat from mining rigs, the farm cuts energy waste while growing crops year-ro
+  - https://x.com/TrendingBitcoin/status/2056556948720676981
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 5).
+- **@whalepiz** (22 likes, score 7/10) — BTC is red, but miners are finding other paths.
+
+HIVE Digital just drew attention with its plan to build an AI gigafactory with up to 100,000 GPUs.
+
+Back in the day, miners only mined coins.
+
+Now they
+  - https://x.com/WhalePiz/status/2056553584079360308
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 58).
+- **@firstsquawk** (18 likes, score 7/10) — US equity futures trade lower, with Nasdaq down 0.5% and S&P 500 off 0.25%.
+  - https://x.com/FirstSquawk/status/2056558726669369515
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 28).
