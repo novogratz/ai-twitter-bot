@@ -3862,3 +3862,26 @@ Andrej Karpathy est crédité d'avoir popularisé le terme « vibecoding ».
 Après avoir travaillé en tant que membre fondateur d'OpenAI, Karp
   - https://x.com/YahooFinance/status/2056821225045778700
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 14).
+- **@bitcoinmagazine** (149 likes, score 9/10) — JUST IN : K33 Research rapporte que 60 000 $ sera probablement le « maximum drawdown » de ce marché baissier du Bitcoin 
+
+« Le marché haussier moins agressif de 2025 prépare le terrain pour un marché
+  - https://x.com/BitcoinMagazine/status/2056845661807444009
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 225).
+- **@dennis_porter_** (89 likes, score 8/10) — HUGE: Minnesota Gov. Tim Walz has signed a bill to enable banks and credit unions to custody bitcoin and digital assets for their customers.
+  - https://x.com/Dennis_Porter_/status/2056828862022005236
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 101).
+- **@adambliv** (95 likes, score 7/10) — J’ai juste passé en revue les chiffres sur les rendements du Bitcoin chaque fois qu’il se négociait autour de 1,28x sa moyenne mobile sur 208 semaines.
+
+Pourquoi est-ce que ça compte ?
+
+Parce qu’aujou
+  - https://x.com/AdamBLiv/status/2056823661034955011
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 111).
+- **@coindesk** (21 likes, score 7/10) — NOUVEAU : Le sponsor de l'ETF Truth Social de Trump, Yorkville America, a retiré ses dépôts pour ses ETF Bitcoin et Bitcoin/Ethereum proposés.
+  - https://x.com/CoinDesk/status/2056847988991852625
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 51).
+- **@realcryptoboost** (0 likes, score 7/10) — Le ratio ETH/BTC vient de clôturer 12 bougies 3D consécutives en rouge. Du jamais vu, et vous vendez.
+
+Le 30 ans américain est à 5.18%, plus haut depuis 2007. Les taux explosent à cause du déficit amé
+  - https://x.com/realcryptoboost/status/2056738741545537947
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 16).
