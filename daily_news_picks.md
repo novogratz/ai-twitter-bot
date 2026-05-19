@@ -3794,3 +3794,22 @@ OpenAI cofounder and former Tesla AI director
 Le cofondateur d’OPENAI, Andrej Karpathy, rejoint officiellement ANTHROPIC !!
   - https://x.com/Kulturlesite_/status/2056776590885863508
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 73).
+- **@ronstoeferle** (34 likes, score 7/10) — Les 20 plus grandes entreprises européennes — ASML, LVMH, Hermès, Siemens, SAP, L'Oréal, Novo Nordisk, TotalEnergies & amis — capitalisation boursière combinée : ~4 171 milliards $ 
+
+Nvidia, seule  :
+  - https://x.com/RonStoeferle/status/2056742293311271371
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 42).
+- **@kalshi** (2373 likes, score 8/10) — INFO URGENTE : Nvidia livre à la main de nouveaux CPU flambant neufs à Anthropic, OpenAI, SpaceX et Oracle
+  - https://x.com/Kalshi/status/2056730770471833714
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2543).
+- **@petermallouk** (204 likes, score 7/10) — Le S&P 500 n'a jamais été aussi concentré sur seulement deux actions qu'il ne l'est aujourd'hui, Nvidia et Apple représentant plus de 15 % de l'indice.
+  - https://x.com/PeterMallouk/status/2056716751690404118
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 242).
+- **@stockmktnewz** (77 likes, score 7/10) — Le PDG de Google $GOOGL, Sundar Pichai, vient de déclarer que l'entreprise utilise plus de 3 trillions de jetons chaque jour à travers ses employés.
+  - https://x.com/StockMKTNewz/status/2056788485164699944
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 111).
+- **@nvidiageforcefr** (4 likes, score 7/10) — Devenez une légende de la course dans Forza Horizon 6 avec #RTXOn 
+
+Disponible dès maintenant avec le Ray tracing et le NVIDIA DLSS 4 avec la Génération Multi-Images.
+  - https://x.com/NVIDIAGeForceFR/status/2056761122695377287
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 8).
