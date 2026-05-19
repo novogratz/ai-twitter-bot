@@ -3541,3 +3541,26 @@ DIRE À VOIX HAUTE CE QUI EST TEN
 - **@iren_ltd** (494 likes, score 7/10) — « L'opportunité avec ces partenaires est de travailler en étroite collaboration et de développer l'ensemble de l'écosystème — de la terre, de l'acier, du béton, jusqu'aux utilisateurs finaux de cette
   - https://x.com/IREN_Ltd/status/2056540650254852110
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 526).
+- **@theaiportfolios** (0 likes, score 8/10) — Commentary:
+
+ZETA, my second-largest position, is up about 17% since mid-May on two things: joining Snowflake's Open Semantic Interchange standard May 14, and a formal OpenAI partnership announced at
+  - https://x.com/theaiportfolios/status/2056488305844506947
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 62).
+- **@cointelegraph** (15 likes, score 7/10) — NEW: Anthropic reverses course, now allowing Mythos users to share cybersecurity threats with others amid concerns that restricting access could hurt smaller companies.
+  - https://x.com/Cointelegraph/status/2056595773068910679
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 25).
+- **@milkroadai** (1259 likes, score 7/10) — This is WILD!
+
+Leopold Aschenbrenner just proved his thesis with his portfolio and the numbers are staggering (Save this).
+
+He is a 24 year old former OpenAI researcher who published a 165-page manife
+  - https://x.com/MilkRoadAI/status/2056357218598215769
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1341).
+- **@pete_rizzo_** (914 likes, score 7/10) — URGENT : LE PRO-#BITCOIN KEVIN WARSH DEVRA ÊTRE OFFICIELLEMENT PRÊTÉ SERMENT EN TANT QUE PRÉSIDENT DE LA RÉSERVE FÉDÉRALE DES ÉTATS-UNIS CE VENDREDI
+
+TRÈS HAUSSIER POUR BTC
+  - https://x.com/pete_rizzo_/status/2056443413730414931
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 992).
+- **@zeffmax** (624 likes, score 7/10) — I'm seeing lots of confusion about why the statute of limitations issue came to a trial at all. Musk and OpenAI disagreed about when Musk could have reasonably become convinced that OpenAI was "steali
+  - https://x.com/ZeffMax/status/2056476111459213511
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 686).
