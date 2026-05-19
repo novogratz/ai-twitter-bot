@@ -3501,3 +3501,24 @@ Now they
 - **@firstsquawk** (18 likes, score 7/10) — US equity futures trade lower, with Nasdaq down 0.5% and S&P 500 off 0.25%.
   - https://x.com/FirstSquawk/status/2056558726669369515
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 28).
+- **@coinbureau** (129 likes, score 7/10) — ALERTE : UN AUTRE PIRATAGE MAJEUR FRAPPE LA CRYPTO ; EXPLOIT DE 76 M$ TOUCHE MONAD
+
+Le protocole Echo sur Monad a été apparemment exploité après qu’un attaquant a émis 1 000 eBTC d’une valeur d’enviro
+  - https://x.com/coinbureau/status/2056561304169812267
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 197).
+- **@cointelegraph** (43 likes, score 7/10) — Besoin de vous mettre à jour sur les actualités ? Voici notre top 10 d’aujourd’hui :
+
+ Kevin Warsh doit prêter serment en tant que nouveau président de la Fed vendredi, remplaçant Jerome Powell.
+
+ Goo
+  - https://x.com/Cointelegraph/status/2056565573220245928
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 73).
+- **@coinmarketcap** (216 likes, score 7/10) — DERNIER:  Le Minnesota a promulgué une loi autorisant les banques et les caisses de crédit à offrir des services de garde de crypto-actifs, effective le 1er août 2026.
+  - https://x.com/CoinMarketCap/status/2056549695686639687
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 284).
+- **@coinmarketcap** (41 likes, score 7/10) — DERNIER:  Vitalik Buterin dit que la vérification formelle assistée par l'IA pourrait rendre Ethereum et l'infrastructure crypto plus sécurisée contre les bugs et les cyberattaques.
+  - https://x.com/CoinMarketCap/status/2056572092720533584
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 83).
+- **@coinmarketcap** (203 likes, score 7/10) — DERNières NOUVELLES :  Bernstein affirme que le compromis sur le rendement de la loi CLARITY favorise le modèle de revenus de flottement de Circle alors que l'offre de stablecoins dépasse les 300 mill
+  - https://x.com/CoinMarketCap/status/2056421857771782622
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 281).
