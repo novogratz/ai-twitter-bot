@@ -3833,3 +3833,32 @@ stock Dividend $AMST
 - **@boris_gauty** (5 likes, score 7/10) — J'aime tellement le fait d'être un ingénieur logiciel  je n'aurai pas rêvé mieux comme métier
   - https://x.com/Boris_Gauty/status/2056810353552454095
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 5).
+- **@cryptogoos** (52 likes, score 7/10) — MICHAEL SAYLOR :
+
+« Le Bitcoin dépassera la capitalisation boursière de l'or d'ici 2035. »
+
+« Il n'y a aucun doute dans mon esprit. »
+  - https://x.com/cryptogoos/status/2056827233054916658
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 78).
+- **@gdb** (304 likes, score 7/10) — SynthID pour vérifier si une image a été générée par OpenAI :
+  - https://x.com/gdb/status/2056820240860778750
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 354).
+- **@openai** (0 likes, score 7/10) — Présentation d'OpenAI Guaranteed Capacity : une nouvelle offre qui permet aux clients de garantir un accès à long terme aux ressources de calcul d'OpenAI.
+
+Nous avons réalisé des investissements à lon
+  - https://x.com/OpenAI/status/2056823271774101907
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 200).
+- **@capetlevrai** (15 likes, score 7/10) — À mon avis on va pas voir beaucoup de monde quitter Claude Opus 4.7 et GPT 5.5 pour Gemini 
+
+C’est bien pour les abonnés Google mais pas suffisant imho 
+
+Et j’espère me tromper
+  - https://x.com/Capetlevrai/status/2056826123015647527
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 29).
+- **@yahoofinance** (10 likes, score 7/10) — Un chercheur fondateur d'OpenAI rejoint la rivale Anthropic.
+
+Andrej Karpathy est crédité d'avoir popularisé le terme « vibecoding ».
+
+Après avoir travaillé en tant que membre fondateur d'OpenAI, Karp
+  - https://x.com/YahooFinance/status/2056821225045778700
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 14).
