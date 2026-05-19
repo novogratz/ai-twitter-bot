@@ -3773,3 +3773,24 @@ En novembre 2022, Bitcoin a touché un plus bas à 15 % sous la moyenne mobile e
 On fait quoi avec les 1600 ?
   - https://x.com/DR__Bourse/status/2056658492795019448
   - **WHY**: Source fiable + impact concret (score signal 1, engagement 23).
+- **@zeffmax** (33 likes, score 7/10) — New: Former OpenAI staffers and a group of nonprofits published a letter Tuesday warning that xAI could become a liability for the SpaceX IPO due to "unpriced risks" around safety.
+
+They claim xAI's p
+  - https://x.com/ZeffMax/status/2056769222148345999
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 47).
+- **@watcherguru** (6679 likes, score 7/10) — INFO URGENTE : Le cofondateur d'OpenAI, Andrej Karpathy, rejoint Anthropic.
+  - https://x.com/WatcherGuru/status/2056758635536011350
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 7405).
+- **@wallstreetbets** (617 likes, score 7/10) — BREAKING: Andrej Karpathy joins Anthropic
+
+OpenAI cofounder and former Tesla AI director
+  - https://x.com/wallstreetbets/status/2056760475799420954
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 703).
+- **@cointelegraph** (137 likes, score 7/10) — DERNIER: Le cofondateur d'OpenAI, Andrej Karpathy, rejoint Anthropic alors que la compétition pour les talents en IA s'intensifie.
+  - https://x.com/Cointelegraph/status/2056759113355296940
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 219).
+- **@kulturlesite_** (67 likes, score 7/10) — GROS TRANSFERT EN IA
+
+Le cofondateur d’OPENAI, Andrej Karpathy, rejoint officiellement ANTHROPIC !!
+  - https://x.com/Kulturlesite_/status/2056776590885863508
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 73).
