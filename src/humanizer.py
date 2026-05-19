@@ -86,6 +86,51 @@ def strip_agent_preamble(text: str) -> str:
     return "\n".join(lines).strip() or text
 
 
+def _strip_multiple_alternatives(text: str) -> str:
+    """The LLM sometimes outputs 2-3 candidate replies separated by 'ou' or
+    blank lines, often each wrapped in "..." quotes. The bot was posting
+    the WHOLE thing as one wall-of-text tweet. Take only the FIRST option.
+
+    Bug 2026-05-19: replies looked like
+      '"OpenAI ouvre Paris. Bercy..." \\n\\nou\\n\\n"100k. Le Livret A..."'
+    Result: 280-char tweet with two stitched takes, unreadable.
+    """
+    if not text:
+        return text
+    # 1) Explicit "ou" / "or" alternative markers on their own line.
+    for marker in (r"\n\nou\n\n", r"\n\nou ", r"\n\nor\n\n", r"\n\nor ",
+                   r"\nou\n", r"\nor\n"):
+        m = re.search(marker, text)
+        if m:
+            text = text[:m.start()].rstrip()
+            break
+    # 2) Multiple quote-wrapped paragraphs ("...."\n\n"....") — keep only
+    # the first quoted block. The model leaks gold-standard exemplars +
+    # writes its own attempt after them.
+    # Find consecutive "..." blocks; if there are >=2, take the first.
+    quoted_blocks = re.findall(r'^[ \t]*"[^"\n]{20,}"\s*$', text, flags=re.MULTILINE)
+    if len(quoted_blocks) >= 2:
+        # Replace text with just the first quoted block content (strip quotes).
+        first = quoted_blocks[0].strip()
+        if first.startswith('"') and first.endswith('"'):
+            first = first[1:-1].strip()
+        text = first
+    else:
+        # 3) Multiple top-level paragraphs where the second starts with "..."
+        # (very common pattern when the model echoes an exemplar). Keep only
+        # the body before the first standalone quoted paragraph that follows
+        # a blank line.
+        m = re.search(r'(.+?)\n\n\s*"[^"\n]{20,}', text, flags=re.DOTALL)
+        if m and len(m.group(1).strip()) >= 25:
+            text = m.group(1).strip()
+    # 4) If the entire output is wrapped in surrounding quotes, strip them.
+    stripped = text.strip()
+    if (stripped.startswith('"') and stripped.endswith('"') and
+            stripped.count('"') == 2):
+        text = stripped[1:-1].strip()
+    return text
+
+
 def humanize(text: str) -> str:
     """Deterministic cleanup: strip AI artifacts, fix punctuation.
     No LLM call — fast and free. Returns original on short/empty input."""
@@ -96,6 +141,9 @@ def humanize(text: str) -> str:
         return ""
     if not text or len(text) < 10:
         return text
+
+    # Strip multiple-alternatives bleed FIRST (before other cleanup).
+    text = _strip_multiple_alternatives(text)
 
     result = text
 
