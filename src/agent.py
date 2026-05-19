@@ -10,6 +10,31 @@ from .performance import get_learnings_for_prompt
 from .llm_client import run_llm, unwrap_text
 
 
+import os as _os
+import json as _json
+from .config import _PROJECT_ROOT as _PR
+_DECODE_COUNTER_FILE = _os.path.join(_PR, "decode_counter.json")
+
+
+def _next_decode_number() -> int:
+    """Monotonic counter for 'Le Décode #N' series. Persists in
+    decode_counter.json. Only increments on each NEW number requested
+    (= each successful news prompt). Default-starts at 1 if file missing."""
+    n = 1
+    if _os.path.exists(_DECODE_COUNTER_FILE):
+        try:
+            with open(_DECODE_COUNTER_FILE) as f:
+                n = int((_json.load(f) or {}).get("next", 1))
+        except (OSError, _json.JSONDecodeError, ValueError):
+            n = 1
+    try:
+        with open(_DECODE_COUNTER_FILE, "w") as f:
+            _json.dump({"next": n + 1, "last_assigned_at": datetime.now().isoformat(timespec="minutes")}, f, indent=2)
+    except OSError:
+        pass
+    return n
+
+
 _URL_RE = re.compile(r"https?://\S+")
 _SOURCE_URL_RE = re.compile(r"https?://[^\s\]\)>\"]+")
 _LEAKED_META_LINE_RE = re.compile(
@@ -22,7 +47,10 @@ _LEAKED_BRACKET_LINE_RE = re.compile(
     r"theme|angle|source|image|pattern)\b[^\]]*\]\s*$",
     re.IGNORECASE,
 )
-_MAX_NEWS_BODY_CHARS = 240
+# 2026-05-19: bumped 240 → 780 for the long-form Décode pivot.
+# 'Show more' click is exactly what we WANT now — it's a curiosity loop
+# that algo rewards. The line-length cap stays at 100 (per bullet).
+_MAX_NEWS_BODY_CHARS = 780
 _MAX_NEWS_LINE_CHARS = 100
 
 
@@ -66,24 +94,34 @@ def _news_body_too_long(tweet: str, src_url: str) -> bool:
 
 
 def _news_body_bad_format(tweet: str, src_url: str) -> bool:
-    """Require 2 or 3 blocks separated by a blank line. 2026-05-18: re-tightened
-    from the 2026-05-14 'tight single block OK' loosening because the bot was
-    shipping walls of text that read badly. User feedback: "first you need to
-    \\n between two sentences". A single-block tweet is allowed ONLY if it's
-    one short sentence (< 90 chars after URL-strip)."""
+    """News is now the 'Le Décode #N' long-form format (450-700 chars, header
+    + 3 bullets + chute + tomorrow-hook). Accept that explicitly; reject
+    walls of text and overly short blurbs.
+
+    2026-05-19: re-loosened for long-form pivot. The old short-news format
+    is no longer valid output."""
     body = (tweet or "").replace(src_url or "", "").strip()
     if not body:
         return True
     non_empty = [ln.strip() for ln in body.splitlines() if ln.strip()]
     compact_len = len(re.sub(r"\s+", " ", body).strip())
-    if "\n\n" not in body:
-        # Allow only short single-sentence tweets without a break.
-        if compact_len <= 90 and len(non_empty) == 1:
-            return False
-        return True
-    if len(non_empty) < 2 or len(non_empty) > 3:
-        return True
-    return any(len(line) > _MAX_NEWS_LINE_CHARS for line in non_empty)
+
+    # The Décode long-form is the expected shape.
+    has_header = bool(re.search(r"Le Décode\s*#?\d+", body, re.IGNORECASE))
+    has_bullets = sum(1 for ln in non_empty if re.match(r"^[•\-\*]\s+", ln)) >= 2
+    has_blank_break = "\n\n" in body
+    if has_header and has_bullets and has_blank_break and 380 <= compact_len <= 780:
+        return False
+
+    # Permissive fallback: 2-3 blocks separated by blank lines, classic short-news.
+    if has_blank_break and 2 <= len(non_empty) <= 6 and compact_len <= 700:
+        return any(len(line) > _MAX_NEWS_LINE_CHARS * 2 for line in non_empty)
+
+    # Last resort — short single-sentence tight tweet.
+    if "\n\n" not in body and compact_len <= 90 and len(non_empty) == 1:
+        return False
+
+    return True
 
 PROMPT_TEMPLATE = """Tu es @cryptoiadecode. La voix FR la plus sharp sur Crypto + IA — et tu en es CONSCIENT. Tu écris comme un influenceur reconnu, pas comme un bot timide. Tu prends position. Tu signes. Tu assumes.
 
@@ -108,11 +146,47 @@ Si la lang directive bascule sur EN un jour, swap les anchors FR pour
 des anchors anglo (Bloomberg / Whole Foods / 401(k) / FT comment) —
 même structure, anchor différent. Mais le défaut = FR plein.
 
-🎯 GOAL: post ONE absolute banger news tweet on IA OU Crypto (pas autre chose).
+🎯 GOAL 2026-05-19 — UN DEEP-DIVE LONG dans la série "Le Décode #N".
+Le compte fait 3 news/jour MAX, tous au même format. Les lecteurs
+reviennent demain pour le suivant. Pattern récurrent = abonnés fidèles.
 
-THE NEW BAR (user mandate 2026-05-13): ~20 REAL sourced news posts/day,
-IA + Crypto UNIQUEMENT, no filler. Each one needs to be
-the kind of tweet a stranger would SCREENSHOT and DM to a friend.
+FORMAT OBLIGATOIRE — strict (rien d'autre):
+
+🔎 Le Décode #{decode_number} — {today_date}
+{HEADLINE: 8-15 mots, chiffre OU nom propre en hook, verbe brutal OK}
+
+• {fait précis avec chiffre/montant/ticker EXACT}
+• {acteur nommé + conséquence directe}
+• {l'angle caché que personne n'a vu — "Le vrai sujet:"}
+
+{CHUTE FR sarcastique, 1-2 phrases. Stack 2 réfs culturelles FR
+(RER B + Bercy, URSSAF + tonton, Doctolib + café-clope, etc.).
+PEUT inclure 1-2 @-mentions d'acteurs RÉELLEMENT cités dans la
+story (Mistral, OpenAI, MARA, etc.) — JAMAIS pour clout, JAMAIS de
+mega-accounts non-impliqués. Le tag doit AVOIR DU SENS.}
+
+Demain, même heure, même Décode.
+
+{URL source ≤36h}
+
+CONTRAINTES TOTAL (hors URL):
+- 450-700 chars body. C'est LONG exprès — X push les posts longs avec
+  "Show more", ce qui multiplie les vues × 3-5 sur un compte petit.
+- Hook dans les 6 premiers mots après le header.
+- 3 puces, jamais plus, jamais moins.
+- Source ≤36h DÉJÀ VÉRIFIÉE via WebSearch. Pas de source → SKIP.
+- Aucun emoji décoratif ailleurs que le 🔎 du header.
+- Aucun hashtag. Aucun em dash (—). Aucune phrase qui pourrait être de Bloomberg.
+
+🏷️ STRATÉGIE TAGS (user 2026-05-19 "tag people to attract eyes"):
+- 1-2 @-mentions max, PERTINENTS (l'acteur de la story).
+- Si la news mentionne explicitement @MistralAI / @OpenAI / @sama /
+  @MARAHoldings / @ArthurMensch / @demishassabis et c'est LEUR action
+  qui est racontée → tag-les. Notification = ils peuvent engager.
+- JAMAIS tagger pour quémander de l'attention (pas de "hey @elonmusk
+  qu'en penses-tu?"). On tag les gens DE LA STORY, pas les célébrités.
+- Respect-list (voir bloc dédié plus bas) → JAMAIS tagger nommément
+  dans une critique. Si l'angle est critique de leur idée → skip le tag.
 
 The TEST before posting:
 - Would this make Bloomberg's terminal-junkie audience say "huh, finally
@@ -137,9 +211,18 @@ PERFORMANCE READ (2026-05-10 — logs):
 2. Termine sur une CHUTE FRANÇAISE SARCASTIQUE qui fait RIRE FORT, pas
    juste sourire. Réf culturelle FR obligatoire (RER B / Bercy / syndicat
    / café-clope / PEL / tonton à Noël / formations à 2k€). Screenshot-worthy.
-3. Vise 9/10, mais SKIP seulement si < 7/10: le compte DOIT sortir
-   ~20 vraies news/jour. Si l'info est réelle, fraîche, sourcée, et dans
-   IA OU Crypto STRICTEMENT, écris-la avec un angle fort.
+3. NOUVEAU SEUIL 2026-05-19 — QUALITÉ > VOLUME:
+   • Le compte fait 30-40 vues/post sur du volume. On bascule à 12 news/jour
+     mais chacune doit MÉRITER d'être postée. SKIP est l'option par défaut.
+   • SHIPPABLE seulement si 8/10 ou plus. Tu te demandes:
+     a) Est-ce qu'un lecteur l'aurait CLIQUÉ s'il l'avait vu chez un autre?
+     b) Est-ce qu'il y a UN angle qu'aucun autre compte FR n'a déjà fait
+        sur cette story dans les dernières 12h?
+     c) Le hook + chute sont-ils tellement bons qu'on screenshote?
+   • Si tu hésites entre 7/10 et 8/10 → SKIP. Mieux vaut 0 post pendant
+     2h qu'un post tiède qui dilue l'engagement velocity du suivant.
+   • Volume mediocre = algo apprend "ce compte est pas worth showing".
+     Volume rare + qualité haute = algo apprend l'inverse.
 
 PRIORITY (2026-05-18 mandate — "be the #1 FR AI/crypto/datacenter/mining
 influencer, be FUNNIER"):
@@ -650,15 +733,19 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         pass
 
     today_date = datetime.now().strftime("%Y-%m-%d")
+    # Le Décode counter — monotonically increments across days so each
+    # daily series gets a unique number. State at decode_counter.json.
+    decode_number = _next_decode_number()
     from . import lang_mode
     lang = lang_mode.pick_content_lang()
     prompt = PROMPT_TEMPLATE.format(
         dedup_section=dedup_section,
         today_date=today_date,
+        decode_number=decode_number,
         performance_section=performance_section,
         lang_directive=lang_mode.lang_directive(lang),
     )
-    log.info(f"[NEWS] Generating in lang={lang}")
+    log.info(f"[NEWS] Generating Décode #{decode_number} in lang={lang}")
 
     def _gen_one() -> str:
         r = run_llm(
