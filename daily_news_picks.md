@@ -3643,3 +3643,27 @@ Un autre exploit majeur vient de faire surface, et celui-ci impliquerait préten
 L'attaquant détiendrait encore plus de 73 M$ après avoir déplacé
   - https://x.com/EvanLuthra/status/2056625243008233927
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 17).
+- **@richarddetente** (16 likes, score 7/10) — Voici le parcours atypique et la thèse d'investissement de Léopold Aschenbrenner, un ancien chercheur de l'équipe d'alignement (Superalignment) d'OpenAI qui a transormé 225 mio en 5,5 mrd en seulement
+  - https://x.com/RichardDetente/status/2056640475059085688
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 16).
+- **@coinacademy_fr** (5 likes, score 7/10) — AI Financial, la société de trésorerie de World Liberty, pourrait ne pas survivre l’année.
+
+La société déclare détenir 7,28 milliards de tokens WLFI invendables valorisés à 706M$, avec seulement 10,5M
+  - https://x.com/coinacademy_fr/status/2056639635900473791
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5).
+- **@claudeai** (366 likes, score 7/10) — Live from Code with Claude London: we're launching self-hosted sandboxes (public beta) and MCP tunnels (research preview) in Claude Managed Agents.
+Run agents inside your own perimeter, with your secu
+  - https://x.com/claudeai/status/2056645485696315581
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 502).
+- **@coinbureau** (63 likes, score 7/10) — NOUVEAU : Les PDG de NVIDIA et Dell DISCUTENT DU GOULET D'ÉTRANGLEMENT D'APPROVISIONNEMENT N°1 - 
+
+Michael Dell : « Eh bien, certainement, la mémoire est un défi. »
+
+Jensen Huang : « C'est notre trava
+  - https://x.com/coinbureau/status/2056581862961865113
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 85).
+- **@saylordocs** (4 likes, score 7/10) — Michael Saylor:
+
+“I’m not proud of this, I’m the only public company CEO in the history of the world that actually lived to see his stock decline in value by -99.8%. My stock went from $333 a share, t
+  - https://x.com/saylordocs/status/2056646539397693732
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 10).
