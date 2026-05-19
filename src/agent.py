@@ -153,21 +153,21 @@ reviennent demain pour le suivant. Pattern récurrent = abonnés fidèles.
 FORMAT OBLIGATOIRE — strict (rien d'autre):
 
 🔎 Le Décode #{decode_number} — {today_date}
-{HEADLINE: 8-15 mots, chiffre OU nom propre en hook, verbe brutal OK}
+{{HEADLINE: 8-15 mots, chiffre OU nom propre en hook, verbe brutal OK}}
 
-• {fait précis avec chiffre/montant/ticker EXACT}
-• {acteur nommé + conséquence directe}
-• {l'angle caché que personne n'a vu — "Le vrai sujet:"}
+• {{fait précis avec chiffre/montant/ticker EXACT}}
+• {{acteur nommé + conséquence directe}}
+• {{l'angle caché que personne n'a vu — "Le vrai sujet:"}}
 
-{CHUTE FR sarcastique, 1-2 phrases. Stack 2 réfs culturelles FR
+{{CHUTE FR sarcastique, 1-2 phrases. Stack 2 réfs culturelles FR
 (RER B + Bercy, URSSAF + tonton, Doctolib + café-clope, etc.).
 PEUT inclure 1-2 @-mentions d'acteurs RÉELLEMENT cités dans la
 story (Mistral, OpenAI, MARA, etc.) — JAMAIS pour clout, JAMAIS de
-mega-accounts non-impliqués. Le tag doit AVOIR DU SENS.}
+mega-accounts non-impliqués. Le tag doit AVOIR DU SENS.}}
 
 Demain, même heure, même Décode.
 
-{URL source ≤36h}
+{{URL source ≤36h}}
 
 CONTRAINTES TOTAL (hors URL):
 - 450-700 chars body. C'est LONG exprès — X push les posts longs avec
