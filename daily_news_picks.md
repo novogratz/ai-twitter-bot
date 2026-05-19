@@ -3667,3 +3667,25 @@ Jensen Huang : « C'est notre trava
 “I’m not proud of this, I’m the only public company CEO in the history of the world that actually lived to see his stock decline in value by -99.8%. My stock went from $333 a share, t
   - https://x.com/saylordocs/status/2056646539397693732
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 10).
+- **@ripplexrpie** (8 likes, score 7/10) — GROS MOUVEMENT $XRP À VENIR ?! LES ANALYSTES PROJETTENT MAINTENANT UNE SURGE POSSIBLE DE 292 % POUR XRP EN 2026 
+
+AU MÊME MOMENT, L'INTÉGRATION PAR GOOGLE DU RÉSEAU DE MÉDIAS DÉCENTRALISÉ ALIMENTÉ PAR
+  - https://x.com/RippleXrpie/status/2056663440270184636
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
+- **@cryptodotnews** (9 likes, score 7/10) — JUST IN: White House Executive Director says announcement on Strategic Bitcoin Reserve is coming soon. Calls it a breakthrough for getting everything legally sound and properly safeguarding the assets
+  - https://x.com/cryptodotnews/status/2056654592277152067
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 17).
+- **@testingcatalog** (74 likes, score 7/10) — GOOGLE  : Une nouvelle application mobile AI Studio est désormais disponible sur Google Play pour une pré-inscription !
+
+> « Votre prochaine grande idée n’est qu’à une conversation de distance. L’insp
+  - https://x.com/testingcatalog/status/2056659138545955039
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 80).
+- **@marionawfal** (4 likes, score 7/10) — A concrete pier fell off a truck onto a Tesla Model Y at a red light.
+
+Hood took the hit. The cabin didn't move.
+
+Then in Shanghai, a truck rear-ended a Model Y. The Tesla barely moved.
+
+Safe and icon
+  - https://x.com/MarioNawfal/status/2056664910248169889
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 10).
