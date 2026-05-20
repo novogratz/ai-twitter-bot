@@ -4140,3 +4140,40 @@ That's when you accumulate.
 Three narratives I'm watching for the
   - https://x.com/cryptogoos/status/2057009030116356370
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 57).
+- **@thebitcoinconf** (8 likes, score 7/10) — FEDERAL RESERVE JUST REPORTED THAT 10% OF AMERICANS HOLD #BITCOIN AND CRYPTO 
+
+THAT’S ~34 MILLION PEOPLE.
+
+INCREDIBLE ADOPTION!
+  - https://x.com/TheBitcoinConf/status/2057069589125570721
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 10).
+- **@cryptosavingexp** (64 likes, score 8/10) — Billionaire Jack Dorsey says: "We don't need banks anymore because we have Bitcoin."
+
+Jack knows what's coming!
+  - https://x.com/CryptoSavingExp/status/2057040614261506495
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 96).
+- **@pete_rizzo_** (47 likes, score 8/10) — JUST IN: STRIVE'S #BITCOIN CREDIT $SATA IS NOW ON TRACK TO HAVE RECORD BREAKING WEEK
+
+DIGITAL CREDIT IS TAKING OFF
+  - https://x.com/pete_rizzo_/status/2057067207775981986
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 59).
+- **@zenkaixbt** (24 likes, score 7/10) — LA PHASE DE MANIPULATION EST PRESQUE TERMINÉE.
+
+UN MOUVEMENT PARABOLIQUE SE PRÉPARE.
+
+ACCUMULEZ À BAS PRIX TANT QUE L'OPPORTUNITÉ DURE.
+
+IGNOREZ LE BRUIT ET LA PEUR.
+
+NE VOUS LAISSEZ PAS SECOUER.
+
+202
+  - https://x.com/zenkaixbt/status/2057065608999587936
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 50).
+- **@btcnewsglobal** (28 likes, score 7/10) — JUSTE EN: LA RÉSERVE FÉDÉRALE VIENT DE RAPPORTER QUE 10 % DES AMÉRICAINS POSSEDENT MAINTENANT #BITCOIN ET LES CRYPTO
+
+NIVEAU LE PLUS ÉLEVÉ DEPUIS 2022
+
+LES ÉTATS-UNIS ADOPTENT LE BTC. C'EST ARRIVÉ
+  - https://x.com/BTCNewsGlobal/status/2057051561864417390
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 44).
