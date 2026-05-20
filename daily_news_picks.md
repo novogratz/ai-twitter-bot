@@ -4269,3 +4269,37 @@ Nous offrons des opportunités à court terme, pratiques, aux étudiants pour tr
 « Vous allez voir beaucoup de choses incroyables au cours des trois prochaines années pour
   - https://x.com/GuntherEagleman/status/2057098314466668549
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 8803).
+- **@altcoindaily** (49 likes, score 9/10) — Le capital afflue vers les échanges #crypto. 
+
+Le rallye du Bitcoin jusqu'à 80 000 $ a déclenché la croissance la plus rapide de l'open interest sur les contrats perpétuels $BTC à ce jour en 2026.
+
+Bi
+  - https://x.com/AltcoinDaily/status/2057162406946853090
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 127).
+- **@avifelman** (79 likes, score 8/10) — There is no more crypto. There are good companies that drive value to their token ($HYPE, $VVV, $CARDS, $TON -- maybe) 
+
++ Zcash / Bitcoin. 
+
+That's all.
+  - https://x.com/AviFelman/status/2057135813100470530
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 115).
+- **@blknoiz06** (49 likes, score 8/10) — tu dois pas avoir vu ce que Bitcoin a fait en 2016/17
+
+Zcash est une sov comme BTC
+
+Hype est une L1 avec des apps par-dessus comme SOL
+
+ils ne se concurrencent pas entre eux et ils sont tous les deux
+  - https://x.com/blknoiz06/status/2057167188503441917
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 73).
+- **@scottmelker** (17 likes, score 7/10) — SELON CRYPTOQUANT : BINANCE A ENREGISTRÉ 9,03 MILLIARDS DE DOLLARS D'INTÉRÊT OUVERT SUR LE BITCOIN ALORS QUE L'OI TOTAL ATTEIGNAIT 29 MILLIARDS DE DOLLARS LE 5 MAI, LE NIVEAU LE PLUS ÉLEVÉ DEPUIS LE 2
+  - https://x.com/scottmelker/status/2057159358723613069
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 21).
+- **@wolf_bitcoin_** (7 likes, score 7/10) — PRESIDENT TRUMP AT THE WHITE HOUSE CRYPTO SUMMIT
+
+"From this day on, America will follow the rule that every Bitcoiner knows very well: Never sell your Bitcoin."
+
+
+"The federal government is already a
+  - https://x.com/WOLF_Bitcoin_/status/2057125445171286152
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 9).
