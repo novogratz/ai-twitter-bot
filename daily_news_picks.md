@@ -4177,3 +4177,21 @@ NIVEAU LE PLUS ÉLEVÉ DEPUIS 2022
 LES ÉTATS-UNIS ADOPTENT LE BTC. C'EST ARRIVÉ
   - https://x.com/BTCNewsGlobal/status/2057051561864417390
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 44).
+- **@kalshi_crypto** (12 likes, score 7/10) — BREAKING: 40% chance Bitcoin hits $100,000 this year
+
+8% chance it happens next month
+  - https://x.com/Kalshi_Crypto/status/2057103210658091107
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 18).
+- **@cryptorover** (243 likes, score 8/10) — ÉNORME : CZ a déclaré : « Les banques américaines achètent du Bitcoin. »
+
+Le prochain marché haussier sera absolument dément.
+  - https://x.com/cryptorover/status/2057099776160674178
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 381).
+- **@cryptofergani** (155 likes, score 7/10) — $BTC A ATTEINT SON PLUS BAS. 
+
+Désolé les baissiers, c’est fini.
+  - https://x.com/cryptofergani/status/2057086731908780534
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 281).
+- **@bfmtv** (11 likes, score 7/10) — "Ne laissons pas s'installer une forme d'opportunité pour les criminels": Emmanuel Macron veut réguler les cryptomonnaies afin d'éviter un nouveau Far West (moins de 1% des transactions sont illicites
+  - https://x.com/BFMTV/status/2057032952362520669
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 47).
