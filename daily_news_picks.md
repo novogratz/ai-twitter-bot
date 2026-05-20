@@ -4079,3 +4079,31 @@ Donc quand je parle de quelqu’un ou que je mets un projet en avant, c’est un
 Et parfois
   - https://x.com/RodolpheSteffan/status/2056978990397579528
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 10).
+- **@cryptorover** (312 likes, score 8/10) — UNREAL: 
+
+ President Trump announced plans to send $2,000 checks to every American, funded by tariffs collected this year.
+
+President Trump said this is “a win for the American people.”
+
+Meanwhile, th
+  - https://x.com/cryptorover/status/2056981139445977537
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 462).
+- **@coinbureau** (137 likes, score 7/10) — NEW: Trump orders Fed to grant crypto firms DIRECT access to master accounts.
+
+This could let crypto firms move money more like banks instead of depending on banks to do it for them.
+  - https://x.com/coinbureau/status/2056994355458515151
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 173).
+- **@cryptorover** (53 likes, score 7/10) — A BIG #BITCOIN TRAP IS BEING SET UP...
+
+Watch NOW:
+https://youtu.be/CtedmAlrO0s
+  - https://x.com/cryptorover/status/2056995070125990233
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 99).
+- **@benjamincowen** (657 likes, score 7/10) — Bitcoin: An Unfortunate Pattern [Update]
+
+In this video we talk about how stablecoin dominance remains structurally bullish and discuss where we have seen similar patterns before.
+  - https://x.com/benjamincowen/status/2056932764625101105
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 775).
+- **@coindesk** (41 likes, score 7/10) — NEW: @Ripple is the only crypto firm on @CNBC's 2026 Disruptor 50 list, ranked 16th.
+  - https://x.com/CoinDesk/status/2056999293454533042
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 59).
