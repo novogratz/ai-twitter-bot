@@ -4256,3 +4256,16 @@ The Gulf is preparing for a future where Hormuz doesn't matter
 - **@cryptorover** (35 likes, score 7/10) — $BTC LONGS GOING PARABOLIC!
   - https://x.com/cryptorover/status/2057139789074497961
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 87).
+- **@tino_bourse** (26 likes, score 7/10) — Depuis 1962, le S&P 500 a chuté entre mai et octobre dans l'immense majorité années d’élections de mi-mandat américaines.
+  - https://x.com/Tino_Bourse/status/2056995430286671972
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 30).
+- **@nasa** (288 likes, score 7/10) — Date limite approchante : Vous avez jusqu'au 22 mai pour postuler à nos stages d'automne. 
+
+Nous offrons des opportunités à court terme, pratiques, aux étudiants pour travailler sur des projets essent
+  - https://x.com/NASA/status/2057154445809430716
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 468).
+- **@gunthereagleman** (8127 likes, score 7/10) — LE PRÉSIDENT TRUMP VIENT DE LÂCHER UNE BOMBE DE CONFIANCE MONUMENTALE ET ÇA VA VIEILLIR COMME DU BON VIN ! 
+
+« Vous allez voir beaucoup de choses incroyables au cours des trois prochaines années pour
+  - https://x.com/GuntherEagleman/status/2057098314466668549
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 8803).
