@@ -4231,3 +4231,28 @@ C'est la meilleure formulation de la thèse que j'ai vue.
 Et elle dit quelque chose d'important sur les valorisations relatives : le cerveau
   - https://x.com/LeaBourseFR/status/2057115500811899179
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 17).
+- **@googlecloud** (60 likes, score 7/10) — Nous avons collaboré étroitement avec des organisations leaders dans divers secteurs pour valider la série Gemini 3.5 dans leurs propres environnements.
+
+Jetez un œil ↓
+  - https://x.com/googlecloud/status/2056827233621143982
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 74).
+- **@coindesk** (21 likes, score 7/10) — ELECTIONS: Crypto super PAC Fairshake spent more than $20 million backing candidates across Southern primaries in Kentucky, Alabama, and Georgia, claiming a “6-0 sweep” in Tuesday’s races.
+  - https://x.com/CoinDesk/status/2057134221060141309
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 51).
+- **@marionawfal** (100 likes, score 7/10) — Meta a commencé à licencier environ 10 % de ses effectifs cette semaine tout en supprimant également 6 000 postes ouverts.
+
+En même temps, ils réaffectent des milliers de personnes supplémentaires dan
+  - https://x.com/MarioNawfal/status/2057110597162995962
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 206).
+- **@cryptorover** (116 likes, score 7/10) — BREAKING: 
+
+ The UAE will launch a new oil pipeline bypassing the Strait of Hormuz in 2027.
+
+Already 50% built. Confirmed by ADNOC CEO. 
+
+The Gulf is preparing for a future where Hormuz doesn't matter
+  - https://x.com/cryptorover/status/2057129975216591250
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 188).
+- **@cryptorover** (35 likes, score 7/10) — $BTC LONGS GOING PARABOLIC!
+  - https://x.com/cryptorover/status/2057139789074497961
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 87).
