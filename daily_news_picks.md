@@ -4017,3 +4017,33 @@ It also has a built-in
 - **@paulbarron** (893 likes, score 7/10) — Huge for US Stablecoins $RLUSD $USDC
   - https://x.com/paulbarron/status/2056763145746616812
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 913).
+- **@crypto__goku** (5 likes, score 7/10) — GM Saiyans ! 
+
+«Même brisé, avance encore. »
+----
+$BTC : 76.704 $
+$ETH : 2.110 $
+#BTC Fear & Greed index : 27
+#Bitcoin Dominance : 60%
+  - https://x.com/Crypto__Goku/status/2056961760880382234
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 7).
+- **@crypto_admiral1** (195 likes, score 8/10) — Default view: AI makes Ethereum and crypto less secure ...... more bugs uncovered, more exploits automated, bigger attack surface.
+
+Vitalik Buterin flips that assumption.
+
+AI doesn’t only amplify atta
+  - https://x.com/Crypto_admiral1/status/2056768863061332472
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 269).
+- **@saylordocs** (14 likes, score 7/10) — US Congressman Thomas Massie said he decided to introduce a bill to end the Federal Reserve after reading The Bitcoin Standard book.
+  - https://x.com/saylordocs/status/2056956833747664919
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 20).
+- **@zippfeed** (7 likes, score 7/10) — BULLISH
+
+SEC proposes biggest IPO overhaul in 20 years — crypto firms get a direct path to Wall Street capital!
+
+The SEC just proposed its biggest IPO rule overhaul in 20+ years  — immediate shelf reg
+  - https://x.com/zippfeed/status/2056834323043815703
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 7).
+- **@whaleinsider** (128 likes, score 7/10) — JUST IN : Les clients de BlackRock vendent pour 325,57 millions de dollars de $BTC.
+  - https://x.com/WhaleInsider/status/2056952341606142136
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 210).
