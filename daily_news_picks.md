@@ -3885,3 +3885,34 @@ Parce qu’aujou
 Le 30 ans américain est à 5.18%, plus haut depuis 2007. Les taux explosent à cause du déficit amé
   - https://x.com/realcryptoboost/status/2056738741545537947
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 16).
+- **@bitcoinprof0637** (39 likes, score 8/10) — SPACEX D'ELON MUSK ENTRERA BIENTÔT EN BOURSE.
+
+ILS POSSÈDENT PLUS DE 600 000 000 $ EN BITCOIN 
+
+UNE ENTREPRISE VALANT UN BILLION DE DOLLARS AVEC DU BTC À SON BILAN
+
+C'EST UN ÉVÉNEMENT ÉNORME
+  - https://x.com/Bitcoinprof0637/status/2056916140710932578
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 61).
+- **@dboybruh** (42 likes, score 7/10) — - The Not So Secret Plan of $SoFi 
+
+• SoFiUSD (SoFiD) 
+
+America’s first stablecoin from a nationally chartered, FDIC-insured bank. 1:1 cash-backed at the Fed, live on Ethereum & Solana
+
+•  Internal se
+  - https://x.com/Dboybruh/status/2056887254325637574
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 44).
+- **@johnlefevre** (1023 likes, score 8/10) — En 2009, Daimler AG a acquis une participation de 9,1 % dans le capital de Tesla pour 50 millions de dollars.
+
+Ils en ont vendu une partie, et leur participation a été diluée à environ 4 %, avant de s
+  - https://x.com/JohnLeFevre/status/2056797164529926648
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1085).
+- **@alifarhat79** (515 likes, score 7/10) — Ce n’est ni Bitcoin, ni Ethereum, ni même une merdicoin. C’est le rendement des obligations japonaises à 10 ans.
+  - https://x.com/alifarhat79/status/2056842764336144550
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 579).
+- **@mitchmartan98** (208 likes, score 7/10) — Je pense sincèrement que l’opportunité la plus asymétrique qui pourrait générer le meilleur rendement au cours des 5 prochaines années est $ETH 
+
+Le meilleur dans tout ça ? Environ 99 % des investisse
+  - https://x.com/MitchMartan98/status/2056840361922728155
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 240).
