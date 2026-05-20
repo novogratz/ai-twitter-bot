@@ -3916,3 +3916,35 @@ Ils en ont vendu une partie, et leur participation a été diluée à environ 4 
 Le meilleur dans tout ça ? Environ 99 % des investisse
   - https://x.com/MitchMartan98/status/2056840361922728155
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 240).
+- **@nvidiaai** (578 likes, score 9/10) — One image + text + camera trajectory = controllable worlds. All on a single GPU. 
+
+Our research team just released SANA-WM, a 2.6B open source world model natively trained for 60-second video generati
+  - https://x.com/NVIDIAAI/status/2056806466317701446
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 624).
+- **@sweatykodi** (56 likes, score 8/10) — Ethereum est globalement en baisse de 29 % depuis le début de l'année
+
+Mais pourtant 32 % de l'offre d'ETH a été mise en jeu
+
+
+
+$ETH $BMNR
+  - https://x.com/SweatyKodi/status/2056839291985412400
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 72).
+- **@nvidiarobotics** (36 likes, score 7/10) — Humanoid robots just got more natural. 
+
+Join our Robotics Office Hours on Wed, May 20 at 11 AM PT to explore SONIC, a new NVIDIA Research framework for training humanoid robots using large-scale huma
+  - https://x.com/NVIDIARobotics/status/2056814912081469856
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 48).
+- **@sosovalue** (311 likes, score 7/10) — SSI Époque 4 se termine bientôt ➔ Époque 5 commence le 21 mai
+
+Points forts pour la saison à venir :
+
+Calendrier : 21 mai – 17 nov. 2026 (180 jours)
+Récompenses totales : 15 000 000 ethereum:0x76a0e27
+  - https://x.com/SoSoValue/status/2056759086008717324
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 355).
+- **@nvidia** (259 likes, score 7/10) — At #GoogleIO, NVIDIA and @GoogleCloud are celebrating a milestone: More than 100,000 developers have joined our joint developer community in just one year, and the platform is expanding.
+
+In the past
+  - https://x.com/nvidia/status/2056891831820882402
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 297).
