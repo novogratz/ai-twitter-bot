@@ -3948,3 +3948,35 @@ Récompenses totales : 15 000 000 ethereum:0x76a0e27
 In the past
   - https://x.com/nvidia/status/2056891831820882402
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 297).
+- **@andrewdfeldman** (349 likes, score 9/10) — .@cerebras is now running Kimi K2.6 - the leading trillion parameter open source model - at ~1000 tokens per second in enterprise trials.
+
+6.7x faster than the next-fastest GPU cloud.
+10x faster than
+  - https://x.com/andrewdfeldman/status/2056872442841223300
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 407).
+- **@sosovaluecrypto** (85 likes, score 7/10) — SoSoValue Flash: Great Power Diplomacy & Liquidity Squeeze, Markets Brace for NVDA Earnings
+
+ Core Catalyst: Truce Extensions & Tehran ShadowsTrump has warned of fresh strikes within 2–3 days if no de
+  - https://x.com/SoSoValueCrypto/status/2056934950352613696
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 117).
+- **@cryptogoos** (1031 likes, score 7/10) — CRASH:
+
+ Iran has reopened its stock market for the first time after 80-day war shutdown.
+
+More than 70% of Iranian stocks were trading in the red after reopening.
+  - https://x.com/cryptogoos/status/2056774383281016952
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 1081).
+- **@ripplexrpie** (1576 likes, score 7/10) — NOUVEAU ! 
+
+ Sénatrice Cynthia Lummis : « Il reste encore beaucoup de travail à faire. »
+
+« Même si la LOI CLARITY est adoptée par le Sénat, il faut au moins 18 MOIS pour qu'elle entre en vigueur. »
+  - https://x.com/RippleXrpie/status/2056692031494193528
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 1818).
+- **@jackdangerlive** (220 likes, score 7/10) — This thing aims wherever you look!
+
+Imagine no longer having to try and hold your arms and hands steady to shoot.
+
+Who wants one?
+  - https://x.com/JackDangerLIVE/status/2056713170203386263
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 304).
