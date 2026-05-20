@@ -3987,3 +3987,33 @@ Who wants one?
 It's time to talk about Google.
   - https://x.com/theo/status/2056946993407369300
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 69).
+- **@cryptopunk7213** (12 likes, score 7/10) — gemini omni was google’s most impressive ai launch for 1 explicit reason:
+
+it’s a world model powered by genie. the 1st deployed at scale. every video it generates accurately depicts real-world physic
+  - https://x.com/cryptopunk7213/status/2056944737622303028
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 14).
+- **@dfinitytoday** (25 likes, score 7/10) — The Most Active Blockchains By Developer Activity:
+
+1. Solana — 10,769 
+2. Ethereum — 9,744 
+3. Polkadot — 9,031 
+4. BNB Chain — 4,019 
+5. Cardano — 3,699 
+6. Optimism — 3,439 
+7. Arbitrum — 2,449 
+8.
+  - https://x.com/DfinityToday/status/2056910528677855659
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 25).
+- **@tokenizeddollar** (20 likes, score 7/10) — Ethereum is as strong as ever!
+Read this if you have any doubt.
+$ETH to trillions and beyond!
+  - https://x.com/TokenizedDollar/status/2056918515483832364
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 22).
+- **@0xsenny** (3 likes, score 7/10) — A coin that deserves your attention. It was created 5 years and 11 months ago on Ethereum. That means the token is older than Pepe and Shiba Inu. It has a huge liquidity pool.
+ 
+It also has a built-in
+  - https://x.com/0xSenny/status/2056913244900503580
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 5).
+- **@paulbarron** (893 likes, score 7/10) — Huge for US Stablecoins $RLUSD $USDC
+  - https://x.com/paulbarron/status/2056763145746616812
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 913).
