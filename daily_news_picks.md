@@ -3980,3 +3980,10 @@ Imagine no longer having to try and hold your arms and hands steady to shoot.
 Who wants one?
   - https://x.com/JackDangerLIVE/status/2056713170203386263
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 304).
+
+## 2026-05-20
+- **@theo** (45 likes, score 7/10) — I'm scared to make this video, but I feel like I have to.
+
+It's time to talk about Google.
+  - https://x.com/theo/status/2056946993407369300
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 69).
