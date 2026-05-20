@@ -4047,3 +4047,35 @@ The SEC just proposed its biggest IPO rule overhaul in 20+ years  — immediate 
 - **@whaleinsider** (128 likes, score 7/10) — JUST IN : Les clients de BlackRock vendent pour 325,57 millions de dollars de $BTC.
   - https://x.com/WhaleInsider/status/2056952341606142136
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 210).
+- **@beez_invest** (4 likes, score 7/10) — GM La Ruche
+
+Aujourd'hui, tu investis dans quoi ? 
+
+Sinon, qu'est-ce que tu as à l'œil en ce moment ? 
+
+Aujourd'hui, on attend les résultats de Nvidia $NVDA et voir comment les marchés réagiront !
+
+ S
+  - https://x.com/beez_invest/status/2056980774474154256
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 10).
+- **@eng_khairallah1** (420 likes, score 7/10) — Jensen Huang, PDG de Nvidia : « Chaque ingénieur va avoir et gérer des centaines d’agents. »
+
+J’ai regardé toutes les grandes conférences sur l’IA cette année. Cette unique phrase a reconfiguré ma faç
+  - https://x.com/eng_khairallah1/status/2056705646419177954
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 518).
+- **@wublockchain** (30 likes, score 7/10) — White House Signals Imminent Strategic Bitcoin Reserve Update
+
+Patrick Witt, executive director of the White House President’s Council of Advisors for Digital Assets, said a formal update on the U.S.
+  - https://x.com/WuBlockchain/status/2056972808597782717
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 42).
+- **@seblatombe** (0 likes, score 7/10) — Souveraineté numérique : « Il faut donner ses informations à des acteurs français comme Mistral »
+
+« ChatGPT, Claude… Toutes les données partagées peuvent potentiellement servir à des manipulations ét
+  - https://x.com/seblatombe/status/2056979483182141900
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 6).
+- **@rodolphesteffan** (10 likes, score 7/10) — La chance que j’ai aujourd’hui, c’est que je n’ai aucune obligation.
+Donc quand je parle de quelqu’un ou que je mets un projet en avant, c’est uniquement parce que je le pense sincèrement.
+
+Et parfois
+  - https://x.com/RodolpheSteffan/status/2056978990397579528
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 10).
