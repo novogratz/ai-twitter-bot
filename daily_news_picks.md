@@ -4303,3 +4303,29 @@ ils ne se concurrencent pas entre eux et ils sont tous les deux
 "The federal government is already a
   - https://x.com/WOLF_Bitcoin_/status/2057125445171286152
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 9).
+- **@watcherguru** (652 likes, score 9/10) — JUSTE EN: Nvidia $NVDA annonce un chiffre d'affaires de 81,6 milliards de dollars pour le T1 2026, supérieur aux attentes.
+  - https://x.com/WatcherGuru/status/2057194922420125912
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 848).
+- **@zerohedge** (228 likes, score 9/10) — *NVIDIA 1Q REV. $81.62B, EST. $79.19B
+*NVIDIA 1Q ADJ EPS $1.87
+*NVIDIA SEES 2Q REV. $89.18B TO $92.82B, EST. $87.36B
+  - https://x.com/zerohedge/status/2057194764148052112
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 272).
+- **@saylordocs** (30 likes, score 7/10) — Ce type minait 1 Bitcoin par jour sur son PC à 800 $ en 2011.
+
+À l'époque, chaque Bitcoin valait en moyenne 15 $.
+  - https://x.com/saylordocs/status/2057183829388042704
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 36).
+- **@flasheurinvest** (14 likes, score 7/10) — Nvidia $NVDA vient tout juste de publier ses résultats du T1 2026 ! 
+
+Et une nouvelle fois… c’est largement au-dessus des attentes 
+
+• EPS : $1.87 vs $1.77 attendu 
+• Revenus : $81.615B vs $78.97B att
+  - https://x.com/FlasheurInvest/status/2057194903122391399
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 20).
+- **@coinacademy_fr** (3 likes, score 7/10) — NVIDIA dépasse les attentes au T1 sur le chiffre d’affaires et les revenus data center, tout en publiant des prévisions T2 supérieures au consensus.
+
+$NVDA affiche 81,62 Md$ de revenus au T1 et prévoi
+  - https://x.com/coinacademy_fr/status/2057195775046664409
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 5).
