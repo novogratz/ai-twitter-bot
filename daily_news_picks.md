@@ -4195,3 +4195,39 @@ Désolé les baissiers, c’est fini.
 - **@bfmtv** (11 likes, score 7/10) — "Ne laissons pas s'installer une forme d'opportunité pour les criminels": Emmanuel Macron veut réguler les cryptomonnaies afin d'éviter un nouveau Far West (moins de 1% des transactions sont illicites
   - https://x.com/BFMTV/status/2057032952362520669
   - **WHY**: Source fiable + impact concret (score signal 1, engagement 47).
+- **@cryptogoos** (27 likes, score 7/10) — $NVDA REPORTS EARNINGS TONIGHT. 
+
+THE ENTIRE AI RALLY IS ON THE LINE.
+
+5PM ET. Wall Street is pricing a $350B+ overnight swing. 6.5% move expected.
+
+Expectations: $78.75B revenue. 
+
+If Nvidia misses,
+  - https://x.com/cryptogoos/status/2057114875864678850
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 45).
+- **@xfinancebull** (98 likes, score 7/10) — PARMI LES PRINCIPAUX ETF CRYPTO, POURQUOI $XRP EST-IL LE SEUL ETF SPOT ENCORE VERT POUR LA SEMAINE DERNIÈRE ET CELLE-CI ? 
+
+Goldman Sachs a liquidé l’intégralité de sa position $XRP de 154 M$ au T1.
+  - https://x.com/Xfinancebull/status/2057085155144351875
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 116).
+- **@cryptorover** (179 likes, score 7/10) — LA PLUS GRANDE ENTREPRISE MONDIALE ANNONCE SES RÉSULTATS AUJOURD’HUI.
+
+Et cela pourrait déterminer si la bulle de l’IA a encore du carburant ou si elle a déjà atteint son pic.
+
+Nvidia annonce ses résu
+  - https://x.com/cryptorover/status/2057108825950601233
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 311).
+- **@bitcoinnewscom** (20 likes, score 7/10) — LES PLANS D’ETF BITCOIN DE TRUTH SOCIAL ANNULES
+
+Trump Media & Technology Group a retiré ses plans pour des ETF Bitcoin et Bitcoin-Ethereum sous la marque Truth Social.
+
+L’entreprise a déclaré qu’elle
+  - https://x.com/BitcoinNewsCom/status/2057059693504180564
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 32).
+- **@leaboursefr** (11 likes, score 7/10) — "Nvidia fournit le cerveau, STM aide à construire le corps"
+C'est la meilleure formulation de la thèse que j'ai vue.
+
+Et elle dit quelque chose d'important sur les valorisations relatives : le cerveau
+  - https://x.com/LeaBourseFR/status/2057115500811899179
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 17).
