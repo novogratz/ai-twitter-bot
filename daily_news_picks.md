@@ -4107,3 +4107,36 @@ In this video we talk about how stablecoin dominance remains structurally bullis
 - **@coindesk** (41 likes, score 7/10) — NEW: @Ripple is the only crypto firm on @CNBC's 2026 Disruptor 50 list, ranked 16th.
   - https://x.com/CoinDesk/status/2056999293454533042
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 59).
+- **@cryptorover** (226 likes, score 8/10) — BULLISH FOR CRYPTO 
+
+South Carolina just signed a major pro-crypto bill into law.
+
+The new law protects self custody rights, bans CBDC payments at the state level, supports Bitcoin mining.
+  - https://x.com/cryptorover/status/2057011139310215249
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 306).
+- **@lbazeltiaheed** (9 likes, score 7/10) — Can’t believe how good @anitaoh8 is at crypto analysis. Free real-time trade points helped me secure around $50k profit in seven days.
+stock   $AMST $SBFM   #AI #Gaming $RTX $QCOM
+  - https://x.com/LbaZeltiaheed/status/2057018704798335406
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 27).
+- **@elonmusk** (19494 likes, score 7/10) — Unconscionable.
+
+I am happy to fund a wrongful death lawsuit against these disgusting excuses for law enforcement. They damn well better have been fired.
+  - https://x.com/elonmusk/status/2056980522535199159
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 20910).
+- **@moneyradar_fr** (12 likes, score 7/10) — LE PIÈGE OBLIGATAIRE se REFERME. 
+
+Les rendements du G7 ont été multipliés par 8 depuis le creux de 2020.
+
+ Le plus terrifiant ? Le 30 ans américain frôle désormais les 5,19 % (du jamais vu depuis 200
+  - https://x.com/MoneyRadar_FR/status/2057009179018006772
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 14).
+- **@cryptogoos** (49 likes, score 7/10) — The next 7 months could be the most important of your life.
+
+Q4 is where I expect the crypto market to bottom.
+That's your window. 
+
+That's when you accumulate. 
+
+Three narratives I'm watching for the
+  - https://x.com/cryptogoos/status/2057009030116356370
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 57).
