@@ -47,10 +47,14 @@ _RATIONALE_STARTERS = (
     "j'ai sélectionné", "j'ai choisi", "j'ai retenu",
     "ton tweet :", "le tweet :", "tweet:", "tweet :",
     "score :", "score:",
+    "**score", "**score:", "**score :",  # markdown-bolded score
+    "**rationale", "**rationale:",
+    "**angle", "**angle:",
     "rationale", "raisonnement",
     "source :", "source:",
     "pattern :", "pattern:",
     "candidat", "winner :", "winner:",
+    "l'angle est", "l'angle:", "l'angle :",  # mid-sentence rationale leaks
 )
 
 

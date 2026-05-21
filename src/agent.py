@@ -150,6 +150,16 @@ même structure, anchor différent. Mais le défaut = FR plein.
 Le compte fait 3 news/jour MAX, tous au même format. Les lecteurs
 reviennent demain pour le suivant. Pattern récurrent = abonnés fidèles.
 
+⚠️ OUTPUT RULE — STRICT (user mandate 2026-05-21):
+- Ta sortie DOIT commencer par la ligne "🔎 Le Décode #..." (le header).
+- AUCUN texte avant le header. Pas de "Score:", pas de "**Score interne**",
+  pas de "L'angle est...", pas de "Voici...", pas de "Parfait.", pas de
+  méta-commentaire, pas de notes en bold markdown. RIEN.
+- Si tu veux scorer ton output, fais-le mentalement et SKIP si <8/10.
+  N'écris JAMAIS ton score dans la sortie.
+- Si tu produis du préambule avant le header, le pipeline le détecte et
+  SKIP la cycle. Tu perds ta chance de poster aujourd'hui. Direct au format.
+
 FORMAT OBLIGATOIRE — strict (rien d'autre):
 
 🔎 Le Décode #{decode_number} — {today_date}
@@ -782,6 +792,18 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     tweet = strip_agent_preamble(tweet)
     if not tweet or tweet.upper() == "SKIP":
         return None
+    # 2026-05-21: Le Décode format enforcer. If output contains the
+    # signature header anywhere, strip everything before it (catches
+    # "**Score: 9/10. L'angle est ...** \n\n🔎 Le Décode #N..." leaks).
+    decode_match = re.search(r"🔎\s*Le Décode\s*#?\s*\d+", tweet, re.IGNORECASE)
+    if decode_match:
+        tweet = tweet[decode_match.start():].strip()
+    # If we asked for a Décode and the model didn't produce the header
+    # at all, the output is malformed — SKIP rather than ship a regular
+    # news post that breaks the recurring-series promise to readers.
+    elif "Le Décode" not in tweet and "le décode" not in tweet.lower():
+        log.info(f"[NEWS] Décode header missing — SKIPPING (user mandate: every news is Le Décode #N). Output preview: {tweet[:160]!r}")
+        return None
     # Defense against skip-rationale leaks (bug 2026-04-30 PM: quote-tweet
     # agent posted prose explaining its skip decision on @marcelenplace).
     # The word "skip" never legitimately appears in a tweet we'd ship.
@@ -819,8 +841,8 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
             pub_date = _url_publication_date(src_url)
             if pub_date is not None:
                 age = datetime.now() - pub_date
-                if age > timedelta(hours=24):
-                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>24h) — SKIPPING stale source: {src_url}")
+                if age > timedelta(hours=36):
+                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>36h) — SKIPPING stale source: {src_url}")
                     globals()["_last_source_url"] = None
                     globals()["_last_image_topic"] = None
                     return None
