@@ -4398,3 +4398,28 @@ Ceci marque la première fois qu'une IA a résolu de maniè
 - **@polymarket** (185 likes, score 7/10) — NOUVEAU : OpenAI se prépare apparemment à déposer une demande d'introduction en bourse dans les prochains jours.
   - https://x.com/Polymarket/status/2057136055246000364
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 307).
+- **@therabbithole** (215 likes, score 8/10) — Tesla, SpaceX, Neuralink, Boring, 𝕏 et xAI sont ce qu'il a fallu à Elon pour en arriver là. Ces entreprises ont entraîné d'énormes innovations et du bien accompli dans divers secteurs.
+
+Bientôt, le m
+  - https://x.com/TheRabbitHole/status/2057154126186971483
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 263).
+- **@unusual_whales** (1292 likes, score 7/10) — URGENT :
+
+SpaceX vise une introduction en bourse le 12 juin sur le Nasdaq sous le symbole $SPCX avec une valorisation de 1 750 milliards de dollars.
+
+Musk détient 85,1 % du pouvoir de vote en tant que
+  - https://x.com/unusual_whales/status/2057246557381235043
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1696).
+- **@drjasper_eth** (10 likes, score 7/10) — Fundamental value doesn't come from revenue; it comes from valuable hardness. 
+
+Ethereum is the bedrock of trust, and in that is invaluable.
+  - https://x.com/drjasper_eth/status/2057256368638206159
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 14).
+- **@matthewthewalk1** (6 likes, score 7/10) — Since you're right there, Can you ask them how they plan to help long term Tesla shareholders regarding the SpaceX IPO/potential merger please.
+  - https://x.com/Matthewthewalk1/status/2057277550376914998
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 8).
+- **@roundtablespace** (11 likes, score 7/10) — A GUY BUILT A POLYMARKET BOT WITH CLAUDE IN ONE EVENING AND WOKE UP TO $2,314 IN PROFIT.
+
+It doesn't predict anything. It just hunts pricing inefficiencies faster than any human can react and takes th
+  - https://x.com/RoundtableSpace/status/2057291539106459790
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 21).
