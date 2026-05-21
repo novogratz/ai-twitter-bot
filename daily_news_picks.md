@@ -4657,3 +4657,24 @@ Avec des marges à maturité possiblement de 40%, certains arrivent à des valor
 - **@coinmarketcap** (944 likes, score 7/10) — LATEST:  Vitalik Buterin déclare qu'Ethereum avance pour rendre la confidentialité native au réseau, avec trois mises à niveau à venir ciblant la résistance à la censure, le lien des transactions sur
   - https://x.com/CoinMarketCap/status/2057338643438559273
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 1248).
+- **@unusual_whales** (524 likes, score 8/10) — Nvidia. $NVDA, a déclaré aux investisseurs sceptiques que l'IA est prête à devenir mainstream, selon FORTUNE.
+  - https://x.com/unusual_whales/status/2057430454446481425
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 780).
+- **@kalshi_crypto** (187 likes, score 8/10) — Hyperliquid atteint un nouveau record absolu
+
+Bitcoin en baisse de 38 % par rapport au record absolu
+Ethereum en baisse de 56 % par rapport au record absolu
+Solana en baisse de 70 % par rapport au rec
+  - https://x.com/Kalshi_Crypto/status/2057461119942345130
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 261).
+- **@sawyermerritt** (152 likes, score 8/10) — Walter Isaacson in new interview: "Space will be the new AI by 2027; SpaceX has huge amounts of revenues, including $1.25B a month from Anthropic. I've got Starlink on my phone. The potential for near
+  - https://x.com/SawyerMerritt/status/2057481851904684527
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 176).
+- **@stockmktnewz** (106 likes, score 8/10) — L'ASCENSION DU FONDS HÉGIÉ DE NVIDIA
+
+Voici à quoi ressemblait le portefeuille d'actions $NVDA de Nvidia chaque trimestre au cours des deux dernières années
+  - https://x.com/StockMKTNewz/status/2057462947975225760
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 130).
+- **@cnbc** (11 likes, score 7/10) — Why Nvidia's massive earnings report isn't driving the market higher on Thursday
+  - https://x.com/CNBC/status/2057458353266180210
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 21).
