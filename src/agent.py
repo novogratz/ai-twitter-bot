@@ -150,15 +150,43 @@ même structure, anchor différent. Mais le défaut = FR plein.
 Le compte fait 3 news/jour MAX, tous au même format. Les lecteurs
 reviennent demain pour le suivant. Pattern récurrent = abonnés fidèles.
 
-⚠️ OUTPUT RULE — STRICT (user mandate 2026-05-21):
-- Ta sortie DOIT commencer par la ligne "🔎 Le Décode #..." (le header).
-- AUCUN texte avant le header. Pas de "Score:", pas de "**Score interne**",
-  pas de "L'angle est...", pas de "Voici...", pas de "Parfait.", pas de
-  méta-commentaire, pas de notes en bold markdown. RIEN.
-- Si tu veux scorer ton output, fais-le mentalement et SKIP si <8/10.
-  N'écris JAMAIS ton score dans la sortie.
-- Si tu produis du préambule avant le header, le pipeline le détecte et
-  SKIP la cycle. Tu perds ta chance de poster aujourd'hui. Direct au format.
+⚠️ OUTPUT RULE — ULTRA STRICT (user mandate 2026-05-21):
+- Ta sortie DOIT commencer EXACTEMENT par "🔎 Le Décode #..." (le header).
+- ZÉRO préambule. Pas de "**Score**", "**Vérifications**", "**Angle**",
+  "**Checklist**", "**Conformité**", "**Output**", "**Post**", pas
+  d'en-tête de validation, pas de liste à puces de checks (- Source: …
+  ✓ - Scope: … ✓), pas de "Voici", "Parfait", "OK".
+- Si tu veux te valider mentalement, FAIS-LE SILENCIEUSEMENT et SKIP si
+  <8/10. N'écris JAMAIS ta validation/score/checklist dans la sortie.
+- Le pipeline détecte tout préambule et SKIP la cycle. Tu perds ta chance
+  de poster.
+
+✅ EXEMPLE CORRECT (output qu'on veut, à la lettre):
+
+🔎 Le Décode #42 — 2026-05-21
+Stargate lève 100Md pour un datacenter qui consomme 4 GW. Bercy dort.
+
+• OpenAI + SoftBank closent 100Md à 5x EBITDA projeté 2030, jamais publié
+• La centrale nucléaire Oyster Creek redémarrée juste pour ce site
+• Le vrai sujet: l'IA crée son grid privé, le réseau public devient secondaire
+
+@sama parle du futur. @MistralAI cherche des GPUs. Bercy prépare l'amende sur le serveur Microsoft Word.
+
+Demain, même heure, même Décode.
+
+https://www.theinformation.com/articles/exemple
+
+❌ EXEMPLE INTERDIT (NE FAIS JAMAIS ÇA):
+
+**Vérifications:**
+- Source: theinformation, 21 mai 2026 ✓
+- Scope: crypto/IA ✓
+**Score: 9/10.** L'angle est sharp.
+
+🔎 Le Décode #42 — 2026-05-21
+[...]
+
+→ Cette structure SKIP automatique. Donne directement le Décode. RIEN AVANT.
 
 FORMAT OBLIGATOIRE — strict (rien d'autre):
 
@@ -839,17 +867,22 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     tweet = strip_agent_preamble(tweet)
     if not tweet or tweet.upper() == "SKIP":
         return None
-    # 2026-05-21: Le Décode format enforcer. If output contains the
-    # signature header anywhere, strip everything before it (catches
-    # "**Score: 9/10. L'angle est ...** \n\n🔎 Le Décode #N..." leaks).
-    decode_match = re.search(r"🔎\s*Le Décode\s*#?\s*\d+", tweet, re.IGNORECASE)
+    # 2026-05-21: Le Décode format enforcer. Permissive regex — header
+    # may appear with or without the 🔎 emoji, with various dashes.
+    decode_match = re.search(
+        r"(?:🔎\s*)?Le\s+Décode\s*#?\s*\d+",
+        tweet,
+        re.IGNORECASE,
+    )
     if decode_match:
-        tweet = tweet[decode_match.start():].strip()
-    # If we asked for a Décode and the model didn't produce the header
-    # at all, the output is malformed — SKIP rather than ship a regular
-    # news post that breaks the recurring-series promise to readers.
-    elif "Le Décode" not in tweet and "le décode" not in tweet.lower():
-        log.info(f"[NEWS] Décode header missing — SKIPPING (user mandate: every news is Le Décode #N). Output preview: {tweet[:160]!r}")
+        # If the header doesn't already start with the emoji, prepend it
+        # so the on-X presentation stays consistent across the series.
+        body = tweet[decode_match.start():].strip()
+        if not body.startswith("🔎"):
+            body = "🔎 " + body
+        tweet = body
+    elif "le décode" not in tweet.lower():
+        log.info(f"[NEWS] Décode header missing — SKIPPING (user mandate: every news is Le Décode #N). Output preview: {tweet[:200]!r}")
         return None
     # Defense against skip-rationale leaks (bug 2026-04-30 PM: quote-tweet
     # agent posted prose explaining its skip decision on @marcelenplace).
