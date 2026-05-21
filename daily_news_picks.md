@@ -4678,3 +4678,26 @@ Voici à quoi ressemblait le portefeuille d'actions $NVDA de Nvidia chaque trime
 - **@cnbc** (11 likes, score 7/10) — Why Nvidia's massive earnings report isn't driving the market higher on Thursday
   - https://x.com/CNBC/status/2057458353266180210
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 21).
+- **@cryptorover** (24 likes, score 8/10) — Le fondateur de Binance, CZ, pense que le Bitcoin atteindra 1 000 000 $.
+
+« Pour les 20 à 50 prochaines années, le Bitcoin continuera de monter. »
+
+J'approuve totalement.
+  - https://x.com/cryptorover/status/2057502177128518016
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 52).
+- **@deitaone** (164 likes, score 9/10) — $NVDA - ACTIONS NVIDIA EN BAISSE DE 1 % APRÈS LES RÉSULTATS DU 1ER TRIMESTRE
+  - https://x.com/DeItaone/status/2057454369457533094
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 240).
+- **@leaboursefr** (21 likes, score 7/10) — Nvidia a été fondée en 1993, la même année que le traité de Maastricht qui posait les bases de l'Union Européenne.
+
+En 30 ans, Nvidia est passée de 0 à 5000 milliards de capitalisation et 60 milliards
+  - https://x.com/LeaBourseFR/status/2057482294512734624
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 33).
+- **@beez_invest** (13 likes, score 7/10) — Les résultats de Nvidia $NVDA sont sortis :
+
+Contrairement à d'habitude, l'action est en hausse à l'ouverture des marchés
+  - https://x.com/beez_invest/status/2057455760854876358
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 15).
+- **@cointelegraph** (65 likes, score 7/10) — MISE À JOUR : Les revenus des centres de données de Nvidia atteignent 62,3 milliards de dollars, éclipsant la somme des revenus de ses concurrents, selon Artemis.
+  - https://x.com/Cointelegraph/status/2057489156272431556
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 125).
