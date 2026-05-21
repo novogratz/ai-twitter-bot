@@ -4329,3 +4329,34 @@ Et une nouvelle fois… c’est largement au-dessus des attentes
 $NVDA affiche 81,62 Md$ de revenus au T1 et prévoi
   - https://x.com/coinacademy_fr/status/2057195775046664409
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 5).
+- **@shiri_shh** (7 likes, score 7/10) — NVIDIA just dropped Q1 earnings
+
+$81.6B revenue
+$58.3B net income
+75% gross margins
+$80B added to buybacks
+
+92% of Nvidia revenue now comes from one thing:
+
+DATA CENTERS.
+  - https://x.com/shiri_shh/status/2057222537319424357
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 15).
+- **@jimcramer** (30 likes, score 8/10) — Nous avons actuellement une offre exceptionnelle à 4 $ pour le CNBC Investing Club, et notre analyse de la conférence téléphonique de Nvidia de ce soir vaut dix fois ce montant...
+  - https://x.com/jimcramer/status/2057249156603716042
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 86).
+- **@smallcapsnipa** (40 likes, score 8/10) — $NBIS JUST HIKED ON DEMAND GPU PRICES 
+
+H100: $2.95 → $3.85/hr (+30%)
+H200: $3.50 → $4.50/hr (+28%)
+B200: $5.50 → $7.15/hr (+30%)
+B300: $6.10 → $7.85/hr (+29%)
+
+This is so bullish for Nebius & major c
+  - https://x.com/SmallCapSnipa/status/2057235966008393996
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 52).
+- **@earnings_guy** (857 likes, score 8/10) — $NVDA (Nvidia) #earnings are out:
+  - https://x.com/earnings_guy/status/2057194726604820882
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 931).
+- **@polymarketmoney** (119 likes, score 7/10) — $NVDA ANNOUNCED A NEW $80B SHARE BUYBACK PLAN
+  - https://x.com/PolymarketMoney/status/2057236103024001041
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 139).
