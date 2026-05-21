@@ -4360,3 +4360,22 @@ This is so bullish for Nebius & major c
 - **@polymarketmoney** (119 likes, score 7/10) — $NVDA ANNOUNCED A NEW $80B SHARE BUYBACK PLAN
   - https://x.com/PolymarketMoney/status/2057236103024001041
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 139).
+- **@wealthmatica** (20 likes, score 7/10) — Holy smokes Nvidia… 
+
+“Vera CPU opens a brand-new $200 billion TAM for NVIDIA, a market we have never addressed before.
+
+We have visibility to nearly $20 billion in total CPU revenue this year, settin
+  - https://x.com/wealthmatica/status/2057251251964739701
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 28).
+- **@kobeissiletter** (528 likes, score 8/10) — URGENT : L'action SoftBank bondit de plus de +15 % alors que les résultats de Nvidia signalent un fort élan pour l'IA.
+  - https://x.com/KobeissiLetter/status/2057260916849164655
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 658).
+- **@economyapp** (306 likes, score 8/10) — $NVDA Le centre de données NVIDIA reste hors des tableaux.
+  - https://x.com/EconomyApp/status/2057196816274542717
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 316).
+- **@apompliano** (27 likes, score 8/10) — I sat down with Dan Ives (@DivesTech) to discuss the SpaceX IPO, the AI trade across chips, software, and infrastructure, the US vs. China tech race, and what bitcoin's performance means as capital ro
+  - https://x.com/APompliano/status/2057262136846414109
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 73).
+- **@roundtablespace** (23 likes, score 7/10) — Nvidia a annoncé un chiffre d'affaires trimestriel record de 81,6 milliards de dollars et a dépassé les attentes en matière de bénéfices, mais son action a tout de même chuté de plus de 3 %.
+  - https://x.com/RoundtableSpace/status/2057261340562182305
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 37).
