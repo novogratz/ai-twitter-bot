@@ -4534,3 +4534,26 @@ Vous n'êtes pas prêts de le revoir à 1,50€.
 - **@steezehuman** (52 likes, score 7/10) — At age 22 you should have lost your savings in crypto at least once
   - https://x.com/Steezehuman/status/2057325640727032034
   - **WHY**: Source fiable + impact concret (score signal 1, engagement 94).
+- **@stockmktnewz** (1642 likes, score 9/10) — Jensen Huang possède actuellement 812 450 469 actions de l'action Nvidia $NVDA
+
+Nvidia vient d'annoncer qu'elle augmente son dividende trimestriel à 0,25 $ par action, contre 0,01 $ par action auparav
+  - https://x.com/StockMKTNewz/status/2057284495565357461
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1858).
+- **@polymarket** (5929 likes, score 8/10) — JUST IN: Anthropic will pay SpaceX $1,250,000,000.00 per month for compute through May 2029.
+  - https://x.com/Polymarket/status/2057218938769948939
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 6265).
+- **@adanmaigoro** (4 likes, score 7/10) — Cost of sending 100 $USDC on Sui, Solana and Ethereum
+
+Sol - $0.001
+Sui - $0 (free) 
+Eth - $0.1
+  - https://x.com/ADanmaigoro/status/2057356718888325363
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 12).
+- **@xfenaux** (62 likes, score 8/10) — Bonjour à tous en ce jeudi 21 mai,  
+
+Nvidia résultats hier soir (-1.2% après bourse) : mieux que le consensus guidance Q2 au-dessus du consensus, mais flat en after-hours > Chine exclue de la guidanc
+  - https://x.com/XFenaux/status/2057312953276277228
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 68).
+- **@steveurkeldude** (1961 likes, score 7/10) — Me, when my $NVDA dividend increases from $0.01 to $0.25 on 100 shares
+  - https://x.com/SteveUrkelDude/status/2057203768593350799
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 2019).
