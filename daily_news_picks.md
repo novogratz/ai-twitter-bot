@@ -4701,3 +4701,28 @@ Contrairement à d'habitude, l'action est en hausse à l'ouverture des marchés
 - **@cointelegraph** (65 likes, score 7/10) — MISE À JOUR : Les revenus des centres de données de Nvidia atteignent 62,3 milliards de dollars, éclipsant la somme des revenus de ses concurrents, selon Artemis.
   - https://x.com/Cointelegraph/status/2057489156272431556
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 125).
+- **@cryptoastmedia** (2 likes, score 7/10) — Faut-il acheter l’action Cerebras (CBRS), le nouveau rival de Nvidia ?
+
+Le fabricant de puces IA a bondi de 68 % dès son IPO, portée par des accords géants avec OpenAI et AWS.
+
+Notre analyse complète
+  - https://x.com/CryptoastMedia/status/2057499671388364935
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 6).
+- **@niccruzpatane** (3567 likes, score 7/10) — SpaceX confirmed in their IPO filing that they still plan to offer point-to-point terrestrial travel on Earth using Starship
+
+It will enable passengers to fly anywhere in the world in about 30 minutes
+  - https://x.com/niccruzpatane/status/2057257911076753465
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 3831).
+- **@investingcom** (96 likes, score 7/10) — *OPENAI PRÊT À DÉPOSER UN PROSPECTUS D’INTRODUCTION EN BOURSE CONFIDENTIEL CELLE-CI SEMAINE - WSJ*
+  - https://x.com/Investingcom/status/2057440487896670237
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 124).
+- **@fluentinfinance** (10 likes, score 7/10) — OpenAi right now:
+  - https://x.com/FluentInFinance/status/2057499315308732682
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 20).
+- **@beez_invest** (24 likes, score 7/10) — Vous pouvez tous arriver à ce résultat
+
+J'ai commencé à investir tard. Je me suis lancé en 2020, grâce au Covid j’avais alors un patrimoine de 120K€, placé sur des livrets d’épargne
+
+Aujourd'hui, mon
+  - https://x.com/beez_invest/status/2057505851338830025
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 38).
