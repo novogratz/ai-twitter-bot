@@ -4450,3 +4450,26 @@ SpaceX a officiellement déposé son dossier pour son IPO, visant 80 milliards d
 « C'est l'un des mouvements financiers religieu
   - https://x.com/WOLF_Bitcoin_/status/2057219818529386959
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 13).
+- **@cryptorover** (111 likes, score 9/10) — URGENT :   BlackRock vend pour 61 500 000 $ de Bitcoin...
+  - https://x.com/cryptorover/status/2057306976842052059
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 207).
+- **@bscnews** (8 likes, score 7/10) — SpaceX détient un stock de 1,2 milliard de dollars en Bitcoin
+
+SpaceX a divulgué dans un dépôt S 1 qu'elle détenait 18 712 Bitcoin au 31 mars 2026.
+
+La position en Bitcoin $BTC de l'entreprise avait u
+  - https://x.com/BSCNews/status/2057305593548070975
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 14).
+- **@cryptogoos** (5 likes, score 7/10) — "No one should be surprised if Bitcoin hits $700,000."
+
+$14 TRILLION Blackrock CEO Larry Fink says sovereign wealth funds are weighing Bitcoin, and a 2–5% allocation could send it toward $700,000.
+
+TH
+  - https://x.com/cryptogoos/status/2057313433280778475
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 9).
+- **@cointelegraph** (21 likes, score 7/10) — PERSPICACE : La stratégie de $STRC promet un dividende Bitcoin de 11,5 %, mais est-ce la prochaine grande innovation dans la finance crypto, ou un pari risqué ?
+  - https://x.com/Cointelegraph/status/2057310692814860689
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 45).
+- **@coinmarketcap** (55 likes, score 8/10) — DERNIER:  Le dépôt de l'introduction en bourse de SpaceX révèle qu'elle détenait 18 712 Bitcoin, d'une valeur de 1,44 milliard de dollars, à son bilan au premier trimestre, alors qu'elle se prépare po
+  - https://x.com/CoinMarketCap/status/2057304166922321953
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 103).
