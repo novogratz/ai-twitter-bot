@@ -4810,3 +4810,30 @@ Au market cap d'Ethereum, $KTA atteindrait 477 $ (2
 App Revenue measures the total revenue of all protocols on a chain.
   - https://x.com/DefiLlama/status/2057576459074470168
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 6).
+- **@kalshi_crypto** (265 likes, score 9/10) — Top companies holding the most Bitcoin:
+
+Michael Saylor's Strategy — 843,738 ($65B)
+Twenty One Capital — 43,513 ($3.4B)
+Metaplanet — 40,177 ($3.1B)
+MARA Holdings — 38,689 ($3B)
+Bullish — 24,000 ($1.9B
+  - https://x.com/Kalshi_Crypto/status/2057474934780150237
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 301).
+- **@francecryptos** (14 likes, score 7/10) — La fête sur les actions IA continue après l'annonce des résultats trimestriels record de @nvidia.
+
+$NVDA a 81,6 milliards de dollars de revenus au T1 (+85% sur un an) dont 75,2 milliards rien que sur
+  - https://x.com/FranceCryptos/status/2057402254500450680
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 16).
+- **@jason** (8 likes, score 7/10) — I'm just not sure where the new Bitcoin buyer comes from it you have stablecoins, $tao and $SOL being more interesting, valuable and easier to use  
+
+Anyone have 10x $BTC thesis?
+  - https://x.com/Jason/status/2057591338917331061
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 30).
+- **@jarodjmnz** (0 likes, score 7/10) — Les résultats de $NVDA sont bien évidemment encore une fois exceptionnels, mais ce trimestre encore j’aimerais attirer votre attention sur les revenus Networking.
+
+Les revenus Networking de Nvidia ont
+  - https://x.com/jarodjmnz/status/2057538271165477271
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 8).
+- **@kalshi_crypto** (207 likes, score 7/10) — JUST IN : 6,25 milliards de dollars d'options Bitcoin doivent expirer le 29 mai
+  - https://x.com/Kalshi_Crypto/status/2057515264510435396
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 225).
