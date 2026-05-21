@@ -4379,3 +4379,22 @@ We have visibility to nearly $20 billion in total CPU revenue this year, settin
 - **@roundtablespace** (23 likes, score 7/10) — Nvidia a annoncé un chiffre d'affaires trimestriel record de 81,6 milliards de dollars et a dépassé les attentes en matière de bénéfices, mais son action a tout de même chuté de plus de 3 %.
   - https://x.com/RoundtableSpace/status/2057261340562182305
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 37).
+- **@roundtablespace** (5 likes, score 7/10) — A TRADER ON POLYMARKET VALUED A TRUMP KISS AT $142,000 AND STANDS TO MAKE $163,000 IF IT'S CONFIRMED BEFORE MAY 31.
+
+Overnight the odds jumped from 12% to 95% after a video started circulating online,
+  - https://x.com/RoundtableSpace/status/2057283989329547675
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7).
+- **@polymarket** (1821 likes, score 7/10) — JUST IN : OpenAI annonce qu'un modèle d'IA interne a résolu une célèbre conjecture mathématique qui avait déconcerté les humains pendant près de 80 ans.
+  - https://x.com/Polymarket/status/2057194955148329382
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2055).
+- **@cointelegraph** (59 likes, score 7/10) — INTÉRESSANT : Un modèle OpenAI a résolu une question mathématique ouverte vieille de 80 ans, le problème des distances unitaires dans le plan.
+
+Ceci marque la première fois qu'une IA a résolu de maniè
+  - https://x.com/Cointelegraph/status/2057265116945752384
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 85).
+- **@polymarket** (38 likes, score 7/10) — 12 % de chances qu'OpenAI annonce l'AGI cette année.
+  - https://x.com/Polymarket/status/2057195044520571154
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 52).
+- **@polymarket** (185 likes, score 7/10) — NOUVEAU : OpenAI se prépare apparemment à déposer une demande d'introduction en bourse dans les prochains jours.
+  - https://x.com/Polymarket/status/2057136055246000364
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 307).
