@@ -4574,3 +4574,38 @@ Plus de 950 000 véhicules sortent chaque année de l’usine de Tesla la plus p
 - **@teslaownerssv** (228 likes, score 7/10) — Le nouveau Tesla Semi est à l'édition Signature Tesla S/X
   - https://x.com/teslaownersSV/status/2057225132645793998
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 252).
+- **@economyapp** (847 likes, score 9/10) — $NVDA NVIDIA Q1 FY27 (April quarter).
+
+• Revenue +85% Y/Y to $81.6B ($2.6B beat).
+• Operating margin 66% (+16pp Y/Y).
+• Non-GAAP EPS $1.87 ($0.10 beat).
+
+Q2 FY27 guidance:
+• Revenue $91.0B ($3.0B beat
+  - https://x.com/EconomyApp/status/2057201468994957473
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 877).
+- **@beez_invest** (20 likes, score 7/10) — Pour ceux qui aiment les race ! 
+
+10 000€ Sur Nvidia en mai 2016
+
+Nvidia $NVDA  Livret A
+  - https://x.com/beez_invest/status/2057369528544170264
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 24).
+- **@le_investisseur** (0 likes, score 7/10) — Nvidia 
+
+Nvidia augmente son dividende à $0.25 par action et par trimestre contre $0.01 précédemment. 
+
+ Nvidia a aussi annoncé un nouveau programme de rachat d'actions de 80 milliards de dollars.
+  - https://x.com/le_investisseur/status/2057369355550147048
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 6).
+- **@cryptorover** (4 likes, score 7/10) — 1/ $NVDA — Nvidia
+  - https://x.com/cryptorover/status/2057375733438427210
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 6).
+- **@stachalex** (5 likes, score 7/10) — Bitcoin 2.0, minage, bitcoins perdus, quand vendre... 
+Chaque mois, je réponds à vos questions sur Youtube !
+
+ Pourquoi il n’existe pas de Bitcoin 2.0
+ Le minage rapporte-t-il encore ?
+ Où sont les mi
+  - https://x.com/StachAlex/status/2057388646781575192
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7).
