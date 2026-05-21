@@ -127,21 +127,23 @@ def _cadence(minutes: int) -> int:
 
 
 def post_interval_minutes() -> int:
-    """News cadence — 2026-05-19: pivoted to 3 LONG deep-dives/day in
-    'Le Décode #N' series. Target windows in Paris time:
-      - Morning brief  ~8h Paris (2h EST)
-      - Midday update  ~13h Paris (7h EST)
-      - Evening recap  ~19h Paris (13h EST)
-    Polling cadence: every ~2h during waking hours, ~4h overnight.
-    MAX_NEWS_PER_DAY=3 caps actual posts; the cadence just defines
-    when the bot CHECKS whether to ship today's next deep-dive."""
+    """News cadence — 2026-05-21: 6 LONG deep-dives/day in 'Le Décode #N'
+    series. Spread across waking FR hours (~3h between posts):
+      - 8h Paris  (2h EST)  Morning
+      - 11h Paris (5h EST)  Mid-morning
+      - 14h Paris (8h EST)  Lunch-back
+      - 17h Paris (11h EST) Late afternoon
+      - 20h Paris (14h EST) Evening primetime
+      - 22h Paris (16h EST) Night close
+    Polling cadence: every ~25-45min during waking hours so each window
+    gets a chance to ship; overnight stays slow.
+    MAX_NEWS_PER_DAY=6 caps actual posts; the cadence is the poll rate."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    # Paris peaks: 8am=2h EST, 1pm=7h EST, 7pm=13h EST
-    if hour in (1, 2, 3, 6, 7, 8, 12, 13, 14):
-        return _cadence(random.randint(35, 55))
-    if 0 <= hour < 18:
-        return _cadence(random.randint(60, 90))
-    return _cadence(random.randint(120, 180))  # overnight check rarely
+    # Waking FR hours (2h-17h EST = 8h-23h Paris)
+    if 2 <= hour <= 17:
+        return _cadence(random.randint(25, 45))
+    # Overnight Paris (17h-2h EST = 23h-8h Paris) — rare checks
+    return _cadence(random.randint(120, 180))
 
 
 def reply_interval_minutes() -> int:

@@ -1,13 +1,13 @@
 {
   "caps": {
-    "MAX_NEWS_PER_DAY": 3,
-    "MAX_HOTAKES_PER_DAY": 3,
+    "MAX_NEWS_PER_DAY": 6,
+    "MAX_HOTAKES_PER_DAY": 0,
     "MAX_BREAKOUTS_PER_DAY": 0,
     "MAX_SPICY_PER_DAY": 0,
     "MAX_QUOTES_PER_DAY": 80,
     "MAX_RETWEETS_PER_DAY": 300,
     "MAX_REPLIES_PER_CYCLE": 40,
-    "FOLLOW_BLAST_PER_CYCLE": 80,
+    "FOLLOW_BLAST_PER_CYCLE": 100,
     "LIKE_BOT_PER_CYCLE": 100
   },
   "cadence_factor": 0.7,
@@ -43,6 +43,6 @@
   ],
   "language": "fr",
   "scope": "ai_crypto_only",
-  "updated_at": "2026-05-18T12:00:00",
-  "note": "Mandate 2026-05-18 — datacenter IA + crypto mining (MW-scale infrastructure) added to topic_focus. FR audience cares: power consumption, hashrate, GPU supply, Mistral GPU access. Caps cranked, cadence_factor 0.7 (faster cycles)."
+  "updated_at": "2026-05-19T23:28:37",
+  "note": "Mandate 2026-05-18 \u2014 datacenter IA + crypto mining (MW-scale infrastructure) added to topic_focus. FR audience cares: power consumption, hashrate, GPU supply, Mistral GPU access. Caps cranked, cadence_factor 0.7 (faster cycles)."
 }
