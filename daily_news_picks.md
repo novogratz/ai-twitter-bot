@@ -4726,3 +4726,28 @@ J'ai commencé à investir tard. Je me suis lancé en 2020, grâce au Covid j’
 Aujourd'hui, mon
   - https://x.com/beez_invest/status/2057505851338830025
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 38).
+- **@cryptogoos** (4 likes, score 7/10) — THIS IS ABSOLUTELY MASSIVE:
+
+ US Congress just formally introduced a new Strategic Bitcoin Reserve bill that ensures 20 years without any sales and aims to hold 1,000,000 $BTC.
+
+The bill has 17 bipart
+  - https://x.com/cryptogoos/status/2057537790808625225
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 10).
+- **@watcherguru** (955 likes, score 8/10) — INFO URGENTE :  Le congressman américain Mike Rulli déclare : « il n'y aura jamais que 21 millions de Bitcoin. »
+
+« Alors que les gouvernements peuvent imprimer des quantités illimitées d'argent, l'of
+  - https://x.com/WatcherGuru/status/2057533321924542545
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1305).
+- **@cryptorover** (584 likes, score 8/10) — INSANE REVERSAL IN US MARKETS 
+
+$700,000,000,000 has been added to US stocks in just the last 60 minutes after reports that a Pakistan mediated US-Iran peace agreement could be announced within hours.
+  - https://x.com/cryptorover/status/2057526475537183014
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 770).
+- **@btcprice** (107 likes, score 8/10) — Bitcoin Price: $77,500
+  - https://x.com/BTCPrice/status/2057509577122349214
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 121).
+- **@watcherguru** (2389 likes, score 8/10) — JUST IN : Le milliardaire Mark Cuban dit qu'il a vendu « la plupart » de son Bitcoin.
+
+« Le Bitcoin a perdu le fil. »
+  - https://x.com/WatcherGuru/status/2057525912237645899
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4055).
