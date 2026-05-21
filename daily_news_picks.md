@@ -4609,3 +4609,30 @@ Chaque mois, je réponds à vos questions sur Youtube !
  Où sont les mi
   - https://x.com/StachAlex/status/2057388646781575192
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 7).
+- **@divs_king** (122 likes, score 9/10) — Bénéfices nets, 1er trimestre 2026 
+
+Google : 62 milliards de $
+Nvidia : 58 milliards de $
+Microsoft : 31 milliards de $
+Apple : 30 milliards de $
+Amazon : 30 milliards de $
+
+Certains y verront une bu
+  - https://x.com/Divs_King/status/2057399852296708440
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 136).
+- **@bfmtv** (11 likes, score 7/10) — C'est trois fois plus qu'il y a un an: le géant des processeurs graphiques d'IA Nvidia affiche un bénéfice net record à 58,3 milliards de dollars au 1er trimestre
+  - https://x.com/BFMTV/status/2057324720186417448
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 11).
+- **@realzumbakafeo** (3 likes, score 7/10) — Ethereum still stuck below $2,150, no boost from BTC or stocks. Lack of big buyers is the issue, a bearish sign.
+  - https://x.com/realzumbakafeo/status/2057384276992159933
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7).
+- **@bscnews** (21 likes, score 7/10) — Vitalik Buterin Pousse la Confidentialité Native pour Ethereum
+
+Vitalik Buterin (@VitalikButerin) a esquissé trois mises à niveau à court terme pour Ethereum $ETH, visant à faire de la confidentialité
+  - https://x.com/BSCNews/status/2057379368255828025
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 37).
+- **@coinacademy_fr** (21 likes, score 7/10) — HYPE gagne 50% sur la semaine, approche de son ATH et dépasse déjà SOL 
+
+Les deux ETF Hyperliquid cumulent 54 millions de dollars d’entrées nettes pour leur lancement, dépassant les ETF BTC et ETH sur
+  - https://x.com/coinacademy_fr/status/2057388385182896217
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 23).
