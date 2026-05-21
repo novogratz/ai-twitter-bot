@@ -4789,3 +4789,24 @@ D-Wave → QBTSon
 - **@jrupena** (5 likes, score 7/10) — MICHAEL SAYLOR THINKS THAT THE BITCOIN BOTTOM IS IN
   - https://x.com/JRupena/status/2057547581396566046
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 9).
+- **@scottmelker** (207 likes, score 8/10) — MISE À JOUR : 8 DIRIGEANTS ET CHERCHEURS DE LA FONDATION ETHEREUM $ETH ONT DÉMISSIONNÉ EN 2026
+  - https://x.com/scottmelker/status/2057559555723477405
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 267).
+- **@chainspect_app** (183 likes, score 8/10) — .@KeetaNetwork construit l'infrastructure pour moderniser la finance mondiale
+
+Spécialement conçu pour connecter les institutions à l'ère numérique
+
+Au market cap d'Ethereum, $KTA atteindrait 477 $ (2
+  - https://x.com/chainspect_app/status/2057484499445797246
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 229).
+- **@tokenterminal** (10 likes, score 7/10) — La capitalisation boursière des ETF tokenisés dépasse 400 millions de dollars, menée par @ethereum avec une part de marché de 76,9 %.
+  - https://x.com/tokenterminal/status/2057531221488382123
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
+- **@tokenterminal** (7 likes, score 7/10) — The market cap of euro stablecoins surpasses $770 million, led by @ethereum with 62.9% market share.
+  - https://x.com/tokenterminal/status/2057531765955186738
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 9).
+- **@defillama** (6 likes, score 7/10) — For years Ethereum and BSC dominated App Revenue. Since 2024, Solana has led, while Hyperliquid recently claimed the number 2 spot.
+
+App Revenue measures the total revenue of all protocols on a chain.
+  - https://x.com/DefiLlama/status/2057576459074470168
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 6).
