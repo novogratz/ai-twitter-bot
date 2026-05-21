@@ -4636,3 +4636,24 @@ Vitalik Buterin (@VitalikButerin) a esquissé trois mises à niveau à court ter
 Les deux ETF Hyperliquid cumulent 54 millions de dollars d’entrées nettes pour leur lancement, dépassant les ETF BTC et ETH sur
   - https://x.com/coinacademy_fr/status/2057388385182896217
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 23).
+- **@cryptojack** (35 likes, score 8/10) — BREAKING:
+
+$ETH ETF outflow of $28,100,000  yesterday.
+
+BlackRock sold $26,500,000 in Ethereum.
+  - https://x.com/cryptojack/status/2057446734247121071
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 59).
+- **@cointelegraph** (130 likes, score 8/10) — PERSPICACE : Les premiers acheteurs de $HYPE ont surpassé à la fois les détenteurs de Bitcoin et d'Ethereum sur une période de cinq ans.
+  - https://x.com/Cointelegraph/status/2057440192525439429
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 248).
+- **@leaboursefr** (4 likes, score 7/10) — Si Starlink atteignait un jour 100M d’abonnés à ~100$/mois, on parlerait d’un potentiel de ~120 Md$ de revenus annuels.
+
+Avec des marges à maturité possiblement de 40%, certains arrivent à des valoris
+  - https://x.com/LeaBourseFR/status/2057460350077829274
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 10).
+- **@ready_co** (46 likes, score 7/10) — ETH to $10,000
+  - https://x.com/ready_co/status/2057375237839200556
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 50).
+- **@coinmarketcap** (944 likes, score 7/10) — LATEST:  Vitalik Buterin déclare qu'Ethereum avance pour rendre la confidentialité native au réseau, avec trois mises à niveau à venir ciblant la résistance à la censure, le lien des transactions sur
+  - https://x.com/CoinMarketCap/status/2057338643438559273
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 1248).
