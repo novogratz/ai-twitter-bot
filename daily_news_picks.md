@@ -4514,3 +4514,23 @@ Amazon $AMZ
 ₩485 000 000 000 000 ont été ajoutés à la bourse sud-coréenne aujourd'hui après que Samsung a évité de justesse une grève majeure des travailleurs.
   - https://x.com/cryptorover/status/2057323836060954918
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 60).
+- **@eljaboom** (3 likes, score 7/10) — Imminent breakout appearing on Ethereum.
+
+More upside for $ETH
+  - https://x.com/Eljaboom/status/2057342187181146266
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 7).
+- **@saylordocs** (7 likes, score 7/10) — John McAfee revealed the creator of Bitcoin without directly saying it.
+  - https://x.com/saylordocs/status/2057333314445549867
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 15).
+- **@marionawfal** (84 likes, score 7/10) — La fenêtre de lancement de Starship 12 s’ouvre à 17 h 30 CT aujourd’hui
+
+Cette fois, ils testent la nouvelle génération de vaisseaux Starship et Super Heavy, la nouvelle version du moteur Raptor, et i
+  - https://x.com/MarioNawfal/status/2057333434024944073
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 116).
+- **@adresansoso** (752 likes, score 7/10) — Voyez comment tout le monde s'est habitué à payer son litre de carburant à plus de 2€ sans que ça entraine de révolution ?
+Vous n'êtes pas prêts de le revoir à 1,50€.
+  - https://x.com/AdresanSoso/status/2057079149299187784
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 826).
+- **@steezehuman** (52 likes, score 7/10) — At age 22 you should have lost your savings in crypto at least once
+  - https://x.com/Steezehuman/status/2057325640727032034
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 94).
