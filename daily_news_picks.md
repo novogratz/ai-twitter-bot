@@ -4557,3 +4557,20 @@ Nvidia résultats hier soir (-1.2% après bourse) : mieux que le consensus guida
 - **@steveurkeldude** (1961 likes, score 7/10) — Me, when my $NVDA dividend increases from $0.01 to $0.25 on 100 shares
   - https://x.com/SteveUrkelDude/status/2057203768593350799
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 2019).
+- **@john322226** (727 likes, score 7/10) — You go think say men no Dey reject sex until you try touch some men after he get “cut 1” in a potential 60 million naira winning ticket.
+  - https://x.com/john322226/status/2057356101239119933
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1375).
+- **@marionawfal** (70 likes, score 7/10) — Voici la Gigafactory de Shanghai de nuit, et l’échelle est impressionnante.
+
+Plus de 950 000 véhicules sortent chaque année de l’usine de Tesla la plus productive, avec plus de 95 % des pièces provena
+  - https://x.com/MarioNawfal/status/2057370820117459053
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 108).
+- **@polymarket** (83 likes, score 7/10) — JUST IN: UK commits $26.87 million to help contain the Ebola outbreak in Congo.
+  - https://x.com/Polymarket/status/2057365023303795030
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 187).
+- **@cryptorover** (47 likes, score 7/10) — $NVDA CEO Jensen Huang after increasing his yearly income by nearly a BILLION dollars...
+  - https://x.com/cryptorover/status/2057368996304011393
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 85).
+- **@teslaownerssv** (228 likes, score 7/10) — Le nouveau Tesla Semi est à l'édition Signature Tesla S/X
+  - https://x.com/teslaownersSV/status/2057225132645793998
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 252).
