@@ -4423,3 +4423,30 @@ Ethereum is the bedrock of trust, and in that is invaluable.
 It doesn't predict anything. It just hunts pricing inefficiencies faster than any human can react and takes th
   - https://x.com/RoundtableSpace/status/2057291539106459790
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 21).
+
+## 2026-05-21
+- **@stocksavvyshay** (961 likes, score 8/10) — $NVDA vient de divulguer que les prix de location des H100 augmentent d’environ 20 % en 2026, même si le H100 a été lancé en 2022 et qu’il est désormais de trois générations de GPU en retard.
+
+Cela re
+  - https://x.com/StockSavvyShay/status/2057210362530078794
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1083).
+- **@moonoverlord** (145 likes, score 7/10) — plan de jeu pour sortir l'ETH de l'impasse 1.0
+
+- admettre que les L2 étaient une erreur, les abandonner complètement, chacune d'elles est en baisse de -90%+ avec 0 utilisation, enfoncer le clou et en
+  - https://x.com/MoonOverlord/status/2057120907563356308
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 195).
+- **@stocksavvyshay** (620 likes, score 7/10) — Le bénéfice d'exploitation de $NVDA a presque été multiplié par 40 depuis le moment ChatGPT
+  - https://x.com/StockSavvyShay/status/2057198559662047744
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 792).
+- **@marionawfal** (550 likes, score 7/10) — URGENT :
+
+SpaceX a officiellement déposé son dossier pour son IPO, visant 80 milliards de dollars ou plus, ce qui serait la plus grande introduction en bourse de l’histoire, éclipsant de très loin le
+  - https://x.com/MarioNawfal/status/2057210480758849798
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 658).
+- **@wolf_bitcoin_** (9 likes, score 7/10) — DAN NATHAN DE MSNBC SUR LA COMMUNAUTÉ BITCOIN 
+
+« Si vous pensez que MAGA est un puissant mouvement politique, attendez juste de voir les Bitcoiners. »
+
+« C'est l'un des mouvements financiers religieu
+  - https://x.com/WOLF_Bitcoin_/status/2057219818529386959
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 13).
