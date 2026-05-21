@@ -4473,3 +4473,44 @@ TH
 - **@coinmarketcap** (55 likes, score 8/10) — DERNIER:  Le dépôt de l'introduction en bourse de SpaceX révèle qu'elle détenait 18 712 Bitcoin, d'une valeur de 1,44 milliard de dollars, à son bilan au premier trimestre, alors qu'elle se prépare po
   - https://x.com/CoinMarketCap/status/2057304166922321953
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 103).
+- **@jonerlichman** (1557 likes, score 9/10) — Nvidia’s first quarter revenue:
+
+Q1 2027: $81.6 billion
+Q1 2026: $44.1 billion
+Q1 2025: $26.0 billion
+Q1 2024: $7.2 billion
+Q1 2023: $8.3 billion
+Q1 2022: $5.7 billion
+Q1 2021: $3.1 billion
+Q1 2020: $
+  - https://x.com/JonErlichman/status/2057195195012121082
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1647).
+- **@brewmarkets** (809 likes, score 9/10) — Résultats financiers de Nvidia :
+
+• Chiffre d'affaires : 81,62 G$ contre 78,85 G$ attendu
+• BPA : 1,87 $ contre 1,76 $ attendu
+  - https://x.com/brewmarkets/status/2057195905145590069
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 851).
+- **@wolf_financial** (270 likes, score 9/10) — NVIDIA $NVDA VIENT DE PUBLIER SES RÉSULTATS DU T1
+
+- Chiffre d'affaires : 81,6 G$ contre 78,86 G$ attendu 
+- BPA ajusté : 1,87 $ contre 1,76 $ attendu 
+- Bénéfice net : 58,3 G$
+- Marge brute : 74,9 %
+  - https://x.com/WOLF_Financial/status/2057195426349232285
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 320).
+- **@charliebilello** (218 likes, score 9/10) — Croissance des revenus du T1, variation % en glissement annuel...
+Nvidia $NVDA : +85 %
+AMD $AMD : +38 %
+Meta $META : +33 %
+Google $GOOGL : +22 %
+Microsoft $MSFT : +18 %
+Apple $AAPL : +17 %
+Amazon $AMZ
+  - https://x.com/charliebilello/status/2057220239696314451
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 260).
+- **@cryptorover** (36 likes, score 7/10) — INVERSION MASSIVE 
+
+₩485 000 000 000 000 ont été ajoutés à la bourse sud-coréenne aujourd'hui après que Samsung a évité de justesse une grève majeure des travailleurs.
+  - https://x.com/cryptorover/status/2057323836060954918
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 60).
