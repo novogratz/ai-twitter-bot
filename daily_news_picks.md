@@ -4751,3 +4751,41 @@ $700,000,000,000 has been added to US stocks in just the last 60 minutes after r
 « Le Bitcoin a perdu le fil. »
   - https://x.com/WatcherGuru/status/2057525912237645899
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 4055).
+- **@pete_rizzo_** (528 likes, score 7/10) — BREAKING: U.S. CONGRESS JUST FORMALLY INTRODUCED A NEW STRATEGIC #BITCOIN RESERVE BILL
+
+BILL WILL ENSURE US SELLS NO BTC FOR AT LEAST 20 YEARS
+
+17 CONGRESSMEN ARE SUPPORTING THE BILL
+
+THIS IS ABSOLUTE
+  - https://x.com/pete_rizzo_/status/2057482412439843232
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 592).
+- **@frenchie_** (127 likes, score 7/10) — Quel début d’année complètement fou pour les pépites françaises de la tech
+
+Depuis le 1er janvier :
+
+> $2CRSI : +226% YTD (ATH)
+> $ALKRAY : +653% YTD 
+> $SOITEC : +555% YTD 
+> $STMPA : +147% YTD
+
+Pend
+  - https://x.com/Frenchie_/status/2057491725598228978
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 163).
+- **@kunoo** (32 likes, score 7/10) — A trader turned $990,000 into $10. 
+
+This is the hard truth of Crypto.
+  - https://x.com/kunoo/status/2057533131083878496
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 68).
+- **@ondofinance** (274 likes, score 7/10) — Another major U.S. strategic bet.
+
+The Trump administration just awarded $2B to quantum companies, with several already tokenized on Ondo Global Markets:
+
+IBM → IBMon
+Rigetti → RGTIon
+D-Wave → QBTSon
+  - https://x.com/OndoFinance/status/2057537030222221788
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 296).
+- **@jrupena** (5 likes, score 7/10) — MICHAEL SAYLOR THINKS THAT THE BITCOIN BOTTOM IS IN
+  - https://x.com/JRupena/status/2057547581396566046
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 9).
