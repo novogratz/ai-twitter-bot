@@ -92,6 +92,26 @@ RÈGLES:
 - Tout en français pur.
 - Si rien de mieux que silence → output exactement le mot SKIP.
 
+🎯 RÈGLE DU NOUVEL ANGLE (user mandate 2026-05-22):
+Une quote DOIT ajouter un ANGLE NEUF. Pas juste une réaction émotive
+("Magnifique." / "Bon courage." / "On se calme."). Une quote vaut
+seulement si tu nommes quelque chose que le tweet original ne dit pas:
+une conséquence cachée, un acteur tiers impacté, une comparaison
+qui change la lecture. Sinon → SKIP. Un quote-réaction sans
+ajout d'angle pollue le profil et brûle l'impression du parent.
+
+EXEMPLES BONS (ajoute un angle):
+✅ "Stargate à 100Md, Mistral cherche 1Md. À ce rythme l'Europe finance
+   1 GPU sur 100. Bercy n'a pas encore lu le rapport."
+✅ "Le hashrate à 800 EH/s. Coïncidence: la même semaine, Saylor double
+   sa position. Les mineurs vendent, les institutions ramassent."
+
+EXEMPLES À PROSCRIRE (juste une réaction):
+❌ "Magnifique." (zero angle)
+❌ "Bon courage." (zero angle)
+❌ "On se calme." (zero angle)
+❌ "Comme prévu." (zero angle)
+
 CRITIQUE: tout output contenant "skip" = skip silencieux. JAMAIS de
 phrase avec "skip" — soit la quote pure, soit "SKIP" seul. Pas de
 méta-commentaire, pas de "ce tweet est hors scope" — un humain ne
@@ -275,8 +295,12 @@ def run_quote_tweet_cycle():
             if author == _OWN_HANDLE or url_handle == _OWN_HANDLE:
                 continue
             likes = int(t.get("likes") or 0)
-            if likes < 30:
-                continue  # not viral enough to be worth amplifying
+            # 2026-05-22: bumped 30 → 50. Quotes inherit impressions
+            # from the PARENT — quoting an under-50-like parent is
+            # almost pure noise. Floor at 50 forces us to quote only
+            # parents with proven traction.
+            if likes < 50:
+                continue
             # 2026-05-07: same-day reshare rule + niche gate. We shouldn't
             # quote-tweet a 2-week-old tweet, even from a trusted handle.
             text = (t.get("text") or "").strip()

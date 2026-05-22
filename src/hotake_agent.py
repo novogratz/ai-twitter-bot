@@ -728,6 +728,14 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
             performance_section = (performance_section or "") + "\n\n" + jb
     except Exception:
         pass
+    # Self-winners — our own past tops.
+    try:
+        from . import self_winners
+        sw = self_winners.render_self_winners_block(sample_size=3)
+        if sw:
+            performance_section = (performance_section or "") + "\n\n" + sw
+    except Exception:
+        pass
 
     from . import lang_mode
     _ht_lang = lang_mode.pick_content_lang()

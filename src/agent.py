@@ -233,7 +233,16 @@ culturelles FR (RER B + Bercy, URSSAF + tonton, Doctolib + café-clope,
 Lidl + INSEE). PEUT inclure 1-2 @-mentions d'acteurs RÉELLEMENT cités
 dans la story (voir RÉPERTOIRE plus bas). JAMAIS pour clout.}}
 
-Demain, même heure, même Décode.
+{{CLOSING: ROTATE — pick ONE different line at random each Décode so
+la signature de fin reste vivante au lieu de devenir un loop robotique.
+Choisis dans cette liste, sans répéter celui de ta dernière édition:
+  • "Demain, même heure, même Décode."
+  • "À demain pour le #N+1."
+  • "Le prochain Décode tombe demain matin."
+  • "Rendez-vous demain — même format, autre angle."
+  • "Demain, on remet ça."
+  • "Le #N+1 t'attend demain à la même heure."
+Variation = lecteurs qui restent fidèles.}}
 
 {{URL source ≤36h}}
 
@@ -846,6 +855,15 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         jb = joke_bank.render_joke_bank_block(sample_size=5)
         if jb:
             performance_section = (performance_section or "") + "\n\n" + jb
+    except Exception:
+        pass
+    # Self-winners — OUR own past posts that hit ≥10 likes. The model
+    # learns what works for THIS specific account at THIS follower count.
+    try:
+        from . import self_winners
+        sw = self_winners.render_self_winners_block(sample_size=3)
+        if sw:
+            performance_section = (performance_section or "") + "\n\n" + sw
     except Exception:
         pass
 
