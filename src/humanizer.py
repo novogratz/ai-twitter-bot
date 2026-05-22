@@ -157,6 +157,22 @@ def humanize(text: str) -> str:
 
     result = text
 
+    # 2026-05-22: strip hashtags. Ollama leaks them despite prompt
+    # forbidding them. e.g. "...la mie. #RERB #Copilot" → trim trailing.
+    # Inline hashtags also stripped (rare).
+    result = re.sub(r"(?:\s+#[A-Za-z][\w]{1,30})+\s*$", "", result)
+    result = re.sub(r"\s*#[A-Za-z][\w]{1,30}\b", "", result)
+
+    # 2026-05-22: strip instruction-label echo bleed. Model sometimes
+    # writes "Chute FR avec 2 réfs stackées :" or "Titre punchy :" etc.
+    # as a label BEFORE its actual content. Cut these lines.
+    result = re.sub(
+        r"^[ \t]*(?:Chute FR[^\n]*?:|Titre[^\n]*?:|Corps[^\n]*?:|Hook[^\n]*?:|Headline[^\n]*?:|Body[^\n]*?:|Closing[^\n]*?:|URL[^\n]*?:)[ \t]*\n?",
+        "",
+        result,
+        flags=re.IGNORECASE | re.MULTILINE,
+    )
+
     # Strip em/en dashes
     for pat, rep in _DASH_PAIRS:
         result = result.replace(pat, rep)
