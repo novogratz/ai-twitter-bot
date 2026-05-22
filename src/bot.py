@@ -253,19 +253,24 @@ def _run_single_bot_cycle():
         is_decode = (tweet_source == "news" and src_url is not None)
         post_body = tweet
         if is_decode and src_url:
+            log.info(f"[NEWS] Model emitted URL: {src_url}")
             try:
                 from .agent import url_is_reachable
                 if not url_is_reachable(src_url):
-                    log.info(f"[NEWS] Source URL unreachable, stripping fabricated link: {src_url}")
+                    log.info(f"[NEWS] ❌ Source URL unreachable, stripping fabricated link: {src_url}")
                     post_body = tweet.replace(src_url, "").rstrip()
                     post_body = re.sub(r"\n+(Source\s*:?\s*)?\s*$", "", post_body).rstrip()
                     src_url = None
+                else:
+                    log.info(f"[NEWS] ✅ URL validated, keeping inline")
             except Exception as e:
                 log.info(f"[NEWS] URL reachability check failed (keeping link): {e}")
             # When a URL is present, the link card carries the visual.
             # An attached image would suppress the card → text + URL only.
             if src_url:
                 img_path = None
+        elif is_decode:
+            log.info("[NEWS] ⚠️ Décode posting with NO URL (model didn't emit one)")
 
         log.info(f"[NEWS] Posting ({len(post_body)} chars): {post_body[:100]}...")
         post_tweet(post_body, image_path=img_path)
