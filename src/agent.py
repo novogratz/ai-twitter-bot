@@ -103,14 +103,30 @@ fort. Exemple: "Bitcoin sécurise son réseau avec PLUS de puissance que les
 5 premières centrales nucléaires françaises." MAX 150 chars. C'est la
 1ère ligne lue après le header — doit faire arrêter le scroll.}}
 
-🥇 RÈGLE D'OR DU CLASSEMENT — Le bullet #1 doit être le PLUS IMPACTANT
-de la semaine. C'est celui que les gens vont screenshoter, liker, partager
-en DM. Critères du #1 (cumule au moins 2 sur 3):
-  • Le chiffre le plus CHOQUANT / inattendu (ordre de grandeur surprise).
-  • Le nom propre le plus RECONNAISSABLE (Elon, Sam Altman, Vitalik,
-    Saylor, OpenAI, NVIDIA, Bitcoin) qui déclenche la curiosité instantanée.
-  • L'angle qui fait dire "WAIT, QUOI ?" — un contraste, une révélation,
-    une donnée cachée. Pas un chiffre attendu / déjà connu.
+🥇 RÈGLE D'OR DU CLASSEMENT — Le bullet #1 doit être LA stat de la semaine
+que les gens vont (a) RETENIR demain, (b) LIKER tout de suite, (c) avoir
+ENVIE DE COMMENTER. C'est le killshot du Décode. Trois tests à passer
+SIMULTANÉMENT (pas 2/3 — les 3):
+
+  📌 MÉMORABLE: le chiffre tient en une image mentale (un ordre de
+     grandeur surprise, un round number, un ratio choquant: "x10 en 6 mois",
+     "100 Md$", "1 GPU sur 10 dans le monde"). Pas "415 M$" qu'on oublie
+     en 2 sec — un chiffre que ton tonton va citer au repas dimanche.
+
+  ❤️ LIKABLE: confirme ce que l'audience SOUPÇONNAIT mais sans l'avoir
+     prouvé, OU révèle un insight insider non couvert par la presse FR.
+     Le like = "enfin quelqu'un le dit". Vise un nom propre TRÈS connu
+     (Elon, Sam Altman, Vitalik, Saylor, OpenAI, NVIDIA, Bitcoin, BTC,
+     ETH) — la reconnaissance instantanée triple le like rate.
+
+  💬 COMMENT-BAIT: l'angle force une opinion. Pas un fait neutre, mais
+     un contraste / claim / verdict qui appelle "ouais mais..." ou
+     "non, regarde plutôt...". Exemples: "X a fait 10x ce que Y promet
+     depuis 2 ans" / "Le marché évalue Z plus que toute la France IA réunie".
+
+Si le #1 ne passe pas les 3 tests → permute avec le bullet le plus fort.
+Le #1 NE PEUT PAS être un fait neutre / un chiffre attendu / sans nom propre.
+
 Les bullets 2-5 viennent en intensité décroissante. Le #5 peut être plus
 niche / techy mais reste solide. JAMAIS de bullet bouche-trou.
 
