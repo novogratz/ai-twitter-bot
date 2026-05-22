@@ -361,10 +361,14 @@ def main():
 
         # Reply-back bot - reply to people who reply to our tweets (creates threads).
         # Cadence unchanged (60min) but skipped during quiet hours.
-        log.info("Reply-back bot: replying to followers every 20 min (quiet 1am-7am Paris).")
+        # 2026-05-22 PM: 20 → 8 min. Replies to our Décodes are gold —
+        # conversation depth on freshly-posted content is the strongest
+        # algo signal in the first hour. Bumping cadence so we don't
+        # miss the algo-push window.
+        log.info("Reply-back bot: replying to followers every 8 min (quiet 1am-7am Paris).")
         scheduler.add_job(
             quiet_safe_replyback,
-            trigger=IntervalTrigger(minutes=20),
+            trigger=IntervalTrigger(minutes=8),
             id="replyback_job",
         )
 
@@ -377,10 +381,10 @@ def main():
         # the same impressions-per-hour lift. Each boost is dedup'd by URL
         # so no risk of re-RT'ing the same post; if the boost queue is dry
         # the cycle just no-ops.
-        log.info("Boost bot: retweeting own latest tweet every 30 minutes.")
+        log.info("Boost bot: retweeting own latest tweet every 20 minutes.")
         scheduler.add_job(
             safe_run_boost_cycle,
-            trigger=IntervalTrigger(minutes=30),
+            trigger=IntervalTrigger(minutes=20),
             id="boost_job",
         )
 
@@ -901,7 +905,7 @@ def main():
             "quote_tweet_job": 12,
             "retweet_job": 5,
             "like_job": 10,
-            "boost_job": 30,
+            "boost_job": 20,
             "viral_followup_job": 15,
             "followback_job": 45,
             "pin_job": 180,            # 3h
@@ -911,7 +915,7 @@ def main():
             "mega_watch_job": 1.5,
             "chain_reply_job": 30,
             "follow_blast_job": 20,
-            "replyback_job": 5,
+            "replyback_job": 8,
         }
         from src.config import get_live_cadence_factor as _gcf
         _strategy_watchdog_state = {"mtime": 0.0, "last_factor": _gcf(1.0)}

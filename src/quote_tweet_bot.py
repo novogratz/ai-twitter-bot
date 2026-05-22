@@ -295,11 +295,12 @@ def run_quote_tweet_cycle():
             if author == _OWN_HANDLE or url_handle == _OWN_HANDLE:
                 continue
             likes = int(t.get("likes") or 0)
-            # 2026-05-22: bumped 30 → 50. Quotes inherit impressions
-            # from the PARENT — quoting an under-50-like parent is
-            # almost pure noise. Floor at 50 forces us to quote only
-            # parents with proven traction.
-            if likes < 50:
+            # 2026-05-22 PM: floor 50 → 100. User mandate "focus on big
+            # accounts and big content to get more traction". Quotes
+            # inherit impressions from the parent; quoting a 50-like
+            # parent inherits 50-like reach. 100-like floor = 2× the
+            # baseline reach per quote.
+            if likes < 100:
                 continue
             # 2026-05-07: same-day reshare rule + niche gate. We shouldn't
             # quote-tweet a 2-week-old tweet, even from a trusted handle.
