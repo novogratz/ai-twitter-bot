@@ -48,8 +48,9 @@ from .config import (
     _PROJECT_ROOT,
 )
 from .logger import log
-from .twitter_client import retweet_post, scrape_following_feed, scrape_home_feed, scrape_profile_tweets, scrape_x_search
+from .twitter_client import retweet_post, quote_tweet, scrape_following_feed, scrape_home_feed, scrape_profile_tweets, scrape_x_search
 from .engagement_log import log_reply
+from .humanizer import humanize, strip_agent_preamble
 
 # State files
 RETWEETED_FILE = os.path.join(_PROJECT_ROOT, "retweeted.json")
@@ -551,6 +552,69 @@ def _append_to_daily_picks(tweet: dict, score: int, why: str):
 
 # --- main cycle ---
 
+_TROLL_QUOTE_PROMPT = """Tu es @cryptoiadecode. Voix FR mordante sur IA + Crypto.
+
+Tu vas QUOTE-TWEETER ce tweet (qui s'affiche automatiquement en dessous,
+donc ne le résume PAS, ajoute un angle):
+
+@{author}: "{tweet_text}"
+
+OUTPUT: UNE phrase FR, max 240 chars, qui ajoute un angle neuf, troll
+intelligent, tag 1-2 gros comptes pertinents (@sama @ylecun @elonmusk
+@VitalikButerin @saylor @AnthropicAI @nvidia @MistralAI...) si le sujet
+les concerne. Pose la conséquence cachée, le comparatif qui change tout,
+le verdict sec.
+
+🚨 RÈGLE D'OR — TROLL L'IDÉE / LE PRODUIT / LA TENDANCE, JAMAIS @{author}.
+@{author} doit pouvoir liker la quote. Si tu trolls Anthropic / OpenAI /
+xAI / Mistral en tant qu'orgs / produits, c'est OK. Pas d'attaque ad hominem.
+
+RÈGLES STRICTES:
+- 100% français pur, accents corrects.
+- DEADPAN, SEC. Stack 2 réfs FR culturelles si possible (RER B, Bercy,
+  URSSAF, Doctolib, Lidl, tonton, café-clope, Livret A).
+- Tag minimum 1 gros compte pertinent quand le sujet leur appartient.
+- Pas d'emojis. Pas de hashtags. Pas d'em dash (—). Pas de markdown **bold**.
+- Pas de "Voici", "Parfait", "Score", "Rationale" — sortie pure.
+- Si rien d'intéressant à dire → output exactement "SKIP".
+
+Output: la quote FR, OU "SKIP". Rien d'autre."""
+
+
+def _try_generate_troll_quote(pick: dict) -> str:
+    """Generate a FR troll-commentary for a high-signal candidate. Returns
+    None if generation fails or model returns SKIP."""
+    try:
+        from .config import REPLY_MODEL
+        from .llm_client import run_llm, unwrap_text
+    except Exception:
+        return None
+    author = pick.get("author") or "anon"
+    text = (pick.get("text") or "")[:250]
+    prompt = _TROLL_QUOTE_PROMPT.format(author=author, tweet_text=text)
+    try:
+        r = run_llm(prompt, REPLY_MODEL, label="RT_QT", timeout=60)
+    except Exception:
+        log.info("[RT_QT] run_llm crashed:")
+        traceback.print_exc()
+        return None
+    if r.returncode != 0:
+        log.info(f"[RT_QT] rc={r.returncode}: {r.stderr[:160] if r.stderr else ''}")
+        return None
+    out = unwrap_text(r.stdout)
+    if not out:
+        return None
+    out = strip_agent_preamble(out).strip()
+    out = humanize(out)
+    if not out or out.upper().startswith("SKIP") or "skip" in out.lower().split():
+        return None
+    if out.startswith('"') and out.endswith('"'):
+        out = out[1:-1].strip()
+    if len(out) > 240 or len(out) < 25:
+        return None
+    return out
+
+
 def run_retweet_cycle():
     """Retweet the highest-signal tweets of the cycle.
 
@@ -685,23 +749,56 @@ def run_retweet_cycle():
         retweeted.add(pick["url"])
         _save_retweeted(retweeted)
 
-        try:
-            retweet_post(pick["url"])
-            _increment_count()
+        # 2026-05-22: for VIRAL hits (score >= 8 or >=200 likes), try a
+        # quote-tweet with our voice on top instead of a silent retweet.
+        # User mandate: "you reposted it but you should also have quoted...
+        # tag Elon/sama, troll Anthropic, be creative". Quote-tweet includes
+        # the original underneath AND adds our take above. Silent retweet
+        # only happens if quote generation fails or returns SKIP.
+        likes = int(pick.get("likes") or 0)
+        upgrade_to_quote = score >= 8 or likes >= 200
+        quoted_ok = False
+        if upgrade_to_quote:
+            quote_text = _try_generate_troll_quote(pick)
+            if quote_text:
+                try:
+                    quote_tweet(pick["url"], quote_text)
+                    _increment_count()
+                    try:
+                        log_reply(
+                            pick["url"],
+                            f"[QT] {quote_text[:200]}",
+                            action_type="quote",
+                            source=f"RETWEET_QT/{pick['author']}",
+                        )
+                    except Exception:
+                        pass
+                    log.info(f"[RETWEET→QT] Quoted @{pick['author']} (score={score}, likes={likes}): {quote_text[:140]}")
+                    posted += 1
+                    quoted_ok = True
+                    time.sleep(random.randint(5, 10))
+                except Exception:
+                    log.info("[RETWEET→QT] Quote-post failed, falling back to silent RT:")
+                    traceback.print_exc()
+
+        if not quoted_ok:
             try:
-                log_reply(
-                    pick["url"],
-                    f"[RT] {pick['text'][:200]}",
-                    action_type="retweet",
-                    source=f"RETWEET/{pick['author']}",
-                )
+                retweet_post(pick["url"])
+                _increment_count()
+                try:
+                    log_reply(
+                        pick["url"],
+                        f"[RT] {pick['text'][:200]}",
+                        action_type="retweet",
+                        source=f"RETWEET/{pick['author']}",
+                    )
+                except Exception:
+                    pass
+                posted += 1
+                time.sleep(random.randint(5, 10))
             except Exception:
-                pass
-            posted += 1
-            time.sleep(random.randint(5, 10))
-        except Exception:
-            log.info("[RETWEET] Posting failed:")
-            traceback.print_exc()
+                log.info("[RETWEET] Posting failed:")
+                traceback.print_exc()
 
     log.info(
         f"[RETWEET] DONE. Posted {posted}, logged {logged}. "
