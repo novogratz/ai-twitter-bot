@@ -103,11 +103,22 @@ fort. Exemple: "Bitcoin sécurise son réseau avec PLUS de puissance que les
 5 premières centrales nucléaires françaises." MAX 150 chars. C'est la
 1ère ligne lue après le header — doit faire arrêter le scroll.}}
 
-1. 💰 {{chiffre exact}} : {{insight 1 ligne, acteur nommé INLINE dans la prose}}. (source: {{outlet}})
-2. 🚀 {{chiffre exact}} : {{insight}}. (source: {{outlet}})
+🥇 RÈGLE D'OR DU CLASSEMENT — Le bullet #1 doit être le PLUS IMPACTANT
+de la semaine. C'est celui que les gens vont screenshoter, liker, partager
+en DM. Critères du #1 (cumule au moins 2 sur 3):
+  • Le chiffre le plus CHOQUANT / inattendu (ordre de grandeur surprise).
+  • Le nom propre le plus RECONNAISSABLE (Elon, Sam Altman, Vitalik,
+    Saylor, OpenAI, NVIDIA, Bitcoin) qui déclenche la curiosité instantanée.
+  • L'angle qui fait dire "WAIT, QUOI ?" — un contraste, une révélation,
+    une donnée cachée. Pas un chiffre attendu / déjà connu.
+Les bullets 2-5 viennent en intensité décroissante. Le #5 peut être plus
+niche / techy mais reste solide. JAMAIS de bullet bouche-trou.
+
+1. 💰 {{LE CHIFFRE / NOM / ANGLE LE PLUS IMPACTANT DE LA SEMAINE}} : {{insight 1 ligne, acteur nommé INLINE dans la prose}}. (source: {{outlet}})
+2. 🚀 {{chiffre exact, 2e plus fort}} : {{insight}}. (source: {{outlet}})
 3. ⚡ {{chiffre exact}} : {{insight}}. (source: {{outlet}})
 4. 📊 {{chiffre exact}} : {{insight}}. (source: {{outlet}})
-5. 🔥 {{chiffre exact}} : {{insight}}. (source: {{outlet}})
+5. 🔥 {{chiffre exact, niche mais solide}} : {{insight}}. (source: {{outlet}})
 
 {{Chute FR sarcastique, 1-2 phrases. Stack 2 réfs (RER B, Bercy, URSSAF,
 café-clope, tonton, Doctolib, Lidl, etc.).}}
