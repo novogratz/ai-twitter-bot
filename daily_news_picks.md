@@ -5050,3 +5050,15 @@ On September 12, 2019, two childhood friends stood in front of the Nasdaq stock 
 - **@reuters** (16 likes, score 7/10) — Les États-Unis et l'Iran sont restés sur des positions opposées concernant le stock d'uranium de Téhéran et les contrôles sur le détroit d'Ormuz, bien que le secrétaire d'État américain Marco Rubio ai
   - https://x.com/Reuters/status/2057695718102704284
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 32).
+- **@onlinestratfr** (5 likes, score 7/10) — Les augmentations des prix de l'IA sont en cours, mais affectent sa rentabilité
+Brutal retour à la réalité dans 3... 2....
+  - https://x.com/onlinestratfr/status/2057698763259498776
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 7).
+- **@boyergabriel042** (788 likes, score 7/10) — Et lui, quand des plaintes pour agressions sexuelles ?
+  - https://x.com/BoyerGabriel042/status/2057450807734276497
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 926).
+- **@_3emeoeil** (748 likes, score 7/10) — Cinq touristes italiens sont morts lors d’une excursion de plongée sous-marine aux Maldives.
+
+Voilà ce qu'il se serait vraiment passé
+  - https://x.com/_3emeOeil/status/2057361835775365281
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 780).
