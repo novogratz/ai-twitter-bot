@@ -4975,3 +4975,24 @@ They just aren’t economically aligned with $ETH anymore. The EF holds only a t
 Mon analyse via @MagazineCapital @GallantNicolas1
   - https://x.com/ABaradez/status/2057490544587120878
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
+- **@watcherguru** (56 likes, score 8/10) — 16 years ago today, Laszlo Hanyecz paid 10,000 Bitcoin for two Papa John's pizzas. 
+
+Today, 10k $BTC is worth over $775,000,000.
+  - https://x.com/WatcherGuru/status/2057676433233768473
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 92).
+- **@coindesk** (24 likes, score 7/10) — JUST IN: Anthropic is reportedly on track for its first profitable quarter, with projected Q2 revenue surging to $10.9 billion, up from $4.8 billion in Q1, per WSJ.
+  - https://x.com/CoinDesk/status/2057670788212482263
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 44).
+- **@stocksavvyshay** (1909 likes, score 8/10) — The U.S. is set to award $2B to quantum companies through the CHIPS and Science Act with deals structured as grants plus minority government equity stakes.
+
+Awards reportedly include:
+• $IBM ~$1B
+• $G
+  - https://x.com/StockSavvyShay/status/2057405615610433937
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2145).
+- **@coinbureau** (2 likes, score 7/10) — MISE À JOUR : Le fonds de dotation de l’université de Harvard aurait apparemment liquidé l’intégralité de sa position de 87 MILLIONS de dollars en Ethereum seulement un trimestre après son achat, selo
+  - https://x.com/coinbureau/status/2057676576243016048
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 14).
+- **@6ixbuzztv** (100 likes, score 7/10) — Alberta will hold a referendum to determine whether the province should stay in Canada or proceed with a second binding vote on separation
+  - https://x.com/6ixbuzztv/status/2057656904206184893
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 170).
