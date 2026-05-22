@@ -237,7 +237,11 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
             "temperature": 1.0,
             "top_p": 0.95,
             "repeat_penalty": 1.15,
-            "num_predict": 256,
+            # 2026-05-22: bumped 256 → 1024. The 256-cap was truncating
+            # long Décodes mid-URL (e.g. letsdatascience.com/news/
+            # microsoft-cancels-claude-code- ← cut). 1024 gives room for
+            # the full body (~600-1000 chars body + URL).
+            "num_predict": 1024,
         },
     }).encode("utf-8")
     req = urllib.request.Request(

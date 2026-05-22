@@ -720,6 +720,52 @@ def _clean_source_url(url: str) -> str:
     return (url or "").strip().strip("<>").rstrip(".,;:!?")
 
 
+def _looks_truncated(url: str) -> bool:
+    """Heuristic: does this URL look cut off mid-slug?
+
+    Ollama with num_predict cap was emitting URLs like
+    'https://letsdatascience.com/news/microsoft-cancels-claude-code-'
+    (trailing dash, no extension, no closing slash). These 404 in prod.
+    """
+    if not url:
+        return True
+    if url.endswith(("-", "_")):
+        return True
+    # Trailing slug fragment that's "too short" suggests cut.
+    tail = url.rsplit("/", 1)[-1] if "/" in url else ""
+    if tail and "-" in tail and not tail.endswith("/"):
+        # OK heuristic: real URLs usually end in a word char or /.
+        if len(tail) < 8 or tail[-1] in "-_":
+            return True
+    return False
+
+
+def _try_repair_url(url: str) -> str:
+    """If URL looks truncated, try to find a matching complete URL in
+    external_signal.json (the bot's RSS pool). Returns the original on
+    no match."""
+    if not _looks_truncated(url):
+        return url
+    try:
+        sig_path = _os.path.join(_PR, "external_signal.json")
+        if not _os.path.exists(sig_path):
+            return url
+        with open(sig_path) as f:
+            data = _json.load(f) or {}
+        for item in (data.get("items") or []):
+            candidate = (item.get("url") or "").strip()
+            if not candidate.startswith("http"):
+                continue
+            # Match by significant prefix (≥40 chars).
+            common = min(len(url), len(candidate), 40)
+            if url[:common] == candidate[:common]:
+                log.info(f"[NEWS] Repaired truncated URL → {candidate}")
+                return candidate
+    except Exception:
+        pass
+    return url
+
+
 def _extract_source(text: str):
     """Detect an article URL the agent included in the body.
 
@@ -1042,6 +1088,13 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     # on its own line so X can render a card; raw URL-on-last-line stays
     # in place untouched.
     tweet, src_url = _extract_source(tweet)
+    # 2026-05-22: repair truncated URLs that ollama emits when num_predict
+    # caps mid-slug. Looks up the original in external_signal.json by prefix.
+    if src_url:
+        repaired = _try_repair_url(src_url)
+        if repaired != src_url:
+            tweet = tweet.replace(src_url, repaired)
+            src_url = repaired
     if src_url and src_url not in tweet:
         tweet = (tweet.rstrip() + "\n\n" + src_url).strip()
     # Defense-in-depth freshness check. Tightened 24h → 18h (2026-05-08 PM):
