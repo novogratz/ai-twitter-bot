@@ -396,6 +396,13 @@ FR CRYPTO/AI MEDIA (high reach FR audience):
   @coinacademy_fr, @numerama, @siecledigital
   @arthurmensch, @MistralAI, @scaleway
 
+SPACE / AEROSPACE (2026-05-22 — added per user mandate):
+  @SpaceX, @Starlink, @elonmusk (already above for AI/X)
+  @blueorigin, @RocketLab, @ArianeGroup, @esa
+  Tag when the story is genuinely about rockets / satellite IA /
+  Starlink network / launch capex. The bot's scope formally is IA +
+  Crypto + Datacenter + Mining + Space (added today).
+
 RÈGLES:
 - Si la news concerne UN de ces acteurs → tag 1-2 d'entre eux DANS la chute.
 - Le tag fait sens dans la phrase (pas plaqué). Exemple correct:
@@ -1098,21 +1105,16 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     globals()["_pending_decode_topic"] = decode_topic
 
     def _gen_one() -> str:
-        r = run_llm(
-            prompt,
-            NEWS_MODEL,
-            label="NEWS",
-            allowed_tools=["WebSearch"],
-        )
+        # 2026-05-22 PM: DO NOT pass WebSearch to Claude. We already
+        # inject DuckDuckGo + RSS results into the prompt. Claude's
+        # own WebSearch was running redundantly on top, taking 5-8 min
+        # per cycle AND sometimes returning ONLY citations no body.
+        # Without it: Claude writes the Décode from pre-fed data in 5-15s.
+        r = run_llm(prompt, NEWS_MODEL, label="NEWS")
         if r.returncode != 0 and not r.stderr.strip():
             import time as _t
             _t.sleep(8)
-            r = run_llm(
-                prompt,
-                NEWS_MODEL,
-                label="NEWS",
-                allowed_tools=["WebSearch"],
-            )
+            r = run_llm(prompt, NEWS_MODEL, label="NEWS")
         if r.returncode != 0:
             return ""
         return unwrap_text(r.stdout) or ""

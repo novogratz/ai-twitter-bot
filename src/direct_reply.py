@@ -45,6 +45,13 @@ VIP_REPLY_ACCOUNTS = [
     "saylor",            # Michael Saylor
     "brian_armstrong",   # Coinbase
     "cz_binance",        # Changpeng Zhao
+    # 2026-05-22 PM: space industry per user mandate
+    "SpaceX",            # SpaceX corporate
+    "Starlink",          # Starlink service
+    "blueorigin",        # Blue Origin
+    "RocketLab",         # Rocket Lab
+    "ArianeGroup",       # Ariane Group (FR / EU launch)
+    "esa",               # European Space Agency
 ]
 _VIP_REPLY_ACCOUNTS_LC = {h.lower() for h in VIP_REPLY_ACCOUNTS}
 
@@ -328,6 +335,10 @@ SEARCH_QUERIES = [
     "OpenAI OR Anthropic OR Mistral lang:fr min_faves:20",
     "BFM OR Bercy OR Fed lang:fr min_faves:20",
     "DeFi OR Solana OR memecoin lang:fr min_faves:15",
+    # 2026-05-22 PM: space industry per user mandate.
+    "SpaceX OR Starship OR Starlink lang:fr min_faves:10",
+    "Blue Origin OR Rocket Lab OR ArianeGroup lang:fr min_faves:5",
+    "fusée OR satellite OR aerospace lang:fr min_faves:5",
     # Broader queries (catch fresh + niche)
     "intelligence artificielle lang:fr",
     "crypto français analyse lang:fr",

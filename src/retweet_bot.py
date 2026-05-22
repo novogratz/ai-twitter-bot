@@ -128,6 +128,12 @@ FEED_REPOST_SEARCH_QUERIES = [
     "Nvidia OR GPU OR datacenter lang:fr min_faves:3",
     "bourse OR CAC40 OR actions lang:fr min_faves:3",
     "NASDAQ OR Tesla OR Microsoft lang:fr min_faves:3",
+    # 2026-05-22 PM: space industry added per user mandate
+    # "retweet and share content on the space industry, spaceX etc"
+    "SpaceX OR Starship OR Starlink lang:fr min_faves:3",
+    "SpaceX OR Starship lang:en min_faves:50",
+    "Blue Origin OR Rocket Lab OR ArianeGroup lang:fr min_faves:3",
+    "satellite OR fusée OR aerospace lang:fr min_faves:3",
 ]
 
 
