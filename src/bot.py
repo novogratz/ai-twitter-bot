@@ -244,27 +244,28 @@ def _run_single_bot_cycle():
                 log.info("[NEWS] Text-only post (no source URL, no image slug)")
         except Exception as e:
             log.info(f"[NEWS] Image fallback failed (text-only): {e}")
-        # 2026-05-22: URL-as-self-reply pattern. X penalizes external
-        # links in the main tweet body (link card → user clicks AWAY
-        # from X), so for Décodes we:
-        #   1. Strip the URL out of the main body before posting
-        #   2. Post the main Décode (no URL, no image card to suppress)
-        #   3. ~30-90s later, post a self-reply containing the URL +
-        #      a brief intro. The URL renders its card in the REPLY,
-        #      which doesn't deboost the parent. We also get a free
-        #      thread-depth signal for the algo.
-        # Only applies to Décodes (tweet_source == "news" and a URL was
-        # detected). Hot takes still inline the URL (small-volume).
+        # 2026-05-22 PM (user mandate): keep source URL inline in the
+        # body — no more self-reply detour. The link card renders on the
+        # main post; auto-like-own-tweet (already wired in post_tweet)
+        # boosts impressions immediately. Pre-flight URL check still
+        # applies: if the model fabricated the URL, strip it so we don't
+        # ship a broken link.
         is_decode = (tweet_source == "news" and src_url is not None)
         post_body = tweet
         if is_decode and src_url:
-            # Strip URL and any "Source:" lead-in from the body.
-            post_body = tweet.replace(src_url, "").rstrip()
-            post_body = re.sub(r"\n+(Source\s*:?\s*)?\s*$", "", post_body).rstrip()
-            # When URL goes to a reply, NO image card on the main post —
-            # both can't render cards anyway. Image stays text-only.
-            img_path = None
-            log.info(f"[NEWS] Décode: stripping URL → reply ({len(post_body)} chars body)")
+            try:
+                from .agent import url_is_reachable
+                if not url_is_reachable(src_url):
+                    log.info(f"[NEWS] Source URL unreachable, stripping fabricated link: {src_url}")
+                    post_body = tweet.replace(src_url, "").rstrip()
+                    post_body = re.sub(r"\n+(Source\s*:?\s*)?\s*$", "", post_body).rstrip()
+                    src_url = None
+            except Exception as e:
+                log.info(f"[NEWS] URL reachability check failed (keeping link): {e}")
+            # When a URL is present, the link card carries the visual.
+            # An attached image would suppress the card → text + URL only.
+            if src_url:
+                img_path = None
 
         log.info(f"[NEWS] Posting ({len(post_body)} chars): {post_body[:100]}...")
         post_tweet(post_body, image_path=img_path)
@@ -280,30 +281,6 @@ def _run_single_bot_cycle():
                 os.remove(img_path)
             except OSError:
                 pass
-
-        # Self-reply with source URL on Décodes. 2026-05-22 PM fixes:
-        #  - Validate URL with HTTP HEAD before posting; refuse fabricated
-        #    domains (model hallucinated "axio.com" → 404).
-        #  - Short 5-12s wait so other Safari-using bots (retweet/QT) can't
-        #    interleave a post that would steal the "latest tweet" slot
-        #    when we try to self-reply.
-        #  - reply_to_own_latest asks for a header sanity-check so we abort
-        #    if the visible tweet doesn't contain "Le Décode".
-        if is_decode and src_url:
-            try:
-                from .agent import url_is_reachable
-                if not url_is_reachable(src_url):
-                    log.info(f"[NEWS] Source URL unreachable, refusing to post fabricated link: {src_url}")
-                else:
-                    wait_s = random.randint(5, 12)
-                    log.info(f"[NEWS] Décode source reply scheduled in {wait_s}s...")
-                    time.sleep(wait_s)
-                    reply_text = f"📎 Source : {src_url}"
-                    from .twitter_client import reply_to_own_latest
-                    reply_to_own_latest(reply_text, must_contain="Le Décode")
-                    log.info(f"[NEWS] Décode source-reply posted.")
-            except Exception as e:
-                log.info(f"[NEWS] Décode source-reply failed (non-fatal): {e}")
 
 
 def run_bot_cycle():
