@@ -1,6 +1,6 @@
 {
   "caps": {
-    "MAX_NEWS_PER_DAY": 6,
+    "MAX_NEWS_PER_DAY": 10,
     "MAX_HOTAKES_PER_DAY": 0,
     "MAX_BREAKOUTS_PER_DAY": 0,
     "MAX_SPICY_PER_DAY": 0,

@@ -14,6 +14,48 @@ import os as _os
 import json as _json
 from .config import _PROJECT_ROOT as _PR
 _DECODE_COUNTER_FILE = _os.path.join(_PR, "decode_counter.json")
+_FRIDAY_TOP5_STATE_FILE = _os.path.join(_PR, "friday_top5_state.json")
+
+
+def _friday_top5_state() -> dict:
+    """Track which topics have already shipped a Top 5 chiffres today.
+    Schema: {"date": "YYYY-MM-DD", "topics_done": ["IA", "Crypto"]}.
+    Resets across day boundaries (UTC-Paris doesn't matter much for this)."""
+    today = datetime.now().strftime("%Y-%m-%d")
+    if _os.path.exists(_FRIDAY_TOP5_STATE_FILE):
+        try:
+            with open(_FRIDAY_TOP5_STATE_FILE) as f:
+                d = _json.load(f) or {}
+            if d.get("date") == today:
+                return d
+        except (_json.JSONDecodeError, OSError):
+            pass
+    return {"date": today, "topics_done": []}
+
+
+def _should_use_top5(topic: str) -> bool:
+    """Top 5 chiffres format fires only on Fridays AND only for the FIRST
+    Décode of each topic that day. After Investissement, IA, and Crypto
+    have each gotten their one Top 5, the rest of the day's Décodes flow
+    in regular format. User mandate 2026-05-22 PM: "just 5 chiffres for
+    Investissements, ia, crypto then rest should be regular news flow"."""
+    if datetime.now().weekday() != 4:  # not Friday
+        return False
+    state = _friday_top5_state()
+    return topic not in (state.get("topics_done") or [])
+
+
+def _mark_top5_done(topic: str) -> None:
+    state = _friday_top5_state()
+    done = state.get("topics_done") or []
+    if topic not in done:
+        done.append(topic)
+    state["topics_done"] = done
+    try:
+        with open(_FRIDAY_TOP5_STATE_FILE, "w") as f:
+            _json.dump(state, f, indent=2)
+    except OSError:
+        pass
 
 
 _DECODE_TOPICS = ("IA", "Crypto", "Investissement")
@@ -203,8 +245,9 @@ https://www.theinformation.com/articles/exemple
 → Cette structure SKIP automatique. Donne directement le Décode. RIEN AVANT.
 
 JOUR DE LA SEMAINE: **{day_of_week}**
+FORMAT MODE: **{format_mode}**  (top5 = Top 5 chiffres bookmark-bait; regular = Décode multi-paragraphe normal)
 
-📚 SI {day_of_week} == "Vendredi" → FORMAT BOOKMARK-BAIT TOP 5 (ULTRA-IMPACT).
+📚 SI {format_mode} == "top5" → FORMAT BOOKMARK-BAIT TOP 5 (ULTRA-IMPACT).
 
   Le vendredi, le compte ne fait QUE 2 Décodes: 1 IA + 1 Crypto, tous deux
   en format "Top 5 chiffres". Donc CE Décode est l'un des deux récaps
@@ -256,7 +299,7 @@ JOUR DE LA SEMAINE: **{day_of_week}**
   Cible: 900-1300 chars body. Bookmark-bait = lecteur le SAUVE pour relire
   ce week-end. Le but: que ce Décode soit dans 50+ bookmarks au lundi.
 
-📌 SI {day_of_week} != "Vendredi" → Décode normal (voir format ci-dessous).
+📌 SI {format_mode} == "regular" → Décode multi-paragraphe normal (voir format ci-dessous).
 
 FOCUS THÉMATIQUE DU JOUR: **{decode_topic}**
 Si {decode_topic} = IA → tu choisis une story IA (lab, chip, datacenter, agent, regs).
@@ -1028,14 +1071,14 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         pass
 
     today_date = datetime.now().strftime("%Y-%m-%d")
-    # French day names so the bookmark-bait Friday branch in the prompt
-    # matches on "Vendredi".
     _DAYS_FR = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
     day_of_week = _DAYS_FR[datetime.now().weekday()]
-    # Le Décode counter — monotonically increments across days so each
-    # daily series gets a unique number. State at decode_counter.json.
     decode_number = _next_decode_number()
     decode_topic = _topic_for_decode(decode_number)
+    # Friday: only the FIRST Décode of each topic gets Top 5 format.
+    # After IA + Crypto + Investissement each have their Top 5, rest go regular.
+    use_top5 = _should_use_top5(decode_topic)
+    format_mode = "top5" if use_top5 else "regular"
     from . import lang_mode
     lang = lang_mode.pick_content_lang()
     prompt = PROMPT_TEMPLATE.format(
@@ -1044,10 +1087,13 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         day_of_week=day_of_week,
         decode_number=decode_number,
         decode_topic=decode_topic,
+        format_mode=format_mode,
         performance_section=performance_section,
         lang_directive=lang_mode.lang_directive(lang),
     )
-    log.info(f"[NEWS] Generating Décode #{decode_number} ({decode_topic}, {day_of_week}) in lang={lang}")
+    log.info(f"[NEWS] Generating Décode #{decode_number} ({decode_topic}, {day_of_week}, format={format_mode}) in lang={lang}")
+    # Stash use_top5 so we can mark it done if the post ships successfully.
+    globals()["_pending_top5_topic"] = decode_topic if use_top5 else None
 
     def _gen_one() -> str:
         r = run_llm(
@@ -1194,4 +1240,11 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         return None
     tweet = cleaned
     log.info(f"[NEWS] Article URL detected (X will render card): {src_url[:120]}")
+    # Mark Top 5 as shipped for this topic-of-day so next same-topic
+    # Décode falls back to regular format.
+    _pending = globals().get("_pending_top5_topic")
+    if _pending:
+        _mark_top5_done(_pending)
+        log.info(f"[NEWS] Top 5 Vendredi shipped for {_pending} — next {_pending} Décode = regular format.")
+        globals()["_pending_top5_topic"] = None
     return tweet
