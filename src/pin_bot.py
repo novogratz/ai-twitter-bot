@@ -112,7 +112,19 @@ def run_pin_cycle():
         _mark_ran_today()
         return
 
-    best = max(own, key=lambda c: (c["likes"], c["replies"]))
+    # 2026-05-22: Prefer Décodes over any other post. The Décode is the
+    # series brand — the pinned slot is the highest-leverage real-estate
+    # we have for follow conversion, and a pinned random reaction tweet
+    # doesn't sell the series. Prioritize: Décode AND ≥5 likes first;
+    # only fall back to non-Décode if no Décode clears the floor.
+    decodes = [p for p in own if "Le Décode" in p["text"] or "le décode" in p["text"].lower()]
+    pool = decodes if decodes else own
+    if decodes:
+        log.info(
+            f"[PIN] {len(decodes)} Décode(s) eligible — picking best among them "
+            f"(out of {len(own)} total candidates)."
+        )
+    best = max(pool, key=lambda c: (c["likes"], c["replies"]))
     log.info(
         f"[PIN] Best post: {best['likes']} likes / {best['replies']} replies — "
         f"{best['text'][:120]!r}"

@@ -201,6 +201,38 @@ https://www.theinformation.com/articles/exemple
 
 → Cette structure SKIP automatique. Donne directement le Décode. RIEN AVANT.
 
+JOUR DE LA SEMAINE: **{day_of_week}**
+
+📚 SI {day_of_week} == "Vendredi" → FORMAT BOOKMARK-BAIT (le Décode du vendredi est SPÉCIAL):
+
+  Le vendredi, le Décode est un "récap chiffré" structuré pour être SAUVEGARDÉ
+  (bookmark) et relu. Format:
+
+    🔎 Le Décode #{decode_number} — {decode_topic} — Vendredi {today_date}
+
+    {{HEADLINE: "5 chiffres à connaître pour [topic] cette semaine" ou
+    "Les 5 trucs qu'il fallait retenir sur [topic] cette semaine"}}
+
+    {{INTRO: 1-2 phrases qui posent le contexte de la semaine.}}
+
+    1. {{Chiffre exact + acteur + signification 1-line}}
+    2. {{Chiffre exact + acteur + signification 1-line}}
+    3. {{Chiffre exact + acteur + signification 1-line}}
+    4. {{Chiffre exact + acteur + signification 1-line}}
+    5. {{Chiffre exact + acteur + signification 1-line}}
+
+    {{CHUTE FR — 1-2 phrases qui scellent la semaine. Stack 2 réfs FR.
+    Optionnel 1-2 @mentions pertinents.}}
+
+    {{CLOSING varié}}
+
+    {{URL principale ≤36h}}
+
+  Cible: 700-1200 chars body. Bookmark-bait = lecteur le SAUVE pour relire
+  ce week-end. Bookmarks = signal de qualité fort qui convertit en follow.
+
+📌 SI {day_of_week} != "Vendredi" → Décode normal (voir format ci-dessous).
+
 FOCUS THÉMATIQUE DU JOUR: **{decode_topic}**
 Si {decode_topic} = IA → tu choisis une story IA (lab, chip, datacenter, agent, regs).
 Si {decode_topic} = Crypto → tu choisis une story crypto (BTC, ETH, stablecoin, mining, ETF, exchange).
@@ -868,6 +900,10 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         pass
 
     today_date = datetime.now().strftime("%Y-%m-%d")
+    # French day names so the bookmark-bait Friday branch in the prompt
+    # matches on "Vendredi".
+    _DAYS_FR = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+    day_of_week = _DAYS_FR[datetime.now().weekday()]
     # Le Décode counter — monotonically increments across days so each
     # daily series gets a unique number. State at decode_counter.json.
     decode_number = _next_decode_number()
@@ -877,12 +913,13 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     prompt = PROMPT_TEMPLATE.format(
         dedup_section=dedup_section,
         today_date=today_date,
+        day_of_week=day_of_week,
         decode_number=decode_number,
         decode_topic=decode_topic,
         performance_section=performance_section,
         lang_directive=lang_mode.lang_directive(lang),
     )
-    log.info(f"[NEWS] Generating Décode #{decode_number} ({decode_topic}) in lang={lang}")
+    log.info(f"[NEWS] Generating Décode #{decode_number} ({decode_topic}, {day_of_week}) in lang={lang}")
 
     def _gen_one() -> str:
         r = run_llm(
