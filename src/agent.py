@@ -157,26 +157,30 @@ Demain, même heure, même Décode.
     else:
         top5_block = f"""INSTRUCTIONS (NE PAS OUTPUT — réfléchis silencieusement):
 
+  • Le Décode quotidien = MÊME FORMAT scannable que le Vendredi, juste
+    3 chiffres au lieu de 5. Les 3 bullets explorent UNE seule histoire
+    sous 3 angles complémentaires (pas 3 histoires différentes).
   • ÉTAPE 0 (CRITIQUE): choisis UNE URL exacte de la section WEB SEARCH
     RESULTS / RSS POOL plus bas. Lis SON TITRE — il identifie un ACTEUR
-    ou un CHIFFRE précis (ex: "OpenAI signs $300B Oracle deal"). Le
-    TITRE PUNCHY et le 1er paragraphe d'analyse DOIVENT parler EXACTEMENT
-    de cet acteur ou ce chiffre. Si l'URL parle d'OpenAI, le tweet parle
-    d'OpenAI. PAS d'écart sujet — le pipeline strippe l'URL sinon.
-  • KILLSHOT: ce Décode est UNE seule story de la semaine. Le titre punchy
-    doit:
-      - MÉMORABLE (chiffre rond, ratio choquant)
-      - LIKABLE (acteur TRÈS connu: sama, OpenAI, Vitalik, NVIDIA, etc.)
-      - COMMENT-BAIT (claim qui force une opinion)
-  • TAGS: 2-3 gros comptes inline mid-phrase (jamais en début/fin de
-    ligne — X mobile sépare le tag sur sa propre ligne sinon). Bon:
-    "OpenAI signe avec @nvidia un deal de 100Md$". Mauvais: "$100Md$.
-    @nvidia signe...".
+    ou un CHIFFRE précis (ex: "OpenAI signs $300B Oracle deal"). Les 3
+    bullets parlent TOUS de cette histoire. L'intro et le bullet #1
+    DOIVENT mentionner l'acteur principal du titre. Si l'URL parle
+    d'OpenAI, le tweet parle d'OpenAI. Pipeline strippe l'URL sinon.
+  • STRUCTURE DES 3 BULLETS:
+      - #1 (💰): LE CHIFFRE killshot — le chiffre que tout le monde va
+        retenir. MÉMORABLE + LIKABLE + COMMENT-BAIT.
+      - #2 (⚡): le CONTEXTE / comparatif qui rend #1 brutal (ex: "le
+        double du PIB de l'Estonie", "5x la dernière levée").
+      - #3 (📊): la CONSÉQUENCE ou what's next (ex: "Bercy prépare déjà
+        la taxe", "AMD obligé de répliquer dans 60 jours").
+  • TAGS: 2-3 gros comptes inline mid-phrase total sur les 3 bullets +
+    chute. JAMAIS @handle en début/fin de ligne (X mobile l'isole sur sa
+    propre ligne sinon).
   • CHIFFRES: viennent des SIGNAUX FOURNIS. Hedge ("~3 Md$") si pas exact.
   • ZÉRO markdown (**bold**, __italic__). Texte brut.
-  • Cible 600-1000 chars body.
+  • Cible 600-1100 chars body.
   • L'URL en dernière ligne est OBLIGATOIRE. Copie-colle exacte depuis les
-    SIGNAUX. Si l'URL pointe vers un sujet différent du tweet, strippé.
+    SIGNAUX. Si l'URL pointe vers un sujet différent, strippé.
 
 ============================================================
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
@@ -184,15 +188,14 @@ OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
 
 🔎 Le Décode #{decode_number} — {decode_topic} — {day_of_week} {today_date}
 
-{{Titre punchy 1-2 phrases, chiffre OU nom propre TRÈS connu dans les 6
-premiers mots, parlant EXACTEMENT du sujet de l'URL choisie en ÉTAPE 0.}}
+Les 3 chiffres {decode_topic} du jour.
 
-{{2-3 paragraphes d'analyse. ~500-900 chars. Tu prends une position. Tags
-2-3 gros comptes inline mid-phrase (@sama, @ylecun, @VitalikButerin,
-@saylor, @elonmusk, @nvidia, @OpenAI, etc.).}}
+1. 💰 {{chiffre killshot — l'acteur principal du titre URL en 6 premiers mots}} : {{insight 1-2 lignes, tag @handle inline mid-phrase si pertinent}}. (source: {{outlet}})
+2. ⚡ {{chiffre #2 — contexte/comparatif qui amplifie #1}} : {{insight}}. (source: {{outlet}})
+3. 📊 {{chiffre #3 — conséquence / what's next}} : {{insight}}. (source: {{outlet}})
 
-{{Chute FR sarcastique, stack 2 réfs FR (RER B, Bercy, URSSAF, Lidl,
-café-clope, Doctolib, Livret A, tonton).}}
+{{Chute FR sarcastique 1-2 phrases, stack 2 réfs FR (RER B, Bercy, URSSAF,
+café-clope, tonton, Doctolib, Lidl, Livret A).}}
 
 {{1 question directe à l'audience pour déclencher des replies.}}
 
