@@ -57,7 +57,8 @@ MARQUEE_HANDLES = [
 
 
 _STATE_FILE = os.path.join(_PROJECT_ROOT, "marquee_follow_state.json")
-PER_CYCLE_CAP = 8  # don't burn through too fast — looks organic
+PER_CYCLE_CAP = 4  # 4/day from a 524-follower account looks organic;
+# 8 in one batch trips spam-detection. Lowered 2026-05-22 pre-vacation.
 
 
 def _last_run_today() -> bool:
