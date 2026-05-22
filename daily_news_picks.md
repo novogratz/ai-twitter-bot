@@ -4837,3 +4837,32 @@ Les revenus Networking de Nvidia ont
 - **@kalshi_crypto** (207 likes, score 7/10) — JUST IN : 6,25 milliards de dollars d'options Bitcoin doivent expirer le 29 mai
   - https://x.com/Kalshi_Crypto/status/2057515264510435396
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 225).
+- **@nvidia** (28 likes, score 7/10) — Everyone’s watching what comes next.
+
+Start with the NVIDIA GTC Live pregame show at COMPUTEX 2026.
+
+Then watch Jensen Huang take the stage in Taipei to unveil the latest breakthroughs in AI and accel
+  - https://x.com/nvidia/status/2057606098983456840
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 36).
+- **@eloiljf** (21 likes, score 7/10) — Moi, à regarder Niklas Gustavsson, Chief Architect de Spotify, expliquer comment ils font 4 500 déploiements par jour avec Claude, sur la scène d'Anthropic, pendant 27 minutes…
+
+Et à réaliser que j'ut
+  - https://x.com/EloiLJF/status/2057528127702610154
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 23).
+- **@cryptogoos** (12 likes, score 7/10) — HAUSSIER : Michael Saylor dit que Strategy va « probablement acheter tout le Bitcoin extrait entre maintenant et 2140 ».
+  - https://x.com/cryptogoos/status/2057601581973934299
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 20).
+- **@midudev** (1963 likes, score 7/10) — Microsoft annulant les licences de Claude Code, Uber a dépensé en 4 mois le budget IA de toute l’année. Les prix de l’IA augmentant jusqu’à 40 %...
+
+De nombreuses entreprises ont adopté l’IA en pensan
+  - https://x.com/midudev/status/2057557790772867301
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 2081).
+- **@ns123abc** (422 likes, score 7/10) — AMÉLIORATIONS DE STARSHIP V3
+
+SpaceX vient de dévoiler Starship Version 3
+Chaque système majeur a été redessiné : 
+
+> charge utile triplée à 100 tonnes métriques
+> tous les 33 Raptors s’allument maint
+  - https://x.com/ns123abc/status/2057608942868426882
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 554).
