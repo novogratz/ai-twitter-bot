@@ -58,6 +58,7 @@ from src.joke_bank import safe_run_joke_bank_cycle
 from src.self_winners import safe_run_self_winners_cycle
 from src.manu_bercy_bot import safe_run_manu_bercy_cycle
 from src.recap_thread_bot import safe_run_recap_thread_cycle
+from src.buzz_hunter_bot import safe_run_buzz_hunter_cycle
 from src.heartbeat_bot import safe_run_heartbeat
 from src.meta_strategy_agent import safe_run_meta_strategy_cycle
 from src.hn_signal_bot import safe_run_signal_cycle
@@ -785,6 +786,16 @@ def main():
                 safe_run_recap_thread_cycle,
                 trigger=IntervalTrigger(hours=1),
                 id="recap_thread_job",
+            )
+            # Buzz hunter — daily 🔥 Trouvaille du jour. Hunts HN +
+            # Reddit (ML/netsec/ChatGPT/LocalLLaMA/CryptoCurrency) for the
+            # weirdest exploit/leak/hack story of the day and posts ONE
+            # short link-led tweet. Self-gates to 9-11h Paris.
+            log.info("Buzz hunter: daily 🔥 Trouvaille du jour (~10h Paris, weird AI/crypto stories).")
+            scheduler.add_job(
+                safe_run_buzz_hunter_cycle,
+                trigger=IntervalTrigger(hours=1),
+                id="buzz_hunter_job",
             )
             # Manu de Bercy — once a day, fictional bureaucratic press
             # release reacting to the day's AI/crypto news. Recurring
