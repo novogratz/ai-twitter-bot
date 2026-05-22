@@ -843,6 +843,56 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     except Exception:
         pass
 
+    # CANDIDATE ARTICLE URLS — for the fallback case when ollama runs
+    # (it can't WebSearch). Extract real article URLs from external_signal.json
+    # (filter out X status URLs which aren't acceptable sources) and surface
+    # them as a pickable list. Added 2026-05-22 after Décode #60 SKIP'd
+    # because ollama fallback had no URL to attach.
+    try:
+        sig_path = _os.path.join(_PR, "external_signal.json")
+        if _os.path.exists(sig_path):
+            with open(sig_path) as f:
+                sig = _json.load(f) or {}
+            items = sig.get("items") or []
+            article_urls = []
+            for it in items:
+                u = it.get("url") or ""
+                if not u.startswith("http"):
+                    continue
+                # Skip X status URLs and reddit/news.ycombinator (not articles)
+                if any(d in u for d in ("x.com/", "twitter.com/", "reddit.com/", "news.ycombinator.com")):
+                    continue
+                title = (it.get("title") or "")[:120]
+                article_urls.append(f"  - {u}  ({title})")
+                if len(article_urls) >= 10:
+                    break
+            if article_urls:
+                block = (
+                    "==================================================\n"
+                    "CANDIDATE ARTICLE URLS — picks de RSS récent (≤6h en général)\n"
+                    "==================================================\n"
+                    "Si tu ne peux pas WebSearch (modèle local), PIOCHE une URL\n"
+                    "dans cette liste qui colle à ton angle. Préfère ces URLs aux\n"
+                    "X status URLs (qui ne sont pas des sources d'article valides).\n\n"
+                    + "\n".join(article_urls)
+                )
+                performance_section = (performance_section or "") + "\n\n" + block
+    except Exception:
+        pass
+
+    # LIVE WEB SEARCH — fresh hits for today's Décode topic. Always-on so
+    # BOTH Claude (cross-check) and ollama (only signal) get fresh URLs
+    # and snippets. Added 2026-05-22 after user pointed out the bot
+    # missed a great story (Microsoft cancelling Claude Code licenses).
+    # 1-2s overhead, no API key, DuckDuckGo HTML scrape.
+    try:
+        from . import web_search as _ws
+        web_block = _ws.search_for_news_topic(decode_topic)
+        if web_block:
+            performance_section = (performance_section or "") + "\n\n" + web_block
+    except Exception:
+        pass
+
     # Follower growth scoreboard — concrete number the agent sees so it
     # can self-evaluate "is what I'm doing actually working".
     try:
@@ -1017,15 +1067,23 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
                     return None
         except Exception:
             pass
-    # HARD RULE 2026-04-26 PM (user directive): "YOU CANT POST OR HOT TAKE
-    # WITHOUT SOURCE." If no article URL made it through, SKIP the cycle
-    # rather than ship a sourceless post. Replies stay exempt; news doesn't.
+    # 2026-05-22: relaxed the no-source-SKIP for well-formed Décodes.
+    # User: "you can still post without URL bro". When the body has the
+    # Décode header AND looks substantial (≥400 chars compact), ship
+    # even without a URL — the fallback ollama path can't WebSearch so
+    # it sometimes lacks a URL. Better to ship a real Décode without
+    # source than miss the cycle.
     if not src_url:
-        preview = " ".join(tweet.split())[:220]
-        log.info(f"[NEWS] No source URL in output — SKIPPING (user rule: no post without source). Output preview: {preview!r}")
-        globals()["_last_source_url"] = None
-        globals()["_last_image_topic"] = None
-        return None
+        compact = re.sub(r"\s+", " ", tweet).strip()
+        has_header = bool(re.search(r"Le Décode\s*#?\d+", tweet, re.IGNORECASE))
+        if has_header and len(compact) >= 400:
+            log.info(f"[NEWS] No source URL but valid Décode body ({len(compact)} chars) — shipping anyway (user mandate 2026-05-22).")
+        else:
+            preview = " ".join(tweet.split())[:220]
+            log.info(f"[NEWS] No source URL AND body too short / no Décode header — SKIPPING. Output preview: {preview!r}")
+            globals()["_last_source_url"] = None
+            globals()["_last_image_topic"] = None
+            return None
     globals()["_last_source_url"] = src_url
     # X's native link-card covers the visual; an attached image would
     # suppress the card preview, so always null the image topic.
