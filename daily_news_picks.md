@@ -4895,3 +4895,25 @@ Juste un portefeuille.
 Wall Street
   - https://x.com/MerlijnTrader/status/2057568626887246172
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 73).
+- **@tokenterminal** (15 likes, score 7/10) — State of RWAs on @ethereum 
+
+Top sectors: Funds, Commodities, Stocks
+Top assets: sUSDS, XAUT, PAXG
+Top issuers: @SkyMoney, @tether, @Paxos 
+Ethereum market share: 60.5% at $25.1B market cap
+  - https://x.com/tokenterminal/status/2057576644282376356
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 21).
+- **@kobeissiletter** (137 likes, score 8/10) — Les actions technologiques entraînent des gains historiques sur le marché :
+
+Le secteur de l'information technologique a généré un rendement de +225,7 % depuis le début du marché haussier le 12 octobr
+  - https://x.com/KobeissiLetter/status/2057640352635363739
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 211).
+- **@martiniguyyt** (33 likes, score 7/10) — Harvard has sold its $87 million Ethereum position
+  - https://x.com/MartiniGuyYT/status/2057594787503415316
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 47).
+- **@reuters** (10 likes, score 7/10) — Les responsables de la Fed américaine proposent de prolonger les lignes de swap en dollars pour soutenir la stabilité http://reut.rs/4wIrwWp
+  - https://x.com/Reuters/status/2057637605001314773
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 26).
+- **@cointelegraph** (211 likes, score 7/10) — MISE À JOUR : Le Bitcoin a plus que doublé au cours des 5 dernières années, tandis que l’Ethereum est resté largement stable sur la même période.
+  - https://x.com/Cointelegraph/status/2057589845069811740
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 313).
