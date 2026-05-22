@@ -4996,3 +4996,33 @@ Awards reportedly include:
 - **@6ixbuzztv** (100 likes, score 7/10) — Alberta will hold a referendum to determine whether the province should stay in Canada or proceed with a second binding vote on separation
   - https://x.com/6ixbuzztv/status/2057656904206184893
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 170).
+- **@ashcrypto** (511 likes, score 9/10) — URGENT :
+
+ Blackrock ETF a vendu 103 640 000 $ en Bitcoin.
+  - https://x.com/AshCrypto/status/2057654356233933109
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 729).
+- **@martiniguyyt** (33 likes, score 8/10) — URGENT :
+
+ Blackrock ETF vient de vendre pour 103 640 000 $ de Bitcoin.
+  - https://x.com/MartiniGuyYT/status/2057656443051098299
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 71).
+- **@coinbureau** (13 likes, score 7/10) — TRUMP MEDIA PERD MAINTENANT PRÈS DE 500 MILLIONS SUR LE BITCOIN
+
+Trump Media vient de transférer 2 650 Bitcoins supplémentaires d'une valeur d'environ 205 M$ à Crypto[.]com, portant les sorties totale
+  - https://x.com/coinbureau/status/2057687902155669943
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 29).
+- **@wublockchain** (5 likes, score 7/10) — Spot Bitcoin ETFs See $101M Net Outflows on May 21, Extending Streak to 5 Days
+
+On May 21 (ET), spot Bitcoin ETFs recorded total net outflows of $101 million, marking five consecutive days of net outf
+  - https://x.com/WuBlockchain/status/2057686736327811462
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 13).
+- **@crypto__goku** (4 likes, score 7/10) — GM Saiyans ! 
+
+«Peu importe jusqu’où tu vas, l’important est de continuer d’avancer. »
+----
+$BTC : 77.601 $
+$ETH : 2.131 $
+#BTC Fear & Greed index : 28
+#Bitcoin Dominance : 60%
+  - https://x.com/Crypto__Goku/status/2057686217978785996
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 8).
