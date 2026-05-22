@@ -576,7 +576,14 @@ OUTPUT: 2 phrases FR, max 240 chars TOTAL:
 xAI / Mistral en tant qu'orgs / produits, c'est OK. Pas d'attaque ad hominem.
 
 RÈGLES STRICTES:
-- 100% français pur, accents corrects.
+- 🇫🇷 100% FRANÇAIS PUR. ZÉRO mot anglais, ZÉRO franglais. Si le tweet
+  parent est en EN, tu N'ÉCHO PAS ses phrases anglaises — tu reformules
+  en français pur. INTERDIT: "Great weekend", "game changer", "by the way",
+  "deal", "team", "AI", "weekend", "hype", "moon", "pump", "dump", "FOMO",
+  toute phrase entre guillemets en anglais reprise du parent. Si tu ne
+  peux pas reformuler en FR pur → SKIP.
+  Exceptions tolérées: noms propres (OpenAI, Bitcoin), tickers (BTC, ETH,
+  NVDA), acronymes techniques (LLM, GPU, ASIC). PAS de phrases EN.
 - DEADPAN, SEC. Stack 1-2 réfs FR culturelles si possible (RER B, Bercy,
   URSSAF, Doctolib, Lidl, tonton, café-clope, Livret A).
 - Tag inline mid-phrase: "Pendant ce temps, @sama prépare le pivot" — OUI.
@@ -620,7 +627,53 @@ def _try_generate_troll_quote(pick: dict) -> str:
         out = out[1:-1].strip()
     if len(out) > 240 or len(out) < 25:
         return None
+    # Deterministic Franglais guard. Model sometimes echoes an EN phrase
+    # from the parent tweet ('"Great weekend" for data center stocks...').
+    # If we detect an English n-gram in our supposed-FR quote → SKIP rather
+    # than ship a half-translated mess. Whitelist proper-noun-ish tokens.
+    if _has_english_phrase(out):
+        log.info(f"[RT_QT] Franglais detected, refusing: {out[:140]!r}")
+        return None
     return out
+
+
+# Common EN tokens that signal a phrase (not just a proper noun). If any
+# of these appears as a whole word in the supposed-FR quote, treat the
+# output as franglais and SKIP.
+_FRANGLAIS_TOKENS = (
+    "the", "and", "with", "for", "from", "great", "weekend", "game",
+    "changer", "deal", "team", "people", "company", "stock", "stocks",
+    "market", "money", "good", "bad", "back", "another", "this", "that",
+    "what", "when", "where", "why", "how", "you", "your", "our", "their",
+    "have", "been", "going", "getting", "looking", "saying", "thinking",
+    "let", "lets", "let's", "make", "made", "take", "took", "give", "given",
+    "buy", "sell", "short", "long", "moon", "pump", "dump", "fomo", "hype",
+    "ai", "agi", "fud", "alpha", "beta", "rug", "bull", "bear", "fair",
+    "ride", "ridge", "edge", "hold", "holding", "trade", "trading",
+    "wallet", "swap", "drop", "huge", "big", "small", "ridiculous",
+    "wild", "crazy", "insane", "broken", "weekend", "anyway", "actually",
+    "obviously", "really", "very", "much", "more", "less", "now", "soon",
+    "today", "yesterday", "tomorrow",
+)
+
+
+def _has_english_phrase(text: str) -> bool:
+    """True if the supposed-FR quote contains a 'phrase-like' English word.
+    Counts only whole-word matches (regex \\b). Returns True only when 2+
+    distinct EN tokens hit so a single proper-noun-ish word doesn't
+    false-trigger."""
+    low = (text or "").lower()
+    hits = 0
+    for tok in _FRANGLAIS_TOKENS:
+        if re.search(rf"\b{re.escape(tok)}\b", low):
+            hits += 1
+            if hits >= 2:
+                return True
+    # Also flag a single token if it's wrapped in quotes (clearly an
+    # echoed parent phrase, e.g. '"Great weekend"').
+    if re.search(r'["“”]\s*[A-Za-z]+(?:\s+[A-Za-z]+){1,4}\s*["“”]', text or ""):
+        return True
+    return False
 
 
 def run_retweet_cycle():
