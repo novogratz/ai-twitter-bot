@@ -557,12 +557,19 @@ TechCrunch, The Information sont OK). Ce qui compte c'est:
   2. Ton commentaire FR est drôle/sharp/screenshot-worthy
 On veut SHIPPER plus, pas SKIPPER. Mid + drôle + en FR > silence.
 
-WebSearch — FR PRÉFÉRÉ mais pas obligatoire (4-5 requêtes en parallèle):
+⚡ WEB SEARCH STRATEGY (read this carefully — 2026-05-22 optimization):
+La section WEB SEARCH RESULTS ci-dessous est DÉJÀ pré-chargée avec des
+articles frais (DuckDuckGo HTML scrape). Sa présence te dispense de faire
+TES PROPRES WebSearch dans 90% des cas — utilise les URLs déjà fournies.
+- Si la liste WEB SEARCH RESULTS couvre une story pertinente → UTILISE-LA.
+- Lance UNE WebSearch toi-même UNIQUEMENT si la liste pré-chargée ne
+  couvre rien de pertinent à ton {decode_topic} du jour.
+- Cible: générer le Décode en <60s, pas 4 min de WebSearch redondant.
+
+WebSearch FALLBACK (si vraiment rien dans la liste pré-chargée, 1-2 requêtes max):
 - site:lesechos.fr OR site:lemonde.fr OR site:bfmtv.com IA OR Mistral
 - site:numerama.com OR site:siecledigital.fr OR site:usine-digitale.fr
-- site:capital.fr OR site:cryptoast.fr OR site:cointribune.com
-- "AI news today" / "OpenAI" / "Anthropic" / "Nvidia AI" / "Mistral"
-- "Bitcoin" / "Ethereum" / "Solana" / "stablecoins" / "ETF crypto"
+- "AI news today" / "Bitcoin" / "ETF crypto" (selon topic)
 
 Si la presse FR a la news → utilise CETTE source en priorité (l'audience
 clique plus volontiers sur Les Échos que sur Bloomberg).
