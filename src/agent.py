@@ -1058,25 +1058,12 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         performance_section = (performance_section or "") + "\n\n" + core_identity
     performance_section = (performance_section or "") + "\n\n" + personality_store.hard_rules_block()
 
-    # Auto-curated joke bank — top-liked recent posts injected as fresh
-    # exemplars. Replaces hardcoded gold-standards with what's empirically
-    # working RIGHT NOW. Added 2026-05-18 to fight prompt-staleness.
-    try:
-        from . import joke_bank
-        jb = joke_bank.render_joke_bank_block(sample_size=5)
-        if jb:
-            performance_section = (performance_section or "") + "\n\n" + jb
-    except Exception:
-        pass
-    # Self-winners — OUR own past posts that hit ≥10 likes. The model
-    # learns what works for THIS specific account at THIS follower count.
-    try:
-        from . import self_winners
-        sw = self_winners.render_self_winners_block(sample_size=3)
-        if sw:
-            performance_section = (performance_section or "") + "\n\n" + sw
-    except Exception:
-        pass
+    # 2026-05-22 PM: joke_bank + self_winners disabled on the NEWS path.
+    # These exemplars were great for HOT TAKES (short voice-driven 1-liners)
+    # but on the long-form Le Décode multi-paragraph format they add 3-5k
+    # chars of noise that Claude has to process for no clear gain — the
+    # Décode shape is structured (header, paragraphs, chute, URL), not
+    # voice-mimicry-driven. Hotake_agent still injects both.
 
     today_date = datetime.now().strftime("%Y-%m-%d")
     _DAYS_FR = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
