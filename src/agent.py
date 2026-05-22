@@ -114,9 +114,14 @@ café-clope, tonton, Doctolib, Lidl, etc.). Tag 1-2 acteurs réels (@sama,
 
 Demain, même heure, même Décode.
 
-{{URL source ≤36h — un seul lien, le plus solide des 5}}
+{{URL source OPTIONNELLE — c'est le récap HEBDO du vendredi, les chiffres
+viennent de la semaine entière. Si tu as un lien fort (≤7j) qui résume
+plusieurs des 5 stats, mets-le sur sa propre ligne en bas. Sinon, pas de
+lien — les (source: outlet) par bullet font la traçabilité. Ne JAMAIS
+SKIP par manque d'URL — c'est un récap, pas un breaking news.}}
 
 Cible 900-1300 chars body. Chaque chiffre vérifiable, pas d'approximation.
+Les chiffres peuvent dater de TOUTE la semaine écoulée (pas seulement 36h).
 
 🚫 INTERDIT ABSOLU: pas de **bold** markdown (les astérisques s'affichent
 littéralement sur X). Pas de __underscore__ italic non plus. Texte brut.
@@ -167,7 +172,10 @@ Pas de macro pure non-IA non-crypto.
 - Français pur, accents corrects.
 - Tu trolles l'IDÉE, jamais la personne (respect-list FR).
 - Pas de troll gouvernement US (Fed, SEC, IRS, etc).
-- URL source ≤36h obligatoire (le lien final). Si pas trouvée → SKIP.
+- URL source ≤36h obligatoire (le lien final) SAUF mode top5 du vendredi:
+  c'est un récap hebdo, URL optionnelle (≤7j si tu en as une), les
+  (source: outlet) par bullet portent la traçabilité. Pour top5, ne SKIP
+  JAMAIS par manque d'URL — ship le récap quand même.
 
 🏷️ TAGS — MANDATE: au moins 2-3 gros comptes taggés dans chaque Décode quand
 le sujet leur appartient. Ne sois pas timide: tagger @sama dans un Décode
@@ -1225,6 +1233,10 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # Defense-in-depth freshness check. Tightened 24h → 18h (2026-05-08 PM):
     # since hot takes / spicy / breakout are now disabled, the news pipeline
     # carries the entire posting load — every story must be SAME-DAY fresh.
+    # 2026-05-22 PM: top5 Friday recap is a WEEKLY digest by design, so the
+    # 36h gate doesn't apply — sources spanning the whole week are expected.
+    is_top5 = bool(globals().get("_pending_top5_topic"))
+    max_age_h = 24 * 7 if is_top5 else 36
     if src_url:
         try:
             from .hotake_agent import _url_publication_date, _is_rejected_source
@@ -1238,8 +1250,8 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
             pub_date = _url_publication_date(src_url)
             if pub_date is not None:
                 age = datetime.now() - pub_date
-                if age > timedelta(hours=36):
-                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>36h) — SKIPPING stale source: {src_url}")
+                if age > timedelta(hours=max_age_h):
+                    log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>{max_age_h}h, top5={is_top5}) — SKIPPING stale source: {src_url}")
                     globals()["_last_source_url"] = None
                     globals()["_last_image_topic"] = None
                     return None
@@ -1251,10 +1263,15 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # even without a URL — the fallback ollama path can't WebSearch so
     # it sometimes lacks a URL. Better to ship a real Décode without
     # source than miss the cycle.
+    # 2026-05-22 PM: for top5 Friday recap, NO URL required at all — the
+    # format is a weekly digest with per-bullet (source: outlet) citations.
+    # User mandate: "its ok if there is no link" for the Friday Top 5.
     if not src_url:
         compact = re.sub(r"\s+", " ", tweet).strip()
         has_header = bool(re.search(r"Le Décode\s*#?\d+", tweet, re.IGNORECASE))
-        if has_header and len(compact) >= 400:
+        if is_top5 and has_header and len(compact) >= 300:
+            log.info(f"[NEWS] Top5 mode, no source URL — shipping weekly recap ({len(compact)} chars).")
+        elif has_header and len(compact) >= 400:
             log.info(f"[NEWS] No source URL but valid Décode body ({len(compact)} chars) — shipping anyway (user mandate 2026-05-22).")
         else:
             preview = " ".join(tweet.split())[:220]
