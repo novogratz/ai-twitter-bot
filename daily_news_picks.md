@@ -5144,3 +5144,28 @@ Voilà les 4 seules options sérieuses et leurs vraies différences
 1 310 entreprises. 23 pays développés. Pas d'
   - https://x.com/epargnantlibre/status/2057761390757114079
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 11).
+- **@absgec** (36 likes, score 7/10) — BREAKING: WHITE HOUSE *BITCOIN RESERVE* BILL IS HERE!  CLARITY ACT UPDATE & $XRP NEXT MOVE!
+  - https://x.com/AbsGEC/status/2057848797041156390
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 42).
+- **@cipriandafi** (10 likes, score 7/10) — O balenă crypto a deschis o poziție long de 38,4 milioane de dolari pe Ethereum.
+
+Aceeași balenă a făcut deja un profit de aproximativ 6 milioane de dolari doar săptămâna asta.
+  - https://x.com/cipriandafi/status/2057818526191071300
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 10).
+- **@iamfakeguru** (35 likes, score 7/10) — so microsoft just admitted they cant afford AI
+
+in other words, TOP5 most valuable companies in the world just painted the clearest buy signal youve ever seen
+
+its the exact pain point $SERV is solvin
+  - https://x.com/iamfakeguru/status/2057844821281165662
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 47).
+- **@bfmbusiness** (17 likes, score 7/10) — "Une étape majeure dans les mathématiques": OpenAI a résolu un casse-tête mathématique vieux de 80 ans, démontrant que l’intelligence artificielle peut aussi découvrir de "nouvelles idées"
+  - https://x.com/bfmbusiness/status/2057818741551845693
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 17).
+- **@maxcrypto** (234 likes, score 7/10) — Le S&P 500 est en HAUSSE.
+Le Nasdaq est en HAUSSE.
+Le Dow Jones est en HAUSSE.
+
+Mais pourquoi diable le $BTC est en BAISSE ?
+  - https://x.com/MaxCrypto/status/2057826616466985362
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 394).
