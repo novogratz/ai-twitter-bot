@@ -5091,3 +5091,28 @@ ETH pivote maintenant
 dites vous que le narratif officiel c’est que ces gens étaient pas reskillables alors que le vrai motif c’est qu
   - https://x.com/BetterCallMedhi/status/2056489544535711828
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 1046).
+- **@pirat_nation** (47 likes, score 8/10) — NVIDIA changed how it reports its earnings for the first quarter of fiscal year 2027. Instead of listing gaming revenue separately, the company now includes it in a new category called “Edge Computing
+  - https://x.com/Pirat_Nation/status/2057749054679814157
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 69).
+- **@philipjohnston** (16 likes, score 7/10) — Thanks Jensen! “The @NVIDIA Hopper is already in space” (onboard @Starcloud_-1!)
+
+“The energy in space is practically infinite which is a reason to really endeavour to put data center in space.”
+  - https://x.com/PhilipJohnston/status/2057734248862212098
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 18).
+- **@div_croissant** (29 likes, score 7/10) — $ASML qui régale et ma ligne apprécie
+  - https://x.com/Div_Croissant/status/2057723576367665336
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 35).
+- **@cryptoayor** (5 likes, score 7/10) — Pendant que vous vous emmerder avec un $BTC et un $ETH qui ne bougent pas , moi je fais beaucoup d'argent avec les small caps du Nasdaq. 
+
+Pourquoi?
+
+Parce que l'analyse technique marche bien mieux su
+  - https://x.com/CryptoAyor/status/2057529348882886958
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 5).
+- **@leaboursefr** (21 likes, score 7/10) — En 2020 l'État pouvait dépenser massivement pour amortir le choc.
+
+Chômage partiel, PGE, aides directes aux entreprises (la France avait injecté 70 milliards en quelques mois). 
+
+Aujourd'hui la dette
+  - https://x.com/LeaBourseFR/status/2057599714363576649
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 25).
