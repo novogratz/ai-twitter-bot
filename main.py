@@ -19,8 +19,9 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
+from apscheduler.triggers.cron import CronTrigger
 from src.logger import log
-from src.bot import has_post_slot, post_slot_status, safe_run_bot_cycle
+from src.bot import has_post_slot, post_slot_status, safe_run_bot_cycle, safe_run_daily_news_cycle, safe_run_weekly_news_cycle
 from src.reply_bot import safe_run_reply_cycle
 from src.engage_bot import safe_run_engage_cycle
 from src.notify_bot import safe_run_notify_cycle, safe_run_boost_cycle, safe_run_replyback_cycle
@@ -315,12 +316,22 @@ def main():
 
     # Schedule jobs
     if not args.reply_only:
-        first_post = post_interval_minutes()
-        log.info(f"Next post in {first_post} minutes.")
+        # 2026-05-22 PM: two separate news crons (user mandate).
+        # Daily Décodes: every day at 1:00 AM EST (= 7:00 AM Paris CEST).
+        # Burst posts 3 Daily Décodes in ~14-18 min (one per topic).
+        # Weekly Top 5s: Fridays at 7:00 AM EST (= 1:00 PM Paris CEST).
+        # Burst posts 3 Weekly Top 5s in ~14-18 min (one per topic).
+        log.info("News bot DAILY: cron at 1:00 AM America/New_York (= 7:00 AM Paris).")
         scheduler.add_job(
-            reschedule_and_post,
-            trigger=IntervalTrigger(minutes=first_post),
-            id="post_job",
+            safe_run_daily_news_cycle,
+            trigger=CronTrigger(hour=1, minute=0, timezone="America/New_York"),
+            id="daily_news_job",
+        )
+        log.info("News bot WEEKLY: cron Fridays at 7:00 AM America/New_York (= 1:00 PM Paris).")
+        scheduler.add_job(
+            safe_run_weekly_news_cycle,
+            trigger=CronTrigger(day_of_week="fri", hour=7, minute=0, timezone="America/New_York"),
+            id="weekly_news_job",
         )
 
     if not args.post_only:
