@@ -635,14 +635,12 @@ def run_llm(
             )
             return _run_ollama_http(prompt, label=label, timeout=effective_timeout)
 
-    # Per-provider timeout cap. Claude on the bot's NEWS path uses a
-    # ~25k-char prompt + WebSearch (60-240s+). 240s was still too tight
-    # — both Décode #61 and #62 timed out today.
-    # 2026-05-22 (later): bumped 240 → 360s. Stuck calls still fail
-    # over to ollama in 6 min vs 10. NEWS path uses this; small calls
-    # (replies) get the smaller caller-provided timeout via `timeout` arg.
+    # Per-provider timeout cap. Claude on the bot's NEWS path needs
+    # 60-360s for WebSearch + write. User mandate "i want all my news"
+    # — bumping to 480s so Claude has real room to finish even on slow
+    # WebSearch days. Falls over to ollama at 8 min if truly stuck.
     if provider in ("claude", "codex", "gemini"):
-        provider_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 360)
+        provider_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 480)
     else:
         provider_timeout = timeout
     cmd = _build_cmd(prompt, model, output_json, allowed_tools, permission_mode, provider)

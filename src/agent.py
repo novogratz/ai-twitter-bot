@@ -1092,8 +1092,10 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         lang_directive=lang_mode.lang_directive(lang),
     )
     log.info(f"[NEWS] Generating Décode #{decode_number} ({decode_topic}, {day_of_week}, format={format_mode}) in lang={lang}")
-    # Stash use_top5 so we can mark it done if the post ships successfully.
+    # Stash so post-process branches (top5 marker + header auto-inject) can read.
     globals()["_pending_top5_topic"] = decode_topic if use_top5 else None
+    globals()["_pending_decode_num"] = decode_number
+    globals()["_pending_decode_topic"] = decode_topic
 
     def _gen_one() -> str:
         r = run_llm(
@@ -1130,22 +1132,48 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     tweet = strip_agent_preamble(tweet)
     if not tweet or tweet.upper() == "SKIP":
         return None
-    # 2026-05-21: Le Décode format enforcer. Permissive regex — header
-    # may appear with or without the 🔎 emoji, with various dashes.
+    # 2026-05-22 PM: Strip Claude WebSearch "Sources: [title](url) ..."
+    # preamble lines BEFORE doing the header search. Otherwise the search
+    # finds nothing because Décode body got truncated by timeout.
+    tweet = re.sub(
+        r"^[ \t]*Sources?\s*[:：][^\n]*\n+",
+        "",
+        tweet,
+        flags=re.IGNORECASE | re.MULTILINE,
+    )
+    # Also strip standalone markdown-link lines that precede the actual body.
+    tweet = re.sub(
+        r"^\s*-?\s*\[[^\]]+\]\([^)]+\)\s*\n+",
+        "",
+        tweet,
+        flags=re.MULTILINE,
+    )
+    tweet = tweet.strip()
+
+    # Le Décode format enforcer. Tolerate D[eé]code (model occasionally
+    # drops the accent) and missing 🔎 emoji prefix.
     decode_match = re.search(
-        r"(?:🔎\s*)?Le\s+Décode\s*#?\s*\d+",
+        r"(?:🔎\s*)?Le\s+D[eé]code\s*#?\s*\d+",
         tweet,
         re.IGNORECASE,
     )
     if decode_match:
-        # If the header doesn't already start with the emoji, prepend it
-        # so the on-X presentation stays consistent across the series.
         body = tweet[decode_match.start():].strip()
         if not body.startswith("🔎"):
             body = "🔎 " + body
         tweet = body
-    elif "le décode" not in tweet.lower():
-        log.info(f"[NEWS] Décode header missing — SKIPPING (user mandate: every news is Le Décode #N). Output preview: {tweet[:200]!r}")
+    elif tweet and len(re.sub(r"\s+", " ", tweet)) >= 200:
+        # 2026-05-22 PM: header missing but body has real content
+        # (≥200 chars). User mandate: "i want all my news". Auto-inject
+        # the header instead of SKIP.
+        log.info(f"[NEWS] Décode header missing but body present ({len(tweet)} chars) — auto-injecting header.")
+        today = datetime.now().strftime("%Y-%m-%d")
+        n = globals().get("_pending_decode_num")
+        topic = globals().get("_pending_decode_topic", "")
+        header = f"🔎 Le Décode #{n} — {topic} — {today}" if n else f"🔎 Le Décode — {today}"
+        tweet = f"{header}\n\n{tweet}"
+    else:
+        log.info(f"[NEWS] Décode header missing AND body too short — SKIPPING. Output preview: {tweet[:200]!r}")
         return None
     # Defense against skip-rationale leaks (bug 2026-04-30 PM: quote-tweet
     # agent posted prose explaining its skip decision on @marcelenplace).
