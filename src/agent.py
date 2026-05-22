@@ -247,7 +247,11 @@ def _finalize_news_tweet(text: str, src_url: str) -> str:
     body = "\n".join(cleaned_lines).strip()
     body = re.sub(r"\n{3,}", "\n\n", body)
     body = re.sub(r"\s*(?:source|url|lien)\s*[:：]\s*$", "", body, flags=re.IGNORECASE).strip()
-    return (body.rstrip() + "\n\n" + src_url).strip()
+    # 2026-05-22: src_url may be None in Top 5 weekly-recap mode (per-bullet
+    # (source: outlet) carries the trace). Skip the URL append in that case.
+    if src_url:
+        return (body.rstrip() + "\n\n" + src_url).strip()
+    return body.strip()
 
 
 def _news_body_too_long(tweet: str, src_url: str) -> bool:
