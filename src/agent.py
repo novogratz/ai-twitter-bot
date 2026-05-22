@@ -98,19 +98,24 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
 
 🔎 Le Décode #{decode_number} — {decode_topic} — {day_of_week} {today_date}
 
-{{Titre punchy: "5 chiffres {decode_topic} à connaître cette semaine" ou variante}}
+{{HOOK: 1 phrase SHOCKER au-dessus de la pliure mobile — chiffre brut + claim
+fort. Exemple: "Bitcoin sécurise son réseau avec PLUS de puissance que les
+5 premières centrales nucléaires françaises." MAX 150 chars. C'est la
+1ère ligne lue après le header — doit faire arrêter le scroll.}}
 
-{{1-2 phrases d'intro qui posent l'angle}}
-
-1. 💰 {{chiffre exact}} — {{acteur nommé, tag si pertinent}}. {{insight 1 ligne}}. (source: {{outlet}})
-2. 🚀 {{chiffre exact}} — {{acteur nommé, tag si pertinent}}. {{insight}}. (source: {{outlet}})
-3. ⚡ {{chiffre exact}} — {{acteur nommé, tag si pertinent}}. {{insight}}. (source: {{outlet}})
-4. 📊 {{chiffre exact}} — {{acteur nommé, tag si pertinent}}. {{insight}}. (source: {{outlet}})
-5. 🔥 {{chiffre exact}} — {{acteur nommé, tag si pertinent}}. {{insight}}. (source: {{outlet}})
+1. 💰 {{chiffre exact}} : {{insight 1 ligne, acteur nommé INLINE dans la prose}}. (source: {{outlet}})
+2. 🚀 {{chiffre exact}} : {{insight}}. (source: {{outlet}})
+3. ⚡ {{chiffre exact}} : {{insight}}. (source: {{outlet}})
+4. 📊 {{chiffre exact}} : {{insight}}. (source: {{outlet}})
+5. 🔥 {{chiffre exact}} : {{insight}}. (source: {{outlet}})
 
 {{Chute FR sarcastique, 1-2 phrases. Stack 2 réfs (RER B, Bercy, URSSAF,
-café-clope, tonton, Doctolib, Lidl, etc.). Tag 1-2 acteurs réels (@sama,
-@VitalikButerin, @saylor, @ylecun, @elonmusk, @nvidia, etc) quand pertinent.}}
+café-clope, tonton, Doctolib, Lidl, etc.).}}
+
+{{CTA REPLIES — UNE question directe qui demande une réaction. Exemples:
+"Lequel des 5 t'a fait sursauter ?" / "T'as déjà repéré le 6e d'ici lundi ?"
+/ "RT si t'as ton trader pote qui doit voir ça." Le but: déclencher des
+réponses, l'algo X amplifie les threads qui réagissent.}}
 
 Demain, même heure, même Décode.
 
@@ -120,8 +125,25 @@ plusieurs des 5 stats, mets-le sur sa propre ligne en bas. Sinon, pas de
 lien — les (source: outlet) par bullet font la traçabilité. Ne JAMAIS
 SKIP par manque d'URL — c'est un récap, pas un breaking news.}}
 
-Cible 900-1300 chars body. Chaque chiffre vérifiable, pas d'approximation.
-Les chiffres peuvent dater de TOUTE la semaine écoulée (pas seulement 36h).
+🎯 RÈGLES TAGS (très important, ÉVITE le bug de mise en page):
+- MAX 1 tag @handle par bullet. JAMAIS 2 dans la même ligne.
+- Le tag s'écrit TOUJOURS inline dans la prose, comme un mot normal — pas
+  d'espace + retour-ligne autour. Si tu écris "415 M$.\\n@nvidia\\nQ1...",
+  X mobile sépare @nvidia sur sa propre ligne et le tweet a l'air cassé.
+  Bon: "415 M$ Q1 mining chez @nvidia" (tag inline, sans saut de ligne).
+  Mauvais: "415 M$. @nvidia Q1..." (suit d'un point + @, X le saute).
+- Place le tag au MILIEU de la phrase, pas en début/fin de ligne.
+- Chiffre = pull-quote screenshotable. Le tag amplifie le pull-quote.
+
+🚨 CHIFFRES VÉRIFIABLES — N'invente PAS:
+- Les chiffres doivent venir des SIGNAUX FOURNIS ci-dessous ({web_block}-ish).
+- Si tu n'as pas la donnée exacte, écris "~3 Md$" ou "près de 400 M$" — pas
+  un faux chiffre à 3 décimales. Mieux: hedge que mentir.
+- (source: outlet) doit nommer un vrai média qui couvre le sujet (CoinDesk,
+  TheBlock, Bloomberg, Les Échos, FT, Reuters, WSJ, TechCrunch, etc) —
+  pas un nom inventé.
+
+Cible 1000-1700 chars body. Les chiffres peuvent dater de TOUTE la semaine.
 
 🚫 INTERDIT ABSOLU: pas de **bold** markdown (les astérisques s'affichent
 littéralement sur X). Pas de __underscore__ italic non plus. Texte brut.
