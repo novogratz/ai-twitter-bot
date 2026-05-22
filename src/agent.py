@@ -255,10 +255,14 @@ def _finalize_news_tweet(text: str, src_url: str) -> str:
 
 
 def _news_body_too_long(tweet: str, src_url: str) -> bool:
-    """Keep news posts below X's collapsed-text threshold (approx 240-280)."""
+    """Keep news posts below X's collapsed-text threshold (approx 240-280).
+    Top 5 weekly recap gets a bigger ceiling (5 bullets + chute is naturally
+    longer than a 3-paragraph Décode)."""
     body = (tweet or "").replace(src_url or "", "")
     body = re.sub(r"\s+", " ", body).strip()
-    return len(body) > _MAX_NEWS_BODY_CHARS
+    is_top5 = bool(globals().get("_pending_top5_topic"))
+    cap = 2000 if is_top5 else _MAX_NEWS_BODY_CHARS
+    return len(body) > cap
 
 
 def _news_body_bad_format(tweet: str, src_url: str) -> bool:
@@ -277,15 +281,20 @@ def _news_body_bad_format(tweet: str, src_url: str) -> bool:
     has_header = bool(re.search(r"Le Décode\s*#?\d+", body, re.IGNORECASE))
     has_blank_break = "\n\n" in body
 
-    # New long-form Décode shape: 500-1400 chars body, multi-paragraph,
+    # 2026-05-22: top5 weekly recap is naturally longer (5 emoji bullets +
+    # intro + chute). Bump the ceiling 1400 → 2000 in that mode.
+    is_top5 = bool(globals().get("_pending_top5_topic"))
+    body_max = 2000 if is_top5 else 1400
+
+    # New long-form Décode shape: 500-{body_max} chars body, multi-paragraph,
     # blank-line breaks. Bullets optional now (prose is encouraged).
-    if has_header and has_blank_break and 500 <= compact_len <= 1400:
+    if has_header and has_blank_break and 500 <= compact_len <= body_max:
         # Sanity-check no individual paragraph is over the line cap
         # (paragraphs can be long, but no single line should be a wall).
         return any(len(line) > _MAX_NEWS_LINE_CHARS * 3 for line in non_empty)
 
     # Permissive fallback: 2-3 blocks separated by blank lines, classic format.
-    if has_blank_break and 2 <= len(non_empty) <= 10 and compact_len <= 1400:
+    if has_blank_break and 2 <= len(non_empty) <= 10 and compact_len <= body_max:
         return any(len(line) > _MAX_NEWS_LINE_CHARS * 3 for line in non_empty)
 
     # Last resort — short single-sentence tight tweet (legacy fallback only).
@@ -1289,12 +1298,12 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     globals()["_last_image_topic"] = None
     tweet = _finalize_news_tweet(tweet, src_url)
     if _news_body_bad_format(tweet, src_url):
-        preview = " ".join(tweet.replace(src_url, "").split())
+        preview = " ".join(tweet.replace(src_url or "", "").split())
         log.info(f"[NEWS] Bad body format — SKIPPING to avoid unreadable block: {preview[:180]!r}")
         globals()["_last_source_url"] = None
         return None
     if _news_body_too_long(tweet, src_url):
-        preview = " ".join(tweet.replace(src_url, "").split())
+        preview = " ".join(tweet.replace(src_url or "", "").split())
         log.info(f"[NEWS] Body too long ({len(preview)} chars > {_MAX_NEWS_BODY_CHARS}) — SKIPPING to avoid Show more: {preview[:180]!r}")
         globals()["_last_source_url"] = None
         return None
