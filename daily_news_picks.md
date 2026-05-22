@@ -5062,3 +5062,32 @@ Brutal retour à la réalité dans 3... 2....
 Voilà ce qu'il se serait vraiment passé
   - https://x.com/_3emeOeil/status/2057361835775365281
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 780).
+- **@zabihullahatal** (4 likes, score 7/10) — A five step framework for how to build and deploy AI models.
+
+This is the same skillset AI engineers get paid $300K–$500K+ at Anthropic, OpenAI and Google. 
+
+Bookmark this.
+
+This could  be your founda
+  - https://x.com/ZabihullahAtal/status/2057715747627880906
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 6).
+- **@coinbaseduck** (21 likes, score 7/10) — IMHO - after 2021-2022 bear market, there are three main forces of Ethereum “residual” holding it back;
+
+1.) new retail who hoped 2024-2025 cycle had similar return, got disappointed and needed to get
+  - https://x.com/CoinbaseDuck/status/2057639502177321097
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 41).
+- **@gdb** (0 likes, score 7/10) — OpenAI for YC companies:
+  - https://x.com/gdb/status/2057582329548447770
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 58).
+- **@justin_bons** (232 likes, score 7/10) — Ethereum est le plus grand perdant dans la crypto :
+
+Gaspiller quatre ans sur une feuille de route « L2 scaling » échouée, perdant ainsi sa position de leader face à SOL & HYPE
+
+ETH pivote maintenant
+  - https://x.com/Justin_Bons/status/2057466992882303281
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 378).
+- **@bettercallmedhi** (948 likes, score 7/10) — accenture va licencier 11 000 personnes et habille tout ça en grande transformation IA
+
+dites vous que le narratif officiel c’est que ces gens étaient pas reskillables alors que le vrai motif c’est qu
+  - https://x.com/BetterCallMedhi/status/2056489544535711828
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 1046).
