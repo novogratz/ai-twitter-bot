@@ -559,11 +559,17 @@ donc ne le résume PAS, ajoute un angle):
 
 @{author}: "{tweet_text}"
 
-OUTPUT: UNE phrase FR, max 240 chars, qui ajoute un angle neuf, troll
-intelligent, tag 1-2 gros comptes pertinents (@sama @ylecun @elonmusk
-@VitalikButerin @saylor @AnthropicAI @nvidia @MistralAI...) si le sujet
-les concerne. Pose la conséquence cachée, le comparatif qui change tout,
-le verdict sec.
+OUTPUT: 2 phrases FR, max 240 chars TOTAL:
+  - Phrase 1: angle neuf / troll intelligent / verdict sec. Tag 1 gros
+    compte pertinent (@sama @ylecun @elonmusk @VitalikButerin @saylor
+    @AnthropicAI @nvidia @MistralAI...) INLINE au milieu de la phrase,
+    pas en début/fin (sinon X met le tag sur sa propre ligne et le tweet
+    a l'air cassé).
+  - Phrase 2: UNE question directe à l'audience, qui demande une réaction.
+    Exemples: "Vous achetez ou vous shortez ?" / "Lequel des deux remporte
+    le round dans 6 mois ?" / "Qui en parle dans la presse FR dans une
+    semaine ?" / "Vous y croyez ou c'est du bluff ?" Le but: déclencher
+    des réponses, l'algo X amplifie les threads qui réagissent.
 
 🚨 RÈGLE D'OR — TROLL L'IDÉE / LE PRODUIT / LA TENDANCE, JAMAIS @{author}.
 @{author} doit pouvoir liker la quote. Si tu trolls Anthropic / OpenAI /
@@ -571,14 +577,16 @@ xAI / Mistral en tant qu'orgs / produits, c'est OK. Pas d'attaque ad hominem.
 
 RÈGLES STRICTES:
 - 100% français pur, accents corrects.
-- DEADPAN, SEC. Stack 2 réfs FR culturelles si possible (RER B, Bercy,
+- DEADPAN, SEC. Stack 1-2 réfs FR culturelles si possible (RER B, Bercy,
   URSSAF, Doctolib, Lidl, tonton, café-clope, Livret A).
-- Tag minimum 1 gros compte pertinent quand le sujet leur appartient.
+- Tag inline mid-phrase: "Pendant ce temps, @sama prépare le pivot" — OUI.
+  "@sama prépare le pivot" en début — NON. "Le pivot. @sama" en fin — NON.
+- 1 tag max, jamais 2 dans la même phrase.
 - Pas d'emojis. Pas de hashtags. Pas d'em dash (—). Pas de markdown **bold**.
 - Pas de "Voici", "Parfait", "Score", "Rationale" — sortie pure.
 - Si rien d'intéressant à dire → output exactement "SKIP".
 
-Output: la quote FR, OU "SKIP". Rien d'autre."""
+Output: les 2 phrases FR (angle + question) OU "SKIP". Rien d'autre."""
 
 
 def _try_generate_troll_quote(pick: dict) -> str:
