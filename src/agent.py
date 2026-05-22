@@ -1162,10 +1162,12 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         if not body.startswith("🔎"):
             body = "🔎 " + body
         tweet = body
-    elif tweet and len(re.sub(r"\s+", " ", tweet)) >= 200:
-        # 2026-05-22 PM: header missing but body has real content
-        # (≥200 chars). User mandate: "i want all my news". Auto-inject
-        # the header instead of SKIP.
+    elif tweet and len(re.sub(r"\s+", " ", tweet)) >= 100:
+        # 2026-05-22 PM: header missing but body has content (≥100
+        # chars). User mandate: "i want all my news". Auto-inject the
+        # header instead of SKIP. Threshold lowered 200 → 100 because
+        # Claude was sometimes returning only a citation line just
+        # below the 200-char bar.
         log.info(f"[NEWS] Décode header missing but body present ({len(tweet)} chars) — auto-injecting header.")
         today = datetime.now().strftime("%Y-%m-%d")
         n = globals().get("_pending_decode_num")
