@@ -1170,14 +1170,21 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
 
     # LIVE WEB SEARCH — fresh hits for today's Décode topic. Always-on so
     # BOTH Claude (cross-check) and ollama (only signal) get fresh URLs
-    # and snippets. Added 2026-05-22 after user pointed out the bot
-    # missed a great story (Microsoft cancelling Claude Code licenses).
-    # 1-2s overhead, no API key, DuckDuckGo HTML scrape.
+    # and snippets. 2026-05-22 PM expanded to multi-angle queries + RSS-
+    # pool injection so Top 5 has 12-22 real article URLs to pick from
+    # for the killshot link card.
     try:
         from . import web_search as _ws
+        # 1. DuckDuckGo: 3 sub-queries per topic, past-week filter.
         web_block = _ws.search_for_news_topic(decode_topic)
         if web_block:
             performance_section = (performance_section or "") + "\n\n" + web_block
+        # 2. Curated RSS pool from external_signal.json (≤10 days).
+        # Real article URLs with publication timestamps — much higher
+        # signal than DDG for trusted-outlet sourcing.
+        signals = _ws.load_recent_signals(max_age_days=10, limit=10)
+        if signals:
+            performance_section = (performance_section or "") + "\n\n" + _ws.render_signals_block(signals)
     except Exception:
         pass
 
@@ -1343,7 +1350,10 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # 2026-05-22 PM: top5 Friday recap is a WEEKLY digest by design, so the
     # 36h gate doesn't apply — sources spanning the whole week are expected.
     is_top5 = bool(globals().get("_pending_top5_topic"))
-    max_age_h = 24 * 7 if is_top5 else 36
+    # User mandate 2026-05-22 PM: "it has to be something during the last
+    # 10 days max". Bumped top5 ceiling 7d → 10d (240h). Regular Décode
+    # stays at 36h since that's breaking-news cadence.
+    max_age_h = 240 if is_top5 else 36
     if src_url:
         try:
             from .hotake_agent import _url_publication_date, _is_rejected_source
