@@ -146,11 +146,19 @@ réponses, l'algo X amplifie les threads qui réagissent.}}
 
 Demain, même heure, même Décode.
 
-{{URL source OPTIONNELLE — c'est le récap HEBDO du vendredi, les chiffres
-viennent de la semaine entière. Si tu as un lien fort (≤7j) qui résume
-plusieurs des 5 stats, mets-le sur sa propre ligne en bas. Sinon, pas de
-lien — les (source: outlet) par bullet font la traçabilité. Ne JAMAIS
-SKIP par manque d'URL — c'est un récap, pas un breaking news.}}
+{{URL — UN seul lien, OPTIONNEL, et obligatoirement celui qui BACKE le
+bullet #1 (le killshot). Pas un lien général/recap, pas un lien pour
+bullet #3, JAMAIS plusieurs liens. Raisons:
+  • X ne rend qu'une seule carte de prévisualisation par tweet (image
+    + titre + outlet) — c'est notre visuel gratuit. Autant que ce soit
+    sur le bullet le plus fort.
+  • Le lecteur clique sur le lien qui correspond au CHIFFRE qu'il a
+    retenu = celui de #1. Donc colle un seul lien et que ce soit lui.
+  • Les bullets 2-5 gardent leur (source: outlet) inline (texte pur,
+    pas d'URL) — la trace suffit.
+Si tu n'as pas d'URL réelle vérifiable pour #1 → pas de lien du tout
+(le tweet ship en texte pur, c'est OK, ne jamais inventer une URL).
+Format: dernière ligne du tweet = juste l'URL, rien d'autre.}}
 
 🎯 RÈGLES TAGS (très important, ÉVITE le bug de mise en page):
 - MAX 1 tag @handle par bullet. JAMAIS 2 dans la même ligne.
