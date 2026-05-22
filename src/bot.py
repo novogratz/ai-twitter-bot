@@ -263,21 +263,43 @@ def _run_single_bot_cycle():
                 # no injection happened this cycle so we don't false-strip
                 # legitimate Claude-WebSearch URLs.
                 injected = getattr(_ag, "_last_injected_urls", None) or set()
+                injected_titles = getattr(_ag, "_last_injected_url_titles", None) or {}
+                strip_reason = None
                 if injected and src_url not in injected:
-                    log.info(
-                        f"[NEWS] ❌ URL not in injected pool ({len(injected)} candidates) "
-                        f"— treating as fabricated, stripping: {src_url}"
-                    )
-                    post_body = tweet.replace(src_url, "").rstrip()
-                    post_body = re.sub(r"\n+(Source\s*:?\s*)?\s*$", "", post_body).rstrip()
-                    src_url = None
+                    strip_reason = f"not in injected pool ({len(injected)} candidates)"
                 elif not _ag.url_is_reachable(src_url):
-                    log.info(f"[NEWS] ❌ Source URL unreachable, stripping: {src_url}")
+                    strip_reason = "unreachable / soft-404"
+                else:
+                    # Coupling check: bullet #1 should share at least one
+                    # meaningful entity (≥4-char word) with the URL's title.
+                    # Catches "URL is about OpenAI but #1 is about NVIDIA".
+                    title = (injected_titles.get(src_url) or "").lower()
+                    if title:
+                        # Extract bullet #1's text (line starting with "1.")
+                        b1_match = re.search(r"^\s*1\.\s*(.+?)(?:\n\s*2\.|$)", tweet, re.MULTILINE | re.DOTALL)
+                        b1 = (b1_match.group(1) if b1_match else "").lower()
+                        if b1:
+                            # Pull entity-ish words from title (≥4 chars, not stopwords)
+                            stop = {"this", "that", "with", "from", "into", "about",
+                                    "have", "been", "more", "what", "when", "where",
+                                    "their", "there", "which", "while", "your", "could",
+                                    "would", "should", "will", "well", "than", "some",
+                                    "such", "just", "after", "before", "still", "every",
+                                    "another", "between"}
+                            title_tokens = {w for w in re.findall(r"[a-zA-Z]{4,}", title) if w not in stop}
+                            if title_tokens:
+                                if not any(t in b1 for t in title_tokens):
+                                    strip_reason = (
+                                        f"bullet #1 doesn't mention any entity from URL title "
+                                        f"({sorted(title_tokens)[:6]} not in #1)"
+                                    )
+                if strip_reason:
+                    log.info(f"[NEWS] ❌ URL stripped — {strip_reason}: {src_url}")
                     post_body = tweet.replace(src_url, "").rstrip()
                     post_body = re.sub(r"\n+(Source\s*:?\s*)?\s*$", "", post_body).rstrip()
                     src_url = None
                 else:
-                    log.info(f"[NEWS] ✅ URL validated (in pool + reachable), keeping inline")
+                    log.info(f"[NEWS] ✅ URL validated (pool + reachable + matches #1), keeping inline")
             except Exception as e:
                 log.info(f"[NEWS] URL validation failed (keeping link): {e}")
             # When a URL is present, the link card carries the visual.

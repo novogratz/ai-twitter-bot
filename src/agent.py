@@ -100,10 +100,17 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
         # headers like "🥇 RÈGLE D'OR DU CLASSEMENT" verbatim into the tweet.
         top5_block = f"""INSTRUCTIONS (NE PAS OUTPUT — réfléchis silencieusement):
 
-  • ÉTAPE 0: choisis UNE URL exacte de la section WEB SEARCH RESULTS / RSS
-    POOL plus bas. Copie-colle, ne JAMAIS inventer ou modifier le slug.
-    Cette URL backe le bullet #1 (le killshot). Écris bullet #1 comme une
-    stat/claim que l'article supporte (titre + snippet fournis).
+  • ÉTAPE 0 (CRITIQUE): choisis UNE URL exacte de la section WEB SEARCH
+    RESULTS / RSS POOL plus bas. Lis SON TITRE — il identifie un ACTEUR
+    ou un CHIFFRE précis (ex: "OpenAI is going public", "NVIDIA Q1
+    earnings"). Le bullet #1 DOIT parler EXACTEMENT de cet acteur ou de
+    ce chiffre — c'est NON-NÉGOCIABLE. Si le titre dit "OpenAI", #1 parle
+    d'OpenAI. Si le titre dit "NVIDIA", #1 parle de NVIDIA. PAS d'écart
+    sujet.
+    Si tu écris #1 sur NVIDIA mais l'URL pointe vers un article OpenAI,
+    le pipeline strippe l'URL et le tweet ship sans carte preview. Fail.
+    Donc: URL choisie FIRST → bullet #1 écrit ENSUITE, sur le sujet de
+    l'URL, avec le chiffre supporté par l'article.
   • BULLET #1 = LE killshot. Trois tests SIMULTANÉS:
       - MÉMORABLE (round number, ratio choquant, image mentale)
       - LIKABLE (confirme un soupçon, nom propre TRÈS connu: Elon, sama,
@@ -1128,27 +1135,50 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # pool injection so Top 5 has 12-22 real article URLs to pick from
     # for the killshot link card.
     injected_urls = set()
+    # url → title map, so post-flight can verify bullet #1 mentions an
+    # entity from the chosen URL's title.
+    injected_url_titles: dict[str, str] = {}
     try:
         from . import web_search as _ws
         # 1. DuckDuckGo: 3 sub-queries per topic, past-week filter.
+        # Use the lower-level API so we get title↔url pairs.
+        ddg_hits = []
+        for q_topic in (decode_topic,):
+            try:
+                ddg_hits = _ws.search_news(
+                    {
+                        "IA": "AI OpenAI Anthropic Mistral news this week",
+                        "Crypto": "Bitcoin Ethereum crypto news this week",
+                        "Investissement": "AI datacenter capex Stargate news this week",
+                    }.get(q_topic, "AI news this week"),
+                    max_results=8, date_filter="w",
+                )
+            except Exception:
+                ddg_hits = []
+        # Build the multi-angle DDG block as before but with title tracking.
         web_block = _ws.search_for_news_topic(decode_topic)
         if web_block:
             performance_section = (performance_section or "") + "\n\n" + web_block
             for m in re.finditer(r"https?://\S+", web_block):
-                injected_urls.add(m.group(0).rstrip(".,);"))
+                u = m.group(0).rstrip(".,);")
+                injected_urls.add(u)
+        for h in ddg_hits:
+            u = (h.get("url") or "").rstrip(".,);")
+            if u:
+                injected_urls.add(u)
+                injected_url_titles[u] = (h.get("title") or "") + " " + (h.get("snippet") or "")
         # 2. Curated RSS pool from external_signal.json (≤10 days).
-        # Real article URLs with publication timestamps — much higher
-        # signal than DDG for trusted-outlet sourcing.
         signals = _ws.load_recent_signals(max_age_days=10, limit=10)
         if signals:
             performance_section = (performance_section or "") + "\n\n" + _ws.render_signals_block(signals)
             for s in signals:
-                injected_urls.add(s["url"])
+                u = s["url"]
+                injected_urls.add(u)
+                injected_url_titles[u] = s.get("title") or ""
     except Exception:
         pass
-    # Stash for bot.py to validate: the model is only allowed to ship a
-    # URL we explicitly fed it. Anything else is treated as fabricated.
     globals()["_last_injected_urls"] = injected_urls
+    globals()["_last_injected_url_titles"] = injected_url_titles
 
     # No additional injection — slim prompt path uses only web_block.
     pass
