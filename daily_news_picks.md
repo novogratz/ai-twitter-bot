@@ -4866,3 +4866,32 @@ Chaque système majeur a été redessiné :
 > tous les 33 Raptors s’allument maint
   - https://x.com/ns123abc/status/2057608942868426882
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 554).
+- **@thedailyblock** (132 likes, score 8/10) — JUST IN: JPMorgan says tokenized money market funds are unlikely to grow beyond 10–15% of the stablecoin market without major regulatory changes.
+
+While the sector continues expanding, analysts note t
+  - https://x.com/thedailyblock/status/2057563066221609149
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 384).
+- **@ashcrypto** (978 likes, score 7/10) — URGENT :
+
+Harvard vient de vendre la totalité de ses 87 MILLIONS de dollars en $ETH après l'avoir acheté il y a seulement 3 mois.
+  - https://x.com/AshCrypto/status/2057580934669468042
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1490).
+- **@markchen90** (409 likes, score 7/10) — Très fier qu’un modèle d’OpenAI ait réfuté la conjecture de longue date d’Erdős sur la distance unitaire, avec une démonstration élégante et complexe qui met en œuvre des idées sophistiquées de la thé
+  - https://x.com/markchen90/status/2057517045575774598
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 461).
+- **@bitcoinprof0637** (51 likes, score 7/10) — THE PRESIDENT OF THE UNITED STATES HAS JUST SIGNED AN EXECUTIVE ORDER AIMED AT MAKING AMERICA THE GLOBAL HUB FOR BITCOIN AND CRYPTO.
+
+THIS MOMENT COULD RESHAPE THE ENTIRE INDUSTRY.
+  - https://x.com/Bitcoinprof0637/status/2057613611011334484
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 75).
+- **@merlijntrader** (43 likes, score 7/10) — URGENT :
+
+Négociation pré-IPO de SpaceX. En direct sur Injective. Depuis 2025.
+
+Aucun courtier requis. Aucun statut d’investisseur accrédité. Aucun intermédiaire.
+
+Juste un portefeuille.
+
+Wall Street
+  - https://x.com/MerlijnTrader/status/2057568626887246172
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 73).
