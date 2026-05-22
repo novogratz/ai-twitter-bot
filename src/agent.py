@@ -155,25 +155,50 @@ Demain, même heure, même Décode.
 {{URL exacte copiée depuis WEB SEARCH RESULTS / RSS POOL — DERNIÈRE ligne}}
 """
     else:
-        top5_block = f"""FORMAT — Décode multi-paragraphe normal:
+        top5_block = f"""INSTRUCTIONS (NE PAS OUTPUT — réfléchis silencieusement):
+
+  • ÉTAPE 0 (CRITIQUE): choisis UNE URL exacte de la section WEB SEARCH
+    RESULTS / RSS POOL plus bas. Lis SON TITRE — il identifie un ACTEUR
+    ou un CHIFFRE précis (ex: "OpenAI signs $300B Oracle deal"). Le
+    TITRE PUNCHY et le 1er paragraphe d'analyse DOIVENT parler EXACTEMENT
+    de cet acteur ou ce chiffre. Si l'URL parle d'OpenAI, le tweet parle
+    d'OpenAI. PAS d'écart sujet — le pipeline strippe l'URL sinon.
+  • KILLSHOT: ce Décode est UNE seule story de la semaine. Le titre punchy
+    doit:
+      - MÉMORABLE (chiffre rond, ratio choquant)
+      - LIKABLE (acteur TRÈS connu: sama, OpenAI, Vitalik, NVIDIA, etc.)
+      - COMMENT-BAIT (claim qui force une opinion)
+  • TAGS: 2-3 gros comptes inline mid-phrase (jamais en début/fin de
+    ligne — X mobile sépare le tag sur sa propre ligne sinon). Bon:
+    "OpenAI signe avec @nvidia un deal de 100Md$". Mauvais: "$100Md$.
+    @nvidia signe...".
+  • CHIFFRES: viennent des SIGNAUX FOURNIS. Hedge ("~3 Md$") si pas exact.
+  • ZÉRO markdown (**bold**, __italic__). Texte brut.
+  • Cible 600-1000 chars body.
+  • L'URL en dernière ligne est OBLIGATOIRE. Copie-colle exacte depuis les
+    SIGNAUX. Si l'URL pointe vers un sujet différent du tweet, strippé.
+
+============================================================
+OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
+============================================================
 
 🔎 Le Décode #{decode_number} — {decode_topic} — {day_of_week} {today_date}
 
-{{Titre punchy 1-2 phrases, chiffre OU nom propre dans les 6 premiers mots}}
+{{Titre punchy 1-2 phrases, chiffre OU nom propre TRÈS connu dans les 6
+premiers mots, parlant EXACTEMENT du sujet de l'URL choisie en ÉTAPE 0.}}
 
-{{2-3 paragraphes d'analyse REELLE. ~500-900 chars body. Pas un résumé neutre:
-tu prends une position. Chiffres exacts, acteurs nommés. Tag 2-3 gros comptes
-(@sama, @ylecun, @VitalikButerin, @saylor, @elonmusk, @nvidia, etc) en inline
-quand c'est leur sujet — ça déclenche notifs + amplification.}}
+{{2-3 paragraphes d'analyse. ~500-900 chars. Tu prends une position. Tags
+2-3 gros comptes inline mid-phrase (@sama, @ylecun, @VitalikButerin,
+@saylor, @elonmusk, @nvidia, @OpenAI, etc.).}}
 
-{{Chute FR sarcastique, stack 2 réfs FR culturelles.}}
+{{Chute FR sarcastique, stack 2 réfs FR (RER B, Bercy, URSSAF, Lidl,
+café-clope, Doctolib, Livret A, tonton).}}
+
+{{1 question directe à l'audience pour déclencher des replies.}}
 
 Demain, même heure, même Décode.
 
-{{URL source ≤36h}}
-
-🚫 INTERDIT: pas de **bold** ou __italic__ markdown — les astérisques
-s'affichent littéralement sur X et le tweet a l'air pourri. Texte brut.
+{{URL exacte copiée depuis WEB SEARCH RESULTS / RSS POOL — DERNIÈRE ligne}}
 """
 
     return f"""Tu es @cryptoiadecode. Voix FR mordante sur Crypto + IA + Investissement.

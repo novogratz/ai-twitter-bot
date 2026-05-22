@@ -275,10 +275,20 @@ def _run_single_bot_cycle():
                     # Catches "URL is about OpenAI but #1 is about NVIDIA".
                     title = (injected_titles.get(src_url) or "").lower()
                     if title:
-                        # Extract bullet #1's text (line starting with "1.")
+                        # Extract the "subject region" — for top5 that's
+                        # bullet #1, for regular Décode that's the title +
+                        # first paragraph. Both should mention an entity
+                        # from the chosen URL's title.
                         b1_match = re.search(r"^\s*1\.\s*(.+?)(?:\n\s*2\.|$)", tweet, re.MULTILINE | re.DOTALL)
-                        b1 = (b1_match.group(1) if b1_match else "").lower()
-                        if b1:
+                        if b1_match:
+                            subject_region = b1_match.group(1).lower()
+                        else:
+                            # Regular Décode: take everything from header
+                            # to the first blank line after it (title +
+                            # first body paragraph).
+                            hdr = re.search(r"Le D[eé]code[^\n]*\n+(.+?)(?:\n\n|$)", tweet, re.DOTALL)
+                            subject_region = (hdr.group(1) if hdr else tweet[:500]).lower()
+                        if subject_region:
                             # Pull entity-ish words from title (≥4 chars, not stopwords)
                             stop = {"this", "that", "with", "from", "into", "about",
                                     "have", "been", "more", "what", "when", "where",
@@ -288,10 +298,10 @@ def _run_single_bot_cycle():
                                     "another", "between"}
                             title_tokens = {w for w in re.findall(r"[a-zA-Z]{4,}", title) if w not in stop}
                             if title_tokens:
-                                if not any(t in b1 for t in title_tokens):
+                                if not any(t in subject_region for t in title_tokens):
                                     strip_reason = (
-                                        f"bullet #1 doesn't mention any entity from URL title "
-                                        f"({sorted(title_tokens)[:6]} not in #1)"
+                                        f"tweet subject doesn't mention any entity from URL title "
+                                        f"({sorted(title_tokens)[:6]} not in subject region)"
                                     )
                 if strip_reason:
                     log.info(f"[NEWS] ❌ URL stripped — {strip_reason}: {src_url}")
