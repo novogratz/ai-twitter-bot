@@ -250,13 +250,18 @@ def _like_own_latest_tweet():
     close_front_tab()
 
 
-def reply_to_own_latest(reply_text: str) -> bool:
+def reply_to_own_latest(reply_text: str, must_contain: str = "") -> bool:
     """Visit own profile, open the latest tweet, post a reply.
 
     Used by the URL-as-self-reply pattern on Décodes (2026-05-22): main
     body ships without the article URL → 30-90s later we self-reply with
     the URL so the link card renders in the reply (doesn't deboost the
     parent). Also creates a 2-tweet thread → algo thread-depth bonus.
+
+    `must_contain`: if non-empty, peek the visible tweet's text via JS
+    before pressing 'r' and abort if the marker isn't found. This prevents
+    the source-reply from attaching to a retweet/QT that ran between the
+    main post and the self-reply.
 
     Best-effort. Returns True if the reply appeared to submit. False if
     Safari steps glitched (caller treats as non-fatal).
@@ -274,6 +279,35 @@ def reply_to_own_latest(reply_text: str) -> bool:
             time.sleep(4)
             _run_applescript('tell application "Safari" to activate')
             time.sleep(1)
+            # Sanity check: confirm the focused tweet contains the expected
+            # marker. If a retweet/QT slipped in between the main post and
+            # this self-reply call, the marker won't be there and we abort.
+            if must_contain:
+                check_js = (
+                    'var el = document.querySelector(\'[data-testid="tweetText"]\');'
+                    'return el ? el.innerText : "";'
+                )
+                ascript = f'''
+                tell application "Safari"
+                    set result to do JavaScript "{check_js}" in current tab of front window
+                end tell
+                return result
+                '''
+                try:
+                    r = subprocess.run(
+                        ["osascript", "-e", ascript],
+                        capture_output=True, text=True, timeout=8,
+                    )
+                    visible = (r.stdout or "").strip()
+                except Exception:
+                    visible = ""
+                if must_contain.lower() not in visible.lower():
+                    log.info(
+                        f"[SELF-REPLY] Aborting: visible tweet doesn't contain "
+                        f"{must_contain!r} (saw {visible[:100]!r})."
+                    )
+                    close_front_tab()
+                    return False
             # Press 'r' to open reply composer.
             _run_applescript('tell application "System Events" to keystroke "r"')
             time.sleep(3)
