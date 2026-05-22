@@ -1316,7 +1316,10 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         globals()["_last_source_url"] = None
         return None
     tweet = cleaned
-    log.info(f"[NEWS] Article URL detected (X will render card): {src_url[:120]}")
+    if src_url:
+        log.info(f"[NEWS] Article URL detected (X will render card): {src_url[:120]}")
+    else:
+        log.info("[NEWS] No source URL — top5 weekly recap (per-bullet sources inline).")
     # Mark Top 5 as shipped for this topic-of-day so next same-topic
     # Décode falls back to regular format.
     _pending = globals().get("_pending_top5_topic")
