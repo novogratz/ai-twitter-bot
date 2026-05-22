@@ -5207,3 +5207,38 @@ The real question is
 this a good enough reason to cheat my cut?
   - https://x.com/AloeOnChain/status/2057724028702580848
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 169).
+- **@defitracer** (0 likes, score 8/10) — URGENT :
+
+Le PDG de NVIDIA, JENSEN HUANG, VIENT DE RÉVÉLER SES NOUVEAUX INVESTISSEMENTS :
+
+$GLW - 3,2 MILLIARDS $
+$IREN - 2,1 MILLIARDS $
+$CRWV - 2 MILLIARDS $
+$NBIS - 2 MILLIARDS $
+$MRVL - 2 MILLIARD
+  - https://x.com/DeFiTracer/status/2057623589374058721
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 50).
+- **@leaboursefr** (2 likes, score 7/10) — Sentiment des consommateurs au plus bas depuis 1952.
+
+Pire que la crise du pétrole, pire que 2008, pire que le Covid.
+
+Pendant ce temps :
+- le S&P 500 est à ses plus hauts
+- Nvidia publie des résultat
+  - https://x.com/LeaBourseFR/status/2057881649459732608
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 6).
+- **@leaboursefr** (45 likes, score 7/10) — Pour contexte : le CHIPS Act américain c'est 52 milliards sur 5 ans, soit plus de 10 milliards par an.
+
+L'Intel fab en Ohio seule représente 20 milliards d'investissement.
+
+La Chine investit environ 4
+  - https://x.com/LeaBourseFR/status/2057808428160950512
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 61).
+- **@frugalistefutee** (45 likes, score 7/10) — '' Si Nvidia multiplie son dividende par 25, c'est qu'elle est devenue mature et n'a plus les mêmes perspectives de croissance. ''
+
+Les perspectives de croissance :
+  - https://x.com/FrugalisteFutee/status/2057632263953842209
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 55).
+- **@degeneratenews** (84 likes, score 7/10) — NOUVEAU : @Bitwise Le PDG @HHorsley DÉCLARE « LE VOLUME SUR L'ETF BITWISE HYPERLIQUID $BHYP DÉPASSE DÉJÀ 30 M$ AUJOURD'HUI » - « C'EST PLUS QUE PRESQUE TOUT AUTRE ETF CRYPTO, SUR DIFFÉRENTS ACTIFS CRY
+  - https://x.com/DegenerateNews/status/2057884383881650602
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 106).
