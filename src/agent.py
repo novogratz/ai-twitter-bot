@@ -40,8 +40,15 @@ def _next_decode_number() -> int:
 
 def _topic_for_decode(n: int) -> str:
     """Topic rotation across the Décode series so readers get variety —
-    IA, Crypto, Investissement on a 3-cycle. n % 3 → topic. User mandate
-    2026-05-22: "have some for AI and some for investment or crypto"."""
+    IA, Crypto, Investissement on a 3-cycle. n % 3 → topic.
+
+    Friday override (2026-05-22 PM): on Vendredi, only IA and Crypto rotate.
+    First Friday Décode → IA (Top 5 chiffres). Second → Crypto (Top 5 chiffres).
+    These are the bookmark-bait recap posts; Investissement is skipped Friday
+    so the 2 high-impact recaps don't share the day with mid posts.
+    """
+    if datetime.now().weekday() == 4:  # Vendredi
+        return ("IA", "Crypto")[n % 2]
     return _DECODE_TOPICS[n % len(_DECODE_TOPICS)]
 
 
@@ -203,33 +210,57 @@ https://www.theinformation.com/articles/exemple
 
 JOUR DE LA SEMAINE: **{day_of_week}**
 
-📚 SI {day_of_week} == "Vendredi" → FORMAT BOOKMARK-BAIT (le Décode du vendredi est SPÉCIAL):
+📚 SI {day_of_week} == "Vendredi" → FORMAT BOOKMARK-BAIT TOP 5 (ULTRA-IMPACT).
 
-  Le vendredi, le Décode est un "récap chiffré" structuré pour être SAUVEGARDÉ
-  (bookmark) et relu. Format:
+  Le vendredi, le compte ne fait QUE 2 Décodes: 1 IA + 1 Crypto, tous deux
+  en format "Top 5 chiffres". Donc CE Décode est l'un des deux récaps
+  hebdo de la semaine. Il DOIT être ce qu'un lecteur sauvegarde, relit, et
+  partage en DM. Standard: chaque chiffre fait dire "tiens, c'est dingue".
+
+  FORMAT STRICT — aucun écart:
 
     🔎 Le Décode #{decode_number} — {decode_topic} — Vendredi {today_date}
 
-    {{HEADLINE: "5 chiffres à connaître pour [topic] cette semaine" ou
-    "Les 5 trucs qu'il fallait retenir sur [topic] cette semaine"}}
+    {{HEADLINE: une phrase ferme. Exemples:
+      • "Les 5 chiffres IA de la semaine que personne d'autre ne te donne"
+      • "5 stats crypto à connaître avant lundi"
+      • "{decode_topic}: 5 vérités chiffrées qui dégoupillent la semaine"}}
 
-    {{INTRO: 1-2 phrases qui posent le contexte de la semaine.}}
+    {{INTRO: 1-2 phrases qui posent le pourquoi des 5 chiffres choisis.
+    Pas un résumé neutre — une ligne d'angle qui fait LIRE la liste.}}
 
-    1. {{Chiffre exact + acteur + signification 1-line}}
-    2. {{Chiffre exact + acteur + signification 1-line}}
-    3. {{Chiffre exact + acteur + signification 1-line}}
-    4. {{Chiffre exact + acteur + signification 1-line}}
-    5. {{Chiffre exact + acteur + signification 1-line}}
+    1. **{{Chiffre exact}}** — {{acteur nommé}}. {{Signification en 1 phrase
+       qui creuse le pourquoi: conséquence, contradiction, ou révélation cachée}}.
+
+    2. **{{Chiffre exact}}** — {{acteur nommé}}. {{même structure}}.
+
+    3. **{{Chiffre exact}}** — {{acteur nommé}}. {{même structure}}.
+
+    4. **{{Chiffre exact}}** — {{acteur nommé}}. {{même structure}}.
+
+    5. **{{Chiffre exact}}** — {{acteur nommé}}. {{même structure}}.
 
     {{CHUTE FR — 1-2 phrases qui scellent la semaine. Stack 2 réfs FR.
-    Optionnel 1-2 @mentions pertinents.}}
+    Optionnel 1-2 @mentions pertinents (les acteurs des 5 chiffres si X).}}
 
-    {{CLOSING varié}}
+    {{CLOSING varié — voir liste plus bas}}
 
-    {{URL principale ≤36h}}
+    {{URL source ≤36h — l'article principal qui couvre l'une des 5 stats}}
 
-  Cible: 700-1200 chars body. Bookmark-bait = lecteur le SAUVE pour relire
-  ce week-end. Bookmarks = signal de qualité fort qui convertit en follow.
+  RÈGLES DE FER POUR LES 5 CHIFFRES:
+  • Chaque chiffre est une DONNÉE VÉRIFIABLE de la semaine: levée, valo,
+    consommation MW, hashrate, % de marge, nombre d'employés, capex,
+    halving stats, ETF flows, hash difficulty, etc.
+  • PAS de chiffres approximatifs ("environ", "presque", "autour de").
+  • PAS de chiffres inventés. Si tu n'as pas 5 stats RÉELLES de la semaine,
+    SKIP. Mieux vaut 0 Décode qu'un Top 5 bidonné.
+  • Chaque ligne combine: CHIFFRE + ACTEUR + INSIGHT. Le ratio chiffres:prose
+    doit être élevé. Pas de blabla autour.
+  • Variété des 5 chiffres: pas tous sur la même story. 5 angles différents
+    de la semaine sur le topic.
+
+  Cible: 900-1300 chars body. Bookmark-bait = lecteur le SAUVE pour relire
+  ce week-end. Le but: que ce Décode soit dans 50+ bookmarks au lundi.
 
 📌 SI {day_of_week} != "Vendredi" → Décode normal (voir format ci-dessous).
 

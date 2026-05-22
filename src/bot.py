@@ -19,8 +19,17 @@ from .image_gen import make_quote_card
 
 
 def _live_news_cap() -> int:
-    """Live cap from meta_strategy_agent's live_strategy.json, env fallback."""
-    return get_live_cap("MAX_NEWS_PER_DAY", MAX_NEWS_PER_DAY)
+    """Live cap from meta_strategy_agent's live_strategy.json, env fallback.
+
+    Friday override (2026-05-22): cap at 2 news per Friday. The day is
+    reserved for two bookmark-bait "Top 5 chiffres" recaps — one IA,
+    one Crypto. Two high-impact posts > six medium ones on a small account.
+    """
+    cap = get_live_cap("MAX_NEWS_PER_DAY", MAX_NEWS_PER_DAY)
+    from datetime import datetime as _dt
+    if _dt.now().weekday() == 4:  # Friday
+        cap = min(cap, 2)
+    return cap
 
 
 def _live_hotake_cap() -> int:
