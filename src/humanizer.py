@@ -178,6 +178,15 @@ def humanize(text: str) -> str:
         result = result.replace(pat, rep)
     result = result.replace("—", ",").replace("–", ",")
 
+    # 2026-05-22 PM: strip markdown bold/italic. X doesn't render
+    # markdown for most users — "**700 M$**" shows literally. Replace
+    # the wrappers with the inner text. Order matters: ** before *.
+    result = re.sub(r"\*\*([^*\n]+?)\*\*", r"\1", result)
+    result = re.sub(r"__([^_\n]+?)__", r"\1", result)
+    # Single * (italic in markdown) — only strip when surrounded by
+    # word chars on both sides, to avoid eating literal "*" elsewhere.
+    result = re.sub(r"(?<=\w)\*([^*\n]+?)\*(?=\w|\s|[.,;:!?])", r"\1", result)
+
     # Remove robotic openers
     for pat in _ROBOTIC_OPENERS:
         if result.startswith(pat):

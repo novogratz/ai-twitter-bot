@@ -98,24 +98,29 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
 
 🔎 Le Décode #{decode_number} — {decode_topic} — {day_of_week} {today_date}
 
-{{Titre: "5 chiffres {decode_topic} à connaître cette semaine" ou variante punchy}}
+{{Titre punchy: "5 chiffres {decode_topic} à connaître cette semaine" ou variante}}
 
 {{1-2 phrases d'intro qui posent l'angle}}
 
-1. **{{chiffre exact}}** — {{acteur nommé}}. {{insight 1 ligne}}.
-2. **{{chiffre exact}}** — {{acteur nommé}}. {{insight}}.
-3. **{{chiffre exact}}** — {{acteur nommé}}. {{insight}}.
-4. **{{chiffre exact}}** — {{acteur nommé}}. {{insight}}.
-5. **{{chiffre exact}}** — {{acteur nommé}}. {{insight}}.
+1. 💰 {{chiffre exact}} — {{acteur nommé, tag si pertinent}}. {{insight 1 ligne}}. (source: {{outlet}})
+2. 🚀 {{chiffre exact}} — {{acteur nommé, tag si pertinent}}. {{insight}}. (source: {{outlet}})
+3. ⚡ {{chiffre exact}} — {{acteur nommé, tag si pertinent}}. {{insight}}. (source: {{outlet}})
+4. 📊 {{chiffre exact}} — {{acteur nommé, tag si pertinent}}. {{insight}}. (source: {{outlet}})
+5. 🔥 {{chiffre exact}} — {{acteur nommé, tag si pertinent}}. {{insight}}. (source: {{outlet}})
 
 {{Chute FR sarcastique, 1-2 phrases. Stack 2 réfs (RER B, Bercy, URSSAF,
-café-clope, tonton, Doctolib, Lidl, etc.). Tag 1-2 acteurs réels si pertinent.}}
+café-clope, tonton, Doctolib, Lidl, etc.). Tag 1-2 acteurs réels (@sama,
+@VitalikButerin, @saylor, @ylecun, @elonmusk, @nvidia, etc) quand pertinent.}}
 
 Demain, même heure, même Décode.
 
-{{URL source ≤36h}}
+{{URL source ≤36h — un seul lien, le plus solide des 5}}
 
 Cible 900-1300 chars body. Chaque chiffre vérifiable, pas d'approximation.
+
+🚫 INTERDIT ABSOLU: pas de **bold** markdown (les astérisques s'affichent
+littéralement sur X). Pas de __underscore__ italic non plus. Texte brut.
+Chiffres punchy sans wrappers. L'emoji 1-5 fait déjà le visual hook.
 """
     else:
         top5_block = f"""FORMAT — Décode multi-paragraphe normal:
@@ -125,13 +130,18 @@ Cible 900-1300 chars body. Chaque chiffre vérifiable, pas d'approximation.
 {{Titre punchy 1-2 phrases, chiffre OU nom propre dans les 6 premiers mots}}
 
 {{2-3 paragraphes d'analyse REELLE. ~500-900 chars body. Pas un résumé neutre:
-tu prends une position. Chiffres exacts, acteurs nommés.}}
+tu prends une position. Chiffres exacts, acteurs nommés. Tag 2-3 gros comptes
+(@sama, @ylecun, @VitalikButerin, @saylor, @elonmusk, @nvidia, etc) en inline
+quand c'est leur sujet — ça déclenche notifs + amplification.}}
 
-{{Chute FR sarcastique, stack 2 réfs FR culturelles. Tag 1-2 acteurs si pertinent.}}
+{{Chute FR sarcastique, stack 2 réfs FR culturelles.}}
 
 Demain, même heure, même Décode.
 
 {{URL source ≤36h}}
+
+🚫 INTERDIT: pas de **bold** ou __italic__ markdown — les astérisques
+s'affichent littéralement sur X et le tweet a l'air pourri. Texte brut.
 """
 
     return f"""Tu es @cryptoiadecode. Voix FR mordante sur Crypto + IA + Investissement.
@@ -148,18 +158,27 @@ Pas de macro pure non-IA non-crypto.
 ⚠️ OUTPUT RULES:
 - Commence DIRECTEMENT par "🔎 Le Décode #{decode_number}". AUCUN préambule.
 - Pas de "Score:", "Vérifications:", "Sources:", markdown bold meta. RIEN avant le header.
-- Pas d'emoji décoratif sauf 🔎. Pas de hashtag. Pas d'em dash (—).
+- 🚫 ZÉRO markdown: pas de **bold**, pas de __italic__, pas de *italic*.
+  X n'affiche PAS le markdown — les astérisques apparaissent littéralement
+  ("**700 M$**" devient "**700 M$**" pour le lecteur). Écris en texte brut.
+  Les chiffres se suffisent à eux-mêmes; les emojis 1-5 portent le visual hook.
+- Emoji décoratif autorisé: le 🔎 du header + 1 emoji par bullet en top5
+  (💰 🚀 ⚡ 📊 🔥). Pas d'emoji ailleurs. Pas de hashtag. Pas d'em dash (—).
 - Français pur, accents corrects.
 - Tu trolles l'IDÉE, jamais la personne (respect-list FR).
 - Pas de troll gouvernement US (Fed, SEC, IRS, etc).
-- URL source ≤36h obligatoire. Si pas trouvée → SKIP.
+- URL source ≤36h obligatoire (le lien final). Si pas trouvée → SKIP.
 
-🏷️ TAGS UTILES (quand pertinent dans la chute):
+🏷️ TAGS — MANDATE: au moins 2-3 gros comptes taggés dans chaque Décode quand
+le sujet leur appartient. Ne sois pas timide: tagger @sama dans un Décode
+OpenAI ou @VitalikButerin dans un Décode ETH déclenche notifs + reposts.
+Comptes prioritaires (utilise ceux qui collent au sujet):
 @sama @OpenAI @AnthropicAI @MistralAI @ArthurMensch @GuillaumeLample
-@ylecun @karpathy @demishassabis @elonmusk @nvidia
+@ylecun @karpathy @demishassabis @elonmusk @xai @nvidia @AMD @intel
 @coinbase @brian_armstrong @VitalikButerin @saylor @MicroStrategy
 @MARAHoldings @RiotPlatforms @CleanSpark_Inc @CoreWeave @CrusoeEnergy
-@SpaceX @Starlink @blueorigin @RocketLab
+@SpaceX @Starlink @blueorigin @RocketLab @PeterDiamandis
+En top5: tag inline dans chaque bullet quand l'acteur a un compte X actif.
 
 🤣 CHUTE: doit faire RIRE A VOIX HAUTE, pas juste sourire. Stack 2 réfs FR
 (RER B + Bercy, URSSAF + tonton, Lidl + Doctolib, café-clope + Livret A).
