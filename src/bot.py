@@ -356,3 +356,45 @@ def safe_run_bot_cycle():
     except Exception:
         log.error(f"Error during bot cycle: {traceback.format_exc()}")
         health.record_failure("post")
+
+
+def _run_bot_cycle_in_mode(mode: str):
+    """Set the news-mode hint and run the burst. The hint forces
+    _next_topic_not_done_today() in agent.py to filter the rotation:
+    'daily' → only Daily Décodes, 'weekly' → only Weekly Top 5s."""
+    from . import agent as _ag
+    prev = _ag.__dict__.get("_news_mode")
+    _ag.__dict__["_news_mode"] = mode
+    try:
+        run_bot_cycle()
+    finally:
+        if prev is None:
+            _ag.__dict__.pop("_news_mode", None)
+        else:
+            _ag.__dict__["_news_mode"] = prev
+
+
+def safe_run_daily_news_cycle():
+    """Cron handler — 1:00 AM EST every day. Forces daily-only rotation
+    so the burst ships 3 Daily Décodes (one per topic) in ~14-18 min."""
+    from . import health
+    try:
+        log.info("[CRON] Daily news burst (1:00 AM EST) — daily mode forced.")
+        _run_bot_cycle_in_mode("daily")
+        health.record_success("post")
+    except Exception:
+        log.error(f"Error during daily news cron: {traceback.format_exc()}")
+        health.record_failure("post")
+
+
+def safe_run_weekly_news_cycle():
+    """Cron handler — 7:00 AM EST Fridays. Forces weekly-only rotation
+    so the burst ships 3 Weekly Top 5s (one per topic) in ~14-18 min."""
+    from . import health
+    try:
+        log.info("[CRON] Weekly news burst (Friday 7:00 AM EST) — weekly mode forced.")
+        _run_bot_cycle_in_mode("weekly")
+        health.record_success("post")
+    except Exception:
+        log.error(f"Error during weekly news cron: {traceback.format_exc()}")
+        health.record_failure("post")

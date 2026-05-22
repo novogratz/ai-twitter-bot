@@ -88,7 +88,101 @@ def _topic_for_decode(n: int) -> str:
     return _DECODE_TOPICS[n % len(_DECODE_TOPICS)]
 
 
+_DAILY_TOPIC_STATE_FILE = _os.path.join(_PR, "daily_topic_state.json")
+
+
+def _daily_topic_state() -> dict:
+    """Track which (topic, format) combos have shipped today. User mandate
+    is EST-anchored ("1 AM EST every night") so "today" is the EST date.
+    A Décode shipped Friday 7:50 PM EST counts as Friday's, even though
+    Paris already says Saturday."""
+    from zoneinfo import ZoneInfo
+    today = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
+    if _os.path.exists(_DAILY_TOPIC_STATE_FILE):
+        try:
+            with open(_DAILY_TOPIC_STATE_FILE) as f:
+                d = _json.load(f) or {}
+            if d.get("date") == today:
+                return d
+        except (_json.JSONDecodeError, OSError):
+            pass
+    return {"date": today, "topics_done": []}
+
+
+def _topic_done_key(topic: str, is_weekly: bool) -> str:
+    """Dedup key is (topic, format). Daily Décodes and Weekly Top 5s on
+    the same topic count separately — on Friday a topic gets BOTH."""
+    return f"{topic}:{'weekly' if is_weekly else 'daily'}"
+
+
+def _topic_already_done_today(topic: str, is_weekly: bool = False) -> bool:
+    state = _daily_topic_state()
+    return _topic_done_key(topic, is_weekly) in (state.get("topics_done") or [])
+
+
+def _mark_topic_done_today(topic: str, is_weekly: bool = False) -> None:
+    state = _daily_topic_state()
+    done = state.get("topics_done") or []
+    key = _topic_done_key(topic, is_weekly)
+    if key not in done:
+        done.append(key)
+    state["topics_done"] = done
+    try:
+        with open(_DAILY_TOPIC_STATE_FILE, "w") as f:
+            _json.dump(state, f, indent=2)
+    except OSError:
+        pass
+
+
+def _is_in_daily_window() -> bool:
+    """Daily Décodes fire during the daily window: 1 AM EST (user mandate).
+    Window 0-4 AM EST gives the cron + a 3h buffer if startup is delayed.
+    """
+    from zoneinfo import ZoneInfo
+    now = datetime.now(ZoneInfo("America/New_York"))
+    return 0 <= now.hour < 4
+
+
+def _is_in_weekly_window() -> bool:
+    """Weekly Décodes fire on Fridays EST (covers tonight's 7:50 PM EST
+    startup where user expects pending weeklies to ship). Full Friday EST
+    + early Saturday morning (so weekly cron at 7 AM EST Friday + late-
+    night Friday startup both catch).
+    """
+    from zoneinfo import ZoneInfo
+    now = datetime.now(ZoneInfo("America/New_York"))
+    return now.weekday() == 4 and 7 <= now.hour <= 23
+
+
+def _next_topic_not_done_today() -> Optional[tuple]:
+    """Return the next (topic, is_weekly) pair eligible to ship NOW.
+
+    Force-mode (set by the cron triggers in main.py):
+      - globals()["_news_mode"] == "daily"  → only daily combos
+      - globals()["_news_mode"] == "weekly" → only weekly combos
+      - otherwise (manual / startup fire)   → use time-of-day windows
+    """
+    state = _daily_topic_state()
+    done = set(state.get("topics_done") or [])
+    mode = globals().get("_news_mode")
+    plan = []
+    if mode == "daily":
+        plan = [(t, False) for t in _DECODE_TOPICS]
+    elif mode == "weekly":
+        plan = [(t, True) for t in _DECODE_TOPICS]
+    else:
+        if _is_in_weekly_window():
+            plan.extend([(t, True) for t in _DECODE_TOPICS])
+        if _is_in_daily_window():
+            plan.extend([(t, False) for t in _DECODE_TOPICS])
+    for topic, is_weekly in plan:
+        if _topic_done_key(topic, is_weekly) not in done:
+            return (topic, is_weekly)
+    return None
+
+
 def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_date, format_mode, web_block, dedup_block):
+    series_label = "Weekly" if format_mode == "top5" else "Daily"
     """A tight news prompt (~5k chars). Replaces the 25k PROMPT_TEMPLATE
     when generating Décodes. Claude can actually finish on this size.
     """
@@ -134,7 +228,7 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
 ============================================================
 
-🔎 Le Décode #{decode_number} — {decode_topic} — {day_of_week} {today_date}
+🔎 Le Décode {series_label} #{decode_number} — {decode_topic} — {day_of_week} {today_date}
 
 Les 5 chiffres {decode_topic} à retenir cette semaine.
 
@@ -186,7 +280,7 @@ Demain, même heure, même Décode.
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
 ============================================================
 
-🔎 Le Décode #{decode_number} — {decode_topic} — {day_of_week} {today_date}
+🔎 Le Décode {series_label} #{decode_number} — {decode_topic} — {day_of_week} {today_date}
 
 Les 3 chiffres {decode_topic} du jour.
 
@@ -335,7 +429,7 @@ def _news_body_bad_format(tweet: str, src_url: str) -> bool:
     non_empty = [ln.strip() for ln in body.splitlines() if ln.strip()]
     compact_len = len(re.sub(r"\s+", " ", body).strip())
 
-    has_header = bool(re.search(r"Le Décode\s*#?\d+", body, re.IGNORECASE))
+    has_header = bool(re.search(r"Le Décode(?:\s+(?:Daily|Weekly))?\s*#?\d+", body, re.IGNORECASE))
     has_blank_break = "\n\n" in body
 
     # 2026-05-22: top5 weekly recap is naturally longer (5 emoji bullets +
@@ -1221,9 +1315,17 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     today_date = datetime.now().strftime("%Y-%m-%d")
     _DAYS_FR = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
     day_of_week = _DAYS_FR[datetime.now().weekday()]
+
+    # 2026-05-22 PM hard rule (per-topic-per-day-per-format): 1 Daily +
+    # 1 Weekly per topic per day max. Non-Friday: 3 Dailies max.
+    # Friday: 3 Dailies + 3 Weeklies = 6 posts max. Independent of
+    # MAX_NEWS_PER_DAY so meta_strategy_agent can't accidentally flood.
+    next_combo = _next_topic_not_done_today()
+    if next_combo is None:
+        log.info("[NEWS] All eligible topic/format combos shipped today — no Décode this cycle.")
+        return None
+    decode_topic, use_top5 = next_combo
     decode_number = _next_decode_number()
-    decode_topic = _topic_for_decode(decode_number)
-    use_top5 = _should_use_top5(decode_topic)
     format_mode = "top5" if use_top5 else "regular"
 
     # 2026-05-22 PM (durable): use a SLIM news prompt (~5k chars instead
@@ -1310,9 +1412,9 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         log.info("[NEWS] Auto-formatted Décode — inserted \\n\\n breaks at header + bullets.")
 
     # Le Décode format enforcer. Tolerate D[eé]code (model occasionally
-    # drops the accent) and missing 🔎 emoji prefix.
+    # drops the accent), Daily/Weekly label optional, missing 🔎 prefix.
     decode_match = re.search(
-        r"(?:🔎\s*)?Le\s+D[eé]code\s*#?\s*\d+",
+        r"(?:🔎\s*)?Le\s+D[eé]code(?:\s+(?:Daily|Weekly))?\s*#?\s*\d+",
         tweet,
         re.IGNORECASE,
     )
@@ -1322,16 +1424,13 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
             body = "🔎 " + body
         tweet = body
     elif tweet and len(re.sub(r"\s+", " ", tweet)) >= 100:
-        # 2026-05-22 PM: header missing but body has content (≥100
-        # chars). User mandate: "i want all my news". Auto-inject the
-        # header instead of SKIP. Threshold lowered 200 → 100 because
-        # Claude was sometimes returning only a citation line just
-        # below the 200-char bar.
         log.info(f"[NEWS] Décode header missing but body present ({len(tweet)} chars) — auto-injecting header.")
         today = datetime.now().strftime("%Y-%m-%d")
         n = globals().get("_pending_decode_num")
         topic = globals().get("_pending_decode_topic", "")
-        header = f"🔎 Le Décode #{n} — {topic} — {today}" if n else f"🔎 Le Décode — {today}"
+        is_top5 = bool(globals().get("_pending_top5_topic"))
+        label = "Weekly" if is_top5 else "Daily"
+        header = f"🔎 Le Décode {label} #{n} — {topic} — {today}" if n else f"🔎 Le Décode {label} — {today}"
         tweet = f"{header}\n\n{tweet}"
     else:
         log.info(f"[NEWS] Décode header missing AND body too short — SKIPPING. Output preview: {tweet[:200]!r}")
@@ -1405,7 +1504,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # User mandate: "its ok if there is no link" for the Friday Top 5.
     if not src_url:
         compact = re.sub(r"\s+", " ", tweet).strip()
-        has_header = bool(re.search(r"Le Décode\s*#?\d+", tweet, re.IGNORECASE))
+        has_header = bool(re.search(r"Le Décode(?:\s+(?:Daily|Weekly))?\s*#?\d+", tweet, re.IGNORECASE))
         if is_top5 and has_header and len(compact) >= 300:
             log.info(f"[NEWS] Top5 mode, no source URL — shipping weekly recap ({len(compact)} chars).")
         elif has_header and len(compact) >= 400:
@@ -1451,4 +1550,13 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         _mark_top5_done(_pending)
         log.info(f"[NEWS] Top 5 Vendredi shipped for {_pending} — next {_pending} Décode = regular format.")
         globals()["_pending_top5_topic"] = None
+    # Hard daily-per-topic-per-format dedup: mark this (topic, format) done
+    # so no further same-topic-same-format Décode ships today. On Friday a
+    # topic still gets BOTH a Daily and a Weekly (separate keys).
+    _decoded_topic = globals().get("_pending_decode_topic")
+    if _decoded_topic:
+        is_weekly = bool(globals().get("_pending_top5_topic"))
+        _mark_topic_done_today(_decoded_topic, is_weekly=is_weekly)
+        label = "Weekly" if is_weekly else "Daily"
+        log.info(f"[NEWS] Marked '{_decoded_topic}' {label} done for today.")
     return tweet
