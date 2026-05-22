@@ -228,6 +228,11 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
         "prompt": full_prompt,
         "stream": False,
         "keep_alive": "24h",
+        # Disable thinking-mode (qwen3.6 uncensored variants stream their
+        # chain-of-thought into a separate `thinking` field while leaving
+        # `response` empty; with think:false ollama runs in standard
+        # generation mode and the answer lands in `response`).
+        "think": False,
         "options": {
             "temperature": 1.0,
             "top_p": 0.95,
@@ -589,7 +594,26 @@ def run_llm(
             f"[LLM] {label}: opencode primary → ollama HTTP / "
             f"{OLLAMA_MODEL} (timeout {effective_timeout}s)."
         )
-        return _run_ollama_http(prompt, label=label, timeout=effective_timeout)
+        ollama_result = _run_ollama_http(prompt, label=label, timeout=effective_timeout)
+        if not _should_fallback(ollama_result):
+            return ollama_result
+        # Ollama failed (empty response, timeout, error). Try the configured
+        # fallback (typically Claude) so we don't lose the cycle.
+        # 2026-05-22: user mandate "claude as #2" — make ollama-primary's
+        # failures fall over instead of returning empty.
+        fb_provider = _fallback_provider(provider)
+        if fb_provider and fb_provider != "opencode":
+            fb_model = _fallback_model(model, fb_provider)
+            log.info(
+                f"[LLM] {label}: ollama failed (rc={ollama_result.returncode}) → "
+                f"falling back to {fb_provider}/{fb_model}."
+            )
+            # Cloud fallback gets the standard 150s cap (already enforced
+            # for claude/codex/gemini in the cmd-runner branch below).
+            fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, permission_mode, fb_provider)
+            fb_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 150)
+            return _run_cmd(fb_cmd, label=f"{label} (claude fallback)", timeout=fb_timeout, cwd=cwd)
+        return ollama_result
 
     # Codex usage-limit bypass: if a prior cycle cached a lockout window,
     # go straight to local ollama HTTP. Same model, ~50× faster than the
