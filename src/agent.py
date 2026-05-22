@@ -94,102 +94,58 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
     """
     top5_block = ""
     if format_mode == "top5":
-        top5_block = f"""FORMAT — BOOKMARK-BAIT TOP 5 (le Décode du vendredi est SPÉCIAL):
+        # CRITICAL: keep INSTRUCTIONS (rules the model follows silently) and
+        # the EXACT OUTPUT TEMPLATE (the literal text shape) in separate
+        # sections. When they were interleaved, the model echoed instruction
+        # headers like "🥇 RÈGLE D'OR DU CLASSEMENT" verbatim into the tweet.
+        top5_block = f"""INSTRUCTIONS (NE PAS OUTPUT — réfléchis silencieusement):
+
+  • ÉTAPE 0: choisis UNE URL exacte de la section WEB SEARCH RESULTS / RSS
+    POOL plus bas. Copie-colle, ne JAMAIS inventer ou modifier le slug.
+    Cette URL backe le bullet #1 (le killshot). Écris bullet #1 comme une
+    stat/claim que l'article supporte (titre + snippet fournis).
+  • BULLET #1 = LE killshot. Trois tests SIMULTANÉS:
+      - MÉMORABLE (round number, ratio choquant, image mentale)
+      - LIKABLE (confirme un soupçon, nom propre TRÈS connu: Elon, sama,
+        Vitalik, Saylor, OpenAI, NVIDIA, BTC, ETH)
+      - COMMENT-BAIT (claim/contraste qui force une opinion)
+    Si #1 ne passe pas les 3 tests → permute avec le bullet le plus fort.
+  • Bullets 2-5 = intensité décroissante. Pas de bouche-trou.
+  • TAGS: max 1 @handle par bullet, TOUJOURS inline mid-phrase, jamais en
+    début/fin de ligne (X mobile sépare alors le tag sur sa propre ligne).
+    Bon: "415 M$ Q1 mining chez @nvidia". Mauvais: "415 M$. @nvidia Q1...".
+  • CHIFFRES: viennent des SIGNAUX FOURNIS ci-dessous. Si tu n'as pas la
+    donnée exacte, hedge ("~3 Md$", "près de 400 M$"). Mieux hedge que mentir.
+  • (source: outlet) doit nommer un vrai média (CoinDesk, TheBlock, Bloomberg,
+    Les Échos, FT, Reuters, WSJ, TechCrunch). Pas d'invention.
+  • ZÉRO markdown (**bold**, __italic__, *italic*). Texte brut.
+  • Cible 1000-1700 chars body.
+  • L'URL en dernière ligne est OBLIGATOIRE. Copie-colle exacte depuis les
+    SIGNAUX. Pas de slug modifié.
+
+============================================================
+OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
+============================================================
 
 🔎 Le Décode #{decode_number} — {decode_topic} — {day_of_week} {today_date}
 
 Les 5 chiffres {decode_topic} à retenir cette semaine.
 
-{{1 phrase courte (max 120 chars) qui pose l'angle/le fil rouge des 5
-bullets. DOIT être cohérente avec le bullet #1 — c'est une intro, pas
-un sujet déconnecté. Si #1 parle de Coinbase, l'intro parle du même
-thème. Pas d'intro générique "Voici 5 chiffres" — un angle qui prépare
-la révélation du #1.}}
+1. 💰 {{chiffre exact #1, le killshot}} : {{insight 1 ligne, tag @handle inline mid-phrase si pertinent}}. (source: {{outlet}})
+2. 🚀 {{chiffre #2}} : {{insight}}. (source: {{outlet}})
+3. ⚡ {{chiffre #3}} : {{insight}}. (source: {{outlet}})
+4. 📊 {{chiffre #4}} : {{insight}}. (source: {{outlet}})
+5. 🔥 {{chiffre #5}} : {{insight}}. (source: {{outlet}})
 
-🔗 ÉTAPE 0 — AVANT TOUT, CHOISIS L'URL.
-Va dans la section WEB SEARCH RESULTS / CURATED RSS POOL plus bas. Choisis
-UNE URL exacte (copie-colle, ne JAMAIS inventer un domaine ou modifier
-le slug). Cette URL backe le bullet #1 — donc choisis-la sur l'article
-le plus IMPACTANT de la semaine. C'est OBLIGATOIRE, pas optionnel.
-Ensuite, écris le bullet #1 comme une stat/claim que cet article supporte
-(titre + snippet fournis ci-dessous). Tu DOIS écrire l'URL en DERNIÈRE
-LIGNE du tweet, seule sur sa ligne, sans préfixe ni guillemets.
+{{Chute FR sarcastique 1-2 phrases, stack 2 réfs FR (RER B, Bercy, URSSAF,
+café-clope, tonton, Doctolib, Lidl, Livret A).}}
 
-🥇 RÈGLE D'OR DU CLASSEMENT — Le bullet #1 doit être LA stat de la semaine
-que les gens vont (a) RETENIR demain, (b) LIKER tout de suite, (c) avoir
-ENVIE DE COMMENTER. C'est le killshot du Décode. Trois tests à passer
-SIMULTANÉMENT (pas 2/3 — les 3):
-
-  📌 MÉMORABLE: le chiffre tient en une image mentale (un ordre de
-     grandeur surprise, un round number, un ratio choquant: "x10 en 6 mois",
-     "100 Md$", "1 GPU sur 10 dans le monde"). Pas "415 M$" qu'on oublie
-     en 2 sec — un chiffre que ton tonton va citer au repas dimanche.
-
-  ❤️ LIKABLE: confirme ce que l'audience SOUPÇONNAIT mais sans l'avoir
-     prouvé, OU révèle un insight insider non couvert par la presse FR.
-     Le like = "enfin quelqu'un le dit". Vise un nom propre TRÈS connu
-     (Elon, Sam Altman, Vitalik, Saylor, OpenAI, NVIDIA, Bitcoin, BTC,
-     ETH) — la reconnaissance instantanée triple le like rate.
-
-  💬 COMMENT-BAIT: l'angle force une opinion. Pas un fait neutre, mais
-     un contraste / claim / verdict qui appelle "ouais mais..." ou
-     "non, regarde plutôt...". Exemples: "X a fait 10x ce que Y promet
-     depuis 2 ans" / "Le marché évalue Z plus que toute la France IA réunie".
-
-Si le #1 ne passe pas les 3 tests → permute avec le bullet le plus fort.
-Le #1 NE PEUT PAS être un fait neutre / un chiffre attendu / sans nom propre.
-
-Les bullets 2-5 viennent en intensité décroissante. Le #5 peut être plus
-niche / techy mais reste solide. JAMAIS de bullet bouche-trou.
-
-1. 💰 {{LE CHIFFRE / NOM / ANGLE LE PLUS IMPACTANT DE LA SEMAINE}} : {{insight 1 ligne, acteur nommé INLINE dans la prose}}. (source: {{outlet}})
-2. 🚀 {{chiffre exact, 2e plus fort}} : {{insight}}. (source: {{outlet}})
-3. ⚡ {{chiffre exact}} : {{insight}}. (source: {{outlet}})
-4. 📊 {{chiffre exact}} : {{insight}}. (source: {{outlet}})
-5. 🔥 {{chiffre exact, niche mais solide}} : {{insight}}. (source: {{outlet}})
-
-{{Chute FR sarcastique, 1-2 phrases. Stack 2 réfs (RER B, Bercy, URSSAF,
-café-clope, tonton, Doctolib, Lidl, etc.).}}
-
-{{CTA REPLIES — UNE question directe qui demande une réaction. Exemples:
-"Lequel des 5 t'a fait sursauter ?" / "T'as déjà repéré le 6e d'ici lundi ?"
-/ "RT si t'as ton trader pote qui doit voir ça." Le but: déclencher des
-réponses, l'algo X amplifie les threads qui réagissent.}}
+{{1 question directe à l'audience pour déclencher des replies. Exemples:
+"Lequel des 5 t'a fait sursauter ?" / "T'as repéré le 6e d'ici lundi ?"}}
 
 Demain, même heure, même Décode.
 
-https://[URL_EXACTE_COPIÉE_DEPUIS_WEB_SEARCH_RESULTS_CI_DESSOUS]
-
-⬆️ CETTE DERNIÈRE LIGNE EST OBLIGATOIRE. Pas d'exception. Copie-colle une
-URL EXACTE de la section WEB SEARCH RESULTS / CURATED RSS POOL plus bas.
-Si tu omets cette ligne, le tweet n'a pas de carte preview et il flop.
-Si tu modifies l'URL (changement de slug, de domaine, etc.), le lien est
-mort et il est strippé. Donc: copie-colle PURE, identique caractère par
-caractère. Bullets 2-5 gardent leur (source: outlet) texte pur.
-
-🎯 RÈGLES TAGS (très important, ÉVITE le bug de mise en page):
-- MAX 1 tag @handle par bullet. JAMAIS 2 dans la même ligne.
-- Le tag s'écrit TOUJOURS inline dans la prose, comme un mot normal — pas
-  d'espace + retour-ligne autour. Si tu écris "415 M$.\\n@nvidia\\nQ1...",
-  X mobile sépare @nvidia sur sa propre ligne et le tweet a l'air cassé.
-  Bon: "415 M$ Q1 mining chez @nvidia" (tag inline, sans saut de ligne).
-  Mauvais: "415 M$. @nvidia Q1..." (suit d'un point + @, X le saute).
-- Place le tag au MILIEU de la phrase, pas en début/fin de ligne.
-- Chiffre = pull-quote screenshotable. Le tag amplifie le pull-quote.
-
-🚨 CHIFFRES VÉRIFIABLES — N'invente PAS:
-- Les chiffres doivent venir des SIGNAUX FOURNIS ci-dessous ({web_block}-ish).
-- Si tu n'as pas la donnée exacte, écris "~3 Md$" ou "près de 400 M$" — pas
-  un faux chiffre à 3 décimales. Mieux: hedge que mentir.
-- (source: outlet) doit nommer un vrai média qui couvre le sujet (CoinDesk,
-  TheBlock, Bloomberg, Les Échos, FT, Reuters, WSJ, TechCrunch, etc) —
-  pas un nom inventé.
-
-Cible 1000-1700 chars body. Les chiffres peuvent dater de TOUTE la semaine.
-
-🚫 INTERDIT ABSOLU: pas de **bold** markdown (les astérisques s'affichent
-littéralement sur X). Pas de __underscore__ italic non plus. Texte brut.
-Chiffres punchy sans wrappers. L'emoji 1-5 fait déjà le visual hook.
+{{URL exacte copiée depuis WEB SEARCH RESULTS / RSS POOL — DERNIÈRE ligne}}
 """
     else:
         top5_block = f"""FORMAT — Décode multi-paragraphe normal:
@@ -1171,20 +1127,28 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # and snippets. 2026-05-22 PM expanded to multi-angle queries + RSS-
     # pool injection so Top 5 has 12-22 real article URLs to pick from
     # for the killshot link card.
+    injected_urls = set()
     try:
         from . import web_search as _ws
         # 1. DuckDuckGo: 3 sub-queries per topic, past-week filter.
         web_block = _ws.search_for_news_topic(decode_topic)
         if web_block:
             performance_section = (performance_section or "") + "\n\n" + web_block
+            for m in re.finditer(r"https?://\S+", web_block):
+                injected_urls.add(m.group(0).rstrip(".,);"))
         # 2. Curated RSS pool from external_signal.json (≤10 days).
         # Real article URLs with publication timestamps — much higher
         # signal than DDG for trusted-outlet sourcing.
         signals = _ws.load_recent_signals(max_age_days=10, limit=10)
         if signals:
             performance_section = (performance_section or "") + "\n\n" + _ws.render_signals_block(signals)
+            for s in signals:
+                injected_urls.add(s["url"])
     except Exception:
         pass
+    # Stash for bot.py to validate: the model is only allowed to ship a
+    # URL we explicitly fed it. Anything else is treated as fabricated.
+    globals()["_last_injected_urls"] = injected_urls
 
     # No additional injection — slim prompt path uses only web_block.
     pass

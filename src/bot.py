@@ -255,16 +255,31 @@ def _run_single_bot_cycle():
         if is_decode and src_url:
             log.info(f"[NEWS] Model emitted URL: {src_url}")
             try:
-                from .agent import url_is_reachable
-                if not url_is_reachable(src_url):
-                    log.info(f"[NEWS] ❌ Source URL unreachable, stripping fabricated link: {src_url}")
+                from . import agent as _ag
+                # Whitelist check — only allow URLs that came from our
+                # injected WEB SEARCH RESULTS / RSS POOL. Catches soft-404s
+                # (Reuters returns 200 OK on /article-not-found pages, so a
+                # reachability check alone misses fabrications). Skip when
+                # no injection happened this cycle so we don't false-strip
+                # legitimate Claude-WebSearch URLs.
+                injected = getattr(_ag, "_last_injected_urls", None) or set()
+                if injected and src_url not in injected:
+                    log.info(
+                        f"[NEWS] ❌ URL not in injected pool ({len(injected)} candidates) "
+                        f"— treating as fabricated, stripping: {src_url}"
+                    )
+                    post_body = tweet.replace(src_url, "").rstrip()
+                    post_body = re.sub(r"\n+(Source\s*:?\s*)?\s*$", "", post_body).rstrip()
+                    src_url = None
+                elif not _ag.url_is_reachable(src_url):
+                    log.info(f"[NEWS] ❌ Source URL unreachable, stripping: {src_url}")
                     post_body = tweet.replace(src_url, "").rstrip()
                     post_body = re.sub(r"\n+(Source\s*:?\s*)?\s*$", "", post_body).rstrip()
                     src_url = None
                 else:
-                    log.info(f"[NEWS] ✅ URL validated, keeping inline")
+                    log.info(f"[NEWS] ✅ URL validated (in pool + reachable), keeping inline")
             except Exception as e:
-                log.info(f"[NEWS] URL reachability check failed (keeping link): {e}")
+                log.info(f"[NEWS] URL validation failed (keeping link): {e}")
             # When a URL is present, the link card carries the visual.
             # An attached image would suppress the card → text + URL only.
             if src_url:
