@@ -4917,3 +4917,30 @@ Le secteur de l'information technologique a généré un rendement de +225,7 % d
 - **@cointelegraph** (211 likes, score 7/10) — MISE À JOUR : Le Bitcoin a plus que doublé au cours des 5 dernières années, tandis que l’Ethereum est resté largement stable sur la même période.
   - https://x.com/Cointelegraph/status/2057589845069811740
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 313).
+- **@unusual_whales** (924 likes, score 7/10) — Le chiffre d'affaires annualisé d'Anthropic a récemment approché les 45 milliards de dollars, dépassant les 25 milliards de dollars d'OpenAI, selon le Information
+  - https://x.com/unusual_whales/status/2057581700868370493
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1110).
+- **@polymarketmoney** (413 likes, score 7/10) — Anthropic pourrait désormais dépasser OpenAI en termes de croissance, avec un chiffre d'affaires annualisé qui atteindrait reportedly près de 45 milliards de dollars contre 25 milliards pour OpenAI en
+  - https://x.com/PolymarketMoney/status/2057533984020771247
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 457).
+- **@tron_inc** (13 likes, score 7/10) — Tron Inc. (NASDAQ: TRON) acquired 138,060 TRX tokens today at an average price of $0.3622, further increasing its TRX treasury holdings to more than 697.1 million TRX in total. The company aims to fur
+  - https://x.com/TRON_INC/status/2057646548356644919
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 17).
+- **@le_investisseur** (0 likes, score 7/10) — OpenAI
+
+OpenAI va déposer une demande d’introduction en bourse dans les prochains jours selon le Wall Street Journal 
+
+ Valorisation attendue autour des 1000 milliards de dollars 
+
+Introduction en bou
+  - https://x.com/le_investisseur/status/2057344438658007182
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6).
+- **@alexmasoncrypto** (956 likes, score 7/10) — QUELQUE CHOSE DE TRÈS ÉTRANGE SE PASSE
+
+Le marché boursier continue de grimper à de nouveaux sommets historiques.
+
+Mais personne ne prête attention à ce qui se passe vraiment.
+
+OpenAI et Anthropic val
+  - https://x.com/AlexMasonCrypto/status/2057494564387062188
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1164).
