@@ -606,8 +606,18 @@ def run_llm(
             )
             return _run_ollama_http(prompt, label=label, timeout=effective_timeout)
 
+    # Per-provider timeout cap. Claude normally answers in 3-5s; if it
+    # hangs past ~2 min it's stuck and we want to fail over to ollama
+    # fast (don't wait the full LLM_TIMEOUT_SECONDS=600s). Ollama HTTP
+    # path keeps the full 600s budget since the local model genuinely
+    # needs more time for 25k-char prompts.
+    # 2026-05-22: 3 Claude timeouts at 600s today blocked posting for 30 min.
+    if provider in ("claude", "codex", "gemini"):
+        provider_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 150)
+    else:
+        provider_timeout = timeout
     cmd = _build_cmd(prompt, model, output_json, allowed_tools, permission_mode, provider)
-    result = _run_cmd(cmd, label=label, timeout=timeout, cwd=cwd)
+    result = _run_cmd(cmd, label=label, timeout=provider_timeout, cwd=cwd)
 
     # If we actually ran codex this cycle and it returned a usage-limit
     # error, cache the lockout window AND collapse this cycle to a single
