@@ -5116,3 +5116,31 @@ Chômage partiel, PGE, aides directes aux entreprises (la France avait injecté 
 Aujourd'hui la dette
   - https://x.com/LeaBourseFR/status/2057599714363576649
   - **WHY**: Source fiable + impact concret (score signal 2, engagement 25).
+- **@dfintelligence** (13 likes, score 7/10) — Justement, je vais faire des tests avec Nano Banana 2. Mais ça ne m’étonnerait pas qu’OpenAI fasse ses annonces et que Google les enterre avec un Nano Banana Pro 2.
+
+Dans tous les cas, avec toutes ces
+  - https://x.com/DFintelligence/status/2040542794607906836
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 17).
+- **@stocksavvyshay** (281 likes, score 7/10) — Anthropic pourrait désormais dépasser OpenAI en termes de croissance, avec un chiffre d'affaires annualisé qui se rapproche reportedly de 45 milliards de dollars contre 25 milliards de dollars annuali
+  - https://x.com/StockSavvyShay/status/2057533527835725927
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 345).
+- **@dfintelligence** (106 likes, score 7/10) — Breaking news ! Après des suspicions sur Arena et des modèles d’image performants anonymes qui semblent être GPT Image 2...
+
+Il semble qu’OpenAI accélère la phase de test directement sur ChatGPT (avec
+  - https://x.com/DFintelligence/status/2040540839202422914
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 130).
+- **@patamiel** (0 likes, score 7/10) — Mistral AI s'offre une startup autrichienne d'IA physique pour accélérer dans l'industrie
+
+ La thèse est claire : l’IA industrielle est délaissée par les acteurs américains. 
+
+L’Europe a 100 ans d’exp
+  - https://x.com/patamiel/status/2056634720415268866
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 16).
+- **@epargnantlibre** (9 likes, score 7/10) — Tu te demandes quels sont les ETF te permettant de diversifier au maximum?
+
+Voilà les 4 seules options sérieuses et leurs vraies différences 
+
+ MSCI World
+1 310 entreprises. 23 pays développés. Pas d'
+  - https://x.com/epargnantlibre/status/2057761390757114079
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 11).
