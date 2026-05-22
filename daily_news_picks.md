@@ -5026,3 +5026,27 @@ $ETH : 2.131 $
 #Bitcoin Dominance : 60%
   - https://x.com/Crypto__Goku/status/2057686217978785996
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 8).
+- **@dustybc** (73 likes, score 8/10) — 𝗔𝗖𝗧𝗨𝗔𝗟𝗜𝗧𝗘́: Les ETF spot Bitcoin ont enregistré une sortie nette de 100,9 millions de dollars le 21 mai.
+
+Les clients de BlackRock ont vendu pour 103 700 000 $ de $BTC.
+  - https://x.com/DustyBC/status/2057687904307269988
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 99).
+- **@crypto__goku** (10 likes, score 7/10) — Près de 500 milliards de dollars en Bitcoin seraient exposés à une future attaque quantique selon une étude de Glassnode.
+
+Plus de 6 millions de BTC ont déjà révélé leur clé publique sur la blockchain
+  - https://x.com/Crypto__Goku/status/2057691112773468462
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 14).
+- **@girdley** (65 likes, score 7/10) — NEW LONG FORM VIDEO: How SmileDirectClub went from $9 billion to dead overnight
+
+On September 12, 2019, two childhood friends stood in front of the Nasdaq stock exchange as their company, SmileDirectC
+  - https://x.com/girdley/status/2057589045782585478
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 79).
+- **@wublockchain** (12 likes, score 7/10) — May 22 Options Data
+
+21,000 BTC options expired, with a put-call ratio of 0.66, a maximum strike price of $78,500, and a notional value of $1.6 billion.
+129,000 ETH options expired, with a put-call ra
+  - https://x.com/WuBlockchain/status/2057700859111493636
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 20).
+- **@reuters** (16 likes, score 7/10) — Les États-Unis et l'Iran sont restés sur des positions opposées concernant le stock d'uranium de Téhéran et les contrôles sur le détroit d'Ormuz, bien que le secrétaire d'État américain Marco Rubio ai
+  - https://x.com/Reuters/status/2057695718102704284
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 32).
