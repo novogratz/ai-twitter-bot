@@ -1022,6 +1022,32 @@ def _try_repair_url(url: str) -> str:
     return url
 
 
+def url_is_reachable(url: str, timeout: int = 6) -> bool:
+    """HEAD/GET the URL; return True if it resolves to a 2xx/3xx response.
+    Used to refuse posting a fabricated source link (e.g. axio.com which
+    the model hallucinated 2026-05-22). Tolerates 403 + 405 (HEAD often
+    blocked by paywalled outlets — we then try GET)."""
+    import urllib.request as _ur, urllib.error as _ue
+    if not url or not url.startswith("http"):
+        return False
+    UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15"
+    for method in ("HEAD", "GET"):
+        try:
+            req = _ur.Request(url, headers={"User-Agent": UA}, method=method)
+            with _ur.urlopen(req, timeout=timeout) as resp:
+                code = getattr(resp, "status", None) or resp.getcode()
+                if 200 <= int(code) < 400:
+                    return True
+        except _ue.HTTPError as e:
+            # 403/405 = host alive but rejects our method/UA — count as reachable.
+            if e.code in (401, 403, 405, 429):
+                return True
+            continue
+        except (_ue.URLError, ValueError, OSError, TimeoutError):
+            continue
+    return False
+
+
 def _extract_source(text: str):
     """Detect an article URL the agent included in the body.
 

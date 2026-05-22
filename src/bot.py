@@ -281,18 +281,27 @@ def _run_single_bot_cycle():
             except OSError:
                 pass
 
-        # Self-reply with source URL (and auto-follow-up tease) on Décodes.
-        # Scheduled here as a synchronous wait + post inside this cycle so
-        # the lock-out is contained and we don't need cross-cycle plumbing.
+        # Self-reply with source URL on Décodes. 2026-05-22 PM fixes:
+        #  - Validate URL with HTTP HEAD before posting; refuse fabricated
+        #    domains (model hallucinated "axio.com" → 404).
+        #  - Short 5-12s wait so other Safari-using bots (retweet/QT) can't
+        #    interleave a post that would steal the "latest tweet" slot
+        #    when we try to self-reply.
+        #  - reply_to_own_latest asks for a header sanity-check so we abort
+        #    if the visible tweet doesn't contain "Le Décode".
         if is_decode and src_url:
             try:
-                wait_s = random.randint(45, 90)
-                log.info(f"[NEWS] Décode source reply scheduled in {wait_s}s...")
-                time.sleep(wait_s)
-                reply_text = f"📎 Source : {src_url}"
-                from .twitter_client import reply_to_own_latest
-                reply_to_own_latest(reply_text)
-                log.info(f"[NEWS] Décode source-reply posted.")
+                from .agent import url_is_reachable
+                if not url_is_reachable(src_url):
+                    log.info(f"[NEWS] Source URL unreachable, refusing to post fabricated link: {src_url}")
+                else:
+                    wait_s = random.randint(5, 12)
+                    log.info(f"[NEWS] Décode source reply scheduled in {wait_s}s...")
+                    time.sleep(wait_s)
+                    reply_text = f"📎 Source : {src_url}"
+                    from .twitter_client import reply_to_own_latest
+                    reply_to_own_latest(reply_text, must_contain="Le Décode")
+                    log.info(f"[NEWS] Décode source-reply posted.")
             except Exception as e:
                 log.info(f"[NEWS] Décode source-reply failed (non-fatal): {e}")
 
