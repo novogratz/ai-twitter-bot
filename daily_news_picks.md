@@ -5242,3 +5242,29 @@ Les perspectives de croissance :
 - **@degeneratenews** (84 likes, score 7/10) — NOUVEAU : @Bitwise Le PDG @HHorsley DÉCLARE « LE VOLUME SUR L'ETF BITWISE HYPERLIQUID $BHYP DÉPASSE DÉJÀ 30 M$ AUJOURD'HUI » - « C'EST PLUS QUE PRESQUE TOUT AUTRE ETF CRYPTO, SUR DIFFÉRENTS ACTIFS CRY
   - https://x.com/DegenerateNews/status/2057884383881650602
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 106).
+- **@ashcrypto** (191 likes, score 9/10) — URGENT :  La SEC a officiellement « RETARDÉ » son plan pour des actions tokenisées basées sur la blockchain.
+
+Bitcoin a chuté de près de 900 $ suite à cette nouvelle, effaçant 15 000 000 000 $ de capi
+  - https://x.com/AshCrypto/status/2057904180824592523
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 313).
+- **@cryptorover** (290 likes, score 8/10) — Harvard se débarrasse de l'intégralité de sa position en Ethereum natif d'une valeur de 87 000 000 $.
+  - https://x.com/cryptorover/status/2057767928268005629
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 438).
+- **@merlijntrader** (214 likes, score 8/10) — 60 000 000 000 000 $ RECHERCHE UNE CHAÎNE.
+
+ Token Terminal confirme : les actions tokenisées atteignent déjà 1 600 000 000 $.
+
+Ethereum domine avec 41,1 % de part de marché.
+Pénétration actuelle : 0,
+  - https://x.com/MerlijnTrader/status/2057816249045062064
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 258).
+- **@merlijntrader** (202 likes, score 8/10) — LA ROTATION A COMMENCÉ.
+
+Bitcoin et Ethereum se découplent des actions américaines en temps réel.
+
+Tout le monde se concentre sur les gros titres : loi CLARITY. Président pro-Bitcoin de la Fed. Réserv
+  - https://x.com/MerlijnTrader/status/2057853997701337339
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 264).
+- **@quintenfrancois** (205 likes, score 7/10) — C’est un miracle que l’on puisse encore acheter ethereum:0x514910771af9ca656af840dff83e8264ecf986ca avec une ristourne de 84 % par rapport à son ATH de 2021.
+  - https://x.com/QuintenFrancois/status/2057775370754032028
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 227).
