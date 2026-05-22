@@ -362,6 +362,68 @@ def _detect_codex_lockout(result: "LLMResult") -> Optional[datetime]:
     return datetime.now() + timedelta(hours=24)
 
 
+# Claude usage-limit lockout cache, symmetric to codex. When Anthropic
+# 429s us during a 2-week unattended run, retrying Claude every cycle
+# burns ~30s before the fallback fires. Cache the lockout for 1 hour and
+# skip Claude entirely → straight to ollama. Self-cleaning when expired.
+_CLAUDE_LOCKOUT_FILE = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "claude_lockout.json",
+)
+_CLAUDE_RATE_LIMIT_MARKERS = (
+    "rate limit",
+    "ratelimit",
+    "rate_limit",
+    "429",
+    "too many requests",
+    "quota exceeded",
+    "anthropic usage limit",
+    "you've reached your usage limit",
+    "monthly usage limit",
+)
+
+
+def _read_claude_lockout() -> Optional[datetime]:
+    try:
+        with open(_CLAUDE_LOCKOUT_FILE) as f:
+            data = json.load(f)
+        end = datetime.fromisoformat(data.get("locked_until", ""))
+    except (FileNotFoundError, json.JSONDecodeError, ValueError, TypeError):
+        return None
+    if end > datetime.now():
+        return end
+    try:
+        os.remove(_CLAUDE_LOCKOUT_FILE)
+    except OSError:
+        pass
+    return None
+
+
+def _write_claude_lockout(end: datetime, reason: str = "rate_limit") -> None:
+    try:
+        with open(_CLAUDE_LOCKOUT_FILE, "w") as f:
+            json.dump(
+                {
+                    "locked_until": end.isoformat(),
+                    "reason": reason,
+                    "stamped_at": datetime.now().isoformat(),
+                },
+                f,
+                indent=2,
+            )
+    except OSError:
+        pass
+
+
+def _detect_claude_lockout(result: "LLMResult") -> Optional[datetime]:
+    """If Claude returned a rate-limit / quota error, return a lockout window."""
+    blob = ((result.stdout or "") + "\n" + (result.stderr or "")).lower()
+    if not any(m in blob for m in _CLAUDE_RATE_LIMIT_MARKERS):
+        return None
+    # Conservative 1h cache — Anthropic limits typically reset on the hour.
+    return datetime.now() + timedelta(hours=1)
+
+
 def llm_hourly_limit_status() -> tuple[bool, int, int, int]:
     """Compatibility shim: LLM budget limits are disabled."""
     return False, 0, 0, 0
@@ -635,6 +697,20 @@ def run_llm(
             )
             return _run_ollama_http(prompt, label=label, timeout=effective_timeout)
 
+    # Claude rate-limit bypass — symmetric to codex. When Anthropic 429s
+    # for an extended window, skip retrying Claude every cycle and route
+    # straight to ollama. Self-cleans on expiry.
+    if provider == "claude":
+        lockout = _read_claude_lockout()
+        if lockout is not None:
+            effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
+            log.info(
+                f"[LLM] {label}: claude locked until "
+                f"{lockout.isoformat(timespec='minutes')} — "
+                f"using ollama HTTP / {OLLAMA_MODEL} (timeout {effective_timeout}s)."
+            )
+            return _run_ollama_http(prompt, label=label, timeout=effective_timeout)
+
     # Per-provider timeout cap — 2026-05-22 PM (durable): 360s (6 min).
     # User: "im ok to wait more bro... I just want it to work". The bot's
     # big NEWS prompt needs real headroom. 6 min lets Claude finish.
@@ -662,6 +738,19 @@ def run_llm(
                 fb_model = _fallback_model(model, fb)
                 fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, permission_mode, fb)
                 return _run_cmd(fb_cmd, label=f"{label} (codex locked)", timeout=timeout, cwd=cwd)
+
+    # Same treatment for Claude: detect 429 / quota errors, cache a 1h
+    # lockout, and immediately fall over so the cycle doesn't burn time.
+    if provider == "claude":
+        end = _detect_claude_lockout(result)
+        if end is not None:
+            _write_claude_lockout(end)
+            log.info(
+                f"[LLM] Claude rate-limit detected — locking out until "
+                f"{end.isoformat(timespec='minutes')}."
+            )
+            effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
+            return _run_ollama_http(prompt, label=f"{label} (claude locked)", timeout=effective_timeout)
 
     if not _should_fallback(result):
         return result
