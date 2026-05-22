@@ -103,6 +103,15 @@ fort. Exemple: "Bitcoin sécurise son réseau avec PLUS de puissance que les
 5 premières centrales nucléaires françaises." MAX 150 chars. C'est la
 1ère ligne lue après le header — doit faire arrêter le scroll.}}
 
+🔗 ÉTAPE 0 — AVANT TOUT, CHOISIS L'URL.
+Va dans la section WEB SEARCH RESULTS / CURATED RSS POOL plus bas. Choisis
+UNE URL exacte (copie-colle, ne JAMAIS inventer un domaine ou modifier
+le slug). Cette URL backe le bullet #1 — donc choisis-la sur l'article
+le plus IMPACTANT de la semaine. C'est OBLIGATOIRE, pas optionnel.
+Ensuite, écris le bullet #1 comme une stat/claim que cet article supporte
+(titre + snippet fournis ci-dessous). Tu DOIS écrire l'URL en DERNIÈRE
+LIGNE du tweet, seule sur sa ligne, sans préfixe ni guillemets.
+
 🥇 RÈGLE D'OR DU CLASSEMENT — Le bullet #1 doit être LA stat de la semaine
 que les gens vont (a) RETENIR demain, (b) LIKER tout de suite, (c) avoir
 ENVIE DE COMMENTER. C'est le killshot du Décode. Trois tests à passer
@@ -146,28 +155,14 @@ réponses, l'algo X amplifie les threads qui réagissent.}}
 
 Demain, même heure, même Décode.
 
-{{URL — UN seul lien, OBLIGATOIRE si la section WEB SEARCH RESULTS plus bas
-contient au moins 1 URL. C'est NON-NÉGOCIABLE: tu DOIS prendre une URL
-des WEB SEARCH RESULTS ci-dessous (copie-colle un lien exact, ne JAMAIS
-inventer un domaine) et la placer comme DERNIÈRE LIGNE du tweet, seule
-sur sa ligne, rien après.
+https://[URL_EXACTE_COPIÉE_DEPUIS_WEB_SEARCH_RESULTS_CI_DESSOUS]
 
-Pourquoi obligatoire:
-  • X rend une carte de prévisualisation (image + titre + outlet) UNIQUEMENT
-    s'il y a une URL dans le tweet. Sans URL = mur de texte gris = -50% de
-    likes. Avec URL = visuel gratuit = stop-scroll.
-  • Le lien DOIT backer le bullet #1 (le killshot), pas un autre bullet.
-    Choisis l'URL des WEB SEARCH RESULTS dont le titre matche le mieux
-    le chiffre / nom propre de #1.
-  • Les bullets 2-5 gardent leur (source: outlet) inline texte pur,
-    pas d'URL.
-
-EXCEPTION: si vraiment AUCUNE URL ne match #1 (improbable avec 6 résultats
-fournis), ship sans URL plutôt que d'inventer. Mais 95% du temps, tu DOIS
-mettre une URL.
-
-Format: dernière ligne = URL pure. Pas de "(source: ...)" autour, pas de
-texte. Juste https://...}}
+⬆️ CETTE DERNIÈRE LIGNE EST OBLIGATOIRE. Pas d'exception. Copie-colle une
+URL EXACTE de la section WEB SEARCH RESULTS / CURATED RSS POOL plus bas.
+Si tu omets cette ligne, le tweet n'a pas de carte preview et il flop.
+Si tu modifies l'URL (changement de slug, de domaine, etc.), le lien est
+mort et il est strippé. Donc: copie-colle PURE, identique caractère par
+caractère. Bullets 2-5 gardent leur (source: outlet) texte pur.
 
 🎯 RÈGLES TAGS (très important, ÉVITE le bug de mise en page):
 - MAX 1 tag @handle par bullet. JAMAIS 2 dans la même ligne.
