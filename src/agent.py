@@ -39,16 +39,10 @@ def _next_decode_number() -> int:
 
 
 def _topic_for_decode(n: int) -> str:
-    """Topic rotation across the Décode series so readers get variety —
-    IA, Crypto, Investissement on a 3-cycle. n % 3 → topic.
-
-    Friday override (2026-05-22 PM): on Vendredi, only IA and Crypto rotate.
-    First Friday Décode → IA (Top 5 chiffres). Second → Crypto (Top 5 chiffres).
-    These are the bookmark-bait recap posts; Investissement is skipped Friday
-    so the 2 high-impact recaps don't share the day with mid posts.
+    """Topic rotation: IA, Crypto, Investissement on a 3-cycle. n % 3 → topic.
+    Friday still uses the Top 5 bookmark-bait FORMAT (prompt-side) but rotates
+    all 3 topics like other days — user reverted the IA/Crypto-only Friday rule.
     """
-    if datetime.now().weekday() == 4:  # Vendredi
-        return ("IA", "Crypto")[n % 2]
     return _DECODE_TOPICS[n % len(_DECODE_TOPICS)]
 
 
