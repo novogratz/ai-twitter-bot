@@ -340,3 +340,13 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top reply targets: @LesEchos=29, @LeJournalDuCoin=17, @McnallieM=14, @FlasheurInvest=14, @coinacademy_fr=13
 
 **Followers we follow** (running total): 166
+
+## 2026-05-21
+
+**Activity** — total actions: 411
+  - by type: reply=254, retweet=131, quote=16, post=7, hotake=3
+  - top sources: PROFILE-ALWAYS=117, RETWEET=100, MEGA=47, FAVORITE_PROFILE=31, QUOTE=16, SEARCH-FR-HOT=16, PROFILE-FR=14, FOLLOWING=11
+  - comedy patterns: FR_ANCHOR=14, METAPHOR=5, RENAME=5, UNDERSTATEMENT=4, DIALOGUE=2
+  - top reply targets: @LesEchos=16, @LeJournalDuCoin=13, @McnallieM=13, @FlasheurInvest=10, @CryptoastMedia=10
+
+**Followers we follow** (running total): 166
