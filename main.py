@@ -59,6 +59,7 @@ from src.self_winners import safe_run_self_winners_cycle
 from src.manu_bercy_bot import safe_run_manu_bercy_cycle
 from src.recap_thread_bot import safe_run_recap_thread_cycle
 from src.buzz_hunter_bot import safe_run_buzz_hunter_cycle
+from src.marquee_follow_bot import safe_run_marquee_follow_cycle
 from src.heartbeat_bot import safe_run_heartbeat
 from src.meta_strategy_agent import safe_run_meta_strategy_cycle
 from src.hn_signal_bot import safe_run_signal_cycle
@@ -806,6 +807,18 @@ def main():
                 safe_run_manu_bercy_cycle,
                 trigger=IntervalTrigger(hours=4),
                 id="manu_bercy_job",
+            )
+            # Marquee-account follow — once a day. Ensures the bot is
+            # following the giants (Elon, sama, Vitalik, Saylor, etc) so
+            # the home feed surfaces first-party signal AND so each followed
+            # account gets a small notification ping from us. User mandate
+            # 2026-05-22: "follow Elon Musk account and big accounts like
+            # him... MAKE SOME BUZZ".
+            log.info("Marquee follow: once-daily follow of AI/crypto/space giants.")
+            scheduler.add_job(
+                safe_run_marquee_follow_cycle,
+                trigger=IntervalTrigger(hours=8),
+                id="marquee_follow_job",
             )
         else:
             log.info("Meta-strategy agent + strategy lab: disabled in Plus-safe mode.")
