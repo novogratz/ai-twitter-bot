@@ -396,12 +396,13 @@ FR CRYPTO/AI MEDIA (high reach FR audience):
   @coinacademy_fr, @numerama, @siecledigital
   @arthurmensch, @MistralAI, @scaleway
 
-SPACE / AEROSPACE (2026-05-22 — added per user mandate):
-  @SpaceX, @Starlink, @elonmusk (already above for AI/X)
+SPACE / AEROSPACE (handles for OCCASIONAL coverage when a story crosses
+into IA/datacenter territory — e.g. Starlink + AI satellite, SpaceX
+fundraise, ArianeGroup European tech sovereignty):
+  @SpaceX, @Starlink, @elonmusk (already above)
   @blueorigin, @RocketLab, @ArianeGroup, @esa
-  Tag when the story is genuinely about rockets / satellite IA /
-  Starlink network / launch capex. The bot's scope formally is IA +
-  Crypto + Datacenter + Mining + Space (added today).
+  PRIMARY scope stays IA + Crypto + Investissement. Space is a bonus
+  angle when relevant, NOT a separate Décode topic.
 
 RÈGLES:
 - Si la news concerne UN de ces acteurs → tag 1-2 d'entre eux DANS la chute.
@@ -1151,6 +1152,22 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
         flags=re.MULTILINE,
     )
     tweet = tweet.strip()
+
+    # 2026-05-22 PM: AUTO-FORMAT line-breaks for Décodes that ship as
+    # one long line. Model sometimes drops the \n\n separators on ollama
+    # fallback. Rather than SKIP, insert breaks at known boundaries.
+    _decode_header_with_date_re = re.compile(
+        r"(🔎?\s*Le\s+D[eé]code\s*#?\s*\d+[^\n]*?\d{4}-\d{2}-\d{2})",
+        re.IGNORECASE,
+    )
+    m_hdr = _decode_header_with_date_re.search(tweet)
+    if m_hdr and "\n\n" not in tweet:
+        head = m_hdr.group(0).strip()
+        body = tweet[m_hdr.end():].lstrip()
+        body = re.sub(r"\s+(\d\.\s)", r"\n\n\1", body)
+        body = re.sub(r"\s+(Demain[,\.]?\s+)", r"\n\n\1", body, flags=re.IGNORECASE)
+        tweet = head + "\n\n" + body
+        log.info("[NEWS] Auto-formatted Décode — inserted \\n\\n breaks at header + bullets.")
 
     # Le Décode format enforcer. Tolerate D[eé]code (model occasionally
     # drops the accent) and missing 🔎 emoji prefix.
