@@ -4944,3 +4944,34 @@ Mais personne ne prête attention à ce qui se passe vraiment.
 OpenAI et Anthropic val
   - https://x.com/AlexMasonCrypto/status/2057494564387062188
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 1164).
+
+## 2026-05-22
+- **@wolf_crypto_x** (1 likes, score 7/10) — This is how much Ethereum $ETH gas fees have been paid every year since launch
+
+2015: 10,000 ETH
+2016: 45,000 ETH
+2017: 280,000 ETH
+2018: 620,000 ETH
+2019: 480,000 ETH
+2020: 2,400,000 ETH
+2021: 5,100,
+  - https://x.com/WOLF_Crypto_X/status/2057638924055400867
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 5).
+- **@cryptowendyo** (5 likes, score 7/10) — Harvard a vendu l'intégralité de sa participation de 87 millions de dollars en Ethereum seulement un trimestre après l'avoir achetée...
+
+Mais ils ont également réduit d'environ 25 % leurs avoirs en $I
+  - https://x.com/CryptoWendyO/status/2057645622228840897
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 9).
+- **@dangambardello** (98 likes, score 7/10) — Ethereum n'est en aucun cas l'un de mes principaux actifs à conserver, mais $ETH va très bien s'en sortir.
+  - https://x.com/dangambardello/status/2057611861458125174
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 132).
+- **@eth_daily** (5 likes, score 7/10) — Don’t expect the Ethereum Foundation to pump ETH’s price.
+
+They just aren’t economically aligned with $ETH anymore. The EF holds only a tiny fraction of the total ETH supply and gets almost zero direc
+  - https://x.com/ETH_Daily/status/2057662151314338065
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 9).
+- **@abaradez** (16 likes, score 7/10) — La guerre en Iran pousse à la consolidation les valeurs bancaires européennes ...après un rallye spectaculaire 
+
+Mon analyse via @MagazineCapital @GallantNicolas1
+  - https://x.com/ABaradez/status/2057490544587120878
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
