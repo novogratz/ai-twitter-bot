@@ -88,6 +88,90 @@ def _topic_for_decode(n: int) -> str:
     return _DECODE_TOPICS[n % len(_DECODE_TOPICS)]
 
 
+def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_date, format_mode, web_block, dedup_block):
+    """A tight news prompt (~5k chars). Replaces the 25k PROMPT_TEMPLATE
+    when generating Décodes. Claude can actually finish on this size.
+    """
+    top5_block = ""
+    if format_mode == "top5":
+        top5_block = f"""FORMAT — BOOKMARK-BAIT TOP 5 (le Décode du vendredi est SPÉCIAL):
+
+🔎 Le Décode #{decode_number} — {decode_topic} — {day_of_week} {today_date}
+
+{{Titre: "5 chiffres {decode_topic} à connaître cette semaine" ou variante punchy}}
+
+{{1-2 phrases d'intro qui posent l'angle}}
+
+1. **{{chiffre exact}}** — {{acteur nommé}}. {{insight 1 ligne}}.
+2. **{{chiffre exact}}** — {{acteur nommé}}. {{insight}}.
+3. **{{chiffre exact}}** — {{acteur nommé}}. {{insight}}.
+4. **{{chiffre exact}}** — {{acteur nommé}}. {{insight}}.
+5. **{{chiffre exact}}** — {{acteur nommé}}. {{insight}}.
+
+{{Chute FR sarcastique, 1-2 phrases. Stack 2 réfs (RER B, Bercy, URSSAF,
+café-clope, tonton, Doctolib, Lidl, etc.). Tag 1-2 acteurs réels si pertinent.}}
+
+Demain, même heure, même Décode.
+
+{{URL source ≤36h}}
+
+Cible 900-1300 chars body. Chaque chiffre vérifiable, pas d'approximation.
+"""
+    else:
+        top5_block = f"""FORMAT — Décode multi-paragraphe normal:
+
+🔎 Le Décode #{decode_number} — {decode_topic} — {day_of_week} {today_date}
+
+{{Titre punchy 1-2 phrases, chiffre OU nom propre dans les 6 premiers mots}}
+
+{{2-3 paragraphes d'analyse REELLE. ~500-900 chars body. Pas un résumé neutre:
+tu prends une position. Chiffres exacts, acteurs nommés.}}
+
+{{Chute FR sarcastique, stack 2 réfs FR culturelles. Tag 1-2 acteurs si pertinent.}}
+
+Demain, même heure, même Décode.
+
+{{URL source ≤36h}}
+"""
+
+    return f"""Tu es @cryptoiadecode. Voix FR mordante sur Crypto + IA + Investissement.
+Influenceur, pas bot timide. Tu prends position. Tu signes. Zéro bullshit.
+
+🎯 GOAL: ONE Le Décode #{decode_number} sur la story {decode_topic} la plus chaude des 24h.
+TOPIC: {decode_topic} uniquement (pas d'autre sujet). Format: {format_mode}.
+
+🚨 SCOPE STRICT: IA + Crypto + Investissement (+ datacenter MW + crypto mining).
+Pas de macro pure non-IA non-crypto.
+
+{top5_block}
+
+⚠️ OUTPUT RULES:
+- Commence DIRECTEMENT par "🔎 Le Décode #{decode_number}". AUCUN préambule.
+- Pas de "Score:", "Vérifications:", "Sources:", markdown bold meta. RIEN avant le header.
+- Pas d'emoji décoratif sauf 🔎. Pas de hashtag. Pas d'em dash (—).
+- Français pur, accents corrects.
+- Tu trolles l'IDÉE, jamais la personne (respect-list FR).
+- Pas de troll gouvernement US (Fed, SEC, IRS, etc).
+- URL source ≤36h obligatoire. Si pas trouvée → SKIP.
+
+🏷️ TAGS UTILES (quand pertinent dans la chute):
+@sama @OpenAI @AnthropicAI @MistralAI @ArthurMensch @GuillaumeLample
+@ylecun @karpathy @demishassabis @elonmusk @nvidia
+@coinbase @brian_armstrong @VitalikButerin @saylor @MicroStrategy
+@MARAHoldings @RiotPlatforms @CleanSpark_Inc @CoreWeave @CrusoeEnergy
+@SpaceX @Starlink @blueorigin @RocketLab
+
+🤣 CHUTE: doit faire RIRE A VOIX HAUTE, pas juste sourire. Stack 2 réfs FR
+(RER B + Bercy, URSSAF + tonton, Lidl + Doctolib, café-clope + Livret A).
+
+{web_block}
+
+{dedup_block}
+
+OUTPUT — SEULEMENT le Décode au format exact ci-dessus. Rien d'autre.
+"""
+
+
 _URL_RE = re.compile(r"https?://\S+")
 _SOURCE_URL_RE = re.compile(r"https?://[^\s\]\)>\"]+")
 _LEAKED_META_LINE_RE = re.compile(
@@ -943,71 +1027,12 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     else:
         dedup_section = ""
 
-    perf = get_learnings_for_prompt()
+    # 2026-05-22 PM (durable trim): the news prompt was ballooning to
+    # 25k chars and Claude couldn't finish on it in <5min. Diagnostic
+    # showed Claude is fine on 3k prompts (6.8s) but hangs >5min on 25k.
+    # Trimmed everything except: live web search results + dedup section
+    # + tight voice anchor. Drops the prompt to ~12k chars.
     performance_section = ""
-    if perf:
-        performance_section = f"""==================================================
-APPRENDS DE TES PERFORMANCES
-==================================================
-
-{perf}
-
-UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les patterns de tes pires."""
-
-    # Autonomous evolution agent's directives (regenerated every 12h from
-    # actual engagement data). Loaded at runtime — empty on first run.
-    from .evolution_store import get_directives_block
-    directives_block = get_directives_block()
-    if directives_block:
-        performance_section = (performance_section or "") + directives_block
-
-    # External-signal injection — RSS + HN + Reddit + X home merged into
-    # external_signal.json. Leads Google/WebSearch by 20-50 min so this
-    # is often the first place we see what tomorrow's wire will cover.
-    try:
-        from . import hn_signal_bot
-        ext = hn_signal_bot.render_signal_block(max_items=10)
-        if ext:
-            performance_section = (performance_section or "") + "\n\n" + ext
-    except Exception:
-        pass
-
-    # CANDIDATE ARTICLE URLS — for the fallback case when ollama runs
-    # (it can't WebSearch). Extract real article URLs from external_signal.json
-    # (filter out X status URLs which aren't acceptable sources) and surface
-    # them as a pickable list. Added 2026-05-22 after Décode #60 SKIP'd
-    # because ollama fallback had no URL to attach.
-    try:
-        sig_path = _os.path.join(_PR, "external_signal.json")
-        if _os.path.exists(sig_path):
-            with open(sig_path) as f:
-                sig = _json.load(f) or {}
-            items = sig.get("items") or []
-            article_urls = []
-            for it in items:
-                u = it.get("url") or ""
-                if not u.startswith("http"):
-                    continue
-                # Skip X status URLs and reddit/news.ycombinator (not articles)
-                if any(d in u for d in ("x.com/", "twitter.com/", "reddit.com/", "news.ycombinator.com")):
-                    continue
-                title = (it.get("title") or "")[:120]
-                article_urls.append(f"  - {u}  ({title})")
-                if len(article_urls) >= 10:
-                    break
-            if article_urls:
-                block = (
-                    "==================================================\n"
-                    "CANDIDATE ARTICLE URLS — picks de RSS récent (≤6h en général)\n"
-                    "==================================================\n"
-                    "Si tu ne peux pas WebSearch (modèle local), PIOCHE une URL\n"
-                    "dans cette liste qui colle à ton angle. Préfère ces URLs aux\n"
-                    "X status URLs (qui ne sont pas des sources d'article valides).\n\n"
-                    + "\n".join(article_urls)
-                )
-                performance_section = (performance_section or "") + "\n\n" + block
-    except Exception:
-        pass
 
     # LIVE WEB SEARCH — fresh hits for today's Décode topic. Always-on so
     # BOTH Claude (cross-check) and ollama (only signal) get fresh URLs
@@ -1022,41 +1047,8 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     except Exception:
         pass
 
-    # Follower growth scoreboard — concrete number the agent sees so it
-    # can self-evaluate "is what I'm doing actually working".
-    try:
-        from . import follower_tracker_bot
-        growth = follower_tracker_bot.get_growth_block()
-        if growth:
-            performance_section = (performance_section or "") + "\n\n" + growth
-    except Exception:
-        pass
-
-    # Closed-loop pattern bandit — last 7 days of pattern winners/losers.
-    try:
-        from .performance import get_pattern_stats_block
-        bandit = get_pattern_stats_block()
-        if bandit:
-            performance_section = (performance_section or "") + "\n\n" + bandit
-    except Exception:
-        pass
-
-    # Personality store — global mood from accumulated dossiers + hard rules.
-    from . import personality_store
-    # Self-evolving bot identity (written by self_evolution_agent every few hrs).
-    # This is the bot's ACTUAL state-of-mind, not a static voice anchor — it
-    # drifts daily based on what the bot lived + what's happening in the world.
-    bot_self = personality_store.render_bot_self()
-    if bot_self:
-        performance_section = (performance_section or "") + "\n\n" + bot_self
-    mood = personality_store.render_global_mood()
-    if mood:
-        performance_section = (performance_section or "") + "\n\n" + mood
-    # Hand-curated ideological core (core_identity.md) — voice anchor.
-    core_identity = personality_store.render_core_identity()
-    if core_identity:
-        performance_section = (performance_section or "") + "\n\n" + core_identity
-    performance_section = (performance_section or "") + "\n\n" + personality_store.hard_rules_block()
+    # No additional injection — slim prompt path uses only web_block.
+    pass
 
     # 2026-05-22 PM: joke_bank + self_winners disabled on the NEWS path.
     # These exemplars were great for HOT TAKES (short voice-driven 1-liners)
@@ -1070,23 +1062,23 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     day_of_week = _DAYS_FR[datetime.now().weekday()]
     decode_number = _next_decode_number()
     decode_topic = _topic_for_decode(decode_number)
-    # Friday: only the FIRST Décode of each topic gets Top 5 format.
-    # After IA + Crypto + Investissement each have their Top 5, rest go regular.
     use_top5 = _should_use_top5(decode_topic)
     format_mode = "top5" if use_top5 else "regular"
-    from . import lang_mode
-    lang = lang_mode.pick_content_lang()
-    prompt = PROMPT_TEMPLATE.format(
-        dedup_section=dedup_section,
-        today_date=today_date,
-        day_of_week=day_of_week,
+
+    # 2026-05-22 PM (durable): use a SLIM news prompt (~5k chars instead
+    # of the 25-30k PROMPT_TEMPLATE) so Claude can actually finish.
+    # Diagnostic showed 25k → >5min hang, 3k → 6.8s, 50 → 4s. Smaller
+    # prompts let Claude breathe.
+    prompt = _build_slim_news_prompt(
         decode_number=decode_number,
         decode_topic=decode_topic,
+        day_of_week=day_of_week,
+        today_date=today_date,
         format_mode=format_mode,
-        performance_section=performance_section,
-        lang_directive=lang_mode.lang_directive(lang),
+        web_block=performance_section,  # only web search injection
+        dedup_block=dedup_section[:1500] if dedup_section else "",
     )
-    log.info(f"[NEWS] Generating Décode #{decode_number} ({decode_topic}, {day_of_week}, format={format_mode}) in lang={lang}")
+    log.info(f"[NEWS] Generating Décode #{decode_number} ({decode_topic}, {day_of_week}, format={format_mode}, prompt={len(prompt)} chars)")
     # Stash so post-process branches (top5 marker + header auto-inject) can read.
     globals()["_pending_top5_topic"] = decode_topic if use_top5 else None
     globals()["_pending_decode_num"] = decode_number
