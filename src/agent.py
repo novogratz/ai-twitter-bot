@@ -146,19 +146,28 @@ réponses, l'algo X amplifie les threads qui réagissent.}}
 
 Demain, même heure, même Décode.
 
-{{URL — UN seul lien, OPTIONNEL, et obligatoirement celui qui BACKE le
-bullet #1 (le killshot). Pas un lien général/recap, pas un lien pour
-bullet #3, JAMAIS plusieurs liens. Raisons:
-  • X ne rend qu'une seule carte de prévisualisation par tweet (image
-    + titre + outlet) — c'est notre visuel gratuit. Autant que ce soit
-    sur le bullet le plus fort.
-  • Le lecteur clique sur le lien qui correspond au CHIFFRE qu'il a
-    retenu = celui de #1. Donc colle un seul lien et que ce soit lui.
-  • Les bullets 2-5 gardent leur (source: outlet) inline (texte pur,
-    pas d'URL) — la trace suffit.
-Si tu n'as pas d'URL réelle vérifiable pour #1 → pas de lien du tout
-(le tweet ship en texte pur, c'est OK, ne jamais inventer une URL).
-Format: dernière ligne du tweet = juste l'URL, rien d'autre.}}
+{{URL — UN seul lien, OBLIGATOIRE si la section WEB SEARCH RESULTS plus bas
+contient au moins 1 URL. C'est NON-NÉGOCIABLE: tu DOIS prendre une URL
+des WEB SEARCH RESULTS ci-dessous (copie-colle un lien exact, ne JAMAIS
+inventer un domaine) et la placer comme DERNIÈRE LIGNE du tweet, seule
+sur sa ligne, rien après.
+
+Pourquoi obligatoire:
+  • X rend une carte de prévisualisation (image + titre + outlet) UNIQUEMENT
+    s'il y a une URL dans le tweet. Sans URL = mur de texte gris = -50% de
+    likes. Avec URL = visuel gratuit = stop-scroll.
+  • Le lien DOIT backer le bullet #1 (le killshot), pas un autre bullet.
+    Choisis l'URL des WEB SEARCH RESULTS dont le titre matche le mieux
+    le chiffre / nom propre de #1.
+  • Les bullets 2-5 gardent leur (source: outlet) inline texte pur,
+    pas d'URL.
+
+EXCEPTION: si vraiment AUCUNE URL ne match #1 (improbable avec 6 résultats
+fournis), ship sans URL plutôt que d'inventer. Mais 95% du temps, tu DOIS
+mettre une URL.
+
+Format: dernière ligne = URL pure. Pas de "(source: ...)" autour, pas de
+texte. Juste https://...}}
 
 🎯 RÈGLES TAGS (très important, ÉVITE le bug de mise en page):
 - MAX 1 tag @handle par bullet. JAMAIS 2 dans la même ligne.
@@ -229,10 +238,12 @@ Pas de macro pure non-IA non-crypto.
 - Français pur, accents corrects.
 - Tu trolles l'IDÉE, jamais la personne (respect-list FR).
 - Pas de troll gouvernement US (Fed, SEC, IRS, etc).
-- URL source ≤36h obligatoire (le lien final) SAUF mode top5 du vendredi:
-  c'est un récap hebdo, URL optionnelle (≤7j si tu en as une), les
-  (source: outlet) par bullet portent la traçabilité. Pour top5, ne SKIP
-  JAMAIS par manque d'URL — ship le récap quand même.
+- URL source = DERNIÈRE LIGNE du tweet, OBLIGATOIRE dès que la section
+  WEB SEARCH RESULTS plus bas contient au moins 1 URL. Tu copie-colles une
+  URL exacte de cette section — JAMAIS d'invention de domaine. Que ce soit
+  Décode régulier (#36h) ou top5 (#7j), même règle. L'URL backe le sujet
+  principal (le bullet #1 en top5, l'angle principal en régulier).
+  Sans URL → pas de carte preview → 50% de likes en moins.
 
 🏷️ TAGS — MANDATE: au moins 2-3 gros comptes taggés dans chaque Décode quand
 le sujet leur appartient. Ne sois pas timide: tagger @sama dans un Décode
