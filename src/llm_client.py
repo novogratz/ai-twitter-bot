@@ -237,11 +237,12 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
             "temperature": 1.0,
             "top_p": 0.95,
             "repeat_penalty": 1.15,
-            # 2026-05-22: bumped 256 → 1024. The 256-cap was truncating
-            # long Décodes mid-URL (e.g. letsdatascience.com/news/
-            # microsoft-cancels-claude-code- ← cut). 1024 gives room for
-            # the full body (~600-1000 chars body + URL).
-            "num_predict": 1024,
+            # 2026-05-22: 256 → 1024 → 1800. Friday Top-5 Décode format
+            # (5 numbered bullets with bold chiffre + acteur + insight +
+            # chute + URL) needs more room. 1800 covers the long-form
+            # path plus URL margin. SKIPs caused by mid-output truncation
+            # were Décode #62 today.
+            "num_predict": 1800,
         },
     }).encode("utf-8")
     req = urllib.request.Request(
@@ -634,15 +635,14 @@ def run_llm(
             )
             return _run_ollama_http(prompt, label=label, timeout=effective_timeout)
 
-    # Per-provider timeout cap. Claude normally answers in 3-10s on small
-    # prompts; the bot's NEWS path uses a ~25k-char prompt + WebSearch
-    # which can run 60-180s. Cap at 240s — enough for a slow WebSearch
-    # cycle, fast enough that a truly stuck call fails over to ollama
-    # in 4 min instead of 10.
-    # 2026-05-22 PM: bumped 150 → 240 after Décode #60 timed out at 150s
-    # mid-WebSearch (Claude works fine in CLI for small prompts).
+    # Per-provider timeout cap. Claude on the bot's NEWS path uses a
+    # ~25k-char prompt + WebSearch (60-240s+). 240s was still too tight
+    # — both Décode #61 and #62 timed out today.
+    # 2026-05-22 (later): bumped 240 → 360s. Stuck calls still fail
+    # over to ollama in 6 min vs 10. NEWS path uses this; small calls
+    # (replies) get the smaller caller-provided timeout via `timeout` arg.
     if provider in ("claude", "codex", "gemini"):
-        provider_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 240)
+        provider_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 360)
     else:
         provider_timeout = timeout
     cmd = _build_cmd(prompt, model, output_json, allowed_tools, permission_mode, provider)
