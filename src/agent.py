@@ -98,10 +98,13 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
 
 🔎 Le Décode #{decode_number} — {decode_topic} — {day_of_week} {today_date}
 
-{{HOOK: 1 phrase SHOCKER au-dessus de la pliure mobile — chiffre brut + claim
-fort. Exemple: "Bitcoin sécurise son réseau avec PLUS de puissance que les
-5 premières centrales nucléaires françaises." MAX 150 chars. C'est la
-1ère ligne lue après le header — doit faire arrêter le scroll.}}
+Les 5 chiffres {decode_topic} à retenir cette semaine.
+
+{{1 phrase courte (max 120 chars) qui pose l'angle/le fil rouge des 5
+bullets. DOIT être cohérente avec le bullet #1 — c'est une intro, pas
+un sujet déconnecté. Si #1 parle de Coinbase, l'intro parle du même
+thème. Pas d'intro générique "Voici 5 chiffres" — un angle qui prépare
+la révélation du #1.}}
 
 🔗 ÉTAPE 0 — AVANT TOUT, CHOISIS L'URL.
 Va dans la section WEB SEARCH RESULTS / CURATED RSS POOL plus bas. Choisis
