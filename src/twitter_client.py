@@ -250,6 +250,49 @@ def _like_own_latest_tweet():
     close_front_tab()
 
 
+def reply_to_own_latest(reply_text: str) -> bool:
+    """Visit own profile, open the latest tweet, post a reply.
+
+    Used by the URL-as-self-reply pattern on Décodes (2026-05-22): main
+    body ships without the article URL → 30-90s later we self-reply with
+    the URL so the link card renders in the reply (doesn't deboost the
+    parent). Also creates a 2-tweet thread → algo thread-depth bonus.
+
+    Best-effort. Returns True if the reply appeared to submit. False if
+    Safari steps glitched (caller treats as non-fatal).
+    """
+    if not reply_text or not reply_text.strip():
+        return False
+    with _safari_lock:
+        try:
+            log.info(f"[SELF-REPLY] Opening own profile to find latest tweet")
+            webbrowser.open(BOT_PROFILE_URL)
+            time.sleep(5)
+            _run_applescript('tell application "Safari" to activate')
+            time.sleep(1)
+            _navigate_to_first_tweet()
+            time.sleep(4)
+            _run_applescript('tell application "Safari" to activate')
+            time.sleep(1)
+            # Press 'r' to open reply composer.
+            _run_applescript('tell application "System Events" to keystroke "r"')
+            time.sleep(3)
+            _paste_text(reply_text)
+            time.sleep(2)
+            _run_applescript('tell application "System Events" to keystroke return using command down')
+            time.sleep(3)
+            log.info(f"[SELF-REPLY] Posted: {reply_text[:80]}")
+            close_front_tab()
+            return True
+        except Exception as e:
+            log.info(f"[SELF-REPLY] failed: {e}")
+            try:
+                close_front_tab()
+            except Exception:
+                pass
+            return False
+
+
 LIKED_TWEETS_FILE = os.path.join(_PROJECT_ROOT, "liked_tweets.json") if "_PROJECT_ROOT" in globals() else None
 
 

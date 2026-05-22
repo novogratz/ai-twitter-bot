@@ -2,6 +2,7 @@
 import json
 import os
 import random
+import re
 import time
 import traceback
 from datetime import date
@@ -238,8 +239,30 @@ def _run_single_bot_cycle():
                 log.info("[NEWS] Text-only post (no source URL, no image slug)")
         except Exception as e:
             log.info(f"[NEWS] Image fallback failed (text-only): {e}")
-        log.info(f"[NEWS] Posting ({len(tweet)} chars): {tweet[:100]}...")
-        post_tweet(tweet, image_path=img_path)
+        # 2026-05-22: URL-as-self-reply pattern. X penalizes external
+        # links in the main tweet body (link card → user clicks AWAY
+        # from X), so for Décodes we:
+        #   1. Strip the URL out of the main body before posting
+        #   2. Post the main Décode (no URL, no image card to suppress)
+        #   3. ~30-90s later, post a self-reply containing the URL +
+        #      a brief intro. The URL renders its card in the REPLY,
+        #      which doesn't deboost the parent. We also get a free
+        #      thread-depth signal for the algo.
+        # Only applies to Décodes (tweet_source == "news" and a URL was
+        # detected). Hot takes still inline the URL (small-volume).
+        is_decode = (tweet_source == "news" and src_url is not None)
+        post_body = tweet
+        if is_decode and src_url:
+            # Strip URL and any "Source:" lead-in from the body.
+            post_body = tweet.replace(src_url, "").rstrip()
+            post_body = re.sub(r"\n+(Source\s*:?\s*)?\s*$", "", post_body).rstrip()
+            # When URL goes to a reply, NO image card on the main post —
+            # both can't render cards anyway. Image stays text-only.
+            img_path = None
+            log.info(f"[NEWS] Décode: stripping URL → reply ({len(post_body)} chars body)")
+
+        log.info(f"[NEWS] Posting ({len(post_body)} chars): {post_body[:100]}...")
+        post_tweet(post_body, image_path=img_path)
         save_tweet(tweet)
         # Engagement-log routing must match the actual generator so the
         # bandit attribution stays correct.
@@ -252,6 +275,21 @@ def _run_single_bot_cycle():
                 os.remove(img_path)
             except OSError:
                 pass
+
+        # Self-reply with source URL (and auto-follow-up tease) on Décodes.
+        # Scheduled here as a synchronous wait + post inside this cycle so
+        # the lock-out is contained and we don't need cross-cycle plumbing.
+        if is_decode and src_url:
+            try:
+                wait_s = random.randint(45, 90)
+                log.info(f"[NEWS] Décode source reply scheduled in {wait_s}s...")
+                time.sleep(wait_s)
+                reply_text = f"📎 Source : {src_url}"
+                from .twitter_client import reply_to_own_latest
+                reply_to_own_latest(reply_text)
+                log.info(f"[NEWS] Décode source-reply posted.")
+            except Exception as e:
+                log.info(f"[NEWS] Décode source-reply failed (non-fatal): {e}")
 
 
 def run_bot_cycle():
