@@ -635,12 +635,15 @@ def run_llm(
             )
             return _run_ollama_http(prompt, label=label, timeout=effective_timeout)
 
-    # Per-provider timeout cap. Claude on the bot's NEWS path needs
-    # 60-360s for WebSearch + write. User mandate "i want all my news"
-    # — bumping to 480s so Claude has real room to finish even on slow
-    # WebSearch days. Falls over to ollama at 8 min if truly stuck.
+    # Per-provider timeout cap. Claude was running 5-8 min on the NEWS
+    # path due to its internal WebSearch on top of the pre-fed results.
+    # 480s = too long for the user (no visibility, looks dead).
+    # 2026-05-22 (later): drop to 150s. If Claude can't finish in 2.5 min,
+    # ollama fallback (30-90s warm) ships something faster. With the
+    # auto-inject-header + pre-fed web_search results, ollama's output
+    # is now reliable enough to be the default fast path.
     if provider in ("claude", "codex", "gemini"):
-        provider_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 480)
+        provider_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 150)
     else:
         provider_timeout = timeout
     cmd = _build_cmd(prompt, model, output_json, allowed_tools, permission_mode, provider)
