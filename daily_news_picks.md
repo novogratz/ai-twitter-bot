@@ -5169,3 +5169,41 @@ Le Dow Jones est en HAUSSE.
 Mais pourquoi diable le $BTC est en BAISSE ?
   - https://x.com/MaxCrypto/status/2057826616466985362
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 394).
+- **@martiniguyyt** (0 likes, score 7/10) — Nvidia CEO Jensen Huang predicts that a billion people will each have hundreds of billions of AI agents working for them 24/7.
+
+These agents will use tools nonstop and consume enormous amounts of comp
+  - https://x.com/MartiniGuyYT/status/2057666991520100407
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 34).
+- **@ncheron_bourse** (39 likes, score 8/10) — L’ETF Magnificent Seven vient justement de valider son breakout au-dessus de la résistance historique des 69/70$.
+
+Pour rappel, cet ETF regroupe les “7 Magnifiques” du marché américain : Apple, Micros
+  - https://x.com/NCheron_bourse/status/2057840081583448088
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 53).
+- **@ncheron_bourse** (4 likes, score 7/10) — Selon vous, quelle société du S&P 500 affichera la meilleure performance sur les 10 prochaines années ?
+
+ Visa
+ Meta
+ Apple
+ Nvidia
+ Eli Lilly
+ Amazon
+ Alphabet
+ Microsoft
+ Mastercard
+ Berkshire Hatha
+  - https://x.com/NCheron_bourse/status/2057869692287562081
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 20).
+- **@perplexity_ai** (10 likes, score 7/10) — Bumblebee started as an internal tool.
+
+Making Perplexity products more secure for users starts with protecting the developer systems we use to build them.
+
+Read the full blog:
+  - https://x.com/perplexity_ai/status/2057870003060498612
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 10).
+- **@aloeonchain** (111 likes, score 7/10) — Happy Bitcoin Pizza Day to all degens  
+
+The real question is 
+
+this a good enough reason to cheat my cut?
+  - https://x.com/AloeOnChain/status/2057724028702580848
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 169).
