@@ -24,10 +24,13 @@ fi
 # ~23GB model takes ~170s — longer than the bot's per-call timeout. Use
 # OLLAMA_MODEL from .env so a model swap auto-warms the right one.
 if command -v curl >/dev/null 2>&1; then
-  OLLAMA_MODEL_NAME="${OLLAMA_MODEL:-qwen3-coder:30b}"
+  OLLAMA_MODEL_NAME="${OLLAMA_MODEL:-fredrezones55/qwen3.6-35b-a3b-uncensored-hauhaucs-aggressive}"
   echo "[run] Pre-warming $OLLAMA_MODEL_NAME (keep_alive=24h)..."
+  # think:false matches the bot's runtime payload (qwen3.6 uncensored is a
+  # thinking-mode model — without this it leaks tokens into a separate
+  # `thinking` field and `response` stays empty).
   curl -fsS --max-time 300 http://localhost:11434/api/generate \
-    -d "{\"model\":\"$OLLAMA_MODEL_NAME\",\"prompt\":\"ok\",\"stream\":false,\"keep_alive\":\"24h\"}" \
+    -d "{\"model\":\"$OLLAMA_MODEL_NAME\",\"prompt\":\"ok\",\"stream\":false,\"think\":false,\"keep_alive\":\"24h\"}" \
     >/dev/null 2>&1 && echo "[run] Model warm." || echo "[run] Pre-warm failed (model not pulled yet? ollama not running?). Bot will warm on first call."
 fi
 
