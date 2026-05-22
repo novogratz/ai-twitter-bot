@@ -16,6 +16,9 @@ from .config import _PROJECT_ROOT as _PR
 _DECODE_COUNTER_FILE = _os.path.join(_PR, "decode_counter.json")
 
 
+_DECODE_TOPICS = ("IA", "Crypto", "Investissement")
+
+
 def _next_decode_number() -> int:
     """Monotonic counter for 'Le Décode #N' series. Persists in
     decode_counter.json. Only increments on each NEW number requested
@@ -35,6 +38,13 @@ def _next_decode_number() -> int:
     return n
 
 
+def _topic_for_decode(n: int) -> str:
+    """Topic rotation across the Décode series so readers get variety —
+    IA, Crypto, Investissement on a 3-cycle. n % 3 → topic. User mandate
+    2026-05-22: "have some for AI and some for investment or crypto"."""
+    return _DECODE_TOPICS[n % len(_DECODE_TOPICS)]
+
+
 _URL_RE = re.compile(r"https?://\S+")
 _SOURCE_URL_RE = re.compile(r"https?://[^\s\]\)>\"]+")
 _LEAKED_META_LINE_RE = re.compile(
@@ -47,11 +57,11 @@ _LEAKED_BRACKET_LINE_RE = re.compile(
     r"theme|angle|source|image|pattern)\b[^\]]*\]\s*$",
     re.IGNORECASE,
 )
-# 2026-05-19: bumped 240 → 780 for the long-form Décode pivot.
-# 'Show more' click is exactly what we WANT now — it's a curiosity loop
-# that algo rewards. The line-length cap stays at 100 (per bullet).
-_MAX_NEWS_BODY_CHARS = 780
-_MAX_NEWS_LINE_CHARS = 100
+# 2026-05-22: bumped 780 → 1400 for the multi-paragraph Décode format.
+# User mandate: "make the text I write a bit longer, write a real thing
+# bro" — body now targets 700-1200 chars of actual argumentation.
+_MAX_NEWS_BODY_CHARS = 1400
+_MAX_NEWS_LINE_CHARS = 220  # also bumped — paragraphs allowed, not just bullets
 
 
 def _strip_urls(text: str) -> str:
@@ -94,30 +104,33 @@ def _news_body_too_long(tweet: str, src_url: str) -> bool:
 
 
 def _news_body_bad_format(tweet: str, src_url: str) -> bool:
-    """News is now the 'Le Décode #N' long-form format (450-700 chars, header
-    + 3 bullets + chute + tomorrow-hook). Accept that explicitly; reject
-    walls of text and overly short blurbs.
+    """Validate the multi-paragraph Le Décode #N format.
 
-    2026-05-19: re-loosened for long-form pivot. The old short-news format
-    is no longer valid output."""
+    2026-05-22: rewritten for the longer prose body (700-1200 chars,
+    2-4 paragraphs of argument, optional 2-3 bullets in the middle).
+    Header + blank-line break + body + chute + tomorrow-hook + URL.
+    """
     body = (tweet or "").replace(src_url or "", "").strip()
     if not body:
         return True
     non_empty = [ln.strip() for ln in body.splitlines() if ln.strip()]
     compact_len = len(re.sub(r"\s+", " ", body).strip())
 
-    # The Décode long-form is the expected shape.
     has_header = bool(re.search(r"Le Décode\s*#?\d+", body, re.IGNORECASE))
-    has_bullets = sum(1 for ln in non_empty if re.match(r"^[•\-\*]\s+", ln)) >= 2
     has_blank_break = "\n\n" in body
-    if has_header and has_bullets and has_blank_break and 380 <= compact_len <= 780:
-        return False
 
-    # Permissive fallback: 2-3 blocks separated by blank lines, classic short-news.
-    if has_blank_break and 2 <= len(non_empty) <= 6 and compact_len <= 700:
-        return any(len(line) > _MAX_NEWS_LINE_CHARS * 2 for line in non_empty)
+    # New long-form Décode shape: 500-1400 chars body, multi-paragraph,
+    # blank-line breaks. Bullets optional now (prose is encouraged).
+    if has_header and has_blank_break and 500 <= compact_len <= 1400:
+        # Sanity-check no individual paragraph is over the line cap
+        # (paragraphs can be long, but no single line should be a wall).
+        return any(len(line) > _MAX_NEWS_LINE_CHARS * 3 for line in non_empty)
 
-    # Last resort — short single-sentence tight tweet.
+    # Permissive fallback: 2-3 blocks separated by blank lines, classic format.
+    if has_blank_break and 2 <= len(non_empty) <= 10 and compact_len <= 1400:
+        return any(len(line) > _MAX_NEWS_LINE_CHARS * 3 for line in non_empty)
+
+    # Last resort — short single-sentence tight tweet (legacy fallback only).
     if "\n\n" not in body and compact_len <= 90 and len(non_empty) == 1:
         return False
 
@@ -188,33 +201,52 @@ https://www.theinformation.com/articles/exemple
 
 → Cette structure SKIP automatique. Donne directement le Décode. RIEN AVANT.
 
-FORMAT OBLIGATOIRE — strict (rien d'autre):
+FOCUS THÉMATIQUE DU JOUR: **{decode_topic}**
+Si {decode_topic} = IA → tu choisis une story IA (lab, chip, datacenter, agent, regs).
+Si {decode_topic} = Crypto → tu choisis une story crypto (BTC, ETH, stablecoin, mining, ETF, exchange).
+Si {decode_topic} = Investissement → tu choisis une story marché/macro/strat
+(Wall Street, big move VC, prise de position d'un investisseur ref, ETF, IPO, capex IA).
+Ne croise PAS les topics — un Décode = un sujet, focus net. Le sujet de cette
+édition s'affiche dans le header pour que les lecteurs sachent à quoi s'attendre.
 
-🔎 Le Décode #{decode_number} — {today_date}
-{{HEADLINE: 8-15 mots, chiffre OU nom propre en hook, verbe brutal OK}}
+FORMAT OBLIGATOIRE — strict (rien d'autre, ligne par ligne):
 
-• {{fait précis avec chiffre/montant/ticker EXACT}}
-• {{acteur nommé + conséquence directe}}
-• {{l'angle caché que personne n'a vu — "Le vrai sujet:"}}
+🔎 Le Décode #{decode_number} — {decode_topic} — {today_date}
 
-{{CHUTE FR sarcastique, 1-2 phrases. Stack 2 réfs culturelles FR
-(RER B + Bercy, URSSAF + tonton, Doctolib + café-clope, etc.).
-PEUT inclure 1-2 @-mentions d'acteurs RÉELLEMENT cités dans la
-story (Mistral, OpenAI, MARA, etc.) — JAMAIS pour clout, JAMAIS de
-mega-accounts non-impliqués. Le tag doit AVOIR DU SENS.}}
+{{TITRE: 1-2 phrases punchy, opinion-forte ou question contrarian.
+NE COMMENCE PAS par "Aujourd'hui" / "Selon" / "Breaking". Démarre fort:
+chiffre choc, nom propre sec, prise de position, ou question contrarian.}}
+
+{{CORPS — 2 à 4 paragraphes de RAISONNEMENT RÉEL. ~600-1000 chars body.
+NE PAS faire une liste à puces sèche. Écris comme un humain qui argumente.
+Tu peux utiliser des phrases courtes mordantes ALTERNÉES avec des phrases
+analytiques plus longues. Inclure: chiffres exacts, acteurs nommés (boîtes,
+fonds, personnages publics), conséquence économique, lien causal qu'aucun
+autre compte FR n'a fait. Tu prends une POSITION — pro ou anti — pas un
+résumé neutre. Tu signes ton angle. Quand pertinent, tu fais 2-3 puces
+courtes au milieu pour des chiffres clés. Style: comme @Graphseo
+qui écrit "Je pense le contraire, voici pourquoi:" puis déballe un
+argument en 3 mouvements.}}
+
+{{CHUTE FR — 1-2 phrases sarcastiques qui scellent l'angle. Stack 2 réfs
+culturelles FR (RER B + Bercy, URSSAF + tonton, Doctolib + café-clope,
+Lidl + INSEE). PEUT inclure 1-2 @-mentions d'acteurs RÉELLEMENT cités
+dans la story (voir RÉPERTOIRE plus bas). JAMAIS pour clout.}}
 
 Demain, même heure, même Décode.
 
 {{URL source ≤36h}}
 
 CONTRAINTES TOTAL (hors URL):
-- 450-700 chars body. C'est LONG exprès — X push les posts longs avec
-  "Show more", ce qui multiplie les vues × 3-5 sur un compte petit.
-- Hook dans les 6 premiers mots après le header.
-- 3 puces, jamais plus, jamais moins.
+- 700-1200 chars body. C'est LONG exprès — X push les posts longs avec
+  "Show more" → 3-5× plus de vues qu'un one-liner pour un petit compte.
+  Plus, le format long permet d'argumenter et de SIGNER une opinion.
+- LIGNE VIDE entre le header et le titre (très important pour la lisibilité).
+- Hook dans les 6 premiers mots après le titre. Pas de préambule.
 - Source ≤36h DÉJÀ VÉRIFIÉE via WebSearch. Pas de source → SKIP.
-- Aucun emoji décoratif ailleurs que le 🔎 du header.
-- Aucun hashtag. Aucun em dash (—). Aucune phrase qui pourrait être de Bloomberg.
+- Aucun emoji décoratif sauf le 🔎 du header.
+- Aucun hashtag. Aucun em dash (—). Aucune phrase Bloomberg-flavored.
+- Tu prends une OPINION, pas un résumé. Tu signes ton angle.
 
 🏷️ STRATÉGIE TAGS — OBLIGATOIRE (user mandate 2026-05-19 + 21 "tag
 big accounts to go viral"). Chaque Décode DOIT inclure 1-2 @-mentions
@@ -821,16 +853,18 @@ UTILISE CES DONNÉES. Écris plus comme tes meilleurs tweets. Évite les pattern
     # Le Décode counter — monotonically increments across days so each
     # daily series gets a unique number. State at decode_counter.json.
     decode_number = _next_decode_number()
+    decode_topic = _topic_for_decode(decode_number)
     from . import lang_mode
     lang = lang_mode.pick_content_lang()
     prompt = PROMPT_TEMPLATE.format(
         dedup_section=dedup_section,
         today_date=today_date,
         decode_number=decode_number,
+        decode_topic=decode_topic,
         performance_section=performance_section,
         lang_directive=lang_mode.lang_directive(lang),
     )
-    log.info(f"[NEWS] Generating Décode #{decode_number} in lang={lang}")
+    log.info(f"[NEWS] Generating Décode #{decode_number} ({decode_topic}) in lang={lang}")
 
     def _gen_one() -> str:
         r = run_llm(
