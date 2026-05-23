@@ -141,17 +141,22 @@ def _pick_best_pool_url(bullet1_text: str, pool_url_titles: dict) -> str:
 
 
 def _bullet1_numbers_grounded(bullet1: str, url_title_snippet: str) -> bool:
-    """Strict version: EVERY major number in bullet #1 must appear in the
-    article title+snippet. Skips year-like numbers (1900-2100) since
-    those are dates, not stats. Returns True if all numbers ground OR
-    if bullet has no extractable major numbers.
+    """Lenient version (2026-05-23 PM v2): at least ONE major number in
+    bullet #1 must appear in the article title+snippet. Skips year-like
+    numbers (1900-2100). Returns True if no extractable major numbers,
+    if the snippet itself has no numbers (text-only article), or if any
+    number grounds.
 
-    Catches Décode #109 hallucination: bullet "60 M$" + "1,4 Md$" while
-    article had "$42 million" + "$1.4 billion". The "1,4" matched but
-    "60" didn't — strict mode requires ALL match, so this rejects."""
+    This catches strong hallucinations (zero overlap) without false-
+    positiving on real numbers the model knows from the article body
+    that just happen not to be in the 500-char DDG snippet."""
     if not bullet1 or not url_title_snippet:
         return True
     haystack = url_title_snippet.lower()
+    # If the snippet has no numbers at all, the article may be text-only.
+    # Skip the check rather than reject every bullet on text-only sources.
+    if not re.search(r"\d{2,}", haystack):
+        return True
     nums = []
     for m in re.finditer(r"(\d[\d.,\s]{0,8}\d|\d)", bullet1):
         raw = m.group(1).strip().replace(" ", "")
@@ -173,16 +178,16 @@ def _bullet1_numbers_grounded(bullet1: str, url_title_snippet: str) -> bool:
         nums.append((val, candidates))
     if not nums:
         return True
-    # ALL major numbers from #1 must appear in haystack
+    # At least ONE major number from #1 must appear in haystack
     for val, candidates in nums:
-        found = False
         for c in candidates:
             if c and c.lower() in haystack:
-                found = True
-                break
-        if not found:
-            return False
-    return True
+                return True
+        # Fuzzy: leading 2 digits also count
+        sval = str(val)
+        if len(sval) >= 2 and sval[:2] in haystack:
+            return True
+    return False
 
 
 _OUTLET_DISPLAY_NAMES = {
