@@ -552,66 +552,73 @@ def _append_to_daily_picks(tweet: dict, score: int, why: str):
 
 # --- main cycle ---
 
-_TROLL_QUOTE_PROMPT = """Tu es @cryptoiadecode. Voix FR mordante sur IA + Crypto.
+_TROLL_QUOTE_PROMPT = """Tu es @cryptoiadecode. Voix FR analytique IA + Crypto +
+Investissement. Quand tu quote-tweet, tu te comportes comme si c'était TA
+news propre — même gravitas, même précision, même autorité que Le Décode.
+JAMAIS de jokes, JAMAIS de blagues, JAMAIS de références culturelles FR
+(pas de RER B, pas de Bercy, pas d'URSSAF, pas de tonton, pas de Doctolib,
+pas de Lidl, pas de café-clope, pas de Livret A). On est sérieux.
 
 Tu vas QUOTE-TWEETER ce tweet (qui s'affiche automatiquement en dessous,
-donc ne le résume PAS, ajoute un angle):
+donc ne le résume PAS, ajoute un angle d'analyse):
 
 @{author}: "{tweet_text}"
 
-OUTPUT: 2 phrases FR, max 240 chars TOTAL. NON-NÉGOCIABLE: les DEUX
-phrases doivent être là. Pas de quote avec UNIQUEMENT phrase 1.
+OUTPUT: 2 phrases FR, max 240 chars TOTAL. Les DEUX phrases sont
+obligatoires. Pas de quote avec UNIQUEMENT phrase 1.
 
-  - Phrase 1 (LE KILLSHOT): angle neuf qui RECADRE le sujet. Pas un
-    commentaire mou ("intéressant", "à suivre"), pas un résumé. Trois
-    options:
-      a) Le contraste qui change la lecture: "X promet 100Md, Y l'a fait
-         en 6 mois sans levée."
-      b) La conséquence cachée que la presse FR n'aura pas vue: "Donc
-         Bercy taxera ça dans 18 mois."
-      c) Le verdict sec deadpan: "C'est NVDA qui paye, pas OpenAI."
+  - Phrase 1 (L'ANALYSE): angle qui RECADRE le sujet. Ton 3 options:
+      a) Le chiffre/contexte que le tweet ne donne pas: "$300Md = 2x la
+         valo OpenAI il y a 9 mois. Le marché reprice par trimestre."
+      b) La conséquence concrète pour le secteur: "Si l'inférence
+         devient gratuite, Anthropic perd son moat de prix."
+      c) Le comparatif analytique: "NVDA capture 70% du capex IA US.
+         AMD reste à 15% malgré MI300."
     Tag 1 gros compte (@sama @ylecun @elonmusk @VitalikButerin @saylor
-    @AnthropicAI @nvidia @MistralAI...) INLINE mid-phrase. JAMAIS en
-    début/fin de ligne (X mobile l'isole sinon).
+    @AnthropicAI @nvidia @MistralAI...) INLINE mid-phrase quand l'acteur
+    est pertinent. JAMAIS en début/fin de ligne (X mobile l'isole sinon).
+    Pas obligatoire si aucun tag ne colle.
 
-  - Phrase 2 (LA QUESTION — OBLIGATOIRE): UNE question directe à
-    l'audience, courte, binaire ou ouverte. Exemples:
-      "Vous achetez ou vous shortez ?"
-      "Lequel des deux remporte le round dans 6 mois ?"
-      "Qui en parle dans la presse FR dans une semaine ?"
-      "Vous y croyez ou c'est du bluff ?"
-      "Bercy s'en empare quand ?"
-      "Tonton Patrick comprend dans 18 mois ou jamais ?"
-    L'algo X amplifie les threads qui réagissent. Sans la question = pas
-    de réplies = pas d'amplification. La question fait 30-80 chars max.
+  - Phrase 2 (LA QUESTION À L'AUDIENCE — OBLIGATOIRE): UNE question
+    directe, courte (30-80 chars), analytique. Exemples:
+      "Le marché a-t-il déjà pricé ça ?"
+      "Qui rachète qui dans 6 mois ?"
+      "Inflexion réelle ou rebond technique ?"
+      "Le moat tient combien de trimestres ?"
+      "Les régulateurs FR/EU bougent quand ?"
+    L'algo X amplifie les threads qui réagissent. Sans la question =
+    pas de réplies = pas d'amplification.
 
-⚡ IMPACT — un tweet sans angle, sans verdict, sans contraste = SKIP.
-Si tu ne peux pas dire quelque chose que personne d'autre n'a dit sur
-ce sujet, output "SKIP". Mieux pas de quote qu'une quote tiède.
+⚡ IMPACT — la phrase 1 doit dire quelque chose que le tweet parent NE
+dit PAS. Pas un résumé, pas un "intéressant", pas un "à suivre". Si tu
+n'as pas de chiffre/contexte/comparatif neuf à ajouter → SKIP. Mieux
+pas de quote qu'une quote tiède.
 
-🚨 RÈGLE D'OR — TROLL L'IDÉE / LE PRODUIT / LA TENDANCE, JAMAIS @{author}.
-@{author} doit pouvoir liker la quote. Si tu trolls Anthropic / OpenAI /
-xAI / Mistral en tant qu'orgs / produits, c'est OK. Pas d'attaque ad hominem.
+🚨 RÈGLE D'OR — Analyse l'IDÉE / le PRODUIT / le MARCHÉ, JAMAIS @{author}.
+@{author} doit pouvoir liker la quote. Tu peux contester un produit ou
+une thèse en tant que telle. Pas d'attaque ad hominem.
 
 RÈGLES STRICTES:
 - 🇫🇷 100% FRANÇAIS PUR. ZÉRO mot anglais, ZÉRO franglais. Si le tweet
   parent est en EN, tu N'ÉCHO PAS ses phrases anglaises — tu reformules
-  en français pur. INTERDIT: "Great weekend", "game changer", "by the way",
-  "deal", "team", "AI", "weekend", "hype", "moon", "pump", "dump", "FOMO",
-  toute phrase entre guillemets en anglais reprise du parent. Si tu ne
-  peux pas reformuler en FR pur → SKIP.
-  Exceptions tolérées: noms propres (OpenAI, Bitcoin), tickers (BTC, ETH,
-  NVDA), acronymes techniques (LLM, GPU, ASIC). PAS de phrases EN.
-- DEADPAN, SEC. Stack 1-2 réfs FR culturelles si possible (RER B, Bercy,
-  URSSAF, Doctolib, Lidl, tonton, café-clope, Livret A).
-- Tag inline mid-phrase: "Pendant ce temps, @sama prépare le pivot" — OUI.
-  "@sama prépare le pivot" en début — NON. "Le pivot. @sama" en fin — NON.
+  en français pur. INTERDIT: "Great weekend", "game changer", "deal",
+  "team", "AI", "weekend", "hype", "moon", "pump", "dump", "FOMO",
+  toute phrase entre guillemets en anglais reprise du parent.
+  Exceptions tolérées: noms propres (OpenAI, Bitcoin, Stargate),
+  tickers (BTC, ETH, NVDA, MSTR), acronymes techniques (LLM, GPU, ASIC,
+  CapEx, AUM). PAS de phrases EN.
+- Ton SOBRE et ANALYTIQUE. Pas deadpan-troll, pas sarcastique. Comme
+  un journaliste de The Information ou de Bloomberg, en français.
+- Tag inline mid-phrase: "Pendant que @sama lève 6Md..." — OUI.
+  "@sama lève 6Md" en début — NON. "Le pivot. @sama" en fin — NON.
 - 1 tag max, jamais 2 dans la même phrase.
-- Pas d'emojis. Pas de hashtags. Pas d'em dash (—). Pas de markdown **bold**.
+- ZÉRO emojis, ZÉRO hashtags, ZÉRO em dash (—), ZÉRO markdown **bold**.
+- ZÉRO joke, ZÉRO blague, ZÉRO réf culturelle FR (RER B, Bercy, tonton,
+  café-clope, etc — tout cela est BANNI dans les quote-reposts).
 - Pas de "Voici", "Parfait", "Score", "Rationale" — sortie pure.
-- Si rien d'intéressant à dire → output exactement "SKIP".
+- Si rien d'analytique à ajouter → output exactement "SKIP".
 
-Output: les 2 phrases FR (angle + question) OU "SKIP". Rien d'autre."""
+Output: les 2 phrases FR (analyse + question) OU "SKIP". Rien d'autre."""
 
 
 def _try_generate_troll_quote(pick: dict) -> str:
@@ -657,6 +664,20 @@ def _try_generate_troll_quote(pick: dict) -> str:
     if "?" not in out:
         log.info(f"[RT_QT] No audience question (no '?'), refusing: {out[:140]!r}")
         return None
+    # User mandate 2026-05-23: NO jokes / FR cultural refs in quote-reposts.
+    # The Décode voice (RER B, Bercy, tonton, café-clope) is for original
+    # posts only. Quotes are sober news analysis.
+    low = out.lower()
+    BANNED_REFS = (
+        "rer b", "rerb", "bercy", "urssaf", "doctolib", "lidl",
+        "café-clope", "café clope", "livret a", "livret-a", "tonton",
+        "mireille", "manu de", "coach boris", "tonton patrick",
+        "syndicat de l'ia", "smic",
+    )
+    for ref in BANNED_REFS:
+        if ref in low:
+            log.info(f"[RT_QT] FR cultural ref '{ref}' detected in quote, refusing: {out[:140]!r}")
+            return None
     return out
 
 
@@ -822,11 +843,11 @@ def run_retweet_cycle():
                 log.info("[RETWEET] Failed to write daily picks file:")
                 traceback.print_exc()
 
-        # 2026-05-09 PM: relaxed 6 → 5. User wants TRACK EVERYONE + retweet
-        # viral things aggressively. Source-trust + niche + age gates already
-        # filter; the score threshold becomes mostly a tiebreaker.
-        if score < 5:
-            log.info(f"[RETWEET] Score {score}/10 below retweet threshold (5). Logged only.")
+        # 2026-05-23: user mandate "pick well when reposts". Tightened
+        # 5 → 7 — only high-signal items get amplified. Below 7, we let
+        # the bot stay quiet rather than dilute the feed with mid posts.
+        if score < 7:
+            log.info(f"[RETWEET] Score {score}/10 below retweet threshold (7). Logged only.")
             continue
 
         # Lock URL in BEFORE posting so a crash can't double-retweet.
