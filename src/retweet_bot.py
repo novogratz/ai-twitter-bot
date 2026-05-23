@@ -559,17 +559,35 @@ donc ne le résume PAS, ajoute un angle):
 
 @{author}: "{tweet_text}"
 
-OUTPUT: 2 phrases FR, max 240 chars TOTAL:
-  - Phrase 1: angle neuf / troll intelligent / verdict sec. Tag 1 gros
-    compte pertinent (@sama @ylecun @elonmusk @VitalikButerin @saylor
-    @AnthropicAI @nvidia @MistralAI...) INLINE au milieu de la phrase,
-    pas en début/fin (sinon X met le tag sur sa propre ligne et le tweet
-    a l'air cassé).
-  - Phrase 2: UNE question directe à l'audience, qui demande une réaction.
-    Exemples: "Vous achetez ou vous shortez ?" / "Lequel des deux remporte
-    le round dans 6 mois ?" / "Qui en parle dans la presse FR dans une
-    semaine ?" / "Vous y croyez ou c'est du bluff ?" Le but: déclencher
-    des réponses, l'algo X amplifie les threads qui réagissent.
+OUTPUT: 2 phrases FR, max 240 chars TOTAL. NON-NÉGOCIABLE: les DEUX
+phrases doivent être là. Pas de quote avec UNIQUEMENT phrase 1.
+
+  - Phrase 1 (LE KILLSHOT): angle neuf qui RECADRE le sujet. Pas un
+    commentaire mou ("intéressant", "à suivre"), pas un résumé. Trois
+    options:
+      a) Le contraste qui change la lecture: "X promet 100Md, Y l'a fait
+         en 6 mois sans levée."
+      b) La conséquence cachée que la presse FR n'aura pas vue: "Donc
+         Bercy taxera ça dans 18 mois."
+      c) Le verdict sec deadpan: "C'est NVDA qui paye, pas OpenAI."
+    Tag 1 gros compte (@sama @ylecun @elonmusk @VitalikButerin @saylor
+    @AnthropicAI @nvidia @MistralAI...) INLINE mid-phrase. JAMAIS en
+    début/fin de ligne (X mobile l'isole sinon).
+
+  - Phrase 2 (LA QUESTION — OBLIGATOIRE): UNE question directe à
+    l'audience, courte, binaire ou ouverte. Exemples:
+      "Vous achetez ou vous shortez ?"
+      "Lequel des deux remporte le round dans 6 mois ?"
+      "Qui en parle dans la presse FR dans une semaine ?"
+      "Vous y croyez ou c'est du bluff ?"
+      "Bercy s'en empare quand ?"
+      "Tonton Patrick comprend dans 18 mois ou jamais ?"
+    L'algo X amplifie les threads qui réagissent. Sans la question = pas
+    de réplies = pas d'amplification. La question fait 30-80 chars max.
+
+⚡ IMPACT — un tweet sans angle, sans verdict, sans contraste = SKIP.
+Si tu ne peux pas dire quelque chose que personne d'autre n'a dit sur
+ce sujet, output "SKIP". Mieux pas de quote qu'une quote tiède.
 
 🚨 RÈGLE D'OR — TROLL L'IDÉE / LE PRODUIT / LA TENDANCE, JAMAIS @{author}.
 @{author} doit pouvoir liker la quote. Si tu trolls Anthropic / OpenAI /
@@ -633,6 +651,11 @@ def _try_generate_troll_quote(pick: dict) -> str:
     # than ship a half-translated mess. Whitelist proper-noun-ish tokens.
     if _has_english_phrase(out):
         log.info(f"[RT_QT] Franglais detected, refusing: {out[:140]!r}")
+        return None
+    # User mandate 2026-05-23: every quote MUST end with a question to the
+    # audience. Without "?" → no engagement bait → SKIP to silent retweet.
+    if "?" not in out:
+        log.info(f"[RT_QT] No audience question (no '?'), refusing: {out[:140]!r}")
         return None
     return out
 
@@ -810,14 +833,13 @@ def run_retweet_cycle():
         retweeted.add(pick["url"])
         _save_retweeted(retweeted)
 
-        # 2026-05-22: for VIRAL hits (score >= 8 or >=200 likes), try a
-        # quote-tweet with our voice on top instead of a silent retweet.
-        # User mandate: "you reposted it but you should also have quoted...
-        # tag Elon/sama, troll Anthropic, be creative". Quote-tweet includes
-        # the original underneath AND adds our take above. Silent retweet
-        # only happens if quote generation fails or returns SKIP.
+        # 2026-05-23: user mandate "90% reposts, 10% reposts + quote".
+        # Decision is now stochastic — 10% of candidates get the troll-
+        # quote treatment, regardless of score. Eligibility floor lifted
+        # so even score-7 candidates can land a quote (variety > only
+        # picking the same top-engagement candidates).
         likes = int(pick.get("likes") or 0)
-        upgrade_to_quote = score >= 8 or likes >= 200
+        upgrade_to_quote = random.random() < 0.10
         quoted_ok = False
         if upgrade_to_quote:
             quote_text = _try_generate_troll_quote(pick)
