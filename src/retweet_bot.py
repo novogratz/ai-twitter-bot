@@ -58,7 +58,7 @@ RETWEET_STATE_FILE = os.path.join(_PROJECT_ROOT, "retweet_daily_state.json")
 DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 
 # Hard cap per day. Path is deterministic/no-AI, so volume is cheap.
-MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "40"))
+MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "30"))
 RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "3")))
 
 # Min likes to consider a candidate before scoring. Source/niche/age gates
