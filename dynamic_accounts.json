@@ -17,9 +17,15 @@
     "VincentAuriac",
     "CyrilleDelsahut",
     "AlexisGalland",
-    "LucBourassa"
+    "LucBourassa",
+    "boursier",
+    "lecho_fr",
+    "blablacar_fr"
   ],
-  "en": [],
+  "en": [
+    "blablacar",
+    "sodexo"
+  ],
   "history": [
     {
       "lang": "fr",
@@ -109,6 +115,31 @@
     {
       "lang": "fr",
       "handle": "LucBourassa",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "boursier",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "lecho_fr",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "blablacar_fr",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "en",
+      "handle": "blablacar",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "en",
+      "handle": "sodexo",
       "added": "2026-05-23"
     }
   ]
