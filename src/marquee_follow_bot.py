@@ -38,6 +38,8 @@ MARQUEE_HANDLES = [
     # AI researchers / sharp thinkers (user-curated 2026-05-23)
     "fchollet", "AndrewYNg", "lilianweng", "drfeifei",
     "ID_AA_Carmack", "jeremyphoward", "gwern",
+    # Cursor — user mandate 2026-05-23: "Elon loves Cursor, we need his attention"
+    "cursor_ai", "sualeh", "amanrsanger", "mntruell",
     # Chips + infra
     "nvidia", "AMD", "intel", "CoreWeave", "CrusoeEnergy",
     "groqinc", "cerebrassystems",
