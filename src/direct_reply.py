@@ -867,7 +867,14 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         # Hard EN cap — 90%+ FR ratio mandate. Skip EN tweets once the
         # cycle-wide EN budget is exhausted. PROFILE-EN is excluded from
         # this check (it runs last and has its own budget awareness).
-        is_en_tweet = not _looks_french(text)
+        # translated_from field beats the text heuristic: X auto-translates
+        # EN tweets into FR in the DOM, making _looks_french return True
+        # for originally-English tweets.
+        _tl = tweet.get("translated_from") or ""
+        if _tl:
+            is_en_tweet = (_tl == "en")
+        else:
+            is_en_tweet = not _looks_french(text)
         if is_en_tweet and en_counter is not None and en_counter[0] >= MAX_EN_REPLIES_PER_CYCLE:
             log.info(f"[{source_name}] EN cap reached ({en_counter[0]}/{MAX_EN_REPLIES_PER_CYCLE}) — skipping EN tweet @{author}: {text[:60]}")
             continue
