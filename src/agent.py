@@ -1621,17 +1621,33 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # X's native link-card covers the visual; an attached image would
     # suppress the card preview, so always null the image topic.
     globals()["_last_image_topic"] = None
-    # 2026-05-23: de-linkify any OTHER URLs in the body so X doesn't hijack
-    # the link-card preview with an inline reference. Bug from Décode #98
-    # Crypto: model wrote "http://Crypto.com" in bullet #3, X picked THAT
-    # as the card instead of the trailing CoinDesk URL. We keep the text
-    # reference visible ("Crypto.com") but strip the http(s):// prefix so
-    # X stops auto-linking it.
+    # 2026-05-23 PM (Décode #109 bug): X auto-linkifies bare domains
+    # (especially exotic TLDs like .today) even without http://. Stripping
+    # the scheme isn't enough. Instead, REMOVE any inline URL that isn't
+    # the trailing source URL — both the URL itself and its surrounding
+    # "(source: ...)" wrapper if present. Outlet name stays only when
+    # the model wrote "(source: Bloomberg)" (text, no URL).
     if src_url:
-        def _delinkify(m):
+        def _keep_outlet_drop_url(m):
+            url_in_wrapper = m.group(1)
+            if url_in_wrapper == src_url or url_in_wrapper.rstrip(".,);") == src_url:
+                return m.group(0)  # keep wrapper containing the chosen URL
+            return ""  # drop "(source: <other-url>)" entirely
+        # Drop (source: <url>) blocks pointing to non-chosen URLs.
+        tweet = re.sub(
+            r"\s*\(\s*source\s*[:：]\s*(https?://\S+?)\s*\)",
+            _keep_outlet_drop_url,
+            tweet,
+            flags=re.IGNORECASE,
+        )
+        # Then drop any remaining bare inline URLs that aren't the source.
+        def _drop_bare(m):
             url = m.group(0)
-            return url if url == src_url or url.rstrip(".,);") == src_url else re.sub(r"^https?://", "", url)
-        tweet = re.sub(r"https?://\S+", _delinkify, tweet)
+            return url if url == src_url or url.rstrip(".,);") == src_url else ""
+        tweet = re.sub(r"https?://\S+", _drop_bare, tweet)
+        # Tidy up empty parens / double spaces left by the deletions.
+        tweet = re.sub(r"\(\s*\)", "", tweet)
+        tweet = re.sub(r" {2,}", " ", tweet)
     tweet = _finalize_news_tweet(tweet, src_url)
     if _news_body_bad_format(tweet, src_url):
         preview = " ".join(tweet.replace(src_url or "", "").split())
