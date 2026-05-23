@@ -304,8 +304,13 @@ Influenceur, pas bot timide. Tu prends position. Tu signes. Zéro bullshit.
 🎯 GOAL: ONE Le Décode #{decode_number} sur la story {decode_topic} la plus chaude des 24h.
 TOPIC: {decode_topic} uniquement (pas d'autre sujet). Format: {format_mode}.
 
-🚨 SCOPE STRICT: IA + Crypto + Investissement (+ datacenter MW + crypto mining).
-Pas de macro pure non-IA non-crypto.
+🚨 SCOPE STRICT — 3 catégories distinctes:
+  • IA — labs, modèles, agents, levées IA, regs IA.
+  • Crypto — BTC, ETH, ETF, stablecoins, mining, DeFi sérieux.
+  • Investissement & Bourse — capex IA/datacenters MW, crypto mining
+    (MARA, RIOT, CleanSpark, CoreWeave, Crusoe), valos / IPOs / earnings
+    Nvidia / AMD / Tesla / Microsoft / Google / Meta liés à IA ou crypto,
+    flux de capital sur ces noms. PAS de macro pure (Fed, CAC40 banques).
 
 {top5_block}
 
