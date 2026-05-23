@@ -1321,18 +1321,37 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # + tight voice anchor. Drops the prompt to ~12k chars.
     performance_section = ""
 
-    # LIVE WEB SEARCH — fresh hits for today's Décode topic. Always-on so
-    # BOTH Claude (cross-check) and ollama (only signal) get fresh URLs
-    # and snippets. 2026-05-22 PM expanded to multi-angle queries + RSS-
-    # pool injection so Top 5 has 12-22 real article URLs to pick from
-    # for the killshot link card.
+    # Pool injection moved BELOW topic selection — needs decode_topic.
     injected_urls = set()
     injected_url_titles: dict[str, str] = {}
+
+    # 2026-05-22 PM: joke_bank + self_winners disabled on the NEWS path.
+    # These exemplars were great for HOT TAKES (short voice-driven 1-liners)
+    # but on the long-form Le Décode multi-paragraph format they add 3-5k
+    # chars of noise that Claude has to process for no clear gain — the
+    # Décode shape is structured (header, paragraphs, chute, URL), not
+    # voice-mimicry-driven. Hotake_agent still injects both.
+
+    today_date = datetime.now().strftime("%Y-%m-%d")
+    _DAYS_FR = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+    day_of_week = _DAYS_FR[datetime.now().weekday()]
+
+    # 2026-05-22 PM hard rule (per-topic-per-day-per-format): 1 Daily +
+    # 1 Weekly per topic per day max. Non-Friday: 3 Dailies max.
+    # Friday: 3 Dailies + 3 Weeklies = 6 posts max. Independent of
+    # MAX_NEWS_PER_DAY so meta_strategy_agent can't accidentally flood.
+    next_combo = _next_topic_not_done_today()
+    if next_combo is None:
+        log.info("[NEWS] All eligible topic/format combos shipped today — no Décode this cycle.")
+        return None
+    decode_topic, use_top5 = next_combo
+    decode_number = _next_decode_number()
+    format_mode = "top5" if use_top5 else "regular"
+
+    # POOL INJECTION (multi-query DDG + RSS + reachability pre-filter).
+    # Lives here so it sees the resolved decode_topic.
     try:
         from . import web_search as _ws
-        # Collect raw candidates from MULTIPLE DDG sub-queries (structured)
-        # + RSS pool. Multi-query approach gives ~20-30 candidate URLs;
-        # the reachability filter then keeps the live ones.
         sub_queries = {
             "IA": [
                 "OpenAI Anthropic Mistral news this week",
@@ -1363,8 +1382,6 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
             signals = _ws.load_recent_signals(max_age_days=10, limit=10)
         except Exception:
             signals = []
-
-        # Build candidate (url, title) pairs, dedup by URL.
         raw_candidates = {}
         for h in ddg_hits:
             u = (h.get("url") or "").rstrip(".,);")
@@ -1374,28 +1391,21 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
             u = s.get("url") or ""
             if u and u not in raw_candidates:
                 raw_candidates[u] = s.get("title") or ""
-
-        # 2026-05-23 PM: PRE-VALIDATE pool URLs for reachability before
-        # showing them to the LLM. Parallel HEAD requests. Without this,
-        # DDG-indexed dead URLs (e.g. cryptoslate.com 404s) end up in the
-        # prompt → model picks them → tweet ships with broken link.
         reachable_pool = {}
         if raw_candidates:
             import concurrent.futures as _cf
             urls_list = list(raw_candidates.keys())
             log.info(f"[NEWS] Pre-validating {len(urls_list)} pool URLs for reachability...")
-            with _cf.ThreadPoolExecutor(max_workers=8) as pool:
-                results = list(pool.map(lambda u: (u, url_is_reachable(u, timeout=4)), urls_list))
+            with _cf.ThreadPoolExecutor(max_workers=8) as _pool:
+                results = list(_pool.map(lambda u: (u, url_is_reachable(u, timeout=4)), urls_list))
             for u, ok in results:
                 if ok:
                     reachable_pool[u] = raw_candidates[u]
             log.info(f"[NEWS] Pool: {len(reachable_pool)}/{len(urls_list)} URLs reachable after filter.")
-
-        # Build the LLM-visible block from ONLY reachable URLs.
         if reachable_pool:
             lines = [
                 "==================================================",
-                f"WEB SEARCH RESULTS — {len(reachable_pool)} reachable URLs (past week)",
+                f"WEB SEARCH RESULTS — {len(reachable_pool)} reachable URLs (past week, topic={decode_topic})",
                 "Pick the URL whose title best matches bullet #1 — copy EXACTLY.",
                 "==================================================",
                 "",
@@ -1405,40 +1415,13 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
                 lines.append(f"  {title}")
                 lines.append("")
             performance_section = (performance_section or "") + "\n\n" + "\n".join(lines)
-
         injected_urls = set(reachable_pool.keys())
         injected_url_titles = dict(reachable_pool)
     except Exception:
         log.info(f"[NEWS] Pool injection failed (proceeding without): {traceback.format_exc()[:400]}")
     globals()["_last_injected_urls"] = injected_urls
     globals()["_last_injected_url_titles"] = injected_url_titles
-    log.info(f"[NEWS] Final injected pool: {len(injected_urls)} URLs.")
-
-    # No additional injection — slim prompt path uses only web_block.
-    pass
-
-    # 2026-05-22 PM: joke_bank + self_winners disabled on the NEWS path.
-    # These exemplars were great for HOT TAKES (short voice-driven 1-liners)
-    # but on the long-form Le Décode multi-paragraph format they add 3-5k
-    # chars of noise that Claude has to process for no clear gain — the
-    # Décode shape is structured (header, paragraphs, chute, URL), not
-    # voice-mimicry-driven. Hotake_agent still injects both.
-
-    today_date = datetime.now().strftime("%Y-%m-%d")
-    _DAYS_FR = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
-    day_of_week = _DAYS_FR[datetime.now().weekday()]
-
-    # 2026-05-22 PM hard rule (per-topic-per-day-per-format): 1 Daily +
-    # 1 Weekly per topic per day max. Non-Friday: 3 Dailies max.
-    # Friday: 3 Dailies + 3 Weeklies = 6 posts max. Independent of
-    # MAX_NEWS_PER_DAY so meta_strategy_agent can't accidentally flood.
-    next_combo = _next_topic_not_done_today()
-    if next_combo is None:
-        log.info("[NEWS] All eligible topic/format combos shipped today — no Décode this cycle.")
-        return None
-    decode_topic, use_top5 = next_combo
-    decode_number = _next_decode_number()
-    format_mode = "top5" if use_top5 else "regular"
+    log.info(f"[NEWS] Final injected pool: {len(injected_urls)} URLs (topic={decode_topic}).")
 
     # 2026-05-22 PM (durable): use a SLIM news prompt (~5k chars instead
     # of the 25-30k PROMPT_TEMPLATE) so Claude can actually finish.
