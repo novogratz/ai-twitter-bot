@@ -555,9 +555,17 @@ def _append_to_daily_picks(tweet: dict, score: int, why: str):
 _TROLL_QUOTE_PROMPT = """Tu es @cryptoiadecode. Voix FR analytique IA + Crypto +
 Investissement. Quand tu quote-tweet, tu te comportes comme si c'était TA
 news propre — même gravitas, même précision, même autorité que Le Décode.
-JAMAIS de jokes, JAMAIS de blagues, JAMAIS de références culturelles FR
-(pas de RER B, pas de Bercy, pas d'URSSAF, pas de tonton, pas de Doctolib,
-pas de Lidl, pas de café-clope, pas de Livret A). On est sérieux.
+
+🎯 LA RÈGLE D'OR — UNE bonne quote = HARD SIGNAL + (optionnellement) UN
+anchor culturel FR. Hard signal = un chiffre concret (Md$, GW, %, ratio),
+un ticker (NVDA, BTC, MSTR, ETH), un @tag de gros compte, OU un nom propre
+fort (Stargate, Anthropic, OpenAI, CoreWeave). Sans hard signal → SKIP.
+Exemple qui a marché (3 likes): "L'Iran en alerte maximale, Trump annule
+son repos, et @saylor recharge Bitcoin comme si c'était les soldes de
+Lidl. Vous achetez ou vous shortez ce soir ?" → événement concret + @tag
++ comparaison Lidl bien ancrée. Marche parce que c'est ancré.
+Exemple qui FLOP: "Bercy se réunit jeudi. Vous y croyez ?" → 0 hard signal,
+pur folklore = SKIP.
 
 Tu vas QUOTE-TWEETER ce tweet (qui s'affiche automatiquement en dessous,
 donc ne le résume PAS, ajoute un angle d'analyse):
@@ -607,16 +615,16 @@ RÈGLES STRICTES:
   Exceptions tolérées: noms propres (OpenAI, Bitcoin, Stargate),
   tickers (BTC, ETH, NVDA, MSTR), acronymes techniques (LLM, GPU, ASIC,
   CapEx, AUM). PAS de phrases EN.
-- Ton SOBRE et ANALYTIQUE. Pas deadpan-troll, pas sarcastique. Comme
-  un journaliste de The Information ou de Bloomberg, en français.
+- Ton ANALYTIQUE D'ABORD. Un anchor culturel FR (Lidl, Bercy, RER B,
+  tonton, etc) est OK MAX 1 PAR QUOTE, et UNIQUEMENT en appui d'un
+  hard signal (chiffre/ticker/@tag). Pas d'anchor sans hard signal —
+  ça devient un meme creux. Pas plus d'1 anchor — 2 = stand-up.
 - Tag inline mid-phrase: "Pendant que @sama lève 6Md..." — OUI.
   "@sama lève 6Md" en début — NON. "Le pivot. @sama" en fin — NON.
-- 1 tag max, jamais 2 dans la même phrase.
+- 1 @tag max, jamais 2 dans la même phrase.
 - ZÉRO emojis, ZÉRO hashtags, ZÉRO em dash (—), ZÉRO markdown **bold**.
-- ZÉRO joke, ZÉRO blague, ZÉRO réf culturelle FR (RER B, Bercy, tonton,
-  café-clope, etc — tout cela est BANNI dans les quote-reposts).
 - Pas de "Voici", "Parfait", "Score", "Rationale" — sortie pure.
-- Si rien d'analytique à ajouter → output exactement "SKIP".
+- Si pas de hard signal ou pas d'angle neuf → output exactement "SKIP".
 
 Output: les 2 phrases FR (analyse + question) OU "SKIP". Rien d'autre."""
 
@@ -664,20 +672,18 @@ def _try_generate_troll_quote(pick: dict) -> str:
     if "?" not in out:
         log.info(f"[RT_QT] No audience question (no '?'), refusing: {out[:140]!r}")
         return None
-    # User mandate 2026-05-23: NO jokes / FR cultural refs in quote-reposts.
-    # The Décode voice (RER B, Bercy, tonton, café-clope) is for original
-    # posts only. Quotes are sober news analysis.
-    low = out.lower()
-    BANNED_REFS = (
-        "rer b", "rerb", "bercy", "urssaf", "doctolib", "lidl",
-        "café-clope", "café clope", "livret a", "livret-a", "tonton",
-        "mireille", "manu de", "coach boris", "tonton patrick",
-        "syndicat de l'ia", "smic",
-    )
-    for ref in BANNED_REFS:
-        if ref in low:
-            log.info(f"[RT_QT] FR cultural ref '{ref}' detected in quote, refusing: {out[:140]!r}")
-            return None
+    # User mandate 2026-05-23 PM: FR anchors (RER B, Bercy, Lidl, tonton...)
+    # are OK in quotes IF the quote also carries hard signal (number, $,
+    # ticker, or named-entity tag). The Lidl quote that landed 3 likes
+    # worked because it had @saylor + Bitcoin + concrete event. Pure joke
+    # without hard anchor = SKIP.
+    has_number = bool(re.search(r"\b\d[\d.,]*\s*(?:%|md|md\$|m\$|k\$|md€|m€|gw|tw|twh|gwh|mwh)\b", out, re.IGNORECASE)) or bool(re.search(r"\$\d", out))
+    has_tag = "@" in out
+    has_ticker = bool(re.search(r"\b(?:BTC|ETH|SOL|NVDA|AMD|MSTR|MARA|RIOT|TSLA|MSFT|GOOG|META|CRWV|OpenAI|Anthropic|Mistral|Stargate)\b", out))
+    has_hard_signal = has_number or has_tag or has_ticker
+    if not has_hard_signal:
+        log.info(f"[RT_QT] No hard signal (number/tag/ticker), too soft, refusing: {out[:140]!r}")
+        return None
     return out
 
 
@@ -843,11 +849,12 @@ def run_retweet_cycle():
                 log.info("[RETWEET] Failed to write daily picks file:")
                 traceback.print_exc()
 
-        # 2026-05-23: user mandate "pick well when reposts". Tightened
-        # 5 → 7 — only high-signal items get amplified. Below 7, we let
-        # the bot stay quiet rather than dilute the feed with mid posts.
-        if score < 7:
-            log.info(f"[RETWEET] Score {score}/10 below retweet threshold (7). Logged only.")
+        # 2026-05-23 PM: user "do reposts more". Lowered 7 → 6 — broader
+        # repost coverage while still skipping clear mid posts. Quality
+        # gate stays at score-6 because below that engagement is too
+        # thin to be worth amplifying.
+        if score < 6:
+            log.info(f"[RETWEET] Score {score}/10 below retweet threshold (6). Logged only.")
             continue
 
         # Lock URL in BEFORE posting so a crash can't double-retweet.
