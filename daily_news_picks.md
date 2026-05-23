@@ -5469,3 +5469,12 @@ China launches its first fully self-developed gaming GPU
  P
   - https://x.com/AlexXplore/status/2058128666689749290
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 246).
+- **@kobeissiletter** (1088 likes, score 8/10) — URGENT : Le Bitcoin grimpe vers 77 000 $ après que le président Trump a déclaré qu'il annoncerait prochainement un accord avec l'Iran.
+  - https://x.com/KobeissiLetter/status/2058287203508191518
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1350).
+- **@watcherguru** (960 likes, score 8/10) — JUST IN : Bitcoin reprend les 77 000 $ après que le président Trump a déclaré que les États-Unis et l'Iran finalisent un accord.
+  - https://x.com/WatcherGuru/status/2058291899094470932
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1296).
+- **@cointelegraph** (20 likes, score 7/10) — DERNIER : Le marché de prédiction Polymarket place désormais les chances d'une introduction en bourse d'OpenAI d'ici la fin de 2026 à 72 %.
+  - https://x.com/Cointelegraph/status/2058292000701424060
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 60).
