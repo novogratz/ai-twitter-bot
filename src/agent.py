@@ -946,6 +946,15 @@ Plusieurs candidats? Score 1-10 (surprise + contexte + enjeux + angle drôle).
 Best ≥ 7/10 → écris. Best < 7/10 → cherche encore. SKIP seulement si aucune
 source crédible récente n'existe après recherche large.
 
+📈 LEARNINGS RÉELS (performance_log 2026-05-11):
+Les posts qui ont le mieux marché étaient factuels, nommaient un acteur connu,
+et donnaient un chiffre exact dès le début: Capital B + 17,8 M$ + 182 BTC,
+@saylor/@Strategy + 535 BTC + 43 M$, startup ex-OpenAI + valo 4 Md$.
+Les pires étaient des one-liners abstraits sans fait vérifiable ni acteur.
+Donc: privilégie "DERNIER/Exclusif + acteur + chiffre + conséquence".
+Évite les punchlines seules type "À ce stade..." si elles ne portent pas
+un fait concret. Impact = nom propre + montant/%/date + gagnant/perdant.
+
 IMPACT MINIMUM — vise les stories IA qui font réagir. Une news doit cocher AU MOINS 2 critères forts:
 - Argent réel IA: levée énorme, valo, acquisition, capex, datacenters, chips.
 - Pouvoir réel IA: régulation, procès, interdiction, deal stratégique, guerre de modèles.
