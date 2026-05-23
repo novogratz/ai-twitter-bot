@@ -302,10 +302,25 @@ def _run_single_bot_cycle() -> bool:
                                         f"({sorted(title_tokens)[:6]} not in subject region)"
                                     )
                 if strip_reason:
-                    log.info(f"[NEWS] ❌ URL stripped — {strip_reason}: {src_url}")
-                    post_body = tweet.replace(src_url, "").rstrip()
-                    post_body = re.sub(r"\n+(Source\s*:?\s*)?\s*$", "", post_body).rstrip()
-                    src_url = None
+                    # 2026-05-23: was stripping URL + shipping URL-less.
+                    # User mandate: Daily Décodes MUST ship with link card.
+                    # If URL validation fails → SKIP entire cycle, retry
+                    # next cycle. Un-mark the topic in daily_topic_state
+                    # so the rotation picks it again next time (agent.py
+                    # marked it done as part of its successful generation,
+                    # but we're refusing to actually ship).
+                    log.info(
+                        f"[NEWS] ❌ URL stripped — {strip_reason}: {src_url} "
+                        f"→ SKIPPING Daily Décode (cannot ship URL-less)."
+                    )
+                    try:
+                        topic = _ag.__dict__.get("_pending_decode_topic")
+                        if topic:
+                            _ag._unmark_topic_done_today(topic, is_weekly=False)
+                            log.info(f"[NEWS] Un-marked '{topic}:daily' — will retry next cycle.")
+                    except Exception:
+                        pass
+                    return
                 else:
                     log.info(f"[NEWS] ✅ URL validated (pool + reachable + matches #1), keeping inline")
             except Exception as e:
@@ -315,7 +330,19 @@ def _run_single_bot_cycle() -> bool:
             if src_url:
                 img_path = None
         elif is_decode:
-            log.info("[NEWS] ⚠️ Décode posting with NO URL (model didn't emit one)")
+            # No URL emitted by the model → SKIP Daily, retry. (Weekly Top5
+            # is allowed URL-less since per-bullet sources carry the trace —
+            # handled upstream in agent.py.)
+            log.info("[NEWS] ⚠️ Décode would ship URL-less → SKIPPING (link card required).")
+            try:
+                from . import agent as _ag
+                topic = _ag.__dict__.get("_pending_decode_topic")
+                if topic:
+                    _ag._unmark_topic_done_today(topic, is_weekly=False)
+                    log.info(f"[NEWS] Un-marked '{topic}:daily' — will retry next cycle.")
+            except Exception:
+                pass
+            return
 
         log.info(f"[NEWS] Posting ({len(post_body)} chars): {post_body[:100]}...")
         post_tweet(post_body, image_path=img_path)
