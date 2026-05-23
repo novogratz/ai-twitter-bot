@@ -5437,3 +5437,21 @@ Minting on @ethereum
 Apply for wl : https://dioramas.xyz
   - https://x.com/worldsinboxes/status/2057689196333273349
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 773).
+- **@kalshi** (137 likes, score 9/10) — INFO URGENTE : 60 % de chances que Bitcoin chute sous 60 000 $
+  - https://x.com/Kalshi/status/2058194235183010124
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 251).
+- **@cryptogoos** (2356 likes, score 8/10) — LA CHINE VIENT DE LANCER UNE AUTRE ATTAQUE DIRECTE CONTRE $NVDA.
+
+La Chine vient d’expédier son premier vrai rival à Nvidia.
+
+Le GPU LX 7G100 de Lisuan Tech a été lancé hier.  
+Fabriqué entièrement en
+  - https://x.com/cryptogoos/status/2058080225724948931
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2672).
+- **@askyoshik** (2245 likes, score 8/10) — Les calculs de la bulle de l’IA ne tiennent pas la route.
+
+Anthropic dépense 3 $ pour générer 1 $ et c’est avant d’inclure tous les autres coûts comme le personnel ou l’électricité.
+
+Microsoft a inves
+  - https://x.com/AskYoshik/status/2057859030081745275
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2617).
