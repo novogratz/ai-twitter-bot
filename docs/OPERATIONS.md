@@ -283,6 +283,7 @@ Counter / state files (one per bot):
 | Stop the bot now | `./bin/stop.sh` |
 | Reset daily counters | `echo '{"date":"'$(date +%Y-%m-%d)'","news":0,"hotakes":0}' > daily_state.json` |
 | Force a news cycle now (foreground) | `python3 -c "from src.bot import run_bot_cycle; run_bot_cycle()"` |
+| Force monthly Top 10 recaps now | `python3 main.py --monthly-recap-now` |
 | Force a retweet cycle now | `python3 -c "from src.retweet_bot import run_retweet_cycle; run_retweet_cycle()"` |
 | Manually pin a tweet | `python3 -c "from src.twitter_client import pin_own_tweet; pin_own_tweet('https://x.com/<you>/status/<id>')"` |
 | Add a handle to respect list | `python3 -c "from src.respect_list import add; add('handle','reason')"` |

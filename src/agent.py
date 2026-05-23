@@ -110,21 +110,27 @@ def _daily_topic_state() -> dict:
     return {"date": today, "topics_done": []}
 
 
-def _topic_done_key(topic: str, is_weekly: bool) -> str:
-    """Dedup key is (topic, format). Daily Décodes and Weekly Top 5s on
-    the same topic count separately — on Friday a topic gets BOTH."""
-    return f"{topic}:{'weekly' if is_weekly else 'daily'}"
+def _format_key(is_weekly: bool = False, format_kind: Optional[str] = None) -> str:
+    if format_kind:
+        return format_kind
+    return "weekly" if is_weekly else "daily"
 
 
-def _topic_already_done_today(topic: str, is_weekly: bool = False) -> bool:
+def _topic_done_key(topic: str, is_weekly: bool = False, format_kind: Optional[str] = None) -> str:
+    """Dedup key is (topic, format). Daily, weekly Top 5, and monthly Top 10
+    on the same topic count separately."""
+    return f"{topic}:{_format_key(is_weekly, format_kind)}"
+
+
+def _topic_already_done_today(topic: str, is_weekly: bool = False, format_kind: Optional[str] = None) -> bool:
     state = _daily_topic_state()
-    return _topic_done_key(topic, is_weekly) in (state.get("topics_done") or [])
+    return _topic_done_key(topic, is_weekly, format_kind) in (state.get("topics_done") or [])
 
 
-def _mark_topic_done_today(topic: str, is_weekly: bool = False) -> None:
+def _mark_topic_done_today(topic: str, is_weekly: bool = False, format_kind: Optional[str] = None) -> None:
     state = _daily_topic_state()
     done = state.get("topics_done") or []
-    key = _topic_done_key(topic, is_weekly)
+    key = _topic_done_key(topic, is_weekly, format_kind)
     if key not in done:
         done.append(key)
     state["topics_done"] = done
@@ -135,13 +141,13 @@ def _mark_topic_done_today(topic: str, is_weekly: bool = False) -> None:
         pass
 
 
-def _unmark_topic_done_today(topic: str, is_weekly: bool = False) -> None:
+def _unmark_topic_done_today(topic: str, is_weekly: bool = False, format_kind: Optional[str] = None) -> None:
     """Reverse of _mark_topic_done_today. Used when bot.py-side URL
     validation strips the link and we SKIP rather than ship URL-less —
     the topic should remain eligible for the next cycle."""
     state = _daily_topic_state()
     done = state.get("topics_done") or []
-    key = _topic_done_key(topic, is_weekly)
+    key = _topic_done_key(topic, is_weekly, format_kind)
     if key in done:
         done.remove(key)
     state["topics_done"] = done
@@ -176,8 +182,9 @@ def _next_topic_not_done_today() -> Optional[tuple]:
     """Return the next (topic, is_weekly) pair eligible to ship NOW.
 
     Force-mode (set by the cron triggers in main.py):
-      - globals()["_news_mode"] == "daily"  → only daily combos
-      - globals()["_news_mode"] == "weekly" → only weekly combos
+      - globals()["_news_mode"] == "daily"   → only daily combos
+      - globals()["_news_mode"] == "weekly"  → only weekly combos
+      - globals()["_news_mode"] == "monthly" → only monthly combos
       - otherwise (manual / startup fire)   → use time-of-day windows
     """
     state = _daily_topic_state()
@@ -185,27 +192,75 @@ def _next_topic_not_done_today() -> Optional[tuple]:
     mode = globals().get("_news_mode")
     plan = []
     if mode == "daily":
-        plan = [(t, False) for t in _DECODE_TOPICS]
+        plan = [(t, "daily") for t in _DECODE_TOPICS]
     elif mode == "weekly":
-        plan = [(t, True) for t in _DECODE_TOPICS]
+        plan = [(t, "weekly") for t in _DECODE_TOPICS]
+    elif mode == "monthly":
+        plan = [(t, "monthly") for t in _DECODE_TOPICS]
     else:
         if _is_in_weekly_window():
-            plan.extend([(t, True) for t in _DECODE_TOPICS])
+            plan.extend([(t, "weekly") for t in _DECODE_TOPICS])
         if _is_in_daily_window():
-            plan.extend([(t, False) for t in _DECODE_TOPICS])
-    for topic, is_weekly in plan:
-        if _topic_done_key(topic, is_weekly) not in done:
-            return (topic, is_weekly)
+            plan.extend([(t, "daily") for t in _DECODE_TOPICS])
+    for topic, format_kind in plan:
+        if _topic_done_key(topic, format_kind=format_kind) not in done:
+            return (topic, format_kind)
     return None
 
 
 def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_date, format_mode, web_block, dedup_block):
-    series_label = "Weekly" if format_mode == "top5" else "Daily"
+    series_label = "Monthly" if format_mode == "monthly_top10" else ("Weekly" if format_mode == "top5" else "Daily")
     """A tight news prompt (~5k chars). Replaces the 25k PROMPT_TEMPLATE
     when generating Décodes. Claude can actually finish on this size.
     """
     top5_block = ""
-    if format_mode == "top5":
+    if format_mode == "monthly_top10":
+        top5_block = f"""INSTRUCTIONS (NE PAS OUTPUT — réfléchis silencieusement):
+
+  • Le Décode Monthly = TOP 10 chiffres du mois pour UNE catégorie.
+  • Fenêtre: les 30 derniers jours. Tu synthétises les plus gros faits, pas
+    les micro-news. Chaque bullet doit porter un acteur, un chiffre, et une
+    conséquence business/marché/souveraineté.
+  • Le classement est décroissant: #1 = le fait du mois que le lecteur doit
+    bookmarker. #10 doit encore être utile; pas de bouche-trou.
+  • CHIFFRES: viennent des SIGNAUX FOURNIS. Hedge ("~3 Md$") si pas exact.
+    JAMAIS inventer un chiffre absent du titre/snippet.
+  • TAGS: max 1 @handle par bullet, inline mid-phrase, jamais seul en début
+    ou fin de ligne.
+  • (source: outlet) doit nommer un vrai média. Pas d'invention.
+  • ZÉRO markdown (**bold**, __italic__). Texte brut.
+  • URL finale optionnelle. Si tu en mets une, copie-colle une URL exacte
+    depuis les signaux. Sinon les sources par bullet suffisent.
+  • Cible 1800-2600 chars body.
+
+============================================================
+OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
+============================================================
+
+🔎 Le Décode Monthly #{decode_number} — {decode_topic} — {day_of_week} {today_date}
+
+Les 10 chiffres {decode_topic} du mois.
+
+1. 💰 {{chiffre exact #1, le killshot}} : {{insight 1 ligne, tag @handle inline si pertinent}}. (source: {{outlet}})
+2. 🚀 {{chiffre #2}} : {{insight}}. (source: {{outlet}})
+3. ⚡ {{chiffre #3}} : {{insight}}. (source: {{outlet}})
+4. 📊 {{chiffre #4}} : {{insight}}. (source: {{outlet}})
+5. 🔥 {{chiffre #5}} : {{insight}}. (source: {{outlet}})
+6. 🧨 {{chiffre #6}} : {{insight}}. (source: {{outlet}})
+7. 🏦 {{chiffre #7}} : {{insight}}. (source: {{outlet}})
+8. 🧱 {{chiffre #8}} : {{insight}}. (source: {{outlet}})
+9. 🛰️ {{chiffre #9}} : {{insight}}. (source: {{outlet}})
+10. 🧾 {{chiffre #10}} : {{insight}}. (source: {{outlet}})
+
+{{Chute FR sarcastique 1-2 phrases, stack 2 réfs FR.}}
+
+{{Question directe: "Lequel des 10 change vraiment le mois prochain ?"}}
+
+Le mois prochain, même Décode.
+
+{{URL exacte optionnelle depuis WEB SEARCH RESULTS / RSS POOL — DERNIÈRE ligne si présente}}
+"""
+    elif format_mode == "top5":
         # CRITICAL: keep INSTRUCTIONS (rules the model follows silently) and
         # the EXACT OUTPUT TEMPLATE (the literal text shape) in separate
         # sections. When they were interleaved, the model echoed instruction
@@ -441,8 +496,8 @@ def _news_body_too_long(tweet: str, src_url: str) -> bool:
     longer than a 3-paragraph Décode)."""
     body = (tweet or "").replace(src_url or "", "")
     body = re.sub(r"\s+", " ", body).strip()
-    is_top5 = bool(globals().get("_pending_top5_topic"))
-    cap = 2000 if is_top5 else _MAX_NEWS_BODY_CHARS
+    format_kind = globals().get("_pending_decode_format", "daily")
+    cap = 3200 if format_kind == "monthly" else (2000 if format_kind == "weekly" else _MAX_NEWS_BODY_CHARS)
     return len(body) > cap
 
 
@@ -459,13 +514,13 @@ def _news_body_bad_format(tweet: str, src_url: str) -> bool:
     non_empty = [ln.strip() for ln in body.splitlines() if ln.strip()]
     compact_len = len(re.sub(r"\s+", " ", body).strip())
 
-    has_header = bool(re.search(r"Le Décode(?:\s+(?:Daily|Weekly))?\s*#?\d+", body, re.IGNORECASE))
+    has_header = bool(re.search(r"Le Décode(?:\s+(?:Daily|Weekly|Monthly))?\s*#?\d+", body, re.IGNORECASE))
     has_blank_break = "\n\n" in body
 
     # 2026-05-22: top5 weekly recap is naturally longer (5 emoji bullets +
     # intro + chute). Bump the ceiling 1400 → 2000 in that mode.
-    is_top5 = bool(globals().get("_pending_top5_topic"))
-    body_max = 2000 if is_top5 else 1400
+    format_kind = globals().get("_pending_decode_format", "daily")
+    body_max = 3200 if format_kind == "monthly" else (2000 if format_kind == "weekly" else 1400)
 
     # New long-form Décode shape: 500-{body_max} chars body, multi-paragraph,
     # blank-line breaks. Bullets optional now (prose is encouraged).
@@ -1353,9 +1408,11 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     if next_combo is None:
         log.info("[NEWS] All eligible topic/format combos shipped today — no Décode this cycle.")
         return None
-    decode_topic, use_top5 = next_combo
+    decode_topic, format_kind = next_combo
+    use_top5 = format_kind == "weekly"
+    use_monthly = format_kind == "monthly"
     decode_number = _next_decode_number()
-    format_mode = "top5" if use_top5 else "regular"
+    format_mode = "monthly_top10" if use_monthly else ("top5" if use_top5 else "regular")
 
     # POOL INJECTION (multi-query DDG + RSS + reachability pre-filter).
     # Lives here so it sees the resolved decode_topic.
@@ -1363,32 +1420,32 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         from . import web_search as _ws
         sub_queries = {
             "IA": [
-                "OpenAI Anthropic Mistral news this week",
-                "AI datacenter GPU NVIDIA news this week",
-                "AI agent LLM startup funding news this week",
-                "Cursor AI code editor news Elon Musk this week",
+                f"OpenAI Anthropic Mistral news {'this month' if use_monthly else 'this week'}",
+                f"AI datacenter GPU NVIDIA news {'this month' if use_monthly else 'this week'}",
+                f"AI agent LLM startup funding news {'this month' if use_monthly else 'this week'}",
+                f"Cursor AI code editor news Elon Musk {'this month' if use_monthly else 'this week'}",
             ],
             "Crypto": [
-                "Bitcoin Ethereum crypto news this week",
-                "crypto mining hashrate MARA Riot news this week",
-                "stablecoin DeFi Coinbase news this week",
-                "Bitcoin ETF inflows institutional news this week",
+                f"Bitcoin Ethereum crypto news {'this month' if use_monthly else 'this week'}",
+                f"crypto mining hashrate MARA Riot news {'this month' if use_monthly else 'this week'}",
+                f"stablecoin DeFi Coinbase news {'this month' if use_monthly else 'this week'}",
+                f"Bitcoin ETF inflows institutional news {'this month' if use_monthly else 'this week'}",
             ],
             "Investissement": [
-                "NVIDIA AMD Tesla Microsoft Google AI stock earnings this week",
-                "AI datacenter capex Stargate CoreWeave CRWV news this week",
-                "tech IPO MicroStrategy MSTR MARA RIOT valuation this week",
-                "AI investment fund raise venture capital news this week",
+                f"NVIDIA AMD Tesla Microsoft Google AI stock earnings {'this month' if use_monthly else 'this week'}",
+                f"AI datacenter capex Stargate CoreWeave CRWV news {'this month' if use_monthly else 'this week'}",
+                f"tech IPO MicroStrategy MSTR MARA RIOT valuation {'this month' if use_monthly else 'this week'}",
+                f"AI investment fund raise venture capital news {'this month' if use_monthly else 'this week'}",
             ],
         }.get(decode_topic, ["AI news this week"])
         ddg_hits = []
         for q in sub_queries:
             try:
-                ddg_hits.extend(_ws.search_news(q, max_results=5, date_filter="w"))
+                ddg_hits.extend(_ws.search_news(q, max_results=8 if use_monthly else 5, date_filter="m" if use_monthly else "w"))
             except Exception:
                 continue
         try:
-            signals = _ws.load_recent_signals(max_age_days=10, limit=10)
+            signals = _ws.load_recent_signals(max_age_days=35 if use_monthly else 10, limit=20 if use_monthly else 10)
         except Exception:
             signals = []
         # Filter out content farms / low-trust outlets BEFORE reachability
@@ -1423,7 +1480,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
                 "==================================================",
                 "",
             ]
-            for u, title in list(reachable_pool.items())[:12]:
+            for u, title in list(reachable_pool.items())[:24 if use_monthly else 12]:
                 lines.append(f"- {u}")
                 lines.append(f"  {title}")
                 lines.append("")
@@ -1454,6 +1511,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     globals()["_pending_top5_topic"] = decode_topic if use_top5 else None
     globals()["_pending_decode_num"] = decode_number
     globals()["_pending_decode_topic"] = decode_topic
+    globals()["_pending_decode_format"] = format_kind
 
     def _gen_one() -> str:
         # 2026-05-22 PM: DO NOT pass WebSearch to Claude. We already
@@ -1536,8 +1594,8 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         today = datetime.now().strftime("%Y-%m-%d")
         n = globals().get("_pending_decode_num")
         topic = globals().get("_pending_decode_topic", "")
-        is_top5 = bool(globals().get("_pending_top5_topic"))
-        label = "Weekly" if is_top5 else "Daily"
+        format_kind = globals().get("_pending_decode_format", "daily")
+        label = "Monthly" if format_kind == "monthly" else ("Weekly" if format_kind == "weekly" else "Daily")
         header = f"🔎 Le Décode {label} #{n} — {topic} — {today}" if n else f"🔎 Le Décode {label} — {today}"
         tweet = f"{header}\n\n{tweet}"
     else:
@@ -1576,11 +1634,14 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # carries the entire posting load — every story must be SAME-DAY fresh.
     # 2026-05-22 PM: top5 Friday recap is a WEEKLY digest by design, so the
     # 36h gate doesn't apply — sources spanning the whole week are expected.
-    is_top5 = bool(globals().get("_pending_top5_topic"))
+    # Monthly Top 10 spans roughly the last month.
+    format_kind = globals().get("_pending_decode_format", "daily")
+    is_top5 = format_kind == "weekly"
+    is_monthly = format_kind == "monthly"
     # User mandate 2026-05-22 PM: "it has to be something during the last
     # 10 days max". Bumped top5 ceiling 7d → 10d (240h). Regular Décode
     # stays at 36h since that's breaking-news cadence.
-    max_age_h = 240 if is_top5 else 36
+    max_age_h = 840 if is_monthly else (240 if is_top5 else 36)
     if src_url:
         try:
             from .hotake_agent import _url_publication_date, _is_rejected_source
@@ -1613,11 +1674,10 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     if not src_url:
         compact = re.sub(r"\s+", " ", tweet).strip()
         has_header = bool(re.search(r"Le Décode(?:\s+(?:Daily|Weekly))?\s*#?\d+", tweet, re.IGNORECASE))
-        # Top 5 weekly: per-bullet (source: outlet) carries the trace, URL
-        # remains genuinely optional (user mandate). Daily: URL is MANDATORY
-        # — link card is the visual hook. No URL → SKIP, ship next cycle.
-        if is_top5 and has_header and len(compact) >= 300:
-            log.info(f"[NEWS] Top5 mode, no source URL — shipping weekly recap ({len(compact)} chars).")
+        # Top 5 weekly / Top 10 monthly: per-bullet (source: outlet) carries
+        # the trace, URL remains optional. Daily: URL is mandatory.
+        if (is_top5 or is_monthly) and has_header and len(compact) >= 300:
+            log.info(f"[NEWS] Recap mode, no source URL — shipping recap ({len(compact)} chars, monthly={is_monthly}).")
         else:
             preview = " ".join(tweet.split())[:220]
             log.info(
@@ -1725,7 +1785,8 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # Bug 2026-05-22: was reading the global AFTER it was set to None,
     # so all Weekly Top 5s got marked as Daily in daily_topic_state.
     _pending = globals().get("_pending_top5_topic")
-    is_weekly_this_post = bool(_pending)
+    _format_kind_this_post = globals().get("_pending_decode_format", "daily")
+    is_weekly_this_post = _format_kind_this_post == "weekly"
     if _pending:
         _mark_top5_done(_pending)
         log.info(f"[NEWS] Top 5 Vendredi shipped for {_pending} — next {_pending} Décode = regular format.")
@@ -1735,7 +1796,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # topic still gets BOTH a Daily and a Weekly (separate keys).
     _decoded_topic = globals().get("_pending_decode_topic")
     if _decoded_topic:
-        _mark_topic_done_today(_decoded_topic, is_weekly=is_weekly_this_post)
-        label = "Weekly" if is_weekly_this_post else "Daily"
+        _mark_topic_done_today(_decoded_topic, format_kind=_format_kind_this_post)
+        label = "Monthly" if _format_kind_this_post == "monthly" else ("Weekly" if is_weekly_this_post else "Daily")
         log.info(f"[NEWS] Marked '{_decoded_topic}' {label} done for today.")
     return tweet

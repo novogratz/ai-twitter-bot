@@ -21,7 +21,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from apscheduler.triggers.cron import CronTrigger
 from src.logger import log
-from src.bot import has_post_slot, post_slot_status, safe_run_bot_cycle, safe_run_daily_news_cycle, safe_run_weekly_news_cycle
+from src.bot import has_post_slot, post_slot_status, safe_run_bot_cycle, safe_run_daily_news_cycle, safe_run_weekly_news_cycle, safe_run_monthly_news_cycle
 from src.reply_bot import safe_run_reply_cycle
 from src.engage_bot import safe_run_engage_cycle
 from src.notify_bot import safe_run_notify_cycle, safe_run_boost_cycle, safe_run_replyback_cycle
@@ -206,6 +206,7 @@ def main():
     parser = argparse.ArgumentParser(description="@kzer_ai AI Twitter bot")
     parser.add_argument("--post-only", action="store_true", help="Run only the post bot")
     parser.add_argument("--reply-only", action="store_true", help="Run only the reply bot")
+    parser.add_argument("--monthly-recap-now", action="store_true", help="Post the monthly Top 10 Décode recap now, then exit")
     parser.add_argument("--dry-run", action="store_true", help="Print actions without posting")
     args = parser.parse_args()
 
@@ -215,6 +216,10 @@ def main():
 
     if args.dry_run:
         log.info("DRY RUN MODE - no tweets will be posted")
+
+    if args.monthly_recap_now:
+        safe_run_monthly_news_cycle()
+        return
 
     scheduler = BlockingScheduler()
 
@@ -336,6 +341,12 @@ def main():
             safe_run_weekly_news_cycle,
             trigger=CronTrigger(day_of_week="fri", hour=7, minute=0, timezone="America/New_York"),
             id="weekly_news_job",
+        )
+        log.info("News bot MONTHLY: cron on the 1st at 8:00 AM America/New_York (= monthly Top 10).")
+        scheduler.add_job(
+            safe_run_monthly_news_cycle,
+            trigger=CronTrigger(day=1, hour=8, minute=0, timezone="America/New_York"),
+            id="monthly_news_job",
         )
 
     if not args.post_only:

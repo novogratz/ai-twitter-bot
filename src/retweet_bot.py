@@ -117,7 +117,7 @@ OFF_TOPIC_KEYWORDS = (
 # we shouldn't be amplifying week-old or year-old news.
 MAX_CANDIDATE_AGE_HOURS = int(os.environ.get("RETWEET_MAX_AGE_HOURS", "24"))
 FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "5"))
-FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "2"))
+FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "5"))
 
 FEED_REPOST_SEARCH_QUERIES = [
     "Bitcoin OR BTC lang:fr min_faves:3",
@@ -134,6 +134,13 @@ FEED_REPOST_SEARCH_QUERIES = [
     "SpaceX OR Starship lang:en min_faves:50",
     "Blue Origin OR Rocket Lab OR ArianeGroup lang:fr min_faves:3",
     "satellite OR fusée OR aerospace lang:fr min_faves:3",
+    # Big-account / big-post discovery. Still filtered by same-day age and
+    # niche gates before reposting.
+    "OpenAI OR Anthropic OR Nvidia lang:en min_faves:1000",
+    "Bitcoin OR BTC OR Ethereum lang:en min_faves:1000",
+    "AI datacenter OR GPU OR chips lang:en min_faves:500",
+    "SpaceX OR Starship OR xAI lang:en min_faves:1000",
+    "Mistral OR HuggingFace OR Cursor lang:en min_faves:300",
 ]
 
 
@@ -441,14 +448,14 @@ def _collect_feed_repost_candidates(retweeted: set) -> list:
 
     try:
         log.info("[RETWEET] Scraping For You/Home feed for repost candidates...")
-        add("FEED_HOME", scrape_home_feed(max_tweets=25))
+        add("FEED_HOME", scrape_home_feed(max_tweets=40))
     except Exception:
         log.info("[RETWEET] Home feed candidate scrape failed:")
         traceback.print_exc()
 
     try:
         log.info("[RETWEET] Scraping Following feed for repost candidates...")
-        add("FEED_FOLLOWING", scrape_following_feed(max_tweets=25))
+        add("FEED_FOLLOWING", scrape_following_feed(max_tweets=40))
     except Exception:
         log.info("[RETWEET] Following feed candidate scrape failed:")
         traceback.print_exc()
@@ -461,7 +468,7 @@ def _collect_feed_repost_candidates(retweeted: set) -> list:
         try:
             tab = "top" if random.random() < 0.7 else "live"
             log.info(f"[RETWEET] Searching X {tab} for repost candidates: {query}")
-            add(f"FEED_SEARCH/{tab}", scrape_x_search(query, max_tweets=15, tab=tab))
+            add(f"FEED_SEARCH/{tab}", scrape_x_search(query, max_tweets=25, tab=tab))
         except Exception:
             log.info(f"[RETWEET] Feed search candidate scrape failed for {query!r}:")
             traceback.print_exc()

@@ -419,10 +419,12 @@ def _run_single_bot_cycle() -> bool:
             except Exception:
                 pass
             topic = _ag_mod.__dict__.get("_pending_decode_topic")
-            is_weekly = _ag_mod.__dict__.get("_pending_top5_topic") is not None
+            format_kind = _ag_mod.__dict__.get("_pending_decode_format", "daily")
+            is_weekly = format_kind == "weekly"
+            is_recap = format_kind in {"weekly", "monthly"}
             last_tried_topic = (topic, is_weekly)
-            # Weekly Top 5 is allowed URL-less; don't retry it.
-            if is_weekly:
+            # Weekly Top 5 and Monthly Top 10 are allowed URL-less; don't retry them.
+            if is_recap:
                 tweet = candidate
                 break
             # 2026-05-23 PM: force URL substitution from injected pool.
@@ -702,7 +704,8 @@ def safe_run_bot_cycle():
 def _run_bot_cycle_in_mode(mode: str):
     """Set the news-mode hint and run the burst. The hint forces
     _next_topic_not_done_today() in agent.py to filter the rotation:
-    'daily' → only Daily Décodes, 'weekly' → only Weekly Top 5s."""
+    'daily' → only Daily Décodes, 'weekly' → only Weekly Top 5s,
+    'monthly' → Monthly Top 10s."""
     from . import agent as _ag
     prev = _ag.__dict__.get("_news_mode")
     _ag.__dict__["_news_mode"] = mode
@@ -738,4 +741,17 @@ def safe_run_weekly_news_cycle():
         health.record_success("post")
     except Exception:
         log.error(f"Error during weekly news cron: {traceback.format_exc()}")
+        health.record_failure("post")
+
+
+def safe_run_monthly_news_cycle():
+    """Manual/monthly handler — forces monthly Top 10 rotation so the burst
+    ships 3 Monthly Décodes (one per topic)."""
+    from . import health
+    try:
+        log.info("[CRON] Monthly news burst — monthly mode forced.")
+        _run_bot_cycle_in_mode("monthly")
+        health.record_success("post")
+    except Exception:
+        log.error(f"Error during monthly news cron: {traceback.format_exc()}")
         health.record_failure("post")

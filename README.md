@@ -14,8 +14,8 @@ The bot operates **30+ concurrent micro-bots** orchestrated by an APScheduler lo
 
 | Layer | Bots | Purpose |
 |---|---|---|
-| **Content** | `agent`, `hotake_agent`, `breakout_bot`, `spicy_bot`, `thread_bot`, `digest_thread_bot` | Original posts — news, hot takes, threads, polarizing takes |
-| **Reshare** | `retweet_bot`, `quote_tweet_bot`, `notify_bot` (boost) | Amplify trusted-source content with same-day + niche filters |
+| **Content** | `agent`, `hotake_agent`, `breakout_bot`, `spicy_bot`, `thread_bot`, `digest_thread_bot` | Original posts — news, daily/weekly/monthly Décodes, hot takes, threads |
+| **Reshare** | `retweet_bot`, `quote_tweet_bot`, `notify_bot` (boost) | Amplify trusted-source and big visible posts with same-day + niche filters |
 | **Reply** | `direct_reply`, `reply_bot`, `early_bird_bot`, `mega_watch_bot`, `replyback_agent`, `viral_followup_bot`, `spike_bot`, `roast_pgm_bot` | Real-time engagement on viral tweets, mega-account top-5-reply window |
 | **Follow** | `engage_bot`, `discover_bot`, `scout_agent`, `follow_blast_bot`, `followback_bot`, `smart_unfollow_bot` | Network growth — discover, follow, follow-back, prune non-reciprocal |
 | **Like** | `like_bot`, `notify_bot` | Bulk likes for outbound notifications |
