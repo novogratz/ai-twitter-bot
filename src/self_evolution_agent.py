@@ -47,6 +47,8 @@ from .llm_client import run_llm, unwrap_text
 from .logger import log
 
 BOT_SELF_FILE = os.path.join(_PROJECT_ROOT, "bot_self.json")
+BOT_SELF_FR_FILE = os.path.join(_PROJECT_ROOT, "bot_self_fr.json")
+BOT_SELF_EN_FILE = os.path.join(_PROJECT_ROOT, "bot_self_en.json")
 SELF_LOG_FILE = os.path.join(_PROJECT_ROOT, "self_evolution_log.json")
 
 
@@ -103,8 +105,29 @@ def _read_current_self() -> dict:
 
 
 def _save_bot_self(d: dict):
-    with open(BOT_SELF_FILE, "w") as f:
-        json.dump(d, f, indent=2, ensure_ascii=False)
+    """Write bot_self_fr.json (primary) and bot_self_en.json (adapted).
+    Legacy bot_self.json is also written for backwards compat."""
+    d_fr = dict(d)
+    for path in (BOT_SELF_FILE, BOT_SELF_FR_FILE):
+        with open(path, "w") as f:
+            json.dump(d_fr, f, indent=2, ensure_ascii=False)
+    # EN version: translate mood/obsession/self_narrative keys
+    mood_map = {
+        "lassé": "tired", "féroce": "fierce", "joueur": "playful",
+        "méthodique": "methodical", "fébrile": "restless",
+        "cynique": "cynical", "curieux": "curious", "énergique": "energized",
+    }
+    d_en = dict(d)
+    if d_en.get("mood"):
+        d_en["mood"] = mood_map.get(d_en["mood"].lower(), d_en["mood"])
+    if d_en.get("obsession"):
+        d_en["obsession"] = d_en["obsession"]
+    if d_en.get("self_narrative"):
+        d_en["self_narrative"] = d_en["self_narrative"]
+    if d_en.get("recent_learning"):
+        d_en["recent_learning"] = d_en["recent_learning"]
+    with open(BOT_SELF_EN_FILE, "w") as f:
+        json.dump(d_en, f, indent=2, ensure_ascii=False)
 
 
 def _append_log(entry: dict):
@@ -254,7 +277,7 @@ def safe_run_self_evolution_cycle():
         try:
             from .git_ops import auto_push
             auto_push(
-                ["bot_self.json", "self_evolution_log.json"],
+                ["bot_self.json", "bot_self_fr.json", "bot_self_en.json", "self_evolution_log.json"],
                 "Autonomous personality update — mood, obsession, voice tweaks, drift",
             )
         except Exception:

@@ -618,13 +618,13 @@ RULES:
 Output ONLY the reply, OR the literal word SKIP if no clean joke is possible."""
 
 
-def _generate_single_reply(author: str, tweet_text: str):
+def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
     """Generate a single reply for a specific tweet."""
     from . import personality_store
     persona_block = personality_store.render_account_block(author)
     hard_rules = personality_store.hard_rules_block()
-    # Hand-curated ideological core (core_identity.md) — voice anchor.
-    core_identity = personality_store.render_core_identity()
+    # Hand-curated ideological core — voice anchor. Match parent tweet lang.
+    core_identity = personality_store.render_core_identity(lang=lang)
     base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200])
     extras = []
     if persona_block:
@@ -882,7 +882,8 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             break
 
         log.info(f"[{source_name}] Generating reply for @{author}: {text[:60]}...")
-        reply = _generate_single_reply(author, text)
+        _reply_lang = "en" if is_en_tweet else "fr"
+        reply = _generate_single_reply(author, text, lang=_reply_lang)
         if reply is _LLM_RATE_LIMITED:
             limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
             log.info(

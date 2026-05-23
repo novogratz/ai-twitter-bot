@@ -58,8 +58,9 @@ def generate_replyback(original_tweet: str, their_reply: str, author: str = "") 
     persona_block = personality_store.render_account_block(author) if author else ""
     if persona_block:
         extras.append(persona_block)
-    # Hand-curated ideological core (core_identity.md) — voice anchor.
-    core_identity = personality_store.render_core_identity()
+    # Hand-curated ideological core — voice anchor. Detect lang from their_reply.
+    _reply_lang = "en" if any(w in (their_reply or "") for w in ["the", "this", "that", "and", "for"]) and not any(w in (their_reply or "") for w in ["le", "la", "les", "un", "une", "est", "dans"]) else "fr"
+    core_identity = personality_store.render_core_identity(lang=_reply_lang)
     if core_identity:
         extras.append(core_identity)
     extras.append(personality_store.hard_rules_block())

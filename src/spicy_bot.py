@@ -28,7 +28,6 @@ from .llm_client import run_llm, unwrap_text
 from .logger import log
 from .twitter_client import post_tweet
 from .humanizer import humanize, strip_agent_preamble
-from . import personality_store
 
 SPICY_STATE_FILE = os.path.join(_PROJECT_ROOT, "spicy_state.json")
 
@@ -131,16 +130,15 @@ def run_spicy_cycle():
     mode = "SPICY" if random.random() < 0.6 else "QUESTION"
     instructions = SPICY_INSTRUCTIONS if mode == "SPICY" else QUESTION_INSTRUCTIONS
 
-    perf = personality_store.hard_rules_block()
-    bot_self = personality_store.render_bot_self()
-    if bot_self:
-        perf = bot_self + "\n\n" + perf
-    core = personality_store.render_core_identity()
-    if core:
-        perf = core + "\n\n" + perf
-
     from . import lang_mode
     lang = lang_mode.pick_content_lang()
+    perf = personality_store.hard_rules_block()
+    bot_self = personality_store.render_bot_self(lang=lang)
+    if bot_self:
+        perf = bot_self + "\n\n" + perf
+    core = personality_store.render_core_identity(lang=lang)
+    if core:
+        perf = core + "\n\n" + perf
     prompt = SPICY_PROMPT.format(
         mode=mode,
         mode_instructions=instructions,

@@ -48,6 +48,7 @@ PERSONALITY_FILE = os.path.join(_PROJECT_ROOT, "personality.json")
 # bot's takes stay coherent across news, hot takes, replies, replybacks and
 # direct replies. NEVER overwritten by any agent — only the human edits it.
 CORE_IDENTITY_FILE = os.path.join(_PROJECT_ROOT, "core_identity.md")
+CORE_IDENTITY_EN_FILE = os.path.join(_PROJECT_ROOT, "core_identity_en.md")
 
 ALLOWED_CATEGORIES = {
     "builder", "predator", "retail", "media", "influencer", "institution", "unknown"
@@ -280,17 +281,27 @@ def render_account_block(handle: str) -> str:
     return "\n".join(lines)
 
 
-def render_core_identity() -> str:
-    """Load the hand-curated ideological core (core_identity.md) and wrap it
+def render_core_identity(lang: str = "fr") -> str:
+    """Load the hand-curated ideological core for the given language and wrap it
     so the model treats it as ground truth. Empty string if the file is
     missing — the bot still runs, just without the curated voice anchor."""
+    path = CORE_IDENTITY_EN_FILE if lang == "en" else CORE_IDENTITY_FILE
     try:
-        with open(CORE_IDENTITY_FILE, "r", encoding="utf-8") as f:
+        with open(path, "r", encoding="utf-8") as f:
             raw = f.read().strip()
     except (OSError, FileNotFoundError):
         return ""
     if not raw:
         return ""
+    if lang == "en":
+        return (
+            "==================================================\n"
+            "CORE IDENTITY (NON-NEGOTIABLE — who you are)\n"
+            "==================================================\n"
+            "These opinions and this tone are stable. When a topic below\n"
+            "lands on the table, you already have a stance. Drop it.\n\n"
+            + raw
+        )
     return (
         "==================================================\n"
         "IDENTITE NOYAU (NON NEGOCIABLE — c'est qui tu es)\n"
@@ -302,25 +313,66 @@ def render_core_identity() -> str:
 
 
 BOT_SELF_FILE = os.path.join(_PROJECT_ROOT, "bot_self.json")
+BOT_SELF_FR_FILE = os.path.join(_PROJECT_ROOT, "bot_self_fr.json")
+BOT_SELF_EN_FILE = os.path.join(_PROJECT_ROOT, "bot_self_en.json")
 
 
-def render_bot_self() -> str:
+def _load_bot_self(lang: str = "fr") -> dict:
+    """Load bot_self for a language. FR tries bot_self_fr.json then legacy bot_self.json."""
+    if lang == "en":
+        path = BOT_SELF_EN_FILE
+    else:
+        path = BOT_SELF_FR_FILE if os.path.exists(BOT_SELF_FR_FILE) else BOT_SELF_FILE
+    if not os.path.exists(path):
+        return {}
+    try:
+        with open(path, "r") as f:
+            d = json.load(f)
+        return d if isinstance(d, dict) else {}
+    except (json.JSONDecodeError, OSError):
+        return {}
+
+
+def render_bot_self(lang: str = "fr") -> str:
     """Inject the bot's CURRENT self-narrative into prompts.
 
-    Written by self_evolution_agent.py every few hours. The agent
-    rewrites this file based on recent activity + WebSearch on the
-    state of the world. Empty string if the file is missing or
-    malformed (the bot still runs, just without the drift signal).
+    Loads from bot_self_fr.json or bot_self_en.json depending on language.
+    Falls back to legacy bot_self.json for FR.
+    Written by self_evolution_agent.py every few hours.
+    Empty string if the file is missing or malformed.
     """
-    if not os.path.exists(BOT_SELF_FILE):
+    d = _load_bot_self(lang)
+    if not d:
         return ""
-    try:
-        with open(BOT_SELF_FILE, "r") as f:
-            d = json.load(f)
-    except (json.JSONDecodeError, OSError):
-        return ""
-    if not isinstance(d, dict):
-        return ""
+
+    if lang == "en":
+        parts = []
+        parts.append("==================================================")
+        parts.append("CURRENT STATE (your real mood — autonomous update)")
+        parts.append("==================================================")
+        if d.get("mood"):
+            parts.append(f"Mood: {d['mood']}")
+        if d.get("obsession"):
+            parts.append(f"Current obsession: {d['obsession']}")
+        if d.get("recent_learning"):
+            parts.append(f"Recent takeaway: {d['recent_learning']}")
+        if d.get("self_narrative"):
+            parts.append("")
+            parts.append(d["self_narrative"])
+        if d.get("voice_tweaks"):
+            parts.append("")
+            parts.append("Today's voice tweaks:")
+            for t in d["voice_tweaks"]:
+                parts.append(f"- {t}")
+        if d.get("drift"):
+            parts.append("")
+            parts.append("Positions that drifted:")
+            for topic, stance in d["drift"].items():
+                parts.append(f"- {topic}: {stance}")
+        parts.append("")
+        parts.append("This block describes your current state — not a strict rule.")
+        parts.append("You're free to deviate if the moment calls for it.")
+        return "\n".join(parts)
 
     parts = []
     parts.append("==================================================")
