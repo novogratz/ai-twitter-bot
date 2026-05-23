@@ -803,11 +803,18 @@ def main():
                 trigger=IntervalTrigger(hours=1),
                 id="recap_thread_job",
             )
-            # 2026-05-22 PM: buzz_hunter + manu_bercy DISABLED per user
-            # mandate "I only want daily and weekly decode... no other news".
-            # Original content surface = Décodes only. Engagement loop
-            # (retweets, quotes, likes, replies) handles the rest.
-            log.info("Buzz hunter + Manu de Bercy disabled (user mandate: Décodes only for original content).")
+            # Manu de Bercy stays disabled. 2026-05-23: re-enabled buzz_hunter
+            # as a WEEKLY viral attempt (Sundays 11 AM EST) — user mandate:
+            # "make some buzz every week, don't do a lot of try-hard posts
+            # but try". One shot per week, weird/exploit/hack story from
+            # HN+Reddit. Different format from Décodes — bold, screenshot-
+            # worthy, viral-leaning.
+            log.info("Buzz hunter: WEEKLY viral attempt — Sundays 11:00 AM EST.")
+            scheduler.add_job(
+                safe_run_buzz_hunter_cycle,
+                trigger=CronTrigger(day_of_week="sun", hour=11, minute=0, timezone="America/New_York"),
+                id="buzz_hunter_weekly_job",
+            )
             # Marquee-account follow — once a day. Ensures the bot is
             # following the giants (Elon, sama, Vitalik, Saylor, etc) so
             # the home feed surfaces first-party signal AND so each followed
