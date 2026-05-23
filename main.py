@@ -152,15 +152,16 @@ def post_interval_minutes() -> int:
 
 
 def reply_interval_minutes() -> int:
-    """Primary growth cadence — accelerated for 10k target. EN content + global
-    audience: peak in US business hours, not Paris."""
+    """Primary growth cadence — user mandate 2026-05-22 PM: "reply a lot bro".
+    Replies are the engagement-loop oxygen. Tightened across all windows.
+    """
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     # US business peak EST 09-16 = absolute reply window.
     if 9 <= hour < 16:
-        return random.randint(4, 8)
+        return random.randint(2, 5)
     if 16 <= hour < 23:
-        return random.randint(8, 14)
-    return random.randint(12, 20)
+        return random.randint(5, 9)
+    return random.randint(8, 14)
 
 
 def engage_interval_minutes() -> int:
@@ -799,26 +800,11 @@ def main():
                 trigger=IntervalTrigger(hours=1),
                 id="recap_thread_job",
             )
-            # Buzz hunter — daily 🔥 Trouvaille du jour. Hunts HN +
-            # Reddit (ML/netsec/ChatGPT/LocalLLaMA/CryptoCurrency) for the
-            # weirdest exploit/leak/hack story of the day and posts ONE
-            # short link-led tweet. Self-gates to 9-11h Paris.
-            log.info("Buzz hunter: daily 🔥 Trouvaille du jour (~10h Paris, weird AI/crypto stories).")
-            scheduler.add_job(
-                safe_run_buzz_hunter_cycle,
-                trigger=IntervalTrigger(hours=1),
-                id="buzz_hunter_job",
-            )
-            # Manu de Bercy — once a day, fictional bureaucratic press
-            # release reacting to the day's AI/crypto news. Recurring
-            # signature format that becomes a meme. Internal state dedup
-            # ensures one post per day even if the job fires multiple times.
-            log.info("Manu de Bercy: daily fictional press release (signature format).")
-            scheduler.add_job(
-                safe_run_manu_bercy_cycle,
-                trigger=IntervalTrigger(hours=4),
-                id="manu_bercy_job",
-            )
+            # 2026-05-22 PM: buzz_hunter + manu_bercy DISABLED per user
+            # mandate "I only want daily and weekly decode... no other news".
+            # Original content surface = Décodes only. Engagement loop
+            # (retweets, quotes, likes, replies) handles the rest.
+            log.info("Buzz hunter + Manu de Bercy disabled (user mandate: Décodes only for original content).")
             # Marquee-account follow — once a day. Ensures the bot is
             # following the giants (Elon, sama, Vitalik, Saylor, etc) so
             # the home feed surfaces first-party signal AND so each followed
