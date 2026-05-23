@@ -226,9 +226,15 @@ def _run_single_bot_cycle() -> bool:
                 injected = getattr(_ag_mod, "_last_injected_urls", None) or set()
                 injected_titles = getattr(_ag_mod, "_last_injected_url_titles", None) or {}
                 in_pool = (not injected) or (cand_src in injected)
-                reachable = _ag_mod.url_is_reachable(cand_src) if in_pool else False
+                # 2026-05-23 PM: trust reachability over pool-whitelist.
+                # Ollama (during Claude lockout) sometimes picks real URLs
+                # from training data that aren't in our DDG/RSS pool — we
+                # were rejecting all those. Now: reachable URL = OK, and
+                # we only enforce coupling when we actually have a title
+                # for the URL (in-pool case).
+                reachable = _ag_mod.url_is_reachable(cand_src)
                 coupling = True
-                if in_pool and reachable:
+                if reachable and in_pool:
                     title = (injected_titles.get(cand_src) or "").lower()
                     if title:
                         b1_match = re.search(r"^\s*1\.\s*(.+?)(?:\n\s*2\.|$)", candidate, re.MULTILINE | re.DOTALL)
@@ -237,7 +243,13 @@ def _run_single_bot_cycle() -> bool:
                         title_tokens = {w for w in re.findall(r"[a-zA-Z]{4,}", title) if w not in stop}
                         if title_tokens and not any(t in subject_region for t in title_tokens):
                             coupling = False
-                ok = in_pool and reachable and coupling
+                ok = reachable and coupling
+                if not reachable:
+                    log.info(f"[NEWS] Validation FAIL: URL unreachable / 404: {cand_src}")
+                elif not coupling:
+                    log.info(f"[NEWS] Validation FAIL: coupling mismatch with bullet #1")
+                elif not in_pool:
+                    log.info(f"[NEWS] URL passed validation (reachable, not in DDG pool but trusted): {cand_src}")
             if ok:
                 tweet = candidate
                 break
@@ -334,10 +346,11 @@ def _run_single_bot_cycle() -> bool:
                 injected = getattr(_ag, "_last_injected_urls", None) or set()
                 injected_titles = getattr(_ag, "_last_injected_url_titles", None) or {}
                 strip_reason = None
-                if injected and src_url not in injected:
-                    strip_reason = f"not in injected pool ({len(injected)} candidates)"
-                elif not _ag.url_is_reachable(src_url):
-                    strip_reason = "unreachable / soft-404"
+                # 2026-05-23: pool-whitelist relaxed — reachability is the
+                # source-of-truth gate. Real URLs from ollama's training
+                # data that aren't in our DDG pool can still pass.
+                if not _ag.url_is_reachable(src_url):
+                    strip_reason = "unreachable / 404"
                 else:
                     # Coupling check: bullet #1 should share at least one
                     # meaningful entity (≥4-char word) with the URL's title.
