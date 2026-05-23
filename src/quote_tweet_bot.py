@@ -80,9 +80,9 @@ Hut 8, Bitfarms, TeraWulf, Cipher), Mistral GPU souverain. Hors scope
 RÈGLES:
 - Maximum 200 caractères (le tweet original s'affiche en dessous).
 - HOOK dans les 6 premiers mots: chiffre / nom propre / verbe brutal.
-- DEADPAN. SEC. SCREENSHOT-WORTHY. STACK 2 réfs FR si tu peux
-  (RER B + URSSAF, Lidl + Bercy, Doctolib + café-clope, tonton à Noël
-  + PEL). Stacker = plus drôle.
+- DEADPAN. SEC. SCREENSHOT-WORTHY. STACK 2 réfs FR fraîches (pas RER B,
+  pas Bercy — LinkedIn coaching, Apple Pay caisse en carton, livraison
+  J+3, QR code pour tout, tuto Defisko, volet roulant, abonnement à tout).
 - Pas d'emojis. Pas de hashtags. Pas d'em dashes (—).
 - Tout en français pur.
 - Si rien de mieux que silence → output exactement le mot SKIP.
