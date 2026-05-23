@@ -633,6 +633,12 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             if (s.indexOf('m') !== -1) return Math.round(parseFloat(s) * 1000000);
             return parseInt(s, 10) || 0;
         }
+        function detectTranslatedLang(article) {
+            var html = article.innerHTML;
+            if (html.indexOf('Afficher l\\'original') !== -1) return 'en';
+            if (html.indexOf('Show original') !== -1) return 'fr';
+            return '';
+        }
         var tweets = [];
         var articles = document.querySelectorAll('article[data-testid="tweet"]');
         if (articles.length === 0) return 'NO_ARTICLES';
@@ -654,7 +660,8 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             var author = authorEl ? authorEl.textContent.trim().replace('@','') : '';
             var likes = extractCount(a, 'like');
             var replies = extractCount(a, 'reply');
-            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, 200), a: author || 'unknown', l: likes, r: replies}));
+            var tl = detectTranslatedLang(a);
+            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, 200), a: author || 'unknown', l: likes, r: replies, tl: tl}));
         }
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
         return '[' + tweets.join(',') + ']';
@@ -721,6 +728,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             "author": t["a"],
             "likes": int(t.get("l") or 0),
             "replies": int(t.get("r") or 0),
+            "translated_from": t.get("tl") or "",
         } for t in data]
         log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")
         return tweets
