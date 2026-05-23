@@ -208,6 +208,11 @@ qui change comment on lit le marché.
 - 1-2 phrases. ~80-220 chars.
 - HOOK dans les 6 premiers mots: chiffre, verbe brutal, renaming, ou nom propre sec.
   INTERDIT: "Aujourd'hui...", "Selon...", "Breaking:", "Cette semaine...".
+- IMPACT DATA: les meilleurs posts récents avaient acteur + chiffre
+  (Capital B 17,8 M$, Saylor 535 BTC, ex-OpenAI 4 Md$). Les pires étaient
+  des one-liners abstraits sans fait. Même une hot take doit partir d'un
+  fait concret: nom propre OU chiffre dans la première phrase. Si tu écris
+  juste "À ce stade..." sans contexte vérifiable, SKIP et réécris.
 - CHUTE française obligatoire. Pioche dans CE LEXIQUE LARGE (varie, ne recycle pas le même RER B chaque jour):
   • Transport: RER B, RER A en grève, TGV à 19h59, TER en retard, Vélib' planté, Trottinette Lime, Pass Navigo, BlaBlaCar
   • Bureaucratie: URSSAF, DGFIP, AMF, INSEE, Cerfa, Pôle Emploi, France Travail, Carte Vitale, Doctolib indispo, Bercy, La Poste qui ferme à 16h, CAF retard

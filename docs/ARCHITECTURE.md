@@ -153,6 +153,11 @@ main.py
 | `cleanup_bot.py` | hourly (idempotent) | Daily state hygiene — log rotation + JSON caps |
 | `heartbeat_bot.py` | every 60s | Alive-tick log line |
 
+Current impact bias: active prompts and repost scoring favor concrete,
+numeric, named-actor updates over abstract one-liners. The data-backed pattern
+is actor + exact number + consequence, e.g. BTC buys, funding, valuations,
+capex, regulation, datacenter energy, and clear winners/losers.
+
 ### Safety + infrastructure
 
 | Module | Purpose |

@@ -487,12 +487,19 @@ def _candidate_rank(c: dict) -> tuple:
         "coinbase", "google", "microsoft", "meta", "apple", "tesla",
         "rates", "inflation", "tariff", "chips", "gpu",
     ))
+    hard_impact = any(k in text for k in (
+        "datacenter", "data center", "megawatt", "mw", "gigawatt", "gw",
+        "power", "energy", "nuclear", "gpu cluster", "h100", "h200", "b200",
+        "funding", "valuation", "treasury", "holdings", "etf", "inflows",
+        "sec approves", "lawsuit", "ban", "partnership", "oracle", "softbank",
+    ))
     numbers = len(re.findall(r"(\$?\d+(?:[.,]\d+)?\s?(?:%|bn|billion|m|million|k)?)", text))
     engagement = int(c.get("likes") or 0) + (2 * int(c.get("replies") or 0))
     impact_points = (
         (2 if breaking else 0)
         + (3 if money_or_power else 0)
         + (2 if strategic else 0)
+        + (2 if hard_impact else 0)
         + min(numbers, 3)
     )
     return (impact_points, engagement)
@@ -504,12 +511,14 @@ def _score_candidate(pick: dict) -> dict:
     # 2026-05-08: dropped the FR-language bonus. The bot's voice is EN
     # now and we explicitly want to reshare English-source content, so
     # scoring should be language-agnostic on source.
-    if impact_points >= 9 and engagement >= 100:
+    if impact_points >= 10 and engagement >= 100:
         score = 9
     elif impact_points >= 7 and engagement >= 50:
         score = 8
-    else:
+    elif impact_points >= 5 and engagement >= 25:
         score = 7
+    else:
+        score = 6
     return {
         "best_score": score,
         "why_it_matters": f"Source fiable + impact concret (score signal {impact_points}, engagement {engagement}).",

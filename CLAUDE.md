@@ -37,6 +37,12 @@ Repost volume is currently tuned high but bounded: `MAX_RETWEETS_PER_DAY=40`,
 8 min. Retweet candidates still pass source, niche, age, min-like, and
 deterministic score filters before posting.
 
+Impact tuning: top historical posts were concrete, numeric, named-actor
+updates (Capital B funding/BTC buys, Saylor/Strategy BTC buys, ex-OpenAI
+startup valuation). Prompts now explicitly prefer `DERNIER/Exclusif` +
+actor + exact number + consequence, and avoid abstract standalone one-liners
+that do not carry a verifiable fact.
+
 **Hard post-flight guard** (`contains_post_unsafe_leak` in `src/llm_client.py`,
 wired into `twitter_client.post_tweet`): refuses to post anything containing
 tool-call XML (`<function=…>`), NDJSON envelope keys (`"sessionID":`,
