@@ -1,0 +1,52 @@
+{
+  "active": null,
+  "history": [
+    {
+      "path": "caps.LIKE_BOT_PER_CYCLE",
+      "before": 80,
+      "after": 100,
+      "rationale": "No original posts in 48h yet +16 followers in 18h (581\u2192597) \u2014 all growth is engagement-driven; boosting like throughput from 80\u2192100 per cycle amplifies the only confirmed acquisition channel.",
+      "applied_at": "2026-05-16T23:14:45",
+      "baseline": {
+        "ts": "2026-05-16T23:14:45",
+        "followers": 597,
+        "likes_per_post_24h": null
+      },
+      "decision": "KEPT",
+      "result_at": "2026-05-18T22:40:36",
+      "delta": {
+        "d_followers": 40,
+        "d_likes_per_post": null
+      },
+      "current_metrics": {
+        "ts": "2026-05-18T22:40:36",
+        "followers": 637,
+        "likes_per_post_24h": null
+      }
+    },
+    {
+      "path": "caps.FOLLOW_BLAST_PER_CYCLE",
+      "before": 80,
+      "after": 100,
+      "rationale": "+21 followers in 24h (665\u2192686) with zero original posts \u2014 100% of growth is engagement-driven. LIKE_BOT was already bumped to 100 and held; the next untouched direct-follower lever is FOLLOW_BLAST, currently at 80. A 25% bump mirrors the LIKE_BOT increase that drove +40 followers the prior cycle.",
+      "applied_at": "2026-05-19T23:28:37",
+      "baseline": {
+        "ts": "2026-05-19T23:28:37",
+        "followers": 686,
+        "likes_per_post_24h": null
+      },
+      "decision": "KEPT",
+      "result_at": "2026-05-21T00:57:45",
+      "delta": {
+        "d_followers": 18,
+        "d_likes_per_post": null
+      },
+      "current_metrics": {
+        "ts": "2026-05-21T00:57:45",
+        "followers": 704,
+        "likes_per_post_24h": null
+      }
+    }
+  ],
+  "last_decision_at": "2026-05-21T00:57:45"
+}

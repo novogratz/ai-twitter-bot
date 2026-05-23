@@ -20,11 +20,17 @@
     "LucBourassa",
     "boursier",
     "lecho_fr",
-    "blablacar_fr"
+    "blablacar_fr",
+    "thomas_toucheix",
+    "mickael_broux",
+    "perrault_david",
+    "louis_ha"
   ],
   "en": [
     "blablacar",
-    "sodexo"
+    "sodexo",
+    "sbc_412",
+    "stacyherbert"
   ],
   "history": [
     {
@@ -140,6 +146,36 @@
     {
       "lang": "en",
       "handle": "sodexo",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomas_toucheix",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickael_broux",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "perrault_david",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "louis_ha",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "en",
+      "handle": "sbc_412",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "en",
+      "handle": "stacyherbert",
       "added": "2026-05-23"
     }
   ]
