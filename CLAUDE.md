@@ -12,13 +12,13 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 This repo is **kzer**, an autonomous Twitter/X growth agent. ~30 concurrent micro-bots managed by APScheduler in `main.py`. Browser-driven via Safari + AppleScript — no Twitter API key.
 
-**Default AI provider: OpenCode** (`AI_CLI=opencode`). No auth needed — free and ready to go.
+**Default AI provider: Ollama** (`AI_CLI=ollama`). Codex is the default backup when the local model fails.
 
-To switch to Claude or Gemini:
+To switch providers:
 
 ```bash
-claude login                 # or: gemini login
-echo "AI_CLI=claude" >> .env  # or: AI_CLI=gemini
+AI_CLI=codex ./bin/run.sh
+echo "AI_CLI=codex" >> .env
 ```
 
 The `src/llm_client.py` adapter handles each provider transparently. If the
@@ -42,7 +42,7 @@ because the previous guard only caught XML, not JSON streams.
 **Codex usage-limit lockout cache** (`codex_lockout.json` at repo root):
 when codex returns "hit your usage limit, try again at …", `run_llm` parses
 the date and caches it. Until that timestamp passes, codex is bypassed
-entirely and calls go straight to the opencode fallback (`LLM_FALLBACK_CLI` /
+entirely and calls go straight to the local Ollama fallback (`LLM_FALLBACK_CLI` /
 `LLM_FALLBACK_MODEL`). Self-cleaning — the cache file is deleted when the
 lockout window expires. Avoids the 6+ min per-cycle ladder cost while codex
 is unavailable for days.
@@ -131,7 +131,7 @@ Plus `FR_ANCHOR` for FR-mode runs, `OTHER` as fallback. The metadata line is str
 
 ### Language — `lang_mode.py`
 
-`CONTENT_LANG_PRIMARY=en` (default) → all standalone content (news, hot takes, breakouts, spicy, threads, quote-tweet commentary) in English.
+`CONTENT_LANG_PRIMARY=en` (default) → all standalone content (news, hot takes, breakouts, spicy, threads) in English.
 
 Reply paths (`direct_reply`, `reply_bot`, `replyback_agent`, `viral_followup`, `spike`, `mega_watch`, `early_bird`) **always match parent tweet language** regardless of `CONTENT_LANG_PRIMARY`.
 

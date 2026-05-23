@@ -16,16 +16,16 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `AI_CLI` | `codex` | `codex` / `opencode` / `claude` / `gemini`. The CLI must be authenticated or locally configured. |
-| `LLM_FALLBACK_CLI` | `opencode` | Fallback CLI used when the primary LLM CLI fails, times out, is missing, or returns empty output. |
+| `AI_CLI` | `ollama` | `ollama` / `codex` / `opencode` / `claude` / `gemini`. `ollama` uses the direct local HTTP path. |
+| `LLM_FALLBACK_CLI` | `codex` | Fallback provider used when the primary LLM fails, times out, is missing, or returns empty output. |
 | `LLM_FALLBACK_MODEL` | (unset) | Optional universal model for fallback calls. Overrides provider-specific fallback defaults. |
-| `OPENCODE_FALLBACK_MODEL` | `opencode/big-pickle` | OpenCode model used by fallback calls when `LLM_FALLBACK_MODEL` is unset. |
+| `OPENCODE_FALLBACK_MODEL` | `opencode/big-pickle` | Legacy model label for the direct Ollama fallback path when `LLM_FALLBACK_MODEL` is unset. |
 | `LLM_DISABLE_FALLBACK` | `0` | Set to `1` to disable automatic LLM fallback. |
 | `NEWS_MODEL` | `gpt-5.4-mini` | Model for real sourced news posts. Override to `gpt-5.4` only for high-quality manual cycles. |
 | `HOTAKE_MODEL` | `gpt-5.4-mini` | Model for hot takes + breakouts + spicy. |
 | `REPLY_MODEL` | `gpt-5.4-mini` | Model for replies. Mini keeps the volume surface cheaper. |
 | `PRIORITY_REPLY_MODEL` | `gpt-5.4-mini` | Model for VIP-account replies. |
-| `QUOTE_MODEL` | `gpt-5.4-mini` | Model for quote-tweet commentary. |
+| `QUOTE_MODEL` | `gpt-5.4-mini` | Legacy setting; quote reposts are disabled by default. |
 | `ROAST_MODEL` | `gpt-5.4-mini` | Model for the @pgm_pm roast bot. |
 | `NEWS_POSTS_PER_CYCLE` | `3` | Number of separate news posts to publish per post cycle. |
 | `NEWS_POST_SPACING_SECONDS` | `120` | Delay between burst news posts. |
@@ -54,11 +54,11 @@ Reshare paths don't burn LLM cycles (deterministic scoring) so caps can be much 
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `MAX_QUOTES_PER_DAY` | `80` | Quote-tweets (LLM commentary on viral content). |
+| `MAX_QUOTES_PER_DAY` | `80` | Legacy cap for the repost-pool job. |
 | `MAX_RETWEETS_PER_DAY` | `220` | Selective crypto / AI / bourse reposts. |
 | `RETWEETS_PER_CYCLE` | `5` | Max external retweets shipped after each deterministic candidate scrape. |
 | `MAX_REPLIES_PER_CYCLE` | `8` | Replies per `reply_bot` / `direct_reply` cycle. |
-| `MAX_PROMOTES_PER_DAY` | `3` | Promote-best-reply (quote-RT own top reply). |
+| `MAX_PROMOTES_PER_DAY` | `3` | Promote-best-reply (plain-repost own top reply). |
 | `MAX_BOOSTS_PER_DAY` | (no cap) | Self-RT scheduled by cadence only. |
 
 ---
@@ -93,7 +93,7 @@ Per-cycle quotas (not daily caps):
 | `RETWEET_FEED_SEARCHES_PER_CYCLE` | `2` | Targeted crypto / AI / bourse searches scraped by the retweet cycle. |
 | `X_FEED_SEARCHES_PER_CYCLE` | `2` | Targeted searches merged into `external_signal.json` for news generation. |
 | `LIKE_TOP_TAB_PROBABILITY` | `0.55` | Probability the like bot uses X Top search instead of Live to train For You toward the niche. |
-| `QUOTE_MAX_AGE_HOURS` | `18` | Same for quote-tweets. |
+| `QUOTE_MAX_AGE_HOURS` | `18` | Same age gate for the legacy repost-pool job. |
 | `BREAKOUT_MIN_LIKES` | `30` | Min likes to consider a tweet a "breakout candidate". |
 | `BREAKOUT_VELOCITY_LIKES` | `100` | Likes threshold for "this is breaking". |
 | `MAX_BREAKOUTS_PER_DAY` | `4` | Daily cap on breakout posts. |
@@ -145,7 +145,8 @@ These are best-effort: the file may not exist on first boot or after a fresh clo
 
 ```env
 BOT_HANDLE=kzer_ai
-AI_CLI=codex
+AI_CLI=ollama
+LLM_FALLBACK_CLI=codex
 NEWS_MODEL=gpt-5.4-mini
 HOTAKE_MODEL=gpt-5.4-mini
 REPLY_MODEL=gpt-5.4-mini

@@ -48,7 +48,7 @@ from .config import (
     _PROJECT_ROOT,
 )
 from .logger import log
-from .twitter_client import retweet_post, quote_tweet, scrape_following_feed, scrape_home_feed, scrape_profile_tweets, scrape_x_search
+from .twitter_client import retweet_post, scrape_following_feed, scrape_home_feed, scrape_profile_tweets, scrape_x_search
 from .engagement_log import log_reply
 from .humanizer import humanize, strip_agent_preamble
 
@@ -862,55 +862,23 @@ def run_retweet_cycle():
         retweeted.add(pick["url"])
         _save_retweeted(retweeted)
 
-        # 2026-05-23: user mandate "90% reposts, 10% reposts + quote".
-        # Decision is now stochastic — 10% of candidates get the troll-
-        # quote treatment, regardless of score. Eligibility floor lifted
-        # so even score-7 candidates can land a quote (variety > only
-        # picking the same top-engagement candidates).
-        likes = int(pick.get("likes") or 0)
-        upgrade_to_quote = random.random() < 0.10
-        quoted_ok = False
-        if upgrade_to_quote:
-            quote_text = _try_generate_troll_quote(pick)
-            if quote_text:
-                try:
-                    quote_tweet(pick["url"], quote_text)
-                    _increment_count()
-                    try:
-                        log_reply(
-                            pick["url"],
-                            f"[QT] {quote_text[:200]}",
-                            action_type="quote",
-                            source=f"RETWEET_QT/{pick['author']}",
-                        )
-                    except Exception:
-                        pass
-                    log.info(f"[RETWEET→QT] Quoted @{pick['author']} (score={score}, likes={likes}): {quote_text[:140]}")
-                    posted += 1
-                    quoted_ok = True
-                    time.sleep(random.randint(5, 10))
-                except Exception:
-                    log.info("[RETWEET→QT] Quote-post failed, falling back to silent RT:")
-                    traceback.print_exc()
-
-        if not quoted_ok:
+        try:
+            retweet_post(pick["url"])
+            _increment_count()
             try:
-                retweet_post(pick["url"])
-                _increment_count()
-                try:
-                    log_reply(
-                        pick["url"],
-                        f"[RT] {pick['text'][:200]}",
-                        action_type="retweet",
-                        source=f"RETWEET/{pick['author']}",
-                    )
-                except Exception:
-                    pass
-                posted += 1
-                time.sleep(random.randint(5, 10))
+                log_reply(
+                    pick["url"],
+                    f"[RT] {pick['text'][:200]}",
+                    action_type="retweet",
+                    source=f"RETWEET/{pick['author']}",
+                )
             except Exception:
-                log.info("[RETWEET] Posting failed:")
-                traceback.print_exc()
+                pass
+            posted += 1
+            time.sleep(random.randint(5, 10))
+        except Exception:
+            log.info("[RETWEET] Posting failed:")
+            traceback.print_exc()
 
     log.info(
         f"[RETWEET] DONE. Posted {posted}, logged {logged}. "

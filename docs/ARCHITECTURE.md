@@ -87,7 +87,7 @@ main.py
 | Module | Cadence | Behavior |
 |---|---|---|
 | `retweet_bot.py` | every 8 min | Feed/search/trusted-handle scrape → niche+age filter → deterministic score → retweet up to `RETWEETS_PER_CYCLE` |
-| `quote_tweet_bot.py` | every 35 min | Viral query scrape → FR/EN filter → quote with EN commentary |
+| `quote_tweet_bot.py` | every 35 min | Legacy repost-pool scrape → FR/EN filter → plain repost |
 | `notify_bot.run_boost_cycle` | every 60 min | Self-RT freshest own post (algo-window timing) |
 
 ### Reply paths
@@ -120,7 +120,7 @@ main.py
 |---|---|---|
 | `like_bot.py` | every 15 min | JS-click ~18 likes on niche search results |
 | `pin_bot.py` | every 6h (idempotent daily) | Auto-pin highest-likes own post via JS menu |
-| `promote_bot.py` | every 3h | Quote-RT top recent reply onto profile |
+| `promote_bot.py` | every 3h | Plain-repost top recent reply onto profile |
 
 ### Real-time signal
 

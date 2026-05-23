@@ -12,13 +12,13 @@ Project context for **Codex CLI** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md). 
 
 This repo is **kzer**, an autonomous Twitter/X growth agent. ~30 concurrent micro-bots managed by APScheduler in `main.py`. Browser-driven via Safari + AppleScript — no Twitter API key.
 
-**Default AI provider: OpenCode** (`AI_CLI=opencode`). No auth needed — free and ready to go.
+**Default AI provider: Ollama** (`AI_CLI=ollama`). Codex is the default backup when the local model fails.
 
 Switch providers at any time:
 
 ```bash
-AI_CLI=claude  ./bin/run.sh    # one-off
-echo "AI_CLI=claude" >> .env   # persistent
+AI_CLI=codex  ./bin/run.sh    # one-off
+echo "AI_CLI=codex" >> .env   # persistent
 ```
 
 The same models run across all generation surfaces (news, replies, hot takes, threads, breakouts). The CLI adapter (`src/llm_client.py`) handles each provider transparently. If the primary returns a hard failure (non-zero exit, empty stdout) **or a soft refusal** (exit 0 but body like `[no need to search for external sources…]`), the same fallback ladder fires: `LLM_FALLBACK_CLI` / `LLM_FALLBACK_MODEL`, then `OPENCODE_FALLBACK2_MODEL`. Refusal patterns live in `_REFUSAL_PATTERNS` in `src/llm_client.py`.
@@ -27,7 +27,7 @@ News bursts are tuned via `NEWS_POSTS_PER_CYCLE` (default `3`); set to `1` when 
 
 **Hard post-flight guard** (`contains_post_unsafe_leak` in `src/llm_client.py`, wired into `twitter_client.post_tweet`): refuses to post anything containing tool-call XML (`<function=…>`), NDJSON envelope keys (`"sessionID":`, `"step_start"`, etc.), or text that opens with `{` / `[{`. Added after a 163k-char `{"type":"step_start",…}` blob got pushed to Safari on 2026-05-14 because the previous guard only caught XML, not JSON streams.
 
-**Codex usage-limit lockout cache** (`codex_lockout.json` at repo root): when codex returns "hit your usage limit, try again at …", `run_llm` parses the date and caches it. Until that timestamp passes, codex is bypassed entirely and calls go straight to the opencode fallback (`LLM_FALLBACK_CLI` / `LLM_FALLBACK_MODEL`). Self-cleaning — the cache file is deleted when the lockout window expires. Avoids the 6+ min per-cycle ladder cost while codex is unavailable for days.
+**Codex usage-limit lockout cache** (`codex_lockout.json` at repo root): when codex returns "hit your usage limit, try again at …", `run_llm` parses the date and caches it. Until that timestamp passes, codex is bypassed entirely and calls go straight to the local Ollama fallback. Self-cleaning — the cache file is deleted when the lockout window expires. Avoids the 6+ min per-cycle ladder cost while codex is unavailable for days.
 
 LLM budgets are soft by default: `LLM_ENFORCE_BUDGET=0` means usage is logged
 but production content is not blocked by local hourly/daily counters. Set it to

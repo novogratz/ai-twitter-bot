@@ -12,7 +12,7 @@ Strategy:
       1. Auto-pin it (override daily pin lock).
       2. Self-RT it via retweet_post (push it onto every follower's feed).
       3. Generate + post an in-thread follow-up (extends the punchline).
-      4. Promote (quote-RT) it onto our own feed with a meta-comment.
+      4. Skip old quote-RT promo; plain repost already happened.
       5. Like top replies on it (boosts thread engagement).
   - Persistent dedup so we don't re-orchestrate the same spike.
 """
@@ -29,7 +29,6 @@ from .twitter_client import (
     scrape_profile_tweets,
     retweet_post,
     pin_own_tweet,
-    quote_tweet,
     reply_to_tweet_in_thread,
     like_own_tweet_replies,
 )
@@ -151,14 +150,9 @@ def _orchestrate_spike(post: dict, history: set):
         log.info("[SPIKE] follow-up failed:")
         traceback.print_exc()
 
-    # 4. Quote-RT onto our profile feed with a meta-comment.
-    try:
-        quote_tweet(url, "Pour ceux qui scrollent trop vite.")
-        log.info("[SPIKE] quote-RT promo done.")
-        time.sleep(2)
-    except Exception:
-        log.info("[SPIKE] quote-RT promo failed:")
-        traceback.print_exc()
+    # 4. Quote promo disabled. The earlier self-repost already covers
+    # the plain repost surface; doing it again could toggle it off.
+    log.info("[SPIKE] quote promo disabled; keeping the existing plain repost.")
 
     # 5. Like top replies on the spiking thread (boosts engagement signal).
     try:
