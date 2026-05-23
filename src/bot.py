@@ -107,6 +107,74 @@ def _increment_counter(counter_name: str):
     _save_daily_state(state)
 
 
+_DECODE_STOP_TOKENS = {
+    "this","that","with","from","into","about","have","been","more","what",
+    "when","where","their","there","which","while","your","could","would",
+    "should","will","well","than","some","such","just","after","before",
+    "still","every","another","between","comme","cette","leur","cette",
+    "dans","pour","mais","plus","moins","tout","tous","sans","avec",
+}
+
+
+def _pick_best_pool_url(bullet1_text: str, pool_url_titles: dict) -> str:
+    """Find the pool URL whose title best matches bullet #1 (token overlap).
+    Returns the best URL or '' if no good match. Used to force-substitute
+    the model's hallucinated URL with a real one from our injected pool."""
+    if not bullet1_text or not pool_url_titles:
+        return ""
+    b1_tokens = {
+        w for w in re.findall(r"[a-zA-Z]{4,}", bullet1_text.lower())
+        if w not in _DECODE_STOP_TOKENS
+    }
+    if not b1_tokens:
+        return ""
+    best_url, best_score = "", 0
+    for url, title in pool_url_titles.items():
+        title_tokens = {
+            w for w in re.findall(r"[a-zA-Z]{4,}", (title or "").lower())
+            if w not in _DECODE_STOP_TOKENS
+        }
+        overlap = len(b1_tokens & title_tokens)
+        if overlap > best_score:
+            best_score, best_url = overlap, url
+    return best_url if best_score >= 1 else ""
+
+
+def _substitute_url_with_pool_match(tweet: str, src_url: str) -> tuple:
+    """Replace the candidate's URL with the best-matching pool URL whose
+    title overlaps bullet #1. Returns (new_tweet, new_src_url) — falls
+    back to (tweet, src_url) unchanged if no good substitution found.
+
+    Why this exists: ollama (during Claude lockout) hallucinates plausible
+    CoinDesk slugs that 404. The pool URLs are real (from a live DDG/RSS
+    fetch this cycle), so substituting is far safer than retrying the LLM."""
+    from . import agent as _ag
+    pool_titles = getattr(_ag, "_last_injected_url_titles", None) or {}
+    if not pool_titles:
+        return tweet, src_url
+    # Extract bullet #1 text from the candidate
+    b1_match = re.search(r"^\s*1\.\s*(.+?)(?:\n\s*2\.|$)", tweet, re.MULTILINE | re.DOTALL)
+    bullet1 = b1_match.group(1) if b1_match else ""
+    best_url = _pick_best_pool_url(bullet1, pool_titles)
+    if not best_url:
+        return tweet, src_url
+    # Verify the pool URL is reachable (DDG indexed URLs usually are)
+    if not _ag.url_is_reachable(best_url):
+        return tweet, src_url
+    # If model's URL is the same as the best pool URL, no substitution needed
+    if src_url == best_url:
+        return tweet, src_url
+    # Strip the model's URL from the tweet (if present) and append best pool URL
+    new_tweet = tweet
+    if src_url:
+        new_tweet = new_tweet.replace(src_url, "").rstrip()
+    # Also strip any trailing standalone URL the model wrote
+    new_tweet = re.sub(r"https?://\S+\s*$", "", new_tweet, flags=re.MULTILINE).rstrip()
+    new_tweet = new_tweet.rstrip() + "\n\n" + best_url
+    log.info(f"[NEWS] Substituted URL: {src_url!r} → {best_url!r} (pool match for bullet #1)")
+    return new_tweet, best_url
+
+
 def _run_single_bot_cycle() -> bool:
     """Post a Décode (Daily or Weekly), respecting daily limits.
     Returns True if a post was shipped, False if nothing eligible — caller
@@ -221,6 +289,16 @@ def _run_single_bot_cycle() -> bool:
             if is_weekly:
                 tweet = candidate
                 break
+            # 2026-05-23 PM: force URL substitution from injected pool.
+            # Don't trust the model's URL choice — ollama hallucinates fake
+            # CoinDesk slugs. Replace with the best-matching real pool URL
+            # by bullet #1 token overlap. This GUARANTEES a real URL when
+            # the pool has decent coverage for the topic.
+            candidate, cand_src = _substitute_url_with_pool_match(candidate, cand_src)
+            try:
+                _ag_mod.__dict__["_last_source_url"] = cand_src
+            except Exception:
+                pass
             ok = False
             if cand_src:
                 injected = getattr(_ag_mod, "_last_injected_urls", None) or set()
