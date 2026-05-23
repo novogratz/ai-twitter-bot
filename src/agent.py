@@ -134,6 +134,23 @@ def _mark_topic_done_today(topic: str, is_weekly: bool = False) -> None:
         pass
 
 
+def _unmark_topic_done_today(topic: str, is_weekly: bool = False) -> None:
+    """Reverse of _mark_topic_done_today. Used when bot.py-side URL
+    validation strips the link and we SKIP rather than ship URL-less —
+    the topic should remain eligible for the next cycle."""
+    state = _daily_topic_state()
+    done = state.get("topics_done") or []
+    key = _topic_done_key(topic, is_weekly)
+    if key in done:
+        done.remove(key)
+    state["topics_done"] = done
+    try:
+        with open(_DAILY_TOPIC_STATE_FILE, "w") as f:
+            _json.dump(state, f, indent=2)
+    except OSError:
+        pass
+
+
 def _is_in_daily_window() -> bool:
     """Daily Décodes fire during the daily window: 1 AM EST (user mandate).
     Window 0-4 AM EST gives the cron + a 3h buffer if startup is delayed.
