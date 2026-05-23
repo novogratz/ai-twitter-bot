@@ -340,10 +340,10 @@ def main():
             trigger=CronTrigger(day_of_week="fri", hour=7, minute=0, timezone="America/New_York"),
             id="weekly_news_job",
         )
-        log.info("News bot MONTHLY: cron Saturdays at 8:00 AM America/New_York (= monthly Top 10).")
+        log.info("News bot MONTHLY: cron on the 23rd at 8:00 AM America/New_York (= monthly Top 10).")
         scheduler.add_job(
             safe_run_monthly_news_cycle,
-            trigger=CronTrigger(day_of_week="sat", hour=8, minute=0, timezone="America/New_York"),
+            trigger=CronTrigger(day=23, hour=8, minute=0, timezone="America/New_York"),
             id="monthly_news_job",
         )
 
