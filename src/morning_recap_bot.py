@@ -145,10 +145,10 @@ def run_morning_recap_cycle():
 
     today_date = datetime.now().strftime("%Y-%m-%d")
     performance_section = personality_store.hard_rules_block()
-    bot_self = personality_store.render_bot_self()
+    bot_self = personality_store.render_bot_self(lang="fr")
     if bot_self:
         performance_section = bot_self + "\n\n" + performance_section
-    core = personality_store.render_core_identity()
+    core = personality_store.render_core_identity(lang="fr")
     if core:
         performance_section = core + "\n\n" + performance_section
 

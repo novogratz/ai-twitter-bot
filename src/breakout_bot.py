@@ -28,7 +28,6 @@ from .llm_client import run_llm, unwrap_text
 from .logger import log
 from .twitter_client import scrape_x_search, post_tweet
 from .humanizer import humanize, strip_agent_preamble
-from . import personality_store
 
 BREAKOUT_STATE_FILE = os.path.join(_PROJECT_ROOT, "breakout_state.json")
 BREAKOUT_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "breakout_history.json")
@@ -203,11 +202,13 @@ def run_breakout_cycle():
         f"\"{topic['text'][:400]}\""
     )
 
+    from . import lang_mode
+    lang = lang_mode.pick_content_lang()
     performance_section = personality_store.hard_rules_block()
-    bot_self = personality_store.render_bot_self()
+    bot_self = personality_store.render_bot_self(lang=lang)
     if bot_self:
         performance_section = bot_self + "\n\n" + performance_section
-    core = personality_store.render_core_identity()
+    core = personality_store.render_core_identity(lang=lang)
     if core:
         performance_section = core + "\n\n" + performance_section
     # External-signal injection — HN + Reddit pulse for "trending NOW".
@@ -218,9 +219,6 @@ def run_breakout_cycle():
             performance_section = ext + "\n\n" + performance_section
     except Exception:
         pass
-
-    from . import lang_mode
-    lang = lang_mode.pick_content_lang()
     prompt = BREAKOUT_PROMPT.format(
         trend_context=trend_context[:1500],
         today_date=datetime.now().strftime("%Y-%m-%d"),

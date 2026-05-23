@@ -739,16 +739,17 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
         pass
 
     # Personality store — global mood from dossiers + hard rules.
-    from . import personality_store
+    from . import lang_mode, personality_store
+    _ht_lang = lang_mode.pick_content_lang()
     # Self-evolving bot identity (written by self_evolution_agent every few hrs).
-    bot_self = personality_store.render_bot_self()
+    bot_self = personality_store.render_bot_self(lang=_ht_lang)
     if bot_self:
         performance_section = (performance_section or "") + "\n\n" + bot_self
     mood = personality_store.render_global_mood()
     if mood:
         performance_section = (performance_section or "") + "\n\n" + mood
     # Hand-curated ideological core (core_identity.md) — voice anchor.
-    core_identity = personality_store.render_core_identity()
+    core_identity = personality_store.render_core_identity(lang=_ht_lang)
     if core_identity:
         performance_section = (performance_section or "") + "\n\n" + core_identity
     performance_section = (performance_section or "") + "\n\n" + personality_store.hard_rules_block()
@@ -769,9 +770,6 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
             performance_section = (performance_section or "") + "\n\n" + sw
     except Exception:
         pass
-
-    from . import lang_mode
-    _ht_lang = lang_mode.pick_content_lang()
     log.info(f"[HOTAKE] Generating in lang={_ht_lang}")
     prompt = HOTAKE_PROMPT.format(
         performance_section=performance_section,

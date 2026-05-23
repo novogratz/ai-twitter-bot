@@ -497,7 +497,8 @@ def generate_replies(recent_topics=None, already_replied=None):
     if mood:
         discovered_section = (discovered_section or "") + "\n\n" + mood
     # Hand-curated ideological core (core_identity.md) — voice anchor.
-    core_identity = personality_store.render_core_identity()
+    # Reply agent targets FR tweets exclusively (lang:fr queries), so FR identity.
+    core_identity = personality_store.render_core_identity(lang="fr")
     if core_identity:
         discovered_section = (discovered_section or "") + "\n\n" + core_identity
     discovered_section = (discovered_section or "") + "\n\n" + personality_store.hard_rules_block()
