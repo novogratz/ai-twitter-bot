@@ -1,6 +1,6 @@
 {
   "caps": {
-    "MAX_NEWS_PER_DAY": 10,
+    "MAX_NEWS_PER_DAY": 6,
     "MAX_HOTAKES_PER_DAY": 0,
     "MAX_BREAKOUTS_PER_DAY": 0,
     "MAX_SPICY_PER_DAY": 0,
@@ -52,5 +52,5 @@
   "language": "fr",
   "scope": "ai_crypto_only",
   "updated_at": "2026-05-19T23:28:37",
-  "note": "Mandate 2026-05-18 \u2014 datacenter IA + crypto mining (MW-scale infrastructure) added to topic_focus. FR audience cares: power consumption, hashrate, GPU supply, Mistral GPU access. Caps cranked, cadence_factor 0.7 (faster cycles)."
+  "note": "Cap 6 = 3 daily + 3 weekly Fridays (user mandate 2026-05-22 PM)"
 }

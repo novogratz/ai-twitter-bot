@@ -1543,9 +1543,11 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         log.info(f"[NEWS] Article URL detected (X will render card): {src_url[:120]}")
     else:
         log.info("[NEWS] No source URL — top5 weekly recap (per-bullet sources inline).")
-    # Mark Top 5 as shipped for this topic-of-day so next same-topic
-    # Décode falls back to regular format.
+    # IMPORTANT: capture is_weekly BEFORE clearing _pending_top5_topic.
+    # Bug 2026-05-22: was reading the global AFTER it was set to None,
+    # so all Weekly Top 5s got marked as Daily in daily_topic_state.
     _pending = globals().get("_pending_top5_topic")
+    is_weekly_this_post = bool(_pending)
     if _pending:
         _mark_top5_done(_pending)
         log.info(f"[NEWS] Top 5 Vendredi shipped for {_pending} — next {_pending} Décode = regular format.")
@@ -1555,8 +1557,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # topic still gets BOTH a Daily and a Weekly (separate keys).
     _decoded_topic = globals().get("_pending_decode_topic")
     if _decoded_topic:
-        is_weekly = bool(globals().get("_pending_top5_topic"))
-        _mark_topic_done_today(_decoded_topic, is_weekly=is_weekly)
-        label = "Weekly" if is_weekly else "Daily"
+        _mark_topic_done_today(_decoded_topic, is_weekly=is_weekly_this_post)
+        label = "Weekly" if is_weekly_this_post else "Daily"
         log.info(f"[NEWS] Marked '{_decoded_topic}' {label} done for today.")
     return tweet
