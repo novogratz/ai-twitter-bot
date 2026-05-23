@@ -60,6 +60,7 @@ def _mark_top5_done(topic: str) -> None:
 
 
 _DECODE_TOPICS = ("IA", "Crypto", "Investissement")
+_MONTHLY_DECODE_TOPICS = ("Crypto", "Investissement", "IA")
 
 
 def _next_decode_number() -> int:
@@ -158,6 +159,23 @@ def _unmark_topic_done_today(topic: str, is_weekly: bool = False, format_kind: O
         pass
 
 
+def _clear_topics_done_today_for_format(format_kind: str) -> None:
+    """Clear today's done markers for one format only.
+
+    Manual monthly recaps need to be rerunnable without disturbing daily or
+    weekly dedup state.
+    """
+    state = _daily_topic_state()
+    suffix = f":{format_kind}"
+    done = [key for key in (state.get("topics_done") or []) if not str(key).endswith(suffix)]
+    state["topics_done"] = done
+    try:
+        with open(_DAILY_TOPIC_STATE_FILE, "w") as f:
+            _json.dump(state, f, indent=2)
+    except OSError:
+        pass
+
+
 def _is_in_daily_window() -> bool:
     """Daily Décodes fire during the daily window: 1 AM EST (user mandate).
     Window 0-4 AM EST gives the cron + a 3h buffer if startup is delayed.
@@ -196,7 +214,7 @@ def _next_topic_not_done_today() -> Optional[tuple]:
     elif mode == "weekly":
         plan = [(t, "weekly") for t in _DECODE_TOPICS]
     elif mode == "monthly":
-        plan = [(t, "monthly") for t in _DECODE_TOPICS]
+        plan = [(t, "monthly") for t in _MONTHLY_DECODE_TOPICS]
     else:
         if _is_in_weekly_window():
             plan.extend([(t, "weekly") for t in _DECODE_TOPICS])
@@ -416,7 +434,7 @@ TOPIC: {decode_topic} uniquement (pas d'autre sujet). Format: {format_mode}.
 le sujet leur appartient. Ne sois pas timide: tagger @sama dans un Décode
 OpenAI ou @VitalikButerin dans un Décode ETH déclenche notifs + reposts.
 Comptes prioritaires (utilise ceux qui collent au sujet):
-@sama @OpenAI @AnthropicAI @MistralAI @ArthurMensch @GuillaumeLample
+@sama @OpenAI @AnthropicAI @MistralAI
 @ylecun @karpathy @demishassabis @elonmusk @xai @nvidia @AMD @intel
 @cursor_ai @sualeh @amanrsanger
 @coinbase @brian_armstrong @VitalikButerin @saylor @MicroStrategy
@@ -447,11 +465,212 @@ _LEAKED_BRACKET_LINE_RE = re.compile(
     r"theme|angle|source|image|pattern)\b[^\]]*\]\s*$",
     re.IGNORECASE,
 )
+_DECODE_HEADER_LINE_RE = re.compile(
+    r"^\s*🔎?\s*Le\s+D[eé]code(?:\s+(?:Daily|Weekly|Monthly))?\s*#?\s*\d+\b",
+    re.IGNORECASE,
+)
 # 2026-05-22: bumped 780 → 1400 for the multi-paragraph Décode format.
 # User mandate: "make the text I write a bit longer, write a real thing
 # bro" — body now targets 700-1200 chars of actual argumentation.
 _MAX_NEWS_BODY_CHARS = 1400
 _MAX_NEWS_LINE_CHARS = 220  # also bumped — paragraphs allowed, not just bullets
+
+
+def _source_display_name(value: str) -> str:
+    """Readable source label for inline citations. Never returns a URL."""
+    from urllib.parse import urlparse
+
+    raw = (value or "").strip().strip(".,);]")
+    parsed = urlparse(raw if re.match(r"https?://", raw, re.IGNORECASE) else f"https://{raw}")
+    host = (parsed.netloc or parsed.path or "").lower().replace("www.", "")
+    host = host.split("/")[0]
+    outlets = {
+        "bloomberg.com": "Bloomberg",
+        "reuters.com": "Reuters",
+        "ft.com": "FT",
+        "wsj.com": "WSJ",
+        "investing.com": "Investing",
+        "yahoo.com": "Yahoo Finance",
+        "finance.yahoo.com": "Yahoo Finance",
+        "coindesk.com": "CoinDesk",
+        "cointelegraph.com": "Cointelegraph",
+        "theblock.co": "The Block",
+        "decrypt.co": "Decrypt",
+        "cnbc.com": "CNBC",
+        "techcrunch.com": "TechCrunch",
+        "theverge.com": "The Verge",
+        "axios.com": "Axios",
+        "u.today": "U.Today",
+        "lesechos.fr": "Les Échos",
+        "lemonde.fr": "Le Monde",
+        "lefigaro.fr": "Le Figaro",
+        "bfmtv.com": "BFM",
+        "businessinsider.com": "Business Insider",
+        "forbes.com": "Forbes",
+        "barrons.com": "Barron's",
+        "economist.com": "The Economist",
+        "nytimes.com": "NYT",
+        "theinformation.com": "The Information",
+        "gncrypto.news": "GN Crypto",
+        "cryptorank.io": "CryptoRank",
+        "cryptoseyes.com": "CryptoSEyes",
+        "livebitcoinnews.com": "Live Bitcoin News",
+        "cryptonews.com": "CryptoNews",
+    }
+    if host in outlets:
+        return outlets[host]
+    first = host.split(".")[0] if host else raw
+    return first.replace("-", " ").replace("_", " ").title() if first else "source"
+
+
+def _rewrite_inline_source_urls(text: str) -> str:
+    """Replace inline source URLs with source names.
+
+    Applies before source extraction so URLs inside "(source: http...)" cannot
+    be mistaken for the final link-card URL.
+    """
+    if not text:
+        return text
+    lines = text.splitlines()
+    last_non_empty = None
+    for i, line in enumerate(lines):
+        if line.strip():
+            last_non_empty = i
+
+    def repl_wrapped(match):
+        return f"(source: {_source_display_name(match.group(1))})"
+
+    def repl_unwrapped(match):
+        return f"source: {_source_display_name(match.group(1))}"
+
+    cleaned_lines = []
+    final_url_line = re.compile(r"^\s*(?:source\s*[:：]\s*)?https?://\S+\s*$", re.IGNORECASE)
+    for i, line in enumerate(lines):
+        if i == last_non_empty and final_url_line.match(line):
+            cleaned_lines.append(line)
+            continue
+        line = re.sub(
+            r"\(\s*source\s*[:：]\s*(https?://[^)\s]+)\s*\)",
+            repl_wrapped,
+            line,
+            flags=re.IGNORECASE,
+        )
+        line = re.sub(
+            r"\bsource\s*[:：]\s*(https?://[^\s)\]]+)",
+            repl_unwrapped,
+            line,
+            flags=re.IGNORECASE,
+        )
+        cleaned_lines.append(line)
+    return "\n".join(cleaned_lines)
+
+
+def _enforce_single_trailing_url(text: str, src_url: Optional[str]) -> str:
+    """Allow only the final source URL; strip every other raw URL."""
+    text = _rewrite_inline_source_urls(text or "")
+    if not src_url:
+        return re.sub(r"https?://\S+", "", text).strip()
+
+    urls = list(_SOURCE_URL_RE.finditer(text))
+    if not urls:
+        return (text.rstrip() + "\n\n" + src_url).strip()
+
+    parts = []
+    last_end = 0
+    for match in urls:
+        raw = match.group(0)
+        cleaned = _clean_source_url(raw)
+        is_final = cleaned == src_url and match == urls[-1]
+        parts.append(text[last_end:match.start()])
+        if is_final:
+            parts.append(src_url)
+        last_end = match.end()
+    parts.append(text[last_end:])
+    cleaned_text = "".join(parts)
+    if src_url not in cleaned_text:
+        cleaned_text = cleaned_text.rstrip() + "\n\n" + src_url
+    return re.sub(r"[ \t]{2,}", " ", cleaned_text).strip()
+
+
+def _dedupe_decode_headers(text: str) -> str:
+    """Keep one Décode header if the model and fallback both emitted one."""
+    lines = (text or "").splitlines()
+    header_indexes = [i for i, line in enumerate(lines) if _DECODE_HEADER_LINE_RE.match(line.strip())]
+    if len(header_indexes) <= 1:
+        return text
+
+    # Duplicate-header leaks happen at the top. Keep the last leading header,
+    # usually the richer one with weekday + date, and drop earlier headers.
+    first_content_seen = False
+    leading_headers = []
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if _DECODE_HEADER_LINE_RE.match(stripped) and not first_content_seen:
+            leading_headers.append(i)
+            continue
+        first_content_seen = True
+    if len(leading_headers) <= 1:
+        return text
+    keep = leading_headers[-1]
+    drop = set(leading_headers[:-1])
+    cleaned = [line for i, line in enumerate(lines) if i not in drop]
+    return re.sub(r"\n{3,}", "\n\n", "\n".join(cleaned)).strip()
+
+
+def _compact_inline_mentions(text: str) -> str:
+    """Prevent X from rendering standalone @handle lines inside bullets."""
+    if not text:
+        return text
+    text = re.sub(
+        r"[ \t]*\n[ \t]*(@[A-Za-z0-9_]{1,15})[ \t]*\n[ \t]*",
+        r" \1 ",
+        text,
+    )
+    text = re.sub(
+        r"([^\n])\s*\n\s*(@[A-Za-z0-9_]{1,15})(?=[\s.,;:])",
+        r"\1 \2",
+        text,
+    )
+    return re.sub(r"[ \t]{2,}", " ", text)
+
+
+def _news_quality_issue(text: str) -> Optional[str]:
+    """Catch obvious hallucinated/news-broken output before posting."""
+    body = _URL_RE.sub("", text or "")
+    if len(_DECODE_HEADER_LINE_RE.findall(body)) > 1:
+        return "duplicate Décode header"
+
+    self_deal_pairs = {
+        "spacex": ("spacex", "@spacex"),
+        "openai": ("openai", "@openai"),
+        "anthropic": ("anthropic", "@anthropicai"),
+        "google": ("google", "@google"),
+        "nvidia": ("nvidia", "@nvidia"),
+        "mistral": ("mistral", "@mistralai"),
+        "microsoft": ("microsoft", "@microsoft"),
+        "meta": ("meta", "@meta"),
+        "coinbase": ("coinbase", "@coinbase"),
+        "riot": ("riot", "@riotplatforms"),
+        "mara": ("mara", "@maraholdings"),
+    }
+    deal_verbs = r"(signe|sign[eé]?|deal|contrat|partenariat|acquiert|rach[eè]te|ach[eè]te|vend|paye|paie)"
+    compact = re.sub(r"\s+", " ", body.lower())
+    for label, aliases in self_deal_pairs.items():
+        alias_rx = "|".join(re.escape(a) for a in aliases)
+        if re.search(rf"\b(?:{alias_rx})\b[^.?!\n]{{0,120}}\b{deal_verbs}\b[^.?!\n]{{0,120}}\b(?:{alias_rx})\b", compact):
+            return f"self-deal hallucination involving {label}"
+
+    # Broken numbered bullets like "8. 🧱 2. 60.24." are usually model debris.
+    if re.search(r"^\s*\d+\.\s*[^\n]{0,12}\b\d+\.\s+\d+(?:[.,]\d+)?\b", body, re.MULTILINE):
+        return "malformed numeric bullet"
+
+    bogus_sources = {"the man", "unknown", "source", "entrepreneur loop"}
+    for source_name in re.findall(r"\(\s*source\s*[:：]\s*([^)]+?)\s*\)", body, flags=re.IGNORECASE):
+        if source_name.strip().lower() in bogus_sources:
+            return f"bogus source label: {source_name.strip()}"
+    return None
 
 
 def _strip_urls(text: str) -> str:
@@ -483,6 +702,7 @@ def _finalize_news_tweet(text: str, src_url: str) -> str:
     body = "\n".join(cleaned_lines).strip()
     body = re.sub(r"\n{3,}", "\n\n", body)
     body = re.sub(r"\s*(?:source|url|lien)\s*[:：]\s*$", "", body, flags=re.IGNORECASE).strip()
+    body = _compact_inline_mentions(_dedupe_decode_headers(body))
     # 2026-05-22: src_url may be None in Top 5 weekly-recap mode (per-bullet
     # (source: outlet) carries the trace). Skip the URL append in that case.
     if src_url:
@@ -727,7 +947,7 @@ la notification entrante → engagement → algo lift.
 AI LABS / FOUNDERS (tag si la story les concerne):
   @sama (Sam Altman), @OpenAI, @OpenAINewsroom
   @AnthropicAI, @claudeai
-  @MistralAI, @ArthurMensch, @GuillaumeLample
+  @MistralAI
   @GoogleDeepMind, @demishassabis, @JeffDean
   @xai, @elonmusk, @grok
   @Meta, @AIatMeta, @ylecun, @AIatMetaResearch
@@ -1473,6 +1693,33 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
                     reachable_pool[u] = raw_candidates[u]
             log.info(f"[NEWS] Pool: {len(reachable_pool)}/{len(urls_list)} URLs reachable after filter.")
         if reachable_pool:
+            # Extract unique named entities from URL titles to guide ÉTAPE 0
+            stop_entities = {"the", "and", "for", "are", "not", "but",
+                             "this", "that", "with", "from", "into", "about",
+                             "have", "been", "more", "what", "when", "where",
+                             "their", "there", "which", "while", "your", "could",
+                             "would", "should", "will", "well", "than", "some",
+                             "such", "just", "after", "before", "still", "every",
+                             "another", "between", "les", "des", "est", "pas",
+                             "une", "dans", "sur", "tout", "mais", "pour",
+                             "avec", "sont", "fait", "cette", "plus",
+                              "aussi", "être", "avoir", "faire", "bien", "donc",
+                              "dont", "alors", "tous", "peut", "leur", "très",
+                              "même", "sans", "non", "ces", "elle",
+                              "été", "etc", "via", "comme"}
+            all_entities = set()
+            for title in reachable_pool.values():
+                for w in re.findall(r"\w{5,}", title.lower()):
+                    if w not in stop_entities:
+                        all_entities.add(w)
+            entity_hint = ""
+            if all_entities:
+                sorted_ents = sorted(all_entities, key=lambda x: -len(x))[:12]
+                entity_hint = (
+                    "KEY ENTITIES ACROSS THESE URLS (mention at least one in bullet #1):\n"
+                    + ", ".join(sorted_ents)
+                    + "\n\n"
+                )
             lines = [
                 "==================================================",
                 f"WEB SEARCH RESULTS — {len(reachable_pool)} reachable URLs (past week, topic={decode_topic})",
@@ -1480,6 +1727,8 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
                 "==================================================",
                 "",
             ]
+            if entity_hint:
+                lines.insert(0, entity_hint.rstrip())
             for u, title in list(reachable_pool.items())[:24 if use_monthly else 12]:
                 lines.append(f"- {u}")
                 lines.append(f"  {title}")
@@ -1580,7 +1829,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # Le Décode format enforcer. Tolerate D[eé]code (model occasionally
     # drops the accent), Daily/Weekly label optional, missing 🔎 prefix.
     decode_match = re.search(
-        r"(?:🔎\s*)?Le\s+D[eé]code(?:\s+(?:Daily|Weekly))?\s*#?\s*\d+",
+        r"(?:🔎\s*)?Le\s+D[eé]code(?:\s+(?:Daily|Weekly|Monthly))?\s*#?\s*\d+",
         tweet,
         re.IGNORECASE,
     )
@@ -1616,6 +1865,10 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # Pull the [IMAGE: <slug>] hint out of the body first (it's metadata
     # for the image fallback, never meant to be tweeted).
     tweet, image_topic = _extract_image_topic(tweet)
+    # Inline citations must never contain raw URLs. Do this before source
+    # extraction so "(source: http://...)" cannot be mistaken for the final
+    # link-card URL.
+    tweet = _rewrite_inline_source_urls(tweet)
     # Detect article URL. Legacy [SOURCE: url] gets stripped + re-appended
     # on its own line so X can render a card; raw URL-on-last-line stays
     # in place untouched.
@@ -1673,7 +1926,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # User mandate: "its ok if there is no link" for the Friday Top 5.
     if not src_url:
         compact = re.sub(r"\s+", " ", tweet).strip()
-        has_header = bool(re.search(r"Le Décode(?:\s+(?:Daily|Weekly))?\s*#?\d+", tweet, re.IGNORECASE))
+        has_header = bool(re.search(r"Le Décode(?:\s+(?:Daily|Weekly|Monthly))?\s*#?\d+", tweet, re.IGNORECASE))
         # Top 5 weekly / Top 10 monthly: per-bullet (source: outlet) carries
         # the trace, URL remains optional. Daily: URL is mandatory.
         if (is_top5 or is_monthly) and has_header and len(compact) >= 300:
@@ -1691,73 +1944,17 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # X's native link-card covers the visual; an attached image would
     # suppress the card preview, so always null the image topic.
     globals()["_last_image_topic"] = None
-    # 2026-05-23 PM v2 (user: "when source is investing.com just say
-    # source: Investing"): rewrite every (source: <url>) wrapper to use
-    # the outlet's display name instead of the raw URL. Keeps the
-    # citation visible AND stops X from auto-linkifying the inline URL.
-    # Only one URL survives in the whole tweet: the trailing source URL.
-    if src_url:
-        def _outlet_display_name(u: str) -> str:
-            from urllib.parse import urlparse
-            host = (urlparse(u).netloc or "").lower().replace("www.", "")
-            outlets = {
-                "bloomberg.com": "Bloomberg",
-                "reuters.com": "Reuters",
-                "ft.com": "FT",
-                "wsj.com": "WSJ",
-                "investing.com": "Investing",
-                "yahoo.com": "Yahoo Finance",
-                "finance.yahoo.com": "Yahoo Finance",
-                "coindesk.com": "CoinDesk",
-                "cointelegraph.com": "Cointelegraph",
-                "theblock.co": "The Block",
-                "decrypt.co": "Decrypt",
-                "cnbc.com": "CNBC",
-                "techcrunch.com": "TechCrunch",
-                "theverge.com": "The Verge",
-                "axios.com": "Axios",
-                "u.today": "U.Today",
-                "lesechos.fr": "Les Échos",
-                "lemonde.fr": "Le Monde",
-                "lefigaro.fr": "Le Figaro",
-                "bfmtv.com": "BFM",
-                "businessinsider.com": "Business Insider",
-                "forbes.com": "Forbes",
-                "barrons.com": "Barron's",
-                "economist.com": "The Economist",
-                "nytimes.com": "NYT",
-                "theinformation.com": "The Information",
-            }
-            if host in outlets:
-                return outlets[host]
-            first = host.split(".")[0] if host else ""
-            return first.capitalize() if first else "source"
-
-        def _rewrite_source_wrapper(m):
-            url_in = m.group(1)
-            # Always rewrite — replace the inline URL with the outlet name.
-            # Even if the wrapper happens to contain src_url (rare), we
-            # still strip the URL since the trailing URL is the only
-            # canonical link the link card should render.
-            return f"(source: {_outlet_display_name(url_in)})"
-
-        tweet = re.sub(
-            r"\(\s*source\s*[:：]\s*(https?://\S+?)\s*\)",
-            _rewrite_source_wrapper,
-            tweet,
-            flags=re.IGNORECASE,
-        )
-
-        # Then drop any remaining bare inline URLs that aren't the
-        # trailing source URL (handles URLs not wrapped in (source: ...)).
-        def _drop_bare(m):
-            url = m.group(0)
-            return url if url == src_url or url.rstrip(".,);") == src_url else ""
-        tweet = re.sub(r"https?://\S+", _drop_bare, tweet)
-        # Tidy up empty parens / double spaces left by the deletions.
-        tweet = re.sub(r"\(\s*\)", "", tweet)
-        tweet = re.sub(r" {2,}", " ", tweet)
+    # Final hard invariant for every Décode format: no raw URLs in the body,
+    # exactly one optional URL at the end for the X link card.
+    tweet = _enforce_single_trailing_url(tweet, src_url)
     tweet = _finalize_news_tweet(tweet, src_url)
+    quality_issue = _news_quality_issue(tweet)
+    if quality_issue:
+        preview = " ".join(tweet.replace(src_url or "", "").split())[:220]
+        log.info(f"[NEWS] Quality gate refused — {quality_issue}: {preview!r}")
+        globals()["_last_source_url"] = None
+        globals()["_last_image_topic"] = None
+        return None
     if _news_body_bad_format(tweet, src_url):
         preview = " ".join(tweet.replace(src_url or "", "").split())
         log.info(f"[NEWS] Bad body format — SKIPPING to avoid unreadable block: {preview[:180]!r}")

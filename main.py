@@ -218,7 +218,7 @@ def main():
         log.info("DRY RUN MODE - no tweets will be posted")
 
     if args.monthly_recap_now:
-        safe_run_monthly_news_cycle()
+        safe_run_monthly_news_cycle(force_all=True)
         return
 
     scheduler = BlockingScheduler()
@@ -300,15 +300,13 @@ def main():
         if not _quiet_skip("REPLYBACK"):
             safe_run_replyback_cycle()
 
-    # Run news post FIRST so the bot opens its session with a banger.
-    # User preference: AI news + sharp comment is the brand DNA — that's what
-    # we want to lead with, not a reply. Replies follow once the post is up.
+    # Startup news burst: force all three Daily Décodes first, then all three
+    # Monthly Top 10s. Replies follow once the posts are up.
     if not args.reply_only:
-        if has_post_slot():
-            log.info("Bot started! Posting first news tweet...")
-            safe_run_bot_cycle()
-        else:
-            log.info(f"Bot started with daily post caps full ({post_slot_status()}). Skipping startup news search.")
+        log.info("Bot started! Firing forced daily Décodes for IA, Crypto, Investissement...")
+        safe_run_daily_news_cycle(force_all=True)
+        log.info("Firing forced monthly recaps for Crypto, Investissement, IA...")
+        safe_run_monthly_news_cycle(force_all=True)
 
     # Then warm up the engagement loop with a direct-reply cycle.
     if not args.post_only:
@@ -342,10 +340,10 @@ def main():
             trigger=CronTrigger(day_of_week="fri", hour=7, minute=0, timezone="America/New_York"),
             id="weekly_news_job",
         )
-        log.info("News bot MONTHLY: cron on the 1st at 8:00 AM America/New_York (= monthly Top 10).")
+        log.info("News bot MONTHLY: cron Saturdays at 8:00 AM America/New_York (= monthly Top 10).")
         scheduler.add_job(
             safe_run_monthly_news_cycle,
-            trigger=CronTrigger(day=1, hour=8, minute=0, timezone="America/New_York"),
+            trigger=CronTrigger(day_of_week="sat", hour=8, minute=0, timezone="America/New_York"),
             id="monthly_news_job",
         )
 

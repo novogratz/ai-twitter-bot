@@ -403,7 +403,7 @@ def _run_single_bot_cycle() -> bool:
         tweet = None
         last_tried_topic = None
         for attempt in range(3):
-            log.info(f"Generating Décode (Daily or Weekly), attempt {attempt + 1}/3...")
+            log.info(f"Generating Décode, attempt {attempt + 1}/3...")
             candidate = generate_tweet()
             if candidate is None:
                 log.info("[NEWS] generate_tweet returned None — no eligible combo.")
@@ -422,7 +422,7 @@ def _run_single_bot_cycle() -> bool:
             format_kind = _ag_mod.__dict__.get("_pending_decode_format", "daily")
             is_weekly = format_kind == "weekly"
             is_recap = format_kind in {"weekly", "monthly"}
-            last_tried_topic = (topic, is_weekly)
+            last_tried_topic = (topic, format_kind)
             # Weekly Top 5 and Monthly Top 10 are allowed URL-less; don't retry them.
             if is_recap:
                 tweet = candidate
@@ -483,7 +483,7 @@ def _run_single_bot_cycle() -> bool:
             log.info(f"[NEWS] Attempt {attempt + 1} URL failed validation (src={cand_src}). Un-marking + retrying.")
             try:
                 if topic:
-                    _ag_mod._unmark_topic_done_today(topic, is_weekly=is_weekly)
+                    _ag_mod._unmark_topic_done_today(topic, format_kind=format_kind)
             except Exception:
                 pass
             _decrement_counter("news")
@@ -580,28 +580,31 @@ def _run_single_bot_cycle() -> bool:
                     strip_reason = "unreachable / 404"
                 else:
                     # Coupling check: bullet #1 should share at least one
-                    # meaningful entity (≥4-char word) with the URL's title.
+                    # meaningful entity (≥3-char word) with the URL's title.
                     # Catches "URL is about OpenAI but #1 is about NVIDIA".
+                    # 2026-05-23 fix: scan ALL numbered bullets, not just #1,
+                    # and use unicode-aware regex for French accented chars.
                     title = (injected_titles.get(src_url) or "").lower()
                     if title:
-                        # All Décodes (top5 daily and weekly) now ship as
-                        # numbered bullets — extract bullet #1's text.
-                        # Fallback: if no bullet #1 is found (legacy prose
-                        # format), use the entire first 500 chars.
-                        b1_match = re.search(r"^\s*1\.\s*(.+?)(?:\n\s*2\.|$)", tweet, re.MULTILINE | re.DOTALL)
-                        if b1_match:
-                            subject_region = b1_match.group(1).lower()
-                        else:
-                            subject_region = tweet[:500].lower()
+                        # Scan full tweet minus URL as subject region
+                        subject_region = re.sub(r"https?://\S+", "", tweet).lower().strip()
                         if subject_region:
-                            # Pull entity-ish words from title (≥4 chars, not stopwords)
-                            stop = {"this", "that", "with", "from", "into", "about",
+                            # Pull entity-ish words from title (≥3 chars, not stopwords)
+                            # Use unicode-aware regex for French accents
+                            stop = {"the", "and", "for", "are", "not", "but",
+                                    "this", "that", "with", "from", "into", "about",
                                     "have", "been", "more", "what", "when", "where",
                                     "their", "there", "which", "while", "your", "could",
                                     "would", "should", "will", "well", "than", "some",
                                     "such", "just", "after", "before", "still", "every",
-                                    "another", "between"}
-                            title_tokens = {w for w in re.findall(r"[a-zA-Z]{4,}", title) if w not in stop}
+                                    "another", "between", "les", "des", "est", "pas",
+                                    "une", "dans", "sur", "tout", "mais", "pour",
+                                    "avec", "sont", "fait", "cette", "plus",
+                                    "aussi", "être", "avoir", "faire", "bien", "donc",
+                                    "dont", "alors", "tous", "peut", "leur", "très",
+                                    "même", "sans", "non", "ces", "elle",
+                                    "été", "etc", "via", "comme"}
+                            title_tokens = {w for w in re.findall(r"\w{3,}", title) if w not in stop}
                             if title_tokens:
                                 if not any(t in subject_region for t in title_tokens):
                                     strip_reason = (
@@ -609,25 +612,31 @@ def _run_single_bot_cycle() -> bool:
                                         f"({sorted(title_tokens)[:6]} not in subject region)"
                                     )
                 if strip_reason:
-                    # 2026-05-23: was stripping URL + shipping URL-less.
-                    # User mandate: Daily Décodes MUST ship with link card.
-                    # If URL validation fails → SKIP entire cycle, retry
-                    # next cycle. Un-mark the topic in daily_topic_state
-                    # so the rotation picks it again next time (agent.py
-                    # marked it done as part of its successful generation,
-                    # but we're refusing to actually ship).
-                    log.info(
-                        f"[NEWS] ❌ URL stripped — {strip_reason}: {src_url} "
-                        f"→ SKIPPING Daily Décode (cannot ship URL-less)."
-                    )
-                    try:
-                        topic = _ag.__dict__.get("_pending_decode_topic")
-                        if topic:
-                            _ag._unmark_topic_done_today(topic, is_weekly=False)
-                            log.info(f"[NEWS] Un-marked '{topic}:daily' — will retry next cycle.")
-                    except Exception:
-                        pass
-                    return
+                    # Monthly/weekly recap: allowed URL-less — strip URL, keep posting
+                    decode_format = getattr(_ag, "_pending_decode_format", "daily")
+                    if decode_format in ("monthly", "weekly"):
+                        log.info(
+                            f"[NEWS] ⚠️ URL stripped ({decode_format} mode) — {strip_reason}: "
+                            f"{src_url}. Stripping URL, shipping body-only."
+                        )
+                        post_body = re.sub(r"https?://\S+", "", post_body).strip()
+                        src_url = None
+                        is_decode = False
+                        img_path = None
+                    else:
+                        # Daily Décode: URL is mandatory. SKIP entire cycle, retry.
+                        log.info(
+                            f"[NEWS] ❌ URL stripped — {strip_reason}: {src_url} "
+                            f"→ SKIPPING Daily Décode (cannot ship URL-less)."
+                        )
+                        try:
+                            topic = _ag.__dict__.get("_pending_decode_topic")
+                            if topic:
+                                _ag._unmark_topic_done_today(topic, is_weekly=False)
+                                log.info(f"[NEWS] Un-marked '{topic}:daily' — will retry next cycle.")
+                        except Exception:
+                            pass
+                        return
                 else:
                     log.info(f"[NEWS] ✅ URL validated (pool + reachable + matches #1), keeping inline")
             except Exception as e:
@@ -701,30 +710,38 @@ def safe_run_bot_cycle():
         health.record_failure("post")
 
 
-def _run_bot_cycle_in_mode(mode: str):
+def _run_bot_cycle_in_mode(mode: str, posts_per_cycle: int | None = None):
     """Set the news-mode hint and run the burst. The hint forces
     _next_topic_not_done_today() in agent.py to filter the rotation:
     'daily' → only Daily Décodes, 'weekly' → only Weekly Top 5s,
     'monthly' → Monthly Top 10s."""
     from . import agent as _ag
     prev = _ag.__dict__.get("_news_mode")
+    prev_posts_per_cycle = NEWS_POSTS_PER_CYCLE
     _ag.__dict__["_news_mode"] = mode
     try:
+        if posts_per_cycle is not None:
+            globals()["NEWS_POSTS_PER_CYCLE"] = posts_per_cycle
         run_bot_cycle()
     finally:
+        globals()["NEWS_POSTS_PER_CYCLE"] = prev_posts_per_cycle
         if prev is None:
             _ag.__dict__.pop("_news_mode", None)
         else:
             _ag.__dict__["_news_mode"] = prev
 
 
-def safe_run_daily_news_cycle():
+def safe_run_daily_news_cycle(force_all: bool = False):
     """Cron handler — 1:00 AM EST every day. Forces daily-only rotation
     so the burst ships 3 Daily Décodes (one per topic) in ~14-18 min."""
     from . import health
     try:
         log.info("[CRON] Daily news burst (1:00 AM EST) — daily mode forced.")
-        _run_bot_cycle_in_mode("daily")
+        if force_all:
+            from . import agent as _ag
+            _ag._clear_topics_done_today_for_format("daily")
+            log.info("[CRON] Cleared today's daily Décode markers for manual all-category run.")
+        _run_bot_cycle_in_mode("daily", posts_per_cycle=3)
         health.record_success("post")
     except Exception:
         log.error(f"Error during daily news cron: {traceback.format_exc()}")
@@ -744,13 +761,17 @@ def safe_run_weekly_news_cycle():
         health.record_failure("post")
 
 
-def safe_run_monthly_news_cycle():
+def safe_run_monthly_news_cycle(force_all: bool = False):
     """Manual/monthly handler — forces monthly Top 10 rotation so the burst
     ships 3 Monthly Décodes (one per topic)."""
     from . import health
     try:
         log.info("[CRON] Monthly news burst — monthly mode forced.")
-        _run_bot_cycle_in_mode("monthly")
+        if force_all:
+            from . import agent as _ag
+            _ag._clear_topics_done_today_for_format("monthly")
+            log.info("[CRON] Cleared today's monthly Décode markers for manual all-category run.")
+        _run_bot_cycle_in_mode("monthly", posts_per_cycle=3)
         health.record_success("post")
     except Exception:
         log.error(f"Error during monthly news cron: {traceback.format_exc()}")
