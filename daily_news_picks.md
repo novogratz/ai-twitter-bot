@@ -5369,3 +5369,36 @@ Les offres ATM sont simplement terribles pour le c
  $RKLB $OKLO
   - https://x.com/MichelePet48459/status/2058035440259899809
   - **WHY**: Source fiable + impact concret (score signal 3, engagement 27).
+- **@wolf_bitcoin_** (6 likes, score 7/10) — MAX KEISER DISCUSSING BITCOIN ON TV IN 2011 WHEN IT WAS TRADING AT $10
+
+"Bitcoin is the first decentralized digital currency. The supply is capped at 21 million... ever."
+  - https://x.com/WOLF_Bitcoin_/status/2057974793954017705
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 12).
+- **@jouhatsu_ai** (780 likes, score 8/10) — Les hardcore users de Claude Code dans le monde anglophone facturent entre 15 500 et 42 000 $ / mois  à leurs clients… 
+
+et le pire, c’est que Anthropic a quasiment tout expliqué en 30 minutes officie
+  - https://x.com/Jouhatsu_ai/status/2050253254957670650
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 850).
+- **@flarenetworks** (42 likes, score 8/10) — 10,000 $BTC. Two pizzas.
+
+Imagine borrowing against your Bitcoin instead of spending it.
+
+FBTC via Flare's FAssets: built to do that. And more.
+
+Read more about it here: https://flare.network/news/the
+  - https://x.com/FlareNetworks/status/2058035192955326924
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 58).
+- **@silvano_trotta** (0 likes, score 7/10) — Hier, le 20 mai 2026, SpaceX a officiellement déposé son formulaire S-1 auprès de la SEC (le document qui officialise l’entrée en bourse). C’est le début concret de ce qui s’annonce comme l’IPO la plu
+  - https://x.com/silvano_trotta/status/2057503518169165982
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 18).
+- **@frugalistefutee** (25 likes, score 7/10) — SpaceX $SPCX
+
+- Revenus 2025 / $18.6B
+- Pertes nettes de $4.9B
+- $102B en actifs / $60.5B de dettes
+
+Introduction en bourse le 12 juin / 1.75-2.0T
+
+4 à 5% des actions en circulation seront offertes su
+  - https://x.com/FrugalisteFutee/status/2057628428539658478
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 27).
