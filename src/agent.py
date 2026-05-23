@@ -754,6 +754,15 @@ def _recent_duplicate_issue(tweet: str, recent_tweets: list[str]) -> Optional[st
     return None
 
 
+def _mark_generation_retryable(reason: str, text: str = "") -> None:
+    """Tell bot.py to retry the same topic with a different candidate."""
+    rejected_terms = set(globals().get("_temporary_rejected_terms") or set())
+    rejected_terms.update(_dedup_terms(text))
+    globals()["_temporary_rejected_terms"] = rejected_terms
+    globals()["_last_generation_skip_retryable"] = True
+    globals()["_last_generation_skip_reason"] = reason
+
+
 def _strip_urls(text: str) -> str:
     """Drop URLs from final tweet text. X deboosts off-platform links and the
     image card carries the brand — source can go in a self-reply later. Also
@@ -1992,6 +2001,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
             # rule leaks ~once a day, so this is the deterministic backstop.
             if _is_rejected_source(src_url):
                 log.info(f"[NEWS] Source on content-farm rejectlist — SKIPPING: {src_url}")
+                _mark_generation_retryable(f"rejected source: {src_url}", tweet)
                 globals()["_last_source_url"] = None
                 globals()["_last_image_topic"] = None
                 return None
@@ -2000,6 +2010,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
                 age = datetime.now() - pub_date
                 if age > timedelta(hours=max_age_h):
                     log.info(f"[NEWS] URL is {age.total_seconds()/3600:.1f}h old (>{max_age_h}h, top5={is_top5}) — SKIPPING stale source: {src_url}")
+                    _mark_generation_retryable(f"stale source: {src_url}", tweet)
                     globals()["_last_source_url"] = None
                     globals()["_last_image_topic"] = None
                     return None
@@ -2029,6 +2040,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
             )
             globals()["_last_source_url"] = None
             globals()["_last_image_topic"] = None
+            _mark_generation_retryable("daily missing source URL", tweet)
             return None
     globals()["_last_source_url"] = src_url
     # X's native link-card covers the visual; an attached image would
@@ -2042,11 +2054,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     if duplicate_issue:
         preview = " ".join(tweet.replace(src_url or "", "").split())[:220]
         log.info(f"[NEWS] Dedup refused — {duplicate_issue}: {preview!r}")
-        rejected_terms = set(globals().get("_temporary_rejected_terms") or set())
-        rejected_terms.update(_dedup_terms(tweet))
-        globals()["_temporary_rejected_terms"] = rejected_terms
-        globals()["_last_generation_skip_retryable"] = True
-        globals()["_last_generation_skip_reason"] = duplicate_issue
+        _mark_generation_retryable(duplicate_issue, tweet)
         globals()["_last_source_url"] = None
         globals()["_last_image_topic"] = None
         return None
@@ -2054,11 +2062,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     if quality_issue:
         preview = " ".join(tweet.replace(src_url or "", "").split())[:220]
         log.info(f"[NEWS] Quality gate refused — {quality_issue}: {preview!r}")
-        rejected_terms = set(globals().get("_temporary_rejected_terms") or set())
-        rejected_terms.update(_dedup_terms(tweet))
-        globals()["_temporary_rejected_terms"] = rejected_terms
-        globals()["_last_generation_skip_retryable"] = True
-        globals()["_last_generation_skip_reason"] = quality_issue
+        _mark_generation_retryable(quality_issue, tweet)
         globals()["_last_source_url"] = None
         globals()["_last_image_topic"] = None
         return None
