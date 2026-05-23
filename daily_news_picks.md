@@ -5402,3 +5402,38 @@ Introduction en bourse le 12 juin / 1.75-2.0T
 4 à 5% des actions en circulation seront offertes su
   - https://x.com/FrugalisteFutee/status/2057628428539658478
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 27).
+- **@degeneratenews** (24 likes, score 7/10) — STATS: @BounceTech FLIPS @phantom IN 7-DAY REVENUE ON @HyperliquidX L1
+
+$268,399 VS. $247,688
+
+- PER @DefiLlama DATA
+
+SOURCE: https://defillama.com/chain/hyperliquid-l1…
+  - https://x.com/DegenerateNews/status/2058045608024232027
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 40).
+- **@libertyswapfi** (5 likes, score 7/10) — - Flash loan $56M
+- Add $8M liquidity across 7 different AMM pools through separate addresses
+- Buy and sell against your own liquidity
+- Remove liquidity and repay the flash loan
+
+All within a single
+  - https://x.com/LibertySwapFi/status/2058053928663867683
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7).
+- **@wolf_bitcoin_** (3 likes, score 7/10) — Mark Cuban on his MOST PROFITABLE Shark Tank Investments  
+
+"Dude Wipes will do $150M in revenue this year. I gave them $250k for 20% of the company."  
+
+
+"BeatBox Beverages just did a fundraising at
+  - https://x.com/WOLF_Bitcoin_/status/2058042996621463701
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5).
+- **@gergelyorosz** (766 likes, score 7/10) — J'ai utilisé l'IA pour vérifier en double mes états de clôture annuels de mon entreprise - je lui ai fourni des relevés bancaires, des états comptables, etc., en parallèle de mon comptable qui les exa
+  - https://x.com/GergelyOrosz/status/2057773000536002897
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 878).
+- **@worldsinboxes** (511 likes, score 7/10) — 10k worlds , endless possibilities 
+
+Minting on @ethereum 
+
+Apply for wl : https://dioramas.xyz
+  - https://x.com/worldsinboxes/status/2057689196333273349
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 773).
