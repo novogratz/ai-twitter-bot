@@ -350,3 +350,13 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top reply targets: @LesEchos=16, @LeJournalDuCoin=13, @McnallieM=13, @FlasheurInvest=10, @CryptoastMedia=10
 
 **Followers we follow** (running total): 166
+
+## 2026-05-22
+
+**Activity** — total actions: 360
+  - by type: reply=223, retweet=96, quote=25, post=16
+  - top sources: PROFILE-ALWAYS=118, RETWEET=63, MEGA=41, FAVORITE_PROFILE=33, QUOTE=15, FOLLOWING=14, RETWEET_QT=10, PROFILE-FR=9
+  - comedy patterns: FR_ANCHOR=11, DIALOGUE=6, RENAME=3, UNDERSTATEMENT=2, REPETITION=1, METAPHOR=1
+  - top reply targets: @Graphseo=17, @LeJournalDuCoin=17, @LesEchos=14, @McnallieM=13, @Crypto__Goku=8
+
+**Followers we follow** (running total): 166
