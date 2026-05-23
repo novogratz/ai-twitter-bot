@@ -5291,3 +5291,26 @@ Puffer Co-Founder @AmirOnchain explains how based sequencing enables trust-minim
 Ethereum continue de prendre du retard.
   - https://x.com/scottmelker/status/2057929499019276510
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 117).
+- **@adambliv** (406 likes, score 9/10) — Why would you sell Bitcoin for $75k when it’s going to $1,000,000 are you stupid lmao
+  - https://x.com/AdamBLiv/status/2057921563190596042
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 530).
+- **@kalshi_crypto** (170 likes, score 9/10) — 2010: 10,000 Bitcoin = two pizzas
+
+2026: 10,000 Bitcoin = $769,000,000
+  - https://x.com/Kalshi_Crypto/status/2057878819105566845
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 230).
+- **@bitcoinsapiens** (722 likes, score 9/10) — ARTHUR HAYES : Le Bitcoin atteindra 3,4 millions de dollars d'ici 2028.
+  - https://x.com/BitcoinSapiens/status/2057703755563565516
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1088).
+- **@cryptogoos** (381 likes, score 8/10) — C'EST ÉNORME
+
+ La SEC vient d'approuver le trading d'options sur l'indice Bitcoin de Nasdaq.
+
+GROS
+  - https://x.com/cryptogoos/status/2057956168484688365
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 435).
+- **@thebitcoinconf** (373 likes, score 7/10) — MICHAEL SAYLOR : « Nous achèterons probablement la totalité du #Bitcoin produit par les mineurs d'ici jusqu'en 2140. »
+
+Ils détiendraient environ 8,6 % de l'offre de BTC
+  - https://x.com/TheBitcoinConf/status/2057831656774345102
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 459).
