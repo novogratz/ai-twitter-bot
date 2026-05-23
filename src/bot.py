@@ -412,7 +412,16 @@ def _run_single_bot_cycle() -> bool:
                 reason = _ag_mod.__dict__.get("_last_generation_skip_reason") or "no eligible combo"
                 log.info(f"[NEWS] generate_tweet returned None — {reason}.")
                 if retryable and attempt < max_attempts - 1:
-                    log.info("[NEWS] Refusal is retryable — searching for a different story.")
+                    topic = _ag_mod.__dict__.get("_pending_decode_topic")
+                    fk = _ag_mod.__dict__.get("_pending_decode_format", "daily")
+                    if topic and fk:
+                        key = _ag_mod._topic_done_key(topic, format_kind=fk)
+                        skipped = set(_ag_mod.__dict__.get("_temporary_skipped_done_keys") or set())
+                        skipped.add(key)
+                        _ag_mod.__dict__["_temporary_skipped_done_keys"] = skipped
+                        log.info(f"[NEWS] Skipped {key} — retryable failure, trying next category.")
+                    else:
+                        log.info("[NEWS] Refusal is retryable — searching for a different story.")
                     continue
                 break
             _increment_counter("news")
@@ -430,9 +439,18 @@ def _run_single_bot_cycle() -> bool:
             is_weekly = format_kind == "weekly"
             is_recap = format_kind in {"weekly", "monthly"}
             last_tried_topic = (topic, format_kind)
-            # Weekly Top 5 and Monthly Top 10 are allowed URL-less; don't retry them.
+            # Weekly Top 5 and Monthly Top 10: inject best pool URL for bullet #1
+            # so the post has a real article link, not a generic domain.
             if is_recap:
-                tweet = candidate
+                recap_tweet, recap_src = _substitute_url_with_pool_match(candidate, cand_src)
+                if recap_src and recap_src != cand_src:
+                    try:
+                        _ag_mod.__dict__["_last_source_url"] = recap_src
+                    except Exception:
+                        pass
+                    tweet = recap_tweet
+                else:
+                    tweet = candidate
                 break
             # 2026-05-23 PM: force URL substitution from injected pool.
             # Don't trust the model's URL choice — ollama hallucinates fake
@@ -775,7 +793,7 @@ def safe_run_daily_news_cycle(force_all: bool = False):
             from . import agent as _ag
             _ag._clear_topics_done_today_for_format("daily")
             log.info("[CRON] Cleared today's daily Décode markers for manual all-category run.")
-        _run_bot_cycle_in_mode("daily", posts_per_cycle=3)
+        _run_bot_cycle_in_mode("daily", posts_per_cycle=4)
         health.record_success("post")
     except Exception:
         log.error(f"Error during daily news cron: {traceback.format_exc()}")
@@ -784,11 +802,11 @@ def safe_run_daily_news_cycle(force_all: bool = False):
 
 def safe_run_weekly_news_cycle():
     """Cron handler — 7:00 AM EST Fridays. Forces weekly-only rotation
-    so the burst ships 3 Weekly Top 5s (one per topic) in ~14-18 min."""
+    so the burst ships 4 Weekly Top 5s (one per topic) in ~14-18 min."""
     from . import health
     try:
         log.info("[CRON] Weekly news burst (Friday 7:00 AM EST) — weekly mode forced.")
-        _run_bot_cycle_in_mode("weekly")
+        _run_bot_cycle_in_mode("weekly", posts_per_cycle=4)
         health.record_success("post")
     except Exception:
         log.error(f"Error during weekly news cron: {traceback.format_exc()}")
@@ -797,7 +815,7 @@ def safe_run_weekly_news_cycle():
 
 def safe_run_monthly_news_cycle(force_all: bool = False):
     """Manual/monthly handler — forces monthly Top 10 rotation so the burst
-    ships 3 Monthly Décodes (one per topic)."""
+    ships 4 Monthly Décodes (one per topic)."""
     from . import health
     try:
         log.info("[CRON] Monthly news burst — monthly mode forced.")
@@ -805,7 +823,7 @@ def safe_run_monthly_news_cycle(force_all: bool = False):
             from . import agent as _ag
             _ag._clear_topics_done_today_for_format("monthly")
             log.info("[CRON] Cleared today's monthly Décode markers for manual all-category run.")
-        _run_bot_cycle_in_mode("monthly", posts_per_cycle=3)
+        _run_bot_cycle_in_mode("monthly", posts_per_cycle=4)
         health.record_success("post")
     except Exception:
         log.error(f"Error during monthly news cron: {traceback.format_exc()}")

@@ -161,6 +161,12 @@ def search_for_news_topic(topic: str, date_filter: str = "w") -> str:
             "AI datacenter capex Stargate CoreWeave CRWV news this week",
             "tech IPO MicroStrategy MSTR MARA RIOT valuation this week",
         ],
+        "Space": [
+            "SpaceX Starship launch space news this week",
+            "Blue Origin New Glenn rocket news this week",
+            "Starlink satellite NASA space industry news this week",
+            "Rocket Lab ArianeGroup ESA space news this week",
+        ],
     }
     queries = queries_by_topic.get(topic, ["AI crypto news this week"])
     all_hits = []

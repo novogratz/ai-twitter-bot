@@ -59,8 +59,8 @@ def _mark_top5_done(topic: str) -> None:
         pass
 
 
-_DECODE_TOPICS = ("IA", "Crypto", "Investissement")
-_MONTHLY_DECODE_TOPICS = ("Crypto", "Investissement", "IA")
+_DECODE_TOPICS = ("IA", "Crypto", "Investissement", "Space")
+_MONTHLY_DECODE_TOPICS = ("Crypto", "Investissement", "IA", "Space")
 
 
 def _peek_next_decode_number() -> int:
@@ -85,10 +85,7 @@ def _commit_next_decode_number(n: int) -> None:
 
 
 def _topic_for_decode(n: int) -> str:
-    """Topic rotation: IA, Crypto, Investissement on a 3-cycle. n % 3 → topic.
-    Friday still uses the Top 5 bookmark-bait FORMAT (prompt-side) but rotates
-    all 3 topics like other days — user reverted the IA/Crypto-only Friday rule.
-    """
+    """Topic rotation: IA, Crypto, Investissement, Space on a 4-cycle."""
     return _DECODE_TOPICS[n % len(_DECODE_TOPICS)]
 
 
@@ -238,10 +235,15 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
     if format_mode == "monthly_top10":
         top5_block = f"""INSTRUCTIONS (NE PAS OUTPUT — réfléchis silencieusement):
 
-  • Le Décode Monthly = TOP 10 chiffres du mois pour UNE catégorie.
-  • Fenêtre: les 30 derniers jours. Tu synthétises les plus gros faits, pas
-    les micro-news. Chaque bullet doit porter un acteur, un chiffre, et une
+  • Le Décode Monthly = TOP 10 chiffres des 30 derniers jours pour UNE
+    catégorie. Tu synthétises les plus gros faits, pas les micro-news. Chaque bullet doit porter un acteur, un chiffre, et une
     conséquence business/marché/souveraineté.
+  • ⚠️ DATA FRESHNESS — utilise UNIQUEMENT les WEB SEARCH RESULTS / RSS
+    POOL ci-dessous. N'utilise PAS ta connaissance d'entraînement — elle
+    est périmée (ex: Bitcoin n'est PAS à 125k, il est ~75k aujourd'hui).
+    Si les search results ne contiennent pas assez de data récentes pour
+    faire 10 bullets crédibles, fais moins de bullets (8-9) avec des
+    chiffres sourcés plutôt que d'inventer.
   • Le classement est décroissant: #1 = le fait du mois que le lecteur doit
     bookmarker. #10 doit encore être utile; pas de bouche-trou.
   • BULLET #1 = LE killshot absolu: chiffre rond/mémorisable, acteur connu,
@@ -264,8 +266,11 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
     ou fin de ligne.
   • (source: outlet) doit nommer un vrai média. Pas d'invention.
   • ZÉRO markdown (**bold**, __italic__). Texte brut.
-  • URL finale optionnelle. Si tu en mets une, copie-colle une URL exacte
-    depuis les signaux. Sinon les sources par bullet suffisent.
+  • URL finale OBLIGATOIRE: une URL de la section WEB SEARCH RESULTS /
+    RSS POOL qui correspond au bullet #1. Copie-colle l'URL exacte.
+    Pas de domaine générique (coindesk.com, bloomberg.com) — seulement
+    des URLs d'article complètes. Si le pool n'a pas d'URL pour le sujet
+    du #1, choisis un sujet #1 qui a une URL dans le pool.
   • Cible 1800-2600 chars body.
 
 ============================================================
@@ -293,7 +298,7 @@ Les 10 chiffres {decode_topic} du mois.
 
 Le mois prochain, même Décode.
 
-{{URL exacte optionnelle depuis WEB SEARCH RESULTS / RSS POOL — DERNIÈRE ligne si présente}}
+{{URL exacte OBLIGATOIRE depuis WEB SEARCH RESULTS / RSS POOL — DERNIÈRE ligne}}
 """
     elif format_mode == "top5":
         # CRITICAL: keep INSTRUCTIONS (rules the model follows silently) and
@@ -302,6 +307,8 @@ Le mois prochain, même Décode.
         # headers like "🥇 RÈGLE D'OR DU CLASSEMENT" verbatim into the tweet.
         top5_block = f"""INSTRUCTIONS (NE PAS OUTPUT — réfléchis silencieusement):
 
+  • Le Décode Weekly = TOP 5 chiffres des 7 derniers jours pour UNE
+    catégorie.
   • ÉTAPE 0 (CRITIQUE): choisis UNE URL exacte de la section WEB SEARCH
     RESULTS / RSS POOL plus bas. Lis SON TITRE — il identifie un ACTEUR
     ou un CHIFFRE précis (ex: "OpenAI is going public", "NVIDIA Q1
@@ -365,9 +372,8 @@ Demain, même heure, même Décode.
     else:
         top5_block = f"""INSTRUCTIONS (NE PAS OUTPUT — réfléchis silencieusement):
 
-  • Le Décode quotidien = MÊME FORMAT scannable que le Vendredi, juste
-    3 chiffres au lieu de 5. Les 3 bullets explorent UNE seule histoire
-    sous 3 angles complémentaires (pas 3 histoires différentes).
+  • Le Décode quotidien = TOP 3 chiffres des dernières 24-48h pour UNE
+    catégorie. Les 3 bullets explorent UNE seule histoire sous 3 angles.
   • ÉTAPE 0 (CRITIQUE): choisis UNE URL exacte de la section WEB SEARCH
     RESULTS / RSS POOL plus bas. Lis SON TITRE — il identifie un ACTEUR
     ou un CHIFFRE précis (ex: "OpenAI signs $300B Oracle deal"). Les 3
@@ -415,19 +421,21 @@ Demain, même heure, même Décode.
 {{URL exacte copiée depuis WEB SEARCH RESULTS / RSS POOL — DERNIÈRE ligne}}
 """
 
-    return f"""Tu es @cryptoiadecode. Voix FR mordante sur Crypto + IA + Investissement.
+    return f"""Tu es @cryptoiadecode. Voix FR mordante sur Crypto + IA + Space + Investissement.
 Influenceur, pas bot timide. Tu prends position. Tu signes. Zéro bullshit.
 
 🎯 GOAL: ONE Le Décode #{decode_number} sur la story {decode_topic} la plus chaude des 24h.
 TOPIC: {decode_topic} uniquement (pas d'autre sujet). Format: {format_mode}.
 
-🚨 SCOPE STRICT — 3 catégories distinctes:
+🚨 SCOPE STRICT — 4 catégories distinctes:
   • IA — labs, modèles, agents, levées IA, regs IA.
   • Crypto — BTC, ETH, ETF, stablecoins, mining, DeFi sérieux.
   • Investissement & Bourse — capex IA/datacenters MW, crypto mining
     (MARA, RIOT, CleanSpark, CoreWeave, Crusoe), valos / IPOs / earnings
     Nvidia / AMD / Tesla / Microsoft / Google / Meta liés à IA ou crypto,
     flux de capital sur ces noms. PAS de macro pure (Fed, CAC40 banques).
+  • Space — SpaceX, Starship, Starlink, Blue Origin, Rocket Lab, New Glenn,
+    ArianeGroup, ESA, NASA, space industry, launchers, satellites.
 
 {top5_block}
 
@@ -459,7 +467,7 @@ Comptes prioritaires (utilise ceux qui collent au sujet):
 @cursor_ai @sualeh @amanrsanger
 @coinbase @brian_armstrong @VitalikButerin @saylor @MicroStrategy
 @MARAHoldings @RiotPlatforms @CleanSpark_Inc @CoreWeave @CrusoeEnergy
-@SpaceX @Starlink @blueorigin @RocketLab @PeterDiamandis
+@SpaceX @Starlink @blueorigin @RocketLab @ArianeGroup @esa @NASA @PeterDiamandis
 En top5: tag inline dans chaque bullet quand l'acteur a un compte X actif.
 
 🤣 CHUTE: doit faire RIRE A VOIX HAUTE, pas juste sourire. Stack 2 réfs FR
@@ -988,6 +996,8 @@ Si {decode_topic} = IA → tu choisis une story IA (lab, chip, datacenter, agent
 Si {decode_topic} = Crypto → tu choisis une story crypto (BTC, ETH, stablecoin, mining, ETF, exchange).
 Si {decode_topic} = Investissement → tu choisis une story marché/macro/strat
 (Wall Street, big move VC, prise de position d'un investisseur ref, ETF, IPO, capex IA).
+Si {decode_topic} = Space → tu choisis une story space (SpaceX, Starship, Starlink, Blue Origin,
+New Glenn, Rocket Lab, ArianeGroup, ESA, NASA, space industry, launchers, satellites).
 Ne croise PAS les topics — un Décode = un sujet, focus net. Le sujet de cette
 édition s'affiche dans le header pour que les lecteurs sachent à quoi s'attendre.
 
@@ -1078,13 +1088,10 @@ FR CRYPTO/AI MEDIA (high reach FR audience):
   @coinacademy_fr, @numerama, @siecledigital
   @arthurmensch, @MistralAI, @scaleway
 
-SPACE / AEROSPACE (handles for OCCASIONAL coverage when a story crosses
-into IA/datacenter territory — e.g. Starlink + AI satellite, SpaceX
-fundraise, ArianeGroup European tech sovereignty):
+SPACE / AEROSPACE (now a standalone Décode topic — SpaceX, Starship,
+Starlink, Blue Origin, New Glenn, Rocket Lab, ArianeGroup, ESA, NASA):
   @SpaceX, @Starlink, @elonmusk (already above)
-  @blueorigin, @RocketLab, @ArianeGroup, @esa
-  PRIMARY scope stays IA + Crypto + Investissement. Space is a bonus
-  angle when relevant, NOT a separate Décode topic.
+  @blueorigin, @RocketLab, @ArianeGroup, @esa, @NASA
 
 RÈGLES:
 - Si la news concerne UN de ces acteurs → tag 1-2 d'entre eux DANS la chute.
@@ -1744,32 +1751,38 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         from . import web_search as _ws
         sub_queries = {
             "IA": [
-                f"OpenAI Anthropic Mistral news {'this month' if use_monthly else 'this week'}",
-                f"AI datacenter GPU NVIDIA news {'this month' if use_monthly else 'this week'}",
-                f"AI agent LLM startup funding news {'this month' if use_monthly else 'this week'}",
-                f"Cursor AI code editor news Elon Musk {'this month' if use_monthly else 'this week'}",
+                f"OpenAI Anthropic Mistral news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"AI datacenter GPU NVIDIA news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"AI agent LLM startup funding news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"Cursor AI code editor news Elon Musk {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
             ],
             "Crypto": [
-                f"Bitcoin Ethereum crypto news {'this month' if use_monthly else 'this week'}",
-                f"crypto mining hashrate MARA Riot news {'this month' if use_monthly else 'this week'}",
-                f"stablecoin DeFi Coinbase news {'this month' if use_monthly else 'this week'}",
-                f"Bitcoin ETF inflows institutional news {'this month' if use_monthly else 'this week'}",
+                f"Bitcoin Ethereum crypto news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"crypto mining hashrate MARA Riot news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"stablecoin DeFi Coinbase news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"Bitcoin ETF inflows institutional news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
             ],
             "Investissement": [
-                f"NVIDIA AMD Tesla Microsoft Google AI stock earnings {'this month' if use_monthly else 'this week'}",
-                f"AI datacenter capex Stargate CoreWeave CRWV news {'this month' if use_monthly else 'this week'}",
-                f"tech IPO MicroStrategy MSTR MARA RIOT valuation {'this month' if use_monthly else 'this week'}",
-                f"AI investment fund raise venture capital news {'this month' if use_monthly else 'this week'}",
+                f"NVIDIA AMD Tesla Microsoft Google AI stock earnings {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"AI datacenter capex Stargate CoreWeave CRWV news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"tech IPO MicroStrategy MSTR MARA RIOT valuation {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"AI investment fund raise venture capital news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+            ],
+            "Space": [
+                f"SpaceX Starship launch news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"Blue Origin New Glenn rocket space news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"Starlink satellite internet NASA space news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"Rocket Lab ArianeGroup ESA space industry news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
             ],
         }.get(decode_topic, ["AI news this week"])
         ddg_hits = []
         for q in sub_queries:
             try:
-                ddg_hits.extend(_ws.search_news(q, max_results=8 if use_monthly else 5, date_filter="m" if use_monthly else "w"))
+                ddg_hits.extend(_ws.search_news(q, max_results=8 if use_monthly else 5, date_filter="m" if use_monthly else ("w" if use_top5 else "d")))
             except Exception:
                 continue
         try:
-            signals = _ws.load_recent_signals(max_age_days=35 if use_monthly else 10, limit=20 if use_monthly else 10)
+            signals = _ws.load_recent_signals(max_age_days=30 if use_monthly else (7 if use_top5 else 2), limit=20 if use_monthly else 10)
         except Exception:
             signals = []
         # Filter out content farms / low-trust outlets BEFORE reachability
@@ -1833,7 +1846,8 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
                 )
             lines = [
                 "==================================================",
-                f"WEB SEARCH RESULTS — {len(reachable_pool)} reachable URLs (past week, topic={decode_topic})",
+                f"WEB SEARCH RESULTS — {len(reachable_pool)} reachable URLs ({'past month' if use_monthly else 'past week'}, topic={decode_topic})",
+                "⚠️ ONLY use these URLs and their snippets. Do NOT use your training data — it is OLD.",
                 "Pick the URL whose title best matches bullet #1 — copy EXACTLY.",
                 "==================================================",
                 "",
@@ -2002,10 +2016,8 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     format_kind = globals().get("_pending_decode_format", "daily")
     is_top5 = format_kind == "weekly"
     is_monthly = format_kind == "monthly"
-    # User mandate 2026-05-22 PM: "it has to be something during the last
-    # 10 days max". Bumped top5 ceiling 7d → 10d (240h). Regular Décode
-    # stays at 36h since that's breaking-news cadence.
-    max_age_h = 840 if is_monthly else (240 if is_top5 else 36)
+    # User mandate 2026-05-23: daily = 48h max, weekly = 7 days, monthly = 30 days.
+    max_age_h = 720 if is_monthly else (168 if is_top5 else 48)
     if src_url:
         try:
             from .hotake_agent import _url_publication_date, _is_rejected_source

@@ -300,13 +300,14 @@ def main():
         if not _quiet_skip("REPLYBACK"):
             safe_run_replyback_cycle()
 
-    # Startup news burst: force all three Daily Décodes first, then all three
-    # Monthly Top 10s. Replies follow once the posts are up.
+    # Startup news burst: Monthly Top 10s first (guaranteed slot — daily
+    # decodes take 6-10+ minutes and the bot may be killed before monthly
+    # gets a turn). Then fire all three Daily Décodes.
     if not args.reply_only:
+        log.info("Firing forced monthly recaps for Crypto, Investissement, IA, Space...")
+        safe_run_monthly_news_cycle(force_all=True)
         log.info("Bot started! Firing forced daily Décodes for IA, Crypto, Investissement...")
         safe_run_daily_news_cycle(force_all=True)
-        log.info("Firing forced monthly recaps for Crypto, Investissement, IA...")
-        safe_run_monthly_news_cycle(force_all=True)
 
     # Then warm up the engagement loop with a direct-reply cycle.
     if not args.post_only:
