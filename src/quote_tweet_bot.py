@@ -1,11 +1,9 @@
-"""Quote-tweet bot: pick a viral FR tweet in our niche, post a sharp quote.
+"""Repost-pool bot: pick a viral tweet in our niche and plain-repost it.
 
-Why a separate path from replies: a quote tweet creates an entirely new post
-in our followers' feed AND lands as a notification on the original author's
-side. Different distribution surface than a reply — pure additive growth lever.
-
-Cap is intentionally tiny (1-2/day): quote tweets are a *signal* feature, not
-a volume feature. Spamming them looks desperate.
+This module keeps the old quote_tweet_bot name for scheduler/state
+compatibility, but it no longer publishes quote reposts or generates quote
+commentary. It only uses the candidate pool and dedup state, then calls
+retweet_post().
 """
 import json
 import os
@@ -16,17 +14,14 @@ import traceback
 from datetime import datetime, date
 from .config import QUOTE_MODEL, BLOCKLIST, _PROJECT_ROOT, BOT_HANDLE, MAX_QUOTES_PER_DAY
 from .logger import log
-from .twitter_client import scrape_x_search, quote_tweet
+from .twitter_client import scrape_x_search, retweet_post
 from .humanizer import humanize
 from .engagement_log import log_reply
 from .llm_client import run_llm, unwrap_text
 
 QUOTED_FILE = os.path.join(_PROJECT_ROOT, "quoted_tweets.json")
 QUOTE_STATE_FILE = os.path.join(_PROJECT_ROOT, "quote_daily_state.json")
-# MAX_QUOTES_PER_DAY now lives in config (12/day on user directive 2026-04-26 PM).
-# Quote tweets are a *different* distribution surface (lands in our followers'
-# feed AND notifies the original author), so scaling them up is pure additive
-# growth — not redundant with replies.
+# MAX_QUOTES_PER_DAY is retained as the cap for this legacy repost-pool job.
 _OWN_HANDLE = BOT_HANDLE.lower()
 
 # Pull HOT tweets (X "Top" tab) with high engagement floor — quote
@@ -265,7 +260,7 @@ def _handle_from_url(url: str) -> str:
 
 
 def run_quote_tweet_cycle():
-    """Pick the most viral FR tweet from our queries and quote-tweet it."""
+    """Pick a viral in-niche tweet from the quote pool and plain-repost it."""
     from .config import get_live_cap
     cap = get_live_cap("MAX_QUOTES_PER_DAY", MAX_QUOTES_PER_DAY)
     if _today_count() >= cap:
@@ -386,42 +381,21 @@ def run_quote_tweet_cycle():
     text = best.get("text", "")
     likes = int(best.get("likes") or 0)
 
-    log.info(f"[QUOTE] Best pick: @{author} ({likes} likes) — {text[:80]}...")
-    quote = _generate_quote(author, text)
-    if not quote:
-        log.info("[QUOTE] Generation returned SKIP — not posting.")
-        return
+    log.info(f"[QUOTE] Best pick for plain repost: @{author} ({likes} likes) — {text[:80]}...")
 
-    quote = humanize(quote)
-    # Final defense: refuse if our quote text names a protected handle.
-    cleaned, reason = respect_list.scrub_text_or_skip(quote)
-    if cleaned is None:
-        log.info(f"[QUOTE] Refused — {reason}: {quote[:120]!r}")
-        return
-    quote = cleaned
-
-    # Last-line defense: even if SKIP-or-rationale slipped past _generate_quote
-    # AND the humanizer preserved it, refuse to post anything that looks like
-    # the agent reasoning aloud. Min-length floor catches any short sentinel.
-    if _looks_like_skip_or_rationale(quote) or len(quote.strip()) < 15:
-        log.info(f"[QUOTE] Final guard: refusing to post {quote!r} (skip-rationale/too short).")
-        return
-
-    log.info(f"[QUOTE] Posting ({len(quote)} chars): {quote}")
-
-    # Lock URL in BEFORE posting so a crash can't double-quote
+    # Lock URL in BEFORE posting so a crash can't double-repost.
     quoted.add(url)
     _save_quoted(quoted)
 
     try:
-        quote_tweet(url, quote)
+        retweet_post(url)
         _increment_count()
         try:
-            log_reply(url, quote, action_type="quote", source=f"QUOTE/{author}")
+            log_reply(url, f"[RT] {text[:200]}", action_type="retweet", source=f"QUOTE_POOL/{author}")
         except Exception:
             pass
         time.sleep(random.randint(5, 12))
-        log.info("[QUOTE] Quote tweet posted.")
+        log.info("[QUOTE] Plain repost posted.")
     except Exception:
         log.info(f"[QUOTE] Posting failed:")
         traceback.print_exc()

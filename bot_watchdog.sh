@@ -19,7 +19,7 @@ if [ -f "$PROJECT_DIR/.env" ]; then
     set +a
 fi
 
-export AI_CLI="${AI_CLI:-codex}"
+export AI_CLI="${AI_CLI:-ollama}"
 export NEWS_MODEL="${NEWS_MODEL:-gpt-5.4-mini}"
 export REPLY_MODEL="${REPLY_MODEL:-gpt-5.4-mini}"
 export PRIORITY_REPLY_MODEL="${PRIORITY_REPLY_MODEL:-gpt-5.4-mini}"

@@ -33,7 +33,7 @@ def _tweet_age_minutes(tweet_url: str) -> int:
     age = datetime.now(tz=timezone.utc) - tweet_time
     return int(age.total_seconds() / 60)
 from .reply_agent import generate_replies
-from .twitter_client import reply_to_tweet, quote_tweet, refresh_feed
+from .twitter_client import reply_to_tweet, retweet_post, refresh_feed
 from .history import get_recent_tweets
 from .engagement_log import log_reply
 from .humanizer import humanize
@@ -229,7 +229,9 @@ def run_reply_cycle():
 
         try:
             if action_type == "quote":
-                quote_tweet(url, reply_text)
+                log.info("[REPLY] Quote action disabled; plain-reposting instead.")
+                retweet_post(url)
+                action_type = "retweet"
             else:
                 reply_to_tweet(url, reply_text)
             posted_count += 1

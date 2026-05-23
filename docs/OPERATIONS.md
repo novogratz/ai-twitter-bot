@@ -16,13 +16,13 @@ cp .env.example .env
 Edit `.env`:
 
 - Set `BOT_HANDLE` to your X username (without `@`)
-- Set `AI_CLI` to `opencode`, `claude`, `codex`, or `gemini`
-- Set the model defaults (defaults assume Claude Opus 4.7)
+- Set `AI_CLI` to `ollama` for the local default, with `LLM_FALLBACK_CLI=codex`
+- Set the model defaults if you explicitly switch away from Ollama
 - Adjust caps to match your tier
 
 Authenticate the AI CLI:
 ```bash
-opencode auth        # or: claude login / codex login / gemini login
+codex login          # backup provider when Ollama fails
 ```
 
 Open Safari, log into x.com, accept all cookies, dismiss any onboarding modals.
@@ -258,7 +258,7 @@ Files that change at runtime. Most are auto-pushed to git by their producing age
 | `replied_tweets.json` | `reply_bot` + `direct_reply` | URL dedup |
 | `replied_back.json` | `notify_bot` | Replyback dedup |
 | `retweeted.json` | `retweet_bot` | Retweet dedup |
-| `quoted_tweets.json` | `quote_tweet_bot` | Quote-tweet dedup |
+| `quoted_tweets.json` | `quote_tweet_bot` | Legacy repost-pool dedup |
 | `followed_accounts.json` | `engage_bot` | Tracked follows |
 | `do_not_refollow.json` | `smart_unfollow_bot` | Anti-churn list |
 | `safari_health.json` | `health.py` | Per-bot success/failure counts |

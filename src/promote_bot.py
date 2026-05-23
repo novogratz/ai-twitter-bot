@@ -1,21 +1,21 @@
-"""Promote-best-reply bot — quote-RT our highest-engagement reply.
+"""Promote-best-reply bot — repost our highest-engagement reply.
 
 Replies are the bot's working surface (consistent likes + comments). But
 they live INSIDE someone else's thread — invisible to followers scrolling
 their timeline. Solution: once a reply hits a meaningful like count,
-quote-tweet it on the profile feed so it shows up as a standalone post
-on /kzer_ai. Same content, different distribution surface.
+plain-repost it so it gets another feed pass. Same content, different
+distribution surface.
 
 Strategy:
   - Once every ~3h. Visit /kzer_ai/with_replies, scrape recent replies +
     their like counts.
   - Filter: must be authored by @cryptoiadecode, must have ≥ MIN_LIKES.
   - Skip if already promoted (persistent dedup in promoted_replies.json).
-  - Quote-RT the top candidate with a short FR meta-comment.
+  - Plain-repost the top candidate.
   - Cap 3/day so we don't feel mechanical.
 
-Different from quote_tweet_bot (which quotes external tweets):
-this quotes OUR OWN replies that already proved they land.
+Different from quote_tweet_bot (which reposts external tweets):
+this reposts OUR OWN replies that already proved they land.
 """
 import json
 import os
@@ -26,7 +26,7 @@ from datetime import date, datetime
 
 from .config import _PROJECT_ROOT, BOT_HANDLE, BLOCKLIST
 from .logger import log
-from .twitter_client import scrape_profile_tweets, quote_tweet
+from .twitter_client import scrape_profile_tweets, retweet_post
 from .engagement_log import log_reply
 
 PROMOTED_FILE = os.path.join(_PROJECT_ROOT, "promoted_replies.json")
@@ -37,9 +37,7 @@ MIN_LIKES = int(os.environ.get("PROMOTE_MIN_LIKES", "5"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
-# Short FR meta-comments to set up the quote-RT. Picked at random so the
-# pattern doesn't get mechanical. They all imply "regardez ce que j'ai
-# dit, c'était drôle / vrai / les deux".
+# Kept only for older state/log context. Promote now uses plain reposts.
 META_COMMENTS = [
     "Pour ceux qui scrollent trop vite.",
     "Repost pour ceux du fond.",
@@ -99,7 +97,7 @@ def _increment_count():
 
 
 def run_promote_cycle():
-    """Find our top recent reply and quote-RT it."""
+    """Find our top recent reply and plain-repost it."""
     if _today_count() >= MAX_PROMOTES_PER_DAY:
         log.info(f"[PROMOTE] Daily cap reached ({MAX_PROMOTES_PER_DAY}). Skipping.")
         return
@@ -160,20 +158,18 @@ def run_promote_cycle():
         f"{best['text'][:120]!r}"
     )
 
-    comment = random.choice(META_COMMENTS)
-
     # Lock URL in BEFORE posting so a crash can't double-promote.
     promoted.add(best["url"])
     _save_promoted(promoted)
 
     try:
-        quote_tweet(best["url"], comment)
+        retweet_post(best["url"])
         _increment_count()
         try:
             log_reply(
                 best["url"],
-                f"[PROMOTE] {comment} :: {best['text'][:150]}",
-                action_type="promote",
+                f"[PROMOTE_RT] {best['text'][:150]}",
+                action_type="retweet",
                 source=f"PROMOTE/{BOT_HANDLE}",
             )
         except Exception:

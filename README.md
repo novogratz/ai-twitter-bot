@@ -19,7 +19,7 @@ The bot operates **30+ concurrent micro-bots** orchestrated by an APScheduler lo
 | **Reply** | `direct_reply`, `reply_bot`, `early_bird_bot`, `mega_watch_bot`, `replyback_agent`, `viral_followup_bot`, `spike_bot`, `roast_pgm_bot` | Real-time engagement on viral tweets, mega-account top-5-reply window |
 | **Follow** | `engage_bot`, `discover_bot`, `scout_agent`, `follow_blast_bot`, `followback_bot`, `smart_unfollow_bot` | Network growth — discover, follow, follow-back, prune non-reciprocal |
 | **Like** | `like_bot`, `notify_bot` | Bulk likes for outbound notifications |
-| **Promote** | `pin_bot`, `promote_bot` | Auto-pin best post, quote-RT top reply onto profile |
+| **Promote** | `pin_bot`, `promote_bot` | Auto-pin best post, plain-repost top reply onto profile |
 | **Real-time signal** | `rss_signal_bot`, `hn_signal_bot`, `x_home_scout_bot`, `auto_tune_bot` | Aggregate trends from RSS + HN + Reddit + X home; 20-50 min ahead of WebSearch |
 | **Self-evolution** | `meta_strategy_agent`, `strategy_agent`, `evolution_agent`, `reflection_agent`, `self_evolution_agent` | Optional agentic runs that rewrite strategy, persona, dossiers; gated by `ENABLE_AI_MAINTENANCE` / `ENABLE_AI_DISCOVERY` |
 | **Safety** | `suppression_watch_bot`, `health.py`, `respect_list` | Shadowban detection + Safari watchdog + protected-handle list |
@@ -77,7 +77,7 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full lattice.
 
 - macOS (Safari + AppleScript automation, browser-driven, no API key)
 - Python 3.10+
-- One of: Codex CLI (`codex`), OpenCode (`opencode`), Claude Code CLI (`claude`), or Gemini CLI (`gemini`) — authenticated/configured
+- Ollama running locally, with Codex CLI (`codex`) authenticated as backup
 - Twitter/X account logged into Safari
 
 **Install**
@@ -118,7 +118,7 @@ Every knob is an environment variable in `.env`. Defaults are tuned for an Engli
 | Variable | Default | What it does |
 |---|---|---|
 | `BOT_HANDLE` | `kzer_ai` | Your X handle (without `@`) |
-| `AI_CLI` | `codex` | `codex` / `opencode` / `claude` / `gemini` |
+| `AI_CLI` | `ollama` | `ollama` / `codex` / `opencode` / `claude` / `gemini` |
 | `NEWS_MODEL` | `gpt-5.4-mini` | Model for news + threads; override for manual quality runs |
 | `HOTAKE_MODEL` | `gpt-5.4-mini` | Model for hot takes + breakouts |
 | `REPLY_MODEL` | `gpt-5.4-mini` | Model for replies (volume surface) |
@@ -127,7 +127,7 @@ Every knob is an environment variable in `.env`. Defaults are tuned for an Engli
 | `MAX_NEWS_PER_DAY` | `10` | Cap on news posts |
 | `NEWS_POSTS_PER_CYCLE` | `3` | News posts to burst per cycle; set to `1` for one-shot (fail → skip) |
 | `MAX_HOTAKES_PER_DAY` | `0` | Cap on hot takes |
-| `MAX_QUOTES_PER_DAY` | `80` | Cap on quote-tweets |
+| `MAX_QUOTES_PER_DAY` | `80` | Cap on the legacy repost-pool job |
 | `MAX_RETWEETS_PER_DAY` | `220` | Cap on retweets |
 | `RETWEETS_PER_CYCLE` | `5` | Max external retweets shipped after each candidate scrape |
 | `MAX_REPLIES_PER_CYCLE` | `8` | Cap per reply cycle |

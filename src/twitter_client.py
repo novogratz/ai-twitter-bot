@@ -480,43 +480,13 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
 
 
 def quote_tweet(tweet_url: str, comment: str):
-    """Quote tweet by posting a new tweet with the tweet URL embedded."""
-    with _safari_lock:
-        full_text = f"{comment}\n\n{tweet_url}"
-        url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": full_text})
-        log.info(f"Quote tweeting: {tweet_url}")
-        webbrowser.open(url)
-        time.sleep(4)
+    """Compatibility wrapper: quote-post requests are now plain reposts.
 
-        log.info("Posting quote tweet...")
-        _run_applescript('''
-        tell application "System Events"
-            keystroke return using command down
-        end tell
-        ''')
-        time.sleep(2)
-        log.info("Quote tweet posted!")
-        close_front_tab()
-
-        # 1) Self-like our own quote-tweet (user mandate 2026-05-18:
-        # "Always auto like your own tweets or quotes... always").
-        # Algo lifts: own-like is a positive signal in the first-second
-        # engagement vector that decides For You distribution.
-        try:
-            _like_own_latest_tweet()
-        except Exception as e:
-            log.info(f"[QUOTE] self-like failed: {e}")
-
-        # 2) Also like the original tweet we quoted — courtesy + lifts
-        # our notification in the original author's notification feed.
-        # Idempotent: skips if already liked.
-        try:
-            webbrowser.open(tweet_url)
-            time.sleep(5)
-            like_tweet(tweet_url)
-            close_front_tab()
-        except Exception as e:
-            log.info(f"[QUOTE] parent-like failed: {e}")
+    Kept so older bot paths that still call quote_tweet cannot publish a
+    quote repost. The comment is intentionally ignored.
+    """
+    log.info(f"[QUOTE] Quote repost disabled; doing plain repost instead: {tweet_url}")
+    retweet_post(tweet_url)
 
 
 def unfollow_account(username: str) -> bool:

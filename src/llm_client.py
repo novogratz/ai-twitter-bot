@@ -430,18 +430,20 @@ def llm_hourly_limit_status() -> tuple[bool, int, int, int]:
 
 
 def _provider() -> str:
-    requested = os.environ.get("AI_CLI", "codex").strip().lower()
-    if requested in {"claude", "codex", "gemini", "opencode"}:
-        return requested
+    requested = os.environ.get("AI_CLI", "ollama").strip().lower()
+    if requested in {"ollama", "opencode"}:
+        return "ollama"
+    if requested in {"claude", "codex", "gemini"}:
+        if shutil.which(requested):
+            return requested
+        log.info(f"[LLM] Requested AI_CLI={requested!r} is not installed; selecting an available CLI.")
     if shutil.which("codex"):
         return "codex"
-    if shutil.which("opencode"):
-        return "opencode"
     if shutil.which("gemini"):
         return "gemini"
     if shutil.which("claude"):
         return "claude"
-    return "codex"
+    return "ollama"
 
 
 def _build_cmd(
@@ -506,21 +508,25 @@ def _build_cmd(
 
 
 def _fallback_provider(primary_provider: str) -> Optional[str]:
-    default_fallback = "codex" if primary_provider == "opencode" else "opencode"
+    default_fallback = "ollama" if primary_provider == "codex" else "codex"
     env_fallback = os.environ.get("LLM_FALLBACK_CLI", "").strip().lower()
     fallback = env_fallback or default_fallback
     if os.environ.get("LLM_DISABLE_FALLBACK", "0") == "1":
         return None
     if not fallback:
         return None
-    if fallback not in {"claude", "codex", "gemini", "opencode"}:
+    if fallback == "opencode":
+        fallback = "ollama"
+    if fallback not in {"ollama", "claude", "codex", "gemini"}:
         return None
-    if not shutil.which(fallback):
+    if fallback != "ollama" and not shutil.which(fallback):
         return None
-    # Same-provider fallback only allowed when explicitly requested via env
-    # (different model, e.g. opencode/big-pickle → opencode/qwen)
-    if fallback == primary_provider and not env_fallback:
-        return None
+    # Avoid retrying the same provider as its own fallback unless the caller
+    # explicitly configured a different fallback model.
+    if fallback == primary_provider and not os.environ.get("LLM_FALLBACK_MODEL", "").strip():
+        fallback = default_fallback
+        if fallback == "opencode":
+            fallback = "ollama"
     return fallback
 
 
@@ -534,14 +540,14 @@ def _fallback_model(primary_model: str, fallback_provider: str) -> str:
         return os.environ.get("GEMINI_FALLBACK_MODEL", "").strip() or "gemini-2.0-flash"
     if fallback_provider == "claude":
         return os.environ.get("CLAUDE_FALLBACK_MODEL", "").strip() or "claude-sonnet-4-6"
-    if fallback_provider == "opencode":
+    if fallback_provider in {"ollama", "opencode"}:
         return os.environ.get("OPENCODE_FALLBACK_MODEL", "").strip() or "opencode/big-pickle"
     return primary_model
 
 
 def _fallback_model2(fallback_provider: str) -> Optional[str]:
     """Second-level fallback model — used when the first fallback also fails."""
-    if fallback_provider == "opencode":
+    if fallback_provider in {"ollama", "opencode"}:
         return os.environ.get("OPENCODE_FALLBACK2_MODEL", "").strip() or "ollama/qwen3-coder"
     return None
 
@@ -646,11 +652,10 @@ def run_llm(
 ) -> LLMResult:
     provider = _provider()
 
-    # When the user has set AI_CLI=opencode, skip codex entirely and route
-    # everything through the local ollama HTTP path. opencode CLI subprocess
-    # hangs ~130s after generation (CLI bug), so we use HTTP directly to
-    # the same underlying ollama model. ~2-130s warm, no subprocess overhead.
-    if provider == "opencode":
+    # When the user has set AI_CLI=ollama/opencode, route everything through
+    # the local Ollama HTTP path. The old opencode CLI subprocess path hung
+    # after generation, so opencode is now just a legacy alias for Ollama.
+    if provider == "ollama":
         # Caller-side timeouts (e.g. direct_reply passes 45s for VIP, 30s
         # for regular) were tuned for codex's ~5s response time and KILL
         # the local model mid-generation. Floor at DEFAULT so qwen3.6 has
@@ -658,18 +663,16 @@ def run_llm(
         # 0 posted in one hour because every call hit the 45s wall.
         effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
         log.info(
-            f"[LLM] {label}: opencode primary → ollama HTTP / "
+            f"[LLM] {label}: ollama primary → ollama HTTP / "
             f"{OLLAMA_MODEL} (timeout {effective_timeout}s)."
         )
         ollama_result = _run_ollama_http(prompt, label=label, timeout=effective_timeout)
         if not _should_fallback(ollama_result):
             return ollama_result
         # Ollama failed (empty response, timeout, error). Try the configured
-        # fallback (typically Claude) so we don't lose the cycle.
-        # 2026-05-22: user mandate "claude as #2" — make ollama-primary's
-        # failures fall over instead of returning empty.
+        # fallback so we don't lose the cycle.
         fb_provider = _fallback_provider(provider)
-        if fb_provider and fb_provider != "opencode":
+        if fb_provider and fb_provider != "ollama":
             fb_model = _fallback_model(model, fb_provider)
             log.info(
                 f"[LLM] {label}: ollama failed (rc={ollama_result.returncode}) → "
@@ -679,12 +682,11 @@ def run_llm(
             # for claude/codex/gemini in the cmd-runner branch below).
             fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, permission_mode, fb_provider)
             fb_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 150)
-            return _run_cmd(fb_cmd, label=f"{label} (claude fallback)", timeout=fb_timeout, cwd=cwd)
+            return _run_cmd(fb_cmd, label=f"{label} ({fb_provider} fallback)", timeout=fb_timeout, cwd=cwd)
         return ollama_result
 
     # Codex usage-limit bypass: if a prior cycle cached a lockout window,
-    # go straight to local ollama HTTP. Same model, ~50× faster than the
-    # opencode CLI fallback.
+    # go straight to local Ollama HTTP.
     if provider == "codex":
         lockout = _read_codex_lockout()
         if lockout is not None:
@@ -724,7 +726,7 @@ def run_llm(
 
     # If we actually ran codex this cycle and it returned a usage-limit
     # error, cache the lockout window AND collapse this cycle to a single
-    # opencode call (no ollama second fallback).
+    # Ollama fallback call.
     if provider == "codex":
         end = _detect_codex_lockout(result)
         if end is not None:
@@ -734,6 +736,9 @@ def run_llm(
                 f"{end.isoformat(timespec='minutes')}."
             )
             fb = _fallback_provider(provider)
+            if fb in {"ollama", "opencode"}:
+                effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
+                return _run_ollama_http(prompt, label=f"{label} (codex locked)", timeout=effective_timeout)
             if fb:
                 fb_model = _fallback_model(model, fb)
                 fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, permission_mode, fb)
@@ -759,10 +764,8 @@ def run_llm(
     if not fallback_provider:
         return result
 
-    # When the fallback is opencode, skip the broken opencode CLI subprocess
-    # (hangs ~130s post-generation) and go straight to ollama HTTP. Matches
-    # the existing behavior for codex-locked / opencode-primary paths.
-    if fallback_provider == "opencode":
+    # Ollama fallback uses the direct local HTTP path.
+    if fallback_provider in {"ollama", "opencode"}:
         effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
         log.info(
             f"[LLM] {label}: primary {provider}/{model} failed "

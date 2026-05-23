@@ -518,11 +518,9 @@ def main():
         else:
             log.info("Scout agent: disabled by default in Plus-safe mode.")
 
-        # Quote-tweet bot — accelerated 2026-05-05 (user: "reshare way more").
-        # Daily cap is 10 (env), so cadence sets the upper bound on attempts;
-        # bumped 3h → 75min so cap actually binds instead of cycle frequency.
-        # 2026-05-15 → 16: 35 → 20 → 12 min. Quote more.
-        log.info("Quote-tweet bot: amplifying viral FR setups every 12 min (cap binds via MAX_QUOTES_PER_DAY).")
+        # Repost-pool bot — formerly quote-tweet. It still uses the same
+        # candidate pool/state, but posts plain reposts only.
+        log.info("Repost-pool bot: amplifying viral setups every 12 min (plain reposts only).")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
             trigger=IntervalTrigger(minutes=12),
@@ -563,11 +561,9 @@ def main():
             id="thread_job",
         )
 
-        # Promote-best-reply bot — quote-RTs our highest-engagement reply
+        # Promote-best-reply bot — plain-reposts our highest-engagement reply
         # so it appears on the profile feed instead of buried in a thread.
-        # Cap 3/day. Different from quote_tweet_bot (which quotes external
-        # tweets) — this one repackages OUR proven content.
-        log.info("Promote bot: quote-RT top recent reply every 3h (cap 3/day).")
+        log.info("Promote bot: plain-repost top recent reply every 3h (cap 3/day).")
         scheduler.add_job(
             safe_run_promote_cycle,
             trigger=IntervalTrigger(hours=3),
@@ -679,7 +675,7 @@ def main():
 
         # Spike orchestrator — when one of OUR posts crosses SPIKE_LIKES
         # (default 25), all bots converge: auto-pin, self-RT, in-thread
-        # follow-up, quote-RT promo, like top replies. Most growth
+        # follow-up, repost promo, like top replies. Most growth
         # happens AROUND the viral moment; this bot ensures we ride it.
         log.info("Spike orchestrator: amplifying viral own posts every 8 min.")
         scheduler.add_job(
