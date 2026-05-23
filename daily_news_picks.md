@@ -5455,3 +5455,17 @@ Anthropic dépense 3 $ pour générer 1 $ et c’est avant d’inclure tous les 
 Microsoft a inves
   - https://x.com/AskYoshik/status/2057859030081745275
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 2617).
+- **@bitcoinmalaya** (93 likes, score 8/10) — USA: “We will ban top-tier gaming GPU export to China and cripple them”
+
+China: “Okay. We will build our own”
+
+Result today?
+
+China launches its first fully self-developed gaming GPU
+  - https://x.com/bitcoinmalaya/status/2058174464668672104
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 103).
+- **@alexxplore** (212 likes, score 7/10) — KNDS, né en 2015 de la fusion entre Nexter (ex-GIAT, 100 % français) et Krauss-Maffei Wegmann (KMW, allemand), est actuellement contrôlé à 50/50 entre l’État français et la famille Bode-Wegmann.  
+
+ P
+  - https://x.com/AlexXplore/status/2058128666689749290
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 246).
