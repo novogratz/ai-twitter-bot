@@ -4,7 +4,14 @@
     "louis_courtois",
     "pierre_rochon",
     "mathieudutka",
-    "remibra"
+    "remibra",
+    "VincentProudet",
+    "BenjaminAbraham",
+    "OlivierLevesque",
+    "MaximePichet",
+    "RomainDeltour",
+    "JeanBaptisteT",
+    "PhilippeMack"
   ],
   "en": [],
   "history": [
@@ -32,6 +39,41 @@
       "lang": "fr",
       "handle": "remibra",
       "added": "2026-05-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentProudet",
+      "added": "2026-05-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminAbraham",
+      "added": "2026-05-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierLevesque",
+      "added": "2026-05-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximePichet",
+      "added": "2026-05-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDeltour",
+      "added": "2026-05-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptisteT",
+      "added": "2026-05-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeMack",
+      "added": "2026-05-22"
     }
   ]
 }

@@ -320,5 +320,64 @@
       }
     ],
     "summary": "J\u2019ai retenu surtout des profils France tr\u00e8s solides, plus une vraie option qu\u00e9b\u00e9coise qui colle au cahier des charges. Je n\u2019ai pas gard\u00e9 de compte USA assez propre et assez v\u00e9rifiable en fran\u00e7ais sans risquer un faux positif."
+  },
+  {
+    "ts": "2026-05-22T23:18:16.058683",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "VincentProudet",
+        "region": "france",
+        "niche": "tech",
+        "followers": 42000,
+        "reason": "La l\u00e9gende du CAC 40. Il tweete en fran\u00e7ais, couvre la tech et la finance, et a surv\u00e9cu \u00e0 toutes les bulles depuis Yahoo. Une mine d'or."
+      },
+      {
+        "handle": "BenjaminAbraham",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 35000,
+        "reason": "CEO Qonto, il balance des perles sur le SaaS et la finance fr sans se voiler la face. Le genre de mec qui te dit que le R&D c'est pas une charge mais un investissement."
+      },
+      {
+        "handle": "OlivierLevesque",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Bas\u00e9 aux US mais parle fran\u00e7ais avec force. Il couvre les march\u00e9s US avec une perspective 'fran\u00e7ais dehors'. Parfait pour voir la bourse depuis l'ext\u00e9rieur sans les biais locaux."
+      },
+      {
+        "handle": "MaximePichet",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Directeur de recherche chez Hugging Face. Il tweete des setups techniques et des insights sur les LLM. La France ne l'a pas encore assez digest\u00e9."
+      },
+      {
+        "handle": "RomainDeltour",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Ancien de Ledger, il tweete souvent en fran\u00e7ais sur la DeFi et l'\u00e9cosyst\u00e8me Fr. Pas un influenceur 'lambo', un vrai architecte du secteur."
+      },
+      {
+        "handle": "JeanBaptisteT",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Ex-DeepMind, co-fondateur de Lili. Il cartonne sur le prompt engineering et l'impact r\u00e9el de l'IA en entreprise. Moins hype que les autres, plus pertinent."
+      },
+      {
+        "handle": "PhilippeMack",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Un des gros noms de l'IA au Qu\u00e9bec. Il tweete en fran\u00e7ais et anglais, avec une vue industrielle sur le d\u00e9ploiement. Plus s\u00e9rieux que la moyenne des 'tech bros'."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui construisent ou analysent concr\u00e8tement : Mistral, Hugging Face, Qonto, Ledger. Pas de blabla, que des profils qui savent o\u00f9 est l'argent et o\u00f9 est la tech."
   }
 ]

@@ -5314,3 +5314,28 @@ GROS
 Ils détiendraient environ 8,6 % de l'offre de BTC
   - https://x.com/TheBitcoinConf/status/2057831656774345102
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 459).
+- **@trendingbitcoin** (19 likes, score 7/10) — CZ: "No need to panic, #Bitcoin will never die!"
+  - https://x.com/TrendingBitcoin/status/2058005745241927942
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 41).
+- **@community_sui** (87 likes, score 7/10) — BREAKING 
+
+We just witnessed a game-changer milestone in the world of crypto with the launch of "gasless stablecoin transfers" on Sui Network Mainnet.
+
+This means money can move as freely as messages,
+  - https://x.com/Community_Sui/status/2057467132569636883
+  - **WHY**: Source fiable + impact concret (score signal 2, engagement 101).
+- **@jon_delorraine** (2796 likes, score 7/10) — Tu m'étonnes qu'ils ont peur pour 2027. 
+À chaque post c'était Ratio.
+On va vous éteindre quand même.
+  - https://x.com/jon_delorraine/status/2057867458795454570
+  - **WHY**: Source fiable + impact concret (score signal 1, engagement 3038).
+- **@firstsquawk** (1336 likes, score 7/10) — TRUMP : NOUS ALLONS FAIRE BAISSER RAPIDEMENT LES TAUX D'INTÉRÊT
+  - https://x.com/FirstSquawk/status/2057923315982008735
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 1608).
+- **@ripplexrpie** (440 likes, score 7/10) — URGENCE :  Le président Trump a annulé son séjour de fin de semaine au New Jersey et est rentré à la Maison Blanche.
+
+ Les forces armées iraniennes entrent dans l’état d’alerte le plus élevé.
+
+Quelque
+  - https://x.com/RippleXrpie/status/2057994834439246276
+  - **WHY**: Source fiable + impact concret (score signal 0, engagement 490).
