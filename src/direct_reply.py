@@ -378,7 +378,13 @@ HOT_TAB_QUERIES = [
     "crypto lang:fr min_faves:20",
     "trading lang:fr min_faves:10",
     "ChatGPT lang:fr min_faves:20",
+    # Big visible posts. Freshness is still enforced by DIRECT_REPLY_MAX_AGE_MINUTES.
+    "OpenAI OR Anthropic OR Nvidia lang:en min_faves:1000",
+    "Bitcoin OR Ethereum OR BTC lang:en min_faves:1000",
+    "SpaceX OR Starship OR xAI lang:en min_faves:1000",
 ]
+
+DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "1440"))
 
 REPLY_PROMPT = """You are @cryptoiadecode. The SHARPEST shitposter on Finance/Crypto/AI Twitter.
 Imagine a hybrid of Naval and a 4chan native who actually reads the 10-K. Hardcore
@@ -765,9 +771,11 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             log.info(f"[{source_name}] Own tweet — skipping {url}")
             continue
 
-        # Skip if older than 7 days
+        # Never comment on old viral posts. Big-account/high-like searches
+        # can surface stale bangers; freshness beats visibility.
         age = _tweet_age_minutes(url)
-        if age > 10080:
+        if age > DIRECT_REPLY_MAX_AGE_MINUTES:
+            log.info(f"[{source_name}] Old tweet ({age}m>{DIRECT_REPLY_MAX_AGE_MINUTES}m) - skipping {url}")
             continue
 
         # Engagement floor — user directive 2026-04-26 PM: "you reply to
@@ -1061,13 +1069,13 @@ def run_direct_reply_cycle():
 
     # === SOURCE 4: HOT FR tweets (X's "Top" tab, min_faves) — fallback if curated didn't fill ===
     all_hot = HOT_TAB_QUERIES + dyn_queries.get("hot", [])
-    hot_picks = random.sample(all_hot, min(3, len(all_hot)))
+    hot_picks = random.sample(all_hot, min(5, len(all_hot)))
     for query in hot_picks:
         if _budget() <= 0:
             break
         log.info(f"[DIRECT] === FR Search (HOT/top): {query} ===")
         try:
-            hot_tweets = scrape_x_search(query, max_tweets=12, tab="top")
+            hot_tweets = scrape_x_search(query, max_tweets=20, tab="top")
             if hot_tweets:
                 total += _reply_to_tweets(hot_tweets, replied, "SEARCH-FR-HOT", source_detail=query, remaining=_budget(), en_counter=en_counter)
                 if _llm_exhausted():

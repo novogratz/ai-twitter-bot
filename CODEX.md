@@ -36,6 +36,12 @@ startup valuation). Prompts now explicitly prefer `DERNIER/Exclusif` +
 actor + exact number + consequence, and avoid abstract standalone one-liners
 that do not carry a verifiable fact.
 
+Monthly recaps: `python main.py --monthly-recap-now` forces three Monthly
+Décode Top 10 posts (IA, Crypto, Investissement). Scheduled monthly on the
+1st at 8 AM New York. Big-post discovery is enabled for reposts/replies, but
+freshness gates remain strict: reposts stay under `RETWEET_MAX_AGE_HOURS`,
+direct replies under `DIRECT_REPLY_MAX_AGE_MINUTES`.
+
 **Hard post-flight guard** (`contains_post_unsafe_leak` in `src/llm_client.py`, wired into `twitter_client.post_tweet`): refuses to post anything containing tool-call XML (`<function=…>`), NDJSON envelope keys (`"sessionID":`, `"step_start"`, etc.), or text that opens with `{` / `[{`. Added after a 163k-char `{"type":"step_start",…}` blob got pushed to Safari on 2026-05-14 because the previous guard only caught XML, not JSON streams.
 
 **Codex usage-limit lockout cache** (`codex_lockout.json` at repo root): when codex returns "hit your usage limit, try again at …", `run_llm` parses the date and caches it. Until that timestamp passes, codex is bypassed entirely and calls go straight to the local Ollama fallback. Self-cleaning — the cache file is deleted when the lockout window expires. Avoids the 6+ min per-cycle ladder cost while codex is unavailable for days.

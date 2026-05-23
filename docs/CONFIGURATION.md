@@ -90,7 +90,8 @@ Per-cycle quotas (not daily caps):
 | `FAVORITE_REPOSTS_PER_CYCLE` | `3` | Best recent posts to repost while visiting favorite/VIP profiles. |
 | `FAVORITE_REPOST_MIN_ENGAGEMENT` | `3` | Minimum likes + 2×replies for favorite-profile reposts. |
 | `FAVORITE_REPOST_MAX_AGE_MINUTES` | `2880` | Max age for favorite-profile reposts. |
-| `RETWEET_FEED_SEARCHES_PER_CYCLE` | `2` | Targeted crypto / AI / bourse searches scraped by the retweet cycle. |
+| `RETWEET_FEED_SEARCHES_PER_CYCLE` | `5` | Targeted crypto / AI / bourse searches scraped by the retweet cycle, including high-like big-account searches. |
+| `DIRECT_REPLY_MAX_AGE_MINUTES` | `1440` | Max age for direct replies. Keeps big-post search from commenting on old viral tweets. |
 | `X_FEED_SEARCHES_PER_CYCLE` | `2` | Targeted searches merged into `external_signal.json` for news generation. |
 | `LIKE_TOP_TAB_PROBABILITY` | `0.55` | Probability the like bot uses X Top search instead of Live to train For You toward the niche. |
 | `QUOTE_MAX_AGE_HOURS` | `18` | Same age gate for the legacy repost-pool job. |

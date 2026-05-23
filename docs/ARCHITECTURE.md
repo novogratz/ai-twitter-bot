@@ -81,12 +81,13 @@ main.py
 | `spicy_bot.py` | every ~80 min | Polarising take or question |
 | `thread_bot.py` | every 4h (idempotent daily) | 4-tweet single-story thread |
 | `digest_thread_bot.py` | every 4h (idempotent daily) | 6-tweet "top 5 stories" recap |
+| `agent.py` monthly mode | 1st of month + manual `--monthly-recap-now` | 3 Monthly Décode Top 10 posts: IA, Crypto, Investissement |
 
 ### Reshare
 
 | Module | Cadence | Behavior |
 |---|---|---|
-| `retweet_bot.py` | every 3 min | Feed/search/trusted-handle scrape → niche+age filter → deterministic score → retweet up to `RETWEETS_PER_CYCLE` |
+| `retweet_bot.py` | every 3 min | Feed/search/trusted-handle/big-post scrape → niche+age filter → deterministic score → retweet up to `RETWEETS_PER_CYCLE` |
 | `quote_tweet_bot.py` | every 8 min | Legacy repost-pool scrape → FR/EN filter → plain repost |
 | `notify_bot.run_boost_cycle` | every 60 min | Self-RT freshest own post (algo-window timing) |
 
