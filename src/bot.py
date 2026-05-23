@@ -140,38 +140,124 @@ def _pick_best_pool_url(bullet1_text: str, pool_url_titles: dict) -> str:
     return best_url if best_score >= 1 else ""
 
 
-def _substitute_url_with_pool_match(tweet: str, src_url: str) -> tuple:
-    """Replace the candidate's URL with the best-matching pool URL whose
-    title overlaps bullet #1. Returns (new_tweet, new_src_url) — falls
-    back to (tweet, src_url) unchanged if no good substitution found.
+_OUTLET_DISPLAY_NAMES = {
+    "bloomberg.com": "Bloomberg",
+    "reuters.com": "Reuters",
+    "ft.com": "Financial Times",
+    "wsj.com": "WSJ",
+    "nytimes.com": "NYT",
+    "theinformation.com": "The Information",
+    "techcrunch.com": "TechCrunch",
+    "theverge.com": "The Verge",
+    "wired.com": "Wired",
+    "arstechnica.com": "Ars Technica",
+    "venturebeat.com": "VentureBeat",
+    "technologyreview.com": "MIT Tech Review",
+    "coindesk.com": "CoinDesk",
+    "cointelegraph.com": "Cointelegraph",
+    "theblock.co": "The Block",
+    "decrypt.co": "Decrypt",
+    "cnbc.com": "CNBC",
+    "axios.com": "Axios",
+    "finance.yahoo.com": "Yahoo Finance",
+    "lesechos.fr": "Les Échos",
+    "lemonde.fr": "Le Monde",
+    "numerama.com": "Numerama",
+    "bfmtv.com": "BFM",
+    "lefigaro.fr": "Le Figaro",
+    "capital.fr": "Capital",
+    "france24.com": "France 24",
+    "businessinsider.com": "Business Insider",
+    "forbes.com": "Forbes",
+    "barrons.com": "Barron's",
+    "economist.com": "The Economist",
+}
 
-    Why this exists: ollama (during Claude lockout) hallucinates plausible
-    CoinDesk slugs that 404. The pool URLs are real (from a live DDG/RSS
-    fetch this cycle), so substituting is far safer than retrying the LLM."""
+
+def _outlet_name_for_url(url: str) -> str:
+    """Pick a clean display name for the URL's host."""
+    from urllib.parse import urlparse
+    if not url:
+        return ""
+    host = urlparse(url).netloc.lower().lstrip("www.")
+    if host in _OUTLET_DISPLAY_NAMES:
+        return _OUTLET_DISPLAY_NAMES[host]
+    # Default: first label of the host, capitalized.
+    head = host.split(".")[0]
+    return head.capitalize() if head else ""
+
+
+def _align_bullet1_source_tag(tweet: str, new_url: str) -> str:
+    """When we substitute the URL, rewrite the (source: X) tag on bullet
+    #1 to match the new URL's outlet. Otherwise the post says
+    "(source: Bloomberg)" with a Reuters trailing URL — bad signal."""
+    new_outlet = _outlet_name_for_url(new_url)
+    if not new_outlet:
+        return tweet
+    def _replace_in_b1(m):
+        b1 = m.group(0)
+        # Replace any (source: <anything>) with the new outlet name.
+        return re.sub(
+            r"\((?:source|src|via)\s*[:：]\s*[^)]*\)",
+            f"(source: {new_outlet})",
+            b1,
+            count=1,
+            flags=re.IGNORECASE,
+        )
+    return re.sub(r"^\s*1\..*?(?=\n\s*2\.|$)", _replace_in_b1, tweet, flags=re.DOTALL | re.MULTILINE)
+
+
+def _substitute_url_with_pool_match(tweet: str, src_url: str) -> tuple:
+    """Replace the candidate's URL with a pool URL. Tries:
+      1. Best token-overlap with bullet #1.
+      2. Best token-overlap with full tweet body (broader topic match).
+      3. First reachable pool URL (last resort).
+
+    Returns (new_tweet, new_src_url). Only falls back to original src_url
+    if literally no pool URL is reachable.
+
+    2026-05-23: re-instated strict pool whitelist in the validator, so
+    this function must ALWAYS produce an in-pool URL or downstream will
+    reject. Made substitution exhaustive: pick anything reachable from
+    the pool rather than fall back to a model-emitted URL."""
     from . import agent as _ag
     pool_titles = getattr(_ag, "_last_injected_url_titles", None) or {}
     if not pool_titles:
         return tweet, src_url
-    # Extract bullet #1 text from the candidate
+    # If model's URL is already in pool AND reachable, keep it.
+    if src_url and src_url in pool_titles and _ag.url_is_reachable(src_url):
+        return tweet, src_url
+    # Pick best pool URL by bullet #1 overlap → fall back to full-tweet overlap
+    # → fall back to first reachable.
     b1_match = re.search(r"^\s*1\.\s*(.+?)(?:\n\s*2\.|$)", tweet, re.MULTILINE | re.DOTALL)
     bullet1 = b1_match.group(1) if b1_match else ""
     best_url = _pick_best_pool_url(bullet1, pool_titles)
+    if best_url and not _ag.url_is_reachable(best_url):
+        best_url = ""
     if not best_url:
+        best_url = _pick_best_pool_url(tweet, pool_titles)
+        if best_url and not _ag.url_is_reachable(best_url):
+            best_url = ""
+    if not best_url:
+        for url in pool_titles.keys():
+            if _ag.url_is_reachable(url):
+                best_url = url
+                log.info(f"[NEWS] Fallback substitution: first reachable pool URL ({url})")
+                break
+    if not best_url:
+        log.info("[NEWS] No reachable pool URL found for substitution — leaving original.")
         return tweet, src_url
-    # Verify the pool URL is reachable (DDG indexed URLs usually are)
-    if not _ag.url_is_reachable(best_url):
-        return tweet, src_url
-    # If model's URL is the same as the best pool URL, no substitution needed
     if src_url == best_url:
         return tweet, src_url
-    # Strip the model's URL from the tweet (if present) and append best pool URL
     new_tweet = tweet
     if src_url:
         new_tweet = new_tweet.replace(src_url, "").rstrip()
-    # Also strip any trailing standalone URL the model wrote
     new_tweet = re.sub(r"https?://\S+\s*$", "", new_tweet, flags=re.MULTILINE).rstrip()
+    # Align inline (source: X) on bullet #1 with the substituted URL's
+    # outlet so the post doesn't say "Bloomberg" then link to Reuters.
+    new_tweet = _align_bullet1_source_tag(new_tweet, best_url)
     new_tweet = new_tweet.rstrip() + "\n\n" + best_url
-    log.info(f"[NEWS] Substituted URL: {src_url!r} → {best_url!r} (pool match for bullet #1)")
+    log.info(f"[NEWS] Substituted URL: {src_url!r} → {best_url!r} (source tag updated)")
     return new_tweet, best_url
 
 
@@ -303,14 +389,16 @@ def _run_single_bot_cycle() -> bool:
             if cand_src:
                 injected = getattr(_ag_mod, "_last_injected_urls", None) or set()
                 injected_titles = getattr(_ag_mod, "_last_injected_url_titles", None) or {}
+                # 2026-05-23 PM: STRICT pool whitelist back on. After two
+                # dead Reuters/Bloomberg URLs slipped through the
+                # reachability+slug heuristic (both outlets 403 every bot
+                # UA so we can't tell real from fake via HTTP), the only
+                # reliable defense is "URL must be in the live DDG/RSS
+                # pool we injected this cycle". Substitution upstream
+                # (_substitute_url_with_pool_match) should have already
+                # forced the URL into the pool; if not, this catches it.
                 in_pool = (not injected) or (cand_src in injected)
-                # 2026-05-23 PM: trust reachability over pool-whitelist.
-                # Ollama (during Claude lockout) sometimes picks real URLs
-                # from training data that aren't in our DDG/RSS pool — we
-                # were rejecting all those. Now: reachable URL = OK, and
-                # we only enforce coupling when we actually have a title
-                # for the URL (in-pool case).
-                reachable = _ag_mod.url_is_reachable(cand_src)
+                reachable = _ag_mod.url_is_reachable(cand_src) if in_pool else False
                 coupling = True
                 if reachable and in_pool:
                     title = (injected_titles.get(cand_src) or "").lower()
@@ -321,13 +409,13 @@ def _run_single_bot_cycle() -> bool:
                         title_tokens = {w for w in re.findall(r"[a-zA-Z]{4,}", title) if w not in stop}
                         if title_tokens and not any(t in subject_region for t in title_tokens):
                             coupling = False
-                ok = reachable and coupling
-                if not reachable:
+                ok = in_pool and reachable and coupling
+                if not in_pool:
+                    log.info(f"[NEWS] Validation FAIL: URL not in injected pool ({len(injected)} candidates): {cand_src}")
+                elif not reachable:
                     log.info(f"[NEWS] Validation FAIL: URL unreachable / 404: {cand_src}")
                 elif not coupling:
                     log.info(f"[NEWS] Validation FAIL: coupling mismatch with bullet #1")
-                elif not in_pool:
-                    log.info(f"[NEWS] URL passed validation (reachable, not in DDG pool but trusted): {cand_src}")
             if ok:
                 tweet = candidate
                 break
