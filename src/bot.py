@@ -402,11 +402,18 @@ def _run_single_bot_cycle() -> bool:
         from . import agent as _ag_mod
         tweet = None
         last_tried_topic = None
-        for attempt in range(3):
-            log.info(f"Generating Décode, attempt {attempt + 1}/3...")
+        _ag_mod.__dict__["_temporary_rejected_terms"] = set()
+        max_attempts = 5
+        for attempt in range(max_attempts):
+            log.info(f"Generating Décode, attempt {attempt + 1}/{max_attempts}...")
             candidate = generate_tweet()
             if candidate is None:
-                log.info("[NEWS] generate_tweet returned None — no eligible combo.")
+                retryable = bool(_ag_mod.__dict__.get("_last_generation_skip_retryable"))
+                reason = _ag_mod.__dict__.get("_last_generation_skip_reason") or "no eligible combo"
+                log.info(f"[NEWS] generate_tweet returned None — {reason}.")
+                if retryable and attempt < max_attempts - 1:
+                    log.info("[NEWS] Refusal is retryable — searching for a different story.")
+                    continue
                 break
             _increment_counter("news")
             # Quick validate URL here (whitelist + coupling). Real post-flight
@@ -488,7 +495,8 @@ def _run_single_bot_cycle() -> bool:
                 pass
             _decrement_counter("news")
         else:
-            log.info("[NEWS] All 3 attempts failed URL validation. Giving up this cycle.")
+            log.info(f"[NEWS] All {max_attempts} attempts failed validation/dedup. Giving up this cycle.")
+        _ag_mod.__dict__.pop("_temporary_rejected_terms", None)
         if tweet is None and can_hotake:
             log.info("No fresh Décode - trying a hot take instead...")
             tweet = generate_hotake()
