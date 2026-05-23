@@ -269,6 +269,8 @@ FR_ACCOUNTS = [
     "FinaryApp",         # Finary — app epargne FR tres actif
     "leo_labruyere",     # Leonor — investissement FR, tres suivie
     "Freddy_Invest",     # Freddy Invest — FR investisseur individuel
+    "Romain_Del_Rio",    # FR investisseur — tres actif
+    "InvestirAgency",    # FR investissement, actif quotidien
 
     # === Crypto FR ===
     "PowerHasheur",      # Hasheur
@@ -291,6 +293,9 @@ FR_ACCOUNTS = [
     "CointribuneFR",     # Cointribune FR
     "TheDeFISaint",      # DeFi / crypto FR — tres actif
     "ChrisBlec",         # crypto FR — analyse et news
+    "Raph_Bloch",        # Raphael Bloch — The Big Whale, crypto media FR
+    "Crypto_Doublard",   # crypto FR, actif quotidien
+    "fredo_bullen",      # crypto FR — news et analyse
 
     # === Tech / IA FR ===
     "arthurmensch",      # Mistral AI — tres actif
@@ -300,12 +305,20 @@ FR_ACCOUNTS = [
     "yacine999",         # Yacine Jernite — Hugging Face, IA FR tres actif
     "ClementDelangue",   # CEO Hugging Face — IA FR, tres suivi
     "Thomas_Wolf",       # CSO Hugging Face — IA FR
+    "ncasenmare",        # AI researcher FR — tres actif
+    "olivier_ramier",    # CTO @gotelescope.ai — IA FR, Berlin
+    "sileix",            # AI / dev FR — actif quotidien
     # KorbenInfo removed 2026-04-26 — 0% scrape success (page never loads)
     "Frandroid",         # FrAndroid — tech FR
     "Numerama",          # Numerama
     "01net",             # 01net
     "JournalDuGeek",     # Journal du Geek
     "GuillaumeBesson",   # FR tech entrepreneur
+
+    # === Space FR ===
+    "EricDrd",           # Eric Durand — SpaceX France, tres actif
+    "Arnaud_Esquerre",   # journaliste spatial FR
+    "SpaceX_France",     # infos SpaceX en FR
 ]
 
 # English-speaking influencers — visited only AFTER FR, fewer per cycle

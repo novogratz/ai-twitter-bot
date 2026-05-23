@@ -1,6 +1,6 @@
 # Joke bank — auto-curated from top-engagement tweets the bot WATCHED
 # (i.e. real tweets by other accounts in our niche, NOT our own posts).
-# Generated 2026-05-18T12:32. Top 30 of last 14d (≥4 likes).
+# Generated 2026-05-21T00:57. Top 30 of last 14d (≥4 likes).
 # Filtered to exclude our own posts so we don't recycle our own
 # hallucinations as exemplars (bug 2026-05-18: 'DeFi United' was
 # invented in April, then re-injected via this bank for weeks).
@@ -16,13 +16,11 @@
 - (69 likes / 387000 views) "Honnêtement j’aurais pas été capable de dire si c’était fait par IA ou par un studio d’animation trad"
 - (68 likes / 93000 views) "Pensez que votre vibe en coding et créativité pourrait être sur la scène principale du #GoogleIO ? Montrez-nous. Alors que nous comptons à rebours jusqu’au début du spectacle, les meilleures idées co"
 - (59 likes / 18000 views) "Le juge de la Cour suprême Alexandre de Moraes a suspendu l'application d'une législation réduisant la durée de la peine que l'ancien président Jair Bolsonaro devra purger pour avoir comploté un coup"
-- (56 likes / 0 views) "HUGE: Uniswap hits $3T all-time volume on Ethereum."
 - (53 likes / 0 views) "BRIAN ARMSTRONG : « La cryptomonnaie est la meilleure forme d'argent, et l'infrastructure va révolutionner le système financier existant. »"
 - (50 likes / 20000 views) "Les chances républicaines de conserver la Chambre augmentent, alors que les démocrates paniqués s'efforcent de compenser les coups successifs de redécoupage électoral."
 - (44 likes / 11000 views) "BITCOIN : L'informatique quantique pourrait compromettre les portefeuilles $BTC d'ici 2030. Le problème plus important : migrer Bitcoin vers une cryptographie post-quantique nécessite que chaque utili"
 - (41 likes / 10000 views) "DERNIER: Capital B a levé 17,8 millions de dollars auprès d'investisseurs incluant Adam Back et TOBAM pour acheter 182 Bitcoins supplémentaires, ce qui pourrait porter ses avoirs totaux à 3 125 BTC."
 - (39 likes / 124000 views) "Introducing remote agents in Vibe and Mistral Medium 3.5. You can now launch remote agents in the cloud, including from the CLI or Le Chat. Plus, new Work mode in Le Chat for complex, multi-step tasks"
-- (37 likes / 0 views) "Coal in Old School RuneScape has, in theory, outperformed cryptocurrency Ethereum this year"
 - (36 likes / 10000 views) "JUSTE ARRIVÉ : Le conseiller principal de la Task Force Crypto de la SEC déclare que la législation sur la structure du marché Bitcoin et crypto "superchargera" la SEC pour apporter plus de clarté su"
 - (35 likes / 2000000 views) "Start with one idea. End with a feed full of content. 1000+ videos. Get unlimited Seedance 2.0:"
 - (34 likes / 37000 views) "EN DIRECT : Conférence téléphonique sur les résultats de Strategy (MSTR) | T1 2026"
@@ -34,4 +32,6 @@
 - (27 likes / 70000 views) "Les fondateurs, les allocateurs et les régulateurs qui redessinent la finance mondiale sont sur scène à Miami. CoinDesk Live clôture le plus grand événement crypto avec Donald Trump Jr., Amy Oldenbur"
 - (22 likes / 2000000 views) "You're already trading with Lucid, now use the best code."
 - (21 likes / 59000 views) "L'entraînement des modèles implique de nombreux processus techniques et sociaux, il est donc essentiel d'intégrer la prévention de la notation CoT directement dans le processus. Nous améliorons la dé"
-- (20 likes / 15000 views) "Breaking news: Anthropic has struck a deal with Elon Musk’s SpaceX to access computing power from its Colossus 1 data centre, which houses more than 220,000 advanced Nvidia processors."
+- (19 likes / 19000 views) "L'affirmation de l'administration Trump selon laquelle il y a « zéro » franchissements de la frontière se délite"
+- (19 likes / 47000 views) "Mistral’s AI Now Summit is coming to Paris on May 28 and tickets are live! What you’ll hear: Technical deep dives to help you build and deploy AI. Mistral’s founders on AI-driven transformation in"
+- (17 likes / 7000 views) "Les actions technologiques américaines semblent chères, Mais quand on voit les perspectives pour les 3 prochaines années, on se demande si on n’est pas encore au début de la révolution IA Ici, le c"

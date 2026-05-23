@@ -1,40 +1,38 @@
 {
-  "ts": "2026-05-13T04:57:42.209157",
+  "ts": "2026-05-23T11:12:34.167803",
   "window_min": 90,
-  "total_actions": 31,
+  "total_actions": 26,
   "by_type": {
-    "reply": 24,
-    "quote": 2,
-    "retweet": 5,
-    "post": 1
+    "reply": 26,
+    "retweet": 5
   },
   "winners": {
-    "MEGA/BFMBourse": 6,
-    "MEGA/LeJournalDuCoin": 3,
-    "MEGA/sama": 2,
-    "PROFILE-FR/01net": 2,
-    "PROFILE-ALWAYS/TagadoBTC": 1
+    "PROFILE-ALWAYS/Graphseo": 2,
+    "PROFILE-ALWAYS/FlasheurInvest": 2,
+    "FOLLOWING": 2,
+    "FEED": 2,
+    "FAVORITE_PROFILE/saylor": 1
   },
   "losers": {
-    "PROFILE-ALWAYS/TagadoBTC": 1,
-    "PROFILE-ALWAYS/Crypto__Goku": 1,
+    "FAVORITE_PROFILE/saylor": 1,
+    "PROFILE-ALWAYS/saylor": 1,
+    "PROFILE-ALWAYS/LeJournalDuCoin": 1,
+    "FAVORITE_PROFILE/CryptoastMedia": 1,
+    "PROFILE-ALWAYS/CryptoastMedia": 1,
+    "FAVORITE_PROFILE/coinacademy_fr": 1,
+    "PROFILE-ALWAYS/CryptoPicsou": 1,
     "PROFILE-ALWAYS/MiningTk": 1,
-    "PROFILE-ALWAYS/MoneyRadar_FR": 1,
-    "QUOTE/Merlijn The Trader": 1,
     "PROFILE-ALWAYS/Capetlevrai": 1,
     "PROFILE-ALWAYS/Dark_Emi_": 1,
     "PROFILE-ALWAYS/Divs_King": 1,
     "PROFILE-ALWAYS/MathieuL1": 1,
-    "RETWEET/pete_rizzo_": 1,
-    "RETWEET/_3emeoeil": 1,
-    "RETWEET/cointelegraph": 1,
-    "RETWEET/finneko_prgrm": 1,
-    "RETWEET/theinformation": 1,
-    "PROFILE-ALWAYS/fchollet": 1,
-    "QUOTE/Sam Altman": 1,
-    "PROFILE-FR/Capetlevrai": 1,
-    "PROFILE-ALWAYS/RodolpheSteffan": 1
+    "PROFILE-ALWAYS/NCheron_bourse": 1,
+    "SEARCH-FR-HOT/licenciements IA": 1,
+    "SEARCH-FR-HOT/Samsung HBM m\u00e9moire IA r\u00e9sultats profit": 1,
+    "FAVORITE_PROFILE/McnallieM": 1,
+    "PROFILE-ALWAYS/McnallieM": 1,
+    "QUOTE_POOL/Bloomberg TV": 1
   },
-  "post_cadence_factor": 0.85,
+  "post_cadence_factor": 1.0,
   "boost_cadence_factor": 1.0
 }
