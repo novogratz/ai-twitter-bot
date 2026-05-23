@@ -5268,3 +5268,26 @@ Tout le monde se concentre sur les gros titres : loi CLARITY. Président pro-Bit
 - **@quintenfrancois** (205 likes, score 7/10) — C’est un miracle que l’on puisse encore acheter ethereum:0x514910771af9ca656af840dff83e8264ecf986ca avec une ristourne de 84 % par rapport à son ATH de 2021.
   - https://x.com/QuintenFrancois/status/2057775370754032028
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 227).
+- **@bitcoin_teddy** (1145 likes, score 9/10) — « Si Bitcoin dépasse les 100 000 $, vous pouvez parier qu'il atteindra 1 million de dollars. »    
+
+- John McAfee
+  - https://x.com/Bitcoin_Teddy/status/2057749305960845373
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1267).
+- **@cointelegraph** (189 likes, score 9/10) — HOSTORY : Il y a 16 ans aujourd'hui, Laszlo Hanyecz réalisait le premier achat de Bitcoin dans le monde réel en payant 10 000 $BTC pour deux pizzas.
+
+Ces pièces valent maintenant environ 774 millions
+  - https://x.com/Cointelegraph/status/2057879237923663969
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 351).
+- **@puffer_finance** (55 likes, score 7/10) — What does based sequencing unlock for Ethereum rollups?
+
+Puffer Co-Founder @AmirOnchain explains how based sequencing enables trust-minimized communication between L2s and L1, coordination across L2s,
+  - https://x.com/puffer_finance/status/2057815697263362317
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 115).
+- **@kit_sats** (78 likes, score 7/10) — how confident are you in bitcoin long term?
+  - https://x.com/kit_sats/status/2057921187913805998
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 234).
+- **@scottmelker** (71 likes, score 7/10) — Bitcoin ne cesse de se renforcer.
+
+Ethereum continue de prendre du retard.
+  - https://x.com/scottmelker/status/2057929499019276510
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 117).
