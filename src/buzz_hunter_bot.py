@@ -1,4 +1,4 @@
-"""Buzz hunter — daily "🔥 Trouvaille du jour" tweet.
+"""Buzz hunter — daily "🔥 Trouvaille de la semaine" tweet.
 
 Goal: hunt the FR/EN web for the weirdest, most-overlooked, most-buzz-
 worthy AI/crypto/exploit story of the day and post ONE punchy tweet
@@ -22,7 +22,7 @@ Selection criteria:
     not in dedup state)
 
 Output format (deliberately not a Décode — distinct surface):
-  🔥 Trouvaille du jour
+  🔥 Trouvaille de la semaine
 
   {1-line punchy hook on the story — chiffre or named entity in first 6 words}
 
@@ -180,13 +180,18 @@ def _save_state(s: dict) -> None:
 
 
 def _in_window() -> bool:
-    """Only ship in the 9-11h Paris window (morning commute scroll)."""
-    h = datetime.now(ZoneInfo("Europe/Paris")).hour
-    return 9 <= h < 11
+    """Weekly viral attempt: Sundays only, around 11 AM EST (= 5 PM Paris).
+    Overlap of US morning scroll + EU late afternoon — bilingual prime
+    window. User mandate 2026-05-23: "make some buzz every week, don't do
+    a lot of try-hard posts but try". One shot per week."""
+    now = datetime.now(ZoneInfo("America/New_York"))
+    # Sunday weekday=6, US morning prime
+    return now.weekday() == 6 and 11 <= now.hour < 14
 
 
-PROMPT = """Tu es @cryptoiadecode. Tu écris UN tweet FR style "🔥 Trouvaille du jour"
-sur cette histoire bizarre/exploit/leak/hack:
+PROMPT = """Tu es @cryptoiadecode. C'est dimanche, l'attempt buzz hebdo —
+UN tweet qui peut devenir viral. Format différent du Décode. Bold,
+contrarian, screenshot-worthy. Sur cette histoire weird/exploit/leak/hack:
 
 TITRE: {title}
 SOURCE: {src} (score {score})
@@ -194,7 +199,7 @@ URL: {url}
 
 OUTPUT — exactement ce format:
 
-🔥 Trouvaille du jour
+🔥 Trouvaille de la semaine
 
 {{1 ligne hook punchy en français — chiffre ou nom propre dans les 6 premiers mots,
 verbe brutal, ton "wait what". 70-130 chars}}
@@ -268,8 +273,8 @@ def run_buzz_hunter_cycle() -> None:
         log.info("[BUZZ] LLM returned SKIP / empty.")
         return
     text = humanize(text)
-    if "🔥 Trouvaille du jour" not in text and "🔥 Trouvaille" not in text:
-        text = "🔥 Trouvaille du jour\n\n" + text
+    if "🔥 Trouvaille" not in text:
+        text = "🔥 Trouvaille de la semaine\n\n" + text
     if len(text) > 280:
         log.info(f"[BUZZ] over-length ({len(text)} chars) — refusing.")
         return
