@@ -726,6 +726,15 @@ def _dedup_terms(text: str) -> set[str]:
     return terms
 
 
+def _candidate_terms(text: str) -> set[str]:
+    body = (text or "").lower()
+    return {
+        w
+        for w in re.findall(r"@?[a-z0-9_]{3,}", body)
+        if not re.fullmatch(r"20\d{2}|2026|2025", w)
+    }
+
+
 def _recent_duplicate_issue(tweet: str, recent_tweets: list[str]) -> Optional[str]:
     """Refuse repeats of yesterday/recent posts, even if today's slot reset."""
     current = _dedup_terms(tweet)
@@ -1643,6 +1652,8 @@ def generate_tweet() -> Optional[str]:
     _last_source_url = None
     _last_image_topic = None
     _last_pattern = None
+    globals()["_last_generation_skip_retryable"] = False
+    globals()["_last_generation_skip_reason"] = None
     recent = get_recent_tweets(hours=72)
 
     if recent:
@@ -1745,14 +1756,21 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         # with factually wrong claims (saw "Nvidia +20%" when it crashed).
         from .hotake_agent import _is_rejected_source
         raw_candidates = {}
+        rejected_terms = set(globals().get("_temporary_rejected_terms") or set())
         for h in ddg_hits:
             u = (h.get("url") or "").rstrip(".,);")
+            title = (h.get("title") or "") + " " + (h.get("snippet") or "")
+            if rejected_terms and len(_candidate_terms(title) & rejected_terms) >= 3:
+                continue
             if u and u not in raw_candidates and not _is_rejected_source(u):
-                raw_candidates[u] = (h.get("title") or "") + " " + (h.get("snippet") or "")
+                raw_candidates[u] = title
         for s in signals:
             u = s.get("url") or ""
+            title = s.get("title") or ""
+            if rejected_terms and len(_candidate_terms(title) & rejected_terms) >= 3:
+                continue
             if u and u not in raw_candidates and not _is_rejected_source(u):
-                raw_candidates[u] = s.get("title") or ""
+                raw_candidates[u] = title
         reachable_pool = {}
         if raw_candidates:
             import concurrent.futures as _cf
@@ -2024,6 +2042,11 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     if duplicate_issue:
         preview = " ".join(tweet.replace(src_url or "", "").split())[:220]
         log.info(f"[NEWS] Dedup refused — {duplicate_issue}: {preview!r}")
+        rejected_terms = set(globals().get("_temporary_rejected_terms") or set())
+        rejected_terms.update(_dedup_terms(tweet))
+        globals()["_temporary_rejected_terms"] = rejected_terms
+        globals()["_last_generation_skip_retryable"] = True
+        globals()["_last_generation_skip_reason"] = duplicate_issue
         globals()["_last_source_url"] = None
         globals()["_last_image_topic"] = None
         return None
@@ -2031,6 +2054,11 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     if quality_issue:
         preview = " ".join(tweet.replace(src_url or "", "").split())[:220]
         log.info(f"[NEWS] Quality gate refused — {quality_issue}: {preview!r}")
+        rejected_terms = set(globals().get("_temporary_rejected_terms") or set())
+        rejected_terms.update(_dedup_terms(tweet))
+        globals()["_temporary_rejected_terms"] = rejected_terms
+        globals()["_last_generation_skip_retryable"] = True
+        globals()["_last_generation_skip_reason"] = quality_issue
         globals()["_last_source_url"] = None
         globals()["_last_image_topic"] = None
         return None
