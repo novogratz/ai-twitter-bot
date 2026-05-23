@@ -320,6 +320,18 @@ EN_ACCOUNTS = [
     "nvidia",
     "rowancheung",
     "TheRundownAI",
+    # AI elite researchers — user mandate 2026-05-23: "be smart with
+    # them". Be VIP-careful: their tweets are mostly sharp signal, so
+    # reply only when we have a substantive analytical point.
+    "ylecun",
+    "fchollet",
+    "AndrewYNg",
+    "lilianweng",
+    "demishassabis",
+    "drfeifei",
+    "ID_AA_Carmack",
+    "jeremyphoward",
+    "gwern",
 ]
 
 # Backward-compat alias
