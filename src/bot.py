@@ -140,6 +140,51 @@ def _pick_best_pool_url(bullet1_text: str, pool_url_titles: dict) -> str:
     return best_url if best_score >= 1 else ""
 
 
+def _bullet1_numbers_grounded(bullet1: str, url_title_snippet: str) -> bool:
+    """Strict version: EVERY major number in bullet #1 must appear in the
+    article title+snippet. Skips year-like numbers (1900-2100) since
+    those are dates, not stats. Returns True if all numbers ground OR
+    if bullet has no extractable major numbers.
+
+    Catches Décode #109 hallucination: bullet "60 M$" + "1,4 Md$" while
+    article had "$42 million" + "$1.4 billion". The "1,4" matched but
+    "60" didn't — strict mode requires ALL match, so this rejects."""
+    if not bullet1 or not url_title_snippet:
+        return True
+    haystack = url_title_snippet.lower()
+    nums = []
+    for m in re.finditer(r"(\d[\d.,\s]{0,8}\d|\d)", bullet1):
+        raw = m.group(1).strip().replace(" ", "")
+        digits = raw.replace(",", "").replace(".", "")
+        if not digits or len(digits) < 2:
+            continue
+        try:
+            val = int(digits)
+        except ValueError:
+            continue
+        if val < 10:
+            continue
+        if 1900 <= val <= 2100:
+            continue  # year — not a stat
+        candidates = {raw, digits, raw.replace(",", "."), raw.replace(".", ",")}
+        if len(digits) >= 4:
+            candidates.add(f"{int(digits):,}")
+            candidates.add(f"{int(digits):,}".replace(",", " "))
+        nums.append((val, candidates))
+    if not nums:
+        return True
+    # ALL major numbers from #1 must appear in haystack
+    for val, candidates in nums:
+        found = False
+        for c in candidates:
+            if c and c.lower() in haystack:
+                found = True
+                break
+        if not found:
+            return False
+    return True
+
+
 _OUTLET_DISPLAY_NAMES = {
     "bloomberg.com": "Bloomberg",
     "reuters.com": "Reuters",
@@ -409,13 +454,22 @@ def _run_single_bot_cycle() -> bool:
                         title_tokens = {w for w in re.findall(r"[a-zA-Z]{4,}", title) if w not in stop}
                         if title_tokens and not any(t in subject_region for t in title_tokens):
                             coupling = False
-                ok = in_pool and reachable and coupling
+                grounded = True
+                if reachable and in_pool and coupling:
+                    title = injected_titles.get(cand_src) or ""
+                    b1_match = re.search(r"^\s*1\.\s*(.+?)(?:\n\s*2\.|$)", candidate, re.MULTILINE | re.DOTALL)
+                    b1_text = b1_match.group(1) if b1_match else ""
+                    if not _bullet1_numbers_grounded(b1_text, title):
+                        grounded = False
+                ok = in_pool and reachable and coupling and grounded
                 if not in_pool:
                     log.info(f"[NEWS] Validation FAIL: URL not in injected pool ({len(injected)} candidates): {cand_src}")
                 elif not reachable:
                     log.info(f"[NEWS] Validation FAIL: URL unreachable / 404: {cand_src}")
                 elif not coupling:
                     log.info(f"[NEWS] Validation FAIL: coupling mismatch with bullet #1")
+                elif not grounded:
+                    log.info(f"[NEWS] Validation FAIL: bullet #1 numbers not grounded in article snippet (hallucinated number)")
             if ok:
                 tweet = candidate
                 break
