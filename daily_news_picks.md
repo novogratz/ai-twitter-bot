@@ -5339,3 +5339,33 @@ On va vous éteindre quand même.
 Quelque
   - https://x.com/RippleXrpie/status/2057994834439246276
   - **WHY**: Source fiable + impact concret (score signal 0, engagement 490).
+
+## 2026-05-23
+- **@greginvestfr** (15 likes, score 7/10) — Et +7 % pour Rocket Lab $RKLB aujourd'hui 
+
+Comme $ASTS, c'était également l'une des 3 entreprises que je mettais en avant la semaine dernière sur le thème spatial.
+
+Rocket Lab n'est plus seulement un
+  - https://x.com/GregInvestFr/status/2057879412880666773
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 17).
+- **@rocketlab** (2858 likes, score 7/10) — Rocket Lab a reçu un contrat de 90 millions de dollars de la part du @USSpaceForce’s Space Systems Command @USSF_SSC pour concevoir, fabriquer, intégrer et exploiter deux satellites géostationnaires h
+  - https://x.com/RocketLab/status/2057614847672775017
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 2970).
+- **@valueinideas** (458 likes, score 7/10) — $RKLB
+
+Rocket Lab a annoncé un ATM de 3 milliards de dollars.
+
+Encore une fois, je vendrais totalement toutes mes actions Rocket Lab dès maintenant.
+
+Les offres ATM sont simplement terribles pour le c
+  - https://x.com/ValueInIdeas/status/2057224216936857610
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 598).
+- **@rocketlab** (269 likes, score 7/10) — Read more: https://globenewswire.com/news-release/2026/05/22/3299858/0/en/rocket-lab-awarded-90m-contract-to-build-geo-satellites-hosting-space-domain-awareness-payload-for-u-s-space-force.html…
+  - https://x.com/RocketLab/status/2057615003990335874
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 273).
+- **@michelepet48459** (9 likes, score 7/10) — Want to make money in the stock market?  @edartikozgur. His recommended stocks are performing exceptionally well — go check out his picks now.
+
+ stock SpaceX  $PLTR #AAPL #StockTrading
+ $RKLB $OKLO
+  - https://x.com/MichelePet48459/status/2058035440259899809
+  - **WHY**: Source fiable + impact concret (score signal 3, engagement 27).
