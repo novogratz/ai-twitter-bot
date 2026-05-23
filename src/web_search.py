@@ -153,9 +153,9 @@ def search_for_news_topic(topic: str, date_filter: str = "w") -> str:
             "stablecoin DeFi Coinbase news this week",
         ],
         "Investissement": [
-            "AI datacenter capex Stargate CoreWeave news this week",
-            "Nvidia AMD chip earnings news this week",
-            "tech IPO valuation startup news this week",
+            "NVIDIA AMD Tesla Microsoft Google AI stock earnings this week",
+            "AI datacenter capex Stargate CoreWeave CRWV news this week",
+            "tech IPO MicroStrategy MSTR MARA RIOT valuation this week",
         ],
     }
     queries = queries_by_topic.get(topic, ["AI crypto news this week"])
