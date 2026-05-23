@@ -379,5 +379,64 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui construisent ou analysent concr\u00e8tement : Mistral, Hugging Face, Qonto, Ledger. Pas de blabla, que des profils qui savent o\u00f9 est l'argent et o\u00f9 est la tech."
+  },
+  {
+    "ts": "2026-05-23T06:34:09.467375",
+    "raw_count": 7,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "L3m4d",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'expert qui explique pourquoi ton RER B est plus rentable que tes actions, avec une rigueur qui fait mal."
+      },
+      {
+        "handle": "JulienDelVal",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 38000,
+        "reason": "L'analyste qui a vu 2022 arriver pendant que les influenceurs vendaient du r\u00eave, tweete en FR avec pr\u00e9cision."
+      },
+      {
+        "handle": "VincentAuriac",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 32000,
+        "reason": "La voix calme du Qu\u00e9bec, couvre les march\u00e9s US et FR sans crier, audience fid\u00e8le qui aime la data."
+      },
+      {
+        "handle": "CyrilleDelsahut",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 28000,
+        "reason": "L'investisseur US francophone qui track la tech fr, tweete en FR, perspective globale sans \u00eatre g\u00e9n\u00e9raliste."
+      },
+      {
+        "handle": "PierreGinsburger",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 22000,
+        "reason": "Le DG de Qonto qui balance la r\u00e9alit\u00e9 des PME, pas de formations VIP, juste du concret sur le cash-flow."
+      },
+      {
+        "handle": "AlexisGalland",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Ex-Goldman qui trade crypto, tweete en FR, \u00e9vite les coins bizarres, focus BTC/ETH avec un ton sec."
+      },
+      {
+        "handle": "LucBourassa",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Le prof d'HEC Montr\u00e9al qui d\u00e9mystifie la crypto sans jargon, tweete en FR, pas de signaux payants."
+      }
+    ],
+    "summary": "Le duo DelVal/Auriac t'\u00e9vite de vendre \u00e0 perte, Bourassa te rappelle que la bourse n'est pas un casino, et Ginsburger montre que le business model compte plus que le hype."
   }
 ]

@@ -11,7 +11,13 @@
     "MaximePichet",
     "RomainDeltour",
     "JeanBaptisteT",
-    "PhilippeMack"
+    "PhilippeMack",
+    "L3m4d",
+    "JulienDelVal",
+    "VincentAuriac",
+    "CyrilleDelsahut",
+    "AlexisGalland",
+    "LucBourassa"
   ],
   "en": [],
   "history": [
@@ -74,6 +80,36 @@
       "lang": "fr",
       "handle": "PhilippeMack",
       "added": "2026-05-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "L3m4d",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDelVal",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentAuriac",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilleDelsahut",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisGalland",
+      "added": "2026-05-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucBourassa",
+      "added": "2026-05-23"
     }
   ]
 }
