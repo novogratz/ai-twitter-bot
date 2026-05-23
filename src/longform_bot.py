@@ -51,9 +51,10 @@ propre, lien causal nommé. Format:
 • {{conséquence avec acteur nommé}}
 • {{l'angle que personne ne nomme}}}}
 
-{{Une LIGNE CHUTE qui nomme le vrai pari caché. FR culturel obligatoire
-(RER B, Bercy, URSSAF, syndicat, Lidl, Doctolib, tonton à Noël, Coach Boris).
-Stack 2 réfs si tu peux.}}
+{{Une LIGNE CHUTE qui nomme le vrai pari caché. FR culturel frais (pas
+RER B, pas Bercy — LinkedIn coaching, Apple Pay carton, livraison J+3,
+QR code pour tout, tuto Defisko, volet roulant bloqué). Stack 2 réfs si
+tu peux.}}
 
 {{URL source ≤36h obligatoire}}
 
