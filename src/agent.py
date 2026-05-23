@@ -241,8 +241,13 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
     conséquence business/marché/souveraineté.
   • Le classement est décroissant: #1 = le fait du mois que le lecteur doit
     bookmarker. #10 doit encore être utile; pas de bouche-trou.
+  • BULLET #1 = LE killshot absolu: chiffre rond/mémorisable, acteur connu,
+    enjeu business brutal. Le lecteur doit comprendre en 2 secondes pourquoi
+    il faut lire/liker le reste. Si #1 n'est pas le plus mémorable, permute.
   • CHIFFRES: viennent des SIGNAUX FOURNIS. Hedge ("~3 Md$") si pas exact.
     JAMAIS inventer un chiffre absent du titre/snippet.
+  • URL finale: si présente, elle DOIT correspondre au bullet #1, pas à un
+    bullet secondaire. Bullet #1 d'abord, URL qui le prouve ensuite.
   • TAGS: max 1 @handle par bullet, inline mid-phrase, jamais seul en début
     ou fin de ligne.
   • (source: outlet) doit nommer un vrai média. Pas d'invention.
@@ -359,7 +364,10 @@ Demain, même heure, même Décode.
     d'OpenAI, le tweet parle d'OpenAI. Pipeline strippe l'URL sinon.
   • STRUCTURE DES 3 BULLETS:
       - #1 (💰): LE CHIFFRE killshot — le chiffre que tout le monde va
-        retenir. MÉMORABLE + LIKABLE + COMMENT-BAIT.
+        retenir. MÉMORABLE + LIKABLE + COMMENT-BAIT. C'est le hook du post:
+        le plus gros nom + le nombre le plus simple à retenir + l'enjeu le
+        plus évident. Si un autre bullet donne plus envie de lire/liker,
+        il devient #1.
       - #2 (⚡): le CONTEXTE / comparatif qui rend #1 brutal (ex: "le
         double du PIB de l'Estonie", "5x la dernière levée").
       - #3 (📊): la CONSÉQUENCE ou what's next (ex: "Bercy prépare déjà
@@ -523,6 +531,12 @@ def _source_display_name(value: str) -> str:
     return first.replace("-", " ").replace("_", " ").title() if first else "source"
 
 
+_BODY_DOMAIN_RE = re.compile(
+    r"(?<!@)\b((?:[A-Za-z0-9-]+\.)+(?:com|fr|io|news|co|ai|org|net|finance|app|dev|xyz|me|tv|gg|co\.uk)(?:/[^\s)\]]*)?)",
+    re.IGNORECASE,
+)
+
+
 def _rewrite_inline_source_urls(text: str) -> str:
     """Replace inline source URLs with source names.
 
@@ -542,6 +556,9 @@ def _rewrite_inline_source_urls(text: str) -> str:
 
     def repl_unwrapped(match):
         return f"source: {_source_display_name(match.group(1))}"
+
+    def repl_domain(match):
+        return _source_display_name(match.group(1) if match.lastindex else match.group(0))
 
     cleaned_lines = []
     final_url_line = re.compile(r"^\s*(?:source\s*[:：]\s*)?https?://\S+\s*$", re.IGNORECASE)
@@ -573,6 +590,8 @@ def _rewrite_inline_source_urls(text: str) -> str:
             line,
             flags=re.IGNORECASE,
         )
+        line = re.sub(r"https?://[^\s)\]]+", repl_domain, line, flags=re.IGNORECASE)
+        line = _BODY_DOMAIN_RE.sub(repl_domain, line)
         cleaned_lines.append(line)
     return "\n".join(cleaned_lines)
 
@@ -682,6 +701,47 @@ def _news_quality_issue(text: str) -> Optional[str]:
     for source_name in re.findall(r"\(\s*source\s*[:：]\s*([^)]+?)\s*\)", body, flags=re.IGNORECASE):
         if source_name.strip().lower() in bogus_sources:
             return f"bogus source label: {source_name.strip()}"
+    return None
+
+
+def _dedup_terms(text: str) -> set[str]:
+    """Entity/number terms used for recent-story duplicate detection."""
+    body = _URL_RE.sub("", text or "").lower()
+    body = re.sub(r"\(\s*source\s*[:：][^)]+\)", " ", body, flags=re.IGNORECASE)
+    stop = {
+        "decode", "daily", "weekly", "monthly", "samedi", "dimanche", "lundi",
+        "mardi", "mercredi", "jeudi", "vendredi", "source", "chiffres",
+        "jour", "mois", "semaine", "demain", "prochain", "meme", "même",
+        "pour", "avec", "dans", "plus", "tout", "fait", "sont", "leur",
+        "comme", "mais", "cette", "entre", "sans", "chez", "sur", "les",
+        "des", "une", "est", "pas", "qui", "que", "quoi", "dont",
+    }
+    terms = {
+        w
+        for w in re.findall(r"@?[a-z0-9_]{3,}", body)
+        if w not in stop and not re.fullmatch(r"20\d{2}|2026|2025", w)
+    }
+    # Keep memorable numbers; they are useful duplicate signatures.
+    terms.update(re.findall(r"\b\d+(?:[,.]\d+)?\s*(?:md|m|k|btc|eh/s|mw|%)\b", body))
+    return terms
+
+
+def _recent_duplicate_issue(tweet: str, recent_tweets: list[str]) -> Optional[str]:
+    """Refuse repeats of yesterday/recent posts, even if today's slot reset."""
+    current = _dedup_terms(tweet)
+    if not current:
+        return None
+    for old in recent_tweets:
+        old_terms = _dedup_terms(old)
+        if not old_terms:
+            continue
+        overlap = current & old_terms
+        if len(overlap) >= 6 and len(overlap) / max(1, min(len(current), len(old_terms))) >= 0.45:
+            return f"recent duplicate story ({', '.join(sorted(overlap)[:8])})"
+        handles = {t for t in current if t.startswith("@")} & {t for t in old_terms if t.startswith("@")}
+        numbers = {t for t in current if re.search(r"\d", t)} & {t for t in old_terms if re.search(r"\d", t)}
+        if handles and numbers:
+            return f"recent duplicate entity+number ({', '.join(sorted(handles | numbers)[:8])})"
     return None
 
 
@@ -1583,7 +1643,7 @@ def generate_tweet() -> Optional[str]:
     _last_source_url = None
     _last_image_topic = None
     _last_pattern = None
-    recent = get_recent_tweets(hours=24)
+    recent = get_recent_tweets(hours=72)
 
     if recent:
         # Cross-format hard banlist — same module hot-take uses, so news
@@ -1597,13 +1657,13 @@ def generate_tweet() -> Optional[str]:
         if banned:
             banned_list = ", ".join(sorted(banned))
             banned_block = (
-                f"\n\n⛔ HARD BANLIST (sujets vus dans les 24h, news OU hot take — "
+                f"\n\n⛔ HARD BANLIST (sujets vus dans les 72h, news OU hot take — "
                 f"INTERDITS, va ailleurs): {banned_list}\n"
                 "Si ton meilleur sujet est dans cette liste, FORCE un autre angle "
                 "ou SKIP. Recycler = perdre des followers (ils voient deux fois la "
                 "même chose en 30 min).\n"
             )
-        dedup_section = f"""Déjà posté dans les dernières 24h - ne couvre PAS le même sujet:
+        dedup_section = f"""Déjà posté dans les dernières 72h - ne couvre PAS le même sujet:
 {tweets_list}{banned_block}
 
 Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
@@ -1960,6 +2020,13 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # exactly one optional URL at the end for the X link card.
     tweet = _enforce_single_trailing_url(tweet, src_url)
     tweet = _finalize_news_tweet(tweet, src_url)
+    duplicate_issue = _recent_duplicate_issue(tweet, recent)
+    if duplicate_issue:
+        preview = " ".join(tweet.replace(src_url or "", "").split())[:220]
+        log.info(f"[NEWS] Dedup refused — {duplicate_issue}: {preview!r}")
+        globals()["_last_source_url"] = None
+        globals()["_last_image_topic"] = None
+        return None
     quality_issue = _news_quality_issue(tweet)
     if quality_issue:
         preview = " ".join(tweet.replace(src_url or "", "").split())[:220]
