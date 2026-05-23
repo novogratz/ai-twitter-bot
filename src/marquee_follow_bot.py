@@ -35,6 +35,9 @@ MARQUEE_HANDLES = [
     "ArthurMensch", "GuillaumeLample", "ylecun", "karpathy",
     "demishassabis", "GoogleDeepMind", "xai", "grok",
     "AIatMeta", "perplexity_ai", "AravSrinivas",
+    # AI researchers / sharp thinkers (user-curated 2026-05-23)
+    "fchollet", "AndrewYNg", "lilianweng", "drfeifei",
+    "ID_AA_Carmack", "jeremyphoward", "gwern",
     # Chips + infra
     "nvidia", "AMD", "intel", "CoreWeave", "CrusoeEnergy",
     "groqinc", "cerebrassystems",

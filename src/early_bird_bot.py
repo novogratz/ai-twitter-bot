@@ -49,6 +49,8 @@ EARLY_BIRD_ACCOUNTS = [
     "GoogleDeepMind", "MistralAI", "DarioAmodei", "AravSrinivas",
     "demishassabis", "gdb", "miramurati", "ID_AA_Carmack", "geoffreyhinton",
     "AndrewYNg", "fchollet", "jeffdean", "simonw", "swyx",
+    # AI elite added 2026-05-23 (user mandate "be smart with them")
+    "lilianweng", "drfeifei", "jeremyphoward", "gwern",
     # === IA EN niche / dev ===
     "TheRundownAI", "rowancheung", "mckaywrigley", "levelsio",
     "AlphaSignalAI", "TheAIGRID", "DrJimFan", "GaryMarcus",

@@ -38,6 +38,10 @@ MEGA_ACCOUNTS = [
     "MistralAI", "arthurmensch",
     "lesechos", "BFMBourse", "LeJournalDuCoin",
     "naval",
+    # AI researchers — user mandate 2026-05-23. Fresh tweets from these
+    # accounts are gold for early-reply algo amplification.
+    "karpathy", "ylecun", "fchollet", "AndrewYNg", "demishassabis",
+    "ID_AA_Carmack", "lilianweng", "drfeifei", "jeremyphoward", "gwern",
 ]
 
 MAX_AGE_MIN = 4
