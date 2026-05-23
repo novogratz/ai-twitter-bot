@@ -25,7 +25,7 @@ The same models run across all generation surfaces (news, replies, hot takes, th
 
 News bursts are tuned via `NEWS_POSTS_PER_CYCLE` (default `3`); set to `1` when the LLM is flaky so each cycle skips fast instead of grinding for 6+ min on bad output.
 
-Repost volume is currently tuned high but bounded: `MAX_RETWEETS_PER_DAY=40`,
+Repost volume is currently tuned high but bounded: `MAX_RETWEETS_PER_DAY=30`,
 `RETWEETS_PER_CYCLE=3`, retweet job every 3 min, legacy repost-pool every
 8 min. Retweet candidates still pass source, niche, age, min-like, and
 deterministic score filters before posting.

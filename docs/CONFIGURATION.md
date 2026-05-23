@@ -55,7 +55,7 @@ Reshare paths don't burn LLM cycles (deterministic scoring) so caps can be much 
 | Variable | Default | Purpose |
 |---|---|---|
 | `MAX_QUOTES_PER_DAY` | `80` | Legacy cap for the repost-pool job. |
-| `MAX_RETWEETS_PER_DAY` | `40` | Selective crypto / AI / bourse reposts. |
+| `MAX_RETWEETS_PER_DAY` | `30` | Selective crypto / AI / bourse reposts. |
 | `RETWEETS_PER_CYCLE` | `3` | Max external retweets shipped after each deterministic candidate scrape. |
 | `MAX_REPLIES_PER_CYCLE` | `8` | Replies per `reply_bot` / `direct_reply` cycle. |
 | `MAX_PROMOTES_PER_DAY` | `3` | Promote-best-reply (plain-repost own top reply). |
@@ -162,7 +162,7 @@ MAX_HOTAKES_PER_DAY=0
 MAX_BREAKOUTS_PER_DAY=4
 MAX_SPICY_PER_DAY=4
 MAX_QUOTES_PER_DAY=80
-MAX_RETWEETS_PER_DAY=40
+MAX_RETWEETS_PER_DAY=30
 RETWEETS_PER_CYCLE=3
 MAX_REPLIES_PER_CYCLE=8
 

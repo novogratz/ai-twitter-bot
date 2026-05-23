@@ -128,7 +128,7 @@ Every knob is an environment variable in `.env`. Defaults are tuned for an Engli
 | `NEWS_POSTS_PER_CYCLE` | `3` | News posts to burst per cycle; set to `1` for one-shot (fail → skip) |
 | `MAX_HOTAKES_PER_DAY` | `0` | Cap on hot takes |
 | `MAX_QUOTES_PER_DAY` | `80` | Cap on the legacy repost-pool job |
-| `MAX_RETWEETS_PER_DAY` | `40` | Cap on retweets |
+| `MAX_RETWEETS_PER_DAY` | `30` | Cap on retweets |
 | `RETWEETS_PER_CYCLE` | `3` | Max external retweets shipped after each candidate scrape |
 | `MAX_REPLIES_PER_CYCLE` | `8` | Cap per reply cycle |
 | `CONTENT_LANG_PRIMARY` | `en` | `en` / `fr` / `mixed` (replies always match parent) |
