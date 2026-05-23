@@ -760,10 +760,12 @@ def _recent_duplicate_issue(tweet: str, recent_tweets: list[str], format_kind: s
 
     Format-scoped dedup: monthly recaps only dedup against other monthly recaps,
     weekly against weekly, so a monthly Crypto recap isn't falsely killed by a
-    daily Crypto decode that shares entities/numbers."""
+    daily Crypto decode that shares entities/numbers. Also skips same-date tweets
+    for recaps — intra-session re-runs should not self-dedup."""
     current = _dedup_terms(tweet)
     if not current:
         return None
+    today = datetime.now().strftime("%Y-%m-%d")
     for old in recent_tweets:
         # Skip tweets from other formats — monthly vs daily on same topic
         # is not a duplicate.
@@ -772,6 +774,9 @@ def _recent_duplicate_issue(tweet: str, recent_tweets: list[str], format_kind: s
         if format_kind == "weekly" and "Le Décode Weekly" not in old:
             continue
         if format_kind == "daily" and "Le Décode Daily" not in old and "Le Décode Weekly" not in old and "Le Décode Monthly" not in old:
+            continue
+        # Skip same-date recaps — intra-session re-runs should not dedup.
+        if format_kind in ("monthly", "weekly") and today in old:
             continue
         old_terms = _dedup_terms(old)
         if not old_terms:
