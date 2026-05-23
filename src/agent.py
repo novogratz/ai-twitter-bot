@@ -1510,13 +1510,17 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     if not src_url:
         compact = re.sub(r"\s+", " ", tweet).strip()
         has_header = bool(re.search(r"Le Décode(?:\s+(?:Daily|Weekly))?\s*#?\d+", tweet, re.IGNORECASE))
+        # Top 5 weekly: per-bullet (source: outlet) carries the trace, URL
+        # remains genuinely optional (user mandate). Daily: URL is MANDATORY
+        # — link card is the visual hook. No URL → SKIP, ship next cycle.
         if is_top5 and has_header and len(compact) >= 300:
             log.info(f"[NEWS] Top5 mode, no source URL — shipping weekly recap ({len(compact)} chars).")
-        elif has_header and len(compact) >= 400:
-            log.info(f"[NEWS] No source URL but valid Décode body ({len(compact)} chars) — shipping anyway (user mandate 2026-05-22).")
         else:
             preview = " ".join(tweet.split())[:220]
-            log.info(f"[NEWS] No source URL AND body too short / no Décode header — SKIPPING. Output preview: {preview!r}")
+            log.info(
+                f"[NEWS] Daily Décode without trailing URL → SKIPPING (user mandate: "
+                f"link card preview is required). Preview: {preview!r}"
+            )
             globals()["_last_source_url"] = None
             globals()["_last_image_topic"] = None
             return None
@@ -1524,6 +1528,17 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # X's native link-card covers the visual; an attached image would
     # suppress the card preview, so always null the image topic.
     globals()["_last_image_topic"] = None
+    # 2026-05-23: de-linkify any OTHER URLs in the body so X doesn't hijack
+    # the link-card preview with an inline reference. Bug from Décode #98
+    # Crypto: model wrote "http://Crypto.com" in bullet #3, X picked THAT
+    # as the card instead of the trailing CoinDesk URL. We keep the text
+    # reference visible ("Crypto.com") but strip the http(s):// prefix so
+    # X stops auto-linking it.
+    if src_url:
+        def _delinkify(m):
+            url = m.group(0)
+            return url if url == src_url or url.rstrip(".,);") == src_url else re.sub(r"^https?://", "", url)
+        tweet = re.sub(r"https?://\S+", _delinkify, tweet)
     tweet = _finalize_news_tweet(tweet, src_url)
     if _news_body_bad_format(tweet, src_url):
         preview = " ".join(tweet.replace(src_url or "", "").split())
