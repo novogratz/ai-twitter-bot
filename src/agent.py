@@ -755,12 +755,24 @@ def _candidate_terms(text: str) -> set[str]:
     }
 
 
-def _recent_duplicate_issue(tweet: str, recent_tweets: list[str]) -> Optional[str]:
-    """Refuse repeats of yesterday/recent posts, even if today's slot reset."""
+def _recent_duplicate_issue(tweet: str, recent_tweets: list[str], format_kind: str = "daily") -> Optional[str]:
+    """Refuse repeats of yesterday/recent posts, even if today's slot reset.
+
+    Format-scoped dedup: monthly recaps only dedup against other monthly recaps,
+    weekly against weekly, so a monthly Crypto recap isn't falsely killed by a
+    daily Crypto decode that shares entities/numbers."""
     current = _dedup_terms(tweet)
     if not current:
         return None
     for old in recent_tweets:
+        # Skip tweets from other formats — monthly vs daily on same topic
+        # is not a duplicate.
+        if format_kind == "monthly" and "Le Décode Monthly" not in old:
+            continue
+        if format_kind == "weekly" and "Le Décode Weekly" not in old:
+            continue
+        if format_kind == "daily" and "Le Décode Daily" not in old and "Le Décode Weekly" not in old and "Le Décode Monthly" not in old:
+            continue
         old_terms = _dedup_terms(old)
         if not old_terms:
             continue
@@ -2074,7 +2086,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # exactly one optional URL at the end for the X link card.
     tweet = _enforce_single_trailing_url(tweet, src_url)
     tweet = _finalize_news_tweet(tweet, src_url)
-    duplicate_issue = _recent_duplicate_issue(tweet, recent)
+    duplicate_issue = _recent_duplicate_issue(tweet, recent, format_kind)
     if duplicate_issue:
         preview = " ".join(tweet.replace(src_url or "", "").split())[:220]
         log.info(f"[NEWS] Dedup refused — {duplicate_issue}: {preview!r}")
