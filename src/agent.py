@@ -1146,13 +1146,51 @@ def _try_repair_url(url: str) -> str:
     return url
 
 
+_FRAGILE_HOSTS = {
+    "bloomberg.com", "reuters.com", "wsj.com", "ft.com", "nytimes.com",
+    "theinformation.com", "businessinsider.com", "forbes.com",
+    "barrons.com", "economist.com",
+}
+
+
+def _url_slug_looks_real(url: str) -> bool:
+    """Heuristic check on the URL's last path segment. Real article URLs
+    from major outlets have long, hyphen-rich slugs (often ≥30 chars,
+    ≥3 hyphens). Hallucinated URLs from LLMs tend to be short/clean like
+    'marathon-digital-refinancing' (29 chars, 2 hyphens). For fragile
+    outlets where HTTP probing returns 403 (bot-block) — we can't tell
+    real from fake via the network, so we use slug shape as the gate."""
+    from urllib.parse import urlparse
+    p = urlparse(url)
+    if not p.netloc:
+        return False
+    host = p.netloc.lower().lstrip("www.")
+    if host not in _FRAGILE_HOSTS:
+        return True
+    segs = [s for s in p.path.split("/") if s]
+    if not segs:
+        return False
+    last_seg = segs[-1]
+    # Real Bloomberg/Reuters/WSJ slugs: 40+ chars, 5+ hyphens, words
+    # describing the headline. Loose threshold: ≥35 chars AND ≥3 hyphens.
+    return len(last_seg) >= 35 and last_seg.count("-") >= 3
+
+
 def url_is_reachable(url: str, timeout: int = 6) -> bool:
     """HEAD/GET the URL; return True if it resolves to a 2xx/3xx response.
-    Used to refuse posting a fabricated source link (e.g. axio.com which
-    the model hallucinated 2026-05-22). Tolerates 403 + 405 (HEAD often
-    blocked by paywalled outlets — we then try GET)."""
+    Used to refuse posting a fabricated source link.
+
+    For fragile outlets (Bloomberg, Reuters, etc.) HTTP probes return 403
+    against any bot UA — so we layer in a slug-shape heuristic to detect
+    hallucinated URLs that look like real ones but have the wrong slug
+    shape.
+    """
     import urllib.request as _ur, urllib.error as _ue
     if not url or not url.startswith("http"):
+        return False
+    # Slug-shape pre-check for fragile outlets where HTTP can't tell
+    # real from fake. Reject obvious hallucinations before network.
+    if not _url_slug_looks_real(url):
         return False
     UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15"
     for method in ("HEAD", "GET"):
@@ -1163,7 +1201,9 @@ def url_is_reachable(url: str, timeout: int = 6) -> bool:
                 if 200 <= int(code) < 400:
                     return True
         except _ue.HTTPError as e:
-            # 403/405 = host alive but rejects our method/UA — count as reachable.
+            # 403/405 = host alive but rejects our method/UA — count as
+            # reachable. Slug-shape gate above already filtered hallucinated
+            # short slugs from fragile outlets.
             if e.code in (401, 403, 405, 429):
                 return True
             continue
