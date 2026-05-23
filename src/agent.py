@@ -233,8 +233,14 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
   • TAGS: max 1 @handle par bullet, TOUJOURS inline mid-phrase, jamais en
     début/fin de ligne (X mobile sépare alors le tag sur sa propre ligne).
     Bon: "415 M$ Q1 mining chez @nvidia". Mauvais: "415 M$. @nvidia Q1...".
-  • CHIFFRES: viennent des SIGNAUX FOURNIS ci-dessous. Si tu n'as pas la
-    donnée exacte, hedge ("~3 Md$", "près de 400 M$"). Mieux hedge que mentir.
+  • CHIFFRES — RÈGLE NON-NÉGOCIABLE: chaque chiffre doit littéralement
+    apparaître dans le TITRE ou le SNIPPET de l'article que tu choisis
+    en ÉTAPE 0 (sections WEB SEARCH RESULTS / CURATED RSS POOL plus bas).
+    Si le snippet dit "$42 million in net inflows", tu écris "42 M$".
+    Tu n'écris PAS "60 M$" parce que ça sonne mieux — c'est mentir et
+    le lecteur clique sur le lien pour vérifier. Si l'article ne donne
+    pas un chiffre précis, hedge avec "~" ou "environ" ou "près de".
+    JAMAIS inventer un chiffre absent du snippet.
   • (source: outlet) doit nommer un vrai média (CoinDesk, TheBlock, Bloomberg,
     Les Échos, FT, Reuters, WSJ, TechCrunch). Pas d'invention.
   • ZÉRO markdown (**bold**, __italic__, *italic*). Texte brut.

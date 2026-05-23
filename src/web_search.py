@@ -93,7 +93,10 @@ def search_news(query: str, max_results: int = 6, timeout: int = 10,
         )):
             continue
         title = html.unescape(re.sub(r"<[^>]+>", "", title_html)).strip()
-        snippet = html.unescape(re.sub(r"<[^>]+>", "", snippet_html)).strip()[:240]
+        # 2026-05-23 PM: bumped snippet length 240 → 500 chars so the LLM
+        # sees more of the article's lede (where the real numbers live).
+        # Without this it hallucinates plausible-but-wrong numbers.
+        snippet = html.unescape(re.sub(r"<[^>]+>", "", snippet_html)).strip()[:500]
         if not title or not href.startswith("http"):
             continue
         # Belt-and-suspenders: drop URLs with an obviously-old year in the
