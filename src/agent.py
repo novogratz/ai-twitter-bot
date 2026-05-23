@@ -63,10 +63,8 @@ _DECODE_TOPICS = ("IA", "Crypto", "Investissement")
 _MONTHLY_DECODE_TOPICS = ("Crypto", "Investissement", "IA")
 
 
-def _next_decode_number() -> int:
-    """Monotonic counter for 'Le Décode #N' series. Persists in
-    decode_counter.json. Only increments on each NEW number requested
-    (= each successful news prompt). Default-starts at 1 if file missing."""
+def _peek_next_decode_number() -> int:
+    """Return the next decode number without consuming it."""
     n = 1
     if _os.path.exists(_DECODE_COUNTER_FILE):
         try:
@@ -74,12 +72,16 @@ def _next_decode_number() -> int:
                 n = int((_json.load(f) or {}).get("next", 1))
         except (OSError, _json.JSONDecodeError, ValueError):
             n = 1
+    return n
+
+
+def _commit_next_decode_number(n: int) -> None:
+    """Persist the next decode number after a successful post."""
     try:
         with open(_DECODE_COUNTER_FILE, "w") as f:
             _json.dump({"next": n + 1, "last_assigned_at": datetime.now().isoformat(timespec="minutes")}, f, indent=2)
     except OSError:
         pass
-    return n
 
 
 def _topic_for_decode(n: int) -> str:
@@ -207,6 +209,7 @@ def _next_topic_not_done_today() -> Optional[tuple]:
     """
     state = _daily_topic_state()
     done = set(state.get("topics_done") or [])
+    done.update(globals().get("_temporary_skipped_done_keys") or set())
     mode = globals().get("_news_mode")
     plan = []
     if mode == "daily":
@@ -244,6 +247,15 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
   • BULLET #1 = LE killshot absolu: chiffre rond/mémorisable, acteur connu,
     enjeu business brutal. Le lecteur doit comprendre en 2 secondes pourquoi
     il faut lire/liker le reste. Si #1 n'est pas le plus mémorable, permute.
+  • VIRALITÉ MONTHLY: classe les 10 chiffres par potentiel de stop-scroll:
+      1) nom que tout le monde reconnaît (OpenAI, NVIDIA, BTC, BlackRock,
+         Coinbase, Saylor, Elon, CoreWeave, Microsoft, Google),
+      2) chiffre simple à répéter en commentaire ("80 Md$", "10x", "820k BTC"),
+      3) conséquence claire ("ceci change le pricing, le pouvoir, ou le risque"),
+      4) tension/opinion qui donne envie de répondre.
+    #1 doit battre les 9 autres sur au moins 3 critères. Sinon tu rerank.
+  • Pas de classement chronologique. Pas de "joli panorama". C'est un Top 10
+    fait pour être sauvegardé, partagé, et cité.
   • CHIFFRES: viennent des SIGNAUX FOURNIS. Hedge ("~3 Md$") si pas exact.
     JAMAIS inventer un chiffre absent du titre/snippet.
   • URL finale: si présente, elle DOIT correspondre au bullet #1, pas à un
@@ -1723,7 +1735,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     decode_topic, format_kind = next_combo
     use_top5 = format_kind == "weekly"
     use_monthly = format_kind == "monthly"
-    decode_number = _next_decode_number()
+    decode_number = _peek_next_decode_number()
     format_mode = "monthly_top10" if use_monthly else ("top5" if use_top5 else "regular")
 
     # POOL INJECTION (multi-query DDG + RSS + reachability pre-filter).
@@ -2069,11 +2081,13 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     if _news_body_bad_format(tweet, src_url):
         preview = " ".join(tweet.replace(src_url or "", "").split())
         log.info(f"[NEWS] Bad body format — SKIPPING to avoid unreadable block: {preview[:180]!r}")
+        _mark_generation_retryable("bad body format", tweet)
         globals()["_last_source_url"] = None
         return None
     if _news_body_too_long(tweet, src_url):
         preview = " ".join(tweet.replace(src_url or "", "").split())
         log.info(f"[NEWS] Body too long ({len(preview)} chars > {_MAX_NEWS_BODY_CHARS}) — SKIPPING to avoid Show more: {preview[:180]!r}")
+        _mark_generation_retryable("body too long", tweet)
         globals()["_last_source_url"] = None
         return None
     # Respect-list defense: refuse to ship news that names a protected
@@ -2082,6 +2096,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     cleaned, reason = respect_list.scrub_text_or_skip(tweet)
     if cleaned is None:
         log.info(f"[NEWS] Refused — {reason}: {tweet[:120]!r}")
+        _mark_generation_retryable(f"respect list: {reason}", tweet)
         globals()["_last_source_url"] = None
         return None
     tweet = cleaned
@@ -2107,4 +2122,5 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         _mark_topic_done_today(_decoded_topic, format_kind=_format_kind_this_post)
         label = "Monthly" if _format_kind_this_post == "monthly" else ("Weekly" if is_weekly_this_post else "Daily")
         log.info(f"[NEWS] Marked '{_decoded_topic}' {label} done for today.")
+    _commit_next_decode_number(decode_number)
     return tweet

@@ -704,6 +704,20 @@ def run_bot_cycle():
         log.info(f"[NEWS] Décode attempt {i + 1}/{count}")
         shipped = _run_single_bot_cycle()
         if not shipped:
+            try:
+                from . import agent as _ag
+                mode = _ag.__dict__.get("_news_mode")
+                topic = _ag.__dict__.get("_pending_decode_topic")
+                format_kind = _ag.__dict__.get("_pending_decode_format")
+                if mode in {"daily", "weekly", "monthly"} and topic and format_kind:
+                    key = _ag._topic_done_key(topic, format_kind=format_kind)
+                    skipped = set(_ag.__dict__.get("_temporary_skipped_done_keys") or set())
+                    skipped.add(key)
+                    _ag.__dict__["_temporary_skipped_done_keys"] = skipped
+                    log.info(f"[NEWS] No post shipped for {key}; trying next forced category.")
+                    continue
+            except Exception:
+                pass
             log.info("[NEWS] Nothing eligible to ship — ending burst early.")
             break
         if i < count - 1:
@@ -731,14 +745,20 @@ def _run_bot_cycle_in_mode(mode: str, posts_per_cycle: int | None = None):
     'monthly' → Monthly Top 10s."""
     from . import agent as _ag
     prev = _ag.__dict__.get("_news_mode")
+    prev_skipped = _ag.__dict__.get("_temporary_skipped_done_keys")
     prev_posts_per_cycle = NEWS_POSTS_PER_CYCLE
     _ag.__dict__["_news_mode"] = mode
+    _ag.__dict__["_temporary_skipped_done_keys"] = set()
     try:
         if posts_per_cycle is not None:
             globals()["NEWS_POSTS_PER_CYCLE"] = posts_per_cycle
         run_bot_cycle()
     finally:
         globals()["NEWS_POSTS_PER_CYCLE"] = prev_posts_per_cycle
+        if prev_skipped is None:
+            _ag.__dict__.pop("_temporary_skipped_done_keys", None)
+        else:
+            _ag.__dict__["_temporary_skipped_done_keys"] = prev_skipped
         if prev is None:
             _ag.__dict__.pop("_news_mode", None)
         else:
