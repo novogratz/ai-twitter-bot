@@ -849,12 +849,13 @@ def run_retweet_cycle():
                 log.info("[RETWEET] Failed to write daily picks file:")
                 traceback.print_exc()
 
-        # 2026-05-23 PM: user "do reposts more". Lowered 7 → 6 — broader
-        # repost coverage while still skipping clear mid posts. Quality
-        # gate stays at score-6 because below that engagement is too
-        # thin to be worth amplifying.
-        if score < 6:
-            log.info(f"[RETWEET] Score {score}/10 below retweet threshold (6). Logged only.")
+        # 2026-05-23 PM: user "max 10/15 per day, needs to be something I
+        # would present in a YouTube video". Strict quality gate — score
+        # must be ≥8 (real news or genuinely buzz-worthy moment, e.g.
+        # Elon SpaceX launch). Everything else stays in the research log
+        # but doesn't get amplified. Replies handle the engagement volume.
+        if score < 8:
+            log.info(f"[RETWEET] Score {score}/10 below YouTube-worthy threshold (8). Logged only.")
             continue
 
         # Lock URL in BEFORE posting so a crash can't double-retweet.
