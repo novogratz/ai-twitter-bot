@@ -1618,26 +1618,65 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # X's native link-card covers the visual; an attached image would
     # suppress the card preview, so always null the image topic.
     globals()["_last_image_topic"] = None
-    # 2026-05-23 PM (Décode #109 bug): X auto-linkifies bare domains
-    # (especially exotic TLDs like .today) even without http://. Stripping
-    # the scheme isn't enough. Instead, REMOVE any inline URL that isn't
-    # the trailing source URL — both the URL itself and its surrounding
-    # "(source: ...)" wrapper if present. Outlet name stays only when
-    # the model wrote "(source: Bloomberg)" (text, no URL).
+    # 2026-05-23 PM v2 (user: "when source is investing.com just say
+    # source: Investing"): rewrite every (source: <url>) wrapper to use
+    # the outlet's display name instead of the raw URL. Keeps the
+    # citation visible AND stops X from auto-linkifying the inline URL.
+    # Only one URL survives in the whole tweet: the trailing source URL.
     if src_url:
-        def _keep_outlet_drop_url(m):
-            url_in_wrapper = m.group(1)
-            if url_in_wrapper == src_url or url_in_wrapper.rstrip(".,);") == src_url:
-                return m.group(0)  # keep wrapper containing the chosen URL
-            return ""  # drop "(source: <other-url>)" entirely
-        # Drop (source: <url>) blocks pointing to non-chosen URLs.
+        def _outlet_display_name(u: str) -> str:
+            from urllib.parse import urlparse
+            host = (urlparse(u).netloc or "").lower().replace("www.", "")
+            outlets = {
+                "bloomberg.com": "Bloomberg",
+                "reuters.com": "Reuters",
+                "ft.com": "FT",
+                "wsj.com": "WSJ",
+                "investing.com": "Investing",
+                "yahoo.com": "Yahoo Finance",
+                "finance.yahoo.com": "Yahoo Finance",
+                "coindesk.com": "CoinDesk",
+                "cointelegraph.com": "Cointelegraph",
+                "theblock.co": "The Block",
+                "decrypt.co": "Decrypt",
+                "cnbc.com": "CNBC",
+                "techcrunch.com": "TechCrunch",
+                "theverge.com": "The Verge",
+                "axios.com": "Axios",
+                "u.today": "U.Today",
+                "lesechos.fr": "Les Échos",
+                "lemonde.fr": "Le Monde",
+                "lefigaro.fr": "Le Figaro",
+                "bfmtv.com": "BFM",
+                "businessinsider.com": "Business Insider",
+                "forbes.com": "Forbes",
+                "barrons.com": "Barron's",
+                "economist.com": "The Economist",
+                "nytimes.com": "NYT",
+                "theinformation.com": "The Information",
+            }
+            if host in outlets:
+                return outlets[host]
+            first = host.split(".")[0] if host else ""
+            return first.capitalize() if first else "source"
+
+        def _rewrite_source_wrapper(m):
+            url_in = m.group(1)
+            # Always rewrite — replace the inline URL with the outlet name.
+            # Even if the wrapper happens to contain src_url (rare), we
+            # still strip the URL since the trailing URL is the only
+            # canonical link the link card should render.
+            return f"(source: {_outlet_display_name(url_in)})"
+
         tweet = re.sub(
-            r"\s*\(\s*source\s*[:：]\s*(https?://\S+?)\s*\)",
-            _keep_outlet_drop_url,
+            r"\(\s*source\s*[:：]\s*(https?://\S+?)\s*\)",
+            _rewrite_source_wrapper,
             tweet,
             flags=re.IGNORECASE,
         )
-        # Then drop any remaining bare inline URLs that aren't the source.
+
+        # Then drop any remaining bare inline URLs that aren't the
+        # trailing source URL (handles URLs not wrapped in (source: ...)).
         def _drop_bare(m):
             url = m.group(0)
             return url if url == src_url or url.rstrip(".,);") == src_url else ""
