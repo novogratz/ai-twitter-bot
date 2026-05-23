@@ -363,6 +363,7 @@ OpenAI ou @VitalikButerin dans un Décode ETH déclenche notifs + reposts.
 Comptes prioritaires (utilise ceux qui collent au sujet):
 @sama @OpenAI @AnthropicAI @MistralAI @ArthurMensch @GuillaumeLample
 @ylecun @karpathy @demishassabis @elonmusk @xai @nvidia @AMD @intel
+@cursor_ai @sualeh @amanrsanger
 @coinbase @brian_armstrong @VitalikButerin @saylor @MicroStrategy
 @MARAHoldings @RiotPlatforms @CleanSpark_Inc @CoreWeave @CrusoeEnergy
 @SpaceX @Starlink @blueorigin @RocketLab @PeterDiamandis

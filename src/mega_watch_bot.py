@@ -42,6 +42,9 @@ MEGA_ACCOUNTS = [
     # accounts are gold for early-reply algo amplification.
     "karpathy", "ylecun", "fchollet", "AndrewYNg", "demishassabis",
     "ID_AA_Carmack", "lilianweng", "drfeifei", "jeremyphoward", "gwern",
+    # Cursor — sharp analytical replies on their drops have shot at
+    # Elon's attention (he openly raves about Cursor).
+    "cursor_ai", "sualeh", "amanrsanger", "mntruell",
 ]
 
 MAX_AGE_MIN = 4

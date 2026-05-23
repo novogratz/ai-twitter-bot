@@ -149,6 +149,7 @@ def search_for_news_topic(topic: str, date_filter: str = "w") -> str:
             "OpenAI Anthropic Mistral news this week",
             "AI datacenter GPU NVIDIA news this week",
             "AI agent LLM startup funding news this week",
+            "Cursor AI code editor news Elon Musk this week",
         ],
         "Crypto": [
             "Bitcoin ETH ETF news this week",

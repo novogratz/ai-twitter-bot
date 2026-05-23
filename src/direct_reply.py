@@ -332,6 +332,13 @@ EN_ACCOUNTS = [
     "ID_AA_Carmack",
     "jeremyphoward",
     "gwern",
+    # Cursor — user mandate 2026-05-23: "Elon loves Cursor, need his
+    # attention". When Cursor team ships product news, our analytical
+    # reply on developer-tools economics could catch Elon's eye.
+    "cursor_ai",
+    "sualeh",
+    "amanrsanger",
+    "mntruell",
 ]
 
 # Backward-compat alias

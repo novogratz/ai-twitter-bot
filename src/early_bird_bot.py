@@ -51,6 +51,9 @@ EARLY_BIRD_ACCOUNTS = [
     "AndrewYNg", "fchollet", "jeffdean", "simonw", "swyx",
     # AI elite added 2026-05-23 (user mandate "be smart with them")
     "lilianweng", "drfeifei", "jeremyphoward", "gwern",
+    # Cursor — Elon engages openly, early replies on their drops are
+    # a path to his attention. 4 accounts: official + 3 co-founders.
+    "cursor_ai", "sualeh", "amanrsanger", "mntruell",
     # === IA EN niche / dev ===
     "TheRundownAI", "rowancheung", "mckaywrigley", "levelsio",
     "AlphaSignalAI", "TheAIGRID", "DrJimFan", "GaryMarcus",
