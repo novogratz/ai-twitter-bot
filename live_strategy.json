@@ -5,7 +5,7 @@
     "MAX_BREAKOUTS_PER_DAY": 0,
     "MAX_SPICY_PER_DAY": 0,
     "MAX_QUOTES_PER_DAY": 80,
-    "MAX_RETWEETS_PER_DAY": 8,
+    "MAX_RETWEETS_PER_DAY": 40,
     "MAX_REPLIES_PER_CYCLE": 100,
     "FOLLOW_BLAST_PER_CYCLE": 100,
     "LIKE_BOT_PER_CYCLE": 100
@@ -56,5 +56,5 @@
   "language": "fr",
   "scope": "ai_crypto_only",
   "updated_at": "2026-05-19T23:28:37",
-  "note": "6 D\u00e9codes/Fri, 3/other days; replies cranked to 60/cycle (user: reply a lot)"
+  "note": "6 D\u00e9codes/Fri, 3/other days; replies cranked to 60/cycle; reposts raised to 40/day (user: do more reposts)"
 }

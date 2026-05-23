@@ -25,6 +25,11 @@ The same models run across all generation surfaces (news, replies, hot takes, th
 
 News bursts are tuned via `NEWS_POSTS_PER_CYCLE` (default `3`); set to `1` when the LLM is flaky so each cycle skips fast instead of grinding for 6+ min on bad output.
 
+Repost volume is currently tuned high but bounded: `MAX_RETWEETS_PER_DAY=40`,
+`RETWEETS_PER_CYCLE=3`, retweet job every 3 min, legacy repost-pool every
+8 min. Retweet candidates still pass source, niche, age, min-like, and
+deterministic score filters before posting.
+
 **Hard post-flight guard** (`contains_post_unsafe_leak` in `src/llm_client.py`, wired into `twitter_client.post_tweet`): refuses to post anything containing tool-call XML (`<function=…>`), NDJSON envelope keys (`"sessionID":`, `"step_start"`, etc.), or text that opens with `{` / `[{`. Added after a 163k-char `{"type":"step_start",…}` blob got pushed to Safari on 2026-05-14 because the previous guard only caught XML, not JSON streams.
 
 **Codex usage-limit lockout cache** (`codex_lockout.json` at repo root): when codex returns "hit your usage limit, try again at …", `run_llm` parses the date and caches it. Until that timestamp passes, codex is bypassed entirely and calls go straight to the local Ollama fallback. Self-cleaning — the cache file is deleted when the lockout window expires. Avoids the 6+ min per-cycle ladder cost while codex is unavailable for days.
