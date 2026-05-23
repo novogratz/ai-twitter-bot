@@ -96,16 +96,18 @@ def _increment_counter(counter_name: str):
     _save_daily_state(state)
 
 
-def _run_single_bot_cycle():
-    """Post a news tweet or hot take, respecting daily limits."""
+def _run_single_bot_cycle() -> bool:
+    """Post a Décode (Daily or Weekly), respecting daily limits.
+    Returns True if a post was shipped, False if nothing eligible — caller
+    uses False to break the burst loop instead of sleeping for nothing."""
     news_count, hotake_count = _get_counters()
     news_cap = _live_news_cap()
     hotake_cap = _live_hotake_cap()
-    log.info(f"Today: {news_count}/{news_cap} news, {hotake_count}/{hotake_cap} hot takes")
+    log.info(f"Today: {news_count}/{news_cap} Décodes, {hotake_count}/{hotake_cap} hot takes")
 
     if news_count >= news_cap and hotake_count >= hotake_cap:
-        log.info("Daily limits reached. Skipping.")
-        return
+        log.info("Daily Décode limits reached. Skipping.")
+        return False
 
     can_hotake = hotake_count < hotake_cap
     can_news = news_count < news_cap
@@ -175,22 +177,22 @@ def _run_single_bot_cycle():
                     os.remove(img_path)
                 except OSError:
                     pass
-            return
+            return True
     else:
-        log.info("Searching for AI news...")
+        log.info("Generating next Décode (Daily or Weekly)...")
         tweet = generate_tweet()
         if tweet:
             _increment_counter("news")
         elif can_hotake:
-            log.info("No fresh news - trying a hot take instead...")
+            log.info("No fresh Décode - trying a hot take instead...")
             tweet = generate_hotake()
             if tweet:
                 _increment_counter("hotakes")
                 tweet_source = "hotake"
 
     if tweet is None:
-        log.info("Nothing to post - skipping this cycle.")
-        return
+        log.info("No eligible Décode this cycle (all topic/format combos shipped).")
+        return False
 
     # Pull pattern_id from whichever agent generated this tweet (same side-
     # channel as URL/image). News-falls-back-to-hotake must read from hotake.
@@ -329,19 +331,26 @@ def _run_single_bot_cycle():
                 os.remove(img_path)
             except OSError:
                 pass
+    # Successful Décode ship.
+    return True
 
 
 def run_bot_cycle():
-    """Post a burst of news tweets, spaced out so X sees separate posts."""
+    """Burst Décodes up to NEWS_POSTS_PER_CYCLE. Breaks out the moment an
+    iteration returns False (no eligible topic/format combo left) so we
+    don't sleep 120s after each no-op."""
     count = max(1, NEWS_POSTS_PER_CYCLE)
     for i in range(count):
         if not has_post_slot():
             log.info("[NEWS] No post slot left for burst. Stopping.")
             break
-        log.info(f"[NEWS] Burst post {i + 1}/{count}")
-        _run_single_bot_cycle()
+        log.info(f"[NEWS] Décode attempt {i + 1}/{count}")
+        shipped = _run_single_bot_cycle()
+        if not shipped:
+            log.info("[NEWS] Nothing eligible to ship — ending burst early.")
+            break
         if i < count - 1:
-            log.info(f"[NEWS] Waiting {NEWS_POST_SPACING_SECONDS}s before next post.")
+            log.info(f"[NEWS] Waiting {NEWS_POST_SPACING_SECONDS}s before next Décode.")
             time.sleep(NEWS_POST_SPACING_SECONDS)
 
 
