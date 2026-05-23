@@ -520,10 +520,10 @@ def main():
 
         # Repost-pool bot — formerly quote-tweet. It still uses the same
         # candidate pool/state, but posts plain reposts only.
-        log.info("Repost-pool bot: amplifying viral setups every 12 min (plain reposts only).")
+        log.info("Repost-pool bot: amplifying viral setups every 8 min (plain reposts only).")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=12),
+            trigger=IntervalTrigger(minutes=8),
             id="quote_tweet_job",
         )
 
@@ -531,10 +531,11 @@ def main():
         # cheap/no-LLM and feed the YouTube research doc, so let the daily cap
         # bind while source/niche/age/dedup filters keep quality bounded.
         # 2026-05-15: 8 → 5 min ("retweet more things").
-        log.info("Retweet bot: amplifying trusted news every 5 min (multi-RT cycle, cap binds via MAX_RETWEETS_PER_DAY).")
+        # 2026-05-23: 5 → 3 min ("do more reposts").
+        log.info("Retweet bot: amplifying trusted news every 3 min (multi-RT cycle, cap binds via MAX_RETWEETS_PER_DAY).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(minutes=5),
+            trigger=IntervalTrigger(minutes=3),
             id="retweet_job",
         )
 
@@ -929,8 +930,8 @@ def main():
         # reply, engage, early_bird, roast, direct_reply) already pick
         # up changes via _cadence() on their next reschedule.
         FIXED_JOB_BASE_MINUTES = {
-            "quote_tweet_job": 12,
-            "retweet_job": 5,
+            "quote_tweet_job": 8,
+            "retweet_job": 3,
             "like_job": 10,
             "boost_job": 20,
             "viral_followup_job": 15,

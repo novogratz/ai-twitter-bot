@@ -58,13 +58,12 @@ RETWEET_STATE_FILE = os.path.join(_PROJECT_ROOT, "retweet_daily_state.json")
 DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 
 # Hard cap per day. Path is deterministic/no-AI, so volume is cheap.
-MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "220"))
-RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "5")))
+MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "40"))
+RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "3")))
 
-# Min likes to even consider a candidate. Lowered 10 → 5 (2026-05-05) so
-# fresh elite news from trusted handles gets amplified BEFORE engagement
-# accumulates — being early on the wire is the whole point.
-MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "0"))
+# Min likes to consider a candidate before scoring. Source/niche/age gates
+# still carry most of the quality boundary.
+MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "25"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -849,13 +848,10 @@ def run_retweet_cycle():
                 log.info("[RETWEET] Failed to write daily picks file:")
                 traceback.print_exc()
 
-        # 2026-05-23 PM: user "max 10/15 per day, needs to be something I
-        # would present in a YouTube video". Strict quality gate — score
-        # must be ≥8 (real news or genuinely buzz-worthy moment, e.g.
-        # Elon SpaceX launch). Everything else stays in the research log
-        # but doesn't get amplified. Replies handle the engagement volume.
-        if score < 8:
-            log.info(f"[RETWEET] Score {score}/10 below YouTube-worthy threshold (8). Logged only.")
+        # 2026-05-23: user wants more reposts. Keep deterministic quality
+        # gating, but publish 7/10+ after source/niche/age filters pass.
+        if score < 7:
+            log.info(f"[RETWEET] Score {score}/10 below repost threshold (7). Logged only.")
             continue
 
         # Lock URL in BEFORE posting so a crash can't double-retweet.

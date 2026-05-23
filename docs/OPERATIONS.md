@@ -174,7 +174,8 @@ Edit `.env`:
 MAX_NEWS_PER_DAY=8
 MAX_HOTAKES_PER_DAY=4
 MAX_QUOTES_PER_DAY=15
-MAX_RETWEETS_PER_DAY=30
+MAX_RETWEETS_PER_DAY=20
+RETWEETS_PER_CYCLE=1
 ```
 
 Restart. Or wait 4h for `meta_strategy_agent` to re-evaluate (it adapts caps based on engagement).
@@ -184,7 +185,7 @@ Restart. Or wait 4h for `meta_strategy_agent` to re-evaluate (it adapts caps bas
 Edit `.env` to raise the same caps. Or:
 
 ```bash
-echo '{"caps": {"MAX_NEWS_PER_DAY": 30, "MAX_RETWEETS_PER_DAY": 100}, "cadence_factor": 0.7, "topic_focus": ["AI agents", "BTC ETF", "NVDA earnings"]}' > live_strategy.json
+echo '{"caps": {"MAX_NEWS_PER_DAY": 30, "MAX_RETWEETS_PER_DAY": 60}, "cadence_factor": 0.7, "topic_focus": ["AI agents", "BTC ETF", "NVDA earnings"]}' > live_strategy.json
 ```
 
 This overrides `.env` until the next `meta_strategy_agent` cycle.
