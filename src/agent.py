@@ -1382,14 +1382,18 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
             signals = _ws.load_recent_signals(max_age_days=10, limit=10)
         except Exception:
             signals = []
+        # Filter out content farms / low-trust outlets BEFORE reachability
+        # check. via.news, cryptoslate, etc publish AI-generated clickbait
+        # with factually wrong claims (saw "Nvidia +20%" when it crashed).
+        from .hotake_agent import _is_rejected_source
         raw_candidates = {}
         for h in ddg_hits:
             u = (h.get("url") or "").rstrip(".,);")
-            if u and u not in raw_candidates:
+            if u and u not in raw_candidates and not _is_rejected_source(u):
                 raw_candidates[u] = (h.get("title") or "") + " " + (h.get("snippet") or "")
         for s in signals:
             u = s.get("url") or ""
-            if u and u not in raw_candidates:
+            if u and u not in raw_candidates and not _is_rejected_source(u):
                 raw_candidates[u] = s.get("title") or ""
         reachable_pool = {}
         if raw_candidates:

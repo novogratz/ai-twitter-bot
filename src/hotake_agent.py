@@ -59,6 +59,34 @@ _REJECTED_SOURCE_DOMAINS = (
     "u.today",
     "bitcoinist.com",
     "ambcrypto.com",
+    # 2026-05-23 (user mandate "remove via.news from pool"): content farms
+    # publishing AI-generated / clickbait articles with factually wrong
+    # claims. via.news said "Nvidia +20%" when Nvidia actually crashed.
+    "via.news",
+    "cryptoslate.com",
+    "observer.com",
+    "decrypt.co",  # often AI-rewritten, low signal
+    "watcher.guru",
+    "watcherguru.com",
+    "thedefiant.io",
+    "dailycoin.com",
+    "cryptobriefing.com",
+    "newsbtc.com",
+    "thecryptobasic.com",
+    "fxstreet.com",
+    "benzinga.com",
+    "seekingalpha.com",  # often paywall-blocked + clickbait
+    "thestreet.com",
+    "tradingview.com",
+    "marketbeat.com",
+    "247wallst.com",
+    "investorplace.com",
+    "tipranks.com",
+    "zerohedge.com",
+    "kitco.com",
+    "ainvest.com",
+    "stocknews.com",
+    "indiatimes.com",
 )
 
 
