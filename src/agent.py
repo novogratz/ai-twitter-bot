@@ -1,6 +1,7 @@
 """News agent: searches for breaking AI news and generates tweets in French."""
 import json
 import re
+import traceback
 from datetime import datetime, timedelta
 from typing import Optional
 from .config import NEWS_MODEL
@@ -1319,50 +1320,85 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # pool injection so Top 5 has 12-22 real article URLs to pick from
     # for the killshot link card.
     injected_urls = set()
-    # url → title map, so post-flight can verify bullet #1 mentions an
-    # entity from the chosen URL's title.
     injected_url_titles: dict[str, str] = {}
     try:
         from . import web_search as _ws
-        # 1. DuckDuckGo: 3 sub-queries per topic, past-week filter.
-        # Use the lower-level API so we get title↔url pairs.
+        # Collect raw candidates from DDG + RSS first, before reachability filter.
         ddg_hits = []
-        for q_topic in (decode_topic,):
-            try:
-                ddg_hits = _ws.search_news(
-                    {
-                        "IA": "AI OpenAI Anthropic Mistral news this week",
-                        "Crypto": "Bitcoin Ethereum crypto news this week",
-                        "Investissement": "AI datacenter capex Stargate news this week",
-                    }.get(q_topic, "AI news this week"),
-                    max_results=8, date_filter="w",
-                )
-            except Exception:
-                ddg_hits = []
-        # Build the multi-angle DDG block as before but with title tracking.
-        web_block = _ws.search_for_news_topic(decode_topic)
-        if web_block:
-            performance_section = (performance_section or "") + "\n\n" + web_block
-            for m in re.finditer(r"https?://\S+", web_block):
-                u = m.group(0).rstrip(".,);")
-                injected_urls.add(u)
-        for h in ddg_hits:
+        try:
+            ddg_hits = _ws.search_news(
+                {
+                    "IA": "AI OpenAI Anthropic Mistral news this week",
+                    "Crypto": "Bitcoin Ethereum crypto news this week",
+                    "Investissement": "AI datacenter capex Stargate news this week",
+                }.get(decode_topic, "AI news this week"),
+                max_results=10, date_filter="w",
+            )
+        except Exception:
+            ddg_hits = []
+        # Multi-angle DDG block (will be rebuilt after reachability filter).
+        try:
+            multi_hits_pairs = []
+            multi_block = _ws.search_for_news_topic(decode_topic)
+            for m in re.finditer(r"^- (https?://\S+)\n  (.+)$", multi_block, re.MULTILINE):
+                multi_hits_pairs.append({"url": m.group(1).rstrip(".,);"), "title": m.group(2), "snippet": ""})
+        except Exception:
+            multi_hits_pairs = []
+        signals = []
+        try:
+            signals = _ws.load_recent_signals(max_age_days=10, limit=10)
+        except Exception:
+            signals = []
+
+        # Build candidate (url, title) pairs from all 3 sources, dedup by URL.
+        raw_candidates = {}
+        for h in ddg_hits + multi_hits_pairs:
             u = (h.get("url") or "").rstrip(".,);")
-            if u:
-                injected_urls.add(u)
-                injected_url_titles[u] = (h.get("title") or "") + " " + (h.get("snippet") or "")
-        # 2. Curated RSS pool from external_signal.json (≤10 days).
-        signals = _ws.load_recent_signals(max_age_days=10, limit=10)
-        if signals:
-            performance_section = (performance_section or "") + "\n\n" + _ws.render_signals_block(signals)
-            for s in signals:
-                u = s["url"]
-                injected_urls.add(u)
-                injected_url_titles[u] = s.get("title") or ""
+            if u and u not in raw_candidates:
+                raw_candidates[u] = (h.get("title") or "") + " " + (h.get("snippet") or "")
+        for s in signals:
+            u = s.get("url") or ""
+            if u and u not in raw_candidates:
+                raw_candidates[u] = s.get("title") or ""
+
+        # 2026-05-23 PM: PRE-VALIDATE pool URLs for reachability before
+        # showing them to the LLM. Parallel HEAD requests. Without this,
+        # DDG-indexed dead URLs (e.g. cryptoslate.com 404s) end up in the
+        # prompt → model picks them → tweet ships with broken link.
+        reachable_pool = {}
+        if raw_candidates:
+            import concurrent.futures as _cf
+            urls_list = list(raw_candidates.keys())
+            log.info(f"[NEWS] Pre-validating {len(urls_list)} pool URLs for reachability...")
+            with _cf.ThreadPoolExecutor(max_workers=8) as pool:
+                results = list(pool.map(lambda u: (u, url_is_reachable(u, timeout=4)), urls_list))
+            for u, ok in results:
+                if ok:
+                    reachable_pool[u] = raw_candidates[u]
+            log.info(f"[NEWS] Pool: {len(reachable_pool)}/{len(urls_list)} URLs reachable after filter.")
+
+        # Build the LLM-visible block from ONLY reachable URLs.
+        if reachable_pool:
+            lines = [
+                "==================================================",
+                f"WEB SEARCH RESULTS — {len(reachable_pool)} reachable URLs (past week)",
+                "Pick the URL whose title best matches bullet #1 — copy EXACTLY.",
+                "==================================================",
+                "",
+            ]
+            for u, title in list(reachable_pool.items())[:12]:
+                lines.append(f"- {u}")
+                lines.append(f"  {title}")
+                lines.append("")
+            performance_section = (performance_section or "") + "\n\n" + "\n".join(lines)
+
+        injected_urls = set(reachable_pool.keys())
+        injected_url_titles = dict(reachable_pool)
     except Exception:
-        pass
+        log.info(f"[NEWS] Pool injection failed (proceeding without): {traceback.format_exc()[:400]}")
     globals()["_last_injected_urls"] = injected_urls
     globals()["_last_injected_url_titles"] = injected_url_titles
+    log.info(f"[NEWS] Final injected pool: {len(injected_urls)} URLs.")
 
     # No additional injection — slim prompt path uses only web_block.
     pass
