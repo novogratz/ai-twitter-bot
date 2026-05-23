@@ -561,6 +561,18 @@ def _rewrite_inline_source_urls(text: str) -> str:
             line,
             flags=re.IGNORECASE,
         )
+        line = re.sub(
+            r"\(\s*source\s*[:：]\s*((?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,}(?:/[^\s)]*)?)\s*\)",
+            repl_wrapped,
+            line,
+            flags=re.IGNORECASE,
+        )
+        line = re.sub(
+            r"\bsource\s*[:：]\s*((?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,}(?:/[^\s)\]]*)?)",
+            repl_unwrapped,
+            line,
+            flags=re.IGNORECASE,
+        )
         cleaned_lines.append(line)
     return "\n".join(cleaned_lines)
 

@@ -8,7 +8,7 @@ import traceback
 from datetime import date
 from .config import MAX_NEWS_PER_DAY, MAX_HOTAKES_PER_DAY, DAILY_STATE_FILE, get_live_cap
 from .logger import log
-from .agent import generate_tweet
+from .agent import generate_tweet, _enforce_single_trailing_url, _finalize_news_tweet
 from .hotake_agent import generate_hotake
 from .twitter_client import post_tweet, post_thread
 from .history import save_tweet
@@ -660,9 +660,15 @@ def _run_single_bot_cycle() -> bool:
                 pass
             return
 
+        if tweet_source == "news":
+            post_body = _finalize_news_tweet(_enforce_single_trailing_url(post_body, src_url), src_url)
+            inline_urls = re.findall(r"https?://\S+", post_body.replace(src_url or "", ""))
+            if inline_urls:
+                log.info(f"[NEWS] Final URL sanitizer refused inline URLs: {inline_urls[:3]}")
+                return False
         log.info(f"[NEWS] Posting ({len(post_body)} chars): {post_body[:100]}...")
         post_tweet(post_body, image_path=img_path)
-        save_tweet(tweet)
+        save_tweet(post_body if tweet_source == "news" else tweet)
         # Engagement-log routing must match the actual generator so the
         # bandit attribution stays correct.
         if tweet_source == "hotake":
