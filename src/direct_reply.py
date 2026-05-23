@@ -251,10 +251,8 @@ def _is_fr_or_en(text: str) -> bool:
 FR_ACCOUNTS = [
     # === Bourse / Finance / Macro FR ===
     "XFenaux",           # Xavier Fenaux — user-flagged 2026-04-29: "I love the guy make him laugh", reply to most tweets
-    "NCheron_bourse",    # Nicolas Chéron
     "RodolpheSteffan",   # Rodolphe Steffan (user re-confirmed 2026-04-29)
     "IVTrading",         # Interactiv Trading
-    "ABaradez",          # Alexandre Baradez
     "Phil_RX",           # Philippe (added 2026-04-28 user request)
     "Graphseo",          # Julien Flot (user re-confirmed 2026-04-29)
     "vision_ia",         # VISION IA — user VIP 2026-05-02
@@ -268,11 +266,12 @@ FR_ACCOUNTS = [
     "Capital",           # Capital magazine
     "LesEchos",          # Les Echos
     "BFMBourse",         # BFM Bourse
-    # InvestirLeJournal, LeRevenu_fr removed 2026-04-26 — 0% scrape success (page never loads)
+    "FinaryApp",         # Finary — app epargne FR tres actif
+    "leo_labruyere",     # Leonor — investissement FR, tres suivie
+    "Freddy_Invest",     # Freddy Invest — FR investisseur individuel
 
     # === Crypto FR ===
     "PowerHasheur",      # Hasheur
-    "Capetlevrai",       # CAPET
     "Dark_Emi_",         # Dark Emi
     "JournalDuCoin",     # Journal Du Coin
     "LeJournalDuCoin",   # Journal du Coin — high-traction FR crypto
@@ -290,12 +289,17 @@ FR_ACCOUNTS = [
     "MoneyRadar_FR",     # finance/crypto vulgarisation
     "TheBigWhale_",      # The Big Whale media FR
     "CointribuneFR",     # Cointribune FR
+    "TheDeFISaint",      # DeFi / crypto FR — tres actif
+    "ChrisBlec",         # crypto FR — analyse et news
 
     # === Tech / IA FR ===
-    "arthurmensch",      # Mistral AI
+    "arthurmensch",      # Mistral AI — tres actif
     "GuillaumeLample",   # Mistral AI
     "GaelVaroquaux",     # scikit-learn / Probabl
-    "cyrildiagne",       # Cyril Diagne — AI artist FR très suivi
+    "cyrildiagne",       # Cyril Diagne — AI artist FR tres suivi
+    "yacine999",         # Yacine Jernite — Hugging Face, IA FR tres actif
+    "ClementDelangue",   # CEO Hugging Face — IA FR, tres suivi
+    "Thomas_Wolf",       # CSO Hugging Face — IA FR
     # KorbenInfo removed 2026-04-26 — 0% scrape success (page never loads)
     "Frandroid",         # FrAndroid — tech FR
     "Numerama",          # Numerama
