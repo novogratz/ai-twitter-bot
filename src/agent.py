@@ -1330,36 +1330,43 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     injected_url_titles: dict[str, str] = {}
     try:
         from . import web_search as _ws
-        # Collect raw candidates from DDG + RSS first, before reachability filter.
+        # Collect raw candidates from MULTIPLE DDG sub-queries (structured)
+        # + RSS pool. Multi-query approach gives ~20-30 candidate URLs;
+        # the reachability filter then keeps the live ones.
+        sub_queries = {
+            "IA": [
+                "OpenAI Anthropic Mistral news this week",
+                "AI datacenter GPU NVIDIA news this week",
+                "AI agent LLM startup funding news this week",
+                "Cursor AI code editor news Elon Musk this week",
+            ],
+            "Crypto": [
+                "Bitcoin Ethereum crypto news this week",
+                "crypto mining hashrate MARA Riot news this week",
+                "stablecoin DeFi Coinbase news this week",
+                "Bitcoin ETF inflows institutional news this week",
+            ],
+            "Investissement": [
+                "NVIDIA AMD Tesla Microsoft Google AI stock earnings this week",
+                "AI datacenter capex Stargate CoreWeave CRWV news this week",
+                "tech IPO MicroStrategy MSTR MARA RIOT valuation this week",
+                "AI investment fund raise venture capital news this week",
+            ],
+        }.get(decode_topic, ["AI news this week"])
         ddg_hits = []
-        try:
-            ddg_hits = _ws.search_news(
-                {
-                    "IA": "AI OpenAI Anthropic Mistral news this week",
-                    "Crypto": "Bitcoin Ethereum crypto news this week",
-                    "Investissement": "AI datacenter capex Stargate news this week",
-                }.get(decode_topic, "AI news this week"),
-                max_results=10, date_filter="w",
-            )
-        except Exception:
-            ddg_hits = []
-        # Multi-angle DDG block (will be rebuilt after reachability filter).
-        try:
-            multi_hits_pairs = []
-            multi_block = _ws.search_for_news_topic(decode_topic)
-            for m in re.finditer(r"^- (https?://\S+)\n  (.+)$", multi_block, re.MULTILINE):
-                multi_hits_pairs.append({"url": m.group(1).rstrip(".,);"), "title": m.group(2), "snippet": ""})
-        except Exception:
-            multi_hits_pairs = []
-        signals = []
+        for q in sub_queries:
+            try:
+                ddg_hits.extend(_ws.search_news(q, max_results=5, date_filter="w"))
+            except Exception:
+                continue
         try:
             signals = _ws.load_recent_signals(max_age_days=10, limit=10)
         except Exception:
             signals = []
 
-        # Build candidate (url, title) pairs from all 3 sources, dedup by URL.
+        # Build candidate (url, title) pairs, dedup by URL.
         raw_candidates = {}
-        for h in ddg_hits + multi_hits_pairs:
+        for h in ddg_hits:
             u = (h.get("url") or "").rstrip(".,);")
             if u and u not in raw_candidates:
                 raw_candidates[u] = (h.get("title") or "") + " " + (h.get("snippet") or "")
