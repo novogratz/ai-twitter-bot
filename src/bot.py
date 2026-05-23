@@ -86,6 +86,17 @@ def post_slot_status() -> str:
     return f"{news_count}/{_live_news_cap()} news, {hotake_count}/{_live_hotake_cap()} hot takes"
 
 
+def _decrement_counter(counter_name: str):
+    """Reverse a previous _increment_counter call — used when a generated
+    tweet is rejected by URL validation so the daily slot isn't burned."""
+    state = _load_daily_state()
+    today = date.today().isoformat()
+    if state.get("date") != today:
+        return  # date rolled over, nothing to decrement
+    state[counter_name] = max(0, state.get(counter_name, 0) - 1)
+    _save_daily_state(state)
+
+
 def _increment_counter(counter_name: str):
     """Increment a daily counter and persist."""
     state = _load_daily_state()
@@ -179,11 +190,67 @@ def _run_single_bot_cycle() -> bool:
                     pass
             return True
     else:
-        log.info("Generating next Décode (Daily or Weekly)...")
-        tweet = generate_tweet()
-        if tweet:
+        # 2026-05-23 PM: Décode retry loop — user mandate "make sure URL is
+        # there, don't skip, if it doesn't work generate a new post". Up to
+        # 3 attempts to land a Décode whose URL passes whitelist + coupling.
+        # Between attempts, un-mark the topic in daily_topic_state and
+        # un-increment the counter so we don't burn slots on rejected gens.
+        from . import agent as _ag_mod
+        tweet = None
+        last_tried_topic = None
+        for attempt in range(3):
+            log.info(f"Generating Décode (Daily or Weekly), attempt {attempt + 1}/3...")
+            candidate = generate_tweet()
+            if candidate is None:
+                log.info("[NEWS] generate_tweet returned None — no eligible combo.")
+                break
             _increment_counter("news")
-        elif can_hotake:
+            # Quick validate URL here (whitelist + coupling). Real post-flight
+            # validation still runs further below, but we use this to decide
+            # whether to retry or accept.
+            cand_src = None
+            try:
+                from .agent import last_source_url as _ls
+                cand_src = _ls()
+            except Exception:
+                pass
+            topic = _ag_mod.__dict__.get("_pending_decode_topic")
+            is_weekly = _ag_mod.__dict__.get("_pending_top5_topic") is not None
+            last_tried_topic = (topic, is_weekly)
+            # Weekly Top 5 is allowed URL-less; don't retry it.
+            if is_weekly:
+                tweet = candidate
+                break
+            ok = False
+            if cand_src:
+                injected = getattr(_ag_mod, "_last_injected_urls", None) or set()
+                injected_titles = getattr(_ag_mod, "_last_injected_url_titles", None) or {}
+                in_pool = (not injected) or (cand_src in injected)
+                reachable = _ag_mod.url_is_reachable(cand_src) if in_pool else False
+                coupling = True
+                if in_pool and reachable:
+                    title = (injected_titles.get(cand_src) or "").lower()
+                    if title:
+                        b1_match = re.search(r"^\s*1\.\s*(.+?)(?:\n\s*2\.|$)", candidate, re.MULTILINE | re.DOTALL)
+                        subject_region = (b1_match.group(1) if b1_match else candidate[:500]).lower()
+                        stop = {"this","that","with","from","into","about","have","been","more","what","when","where","their","there","which","while","your","could","would","should","will","well","than","some","such","just","after","before","still","every","another","between"}
+                        title_tokens = {w for w in re.findall(r"[a-zA-Z]{4,}", title) if w not in stop}
+                        if title_tokens and not any(t in subject_region for t in title_tokens):
+                            coupling = False
+                ok = in_pool and reachable and coupling
+            if ok:
+                tweet = candidate
+                break
+            log.info(f"[NEWS] Attempt {attempt + 1} URL failed validation (src={cand_src}). Un-marking + retrying.")
+            try:
+                if topic:
+                    _ag_mod._unmark_topic_done_today(topic, is_weekly=is_weekly)
+            except Exception:
+                pass
+            _decrement_counter("news")
+        else:
+            log.info("[NEWS] All 3 attempts failed URL validation. Giving up this cycle.")
+        if tweet is None and can_hotake:
             log.info("No fresh Décode - trying a hot take instead...")
             tweet = generate_hotake()
             if tweet:
