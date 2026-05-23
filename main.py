@@ -152,16 +152,17 @@ def post_interval_minutes() -> int:
 
 
 def reply_interval_minutes() -> int:
-    """Primary growth cadence — user mandate 2026-05-22 PM: "reply a lot bro".
-    Replies are the engagement-loop oxygen. Tightened across all windows.
+    """Primary growth cadence — user mandate 2026-05-23: "go crazy on
+    responses, respond to way more messages". Reply loop is the volume
+    play. Tightened again across all windows.
     """
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     # US business peak EST 09-16 = absolute reply window.
     if 9 <= hour < 16:
-        return random.randint(2, 5)
+        return random.randint(1, 3)
     if 16 <= hour < 23:
-        return random.randint(5, 9)
-    return random.randint(8, 14)
+        return random.randint(3, 6)
+    return random.randint(5, 9)
 
 
 def engage_interval_minutes() -> int:
@@ -173,19 +174,21 @@ def engage_interval_minutes() -> int:
 
 
 def direct_reply_interval_minutes() -> int:
-    """Primary response path. cadence_factor applied LIVE."""
-    hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 9 <= hour < 16:
-        return _cadence(random.randint(4, 7))
-    return _cadence(random.randint(8, 13))
-
-
-def early_bird_interval_minutes() -> int:
-    """Early-bird replies — highest-upside, scan aggressively. cadence applied."""
+    """Primary response path. cadence_factor applied LIVE.
+    2026-05-23: tightened per "go crazy" mandate."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
         return _cadence(random.randint(2, 4))
-    return _cadence(random.randint(4, 7))
+    return _cadence(random.randint(5, 9))
+
+
+def early_bird_interval_minutes() -> int:
+    """Early-bird replies — highest-upside, scan aggressively. cadence applied.
+    2026-05-23: tightened to 1-3 min during US peak."""
+    hour = datetime.now(ZoneInfo("America/New_York")).hour
+    if 9 <= hour < 16:
+        return _cadence(random.randint(1, 3))
+    return _cadence(random.randint(3, 6))
 
 
 def roast_interval_minutes() -> int:
