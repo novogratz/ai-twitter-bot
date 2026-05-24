@@ -29,11 +29,13 @@ import traceback
 import urllib.parse
 import webbrowser
 
-from .config import _PROJECT_ROOT, BOT_HANDLE
+from .config import _PROJECT_ROOT, BOT_HANDLE, get_live_cap
 from .logger import log
 from .twitter_client import _safari_lock, close_front_tab, _scroll_page
 
 FOLLOWS_PER_CYCLE = int(os.environ.get("FOLLOW_BLAST_PER_CYCLE", "40"))
+FOLLOW_BLAST_DAILY_CAP = int(os.environ.get("FOLLOW_BLAST_DAILY_CAP", "650"))
+FOLLOW_BLAST_STATE_FILE = os.path.join(_PROJECT_ROOT, "follow_blast_state.json")
 
 # FR niche search queries. Rotated per cycle. The min_faves floor keeps
 # us out of bot-farm zones — we want real FR users in the niche.
@@ -110,6 +112,26 @@ def _click_follow_buttons(max_clicks: int) -> int:
         return 0
 
 
+def _load_daily_state() -> dict:
+    from datetime import date
+    today = date.today().isoformat()
+    if not os.path.exists(FOLLOW_BLAST_STATE_FILE):
+        return {"date": today, "count": 0}
+    try:
+        with open(FOLLOW_BLAST_STATE_FILE, "r") as f:
+            state = json.load(f) or {}
+    except (OSError, json.JSONDecodeError):
+        return {"date": today, "count": 0}
+    if state.get("date") != today:
+        return {"date": today, "count": 0}
+    return {"date": today, "count": int(state.get("count") or 0)}
+
+
+def _save_daily_state(state: dict) -> None:
+    with open(FOLLOW_BLAST_STATE_FILE, "w") as f:
+        json.dump(state, f, indent=2)
+
+
 def run_follow_blast_cycle():
     """Open a FR niche search, scroll, JS-click N visible Follow buttons."""
     # Skip if X is suppressing us — bulk follows during a shadowban
@@ -134,6 +156,11 @@ def run_follow_blast_cycle():
             log.info(f"[FOLLOW-BLAST] do-not-refollow set has {len(dnr)} entries.")
     except Exception:
         pass
+    state = _load_daily_state()
+    remaining = max(0, FOLLOW_BLAST_DAILY_CAP - int(state.get("count") or 0))
+    if remaining <= 0:
+        log.info(f"[FOLLOW-BLAST] Daily cap reached ({FOLLOW_BLAST_DAILY_CAP}) — skipping.")
+        return
     query = random.choice(BLAST_QUERIES)
     encoded = urllib.parse.quote(query)
     # /search?f=people = profile-card list, dense Follow CTAs.
@@ -149,15 +176,21 @@ def run_follow_blast_cycle():
         time.sleep(1)
 
         # Two batches with a small pause so the action doesn't burst.
-        first = FOLLOWS_PER_CYCLE // 2 + FOLLOWS_PER_CYCLE % 2
-        second = FOLLOWS_PER_CYCLE - first
+        cycle_cap = min(get_live_cap("FOLLOW_BLAST_PER_CYCLE", FOLLOWS_PER_CYCLE), remaining)
+        first = cycle_cap // 2 + cycle_cap % 2
+        second = cycle_cap - first
         clicked = _click_follow_buttons(first)
         time.sleep(random.uniform(2.0, 3.5))
         clicked += _click_follow_buttons(second)
 
         close_front_tab()
 
-    log.info(f"[FOLLOW-BLAST] Followed {clicked} accounts on '{query}'")
+    state["count"] = int(state.get("count") or 0) + max(0, clicked)
+    _save_daily_state(state)
+    log.info(
+        f"[FOLLOW-BLAST] Followed {clicked} accounts on '{query}' "
+        f"({state['count']}/{FOLLOW_BLAST_DAILY_CAP} today)."
+    )
 
 
 def safe_run_follow_blast_cycle():

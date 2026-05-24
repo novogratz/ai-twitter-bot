@@ -58,6 +58,8 @@ Reshare paths don't burn LLM cycles (deterministic scoring) so caps can be much 
 | `MAX_RETWEETS_PER_DAY` | `30` | Selective crypto / AI / bourse reposts. |
 | `RETWEETS_PER_CYCLE` | `3` | Max external retweets shipped after each deterministic candidate scrape. |
 | `MAX_REPLIES_PER_CYCLE` | `8` | Replies per `reply_bot` / `direct_reply` cycle. |
+| `DIRECT_REPLY_MAX_PER_CYCLE` | `32` | Cap for the high-value profile/feed reply scanner. |
+| `DIRECT_REPLY_MAX_EN_PER_CYCLE` | `5` | English reply cap inside one direct-reply cycle. |
 | `MAX_PROMOTES_PER_DAY` | `3` | Promote-best-reply (plain-repost own top reply). |
 | `MAX_BOOSTS_PER_DAY` | (no cap) | Self-RT scheduled by cadence only. |
 
@@ -70,7 +72,9 @@ Per-cycle quotas (not daily caps):
 | Variable | Default | Purpose |
 |---|---|---|
 | `FOLLOW_BLAST_PER_CYCLE` | `30` | Bulk Follow-button clicks per cycle. |
+| `FOLLOW_BLAST_DAILY_CAP` | `650` | Daily circuit breaker for bulk Follow-button clicks. |
 | `LIKE_BOT_PER_CYCLE` | `22` | Bulk Like-button clicks per cycle. |
+| `LIKE_BOT_DAILY_CAP` | `1800` | Daily circuit breaker for bulk Like-button clicks. |
 | `FOLLOWBACK_CAP` | `8` | Follow-back attempts per cycle. |
 | `UNFOLLOW_CAP_PER_CYCLE` | `15` | Smart-unfollow targets per cycle. |
 | `EARLY_BIRD_MAX_REPLIES_PER_CYCLE` | `4` | Early-bird replies per cycle. |
@@ -165,9 +169,13 @@ MAX_QUOTES_PER_DAY=80
 MAX_RETWEETS_PER_DAY=30
 RETWEETS_PER_CYCLE=3
 MAX_REPLIES_PER_CYCLE=8
+DIRECT_REPLY_MAX_PER_CYCLE=32
+DIRECT_REPLY_MAX_EN_PER_CYCLE=5
 
 FOLLOW_BLAST_PER_CYCLE=30
+FOLLOW_BLAST_DAILY_CAP=650
 LIKE_BOT_PER_CYCLE=22
+LIKE_BOT_DAILY_CAP=1800
 RETWEET_MIN_LIKES=25
 RETWEET_MAX_AGE_HOURS=18
 QUOTE_MAX_AGE_HOURS=18
