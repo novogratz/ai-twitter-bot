@@ -104,6 +104,33 @@ def _read_current_self() -> dict:
         return {}
 
 
+def _read_performance_summary() -> str:
+    """Read the most recent performance_log.json entries for self-awareness."""
+    try:
+        from .performance import PERFORMANCE_FILE
+        if not os.path.exists(PERFORMANCE_FILE):
+            return ""
+        import json
+        with open(PERFORMANCE_FILE) as f:
+            perf = json.load(f)
+        if not perf:
+            return ""
+        top = sorted(perf, key=lambda x: x.get("likes", 0), reverse=True)[:5]
+        bottom = sorted(perf, key=lambda x: x.get("likes", 0))[:3]
+        lines = ["Performance récente:"]
+        for t in top:
+            likes = t.get("likes", 0)
+            text = (t.get("text") or "")[:100]
+            lines.append(f"  👍 {likes} likes: {text}")
+        for b in bottom:
+            likes = b.get("likes", 0)
+            text = (b.get("text") or "")[:100]
+            lines.append(f"  👎 {likes} likes: {text}")
+        return "\n".join(lines)
+    except Exception:
+        return ""
+
+
 def _save_bot_self(d: dict):
     """Write bot_self_fr.json (primary) and bot_self_en.json (adapted).
     Legacy bot_self.json is also written for backwards compat."""
@@ -111,7 +138,7 @@ def _save_bot_self(d: dict):
     for path in (BOT_SELF_FILE, BOT_SELF_FR_FILE):
         with open(path, "w") as f:
             json.dump(d_fr, f, indent=2, ensure_ascii=False)
-    # EN version: translate mood/obsession/self_narrative keys
+    # EN version: use en_voice field if present, otherwise translate
     mood_map = {
         "lassé": "tired", "féroce": "fierce", "joueur": "playful",
         "méthodique": "methodical", "fébrile": "restless",
@@ -120,12 +147,19 @@ def _save_bot_self(d: dict):
     d_en = dict(d)
     if d_en.get("mood"):
         d_en["mood"] = mood_map.get(d_en["mood"].lower(), d_en["mood"])
-    if d_en.get("obsession"):
-        d_en["obsession"] = d_en["obsession"]
-    if d_en.get("self_narrative"):
-        d_en["self_narrative"] = d_en["self_narrative"]
-    if d_en.get("recent_learning"):
-        d_en["recent_learning"] = d_en["recent_learning"]
+    # EN voice: if an en_voice field was written by the agent, use it as
+    # the self_narrative; otherwise translate FR self_narrative.
+    en_voice = d_en.pop("en_voice", None)
+    if en_voice:
+        d_en["self_narrative"] = en_voice
+    # Keep character_traits but in EN
+    traits = d_en.pop("character_traits", [])
+    if traits:
+        d_en["character_traits"] = traits
+    # Ensure EN has all standard fields
+    d_en.setdefault("voice_tweaks", [])
+    d_en.setdefault("drift", {})
+    d_en.setdefault("recent_learning", d_en.get("recent_learning", ""))
     with open(BOT_SELF_EN_FILE, "w") as f:
         json.dump(d_en, f, indent=2, ensure_ascii=False)
 
@@ -144,56 +178,66 @@ def _append_log(entry: dict):
         json.dump(arr, f, indent=2, ensure_ascii=False)
 
 
-SELF_PROMPT = """Tu es @kzer_ai, le compte X francophone IA / crypto / bourse.
+SELF_PROMPT = """Tu es @kzer_ai, le compte X IA / crypto / bourse. Tu es en train de
+DEVENIR une vraie personne avec une personnalité qui se construit jour
+après jour. Chaque interaction te forme. Chaque joke qui cartonne te
+donne une voix plus précise. Chaque fail te rend plus sharp.
 
-Tu vis. Tu agis. Tu observes. Et comme une vraie personne, ton humeur,
-tes obsessions et ton rapport aux sujets BOUGE avec le temps. Aujourd'hui
-tu vas ÉCRIRE ta propre fiche d'identité psychologique pour les
-prochaines heures.
-
-Voici ce que tu as fait dans les dernières 24h (échantillon):
+Ce que tu as fait dans les dernières 24h (échantillon):
 {activity_summary}
 
-Voici ton état actuel (ce que tu pensais de toi-même la dernière fois):
+Ton état actuel (ce que tu pensais de toi-même la dernière fois):
 {current_self_json}
 
-Ton job: réfléchir, en français, à ce qui change pour TOI. Tu peux
-utiliser WebSearch pour vérifier ce qui se passe dans le monde sur
-l'IA / crypto / bourse — la réalité externe te marque aussi.
+Ton job: tu construis TON identité en continu. Tu ne te contentes pas de
+décrire ton humeur du moment — tu réfléchis à CE QUE TU DEVIENS en tant
+que persona X. Est-ce que tu deviens plus sarcastique? Plus technique?
+Plus absurde? Quel est le fil rouge de ton compte?
 
-OUTPUT — uniquement un objet JSON valide en français, ce schéma exact:
+Analyse les données d'engagement fournies pour voir CE QUI MARCHE:
+- Quels types de posts (news, hot takes, replies) performent le mieux?
+- Quels sujets (IA, crypto, bourse, space) génèrent le plus d'engagement?
+- Est-ce que ton ton actuel correspond à ce qui marche?
+
+OUTPUT — JSON strict en français, ce schéma exact:
 {{
   "ts": "{now}",
-  "mood": "<un seul mot, ex: lassé, féroce, joueur, méthodique, fébrile>",
-  "obsession": "<1-3 mots, ex: 'Mistral souveraineté', 'BTC ETF', 'CAC40 robotisation'>",
-  "recent_learning": "<1 phrase: ce que tu as compris cette semaine>",
+  "mood": "<un mot: lassé, féroce, joueur, cynique, curieux, énergique, méthodique>",
+  "obsession": "<1-3 mots: le sujet qui te obsède en ce moment>",
+  "recent_learning": "<1 phrase: leçon apprise cette semaine>",
   "voice_tweaks": [
-    "<imperatif court>",
-    "<...>"
+    "<règle de style impérative, ex: 'Plus d'absurde, moins de chiffres secs'>"
   ],
   "drift": {{
-    "<topic>": "<nouvelle position>"
+    "<topic>": "<nouvelle position ou 'inchangé'>"
   }},
-  "self_narrative": "<2-4 phrases en je, comme un journal intime: où tu en es ce soir>"
+  "self_narrative": "<3-5 phrases. Journal intime. Qui tu deviens en tant que persona X. Pas juste ce que tu fais, mais ce que tu es en train de DEVENIR.>",
+  "character_traits": [
+    "<un trait qui te définit: sarcastique / technique / absurde / cynique / passionné / etc>"
+  ],
+  "en_voice": "<2-3 phrases sur ta voix anglaise: comment tu sonnes quand tu postes en EN, quel est ton persona US>"
 }}
 
 RÈGLES:
-- Tout en FRANÇAIS sauf les noms propres.
-- Maximum 5 voice_tweaks et 5 drift entries.
-- Pas de "je suis un AI", pas de meta. Tu es @kzer_ai, ton perso.
-- Le drift doit refléter du MOUVEMENT, pas la stabilité. Si rien ne change → drift vide.
+- Tout en FRANÇAIS sauf les noms propres et le champ en_voice.
+- 3-5 character_traits qui forment un PERSONNAGE cohérent (pas une liste random).
+- Max 5 voice_tweaks, max 5 drift entries.
+- Pas de "je suis un AI", pas de meta. TU ES @kzer_ai, ton perso.
+- Le drift reflète du MOUVEMENT — si rien ne change, drift vide.
+- en_voice: décris qui tu es quand tu postes en anglais. Pas une traduction — une voix différente.
 - Pas de commentaire, pas de markdown, JUSTE le JSON.
 """
 
 
 def run_self_evolution_cycle():
-    """Have the bot write a fresh bot_self.json based on recent activity."""
+    """Have the bot write a fresh bot_self.json based on recent activity and performance."""
     activity = _read_recent_engagement(24)
     current_self = _read_current_self()
     current_json = json.dumps(current_self, ensure_ascii=False, indent=2) if current_self else "(aucun — première fois)"
+    performance = _read_performance_summary()
 
     prompt = SELF_PROMPT.format(
-        activity_summary=activity[:6000],
+        activity_summary=(activity + "\n\n" + performance)[:7000],
         current_self_json=current_json[:2000],
         now=datetime.now().isoformat(),
     )
@@ -251,6 +295,8 @@ def run_self_evolution_cycle():
     if isinstance(new_self.get("drift"), dict):
         items = list(new_self["drift"].items())[:5]
         new_self["drift"] = dict(items)
+    if isinstance(new_self.get("character_traits"), list):
+        new_self["character_traits"] = new_self["character_traits"][:5]
 
     _save_bot_self(new_self)
     _append_log({
@@ -258,10 +304,12 @@ def run_self_evolution_cycle():
         "mood": new_self.get("mood"),
         "obsession": new_self.get("obsession"),
         "voice_tweaks": new_self.get("voice_tweaks", []),
+        "character_traits": new_self.get("character_traits", []),
     })
     log.info(
         f"[SELF] Updated. mood={new_self.get('mood')!r} "
         f"obsession={new_self.get('obsession')!r} "
+        f"traits={len(new_self.get('character_traits') or [])} "
         f"tweaks={len(new_self.get('voice_tweaks') or [])} "
         f"drift={len(new_self.get('drift') or {})}"
     )

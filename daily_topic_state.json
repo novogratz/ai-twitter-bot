@@ -7,6 +7,7 @@
     "IA:monthly",
     "Space:monthly",
     "IA:daily",
-    "Space:daily"
+    "Space:daily",
+    "Investissement:daily"
   ]
 }
