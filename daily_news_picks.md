@@ -5478,3 +5478,17 @@ China launches its first fully self-developed gaming GPU
 - **@cointelegraph** (20 likes, score 7/10) — DERNIER : Le marché de prédiction Polymarket place désormais les chances d'une introduction en bourse d'OpenAI d'ici la fin de 2026 à 72 %.
   - https://x.com/Cointelegraph/status/2058292000701424060
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 60).
+- **@antibearthesis** (2519 likes, score 8/10) — One of these is not like the other:
+
+SpaceX IPO: $2T Valuation
+Amazon: $2.8T Valuation
+
+SpaceX revenue: $18.7B
+Amazon revenue: $742B
+
+Explain this gap.
+  - https://x.com/antibearthesis/status/2058190455083241819
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3877).
+- **@yun_fr** (66 likes, score 7/10) — On est passé d'un monopole AMD/NVIDIA à une situation où NVIDIA délaisse la partie gaming pour se concentrer sur l'IA pendant que 2 petits nouveaux viennent concurrencer la partie GPU gaming : Intel e
+  - https://x.com/Yun_Fr/status/2058105046932377952
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 84).
