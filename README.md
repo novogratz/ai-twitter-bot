@@ -131,7 +131,7 @@ Every knob is an environment variable in `.env`. Defaults are tuned for an Engli
 | `MAX_RETWEETS_PER_DAY` | `30` | Cap on retweets |
 | `RETWEETS_PER_CYCLE` | `3` | Max external retweets shipped after each candidate scrape |
 | `MAX_REPLIES_PER_CYCLE` | `3` | Cap per broad reply cycle; direct replies target 20-50 quality replies/day |
-| `CONTENT_LANG_PRIMARY` | `en` | `en` / `fr` / `mixed` (replies always match parent) |
+| `CONTENT_LANG_PRIMARY` | `fr` | `en` / `fr` / `mixed` (replies always match parent) |
 | `RETWEET_MAX_AGE_HOURS` | `18` | Skip retweet candidates older than this |
 | `SUPPRESSION_AVG_LIKES_FLOOR` | `1.0` | Trigger shadowban-pause if avg drops below |
 
