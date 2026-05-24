@@ -892,16 +892,10 @@ def main():
             id="x_home_scout_job",
         )
 
-        # Chain-reply bot — respond to replies on OUR REPLIES (not just
-        # on our original posts, which notify_bot already handles). Cap
-        # 4 chain-replies/cycle + max 3 our-turns per thread to prevent
-        # infinite ping-pong loops.
-        log.info("Chain-reply bot: respond to nested replies every 10 min (cap 7/cycle).")
-        scheduler.add_job(
-            safe_run_chain_reply_cycle,
-            trigger=IntervalTrigger(minutes=10),
-            id="chain_reply_job",
-        )
+        # Chain-reply disabled: replying to replies-of-replies looks spammy
+        # and can trigger blocks. Growth replies should target original
+        # tweets, one response per tweet.
+        log.info("Chain-reply bot disabled: no nested replies; target original tweets only.")
 
         # YouTube brief — daily aggregator that turns 24h of bot activity
         # into a video-script-ready brief. User pivot: bot now feeds a
@@ -949,7 +943,6 @@ def main():
             "breakout_job": 5,
             "spicy_job": 40,
             "mega_watch_job": 1.5,
-            "chain_reply_job": 10,
             "follow_blast_job": 20,
             "replyback_job": 8,
         }

@@ -29,7 +29,6 @@ VIP_REPLY_ACCOUNTS = [
     "novogratz",         # Mike Novogratz
     "jbelizaireCEO",     # John Belizaire
     "FlasheurInvest",
-    "MatthiasBaccino",
     "McnallieM",         # McNallie Money — warm VIP, AI/crypto data centers
     # 2026-05-15 — AI/Crypto megafounders (user mandate: "be the master at
     # AI crypto and investments in france, the number 1"). FR audience
@@ -293,7 +292,6 @@ FR_ACCOUNTS = [
     "FinTales_",         # FinTales
     "MathieuL1",         # Mathieu Louvet
     "FlasheurInvest",    # Flasheur — user VIP 2026-05-02
-    "MatthiasBaccino",   # Matthias Baccino — user VIP 2026-05-02
     "ThomasVeillet",     # Morning Bell — tres actif, tres FR
     "YoannLOPEZ",        # Snowball — investing FR
     "Capital",           # Capital magazine
@@ -829,6 +827,9 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
 
         # Skip if already replied
         if url in replied:
+            continue
+        if (text or "").lstrip().startswith("@"):
+            log.info(f"[{source_name}] Looks like a reply, not an original tweet — skipping {url}")
             continue
 
         # Per-author cap inside this batch
