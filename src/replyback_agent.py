@@ -9,7 +9,7 @@ from .config import REPLY_MODEL
 from .logger import log
 from .llm_client import run_llm, unwrap_text
 
-REPLYBACK_PROMPT = """You are @kzer_ai. Someone just replied to YOUR tweet. This is a conversation. You MUST make them laugh.
+REPLYBACK_PROMPT = """You are @CryptoAIDecode. Someone just replied to YOUR tweet. This is a conversation. You MUST make them laugh.
 
 Your original tweet: "{original_tweet}"
 Their reply: "{their_reply}"

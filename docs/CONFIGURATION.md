@@ -8,7 +8,7 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `BOT_HANDLE` | `kzer_ai` | Your X handle, without `@`. Used in profile URLs + log filtering. |
+| `BOT_HANDLE` | `CryptoAIDecode` | Your X handle, without `@`. Used in profile URLs + log filtering. |
 
 ---
 
@@ -149,7 +149,7 @@ These are best-effort: the file may not exist on first boot or after a fresh clo
 ## .env.example template
 
 ```env
-BOT_HANDLE=kzer_ai
+BOT_HANDLE=CryptoAIDecode
 AI_CLI=ollama
 LLM_FALLBACK_CLI=codex
 NEWS_MODEL=gpt-5.4-mini

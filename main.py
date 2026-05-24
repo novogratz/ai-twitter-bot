@@ -1,4 +1,4 @@
-"""@kzer_ai Twitter bot - AI news, sharp takes, strategic replies.
+"""@CryptoAIDecode Twitter bot - AI news, sharp takes, strategic replies.
 
 Growth strategy: replies on massive accounts > original posts.
 Quality over quantity. Every interaction must earn a follow.
@@ -202,7 +202,7 @@ def _graceful_shutdown(signum, frame):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="@kzer_ai AI Twitter bot")
+    parser = argparse.ArgumentParser(description="@CryptoAIDecode AI Twitter bot")
     parser.add_argument("--post-only", action="store_true", help="Run only the post bot")
     parser.add_argument("--reply-only", action="store_true", help="Run only the reply bot")
     parser.add_argument("--monthly-recap-now", action="store_true", help="Post the monthly Top 10 Décode recap now, then exit")
@@ -575,7 +575,7 @@ def main():
             id="promote_job",
         )
 
-        # Follow-back bot — scrape /kzer_ai/followers and follow back fresh
+        # Follow-back bot — scrape /CryptoAIDecode/followers and follow back fresh
         # ones (capped 8/cycle, every 2h). Reciprocity is the highest-leverage
         # follower-growth tactic; the existing reciprocity loop only catches
         # repliers — this catches lurkers + likers + everyone else.
@@ -868,7 +868,7 @@ def main():
             id="smart_unfollow_job",
         )
 
-        # Follower-count tracker — every 30 min, scrape /kzer_ai header,
+        # Follower-count tracker — every 30 min, scrape /CryptoAIDecode header,
         # log to follower_history.json. Powers the growth scoreboard
         # block injected into news/hotake prompts. Without this signal,
         # the bot can't measure if its decisions are working.

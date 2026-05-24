@@ -2,7 +2,7 @@
 
 Without a follower-count time series we can't tell which days/cycles
 ACTUALLY drove growth vs. which just felt productive. This bot scrapes
-/kzer_ai every 30 min, parses the follower count from the profile
+/CryptoAIDecode every 30 min, parses the follower count from the profile
 header via JS, and appends to follower_history.json. The
 meta_strategy_agent reads the recent slope on every cycle and feeds
 'we gained N followers in the last 24h' into its prompt.
@@ -45,10 +45,10 @@ def _parse_count(s: str) -> int:
 
 
 def _scrape_follower_count() -> int:
-    """Open /kzer_ai, JS-extract the number next to 'Followers' / 'Abonnés'."""
+    """Open /CryptoAIDecode, JS-extract the number next to 'Followers' / 'Abonnés'."""
     js_code = '''
     (function() {
-        // Followers link looks like /kzer_ai/verified_followers or /followers.
+        // Followers link looks like /CryptoAIDecode/verified_followers or /followers.
         var anchors = document.querySelectorAll('a[href$="/followers"], a[href$="/verified_followers"]');
         for (var a of anchors) {
             // The count is in the first child span (or a nested span with text).

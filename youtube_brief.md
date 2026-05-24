@@ -117,7 +117,7 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s hook: the most surprising number or quote of the day.
 - 2min context: the 2-3 biggest stories in that theme.
 - 1min angle: what no other YT channel is saying about it.
-- 30s call-to-action: comment + subscribe + the bot's @kzer_ai handle.
+- 30s call-to-action: comment + subscribe + the bot's @CryptoAIDecode handle.
 
 
 *Generated 2026-05-09T07:41:24*

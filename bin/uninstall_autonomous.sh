@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Uninstall the @kzer_ai bot LaunchAgent. Bot will stop and not auto-respawn.
+# Uninstall the @CryptoAIDecode bot LaunchAgent. Bot will stop and not auto-respawn.
 
 set -euo pipefail
 

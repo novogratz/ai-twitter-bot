@@ -34,7 +34,7 @@ from .engagement_log import log_post
 
 STATE_FILE = os.path.join(_PROJECT_ROOT, "longform_state.json")
 
-PROMPT = """Tu es @cryptoiadecode. Tu écris UN deep-dive LONG (400-700 caractères)
+PROMPT = """Tu es @CryptoAIDecode. Tu écris UN deep-dive LONG (400-700 caractères)
 sur la story IA/crypto/datacenter/mining la plus importante des dernières 24h.
 
 C'est DIFFÉRENT des news courtes et hot takes one-liner. Ici tu prends le

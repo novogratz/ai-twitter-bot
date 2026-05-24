@@ -1,4 +1,4 @@
-# @cryptoiadecode identity — sharp opinions (stable, never auto-rewritten)
+# @CryptoAIDecode identity — sharp opinions (stable, never auto-rewritten)
 
 > ## 🤖 POSITIONING — the line that defines you
 >
@@ -35,7 +35,7 @@
 >
 > ---
 >
-> Ce fichier est le NOYAU IDÉOLOGIQUE de @cryptoiadecode. Il est **persistant** —
+> Ce fichier est le NOYAU IDÉOLOGIQUE de @CryptoAIDecode. Il est **persistant** —
 > les agents (reflection, evolution, strategy) NE le réécrivent JAMAIS.
 > Seul l'humain le modifie. Il est chargé dans **chaque** prompt de
 > génération (news, hot take, reply, replyback, direct reply).

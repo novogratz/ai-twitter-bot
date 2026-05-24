@@ -117,7 +117,7 @@ Every knob is an environment variable in `.env`. Defaults are tuned for an Engli
 
 | Variable | Default | What it does |
 |---|---|---|
-| `BOT_HANDLE` | `kzer_ai` | Your X handle (without `@`) |
+| `BOT_HANDLE` | `CryptoAIDecode` | Your X handle (without `@`) |
 | `AI_CLI` | `ollama` | `ollama` / `codex` / `opencode` / `claude` / `gemini` |
 | `NEWS_MODEL` | `gpt-5.4-mini` | Model for news + threads; override for manual quality runs |
 | `HOTAKE_MODEL` | `gpt-5.4-mini` | Model for hot takes + breakouts |

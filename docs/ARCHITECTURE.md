@@ -150,7 +150,7 @@ main.py
 |---|---|---|
 | `performance.py` | every 2h | Scrape own profile metrics, write `performance_log.json` + `learnings.json`, compute pattern bandit |
 | `daily_digest.py` | hourly (idempotent) | Append yesterday's rollup to `daily_digest.md` |
-| `follower_tracker_bot.py` | every 30 min | Scrape /kzer_ai header, log `follower_history.json` |
+| `follower_tracker_bot.py` | every 30 min | Scrape /CryptoAIDecode header, log `follower_history.json` |
 | `cleanup_bot.py` | hourly (idempotent) | Daily state hygiene — log rotation + JSON caps |
 | `heartbeat_bot.py` | every 60s | Alive-tick log line |
 

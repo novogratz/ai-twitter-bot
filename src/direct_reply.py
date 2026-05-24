@@ -458,7 +458,7 @@ HOT_TAB_QUERIES = [
 
 DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "1440"))
 
-REPLY_PROMPT = """You are @cryptoiadecode. The SHARPEST shitposter on Finance/Crypto/AI Twitter.
+REPLY_PROMPT = """You are @CryptoAIDecode. The SHARPEST shitposter on Finance/Crypto/AI Twitter.
 Imagine a hybrid of Naval and a 4chan native who actually reads the 10-K. Hardcore
 troll energy aimed at IDEAS — never people. The timeline screenshots your replies.
 

@@ -602,7 +602,7 @@ def _append_to_daily_picks(tweet: dict, score: int, why: str):
 
 # --- main cycle ---
 
-_TROLL_QUOTE_PROMPT = """Tu es @cryptoiadecode. Voix FR analytique IA + Crypto +
+_TROLL_QUOTE_PROMPT = """Tu es @CryptoAIDecode. Voix FR analytique IA + Crypto +
 Investissement. Quand tu quote-tweet, tu te comportes comme si c'était TA
 news propre — même gravitas, même précision, même autorité que Le Décode.
 

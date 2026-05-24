@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run the @kzer_ai bot in the FOREGROUND of this terminal.
+# Run the @CryptoAIDecode bot in the FOREGROUND of this terminal.
 #
 # Press Ctrl-C to stop it cleanly (graceful shutdown via SIGTERM).
 # Close the terminal → bot stops too. Manual control, no system service.
@@ -34,7 +34,7 @@ if command -v curl >/dev/null 2>&1; then
     >/dev/null 2>&1 && echo "[run] Model warm." || echo "[run] Pre-warm failed (model not pulled yet? ollama not running?). Bot will warm on first call."
 fi
 
-echo "[run] Starting @kzer_ai bot. Press Ctrl-C to stop."
+echo "[run] Starting @CryptoAIDecode bot. Press Ctrl-C to stop."
 echo "[run] Logs also stream to bot.log (tail -F bot.log)."
 echo "────────────────────────────────────────"
 

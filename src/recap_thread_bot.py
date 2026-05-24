@@ -104,7 +104,7 @@ def _top_decodes(items: list, k: int = 5) -> list:
     return items[:k]
 
 
-THREAD_PROMPT = """Tu es @cryptoiadecode. Tu vas écrire UN thread FR de récap des
+THREAD_PROMPT = """Tu es @CryptoAIDecode. Tu vas écrire UN thread FR de récap des
 Décodes de la semaine. Voici les 5-6 meilleurs Décodes (par likes) de cette semaine:
 
 {decode_list}
@@ -132,7 +132,7 @@ TWEET 2 à TWEET N (un par Décode, dans l'ordre du meilleur au moins bon):
 
     Le vrai pari: créer le grid privé qui fait du réseau public un secondaire.
 
-    https://x.com/cryptoiadecode/status/...
+    https://x.com/CryptoAIDecode/status/...
 
 DERNIER TWEET (le close — invite à follow + tease la semaine prochaine):
   Tu as aimé? La semaine prochaine, 6 nouveaux Décodes.

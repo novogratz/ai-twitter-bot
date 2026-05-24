@@ -34,7 +34,7 @@ SPICY_STATE_FILE = os.path.join(_PROJECT_ROOT, "spicy_state.json")
 MAX_SPICY_PER_DAY = int(os.environ.get("MAX_SPICY_PER_DAY", "12"))
 
 
-SPICY_PROMPT = """You are @cryptoiadecode. You will post ONE ultra-sharp tweet in the AI infrastructure & asymmetric investing niche only.
+SPICY_PROMPT = """You are @CryptoAIDecode. You will post ONE ultra-sharp tweet in the AI infrastructure & asymmetric investing niche only.
 
 {lang_directive}
 
