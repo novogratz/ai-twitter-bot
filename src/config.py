@@ -52,6 +52,9 @@ BLOCKLIST = {
     "la_pique",
     "la-pique",
     "matthiasbaccino",
+    "ncheron_bourse",
+    "capetlevrai",
+    "mathieul1",
 }
 
 # Discovered accounts file (autonomous influencer discovery)
