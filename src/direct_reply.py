@@ -212,17 +212,50 @@ def _is_on_niche(text: str) -> bool:
 
 # === FR detection — used to sort FEED tweets FR-first ===
 _FR_MARKERS = re.compile(
-    r"\b(le|la|les|un|une|des|du|dans|pour|sur|avec|pas|est|sont|"
+    r"\b(le|la|les|un|une|des|du|de|d|dans|pour|sur|avec|pas|est|sont|"
     r"mais|aussi|très|tout|cette|qui|que|quand|comme|entre|depuis|"
     r"faire|faut|peut|encore|selon|même|après|avant|bien|sans|"
-    r"nous|vous|ils|elles|notre|votre|leur|ces|son|ses|ses|"
-    r"marché|bourse|taux|année|être|avoir|rien|jamais|toujours)\b",
+    r"je|j|tu|il|elle|on|nous|vous|ils|elles|me|te|se|ce|c|"
+    r"notre|votre|leur|ces|son|ses|sa|mon|ton|mes|tes|"
+    r"enfin|ptdr|mdr|franchement|grave|voila|voilà|"
+    r"jours|délivrance|refait|marché|bourse|taux|année|être|avoir|"
+    r"rien|jamais|toujours)\b",
+    re.IGNORECASE,
+)
+_FR_ACCENT_RE = re.compile(r"[àâçéèêëîïôûùüÿœæ]", re.IGNORECASE)
+_EN_MARKERS = re.compile(
+    r"\b(the|this|that|with|from|just|was|were|are|is|you|your|"
+    r"market|portfolio|ride|ticket|line|bug|beta|test|rug|"
+    r"deliverance|original|inevitable|called|expected)\b",
     re.IGNORECASE,
 )
 
 def _looks_french(text: str) -> bool:
-    """Quick heuristic: >=3 FR marker words → likely French."""
-    return len(_FR_MARKERS.findall(text)) >= 3
+    """Quick heuristic for parent-tweet language.
+
+    Bias hard toward French: most target accounts are FR, and short native
+    tweets often have only one or two grammar markers ("Enfin la delivrance",
+    "Ptdr 2 jours apres..."). A false EN classification is much worse than a
+    borderline FR reply.
+    """
+    if not text:
+        return False
+    markers = len(_FR_MARKERS.findall(text))
+    if markers >= 2:
+        return True
+    # One marker plus French orthography/slang is enough for short tweets.
+    if markers >= 1 and _FR_ACCENT_RE.search(text):
+        return True
+    if re.search(r"\b(ptdr|mdr|wesh|frerot|frérot|voila|voilà|délivrance|refait)\b", text, re.IGNORECASE):
+        return True
+    return False
+
+
+def _looks_english(text: str) -> bool:
+    """Detect English output so FR-mode replies don't leak EN."""
+    if not text:
+        return False
+    return len(_EN_MARKERS.findall(text)) >= 2 and not _looks_french(text)
 
 
 def _is_fr_or_en(text: str) -> bool:
@@ -643,6 +676,15 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
     # Hand-curated ideological core — voice anchor. Match parent tweet lang.
     core_identity = personality_store.render_core_identity(lang=lang)
     base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200])
+    if lang == "fr":
+        base += (
+            "\n\nTARGET LANGUAGE OVERRIDE: FRENCH ONLY.\n"
+            "The parent tweet is French. Reply in natural native French. "
+            "Do not use English words like 'the', 'market', 'portfolio', "
+            "'ride', 'ticket', 'bug', 'beta test', or 'rug'."
+        )
+    elif lang == "en":
+        base += "\n\nTARGET LANGUAGE OVERRIDE: ENGLISH ONLY."
     extras = []
     if persona_block:
         extras.append(persona_block)
@@ -671,6 +713,9 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
 
         # Honor model-emitted SKIP (e.g., blocklisted author)
         if reply.upper().strip() == "SKIP":
+            return None
+        if lang == "fr" and _looks_english(reply):
+            log.info(f"[DIRECT_REPLY] Rejected English reply for French tweet: {reply[:120]!r}")
             return None
 
         return reply
