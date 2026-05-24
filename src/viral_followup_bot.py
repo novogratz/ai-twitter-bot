@@ -1,4 +1,4 @@
-"""Viral follow-up bot — when our own post hits 20+ likes, post a follow-up.
+"""Viral follow-up bot — when our own post hits VIRAL_THRESHOLD+, post a follow-up.
 
 Why: when X's algo decides a tweet is working, the first ~hour after takeoff
 is the highest-leverage window we have. Adding a follow-up reply on the same
@@ -8,9 +8,9 @@ users, (c) gives us a chance to drop another joke + push the punchline.
 
 Strategy:
   - Every 30 min: scrape /kzer_ai for our recent posts.
-  - For each post with likes ≥ VIRAL_THRESHOLD that we haven't followed up on:
-    - Generate a short FR follow-up via Claude that extends the original
-      angle (one-liner punchline, NOT another news take).
+  - For each post with likes >= VIRAL_THRESHOLD that we haven't followed up on:
+    - Generate a short follow-up via LLM that extends the original joke
+      (one-liner punchline, NOT another news take).
     - Reply to the post in-thread.
     - Persist URL in viral_followed_up.json so we never double-follow-up.
   - Cap 3 follow-ups per cycle (keep cadence honest).
@@ -30,27 +30,39 @@ from .humanizer import humanize
 from .engagement_log import log_reply
 
 VIRAL_FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "viral_followed_up.json")
-VIRAL_THRESHOLD = int(os.environ.get("VIRAL_THRESHOLD", "8"))
-VIRAL_FOLLOWUP_CAP_PER_CYCLE = int(os.environ.get("VIRAL_FOLLOWUP_CAP", "3"))
+VIRAL_THRESHOLD = int(os.environ.get("VIRAL_THRESHOLD", "4"))
+VIRAL_FOLLOWUP_CAP_PER_CYCLE = int(os.environ.get("VIRAL_FOLLOWUP_CAP", "5"))
 
 
-FOLLOWUP_PROMPT = """You are @kzer_ai. You just posted this tweet that's landing hard:
+FOLLOWUP_PROMPT = """You are @kzer_ai. Your tweet is landing hard — extend the joke.
 
+Your original tweet:
 "{post_text}"
 
 ({likes} likes, {replies} replies)
 
-Your job: write ONE short follow-up sentence, posted as a reply to your own tweet, that EXTENDS the joke or lands one more layer.
+Your job: write ONE short follow-up sentence, posted as a reply to your own tweet, that EXTENDS the joke or lands ONE MORE LAYER.
 
-LANGUAGE: match the language of the original tweet above. If it's English, follow up in English. If it's French, follow up in French. Do NOT mix the two.
+LANGUAGE: match the language of the original tweet. English -> English follow-up. French -> French follow-up. No mixing.
+
+🎯 LAUGH TEST — if it doesn't make YOU laugh, rewrite until it does.
+The audience is riding high on the original joke. Don't kill the vibe with
+a flat follow-up. DEADPAN. SHARP. ONE MORE PUNCHLINE.
+
+PREFERRED SHAPES (pick one):
+  - Callback ("Edit: I forgot to mention the worst part...")
+  - Mini-dialogue ("- But how?" / "- Nobody knows. That's the point.")
+  - Renaming ("Stargate: the world's most expensive GPU fireplace.")
+  - Anti-climax ("Huge launch. Revolutionary. The slide deck was beautiful.")
+  - Understatement ("Minor detail: the math doesn't work.")
+  - Absurd comparison ("This is like bringing a knife to a GPU fight.")
 
 RULES:
-- Max 200 characters.
-- DEADPAN. SHARP. One more punchline, not a new news beat.
-- Preferred shapes: callback ("Edit:..."), mini-dialogue ("- But..." / "- Nope."), renaming, or brutal understatement.
+- Max 200 characters. Short lands harder.
 - No emojis. No hashtags. No em dashes (—).
-- No "Update:", "Follow-up:", "More seriously". You extend the bit; you don't pivot to a serious thread.
-- If you don't have a real second punchline → output exactly the word SKIP.
+- No "Update:", "Follow-up:", "More seriously". You extend the bit, not pivot.
+- Use ONE exact detail from the original tweet. Generic follow-ups bomb.
+- If you don't have a real second punchline -> output exactly: SKIP
 
 Output ONLY the follow-up text, or SKIP."""
 
@@ -71,9 +83,11 @@ def _save_followed_up(s: set):
 
 
 def _generate_followup(post_text: str, likes: int, replies: int) -> Optional[str]:
+    from . import personality_store
+    extras = [personality_store.hard_rules_block()]
     prompt = FOLLOWUP_PROMPT.format(
         post_text=post_text, likes=likes, replies=replies,
-    )
+    ) + "\n\n" + "\n\n".join(extras)
     result = run_llm(prompt, REPLY_MODEL, label="VIRAL_FOLLOWUP")
     if result.returncode != 0:
         log.info(f"[VIRAL] LLM failed: {result.stderr[:160]}")
@@ -95,7 +109,7 @@ def run_viral_followup_cycle():
 
     log.info(f"[VIRAL] Scraping @{BOT_HANDLE} for posts > {VIRAL_THRESHOLD} likes...")
     try:
-        tweets = scrape_profile_tweets(BOT_HANDLE, max_tweets=15)
+        tweets = scrape_profile_tweets(BOT_HANDLE, max_tweets=25)
     except Exception:
         log.info("[VIRAL] Scrape failed:")
         traceback.print_exc()

@@ -723,8 +723,12 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
         return None
 
 
-DIRECT_REPLY_MAX_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_PER_CYCLE", "32"))
-MAX_EN_REPLIES_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_EN_PER_CYCLE", "5"))
+DIRECT_REPLY_MAX_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_PER_CYCLE", "45"))
+MAX_EN_REPLIES_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_EN_PER_CYCLE", "7"))
+DIRECT_REPLY_FEED_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_FEED_SCAN_LIMIT", "45"))
+DIRECT_REPLY_PROFILE_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_PROFILE_SCAN_LIMIT", "14"))
+DIRECT_REPLY_HOT_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_HOT_QUERY_LIMIT", "8"))
+DIRECT_REPLY_LIVE_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_LIVE_QUERY_LIMIT", "8"))
 
 
 def _maybe_repost_best_profile_tweet(username: str, tweets: list, retweeted: set) -> bool:
@@ -1064,7 +1068,7 @@ def run_direct_reply_cycle():
         if _budget() <= 0:
             break
         log.info(f"[DIRECT] === ALWAYS profile @{username} ===")
-        tweets = scrape_profile_tweets(username, max_tweets=12)
+        tweets = scrape_profile_tweets(username, max_tweets=DIRECT_REPLY_PROFILE_SCAN_LIMIT)
         if tweets:
             if favorite_reposts < FAVORITE_REPOSTS_PER_CYCLE:
                 if _maybe_repost_best_profile_tweet(username, tweets, retweeted):
@@ -1090,7 +1094,7 @@ def run_direct_reply_cycle():
     if _budget() > 0:
         log.info("[DIRECT] === Scraping Following feed (chronological) ===")
         try:
-            following_tweets = scrape_following_feed(max_tweets=30)
+            following_tweets = scrape_following_feed(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
             if following_tweets:
                 following_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
                 total += _reply_to_tweets(following_tweets, replied, "FOLLOWING", remaining=_budget(), en_counter=en_counter)
@@ -1103,7 +1107,7 @@ def run_direct_reply_cycle():
     if _budget() > 0:
         log.info("[DIRECT] === Scraping home feed (For You / algorithmic) ===")
         try:
-            feed_tweets = scrape_home_feed(max_tweets=30)
+            feed_tweets = scrape_home_feed(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
             if feed_tweets:
                 feed_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
                 total += _reply_to_tweets(feed_tweets, replied, "FEED", remaining=_budget(), en_counter=en_counter)
@@ -1123,12 +1127,12 @@ def run_direct_reply_cycle():
     # Apply autonomous evolution: filter pruned + double-weight reinforced
     from .evolution_store import filter_and_weight
     all_fr = filter_and_weight(FR_ACCOUNTS + dyn_accounts.get("fr", []))
-    fr_picks = random.sample(all_fr, min(8, len(all_fr)))  # was 6 → 8: more curated coverage
+    fr_picks = random.sample(all_fr, min(12, len(all_fr)))
     for username in fr_picks:
         if _budget() <= 0:
             break
         log.info(f"[DIRECT] === FR profile @{username} ===")
-        tweets = scrape_profile_tweets(username, max_tweets=10)
+        tweets = scrape_profile_tweets(username, max_tweets=DIRECT_REPLY_PROFILE_SCAN_LIMIT)
         if tweets:
             profile_tweets = [{
                 "url": t["url"], "text": t["text"], "author": username,
@@ -1146,13 +1150,13 @@ def run_direct_reply_cycle():
 
     # === SOURCE 4: HOT FR tweets (X's "Top" tab, min_faves) — fallback if curated didn't fill ===
     all_hot = HOT_TAB_QUERIES + dyn_queries.get("hot", [])
-    hot_picks = random.sample(all_hot, min(5, len(all_hot)))
+    hot_picks = random.sample(all_hot, min(DIRECT_REPLY_HOT_QUERY_LIMIT, len(all_hot)))
     for query in hot_picks:
         if _budget() <= 0:
             break
         log.info(f"[DIRECT] === FR Search (HOT/top): {query} ===")
         try:
-            hot_tweets = scrape_x_search(query, max_tweets=20, tab="top")
+            hot_tweets = scrape_x_search(query, max_tweets=30, tab="top")
             if hot_tweets:
                 total += _reply_to_tweets(hot_tweets, replied, "SEARCH-FR-HOT", source_detail=query, remaining=_budget(), en_counter=en_counter)
                 if _llm_exhausted():
@@ -1166,12 +1170,12 @@ def run_direct_reply_cycle():
 
     # === SOURCE 5: French X Live searches (random discovery — LAST RESORT) ===
     all_search = SEARCH_QUERIES + dyn_queries.get("live", [])
-    queries = random.sample(all_search, min(5, len(all_search)))
+    queries = random.sample(all_search, min(DIRECT_REPLY_LIVE_QUERY_LIMIT, len(all_search)))
     for query in queries:
         if _budget() <= 0:
             break
         log.info(f"[DIRECT] === FR Search (live): {query} ===")
-        search_tweets = scrape_x_search(query, max_tweets=15, tab="live")
+        search_tweets = scrape_x_search(query, max_tweets=25, tab="live")
         if search_tweets:
             total += _reply_to_tweets(search_tweets, replied, "SEARCH-FR-LIVE", source_detail=query, remaining=_budget(), en_counter=en_counter)
             if _llm_exhausted():
@@ -1182,12 +1186,12 @@ def run_direct_reply_cycle():
 
     # === SOURCE 4: English influencer profiles - more accounts, more tweets ===
     all_en = filter_and_weight(EN_ACCOUNTS + dyn_accounts.get("en", []))
-    en_picks = random.sample(all_en, min(4, len(all_en)))
+    en_picks = random.sample(all_en, min(6, len(all_en)))
     for username in en_picks:
         if _budget() <= 0:
             break
         log.info(f"[DIRECT] === EN profile @{username} ===")
-        tweets = scrape_profile_tweets(username, max_tweets=10)
+        tweets = scrape_profile_tweets(username, max_tweets=DIRECT_REPLY_PROFILE_SCAN_LIMIT)
         if tweets:
             profile_tweets = [{
                 "url": t["url"], "text": t["text"], "author": username,

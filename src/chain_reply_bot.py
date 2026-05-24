@@ -40,7 +40,7 @@ from .engagement_log import log_reply
 CHAIN_REPLIED_FILE = os.path.join(_PROJECT_ROOT, "chain_replied.json")
 THREAD_TURN_FILE = os.path.join(_PROJECT_ROOT, "chain_thread_turns.json")
 
-MAX_CHAIN_REPLIES_PER_CYCLE = int(os.environ.get("CHAIN_REPLY_CAP", "4"))
+MAX_CHAIN_REPLIES_PER_CYCLE = int(os.environ.get("CHAIN_REPLY_CAP", "7"))
 MAX_OUR_TURNS_PER_THREAD = int(os.environ.get("CHAIN_TURNS_PER_THREAD", "3"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
@@ -169,7 +169,7 @@ def run_chain_reply_cycle():
 
     log.info(f"[CHAIN] Scraping @{BOT_HANDLE}/with_replies for our recent replies...")
     try:
-        own_replies = scrape_profile_tweets(f"{BOT_HANDLE}/with_replies", max_tweets=12)
+        own_replies = scrape_profile_tweets(f"{BOT_HANDLE}/with_replies", max_tweets=25)
     except Exception:
         log.info("[CHAIN] /with_replies scrape failed:")
         traceback.print_exc()
