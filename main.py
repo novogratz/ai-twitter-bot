@@ -10,6 +10,7 @@ Usage:
     python main.py --dry-run    Print what would happen without posting
 """
 import argparse
+import json
 import os
 import random
 import signal
@@ -73,6 +74,9 @@ from src.youtube_brief_bot import safe_run_youtube_brief_cycle
 from src.morning_recap_bot import safe_run_morning_recap_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE, _LIVE_STRATEGY_FILE as LIVE_STRATEGY_FILE
+
+MONTHLY_STARTUP_STATE_FILE = "monthly_startup_state.json"
+MONTHLY_STARTUP_DAY_UTC = 23
 
 
 def _engagement_skip_rate() -> float:
@@ -201,6 +205,38 @@ def _graceful_shutdown(signum, frame):
     sys.exit(0)
 
 
+def _load_monthly_startup_state() -> dict:
+    try:
+        with open(MONTHLY_STARTUP_STATE_FILE, "r") as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+def _save_monthly_startup_state(state: dict) -> None:
+    with open(MONTHLY_STARTUP_STATE_FILE, "w") as f:
+        json.dump(state, f, indent=2)
+
+
+def _run_monthly_startup_catchup_if_due() -> None:
+    """Run Monthly Décodes from ./bin/run.sh once per month."""
+    now = datetime.now(ZoneInfo("UTC"))
+    if now.day < MONTHLY_STARTUP_DAY_UTC:
+        return
+
+    month_key = now.strftime("%Y-%m")
+    state = _load_monthly_startup_state()
+    if state.get("last_month") == month_key:
+        return
+
+    log.info(f"[STARTUP] Monthly Décodes due for {month_key}; running before Daily burst.")
+    safe_run_monthly_news_cycle(force_all=True)
+    _save_monthly_startup_state({
+        "last_month": month_key,
+        "last_attempted_at": now.isoformat(timespec="seconds"),
+    })
+
+
 def main():
     parser = argparse.ArgumentParser(description="@CryptoAIDecode AI Twitter bot")
     parser.add_argument("--post-only", action="store_true", help="Run only the post bot")
@@ -299,11 +335,11 @@ def main():
         if not _quiet_skip("REPLYBACK"):
             safe_run_replyback_cycle()
 
-    # Startup news burst: fire Daily Décodes immediately. Monthly recaps are
-    # handled by their own cron/manual command so a restart doesn't repost
-    # the whole monthly set.
+    # Startup news burst: Monthly catch-up first, then Daily. Monthly is part
+    # of ./bin/run.sh so a missed cron window does not skip the whole month.
     if not args.reply_only:
-        log.info("Bot started! Firing remaining daily Décodes now; already-shipped topics stay locked.")
+        log.info("Bot started! Checking Monthly Décodes, then firing remaining Daily Décodes.")
+        _run_monthly_startup_catchup_if_due()
         safe_run_daily_news_cycle(force_all=False)
 
     # Then warm up the engagement loop with a direct-reply cycle.
@@ -335,13 +371,6 @@ def main():
             trigger=CronTrigger(day_of_week="fri", hour=19, minute=30, timezone="UTC"),
             id="weekly_news_job",
         )
-        log.info("News bot MONTHLY: cron on the 23rd at 20:00 UTC (= monthly Top 10).")
-        scheduler.add_job(
-            safe_run_monthly_news_cycle,
-            trigger=CronTrigger(day=23, hour=20, minute=0, timezone="UTC"),
-            id="monthly_news_job",
-        )
-
     if not args.post_only:
         first_reply = reply_interval_minutes()
         log.info(f"Reply bot: next scan in {first_reply} minutes.")
