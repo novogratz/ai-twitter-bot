@@ -183,7 +183,7 @@ def run_reply_cycle():
 
     # Growth push: the model already ranked the batch; ship more good targets
     # per scan while MAX_REPLIES_PER_CYCLE still controls the hard ceiling.
-    replies = filtered[:min(5, MAX_REPLIES_PER_CYCLE)]
+    replies = filtered[:min(8, MAX_REPLIES_PER_CYCLE)]
 
     if not replies:
         log.info("[REPLY] All replies filtered (dedup/blocklist) - skipping cycle.")
