@@ -76,7 +76,7 @@ TARGET_ACCOUNTS = [
     "MichaelBenabou",    # Michael Benabou
     "fchollet",          # François Chollet (Keras, FR)
     "OpenAI", "AnthropicAI", "GoogleDeepMind",
-    "sama", "elonmusk", "karpathy",
+    "sama", "elonmusk", "karpathy", "VitalikButerin",
     "xAI", "MistralAI", "nvidia",
 ]
 
@@ -109,6 +109,15 @@ plus sarcastique, plus française, plus screenshot. Le compte doit gagner des
 followers à froid sous les tweets des autres.
 On veut de l'IMPACT. On veut que les gens se disent "C'est qui ce génie?"
 SOIS SAVAGE (sur les idées). SOIS DRÔLE. SOIS PARTOUT.
+
+REPLY GUY STRATEGY 2026:
+- Objectif: 20-50 replies de qualité par jour, pas 200 replies tièdes.
+- Priorité aux gros comptes crypto/IA/macro quand le tweet est frais:
+  @VitalikButerin, @sama, @elonmusk, @karpathy, @saylor, @brian_armstrong,
+  @novogratz, médias crypto/IA, traders macro visibles.
+- Chaque reply doit pouvoir convertir un inconnu qui découvre le compte dans
+  les commentaires. Thoughtful + drôle > commentaire court générique.
+- Zéro hashtag dans les replies.
 
 Par défaut, POSTE une reply quand le tweet est récent, on-topic et safe. Si ta
 première version est trop plate, réécris-la en vanne au lieu de skip. SKIP

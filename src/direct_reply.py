@@ -362,6 +362,7 @@ EN_ACCOUNTS = [
     "GoogleDeepMind",
     "sama",
     "elonmusk",
+    "VitalikButerin",
     "karpathy",
     "xAI",
     "MistralAI",
@@ -728,7 +729,7 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
         return None
 
 
-DIRECT_REPLY_MAX_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_PER_CYCLE", "60"))
+DIRECT_REPLY_MAX_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_PER_CYCLE", "2"))
 MAX_EN_REPLIES_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_EN_PER_CYCLE", "10"))
 DIRECT_REPLY_FEED_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_FEED_SCAN_LIMIT", "60"))
 DIRECT_REPLY_PROFILE_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_PROFILE_SCAN_LIMIT", "18"))

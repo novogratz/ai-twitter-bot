@@ -1,15 +1,15 @@
-"""Spicy bot — deliberately polarizing FR takes + question bait.
+"""Spicy bot — deliberately polarizing English takes + question bait.
 
 User: 20k followers EOM. Need viral moments. Polarizing takes drive
 REPLIES, and replies are the #1 algorithm signal on X. Questions also
 drive replies because the platform UI invites them.
 
 Two modes, picked at random per cycle:
-  - SPICY: deliberate hot take with a contrarian FR position. Stays
+  - SPICY: deliberate hot take with a contrarian English position. Stays
     inside hard rules (no illegal, no US-gov troll) but pushes harder
     on private targets (corporate hype, retail traders, influencer
     coaching, OPINIONATED takes on the niche).
-  - QUESTION: an open FR question on AI / crypto designed to
+  - QUESTION: an open English question on AI / crypto designed to
     trigger replies from followers + lurkers. "Honest question" framing.
 
 Cap 6/day total. Posts via post_tweet(). Different from regular news
@@ -34,7 +34,7 @@ SPICY_STATE_FILE = os.path.join(_PROJECT_ROOT, "spicy_state.json")
 MAX_SPICY_PER_DAY = int(os.environ.get("MAX_SPICY_PER_DAY", "12"))
 
 
-SPICY_PROMPT = """Tu es @kzer_ai. Tu vas poster UN tweet ULTRA SHARP, niche IA / crypto UNIQUEMENT.
+SPICY_PROMPT = """You are @cryptoiadecode. You will post ONE ultra-sharp tweet in the AI / crypto niche only.
 
 {lang_directive}
 
@@ -55,7 +55,7 @@ RÈGLES DURES:
 OUTPUT — strictement le tweet, rien d'autre.
 JAMAIS de "Voici", "Le tweet:", "---", ou méta-commentaire."""
 
-SPICY_INSTRUCTIONS = """SPICY MODE — Tu balances une OPINION TRANCHÉE qui va faire débattre.
+SPICY_INSTRUCTIONS = """SPICY MODE — Drop a sharp opinion that will make people debate.
 - Choisis 1 sujet IA OU crypto (STRICT — pas de bourse/macro) où une majorité pense X.
 - Tu dis le contraire avec une chute qui pique.
 - C'est OK d'être divisif tant qu'il y a un argument.
@@ -68,7 +68,7 @@ Exemples de positions spicy valides:
 - "Mistral lève encore. À ce rythme on financera la souveraineté française avant qu'elle ait shippé un modèle."
 """
 
-QUESTION_INSTRUCTIONS = """QUESTION MODE — Tu poses UNE question ouverte qui invite la réponse.
+QUESTION_INSTRUCTIONS = """QUESTION MODE — Ask ONE open question that invites replies.
 - Sujet: IA OU crypto UNIQUEMENT. Position polite, pas accusatoire.
 - Format: une seule question + un cadre court qui justifie la question.
 - L'audience doit lire et avoir envie de RÉPONDRE.

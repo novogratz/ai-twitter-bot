@@ -59,10 +59,6 @@ RSS_FEEDS = [
     ("Yahoo Finance",     "https://finance.yahoo.com/news/rssindex"),
     ("Axios Tech",        "https://api.axios.com/feed/technology/"),
     ("Reuters Tech",      "https://www.reutersagency.com/feed/?best-sectors=technology&post_type=best"),
-    # FR — keep a thin pulse for Mistral / Bercy scoops
-    ("Les Echos Tech",    "https://services.lesechos.fr/rss/les-echos-tech-medias.xml"),
-    ("Le Monde Tech",     "https://www.lemonde.fr/pixels/rss_full.xml"),
-    ("Numerama",          "https://www.numerama.com/feed/"),
 ]
 
 # Niche-keyword filter — tweet must hit one of these.

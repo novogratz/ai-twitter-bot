@@ -1,17 +1,16 @@
-"""Daily 'top 5 IA/crypto/bourse' digest thread.
+"""Daily 'top 5 AI/crypto/markets' digest thread.
 
 Different from src/thread_bot.py:
   - thread_bot = ONE story dissected (4 tweets: hook → fact → angle → chute)
   - digest_thread_bot = FIVE stories of the day in a recap thread
 
-The digest format is highly shareable on FR Twitter (saves people from
-scrolling 30 outlets). It also positions @cryptoiadecode as THE one-stop FR
-source for IA / crypto / bourse — exactly what the user wants.
+The digest format is highly shareable when it saves people from scrolling
+30 outlets. It positions @cryptoiadecode as a one-stop English source for
+AI / crypto / markets.
 
 Strategy:
   - Once per day (cap=1, idempotent state in digest_thread_state.json).
-  - Picks 5 distinct stories from the last ~36h (one each from FR press
-    + EN top-tier).
+  - Picks 5 distinct stories from the last ~36h from top-tier EN sources.
   - Generates a 6-tweet thread: intro + 5 numbered stories + chute.
   - Posts via twitter_client.post_thread().
 """
@@ -36,7 +35,7 @@ DIGEST_PROMPT = """You are @cryptoiadecode. You write THE daily recap thread —
 📅 Date: {today_date}
 
 PROCESSUS:
-1. WebSearch large (FR + EN top-tier) en parallèle — trouve 5 stories DISTINCTES qui dominent en ce moment:
+1. WebSearch large (EN top-tier) in parallel — find 5 DISTINCT stories dominating right now:
    - 1-2 IA (Mistral, OpenAI, Anthropic, Nvidia, agents, levée, modèle)
    - 1-2 crypto (Bitcoin, Ethereum, ETF, régulation, hack, ATH/crash)
    - 1-2 bourse / macro / tech earnings (CAC40, Nvidia, taux, IPO, faillite)
@@ -46,12 +45,12 @@ PROCESSUS:
 
 FORMAT THREAD (6 tweets, blocs séparés par "---"):
 
-TWEET 1 — INTRO (≤220 chars, FR sec):
+TWEET 1 — INTRO (≤220 chars, dry English):
 - "5 trucs qui ont bougé aujourd'hui sur l'IA, la crypto et la bourse. Personne va vous les expliquer aussi vite. 🧵"
 - Style alternatif accepté tant que: annonce un récap de 5 stories + crée la promesse.
 - Le 🧵 émoji thread est OK, pas d'autre emoji.
 
-TWEET 2 — STORY 1 (≤270 chars, FR):
+TWEET 2 — STORY 1 (≤270 chars, English):
 - Format: "1/ <fait sec en 1 phrase>.\\n\\n<chute FR sarcastique>."
 - Cite un chiffre vérifiable.
 - Mentionne l'outlet entre parenthèses (ex: (Les Échos), (Reuters)).
@@ -72,10 +71,10 @@ TWEET 6 — STORY 5 + CHUTE (≤270 chars):
   Ex: "Conclusion: si t'as lu jusqu'ici, t'as plus suivi l'actualité que 80% des analystes BFM."
 
 RÈGLES DURES:
-- TOUT EN FRANÇAIS. Audience 100% FR.
+- 100% English. Global AI / crypto / markets audience.
 - Pas d'em dash (—). Pas d'emojis (sauf 🧵 sur le tweet 1).
 - Pas de hashtag.
-- Sources top-tier obligatoires (Reuters, Bloomberg, FT, WSJ, AFP, Les Échos, Le Monde, BFM, Numerama, Usine Digitale, Siècle Digital, TechCrunch, The Information, CoinDesk).
+- Top-tier sources required (Reuters, Bloomberg, FT, WSJ, AFP, TechCrunch, The Information, CoinDesk, The Block, CNBC, Axios).
 - ≤36h max sur chaque news.
 - Si moins de 4 stories valides existent → output exactement le mot SKIP. Mieux vaut sauter le récap qu'écrire un thread bidon.
 

@@ -1,20 +1,22 @@
 {
   "caps": {
-    "MAX_NEWS_PER_DAY": 6,
+    "MAX_NEWS_PER_DAY": 5,
     "MAX_HOTAKES_PER_DAY": 3,
     "MAX_BREAKOUTS_PER_DAY": 0,
     "MAX_SPICY_PER_DAY": 0,
     "MAX_QUOTES_PER_DAY": 80,
     "MAX_RETWEETS_PER_DAY": 30,
-    "MAX_REPLIES_PER_CYCLE": 120,
+    "MAX_REPLIES_PER_CYCLE": 3,
     "FOLLOW_BLAST_PER_CYCLE": 140,
     "LIKE_BOT_PER_CYCLE": 140
   },
-  "cadence_factor": 0.55,
+  "cadence_factor": 1.0,
   "topic_focus": [
     "IA",
     "crypto",
     "Bitcoin",
+    "AI tokens",
+    "macro",
     "OpenAI",
     "Mistral",
     "datacenter IA",
@@ -53,8 +55,8 @@
     "AI code editor",
     "devtools IA"
   ],
-  "language": "fr",
+  "language": "en",
   "scope": "ai_crypto_only",
   "updated_at": "2026-05-23T20:05:00",
-  "note": "Vacation growth push: keep retweets capped at 30/day, speed cadence, prioritize replies + reciprocal follow/like loops toward 10k follower goal."
+  "note": "English migration: standalone content in English; replies still match parent language. Retweets restricted to big English crypto/AI/macro content."
 }

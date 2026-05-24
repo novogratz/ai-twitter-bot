@@ -124,13 +124,13 @@ Every knob is an environment variable in `.env`. Defaults are tuned for an Engli
 | `REPLY_MODEL` | `gpt-5.4-mini` | Model for replies (volume surface) |
 | `LLM_ENFORCE_BUDGET` | `0` | `0` = soft accounting only; `1` = hard-stop local LLM calls at configured budgets |
 | `LLM_MIN_SECONDS_BETWEEN_CALLS` | `15` | Spacing guardrail to avoid bursty overlapping CLI calls |
-| `MAX_NEWS_PER_DAY` | `10` | Cap on news posts |
+| `MAX_NEWS_PER_DAY` | `5` | Cap on Décode insight posts |
 | `NEWS_POSTS_PER_CYCLE` | `3` | News posts to burst per cycle; set to `1` for one-shot (fail → skip) |
-| `MAX_HOTAKES_PER_DAY` | `0` | Cap on hot takes |
+| `MAX_HOTAKES_PER_DAY` | `3` | Cap on quick takes |
 | `MAX_QUOTES_PER_DAY` | `80` | Cap on the legacy repost-pool job |
 | `MAX_RETWEETS_PER_DAY` | `30` | Cap on retweets |
 | `RETWEETS_PER_CYCLE` | `3` | Max external retweets shipped after each candidate scrape |
-| `MAX_REPLIES_PER_CYCLE` | `8` | Cap per reply cycle |
+| `MAX_REPLIES_PER_CYCLE` | `3` | Cap per broad reply cycle; direct replies target 20-50 quality replies/day |
 | `CONTENT_LANG_PRIMARY` | `en` | `en` / `fr` / `mixed` (replies always match parent) |
 | `RETWEET_MAX_AGE_HOURS` | `18` | Skip retweet candidates older than this |
 | `SUPPRESSION_AVG_LIKES_FLOOR` | `1.0` | Trigger shadowban-pause if avg drops below |
@@ -181,7 +181,7 @@ ai-twitter-bot/
 ## Design principles
 
 1. **Process safety > feature parity.** Every cycle is wrapped in `safe_run_*` so a single-cycle exception cannot crash the scheduler. Health watchdog auto-restarts Safari after 3 consecutive cycle failures.
-2. **Autonomous self-modification with bounded blast radius.** Agentic maintenance is disabled by default. When enabled, `meta_strategy_agent` can rewrite daily caps only within hard-coded ranges (`news 4-40`, `retweet 8-120`). Every self-modifying agent auto-commits + pushes its state files to git so every change is audit-trailed.
+2. **Autonomous self-modification with bounded blast radius.** Agentic maintenance is disabled by default. When enabled, `meta_strategy_agent` can rewrite daily caps only within hard-coded ranges (`news 4-8`, `retweet 8-30`). Every self-modifying agent auto-commits + pushes its state files to git so every change is audit-trailed.
 3. **Idempotent state.** All daily-counter files (`thread_daily_state`, `pin_daily_state`, etc.) are JSON-keyed by date. A restart mid-day picks up exactly where it left off; the bot never double-posts.
 4. **Best-effort UI automation.** Every JS-click into the X DOM is wrapped in try/except with a fallback path. When X reshuffles its DOM, the bot logs and skips that one cycle — it never crashes.
 5. **Bandit attribution baked in.** Every generated tweet carries a `[PATTERN: <ID>]` metadata line that's stripped pre-post and logged to `engagement_log.csv` column 6. The `evolution_agent` reads these to compute per-pattern ROI and rewrite the style guide.

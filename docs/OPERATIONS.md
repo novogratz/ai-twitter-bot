@@ -225,7 +225,7 @@ Common patterns and what to do:
 # All content in EN (default)
 echo "CONTENT_LANG_PRIMARY=en" >> .env
 # All content in FR
-echo "CONTENT_LANG_PRIMARY=fr" >> .env
+echo "CONTENT_LANG_PRIMARY=en" >> .env
 # 70% EN / 30% FR per cycle
 echo "CONTENT_LANG_PRIMARY=mixed" >> .env
 ```
