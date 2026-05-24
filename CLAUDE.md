@@ -31,8 +31,7 @@ then `OPENCODE_FALLBACK2_MODEL`. Refusal patterns live in
 News bursts are tuned via `NEWS_POSTS_PER_CYCLE` (default `3`); set to `1`
 when the LLM is flaky so each cycle skips fast instead of grinding for 6+ min
 on bad output.
-
-Repost volume is currently tuned high but bounded: `MAX_RETWEETS_PER_DAY=40`,
+Repost volume is currently tuned high but bounded: `MAX_RETWEETS_PER_DAY=30`,
 `RETWEETS_PER_CYCLE=3`, retweet job every 3 min, legacy repost-pool every
 8 min. Retweet candidates still pass source, niche, age, min-like, and
 deterministic score filters before posting.
@@ -165,7 +164,7 @@ for discovery/scout):
 | `strategy_agent` | 3h | `dynamic_queries.json` + `dynamic_accounts.json` (additions only) |
 | `evolution_agent` | 3h | `directives.md` + `pruned_accounts.json` + `reinforced_accounts.json` |
 | `reflection_agent` | 6h | `personality.json` (per-account dossiers + topic positions) |
-| `self_evolution_agent` | 4h | `bot_self.json` (mood, obsession, drift, self_narrative) |
+| `self_evolution_agent` | 4h | `bot_self_fr.json` + `bot_self_en.json` (mood, obsession, character_traits, en_voice, drift, self_narrative) |
 | `scout_agent` | 4h | `dynamic_accounts.json` + auto-follows |
 | `performance.py` | 2h | `performance_log.json` + `learnings.json` |
 | `daily_digest` | 1h (idempotent) | `daily_digest.md` |

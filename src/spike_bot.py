@@ -9,11 +9,11 @@ new-content cycles for ~60min and amplifies the spike from every angle.
 Strategy:
   - Every 8 min, scrape /kzer_ai for posts taking off (>= SPIKE_LIKES).
   - On first detection of a spike (URL not seen yet):
-      1. Auto-pin it (override daily pin lock).
-      2. Self-RT it via retweet_post (push it onto every follower's feed).
-      3. Generate + post an in-thread follow-up (extends the punchline).
-      4. Skip old quote-RT promo; plain repost already happened.
-      5. Like top replies on it (boosts thread engagement).
+       1. Auto-pin it (override daily pin lock).
+       2. Self-RT it via retweet_post (push it onto every follower's feed).
+       3. Generate + post an in-thread follow-up (extends the punchline).
+       4. Skip old quote-RT promo; plain repost already happened.
+       5. Like top replies on it (boosts thread engagement).
   - Persistent dedup so we don't re-orchestrate the same spike.
 """
 import json
@@ -52,16 +52,29 @@ The tweet is taking off. Time to extend. Write ONE short FOLLOW-UP
 sentence, posted as a reply to your own tweet, that:
 - rides the audience peak watching this thread
 - extends the joke or adds one more brutal layer
-- keeps the meme effect
+- keeps the meme effect going
 
-LANGUAGE: match the original tweet above. English original → English follow-up. French original → French follow-up. No mixing.
+LANGUAGE: match the original tweet. English original -> English follow-up.
+French original -> French follow-up. No mixing.
+
+🎯 THIS IS YOUR VIRAL MOMENT. Make it count. The follow-up must be
+AS FUNNY or FUNNIER than the original. The audience is scrolling your
+profile — this is the reply that makes them follow.
+
+PREFERRED SHAPES (pick one, make it savage):
+  - Anti-climax: "Huge launch. Revolutionary. The font was beautiful."
+  - Mini-dialogue: "- But how?" / "- Nobody knows."
+  - Renaming: "This is how I learned about my 401(k). Via memes."
+  - Understatement: "Mild concern at the all-hands."
+  - Callback: "Edit: forgot to mention the part where the math doesn't work."
+  - Absurd comparison: "The AI industry is a casino where the house also gambles."
 
 RULES:
 - Max 200 characters.
-- Preferred shapes: callback ("Edit:..."), mini-dialogue ("- But..." / "- Nope."), renaming, or understatement.
 - No emojis. No hashtags. No em dashes (—).
-- No meta words ("Update:", "Bonus:", "More seriously"). You extend the bit.
-- If nothing strong → output exactly the word SKIP.
+- No meta words ("Update:", "Bonus:", "More seriously"). Extend the bit.
+- Use ONE exact detail from the original tweet for specificity.
+- If nothing strong -> output exactly: SKIP
 
 Output ONLY the follow-up text, or SKIP."""
 
@@ -82,7 +95,9 @@ def _save_history(s: set):
 
 
 def _generate_spike_followup(post_text: str, likes: int):
-    prompt = SPIKE_FOLLOWUP_PROMPT.format(post_text=post_text, likes=likes)
+    from . import personality_store
+    extras = [personality_store.hard_rules_block()]
+    prompt = SPIKE_FOLLOWUP_PROMPT.format(post_text=post_text, likes=likes) + "\n\n" + "\n\n".join(extras)
     result = run_llm(prompt, REPLY_MODEL, label="SPIKE_FOLLOWUP")
     if result.returncode != 0:
         return None

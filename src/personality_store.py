@@ -356,6 +356,8 @@ def render_bot_self(lang: str = "fr") -> str:
             parts.append(f"Current obsession: {d['obsession']}")
         if d.get("recent_learning"):
             parts.append(f"Recent takeaway: {d['recent_learning']}")
+        if d.get("character_traits"):
+            parts.append(f"Character: {', '.join(d['character_traits'])}")
         if d.get("self_narrative"):
             parts.append("")
             parts.append(d["self_narrative"])
@@ -384,6 +386,8 @@ def render_bot_self(lang: str = "fr") -> str:
         parts.append(f"Obsession en ce moment: {d['obsession']}")
     if d.get("recent_learning"):
         parts.append(f"Constat recent: {d['recent_learning']}")
+    if d.get("character_traits"):
+        parts.append(f"Traits de caractere: {', '.join(d['character_traits'])}")
     if d.get("self_narrative"):
         parts.append("")
         parts.append(d["self_narrative"])
