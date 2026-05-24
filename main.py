@@ -159,10 +159,10 @@ def reply_interval_minutes() -> int:
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     # US business peak EST 09-16 = absolute reply window.
     if 9 <= hour < 16:
-        return random.randint(1, 3)
+        return random.randint(1, 2)
     if 16 <= hour < 23:
-        return random.randint(3, 6)
-    return random.randint(5, 9)
+        return random.randint(2, 4)
+    return random.randint(3, 6)
 
 
 def engage_interval_minutes() -> int:
@@ -178,8 +178,8 @@ def direct_reply_interval_minutes() -> int:
     2026-05-23: tightened per "go crazy" mandate."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return _cadence(random.randint(2, 4))
-    return _cadence(random.randint(5, 9))
+        return _cadence(random.randint(1, 3))
+    return _cadence(random.randint(3, 6))
 
 
 def early_bird_interval_minutes() -> int:
@@ -528,10 +528,10 @@ def main():
 
         # Repost-pool bot — formerly quote-tweet. It still uses the same
         # candidate pool/state, but posts plain reposts only.
-        log.info("Repost-pool bot: amplifying viral setups every 8 min (plain reposts only).")
+        log.info("Repost-pool bot: amplifying viral setups every 5 min (plain reposts only).")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=8),
+            trigger=IntervalTrigger(minutes=5),
             id="quote_tweet_job",
         )
 
@@ -540,10 +540,10 @@ def main():
         # bind while source/niche/age/dedup filters keep quality bounded.
         # 2026-05-15: 8 → 5 min ("retweet more things").
         # 2026-05-23: 5 → 3 min ("do more reposts").
-        log.info("Retweet bot: amplifying trusted news every 3 min (multi-RT cycle, cap binds via MAX_RETWEETS_PER_DAY).")
+        log.info("Retweet bot: amplifying trusted news every 2 min (multi-RT cycle, cap binds via MAX_RETWEETS_PER_DAY).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(minutes=3),
+            trigger=IntervalTrigger(minutes=2),
             id="retweet_job",
         )
 
@@ -938,8 +938,8 @@ def main():
         # reply, engage, early_bird, roast, direct_reply) already pick
         # up changes via _cadence() on their next reschedule.
         FIXED_JOB_BASE_MINUTES = {
-            "quote_tweet_job": 8,
-            "retweet_job": 3,
+            "quote_tweet_job": 5,
+            "retweet_job": 2,
             "like_job": 10,
             "boost_job": 20,
             "viral_followup_job": 10,

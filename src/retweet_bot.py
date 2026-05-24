@@ -58,12 +58,12 @@ RETWEET_STATE_FILE = os.path.join(_PROJECT_ROOT, "retweet_daily_state.json")
 DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 
 # Hard cap per day. Path is deterministic/no-AI, so volume is cheap.
-MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "30"))
-RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "3")))
+MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "60"))
+RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "5")))
 
 # Min likes to consider a candidate before scoring. Source/niche/age gates
 # still carry most of the quality boundary.
-MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "25"))
+MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "12"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -116,8 +116,8 @@ OFF_TOPIC_KEYWORDS = (
 # Max age in hours for a retweet candidate. Anything older is stale —
 # we shouldn't be amplifying week-old or year-old news.
 MAX_CANDIDATE_AGE_HOURS = int(os.environ.get("RETWEET_MAX_AGE_HOURS", "24"))
-FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "5"))
-FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "5"))
+FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "3"))
+FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "8"))
 
 FEED_REPOST_SEARCH_QUERIES = [
     "Bitcoin OR BTC lang:fr min_faves:3",

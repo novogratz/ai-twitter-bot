@@ -437,10 +437,12 @@ TOPIC: {decode_topic} uniquement (pas d'autre sujet). Format: {format_mode}.
 🚨 SCOPE STRICT — 4 catégories distinctes:
   • IA — labs, modèles, agents, levées IA, regs IA.
   • Crypto — BTC, ETH, ETF, stablecoins, mining, DeFi sérieux.
-  • Investissement & Bourse — capex IA/datacenters MW, crypto mining
-    (MARA, RIOT, CleanSpark, CoreWeave, Crusoe), valos / IPOs / earnings
-    Nvidia / AMD / Tesla / Microsoft / Google / Meta liés à IA ou crypto,
-    flux de capital sur ces noms. PAS de macro pure (Fed, CAC40 banques).
+  • Investissement & Bourse — marchés actions, IPOs, valorisations, earnings,
+    fonds/VC, capex IA/datacenters, multiples, rotation sectorielle, gros
+    mouvements de Wall Street / Paris. Exemples forts: SpaceX IPO/valo,
+    OpenAI/Anthropic IPO, CoreWeave, Nvidia/AMD/Tesla/Microsoft/Google/Meta.
+    Évite les proxies crypto purs (MSTR, MARA, RIOT, CleanSpark) sauf si
+    l'angle est clairement bourse/valorisation, pas Bitcoin/hashrate.
   • Space — SpaceX, Starship, Starlink, Blue Origin, Rocket Lab, New Glenn,
     ArianeGroup, ESA, NASA, space industry, launchers, satellites.
 
@@ -1029,8 +1031,9 @@ FORMAT MODE: **{format_mode}**  (top5 = Top 5 chiffres bookmark-bait; regular = 
 FOCUS THÉMATIQUE DU JOUR: **{decode_topic}**
 Si {decode_topic} = IA → tu choisis une story IA (lab, chip, datacenter, agent, regs).
 Si {decode_topic} = Crypto → tu choisis une story crypto (BTC, ETH, stablecoin, mining, ETF, exchange).
-Si {decode_topic} = Investissement → tu choisis une story marché/macro/strat
-(Wall Street, big move VC, prise de position d'un investisseur ref, ETF, IPO, capex IA).
+Si {decode_topic} = Investissement → tu choisis une story bourse/stock market/IPO/valo
+(SpaceX IPO/valorisation, OpenAI/Anthropic IPO, Wall Street, big move VC, earnings, capex IA).
+Évite MicroStrategy/MSTR/MARA/RIOT/CleanSpark sauf angle bourse exceptionnel, pas crypto.
 Si {decode_topic} = Space → tu choisis une story space (SpaceX, Starship, Starlink, Blue Origin,
 New Glenn, Rocket Lab, ArianeGroup, ESA, NASA, space industry, launchers, satellites).
 Ne croise PAS les topics — un Décode = un sujet, focus net. Le sujet de cette
@@ -1802,8 +1805,9 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
             ],
             "Investissement": [
                 f"NVIDIA AMD Tesla Microsoft Google AI stock earnings {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"SpaceX IPO valuation OpenAI Anthropic IPO stock market {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
                 f"AI datacenter capex Stargate CoreWeave CRWV news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"tech IPO MicroStrategy MSTR MARA RIOT valuation {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"tech IPO valuation private markets Wall Street bourse {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
                 f"AI investment fund raise venture capital news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
             ],
             "Space": [

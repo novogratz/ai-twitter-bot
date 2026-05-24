@@ -5,6 +5,8 @@
     "Crypto:monthly",
     "Investissement:monthly",
     "IA:monthly",
-    "Space:monthly"
+    "Space:monthly",
+    "IA:daily",
+    "Space:daily"
   ]
 }

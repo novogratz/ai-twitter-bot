@@ -270,8 +270,8 @@ def run_quote_tweet_cycle():
     quoted = _load_quoted()
     candidates = []
 
-    # Pick 2 random queries this cycle, scrape top tab, pick the most-liked.
-    for query in random.sample(QUOTE_QUERIES, k=min(4, len(QUOTE_QUERIES))):
+    # Scan more hot queries per cycle so the repost pool has more live setups.
+    for query in random.sample(QUOTE_QUERIES, k=min(7, len(QUOTE_QUERIES))):
         log.info(f"[QUOTE] Searching HOT for: {query}")
         try:
             tweets = scrape_x_search(query, max_tweets=15, tab="top")
