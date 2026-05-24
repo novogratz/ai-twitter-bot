@@ -5556,3 +5556,20 @@ WHAT A LEGEND!
 - **@bitcoinsapiens** (39 likes, score 8/10) — LARRY FINK: "No one should be surprised if Bitcoin hits $700,000."
   - https://x.com/BitcoinSapiens/status/2058398332196909146
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 51).
+- **@peterdiamandis** (112 likes, score 9/10) — In ONE week: Anthropic raised $30B at a $900B valuation — overtaking OpenAI. OpenAI filed its S-1. SpaceX filed for a $75B IPO, and a $28T TAM. NextEra agreed to a $67B utility megamerger to power AI.
+  - https://x.com/PeterDiamandis/status/2058411159120933273
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 158).
+- **@merlijntrader** (196 likes, score 9/10) — THE SEC FINED NVIDIA FOR HIDING CRYPTO INSIDE GAMING.
+
+ 2022: NVIDIA charged for hiding crypto-mining revenue under "gaming."
+2
+026: NVIDIA now hides gaming itself under "Edge Computing."
+
+Same playbo
+  - https://x.com/MerlijnTrader/status/2058208834615972222
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 228).
+- **@scottmelker** (85 likes, score 9/10) — NEW PODCAST: Bitcoin’s chart is flashing the same bear flag pattern seen before the 2022 collapse, with $BTC potentially heading to 40k, warns @cryptomanran.
+
+ OUT NOW: https://youtu.be/II1LfTs055Q
+  - https://x.com/scottmelker/status/2058274162196480150
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 159).
