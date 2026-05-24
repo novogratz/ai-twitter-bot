@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install the @kzer_ai bot as a macOS LaunchAgent.
+# Install the @CryptoAIDecode bot as a macOS LaunchAgent.
 #
 # Result: bot starts at login + auto-respawns on crash + survives reboots.
 # Effectively turns the bot into a system service for this user account.

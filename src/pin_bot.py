@@ -6,7 +6,7 @@ follow. If it's stale, they bounce. We post a lot — the pinned slot
 should rotate to whatever is currently working.
 
 Strategy:
-  - Once per day, scrape /kzer_ai (main feed, posts only — NOT
+  - Once per day, scrape /CryptoAIDecode (main feed, posts only — NOT
     /with_replies which mixes replies in).
   - Pick the post with the highest like count from the last ~30 tweets
     (the visible profile window).

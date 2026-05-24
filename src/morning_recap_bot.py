@@ -45,7 +45,7 @@ MORNING_HOUR_START_EST = 1
 MORNING_HOUR_END_EST = 4
 
 
-RECAP_PROMPT = """You are @cryptoiadecode. It is morning and you write THE wake-up
+RECAP_PROMPT = """You are @CryptoAIDecode. It is morning and you write THE wake-up
 thread for a global English AI infrastructure & asymmetric investing audience.
 
 VOICI les éléments en buzz ce matin (RSS / HN / Reddit / X home, last 8h):

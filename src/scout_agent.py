@@ -72,7 +72,7 @@ def _build_agent_prompt() -> str:
     known_sample = sorted(_known_handles())[:120]
     dyn_a = os.path.abspath(DYNAMIC_ACCOUNTS_FILE)
 
-    return f"""Tu es le SCOUT AGENT autonome de @kzer_ai — un bot X francophone qui couvre IA + crypto + bourse.
+    return f"""Tu es le SCOUT AGENT autonome de @CryptoAIDecode — un bot X francophone qui couvre IA + crypto + bourse.
 
 🎯 TA MISSION CETTE SESSION:
 Trouver les MEILLEURS comptes X FRANCOPHONES sur IA / crypto / bourse / finance / trading dans TROIS régions:

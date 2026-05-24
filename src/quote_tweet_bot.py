@@ -41,7 +41,7 @@ QUOTE_QUERIES = [
     "stablecoin OR ETF OR \"spot ETF\" lang:en min_faves:800",
 ]
 
-QUOTE_PROMPT = """Tu es @kzer_ai. Tu vas QUOTE-TWEETER ce tweet:
+QUOTE_PROMPT = """Tu es @CryptoAIDecode. Tu vas QUOTE-TWEETER ce tweet:
 
 @{author}: "{tweet_text}"
 

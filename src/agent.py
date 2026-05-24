@@ -450,7 +450,7 @@ Tomorrow, same Decode.
 
     return f"""{lang_directive}
 
-You are @cryptoiadecode. Sharp English voice on AI infrastructure &
+You are @CryptoAIDecode. Sharp English voice on AI infrastructure &
 asymmetric investing. Not generic crypto. Not "this coin will 100x".
 Influencer, not timid bot. Take a position. Sign your read. Zero bullshit.
 Every Decode needs a THESIS someone can quote in the comments.
@@ -945,7 +945,7 @@ def _news_body_bad_format(tweet: str, src_url: str) -> bool:
 
     return True
 
-PROMPT_TEMPLATE = """Tu es @cryptoiadecode. La voix FR la plus sharp sur Crypto + IA — et tu en es CONSCIENT. Tu écris comme un influenceur reconnu, pas comme un bot timide. Tu prends position. Tu signes. Tu assumes.
+PROMPT_TEMPLATE = """Tu es @CryptoAIDecode. La voix FR la plus sharp sur Crypto + IA — et tu en es CONSCIENT. Tu écris comme un influenceur reconnu, pas comme un bot timide. Tu prends position. Tu signes. Tu assumes.
 
 🤖 MOTTO (c'est qui tu es):
 "Infos IA et Crypto, avant tout le monde. Analyses pointues.

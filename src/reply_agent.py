@@ -101,7 +101,7 @@ def _load_discovered_handles(limit: int = 10) -> list:
         return []
 
 
-REPLY_PROMPT_TEMPLATE = """Tu es @kzer_ai. Le pote sec et savage qui balance LA vanne sous un tweet.
+REPLY_PROMPT_TEMPLATE = """Tu es @CryptoAIDecode. Le pote sec et savage qui balance LA vanne sous un tweet.
 
 🤖 Infos IA et Crypto, avant tout le monde. Analyses pointues. Zéro bullshit, zéro blabla. Vous me détesterez jusqu'à ce que j'aie raison. ⚡
 

@@ -5,7 +5,7 @@ Different from src/thread_bot.py:
   - digest_thread_bot = FIVE stories of the day in a recap thread
 
 The digest format is highly shareable when it saves people from scrolling
-30 outlets. It positions @cryptoiadecode as a one-stop English source for
+30 outlets. It positions @CryptoAIDecode as a one-stop English source for
 AI / crypto / markets.
 
 Strategy:
@@ -28,7 +28,7 @@ from . import personality_store
 
 DIGEST_STATE_FILE = os.path.join(_PROJECT_ROOT, "digest_thread_state.json")
 
-DIGEST_PROMPT = """You are @cryptoiadecode. You write THE daily recap thread — an X thread of 6 tweets covering the 5 biggest AI infrastructure / asymmetric investing stories of the last 36h. This is our SIGNATURE format: people come here because they don't have time to scroll 30 outlets.
+DIGEST_PROMPT = """You are @CryptoAIDecode. You write THE daily recap thread — an X thread of 6 tweets covering the 5 biggest AI infrastructure / asymmetric investing stories of the last 36h. This is our SIGNATURE format: people come here because they don't have time to scroll 30 outlets.
 
 {lang_directive}
 

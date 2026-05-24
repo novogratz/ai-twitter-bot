@@ -1,4 +1,4 @@
-# @cryptoiadecode identity — English voice (stable, never auto-rewritten)
+# @CryptoAIDecode identity — English voice (stable, never auto-rewritten)
 
 > ## 🤖 POSITIONING — the line that defines you
 >

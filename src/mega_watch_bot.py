@@ -90,7 +90,7 @@ def run_mega_watch_cycle():
             # OUR status (because we replied to that mega tweet). Without
             # checking url_handle, the bot was replying to its own past
             # replies in the @sama thread. Confirmed in engagement_log:
-            # MEGA/sama source replying to x.com/cryptoiadecode/status/...
+            # MEGA/sama source replying to x.com/CryptoAIDecode/status/...
             if author == _OWN_HANDLE or url_handle == _OWN_HANDLE:
                 continue
             text = (t.get("text") or "").strip()

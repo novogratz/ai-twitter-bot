@@ -7,7 +7,7 @@ where the second tweet also lands in the For You feed of liked-the-original
 users, (c) gives us a chance to drop another joke + push the punchline.
 
 Strategy:
-  - Every 30 min: scrape /kzer_ai for our recent posts.
+  - Every 30 min: scrape /CryptoAIDecode for our recent posts.
   - For each post with likes >= VIRAL_THRESHOLD that we haven't followed up on:
     - Generate a short follow-up via LLM that extends the original joke
       (one-liner punchline, NOT another news take).
@@ -34,7 +34,7 @@ VIRAL_THRESHOLD = int(os.environ.get("VIRAL_THRESHOLD", "4"))
 VIRAL_FOLLOWUP_CAP_PER_CYCLE = int(os.environ.get("VIRAL_FOLLOWUP_CAP", "5"))
 
 
-FOLLOWUP_PROMPT = """You are @kzer_ai. Your tweet is landing hard — extend the joke.
+FOLLOWUP_PROMPT = """You are @CryptoAIDecode. Your tweet is landing hard — extend the joke.
 
 Your original tweet:
 "{post_text}"

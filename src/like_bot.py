@@ -2,7 +2,7 @@
 
 Why: a like is the cheapest social signal on X. Each like sends a
 notification → the recipient checks their notifs → many click through
-to /kzer_ai. With ~20 likes per cycle and ~4 cycles per hour, that's
+to /CryptoAIDecode. With ~20 likes per cycle and ~4 cycles per hour, that's
 ~80 outbound notifications/hour.
 
 Strategy:

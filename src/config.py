@@ -1,4 +1,4 @@
-"""Central configuration for the @cryptoiadecode Twitter bot."""
+"""Central configuration for the @CryptoAIDecode Twitter bot."""
 import os
 
 _PROJECT_ROOT = os.path.join(os.path.dirname(__file__), "..")
@@ -24,7 +24,7 @@ def _load_dotenv(path: str = os.path.join(_PROJECT_ROOT, ".env")) -> None:
 _load_dotenv()
 
 # Bot identity
-BOT_HANDLE = os.environ.get("BOT_HANDLE", "cryptoiadecode")
+BOT_HANDLE = os.environ.get("BOT_HANDLE", "CryptoAIDecode")
 BOT_PROFILE_URL = f"https://x.com/{BOT_HANDLE}"
 
 # Data file paths
