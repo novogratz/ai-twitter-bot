@@ -36,7 +36,6 @@ _OWN_HANDLE = BOT_HANDLE.lower()
 MEGA_ACCOUNTS = [
     "sama", "OpenAI", "AnthropicAI", "elonmusk",
     "MistralAI", "arthurmensch",
-    "lesechos", "BFMBourse", "LeJournalDuCoin",
     "naval",
     # AI researchers — user mandate 2026-05-23. Fresh tweets from these
     # accounts are gold for early-reply algo amplification.
@@ -45,6 +44,12 @@ MEGA_ACCOUNTS = [
     # Cursor — sharp analytical replies on their drops have shot at
     # Elon's attention (he openly raves about Cursor).
     "cursor_ai", "sualeh", "amanrsanger", "mntruell",
+    # English AI infra / asymmetric investing accounts.
+    "CoreWeave", "CrusoeEnergy", "LambdaAPI", "applied_dc",
+    "IREN_Ltd", "Hut8Corp", "TeraWulfInc", "CipherMining",
+    "CleanSpark_Inc", "MARAHoldings", "RiotPlatforms",
+    "SpaceX", "Starlink", "RocketLab", "PeterDiamandis",
+    "bittensor_", "opentensor", "KobeissiLetter", "unusual_whales",
 ]
 
 MAX_AGE_MIN = 4

@@ -42,17 +42,19 @@ MARQUEE_HANDLES = [
     "cursor_ai", "sualeh", "amanrsanger", "mntruell",
     # Chips + infra
     "nvidia", "AMD", "intel", "CoreWeave", "CrusoeEnergy",
-    "groqinc", "cerebrassystems",
+    "groqinc", "cerebrassystems", "LambdaAPI", "applied_dc",
+    "IREN_Ltd",
     # Crypto core
     "VitalikButerin", "saylor", "MicroStrategy", "brian_armstrong",
     "coinbase", "cz_binance", "binance", "krakenfx",
     "ethereum", "solana", "aeyakovenko",
     # Crypto mining
     "MARAHoldings", "RiotPlatforms", "CleanSpark_Inc", "Hut8Corp",
-    "Bitfarms_io", "TeraWulfInc", "CipherMining",
+    "Bitfarms_io", "TeraWulfInc", "CipherMining", "Core_Scientific",
     # Crypto press + analysts
     "CoinDesk", "TheBlock__", "Cointelegraph", "watcherguru",
     "DocumentingBTC", "PeterSchiff", "RaoulGMI", "APompliano",
+    "bittensor_", "opentensor", "KobeissiLetter", "unusual_whales",
     # FR ecosystem
     "rachel__lemoine", "ledger", "PaymiumOfficial", "ArthurBigBig",
     "owencyclops", "marcelenplace",

@@ -54,6 +54,12 @@ EARLY_BIRD_ACCOUNTS = [
     # Cursor — Elon engages openly, early replies on their drops are
     # a path to his attention. 4 accounts: official + 3 co-founders.
     "cursor_ai", "sualeh", "amanrsanger", "mntruell",
+    # === AI infra / asymmetric investing EN ===
+    "CoreWeave", "CrusoeEnergy", "LambdaAPI", "applied_dc",
+    "IREN_Ltd", "Hut8Corp", "TeraWulfInc", "CipherMining",
+    "CleanSpark_Inc", "MARAHoldings", "RiotPlatforms",
+    "SpaceX", "Starlink", "RocketLab", "PeterDiamandis",
+    "bittensor_", "opentensor", "KobeissiLetter",
     # === IA EN niche / dev ===
     "TheRundownAI", "rowancheung", "mckaywrigley", "levelsio",
     "AlphaSignalAI", "TheAIGRID", "DrJimFan", "GaryMarcus",

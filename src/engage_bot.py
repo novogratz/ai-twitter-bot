@@ -41,6 +41,13 @@ TARGET_ACCOUNTS = [
     "elonmusk", "BillGates", "satyanadella",
     "sama", "ylecun", "karpathy",
 
+    # === AI infra / asymmetric investing EN ===
+    "CoreWeave", "CrusoeEnergy", "LambdaAPI", "applied_dc",
+    "IREN_Ltd", "Hut8Corp", "TeraWulfInc", "CipherMining",
+    "CleanSpark_Inc", "MARAHoldings", "RiotPlatforms",
+    "SpaceX", "Starlink", "RocketLab", "PeterDiamandis",
+    "bittensor_", "opentensor", "KobeissiLetter", "unusual_whales",
+
     # === IA: Companies ===
     "OpenAI", "AnthropicAI", "GoogleDeepMind", "MetaAI",
     "xAI", "MistralAI", "HuggingFace", "Cohere", "PerplexityAI",

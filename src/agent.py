@@ -229,10 +229,10 @@ def _next_topic_not_done_today() -> Optional[tuple]:
 def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_date, format_mode, web_block, dedup_block):
     series_label = "Monthly" if format_mode == "monthly_top10" else ("Weekly" if format_mode == "top5" else "Daily")
     topic_label = {
-        "IA": "AI",
-        "Crypto": "Crypto",
-        "Investissement": "Markets",
-        "Space": "Space",
+        "IA": "AI Infra",
+        "Crypto": "AI-linked Crypto",
+        "Investissement": "Asymmetric Markets",
+        "Space": "Space Infrastructure",
     }.get(decode_topic, decode_topic)
     from . import lang_mode as _lang_mode
     lang_directive = _lang_mode.lang_directive(_lang_mode.pick_content_lang())
@@ -245,7 +245,10 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
 
   • Le Décode Monthly = TOP 10 chiffres des 30 derniers jours pour UNE
     catégorie. Tu synthétises les plus gros faits, pas les micro-news. Chaque bullet doit porter un acteur, un chiffre, et une
-    conséquence business/marché/souveraineté.
+    conséquence business/marché/souveraineté. Priorité au prisme "AI
+    infrastructure & asymmetric investing": power demand, MW/GW capacity,
+    compute scarcity, grid bottlenecks, robotics, space infrastructure,
+    and AI-linked crypto.
   • ⚠️ DATA FRESHNESS — utilise UNIQUEMENT les WEB SEARCH RESULTS / RSS
     POOL ci-dessous. N'utilise PAS ta connaissance d'entraînement — elle
     est périmée (ex: Bitcoin n'est PAS à 125k, il est ~75k aujourd'hui).
@@ -261,7 +264,8 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
     il faut lire/liker le reste. Si #1 n'est pas le plus mémorable, permute.
   • VIRALITÉ MONTHLY: classe les 10 chiffres par potentiel de stop-scroll:
       1) nom que tout le monde reconnaît (OpenAI, NVIDIA, BTC, BlackRock,
-         Coinbase, Saylor, Elon, CoreWeave, Microsoft, Google),
+         Coinbase, Saylor, Elon, CoreWeave, Microsoft, Google, SpaceX,
+         IREN, HIVE, TAO, Applied Digital),
       2) chiffre simple à répéter en commentaire ("80 Md$", "10x", "820k BTC"),
       3) conséquence claire ("ceci change le pricing, le pouvoir, ou le risque"),
       4) tension/opinion qui donne envie de répondre.
@@ -287,7 +291,7 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
 ============================================================
 
-🔎 The Decode Monthly #{decode_number} — {topic_label} — {day_of_week} {today_date}
+🔎 The Decode Monthly #{decode_number} — {topic_label}
 
 The 10 {topic_label} numbers that mattered this month.
 
@@ -318,7 +322,9 @@ Next month, same Decode.
         top5_block = f"""INSTRUCTIONS (NE PAS OUTPUT — réfléchis silencieusement):
 
   • Le Décode Weekly = TOP 5 chiffres des 7 derniers jours pour UNE
-    catégorie.
+    catégorie, avec le prisme "AI infrastructure & asymmetric investing":
+    power demand, MW/GW capacity, compute scarcity, grid bottlenecks,
+    datacenter stocks, robotics, space infrastructure, and AI-linked crypto.
   • ÉTAPE 0 (CRITIQUE): choisis UNE URL exacte de la section WEB SEARCH
     RESULTS / RSS POOL plus bas. Lis SON TITRE — il identifie un ACTEUR
     ou un CHIFFRE précis (ex: "OpenAI is going public", "NVIDIA Q1
@@ -333,7 +339,8 @@ Next month, same Decode.
   • BULLET #1 = LE killshot. Trois tests SIMULTANÉS:
       - MÉMORABLE (round number, ratio choquant, image mentale)
       - LIKABLE (confirme un soupçon, nom propre TRÈS connu: Elon, sama,
-        Vitalik, Saylor, OpenAI, NVIDIA, BTC, ETH)
+        Vitalik, Saylor, OpenAI, NVIDIA, BTC, ETH, CoreWeave, SpaceX,
+        IREN, HIVE, TAO, Applied Digital)
       - COMMENT-BAIT (claim/contraste qui force une opinion)
     Si #1 ne passe pas les 3 tests → permute avec le bullet le plus fort.
   • TEST FOLLOWER: le lecteur doit penser "ok ce compte voit l'angle avant
@@ -362,7 +369,7 @@ Next month, same Decode.
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
 ============================================================
 
-🔎 The Decode {series_label} #{decode_number} — {topic_label} — {day_of_week} {today_date}
+🔎 The Decode {series_label} #{decode_number} — {topic_label}
 
 The 5 {topic_label} numbers to remember this week.
 
@@ -386,6 +393,9 @@ Tomorrow, same Decode.
 
   • Le Décode quotidien = TOP 3 chiffres des dernières 24-48h pour UNE
     catégorie. Les 3 bullets explorent UNE seule histoire sous 3 angles.
+    Le prisme par défaut est "AI infrastructure & asymmetric investing":
+    datacenter stocks, MW/GW power capacity, compute wars, energy, robotics,
+    space infrastructure, frontier tech, and crypto linked to AI.
   • ÉTAPE 0 (CRITIQUE): choisis UNE URL exacte de la section WEB SEARCH
     RESULTS / RSS POOL plus bas. Lis SON TITRE — il identifie un ACTEUR
     ou un CHIFFRE précis (ex: "OpenAI signs $300B Oracle deal"). Les 3
@@ -421,7 +431,7 @@ Tomorrow, same Decode.
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
 ============================================================
 
-🔎 The Decode {series_label} #{decode_number} — {topic_label} — {day_of_week} {today_date}
+🔎 The Decode {series_label} #{decode_number} — {topic_label}
 
 The 3 {topic_label} numbers that matter today.
 
@@ -440,43 +450,46 @@ Tomorrow, same Decode.
 
     return f"""{lang_directive}
 
-You are @cryptoiadecode. Sharp English voice on Crypto + AI + Space + Markets.
+You are @cryptoiadecode. Sharp English voice on AI infrastructure &
+asymmetric investing. Not generic crypto. Not "this coin will 100x".
 Influencer, not timid bot. Take a position. Sign your read. Zero bullshit.
 Every Decode needs a THESIS someone can quote in the comments.
 Not an article summary: a contrarian, funny, memorable read.
+Default thesis style:
+- "The market is underpricing AI power demand."
+- "Everyone watches GPUs. Nobody watches power generation."
+- "Compute is becoming an energy trade with a software multiple."
 
 🎯 GOAL: ONE The Decode #{decode_number} on the hottest {topic_label} story.
 TOPIC: {topic_label} only. Format: {format_mode}.
 
 📈 CONTENT STRATEGY 2026:
-- The Decode = 40% of the mix: insight/analysis with thesis, numbers, consequence.
-- Quick news takes = 30%: Bitcoin, AI tokens, macro, regulation, flows, ETFs.
-- Threads = 15%: weekly market decode, "AI tools for crypto traders", long-form value.
+- The Decode = 40% of the mix: AI infra analysis with thesis, numbers, consequence.
+- Quick news takes = 30%: AI power demand, datacenter stocks, AI-linked crypto, compute wars, frontier tech.
+- Threads = 15%: AI Power Wars, Undervalued Compute, Market Decode, long-form value.
 - Visuals/link cards = 10%: charts, before/after, source cards, banners when relevant.
 - Engagement bait = 5%: one sharp question, never a soft one.
 
-PROVEN FORMATS when the story supports them:
-- "What AI just revealed about [coin/sector]..."
-- Before/after: current number vs AI forecast or market scenario.
-- "3 AI tools every crypto trader should test" for tools/threads.
-- "The chart nobody is watching..." when the signal comes from a chart.
+RECURRING FORMATS when the story supports them:
+- AI Infra Radar
+- Asymmetric Bet of the Week
+- Market Decode
+- AI Power Wars
+- Undervalued Compute
+- The Numbers That Matter
+- "The chart nobody is watching..." when the signal comes from power, capex, or compute capacity.
 
 🚨 STRICT SCOPE — 4 distinct categories:
-  • AI — labs, models, agents, AI funding, AI regulation.
-  • Crypto — BTC, ETH, ETFs, stablecoins, mining, serious DeFi.
-  • Markets — stocks, IPOs, valuations, earnings, funds/VC,
-    AI/datacenter capex, multiples, sector rotation, major Wall Street moves.
-    Strong examples: SpaceX IPO/valuation,
-    OpenAI/Anthropic IPO, CoreWeave, Nvidia/AMD/Tesla/Microsoft/Google/Meta.
-    Avoid pure crypto proxies (MSTR, MARA, RIOT, CleanSpark) unless the
-    angle is clearly market/valuation, not Bitcoin/hashrate.
-  • Space — SpaceX, Starship, Starlink, Blue Origin, Rocket Lab, New Glenn,
-    ArianeGroup, ESA, NASA, space industry, launchers, satellites.
+  • AI Infra — labs, models, agents, GPUs, datacenters, MW/GW capacity, grid bottlenecks.
+  • AI-linked Crypto — TAO/Bittensor, decentralized compute, BTC miners pivoting to HPC/AI hosting.
+  • Asymmetric Markets — CoreWeave, SLNH/Soluna, HIVE, IREN, TeraWulf, Applied Digital,
+    Nvidia/AMD/TSMC, energy, nuclear, power generation, private-market valuation gaps.
+  • Space Infrastructure — SpaceX, Starship, Starlink, launch capacity, satellites, robotics, frontier tech.
 
 {top5_block}
 
 ⚠️ OUTPUT RULES:
-- Start DIRECTLY with "🔎 The Decode #{decode_number}". No preamble.
+- Start DIRECTLY with "🔎 The Decode". No preamble and NO date on the first line.
 - Pas de "Score:", "Vérifications:", "Sources:", markdown bold meta. RIEN avant le header.
 - 🚫 ZÉRO markdown: pas de **bold**, pas de __italic__, pas de *italic*.
   X n'affiche PAS le markdown — les astérisques apparaissent littéralement
@@ -1822,29 +1835,29 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         from . import web_search as _ws
         sub_queries = {
             "IA": [
-                f"OpenAI Anthropic Mistral news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"AI datacenter GPU NVIDIA news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"AI agent LLM startup funding news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"Cursor AI code editor news Elon Musk {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"AI datacenter power demand megawatt gigawatt news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"OpenAI Anthropic xAI compute GPU cluster datacenter news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"NVIDIA GPU power grid nuclear AI datacenter news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"robotics humanoid robots frontier tech AI infrastructure news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
             ],
             "Crypto": [
-                f"Bitcoin Ethereum crypto news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"crypto mining hashrate MARA Riot news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"stablecoin DeFi Coinbase news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"Bitcoin ETF inflows institutional news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"TAO Bittensor decentralized compute AI crypto news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"crypto mining AI hosting HIVE IREN TeraWulf Core Scientific news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"Bitcoin miners AI datacenter HPC MARA Riot CleanSpark news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"AI tokens decentralized GPU network compute crypto news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
             ],
             "Investissement": [
-                f"NVIDIA AMD Tesla Microsoft Google AI stock earnings {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"SpaceX IPO valuation OpenAI Anthropic IPO stock market {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"AI datacenter capex Stargate CoreWeave CRWV news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"tech IPO valuation private markets Wall Street bourse {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"AI investment fund raise venture capital news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"CoreWeave CRWV Applied Digital APLD IREN HIVE SLNH AI datacenter stocks {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"AI power generation grid nuclear datacenter stocks energy demand {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"SpaceX valuation Starlink private markets frontier tech investing {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"NVIDIA AMD TSMC AI infrastructure capex earnings {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"TeraWulf WULF Cipher CIFR Core Scientific CORZ AI hosting HPC {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
             ],
             "Space": [
-                f"SpaceX Starship launch news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"Blue Origin New Glenn rocket space news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"Starlink satellite internet NASA space news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"Rocket Lab ArianeGroup ESA space industry news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"SpaceX Starship Starlink space infrastructure news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"Blue Origin New Glenn Rocket Lab launch capacity news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"satellite AI robotics space infrastructure frontier tech news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"SpaceX valuation Starlink revenue private markets news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
             ],
         }.get(decode_topic, ["AI news this week"])
         ddg_hits = []

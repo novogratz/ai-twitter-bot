@@ -369,6 +369,26 @@ EN_ACCOUNTS = [
     "nvidia",
     "rowancheung",
     "TheRundownAI",
+    # Big English AI infra / asymmetric investing accounts.
+    "CoreWeave",
+    "CrusoeEnergy",
+    "LambdaAPI",
+    "applied_dc",
+    "IREN_Ltd",
+    "Hut8Corp",
+    "TeraWulfInc",
+    "CipherMining",
+    "CleanSpark_Inc",
+    "MARAHoldings",
+    "RiotPlatforms",
+    "SpaceX",
+    "Starlink",
+    "RocketLab",
+    "PeterDiamandis",
+    "bittensor_",
+    "opentensor",
+    "KobeissiLetter",
+    "unusual_whales",
     # AI elite researchers — user mandate 2026-05-23: "be smart with
     # them". Be VIP-careful: their tweets are mostly sharp signal, so
     # reply only when we have a substantive analytical point.
@@ -429,8 +449,11 @@ HOT_TAB_QUERIES = [
     "ChatGPT lang:fr min_faves:20",
     # Big visible posts. Freshness is still enforced by DIRECT_REPLY_MAX_AGE_MINUTES.
     "OpenAI OR Anthropic OR Nvidia lang:en min_faves:1000",
-    "Bitcoin OR Ethereum OR BTC lang:en min_faves:1000",
-    "SpaceX OR Starship OR xAI lang:en min_faves:1000",
+    "AI datacenter OR power demand OR megawatt lang:en min_faves:500",
+    "CoreWeave OR CRWV OR APLD OR IREN OR HIVE lang:en min_faves:300",
+    "TAO OR Bittensor OR decentralized compute lang:en min_faves:300",
+    "SpaceX OR Starlink OR xAI lang:en min_faves:1000",
+    "robotics OR humanoid robots OR frontier tech lang:en min_faves:500",
 ]
 
 DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "1440"))
