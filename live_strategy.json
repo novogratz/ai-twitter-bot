@@ -6,11 +6,11 @@
     "MAX_SPICY_PER_DAY": 0,
     "MAX_QUOTES_PER_DAY": 80,
     "MAX_RETWEETS_PER_DAY": 30,
-    "MAX_REPLIES_PER_CYCLE": 100,
-    "FOLLOW_BLAST_PER_CYCLE": 100,
-    "LIKE_BOT_PER_CYCLE": 100
+    "MAX_REPLIES_PER_CYCLE": 120,
+    "FOLLOW_BLAST_PER_CYCLE": 140,
+    "LIKE_BOT_PER_CYCLE": 140
   },
-  "cadence_factor": 0.7,
+  "cadence_factor": 0.55,
   "topic_focus": [
     "IA",
     "crypto",
@@ -55,6 +55,6 @@
   ],
   "language": "fr",
   "scope": "ai_crypto_only",
-  "updated_at": "2026-05-19T23:28:37",
-  "note": "6 D\u00e9codes/Fri, 3/other days; replies cranked to 60/cycle; reposts raised to 40/day (user: do more reposts)"
+  "updated_at": "2026-05-23T20:05:00",
+  "note": "Vacation growth push: keep retweets capped at 30/day, speed cadence, prioritize replies + reciprocal follow/like loops toward 10k follower goal."
 }

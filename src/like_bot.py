@@ -23,7 +23,7 @@ import traceback
 import urllib.parse
 import webbrowser
 
-from .config import _PROJECT_ROOT
+from .config import _PROJECT_ROOT, get_live_cap
 from .logger import log
 from .twitter_client import _safari_lock, close_front_tab, _scroll_page
 
@@ -62,6 +62,8 @@ LIKE_QUERIES = [
 TOP_TAB_PROBABILITY = float(os.environ.get("LIKE_TOP_TAB_PROBABILITY", "0.55"))
 
 LIKES_PER_CYCLE = int(os.environ.get("LIKE_BOT_PER_CYCLE", "18"))
+LIKE_BOT_DAILY_CAP = int(os.environ.get("LIKE_BOT_DAILY_CAP", "1800"))
+LIKE_BOT_STATE_FILE = os.path.join(_PROJECT_ROOT, "like_bot_state.json")
 
 
 def _click_likes_on_page(max_clicks: int) -> int:
@@ -108,8 +110,35 @@ def _click_likes_on_page(max_clicks: int) -> int:
         return 0
 
 
+def _load_daily_state() -> dict:
+    import json
+    from datetime import date
+    today = date.today().isoformat()
+    if not os.path.exists(LIKE_BOT_STATE_FILE):
+        return {"date": today, "count": 0}
+    try:
+        with open(LIKE_BOT_STATE_FILE, "r") as f:
+            state = json.load(f) or {}
+    except (OSError, json.JSONDecodeError):
+        return {"date": today, "count": 0}
+    if state.get("date") != today:
+        return {"date": today, "count": 0}
+    return {"date": today, "count": int(state.get("count") or 0)}
+
+
+def _save_daily_state(state: dict) -> None:
+    import json
+    with open(LIKE_BOT_STATE_FILE, "w") as f:
+        json.dump(state, f, indent=2)
+
+
 def run_like_cycle():
     """Open a niche search, scroll, JS-click N visible like buttons."""
+    state = _load_daily_state()
+    remaining = max(0, LIKE_BOT_DAILY_CAP - int(state.get("count") or 0))
+    if remaining <= 0:
+        log.info(f"[LIKE] Daily cap reached ({LIKE_BOT_DAILY_CAP}) — skipping.")
+        return
     query = random.choice(LIKE_QUERIES)
     encoded = urllib.parse.quote(query)
     tab = "top" if random.random() < TOP_TAB_PROBABILITY else "live"
@@ -129,15 +158,21 @@ def run_like_cycle():
         # Pause briefly between batches so the action doesn't burst.
         clicked_total = 0
         # Two batches of half so we space out the JS clicks slightly.
-        first = LIKES_PER_CYCLE // 2 + LIKES_PER_CYCLE % 2
-        second = LIKES_PER_CYCLE - first
+        cycle_cap = min(get_live_cap("LIKE_BOT_PER_CYCLE", LIKES_PER_CYCLE), remaining)
+        first = cycle_cap // 2 + cycle_cap % 2
+        second = cycle_cap - first
         clicked_total += _click_likes_on_page(first)
         time.sleep(random.uniform(1.5, 3.0))
         clicked_total += _click_likes_on_page(second)
 
         close_front_tab()
 
-    log.info(f"[LIKE] Liked {clicked_total} tweets on '{query}' ({tab})")
+    state["count"] = int(state.get("count") or 0) + max(0, clicked_total)
+    _save_daily_state(state)
+    log.info(
+        f"[LIKE] Liked {clicked_total} tweets on '{query}' ({tab}) "
+        f"({state['count']}/{LIKE_BOT_DAILY_CAP} today)."
+    )
 
 
 def safe_run_like_cycle():

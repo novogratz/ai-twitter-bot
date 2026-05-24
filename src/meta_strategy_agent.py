@@ -39,10 +39,10 @@ _BOUNDS = {
     "MAX_NEWS_PER_DAY":      (4,  40),
     "MAX_HOTAKES_PER_DAY":   (2,  20),
     "MAX_QUOTES_PER_DAY":    (4,  60),
-    "MAX_RETWEETS_PER_DAY":  (8,  120),
+    "MAX_RETWEETS_PER_DAY":  (8,  30),
     "MAX_BREAKOUTS_PER_DAY": (1,  10),
     "MAX_SPICY_PER_DAY":     (1,  10),
-    "MAX_REPLIES_PER_CYCLE": (8,  40),
+    "MAX_REPLIES_PER_CYCLE": (8,  140),
 }
 
 

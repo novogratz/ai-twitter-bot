@@ -678,8 +678,8 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
         return None
 
 
-DIRECT_REPLY_MAX_PER_CYCLE = 18  # Always-scan VIP + high-traction accounts first.
-MAX_EN_REPLIES_PER_CYCLE = 3     # hard cap — keeps ~80% FR ratio while leaving room for big EN influencers
+DIRECT_REPLY_MAX_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_PER_CYCLE", "32"))
+MAX_EN_REPLIES_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_EN_PER_CYCLE", "5"))
 
 
 def _maybe_repost_best_profile_tweet(username: str, tweets: list, retweeted: set) -> bool:
