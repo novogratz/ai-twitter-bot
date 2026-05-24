@@ -32,13 +32,18 @@
     "YannickLavoie",
     "MehdiMoussaid",
     "AlexisPerron",
-    "SylvainDurand"
+    "SylvainDurand",
+    "jpdouvigne",
+    "nicolascolin"
   ],
   "en": [
     "blablacar",
     "sodexo",
     "sbc_412",
-    "stacyherbert"
+    "stacyherbert",
+    "joshuareeves",
+    "mike_basas",
+    "michael_levitin"
   ],
   "history": [
     {
@@ -224,6 +229,31 @@
     {
       "lang": "fr",
       "handle": "SylvainDurand",
+      "added": "2026-05-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "jpdouvigne",
+      "added": "2026-05-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "nicolascolin",
+      "added": "2026-05-24"
+    },
+    {
+      "lang": "en",
+      "handle": "joshuareeves",
+      "added": "2026-05-24"
+    },
+    {
+      "lang": "en",
+      "handle": "mike_basas",
+      "added": "2026-05-24"
+    },
+    {
+      "lang": "en",
+      "handle": "michael_levitin",
       "added": "2026-05-24"
     }
   ]

@@ -5543,3 +5543,16 @@ $VSAT Viasat +524.46%
 $LUNR Intu
   - https://x.com/Speculator_io/status/2058301220280770895
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 471).
+- **@bitcoin_teddy** (76 likes, score 8/10) — Someone has been buying $30 worth of #Bitcoin daily for the last 8 years, turning $86,000 to $1 MILLION  
+
+WHAT A LEGEND!
+  - https://x.com/Bitcoin_Teddy/status/2058292635953991809
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 90).
+- **@trendingbitcoin** (24 likes, score 7/10) — “If Bitcoin is worth $200,000, do not sell it and buy dollars because if BTC is at $200,000, the dollar is very close to its grave.”  
+
+- Saifedean Ammous
+  - https://x.com/TrendingBitcoin/status/2058398080660045916
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 34).
+- **@bitcoinsapiens** (39 likes, score 8/10) — LARRY FINK: "No one should be surprised if Bitcoin hits $700,000."
+  - https://x.com/BitcoinSapiens/status/2058398332196909146
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 51).
