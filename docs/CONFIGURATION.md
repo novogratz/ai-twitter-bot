@@ -114,7 +114,7 @@ Per-cycle quotas (not daily caps):
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `CONTENT_LANG_PRIMARY` | `en` | `en` / `fr` / `mixed` (70% EN / 30% FR). Reply paths always match parent tweet language regardless. |
+| `CONTENT_LANG_PRIMARY` | `fr` | `en` / `fr` / `mixed` (70% EN / 30% FR). Reply paths always match parent tweet language regardless. |
 
 ---
 
@@ -184,5 +184,5 @@ ENABLE_AI_MAINTENANCE=0
 ENABLE_AI_DISCOVERY=0
 ENABLE_CODEX_OPERATOR=0
 
-CONTENT_LANG_PRIMARY=en
+CONTENT_LANG_PRIMARY=fr
 ```

@@ -147,7 +147,7 @@ Plus `FR_ANCHOR` for FR-mode runs, `OTHER` as fallback. The metadata line is str
 
 ### Language — `lang_mode.py`
 
-`CONTENT_LANG_PRIMARY=en` (default) → all standalone content (news, hot takes, breakouts, spicy, threads) in English.
+`CONTENT_LANG_PRIMARY=fr` → all standalone content (news, hot takes, breakouts, spicy, threads) in French.
 
 Reply paths (`direct_reply`, `reply_bot`, `replyback_agent`, `viral_followup`, `spike`, `mega_watch`, `early_bird`) **always match parent tweet language** regardless of `CONTENT_LANG_PRIMARY`.
 
