@@ -5492,3 +5492,10 @@ Explain this gap.
 - **@yun_fr** (66 likes, score 7/10) — On est passé d'un monopole AMD/NVIDIA à une situation où NVIDIA délaisse la partie gaming pour se concentrer sur l'IA pendant que 2 petits nouveaux viennent concurrencer la partie GPU gaming : Intel e
   - https://x.com/Yun_Fr/status/2058105046932377952
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 84).
+- **@uniperpv4** (24 likes, score 7/10) — Development pipeline for $PERP
+
+
+
+1. Leverage tokens on Ethereum: Similar to what http://bounce.tech is doing on @HyperliquidX
+  - https://x.com/uniperpv4/status/2058198089048236345
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 30).
