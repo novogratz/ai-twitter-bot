@@ -181,8 +181,9 @@ def run_reply_cycle():
         seen_in_batch.add(url)
         filtered.append(data)
 
-    # Plus-safe cap. The model already ranked the batch; only ship the best.
-    replies = filtered[:min(3, MAX_REPLIES_PER_CYCLE)]
+    # Growth push: the model already ranked the batch; ship more good targets
+    # per scan while MAX_REPLIES_PER_CYCLE still controls the hard ceiling.
+    replies = filtered[:min(5, MAX_REPLIES_PER_CYCLE)]
 
     if not replies:
         log.info("[REPLY] All replies filtered (dedup/blocklist) - skipping cycle.")

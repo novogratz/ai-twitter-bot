@@ -1,6 +1,7 @@
 """Notify bot: likes replies on own tweets and replies back to build loyalty."""
 import json
 import os
+import re
 import traceback
 from .config import _PROJECT_ROOT, BLOCKLIST, BOT_HANDLE
 from .logger import log
@@ -19,6 +20,8 @@ import random
 
 REPLIED_BACK_FILE = os.path.join(_PROJECT_ROOT, "replied_back.json")
 _OWN_HANDLE = BOT_HANDLE.lower()
+_HANDLE_RE = re.compile(r"^[A-Za-z0-9_]{1,15}$")
+_MENTION_RE = re.compile(r"@([A-Za-z0-9_]{1,15})(?![A-Za-z0-9_])")
 
 
 def _influencer_handles() -> set:
@@ -32,11 +35,13 @@ def _extract_handle(user_string: str) -> str:
     """Extract @handle (lowercase, no @) from a User-Name text blob."""
     if not user_string:
         return ""
-    parts = user_string.split("@")
-    if len(parts) >= 2:
-        # take the last @-prefixed token, strip whitespace
-        return parts[-1].split()[0].strip().lower()
-    return user_string.strip().lower()
+    mentions = _MENTION_RE.findall(user_string)
+    if mentions:
+        return mentions[-1].lower()
+    handle = user_string.strip().lstrip("@").lower()
+    if _HANDLE_RE.fullmatch(handle):
+        return handle
+    return ""
 
 
 def _is_blocklisted(user_string: str, handle: str) -> bool:
@@ -103,15 +108,15 @@ def run_replyback_cycle():
     # warm engagers into followers.
     incoming = len(replies)
     if incoming >= 50:
-        cycle_cap = 12
+        cycle_cap = 18
     elif incoming >= 30:
-        cycle_cap = 10
+        cycle_cap = 15
     elif incoming >= 20:
-        cycle_cap = 8
+        cycle_cap = 12
     elif incoming >= 10:
-        cycle_cap = 6
+        cycle_cap = 9
     else:
-        cycle_cap = 5
+        cycle_cap = 7
     log.info(f"[REPLYBACK] Parent has {incoming} replies — cap {cycle_cap} this cycle.")
 
     for reply_info in replies[:cycle_cap]:
@@ -119,6 +124,9 @@ def run_replyback_cycle():
         text = reply_info.get("text", "")
         reply_url = reply_info.get("url", "")
         handle = _extract_handle(user)
+        if not handle:
+            log.info(f"[REPLYBACK] No usable handle in user={user!r} - skipping.")
+            continue
 
         # Skip blocklisted handles (e.g., @pgm_pm). Hardened to catch
         # display-name variants ("la pique") that the scraper sometimes
@@ -208,15 +216,6 @@ def _reciprocate_engagers(replies: list, influencers: set, max_visits: int = 5):
         if not handle or handle in seen_handles:
             continue
         seen_handles.add(handle)
-        # Reject display-name leaks: when the scraper hands us "haruka takamori"
-        # instead of the @handle, _extract_handle falls back to the whole string
-        # and we end up visiting https://x.com/haruka takamori (malformed) and
-        # polluting followed_accounts.json with bogus entries. A real X handle
-        # is [A-Za-z0-9_]{1,15} — anything with whitespace, punctuation, or
-        # length >15 is a display-name leak. Skip it.
-        if any(c not in "abcdefghijklmnopqrstuvwxyz0123456789_" for c in handle) or len(handle) > 15:
-            log.info(f"[RECIPROCATE] Display-name leak {handle!r} — skipping.")
-            continue
         # Hardened blocklist: catches display-name variants from scraper.
         if _is_blocklisted(user_str, handle) or handle == _OWN_HANDLE:
             continue

@@ -113,31 +113,42 @@ _DECODE_STOP_TOKENS = {
     "should","will","well","than","some","such","just","after","before",
     "still","every","another","between","comme","cette","leur","cette",
     "dans","pour","mais","plus","moins","tout","tous","sans","avec",
+    "bitcoin","crypto","network","daily","performance","chart","source",
+    "chiffres","jour","miner","miners","mining","datacenter","datacenters",
 }
 
 
-def _pick_best_pool_url(bullet1_text: str, pool_url_titles: dict) -> str:
+def _decode_match_tokens(text: str) -> set[str]:
+    """High-signal tokens for matching bullet #1 to a source title."""
+    if not text:
+        return set()
+    tokens = set()
+    for handle in re.findall(r"@([A-Za-z0-9_]{3,15})", text):
+        tokens.add(handle.lower())
+    for word in re.findall(r"[A-Za-z][A-Za-z0-9_]{3,}", text):
+        w = word.lower()
+        if w not in _DECODE_STOP_TOKENS:
+            tokens.add(w)
+    return tokens
+
+
+def _pick_best_pool_url(bullet1_text: str, pool_url_titles: dict, *, require_strong_match: bool = True) -> str:
     """Find the pool URL whose title best matches bullet #1 (token overlap).
     Returns the best URL or '' if no good match. Used to force-substitute
     the model's hallucinated URL with a real one from our injected pool."""
     if not bullet1_text or not pool_url_titles:
         return ""
-    b1_tokens = {
-        w for w in re.findall(r"[a-zA-Z]{4,}", bullet1_text.lower())
-        if w not in _DECODE_STOP_TOKENS
-    }
+    b1_tokens = _decode_match_tokens(bullet1_text)
     if not b1_tokens:
         return ""
     best_url, best_score = "", 0
     for url, title in pool_url_titles.items():
-        title_tokens = {
-            w for w in re.findall(r"[a-zA-Z]{4,}", (title or "").lower())
-            if w not in _DECODE_STOP_TOKENS
-        }
+        title_tokens = _decode_match_tokens(title or "")
         overlap = len(b1_tokens & title_tokens)
         if overlap > best_score:
             best_score, best_url = overlap, url
-    return best_url if best_score >= 1 else ""
+    threshold = 1 if not require_strong_match else 2
+    return best_url if best_score >= threshold else ""
 
 
 def _bullet1_numbers_grounded(bullet1: str, url_title_snippet: str) -> bool:
@@ -277,25 +288,16 @@ def _substitute_url_with_pool_match(tweet: str, src_url: str) -> tuple:
     # If model's URL is already in pool AND reachable, keep it.
     if src_url and src_url in pool_titles and _ag.url_is_reachable(src_url):
         return tweet, src_url
-    # Pick best pool URL by bullet #1 overlap → fall back to full-tweet overlap
-    # → fall back to first reachable.
+    # Pick best pool URL by strong bullet #1 overlap. Do not fall back to a
+    # broad topic URL for Daily Decodes: that produced link cards like a
+    # Bitcoin hashrate chart under a Riot/CleanSpark/IREN lead.
     b1_match = re.search(r"^\s*1\.\s*(.+?)(?:\n\s*2\.|$)", tweet, re.MULTILINE | re.DOTALL)
     bullet1 = b1_match.group(1) if b1_match else ""
     best_url = _pick_best_pool_url(bullet1, pool_titles)
     if best_url and not _ag.url_is_reachable(best_url):
         best_url = ""
     if not best_url:
-        best_url = _pick_best_pool_url(tweet, pool_titles)
-        if best_url and not _ag.url_is_reachable(best_url):
-            best_url = ""
-    if not best_url:
-        for url in pool_titles.keys():
-            if _ag.url_is_reachable(url):
-                best_url = url
-                log.info(f"[NEWS] Fallback substitution: first reachable pool URL ({url})")
-                break
-    if not best_url:
-        log.info("[NEWS] No reachable pool URL found for substitution — leaving original.")
+        log.info("[NEWS] No strong bullet #1 URL match in pool — leaving original for validation/retry.")
         return tweet, src_url
     if src_url == best_url:
         return tweet, src_url
@@ -482,9 +484,9 @@ def _run_single_bot_cycle() -> bool:
                     if title:
                         b1_match = re.search(r"^\s*1\.\s*(.+?)(?:\n\s*2\.|$)", candidate, re.MULTILINE | re.DOTALL)
                         subject_region = (b1_match.group(1) if b1_match else candidate[:500]).lower()
-                        stop = {"this","that","with","from","into","about","have","been","more","what","when","where","their","there","which","while","your","could","would","should","will","well","than","some","such","just","after","before","still","every","another","between"}
-                        title_tokens = {w for w in re.findall(r"[a-zA-Z]{4,}", title) if w not in stop}
-                        if title_tokens and not any(t in subject_region for t in title_tokens):
+                        title_tokens = _decode_match_tokens(title)
+                        subject_tokens = _decode_match_tokens(subject_region)
+                        if title_tokens and len(title_tokens & subject_tokens) < 2:
                             coupling = False
                 grounded = True
                 if reachable and in_pool and coupling:
@@ -605,64 +607,40 @@ def _run_single_bot_cycle() -> bool:
                 if not _ag.url_is_reachable(src_url):
                     strip_reason = "unreachable / 404"
                 else:
-                    # Coupling check: bullet #1 should share at least one
-                    # meaningful entity (≥3-char word) with the URL's title.
-                    # Catches "URL is about OpenAI but #1 is about NVIDIA".
-                    # 2026-05-23 fix: scan ALL numbered bullets, not just #1,
-                    # and use unicode-aware regex for French accented chars.
+                    # Coupling check: bullet #1 must strongly match the URL
+                    # title. Catches broad topic cards like hashrate charts
+                    # under a Riot/CleanSpark/IREN lead.
                     title = (injected_titles.get(src_url) or "").lower()
                     if title:
-                        # Scan full tweet minus URL as subject region
-                        subject_region = re.sub(r"https?://\S+", "", tweet).lower().strip()
+                        b1_match = re.search(r"^\s*1\.\s*(.+?)(?:\n\s*2\.|$)", tweet, re.MULTILINE | re.DOTALL)
+                        subject_region = (b1_match.group(1) if b1_match else re.sub(r"https?://\S+", "", tweet)[:500]).lower().strip()
                         if subject_region:
-                            # Pull entity-ish words from title (≥3 chars, not stopwords)
-                            # Use unicode-aware regex for French accents
-                            stop = {"the", "and", "for", "are", "not", "but",
-                                    "this", "that", "with", "from", "into", "about",
-                                    "have", "been", "more", "what", "when", "where",
-                                    "their", "there", "which", "while", "your", "could",
-                                    "would", "should", "will", "well", "than", "some",
-                                    "such", "just", "after", "before", "still", "every",
-                                    "another", "between", "les", "des", "est", "pas",
-                                    "une", "dans", "sur", "tout", "mais", "pour",
-                                    "avec", "sont", "fait", "cette", "plus",
-                                    "aussi", "être", "avoir", "faire", "bien", "donc",
-                                    "dont", "alors", "tous", "peut", "leur", "très",
-                                    "même", "sans", "non", "ces", "elle",
-                                    "été", "etc", "via", "comme"}
-                            title_tokens = {w for w in re.findall(r"\w{3,}", title) if w not in stop}
+                            title_tokens = _decode_match_tokens(title)
+                            subject_tokens = _decode_match_tokens(subject_region)
                             if title_tokens:
-                                if not any(t in subject_region for t in title_tokens):
+                                overlap = title_tokens & subject_tokens
+                                if len(overlap) < 2:
                                     strip_reason = (
-                                        f"tweet subject doesn't mention any entity from URL title "
-                                        f"({sorted(title_tokens)[:6]} not in subject region)"
+                                        f"bullet #1 doesn't match URL title strongly "
+                                        f"(overlap={sorted(overlap)[:6]}, title={sorted(title_tokens)[:6]})"
                                     )
                 if strip_reason:
-                    # Monthly/weekly recap: allowed URL-less — strip URL, keep posting
+                    # User mandate 2026-05-24: all Décode formats need a
+                    # trailing URL that proves point #1. If validation strips
+                    # the link, skip and retry instead of posting body-only.
                     decode_format = getattr(_ag, "_pending_decode_format", "daily")
-                    if decode_format in ("monthly", "weekly"):
-                        log.info(
-                            f"[NEWS] ⚠️ URL stripped ({decode_format} mode) — {strip_reason}: "
-                            f"{src_url}. Stripping URL, shipping body-only."
-                        )
-                        post_body = re.sub(r"https?://\S+", "", post_body).strip()
-                        src_url = None
-                        is_decode = False
-                        img_path = None
-                    else:
-                        # Daily Décode: URL is mandatory. SKIP entire cycle, retry.
-                        log.info(
-                            f"[NEWS] ❌ URL stripped — {strip_reason}: {src_url} "
-                            f"→ SKIPPING Daily Décode (cannot ship URL-less)."
-                        )
-                        try:
-                            topic = _ag.__dict__.get("_pending_decode_topic")
-                            if topic:
-                                _ag._unmark_topic_done_today(topic, is_weekly=False)
-                                log.info(f"[NEWS] Un-marked '{topic}:daily' — will retry next cycle.")
-                        except Exception:
-                            pass
-                        return
+                    log.info(
+                        f"[NEWS] ❌ URL stripped ({decode_format}) — {strip_reason}: {src_url} "
+                        f"→ SKIPPING Décode (point #1 URL required)."
+                    )
+                    try:
+                        topic = _ag.__dict__.get("_pending_decode_topic")
+                        if topic:
+                            _ag._unmark_topic_done_today(topic, format_kind=decode_format)
+                            log.info(f"[NEWS] Un-marked '{topic}:{decode_format}' — will retry next cycle.")
+                    except Exception:
+                        pass
+                    return
                 else:
                     log.info(f"[NEWS] ✅ URL validated (pool + reachable + matches #1), keeping inline")
             except Exception as e:
@@ -672,16 +650,16 @@ def _run_single_bot_cycle() -> bool:
             if src_url:
                 img_path = None
         elif is_decode:
-            # No URL emitted by the model → SKIP Daily, retry. (Weekly Top5
-            # is allowed URL-less since per-bullet sources carry the trace —
-            # handled upstream in agent.py.)
-            log.info("[NEWS] ⚠️ Décode would ship URL-less → SKIPPING (link card required).")
+            # No URL emitted by the model → SKIP, retry. Daily, Weekly, and
+            # Monthly all need a final URL proving point #1.
+            log.info("[NEWS] ⚠️ Décode would ship URL-less → SKIPPING (point #1 link card required).")
             try:
                 from . import agent as _ag
                 topic = _ag.__dict__.get("_pending_decode_topic")
+                decode_format = getattr(_ag, "_pending_decode_format", "daily")
                 if topic:
-                    _ag._unmark_topic_done_today(topic, is_weekly=False)
-                    log.info(f"[NEWS] Un-marked '{topic}:daily' — will retry next cycle.")
+                    _ag._unmark_topic_done_today(topic, format_kind=decode_format)
+                    log.info(f"[NEWS] Un-marked '{topic}:{decode_format}' — will retry next cycle.")
             except Exception:
                 pass
             return

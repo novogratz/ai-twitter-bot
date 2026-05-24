@@ -300,14 +300,12 @@ def main():
         if not _quiet_skip("REPLYBACK"):
             safe_run_replyback_cycle()
 
-    # Startup news burst: Monthly Top 10s first (guaranteed slot — daily
-    # decodes take 6-10+ minutes and the bot may be killed before monthly
-    # gets a turn). Then fire all three Daily Décodes.
+    # Startup news burst: fire Daily Décodes immediately. Monthly recaps are
+    # handled by their own cron/manual command so a restart doesn't repost
+    # the whole monthly set.
     if not args.reply_only:
-        log.info("Firing forced monthly recaps for Crypto, Investissement, IA, Space...")
-        safe_run_monthly_news_cycle(force_all=True)
-        log.info("Bot started! Firing forced daily Décodes for IA, Crypto, Investissement...")
-        safe_run_daily_news_cycle(force_all=True)
+        log.info("Bot started! Firing remaining daily Décodes now; already-shipped topics stay locked.")
+        safe_run_daily_news_cycle(force_all=False)
 
     # Then warm up the engagement loop with a direct-reply cycle.
     if not args.post_only:
@@ -619,10 +617,10 @@ def main():
 
         # Viral follow-up bot — 2026-05-16: 30 → 15 min. The algo push
         # window for follow-ups is small; check more often.
-        log.info("Viral follow-up bot: replying to own viral posts every 15 min.")
+        log.info("Viral follow-up bot: replying to own traction posts every 10 min.")
         scheduler.add_job(
             safe_run_viral_followup_cycle,
-            trigger=IntervalTrigger(minutes=15),
+            trigger=IntervalTrigger(minutes=10),
             id="viral_followup_job",
         )
 
@@ -898,10 +896,10 @@ def main():
         # on our original posts, which notify_bot already handles). Cap
         # 4 chain-replies/cycle + max 3 our-turns per thread to prevent
         # infinite ping-pong loops.
-        log.info("Chain-reply bot: respond to nested replies every 15 min (cap 4/cycle).")
+        log.info("Chain-reply bot: respond to nested replies every 10 min (cap 7/cycle).")
         scheduler.add_job(
             safe_run_chain_reply_cycle,
-            trigger=IntervalTrigger(minutes=15),
+            trigger=IntervalTrigger(minutes=10),
             id="chain_reply_job",
         )
 
@@ -944,14 +942,14 @@ def main():
             "retweet_job": 3,
             "like_job": 10,
             "boost_job": 20,
-            "viral_followup_job": 15,
+            "viral_followup_job": 10,
             "followback_job": 45,
             "pin_job": 180,            # 3h
             "spike_job": 8,
             "breakout_job": 5,
             "spicy_job": 40,
             "mega_watch_job": 1.5,
-            "chain_reply_job": 30,
+            "chain_reply_job": 10,
             "follow_blast_job": 20,
             "replyback_job": 8,
         }

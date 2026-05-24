@@ -38,7 +38,7 @@ DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "15"))
 MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "5"))
 MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "20"))
-MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "5"))
+MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "8"))
 
 # Accounts we never reply to. Includes both @handles AND display-name
 # variants so the blocklist still catches us when the scraper returns the

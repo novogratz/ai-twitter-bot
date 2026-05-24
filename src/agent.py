@@ -260,7 +260,7 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
     fait pour être sauvegardé, partagé, et cité.
   • CHIFFRES: viennent des SIGNAUX FOURNIS. Hedge ("~3 Md$") si pas exact.
     JAMAIS inventer un chiffre absent du titre/snippet.
-  • URL finale: si présente, elle DOIT correspondre au bullet #1, pas à un
+  • URL finale: OBLIGATOIRE. Elle DOIT correspondre au bullet #1, pas à un
     bullet secondaire. Bullet #1 d'abord, URL qui le prouve ensuite.
   • TAGS: max 1 @handle par bullet, inline mid-phrase, jamais seul en début
     ou fin de ligne.
@@ -343,7 +343,8 @@ Le mois prochain, même Décode.
   • ZÉRO markdown (**bold**, __italic__, *italic*). Texte brut.
   • Cible 1000-1700 chars body.
   • L'URL en dernière ligne est OBLIGATOIRE. Copie-colle exacte depuis les
-    SIGNAUX. Pas de slug modifié.
+    SIGNAUX. Elle doit prouver le bullet #1, le plus impactant. Pas de slug
+    modifié, pas de lien générique.
 
 ============================================================
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
@@ -381,6 +382,9 @@ Demain, même heure, même Décode.
     bullets parlent TOUS de cette histoire. L'intro et le bullet #1
     DOIVENT mentionner l'acteur principal du titre. Si l'URL parle
     d'OpenAI, le tweet parle d'OpenAI. Pipeline strippe l'URL sinon.
+  • RÈGLE LINK-CARD: l'URL finale est la preuve du bullet #1. Pas du bullet
+    #2, pas du contexte, pas d'un graphe générique du secteur. Si le #1 est
+    Riot/CleanSpark/IREN, l'URL doit parler de Riot/CleanSpark/IREN.
   • STRUCTURE DES 3 BULLETS:
       - #1 (💰): LE CHIFFRE killshot — le chiffre que tout le monde va
         retenir. MÉMORABLE + LIKABLE + COMMENT-BAIT. C'est le hook du post:
@@ -398,7 +402,8 @@ Demain, même heure, même Décode.
   • ZÉRO markdown (**bold**, __italic__). Texte brut.
   • Cible 600-1100 chars body.
   • L'URL en dernière ligne est OBLIGATOIRE. Copie-colle exacte depuis les
-    SIGNAUX. Si l'URL pointe vers un sujet différent, strippé.
+    SIGNAUX. Elle doit prouver le bullet #1, le plus impactant. Si l'URL
+    pointe vers un sujet différent, strippé.
 
 ============================================================
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
@@ -457,7 +462,8 @@ TOPIC: {decode_topic} uniquement (pas d'autre sujet). Format: {format_mode}.
   WEB SEARCH RESULTS plus bas contient au moins 1 URL. Tu copie-colles une
   URL exacte de cette section — JAMAIS d'invention de domaine. Que ce soit
   Décode régulier (#36h) ou top5 (#7j), même règle. L'URL backe le sujet
-  principal (le bullet #1 en top5, l'angle principal en régulier).
+  principal: le point #1 / bullet #1, toujours le plus impactant. Jamais un
+  lien générique qui illustre seulement le secteur.
   Sans URL → pas de carte preview → 50% de likes en moins.
 
 🏷️ TAGS — MANDATE: au moins 2-3 gros comptes taggés dans chaque Décode quand
@@ -766,6 +772,10 @@ def _recent_duplicate_issue(tweet: str, recent_tweets: list[str], format_kind: s
     weekly against weekly, so a monthly Crypto recap isn't falsely killed by a
     daily Crypto decode that shares entities/numbers. Also skips same-date tweets
     for recaps — intra-session re-runs should not self-dedup."""
+    # User directive 2026-05-24: do not block Daily Decodes on recent
+    # entity+number overlap. This gate was too aggressive and killed the
+    # IA / Investissement / Space burst after one Crypto post.
+    return None
     current = _dedup_terms(tweet)
     if not current:
         return None
@@ -2068,32 +2078,19 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
                     return None
         except Exception:
             pass
-    # 2026-05-22: relaxed the no-source-SKIP for well-formed Décodes.
-    # User: "you can still post without URL bro". When the body has the
-    # Décode header AND looks substantial (≥400 chars compact), ship
-    # even without a URL — the fallback ollama path can't WebSearch so
-    # it sometimes lacks a URL. Better to ship a real Décode without
-    # source than miss the cycle.
-    # 2026-05-22 PM: for top5 Friday recap, NO URL required at all — the
-    # format is a weekly digest with per-bullet (source: outlet) citations.
-    # User mandate: "its ok if there is no link" for the Friday Top 5.
+    # User mandate 2026-05-24: every Daily, Weekly, and Monthly Décode must
+    # end with an article URL that proves point #1. No URL-less recap escape
+    # hatch: the link card is part of the format.
     if not src_url:
-        compact = re.sub(r"\s+", " ", tweet).strip()
-        has_header = bool(re.search(r"Le Décode(?:\s+(?:Daily|Weekly|Monthly))?\s*#?\d+", tweet, re.IGNORECASE))
-        # Top 5 weekly / Top 10 monthly: per-bullet (source: outlet) carries
-        # the trace, URL remains optional. Daily: URL is mandatory.
-        if (is_top5 or is_monthly) and has_header and len(compact) >= 300:
-            log.info(f"[NEWS] Recap mode, no source URL — shipping recap ({len(compact)} chars, monthly={is_monthly}).")
-        else:
-            preview = " ".join(tweet.split())[:220]
-            log.info(
-                f"[NEWS] Daily Décode without trailing URL → SKIPPING (user mandate: "
-                f"link card preview is required). Preview: {preview!r}"
-            )
-            globals()["_last_source_url"] = None
-            globals()["_last_image_topic"] = None
-            _mark_generation_retryable("daily missing source URL", tweet)
-            return None
+        preview = " ".join(tweet.split())[:220]
+        log.info(
+            f"[NEWS] Décode without trailing URL → SKIPPING (user mandate: "
+            f"point #1 link card required for daily/weekly/monthly). Preview: {preview!r}"
+        )
+        globals()["_last_source_url"] = None
+        globals()["_last_image_topic"] = None
+        _mark_generation_retryable("missing point #1 source URL", tweet)
+        return None
     globals()["_last_source_url"] = src_url
     # X's native link-card covers the visual; an attached image would
     # suppress the card preview, so always null the image topic.
