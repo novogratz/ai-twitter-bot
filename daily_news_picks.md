@@ -5586,3 +5586,16 @@ Same playbo
 -"ETH was $2,000 in 2021 and
   - https://x.com/papaxem4/status/2058234224059011247
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 32).
+- **@bscnews** (20 likes, score 7/10) — Canaan revenue collapses 74% while $BTC treasury hits a record
+
+@CanaanIO (NASDAQ: CAN) reported Q1 revenue of $62.7M, down from $196.3M in Q4 and a $88.7M net loss. Then the kicker: crypto treasury h
+  - https://x.com/BSCNews/status/2058421484687679766
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 32).
+- **@coinmarketcap** (174 likes, score 8/10) — LATEST:  Senate Banking Chair Tim Scott says banks "can see the writing on the wall" and will no longer clash with the crypto industry within 3 to 5 years.
+  - https://x.com/CoinMarketCap/status/2058453489752088768
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 262).
+- **@ashcrypto** (66 likes, score 7/10) — If you had invested $100,000 in Ubisoft 8 years ago, it would be worth just around $3,000 today.
+
+$ETH  has been a better investment, in this case.
+  - https://x.com/AshCrypto/status/2058461132671562065
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 144).
