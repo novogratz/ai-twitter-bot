@@ -37,30 +37,27 @@ FOLLOWS_PER_CYCLE = int(os.environ.get("FOLLOW_BLAST_PER_CYCLE", "40"))
 FOLLOW_BLAST_DAILY_CAP = int(os.environ.get("FOLLOW_BLAST_DAILY_CAP", "650"))
 FOLLOW_BLAST_STATE_FILE = os.path.join(_PROJECT_ROOT, "follow_blast_state.json")
 
-# FR niche search queries. Rotated per cycle. The min_faves floor keeps
-# us out of bot-farm zones — we want real FR users in the niche.
+# English niche search queries. Rotated per cycle. The min_faves floor keeps
+# us out of bot-farm zones — we want real global AI / crypto users.
 BLAST_QUERIES = [
-    # AI + Crypto only — FR audience (mandate 2026-05-13)
-    "IA lang:fr min_faves:3",
-    "ChatGPT lang:fr min_faves:3",
-    "Claude lang:fr min_faves:2",
-    "Mistral lang:fr min_faves:2",
-    "OpenAI lang:fr min_faves:3",
-    "Anthropic lang:fr min_faves:2",
-    "intelligence artificielle lang:fr",
-    "agent IA lang:fr min_faves:2",
-    "GPT lang:fr min_faves:3",
-    "LLM lang:fr min_faves:2",
-    "Bitcoin lang:fr min_faves:3",
-    "Ethereum lang:fr min_faves:2",
-    "crypto lang:fr min_faves:3",
-    "BTC lang:fr min_faves:2",
-    "Solana lang:fr min_faves:2",
-    "stablecoin lang:fr min_faves:2",
-    "DeFi lang:fr min_faves:2",
-    "ETF Bitcoin lang:fr min_faves:2",
-    "Nvidia lang:fr min_faves:2",
-    "GPU lang:fr min_faves:2",
+    "AI lang:en min_faves:25",
+    "ChatGPT lang:en min_faves:25",
+    "Claude lang:en min_faves:25",
+    "Mistral lang:en min_faves:25",
+    "OpenAI lang:en min_faves:25",
+    "Anthropic lang:en min_faves:25",
+    "AI agents lang:en min_faves:25",
+    "GPT OR LLM lang:en min_faves:25",
+    "Bitcoin lang:en min_faves:25",
+    "Ethereum lang:en min_faves:25",
+    "crypto lang:en min_faves:25",
+    "BTC lang:en min_faves:25",
+    "Solana lang:en min_faves:25",
+    "stablecoin lang:en min_faves:25",
+    "DeFi lang:en min_faves:25",
+    "Bitcoin ETF lang:en min_faves:25",
+    "Nvidia lang:en min_faves:25",
+    "GPU lang:en min_faves:25",
 ]
 
 

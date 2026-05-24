@@ -61,9 +61,9 @@ DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "60"))
 RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "5")))
 
-# Min likes to consider a candidate before scoring. Source/niche/age gates
-# still carry most of the quality boundary.
-MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "12"))
+# Min likes to consider a candidate before scoring. English migration requires
+# bigger visible posts, not small local/French reposts.
+MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "100"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -116,26 +116,11 @@ OFF_TOPIC_KEYWORDS = (
 # Max age in hours for a retweet candidate. Anything older is stale —
 # we shouldn't be amplifying week-old or year-old news.
 MAX_CANDIDATE_AGE_HOURS = int(os.environ.get("RETWEET_MAX_AGE_HOURS", "24"))
-FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "3"))
+FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "100"))
 FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "8"))
 
 FEED_REPOST_SEARCH_QUERIES = [
-    "Bitcoin OR BTC lang:fr min_faves:3",
-    "Ethereum OR ETH lang:fr min_faves:3",
-    "crypto OR stablecoin OR DeFi lang:fr min_faves:3",
-    "OpenAI OR ChatGPT OR Claude lang:fr min_faves:3",
-    "IA OR intelligence artificielle OR Mistral lang:fr min_faves:3",
-    "Nvidia OR GPU OR datacenter lang:fr min_faves:3",
-    "bourse OR CAC40 OR actions lang:fr min_faves:3",
-    "NASDAQ OR Tesla OR Microsoft lang:fr min_faves:3",
-    # 2026-05-22 PM: space industry added per user mandate
-    # "retweet and share content on the space industry, spaceX etc"
-    "SpaceX OR Starship OR Starlink lang:fr min_faves:3",
-    "SpaceX OR Starship lang:en min_faves:50",
-    "Blue Origin OR Rocket Lab OR ArianeGroup lang:fr min_faves:3",
-    "satellite OR fusée OR aerospace lang:fr min_faves:3",
-    # Big-account / big-post discovery. Still filtered by same-day age and
-    # niche gates before reposting.
+    # English-only big-post discovery. Same-day age and niche gates still apply.
     "OpenAI OR Anthropic OR Nvidia lang:en min_faves:1000",
     "Bitcoin OR BTC OR Ethereum lang:en min_faves:1000",
     "AI datacenter OR GPU OR chips lang:en min_faves:500",
@@ -256,9 +241,10 @@ EN_TRUSTED_HANDLES = [
     "Meta",
 ]
 
-# Combined list kept for the source-trust check (a tweet from any of these
-# clears the "trusted source" gate). Sampling logic below biases FR.
-TRUSTED_NEWS_HANDLES = FR_TRUSTED_HANDLES + EN_TRUSTED_HANDLES
+# Combined list kept for the source-trust check. English migration: only EN
+# trusted handles are retweet-eligible; French sources remain available to
+# reply bots but not reposted onto the profile.
+TRUSTED_NEWS_HANDLES = EN_TRUSTED_HANDLES
 
 # Trusted domains — if the tweet embeds a link to one of these, we count
 # the embedded article as the source even if the handle isn't on our list
@@ -267,14 +253,6 @@ TRUSTED_DOMAINS = {
     "reuters.com", "bloomberg.com", "ft.com", "wsj.com", "afp.com",
     "techcrunch.com", "theinformation.com", "theverge.com", "wired.com",
     "coindesk.com", "theblock.co", "axios.com", "cnbc.com",
-    "lesechos.fr", "lemonde.fr", "lefigaro.fr", "bfmtv.com",
-    "investir.lesechos.fr", "journalducoin.com", "cointribune.com",
-    "frenchweb.fr", "maddyness.com", "journaldunet.com",
-    # FR additions 2026-05-05
-    "presse-citron.net", "siecledigital.fr", "usine-digitale.fr",
-    "numerama.com", "01net.com", "lesnumeriques.com", "frandroid.com",
-    "ladn.eu", "cryptoast.fr", "bfmtv.com/crypto", "boursorama.com",
-    "capital.fr", "challenges.fr", "lexpress.fr",
 }
 
 # Content blocklist — handles to never retweet even if scraped here. Safety
@@ -758,14 +736,10 @@ def run_retweet_cycle():
 
     # High-volume crypto/AI/bourse repost surface. Scrape wide every cycle;
     # source/niche/age/dedup gates keep the feed on topic.
-    en_sample = random.sample(
-        EN_TRUSTED_HANDLES, k=min(24, len(EN_TRUSTED_HANDLES))
+    sample = random.sample(
+        EN_TRUSTED_HANDLES, k=min(28, len(EN_TRUSTED_HANDLES))
     )
-    fr_sample = random.sample(
-        FR_TRUSTED_HANDLES, k=min(10, len(FR_TRUSTED_HANDLES))
-    )
-    sample = en_sample + fr_sample
-    log.info(f"[RETWEET] Scraping crypto/AI/bourse handles: {sample}")
+    log.info(f"[RETWEET] Scraping EN-only crypto/AI/macro handles: {sample}")
 
     for handle in sample:
         try:
@@ -866,8 +840,8 @@ def run_retweet_cycle():
 
         # 2026-05-23: user wants more reposts. Keep deterministic quality
         # gating, but publish 7/10+ after source/niche/age filters pass.
-        if score < 7:
-            log.info(f"[RETWEET] Score {score}/10 below repost threshold (7). Logged only.")
+        if score < 8:
+            log.info(f"[RETWEET] Score {score}/10 below EN big-content threshold (8). Logged only.")
             continue
 
         # Lock URL in BEFORE posting so a crash can't double-retweet.

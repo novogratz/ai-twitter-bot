@@ -24,32 +24,21 @@ QUOTE_STATE_FILE = os.path.join(_PROJECT_ROOT, "quote_daily_state.json")
 # MAX_QUOTES_PER_DAY is retained as the cap for this legacy repost-pool job.
 _OWN_HANDLE = BOT_HANDLE.lower()
 
-# Pull HOT tweets (X "Top" tab) with high engagement floor — quote
-# bait should be at least somewhat viral or there's no audience to capture.
-# 2026-04-30 PM (user directive): "biggest tweets from france or english".
-# So queries now span FR and EN — the prompt forces FR commentary either way.
+# Pull HOT English tweets (X "Top" tab) with high engagement floor. The legacy
+# quote pool now plain-reposts only; keep it aligned with the English migration.
 QUOTE_QUERIES = [
-    # 2026-05-08 pivot: bot now writes in EN, audience for quote-tweet
-    # commentary is the wider EN AI/crypto/finance crowd. Queries flipped
-    # EN-heavy with viral floors. A small FR pool stays for Mistral /
-    # Bercy / AMF scoops we don't want to miss.
-    # EN — primary
-    "OpenAI OR ChatGPT lang:en min_faves:500",
-    "Anthropic OR Claude lang:en min_faves:300",
-    "Mistral OR \"LightOn\" OR \"Hugging Face\" lang:en min_faves:200",
+    "OpenAI OR ChatGPT lang:en min_faves:1000",
+    "Anthropic OR Claude lang:en min_faves:800",
+    "Mistral OR \"Hugging Face\" lang:en min_faves:500",
     "Nvidia OR NVDA OR GPU lang:en min_faves:500",
-    "Bitcoin OR BTC lang:en min_faves:500",
-    "Ethereum OR ETH lang:en min_faves:300",
-    "AGI OR \"AI safety\" lang:en min_faves:400",
-    "AI agents OR \"AI startup\" lang:en min_faves:300",
-    "S&P500 OR Nasdaq lang:en min_faves:300",
+    "Bitcoin OR BTC lang:en min_faves:1000",
+    "Ethereum OR ETH lang:en min_faves:800",
+    "AGI OR \"AI safety\" lang:en min_faves:800",
+    "AI agents OR \"AI startup\" lang:en min_faves:500",
+    "S&P500 OR Nasdaq lang:en min_faves:500",
     "Tesla OR Musk lang:en min_faves:1000",
-    "earnings OR IPO OR acquisition lang:en min_faves:200",
-    "stablecoin OR ETF OR \"spot ETF\" lang:en min_faves:300",
-    # FR — fallback for Mistral / Bercy / AMF scoops
-    "Mistral lang:fr min_faves:30",
-    "Bercy OR AMF lang:fr min_faves:30",
-    "IA France lang:fr min_faves:30",
+    "earnings OR IPO OR acquisition lang:en min_faves:500",
+    "stablecoin OR ETF OR \"spot ETF\" lang:en min_faves:800",
 ]
 
 QUOTE_PROMPT = """Tu es @kzer_ai. Tu vas QUOTE-TWEETER ce tweet:
@@ -343,8 +332,8 @@ def run_quote_tweet_cycle():
                 if author == _OWN_HANDLE or url_handle == _OWN_HANDLE:
                     continue
                 likes = int(t.get("likes") or 0)
-                if likes < 20:
-                    continue  # trusted outlets break news fast — lower floor
+                if likes < 100:
+                    continue
                 # 2026-05-07: same-day + niche gate (no Justin Bieber 2012).
                 text = (t.get("text") or "").strip()
                 try:

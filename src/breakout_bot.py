@@ -1,14 +1,14 @@
 """Breakout bot — fast trend jacker for the breakthrough moment.
 
 User: 20k followers by end of month. Math says we need at least one viral
-moment per week. Viral moments require SPEED: being among the first 50 FR
+moment per week. Viral moments require SPEED: being among the first 50 English
 voices on a breaking topic = 10-100x reach vs. posting 6h later.
 
 Strategy:
   - Every 8 min, scrape X niche-search "live" tab + trends panel.
   - Velocity check: tweets in the last 30min that already cleared
     HIGH_VELOCITY_LIKES likes = something is breaking.
-  - Pick the topic, generate a SHARP FR hot take in <30 sec via Claude
+  - Pick the topic, generate a SHARP English hot take in <30 sec via Claude
     (Opus, no rejection sampling — speed > polish).
   - Post immediately. The bot's regular news/hotake cycle is too slow
     for breaking news (45-min cadence).
@@ -36,20 +36,14 @@ MAX_BREAKOUTS_PER_DAY = int(os.environ.get("MAX_BREAKOUTS_PER_DAY", "15"))
 HIGH_VELOCITY_LIKES = int(os.environ.get("BREAKOUT_VELOCITY_LIKES", "100"))
 MIN_LIKES_TO_CONSIDER = int(os.environ.get("BREAKOUT_MIN_LIKES", "30"))
 
-# Search queries that surface high-velocity FR + EN content in our niches.
+# Search queries that surface high-velocity English content in our niches.
 # We want the FRESH viral pulse, not yesterday's already-hot tweets.
 BREAKOUT_QUERIES = [
-    # FR niche viral — AI + Crypto ONLY
-    "IA OR ChatGPT OR OpenAI OR Mistral lang:fr min_faves:50",
-    "Bitcoin OR crypto OR ETF OR Ethereum lang:fr min_faves:50",
-    "Anthropic OR Claude lang:fr min_faves:30",
-    "Nvidia OR GPU OR datacenter lang:fr min_faves:30",
-    "Solana OR stablecoin OR DeFi lang:fr min_faves:30",
-    # EN mega-viral (we comment in FR over them)
     "OpenAI OR Anthropic lang:en min_faves:5000",
     "Bitcoin OR Ethereum lang:en min_faves:5000",
     "AI OR AGI lang:en min_faves:8000",
     "Nvidia OR GPU lang:en min_faves:5000",
+    "Solana OR stablecoin OR DeFi lang:en min_faves:3000",
 ]
 
 
@@ -68,7 +62,7 @@ Pas de SKIP. Pas de rejection sampling. Tu shipes un take qui claque.
 FORMAT (≤270 chars TOTAL, screenshot-worthy):
 - 1-2 phrases sec.
 - Une chute qui pique. Pas de news-report tone.
-- Une réf culturelle FR (RER B, Bercy, syndicat, café-clope) est BIENVENUE — même en EN, c'est une signature.
+- English-only. Use global AI / crypto / Wall Street references.
 - Pas d'emojis, pas de hashtag, pas d'em dash.
 - Pas de "Selon X..." / "Breaking:" / "Aujourd'hui..." / "According to..." / "Today...".
 
@@ -167,7 +161,7 @@ def _detect_breakout_topic() -> dict:
 
 
 def run_breakout_cycle():
-    """Detect a viral breaking topic, post a fast FR hot take on it."""
+    """Detect a viral breaking topic, post a fast English hot take on it."""
     from .config import get_live_cap
     cap = get_live_cap("MAX_BREAKOUTS_PER_DAY", MAX_BREAKOUTS_PER_DAY)
     if _today_count() >= cap:

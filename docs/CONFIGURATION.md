@@ -39,8 +39,8 @@ Original content uses LLM cycles + appears on the profile feed; the cap balances
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `MAX_NEWS_PER_DAY` | `10` | Real sourced news posts. |
-| `MAX_HOTAKES_PER_DAY` | `0` | Hot takes (disabled by default; profile stays news-first). |
+| `MAX_NEWS_PER_DAY` | `5` | Real sourced Décode insight posts. |
+| `MAX_HOTAKES_PER_DAY` | `3` | Quick takes on AI / crypto / macro stories. |
 | `MAX_BREAKOUTS_PER_DAY` | `4` | Breakout reactions to viral stories. |
 | `MAX_SPICY_PER_DAY` | `4` | Polarizing takes / questions. |
 
@@ -57,8 +57,8 @@ Reshare paths don't burn LLM cycles (deterministic scoring) so caps can be much 
 | `MAX_QUOTES_PER_DAY` | `80` | Legacy cap for the repost-pool job. |
 | `MAX_RETWEETS_PER_DAY` | `30` | Selective crypto / AI / bourse reposts. |
 | `RETWEETS_PER_CYCLE` | `3` | Max external retweets shipped after each deterministic candidate scrape. |
-| `MAX_REPLIES_PER_CYCLE` | `8` | Replies per `reply_bot` / `direct_reply` cycle. |
-| `DIRECT_REPLY_MAX_PER_CYCLE` | `32` | Cap for the high-value profile/feed reply scanner. |
+| `MAX_REPLIES_PER_CYCLE` | `3` | Broad reply-bot cap per cycle. |
+| `DIRECT_REPLY_MAX_PER_CYCLE` | `2` | High-value profile/feed reply cap per cycle; cadence targets 20-50/day. |
 | `DIRECT_REPLY_MAX_EN_PER_CYCLE` | `5` | English reply cap inside one direct-reply cycle. |
 | `MAX_PROMOTES_PER_DAY` | `3` | Promote-best-reply (plain-repost own top reply). |
 | `MAX_BOOSTS_PER_DAY` | (no cap) | Self-RT scheduled by cadence only. |
@@ -114,7 +114,7 @@ Per-cycle quotas (not daily caps):
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `CONTENT_LANG_PRIMARY` | `fr` | `en` / `fr` / `mixed` (70% EN / 30% FR). Reply paths always match parent tweet language regardless. |
+| `CONTENT_LANG_PRIMARY` | `en` | `en` / `fr` / `mixed` (70% EN / 30% FR). Reply paths always match parent tweet language regardless. |
 
 ---
 
@@ -184,5 +184,5 @@ ENABLE_AI_MAINTENANCE=0
 ENABLE_AI_DISCOVERY=0
 ENABLE_CODEX_OPERATOR=0
 
-CONTENT_LANG_PRIMARY=fr
+CONTENT_LANG_PRIMARY=en
 ```

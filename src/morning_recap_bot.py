@@ -1,4 +1,4 @@
-"""Morning recap thread — daily 'what you need to know' thread at 8am Paris.
+"""Morning recap thread — daily 'what you need to know' English thread.
 
 User pivot 2026-05-09 PM: bot is now a crypto+IA influencer + YouTube
 feed. A daily morning recap thread is the strongest "this account
@@ -12,11 +12,10 @@ Strategy:
   - Fires every hour but only ships once between 06:00-09:00 Paris
     (08:00-11:00 EST during DST or 07:00-10:00 EST in winter — the
     scheduler hour-check covers both via the time-of-day window).
-  - Generates a 4-tweet FR thread:
-      1. Hook: "Réveil. Voici les 3 trucs IA + Crypto qui comptent
-         ce matin. 🧵"
+  - Generates a 4-tweet English thread:
+      1. Hook: "Morning scan. The 3 AI + Crypto stories that matter. 🧵"
       2-4. Three stories from external_signal.json + RSS, each with
-         one sentence of context + one sentence of sarcastic chute FR.
+         one sentence of context + one sentence of sarcastic punchline.
   - Posts via twitter_client.post_thread.
   - Auto-pushes morning_recap_state.json + state to git.
 
@@ -46,30 +45,28 @@ MORNING_HOUR_START_EST = 1
 MORNING_HOUR_END_EST = 4
 
 
-RECAP_PROMPT = """Tu es @cryptoiadecode. C'est le matin et tu écris LE thread du
-réveil pour ton audience FR crypto + IA.
+RECAP_PROMPT = """You are @cryptoiadecode. It is morning and you write THE wake-up
+thread for a global English crypto + AI audience.
 
 📅 {today_date}
 
 VOICI les éléments en buzz ce matin (RSS / HN / Reddit / X home, last 8h):
 {signal_block}
 
-Ton job: écrire UN thread de 4 tweets en FRANÇAIS qui résume les 3
-plus grosses stories Crypto + IA du moment. C'est NOTRE rendez-vous
-matinal — l'audience vient ici parce qu'elle veut savoir EN 2 MINUTES
-ce qu'il s'est passé pendant la nuit.
+Your job: write ONE 4-tweet English thread summarizing the 3 biggest
+Crypto + AI stories right now. This is the morning ritual: the audience
+comes here to know in 2 minutes what moved overnight.
 
 FORMAT (4 tweets, blocs séparés par "---"):
 
-TWEET 1 — INTRO (≤220 chars, FR sec):
-- Style: "Réveil. Voici les 3 trucs Crypto + IA qui comptent ce matin. 🧵"
+TWEET 1 — INTRO (≤220 chars, dry English):
+- Style: "Morning scan. The 3 Crypto + AI stories that matter. 🧵"
 - Hook + promesse + le 🧵 émoji thread.
 
 TWEET 2 — STORY 1 (≤270 chars):
-- Format: "1/ <fait sec en 1 phrase + chiffre exact>.\\n\\n<chute FR sarcastique>."
+- Format: "1/ <dry fact in 1 sentence + exact number>.\\n\\n<sarcastic English punchline>."
 - Mentionne l'outlet entre parenthèses (ex: "(Bloomberg)").
-- Réf culturelle FR autorisée si elle pique (RER B / Bercy / syndicat /
-  café-clope / PEL / tonton).
+- Use global AI / crypto / Wall Street references. No French anchors.
 
 TWEET 3 — STORY 2 (≤270 chars):
 - Même format avec "2/" devant.
@@ -80,11 +77,11 @@ TWEET 4 — STORY 3 + CHUTE (≤270 chars):
   la suite." / "Vous êtes prévenus." / "Au moins on est prévenus.").
 
 RÈGLES:
-- TOUT EN FRANÇAIS. Audience 100% FR.
+- 100% English. Global AI / crypto / markets audience.
 - Pas d'em dash (—). Pas d'emojis (sauf 🧵 sur tweet 1).
 - Pas de hashtag.
 - Sources top-tier (Bloomberg / FT / Reuters / Les Échos / TechCrunch /
-  CoinDesk / The Information).
+  CoinDesk / The Information / CNBC / Axios).
 - ≤24h sur les news.
 - Si moins de 3 stories valides existent dans le signal → output
   exactement le mot SKIP.

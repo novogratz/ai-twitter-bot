@@ -29,14 +29,14 @@ from .twitter_client import scrape_following_feed, scrape_home_feed, scrape_x_se
 from .rss_signal_bot import NICHE_HITS, SIGNAL_FILE
 
 SEARCH_QUERIES = [
-    "Bitcoin OR BTC lang:fr min_faves:2",
-    "Ethereum OR ETH lang:fr min_faves:2",
-    "crypto OR stablecoin OR DeFi lang:fr min_faves:2",
-    "OpenAI OR ChatGPT OR Claude lang:fr min_faves:2",
-    "IA OR intelligence artificielle OR Mistral lang:fr min_faves:2",
-    "Nvidia OR GPU OR datacenter lang:fr min_faves:2",
-    "bourse OR CAC40 OR actions lang:fr min_faves:2",
-    "NASDAQ OR Tesla OR Microsoft lang:fr min_faves:2",
+    "Bitcoin OR BTC lang:en min_faves:100",
+    "Ethereum OR ETH lang:en min_faves:100",
+    "crypto OR stablecoin OR DeFi lang:en min_faves:100",
+    "OpenAI OR ChatGPT OR Claude lang:en min_faves:100",
+    "AI OR artificial intelligence OR Mistral lang:en min_faves:100",
+    "Nvidia OR GPU OR datacenter lang:en min_faves:100",
+    "stock market OR Nasdaq OR S&P500 lang:en min_faves:100",
+    "Tesla OR Microsoft OR Meta lang:en min_faves:100",
 ]
 SEARCHES_PER_CYCLE = int(os.environ.get("X_FEED_SEARCHES_PER_CYCLE", "2"))
 

@@ -1,28 +1,32 @@
 # Growth Optimization Strategies
 
-## Content Enhancement for 10K Followers
+## 2026 Execution Plan
 
-### 1. Increased Engagement
-- MAX_NEWS_PER_DAY: 12 (from 10) - More quality content
-- MAX_QUOTES_PER_DAY: 120 (from 80) - More reposts and engagement
-- MAX_RETWEETS_PER_DAY: 300 (from 220) - More retweet activity
-- MAX_REPLIES_PER_CYCLE: 12 (from 8) - More interaction with users
+### 1. Content Mix
+- 40% Insights/Analysis: "Le Décode" remains the backbone.
+- 30% Quick takes: Bitcoin, AI tokens, macro, ETF flows, regulation.
+- 15% Threads: weekly market decode and AI tools for crypto traders.
+- 10% Visuals: link cards, charts, before/after framing, banners when available.
+- 5% Engagement bait: one sharp question or poll-style prompt, never generic.
 
-### 2. Enhanced Discovery
-- ENABLE_AI_MAINTENANCE=1 - Enable self-improvement features
-- ENABLE_AI_DISCOVERY=1 - Enable autonomous account discovery
-- ENABLE_CODEX_OPERATOR=1 - Enable operator features for growth
+### 2. Cadence
+- Original posts: 3-5/day minimum, capped by `MAX_NEWS_PER_DAY=5` and `MAX_HOTAKES_PER_DAY=3`.
+- Peak timing: daily/weekly/monthly Decode bursts run in the evening UTC window.
+- Hashtags: sparse and curated only, max one of `#Crypto`, `#AI`, `#Bitcoin`, `#Web3`.
 
-### 3. Growth Focus
-- GROWTH_ENHANCEMENT=1 - Activate growth optimization mode
-- FOLLOW_BACK_RATIO=0.3 - Follow 30% of followers back to increase visibility
-- RETWEET_ENGAGEMENT_THRESHOLD=5 - Only retweet content with 5+ likes to boost engagement quality
+### 3. Reply Guy Strategy
+- Target 20-50 quality replies/day.
+- Reply thoughtfully under large crypto/AI/macro accounts: Vitalik, sama, Saylor, Coinbase, major AI labs, high-traction French crypto/finance accounts.
+- Replies must be specific to the parent tweet and safe for the author to like.
 
-### 4. Content Diversity
-- NEWS_CANDIDATES=5 (from 3) - More candidate news sources
-- Content variety: Mix news, hot takes, breakout analysis, and engaging replies
+### 4. Profile And Funnel
+- Pin the best performing thread or latest YouTube video.
+- Use bio/link hub for YouTube and newsletter.
+- Cross-promote YouTube: videos should end with "Follow for daily decodes".
 
-### 5. Performance Optimization
-- BOOST_ENGAGEMENT_POSTS=1 - Boost high engagement posts
+### 5. Advanced Growth
+- Collaborate with similar-sized accounts for mutual shoutouts.
+- Run occasional small crypto giveaways.
+- Build "The Decode Weekly" newsletter for email capture.
 
-These changes will significantly increase the bot's activity level and engagement, making it more visible and attractive to users who want to follow a dynamic AI-focused account.
+Realistic target: with consistent threads plus smart replies, 5k-10k followers in 3-6 months from the current small-account baseline.

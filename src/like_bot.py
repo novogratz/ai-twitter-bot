@@ -28,36 +28,14 @@ from .logger import log
 from .twitter_client import _safari_lock, close_front_tab, _scroll_page
 
 LIKE_QUERIES = [
-    # FR AI
-    "IA lang:fr min_faves:5",
-    "ChatGPT lang:fr min_faves:5",
-    "Claude lang:fr min_faves:3",
-    "Mistral lang:fr min_faves:3",
-    "OpenAI lang:fr min_faves:5",
-    "Anthropic lang:fr min_faves:3",
-    "intelligence artificielle lang:fr",
-    "Hugging Face lang:fr",
-    # FR crypto
-    "Bitcoin lang:fr min_faves:5",
-    "Ethereum lang:fr min_faves:3",
-    "crypto lang:fr min_faves:5",
-    "BTC lang:fr min_faves:3",
-    # FR bourse
-    "CAC40 lang:fr",
-    "bourse lang:fr min_faves:3",
-    "Nvidia lang:fr min_faves:3",
-    "trading lang:fr min_faves:3",
-    "investissement lang:fr min_faves:3",
-    "actions lang:fr min_faves:3",
-    # EN/global crypto + AI signals that train For You hard
-    "Bitcoin OR BTC min_faves:20",
-    "Ethereum OR ETH min_faves:15",
-    "crypto OR stablecoin OR DeFi min_faves:15",
-    "OpenAI OR Anthropic OR ChatGPT min_faves:20",
-    "Nvidia OR GPU OR datacenter min_faves:20",
-    "AI agents OR LLM min_faves:20",
-    "NASDAQ OR stocks OR earnings min_faves:20",
-    "Tesla OR Microsoft OR Meta AI min_faves:20",
+    "Bitcoin OR BTC lang:en min_faves:50",
+    "Ethereum OR ETH lang:en min_faves:50",
+    "crypto OR stablecoin OR DeFi lang:en min_faves:50",
+    "OpenAI OR Anthropic OR ChatGPT lang:en min_faves:50",
+    "Nvidia OR GPU OR datacenter lang:en min_faves:50",
+    "AI agents OR LLM lang:en min_faves:50",
+    "NASDAQ OR stocks OR earnings lang:en min_faves:50",
+    "Tesla OR Microsoft OR Meta AI lang:en min_faves:50",
 ]
 TOP_TAB_PROBABILITY = float(os.environ.get("LIKE_TOP_TAB_PROBABILITY", "0.55"))
 

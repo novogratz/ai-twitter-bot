@@ -36,13 +36,13 @@ META_LOG_FILE = os.path.join(_PROJECT_ROOT, "meta_strategy_log.json")
 # Bounds the agent can NOT cross — safety rails so a bad cycle can't
 # explode caps to 1000 or freeze the bot at 0.
 _BOUNDS = {
-    "MAX_NEWS_PER_DAY":      (4,  40),
-    "MAX_HOTAKES_PER_DAY":   (2,  20),
+    "MAX_NEWS_PER_DAY":      (4,  8),
+    "MAX_HOTAKES_PER_DAY":   (2,  5),
     "MAX_QUOTES_PER_DAY":    (4,  60),
     "MAX_RETWEETS_PER_DAY":  (8,  30),
     "MAX_BREAKOUTS_PER_DAY": (1,  10),
     "MAX_SPICY_PER_DAY":     (1,  10),
-    "MAX_REPLIES_PER_CYCLE": (8,  140),
+    "MAX_REPLIES_PER_CYCLE": (1,  5),
 }
 
 
@@ -117,8 +117,8 @@ ETAT ACTUEL (suppression, tuning, identité bot, stratégie en cours):
 REGLES POUR TES DECISIONS:
 1. Si suppression_state.paused_until est dans le futur → tu DOIS baisser
    les caps agressifs (spicy, breakout, follow_blast) à leur minimum.
-2. Si l'activité totale 7j est faible (< 200) → augmente les caps de
-   reshare (quotes, retweets) — il faut SHIPPER plus.
+2. Si l'activité totale 7j est faible (< 200) → augmente plutôt la qualité
+   des sujets et les reposts; ne transforme pas les replies en spam.
 3. Si l'activité est saine (>= 500) ET suppression non flaggée →
    maintiens ou monte.
 4. Topic focus: choisis 3 sujets HOT en ce moment dans IA/crypto/bourse
@@ -142,8 +142,8 @@ OUTPUT — UNIQUEMENT un JSON valide, ce schéma exact:
 }}
 
 BORNES: chaque cap est dans son range autorisé. Bornes:
-  news 4-40, hotake 2-20, quote 4-60, retweet 8-120,
-  breakout 1-10, spicy 1-10, replies/cycle 8-40.
+  news 4-8, hotake 2-5, quote 4-60, retweet 8-30,
+  breakout 1-10, spicy 1-10, replies/cycle 1-5.
 
 Pas de markdown, pas de commentaire — JUSTE le JSON.
 """

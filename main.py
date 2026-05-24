@@ -152,17 +152,15 @@ def post_interval_minutes() -> int:
 
 
 def reply_interval_minutes() -> int:
-    """Primary growth cadence — user mandate 2026-05-23: "go crazy on
-    responses, respond to way more messages". Reply loop is the volume
-    play. Tightened again across all windows.
+    """Reply-guy cadence. 2026 growth target is 20-50 quality replies/day,
+    so this loop stays frequent without turning every scan into a burst.
     """
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    # US business peak EST 09-16 = absolute reply window.
     if 9 <= hour < 16:
-        return random.randint(1, 2)
+        return _cadence(random.randint(25, 40))
     if 16 <= hour < 23:
-        return random.randint(2, 4)
-    return random.randint(3, 6)
+        return _cadence(random.randint(30, 50))
+    return _cadence(random.randint(45, 75))
 
 
 def engage_interval_minutes() -> int:
@@ -174,21 +172,22 @@ def engage_interval_minutes() -> int:
 
 
 def direct_reply_interval_minutes() -> int:
-    """Primary response path. cadence_factor applied LIVE.
-    2026-05-23: tightened per "go crazy" mandate."""
+    """Primary response path. cadence_factor applied LIVE."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return _cadence(random.randint(1, 3))
-    return _cadence(random.randint(3, 6))
+        return _cadence(random.randint(12, 22))
+    if 16 <= hour < 23:
+        return _cadence(random.randint(18, 35))
+    return _cadence(random.randint(35, 60))
 
 
 def early_bird_interval_minutes() -> int:
     """Early-bird replies — highest-upside, scan aggressively. cadence applied.
-    2026-05-23: tightened to 1-3 min during US peak."""
+    Keep this faster than normal replies so big-account drops are still caught."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return _cadence(random.randint(1, 3))
-    return _cadence(random.randint(3, 6))
+        return _cadence(random.randint(5, 9))
+    return _cadence(random.randint(8, 15))
 
 
 def roast_interval_minutes() -> int:
@@ -322,27 +321,24 @@ def main():
 
     # Schedule jobs
     if not args.reply_only:
-        # 2026-05-22 PM: two separate news crons (user mandate).
-        # Daily Décodes: every day at 1:00 AM EST (= 7:00 AM Paris CEST).
-        # Burst posts 3 Daily Décodes in ~14-18 min (one per topic).
-        # Weekly Top 5s: Fridays at 7:00 AM EST (= 1:00 PM Paris CEST).
-        # Burst posts 3 Weekly Top 5s in ~14-18 min (one per topic).
-        log.info("News bot DAILY: cron at 1:00 AM America/New_York (= 7:00 AM Paris).")
+        # 2026-05-24 growth strategy: ship original analysis during global
+        # crypto peak, evenings UTC, instead of the old early-EST window.
+        log.info("News bot DAILY: cron at 19:00 UTC (= evening global crypto peak).")
         scheduler.add_job(
             safe_run_daily_news_cycle,
-            trigger=CronTrigger(hour=1, minute=0, timezone="America/New_York"),
+            trigger=CronTrigger(hour=19, minute=0, timezone="UTC"),
             id="daily_news_job",
         )
-        log.info("News bot WEEKLY: cron Fridays at 7:00 AM America/New_York (= 1:00 PM Paris).")
+        log.info("News bot WEEKLY: cron Fridays at 19:30 UTC.")
         scheduler.add_job(
             safe_run_weekly_news_cycle,
-            trigger=CronTrigger(day_of_week="fri", hour=7, minute=0, timezone="America/New_York"),
+            trigger=CronTrigger(day_of_week="fri", hour=19, minute=30, timezone="UTC"),
             id="weekly_news_job",
         )
-        log.info("News bot MONTHLY: cron on the 23rd at 8:00 AM America/New_York (= monthly Top 10).")
+        log.info("News bot MONTHLY: cron on the 23rd at 20:00 UTC (= monthly Top 10).")
         scheduler.add_job(
             safe_run_monthly_news_cycle,
-            trigger=CronTrigger(day=23, hour=8, minute=0, timezone="America/New_York"),
+            trigger=CronTrigger(day=23, hour=20, minute=0, timezone="UTC"),
             id="monthly_news_job",
         )
 
@@ -377,7 +373,7 @@ def main():
 
         # Direct reply bot - visits influencer profiles and replies to their tweets.
         # Slowed from 15 -> ~25min jittered. Skipped during quiet hours.
-        log.info("Direct reply bot: replying to influencer tweets every ~25 min (jittered, quiet 1am-7am Paris).")
+        log.info("Direct reply bot: reply-guy strategy targeting 20-50 quality replies/day.")
         scheduler.add_job(
             reschedule_and_direct_reply,
             trigger=IntervalTrigger(minutes=direct_reply_interval_minutes()),
@@ -911,7 +907,7 @@ def main():
         # Morning recap thread — fires every hour but only ships once
         # in the 07:00-10:00 Paris window (idempotent daily). Daily
         # ritual + ready video opener.
-        log.info("Morning recap: 4-tweet FR thread daily ~8am Paris (hourly check).")
+        log.info("Morning recap: 4-tweet English thread daily in morning window (hourly check).")
         scheduler.add_job(
             safe_run_morning_recap_cycle,
             trigger=IntervalTrigger(hours=1),

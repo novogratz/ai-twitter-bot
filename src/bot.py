@@ -36,10 +36,43 @@ def _live_hotake_cap() -> int:
 THREAD_SEPARATOR = "---THREAD---"
 NEWS_POSTS_PER_CYCLE = int(os.environ.get("NEWS_POSTS_PER_CYCLE", "3"))
 NEWS_POST_SPACING_SECONDS = int(os.environ.get("NEWS_POST_SPACING_SECONDS", "120"))
+ORIGINAL_HASHTAG_PROB = float(os.environ.get("ORIGINAL_HASHTAG_PROB", "0.18"))
+_CURATED_HASHTAGS = ("#Crypto", "#AI", "#Bitcoin", "#Web3")
 
 # Source-as-self-reply was reverted 2026-04-30 PM (user: "remove the source as
 # reply of yourself this is ridiculous.. put it directly in the news if needed").
 # URL stays inline in the tweet body — X renders the link card natively.
+
+
+def _maybe_add_curated_hashtag(text: str) -> str:
+    """Add at most one approved hashtag to original posts, sparingly.
+
+    humanize() strips model-leaked hashtags, so this is the only sanctioned
+    hashtag path. Replies stay hashtag-free because reply hashtags read spammy.
+    """
+    if not text or random.random() > ORIGINAL_HASHTAG_PROB:
+        return text
+    if any(tag.lower() in text.lower() for tag in _CURATED_HASHTAGS):
+        return text
+    body = text.lower()
+    if re.search(r"\bbitcoin|btc|satoshi|saylor|microstrategy\b", body):
+        tag = "#Bitcoin"
+    elif re.search(r"\bweb3|defi|dao|wallet|stablecoin|token\b", body):
+        tag = "#Web3"
+    elif re.search(r"\bcrypto|ethereum|solana|coinbase|binance|etf crypto\b", body):
+        tag = "#Crypto"
+    elif re.search(r"\bia\b|openai|anthropic|mistral|nvidia|gpu|agent|llm|chatgpt", body):
+        tag = "#AI"
+    else:
+        return text
+    if len(text) + len(tag) + 1 > 280:
+        return text
+    lines = text.rstrip().splitlines()
+    last_idx = next((i for i in range(len(lines) - 1, -1, -1) if lines[i].strip()), None)
+    if last_idx is not None and re.fullmatch(r"https?://\S+", lines[last_idx].strip()):
+        lines.insert(last_idx, tag)
+        return "\n".join(lines).strip()
+    return f"{text.rstrip()} {tag}"
 
 
 def _load_daily_state() -> dict:
@@ -355,6 +388,7 @@ def _run_single_bot_cycle() -> bool:
         else:
             _increment_counter("hotakes")
             tweet = humanize(tweet)
+            tweet = _maybe_add_curated_hashtag(tweet)
             # Visual policy 2026-04-29 PM (user: "shitty image generated"):
             # NO MORE Pillow quote cards — they look bot-y. Real photos only.
             # Priority: source-article og:image > Wiki og:image > text-only.
@@ -666,10 +700,13 @@ def _run_single_bot_cycle() -> bool:
 
         if tweet_source == "news":
             post_body = _finalize_news_tweet(_enforce_single_trailing_url(post_body, src_url), src_url)
+            post_body = _maybe_add_curated_hashtag(post_body)
             inline_urls = re.findall(r"https?://\S+", post_body.replace(src_url or "", ""))
             if inline_urls:
                 log.info(f"[NEWS] Final URL sanitizer refused inline URLs: {inline_urls[:3]}")
                 return False
+        elif tweet_source == "hotake":
+            post_body = _maybe_add_curated_hashtag(post_body)
         log.info(f"[NEWS] Posting ({len(post_body)} chars): {post_body[:100]}...")
         post_tweet(post_body, image_path=img_path)
         save_tweet(post_body if tweet_source == "news" else tweet)
@@ -762,11 +799,11 @@ def _run_bot_cycle_in_mode(mode: str, posts_per_cycle: int | None = None):
 
 
 def safe_run_daily_news_cycle(force_all: bool = False):
-    """Cron handler — 1:00 AM EST every day. Forces daily-only rotation
-    so the burst ships 3 Daily Décodes (one per topic) in ~14-18 min."""
+    """Cron handler — evening UTC. Forces daily-only rotation so the burst
+    ships Daily Décodes during the global crypto peak window."""
     from . import health
     try:
-        log.info("[CRON] Daily news burst (1:00 AM EST) — daily mode forced.")
+        log.info("[CRON] Daily news burst (evening UTC) — daily mode forced.")
         if force_all:
             from . import agent as _ag
             _ag._clear_topics_done_today_for_format("daily")
@@ -779,11 +816,11 @@ def safe_run_daily_news_cycle(force_all: bool = False):
 
 
 def safe_run_weekly_news_cycle():
-    """Cron handler — 7:00 AM EST Fridays. Forces weekly-only rotation
-    so the burst ships 4 Weekly Top 5s (one per topic) in ~14-18 min."""
+    """Cron handler — Friday evening UTC. Forces weekly-only rotation
+    so the burst ships 4 Weekly Top 5s."""
     from . import health
     try:
-        log.info("[CRON] Weekly news burst (Friday 7:00 AM EST) — weekly mode forced.")
+        log.info("[CRON] Weekly news burst (Friday evening UTC) — weekly mode forced.")
         _run_bot_cycle_in_mode("weekly", posts_per_cycle=4)
         health.record_success("post")
     except Exception:
