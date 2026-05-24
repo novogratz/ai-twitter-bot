@@ -24,7 +24,15 @@
     "thomas_toucheix",
     "mickael_broux",
     "perrault_david",
-    "louis_ha"
+    "louis_ha",
+    "RomainDillet",
+    "PierreBordry",
+    "AlexRochon",
+    "LucasFradin",
+    "YannickLavoie",
+    "MehdiMoussaid",
+    "AlexisPerron",
+    "SylvainDurand"
   ],
   "en": [
     "blablacar",
@@ -177,6 +185,46 @@
       "lang": "en",
       "handle": "stacyherbert",
       "added": "2026-05-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDillet",
+      "added": "2026-05-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreBordry",
+      "added": "2026-05-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexRochon",
+      "added": "2026-05-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasFradin",
+      "added": "2026-05-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "YannickLavoie",
+      "added": "2026-05-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "MehdiMoussaid",
+      "added": "2026-05-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisPerron",
+      "added": "2026-05-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainDurand",
+      "added": "2026-05-24"
     }
   ]
 }

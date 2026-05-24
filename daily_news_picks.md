@@ -5508,3 +5508,38 @@ Explain this gap.
 - **@reutersbiz** (73 likes, score 8/10) — Nvidia CEO Jensen Huang sees long-term opportunities in China despite tech tensions with the US, noting the country is part of a $200 billion market forecast for data centers and CPU. More here: https
   - https://x.com/ReutersBiz/status/2058256648439812461
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 89).
+
+## 2026-05-24
+- **@ncheron_bourse** (59 likes, score 8/10) — 5 étapes pour devenir Jean-Michel DCA :
+
+1. Constituer un portefeuille d’ETF
+2. Mettre en place un plan d’investissement programmé
+3. Attendre
+4. Profiter de la vie
+5. Regarder son portefeuille dans 2
+  - https://x.com/NCheron_bourse/status/2058201732077789234
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 83).
+- **@raparappa223hxk** (45 likes, score 8/10) — 株を30年やってきたから、もう一度だけ言う
+100株でいい。今動かなければ遅い
+
+次に世界を変えるのは“物理AI”
+NVIDIA・ソフトバンク・OpenAIが一斉に動き出した
+AIは「会話」から「現実世界を動かす時代」へ
+現在：157円
+上場来高値：3,838円
+もう“種”は撒かれている
+気づいた人から、静かに動いている
+  - https://x.com/raparappa223hxk/status/2058393251301011779
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 55).
+- **@speculator_io** (435 likes, score 7/10) — A year ago, I shared I my list of space stocks.
+
+Since then...
+
+$PL Planet Labs +1,888.79%
+$RKLB Rocket Lab +1295.27%
+$SATL Satellogic +930.10%
+$BKSY BlackSky +909.92%
+$VSAT Viasat +524.46%
+$LUNR Intu
+  - https://x.com/Speculator_io/status/2058301220280770895
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 471).
