@@ -5499,3 +5499,12 @@ Explain this gap.
 1. Leverage tokens on Ethereum: Similar to what http://bounce.tech is doing on @HyperliquidX
   - https://x.com/uniperpv4/status/2058198089048236345
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 30).
+- **@reuters** (309 likes, score 9/10) — Nvidia CEO Jensen Huang sees long-term opportunities in China despite tech tensions with the US, noting the country is part of a $200 billion market forecast for data centers and CPU https://reut.rs/4
+  - https://x.com/Reuters/status/2058255390174073109
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 361).
+- **@trendingbitcoin** (116 likes, score 9/10) — Michael Saylor says keeping your job, avoiding splurges, and using long-term mortgage debt to buy Bitcoin could lead to 100x returns, with Bitcoin potentially worth $13M by 2045.
+  - https://x.com/TrendingBitcoin/status/2058247337173278947
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 148).
+- **@reutersbiz** (73 likes, score 8/10) — Nvidia CEO Jensen Huang sees long-term opportunities in China despite tech tensions with the US, noting the country is part of a $200 billion market forecast for data centers and CPU. More here: https
+  - https://x.com/ReutersBiz/status/2058256648439812461
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 89).
