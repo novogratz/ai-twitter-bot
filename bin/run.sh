@@ -38,6 +38,6 @@ echo "[run] Starting @kzer_ai bot. Press Ctrl-C to stop."
 echo "[run] Logs also stream to bot.log (tail -F bot.log)."
 echo "────────────────────────────────────────"
 
-# Foreground execution. Output to terminal AND tee'd to bot.log so the
-# existing log-tail flow works.
-exec "$REPO_DIR/.venv/bin/python3" main.py 2>&1 | tee -a "$REPO_DIR/bot.log"
+# Foreground execution via uv so dependencies come from the project env.
+# Output to terminal AND tee'd to bot.log so the existing log-tail flow works.
+exec uv run python main.py 2>&1 | tee -a "$REPO_DIR/bot.log"
