@@ -146,26 +146,26 @@ def search_for_news_topic(topic: str, date_filter: str = "w") -> str:
     """
     queries_by_topic = {
         "IA": [
-            "OpenAI Anthropic Mistral news this week",
-            "AI datacenter GPU NVIDIA news this week",
-            "AI agent LLM startup funding news this week",
-            "Cursor AI code editor news Elon Musk this week",
+            "AI datacenter power demand megawatt gigawatt news this week",
+            "OpenAI Anthropic xAI compute GPU cluster datacenter news this week",
+            "NVIDIA GPU power grid nuclear AI datacenter news this week",
+            "robotics humanoid robots frontier tech AI infrastructure news this week",
         ],
         "Crypto": [
-            "Bitcoin ETH ETF news this week",
-            "crypto mining hashrate MARA Riot news this week",
-            "stablecoin DeFi Coinbase news this week",
+            "TAO Bittensor decentralized compute AI crypto news this week",
+            "crypto mining AI hosting HIVE IREN TeraWulf Core Scientific news this week",
+            "Bitcoin miners AI datacenter HPC MARA Riot CleanSpark news this week",
         ],
         "Investissement": [
-            "NVIDIA AMD Tesla Microsoft Google AI stock earnings this week",
-            "AI datacenter capex Stargate CoreWeave CRWV news this week",
-            "tech IPO MicroStrategy MSTR MARA RIOT valuation this week",
+            "CoreWeave CRWV Applied Digital APLD IREN HIVE SLNH AI datacenter stocks this week",
+            "AI power generation grid nuclear datacenter stocks energy demand this week",
+            "TeraWulf WULF Cipher CIFR Core Scientific CORZ AI hosting HPC this week",
         ],
         "Space": [
-            "SpaceX Starship launch space news this week",
-            "Blue Origin New Glenn rocket news this week",
-            "Starlink satellite NASA space industry news this week",
-            "Rocket Lab ArianeGroup ESA space news this week",
+            "SpaceX Starship Starlink space infrastructure news this week",
+            "Blue Origin New Glenn Rocket Lab launch capacity news this week",
+            "satellite AI robotics space infrastructure frontier tech news this week",
+            "SpaceX valuation Starlink revenue private markets news this week",
         ],
     }
     queries = queries_by_topic.get(topic, ["AI crypto news this week"])

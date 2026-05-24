@@ -1,4 +1,4 @@
-"""Retweet bot: selective amplifier for ELITE AI / crypto / bourse news.
+"""Retweet bot: selective amplifier for ELITE English AI infra signal.
 
 Why this exists (user mandate 2026-04-27): the user is producing a daily
 YouTube news show. Every retweet must clear two bars:
@@ -78,7 +78,15 @@ NICHE_KEYWORDS = (
     "openai", "anthropic", "claude", "chatgpt", "gpt", "gemini", "llama",
     "mistral", "llm", "nvidia", "nvda", "deepmind", "agi",
     "datacenter", "data center", "gpu", "tpu", "chip", "semiconductor",
+    "compute", "compute cluster", "power demand", "power generation",
+    "electricity", "grid", "nuclear", "megawatt", "megawatts", "mw ",
+    "gigawatt", "gigawatts", "gw ", "energy demand", "ai infra",
+    "ai infrastructure", "hpc", "colo", "colocation", "coreweave",
+    "crwv", "crusoe", "lambda labs", "applied digital", "apld",
+    "iren", "hive", "soluna", "slnh", "terawulf", "wulf",
+    "cipher mining", "cifr", "core scientific", "corz",
     "hugging face", "huggingface", "perplexity", "copilot",
+    "robotics", "humanoid", "frontier tech",
     # Crypto
     "bitcoin", "btc", "ethereum", "eth", "crypto", "stablecoin",
     "tether", "usdc", "coinbase", "binance", "kraken", "blockchain",
@@ -86,7 +94,8 @@ NICHE_KEYWORDS = (
     "etf bitcoin", "etf btc", "etf ether", "spot etf", "halving",
     "tokenization", "tokenized", "rwa", "prediction market",
     "polymarket", "circle", "usdt", "saylor", "mstr",
-    "sec lawsuit", "ofac", "mt gox",
+    "sec lawsuit", "ofac", "mt gox", "tao", "bittensor",
+    "decentralized compute", "decentralised compute",
     # Bourse / macro
     "stock", "shares", "nasdaq", "s&p", "s&p 500", "dow ",
     "cac40", "cac ", "ipo", "earnings", "guidance",
@@ -95,6 +104,7 @@ NICHE_KEYWORDS = (
     "tesla", "apple", "google", "alphabet", "meta", "amazon",
     "microsoft", "msft", "aapl", "googl", "tsla", "amzn",
     "valuation", "billion", "trillion", "milliard", "valo",
+    "asymmetric", "asymmetry", "private markets", "frontier",
     "bourse", "marché", "marche", "action", "actions",
     "investissement", "trading", "pea", "cac 40", "cac40",
 )
@@ -121,11 +131,14 @@ FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", 
 
 FEED_REPOST_SEARCH_QUERIES = [
     # English-only big-post discovery. Same-day age and niche gates still apply.
-    "OpenAI OR Anthropic OR Nvidia lang:en min_faves:1000",
-    "Bitcoin OR BTC OR Ethereum lang:en min_faves:1000",
-    "AI datacenter OR GPU OR chips lang:en min_faves:500",
-    "SpaceX OR Starship OR xAI lang:en min_faves:1000",
-    "Mistral OR HuggingFace OR Cursor lang:en min_faves:300",
+    "AI datacenter OR power demand OR megawatt lang:en min_faves:500",
+    "CoreWeave OR CRWV OR APLD OR IREN OR HIVE lang:en min_faves:300",
+    "TAO OR Bittensor OR decentralized compute lang:en min_faves:300",
+    "nuclear OR grid OR power generation AI lang:en min_faves:500",
+    "robotics OR humanoid robots OR frontier tech lang:en min_faves:500",
+    "SpaceX OR Starlink OR space infrastructure lang:en min_faves:1000",
+    "Nvidia OR GPU OR compute cluster lang:en min_faves:1000",
+    "OpenAI OR Anthropic OR xAI datacenter lang:en min_faves:1000",
 ]
 
 
@@ -213,6 +226,21 @@ EN_TRUSTED_HANDLES = [
     "AnthropicAI",
     "GoogleDeepMind",
     "deepmind",
+    "sama",
+    "elonmusk",
+    "xai",
+    "karpathy",
+    "ylecun",
+    "fchollet",
+    "AndrewYNg",
+    "demishassabis",
+    "ID_AA_Carmack",
+    "lilianweng",
+    "drfeifei",
+    "jeremyphoward",
+    "gwern",
+    "rowancheung",
+    "TheRundownAI",
     # Crypto press
     "CoinDesk",
     "TheBlock__",
@@ -234,11 +262,34 @@ EN_TRUSTED_HANDLES = [
     "SquawkCNBC",
     "KobeissiLetter",
     "unusual_whales",
+    "bespokeinvest",
+    "markets",
     # Official AI / big-tech news
     "MistralAI",
     "nvidia",
+    "AMD",
+    "intel",
     "Microsoft",
     "Meta",
+    # AI infrastructure, power, mining-to-HPC, space
+    "CoreWeave",
+    "CrusoeEnergy",
+    "LambdaAPI",
+    "applied_dc",
+    "IREN_Ltd",
+    "Hut8Corp",
+    "TeraWulfInc",
+    "CipherMining",
+    "CleanSpark_Inc",
+    "MARAHoldings",
+    "RiotPlatforms",
+    "SpaceX",
+    "Starlink",
+    "RocketLab",
+    "PeterDiamandis",
+    # AI-linked crypto / decentralized compute
+    "bittensor_",
+    "opentensor",
 ]
 
 # Combined list kept for the source-trust check. English migration: only EN
@@ -460,23 +511,29 @@ def _candidate_rank(c: dict) -> tuple:
     breaking = any(k in text for k in (
         "breaking", "exclusive", "announces", "announced", "launch",
         "raises", "raised", "sec", "fed", "bitcoin", "openai", "nvidia",
+        "coreweave", "spacex", "datacenter", "data center",
     ))
     money_or_power = any(k in text for k in (
         "$", "billion", "trillion", "million", "acquire",
         "acquisition", "merger", "ipo", "bankrupt", "lawsuit",
         "ban", "regulator", "sec", "fed",
         "valuation", "earnings", "revenue", "profit", "loss",
+        "megawatt", "gigawatt", "power", "energy", "nuclear", "ppa",
     ))
     strategic = any(k in text for k in (
         "openai", "anthropic", "nvidia", "mistral", "bitcoin", "ethereum",
         "coinbase", "google", "microsoft", "meta", "apple", "tesla",
-        "rates", "inflation", "tariff", "chips", "gpu",
+        "rates", "inflation", "tariff", "chips", "gpu", "coreweave",
+        "crwv", "apld", "iren", "hive", "slnh", "terawulf", "wulf",
+        "cipher", "cifr", "bittensor", "tao", "spacex", "starlink",
     ))
     hard_impact = any(k in text for k in (
         "datacenter", "data center", "megawatt", "mw", "gigawatt", "gw",
         "power", "energy", "nuclear", "gpu cluster", "h100", "h200", "b200",
         "funding", "valuation", "treasury", "holdings", "etf", "inflows",
         "sec approves", "lawsuit", "ban", "partnership", "oracle", "softbank",
+        "grid", "power generation", "colocation", "hpc", "ai hosting",
+        "compute", "robotics", "humanoid", "frontier tech",
     ))
     numbers = len(re.findall(r"(\$?\d+(?:[.,]\d+)?\s?(?:%|bn|billion|m|million|k)?)", text))
     engagement = int(c.get("likes") or 0) + (2 * int(c.get("replies") or 0))

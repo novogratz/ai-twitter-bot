@@ -1,4 +1,4 @@
-"""Like-aggressive bot — bulk-like crypto / AI / bourse tweets every cycle.
+"""Like-aggressive bot — bulk-like AI infra / asymmetric investing tweets every cycle.
 
 Why: a like is the cheapest social signal on X. Each like sends a
 notification → the recipient checks their notifs → many click through
@@ -28,14 +28,14 @@ from .logger import log
 from .twitter_client import _safari_lock, close_front_tab, _scroll_page
 
 LIKE_QUERIES = [
-    "Bitcoin OR BTC lang:en min_faves:50",
-    "Ethereum OR ETH lang:en min_faves:50",
-    "crypto OR stablecoin OR DeFi lang:en min_faves:50",
-    "OpenAI OR Anthropic OR ChatGPT lang:en min_faves:50",
-    "Nvidia OR GPU OR datacenter lang:en min_faves:50",
-    "AI agents OR LLM lang:en min_faves:50",
-    "NASDAQ OR stocks OR earnings lang:en min_faves:50",
-    "Tesla OR Microsoft OR Meta AI lang:en min_faves:50",
+    "AI datacenter OR power demand lang:en min_faves:50",
+    "megawatt OR gigawatt OR nuclear AI lang:en min_faves:50",
+    "CoreWeave OR CRWV OR APLD lang:en min_faves:50",
+    "IREN OR HIVE OR TeraWulf OR WULF lang:en min_faves:50",
+    "TAO OR Bittensor OR decentralized compute lang:en min_faves:50",
+    "Nvidia OR GPU OR compute cluster lang:en min_faves:50",
+    "robotics OR humanoid robots OR frontier tech lang:en min_faves:50",
+    "SpaceX OR Starlink OR space infrastructure lang:en min_faves:50",
 ]
 TOP_TAB_PROBABILITY = float(os.environ.get("LIKE_TOP_TAB_PROBABILITY", "0.55"))
 

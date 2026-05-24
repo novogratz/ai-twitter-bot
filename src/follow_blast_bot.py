@@ -1,4 +1,4 @@
-"""Mass-follow blast bot — bulk-follow FR niche accounts at scale.
+"""Mass-follow blast bot — bulk-follow English AI infra niche accounts at scale.
 
 Why: with 360 → 10k follower target, we need NET-NEW follows at maximum
 volume. engage_bot follows from a curated list (slow ramp). discover_bot
@@ -40,24 +40,20 @@ FOLLOW_BLAST_STATE_FILE = os.path.join(_PROJECT_ROOT, "follow_blast_state.json")
 # English niche search queries. Rotated per cycle. The min_faves floor keeps
 # us out of bot-farm zones — we want real global AI / crypto users.
 BLAST_QUERIES = [
-    "AI lang:en min_faves:25",
-    "ChatGPT lang:en min_faves:25",
-    "Claude lang:en min_faves:25",
-    "Mistral lang:en min_faves:25",
-    "OpenAI lang:en min_faves:25",
-    "Anthropic lang:en min_faves:25",
-    "AI agents lang:en min_faves:25",
-    "GPT OR LLM lang:en min_faves:25",
-    "Bitcoin lang:en min_faves:25",
-    "Ethereum lang:en min_faves:25",
-    "crypto lang:en min_faves:25",
-    "BTC lang:en min_faves:25",
-    "Solana lang:en min_faves:25",
-    "stablecoin lang:en min_faves:25",
-    "DeFi lang:en min_faves:25",
-    "Bitcoin ETF lang:en min_faves:25",
-    "Nvidia lang:en min_faves:25",
-    "GPU lang:en min_faves:25",
+    "AI datacenter lang:en min_faves:25",
+    "AI infrastructure lang:en min_faves:25",
+    "power demand AI lang:en min_faves:25",
+    "megawatt OR gigawatt AI lang:en min_faves:25",
+    "CoreWeave OR CRWV lang:en min_faves:25",
+    "APLD OR Applied Digital lang:en min_faves:25",
+    "IREN OR HIVE lang:en min_faves:25",
+    "TeraWulf OR WULF lang:en min_faves:25",
+    "TAO OR Bittensor lang:en min_faves:25",
+    "decentralized compute lang:en min_faves:25",
+    "Nvidia OR GPU cluster lang:en min_faves:25",
+    "nuclear OR grid AI datacenter lang:en min_faves:25",
+    "robotics OR humanoid robots lang:en min_faves:25",
+    "SpaceX OR Starlink lang:en min_faves:25",
 ]
 
 
@@ -130,7 +126,7 @@ def _save_daily_state(state: dict) -> None:
 
 
 def run_follow_blast_cycle():
-    """Open a FR niche search, scroll, JS-click N visible Follow buttons."""
+    """Open an English AI infra niche search, scroll, JS-click Follow buttons."""
     # Skip if X is suppressing us — bulk follows during a shadowban
     # phase trip the spam detector even harder.
     try:

@@ -39,11 +39,11 @@ MIN_LIKES_TO_CONSIDER = int(os.environ.get("BREAKOUT_MIN_LIKES", "30"))
 # Search queries that surface high-velocity English content in our niches.
 # We want the FRESH viral pulse, not yesterday's already-hot tweets.
 BREAKOUT_QUERIES = [
-    "OpenAI OR Anthropic lang:en min_faves:5000",
-    "Bitcoin OR Ethereum lang:en min_faves:5000",
-    "AI OR AGI lang:en min_faves:8000",
-    "Nvidia OR GPU lang:en min_faves:5000",
-    "Solana OR stablecoin OR DeFi lang:en min_faves:3000",
+    "AI datacenter OR power demand lang:en min_faves:3000",
+    "CoreWeave OR CRWV OR APLD OR IREN lang:en min_faves:2000",
+    "Nvidia OR GPU OR compute cluster lang:en min_faves:5000",
+    "TAO OR Bittensor OR decentralized compute lang:en min_faves:2000",
+    "SpaceX OR Starlink OR robotics lang:en min_faves:5000",
 ]
 
 
@@ -56,13 +56,14 @@ Story qui prend la lumière (échantillon des tweets qui montent):
 
 📅 Date: {today_date}
 
-OBJECTIF: ÊTRE PARMI LES 50 PREMIÈRES VOIX à commenter cette story.
+OBJECTIF: be among the first 50 voices commenting on this story through the
+AI infrastructure & asymmetric investing lens.
 Pas de SKIP. Pas de rejection sampling. Tu shipes un take qui claque.
 
 FORMAT (≤270 chars TOTAL, screenshot-worthy):
 - 1-2 phrases sec.
 - Une chute qui pique. Pas de news-report tone.
-- English-only. Use global AI / crypto / Wall Street references.
+- English-only. Use global AI infra / power / compute / Wall Street references.
 - Pas d'emojis, pas de hashtag, pas d'em dash.
 - Pas de "Selon X..." / "Breaking:" / "Aujourd'hui..." / "According to..." / "Today...".
 

@@ -67,12 +67,15 @@ NICHE_HITS = re.compile(
     r"ai|a\.i\.|artificial intelligence|machine learning|llm|"
     r"openai|anthropic|claude|chatgpt|gpt|gemini|llama|mistral|"
     r"nvidia|nvda|deepmind|agi|datacenter|gpu|tpu|chip|"
-    r"hugging\s?face|perplexity|copilot|robot|agent|"
+    r"compute|hpc|power demand|power generation|electricity|grid|"
+    r"nuclear|megawatt|gigawatt|coreweave|crusoe|applied digital|"
+    r"iren|hive|soluna|terawulf|cipher mining|core scientific|"
+    r"hugging\s?face|perplexity|copilot|robot|robotics|humanoid|agent|"
     r"bitcoin|btc|ethereum|eth|crypto|stablecoin|coinbase|binance|"
-    r"defi|nft|solana|"
+    r"defi|nft|solana|tao|bittensor|decentralized compute|"
     r"stock|nasdaq|s&p|s\&p|cac40|ipo|earnings|fed|fomc|"
     r"tesla|apple|google|alphabet|meta|amazon|microsoft|"
-    r"valuation|billion|trillion"
+    r"valuation|billion|trillion|spacex|starlink|frontier tech"
     r")\b",
     re.IGNORECASE,
 )

@@ -30,6 +30,13 @@ TARGET_ACCOUNTS = [
     "MiningTk", "MoneyRadar_FR", "Divs_King", "arthurmensch",
     "GuillaumeLample", "GaelVaroquaux",
 
+    # AI infra / asymmetric investing EN
+    "CoreWeave", "CrusoeEnergy", "LambdaAPI", "applied_dc",
+    "IREN_Ltd", "Hut8Corp", "TeraWulfInc", "CipherMining",
+    "CleanSpark_Inc", "MARAHoldings", "RiotPlatforms",
+    "SpaceX", "Starlink", "RocketLab", "PeterDiamandis",
+    "bittensor_", "opentensor", "KobeissiLetter", "unusual_whales",
+
     # Bourse / Finance FR
     "NCheron_bourse",    # Nicolas Chéron
     "RodolpheSteffan",   # Rodolphe Steffan

@@ -2,7 +2,7 @@
 
 > 🤖 **Infos IA et Crypto, avant tout le monde. Analyses pointues. Zéro bullshit, zéro blabla. Vous me détesterez jusqu'à ce que j'aie raison.** ⚡
 
-> **Mandate 2026-05-13:** FR only. Scope = IA + Crypto only (no bourse / actions / macro). Goal = thousands of followers + likes.
+> **Positioning 2026-05-24:** English standalone content. Core niche = AI infrastructure & asymmetric investing: power demand, MW/GW capacity, compute wars, AI infra stocks, energy, robotics, space, frontier tech, and crypto linked to AI.
 
 A self-evolving Twitter/X agent. Posts breaking news, replies in real time, amplifies signal, and manages its own follower-ratio. Agentic strategy/persona rewrites are available but disabled by default so LLM calls are spent on production content first. Driven by Claude Code (or Codex / Gemini CLI). No Twitter API key. Browser automation only.
 

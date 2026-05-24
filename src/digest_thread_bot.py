@@ -28,17 +28,15 @@ from . import personality_store
 
 DIGEST_STATE_FILE = os.path.join(_PROJECT_ROOT, "digest_thread_state.json")
 
-DIGEST_PROMPT = """You are @cryptoiadecode. You write THE daily recap thread — an X thread of 6 tweets covering the 5 biggest AI / crypto / bourse stories of the last 36h. This is our SIGNATURE format: people come here because they don't have time to scroll 30 outlets.
+DIGEST_PROMPT = """You are @cryptoiadecode. You write THE daily recap thread — an X thread of 6 tweets covering the 5 biggest AI infrastructure / asymmetric investing stories of the last 36h. This is our SIGNATURE format: people come here because they don't have time to scroll 30 outlets.
 
 {lang_directive}
 
-📅 Date: {today_date}
-
 PROCESSUS:
 1. WebSearch large (EN top-tier) in parallel — find 5 DISTINCT stories dominating right now:
-   - 1-2 IA (Mistral, OpenAI, Anthropic, Nvidia, agents, levée, modèle)
-   - 1-2 crypto (Bitcoin, Ethereum, ETF, régulation, hack, ATH/crash)
-   - 1-2 bourse / macro / tech earnings (CAC40, Nvidia, taux, IPO, faillite)
+   - 1-2 AI infra (datacenters, power demand, GPUs, grid/nuclear, OpenAI/Anthropic/xAI)
+   - 1-2 AI-linked crypto (TAO/Bittensor, decentralized compute, miners pivoting to HPC)
+   - 1-2 asymmetric markets / frontier tech (CoreWeave, APLD, IREN, HIVE, SLNH, robotics, SpaceX)
 2. Vérifie sur 2+ sources que chaque story est réelle + ≤36h.
 3. Pour chaque story note: 1 chiffre exact + l'angle drôle/critique.
 4. Écris le thread.
@@ -46,7 +44,8 @@ PROCESSUS:
 FORMAT THREAD (6 tweets, blocs séparés par "---"):
 
 TWEET 1 — INTRO (≤220 chars, dry English):
-- "5 trucs qui ont bougé aujourd'hui sur l'IA, la crypto et la bourse. Personne va vous les expliquer aussi vite. 🧵"
+- No date in the first line. Open with the recurring identity, not a calendar.
+- Example: "5 AI infra moves the market is underpricing. Power, compute, space, and the weird crypto corner nobody models. 🧵"
 - Style alternatif accepté tant que: annonce un récap de 5 stories + crée la promesse.
 - Le 🧵 émoji thread est OK, pas d'autre emoji.
 

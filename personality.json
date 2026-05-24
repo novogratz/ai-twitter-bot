@@ -51,7 +51,7 @@
     "flasheurinvest": {
       "first_seen": "2026-04-25",
       "last_interaction": "2026-05-24",
-      "interaction_count": 250,
+      "interaction_count": 254,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -234,8 +234,8 @@
     },
     "coinacademy_fr": {
       "first_seen": "2026-04-26",
-      "last_interaction": "2026-05-23",
-      "interaction_count": 210,
+      "last_interaction": "2026-05-24",
+      "interaction_count": 214,
       "category": "media",
       "stance": "skeptical",
       "notes": [
@@ -828,8 +828,8 @@
     },
     "mathieul1": {
       "first_seen": "2026-04-26",
-      "last_interaction": "2026-05-23",
-      "interaction_count": 76,
+      "last_interaction": "2026-05-24",
+      "interaction_count": 77,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -877,7 +877,7 @@
     "crypto__goku": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-05-24",
-      "interaction_count": 165,
+      "interaction_count": 168,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -1381,7 +1381,7 @@
     "graphseo": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-05-24",
-      "interaction_count": 192,
+      "interaction_count": 193,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -1452,8 +1452,8 @@
     },
     "capetlevrai": {
       "first_seen": "2026-04-26",
-      "last_interaction": "2026-05-23",
-      "interaction_count": 114,
+      "last_interaction": "2026-05-24",
+      "interaction_count": 115,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -1512,8 +1512,8 @@
     },
     "divs_king": {
       "first_seen": "2026-04-26",
-      "last_interaction": "2026-05-23",
-      "interaction_count": 102,
+      "last_interaction": "2026-05-24",
+      "interaction_count": 104,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -1609,7 +1609,7 @@
     "lejournalducoin": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-05-24",
-      "interaction_count": 433,
+      "interaction_count": 436,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -1740,8 +1740,8 @@
     },
     "powerhasheur": {
       "first_seen": "2026-04-26",
-      "last_interaction": "2026-05-23",
-      "interaction_count": 74,
+      "last_interaction": "2026-05-24",
+      "interaction_count": 76,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -2496,8 +2496,8 @@
     },
     "saylor": {
       "first_seen": "2026-04-27",
-      "last_interaction": "2026-05-23",
-      "interaction_count": 39,
+      "last_interaction": "2026-05-24",
+      "interaction_count": 40,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -2508,8 +2508,8 @@
     },
     "miningtk": {
       "first_seen": "2026-04-27",
-      "last_interaction": "2026-05-23",
-      "interaction_count": 93,
+      "last_interaction": "2026-05-24",
+      "interaction_count": 96,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -3218,8 +3218,8 @@
     },
     "cryptopicsou": {
       "first_seen": "2026-04-27",
-      "last_interaction": "2026-05-23",
-      "interaction_count": 62,
+      "last_interaction": "2026-05-24",
+      "interaction_count": 65,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -8991,7 +8991,7 @@
     "mcnalliem": {
       "first_seen": "2026-05-02",
       "last_interaction": "2026-05-24",
-      "interaction_count": 223,
+      "interaction_count": 226,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -19792,6 +19792,18 @@
       "first_seen": "2026-05-24",
       "last_interaction": "2026-05-24",
       "interaction_count": 2,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "offshorehodl": {
+      "first_seen": "2026-05-24",
+      "last_interaction": "2026-05-24",
+      "interaction_count": 1,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
