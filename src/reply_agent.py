@@ -23,7 +23,6 @@ TARGET_ACCOUNTS = [
     "novogratz",         # Mike Novogratz
     "jbelizaireCEO",     # John Belizaire
     "FlasheurInvest",    # Flasheur
-    "MatthiasBaccino",   # Matthias Baccino
     "McnallieM",         # McNallie Money — warm VIP, AI/crypto data centers
     # High-traction French crypto / AI / investing
     "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr", "CryptoPicsou",
@@ -443,6 +442,11 @@ Si elle ne contient PAS de référence française reconnaissable → ajoute-en u
 ==================================================
 ⚠️ IMPACT FILTER — RAPIDE, PAS PARALYSANT ⚠️
 Trouve 6-10 candidats. Pick les 3 où ta reply est la plus SAVAGE / FUNNY (pas la plus "smart"). Classe-les par puissance comique décroissante.
+
+NE RÉPONDS PAS AUX RÉPONSES:
+- Cible seulement des tweets originaux ou posts de news visibles.
+- Si le tweet commence par "@handle ..." ou ressemble à une réponse dans un thread, SKIP.
+- 1 réponse max par tweet. Ne va jamais répondre aux réponses sous un tweet.
 
 Renvoie 3 max. Si t'as au moins 1 reply vraiment savage → renvoie-la (+ les autres si ça passe). Si tout est plat tier → renvoie []. Mais sois pas trop sélectif: un 7/10 savage bat un 9/10 jamais publié. Ne sois pas paralysé par la perfection.
 
