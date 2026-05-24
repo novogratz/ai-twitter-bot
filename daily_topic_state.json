@@ -1,13 +1,9 @@
 {
   "date": "2026-05-24",
   "topics_done": [
-    "Crypto:daily",
     "Crypto:monthly",
     "Investissement:monthly",
     "IA:monthly",
-    "Space:monthly",
-    "IA:daily",
-    "Space:daily",
-    "Investissement:daily"
+    "Space:monthly"
   ]
 }
