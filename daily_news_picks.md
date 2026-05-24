@@ -5573,3 +5573,16 @@ Same playbo
  OUT NOW: https://youtu.be/II1LfTs055Q
   - https://x.com/scottmelker/status/2058274162196480150
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 159).
+- **@reuters** (99 likes, score 9/10) — Nvidia says its forecast for $200 billion CPU market includes China http://reut.rs/4f3LdBA
+  - https://x.com/Reuters/status/2058162306291208641
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 141).
+- **@reuters** (47 likes, score 8/10) — Nvidia says its forecast for $200 billion CPU market includes China http://reut.rs/4v6XjyB
+  - https://x.com/Reuters/status/2058223983569322135
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 67).
+- **@papaxem4** (24 likes, score 7/10) — When you start seeing a lot of posts on Twitter like:
+
+- "If you had invested $100K in Ethereum in 2021, you’d only have $70K now" 
+- "Ethereum is basically a stablecoin"
+-"ETH was $2,000 in 2021 and
+  - https://x.com/papaxem4/status/2058234224059011247
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 32).
