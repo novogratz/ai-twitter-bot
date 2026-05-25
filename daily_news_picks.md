@@ -376,3 +376,52 @@ Din Dan Dell.
 ¥30,500,000,000,000 added to the Japanese stock market today.
   - https://x.com/AshCrypto/status/2058811685520003397
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 276).
+- **@polymarketmoney** (838 likes, score 8/10) — Anthropic's revenue growth:   
+
+• 2021: Founded 
+• 2022: $10 million 
+• 2023: $100 million  
+• 2024: $1 billion  
+• 2025: $9 billion run-rate  
+• Feb 2026: $14 billion run-rate 
+• Mar 2026: $19 billio
+  - https://x.com/PolymarketMoney/status/2058717037032071296
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 954).
+- **@bitcoinaiguy** (368 likes, score 8/10) — Is $IREN closer to $25 or $100?
+
+The bears keep telling me $30 is next… but the bulls can smell $100 soon.
+
+Who’s right?
+  - https://x.com/BitcoinAIGuy/status/2055737113119793611
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 560).
+- **@rohanpaul_ai** (95 likes, score 8/10) — OpenAI Employee Alma Maters
+
+---
+
+Source: linkedin. com/posts/josh-angle-816b3436_want-to-work-at-the-arguably-the-hottest-activity-7389688792737210368-6DOS/
+  - https://x.com/rohanpaul_ai/status/2058652255675437529
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 117).
+- **@durov** (10074 likes, score 7/10) — It happened. Our decentralized confidential compute network, Cocoon, is live. The first AI requests from users are now being processed by Cocoon with 100% confidentiality. GPU owners are already earni
+  - https://x.com/durov/status/1995208789600182391
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 11936).
+- **@anthropicai** (8466 likes, score 7/10) — Last month we launched Project Glasswing, our collaborative AI cybersecurity initiative. Since then, we and our partners have found more than ten thousand high- or critical-severity vulnerabilities in
+  - https://x.com/AnthropicAI/status/2057909102542549503
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 9416).
+- **@bitcoinaiguy** (522 likes, score 7/10) — $IREN my gut tells me a major deal announcement is coming in days/weeks
+
+YOU ARE NOT BULLISH ENOUGH!
+  - https://x.com/BitcoinAIGuy/status/2055027194364100800
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 604).
+- **@animeupdates** (390 likes, score 7/10) — Anime Producer Koichi Murakami comments on alleged unauthorized AI voice imitations following the lawsuit filed by voice actor Kenjiro Tsuda against TikTok:
+
+"Not just him, but many other voice actors
+  - https://x.com/animeupdates/status/2058753061795860654
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 408).
+- **@trendspider** (361 likes, score 7/10) — From hashing blocks to hosting GPUs   $IREN
+  - https://x.com/TrendSpider/status/2057152362477748304
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 379).
+- **@blockspace** (96 likes, score 7/10) — $IREN Has Revealed new Images of their Cooling System at Childress
+
+These advanced coolants allow Iren to pack a large quantity of GPUs into a small compact space without overheat!
+  - https://x.com/blockspace/status/2058543500308644200
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 102).
