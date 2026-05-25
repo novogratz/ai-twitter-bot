@@ -20,3 +20,29 @@ Power will ramp as new data centers come online by turning its 2 GW Sweetwater c
 - **@coinmarketcap** (185 likes, score 8/10) — LATEST:  IREN co-founder Dan Roberts says power, land, and data center capacity are becoming more valuable than chips as global AI compute demand surges.
   - https://x.com/CoinMarketCap/status/2058086571866198224
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 295).
+- **@quantian1** (118 likes, score 8/10) — US VC is singularly dependent on the SpaceX exit to justify its performance: absent that, it underperformed PE and barely beat public equities.  At SpaceX's valuation last year, it was competitive wit
+  - https://x.com/quantian1/status/2058716824875811111
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 138).
+- **@pirat_nation** (1840 likes, score 8/10) — China’s new gaming GPU, the Lisuan LX 7G100, officially launched and sold out on the first day with around 30,000 pre-orders.
+
+The graphics card comes with:
+
+>12 GB GDDR6 memory
+>6 nm manufacturing pr
+  - https://x.com/Pirat_Nation/status/2058669116513304779
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2036).
+- **@cernunnoscap** (169 likes, score 7/10) — $IREN Congratulations on figuring out Liquid Cooling 
+
+Well, now we know where they are buying their liquid cooling equipment from - Motivair by Schneider Electric.
+
+So they are buying:
+Server racks f
+  - https://x.com/CernunnosCap/status/2058419749382651987
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 301).
+- **@bitcoinaiguy** (159 likes, score 7/10) — There will be a day when $NBIS and $IREN investors are both cheering each other on and celebrating together.
+
+That day will mark the pico top.
+
+The fighting on Twitter means we are still early and the
+  - https://x.com/BitcoinAIGuy/status/2058695841209008584
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 201).
