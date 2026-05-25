@@ -15,7 +15,7 @@ The bot operates **30+ concurrent micro-bots** orchestrated by an APScheduler lo
 | Layer | Bots | Purpose |
 |---|---|---|
 | **Content** | `agent`, `hotake_agent`, `breakout_bot`, `spicy_bot`, `thread_bot`, `digest_thread_bot` | Original posts — news, daily/weekly/monthly Décodes, hot takes, threads |
-| **Reshare** | `retweet_bot`, `quote_tweet_bot`, `notify_bot` (boost) | Amplify trusted-source and big visible posts with same-day + niche filters |
+| **Reshare** | `retweet_bot`, `quote_tweet_bot`, `notify_bot` (boost) | Amplify trusted-source and big visible posts with same-day + niche filters; quote posts are FR-first and add our own angle |
 | **Reply** | `direct_reply`, `reply_bot`, `early_bird_bot`, `mega_watch_bot`, `replyback_agent`, `viral_followup_bot`, `spike_bot`, `roast_pgm_bot` | Real-time engagement on viral tweets, mega-account top-5-reply window |
 | **Follow** | `engage_bot`, `discover_bot`, `scout_agent`, `follow_blast_bot`, `followback_bot`, `smart_unfollow_bot` | Network growth — discover, follow, follow-back, prune non-reciprocal |
 | **Like** | `like_bot`, `notify_bot` | Bulk likes for outbound notifications |
@@ -127,7 +127,7 @@ Every knob is an environment variable in `.env`. Defaults are tuned for an Engli
 | `MAX_NEWS_PER_DAY` | `5` | Cap on Décode insight posts |
 | `NEWS_POSTS_PER_CYCLE` | `3` | News posts to burst per cycle; set to `1` for one-shot (fail → skip) |
 | `MAX_HOTAKES_PER_DAY` | `3` | Cap on quick takes |
-| `MAX_QUOTES_PER_DAY` | `80` | Cap on the legacy repost-pool job |
+| `MAX_QUOTES_PER_DAY` | `80` | Cap on quote posts from the FR-first quote bot |
 | `MAX_RETWEETS_PER_DAY` | `30` | Cap on retweets |
 | `RETWEETS_PER_CYCLE` | `3` | Max external retweets shipped after each candidate scrape |
 | `MAX_REPLIES_PER_CYCLE` | `3` | Cap per broad reply cycle; direct replies target 20-50 quality replies/day |
