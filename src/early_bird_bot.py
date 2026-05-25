@@ -20,8 +20,8 @@ import traceback
 from .config import BLOCKLIST, BOT_HANDLE
 from .logger import log
 from .twitter_client import scrape_profile_tweets, reply_to_tweet
-from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url
-from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche
+from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
+from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche, _looks_french
 from .engagement_log import log_reply
 from .humanizer import humanize
 
@@ -153,6 +153,9 @@ def run_early_bird_cycle():
             text = tweet.get("text", "")
             if not url or url in replied:
                 continue
+            if _is_reply_like_tweet(tweet, expected_author=username):
+                log.info(f"[EARLYBIRD] Looks like a thread reply — skipping {url}")
+                continue
 
             # Block self + blocklisted
             url_handle = _handle_from_url(url)
@@ -178,7 +181,11 @@ def run_early_bird_cycle():
                 continue
 
             log.info(f"[EARLYBIRD] FRESH ({age}min) @{username}: {text[:80]}...")
-            reply = _generate_single_reply(username, text)
+            reply = _generate_single_reply(
+                username,
+                text,
+                lang="fr" if _looks_french(text) else "en",
+            )
             if reply is _LLM_RATE_LIMITED:
                 log.info("[EARLYBIRD] LLM budget reached; stopping this cycle before posting attempts.")
                 return

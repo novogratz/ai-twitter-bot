@@ -9,7 +9,7 @@ from .logger import log
 from .config import PRIORITY_REPLY_MODEL, REPLY_MODEL
 from .llm_client import LLM_RATE_LIMIT_CODE, llm_hourly_limit_status, run_llm, unwrap_text
 from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
-from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url
+from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
 from .config import BLOCKLIST, BOT_HANDLE
 from .humanizer import humanize
 from .engagement_log import log_reply
@@ -490,12 +490,24 @@ LAUGH FLOOR — non-negotiable:
 - BE WEIRD. Absurdist > polite. Surreal > smart. Specific > generic.
 - Every reply needs a punchline, not just agreement. If the reply could start
   with "oui" or "exact", delete it and find the joke.
+- User directive: make people laugh. Optimize for the actual laugh, not for
+  looking clever. If the line reads like compressed analysis, rewrite it into
+  a comic image, mini-dialogue, renaming, ridiculous number, or anti-climax.
+- Best shape: true observation + absurd visual + hard stop. No essay, no moral.
 
 LANGUAGE — CRITICAL — MATCH THE PARENT TWEET:
 - Detect the language of the TWEET ABOVE.
 - FRENCH tweet -> FRENCH reply, use FR cultural references (fresh ones, NOT RER B/Bercy).
 - ENGLISH tweet -> ENGLISH reply. ZERO French references. Use EN cultural references (Wall Street, SEC, 401k, HOA, Chipotle, CVS, IRS, Craigslist, Venmo, LinkedIn).
 - If mixed/unclear -> match the dominant language. Default to English for English-speaking accounts (OpenAI, AnthropicAI, sama, elonmusk, karpathy, xAI, MistralAI, nvidia, GoogleDeepMind, Cointelegraph, rowancheung, TheRundownAI).
+- Original English post means ENGLISH reply. Do not translate English posts
+  into French. No exception.
+
+ORIGINAL-POST ONLY:
+- Reply to @{author}'s main post only.
+- Never reply to a different person's reply inside @{author}'s thread.
+- If the candidate is a comment/reply under a post, output SKIP and find a new
+  original post instead.
 
 ⚠️ HARDLINE — what you NEVER touch ⚠️
 - Their BUSINESS, courses, coaching, formations, services, products, livelihood
@@ -563,6 +575,8 @@ STYLE — HARDCORE TROLL MODE:
   shouldn't be in the same sentence but somehow ARE the same sentence.
 - Say the quiet part LOUD. The thing everyone's thinking but won't post.
 - One joke per reply. Land it, don't explain it. Don't write the punchline twice.
+- Add surprise. The reader should not be able to predict the final 5 words from
+  the first 5 words.
 - Lowercase is fine on EN replies if it serves the deadpan. FR replies stay
   properly capitalized + accented.
 
@@ -691,6 +705,8 @@ RULES:
 - No em dashes (—). No emojis. No hashtags.
 - Clean grammar, no typos.
 - AIM FOR LOL, not a smirk. If you wouldn't laugh out loud, the timeline won't.
+- Final self-check: would someone send this to a friend with "mdr" / "lol"?
+  If no, rewrite once before choosing SKIP.
 - If you can't deliver a savage joke on the SUBJECT without touching the person
   or their tweet, output the literal word SKIP. Mid is worse than silent.
 
@@ -746,6 +762,9 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
         if lang == "fr" and _looks_english(reply):
             log.info(f"[DIRECT_REPLY] Rejected English reply for French tweet: {reply[:120]!r}")
             return None
+        if lang == "en" and _looks_french(reply):
+            log.info(f"[DIRECT_REPLY] Rejected French reply for English tweet: {reply[:120]!r}")
+            return None
 
         return reply
     except Exception:
@@ -782,7 +801,7 @@ def _maybe_repost_best_profile_tweet(username: str, tweets: list, retweeted: set
         text = (t.get("text") or "").strip()
         if not url or url in retweeted or not text:
             continue
-        if text.startswith("@"):
+        if _is_reply_like_tweet(t, expected_author=username_lc):
             continue
         url_handle = _handle_from_url(url)
         author = (t.get("author") or username or url_handle or "").lower().lstrip("@")
@@ -852,7 +871,8 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         # Skip if already replied
         if url in replied:
             continue
-        if (text or "").lstrip().startswith("@"):
+        expected_author = source_detail if source_name.startswith("PROFILE") else ""
+        if _is_reply_like_tweet(tweet, expected_author=expected_author):
             log.info(f"[{source_name}] Looks like a reply, not an original tweet — skipping {url}")
             continue
 

@@ -140,6 +140,9 @@ _FUNNY_FORCER = (
     "TON DE SORTIE OBLIGATOIRE: drôle, mordant, irrévérencieux. "
     "Pas d'explication. Pas de mise en garde. Pas de 'mais ça dépend'. "
     "Un constat sec + une chute qui pique. "
+    "Ne sois pas seulement pertinent: cherche le vrai rire, le truc qu'on "
+    "envoie dans un groupe WhatsApp avec 'mdr'. "
+    "Si la punchline ressemble à une analyse LinkedIn raccourcie, recommence. "
     "Si la phrase ne te ferait pas rire à voix haute, RÉÉCRIS. "
     "Aucune phrase neutre ou bilan-prudent. Aucune méta-instruction "
     "(pas de '⚠️', 'CRITIQUE:', 'OUTPUT:', 'PATTERN:'). "
@@ -219,7 +222,7 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
     """
     import urllib.request
     import urllib.error
-    full_prompt = _FUNNY_FORCER + prompt
+    full_prompt = _FUNNY_FORCER + "/no_think\n\n" + prompt
     payload = json.dumps({
         "model": OLLAMA_MODEL,
         "prompt": full_prompt,
@@ -234,12 +237,17 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
             "temperature": 1.0,
             "top_p": 0.95,
             "repeat_penalty": 1.15,
+            # The long Décode prompts are regularly 16k-24k chars before
+            # generation. Ollama's default context is too small for that on
+            # many models, which can produce empty responses after a long
+            # wait. Keep the window explicit and overrideable.
+            "num_ctx": int(os.environ.get("OLLAMA_NUM_CTX", "32768")),
             # 2026-05-22: 256 → 1024 → 1800. Friday Top-5 Décode format
             # (5 numbered bullets with bold chiffre + acteur + insight +
             # chute + URL) needs more room. 1800 covers the long-form
             # path plus URL margin. SKIPs caused by mid-output truncation
             # were Décode #62 today.
-            "num_predict": 1800,
+            "num_predict": int(os.environ.get("OLLAMA_NUM_PREDICT", "1800")),
         },
     }).encode("utf-8")
     req = urllib.request.Request(
@@ -261,6 +269,18 @@ def _run_ollama_http(prompt: str, label: str, timeout: int) -> "LLMResult":
         return LLMResult(1, "", f"{label}: ollama unexpected error: {e}")
     # /api/generate returns {"response": "..."}
     text = (data.get("response") or "").strip()
+    if not text:
+        meta = {
+            "done": data.get("done"),
+            "done_reason": data.get("done_reason"),
+            "prompt_eval_count": data.get("prompt_eval_count"),
+            "eval_count": data.get("eval_count"),
+            "thinking_chars": len(str(data.get("thinking") or "")),
+            "error": data.get("error"),
+        }
+        msg = f"{label}: ollama returned empty response; meta={meta}"
+        log.info(f"[LLM] {msg}")
+        return LLMResult(1, "", msg)
     return LLMResult(0, text, "")
 
 
@@ -665,7 +685,15 @@ def run_llm(
         )
         ollama_result = _run_ollama_http(prompt, label=label, timeout=effective_timeout)
         if not _should_fallback(ollama_result):
-            return ollama_result
+            usable = unwrap_text(ollama_result.stdout)
+            if usable.strip():
+                return LLMResult(0, usable, ollama_result.stderr)
+            raw_preview = re.sub(r"\s+", " ", (ollama_result.stdout or "").strip())[:240]
+            ollama_result = LLMResult(
+                1,
+                "",
+                f"{label}: ollama output became empty after safety unwrap; raw_preview={raw_preview!r}",
+            )
         # Ollama failed (empty response, timeout, error). Try the configured
         # fallback so we don't lose the cycle.
         fb_provider = _fallback_provider(provider)
@@ -679,7 +707,17 @@ def run_llm(
             # for claude/codex/gemini in the cmd-runner branch below).
             fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, permission_mode, fb_provider)
             fb_timeout = min(timeout or DEFAULT_LLM_TIMEOUT_SECONDS, 150)
-            return _run_cmd(fb_cmd, label=f"{label} ({fb_provider} fallback)", timeout=fb_timeout, cwd=cwd)
+            fb_result = _run_cmd(fb_cmd, label=f"{label} ({fb_provider} fallback)", timeout=fb_timeout, cwd=cwd)
+            if not _should_fallback(fb_result):
+                return fb_result
+            combined_stderr = "\n".join(
+                part for part in [
+                    ollama_result.stderr.strip(),
+                    f"{label}: ollama failed; tried {fb_provider}/{fb_model}.",
+                    fb_result.stderr.strip(),
+                ] if part
+            )
+            return LLMResult(fb_result.returncode or 1, fb_result.stdout, combined_stderr)
         return ollama_result
 
     # Codex usage-limit bypass: if a prior cycle cached a lockout window,

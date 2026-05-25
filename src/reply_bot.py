@@ -17,6 +17,22 @@ def _handle_from_url(tweet_url: str) -> str:
     return m.group(1).lower() if m else ""
 
 
+def _is_reply_like_tweet(tweet: dict, expected_author: str = "") -> bool:
+    """Return True for nested replies/thread comments we should not target."""
+    text = (tweet.get("text") or "").lstrip()
+    if text.startswith("@") or bool(tweet.get("is_reply")):
+        return True
+    expected = (expected_author or "").lower().lstrip("@")
+    if expected:
+        url_handle = _handle_from_url(tweet.get("url") or "")
+        author = (tweet.get("author") or "").lower().lstrip("@")
+        if url_handle and url_handle != expected:
+            return True
+        if author and author not in {"unknown", expected}:
+            return True
+    return False
+
+
 # Twitter snowflake epoch (ms since 2010-11-04T01:42:54.657Z)
 _TWITTER_EPOCH = 1288834974657
 
@@ -157,7 +173,8 @@ def run_reply_cycle():
         log.info("[REPLY] No good tweets found - skipping this cycle.")
         return
 
-    # Pre-filter pass: drop blocklisted handles, already-replied URLs, and intra-batch dupes.
+    # Pre-filter pass: drop blocklisted handles, already-replied URLs, thread
+    # replies, and intra-batch dupes.
     # The in-loop check below is the final safety net.
     seen_in_batch = set()
     filtered = []
@@ -170,6 +187,9 @@ def run_reply_cycle():
             continue
         if url in replied:
             log.info(f"[REPLY] Already replied (pre-filter) - dropping: {url}")
+            continue
+        if _is_reply_like_tweet({"url": url, "text": data.get("tweet_text") or data.get("text") or ""}):
+            log.info(f"[REPLY] Looks like a thread reply - dropping: {url}")
             continue
         handle = _handle_from_url(url)
         if handle and handle in BLOCKLIST:
@@ -210,6 +230,10 @@ def run_reply_cycle():
         # Self-reply guard
         if handle == _OWN_HANDLE:
             log.info(f"[REPLY] Own tweet @{handle} - skipping {url}")
+            continue
+
+        if _is_reply_like_tweet({"url": url, "text": data.get("tweet_text") or data.get("text") or ""}):
+            log.info(f"[REPLY] Looks like a thread reply - skipping {url}")
             continue
 
         # HARD RECENCY CHECK: reject tweets older than 7 days (10080 min)
