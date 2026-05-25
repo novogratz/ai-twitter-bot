@@ -425,3 +425,25 @@ YOU ARE NOT BULLISH ENOUGH!
 These advanced coolants allow Iren to pack a large quantity of GPUs into a small compact space without overheat!
   - https://x.com/blockspace/status/2058543500308644200
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 102).
+- **@stocksavvyshay** (117 likes, score 9/10) — $IREN CEO said anyone trying to build a 1GW AI factory today likely wouldn't get first compute online until 2030.
+
+With agentic AI token demand projected to rise 24x by 2030, the companies that alread
+  - https://x.com/StockSavvyShay/status/2058890252367065385
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 189).
+- **@datachaz** (90 likes, score 8/10) — NVIDIA JUST DROPPED AN OPEN-SOURCE WORLD MODEL THAT RUNS ON YOUR GAMING PC 
+
+Instead of melting your GPU, @NVIDIAAI’s new 2.6B-parameter model, SANA-WM, brings 60 seconds of controllable video straigh
+  - https://x.com/DataChaz/status/2058099180372164890
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 114).
+- **@coinbureau** (203 likes, score 8/10) — HOT: “PRETTIER-THAN-HUMAN” ROBOT JUST SOLD FOR $15,400 
+
+Noetix Robotics’ Xiaoyue, model X-Head 1, sold on JD Auctions after 49 bids and nearly 40,000 viewers.
+  - https://x.com/coinbureau/status/2058642943964229851
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 295).
+- **@marionawfal** (160 likes, score 8/10) — SpaceX handed the SEC a 300-page IPO prospectus that reads like a sci-fi novel.
+
+The mission: "extend the light of consciousness to the stars." 
+
+The product roadmap includes building a moon base, har
+  - https://x.com/MarioNawfal/status/2058861886788210790
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 248).
