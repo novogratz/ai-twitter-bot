@@ -1,10 +1,4 @@
-"""Repost-pool bot: pick a viral tweet in our niche and plain-repost it.
-
-This module keeps the old quote_tweet_bot name for scheduler/state
-compatibility, but it no longer publishes quote reposts or generates quote
-commentary. It only uses the candidate pool and dedup state, then calls
-retweet_post().
-"""
+"""Quote-post bot: pick a viral tweet in our niche and add our FR angle."""
 import json
 import os
 import random
@@ -14,31 +8,33 @@ import traceback
 from datetime import datetime, date
 from .config import QUOTE_MODEL, BLOCKLIST, _PROJECT_ROOT, BOT_HANDLE, MAX_QUOTES_PER_DAY
 from .logger import log
-from .twitter_client import scrape_x_search, retweet_post
+from .twitter_client import scrape_x_search, quote_tweet
 from .humanizer import humanize
 from .engagement_log import log_reply
 from .llm_client import run_llm, unwrap_text
 
 QUOTED_FILE = os.path.join(_PROJECT_ROOT, "quoted_tweets.json")
 QUOTE_STATE_FILE = os.path.join(_PROJECT_ROOT, "quote_daily_state.json")
-# MAX_QUOTES_PER_DAY is retained as the cap for this legacy repost-pool job.
+# MAX_QUOTES_PER_DAY is retained as the cap for quote-post volume.
 _OWN_HANDLE = BOT_HANDLE.lower()
 
-# Pull HOT English tweets (X "Top" tab) with high engagement floor. The legacy
-# quote pool now plain-reposts only; keep it aligned with the English migration.
+# French-first quote discovery. EN remains fallback only for huge global signal;
+# every generated quote is still in French.
 QUOTE_QUERIES = [
+    "IA OR ChatGPT OR OpenAI lang:fr min_faves:10",
+    "Mistral OR \"Hugging Face\" OR \"Le Chat\" lang:fr min_faves:10",
+    "\"agent IA\" OR \"agents IA\" OR automatisation lang:fr min_faves:5",
+    "Nvidia OR GPU OR datacenter OR \"centre de données\" lang:fr min_faves:5",
+    "Bitcoin OR BTC OR Ethereum OR ETH lang:fr min_faves:10",
+    "crypto OR stablecoin OR DeFi OR Bittensor lang:fr min_faves:5",
+    "bourse OR PEA OR ETF OR investissement lang:fr min_faves:5",
+    "CAC40 OR Nasdaq OR inflation OR taux lang:fr min_faves:5",
+    "SpaceX OR Starship OR Starlink OR satellite lang:fr min_faves:5",
     "OpenAI OR ChatGPT lang:en min_faves:1000",
     "Anthropic OR Claude lang:en min_faves:800",
-    "Mistral OR \"Hugging Face\" lang:en min_faves:500",
-    "Nvidia OR NVDA OR GPU lang:en min_faves:500",
+    "Nvidia OR NVDA OR GPU lang:en min_faves:800",
     "Bitcoin OR BTC lang:en min_faves:1000",
-    "Ethereum OR ETH lang:en min_faves:800",
-    "AGI OR \"AI safety\" lang:en min_faves:800",
-    "AI agents OR \"AI startup\" lang:en min_faves:500",
-    "S&P500 OR Nasdaq lang:en min_faves:500",
-    "Tesla OR Musk lang:en min_faves:1000",
-    "earnings OR IPO OR acquisition lang:en min_faves:500",
-    "stablecoin OR ETF OR \"spot ETF\" lang:en min_faves:800",
+    "AI agents OR \"AI startup\" lang:en min_faves:800",
 ]
 
 QUOTE_PROMPT = """Tu es @CryptoAIDecode. Tu vas QUOTE-TWEETER ce tweet:
@@ -248,8 +244,19 @@ def _handle_from_url(url: str) -> str:
     return (m.group(1).lower() if m else "")
 
 
+def _quote_min_likes(tweet: dict) -> int:
+    try:
+        from .retweet_bot import FR_TRUSTED_HANDLES, _looks_french_text
+        author = ((tweet.get("author") or _handle_from_url(tweet.get("url") or "")) or "").lower()
+        if any(author == h.lower() for h in FR_TRUSTED_HANDLES) or _looks_french_text(tweet.get("text") or ""):
+            return int(os.environ.get("QUOTE_FR_MIN_LIKES", "10"))
+    except Exception:
+        pass
+    return int(os.environ.get("QUOTE_MIN_LIKES", "100"))
+
+
 def run_quote_tweet_cycle():
-    """Pick a viral in-niche tweet from the quote pool and plain-repost it."""
+    """Pick a viral in-niche tweet and publish a quote post with a FR angle."""
     from .config import get_live_cap
     cap = get_live_cap("MAX_QUOTES_PER_DAY", MAX_QUOTES_PER_DAY)
     if _today_count() >= cap:
@@ -259,8 +266,8 @@ def run_quote_tweet_cycle():
     quoted = _load_quoted()
     candidates = []
 
-    # Scan more hot queries per cycle so the repost pool has more live setups.
-    for query in random.sample(QUOTE_QUERIES, k=min(7, len(QUOTE_QUERIES))):
+    # Scan more hot queries per cycle so the quote pool has more live setups.
+    for query in random.sample(QUOTE_QUERIES, k=min(10, len(QUOTE_QUERIES))):
         log.info(f"[QUOTE] Searching HOT for: {query}")
         try:
             tweets = scrape_x_search(query, max_tweets=15, tab="top")
@@ -279,12 +286,7 @@ def run_quote_tweet_cycle():
             if author == _OWN_HANDLE or url_handle == _OWN_HANDLE:
                 continue
             likes = int(t.get("likes") or 0)
-            # 2026-05-22 PM: floor 50 → 100. User mandate "focus on big
-            # accounts and big content to get more traction". Quotes
-            # inherit impressions from the parent; quoting a 50-like
-            # parent inherits 50-like reach. 100-like floor = 2× the
-            # baseline reach per quote.
-            if likes < 100:
+            if likes < _quote_min_likes(t):
                 continue
             # 2026-05-07: same-day reshare rule + niche gate. We shouldn't
             # quote-tweet a 2-week-old tweet, even from a trusted handle.
@@ -310,9 +312,12 @@ def run_quote_tweet_cycle():
     # is exactly what the user described, and our FR sarcastic commentary on
     # top is the bot's voice.
     try:
-        from .retweet_bot import TRUSTED_NEWS_HANDLES
+        from .retweet_bot import EN_TRUSTED_HANDLES, FR_TRUSTED_HANDLES
         from .twitter_client import scrape_profile_tweets
-        sampled = random.sample(TRUSTED_NEWS_HANDLES, k=min(3, len(TRUSTED_NEWS_HANDLES)))
+        sampled = (
+            random.sample(FR_TRUSTED_HANDLES, k=min(12, len(FR_TRUSTED_HANDLES)))
+            + random.sample(EN_TRUSTED_HANDLES, k=min(3, len(EN_TRUSTED_HANDLES)))
+        )
         for handle in sampled:
             log.info(f"[QUOTE] Scraping trusted-news handle: @{handle}")
             try:
@@ -332,7 +337,7 @@ def run_quote_tweet_cycle():
                 if author == _OWN_HANDLE or url_handle == _OWN_HANDLE:
                     continue
                 likes = int(t.get("likes") or 0)
-                if likes < 100:
+                if likes < _quote_min_likes(t):
                     continue
                 # 2026-05-07: same-day + niche gate (no Justin Bieber 2012).
                 text = (t.get("text") or "").strip()
@@ -355,7 +360,7 @@ def run_quote_tweet_cycle():
         log.info("[QUOTE] No viable candidates this cycle.")
         return
 
-    # Pick the single most-liked candidate (max ROI on the one quote we post).
+    # Pick the highest-ROI candidate that also produces a usable quote.
     # Filter out protected (respect-list) authors first — quote-tweeting them
     # with our voice on top reads as a public callout and gets us blocked.
     from . import respect_list
@@ -364,27 +369,42 @@ def run_quote_tweet_cycle():
         log.info("[QUOTE] All candidates are on the respect list. Skipping.")
         return
     candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
-    best = candidates[0]
+    best = None
+    quote = None
+    for candidate in candidates[:5]:
+        author = candidate.get("author", "someone")
+        text = candidate.get("text", "")
+        likes = int(candidate.get("likes") or 0)
+        quote = _generate_quote(author, text)
+        if quote:
+            best = candidate
+            break
+        log.info(f"[QUOTE] Candidate produced no quote; trying next: @{author} ({likes} likes)")
+
+    if not best or not quote:
+        log.info("[QUOTE] No top candidate produced a usable quote this cycle.")
+        return
+
     url = best["url"]
     author = best.get("author", "someone")
     text = best.get("text", "")
     likes = int(best.get("likes") or 0)
 
-    log.info(f"[QUOTE] Best pick for plain repost: @{author} ({likes} likes) — {text[:80]}...")
+    log.info(f"[QUOTE] Best pick: @{author} ({likes} likes) — {text[:80]}...")
 
     # Lock URL in BEFORE posting so a crash can't double-repost.
     quoted.add(url)
     _save_quoted(quoted)
 
     try:
-        retweet_post(url)
+        quote_tweet(url, quote)
         _increment_count()
         try:
-            log_reply(url, f"[RT] {text[:200]}", action_type="retweet", source=f"QUOTE_POOL/{author}")
+            log_reply(url, quote, action_type="quote", source=f"QUOTE/{author}")
         except Exception:
             pass
         time.sleep(random.randint(5, 12))
-        log.info("[QUOTE] Plain repost posted.")
+        log.info("[QUOTE] Quote posted.")
     except Exception:
         log.info(f"[QUOTE] Posting failed:")
         traceback.print_exc()
