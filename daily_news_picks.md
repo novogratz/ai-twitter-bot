@@ -512,3 +512,87 @@ Here's what he said that most peopl
 Power grids must balance supply and demand every second. Wind and solar cannot do that. Their output follows the wea
   - https://x.com/Electroversenet/status/2058201289054675317
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 1048).
+- **@inventmoneyapp** (52 likes, score 9/10) — What will the price of Bitcoin be on May 30 00:00 UTC? 
+
+Guess correctly and win $5! 
+
+The top 10 closest predictions will win $5 each.
+
+Start this mission in Invent Money to participate.
+  - https://x.com/InventMoneyApp/status/2058984156973912264
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 156).
+- **@leverageshares** (19 likes, score 7/10) — 3x Long Tesla remains the largest Leverage Shares ETP by AUM at $233.3M, followed by 3x Long NVIDIA, 3x Long SanDisk, 3x AMD, and 3x Long MicroStrategy.
+
+From AI infrastructure and semiconductors to c
+  - https://x.com/LeverageShares/status/2058907114362249348
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 27).
+- **@indiantechguide** (3694 likes, score 8/10) — OpenAI is offering a $445,000 (Rs 3.77 crore) job role to solve problems that may not exist yet.
+  - https://x.com/IndianTechGuide/status/2058873237669335503
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 3944).
+- **@hormuzletter** (9748 likes, score 8/10) — BREAKING: Iran's Foreign Ministry now officially confirms that no Iranian nuclear commitments and uranium handover exist or will exist in any draft agreement with the US, calling all reports that clai
+  - https://x.com/HormuzLetter/status/2058831836248186958
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11046).
+- **@ashcrypto** (406 likes, score 8/10) — This is what the new Fed chair thinks about Bitcoin.
+
+And you're still bearish.
+  - https://x.com/AshCrypto/status/2058975163022975162
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 626).
+- **@2xnmore** (208 likes, score 8/10) — Grayscale's Head of Research just wrote about $TAO.
+
+Not a price prediction. Not speculation.
+
+A documented breakdown of what Bittensor's subnet pulled off on March 10.
+
+72 billion parameter LLM. Trai
+  - https://x.com/2xnmore/status/2058868834874868005
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 224).
+- **@nightskytoday** (1598 likes, score 7/10) — : Germany's Fusion Reactor could power the whole planet by 2030s and connect to the Grid soon.
+  - https://x.com/NightSkyToday/status/2058714918711411038
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1762).
+- **@bitcoinarchive** (718 likes, score 7/10) — JUST IN: Iran deal 95% done - final stretch takes days. 
+
+- War ends
+- Strait of Hormuz reopens toll-free
+- Nuclear material addressed
+Iran gets frozen assets + sanction waivers. If they deliver. -  F
+  - https://x.com/BitcoinArchive/status/2058902466851188955
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 818).
+- **@ourcryptotalk** (74 likes, score 7/10) — 8 Altcoins To Watch This Week 
+
+→ $QUBIC
+→ $SUI
+→ $RENDER
+→ $XPL
+→ $TAO
+→ $NEAR
+→ $INFRA
+→ $DEUS
+
+The past week was full of action and updates.
+
+Now its time to monitor them.
+
+Did we miss any?
+  - https://x.com/ourcryptotalk/status/2058889615617200638
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 100).
+- **@brivael** (182 likes, score 7/10) — Il y a un truc qu'on a perdu en France, et ce tweet de @FNarolles le documente parfaitement.
+
+2013. Richard Bowles, responsable commercial d'Arianespace, parle de SpaceX devant un parterre de pros du
+  - https://x.com/brivael/status/2058645785244500030
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 226).
+- **@cb_doge** (78 likes, score 7/10) — xAI just released Grok Build Beta for SuperGrok and 𝕏 Premium+ users.
+
+A powerful new coding agent + CLI built for complex software work.
+
+What it can do:
+
+• Plan, build, test, and deploy from the te
+  - https://x.com/cb_doge/status/2058977990311305314
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 196).
+- **@0xpepesso** (24 likes, score 7/10) — AI BUBBLE IS ABOUT TO EXPLODE
+
+Three of the biggest companies on earth are about to sell stock to the public for the first time - all within a few months of each other
+
+1. SpaceX filed the paperwork o
+  - https://x.com/0xPepesso/status/2058938862794104904
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 60).
