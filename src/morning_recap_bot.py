@@ -52,7 +52,7 @@ VOICI les éléments en buzz ce matin (RSS / HN / Reddit / X home, last 8h):
 {signal_block}
 
 Ton job : écris UN thread de 4 tweets qui résume les 3 plus grosses
-stories IA / crypto liée à l'IA / tech frontière du moment. C'est le rituel du matin : l'audience
+stories IA / Crypto & IA / tech frontière du moment. C'est le rituel du matin : l'audience
 vient ici pour savoir en 2 minutes ce qui a bougé dans la nuit.
 
 FORMAT (4 tweets, blocs séparés par "---"):

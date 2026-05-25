@@ -230,7 +230,7 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
     series_label = "Monthly" if format_mode == "monthly_top10" else ("Weekly" if format_mode == "top5" else "Daily")
     topic_label = {
         "IA": "Infrastructure IA",
-        "Crypto": "Crypto liée à l'IA",
+        "Crypto": "Crypto & IA",
         "Investissement": "Marchés Asymétriques",
         "Space": "Infrastructure Spatiale",
     }.get(decode_topic, decode_topic)
@@ -472,7 +472,7 @@ SUJET : {topic_label} uniquement. Format : {format_mode}.
 
 📈 STRATÉGIE DE CONTENU 2026 :
 - Le Décode = 40% du mix : analyse infra IA avec thèse, chiffres, conséquences.
-- News rapides = 30% : demande électrique IA, actions datacenter, crypto liée à l'IA, guerres du compute, tech frontière.
+- News rapides = 30% : demande électrique IA, actions datacenter, Crypto & IA, guerres du compute, tech frontière.
 - Threads = 15% : Guerres de l'Électricité IA, Compute Sous-Évalué, Market Decode, valeur long-terme.
 - Visuels/link cards = 10% : graphiques, avant/après, cartes source, bannières.
 - Engagement bait = 5% : une question incisive, jamais molle.
@@ -488,7 +488,7 @@ FORMATS RÉCURRENTS quand le sujet le permet :
 
 🚨 PÉRIMÈTRE STRICT — 4 catégories distinctes :
   • Infra IA — labs, modèles, agents, GPU, datacenters, capacité MW/GW, goulots d'étranglement du réseau.
-  • Crypto liée à l'IA — TAO/Bittensor, compute décentralisé, mineurs BTC qui pivotent vers l'hébergement HPC/IA.
+  • Crypto & IA — TAO/Bittensor, compute décentralisé, mineurs BTC qui pivotent vers l'hébergement HPC/IA.
   • Marchés Asymétriques — CoreWeave, SLNH/Soluna, HIVE, IREN, TeraWulf, Applied Digital,
     Nvidia/AMD/TSMC, énergie, nucléaire, production électrique, gaps de valorisation privée.
   • Infra Spatiale — SpaceX, Starship, Starlink, capacité de lancement, satellites, robotique, tech frontière.
