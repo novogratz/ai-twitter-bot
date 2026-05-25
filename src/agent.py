@@ -229,10 +229,17 @@ def _next_topic_not_done_today() -> Optional[tuple]:
 def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_date, format_mode, web_block, dedup_block):
     series_label = "Monthly" if format_mode == "monthly_top10" else ("Weekly" if format_mode == "top5" else "Daily")
     topic_label = {
-        "IA": "AI Infra",
-        "Crypto": "AI-linked Crypto",
-        "Investissement": "Asymmetric Markets",
-        "Space": "Space Infrastructure",
+        "IA": "Infrastructure IA",
+        "Crypto": "Crypto liée à l'IA",
+        "Investissement": "Marchés Asymétriques",
+        "Space": "Infrastructure Spatiale",
+    }.get(decode_topic, decode_topic)
+    # Topic label for title (short form)
+    topic_label_title = {
+        "IA": "Infra IA",
+        "Crypto": "Crypto & IA",
+        "Investissement": "Marchés Asym.",
+        "Space": "Space",
     }.get(decode_topic, decode_topic)
     from . import lang_mode as _lang_mode
     lang_directive = _lang_mode.lang_directive(_lang_mode.pick_content_lang())
@@ -291,9 +298,9 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
 ============================================================
 
-🔎 The Decode Monthly #{decode_number} — {topic_label}
+🔎 Le Décode {series_label} #{decode_number} — {topic_label_title}
 
-The 10 {topic_label} numbers that mattered this month.
+Les 10 chiffres {topic_label} qui ont compté ce mois-ci.
 
 1. 💰 {{exact #1 number, the killshot}} : {{one-line insight, inline @handle if relevant}}. (source: {{outlet}})
 2. 🚀 {{number #2}} : {{insight}}. (source: {{outlet}})
@@ -306,11 +313,11 @@ The 10 {topic_label} numbers that mattered this month.
 9. 🛰️ {{number #9}} : {{insight}}. (source: {{outlet}})
 10. 🧾 {{number #10}} : {{insight}}. (source: {{outlet}})
 
-{{Sarcastic English punchline, 1-2 sentences, with one global market/tech reference.}}
+{{Punchline sarcastique, 1-2 phrases, avec une référence marché/techno mondiale.}}
 
-{{Direct audience question: "Which one changes next month's market?"}}
+{{Question directe : "Lequel va tout changer le mois prochain ?"}}
 
-Next month, same Decode.
+Mois prochain, même Décode.
 
 {{URL exacte OBLIGATOIRE depuis WEB SEARCH RESULTS / RSS POOL — DERNIÈRE ligne}}
 """
@@ -369,9 +376,9 @@ Next month, same Decode.
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
 ============================================================
 
-🔎 The Decode {series_label} #{decode_number} — {topic_label}
+🔎 Le Décode {series_label} #{decode_number} — {topic_label_title}
 
-The 5 {topic_label} numbers to remember this week.
+Les 5 chiffres {topic_label} à retenir cette semaine.
 
 1. 💰 {{exact #1 number, the killshot}} : {{one-line insight, inline @handle mid-phrase if relevant}}. (source: {{outlet}})
 2. 🚀 {{number #2}} : {{insight}}. (source: {{outlet}})
@@ -379,12 +386,12 @@ The 5 {topic_label} numbers to remember this week.
 4. 📊 {{number #4}} : {{insight}}. (source: {{outlet}})
 5. 🔥 {{number #5}} : {{insight}}. (source: {{outlet}})
 
-{{Sarcastic English punchline, 1-2 sentences, with one global market/tech reference.}}
+{{Punchline sarcastique, 1-2 phrases, avec une référence marché/techno mondiale.}}
 
-{{1 direct audience question to trigger replies. Examples:
-"Which one is the real signal?" / "What is the sixth number by Monday?"}}
+{{1 question directe pour provoquer des réponses. Exemples :
+"Lequel est le vrai signal ?" / "Quel sera le 6e chiffre d'ici lundi ?"}}
 
-Tomorrow, same Decode.
+Demain, même Décode.
 
 {{URL exacte copiée depuis WEB SEARCH RESULTS / RSS POOL — DERNIÈRE ligne}}
 """
@@ -431,102 +438,102 @@ Tomorrow, same Decode.
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
 ============================================================
 
-🔎 The Decode {series_label} #{decode_number} — {topic_label}
+🔎 Le Décode {series_label} #{decode_number} — {topic_label_title}
 
-The 3 {topic_label} numbers that matter today.
+Les 3 chiffres {topic_label} qui comptent aujourd'hui.
 
 1. 💰 {{killshot number — main actor from the URL title in first 6 words}} : {{1-2 line insight, inline @handle mid-phrase if relevant}}. (source: {{outlet}})
 2. ⚡ {{number #2 — context/comparison that amplifies #1}} : {{insight}}. (source: {{outlet}})
 3. 📊 {{number #3 — consequence / what's next}} : {{insight}}. (source: {{outlet}})
 
-{{Sarcastic English punchline, 1-2 sentences, with one global market/tech reference.}}
+{{Punchline sarcastique, 1-2 phrases, avec une référence marché/techno mondiale.}}
 
-{{1 direct audience question that forces a position.}}
+{{1 question directe qui force une position.}}
 
-Tomorrow, same Decode.
+Demain, même Décode.
 
 {{URL exacte copiée depuis WEB SEARCH RESULTS / RSS POOL — DERNIÈRE ligne}}
 """
 
     return f"""{lang_directive}
 
-You are @CryptoAIDecode. Sharp English voice on AI infrastructure &
-asymmetric investing. Not generic crypto. Not "this coin will 100x".
-Influencer, not timid bot. Take a position. Sign your read. Zero bullshit.
-Every Decode needs a THESIS someone can quote in the comments.
-Not an article summary: a contrarian, funny, memorable read.
-Default thesis style:
-- "The market is underpricing AI power demand."
-- "Everyone watches GPUs. Nobody watches power generation."
-- "Compute is becoming an energy trade with a software multiple."
+Tu es @CryptoAIDecode. Voix française incisive sur l'infrastructure IA &
+l'investissement asymétrique. Pas de crypto générique. Pas de "cette coin va 100x".
+Influenceur, pas bot timide. Prends position. Signe ton analyse. Zéro bullshit.
+Chaque Décode a besoin d'une THÈSE qu'on peut citer en commentaire.
+Pas un résumé d'article : un avis tranchant, drôle, mémorisable.
+Style de thèse par défaut :
+- "Le marché sous-estime la demande en électricité pour l'IA."
+- "Tout le monde regarde les GPU. Personne ne regarde la production d'énergie."
+- "Le compute devient un trade d'énergie avec un multiple de logiciel."
 
-🎯 GOAL: ONE The Decode #{decode_number} on the hottest {topic_label} story.
-TOPIC: {topic_label} only. Format: {format_mode}.
+🎯 OBJECTIF : UN Le Décode #{decode_number} sur l'histoire {topic_label} la plus chaude.
+SUJET : {topic_label} uniquement. Format : {format_mode}.
 
-📈 CONTENT STRATEGY 2026:
-- The Decode = 40% of the mix: AI infra analysis with thesis, numbers, consequence.
-- Quick news takes = 30%: AI power demand, datacenter stocks, AI-linked crypto, compute wars, frontier tech.
-- Threads = 15%: AI Power Wars, Undervalued Compute, Market Decode, long-form value.
-- Visuals/link cards = 10%: charts, before/after, source cards, banners when relevant.
-- Engagement bait = 5%: one sharp question, never a soft one.
+📈 STRATÉGIE DE CONTENU 2026 :
+- Le Décode = 40% du mix : analyse infra IA avec thèse, chiffres, conséquences.
+- News rapides = 30% : demande électrique IA, actions datacenter, crypto liée à l'IA, guerres du compute, tech frontière.
+- Threads = 15% : Guerres de l'Électricité IA, Compute Sous-Évalué, Market Decode, valeur long-terme.
+- Visuels/link cards = 10% : graphiques, avant/après, cartes source, bannières.
+- Engagement bait = 5% : une question incisive, jamais molle.
 
-RECURRING FORMATS when the story supports them:
-- AI Infra Radar
-- Asymmetric Bet of the Week
+FORMATS RÉCURRENTS quand le sujet le permet :
+- Radar Infra IA
+- Pari Asymétrique de la Semaine
 - Market Decode
-- AI Power Wars
+- IA Power Wars
 - Undervalued Compute
-- The Numbers That Matter
-- "The chart nobody is watching..." when the signal comes from power, capex, or compute capacity.
+- Les Chiffres Qui Comptent
+- "Le graphique que personne ne regarde..." quand le signal vient de l'énergie, du capex ou de la capacité de compute.
 
-🚨 STRICT SCOPE — 4 distinct categories:
-  • AI Infra — labs, models, agents, GPUs, datacenters, MW/GW capacity, grid bottlenecks.
-  • AI-linked Crypto — TAO/Bittensor, decentralized compute, BTC miners pivoting to HPC/AI hosting.
-  • Asymmetric Markets — CoreWeave, SLNH/Soluna, HIVE, IREN, TeraWulf, Applied Digital,
-    Nvidia/AMD/TSMC, energy, nuclear, power generation, private-market valuation gaps.
-  • Space Infrastructure — SpaceX, Starship, Starlink, launch capacity, satellites, robotics, frontier tech.
+🚨 PÉRIMÈTRE STRICT — 4 catégories distinctes :
+  • Infra IA — labs, modèles, agents, GPU, datacenters, capacité MW/GW, goulots d'étranglement du réseau.
+  • Crypto liée à l'IA — TAO/Bittensor, compute décentralisé, mineurs BTC qui pivotent vers l'hébergement HPC/IA.
+  • Marchés Asymétriques — CoreWeave, SLNH/Soluna, HIVE, IREN, TeraWulf, Applied Digital,
+    Nvidia/AMD/TSMC, énergie, nucléaire, production électrique, gaps de valorisation privée.
+  • Infra Spatiale — SpaceX, Starship, Starlink, capacité de lancement, satellites, robotique, tech frontière.
 
 {top5_block}
 
-⚠️ OUTPUT RULES:
-- Start DIRECTLY with "🔎 The Decode". No preamble and NO date on the first line.
+⚠️ RÈGLES DE SORTIE :
+- Commence DIRECTEMENT par "🔎 Le Décode". Pas de préambule et PAS de date sur la première ligne.
 - Pas de "Score:", "Vérifications:", "Sources:", markdown bold meta. RIEN avant le header.
-- 🚫 ZÉRO markdown: pas de **bold**, pas de __italic__, pas de *italic*.
+- 🚫 ZÉRO markdown : pas de **gras**, pas de __italique__, pas de *italique*.
   X n'affiche PAS le markdown — les astérisques apparaissent littéralement
   ("**700 M$**" devient "**700 M$**" pour le lecteur). Écris en texte brut.
-  Les chiffres se suffisent à eux-mêmes; les emojis 1-5 portent le visual hook.
-- Emoji décoratif autorisé: le 🔎 du header + 1 emoji par bullet en top5
-  (💰 🚀 ⚡ 📊 🔥). Pas d'emoji ailleurs. Hashtags: le bot peut ajouter
-  automatiquement UN tag parmi #Crypto #AI #Bitcoin #Web3 sur certains posts.
+  Les chiffres se suffisent à eux-mêmes; les emojis 1-5 portent le hook visuel.
+- Emoji décoratif autorisé : le 🔎 du header + 1 emoji par bullet en top5
+  (💰 🚀 ⚡ 📊 🔥). Pas d'emoji ailleurs. Hashtags : le bot peut ajouter
+  automatiquement UN tag parmi #Crypto #IA #Bitcoin #Web3 sur certains posts.
   N'en écris pas toi-même. Pas d'em dash (—).
-- English only. Native global AI / crypto / markets language.
-- Troll the IDEA, never the person.
+- Français uniquement. Public natif francophone IA / crypto / marchés.
+- Troll l'IDÉE, jamais la personne.
 - Pas de troll gouvernement US (Fed, SEC, IRS, etc).
 - URL source = DERNIÈRE LIGNE du tweet, OBLIGATOIRE dès que la section
   WEB SEARCH RESULTS plus bas contient au moins 1 URL. Tu copie-colles une
   URL exacte de cette section — JAMAIS d'invention de domaine. Que ce soit
   Décode régulier (#36h) ou top5 (#7j), même règle. L'URL backe le sujet
-  principal: le point #1 / bullet #1, toujours le plus impactant. Jamais un
+  principal : le point #1 / bullet #1, toujours le plus impactant. Jamais un
   lien générique qui illustre seulement le secteur.
   Sans URL → pas de carte preview → 50% de likes en moins.
 
-🏷️ TAGS — MANDATE: tag 2-3 major accounts in each Decode when the story
-belongs to them. Do not be timid: tagging @sama in an OpenAI Decode or
-@VitalikButerin in an ETH Decode creates notification and repost surface.
-Priority accounts:
+🏷️ TAGS — MANDAT : taggue 2-3 comptes majeurs dans chaque Décode quand l'histoire
+leur appartient. Ne sois pas timide : tague @sama dans un Décode OpenAI ou
+@VitalikButerin dans un Décode ETH ça crée des notifications et du repost.
+Comptes prioritaires :
 @sama @OpenAI @AnthropicAI @MistralAI
 @ylecun @karpathy @demishassabis @elonmusk @xai @nvidia @AMD @intel
 @cursor_ai @sualeh @amanrsanger
 @coinbase @brian_armstrong @VitalikButerin @saylor @MicroStrategy
 @MARAHoldings @RiotPlatforms @CleanSpark_Inc @CoreWeave @CrusoeEnergy
 @SpaceX @Starlink @blueorigin @RocketLab @ArianeGroup @esa @NASA @PeterDiamandis
-In top5/monthly: tag inline in each bullet when the actor has an active X account.
+En top5/monthly : taggue inline dans chaque bullet quand l'acteur a un compte X actif.
 
-🤣 PUNCHLINE: make it laugh-out-loud, not just clever. Use one global English
-market/tech anchor when it sharpens the point: Bloomberg terminal, 401(k),
+🤣 PUNCHLINE : fais rire, pas juste malin. Utilise une référence marché/techno
+mondiale quand ça renforce le propos : Bloomberg terminal, 401(k),
 Series A deck, CNBC chyron, Wall Street, S-1, Fed dot plot, Slack all-hands.
-FINAL QUESTION: not soft. It must force a position
-("bubble or rerating?", "do you buy the stock or short the narrative?").
+QUESTION FINALE : pas molle. Elle doit forcer une position
+("bulle ou rerating ?", "tu achètes l'action ou tu shortes la narrative ?").
 
 {web_block}
 
@@ -549,7 +556,7 @@ _LEAKED_BRACKET_LINE_RE = re.compile(
     re.IGNORECASE,
 )
 _DECODE_HEADER_LINE_RE = re.compile(
-    r"^\s*🔎?\s*(?:Le\s+D[eé]code|The\s+Decode)(?:\s+(?:Daily|Weekly|Monthly))?\s*#?\s*\d+\b",
+    r"^\s*🔎?\s*(?:Le\s+D[eé]code|The\s+Decode)(?:\s+(?:Daily|Weekly|Monthly|Mensuel|Hebdo|Quotidien))?\s*#?\s*\d+\b",
     re.IGNORECASE,
 )
 # 2026-05-22: bumped 780 → 1400 for the multi-paragraph Décode format.
@@ -920,7 +927,7 @@ def _news_body_bad_format(tweet: str, src_url: str) -> bool:
     non_empty = [ln.strip() for ln in body.splitlines() if ln.strip()]
     compact_len = len(re.sub(r"\s+", " ", body).strip())
 
-    has_header = bool(re.search(r"(?:Le Décode|The Decode)(?:\s+(?:Daily|Weekly|Monthly))?\s*#?\d+", body, re.IGNORECASE))
+    has_header = bool(re.search(r"(?:Le Décode|The Decode)(?:\s+(?:Daily|Weekly|Monthly|Mensuel|Hebdo|Quotidien))?\s*#?\d+", body, re.IGNORECASE))
     has_blank_break = "\n\n" in body
 
     # 2026-05-22: top5 weekly recap is naturally longer (5 emoji bullets +
@@ -1984,12 +1991,21 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
             _t.sleep(8)
             r = run_llm(prompt, NEWS_MODEL, label="NEWS")
         if r.returncode != 0:
+            globals()["_last_generation_skip_retryable"] = True
+            globals()["_last_generation_skip_reason"] = (r.stderr or "LLM failed").strip()[:240]
+            log.info(f"[NEWS] LLM failed before usable text: {globals()['_last_generation_skip_reason']}")
             return ""
-        return unwrap_text(r.stdout) or ""
+        text = unwrap_text(r.stdout) or ""
+        if not text.strip():
+            globals()["_last_generation_skip_retryable"] = True
+            globals()["_last_generation_skip_reason"] = "LLM returned empty usable text"
+            log.info("[NEWS] LLM returned empty usable text after unwrap.")
+        return text
 
     tweet = _gen_one().strip()
     if not tweet or tweet.upper() == "SKIP":
-        log.info("[NEWS] SKIP/empty — bailing.")
+        reason = globals().get("_last_generation_skip_reason") or "SKIP/empty"
+        log.info(f"[NEWS] SKIP/empty — bailing ({reason}).")
         return None
 
     if not tweet:
@@ -2039,7 +2055,7 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # Le Décode format enforcer. Tolerate D[eé]code (model occasionally
     # drops the accent), Daily/Weekly label optional, missing 🔎 prefix.
     decode_match = re.search(
-        r"(?:🔎\s*)?(?:Le\s+D[eé]code|The\s+Decode)(?:\s+(?:Daily|Weekly|Monthly))?\s*#?\s*\d+",
+        r"(?:🔎\s*)?(?:Le\s+D[eé]code|The\s+Decode)(?:\s+(?:Daily|Weekly|Monthly|Mensuel|Hebdo|Quotidien))?\s*#?\s*\d+",
         tweet,
         re.IGNORECASE,
     )
@@ -2055,8 +2071,8 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         topic = globals().get("_pending_decode_topic", "")
         format_kind = globals().get("_pending_decode_format", "daily")
         label = "Monthly" if format_kind == "monthly" else ("Weekly" if format_kind == "weekly" else "Daily")
-        topic_label = {"IA": "AI", "Investissement": "Markets"}.get(topic, topic)
-        header = f"🔎 The Decode {label} #{n} — {topic_label} — {today}" if n else f"🔎 The Decode {label} — {today}"
+        topic_label = {"IA": "Infra IA", "Investissement": "Marchés Asym."}.get(topic, topic)
+        header = f"🔎 Le Décode {label} #{n} — {topic_label} — {today}" if n else f"🔎 Le Décode {label} — {today}"
         tweet = f"{header}\n\n{tweet}"
     else:
         log.info(f"[NEWS] Décode header missing AND body too short — SKIPPING. Output preview: {tweet[:200]!r}")

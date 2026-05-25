@@ -34,6 +34,7 @@ from .llm_client import run_llm, unwrap_text
 from .logger import log
 from .twitter_client import post_thread
 from .humanizer import humanize, strip_agent_preamble
+from . import lang_mode
 from . import personality_store
 
 RECAP_STATE_FILE = os.path.join(_PROJECT_ROOT, "morning_recap_state.json")
@@ -45,25 +46,24 @@ MORNING_HOUR_START_EST = 1
 MORNING_HOUR_END_EST = 4
 
 
-RECAP_PROMPT = """You are @CryptoAIDecode. It is morning and you write THE wake-up
-thread for a global English AI infrastructure & asymmetric investing audience.
+RECAP_PROMPT = """{lang_directive}
 
 VOICI les éléments en buzz ce matin (RSS / HN / Reddit / X home, last 8h):
 {signal_block}
 
-Your job: write ONE 4-tweet English thread summarizing the 3 biggest
-AI infra / AI-linked crypto / frontier tech stories right now. This is the morning ritual: the audience
-comes here to know in 2 minutes what moved overnight.
+Ton job : écris UN thread de 4 tweets qui résume les 3 plus grosses
+stories IA / crypto liée à l'IA / tech frontière du moment. C'est le rituel du matin : l'audience
+vient ici pour savoir en 2 minutes ce qui a bougé dans la nuit.
 
 FORMAT (4 tweets, blocs séparés par "---"):
 
-TWEET 1 — INTRO (≤220 chars, dry English):
-- No date in the first line.
-- Style: "Morning scan. The 3 AI infra stories that matter. Power, compute, and the weird crypto corner. 🧵"
+TWEET 1 — INTRO (≤220 chars) :
+- Pas de date sur la première ligne.
+- Style : "Morning scan. Les 3 stories IA du matin. Power, compute, et le coin crypto bizarre. 🧵"
 - Hook + promesse + le 🧵 émoji thread.
 
-TWEET 2 — STORY 1 (≤270 chars):
-- Format: "1/ <dry fact in 1 sentence + exact number>.\\n\\n<sarcastic English punchline>."
+TWEET 2 — STORY 1 (≤270 chars) :
+- Format : "1/ <fait sec en 1 phrase + chiffre exact>.\\n\\n<punchline>."
 - Mentionne l'outlet entre parenthèses (ex: "(Bloomberg)").
 - Use global AI / crypto / Wall Street references. No French anchors.
 
@@ -76,7 +76,7 @@ TWEET 4 — STORY 3 + CHUTE (≤270 chars):
   la suite." / "Vous êtes prévenus." / "Au moins on est prévenus.").
 
 RÈGLES:
-- 100% English. Global AI infra / asymmetric investing audience.
+- Langue dictée par la directive linguistique en haut du prompt.
 - Pas d'em dash (—). Pas d'emojis (sauf 🧵 sur tweet 1).
 - Pas de hashtag.
 - Sources top-tier (Bloomberg / FT / Reuters / Les Échos / TechCrunch /
@@ -140,15 +140,17 @@ def run_morning_recap_cycle():
         signal_block = "(signal feed unavailable)"
 
     today_date = datetime.now().strftime("%Y-%m-%d")
+    _lang = lang_mode.pick_content_lang()
     performance_section = personality_store.hard_rules_block()
-    bot_self = personality_store.render_bot_self(lang="fr")
+    bot_self = personality_store.render_bot_self(lang=_lang)
     if bot_self:
         performance_section = bot_self + "\n\n" + performance_section
-    core = personality_store.render_core_identity(lang="fr")
+    core = personality_store.render_core_identity(lang=_lang)
     if core:
         performance_section = core + "\n\n" + performance_section
 
     prompt = RECAP_PROMPT.format(
+        lang_directive=lang_mode.lang_directive(_lang),
         today_date=today_date,
         signal_block=signal_block[:5000],
         performance_section=performance_section,

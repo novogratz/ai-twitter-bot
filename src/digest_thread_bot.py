@@ -28,9 +28,9 @@ from . import personality_store
 
 DIGEST_STATE_FILE = os.path.join(_PROJECT_ROOT, "digest_thread_state.json")
 
-DIGEST_PROMPT = """You are @CryptoAIDecode. You write THE daily recap thread — an X thread of 6 tweets covering the 5 biggest AI infrastructure / asymmetric investing stories of the last 36h. This is our SIGNATURE format: people come here because they don't have time to scroll 30 outlets.
+DIGEST_PROMPT = """{lang_directive}
 
-{lang_directive}
+Tu écris LE thread de récap quotidien — un thread X de 6 tweets couvrant les 5 plus grosses stories d'infrastructure IA / investissement asymétrique des dernières 36h. C'est notre format signature : les gens viennent ici parce qu'ils n'ont pas le temps de scroller 30 outlets.
 
 PROCESSUS:
 1. WebSearch large (EN top-tier) in parallel — find 5 DISTINCT stories dominating right now:
@@ -43,13 +43,12 @@ PROCESSUS:
 
 FORMAT THREAD (6 tweets, blocs séparés par "---"):
 
-TWEET 1 — INTRO (≤220 chars, dry English):
-- No date in the first line. Open with the recurring identity, not a calendar.
-- Example: "5 AI infra moves the market is underpricing. Power, compute, space, and the weird crypto corner nobody models. 🧵"
-- Style alternatif accepté tant que: annonce un récap de 5 stories + crée la promesse.
+TWEET 1 — INTRO (≤220 chars) :
+- Pas de date sur la première ligne.
+- Exemple : "5 moves IA infra que le marché sous-price. Power, compute, space, et le coin crypto bizarre que personne ne modèle. 🧵"
 - Le 🧵 émoji thread est OK, pas d'autre emoji.
 
-TWEET 2 — STORY 1 (≤270 chars, English):
+TWEET 2 — STORY 1 (≤270 chars) :
 - Format: "1/ <fait sec en 1 phrase>.\\n\\n<chute FR sarcastique>."
 - Cite un chiffre vérifiable.
 - Mentionne l'outlet entre parenthèses (ex: (Les Échos), (Reuters)).
@@ -70,7 +69,7 @@ TWEET 6 — STORY 5 + CHUTE (≤270 chars):
   Ex: "Conclusion: si t'as lu jusqu'ici, t'as plus suivi l'actualité que 80% des analystes BFM."
 
 RÈGLES DURES:
-- 100% English. Global AI / crypto / markets audience.
+- Langue dictée par la directive linguistique en haut du prompt.
 - Pas d'em dash (—). Pas d'emojis (sauf 🧵 sur le tweet 1).
 - Pas de hashtag.
 - Top-tier sources required (Reuters, Bloomberg, FT, WSJ, AFP, TechCrunch, The Information, CoinDesk, The Block, CNBC, Axios).

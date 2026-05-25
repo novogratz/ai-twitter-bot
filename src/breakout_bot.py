@@ -63,7 +63,7 @@ Pas de SKIP. Pas de rejection sampling. Tu shipes un take qui claque.
 FORMAT (≤270 chars TOTAL, screenshot-worthy):
 - 1-2 phrases sec.
 - Une chute qui pique. Pas de news-report tone.
-- English-only. Use global AI infra / power / compute / Wall Street references.
+- Langue dictée par la directive linguistique en haut du prompt.
 - Pas d'emojis, pas de hashtag, pas d'em dash.
 - Pas de "Selon X..." / "Breaking:" / "Aujourd'hui..." / "According to..." / "Today...".
 
