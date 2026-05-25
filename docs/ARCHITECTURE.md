@@ -87,8 +87,8 @@ main.py
 
 | Module | Cadence | Behavior |
 |---|---|---|
-| `retweet_bot.py` | every 3 min | Feed/search/trusted-handle/big-post scrape → niche+age filter → deterministic score → retweet up to `RETWEETS_PER_CYCLE` |
-| `quote_tweet_bot.py` | every 8 min | Legacy repost-pool scrape → FR/EN filter → plain repost |
+| `retweet_bot.py` | every 2 min | Feed/search/trusted-handle/big-post scrape → niche+age filter → deterministic score → retweet up to `RETWEETS_PER_CYCLE` |
+| `quote_tweet_bot.py` | every 4 min | FR-first quote discovery → niche+age+respect-list filter → generate FR angle → quote post |
 | `notify_bot.run_boost_cycle` | every 60 min | Self-RT freshest own post (algo-window timing) |
 
 ### Reply paths

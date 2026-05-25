@@ -259,7 +259,7 @@ Files that change at runtime. Most are auto-pushed to git by their producing age
 | `replied_tweets.json` | `reply_bot` + `direct_reply` | URL dedup |
 | `replied_back.json` | `notify_bot` | Replyback dedup |
 | `retweeted.json` | `retweet_bot` | Retweet dedup |
-| `quoted_tweets.json` | `quote_tweet_bot` | Legacy repost-pool dedup |
+| `quoted_tweets.json` | `quote_tweet_bot` | Quote-post dedup |
 | `followed_accounts.json` | `engage_bot` | Tracked follows |
 | `do_not_refollow.json` | `smart_unfollow_bot` | Anti-churn list |
 | `safari_health.json` | `health.py` | Per-bot success/failure counts |
@@ -285,6 +285,7 @@ Counter / state files (one per bot):
 | Force a news cycle now (foreground) | `python3 -c "from src.bot import run_bot_cycle; run_bot_cycle()"` |
 | Force monthly Top 10 recaps now | `python3 main.py --monthly-recap-now` |
 | Force a retweet cycle now | `python3 -c "from src.retweet_bot import run_retweet_cycle; run_retweet_cycle()"` |
+| Force a quote cycle now | `python3 -c "from src.quote_tweet_bot import run_quote_tweet_cycle; run_quote_tweet_cycle()"` |
 | Manually pin a tweet | `python3 -c "from src.twitter_client import pin_own_tweet; pin_own_tweet('https://x.com/<you>/status/<id>')"` |
 | Add a handle to respect list | `python3 -c "from src.respect_list import add; add('handle','reason')"` |
 | Disable a specific bot temporarily | Comment out its `scheduler.add_job` call in `main.py` and restart |
