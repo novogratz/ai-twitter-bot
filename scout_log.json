@@ -556,5 +556,57 @@
       }
     ],
     "summary": "On a filtr\u00e9 le bruit pour ne garder que les cerveaux : des analysts techniques solides, des fondateurs tech qui codent encore, et des investisseurs qu\u00e9b\u00e9cois qui g\u00e8rent leur bl\u00e9 s\u00e9rieusement. Pas de vendeurs de r\u00eaves, que du contenu qui survit au crash."
+  },
+  {
+    "ts": "2026-05-25T02:41:12.873386",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "cryptomathieu",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Le roi des cryptos FR, analyse technique rigoureuse, z\u00e9ro hype."
+      },
+      {
+        "handle": "mickaelbouton",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Le baron des march\u00e9s, style direct, d\u00e9crypte la macro avant tout le monde."
+      },
+      {
+        "handle": "gilles_martinez",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Cofondateur de Qonto, twitte sur l'IA appliqu\u00e9 aux fintechs avec brio."
+      },
+      {
+        "handle": "vincent_careme",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "Bas\u00e9 \u00e0 SF mais francophone, focus AI et VC, r\u00e9seau solide."
+      },
+      {
+        "handle": "joseph_roussel",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "L'analyste qu\u00e9b\u00e9cois incontournable, deep dive sur Solana et Bitcoin."
+      },
+      {
+        "handle": "louis_fournier",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Journaliste financier, couverture boursi\u00e8re FR-CA impeccable."
+      }
+    ],
+    "summary": "6 profils solides, zero formation \u00e0 99\u20ac, mix parfait entre analytiques purs et insiders tech."
   }
 ]

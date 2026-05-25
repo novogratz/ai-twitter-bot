@@ -44,7 +44,13 @@
     "jchermak",
     "thomas_brochier",
     "lucas_letellier",
-    "david_roux"
+    "david_roux",
+    "cryptomathieu",
+    "mickaelbouton",
+    "gilles_martinez",
+    "vincent_careme",
+    "joseph_roussel",
+    "louis_fournier"
   ],
   "en": [
     "blablacar",
@@ -326,6 +332,36 @@
     {
       "lang": "en",
       "handle": "balajis",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptomathieu",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelbouton",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "gilles_martinez",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "vincent_careme",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "joseph_roussel",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "louis_fournier",
       "added": "2026-05-25"
     }
   ]

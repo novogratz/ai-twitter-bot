@@ -271,3 +271,59 @@ Here's how I'm playing each one and why:
 • SPA
   - https://x.com/itsmichaelluu/status/2058548460845195336
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 177).
+- **@senlummis** (718 likes, score 8/10) — Wyoming workers & producers power our grid and strengthen national security. Advanced manufacturing, Bitcoin mining, AI all demand reliable baseload power.
+
+The U.S. needs more generation, more infras
+  - https://x.com/SenLummis/status/2057114026962776483
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 794).
+- **@ggreenwald** (7747 likes, score 8/10) — The amazing thing about Israel trying to derail the deal by insisting on the right to bomb Lebanon: 
+
+Trump announced on April 18 that as part of a deal, he ordered Israel to stop bombing Lebanon, cla
+  - https://x.com/ggreenwald/status/2058683492804817353
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 8205).
+- **@semianalysis_** (96 likes, score 8/10) — The basic shape of the problem is that US AI power demand has run from roughly 3 GW in 2023 to a path of about 28 GW by the end of 2026, and the grid simply cant keep up with that kind of step functio
+  - https://x.com/SemiAnalysis_/status/2058291987162247644
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 108).
+- **@indiantechguide** (5723 likes, score 7/10) — India's peak power demand hit a record high of 270.8 GW.
+  - https://x.com/IndianTechGuide/status/2058110729979383948
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5967).
+- **@cryptorover** (140 likes, score 7/10) — $BTC - The 4-year cycle isn't dead. It's playing out perfectly.
+
+Cycle 1 (2011-2014) → 2011 Buy / 2012 Hold / 2013 Sell / 2014 Bear
+
+Cycle 2 (2015-2018) → 2015 Buy / 2016 Hold / 2017 Sell / 2018 Bear
+  - https://x.com/cryptorover/status/2058790919206469823
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 256).
+- **@cryptorover** (139 likes, score 7/10) — $BTC - The 4-year cycle isn't dead. It's playing out perfectly.
+
+Cycle 1 (2011-2014) → 2011 Buy / 2012 Hold / 2013 Sell / 2014 Bear
+
+Cycle 2 (2015-2018) → 2015 Buy / 2016 Hold / 2017 Sell / 2018 Bear
+  - https://x.com/cryptorover/status/2058790919206469823
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 255).
+- **@hamids** (139 likes, score 7/10) — This is Claude Opus doing its best estimation of $SPCX profits vs. $MU profits for 2027.
+
+The "bear" case for $MU = 4 to 5 times the profits of the most optimistic "Bull" case for $SPCX. The most like
+  - https://x.com/hamids/status/2058617115331219773
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 169).
+- **@chibireviews** (4807 likes, score 7/10) — Nuclear Take: Going to say something very harsh but true
+
+This entire drama will indirectly cause manga authors to never put black characters in their stories again. Why add something that will likely
+  - https://x.com/ChibiReviews/status/2058728569296093494
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 5195).
+- **@cb_doge** (817 likes, score 7/10) — Starlink vs. Regular In-Flight WiFi
+
+I tested in-flight WiFi on two airlines in the last 24 hours.
+
+Qatar Airways (Starlink): 165 Mbps
+American Airlines ( No Starlink): 30 Mbps
+
+The difference was not
+  - https://x.com/cb_doge/status/2058562683125842053
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1191).
+- **@semianalysis_** (286 likes, score 7/10) — One of the threads we kept pulling on in our recent piece on how AI labs are solving the power crisis is that onsite gas has stopped being a fringe option, and quietly turned into the default planning
+  - https://x.com/SemiAnalysis_/status/2058291985543303336
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 320).
+- **@jayinslee** (34 likes, score 7/10) — Families from coast to coast are demanding solutions to lower their power bills, and clean energy is proving again and again that it’s the fastest, most effective answer we have to get it done.
+  - https://x.com/JayInslee/status/2058639924279083504
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 264).
