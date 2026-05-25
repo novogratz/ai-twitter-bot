@@ -504,5 +504,57 @@
       }
     ],
     "summary": "Le lot se concentre sur la 'French Tech' IA (Mistral/HuggingFace) et le trading classique qu\u00e9b\u00e9cois. J'ai vir\u00e9 les vendeurs de r\u00eave pour garder les buildeurs et les pros."
+  },
+  {
+    "ts": "2026-05-25T00:35:30.671653",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "TheCryptoLark",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 320000,
+        "reason": "Le proph\u00e8te new-yorkais qui balance des perles sur la Fed et les cycles alt. Pas de pub Telegram, juste du contenu brut en anglais mais essentiel pour la diaspora."
+      },
+      {
+        "handle": "MickaelTeyssier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'analyste technique qui ne fait pas de bla-bla politique. Ses charts sur le CAC et le DAX valent de l'or, twitte tous les matins sans se prendre la t\u00eate."
+      },
+      {
+        "handle": "AlexisRochon",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'investisseur qu\u00e9b\u00e9cois qui parle valeur. Pas de shitcoin, pas de leverage d\u00e9mesur\u00e9. Juste des bilans et des dividendes. Le calme dans la temp\u00eate crypto."
+      },
+      {
+        "handle": "DimitriB",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Cofondateur de Hugging Face. Il tweet sur l'open-source et les mod\u00e8les de langue en fran\u00e7ais/anglais. C'est la r\u00e9f\u00e9rence pure, z\u00e9ro hype, 100% tech."
+      },
+      {
+        "handle": "MaelLeGrand",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Directeur chez Mael AI. Il tweet sur l'Agentic AI et les startups montr\u00e9alaises. Un regard frais sur l'IA qui ne vient pas de la Silicon Valley."
+      },
+      {
+        "handle": "ArnaudEsquerre",
+        "region": "france",
+        "niche": "tech",
+        "followers": 8000,
+        "reason": "CTO chez DeepL. Il partage ses r\u00e9flexions sur la traduction neuronale et l'IA generative. Moins connu que Mistral mais plus pointu techniquement."
+      }
+    ],
+    "summary": "On a filtr\u00e9 le bruit pour ne garder que les cerveaux : des analysts techniques solides, des fondateurs tech qui codent encore, et des investisseurs qu\u00e9b\u00e9cois qui g\u00e8rent leur bl\u00e9 s\u00e9rieusement. Pas de vendeurs de r\u00eaves, que du contenu qui survit au crash."
   }
 ]

@@ -123,3 +123,47 @@ $ON
 It shows major positions including Intel, Nokia, CoreWeave, Coherent, Synopsys, Nebius and Generate Biosciences.
   - https://x.com/unusual_whales/status/2055385982921568501
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 2890).
+- **@stocksavvyshay** (1497 likes, score 9/10) — $IREN CEO said company has spent eight years assembling the inputs for AI infrastructure, including 5GW of secured power & land across three continents.
+
+He believes neocloud growth should be higher t
+  - https://x.com/StockSavvyShay/status/2057411575796113819
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1611).
+- **@interesting_ail** (2227 likes, score 8/10) — Around 49,000 residents by Lake Tahoe will no longer be able to use their main power source starting May 2027
+
+NV Energy said AI data centers are requiring “unprecedented” demand
+  - https://x.com/interesting_aIl/status/2054649852059889959
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2437).
+- **@damidefi** (254 likes, score 8/10) — Top Sectors and Project Dominating Them
+
+Artificial Intelligence (AI): $TAO, $LINK, $RENDER
+Real-World Assets (RWA): $ONDO, $CFG, $RAILS, $WLFI
+Decentralized Physical Infrastructure Networks (DePIN):
+  - https://x.com/DamiDefi/status/2058544565339254942
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 314).
+- **@rainmaker1973** (152 likes, score 8/10) — A surprising shift in public opinion is underway: many Americans now say they would rather live near a nuclear power plant than a massive AI data center.
+
+As AI demand explodes, communities across the
+  - https://x.com/Rainmaker1973/status/2058562205688246676
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 292).
+- **@pumpolinsky** (204 likes, score 7/10) — Do you believe $TAO can reach above 4000 dollar this year?
+  - https://x.com/pumpolinsky/status/2058577475169333606
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 282).
+- **@cryptomanran** (699 likes, score 7/10) — Portfolio Update:
+
+1.BTC
+2.HYPE
+3.SOL
+4.ZEC
+http://5.CC
+6.NEAR
+http://7.AERO
+8.JTO
+9.VVV
+10.TIBBIR
+11.TAO
+12.PUMP
+13.SUI
+14.WLD
+15.CRV
+  - https://x.com/cryptomanran/status/2058491241029885972
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1283).
