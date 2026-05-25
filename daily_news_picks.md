@@ -447,3 +447,68 @@ The mission: "extend the light of consciousness to the stars."
 The product roadmap includes building a moon base, har
   - https://x.com/MarioNawfal/status/2058861886788210790
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 248).
+- **@stocksavvyshay** (176 likes, score 9/10) — $NVDA EXPECTED TO BECOME THE MOST PROFITABLE COMPANY IN WORLD BY 2027
+
+The global profit pool is shifting toward AI compute, memory & the platforms scaling on top of both: 
+
+1. Nvidia ~$241B
+2. Samsun
+  - https://x.com/StockSavvyShay/status/2058948126137102735
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 314).
+- **@cryptogoos** (381 likes, score 9/10) — CHINA BANNED NVIDIA’S CHINA-ONLY CHIPS
+
+ China didn’t just reject Nvidia chips in general - they even blocked the one specifically designed for them.
+
+The 5090D V2 was literally built for the Chinese
+  - https://x.com/cryptogoos/status/2058870191551881539
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 399).
+- **@smallcapsnipa** (141 likes, score 9/10) — GOLDMAN SACHS PROJECTS U.S. DATA CENTER POWER DEMAND TO DOUBLE BY 2027
+
+• 66 gigawatts in 2027 from 31 GW in 2025
+• Only About 50-60% of data center capacity scheduled for the next one to two years is
+  - https://x.com/SmallCapSnipa/status/2058927256689332333
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 155).
+- **@oguzerkan** (41 likes, score 8/10) — Power is the biggest bottleneck for scaling AI.
+
+Planned data center projects require 39,429 acres of additional power-ready land by 2030.
+
+Only 17% of this demand has firm power commitments.
+
+Good lu
+  - https://x.com/oguzerkan/status/2058907686243082277
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 69).
+- **@ftr_investors** (17 likes, score 7/10) — It’s late 2026
+
+SpaceX, OpenAI, and Anthropic are all publicly traded.
+
+You have $100,000 to invest 
+But you can only pick 𝗢𝗡𝗘 for the next 5 years:
+
+ SpaceX
+ OpenAI
+ Anthropic
+
+Which one gets your
+  - https://x.com/ftr_investors/status/2058899412735103361
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 35).
+- **@bitcoin** (1561 likes, score 8/10) — $77,368.65
+
+#Bitcoin
+  - https://x.com/Bitcoin/status/2057623599746257399
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2107).
+- **@2xnmore** (91 likes, score 8/10) — Barry Silbert bought Bitcoin at $7.
+
+He built Grayscale from nothing.
+
+He turned DCG into a 300-company crypto empire.
+
+Now he's saying $TAO is his Bitcoin moment.
+
+Here's what he said that most peopl
+  - https://x.com/2xnmore/status/2058926068116144417
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 115).
+- **@electroversenet** (902 likes, score 8/10) — Wind and solar look cheap on paper, but only because their true costs are hidden. 
+
+Power grids must balance supply and demand every second. Wind and solar cannot do that. Their output follows the wea
+  - https://x.com/Electroversenet/status/2058201289054675317
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1048).
