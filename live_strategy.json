@@ -6,11 +6,11 @@
     "MAX_SPICY_PER_DAY": 0,
     "MAX_QUOTES_PER_DAY": 80,
     "MAX_RETWEETS_PER_DAY": 30,
-    "MAX_REPLIES_PER_CYCLE": 3,
+    "MAX_REPLIES_PER_CYCLE": 10,
     "FOLLOW_BLAST_PER_CYCLE": 140,
     "LIKE_BOT_PER_CYCLE": 140
   },
-  "cadence_factor": 1.0,
+  "cadence_factor": 0.65,
   "topic_focus": [
     "AI infrastructure",
     "asymmetric investing",
@@ -64,8 +64,8 @@
     "AI code editor",
     "devtools IA"
   ],
-  "language": "en",
+  "language": "fr",
   "scope": "ai_crypto_only",
-  "updated_at": "2026-05-23T20:05:00",
-  "note": "Positioning: AI infrastructure & asymmetric investing. Standalone content in English; replies still match parent language. Retweets restricted to big English AI infra/compute/energy/crypto-linked content."
+  "updated_at": "2026-05-25T08:25:00",
+  "note": "Positioning: IA & infra IA + investissement asymétrique. Push FR profile replies harder: French curated profiles first, EN tightly capped, faster cadence, more profile tweets scanned."
 }

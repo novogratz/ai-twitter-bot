@@ -106,7 +106,6 @@ _PROMPT_BLEED_MARKERS = (
     "<la hot take",
     "<la news",
     "<la reply",
-    "[pattern:",  # raw bracket should already be stripped, double check
     "output —",
     "output:",
 )
@@ -525,8 +524,19 @@ def _build_cmd(
 
 
 def _fallback_provider(primary_provider: str) -> Optional[str]:
-    default_fallback = "ollama" if primary_provider == "codex" else "codex"
     env_fallback = os.environ.get("LLM_FALLBACK_CLI", "").strip().lower()
+    # Local-first content generation: when Ollama is the configured provider,
+    # do not route failed generations to Codex/Claude/Gemini unless explicitly
+    # allowed. This also protects older .env files with LLM_FALLBACK_CLI=codex.
+    if (
+        primary_provider == "ollama"
+        and env_fallback not in {"", "ollama", "opencode"}
+        and os.environ.get("LLM_ALLOW_REMOTE_FALLBACK", "0") != "1"
+    ):
+        return None
+    if primary_provider == "ollama" and not env_fallback:
+        return None
+    default_fallback = "ollama" if primary_provider == "codex" else "codex"
     fallback = env_fallback or default_fallback
     if os.environ.get("LLM_DISABLE_FALLBACK", "0") == "1":
         return None

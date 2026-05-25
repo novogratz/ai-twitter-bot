@@ -179,10 +179,10 @@ def direct_reply_interval_minutes() -> int:
     """Primary response path. cadence_factor applied LIVE."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return _cadence(random.randint(12, 22))
+        return _cadence(random.randint(6, 12))
     if 16 <= hour < 23:
-        return _cadence(random.randint(18, 35))
-    return _cadence(random.randint(35, 60))
+        return _cadence(random.randint(10, 18))
+    return _cadence(random.randint(18, 30))
 
 
 def early_bird_interval_minutes() -> int:
@@ -448,10 +448,10 @@ def main():
         )
 
         if ENABLE_AI_DISCOVERY:
-            log.info("Discover bot: searching for new influencers every 6 hours.")
+            log.info("Discover bot: searching for new French influencers every 90 min.")
             scheduler.add_job(
                 safe_run_discovery_cycle,
-                trigger=IntervalTrigger(hours=6),
+                trigger=IntervalTrigger(minutes=90),
                 id="discover_job",
             )
         else:
@@ -660,13 +660,13 @@ def main():
             id="digest_thread_job",
         )
 
-        # Follow blast bot — bulk-follow ~30 FR niche accounts every 30 min.
+        # Follow blast bot — bulk-follow ~30 FR niche accounts every 15 min.
         # Highest-leverage net-new follower acquisition: ~120/hour follow
         # attempts, with 10-20% reciprocity = ~12-25 followers/hour gain.
-        log.info("Follow-blast bot: bulk-following FR niche accounts every 30 min (~30/cycle).")
+        log.info("Follow-blast bot: bulk-following FR niche accounts every 15 min (~30/cycle).")
         scheduler.add_job(
             safe_run_follow_blast_cycle,
-            trigger=IntervalTrigger(minutes=30),
+            trigger=IntervalTrigger(minutes=15),
             id="follow_blast_job",
         )
 

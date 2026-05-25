@@ -1,4 +1,4 @@
-"""Mass-follow blast bot — bulk-follow English AI infra niche accounts at scale.
+"""Mass-follow blast bot — bulk-follow French AI/crypto/finance niche accounts at scale.
 
 Why: with 360 → 10k follower target, we need NET-NEW follows at maximum
 volume. engage_bot follows from a curated list (slow ramp). discover_bot
@@ -37,23 +37,24 @@ FOLLOWS_PER_CYCLE = int(os.environ.get("FOLLOW_BLAST_PER_CYCLE", "40"))
 FOLLOW_BLAST_DAILY_CAP = int(os.environ.get("FOLLOW_BLAST_DAILY_CAP", "650"))
 FOLLOW_BLAST_STATE_FILE = os.path.join(_PROJECT_ROOT, "follow_blast_state.json")
 
-# English niche search queries. Rotated per cycle. The min_faves floor keeps
-# us out of bot-farm zones — we want real global AI / crypto users.
+# French niche search queries. Rotated per cycle. Most use low/no min_faves
+# because the goal is net-new FR graph discovery, not only already-viral posts.
 BLAST_QUERIES = [
-    "AI datacenter lang:en min_faves:25",
-    "AI infrastructure lang:en min_faves:25",
-    "power demand AI lang:en min_faves:25",
-    "megawatt OR gigawatt AI lang:en min_faves:25",
-    "CoreWeave OR CRWV lang:en min_faves:25",
-    "APLD OR Applied Digital lang:en min_faves:25",
-    "IREN OR HIVE lang:en min_faves:25",
-    "TeraWulf OR WULF lang:en min_faves:25",
-    "TAO OR Bittensor lang:en min_faves:25",
-    "decentralized compute lang:en min_faves:25",
-    "Nvidia OR GPU cluster lang:en min_faves:25",
-    "nuclear OR grid AI datacenter lang:en min_faves:25",
-    "robotics OR humanoid robots lang:en min_faves:25",
-    "SpaceX OR Starlink lang:en min_faves:25",
+    "IA OR \"intelligence artificielle\" lang:fr",
+    "\"agents IA\" OR \"agent IA\" lang:fr",
+    "Mistral OR HuggingFace OR \"Hugging Face\" lang:fr",
+    "OpenAI OR ChatGPT OR Claude lang:fr",
+    "startup IA OR \"French Tech\" lang:fr",
+    "développeur IA OR \"Cursor AI\" lang:fr",
+    "Nvidia OR GPU OR datacenter lang:fr",
+    "\"data center\" OR datacenter OR \"centre de données\" lang:fr",
+    "Bitcoin OR Ethereum OR Solana OR crypto lang:fr",
+    "DeFi OR stablecoin OR Bittensor OR TAO lang:fr",
+    "minage Bitcoin OR mining crypto lang:fr",
+    "bourse OR PEA OR ETF OR investissement lang:fr",
+    "trading OR marchés financiers lang:fr",
+    "SpaceX OR Starship OR Starlink lang:fr",
+    "ArianeGroup OR satellite OR spatial lang:fr",
 ]
 
 
@@ -126,7 +127,7 @@ def _save_daily_state(state: dict) -> None:
 
 
 def run_follow_blast_cycle():
-    """Open an English AI infra niche search, scroll, JS-click Follow buttons."""
+    """Open a French niche people search, scroll, JS-click Follow buttons."""
     # Skip if X is suppressing us — bulk follows during a shadowban
     # phase trip the spam detector even harder.
     try:

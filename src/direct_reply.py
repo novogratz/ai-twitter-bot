@@ -82,7 +82,26 @@ HIGH_TRACTION_REPLY_ACCOUNTS = [
     "fchollet",
     "MistralAI",
 ]
+_FR_ACCOUNT_HINTS = ("_fr", "cryptoast", "coinacademy", "journalducoin", "fintales", "graphseo", "vision_ia")
 ALWAYS_REPLY_ACCOUNTS = list(dict.fromkeys(VIP_REPLY_ACCOUNTS + HIGH_TRACTION_REPLY_ACCOUNTS))
+ALWAYS_REPLY_FR_ACCOUNTS = [
+    h for h in ALWAYS_REPLY_ACCOUNTS
+    if h in HIGH_TRACTION_REPLY_ACCOUNTS or h in {
+        "Graphseo",
+        "RodolpheSteffan",
+        "vision_ia",
+        "FinTales_",
+        "FlasheurInvest",
+        "McnallieM",
+        "ylecun",
+        "arthurmensch",
+        "GuillaumeLample",
+        "fchollet",
+        "ArianeGroup",
+        "esa",
+    } or any(hint in h.lower() for hint in _FR_ACCOUNT_HINTS)
+]
+ALWAYS_REPLY_EN_ACCOUNTS = [h for h in ALWAYS_REPLY_ACCOUNTS if h not in ALWAYS_REPLY_FR_ACCOUNTS]
 
 # === Language gate — added 2026-04-26 after DE/TR replies leaked through ===
 # X's `lang:fr` operator is best-effort: it returns DE / TR / ES / RU tweets
@@ -418,8 +437,16 @@ PRIORITY_ACCOUNTS = FR_ACCOUNTS + EN_ACCOUNTS
 SEARCH_QUERIES = [
     # Hot tweets (already engaged, guaranteed alive)
     "IA OR ChatGPT lang:fr min_faves:30",
+    "\"agents IA\" OR \"agent IA\" lang:fr min_faves:5",
+    "Mistral OR HuggingFace OR \"Hugging Face\" lang:fr min_faves:5",
+    "OpenAI OR Claude OR Anthropic lang:fr min_faves:5",
+    "Nvidia OR GPU OR datacenter lang:fr min_faves:5",
+    "\"centre de données\" OR \"data center\" lang:fr min_faves:5",
     "Bitcoin OR crypto OR Ethereum lang:fr min_faves:30",
+    "Bittensor OR TAO OR DeFi OR stablecoin lang:fr min_faves:5",
+    "minage OR mining OR MARA OR IREN lang:fr min_faves:5",
     "bourse OR CAC40 OR trading lang:fr min_faves:20",
+    "PEA OR ETF OR investissement lang:fr min_faves:5",
     "OpenAI OR Anthropic OR Mistral lang:fr min_faves:20",
     "BFM OR Bercy OR Fed lang:fr min_faves:20",
     "DeFi OR Solana OR memecoin lang:fr min_faves:15",
@@ -429,6 +456,9 @@ SEARCH_QUERIES = [
     "fusée OR satellite OR aerospace lang:fr min_faves:5",
     # Broader queries (catch fresh + niche)
     "intelligence artificielle lang:fr",
+    "startup IA française lang:fr",
+    "French Tech IA lang:fr",
+    "développeur IA français lang:fr",
     "crypto français analyse lang:fr",
     "marchés financiers lang:fr",
     "startup levée de fonds lang:fr",
@@ -442,7 +472,11 @@ SEARCH_QUERIES = [
 HOT_TAB_QUERIES = [
     "\"Claude AI\" OR \"Claude Code\" OR ClaudeCode OR \"Claude Anthropic\" lang:fr min_faves:10",
     "IA lang:fr min_faves:20",
+    "\"agents IA\" OR \"agent IA\" lang:fr min_faves:5",
+    "Mistral OR HuggingFace OR \"Hugging Face\" lang:fr min_faves:5",
+    "Nvidia OR GPU OR datacenter lang:fr min_faves:5",
     "Bitcoin lang:fr min_faves:20",
+    "Bittensor OR TAO OR DeFi lang:fr min_faves:5",
     "bourse lang:fr min_faves:10",
     "crypto lang:fr min_faves:20",
     "trading lang:fr min_faves:10",
@@ -1007,7 +1041,9 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             break
 
         log.info(f"[{source_name}] Generating reply for @{author}: {text[:60]}...")
-        _reply_lang = "en" if is_en_tweet else "fr"
+        # Curated French profile visits are explicitly for FR timeline presence.
+        # Even if the account posts a short English line, answer in French.
+        _reply_lang = "fr" if source_name in {"PROFILE-ALWAYS", "PROFILE-FR"} else ("en" if is_en_tweet else "fr")
         reply = _generate_single_reply(author, text, lang=_reply_lang)
         if reply is _LLM_RATE_LIMITED:
             limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
@@ -1047,7 +1083,7 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             except Exception:
                 pass  # logging failures must never block the bot
             posted += 1
-            if is_en_tweet and en_counter is not None:
+            if _reply_lang == "en" and en_counter is not None:
                 en_counter[0] += 1
             if author_key:
                 per_author_count[author_key] = per_author_count.get(author_key, 0) + 1
@@ -1115,8 +1151,9 @@ def run_direct_reply_cycle():
     # User VIP + high-traction FR crypto/AI/bourse accounts. They bypass random
     # sampling so they are checked every direct-reply cycle; only the user's
     # VIP handles use PRIORITY_REPLY_MODEL, while the larger traction pool uses
-    # the cheaper reply model to protect budget.
-    for username in ALWAYS_REPLY_ACCOUNTS:
+    # the cheaper reply model to protect budget. Keep this FR-first so global
+    # EN VIPs cannot consume the profile-reply budget before French accounts.
+    for username in ALWAYS_REPLY_FR_ACCOUNTS:
         if _budget() <= 0:
             break
         log.info(f"[DIRECT] === ALWAYS profile @{username} ===")
@@ -1236,8 +1273,9 @@ def run_direct_reply_cycle():
         save_replied(replied)
         return
 
-    # === SOURCE 4: English influencer profiles - more accounts, more tweets ===
-    all_en = filter_and_weight(EN_ACCOUNTS + dyn_accounts.get("en", []))
+    # === SOURCE 4: English influencer profiles - last and tightly capped.
+    # Global accounts are useful, but this bot's growth target is FR presence.
+    all_en = filter_and_weight(ALWAYS_REPLY_EN_ACCOUNTS + EN_ACCOUNTS + dyn_accounts.get("en", []))
     en_picks = random.sample(all_en, min(6, len(all_en)))
     for username in en_picks:
         if _budget() <= 0:
