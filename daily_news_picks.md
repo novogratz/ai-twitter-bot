@@ -73,3 +73,53 @@ Here they are:
 China launches its first gaming GPU, the Lisuan Tech LX 7G100. It runs DirectX 12 and runs modern games without crashes. Performance roughly on the level of an RTX 3060 or 40
   - https://x.com/eXtas1stv/status/2058439834562105504
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 1126).
+
+## 2026-05-25
+- **@leopoldatracker** (1132 likes, score 8/10) — 2 days ago, I gave you:
+
+- $TE from $6 to $9.40
+- $IREN from $46 to $58
+- $CLSK from $13 to $15.76
+- $WYFI from $23 to $29.55
+- $APLD from $36 to $48.57
+
+Next alert dropping soon!
+
+If you are not foll
+  - https://x.com/LeopoldATracker/status/2057565925835002280
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1192).
+- **@curiouspejjy** (611 likes, score 8/10) — It would be nice if long term $TSLA shareholders could get $SPCX stock before it IPOs.
+
+Something like per 100 share of $TSLA stock, you get one 1 $SPCX stock if you held Tesla shares since 2021.
+
+Thi
+  - https://x.com/CuriousPejjy/status/2057777690648649789
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 721).
+- **@ourcryptotalk** (258 likes, score 8/10) — In April 2024 :
+
+- $NEAR was at a $10.2B
+- $TAO was at $4.6B.
+
+> The gap was over 2X
+> 2 years later, they are both close to $3B.
+
+Is $TAO slowly becoming the leading AI token in web3, or does $NEAR h
+  - https://x.com/ourcryptotalk/status/2058436722112049305
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 302).
+- **@ourcryptotalk** (85 likes, score 8/10) — TAKE CARE OF YOUR ALTCOINS 
+
+Because the Fed is in no mood to cut rates.
+
+Even Kevin Warsh appointment cannot help Altseason dreams.
+
+If previous pattern repeats here we can see :
+
+$TAO under $200
+$ON
+  - https://x.com/ourcryptotalk/status/2058586358101524661
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 113).
+- **@unusual_whales** (2678 likes, score 8/10) — BREAKING: Nvidia, $NVIDA, has updated its portfolio.
+
+It shows major positions including Intel, Nokia, CoreWeave, Coherent, Synopsys, Nebius and Generate Biosciences.
+  - https://x.com/unusual_whales/status/2055385982921568501
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2890).
