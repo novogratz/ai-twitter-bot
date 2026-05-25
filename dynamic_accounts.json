@@ -34,7 +34,13 @@
     "AlexisPerron",
     "SylvainDurand",
     "jpdouvigne",
-    "nicolascolin"
+    "nicolascolin",
+    "TheCryptoLark",
+    "MickaelTeyssier",
+    "AlexisRochon",
+    "DimitriB",
+    "MaelLeGrand",
+    "ArnaudEsquerre"
   ],
   "en": [
     "blablacar",
@@ -255,6 +261,36 @@
       "lang": "en",
       "handle": "michael_levitin",
       "added": "2026-05-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheCryptoLark",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelTeyssier",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisRochon",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "DimitriB",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelLeGrand",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArnaudEsquerre",
+      "added": "2026-05-25"
     }
   ]
 }
