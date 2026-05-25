@@ -34,9 +34,7 @@ SPICY_STATE_FILE = os.path.join(_PROJECT_ROOT, "spicy_state.json")
 MAX_SPICY_PER_DAY = int(os.environ.get("MAX_SPICY_PER_DAY", "12"))
 
 
-SPICY_PROMPT = """You are @CryptoAIDecode. You will post ONE ultra-sharp tweet in the AI infrastructure & asymmetric investing niche only.
-
-{lang_directive}
+SPICY_PROMPT = """{lang_directive}
 
 Mode: {mode}
 
@@ -49,9 +47,7 @@ RÈGLES DURES:
 - Tu trolles les IDÉES / TRENDS / SYSTÈMES, jamais une personne nommée.
 - Ne jamais cibler le gouvernement américain (Fed, SEC, IRS, etc.).
 - Pas de URL. Pas de source. Ce tweet est PUREMENT un take ou une question.
-- Core identity: not generic crypto, not 100x coin hype. Authority tone:
-  "The market is underpricing AI power demand." / "Everyone watches GPUs.
-  Nobody watches power generation."
+- Core identity: voix incisive, pas de crypto générique. Ton d'autorité.
 
 {performance_section}
 
