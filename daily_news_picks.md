@@ -46,3 +46,30 @@ That day will mark the pico top.
 The fighting on Twitter means we are still early and the
   - https://x.com/BitcoinAIGuy/status/2058695841209008584
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 201).
+- **@pirat_nation** (401 likes, score 8/10) — Anthropic launched Project Glasswing in April 2026 to tackle a growing cybersecurity problem: software has more security flaws than humans can realistically find and fix.
+
+The company gave about 50 or
+  - https://x.com/Pirat_Nation/status/2058413180276330551
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 463).
+- **@firstsquawk** (126 likes, score 8/10) — EUROPEAN CENTRAL BANK IS SET TO URGE LENDERS TO SPEED UP CYBERSECURITY UPGRADES AFTER AI MODELS SUCH AS ANTHROPIC’S CLAUDE MYTHOS PREVIEW EXPOSED NEW RISKS IN BANKING IT SYSTEMS, ACCORDING TO THE FINA
+  - https://x.com/FirstSquawk/status/2058627275755811233
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 156).
+- **@filecoin** (87 likes, score 8/10) — Only one-third of the 12 gigawatts planned for 2026 US data center capacity is actually under construction. 
+
+The rest is waiting on transformers, switchgear, and grid approvals. 
+
+Filecoin doesn't wa
+  - https://x.com/Filecoin/status/2058665619159998614
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 105).
+- **@nolimitgains** (3243 likes, score 8/10) — Nuclear demand is about to collide with the worst uranium supply structure in 50 years.
+
+These are the 7 highest-upside ways to play it.
+
+Here they are:
+  - https://x.com/NoLimitGains/status/2058519839321313325
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 3553).
+- **@extas1stv** (1012 likes, score 8/10) — NEW ERA FOR PC GAMING?! 
+
+China launches its first gaming GPU, the Lisuan Tech LX 7G100. It runs DirectX 12 and runs modern games without crashes. Performance roughly on the level of an RTX 3060 or 40
+  - https://x.com/eXtas1stv/status/2058439834562105504
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1126).
