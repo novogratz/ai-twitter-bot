@@ -21,7 +21,30 @@ AUTO_FOLLOW_CATEGORIES = {"ai", "crypto", "bourse"}
 # is already FR-only, so growing the FR query surface directly grows the
 # rate of new FR followers.
 DISCOVERY_QUERIES = [
-    # FR — bourse / trading / finance (was 3, now 7)
+    # FR — IA / builders / agents / devtools
+    "IA générative France",
+    "agent IA français",
+    "agents IA lang:fr",
+    "Mistral AI français",
+    "LLM français",
+    "Hugging Face français",
+    "startup IA française",
+    "SaaS IA français",
+    "automation IA français",
+    "prompt engineering français",
+    "Cursor AI français",
+    "développeur IA français",
+    # FR — crypto / miners / infra
+    "crypto français analyse",
+    "Bitcoin analyse FR",
+    "crypto Paris",
+    "DeFi français",
+    "stablecoin français",
+    "minage Bitcoin français",
+    "MARA IREN CoreWeave français",
+    "Bittensor TAO français",
+    "GPU mining IA français",
+    # FR — bourse / trading / finance
     "bourse trading français",
     "CAC 40 analyse",
     "investissement long terme",
@@ -29,25 +52,40 @@ DISCOVERY_QUERIES = [
     "trader Paris",
     "ETF français",
     "analyse marché français",
-    # FR — crypto (was 2, now 5)
-    "crypto français analyse",
-    "Bitcoin analyse FR",
-    "crypto Paris",
-    "DeFi français",
-    "stablecoin français",
-    # FR — IA (was 2, now 4)
-    "intelligence artificielle français",
-    "IA actualité",
-    "Mistral AI français",
-    "LLM français",
-    # FR — tech / startup (new bucket, 2)
+    "datacenter IA bourse français",
+    "Nvidia bourse français",
+    "énergie datacenter IA français",
+    # FR — tech / startup / space
     "startup française tech",
     "VC français AI",
-    # EN — keep just top-signal queries (was 8, now 4)
+    "French Tech IA",
+    "spatial français Ariane SpaceX",
+    "satellite IA français",
+    # EN — keep just top-signal queries for cross-pollination
     "AI founder",
     "AI startup",
     "Bitcoin macro",
     "AGI",
+]
+
+DYNAMIC_LIVE_QUERY_SEEDS = [
+    "IA OR \"intelligence artificielle\" lang:fr",
+    "\"agents IA\" OR \"agent IA\" lang:fr",
+    "Mistral OR HuggingFace OR \"Hugging Face\" lang:fr",
+    "OpenAI OR ChatGPT OR Claude lang:fr",
+    "Bitcoin OR Ethereum OR Solana OR crypto lang:fr",
+    "Bittensor OR TAO OR DeFi OR stablecoin lang:fr",
+    "Nvidia OR GPU OR datacenter OR \"data center\" lang:fr",
+    "CoreWeave OR IREN OR MARA OR Riot lang:fr",
+    "SpaceX OR Starship OR Starlink OR ArianeGroup lang:fr",
+]
+
+DYNAMIC_HOT_QUERY_SEEDS = [
+    "IA OR ChatGPT lang:fr min_faves:10",
+    "Mistral OR OpenAI OR Anthropic lang:fr min_faves:10",
+    "Bitcoin OR crypto OR Ethereum lang:fr min_faves:10",
+    "Nvidia OR GPU OR datacenter lang:fr min_faves:5",
+    "SpaceX OR Starship OR Starlink lang:fr min_faves:5",
 ]
 
 
@@ -171,13 +209,13 @@ def _score_candidates(candidates: list) -> list:
 def run_discovery_cycle():
     """One discovery pass: search X, dedup, heuristic-filter, persist new handles."""
     log.info("[DISCOVER] Starting discovery cycle...")
-    queries = random.sample(DISCOVERY_QUERIES, k=min(3, len(DISCOVERY_QUERIES)))
+    queries = random.sample(DISCOVERY_QUERIES, k=min(6, len(DISCOVERY_QUERIES)))
     known = _existing_handles()
     candidates_by_handle = {}
 
     for q in queries:
         try:
-            tweets = scrape_x_search(q, max_tweets=15)
+            tweets = scrape_x_search(q, max_tweets=30)
         except Exception as e:
             log.info(f"[DISCOVER] Search failed for '{q}': {e}")
             continue
@@ -233,6 +271,24 @@ def run_discovery_cycle():
     if followed:
         _save_discovered(discovered)  # persist `followed: true` flags
         log.info(f"[DISCOVER] Auto-followed {len(followed)} FR account(s): {', '.join(followed)}")
+
+    # Feed the reply engine directly. discovery_state is archival; direct_reply
+    # consumes dynamic_accounts/dynamic_queries every cycle.
+    try:
+        from .dynamic_strategy import add_dynamic_accounts, add_dynamic_queries
+        fr_handles = [k["handle"] for k in keepers if k.get("lang") == "fr"]
+        if fr_handles:
+            added_accounts = add_dynamic_accounts(fr=fr_handles, known=known)
+            log.info(f"[DISCOVER] Added {added_accounts} FR handle(s) to dynamic_accounts.json.")
+        added_queries = add_dynamic_queries(
+            live=random.sample(DYNAMIC_LIVE_QUERY_SEEDS, k=min(3, len(DYNAMIC_LIVE_QUERY_SEEDS))),
+            hot=random.sample(DYNAMIC_HOT_QUERY_SEEDS, k=min(2, len(DYNAMIC_HOT_QUERY_SEEDS))),
+        )
+        if added_queries:
+            log.info(f"[DISCOVER] Added {added_queries} fresh FR query seed(s) to dynamic_queries.json.")
+    except Exception:
+        log.info("[DISCOVER] Dynamic strategy handoff failed:")
+        traceback.print_exc()
 
 
 def safe_run_discovery_cycle():

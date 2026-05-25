@@ -5,11 +5,13 @@
     <key>Label</key>
     <string>com.kzer.ai-twitter-bot</string>
 
-    <!-- The actual command. python3 main.py from the repo root. -->
+    <!-- The actual command. Run through uv so project dependencies resolve. -->
     <key>ProgramArguments</key>
     <array>
-      <string>/usr/bin/python3</string>
-      <string>/Users/benoitfloch/ai-twitter-bot/main.py</string>
+      <string>/opt/homebrew/bin/uv</string>
+      <string>run</string>
+      <string>python</string>
+      <string>main.py</string>
     </array>
 
     <!-- cwd for relative-path file IO (history.json, daily_state.json, etc.) -->
