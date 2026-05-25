@@ -551,12 +551,11 @@ def main():
         else:
             log.info("Scout agent: disabled by default in Plus-safe mode.")
 
-        # Repost-pool bot — formerly quote-tweet. It still uses the same
-        # candidate pool/state, but posts plain reposts only.
-        log.info("Repost-pool bot: amplifying viral setups every 5 min (plain reposts only).")
+        # Quote bot — FR-first candidate pool with our own angle on top.
+        log.info("Quote bot: quote-posting FR-first viral setups every 4 min.")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=5),
+            trigger=IntervalTrigger(minutes=4),
             id="quote_tweet_job",
         )
 

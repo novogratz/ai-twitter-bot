@@ -480,13 +480,43 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
 
 
 def quote_tweet(tweet_url: str, comment: str):
-    """Compatibility wrapper: quote-post requests are now plain reposts.
+    """Publish a quote post by composing `comment` plus the source tweet URL.
 
-    Kept so older bot paths that still call quote_tweet cannot publish a
-    quote repost. The comment is intentionally ignored.
+    X renders a tweet URL included in a new post as a quote card. This route is
+    more stable than driving the nested repost menu and keeps the same
+    Safari-lock behavior as normal posts/replies.
     """
-    log.info(f"[QUOTE] Quote repost disabled; doing plain repost instead: {tweet_url}")
-    retweet_post(tweet_url)
+    comment = _scrub_metadata_leaks((comment or "").strip())
+    if not tweet_url or not comment:
+        raise ValueError("quote_tweet requires both tweet_url and comment")
+
+    from .llm_client import contains_post_unsafe_leak
+    if contains_post_unsafe_leak(comment):
+        log.error(f"[QUOTE] Unsafe leak detected after scrub — refusing. Text: {comment[:200]!r}")
+        raise ToolCallLeakError("tool-call / stream-envelope markup in quote text")
+
+    with _safari_lock:
+        text = f"{comment}\n{tweet_url}"
+        url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
+        log.info(f"[QUOTE] Opening quote composer for: {tweet_url}")
+        webbrowser.open(url)
+        time.sleep(4)
+        _run_applescript('''
+        tell application "System Events"
+            keystroke return using command down
+        end tell
+        ''')
+        time.sleep(2)
+        log.info(f"[QUOTE] Quote posted: {tweet_url}")
+        close_front_tab()
+        try:
+            like_tweet(tweet_url)
+        except Exception as e:
+            log.info(f"[QUOTE] parent-like failed: {e}")
+        try:
+            _like_own_latest_tweet()
+        except Exception as e:
+            log.info(f"[QUOTE] self-like failed: {e}")
 
 
 def unfollow_account(username: str) -> bool:

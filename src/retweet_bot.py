@@ -128,7 +128,7 @@ OFF_TOPIC_KEYWORDS = (
 # we shouldn't be amplifying week-old or year-old news.
 MAX_CANDIDATE_AGE_HOURS = int(os.environ.get("RETWEET_MAX_AGE_HOURS", "24"))
 FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "100"))
-FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "8"))
+FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "12"))
 
 FEED_REPOST_SEARCH_QUERIES = [
     # French-first repost discovery. Same-day age and niche gates still apply.
@@ -140,6 +140,10 @@ FEED_REPOST_SEARCH_QUERIES = [
     "bourse OR PEA OR ETF OR investissement lang:fr min_faves:5",
     "SpaceX OR Starship OR Starlink lang:fr min_faves:5",
     "ArianeGroup OR satellite OR spatial lang:fr min_faves:3",
+    "OpenAI OR Anthropic OR Nvidia lang:fr min_faves:5",
+    "Mistral OR souveraineté numérique OR cloud souverain lang:fr min_faves:3",
+    "LeJournalDuCoin OR Cryptoast OR Cointribune lang:fr min_faves:3",
+    "Zonebourse OR Finary OR Boursorama lang:fr min_faves:3",
     # English fallback only for big global signal.
     "AI datacenter OR power demand OR megawatt lang:en min_faves:500",
     "CoreWeave OR CRWV OR APLD OR IREN OR HIVE lang:en min_faves:300",
@@ -209,6 +213,21 @@ FR_TRUSTED_HANDLES = [
     "Capital",
     "Challenges",
     "LExpress",
+    "AgefiFrance",
+    "JDNebusiness",
+    "latribune",
+    "LaTribuneTech",
+    "Finary",
+    "Zonebourse",
+    "cafedelabourse",
+    "GoodValYou",
+    "Grainedecrypteur",
+    "FlasheurInvest",
+    "Graphseo",
+    "CryptoPicsou",
+    "coinacademy_fr",
+    "FranceCryptos",
+    "LeJournalDuCoin",
 ]
 
 EN_TRUSTED_HANDLES = [
