@@ -61,9 +61,10 @@ DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "60"))
 RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "5")))
 
-# Min likes to consider a candidate before scoring. English migration requires
-# bigger visible posts, not small local/French reposts.
+# Min likes to consider a candidate before scoring. French Twitter is smaller
+# than global EN tech Twitter, so keep a lower FR floor and a stricter EN floor.
 MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "100"))
+FR_MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_FR_MIN_LIKES", "15"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -130,7 +131,16 @@ FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "1
 FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "8"))
 
 FEED_REPOST_SEARCH_QUERIES = [
-    # English-only big-post discovery. Same-day age and niche gates still apply.
+    # French-first repost discovery. Same-day age and niche gates still apply.
+    "IA OR ChatGPT OR Mistral lang:fr min_faves:10",
+    "\"agents IA\" OR \"agent IA\" lang:fr min_faves:5",
+    "Nvidia OR GPU OR datacenter lang:fr min_faves:5",
+    "Bitcoin OR Ethereum OR crypto lang:fr min_faves:10",
+    "Bittensor OR TAO OR DeFi OR stablecoin lang:fr min_faves:5",
+    "bourse OR PEA OR ETF OR investissement lang:fr min_faves:5",
+    "SpaceX OR Starship OR Starlink lang:fr min_faves:5",
+    "ArianeGroup OR satellite OR spatial lang:fr min_faves:3",
+    # English fallback only for big global signal.
     "AI datacenter OR power demand OR megawatt lang:en min_faves:500",
     "CoreWeave OR CRWV OR APLD OR IREN OR HIVE lang:en min_faves:300",
     "TAO OR Bittensor OR decentralized compute lang:en min_faves:300",
@@ -292,10 +302,9 @@ EN_TRUSTED_HANDLES = [
     "opentensor",
 ]
 
-# Combined list kept for the source-trust check. English migration: only EN
-# trusted handles are retweet-eligible; French sources remain available to
-# reply bots but not reposted onto the profile.
-TRUSTED_NEWS_HANDLES = EN_TRUSTED_HANDLES
+# Combined list kept for the source-trust check. French sources are first-class
+# repost sources; EN remains useful fallback for major global signal.
+TRUSTED_NEWS_HANDLES = FR_TRUSTED_HANDLES + EN_TRUSTED_HANDLES
 
 # Trusted domains — if the tweet embeds a link to one of these, we count
 # the embedded article as the source even if the handle isn't on our list
@@ -445,7 +454,21 @@ def _feed_candidate_ok(t: dict) -> bool:
         return False
     likes = int(t.get("likes") or 0)
     replies = int(t.get("replies") or 0)
-    return likes + (2 * replies) >= FEED_REPOST_MIN_ENGAGEMENT
+    author = ((t.get("author") or _handle_from_url(t.get("url") or "")) or "").lower()
+    is_fr_source = any(author == h.lower() for h in FR_TRUSTED_HANDLES) or _looks_french_text(text)
+    floor = min(FEED_REPOST_MIN_ENGAGEMENT, 10) if is_fr_source else FEED_REPOST_MIN_ENGAGEMENT
+    return likes + (2 * replies) >= floor
+
+
+def _looks_french_text(text: str) -> bool:
+    low = (text or "").lower()
+    return bool(re.search(r"[àâçéèêëîïôûùüÿœæ]", low)) or any(
+        marker in low
+        for marker in (
+            " l'", " d'", "qu'", " c'", "est ", " les ", " des ", " une ",
+            " avec ", " pour ", " marché", " bourse", " français", " ia ",
+        )
+    )
 
 
 def _collect_feed_repost_candidates(retweeted: set) -> list:
@@ -791,12 +814,13 @@ def run_retweet_cycle():
     retweeted = _load_retweeted()
     candidates = _collect_feed_repost_candidates(retweeted)
 
-    # High-volume crypto/AI/bourse repost surface. Scrape wide every cycle;
-    # source/niche/age/dedup gates keep the feed on topic.
-    sample = random.sample(
-        EN_TRUSTED_HANDLES, k=min(28, len(EN_TRUSTED_HANDLES))
+    # High-volume crypto/AI/bourse repost surface. Scrape FR wide first, then
+    # a smaller EN fallback. Source/niche/age/dedup gates keep it on topic.
+    sample = (
+        random.sample(FR_TRUSTED_HANDLES, k=min(24, len(FR_TRUSTED_HANDLES)))
+        + random.sample(EN_TRUSTED_HANDLES, k=min(10, len(EN_TRUSTED_HANDLES)))
     )
-    log.info(f"[RETWEET] Scraping EN-only crypto/AI/macro handles: {sample}")
+    log.info(f"[RETWEET] Scraping FR-first crypto/AI/macro handles: {sample}")
 
     for handle in sample:
         try:
@@ -824,7 +848,9 @@ def run_retweet_cycle():
                 continue
             likes = int(t.get("likes") or 0)
             replies = int(t.get("replies") or 0)
-            if likes < MIN_LIKES_FLOOR and replies < 1:
+            is_fr_source = any((url_handle or handle).lower() == h.lower() for h in FR_TRUSTED_HANDLES)
+            min_likes = FR_MIN_LIKES_FLOOR if is_fr_source or _looks_french_text(text) else MIN_LIKES_FLOOR
+            if likes < min_likes and replies < 1:
                 continue
             # 2026-05-07 user incident: bot retweeted Reuters' 2012 Justin
             # Bieber tweet. Reuters/Bloomberg post EVERYTHING — trusted
@@ -895,10 +921,10 @@ def run_retweet_cycle():
                 log.info("[RETWEET] Failed to write daily picks file:")
                 traceback.print_exc()
 
-        # 2026-05-23: user wants more reposts. Keep deterministic quality
-        # gating, but publish 7/10+ after source/niche/age filters pass.
-        if score < 8:
-            log.info(f"[RETWEET] Score {score}/10 below EN big-content threshold (8). Logged only.")
+        is_fr_pick = any((pick.get("author") or "").lower() == h.lower() for h in FR_TRUSTED_HANDLES) or _looks_french_text(pick.get("text") or "")
+        threshold = 7 if is_fr_pick else 8
+        if score < threshold:
+            log.info(f"[RETWEET] Score {score}/10 below threshold ({threshold}). Logged only.")
             continue
 
         # Lock URL in BEFORE posting so a crash can't double-retweet.

@@ -1,11 +1,11 @@
 {
   "caps": {
-    "MAX_NEWS_PER_DAY": 5,
-    "MAX_HOTAKES_PER_DAY": 3,
+    "MAX_NEWS_PER_DAY": 6,
+    "MAX_HOTAKES_PER_DAY": 6,
     "MAX_BREAKOUTS_PER_DAY": 0,
     "MAX_SPICY_PER_DAY": 0,
     "MAX_QUOTES_PER_DAY": 80,
-    "MAX_RETWEETS_PER_DAY": 30,
+    "MAX_RETWEETS_PER_DAY": 80,
     "MAX_REPLIES_PER_CYCLE": 10,
     "FOLLOW_BLAST_PER_CYCLE": 140,
     "LIKE_BOT_PER_CYCLE": 140
@@ -66,6 +66,6 @@
   ],
   "language": "fr",
   "scope": "ai_crypto_only",
-  "updated_at": "2026-05-25T08:25:00",
-  "note": "Positioning: IA & infra IA + investissement asymétrique. Push FR profile replies harder: French curated profiles first, EN tightly capped, faster cadence, more profile tweets scanned."
+  "updated_at": "2026-05-25T12:15:00",
+  "note": "Positioning: IA & infra IA + investissement asymétrique. Push volume: more fallback hot takes, higher retweet cap, French retweets first, EN fallback only for major global signal."
 }
