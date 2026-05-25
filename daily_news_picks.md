@@ -327,3 +327,52 @@ The difference was not
 - **@jayinslee** (34 likes, score 7/10) — Families from coast to coast are demanding solutions to lower their power bills, and clean energy is proving again and again that it’s the fastest, most effective answer we have to get it done.
   - https://x.com/JayInslee/status/2058639924279083504
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 264).
+- **@jasonl_capital** (350 likes, score 9/10) — Goldman Sachs just projected the AI optical networking market hitting $154B by 2028 - nearly 10x from today.
+
+As GPU clusters scale into multi-rack systems like NVIDIA's NVL576, the bottleneck shifts
+  - https://x.com/JasonL_Capital/status/2058692618725274084
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 404).
+- **@pete_rizzo_** (195 likes, score 8/10) — BILLIONAIRE MIKE NOVOGRATZ SAYS MICHAEL SAYLOR IS BUYING SO MUCH #BITCOIN HE WILL TRIGGER A SUPPLY SHOCK  
+
+HE IS BUYING "BILLIONS PER WEEK" 
+
+EXCHANGES DON'T HAVE "ENOUGH SUPPLY"   
+
+CALM BEFORE THE
+  - https://x.com/pete_rizzo_/status/2058786388863259018
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 245).
+- **@williamrayx** (127 likes, score 8/10) — SpaceX has tied executive compensation to the engineering requirements for a one million person colony on Mars. The filing sets technical conditions around habitats that hold breathable pressure and b
+  - https://x.com/WilliamRayX/status/2058298141179539823
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 133).
+- **@durov** (10074 likes, score 7/10) — It happened. Our decentralized confidential compute network, Cocoon, is live. The first AI requests from users are now being processed by Cocoon with 100% confidentiality. GPU owners are already earni
+  - https://x.com/durov/status/1995208789600182391
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 11936).
+- **@cryptomanran** (0 likes, score 7/10) — Portfolio Update:
+
+1.BTC
+2.HYPE
+3.SOL
+4.ZEC
+http://5.CC
+6.NEAR
+http://7.AERO
+8.JTO
+9.VVV
+10.TIBBIR
+11.TAO
+12.PUMP
+13.SUI
+14.WLD
+15.CRV
+  - https://x.com/cryptomanran/status/2058491241029885972
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 608).
+- **@chinoalemano** (340 likes, score 7/10) — $IREN - It's happening. Childress. Microsoft. Dell.
+
+Din Dan Dell.
+  - https://x.com/chinoalemano/status/2058456738597118119
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 356).
+- **@ashcrypto** (154 likes, score 7/10) — BREAKING: Japan’s stock market index Nikkei just made a new all time and hit 65,400 for the first time in HISTORY.
+
+¥30,500,000,000,000 added to the Japanese stock market today.
+  - https://x.com/AshCrypto/status/2058811685520003397
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 276).
