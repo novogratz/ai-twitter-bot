@@ -40,7 +40,11 @@
     "AlexisRochon",
     "DimitriB",
     "MaelLeGrand",
-    "ArnaudEsquerre"
+    "ArnaudEsquerre",
+    "jchermak",
+    "thomas_brochier",
+    "lucas_letellier",
+    "david_roux"
   ],
   "en": [
     "blablacar",
@@ -49,7 +53,9 @@
     "stacyherbert",
     "joshuareeves",
     "mike_basas",
-    "michael_levitin"
+    "michael_levitin",
+    "saylor",
+    "balajis"
   ],
   "history": [
     {
@@ -290,6 +296,36 @@
     {
       "lang": "fr",
       "handle": "ArnaudEsquerre",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "jchermak",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomas_brochier",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucas_letellier",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "david_roux",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "en",
+      "handle": "saylor",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "en",
+      "handle": "balajis",
       "added": "2026-05-25"
     }
   ]

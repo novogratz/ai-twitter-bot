@@ -167,3 +167,59 @@ http://7.AERO
 15.CRV
   - https://x.com/cryptomanran/status/2058491241029885972
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 1283).
+- **@mcnalliem** (92 likes, score 9/10) — Consider this...
+
+@nvidia has a 5-year right to purchase 30 million $IREN shares at $70/share
+
+@IREN_Ltd is currently trading at ~$56/share
+
+That means retail investors can buy $IREN today at a $14 di
+  - https://x.com/McnallieM/status/2058742078340002019
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 106).
+- **@cryptorover** (2750 likes, score 8/10) — THIS IS HUGE: 
+
+ BlackRock CEO Larry Fink just said something insane:"
+
+The U.S. is short on power, chips, memory, and compute. 
+
+''I believe a new asset class will emerge. Futures on compute."
+
+He's
+  - https://x.com/cryptorover/status/2056375000295444788
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 3216).
+- **@stocksavvyshay** (1771 likes, score 8/10) — $IREN CEO Dan Roberts says the company is partnering with $NVDA and $DELL to build an AI compute ecosystem from land, steel and power all the way to the end customer.
+  - https://x.com/StockSavvyShay/status/2056550654018289998
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1883).
+- **@pumpolinsky** (208 likes, score 7/10) — Do you believe $TAO can reach above 4000 dollar this year?
+  - https://x.com/pumpolinsky/status/2058577475169333606
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 286).
+- **@durov** (10074 likes, score 7/10) — It happened. Our decentralized confidential compute network, Cocoon, is live. The first AI requests from users are now being processed by Cocoon with 100% confidentiality. GPU owners are already earni
+  - https://x.com/durov/status/1995208789600182391
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 11936).
+- **@anthropicai** (8448 likes, score 7/10) — Last month we launched Project Glasswing, our collaborative AI cybersecurity initiative. Since then, we and our partners have found more than ten thousand high- or critical-severity vulnerabilities in
+  - https://x.com/AnthropicAI/status/2057909102542549503
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 9394).
+- **@iren_ltd** (1988 likes, score 7/10) — IREN has acquired Awaken, a creative and media agency specializing in content strategy and brand development for high-growth companies.
+
+Senior members of the team will join IREN, including Founder an
+  - https://x.com/IREN_Ltd/status/2056332450771403067
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2302).
+- **@cryptomanran** (702 likes, score 7/10) — Portfolio Update:
+
+1.BTC
+2.HYPE
+3.SOL
+4.ZEC
+http://5.CC
+6.NEAR
+http://7.AERO
+8.JTO
+9.VVV
+10.TIBBIR
+11.TAO
+12.PUMP
+13.SUI
+14.WLD
+15.CRV
+  - https://x.com/cryptomanran/status/2058491241029885972
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1292).
