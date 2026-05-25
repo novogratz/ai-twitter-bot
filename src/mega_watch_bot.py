@@ -23,8 +23,8 @@ import webbrowser
 from .config import _PROJECT_ROOT, BOT_HANDLE, BLOCKLIST
 from .logger import log
 from .twitter_client import scrape_profile_tweets, reply_to_tweet
-from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url
-from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche
+from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
+from .direct_reply import _LLM_RATE_LIMITED, _generate_single_reply, _is_on_niche, _looks_french
 from .engagement_log import log_reply
 from .humanizer import humanize
 
@@ -96,6 +96,9 @@ def run_mega_watch_cycle():
             text = (t.get("text") or "").strip()
             if not text:
                 continue
+            if _is_reply_like_tweet(t, expected_author=username):
+                log.info(f"[MEGA] Looks like a thread reply — skipping {url}")
+                continue
             # Mega-account replies usually have NO age in the scrape;
             # fall back to "if it's not in our replied set, treat as
             # fresh enough for these handles".
@@ -117,6 +120,7 @@ def run_mega_watch_cycle():
             reply_text = _generate_single_reply(
                 author=author,
                 tweet_text=text,
+                lang="fr" if _looks_french(text) else "en",
             )
             if reply_text is _LLM_RATE_LIMITED:
                 log.info("[MEGA] LLM budget reached; stopping this cycle before posting attempts.")

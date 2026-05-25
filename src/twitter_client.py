@@ -639,6 +639,11 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             if (html.indexOf('Show original') !== -1) return 'fr';
             return '';
         }
+        function detectReplyArticle(article, tweetText) {
+            var full = article.innerText || '';
+            if ((tweetText || '').trim().indexOf('@') === 0) return true;
+            return /Replying to|En réponse à|En reponse a|Répond à|Repond a/i.test(full);
+        }
         var tweets = [];
         var articles = document.querySelectorAll('article[data-testid="tweet"]');
         if (articles.length === 0) return 'NO_ARTICLES';
@@ -661,7 +666,8 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             var likes = extractCount(a, 'like');
             var replies = extractCount(a, 'reply');
             var tl = detectTranslatedLang(a);
-            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, 200), a: author || 'unknown', l: likes, r: replies, tl: tl}));
+            var isReply = detectReplyArticle(a, text);
+            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, 200), a: author || 'unknown', l: likes, r: replies, tl: tl, ir: isReply}));
         }
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
         return '[' + tweets.join(',') + ']';
@@ -729,6 +735,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             "likes": int(t.get("l") or 0),
             "replies": int(t.get("r") or 0),
             "translated_from": t.get("tl") or "",
+            "is_reply": bool(t.get("ir") or False),
         } for t in data]
         log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")
         return tweets

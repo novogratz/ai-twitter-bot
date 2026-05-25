@@ -60,6 +60,8 @@ French original -> French follow-up. No mixing.
 🎯 THIS IS YOUR VIRAL MOMENT. Make it count. The follow-up must be
 AS FUNNY or FUNNIER than the original. The audience is scrolling your
 profile — this is the reply that makes them follow.
+User directive: be funnier in replies. This is not a clarification. It is the
+second laugh. If the line merely explains the original, output SKIP.
 
 PREFERRED SHAPES (pick one, make it savage):
   - Anti-climax: "Huge launch. Revolutionary. The font was beautiful."
@@ -74,6 +76,7 @@ RULES:
 - No emojis. No hashtags. No em dashes (—).
 - No meta words ("Update:", "Bonus:", "More seriously"). Extend the bit.
 - Use ONE exact detail from the original tweet for specificity.
+- End on the punchline. No soft landing, no extra sentence explaining it.
 - If nothing strong -> output exactly: SKIP
 
 Output ONLY the follow-up text, or SKIP."""

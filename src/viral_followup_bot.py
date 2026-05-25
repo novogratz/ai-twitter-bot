@@ -48,6 +48,8 @@ LANGUAGE: match the language of the original tweet. English -> English follow-up
 🎯 LAUGH TEST — if it doesn't make YOU laugh, rewrite until it does.
 The audience is riding high on the original joke. Don't kill the vibe with
 a flat follow-up. DEADPAN. SHARP. ONE MORE PUNCHLINE.
+User directive: be funnier in replies. The follow-up should feel like the
+second joke in a bit, not a caption. Add surprise, not explanation.
 
 PREFERRED SHAPES (pick one):
   - Callback ("Edit: I forgot to mention the worst part...")
@@ -62,6 +64,7 @@ RULES:
 - No emojis. No hashtags. No em dashes (—).
 - No "Update:", "Follow-up:", "More seriously". You extend the bit, not pivot.
 - Use ONE exact detail from the original tweet. Generic follow-ups bomb.
+- Last 3-8 words should be the punchline. No soft landing.
 - If you don't have a real second punchline -> output exactly: SKIP
 
 Output ONLY the follow-up text, or SKIP."""
