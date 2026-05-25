@@ -223,3 +223,51 @@ http://7.AERO
 15.CRV
   - https://x.com/cryptomanran/status/2058491241029885972
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 1292).
+- **@stocksavvyshay** (0 likes, score 9/10) — $NVDA just disclosed H100 rental prices are up ~20% in 2026 even though the H100 launched in 2022 and is now three GPU generations old.
+
+That makes contracted capacity at $CRWV, $NBIS, $IREN, $WULF, $
+  - https://x.com/StockSavvyShay/status/2057210362530078794
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 158).
+- **@stocksavvyshay** (3464 likes, score 9/10) — UPDATED FIB LEVELS FOR POPULAR STOCKS
+
+AI Utility
+• $IREN $50
+• $NBIS $133
+• $CIFR $17
+• $CRWV $103
+
+AI Power
+• $EOSE $7
+• $BE $194
+• $NVTS $13
+• $VRT $258
+
+AI Hardware
+• $NVDA $179
+• $TSM $327
+• $ASM
+  - https://x.com/StockSavvyShay/status/2053098280167580135
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 3646).
+- **@stocksavvyshay** (2438 likes, score 9/10) — 10 WAYS TO BUILD AN AI POWER PORTFOLIO
+
+1. $OKLO effectively building the “local nuclear plant” the AI economy will require by placing reactors directly next to data center campuses for 24/7 onsite ge
+  - https://x.com/StockSavvyShay/status/2053452970323493166
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 2670).
+- **@fortworthchris** (296 likes, score 9/10) — The entire Lower 48 U.S. grid peaks at roughly 759 GW.
+
+Texas alone has reportedly received ~440 GW of interconnection requests.
+
+That is the scale of the AI/data center power boom.
+  - https://x.com/fortworthchris/status/2058723463603404884
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 324).
+- **@itsmichaelluu** (123 likes, score 9/10) — $NVDA is up 500,000% since its IPO in 1999.
+
+$10,000 would be $50M doing nothing all but holding.
+ 
+SPACEX, OPENAI, ANTHROPIC are all going public now.
+
+Here's how I'm playing each one and why:
+
+• SPA
+  - https://x.com/itsmichaelluu/status/2058548460845195336
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 177).
