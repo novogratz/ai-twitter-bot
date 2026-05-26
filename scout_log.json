@@ -823,5 +823,78 @@
       }
     ],
     "summary": "J'ai mis\u00e9 sur la substance plut\u00f4t que le bruit : des profils qui tweetent leur boulot (Mistral, fondeurs) ou des v\u00e9t\u00e9rans crypto qui ont surv\u00e9cu aux bear markets. Z\u00e9ro vendeur de r\u00eaves, que des experts."
+  },
+  {
+    "ts": "2026-05-26T14:36:09.910109",
+    "raw_count": 14,
+    "kept_count": 9,
+    "accounts_added": 9,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "cryptofr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 320000,
+        "reason": "La r\u00e9f\u00e9rence FR. Moins hype qu'avant, mais toujours la rigueur et l'actu crypto pure sans les pubs de formateurs \u00e0 99\u20ac."
+      },
+      {
+        "handle": "boursier_com",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 280000,
+        "reason": "La institution. Pas le plus fun, mais le plus fiable pour les valeurs fran\u00e7aises et la macro. Z\u00e9ro blabla, que des chiffres."
+      },
+      {
+        "handle": "arthur_mensch",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Le cerveau de Mistral. Twitte en FR et EN, mais ses posts FR sont des p\u00e9pites de vision technique sans le jargon marketing."
+      },
+      {
+        "handle": "cryptomario",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 52000,
+        "reason": "Mario est un classique. Il twitte en FR, analyse on-chain avec brio et \u00e9vite le 'go gucci go' de base."
+      },
+      {
+        "handle": "crypto_goku",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Goku est un veteran. Son style est direct, il couvre le march\u00e9 depuis la premi\u00e8re ann\u00e9e, moins de bruit, plus de fond."
+      },
+      {
+        "handle": "CryptoQuebec",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "La voix majeure du Qu\u00e9bec crypto. Couvre le march\u00e9 local et global, style canadien-fran\u00e7ais direct."
+      },
+      {
+        "handle": "cryptomathou",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Le c\u00f4t\u00e9 math\u00e9maticien qui d\u00e9crypte la tech derri\u00e8re la finance. Parfait pour ne pas se faire arnaquer par les shills."
+      },
+      {
+        "handle": "lecoinlab",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 21000,
+        "reason": "Th\u00e9o a un style sec, analytique. Pas de fanboyisme, juste du concret sur les blockchains et l'infra."
+      },
+      {
+        "handle": "MarcCormier",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Marc est un acteur cl\u00e9 de l'\u00e9cosyst\u00e8me Web3 qu\u00e9b\u00e9cois. Fondamental, il ne vend pas de r\u00eave, il montre le terrain."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les influenceurs formateurs pour garder les analystes de terrain et les institutions. La France p\u00e8se lourd sur Mistral et l'analyse crypto fondamentale. Le Qu\u00e9bec et les USA francophones sont bien servis par des profils techniques qui \u00e9vitent le buzz."
   }
 ]
