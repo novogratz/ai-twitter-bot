@@ -596,3 +596,63 @@ Three of the biggest companies on earth are about to sell stock to the public fo
 1. SpaceX filed the paperwork o
   - https://x.com/0xPepesso/status/2058938862794104904
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 60).
+- **@starmexxx** (2004 likes, score 9/10) — JENSEN HUANG SOLD A $249 AI COMPUTER ON STAGE THAT KILLS YOUR $200/MONTH OPENAI BILL. THE VIDEO HAS 217,000 LIKES
+
+the box is called the jetson orin nano super. 70 trillion ai operations per second, 2
+  - https://x.com/starmexxx/status/2058933808406130855
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 2210).
+- **@coinbureau** (122 likes, score 9/10) — NEW: Nvidia is now larger than 7 of the S&P 500's 11 sectors.
+
+NVDA accounts for a record 8% of the index.
+
+Bigger than Utilities, Real Estate, and Materials combined.
+
+Bigger than Germany's entire ec
+  - https://x.com/coinbureau/status/2059004616080236968
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 230).
+- **@rektfencer** (1660 likes, score 8/10) — THIS IS NOT LOOKING GOOD
+
+SpaceX, OpenAI, and Anthropic will go public at the same time.
+
+That will force the market to absorb $200 BILLION of new supply.
+
+When that happens, funds don't find new mone
+  - https://x.com/rektfencer/status/2058911651957559374
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2046).
+- **@jonerlichman** (280 likes, score 8/10) — This was Nvidia’s first office.
+
+Today, it’s worth $5.2 trillion.
+  - https://x.com/JonErlichman/status/2059072812199956784
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 304).
+- **@elontrades** (0 likes, score 8/10) — $TAO or $NEAR? 
+
+Which one do you think performs better 2026-2027?
+  - https://x.com/ElonTrades/status/2058868492355403825
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 224).
+- **@stevenmarkryan** (110 likes, score 8/10) — SpaceX IPO.
+
+
+
+I am hearing some potentially positive news for Australian investors. Have seen emails circulating from an Australian brokerage stating they MAY have an allocation of SpaceX. Looks like
+  - https://x.com/stevenmarkryan/status/2059070077576921442
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 142).
+- **@hodlmagoo** (105 likes, score 8/10) — It is an existential crisis for the US to make sure @SpaceX, @AnthropicAI  and @OpenAI secure their runway. 
+
+AI bubble won’t pop until they have IPO’d
+  - https://x.com/HodlMagoo/status/2059019371645718835
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 141).
+- **@bitcoinaiguy** (163 likes, score 7/10) — $100 soon $IREN
+  - https://x.com/BitcoinAIGuy/status/2059077125009789265
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 191).
+- **@channelinteres** (3416 likes, score 7/10) — There is a lot of lighting on nuclear icebreakers, because they simply have nowhere to put their energy.
+Itis necessary to maintain a certain level of load on the reactor 
+As a result, nuclear icebrea
+  - https://x.com/ChannelInteres/status/2058997274642886957
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 3566).
+- **@brianroemmele** (113 likes, score 7/10) — Talking To The Pope: Anthropic’s Latest Interpretability Claims: AI Regulatory Capture 
+
+Gatekeeping in Action: Fear and “Safety” as Competitive Moat and Regulatory Lever
+
+In a presentation alongside
+  - https://x.com/BrianRoemmele/status/2058950628538560861
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 153).
