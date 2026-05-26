@@ -608,5 +608,57 @@
       }
     ],
     "summary": "6 profils solides, zero formation \u00e0 99\u20ac, mix parfait entre analytiques purs et insiders tech."
+  },
+  {
+    "ts": "2026-05-25T23:43:36.936906",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "coinacade_fr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "Coin Academy. Ils font des threads \u00e9ducatifs sans dormir. Le genre de contenu qui reste pertinent en 2026."
+      },
+      {
+        "handle": "jamesd_ayala",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 60000,
+        "reason": "Co-founder Cohere. Il parle anglais mais twitte en fran\u00e7ais r\u00e9guli\u00e8rement. L'intellectuel qui d\u00e9dramatise l'AGI."
+      },
+      {
+        "handle": "MaximeScheffer",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "CEO de Qonto. Il poste des perles sur la SaaS et la B2B sans se prendre pour Elon."
+      },
+      {
+        "handle": "cryptogoku",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "Analyse technique pure. Si tu cherches des chartes qui parlent, c'est lui."
+      },
+      {
+        "handle": "sylvainm13",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "L'expert en valeur qu\u00e9b\u00e9cois. Il analyse le march\u00e9 avec la pr\u00e9cision d'un horloger et le cynisme d'un montr\u00e9alais."
+      },
+      {
+        "handle": "JLLevesque",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "G\u00e9rant de fonds. Il balance des insights sur le march\u00e9 US avec un accent qu'on entend."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 les p\u00e9pites FR et QC qui sortent du lot sans vendre de l'air. On a les g\u00e9ants de l'IA fran\u00e7aise (Mistral/HF) et la cr\u00e8me des analystes crypto/francophones qui ne font pas de pub pour leur Telegram VIP \u00e0 500 balles."
   }
 ]
