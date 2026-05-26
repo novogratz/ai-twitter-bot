@@ -1017,3 +1017,12 @@ The market nee
 - **@hedgiemarkets** (175 likes, score 9/10) — New Bloomberg reporting reveals SoftBank has committed roughly $60 billion to OpenAI, and internal advisors who questioned the size of the bet say founder Masayoshi Son shut them down. Former SoftBank
   - https://x.com/HedgieMarkets/status/2059304246428729502
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 209).
+- **@thelonginvest** (296 likes, score 8/10) — $IREN now at $60
+
+Up another 6% today
+
+Serenity told you to sell it at $46
+
+Exactly at the bottom.
+  - https://x.com/TheLongInvest/status/2059291757511090516
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 364).
