@@ -1014,3 +1014,6 @@ That is 8.4% of the entire S&P 500.
 The market nee
   - https://x.com/AlexMasonCrypto/status/2059283508007260173
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 213).
+- **@hedgiemarkets** (175 likes, score 9/10) — New Bloomberg reporting reveals SoftBank has committed roughly $60 billion to OpenAI, and internal advisors who questioned the size of the bet say founder Masayoshi Son shut them down. Former SoftBank
+  - https://x.com/HedgieMarkets/status/2059304246428729502
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 209).
