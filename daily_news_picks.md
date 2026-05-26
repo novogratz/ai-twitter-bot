@@ -873,3 +873,80 @@ The program could turn nuclear waste into domestic reactor fuel while easing one
 - **@unusual_whales** (90 likes, score 7/10) — Israel wants freedom of military operations in Lebanon, with Iranian peace deal, per Reuters
   - https://x.com/unusual_whales/status/2059272593090236431
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 170).
+- **@bitget** (1496 likes, score 9/10) — SpaceX’s IPO is getting closer.
+
+Join our CMO @ignaciobitget and industry experts this Tuesday on X Space to break down the filing, valuation, unlock timeline, and investor trends.
+
+$1000 Giveaway (20
+  - https://x.com/bitget/status/2058916546957754753
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 4030).
+- **@cryptorover** (88 likes, score 8/10) — THIS IS HUGE! 
+
+ THE FED IS INJECTING $7,000,000,000.00 INTO THE ECONOMY NEXT WEEK.
+  - https://x.com/cryptorover/status/2059274103505191089
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 148).
+- **@taooutsider** (52 likes, score 8/10) — $TAO is moving into the next liquidity wall
+
+TAO Bittensor left the $240 to $255 base and is now pressing into $285 to $300.
+
+That is the closest active liquidity zone.
+
+My read: price likely tests $3
+  - https://x.com/TaoOutsider/status/2059141207905722499
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 64).
+- **@bulltheoryio** (125 likes, score 8/10) — BREAKING: $550 Billion added to US markets today as both the S&P 500 and Nasdaq hit their highest levels in history.
+  - https://x.com/BullTheoryio/status/2059270917004705954
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 157).
+- **@cryptotony__** (103 likes, score 8/10) — $TAO / $USD - Update 
+
+$292 clear and this opens up the doors for a possible 10% plus moves. Alerts on.
+  - https://x.com/CryptoTony__/status/2059213453462565136
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 141).
+- **@gemsmorro** (56 likes, score 8/10) — $TAO is going through a major institutional reset
+
+Grayscale cut exposure from 43% to 22.58%, which looks more like a normal rebalance than selling pressure
+
+The main catalyst is still ahead spot $TAO
+  - https://x.com/gemsmorro/status/2059251444654514527
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 120).
+- **@tedpillows** (169 likes, score 7/10) — $500,000,000,000 added to the US stock market today as S&P 500 hit a new ATH.
+  - https://x.com/TedPillows/status/2059268074499408206
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 303).
+- **@tedpillows** (156 likes, score 7/10) — $500,000,000,000 added to the US stock market today as S&P 500 hit a new ATH.
+  - https://x.com/TedPillows/status/2059268074499408206
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 278).
+- **@powerhasheur** (0 likes, score 7/10) — L'Europe réalise 38% des transactions mondiales de stablecoins. Elle n'en émet que 0,3%  
+
+Stablecoins  : 750 millions de capitalisation. Stablecoins  : + de 320 milliards.  
+
+Vendredi dernier, quelqu
+  - https://x.com/PowerHasheur/status/2059238427120357790
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 66).
+- **@ashcrypto** (694 likes, score 7/10) — MASSIVE
+
+$416,000,000,000 has been added to US stocks as market opens
+  - https://x.com/AshCrypto/status/2059266922282135609
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 930).
+- **@ashcrypto** (674 likes, score 7/10) — MASSIVE
+
+$416,000,000,000 has been added to US stocks as market opens
+  - https://x.com/AshCrypto/status/2059266922282135609
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 906).
+- **@randgroup** (246 likes, score 7/10) — $TAO consolidating into the massive BULLISH PENNANT. Textbook move loading, get ready
+  - https://x.com/randgroup/status/2059185095865463187
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 280).
+- **@sawyermerritt** (242 likes, score 7/10) — Starlink’s median download speed across all 27 European countries rose from 114 Mbps in Q1 2025 to 165 Mbps in Q1 2026, up 45%, while download speeds improved in 26 of the markets.
+
+"Across Europe, th
+  - https://x.com/SawyerMerritt/status/2059258066822926835
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 276).
+- **@unusual_whales** (104 likes, score 7/10) — Israel wants freedom of military operations in Lebanon, with Iranian peace deal, per Reuters
+  - https://x.com/unusual_whales/status/2059272593090236431
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 190).
+- **@2xnmore** (85 likes, score 7/10) — Still the most underrated thing that happened in AI x crypto this year.
+
+Grayscale’s Head of Research documented it. A 72B-parameter model trained on a permissionless network. 
+
+No data center. No Big
+  - https://x.com/2xnmore/status/2059197337080062145
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 113).
