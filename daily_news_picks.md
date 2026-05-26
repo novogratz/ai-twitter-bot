@@ -1037,3 +1037,24 @@ Exactly at the bottom.
 One week later, he made a chip deal with China that sent the stock surging.
   - https://x.com/GOP__Ls/status/2059312138389225879
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 633).
+- **@amitisinvesting** (785 likes, score 7/10) — every semi running except the one that is responsible for all them running 
+
+semis ex-Nvidia and space are the themes leading this market 
+
+there was a space name that was down 99.9% over the past 5 y
+  - https://x.com/amitisinvesting/status/2059317128767967637
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 953).
+- **@amitisinvesting** (764 likes, score 7/10) — every semi running except the one that is responsible for all them running 
+
+semis ex-Nvidia and space are the themes leading this market 
+
+there was a space name that was down 99.9% over the past 5 y
+  - https://x.com/amitisinvesting/status/2059317128767967637
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 932).
+- **@kobeissiletter** (82 likes, score 7/10) — You can't make this up:
+
+On May 22nd, ahead of the market's 3-day closure, President Trump said "Micron is great" and that the company could invest "over $100 billion" in New York.
+
+Today, as markets
+  - https://x.com/KobeissiLetter/status/2059329996708065631
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 114).
