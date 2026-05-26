@@ -1,19 +1,19 @@
 {
-  "ts": "2026-05-26T14:04:30.088444",
+  "ts": "2026-05-26T18:04:20.410147",
   "caps": {
-    "MAX_NEWS_PER_DAY": 4,
-    "MAX_HOTAKES_PER_DAY": 2,
-    "MAX_QUOTES_PER_DAY": 4,
-    "MAX_RETWEETS_PER_DAY": 10,
-    "MAX_BREAKOUTS_PER_DAY": 1,
-    "MAX_SPICY_PER_DAY": 1,
-    "MAX_REPLIES_PER_CYCLE": 1
+    "MAX_NEWS_PER_DAY": 6,
+    "MAX_HOTAKES_PER_DAY": 3,
+    "MAX_QUOTES_PER_DAY": 15,
+    "MAX_RETWEETS_PER_DAY": 20,
+    "MAX_BREAKOUTS_PER_DAY": 2,
+    "MAX_SPICY_PER_DAY": 3,
+    "MAX_REPLIES_PER_CYCLE": 2
   },
   "topic_focus": [
-    "Nuclear SMR for AI datacenters",
-    "HiveOS vs proprietary stack",
-    "TAO inference bottleneck"
+    "AI CapEx Reality Check (Nvidia earnings ",
+    "Crypto Liquidity & Stablecoin Flows",
+    "Energy Grid Bottlenecks for AI"
   ],
-  "cadence_factor": 0.65,
-  "rationale": ""
+  "cadence_factor": 1.2,
+  "rationale": "Le bot est en veilleuse depuis mai, il faut réactiver la sauce sans faire mal au client. On joue la carte de l'opiniâtre cynique : beaucoup de retweets pour réchauffer l'algorithme, quelques hotakes pour rappeler qu'on est toujours là et un peu plus piquant. Le marché IA est en phase de digestion post-euphorie, parfait pour des piques sur la réalité du cash-flow."
 }
