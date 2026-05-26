@@ -56,7 +56,17 @@
     "MaximeScheffer",
     "cryptogoku",
     "sylvainm13",
-    "JLLevesque"
+    "JLLevesque",
+    "CryptoDals",
+    "Cryptos_btc",
+    "ThomCrypto",
+    "GaelleCrypto",
+    "Crypto_Thomas",
+    "CryptoKael",
+    "Crypto_Alexis",
+    "Crypto_Marc",
+    "Crypto_Vincent",
+    "Crypto_Lisa"
   ],
   "en": [
     "blablacar",
@@ -399,6 +409,56 @@
       "lang": "fr",
       "handle": "JLLevesque",
       "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoDals",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "Cryptos_btc",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomCrypto",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelleCrypto",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "Crypto_Thomas",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKael",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "Crypto_Alexis",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "Crypto_Marc",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "Crypto_Vincent",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "Crypto_Lisa",
+      "added": "2026-05-26"
     }
   ]
 }
