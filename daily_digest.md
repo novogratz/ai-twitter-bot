@@ -379,3 +379,13 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top reply targets: @McnallieM=13, @FlasheurInvest=12, @Graphseo=9, @KobeissiLetter=7, @RodolpheSteffan=6
 
 **Followers we follow** (running total): 166
+
+## 2026-05-25
+
+**Activity** — total actions: 278
+  - by type: reply=161, retweet=104, hotake=6, post=4, quote=3
+  - top sources: PROFILE-ALWAYS=85, RETWEET=62, QUOTE_POOL=31, SEARCH-FR-HOT=26, MEGA=19, FOLLOWING=15, FAVORITE_PROFILE=11, SEARCH-FR-LIVE=6
+  - comedy patterns: FR_ANCHOR=3, RENAME=3, DIALOGUE=1, METAPHOR=1
+  - top reply targets: @unusual_whales=14, @LeJournalDuCoin=13, @FlasheurInvest=11, @Crypto__Goku=11, @McnallieM=9
+
+**Followers we follow** (running total): 166
