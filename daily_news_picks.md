@@ -743,3 +743,37 @@ You might know me from the "IREN - Today" post
 - **@whaleinsider** (30 likes, score 7/10) — JUST IN:  Taiwan, with just 23 million people, has overtaken India to become the world’s 5th-largest stock market - fueled by the AI and semiconductor boom.
   - https://x.com/WhaleInsider/status/2059127555765023091
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 68).
+- **@bitcoinaiguy** (482 likes, score 8/10) — Absolute euphoria in $NBIS; if you’re not taking $NBIS profits at $222.50 and rotating into $IREN at $56.72. You might miss the easiest 10x of the cycle. 
+
+This is textbook.
+  - https://x.com/BitcoinAIGuy/status/2054924584328024399
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 624).
+- **@bitcoinaiguy** (208 likes, score 8/10) — When $IREN is $69, I will host a dedicated Space about Bitcoin, AI, and retardmaxxing.
+
+Would anyone be interested in these topics?
+  - https://x.com/BitcoinAIGuy/status/2059056548463222828
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 276).
+- **@bitcoinaiguy** (365 likes, score 7/10) — $100 soon $IREN
+  - https://x.com/BitcoinAIGuy/status/2059077125009789265
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 415).
+- **@bitcoinaiguy** (307 likes, score 7/10) — Meanwhile in Germany $IREN
+  - https://x.com/BitcoinAIGuy/status/2058947236310953997
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 337).
+- **@noctiscrypto** (51 likes, score 7/10) — Haaaa… sacrée M2 liquidité 
+
+ En gros, on zoomait trop. 
+
+Mais quand on prend un peu de hauteur, on voit le même schéma à chaque cycle 
+
+• $BTC  sous la M2
+• Il la rattrape violemment et part en BULLE
+  - https://x.com/NoctisCrypto/status/2053757718268383431
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 65).
+- **@noctiscrypto** (31 likes, score 7/10) — Rappelez-vous de ce chart hyper important sur les #altcoins VS #Bitcoin 
+
+Il date d’il y a 6 mois… et aujourd’hui,…
+Plus le temps avance, plus le scénario se confirme.
+
+• Le spring test de l’accumulat
+  - https://x.com/NoctisCrypto/status/2053036559298081211
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 35).
