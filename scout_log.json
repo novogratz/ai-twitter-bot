@@ -764,5 +764,64 @@
       }
     ],
     "summary": "Une s\u00e9lection de v\u00e9t\u00e9rans et de fondateurs qui n'ont pas besoin de vendre du r\u00eave, car ils construisent l'industrie. Z\u00e9ro formateur, 100% experts."
+  },
+  {
+    "ts": "2026-05-26T12:31:34.138138",
+    "raw_count": 9,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoVince_",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 75000,
+        "reason": "Style direct, pas de blabla, focus sur les cycles et les narratives IA/Web3."
+      },
+      {
+        "handle": "AlexisPerron_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "De Mistral, twitte souvent sur l'IA open source et les tendances tech globales."
+      },
+      {
+        "handle": "Jean_Pierre_P",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 40000,
+        "reason": "Analyste bas\u00e9 \u00e0 NY, tweets en FR sur les march\u00e9s US avec une vision europ\u00e9enne."
+      },
+      {
+        "handle": "LorisTillet",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Expert infrastructure IA et GPU, tweets techniques mais accessibles."
+      },
+      {
+        "handle": "MaximeDion_",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "Fondeur de startup IA \u00e0 Montr\u00e9al, couvre l'\u00e9cosyst\u00e8me tech francophone."
+      },
+      {
+        "handle": "CryptoDion",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Analyse on-chain et macro, moins hype que les autres mais plus solide."
+      },
+      {
+        "handle": "CryptoLuc_75",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Diaspora fr \u00e0 NYC, focus sur l'adoption institutionnelle et les ETF."
+      }
+    ],
+    "summary": "J'ai mis\u00e9 sur la substance plut\u00f4t que le bruit : des profils qui tweetent leur boulot (Mistral, fondeurs) ou des v\u00e9t\u00e9rans crypto qui ont surv\u00e9cu aux bear markets. Z\u00e9ro vendeur de r\u00eaves, que des experts."
   }
 ]

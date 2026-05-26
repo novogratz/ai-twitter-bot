@@ -846,3 +846,30 @@ lawyers, designers, finance people are bui
 Vous voulez que je leur pose quelles questions ?
   - https://x.com/DFintelligence/status/2059173255894765732
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 34).
+- **@bulltheoryio** (113 likes, score 8/10) — BREAKING: $550 Billion added to US markets today as both the S&P 500 and Nasdaq hit their highest levels in history.
+  - https://x.com/BullTheoryio/status/2059270917004705954
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 143).
+- **@cryptorover** (276 likes, score 7/10) — MASSIVE 
+
+$500,000,000,000 has been added to US stocks in just the last 5 minutes as the S&P 500 opened at a new all time high.
+  - https://x.com/cryptorover/status/2059267145725587590
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 392).
+- **@cryptorover** (275 likes, score 7/10) — MASSIVE 
+
+$500,000,000,000 has been added to US stocks in just the last 5 minutes as the S&P 500 opened at a new all time high.
+  - https://x.com/cryptorover/status/2059267145725587590
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 391).
+- **@stocksavvyshay** (663 likes, score 7/10) — $OKLO was selected by the DoE for advanced negotiations under its surplus plutonium fuel program.
+
+The program could turn nuclear waste into domestic reactor fuel while easing one of the biggest bottl
+  - https://x.com/StockSavvyShay/status/2059246587818504493
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 743).
+- **@cmsinvests** (282 likes, score 7/10) — The stock market once a nuclear deal is reached
+  - https://x.com/cmsinvests/status/2059137262806237681
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 306).
+- **@unusual_whales** (92 likes, score 7/10) — Israel wants freedom of military operations in Lebanon, with Iranian peace deal, per Reuters
+  - https://x.com/unusual_whales/status/2059272593090236431
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 174).
+- **@unusual_whales** (90 likes, score 7/10) — Israel wants freedom of military operations in Lebanon, with Iranian peace deal, per Reuters
+  - https://x.com/unusual_whales/status/2059272593090236431
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 170).

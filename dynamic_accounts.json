@@ -68,7 +68,14 @@
     "Crypto_Vincent",
     "Crypto_Lisa",
     "louis_gosselin",
-    "AlexisLeluc"
+    "AlexisLeluc",
+    "CryptoVince_",
+    "AlexisPerron_",
+    "Jean_Pierre_P",
+    "LorisTillet",
+    "MaximeDion_",
+    "CryptoDion",
+    "CryptoLuc_75"
   ],
   "en": [
     "blablacar",
@@ -470,6 +477,41 @@
     {
       "lang": "fr",
       "handle": "AlexisLeluc",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoVince_",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisPerron_",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "Jean_Pierre_P",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorisTillet",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDion_",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoDion",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoLuc_75",
       "added": "2026-05-26"
     }
   ]
