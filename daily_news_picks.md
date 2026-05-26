@@ -1032,3 +1032,8 @@ Exactly at the bottom.
 - **@nvidianewsroom** (611 likes, score 8/10) — Ahead of COMPUTEX, NVIDIA CEO Jensen Huang joined TSMC executives, including Chairman and CEO C.C. Wei, for dinner at 36Kitchen, celebrating a decades-long partnership at the heart of the AI era.
   - https://x.com/nvidianewsroom/status/2059311735815729464
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 663).
+- **@gop__ls** (581 likes, score 8/10) — Trump bought a million dollars worth of Nvidia stock.
+
+One week later, he made a chip deal with China that sent the stock surging.
+  - https://x.com/GOP__Ls/status/2059312138389225879
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 633).
