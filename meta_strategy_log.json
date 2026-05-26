@@ -1,0 +1,21 @@
+[
+  {
+    "ts": "2026-05-26T14:04:30.088444",
+    "caps": {
+      "MAX_NEWS_PER_DAY": 4,
+      "MAX_HOTAKES_PER_DAY": 2,
+      "MAX_QUOTES_PER_DAY": 4,
+      "MAX_RETWEETS_PER_DAY": 10,
+      "MAX_BREAKOUTS_PER_DAY": 1,
+      "MAX_SPICY_PER_DAY": 1,
+      "MAX_REPLIES_PER_CYCLE": 1
+    },
+    "topic_focus": [
+      "Nuclear SMR for AI datacenters",
+      "HiveOS vs proprietary stack",
+      "TAO inference bottleneck"
+    ],
+    "cadence_factor": 0.65,
+    "rationale": ""
+  }
+]
