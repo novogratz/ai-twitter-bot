@@ -50,7 +50,13 @@
     "gilles_martinez",
     "vincent_careme",
     "joseph_roussel",
-    "louis_fournier"
+    "louis_fournier",
+    "coinacade_fr",
+    "jamesd_ayala",
+    "MaximeScheffer",
+    "cryptogoku",
+    "sylvainm13",
+    "JLLevesque"
   ],
   "en": [
     "blablacar",
@@ -362,6 +368,36 @@
     {
       "lang": "fr",
       "handle": "louis_fournier",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "coinacade_fr",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "jamesd_ayala",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeScheffer",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptogoku",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "sylvainm13",
+      "added": "2026-05-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "JLLevesque",
       "added": "2026-05-25"
     }
   ]

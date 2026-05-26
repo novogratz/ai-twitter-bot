@@ -656,3 +656,64 @@ Gatekeeping in Action: Fear and “Safety” as Competitive Moat and Regulatory 
 In a presentation alongside
   - https://x.com/BrianRoemmele/status/2058950628538560861
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 153).
+- **@sebjohnsonuk** (1096 likes, score 9/10) — Anthropic is hiring for 6 roles in London and is willing to pay up to £630k A YEAR for each.
+
+The AI lab is expanding its London presence and has secured a new office for 800 people.
+
+As part of this
+  - https://x.com/SebJohnsonUK/status/2058807025581338888
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1230).
+- **@kalshi** (0 likes, score 8/10) — BREAKING: 65% chance of a US-Iran nuclear deal this year — a recent high.
+  - https://x.com/Kalshi/status/2059010433449640413
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 296).
+- **@0xlofty** (65 likes, score 8/10) — The same Bitcoin cycle is repeating again.
+
+Every major Bear Cycle followed the same structure.
+
+Lower highs → Weak recovery → Sharp breakdown
+
+Now $BTC is showing the same pattern.
+
+$50,000 is where
+  - https://x.com/0xLofty/status/2058975970179039517
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 107).
+- **@polymarketmoney** (738 likes, score 8/10) — JUST IN: OpenAI is no longer projected to IPO by the end of September.
+  - https://x.com/PolymarketMoney/status/2059017558410355192
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 874).
+- **@divs_king** (455 likes, score 8/10) — Voici le portefeuille actuel de Donald Trump 
+
+3 secteurs : de la tech, de l’énergie et de la finance.
+
+Une quinzaine de lignes, et une assez forte concentration avec 50% du portefeuille réparti sur l
+  - https://x.com/Divs_King/status/2058962722801250768
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 531).
+- **@gunthereagleman** (661 likes, score 7/10) — BOOM!  Kalshi has Trump getting a US-Iran nuclear deal done at 65% by year end! 
+
+Trust Trump… He will get it done!
+  - https://x.com/GuntherEagleman/status/2059013626367717649
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1121).
+- **@pete_rizzo_** (218 likes, score 7/10) — JUST IN: CYPHERPUNK LEGEND ADAM BACK JUST SAID THE BIGGEST #BITCOIN INSTITUTIONAL ALLOCATIONS ARE STILL AHEAD
+
+MAJOR INSTITUTIONS ARE GETTING OFF ZERO
+
+THE 60-40 PORTFOLIO IS DEAD
+
+THIS IS NOT PRICED
+  - https://x.com/pete_rizzo_/status/2059063968132411822
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 244).
+- **@inversornovato_** (56 likes, score 7/10) — $KEEL grimpe de +7 % à la bourse de Toronto 
+
+On verra comment il ouvrira demain à Wall Street.
+
+Je reste très enthousiaste à propos de ce secteur.
+
+Tu as l'analyse de Keel Infrastructure publiée sur
+  - https://x.com/InversorNovato_/status/2058960184974672114
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 70).
+- **@mmatters22596** (0 likes, score 7/10) — The AI boom is ultimately becoming an ENERGY STORY
+
+- and an energy shortage is already inevitable.
+
+These 4 companies could become some of the biggest beneficiaries over the next years — and all of t
+  - https://x.com/MMatters22596/status/2059035027745157562
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 40).
