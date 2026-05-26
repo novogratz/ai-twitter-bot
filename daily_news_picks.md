@@ -1003,3 +1003,14 @@ Vendredi dernier, quelqu
 Pourtant, plus j’étudie ce secteur, plus j’ai l’impression qu’il pourrait devenir l’un des grands thèmes t
   - https://x.com/FlasheurInvest/status/2059312750455558631
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 53).
+- **@alexmasoncrypto** (157 likes, score 9/10) — THIS IS THE END OF THE AI BUBBLE
+
+SpaceX, OpenAI, and Anthropic are all preparing to go public at the same time.
+
+$5.4T in combined capitalization.
+
+That is 8.4% of the entire S&P 500.
+
+The market nee
+  - https://x.com/AlexMasonCrypto/status/2059283508007260173
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 213).
