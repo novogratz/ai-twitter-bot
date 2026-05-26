@@ -38,6 +38,20 @@ startup valuation). Prompts now explicitly prefer `DERNIER/Exclusif` +
 actor + exact number + consequence, and avoid abstract standalone one-liners
 that do not carry a verifiable fact.
 
+Daily Décode schedule: **two** crons — a morning FR burst at 07:00
+Europe/Paris (`daily_news_morning_job`) and an evening top-up at 19:00 UTC
+(`daily_news_job`). `MAX_NEWS_PER_DAY` caps the combined total and
+per-`(topic, format)` dedup (`daily_topic_state.json`) means the evening
+cron only ships topics the morning burst didn't. Restored the morning slot
+on 2026-05-26 after the single evening-only cron left a bot that ran
+continuously through the day with zero Décodes until 21:00 Paris.
+
+**Scheduler hardening (2026-05-26):** `BlockingScheduler` runs with
+`misfire_grace_time=3600`, `coalesce=True`, `max_instances=2`, and a
+30-thread pool. APScheduler's defaults (`misfire_grace_time=1s`, 10 threads)
+silently DROPPED once-a-day crons whenever a 600s LLM call saturated the
+pool at the scheduled tick — so the daily news could skip the whole day.
+
 Monthly recaps: `python main.py --monthly-recap-now` forces three Monthly
 Décode Top 10 posts (IA, Crypto, Investissement). Scheduled monthly on the
 1st at 8 AM New York. Big-post discovery is enabled for reposts/replies, but

@@ -21,6 +21,7 @@ from zoneinfo import ZoneInfo
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from apscheduler.triggers.cron import CronTrigger
+from apscheduler.executors.pool import ThreadPoolExecutor
 from src.logger import log
 from src.bot import has_post_slot, post_slot_status, safe_run_bot_cycle, safe_run_daily_news_cycle, safe_run_weekly_news_cycle, safe_run_monthly_news_cycle
 from src.reply_bot import safe_run_reply_cycle
@@ -256,7 +257,21 @@ def main():
         safe_run_monthly_news_cycle(force_all=True)
         return
 
-    scheduler = BlockingScheduler()
+    # 2026-05-26 FIX: harden scheduler defaults. With ~50 micro-bots and
+    # LLM calls that can block a worker for up to 600s, APScheduler's
+    # default misfire_grace_time=1s silently DROPPED time-sensitive jobs
+    # (incl. the once-a-day news cron) whenever the 10-thread pool was
+    # briefly saturated. Generous grace + coalesce + a bigger pool mean a
+    # busy moment can never make the daily Décode (or morning recap) skip
+    # the whole day.
+    scheduler = BlockingScheduler(
+        executors={"default": ThreadPoolExecutor(30)},
+        job_defaults={
+            "misfire_grace_time": 3600,
+            "coalesce": True,
+            "max_instances": 2,
+        },
+    )
 
     # --- POST BOT (secondary - few posts, only bangers) ---
     def reschedule_and_post():
@@ -359,7 +374,20 @@ def main():
     if not args.reply_only:
         # 2026-05-24 growth strategy: ship original analysis during global
         # crypto peak, evenings UTC, instead of the old early-EST window.
-        log.info("News bot DAILY: cron at 19:00 UTC (= evening global crypto peak).")
+        # 2026-05-26 FIX: a single evening cron meant a bot that ran
+        # continuously through the day shipped NOTHING until 21:00 Paris —
+        # and nothing at all if it was down at 19:00 UTC. Add a morning FR
+        # burst so the daily Décode reliably lands for the morning scroll.
+        # MAX_NEWS_PER_DAY caps the combined total and per-(topic,format)
+        # dedup means the evening cron just tops up whatever the morning
+        # didn't ship.
+        log.info("News bot DAILY (morning): cron at 07:00 Europe/Paris.")
+        scheduler.add_job(
+            safe_run_daily_news_cycle,
+            trigger=CronTrigger(hour=7, minute=0, timezone="Europe/Paris"),
+            id="daily_news_morning_job",
+        )
+        log.info("News bot DAILY (evening): cron at 19:00 UTC (= global crypto peak).")
         scheduler.add_job(
             safe_run_daily_news_cycle,
             trigger=CronTrigger(hour=19, minute=0, timezone="UTC"),
