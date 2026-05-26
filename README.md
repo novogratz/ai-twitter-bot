@@ -180,7 +180,7 @@ ai-twitter-bot/
 
 ## Design principles
 
-1. **Process safety > feature parity.** Every cycle is wrapped in `safe_run_*` so a single-cycle exception cannot crash the scheduler. Health watchdog auto-restarts Safari after 3 consecutive cycle failures.
+1. **Process safety > feature parity.** Every cycle is wrapped in `safe_run_*` so a single-cycle exception cannot crash the scheduler. Health watchdog auto-restarts Safari after 3 consecutive cycle failures. The `BlockingScheduler` runs with a 30-thread pool and `misfire_grace_time=3600` + `coalesce=True` so a long (≤600s) LLM call saturating the pool can never silently drop a time-sensitive job — once-a-day crons (daily Décode, morning recap) still fire when a worker frees up instead of skipping the day.
 2. **Autonomous self-modification with bounded blast radius.** Agentic maintenance is disabled by default. When enabled, `meta_strategy_agent` can rewrite daily caps only within hard-coded ranges (`news 4-8`, `retweet 8-30`). Every self-modifying agent auto-commits + pushes its state files to git so every change is audit-trailed.
 3. **Idempotent state.** All daily-counter files (`thread_daily_state`, `pin_daily_state`, etc.) are JSON-keyed by date. A restart mid-day picks up exactly where it left off; the bot never double-posts.
 4. **Best-effort UI automation.** Every JS-click into the X DOM is wrapped in try/except with a fallback path. When X reshuffles its DOM, the bot logs and skips that one cycle — it never crashes.
