@@ -75,7 +75,20 @@
     "LorisTillet",
     "MaximeDion_",
     "CryptoDion",
-    "CryptoLuc_75"
+    "CryptoLuc_75",
+    "cryptofr",
+    "boursier_com",
+    "arthur_mensch",
+    "cryptomario",
+    "crypto_goku",
+    "CryptoQuebec",
+    "cryptomathou",
+    "lecoinlab",
+    "MarcCormier",
+    "alexiscornille",
+    "thomas_cornille",
+    "margaux_cadoret",
+    "julien_truffaut"
   ],
   "en": [
     "blablacar",
@@ -86,7 +99,10 @@
     "mike_basas",
     "michael_levitin",
     "saylor",
-    "balajis"
+    "balajis",
+    "OpenAIDeveloper",
+    "DassaultSys",
+    "BNPParibas"
   ],
   "history": [
     {
@@ -512,6 +528,86 @@
     {
       "lang": "fr",
       "handle": "CryptoLuc_75",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptofr",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "boursier_com",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "arthur_mensch",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptomario",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "crypto_goku",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoQuebec",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptomathou",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "lecoinlab",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcCormier",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "alexiscornille",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomas_cornille",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "margaux_cadoret",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "julien_truffaut",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "en",
+      "handle": "OpenAIDeveloper",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "en",
+      "handle": "DassaultSys",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "en",
+      "handle": "BNPParibas",
       "added": "2026-05-26"
     }
   ]
