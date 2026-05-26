@@ -799,3 +799,50 @@ I TURNED $100 INTO $147,000+ IN 12 DAYS LAST YEAR; MILLIONAIRES WERE MADE SIMPLY
 LIKE THIS POS
   - https://x.com/moneymotive888/status/2058011179348550065
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 4569).
+- **@cryptorover** (90 likes, score 8/10) — During midterm years, Bitcoin ALWAYS trades below the bull market support band.
+
+Everyone's narrative right now is that the stock market is outperforming Bitcoin and that this is somehow strange.
+
+IT'
+  - https://x.com/cryptorover/status/2059172181213610424
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 182).
+- **@pete_rizzo_** (146 likes, score 8/10) — BILLIONAIRE MICHAEL SAYLOR SAYS "WE CAN BUY MORE #BITCOIN THAN THE SELLERS CAN SELL"  
+
+"WE DO NOT HAVE BUYER FATIGUE"
+
+840,000 BTC AND COUNTING
+
+SUPPLY SHOCK IS REAL
+  - https://x.com/pete_rizzo_/status/2059153810308972935
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 180).
+- **@bulltheoryio** (739 likes, score 7/10) — THIS IS INSANE  
+
+DeepSeek is now up to 50x CHEAPER than OpenAI and Anthropic for AI tokens.
+
+DeepSeek’s latest permanent 75% price cut pushed some inference costs down to fractions of a cent per mill
+  - https://x.com/BullTheoryio/status/2059128065318609332
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 913).
+- **@intheassembly** (112 likes, score 7/10) — 5803 Fujikura.
+
+Japanese maker of optical fiber cables used in AI data centers and satellite networks.
+
+Stock has tripled in the last 12 months on AI infrastructure demand.
+
+Direct exposure to the sam
+  - https://x.com/InTheAssembly/status/2058844347034943525
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 114).
+- **@anatolikopadze** (229 likes, score 7/10) — Boris Cherny: "Claude Code is 100% written by Claude Code, Cowork is 100% written by Claude Code"
+
+across all of Anthropic, 90% of code is written by Claude
+
+lawyers, designers, finance people are bui
+  - https://x.com/AnatoliKopadze/status/2058917854062195072
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 327).
+- **@coinmarketcap** (51 likes, score 7/10) — LATEST:  BitMine, one of the largest public Ethereum treasury firms, is on the preliminary Russell 1000 list for June, potentially drawing fresh passive-fund demand.
+  - https://x.com/CoinMarketCap/status/2059176755554873840
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 97).
+- **@dfintelligence** (14 likes, score 7/10) — Je suis à un petit déjeuner où @MistralAI et @BNPParibas expliquent leur collaboration et leurs projets.
+
+Vous voulez que je leur pose quelles questions ?
+  - https://x.com/DFintelligence/status/2059173255894765732
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 34).

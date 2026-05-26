@@ -66,7 +66,9 @@
     "Crypto_Alexis",
     "Crypto_Marc",
     "Crypto_Vincent",
-    "Crypto_Lisa"
+    "Crypto_Lisa",
+    "louis_gosselin",
+    "AlexisLeluc"
   ],
   "en": [
     "blablacar",
@@ -458,6 +460,16 @@
     {
       "lang": "fr",
       "handle": "Crypto_Lisa",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "louis_gosselin",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisLeluc",
       "added": "2026-05-26"
     }
   ]
