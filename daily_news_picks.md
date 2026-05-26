@@ -1026,3 +1026,6 @@ Serenity told you to sell it at $46
 Exactly at the bottom.
   - https://x.com/TheLongInvest/status/2059291757511090516
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 364).
+- **@bulltheoryio** (261 likes, score 8/10) — BREAKING: $400,000,000,000 wiped out from US stocks in just 90 minutes after Marco Rubio said Iran ceasefire and Strait of Hormuz deal talks need “several more days.”
+  - https://x.com/BullTheoryio/status/2059309364310348093
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 357).
