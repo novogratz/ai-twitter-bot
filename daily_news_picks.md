@@ -950,3 +950,56 @@ Grayscale’s Head of Research documented it. A 72B-parameter model trained on a
 No data center. No Big
   - https://x.com/2xnmore/status/2059197337080062145
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 113).
+- **@bitget** (0 likes, score 9/10) — SpaceX’s IPO is getting closer.
+
+Join our CMO @ignaciobitget and industry experts this Tuesday on X Space to break down the filing, valuation, unlock timeline, and investor trends.
+
+$1000 Giveaway (20
+  - https://x.com/bitget/status/2058916546957754753
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 3116).
+- **@jonahlupton** (172 likes, score 8/10) — Here's a question for all the $IREN bulls/bears (fwiw, I'm a bull)... $IREN is about to close out their FY2026 with approx $775M revenues... sell side is looking for revenues to increase by +316% in F
+  - https://x.com/JonahLupton/status/2058890342561144874
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 266).
+- **@jesusmartinez** (108 likes, score 8/10) — $NEAR breaks $3
+$TAO breaks $400
+$VVV breaks $20
+
+AI Crypto Summer will be glorious
+  - https://x.com/JesusMartinez/status/2059287558446518478
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 142).
+- **@vision_ia** (745 likes, score 8/10) — Google vient de leaker son prochain monstre.
+
+Gemini Omni : un modèle de génération vidéo qui vient d'apparaître chez certains utilisateurs Gemini, juste avant Google I/O (19-20 mai).
+
+Les premiers ré
+  - https://x.com/vision_ia/status/2054203113226059873
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 803).
+- **@stonkvalue** (558 likes, score 8/10) — AI power demand is becoming one of the biggest AI Bottleneck of this decade.
+
+Goldman Sachs predicts that power demand could  surge 200% by 2030.
+
+Power Generation 
+$VST — Vistra Corp.
+$CEG — Constell
+  - https://x.com/StonkValue/status/2058747083977584696
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 602).
+- **@sawyermerritt** (867 likes, score 7/10) — Elon on Grok:
+
+“Our AI will be great; I will never give up. Never. Space(XAI) is only 3 years old. That’s half the age of Anthropic and quarter the age of OpenAI. Let’s see where things stand 3 years
+  - https://x.com/SawyerMerritt/status/2059269876351414399
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 953).
+- **@powerhasheur** (0 likes, score 7/10) — L'Europe réalise 38% des transactions mondiales de stablecoins. Elle n'en émet que 0,3%  
+
+Stablecoins  : 750 millions de capitalisation. Stablecoins  : + de 320 milliards.  
+
+Vendredi dernier, quelqu
+  - https://x.com/PowerHasheur/status/2059238427120357790
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 86).
+- **@polymarket** (3502 likes, score 7/10) — JUST IN: Three Mile Island nuclear plant to be revived for AI power demand.
+  - https://x.com/Polymarket/status/2052807250566082610
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 3694).
+- **@flasheurinvest** (39 likes, score 7/10) — Je remarque que certaines personnes ne se projettent pas encore totalement sur le quantique 
+
+Pourtant, plus j’étudie ce secteur, plus j’ai l’impression qu’il pourrait devenir l’un des grands thèmes t
+  - https://x.com/FlasheurInvest/status/2059312750455558631
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 53).
