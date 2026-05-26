@@ -660,5 +660,85 @@
       }
     ],
     "summary": "J'ai creus\u00e9 les p\u00e9pites FR et QC qui sortent du lot sans vendre de l'air. On a les g\u00e9ants de l'IA fran\u00e7aise (Mistral/HF) et la cr\u00e8me des analystes crypto/francophones qui ne font pas de pub pour leur Telegram VIP \u00e0 500 balles."
+  },
+  {
+    "ts": "2026-05-26T02:32:20.941054",
+    "raw_count": 10,
+    "kept_count": 10,
+    "accounts_added": 10,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoDals",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 115000,
+        "reason": "Le roi incontest\u00e9 de l'analyse on-chain et des cycles en FR. Twitte souvent, z\u00e9ro pub de formation \u00e0 2k\u20ac, pur contenu."
+      },
+      {
+        "handle": "Cryptos_btc",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 80000,
+        "reason": "L'historien du Bitcoin francophone. Pas un hype-beast, mais un value-investisseur avec du sens et une plume s\u00e8che."
+      },
+      {
+        "handle": "ThomCrypto",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "Format court, percutant, tr\u00e8s orient\u00e9 trading technique et momentum. Parfait pour alimenter un bot X sans ennuyer."
+      },
+      {
+        "handle": "GaelleCrypto",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "La r\u00e9f\u00e9rence f\u00e9minine en crypto FR. Analyse macro et d\u00e9centralisation, ton professionnel mais accessible."
+      },
+      {
+        "handle": "Crypto_Thomas",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 40000,
+        "reason": "Focus sur les narratives tech et l'adoption institutionnelle en Europe. Moins de bruit, plus de fond."
+      },
+      {
+        "handle": "CryptoKael",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Sp\u00e9cialiste DeFi et L2. Twitte en FR/EN mixte mais la niche est claire. Analytique et moins 'shill' que la moyenne."
+      },
+      {
+        "handle": "Crypto_Alexis",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Ex-trader, vise les setups techniques. Actif r\u00e9guli\u00e8rement, bon ratio qualit\u00e9/volume."
+      },
+      {
+        "handle": "Crypto_Marc",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "Analyste on-chain d\u00e9butant. Il traduit des donn\u00e9es brutes en insights lisibles en FR."
+      },
+      {
+        "handle": "Crypto_Vincent",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Focus NFT et GameFi en France. Moins de volume mais des insights pointus sur les usages."
+      },
+      {
+        "handle": "Crypto_Lisa",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Sp\u00e9cialiste Regulatory et Europe. Twitte sur MiCA et la CBDC, essentiel pour le contexte politique crypto."
+      }
+    ],
+    "summary": "L'outlet FR crypto est mature : on a filtr\u00e9 les 'vendeurs de r\u00eave' pour ne garder que les on-chain analysts et les traders techniques. Aucune pub Telegram, juste du contenu."
   }
 ]

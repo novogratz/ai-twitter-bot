@@ -777,3 +777,25 @@ Plus le temps avance, plus le scénario se confirme.
 • Le spring test de l’accumulat
   - https://x.com/NoctisCrypto/status/2053036559298081211
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 35).
+- **@stonkvalue** (44 likes, score 8/10) — Top 2026 companies with strongest earnings cycle:
+
+Photonics
+$LITE — Lumentum Holdings
+$AAOI — Applied Optoelectronics
+$LPTH — LightPath Technologies
+
+AI Infrastructures
+$NVDA — NVIDIA Corp.
+$CRWV — C
+  - https://x.com/StonkValue/status/2059101297803247906
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 56).
+- **@barchart** (0 likes, score 8/10) — Is Nvidia $NVDA headed to $380 and a market cap of $9 Trillion?
+  - https://x.com/Barchart/status/2058970642335342614
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 122).
+- **@moneymotive888** (2491 likes, score 7/10) — I AM OFFICIALLY BEGINNING THE 2026 $500 TO $1 MILLION ACCOUNT CHALLENGE NEXT WEEK!  
+
+I TURNED $100 INTO $147,000+ IN 12 DAYS LAST YEAR; MILLIONAIRES WERE MADE SIMPLY BY FOLLOWING ME.  
+
+LIKE THIS POS
+  - https://x.com/moneymotive888/status/2058011179348550065
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 4569).
