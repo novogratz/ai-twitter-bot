@@ -717,3 +717,29 @@ Tu as l'analyse de Keel Infrastructure publiée sur
 These 4 companies could become some of the biggest beneficiaries over the next years — and all of t
   - https://x.com/MMatters22596/status/2059035027745157562
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 40).
+
+## 2026-05-26
+- **@lechatenbourse** (384 likes, score 7/10) — Première fois que le nouvel ETF World PEA d'Amundi atteint les 6€ !!! 
+isin : FR001400U5Q4
+
+#ETF #bourse
+  - https://x.com/lechatenbourse/status/2058911958045172183
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 414).
+- **@chinoalemano** (133 likes, score 7/10) — $IREN x $NVDA x Anthropic.
+
+I'm gonna say it again, IREN x Anthropic is real.
+
+It's not fiction.
+
+It's not a joke.
+
+It's not fake.
+
+Read the whole post.
+
+You might know me from the "IREN - Today" post
+  - https://x.com/chinoalemano/status/2059039331491127743
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 151).
+- **@whaleinsider** (30 likes, score 7/10) — JUST IN:  Taiwan, with just 23 million people, has overtaken India to become the world’s 5th-largest stock market - fueled by the AI and semiconductor boom.
+  - https://x.com/WhaleInsider/status/2059127555765023091
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 68).
