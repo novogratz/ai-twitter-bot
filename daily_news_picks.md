@@ -1029,3 +1029,6 @@ Exactly at the bottom.
 - **@bulltheoryio** (261 likes, score 8/10) — BREAKING: $400,000,000,000 wiped out from US stocks in just 90 minutes after Marco Rubio said Iran ceasefire and Strait of Hormuz deal talks need “several more days.”
   - https://x.com/BullTheoryio/status/2059309364310348093
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 357).
+- **@nvidianewsroom** (611 likes, score 8/10) — Ahead of COMPUTEX, NVIDIA CEO Jensen Huang joined TSMC executives, including Chairman and CEO C.C. Wei, for dinner at 36Kitchen, celebrating a decades-long partnership at the heart of the AI era.
+  - https://x.com/nvidianewsroom/status/2059311735815729464
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 663).
