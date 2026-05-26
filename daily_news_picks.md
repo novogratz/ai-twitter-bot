@@ -1058,3 +1058,8 @@ On May 22nd, ahead of the market's 3-day closure, President Trump said "Micron i
 Today, as markets
   - https://x.com/KobeissiLetter/status/2059329996708065631
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 114).
+- **@flasheurinvest** (51 likes, score 7/10) — Je remarque que certaines personnes ne se projettent pas encore totalement sur le quantique 
+
+Pourtant, plus j’étudie ce secteur, plus j’ai l’impression qu’il pourrait devenir l’un des grands thèmes t
+  - https://x.com/FlasheurInvest/status/2059312750455558631
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 69).
