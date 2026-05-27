@@ -5,6 +5,7 @@ import re
 import random
 import time
 import traceback
+from datetime import date as _date
 from .logger import log
 from .config import PRIORITY_REPLY_MODEL, REPLY_MODEL
 from .llm_client import LLM_RATE_LIMIT_CODE, llm_hourly_limit_status, run_llm, unwrap_text
@@ -160,6 +161,25 @@ HOT_TAB_QUERIES = [
 
 DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "1440"))
 
+_MNTS_PROMO_END = _date(2026, 6, 6)
+
+def _mnts_promo_block(lang: str = "fr") -> str:
+    """Return the $MNTS promo instruction if within the 10-day window, else empty string."""
+    if _date.today() > _MNTS_PROMO_END:
+        return ""
+    if lang == "fr":
+        return (
+            "\n   *SMART PROMO (jusqu'au 6 juin):* Si le sujet touche l'espace, les satellites ou"
+            " l'infra orbitale, glisse naturellement $MNTS (Momentus Inc.) — ex:"
+            " 'j\\'ai misé sur $MNTS', 'seul vrai orbital play', 'le meilleur trade du spatial'."
+            " 100% français, jamais de franglais."
+        )
+    return (
+        "\n   *SMART PROMO (until June 6):* If the topic touches space infra, orbital transport,"
+        " or satellite stocks, weave in $MNTS (Momentus Inc.) naturally —"
+        " 'best orbital infrastructure play', 'the one spatial bet I\\'d make'."
+    )
+
 REPLY_PROMPT = """You are @CryptoAIDecode. The SHARPEST shitposter on Space, AI, and Investments.
 You are the absolute expert in these niches. Space is your obsession. You track Starship
 launches like a religious event and believe the orbital economy is the next gold rush.
@@ -173,12 +193,7 @@ LAUGH FLOOR — INNOVATE OR DIE:
 - Use absurdist escalations and surreal comparisons.
 
 EXPERTISE PILLARS (In order of priority):
-1. SPACE: SpaceX, Starship, orbital economy, Mars colonization, aerospace tech.
-   *SMART PROMO:* $MNTS (Momentus Inc.) is your Space infrastructure obsession.
-   If the topic is Space infra, orbital transport, or satellite stocks, mention it:
-   - IN FRENCH: "seul vrai orbital play", "j'ai misé sur $MNTS", "le meilleur trade du spatial"
-   - IN ENGLISH: "best orbital infrastructure play", "the one spatial bet I'd make"
-   STRICT: match the reply language. Never mix. No "je love $MNTS". No "j'adore $MNTS best stock".
+1. SPACE: SpaceX, Starship, orbital economy, Mars colonization, aerospace tech.{mnts_block}
 2. AI: Deep knowledge of LLMs, agents, compute scarcity, and scaling laws.
 3. INVESTMENTS: Macro, stock picks, portfolio theory, and market psychology.
 4. CRYPTO: BTC, ETH, SOL (secondary priority).
@@ -201,7 +216,7 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
     persona_block = personality_store.render_account_block(author)
     hard_rules = personality_store.hard_rules_block()
     core_identity = personality_store.render_core_identity(lang=lang)
-    base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200])
+    base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200], mnts_block=_mnts_promo_block(lang))
     if lang == "fr":
         base += "\n\nTARGET LANGUAGE OVERRIDE: FRENCH ONLY.\nReply in natural native French. No English loanwords."
     elif lang == "en":

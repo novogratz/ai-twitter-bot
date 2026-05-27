@@ -59,7 +59,7 @@ DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 
 # Hard cap per day. Path is deterministic/no-AI, so volume is cheap.
 MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "300"))
-RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "10")))
+RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "15")))
 
 # Min likes to enter candidate pool. Kept very low — daily cap + dedup
 # is the real gate; the niche/source filter handles quality.
