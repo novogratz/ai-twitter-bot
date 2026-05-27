@@ -59,6 +59,8 @@ EARLY_BIRD_ACCOUNTS = [
     "IREN_Ltd", "Hut8Corp", "TeraWulfInc", "CipherMining",
     "CleanSpark_Inc", "MARAHoldings", "RiotPlatforms",
     "SpaceX", "Starlink", "RocketLab", "PeterDiamandis",
+    "NASA", "ESA", "CNES", "ArianeGroup", "blueorigin", "MomentusSpace",
+    "SpaceX_France", "Jeff_Foust", "SpaceNews", "planet", "Astro_Andreas",
     "bittensor_", "opentensor", "KobeissiLetter",
     # === IA EN niche / dev ===
     "TheRundownAI", "rowancheung", "mckaywrigley", "levelsio",
@@ -110,7 +112,7 @@ EARLY_BIRD_AGE_MAX_MIN = 18
 # 2 -> 4 (2026-05-06 PM growth push). Top-5-reply on a viral tweet is
 # the single highest impressions multiplier we have (10-100x), and we
 # only fire 4-5x per hour, so capping at 2 was leaving slots on the table.
-EARLY_BIRD_MAX_REPLIES_PER_CYCLE = 4
+EARLY_BIRD_MAX_REPLIES_PER_CYCLE = 15
 
 
 def run_early_bird_cycle():
