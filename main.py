@@ -317,6 +317,12 @@ def main():
         log.info("Bot started! Checking Monthly Décodes, then firing remaining Daily Décodes.")
         _run_monthly_startup_catchup_if_due()
         safe_run_daily_news_cycle(force_all=False)
+        # Fire one RT + quote cycle immediately so they don't wait for the full
+        # direct-reply warmup to finish before scheduler.start() is called.
+        log.info("Startup retweet burst...")
+        safe_run_retweet_cycle()
+        log.info("Startup quote burst...")
+        safe_run_quote_tweet_cycle()
 
     # Then warm up the engagement loop with a direct-reply cycle.
     if not args.post_only:
