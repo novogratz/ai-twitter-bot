@@ -552,10 +552,10 @@ def main():
         # Retweet bot — high-volume deterministic amplifier. max_instances=1
         # prevents two slow cycles from running simultaneously and blocking
         # all other jobs; coalesce=True (job_defaults) merges missed fires.
-        log.info("Retweet bot: amplifying trusted news every 5 min (max_instances=1, cap via MAX_RETWEETS_PER_DAY).")
+        log.info("Retweet bot: amplifying trusted news every 3 min (max_instances=1, cap via MAX_RETWEETS_PER_DAY).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(minutes=5),
+            trigger=IntervalTrigger(minutes=3),
             id="retweet_job",
             max_instances=1,
         )
@@ -907,7 +907,7 @@ def main():
         # up changes via _cadence() on their next reschedule.
         FIXED_JOB_BASE_MINUTES = {
             "quote_tweet_job": 2,
-            "retweet_job": 5,
+            "retweet_job": 3,
             "like_job": 4,
             "boost_job": 10,
             "viral_followup_job": 5,

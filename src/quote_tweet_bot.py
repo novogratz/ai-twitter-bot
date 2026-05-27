@@ -249,10 +249,10 @@ def _quote_min_likes(tweet: dict) -> int:
         from .retweet_bot import FR_TRUSTED_HANDLES, _looks_french_text
         author = ((tweet.get("author") or _handle_from_url(tweet.get("url") or "")) or "").lower()
         if any(author == h.lower() for h in FR_TRUSTED_HANDLES) or _looks_french_text(tweet.get("text") or ""):
-            return int(os.environ.get("QUOTE_FR_MIN_LIKES", "5"))
+            return int(os.environ.get("QUOTE_FR_MIN_LIKES", "2"))
     except Exception:
         pass
-    return int(os.environ.get("QUOTE_MIN_LIKES", "30"))
+    return int(os.environ.get("QUOTE_MIN_LIKES", "10"))
 
 
 def run_quote_tweet_cycle():
@@ -296,8 +296,8 @@ def run_quote_tweet_cycle():
                 if not _is_on_niche(text):
                     continue
                 age = _scrape_age_hours(t)
-                if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "18")):
-                    if not (age >= 999_000 and likes >= 20):
+                if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "48")):
+                    if not (age >= 999_000 and likes >= 2):
                         continue
             except Exception:
                 pass
@@ -343,8 +343,8 @@ def run_quote_tweet_cycle():
                     if not _is_on_niche(text):
                         continue
                     age = _scrape_age_hours(t)
-                    if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "18")):
-                        if not (age >= 999_000 and likes >= 100):
+                    if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "48")):
+                        if not (age >= 999_000 and likes >= 2):
                             continue
                 except Exception:
                     pass
