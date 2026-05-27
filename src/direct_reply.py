@@ -23,10 +23,10 @@ FAVORITE_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FAVORITE_REPOST_MIN_ENGAGEM
 FAVORITE_REPOST_MAX_AGE_MINUTES = int(os.environ.get("FAVORITE_REPOST_MAX_AGE_MINUTES", "2880"))
 
 VIP_REPLY_ACCOUNTS = [
-    "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz", 
-    "jbelizaireCEO", "FlasheurInvest", "McnallieM", "ylecun", "arthurmensch", 
-    "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama", 
-    "VitalikButerin", "saylor", "brian_armstrong", "cz_binance", "SpaceX", 
+    "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz",
+    "jbelizaireCEO", "FlasheurInvest", "ylecun", "arthurmensch",
+    "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
+    "VitalikButerin", "saylor", "brian_armstrong", "cz_binance", "SpaceX",
     "Starlink", "blueorigin", "RocketLab", "ArianeGroup", "esa"
 ]
 _VIP_REPLY_ACCOUNTS_LC = {h.lower() for h in VIP_REPLY_ACCOUNTS}
@@ -44,7 +44,7 @@ ALWAYS_REPLY_FR_ACCOUNTS = [
     h for h in ALWAYS_REPLY_ACCOUNTS
     if h in HIGH_TRACTION_REPLY_ACCOUNTS or h in {
         "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "FlasheurInvest",
-        "McnallieM", "ylecun", "arthurmensch", "GuillaumeLample", "fchollet",
+        "ylecun", "arthurmensch", "GuillaumeLample", "fchollet",
         "ArianeGroup", "esa"
     } or any(hint in h.lower() for hint in _FR_ACCOUNT_HINTS)
 ]
