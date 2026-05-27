@@ -176,12 +176,14 @@ for discovery/scout):
 
 | Agent | Cadence | What it modifies |
 |---|---|---|
-| `meta_strategy_agent` | 4h | `live_strategy.json` (daily caps, cadence factor, topic focus) |
+| `meta_strategy_agent` | 4h | `live_strategy.json` (daily caps, cadence factor, topic focus) — min bounds prevent zeroing hot takes |
 | `strategy_agent` | 3h | `dynamic_queries.json` + `dynamic_accounts.json` (additions only) |
 | `evolution_agent` | 3h | `directives.md` + `pruned_accounts.json` + `reinforced_accounts.json` |
 | `reflection_agent` | 6h | `personality.json` (per-account dossiers + topic positions) |
 | `self_evolution_agent` | 4h | `bot_self_fr.json` + `bot_self_en.json` (mood, obsession, character_traits, en_voice, drift, self_narrative) |
 | `scout_agent` | 4h | `dynamic_accounts.json` + auto-follows |
+| `analyzer_bot` | 4h | `performance_insights.json` (top patterns, best hours, rising topics, viral examples) |
+| `style_evolution_bot` | 6h | `directives.md` — scrapes viral X formats, rewrites style guide with Claude Sonnet |
 | `performance.py` | 2h | `performance_log.json` + `learnings.json` |
 | `daily_digest` | 1h (idempotent) | `daily_digest.md` |
 
