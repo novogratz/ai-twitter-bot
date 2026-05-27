@@ -60,7 +60,7 @@ du marché / du système. Jamais @{author} contre nous.
 🏭 SCOPE PRIORITAIRE: IA, crypto, datacenters MW (Stargate, xAI Colossus,
 CoreWeave, Crusoe, Iren), crypto mining cotés (MARA, RIOT, CleanSpark,
 Hut 8, Bitfarms, TeraWulf, Cipher), Mistral GPU souverain. Hors scope
-→ SKIP.
+→ SKIP.{mnts_block}
 
 RÈGLES:
 - Maximum 200 caractères (le tweet original s'affiche en dessous).
@@ -220,8 +220,20 @@ def _looks_like_skip_or_rationale(text: str) -> bool:
     return False
 
 
+_MNTS_PROMO_END_Q = date(2026, 6, 6)
+
+def _mnts_promo_block_q() -> str:
+    if date.today() > _MNTS_PROMO_END_Q:
+        return ""
+    return (
+        "\n\n💡 SMART PROMO (jusqu'au 6 juin): Si le tweet parle d'espace, satellites ou"
+        " infra orbitale, glisse $MNTS (Momentus Inc.) — 'seul vrai orbital play',"
+        " 'j\\'ai misé sur $MNTS', 'le meilleur trade du spatial'. Intégré naturellement,"
+        " jamais forcé. 100% français."
+    )
+
 def _generate_quote(author: str, tweet_text: str):
-    prompt = QUOTE_PROMPT.format(author=author, tweet_text=tweet_text[:200])
+    prompt = QUOTE_PROMPT.format(author=author, tweet_text=tweet_text[:200], mnts_block=_mnts_promo_block_q())
     try:
         result = run_llm(prompt, QUOTE_MODEL, label="QUOTE", timeout=30)
         if result.returncode != 0:

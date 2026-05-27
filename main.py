@@ -541,10 +541,10 @@ def main():
             log.info("Scout agent: disabled by default in Plus-safe mode.")
 
         # Quote bot — FR-first candidate pool with our own angle on top.
-        log.info("Quote bot: quote-posting FR-first viral setups every 4 min.")
+        log.info("Quote bot: quote-posting FR-first viral setups every 2 min.")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=4),
+            trigger=IntervalTrigger(minutes=2),
             id="quote_tweet_job",
             max_instances=1,
         )
@@ -552,10 +552,10 @@ def main():
         # Retweet bot — high-volume deterministic amplifier. max_instances=1
         # prevents two slow cycles from running simultaneously and blocking
         # all other jobs; coalesce=True (job_defaults) merges missed fires.
-        log.info("Retweet bot: amplifying trusted news every 3 min (max_instances=1, cap via MAX_RETWEETS_PER_DAY).")
+        log.info("Retweet bot: amplifying trusted news every 2 min (max_instances=1, cap via MAX_RETWEETS_PER_DAY).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(minutes=3),
+            trigger=IntervalTrigger(minutes=2),
             id="retweet_job",
             max_instances=1,
         )
@@ -907,7 +907,7 @@ def main():
         # up changes via _cadence() on their next reschedule.
         FIXED_JOB_BASE_MINUTES = {
             "quote_tweet_job": 2,
-            "retweet_job": 3,
+            "retweet_job": 2,
             "like_job": 4,
             "boost_job": 10,
             "viral_followup_job": 5,
