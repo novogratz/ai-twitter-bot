@@ -1478,3 +1478,40 @@ Les ETF Hyperliquid viennent de dépasser les 100 millions
 BTC WILL REPLACE THE DOLLAR AS THE WORLD'S C
   - https://x.com/pete_rizzo_/status/2059683141623661020
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 138).
+- **@2xnmore** (210 likes, score 9/10) — People called $TAO dead in April because one founder sold.
+
+Sam Altman raised $40B this year. OpenAI is chasing a $1T valuation. They have one product and one point of failure.
+
+TAO has 128 subnets, e
+  - https://x.com/2xnmore/status/2059650842844680443
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 234).
+- **@whalefactor** (145 likes, score 8/10) — WHALE WATCH: SpaceX is on track to become the largest diversified public company holding Bitcoin.  
+
+Their recent S 1 filing ahead of the June IPO reveals a massive stack of 18,712 $BTC. At current ma
+  - https://x.com/WhaleFactor/status/2059671022933094769
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 185).
+- **@sama** (2856 likes, score 8/10) — AI should dramatically increase quality of life and individual freedoms for people around the world.
+
+The OpenAI Foundation is making an initial $250M commitment to measurement, transition support, an
+  - https://x.com/sama/status/2059677202917331431
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 4470).
+- **@danny_crypton** (118 likes, score 7/10) — ELON MUSK IS ABOUT TO MAKE EVERYONE MILLIONAIRES!!
+
+99% WILL MISS THIS CHANCE IN 2026
+
+No clickbait or any other shit,
+
+ $SPCX IPO WILL BE THE BIGGEST RETAIL OPPORTUNITY OF THIS CYCLE...
+
+In 2016, Tes
+  - https://x.com/Danny_Crypton/status/2059675548134101023
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 166).
+- **@rocketlab** (2867 likes, score 7/10) — We have officially acquired Motiv Space Systems. 
+Motiv – now Rocket Lab Robotics – brings mission-tested Mars heritage with advanced multi-degree of freedom robotic arms, actuators, and drive electro
+  - https://x.com/RocketLab/status/2059378347504001424
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2979).
+- **@skyecosystem** (68 likes, score 7/10) — The concerns being raised about DeFi security are worth taking seriously. Security risk in onchain finance is real, and the industry has to do better.
+
+Sky Protocol is the oldest DeFi protocol on @eth
+  - https://x.com/SkyEcosystem/status/2059636660921352259
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 80).
