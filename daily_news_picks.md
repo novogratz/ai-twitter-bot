@@ -1099,3 +1099,44 @@ $OKLO has added ~$505,000,000 to its market capitalization to
 - **@nikkei** (116 likes, score 8/10) — Trump Made 3,700 U.S. Stock Trades: NVIDIA, Boeing, Suspicions of Profit-Seeking
   - https://x.com/nikkei/status/2059372023847981216
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 168).
+- **@cryptorover** (539 likes, score 9/10) — BREAKING:  CNBC REPORTS ELON MUSK IS CONSIDERING MERGING SPACEX AND TESLA INTO A $7,500,000,000,000 COMPANY. 
+
+The company would hold over 30,000 $BTC on its balance sheet. 
+
+Absolutely INSANE!
+  - https://x.com/cryptorover/status/2059488838456877532
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 653).
+- **@deitaone** (343 likes, score 9/10) — $NVDA - USTR GREER: CHINESE COMPANIES ARE INTERESTED IN NVIDIA H200 CHIP, BUT  COMMUNIST PARTY IS INTERESTED IN PROMOTING DOMESTIC CHIPS
+  - https://x.com/DeItaone/status/2059384698942410816
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 411).
+- **@cryptogoos** (35 likes, score 7/10) — This is INSANE.
+
+ CNBC REPORTS ELON MUSK IS CONSIDERING MERGING SPACEX AND TESLA INTO A $7,500,000,000,000 COMPANY.
+
+This would make Elon Musk a MULTI-TRILLIONAIRE.
+
+The largest company in human histo
+  - https://x.com/cryptogoos/status/2059530542933004677
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 47).
+- **@frederi55284379** (23 likes, score 7/10) — Le Secteur Spatial est bootsé par 2 Événements : la Valorisation de SpaceX et la confirmation de l'existence d'une véritable économie spatiale en hyper croissance ET les Fonds ETF dédiés au Spatial qu
+  - https://x.com/Frederi55284379/status/2059538924335178084
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 25).
+- **@le_biais_fi** (2229 likes, score 8/10) — Demain, SpaceX fera son entrée en bourse à une valorisation ridicule de 1.75 Trillion de $ et ce sera bien évidemment la plus grosse IPO jamais
+faite.
+
+Et au lieu d'acheter SpaceX, je me suis intéress
+  - https://x.com/Le_Biais_Fi/status/2056245914956968269
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2327).
+- **@iren_ltd** (1265 likes, score 8/10) — “For the last eight years, we’ve been assembling the inputs. We’ve got 5GW of secured power and land. We’re active in three continents. And we’re delivering to some of the biggest customers.”
+
+-@danro
+  - https://x.com/IREN_Ltd/status/2057268451706831056
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1337).
+- **@kobeissiletter** (0 likes, score 8/10) — BREAKING: SpaceX has been awarded a $2.29 billion contract from the US Space Force for space data network development.
+  - https://x.com/KobeissiLetter/status/2059361963537285372
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 328).
+- **@financelancelot** (251 likes, score 8/10) — Huawei has begun shipping their 910c GPU with 128GB of HBM memory.
+
+The sudden release of these chips came as a shock as China accounts for approximately 40% of $NVDA revenue once smuggling and black
+  - https://x.com/FinanceLancelot/status/2059476277065613347
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 299).
