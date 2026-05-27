@@ -1440,3 +1440,41 @@ Here’s what you
 - **@bitget** (94 likes, score 8/10) — JUST IN: NASA launches a new Moon Base mission website as plans move forward for a permanent $20B U.S. lunar base, with SpaceX’s Starship at the center of the effort.
   - https://x.com/bitget/status/2059637949424181560
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 152).
+- **@barchart** (135 likes, score 8/10) — Nvidia's $NVDA 1000% return over the last 5 years isn't enough for you Jim?
+  - https://x.com/Barchart/status/2059678351628104185
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 173).
+- **@easya_app** (46 likes, score 8/10) — BREAKING NEWS: EasyA ecosystem valuation soars to nearly $30 billion.
+
+@Cognition AI, co-founded by EasyA hackathon winner, raises $1 billion in latest funding round.
+  - https://x.com/easya_app/status/2059692662056186346
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 70).
+- **@unusual_whales** (552 likes, score 8/10) — Nvidia plans to invest around $150 billion a year in Taiwan, CEO Jensen Huang said
+  - https://x.com/unusual_whales/status/2059680279145378138
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 740).
+- **@tedpillows** (86 likes, score 8/10) — Nvidia $NVDA is trying to tell something.
+
+It's all in the charts.
+  - https://x.com/TedPillows/status/2059694506312708606
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 174).
+- **@ashcrypto** (563 likes, score 7/10) — $230,000,000,000 wiped out from US stocks in 20 MINUTES after Trump ruled out lifting Iran sanctions.
+  - https://x.com/AshCrypto/status/2059692243334652251
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 979).
+- **@lejournalducoin** (37 likes, score 7/10) — Si vous investissez dans les cryptos, ce graphique devrait vous intriguer.
+
+Ou comment $HYPE est en train de capter l’attention des institutionnels 
+
+Mi-mai 2026, deux ETF HYPE spot sont lancés aux Ét
+  - https://x.com/LeJournalDuCoin/status/2059617657486282819
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 43).
+- **@coinacademy_fr** (33 likes, score 7/10) — Grayscale dépose l’enregistrement officiel de son ETF $HYPE : le listing en bourse pourrait intervenir dès le début de la semaine prochaine.
+
+Les ETF Hyperliquid viennent de dépasser les 100 millions
+  - https://x.com/coinacademy_fr/status/2059697425472786619
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 33).
+- **@pete_rizzo_** (100 likes, score 7/10) — JUST IN: MACRO ANALYST JAMES LAVISH JUST SAID #BITCOIN COULD 100X FROM HERE
+
+"IT'S JUST THE REALITY OF THE PHYSICS OF HOW MUCH MONEY IS MOVING IN AND OUT"
+
+BTC WILL REPLACE THE DOLLAR AS THE WORLD'S C
+  - https://x.com/pete_rizzo_/status/2059683141623661020
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 138).
