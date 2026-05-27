@@ -1,19 +1,22 @@
 {
-  "ts": "2026-05-26T18:04:20.410147",
+  "ts": "2026-05-27T00:00:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 6,
-    "MAX_HOTAKES_PER_DAY": 3,
-    "MAX_QUOTES_PER_DAY": 15,
-    "MAX_RETWEETS_PER_DAY": 20,
-    "MAX_BREAKOUTS_PER_DAY": 2,
-    "MAX_SPICY_PER_DAY": 3,
-    "MAX_REPLIES_PER_CYCLE": 2
+    "MAX_NEWS_PER_DAY": 4,
+    "MAX_HOTAKES_PER_DAY": 0,
+    "MAX_QUOTES_PER_DAY": 500,
+    "MAX_RETWEETS_PER_DAY": 300,
+    "MAX_BREAKOUTS_PER_DAY": 0,
+    "MAX_SPICY_PER_DAY": 0,
+    "MAX_REPLIES_PER_CYCLE": 25,
+    "LIKE_BOT_PER_CYCLE": 40,
+    "FOLLOW_BLAST_PER_CYCLE": 60
   },
   "topic_focus": [
-    "AI CapEx Reality Check (Nvidia earnings ",
-    "Crypto Liquidity & Stablecoin Flows",
-    "Energy Grid Bottlenecks for AI"
+    "IA",
+    "Crypto",
+    "Investissement",
+    "Space"
   ],
-  "cadence_factor": 1.2,
-  "rationale": "Le bot est en veilleuse depuis mai, il faut réactiver la sauce sans faire mal au client. On joue la carte de l'opiniâtre cynique : beaucoup de retweets pour réchauffer l'algorithme, quelques hotakes pour rappeler qu'on est toujours là et un peu plus piquant. Le marché IA est en phase de digestion post-euphorie, parfait pour des piques sur la réalité du cash-flow."
+  "cadence_factor": 0.5,
+  "rationale": "4 Décodes/day only (one per topic). No hot takes, no spicy, no breakout. Max reposts + quote reposts."
 }
