@@ -260,12 +260,15 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
     posted = 0
     PER_AUTHOR_CAP = 1 if source_name == "PROFILE-ALWAYS" else 2
     per_author_count = {}
+    per_author_skips = {}
+    MAX_SKIPS_PER_AUTHOR = 3
     for tweet in tweets:
         if remaining is not None and posted >= remaining: break
         url, text, author = tweet["url"], tweet["text"], tweet.get("author", "someone")
         if url in replied or _is_reply_like_tweet(tweet): continue
         author_key = (author or "").lower().strip()
         if author_key and per_author_count.get(author_key, 0) >= PER_AUTHOR_CAP: continue
+        if author_key and per_author_skips.get(author_key, 0) >= MAX_SKIPS_PER_AUTHOR: continue
         if _handle_from_url(url) in BLOCKLIST or (author and author.lower() in BLOCKLIST): continue
         if _handle_from_url(url) == _OWN_HANDLE: continue
         if _tweet_age_minutes(url) > DIRECT_REPLY_MAX_AGE_MINUTES: continue
@@ -280,7 +283,9 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         log.info(f"[{source_name}] Replying to @{author}...")
         _reply_lang = "fr" if source_name.startswith("PROFILE") else ("en" if is_en_tweet else "fr")
         reply = _generate_single_reply(author, text, lang=_reply_lang)
-        if not reply or reply is _LLM_RATE_LIMITED: continue
+        if not reply or reply is _LLM_RATE_LIMITED:
+            if author_key: per_author_skips[author_key] = per_author_skips.get(author_key, 0) + 1
+            continue
         reply = humanize(reply)
         replied.add(url)
         save_replied(replied)
