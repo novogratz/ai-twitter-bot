@@ -1140,3 +1140,76 @@ Et au lieu d'acheter SpaceX, je me suis intéress
 The sudden release of these chips came as a shock as China accounts for approximately 40% of $NVDA revenue once smuggling and black
   - https://x.com/FinanceLancelot/status/2059476277065613347
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 299).
+- **@pete_rizzo_** (222 likes, score 9/10) — JUST IN: $10 TRILLION MORGAN STANLEY HAS ADDED #BITCOIN EVERY SINGLE WEEK FOR 6 STRAIGHT WEEKS VIA $MSBT
+
+THEY HOLD OVER $270,000,000 IN BTC
+
+WORLD'S BIGGEST BANKS ARE BUYING THE DIP
+  - https://x.com/pete_rizzo_/status/2059519972804862397
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 264).
+- **@pete_rizzo_** (126 likes, score 9/10) — JUST IN: TOM LEE JUST SAID #BITCOIN AND CRYPTO WILL DISRUPT THE TRILLION DOLLAR BANKING INDUSTRY
+
+"THE BANKS ARE DESCENDING ON CRYPTO"
+
+"IN 10 YEARS, 5 OF THE 10 LARGEST BANKS WILL BE DIGITALLY NATIVE
+  - https://x.com/pete_rizzo_/status/2059549471126491354
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 162).
+- **@pete_rizzo_** (273 likes, score 9/10) — JUST IN: BILLIONAIRE MICHAEL SAYLOR JUST SAID THE BOTTOM IS IN AND THAT "#BITCOIN SUMMER" IS COMING FAST
+
+CLARITY ACT WILL PASS
+
+BANKS WILL START BUYING BTC
+
+STRC WILL BUY "2-3x" THE DAILY MINED SUPPL
+  - https://x.com/pete_rizzo_/status/2059458316544151831
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 303).
+- **@pete_rizzo_** (20 likes, score 7/10) — JUST IN: $40 BILLION FINANCIAL GIANT BANCA SELLA JUST ANNOUNCED TO LAUNCH #BITCOIN AND CRYPTO CUSTODY
+
+30,000,000 CUSTOMERS ACROSS EUROPE
+
+THE WORLD'S LARGEST BANKS ARE ADOPTING BTC
+  - https://x.com/pete_rizzo_/status/2059599715537190919
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 34).
+- **@iren_ltd** (0 likes, score 9/10) — IREN has entered into a $1.6bn purchase agreement with Dell for air-cooled Blackwell systems to support its previously announced 5-year, $3.4bn managed services AI cloud contract.
+
+The systems are exp
+  - https://x.com/IREN_Ltd/status/2059392975684395100
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 140).
+- **@hut8corp** (108 likes, score 9/10) — Hut 8 CEO @ashergenoot will appear on @CNBC
+Power Lunch at 2:25 p.m. ET today to discuss our second hyperscale AI data center lease — a 15-year, $9.8 billion triple-net agreement with an investment-gr
+  - https://x.com/Hut8Corp/status/2052404064776851937
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 126).
+- **@speculator_io** (2656 likes, score 8/10) — 𝗧𝗵𝗲 𝗟𝗲𝗮𝗱𝗶𝗻𝗴 𝗦𝘁𝗼𝗰𝗸𝘀 𝗥𝗶𝗴𝗵𝘁 𝗡𝗼𝘄:
+
+𝗠𝗮𝗿𝗸𝗲𝘁 𝗟𝗲𝗮𝗱𝗲𝗿𝘀
+$BE Bloom Energy
+$NBIS Nebius
+$HOOD Robinhood
+$CLS Celestica
+$CRWV CoreWeave
+$SYM Symbotic
+$STX Seagate
+$CRDO Credo T
+  - https://x.com/Speculator_io/status/1984391257683382631
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2788).
+- **@wallstengine** (413 likes, score 8/10) — $NVDA CEO: 
+
+NVIDIA MARKET CAP IN 3 to 5 YEARS IS GOING TO BE VERY MUCH HIGHER THAN TODAY. THEY CAN’T STOP US
+  - https://x.com/wallstengine/status/2059545648568086721
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 457).
+- **@realjgbanks** (754 likes, score 8/10) — FREE TRADE IDEAS FOR 5/27
+
+$TE Hold 10-9.25 target 17 -> 7/17 12C
+
+$NOK HOLD 16 target 20  -> 7/17 17C 
+
+$IREN Break 60 target 65 -> 6/18 65C 
+
+$MU Break 950 target 1,020 -> 5/29 1100C
+
+HIT THE  IF YO
+  - https://x.com/RealJGBanks/status/2059430510384869757
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 792).
+- **@trendingbitcoin** (114 likes, score 8/10) — Bitcoin is going to $100,000
+  - https://x.com/TrendingBitcoin/status/2059516198262313054
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 154).
