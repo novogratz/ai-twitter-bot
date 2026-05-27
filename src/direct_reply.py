@@ -162,21 +162,34 @@ HOT_TAB_QUERIES = [
 DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "1440"))
 
 _MNTS_PROMO_END = _date(2026, 6, 6)
+_SPACE_KEYWORDS_RE = re.compile(
+    r"\b(space|spatial|spatiaux|spacex|starship|starlink|satellite|orbital|orbit|"
+    r"mars|lune|moon|rocket|fus[ée]e?|launch|astronaut|nasa|esa|cnes|ariane|"
+    r"aerospace|launcher|mnts|momentus|"
+    r"espace|exploration\s+spatiale|tourisme\s+spatial|new\s*space|"
+    r"orbitale?|fusée|lancement|satellite|constellation)\b",
+    re.IGNORECASE,
+)
 
-def _mnts_promo_block(lang: str = "fr") -> str:
-    """Return the $MNTS promo instruction if within the 10-day window, else empty string."""
+def _is_space_tweet(text: str) -> bool:
+    return bool(_SPACE_KEYWORDS_RE.search(text or ""))
+
+def _mnts_promo_block(lang: str = "fr", tweet_text: str = "") -> str:
+    """Return the $MNTS promo instruction only if: within 10-day window AND tweet is about space."""
     if _date.today() > _MNTS_PROMO_END:
+        return ""
+    if not _is_space_tweet(tweet_text):
         return ""
     if lang == "fr":
         return (
-            "\n   *SMART PROMO (jusqu'au 6 juin):* Si le sujet touche l'espace, les satellites ou"
-            " l'infra orbitale, glisse naturellement $MNTS (Momentus Inc.) — ex:"
+            "\n   *SMART PROMO (jusqu'au 6 juin, UNIQUEMENT si le sujet est spatial):*"
+            " Glisse $MNTS (Momentus Inc.) naturellement —"
             " 'j\\'ai misé sur $MNTS', 'seul vrai orbital play', 'le meilleur trade du spatial'."
             " 100% français, jamais de franglais."
         )
     return (
-        "\n   *SMART PROMO (until June 6):* If the topic touches space infra, orbital transport,"
-        " or satellite stocks, weave in $MNTS (Momentus Inc.) naturally —"
+        "\n   *SMART PROMO (until June 6, ONLY if the topic is space):*"
+        " Weave in $MNTS (Momentus Inc.) naturally —"
         " 'best orbital infrastructure play', 'the one spatial bet I\\'d make'."
     )
 
@@ -216,7 +229,7 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
     persona_block = personality_store.render_account_block(author)
     hard_rules = personality_store.hard_rules_block()
     core_identity = personality_store.render_core_identity(lang=lang)
-    base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200], mnts_block=_mnts_promo_block(lang))
+    base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200], mnts_block=_mnts_promo_block(lang, tweet_text))
     if lang == "fr":
         base += "\n\nTARGET LANGUAGE OVERRIDE: FRENCH ONLY.\nReply in natural native French. No English loanwords."
     elif lang == "en":
