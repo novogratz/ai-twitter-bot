@@ -1213,3 +1213,41 @@ HIT THE  IF YO
 - **@trendingbitcoin** (114 likes, score 8/10) — Bitcoin is going to $100,000
   - https://x.com/TrendingBitcoin/status/2059516198262313054
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 154).
+- **@michaeljayyt** (259 likes, score 9/10) — I’ll only say it once.
+Here are 8 stocks best positioned for the AI infrastructure supercycle:
+
+1- $IREN – AI-optimized data centers with major hyperscaler contracts
+2- $OKLO – Next-gen nuclear power
+  - https://x.com/MichaelJayYT/status/2059318653125103746
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 271).
+- **@cryptotony__** (33 likes, score 8/10) — Micron has officially joined the $1T club, delivering one of the fastest $100B → $1T valuation runs the market has ever seen.
+
+Nvidia did it in 4 years. 
+$NVDA
+ 
+Micron did it in only 1... 
+$MU
+  - https://x.com/CryptoTony__/status/2059582132440469936
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 79).
+- **@cryptorover** (311 likes, score 9/10) — BREAKING:  €34,000,000,000 Banca Sella becomes the first Italian Bank to offer Bitcoin & Crypto services.
+  - https://x.com/cryptorover/status/2059594234454565364
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 441).
+- **@coindesk** (57 likes, score 9/10) — MARKETS: An unknown investor executed a single $1.29B dark pool sale of @BlackRock's $IBIT as Bitcoin ETFs log seven straight days of outflows totaling $1.88B, per @intangiblecoins.
+  - https://x.com/CoinDesk/status/2059571554636230961
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 133).
+- **@biancoresearch** (129 likes, score 9/10) — Anthropic had a $380B valuation in Q1. They are closing on a $900B vlaualtion this quarter.
+
+This means that Q2 "Other Income" will triple from Q1.
+  - https://x.com/biancoresearch/status/2059501816937640394
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 141).
+- **@coinacademy_fr** (16 likes, score 7/10) — Banca Sella devient la première grande banque italienne à proposer le trading de Bitcoin via son application mobile Hype.
+  - https://x.com/coinacademy_fr/status/2059587655151632429
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 26).
+- **@cointelegraph** (196 likes, score 8/10) — BULLISH: Goldman Sachs raises its S&P 500 year-end target to 8,000, up from 7,600, citing stronger earnings expectations following a robust Q1 reporting season.
+  - https://x.com/Cointelegraph/status/2059520229810508124
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 294).
+- **@cointelegraph** (116 likes, score 8/10) — INSIGHT: SpaceX could become the largest public Bitcoin holder.
+
+The company holds 18,712 $BTC ahead of its IPO, per Grayscale.
+  - https://x.com/Cointelegraph/status/2059593437792403833
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 242).
