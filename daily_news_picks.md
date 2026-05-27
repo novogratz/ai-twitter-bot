@@ -1364,3 +1364,43 @@ Which one are you replacing?
 Il s’agit du meilleur démarrage jamais enregistré pour un ETF crypto spot
   - https://x.com/LeJournalDuCoin/status/2059511205455077562
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 28).
+- **@polymarketmoney** (280 likes, score 9/10) — NEW IN: There's now an 93% chance Anthropic has a higher valuation than OpenAI this year.
+  - https://x.com/PolymarketMoney/status/2059416748617544061
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 332).
+- **@kylechasse** (34 likes, score 7/10) — SpaceX just launched the most powerful rocket ever built.
+
+Two days after filing for the biggest IPO in history.
+
+The timing is not a coincidence.
+
+My full breakdown drops in 2 hours.
+
+You are not rea
+  - https://x.com/Kylechasse/status/2059593955545952552
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 48).
+- **@crypto__goku** (29 likes, score 7/10) — GM Saiyans ! 
+
+«Continue de découvrir le monde comme si c’était la première fois.»
+----
+$BTC : 75.646 $
+$ETH : 2.075 $
+#BTC Fear & Greed index : 25
+#Bitcoin Dominance : 60%
+  - https://x.com/Crypto__Goku/status/2059525492764533150
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 47).
+- **@frederi55284379** (39 likes, score 7/10) — $RDW Il y a 6 mois j'anticipais son positionnement sur l'infrastructure des Data Centers spaciaux.
+Le Marché vient de prendre conscience au travers du prospectus de l'IPO de SpaceX du gigantesque pote
+  - https://x.com/Frederi55284379/status/2059525597911527890
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 45).
+- **@reuters** (399 likes, score 8/10) — Nvidia plans to invest around $150 billion a year in Taiwan, CEO Jensen Huang said at the launch celebration for the chipmaker's planned Taiwan headquarters in Taipei, a week after rival AMD said it w
+  - https://x.com/Reuters/status/2059603020212502881
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 437).
+- **@saylor** (981 likes, score 8/10) — Last Thursday on @SchwabNetwork, I discussed $BTC pricing dynamics, Digital Credit $STRC, its impact on $MSTR, and the convergence of DeFi and TradFi as Bitcoin reshapes financial markets.
+  - https://x.com/saylor/status/2059629992703656435
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1319).
+- **@cathiedwood** (1788 likes, score 7/10) — Beautiful! I have accumulated ~3 million frequent flyer miles on #AmericanAirlines, a number that Starlink will help turbocharge in the years ahead. Maybe AA/Starlink miles will translate into Starshi
+  - https://x.com/CathieDWood/status/2059472992351015107
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1906).
+- **@kalshi** (871 likes, score 7/10) — JUST IN: Jensen Huang says Nvidia market cap will be "very much higher" over next 3-5 years
+  - https://x.com/Kalshi/status/2059622747420987747
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1117).
