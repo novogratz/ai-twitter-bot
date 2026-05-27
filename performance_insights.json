@@ -1,0 +1,136 @@
+{
+  "generated_at": "2026-05-27T19:55:26.052833",
+  "window_7d_actions": 2084,
+  "window_24h_actions": 231,
+  "top_patterns": [
+    {
+      "pattern": "UNKNOWN",
+      "count": 1949
+    },
+    {
+      "pattern": "FR_ANCHOR",
+      "count": 62
+    },
+    {
+      "pattern": "DIALOGUE",
+      "count": 21
+    },
+    {
+      "pattern": "METAPHOR",
+      "count": 18
+    },
+    {
+      "pattern": "RENAME",
+      "count": 16
+    }
+  ],
+  "worst_patterns": [
+    {
+      "pattern": "REPETITION",
+      "count": 4
+    },
+    {
+      "pattern": "UNDERSTATEMENT",
+      "count": 14
+    },
+    {
+      "pattern": "RENAME",
+      "count": 16
+    }
+  ],
+  "best_hours_utc": [
+    {
+      "hour": 11,
+      "actions": 117
+    },
+    {
+      "hour": 5,
+      "actions": 108
+    },
+    {
+      "hour": 22,
+      "actions": 102
+    },
+    {
+      "hour": 16,
+      "actions": 102
+    },
+    {
+      "hour": 4,
+      "actions": 100
+    }
+  ],
+  "best_topics_7d": [
+    {
+      "topic": "Autre",
+      "count": 732
+    },
+    {
+      "topic": "IA",
+      "count": 638
+    },
+    {
+      "topic": "Bourse",
+      "count": 462
+    },
+    {
+      "topic": "Crypto",
+      "count": 419
+    },
+    {
+      "topic": "Spatial",
+      "count": 188
+    }
+  ],
+  "rising_topics_24h": [
+    {
+      "topic": "IA",
+      "24h_rate": 0.398,
+      "7d_rate": 0.306
+    },
+    {
+      "topic": "Spatial",
+      "24h_rate": 0.299,
+      "7d_rate": 0.09
+    }
+  ],
+  "content_surface_mix": [
+    {
+      "type": "reply",
+      "count": 1262
+    },
+    {
+      "type": "retweet",
+      "count": 630
+    },
+    {
+      "type": "quote",
+      "count": 98
+    },
+    {
+      "type": "post",
+      "count": 74
+    },
+    {
+      "type": "hotake",
+      "count": 20
+    }
+  ],
+  "viral_examples": [
+    {
+      "ts": "2026-05-27T18:59:02.980411",
+      "text": "Altman promet la fin des corvées. Résultat : OpenAI facture 1Md$/an pour l'électricité de Stargate et l'impression que vous servez de batterie humaine gratuite.",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-05-27T18:19:52.045479",
+      "text": "Paul : \"L'IA va détruire 40% des emplois de bureau.\" Le syndicat de l'IA qui arrive à 18h : \"Oui, mais qui tamponne le bon de sortie ?\"",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-05-27T18:00:22.123292",
+      "text": "@coreweave wants you to believe GPU capacity is the moat.\nIt’s not. It’s the rent. The real moat is knowing which datacenter has power left and which one is just a server farm in the desert waiting for the grid.",
+      "type": "reply"
+    }
+  ]
+}
