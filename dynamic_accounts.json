@@ -88,7 +88,15 @@
     "alexiscornille",
     "thomas_cornille",
     "margaux_cadoret",
-    "julien_truffaut"
+    "julien_truffaut",
+    "0x_ritz",
+    "CryptoFrenchy",
+    "Lefilaire",
+    "CryptoKoolaid",
+    "ThalesBorghi",
+    "MarcLambron",
+    "CryptoVince",
+    "CryptoThibault"
   ],
   "en": [
     "blablacar",
@@ -608,6 +616,46 @@
     {
       "lang": "en",
       "handle": "BNPParibas",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "0x_ritz",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoFrenchy",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lefilaire",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKoolaid",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThalesBorghi",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLambron",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoVince",
+      "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoThibault",
       "added": "2026-05-26"
     }
   ]

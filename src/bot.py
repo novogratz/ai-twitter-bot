@@ -109,8 +109,8 @@ def has_post_slot() -> bool:
     news/hot-take generation path once both daily buckets are full.
     Reads LIVE caps via meta_strategy_agent's live_strategy.json.
     """
-    news_count, hotake_count = _get_counters()
-    return news_count < _live_news_cap() or hotake_count < _live_hotake_cap()
+    news_count, _ = _get_counters()
+    return news_count < _live_news_cap()
 
 
 def post_slot_status() -> str:
@@ -355,81 +355,15 @@ def _run_single_bot_cycle() -> bool:
     hotake_cap = _live_hotake_cap()
     log.info(f"Today: {news_count}/{news_cap} Décodes, {hotake_count}/{hotake_cap} hot takes")
 
-    if news_count >= news_cap and hotake_count >= hotake_cap:
-        log.info("Daily Décode limits reached. Skipping.")
+    if news_count >= news_cap:
+        log.info("Daily Décode limit reached. Skipping.")
         return False
 
-    can_hotake = hotake_count < hotake_cap
     can_news = news_count < news_cap
+    tweet_source = "news"
 
-    # AI news is the brand backbone. Force the first half of the daily news
-    # quota through the AI news path before spending the single AI hot-take slot.
-    news_floor_before_hotake = min(3, news_cap)
-    if can_news and news_count < news_floor_before_hotake:
-        do_hotake = False
-    elif not can_news:
-        do_hotake = can_hotake
-    elif not can_hotake:
-        do_hotake = False
-    else:
-        do_hotake = random.random() < 0.25
-
-    tweet_source = "news"  # which module owns last_source_url for this tweet
-    if do_hotake:
-        log.info("Generating AI hot take...")
-        tweet = generate_hotake()
-        if tweet is None:
-            log.warning("Hot take failed, falling back to news...")
-            if can_news:
-                tweet = generate_tweet()
-                if tweet:
-                    _increment_counter("news")
-                    tweet_source = "news"
-        else:
-            _increment_counter("hotakes")
-            tweet = humanize(tweet)
-            tweet = _maybe_add_curated_hashtag(tweet)
-            # Visual policy 2026-04-29 PM (user: "shitty image generated"):
-            # NO MORE Pillow quote cards — they look bot-y. Real photos only.
-            # Priority: source-article og:image > Wiki og:image > text-only.
-            # The article's own hero photo is the most credible visual (it's
-            # what a journalist sharing the scoop would surface).
-            img_path = None
-            src_url = None
-            try:
-                from .hotake_agent import last_source_url, last_image_topic
-                src_url = last_source_url()
-                # When a source URL is present X renders a native link-card,
-                # which is the visual. Skip image attach so the card shows.
-                if not src_url:
-                    slug = last_image_topic()
-                    if slug:
-                        wiki_url = f"https://en.wikipedia.org/wiki/{slug}"
-                        img_path = fetch_article_image(wiki_url)
-                        if img_path:
-                            log.info(f"[HOTAKE] Wiki photo attached for '{slug}': {img_path}")
-                    else:
-                        log.info("[HOTAKE] No source URL or image slug — text-only")
-                else:
-                    log.info(f"[HOTAKE] URL inline (X renders link card): {src_url[:80]}")
-            except Exception as e:
-                log.info(f"[HOTAKE] Image fetch failed (text-only): {e}")
-            log.info(f"[HOTAKE] Posting ({len(tweet)} chars): {tweet[:100]}...")
-            post_tweet(tweet, image_path=img_path)
-            save_tweet(tweet)
-            try:
-                from .hotake_agent import last_pattern as _last_hotake_pattern
-                _pattern = _last_hotake_pattern() or ""
-            except Exception:
-                _pattern = ""
-            log_hotake(tweet, pattern_id=_pattern)
-            if img_path:
-                try:
-                    os.remove(img_path)
-                except OSError:
-                    pass
-            return True
-    else:
+    if True:
+        # 2026-05-26: hot takes disabled — Décodes only.
         # 2026-05-23 PM: Décode retry loop — user mandate "make sure URL is
         # there, don't skip, if it doesn't work generate a new post". Up to
         # 3 attempts to land a Décode whose URL passes whitelist + coupling.
@@ -551,24 +485,13 @@ def _run_single_bot_cycle() -> bool:
         else:
             log.info(f"[NEWS] All {max_attempts} attempts failed validation/dedup. Giving up this cycle.")
         _ag_mod.__dict__.pop("_temporary_rejected_terms", None)
-        if tweet is None and can_hotake:
-            log.info("No fresh Décode - trying a hot take instead...")
-            tweet = generate_hotake()
-            if tweet:
-                _increment_counter("hotakes")
-                tweet_source = "hotake"
 
     if tweet is None:
         log.info("No eligible Décode this cycle (all topic/format combos shipped).")
         return False
 
-    # Pull pattern_id from whichever agent generated this tweet (same side-
-    # channel as URL/image). News-falls-back-to-hotake must read from hotake.
     try:
-        if tweet_source == "hotake":
-            from .hotake_agent import last_pattern as _last_news_pattern
-        else:
-            from .agent import last_pattern as _last_news_pattern
+        from .agent import last_pattern as _last_news_pattern
         _news_pattern = _last_news_pattern() or ""
     except Exception:
         _news_pattern = ""
@@ -674,6 +597,7 @@ def _run_single_bot_cycle() -> bool:
                             log.info(f"[NEWS] Un-marked '{topic}:{decode_format}' — will retry next cycle.")
                     except Exception:
                         pass
+                    _decrement_counter("news")
                     return
                 else:
                     log.info(f"[NEWS] ✅ URL validated (pool + reachable + matches #1), keeping inline")
@@ -696,6 +620,7 @@ def _run_single_bot_cycle() -> bool:
                     log.info(f"[NEWS] Un-marked '{topic}:{decode_format}' — will retry next cycle.")
             except Exception:
                 pass
+            _decrement_counter("news")
             return
 
         if tweet_source == "news":
