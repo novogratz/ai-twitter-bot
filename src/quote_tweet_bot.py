@@ -221,19 +221,27 @@ def _looks_like_skip_or_rationale(text: str) -> bool:
 
 
 _MNTS_PROMO_END_Q = date(2026, 6, 6)
+_SPACE_RE_Q = re.compile(
+    r"\b(space|spatial|spatiaux|spacex|starship|starlink|satellite|orbital|orbit|"
+    r"mars|lune|moon|rocket|fus[ée]e?|launch|astronaut|nasa|esa|cnes|ariane|"
+    r"aerospace|launcher|mnts|momentus|espace|exploration|tourisme\s+spatial|new\s*space)\b",
+    re.IGNORECASE,
+)
 
-def _mnts_promo_block_q() -> str:
+def _mnts_promo_block_q(tweet_text: str = "") -> str:
     if date.today() > _MNTS_PROMO_END_Q:
         return ""
+    if not _SPACE_RE_Q.search(tweet_text or ""):
+        return ""
     return (
-        "\n\n💡 SMART PROMO (jusqu'au 6 juin): Si le tweet parle d'espace, satellites ou"
-        " infra orbitale, glisse $MNTS (Momentus Inc.) — 'seul vrai orbital play',"
-        " 'j\\'ai misé sur $MNTS', 'le meilleur trade du spatial'. Intégré naturellement,"
-        " jamais forcé. 100% français."
+        "\n\n💡 SMART PROMO (jusqu'au 6 juin, UNIQUEMENT si le sujet est spatial):"
+        " Glisse $MNTS (Momentus Inc.) naturellement — 'seul vrai orbital play',"
+        " 'j\\'ai misé sur $MNTS', 'le meilleur trade du spatial'."
+        " Intégré subtilement, jamais forcé. 100% français."
     )
 
 def _generate_quote(author: str, tweet_text: str):
-    prompt = QUOTE_PROMPT.format(author=author, tweet_text=tweet_text[:200], mnts_block=_mnts_promo_block_q())
+    prompt = QUOTE_PROMPT.format(author=author, tweet_text=tweet_text[:200], mnts_block=_mnts_promo_block_q(tweet_text))
     try:
         result = run_llm(prompt, QUOTE_MODEL, label="QUOTE", timeout=30)
         if result.returncode != 0:
