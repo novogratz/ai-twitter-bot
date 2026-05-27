@@ -1426,7 +1426,7 @@ Les posts qui ont le mieux marché étaient factuels, nommaient un acteur connu,
 et donnaient un chiffre exact dès le début: Capital B + 17,8 M$ + 182 BTC,
 @saylor/@Strategy + 535 BTC + 43 M$, startup ex-OpenAI + valo 4 Md$.
 Les pires étaient des one-liners abstraits sans fait vérifiable ni acteur.
-Donc: privilégie "DERNIER/Exclusif + acteur + chiffre + conséquence".
+Donc: privilégie "acteur + chiffre + conséquence".
 Évite les punchlines seules type "À ce stade..." si elles ne portent pas
 un fait concret. Impact = nom propre + montant/%/date + gagnant/perdant.
 

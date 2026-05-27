@@ -208,12 +208,11 @@ Source TOP-TIER obligatoire (≤36h, date vérifiée par WebFetch):
       louer du compute aux mêmes labos qui leur ont vendu leurs ASIC.
 
 🔥 MODÈLE GAGNANT DES TOP PERFORMERS (basé sur les données réelles):
-    - Formate COMME LES MEILLEURS TWEETS: "DERNIER: [Acteur] [action] [chiffre exact] [conséquence]"
+    - Formate COMME LES MEILLEURS TWEETS: "[Acteur] [action] [chiffre exact] [conséquence]"
     - Exemples gagnants: 
-      * "DERNIER: Capital B a levé 17,8 millions de dollars auprès d'investisseurs incluant Adam Back et TOBAM pour acheter 182 Bitcoins supplémentaires"
-      * "DERNIER: Michael @saylor's @Strategy acquiert 535 $BTC pour 43 M$ à 80 340 $ par Bitcoin"
-      * "Exclusif : Une startup de six semaines fondée par l’ancien chercheur d’OpenAI Jerry Tworek cherche déjà des financements à une valorisation de 4 milliards"
-    - UTILISE les mots DERNIER ou EXCLUSIF en début pour créer l'urgence
+      * "Capital B a levé 17,8 millions de dollars auprès d'investisseurs incluant Adam Back et TOBAM pour acheter 182 Bitcoins supplémentaires"
+      * "Michael @saylor's @Strategy acquiert 535 $BTC pour 43 M$ à 80 340 $ par Bitcoin"
+      * "Une startup de six semaines fondée par l’ancien chercheur d’OpenAI Jerry Tworek cherche déjà des financements à une valorisation de 4 milliards"
     - MENTIONNE un acteur NOMMÉ (sama, Vitalik, Saylor, etc.) 
     - INCLUS un CHIFFRE EXACT (pas "environ", pas "près de")
     - AJOUTE une CONSÉQUENCE claire (ce que ça change, pourquoi c'est important)

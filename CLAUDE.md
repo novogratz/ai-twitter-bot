@@ -40,8 +40,8 @@ list, and dedup filters before posting.
 
 Impact tuning: top historical posts were concrete, numeric, named-actor
 updates (Capital B funding/BTC buys, Saylor/Strategy BTC buys, ex-OpenAI
-startup valuation). Prompts now explicitly prefer `DERNIER/Exclusif` +
-actor + exact number + consequence, and avoid abstract standalone one-liners
+startup valuation). Prompts now explicitly prefer actor +
+exact number + consequence, and avoid abstract standalone one-liners
 that do not carry a verifiable fact.
 
 Daily Décode schedule: **two** crons — a morning FR burst at 07:00

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Lightweight bot watchdog — runs every 5 minutes via launchd.
-# If `python3 main.py` is dead, restart it. No Claude calls, no AI cost.
+# If `uv run python main.py` is dead, restart it. No Claude calls, no AI cost.
 # This guarantees the bot is never dark for more than ~5 minutes.
 
 set -euo pipefail
@@ -41,7 +41,7 @@ fi
 
 # Check for live bot process (case-insensitive: macOS framework Python
 # shows as `Python main.py` with a capital P, so plain `pgrep -f` misses it).
-if pgrep -if "python.*main\.py" > /dev/null 2>&1; then
+if pgrep -if "(uv run python|python).*main\.py" > /dev/null 2>&1; then
     # Alive — silent success (don't fill the log).
     exit 0
 fi
@@ -51,5 +51,5 @@ fi
 # replaces this watchdog process with the bot so the supervised process stays
 # alive and receives signals directly.
 TS=$(date -Iseconds)
-echo "[$TS] Bot dead — execing main.py" >> "$LOG_FILE"
-exec python3 main.py >> "$PROJECT_DIR/bot.log" 2>> "$PROJECT_DIR/bot.err"
+echo "[$TS] Bot dead — execing uv run python main.py" >> "$LOG_FILE"
+exec uv run python main.py >> "$PROJECT_DIR/bot.log" 2>> "$PROJECT_DIR/bot.err"

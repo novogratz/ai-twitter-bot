@@ -39,8 +39,8 @@ LIKE_QUERIES = [
 ]
 TOP_TAB_PROBABILITY = float(os.environ.get("LIKE_TOP_TAB_PROBABILITY", "0.55"))
 
-LIKES_PER_CYCLE = int(os.environ.get("LIKE_BOT_PER_CYCLE", "18"))
-LIKE_BOT_DAILY_CAP = int(os.environ.get("LIKE_BOT_DAILY_CAP", "1800"))
+LIKES_PER_CYCLE = int(os.environ.get("LIKE_BOT_PER_CYCLE", "40"))
+LIKE_BOT_DAILY_CAP = int(os.environ.get("LIKE_BOT_DAILY_CAP", "3000"))
 LIKE_BOT_STATE_FILE = os.path.join(_PROJECT_ROOT, "like_bot_state.json")
 
 
