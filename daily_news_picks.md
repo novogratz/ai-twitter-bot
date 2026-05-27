@@ -1324,3 +1324,43 @@ Box (BOX) shares are down 2% after the
 “We are Absolutely Compute Constraint. Without AI compute -> it limits AI companies / Hyperscalers Growth”
   - https://x.com/DollarCostAvg/status/2059547244731269463
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 109).
+- **@londonrealtv** (142 likes, score 8/10) — BREAKING: 
+
+There is a 50% chance Bitcoin drops below $50,000 this year on Kalshi.
+  - https://x.com/LondonRealTV/status/2059596444148072764
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 152).
+- **@investingcom** (109 likes, score 8/10) — *US SPACE FORCE AWARDS SPACEX $2.29 BILLION CONTRACT FOR MILITARY SPACE DATA NETWORK
+  - https://x.com/Investingcom/status/2059583930328588708
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 209).
+- **@moneyradar_fr** (49 likes, score 8/10) — LE PENTAGONE accorde un énorme contrat à Space X à l'aube de son IPO !
+
+Ce n'est plus une simple rumeur : SpaceX vient de décrocher un contrat de 2,29 milliards de dollars avec l'US Space Force pour c
+  - https://x.com/MoneyRadar_FR/status/2059573072915533954
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 53).
+- **@jukan05** (261 likes, score 8/10) — "Likely SpaceX Win for new datacenter ASIC. We expect MTK to be the design service provider for xAI’s datacenter ASIC based on Intel 14A + EMIB-T."
+
+Interesting....
+  - https://x.com/jukan05/status/2059458320424173580
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 277).
+- **@financelancelot** (205 likes, score 8/10) — Is the SpaceX IPO about to collapse the stock market as it pulls liquidity out of the AI bubble?
+  - https://x.com/FinanceLancelot/status/2059407861017379183
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 245).
+- **@growthrapidly** (131 likes, score 8/10) — 5 must own stocks to hold till 2030:
+
+$NOW 
+$IREN 
+$HIMS 
+$OSCR 
+$ONDS
+
+Which one are you replacing?
+  - https://x.com/growthrapidly/status/2059560254480736550
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 183).
+- **@coindesk** (59 likes, score 8/10) — NEW: @Krakenfx launches Bitcoin Vault, letting $BTC holders earn yield through DeFi protocols including @Aave and @Morpho.
+  - https://x.com/CoinDesk/status/2059614167355601353
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 111).
+- **@lejournalducoin** (28 likes, score 7/10) — Les ETF HYPE ont absorbé 1,04% de la capitalisation totale de $HYPE en seulement 10 jours de trading, selon Kairos Research.
+
+Il s’agit du meilleur démarrage jamais enregistré pour un ETF crypto spot
+  - https://x.com/LeJournalDuCoin/status/2059511205455077562
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 28).
