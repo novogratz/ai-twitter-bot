@@ -1282,3 +1282,45 @@ Which stock makes you a millionaire by 2030?
 10. $TSLA
   - https://x.com/QC_Capitals/status/2059528221612265966
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 80).
+- **@stocksavvyshay** (270 likes, score 9/10) — $NVDA unveiled its new Constellation AI campus in Taipei which is a 4,000-employee R&D hub expected to begin operations by 2030.
+
+Jensen said Nvidia’s Taiwan spending could reach $150B annually as phy
+  - https://x.com/StockSavvyShay/status/2059598551777505461
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 320).
+- **@bitget** (68 likes, score 8/10) — OPENAIUSDT pre-IPO perpetual is LIVE!
+
+Get early exposure to OpenAI before the IPO and ride the valuation wave.
+
+Trade now: https://bitget.com/futures/usdt/OPENAIUSDT…
+  - https://x.com/bitget/status/2059479198285369534
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 104).
+- **@moonlaggoune** (275 likes, score 8/10) — 80% des épargnants utilisent l'IA pour leurs finances.
+
+Ma vision pour Finary : devenir le pionnier de la finance agentique et en faire banquier privé dans votre poche, disponible 24/7.
+
+Pour cela, no
+  - https://x.com/moonlaggoune/status/2048344796809359664
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 383).
+- **@wallstengine** (126 likes, score 8/10) — $NVDA CEO: NVIDIA IS SPENDING AROUND $150B IN TAIWAN EACH YEAR
+  - https://x.com/wallstengine/status/2059546805709443297
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 146).
+- **@watcherguru** (2193 likes, score 8/10) — JUST IN:  US bank SoFi officially opens access to its own crypto stablecoin for 15,000,000 users.
+  - https://x.com/WatcherGuru/status/2059595843892613170
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2657).
+- **@investingcom** (190 likes, score 8/10) — *TAIWAN SAID TO SUSPECT NVIDIA CHIPS SMUGGLED TO CHINA VIA JAPAN
+
+$NVDA
+  - https://x.com/Investingcom/status/2059591175678361622
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 322).
+- **@zerohedge** (110 likes, score 8/10) — Premarket Movers: 
+
+Mag 7 stocks are mixed early Wednesday (Alphabet -0.5%, Nvidia +0.4%, Apple +0.1%, Tesla +1.6%, Amazon +0.02%, Microsoft -0.5%, Meta -0.5%)
+
+Box (BOX) shares are down 2% after the
+  - https://x.com/zerohedge/status/2059597112866742322
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 144).
+- **@dollarcostavg** (107 likes, score 8/10) — $IREN Chamath likely is talking about $IREN here. Likely Anthropic Deal underway. 
+
+“We are Absolutely Compute Constraint. Without AI compute -> it limits AI companies / Hyperscalers Growth”
+  - https://x.com/DollarCostAvg/status/2059547244731269463
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 109).
