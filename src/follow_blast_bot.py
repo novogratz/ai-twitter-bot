@@ -33,28 +33,29 @@ from .config import _PROJECT_ROOT, BOT_HANDLE, get_live_cap
 from .logger import log
 from .twitter_client import _safari_lock, close_front_tab, _scroll_page
 
-FOLLOWS_PER_CYCLE = int(os.environ.get("FOLLOW_BLAST_PER_CYCLE", "40"))
-FOLLOW_BLAST_DAILY_CAP = int(os.environ.get("FOLLOW_BLAST_DAILY_CAP", "650"))
+FOLLOWS_PER_CYCLE = int(os.environ.get("FOLLOW_BLAST_PER_CYCLE", "60"))
+FOLLOW_BLAST_DAILY_CAP = int(os.environ.get("FOLLOW_BLAST_DAILY_CAP", "1200"))
 FOLLOW_BLAST_STATE_FILE = os.path.join(_PROJECT_ROOT, "follow_blast_state.json")
 
 # French niche search queries. Rotated per cycle. Most use low/no min_faves
 # because the goal is net-new FR graph discovery, not only already-viral posts.
 BLAST_QUERIES = [
+    # === Space (Highest Priority user mandate 2026-05-26) ===
+    "SpaceX OR Starship OR Starlink lang:fr",
+    "orbital economy OR $MNTS OR Momentus Space lang:en",
+    "ArianeGroup OR satellite OR spatial lang:fr",
+    "\"New Space\" France OR fusée lang:fr",
+    "ESA OR exploration spatiale lang:fr",
+    # === AI ===
     "IA OR \"intelligence artificielle\" lang:fr",
-    "\"agents IA\" OR \"agent IA\" lang:fr",
     "Mistral OR HuggingFace OR \"Hugging Face\" lang:fr",
     "OpenAI OR ChatGPT OR Claude lang:fr",
-    "startup IA OR \"French Tech\" lang:fr",
     "développeur IA OR \"Cursor AI\" lang:fr",
-    "Nvidia OR GPU OR datacenter lang:fr",
-    "\"data center\" OR datacenter OR \"centre de données\" lang:fr",
-    "Bitcoin OR Ethereum OR Solana OR crypto lang:fr",
-    "DeFi OR stablecoin OR Bittensor OR TAO lang:fr",
-    "minage Bitcoin OR mining crypto lang:fr",
+    # === Investment ===
     "bourse OR PEA OR ETF OR investissement lang:fr",
     "trading OR marchés financiers lang:fr",
-    "SpaceX OR Starship OR Starlink lang:fr",
-    "ArianeGroup OR satellite OR spatial lang:fr",
+    # === Crypto ===
+    "Bitcoin OR Ethereum OR Solana OR crypto lang:fr",
 ]
 
 

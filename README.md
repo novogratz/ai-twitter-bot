@@ -185,7 +185,7 @@ ai-twitter-bot/
 3. **Idempotent state.** All daily-counter files (`thread_daily_state`, `pin_daily_state`, etc.) are JSON-keyed by date. A restart mid-day picks up exactly where it left off; the bot never double-posts.
 4. **Best-effort UI automation.** Every JS-click into the X DOM is wrapped in try/except with a fallback path. When X reshuffles its DOM, the bot logs and skips that one cycle — it never crashes.
 5. **Bandit attribution baked in.** Every generated tweet carries a `[PATTERN: <ID>]` metadata line that's stripped pre-post and logged to `engagement_log.csv` column 6. The `evolution_agent` reads these to compute per-pattern ROI and rewrite the style guide.
-6. **Concrete impact beats abstract wit.** Saved performance data shows named actors + exact numbers + real consequences outperform standalone punchlines, so prompts bias toward `DERNIER/Exclusif` facts, amounts, BTC counts, valuations, capex, regulation, and clear winners/losers.
+6. **Concrete impact beats abstract wit.** Saved performance data shows named actors + exact numbers + real consequences outperform standalone punchlines, so prompts bias toward naming actors, amounts, BTC counts, valuations, capex, regulation, and clear winners/losers.
 7. **Soft + hard list separation.** `BLOCKLIST` (hard, never engage) is for actual bad actors. `respect_list` (soft, engage but never criticize by name) is for influencers we shouldn't risk offending.
 
 ---
