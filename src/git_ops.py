@@ -89,7 +89,7 @@ def auto_push(file_paths: Iterable[str], commit_message: str) -> bool:
 
         # Push.
         branch = _current_branch()
-        push = _run_git(["push", "origin", branch], timeout=60)
+        push = _run_git(["push", "origin", branch], timeout=180)
         if push.returncode != 0:
             err = (push.stderr or push.stdout or "")[:300]
             log.info(f"[GIT] push failed ({branch}): {err}")
