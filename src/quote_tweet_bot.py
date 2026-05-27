@@ -249,10 +249,10 @@ def _quote_min_likes(tweet: dict) -> int:
         from .retweet_bot import FR_TRUSTED_HANDLES, _looks_french_text
         author = ((tweet.get("author") or _handle_from_url(tweet.get("url") or "")) or "").lower()
         if any(author == h.lower() for h in FR_TRUSTED_HANDLES) or _looks_french_text(tweet.get("text") or ""):
-            return int(os.environ.get("QUOTE_FR_MIN_LIKES", "10"))
+            return int(os.environ.get("QUOTE_FR_MIN_LIKES", "5"))
     except Exception:
         pass
-    return int(os.environ.get("QUOTE_MIN_LIKES", "100"))
+    return int(os.environ.get("QUOTE_MIN_LIKES", "30"))
 
 
 def run_quote_tweet_cycle():
@@ -297,11 +297,8 @@ def run_quote_tweet_cycle():
                     continue
                 age = _scrape_age_hours(t)
                 if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "18")):
-                    # 2026-05-16: removed "high engagement implies fresh"
-                    # escape hatch. 100+ likes on a tweet means nothing
-                    # about its age — viral 2024 tweets get quoted as
-                    # if they're news. No timestamp = no quote.
-                    continue
+                    if not (age >= 999_000 and likes >= 20):
+                        continue
             except Exception:
                 pass
             candidates.append(t)
@@ -315,8 +312,8 @@ def run_quote_tweet_cycle():
         from .retweet_bot import EN_TRUSTED_HANDLES, FR_TRUSTED_HANDLES
         from .twitter_client import scrape_profile_tweets
         sampled = (
-            random.sample(FR_TRUSTED_HANDLES, k=min(12, len(FR_TRUSTED_HANDLES)))
-            + random.sample(EN_TRUSTED_HANDLES, k=min(3, len(EN_TRUSTED_HANDLES)))
+            random.sample(FR_TRUSTED_HANDLES, k=min(6, len(FR_TRUSTED_HANDLES)))
+            + random.sample(EN_TRUSTED_HANDLES, k=min(2, len(EN_TRUSTED_HANDLES)))
         )
         for handle in sampled:
             log.info(f"[QUOTE] Scraping trusted-news handle: @{handle}")
