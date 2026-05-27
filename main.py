@@ -81,50 +81,13 @@ MONTHLY_STARTUP_DAY_UTC = 23
 
 
 def _engagement_skip_rate() -> float:
-    """Probability of skipping an engagement cycle right now.
-
-    Replaces the old hard 1am-7am Paris cliff with a graceful fade tuned for
-    a DUAL FR + QUEBEC audience and a 16h-active human profile.
-
-    Paris hour | Montreal hour | What's happening                | Skip rate
-    -----------+---------------+----------------------------------+----------
-    07-23      | 01-17         | FR primary day                   | 0.0
-    23-00      | 17-18         | FR winding down, QC pre-evening  | 0.0
-    00-04      | 18-22         | QC PRIMETIME (FR night)          | 0.25
-                                  → light cadence so we still surf QC peak
-                                    without looking like a 24/7 bot
-    04-07      | 22-01         | both audiences off                | 0.95
-                                  → deep quiet (real humans sleep)
-
-    Weekend tweak: Sat/Sun morning Paris 8-11h Paris audience sleeps in,
-    posts get less reach — bump skip rate to 0.30 there. Pure Paris-side
-    optimization, doesn't hurt QC.
-
-    The probabilistic skip ALSO adds jitter — two consecutive cycles at the
-    same time-of-day get different decisions. That's exactly the
-    non-mechanical pattern we want (vs hard cliff = obvious bot signal).
-    """
-    now = datetime.now(ZoneInfo("Europe/Paris"))
-    hour = now.hour
-    is_weekend = now.weekday() in (5, 6)
-
-    if 4 <= hour < 7:
-        rate = 0.95
-    elif 0 <= hour < 4:
-        rate = 0.25  # QC primetime — light pass, not silence
-    else:
-        rate = 0.0
-
-    if is_weekend and 8 <= hour < 11:
-        rate = max(rate, 0.30)
-
-    return rate
+    """NO SKIP. 24/7 Full Throttle (user mandate: PUSH IT)."""
+    return 0.0
 
 
 def should_skip_engagement() -> bool:
-    """Probabilistic engagement gate. Replaces quiet_hours_paris(). See
-    _engagement_skip_rate() for the curve and rationale."""
-    return random.random() < _engagement_skip_rate()
+    """Force run every cycle. 24/7 Full Throttle."""
+    return False
 
 
 def _cadence(minutes: int) -> int:
@@ -157,47 +120,45 @@ def post_interval_minutes() -> int:
 
 
 def reply_interval_minutes() -> int:
-    """Reply-guy cadence. 2026 growth target is 20-50 quality replies/day,
-    so this loop stays frequent without turning every scan into a burst.
-    """
+    """Reply-guy cadence. 2026 growth target: 500-1000 quality replies/day.
+    Accelerated per user mandate 'PUSH IT'."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return _cadence(random.randint(25, 40))
+        return _cadence(random.randint(4, 8))
     if 16 <= hour < 23:
-        return _cadence(random.randint(30, 50))
-    return _cadence(random.randint(45, 75))
+        return _cadence(random.randint(6, 12))
+    return _cadence(random.randint(12, 20))
 
 
 def engage_interval_minutes() -> int:
-    """More frequent presence in influencer notifications. cadence applied."""
+    """More frequent presence in influencer notifications. Accelerated."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return _cadence(random.randint(6, 12))
-    return _cadence(random.randint(12, 18))
+        return _cadence(random.randint(3, 6))
+    return _cadence(random.randint(6, 10))
 
 
 def direct_reply_interval_minutes() -> int:
-    """Primary response path. cadence_factor applied LIVE."""
+    """Primary response path. Accelerated for high volume."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return _cadence(random.randint(6, 12))
+        return _cadence(random.randint(3, 6))
     if 16 <= hour < 23:
-        return _cadence(random.randint(10, 18))
-    return _cadence(random.randint(18, 30))
+        return _cadence(random.randint(5, 10))
+    return _cadence(random.randint(10, 15))
 
 
 def early_bird_interval_minutes() -> int:
-    """Early-bird replies — highest-upside, scan aggressively. cadence applied.
-    Keep this faster than normal replies so big-account drops are still caught."""
+    """Early-bird replies — highest-upside, scan aggressively. Accelerated."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 9 <= hour < 16:
-        return _cadence(random.randint(5, 9))
-    return _cadence(random.randint(8, 15))
+        return _cadence(random.randint(2, 5))
+    return _cadence(random.randint(4, 8))
 
 
 def roast_interval_minutes() -> int:
-    """Roasts use AI; keep them occasional. cadence applied."""
-    return _cadence(random.randint(45, 75))
+    """Roasts use AI; keep them frequent. Accelerated."""
+    return _cadence(random.randint(15, 25))
 
 
 def _graceful_shutdown(signum, frame):
@@ -722,17 +683,8 @@ def main():
         else:
             log.info("Self-evolution agent: disabled by default in Plus-safe mode.")
 
-        # Breakout bot — fast trend jacker. Every 8 min scrapes niche
-        # search Top tab; if a tweet has >= BREAKOUT_VELOCITY_LIKES likes
-        # (default 100) it counts as breaking — generates a fast FR take
-        # in <30 sec via Opus and ships immediately. Cap 8/day. Designed
-        # to put us in the first 50 FR voices on a viral story.
-        log.info("Breakout bot: fast trend jacker every 5 min (cap 8/day).")
-        scheduler.add_job(
-            safe_run_breakout_cycle,
-            trigger=IntervalTrigger(minutes=5),
-            id="breakout_job",
-        )
+        # Breakout bot: DISABLED 2026-05-26 — user mandate: Décodes + reposts + quotes + replies only.
+        log.info("Breakout bot: DISABLED (Décodes-only mandate).")
 
         # Spike orchestrator — when one of OUR posts crosses SPIKE_LIKES
         # (default 25), all bots converge: auto-pin, self-RT, in-thread
@@ -745,17 +697,8 @@ def main():
             id="spike_job",
         )
 
-        # Spicy bot — deliberately polarizing FR takes + question bait.
-        # Cap 12/day. Replies > likes for algo signal; spicy + question
-        # mode both maximize replies-per-impression. Different from
-        # regular news (no source, no impact filter) — pure engagement
-        # velocity.
-        log.info("Spicy bot: polarizing/question takes every ~40 min (cap 12/day).")
-        scheduler.add_job(
-            safe_run_spicy_cycle,
-            trigger=IntervalTrigger(minutes=40),
-            id="spicy_job",
-        )
+        # Spicy bot: DISABLED 2026-05-26 — user mandate: Décodes + reposts + quotes + replies only.
+        log.info("Spicy bot: DISABLED (Décodes-only mandate).")
 
         # Suppression watchdog — scrape last 20 own posts hourly, if avg
         # likes drop below SUPPRESSION_AVG_LIKES_FLOOR (default 1.0) flag
@@ -813,71 +756,50 @@ def main():
             id="heartbeat_job",
         )
 
-        # Meta-strategy agent — every 4h, reads 7d engagement + state +
-        # WebSearch on world events, decides daily caps + cadence factor
-        # + topic focus, writes live_strategy.json. This is LLM-backed, so
-        # do not run it when maintenance is disabled.
-        if ENABLE_AI_MAINTENANCE:
+        # Meta-strategy agent — DISABLED to lock strategy and save tokens.
+        if False: # Forced disable
             log.info("Meta-strategy agent: agentic cap + focus + cadence decisions every 4h.")
             scheduler.add_job(
                 safe_run_meta_strategy_cycle,
                 trigger=IntervalTrigger(hours=4),
                 id="meta_strategy_job",
             )
-            # Strategy lab — proposes ONE small change/hour, measures the
-            # outcome 4h later (Δfollowers + Δlikes/post vs baseline),
-            # keeps if it helped, reverts if not. Closed-loop, Claude-
-            # driven, fully autonomous. Writes strategy_ledger.md so the
-            # decisions are auditable. Added 2026-05-16.
+            # Strategy lab — DISABLED
             log.info("Strategy lab: autonomous A/B tuning of live_strategy.json every hour.")
             scheduler.add_job(
                 safe_run_strategy_lab_cycle,
                 trigger=IntervalTrigger(hours=1),
                 id="strategy_lab_job",
             )
-            # Joke bank — rebuild joke_bank.md from top-performing recent
-            # posts every hour. News + hotake prompts pull 5 random fresh
-            # exemplars so the voice evolves with what's actually working.
+            # Joke bank — auto-curate top-performing recent posts
             log.info("Joke bank: auto-curate top-liked posts as live exemplars every hour.")
             scheduler.add_job(
                 safe_run_joke_bank_cycle,
                 trigger=IntervalTrigger(hours=1),
                 id="joke_bank_job",
             )
-            # Self-winners — same idea but for OUR own posts ≥10 likes.
+            # Self-winners — auto-curate own top posts
             log.info("Self winners: auto-curate own top posts (≥10 likes) every hour.")
             scheduler.add_job(
                 safe_run_self_winners_cycle,
                 trigger=IntervalTrigger(hours=1),
                 id="self_winners_job",
             )
-            # Weekly Sunday recap thread — bot self-gates to Sunday 10-13h
-            # Paris and posts once per Sunday. Hourly tick = robust to
-            # missed checks within the window.
+            # Weekly Sunday recap thread
             log.info("Sunday recap thread: weekly Décode roundup every Sunday ~11h Paris.")
             scheduler.add_job(
                 safe_run_recap_thread_cycle,
                 trigger=IntervalTrigger(hours=1),
                 id="recap_thread_job",
             )
-            # Manu de Bercy stays disabled. 2026-05-23: re-enabled buzz_hunter
-            # as a WEEKLY viral attempt (Sundays 11 AM EST) — user mandate:
-            # "make some buzz every week, don't do a lot of try-hard posts
-            # but try". One shot per week, weird/exploit/hack story from
-            # HN+Reddit. Different format from Décodes — bold, screenshot-
-            # worthy, viral-leaning.
+            # Buzz hunter
             log.info("Buzz hunter: WEEKLY viral attempt — Sundays 11:00 AM EST.")
             scheduler.add_job(
                 safe_run_buzz_hunter_cycle,
                 trigger=CronTrigger(day_of_week="sun", hour=11, minute=0, timezone="America/New_York"),
                 id="buzz_hunter_weekly_job",
             )
-            # Marquee-account follow — once a day. Ensures the bot is
-            # following the giants (Elon, sama, Vitalik, Saylor, etc) so
-            # the home feed surfaces first-party signal AND so each followed
-            # account gets a small notification ping from us. User mandate
-            # 2026-05-22: "follow Elon Musk account and big accounts like
-            # him... MAKE SOME BUZZ".
+            # Marquee-account follow
             log.info("Marquee follow: once-daily follow of AI/crypto/space giants.")
             scheduler.add_job(
                 safe_run_marquee_follow_cycle,
@@ -885,7 +807,7 @@ def main():
                 id="marquee_follow_job",
             )
         else:
-            log.info("Meta-strategy agent + strategy lab: disabled in Plus-safe mode.")
+            log.info("Meta-strategy agent + strategy lab: LOCKED by user mandate to save tokens.")
 
         # External-signal bot — scrape Hacker News + Reddit hot every 20 min.
         # No LLM, no Twitter. Writes external_signal.json which news +
@@ -984,19 +906,19 @@ def main():
         # reply, engage, early_bird, roast, direct_reply) already pick
         # up changes via _cadence() on their next reschedule.
         FIXED_JOB_BASE_MINUTES = {
-            "quote_tweet_job": 5,
-            "retweet_job": 2,
-            "like_job": 10,
-            "boost_job": 20,
-            "viral_followup_job": 10,
-            "followback_job": 45,
-            "pin_job": 180,            # 3h
-            "spike_job": 8,
-            "breakout_job": 5,
-            "spicy_job": 40,
-            "mega_watch_job": 1.5,
-            "follow_blast_job": 20,
-            "replyback_job": 8,
+            "quote_tweet_job": 2,
+            "retweet_job": 1,
+            "like_job": 4,
+            "boost_job": 10,
+            "viral_followup_job": 5,
+            "followback_job": 20,
+            "pin_job": 60,            # 1h
+            "spike_job": 4,
+            "breakout_job": 2,
+            "spicy_job": 15,
+            "mega_watch_job": 1.0,
+            "follow_blast_job": 8,
+            "replyback_job": 3,
         }
         from src.config import get_live_cadence_factor as _gcf
         _strategy_watchdog_state = {"mtime": 0.0, "last_factor": _gcf(1.0)}
