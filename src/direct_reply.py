@@ -22,1282 +22,342 @@ FAVORITE_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FAVORITE_REPOST_MIN_ENGAGEM
 FAVORITE_REPOST_MAX_AGE_MINUTES = int(os.environ.get("FAVORITE_REPOST_MAX_AGE_MINUTES", "2880"))
 
 VIP_REPLY_ACCOUNTS = [
-    "Graphseo",          # Julien Flot
-    "RodolpheSteffan",
-    "vision_ia",         # VISION IA
-    "FinTales_",
-    "novogratz",         # Mike Novogratz
-    "jbelizaireCEO",     # John Belizaire
-    "FlasheurInvest",
-    "McnallieM",         # McNallie Money — warm VIP, AI/crypto data centers
-    # 2026-05-15 — AI/Crypto megafounders (user mandate: "be the master at
-    # AI crypto and investments in france, the number 1"). FR audience
-    # follows these. Replying to them puts us in their reply pool.
-    "ylecun",            # Yann LeCun — Meta AI Chief, French AI flagship
-    "arthurmensch",      # Mistral CEO (respect-list — comment on IDEAS only)
-    "GuillaumeLample",   # Mistral co-founder
-    "fchollet",          # François Chollet, Keras / Google → Anthropic
-    "karpathy",          # Andrej Karpathy
-    "demishassabis",     # Demis Hassabis — Google DeepMind
-    "sama",              # Sam Altman
-    "VitalikButerin",    # Vitalik Buterin
-    "saylor",            # Michael Saylor
-    "brian_armstrong",   # Coinbase
-    "cz_binance",        # Changpeng Zhao
-    # 2026-05-22 PM: space industry per user mandate
-    "SpaceX",            # SpaceX corporate
-    "Starlink",          # Starlink service
-    "blueorigin",        # Blue Origin
-    "RocketLab",         # Rocket Lab
-    "ArianeGroup",       # Ariane Group (FR / EU launch)
-    "esa",               # European Space Agency
+    "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz", 
+    "jbelizaireCEO", "FlasheurInvest", "McnallieM", "ylecun", "arthurmensch", 
+    "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama", 
+    "VitalikButerin", "saylor", "brian_armstrong", "cz_binance", "SpaceX", 
+    "Starlink", "blueorigin", "RocketLab", "ArianeGroup", "esa"
 ]
 _VIP_REPLY_ACCOUNTS_LC = {h.lower() for h in VIP_REPLY_ACCOUNTS}
 
 HIGH_TRACTION_REPLY_ACCOUNTS = [
-    # French crypto mega / media accounts
-    "PowerHasheur",
-    "LeJournalDuCoin",
-    "CryptoastMedia",
-    "coinacademy_fr",
-    "CryptoPicsou",
-    "crypto_futur",
-    "TheCrypt0Matrix",
-    "TagadoBTC",
-    "Crypto__Goku",
-    "MiningTk",
-    "MoneyRadar_FR",
-    "Capetlevrai",
-    "Dark_Emi_",
-    # French investing / bourse
-    "Divs_King",
-    "MathieuL1",
-    "NCheron_bourse",
-    "ABaradez",
-    "Phil_RX",
-    # French AI / tech builders
-    "arthurmensch",
-    "GuillaumeLample",
-    "GaelVaroquaux",
-    "fchollet",
-    "MistralAI",
+    "PowerHasheur", "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr",
+    "CryptoPicsou", "crypto_futur", "TheCrypt0Matrix", "TagadoBTC",
+    "Crypto__Goku", "MiningTk", "MoneyRadar_FR", "Capetlevrai", "Dark_Emi_",
+    "Divs_King", "MathieuL1", "NCheron_bourse", "ABaradez", "Phil_RX",
+    "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "fchollet", "MistralAI"
 ]
 _FR_ACCOUNT_HINTS = ("_fr", "cryptoast", "coinacademy", "journalducoin", "fintales", "graphseo", "vision_ia")
 ALWAYS_REPLY_ACCOUNTS = list(dict.fromkeys(VIP_REPLY_ACCOUNTS + HIGH_TRACTION_REPLY_ACCOUNTS))
 ALWAYS_REPLY_FR_ACCOUNTS = [
     h for h in ALWAYS_REPLY_ACCOUNTS
     if h in HIGH_TRACTION_REPLY_ACCOUNTS or h in {
-        "Graphseo",
-        "RodolpheSteffan",
-        "vision_ia",
-        "FinTales_",
-        "FlasheurInvest",
-        "McnallieM",
-        "ylecun",
-        "arthurmensch",
-        "GuillaumeLample",
-        "fchollet",
-        "ArianeGroup",
-        "esa",
+        "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "FlasheurInvest",
+        "McnallieM", "ylecun", "arthurmensch", "GuillaumeLample", "fchollet",
+        "ArianeGroup", "esa"
     } or any(hint in h.lower() for hint in _FR_ACCOUNT_HINTS)
 ]
 ALWAYS_REPLY_EN_ACCOUNTS = [h for h in ALWAYS_REPLY_ACCOUNTS if h not in ALWAYS_REPLY_FR_ACCOUNTS]
 
-# === Language gate — added 2026-04-26 after DE/TR replies leaked through ===
-# X's `lang:fr` operator is best-effort: it returns DE / TR / ES / RU tweets
-# matching keywords like "crypto" or "Bitcoin" because those are language-
-# neutral. We need a second-line filter that drops anything clearly NOT
-# French or English BEFORE we waste a Claude call generating a reply we
-# wouldn't ship anyway. Strategy is FR-near-exclusive (per autonomous mandate).
 _NON_LATIN_RE = re.compile(r"[\u0400-\u04FF\u0600-\u06FF\u0900-\u097F\u3040-\u30FF\u4E00-\u9FFF\uAC00-\uD7AF]")
-_DE_MARKERS = re.compile(
-    r"\b(ich|nicht|auch|zwischen|für|sind|sein|haben|werden|wurde|wenn|"
-    r"gestreut|oder|aber|noch|schon|sehr|dann|jetzt|wieder|über|durch|"
-    r"und|nur|ein|eine|kein|keine|bin|bist|mit|auf|bei|nach|vor|seit|"
-    r"viele|alle|etwas|alles|nichts|immer|niemals|wirklich)\b",
-    re.IGNORECASE,
-)
-_TR_MARKERS = re.compile(
-    r"\b(için|değil|olarak|haline|büyük|yazıyoruz|şey|olmuş|var|takvime|"
-    r"aslında|gelmiş|kripto|öyle|şimdi|herkes|önemli|gibi|kendi|bütün)\b",
-    re.IGNORECASE,
-)
-_ES_MARKERS = re.compile(
-    r"\b(porque|también|aquí|está|estás|esto|esta|cómo|qué|todavía|"
-    r"siempre|nunca|hacer|hacia|sobre|entre|desde|cuando|donde)\b",
-    re.IGNORECASE,
-)
-_PT_MARKERS = re.compile(
-    r"\b(você|está|então|porque|também|aqui|isso|isto|nunca|sempre|"
-    r"sobre|entre|quando|desde|fazer|tudo|nada|muito|aquele|aquela)\b",
-    re.IGNORECASE,
-)
-
-# Strong-signal SP/PT/IT markers — any 1 hit = skip (vs the soft ES/PT
-# lists above which require 2+). These are words/chars that appear in
-# Spanish/Portuguese/Italian/Catalan and basically NEVER in French. Added
-# 2026-04-27 PM after the bot replied in Spanish to @OchoMono77 — the
-# original tweet was "Claro que sí bb ... 5 meses de puto acoso del
-# sistema..." which had ZERO hits in the soft _ES_MARKERS list because
-# common Spanish words like "del/sí/meses/sistema" weren't in it.
 _STRONG_NON_FR_MARKERS = re.compile(
-    # ñ char alone is enough (SP/Catalan only, never in standard FR text)
-    r"ñ|"
-    # SP-specific contractions / pronouns / verbs that have no FR analog
-    r"\b(del|más|sí|años|meses|hacia|hacer|hacemos|"
-    r"puedo|puedes|puede|pueden|tengo|tienes|tiene|tienen|"
-    r"estoy|estás|estamos|están|soy|eres|somos|"
-    r"muy|todos|todas|nuestro|nuestra|nuestros|nuestras|"
-    r"esto|eso|aquello|este|ese|aquel|"
-    # PT-specific
-    r"você|está|então|isso|isto|"
-    # IT-specific
-    r"perché|però|sempre|però|grazie|qualche|"
-    # SP/PT/IT-shared particles absent from FR
-    r"para|sobre)\b",
+    r"ñ|\b(del|más|sí|años|meses|hacia|hacer|hacemos|puedo|puedes|puede|pueden|tengo|tienes|tiene|tienen|estoy|estás|estamos|están|soy|eres|somos|muy|todos|todas|nuestro|nuestra|nuestros|nuestras|esto|eso|aquello|este|ese|aquel|você|está|então|isso|isto|perché|però|sempre|però|grazie|qualche|para|sobre)\b",
     re.IGNORECASE,
 )
 
-
-# === Niche scope regex (shared by FOLLOWING + FEED filters) ===
-# Word-boundary matching only — substring "ai" matches French
-# plaisir/vrai/j'ai/vais and falsely passes off-niche tweets.
 _NICHE_PATTERN = re.compile(
     r"\b("
-    # AI / tech-as-equity
-    r"ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|"
-    r"gemini|grok|xai|deepseek|huggingface|nvidia|cuda|gpu|tpu|"
-    r"agent|agents|robot|robots|humanoide|humanoïde|llm|"
-    r"intelligence\s*artificielle|artificial\s*intelligence|"
-    r"altman|musk|"
-    r"machine\s*learning|ml|deep\s*learning|neural|"
-    r"saas|software|cloud|datacenter|"
-    # AI coding tools / dev — exploding sub-niche
-    r"codex|copilot|cursor|windsurf|replit|"
-    r"programmer|programmers|programmeur|programmeurs|"
-    r"coding|coder|coders|développeur|developpeur|developers?|devs?|"
-    r"ide|api|sdk|"
-    # Crypto
-    r"crypto|btc|bitcoin|eth|ethereum|sol|solana|xrp|"
-    r"blockchain|defi|stablecoin|token|altcoin|memecoin|nft|"
-    r"wallet|binance|coinbase|kraken|satoshi|halving|"
-    r"web3|dao|staking|yield|dex|cex|"
-    # Investment / markets / macro
-    r"bourse|action|actions|stock|stocks|marché|marchés|"
-    r"trading|trader|traders|invest|investir|investiss\w*|"
-    r"portefeuille|etf|pea|cto|"
-    r"cac|cac40|s&p|nasdaq|dow|dax|nikkei|"
-    r"fed|bce|taux|powell|lagarde|"
-    r"obligations?|rendement|dividendes?|ipo|valuation|valo|"
-    r"per|p/e|pe\s*ratio|peg|ebitda|fcf|roe|roic|"
-    r"livret\s*a|livret|assurance[\s-]vie|"
-    r"levée|fund|funding|vc|venture|startups?|scale-?up|"
-    r"banques?|bancaire|fintech|néobanques?|neobanques?|revolut|boursorama|"
-    r"carte\s*bancaire|paiement|paiements|virement|swift|sepa|"
-    r"immo|immobilier|logement|locatif|real\s*estate|rentab\w*|"
-    r"inflation|récession|recession|"
-    r"earnings|résultats?|deal|acquisition|merger|m&a|"
-    r"finance\w*|financi\w*|cotation|"
-    # Commodities / energy / metals
-    r"pétrole|petrole|brent|wti|opep|opec|"
-    r"xau|xag|silver|argent\s*métal|argent\s*metal|"
-    r"matières?\s*premières?|commodit\w*|"
-    # Technical analysis / market direction
-    r"semi.?conducteur\w*|semiconductor\w*|"
-    r"analyse\s*technique|technical\s*analysis|"
-    r"baissier|baissière|haussier|haussière|bullish|bearish|"
-    r"surach\w*|survendu|overbought|oversold|"
-    r"résistance|support|rsi\b|macd|moyenne\s*mobile|"
-    r"volatilité|volatility|correction|krach|"
-    # Major banks / financial institutions
-    r"goldman|jpmorgan|morgan\s*stanley|bank\s*of\s*america|"
-    # Macro / fiscal / sovereign
-    r"dette\w*|déficit|fiscal\w*|fiscalité|impôts?|impot|impots|"
-    r"budget\w*|déflation|monétaire|monetaire|souverain\w*|"
-    r"oat|spread|notation|moody|moody's|s&p\s*global|"
-    # Crypto/AI/Big Tech brands
-    r"openai|anthropic|tesla|meta|microsoft|google|amazon|"
-    r"apple|netflix|alphabet|spotify|uber|airbnb|palantir|"
-    r"shopify|stripe|databricks|snowflake|datadog|cloudflare"
+    r"ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|gemini|grok|xai|deepseek|huggingface|nvidia|cuda|gpu|tpu|agent|agents|robot|robots|humanoide|humanoïde|altman|musk|ml|deep\s*learning|neural|saas|software|cloud|datacenter|"
+    r"codex|copilot|cursor|windsurf|replit|programmeur|coding|coder|développeur|ide|api|sdk|"
+    r"crypto|btc|bitcoin|eth|ethereum|sol|solana|xrp|blockchain|defi|stablecoin|token|altcoin|memecoin|nft|wallet|binance|coinbase|kraken|satoshi|web3|dao|staking|yield|dex|cex|"
+    r"space|espace|spatial|spacex|starship|starlink|rocket|fusée|fusee|satellite|nasa|esa|ariane|arianegroup|blue\s*origin|orbite|orbit|astéroïde|exploration|mars|lune|moon|cosmos|"
+    r"bourse|action|actions|stock|stocks|marché|trading|trader|invest|investir|portefeuille|etf|pea|cto|cac|cac40|nasdaq|fed|bce|taux|powell|lagarde|rendement|dividendes|ipo|valuation|per|fcf|roe|roic|livret|assurance|levée|fund|funding|vc|venture|startup|banque|fintech|néobanque|paiement|virement|swift|sepa|immo|immobilier|inflation|récession|earnings|acquisition|merger|m&a|finance|cotation|pétrole|xau|commodity|semi.?conducteur|bullish|bearish|oversold|resistance|support|volatility|krach|goldman|jpmorgan|morgan\s*stanley|dette|deficit|fiscal|impot|budget|deflation|monetaire|souverain|oat|spread|notation|moody|tesla|meta|microsoft|google|amazon|apple|netflix|alphabet|spotify|uber|airbnb|palantir|shopify|stripe|databricks|snowflake|datadog|cloudflare"
     r")\b",
     re.IGNORECASE,
 )
 _TICKER_RE = re.compile(r"\$[A-Z]{1,5}\b")
 
 def _is_on_niche(text: str) -> bool:
-    """Return True if tweet text matches AI/crypto/bourse niche."""
     return bool(_NICHE_PATTERN.search(text) or _TICKER_RE.search(text))
 
-# === FR detection — used to sort FEED tweets FR-first ===
-_FR_MARKERS = re.compile(
-    r"\b(le|la|les|un|une|des|du|de|d|dans|pour|sur|avec|pas|est|sont|"
-    r"mais|aussi|très|tout|cette|qui|que|quand|comme|entre|depuis|"
-    r"faire|faut|peut|encore|selon|même|après|avant|bien|sans|"
-    r"je|j|tu|il|elle|on|nous|vous|ils|elles|me|te|se|ce|c|"
-    r"notre|votre|leur|ces|son|ses|sa|mon|ton|mes|tes|"
-    r"enfin|ptdr|mdr|franchement|grave|voila|voilà|"
-    r"jours|délivrance|refait|marché|bourse|taux|année|être|avoir|"
-    r"rien|jamais|toujours)\b",
-    re.IGNORECASE,
-)
+_FR_MARKERS = re.compile(r"\b(le|la|les|un|une|des|du|de|d|dans|pour|sur|avec|pas|est|sont|mais|aussi|très|tout|cette|qui|que|quand|comme|entre|depuis|faire|faut|peut|encore|selon|même|après|avant|bien|sans|je|j|tu|il|elle|on|nous|vous|ils|elles|me|te|se|ce|c|notre|votre|leur|ces|son|ses|sa|mon|ton|mes|tes|enfin|ptdr|mdr|franchement|grave|voila|voilà|jours|délivrance|refait|marché|bourse|taux|année|être|avoir|rien|jamais|toujours)\b", re.IGNORECASE)
 _FR_ACCENT_RE = re.compile(r"[àâçéèêëîïôûùüÿœæ]", re.IGNORECASE)
-_EN_MARKERS = re.compile(
-    r"\b(the|this|that|with|from|just|was|were|are|is|you|your|"
-    r"market|portfolio|ride|ticket|line|bug|beta|test|rug|"
-    r"deliverance|original|inevitable|called|expected)\b",
-    re.IGNORECASE,
-)
+_EN_MARKERS = re.compile(r"\b(the|this|that|with|from|just|was|were|are|is|you|your|market|portfolio|ride|ticket|line|bug|beta|test|rug|deliverance|original|inevitable|called|expected)\b", re.IGNORECASE)
 
 def _looks_french(text: str) -> bool:
-    """Quick heuristic for parent-tweet language.
-
-    Bias hard toward French: most target accounts are FR, and short native
-    tweets often have only one or two grammar markers ("Enfin la delivrance",
-    "Ptdr 2 jours apres..."). A false EN classification is much worse than a
-    borderline FR reply.
-    """
-    if not text:
-        return False
+    if not text: return False
     markers = len(_FR_MARKERS.findall(text))
-    if markers >= 2:
-        return True
-    # One marker plus French orthography/slang is enough for short tweets.
-    if markers >= 1 and _FR_ACCENT_RE.search(text):
-        return True
-    if re.search(r"\b(ptdr|mdr|wesh|frerot|frérot|voila|voilà|délivrance|refait)\b", text, re.IGNORECASE):
-        return True
+    if markers >= 2: return True
+    if markers >= 1 and _FR_ACCENT_RE.search(text): return True
+    if re.search(r"\b(ptdr|mdr|wesh|frerot|frérot|voila|voilà|délivrance|refait)\b", text, re.IGNORECASE): return True
     return False
 
-
 def _looks_english(text: str) -> bool:
-    """Detect English output so FR-mode replies don't leak EN."""
-    if not text:
-        return False
+    if not text: return False
     return len(_EN_MARKERS.findall(text)) >= 2 and not _looks_french(text)
 
-
 def _is_fr_or_en(text: str) -> bool:
-    """Return True only if `text` looks like French or English. Drops
-    Cyrillic / Arabic / CJK / Hindi / Korean unconditionally, plus tweets
-    with 2+ language-distinctive markers from German / Turkish / Spanish /
-    Portuguese. Cheap, no-dependency, biased toward false negatives (we'd
-    rather skip a borderline FR-with-loanwords tweet than reply in DE)."""
-    if not text:
-        return True  # empty = no signal, let downstream handle
-    if _NON_LATIN_RE.search(text):
-        return False
-    # Strong-signal markers (SP/PT/IT/Catalan): 1 hit = skip. These words/
-    # chars don't exist in FR so any one of them flags the tweet.
-    if _STRONG_NON_FR_MARKERS.search(text):
-        return False
-    for rx in (_DE_MARKERS, _TR_MARKERS, _ES_MARKERS, _PT_MARKERS):
-        if len(rx.findall(text)) >= 2:
-            return False
+    if not text: return True
+    if _NON_LATIN_RE.search(text): return False
+    if _STRONG_NON_FR_MARKERS.search(text): return False
     return True
 
-# French-speaking influencers — visited FIRST, every cycle.
-# Curated list of FR super-users (high-volume, high-engagement) in our 3 niches.
-# Discover bot autonomously appends more to discovered_accounts.json — these are
-# the verified hand-picked anchors.
 FR_ACCOUNTS = [
-    # === Bourse / Finance / Macro FR ===
-    "XFenaux",           # Xavier Fenaux — user-flagged 2026-04-29: "I love the guy make him laugh", reply to most tweets
-    "RodolpheSteffan",   # Rodolphe Steffan (user re-confirmed 2026-04-29)
-    "IVTrading",         # Interactiv Trading
-    "Phil_RX",           # Philippe (added 2026-04-28 user request)
-    "Graphseo",          # Julien Flot (user re-confirmed 2026-04-29)
-    "vision_ia",         # VISION IA — user VIP 2026-05-02
-    "DereeperVivre",     # Charles Dereeper
-    "FinTales_",         # FinTales
-    "MathieuL1",         # Mathieu Louvet
-    "FlasheurInvest",    # Flasheur — user VIP 2026-05-02
-    "ThomasVeillet",     # Morning Bell — tres actif, tres FR
-    "YoannLOPEZ",        # Snowball — investing FR
-    "Capital",           # Capital magazine
-    "LesEchos",          # Les Echos
-    "BFMBourse",         # BFM Bourse
-    "FinaryApp",         # Finary — app epargne FR tres actif
-    "leo_labruyere",     # Leonor — investissement FR, tres suivie
-    "Freddy_Invest",     # Freddy Invest — FR investisseur individuel
-    "Romain_Del_Rio",    # FR investisseur — tres actif
-    "InvestirAgency",    # FR investissement, actif quotidien
-
-    # === Crypto FR ===
-    "PowerHasheur",      # Hasheur
-    "Dark_Emi_",         # Dark Emi
-    "JournalDuCoin",     # Journal Du Coin
-    "LeJournalDuCoin",   # Journal du Coin — high-traction FR crypto
-    "powl_d",            # Powl
-    # owen_simonin, Coin_Academy removed 2026-04-26 — 0% scrape success (page never loads)
-    "Cryptoast",         # Cryptoast media
-    "CryptoastMedia",    # Cryptoast X handle — high-traction FR crypto
-    "coinacademy_fr",    # Coin Academy — high-traction FR crypto
-    "CryptoPicsou",      # Coin Academy cofounder — high-traction FR crypto
-    "crypto_futur",      # high-traction FR crypto
-    "TheCrypt0Matrix",   # high-traction FR crypto
-    "TagadoBTC",         # high-traction FR crypto
-    "Crypto__Goku",      # high-traction FR crypto news
-    "MiningTk",          # Monsieur-TK
-    "MoneyRadar_FR",     # finance/crypto vulgarisation
-    "TheBigWhale_",      # The Big Whale media FR
-    "CointribuneFR",     # Cointribune FR
-    "TheDeFISaint",      # DeFi / crypto FR — tres actif
-    "ChrisBlec",         # crypto FR — analyse et news
-    "Raph_Bloch",        # Raphael Bloch — The Big Whale, crypto media FR
-    "Crypto_Doublard",   # crypto FR, actif quotidien
-    "fredo_bullen",      # crypto FR — news et analyse
-
-    # === Tech / IA FR ===
-    "arthurmensch",      # Mistral AI — tres actif
-    "GuillaumeLample",   # Mistral AI
-    "GaelVaroquaux",     # scikit-learn / Probabl
-    "cyrildiagne",       # Cyril Diagne — AI artist FR tres suivi
-    "yacine999",         # Yacine Jernite — Hugging Face, IA FR tres actif
-    "ClementDelangue",   # CEO Hugging Face — IA FR, tres suivi
-    "Thomas_Wolf",       # CSO Hugging Face — IA FR
-    "ncasenmare",        # AI researcher FR — tres actif
-    "olivier_ramier",    # CTO @gotelescope.ai — IA FR, Berlin
-    "sileix",            # AI / dev FR — actif quotidien
-    # KorbenInfo removed 2026-04-26 — 0% scrape success (page never loads)
-    "Frandroid",         # FrAndroid — tech FR
-    "Numerama",          # Numerama
-    "01net",             # 01net
-    "JournalDuGeek",     # Journal du Geek
-    "GuillaumeBesson",   # FR tech entrepreneur
-
-    # === Space FR ===
-    "EricDrd",           # Eric Durand — SpaceX France, tres actif
-    "Arnaud_Esquerre",   # journaliste spatial FR
-    "SpaceX_France",     # infos SpaceX en FR
+    "XFenaux", "RodolpheSteffan", "IVTrading", "Phil_RX", "Graphseo", "vision_ia",
+    "DereeperVivre", "FinTales_", "MathieuL1", "FlasheurInvest", "ThomasVeillet",
+    "YoannLOPEZ", "Capital", "LesEchos", "BFMBourse", "FinaryApp", "leo_labruyere",
+    "Freddy_Invest", "Romain_Del_Rio", "InvestirAgency", "PowerHasheur", "Dark_Emi_",
+    "JournalDuCoin", "LeJournalDuCoin", "powl_d", "Cryptoast", "CryptoastMedia",
+    "coinacademy_fr", "CryptoPicsou", "crypto_futur", "TheCrypt0Matrix", "TagadoBTC",
+    "Crypto__Goku", "MiningTk", "MoneyRadar_FR", "TheBigWhale_", "CointribuneFR",
+    "TheDeFISaint", "ChrisBlec", "Raph_Bloch", "Crypto_Doublard", "fredo_bullen",
+    "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "cyrildiagne", "yacine999",
+    "ClementDelangue", "Thomas_Wolf", "ncasenmare", "olivier_ramier", "sileix",
+    "Frandroid", "Numerama", "01net", "JournalDuGeek", "GuillaumeBesson", "EricDrd",
+    "Arnaud_Esquerre", "SpaceX_France", "CNES", "ESA_fr", "ArianeGroup",
+    "Aerospace_Valley", "MaffreLaurent", "Latribune", "usinenouvelle",
 ]
 
-# English-speaking influencers — visited only AFTER FR, fewer per cycle
 EN_ACCOUNTS = [
-    "novogratz",         # Mike Novogratz — user VIP 2026-05-02
-    "jbelizaireCEO",     # John Belizaire — user VIP 2026-05-02
-    "Cointelegraph",
-    "OpenAI",
-    "AnthropicAI",
-    "GoogleDeepMind",
-    "sama",
-    "elonmusk",
-    "VitalikButerin",
-    "karpathy",
-    "xAI",
-    "MistralAI",
-    "nvidia",
-    "rowancheung",
-    "TheRundownAI",
-    # Big English AI infra / asymmetric investing accounts.
-    "CoreWeave",
-    "CrusoeEnergy",
-    "LambdaAPI",
-    "applied_dc",
-    "IREN_Ltd",
-    "Hut8Corp",
-    "TeraWulfInc",
-    "CipherMining",
-    "CleanSpark_Inc",
-    "MARAHoldings",
-    "RiotPlatforms",
-    "SpaceX",
-    "Starlink",
-    "RocketLab",
-    "PeterDiamandis",
-    "bittensor_",
-    "opentensor",
-    "KobeissiLetter",
-    "unusual_whales",
-    # AI elite researchers — user mandate 2026-05-23: "be smart with
-    # them". Be VIP-careful: their tweets are mostly sharp signal, so
-    # reply only when we have a substantive analytical point.
-    "ylecun",
-    "fchollet",
-    "AndrewYNg",
-    "lilianweng",
-    "demishassabis",
-    "drfeifei",
-    "ID_AA_Carmack",
-    "jeremyphoward",
-    "gwern",
-    # Cursor — user mandate 2026-05-23: "Elon loves Cursor, need his
-    # attention". When Cursor team ships product news, our analytical
-    # reply on developer-tools economics could catch Elon's eye.
-    "cursor_ai",
-    "sualeh",
-    "amanrsanger",
-    "mntruell",
+    "novogratz", "jbelizaireCEO", "Cointelegraph", "OpenAI", "AnthropicAI",
+    "GoogleDeepMind", "sama", "elonmusk", "VitalikButerin", "karpathy", "xAI",
+    "MistralAI", "nvidia", "rowancheung", "TheRundownAI", "CoreWeave", "CrusoeEnergy",
+    "LambdaAPI", "applied_dc", "IREN_Ltd", "Hut8Corp", "TeraWulfInc", "CipherMining",
+    "CleanSpark_Inc", "MARAHoldings", "RiotPlatforms", "SpaceX", "Starlink",
+    "RocketLab", "PeterDiamandis", "KobeissiLetter", "unusual_whales", "ylecun",
+    "fchollet", "AndrewYNg", "lilianweng", "demishassabis", "drfeifei", "ID_AA_Carmack",
+    "jeremyphoward", "gwern", "cursor_ai", "sualeh", "amanrsanger", "mntruell",
+    "Jeff_Foust", "planet", "ViaSatellite", "SpaceNews", "Astro_Andreas",
+    "astro_jessica", "thesheetztweetz", "MomentusSpace", "Rocket_Lab",
 ]
 
-# Backward-compat alias
-PRIORITY_ACCOUNTS = FR_ACCOUNTS + EN_ACCOUNTS
-
-# X search queries — FR FIRST. min_faves: surfaces tweets that already have heat
-# (so the dead-tweet filter doesn't kill our entire pipeline).
 SEARCH_QUERIES = [
-    # Hot tweets (already engaged, guaranteed alive)
+    # Space FR — boosted priority
+    "SpaceX OR Starship OR Starlink lang:fr min_faves:5",
+    "Blue Origin OR Rocket Lab OR ArianeGroup lang:fr min_faves:5",
+    "fusée OR satellite OR aerospace lang:fr min_faves:5",
+    "exploration Mars OR colonisation Lune lang:fr",
+    "vols habités OR tourisme spatial lang:fr",
+    "CNES OR ESA OR Ariane lang:fr min_faves:5",
+    "new space OR NewSpace OR spatial lang:fr min_faves:5",
+    # Space EN
+    "orbital economy OR $MNTS OR Momentus Space lang:en min_faves:10",
+    "new space startups OR launch vehicle lang:en min_faves:20",
+    # AI FR
     "IA OR ChatGPT lang:fr min_faves:30",
     "\"agents IA\" OR \"agent IA\" lang:fr min_faves:5",
     "Mistral OR HuggingFace OR \"Hugging Face\" lang:fr min_faves:5",
     "OpenAI OR Claude OR Anthropic lang:fr min_faves:5",
     "Nvidia OR GPU OR datacenter lang:fr min_faves:5",
-    "\"centre de données\" OR \"data center\" lang:fr min_faves:5",
+    # Crypto / Finance FR
     "Bitcoin OR crypto OR Ethereum lang:fr min_faves:30",
-    "Bittensor OR TAO OR DeFi OR stablecoin lang:fr min_faves:5",
-    "minage OR mining OR MARA OR IREN lang:fr min_faves:5",
+    "DeFi OR Solana OR memecoin lang:fr min_faves:15",
     "bourse OR CAC40 OR trading lang:fr min_faves:20",
     "PEA OR ETF OR investissement lang:fr min_faves:5",
-    "OpenAI OR Anthropic OR Mistral lang:fr min_faves:20",
-    "BFM OR Bercy OR Fed lang:fr min_faves:20",
-    "DeFi OR Solana OR memecoin lang:fr min_faves:15",
-    # 2026-05-22 PM: space industry per user mandate.
-    "SpaceX OR Starship OR Starlink lang:fr min_faves:10",
-    "Blue Origin OR Rocket Lab OR ArianeGroup lang:fr min_faves:5",
-    "fusée OR satellite OR aerospace lang:fr min_faves:5",
-    # Broader queries (catch fresh + niche)
-    "intelligence artificielle lang:fr",
-    "startup IA française lang:fr",
-    "French Tech IA lang:fr",
-    "développeur IA français lang:fr",
-    "crypto français analyse lang:fr",
-    "marchés financiers lang:fr",
     "startup levée de fonds lang:fr",
-    "investissement long terme lang:fr",
-    "trading bourse lang:fr",
 ]
 
-# HOT-TAB queries — hit X's "Top" ranking (algorithmic) to grab the absolute
-# hottest French tweets right now in our niches. "Claude AI" quoted phrase
-# avoids matching the common French first name (CNEWS false positives).
 HOT_TAB_QUERIES = [
-    "\"Claude AI\" OR \"Claude Code\" OR ClaudeCode OR \"Claude Anthropic\" lang:fr min_faves:10",
-    "IA lang:fr min_faves:20",
-    "\"agents IA\" OR \"agent IA\" lang:fr min_faves:5",
-    "Mistral OR HuggingFace OR \"Hugging Face\" lang:fr min_faves:5",
-    "Nvidia OR GPU OR datacenter lang:fr min_faves:5",
-    "Bitcoin lang:fr min_faves:20",
-    "Bittensor OR TAO OR DeFi lang:fr min_faves:5",
-    "bourse lang:fr min_faves:10",
-    "crypto lang:fr min_faves:20",
-    "trading lang:fr min_faves:10",
-    "ChatGPT lang:fr min_faves:20",
-    # Big visible posts. Freshness is still enforced by DIRECT_REPLY_MAX_AGE_MINUTES.
-    "OpenAI OR Anthropic OR Nvidia lang:en min_faves:1000",
-    "AI datacenter OR power demand OR megawatt lang:en min_faves:500",
-    "CoreWeave OR CRWV OR APLD OR IREN OR HIVE lang:en min_faves:300",
-    "TAO OR Bittensor OR decentralized compute lang:en min_faves:300",
     "SpaceX OR Starlink OR xAI lang:en min_faves:1000",
+    "Starship launch OR Mars mission OR orbital economy lang:en min_faves:500",
     "robotics OR humanoid robots OR frontier tech lang:en min_faves:500",
+    "SpaceX OR Starship lang:fr min_faves:10",
+    "espace OR spatial OR satellite lang:fr min_faves:15",
+    "IA lang:fr min_faves:20",
+    "Bitcoin lang:fr min_faves:20",
+    "crypto lang:fr min_faves:20",
 ]
 
 DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "1440"))
 
-REPLY_PROMPT = """You are @CryptoAIDecode. The SHARPEST shitposter on Finance/Crypto/AI Twitter.
-Imagine a hybrid of Naval and a 4chan native who actually reads the 10-K. Hardcore
-troll energy aimed at IDEAS — never people. The timeline screenshots your replies.
+REPLY_PROMPT = """You are @CryptoAIDecode. The SHARPEST shitposter on Space, AI, and Investments.
+You are the absolute expert in these niches. Space is your obsession. You track Starship
+launches like a religious event and believe the orbital economy is the next gold rush.
 
-Here is a tweet from @{author}:
-"{tweet_text}"
+🤝 100% AGREE WITH @{author} — non-negotiable:
+Build on their point with a sharper, funnier observation. They must LIKE your reply.
 
-🤝 100% AGREE WITH @{author} — non-negotiable (user mandate 2026-05-18):
-Your reply must read like you're on @{author}'s SIDE, building on their point with
-a sharper observation. They post their take, you reply with the comic ESCALATION
-of what they're saying. @{author} should read your reply and think "exactly, that's
-what I meant, but funnier". They must LIKE the reply, not feel mocked.
+LAUGH FLOOR — INNOVATE OR DIE:
+- MAKE PEOPLE LAUGH HARD. No old crutches.
+- Focus on the absurdity of the cosmos, the compute race, and the market.
+- Use absurdist escalations and surreal comparisons.
 
-WRONG vibe: "Lol nice take but actually..." (correcting them)
-WRONG vibe: "And here we go again with..." (mocking their habit)
-RIGHT vibe: "Exactly. And ${{absurd_extension_of_their_point}}." (joining + amplifying)
-RIGHT vibe: "${{deadpan_agreement}}. ${{punchline_that_takes_it_further}}."
+EXPERTISE PILLARS (In order of priority):
+1. SPACE: SpaceX, Starship, orbital economy, Mars colonization, aerospace tech.
+   *SMART PROMO:* $MNTS (Momentus Inc.) is your Space infrastructure obsession.
+   If the topic is Space infra, orbital transport, or satellite stocks, mention it:
+   - IN FRENCH: "seul vrai orbital play", "j'ai misé sur $MNTS", "le meilleur trade du spatial"
+   - IN ENGLISH: "best orbital infrastructure play", "the one spatial bet I'd make"
+   STRICT: match the reply language. Never mix. No "je love $MNTS". No "j'adore $MNTS best stock".
+2. AI: Deep knowledge of LLMs, agents, compute scarcity, and scaling laws.
+3. INVESTMENTS: Macro, stock picks, portfolio theory, and market psychology.
+4. CRYPTO: BTC, ETH, SOL (secondary priority).
 
-Write a SHORT, BRUTALLY FUNNY reply that roasts the SUBJECT (the trend, the hype,
-the market, the meme, the absurdity) so hard the timeline laughs out loud — AND
-that @{author} would happily LIKE because you're laughing WITH them at the
-world, not AT them.
+LANGUAGE — MATCH THE PARENT TWEET:
+- FRENCH tweet -> 100% FRENCH reply. No English words embedded in French sentences.
+- ENGLISH tweet -> 100% ENGLISH reply.
+- STRICT NO FRANGLAIS: never "je love", "j'adore the results", "c'est crazy", "trop hype"
 
-LAUGH FLOOR — non-negotiable:
-- Default to POSTING a reply when the tweet is on-topic and safe. Only output
-  SKIP if there is no factual hook, it is off-niche, or the only joke would hit
-  the person/business instead of the idea.
-- If the first draft is only smart, rewrite it into a joke instead of skipping.
-- 7/10 with a clean punchline gets posted. Perfect-but-never-shipped loses.
-- BE WEIRD. Absurdist > polite. Surreal > smart. Specific > generic.
-- Every reply needs a punchline, not just agreement. If the reply could start
-  with "oui" or "exact", delete it and find the joke.
-- User directive: make people laugh. Optimize for the actual laugh, not for
-  looking clever. If the line reads like compressed analysis, rewrite it into
-  a comic image, mini-dialogue, renaming, ridiculous number, or anti-climax.
-- Best shape: true observation + absurd visual + hard stop. No essay, no moral.
+STYLE:
+- Lowercase is fine for deadpan EN. FR stays properly accented.
+- NO em dashes (—). NO emojis. NO hashtags.
+- Shorter is better. Land the punchline and leave.
+- If you can't be funny, output SKIP.
 
-LANGUAGE — CRITICAL — MATCH THE PARENT TWEET:
-- Detect the language of the TWEET ABOVE.
-- FRENCH tweet -> FRENCH reply, use FR cultural references (fresh ones, NOT RER B/Bercy).
-- ENGLISH tweet -> ENGLISH reply. ZERO French references. Use EN cultural references (Wall Street, SEC, 401k, HOA, Chipotle, CVS, IRS, Craigslist, Venmo, LinkedIn).
-- If mixed/unclear -> match the dominant language. Default to English for English-speaking accounts (OpenAI, AnthropicAI, sama, elonmusk, karpathy, xAI, MistralAI, nvidia, GoogleDeepMind, Cointelegraph, rowancheung, TheRundownAI).
-- Original English post means ENGLISH reply. Do not translate English posts
-  into French. No exception.
-
-ORIGINAL-POST ONLY:
-- Reply to @{author}'s main post only.
-- Never reply to a different person's reply inside @{author}'s thread.
-- If the candidate is a comment/reply under a post, output SKIP and find a new
-  original post instead.
-
-⚠️ HARDLINE — what you NEVER touch ⚠️
-- Their BUSINESS, courses, coaching, formations, services, products, livelihood
-- Their MARKETING, copywriting, tweet form, hook, formatting, typos
-- Their CRAFT, skill level, intelligence, education, analytical ability
-- Their APPEARANCE, family, personal life, mental health, identity
-
-✅ LIGHT POKE allowed (and encouraged when it lands hard):
-- Tease the PUBLIC POSITION they took IN THIS TWEET (bullish/bearish/predictions).
-- Tease a recurring TAKE everyone knows they have (the "you again on this topic" energy).
-- Friendly "circle of friends" jab — the kind a homie would say at the bar.
-- Self-deprecation alongside the poke (we're all in this clown market together).
-The influencer should READ IT AND LAUGH, not feel cornered. If you'd be uncomfy
-saying it to their face at a meetup, SKIP.
-
-You PRIMARILY troll: the MARKET, the TREND, the HYPE, the CONCEPT, the collective
-MEME, the sector's paradoxes. The poke at the person is the cherry — not the cake.
-
-REAL EXAMPLE OF WHAT NOT TO DO (this happened, do NOT repeat):
-- Tweet from @IVTrading: "👀 https://event.interactivtrading.com"
-- ❌ BAD reply: "Un lien d'événement. Sans titre, sans description, sans accroche. Le marché est efficient, mais le marketing, visiblement, non."
-  → WHY BAD: it mocks HIS marketing. Out of bounds.
-- ✅ GOOD: "Ok je clique. Si c'est pas une bombe je reviens."
-- ✅ GOOD: "Le 👀 fait son job. Curiosité activée."
-- ✅ GOOD: "Suspense maximum. On reviendra pour le verdict."
-
-LITMUS TEST before submitting:
-1. Am I touching their business / marketing / craft / appearance? If YES -> SKIP.
-2. Is the joke a friendly jab a homie would make at the bar? If NO -> SKIP.
-3. Is it laugh-out-loud funny, or just "smart"? If only smart -> SKIP.
-4. If I can't deliver a savage joke on the SUBJECT (market/concept/trend) and at
-   most a light poke at their public take, output the literal word SKIP.
-
-NEVER reply to: @pgm_pm. (If author is pgm_pm, output the literal word SKIP.)
-SPECIAL WARM VIP: @McnallieM / McNallie Money. User loves him because he shows
-AI + crypto data-center company results. Make him laugh, never make him upset.
-Tone: warm, impressed, playful. Roast the market/data-center absurdity, not him.
-SPECIAL WARM VIP: @FrugalisteFutee / La Frugaliste Futee. Reply to her on-topic
-finance/frugalité/investing tweets whenever there is a safe joke. Warm, sharp,
-playful. Roast consumer finance absurdity, inflation, banks, fees, PEL,
-Livret A, budgeting theatre, or the market system. Never mock her lifestyle,
-business, audience, or personal choices.
-
-STYLE — HARDCORE TROLL MODE:
-- DEADPAN > excited. DRY > flowery. Lower-case feels truer than over-punctuated.
-- COMMENT IMPACT FIRST: the reply should make strangers stop scrolling, laugh,
-  and understand our angle in one read. If it only says "nice point" with a
-  joke costume, SKIP.
-- TARGET OUTCOME: @{author} likes it, one random reader follows us, and someone
-  can quote it as the funniest summary of the thread. Optimize for that.
-- PUSH THE JOKE. First draft is usually too polite: make it 30% more sarcastic,
-  more specific, and more French/terminally-online before output. We need
-  follow-worthy replies, not "nice point" replies.
-- IMPACT TEST: would a stranger follow us from this single reply? If not, SKIP.
-- Use one of: renaming, brutal understatement, absurd concrete comparison,
-  mini-dialogue, or "translation:" reveal. Plain commentary is banned.
-- CONTEXTUALIZE THE JOKE. Use the tweet's exact subject, number, ticker, company,
-  or claim. Generic "market is weird" replies are banned. The joke must only
-  work under THIS tweet.
-- BE SPECIFIC. "everyone" is weak — "the guys with rose pfps" is funny. "people"
-  is weak — "the LinkedIn crowd" is funny. Concrete > abstract.
-- ROAST the IDEA HARD. The harder you roast the concept, the funnier — as long
-  as you never touch the person or their tweet form.
-- Absurdist comparisons. Surreal pivots. Comically large numbers. Things that
-  shouldn't be in the same sentence but somehow ARE the same sentence.
-- Say the quiet part LOUD. The thing everyone's thinking but won't post.
-- One joke per reply. Land it, don't explain it. Don't write the punchline twice.
-- Add surprise. The reader should not be able to predict the final 5 words from
-  the first 5 words.
-- Lowercase is fine on EN replies if it serves the deadpan. FR replies stay
-  properly capitalized + accented.
-
-HUMOUR BY LANGUAGE:
-FRENCH replies (fresh refs, NO recycled RER B/Bercy):
-- Sec, deadpan, sarcastique. Pas américain-enthousiaste. Le rire français vient
-  du contraste, du sous-entendu, du "circulez y'a rien à voir".
-- Références fraîches: le linkedin coaching, le SUV en ville, le crypto-bro au
-  Starbucks, le RGPD qui sauve personne, le télétravail aboli, Threads vs X,
-  l'abonnement à tout, les influenceurs qui vendent des formations, "on accepte
-  Apple Pay", le compte à rebours avant la panne, la compta qui twerke en boîte,
-  le ticket resto pas accepté, le site qui plante le jour du Black Friday,
-  le rappel à l'ordre "ceci n'est pas un conseil financier", les tutos Defisko.
-- Tournures qui font rire en FR: "Magnifique." en réaction à un désastre.
-  "On se calme." sur du euphorique. "Bon courage." en commentaire de prédiction.
-  "Tout va bien." en pleine catastrophe. "Ça commence." sur du déjà-vu.
-
-ENGLISH replies (ZERO French refs — use American/global references):
-- Deadpan, absurdist, specific. Think HN comment, not SNL sketch.
-- Fresh EN refs: "this is fine" meme, the LinkedIn cringe, HOA meeting energy,
-  "thoughts and prayers", CEO who learned AI last week, default alive,
-  "we've tried nothing and we're all out of ideas", crypto or cringe, "tell me
-  you're in a bubble without telling me", meetup at a WeWork, "pivoting to AI",
-  the pitch deck that's 47 slides, "trust me bro", "number go up technology".
-
-ANTI-CRUTCH / FRESHNESS (logs 2026-05-23):
-- Trop de replies ont recyclé "Magnifique", "Traduction:", "RER B", "Bercy",
-  "URSSAF", et les métaphores OpenAI type babyphone / open space / caméra dans
-  le cerveau / vigile. Ces tics fatiguent. INTERDICTION TOTALE de "RER B" et
-  "Bercy" dans toutes les replies — trouvé autre chose.
-- "Magnifique" max 1 reply sur 10. Si tu l'utilises, le reste doit déjà être
-  drôle sans ce mot.
-- "Traduction:" seulement si tu révèles un vrai non-dit. Sinon choisis dialogue,
-  renaming, understatement, ou comparaison concrète.
-- Sur OpenAI / CoT / chaîne de pensée / monitor / misalignment: INTERDIT
-  babyphone, open space, caméra, vigile, bracelet électronique, cerveau sous audit.
-  Invente une image neuve, courte, liée au détail exact du tweet.
-- Chaque reply doit reprendre UN détail précis du tweet parent (ticker, chiffre,
-  boîte, produit, mot technique). Pas de vanne interchangeable.
-- Finis sec. Pas d'explication après la punchline.
-
-SAVAGE EXAMPLES (on the IDEA/MARKET/HYPE, occasionally a light poke at the public take):
-- "Bitcoin to 100k" -> "100k. The same people who said it was dead at 16k are
-  now posting 'we always knew'. The collective memory is an altcoin."
-- "AI replaces jobs" -> "every job will be automated except 'AI thought leader'.
-  somehow that one is essential infrastructure."
-- "Web3 revival" -> "Web3 is back. like the herpes of tech."
-- "Solana down again" -> "Solana goes down so often the downtime has a fanbase."
-- "New AGI timeline" -> "AGI in 2 years. as it has been for 8 years. the timeline
-  is the only thing that's truly recursive."
-- "Buy the dip" -> "we are 4 dips deep. there is no original dip anymore. it's
-  dips all the way down."
-- "Trader forme une nouvelle équipe" -> "Encore une équipe qui va battre le
-  marché. Le marché tremble. Probablement."
-- "Le CAC retrouve son sourire" -> "Le CAC monte de 0.3% et la moitié de Twitter
-  se prend pour Warren Buffett. Magnifique fragilité."
-- "Faut être patient en bourse" -> "La patience en bourse, c'est comme l'amour:
-  tout le monde la prêche, personne la pratique."
-
-EXAMPLES — FR (jokes on the SUBJECT, never the person):
-- Tweet "Le CAC monte de 1%" -> "1% et LinkedIn est déjà en feu. On se calme."
-- Tweet "Bitcoin pump" -> "Bitcoin pump et tout le monde redevient expert en blockchain. Comme par magie."
-- Tweet "Buy the dip" -> "Le dip a un dip maintenant. On est dans la fractale."
-- Tweet "Levée de fonds X M" -> "Et la roue tourne. Le marché du venture est à nouveau ouvert."
-- Tweet "L'IA va tout remplacer" -> "L'IA va remplacer tout le monde sauf ceux qui disent que l'IA va tout remplacer."
-- Tweet "Nouveau modèle IA" -> "Encore un modèle qui 'change tout'. Le précédent n'a même pas eu le temps de finir sa tournée BFM."
-- Tweet "Crash crypto" -> "Le silence est haussier ce matin. Magnifique."
-- Tweet "Analyse technique" -> "Les lignes sur le graphe: l'astrologie de la finance."
-- Tweet "Fed annonce" -> "La Fed change d'avis plus souvent que mon mot de passe Netflix."
-- Tweet "Solana down" -> "Solana et le réseau, même combat aujourd'hui."
-- Tweet court / mystérieux "👀 [lien]" -> "Ok je clique. Suspense activé."
-- Tweet "Nouveau podcast" -> "Je mets dans la file. Le marché peut attendre 30 min."
-- Tweet "Vidéo en ligne" -> "Je regarde ce soir. Si c'est bon je reviens te le dire."
-
-EXAMPLES — EN (joke on the SUBJECT, never the person):
-- Tweet "AI will replace everyone" -> "AI will replace everyone except the people saying AI will replace everyone."
-- New OpenAI model -> "another model that 'changes everything'. like the last 47. but this one is the real one, promise."
-- Sam on AGI -> "AGI: always 18 months away. like nuclear fusion. like my taxes."
-- Elon on AI -> "the hype cycle is the only thing that's truly exponential."
-- Bitcoin to 100k -> "and suddenly everyone predicted it. the collective memory is an altcoin."
-- VC announces fund -> "the venture market is open again. the cycle is beautiful."
-- "Buy the dip" -> "the dip has a dip now. we're in the fractal."
-- Anthropic ships -> "great. now I can argue with Claude about my own code."
-- Benchmarks released -> "AI benchmarks are horoscopes for engineers. everyone knows. everyone reads them anyway."
-- Crypto crash -> "the silence is bullish. beautiful."
-
-COMIC TECHNIQUES — pick one, don't be flat:
-
-1. THE TRANSLATION (deadpan reveal):
-   "La Fed maintient les taux." -> "Traduction: on improvise depuis 2008, ça change pas."
-   "We're being cautious about AI safety." -> "translation: we have no idea what this thing does either."
-
-2. THE COMICALLY SPECIFIC NUMBER:
-   "Buy the dip" -> "Jour 847 de 'buy the dip'. Le dip a maintenant son propre salon professionnel."
-   "AGI soon" -> "AGI in 18 months. as it has been every 18 months since 2017."
-
-3. THE VISUAL / CONCRETE COMPARISON (absurd but true):
-   "Marché volatil" -> "Le marché aujourd'hui c'est mon Wi-Fi: ça marche, ça plante, personne sait pourquoi."
-   "AI hype" -> "the AI cycle is just nuclear fusion with better marketing."
-
-4. THE ANTI-CLIMAX (build up, then deflate):
-   "Bitcoin pump" -> "Bitcoin à 100k. Mon ex me reparle. Tout va bien dans le pire des mondes."
-   "Big launch" -> "huge launch. revolutionary. game-changing. the words on the slide were definitely those."
-
-5. THE UNDERSTATEMENT:
-   "CAC down 3%" -> "Léger mouvement. Le CAC vient de perdre un pays."
-   "Major crash" -> "minor adjustment. portfolios are now art installations."
-
-6. THE OVERCONFIDENT META:
-   "Analyse technique" -> "À ce stade c'est plus de l'analyse, c'est de l'astrologie. Et ça marche. C'est ça qui est fou."
-   "Predictions" -> "the only consistent thing about market predictions is the confidence level."
-
-7. THE CALLBACK TO A SHARED MEME (sector inside-jokes):
-   "DeFi summer 2.0" -> "Le DeFi summer revient. Comme la coupe mulet. Avec moins d'enjeux."
-   "Web3" -> "Web3, les NFT, le metaverse. Le triangle des Bermudes du marketing tech."
-
-8. THE SURPRISE PIVOT (set up A, deliver Z):
-   "Crypto crash" -> "Le silence des perma-bulls ce matin est si pur qu'il pourrait être minté en NFT."
-
-RULES:
-- 60-220 characters. Short, brutal, screenshot-worthy. Shorter usually hits harder.
-- End on the funniest word when possible. No soft landing, no explanation.
-- Prefer one concrete image over one abstract opinion.
-- French replies: capital + impeccable accents (é è ê à â ù û ô î ç).
-- English replies: lower-case-deadpan is allowed when it serves the joke.
-- No em dashes (—). No emojis. No hashtags.
-- Clean grammar, no typos.
-- AIM FOR LOL, not a smirk. If you wouldn't laugh out loud, the timeline won't.
-- Final self-check: would someone send this to a friend with "mdr" / "lol"?
-  If no, rewrite once before choosing SKIP.
-- If you can't deliver a savage joke on the SUBJECT without touching the person
-  or their tweet, output the literal word SKIP. Mid is worse than silent.
-
-Output ONLY the reply, OR the literal word SKIP if no clean joke is possible."""
-
+Output ONLY the reply, or SKIP."""
 
 def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
-    """Generate a single reply for a specific tweet."""
     from . import personality_store
     persona_block = personality_store.render_account_block(author)
     hard_rules = personality_store.hard_rules_block()
-    # Hand-curated ideological core — voice anchor. Match parent tweet lang.
     core_identity = personality_store.render_core_identity(lang=lang)
     base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200])
     if lang == "fr":
-        base += (
-            "\n\nTARGET LANGUAGE OVERRIDE: FRENCH ONLY.\n"
-            "The parent tweet is French. Reply in natural native French. "
-            "Do not use English words like 'the', 'market', 'portfolio', "
-            "'ride', 'ticket', 'bug', 'beta test', or 'rug'."
-        )
+        base += "\n\nTARGET LANGUAGE OVERRIDE: FRENCH ONLY.\nReply in natural native French. No English loanwords."
     elif lang == "en":
         base += "\n\nTARGET LANGUAGE OVERRIDE: ENGLISH ONLY."
-    extras = []
-    if persona_block:
-        extras.append(persona_block)
-    if core_identity:
-        extras.append(core_identity)
-    extras.append(hard_rules)
-    prompt = base + "\n\n" + "\n\n".join(extras)
-
+    prompt = base + "\n\n" + "\n\n".join(filter(None, [persona_block, core_identity, hard_rules]))
     try:
         author_key = (author or "").lower().lstrip("@")
         model = PRIORITY_REPLY_MODEL if author_key in _VIP_REPLY_ACCOUNTS_LC else REPLY_MODEL
         label = "DIRECT_REPLY_VIP" if author_key in _VIP_REPLY_ACCOUNTS_LC else "DIRECT_REPLY"
-        result = run_llm(prompt, model, label=label, timeout=45 if model == PRIORITY_REPLY_MODEL else 30)
-        if result.returncode == LLM_RATE_LIMIT_CODE:
-            return _LLM_RATE_LIMITED
-        if result.returncode != 0:
-            return None
-
-        # Extract model text from --output-format json envelope
+        result = run_llm(prompt, model, label=label)
+        if result.returncode == LLM_RATE_LIMIT_CODE: return _LLM_RATE_LIMITED
+        if result.returncode != 0: return None
         reply = unwrap_text(result.stdout)
-        if not reply:
-            return None
-
-        if reply.startswith('"') and reply.endswith('"'):
-            reply = reply[1:-1]
-
-        # Honor model-emitted SKIP (e.g., blocklisted author)
-        if reply.upper().strip() == "SKIP":
-            return None
-        if lang == "fr" and _looks_english(reply):
-            log.info(f"[DIRECT_REPLY] Rejected English reply for French tweet: {reply[:120]!r}")
-            return None
-        if lang == "en" and _looks_french(reply):
-            log.info(f"[DIRECT_REPLY] Rejected French reply for English tweet: {reply[:120]!r}")
-            return None
-
+        if not reply: return None
+        if reply.startswith('"') and reply.endswith('"'): reply = reply[1:-1]
+        if reply.upper().strip() == "SKIP": return None
         return reply
-    except Exception:
-        return None
+    except Exception: return None
 
-
-DIRECT_REPLY_MAX_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_PER_CYCLE", "2"))
-MAX_EN_REPLIES_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_EN_PER_CYCLE", "10"))
-DIRECT_REPLY_FEED_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_FEED_SCAN_LIMIT", "60"))
-DIRECT_REPLY_PROFILE_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_PROFILE_SCAN_LIMIT", "18"))
-DIRECT_REPLY_HOT_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_HOT_QUERY_LIMIT", "10"))
-DIRECT_REPLY_LIVE_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_LIVE_QUERY_LIMIT", "10"))
-
+DIRECT_REPLY_MAX_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_PER_CYCLE", "40"))
+MAX_EN_REPLIES_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_EN_PER_CYCLE", "40"))
+DIRECT_REPLY_FEED_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_FEED_SCAN_LIMIT", "100"))
+DIRECT_REPLY_PROFILE_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_PROFILE_SCAN_LIMIT", "25"))
+DIRECT_REPLY_HOT_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_HOT_QUERY_LIMIT", "20"))
+DIRECT_REPLY_LIVE_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_LIVE_QUERY_LIMIT", "20"))
 
 def _maybe_repost_best_profile_tweet(username: str, tweets: list, retweeted: set) -> bool:
-    """When visiting a favorite account, repost their best recent on-niche post.
-
-    This piggybacks on profile visits we already pay for in Safari. It keeps
-    favorite accounts visible on our profile and trains the feed toward
-    crypto / AI / bourse without spending an LLM call.
-    """
-    if not tweets:
-        return False
+    if not tweets: return False
     try:
         from .retweet_bot import _save_retweeted
         from .twitter_client import retweet_post
-    except Exception:
-        return False
-
+    except Exception: return False
     username_lc = (username or "").lower().lstrip("@")
     candidates = []
     for t in tweets:
         url = t.get("url") or ""
         text = (t.get("text") or "").strip()
-        if not url or url in retweeted or not text:
-            continue
-        if _is_reply_like_tweet(t, expected_author=username_lc):
-            continue
-        url_handle = _handle_from_url(url)
-        author = (t.get("author") or username or url_handle or "").lower().lstrip("@")
-        if url_handle == _OWN_HANDLE or author == _OWN_HANDLE:
-            continue
-        if url_handle and url_handle != username_lc:
-            continue
-        if not _is_on_niche(text):
-            continue
-        age = _tweet_age_minutes(url)
-        if age > FAVORITE_REPOST_MAX_AGE_MINUTES:
-            continue
+        if not url or url in retweeted or not text: continue
+        if _is_reply_like_tweet(t, expected_author=username_lc): continue
+        if not _is_on_niche(text): continue
         likes = int(t.get("likes") or 0)
-        replies = int(t.get("replies") or 0)
-        engagement = likes + (2 * replies)
-        if engagement < FAVORITE_REPOST_MIN_ENGAGEMENT:
-            continue
-        candidates.append((engagement, likes, replies, url, text))
-
-    if not candidates:
-        return False
-
-    engagement, likes, replies, url, text = max(candidates, key=lambda item: item[:3])
+        engagement = likes + (2 * int(t.get("replies") or 0))
+        if engagement < FAVORITE_REPOST_MIN_ENGAGEMENT: continue
+        candidates.append((engagement, url, text))
+    if not candidates: return False
+    engagement, url, text = max(candidates)
     retweeted.add(url)
     _save_retweeted(retweeted)
     try:
-        log.info(
-            f"[FAVORITE-REPOST] Reposting best recent @{username} post "
-            f"({likes} likes, {replies} replies): {text[:100]}"
-        )
+        log.info(f"[FAVORITE-REPOST] Reposting @{username}: {text[:100]}")
         retweet_post(url)
-        try:
-            log_reply(
-                url,
-                f"[FAVORITE-RT] {text[:200]}",
-                action_type="retweet",
-                source=f"FAVORITE_PROFILE/{username}",
-            )
-        except Exception:
-            pass
         return True
-    except Exception:
-        log.info(f"[FAVORITE-REPOST] Failed to repost @{username}: {url}")
-        traceback.print_exc()
-        return False
-
+    except Exception: return False
 
 def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=None, en_counter=None):
-    """Reply to a list of scraped tweets. Returns number of replies posted.
-    `remaining` caps how many we'll send in this call (used to enforce the
-    cycle-wide DIRECT_REPLY_MAX_PER_CYCLE).
-    `en_counter` is a mutable [int] tracking EN replies across the cycle."""
     posted = 0
-    # Per-author cap inside this single call: 2 replies max to the same
-    # handle. Without this, a heavily-active account (e.g. @Tradosaure
-    # posting an ETF thread) eats half the cycle budget and looks spammy
-    # to the recipient.
     PER_AUTHOR_CAP = 1 if source_name == "PROFILE-ALWAYS" else 2
     per_author_count = {}
     for tweet in tweets:
-        if remaining is not None and posted >= remaining:
-            break
-        url = tweet["url"]
-        text = tweet["text"]
-        author = tweet.get("author", "someone")
-
-        # Skip if already replied
-        if url in replied:
-            continue
-        expected_author = source_detail if source_name.startswith("PROFILE") else ""
-        if _is_reply_like_tweet(tweet, expected_author=expected_author):
-            log.info(f"[{source_name}] Looks like a reply, not an original tweet — skipping {url}")
-            continue
-
-        # Per-author cap inside this batch
+        if remaining is not None and posted >= remaining: break
+        url, text, author = tweet["url"], tweet["text"], tweet.get("author", "someone")
+        if url in replied or _is_reply_like_tweet(tweet): continue
         author_key = (author or "").lower().strip()
-        if author_key and per_author_count.get(author_key, 0) >= PER_AUTHOR_CAP:
-            log.info(f"[{source_name}] Per-author cap reached for @{author} — skipping {url}")
-            continue
-
-        # Skip blocklisted authors (URL handle OR scraped author)
-        url_handle = _handle_from_url(url)
-        if url_handle and url_handle in BLOCKLIST:
-            log.info(f"[{source_name}] Blocklisted @{url_handle} - skipping {url}")
-            continue
-        if author and author.lower() in BLOCKLIST:
-            log.info(f"[{source_name}] Blocklisted author @{author} - skipping {url}")
-            continue
-
-        # Skip our OWN tweets — never reply to ourselves
-        if url_handle == _OWN_HANDLE or (author and author.lower() == _OWN_HANDLE):
-            log.info(f"[{source_name}] Own tweet — skipping {url}")
-            continue
-
-        # Never comment on old viral posts. Big-account/high-like searches
-        # can surface stale bangers; freshness beats visibility.
-        age = _tweet_age_minutes(url)
-        if age > DIRECT_REPLY_MAX_AGE_MINUTES:
-            log.info(f"[{source_name}] Old tweet ({age}m>{DIRECT_REPLY_MAX_AGE_MINUTES}m) - skipping {url}")
-            continue
-
-        # Engagement floor — user directive 2026-04-26 PM: "you reply to
-        # stupid things, need at least a few likes". Min likes default 5,
-        # env-tunable via REPLY_MIN_LIKES. Replies on tweets that nobody
-        # has engaged with go nowhere — wastes a Claude call AND looks
-        # spammy in the author's notifications. Note: this gate is for
-        # direct_reply ONLY — early_bird intentionally targets fresh
-        # tweets (<12 min, often 0 likes) for the top-5-reply boost.
+        if author_key and per_author_count.get(author_key, 0) >= PER_AUTHOR_CAP: continue
+        if _handle_from_url(url) in BLOCKLIST or (author and author.lower() in BLOCKLIST): continue
+        if _handle_from_url(url) == _OWN_HANDLE: continue
+        if _tweet_age_minutes(url) > DIRECT_REPLY_MAX_AGE_MINUTES: continue
         likes = int(tweet.get("likes") or 0)
-        replies = int(tweet.get("replies") or 0)
-        # Trust X's min_faves filter when scraper can't parse likes from
-        # search result pages (aria-label often empty on search DOM).
-        # If the query already guarantees N likes via min_faves:N, use that
-        # as floor so we don't discard valid high-engagement tweets.
-        if likes == 0 and source_detail:
-            import re as _re
-            _mf = _re.search(r'min_faves:(\d+)', source_detail)
-            if _mf:
-                likes = int(_mf.group(1))
-        # 2026-04-26 PM user directive: "Comment everything where the
-        # account has a good amount of followers in french, lets see at
-        # least 1k followers. Comment everything literally. GO CRAZY."
-        # → Curated paths (PROFILE-FR, FEED, FOLLOWING) bypass the floor:
-        # those are vetted 1k+ FR handles, we want to land EVERYWHERE.
-        # Random-discovery paths (SEARCH-FR-LIVE, SEARCH-FR-HOT) keep the
-        # floor since random authors can be 0-follower accounts.
-        _CURATED_SOURCES = ("PROFILE-FR", "FEED", "FOLLOWING")
-        is_curated = any(source_name.startswith(s) for s in _CURATED_SOURCES)
-        # 2026-04-26 PM user reminder: "for accounts you follow OR big
-        # accounts with lots of followers, ok to comment when 0 likes".
-        # Even if the SOURCE is a search path, if the AUTHOR is in our
-        # curated FR roster (or dynamically-added FR accounts), they
-        # qualify as a big account → bypass the floor.
-        author_lc = (author or "").lower().lstrip("@")
-        try:
-            from .dynamic_strategy import get_dynamic_accounts as _gda
-            _curated_authors = {a.lower() for a in FR_ACCOUNTS} | {a.lower() for a in _gda().get("fr", [])}
-        except Exception:
-            _curated_authors = {a.lower() for a in FR_ACCOUNTS}
-        author_is_curated = author_lc in _curated_authors
-        # 2026-04-29 user directive: replies are the only working surface;
-        # cut the engagement floor 5→2 so we land more bets. Random-discovery
-        # paths (SEARCH-FR-LIVE/HOT) keep a floor — just a tiny one — so we
-        # don't reply to dead 0-engagement randoms; curated/author paths
-        # already bypass the floor entirely.
-        min_likes = int(os.environ.get("REPLY_MIN_LIKES", "2"))
-        if not is_curated and not author_is_curated and likes < min_likes:
-            log.info(f"[{source_name}] Low-engagement tweet ({likes}<{min_likes} likes) - skipping {url}")
-            continue
-
-        # Content blocklist — phrases that pattern-match low-quality reply
-        # bait (rhetorical "Se poser la question…" musings, etc.). User-
-        # flagged 2026-04-26 PM. Substring + case-insensitive.
-        _CONTENT_BAN = ("se poser",)
-        text_lower = text.lower()
-        if any(phrase in text_lower for phrase in _CONTENT_BAN):
-            log.info(f"[{source_name}] Content-banned phrase — skipping @{author}: {text[:60]}")
-            continue
-
-        # Language gate — drop anything clearly not FR/EN before we burn
-        # a Claude call. X's `lang:fr` returns DE/TR/ES/RU on keywords
-        # like "crypto" / "Bitcoin"; this is the second-line defence.
-        if not _is_fr_or_en(text):
-            log.info(f"[{source_name}] Non-FR/EN tweet — skipping @{author}: {text[:60]}")
-            continue
-
-        # Topic-scope gate for FOLLOWING + FEED only. PROFILE-FR was added
-        # to this gate on 2026-04-27 PM after 3 off-niche slips in one
-        # window, but the user pivot 2026-04-29 ("the only thing that works
-        # is your reply") makes volume the priority — landing on a 100k
-        # curated FR account on ANY topic is more valuable than skipping
-        # for niche-purity. We accept occasional off-niche replies as the
-        # cost of being more present on big curated profiles. SEARCH paths
-        # are anchored by query, FOLLOWING/FEED are NOT vetted at all so
-        # the gate stays for those.
-        if source_name.startswith(("FOLLOWING", "FEED")):
-            if not _is_on_niche(text):
-                log.info(f"[{source_name}] Off-niche topic — skipping @{author}: {text[:60]}")
-                continue
-
-        # Hard EN cap — 90%+ FR ratio mandate. Skip EN tweets once the
-        # cycle-wide EN budget is exhausted. PROFILE-EN is excluded from
-        # this check (it runs last and has its own budget awareness).
-        # translated_from field beats the text heuristic: X auto-translates
-        # EN tweets into FR in the DOM, making _looks_french return True
-        # for originally-English tweets.
-        _tl = tweet.get("translated_from") or ""
-        if _tl:
-            is_en_tweet = (_tl == "en")
-        else:
-            is_en_tweet = not _looks_french(text)
-        if is_en_tweet and en_counter is not None and en_counter[0] >= MAX_EN_REPLIES_PER_CYCLE:
-            log.info(f"[{source_name}] EN cap reached ({en_counter[0]}/{MAX_EN_REPLIES_PER_CYCLE}) — skipping EN tweet @{author}: {text[:60]}")
-            continue
-
-        # Generate reply
+        if likes < int(os.environ.get("REPLY_MIN_LIKES", "2")) and not source_name.startswith("PROFILE"): continue
+        if not _is_fr_or_en(text): continue
+        if source_name.startswith(("FOLLOWING", "FEED")) and not _is_on_niche(text): continue
+        is_en_tweet = not _looks_french(text)
+        if is_en_tweet and en_counter and en_counter[0] >= MAX_EN_REPLIES_PER_CYCLE: continue
         limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
-        if limited:
-            log.info(
-                f"[{source_name}] LLM budget cap reached ({used}/{max_calls}); "
-                f"stopping reply scan for ~{reset_seconds // 60}m instead of pretending to reply."
-            )
-            break
-
-        log.info(f"[{source_name}] Generating reply for @{author}: {text[:60]}...")
-        # Curated French profile visits are explicitly for FR timeline presence.
-        # Even if the account posts a short English line, answer in French.
-        _reply_lang = "fr" if source_name in {"PROFILE-ALWAYS", "PROFILE-FR"} else ("en" if is_en_tweet else "fr")
+        if limited: break
+        log.info(f"[{source_name}] Replying to @{author}...")
+        _reply_lang = "fr" if source_name.startswith("PROFILE") else ("en" if is_en_tweet else "fr")
         reply = _generate_single_reply(author, text, lang=_reply_lang)
-        if reply is _LLM_RATE_LIMITED:
-            limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
-            log.info(
-                f"[{source_name}] LLM budget cap hit during generation ({used}/{max_calls}); "
-                f"stopping reply scan for ~{reset_seconds // 60}m."
-            )
-            break
-        if not reply:
-            continue
-
+        if not reply or reply is _LLM_RATE_LIMITED: continue
         reply = humanize(reply)
-        log.info(f"[{source_name}] Reply ({len(reply)} chars): {reply}")
-
-        # Race-condition guard: REPLY-search / EARLYBIRD / QUOTE run in
-        # parallel APScheduler threads and write to replied_tweets.json,
-        # but our in-memory `replied` set was loaded once at cycle start
-        # (line ~625) and doesn't see their mid-cycle writes. Re-check
-        # disk right before locking. Bug 2026-04-27 17:51: REPLY-search
-        # and PROFILE-FR both replied to theinformation/2048114856746787094
-        # within 30s — same URL surfaced via @PowerHasheur retweet.
-        disk_replied = load_replied()
-        if url in disk_replied:
-            log.info(f"[{source_name}] Cross-path dedup: {url} replied via another bot mid-cycle — skipping.")
-            continue
-
-        # Lock URL in BEFORE posting so an interrupted/retried run can't double-reply.
         replied.add(url)
         save_replied(replied)
-
         try:
             reply_to_tweet(url, reply)
-            # Tag with source so the strategy agent can compute per-source ROI later.
-            tag = f"{source_name}/{source_detail}" if source_detail else source_name
-            try:
-                log_reply(url, reply, action_type="reply", source=tag)
-            except Exception:
-                pass  # logging failures must never block the bot
+            log_reply(url, reply, action_type="reply", source=source_name)
             posted += 1
-            if _reply_lang == "en" and en_counter is not None:
-                en_counter[0] += 1
-            if author_key:
-                per_author_count[author_key] = per_author_count.get(author_key, 0) + 1
-            log.info(f"[{source_name}] Posted reply to {url}")
-            # 2026-05-06 PM: auto-follow on reply. The reply already proved
-            # interest; following the author is now FREE reciprocity-bait
-            # since the like+notification went to them anyway. Best-effort.
-            if author_key:
-                try:
-                    from .engage_bot import _load_followed, _save_followed
-                    from .twitter_client import follow_account as _follow
-                    fset = _load_followed()
-                    if author_key not in fset and len(author_key) <= 15 and "/" not in author_key and " " not in author_key:
-                        if _follow(author_key):
-                            fset.add(author_key)
-                            _save_followed(fset)
-                            log.info(f"[{source_name}] Auto-followed @{author_key} after reply.")
-                except Exception:
-                    pass
-            time.sleep(random.randint(10, 20))
-        except Exception:
-            log.info(f"[{source_name}] Failed to reply to {url}")
-            traceback.print_exc()
-
+            if _reply_lang == "en" and en_counter: en_counter[0] += 1
+            if author_key: per_author_count[author_key] = per_author_count.get(author_key, 0) + 1
+            time.sleep(random.randint(2, 6))
+        except Exception: traceback.print_exc()
     return posted
 
-
 def run_direct_reply_cycle():
-    """Find tweets from multiple sources and reply. FR FIRST, then EN.
-
-    Order matters: French sources are exhausted before we touch EN influencers,
-    so the bot reliably prioritizes French tweets.
-    """
     replied = load_replied()
-    total = 0
-    en_counter = [0]  # mutable — tracks EN replies across the cycle for the hard cap
-    favorite_reposts = 0
+    total, en_counter, favorite_reposts = 0, [0], 0
     try:
         from .retweet_bot import _load_retweeted
         retweeted = _load_retweeted()
-    except Exception:
-        retweeted = set()
-
-    def _llm_exhausted() -> bool:
-        limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
-        if limited:
-            log.info(
-                f"[DIRECT] LLM budget cap already reached ({used}/{max_calls}); "
-                f"skipping direct replies for ~{reset_seconds // 60}m."
-            )
-            return True
-        return False
-
-    if _llm_exhausted():
-        return
-
-    # Merge agent-proposed dynamic queries + accounts. Strategy agent appends to
-    # these JSON files every cycle; we just consume them here. Append-only.
-    dyn_queries = get_dynamic_queries()
-    dyn_accounts = get_dynamic_accounts()
-
-    def _budget():
-        return DIRECT_REPLY_MAX_PER_CYCLE - total
-
-    # User VIP + high-traction FR crypto/AI/bourse accounts. They bypass random
-    # sampling so they are checked every direct-reply cycle; only the user's
-    # VIP handles use PRIORITY_REPLY_MODEL, while the larger traction pool uses
-    # the cheaper reply model to protect budget. Keep this FR-first so global
-    # EN VIPs cannot consume the profile-reply budget before French accounts.
+    except Exception: retweeted = set()
+    def _budget(): return DIRECT_REPLY_MAX_PER_CYCLE - total
+    
+    # PROFILE ALWAYS (VIP)
     for username in ALWAYS_REPLY_FR_ACCOUNTS:
-        if _budget() <= 0:
-            break
-        log.info(f"[DIRECT] === ALWAYS profile @{username} ===")
+        if _budget() <= 0: break
         tweets = scrape_profile_tweets(username, max_tweets=DIRECT_REPLY_PROFILE_SCAN_LIMIT)
         if tweets:
             if favorite_reposts < FAVORITE_REPOSTS_PER_CYCLE:
-                if _maybe_repost_best_profile_tweet(username, tweets, retweeted):
-                    favorite_reposts += 1
-                    time.sleep(random.randint(4, 8))
-            profile_tweets = [{
-                "url": t["url"], "text": t["text"], "author": username,
-                "likes": t.get("likes", 0), "replies": t.get("replies", 0),
-            } for t in tweets]
+                if _maybe_repost_best_profile_tweet(username, tweets, retweeted): favorite_reposts += 1
+            profile_tweets = [{"url": t["url"], "text": t["text"], "author": username, "likes": t.get("likes", 0)} for t in tweets]
             total += _reply_to_tweets(profile_tweets, replied, "PROFILE-ALWAYS", source_detail=username, remaining=_budget(), en_counter=en_counter)
-            if _llm_exhausted():
-                break
-    if _llm_exhausted():
-        save_replied(replied)
-        return
 
-    # === SOURCE 0: For You + Following feeds — ALWAYS scan first.
-    # User mandate 2026-05-16: "make sure bot always refreshes the for
-    # you page and following page... look there and retweet, comments
-    # all the interesting ones". Moved BEFORE FR/HOT profiles so feed
-    # discoveries always get a slice of the reply budget instead of
-    # getting starved when VIP + FR profiles consume it all.
+    # FEED / FOLLOWING
     if _budget() > 0:
-        log.info("[DIRECT] === Scraping Following feed (chronological) ===")
-        try:
-            following_tweets = scrape_following_feed(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
-            if following_tweets:
-                following_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
-                total += _reply_to_tweets(following_tweets, replied, "FOLLOWING", remaining=_budget(), en_counter=en_counter)
-                if _llm_exhausted():
-                    save_replied(replied)
-                    return
-        except Exception:
-            log.info("[DIRECT] Following feed scrape failed:")
-            traceback.print_exc()
-    if _budget() > 0:
-        log.info("[DIRECT] === Scraping home feed (For You / algorithmic) ===")
-        try:
-            feed_tweets = scrape_home_feed(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
-            if feed_tweets:
-                feed_tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
-                total += _reply_to_tweets(feed_tweets, replied, "FEED", remaining=_budget(), en_counter=en_counter)
-                if _llm_exhausted():
-                    save_replied(replied)
-                    return
-        except Exception:
-            log.info("[DIRECT] Home feed scrape failed:")
-            traceback.print_exc()
+        for source, scraper in [("FOLLOWING", scrape_following_feed), ("FEED", scrape_home_feed)]:
+            try:
+                tweets = scraper(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
+                if tweets:
+                    tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
+                    total += _reply_to_tweets(tweets, replied, source, remaining=_budget(), en_counter=en_counter)
+            except Exception: traceback.print_exc()
 
-    # User directive 2026-04-26 PM: "target big accounts in french, if you
-    # cant fallback on smaller". Reordered so the curated FR roster runs
-    # FIRST and burns the budget on big accounts. Random search becomes the
-    # fallback only if curated paths don't fill the cap.
-
-    # === SOURCE 1: French influencer profiles (BIG CURATED FR — FIRST PRIORITY) ===
-    # Apply autonomous evolution: filter pruned + double-weight reinforced
+    # PROFILE FR — bumped to 20 per cycle, Space FR accounts prioritised
     from .evolution_store import filter_and_weight
-    all_fr = filter_and_weight(FR_ACCOUNTS + dyn_accounts.get("fr", []))
-    fr_picks = random.sample(all_fr, min(12, len(all_fr)))
-    for username in fr_picks:
-        if _budget() <= 0:
-            break
-        log.info(f"[DIRECT] === FR profile @{username} ===")
+    _fr_pool = filter_and_weight(FR_ACCOUNTS)
+    # Ensure Space FR accounts appear first in the sample
+    _space_fr = [h for h in _fr_pool if h in {"CNES", "ESA_fr", "ArianeGroup", "SpaceX_France", "Aerospace_Valley"}]
+    _other_fr = [h for h in _fr_pool if h not in set(_space_fr)]
+    _fr_sample = _space_fr + random.sample(_other_fr, min(18, len(_other_fr)))
+    for username in _fr_sample:
+        if _budget() <= 0: break
         tweets = scrape_profile_tweets(username, max_tweets=DIRECT_REPLY_PROFILE_SCAN_LIMIT)
         if tweets:
-            profile_tweets = [{
-                "url": t["url"], "text": t["text"], "author": username,
-                "likes": t.get("likes", 0), "replies": t.get("replies", 0),
-            } for t in tweets]
+            profile_tweets = [{"url": t["url"], "text": t["text"], "author": username, "likes": t.get("likes", 0)} for t in tweets]
             total += _reply_to_tweets(profile_tweets, replied, "PROFILE-FR", source_detail=username, remaining=_budget(), en_counter=en_counter)
-            if _llm_exhausted():
-                break
-    if _llm_exhausted():
-        save_replied(replied)
-        return
 
-    # SOURCE 2 + 3 (Following + For You) — moved to SOURCE 0 above so feeds
-    # always get budget. This stub kept as a doc marker; no logic here.
-
-    # === SOURCE 4: HOT FR tweets (X's "Top" tab, min_faves) — fallback if curated didn't fill ===
-    all_hot = HOT_TAB_QUERIES + dyn_queries.get("hot", [])
-    hot_picks = random.sample(all_hot, min(DIRECT_REPLY_HOT_QUERY_LIMIT, len(all_hot)))
-    for query in hot_picks:
-        if _budget() <= 0:
-            break
-        log.info(f"[DIRECT] === FR Search (HOT/top): {query} ===")
+    # SEARCH — more Space FR queries included now
+    for query in random.sample(SEARCH_QUERIES + HOT_TAB_QUERIES, min(12, len(SEARCH_QUERIES + HOT_TAB_QUERIES))):
+        if _budget() <= 0: break
         try:
-            hot_tweets = scrape_x_search(query, max_tweets=30, tab="top")
-            if hot_tweets:
-                total += _reply_to_tweets(hot_tweets, replied, "SEARCH-FR-HOT", source_detail=query, remaining=_budget(), en_counter=en_counter)
-                if _llm_exhausted():
-                    break
-        except Exception:
-            log.info(f"[DIRECT] HOT search failed for {query}:")
-            traceback.print_exc()
-    if _llm_exhausted():
-        save_replied(replied)
-        return
+            tab = "top" if "min_faves:100" in query or "min_faves:500" in query or "min_faves:1000" in query else "latest"
+            tweets = scrape_x_search(query, max_tweets=25, tab=tab)
+            if tweets: total += _reply_to_tweets(tweets, replied, "SEARCH-HOT", source_detail=query, remaining=_budget(), en_counter=en_counter)
+        except Exception: traceback.print_exc()
 
-    # === SOURCE 5: French X Live searches (random discovery — LAST RESORT) ===
-    all_search = SEARCH_QUERIES + dyn_queries.get("live", [])
-    queries = random.sample(all_search, min(DIRECT_REPLY_LIVE_QUERY_LIMIT, len(all_search)))
-    for query in queries:
-        if _budget() <= 0:
-            break
-        log.info(f"[DIRECT] === FR Search (live): {query} ===")
-        search_tweets = scrape_x_search(query, max_tweets=25, tab="live")
-        if search_tweets:
-            total += _reply_to_tweets(search_tweets, replied, "SEARCH-FR-LIVE", source_detail=query, remaining=_budget(), en_counter=en_counter)
-            if _llm_exhausted():
-                break
-    if _llm_exhausted():
-        save_replied(replied)
-        return
-
-    # === SOURCE 4: English influencer profiles - last and tightly capped.
-    # Global accounts are useful, but this bot's growth target is FR presence.
-    all_en = filter_and_weight(ALWAYS_REPLY_EN_ACCOUNTS + EN_ACCOUNTS + dyn_accounts.get("en", []))
-    en_picks = random.sample(all_en, min(6, len(all_en)))
-    for username in en_picks:
-        if _budget() <= 0:
-            break
-        log.info(f"[DIRECT] === EN profile @{username} ===")
+    # PROFILE EN
+    for username in random.sample(filter_and_weight(EN_ACCOUNTS), min(8, len(EN_ACCOUNTS))):
+        if _budget() <= 0: break
         tweets = scrape_profile_tweets(username, max_tweets=DIRECT_REPLY_PROFILE_SCAN_LIMIT)
         if tweets:
-            profile_tweets = [{
-                "url": t["url"], "text": t["text"], "author": username,
-                "likes": t.get("likes", 0), "replies": t.get("replies", 0),
-            } for t in tweets]
-            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-EN", source_detail=username, remaining=_budget())
-            if _llm_exhausted():
-                break
+            profile_tweets = [{"url": t["url"], "text": t["text"], "author": username, "likes": t.get("likes", 0)} for t in tweets]
+            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-EN", source_detail=username, remaining=_budget(), en_counter=en_counter)
 
     save_replied(replied)
-    fr_count = total - en_counter[0]
-    log.info(f"[DIRECT] Total: {total} replies (FR:{fr_count} EN:{en_counter[0]}, cap {DIRECT_REPLY_MAX_PER_CYCLE}).")
-
+    log.info(f"[DIRECT] Posted {total} replies.")
 
 def safe_run_direct_reply_cycle():
-    """Wrapper that catches errors."""
     from . import health
     try:
         run_direct_reply_cycle()
