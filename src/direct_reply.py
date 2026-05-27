@@ -220,7 +220,9 @@ STYLE:
 - Lowercase is fine for deadpan EN. FR stays properly accented.
 - NO em dashes (—). NO emojis. NO hashtags.
 - Shorter is better. Land the punchline and leave.
-- If you can't be funny, output SKIP.
+- On-niche tweets (Space, AI, Crypto, Bourse): ALWAYS reply. A sharp factual dunk, a hard prediction,
+  or a dry "well, obviously" counts. Do NOT SKIP on-niche content just because it's not funny enough.
+- Off-niche tweet with zero angle for Space/AI/Crypto/Bourse: output SKIP.
 
 Output ONLY the reply, or SKIP."""
 
