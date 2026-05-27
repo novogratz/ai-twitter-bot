@@ -34,15 +34,28 @@ LIVE_STRATEGY_FILE = os.path.join(_PROJECT_ROOT, "live_strategy.json")
 META_LOG_FILE = os.path.join(_PROJECT_ROOT, "meta_strategy_log.json")
 
 # Bounds the agent can NOT cross — safety rails so a bad cycle can't
-# explode caps to 1000 or freeze the bot at 0.
+# explode caps or silence the bot's original voice.
+# Minimums are HIGH on purpose: the bot MUST always have hot takes + spicy.
+# A meta-strategy that sets these to 0 is broken, not conservative.
 _BOUNDS = {
     "MAX_NEWS_PER_DAY":      (4,  20),
-    "MAX_HOTAKES_PER_DAY":   (2,  15),
-    "MAX_QUOTES_PER_DAY":    (4,  200),
-    "MAX_RETWEETS_PER_DAY":  (8,  200),
-    "MAX_BREAKOUTS_PER_DAY": (1,  50),
-    "MAX_SPICY_PER_DAY":     (1,  100),
-    "MAX_REPLIES_PER_CYCLE": (1,  25),
+    "MAX_HOTAKES_PER_DAY":   (5,  20),
+    "MAX_QUOTES_PER_DAY":    (10, 100),
+    "MAX_RETWEETS_PER_DAY":  (8,   50),
+    "MAX_BREAKOUTS_PER_DAY": (3,   15),
+    "MAX_SPICY_PER_DAY":     (4,   15),
+    "MAX_REPLIES_PER_CYCLE": (3,   10),
+}
+
+# Safe defaults used when the LLM omits a cap key entirely.
+_DEFAULTS = {
+    "MAX_NEWS_PER_DAY":      6,
+    "MAX_HOTAKES_PER_DAY":   8,
+    "MAX_QUOTES_PER_DAY":    50,
+    "MAX_RETWEETS_PER_DAY":  30,
+    "MAX_BREAKOUTS_PER_DAY": 5,
+    "MAX_SPICY_PER_DAY":     6,
+    "MAX_REPLIES_PER_CYCLE": 5,
 }
 
 
@@ -235,16 +248,19 @@ def run_meta_strategy_cycle():
             log.info(f"[META-STRAT] No JSON found: {raw[:200]!r}")
             return
 
-    # Bound caps to safety ranges. The agent is constrained but never trusted.
+    # Bound caps to safety ranges. Every key gets a value — missing keys fall
+    # back to _DEFAULTS so a lazy LLM can't silently zero out hot takes.
     raw_caps = data.get("caps") if isinstance(data, dict) else {}
     if not isinstance(raw_caps, dict):
         raw_caps = {}
-    bounded_caps = {k: _bound(k, raw_caps.get(k)) for k in _BOUNDS.keys()
-                    if raw_caps.get(k) is not None}
+    bounded_caps = {
+        k: _bound(k, raw_caps.get(k) if raw_caps.get(k) is not None else _DEFAULTS[k])
+        for k in _BOUNDS.keys()
+    }
 
     cadence = data.get("cadence_factor", 1.0)
     try:
-        cadence = max(0.6, min(1.6, float(cadence)))
+        cadence = max(0.8, min(1.4, float(cadence)))
     except (ValueError, TypeError):
         cadence = 1.0
 

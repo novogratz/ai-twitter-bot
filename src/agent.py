@@ -1805,7 +1805,29 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # showed Claude is fine on 3k prompts (6.8s) but hangs >5min on 25k.
     # Trimmed everything except: live web search results + dedup section
     # + tight voice anchor. Drops the prompt to ~12k chars.
-    performance_section = ""
+    # Inject performance insights from the analyzer bot (if available).
+    _insights_path = _os.path.join(_os.path.dirname(__file__), "..", "performance_insights.json")
+    try:
+        import json as _json
+        if _os.path.exists(_insights_path):
+            _ins = _json.load(open(_insights_path))
+            _parts = []
+            if _ins.get("top_patterns"):
+                _parts.append("Top patterns 7j: " + ", ".join(
+                    f"{p['pattern']}({p['count']})" for p in _ins["top_patterns"][:3]
+                ))
+            if _ins.get("rising_topics_24h"):
+                _parts.append("Topics en hausse 24h: " + ", ".join(
+                    r["topic"] for r in _ins["rising_topics_24h"]
+                ))
+            if _ins.get("best_topics_7d"):
+                _parts.append("Best topics 7j: " + ", ".join(
+                    f"{t['topic']}({t['count']})" for t in _ins["best_topics_7d"][:3]
+                ))
+            if _parts:
+                performance_section = "=== INSIGHTS ANALYZER ===\n" + "\n".join(_parts) + "\n=== FIN INSIGHTS ===\n\n"
+    except Exception:
+        pass
 
     # Pool injection moved BELOW topic selection — needs decode_topic.
     injected_urls = set()

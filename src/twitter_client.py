@@ -539,21 +539,30 @@ def unfollow_account(username: str) -> bool:
         webbrowser.open(profile_url)
         time.sleep(5)
 
-        # Step 1: click the "Following" button (only visible if we follow them).
+        # Step 1: click the "Following" button. Try multiple selectors since
+        # X occasionally renames data-testid values.
         click_following = '''
         tell application "Safari"
             do JavaScript "
-                var btns = document.querySelectorAll('[data-testid$=\"-unfollow\"]');
-                if (btns.length) { btns[0].click(); return 'CLICKED'; }
+                var btn = document.querySelector('[data-testid$=\"-unfollow\"]');
+                if (!btn) btn = document.querySelector('[data-testid=\"userActions\"] [role=\"button\"]');
+                if (!btn) {
+                    var spans = document.querySelectorAll('[role=\"button\"] span');
+                    for (var i = 0; i < spans.length; i++) {
+                        if (spans[i].textContent.trim() === 'Following') { btn = spans[i].closest('[role=\"button\"]'); break; }
+                    }
+                }
+                if (btn) { btn.click(); return 'CLICKED'; }
                 return 'NO_FOLLOWING_BTN';
             " in current tab of front window
         end tell
         '''
-        if not _run_applescript(click_following):
-            log.info(f"[UNFOLLOW] JS step 1 failed for @{username}.")
+        result = _run_applescript(click_following)
+        if not result or result.strip() == "NO_FOLLOWING_BTN":
+            log.info(f"[UNFOLLOW] Not following @{username} (or button not found) — skipping.")
             close_front_tab()
             return False
-        time.sleep(1.2)
+        time.sleep(1.5)
 
         # Step 2: click the confirm in the modal.
         click_confirm = '''

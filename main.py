@@ -73,6 +73,8 @@ from src.x_home_scout_bot import safe_run_home_scout_cycle
 from src.chain_reply_bot import safe_run_chain_reply_cycle
 from src.youtube_brief_bot import safe_run_youtube_brief_cycle
 from src.morning_recap_bot import safe_run_morning_recap_cycle
+from src.analyzer_bot import safe_run_analyzer_cycle
+from src.style_evolution_bot import safe_run_style_evolution_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE, _LIVE_STRATEGY_FILE as LIVE_STRATEGY_FILE
 
@@ -689,8 +691,12 @@ def main():
         else:
             log.info("Self-evolution agent: disabled by default in Plus-safe mode.")
 
-        # Breakout bot: DISABLED 2026-05-26 — user mandate: Décodes + reposts + quotes + replies only.
-        log.info("Breakout bot: DISABLED (Décodes-only mandate).")
+        log.info("Breakout bot: viral-moment amplifier every 15 min.")
+        scheduler.add_job(
+            safe_run_breakout_cycle,
+            trigger=IntervalTrigger(minutes=15),
+            id="breakout_job",
+        )
 
         # Spike orchestrator — when one of OUR posts crosses SPIKE_LIKES
         # (default 25), all bots converge: auto-pin, self-RT, in-thread
@@ -703,8 +709,12 @@ def main():
             id="spike_job",
         )
 
-        # Spicy bot: DISABLED 2026-05-26 — user mandate: Décodes + reposts + quotes + replies only.
-        log.info("Spicy bot: DISABLED (Décodes-only mandate).")
+        log.info("Spicy bot: polarizing takes + question bait every 20 min.")
+        scheduler.add_job(
+            safe_run_spicy_cycle,
+            trigger=IntervalTrigger(minutes=20),
+            id="spicy_job",
+        )
 
         # Suppression watchdog — scrape last 20 own posts hourly, if avg
         # likes drop below SUPPRESSION_AVG_LIKES_FLOOR (default 1.0) flag
@@ -762,58 +772,14 @@ def main():
             id="heartbeat_job",
         )
 
-        # Meta-strategy agent — DISABLED to lock strategy and save tokens.
-        if False: # Forced disable
-            log.info("Meta-strategy agent: agentic cap + focus + cadence decisions every 4h.")
-            scheduler.add_job(
-                safe_run_meta_strategy_cycle,
-                trigger=IntervalTrigger(hours=4),
-                id="meta_strategy_job",
-            )
-            # Strategy lab — DISABLED
-            log.info("Strategy lab: autonomous A/B tuning of live_strategy.json every hour.")
-            scheduler.add_job(
-                safe_run_strategy_lab_cycle,
-                trigger=IntervalTrigger(hours=1),
-                id="strategy_lab_job",
-            )
-            # Joke bank — auto-curate top-performing recent posts
-            log.info("Joke bank: auto-curate top-liked posts as live exemplars every hour.")
-            scheduler.add_job(
-                safe_run_joke_bank_cycle,
-                trigger=IntervalTrigger(hours=1),
-                id="joke_bank_job",
-            )
-            # Self-winners — auto-curate own top posts
-            log.info("Self winners: auto-curate own top posts (≥10 likes) every hour.")
-            scheduler.add_job(
-                safe_run_self_winners_cycle,
-                trigger=IntervalTrigger(hours=1),
-                id="self_winners_job",
-            )
-            # Weekly Sunday recap thread
-            log.info("Sunday recap thread: weekly Décode roundup every Sunday ~11h Paris.")
-            scheduler.add_job(
-                safe_run_recap_thread_cycle,
-                trigger=IntervalTrigger(hours=1),
-                id="recap_thread_job",
-            )
-            # Buzz hunter
-            log.info("Buzz hunter: WEEKLY viral attempt — Sundays 11:00 AM EST.")
-            scheduler.add_job(
-                safe_run_buzz_hunter_cycle,
-                trigger=CronTrigger(day_of_week="sun", hour=11, minute=0, timezone="America/New_York"),
-                id="buzz_hunter_weekly_job",
-            )
-            # Marquee-account follow
-            log.info("Marquee follow: once-daily follow of AI/crypto/space giants.")
-            scheduler.add_job(
-                safe_run_marquee_follow_cycle,
-                trigger=IntervalTrigger(hours=8),
-                id="marquee_follow_job",
-            )
-        else:
-            log.info("Meta-strategy agent + strategy lab: LOCKED by user mandate to save tokens.")
+        log.info("Meta-strategy agent: autonomous cap + focus + cadence decisions every 4h.")
+        scheduler.add_job(
+            safe_run_meta_strategy_cycle,
+            trigger=IntervalTrigger(hours=4),
+            id="meta_strategy_job",
+        )
+        # Strategy lab, joke bank, buzz hunter: kept off to save tokens.
+        log.info("Strategy lab + joke bank: disabled (token savers).")
 
         # External-signal bot — scrape Hacker News + Reddit hot every 20 min.
         # No LLM, no Twitter. Writes external_signal.json which news +
@@ -896,6 +862,26 @@ def main():
             safe_run_morning_recap_cycle,
             trigger=IntervalTrigger(hours=1),
             id="morning_recap_job",
+        )
+
+        # Analyzer bot — reads engagement_log every 4h, produces
+        # performance_insights.json (best patterns, hours, topics) that
+        # gets injected into news/hotake prompts. Data-driven self-improvement.
+        log.info("Analyzer bot: performance insights every 4h.")
+        scheduler.add_job(
+            safe_run_analyzer_cycle,
+            trigger=IntervalTrigger(hours=4),
+            id="analyzer_job",
+        )
+
+        # Style-evolution bot ("fashion bot") — scrapes X for viral FR
+        # crypto/IA formats, then rewrites directives.md with fresh patterns.
+        # Uses Claude Sonnet. Keeps the voice from going stale.
+        log.info("Style-evolution bot: trend-driven style refresh every 6h.")
+        scheduler.add_job(
+            safe_run_style_evolution_cycle,
+            trigger=IntervalTrigger(hours=6),
+            id="style_evolution_job",
         )
 
         # ============================================================
