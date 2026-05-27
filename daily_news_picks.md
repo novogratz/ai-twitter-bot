@@ -1404,3 +1404,39 @@ Le Marché vient de prendre conscience au travers du prospectus de l'IPO de Spac
 - **@kalshi** (871 likes, score 7/10) — JUST IN: Jensen Huang says Nvidia market cap will be "very much higher" over next 3-5 years
   - https://x.com/Kalshi/status/2059622747420987747
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 1117).
+- **@tedpillows** (255 likes, score 9/10) — What's happening with NVIDIA?
+
+While stock market is hitting new highs, $NVDA is down over 11% in just 2 weeks, erasing over $630,000,000,000 from its market value.
+  - https://x.com/TedPillows/status/2059651842217218359
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 565).
+- **@reuters** (129 likes, score 8/10) — Nvidia to spend $150 billion a year in Taiwan, 'epicentre' of AI revolution, says CEO http://reut.rs/3PNdOkq
+  - https://x.com/Reuters/status/2059541423024754867
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 163).
+- **@terawulfinc** (107 likes, score 8/10) — Had an amazing day with the @SchneiderElec team yesterday, helping to educate others on how $WULF is building world-class data centers for the future with the help of our partners 
+
+We're a show > tel
+  - https://x.com/TeraWulfInc/status/2057861971798536218
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 123).
+- **@googledeepmind** (1233 likes, score 8/10) — SynthID has already watermarked over 100 billion pieces of content, but transparency is a team sport.
+
+That’s why we’re partnering with @OpenAI, @ElevenLabs and Kakao to add SynthID watermarking to th
+  - https://x.com/GoogleDeepMind/status/2059235181274202500
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1409).
+- **@pirat_nation** (426 likes, score 8/10) — Nvidia CEO Jensen Huang said the company plans to invest about $150 billion a year in Taiwan, showing how important the country has become to the global AI industry.
+
+Speaking at the launch of Nvidia’
+  - https://x.com/Pirat_Nation/status/2059606543809781776
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 492).
+- **@terawulfinc** (252 likes, score 8/10) — BIG infrastructure expansion for $WULF 
+
+TeraWulf just acquired the 1+ GW Eastern Kentucky HPC Campus, “Muskie Data” — further expanding its growing AI & HPC infrastructure platform.
+
+Here’s what you
+  - https://x.com/TeraWulfInc/status/2059244439181144347
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 302).
+- **@stockmktnewz** (155 likes, score 8/10) — Nvidia $NVDA is larger than the next 9  chipmakers combined
+  - https://x.com/StockMKTNewz/status/2059651539925397791
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 285).
+- **@bitget** (94 likes, score 8/10) — JUST IN: NASA launches a new Moon Base mission website as plans move forward for a permanent $20B U.S. lunar base, with SpaceX’s Starship at the center of the effort.
+  - https://x.com/bitget/status/2059637949424181560
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 152).
