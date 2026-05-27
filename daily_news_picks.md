@@ -1251,3 +1251,34 @@ This means that Q2 "Other Income" will triple from Q1.
 The company holds 18,712 $BTC ahead of its IPO, per Grayscale.
   - https://x.com/Cointelegraph/status/2059593437792403833
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 242).
+- **@yianisz** (172 likes, score 9/10) — $IREN just signed another Blackwell deployment tied to its existing $3.4B AI cloud contract and raised ARR targets from $3.7B to $4.4B.
+
+That’s a +$700M run-rate increase from one deployment cycle.
+  - https://x.com/yianisz/status/2059563339852681381
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 188).
+- **@ashcrypto** (371 likes, score 8/10) — MASSIVE: €34 billion Banca Sella is set to launch crypto services, becoming the first major Italian bank to embrace crypto.
+
+58.9 Million people just got access to crypto.
+  - https://x.com/AshCrypto/status/2059592864418418968
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 557).
+- **@coinacademy_fr** (94 likes, score 8/10) — Les ETF spot Hyperliquid ont absorbé 1,04% de la capitalisation de $HYPE durant leurs 10 premiers jours.
+
+Il s’agit du lancement le plus fort pour un ETF crypto spot à ce jour devant BTC à 0,59%, ETH
+  - https://x.com/coinacademy_fr/status/2059540684416196988
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 98).
+- **@qc_capitals** (32 likes, score 8/10) — You got $400,000 to invest 
+
+Which stock makes you a millionaire by 2030?  
+
+1. $AMD
+2. $NBIS
+3. $SOFI
+4. $META
+5. $PLTR
+6. $MSFT
+7. $NOW 
+8. $IREN
+9. $MSTR
+10. $TSLA
+  - https://x.com/QC_Capitals/status/2059528221612265966
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 80).
