@@ -836,8 +836,8 @@ def run_retweet_cycle():
     # High-volume crypto/AI/bourse repost surface. Scrape FR wide first, then
     # a smaller EN fallback. Source/niche/age/dedup gates keep it on topic.
     sample = (
-        random.sample(FR_TRUSTED_HANDLES, k=min(24, len(FR_TRUSTED_HANDLES)))
-        + random.sample(EN_TRUSTED_HANDLES, k=min(10, len(EN_TRUSTED_HANDLES)))
+        random.sample(FR_TRUSTED_HANDLES, k=min(10, len(FR_TRUSTED_HANDLES)))
+        + random.sample(EN_TRUSTED_HANDLES, k=min(5, len(EN_TRUSTED_HANDLES)))
     )
     log.info(f"[RETWEET] Scraping FR-first crypto/AI/macro handles: {sample}")
 
@@ -879,15 +879,15 @@ def run_retweet_cycle():
             if not _is_on_niche(text):
                 continue
             # Same-day freshness — when scraper exposes a timestamp,
-            # skip anything older than MAX_CANDIDATE_AGE_HOURS. When
-            # it's missing the helper returns 999_999 → SKIP.
-            # 2026-05-16: removed the "engagement-implies-fresh" escape
-            # hatch — was letting 2025 tweets through because a 1-year-old
-            # crypto post can still have 1 like / 1 reply. User complaint:
-            # "stop reposting things from 2025". No timestamp = no retweet.
+            # skip anything older than MAX_CANDIDATE_AGE_HOURS.
+            # Escape hatch: trusted-handle posts with no timestamp but
+            # decent engagement (≥30 likes) are allowed — the scraper
+            # doesn't always expose timestamps, and a tweet from a
+            # whitelisted handle with 30+ likes is almost certainly recent.
             age_hours = _scrape_age_hours(t)
             if age_hours > MAX_CANDIDATE_AGE_HOURS:
-                continue
+                if not (age_hours >= 999_000 and likes >= 30):
+                    continue
             # Belt-and-suspenders source check — even though the handle
             # came from our whitelist, pull it through _has_trusted_source
             # so embedded-article logic stays consistent.
@@ -941,7 +941,7 @@ def run_retweet_cycle():
                 traceback.print_exc()
 
         is_fr_pick = any((pick.get("author") or "").lower() == h.lower() for h in FR_TRUSTED_HANDLES) or _looks_french_text(pick.get("text") or "")
-        threshold = 7 if is_fr_pick else 8
+        threshold = 6 if is_fr_pick else 7
         if score < threshold:
             log.info(f"[RETWEET] Score {score}/10 below threshold ({threshold}). Logged only.")
             continue

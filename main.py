@@ -546,18 +546,18 @@ def main():
             safe_run_quote_tweet_cycle,
             trigger=IntervalTrigger(minutes=4),
             id="quote_tweet_job",
+            max_instances=1,
         )
 
-        # Retweet bot — high-volume deterministic amplifier. Retweets are
-        # cheap/no-LLM and feed the YouTube research doc, so let the daily cap
-        # bind while source/niche/age/dedup filters keep quality bounded.
-        # 2026-05-15: 8 → 5 min ("retweet more things").
-        # 2026-05-23: 5 → 3 min ("do more reposts").
-        log.info("Retweet bot: amplifying trusted news every 2 min (multi-RT cycle, cap binds via MAX_RETWEETS_PER_DAY).")
+        # Retweet bot — high-volume deterministic amplifier. max_instances=1
+        # prevents two slow cycles from running simultaneously and blocking
+        # all other jobs; coalesce=True (job_defaults) merges missed fires.
+        log.info("Retweet bot: amplifying trusted news every 5 min (max_instances=1, cap via MAX_RETWEETS_PER_DAY).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(minutes=2),
+            trigger=IntervalTrigger(minutes=5),
             id="retweet_job",
+            max_instances=1,
         )
 
         # Daily digest — append yesterday's rollup to daily_digest.md.
@@ -907,7 +907,7 @@ def main():
         # up changes via _cadence() on their next reschedule.
         FIXED_JOB_BASE_MINUTES = {
             "quote_tweet_job": 2,
-            "retweet_job": 1,
+            "retweet_job": 5,
             "like_job": 4,
             "boost_job": 10,
             "viral_followup_job": 5,
