@@ -36,10 +36,10 @@ DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 # Daily posting limits. Defaults enforce the 2026 growth mix:
 # 3-5+ original posts/day minimum, led by "Le Décode" insight posts, with
 # quick news takes as the secondary original surface.
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "4"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "0"))
-MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "500"))
-MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "25"))
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "6"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "8"))
+MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "60"))
+MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "5"))
 
 # Accounts we never reply to. Includes both @handles AND display-name
 # variants so the blocklist still catches us when the scraper returns the
@@ -88,9 +88,8 @@ QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "clau
 
 # No budget limits — the bot calls the LLM freely.
 
-# Force-disable AI maintenance and discovery (user mandate: stop adjusting strategy / save tokens)
-ENABLE_AI_MAINTENANCE = False
-ENABLE_AI_DISCOVERY = False
+ENABLE_AI_MAINTENANCE = True
+ENABLE_AI_DISCOVERY = True
 ENABLE_CODEX_OPERATOR = False
 
 # Growth optimization settings

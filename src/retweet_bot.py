@@ -124,6 +124,44 @@ OFF_TOPIC_KEYWORDS = (
     "horoscope", "zodiac", "recipe", "cooking",
 )
 
+# Shill / pump-and-dump blocklist — tweets that match these patterns are
+# crypto spam and would tank our credibility. Never retweet these.
+SHILL_PATTERNS = (
+    "will make everyone millionaire",
+    "99% will miss",
+    "biggest retail opportunity",
+    "1000x", "100x guaranteed", "10x guaranteed",
+    "buy now before",
+    "last chance to buy",
+    "get in before",
+    "this is your last",
+    "elon is about to make",
+    "you'll be rich",
+    "retire from this",
+    "life-changing opportunity",
+    "don't miss this",
+    "no clickbait",
+    "pump incoming",
+    "next 1000x",
+    "gem alert",
+    "hidden gem",
+    "undervalued gem",
+    "to the moon",
+    "🚀🚀🚀",
+    "💎🙌",
+    "lfg 🚀",
+)
+
+
+def _is_shill(text: str) -> bool:
+    """Return True if the tweet looks like a pump/shill/spam post."""
+    t = (text or "").lower()
+    # All-caps ratio > 60% of alpha chars is a shill signal
+    alpha = [c for c in text if c.isalpha()]
+    if len(alpha) > 20 and sum(1 for c in alpha if c.isupper()) / len(alpha) > 0.6:
+        return True
+    return any(p in t for p in SHILL_PATTERNS)
+
 # Max age in hours for a retweet candidate. Anything older is stale —
 # we shouldn't be amplifying week-old or year-old news.
 MAX_CANDIDATE_AGE_HOURS = int(os.environ.get("RETWEET_MAX_AGE_HOURS", "48"))
@@ -157,9 +195,11 @@ FEED_REPOST_SEARCH_QUERIES = [
 
 
 def _is_on_niche(text: str) -> bool:
-    """Tweet must contain at least one niche keyword AND no off-topic keyword."""
+    """Tweet must contain at least one niche keyword, no off-topic keyword, and no shill."""
     t = (text or "").lower()
     if any(off in t for off in OFF_TOPIC_KEYWORDS):
+        return False
+    if _is_shill(text):
         return False
     return any(kw in t for kw in NICHE_KEYWORDS)
 
