@@ -36,8 +36,8 @@ DAILY_STATE_FILE = os.path.join(_PROJECT_ROOT, "daily_state.json")
 # Daily posting limits. Defaults enforce the 2026 growth mix:
 # 3-5+ original posts/day minimum, led by "Le Décode" insight posts, with
 # quick news takes as the secondary original surface.
-MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "20"))
-MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "15"))
+MAX_NEWS_PER_DAY = int(os.environ.get("MAX_NEWS_PER_DAY", "4"))
+MAX_HOTAKES_PER_DAY = int(os.environ.get("MAX_HOTAKES_PER_DAY", "0"))
 MAX_QUOTES_PER_DAY = int(os.environ.get("MAX_QUOTES_PER_DAY", "500"))
 MAX_REPLIES_PER_CYCLE = int(os.environ.get("MAX_REPLIES_PER_CYCLE", "25"))
 
