@@ -1063,3 +1063,39 @@ Today, as markets
 Pourtant, plus j’étudie ce secteur, plus j’ai l’impression qu’il pourrait devenir l’un des grands thèmes t
   - https://x.com/FlasheurInvest/status/2059312750455558631
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 69).
+
+## 2026-05-27
+- **@documentingbtc** (681 likes, score 9/10) — Water Use Estimated by Billions of Gallons
+
+Lawns                                ~3,285
+Almonds                           ~1,650
+Golf Courses                   ~1,000
+Data Center (Power)    ~150
+Data
+  - https://x.com/DocumentingBTC/status/2057508257460060171
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 773).
+- **@documentingbtc** (459 likes, score 8/10) — SpaceX disclosed in their IPO paperwork today the company holds 18,712 bitcoin worth $1.4 billion, more than two times as much bitcoin as previously reported.
+  - https://x.com/DocumentingBTC/status/2057209143790907600
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 507).
+- **@joinautopilot** (260 likes, score 8/10) — Breaking: Oklo is surging after Trump chooses them to receive Cold War-era, weapons-grade plutonium from dismantled U.S. nuclear warheads
+
+$OKLO has added ~$505,000,000 to its market capitalization to
+  - https://x.com/joinautopilot/status/2059352943854239876
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 278).
+- **@disclosetv** (1018 likes, score 8/10) — JUST IN - U.S. Space Force awards SpaceX $2.29 billion contract for military space data network.
+  - https://x.com/disclosetv/status/2059361913381744971
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1130).
+- **@sawyermerritt** (0 likes, score 8/10) — NASA has just launched a new website for its Moon Base missions, which aims to build a permanent $20 billion U.S. base on the Moon. @SpaceX's Starship rocket will play a big role in these missions.
+
+"
+  - https://x.com/SawyerMerritt/status/2059339897123607037
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 836).
+- **@watcherguru** (0 likes, score 8/10) — JUST IN:  US Space Force awards Elon Musk's SpaceX $2.29 billion contract to develop space-based military data network.
+  - https://x.com/WatcherGuru/status/2059364134114689403
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 638).
+- **@cointelegraph** (169 likes, score 8/10) — BIG: SpaceX has secured a $2.29 billion U.S. Space Force contract to develop a next-generation space data network.
+  - https://x.com/Cointelegraph/status/2059386132627108096
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 219).
+- **@nikkei** (116 likes, score 8/10) — Trump Made 3,700 U.S. Stock Trades: NVIDIA, Boeing, Suspicions of Profit-Seeking
+  - https://x.com/nikkei/status/2059372023847981216
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 168).
