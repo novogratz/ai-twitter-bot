@@ -58,13 +58,13 @@ RETWEET_STATE_FILE = os.path.join(_PROJECT_ROOT, "retweet_daily_state.json")
 DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 
 # Hard cap per day. Path is deterministic/no-AI, so volume is cheap.
-MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "60"))
-RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "5")))
+MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "300"))
+RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "10")))
 
-# Min likes to consider a candidate before scoring. French Twitter is smaller
-# than global EN tech Twitter, so keep a lower FR floor and a stricter EN floor.
-MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "100"))
-FR_MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_FR_MIN_LIKES", "15"))
+# Min likes to enter candidate pool. Kept very low — daily cap + dedup
+# is the real gate; the niche/source filter handles quality.
+MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "10"))
+FR_MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_FR_MIN_LIKES", "2"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -126,8 +126,8 @@ OFF_TOPIC_KEYWORDS = (
 
 # Max age in hours for a retweet candidate. Anything older is stale —
 # we shouldn't be amplifying week-old or year-old news.
-MAX_CANDIDATE_AGE_HOURS = int(os.environ.get("RETWEET_MAX_AGE_HOURS", "24"))
-FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "100"))
+MAX_CANDIDATE_AGE_HOURS = int(os.environ.get("RETWEET_MAX_AGE_HOURS", "48"))
+FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "5"))
 FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "12"))
 
 FEED_REPOST_SEARCH_QUERIES = [
@@ -886,7 +886,7 @@ def run_retweet_cycle():
             # whitelisted handle with 30+ likes is almost certainly recent.
             age_hours = _scrape_age_hours(t)
             if age_hours > MAX_CANDIDATE_AGE_HOURS:
-                if not (age_hours >= 999_000 and likes >= 30):
+                if not (age_hours >= 999_000 and likes >= 3):
                     continue
             # Belt-and-suspenders source check — even though the handle
             # came from our whitelist, pull it through _has_trusted_source
@@ -940,8 +940,7 @@ def run_retweet_cycle():
                 log.info("[RETWEET] Failed to write daily picks file:")
                 traceback.print_exc()
 
-        is_fr_pick = any((pick.get("author") or "").lower() == h.lower() for h in FR_TRUSTED_HANDLES) or _looks_french_text(pick.get("text") or "")
-        threshold = 6 if is_fr_pick else 7
+        threshold = 6  # post everything that passes niche/source/dedup
         if score < threshold:
             log.info(f"[RETWEET] Score {score}/10 below threshold ({threshold}). Logged only.")
             continue
