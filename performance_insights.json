@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-05-27T19:55:26.052833",
-  "window_7d_actions": 2084,
-  "window_24h_actions": 231,
+  "generated_at": "2026-05-28T01:36:05.192486",
+  "window_7d_actions": 2038,
+  "window_24h_actions": 222,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 1949
+      "count": 1903
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 62
+      "count": 61
     },
     {
       "pattern": "DIALOGUE",
@@ -17,11 +17,11 @@
     },
     {
       "pattern": "METAPHOR",
-      "count": 18
+      "count": 19
     },
     {
       "pattern": "RENAME",
-      "count": 16
+      "count": 18
     }
   ],
   "worst_patterns": [
@@ -31,11 +31,11 @@
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 14
+      "count": 12
     },
     {
       "pattern": "RENAME",
-      "count": 16
+      "count": 18
     }
   ],
   "best_hours_utc": [
@@ -48,68 +48,68 @@
       "actions": 108
     },
     {
-      "hour": 22,
-      "actions": 102
-    },
-    {
       "hour": 16,
       "actions": 102
     },
     {
       "hour": 4,
       "actions": 100
+    },
+    {
+      "hour": 6,
+      "actions": 100
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 732
+      "count": 713
     },
     {
       "topic": "IA",
-      "count": 638
+      "count": 621
     },
     {
       "topic": "Bourse",
-      "count": 462
+      "count": 454
     },
     {
       "topic": "Crypto",
-      "count": 419
+      "count": 413
     },
     {
       "topic": "Spatial",
-      "count": 188
+      "count": 186
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "IA",
-      "24h_rate": 0.398,
-      "7d_rate": 0.306
+      "24h_rate": 0.419,
+      "7d_rate": 0.305
     },
     {
       "topic": "Spatial",
-      "24h_rate": 0.299,
-      "7d_rate": 0.09
+      "24h_rate": 0.315,
+      "7d_rate": 0.091
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1262
+      "count": 1246
     },
     {
       "type": "retweet",
-      "count": 630
+      "count": 595
     },
     {
       "type": "quote",
-      "count": 98
+      "count": 99
     },
     {
       "type": "post",
-      "count": 74
+      "count": 78
     },
     {
       "type": "hotake",
@@ -118,18 +118,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-05-27T18:59:02.980411",
-      "text": "Altman promet la fin des corvées. Résultat : OpenAI facture 1Md$/an pour l'électricité de Stargate et l'impression que vous servez de batterie humaine gratuite.",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-05-27T18:19:52.045479",
-      "text": "Paul : \"L'IA va détruire 40% des emplois de bureau.\" Le syndicat de l'IA qui arrive à 18h : \"Oui, mais qui tamponne le bon de sortie ?\"",
+      "ts": "2026-05-28T01:32:06.962386",
+      "text": "@Frandroid\n\nLe vrai coût de Starship, c'est pas le lanceur. C'est l'ingénieur qui arrive à 6h pour réparer la pompe à essence qui a explosé à 3h.\n\nNvidia paie les stars, Bercy paie la troupe.",
       "type": "reply"
     },
     {
-      "ts": "2026-05-27T18:00:22.123292",
-      "text": "@coreweave wants you to believe GPU capacity is the moat.\nIt’s not. It’s the rent. The real moat is knowing which datacenter has power left and which one is just a server farm in the desert waiting for the grid.",
+      "ts": "2026-05-28T01:28:03.656474",
+      "text": "Le S&P 500 à 6000. C'est un compte bancaire qui fait des allers-retours perpétuels entre le Guichet et l'Atelier, convaincu qu'il économise en marchant.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-05-28T00:46:53.567636",
+      "text": "Le vrai marché des datacenters, c'est pas les GPUs.\nC'est l'eau.",
       "type": "reply"
     }
   ]
