@@ -103,12 +103,13 @@ For full operations playbook see [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
 
 ## Skills
 
-User-invokable slash commands live under `.claude/skills/` (mirrored at `.codex/skills/`). 24 skills, each is a directory with a `SKILL.md` file:
+User-invokable slash commands live under `.claude/skills/` (mirrored at `.codex/skills/`). 25 skills, each is a directory with a `SKILL.md` file:
 
 - **Lifecycle**: `start`, `stop`, `restart`, `status`, `run-agent`
 - **Manual triggers**: `post`, `reply`, `engage`, `boost`, `hotake`, `news`, `tweet`, `thread`, `dryrun`
 - **Account ops**: `follow`, `like`, `accounts`, `history`
 - **Telemetry**: `logs`, `stats`, `config`, `reset`, `improve`
+- **Weekly strategy**: `strategy` — Claude-powered weekly review (style evolution + prompt tuning)
 
 Skill format (frontmatter YAML):
 
@@ -182,7 +183,7 @@ for discovery/scout):
 | `self_evolution_agent` | 4h | `bot_self_fr.json` + `bot_self_en.json` (mood, obsession, character_traits, en_voice, drift, self_narrative) |
 | `scout_agent` | 4h | `dynamic_accounts.json` + auto-follows |
 | `analyzer_bot` | 4h | `performance_insights.json` (top patterns, best hours, rising topics, viral examples) |
-| `style_evolution_bot` | 6h | `directives.md` — scrapes viral X formats, rewrites style guide with Claude Sonnet |
+| `style_evolution_bot` | 168h (weekly) | `directives.md` — scrapes viral X formats, rewrites style guide with Claude Sonnet |
 | `performance.py` | 2h | `performance_log.json` + `learnings.json` |
 | `daily_digest` | 1h (idempotent) | `daily_digest.md` |
 

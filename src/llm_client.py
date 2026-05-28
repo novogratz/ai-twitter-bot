@@ -676,8 +676,9 @@ def run_llm(
     permission_mode: Optional[str] = None,
     timeout: Optional[int] = None,
     cwd: Optional[str] = None,
+    force_provider: Optional[str] = None,
 ) -> LLMResult:
-    provider = _provider()
+    provider = force_provider or _provider()
 
     # When the user has set AI_CLI=ollama/opencode, route everything through
     # the local Ollama HTTP path. The old opencode CLI subprocess path hung
