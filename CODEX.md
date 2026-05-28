@@ -40,11 +40,10 @@ startup valuation). Prompts now explicitly prefer actor +
 exact number + consequence, and avoid abstract standalone one-liners
 that do not carry a verifiable fact.
 
-Daily Decode schedule: **single** cron at 06:00 `America/New_York` (`daily_news_job`)
-targeting the North American morning scroll (2026-05-28 pivot, supersedes the
-two-cron FR schedule). Weekly fires Friday at 06:30 EST. `MAX_NEWS_PER_DAY` caps
-the daily total; per-`(topic, format)` dedup (`daily_topic_state.json`) prevents
-topic repetition across restarts.
+Daily Decode schedule: cron at 07:00 `America/New_York` (`daily_news_job`).
+Weekly fires at startup AND cron Fridays at 07:00 EST.
+`MAX_NEWS_PER_DAY` caps the daily total; per-`(topic, format)` dedup
+(`daily_topic_state.json`) prevents topic repetition across restarts.
 
 **Scheduler hardening (2026-05-26):** `BlockingScheduler` runs with
 `misfire_grace_time=3600`, `coalesce=True`, `max_instances=2`, and a

@@ -176,12 +176,12 @@ def _clear_topics_done_today_for_format(format_kind: str) -> None:
 
 
 def _is_in_daily_window() -> bool:
-    """Daily Decodes fire at 6 AM EST (North American morning push, 2026-05-28).
-    Window 5-9 AM EST gives the cron + a 3h buffer if startup is delayed.
+    """Daily Decodes fire at 7 AM EST (North American morning push, 2026-05-28).
+    Window 6-10 AM EST gives the cron + a 3h buffer if startup is delayed.
     """
     from zoneinfo import ZoneInfo
     now = datetime.now(ZoneInfo("America/New_York"))
-    return 5 <= now.hour < 9
+    return 6 <= now.hour < 10
 
 
 def _is_in_weekly_window() -> bool:
