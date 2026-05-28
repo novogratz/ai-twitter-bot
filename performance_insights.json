@@ -1,15 +1,19 @@
 {
-  "generated_at": "2026-05-28T05:36:03.958020",
-  "window_7d_actions": 1997,
-  "window_24h_actions": 218,
+  "generated_at": "2026-05-28T13:00:46.704865",
+  "window_7d_actions": 1905,
+  "window_24h_actions": 164,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 1866
+      "count": 1770
     },
     {
       "pattern": "FR_ANCHOR",
       "count": 60
+    },
+    {
+      "pattern": "METAPHOR",
+      "count": 23
     },
     {
       "pattern": "DIALOGUE",
@@ -17,17 +21,13 @@
     },
     {
       "pattern": "RENAME",
-      "count": 18
-    },
-    {
-      "pattern": "METAPHOR",
-      "count": 18
+      "count": 16
     }
   ],
   "worst_patterns": [
     {
       "pattern": "REPETITION",
-      "count": 4
+      "count": 5
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -35,81 +35,81 @@
     },
     {
       "pattern": "RENAME",
-      "count": 18
+      "count": 16
     }
   ],
   "best_hours_utc": [
-    {
-      "hour": 11,
-      "actions": 117
-    },
     {
       "hour": 16,
       "actions": 102
     },
     {
-      "hour": 5,
-      "actions": 100
+      "hour": 4,
+      "actions": 98
+    },
+    {
+      "hour": 11,
+      "actions": 98
+    },
+    {
+      "hour": 21,
+      "actions": 97
     },
     {
       "hour": 6,
-      "actions": 100
-    },
-    {
-      "hour": 7,
-      "actions": 100
+      "actions": 96
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 685
+      "count": 633
     },
     {
       "topic": "IA",
-      "count": 616
+      "count": 591
     },
     {
       "topic": "Bourse",
-      "count": 451
+      "count": 435
     },
     {
       "topic": "Crypto",
-      "count": 406
+      "count": 388
     },
     {
       "topic": "Spatial",
-      "count": 187
+      "count": 188
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "IA",
-      "24h_rate": 0.431,
-      "7d_rate": 0.308
+      "24h_rate": 0.421,
+      "7d_rate": 0.31
     },
     {
       "topic": "Spatial",
-      "24h_rate": 0.257,
-      "7d_rate": 0.094
+      "24h_rate": 0.22,
+      "7d_rate": 0.099
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1214
+      "count": 1138
     },
     {
       "type": "retweet",
-      "count": 587
+      "count": 568
     },
     {
       "type": "quote",
-      "count": 101
+      "count": 97
     },
     {
       "type": "post",
-      "count": 78
+      "count": 85
     },
     {
       "type": "hotake",
@@ -118,18 +118,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-05-28T05:32:57.613020",
-      "text": "La Bourse française pleure sa croissance molle, pendant que Musk transforme l'orbite en champ de course orbital.\n\nBercy compte les sous de la cafétériai, SpaceX vend le droit de vivre ailleurs avant même qu'on ait fini de rénover les toilettes.",
+      "ts": "2026-05-28T12:59:38.627692",
+      "text": "Sama, le seul mec au monde qui peut faire une pause 2 minutes et être plus rentable que toi sur l'année.",
       "type": "reply"
     },
     {
-      "ts": "2026-05-28T05:31:02.712960",
-      "text": "Stargate at $100B. China buys 50% of the world’s lithium. Iran gets the nuke, Silicon Valley gets the tax deduction.",
-      "type": "quote"
+      "ts": "2026-05-28T12:46:39.068147",
+      "text": "The real story is that AI is the most violent deflation since the electric motor, and Classic SaaS is already dead.\n\nSeat-based pricing is a toll booth on a highway that just got paved over with open-weight agents.",
+      "type": "reply"
     },
     {
-      "ts": "2026-05-28T05:28:26.606011",
-      "text": "The prompt ended with \"/no_think\" and no source tweet, but the persona and instructions are active.\nTo comply with \"Always reply\" for on-niche content and \"Output ONLY the reply\", I will generate a standalone hard take that establishes the voice and adheres to the \"No English loa",
+      "ts": "2026-05-28T12:43:51.902356",
+      "text": "Solana down again. Le market est en train de tester si le support tient ou si on doit en refaire un autre.",
       "type": "reply"
     }
   ]

@@ -1104,5 +1104,64 @@
       }
     ],
     "summary": "Un m\u00e9lange solide de fondateurs d'IA fran\u00e7ais et de v\u00e9t\u00e9rans du trading qu\u00e9b\u00e9cois, loin des vendeurs de r\u00eave habituels."
+  },
+  {
+    "ts": "2026-05-28T11:19:26.772863",
+    "raw_count": 7,
+    "kept_count": 7,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "yann_lecun_fr",
+        "region": "france",
+        "niche": "ai",
+        "followers": 95000,
+        "reason": "Le grand-p\u00e8re de l'IA en France, twitte ses th\u00e8ses profondes avec une rigueur qui pique, mais reste accessible."
+      },
+      {
+        "handle": "johann_debord",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 80000,
+        "reason": "L'ex-de BFM Bourse qui a le style sec d'un trader qui a vu trop de bulles \u00e9clater, sans le blabla politique."
+      },
+      {
+        "handle": "crypto_fr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "La r\u00e9f\u00e9rence pour les charts et la macro crypto en FR, z\u00e9ro promo de cours de trading \u00e0 99\u20ac."
+      },
+      {
+        "handle": "guillaumepucelle",
+        "region": "france",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "CEO de Blablacar, il couvre la tech scale-up avec un ton franc-parler qui d\u00e9construit le hype US."
+      },
+      {
+        "handle": "david_daoust",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "L'analyse fondamentale qu\u00e9b\u00e9coise par excellence, pas de sentimentalistes ici, juste des chiffres et du sens."
+      },
+      {
+        "handle": "marches_moins",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 18000,
+        "reason": "Le blogueur qui d\u00e9crypte la fiscalit\u00e9 et les march\u00e9s avec une pr\u00e9cision chirurgicale, indispensable pour les QC."
+      },
+      {
+        "handle": "francois_delattre",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Franchis\u00e9 US de la crypto, il traduire le jargon DeFi en concepts business tangibles pour la diaspora."
+      }
+    ],
+    "summary": "Une s\u00e9lection pure-plateforme : des profils techniques qui twittent pour eux-m\u00eames, pas pour vendre du vent. Le mix France/Quebec/USA couvre les angles macro et micro sans redondance politique."
   }
 ]

@@ -110,7 +110,12 @@
     "PhilippeCyr",
     "PierreBourque",
     "MarcFeldman",
-    "JulienBouchard_"
+    "JulienBouchard_",
+    "yann_lecun_fr",
+    "johann_debord",
+    "crypto_fr",
+    "david_daoust",
+    "marches_moins"
   ],
   "en": [
     "blablacar",
@@ -740,6 +745,31 @@
     {
       "lang": "fr",
       "handle": "JulienBouchard_",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "yann_lecun_fr",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "johann_debord",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "crypto_fr",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "david_daoust",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "marches_moins",
       "added": "2026-05-28"
     }
   ]
