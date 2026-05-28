@@ -14,8 +14,9 @@
 >      Pas de macro générique (Fed minutes pure, CAC40 banques, etc).
 >
 > Si le sujet ne tombe dans aucune des 3 catégories → SKIP.
-> LANGUE: FRANÇAIS uniquement pour les posts standalone. Les replies
-> matchent la langue du tweet parent (FR priorité).
+> LANGUAGE: ENGLISH only for standalone content (news, hot takes,
+> breakouts, threads, quotes, reposts). Replies match the parent
+> tweet's language — French only when replying to French content.
 >
 > SÉRIE: Le Décode Daily (1 par topic / jour, 7h Paris) + Le Décode
 > Weekly (Top 5 chiffres / topic, Fridays 13h Paris). C'est la colonne

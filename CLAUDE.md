@@ -2,9 +2,9 @@
 
 Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). Use whichever CLI you have authenticated.
 
-> 🤖 **Infos IA et Crypto, avant tout le monde. Analyses pointues. Zéro bullshit, zéro blabla. Vous me détesterez jusqu'à ce que j'aie raison.** ⚡
+> 🤖 **Crypto + AI + Markets + Space, decoded before everyone else. Sharp analysis. Zero bullshit, zero filler. You'll hate me until I'm right.** ⚡
 
-> **Mandate 2026-05-13:** FR only. Scope = IA + Crypto only (no bourse / actions / macro). Goal = thousands of followers + likes.
+> **Mandate 2026-05-27:** Full English pivot (supersedes the FR-only mandate). All standalone content — news, hot takes, breakouts, threads, quotes, reposts — in English. French ONLY when replying to French content (reply paths match the parent's language). Scope = AI + Crypto. Goal = thousands of followers + likes (super-influencer push).
 
 ---
 
@@ -33,8 +33,10 @@ when the LLM is flaky so each cycle skips fast instead of grinding for 6+ min
 on bad output.
 Repost / quote volume is tuned high but bounded: `MAX_RETWEETS_PER_DAY=30`,
 `RETWEETS_PER_CYCLE=3`, retweet job every 2 min, and the quote bot every
-4 min. Quote discovery is French-first: it scans FR AI / crypto / bourse
-queries and FR trusted handles before falling back to high-signal EN parents.
+4 min. Quote and repost discovery is English-first (2026-05-27 pivot): they
+scan global high-signal EN AI / crypto / markets / space queries and EN
+trusted handles first, with a short FR tail only for major French stories.
+Every generated quote is in English.
 Retweet and quote candidates still pass source, niche, age, min-like, respect
 list, and dedup filters before posting.
 
@@ -163,9 +165,9 @@ Plus `FR_ANCHOR` for FR-mode runs, `OTHER` as fallback. The metadata line is str
 
 ### Language — `lang_mode.py`
 
-`CONTENT_LANG_PRIMARY=fr` → all standalone content (news, hot takes, breakouts, spicy, threads) in French.
+`CONTENT_LANG_PRIMARY=en` (default since the 2026-05-27 pivot) → all standalone content (news, hot takes, breakouts, spicy, threads, quotes, reposts) in English. The quote bot's prompt is hardcoded English; repost/quote discovery is English-first (see `quote_tweet_bot.py` / `retweet_bot.py`).
 
-Reply paths (`direct_reply`, `reply_bot`, `replyback_agent`, `viral_followup`, `spike`, `mega_watch`, `early_bird`) **always match parent tweet language** regardless of `CONTENT_LANG_PRIMARY`.
+Reply paths (`direct_reply`, `reply_bot`, `replyback_agent`, `viral_followup`, `spike`, `mega_watch`, `early_bird`) **always match parent tweet language** regardless of `CONTENT_LANG_PRIMARY` — so French replies still happen on French threads.
 
 ### Self-modification boundary
 

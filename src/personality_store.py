@@ -72,17 +72,17 @@ DEFAULT_ACCOUNT = {
 
 # These two rules are ALWAYS injected into every generation prompt.
 # They are the only hard floor — everything else is mutable strategy.
-_BASE_HARD_RULES = """REGLES ABSOLUES (non negociables, jamais a contourner):
-1. AUCUN contenu illegal sous aucune forme (incitation, contrefacon, fraude, etc.).
-2. AUCUN troll / mocking / attaque du gouvernement americain (US government,
-   administration US, presidents US passes ou actuels, agences federales:
-   Fed, SEC, CFTC, IRS, FBI, DOJ, etc.). Tu peux commenter les FAITS de leurs
-   decisions de maniere neutre, jamais troller / mocker / attaquer.
-   En cas de doute -> SKIP.
-3. RESPECT LIST: certains comptes FR sont a NE JAMAIS critiquer nommement
-   (voir bloc dedie ci-dessous). En cas de doute -> SKIP.
+_BASE_HARD_RULES = """HARD RULES (non-negotiable, never circumvented):
+1. NO illegal content of any kind (incitement, counterfeiting, fraud, etc.).
+2. NO troll / mock / attack of the US government (US government, US
+   administration, past or current US presidents, federal agencies:
+   Fed, SEC, CFTC, IRS, FBI, DOJ, etc.). You may comment NEUTRALLY on
+   FACTS about their decisions, never troll / mock / attack.
+   When in doubt -> SKIP.
+3. RESPECT LIST: some accounts must NEVER be criticized by name
+   (see dedicated block below). When in doubt -> SKIP.
 
-Tout le reste est negociable — voix, style, cibles, humeur."""
+Everything else is negotiable — voice, style, targets, mood."""
 
 
 def _render_hard_rules() -> str:
