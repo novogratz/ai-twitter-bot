@@ -341,31 +341,19 @@ def main():
 
     # Schedule jobs
     if not args.reply_only:
-        # 2026-05-24 growth strategy: ship original analysis during global
-        # crypto peak, evenings UTC, instead of the old early-EST window.
-        # 2026-05-26 FIX: a single evening cron meant a bot that ran
-        # continuously through the day shipped NOTHING until 21:00 Paris —
-        # and nothing at all if it was down at 19:00 UTC. Add a morning FR
-        # burst so the daily Décode reliably lands for the morning scroll.
-        # MAX_NEWS_PER_DAY caps the combined total and per-(topic,format)
-        # dedup means the evening cron just tops up whatever the morning
-        # didn't ship.
-        log.info("News bot DAILY (morning): cron at 07:00 Europe/Paris.")
+        # 2026-05-28: North American pivot — single 6 AM EST morning burst
+        # targets the US morning scroll (peak engagement for EN content).
+        # Single cron keeps it simple; MAX_NEWS_PER_DAY still caps total volume.
+        log.info("News bot DAILY: cron at 06:00 America/New_York (6 AM EST).")
         scheduler.add_job(
             safe_run_daily_news_cycle,
-            trigger=CronTrigger(hour=7, minute=0, timezone="Europe/Paris"),
-            id="daily_news_morning_job",
-        )
-        log.info("News bot DAILY (evening): cron at 19:00 UTC (= global crypto peak).")
-        scheduler.add_job(
-            safe_run_daily_news_cycle,
-            trigger=CronTrigger(hour=19, minute=0, timezone="UTC"),
+            trigger=CronTrigger(hour=6, minute=0, timezone="America/New_York"),
             id="daily_news_job",
         )
-        log.info("News bot WEEKLY: cron Fridays at 19:30 UTC.")
+        log.info("News bot WEEKLY: cron Fridays at 06:30 America/New_York.")
         scheduler.add_job(
             safe_run_weekly_news_cycle,
-            trigger=CronTrigger(day_of_week="fri", hour=19, minute=30, timezone="UTC"),
+            trigger=CronTrigger(day_of_week="fri", hour=6, minute=30, timezone="America/New_York"),
             id="weekly_news_job",
         )
     if not args.post_only:

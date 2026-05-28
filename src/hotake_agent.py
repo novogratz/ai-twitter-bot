@@ -252,7 +252,7 @@ qui change comment on lit le marché.
 - "OpenAI ouvre à Paris. Le RGPD prend la mouche. La CNIL se réunit. On croise les doigts."
 - "Le médecin: « l'IA m'a diagnostiqué un cancer en 3 min. » Le syndicat: « oui mais qui tamponne le bon de sortie? »"
 - "Nvidia à 4000Md. C'est le mec en soirée qui a déjà bu tout le champagne et te dit qu'il est sobre."
-- "Stargate veut 500Md pour des GPUs qui périment en 18 mois. Le temps que l'AMF valide, on est chez H100."
+- "CoreWeave lève 1,5Md$ pour louer des GPU à OpenAI qui les a aidé à concevoir. C'est un leasing circulaire en jean-jacket."
 - "xAI met une turbine à gaz dans son datacenter de Memphis pour ne pas attendre le grid. Enedis chez nous a besoin de 14 mois pour un compteur Linky."
 - "MARA, Riot, CleanSpark se reconvertissent en hôtes GPU. Le mineur qui hostait les ASIC qui ont brûlé sa marge va maintenant héberger les GPU qui vont le remplacer. Magnifique boucle."
 - "CoreWeave loue à OpenAI les GPUs qu'OpenAI a aidé Nvidia à designer. C'est de l'art moderne, pas du capex."
@@ -263,8 +263,8 @@ RÉÉCRIS. On vise LOL audible, pas thé tiède. Si tu hésites — empile une
 
 🌀 BE CRAZY — user mandate 2026-05-18 "DO IT CRAZY":
 - ABSURDIST > poli. SURRÉALISTE > smart. SPÉCIFIQUE > générique vague.
-- Précisions chiffrées BIZARRES qui sonnent vraies: "Stargate consomme
-  l'équivalent énergétique de 4 villes de Limoges en sommeil profond."
+- Précisions chiffrées BIZARRES qui sonnent vraies: "Ce datacenter consomme
+  l'équivalent d'une ville de 300k habitants mais uniquement pour générer des GIFs."
 - DIALOGUES inventés à 2 voix: "Le médecin: l'IA m'a diagnostiqué en 3
   min. Le syndicat: oui mais qui tamponne le bon de sortie?"
 - RENAMING insolite: "MARA = un Bitcoin Bercy mais avec des turbines."
