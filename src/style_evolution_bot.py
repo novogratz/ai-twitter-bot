@@ -17,6 +17,7 @@ Hard constraints:
 """
 import json
 import os
+import shutil
 import traceback
 from datetime import datetime
 
@@ -128,13 +129,17 @@ def run_style_evolution_cycle():
         current_directives=current[:3000],
     )
 
-    log.info("[STYLE-EVO] Running style-evolution agent (Sonnet)...")
+    # Weekly strategy job: use Claude when installed (quality > speed here).
+    # Falls back to whatever _provider() selects if claude is unavailable.
+    _claude_provider = "claude" if shutil.which("claude") else None
+    log.info(f"[STYLE-EVO] Running style-evolution agent ({'Claude Sonnet' if _claude_provider else 'Ollama'})...")
     result = run_llm(
         prompt,
         NEWS_MODEL,
         label="STYLE_EVOLUTION",
         allowed_tools=["WebSearch"],
         output_json=False,
+        force_provider=_claude_provider,
     )
 
     if result.returncode != 0 or not result.stdout.strip():

@@ -864,13 +864,12 @@ def main():
             id="analyzer_job",
         )
 
-        # Style-evolution bot ("fashion bot") — scrapes X for viral FR
-        # crypto/IA formats, then rewrites directives.md with fresh patterns.
-        # Uses Claude Sonnet. Keeps the voice from going stale.
-        log.info("Style-evolution bot: trend-driven style refresh every 72h (token saver).")
+        # Style-evolution bot — scrapes X for viral formats, rewrites
+        # directives.md. Uses Claude Sonnet (weekly, token-conscious).
+        log.info("Style-evolution bot: trend-driven style refresh every 168h (weekly, Claude).")
         scheduler.add_job(
             safe_run_style_evolution_cycle,
-            trigger=IntervalTrigger(hours=72),
+            trigger=IntervalTrigger(hours=168),
             id="style_evolution_job",
         )
 
