@@ -115,7 +115,13 @@
     "johann_debord",
     "crypto_fr",
     "david_daoust",
-    "marches_moins"
+    "marches_moins",
+    "MarcGueury",
+    "RaphaElie1",
+    "PierreMounier",
+    "LouisPoussin",
+    "JoffroyB",
+    "VincentLefebvre"
   ],
   "en": [
     "blablacar",
@@ -770,6 +776,36 @@
     {
       "lang": "fr",
       "handle": "marches_moins",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcGueury",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaElie1",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreMounier",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "LouisPoussin",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JoffroyB",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentLefebvre",
       "added": "2026-05-28"
     }
   ]

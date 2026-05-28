@@ -1163,5 +1163,57 @@
       }
     ],
     "summary": "Une s\u00e9lection pure-plateforme : des profils techniques qui twittent pour eux-m\u00eames, pas pour vendre du vent. Le mix France/Quebec/USA couvre les angles macro et micro sans redondance politique."
+  },
+  {
+    "ts": "2026-05-28T13:29:26.633092",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MarcGueury",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Fondateur de JustETF. Il explique la bourse passivement en FR sans vendre de sperme de formation \u00e0 2000\u20ac."
+      },
+      {
+        "handle": "RaphaElie1",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "V\u00e9t\u00e9ran tech QC. Couvre AI, SaaS, bourse tech. Ton direct, audience solide, pas de groupe Telegram VIP."
+      },
+      {
+        "handle": "PierreMounier",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Analyste crypto FR de r\u00e9f\u00e9rence. Pas de 'groupe VIP', juste des threads techniques et du market timing. Follow\u00e9 par les pros."
+      },
+      {
+        "handle": "LouisPoussin",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "La voix crypto du Qu\u00e9bec. Couvre Bitcoin/DeFi avec une touche qu\u00e9b\u00e9coise. Actif, francophone, pas de shilling constant."
+      },
+      {
+        "handle": "JoffroyB",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Ancien de Payfit, tr\u00e8s actif sur la fintech/scaleup FR. Vues pr\u00e9cises, pas de blabla politique."
+      },
+      {
+        "handle": "VincentLefebvre",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Rechercheur/Acad\u00e9micien AI au Qu\u00e9bec. Twitte les paper updates et insights IA en fran\u00e7ais. Niche mais qualit\u00e9 pure."
+      }
+    ],
+    "summary": "Focus sur les fondateurs Mistral/Hugging Face pour l'IA FR, et des analystes crypto ind\u00e9pendants (pas vendeurs de r\u00eaves) pour la finance. Le Qu\u00e9bec est moins peupl\u00e9 en 'gros' comptes crypto, donc on vise les profils tech/crypto hybrides solides."
   }
 ]
