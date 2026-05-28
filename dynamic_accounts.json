@@ -108,7 +108,9 @@
     "MaxMaurin",
     "Ludovic_M",
     "PhilippeCyr",
-    "PierreBourque"
+    "PierreBourque",
+    "MarcFeldman",
+    "JulienBouchard_"
   ],
   "en": [
     "blablacar",
@@ -728,6 +730,16 @@
     {
       "lang": "fr",
       "handle": "PierreBourque",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcFeldman",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBouchard_",
       "added": "2026-05-28"
     }
   ]

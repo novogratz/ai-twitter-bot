@@ -1066,5 +1066,43 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les cerveaux derri\u00e8re le code (Mistral/Replit) et les pros du march\u00e9 (Bourgeois/Yomoni). Z\u00e9ro vendeur de r\u00eave, 100% contenu technique ou analyse fine."
+  },
+  {
+    "ts": "2026-05-28T03:45:11.348531",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Cl\u00e9mentDelangue",
+        "region": "france",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Cofondateur Hugging Face, il explique l'open source AI comme s'il parlait \u00e0 ses potes, sans jargon pesant."
+      },
+      {
+        "handle": "MarcFeldman",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Le v\u00e9t\u00e9ran du web qu\u00e9b\u00e9cois, couvre IA et Startups avec une vision \u00e0 30 ans, rare dans ce secteur."
+      },
+      {
+        "handle": "JulienBouchard_",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Le roi de la micro-cap au Qu\u00e9bec, analyse visuelle parfaite, twitte en fran\u00e7ais avec l'accent qui tue."
+      },
+      {
+        "handle": "ThomasBourdonnet",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Franco-am\u00e9ricain, il d\u00e9crypte la Wall Street frangine avec un humour corrosif, pas dans le 'LinkedIn influencer'."
+      }
+    ],
+    "summary": "Un m\u00e9lange solide de fondateurs d'IA fran\u00e7ais et de v\u00e9t\u00e9rans du trading qu\u00e9b\u00e9cois, loin des vendeurs de r\u00eave habituels."
   }
 ]
