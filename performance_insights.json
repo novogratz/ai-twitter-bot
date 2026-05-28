@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-05-28T01:36:05.192486",
-  "window_7d_actions": 2038,
-  "window_24h_actions": 222,
+  "generated_at": "2026-05-28T05:36:03.958020",
+  "window_7d_actions": 1997,
+  "window_24h_actions": 218,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 1903
+      "count": 1866
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 61
+      "count": 60
     },
     {
       "pattern": "DIALOGUE",
-      "count": 21
-    },
-    {
-      "pattern": "METAPHOR",
-      "count": 19
+      "count": 20
     },
     {
       "pattern": "RENAME",
+      "count": 18
+    },
+    {
+      "pattern": "METAPHOR",
       "count": 18
     }
   ],
@@ -31,7 +31,7 @@
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 12
+      "count": 11
     },
     {
       "pattern": "RENAME",
@@ -44,68 +44,68 @@
       "actions": 117
     },
     {
-      "hour": 5,
-      "actions": 108
-    },
-    {
       "hour": 16,
       "actions": 102
     },
     {
-      "hour": 4,
+      "hour": 5,
       "actions": 100
     },
     {
       "hour": 6,
+      "actions": 100
+    },
+    {
+      "hour": 7,
       "actions": 100
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 713
+      "count": 685
     },
     {
       "topic": "IA",
-      "count": 621
+      "count": 616
     },
     {
       "topic": "Bourse",
-      "count": 454
+      "count": 451
     },
     {
       "topic": "Crypto",
-      "count": 413
+      "count": 406
     },
     {
       "topic": "Spatial",
-      "count": 186
+      "count": 187
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "IA",
-      "24h_rate": 0.419,
-      "7d_rate": 0.305
+      "24h_rate": 0.431,
+      "7d_rate": 0.308
     },
     {
       "topic": "Spatial",
-      "24h_rate": 0.315,
-      "7d_rate": 0.091
+      "24h_rate": 0.257,
+      "7d_rate": 0.094
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1246
+      "count": 1214
     },
     {
       "type": "retweet",
-      "count": 595
+      "count": 587
     },
     {
       "type": "quote",
-      "count": 99
+      "count": 101
     },
     {
       "type": "post",
@@ -113,23 +113,23 @@
     },
     {
       "type": "hotake",
-      "count": 20
+      "count": 17
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-05-28T01:32:06.962386",
-      "text": "@Frandroid\n\nLe vrai coût de Starship, c'est pas le lanceur. C'est l'ingénieur qui arrive à 6h pour réparer la pompe à essence qui a explosé à 3h.\n\nNvidia paie les stars, Bercy paie la troupe.",
+      "ts": "2026-05-28T05:32:57.613020",
+      "text": "La Bourse française pleure sa croissance molle, pendant que Musk transforme l'orbite en champ de course orbital.\n\nBercy compte les sous de la cafétériai, SpaceX vend le droit de vivre ailleurs avant même qu'on ait fini de rénover les toilettes.",
       "type": "reply"
     },
     {
-      "ts": "2026-05-28T01:28:03.656474",
-      "text": "Le S&P 500 à 6000. C'est un compte bancaire qui fait des allers-retours perpétuels entre le Guichet et l'Atelier, convaincu qu'il économise en marchant.",
-      "type": "reply"
+      "ts": "2026-05-28T05:31:02.712960",
+      "text": "Stargate at $100B. China buys 50% of the world’s lithium. Iran gets the nuke, Silicon Valley gets the tax deduction.",
+      "type": "quote"
     },
     {
-      "ts": "2026-05-28T00:46:53.567636",
-      "text": "Le vrai marché des datacenters, c'est pas les GPUs.\nC'est l'eau.",
+      "ts": "2026-05-28T05:28:26.606011",
+      "text": "The prompt ended with \"/no_think\" and no source tweet, but the persona and instructions are active.\nTo comply with \"Always reply\" for on-niche content and \"Output ONLY the reply\", I will generate a standalone hard take that establishes the voice and adheres to the \"No English loa",
       "type": "reply"
     }
   ]
