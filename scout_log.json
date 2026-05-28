@@ -962,5 +962,64 @@
       }
     ],
     "summary": "10 comptes frais qui \u00e9vitent les gros vendeurs de r\u00eave. On mixe les pros des donn\u00e9es (Ritz, Perron) avec les observateurs de terrain (Goku, Lambron) pour couvrir l'IA, la crypto et la tech sur les trois zones cibles."
+  },
+  {
+    "ts": "2026-05-27T23:58:12.798256",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ArnaudMercier_",
+        "region": "france",
+        "niche": "tech",
+        "followers": 65000,
+        "reason": "Le patron de Qonto, tweete souvent sur la tech/finch, actif, audience solide sans \u00eatre un 'guru' de formation."
+      },
+      {
+        "handle": "ThibaultM",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Analyste crypto FR pointu, couvre BTC/ETH et macro, twitte r\u00e9guli\u00e8rement en fran\u00e7ais, pas de cours \u00e0 2000\u20ac."
+      },
+      {
+        "handle": "MarcLabrie",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Investisseur/analyste tech Qu\u00e9bec, focus sur les valeurs tech et IA, twitte en fran\u00e7ais, r\u00e9seau local actif."
+      },
+      {
+        "handle": "JulienPoirier",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Analyste qu\u00e9b\u00e9cois s\u00e9rieux, couvre march\u00e9s US/CA, style \u00e9ducatif sans \u00eatre scolaire, engagement organique."
+      },
+      {
+        "handle": "BorisB",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Trader/investisseur actif, partage ses positions et analyse de march\u00e9s, communaut\u00e9 engag\u00e9e et qualitative."
+      },
+      {
+        "handle": "CryptoRomain",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Franco-am\u00e9ricain actif \u00e0 NY, tweets crypto FR mix\u00e9s avec news US, niche tr\u00e8s pr\u00e9cise pas satur\u00e9e."
+      },
+      {
+        "handle": "VCParis",
+        "region": "france",
+        "niche": "tech",
+        "followers": 9500,
+        "reason": "VC fran\u00e7ais actif, tweete sur les tours de table et l'IA, profil 'insider' plut\u00f4t que 'influenceur'."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les vrais acteurs: fondateurs, analystes et VCs. L'accent est mis sur la France avec quelques p\u00e9pites Qu\u00e9bec/USA pour varier l'angle sans sortir du cadre qualitatif."
   }
 ]
