@@ -121,7 +121,15 @@
     "PierreMounier",
     "LouisPoussin",
     "JoffroyB",
-    "VincentLefebvre"
+    "VincentLefebvre",
+    "Liam_Montier",
+    "JGThaler",
+    "MathieuDutour",
+    "AntoineDumas",
+    "SylvainMulliez",
+    "0xRitz",
+    "JulienHermelin",
+    "MarcBoulangerQc"
   ],
   "en": [
     "blablacar",
@@ -806,6 +814,46 @@
     {
       "lang": "fr",
       "handle": "VincentLefebvre",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "Liam_Montier",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JGThaler",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDutour",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineDumas",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainMulliez",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xRitz",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienHermelin",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcBoulangerQc",
       "added": "2026-05-28"
     }
   ]

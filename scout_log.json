@@ -1215,5 +1215,71 @@
       }
     ],
     "summary": "Focus sur les fondateurs Mistral/Hugging Face pour l'IA FR, et des analystes crypto ind\u00e9pendants (pas vendeurs de r\u00eaves) pour la finance. Le Qu\u00e9bec est moins peupl\u00e9 en 'gros' comptes crypto, donc on vise les profils tech/crypto hybrides solides."
+  },
+  {
+    "ts": "2026-05-28T15:26:24.267090",
+    "raw_count": 10,
+    "kept_count": 8,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Liam_Montier",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 180000,
+        "reason": "Bas\u00e9 aux USA, mais ses threads sur la liquidit\u00e9 et la macro crypto sont la bible des traders francophones."
+      },
+      {
+        "handle": "JGThaler",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 75000,
+        "reason": "Le roi de l'analyse fondamentale en FR. Pas flashy, mais sa logique est in\u00e9branlable depuis des ann\u00e9es."
+      },
+      {
+        "handle": "MathieuDutour",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "CTO de Coinhouse, pur analyste technique, twitte en FR, pas de formation \u00e0 vendre, juste du son frais."
+      },
+      {
+        "handle": "AntoineDumas",
+        "region": "france",
+        "niche": "ai",
+        "followers": 60000,
+        "reason": "Co-founder de Qwant AI, il d\u00e9livre la tech fran\u00e7aise pure, un peu plus acad\u00e9mique mais indispensable."
+      },
+      {
+        "handle": "SylvainMulliez",
+        "region": "france",
+        "niche": "finance",
+        "followers": 55000,
+        "reason": "Fintech founder (N26 ex-CTO), il twitte des insights boursiers et banking FR percutants, sans pub pour son stage."
+      },
+      {
+        "handle": "0xRitz",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Journaliste crypto de talent, ses threads sont souvent plus clairs que les papers techniques eux-m\u00eames."
+      },
+      {
+        "handle": "JulienHermelin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Ex-Kucoin FR, focus Bitcoin et macro, twitte en FR, ton souvent cynique mais toujours pertinent."
+      },
+      {
+        "handle": "MarcBoulangerQc",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "L'analyste qu\u00e9b\u00e9cois le plus \u00e9cout\u00e9, style direct, couvre CA et US, rarement de blabla politique."
+      }
+    ],
+    "summary": "Le lot est mixte entre les g\u00e9ants institutionnels (Mistral) et les analystes de terrain qui ont encore la main sur le clavier. C'est un s\u00e9lect 5 \u00e9toiles : z\u00e9ro influenceur 'coach', que des techniciens ou fondateurs qui font le job."
   }
 ]

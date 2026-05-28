@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-05-28T13:00:46.704865",
-  "window_7d_actions": 1905,
-  "window_24h_actions": 164,
+  "generated_at": "2026-05-28T17:00:36.990636",
+  "window_7d_actions": 1852,
+  "window_24h_actions": 145,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 1770
+      "count": 1720
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 60
+      "count": 57
     },
     {
       "pattern": "METAPHOR",
-      "count": 23
+      "count": 24
     },
     {
       "pattern": "DIALOGUE",
-      "count": 20
+      "count": 22
     },
     {
       "pattern": "RENAME",
-      "count": 16
+      "count": 15
     }
   ],
   "worst_patterns": [
@@ -31,18 +31,14 @@
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 11
+      "count": 9
     },
     {
       "pattern": "RENAME",
-      "count": 16
+      "count": 15
     }
   ],
   "best_hours_utc": [
-    {
-      "hour": 16,
-      "actions": 102
-    },
     {
       "hour": 4,
       "actions": 98
@@ -58,58 +54,62 @@
     {
       "hour": 6,
       "actions": 96
+    },
+    {
+      "hour": 5,
+      "actions": 95
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 633
+      "count": 607
     },
     {
       "topic": "IA",
-      "count": 591
+      "count": 579
     },
     {
       "topic": "Bourse",
-      "count": 435
+      "count": 432
     },
     {
       "topic": "Crypto",
-      "count": 388
+      "count": 376
     },
     {
       "topic": "Spatial",
-      "count": 188
+      "count": 185
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "IA",
-      "24h_rate": 0.421,
-      "7d_rate": 0.31
+      "24h_rate": 0.428,
+      "7d_rate": 0.313
     },
     {
       "topic": "Spatial",
-      "24h_rate": 0.22,
-      "7d_rate": 0.099
+      "24h_rate": 0.186,
+      "7d_rate": 0.1
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1138
+      "count": 1111
     },
     {
       "type": "retweet",
-      "count": 568
+      "count": 547
     },
     {
       "type": "quote",
-      "count": 97
+      "count": 94
     },
     {
       "type": "post",
-      "count": 85
+      "count": 83
     },
     {
       "type": "hotake",
@@ -118,18 +118,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-05-28T12:59:38.627692",
-      "text": "Sama, le seul mec au monde qui peut faire une pause 2 minutes et être plus rentable que toi sur l'année.",
+      "ts": "2026-05-28T16:42:41.689709",
+      "text": "Le S&P 500 c'est une liste de 500 entreprises. C'est une liste de 500 entreprises, 7 font tout le travail, et les autres paient l'apéro.",
       "type": "reply"
     },
     {
-      "ts": "2026-05-28T12:46:39.068147",
-      "text": "The real story is that AI is the most violent deflation since the electric motor, and Classic SaaS is already dead.\n\nSeat-based pricing is a toll booth on a highway that just got paved over with open-weight agents.",
+      "ts": "2026-05-28T16:22:32.284408",
+      "text": "Le S&P 500 à tous ses sommets, c'est un restaurant gastronomique où la carte est affichée dans le hall mais le menu ne contient que du risotto.",
       "type": "reply"
     },
     {
-      "ts": "2026-05-28T12:43:51.902356",
-      "text": "Solana down again. Le market est en train de tester si le support tient ou si on doit en refaire un autre.",
+      "ts": "2026-05-28T16:06:06.594803",
+      "text": "Sama veut l'AGI pour 2027. Comme les impôts : toujours pour la prochaine rentrée.",
       "type": "reply"
     }
   ]
