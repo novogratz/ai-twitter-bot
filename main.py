@@ -316,8 +316,11 @@ def main():
     # Startup news burst: Monthly catch-up first, then Daily. Monthly is part
     # of ./bin/run.sh so a missed cron window does not skip the whole month.
     if not args.reply_only:
-        log.info("Bot started! Checking Monthly Décodes, then firing remaining Daily Décodes.")
+        log.info("Bot started! Checking Monthly catchup, firing Weekly + Daily Decodes.")
         _run_monthly_startup_catchup_if_due()
+        # Fire weekly immediately on startup so pending weekly topics ship now.
+        log.info("Startup weekly burst...")
+        safe_run_weekly_news_cycle()
         safe_run_daily_news_cycle(force_all=False)
         # Fire one RT + quote cycle immediately so they don't wait for the full
         # direct-reply warmup to finish before scheduler.start() is called.
@@ -341,19 +344,18 @@ def main():
 
     # Schedule jobs
     if not args.reply_only:
-        # 2026-05-28: North American pivot — single 6 AM EST morning burst
-        # targets the US morning scroll (peak engagement for EN content).
-        # Single cron keeps it simple; MAX_NEWS_PER_DAY still caps total volume.
-        log.info("News bot DAILY: cron at 06:00 America/New_York (6 AM EST).")
+        # 2026-05-28: North American pivot — 7 AM EST daily burst.
+        # Weekly also fires at startup; cron catches subsequent Fridays.
+        log.info("News bot DAILY: cron at 07:00 America/New_York (7 AM EST).")
         scheduler.add_job(
             safe_run_daily_news_cycle,
-            trigger=CronTrigger(hour=6, minute=0, timezone="America/New_York"),
+            trigger=CronTrigger(hour=7, minute=0, timezone="America/New_York"),
             id="daily_news_job",
         )
-        log.info("News bot WEEKLY: cron Fridays at 06:30 America/New_York.")
+        log.info("News bot WEEKLY: cron Fridays at 07:00 America/New_York.")
         scheduler.add_job(
             safe_run_weekly_news_cycle,
-            trigger=CronTrigger(day_of_week="fri", hour=6, minute=30, timezone="America/New_York"),
+            trigger=CronTrigger(day_of_week="fri", hour=7, minute=0, timezone="America/New_York"),
             id="weekly_news_job",
         )
     if not args.post_only:
