@@ -1,224 +1,140 @@
 {
-  "ts": "2026-05-27T07:06:48.839504",
-  "count": 34,
+  "ts": "2026-05-28T06:06:04.717703",
+  "count": 22,
   "items": [
     {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Polymarket Money",
-      "title": "Leopold Aschenbrenner just updated the Situational Awareness Fund portfolio.\n\nHere are every single-stock holding disclosed as of the end of Q1 (excluding options):\n\n• $BE: ~$879M\n• $SNDK: ~$724M\n• $C",
-      "url": "https://x.com/PolymarketMoney/status/2056348388887867832",
-      "score": 242,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Leif | Investing",
-      "title": "HOT stocks are getting crushed \n\n$RKLB -11%\n$NVTS -9%\n$NXT -7.5%\n$ASTS -7.5%\n$NBIS -7%\n$CRWV -7%\n$IREN -6.5%\n$VRT -6%\n$ONDS -6%\n$OKLO -5.5%\n$AMD -5%\n\nContinuation from yesterday's selloff\n\nStarting to",
-      "url": "https://x.com/LeifInvests/status/2056740970255774104",
-      "score": 134,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Crypto Rover",
-      "title": "The US stock market is trading at the MOST overvalued levels in history. \n\nYou know what comes next.",
-      "url": "https://x.com/cryptorover/status/2059585907280551980",
-      "score": 72,
-      "ts": ""
-    },
-    {
-      "src": "X_FOLLOWING/Barchart",
-      "title": "S&P 500 will hit 8,000 by year-end says Goldman Sachs",
-      "url": "https://x.com/Barchart/status/2059589404218601883",
-      "score": 62,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Investing.com",
-      "title": "*US SPACE FORCE AWARDS SPACEX $2.29 BILLION CONTRACT FOR MILITARY SPACE DATA NETWORK",
-      "url": "https://x.com/Investingcom/status/2059583930328588708",
-      "score": 30,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Thomas Wilson",
-      "title": "I'll only say it once.  This might be the fastest way to accumulate $1 million by the end of 2026.\nMy May advice：\n\n$IONQ (IonQ) — Don’t buy\n\n$CRWV (CoreWeave) — Don’t buy\n\n$FUTU (Futu Holdings) — Don’",
-      "url": "https://x.com/sidikfific/status/2059425852819902550",
-      "score": 16,
-      "ts": ""
-    },
-    {
-      "src": "X_FOLLOWING/Matteo Invest",
-      "title": "Le NASDAQ continue son expansion haussière en weekly après avoir cassé sa structure de compression \n\nMais un point commence à attirer l’attention : le RSI hebdo approche les 77.\n\nHistoriquement, sur l",
-      "url": "https://x.com/matteoinvest/status/2059587485722726797",
-      "score": 8,
-      "ts": ""
-    },
-    {
-      "src": "X_FOLLOWING/Coin Academy",
-      "title": "Stake DAO subit un hack sur Arbitrum après la compromission d’une clé privée deployer.\n\nL’attaquant a mint 5 446 milliards de vsdCRV puis échangé une partie des fonds contre 43,78 ETH (~90K$) avant de",
-      "url": "https://x.com/coinacademy_fr/status/2059588743128859030",
-      "score": 7,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Kalshi Crypto",
-      "title": "JUST IN: Banca Sella to become first Italian bank to offer crypto services",
-      "url": "https://x.com/Kalshi_Crypto/status/2059588143062376925",
-      "score": 5,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Coin Academy",
-      "title": "Banca Sella devient la première grande banque italienne à proposer le trading de Bitcoin via son application mobile Hype.",
-      "url": "https://x.com/coinacademy_fr/status/2059587655151632429",
-      "score": 4,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Deep Whale",
-      "title": "ETF FLOWS | 26 May 2026\n\n ETF $BTC : -333.71 M$\n ETF $ETH : -35.04 M$\n\n ETF $HYPE : +20.45 M$\n ETF $XRP : +1.55 M$\n\n ETF $SOL : 0\n ETF $LTC : 0\n ETF $HBAR : 0\n ETF $LINK : 0\n ETF $DOGE : 0\n ETF $DOT :",
-      "url": "https://x.com/DeepWhale/status/2059586525713629505",
-      "score": 4,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Haider.",
-      "title": "unfortunately, some people are already dismissing openai recent math breakthrough as if it were no big deal\n\nfew years ago, we were testing AI models on high-school math -- and now they're helping sol",
-      "url": "https://x.com/haider1/status/2059588235521556834",
-      "score": 4,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Leif | Investing",
-      "title": "My Favorite Stocks by Sector \n\nSemis → $NVDA\nCPU → $ARM\nHyperscaler → $ORCL\nNeocloud → $CRWV\nSaaS → $DDOG\nCybersecurity → $CRWD\nNetworking → $ANET\nDefense/Gov Software → $PLTR\nRobotics → $SYM\nIndustri",
-      "url": "https://x.com/LeifInvests/status/2058991396665635072",
+      "src": "The Verge",
+      "title": "YouTube will let you ask AI to make a custom video feed",
+      "url": "https://www.theverge.com/streaming/938759/youtube-custom-ai-feed-prompt-availability",
       "score": 0,
-      "ts": ""
+      "ts": "2026-05-28T05:21:19"
     },
     {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Mike Investing",
-      "title": "The literal White House is telling you to prioritize these 5 sectors amongst your portfolio…\n\n1. Space ~ $RKLB, $ASTS, $RDW, $PL\n2. Neo-Cloud ~ $IREN, $NBIS, $APLD, $CIFR\n3. Rare Earths ~ $USAR, $UUUU",
-      "url": "https://x.com/MrMikeInvesting/status/2059389968640786487",
+      "src": "The Verge",
+      "title": "A Google employee allegedly used inside information to win $1.2 million on Polymarket",
+      "url": "https://www.theverge.com/tech/938635/google-polymarket-insider-trading-prediction-market-bets",
       "score": 0,
-      "ts": ""
+      "ts": "2026-05-27T18:30:02"
     },
     {
-      "src": "r/CC",
-      "title": "The Crypto Opportunity Died Years Ago &amp; Nobody Wants to Admit It!",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1to11ve/the_crypto_opportunity_died_years_ago_nobody/",
-      "score": 275
+      "src": "HN",
+      "title": "YouTube to automatically label AI-generated videos",
+      "url": "https://blog.youtube/news-and-events/improving-ai-labels-viewers-creators/",
+      "score": 870
+    },
+    {
+      "src": "HN",
+      "title": "I think Anthropic and OpenAI have found product-market fit",
+      "url": "https://simonwillison.net/2026/May/27/product-market-fit/",
+      "score": 870
+    },
+    {
+      "src": "HN",
+      "title": "DuckDuckGo search saw 28% more visits after Google said people love AI mode",
+      "url": "https://www.pcgamer.com/hardware/duckduckgos-ai-free-search-saw-nearly-28-percent-more-visits-in-the-week-following-googles-insistence-that-people-love-ai-mode/",
+      "score": 866
+    },
+    {
+      "src": "HN",
+      "title": "What Apple and Google are doing to push notifications",
+      "url": "https://www.jacquescorbytuech.com/writing/what-apple-and-google-are-doing-your-push-notifications",
+      "score": 284
     },
     {
       "src": "r/CC",
       "title": "Satoshi’s 1.1 million bitcoin and millions more can be saved from quantum attack, says expert",
       "url": "https://www.reddit.com/r/CryptoCurrency/comments/1to7iht/satoshis_11_million_bitcoin_and_millions_more_can/",
-      "score": 229
+      "score": 232
+    },
+    {
+      "src": "r/ML",
+      "title": "AI-generated CUDA kernels silently break training and inference [R]",
+      "url": "https://www.reddit.com/r/MachineLearning/comments/1tpaw6x/aigenerated_cuda_kernels_silently_break_training/",
+      "score": 213
+    },
+    {
+      "src": "HN",
+      "title": "Google employee charged with $1M Polymarket insider trading bet on search term",
+      "url": "https://www.cnbc.com/2026/05/27/google-employee-polymarket-insider-trading.html",
+      "score": 174
     },
     {
       "src": "r/CC",
       "title": "Vitalik just published Ethereum's quantum resistance roadmap and it might be the most important post-merge development nobody's discussing.",
       "url": "https://www.reddit.com/r/CryptoCurrency/comments/1togj0j/vitalik_just_published_ethereums_quantum/",
-      "score": 128
-    },
-    {
-      "src": "r/ML",
-      "title": "[D] Where do you go for serious AI research discussion online? [D]",
-      "url": "https://www.reddit.com/r/MachineLearning/comments/1to2l4c/d_where_do_you_go_for_serious_ai_research/",
-      "score": 81
-    },
-    {
-      "src": "HN",
-      "title": "Claude Code as a Daily Driver: Claude.md, Skills, Subagents, Plugins, and MCPs",
-      "url": "https://arps18.github.io/posts/claude-code-mastery/",
-      "score": 76
+      "score": 174
     },
     {
       "src": "r/CC",
-      "title": "Satoshi-era Bitcoin miner transfers $203M in BTC to OTC desks",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1to0ss9/satoshiera_bitcoin_miner_transfers_203m_in_btc_to/",
-      "score": 59
-    },
-    {
-      "src": "r/ML",
-      "title": "The famous METR AI time horizons graph contains numerous severe errors [D]",
-      "url": "https://www.reddit.com/r/MachineLearning/comments/1tnhnh5/the_famous_metr_ai_time_horizons_graph_contains/",
-      "score": 55
+      "title": "Trump-Linked Crypto Firm Burns $1.5 Billion on Failed Token and Faces Bankruptcy",
+      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tpq980/trumplinked_crypto_firm_burns_15_billion_on/",
+      "score": 104
     },
     {
       "src": "r/CC",
       "title": "NASDAQ hits ATH...but crypto? WTAF?!",
       "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tomom4/nasdaq_hits_athbut_crypto_wtaf/",
-      "score": 51
-    },
-    {
-      "src": "HN",
-      "title": "Nvidia Vera CPU Benchmarks: Olympus Cores Delivering Great Performance",
-      "url": "https://www.phoronix.com/review/nvidia-vera-benchmarks",
-      "score": 30
-    },
-    {
-      "src": "r/CC",
-      "title": "Crypto Whales sit on the most auditable wealth ever created and can't always get a bank account.",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1to41a6/crypto_whales_sit_on_the_most_auditable_wealth/",
-      "score": 27
-    },
-    {
-      "src": "r/CC",
-      "title": "UK Issues Sanctions Against Justin Sun's HTX, Other Crypto Firms Over Alleged Russia Ties",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1toqwsj/uk_issues_sanctions_against_justin_suns_htx_other/",
-      "score": 19
-    },
-    {
-      "src": "r/CC",
-      "title": "Investigating a Russian Crypto Laundering Operation",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tokunv/investigating_a_russian_crypto_laundering/",
-      "score": 19
+      "score": 97
     },
     {
       "src": "r/ML",
-      "title": "[P] Built a portable GPU ISA after reading too many architecture manuals [P]",
-      "url": "https://www.reddit.com/r/MachineLearning/comments/1to76tv/p_built_a_portable_gpu_isa_after_reading_too_many/",
-      "score": 18
+      "title": "[D] Where do you go for serious AI research discussion online? [D]",
+      "url": "https://www.reddit.com/r/MachineLearning/comments/1to2l4c/d_where_do_you_go_for_serious_ai_research/",
+      "score": 96
+    },
+    {
+      "src": "r/CC",
+      "title": "Coinbase has become uselessly ratchet.",
+      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tpra86/coinbase_has_become_uselessly_ratchet/",
+      "score": 92
+    },
+    {
+      "src": "r/CC",
+      "title": "Crypto’s biggest problem isn’t regulation — it’s that most “decentralization” is fake",
+      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tp1wbp/cryptos_biggest_problem_isnt_regulation_its_that/",
+      "score": 78
+    },
+    {
+      "src": "HN",
+      "title": "Investigating how prompt politeness affects LLM accuracy (2025)",
+      "url": "https://arxiv.org/abs/2510.04950",
+      "score": 72
+    },
+    {
+      "src": "HN",
+      "title": "A Eureka machine that thinks like nature and explores what AI cannot",
+      "url": "https://iisc.ac.in/a-eureka-machine-that-thinks-like-nature-and-explores-what-ai-cannot/",
+      "score": 69
+    },
+    {
+      "src": "r/CC",
+      "title": "📉 In 2014, the crypto exchange Mt. Gox collapsed after losing approximately 850,000 Bitcoin.",
+      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tp2oiz/in_2014_the_crypto_exchange_mt_gox_collapsed/",
+      "score": 57
+    },
+    {
+      "src": "r/ML",
+      "title": "The famous METR AI time horizons graph contains numerous severe errors [D]",
+      "url": "https://www.reddit.com/r/MachineLearning/comments/1tnhnh5/the_famous_metr_ai_time_horizons_graph_contains/",
+      "score": 53
+    },
+    {
+      "src": "r/CC",
+      "title": "President DJT Says He'll “Never Let Crypto Down”",
+      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tptaac/president_djt_says_hell_never_let_crypto_down/",
+      "score": 48
     },
     {
       "src": "r/CC",
       "title": "What actually happens to your crypto when you die? Has anyone dealt with this as an executor?",
       "url": "https://www.reddit.com/r/CryptoCurrency/comments/1toprba/what_actually_happens_to_your_crypto_when_you_die/",
-      "score": 17
-    },
-    {
-      "src": "r/CC",
-      "title": "If you could go back to your first day in crypto, what would you warn yourself about?",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1to2boa/if_you_could_go_back_to_your_first_day_in_crypto/",
-      "score": 17
-    },
-    {
-      "src": "r/ML",
-      "title": "If you use NVIDIA Isaac Sim for reinforcement learning, do you use Isaac Lab with it? Just want to get a sense of what the status quo is. [D]",
-      "url": "https://www.reddit.com/r/MachineLearning/comments/1tn1rtk/if_you_use_nvidia_isaac_sim_for_reinforcement/",
-      "score": 12
-    },
-    {
-      "src": "r/CC",
-      "title": "Base launches new tool to connect crypto wallets to AI agents",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1towoh4/base_launches_new_tool_to_connect_crypto_wallets/",
-      "score": 7
+      "score": 32
     },
     {
       "src": "HN",
-      "title": "I'm Tired of Talking to AI",
-      "url": "https://orchidfiles.com/im-tired-of-ai-generated-answers/",
-      "score": 4
-    },
-    {
-      "src": "r/CC",
-      "title": "How to start investing in Crypto?",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1toeso4/how_to_start_investing_in_crypto/",
-      "score": 4
-    },
-    {
-      "src": "r/ML",
-      "title": "[D] Is IEEE Workshop on Machine Learning for Signal Processing Reputable? [D]",
-      "url": "https://www.reddit.com/r/MachineLearning/comments/1touia2/d_is_ieee_workshop_on_machine_learning_for_signal/",
-      "score": 3
+      "title": "AI Datacenters Were Built for GPUs. What Happens When You Remove the GPUs?",
+      "url": "https://almartis.xyz/gpu-free-datacenter.html",
+      "score": 31
     }
   ]
 }

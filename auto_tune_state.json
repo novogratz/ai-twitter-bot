@@ -1,27 +1,18 @@
 {
-  "ts": "2026-05-27T06:46:15.466242",
+  "ts": "2026-05-28T06:06:03.855664",
   "window_min": 90,
-  "total_actions": 9,
+  "total_actions": 6,
   "by_type": {
-    "retweet": 5,
     "reply": 5,
     "quote": 1
   },
   "winners": {
-    "PROFILE-ALWAYS": 2,
-    "RETWEET/frederi55284379": 1,
-    "RETWEET/le_biais_fi": 1,
-    "RETWEET/iren_ltd": 1,
-    "RETWEET/kobeissiletter": 1
+    "PROFILE-ALWAYS": 3,
+    "PROFILE-FR": 2,
+    "QUOTE/The Spectator Index": 1
   },
   "losers": {
-    "RETWEET/frederi55284379": 1,
-    "RETWEET/le_biais_fi": 1,
-    "RETWEET/iren_ltd": 1,
-    "RETWEET/kobeissiletter": 1,
-    "RETWEET/financelancelot": 1,
-    "PROFILE-EN": 1,
-    "QUOTE/Claude": 1
+    "QUOTE/The Spectator Index": 1
   },
   "post_cadence_factor": 1.5,
   "boost_cadence_factor": 1.0
