@@ -900,16 +900,10 @@ def run_retweet_cycle():
             # bourse keyword AND no celebrity/sports/weather marker.
             if not _is_on_niche(text):
                 continue
-            # Same-day freshness — when scraper exposes a timestamp,
-            # skip anything older than MAX_CANDIDATE_AGE_HOURS.
-            # Escape hatch: trusted-handle posts with no timestamp but
-            # decent engagement (≥30 likes) are allowed — the scraper
-            # doesn't always expose timestamps, and a tweet from a
-            # whitelisted handle with 30+ likes is almost certainly recent.
+            # Hard 48h freshness gate — no timestamp = skip (age returns 999999).
             age_hours = _scrape_age_hours(t)
             if age_hours > MAX_CANDIDATE_AGE_HOURS:
-                if not (age_hours >= 999_000 and likes >= 3):
-                    continue
+                continue
             # Belt-and-suspenders source check — even though the handle
             # came from our whitelist, pull it through _has_trusted_source
             # so embedded-article logic stays consistent.
