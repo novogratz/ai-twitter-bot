@@ -316,51 +316,27 @@ Next month, same Decode.
 {{Exact URL MANDATORY from WEB SEARCH RESULTS / RSS POOL — LAST line}}
 """
     elif format_mode == "top5":
-        # CRITICAL: keep INSTRUCTIONS (rules the model follows silently) and
-        # the EXACT OUTPUT TEMPLATE (the literal text shape) in separate
-        # sections. When they were interleaved, the model echoed instruction
-        # headers verbatim into the tweet.
         top5_block = f"""INSTRUCTIONS (DO NOT OUTPUT — think silently):
 
-  • The Weekly Decode = TOP 5 numbers from the past 7 days for ONE
-    category, with the lens "AI infrastructure & asymmetric investing":
-    power demand, MW/GW capacity, compute scarcity, grid bottlenecks,
-    datacenter stocks, robotics, space infrastructure, and AI-linked crypto.
-  • STEP 0 (CRITICAL): pick ONE exact URL from the WEB SEARCH RESULTS / RSS POOL
-    section below. Read ITS TITLE — it identifies a specific ACTOR or NUMBER
-    (e.g. "OpenAI is going public", "NVIDIA Q1 earnings"). Bullet #1 MUST talk
-    about EXACTLY that actor or number — NON-NEGOTIABLE. If the title says
-    "OpenAI", #1 talks about OpenAI. If it says "NVIDIA", #1 talks about NVIDIA.
-    If you write #1 about NVIDIA but the URL points to an OpenAI article,
-    the pipeline strips the URL and the tweet ships without a preview card. Fail.
-    So: URL chosen FIRST → bullet #1 written AFTER, on the URL's topic, with the
-    number supported by the article.
-  • BULLET #1 = THE killshot. Three SIMULTANEOUS tests:
-      - MEMORABLE (round number, shocking ratio, mental image)
-      - LIKABLE (confirms a suspicion, very well-known name: Elon, sama,
-        Vitalik, Saylor, OpenAI, NVIDIA, BTC, ETH, CoreWeave, SpaceX,
-        IREN, HIVE, TAO, Applied Digital)
-      - COMMENT-BAIT (claim/contrast that forces an opinion)
-    If #1 doesn't pass all 3 tests → swap with the strongest bullet.
-  • FOLLOWER TEST: the reader must think "ok this account sees the angle before
-    everyone else". No media summary. A clean thesis, a number, a risk.
-  • Bullets 2-5 = decreasing intensity. No filler.
-  • TAGS: max 1 @handle per bullet, ALWAYS inline mid-phrase, never at
-    start/end of line (X mobile isolates it on its own line otherwise).
-    Good: "415M Q1 mining at @nvidia". Bad: "415M. @nvidia Q1...".
-  • NUMBERS — NON-NEGOTIABLE RULE: every number must literally appear in the
-    TITLE or SNIPPET of the article chosen in STEP 0 (WEB SEARCH RESULTS /
-    CURATED RSS POOL sections below). If the snippet says "$42 million in net
-    inflows", you write "$42M". You do NOT write "$60M" because it sounds better
-    — that's lying and the reader clicks the link to verify. If the article
-    doesn't give a precise number, hedge with "~" or "roughly" or "nearly".
-    NEVER invent a number absent from the snippet.
-  • (source: outlet) must name a real media outlet (CoinDesk, TheBlock, Bloomberg,
-    FT, Reuters, WSJ, TechCrunch). No invention.
-  • ZERO markdown (**bold**, __italic__, *italic*). Plain text only.
-  • Target 1000-1700 chars body.
-  • The URL on the last line is MANDATORY. Exact copy-paste from the SIGNALS.
-    It must prove bullet #1, the most impactful. No modified slugs, no generic links.
+  • The Weekly Decode = ONE story from the past 7 days, THREE angles. ONE source URL.
+    Not 5 different articles. One article, three levels of depth.
+  • STEP 0 (CRITICAL): pick ONE exact URL from WEB SEARCH RESULTS / RSS POOL.
+    The actor in its title = the main actor of this Decode. ALL analysis comes
+    from that article. URL chosen FIRST then write. Mismatched URL = stripped preview card.
+  • BULLET #1 (💰) = THE killshot. Three SIMULTANEOUS tests:
+      - MEMORABLE: round number, shocking ratio, mental image
+      - LIKABLE: very well-known name (Elon, sama, Saylor, OpenAI, NVIDIA, BTC, SpaceX...)
+      - COMMENT-BAIT: claim/contrast that forces an opinion
+    FOLLOWER TEST: if #1 can't earn a follow on its own, change the story.
+  • BULLET #2 (⚡) = CONTEXT that makes #1 brutal. Comparison, ratio, or historical parallel.
+  • BULLET #3 (📊) = CONSEQUENCE. What changes next or the brutal implication.
+  • NO (source: outlet) per bullet. ONE URL at the end covers everything.
+  • TAGS: max 1 @handle per bullet, ALWAYS inline mid-phrase, never at start/end of line.
+  • NUMBERS: must appear in the TITLE or SNIPPET of the chosen article. Hedge with "~" if not exact.
+    NEVER invent a number.
+  • ZERO markdown. Plain text only.
+  • Target 600-1000 chars body. Tight is punchy.
+  • ONE URL at the very last line. Exact copy-paste. Must prove bullet #1.
 
 ============================================================
 EXACT OUTPUT (write ONLY the following, in this order):
@@ -368,60 +344,37 @@ EXACT OUTPUT (write ONLY the following, in this order):
 
 🔎 The Decode {series_label} #{decode_number} — {topic_label_title}
 
-The 5 {topic_label} numbers to know this week.
+The most asymmetric move this week:
 
-1. 💰 {{exact #1 number, the killshot}} : {{one-line insight, inline @handle mid-phrase if relevant}}. (source: {{outlet}})
-2. 🚀 {{number #2}} : {{insight}}. (source: {{outlet}})
-3. ⚡ {{number #3}} : {{insight}}. (source: {{outlet}})
-4. 📊 {{number #4}} : {{insight}}. (source: {{outlet}})
-5. 🔥 {{number #5}} : {{insight}}. (source: {{outlet}})
+1. 💰 {{killshot number + main actor — actor from URL title in first 6 words}} : {{insight, inline @handle mid-phrase if relevant}}
+2. ⚡ {{context/comparison that makes #1 brutal}} : {{ratio, parallel, or scale reference}}
+3. 📊 {{consequence}} : {{what changes or what's at stake}}
 
-{{Sarcastic punchline, 1-2 sentences, with a global market/tech reference.}}
+{{Sarcastic punchline that signs the take. 1-2 sentences. No question.}}
 
-{{1 direct question to provoke responses. Examples:
-"Which is the real signal?" / "What will be the 6th number by Monday?"}}
-
-Tomorrow, same Decode.
-
-{{Exact URL copied from WEB SEARCH RESULTS / RSS POOL — LAST line}}
+{{Exact URL — LAST LINE, MANDATORY}}
 """
     else:
         top5_block = f"""INSTRUCTIONS (DO NOT OUTPUT — think silently):
 
-  • The Daily Decode = TOP 3 numbers from the past 24-48h for ONE
-    category. All 3 bullets explore ONE story from 3 angles.
-    Default lens: "AI infrastructure & asymmetric investing":
-    datacenter stocks, MW/GW power capacity, compute wars, energy, robotics,
-    space infrastructure, frontier tech, and crypto linked to AI.
-  • STEP 0 (CRITICAL): pick ONE exact URL from the WEB SEARCH RESULTS / RSS
-    POOL section below. Read ITS TITLE — it identifies a specific ACTOR or
-    NUMBER (e.g. "OpenAI signs $300B Oracle deal"). All 3 bullets talk about
-    THAT story. The intro and bullet #1 MUST mention the main actor from the
-    title. If the URL is about OpenAI, the tweet is about OpenAI. Pipeline
-    strips the URL otherwise.
-  • LINK-CARD RULE: the final URL proves bullet #1. Not bullet #2, not context,
-    not a generic sector chart. If #1 is about Riot/CleanSpark/IREN, the URL
-    must talk about Riot/CleanSpark/IREN.
-  • 3-BULLET STRUCTURE:
-      - #1 (💰): THE killshot number — the number everyone will remember.
-        MEMORABLE + LIKABLE + COMMENT-BAIT. It's the post hook:
-        biggest name + simplest number to remember + most obvious stakes.
-        If another bullet is more likeable, it becomes #1.
-        FOLLOWER TEST: if this #1 can't earn a follow on its own, the story
-        is too weak. Change the story.
-      - #2 (⚡): CONTEXT / comparison that makes #1 brutal (e.g. "double
-        the GDP of Estonia", "5x the last raise").
-      - #3 (📊): CONSEQUENCE or what's next (e.g. "AMD forced to respond
-        within 60 days", "this makes their next earnings call awkward").
-  • TAGS: 2-3 major accounts inline mid-phrase total across 3 bullets +
-    punchline. NEVER @handle at start/end of line (X mobile isolates it
-    on its own line otherwise).
-  • NUMBERS: come from the SIGNALS PROVIDED. Hedge ("~$3B") if not exact.
-  • ZERO markdown (**bold**, __italic__). Plain text only.
-  • Target 600-1100 chars body.
-  • The URL on the last line is MANDATORY. Exact copy-paste from the SIGNALS.
-    It must prove bullet #1, the most impactful. If the URL points to a
-    different topic, it gets stripped.
+  • The Daily Decode = ONE story, ONE sharp take, ONE source URL.
+    No numbered list. No "(source: X)" per line. ONE URL at the end.
+  • STEP 0 (CRITICAL): pick ONE exact URL from WEB SEARCH RESULTS / RSS POOL.
+    The actor in its title = the main actor of this Decode. ALL analysis comes
+    from that article. URL chosen FIRST then write. Mismatched URL = stripped preview card.
+  • NARRATIVE STRUCTURE (4 parts — DO NOT label them, just write naturally):
+      HOOK: main actor + the ONE number everyone needs to know. 1-2 lines max.
+      ANGLE: the brutal insight — what makes this asymmetric, what nobody's saying. 2-3 sentences.
+      CONSEQUENCE: what changes, what's at stake, what comes next. 1-2 sentences.
+      THESIS: the one line that makes someone want to follow. Under 20 words. NOT a question.
+  • FOLLOWER TEST: if someone reads only the THESIS and doesn't feel compelled
+    to follow, rewrite it. The voice is "You'll hate me until I'm right."
+  • TAGS: 1-2 @handles inline mid-phrase across the whole Decode. Never at start/end of line.
+  • NUMBERS: come from the article/snippet only. Hedge with "~" if not exact.
+    NEVER invent a number absent from the title or snippet.
+  • ZERO markdown. Plain text only.
+  • Target 350-750 chars body. Shorter is sharper. No padding.
+  • ONE URL at the very last line. Copy-paste exact. This is the source for everything above.
 
 ============================================================
 EXACT OUTPUT (write ONLY the following, in this order):
@@ -429,20 +382,17 @@ EXACT OUTPUT (write ONLY the following, in this order):
 
 🔎 The Decode {series_label} #{decode_number} — {topic_label_title}
 
-The 3 {topic_label} numbers that matter today.
+{{HOOK: main actor + the one number. 1-2 lines.}}
 
-1. 💰 {{killshot number — main actor from the URL title in first 6 words}} : {{1-2 line insight, inline @handle mid-phrase if relevant}}. (source: {{outlet}})
-2. ⚡ {{number #2 — context/comparison that amplifies #1}} : {{insight}}. (source: {{outlet}})
-3. 📊 {{number #3 — consequence / what's next}} : {{insight}}. (source: {{outlet}})
+{{ANGLE: the asymmetric insight nobody's saying. 2-3 sentences.}}
 
-{{Sarcastic punchline, 1-2 sentences, with a global market/tech reference.}}
+{{CONSEQUENCE: 1-2 sentences.}}
 
-{{1 direct question that forces a position.}}
+{{THESIS: the take that earns a follow. Under 20 words. No question mark.}}
 
-Tomorrow, same Decode.
-
-{{Exact URL copied from WEB SEARCH RESULTS / RSS POOL — LAST line}}
+{{Exact URL — LAST LINE, MANDATORY}}
 """
+
 
     return f"""{lang_directive}
 
