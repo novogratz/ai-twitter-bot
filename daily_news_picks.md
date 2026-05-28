@@ -1624,3 +1624,34 @@ Michael Burry reported that the upcoming public listings for SpaceX, OpenAI, and
 - **@trendspider** (728 likes, score 7/10) — Sights set on all-time highs $IREN
   - https://x.com/TrendSpider/status/2059681304342302752
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 776).
+- **@bulltheoryio** (96 likes, score 9/10) — Bitcoin treasury company NAKAMOTO has erased almost its entire market cap after crashing -99.68% in just 1 year.
+
+If you invested $10,000 exactly one year ago, you would have just around $32 left toda
+  - https://x.com/BullTheoryio/status/2059965308358791282
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 166).
+- **@hedgiemarkets** (498 likes, score 9/10) — Google's plan to partly power a Texas data center through a 933-megawatt natural gas plant has been confirmed after Cleanview researchers uncovered the permit application. The plant would emit 4.5 mil
+  - https://x.com/HedgieMarkets/status/2040265098250588656
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 554).
+- **@leopoldatracker** (581 likes, score 9/10) — 8 undervalued stocks Leopold Aschenbrenner is signaling you to buy through his latest 13F reports. It is not $BE, $MU, or $NVDA, but:
+
+• $HIVE — HIVE Digital
+• $RIOT — Riot Platforms
+• $TE — T1 Energy
+  - https://x.com/LeopoldATracker/status/2056356990671090163
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 615).
+- **@cointelegraph** (129 likes, score 9/10) — JUST IN: The OpenAI Foundation committed an initial $250 million toward grants, partnerships, and initiatives focused on building secure and abundant economic futures in the age of AI.
+  - https://x.com/Cointelegraph/status/2059736652935840211
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 193).
+- **@cryptorover** (62 likes, score 9/10) — This is CRAZY! 
+
+Someone built an algorithm to find dormant Bitcoin wallets, reported them to the NYPD as "lost property," and is now suing to legally own them.
+
+39,069 wallets. ~3.8M $BTC. ~$285 bill
+  - https://x.com/cryptorover/status/2059967421461700741
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 140).
+- **@stocksavvyshay** (2114 likes, score 8/10) — $NVDA CEO Jensen Huang said we should expect a wave of small nuclear reactors within the next 6-7 years.
+
+• $UUUU & $UEC are direct beneficiaries of federal stockpile buys for domestic supply
+• $CCJ l
+  - https://x.com/StockSavvyShay/status/1996308177844076991
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2296).
