@@ -1562,3 +1562,39 @@ We're going to look back at TAO the same way we look back at ETH in 2016
 Trouble in paradise?
   - https://x.com/TradingThomas3/status/2059818104952074323
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 236).
+- **@ashcrypto** (1560 likes, score 9/10) — BREAKING : BlackRock ETF has sold $527,820,000 worth of Bitcoin.
+
+Largest single-day outflow since launch .
+  - https://x.com/AshCrypto/status/2059835101899571373
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 2000).
+- **@elonmusk** (1194 likes, score 8/10) — SpaceX has not committed to leasing Colossus for years, although it’s possible that may be what happens.
+
+This is a 180 day lease with 90 day notice mutual cancellation thereafter. The short term was
+  - https://x.com/elonmusk/status/2059880289514696927
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1590).
+- **@investments_ceo** (426 likes, score 8/10) — UPDATE:  Eric Trump says Bitcoin will reach $1,000,000 over the next four years.
+  - https://x.com/Investments_CEO/status/2059749166037766389
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 502).
+- **@burrytracker** (757 likes, score 8/10) — Update: Leopold Aschenbrenner's $IREN position is now up +746%
+
+He opened the position in May 2025 at ~$8/share with 3.4M shares
+
+Recently, he released his Situational Awareness Fund Q1 2026 filings w
+  - https://x.com/burrytracker/status/2059717594584662492
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 823).
+- **@theinformation** (99 likes, score 8/10) — Anthropic is now likely generating at least 35% more revenue than OpenAI, reversing the companies’ positions from the end of last year. The shift could complicate OpenAI’s IPO plans if Anthropic reach
+  - https://x.com/theinformation/status/2059703730409181609
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 111).
+- **@elonmusk** (7243 likes, score 8/10) — SpaceX has almost finished writing V1.0 of an in-house AI training stack in C that exact-maps to 220k GB300s with 800G NICs, making heavy use of pipeline parallelism and getting as close to bare metal
+  - https://x.com/elonmusk/status/2059884150187053488
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 10349).
+- **@anthropicai** (3843 likes, score 8/10) — Anthropic is acquiring @stainlessapi, an SDK and MCP server platform that has powered every Anthropic SDK since the earliest days of our API.
+
+Read more:
+  - https://x.com/AnthropicAI/status/2056419620643541012
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4539).
+- **@bulltheoryio** (3324 likes, score 8/10) — MICHAEL BURRY WARNS THREE UPCOMING IPOs COULD COMPLETELY CRASH THE STOCK MARKET.
+
+Michael Burry reported that the upcoming public listings for SpaceX, OpenAI, and Anthropic are going to pull more capi
+  - https://x.com/BullTheoryio/status/2059699584818184550
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 3932).
