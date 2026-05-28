@@ -1598,3 +1598,29 @@ Read more:
 Michael Burry reported that the upcoming public listings for SpaceX, OpenAI, and Anthropic are going to pull more capi
   - https://x.com/BullTheoryio/status/2059699584818184550
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 3932).
+- **@rainmaker1973** (5677 likes, score 8/10) — A massive new hyperscale data center project called Stratos is planned for Box Elder County, Utah. If built, it would demand up to 9 gigawatts of electricity, more than twice the total power consumpti
+  - https://x.com/Rainmaker1973/status/2054513582365081722
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 6993).
+- **@cryptorover** (272 likes, score 8/10) — BLOODBATH:  Tom Lee’s Ethereum holding company Bitmine is down nearly -90% from its all time high of $161 a year ago.
+  - https://x.com/cryptorover/status/2059937784199311421
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 428).
+- **@polymarket** (645 likes, score 7/10) — JUST IN: Ethereum crashes below $2,000.
+  - https://x.com/Polymarket/status/2059851935977558423
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 843).
+- **@leopoldatracker** (794 likes, score 7/10) — If you're planning to retire within the next 5–10 years, here are 12 stocks Leopold Aschenbrenner is holding that have the potential to 10–50x over the next 5–10 years:
+
+1. $WYFI — Fiber infrastructur
+  - https://x.com/LeopoldATracker/status/2056498516231323819
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 820).
+- **@energy** (725 likes, score 7/10) — Thanks to President Trump, the Energy Department is providing over 20 metric tons of High-Assay Low-Enriched Uranium (HALEU) to power the American Nuclear Renaissance.
+  - https://x.com/ENERGY/status/2059718227320606762
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 775).
+- **@mara** (586 likes, score 7/10) — MARA expands its AI infrastructure pipeline by entering into an agreement to acquire Long Ridge Energy & Power, which owns, among other assets, a highly efficient 505 MW nameplate CCGT power plant and
+  - https://x.com/MARA/status/2049806832290676823
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 680).
+- **@leopoldatracker** (219 likes, score 7/10) — My bear case for $IREN is $200
+  - https://x.com/LeopoldATracker/status/2059718414701084998
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 265).
+- **@trendspider** (728 likes, score 7/10) — Sights set on all-time highs $IREN
+  - https://x.com/TrendSpider/status/2059681304342302752
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 776).
