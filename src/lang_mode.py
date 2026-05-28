@@ -1,8 +1,9 @@
 """Bilingual content language picker.
 
-User mandate 2026-05-24: "Tout en français. Replies = langue du parent."
-Standalone content (news, hot takes, breakouts, spicy, threads) → 100% FR.
-Replies always match parent tweet language — that rule NEVER changes.
+User mandate 2026-05-27: "Pivot to full English." Standalone content
+(news, hot takes, breakouts, spicy, threads, quotes, reposts) → 100% EN.
+Replies always match parent tweet language — French only when the parent
+is French. That reply rule NEVER changes.
 """
 import os
 import random
@@ -12,7 +13,7 @@ Lang = Literal["en", "fr"]
 
 
 def _mode() -> str:
-    return os.environ.get("CONTENT_LANG_PRIMARY", "fr").strip().lower()
+    return os.environ.get("CONTENT_LANG_PRIMARY", "en").strip().lower()
 
 
 def pick_content_lang() -> Lang:

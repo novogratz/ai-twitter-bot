@@ -64,7 +64,7 @@ RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "15")))
 # Min likes to enter candidate pool. Kept very low — daily cap + dedup
 # is the real gate; the niche/source filter handles quality.
 MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "10"))
-FR_MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_FR_MIN_LIKES", "2"))
+FR_MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_FR_MIN_LIKES", "10"))  # Same as EN since full pivot
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -169,28 +169,22 @@ FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "5
 FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "12"))
 
 FEED_REPOST_SEARCH_QUERIES = [
-    # French-first repost discovery. Same-day age and niche gates still apply.
-    "IA OR ChatGPT OR Mistral lang:fr min_faves:10",
-    "\"agents IA\" OR \"agent IA\" lang:fr min_faves:5",
-    "Nvidia OR GPU OR datacenter lang:fr min_faves:5",
-    "Bitcoin OR Ethereum OR crypto lang:fr min_faves:10",
-    "Bittensor OR TAO OR DeFi OR stablecoin lang:fr min_faves:5",
-    "bourse OR PEA OR ETF OR investissement lang:fr min_faves:5",
-    "SpaceX OR Starship OR Starlink lang:fr min_faves:5",
-    "ArianeGroup OR satellite OR spatial lang:fr min_faves:3",
-    "OpenAI OR Anthropic OR Nvidia lang:fr min_faves:5",
-    "Mistral OR souveraineté numérique OR cloud souverain lang:fr min_faves:3",
-    "LeJournalDuCoin OR Cryptoast OR Cointribune lang:fr min_faves:3",
-    "Zonebourse OR Finary OR Boursorama lang:fr min_faves:3",
-    # English fallback only for big global signal.
-    "AI datacenter OR power demand OR megawatt lang:en min_faves:500",
-    "CoreWeave OR CRWV OR APLD OR IREN OR HIVE lang:en min_faves:300",
-    "TAO OR Bittensor OR decentralized compute lang:en min_faves:300",
-    "nuclear OR grid OR power generation AI lang:en min_faves:500",
-    "robotics OR humanoid robots OR frontier tech lang:en min_faves:500",
-    "SpaceX OR Starlink OR space infrastructure lang:en min_faves:1000",
-    "Nvidia OR GPU OR compute cluster lang:en min_faves:1000",
-    "OpenAI OR Anthropic OR xAI datacenter lang:en min_faves:1000",
+    # English-first repost discovery (user pivot 2026-05-27: full English).
+    # We're an English brand now — reposting French tweets on an EN timeline
+    # is incoherent, so EN/global high-signal content leads. Same-day age and
+    # niche gates still apply.
+    "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500",
+    "Nvidia OR GPU OR \"compute cluster\" lang:en min_faves:500",
+    "\"AI agents\" OR \"AI startup\" OR \"frontier model\" lang:en min_faves:300",
+    "\"AI datacenter\" OR power demand OR megawatt lang:en min_faves:300",
+    "CoreWeave OR CRWV OR APLD OR IREN OR HIVE lang:en min_faves:200",
+    "TAO OR Bittensor OR \"decentralized compute\" lang:en min_faves:200",
+    "Bitcoin OR BTC OR \"BTC ETF\" lang:en min_faves:600",
+    "Ethereum OR ETH OR stablecoin OR DeFi lang:en min_faves:300",
+    "MARA OR RIOT OR CleanSpark OR \"crypto mining\" lang:en min_faves:200",
+    "nuclear OR grid OR \"power generation\" AI lang:en min_faves:300",
+    "robotics OR humanoid robots OR frontier tech lang:en min_faves:300",
+    "SpaceX OR Starlink OR Starship OR space infrastructure lang:en min_faves:600",
 ]
 
 
@@ -218,9 +212,8 @@ def _scrape_age_hours(t: dict) -> float:
         return 999_999.0
 
 
-# Trusted news handles split by language. 2026-05-06 user pivot: audience is
-# FR, so the feed must look FR. Sample heavily from FR, only top-tier EN
-# (wires) qualify as fallback when nothing FR is fresh enough.
+# Trusted news handles — 2026-05-27 pivot: English-first repost discovery.
+# Sample heavily from EN sources; keep a small FR tail for major stories.
 
 FR_TRUSTED_HANDLES = [
     # FR generalist press
@@ -361,9 +354,8 @@ EN_TRUSTED_HANDLES = [
     "opentensor",
 ]
 
-# Combined list kept for the source-trust check. French sources are first-class
-# repost sources; EN remains useful fallback for major global signal.
-TRUSTED_NEWS_HANDLES = FR_TRUSTED_HANDLES + EN_TRUSTED_HANDLES
+# Combined list kept for the source-trust check.
+TRUSTED_NEWS_HANDLES = EN_TRUSTED_HANDLES + FR_TRUSTED_HANDLES
 
 # Trusted domains — if the tweet embeds a link to one of these, we count
 # the embedded article as the source even if the handle isn't on our list
@@ -514,9 +506,7 @@ def _feed_candidate_ok(t: dict) -> bool:
     likes = int(t.get("likes") or 0)
     replies = int(t.get("replies") or 0)
     author = ((t.get("author") or _handle_from_url(t.get("url") or "")) or "").lower()
-    is_fr_source = any(author == h.lower() for h in FR_TRUSTED_HANDLES) or _looks_french_text(text)
-    floor = min(FEED_REPOST_MIN_ENGAGEMENT, 10) if is_fr_source else FEED_REPOST_MIN_ENGAGEMENT
-    return likes + (2 * replies) >= floor
+    return likes + (2 * replies) >= FEED_REPOST_MIN_ENGAGEMENT
 
 
 def _looks_french_text(text: str) -> bool:
@@ -632,9 +622,6 @@ def _candidate_rank(c: dict) -> tuple:
 def _score_candidate(pick: dict) -> dict:
     engagement = int(pick.get("likes") or 0) + (2 * int(pick.get("replies") or 0))
     impact_points = _candidate_rank(pick)[0]
-    # 2026-05-08: dropped the FR-language bonus. The bot's voice is EN
-    # now and we explicitly want to reshare English-source content, so
-    # scoring should be language-agnostic on source.
     if impact_points >= 10 and engagement >= 100:
         score = 9
     elif impact_points >= 7 and engagement >= 50:
@@ -684,81 +671,77 @@ def _append_to_daily_picks(tweet: dict, score: int, why: str):
 
 # --- main cycle ---
 
-_TROLL_QUOTE_PROMPT = """Tu es @CryptoAIDecode. Voix FR analytique IA + Crypto +
-Investissement. Quand tu quote-tweet, tu te comportes comme si c'était TA
-news propre — même gravitas, même précision, même autorité que Le Décode.
+_TROLL_QUOTE_PROMPT = """You are @CryptoAIDecode. Sharp analytical voice on AI +
+Crypto + Markets. When you quote-tweet, you act like it's YOUR own news —
+same gravitas, same precision, same authority as The Decode.
 
-🎯 LA RÈGLE D'OR — UNE bonne quote = HARD SIGNAL + (optionnellement) UN
-anchor culturel FR. Hard signal = un chiffre concret (Md$, GW, %, ratio),
-un ticker (NVDA, BTC, MSTR, ETH), un @tag de gros compte, OU un nom propre
-fort (Stargate, Anthropic, OpenAI, CoreWeave). Sans hard signal → SKIP.
-Exemple qui a marché (3 likes): "L'Iran en alerte maximale, Trump annule
-son repos, et @saylor recharge Bitcoin comme si c'était les soldes de
-Lidl. Vous achetez ou vous shortez ce soir ?" → événement concret + @tag
-+ comparaison Lidl bien ancrée. Marche parce que c'est ancré.
-Exemple qui FLOP: "Bercy se réunit jeudi. Vous y croyez ?" → 0 hard signal,
-pur folklore = SKIP.
+🎯 THE GOLDEN RULE — a good quote = HARD SIGNAL + (optionally) ONE global
+cultural anchor. Hard signal = a concrete number ($B, GW, %, ratio), a
+ticker (NVDA, BTC, MSTR, ETH), an @tag of a big account, OR a strong proper
+noun (Stargate, Anthropic, OpenAI, CoreWeave). No hard signal → SKIP.
+Example that worked: "Iran on max alert, Trump cancels his weekend, and
+@saylor reloads Bitcoin like it's a Black Friday doorbuster. Buying or
+shorting tonight?" → concrete event + @tag + a well-anchored comparison.
+Works because it's anchored.
+Example that FLOPS: "The Fed meets Thursday. Believe it?" → 0 hard signal,
+pure folklore = SKIP.
 
-Tu vas QUOTE-TWEETER ce tweet (qui s'affiche automatiquement en dessous,
-donc ne le résume PAS, ajoute un angle d'analyse):
+You will QUOTE-TWEET this tweet (it auto-renders below, so do NOT summarize
+it — add an angle of analysis):
 
 @{author}: "{tweet_text}"
 
-OUTPUT: 2 phrases FR, max 240 chars TOTAL. Les DEUX phrases sont
-obligatoires. Pas de quote avec UNIQUEMENT phrase 1.
+OUTPUT: 2 English sentences, max 240 chars TOTAL. BOTH sentences are
+mandatory. No quote with ONLY sentence 1.
 
-  - Phrase 1 (L'ANALYSE): angle qui RECADRE le sujet. Ton 3 options:
-      a) Le chiffre/contexte que le tweet ne donne pas: "$300Md = 2x la
-         valo OpenAI il y a 9 mois. Le marché reprice par trimestre."
-      b) La conséquence concrète pour le secteur: "Si l'inférence
-         devient gratuite, Anthropic perd son moat de prix."
-      c) Le comparatif analytique: "NVDA capture 70% du capex IA US.
-         AMD reste à 15% malgré MI300."
-    Tag 1 gros compte (@sama @ylecun @elonmusk @VitalikButerin @saylor
-    @AnthropicAI @nvidia @MistralAI...) INLINE mid-phrase quand l'acteur
-    est pertinent. JAMAIS en début/fin de ligne (X mobile l'isole sinon).
-    Pas obligatoire si aucun tag ne colle.
+  - Sentence 1 (THE ANALYSIS): an angle that REFRAMES the subject. 3 options:
+      a) The number/context the tweet doesn't give: "$300B = 2x OpenAI's
+         valuation 9 months ago. The market reprices every quarter."
+      b) The concrete consequence for the sector: "If inference goes free,
+         Anthropic loses its price moat."
+      c) The analytical comparison: "NVDA captures 70% of US AI capex.
+         AMD stuck at 15% despite MI300."
+    Tag 1 big account (@sama @ylecun @elonmusk @VitalikButerin @saylor
+    @AnthropicAI @nvidia @MistralAI...) INLINE mid-sentence when the actor
+    is relevant. NEVER at the start/end of a line (X mobile isolates it).
+    Not required if no tag fits.
 
-  - Phrase 2 (LA QUESTION À L'AUDIENCE — OBLIGATOIRE): UNE question
-    directe, courte (30-80 chars), analytique. Exemples:
-      "Le marché a-t-il déjà pricé ça ?"
-      "Qui rachète qui dans 6 mois ?"
-      "Inflexion réelle ou rebond technique ?"
-      "Le moat tient combien de trimestres ?"
-      "Les régulateurs FR/EU bougent quand ?"
-    L'algo X amplifie les threads qui réagissent. Sans la question =
-    pas de réplies = pas d'amplification.
+  - Sentence 2 (THE QUESTION TO THE AUDIENCE — MANDATORY): ONE direct,
+    short (30-80 chars), analytical question. Examples:
+      "Has the market already priced this?"
+      "Who acquires who in 6 months?"
+      "Real inflection or technical bounce?"
+      "How many quarters does the moat hold?"
+      "When do US/EU regulators move?"
+    The X algo amplifies threads that get replies. No question = no
+    replies = no amplification.
 
-⚡ IMPACT — la phrase 1 doit dire quelque chose que le tweet parent NE
-dit PAS. Pas un résumé, pas un "intéressant", pas un "à suivre". Si tu
-n'as pas de chiffre/contexte/comparatif neuf à ajouter → SKIP. Mieux
-pas de quote qu'une quote tiède.
+⚡ IMPACT — sentence 1 must say something the parent tweet does NOT.
+Not a summary, not "interesting", not "one to watch". If you don't have a
+fresh number/context/comparison to add → SKIP. Better no quote than a
+lukewarm one.
 
-🚨 RÈGLE D'OR — Analyse l'IDÉE / le PRODUIT / le MARCHÉ, JAMAIS @{author}.
-@{author} doit pouvoir liker la quote. Tu peux contester un produit ou
-une thèse en tant que telle. Pas d'attaque ad hominem.
+🚨 GOLDEN RULE — analyze the IDEA / the PRODUCT / the MARKET, NEVER @{author}.
+@{author} must be able to like the quote. You can challenge a product or a
+thesis on its merits. No ad hominem attacks.
 
-RÈGLES STRICTES:
-- 🇫🇷 100% FRANÇAIS PUR. ZÉRO mot anglais, ZÉRO franglais. Si le tweet
-  parent est en EN, tu N'ÉCHO PAS ses phrases anglaises — tu reformules
-  en français pur. INTERDIT: "Great weekend", "game changer", "deal",
-  "team", "AI", "weekend", "hype", "moon", "pump", "dump", "FOMO",
-  toute phrase entre guillemets en anglais reprise du parent.
-  Exceptions tolérées: noms propres (OpenAI, Bitcoin, Stargate),
-  tickers (BTC, ETH, NVDA, MSTR), acronymes techniques (LLM, GPU, ASIC,
-  CapEx, AUM). PAS de phrases EN.
-- Ton ANALYTIQUE D'ABORD. Un anchor culturel FR (Lidl, Bercy, RER B,
-  tonton, etc) est OK MAX 1 PAR QUOTE, et UNIQUEMENT en appui d'un
-  hard signal (chiffre/ticker/@tag). Pas d'anchor sans hard signal —
-  ça devient un meme creux. Pas plus d'1 anchor — 2 = stand-up.
-- Tag inline mid-phrase: "Pendant que @sama lève 6Md..." — OUI.
-  "@sama lève 6Md" en début — NON. "Le pivot. @sama" en fin — NON.
-- 1 @tag max, jamais 2 dans la même phrase.
-- ZÉRO emojis, ZÉRO hashtags, ZÉRO em dash (—), ZÉRO markdown **bold**.
-- Pas de "Voici", "Parfait", "Score", "Rationale" — sortie pure.
-- Si pas de hard signal ou pas d'angle neuf → output exactement "SKIP".
+STRICT RULES:
+- 🇬🇧 100% ENGLISH. ZERO French words. If the parent tweet is in French, you
+  do NOT echo its French phrases — you reframe in clean English. Write as a
+  native English-speaking operator/founder.
+- ANALYTICAL FIRST. A global cultural anchor (a 10-K footnote, the Fed dot
+  plot, a CNBC chyron, a 401(k), Whole Foods, "number go up technology") is
+  OK MAX 1 PER QUOTE, and ONLY backing a hard signal (number/ticker/@tag).
+  No anchor without a hard signal — it becomes an empty meme. Max 1 anchor.
+  NO French anchors (Bercy, RER B, Lidl, tonton) — gibberish to a global reader.
+- Tag inline mid-sentence: "While @sama raises $6B..." — YES.
+  "@sama raises $6B" at the start — NO. "The pivot. @sama" at the end — NO.
+- 1 @tag max, never 2 in the same sentence.
+- ZERO emojis, ZERO hashtags, ZERO em dash (—), ZERO markdown **bold**.
+- No "Here's", "Perfect", "Score", "Rationale" — pure output.
+- If no hard signal or no fresh angle → output exactly "SKIP".
 
-Output: les 2 phrases FR (analyse + question) OU "SKIP". Rien d'autre."""
+Output: the 2 English sentences (analysis + question) OR "SKIP". Nothing else."""
 
 
 def _try_generate_troll_quote(pick: dict) -> str:
@@ -873,13 +856,12 @@ def run_retweet_cycle():
     retweeted = _load_retweeted()
     candidates = _collect_feed_repost_candidates(retweeted)
 
-    # High-volume crypto/AI/bourse repost surface. Scrape FR wide first, then
-    # a smaller EN fallback. Source/niche/age/dedup gates keep it on topic.
-    sample = (
-        random.sample(FR_TRUSTED_HANDLES, k=min(10, len(FR_TRUSTED_HANDLES)))
-        + random.sample(EN_TRUSTED_HANDLES, k=min(5, len(EN_TRUSTED_HANDLES)))
-    )
-    log.info(f"[RETWEET] Scraping FR-first crypto/AI/macro handles: {sample}")
+    # High-volume crypto/AI repost surface. English-first since the
+    # 2026-05-27 pivot: scrape EN only for repost discovery. FR handles
+    # are excluded because our timeline is English now — reposting French
+    # content on an EN timeline is incoherent.
+    sample = random.sample(EN_TRUSTED_HANDLES, k=min(15, len(EN_TRUSTED_HANDLES)))
+    log.info(f"[RETWEET] Scraping EN-first crypto/AI handles: {sample}")
 
     for handle in sample:
         try:

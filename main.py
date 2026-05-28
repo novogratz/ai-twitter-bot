@@ -485,10 +485,10 @@ def main():
         # bot to auto-adjust strategy MULTIPLE TIMES per day. Append-only
         # safety boundary still holds (additions never removals).
         if ENABLE_AI_MAINTENANCE:
-            log.info("Strategy agent: autonomous self-improvement every 3 hours.")
+            log.info("Strategy agent: autonomous self-improvement every 72 hours (token saver).")
             scheduler.add_job(
                 safe_run_strategy_cycle,
-                trigger=IntervalTrigger(hours=3),
+                trigger=IntervalTrigger(hours=72),
                 id="strategy_job",
             )
         else:
@@ -507,10 +507,10 @@ def main():
         # rogue, and prune TTL is still 30d so doubling the cadence doesn't
         # double the damage — it just makes the style guide more responsive.
         if ENABLE_AI_MAINTENANCE:
-            log.info("Evolution agent: content-quality self-improvement every 3 hours.")
+            log.info("Evolution agent: content-quality self-improvement every 72 hours (token saver).")
             scheduler.add_job(
                 safe_run_evolution_cycle,
-                trigger=IntervalTrigger(hours=3),
+                trigger=IntervalTrigger(hours=72),
                 id="evolution_job",
             )
         else:
@@ -521,10 +521,10 @@ def main():
         # dossiers (category, stance, feelings, notes) + per-topic positions.
         # Replies become PERSONAL because the bot remembers each account.
         if ENABLE_AI_MAINTENANCE:
-            log.info("Reflection agent: personality / memory update every 6 hours.")
+            log.info("Reflection agent: personality / memory update every 72 hours (token saver).")
             scheduler.add_job(
                 safe_run_reflection_cycle,
-                trigger=IntervalTrigger(hours=6),
+                trigger=IntervalTrigger(hours=72),
                 id="reflection_job",
             )
         else:
@@ -682,10 +682,10 @@ def main():
         # switch as strategy/evolution/reflection. News + replies get first
         # claim on the local CLI budget.
         if ENABLE_AI_MAINTENANCE:
-            log.info("Self-evolution agent: bot rewrites own personality every 4h (agentic).")
+            log.info("Self-evolution agent: bot rewrites own personality every 72h (token saver).")
             scheduler.add_job(
                 safe_run_self_evolution_cycle,
-                trigger=IntervalTrigger(hours=4),
+                trigger=IntervalTrigger(hours=72),
                 id="self_evolution_job",
             )
         else:
@@ -772,10 +772,10 @@ def main():
             id="heartbeat_job",
         )
 
-        log.info("Meta-strategy agent: autonomous cap + focus + cadence decisions every 4h.")
+        log.info("Meta-strategy agent: autonomous cap + focus + cadence decisions every 72h (token saver).")
         scheduler.add_job(
             safe_run_meta_strategy_cycle,
-            trigger=IntervalTrigger(hours=4),
+            trigger=IntervalTrigger(hours=72),
             id="meta_strategy_job",
         )
         # Strategy lab, joke bank, buzz hunter: kept off to save tokens.
@@ -877,10 +877,10 @@ def main():
         # Style-evolution bot ("fashion bot") — scrapes X for viral FR
         # crypto/IA formats, then rewrites directives.md with fresh patterns.
         # Uses Claude Sonnet. Keeps the voice from going stale.
-        log.info("Style-evolution bot: trend-driven style refresh every 6h.")
+        log.info("Style-evolution bot: trend-driven style refresh every 72h (token saver).")
         scheduler.add_job(
             safe_run_style_evolution_cycle,
-            trigger=IntervalTrigger(hours=6),
+            trigger=IntervalTrigger(hours=72),
             id="style_evolution_job",
         )
 

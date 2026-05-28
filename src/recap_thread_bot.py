@@ -82,8 +82,8 @@ def _recent_decodes() -> list:
         text = (t.get("text") or "").strip()
         if not text:
             continue
-        # Match Le Décode header in either form (with or without emoji)
-        if not re.search(r"Le Décode\s*#?\s*\d+", text, re.IGNORECASE):
+        # Match either "Le Décode" or "The Decode" header
+        if not re.search(r"(?:Le Décode|The Decode)\s*#?\s*\d+", text, re.IGNORECASE):
             continue
         url = t.get("url") or ""
         if not url:
@@ -104,50 +104,50 @@ def _top_decodes(items: list, k: int = 5) -> list:
     return items[:k]
 
 
-THREAD_PROMPT = """Tu es @CryptoAIDecode. Tu vas écrire UN thread FR de récap des
-Décodes de la semaine. Voici les 5-6 meilleurs Décodes (par likes) de cette semaine:
+THREAD_PROMPT = """You are @CryptoAIDecode. You will write ONE English recap thread
+of the week's Decodes. Here are the 5-6 best Decodes (by likes) this week:
 
 {decode_list}
 
-OUTPUT — un thread X de {n_tweets} tweets, chaque tweet séparé par "---" sur sa
-propre ligne. PAS DE TEXTE AVANT NI APRÈS le thread, juste les tweets séparés
-par ---.
+OUTPUT — an X thread of {n_tweets} tweets, each tweet separated by "---" on its
+own line. NO TEXT BEFORE OR AFTER the thread, just the tweets separated by ---.
 
-TWEET 1 (le head — accroche pour faire scroller / cliquer):
-  📅 Les {n_decodes} Décodes qui ont marqué la semaine.
+TWEET 1 (the head — a hook that makes people scroll / click):
+  📅 The {n_decodes} Decodes that defined the week.
 
-  IA, crypto, infrastructure. Une lecture FR sans bullshit.
+  AI, crypto, infrastructure. A no-bullshit read.
 
   Thread 👇
 
-TWEET 2 à TWEET N (un par Décode, dans l'ordre du meilleur au moins bon):
-  Pour chaque Décode:
-  - Mentionne SON numéro (#N)
-  - Résume son angle en 1 phrase mordante (10-20 mots)
-  - Ajoute 1 phrase qui donne ENVIE de cliquer pour voir le Décode complet
-  - Inclus l'URL du Décode original (les URLs sont fournies dans la liste).
+TWEET 2 to TWEET N (one per Decode, ordered best to worst):
+  For each Decode:
+  - Mention ITS number (#N)
+  - Summarize its angle in 1 biting sentence (10-20 words)
+  - Add 1 sentence that makes people WANT to click for the full Decode
+  - Include the original Decode URL (URLs are provided in the list).
 
-  Exemple de format pour 1 tweet du thread:
-    #57 — IA. OpenAI lève 200Md pour des GPUs qui périment en 18 mois.
+  Example format for 1 thread tweet:
+    #57 — AI. OpenAI raises $200B for GPUs that expire in 18 months.
 
-    Le vrai pari: créer le grid privé qui fait du réseau public un secondaire.
+    The real bet: build the private grid that turns the public one into a backup.
 
     https://x.com/CryptoAIDecode/status/...
 
-DERNIER TWEET (le close — invite à follow + tease la semaine prochaine):
-  Tu as aimé? La semaine prochaine, 6 nouveaux Décodes.
+LAST TWEET (the close — invite to follow + tease next week):
+  Liked this? Next week, 6 new Decodes.
 
-  IA, crypto, datacenters, mining. Lundi à dimanche.
+  AI, crypto, datacenters, mining. Monday to Sunday.
 
-  Follow pour ne pas les rater.
+  Follow so you don't miss them.
 
-RÈGLES:
-- Chaque tweet ≤ 270 caractères.
-- Pas d'em dashes (—). Tirets simples ou virgules.
-- Stack 1 réf culturelle FR par tweet quand pertinent (RER B, Bercy, etc).
-- 100% français.
-- Aucun emoji décoratif sauf 📅 du tweet 1 et 👇 du head.
-- Output: juste les tweets séparés par "---", rien d'autre.
+RULES:
+- Each tweet ≤ 270 characters.
+- No em dashes (—). Simple hyphens or commas.
+- Lean on 1 global cultural ref per tweet when relevant (10-K footnote, Fed
+  dot plot, CNBC, 401k). NO French anchors (RER B, Bercy) — global audience.
+- 100% English.
+- No decorative emoji except 📅 in tweet 1 and 👇 in the head.
+- Output: just the tweets separated by "---", nothing else.
 """
 
 

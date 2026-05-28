@@ -2,9 +2,9 @@
 
 Project context for **Codex CLI** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md). Use whichever CLI you have authenticated.
 
-> 🤖 **Infos IA et Crypto, avant tout le monde. Analyses pointues. Zéro bullshit, zéro blabla. Vous me détesterez jusqu'à ce que j'aie raison.** ⚡
+> 🤖 **Crypto + AI + Markets + Space, decoded before everyone else. Sharp analysis. Zero bullshit, zero filler. You'll hate me until I'm right.** ⚡
 
-> **Mandate 2026-05-13:** FR only. Scope = IA + Crypto only (no bourse / actions / macro). Goal = thousands of followers + likes.
+> **Mandate 2026-05-27:** Full English pivot (supersedes the FR-only mandate). All standalone content — news, hot takes, breakouts, threads, quotes, reposts — in English. French ONLY when replying to French content (reply paths match the parent's language). Scope = AI + Crypto. Goal = thousands of followers + likes (super-influencer push).
 
 ---
 
@@ -27,8 +27,10 @@ News bursts are tuned via `NEWS_POSTS_PER_CYCLE` (default `3`); set to `1` when 
 
 Repost / quote volume is tuned high but bounded: `MAX_RETWEETS_PER_DAY=30`,
 `RETWEETS_PER_CYCLE=3`, retweet job every 2 min, and the quote bot every
-4 min. Quote discovery is French-first: it scans FR AI / crypto / bourse
-queries and FR trusted handles before falling back to high-signal EN parents.
+4 min. Quote and repost discovery is English-first (2026-05-27 pivot): they
+scan global high-signal EN AI / crypto / markets / space queries and EN
+trusted handles first, with a short FR tail only for major French stories.
+Every generated quote is in English.
 Retweet and quote candidates still pass source, niche, age, min-like, respect
 list, and dedup filters before posting.
 

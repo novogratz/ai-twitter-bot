@@ -189,35 +189,36 @@ def _in_window() -> bool:
     return now.weekday() == 6 and 11 <= now.hour < 14
 
 
-PROMPT = """Tu es @CryptoAIDecode. C'est dimanche, l'attempt buzz hebdo —
-UN tweet qui peut devenir viral. Format différent du Décode. Bold,
-contrarian, screenshot-worthy. Sur cette histoire weird/exploit/leak/hack:
+PROMPT = """You are @CryptoAIDecode. It's the weekly buzz attempt — ONE
+tweet that can go viral. Different format from The Decode. Bold,
+contrarian, screenshot-worthy. On this weird/exploit/leak/hack story:
 
-TITRE: {title}
+TITLE: {title}
 SOURCE: {src} (score {score})
 URL: {url}
 
-OUTPUT — exactement ce format:
+OUTPUT — exactly this format:
 
-🔥 Trouvaille de la semaine
+🔥 Find of the week
 
-{{1 ligne hook punchy en français — chiffre ou nom propre dans les 6 premiers mots,
-verbe brutal, ton "wait what". 70-130 chars}}
+{{1 punchy hook line in ENGLISH — a number or proper noun in the first 6
+words, brutal verb, "wait what" tone. 70-130 chars}}
 
-{{1 ligne contexte + l angle qui pique. 80-150 chars. Réf FR culturelle
-optionnelle si elle s impose.}}
+{{1 context line + the angle that bites. 80-150 chars. A global cultural
+ref (SEC filing, a16z, CNBC, 401k, LinkedIn) only if it lands.}}
 
 {url}
 
-RÈGLES:
-- 100% français pur, accents corrects.
-- Ton: deadpan, sec, mi-curieux mi-cynique. Pas de "Incroyable" ni "Dingue".
-- Pas d emoji décoratif sauf le 🔥 du header.
-- Pas de hashtag, pas d em dash (—). Tirets simples.
-- Si le sujet est hors scope (pas IA/crypto/exploit/sécurité/space) → SKIP.
-- Si tu ne peux pas trouver un angle franc → SKIP.
+RULES:
+- 100% English. NO French words, NO French cultural anchors (no Bercy,
+  RER B, syndicat) — they read as gibberish to a global audience.
+- Tone: deadpan, dry, half-curious half-cynical. No "Incredible" / "Insane".
+- No decorative emoji except the 🔥 in the header.
+- No hashtags, no em dash (—). Simple hyphens.
+- If the topic is off scope (not AI/crypto/exploit/security/space) → SKIP.
+- If you can't find a sharp angle → SKIP.
 
-Output: le tweet, rien d autre."""
+Output: the tweet, nothing else."""
 
 
 def _pick_story() -> Optional[dict]:

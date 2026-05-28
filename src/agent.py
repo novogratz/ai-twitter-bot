@@ -298,7 +298,7 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
 ============================================================
 
-🔎 Le Décode {series_label} #{decode_number} — {topic_label_title}
+🔎 The Decode {series_label} #{decode_number} — {topic_label_title}
 
 Les 10 chiffres {topic_label} qui ont compté ce mois-ci.
 
@@ -376,7 +376,7 @@ Mois prochain, même Décode.
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
 ============================================================
 
-🔎 Le Décode {series_label} #{decode_number} — {topic_label_title}
+🔎 The Decode {series_label} #{decode_number} — {topic_label_title}
 
 Les 5 chiffres {topic_label} à retenir cette semaine.
 
@@ -438,7 +438,7 @@ Demain, même Décode.
 OUTPUT EXACT (écris UNIQUEMENT ce qui suit, dans cet ordre):
 ============================================================
 
-🔎 Le Décode {series_label} #{decode_number} — {topic_label_title}
+🔎 The Decode {series_label} #{decode_number} — {topic_label_title}
 
 Les 3 chiffres {topic_label} qui comptent aujourd'hui.
 
@@ -467,7 +467,7 @@ Style de thèse par défaut :
 - "Tout le monde regarde les GPU. Personne ne regarde la production d'énergie."
 - "Le compute devient un trade d'énergie avec un multiple de logiciel."
 
-🎯 OBJECTIF : UN Le Décode #{decode_number} sur l'histoire {topic_label} la plus chaude.
+🎯 OBJECTIF : UN The Decode #{decode_number} sur l'histoire {topic_label} la plus chaude.
 SUJET : {topic_label} uniquement. Format : {format_mode}.
 
 📈 STRATÉGIE DE CONTENU 2026 :
@@ -496,7 +496,7 @@ FORMATS RÉCURRENTS quand le sujet le permet :
 {top5_block}
 
 ⚠️ RÈGLES DE SORTIE :
-- Commence DIRECTEMENT par "🔎 Le Décode". Pas de préambule et PAS de date sur la première ligne.
+- Commence DIRECTEMENT par "🔎 The Decode". Pas de préambule et PAS de date sur la première ligne.
 - Pas de "Score:", "Vérifications:", "Sources:", markdown bold meta. RIEN avant le header.
 - 🚫 ZÉRO markdown : pas de **gras**, pas de __italique__, pas de *italique*.
   X n'affiche PAS le markdown — les astérisques apparaissent littéralement
@@ -967,24 +967,22 @@ Zéro bullshit, zéro blabla. Vous me détesterez jusqu'à ce que j'aie raison."
 
 {lang_directive}
 
-🇫🇷 MODE FR (default 2026-05-09): tu écris EN FRANÇAIS, audience FR pure.
-Utilise des références culturelles FR fraîches (linkedIn coaching, crypto-bro
-Starbucks, Apple Pay sur caisse en carton, livraison Amazon J+3, QR code pour
-tout, tuto Defisko, volet roulant bloqué, abonnement à tout, "merci de patienter
-votre appel est important", auto-entreprise pour vendre des bougies, le site qui
-plante le Black Friday, le télétravail qu'on abolira chaque semestre).
-Plus de RER B, Bercy, URSSAF, café-clope, tonton, Doctolib — ces refs sont
-épuisées. Trouve du neuf.
-Si la lang directive bascule sur EN un jour, swap les anchors FR pour
-des anchors anglo (Bloomberg / Whole Foods / 401(k) / FT comment) —
-même structure, anchor différent. Mais le défaut = FR plein.
+🇬🇧 EN MODE (default since 2026-05-27 pivot): the language directive above
+is GROUND TRUTH — write in ENGLISH for a global AI / crypto / markets
+audience. Use fresh GLOBAL cultural anchors as deadpan flavor (NOT a forced
+punchline): a Form 10-K footnote, an S-1 risk factor, an a16z term sheet, the
+Fed dot plot, a CNBC chyron, a 401(k), a LinkedIn "thrilled to announce" post,
+a Notion doc with 47 nested toggles, a Whole Foods checkout line, "number go
+up technology". NO French anchors (Bercy, RER B, URSSAF, tonton, Doctolib) —
+they read as gibberish to a global reader. If the language directive ever
+flips back to FR, swap to fresh FR anchors — same structure, different anchor.
 
 🎯 GOAL 2026-05-19 — UN DEEP-DIVE LONG dans la série "Le Décode #N".
 Le compte fait 3 news/jour MAX, tous au même format. Les lecteurs
 reviennent demain pour le suivant. Pattern récurrent = abonnés fidèles.
 
 ⚠️ OUTPUT RULE — ULTRA STRICT (user mandate 2026-05-21):
-- Ta sortie DOIT commencer EXACTEMENT par "🔎 Le Décode #..." (le header).
+- Ta sortie DOIT commencer EXACTEMENT par "🔎 The Decode #..." (le header).
 - ZÉRO préambule. Pas de "**Score**", "**Vérifications**", "**Angle**",
   "**Checklist**", "**Conformité**", "**Output**", "**Post**", pas
   d'en-tête de validation, pas de liste à puces de checks (- Source: …
@@ -996,7 +994,7 @@ reviennent demain pour le suivant. Pattern récurrent = abonnés fidèles.
 
 ✅ EXEMPLE CORRECT (output qu'on veut, à la lettre):
 
-🔎 Le Décode #42 — 2026-05-21
+🔎 The Decode #42 — 2026-05-21
 Stargate lève 100Md pour un datacenter qui consomme 4 GW. Bercy dort.
 
 • OpenAI + SoftBank closent 100Md à 5x EBITDA projeté 2030, jamais publié
@@ -1016,7 +1014,7 @@ https://www.theinformation.com/articles/exemple
 - Scope: crypto/IA ✓
 **Score: 9/10.** L'angle est sharp.
 
-🔎 Le Décode #42 — 2026-05-21
+🔎 The Decode #42 — 2026-05-21
 [...]
 
 → Cette structure SKIP automatique. Donne directement le Décode. RIEN AVANT.
@@ -1033,7 +1031,7 @@ FORMAT MODE: **{format_mode}**  (top5 = Top 5 chiffres bookmark-bait; regular = 
 
   FORMAT STRICT — aucun écart:
 
-    🔎 Le Décode #{decode_number} — {decode_topic} — Vendredi {today_date}
+    🔎 The Decode #{decode_number} — {decode_topic} — Vendredi {today_date}
 
     {{HEADLINE: une phrase ferme. Exemples:
       • "Les 5 chiffres IA de la semaine que personne d'autre ne te donne"
@@ -1091,7 +1089,7 @@ Ne croise PAS les topics — un Décode = un sujet, focus net. Le sujet de cette
 
 FORMAT OBLIGATOIRE — strict (rien d'autre, ligne par ligne):
 
-🔎 Le Décode #{decode_number} — {decode_topic} — {today_date}
+🔎 The Decode #{decode_number} — {decode_topic} — {today_date}
 
 {{TITRE: 1-2 phrases punchy, opinion-forte ou question contrarian.
 NE COMMENCE PAS par "Aujourd'hui" / "Selon" / "Breaking". Démarre fort:
@@ -2093,8 +2091,8 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         topic = globals().get("_pending_decode_topic", "")
         format_kind = globals().get("_pending_decode_format", "daily")
         label = "Monthly" if format_kind == "monthly" else ("Weekly" if format_kind == "weekly" else "Daily")
-        topic_label = {"IA": "Infra IA", "Investissement": "Marchés Asym."}.get(topic, topic)
-        header = f"🔎 Le Décode {label} #{n} — {topic_label} — {today}" if n else f"🔎 Le Décode {label} — {today}"
+        topic_label = {"IA": "AI Infra", "Investissement": "Asym. Markets"}.get(topic, topic)
+        header = f"🔎 The Decode {label} #{n} — {topic_label} — {today}" if n else f"🔎 The Decode {label} — {today}"
         tweet = f"{header}\n\n{tweet}"
     else:
         log.info(f"[NEWS] Décode header missing AND body too short — SKIPPING. Output preview: {tweet[:200]!r}")
