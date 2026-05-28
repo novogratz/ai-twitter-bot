@@ -336,8 +336,7 @@ def run_quote_tweet_cycle():
                     continue
                 age = _scrape_age_hours(t)
                 if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "48")):
-                    if not (age >= 999_000 and likes >= 2):
-                        continue
+                    continue
             except Exception:
                 pass
             candidates.append(t)
@@ -382,8 +381,7 @@ def run_quote_tweet_cycle():
                         continue
                     age = _scrape_age_hours(t)
                     if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "48")):
-                        if not (age >= 999_000 and likes >= 2):
-                            continue
+                        continue
                 except Exception:
                     pass
                 candidates.append(t)
