@@ -1515,3 +1515,50 @@ Motiv – now Rocket Lab Robotics – brings mission-tested Mars heritage with a
 Sky Protocol is the oldest DeFi protocol on @eth
   - https://x.com/SkyEcosystem/status/2059636660921352259
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 80).
+
+## 2026-05-28
+- **@ashcrypto** (3059 likes, score 9/10) — BREAKING: 
+
+Bittensor $TAO has crashed -27% and wiped out nearly $900 million from its market cap in the past 12 hours. 
+
+$9 million in TAO longs were also liquidated.
+
+This came after Covenant AI a m
+  - https://x.com/AshCrypto/status/2042476384086626336
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 3853).
+- **@cryptorover** (71 likes, score 9/10) — BLACKROCK IS SELLING 
+
+BlackRock sold $527 MILLION worth of BTC yesterday, extending its selling streak to 8 straight days.
+
+They have now sold $1.8 BILLION worth of Bitcoin in just the last 8 days.
+  - https://x.com/cryptorover/status/2059845217361215555
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 125).
+- **@cointelegraph** (71 likes, score 9/10) — NOW: Anthropic is generating at least 35% more revenue than OpenAI, hitting $45B annualized versus OpenAI's $30B, per The Information.
+  - https://x.com/Cointelegraph/status/2059837315749454280
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 119).
+- **@drtilt2** (208 likes, score 8/10) — Vendez nvidia ils vont faire faillite.
+Leur business est bancale et les marges presque négatives...
+  - https://x.com/DrTilt2/status/2059644265773339033
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 276).
+- **@wallstreetbets** (1384 likes, score 8/10) — Every cycle has one ecosystem that gets ignored until it's too late
+
+In 2017 it was ETH, in 2021 it was SOL, in 2026 it's $TAO
+
+We're going to look back at TAO the same way we look back at ETH in 2016
+  - https://x.com/wallstreetbets/status/2050365076373131274
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1568).
+- **@watcherguru** (263 likes, score 8/10) — JUST IN:  Bitcoin falls under $73,000 after US and Iran launch attacks against each other.
+  - https://x.com/WatcherGuru/status/2059848015020474632
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 435).
+- **@stats_feed** (301 likes, score 8/10) — Nuclear power capacity from 1980 to 2025. 
+
+•  USA dominates from the start and stays #1 the entire race (~97–101 GW), but nearly flat since 1990
+
+•  France rockets from 13 GW in 1980 to 63 GW by 1990
+  - https://x.com/stats_feed/status/2059614619941900521
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 375).
+- **@tradingthomas3** (192 likes, score 8/10) — $NVDA H200 GPU prices reportedly drop sharply in recent days amid easing AI chip supply constraints
+
+Trouble in paradise?
+  - https://x.com/TradingThomas3/status/2059818104952074323
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 236).
