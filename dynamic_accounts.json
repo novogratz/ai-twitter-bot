@@ -96,7 +96,14 @@
     "ThalesBorghi",
     "MarcLambron",
     "CryptoVince",
-    "CryptoThibault"
+    "CryptoThibault",
+    "ArnaudMercier_",
+    "ThibaultM",
+    "MarcLabrie",
+    "JulienPoirier",
+    "BorisB",
+    "CryptoRomain",
+    "VCParis"
   ],
   "en": [
     "blablacar",
@@ -657,6 +664,41 @@
       "lang": "fr",
       "handle": "CryptoThibault",
       "added": "2026-05-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArnaudMercier_",
+      "added": "2026-05-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultM",
+      "added": "2026-05-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLabrie",
+      "added": "2026-05-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienPoirier",
+      "added": "2026-05-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisB",
+      "added": "2026-05-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoRomain",
+      "added": "2026-05-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "VCParis",
+      "added": "2026-05-27"
     }
   ]
 }
