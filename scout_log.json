@@ -1021,5 +1021,50 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les vrais acteurs: fondateurs, analystes et VCs. L'accent est mis sur la France avec quelques p\u00e9pites Qu\u00e9bec/USA pour varier l'angle sans sortir du cadre qualitatif."
+  },
+  {
+    "ts": "2026-05-28T01:58:01.046747",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JL_Bourgeois",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'incontournable de la bourse FR. Pas de signaux VIP, juste des analyses macro et sectorielles solides. L'anti-'moonboy' par excellence."
+      },
+      {
+        "handle": "MaxMaurin",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Fondateur de Replit. Il tweet sur l'IA dev et le SaaS avec l'\u00e9nergie typique de la SV mais en fran\u00e7ais. Le bridge parfait entre les deux rives."
+      },
+      {
+        "handle": "Ludovic_M",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Le V\u00e9t\u00e9ran du Quebec. Il couvre le march\u00e9 crypto avec une perspective nord-am\u00e9ricaine mais une plume francophone. Actif et pertinent."
+      },
+      {
+        "handle": "PhilippeCyr",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Journaliste boursier qu\u00e9b\u00e9cois. Il couvre la tech et la fintech (notamment les ETF) sans se vendre \u00e0 vie. C'est calme, c'est bien."
+      },
+      {
+        "handle": "PierreBourque",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Directeur de recherche chez Coinhouse. Il balance des threads technique sur la DeFi et le Bitcoin. Pas de 'DAGOBERT', du vrai savoir."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les cerveaux derri\u00e8re le code (Mistral/Replit) et les pros du march\u00e9 (Bourgeois/Yomoni). Z\u00e9ro vendeur de r\u00eave, 100% contenu technique ou analyse fine."
   }
 ]

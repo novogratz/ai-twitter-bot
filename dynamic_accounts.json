@@ -103,7 +103,12 @@
     "JulienPoirier",
     "BorisB",
     "CryptoRomain",
-    "VCParis"
+    "VCParis",
+    "JL_Bourgeois",
+    "MaxMaurin",
+    "Ludovic_M",
+    "PhilippeCyr",
+    "PierreBourque"
   ],
   "en": [
     "blablacar",
@@ -699,6 +704,31 @@
       "lang": "fr",
       "handle": "VCParis",
       "added": "2026-05-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JL_Bourgeois",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxMaurin",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "Ludovic_M",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeCyr",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreBourque",
+      "added": "2026-05-28"
     }
   ]
 }
