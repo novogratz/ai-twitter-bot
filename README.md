@@ -1,10 +1,8 @@
-# kzer — autonomous Twitter/X growth agent
+# Autonomous Twitter/X Influencer Bot
 
-> 🤖 **Infos IA et Crypto, avant tout le monde. Analyses pointues. Zéro bullshit, zéro blabla. Vous me détesterez jusqu'à ce que j'aie raison.** ⚡
+> **You'll hate me until I'm right.**
 
-> **Positioning 2026-05-24:** English standalone content. Core niche = AI infrastructure & asymmetric investing: power demand, MW/GW capacity, compute wars, AI infra stocks, energy, robotics, space, frontier tech, and crypto linked to AI.
-
-A self-evolving Twitter/X agent. Posts breaking news, replies in real time, amplifies signal, and manages its own follower-ratio. Agentic strategy/persona rewrites are available but disabled by default so LLM calls are spent on production content first. Driven by Claude Code (or Codex / Gemini CLI). No Twitter API key. Browser automation only.
+A self-evolving Twitter/X influencer agent targeting the AI, crypto, markets, and space niche. Posts sharp original analysis, replies in real time, amplifies signal, and manages its own follower-ratio. Claude Code (or Codex / Gemini CLI) as the LLM backbone. No Twitter API key — browser automation only.
 
 ---
 

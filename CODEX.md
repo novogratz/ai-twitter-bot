@@ -2,15 +2,15 @@
 
 Project context for **Codex CLI** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md). Use whichever CLI you have authenticated.
 
-> 🤖 **Crypto + AI + Markets + Space, decoded before everyone else. Sharp analysis. Zero bullshit, zero filler. You'll hate me until I'm right.** ⚡
+> **You'll hate me until I'm right.**
 
-> **Mandate 2026-05-27:** Full English pivot (supersedes the FR-only mandate). All standalone content — news, hot takes, breakouts, threads, quotes, reposts — in English. French ONLY when replying to French content (reply paths match the parent's language). Scope = AI + Crypto. Goal = thousands of followers + likes (super-influencer push).
+> **Mandate 2026-05-27:** All standalone content in English. French ONLY when replying to French content. Goal = super-influencer in AI, crypto, markets, and space.
 
 ---
 
 ## Quick context
 
-This repo is **kzer**, an autonomous Twitter/X growth agent. ~30 concurrent micro-bots managed by APScheduler in `main.py`. Browser-driven via Safari + AppleScript — no Twitter API key.
+Autonomous Twitter/X influencer bot. ~30 concurrent micro-bots managed by APScheduler in `main.py`. Browser-driven via Safari + AppleScript — no Twitter API key.
 
 **Default AI provider: Ollama** (`AI_CLI=ollama`). Codex is the default backup when the local model fails.
 
@@ -40,13 +40,11 @@ startup valuation). Prompts now explicitly prefer actor +
 exact number + consequence, and avoid abstract standalone one-liners
 that do not carry a verifiable fact.
 
-Daily Décode schedule: **two** crons — a morning FR burst at 07:00
-Europe/Paris (`daily_news_morning_job`) and an evening top-up at 19:00 UTC
-(`daily_news_job`). `MAX_NEWS_PER_DAY` caps the combined total and
-per-`(topic, format)` dedup (`daily_topic_state.json`) means the evening
-cron only ships topics the morning burst didn't. Restored the morning slot
-on 2026-05-26 after the single evening-only cron left a bot that ran
-continuously through the day with zero Décodes until 21:00 Paris.
+Daily Decode schedule: **single** cron at 06:00 `America/New_York` (`daily_news_job`)
+targeting the North American morning scroll (2026-05-28 pivot, supersedes the
+two-cron FR schedule). Weekly fires Friday at 06:30 EST. `MAX_NEWS_PER_DAY` caps
+the daily total; per-`(topic, format)` dedup (`daily_topic_state.json`) prevents
+topic repetition across restarts.
 
 **Scheduler hardening (2026-05-26):** `BlockingScheduler` runs with
 `misfire_grace_time=3600`, `coalesce=True`, `max_instances=2`, and a

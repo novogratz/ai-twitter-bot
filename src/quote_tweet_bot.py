@@ -239,7 +239,7 @@ def _looks_like_skip_or_rationale(text: str) -> bool:
     return False
 
 
-_MNTS_PROMO_END_Q = date(2026, 6, 6)
+_MNTS_PROMO_END_Q = date(2026, 5, 27)  # expired — promo ended
 _SPACE_RE_Q = re.compile(
     r"\b(space|spatial|spatiaux|spacex|starship|starlink|satellite|orbital|orbit|"
     r"mars|lune|moon|rocket|fus[ée]e?|launch|astronaut|nasa|esa|cnes|ariane|"

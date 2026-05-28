@@ -42,7 +42,7 @@ FOLLOW_BLAST_STATE_FILE = os.path.join(_PROJECT_ROOT, "follow_blast_state.json")
 BLAST_QUERIES = [
     # === Space (Highest Priority user mandate 2026-05-26) ===
     "SpaceX OR Starship OR Starlink lang:fr",
-    "orbital economy OR $MNTS OR Momentus Space lang:en",
+    "orbital economy OR launch vehicle OR NewSpace lang:en",
     "ArianeGroup OR satellite OR spatial lang:fr",
     "\"New Space\" France OR fusée lang:fr",
     "ESA OR exploration spatiale lang:fr",
