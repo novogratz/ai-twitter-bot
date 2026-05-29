@@ -137,7 +137,10 @@
     "0xSatoshi",
     "MaximeDion",
     "GillesZillhardt",
-    "SergeArlaud"
+    "SergeArlaud",
+    "LeComptoirFin",
+    "MathieuDussart",
+    "PierreDartaud"
   ],
   "en": [
     "blablacar",
@@ -903,6 +906,21 @@
       "lang": "fr",
       "handle": "SergeArlaud",
       "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "LeComptoirFin",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDussart",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDartaud",
+      "added": "2026-05-29"
     }
   ]
 }
