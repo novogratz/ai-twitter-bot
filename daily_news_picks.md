@@ -1797,3 +1797,71 @@ The electricity provider, PJM, which serves 67 million people, issued a grid eme
 - **@kalshi_crypto** (973 likes, score 8/10) — BREAKING: Tom Lee's Ethereum portfolio is now down $8,000,000,000
   - https://x.com/Kalshi_Crypto/status/2059983883274191046
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 1291).
+- **@marionawfal** (75 likes, score 9/10) — SpaceX, OpenAI, and Anthropic are all planning to go public in 2026.
+
+3 of the most powerful and secretive tech companies on earth, all hitting public markets in the same year.
+
+Space infrastructure.
+  - https://x.com/MarioNawfal/status/2060190642073219144
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 123).
+- **@robertgraham** (2651 likes, score 9/10) — A New Glenn rocket has 5.5 GWh of energy (first and second stage).
+
+The Little Boy bomb dropped on Hiroshima had 17.5 GWh of energy.
+
+The largest non-nuclear blast was Operation Minor Scale (1985) wit
+  - https://x.com/robertgraham/status/2060182250428281090
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 2821).
+- **@speculator_io** (1636 likes, score 9/10) — Over the last few months, I compiled 20+ lists of stocks in leading sectors, including:
+
+- Nuclear
+- Quantum
+- Software
+- AI
+- Robotics
+
+Since then, many have gone up over 100%, some even 500%. And th
+  - https://x.com/Speculator_io/status/1871249185212706963
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1712).
+- **@speculator_io** (881 likes, score 9/10) — Companies that will benefit the most from Project Stargate and $500B in AI spending:
+
+• Chips: $NVDA $AVGO $TSM $MRVL $MU $ARM
+• Data Centers: $ORCL $VRT $SMCI $DELL $HPE $ANET $CIEN $CRDO $CLS 
+• Pow
+  - https://x.com/Speculator_io/status/1882077116440678661
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 967).
+- **@rektfencer** (598 likes, score 9/10) — You missed out on:
+
+▸ 48x on $FET
+▸ 30x on $RNDR
+▸ 20x on $TAO
+
+But there's more to come. Nvidia AI conference is coming in less than 24 hours.
+
+Here's a list of AI projects that are set to explode by
+  - https://x.com/rektfencer/status/1769487601134661904
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 740).
+- **@speculator_io** (1787 likes, score 8/10) — A List of Data Center Operators:
+
+$ORCL Oracle
+$CRWV CoreWeave
+$NBIS Nebius
+$IREN Iren
+$GLXY Galaxy Digital
+$APLD Applied Digital
+$RIOT Riot Platforms
+$CIFR Cipher Mining
+$MARA Mara
+$GDS GDS
+$CORZ Cor
+  - https://x.com/Speculator_io/status/1982929641246502968
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1911).
+- **@rektfencer** (762 likes, score 8/10) — I've turned $3,750 into $1,219,000 on alts this year.
+
+My list of tokens with 10-100x potential for this bull run:
+
+➢ AI: $TAO, $FET, $AGC, $XNA, $VETME, $ZIG, $AIPG, $PAAL, $AGRS, $PRIME, $GTAI, $HGP
+  - https://x.com/rektfencer/status/1764639700306837890
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 888).
+- **@coinmarketcap** (347 likes, score 8/10) — LATEST:  Standard Chartered reaffirmed its Ethereum price targets of $4,000 by end-2026 and $40,000 by end-2030, comparing ETH's drop to Amazon stock in 2001.
+  - https://x.com/CoinMarketCap/status/2060079963022258429
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 471).
