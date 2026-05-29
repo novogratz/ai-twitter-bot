@@ -334,6 +334,20 @@ def main():
         log.info("Now warming up the reply loop...")
         safe_run_direct_reply_cycle()
 
+    # Catchup burst — fires 3 extra rounds of every high-volume surface so
+    # any downtime gap is filled quickly on restart.
+    log.info("Catchup burst: 3 extra rounds of RT / quote / reply / spicy / breakout...")
+    for _burst_i in range(3):
+        log.info(f"[CATCHUP] Round {_burst_i + 1}/3")
+        if not args.reply_only:
+            safe_run_retweet_cycle()
+            safe_run_quote_tweet_cycle()
+            safe_run_spicy_cycle()
+            safe_run_breakout_cycle()
+        if not args.post_only:
+            safe_run_direct_reply_cycle()
+    log.info("Catchup burst complete.")
+
         # Warm up reply-to-replies path immediately on startup so people
         # who replied to our latest tweets get a response NOW, not after
         # the bot has been up for 35-45 min.
