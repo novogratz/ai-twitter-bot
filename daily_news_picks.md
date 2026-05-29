@@ -1865,3 +1865,94 @@ My list of tokens with 10-100x potential for this bull run:
 - **@coinmarketcap** (347 likes, score 8/10) — LATEST:  Standard Chartered reaffirmed its Ethereum price targets of $4,000 by end-2026 and $40,000 by end-2030, comparing ETH's drop to Amazon stock in 2001.
   - https://x.com/CoinMarketCap/status/2060079963022258429
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 471).
+- **@thebtctherapist** (348 likes, score 9/10) — If someone had told me in 2021 MicroStrategy was going to own nearly 1 million bitcoin and the price would only be $73,000 I would have questioned everything I believed in. 
+
+This price action is incr
+  - https://x.com/TheBTCTherapist/status/2060198464210825325
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 452).
+- **@unusual_whales** (2016 likes, score 8/10) — This is unusual.
+
+Representative Dale Strong disclosed a Jan. 28 purchase of $IREN, a data-center company powered by renewable energy.
+
+It is his first stock trade in three years in Congress.
+
+Strong
+  - https://x.com/unusual_whales/status/2016930027149869470
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2326).
+- **@speculator_io** (566 likes, score 8/10) — Theme stocks continue to dominate today:
+
+FinTech
+$HOOD 12.77%
+$DAVE 7.52%
+$SEZL 8.37%
+$SOFI 6.00%
+
+Software
+$BBAI 16.27%
+$MGNI 14.31%
+$LIF 5.05%
+$PLTR 4.27%
+
+Crypto
+$CIFR 12.21%
+$RIOT 7.11%
+$IREN 4.0
+  - https://x.com/Speculator_io/status/1939799502279303182
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 638).
+- **@satori_btc** (196 likes, score 8/10) — Is SpaceX quietly becoming a Bitcoin whale?
+
+SpaceX bought 18,712 BTC and is treating them as a core Treasury reserve asset on the same level as cash or bonds.
+
+“They hold 18,712 Bitcoin... and the wa
+  - https://x.com/Satori_btc/status/2060204113405804854
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 356).
+- **@marionawfal** (173 likes, score 8/10) — Blue Origin's New Glenn blew up on the launch pad during a Static Fire Test at Cape Canaveral.
+
+This was supposed to be the safe part.
+
+Bezos spent years and billions to close the gap with SpaceX.
+
+To
+  - https://x.com/MarioNawfal/status/2060207603624419395
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 255).
+- **@thierryborgeat** (2627 likes, score 9/10) — The price to rent an Nvidia H200 just collapsed from $7/hr to $4/hr in three weeks.
+
+A -40% drop in the cost of the single most strategic asset in tech.
+
+When the underlying commodity that powers your
+  - https://x.com/ThierryBorgeat/status/2060084646101012618
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 3161).
+- **@unusual_whales** (7759 likes, score 9/10) — "AI can't stop recommending nuclear strikes in war game simulations... leading AIs from OpenAI, Anthropic and Google opted to use nuclear weapons in 95% of cases," per New Scientist
+  - https://x.com/unusual_whales/status/2026787037404164513
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 8673).
+- **@unusual_whales** (2088 likes, score 9/10) — Google, $GOOGL, to invest $25 billion in data centers and AI infrastructure across largest U.S. electric grid
+  - https://x.com/unusual_whales/status/1945234668476829791
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 2270).
+- **@futurestacked** (162 likes, score 9/10) — BREAKING: Nvidia will pay you $1,000 a month to host a mini AI data center at your house.
+
+It looks like a regular AC unit sitting in your yard. Nobody walking past would know what is inside.
+
+Inside
+  - https://x.com/FutureStacked/status/2060279406656913664
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 190).
+- **@unusual_whales** (4751 likes, score 8/10) — Nvidia, $NVDA, has just made its first move into nuclear power: it is partnering with PG&E's recently-saved Diablo Canyon Nuclear plant to build AI inside the plant.
+  - https://x.com/unusual_whales/status/1856755607375855927
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 5065).
+- **@speculator_io** (1324 likes, score 8/10) — This bull market won’t last forever.
+
+That’s why you need to take advantage of it while it's here.
+
+Trillion-dollar industries are unfolding before our eyes:
+AI, crypto, chips, data centers, fintech,
+  - https://x.com/Speculator_io/status/1973866368295379176
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1500).
+- **@burrytracker** (3333 likes, score 8/10) — Everything he touches turns to gold
+
+Leopold Aschenbrenner's Applied Digital $APLD position is now up +323% since disclosing a $22.7M stake
+
+He opened the position in Q1 2025 at ~$8.62/share
+  - https://x.com/burrytracker/status/2047341960592015816
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3433).
+- **@remarks** (3013 likes, score 8/10) — JUST IN:  Data Centers now account for 7% of the total US power demand.
+  - https://x.com/remarks/status/2046204360355725801
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3243).
