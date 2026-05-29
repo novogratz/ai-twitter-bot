@@ -1,13 +1,13 @@
 {
-  "ts": "2026-05-27T19:30:00.000000",
+  "ts": "2026-05-28T21:00:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 6,
-    "MAX_HOTAKES_PER_DAY": 8,
-    "MAX_QUOTES_PER_DAY": 60,
-    "MAX_RETWEETS_PER_DAY": 80,
-    "MAX_BREAKOUTS_PER_DAY": 5,
-    "MAX_SPICY_PER_DAY": 6,
-    "MAX_REPLIES_PER_CYCLE": 5,
+    "MAX_NEWS_PER_DAY": 10,
+    "MAX_HOTAKES_PER_DAY": 20,
+    "MAX_QUOTES_PER_DAY": 120,
+    "MAX_RETWEETS_PER_DAY": 150,
+    "MAX_BREAKOUTS_PER_DAY": 15,
+    "MAX_SPICY_PER_DAY": 20,
+    "MAX_REPLIES_PER_CYCLE": 8,
     "LIKE_BOT_PER_CYCLE": 40,
     "FOLLOW_BLAST_PER_CYCLE": 60
   },
@@ -17,5 +17,5 @@
     "Spatial"
   ],
   "cadence_factor": 1.0,
-  "rationale": "Full throttle: 6 Décodes/jour, 8 hot takes, 6 spicy, 5 breakouts. Voix originale maximale. Go viral."
+  "rationale": "GO CRAZY mode: max volume on RT/quote/replies. Reply search bug fixed (structured_output). No artificial brakes."
 }

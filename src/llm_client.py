@@ -677,6 +677,7 @@ def run_llm(
     timeout: Optional[int] = None,
     cwd: Optional[str] = None,
     force_provider: Optional[str] = None,
+    structured_output: bool = False,
 ) -> LLMResult:
     provider = force_provider or _provider()
 
@@ -696,7 +697,7 @@ def run_llm(
         )
         ollama_result = _run_ollama_http(prompt, label=label, timeout=effective_timeout)
         if not _should_fallback(ollama_result):
-            usable = unwrap_text(ollama_result.stdout)
+            usable = unwrap_text(ollama_result.stdout, structured_output=structured_output)
             if usable.strip():
                 return LLMResult(0, usable, ollama_result.stderr)
             raw_preview = re.sub(r"\s+", " ", (ollama_result.stdout or "").strip())[:240]
@@ -938,7 +939,7 @@ def _unwrap_ndjson(raw: str) -> str | None:
     return None
 
 
-def unwrap_text(stdout: str) -> str:
+def unwrap_text(stdout: str, structured_output: bool = False) -> str:
     """Return model text from provider CLI output.
 
     Handles NDJSON (opencode --format json), JSON envelopes
@@ -977,6 +978,7 @@ def unwrap_text(stdout: str) -> str:
     # Final guard: if the raw looks like a stream envelope or starts with
     # `{`/`[{`, refuse to return it — caller will treat as empty and skip
     # rather than ship `{"type":"step_start",...}` as a tweet.
-    if contains_post_unsafe_leak(cleaned):
+    # Skip this guard when the caller expects structured JSON (e.g. REPLY_SEARCH).
+    if not structured_output and contains_post_unsafe_leak(cleaned):
         return ""
     return cleaned

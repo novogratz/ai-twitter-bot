@@ -571,6 +571,7 @@ def generate_replies(recent_topics=None, already_replied=None):
         label="REPLY_SEARCH",
         allowed_tools=["WebSearch"],
         cwd="/tmp",
+        structured_output=True,
     )
     if result.returncode != 0:
         log.info(f"[REPLY] CLI error: {result.stderr[:200]}")
