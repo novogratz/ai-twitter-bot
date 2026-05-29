@@ -2155,3 +2155,56 @@ Ondas
 Revenue $240.3M vs $228M expected
   - https://x.com/unusual_whales/status/1986539676120064349
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 811).
+- **@ashcrypto** (702 likes, score 9/10) — Bitcoin just pumped +$1200 in the last 30 minutes and liquidated $32 million worth of shorts.
+  - https://x.com/AshCrypto/status/2060379487431225832
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 992).
+- **@nolimitgains** (0 likes, score 8/10) — 5 stocks at the intersection of AI, robotics, autonomy, and next-gen energy.
+
+All 5 have retraced significantly from their highs.
+
+Here they are:
+  - https://x.com/NoLimitGains/status/2060054533389058211
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 160).
+- **@watcherguru** (1322 likes, score 8/10) — JUST IN: Bitcoin erases losses and reclaims $74,000 after President Trump announces navel blockade in the Strait of Hormuz has ended.
+  - https://x.com/WatcherGuru/status/2060385492273693181
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1706).
+- **@investingvisual** (265 likes, score 8/10) — Leopold Aschenbrenner's top 10 long positions as of today:
+
+1. $NBIS 35%
+2. $SNDK 15%
+3. $BLOOM 13%
+4. $CRWV 9%
+5. $MU 6%
+6. $IREN 5%
+7. $CORZ 5%
+8. $TSM 5%
+9: $APLD 4%
+10. $INTC 2%
+  - https://x.com/InvestingVisual/status/2060361604206637488
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 289).
+- **@thetechinvest** (215 likes, score 8/10) — The Dan Ives AI 30 Stocks That Have Doubled In 2026:
+
+1. $MU
+2. $AMD
+3. $NBIS
+4. $INOD
+
+I still expect these to double or triple in 2026:
+1. $TSM
+2. $IREN
+3. $CRWV
+  - https://x.com/TheTechInvest/status/2060322171415675016
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 241).
+- **@unusual_whales** (0 likes, score 8/10) — Data centres will account for 8.5% of America's peak power demand in 2027, up from 4.1% in 2025, per Goldman Sachs.
+  - https://x.com/unusual_whales/status/2059977235940114898
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 210).
+- **@randgroup** (141 likes, score 8/10) — Microsoft has $80 billion in Azure orders it can't fill. Not for lack of demand. For lack of power.
+  - https://x.com/randgroup/status/2060336121469432264
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 165).
+- **@nicksortor** (45426 likes, score 8/10) — JUST NOW: Jeff Bezos’ New Glenn rocket has EXPLODED into a MASSIVE fireball on the launchpad at Cape Canaveral in Florida
+
+It literally looks like a NUCLEAR BOMB went off.
+
+@ElonMusk responded: “Most
+  - https://x.com/nicksortor/status/2060170321383059562
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 50928).
