@@ -2260,3 +2260,49 @@ On 09/30, it
 BlackRock sold $80,400,000 in Ethereum.
   - https://x.com/TedPillows/status/2060269571706101924
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 261).
+- **@kalshi_crypto** (399 likes, score 9/10) — Top companies holding the most Bitcoin:
+
+Michael Saylor's Strategy — 843,738 ($65B)
+Twenty One Capital — 43,513 ($3.4B)
+Metaplanet — 40,177 ($3.1B)
+MARA Holdings — 38,689 ($3B)
+Bullish — 24,000 ($1.9B
+  - https://x.com/Kalshi_Crypto/status/2057474934780150237
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 445).
+- **@polymarketmoney** (746 likes, score 9/10) — Anthropic reportedly raised $65B at a ~$965B post-money valuation, surpassing OpenAI as the world’s most valuable AI startup.
+  - https://x.com/PolymarketMoney/status/2060062397256372344
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 864).
+- **@cryptorover** (945 likes, score 9/10) — BITCOIN DEATH CROSS ON THE CME CHART! 
+
+History rhymes.
+
+2022: -40.25% drop, bottomed near $15K.
+2026: -40.25% drop...
+
+Same death cross setup with the 50 SMA rolling under the 200.
+
+If this fractal h
+  - https://x.com/cryptorover/status/2060270669775184322
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1281).
+- **@kalshi** (200 likes, score 8/10) — JUST IN: 35% chance Bitcoin hits $100K this year
+  - https://x.com/Kalshi/status/2060409129726828549
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 308).
+- **@coinmarketcap** (113 likes, score 8/10) — LATEST:  Fidelity Digital Assets says Bitcoin and gold are gaining ground in central bank reserves and cross-border settlements, calling it a "shift away from dollar-based systems."
+  - https://x.com/CoinMarketCap/status/2060401328036131145
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 185).
+- **@merlijntrader** (113 likes, score 8/10) — ETH/BTC just closed 14 consecutive 3-day candles in red.
+
+This has never happened in Ethereum's history.
+
+Is it over? The opposite.
+
+RSI back at February's local bottom levels. 
+Last time this happene
+  - https://x.com/MerlijnTrader/status/2060390719278215531
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 153).
+- **@unusual_whales** (378 likes, score 8/10) — Coreweave, $CRWV, is down more than 20% this week.
+  - https://x.com/unusual_whales/status/1986837047017885816
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 486).
+- **@cryptogoos** (177 likes, score 8/10) — BREAKING: Bitcoin hits $74,000 after President Trump announces navel blockade in the Strait of Hormuz has ended.
+  - https://x.com/cryptogoos/status/2060386376202203541
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 201).
