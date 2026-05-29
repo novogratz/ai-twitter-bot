@@ -1755,3 +1755,45 @@ LMAO.
 Can’t make this up.
   - https://x.com/DudeWhoInvests/status/2052515563209928955
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 758).
+
+## 2026-05-29
+- **@ashcrypto** (185 likes, score 9/10) — BREAKING : BlackRock ETF sold $177,950,000 worth of Bitcoin.
+ 
+Nearly $2 Billion flowed out of the fund in the last 9 days.
+  - https://x.com/AshCrypto/status/2060195716421796283
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 291).
+- **@kobeissiletter** (2115 likes, score 9/10) — We need more power:
+
+Global data center power demand is now expected to rise to a record 1,596 terawatt-hours by 2035.
+
+That would mark a +255% increase from 2025 levels.
+
+The US is set to remain the
+  - https://x.com/KobeissiLetter/status/2023437717888250284
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 2565).
+- **@kobeissiletter** (1656 likes, score 9/10) — Global data center power demand is set to accelerate:
+
+Data center power demand is expected to grow +220% from 2023 levels, or +905 TWh, to a record 1,350 TWh by 2030, according to Goldman Sachs.
+
+Thi
+  - https://x.com/KobeissiLetter/status/2043863505284055126
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1876).
+- **@anthropicai** (17508 likes, score 8/10) — We've raised $65 billion in Series H funding at a $965 billion post-money valuation, led by @AltimeterCap, Dragoneer, @Greenoaks, and @sequoia.
+
+This investment will help us advance our research and e
+  - https://x.com/AnthropicAI/status/2060061347522433422
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 19250).
+- **@kobeissiletter** (2816 likes, score 8/10) — BREAKING: The price of power in New York City surges +31% amid the ongoing arctic blast.
+
+The electricity provider, PJM, which serves 67 million people, issued a grid emergency and warned demand may e
+  - https://x.com/KobeissiLetter/status/2016213607353352307
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 3112).
+- **@unusual_whales** (1529 likes, score 8/10) — Tesla, $TSLA, CEO Elon Musk has said that the company is using so much Nvidia, $NVDA, hardware to power its self-driving training systems, the chipmaker can’t keep up with its demand.
+  - https://x.com/unusual_whales/status/1682357503722418178
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1599).
+- **@unusual_whales** (1256 likes, score 8/10) — Microsoft, $MSFT, is open to using natural gas to power AI data centers to keep up with demand
+  - https://x.com/unusual_whales/status/1902363680999952535
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1466).
+- **@kalshi_crypto** (973 likes, score 8/10) — BREAKING: Tom Lee's Ethereum portfolio is now down $8,000,000,000
+  - https://x.com/Kalshi_Crypto/status/2059983883274191046
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1291).
