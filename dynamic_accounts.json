@@ -148,7 +148,15 @@
     "RazvanBuzdugan",
     "AlexisDeG",
     "CyrilKlein",
-    "Raphaeltanguay"
+    "Raphaeltanguay",
+    "0xMert",
+    "ArnaudMensah",
+    "MathieuDufour",
+    "LuccaG",
+    "GillesMauris",
+    "ThibaudMoulin",
+    "AlexisDuchemin",
+    "CryptoGilles"
   ],
   "en": [
     "blablacar",
@@ -968,6 +976,46 @@
     {
       "lang": "fr",
       "handle": "Raphaeltanguay",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xMert",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArnaudMensah",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDufour",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuccaG",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "GillesMauris",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudMoulin",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDuchemin",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoGilles",
       "added": "2026-05-29"
     }
   ]

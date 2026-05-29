@@ -1,115 +1,104 @@
 {
-  "generated_at": "2026-05-29T03:33:48.265101",
-  "window_7d_actions": 1760,
-  "window_24h_actions": 164,
+  "generated_at": "2026-05-29T17:40:26.290883",
+  "window_7d_actions": 1691,
+  "window_24h_actions": 222,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 1636
+      "count": 1579
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 53
-    },
-    {
-      "pattern": "DIALOGUE",
-      "count": 21
+      "count": 44
     },
     {
       "pattern": "METAPHOR",
-      "count": 21
+      "count": 23
+    },
+    {
+      "pattern": "DIALOGUE",
+      "count": 17
     },
     {
       "pattern": "RENAME",
-      "count": 16
+      "count": 14
     }
   ],
   "worst_patterns": [
     {
+      "pattern": "EN_ANCHOR",
+      "count": 1
+    },
+    {
       "pattern": "REPETITION",
-      "count": 5
+      "count": 4
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 8
-    },
-    {
-      "pattern": "RENAME",
-      "count": 16
+      "count": 9
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 4,
+      "hour": 8,
       "actions": 98
-    },
-    {
-      "hour": 11,
-      "actions": 98
-    },
-    {
-      "hour": 6,
-      "actions": 96
-    },
-    {
-      "hour": 5,
-      "actions": 95
     },
     {
       "hour": 22,
       "actions": 95
+    },
+    {
+      "hour": 21,
+      "actions": 92
+    },
+    {
+      "hour": 11,
+      "actions": 91
+    },
+    {
+      "hour": 4,
+      "actions": 90
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 569
+      "count": 584
     },
     {
       "topic": "Autre",
-      "count": 567
+      "count": 505
     },
     {
       "topic": "Bourse",
-      "count": 428
+      "count": 404
     },
     {
       "topic": "Crypto",
-      "count": 342
+      "count": 322
     },
     {
       "topic": "Spatial",
-      "count": 188
+      "count": 194
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Bourse",
-      "24h_rate": 0.317,
-      "7d_rate": 0.243
-    },
-    {
-      "topic": "Spatial",
-      "24h_rate": 0.14,
-      "7d_rate": 0.107
-    }
-  ],
+  "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1063
+      "count": 991
     },
     {
       "type": "retweet",
-      "count": 510
+      "count": 522
     },
     {
       "type": "post",
-      "count": 85
+      "count": 84
     },
     {
       "type": "quote",
-      "count": 85
+      "count": 77
     },
     {
       "type": "hotake",
@@ -118,18 +107,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-05-29T03:29:39.347123",
-      "text": "Le CAC 40 a fini en hausse grâce à l'IA, mais le reste du marché est un trou noir.\n\nC'est comme si ton salaire avait baissé de 5% mais qu'on t'avait offert un café gratuit le midi.",
+      "ts": "2026-05-29T17:39:47.508305",
+      "text": "La CAF veut vérifier si mon agent IA travaille le dimanche.\nJ'ai envoyé un PDF de 400 pages au format Cerfa. Ils sont encore en train de scanner.",
       "type": "reply"
     },
     {
-      "ts": "2026-05-29T02:50:36.369458",
-      "text": "Le marché crypto actuel, c’est pas un cycle. C’est Tonton Patrick qui regarde son portefeuille et se dit “j’ai encore de la marge pour attendre”.\n\nLe vrai sujet n’est pas la direction du BTC. C’est la vitesse à laquelle l’URSSAF redécouvre qu’elle peut mettre des impôts sur la tr",
+      "ts": "2026-05-29T16:08:16.550199",
+      "text": "Tonton Patrick vient de vendre ses 3 appartements à 120k€ pour acheter 10k SOL.\n\nBercy met 6 mois à lui envoyer un avis de taxe sur la plus-value, il la paie en SOL.",
       "type": "reply"
     },
     {
-      "ts": "2026-05-29T01:32:03.414110",
-      "text": "@divs_king a vu venir la ruée sur les datacenters trois ans avant que les comptables de Wall Street ne comprennent que le SaaS meurt.\n\nC'est le gars qui réserve la table au restaurant alors que les autres cherchent encore les clés de la voiture.",
+      "ts": "2026-05-29T16:01:09.066995",
+      "text": "Stargate wants $500B for GPUs that depreciate in 18 months.\n\nThe IRS depreciates a printer over 7 years.",
       "type": "reply"
     }
   ]

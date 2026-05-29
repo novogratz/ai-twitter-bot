@@ -1451,5 +1451,43 @@
       }
     ],
     "summary": "J\u2019ai filtr\u00e9 le bruit des vendeurs de r\u00eave pour ne garder que les constructeurs et les analystes s\u00e9rieux. La France garde le cap sur l\u2019IA via des fondateurs et des journalistes techniques, tandis que le Qu\u00e9bec et la diaspora US apportent une perspective macro plus ancr\u00e9e sur la finance traditionnelle et l\u2019adoption enterprise."
+  },
+  {
+    "ts": "2026-05-29T15:59:03.998522",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GillesMauris",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "L'anti-Kerviel. Il tweete sa vie de trader de mani\u00e8re humaine et humoristique. C'est de la bourse, pas du marketing."
+      },
+      {
+        "handle": "ThibaudMoulin",
+        "region": "france",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "Co-fondateur de Doctolib. Il couvre le startup/tech fran\u00e7ais avec finesse. Moins hype que les autres, plus de fond."
+      },
+      {
+        "handle": "AlexisDuchemin",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "L'expert en actions qu\u00e9b\u00e9cois. Analyse fondamentale solide, pas de hype, juste des chiffres. Un vrai pro."
+      },
+      {
+        "handle": "CryptoGilles",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Gilles analyse la macro crypto avec le sourire. Il tweete en FR et \u00e9vite les \u00e9cosyst\u00e8mes toxiques."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les influenceurs 'lifestyle' pour garder les ing\u00e9nieurs et les traders. La France reste leader en analyse fondamentale, le Qu\u00e9bec en valeurs locales. Aucun vendeur de r\u00eave."
   }
 ]
