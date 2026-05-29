@@ -1706,3 +1706,52 @@ This follows -$1.1 billion withdrawn in the preceding week,
 - **@altcap** (251 likes, score 8/10) — Next up. @SpaceX IPO.
   - https://x.com/altcap/status/2060154645314695525
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 275).
+- **@fiscal_ai** (1036 likes, score 9/10) — Here's Leopold Aschenbrenner's top holdings according to his latest 13-F:
+
+1. Bloom Energy $BE: 23.7%
+2. Sandisk $SNDK: 19.6%
+3. CoreWeave $CRWV: 15%
+4. IREN Limited $IREN: 10.8%
+5. Core Scientific $C
+  - https://x.com/fiscal_ai/status/2058578840679751971
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 1078).
+- **@cointelegraph** (109 likes, score 9/10) — BIG: Claude's maker Anthropic has raised $65B at a $965B valuation, surpassing OpenAI to become the world's most valuable AI startup.
+  - https://x.com/Cointelegraph/status/2060139691689607398
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 161).
+- **@charliebilello** (1123 likes, score 9/10) — Forward P/E Ratios...
+Costco $COST: 45
+Walmart $WMT: 36
+Nvidia $NVDA: 17
+
+Which one is the bubble?
+  - https://x.com/charliebilello/status/2059970961382711562
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1361).
+- **@bitcoinnewscom** (616 likes, score 9/10) — MSTR CEO PHONG LE: I was nervous in 2022 when Bitcoin dropped from $64K to $16K.
+
+I’m not nervous now. 
+
+There’s a lot of headwinds for Bitcoin that are about to turn into tailwinds.
+  - https://x.com/BitcoinNewsCom/status/2060097127578001819
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 644).
+- **@unusual_whales** (407 likes, score 9/10) — "SpaceX lowered its targeted initial public offering valuation to at least $1.8 trillion." per Bloomberg
+  - https://x.com/unusual_whales/status/2060176113280966956
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 501).
+- **@stockmktnewz** (170 likes, score 9/10) — SpaceX is reportedly now looking to go public at a valuation of $1.8 Trillion
+  - https://x.com/StockMKTNewz/status/2060170862851207360
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 212).
+- **@merlijntrader** (146 likes, score 9/10) — TRUMP BOUGHT $5,000,000 IN NVIDIA. ONE WEEK BEFORE THE DEAL.
+
+ Two weeks ago I posted Trump's "buy stocks" quote was a bull trap.
+
+The disclosure dropped May 14.
+
+January 6: Trump bought $500,000 to $
+  - https://x.com/MerlijnTrader/status/2059967937276969150
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 200).
+- **@dudewhoinvests** (682 likes, score 8/10) — Iren $IREN from $56 to $70 right back to $56.
+
+LMAO.
+
+Can’t make this up.
+  - https://x.com/DudeWhoInvests/status/2052515563209928955
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 758).
