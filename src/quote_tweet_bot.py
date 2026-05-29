@@ -334,9 +334,10 @@ def run_quote_tweet_cycle():
                 from .retweet_bot import _is_on_niche, _scrape_age_hours
                 if not _is_on_niche(text):
                     continue
-                age = _scrape_age_hours(t)
-                if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "48")):
-                    continue
+                if t.get("timestamp") or t.get("ts") or t.get("datetime"):
+                    age = _scrape_age_hours(t)
+                    if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "48")):
+                        continue
             except Exception:
                 pass
             candidates.append(t)
@@ -379,9 +380,10 @@ def run_quote_tweet_cycle():
                     from .retweet_bot import _is_on_niche, _scrape_age_hours
                     if not _is_on_niche(text):
                         continue
-                    age = _scrape_age_hours(t)
-                    if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "48")):
-                        continue
+                    if t.get("timestamp") or t.get("ts") or t.get("datetime"):
+                        age = _scrape_age_hours(t)
+                        if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "48")):
+                            continue
                 except Exception:
                     pass
                 candidates.append(t)
