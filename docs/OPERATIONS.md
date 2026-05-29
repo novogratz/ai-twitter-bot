@@ -147,6 +147,20 @@ If this fails with an `ImportError`, the broken module is in the traceback. Fix 
 
 Each failure is logged with a traceback. The Safari watchdog auto-restarts Safari after 3 consecutive failures, but if a Python bug is the root cause, restart won't help — fix the bug.
 
+### "x.com shows a blank / black screen in Safari"
+
+This is a stale service-worker issue. The bot now fixes it automatically:
+- **On every Safari relaunch**: `safari_hygiene` navigates to x.com, unregisters all service workers, clears all caches, and hard-reloads before handing control back to the bot.
+- **Reactive**: after 5 consecutive `NO_ARTICLES` scrape responses, `twitter_client` auto-triggers a Safari restart with a 5-min cooldown.
+
+To force a manual recovery:
+```bash
+# From the macOS prompt while the bot is stopped:
+osascript -e 'tell application "Safari" to quit'
+sleep 3 && open -a Safari
+# Then start the bot normally — _warm_up_xcom() runs automatically.
+```
+
 ### "Bot is suddenly silent"
 
 Check the suppression watchdog:
