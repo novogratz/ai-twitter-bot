@@ -2208,3 +2208,55 @@ It literally looks like a NUCLEAR BOMB went off.
 @ElonMusk responded: “Most
   - https://x.com/nicksortor/status/2060170321383059562
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 50928).
+- **@cryptorover** (316 likes, score 9/10) — SPACEX MAY BE THE BIGGEST INSIDER CASHOUT IN MARKET HISTORY!!!
+
+SpaceX is expected to go public on June 12 at a valuation of $1.75-$2 TRILLION.
+
+That would instantly make it larger than Microsoft and
+  - https://x.com/cryptorover/status/2060378274963058949
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 426).
+- **@wallstengine** (140 likes, score 9/10) — SPACEX CUTS IPO VALUATION TARGET TO AT LEAST $1.8T
+
+Bloomberg reports $SPCX is now targeting a valuation of at least $1.8T, down from earlier expectations above $2T.
+
+The company is still seeking to r
+  - https://x.com/wallstengine/status/2060267723247227031
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 158).
+- **@ashcrypto** (74 likes, score 9/10) — Bitcoin ETFs has sold $2.3 BILLION in $BTC this month.
+
+The 3rd biggest monthly outflow since the ETFs launched in 2024.
+  - https://x.com/AshCrypto/status/2060404080992714809
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 134).
+- **@polymarketmoney** (222 likes, score 9/10) — Elon Musk says reports that SpaceX lowered its IPO valuation target from $2T to $1.8T are “false.”
+  - https://x.com/PolymarketMoney/status/2060361044871323940
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 242).
+- **@speculator_io** (802 likes, score 9/10) — This is Nvidia’s list of partners for next-gen 800V power architecture.
+
+$NVTS Navitas
+Mediatek
+Delta Electronics
+$STM STMicroelectronics
+$AOSL Alpha & Omega Semiconductors
+$FLEX Flex
+$POWI Power Inte
+  - https://x.com/Speculator_io/status/2060145237473763773
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 854).
+- **@unusual_whales** (373 likes, score 9/10) — Look at this.
+
+On 09/26/2025, there were large CoreWeave, $CRWV, positions for $150 call expiring 01/15/2027 & $200 call expiring 01/15/2027.
+
+One was for $7.8 million and $5.3 million.
+
+On 09/30, it
+  - https://x.com/unusual_whales/status/1974822127594586533
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 539).
+- **@kalshi_crypto** (280 likes, score 9/10) — JUST IN: Bitcoin reclaims $74,000
+
+35% chance it hits $100,000 this year
+  - https://x.com/Kalshi_Crypto/status/2060385803352547546
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 352).
+- **@tedpillows** (173 likes, score 9/10) — $ETH ETF outflow of $121,400,000  yesterday.
+
+BlackRock sold $80,400,000 in Ethereum.
+  - https://x.com/TedPillows/status/2060269571706101924
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 261).
