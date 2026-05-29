@@ -1347,5 +1347,36 @@
       }
     ],
     "summary": "J'ai tri\u00e9 le sable pour trouver les p\u00e9pites : des analystes qui twittent encore, pas des vendeurs de r\u00eaves. Le profil est mix\u00e9 entre la profondeur fran\u00e7aise (Mistral/CA) et une touche qu\u00e9b\u00e9coise/am\u00e9ricaine pour la diversit\u00e9 des march\u00e9s."
+  },
+  {
+    "ts": "2026-05-29T01:47:21.345284",
+    "raw_count": 10,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LeComptoirFin",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Le meilleur condens\u00e9 de news boursi\u00e8res francophones. Moins hype que les influenceurs actionnaires, plus utile."
+      },
+      {
+        "handle": "MathieuDussart",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 14000,
+        "reason": "Le v\u00e9t\u00e9ran du Bitcoin QC. Pas de flashy 'to the moon', juste de la conviction et des cycles bien lus."
+      },
+      {
+        "handle": "PierreDartaud",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Un des rares \u00e0 faire de l'analyse fondamentale pure en FR sans vendre sa \u00e2me \u00e0 un courtier en ligne douteux."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des influenceurs 'finance libre' pour garder les artisans : founders de Mistral/Hugging Face, un VC transatlantique et le top de l'analyse crypto QC. C'est moins de bruit, plus de substance."
   }
 ]
