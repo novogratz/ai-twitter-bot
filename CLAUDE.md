@@ -31,14 +31,19 @@ then `OPENCODE_FALLBACK2_MODEL`. Refusal patterns live in
 News bursts are tuned via `NEWS_POSTS_PER_CYCLE` (default `3`); set to `1`
 when the LLM is flaky so each cycle skips fast instead of grinding for 6+ min
 on bad output.
-Repost / quote volume is tuned high but bounded: `MAX_RETWEETS_PER_DAY=30`,
-`RETWEETS_PER_CYCLE=3`, retweet job every 2 min, and the quote bot every
-4 min. Quote and repost discovery is English-first (2026-05-27 pivot): they
-scan global high-signal EN AI / crypto / markets / space queries and EN
-trusted handles first, with a short FR tail only for major French stories.
-Every generated quote is in English.
+Repost / quote volume is tuned high but bounded: `MAX_RETWEETS_PER_DAY=150`,
+`RETWEETS_PER_CYCLE=15`, retweet job every 2 min, and the quote bot every
+2 min (5 queries + 5 trusted handles per cycle to stay under the 2-min window).
+Quote and repost discovery is English-first (2026-05-27 pivot): they scan
+global high-signal EN AI / crypto / markets / space queries and EN trusted
+handles first, with a short FR tail only for major French stories. Every
+generated quote is in English.
 Retweet and quote candidates still pass source, niche, age, min-like, respect
 list, and dedup filters before posting.
+
+**Catchup burst (2026-05-29):** On every startup, after the normal weekly/daily
+Decode burst, the bot fires 3 extra rounds of RT → quote → spicy → breakout →
+direct-reply back-to-back before the scheduler begins. Fills downtime gaps fast.
 
 Impact tuning: top historical posts were concrete, numeric, named-actor
 updates (Capital B funding/BTC buys, Saylor/Strategy BTC buys, ex-OpenAI
@@ -69,6 +74,20 @@ tool-call XML (`<function=…>`), NDJSON envelope keys (`"sessionID":`,
 `"step_start"`, etc.), or text that opens with `{` / `[{`. Added after a
 163k-char `{"type":"step_start",…}` blob got pushed to Safari on 2026-05-14
 because the previous guard only caught XML, not JSON streams.
+
+**`structured_output=True` flag (2026-05-28):** `run_llm()` and `unwrap_text()`
+accept `structured_output=True` to bypass the `[{` safety guard when the caller
+expects a JSON array (not a tweet). `reply_agent.py` uses this for `REPLY_SEARCH`
+— without it, every Ollama JSON-array response was silently swallowed, causing
+zero replies from search cycles.
+
+**Safari black-screen recovery (2026-05-29):** `safari_hygiene._launch_safari()`
+now calls `_warm_up_xcom()` after every relaunch: navigates to x.com, unregisters
+all service workers, clears all caches, and hard-reloads. Prevents the stale-SW
+blank app shell that made every scrape return `NO_ARTICLES`. Reactive path:
+`twitter_client._record_blank_page()` counts consecutive blank-page responses;
+after 5 in a row triggers `restart_safari("black_screen_recovery")` with a 5-min
+cooldown (vs 30-min for preventive).
 
 **Codex usage-limit lockout cache** (`codex_lockout.json` at repo root):
 when codex returns "hit your usage limit, try again at …", `run_llm` parses
