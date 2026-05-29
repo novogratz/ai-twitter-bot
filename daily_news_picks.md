@@ -1996,3 +1996,44 @@ It’s concrete.
 Someone asked him the obvious question. Why not just build private power plants next to
   - https://x.com/r0ck3t23/status/2053439772413030905
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 7741).
+- **@just_kaws** (2119 likes, score 9/10) — Top 12 Stocks to BUY now according to Leopold Aschenbrenner
+
+1) Applied Digital $APLD
+2) Bloom Energy $BE
+3)CleanSpark $CLSK
+4)CoreWeave $CRWV
+5)Intel $INTC
+6) IREN $IREN
+7) Keel Infrastructure $KEEL
+  - https://x.com/JUST_KAWS/status/2057250620130680938
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 2215).
+- **@unusual_whales** (1031 likes, score 9/10) — Meta, $META, joins Amazon, Google and others in turning to nuclear generation to fuel AI data centers.
+
+It wants to add 1 to 4 gigawatts of nuclear generation capacity starting in the early 2030s, it
+  - https://x.com/unusual_whales/status/1864089986158747955
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 1169).
+- **@iren_ltd** (558 likes, score 9/10) — Scalable, grid-connected infrastructure is essential to meet the projected surge in AI data center demand, expected to reach 156GW globally by 2030.
+
+$IREN's Horizon 1 project unlocks up to 50MW of AI
+  - https://x.com/IREN_Ltd/status/1937602726327992357
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 600).
+- **@opinionlabsxyz** (19 likes, score 9/10) — BREAKING: Anthropic just closed a $65B Series H at a $965B post-money valuation, surpassing OpenAI as the world's most valuable AI startup.
+OpenAI sits at 51.2% to IPO before 2027, Anthropic at 48.6%.
+  - https://x.com/opinionlabsxyz/status/2060287879717552570
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 109).
+- **@bitcoin_teddy** (188 likes, score 9/10) — Citibank predicts Bitcoin will reach $189,000 in 2026
+  - https://x.com/Bitcoin_Teddy/status/2060270669649330507
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 226).
+- **@dailyloud** (3002 likes, score 9/10) — Nvidia will now pay you to put a mini AI data center on your house making you close to $22,000 a year
+  - https://x.com/DailyLoud/status/2060333126396567837
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 3410).
+- **@cryptorover** (543 likes, score 9/10) — BLACKROCK IS DUMPING BITCOIN
+
+BlackRock has sold nearly $2 BILLION worth of Bitcoin over the last 9 trading days.
+
+Over the same period, Bitcoin has crashed more than 7%.
+  - https://x.com/cryptorover/status/2060277889665536004
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 793).
+- **@unusual_whales** (2824 likes, score 8/10) — JUST IN: Amazon, Google, Meta, Microsoft, xAI, Oracle, and OpenAI are reportedly preparing to sign an agreement with the Trump administration to develop dedicated power generation for their AI data ce
+  - https://x.com/unusual_whales/status/2026724842246988197
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 3148).
