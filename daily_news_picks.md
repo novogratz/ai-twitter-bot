@@ -1655,3 +1655,54 @@ Someone built an algorithm to find dormant Bitcoin wallets, reported them to the
 • $CCJ l
   - https://x.com/StockSavvyShay/status/1996308177844076991
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 2296).
+- **@pirat_nation** (79 likes, score 9/10) — A man calling himself “Noah Doe” has filed a lawsuit in New York claiming ownership of 39,069 dormant Bitcoin wallets holding around 3.8 million BTC, currently worth an estimated $286 billion.
+
+Doe sa
+  - https://x.com/Pirat_Nation/status/2060164721576423902
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 119).
+- **@cryptorover** (373 likes, score 9/10) — BIG WARNING:
+
+Every major Bitcoin dump over the last year started with the exact same signal: massive BlackRock ETF outflows.
+
+Look at the pattern on the chart.
+
+• Nov 2025:
+BlackRock IBIT saw $463M a
+  - https://x.com/cryptorover/status/2060025716843135419
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 557).
+- **@watcherguru** (2669 likes, score 9/10) — JUST IN: Bitcoin now has an 84% chance of dropping to $70,000 before reclaiming $90,000.
+  - https://x.com/WatcherGuru/status/2060038077179994527
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 3355).
+- **@strongholdpay** (240 likes, score 9/10) — Global fintech update 
+ US: Stablecoins now have a federal framework
+ EU: 9 major banks launching a Euro stablecoin
+ Japan: Crypto tax dropping from 55% to 20%
+ Global: $33T in stablecoin transactions
+  - https://x.com/strongholdpay/status/2060125969327767981
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 260).
+- **@quintenfrancois** (134 likes, score 8/10) — Crypto sentiment is genuinely the worst I’ve ever seen
+
+People are abandoning oversold Bitcoin to chase massively overextended AI stocks because “this time is different”
+
+Classic capitulation behavior
+  - https://x.com/QuintenFrancois/status/2060085270737776732
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 170).
+- **@merlijntrader** (276 likes, score 8/10) — EUROPE IS LOSING THREE WARS AT ONCE.
+
+ The stablecoin war: 85% run on the dollar.
+The crypto war: regulated out by 2027.
+Now the AI war: 212,000 banking jobs gone by 2030.
+
+Morgan Stanley modeled it a
+  - https://x.com/MerlijnTrader/status/2060035875539460337
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 316).
+- **@kobeissiletter** (677 likes, score 8/10) — Crypto fund outflows are accelerating:
+
+Crypto ETFs posted -$1.5 billion in outflows last week, the largest weekly outflow since February.
+
+This follows -$1.1 billion withdrawn in the preceding week,
+  - https://x.com/KobeissiLetter/status/2060033676050657465
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 923).
+- **@altcap** (251 likes, score 8/10) — Next up. @SpaceX IPO.
+  - https://x.com/altcap/status/2060154645314695525
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 275).
