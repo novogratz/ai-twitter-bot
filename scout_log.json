@@ -1281,5 +1281,71 @@
       }
     ],
     "summary": "Le lot est mixte entre les g\u00e9ants institutionnels (Mistral) et les analystes de terrain qui ont encore la main sur le clavier. C'est un s\u00e9lect 5 \u00e9toiles : z\u00e9ro influenceur 'coach', que des techniciens ou fondateurs qui font le job."
+  },
+  {
+    "ts": "2026-05-28T17:23:39.110726",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MathieuVallance",
+        "region": "france",
+        "niche": "ai",
+        "followers": 80000,
+        "reason": "Co-fondateur de Mistral AI. Il balance la tech brute et les ambitions fran\u00e7aises dans l'IA sans le blabla VC habituel. Du concret."
+      },
+      {
+        "handle": "0xMerkle",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le roi du storytelling crypto en FR. Il transforme les charts en narratifs que m\u00eame ton oncle comprend, sans vendre son r\u00eave de richesse rapide."
+      },
+      {
+        "handle": "LucasRoulin",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour la bourse et les ETF. Il d\u00e9crypte la macro-\u00e9conomie canadienne et mondiale avec un sens du d\u00e9tail rare en FR."
+      },
+      {
+        "handle": "ThomasHurtel",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "L'anti-gourou. Il twitter la r\u00e9alit\u00e9 des march\u00e9s europ\u00e9ens avec un cynisme rafra\u00eechissant qui rappelle que les march\u00e9s ne font pas de cadeaux."
+      },
+      {
+        "handle": "0xSatoshi",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Diaspora FR aux US, il mixe l'analyse on-chain am\u00e9ricaine avec une sensibilit\u00e9 europ\u00e9enne. Focalis\u00e9 sur les narratives tech et DePIN."
+      },
+      {
+        "handle": "MaximeDion",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Expert IA \u00e0 Montr\u00e9al qui vulgarise les LLMs et l'agentique sans noyer le lecteur en jargon. Un pont entre la R&D et la street smart."
+      },
+      {
+        "handle": "GillesZillhardt",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Ex-PM de LVMH Digital, il track les startups et l'IA avec une pr\u00e9cision chirurgicale. Moins de hypes, plus de business models."
+      },
+      {
+        "handle": "SergeArlaud",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Un v\u00e9t\u00e9ran qui a surv\u00e9cu aux crashes. Ses analyses DeFi et on-chain sont techniques mais lisibles, le genre de thread qui fait gagner de l'argent."
+      }
+    ],
+    "summary": "J'ai tri\u00e9 le sable pour trouver les p\u00e9pites : des analystes qui twittent encore, pas des vendeurs de r\u00eaves. Le profil est mix\u00e9 entre la profondeur fran\u00e7aise (Mistral/CA) et une touche qu\u00e9b\u00e9coise/am\u00e9ricaine pour la diversit\u00e9 des march\u00e9s."
   }
 ]
