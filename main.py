@@ -334,6 +334,15 @@ def main():
         log.info("Now warming up the reply loop...")
         safe_run_direct_reply_cycle()
 
+    # Warm up reply-to-replies path immediately on startup so people
+    # who replied to our latest tweets get a response NOW, not after
+    # the bot has been up for 35-45 min.
+    if not args.post_only:
+        log.info("Warming up notify (like replies on our tweets)...")
+        quiet_safe_notify()
+        log.info("Warming up replyback (reply to people who replied to us)...")
+        quiet_safe_replyback()
+
     # Catchup burst — fires 3 extra rounds of every high-volume surface so
     # any downtime gap is filled quickly on restart.
     log.info("Catchup burst: 3 extra rounds of RT / quote / reply / spicy / breakout...")
@@ -347,14 +356,6 @@ def main():
         if not args.post_only:
             safe_run_direct_reply_cycle()
     log.info("Catchup burst complete.")
-
-        # Warm up reply-to-replies path immediately on startup so people
-        # who replied to our latest tweets get a response NOW, not after
-        # the bot has been up for 35-45 min.
-        log.info("Warming up notify (like replies on our tweets)...")
-        quiet_safe_notify()
-        log.info("Warming up replyback (reply to people who replied to us)...")
-        quiet_safe_replyback()
 
     # Schedule jobs
     if not args.reply_only:
