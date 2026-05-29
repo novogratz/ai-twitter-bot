@@ -2037,3 +2037,62 @@ Over the same period, Bitcoin has crashed more than 7%.
 - **@unusual_whales** (2824 likes, score 8/10) — JUST IN: Amazon, Google, Meta, Microsoft, xAI, Oracle, and OpenAI are reportedly preparing to sign an agreement with the Trump administration to develop dedicated power generation for their AI data ce
   - https://x.com/unusual_whales/status/2026724842246988197
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 3148).
+- **@marionawfal** (86 likes, score 9/10) — Nvidia could pay homeowners up to $1,000 a month to host a mini AI data center in their backyard.
+
+From the street, it looks like a normal AC unit. Inside: 16 Blackwell GPUs running at full capacity.
+  - https://x.com/MarioNawfal/status/2060360513054552092
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 152).
+- **@cryptogoos** (102 likes, score 9/10) — BEARISH:
+
+BlackRock sold another $177.95 million worth of $BTC.
+
+They have now sold approximately $2 BILLION worth of Bitcoin over the last 9 trading days.
+
+Over the same period, Bitcoin has crashed m
+  - https://x.com/cryptogoos/status/2060338366101561690
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 264).
+- **@rushicrypto** (113 likes, score 9/10) — Anthropic: $965B valuation on $20B revenue.
+
+Walmart: $940B valuation on $725B revenue.
+
+Either AI is about to completely reshape the global economy…
+
+or investors have lost their minds.
+
+There is no
+  - https://x.com/rushicrypto/status/2060208544365093333
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 147).
+- **@ashcrypto** (291 likes, score 8/10) — What the fuck is this scam?
+
+Stocks are hitting new highs, and Bitcoin can barely hold $73K.
+
+This is 100% manipulation.
+  - https://x.com/AshCrypto/status/2060361199640805677
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 505).
+- **@haider1** (2283 likes, score 8/10) — Terence Tao says that for the next 10-20 years, humans and AI will possess complementary strengths
+
+AI can synthesize a million papers and test every idea inside them. Humans can look at 5 examples an
+  - https://x.com/haider1/status/2007633081034006904
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2485).
+- **@arkham** (577 likes, score 8/10) — We found the WORST performing BTC treasury company.
+
+Nakamoto bought ~$679 MILLION of BTC at an average price ~$118K - and held it all the way down. They’ve lost about $224 Million in less than a year
+  - https://x.com/arkham/status/2060312629672030359
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 767).
+- **@tedpillows** (372 likes, score 8/10) — FTX sold its 8% stake in Anthropic for $1,400,000,000.
+
+Today, it's worth $77,000,000,000.
+  - https://x.com/TedPillows/status/2060306590851289408
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 578).
+- **@aleabitoreddit** (515 likes, score 8/10) — The Neocloud Sector Tierlist.
+
+Post Q3 earnings + Market Sector Drop:
+
+[S] Tier: $NBIS
+[A] Tier:  $CIFR, $WULF, $IREN
+[B] Tier: $GLXY, $CORZ
+[C] Tier:  $APLD, $CLSK
+[D] Tier: $WLAC, $DGDX, $WYFI
+[F] T
+  - https://x.com/aleabitoreddit/status/1992181846134968633
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 573).
