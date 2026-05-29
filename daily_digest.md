@@ -409,3 +409,13 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top reply targets: @coinacademy_fr=12, @FlasheurInvest=6, @Graphseo=5, @Crypto__Goku=5, @MoneyRadar_FR=5
 
 **Followers we follow** (running total): 166
+
+## 2026-05-28
+
+**Activity** — total actions: 163
+  - by type: reply=94, retweet=46, post=18, quote=5
+  - top sources: PROFILE-ALWAYS=49, RETWEET=46, PROFILE-FR=13, MEGA=9, QUOTE=5, SEARCH-HOT=5, PROFILE-EN=3, FEED=2
+  - comedy patterns: METAPHOR=7, FR_ANCHOR=6, RENAME=4, DIALOGUE=3, REPETITION=1, UNDERSTATEMENT=1
+  - top reply targets: @MiningTk=5, @CoreWeave=4, @cryptorover=4, @elonmusk=4, @ABaradez=4
+
+**Followers we follow** (running total): 166
