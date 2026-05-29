@@ -1,14 +1,14 @@
-# YouTube brief — 2026-05-28
+# YouTube brief — 2026-05-29
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **221**
-- reply: **107**
-- retweet: **88**
-- quote: **23**
-- post: **3**
+- Total actions logged: **163**
+- reply: **95**
+- retweet: **46**
+- post: **18**
+- quote: **4**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -53,483 +53,281 @@
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-05-27
-- **@documentingbtc** (681 likes, score 9/10) — Water Use Estimated by Billions of Gallons
+## 2026-05-28
+- **@ashcrypto** (3059 likes, score 9/10) — BREAKING: 
 
-Lawns                                ~3,285
-Almonds                           ~1,650
-Golf Courses                   ~1,000
-Data Center (Power)    ~150
-Data
-  - https://x.com/DocumentingBTC/status/2057508257460060171
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 773).
-- **@documentingbtc** (459 likes, score 8/10) — SpaceX disclosed in their IPO paperwork today the company holds 18,712 bitcoin worth $1.4 billion, more than two times as much bitcoin as previously reported.
-  - https://x.com/DocumentingBTC/status/2057209143790907600
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 507).
-- **@joinautopilot** (260 likes, score 8/10) — Breaking: Oklo is surging after Trump chooses them to receive Cold War-era, weapons-grade plutonium from dismantled U.S. nuclear warheads
+Bittensor $TAO has crashed -27% and wiped out nearly $900 million from its market cap in the past 12 hours. 
 
-$OKLO has added ~$505,000,000 to its market capitalization to
-  - https://x.com/joinautopilot/status/2059352943854239876
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 278).
-- **@disclosetv** (1018 likes, score 8/10) — JUST IN - U.S. Space Force awards SpaceX $2.29 billion contract for military space data network.
-  - https://x.com/disclosetv/status/2059361913381744971
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1130).
-- **@sawyermerritt** (0 likes, score 8/10) — NASA has just launched a new website for its Moon Base missions, which aims to build a permanent $20 billion U.S. base on the Moon. @SpaceX's Starship rocket will play a big role in these missions.
+$9 million in TAO longs were also liquidated.
 
-"
-  - https://x.com/SawyerMerritt/status/2059339897123607037
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 836).
-- **@watcherguru** (0 likes, score 8/10) — JUST IN:  US Space Force awards Elon Musk's SpaceX $2.29 billion contract to develop space-based military data network.
-  - https://x.com/WatcherGuru/status/2059364134114689403
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 638).
-- **@cointelegraph** (169 likes, score 8/10) — BIG: SpaceX has secured a $2.29 billion U.S. Space Force contract to develop a next-generation space data network.
-  - https://x.com/Cointelegraph/status/2059386132627108096
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 219).
-- **@nikkei** (116 likes, score 8/10) — Trump Made 3,700 U.S. Stock Trades: NVIDIA, Boeing, Suspicions of Profit-Seeking
-  - https://x.com/nikkei/status/2059372023847981216
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 168).
-- **@cryptorover** (539 likes, score 9/10) — BREAKING:  CNBC REPORTS ELON MUSK IS CONSIDERING MERGING SPACEX AND TESLA INTO A $7,500,000,000,000 COMPANY. 
+This came after Covenant AI a m
+  - https://x.com/AshCrypto/status/2042476384086626336
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 3853).
+- **@cryptorover** (71 likes, score 9/10) — BLACKROCK IS SELLING 
 
-The company would hold over 30,000 $BTC on its balance sheet. 
+BlackRock sold $527 MILLION worth of BTC yesterday, extending its selling streak to 8 straight days.
 
-Absolutely INSANE!
-  - https://x.com/cryptorover/status/2059488838456877532
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 653).
-- **@deitaone** (343 likes, score 9/10) — $NVDA - USTR GREER: CHINESE COMPANIES ARE INTERESTED IN NVIDIA H200 CHIP, BUT  COMMUNIST PARTY IS INTERESTED IN PROMOTING DOMESTIC CHIPS
-  - https://x.com/DeItaone/status/2059384698942410816
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 411).
-- **@cryptogoos** (35 likes, score 7/10) — This is INSANE.
+They have now sold $1.8 BILLION worth of Bitcoin in just the last 8 days.
+  - https://x.com/cryptorover/status/2059845217361215555
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 125).
+- **@cointelegraph** (71 likes, score 9/10) — NOW: Anthropic is generating at least 35% more revenue than OpenAI, hitting $45B annualized versus OpenAI's $30B, per The Information.
+  - https://x.com/Cointelegraph/status/2059837315749454280
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 119).
+- **@drtilt2** (208 likes, score 8/10) — Vendez nvidia ils vont faire faillite.
+Leur business est bancale et les marges presque négatives...
+  - https://x.com/DrTilt2/status/2059644265773339033
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 276).
+- **@wallstreetbets** (1384 likes, score 8/10) — Every cycle has one ecosystem that gets ignored until it's too late
 
- CNBC REPORTS ELON MUSK IS CONSIDERING MERGING SPACEX AND TESLA INTO A $7,500,000,000,000 COMPANY.
+In 2017 it was ETH, in 2021 it was SOL, in 2026 it's $TAO
 
-This would make Elon Musk a MULTI-TRILLIONAIRE.
+We're going to look back at TAO the same way we look back at ETH in 2016
+  - https://x.com/wallstreetbets/status/2050365076373131274
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1568).
+- **@watcherguru** (263 likes, score 8/10) — JUST IN:  Bitcoin falls under $73,000 after US and Iran launch attacks against each other.
+  - https://x.com/WatcherGuru/status/2059848015020474632
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 435).
+- **@stats_feed** (301 likes, score 8/10) — Nuclear power capacity from 1980 to 2025. 
 
-The largest company in human histo
-  - https://x.com/cryptogoos/status/2059530542933004677
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 47).
-- **@frederi55284379** (23 likes, score 7/10) — Le Secteur Spatial est bootsé par 2 Événements : la Valorisation de SpaceX et la confirmation de l'existence d'une véritable économie spatiale en hyper croissance ET les Fonds ETF dédiés au Spatial qu
-  - https://x.com/Frederi55284379/status/2059538924335178084
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 25).
-- **@le_biais_fi** (2229 likes, score 8/10) — Demain, SpaceX fera son entrée en bourse à une valorisation ridicule de 1.75 Trillion de $ et ce sera bien évidemment la plus grosse IPO jamais
-faite.
+•  USA dominates from the start and stays #1 the entire race (~97–101 GW), but nearly flat since 1990
 
-Et au lieu d'acheter SpaceX, je me suis intéress
-  - https://x.com/Le_Biais_Fi/status/2056245914956968269
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2327).
-- **@iren_ltd** (1265 likes, score 8/10) — “For the last eight years, we’ve been assembling the inputs. We’ve got 5GW of secured power and land. We’re active in three continents. And we’re delivering to some of the biggest customers.”
+•  France rockets from 13 GW in 1980 to 63 GW by 1990
+  - https://x.com/stats_feed/status/2059614619941900521
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 375).
+- **@tradingthomas3** (192 likes, score 8/10) — $NVDA H200 GPU prices reportedly drop sharply in recent days amid easing AI chip supply constraints
 
--@danro
-  - https://x.com/IREN_Ltd/status/2057268451706831056
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1337).
-- **@kobeissiletter** (0 likes, score 8/10) — BREAKING: SpaceX has been awarded a $2.29 billion contract from the US Space Force for space data network development.
-  - https://x.com/KobeissiLetter/status/2059361963537285372
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 328).
-- **@financelancelot** (251 likes, score 8/10) — Huawei has begun shipping their 910c GPU with 128GB of HBM memory.
+Trouble in paradise?
+  - https://x.com/TradingThomas3/status/2059818104952074323
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 236).
+- **@ashcrypto** (1560 likes, score 9/10) — BREAKING : BlackRock ETF has sold $527,820,000 worth of Bitcoin.
 
-The sudden release of these chips came as a shock as China accounts for approximately 40% of $NVDA revenue once smuggling and black
-  - https://x.com/FinanceLancelot/status/2059476277065613347
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 299).
-- **@pete_rizzo_** (222 likes, score 9/10) — JUST IN: $10 TRILLION MORGAN STANLEY HAS ADDED #BITCOIN EVERY SINGLE WEEK FOR 6 STRAIGHT WEEKS VIA $MSBT
+Largest single-day outflow since launch .
+  - https://x.com/AshCrypto/status/2059835101899571373
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 2000).
+- **@elonmusk** (1194 likes, score 8/10) — SpaceX has not committed to leasing Colossus for years, although it’s possible that may be what happens.
 
-THEY HOLD OVER $270,000,000 IN BTC
+This is a 180 day lease with 90 day notice mutual cancellation thereafter. The short term was
+  - https://x.com/elonmusk/status/2059880289514696927
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1590).
+- **@investments_ceo** (426 likes, score 8/10) — UPDATE:  Eric Trump says Bitcoin will reach $1,000,000 over the next four years.
+  - https://x.com/Investments_CEO/status/2059749166037766389
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 502).
+- **@burrytracker** (757 likes, score 8/10) — Update: Leopold Aschenbrenner's $IREN position is now up +746%
 
-WORLD'S BIGGEST BANKS ARE BUYING THE DIP
-  - https://x.com/pete_rizzo_/status/2059519972804862397
-  - **WHY**: Source fiable + impact concret (score signal 12, engagement 264).
-- **@pete_rizzo_** (126 likes, score 9/10) — JUST IN: TOM LEE JUST SAID #BITCOIN AND CRYPTO WILL DISRUPT THE TRILLION DOLLAR BANKING INDUSTRY
+He opened the position in May 2025 at ~$8/share with 3.4M shares
 
-"THE BANKS ARE DESCENDING ON CRYPTO"
+Recently, he released his Situational Awareness Fund Q1 2026 filings w
+  - https://x.com/burrytracker/status/2059717594584662492
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 823).
+- **@theinformation** (99 likes, score 8/10) — Anthropic is now likely generating at least 35% more revenue than OpenAI, reversing the companies’ positions from the end of last year. The shift could complicate OpenAI’s IPO plans if Anthropic reach
+  - https://x.com/theinformation/status/2059703730409181609
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 111).
+- **@elonmusk** (7243 likes, score 8/10) — SpaceX has almost finished writing V1.0 of an in-house AI training stack in C that exact-maps to 220k GB300s with 800G NICs, making heavy use of pipeline parallelism and getting as close to bare metal
+  - https://x.com/elonmusk/status/2059884150187053488
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 10349).
+- **@anthropicai** (3843 likes, score 8/10) — Anthropic is acquiring @stainlessapi, an SDK and MCP server platform that has powered every Anthropic SDK since the earliest days of our API.
 
-"IN 10 YEARS, 5 OF THE 10 LARGEST BANKS WILL BE DIGITALLY NATIVE
-  - https://x.com/pete_rizzo_/status/2059549471126491354
-  - **WHY**: Source fiable + impact concret (score signal 12, engagement 162).
-- **@pete_rizzo_** (273 likes, score 9/10) — JUST IN: BILLIONAIRE MICHAEL SAYLOR JUST SAID THE BOTTOM IS IN AND THAT "#BITCOIN SUMMER" IS COMING FAST
+Read more:
+  - https://x.com/AnthropicAI/status/2056419620643541012
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4539).
+- **@bulltheoryio** (3324 likes, score 8/10) — MICHAEL BURRY WARNS THREE UPCOMING IPOs COULD COMPLETELY CRASH THE STOCK MARKET.
 
-CLARITY ACT WILL PASS
+Michael Burry reported that the upcoming public listings for SpaceX, OpenAI, and Anthropic are going to pull more capi
+  - https://x.com/BullTheoryio/status/2059699584818184550
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 3932).
+- **@rainmaker1973** (5677 likes, score 8/10) — A massive new hyperscale data center project called Stratos is planned for Box Elder County, Utah. If built, it would demand up to 9 gigawatts of electricity, more than twice the total power consumpti
+  - https://x.com/Rainmaker1973/status/2054513582365081722
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 6993).
+- **@cryptorover** (272 likes, score 8/10) — BLOODBATH:  Tom Lee’s Ethereum holding company Bitmine is down nearly -90% from its all time high of $161 a year ago.
+  - https://x.com/cryptorover/status/2059937784199311421
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 428).
+- **@polymarket** (645 likes, score 7/10) — JUST IN: Ethereum crashes below $2,000.
+  - https://x.com/Polymarket/status/2059851935977558423
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 843).
+- **@leopoldatracker** (794 likes, score 7/10) — If you're planning to retire within the next 5–10 years, here are 12 stocks Leopold Aschenbrenner is holding that have the potential to 10–50x over the next 5–10 years:
 
-BANKS WILL START BUYING BTC
+1. $WYFI — Fiber infrastructur
+  - https://x.com/LeopoldATracker/status/2056498516231323819
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 820).
+- **@energy** (725 likes, score 7/10) — Thanks to President Trump, the Energy Department is providing over 20 metric tons of High-Assay Low-Enriched Uranium (HALEU) to power the American Nuclear Renaissance.
+  - https://x.com/ENERGY/status/2059718227320606762
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 775).
+- **@mara** (586 likes, score 7/10) — MARA expands its AI infrastructure pipeline by entering into an agreement to acquire Long Ridge Energy & Power, which owns, among other assets, a highly efficient 505 MW nameplate CCGT power plant and
+  - https://x.com/MARA/status/2049806832290676823
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 680).
+- **@leopoldatracker** (219 likes, score 7/10) — My bear case for $IREN is $200
+  - https://x.com/LeopoldATracker/status/2059718414701084998
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 265).
+- **@trendspider** (728 likes, score 7/10) — Sights set on all-time highs $IREN
+  - https://x.com/TrendSpider/status/2059681304342302752
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 776).
+- **@bulltheoryio** (96 likes, score 9/10) — Bitcoin treasury company NAKAMOTO has erased almost its entire market cap after crashing -99.68% in just 1 year.
 
-STRC WILL BUY "2-3x" THE DAILY MINED SUPPL
-  - https://x.com/pete_rizzo_/status/2059458316544151831
-  - **WHY**: Source fiable + impact concret (score signal 11, engagement 303).
-- **@pete_rizzo_** (20 likes, score 7/10) — JUST IN: $40 BILLION FINANCIAL GIANT BANCA SELLA JUST ANNOUNCED TO LAUNCH #BITCOIN AND CRYPTO CUSTODY
+If you invested $10,000 exactly one year ago, you would have just around $32 left toda
+  - https://x.com/BullTheoryio/status/2059965308358791282
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 166).
+- **@hedgiemarkets** (498 likes, score 9/10) — Google's plan to partly power a Texas data center through a 933-megawatt natural gas plant has been confirmed after Cleanview researchers uncovered the permit application. The plant would emit 4.5 mil
+  - https://x.com/HedgieMarkets/status/2040265098250588656
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 554).
+- **@leopoldatracker** (581 likes, score 9/10) — 8 undervalued stocks Leopold Aschenbrenner is signaling you to buy through his latest 13F reports. It is not $BE, $MU, or $NVDA, but:
 
-30,000,000 CUSTOMERS ACROSS EUROPE
+• $HIVE — HIVE Digital
+• $RIOT — Riot Platforms
+• $TE — T1 Energy
+  - https://x.com/LeopoldATracker/status/2056356990671090163
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 615).
+- **@cointelegraph** (129 likes, score 9/10) — JUST IN: The OpenAI Foundation committed an initial $250 million toward grants, partnerships, and initiatives focused on building secure and abundant economic futures in the age of AI.
+  - https://x.com/Cointelegraph/status/2059736652935840211
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 193).
+- **@cryptorover** (62 likes, score 9/10) — This is CRAZY! 
 
-THE WORLD'S LARGEST BANKS ARE ADOPTING BTC
-  - https://x.com/pete_rizzo_/status/2059599715537190919
-  - **WHY**: Source fiable + impact concret (score signal 12, engagement 34).
-- **@iren_ltd** (0 likes, score 9/10) — IREN has entered into a $1.6bn purchase agreement with Dell for air-cooled Blackwell systems to support its previously announced 5-year, $3.4bn managed services AI cloud contract.
+Someone built an algorithm to find dormant Bitcoin wallets, reported them to the NYPD as "lost property," and is now suing to legally own them.
 
-The systems are exp
-  - https://x.com/IREN_Ltd/status/2059392975684395100
+39,069 wallets. ~3.8M $BTC. ~$285 bill
+  - https://x.com/cryptorover/status/2059967421461700741
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 140).
-- **@hut8corp** (108 likes, score 9/10) — Hut 8 CEO @ashergenoot will appear on @CNBC
-Power Lunch at 2:25 p.m. ET today to discuss our second hyperscale AI data center lease — a 15-year, $9.8 billion triple-net agreement with an investment-gr
-  - https://x.com/Hut8Corp/status/2052404064776851937
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 126).
-- **@speculator_io** (2656 likes, score 8/10) — 𝗧𝗵𝗲 𝗟𝗲𝗮𝗱𝗶𝗻𝗴 𝗦𝘁𝗼𝗰𝗸𝘀 𝗥𝗶𝗴𝗵𝘁 𝗡𝗼𝘄:
+- **@stocksavvyshay** (2114 likes, score 8/10) — $NVDA CEO Jensen Huang said we should expect a wave of small nuclear reactors within the next 6-7 years.
 
-𝗠𝗮𝗿𝗸𝗲𝘁 𝗟𝗲𝗮𝗱𝗲𝗿𝘀
-$BE Bloom Energy
-$NBIS Nebius
-$HOOD Robinhood
-$CLS Celestica
-$CRWV CoreWeave
-$SYM Symbotic
-$STX Seagate
-$CRDO Credo T
-  - https://x.com/Speculator_io/status/1984391257683382631
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2788).
-- **@wallstengine** (413 likes, score 8/10) — $NVDA CEO: 
+• $UUUU & $UEC are direct beneficiaries of federal stockpile buys for domestic supply
+• $CCJ l
+  - https://x.com/StockSavvyShay/status/1996308177844076991
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2296).
+- **@pirat_nation** (79 likes, score 9/10) — A man calling himself “Noah Doe” has filed a lawsuit in New York claiming ownership of 39,069 dormant Bitcoin wallets holding around 3.8 million BTC, currently worth an estimated $286 billion.
 
-NVIDIA MARKET CAP IN 3 to 5 YEARS IS GOING TO BE VERY MUCH HIGHER THAN TODAY. THEY CAN’T STOP US
-  - https://x.com/wallstengine/status/2059545648568086721
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 457).
-- **@realjgbanks** (754 likes, score 8/10) — FREE TRADE IDEAS FOR 5/27
+Doe sa
+  - https://x.com/Pirat_Nation/status/2060164721576423902
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 119).
+- **@cryptorover** (373 likes, score 9/10) — BIG WARNING:
 
-$TE Hold 10-9.25 target 17 -> 7/17 12C
+Every major Bitcoin dump over the last year started with the exact same signal: massive BlackRock ETF outflows.
 
-$NOK HOLD 16 target 20  -> 7/17 17C 
+Look at the pattern on the chart.
 
-$IREN Break 60 target 65 -> 6/18 65C 
+• Nov 2025:
+BlackRock IBIT saw $463M a
+  - https://x.com/cryptorover/status/2060025716843135419
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 557).
+- **@watcherguru** (2669 likes, score 9/10) — JUST IN: Bitcoin now has an 84% chance of dropping to $70,000 before reclaiming $90,000.
+  - https://x.com/WatcherGuru/status/2060038077179994527
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 3355).
+- **@strongholdpay** (240 likes, score 9/10) — Global fintech update 
+ US: Stablecoins now have a federal framework
+ EU: 9 major banks launching a Euro stablecoin
+ Japan: Crypto tax dropping from 55% to 20%
+ Global: $33T in stablecoin transactions
+  - https://x.com/strongholdpay/status/2060125969327767981
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 260).
+- **@quintenfrancois** (134 likes, score 8/10) — Crypto sentiment is genuinely the worst I’ve ever seen
 
-$MU Break 950 target 1,020 -> 5/29 1100C
+People are abandoning oversold Bitcoin to chase massively overextended AI stocks because “this time is different”
 
-HIT THE  IF YO
-  - https://x.com/RealJGBanks/status/2059430510384869757
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 792).
-- **@trendingbitcoin** (114 likes, score 8/10) — Bitcoin is going to $100,000
-  - https://x.com/TrendingBitcoin/status/2059516198262313054
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 154).
-- **@michaeljayyt** (259 likes, score 9/10) — I’ll only say it once.
-Here are 8 stocks best positioned for the AI infrastructure supercycle:
+Classic capitulation behavior
+  - https://x.com/QuintenFrancois/status/2060085270737776732
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 170).
+- **@merlijntrader** (276 likes, score 8/10) — EUROPE IS LOSING THREE WARS AT ONCE.
 
-1- $IREN – AI-optimized data centers with major hyperscaler contracts
-2- $OKLO – Next-gen nuclear power
-  - https://x.com/MichaelJayYT/status/2059318653125103746
-  - **WHY**: Source fiable + impact concret (score signal 12, engagement 271).
-- **@cryptotony__** (33 likes, score 8/10) — Micron has officially joined the $1T club, delivering one of the fastest $100B → $1T valuation runs the market has ever seen.
+ The stablecoin war: 85% run on the dollar.
+The crypto war: regulated out by 2027.
+Now the AI war: 212,000 banking jobs gone by 2030.
 
-Nvidia did it in 4 years. 
-$NVDA
- 
-Micron did it in only 1... 
-$MU
-  - https://x.com/CryptoTony__/status/2059582132440469936
-  - **WHY**: Source fiable + impact concret (score signal 12, engagement 79).
-- **@cryptorover** (311 likes, score 9/10) — BREAKING:  €34,000,000,000 Banca Sella becomes the first Italian Bank to offer Bitcoin & Crypto services.
-  - https://x.com/cryptorover/status/2059594234454565364
-  - **WHY**: Source fiable + impact concret (score signal 11, engagement 441).
-- **@coindesk** (57 likes, score 9/10) — MARKETS: An unknown investor executed a single $1.29B dark pool sale of @BlackRock's $IBIT as Bitcoin ETFs log seven straight days of outflows totaling $1.88B, per @intangiblecoins.
-  - https://x.com/CoinDesk/status/2059571554636230961
-  - **WHY**: Source fiable + impact concret (score signal 11, engagement 133).
-- **@biancoresearch** (129 likes, score 9/10) — Anthropic had a $380B valuation in Q1. They are closing on a $900B vlaualtion this quarter.
+Morgan Stanley modeled it a
+  - https://x.com/MerlijnTrader/status/2060035875539460337
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 316).
+- **@kobeissiletter** (677 likes, score 8/10) — Crypto fund outflows are accelerating:
 
-This means that Q2 "Other Income" will triple from Q1.
-  - https://x.com/biancoresearch/status/2059501816937640394
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 141).
-- **@coinacademy_fr** (16 likes, score 7/10) — Banca Sella devient la première grande banque italienne à proposer le trading de Bitcoin via son application mobile Hype.
-  - https://x.com/coinacademy_fr/status/2059587655151632429
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 26).
-- **@cointelegraph** (196 likes, score 8/10) — BULLISH: Goldman Sachs raises its S&P 500 year-end target to 8,000, up from 7,600, citing stronger earnings expectations following a robust Q1 reporting season.
-  - https://x.com/Cointelegraph/status/2059520229810508124
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 294).
-- **@cointelegraph** (116 likes, score 8/10) — INSIGHT: SpaceX could become the largest public Bitcoin holder.
+Crypto ETFs posted -$1.5 billion in outflows last week, the largest weekly outflow since February.
 
-The company holds 18,712 $BTC ahead of its IPO, per Grayscale.
-  - https://x.com/Cointelegraph/status/2059593437792403833
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 242).
-- **@yianisz** (172 likes, score 9/10) — $IREN just signed another Blackwell deployment tied to its existing $3.4B AI cloud contract and raised ARR targets from $3.7B to $4.4B.
+This follows -$1.1 billion withdrawn in the preceding week,
+  - https://x.com/KobeissiLetter/status/2060033676050657465
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 923).
+- **@altcap** (251 likes, score 8/10) — Next up. @SpaceX IPO.
+  - https://x.com/altcap/status/2060154645314695525
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 275).
+- **@fiscal_ai** (1036 likes, score 9/10) — Here's Leopold Aschenbrenner's top holdings according to his latest 13-F:
 
-That’s a +$700M run-rate increase from one deployment cycle.
-  - https://x.com/yianisz/status/2059563339852681381
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 188).
-- **@ashcrypto** (371 likes, score 8/10) — MASSIVE: €34 billion Banca Sella is set to launch crypto services, becoming the first major Italian bank to embrace crypto.
+1. Bloom Energy $BE: 23.7%
+2. Sandisk $SNDK: 19.6%
+3. CoreWeave $CRWV: 15%
+4. IREN Limited $IREN: 10.8%
+5. Core Scientific $C
+  - https://x.com/fiscal_ai/status/2058578840679751971
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 1078).
+- **@cointelegraph** (109 likes, score 9/10) — BIG: Claude's maker Anthropic has raised $65B at a $965B valuation, surpassing OpenAI to become the world's most valuable AI startup.
+  - https://x.com/Cointelegraph/status/2060139691689607398
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 161).
+- **@charliebilello** (1123 likes, score 9/10) — Forward P/E Ratios...
+Costco $COST: 45
+Walmart $WMT: 36
+Nvidia $NVDA: 17
 
-58.9 Million people just got access to crypto.
-  - https://x.com/AshCrypto/status/2059592864418418968
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 557).
-- **@coinacademy_fr** (94 likes, score 8/10) — Les ETF spot Hyperliquid ont absorbé 1,04% de la capitalisation de $HYPE durant leurs 10 premiers jours.
+Which one is the bubble?
+  - https://x.com/charliebilello/status/2059970961382711562
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1361).
+- **@bitcoinnewscom** (616 likes, score 9/10) — MSTR CEO PHONG LE: I was nervous in 2022 when Bitcoin dropped from $64K to $16K.
 
-Il s’agit du lancement le plus fort pour un ETF crypto spot à ce jour devant BTC à 0,59%, ETH
-  - https://x.com/coinacademy_fr/status/2059540684416196988
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 98).
-- **@qc_capitals** (32 likes, score 8/10) — You got $400,000 to invest 
+I’m not nervous now. 
 
-Which stock makes you a millionaire by 2030?  
+There’s a lot of headwinds for Bitcoin that are about to turn into tailwinds.
+  - https://x.com/BitcoinNewsCom/status/2060097127578001819
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 644).
+- **@unusual_whales** (407 likes, score 9/10) — "SpaceX lowered its targeted initial public offering valuation to at least $1.8 trillion." per Bloomberg
+  - https://x.com/unusual_whales/status/2060176113280966956
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 501).
+- **@stockmktnewz** (170 likes, score 9/10) — SpaceX is reportedly now looking to go public at a valuation of $1.8 Trillion
+  - https://x.com/StockMKTNewz/status/2060170862851207360
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 212).
+- **@merlijntrader** (146 likes, score 9/10) — TRUMP BOUGHT $5,000,000 IN NVIDIA. ONE WEEK BEFORE THE DEAL.
 
-1. $AMD
-2. $NBIS
-3. $SOFI
-4. $META
-5. $PLTR
-6. $MSFT
-7. $NOW 
-8. $IREN
-9. $MSTR
-10. $TSLA
-  - https://x.com/QC_Capitals/status/2059528221612265966
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 80).
-- **@stocksavvyshay** (270 likes, score 9/10) — $NVDA unveiled its new Constellation AI campus in Taipei which is a 4,000-employee R&D hub expected to begin operations by 2030.
+ Two weeks ago I posted Trump's "buy stocks" quote was a bull trap.
 
-Jensen said Nvidia’s Taiwan spending could reach $150B annually as phy
-  - https://x.com/StockSavvyShay/status/2059598551777505461
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 320).
-- **@bitget** (68 likes, score 8/10) — OPENAIUSDT pre-IPO perpetual is LIVE!
+The disclosure dropped May 14.
 
-Get early exposure to OpenAI before the IPO and ride the valuation wave.
+January 6: Trump bought $500,000 to $
+  - https://x.com/MerlijnTrader/status/2059967937276969150
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 200).
+- **@dudewhoinvests** (682 likes, score 8/10) — Iren $IREN from $56 to $70 right back to $56.
 
-Trade now: https://bitget.com/futures/usdt/OPENAIUSDT…
-  - https://x.com/bitget/status/2059479198285369534
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 104).
-- **@moonlaggoune** (275 likes, score 8/10) — 80% des épargnants utilisent l'IA pour leurs finances.
+LMAO.
 
-Ma vision pour Finary : devenir le pionnier de la finance agentique et en faire banquier privé dans votre poche, disponible 24/7.
-
-Pour cela, no
-  - https://x.com/moonlaggoune/status/2048344796809359664
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 383).
-- **@wallstengine** (126 likes, score 8/10) — $NVDA CEO: NVIDIA IS SPENDING AROUND $150B IN TAIWAN EACH YEAR
-  - https://x.com/wallstengine/status/2059546805709443297
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 146).
-- **@watcherguru** (2193 likes, score 8/10) — JUST IN:  US bank SoFi officially opens access to its own crypto stablecoin for 15,000,000 users.
-  - https://x.com/WatcherGuru/status/2059595843892613170
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2657).
-- **@investingcom** (190 likes, score 8/10) — *TAIWAN SAID TO SUSPECT NVIDIA CHIPS SMUGGLED TO CHINA VIA JAPAN
-
-$NVDA
-  - https://x.com/Investingcom/status/2059591175678361622
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 322).
-- **@zerohedge** (110 likes, score 8/10) — Premarket Movers: 
-
-Mag 7 stocks are mixed early Wednesday (Alphabet -0.5%, Nvidia +0.4%, Apple +0.1%, Tesla +1.6%, Amazon +0.02%, Microsoft -0.5%, Meta -0.5%)
-
-Box (BOX) shares are down 2% after the
-  - https://x.com/zerohedge/status/2059597112866742322
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 144).
-- **@dollarcostavg** (107 likes, score 8/10) — $IREN Chamath likely is talking about $IREN here. Likely Anthropic Deal underway. 
-
-“We are Absolutely Compute Constraint. Without AI compute -> it limits AI companies / Hyperscalers Growth”
-  - https://x.com/DollarCostAvg/status/2059547244731269463
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 109).
-- **@londonrealtv** (142 likes, score 8/10) — BREAKING: 
-
-There is a 50% chance Bitcoin drops below $50,000 this year on Kalshi.
-  - https://x.com/LondonRealTV/status/2059596444148072764
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 152).
-- **@investingcom** (109 likes, score 8/10) — *US SPACE FORCE AWARDS SPACEX $2.29 BILLION CONTRACT FOR MILITARY SPACE DATA NETWORK
-  - https://x.com/Investingcom/status/2059583930328588708
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 209).
-- **@moneyradar_fr** (49 likes, score 8/10) — LE PENTAGONE accorde un énorme contrat à Space X à l'aube de son IPO !
-
-Ce n'est plus une simple rumeur : SpaceX vient de décrocher un contrat de 2,29 milliards de dollars avec l'US Space Force pour c
-  - https://x.com/MoneyRadar_FR/status/2059573072915533954
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 53).
-- **@jukan05** (261 likes, score 8/10) — "Likely SpaceX Win for new datacenter ASIC. We expect MTK to be the design service provider for xAI’s datacenter ASIC based on Intel 14A + EMIB-T."
-
-Interesting....
-  - https://x.com/jukan05/status/2059458320424173580
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 277).
-- **@financelancelot** (205 likes, score 8/10) — Is the SpaceX IPO about to collapse the stock market as it pulls liquidity out of the AI bubble?
-  - https://x.com/FinanceLancelot/status/2059407861017379183
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 245).
-- **@growthrapidly** (131 likes, score 8/10) — 5 must own stocks to hold till 2030:
-
-$NOW 
-$IREN 
-$HIMS 
-$OSCR 
-$ONDS
-
-Which one are you replacing?
-  - https://x.com/growthrapidly/status/2059560254480736550
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 183).
-- **@coindesk** (59 likes, score 8/10) — NEW: @Krakenfx launches Bitcoin Vault, letting $BTC holders earn yield through DeFi protocols including @Aave and @Morpho.
-  - https://x.com/CoinDesk/status/2059614167355601353
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 111).
-- **@lejournalducoin** (28 likes, score 7/10) — Les ETF HYPE ont absorbé 1,04% de la capitalisation totale de $HYPE en seulement 10 jours de trading, selon Kairos Research.
-
-Il s’agit du meilleur démarrage jamais enregistré pour un ETF crypto spot
-  - https://x.com/LeJournalDuCoin/status/2059511205455077562
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 28).
-- **@polymarketmoney** (280 likes, score 9/10) — NEW IN: There's now an 93% chance Anthropic has a higher valuation than OpenAI this year.
-  - https://x.com/PolymarketMoney/status/2059416748617544061
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 332).
-- **@kylechasse** (34 likes, score 7/10) — SpaceX just launched the most powerful rocket ever built.
-
-Two days after filing for the biggest IPO in history.
-
-The timing is not a coincidence.
-
-My full breakdown drops in 2 hours.
-
-You are not rea
-  - https://x.com/Kylechasse/status/2059593955545952552
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 48).
-- **@crypto__goku** (29 likes, score 7/10) — GM Saiyans ! 
-
-«Continue de découvrir le monde comme si c’était la première fois.»
-----
-$BTC : 75.646 $
-$ETH : 2.075 $
-#BTC Fear & Greed index : 25
-#Bitcoin Dominance : 60%
-  - https://x.com/Crypto__Goku/status/2059525492764533150
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 47).
-- **@frederi55284379** (39 likes, score 7/10) — $RDW Il y a 6 mois j'anticipais son positionnement sur l'infrastructure des Data Centers spaciaux.
-Le Marché vient de prendre conscience au travers du prospectus de l'IPO de SpaceX du gigantesque pote
-  - https://x.com/Frederi55284379/status/2059525597911527890
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 45).
-- **@reuters** (399 likes, score 8/10) — Nvidia plans to invest around $150 billion a year in Taiwan, CEO Jensen Huang said at the launch celebration for the chipmaker's planned Taiwan headquarters in Taipei, a week after rival AMD said it w
-  - https://x.com/Reuters/status/2059603020212502881
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 437).
-- **@saylor** (981 likes, score 8/10) — Last Thursday on @SchwabNetwork, I discussed $BTC pricing dynamics, Digital Credit $STRC, its impact on $MSTR, and the convergence of DeFi and TradFi as Bitcoin reshapes financial markets.
-  - https://x.com/saylor/status/2059629992703656435
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1319).
-- **@cathiedwood** (1788 likes, score 7/10) — Beautiful! I have accumulated ~3 million frequent flyer miles on #AmericanAirlines, a number that Starlink will help turbocharge in the years ahead. Maybe AA/Starlink miles will translate into Starshi
-  - https://x.com/CathieDWood/status/2059472992351015107
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1906).
-- **@kalshi** (871 likes, score 7/10) — JUST IN: Jensen Huang says Nvidia market cap will be "very much higher" over next 3-5 years
-  - https://x.com/Kalshi/status/2059622747420987747
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1117).
-- **@tedpillows** (255 likes, score 9/10) — What's happening with NVIDIA?
-
-While stock market is hitting new highs, $NVDA is down over 11% in just 2 weeks, erasing over $630,000,000,000 from its market value.
-  - https://x.com/TedPillows/status/2059651842217218359
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 565).
-- **@reuters** (129 likes, score 8/10) — Nvidia to spend $150 billion a year in Taiwan, 'epicentre' of AI revolution, says CEO http://reut.rs/3PNdOkq
-  - https://x.com/Reuters/status/2059541423024754867
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 163).
-- **@terawulfinc** (107 likes, score 8/10) — Had an amazing day with the @SchneiderElec team yesterday, helping to educate others on how $WULF is building world-class data centers for the future with the help of our partners 
-
-We're a show > tel
-  - https://x.com/TeraWulfInc/status/2057861971798536218
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 123).
-- **@googledeepmind** (1233 likes, score 8/10) — SynthID has already watermarked over 100 billion pieces of content, but transparency is a team sport.
-
-That’s why we’re partnering with @OpenAI, @ElevenLabs and Kakao to add SynthID watermarking to th
-  - https://x.com/GoogleDeepMind/status/2059235181274202500
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1409).
-- **@pirat_nation** (426 likes, score 8/10) — Nvidia CEO Jensen Huang said the company plans to invest about $150 billion a year in Taiwan, showing how important the country has become to the global AI industry.
-
-Speaking at the launch of Nvidia’
-  - https://x.com/Pirat_Nation/status/2059606543809781776
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 492).
-- **@terawulfinc** (252 likes, score 8/10) — BIG infrastructure expansion for $WULF 
-
-TeraWulf just acquired the 1+ GW Eastern Kentucky HPC Campus, “Muskie Data” — further expanding its growing AI & HPC infrastructure platform.
-
-Here’s what you
-  - https://x.com/TeraWulfInc/status/2059244439181144347
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 302).
-- **@stockmktnewz** (155 likes, score 8/10) — Nvidia $NVDA is larger than the next 9  chipmakers combined
-  - https://x.com/StockMKTNewz/status/2059651539925397791
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 285).
-- **@bitget** (94 likes, score 8/10) — JUST IN: NASA launches a new Moon Base mission website as plans move forward for a permanent $20B U.S. lunar base, with SpaceX’s Starship at the center of the effort.
-  - https://x.com/bitget/status/2059637949424181560
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 152).
-- **@barchart** (135 likes, score 8/10) — Nvidia's $NVDA 1000% return over the last 5 years isn't enough for you Jim?
-  - https://x.com/Barchart/status/2059678351628104185
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 173).
-- **@easya_app** (46 likes, score 8/10) — BREAKING NEWS: EasyA ecosystem valuation soars to nearly $30 billion.
-
-@Cognition AI, co-founded by EasyA hackathon winner, raises $1 billion in latest funding round.
-  - https://x.com/easya_app/status/2059692662056186346
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 70).
-- **@unusual_whales** (552 likes, score 8/10) — Nvidia plans to invest around $150 billion a year in Taiwan, CEO Jensen Huang said
-  - https://x.com/unusual_whales/status/2059680279145378138
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 740).
-- **@tedpillows** (86 likes, score 8/10) — Nvidia $NVDA is trying to tell something.
-
-It's all in the charts.
-  - https://x.com/TedPillows/status/2059694506312708606
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 174).
-- **@ashcrypto** (563 likes, score 7/10) — $230,000,000,000 wiped out from US stocks in 20 MINUTES after Trump ruled out lifting Iran sanctions.
-  - https://x.com/AshCrypto/status/2059692243334652251
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 979).
-- **@lejournalducoin** (37 likes, score 7/10) — Si vous investissez dans les cryptos, ce graphique devrait vous intriguer.
-
-Ou comment $HYPE est en train de capter l’attention des institutionnels 
-
-Mi-mai 2026, deux ETF HYPE spot sont lancés aux Ét
-  - https://x.com/LeJournalDuCoin/status/2059617657486282819
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 43).
-- **@coinacademy_fr** (33 likes, score 7/10) — Grayscale dépose l’enregistrement officiel de son ETF $HYPE : le listing en bourse pourrait intervenir dès le début de la semaine prochaine.
-
-Les ETF Hyperliquid viennent de dépasser les 100 millions
-  - https://x.com/coinacademy_fr/status/2059697425472786619
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 33).
-- **@pete_rizzo_** (100 likes, score 7/10) — JUST IN: MACRO ANALYST JAMES LAVISH JUST SAID #BITCOIN COULD 100X FROM HERE
-
-"IT'S JUST THE REALITY OF THE PHYSICS OF HOW MUCH MONEY IS MOVING IN AND OUT"
-
-BTC WILL REPLACE THE DOLLAR AS THE WORLD'S C
-  - https://x.com/pete_rizzo_/status/2059683141623661020
-  - **WHY**: Source fiable + impact concret (score signal 5, engagement 138).
-- **@2xnmore** (210 likes, score 9/10) — People called $TAO dead in April because one founder sold.
-
-Sam Altman raised $40B this year. OpenAI is chasing a $1T valuation. They have one product and one point of failure.
-
-TAO has 128 subnets, e
-  - https://x.com/2xnmore/status/2059650842844680443
-  - **WHY**: Source fiable + impact concret (score signal 12, engagement 234).
-- **@whalefactor** (145 likes, score 8/10) — WHALE WATCH: SpaceX is on track to become the largest diversified public company holding Bitcoin.  
-
-Their recent S 1 filing ahead of the June IPO reveals a massive stack of 18,712 $BTC. At current ma
-  - https://x.com/WhaleFactor/status/2059671022933094769
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 185).
-- **@sama** (2856 likes, score 8/10) — AI should dramatically increase quality of life and individual freedoms for people around the world.
-
-The OpenAI Foundation is making an initial $250M commitment to measurement, transition support, an
-  - https://x.com/sama/status/2059677202917331431
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 4470).
-- **@danny_crypton** (118 likes, score 7/10) — ELON MUSK IS ABOUT TO MAKE EVERYONE MILLIONAIRES!!
-
-99% WILL MISS THIS CHANCE IN 2026
-
-No clickbait or any other shit,
-
- $SPCX IPO WILL BE THE BIGGEST RETAIL OPPORTUNITY OF THIS CYCLE...
-
-In 2016, Tes
-  - https://x.com/Danny_Crypton/status/2059675548134101023
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 166).
-- **@rocketlab** (2867 likes, score 7/10) — We have officially acquired Motiv Space Systems. 
-Motiv – now Rocket Lab Robotics – brings mission-tested Mars heritage with advanced multi-degree of freedom robotic arms, actuators, and drive electro
-  - https://x.com/RocketLab/status/2059378347504001424
-  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2979).
-- **@skyecosystem** (68 likes, score 7/10) — The concerns being raised about DeFi security are worth taking seriously. Security risk in onchain finance is real, and the industry has to do better.
-
-Sky Protocol is the oldest DeFi protocol on @eth
-  - https://x.com/SkyEcosystem/status/2059636660921352259
-  - **WHY**: Source fiable + impact concret (score signal 5, engagement 80).
+Can’t make this up.
+  - https://x.com/DudeWhoInvests/status/2052515563209928955
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 758).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[The Verge]** A Google employee allegedly used inside information to win $1.2 million on Polymarket
-  - https://www.theverge.com/tech/938635/google-polymarket-insider-trading-prediction-market-bets
-- **[The Verge]** Apple’s newest iPad Air is up to $100 off for the first time
-  - https://www.theverge.com/gadgets/938519/apple-ipad-air-m4-deal-sale
-- **[The Verge]** Motorola says affiliate hijacking of Amazon app was &#8216;unintended&#8217;
-  - https://www.theverge.com/tech/938249/motorola-device-native-amazon-affiliate-hijack
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/Polymarket]** JUST IN: Three Mile Island nuclear plant to be revived for AI power demand.
-  - https://x.com/Polymarket/status/2052807250566082610
-- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Michael Burry Stock Tracker ♟]** Everything he touches turns to gold
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Andrew Benson]** SpaceX millionaires 4,000 x $1mil , 400 x $100 mil 
 
-Leopold Aschenbrenner's Applied Digital $APLD position is now up +323% since disclosing a $22.7M stake
+Every employee who joined before the first succesful launch made (unless they sold early) more than $100 mi
+  - https://x.com/AndrewBenson/status/2060039871394398636
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Bloomberg]** SpaceX is currently targeting a valuation of at least $1.8 trillion in its initial public offering, according to people familiar with the matter, as Elon Musk’s
+  - https://x.com/business/status/2060173872511512755
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Space Investor]** $SPCX: SPACEX RAISES IPO VALUATION TARGET TO AT LEAST $1.8T, SEEKS $75B
 
-He opened the posit
-  - https://x.com/burrytracker/status/2047341960592015816
-- **[HN]** DuckDuckGo search saw 28% more visits after Google said people love AI mode
-  - https://www.pcgamer.com/hardware/duckduckgos-ai-free-search-saw-nearly-28-percent-more-visits-in-the-week-following-googles-insistence-that-people-love-ai-mode/
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/Senator Cynthia Lummis]** Wyoming workers & producers power our grid and strengthen national security. Advanced manufacturing, Bitcoin mining, AI all demand reliable baseload power.
+The new target follows feedback from both advisers and investors.
 
-The
-  - https://x.com/SenLummis/status/2057114026962776483
-- **[X_FOLLOWING/Watcher.Guru]** JUST IN:  Bitcoin falls under $73,000 after US and Iran launch attacks against each other.
-  - https://x.com/WatcherGuru/status/2059848015020474632
+The IPO roadshow beg
+  - https://x.com/SpaceInvestor_D/status/2060188830410457379
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Wu Blockchain]** Hyperliquid SPACEX-USDH Perp Plunges Nearly 45% After Oracle Data Error
+
+Hyperliquid’s SPACEX-USDH perpetual contract plunged nearly 45% in 30 minutes on Thursd
+  - https://x.com/WuBlockchain/status/2060188182424256887
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Nic Cruz Patane]** Delta CEO’s decision to go with Amazon Leo over Starlink just got even worse
+  - https://x.com/niccruzpatane/status/2060201559107973324
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Berk Ucmaz]** Jeff Bezos un roketi rampada patlamış.
+
+Çevredeki hangarlarda, binalarda ve test sahalarında hasar olduğu söyleniyor. 
+Bu roketi fırlatabilen tek rampaydı.
+
+Spa
+  - https://x.com/BerkUcmz/status/2060200084286193718
+- **[X_SEARCH/live/AI datacenter OR power demand lang:en min_faves:100/Aleida Frazell]** Hurry up and follow @anitaoh8 — his recommendations are incredible. I’m making money every single day and finally feel like I have a real edge in the market.
+st
+  - https://x.com/AleidaF84662/status/2060201525104755105
+- **[X_SEARCH/live/AI datacenter OR power demand lang:en min_faves:100/Abram Newton]** I was skeptical about @sayed64145 initially. Took his very first trading idea and went for it. Far exceeded my expectations. I’ve decided to go all in.
+
+ stock 
+  - https://x.com/NewtonAbra32627/status/2060206957458596217
 
 ## 🎬 Suggested video angles
 
@@ -540,4 +338,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @CryptoAIDecode handle.
 
 
-*Generated 2026-05-28T00:36:03*
+*Generated 2026-05-29T00:33:37*
