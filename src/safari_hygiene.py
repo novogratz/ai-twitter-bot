@@ -92,13 +92,59 @@ def _quit_safari() -> bool:
     return True
 
 
+_CLEAR_SW_AND_RELOAD_JS = """
+(async () => {
+  if ('serviceWorker' in navigator) {
+    const regs = await navigator.serviceWorker.getRegistrations();
+    for (let r of regs) { await r.unregister(); }
+  }
+  if (window.caches) {
+    const keys = await caches.keys();
+    for (let k of keys) { await caches.delete(k); }
+  }
+  try { localStorage.clear(); } catch(e) {}
+  try { sessionStorage.clear(); } catch(e) {}
+  location.reload(true);
+})();
+""".strip()
+
+
+def _warm_up_xcom() -> bool:
+    """Navigate to x.com, clear service workers/caches, hard reload.
+
+    Prevents the 'black screen' where Safari restarts with stale SW cache
+    and renders an empty app shell. Must run after Safari is fully up.
+    """
+    script = f'''
+tell application "Safari"
+  activate
+  tell window 1
+    set URL of current tab to "https://x.com/home"
+    delay 6
+    do JavaScript "{_CLEAR_SW_AND_RELOAD_JS.replace(chr(10), " ").replace('"', '\\"')}" in current tab
+    delay 7
+  end tell
+end tell
+'''
+    try:
+        subprocess.run(
+            ["osascript", "-e", script],
+            capture_output=True, text=True, timeout=30,
+        )
+        log.info("[HYGIENE] x.com warmed up — service workers cleared, hard reload done.")
+        return True
+    except Exception as e:
+        log.warning(f"[HYGIENE] x.com warm-up failed (non-fatal): {e}")
+        return False
+
+
 def _launch_safari() -> bool:
     try:
         subprocess.run(
             ["open", "-a", "Safari"],
             capture_output=True, text=True, timeout=15,
         )
-        time.sleep(3)
+        time.sleep(4)
         # Bring it to the front so subsequent AppleScript `front window`
         # calls in twitter_client land on the right surface.
         subprocess.run(
@@ -106,6 +152,9 @@ def _launch_safari() -> bool:
             capture_output=True, text=True, timeout=10,
         )
         time.sleep(2)
+        # Clear stale service workers and warm up x.com so the first scrape
+        # hits a rendered page, not a black-screen app shell.
+        _warm_up_xcom()
         return True
     except Exception as e:
         log.warning(f"[HYGIENE] Safari launch failed: {e}")
@@ -115,13 +164,16 @@ def _launch_safari() -> bool:
 def restart_safari(reason: str = "") -> bool:
     """Quit + relaunch Safari. Returns True on success.
 
-    Cooldown-guarded — refuses to bounce more than once per MIN_GAP_SECONDS.
+    Cooldown-guarded — refuses to bounce more than once per MIN_GAP_SECONDS,
+    UNLESS reason is 'black_screen_recovery' which uses a shorter 5-min gap
+    so reactive recovery isn't blocked by the 30-min preventive cooldown.
     Login session survives because cookies live on disk.
     """
     last = _last_run_ts()
     gap = time.time() - last
-    if gap < MIN_GAP_SECONDS:
-        log.info(f"[HYGIENE] Skipping restart (last was {int(gap)}s ago, < {MIN_GAP_SECONDS}s cooldown). reason={reason}")
+    effective_gap = 5 * 60 if reason == "black_screen_recovery" else MIN_GAP_SECONDS
+    if gap < effective_gap:
+        log.info(f"[HYGIENE] Skipping restart (last was {int(gap)}s ago, < {effective_gap}s cooldown). reason={reason}")
         return False
 
     log.warning(f"[HYGIENE] Restarting Safari. reason={reason or 'preventive'}")

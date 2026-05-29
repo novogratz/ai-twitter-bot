@@ -14,6 +14,35 @@ from .logger import log
 # Without this, the reply bot and engage bot type over each other.
 _safari_lock = threading.Lock()
 
+# Reactive black-screen recovery: track consecutive blank pages.
+# When Safari renders an empty app shell (service worker stale state), every
+# scrape returns NO_ARTICLES. After N consecutive blanks, trigger a hygiene
+# restart without waiting for the scheduled 2h cycle.
+_blank_page_lock = threading.Lock()
+_blank_page_count = 0
+_BLANK_PAGE_RESTART_THRESHOLD = 5
+
+
+def _record_blank_page():
+    global _blank_page_count
+    with _blank_page_lock:
+        _blank_page_count += 1
+        count = _blank_page_count
+    if count >= _BLANK_PAGE_RESTART_THRESHOLD:
+        _reset_blank_page_count()
+        log.warning(f"[SCRAPE] {count} consecutive blank pages — triggering reactive Safari restart.")
+        try:
+            from . import safari_hygiene
+            safari_hygiene.restart_safari(reason="black_screen_recovery")
+        except Exception:
+            pass
+
+
+def _reset_blank_page_count():
+    global _blank_page_count
+    with _blank_page_lock:
+        _blank_page_count = 0
+
 
 def _run_applescript(script: str, retries: int = 1) -> bool:
     """Run an AppleScript command with optional retries. Returns True on success."""
@@ -761,9 +790,11 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             return []
         if not raw or raw == 'NO_ARTICLES':
             log.info(f"[SCRAPE] No articles on {label} (page not loaded?)")
+            _record_blank_page()
             return []
         if raw.startswith('ARTICLES_'):
             log.info(f"[SCRAPE] {label}: {raw}")
+            _record_blank_page()
             return []
 
         data = _json.loads(raw)
@@ -776,6 +807,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             "translated_from": t.get("tl") or "",
             "is_reply": bool(t.get("ir") or False),
         } for t in data]
+        _reset_blank_page_count()
         log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")
         return tweets
     except Exception as e:

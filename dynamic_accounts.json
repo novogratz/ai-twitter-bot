@@ -140,7 +140,15 @@
     "SergeArlaud",
     "LeComptoirFin",
     "MathieuDussart",
-    "PierreDartaud"
+    "PierreDartaud",
+    "MaxKeller",
+    "LuisFigueroa1",
+    "NathanFradin",
+    "JulienCazelles",
+    "RazvanBuzdugan",
+    "AlexisDeG",
+    "CyrilKlein",
+    "Raphaeltanguay"
   ],
   "en": [
     "blablacar",
@@ -920,6 +928,46 @@
     {
       "lang": "fr",
       "handle": "PierreDartaud",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxKeller",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisFigueroa1",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanFradin",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienCazelles",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "RazvanBuzdugan",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDeG",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilKlein",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Raphaeltanguay",
       "added": "2026-05-29"
     }
   ]
