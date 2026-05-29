@@ -1956,3 +1956,43 @@ He opened the position in Q1 2025 at ~$8.62/share
 - **@remarks** (3013 likes, score 8/10) — JUST IN:  Data Centers now account for 7% of the total US power demand.
   - https://x.com/remarks/status/2046204360355725801
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 3243).
+- **@lmkifiwin** (78 likes, score 9/10) — DO YOU UNDERSTAND WHAT JUST HAPPENED IN THE AI RACE..
+
+Anthropic is closing a ~$65 billion round at a valuation near $965 billion. that pushes it past OpenAI's $852 billion - making the Claude maker t
+  - https://x.com/lmkifiwin/status/2060067732901752874
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 100).
+- **@iren_ltd** (3779 likes, score 9/10) — Sweetwater 1 has been successfully energized – a key milestone in the development of the broader 2GW Sweetwater campus.
+
+@danroberts0101, Co-Founder and Co-CEO of $IREN commented:
+
+“Delivering Sweetwa
+  - https://x.com/IREN_Ltd/status/2050318504168198319
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 4109).
+- **@unusual_whales** (872 likes, score 9/10) — OpenAI has promised to deliver 26 gigawatts worth of computing capacity using their chips, which is nearly the amount of power required to provide electricity to the entire state of New York during pe
+  - https://x.com/unusual_whales/status/1988606959340155186
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1070).
+- **@valuetainment** (143 likes, score 9/10) — Anthropic has officially surpassed OpenAI, hitting a record valuation of $965 billion.
+  - https://x.com/valuetainment/status/2060071440955715991
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 155).
+- **@nolimitgains** (4456 likes, score 8/10) — AI data centers are about to consume more electricity than entire countries, and the grid is nowhere near ready.
+
+9 energy stocks are sitting directly in front of that demand.
+
+Here they are:
+  - https://x.com/NoLimitGains/status/2056368422355718401
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 5048).
+- **@unusual_whales** (3455 likes, score 8/10) — Power demand from AI data centers to quadruple in 10 years, per Bloomberg:
+  - https://x.com/unusual_whales/status/1975621393711571391
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 4009).
+- **@coinvo** (223 likes, score 8/10) — JUST IN:  China has built over 80 launch pads near its nuclear missile silos.
+  - https://x.com/Coinvo/status/2060241251761352705
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 231).
+- **@r0ck3t23** (6811 likes, score 8/10) — Elon Musk just revealed what’s actually holding AI back.
+
+It’s not chips. Not models. Not data.
+
+It’s concrete.
+
+Someone asked him the obvious question. Why not just build private power plants next to
+  - https://x.com/r0ck3t23/status/2053439772413030905
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 7741).
