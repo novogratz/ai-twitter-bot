@@ -129,7 +129,15 @@
     "SylvainMulliez",
     "0xRitz",
     "JulienHermelin",
-    "MarcBoulangerQc"
+    "MarcBoulangerQc",
+    "MathieuVallance",
+    "0xMerkle",
+    "LucasRoulin",
+    "ThomasHurtel",
+    "0xSatoshi",
+    "MaximeDion",
+    "GillesZillhardt",
+    "SergeArlaud"
   ],
   "en": [
     "blablacar",
@@ -854,6 +862,46 @@
     {
       "lang": "fr",
       "handle": "MarcBoulangerQc",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuVallance",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xMerkle",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasRoulin",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasHurtel",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xSatoshi",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDion",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "GillesZillhardt",
+      "added": "2026-05-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "SergeArlaud",
       "added": "2026-05-28"
     }
   ]
