@@ -2096,3 +2096,62 @@ Post Q3 earnings + Market Sector Drop:
 [F] T
   - https://x.com/aleabitoreddit/status/1992181846134968633
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 573).
+- **@xai** (25371 likes, score 9/10) — SpaceXAI will provide @AnthropicAI with access to Colossus 1, one of the world’s largest and fastest-deployed AI supercomputers, to provide additional capacity for Claude → http://x.ai/news/anthropic-
+  - https://x.com/xai/status/2052060350770515978
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 27681).
+- **@burrytracker** (7280 likes, score 9/10) — BREAKING: Michael Burry goes short on $PLTR and $NVDA in his latest 13F filing
+
+Scion Capital just bought put options on 1M Nvidia shares and 5M Palantir shares 
+
+The Big Short is feeling bearish on A
+  - https://x.com/burrytracker/status/1985469728995897643
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 8330).
+- **@burrytracker** (3877 likes, score 9/10) — Breaking: The Magnificent 7 have lost over ~$5,000,000,000,000 of market capitalization from their all-time highs
+
+• Microsoft: -33.4%
+• Meta: -32.4%
+• Tesla: -25.7%
+• Amazon: -21.0%
+• Alphabet: -20.1
+  - https://x.com/burrytracker/status/2038619783898284158
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 4417).
+- **@joinautopilot** (875 likes, score 9/10) — New: The Grok portfolio is outperforming the GPT Portfolio since launch on 2/15/25
+
+Grok: +34%
+GPT: +24%
+
+And it just picked 4 new stocks for February including:
+
+#1. Vertiv Holdings $VRT
+
+"Vertiv dom
+  - https://x.com/joinautopilot/status/2018774112064454791
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 927).
+- **@patientinvestor** (0 likes, score 9/10) — Stocks expected to more than 3X their revenue in the next 5 years:
+
+Nvidia $NVDA: +295%
+
+AMD $AMD: +400%
+
+Ouster $OUST: +429%
+
+MP Materials $MP: +658%
+
+Palantir $PLTR: +704%
+
+Iren $IREN: +2056%
+
+Ondas
+  - https://x.com/patientinvestor/status/2059983028500525489
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 136).
+- **@coinvo** (76 likes, score 9/10) — JUST IN: NVIDIA will now pay you over $22,000 a year to host a mini AI data center in your home.
+  - https://x.com/Coinvo/status/2060368061786718494
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 108).
+- **@watcherguru** (1577 likes, score 8/10) — JUST IN: Elon Musk says reports that SpaceX lowered its IPO valuation target are "false."
+  - https://x.com/WatcherGuru/status/2060353662178992132
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2005).
+- **@unusual_whales** (739 likes, score 8/10) — Iris Energy $IREN earnings:
+
+Revenue $240.3M vs $228M expected
+  - https://x.com/unusual_whales/status/1986539676120064349
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 811).
