@@ -122,45 +122,40 @@ def post_interval_minutes() -> int:
 
 
 def reply_interval_minutes() -> int:
-    """Reply-guy cadence. 2026 growth target: 500-1000 quality replies/day.
-    Accelerated per user mandate 'PUSH IT'."""
+    """PUSH IT HARD — max reply volume."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 9 <= hour < 16:
-        return _cadence(random.randint(4, 8))
-    if 16 <= hour < 23:
-        return _cadence(random.randint(6, 12))
-    return _cadence(random.randint(12, 20))
+    if 6 <= hour < 23:
+        return _cadence(random.randint(2, 4))
+    return _cadence(random.randint(5, 8))
 
 
 def engage_interval_minutes() -> int:
-    """More frequent presence in influencer notifications. Accelerated."""
+    """PUSH IT HARD — constant presence in influencer notifications."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 9 <= hour < 16:
-        return _cadence(random.randint(3, 6))
-    return _cadence(random.randint(6, 10))
+    if 6 <= hour < 23:
+        return _cadence(random.randint(2, 4))
+    return _cadence(random.randint(4, 6))
 
 
 def direct_reply_interval_minutes() -> int:
-    """Primary response path. Accelerated for high volume."""
+    """PUSH IT HARD — fire direct replies as fast as possible."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 9 <= hour < 16:
-        return _cadence(random.randint(3, 6))
-    if 16 <= hour < 23:
-        return _cadence(random.randint(5, 10))
-    return _cadence(random.randint(10, 15))
+    if 6 <= hour < 23:
+        return _cadence(random.randint(2, 4))
+    return _cadence(random.randint(5, 8))
 
 
 def early_bird_interval_minutes() -> int:
-    """Early-bird replies — highest-upside, scan aggressively. Accelerated."""
+    """PUSH IT HARD — early-bird every 1-2 min during waking hours."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 9 <= hour < 16:
-        return _cadence(random.randint(2, 5))
-    return _cadence(random.randint(4, 8))
+    if 6 <= hour < 23:
+        return _cadence(random.randint(1, 3))
+    return _cadence(random.randint(3, 5))
 
 
 def roast_interval_minutes() -> int:
-    """Roasts use AI; keep them frequent. Accelerated."""
-    return _cadence(random.randint(15, 25))
+    """PUSH IT HARD — roast every 8-12 min."""
+    return _cadence(random.randint(8, 12))
 
 
 def _graceful_shutdown(signum, frame):
@@ -343,11 +338,11 @@ def main():
         log.info("Warming up replyback (reply to people who replied to us)...")
         quiet_safe_replyback()
 
-    # Catchup burst — fires 3 extra rounds of every high-volume surface so
+    # Catchup burst — fires 5 extra rounds of every high-volume surface so
     # any downtime gap is filled quickly on restart.
-    log.info("Catchup burst: 3 extra rounds of RT / quote / reply / spicy / breakout...")
-    for _burst_i in range(3):
-        log.info(f"[CATCHUP] Round {_burst_i + 1}/3")
+    log.info("Catchup burst: 5 extra rounds of RT / quote / reply / spicy / breakout...")
+    for _burst_i in range(5):
+        log.info(f"[CATCHUP] Round {_burst_i + 1}/5")
         if not args.reply_only:
             safe_run_retweet_cycle()
             safe_run_quote_tweet_cycle()
@@ -696,10 +691,10 @@ def main():
         else:
             log.info("Self-evolution agent: disabled by default in Plus-safe mode.")
 
-        log.info("Breakout bot: viral-moment amplifier every 15 min.")
+        log.info("Breakout bot: viral-moment amplifier every 8 min.")
         scheduler.add_job(
             safe_run_breakout_cycle,
-            trigger=IntervalTrigger(minutes=15),
+            trigger=IntervalTrigger(minutes=8),
             id="breakout_job",
         )
 
@@ -714,10 +709,10 @@ def main():
             id="spike_job",
         )
 
-        log.info("Spicy bot: polarizing takes + question bait every 20 min.")
+        log.info("Spicy bot: polarizing takes + question bait every 10 min.")
         scheduler.add_job(
             safe_run_spicy_cycle,
-            trigger=IntervalTrigger(minutes=20),
+            trigger=IntervalTrigger(minutes=10),
             id="spicy_job",
         )
 

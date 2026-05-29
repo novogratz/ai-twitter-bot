@@ -109,8 +109,8 @@ def has_post_slot() -> bool:
     news/hot-take generation path once both daily buckets are full.
     Reads LIVE caps via meta_strategy_agent's live_strategy.json.
     """
-    news_count, _ = _get_counters()
-    return news_count < _live_news_cap()
+    news_count, hotake_count = _get_counters()
+    return news_count < _live_news_cap() or hotake_count < _live_hotake_cap()
 
 
 def post_slot_status() -> str:
@@ -355,15 +355,16 @@ def _run_single_bot_cycle() -> bool:
     hotake_cap = _live_hotake_cap()
     log.info(f"Today: {news_count}/{news_cap} Décodes, {hotake_count}/{hotake_cap} hot takes")
 
-    if news_count >= news_cap:
-        log.info("Daily Décode limit reached. Skipping.")
+    can_news = news_count < news_cap
+    can_hotake = hotake_count < hotake_cap
+
+    if not can_news and not can_hotake:
+        log.info("All daily post caps full. Skipping.")
         return False
 
-    can_news = news_count < news_cap
-    tweet_source = "news"
+    tweet_source = "news" if can_news else "hotake"
 
-    if True:
-        # 2026-05-26: hot takes disabled — Décodes only.
+    if can_news:
         # 2026-05-23 PM: Décode retry loop — user mandate "make sure URL is
         # there, don't skip, if it doesn't work generate a new post". Up to
         # 3 attempts to land a Décode whose URL passes whitelist + coupling.
@@ -485,6 +486,17 @@ def _run_single_bot_cycle() -> bool:
         else:
             log.info(f"[NEWS] All {max_attempts} attempts failed validation/dedup. Giving up this cycle.")
         _ag_mod.__dict__.pop("_temporary_rejected_terms", None)
+
+    if tweet is None and tweet_source == "news" and can_hotake:
+        log.info("No eligible Décode this cycle — falling back to hot take.")
+        tweet_source = "hotake"
+
+    if tweet is None and tweet_source == "hotake":
+        log.info("Generating hot take...")
+        ht = generate_hotake()
+        if ht:
+            _increment_counter("hotakes")
+            tweet = ht
 
     if tweet is None:
         log.info("No eligible Décode this cycle (all topic/format combos shipped).")
