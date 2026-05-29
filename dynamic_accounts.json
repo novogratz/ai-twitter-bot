@@ -156,7 +156,14 @@
     "GillesMauris",
     "ThibaudMoulin",
     "AlexisDuchemin",
-    "CryptoGilles"
+    "CryptoGilles",
+    "0x0x1c",
+    "johandusautoit",
+    "cryptocapitalfr",
+    "nicolasabraham",
+    "cryptofrancais",
+    "lucasmartin",
+    "thecryptobrofr"
   ],
   "en": [
     "blablacar",
@@ -1016,6 +1023,41 @@
     {
       "lang": "fr",
       "handle": "CryptoGilles",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "0x0x1c",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "johandusautoit",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptocapitalfr",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "nicolasabraham",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptofrancais",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucasmartin",
+      "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "thecryptobrofr",
       "added": "2026-05-29"
     }
   ]

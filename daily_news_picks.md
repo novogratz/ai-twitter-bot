@@ -2306,3 +2306,103 @@ Last time this happene
 - **@cryptogoos** (177 likes, score 8/10) — BREAKING: Bitcoin hits $74,000 after President Trump announces navel blockade in the Strait of Hormuz has ended.
   - https://x.com/cryptogoos/status/2060386376202203541
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 201).
+- **@coinbureau** (102 likes, score 9/10) — BITCOIN ETF OUTFLOWS HIT 9 STRAIGHT DAYS
+
+Spot Bitcoin ETFs have now recorded outflows for 9 consecutive days.
+
+May 27 saw the largest daily outflow of the streak, with $733M leaving the funds.
+
+Black
+  - https://x.com/coinbureau/status/2060351475549954427
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 174).
+- **@bricsinfo** (4353 likes, score 9/10) — Leading AI models from OpenAI, Anthropic, and Google reportedly chose to use nuclear weapons in 95% of simulated war games.
+  - https://x.com/BRICSinfo/status/2027137907929297051
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 4757).
+- **@ashcrypto** (538 likes, score 9/10) — Nearly $1.8 TRILLION has been wiped out from the crypto market since October 10th.
+
+Bitcoin is down -40%
+ETH is down -54%
+BNB is down -49%
+XRP is down -53%
+LINK is down -59%
+SOL is down -62%
+ADA is do
+  - https://x.com/AshCrypto/status/2060433495542149154
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 842).
+- **@tedpillows** (262 likes, score 9/10) — $BTC has 2 decent liquidity clusters right now.
+
+On the upside, there's one sitting around the $74,500-$75,000 level.
+
+On the downside, there's one around $72,000 level.
+
+IMO, Bitcoin will tap the ups
+  - https://x.com/TedPillows/status/2060399968280563896
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 556).
+- **@tedpillows** (156 likes, score 9/10) — $ETH has a large short-side liquidity cluster around $2,060-$2,100.
+
+On the downside, there's a decent long-side liquidity around $1,900-$1,950.
+
+Just like Bitcoin, I expect upside liquidity to be tak
+  - https://x.com/TedPillows/status/2060420123001790595
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 262).
+- **@cryptorover** (610 likes, score 8/10) — INSANE GAMBLE 
+
+A whale just opened a $25,600,000 ETH long with 25x leverage.
+
+If Ethereum drops just $20, the entire position gets liquidated.
+  - https://x.com/cryptorover/status/2060366926900248576
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 852).
+- **@watcherguru** (7479 likes, score 8/10) — JUST IN: Nvidia $NVDA CEO Jensen Huang says "we've achieved AGI."
+  - https://x.com/WatcherGuru/status/2036202494347321408
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 8851).
+- **@polymarket** (2009 likes, score 9/10) — JUST IN: Anthropic's private valuation has officially surpassed $1,000,000,000,000.00.
+  - https://x.com/Polymarket/status/2060449764433428732
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 2369).
+- **@cryptofergani** (320 likes, score 9/10) — Bitcoin is going to $200,000.
+
+ETH will break $10,000.
+
+SOL will reach $800.
+
+Altcoins will explode.
+
+Patience
+  - https://x.com/cryptofergani/status/2060442664374260191
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 556).
+- **@speculator_io** (2794 likes, score 8/10) — This market is a dream for theme pickers.
+
+Chips: $NVDA $AMD $TSM $ASML
+Space: $RKLB $PL $ASTS
+Crypto: $BMNR $COIN
+Quantum: $RGTI $QBTS $QUBT $IONQ
+Nuclear: $OKLO $LEU $NNE $SMR $LTBR
+Data Centers: $N
+  - https://x.com/Speculator_io/status/1975318374885605385
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2988).
+- **@targoncompute** (198 likes, score 8/10) — Over the past month, we have repurchased 2000 TAO of SN4 alpha using organic revenues from the Targon Confidential Compute platform.  
+
+We remain committed to building a sustainable flywheel for the c
+  - https://x.com/TargonCompute/status/2060387734120751126
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 226).
+- **@unusual_whales** (475 likes, score 8/10) — US Space Force has awarded SpaceX $4.6 billion contract to assess airborne threats.
+  - https://x.com/unusual_whales/status/2060465704428503336
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 625).
+- **@tedpillows** (140 likes, score 8/10) — $5,000 is on the line, and this competition comes down to one question:
+
+Would you rather trust Bitcoin and Ethereum with your money or Nvidia and Microsoft?
+
+Everyone has an opinion.
+
+Now we'll find
+  - https://x.com/TedPillows/status/2060455761608647053
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 208).
+- **@barchart** (1560 likes, score 8/10) — BREAKING : Nvidia $NVDA
+
+Timberrrrrrrrrrrrrrrrrr
+  - https://x.com/Barchart/status/2060458815934648386
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1600).
+- **@ashcrypto** (1081 likes, score 8/10) — BREAKING:  JP Morgan will fight the "Crypto Market Structure Bill" in its current form, says Jamie Dimon.
+
+Fck these banking cartels.
+  - https://x.com/AshCrypto/status/2060427852080615891
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1379).

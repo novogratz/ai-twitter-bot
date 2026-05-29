@@ -1489,5 +1489,71 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les influenceurs 'lifestyle' pour garder les ing\u00e9nieurs et les traders. La France reste leader en analyse fondamentale, le Qu\u00e9bec en valeurs locales. Aucun vendeur de r\u00eave."
+  },
+  {
+    "ts": "2026-05-29T18:06:10.888907",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "0x0x1c",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 95000,
+        "reason": "Le roi du deuil crypto fran\u00e7ais. Il tweet en FR, analyse les cycles, et sa patience est plus longue que le d\u00e9lai de d\u00e9gel des tokens."
+      },
+      {
+        "handle": "johandusautoit",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Johan Dusautoit. Le qu\u00e9b\u00e9cois qui parle bourse en fran\u00e7ais sans dormir. Il d\u00e9cortique les r\u00e9sultats trimestriels avec la pr\u00e9cision d'un horloger suisse ivre."
+      },
+      {
+        "handle": "cryptocapitalfr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Institutionnel et propre. Couvre la DeFi et l'infra Web3 en France. Pas de hype, juste des faits. Pour ceux qui veulent comprendre sans vomir."
+      },
+      {
+        "handle": "nicolasabraham",
+        "region": "france",
+        "niche": "tech",
+        "followers": 28000,
+        "reason": "Fondateur de Doctolib (ex), il tweet sur la tech et la sant\u00e9 en France. Moins crypto, mais plus impact business r\u00e9el. Le genre de tweet qui fait monter l'ego."
+      },
+      {
+        "handle": "cryptofrancais",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Communaut\u00e9 et analyse. Pas un guru, mais un agr\u00e9gateur de qualit\u00e9. Si tu veux savoir ce que les frans-fran\u00e7ais pensent du BTC, c'est l\u00e0 que \u00e7a se passe."
+      },
+      {
+        "handle": "lucasmartin",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Diaspora FR aux USA, tweet sur l'IA et la Silicon Valley. Il traduit l'hyst\u00e9rie tech am\u00e9ricaine en fran\u00e7ais digestible. Le pont entre l'ego de Musk et le cerveau fran\u00e7ais."
+      },
+      {
+        "handle": "thibaut_debroise",
+        "region": "france",
+        "niche": "vc",
+        "followers": 15000,
+        "reason": "VC fran\u00e7ais qui tweet sur l'IA et les startups deep tech. Moins de 'to the moon', plus de 'to the exit'. Il finance l'avenir, il ne le parie pas."
+      },
+      {
+        "handle": "thecryptobrofr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Puriste Bitcoin FR. Pas de sh*tcoin \u00e0 02h du mat', que des charts et du sens du ratio risque/rendement. Moins de bruit, plus de grain."
+      }
+    ],
+    "summary": "On a fouill\u00e9 les mines : des v\u00e9t\u00e9rans crypto qui ont surv\u00e9cu \u00e0 trois bear markets (0x0x1c), des analystes boursiers qu\u00e9b\u00e9cois pr\u00e9cis comme des scalpings (Johan Dusautoit), et des VC fran\u00e7ais qui pr\u00e9f\u00e8rent l'IA au p\u00e9trole. Pas de vendeurs de r\u00eave \u00e0 97\u20ac, que des types qui analysent ou construisent."
   }
 ]
