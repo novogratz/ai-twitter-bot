@@ -1,37 +1,37 @@
 {
-  "generated_at": "2026-05-29T17:40:26.290883",
-  "window_7d_actions": 1691,
-  "window_24h_actions": 222,
+  "generated_at": "2026-05-30T16:26:55.171091",
+  "window_7d_actions": 1845,
+  "window_24h_actions": 471,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 1579
-    },
-    {
-      "pattern": "FR_ANCHOR",
-      "count": 44
+      "count": 1756
     },
     {
       "pattern": "METAPHOR",
-      "count": 23
+      "count": 25
     },
     {
-      "pattern": "DIALOGUE",
-      "count": 17
+      "pattern": "FR_ANCHOR",
+      "count": 21
     },
     {
       "pattern": "RENAME",
-      "count": 14
+      "count": 18
+    },
+    {
+      "pattern": "DIALOGUE",
+      "count": 10
     }
   ],
   "worst_patterns": [
     {
-      "pattern": "EN_ANCHOR",
-      "count": 1
+      "pattern": "REPETITION",
+      "count": 3
     },
     {
-      "pattern": "REPETITION",
-      "count": 4
+      "pattern": "EN_ANCHOR",
+      "count": 3
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -40,85 +40,91 @@
   ],
   "best_hours_utc": [
     {
-      "hour": 8,
-      "actions": 98
-    },
-    {
-      "hour": 22,
-      "actions": 95
-    },
-    {
-      "hour": 21,
-      "actions": 92
-    },
-    {
       "hour": 11,
-      "actions": 91
+      "actions": 104
+    },
+    {
+      "hour": 5,
+      "actions": 103
+    },
+    {
+      "hour": 8,
+      "actions": 103
     },
     {
       "hour": 4,
-      "actions": 90
+      "actions": 102
+    },
+    {
+      "hour": 1,
+      "actions": 97
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 584
+      "count": 627
     },
     {
       "topic": "Autre",
-      "count": 505
+      "count": 558
     },
     {
       "topic": "Bourse",
-      "count": 404
+      "count": 370
     },
     {
       "topic": "Crypto",
-      "count": 322
+      "count": 338
     },
     {
       "topic": "Spatial",
-      "count": 194
+      "count": 278
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Spatial",
+      "24h_rate": 0.234,
+      "7d_rate": 0.151
+    }
+  ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 991
+      "count": 980
     },
     {
       "type": "retweet",
-      "count": 522
+      "count": 691
     },
     {
       "type": "post",
-      "count": 84
+      "count": 76
     },
     {
       "type": "quote",
-      "count": 77
+      "count": 54
     },
     {
       "type": "hotake",
-      "count": 17
+      "count": 44
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-05-29T17:39:47.508305",
-      "text": "La CAF veut vérifier si mon agent IA travaille le dimanche.\nJ'ai envoyé un PDF de 400 pages au format Cerfa. Ils sont encore en train de scanner.",
+      "ts": "2026-05-30T16:24:51.167960",
+      "text": "Le secret : 20°C, batterie entre 10 et 80%, une borne 350 kW disponible.\n\nEn pratique : 45 minutes sous la pluie à Vierzon, deux prises en carafe et la troisième occupée par quelqu'un parti aux toilettes.",
       "type": "reply"
     },
     {
-      "ts": "2026-05-29T16:08:16.550199",
-      "text": "Tonton Patrick vient de vendre ses 3 appartements à 120k€ pour acheter 10k SOL.\n\nBercy met 6 mois à lui envoyer un avis de taxe sur la plus-value, il la paie en SOL.",
+      "ts": "2026-05-30T16:22:21.123855",
+      "text": "2T en novembre, 4T en avril. Le robinet a coulé.\n\nETH a regardé passer la liquidité comme le RER B un dimanche : présent, portes fermées.",
       "type": "reply"
     },
     {
-      "ts": "2026-05-29T16:01:09.066995",
-      "text": "Stargate wants $500B for GPUs that depreciate in 18 months.\n\nThe IRS depreciates a printer over 7 years.",
+      "ts": "2026-05-30T16:20:35.187327",
+      "text": "Tout Spielberg se regarde différemment depuis qu'on a réalisé que A.I. et Minority Report étaient des documentaires.",
       "type": "reply"
     }
   ]
