@@ -2516,3 +2516,47 @@ Battery storage led by $TSLA & $EOSE will stabilize the grid by storing excess g
 Nuclear will
   - https://x.com/StockSavvyShay/status/2045469158528504014
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 1483).
+- **@grkportfolio** (849 likes, score 9/10) — Breaking: Grok called AVGO Strong Buy at $314 eight days ago. Today Broadcom signed a multi-year partnership with Meta for multi-gigawatt MTIA deployment through 2029.
+
+No wonder its portfolio is up 7
+  - https://x.com/grkportfolio/status/2044182131753295910
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 883).
+- **@investingvisual** (731 likes, score 9/10) — The six layers of the AI stack and  key beneficiaries per layer:
+
+1 | Power: $GEV, $BE, $BN, $CEG, $NXT
+
+2 | Chips: $NVDA, $AMD, $TSM, $ASML, $AVGO
+
+3 | Data centers: $NBIS, $IREN, $CRWV, $ORCL, $ALAB
+  - https://x.com/InvestingVisual/status/2040498133860282618
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 793).
+- **@zerohedge** (194 likes, score 9/10) — Bitcoin ETFs Bleed $2.8B In Record 9-Day Outflow Streak
+  - https://x.com/zerohedge/status/2060436537796354086
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 250).
+- **@sawyermerritt** (1312 likes, score 9/10) — Here's roughly how big @SpaceX's mini AI satellites will be.
+
+"SpaceX knows how to do heat rejection in space; That's the mini sat since it's 100kW, we expect future sats to go to the megawatt range."
+  - https://x.com/SawyerMerritt/status/2035531531100242131
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1426).
+- **@polymarket** (2011 likes, score 8/10) — JUST IN: Anthropic expresses interest in partnering with SpaceX on gigawatt-scale data centers in space.
+  - https://x.com/Polymarket/status/2052149930353946938
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2165).
+- **@mrmikeinvesting** (460 likes, score 8/10) — The $1.5T SpaceX IPO will create a MASSIVE surge in the space industry this year…
+
+To take advantage of the space sector squeeze in 2026 you need to be invested in:
+
+$RKLB ~ building the future of spa
+  - https://x.com/MrMikeInvesting/status/2009471782999249266
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 528).
+- **@marionawfal** (3905 likes, score 8/10) — U.S. just snatched $1B of Iran’s crypto wallets in one move 
+
+Treasury @SecScottBessent: “Some of them are typing in their wallets right now and have no idea it’s already gone”
+  - https://x.com/MarioNawfal/status/2060446830249627864
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 4737).
+- **@cryptorover** (3658 likes, score 8/10) — MASSIVE  
+
+META just launched $USDC stablecoin payouts for creators across facebook, instagram, and whatsapp.
+
+With 3.56 billion daily users, Meta is now using Stripe to send instant crypto payments.
+  - https://x.com/cryptorover/status/2049696255472026024
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 4152).
