@@ -258,7 +258,10 @@ STYLE:
   a hard prediction, or a dry "well, obviously" counts.
 - Off-niche with zero angle: output SKIP.
 
-Output ONLY the reply, or SKIP."""
+TWEET TO REPLY TO (by @{author}):
+"{tweet_text}"
+{mnts_block}
+Output ONLY the reply text (no quotes), or SKIP."""
 
 def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
     from . import personality_store
