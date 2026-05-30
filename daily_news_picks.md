@@ -2931,3 +2931,134 @@ $RDW Redwire Space +16.47%
 $LUNR Intuitive Machines +15.9
   - https://x.com/Speculator_io/status/2052774828168368329
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 1311).
+- **@cointelegraph** (116 likes, score 9/10) — ETFS: IBIT has been red every day for the past 2 weeks.
+
+Overall, The US Bitcoin ETFs just closed its 3rd consecutive red week.
+
+That's over $3.5B in net outflows since May 11th.
+  - https://x.com/Cointelegraph/status/2060587171761811566
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 204).
+- **@cryptotice_** (86 likes, score 9/10) — INSIGHTS:
+
+Crypto ETF outflows just hit their largest weekly total since February.
+
+$1,500,000,000 out last week.
+$1,100,000,000 the week before.
+$2,600,000,000 in two weeks.
+
+Bitcoin leading at $1,30
+  - https://x.com/CryptoTice_/status/2060436013324095544
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 106).
+- **@wublockchain** (18 likes, score 7/10) — According to SoSoValue data, on May 29 (ET), U.S. spot Bitcoin ETFs recorded a total net outflow of $125 million, marking the 10th consecutive day of net outflows. U.S. spot Ethereum ETFs saw a total
+  - https://x.com/WuBlockchain/status/2060593010505871818
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 42).
+- **@davidsacks** (12574 likes, score 9/10) — Back-of-envelope numbers for 1 gigawatt data center: 
+
+All-in Capex: ~$50 bn 
+Enterprise revenue generated: ~$25-30 bn/year
+Electricity cost: $1-2 bn/year 
+
+~2 year payback.
+
+The boom is real.
+  - https://x.com/DavidSacks/status/2053573251419230702
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 13732).
+- **@financelancelot** (0 likes, score 9/10) — Holy shit! They changed the rules for Elon again...
+
+They waved the profitability rule & are adding SpaceX to indices only 5 days after IPO... normally it's 90
+
+This forces 401k retirement & passive f
+  - https://x.com/FinanceLancelot/status/2060139159260410057
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 584).
+- **@semianalysis_** (460 likes, score 9/10) — AI Datacenter networks often use transceivers that can deliver speeds of up to 800 Gigabits/s per transceiver utilizing 8 fiber pairs (8 lanes of 100 Gigabits/s each). In contrast, far more bandwidth
+  - https://x.com/SemiAnalysis_/status/1989018719641825648
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 476).
+- **@shahh** (75 likes, score 9/10) — REALISTIC  2026 crypto price predictions:
+
+Bitcoin - $97k
+Ethereum - $1.5k
+Solana - $125
+Hyperliquid - $200
+Zcash - $890
+
+What else?
+  - https://x.com/shahh/status/2060405831993307223
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 155).
+- **@anthropicai** (14865 likes, score 8/10) — We're expanding our collaboration with Amazon to secure up to 5 gigawatts of compute for training and deploying Claude. Capacity begins coming online this quarter, with nearly 1 gigawatt expected by t
+  - https://x.com/AnthropicAI/status/2046327624092487688
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 15999).
+- **@cryptorover** (2705 likes, score 8/10) — BREAKING:
+
+Ethereum Founder Vitalik Butterin sells $23,000,000 worth of $ETH...
+  - https://x.com/cryptorover/status/2050455998154875005
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 3433).
+- **@cryptorover** (242 likes, score 8/10) — BREAKING:  US Treasury Secretary Scot Bessent claims that the U.S just seized another $1,000,000,000 in crypto from Iran.
+  - https://x.com/cryptorover/status/2060560506109493310
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 348).
+- **@0x_fokki** (25 likes, score 8/10) — ANTHROPIC'S HEAD OF SECURITY JUST ADMITTED 90% OF THEIR CODE IS WRITTEN BY CLAUDE
+
+and if nobody's reviewing yours, you're shipping bugs right now without knowing it
+
+he spent 28 minutes showing the e
+  - https://x.com/0x_fokki/status/2060413537772847306
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 51).
+- **@bitcoinmagazine** (2778 likes, score 8/10) — JUST IN:  Treasury Secretary Scott Bessent says the U.S. Government has seized $1 billion of Iran's crypto:
+
+"Just outright grabbed the wallets. Some of them may be typing in right now and might not r
+  - https://x.com/BitcoinMagazine/status/2060442288598155762
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3928).
+- **@jasonl_capital** (2999 likes, score 8/10) — A SpaceX IPO at $1.75 trillion likely forces the market to look beyond rockets and start repricing the full supply chain beneath the space economy.
+
+Here's the map, sector by sector:
+  - https://x.com/JasonL_Capital/status/2045631800832094269
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3103).
+- **@blueorigin** (2009 likes, score 8/10) — Launch Alert | New Glenn's fourth launch will send 48 @AmazonLeo satellites into low Earth orbit as part of their growing broadband constellation. More details to come soon.
+  - https://x.com/blueorigin/status/2059676643875049654
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2129).
+- **@cb_doge** (1394 likes, score 8/10) — BREAKING: xAI becomes the world's first AI company to run a gigawatt scale training cluster.
+
+Colossus 2 supercomputer for Grok is now operational.
+  - https://x.com/cb_doge/status/2012511974865633681
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1814).
+- **@kawzinvests** (1350 likes, score 8/10) — $NOK is now inside Anduril's Sentry stack.
+
+A year ago this was a dying telecom equipment name trading sub-$5. Today Nokia is in Nvidia's AI-RAN stack, in hyperscaler optical backbones, and now in And
+  - https://x.com/KawzInvests/status/2050027377892196550
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1426).
+- **@sergeycyw** (639 likes, score 8/10) — AI Needs Energy. From Uranium to Cooling: The Power Stack Behind AI 
+
+Goldman Sachs now sees data-center power demand rising 220% by 2030 vs. 2023, adding 905 TWh. Morgan Stanley sees U.S. data-center
+  - https://x.com/SergeyCYW/status/2051270129586209252
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 659).
+- **@verge** (55 likes, score 8/10) — SpaceX gets $4 billion contract to build missile-tracking ‘Golden Dome’ satellites
+  - https://x.com/verge/status/2060479219126432163
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 67).
+- **@cryptorover** (2368 likes, score 8/10) — $ETH FOUNDER VITALIK:  Ethereum is not built to compete with high-frequency trading platforms or be the fastest chain.  
+
+“It’s meant to be the secure chain, the decentralized chain, the chain you can
+  - https://x.com/cryptorover/status/2046211252209262729
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2798).
+- **@meta** (566 likes, score 8/10) — We’re partnering with @AMD to integrate their GPUs into our infrastructure—that means more compute power to bring our AI experiences to even more people.
+  - https://x.com/Meta/status/2026319974764261552
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1054).
+- **@sergeycyw** (375 likes, score 8/10) — $NASA ETF: The Space Economy Is Becoming Investable
+
+The Tema Space Innovators ETF gives public investors targeted exposure to launch, satellites, lunar systems, defense space, Earth observation, and
+  - https://x.com/SergeyCYW/status/2059651873767092414
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 383).
+- **@cryptodotnews** (58 likes, score 8/10) — NEW: Ripple burns 30 million $RLUSD on Ethereum. Tokens sent to irretrievable wallet on May 28 following new market capitalization milestone for $RLUSD
+  - https://x.com/cryptodotnews/status/2060500433500598388
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 60).
+- **@resistthems** (36 likes, score 8/10) — Elon Musk predicts that "Starlink will actually move the GDP of countries."
+
+"If you don't have access to the internet, or it's too expensive or low bandwidth… you can't access information, and you ca
+  - https://x.com/ResisttheMS/status/2060335345913270592
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 50).
+- **@unusual_whales** (2976 likes, score 7/10) — "Microsoft, $MSFT, AI chief gives 18 months for all white-collar work to be automated by AI," per FORTUNE.
+  - https://x.com/unusual_whales/status/2059987302257213779
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 4064).
+- **@stocksavvyshay** (1695 likes, score 7/10) — BUILDING THE INFRASTRUCTURE OF TOMORROW
+
+1. $RKLB building the vertically integrated logistics layer of the space economy through launch vehicles, spacecraft buses, satellite components & propulsion s
+  - https://x.com/StockSavvyShay/status/2045527211638456504
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1789).
