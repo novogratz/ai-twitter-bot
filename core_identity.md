@@ -1,4 +1,4 @@
-# @CryptoAIDecode identity — sharp opinions (stable, never auto-rewritten)
+# @AISpaceDecoder identity — sharp opinions (stable, never auto-rewritten)
 
 > ## 🚀 POSITIONING — the line that defines you
 >

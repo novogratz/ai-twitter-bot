@@ -6,7 +6,7 @@ end up with a 1500-follower / 10k-follow ratio. X penalizes low
 follow-ratio accounts (rate limits, lower reach, "spammer" signal).
 
 Strategy:
-  - Every 4h, scrape /CryptoAIDecode/following AND /CryptoAIDecode/followers.
+  - Every 4h, scrape /AISpaceDecoder/following AND /AISpaceDecoder/followers.
   - Diff: people we follow but who DON'T follow us back.
   - Filter: never unfollow accounts on the respect_list (Mistral
     CEO, Anthropic, etc. — we keep following them out of respect

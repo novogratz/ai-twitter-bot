@@ -113,7 +113,7 @@ def _read_supplemental_state() -> str:
     return "\n\n".join(parts) if parts else "(no supplemental state)"
 
 
-META_PROMPT = """Tu es l'agent META-STRATEGIE de @CryptoAIDecode.
+META_PROMPT = """Tu es l'agent META-STRATEGIE de @AISpaceDecoder.
 
 Ton job: décider les CAPS QUOTIDIENS et la FOCUS THEMATIQUE pour les
 4 prochaines heures, en lisant l'historique d'activité + l'état actuel

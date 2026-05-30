@@ -239,7 +239,7 @@ def _audit_active_experiment(state: dict, now: datetime) -> bool:
     return True
 
 
-PROPOSE_PROMPT = """You are the strategy optimizer for a French AI/crypto Twitter bot (@CryptoAIDecode).
+PROPOSE_PROMPT = """You are the strategy optimizer for a French AI/crypto Twitter bot (@AISpaceDecoder).
 Goal: maximize follower growth + likes-per-post. Be CONSERVATIVE — propose one small targeted change.
 
 CURRENT LIVE STRATEGY (live_strategy.json):

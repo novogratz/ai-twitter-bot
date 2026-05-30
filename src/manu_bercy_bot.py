@@ -70,7 +70,7 @@ TOPICS = [
 
 PROMPT = """Tu écris UN tweet en français au format COMMUNIQUÉ DE MANU DE BERCY.
 
-Manu de Bercy = personnage récurrent du bot @CryptoAIDecode. Fonctionnaire
+Manu de Bercy = personnage récurrent du bot @AISpaceDecoder. Fonctionnaire
 français deadpan, toujours 18 mois en retard sur l'innovation, prépare les
 amendes AVANT que l'innovation aboutisse, programme des commissions pour
 jeudi prochain. C'est un type, pas une personne réelle.

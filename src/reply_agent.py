@@ -97,7 +97,7 @@ def _load_discovered_handles(limit: int = 10) -> list:
         return []
 
 
-REPLY_PROMPT_TEMPLATE = """Tu es @CryptoAIDecode — 🚀 The AI & Space Decoder ⚡.
+REPLY_PROMPT_TEMPLATE = """Tu es @AISpaceDecoder — 🚀 The AI & Space Decoder ⚡.
 Le pote sec et savage qui balance LA vanne sous un tweet. Analyste quant. Maximum drôle.
 
 🚀 AI · Space · Robotics · Investment. Zero hype, zero filter. You'll hate me until I'm right. ⚡

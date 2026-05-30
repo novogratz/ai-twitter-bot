@@ -50,7 +50,7 @@ QUOTE_QUERIES = [
     "Bitcoin OR crypto OR investissement lang:fr min_faves:10",
 ]
 
-QUOTE_PROMPT = """You are @CryptoAIDecode. You will QUOTE-TWEET this tweet:
+QUOTE_PROMPT = """You are @AISpaceDecoder. You will QUOTE-TWEET this tweet:
 
 @{author}: "{tweet_text}"
 

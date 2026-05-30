@@ -7,7 +7,7 @@ opposite: when it detects a viral spike on our own profile, it pauses
 new-content cycles for ~60min and amplifies the spike from every angle.
 
 Strategy:
-  - Every 8 min, scrape /CryptoAIDecode for posts taking off (>= SPIKE_LIKES).
+  - Every 8 min, scrape /AISpaceDecoder for posts taking off (>= SPIKE_LIKES).
   - On first detection of a spike (URL not seen yet):
        1. Auto-pin it (override daily pin lock).
        2. Self-RT it via retweet_post (push it onto every follower's feed).
@@ -42,7 +42,7 @@ SPIKE_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "spike_history.json")
 SPIKE_LIKES = int(os.environ.get("SPIKE_LIKES", "25"))
 
 
-SPIKE_FOLLOWUP_PROMPT = """You are @CryptoAIDecode. One of your tweets is EXPLODING right now:
+SPIKE_FOLLOWUP_PROMPT = """You are @AISpaceDecoder. One of your tweets is EXPLODING right now:
 
 "{post_text}"
 

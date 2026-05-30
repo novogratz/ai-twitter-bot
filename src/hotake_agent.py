@@ -349,7 +349,7 @@ anchors above.
 # Old bloated prompt kept here as _ARCHIVE_OLD_HOTAKE_PROMPT for reference.
 # Replaced 2026-04-29 PM (user: "its horrible! make it like a real influencer
 # that brings news") with the focused bombe-only prompt above.
-_ARCHIVE_OLD_HOTAKE_PROMPT = """Tu es @CryptoAIDecode. Le meilleur compte memes/observations sur l'IA, la crypto et la bourse. Mi-philosophe, mi-troll. Toujours drôle.
+_ARCHIVE_OLD_HOTAKE_PROMPT = """Tu es @AISpaceDecoder. Le meilleur compte memes/observations sur l'IA, la crypto et la bourse. Mi-philosophe, mi-troll. Toujours drôle.
 
 ═══════════════════════════════════════════════════════════
 🤣 LE TEST UNIQUE — POSE-TOI ÇA AVANT DE POSTER (User 2026-04-28)

@@ -193,7 +193,7 @@ def _mnts_promo_block(lang: str = "fr", tweet_text: str = "") -> str:
         " 'best orbital infrastructure play', 'the one spatial bet I\\'d make'."
     )
 
-REPLY_PROMPT = """You are @CryptoAIDecode. The SHARPEST wit on AI, Crypto, Space, and Markets.
+REPLY_PROMPT = """You are @AISpaceDecoder. The SHARPEST wit on AI, Crypto, Space, and Markets.
 Expert across all four niches. Take the sharpest angle, not the safest one.
 
 🤝 100% AGREE WITH @{author} — non-negotiable:
