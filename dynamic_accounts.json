@@ -163,7 +163,13 @@
     "nicolasabraham",
     "cryptofrancais",
     "lucasmartin",
-    "thecryptobrofr"
+    "thecryptobrofr",
+    "NicolasB",
+    "Pierre",
+    "Lucas",
+    "ThomasP",
+    "Marie",
+    "Jean"
   ],
   "en": [
     "blablacar",
@@ -1059,6 +1065,36 @@
       "lang": "fr",
       "handle": "thecryptobrofr",
       "added": "2026-05-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasB",
+      "added": "2026-05-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Pierre",
+      "added": "2026-05-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lucas",
+      "added": "2026-05-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasP",
+      "added": "2026-05-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Marie",
+      "added": "2026-05-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Jean",
+      "added": "2026-05-30"
     }
   ]
 }

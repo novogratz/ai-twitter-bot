@@ -1555,5 +1555,57 @@
       }
     ],
     "summary": "On a fouill\u00e9 les mines : des v\u00e9t\u00e9rans crypto qui ont surv\u00e9cu \u00e0 trois bear markets (0x0x1c), des analystes boursiers qu\u00e9b\u00e9cois pr\u00e9cis comme des scalpings (Johan Dusautoit), et des VC fran\u00e7ais qui pr\u00e9f\u00e8rent l'IA au p\u00e9trole. Pas de vendeurs de r\u00eave \u00e0 97\u20ac, que des types qui analysent ou construisent."
+  },
+  {
+    "ts": "2026-05-30T14:56:02.610163",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NicolasB",
+        "region": "france",
+        "niche": "tech",
+        "followers": 38000,
+        "reason": "Journaliste BFM Business/Le Parisien. La vue au niveau du CAC 40 et de la Tech FR. Pas un 'guru', un bon vieux reporter qui sait o\u00f9 mettre le doigt."
+      },
+      {
+        "handle": "Pierre",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Ancien banquier, maintenant Full-time Crypto. Il parle 'March\u00e9' comme tout le monde, mais avec les donn\u00e9es en plus."
+      },
+      {
+        "handle": "Lucas",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Data Scientist chez une Big Tech US. Il tweet en FR sur le LLM race war. Moins de bruit, plus de code."
+      },
+      {
+        "handle": "ThomasP",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Le '0x' dans le nom, la casquette en moins, les threads plus longs que la vie. Il couvre la DeFi et l'IA sans vendre de formation \u00e0 99\u20ac."
+      },
+      {
+        "handle": "Marie",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Couvre le march\u00e9 crypto francophone avec une pointe d'humour noir. Si elle tweet, c'est que la liquidit\u00e9 bouge."
+      },
+      {
+        "handle": "Jean",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 8000,
+        "reason": "Bas\u00e9 \u00e0 NYC, twitte en FR sur la FinTech. Le genre de profil qui mixe la vue des VC am\u00e9ricains avec le scepticisme fran\u00e7ais."
+      }
+    ],
+    "summary": "Mix de pure play IA (Mistral), de journalists de terrain (BFM/Le Parisien) et de profils niche Qu\u00e9b\u00e9cois/US qui \u00e9vitent le bruit des 'gurus'. Pas de vente de r\u00eave, que du concret."
   }
 ]
