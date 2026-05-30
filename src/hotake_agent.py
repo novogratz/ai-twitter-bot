@@ -730,9 +730,12 @@ Va chercher dans les 3 piliers (jamais hors-scope):
   open-weights vs closed, Mistral / Anthropic / OpenAI / xAI / Google,
   datacenters IA, énergie pour l'IA (nuclear/GPU farms), AGI timelines,
   capture réglementaire, licorne IA, levée IA.
-- Espace: SpaceX Starship / Falcon, Rocket Lab, NASA Artemis, ESA, CNES,
-  Starlink, AST SpaceMobile, satellites, Lune, Mars, défense spatiale,
-  space stocks (RKLB, ASTS, LUNR), Golden Dome, USSF.
+- Espace (PRIORITÉ — space push mode 2026-05-29): SpaceX Starship/Falcon/Dragon,
+  Blue Origin New Glenn, Virgin Galactic, Rocket Lab RKLB, NASA Artemis,
+  ESA, CNES, Ariane 6, Starlink, AST SpaceMobile ASTS, Intuitive Machines LUNR,
+  Axiom Space, Firefly, Sierra Space, Planet Labs, Amazon Kuiper,
+  Lune, Mars, tourisme spatial, défense spatiale (Golden Dome, USSF),
+  space stocks (RKLB, ASTS, LUNR), économie spatiale, satellite internet.
 - Investissement: actions IA (Nvidia, Palantir, CoreWeave, IREN),
   actions espace, Bitcoin/ETH/crypto ETF, Saylor/MSTR, earnings tech,
   IPOs tech, M&A, asymmetric bets, valuation bulle IA.

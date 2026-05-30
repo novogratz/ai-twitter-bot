@@ -59,8 +59,10 @@ def _mark_top5_done(topic: str) -> None:
         pass
 
 
-_DECODE_TOPICS = ("AI", "Space", "Robotics", "Investment")
-_MONTHLY_DECODE_TOPICS = ("AI", "Space", "Robotics", "Investment")
+# Space push mode (2026-05-29): Space appears 3x in a 6-slot cycle
+# so every other Décode is a Space story.
+_DECODE_TOPICS = ("Space", "AI", "Space", "Robotics", "Space", "Investment")
+_MONTHLY_DECODE_TOPICS = ("Space", "AI", "Space", "Investment")
 
 
 def _peek_next_decode_number() -> int:
@@ -1815,11 +1817,25 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
                 f"CoreWeave IREN applied digital AI cloud compute stocks news {_tf}",
             ],
             "Space": [
-                f"SpaceX Starship Falcon launch news {_tf}",
-                f"Rocket Lab RKLB NASA Artemis moon launch news {_tf}",
-                f"satellite AST SpaceMobile Starlink OneWeb orbital news {_tf}",
-                f"space defense Golden Dome USSF hypersonic space stocks news {_tf}",
-                f"ESA CNES Ariane commercial space economy news {_tf}",
+                f"SpaceX Starship launch test flight news {_tf}",
+                f"SpaceX Falcon 9 Starlink launch manifest news {_tf}",
+                f"Blue Origin New Glenn launch news {_tf}",
+                f"Virgin Galactic space tourism flight news {_tf}",
+                f"Rocket Lab RKLB launch mission news {_tf}",
+                f"NASA Artemis moon lunar mission news {_tf}",
+                f"AST SpaceMobile ASTS satellite broadband news {_tf}",
+                f"Intuitive Machines LUNR lunar lander news {_tf}",
+                f"SpaceX Starlink revenue business model news {_tf}",
+                f"space defense Golden Dome USSF hypersonic missile news {_tf}",
+                f"ESA CNES Ariane 6 launch commercial space news {_tf}",
+                f"space stocks RKLB ASTS LUNR valuation news {_tf}",
+                f"Axiom Space station commercial orbital news {_tf}",
+                f"Firefly Aerospace Relativity Space launch news {_tf}",
+                f"satellite internet OneWeb Amazon Kuiper Starlink competition news {_tf}",
+                f"Mars colonization SpaceX Starship human mission news {_tf}",
+                f"space economy commercial space investment billion news {_tf}",
+                f"ULA Vulcan Centaur launch Boeing Lockheed space news {_tf}",
+                f"Planet Labs BlackSky satellite imagery Earth observation news {_tf}",
             ],
             "Robotics": [
                 f"humanoid robot Tesla Optimus Figure Boston Dynamics news {_tf}",

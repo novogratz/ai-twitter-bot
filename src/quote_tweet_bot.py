@@ -30,12 +30,15 @@ QUOTE_QUERIES = [
     "\"AI datacenter\" OR megawatt OR \"power demand\" OR nuclear lang:en min_faves:300",
     "robotics OR \"humanoid robot\" OR Tesla OR Boston Dynamics lang:en min_faves:400",
     "Mistral OR \"Hugging Face\" OR \"open source AI\" lang:en min_faves:200",
-    # Space
-    "SpaceX OR Starship OR Starlink OR \"Falcon 9\" lang:en min_faves:800",
-    "\"Rocket Lab\" OR RKLB OR NASA OR Artemis lang:en min_faves:400",
-    "satellite OR \"space launch\" OR \"orbital\" OR ESA lang:en min_faves:300",
-    "\"AST SpaceMobile\" OR ASTS OR LUNR OR \"space stock\" lang:en min_faves:200",
-    "\"Golden Dome\" OR USSF OR \"space defense\" lang:en min_faves:200",
+    # Space — PUSH IT
+    "SpaceX OR Starship OR \"Falcon 9\" lang:en min_faves:500",
+    "Starlink OR \"Blue Origin\" OR \"Virgin Galactic\" lang:en min_faves:300",
+    "\"Rocket Lab\" OR RKLB OR NASA OR Artemis lang:en min_faves:200",
+    "\"AST SpaceMobile\" OR ASTS OR LUNR OR \"space stock\" lang:en min_faves:100",
+    "\"Golden Dome\" OR USSF OR \"space defense\" OR hypersonic lang:en min_faves:100",
+    "satellite OR orbital OR \"space launch\" lang:en min_faves:200",
+    "\"space economy\" OR \"commercial space\" OR \"space startup\" lang:en min_faves:100",
+    "Mars OR lunar OR \"Axiom Space\" OR \"space station\" lang:en min_faves:200",
     # Investment (crypto included)
     "Bitcoin OR BTC OR \"BTC ETF\" lang:en min_faves:600",
     "Ethereum OR stablecoin OR DeFi lang:en min_faves:300",

@@ -33,11 +33,14 @@ TARGET_ACCOUNTS = [
     "CoreWeave", "IREN_Ltd", "LambdaAPI", "applied_dc",
     "KobeissiLetter", "unusual_whales",
 
-    # Space — EN accounts
-    "SpaceX", "Starlink", "RocketLab", "NASA", "NASAArtemis",
-    "ESA", "PeterDiamandis", "ASTSpaceMobile", "IntuitiveMach",
-    "BlueOrigin", "SpaceNews", "NASASpaceflight", "SpaceflightNow",
-    "Teslarati", "ChrisHadfield",
+    # Space — PUSH IT (2026-05-29 space mode)
+    "SpaceX", "Starlink", "RocketLab", "NASA", "NASAArtemis", "NASAKennedy",
+    "ESA", "CNES", "ArianeGroup", "BlueOrigin", "virgingalactic",
+    "PeterDiamandis", "ASTSpaceMobile", "IntuitiveMach", "AxiomSpace",
+    "FireflySpace", "PlanetLabs", "SierraSpace",
+    "SpaceNews", "NASASpaceflight", "SpaceflightNow", "nextspaceflight",
+    "Teslarati", "ChrisHadfield", "Astro_DonPettit", "SciGuySpace",
+    "thesheetztweetz", "jeff_foust", "elonmusk",
 
     # Robotics / frontier tech
     "Tesla", "BostonDynamics", "Figure_robot",
