@@ -3901,3 +3901,211 @@ A giant stainless-steel skyscraper falling back from space, flipping vertical, l
 You'd never guess he's the CEO
   - https://x.com/MarioNawfal/status/2060683137324126491
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 94).
+- **@bulltheoryio** (413 likes, score 9/10) — In 2019, SoftBank sold its NVIDIA stake for $3.3 billion profit, which they acquired for $4 billion.
+
+Today, that stake would be worth approximately $253 billion.
+  - https://x.com/BullTheoryio/status/2060665439546687488
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 511).
+- **@stocktalkweekly** (354 likes, score 9/10) — NVIDIA EARNINGS $NVDA 
+
+EPS: $1.87 vs. $1.77 est.
+REVENUE: $81.6B vs. $78.3B est.
+75% gross margin
+
+- Q2 REV GUIDE: $91B vs. $84B est.
+- Datacenter networking revenue $14.8B (+199% Y/Y, +35% Q/Q)
+- An
+  - https://x.com/stocktalkweekly/status/2057196419220488452
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 414).
+- **@mikeseeley** (17 likes, score 7/10) — Another view of the 8:57am (ET) Friday, May 29, SpaceX launch, a Falcon 9 rocket carrying Starlink satellites to orbit.
+
+This was the view from Titusville, 1:24 in flight, as the rocket passed in fron
+  - https://x.com/MikeSeeley/status/2060713581226709479
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 19).
+- **@stocksavvyshay** (692 likes, score 9/10) — $NVDA and $MSFT are reportedly set to unveil the first $ARM based Windows PCs powered by Nvidia's N1X chip at Jensen Huang's GTC Taipei keynote on June 1. 
+
+The move pushes Nvidia into the PC processo
+  - https://x.com/StockSavvyShay/status/2060708960072819180
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 822).
+- **@morningbrew** (695 likes, score 9/10) — Nvidia earnings are OUT 
+
+Q1 FY26
+• EPS: $0.96 vs. $0.93 (est.)
+• Rev: $44.06 billion vs. $43.31 billion (est.)
+
+Double beat. Expect anything different?
+  - https://x.com/MorningBrew/status/1927823470097780837
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 715).
+- **@swapnakpanda** (118 likes, score 9/10) — Some Trillion Dollar Companies:
+
+Nvidia: $5.1T
+Apple: $4.59T
+Google: $4.59T
+Microsoft: $3.34T
+Amazon: $2.91T
+Aramco: $1.8T
+Meta: $1.6T
+Samsung: $1.25T
+Walmart: $1.01T
+Anthropic: $965B
+OpenAI: $852B
+
+W
+  - https://x.com/swapnakpanda/status/2060632025745482138
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 164).
+- **@intengineering** (9 likes, score 7/10) — The U.S. Space Force has awarded SpaceX a $4.16 billion contract for the Space-Based Advanced Moving Target Indicator program — a satellite constellation designed to detect and track airborne threats
+  - https://x.com/IntEngineering/status/2060639881982857381
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 13).
+- **@nasa** (7738 likes, score 9/10) — LIVE: An uncrewed spacecraft, bound for the @Space_Station with nearly three tons of food, fuel, and supplies, is launching from Baikonur Cosmodrome in Kazakhstan. Liftoff is scheduled for 6:21pm ET (
+  - https://x.com/NASA/status/2048160208703135850
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 10276).
+- **@kalshi** (1775 likes, score 9/10) — JUST IN: Google and SpaceX reportedly in talks to launch data centers in orbit
+  - https://x.com/Kalshi/status/2054232142301839601
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1959).
+- **@shelpid_wi3m** (86 likes, score 9/10) — A few years ago, running AI infrastructure required a warehouse.
+
+Today, one guy does it from his backyard.
+
+He installed an Nvidia AI supercomputer next to his home and connected it to power and fibe
+  - https://x.com/Shelpid_WI3M/status/2060696829306540488
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 108).
+- **@interstellaruap** (70 likes, score 9/10) — Elon Musk: "Orbital Data Centers will change the world"
+
+"In 36 months, probably closer to 30 months, the most economically compelling place to put AI will be space."
+
+Starship is slashing launch cost
+  - https://x.com/InterstellarUAP/status/2060638594189217902
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 92).
+- **@focusedcompound** (3861 likes, score 9/10) — Me logging into the Nvidia earnings call this week (I own 0.4 shares)
+  - https://x.com/FocusedCompound/status/2056472945636130989
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3911).
+- **@spacex** (7725 likes, score 8/10) — Now targeting 6:00 p.m. CT for liftoff of Starship
+  - https://x.com/SpaceX/status/2057573745917640976
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 8539).
+- **@earnings_guy** (2211 likes, score 8/10) — $NVDA (Nvidia) #earnings are out:
+  - https://x.com/earnings_guy/status/1991255215052390754
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2407).
+- **@netcapgirl** (1690 likes, score 8/10) — nvidia earnings should be live streamed on every major tv station & streaming platform like it’s the state of the union
+  - https://x.com/netcapgirl/status/1760077498304344419
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1732).
+- **@earnings_guy** (1179 likes, score 8/10) — $NVDA (Nvidia) #earnings are out:
+  - https://x.com/earnings_guy/status/2026772091719069714
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1273).
+- **@stockmktnewz** (732 likes, score 8/10) — Amazon $AMZN just announced it has agreed to acquire Globalstar $GSAT to expand its Amazon Leo satellite network - Reuters
+  - https://x.com/StockMKTNewz/status/2044023478798406071
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 766).
+- **@stocktalkweekly** (336 likes, score 8/10) — Ok "Common sense" skeptic.. This isn't true, but even if I granted it to you, why didn't someone else do it? Why is SpaceX controlling 98% of payload to orbit? He just popped outta nowhere and seized
+  - https://x.com/stocktalkweekly/status/2039191282593980447
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 364).
+- **@epargnantlibre** (15 likes, score 8/10) — Bilan de la semaine
+
+Performance globale : -0,21%  (-158€)
+
+ MSCI World → +0,45% 
+ Stoxx 600 → +0,24% 
+ Emerging Markets → +3,55% 
+ Bitcoin → -2,65% 
+
+Les indices boursiers sont en ATH, et le bitcoin
+  - https://x.com/epargnantlibre/status/2060640135528517792
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 27).
+- **@wallstreetmav** (5623 likes, score 8/10) — The competition for SpaceX just lost a lot of orders for satellites to orbit.
+
+Blue Origin's rocket (owned by Jeff Bezos) just exploded on the pad. 
+
+The SpaceX near monopoly on putting satellites in
+  - https://x.com/WallStreetMav/status/2060174336032469330
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6337).
+- **@stocksavvyshay** (559 likes, score 8/10) — Two weeks before the $SPCX IPO, the company has landed $6.4B in Space Force contracts in the same week.
+
+The awards cover orbital surveillance to replace airborne radar and a next-gen military communi
+  - https://x.com/StockSavvyShay/status/2060472600472830009
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 633).
+- **@coinvo** (244 likes, score 8/10) — BTW: Elon Musk has announced SpaceX will establish data centers on space and on the moon, for 'efficiency.'
+  - https://x.com/Coinvo/status/2060692708503834954
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 322).
+- **@space_strategy** (28 likes, score 8/10) — China might be less than 12 months from sending Long March 10 on a lunar flyby. This will be their Artemis 1 moment. Then how soon until they take crew?
+  - https://x.com/Space_Strategy/status/2060693014637396388
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 36).
+- **@frankafetter** (24 likes, score 8/10) — So with this new chart, Checkmate just dramatically simplified the Post Economic Strategy. Wow. 
+
+At $73k, $BTC is Q26 - so 74% of the time it wants to be higher.
+  - https://x.com/FrankAFetter/status/2060727624008110172
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 26).
+- **@business** (0 likes, score 7/10) — German power prices will swing sharply on Thursday, with electricity trading close to zero at noon before surging to nearly €400 a megawatt-hour in the evening as solar generation fades.
+  - https://x.com/business/status/2059962660448338193
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 18).
+- **@nasa** (147832 likes, score 7/10) — All four of the Artemis II astronauts have been successfully extracted from the Orion spacecraft following splashdown and are now on the USS John P. Murtha. Next up, they will be escorted to the medic
+  - https://x.com/NASA/status/2042785992047055119
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 150694).
+- **@spacex** (32234 likes, score 7/10) — Liftoff of Starship!
+  - https://x.com/SpaceX/status/2057952539417461045
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 34452).
+- **@spacex** (32064 likes, score 7/10) — Liftoff of Starship on its twelfth flight test
+  - https://x.com/SpaceX/status/2058313378171392061
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 34080).
+- **@starlink** (5900 likes, score 7/10) — Starlink enables reliable real-time communication with recovery teams and live streaming of Starship’s splashdown in the middle of the Indian Ocean
+  - https://x.com/Starlink/status/2057950370668945682
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6738).
+- **@techspatiales** (416 likes, score 7/10) — Conséquence directe de cet échec : le pad ne pouvant pas réparé avant au moins 1 an, Blue Moon Mk1 ne sera pas lancé avant longtemps, et leur HLS est de fait hors jeu pour Artemis III.
+Il ne reste que
+  - https://x.com/TechSpatiales/status/2060324313245376710
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 470).
+- **@maxarick** (319 likes, score 7/10) — The next New Glenn booster to fly should be called 'My death was greatly exaggerated'
+  - https://x.com/Maxarick/status/2060617635868356964
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 331).
+- **@theprimaldino** (43 likes, score 7/10) — The next New Glenn booster can ONLY have one name:
+
+“Tis but a scratch”
+  - https://x.com/ThePrimalDino/status/2060687359612432412
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 45).
+- **@toughsf** (35 likes, score 7/10) — NASA Langley's Scramjet Test Facility can simulate conditions ranging from Mach 2 to 8, up to 43 bar and 2890K conditions:
+https://ntrs.nasa.gov/api/citations/20205010862/downloads/Current%20Capabilit
+  - https://x.com/ToughSf/status/2060677606148809168
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 35).
+- **@heyrimsha** (20 likes, score 7/10) — Two brothers from Sydney looked at how every AI lab on Earth was training language models, decided the math underneath was wasteful, and rewrote PyTorch's backpropagation by hand. Their code now power
+  - https://x.com/heyrimsha/status/2060681674653131249
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 26).
+- **@garryb1rd** (5 likes, score 7/10) — It’s been 0 days since someone posted “gm”
+
+It’s been 0 days since somebody posted “touch grass”
+
+It’s been 0 days since somebody posted “we’re early”
+
+It’s been 0 days since somebody posted “I missed
+  - https://x.com/GarryB1rd/status/2060722517887566105
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 11).
+- **@stocktalkweekly** (430 likes, score 7/10) — Artemis II flight window opens in 1 hour
+  - https://x.com/stocktalkweekly/status/2039453956246491147
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 454).
+- **@cryptotice_** (165 likes, score 7/10) — I'M SORRY BUT NOBODY IS TALKING ABOUT WHAT BITCOIN JUST DID.
+
+Multi-year Cup and Handle. Complete.
+
+Breakout. DONE. 
+Perfect retest. DONE. 
+Structure confirmed. DONE.
+
+This pattern took years to build
+  - https://x.com/CryptoTice_/status/2060692700677222588
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 211).
+- **@eliteonchain** (87 likes, score 7/10) — Crypto card volume hit a record $607M in a single month.
+
+The more intriguing question is where that spending is actually happening.
+
+Paymentscan data gives us one of the clearest looks yet at which c
+  - https://x.com/Eliteonchain/status/2060679834645242056
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 179).
+- **@merlijntrader** (8 likes, score 7/10) — FOUR COMPANIES JUST POSTED THE EXACT SAME MESSAGE AT THE EXACT SAME HOUR.
+
+ NVIDIA, Microsoft, Arm and MediaTek. One phrase: "A new era of PC." Plus coordinates to Taipei.
+
+Everyone sees a teaser.
+
+Wh
+  - https://x.com/MerlijnTrader/status/2060730448964465125
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 20).
+- **@physicsastronmy** (10 likes, score 7/10) — A stunning telescope observation captured Starlink satellites appearing near the Moon in the night sky.
+The bright moving lights seemed unusually close to the lunar surface, creating a dramatic visual
+  - https://x.com/Physicsastronmy/status/2060708179688763783
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 14).
