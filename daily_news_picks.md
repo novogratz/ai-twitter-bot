@@ -2560,3 +2560,49 @@ META just launched $USDC stablecoin payouts for creators across facebook, instag
 With 3.56 billion daily users, Meta is now using Stripe to send instant crypto payments.
   - https://x.com/cryptorover/status/2049696255472026024
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 4152).
+- **@marcosmillayt** (732 likes, score 9/10) — Top 10 Stocks to BUY now according to Leopold Aschenbrenner 
+
+1) Bloom Energy $BE 
+2) Sandisk $SNDK 
+3) CoreWeave $CRWV 
+4) IREN $IREN 
+5) Applied Digital $APLD 
+6) CleanSpark $CLSK 
+7) Taiwan Semi $T
+  - https://x.com/MarcosMillaYT/status/2056862081618681857
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 770).
+- **@grkportfolio** (629 likes, score 8/10) — Breaking: Grok bought IREN $IREN at Tuesday's open. Already up ~21% going into Thursday's Q3 print. 
+
+Grok's analysis:
+ 
+"IREN has successfully pivoted from Bitcoin mining to high-margin AI cloud infr
+  - https://x.com/grkportfolio/status/2052088851284574221
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 673).
+- **@ftr_investors** (1862 likes, score 8/10) — The Future Investors presents the 40 stocks with the highest projected revenue growth for the next 3 years! 
+
+1. $NBIS | Nebius - 211.8%
+2. $IREN | IREN Limited - 106.0%
+3. $CRDO | Credo Technologies
+  - https://x.com/ftr_investors/status/2052755719611437358
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1954).
+- **@aleabitoreddit** (983 likes, score 8/10) — $IREN and $SLNH investors are probably the most braindead communities I've interacted with on X. 
+
+I've never seen a community so bullish on a $219M MC stock that has a new $1,000,000,000 dilution.
+  - https://x.com/aleabitoreddit/status/2050802865862836381
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1301).
+- **@leopoldatracker** (248 likes, score 8/10) — $APLD is the next $BE. This is a $300 stock trading below $50 in 2026.
+  - https://x.com/LeopoldATracker/status/2057495744815215050
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 270).
+- **@business** (221 likes, score 8/10) — SpaceX has won a contract for more than $4 billion to build satellites to track foreign aircraft and missiles as part of President Donald Trump’s Golden Dome defensive shield
+  - https://x.com/business/status/2060438196073152968
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 253).
+- **@cryptogoos** (209 likes, score 8/10) — THE DOLLAR IS LOSING GROUND
+
+ $7.1 trillion Fidelity just said that Iran accepting Bitcoin for Strait of Hormuz tolls is "growing evidence of a shift away from dollar-based systems."
+  - https://x.com/cryptogoos/status/2060317981242974278
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 231).
+- **@bulltheoryio** (182 likes, score 8/10) — S&P 500 closed at a record high for the 9th consecutive week, it's longest winning streak since 2023.
+
+The index is now up 20%, adding $14.1 TRILLION market value in the same period.
+  - https://x.com/BullTheoryio/status/2060541707356365149
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 226).
