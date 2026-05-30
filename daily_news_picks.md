@@ -4109,3 +4109,248 @@ Wh
 The bright moving lights seemed unusually close to the lunar surface, creating a dramatic visual
   - https://x.com/Physicsastronmy/status/2060708179688763783
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 14).
+- **@nicrypto** (23 likes, score 8/10) — Context on the SpaceX IPO that most people are missing.
+
+Starlink has 9,600 satellites in orbit - roughly 15x more than the next competitor.
+
+Since 2023, SpaceX has accounted for more than 80% of all
+  - https://x.com/nicrypto/status/2060723911353078007
+  - **WHY**: Source fiable + impact concret (score signal 15, engagement 29).
+- **@nicrypto** (22 likes, score 8/10) — Context on the SpaceX IPO that most people are missing.
+
+Starlink has 9,600 satellites in orbit - roughly 15x more than the next competitor.
+
+Since 2023, SpaceX has accounted for more than 80% of all
+  - https://x.com/nicrypto/status/2060723911353078007
+  - **WHY**: Source fiable + impact concret (score signal 15, engagement 28).
+- **@nasaspaceflight** (120 likes, score 9/10) — LAUNCH! SpaceX Falcon 9 B1082-22 launches Starlink Group 17-41 from SLC-4E, Vandenberg (as you will have guessed).
+  - https://x.com/NASASpaceflight/status/2060744576395059296
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 130).
+- **@mikeseeley** (26 likes, score 8/10) — Another view of the 8:57am (ET) Friday, May 29, SpaceX launch, a Falcon 9 rocket carrying Starlink satellites to orbit.
+
+This was the view from Titusville, 1:24 in flight, as the rocket passed in fron
+  - https://x.com/MikeSeeley/status/2060713581226709479
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 30).
+- **@spaceflightnow** (24 likes, score 7/10) — SpaceX is now fueling its Falcon 9 rocket at Space Launch Complex 4 East at Vandenberg Space Force Base. Liftoff of the Starlink 17-41 mission is set for 8:25 a.m. PDT (11:25 a.m. EDT / 1525 UTC).
+
+Wa
+  - https://x.com/SpaceflightNow/status/2060736569925894654
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 24).
+- **@spaceflightnow** (17 likes, score 7/10) — Liftoff of SpaceX's Falcon 9 rocket from Vandenberg Space Force Base on the Starlink 17-41 mission at 8:25 a.m. PDT (11:25 a.m. EDT / 1525 UTC)!
+
+Watch live: https://youtube.com/watch?v=tH0RDIF93xo…
+  - https://x.com/SpaceflightNow/status/2060744765180665920
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 17).
+- **@coinbureau** (74 likes, score 9/10) — ANTHROPIC VALUATION REPORTEDLY HITS $965B
+
+Anthropic’s valuation has reportedly surged to $965 billion in its latest funding round, overtaking OpenAI, according to Reuters.
+  - https://x.com/coinbureau/status/2060485082125828134
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 112).
+- **@greginvestfr** (32 likes, score 8/10) — Sale journée pour certaines valeurs spatiales aujourd’hui après l’explosion de la fusée New Glenn de Blue Origin lors d’un test de mise à feu.
+
+→ $ASTS : -18%
+→ $RKLB : -6,5%
+→ $PL : -9,5%
+
+Ce qui est
+  - https://x.com/GregInvestFr/status/2060388674089730384
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 38).
+- **@rohanpaul_ai** (3098 likes, score 9/10) — Google CEO Sundar Pichai on current frontier model's ability to break the security of almost all current software.
+
+"These models are definitely, like really gonna break pretty much all software out t
+  - https://x.com/rohanpaul_ai/status/2041559361051619558
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 3494).
+- **@imathtechs** (12 likes, score 7/10) — Anthropic passe devant OpenAI.
+
+Avec une levée de 65 Md$, la maison mère de Claude serait valorisée 965 Md$. Plus qu’OpenAI et ses 852 Md$.
+
+Le signal est clair : la bataille IA se joue désormais auss
+  - https://x.com/iMathTechs/status/2060671130537451922
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 16).
+- **@soph_astro** (148 likes, score 9/10) — Jour 106, orbite 1644 – Ce timelapse montre les phases d'approche et d’amarrage de la mission de ravitaillement @SpaceX CRS‑34  le 17 mai. Incroyable de se dire que cette manœuvre d’amarrage s’effectu
+  - https://x.com/Soph_astro/status/2060741750159790560
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 152).
+- **@jimcramer** (67 likes, score 9/10) — Every rebalance for Anthropic, SpaceX and OpenAI will lead to the chaos we saw at 3:50 p.m. unless we take this stuff out of the shadows. The manipulation potential is so fraught and the losses will b
+  - https://x.com/jimcramer/status/2060745317704696310
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 133).
+- **@soph_astro** (125 likes, score 9/10) — Day 106, orbit 1644 — This timelapse shows the approach and docking of the @SpaceX CRS‑34  resupply mission on 17 May. Isn’t it amazing to think that this docking manoeuvre takes place while flying at
+  - https://x.com/Soph_astro/status/2060741811073647071
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 133).
+- **@marketmatrixs** (24 likes, score 8/10) — TOP 9 STOCKS UNDER A $2B MARKET CAP
+
+1. $ADUR | Aduro Clean Tech
+2. $PGY | Pagaya Technologies
+3. $RR | RichTech Robotics
+4. $KRKNF | Kraken Robotics
+5. $OSS | OneStop Systems
+6. $TE | T1 Energy Inc
+7
+  - https://x.com/MarketMatrixs/status/2060729925200674858
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 38).
+- **@chhddavid** (10 likes, score 7/10) — BREAKING: Anthropic CEO - “I think we might be six to 12 months away from when Claude doing most or maybe all of what we do end to end”.
+
+> AI writes code + designs
+> AI monetizes + launches
+> AI tran
+  - https://x.com/chhddavid/status/2060664315989184688
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 22).
+- **@chhddavid** (10 likes, score 7/10) — BREAKING: Anthropic CEO - “I think we might be six to 12 months away from when Claude doing most or maybe all of what we do end to end”.
+
+> AI writes code + designs
+> AI monetizes + launches
+> AI tran
+  - https://x.com/chhddavid/status/2060664315989184688
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 22).
+- **@highsignal_ai** (18 likes, score 7/10) — Musk's roadmap to petawatt-scale energy:
+
+1) Build a mass driver on the moon
+2) Let Optimus robots run it
+3) Add lots of humans
+4) Send the power to Earth:
+  - https://x.com/HighSignal_AI/status/2060722983837344120
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 18).
+- **@kimmonismus** (699 likes, score 8/10) — o3 should have been named GPT-5.
+
+Time to say goodbye.
+
+Great model.
+  - https://x.com/kimmonismus/status/2060371228972417492
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 753).
+- **@cyberrobooo** (600 likes, score 8/10) — This viral bionic humanoid robot company just raised hundreds of millions RMB in funding ,and it may have finally crossed the Uncanny Valley
+
+AheadForm, the startup behind those ultra-realistic face r
+  - https://x.com/CyberRobooo/status/2041693510492156261
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 658).
+- **@minahil42298354** (22 likes, score 8/10) — Chic and timeless style for every moment.
+
+Image on Gemini Nano Banana 
+
+Prompt:
+A fashion collage layout with a soft pink and cream aesthetic, featuring several photos of a stylish young woman showca
+  - https://x.com/Minahil42298354/status/2060735535514058990
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 52).
+- **@hesamation** (7021 likes, score 8/10) — it’s 2080, Anthropic is worth the GDP of Mars and we’re still waiting for the ancient prophecy of AI bubble burst
+  - https://x.com/Hesamation/status/2060508211359129932
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7127).
+- **@hesamation** (7008 likes, score 8/10) — it’s 2080, Anthropic is worth the GDP of Mars and we’re still waiting for the ancient prophecy of AI bubble burst
+  - https://x.com/Hesamation/status/2060508211359129932
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7114).
+- **@dr_biohacker** (1185 likes, score 8/10) — A neurologist said:
+
+“Stick out your tongue for 40 seconds — this removes cortisol faster than any pills and breathing exercises.
+
+Big Pharm is panicking:
+  - https://x.com/Dr_Biohacker/status/2060710851095695646
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1247).
+- **@aleabitoreddit** (595 likes, score 8/10) — $LASR (NLight), a $2.2B US company does these directed energy weapons. 
+
+They build the "Death Ray" - Lasers that shoot down ballistic and hypersonic missiles.
+
+This can be adapted to Orbital death ra
+  - https://x.com/aleabitoreddit/status/2014826579625738691
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 655).
+- **@coinvo** (328 likes, score 8/10) — BTW: Elon Musk has announced SpaceX will establish data centers on space and on the moon, for 'efficiency.'
+  - https://x.com/Coinvo/status/2060692708503834954
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 414).
+- **@calvinfroedge** (289 likes, score 8/10) — Hormuz matters because even if North America is somewhat insulated, the rest of the global economy is going to get absolutely eviscerated
+
+40% of S&P500 revenue and 50% of MAG7 revenues come from over
+  - https://x.com/calvinfroedge/status/2060728871666766305
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 331).
+- **@newsmax** (37 likes, score 8/10) — Blue Origin is facing a months-long setback after a rocket explosion damaged its launch pad, strengthening SpaceX’s grip on the commercial launch market.
+  - https://x.com/NEWSMAX/status/2060726680214544471
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 61).
+- **@petergostev** (27 likes, score 8/10) — My personal vibes based opinion on this gap - at DeepSeek R1 level I believe this was real - o1 and r1 were not that far apart. 
+
+From o3 onwards, I think there's something fishy going on with the ben
+  - https://x.com/petergostev/status/2060705991319241197
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 35).
+- **@shiri_shh** (19 likes, score 8/10) — OpenAI is expensive AF internally too. 
+
+they've just got the SCALE and the partnerships to eat the cost and subsidize YOU big time.
+
+Claude was behind on compute...that's the real reason behind those
+  - https://x.com/shiri_shh/status/2060681455647539682
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 33).
+- **@wealthcoachmak** (10 likes, score 7/10) — The four biggest companies that will be at the forefront of robotics and AI over the next 10 years?
+
+ $TSLA
+
+ $NVDA
+
+ $AMZN
+
+ $GOOGL
+
+Invest in these and you won’t regret it
+  - https://x.com/WealthCoachMak/status/2060743786909843742
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 12).
+- **@nasa** (147804 likes, score 7/10) — All four of the Artemis II astronauts have been successfully extracted from the Orion spacecraft following splashdown and are now on the USS John P. Murtha. Next up, they will be escorted to the medic
+  - https://x.com/NASA/status/2042785992047055119
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 150666).
+- **@starlink** (5902 likes, score 7/10) — Starlink enables reliable real-time communication with recovery teams and live streaming of Starship’s splashdown in the middle of the Indian Ocean
+  - https://x.com/Starlink/status/2057950370668945682
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6740).
+- **@remarks** (5864 likes, score 7/10) — JUST IN:  US Space Force contracts 12 companies up to $3.2 billion to develop 'Golden Dome' air defense system.
+  - https://x.com/remarks/status/2047747124696121529
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6126).
+- **@bindureddy** (2789 likes, score 7/10) — OPEN SOURCE AI IS LITERALLY UNSTOPPABLE 
+
+The legendary founder of Redis (Antirez) just dropped ds4 - a custom native inference engine built specifically for DeepSeek v4 Flash
+
+This is earth shatterin
+  - https://x.com/bindureddy/status/2052982206344409242
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 3085).
+- **@aleabitoreddit** (512 likes, score 7/10) — Looking back, should have had more Energy Directed Weapon exposure. 
+
+Especially with America’s Golden Dome laser defense giving $LASR practically exponential TAM.
+
+There’s only two companies I’ve see
+  - https://x.com/aleabitoreddit/status/2028767576357228608
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 544).
+- **@curiosityonx** (365 likes, score 7/10) — Everyone's out here waiting for aliens to arrive.
+
+WE are the aliens.
+
+A camera we built is orbiting mars right now, staring into a crater no living thing has ever seen. crossed the void, showed up un
+  - https://x.com/CuriosityonX/status/2060728069770432682
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 435).
+- **@chairmansledger** (158 likes, score 7/10) — It has become abundantly clear to me that the next major move is in Edge AI and Physical AI.
+
+AI leaving the data center and entering the real world.
+
+Autonomy, robotics, sensors, defense systems, ind
+  - https://x.com/ChairmansLedger/status/2060076555586453638
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 202).
+- **@dr_singularity** (115 likes, score 7/10) — Space is hard. But both SpaceX and Blue Origin will make it.
+
+The formula is simple - intelligence plus time.
+
+Throw enough intelligence (human/AI work hours) at a problem, give it enough time, and ev
+  - https://x.com/Dr_Singularity/status/2060454883380056436
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 135).
+- **@nbergwx** (105 likes, score 7/10) — Be mindful if you are going to Brevard and Volusia beaches especially this weekend.
+
+Blue Origin rocket debris could wash up in the water, especially near Cocoa and Playalinda Beach if it does.
+  - https://x.com/NbergWX/status/2060688925413236854
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 117).
+- **@wr4nygov** (83 likes, score 7/10) — I honestly think Gary’s best days never happened. 
+
+In Thailand Chinese EV owners wish they had Teslas. Currently there’s a hysteria over flaming Volvos (Geely). 
+
+Anthropic and OpenAI are desperately
+  - https://x.com/WR4NYGov/status/2060583794089075047
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 101).
+- **@traderdanielle** (19 likes, score 7/10) — The space trade imploded today along with the Blue Origin rocket.
+
+But never fear, this is a buy-the-dip market. 
+
+It is one in which I welcome pullbacks, that often come via way of bad news. 
+
+Also,
+  - https://x.com/traderDanielle/status/2060563614906695921
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 23).
+- **@physicsastronmy** (14 likes, score 7/10) — A stunning telescope observation captured Starlink satellites appearing near the Moon in the night sky.
+The bright moving lights seemed unusually close to the lunar surface, creating a dramatic visual
+  - https://x.com/Physicsastronmy/status/2060708179688763783
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 18).
