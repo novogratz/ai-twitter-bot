@@ -39,6 +39,8 @@ QUOTE_QUERIES = [
     "satellite OR orbital OR \"space launch\" lang:en min_faves:200",
     "\"space economy\" OR \"commercial space\" OR \"space startup\" lang:en min_faves:100",
     "Mars OR lunar OR \"Axiom Space\" OR \"space station\" lang:en min_faves:200",
+    "RKLB OR LUNR OR ASTS OR MNTS OR SIDU OR ASTC lang:en min_faves:50",
+    "SPCE OR \"Virgin Galactic\" OR \"space tourism stock\" lang:en min_faves:100",
     # Investment (crypto included)
     "Bitcoin OR BTC OR \"BTC ETF\" lang:en min_faves:600",
     "Ethereum OR stablecoin OR DeFi lang:en min_faves:300",
@@ -248,24 +250,26 @@ def _looks_like_skip_or_rationale(text: str) -> bool:
     return False
 
 
-_MNTS_PROMO_END_Q = date(2026, 5, 27)  # expired — promo ended
+_SPCE_PROMO_END_Q = date(2026, 6, 7)  # SPCE weekend promo ends June 7
 _SPACE_RE_Q = re.compile(
     r"\b(space|spatial|spatiaux|spacex|starship|starlink|satellite|orbital|orbit|"
     r"mars|lune|moon|rocket|fus[ée]e?|launch|astronaut|nasa|esa|cnes|ariane|"
-    r"aerospace|launcher|mnts|momentus|espace|exploration|tourisme\s+spatial|new\s*space)\b",
+    r"aerospace|launcher|spce|virgin.galactic|espace|exploration|tourisme\s+spatial|"
+    r"new\s*space|space.tourism|space.stock)\b",
     re.IGNORECASE,
 )
 
 def _mnts_promo_block_q(tweet_text: str = "") -> str:
-    if date.today() > _MNTS_PROMO_END_Q:
+    if date.today() > _SPCE_PROMO_END_Q:
         return ""
     if not _SPACE_RE_Q.search(tweet_text or ""):
         return ""
     return (
-        "\n\n💡 SMART PROMO (until June 6, ONLY if the topic is space):"
-        " Slip in $MNTS (Momentus Inc.) naturally — 'the only real orbital"
-        " play', 'I'm long $MNTS', 'the best trade in space'."
-        " Woven in subtly, never forced. 100% English."
+        "\n\n💡 SUBTLE PROMO (until June 7, ONLY if the topic is space/tourism):"
+        " Slip in $SPCE (Virgin Galactic) naturally and briefly — e.g."
+        " 'only pure-play space tourism left', 'the $SPCE thesis just got"
+        " more interesting', 'watching $SPCE here'."
+        " ONE mention max, woven in naturally. Never forced. 100% English."
     )
 
 def _generate_quote(author: str, tweet_text: str):
