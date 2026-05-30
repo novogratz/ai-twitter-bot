@@ -23,31 +23,31 @@ _OWN_HANDLE = BOT_HANDLE.lower()
 # quote is in English. A short FR tail remains only for major French stories.
 QUOTE_QUERIES = [
     # AI
-    "OpenAI OR ChatGPT OR \"GPT-5\" lang:en min_faves:500",
-    "Anthropic OR Claude OR xAI lang:en min_faves:400",
-    "Nvidia OR NVDA OR GPU OR \"compute cluster\" lang:en min_faves:500",
-    "\"AI agents\" OR \"agentic AI\" OR \"frontier model\" lang:en min_faves:400",
-    "\"AI datacenter\" OR megawatt OR \"power demand\" OR nuclear lang:en min_faves:300",
-    "robotics OR \"humanoid robot\" OR Tesla OR Boston Dynamics lang:en min_faves:400",
-    "Mistral OR \"Hugging Face\" OR \"open source AI\" lang:en min_faves:200",
+    "OpenAI OR ChatGPT OR \"GPT-5\" lang:en min_faves:100",
+    "Anthropic OR Claude OR xAI lang:en min_faves:100",
+    "Nvidia OR NVDA OR GPU OR \"compute cluster\" lang:en min_faves:100",
+    "\"AI agents\" OR \"agentic AI\" OR \"frontier model\" lang:en min_faves:50",
+    "\"AI datacenter\" OR megawatt OR \"power demand\" OR nuclear lang:en min_faves:50",
+    "robotics OR \"humanoid robot\" OR Tesla OR Boston Dynamics lang:en min_faves:100",
+    "Mistral OR \"Hugging Face\" OR \"open source AI\" lang:en min_faves:50",
     # Space — PUSH IT
-    "SpaceX OR Starship OR \"Falcon 9\" lang:en min_faves:500",
-    "Starlink OR \"Blue Origin\" OR \"Virgin Galactic\" lang:en min_faves:300",
-    "\"Rocket Lab\" OR RKLB OR NASA OR Artemis lang:en min_faves:200",
-    "\"AST SpaceMobile\" OR ASTS OR LUNR OR \"space stock\" lang:en min_faves:100",
-    "\"Golden Dome\" OR USSF OR \"space defense\" OR hypersonic lang:en min_faves:100",
-    "satellite OR orbital OR \"space launch\" lang:en min_faves:200",
-    "\"space economy\" OR \"commercial space\" OR \"space startup\" lang:en min_faves:100",
-    "Mars OR lunar OR \"Axiom Space\" OR \"space station\" lang:en min_faves:200",
-    "RKLB OR LUNR OR ASTS OR MNTS OR SIDU OR ASTC lang:en min_faves:50",
-    "SPCE OR \"Virgin Galactic\" OR \"space tourism stock\" lang:en min_faves:100",
+    "SpaceX OR Starship OR \"Falcon 9\" lang:en min_faves:100",
+    "Starlink OR \"Blue Origin\" OR \"Virgin Galactic\" lang:en min_faves:50",
+    "\"Rocket Lab\" OR RKLB OR NASA OR Artemis lang:en min_faves:50",
+    "\"AST SpaceMobile\" OR ASTS OR LUNR OR \"space stock\" lang:en min_faves:20",
+    "\"Golden Dome\" OR USSF OR \"space defense\" OR hypersonic lang:en min_faves:30",
+    "satellite OR orbital OR \"space launch\" lang:en min_faves:50",
+    "\"space economy\" OR \"commercial space\" OR \"space startup\" lang:en min_faves:30",
+    "Mars OR lunar OR \"Axiom Space\" OR \"space station\" lang:en min_faves:50",
+    "RKLB OR LUNR OR ASTS OR MNTS OR SIDU OR ASTC lang:en min_faves:10",
+    "SPCE OR \"Virgin Galactic\" OR \"space tourism stock\" lang:en min_faves:20",
     # Investment (crypto included)
-    "Bitcoin OR BTC OR \"BTC ETF\" lang:en min_faves:600",
-    "Ethereum OR stablecoin OR DeFi lang:en min_faves:300",
-    "Palantir OR PLTR OR \"AI stock\" OR \"tech earnings\" lang:en min_faves:300",
+    "Bitcoin OR BTC OR \"BTC ETF\" lang:en min_faves:200",
+    "Ethereum OR stablecoin OR DeFi lang:en min_faves:100",
+    "Palantir OR PLTR OR \"AI stock\" OR \"tech earnings\" lang:en min_faves:100",
     # FR fallback
-    "IA OR ChatGPT OR espace OR fusée lang:fr min_faves:30",
-    "Bitcoin OR crypto OR investissement lang:fr min_faves:30",
+    "IA OR ChatGPT OR espace OR fusée lang:fr min_faves:10",
+    "Bitcoin OR crypto OR investissement lang:fr min_faves:10",
 ]
 
 QUOTE_PROMPT = """You are @CryptoAIDecode. You will QUOTE-TWEET this tweet:
@@ -319,10 +319,11 @@ def run_quote_tweet_cycle():
     candidates = []
 
     # Scan more hot queries per cycle so the quote pool has more live setups.
-    for query in random.sample(QUOTE_QUERIES, k=min(5, len(QUOTE_QUERIES))):
+    for query in random.sample(QUOTE_QUERIES, k=min(10, len(QUOTE_QUERIES))):
         log.info(f"[QUOTE] Searching HOT for: {query}")
+        tab = "live" if random.random() < 0.4 else "top"
         try:
-            tweets = scrape_x_search(query, max_tweets=15, tab="top")
+            tweets = scrape_x_search(query, max_tweets=25, tab=tab)
         except Exception:
             log.info(f"[QUOTE] Scrape failed for {query}:")
             traceback.print_exc()
@@ -365,11 +366,11 @@ def run_quote_tweet_cycle():
         from .twitter_client import scrape_profile_tweets
         # English-first since the 2026-05-27 pivot: sample mostly EN outlets,
         # keep a small FR tail for major French stories.
-        sampled = random.sample(EN_TRUSTED_HANDLES, k=min(5, len(EN_TRUSTED_HANDLES)))
+        sampled = random.sample(EN_TRUSTED_HANDLES, k=min(10, len(EN_TRUSTED_HANDLES)))
         for handle in sampled:
             log.info(f"[QUOTE] Scraping trusted-news handle: @{handle}")
             try:
-                tweets = scrape_profile_tweets(handle, max_tweets=10)
+                tweets = scrape_profile_tweets(handle, max_tweets=15)
             except Exception:
                 log.info(f"[QUOTE] Scrape failed for @{handle}:")
                 traceback.print_exc()
