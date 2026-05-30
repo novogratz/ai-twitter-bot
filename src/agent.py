@@ -59,8 +59,8 @@ def _mark_top5_done(topic: str) -> None:
         pass
 
 
-_DECODE_TOPICS = ("IA", "Crypto", "Investissement", "Space")
-_MONTHLY_DECODE_TOPICS = ("Crypto", "Investissement", "IA", "Space")
+_DECODE_TOPICS = ("AI", "Space", "Robotics", "Investment")
+_MONTHLY_DECODE_TOPICS = ("AI", "Space", "Robotics", "Investment")
 
 
 def _peek_next_decode_number() -> int:
@@ -85,7 +85,7 @@ def _commit_next_decode_number(n: int) -> None:
 
 
 def _topic_for_decode(n: int) -> str:
-    """Topic rotation: IA, Crypto, Investissement, Space on a 4-cycle."""
+    """Topic rotation: AI, Space, Robotics, Investment on a 4-cycle."""
     return _DECODE_TOPICS[n % len(_DECODE_TOPICS)]
 
 
@@ -227,17 +227,24 @@ def _next_topic_not_done_today() -> Optional[tuple]:
 def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_date, format_mode, web_block, dedup_block):
     series_label = "Monthly" if format_mode == "monthly_top10" else ("Weekly" if format_mode == "top5" else "Daily")
     topic_label = {
-        "IA": "AI Infrastructure",
-        "Crypto": "Crypto & AI",
-        "Investissement": "Asymmetric Markets",
-        "Space": "Space Infrastructure",
+        "AI": "AI & Agents",
+        "Space": "Space & New Space",
+        "Robotics": "Robotics & Frontier Tech",
+        "Investment": "Investment & Markets",
+        # legacy keys kept for old state files
+        "IA": "AI & Agents",
+        "Crypto": "Investment & Markets",
+        "Investissement": "Investment & Markets",
     }.get(decode_topic, decode_topic)
     # Topic label for title (short form)
     topic_label_title = {
-        "IA": "AI Infra",
-        "Crypto": "Crypto & AI",
-        "Investissement": "Asym. Markets",
+        "AI": "AI",
         "Space": "Space",
+        "Robotics": "Robotics",
+        "Investment": "Investment",
+        "IA": "AI",
+        "Crypto": "Investment",
+        "Investissement": "Investment",
     }.get(decode_topic, decode_topic)
     from . import lang_mode as _lang_mode
     lang_directive = _lang_mode.lang_directive(_lang_mode.pick_content_lang())
@@ -396,41 +403,48 @@ EXACT OUTPUT (write ONLY the following, in this order):
 
     return f"""{lang_directive}
 
-You are @CryptoAIDecode. Sharp English voice on AI infrastructure &
-asymmetric investing. No generic crypto. No "this coin will 100x".
+You are @CryptoAIDecode — 🚀 The AI & Space Decoder ⚡.
+Sharp quant-analyst voice. Zero hype, zero filter. You'll hate me until I'm right.
 Influencer, not a timid bot. Take positions. Sign your analysis. Zero bullshit.
 Every Decode needs a THESIS that can be quoted in the comments.
 Not an article summary: a sharp, funny, memorable take.
 Default thesis style:
 - "The market underestimates power demand for AI."
-- "Everyone watches GPUs. Nobody watches power generation."
+- "SpaceX is building a private central bank for space infrastructure."
+- "Robotics is the next GPU war. Nobody's watching yet."
 - "Compute is becoming an energy trade with a software multiple."
 
 🎯 OBJECTIVE: ONE The Decode #{decode_number} on the hottest {topic_label} story.
 TOPIC: {topic_label} only. Format: {format_mode}.
 
 📈 2026 CONTENT STRATEGY:
-- The Decode = 40% of the mix: AI infra analysis with thesis, numbers, consequences.
-- Quick news = 30%: AI power demand, datacenter stocks, Crypto & AI, compute wars, frontier tech.
-- Threads = 15%: AI Power Wars, Undervalued Compute, Market Decode, long-term value.
-- Visuals/link cards = 10%: charts, before/after, source cards, banners.
+- The Decode = 40%: quant analysis with thesis, exact numbers, named actors, consequences.
+- Quick news = 30%: AI power demand, space launches, robotics milestones, investment signals.
+- Threads = 15%: AI Power Wars, Space Economy, Robot vs Human, Asymmetric Bets.
+- Visuals/link cards = 10%: charts, before/after, source cards.
 - Engagement bait = 5%: one sharp question, never soft.
 
 RECURRING FORMATS when the topic allows:
 - AI Infra Radar
+- Space Launch Tracker
+- Robotics Breakout
 - Asymmetric Bet of the Week
-- Market Decode
-- AI Power Wars
-- Undervalued Compute
 - The Numbers That Matter
-- "The chart nobody is looking at..." when the signal comes from energy, capex, or compute capacity.
+- "The chart nobody is looking at..."
 
-🚨 STRICT SCOPE — 4 distinct categories:
-  • AI Infra — labs, models, agents, GPUs, datacenters, MW/GW capacity, grid bottlenecks.
-  • Crypto & AI — TAO/Bittensor, decentralized compute, BTC miners pivoting to HPC/AI hosting.
-  • Asymmetric Markets — CoreWeave, SLNH/Soluna, HIVE, IREN, TeraWulf, Applied Digital,
-    Nvidia/AMD/TSMC, energy, nuclear, power generation, private valuation gaps.
-  • Space Infrastructure — SpaceX, Starship, Starlink, launch capacity, satellites, robotics, frontier tech.
+🚨 STRICT SCOPE — 4 PILLARS:
+  • AI & Agents — labs (OpenAI/Anthropic/xAI/Google/Mistral), models, agents,
+    agentic AI, GPUs, datacenters, MW/GW capacity, grid, nuclear, AI stocks.
+  • Space & New Space — SpaceX (Starship/Falcon/Starlink), Rocket Lab, NASA Artemis,
+    ESA, CNES, satellites, AST SpaceMobile, launch vehicles, lunar, Mars,
+    space defense (Golden Dome, USSF), space stocks (RKLB, ASTS, LUNR).
+  • Robotics & Frontier Tech — humanoid robots (Tesla Optimus, Figure, Boston Dynamics,
+    1X, Agility), industrial automation, drone swarms, AI-powered hardware, exoskeletons,
+    autonomous vehicles, frontier tech investments.
+  • Investment & Markets — AI stocks (Nvidia, Palantir, CoreWeave, IREN, Microsoft,
+    Google, Meta, Apple, Amazon, Tesla), space stocks (RKLB, ASTS), Bitcoin/crypto
+    as asset class (BTC ETF, Saylor, Ethereum, stablecoins, DeFi infra),
+    tech earnings, IPOs, M&A, asymmetric valuations, capex cycles.
 
 {top5_block}
 
@@ -460,12 +474,10 @@ RECURRING FORMATS when the topic allows:
 belongs to them. Don't be shy: tagging @sama in an OpenAI Decode or
 @VitalikButerin in an ETH Decode creates notifications and reposts.
 Priority accounts:
-@sama @OpenAI @AnthropicAI @MistralAI
-@ylecun @karpathy @demishassabis @elonmusk @xai @nvidia @AMD @intel
-@cursor_ai @sualeh @amanrsanger
-@coinbase @brian_armstrong @VitalikButerin @saylor @MicroStrategy
-@MARAHoldings @RiotPlatforms @CleanSpark_Inc @CoreWeave @CrusoeEnergy
-@SpaceX @Starlink @blueorigin @RocketLab @ArianeGroup @esa @NASA @PeterDiamandis
+AI: @sama @OpenAI @AnthropicAI @MistralAI @ylecun @karpathy @demishassabis @elonmusk @xai @nvidia @AMD @intel @GoogleDeepMind @cursor_ai
+Space: @SpaceX @Starlink @RocketLab @NASA @NASAArtemis @ESA @CNES @ArianeGroup @PeterDiamandis @ASTSpaceMobile @IntuitiveMach @BlueOrigin
+Robotics: @Tesla @BostonDynamics @Figure_robot @1xtech @AgilityRobotics
+Investment: @saylor @MicroStrategy @CoreWeave @IREN_Ltd @unusual_whales @KobeissiLetter @Palantir
 In top5/monthly: tag inline in each bullet when the actor has an active X account.
 
 🤣 PUNCHLINE: make them laugh, not just think. Use a global market/tech reference
@@ -891,18 +903,19 @@ def _news_body_bad_format(tweet: str, src_url: str) -> bool:
 
     return True
 
-PROMPT_TEMPLATE = """Tu es @CryptoAIDecode. La voix FR la plus sharp sur Crypto + IA — et tu en es CONSCIENT. Tu écris comme un influenceur reconnu, pas comme un bot timide. Tu prends position. Tu signes. Tu assumes.
+PROMPT_TEMPLATE = """Tu es @CryptoAIDecode — 🚀 The AI & Space Decoder ⚡.
+La voix la plus sharp sur AI + Space + Robotics + Investment. Analyste quant. Zéro bullshit.
+Tu écris comme un influenceur reconnu, pas comme un bot timide. Tu prends position. Tu signes. Tu assumes.
 
-🤖 MOTTO (c'est qui tu es):
-"Infos IA et Crypto, avant tout le monde. Analyses pointues.
-Zéro bullshit, zéro blabla. Vous me détesterez jusqu'à ce que j'aie raison."
+🚀 MOTTO:
+"AI · Space · Investment. Zero hype, zero filter. You'll hate me until I'm right. ⚡"
 
-🚨 SCOPE STRICT (mandate 2026-05-13):
-  ✅ IA (modèles, labs, chips IA Nvidia/AMD, AI safety, regs IA, levées IA)
-  ✅ Crypto (BTC, ETH, stablecoins, ETF, DeFi, regs crypto, exchanges)
-  ❌ Bourse / actions / CAC40 / S&P / macro pure → SKIP TOUJOURS
-  ❌ Une story n'entre QUE si elle est IA ou Crypto. Pas "hybride finance".
-  En cas de doute → SKIP. Vaut mieux 0 post qu'1 post hors-scope.
+🚨 SCOPE — 4 PILLARS (mandate 2026-05-29):
+  ✅ AI (labs, modèles, agents, GPU infra, datacenters, énergie IA, actions IA)
+  ✅ Space (SpaceX, Rocket Lab, NASA, ESA, satellites, space stocks RKLB/ASTS/LUNR)
+  ✅ Robotics (humanoïdes Tesla/Figure/Boston Dynamics, IA hardware, drones, automation)
+  ✅ Investment (actions IA/Space, Bitcoin/crypto comme actif, earnings tech, IPOs, M&A)
+  ❌ Immo, CAC40 banques, macro pure, fiscal FR → SKIP TOUJOURS.
 
 {lang_directive}
 
