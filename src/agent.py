@@ -976,9 +976,10 @@ FORMAT MODE: **{format_mode}**  (top5 = Top 5 chiffres bookmark-bait; regular = 
 
 📚 SI {format_mode} == "top5" → FORMAT BOOKMARK-BAIT TOP 5 (ULTRA-IMPACT).
 
-  Le vendredi, le compte ne fait QUE 2 Décodes: 1 IA + 1 Crypto, tous deux
-  en format "Top 5 chiffres". Donc CE Décode est l'un des deux récaps
-  hebdo de la semaine. Il DOIT être ce qu'un lecteur sauvegarde, relit, et
+  Le vendredi, le compte fait 2-4 Décodes en format "Top 5 chiffres"
+  couvrant les 4 piliers: AI, Space, Robotics, Investment.
+  CE Décode est le récap hebdo du sujet {decode_topic}.
+  Il DOIT être ce qu'un lecteur sauvegarde, relit, et
   partage en DM. Standard: chaque chiffre fait dire "tiens, c'est dingue".
 
   FORMAT STRICT — aucun écart:
@@ -1029,13 +1030,14 @@ FORMAT MODE: **{format_mode}**  (top5 = Top 5 chiffres bookmark-bait; regular = 
 📌 SI {format_mode} == "regular" → Décode multi-paragraphe normal (voir format ci-dessous).
 
 FOCUS THÉMATIQUE DU JOUR: **{decode_topic}**
-Si {decode_topic} = IA → tu choisis une story IA (lab, chip, datacenter, agent, regs).
-Si {decode_topic} = Crypto → tu choisis une story crypto (BTC, ETH, stablecoin, mining, ETF, exchange).
-Si {decode_topic} = Investissement → tu choisis une story bourse/stock market/IPO/valo
-(SpaceX IPO/valorisation, OpenAI/Anthropic IPO, Wall Street, big move VC, earnings, capex IA).
-Évite MicroStrategy/MSTR/MARA/RIOT/CleanSpark sauf angle bourse exceptionnel, pas crypto.
-Si {decode_topic} = Space → tu choisis une story space (SpaceX, Starship, Starlink, Blue Origin,
-New Glenn, Rocket Lab, ArianeGroup, ESA, NASA, space industry, launchers, satellites).
+Si {decode_topic} = AI → story IA (lab, modèle, agent, GPU, datacenter, énergie, actions IA).
+Si {decode_topic} = Space → story spatiale (SpaceX/Starship/Starlink, Rocket Lab, NASA Artemis,
+ESA, CNES, satellites, AST SpaceMobile, Golden Dome, space stocks RKLB/ASTS/LUNR).
+Si {decode_topic} = Robotics → story robotique (humanoïdes Tesla/Figure/Boston Dynamics/1X,
+drones, automation industrielle, AI hardware, frontier tech).
+Si {decode_topic} = Investment → story investissement (actions IA/Space, Bitcoin/crypto comme
+actif, Saylor/BTC ETF, earnings tech Nvidia/Palantir, IPO, M&A, valuations asymétriques).
+Pas de Crypto standalone — crypto uniquement sous l'angle investissement/actif.
 Ne croise PAS les topics — un Décode = un sujet, focus net. Le sujet de cette
 édition s'affiche dans le header pour que les lecteurs sachent à quoi s'attendre.
 
@@ -1188,30 +1190,22 @@ PERFORMANCE READ (2026-05-10 — logs):
    • Volume mediocre = algo apprend "ce compte est pas worth showing".
      Volume rare + qualité haute = algo apprend l'inverse.
 
-PRIORITY (2026-05-18 mandate — "be the #1 FR AI/crypto/datacenter/mining
-influencer, be FUNNIER"):
-  IA et CRYPTO et INFRASTRUCTURE = le triangle. PRIORISE les histoires:
-  - **Datacenter IA / MW-scale** : Stargate (OpenAI/SoftBank), xAI Colossus
-    (Memphis), CoreWeave, Crusoe Energy, Lambda Labs, Applied Digital,
-    Iren, Equinix IA, OVHcloud datacenter, Iliad/Free Bercy datacenter.
-    Mots-clés: megawatt, gigawatt, capex, GPU pricing, H200/B100/B200,
-    consommation électrique, nuclear PPA, gas turbine, grid impact.
-  - **Crypto mining (entreprises cotées)** : MARA, RIOT, CleanSpark
-    (CLSK), Hut 8 (HUT), Bitfarms (BITF), Iren (IREN), TeraWulf (WULF),
-    Cipher Mining (CIFR), Bit Digital (BTBT). Mots-clés: hashrate,
-    ASIC, halving, energy cost per BTC, AI pivot, HPC hosting.
-  - **Le pont IA ↔ mining** : mineurs qui pivotent vers AI hosting
-    (CoreScientific, Iren), data center qui héberge GPU + ASIC.
-  - **Mistral / GPU souverains FR** : Mistral GPU supply, Scaleway H200,
-    AI Act + datacenter regulation, France 2030 IA.
-  Nvidia/AMD/TSMC = OK quand l'angle est chips/datacenter IA / mining.
-  MSTR/Coinbase = OK si l'angle est crypto.
-  Pas d'actions hors-IA-crypto, pas de macro pure, pas d'immobilier,
-  pas de politique générale. Si la story n'est pas IA ou Crypto ou
-  Datacenter/Mining → SKIP.
+PRIORITY (2026-05-29 pivot — 4 PILLARS):
+  AI + SPACE + ROBOTICS + INVESTMENT. PRIORISE les histoires:
+  - **AI & Agents** : OpenAI/Anthropic/xAI/Mistral, modèles, agents,
+    GPU infra, datacenters MW/GW, énergie nucléaire, actions IA.
+  - **Space** : SpaceX Starship/Falcon, Rocket Lab, NASA Artemis, ESA,
+    CNES, Starlink, AST SpaceMobile, space stocks RKLB/ASTS/LUNR,
+    Golden Dome, défense spatiale.
+  - **Robotics** : Tesla Optimus, Figure, Boston Dynamics, 1X, Agility,
+    drones, automation industrielle, AI hardware, frontier tech.
+  - **Investment** : Nvidia/Palantir/CoreWeave/IREN actions, space stocks,
+    Bitcoin/BTC ETF/Saylor comme actif macro, earnings tech, IPO, M&A.
+  Crypto OK uniquement sous l'angle investissement/actif. Pas standalone.
+  Pas d'immo, pas de CAC40 banques, pas de macro pure. Hors-scope → SKIP.
 
-🤣 BE FUNNIER (2026-05-18 user mandate): "BE THE NUMBER 1 AI AND CRYPTO
-AND INVESTMENT INFLUENCER IN FRANCE!!!"
+🤣 BE FUNNIER (mandate): "BE THE NUMBER 1 AI + SPACE + INVESTMENT
+INFLUENCER. MAKE FRENCH PEOPLE LAUGH HARD."
 - Une bonne news est une chute qui fait LOL. Pas un sourire poli, un LOL.
 - STACK 2 réfs FR — c'est ÇA qui fait rire. Une seule réf = tiède.
 
@@ -1812,33 +1806,48 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
     # Lives here so it sees the resolved decode_topic.
     try:
         from . import web_search as _ws
+        _tf = 'this month' if use_monthly else ('this week' if use_top5 else 'today')
         sub_queries = {
-            "IA": [
-                f"AI datacenter power demand megawatt gigawatt news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"OpenAI Anthropic xAI compute GPU cluster datacenter news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"NVIDIA GPU power grid nuclear AI datacenter news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"robotics humanoid robots frontier tech AI infrastructure news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-            ],
-            "Crypto": [
-                f"TAO Bittensor decentralized compute AI crypto news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"crypto mining AI hosting HIVE IREN TeraWulf Core Scientific news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"Bitcoin miners AI datacenter HPC MARA Riot CleanSpark news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"AI tokens decentralized GPU network compute crypto news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-            ],
-            "Investissement": [
-                f"CoreWeave CRWV Applied Digital APLD IREN HIVE SLNH AI datacenter stocks {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"AI power generation grid nuclear datacenter stocks energy demand {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"SpaceX valuation Starlink private markets frontier tech investing {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"NVIDIA AMD TSMC AI infrastructure capex earnings {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"TeraWulf WULF Cipher CIFR Core Scientific CORZ AI hosting HPC {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+            "AI": [
+                f"OpenAI Anthropic xAI Google DeepMind AI model agent news {_tf}",
+                f"NVIDIA AMD GPU compute cluster datacenter AI infrastructure news {_tf}",
+                f"AI datacenter power demand megawatt gigawatt nuclear grid news {_tf}",
+                f"CoreWeave IREN applied digital AI cloud compute stocks news {_tf}",
             ],
             "Space": [
-                f"SpaceX Starship Starlink space infrastructure news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"Blue Origin New Glenn Rocket Lab launch capacity news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"satellite AI robotics space infrastructure frontier tech news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
-                f"SpaceX valuation Starlink revenue private markets news {'this month' if use_monthly else ('this week' if use_top5 else 'today')}",
+                f"SpaceX Starship Falcon launch news {_tf}",
+                f"Rocket Lab RKLB NASA Artemis moon launch news {_tf}",
+                f"satellite AST SpaceMobile Starlink OneWeb orbital news {_tf}",
+                f"space defense Golden Dome USSF hypersonic space stocks news {_tf}",
+                f"ESA CNES Ariane commercial space economy news {_tf}",
             ],
-        }.get(decode_topic, ["AI news this week"])
+            "Robotics": [
+                f"humanoid robot Tesla Optimus Figure Boston Dynamics news {_tf}",
+                f"AI robotics automation industrial drone swarm news {_tf}",
+                f"1X Agility Robotics Figure AI funding valuation news {_tf}",
+                f"autonomous vehicles AI hardware frontier tech news {_tf}",
+            ],
+            "Investment": [
+                f"Nvidia Palantir Microsoft Google Meta earnings AI stocks news {_tf}",
+                f"RKLB ASTS LUNR space stocks valuation news {_tf}",
+                f"Bitcoin BTC ETF institutional Saylor crypto investment news {_tf}",
+                f"tech IPO M&A acquisition AI valuation funding news {_tf}",
+                f"Ethereum stablecoin DeFi crypto asset class news {_tf}",
+            ],
+            # Legacy keys — keep so old state files don't crash
+            "IA": [
+                f"OpenAI Anthropic xAI AI infrastructure news {_tf}",
+                f"NVIDIA GPU datacenter AI news {_tf}",
+            ],
+            "Crypto": [
+                f"Bitcoin BTC ETF crypto investment news {_tf}",
+                f"Ethereum DeFi stablecoin crypto news {_tf}",
+            ],
+            "Investissement": [
+                f"AI stocks Nvidia Palantir CoreWeave investment news {_tf}",
+                f"tech earnings M&A valuation news {_tf}",
+            ],
+        }.get(decode_topic, [f"AI Space Robotics Investment news {_tf}"])
         ddg_hits = []
         for q in sub_queries:
             try:
