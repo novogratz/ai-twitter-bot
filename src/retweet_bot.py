@@ -84,30 +84,33 @@ NICHE_KEYWORDS = (
     "gigawatt", "gigawatts", "gw ", "energy demand", "ai infra",
     "ai infrastructure", "hpc", "colo", "colocation", "coreweave",
     "crwv", "crusoe", "lambda labs", "applied digital", "apld",
-    "iren", "hive", "soluna", "slnh", "terawulf", "wulf",
-    "cipher mining", "cifr", "core scientific", "corz",
-    "hugging face", "huggingface", "perplexity", "copilot",
-    "robotics", "humanoid", "frontier tech",
-    # Crypto
+    "iren", "hugging face", "huggingface", "perplexity", "copilot",
+    "robotics", "humanoid", "agentic", "ai agent", "ai agents",
+    "frontier model", "frontier tech", "reasoning model",
+    # Space
+    "spacex", "starship", "starlink", "falcon", "rocket lab", "rocketlab", "rklb",
+    "nasa", "esa", "cnes", "isro", "jaxa", "ussf",
+    "satellite", "orbit", "orbital", "launch vehicle", "launch pad",
+    "mars", "moon", "lunar", "artemis", "iss", "axiom space",
+    "space station", "astronaut", "cosmonaut",
+    "new space", "commercial space", "space economy", "space defense",
+    "asts", "ast spacemobile", "lunr", "rocket", "booster",
+    "golden dome", "space force", "starshield", "one web",
+    "reentry", "payload", "leo ", "geo ", "meo ", "hypersonic",
+    "space infrastructure", "space stock", "launch manifest",
+    # Investment / crypto
     "bitcoin", "btc", "ethereum", "eth", "crypto", "stablecoin",
-    "tether", "usdc", "coinbase", "binance", "kraken", "blockchain",
-    "defi", "nft", "ordinals", "solana", "ripple", "xrp",
-    "etf bitcoin", "etf btc", "etf ether", "spot etf", "halving",
-    "tokenization", "tokenized", "rwa", "prediction market",
-    "polymarket", "circle", "usdt", "saylor", "mstr",
-    "sec lawsuit", "ofac", "mt gox", "tao", "bittensor",
-    "decentralized compute", "decentralised compute",
-    # Bourse / macro
-    "stock", "shares", "nasdaq", "s&p", "s&p 500", "dow ",
-    "cac40", "cac ", "ipo", "earnings", "guidance",
-    "fed ", "fomc", "rate hike", "rate cut", "inflation", "cpi",
-    "treasury yield", "bond ", "merger", "acquisition", "buyout",
+    "usdc", "coinbase", "blockchain", "defi", "spot etf", "halving",
+    "saylor", "mstr",
+    "stock", "shares", "nasdaq", "s&p", "s&p 500",
+    "ipo", "earnings", "guidance", "valuation",
+    "merger", "acquisition", "buyout",
     "tesla", "apple", "google", "alphabet", "meta", "amazon",
     "microsoft", "msft", "aapl", "googl", "tsla", "amzn",
-    "valuation", "billion", "trillion", "milliard", "valo",
-    "asymmetric", "asymmetry", "private markets", "frontier",
-    "bourse", "marché", "marche", "action", "actions",
-    "investissement", "trading", "pea", "cac 40", "cac40",
+    "palantir", "pltr", "rklb", "asts", "lunr",
+    "billion", "trillion", "milliard",
+    "asymmetric", "private markets",
+    "investissement", "trading",
 )
 
 # Off-topic blocklist — common Reuters/Bloomberg/AP topics that have
@@ -169,22 +172,26 @@ FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "5
 FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "12"))
 
 FEED_REPOST_SEARCH_QUERIES = [
-    # English-first repost discovery (user pivot 2026-05-27: full English).
-    # We're an English brand now — reposting French tweets on an EN timeline
-    # is incoherent, so EN/global high-signal content leads. Same-day age and
-    # niche gates still apply.
+    # AI
     "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500",
-    "Nvidia OR GPU OR \"compute cluster\" lang:en min_faves:500",
-    "\"AI agents\" OR \"AI startup\" OR \"frontier model\" lang:en min_faves:300",
-    "\"AI datacenter\" OR power demand OR megawatt lang:en min_faves:300",
-    "CoreWeave OR CRWV OR APLD OR IREN OR HIVE lang:en min_faves:200",
-    "TAO OR Bittensor OR \"decentralized compute\" lang:en min_faves:200",
-    "Bitcoin OR BTC OR \"BTC ETF\" lang:en min_faves:600",
-    "Ethereum OR ETH OR stablecoin OR DeFi lang:en min_faves:300",
-    "MARA OR RIOT OR CleanSpark OR \"crypto mining\" lang:en min_faves:200",
+    "Nvidia OR GPU OR \"compute cluster\" OR semiconductor lang:en min_faves:500",
+    "\"AI agents\" OR \"agentic AI\" OR \"frontier model\" lang:en min_faves:300",
+    "\"AI datacenter\" OR \"power demand\" OR megawatt OR gigawatt lang:en min_faves:300",
+    "robotics OR \"humanoid robot\" OR \"AI robotics\" lang:en min_faves:300",
     "nuclear OR grid OR \"power generation\" AI lang:en min_faves:300",
-    "robotics OR humanoid robots OR frontier tech lang:en min_faves:300",
-    "SpaceX OR Starlink OR Starship OR space infrastructure lang:en min_faves:600",
+    "CoreWeave OR CRWV OR APLD OR IREN lang:en min_faves:200",
+    # Space
+    "SpaceX OR Starship OR Starlink OR \"Falcon 9\" lang:en min_faves:600",
+    "\"Rocket Lab\" OR RKLB OR NASA OR Artemis lang:en min_faves:300",
+    "satellite OR orbital OR \"space launch\" OR \"launch vehicle\" lang:en min_faves:300",
+    "\"AST SpaceMobile\" OR ASTS OR LUNR OR \"space stock\" lang:en min_faves:200",
+    "\"Golden Dome\" OR USSF OR \"space defense\" OR hypersonic lang:en min_faves:200",
+    "ESA OR CNES OR Ariane OR \"commercial space\" lang:en min_faves:200",
+    # Investment
+    "Bitcoin OR BTC OR \"BTC ETF\" OR \"crypto ETF\" lang:en min_faves:500",
+    "Ethereum OR stablecoin OR DeFi OR \"spot ETF\" lang:en min_faves:300",
+    "\"tech earnings\" OR \"Nvidia earnings\" OR \"AI valuation\" lang:en min_faves:300",
+    "Palantir OR PLTR OR \"AI stock\" OR \"space stock\" lang:en min_faves:200",
 ]
 
 
@@ -222,13 +229,10 @@ FR_TRUSTED_HANDLES = [
     "lefigaro",
     "BFMTV",
     "bfmbusiness",
-    "Investir",
-    "JournalduCoin",
-    "Cointribune",
     "FrenchWeb",
     "MaddyNess",
     "JournalDuNet",
-    # FR tech press (primary FR AI signal lives here)
+    # FR tech / AI press
     "presse_citron",
     "siecledigital",
     "usine_digitale",
@@ -237,30 +241,21 @@ FR_TRUSTED_HANDLES = [
     "LesNumeriques",
     "frandroid",
     "LADN_EU",
-    # FR crypto press
+    # FR space
+    "CNES",
+    "ArianeGroup",
+    "ESA_FR",
+    # FR investment / crypto
     "BFMcrypto",
-    "CointelegraphFR",
-    "cryptoast_fr",
-    # FR bourse / macro
-    "BoursoraMag",
     "Capital",
     "Challenges",
     "LExpress",
-    "AgefiFrance",
-    "JDNebusiness",
     "latribune",
     "LaTribuneTech",
     "Finary",
     "Zonebourse",
     "cafedelabourse",
     "GoodValYou",
-    "Grainedecrypteur",
-    "FlasheurInvest",
-    "Graphseo",
-    "CryptoPicsou",
-    "coinacademy_fr",
-    "FranceCryptos",
-    "LeJournalDuCoin",
 ]
 
 EN_TRUSTED_HANDLES = [
@@ -303,29 +298,18 @@ EN_TRUSTED_HANDLES = [
     "gwern",
     "rowancheung",
     "TheRundownAI",
-    # Crypto press
+    # Crypto / investment press
     "CoinDesk",
-    "TheBlock__",
-    "BitcoinMagazine",
-    "Cointelegraph",
-    "decryptmedia",
     "blockworks_",
-    "CryptoSlate",
-    "CoinMarketCap",
-    "WatcherGuru",
-    "DocumentingBTC",
     "saylor",
     "MicroStrategy",
-    "Polymarket",
-    "circle",
-    # Bourse / market signal
+    # Market signal
     "MarketWatch",
     "Investingcom",
     "SquawkCNBC",
     "KobeissiLetter",
     "unusual_whales",
     "bespokeinvest",
-    "markets",
     # Official AI / big-tech news
     "MistralAI",
     "nvidia",
@@ -333,25 +317,34 @@ EN_TRUSTED_HANDLES = [
     "intel",
     "Microsoft",
     "Meta",
-    # AI infrastructure, power, mining-to-HPC, space
+    # AI infrastructure / compute
     "CoreWeave",
     "CrusoeEnergy",
     "LambdaAPI",
     "applied_dc",
     "IREN_Ltd",
-    "Hut8Corp",
-    "TeraWulfInc",
-    "CipherMining",
-    "CleanSpark_Inc",
-    "MARAHoldings",
-    "RiotPlatforms",
+    # Space — primary new pillar
     "SpaceX",
     "Starlink",
     "RocketLab",
+    "NASA",
+    "NASAKennedy",
+    "NASAArtemis",
+    "ESA",
+    "CNES",
+    "ArianeGroup",
     "PeterDiamandis",
-    # AI-linked crypto / decentralized compute
-    "bittensor_",
-    "opentensor",
+    "Astro_DonPettit",
+    "ChrisHadfield",
+    "RDWSpace",
+    "ASTSpaceMobile",
+    "IntuitiveMach",
+    "BlueOrigin",
+    "SpaceNews",
+    "SpaceflightNow",
+    "NASASpaceflight",
+    "Teslarati",
+    "ShawnLevasseur",
 ]
 
 # Combined list kept for the source-trust check.
