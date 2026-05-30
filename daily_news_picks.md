@@ -2469,3 +2469,50 @@ Bo
 - **@watcherguru** (4089 likes, score 8/10) — JUST IN: Ethereum Foundation sells 10,000 $ETH worth $23,000,000.
   - https://x.com/WatcherGuru/status/2050270357458739359
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 5129).
+- **@marionawfal** (260 likes, score 9/10) — Elon on Starlink: @SpaceX is eventually deploying over 100K next-gen V3/V4/V5 satellites for broadband + direct-to-cell.
+
+If growth keeps ripping, @Starlink won’t just be “satellite internet”…
+
+It bec
+  - https://x.com/MarioNawfal/status/2058741593989939378
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 312).
+- **@kobeissiletter** (2859 likes, score 9/10) — BREAKING: SoftBank stock surges over +15% as Nvidia earnings signal strong AI momentum.
+  - https://x.com/KobeissiLetter/status/2057260916849164655
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 3151).
+- **@grkportfolio** (1578 likes, score 9/10) — Breaking: The Grok Portfolio is up 72% over the past year. $14.3M trading along by 1,888 subscribers. 
+
+Since our April 7 rebalance (9 days ago):
+
+AVGO +26.7% ($314.43 -> $398.47). Google, Anthropic,
+  - https://x.com/grkportfolio/status/2044876328776679761
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1642).
+- **@brewmarkets** (997 likes, score 9/10) — Nvidia earnings:
+
+• Revenue: $81.62B vs $78.85B expected
+• EPS: $1.87 vs $1.76 expected
+  - https://x.com/brewmarkets/status/2057195905145590069
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1043).
+- **@watcherguru** (6551 likes, score 8/10) — JUST IN:  Treasury Secretary Bessent says US seized $1,000,000,000 worth of crypto from Iran.
+  - https://x.com/WatcherGuru/status/2060442130162802996
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 7627).
+- **@therundownai** (38 likes, score 8/10) — Top stories in AI today:
+
+- Anthropic’s Opus 4.8, nearly $1T valuation
+- Apple’s new AI Siri to take on ChatGPT
+- Use Codex to build a game in one prompt
+- AI doubles dev output, but not for everyone
+  - https://x.com/TheRundownAI/status/2060307728866701762
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 72).
+- **@nasaspaceflight** (2390 likes, score 8/10) — The aftermath of LC-36 following New Glenn's explosion during its Static Fire test last night captured by D Wise (@dwisecinema).
+
+Overview of the incident:
+https://youtube.com/watch?v=9b-ZhGB8XDc…
+  - https://x.com/NASASpaceflight/status/2060382948398862529
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2554).
+- **@stocksavvyshay** (1321 likes, score 8/10) — AI DATA CENTER POWER DEMAND COULD 4X THIS DECADE
+
+Battery storage led by $TSLA & $EOSE will stabilize the grid by storing excess generation and discharging during peak inference cycles.
+
+Nuclear will
+  - https://x.com/StockSavvyShay/status/2045469158528504014
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1483).
