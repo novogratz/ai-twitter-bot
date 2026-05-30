@@ -123,40 +123,69 @@ EN_ACCOUNTS = [
 ]
 
 SEARCH_QUERIES = [
-    # Space FR — boosted priority
-    "SpaceX OR Starship OR Starlink lang:fr min_faves:5",
-    "Blue Origin OR Rocket Lab OR ArianeGroup lang:fr min_faves:5",
-    "fusée OR satellite OR aerospace lang:fr min_faves:5",
-    "exploration Mars OR colonisation Lune lang:fr",
-    "vols habités OR tourisme spatial lang:fr",
-    "CNES OR ESA OR Ariane lang:fr min_faves:5",
-    "new space OR NewSpace OR spatial lang:fr min_faves:5",
-    # Space EN
-    "orbital economy OR launch vehicle OR NewSpace lang:en min_faves:10",
-    "new space startups OR launch vehicle lang:en min_faves:20",
-    # AI FR
-    "IA OR ChatGPT lang:fr min_faves:30",
-    "\"agents IA\" OR \"agent IA\" lang:fr min_faves:5",
-    "Mistral OR HuggingFace OR \"Hugging Face\" lang:fr min_faves:5",
-    "OpenAI OR Claude OR Anthropic lang:fr min_faves:5",
-    "Nvidia OR GPU OR datacenter lang:fr min_faves:5",
-    # Crypto / Finance FR
-    "Bitcoin OR crypto OR Ethereum lang:fr min_faves:30",
-    "DeFi OR Solana OR memecoin lang:fr min_faves:15",
-    "bourse OR CAC40 OR trading lang:fr min_faves:20",
-    "PEA OR ETF OR investissement lang:fr min_faves:5",
-    "startup levée de fonds lang:fr",
+    # ===== FRENCH PRIORITY — Space =====
+    "SpaceX OR Starship OR Starlink lang:fr min_faves:2",
+    "Blue Origin OR \"New Glenn\" OR \"Virgin Galactic\" lang:fr min_faves:2",
+    "fusée OR satellite OR lancement spatial lang:fr min_faves:2",
+    "CNES OR ESA OR Ariane OR ArianeGroup lang:fr min_faves:2",
+    "exploration Mars OR Lune OR Artemis lang:fr min_faves:2",
+    "tourisme spatial OR vols habités OR astronaute lang:fr min_faves:2",
+    "Rocket Lab OR RKLB OR NASA lang:fr min_faves:2",
+    "espace OR spatial OR new space lang:fr min_faves:5",
+    "satellite internet OR Starlink FR lang:fr min_faves:2",
+    "Golden Dome OR défense spatiale lang:fr min_faves:2",
+    # ===== FRENCH PRIORITY — AI =====
+    "IA OR intelligence artificielle lang:fr min_faves:10",
+    "ChatGPT OR OpenAI OR Mistral lang:fr min_faves:5",
+    "Claude OR Anthropic OR Gemini lang:fr min_faves:5",
+    "agents IA OR agent IA OR agentic lang:fr min_faves:3",
+    "Nvidia OR GPU OR datacenter IA lang:fr min_faves:3",
+    "robotique OR robot humanoïde OR Tesla Optimus lang:fr min_faves:3",
+    "Hugging Face OR modèle IA OR LLM lang:fr min_faves:3",
+    "IA générative OR IA générale OR AGI lang:fr min_faves:3",
+    # ===== FRENCH PRIORITY — Investment =====
+    "Bitcoin OR BTC OR crypto lang:fr min_faves:10",
+    "investissement OR bourse OR ETF lang:fr min_faves:5",
+    "Nvidia OR Palantir OR action tech lang:fr min_faves:3",
+    "levée de fonds OR startup IA lang:fr min_faves:3",
+    "PEA OR Livret A OR épargne lang:fr min_faves:3",
+    "Wall Street OR Nasdaq OR S&P lang:fr min_faves:3",
+    # ===== ENGLISH — Space (impactful) =====
+    "SpaceX OR Starship OR Starlink lang:en min_faves:50",
+    "Rocket Lab OR RKLB OR NASA Artemis lang:en min_faves:20",
+    "Blue Origin OR Virgin Galactic OR space tourism lang:en min_faves:20",
+    "satellite OR orbital OR space launch lang:en min_faves:20",
+    "ASTS OR LUNR OR RKLB OR space stock lang:en min_faves:10",
+    "space defense OR Golden Dome OR USSF lang:en min_faves:20",
+    # ===== ENGLISH — AI (impactful) =====
+    "OpenAI OR Anthropic OR xAI lang:en min_faves:100",
+    "Nvidia OR GPU OR AI datacenter lang:en min_faves:50",
+    "AI agents OR agentic AI lang:en min_faves:50",
+    "robotics OR humanoid robot lang:en min_faves:50",
+    "Mistral OR open source AI lang:en min_faves:20",
+    # ===== ENGLISH — Investment =====
+    "Bitcoin OR BTC ETF OR crypto lang:en min_faves:100",
+    "Palantir OR CoreWeave OR AI stock lang:en min_faves:50",
+    "tech earnings OR Nvidia earnings lang:en min_faves:50",
 ]
 
 HOT_TAB_QUERIES = [
-    "SpaceX OR Starlink OR xAI lang:en min_faves:1000",
-    "Starship launch OR Mars mission OR orbital economy lang:en min_faves:500",
-    "robotics OR humanoid robots OR frontier tech lang:en min_faves:500",
-    "SpaceX OR Starship lang:fr min_faves:10",
-    "espace OR spatial OR satellite lang:fr min_faves:15",
-    "IA lang:fr min_faves:20",
-    "Bitcoin lang:fr min_faves:20",
-    "crypto lang:fr min_faves:20",
+    # Breaking space news EN
+    "SpaceX OR Starship OR Starlink lang:en min_faves:500",
+    "Rocket Lab OR NASA OR space launch lang:en min_faves:200",
+    "space defense OR Golden Dome lang:en min_faves:200",
+    # Breaking AI news EN
+    "OpenAI OR Anthropic OR xAI lang:en min_faves:500",
+    "Nvidia OR AI datacenter lang:en min_faves:300",
+    "robotics OR humanoid robot lang:en min_faves:300",
+    # Breaking FR — Space + AI (for funny replies)
+    "SpaceX OR Starship OR espace lang:fr min_faves:5",
+    "IA OR ChatGPT OR Mistral lang:fr min_faves:5",
+    "satellite OR fusée OR Ariane lang:fr min_faves:3",
+    "Bitcoin OR crypto OR investissement lang:fr min_faves:5",
+    # Breaking investment EN
+    "Bitcoin OR BTC ETF lang:en min_faves:300",
+    "Palantir OR CoreWeave OR space stock lang:en min_faves:100",
 ]
 
 DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "1440"))

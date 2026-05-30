@@ -735,7 +735,9 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             var replies = extractCount(a, 'reply');
             var tl = detectTranslatedLang(a);
             var isReply = detectReplyArticle(a, text);
-            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, 200), a: author || 'unknown', l: likes, r: replies, tl: tl, ir: isReply}));
+            var timeEl = a.querySelector('time[datetime]');
+            var ts = timeEl ? timeEl.getAttribute('datetime') : '';
+            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, 200), a: author || 'unknown', l: likes, r: replies, tl: tl, ir: isReply, ts: ts}));
         }
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
         return '[' + tweets.join(',') + ']';

@@ -924,13 +924,11 @@ def run_retweet_cycle():
             # bourse keyword AND no celebrity/sports/weather marker.
             if not _is_on_niche(text):
                 continue
-            # Age gate: only apply when the scraper returned a real timestamp.
-            # Without a timestamp _scrape_age_hours returns 999999 and kills
-            # every candidate — scraper never populates this field currently.
-            if t.get("timestamp") or t.get("ts") or t.get("datetime"):
-                age_hours = _scrape_age_hours(t)
-                if age_hours > MAX_CANDIDATE_AGE_HOURS:
-                    continue
+            # Hard age gate — scraper now extracts <time datetime> so this
+            # works. No timestamp = assume stale, skip (avoids 2024/2025 content).
+            age_hours = _scrape_age_hours(t)
+            if age_hours > MAX_CANDIDATE_AGE_HOURS:
+                continue
             # Belt-and-suspenders source check — even though the handle
             # came from our whitelist, pull it through _has_trusted_source
             # so embedded-article logic stays consistent.
