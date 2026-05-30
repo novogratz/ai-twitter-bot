@@ -183,33 +183,30 @@ FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "5
 FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "20"))
 
 FEED_REPOST_SEARCH_QUERIES = [
-    # AI
+    # AI — new model releases (highest priority)
+    "\"new model\" OR \"introducing\" OpenAI OR Anthropic OR Google lang:en min_faves:200",
+    "GPT OR Claude OR Gemini OR Grok OR Llama \"released\" OR \"launches\" lang:en min_faves:100",
     "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:200",
+    "\"reasoning model\" OR \"frontier model\" OR \"o3\" OR \"o4\" lang:en min_faves:100",
     "Nvidia OR GPU OR \"compute cluster\" OR semiconductor lang:en min_faves:200",
-    "\"AI agents\" OR \"agentic AI\" OR \"frontier model\" lang:en min_faves:100",
+    "\"AI agents\" OR \"agentic AI\" OR \"multi-agent\" lang:en min_faves:100",
     "\"AI datacenter\" OR \"power demand\" OR megawatt OR gigawatt lang:en min_faves:100",
-    "robotics OR \"humanoid robot\" OR \"AI robotics\" lang:en min_faves:100",
-    "nuclear OR grid OR \"power generation\" AI lang:en min_faves:100",
+    "robotics OR \"humanoid robot\" OR \"Figure\" OR \"Boston Dynamics\" lang:en min_faves:100",
     "CoreWeave OR CRWV OR APLD OR IREN lang:en min_faves:50",
-    # Space — PUSH IT (2026-05-29 space mode)
-    "SpaceX OR Starship OR \"Falcon 9\" OR Starlink lang:en min_faves:200",
-    "\"Blue Origin\" OR \"New Glenn\" OR \"Virgin Galactic\" lang:en min_faves:100",
-    "\"Rocket Lab\" OR RKLB OR NASA OR Artemis lang:en min_faves:50",
-    "\"AST SpaceMobile\" OR ASTS OR LUNR OR \"space stock\" lang:en min_faves:100",
+    # Space — launches, landings, major events (highest priority)
+    "liftoff OR \"launch successful\" OR \"in orbit\" OR splashdown lang:en min_faves:100",
+    "Starship OR \"Falcon 9\" OR \"New Glenn\" OR \"Vulcan\" launch lang:en min_faves:100",
+    "SpaceX OR Starlink OR \"Rocket Lab\" lang:en min_faves:200",
+    "NASA OR Artemis OR \"moon mission\" OR \"Mars mission\" lang:en min_faves:100",
+    "\"Blue Origin\" OR \"Virgin Galactic\" OR \"space tourism\" lang:en min_faves:100",
+    "\"AST SpaceMobile\" OR ASTS OR LUNR OR \"space stock\" lang:en min_faves:50",
     "\"Golden Dome\" OR USSF OR \"space defense\" OR hypersonic lang:en min_faves:100",
     "ESA OR CNES OR Ariane OR \"commercial space\" lang:en min_faves:100",
     "satellite OR orbital OR \"space launch\" OR \"launch vehicle\" lang:en min_faves:200",
-    "\"Axiom Space\" OR \"Firefly\" OR \"Relativity Space\" OR \"Sierra Space\" lang:en min_faves:100",
-    "\"space economy\" OR \"space investment\" OR \"space startup\" lang:en min_faves:100",
-    "Mars OR lunar OR moon OR Artemis OR \"space station\" lang:en min_faves:300",
-    "\"Planet Labs\" OR \"BlackSky\" OR \"Earth observation\" satellite lang:en min_faves:100",
+    "Mars OR lunar OR moon OR \"space station\" OR ISS lang:en min_faves:300",
     "\"Amazon Kuiper\" OR \"satellite internet\" OR Starlink competitor lang:en min_faves:200",
-    "MNTS OR Momentus OR SIDU OR \"Sidus Space\" lang:en min_faves:50",
-    "ASTC OR \"Astrotech\" OR RDW OR \"Redwire\" lang:en min_faves:50",
-    "RKLB OR LUNR OR ASTS OR SPCE OR \"space stock\" lang:en min_faves:100",
     # Investment
     "Bitcoin OR BTC OR \"BTC ETF\" OR \"crypto ETF\" lang:en min_faves:500",
-    "Ethereum OR stablecoin OR DeFi OR \"spot ETF\" lang:en min_faves:300",
     "\"tech earnings\" OR \"Nvidia earnings\" OR \"AI valuation\" lang:en min_faves:300",
     "Palantir OR PLTR OR \"AI stock\" OR \"space stock\" lang:en min_faves:200",
 ]
@@ -622,6 +619,8 @@ def _candidate_rank(c: dict) -> tuple:
         "rates", "inflation", "tariff", "chips", "gpu", "coreweave",
         "crwv", "apld", "iren", "hive", "slnh", "terawulf", "wulf",
         "cipher", "cifr", "bittensor", "tao", "spacex", "starlink",
+        "rocket lab", "rklb", "nasa", "esa", "blue origin", "axiom",
+        "gemini", "claude", "grok", "llama", "gpt", "xai", "deepmind",
     ))
     hard_impact = any(k in text for k in (
         "datacenter", "data center", "megawatt", "mw", "gigawatt", "gw",
@@ -630,8 +629,23 @@ def _candidate_rank(c: dict) -> tuple:
         "sec approves", "lawsuit", "ban", "partnership", "oracle", "softbank",
         "grid", "power generation", "colocation", "hpc", "ai hosting",
         "compute", "robotics", "humanoid", "frontier tech",
+        "orbit", "orbital", "landing", "liftoff", "rocket", "spacecraft",
+        "satellite", "iss", "mission", "astronaut", "capsule", "booster",
     ))
     numbers = len(re.findall(r"(\$?\d+(?:[.,]\d+)?\s?(?:%|bn|billion|m|million|k)?)", text))
+    # Extra bonus for tier-1 AI/Space events: new model releases, rocket launches
+    tier1_ai = any(k in text for k in (
+        "introducing", "new model", "releases", "released", "launches",
+        "gpt-5", "gpt-6", "claude 4", "claude 5", "gemini 2", "gemini ultra",
+        "llama 4", "llama 5", "grok 3", "grok 4", "mistral large",
+        "o3", "o4", "reasoning model", "frontier model",
+    ))
+    tier1_space = any(k in text for k in (
+        "liftoff", "splashdown", "landing", "launch successful", "in orbit",
+        "starship", "falcon 9", "new glenn", "vulcan", "ariane 6",
+        "crew dragon", "dragon capsule", "iss docking", "moon landing",
+        "mars", "artemis", "spacewalk", "eva ",
+    ))
     engagement = int(c.get("likes") or 0) + (2 * int(c.get("replies") or 0))
     impact_points = (
         (2 if breaking else 0)
@@ -639,6 +653,8 @@ def _candidate_rank(c: dict) -> tuple:
         + (2 if strategic else 0)
         + (2 if hard_impact else 0)
         + min(numbers, 3)
+        + (3 if tier1_ai else 0)
+        + (3 if tier1_space else 0)
     )
     return (impact_points, engagement)
 
@@ -646,11 +662,12 @@ def _candidate_rank(c: dict) -> tuple:
 def _score_candidate(pick: dict) -> dict:
     engagement = int(pick.get("likes") or 0) + (2 * int(pick.get("replies") or 0))
     impact_points = _candidate_rank(pick)[0]
-    if impact_points >= 10 and engagement >= 100:
+    # tier1_ai/space adds +3, so a new model drop or rocket launch auto-qualifies at 9
+    if impact_points >= 8 and engagement >= 50:
         score = 9
-    elif impact_points >= 7 and engagement >= 50:
+    elif impact_points >= 6 and engagement >= 25:
         score = 8
-    elif impact_points >= 5 and engagement >= 25:
+    elif impact_points >= 4 and engagement >= 10:
         score = 7
     else:
         score = 6
