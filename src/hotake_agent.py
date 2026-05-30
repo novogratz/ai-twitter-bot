@@ -803,6 +803,36 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
             performance_section = (performance_section or "") + "\n\n" + sw
     except Exception:
         pass
+    # Inject real article URLs from the RSS pool so the LLM doesn't hallucinate.
+    # external_signal.json is refreshed every ~30 min by the RSS bot.
+    news_pool_section = ""
+    try:
+        import json as _json
+        import os as _os
+        _sig_path = _os.path.join(_os.path.dirname(_os.path.dirname(__file__)), "external_signal.json")
+        _sig = _json.load(open(_sig_path))
+        _items = [
+            it for it in (_sig.get("items") or [])
+            if it.get("url") and "x.com" not in it.get("url", "") and "twitter.com" not in it.get("url", "")
+        ]
+        if _items:
+            _lines = "\n".join(
+                f"- {it['url']} | {it.get('title','')[:80]}"
+                for it in _items[:15]
+            )
+            news_pool_section = (
+                "\n\n==================================================\n"
+                "POOL D'ARTICLES RÉELS (fraîchement scrappés — utilise UN de ces liens)\n"
+                "==================================================\n"
+                "NE GÉNÈRE PAS D'URL TOI-MÊME. Choisis UNIQUEMENT dans cette liste.\n"
+                "Si aucun article ne convient → réponds SKIP.\n\n"
+                + _lines
+            )
+    except Exception:
+        pass
+    if news_pool_section:
+        performance_section = (performance_section or "") + news_pool_section
+
     log.info(f"[HOTAKE] Generating in lang={_ht_lang}")
     prompt = HOTAKE_PROMPT.format(
         performance_section=performance_section,
@@ -846,6 +876,13 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
 
     if tweet.startswith('"') and tweet.endswith('"'):
         tweet = tweet[1:-1]
+
+    # Strip literal URL placeholders the LLM sometimes echoes from the prompt
+    # format instructions (e.g. "[URL article]", "<URL article>").
+    tweet = re.sub(r"\[URL[^\]]*\]", "", tweet).strip()
+    tweet = re.sub(r"<URL[^>]*>", "", tweet).strip()
+    if not tweet:
+        return None
 
     # Strip the [PATTERN: id] line first — it's pure attribution metadata
     # for the bandit loop, never tweeted.
