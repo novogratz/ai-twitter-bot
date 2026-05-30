@@ -323,14 +323,12 @@ def main():
 
     # Catchup burst — fires 5 extra rounds of every high-volume surface so
     # any downtime gap is filled quickly on restart.
-    log.info("Catchup burst: 5 extra rounds of RT / quote / reply...")
-    for _burst_i in range(5):
-        log.info(f"[CATCHUP] Round {_burst_i + 1}/5")
-        if not args.reply_only:
-            safe_run_retweet_cycle()
-            safe_run_quote_tweet_cycle()
-        if not args.post_only:
-            safe_run_direct_reply_cycle()
+    log.info("Catchup burst: 1 round of RT / quote / reply...")
+    if not args.reply_only:
+        safe_run_retweet_cycle()
+        safe_run_quote_tweet_cycle()
+    if not args.post_only:
+        safe_run_direct_reply_cycle()
     log.info("Catchup burst complete.")
 
     # Schedule jobs
