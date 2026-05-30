@@ -4354,3 +4354,125 @@ Also,
 The bright moving lights seemed unusually close to the lunar surface, creating a dramatic visual
   - https://x.com/Physicsastronmy/status/2060708179688763783
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 18).
+- **@spacex** (1443 likes, score 9/10) — Falcon 9 launches 24 @Starlink satellites from California
+  - https://x.com/SpaceX/status/2060766975404462459
+  - **WHY**: Source fiable + impact concret (score signal 14, engagement 1755).
+- **@hamids** (141 likes, score 9/10) — SpaceXai just leased a ~300 megawatt data center to Anthropic for ~$15 Billion / year.
+
+$META is bringing ~1.5 gigawatts of data center (about 5x that) online in 2026 and possibly as much as another 4
+  - https://x.com/hamids/status/2060104411956002922
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 177).
+- **@mikeseeley** (31 likes, score 8/10) — Another view of the 8:57am (ET) Friday, May 29, SpaceX launch, a Falcon 9 rocket carrying Starlink satellites to orbit.
+
+This was the view from Titusville, 1:24 in flight, as the rocket passed in fron
+  - https://x.com/MikeSeeley/status/2060713581226709479
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 35).
+- **@ahmedshubber25** (104 likes, score 9/10) — I wouldn’t underestimate Bezos.
+
+This will likely be rebuilt by the end of 2026, with regular launches of New Glenn ramping up in 2027.
+
+He has access to virtually unlimited capital and some of the be
+  - https://x.com/ahmedshubber25/status/2060726775080997305
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 138).
+- **@nick88886666** (9 likes, score 7/10) — Blue Origin's New Glenn rocket exploded during a static fire test at Cape Canaveral
+An accident that occurred during the NG-4 mission (preparation for Amazon Kuiper satellite launch), with no casualti
+  - https://x.com/nick88886666/status/2060175380955406575
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 11).
+- **@kimmonismus** (721 likes, score 8/10) — o3 should have been named GPT-5.
+
+Time to say goodbye.
+
+Great model.
+  - https://x.com/kimmonismus/status/2060371228972417492
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 775).
+- **@stockmktnewz** (21 likes, score 8/10) — SpaceX is currently worth more than Berkshire Hathaway $BRK.B
+
+Anthropic is currently larger than Walmart $WMT
+
+OpenAI is currently larger than JPMorgan $JPM
+  - https://x.com/StockMKTNewz/status/2060759432712044619
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 33).
+- **@stocksavvyshay** (1059 likes, score 8/10) — Leopold Aschenbrenner’s $IREN position is now up over 8x since he opened it last year.
+  - https://x.com/StockSavvyShay/status/2060693740445180370
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1117).
+- **@gdb** (770 likes, score 8/10) — You can now just build amazing voice agents, with the GPT-Realtime-2 reasoning model in our API:
+  - https://x.com/gdb/status/2052448850796011931
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 982).
+- **@cmsinvests** (603 likes, score 8/10) — Investors realizing if they had just copy traded Trump and bought $DELL, they’d be up 75% in just 20 days.
+
+Now you have that same opportunity with:
+
+• $MU at $900
+• $PLTR at $140
+• $NOW at $100
+
+Make
+  - https://x.com/cmsinvests/status/2060334641270100423
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 655).
+- **@aleabitoreddit** (594 likes, score 8/10) — $LASR (NLight), a $2.2B US company does these directed energy weapons. 
+
+They build the "Death Ray" - Lasers that shoot down ballistic and hypersonic missiles.
+
+This can be adapted to Orbital death ra
+  - https://x.com/aleabitoreddit/status/2014826579625738691
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 654).
+- **@calvinfroedge** (361 likes, score 8/10) — Hormuz matters because even if North America is somewhat insulated, the rest of the global economy is going to get absolutely eviscerated
+
+40% of S&P500 revenue and 50% of MAG7 revenues come from over
+  - https://x.com/calvinfroedge/status/2060728871666766305
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 407).
+- **@mrmikeinvesting** (191 likes, score 8/10) — President Trump has only ever exclusively mentioned one stock by its ticker…
+
+That happens to be $PLTR.
+
+With Palantir breaking out of its 10 month bull flag the next move can be explosive.
+
+$PLTR wil
+  - https://x.com/MrMikeInvesting/status/2060749839667749249
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 225).
+- **@nasa_marshall** (88 likes, score 8/10) — Once in a Blue Moon 
+
+Tomorrow, May 31, we will be treated to a rare second full Moon in one month – aka a Blue Moon. Which means double the Moon joy!
+
+Check out more notable astronomical events that
+  - https://x.com/NASA_Marshall/status/2060759486915064160
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 106).
+- **@petergostev** (42 likes, score 8/10) — My personal vibes based opinion on this gap - at DeepSeek R1 level I believe this was real - o1 and r1 were not that far apart. 
+
+From o3 onwards, I think there's something fishy going on with the ben
+  - https://x.com/petergostev/status/2060705991319241197
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 62).
+- **@tedpillows** (11 likes, score 7/10) — Stablecoin dominance is back above its Bull market support band.
+
+A weekly close above 10.6% could accelerate the downtrend in $BTC and alts.
+  - https://x.com/TedPillows/status/2060777470400364712
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 23).
+- **@tina22_2** (12 likes, score 7/10) — Elon Musk announcing the Terafab - March 21, 2026
+
+‘We either build the Terafab or we don’t have the chips… and we need the chips, so we’re gonna build the Terafab.’
+
+Tesla • SpaceX • xAI joint projec
+  - https://x.com/Tina22_2/status/2060657454673781089
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 14).
+- **@cb_doge** (5407 likes, score 7/10) — A rocket returning from hypersonic speed, not only surviving that fiery descent, but hovering & landing at a precise position.
+
+That level of control, balance, & engineering perfection is unbelievable
+  - https://x.com/cb_doge/status/2011030591215714748
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6425).
+- **@aakashgupta** (1375 likes, score 7/10) — Tony Stark's JARVIS ran what would basically be a persistent AI agent with voice, vision, and full codebase access across every system in his lab. In 2026, that's a frontier model on a loop.
+
+Opus 4.6
+  - https://x.com/aakashgupta/status/2040345886967070994
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1425).
+- **@villi** (14 likes, score 7/10) — A fantastic essay on the mismatch between AI power demand and the profile power supply, requiring a new orchestration layer. Excellent read!
+  - https://x.com/villi/status/2060481478069457259
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 16).
+- **@danielisdizzy** (7 likes, score 7/10) — It’s impossible not to be bullish on neo cloud companies $NBIS, $CRWV, $IREN.
+
+The demand environment is absurd.
+
+As the CEO of $NBIS said:
+
+“Demand is so high, coming from so many directions. Whateve
+  - https://x.com/danielisdizzy/status/2060752558075859054
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 11).
