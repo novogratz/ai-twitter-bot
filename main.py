@@ -231,20 +231,6 @@ def main():
         },
     )
 
-    # --- POST BOT (secondary - few posts, only bangers) ---
-    def reschedule_and_post():
-        if has_post_slot():
-            safe_run_bot_cycle()
-        else:
-            log.info(f"[POST] Daily post caps full ({post_slot_status()}). No news/hot-take search this cycle.")
-        next_min = post_interval_minutes()
-        hour = datetime.now(ZoneInfo("America/New_York")).hour
-        log.info(f"[POST][EST {hour}:xx] Next post in {next_min} minutes.")
-        scheduler.reschedule_job(
-            "post_job",
-            trigger=IntervalTrigger(minutes=next_min),
-        )
-
     def _quiet_skip(label: str) -> bool:
         """Skip-and-reschedule helper for engagement cycles. Uses the
         probabilistic fade (16h-active human profile, FR + QC dual audience)
@@ -340,14 +326,12 @@ def main():
 
     # Catchup burst — fires 5 extra rounds of every high-volume surface so
     # any downtime gap is filled quickly on restart.
-    log.info("Catchup burst: 5 extra rounds of RT / quote / reply / spicy / breakout...")
+    log.info("Catchup burst: 5 extra rounds of RT / quote / reply...")
     for _burst_i in range(5):
         log.info(f"[CATCHUP] Round {_burst_i + 1}/5")
         if not args.reply_only:
             safe_run_retweet_cycle()
             safe_run_quote_tweet_cycle()
-            safe_run_spicy_cycle()
-            safe_run_breakout_cycle()
         if not args.post_only:
             safe_run_direct_reply_cycle()
     log.info("Catchup burst complete.")
@@ -579,18 +563,6 @@ def main():
             id="daily_digest_job",
         )
 
-        # Thread bot — 1 well-crafted FR thread per day on the biggest IA story.
-        # Different distribution surface than single-tweet news (lifespan = days,
-        # high screenshot+RT rate). Idempotent state in thread_daily_state.json.
-        # Fires every 4h so a missed cron after restart still catches up;
-        # the daily-state file guards against double-posting.
-        log.info("Thread bot: 1 FR thread/day on the biggest IA story (every 4h, idempotent).")
-        scheduler.add_job(
-            safe_run_thread_cycle,
-            trigger=IntervalTrigger(hours=4),
-            id="thread_job",
-        )
-
         # Promote-best-reply bot — plain-reposts our highest-engagement reply
         # so it appears on the profile feed instead of buried in a thread.
         log.info("Promote bot: plain-repost top recent reply every 3h (cap 3/day).")
@@ -645,17 +617,6 @@ def main():
             id="viral_followup_job",
         )
 
-        # Daily digest thread — once/day, idempotent, fires every 4h to
-        # catch up after restart. Different from thread_bot (single-story)
-        # — this one bundles 5 stories into a recap thread. Highly shareable
-        # format on FR Twitter.
-        log.info("Digest thread bot: 1 daily 5-story FR recap thread (every 4h, idempotent).")
-        scheduler.add_job(
-            safe_run_digest_thread_cycle,
-            trigger=IntervalTrigger(hours=4),
-            id="digest_thread_job",
-        )
-
         # Follow blast bot — bulk-follow ~30 FR niche accounts every 15 min.
         # Highest-leverage net-new follower acquisition: ~120/hour follow
         # attempts, with 10-20% reciprocity = ~12-25 followers/hour gain.
@@ -691,13 +652,6 @@ def main():
         else:
             log.info("Self-evolution agent: disabled by default in Plus-safe mode.")
 
-        log.info("Breakout bot: viral-moment amplifier every 8 min.")
-        scheduler.add_job(
-            safe_run_breakout_cycle,
-            trigger=IntervalTrigger(minutes=8),
-            id="breakout_job",
-        )
-
         # Spike orchestrator — when one of OUR posts crosses SPIKE_LIKES
         # (default 25), all bots converge: auto-pin, self-RT, in-thread
         # follow-up, repost promo, like top replies. Most growth
@@ -707,13 +661,6 @@ def main():
             safe_run_spike_cycle,
             trigger=IntervalTrigger(minutes=8),
             id="spike_job",
-        )
-
-        log.info("Spicy bot: polarizing takes + question bait every 10 min.")
-        scheduler.add_job(
-            safe_run_spicy_cycle,
-            trigger=IntervalTrigger(minutes=10),
-            id="spicy_job",
         )
 
         # Suppression watchdog — scrape last 20 own posts hourly, if avg
@@ -854,16 +801,6 @@ def main():
             id="youtube_brief_job",
         )
 
-        # Morning recap thread — fires every hour but only ships once
-        # in the 07:00-10:00 Paris window (idempotent daily). Daily
-        # ritual + ready video opener.
-        log.info("Morning recap: 4-tweet English thread daily in morning window (hourly check).")
-        scheduler.add_job(
-            safe_run_morning_recap_cycle,
-            trigger=IntervalTrigger(hours=1),
-            id="morning_recap_job",
-        )
-
         # Analyzer bot — reads engagement_log every 4h, produces
         # performance_insights.json (best patterns, hours, topics) that
         # gets injected into news/hotake prompts. Data-driven self-improvement.
@@ -905,8 +842,6 @@ def main():
             "followback_job": 20,
             "pin_job": 60,            # 1h
             "spike_job": 4,
-            "breakout_job": 2,
-            "spicy_job": 15,
             "mega_watch_job": 1.0,
             "follow_blast_job": 8,
             "replyback_job": 3,
