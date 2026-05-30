@@ -981,7 +981,7 @@ def run_retweet_cycle():
                 log.info("[RETWEET] Failed to write daily picks file:")
                 traceback.print_exc()
 
-        threshold = 7  # raise bar to filter clickbait (score 6 = "$1M fastest way" level)
+        threshold = 9  # only truly exceptional: new model drops, major space news, market-moving events
         if score < threshold:
             log.info(f"[RETWEET] Score {score}/10 below threshold ({threshold}). Logged only.")
             continue
