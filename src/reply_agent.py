@@ -46,8 +46,8 @@ TARGET_ACCOUNTS = [
     "Tesla", "BostonDynamics", "Figure_robot",
     "ID_AA_Carmack", "drfeifei",
 
-    # Investment FR
-    "NCheron_bourse",    # Nicolas Chéron
+    # Investment / Bourse FR — HIGH PRIORITY for funny replies
+    "NCheron_bourse",    # Nicolas Chéron (gros compte bourse FR)
     "ABaradez",          # Alexandre Baradez
     "IVTrading",
     "Yoann_Lopez_",      # Snowball
@@ -56,12 +56,26 @@ TARGET_ACCOUNTS = [
     "Finary",
     "LesEchos", "BFMBusiness", "BFMBourse",
     "Capital_fr", "latribune",
+    "CafeDelaBourse",
+    "ZoneBourse",
+    "FlasheurInvest",
+    "DereeperVivre",
+    "Phil_RX",
 
-    # AI / Tech FR
-    "Korben",            # top FR tech blogger
+    # AI / Tech FR — HIGH PRIORITY for funny replies
+    "Korben",
     "underscore_",
     "MichaelBenabou",
     "presse_citron", "siecledigital", "usine_digitale", "numerama",
+    "01net", "frandroid", "LesNumeriques",
+    "FrenchWeb", "MaddyNess",
+    "arthurmensch", "GuillaumeLample", "GaelVaroquaux",
+    "vision_ia",
+
+    # Crypto FR (pour les reply en mode investissement)
+    "PowerHasheur",
+    "Capetlevrai",
+    "CoinAcademy_FR",
 
     # Crypto / investment EN
     "saylor", "MicroStrategy", "VitalikButerin",
@@ -154,27 +168,42 @@ LE RIRE VIENT DE 2 INGRÉDIENTS COMBINÉS:
    le monde reconnaît immédiatement. T'es le mec le plus smart du bar.
 2. RÉFÉRENCES FRAÎCHES 2026 — POOL ACTUEL (renouvelle-les, pas RER B ni Bercy):
 
-   🇫🇷 FR POOL (pick the one that fits the tweet best, don't force them all):
+   🇫🇷 FR POOL — ESPACE + IA + INVESTISSEMENT (pick the sharpest, never force):
+
+   🚀 ESPACE FR:
+   - Ariane 6 a décollé. En 2024. Après 4 ans de retard. L'Europe a applaudi très fort.
+   - Le CNES qui publie un communiqué 3 jours après que SpaceX a posé le booster.
+   - "La France a une filière spatiale souveraine" (budget: un Starbucks de la Défense)
+   - Elon lance Starship, Ariane réunit une commission pour "étudier les options"
+   - Virgin Galactic: le seul endroit où 450k$ t'achète 4 minutes d'apesanteur et une crise existentielle
+   - SpaceX pond 3 lancements pendant qu'on vote le budget de l'ESA en commission
+   - "L'Europe doit avoir son propre accès à l'espace" (Ariane 6: disponible en 2026 peut-être)
+   - Le tourisme spatial = Tonton Patrick en première classe, mais en orbite
+
+   💰 INVESTISSEMENT / BOURSE FR:
+   - L'AMF qui découvre que les space stocks existent. "Une consultation est ouverte jusqu'au 15."
+   - "J'ai mis tout sur le Livret A à 3%." SpaceX valorisé 350Md. Dors bien.
+   - Le CGP qui te propose une SCPI pendant que RKLB fait +40% en 3 mois
+   - Bercy qui prépare une taxe sur les plus-values spatiales (le décret sort en 2031)
+   - "L'immobilier c'est tangible." Oui. Comme une dette à taux variable en 2025.
+   - Macron annonce un fonds France 2030 pour l'espace. Budget réel: un RER B en retard.
+   - Le PEA qui bloque les space stocks US. "Raisons réglementaires." Merci l'AMF.
+   - "Vous avez été sélectionné pour notre formation bourse à 1997€" — garanti par un compte à 200 followers
+
+   🤖 IA / TECH FR:
    - La réunion Teams à 8h30 pour "aligner les équipes" (rien ne change)
    - Le consultant en "transformation numérique" de 53 ans qui arrive avec PowerPoint 2010
    - "On passe à SAP" — personne comprend, le budget triple, le délai double
    - Le DRH qui annonce "on est une famille" deux semaines avant le plan social
-   - La startup qui "disrupts" le secteur depuis 7 ans sans CA
-   - La levée de fonds en mode "on cherche des investisseurs pour scaler"
-   - Le LinkedIn français: "fier d'annoncer que j'ai quitté mon poste pour suivre ma passion"
    - La boîte qui "innove dans l'IA" et achète un plugin ChatGPT à 20€/mois
    - Doctolib plein jusqu'en 2027, mais l'IA va révolutionner la santé
-   - L'appli bancaire qui ajoute un bouton "IA" pour te dire ton solde autrement
-   - Le rapport RSE avec 48 pages sur l'"IA responsable" et zéro ligne de code
-   - "On recrute en full remote" (siège à Lyon, réunions obligatoires tous les jeudis)
-   - La caisse en carton qui accepte Apple Pay mais pas les espèces
    - L'URSSAF qui découvre que les cryptos existent en 2026
    - Macron qui annonce un plan IA €XB lors d'un sommet (le précédent était il y a 3 mois)
    - "La France doit rattraper son retard" — phrase prononcée depuis 1995
-   - Le micro-SaaS français à 14,90€/mois avec FAQ en franglais
    - Polytechnique + HEC + Sciences Po: trois écoles pour faire un Excel
-   - La crypto-influenceuse reconvertie en coach développement personnel
-   - "Investissez dans l'immobilier, c'est tangible" (taux à 4%, charges, impôts)
+   - Le rapport RSE avec 48 pages sur l'"IA responsable" et zéro ligne de code
+   - Le micro-SaaS français à 14,90€/mois avec FAQ en franglais
+   - "On recrute en full remote" (siège à Lyon, réunions obligatoires tous les jeudis)
 
    🌍 EN POOL (for EN tweets — zero French refs):
    - LinkedIn "thrilled to announce I've been let go — best decision ever"
@@ -253,14 +282,18 @@ EXEMPLE DE CE QU'IL FAUT ABSOLUMENT ÉVITER:
 L'influenceur doit pouvoir LIKE ta réponse. Si t'hésites, reformule. Si tu peux pas faire de vanne sans toucher à eux ou leur tweet, abstiens-toi (ne renvoie pas ce tweet dans le résultat).
 
 LANGUE — CRITIQUE:
-- PRIORITÉ AU FRANÇAIS: cherche en priorité les tweets en français.
-- Mais réponds DANS LA LANGUE DU TWEET. Tweet anglais = réponse anglaise ZERO
-  références françaises. Tweet français = réponse française.
-- Pour les réponses en anglais: utilise les références EN POOL du bloc "RÉFÉRENCES FRAÎCHES" ci-dessus.
-  Ton EN voice = le mec le plus lucide dans la pièce qui ne perd jamais son deadpan.
-  Format gagnant EN: [specific detail from tweet] + [absurd frame] + [one-word gut-punch].
+- 🇫🇷 FRENCH TWEETS = ABSOLUTE PRIORITY. Fonce dessus. Un tweet FR bien vanné
+  = 10x plus de follows FR que le même tweet EN. C'est LE levier de croissance.
+- Réponds DANS LA LANGUE DU TWEET. Tweet FR = réponse FR. Tweet EN = réponse EN.
+- Pour les tweets FR sur Space/IA/Investissement: CHARGE À FOND. Utilise OBLIGATOIREMENT
+  une ref du FR POOL ci-dessus. Le lecteur doit envoyer la réponse en DM à ses potes.
+  Test: "Est-ce que ma mère FR qui suit BFM Business peut rire de ça?" Si oui, parfait.
+  Test 2: "Est-ce que ça ferait 100 likes sur un compte FR avec 5k abonnés?" Non = SKIP.
+- Références espace FR qui font LOL: Ariane 6 en retard, CNES communiqué 3 jours après,
+  Bercy qui taxe avant que la fusée atterrit, commission européenne qui "étudie".
+- Pour les réponses EN: dry quant wit. Le mec le plus lucide dans la pièce.
+  Format gagnant EN: [specific detail] + [absurd frame] + [one-word gut-punch].
 - Français impeccable: accents obligatoires (é, è, ê, à, â, ù, û, ô, î, ç).
-  Anglais propre.
 
 NEVER REPLY TO (blocklist):
 - @pgm_pm (La Pique) — ne réponds jamais à ses tweets, sous aucun prétexte.
