@@ -2764,3 +2764,170 @@ Sit back, relax, and enjoy!
 Timestamps below
   - https://x.com/Teslarati/status/2060374906169163862
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 165).
+- **@mrmikeinvesting** (2742 likes, score 9/10) — Nvidia CEO Jensen Huang just revealed the “five-layer” model of what AI is dependent upon…
+
+These 5 layers include:
+
+1. Energy ~ $NBIS, $IREN, $CIFR, $OKLO
+2. Chips ~ $NVDA, $AMD, $TSM, $AVGO
+3. Cloud
+  - https://x.com/MrMikeInvesting/status/2045934002348118054
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 2890).
+- **@preetkailon** (740 likes, score 9/10) — $SPCX
+
+SPACEX JUST DID A 5-FOR-1 STOCK SPLIT AHEAD OF ITS IPO.
+
+Most people think it’s just a number change.
+It’s not.
+Here’s why it actually matters for retail investors. 
+Before the split, 1 share =
+  - https://x.com/preetkailon/status/2055502028273750019
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 826).
+- **@realjgbanks** (451 likes, score 9/10) — BREAKING: SpaceX could IPO at $1.50 TRILLION.
+
+Meanwhile:
+
+$RKLB = $37B
+$ASTS = $34B
+$LUNR = $5B
+$RDW = $1.8B
+$BKSY = $1.1B
+$SIDU = $184M
+
+One SpaceX is worth more than the entire public space sector
+  - https://x.com/RealJGBanks/status/2040157422044713003
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 501).
+- **@nvidia** (0 likes, score 9/10) — The next industrial revolution is here. 
+
+NVIDIA AI factories convert energy into continuous intelligence, delivering 50x higher throughput per megawatt with Blackwell Ultra.
+  - https://x.com/nvidia/status/2060436016704422249
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 182).
+- **@barchart** (76 likes, score 8/10) — AST SpaceMobile $ASTS just traded green for a record 11 straight days and is now up 25% since we highlighted the possible SpaceX IPO momentum on May 19  Will it continue? For magnified exposure, consi
+  - https://x.com/Barchart/status/2060362887110242591
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 78).
+- **@codebypoonam** (4760 likes, score 8/10) — Do you understand what NVIDIA just did?
+
+They didn't announce anything.
+
+Just coordinates: 25.0528, 121.5990
+
+That's Taipei.
+
+Computex starts June 2.
+
+And three words — "A new era of PC."
+
+Here's what
+  - https://x.com/CodeByPoonam/status/2060421518870634950
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 5294).
+- **@ric_rtp** (2516 likes, score 8/10) — "Selling AI chips to China is like selling nuclear weapons to North Korea."
+
+The Anthropic CEO just went to war with Nvidia at Davos.
+
+And dropped the most terrifying satisfying prediction about AI I'
+  - https://x.com/Ric_RTP/status/2013955017514885194
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2864).
+- **@fluentinfinance** (29585 likes, score 8/10) — California’s wealth tax would cost Nvidia’s CEO Jensen Huang $8 Billion.
+
+His response was simple: “I don’t mind paying taxes.”
+
+“Once a year we get a bill, we pay it, and it’s big. I never once thoug
+  - https://x.com/FluentInFinance/status/2052396385350172746
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 31199).
+- **@bitcoinmagazine** (665 likes, score 8/10) — JUST IN: The Bitcoin Fear & Greed Index is now at "Extreme Fear"  
+
+At $73,600 per BTC.  
+
+Read that again.
+  - https://x.com/BitcoinMagazine/status/2060459996375101644
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 843).
+- **@kobeissiletter** (0 likes, score 8/10) — BREAKING: The S&P 500 closes at its highest level on record and posts a 9-week win streak for the first time since 2023.
+
+This puts the S&P 500 up +20.1% since the March 30th low, adding +$11.4 TRILLI
+  - https://x.com/KobeissiLetter/status/2060451419925143941
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 370).
+- **@yahoofinance** (214 likes, score 8/10) — SpaceX wins a $4.16 billion ‌deal with the U.S. Space Force for a satellite program.
+  - https://x.com/YahooFinance/status/2060473809207964061
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 240).
+- **@wallstengine** (117 likes, score 8/10) — The U.S. Space Force awarded SpaceX a $4.16B contract for a new satellite constellation that can track aircraft, cruise missiles and airborne threats globally from orbit.
+
+The program is called Space-
+  - https://x.com/wallstengine/status/2060443623695786071
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 125).
+- **@martiniguyyt** (30 likes, score 7/10) — SpaceX has been awarded a $4.16 billion contract to build a satellite network for tracking airborne targets
+  - https://x.com/MartiniGuyYT/status/2060503956543905928
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 34).
+- **@spacex** (3888 likes, score 8/10) — Starlink is capable of delivering broadband connectivity anywhere on Earth, even out on the range where the bison roam
+  - https://x.com/SpaceX/status/2060004830588924216
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4424).
+- **@speculator_io** (1548 likes, score 8/10) — SpaceX Ecosystem 
+
+Control: $TSLA
+Competitors: $RKLB $FLY $ASTS
+Partners: $PL $SATS $AMZN
+Starlink: $TMUS $QCOM
+Investors: $GOOGL $BAC $DXYZ $XOVR
+  - https://x.com/Speculator_io/status/2000704156214980822
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1612).
+- **@sawyermerritt** (1168 likes, score 8/10) — Walter Isaacson in new interview on @SpaceX's upcoming IPO:
+
+"If you wanna invest your money, do you wanna invest in something that's truly meaningful that makes a real difference in this world? These
+  - https://x.com/SawyerMerritt/status/2060547028631884256
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1242).
+- **@speculator_io** (555 likes, score 8/10) — AI is disrupting almost every industry.
+
+The only true hedge is investing in and owning real-world assets.
+
+• Critical minerals
+• Data centers
+• Rare earths
+• Robotics
+• Nuclear
+• Drones
+• Energy
+• Sp
+  - https://x.com/Speculator_io/status/2021732560103981412
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 641).
+- **@stockmktnewz** (371 likes, score 8/10) — $OKLO just announced an agreement with nvidai $NVDA and Los Alamos National Laboratory 
+
+"to advance critical nuclear infrastructure, AI-enabled research, and nuclear fuel R&D at Los Alamos."
+
+"The co
+  - https://x.com/StockMKTNewz/status/2047299864103407938
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 431).
+- **@stockmktnewz** (138 likes, score 8/10) — If the SpaceX IPO goes well
+
+Expect to see both OpenAI and Anthropic public THIS YEAR
+  - https://x.com/StockMKTNewz/status/2060453813451141574
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 168).
+- **@speculator_io** (0 likes, score 8/10) — Trump has been telling you what to buy for months:
+
+• AI: $DELL $MU $SNDK $WDC
+• chips: $INTC $AMD $NVDA $TSMC $ARM
+• space: $RKLB $PL $ASTS
+• crypto: $HOOD $CRCL $PURR
+• energy: $BE $GEV $FCEL $TE
+•
+  - https://x.com/Speculator_io/status/2060391750577861044
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 144).
+- **@novaxspace** (24 likes, score 7/10) — It’s a quick nod to how Starlink isn’t just an internet constellation, it’s quietly becoming one of the largest orbital solar power systems ever built, scaling up fast with each generation of satellit
+  - https://x.com/NovaXSpace/status/2060485587103072500
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 34).
+- **@brewmarkets** (7281 likes, score 7/10) — Fun fact: Google owns 7% of SpaceX and 14% of Anthropic.
+  - https://x.com/brewmarkets/status/2045645134037991586
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7483).
+- **@spacex** (5918 likes, score 7/10) — Falcon 9 launches 24 @Starlink satellites from California
+  - https://x.com/SpaceX/status/2059302721954488830
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6444).
+- **@spacex** (3255 likes, score 7/10) — Watch Falcon 9 launch 29 @Starlink satellites to orbit from Florida
+  - https://x.com/SpaceX/status/2060342610623959109
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 3755).
+- **@speculator_io** (1247 likes, score 7/10) — The trillion-dollar space race is taking off today:
+
+$RKLB Rocket Lab +25.57%
+$FLY Firefly Aerospace +21.08%
+$BKSY BlackSky Technology +18.36%
+$RDW Redwire Space +16.47%
+$LUNR Intuitive Machines +15.9
+  - https://x.com/Speculator_io/status/2052774828168368329
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1311).
