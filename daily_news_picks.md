@@ -3389,3 +3389,180 @@ In January of this year, I called that the space theme would be the next sector 
 - **@openai** (243 likes, score 7/10) — In conversation with OpenAI’s @markchen90, Terence reflects on a future where AI reduces the cognitive friction of research, helps preserve the paths behind discovery, and expands what mathematicians
   - https://x.com/OpenAI/status/2060451760033214653
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 279).
+- **@ashcrypto** (454 likes, score 9/10) — BREAKING: BlackRock ETF sold $1,410,000,000 worth of Bitcoin this month.
+
+2nd largest monthly outflow since launch.
+  - https://x.com/AshCrypto/status/2060627478402519192
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 712).
+- **@merlijntrader** (135 likes, score 9/10) — THE CME DEATH CROSS JUST PRINTED ON BITCOIN.
+
+The last one cost bulls 42%.
+
+2022: $30K dump to $17K. 
+2026: $83K dump to $48K?
+
+Same chart. Same cross. Same warning.
+
+The market doesn't forget.
+  - https://x.com/MerlijnTrader/status/2060647403540430912
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 185).
+- **@stocktalkweekly** (349 likes, score 9/10) — Portfolio baskets:
+
+Robotics + Edge AI - 29.4% - 6 stocks
+
+Power Infrastructure - 26.5% - 7 stocks
+
+Datacenter - 24.7% - 5 stocks
+
+Telecom + Voice AI - 14.8% - 5 stocks
+
+U.S. Chips - 13.2% - 2 stocks
+  - https://x.com/stocktalkweekly/status/2055418983008879026
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 427).
+- **@lisa01750863095** (428 likes, score 9/10) — The U.S. President & the literal White House are telling you that these 5 sectors are next to squeeze.
+Space：
+1. $RKLB
+2. $ASTS
+3. $RDW
+4. $FLY
+5. $LUNR
+AI Infrastructure：
+1. $CRWV
+2. $NBIS
+3. $IREN
+4
+  - https://x.com/lisa01750863095/status/2057993117660275003
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 446).
+- **@jasonl_capital** (2954 likes, score 8/10) — The White House is telling you exactly what sectors to invest in:
+
+AI Compute - $IREN, $CIFR, $NBIS, $APLD
+Chips - $NVDA, $AMD, $TSM, $INTC
+Networking - $AVGO, $ANET, $MRVL
+Power Infrastructure - $VRT
+  - https://x.com/JasonL_Capital/status/2026652577979379919
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 3100).
+- **@pumpfun** (365 likes, score 8/10) — Yeah, I consider myself a news trader.
+
+Today I shoved my entire portfolio into a $50k market cap shitcoin ahead of the Nvidia Earnings Release to express my bullish view. Then I sold it although they
+  - https://x.com/Pumpfun/status/1828899085065302154
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 611).
+- **@lisa01750863095** (404 likes, score 8/10) — Investing into these 10 stocks will set you up to be rich before 2030:
+1. AMD - $AMD
+2. SanDisk Corp - $SNDK
+3. Nebius - $NBIS
+4. Intel - $INTC
+5. Rocket Lab - $RKLB
+6. Amazon - $AMZN
+7. Oracle - $ORC
+  - https://x.com/lisa01750863095/status/2050022996119638168
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 416).
+- **@netcapgirl** (11657 likes, score 8/10) — happy nvidia earnings to all who celebrate
+  - https://x.com/netcapgirl/status/1828789245726917032
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11783).
+- **@unusual_whales** (3254 likes, score 8/10) — Google, $GOOGL, will officially help build seven nuclear reactors to power its AI systems, per FORTUNE.
+  - https://x.com/unusual_whales/status/1849062465554059551
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 3630).
+- **@stephenpunwasi** (3192 likes, score 8/10) — Funny story. Remember when  gave billions to a Quebec company to build a SpaceX Starlink competitor?
+
+Folks said, “any price is worth it!  can’t trust SpaceX or !”
+
+So… they subcontracted to a -defens
+  - https://x.com/StephenPunwasi/status/1903104342720172272
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 3424).
+- **@bdinvestingg** (183 likes, score 8/10) — Jeff Bezos said space-based data centers are “very realistic" here are stocks that can benefit :
+
+$RKLB — Launches the satellites that host orbital data centers.
+
+$ASTS — Provides the broadband connec
+  - https://x.com/bdinvestingg/status/2057481466875916460
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 199).
+- **@amitisinvesting** (1457 likes, score 7/10) — BIG TECH EARNINGS OFFICIALLY START TOMORROW. 
+
+$META, $MSFT, and $TSLA kick us off.
+
+The S&P is up +1.37% YTD but is being massively outperformed by international stocks and small caps.
+
+High beta nam
+  - https://x.com/amitisinvesting/status/2016207621741588965
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1691).
+- **@spaceinvestor_d** (449 likes, score 7/10) — I don't make a lot of calls, but when I do...
+
+In 2023, I brought you:
+$RKLB (4.83), $RDW (4.54), $LUNR (5.16)
+
+In 2024, I brought you:
+$KULR (0.40), $GSAT (1.70), $ACHR (7.00), $MNTS (5.00)
+
+I can’t
+  - https://x.com/SpaceInvestor_D/status/1869410186613682644
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 515).
+- **@spaceinvestor_d** (152 likes, score 7/10) — Great question!
+
+On top of my core positions, here are some levels I'm looking to deploy more cash at:
+
+$RKLB $20
+$ASTS $25
+$KRMN $20
+$RDW $15
+$LUNR $15
+$BKSY $15
+$PL $4
+$SATL $3
+$MNTS $3
+$SATX $1.20
+  - https://x.com/SpaceInvestor_D/status/1892965252548940095
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 190).
+- **@antibearthesis** (10 likes, score 7/10) — Bought 4 stocks yesterday
+
+$CRWV $META $MA $CELH 
+
+Thoughts?
+  - https://x.com/antibearthesis/status/2060677702147830244
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 36).
+- **@sawyermerritt** (9660 likes, score 7/10) — NEWS: Dutch regulators (RDW), which just approved @Tesla FSD (Supervised) in the Netherlands, have just issued an official statement:
+
+"Due to the continuous strict monitoring of the driver in the veh
+  - https://x.com/SawyerMerritt/status/2042714720579535299
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 10344).
+- **@remarks** (5868 likes, score 7/10) — JUST IN:  US Space Force contracts 12 companies up to $3.2 billion to develop 'Golden Dome' air defense system.
+  - https://x.com/remarks/status/2047747124696121529
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6132).
+- **@iren_ltd** (2039 likes, score 7/10) — Vertical integration sets $IREN’s AI Cloud platform apart.
+
+Construction discipline is what makes it possible.
+
+In British Columbia, Texas, and soon Oklahoma, we’re building the future of AI infrastru
+  - https://x.com/IREN_Ltd/status/2026127721726898601
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2237).
+- **@interesting_ail** (667 likes, score 7/10) — Clone Robotics Torso 2 with 910 muscle fibers and 164 degrees of freedom
+  - https://x.com/interesting_aIl/status/1865660633452077338
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 795).
+- **@speculator_io** (484 likes, score 7/10) — If you think the moves in quantum, rare earths, or nuclear are insane, just wait for Physical AI.
+
+Most people are not ready for what's coming.
+  - https://x.com/Speculator_io/status/2015201923587031308
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 540).
+- **@connorjbates_** (370 likes, score 7/10) — Leading Sectors & Stocks. 
+
+In play stocks & sectors: 
+
+Aerospace/Defense ~ ACHR DPRO KRMN AVAV FTAI KTOS ERJ RKLB 
+
+Bldg-A/C ~ FIX MOD EME 
+
+Construction ~ STRL TPC WLDN PWR AGX MTZ ECG IESC EME 
+
+So
+  - https://x.com/ConnorJBates_/status/1982422188020965531
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 382).
+- **@felixprehn** (107 likes, score 7/10) — One more space stock I also like that isn't in the thread is Orbit International (ORBT).
+
+A $13M micro-cap that builds military-grade electronics for defense and space. Listed at $15 and trades near $
+  - https://x.com/felixprehn/status/2060395240243315006
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 139).
+- **@business** (20 likes, score 7/10) — The deadly heat wave gripping northwest Europe is set to intensify in Spain and France, lifting power demand for cooling and threatening fresh temperature records
+  - https://x.com/business/status/2059918895150981282
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 34).
+- **@theeconomist** (5 likes, score 7/10) — Ukraine will probably emerge as a damaged but functioning democracy and a new middle power: poorer, traumatised, but confident in its identity. Yet it will also be tarnished by militarism and wartime
+  - https://x.com/TheEconomist/status/2060672608073376126
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 25).
