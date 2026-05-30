@@ -3062,3 +3062,107 @@ The Tema Space Innovators ETF gives public investors targeted exposure to launch
 1. $RKLB building the vertically integrated logistics layer of the space economy through launch vehicles, spacecraft buses, satellite components & propulsion s
   - https://x.com/StockSavvyShay/status/2045527211638456504
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 1789).
+- **@xfreeze** (49 likes, score 8/10) — SpaceX is 10xing solar power in orbit every few years
+
+Here’s the progression for Starlink:
+
+• Gen 1 Starlink: ~3,000 satellites generating ~10 MW in orbit
+• Gen 2 Starlink: ~7,000 satellites generati
+  - https://x.com/XFreeze/status/2060614949521756361
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 97).
+- **@stocksavvyshay** (485 likes, score 9/10) — A SpaceX IPO will force the market to rethink what space infrastructure is worth.
+
+A $1.8T+ valuation would show that launch, connectivity & orbital infrastructure are real platforms with durable dema
+  - https://x.com/StockSavvyShay/status/2039411486850945238
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 565).
+- **@nickfralin29** (33 likes, score 8/10) — I'll only say it once. This might be the fastest way to accumulate $1 million by the end of 2026. My May advice:
+
+$CRWD (CrowdStrike) Don't buy
+$SMCI (Super Micro Computer) Don't buy
+$META (Meta) - Bu
+  - https://x.com/nickfralin29/status/2060415447359713557
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 53).
+- **@speculator_io** (2269 likes, score 8/10) — SpaceX $SPCX is planning to go public on June 12.
+
+It's the biggest IPO in history and will instantly reprice the entire space sector.
+
+These are the key space sectors to watch:
+
+Launch Service Provid
+  - https://x.com/Speculator_io/status/2055413961064157418
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2423).
+- **@sunxliao** (413 likes, score 8/10) — The space theme looks ready for a very powerful wave 3 breakout IMO:
+
+$ASTS: 5/9 bullish confirms
+$BKSY: 5/9 bullish confirms
+$FLY: 4/9 bullish confirms
+$LUNR: 6/9 bullish confirms
+$MNTS: 1/9 bullish
+  - https://x.com/sunxliao/status/2053298304126157120
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 455).
+- **@iam_smx** (0 likes, score 8/10) — Elon Musk could become the world’s first trillionaire this year.
+
+His net worth is already around $834 billion, and with a potential SpaceX IPO on the horizon, that trillion-dollar milestone may be cl
+  - https://x.com/iam_smx/status/2060443883708780678
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 102).
+- **@milkroadai** (25 likes, score 7/10) — Chamath Palihapitiya just laid out the most compelling framework for underwriting one of the most consequential IPOs in the history of financial markets.
+
+SpaceX filed its S-1 for an IPO targeting a v
+  - https://x.com/MilkRoadAI/status/2060451920733737052
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 31).
+- **@speculator_io** (2548 likes, score 8/10) — The SpaceX IPO will ignite a trillion-dollar space race.
+
+𝗦𝗽𝗮𝗰𝗲 𝗜𝗻𝗳𝗿𝗮𝘀𝘁𝗿𝘂𝗰𝘁𝘂𝗿𝗲
+$RKLB Rocket Lab
+$SIDU Sidus Space
+$FLY Firefly Aerospace
+$RDW Redwire Space
+$LUNR Intuitive Machines
+  - https://x.com/Speculator_io/status/2044916275114020966
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2660).
+- **@wallstreetbets** (440 likes, score 8/10) — BREAKING:  TRUMP might have already given the next $DELL
+
+last time he told people to buy Dell:
+
+> $DELL went up +80%
+> landed a $9.7B Pentagon contract
+> crushed earnings
+> added billions in market c
+  - https://x.com/wallstreetbets/status/2060376149620924866
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 538).
+- **@stocksavvyshay** (0 likes, score 7/10) — $AAL is partnering with $SPCX to install Starlink Wi-Fi across 500+ Airbus aircraft.
+
+The deal brings satellite internet deeper into commercial aviation and expands Starlink’s role as the connectivity
+  - https://x.com/StockSavvyShay/status/2059290374091530329
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 72).
+- **@alc2022** (2671 likes, score 7/10) — $PLTR is trading at $135
+
+3 years have passed
+  - https://x.com/alc2022/status/2054556837253452175
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2799).
+- **@rocketlab** (1832 likes, score 7/10) — Another liftoff angle for 'Viva La StriX' and @synspective on Electron launch #88. 
+
+That's 9 launches with 100% mission success completed for Synspective and another 18 more to go before 2030.
+  - https://x.com/RocketLab/status/2059037660463894663
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1890).
+- **@verge** (120 likes, score 7/10) — Nvidia, Microsoft, and Arm are all teasing Nvidia’s new N1X laptop processors
+  - https://x.com/verge/status/2060498977825697953
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 134).
+- **@cryptorover** (31 likes, score 7/10) — THE BUFFETT INDICATOR IS FLASHING RED. 
+
+Warren Buffett is sitting on a record $344 billion in cash. Net seller of stocks for 8 straight quarters.
+
+His CASH indicator worked out perfectly every crisis
+  - https://x.com/cryptorover/status/2060621732709593220
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 71).
+- **@deepbluecrypto** (63 likes, score 7/10) — Blue Origin’s New Glenn rocket exploded in a massive fireball during a static fire test at Cape Canaveral’s Launch Complex 36 on May 28, 2026. The first-stage booster, being prepared for the NG-4 miss
+  - https://x.com/DeepBlueCrypto/status/2060178630752313722
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 69).
+- **@bespokeinvest** (23 likes, score 7/10) — Astrotech $ASTC began the week at $2.28 and ended it at $49.80...
+
+Be careful out there.
+  - https://x.com/bespokeinvest/status/2060474417314963940
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 31).
+- **@sargon_of_akkad** (24 likes, score 7/10) — This is the genuine motivation of all left-wing opposition to nuclear power.
+  - https://x.com/Sargon_of_Akkad/status/2060623999600583081
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 30).
