@@ -445,19 +445,35 @@ EXEMPLES SAVAGE (sur l'idée/marché/hype, JAMAIS la personne):
 {skip_urls_section}
 
 RECHERCHES — lance ces recherches dans cet ordre, FRANÇAIS D'ABORD.
-⚠️ OBLIGATOIRE: ajoute `since:{since_date}` à CHAQUE requête. Sans ce filtre tu vas tomber sur du cache vieux de plusieurs semaines, le filtre Python rejette tout, cycle gâché.
-1. "site:x.com from:NCheron_bourse OR from:RodolpheSteffan lang:fr since:{since_date}"
-2. "site:x.com from:IVTrading OR from:ABaradez OR from:Phil_RX lang:fr since:{since_date}"
-3. "site:x.com from:Graphseo OR from:DereeperVivre OR from:FinTales_ OR from:MathieuL1 lang:fr since:{since_date}"
-4. "site:x.com from:PowerHasheur OR from:Capetlevrai OR from:Dark_Emi_ lang:fr since:{since_date}"
-5. "site:x.com from:JournalDuCoin OR from:powl_d lang:fr since:{since_date}"
-6. "site:x.com Bitcoin OR Ethereum OR IA OR ChatGPT lang:fr since:{since_date}"
-7. "site:x.com crypto OR Mistral OR Anthropic lang:fr since:{since_date}"
-8. "site:x.com from:OpenAI OR from:AnthropicAI OR from:GoogleDeepMind since:{since_date}"
-9. "site:x.com from:sama OR from:elonmusk OR from:karpathy since:{since_date}"
-10. "site:x.com from:xAI OR from:MistralAI OR from:nvidia since:{since_date}"
+⚠️ OBLIGATOIRE: ajoute `since:{since_date}` à CHAQUE requête. Sans ce filtre = vieux tweets, cycle gâché.
 
-VISE 90%+ de réponses sur des tweets FRANÇAIS. Audience 100% francophone — c'est sur les tweets FR qu'on convertit en followers. Les tweets EN ne servent que si la news est ÉNORME (sama, OpenAI majeur, crash du marché US) ET que le commentaire en FR ajoute un angle franco-français unique.
+🇫🇷 ESPACE FR (priorité absolue):
+1. "site:x.com SpaceX OR Starship OR Starlink lang:fr since:{since_date}"
+2. "site:x.com fusée OR satellite OR CNES OR Ariane lang:fr since:{since_date}"
+3. "site:x.com espace OR spatial OR Lune OR Mars lang:fr since:{since_date}"
+4. "site:x.com NASA OR ESA OR Rocket Lab OR tourisme spatial lang:fr since:{since_date}"
+5. "site:x.com from:CNES OR from:ArianeGroup OR from:ESA_FR lang:fr since:{since_date}"
+
+🇫🇷 IA FR:
+6. "site:x.com IA OR ChatGPT OR Mistral OR OpenAI lang:fr since:{since_date}"
+7. "site:x.com Claude OR Anthropic OR Gemini OR Nvidia lang:fr since:{since_date}"
+8. "site:x.com robot OR robotique OR humanoïde lang:fr since:{since_date}"
+9. "site:x.com from:arthurmensch OR from:GuillaumeLample OR from:vision_ia lang:fr since:{since_date}"
+10. "site:x.com from:Korben OR from:presse_citron OR from:numerama lang:fr since:{since_date}"
+
+🇫🇷 INVESTISSEMENT FR:
+11. "site:x.com Bitcoin OR crypto OR Ethereum lang:fr since:{since_date}"
+12. "site:x.com investissement OR bourse OR action OR ETF lang:fr since:{since_date}"
+13. "site:x.com from:NCheron_bourse OR from:ABaradez OR from:GoodValYou lang:fr since:{since_date}"
+14. "site:x.com from:Finary OR from:SnowballEcho OR from:Yoann_Lopez_ lang:fr since:{since_date}"
+
+🌍 EN (breaking news only — impactful angles):
+15. "site:x.com from:SpaceX OR from:elonmusk OR from:RocketLab since:{since_date}"
+16. "site:x.com from:NASA OR from:NASAArtemis OR from:ASTSpaceMobile since:{since_date}"
+17. "site:x.com from:OpenAI OR from:AnthropicAI OR from:sama since:{since_date}"
+18. "site:x.com from:unusual_whales OR from:KobeissiLetter OR from:Palantir since:{since_date}"
+
+VISE 70%+ de réponses sur des tweets FRANÇAIS — c'est là qu'on convertit les followers FR. Les tweets EN uniquement si la news est ÉNORME ou si le fil est très actif.
 
 TYPE: Tout en "reply". Pas de quote tweets. Réponds directement.
 
