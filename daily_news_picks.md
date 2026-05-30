@@ -2406,3 +2406,66 @@ Timberrrrrrrrrrrrrrrrrr
 Fck these banking cartels.
   - https://x.com/AshCrypto/status/2060427852080615891
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 1379).
+- **@evanluthra** (895 likes, score 9/10) — BREAKING: NVIDIA WILL NOW PAY YOU OVER $22,000 A YEAR TO HOST A MINI AI DATA CENTER IN YOUR HOME.
+
+Here's how it works:
+
+A startup called Span (with NVIDIA GPUs + homebuilder Pulte) just launched a pr
+  - https://x.com/EvanLuthra/status/2060408721159950473
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1123).
+- **@amd** (208 likes, score 9/10) — “AMD has been on a tear in the data center GPU market.”
+
+@ServeTheHome covers the new AMD Instinct MI350P PCIe card, built to deploy inference on-prem where form factor, power and cooling flexibility
+  - https://x.com/AMD/status/2059999393835610184
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 234).
+- **@tomwarren** (109 likes, score 9/10) — Nvidia, Microsoft, and Arm are all teasing Nvidia’s new N1X laptop processors. It’s the world’s worst kept secret, and now all eyes are on Nvidia’s keynote at Computex on Sunday night. Details
+  - https://x.com/tomwarren/status/2060497545172766973
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 115).
+- **@coinvo** (543 likes, score 8/10) — Instead of building massive, multi acre data centers that crush local power grids, NVIDIA partnered with a startup SPAN to tap into the unused electrical capacity allocated to residential homes.
+  - https://x.com/Coinvo/status/2060369957901279432
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 595).
+- **@dimazeniuk** (405 likes, score 8/10) — NEWS: @SpaceX has won a contract for more than $4 billion to build satellites to track foreign aircraft and missiles as part of Donald Trump’s Golden Dome defensive shield
+  - https://x.com/DimaZeniuk/status/2060464569869340905
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 487).
+- **@cointelegraph** (105 likes, score 9/10) — LATEST: Institutional investors now hold nearly 3.9 million BTC, or 18.5% of Bitcoin’s total supply, with ETFs and public companies leading the accumulation.
+  - https://x.com/Cointelegraph/status/2060411008313704519
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 185).
+- **@cointelegraph** (101 likes, score 9/10) — UPDATE: This is the Bitcoin ETFs' third consecutive red week.
+
+Over $3.5B flowed out over the past 3 weeks.
+  - https://x.com/Cointelegraph/status/2060511684481994921
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 173).
+- **@watcherguru** (15607 likes, score 9/10) — $100,000 invested 5 years ago in Ethereum $ETH is worth $85,000 today. 
+
+$100,000 invested 5 years ago in Nvidia $NVDA is worth $1,400,000 today.
+  - https://x.com/WatcherGuru/status/2048945258516349005
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 17551).
+- **@bulltheoryio** (634 likes, score 9/10) — BREAKING: Bitcoin reclaims $74,000.
+
+It is now up +2.10% in the last 50 minutes, adding $32.34 BILLION to its market cap.
+
+$52 MILLION worth of shorts have been liquidated over the same period.
+  - https://x.com/BullTheoryio/status/2060385707341066700
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 822).
+- **@randgroup** (591 likes, score 9/10) — I mapped 25 public companies across 5 sectors of the Space economy: rockets, satellites, earth observation, lunar exploration and defense. 
+
+SpaceX IPOs in weeks at $1.75 TRILLION and most people have
+  - https://x.com/randgroup/status/2059959837170037012
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 671).
+- **@cryptorover** (461 likes, score 9/10) — MASSIVE:
+
+3,642 trades.
+58 per trading day. $475M in volume. 
+All in three months.
+
+ President Trump bought $NVDA stock 7 days before his own Commerce Department approved Nvidia's China chip deal.
+
+Bo
+  - https://x.com/cryptorover/status/2060401279940383169
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 631).
+- **@cointelegraph** (201 likes, score 8/10) — TODAY: BlackRock has filed another amendment for its iShares Bitcoin Premium ETF ($BITA), fueling speculation that a launch could be near.
+  - https://x.com/Cointelegraph/status/2060486503105450365
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 269).
+- **@watcherguru** (4089 likes, score 8/10) — JUST IN: Ethereum Foundation sells 10,000 $ETH worth $23,000,000.
+  - https://x.com/WatcherGuru/status/2050270357458739359
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 5129).
