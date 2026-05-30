@@ -324,11 +324,21 @@ When it says ENGLISH:
     (no Bercy, RER B, syndicat, BFM, PEL, café-clope, tonton, Macron,
     AMF, INSEE, Pôle Emploi, URSSAF, Doctolib, SNCF, Bleus, Getafe,
     Coupe de France, Macron, etc.).
-  - Use US / global frames instead (SEC filing, IRS audit, 401k loan,
-    HOA violation, Craigslist scam, Venmo request from your ex, Chipotle
-    $18 bowl, Walgreens receipt, WeWork pitch deck, "this is fine" meme,
-    LinkedIn influencer, "trust me bro", "number go up technology").
-  - Write as a native English-speaking US founder would.
+  - Use US / global frames. Pick the one that makes it land hardest:
+    SEC 8-K filing, "per the amended S-1", IRS audit, 401k in 2022,
+    HOA violation letter, Craigslist "free to good home", Venmo request
+    from your ex at 2am, Chipotle $18 bowl, Walgreens self-checkout error,
+    WeWork pitch deck slide 47, "this is fine" dog meme, LinkedIn
+    "thrilled to announce I've been let go", thoughts and prayers from
+    the VC, "pre-revenue stage", "strong buy, not financial advice",
+    Glassdoor 2-star review, Notion doc with 47 nested toggles,
+    Google Calendar invite you can't decline, Slack message at 11:58pm,
+    the guy at a16z who writes 8 paragraphs about a $5 app,
+    "we're a family here", "unlimited PTO" at a company with 3 employees,
+    Y Combinator demo day energy, the CNBC chyron that appears 40 min late.
+  - EN comedy formula: [absurd-but-real observation] + [frame from above] +
+    [one-word gut-punch ending]. Cut after the punchline. Don't explain.
+  - Write as the smartest, darkest guy in the room who just read the footnotes.
 When it says FRANÇAIS, write 100% French with the FR
 anchors above.
 """
@@ -871,6 +881,14 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
                 log.info(f"[HOTAKE] URL is {age.total_seconds()/3600:.1f}h old (>36h) — SKIPPING stale source: {url}")
                 globals()["_last_source_url"] = None
                 return None
+        try:
+            from .agent import url_is_reachable
+            if not url_is_reachable(url):
+                log.info(f"[HOTAKE] URL unreachable / 404 — SKIPPING hallucinated link: {url}")
+                globals()["_last_source_url"] = None
+                return None
+        except Exception:
+            pass
         globals()["_last_source_url"] = url
         log.info(f"[HOTAKE] Source URL detected (X will render card): {url}")
     else:
