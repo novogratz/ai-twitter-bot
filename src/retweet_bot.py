@@ -59,12 +59,12 @@ DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 
 # Hard cap per day. Path is deterministic/no-AI, so volume is cheap.
 MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "300"))
-RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "15")))
+RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "25")))
 
-# Min likes to enter candidate pool. Kept very low — daily cap + dedup
-# is the real gate; the niche/source filter handles quality.
-MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "10"))
-FR_MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_FR_MIN_LIKES", "10"))  # Same as EN since full pivot
+# Min likes — lowered so breaking space/AI news gets in before it goes viral.
+# Daily cap + dedup + niche filter are the real quality gates.
+MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "3"))
+FR_MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_FR_MIN_LIKES", "3"))
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
@@ -180,21 +180,21 @@ def _is_shill(text: str) -> bool:
 # we shouldn't be amplifying week-old or year-old news.
 MAX_CANDIDATE_AGE_HOURS = int(os.environ.get("RETWEET_MAX_AGE_HOURS", "48"))
 FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "5"))
-FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "12"))
+FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "20"))
 
 FEED_REPOST_SEARCH_QUERIES = [
     # AI
-    "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500",
-    "Nvidia OR GPU OR \"compute cluster\" OR semiconductor lang:en min_faves:500",
-    "\"AI agents\" OR \"agentic AI\" OR \"frontier model\" lang:en min_faves:300",
-    "\"AI datacenter\" OR \"power demand\" OR megawatt OR gigawatt lang:en min_faves:300",
-    "robotics OR \"humanoid robot\" OR \"AI robotics\" lang:en min_faves:300",
-    "nuclear OR grid OR \"power generation\" AI lang:en min_faves:300",
-    "CoreWeave OR CRWV OR APLD OR IREN lang:en min_faves:200",
+    "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:200",
+    "Nvidia OR GPU OR \"compute cluster\" OR semiconductor lang:en min_faves:200",
+    "\"AI agents\" OR \"agentic AI\" OR \"frontier model\" lang:en min_faves:100",
+    "\"AI datacenter\" OR \"power demand\" OR megawatt OR gigawatt lang:en min_faves:100",
+    "robotics OR \"humanoid robot\" OR \"AI robotics\" lang:en min_faves:100",
+    "nuclear OR grid OR \"power generation\" AI lang:en min_faves:100",
+    "CoreWeave OR CRWV OR APLD OR IREN lang:en min_faves:50",
     # Space — PUSH IT (2026-05-29 space mode)
-    "SpaceX OR Starship OR \"Falcon 9\" OR Starlink lang:en min_faves:500",
-    "\"Blue Origin\" OR \"New Glenn\" OR \"Virgin Galactic\" lang:en min_faves:300",
-    "\"Rocket Lab\" OR RKLB OR NASA OR Artemis lang:en min_faves:200",
+    "SpaceX OR Starship OR \"Falcon 9\" OR Starlink lang:en min_faves:200",
+    "\"Blue Origin\" OR \"New Glenn\" OR \"Virgin Galactic\" lang:en min_faves:100",
+    "\"Rocket Lab\" OR RKLB OR NASA OR Artemis lang:en min_faves:50",
     "\"AST SpaceMobile\" OR ASTS OR LUNR OR \"space stock\" lang:en min_faves:100",
     "\"Golden Dome\" OR USSF OR \"space defense\" OR hypersonic lang:en min_faves:100",
     "ESA OR CNES OR Ariane OR \"commercial space\" lang:en min_faves:100",
@@ -573,14 +573,14 @@ def _collect_feed_repost_candidates(retweeted: set) -> list:
 
     try:
         log.info("[RETWEET] Scraping For You/Home feed for repost candidates...")
-        add("FEED_HOME", scrape_home_feed(max_tweets=40))
+        add("FEED_HOME", scrape_home_feed(max_tweets=60))
     except Exception:
         log.info("[RETWEET] Home feed candidate scrape failed:")
         traceback.print_exc()
 
     try:
         log.info("[RETWEET] Scraping Following feed for repost candidates...")
-        add("FEED_FOLLOWING", scrape_following_feed(max_tweets=40))
+        add("FEED_FOLLOWING", scrape_following_feed(max_tweets=60))
     except Exception:
         log.info("[RETWEET] Following feed candidate scrape failed:")
         traceback.print_exc()
@@ -591,9 +591,9 @@ def _collect_feed_repost_candidates(retweeted: set) -> list:
     )
     for query in queries:
         try:
-            tab = "top" if random.random() < 0.7 else "live"
+            tab = "live" if random.random() < 0.5 else "top"
             log.info(f"[RETWEET] Searching X {tab} for repost candidates: {query}")
-            add(f"FEED_SEARCH/{tab}", scrape_x_search(query, max_tweets=25, tab=tab))
+            add(f"FEED_SEARCH/{tab}", scrape_x_search(query, max_tweets=40, tab=tab))
         except Exception:
             log.info(f"[RETWEET] Feed search candidate scrape failed for {query!r}:")
             traceback.print_exc()
@@ -889,7 +889,7 @@ def run_retweet_cycle():
 
     for handle in sample:
         try:
-            tweets = scrape_profile_tweets(handle, max_tweets=8)
+            tweets = scrape_profile_tweets(handle, max_tweets=15)
         except Exception:
             log.info(f"[RETWEET] Scrape failed for @{handle}:")
             traceback.print_exc()
