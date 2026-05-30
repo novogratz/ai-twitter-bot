@@ -2606,3 +2606,161 @@ I've never seen a community so bullish on a $219M MC stock that has a new $1,000
 The index is now up 20%, adding $14.1 TRILLION market value in the same period.
   - https://x.com/BullTheoryio/status/2060541707356365149
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 226).
+
+## 2026-05-30
+- **@whalenoname** (64 likes, score 9/10) — DOTCOM IS BACK AND MATH PROVES IT 
+
+Look at the actual numbers
+
+NVIDIA valuation: $5.19T
+NVIDIA revenue: $80B
+
+Walmart valuation: $960B
+Walmart revenue: $680B
+
+NVIDIA is worth 5x more than Walmart whi
+  - https://x.com/WhaleNoName/status/2060532793239630150
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 100).
+- **@vadimstrizheus** (73 likes, score 8/10) — Sam Altman watching Anthropic launch Claude Opus 4.8 and surpass a $1 trillion valuation in the same week.
+  - https://x.com/VadimStrizheus/status/2060462994945966427
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 83).
+- **@ethereum** (1505 likes, score 9/10) — Ethereum is for shipping.
+
+Here are 22 things the Ethereum ecosystem launched, upgraded, and announced over the past month.
+
+0/ Ethereum hit a new all-time high of 72.8 Million monthly transactions, t
+  - https://x.com/ethereum/status/2054259905918362092
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1861).
+- **@teslarati** (155 likes, score 9/10) — Here's an 80-second phone nag test on Tesla FSD v14.3.3.
+
+No alerts, no nagging, no annoyance.
+  - https://x.com/Teslarati/status/2060400358929637656
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 181).
+- **@jonerlichman** (0 likes, score 8/10) — Space stocks since SpaceX IPO filing:
+
+Redwire: +58%
+Virgin Galactic: +43%
+Eutelsat: +41%
+Firefly Aerospace: +38%
+AST Spacemobile: +36%
+Astroscale: +32%
+York Space Systems: +29%
+SES: +18%
+Planet Labs:
+  - https://x.com/JonErlichman/status/2059370622648525250
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 72).
+- **@cryptogoos** (16 likes, score 7/10) — BULLISH:
+
+$200 billion VanEck says Bitcoin could reach $3,000,000 by 2050.
+  - https://x.com/cryptogoos/status/2060567374290678110
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 28).
+- **@ethereum** (683 likes, score 8/10) — Devcon 8 is coming to Mumbai.
+
+This November, the Ethereum community gathers around the values shaping what comes next: open source, privacy, security, and censorship resistance.
+
+Tickets open today -
+  - https://x.com/ethereum/status/2057138142558445629
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 917).
+- **@stocksavvyshay** (754 likes, score 8/10) — $RKLB evolution as the second source of the Space Economy:
+
+• 2017: First Electron launch attempt
+• 2020-22: Vertical integration (Sinclair, ASI, SolAero acquisitions)
+• 2023: First US launch + HASTE
+  - https://x.com/StockSavvyShay/status/2029964317442105511
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 788).
+- **@marionawfal** (41 likes, score 8/10) — iShowSpeed spent 14 days in the Caribbean with Starlink running the whole show.
+
+Satellite internet strait from space, live on one of the biggest YouTube channels on the planet.
+
+The most powerful dis
+  - https://x.com/MarioNawfal/status/2060569731136905342
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 99).
+- **@bespokeinvest** (35 likes, score 7/10) — The S&P 500 Technology sector just saw a two-month gain of 36.1% in April and May, its third best since 1990.  $XLK
+  - https://x.com/bespokeinvest/status/2060457493067665514
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 43).
+- **@forallcurious** (52544 likes, score 8/10) — GET READY: On May 31, 2026, the Moon will reach its full phase. It will be the second Full Moon of May, which makes it a calendrical Blue Moon
+
+A rare Full Blue Moon is coming!
+  - https://x.com/forallcurious/status/2059121268247458270
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 53476).
+- **@ethereum** (1370 likes, score 8/10) — Last week, Ethereum core contributors gathered in Svalbard for the Soldøgn interop: a week long event focused on hardening Glamsterdam implementations to scale Ethereum securely 
+
+Read the full recap,
+  - https://x.com/ethereum/status/2050569356338151442
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1810).
+- **@stocksavvyshay** (1050 likes, score 8/10) — Chamath says the space economy will not end with launch but entire businesses will be built on top of the backbone SpaceX is creating.
+
+That is why $RKLB matters as a builder of the infrastructure lay
+  - https://x.com/StockSavvyShay/status/2040831203235033300
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1160).
+- **@stocksavvyshay** (985 likes, score 8/10) — $RKLB just reported the strongest quarter in company history selling more launches in Q1 than it did in all of 2025.
+
+The bigger story is vertical integration across launch, satellite components, prop
+  - https://x.com/StockSavvyShay/status/2053973725859737900
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1073).
+- **@intel** (259 likes, score 8/10) — Catch Intel CEO @LipBuTan1 live from COMPUTEX 2026. Hear how Intel is advancing Intel 18A and building momentum across PC, edge, and data center—with partners across the ecosystem.
+
+June 2, 1:30 p.m.
+  - https://x.com/intel/status/2060375613605584971
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 289).
+- **@stockmktnewz** (140 likes, score 8/10) — Meta Platforms $META is launching a new Enterprise Solutions unit to embed engineers and product managers with corporate customers - The Information
+  - https://x.com/StockMKTNewz/status/2060466639276245230
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 168).
+- **@jeremyphoward** (131 likes, score 8/10) — I've largely switched over to using GPT-5.5 in recent weeks, which I like nearly as much as Opus 4.6 and 4.7, and is *very* reasonably priced (since I can use my subscription with the @OpenAI API.)
+  - https://x.com/jeremyphoward/status/2060198839030800472
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 149).
+- **@milkroadai** (85 likes, score 8/10) — Larry Ellison, the man who built Oracle into a $500 billion enterprise software empire and he said something that every investor needs to hear (Save this).
+
+"By 2029, I can guarantee you, AI is not go
+  - https://x.com/MilkRoadAI/status/2060496964928880741
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 109).
+- **@mistralai** (0 likes, score 8/10) — We're taking on the hardest problems in the real world  
+
+Today at The AI Now Summit, held at the Louvre, we announced AI solutions for aerospace, automotive, energy, and physics.
+
+Deployed in product
+  - https://x.com/MistralAI/status/2059951137839616110
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 70).
+- **@speculator_io** (930 likes, score 7/10) — A year ago, I shared I my list of space stocks.
+
+Since then...
+
+$PL Planet Labs +1,888.79%
+$RKLB Rocket Lab +1295.27%
+$SATL Satellogic +930.10%
+$BKSY BlackSky +909.92%
+$VSAT Viasat +524.46%
+$LUNR Intu
+  - https://x.com/Speculator_io/status/2058301220280770895
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 996).
+- **@stocksavvyshay** (824 likes, score 7/10) — $PLTR BREAKING ABOVE $155
+  - https://x.com/StockSavvyShay/status/2060375691661869332
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 918).
+- **@stats_feed** (170 likes, score 7/10) — The AI market was worth $208 billion in 2023. It's projected to hit $1.8 trillion by 2030.
+
+That's an 8.6x increase in 7 years.
+  - https://x.com/stats_feed/status/2060543970154045575
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 244).
+- **@testingcatalog** (91 likes, score 7/10) — Microsoft  NVIDIA
+
+> NVIDIA GTC Keynote is happening on June 1
+
+> Microsoft Build Keynote event is happening on June 2
+
+> Both Windows and NVIDIA accounts teased an upcoming announcement, saying "A ne
+  - https://x.com/testingcatalog/status/2060486519043891349
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 107).
+- **@ethereum** (1051 likes, score 7/10) — Morpho is built on Ethereum.
+
+@Morpho enables users and applications to borrow, lend, and create custom credit markets through open, permissionless infrastructure.
+
+Committed to FLOSS principles, Morp
+  - https://x.com/ethereum/status/2057504547506114591
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1275).
+- **@teslarati** (143 likes, score 7/10) — Tesla Full Self-Driving v14.3.3 drives me over 130 miles with near-flawless execution
+
+Sit back, relax, and enjoy!
+
+Timestamps below
+  - https://x.com/Teslarati/status/2060374906169163862
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 165).
