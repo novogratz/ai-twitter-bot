@@ -5,7 +5,7 @@ Different from src/thread_bot.py:
   - digest_thread_bot = FIVE stories of the day in a recap thread
 
 The digest format is highly shareable when it saves people from scrolling
-30 outlets. It positions @CryptoAIDecode as a one-stop English source for
+30 outlets. It positions @AISpaceDecoder as a one-stop English source for
 AI / crypto / markets.
 
 Strategy:

@@ -189,7 +189,7 @@ def _in_window() -> bool:
     return now.weekday() == 6 and 11 <= now.hour < 14
 
 
-PROMPT = """You are @CryptoAIDecode. It's the weekly buzz attempt — ONE
+PROMPT = """You are @AISpaceDecoder. It's the weekly buzz attempt — ONE
 tweet that can go viral. Different format from The Decode. Bold,
 contrarian, screenshot-worthy. On this weird/exploit/leak/hack story:
 

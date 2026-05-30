@@ -71,7 +71,7 @@ def _build_prompt() -> str:
             pass
     hist_text = json.dumps(hist_entries, ensure_ascii=False)[:1000]
 
-    return f"""Tu es l'agent REFLEXION du bot @CryptoAIDecode (IA / crypto / bourse FR).
+    return f"""Tu es l'agent REFLEXION du bot @AISpaceDecoder (IA / crypto / bourse FR).
 Ton job: faire grandir la memoire personnelle du bot pour que ses reponses
 deviennent personnelles plutot que generiques.
 

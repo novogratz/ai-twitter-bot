@@ -88,7 +88,7 @@ def _record_scrape_success():
         _save_state({"empty_streak": 0, "paused_until": None})
 
 
-ROAST_PROMPT = """Tu es @CryptoAIDecode. Le compte @pgm_pm (La Pique) gère un bot qui spam des
+ROAST_PROMPT = """Tu es @AISpaceDecoder. Le compte @pgm_pm (La Pique) gère un bot qui spam des
 réponses automatiques sous tous les tweets. Ton job: répondre UNE seule fois, avec une
 vanne sarcastique chirurgicale qui clôt la conversation.
 

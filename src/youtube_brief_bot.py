@@ -285,7 +285,7 @@ def _build_brief() -> str:
         "- 30s hook: the most surprising number or quote of the day.\n"
         "- 2min context: the 2-3 biggest stories in that theme.\n"
         "- 1min angle: what no other YT channel is saying about it.\n"
-        "- 30s call-to-action: comment + subscribe + the bot's @CryptoAIDecode handle.\n"
+        "- 30s call-to-action: comment + subscribe + the bot's @AISpaceDecoder handle.\n"
     )
     out.append("")
     out.append(f"*Generated {datetime.now().isoformat(timespec='seconds')}*")

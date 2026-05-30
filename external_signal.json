@@ -1,140 +1,200 @@
 {
-  "ts": "2026-05-28T06:06:04.717703",
-  "count": 22,
+  "ts": "2026-05-29T18:07:51.616473",
+  "count": 29,
   "items": [
     {
-      "src": "The Verge",
-      "title": "YouTube will let you ask AI to make a custom video feed",
-      "url": "https://www.theverge.com/streaming/938759/youtube-custom-ai-feed-prompt-availability",
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/unusual_whales",
+      "title": "\"AI can't stop recommending nuclear strikes in war game simulations... leading AIs from OpenAI, Anthropic and Google opted to use nuclear weapons in 95% of cases,\" per New Scientist",
+      "url": "https://x.com/unusual_whales/status/2026787037404164513",
+      "score": 7745,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/unusual_whales",
+      "title": "Nvidia, $NVDA, has just made its first move into nuclear power: it is partnering with PG&E's recently-saved Diablo Canyon Nuclear plant to build AI inside the plant.",
+      "url": "https://x.com/unusual_whales/status/1856755607375855927",
+      "score": 4750,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/unusual_whales",
+      "title": "Google $GOOGL $GOOG is funding the construction of 7 small nuclear power reactors in the US to help with energy needed for AI, per WSJ",
+      "url": "https://x.com/unusual_whales/status/1845910408441295002",
+      "score": 4025,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/unusual_whales",
+      "title": "Elon Musk has said that, \"AI is more dangerous than nuclear bombs.\"\n\nDo you agree?",
+      "url": "https://x.com/unusual_whales/status/1731342780226490530",
+      "score": 3326,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/unusual_whales",
+      "title": "Google, $GOOGL, will officially help build seven nuclear reactors to power its AI systems, per FORTUNE.",
+      "url": "https://x.com/unusual_whales/status/1849062465554059551",
+      "score": 3254,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Lin",
+      "title": "This bull market won’t last forever.\n\nThat’s why you need to take advantage of it while it's here.\n\nTrillion-dollar industries are unfolding before our eyes:\nAI, crypto, chips, data centers, fintech,",
+      "url": "https://x.com/Speculator_io/status/1973866368295379176",
+      "score": 1326,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/unusual_whales",
+      "title": "Meta, $META, joins Amazon, Google and others in turning to nuclear generation to fuel AI data centers.\n\nIt wants to add 1 to 4 gigawatts of nuclear generation capacity starting in the early 2030s, it",
+      "url": "https://x.com/unusual_whales/status/1864089986158747955",
+      "score": 1032,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Lin",
+      "title": "Companies that will benefit the most from Project Stargate and $500B in AI spending:\n\n• Chips: $NVDA $AVGO $TSM $MRVL $MU $ARM\n• Data Centers: $ORCL $VRT $SMCI $DELL $HPE $ANET $CIEN $CRDO $CLS \n• Pow",
+      "url": "https://x.com/Speculator_io/status/1882077116440678661",
+      "score": 882,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Lin",
+      "title": "The future is happening right now.\n\n• AI\n• Space\n• Crypto\n• Flying Cars\n• Neural Chips\n• Smart Glasses\n• Nuclear Energy\n• Self-Driving Cars\n• Gene Sequencing\n• Humanoid Robots\n• Quantum Computers\n\nThe",
+      "url": "https://x.com/Speculator_io/status/1937588229806403911",
+      "score": 543,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/unusual_whales",
+      "title": "Microsoft, $MSFT, is developing an AI to handle the paperwork for establishing new nuclear power plants, per WSJ.",
+      "url": "https://x.com/unusual_whales/status/1737453042306306118",
+      "score": 502,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/unusual_whales",
+      "title": "Japan’s new economy minister says the country will need to maximize the use of existing nuclear power reactors as AI and data centers are expected to boost electricity demand, per Bloomberg.",
+      "url": "https://x.com/unusual_whales/status/1844376589129441562",
+      "score": 443,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/unusual_whales",
+      "title": "Microsoft, $MSFT, is hiring a nuclear energy expert to help power its AI and cloud data centers, per CNBC.",
+      "url": "https://x.com/unusual_whales/status/1706376613078896945",
+      "score": 277,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Shay Boloor",
+      "title": "Two weeks before the $SPCX IPO, the company has landed $6.4B in Space Force contracts in the same week.\n\nThe awards cover orbital surveillance to replace airborne radar and a next-gen military communi",
+      "url": "https://x.com/StockSavvyShay/status/2060472600472830009",
+      "score": 117,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Lin",
+      "title": "SpaceX → Scheduled to go public on June 12th  \n\nOpenAI → Scheduled to go public as early as September  \n\nAnthropic → Scheduled to go public as early as November",
+      "url": "https://x.com/Speculator_io/status/2060476306219831613",
+      "score": 45,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Coin Academy",
+      "title": "Les États-Unis attribuent à SpaceX un contrat de 4,16 milliards $ pour construire un réseau satellitaire destiné au suivi de cibles aériennes.",
+      "url": "https://x.com/coinacademy_fr/status/2060453505714811125",
+      "score": 34,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/CryptoGoos",
+      "title": "THIS IS MASSIVE\n\n US Space Force just awarded SpaceX a $4.16 billion contract to build satellite network for tracking airborne targets.",
+      "url": "https://x.com/cryptogoos/status/2060466324573217125",
+      "score": 23,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Crypto AI Decoded",
+      "title": "$SPCE is breaking out! \n\nSpace is the hottest sector right now as @SpaceX $SPCX is coming in June! \nGet ready to 10x over the next few days. \n\nWe are going to the moon!!!!!",
+      "url": "https://x.com/CryptoAIDecode/status/2060427901971914874",
       "score": 0,
-      "ts": "2026-05-28T05:21:19"
+      "ts": ""
     },
     {
       "src": "The Verge",
-      "title": "A Google employee allegedly used inside information to win $1.2 million on Polymarket",
-      "url": "https://www.theverge.com/tech/938635/google-polymarket-insider-trading-prediction-market-bets",
+      "title": "SpaceX gets $4 billion contract to build missile-tracking ‘Golden Dome’ satellites",
+      "url": "https://www.theverge.com/science/940207/spacex-golden-dome-satellite-contract",
       "score": 0,
-      "ts": "2026-05-27T18:30:02"
+      "ts": "2026-05-29T17:59:46"
+    },
+    {
+      "src": "The Verge",
+      "title": "Microsoft delays Fable (again) to avoid GTA VI",
+      "url": "https://www.theverge.com/games/939991/microsoft-fable-xbox-delay-gta-vi",
+      "score": 0,
+      "ts": "2026-05-29T14:02:37"
+    },
+    {
+      "src": "The Verge",
+      "title": "Microsoft teases new Surface hardware and ‘a new era of PC’",
+      "url": "https://www.theverge.com/news/939960/microsoft-computex-teaser-surface-nvidia-windows-rumors",
+      "score": 0,
+      "ts": "2026-05-29T13:15:19"
     },
     {
       "src": "HN",
-      "title": "YouTube to automatically label AI-generated videos",
-      "url": "https://blog.youtube/news-and-events/improving-ai-labels-viewers-creators/",
-      "score": 870
+      "title": "Notes from the Mistral AI Now Summit in Paris",
+      "url": "https://koenvangilst.nl/lab/mistral-ai-now-summit",
+      "score": 276
     },
     {
       "src": "HN",
-      "title": "I think Anthropic and OpenAI have found product-market fit",
-      "url": "https://simonwillison.net/2026/May/27/product-market-fit/",
-      "score": 870
+      "title": "Is AI causing a repeat of frontend’s lost decade?",
+      "url": "https://mastrojs.github.io/blog/2026-05-23-is-AI-causing-a-repeat-of-frontends-lost-decade/",
+      "score": 244
     },
     {
       "src": "HN",
-      "title": "DuckDuckGo search saw 28% more visits after Google said people love AI mode",
-      "url": "https://www.pcgamer.com/hardware/duckduckgos-ai-free-search-saw-nearly-28-percent-more-visits-in-the-week-following-googles-insistence-that-people-love-ai-mode/",
-      "score": 866
+      "title": "Liquid AI reveals 8B-A1B MoE trained on 38T",
+      "url": "https://www.liquid.ai/blog/lfm2-5-8b-a1b",
+      "score": 113
     },
     {
       "src": "HN",
-      "title": "What Apple and Google are doing to push notifications",
-      "url": "https://www.jacquescorbytuech.com/writing/what-apple-and-google-are-doing-your-push-notifications",
-      "score": 284
-    },
-    {
-      "src": "r/CC",
-      "title": "Satoshi’s 1.1 million bitcoin and millions more can be saved from quantum attack, says expert",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1to7iht/satoshis_11_million_bitcoin_and_millions_more_can/",
-      "score": 232
-    },
-    {
-      "src": "r/ML",
-      "title": "AI-generated CUDA kernels silently break training and inference [R]",
-      "url": "https://www.reddit.com/r/MachineLearning/comments/1tpaw6x/aigenerated_cuda_kernels_silently_break_training/",
-      "score": 213
+      "title": "Expertise in the age of AI",
+      "url": "https://www.moderndescartes.com/essays/ai_and_expertise/",
+      "score": 94
     },
     {
       "src": "HN",
-      "title": "Google employee charged with $1M Polymarket insider trading bet on search term",
-      "url": "https://www.cnbc.com/2026/05/27/google-employee-polymarket-insider-trading.html",
-      "score": 174
-    },
-    {
-      "src": "r/CC",
-      "title": "Vitalik just published Ethereum's quantum resistance roadmap and it might be the most important post-merge development nobody's discussing.",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1togj0j/vitalik_just_published_ethereums_quantum/",
-      "score": 174
-    },
-    {
-      "src": "r/CC",
-      "title": "Trump-Linked Crypto Firm Burns $1.5 Billion on Failed Token and Faces Bankruptcy",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tpq980/trumplinked_crypto_firm_burns_15_billion_on/",
-      "score": 104
-    },
-    {
-      "src": "r/CC",
-      "title": "NASDAQ hits ATH...but crypto? WTAF?!",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tomom4/nasdaq_hits_athbut_crypto_wtaf/",
-      "score": 97
-    },
-    {
-      "src": "r/ML",
-      "title": "[D] Where do you go for serious AI research discussion online? [D]",
-      "url": "https://www.reddit.com/r/MachineLearning/comments/1to2l4c/d_where_do_you_go_for_serious_ai_research/",
-      "score": 96
-    },
-    {
-      "src": "r/CC",
-      "title": "Coinbase has become uselessly ratchet.",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tpra86/coinbase_has_become_uselessly_ratchet/",
-      "score": 92
-    },
-    {
-      "src": "r/CC",
-      "title": "Crypto’s biggest problem isn’t regulation — it’s that most “decentralization” is fake",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tp1wbp/cryptos_biggest_problem_isnt_regulation_its_that/",
-      "score": 78
+      "title": "The mysterious Hy3 LLM is topping OpenRouter Model Rankings by a large margin",
+      "url": "https://minimaxir.com/2026/05/openrouter-hy3/",
+      "score": 91
     },
     {
       "src": "HN",
-      "title": "Investigating how prompt politeness affects LLM accuracy (2025)",
-      "url": "https://arxiv.org/abs/2510.04950",
-      "score": 72
+      "title": "Microsoft 0-day feud escalates as researcher threatens another exploit dump",
+      "url": "https://www.theregister.com/security/2026/05/28/microsoft-0-day-feud-escalates-as-researcher-threatens-another-windows-exploit-dump/5248085",
+      "score": 85
     },
     {
       "src": "HN",
-      "title": "A Eureka machine that thinks like nature and explores what AI cannot",
-      "url": "https://iisc.ac.in/a-eureka-machine-that-thinks-like-nature-and-explores-what-ai-cannot/",
-      "score": 69
-    },
-    {
-      "src": "r/CC",
-      "title": "📉 In 2014, the crypto exchange Mt. Gox collapsed after losing approximately 850,000 Bitcoin.",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tp2oiz/in_2014_the_crypto_exchange_mt_gox_collapsed/",
-      "score": 57
-    },
-    {
-      "src": "r/ML",
-      "title": "The famous METR AI time horizons graph contains numerous severe errors [D]",
-      "url": "https://www.reddit.com/r/MachineLearning/comments/1tnhnh5/the_famous_metr_ai_time_horizons_graph_contains/",
-      "score": 53
-    },
-    {
-      "src": "r/CC",
-      "title": "President DJT Says He'll “Never Let Crypto Down”",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1tptaac/president_djt_says_hell_never_let_crypto_down/",
-      "score": 48
-    },
-    {
-      "src": "r/CC",
-      "title": "What actually happens to your crypto when you die? Has anyone dealt with this as an executor?",
-      "url": "https://www.reddit.com/r/CryptoCurrency/comments/1toprba/what_actually_happens_to_your_crypto_when_you_die/",
-      "score": 32
+      "title": "CAPTCHAs can still detect AI agents",
+      "url": "https://research.roundtable.ai/captchas-detect-ai/",
+      "score": 55
     },
     {
       "src": "HN",
-      "title": "AI Datacenters Were Built for GPUs. What Happens When You Remove the GPUs?",
-      "url": "https://almartis.xyz/gpu-free-datacenter.html",
-      "score": 31
+      "title": "Show HN: Tiny-vLLM – high performance LLM inference engine in C++ and CUDA",
+      "url": "https://github.com/jmaczan/tiny-vllm",
+      "score": 42
+    },
+    {
+      "src": "HN",
+      "title": "A Trillion Characters",
+      "url": "https://characters.fastserial.com",
+      "score": 16
     }
   ]
 }

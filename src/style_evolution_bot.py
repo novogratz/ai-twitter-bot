@@ -30,7 +30,7 @@ DIRECTIVES_FILE = os.path.join(_PROJECT_ROOT, "directives.md")
 INSIGHTS_FILE = os.path.join(_PROJECT_ROOT, "performance_insights.json")
 STYLE_STATE_FILE = os.path.join(_PROJECT_ROOT, "style_evolution_state.json")
 
-STYLE_PROMPT = """Tu es l'agent STYLE-EVOLUTION de @CryptoAIDecode — le bot Twitter FR n°1 IA + Crypto + Spatial.
+STYLE_PROMPT = """Tu es l'agent STYLE-EVOLUTION de @AISpaceDecoder — le bot Twitter FR n°1 IA + Crypto + Spatial.
 
 Ton job: analyser les TENDANCES DE FORMAT qui marchent en ce moment sur Twitter FR IA/Crypto, et réécrire les DIRECTIVES DE STYLE du bot pour maximiser les likes/RT/followers.
 

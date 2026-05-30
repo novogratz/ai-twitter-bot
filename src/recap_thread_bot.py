@@ -104,7 +104,7 @@ def _top_decodes(items: list, k: int = 5) -> list:
     return items[:k]
 
 
-THREAD_PROMPT = """You are @CryptoAIDecode. You will write ONE English recap thread
+THREAD_PROMPT = """You are @AISpaceDecoder. You will write ONE English recap thread
 of the week's Decodes. Here are the 5-6 best Decodes (by likes) this week:
 
 {decode_list}
@@ -131,7 +131,7 @@ TWEET 2 to TWEET N (one per Decode, ordered best to worst):
 
     The real bet: build the private grid that turns the public one into a backup.
 
-    https://x.com/CryptoAIDecode/status/...
+    https://x.com/AISpaceDecoder/status/...
 
 LAST TWEET (the close — invite to follow + tease next week):
   Liked this? Next week, 6 new Decodes.

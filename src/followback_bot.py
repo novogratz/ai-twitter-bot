@@ -6,7 +6,7 @@ niche. The existing reciprocity loop only fires when someone REPLIES
 to us — that misses 90% of new followers (lurkers + likers).
 
 Strategy:
-  - Once per ~2h, visit /CryptoAIDecode/followers via Safari + JS scrape.
+  - Once per ~2h, visit /AISpaceDecoder/followers via Safari + JS scrape.
   - Get the list of @handles currently following us.
   - Follow back any handle we haven't followed yet, capped at FOLLOW_CAP
     per cycle (don't burn the daily follow budget all at once).
@@ -51,7 +51,7 @@ def _looks_like_real_handle(handle: str) -> bool:
 
 
 def _scrape_followers_list(max_handles: int = 30) -> list[str]:
-    """Open /CryptoAIDecode/followers and scrape the @handles visible on the page."""
+    """Open /AISpaceDecoder/followers and scrape the @handles visible on the page."""
     js_code = """
     (function() {
         var handles = [];
@@ -109,7 +109,7 @@ def _scrape_followers_list(max_handles: int = 30) -> list[str]:
 
 
 def run_followback_cycle():
-    """Visit /CryptoAIDecode/followers and follow back fresh ones."""
+    """Visit /AISpaceDecoder/followers and follow back fresh ones."""
     from .engage_bot import _load_followed, _save_followed
 
     followed = _load_followed()

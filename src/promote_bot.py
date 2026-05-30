@@ -7,9 +7,9 @@ plain-repost it so it gets another feed pass. Same content, different
 distribution surface.
 
 Strategy:
-  - Once every ~3h. Visit /CryptoAIDecode/with_replies, scrape recent replies +
+  - Once every ~3h. Visit /AISpaceDecoder/with_replies, scrape recent replies +
     their like counts.
-  - Filter: must be authored by @CryptoAIDecode, must have ≥ MIN_LIKES.
+  - Filter: must be authored by @AISpaceDecoder, must have ≥ MIN_LIKES.
   - Skip if already promoted (persistent dedup in promoted_replies.json).
   - Plain-repost the top candidate.
   - Cap 3/day so we don't feel mechanical.
@@ -106,7 +106,7 @@ def run_promote_cycle():
 
     # /with_replies shows our recent replies as standalone tweets with metrics.
     # Hack: scrape_profile_tweets concatenates "https://x.com/" + arg, so we
-    # can pass "CryptoAIDecode/with_replies" to land on the right page.
+    # can pass "AISpaceDecoder/with_replies" to land on the right page.
     log.info(f"[PROMOTE] Scraping @{BOT_HANDLE}/with_replies for top recent replies...")
     try:
         tweets = scrape_profile_tweets(f"{BOT_HANDLE}/with_replies", max_tweets=20)
