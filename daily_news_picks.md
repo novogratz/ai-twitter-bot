@@ -3566,3 +3566,338 @@ A $13M micro-cap that builds military-grade electronics for defense and space. L
 - **@theeconomist** (5 likes, score 7/10) — Ukraine will probably emerge as a damaged but functioning democracy and a new middle power: poorer, traumatised, but confident in its identity. Yet it will also be tarnished by militarism and wartime
   - https://x.com/TheEconomist/status/2060672608073376126
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 25).
+- **@joshkale** (0 likes, score 9/10) — This New Glenn rocket explosion released 20% of the energy of the Hiroshima atomic bomb and that wasn't even the bad part:
+
+→ The pad: LC-36 is the only pad on Earth that launches New Glenn and now it
+  - https://x.com/JoshKale/status/2060351270867673100
+  - **WHY**: Source fiable + impact concret (score signal 15, engagement 1736).
+- **@highsignal_ai** (4671 likes, score 9/10) — Elon Musk on the regulatory absurdity of launching Starship:
+
+Elon explains that before SpaceX could launch Starship, regulators required them to study whether the rocket would hit a shark in the Paci
+  - https://x.com/HighSignal_AI/status/2051685976859378130
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 5029).
+- **@paulkeitzke** (0 likes, score 8/10) — These 10 companies will make millionaires by 2030:
+1. $PLTR
+
+ Palantir Technologies
+
+2. $NVDA
+
+NVIDIA
+
+3. $ARM
+
+Arm Holdings
+
+4. $TSLA
+
+Tesla
+
+5. $CRSP
+
+CRISPR Therapeutics
+
+6. $RKLB
+
+Rocket Lab USA
+  - https://x.com/PaulKeitzke/status/2060001254990819791
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 44).
+- **@stockmktnewz** (527 likes, score 9/10) — Apple’s $AAPL new iPhone 17 Pro Max is being used by the astronauts on Artemis II
+
+The iPhone has confirmed been to space
+  - https://x.com/StockMKTNewz/status/2040797144496341270
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 621).
+- **@sawyermerritt** (4246 likes, score 9/10) — Elon Musk in new interview on datacenters in space:
+
+"Datacenters in space is much easier than people may think. SpaceX has 10k satellites in orbit right now. In the future with Starship, we'll be lau
+  - https://x.com/SawyerMerritt/status/2056741766464676021
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 4438).
+- **@wallstreetmav** (3391 likes, score 9/10) — SpaceX now has over 10,000 Starlink satellites in orbit (and growing), providing internet data service to every corner of the earth. Even ships at sea or aircraft in the sky can receive high speed int
+  - https://x.com/WallStreetMav/status/2040760018316808233
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 4159).
+- **@stats_feed** (746 likes, score 9/10) — NVIDIA earnings (trailing 12 months in May).
+
+2024: $34 billion 
+2023: $4 billion
+  - https://x.com/stats_feed/status/1791219576593608917
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 824).
+- **@lisa01750863095** (724 likes, score 9/10) — Investing into these 10 stocks will set you up to be rich before 2030:
+1. Nokia - $NOK
+2. Cisco-  $CSCO
+3. Circle - $CRCL
+4.  AXT Inc - $AXTI
+5.  Nebius - $NBIS
+6. SanDisk - $SNDK
+7. Rocket Lab - $RKL
+  - https://x.com/lisa01750863095/status/2057631570094080444
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 762).
+- **@mrmikeinvesting** (523 likes, score 9/10) — These 7 names are the core backbone of the Space Economy in 2026:
+
+1. $ASTS ~ Building the direct to device satellite layer that turns space into carrier grade broadband.
+2. $RKLB ~ Becoming a core pi
+  - https://x.com/MrMikeInvesting/status/2013317011481215225
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 579).
+- **@jasonl_capital** (11 likes, score 7/10) — 7. $VOYG - Voyager Technologies
+
+Building Starlab, the commercial space station positioned to replace the ISS. Raised FY2026 guidance to $230-255M with a $275M backlog up 54% YoY. Multiple Golden Dome
+  - https://x.com/JasonL_Capital/status/2059610392708391351
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 19).
+- **@jasonl_capital** (1105 likes, score 9/10) — The robotics supply chain is bigger than just Tesla.
+
+Here are 10 stocks building the components that go inside every humanoid robot:
+
+1. $MP - MP Materials
+
+Every robot motor needs rare earth magnets
+  - https://x.com/JasonL_Capital/status/2055258608963641551
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1179).
+- **@leifinvests** (626 likes, score 9/10) — My Favorite Stocks by Sector 
+
+Semis → $NVDA
+CPU → $ARM
+Hyperscaler → $ORCL
+Neocloud → $CRWV
+SaaS → $DDOG
+Cybersecurity → $CRWD
+Networking → $ANET
+Defense/Gov Software → $PLTR
+Robotics → $SYM
+Industri
+  - https://x.com/LeifInvests/status/2058991396665635072
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 690).
+- **@lisa01750863095** (2922 likes, score 9/10) — The U.S. government, hyperscalers, and $NVDA are literally telling you that the future will be dominated by the following 10 groups of stocks.
+Space：
+1. $RKLB
+2. $FLY
+3. $SATL
+4. $PL
+5. $ASTS
+Critical
+  - https://x.com/lisa01750863095/status/2053280384285131253
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3054).
+- **@0xnoncesense** (2455 likes, score 9/10) — THIS IS HOW AI BUBBLE ENDS.
+
+SpaceX, OpenAI, and Anthropic are all racing to IPO at the same time.
+
+The market needs to come up with $200 BILLION in fresh capital to absorb them.
+
+That money has to co
+  - https://x.com/0xNonceSense/status/2058583095193022571
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3037).
+- **@robertl1989** (1354 likes, score 9/10) — I’ll say this one last time: these 10 companies will mint millionaires by 2030.
+My top picks for May:
+
+1. $SATL(Satellogic) — $10 → $16 2.
+2. $IREN(Iren) — $64 → $120 3.
+3. $ASTS(AST Spacemobile) — $1
+  - https://x.com/robertl1989/status/2060376557684719648
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1354).
+- **@sairahul1** (675 likes, score 9/10) — 19-year-old makes $50,000 a month selling AI agents to business owners at $10,000-15,000 a call.
+
+His secret - he never sells AI. He sells pain.
+
+Not "our agent uses the latest technology" - but "how
+  - https://x.com/sairahul1/status/2060350342773322130
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 747).
+- **@itsmichaelluu** (498 likes, score 9/10) — Exactly  1 month ago, I explained why these will continue to go up higher:
+
+$BE was at $120 now $322 
+$ASTS was at $63 now $134
+$IONQ was at $28 now $72
+$IREN was at $30 now $70
+
+We're still super ear
+  - https://x.com/itsmichaelluu/status/2060333659241210367
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 542).
+- **@futurist_lens** (390 likes, score 9/10) — My portfolio went up over 1,100% after I made one change:
+
+I started investing in disruptive themes.
+
+Photonics → $AAOI $AXTI $AEHR 
+Space → $RKLB $ASTS $LUNR $PL
+Robotics → $OUST $VPG $AMBA
+AI Infras
+  - https://x.com/futurist_lens/status/2060455164352348541
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 404).
+- **@marketmatrixs** (318 likes, score 9/10) — 12 stocks, 12 potential names that could make you a millionaire by 2030:
+
+1. $ASTS | AST SpaceMobile
+2. $NOW | ServiceNow
+3. $NBIS | Nebius Group
+4. $ADUR | Aduro Clean Tech
+5. $EOSE | Eos Energy
+6. $
+  - https://x.com/MarketMatrixs/status/2060487219039870982
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 358).
+- **@elormkdaniel** (245 likes, score 9/10) — —Anthropic delayed Claude Mythos because the model was apparently too good at hacking banks
+
+—Uber reportedly burned through its 2026 AI budget in four months
+
+—Anthropic just became the world’s most
+  - https://x.com/elormkdaniel/status/2060426085997703275
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 253).
+- **@marcosmillayt** (193 likes, score 9/10) — Did this Wall Street Analyst say that NVIDIA $NVDA is a $350 stock soon? 
+
+Nvidia Earnings shows ‘unrelenting demand’, says Fundstrat’s Tom Lee
+  - https://x.com/MarcosMillaYT/status/2058275715653751172
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 225).
+- **@marionawfal** (96 likes, score 9/10) — NASA is about to break the sound barrier.
+
+The X-59 is heading into supersonic flight tests, and you won't hear it coming.
+
+Supersonic flight over land has been banned for decades because of the noise
+  - https://x.com/MarioNawfal/status/2060557711771660640
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 122).
+- **@netcapgirl** (11657 likes, score 8/10) — happy nvidia earnings to all who celebrate
+  - https://x.com/netcapgirl/status/1828789245726917032
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11783).
+- **@speculator_io** (8188 likes, score 8/10) — Nvidia literally told where to invest:
+
+IP: $ARM
+Fab: $TSM $INTC
+Memory: $MU $SNDK $WDC
+Packaging: $ASX $AMKR $CAMT
+Equipment: $KLAC $LRCX $ASML $KEYS
+Networking: $COHR $GLW $FN $LITE $APH
+Servers OEM
+  - https://x.com/Speculator_io/status/2052160643009019912
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 8364).
+- **@earnings_guy** (2211 likes, score 8/10) — $NVDA (Nvidia) #earnings are out:
+  - https://x.com/earnings_guy/status/1991255215052390754
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2407).
+- **@mrmikeinvesting** (1424 likes, score 8/10) — ServiceNow will go down in history as the greatest dip-buy setup that many have overlooked…
+
+Over the last few months $NOW has partnered with:
+
+- Nvidia
+- Anthropic
+- Amazon
+- Microsoft 
+- Google & mo
+  - https://x.com/MrMikeInvesting/status/2053673066123735460
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1570).
+- **@marionawfal** (0 likes, score 8/10) — China is building masses of launchpads near its nuclear missile silos
+
+New satellite data shows a sprawling web of launchpads, bunkers and communications nodes next to silos that house missiles capabl
+  - https://x.com/MarioNawfal/status/2060645388697354441
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 50).
+- **@curiosityonx** (6058 likes, score 8/10) — This is a real photo of mars.
+
+No filter. No AI. 
+
+Just a 50-mile crater packed with ancient ice, shot by ESA's Mars Express.
+  - https://x.com/CuriosityonX/status/2053988398843494753
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6354).
+- **@nvidiaaiinfra** (5664 likes, score 8/10) — The next chapter of space computing is here 
+
+NVIDIA and its ecosystem are advancing AI from Earth-to-space across:
+
+ Earth Orbit and Infrared Imagery
+ Radio Frequency and Synthetic Aperture Radar
+ Au
+  - https://x.com/NVIDIAAIInfra/status/2052886264349696279
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5912).
+- **@hesamation** (976 likes, score 8/10) — it’s 2080, Anthropic is worth the GDP of Mars and we’re still waiting for the ancient prophecy of AI bubble burst
+  - https://x.com/Hesamation/status/2060508211359129932
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 996).
+- **@ckcapitalxx** (413 likes, score 8/10) — $PENG is a $2.5 billion market cap stock. 
+
+Let me show you who they work with.
+
+Partners: $NVDA. $AMD. $INTC. SK Hynix. SK Telecom. Shell. Dell Technologies.
+
+Customers: NASA. The US Air Force. The U
+  - https://x.com/CKCapitalxx/status/2055072616147267936
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 453).
+- **@ckcapitalxx** (387 likes, score 8/10) — Stocks I think are deeply undervalued right now and will re rate. 
+
+My conviction list.
+
+$PENG — $48. NASA. US Air Force. US Navy. $NVDA and $AMD partner. Photonic memory optionality completely unpric
+  - https://x.com/CKCapitalxx/status/2056502592524411299
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 439).
+- **@preetkailon** (234 likes, score 8/10) — Every $NVDA bull needs to understand what’s being revealed at Computex. 
+
+Everyone’s talking about the N1X reveal at Computex. But most people are missing what actually matters here.
+
+This isn’t just
+  - https://x.com/preetkailon/status/2060541760145944647
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 264).
+- **@tedpillows** (50 likes, score 8/10) — S&P 500 $SPX current fractal overlayed on the 2000 dot-com bubble looks nearly identical.
+
+If this holds, a market correction will happen within 2-4 weeks.
+  - https://x.com/TedPillows/status/2060679788092592464
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 106).
+- **@is_owenlewis** (31 likes, score 8/10) — TL;DR — Starship really needs to work if America wants to get humans to the Lunar surface in 2028. 
+
+Blue Origin will pick itself up and press on. After all, their motto is 
+Gradatim Ferociter, Latin
+  - https://x.com/is_OwenLewis/status/2060390247041745099
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 45).
+- **@starlink** (5904 likes, score 7/10) — Starlink enables reliable real-time communication with recovery teams and live streaming of Starship’s splashdown in the middle of the Indian Ocean
+  - https://x.com/Starlink/status/2057950370668945682
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6742).
+- **@stat_cult** (949 likes, score 7/10) — Top Space Agencies Around The World 
+
+1.  United States – NASA  
+2.  India – ISRO  
+3.  China – CNSA  
+4.  Russia – Roscosmos  
+5.  Europe – ESA  
+6.  Japan – JAXA  
+7.  France – CNES  
+8.  Germany –
+  - https://x.com/Stat_Cult/status/2042800835768521014
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1001).
+- **@speculator_io** (235 likes, score 7/10) — SpaceX → Scheduled to go public on June 12th  
+
+OpenAI → Scheduled to go public as early as September  
+
+Anthropic → Scheduled to go public as early as November
+  - https://x.com/Speculator_io/status/2060476306219831613
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 263).
+- **@leifinvests** (64 likes, score 7/10) — Breaking news: it’s official, certain HIGH-QUALITY SAAS names are back and catching strong bids in the AI-driven market 
+
+Some of the QUALITY SaaS names seeing major strength 
+
+• $CRWD
+• $PANW
+• $SNOW
+  - https://x.com/LeifInvests/status/2060425221446771078
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 96).
+- **@elbazyonatan** (81 likes, score 7/10) — עוד אינדיקציה לעוצמת האירוע של ה-New Glenn - תקשיבו לרעש הפיצוץ שמגיע בשניה ה-33...
+בהנחה שהפיצוץ החל מספר שניות לפני תחילת הסרטון אפשר להעריך את מרחק הצילום בכ-12 ק"מ.
+ועדיין רעש מטורף.
+  - https://x.com/ElbazYonatan/status/2060376758436676000
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 91).
+- **@elonogyx** (41 likes, score 7/10) — Elon Musk: "In the absence of breakthrough innovation in the US, China will utterly dominate
+
+You need humanoid robots. You need real-world AI. You need a million tons a year to orbit. If we get the m
+  - https://x.com/ElonogyX/status/2060632369535578272
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 59).
+- **@asklivermore** (2289 likes, score 7/10) — You've listened to me. Now you will be rewarded. 
+
+Here are the opportunities to buy:
+1. Software-related stocks $IGV - $MSFT, $CRM, $NOW, $MDB, $ZETA, $DDOG, $ADBE, $ORCL, and many others
+
+Emerging:
+  - https://x.com/asklivermore/status/2056669577199899121
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 2783).
+- **@xfreeze** (830 likes, score 7/10) — Starship V3 executing a precision-controlled splashdown in the Indian Ocean
+
+A giant stainless-steel skyscraper falling back from space, flipping vertical, lighting its engines, and touching down in t
+  - https://x.com/XFreeze/status/2059516539733172364
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 996).
+- **@defileo** (693 likes, score 7/10) — > Spent years reading self-help books
+> knew what was wrong
+> couldn't figure out why nothing changed
+> pasted 1 prompt into Claude
+> it audited 9 areas of my life in one session
+> career, money, heal
+  - https://x.com/defileo/status/2043099440614117681
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 709).
+- **@marionawfal** (52 likes, score 7/10) — Jensen Huang is out there living his best life, dancing at the NVIDIA all-employee celebration event in Taipei, Taiwan
+
+You'd never guess he's the CEO
+  - https://x.com/MarioNawfal/status/2060683137324126491
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 94).
