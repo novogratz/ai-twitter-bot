@@ -3166,3 +3166,141 @@ Be careful out there.
 - **@sargon_of_akkad** (24 likes, score 7/10) — This is the genuine motivation of all left-wing opposition to nuclear power.
   - https://x.com/Sargon_of_Akkad/status/2060623999600583081
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 30).
+- **@johntinsman** (0 likes, score 9/10) — SpaceX Potential Compute Business
+
+XAI spent $3-4 billion on Colossus I.
+
+They are leasing it out for $45 bil of 3 years to Anthropic.
+
+SpaceX is finishing a 1 gigawatt Colossus II for around $17 bill
+  - https://x.com/JohnTinsman/status/2059654405964657093
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 138).
+- **@marionawfal** (7341 likes, score 9/10) — The U.S. has 4,000 data centers, while China has 365.
+
+But 24 months ago, AI training required 100 megawatts. 
+
+Today the minimum is 1 gigawatt.
+
+The U.S., Canadian, and Mexican grids can't deliver th
+  - https://x.com/MarioNawfal/status/2055438077531701317
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 8359).
+- **@stocksavvyshay** (1245 likes, score 9/10) — MY 3 FAVORITE SPACE ECONOMY STOCKS 
+
+1. $RKLB (Vertically Integrated Defense Prime)
+
+Rocket Lab is the only company outside of SpaceX that's executing as a vertically integrated space prime with Q1 20
+  - https://x.com/StockSavvyShay/status/2053462207892254783
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1361).
+- **@stocksavvyshay** (786 likes, score 9/10) — Starlink now represents ~70% of SpaceX revenue making connectivity the core cash engine of the company. 
+
+Thats why $ASTS remains a top 5 position for me because D2D connectivity could become one of t
+  - https://x.com/StockSavvyShay/status/2057208251335446709
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 878).
+- **@marionawfal** (344 likes, score 9/10) — BREAKING: TRUMP AND UK PM STARMER SIGN U.S.-UK “TECH PROSPERITY DEAL”
+
+U.S. giants including Microsoft, BlackRock, Nvidia, OpenAI, Oracle, Amazon, and CoreWeave will pour $42B into the UK.
+
+The invest
+  - https://x.com/MarioNawfal/status/1968670091702161525
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 426).
+- **@sawyermerritt** (5101 likes, score 8/10) — J.P. Morgan predicts that Viasat, a competitor of Starlink, could lose up to $80 million of revenue per year due to @SpaceX's new deal with United Airlines to equip its entire fleet of over 1,000 airp
+  - https://x.com/SawyerMerritt/status/1836215133900538114
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 5427).
+- **@cryptorover** (150 likes, score 8/10) — HUGE SELLING BY BLACKROCK 
+
+BlackRock has sold $2.1 BILLION worth of Bitcoin over the last 10 trading days.
+  - https://x.com/cryptorover/status/2060624050448404836
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 290).
+- **@leocapital_01** (866 likes, score 8/10) — I stand corrected. $ASTS  was indeed mentioned in the SpaceX S-1. Named as a competitor in the largest IPO in stock market history.
+
+But more importantly, @SpaceX  just told the SEC that Starlink Mobi
+  - https://x.com/LeoCapital_01/status/2057227173761818819
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 962).
+- **@ripplexrpie** (448 likes, score 8/10) — BREAKING:  Treasury Secretary Scott Bessent announced that the U.S. Government has successfully seized $1 billion worth of crypto from Iran:
+
+"Just outright grabbed the wallets. Some of them may be ty
+  - https://x.com/RippleXrpie/status/2060529221525537085
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 498).
+- **@mattloszak** (358 likes, score 8/10) — A data center developer just told me their electrical loads are breaking their generator shafts.
+
+Crazy to think that GPUs turning on and off, 1s and 0s, can be FELT by the gas turbine & generator.
+
+B
+  - https://x.com/MattLoszak/status/2060352965802967338
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 420).
+- **@squawkcnbc** (204 likes, score 8/10) — Ross Gerber of @GerberKawasaki has a change of heart on SpaceX ahead of the IPO. https://cnb.cx/49YSvDg
+  - https://x.com/SquawkCNBC/status/2060376911532998787
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 338).
+- **@speculator_io** (0 likes, score 8/10) — Space sector rerating is accelerating.
+
+$RDW Redwire +28.44%
+$SIDU Sidus Space +23.07%
+$FLY Firefly Aerospace +19.69%
+$YSS York Space Systems +17.88%
+$ASTS AST SpaceMobile +17.32%
+$SPIR Spire Global +
+  - https://x.com/Speculator_io/status/2059329059016905005
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 68).
+- **@moonmarket** (0 likes, score 7/10) — $ASTC with the SpaceX IPO right around the corner and all Space stocks exploding we have the smallest market cap space stock on the planet right in front of our eyes. Just a $10m market cap 
+
+News Tod
+  - https://x.com/moonmarket/status/2059619416426287567
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 32).
+- **@yatharthmann** (557 likes, score 8/10) — SpaceX has agreed to meet the India's data localization and security requirements.  
+
+Starlink is on track to obtain an operations license in India.
+
+It will be a major competitor for India's struggli
+  - https://x.com/yatharthmann/status/1855941318767267877
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 617).
+- **@paradislabs** (264 likes, score 8/10) — I've been saying that $CRWV's debt profile is an issue.
+
+Now WSJ report that $NBIS are better than $CRWV because of their debt.
+
+The CoreWeave model is basically: borrow heavily today + pray backlog c
+  - https://x.com/ParadisLabs/status/2056364195923316744
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 326).
+- **@squawkcnbc** (27 likes, score 7/10) — "The league has grown massively," says @mikejbuckley of @sailgpusa ahead of this weekend's championship. "Valuations have doubled, big brands are coming in and people want to be a part of it." https:/
+  - https://x.com/SquawkCNBC/status/2060376997646201036
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 39).
+- **@cb_doge** (1097 likes, score 7/10) — First ever spacewalk: 1965
+
+First ever commercial space walk: 2024, when SpaceX made history.
+  - https://x.com/cb_doge/status/2022301597678882992
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1447).
+- **@unusual_whales** (937 likes, score 7/10) — Elon Musk has said: Grok Supercomputer "Colossus 2 will be the first Gigawatt AI training supercluster"
+  - https://x.com/unusual_whales/status/1948326542020334079
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1141).
+- **@speculator_io** (280 likes, score 7/10) — Space stocks are taking off today!
+
+$MNTS +32.76%
+$ASTS +21.78%
+$SATL +21.54%
+$RKLB +12.51%
+$RDW +11.42%
+$LUNR +9.46%
+$PL +9.17%
+  - https://x.com/Speculator_io/status/1889028876854276556
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 288).
+- **@squawkcnbc** (38 likes, score 7/10) — “We have the bold ambition to become the #1 company in oncology by 2030,” says $JNJ CEO Joaquin Duato. https://cnb.cx/4v9uAt4
+  - https://x.com/SquawkCNBC/status/2060369860618559698
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 46).
+- **@sciencepostcard** (6302 likes, score 7/10) — Japan’s leap into the deep blue has birthed a technological titan: the world’s first megawatt-scale underwater turbine designed to anchor within the relentless Kuroshio Current. Unlike solar or wind e
+  - https://x.com/Sciencepostcard/status/2044071725055320152
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 7216).
+- **@speculator_io** (1402 likes, score 7/10) — The Space Economy:
+
+Launch Services Providers
+$RKLB Rocket Lab
+$SPCE Virgin Galactic
+
+Space Infrastructure and Services
+$RDW Redwire Space
+$LUNR Intuitive Machines
+$MNTS Momentus
+$LLAP Terran Orbital
+  - https://x.com/Speculator_io/status/1881715257913069760
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1478).
+- **@microstrategy** (38 likes, score 7/10) — We built the Strategy Mosaic Semantic Layer Comparison Hub to make the evaluation easier, a framework for comparing Mosaic against AtScale, dbt Labs, Denodo, and Looker across the criteria that actual
+  - https://x.com/MicroStrategy/status/2060330669461397617
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 46).
