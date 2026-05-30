@@ -3304,3 +3304,88 @@ $LLAP Terran Orbital
 - **@microstrategy** (38 likes, score 7/10) — We built the Strategy Mosaic Semantic Layer Comparison Hub to make the evaluation easier, a framework for comparing Mosaic against AtScale, dbt Labs, Denodo, and Looker across the criteria that actual
   - https://x.com/MicroStrategy/status/2060330669461397617
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 46).
+- **@saylor** (5116 likes, score 9/10) — CFTC guidance advances Bitcoin capital markets: 24/7 trading, BTC collateral, perpetual futures, options, and regulated access. Good for $BTC holders, powers the $MSTR engine, and supports the rise of
+  - https://x.com/saylor/status/2060385570782679369
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 5724).
+- **@alexmasoncrypto** (303 likes, score 9/10) — FACT: BITCOIN HAS FOLLOWED ONE RULE FOR 7 MONTHS
+
+Touch the upper resistance → dump:
+
+$126K touched → dumped to $87K.
+
+$97K touched → dumped to $62K.
+
+$82K touched → dump started immediately.
+
+Each bo
+  - https://x.com/AlexMasonCrypto/status/2060421800878571779
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 399).
+- **@leifinvests** (136 likes, score 8/10) — HOT stocks are getting crushed 
+
+$RKLB -11%
+$NVTS -9%
+$NXT -7.5%
+$ASTS -7.5%
+$NBIS -7%
+$CRWV -7%
+$IREN -6.5%
+$VRT -6%
+$ONDS -6%
+$OKLO -5.5%
+$AMD -5%
+
+Continuation from yesterday's selloff
+
+Starting to
+  - https://x.com/LeifInvests/status/2056740970255774104
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 192).
+- **@coindesk** (138 likes, score 8/10) — NEW: Treasury Secretary Scott Bessent says the U.S. government has seized "about a billion dollars" of Iran’s crypto.
+  - https://x.com/CoinDesk/status/2060449174152175885
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 206).
+- **@robertgraham** (49 likes, score 8/10) — SpaceX is the most awesome company to IPO ever. They re-invented rockets and satellite Internet.
+
+But they've changed the rules of stock ownership and control such that investors are going to get scre
+  - https://x.com/robertgraham/status/2060478751192801326
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 77).
+- **@cyber_razz** (25006 likes, score 7/10) — A company gave every employee unlimited access to Claude.
+
+Set zero spending limits.
+
+Got a $500 million bill. In one month.
+
+Meanwhile Meta made token usage a leaderboard.
+
+Low score meant getting fi
+  - https://x.com/cyber_razz/status/2060067580342112696
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 25466).
+- **@kobeissiletter** (1054 likes, score 7/10) — AI is about to reshape the global workforce:
+
+24% of jobs globally, or ~838 million positions, are estimated to be exposed to generative AI.
+
+High-income countries are facing the greatest risk at ~33%
+  - https://x.com/KobeissiLetter/status/2060486641634910499
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1416).
+- **@alc2022** (1137 likes, score 7/10) — $pltr today is like $nvda in 2016
+
+1. it has a (digital twin) monopoly
+2. it's penetrated <0.01% of the TAM
+3. it grows faster as it gets bigger, because it's a Singularity Scaler
+  - https://x.com/alc2022/status/2056351598691926083
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1217).
+- **@mrmikeinvesting** (622 likes, score 7/10) — I’ve said this before, & I’ll say this again…
+
+You can literally create generational wealth simply by scrolling on X.
+
+In January of this year, I called that the space theme would be the next sector t
+  - https://x.com/MrMikeInvesting/status/2059609073318867088
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 732).
+- **@coindesk** (161 likes, score 7/10) — NEW: JPMorgan CEO Jamie Dimon escalated his opposition to stablecoin rewards under the Clarity Act:
+
+“The banks will not accept it.”
+
+@HeleneBraunn reports.
+  - https://x.com/CoinDesk/status/2060452971909964045
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 331).
+- **@openai** (243 likes, score 7/10) — In conversation with OpenAI’s @markchen90, Terence reflects on a future where AI reduces the cognitive friction of research, helps preserve the paths behind discovery, and expands what mathematicians
+  - https://x.com/OpenAI/status/2060451760033214653
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 279).
