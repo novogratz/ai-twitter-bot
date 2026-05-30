@@ -294,15 +294,12 @@ def main():
         if not _quiet_skip("REPLYBACK"):
             safe_run_replyback_cycle()
 
-    # Startup news burst: Monthly catch-up first, then Daily. Monthly is part
-    # of ./bin/run.sh so a missed cron window does not skip the whole month.
+    # Startup: Monthly catch-up only (idempotent, guards its own state).
+    # Daily/weekly news fire on their cron schedule (7AM EST) — NOT on restart,
+    # to avoid duplicate posts when the bot is restarted during the day.
     if not args.reply_only:
-        log.info("Bot started! Checking Monthly catchup, firing Weekly + Daily Decodes.")
+        log.info("Bot started! Checking Monthly catchup.")
         _run_monthly_startup_catchup_if_due()
-        # Fire weekly immediately on startup so pending weekly topics ship now.
-        log.info("Startup weekly burst...")
-        safe_run_weekly_news_cycle()
-        safe_run_daily_news_cycle(force_all=False)
         # Fire one RT + quote cycle immediately so they don't wait for the full
         # direct-reply warmup to finish before scheduler.start() is called.
         log.info("Startup retweet burst...")

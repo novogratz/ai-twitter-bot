@@ -92,6 +92,24 @@ def _topic_for_decode(n: int) -> str:
 
 
 _DAILY_TOPIC_STATE_FILE = _os.path.join(_PR, "daily_topic_state.json")
+_POSTED_NEWS_URLS_FILE = _os.path.join(_PR, "posted_news_urls.json")
+
+
+def _load_posted_news_urls() -> set:
+    try:
+        with open(_POSTED_NEWS_URLS_FILE) as f:
+            return set(json.load(f))
+    except (OSError, json.JSONDecodeError):
+        return set()
+
+
+def _save_posted_url(url: str) -> None:
+    urls = _load_posted_news_urls()
+    urls.add(url)
+    # Keep last 500 to bound file size
+    trimmed = list(urls)[-500:]
+    with open(_POSTED_NEWS_URLS_FILE, "w") as f:
+        json.dump(trimmed, f)
 
 
 def _daily_topic_state() -> dict:
@@ -2130,6 +2148,12 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
                 globals()["_last_source_url"] = None
                 globals()["_last_image_topic"] = None
                 return None
+            if src_url in _load_posted_news_urls():
+                log.info(f"[NEWS] URL already posted — SKIPPING duplicate: {src_url[:120]}")
+                _mark_generation_retryable(f"duplicate url: {src_url}", tweet)
+                globals()["_last_source_url"] = None
+                globals()["_last_image_topic"] = None
+                return None
             pub_date = _url_publication_date(src_url)
             if pub_date is not None:
                 age = datetime.now() - pub_date
@@ -2223,4 +2247,9 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         label = "Monthly" if _format_kind_this_post == "monthly" else ("Weekly" if is_weekly_this_post else "Daily")
         log.info(f"[NEWS] Marked '{_decoded_topic}' {label} done for today.")
     _commit_next_decode_number(decode_number)
+    if src_url:
+        try:
+            _save_posted_url(src_url)
+        except Exception:
+            pass
     return tweet
