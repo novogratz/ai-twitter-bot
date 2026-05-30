@@ -22,21 +22,27 @@ _OWN_HANDLE = BOT_HANDLE.lower()
 # Global high-signal AI / crypto / markets / space content; every generated
 # quote is in English. A short FR tail remains only for major French stories.
 QUOTE_QUERIES = [
+    # AI
     "OpenAI OR ChatGPT OR \"GPT-5\" lang:en min_faves:500",
-    "Anthropic OR Claude lang:en min_faves:400",
+    "Anthropic OR Claude OR xAI lang:en min_faves:400",
     "Nvidia OR NVDA OR GPU OR \"compute cluster\" lang:en min_faves:500",
-    "\"AI agents\" OR \"AI startup\" OR \"frontier model\" lang:en min_faves:400",
-    "Mistral OR \"Hugging Face\" OR \"open source AI\" lang:en min_faves:200",
-    "Bitcoin OR BTC OR \"BTC ETF\" lang:en min_faves:800",
-    "Ethereum OR ETH OR stablecoin OR DeFi lang:en min_faves:400",
-    "Bittensor OR TAO OR \"decentralized compute\" lang:en min_faves:200",
+    "\"AI agents\" OR \"agentic AI\" OR \"frontier model\" lang:en min_faves:400",
     "\"AI datacenter\" OR megawatt OR \"power demand\" OR nuclear lang:en min_faves:300",
-    "CoreWeave OR CRWV OR IREN OR \"crypto mining\" lang:en min_faves:200",
-    "SpaceX OR Starship OR Starlink OR \"space infrastructure\" lang:en min_faves:800",
-    "Tesla OR robotics OR \"humanoid robot\" lang:en min_faves:500",
-    # FR fallback — only major French-language stories.
-    "IA OR ChatGPT OR Mistral lang:fr min_faves:30",
-    "Bitcoin OR crypto OR Ethereum lang:fr min_faves:30",
+    "robotics OR \"humanoid robot\" OR Tesla OR Boston Dynamics lang:en min_faves:400",
+    "Mistral OR \"Hugging Face\" OR \"open source AI\" lang:en min_faves:200",
+    # Space
+    "SpaceX OR Starship OR Starlink OR \"Falcon 9\" lang:en min_faves:800",
+    "\"Rocket Lab\" OR RKLB OR NASA OR Artemis lang:en min_faves:400",
+    "satellite OR \"space launch\" OR \"orbital\" OR ESA lang:en min_faves:300",
+    "\"AST SpaceMobile\" OR ASTS OR LUNR OR \"space stock\" lang:en min_faves:200",
+    "\"Golden Dome\" OR USSF OR \"space defense\" lang:en min_faves:200",
+    # Investment (crypto included)
+    "Bitcoin OR BTC OR \"BTC ETF\" lang:en min_faves:600",
+    "Ethereum OR stablecoin OR DeFi lang:en min_faves:300",
+    "Palantir OR PLTR OR \"AI stock\" OR \"tech earnings\" lang:en min_faves:300",
+    # FR fallback
+    "IA OR ChatGPT OR espace OR fusée lang:fr min_faves:30",
+    "Bitcoin OR crypto OR investissement lang:fr min_faves:30",
 ]
 
 QUOTE_PROMPT = """You are @CryptoAIDecode. You will QUOTE-TWEET this tweet:

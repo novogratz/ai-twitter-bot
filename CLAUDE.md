@@ -4,7 +4,7 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
-> **Mandate 2026-05-27:** All standalone content in English. French ONLY when replying to French content. Goal = super-influencer in AI, crypto, markets, and space.
+> **Mandate 2026-05-29:** Full pivot. Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). All standalone content in English. French ONLY when replying to French content. Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
 ---
 
