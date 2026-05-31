@@ -143,6 +143,14 @@ def _scrub_metadata_leaks(text: str) -> str:
         text,
         flags=re.IGNORECASE,
     )
+    # Truncated tag catch — model output cut off before closing ']', e.g. "[PATTERN: REPE"
+    # at end-of-string or end-of-line with no closing bracket.
+    text = re.sub(
+        r"\[\s*(?:PATTERN|IMAGE|SOURCE|KEYWORD|TOPIC|ANGLE)[^\]]*$",
+        "",
+        text,
+        flags=re.IGNORECASE,
+    )
     # Prompt-instruction bleed (local-model output sometimes echoes the
     # rules back). qwen3.6 posted "⚠️ CRITIQUE: FR_ANCHOR" verbatim on
     # 2026-05-15. Strip whole lines starting with the warning emoji OR
