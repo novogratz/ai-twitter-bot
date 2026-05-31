@@ -110,7 +110,7 @@ def _parse_pub_date(s: str) -> datetime:
             return datetime.min
 
 
-def _parse_feed(name: str, url: str, max_age_hours: int = 12) -> list:
+def _parse_feed(name: str, url: str, max_age_hours: int = 48) -> list:
     """Fetch + parse one feed. Return niche-matched items < max_age_hours."""
     try:
         body = _http_get(url, timeout=6)
@@ -133,8 +133,10 @@ def _parse_feed(name: str, url: str, max_age_hours: int = 12) -> list:
     raw = rss_items if rss_items else atom_items
 
     for el in raw:
-        # Title
-        t_el = el.find("title") or el.find("{http://www.w3.org/2005/Atom}title")
+        # Title — use explicit is None checks (ET elements are falsy when childless)
+        t_el = el.find("title")
+        if t_el is None:
+            t_el = el.find("{http://www.w3.org/2005/Atom}title")
         title = (t_el.text or "").strip() if t_el is not None else ""
         if not title:
             continue
@@ -153,13 +155,14 @@ def _parse_feed(name: str, url: str, max_age_hours: int = 12) -> list:
         if not link:
             continue
 
-        # Pub date
-        pub_el = (
-            el.find("pubDate")
-            or el.find("{http://purl.org/dc/elements/1.1/}date")
-            or el.find("{http://www.w3.org/2005/Atom}published")
-            or el.find("{http://www.w3.org/2005/Atom}updated")
-        )
+        # Pub date — explicit is None checks for the same reason
+        pub_el = el.find("pubDate")
+        if pub_el is None:
+            pub_el = el.find("{http://purl.org/dc/elements/1.1/}date")
+        if pub_el is None:
+            pub_el = el.find("{http://www.w3.org/2005/Atom}published")
+        if pub_el is None:
+            pub_el = el.find("{http://www.w3.org/2005/Atom}updated")
         pub = _parse_pub_date(pub_el.text if pub_el is not None else "")
         if pub > datetime.min and pub < cutoff:
             continue
