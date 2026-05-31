@@ -7639,3 +7639,218 @@ Hated home builders may provi
 - **@guohao_li** (8 likes, score 7/10) — It seems Anthropic is at least losing its dominance over OpenAI in coding based on coding-related benchmarks. Aggregated results from SWE-Bench Pro (@ScaleAILabs), SWE-ReBench (@ibragim_bad, @nebiusai
   - https://x.com/guohao_li/status/2061194824074854524
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 10).
+- **@stocksavvyshay** (421 likes, score 9/10) — $AMZN first 48 Leo satellites are preparing to launch on Blue Origin’s New Glenn.
+
+This marks the first of 24 planned launches as Amazon starts building out its satellite internet network.
+  - https://x.com/StockSavvyShay/status/2059719582072684550
+  - **WHY**: Source fiable + impact concret (score signal 17, engagement 473).
+- **@cnnbrk** (320 likes, score 9/10) — A Blue Origin New Glenn rocket exploded on the launchpad during a ground test known as a hotfire at Cape Canaveral, Florida. https://cnn.it/4fa3H3q
+  - https://x.com/cnnbrk/status/2060203006679736784
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 466).
+- **@connorjbates_** (316 likes, score 9/10) — The Space Theme
+
+Launch, Space Systems, and Tourism: 
+
+$RKLB ~ Reusable rockets, satellite launches
+$SPCE ~ Pure‑play suborbital space tourism
+$GEMI ~ Recently listed commercial space station and infr
+  - https://x.com/ConnorJBates_/status/2000341840608833895
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 340).
+- **@sam_badawi** (0 likes, score 7/10) — FIFTY BILLION IN AI DATACENTER CONSTRUCTION AT A 45% CAGR. Here's why:
+
+$NBIS - Revenue surged 684% YoY to $399M while contracted power capacity guidance increased to 4 GW.
+
+$CRWV - Revenue backlog re
+  - https://x.com/Sam_Badawi/status/2060764448214941917
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 18).
+- **@joetegtmeyer** (149 likes, score 9/10) — Is it possible Mars is back on the menu for @SpaceX in 2028? 
+
+Given everything SPaceX is planning (Starship development, V2 Starlink deployments, Orbiting AI Dagtacenters, Starshield deployments, & a
+  - https://x.com/JoeTegtmeyer/status/2061187890395201621
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 177).
+- **@openrouter** (497 likes, score 9/10) — Anthropic Opus 4.1 is now live, topping the charts in coding!
+
+ 74.5% on the SWE-Bench, surpassing both Gemini 2.5 Pro and OpenAI o3
+
+Will be adding providers for it live here
+  - https://x.com/OpenRouter/status/1952775854527746115
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 535).
+- **@ckcapitalxx** (77 likes, score 9/10) — My favorite names in every sector right now. The full conviction list.
+
+Satellite & Space 
+$ASTS
+$RKLB 
+$OPTX
+
+AI Infrastructure 
+$NBIS 
+$PENG 
+$HLIT
+
+Defense 
+$EOS.AX 
+$KRKNF 
+$OPTX 
+
+Humanoid Roboti
+  - https://x.com/CKCapitalxx/status/2061210059112169650
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 105).
+- **@satyanadella** (3908 likes, score 9/10) — Our Fairwater datacenter in Wisconsin is going live, ahead of schedule.
+
+As the world’s most powerful AI datacenter, it will bring together hundreds of thousands of GB200s into a single seamless clust
+  - https://x.com/satyanadella/status/2044767391293509761
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 4574).
+- **@csa_asc** (2608 likes, score 9/10) — Splashdown! The journey of more than 1.1 million kilometers concluded today. Jeremy Hansen and the Artemis II crew are back on Earth after becoming the first humans in over 50 years to venture to the
+  - https://x.com/csa_asc/status/2042765416255074693
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2702).
+- **@arianespace** (345 likes, score 9/10) — Mission VA268 enters its final stretch.
+
+At Europe’s Spaceport in French Guiana, the 32 Amazon Leo satellites have been fully encapsulated under Ariane 6’s payload fairing, now being transferred for i
+  - https://x.com/Arianespace/status/2047727639125737506
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 361).
+- **@tradexwhisperer** (131 likes, score 9/10) — $NOW
+
+Bernstein $236.
+DA Davidson $190.
+Evercore $150.
+
+Now Assist AI revenue target raised from $1B to $1.5B for 2026.
+
+Signs of Agentic AI traction.
+  - https://x.com/TradexWhisperer/status/2061153244777504840
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 151).
+- **@yodastockinvest** (66 likes, score 9/10) — $ASTS is SPECIAL
+
+Always when I buy a stock it goes down first, but this animal is up 50%+(!!) in a month for me, even after the Blue Origin disaster.
+And we're still not done with the SpaceX IPO pump
+  - https://x.com/YodaStockInvest/status/2061130587336020328
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 94).
+- **@fluxcharts** (71 likes, score 9/10) — Only 25% odds for Anthropic IPOing before OpenAI says the market still sees OpenAI as the main event.
+
+But Anthropic going public first would completely change the AI IPO race.
+  - https://x.com/FluxCharts/status/2061116745042076097
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 83).
+- **@thetechinvest** (9 likes, score 7/10) — These companies are expected to double or nearly double their FCF in 2026 or 2027 (2x Playbook): 
+
+1. $NVDA
+2. $META
+3. $AVGO
+4. $SAMSUNG
+5. $MU
+6. $PLTR
+7. $ASML
+8. $ARM
+9. $SNDK
+10. $SKHYNIX
+11. $IN
+  - https://x.com/TheTechInvest/status/2061206409610395837
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 23).
+- **@netcapgirl** (11630 likes, score 8/10) — happy nvidia earnings to all who celebrate
+  - https://x.com/netcapgirl/status/1828789245726917032
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11756).
+- **@jimcramer** (3621 likes, score 8/10) — On the eve of Nvidia earnings
+  - https://x.com/jimcramer/status/1960781362157277288
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4527).
+- **@edzitron** (604 likes, score 8/10) — Oh hey look it’s exactly what I said back in December 2025 
+https://wheresyoured.at/nvidia-isnt-enron-so-what-is-it/#:~:text=not%20doing%20that.-,But,-%E2%80%A6you%20did%20kind…
+  - https://x.com/edzitron/status/2061175275610648966
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 624).
+- **@kalshi** (336 likes, score 8/10) — BREAKING: OpenAI launches biodefense program to fight future pandemics with AI
+  - https://x.com/Kalshi/status/2061193040195109366
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 462).
+- **@niccruzpatane** (275 likes, score 8/10) — NVIDIA released a video showing their new Alpamayo In-Car Reasoning Model. An AI that explains decisions, responds to passengers, and drives.
+
+How it works:
+
+• Verbalized Reasoning: In complex situati
+  - https://x.com/niccruzpatane/status/2035056962312761835
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 351).
+- **@aaronburnett** (32 likes, score 8/10) — When OpenAI and Anthropic IPO, I expect to see little to no handwringing around the competitive moat from the pundits. One of my favorite responses to “but Anthropic/OpenAi have more or faster growing
+  - https://x.com/aaronburnett/status/2061151127845175764
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 40).
+- **@disruptorinvest** (13 likes, score 7/10) — It’s likely going to be the power shortfall. Chips won’t be able to be plugged in.
+  - https://x.com/disruptorinvest/status/2060811961646961010
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 19).
+- **@nvidiaaiinfra** (5661 likes, score 8/10) — The next chapter of space computing is here 
+
+NVIDIA and its ecosystem are advancing AI from Earth-to-space across:
+
+ Earth Orbit and Infrared Imagery
+ Radio Frequency and Synthetic Aperture Radar
+ Au
+  - https://x.com/NVIDIAAIInfra/status/2052886264349696279
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5909).
+- **@cursor_ai** (4188 likes, score 8/10) — o3 and o4-mini are available in Cursor! o4-mini is free for the time being.
+
+Enjoy!
+  - https://x.com/cursor_ai/status/1912582405896171820
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 4448).
+- **@sama** (0 likes, score 8/10) — OpenAI Robotics is hiring, looking for exceptional full-stack hardware, ops, systems, and ML engineers to help us program and manufacture robots that are useful for society.
+
+AI should be able to help
+  - https://x.com/sama/status/2061117302528188712
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1620).
+- **@documentingbtc** (46 likes, score 8/10) — An incredible story by @obi about communities across Africa building locally owned satellite internet infrastructure paid for and sustained with bitcoin
+  - https://x.com/DocumentingBTC/status/2060060931497906606
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 70).
+- **@cryptopunk7213** (19 likes, score 7/10) — the hottest job in ai right now is the Forward Deployed Engineer
+
+salaries hit $300,000 before equity comp, up 15-20% this year.
+
+fde’s are part-engineer, part-consultant, part-product manager that go
+  - https://x.com/cryptopunk7213/status/2061199112410722738
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 23).
+- **@starlink** (5896 likes, score 7/10) — Starlink enables reliable real-time communication with recovery teams and live streaming of Starship’s splashdown in the middle of the Indian Ocean
+  - https://x.com/Starlink/status/2057950370668945682
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6734).
+- **@remarks** (5852 likes, score 7/10) — JUST IN:  US Space Force contracts 12 companies up to $3.2 billion to develop 'Golden Dome' air defense system.
+  - https://x.com/remarks/status/2047747124696121529
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6114).
+- **@sawyermerritt** (1593 likes, score 7/10) — NEWS: Boeing Halts Plan for Starlink Competitor.
+
+Boeing gives up an FCC license to operate a low-Earth orbiting satellite constellation, which would have involved 147 satellites.
+  - https://x.com/SawyerMerritt/status/1719520459190837547
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1701).
+- **@polymarket** (1291 likes, score 7/10) — JUST IN: Artemis astronauts confronted by a man at the Capitol who insists they never went to space.
+  - https://x.com/Polymarket/status/2057220584891687239
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1469).
+- **@aakashgupta** (1376 likes, score 7/10) — Tony Stark's JARVIS ran what would basically be a persistent AI agent with voice, vision, and full codebase access across every system in his lab. In 2026, that's a frontier model on a loop.
+
+Opus 4.6
+  - https://x.com/aakashgupta/status/2040345886967070994
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1426).
+- **@openrouter** (420 likes, score 7/10) — We are launching a new stealth model - "Andromeda Alpha"
+
+This is a smaller reasoning model that has been trained to be really good at image understanding.
+  - https://x.com/OpenRouter/status/1980739861318627813
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 474).
+- **@stocksavvyshay** (126 likes, score 7/10) — $PLTR getting close since they're on pace for $10B annual profit by 2028
+  - https://x.com/StockSavvyShay/status/2061098183539995121
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 130).
+- **@nykchannel** (24 likes, score 7/10) — BREAKING: Texas law SB 2807 now regulates commercial autonomous vehicles!
+Tesla is the FIRST company authorized for driverless operations under this new law.
+  - https://x.com/NYKChannel/status/2061191533378916737
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 26).
+- **@polymarket** (1146 likes, score 7/10) — JUST IN: Palantir revenue soars +85% year over year.
+  - https://x.com/Polymarket/status/2051690129975365877
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1274).
+- **@konstructivizm** (54 likes, score 7/10) — "The First Moments of Sunrise from the ISS" – NASA Astronaut Bob Behnke
+  - https://x.com/konstructivizm/status/2061060876707258868
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 60).
+- **@dudewhoinvests** (24 likes, score 7/10) — Berkshire Hathaway $BRK.A fire selling to buy Taylor Morrison for around $8.5 BILLION.
+
+Interesting move.
+
+New management is definitely already making their names heard.
+
+Hated home builders may provi
+  - https://x.com/DudeWhoInvests/status/2061205059967263173
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 26).
+- **@businsiderssa** (22 likes, score 7/10) — Starlink’s Uganda entry sparks telecom scramble as MTN, Airtel race for satellite advantage
+
+Uganda’s biggest telecom operators are moving quickly to align themselves with Starlink after years of view
+  - https://x.com/BusInsiderSSA/status/2059193834953703686
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 22).
+- **@eyakoby** (13 likes, score 7/10) — BREAKING: IRGC General Vahid Hakan, the official overseeing satellite contracts between Iran’s state broadcaster (IRIB) and the IRGC-linked Khatam al-Anbiya conglomerate, has reportedly been eliminate
+  - https://x.com/EYakoby/status/2061213240239988889
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 13).
