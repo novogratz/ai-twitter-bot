@@ -313,6 +313,8 @@ def main():
         safe_run_retweet_cycle()
         log.info("Startup quote burst...")
         safe_run_quote_tweet_cycle()
+        log.info("Startup hot-quote burst...")
+        safe_run_hot_quote_cycle()
 
     # Then warm up the engagement loop with a direct-reply cycle.
     if not args.post_only:
