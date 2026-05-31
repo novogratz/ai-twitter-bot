@@ -1607,5 +1607,57 @@
       }
     ],
     "summary": "Mix de pure play IA (Mistral), de journalists de terrain (BFM/Le Parisien) et de profils niche Qu\u00e9b\u00e9cois/US qui \u00e9vitent le bruit des 'gurus'. Pas de vente de r\u00eave, que du concret."
+  },
+  {
+    "ts": "2026-05-31T02:15:22.492613",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Loup_Capital",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Thibault Nivon d\u00e9cortique l'IA avec une pr\u00e9cision chirurgicale, zero hype, 100% fond. C'est la r\u00e9f\u00e9rence tech FR."
+      },
+      {
+        "handle": "GaspardLemarchand",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "L'ex-Hedge Fund guy qui a su rendre l'analyse technique digeste et dr\u00f4le. Pas dans le selling, dans l'analyse."
+      },
+      {
+        "handle": "MarcDionne_",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "L'expert AI qu\u00e9b\u00e9cois qui passe le test de la r\u00e9alit\u00e9 aux start-ups. Vraiment tech, pas juste business."
+      },
+      {
+        "handle": "MathieuBourguignon",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "L'ancien de Coinhouse (VC) qui tweete les perles sur le cycle crypto sans vendre de signal \u00e0 99\u20ac."
+      },
+      {
+        "handle": "S\u00e9bastienBachand",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 9000,
+        "reason": "Le prof de Bourse qui rend les concepts financiers moins douloureux qu'un examen de math. Vocabulaire simple, impact fort."
+      },
+      {
+        "handle": "JulienLefebvre",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 8500,
+        "reason": "L'IA Lead chez AWS (USA) qui tweete en FR sur l'infra IA. Rare mix cloud/AI francophone Stateside."
+      }
+    ],
+    "summary": "Mix \u00e9quilibr\u00e9 entre le fond technique pur (Loup Capital, Bachand) et l'accessibilit\u00e9 boursi\u00e8re (Lemarchand). Pas de vendeurs de r\u00eave, que des profils qui font briller leurs yeux quand ils parlent de P/E ratio ou de transformers."
   }
 ]
