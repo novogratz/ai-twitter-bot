@@ -75,6 +75,7 @@ from src.youtube_brief_bot import safe_run_youtube_brief_cycle
 from src.morning_recap_bot import safe_run_morning_recap_cycle
 from src.analyzer_bot import safe_run_analyzer_cycle
 from src.style_evolution_bot import safe_run_style_evolution_cycle
+from src.wsb_signal_bot import safe_run_wsb_signal_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE, _LIVE_STRATEGY_FILE as LIVE_STRATEGY_FILE
 
@@ -534,6 +535,17 @@ def main():
             trigger=IntervalTrigger(minutes=2),
             id="retweet_job",
             max_instances=1,
+        )
+
+        # WSB signal bot — every Saturday 10 AM EST.
+        # Finds hottest AI/Space ticker on r/wallstreetbets, locates the best
+        # tweet about it, and quote-tweets it with a punchy @AISpaceDecoder take.
+        # Weekly dedup state prevents double-posting within the same week.
+        log.info("WSB signal bot: Saturday 10 AM EST — AI/Space ticker of the week.")
+        scheduler.add_job(
+            safe_run_wsb_signal_cycle,
+            trigger=CronTrigger(day_of_week="sat", hour=10, minute=0, timezone="America/New_York"),
+            id="wsb_signal_job",
         )
 
         # Daily digest — append yesterday's rollup to daily_digest.md.
