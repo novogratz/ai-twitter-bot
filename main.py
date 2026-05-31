@@ -77,6 +77,7 @@ from src.analyzer_bot import safe_run_analyzer_cycle
 from src.style_evolution_bot import safe_run_style_evolution_cycle
 from src.wsb_signal_bot import safe_run_wsb_signal_cycle
 from src.autonomous_growth_agent import safe_run_autonomous_growth_cycle
+from src.pin_boost_bot import safe_run_pin_boost_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE, _LIVE_STRATEGY_FILE as LIVE_STRATEGY_FILE
 
@@ -302,6 +303,9 @@ def main():
     if not args.reply_only:
         log.info("Bot started! Monthly catchup: disabled (RT+quote only mode).")
         # _run_monthly_startup_catchup_if_due()  # disabled 2026-05-30
+        # Reboost pinned tweet immediately on startup for fresh feed placement.
+        log.info("Startup pin-boost: cycling pinned tweet for fresh reach...")
+        safe_run_pin_boost_cycle()
         # Fire one RT + quote cycle immediately so they don't wait for the full
         # direct-reply warmup to finish before scheduler.start() is called.
         log.info("Startup retweet burst...")
@@ -403,6 +407,15 @@ def main():
             safe_run_boost_cycle,
             trigger=IntervalTrigger(minutes=20),
             id="boost_job",
+        )
+
+        # Pin-boost bot — un-RT then re-RT the pinned tweet every hour.
+        # Cycling it makes it appear fresh in followers' feeds each hour.
+        log.info("Pin-boost bot: cycling pinned tweet (un-RT → re-RT) every 60 min.")
+        scheduler.add_job(
+            safe_run_pin_boost_cycle,
+            trigger=IntervalTrigger(minutes=60),
+            id="pin_boost_job",
         )
 
         # Early-bird bot — slowed from 5 -> ~8min jittered (still inside the

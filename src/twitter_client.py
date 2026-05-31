@@ -1033,6 +1033,44 @@ def retweet_post(tweet_url: str):
         close_front_tab()
 
 
+def reboost_tweet(tweet_url: str) -> None:
+    """Un-retweet then re-retweet a tweet in one Safari session.
+
+    Pressing 't'+Enter on X toggles the retweet state. Two presses with a
+    short gap = undo then redo, which makes the tweet appear fresh in
+    followers' feeds without leaving a gap. Used to recycle the pinned tweet.
+    """
+    with _safari_lock:
+        log.info(f"[REBOOST] Opening tweet: {tweet_url}")
+        webbrowser.open(tweet_url)
+        time.sleep(7)
+        _run_applescript('tell application "Safari" to activate')
+        time.sleep(1)
+
+        # First toggle: undo the existing retweet
+        _run_applescript('''
+        tell application "System Events"
+            keystroke "t"
+            delay 1.5
+            keystroke return
+        end tell
+        ''')
+        log.info("[REBOOST] Un-retweeted. Waiting before re-RT...")
+        time.sleep(5)
+
+        # Second toggle: re-retweet → appears fresh in feed
+        _run_applescript('''
+        tell application "System Events"
+            keystroke "t"
+            delay 1.5
+            keystroke return
+        end tell
+        ''')
+        time.sleep(2)
+        log.info(f"[REBOOST] Re-retweeted: {tweet_url}")
+        close_front_tab()
+
+
 def pin_own_tweet(tweet_url: str) -> bool:
     """Pin one of our own tweets to the profile via the More menu.
 
