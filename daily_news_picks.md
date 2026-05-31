@@ -7310,3 +7310,137 @@ Le collier cadeau a 1 million d’euros etait un indice
 - **@europamagnifica** (8 likes, score 7/10) — Blue Origin doit faire face à un contretemps qui pourrait durer plusieurs mois après que l’explosion de sa fusée a endommagé son pas de tir, ce qui bouleverse le calendrier des lancements de satellite
   - https://x.com/EuropaMagnifica/status/2061104351603474639
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 12).
+- **@mr_derivatives** (567 likes, score 9/10) — Unpopular Opinion:
+
+ I don’t think $1,077 was THE top on $SMCI.
+
+We could bounce around $700-$800 a bit, but I think it has another leg up at some point sooner rather than later.
+
+Of course Nvidia ear
+  - https://x.com/Mr_Derivatives/status/1759599879557623850
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 757).
+- **@miningtk** (8 likes, score 8/10) — Si je vous donne 1000$ à investir maintenant, d'un seul coup sûr Bitcoin ou Ethereum : vous investissez sur quoi et surtout, pourquoi ? 
+
+PS : il y aura peut-être bientôt un concours, donc je prends l
+  - https://x.com/MiningTk/status/2061151452911878206
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 42).
+- **@miningtk** (7 likes, score 8/10) — Si je vous donne 1000$ à investir maintenant, d'un seul coup sûr Bitcoin ou Ethereum : vous investissez sur quoi et surtout, pourquoi ? 
+
+PS : il y aura peut-être bientôt un concours, donc je prends l
+  - https://x.com/MiningTk/status/2061151452911878206
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 33).
+- **@ashcrypto** (2848 likes, score 9/10) — If Bitcoin were an AI stock, it would be trading above $1,000,000 today.
+  - https://x.com/AshCrypto/status/2060792232983060541
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 3646).
+- **@wr4nygov** (15 likes, score 7/10) — “The proposal called for a massive 20-megawatt data center”
+
+Massive?
+
+Isn’t Colossus II more than 50X that?
+  - https://x.com/WR4NYGov/status/2061021567983960468
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 17).
+- **@wonderofscience** (8065 likes, score 9/10) — Every second, the Sun ejects 1.5 million tons of material into space at hundreds of miles per second, but Earth's magnetic field protects it from the solar wind.
+
+: NASA Goddard
+  - https://x.com/wonderofscience/status/2056019408183754842
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 8839).
+- **@netcapgirl** (3407 likes, score 9/10) — pulling up to the nvidia earnings call when you own 2 shares of the company
+  - https://x.com/netcapgirl/status/1894774064406831332
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3479).
+- **@zenkaixbt** (54 likes, score 9/10) — BITCOIN IS GOING TO $300,000
+  - https://x.com/zenkaixbt/status/2061131983468552353
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 80).
+- **@bitcoinprof0637** (20 likes, score 8/10) — BULLISH: 
+
+The Fed is set to inject $6.576 BILLION into the financial system next week. 
+
+More liquidity entering the market = risk assets could start heating up again. 
+
+Bitcoin and crypto are watchi
+  - https://x.com/Bitcoinprof0637/status/2061149687516651818
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 36).
+- **@trungtphan** (2020 likes, score 8/10) — happy Nvidia earnings day
+  - https://x.com/TrungTPhan/status/1894771051961438232
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2090).
+- **@officiallogank** (1254 likes, score 8/10) — Gemini 3.5 Flash ranks #1 on Automation Bench (from Zapier), beating every other frontier model at a much lower cost
+  - https://x.com/OfficialLoganK/status/2057317567673594131
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1612).
+- **@disruptorinvest** (13 likes, score 7/10) — It’s likely going to be the power shortfall. Chips won’t be able to be plugged in.
+  - https://x.com/disruptorinvest/status/2060811961646961010
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 17).
+- **@venu_7_** (110 likes, score 8/10) — $PLTR remains one of the strongest growth software companies in the market.
+
+The stock is broke out of its downtrend on nearly 2x volume. A strong close above $162 it could be explosive. (200-day SMA)
+  - https://x.com/Venu_7_/status/2061127853459280004
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 130).
+- **@divestech** (69 likes, score 8/10) — Great to be on @SquawkBoxEurope with @cnbcKaren and @BenMBoulos discussing the AI Revolution being a 1996/1997 moment…not a 2000 bubble moment in our view as tech earnings this week another validation
+  - https://x.com/DivesTech/status/2060342571872768502
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 81).
+- **@techleviathan** (27 likes, score 8/10) — SAME CHANNEL, SAME PATTERN, SAME RESULT
+
+$BTC stuck between $72K and $74K for a reason
+
+Every bounce into resistance gets sold into immediately
+
+October 2025: $126K rejected → dumped to $82K
+January 2
+  - https://x.com/TechLeviathan/status/2061113111801741582
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 55).
+- **@michaeldell** (16 likes, score 7/10) — Tremendous partnership and teamwork to make this happen @CoreWeave @Dell @nvidia
+  - https://x.com/MichaelDell/status/2061154808141369480
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 16).
+- **@russembkenya** (3313 likes, score 7/10) — Roscosmos has shared a new image of Earth captured by its hydrometeorological satellite Electro‑L.
+
+#Russia operates about 1559 active satellites, including numerous classified military systems, and p
+  - https://x.com/russembkenya/status/2047206455493710090
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 3475).
+- **@askvenice** (758 likes, score 7/10) — 𝗡𝗲𝘄 𝗺𝗼𝗱𝗲𝗹𝘀 𝗮𝘃𝗮𝗶𝗹𝗮𝗯𝗹𝗲 𝗼𝗻 𝗩𝗲𝗻𝗶𝗰𝗲
+
+𝗤𝘄𝗲𝗻 𝟯.𝟳 𝗠𝗮𝘅. Alibaba. Flagship reasoning model. 1M context, function calling, and prompt caching. Built for code and agentic workflo
+  - https://x.com/AskVenice/status/2057660369313677592
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 842).
+- **@marionawfal** (439 likes, score 7/10) — Satellite images caught something big in China's desert
+
+Deep in the Xinjiang desert, satellite images have picked up something significant. China's been quietly building 80+ launch pads, underground
+  - https://x.com/MarioNawfal/status/2061114982901924056
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 499).
+- **@gradient_hq** (305 likes, score 7/10) — Our GTC takeaway is clear: NVIDIA is betting hard on open.
+
+- NemoClaw turns OpenClaw into enterprise infrastructure. 
+- Nemotron 4 will be open-sourced.
+- Nemotron Coalition puts eight labs on a shar
+  - https://x.com/Gradient_HQ/status/2033857602443219212
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 453).
+- **@realjgbanks** (204 likes, score 7/10) — Such a BIG week ahead. So many more BANGERS coming your way.
+
+$PLTR $ORCL $ARM $TSLA Free trade plans about to be dropped.
+
+Who is ready for them?  Need a show of hands
+  - https://x.com/RealJGBanks/status/2061127302658814211
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 262).
+- **@ai_trade_pro** (166 likes, score 7/10) — Bank of America buried a line in their capital outlook that reframes the entire EM trade:
+
+“AI is eating the emerging markets.”
+
+Taiwan and Korea’s export data now reads like a US tech earnings supple
+  - https://x.com/ai_trade_pro/status/2061132221914939618
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 174).
+- **@raminnasibov** (2344 likes, score 7/10) — Anyone who used a computer between 1985-2010. What’s the one game you still think about?
+  - https://x.com/RaminNasibov/status/2061008355099877815
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 21436).
+- **@natolambert** (480 likes, score 7/10) — Here are my slides from my recent CMU talk, as I'm transitioning from the Olmo 3 era of just building a reasoning model to thinking about how to do impactful research for agentic systems. 
+
+In particu
+  - https://x.com/natolambert/status/2022774820702724204
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 510).
+- **@simplybitcoin** (21 likes, score 7/10) — Who is your favorite person to listen to in Bitcoin?
+
+Tag Below
+  - https://x.com/SimplyBitcoin/status/2061139928696660301
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 65).
+- **@uzayvebilimtr** (44 likes, score 7/10) — La vitesse orbitale du Soleil autour du centre galactique est d'environ 828 000 km/h. Les planètes, quant à elles, tracent des trajectoires en spirale dans l'espace plutôt que des orbites elliptiques
+  - https://x.com/uzayvebilimtr/status/2061093445976932429
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 54).
+- **@cybrgalaxy** (10 likes, score 7/10) — I was with a big Tesla tinting outfit yesterday at Tesla Kennesaw and they didn't know what @ChatCharge or @xtakeover was. I was stunned. They have no idea the community they are missing out on here o
+  - https://x.com/cybrgalaxy/status/2061100028643414050
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 20).
