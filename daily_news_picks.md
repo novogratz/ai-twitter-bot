@@ -6177,3 +6177,224 @@ Quantu
 - **@mikemasco** (27 likes, score 7/10) — BREAKING.. MASSIVE BOOM SOUND REPORTED IN MASSACHUSETTS AND RHODE ISLAND… almost all witness reports and video supports it was a meteor exploding over the sky in Eastern MA. Viewing satellite data it
   - https://x.com/MikeMasco/status/2060837619668324772
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 37).
+- **@marionawfal** (2142 likes, score 9/10) — This aerial view of Starship Flight 12 is unreal.
+
+Posted by NASA's new Deputy Administrator on day TWO of the job: 
+
+"Not a bad way to spend it."
+
+The most powerful rocket ever built, from the best s
+  - https://x.com/MarioNawfal/status/2057957553938588148
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 2206).
+- **@shishirshelke1** (107 likes, score 9/10) — Kuo: Nvidia N1X-powered Windows PCs are expected to ship ~10M units over the next two years.
+
+> Positioned as a niche market for users who need strong local AI compute
+> Mainstream PC AI will continue
+  - https://x.com/ShishirShelke1/status/2060970208651816972
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 117).
+- **@coinbureau** (46 likes, score 9/10) — UPDATE: NASA has confirmed that the mysterious explosion heard was caused by a meteor that broke apart roughly 40 miles above northeastern Massachusetts.
+
+According to NASA, the energy released at bre
+  - https://x.com/coinbureau/status/2060941002886836409
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 64).
+- **@cointelegraph** (27 likes, score 9/10) — LATEST: Bitcoin sentiment just hit its most bullish level of 2026 even with $2.97B in $BTC ETF outflows, Santiment says this historically happens before another pull-back.
+  - https://x.com/Cointelegraph/status/2061055325277467105
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 59).
+- **@trungtphan** (803 likes, score 9/10) — BREAKING:  Nvidia earnings just out:
+
+> EPS: $1.05 , est: $1.01
+> Revenue: $46.7 billion, est: $46.1 billion
+> EPS +30% YoY
+> Revenue +56% YoY
+> New logo design
+  - https://x.com/TrungTPhan/status/1960800893315768386
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 885).
+- **@gordongekko** (381 likes, score 9/10) — I am hearing Bitcoin will be back above $75K in the next 48-72 hours.
+  - https://x.com/GordonGekko/status/2061034904519950749
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 645).
+- **@cointelegraph** (254 likes, score 9/10) — THROWBACK: On May 31st 2010, Bitcoin was only worth $0.08.
+
+Even after a 50% drop, OG Bitcoiners are still up 925,000X.
+  - https://x.com/Cointelegraph/status/2061025104033706110
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 414).
+- **@chinaamc_hq** (52 likes, score 9/10) — #TechInsight  Starship V3 nailed its first flight, and Musk is officially taking SpaceX public
+@SpaceX crushed its 12th test flight in the Indian Ocean on May 22. This isn't just another launch—it’s t
+  - https://x.com/ChinaAMC_HQ/status/2060954752947532123
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 64).
+- **@bassonbrain** (12 likes, score 7/10) — "Rockets are hard" — Elon Musk
+
+@SpaceX only make it look easy...
+
+But it wasn't always clean sailing, and there were dissapointments along the way
+
+To date the company's Falcon 9 rocket booster fleet
+  - https://x.com/BassonBrain/status/2061034746675671524
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 18).
+- **@bassonbrain** (15 likes, score 7/10) — Upcoming Falcon 9 @Starlink missions (updated): Jun 3-10  
+
+4 missions | 106 satellites
+
+- Wednesday, June 3 | 29 Starlink (Group 10-43) satellites | Cape Canaveral SFS, FL | 4.02 a.m. EDT  
+
+- Wednes
+  - https://x.com/BassonBrain/status/2060984151193407986
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 15).
+- **@bassonbrain** (15 likes, score 7/10) — Upcoming Falcon 9 @Starlink missions (updated): Jun 3-10  
+
+4 missions | 106 satellites
+
+- Wednesday, June 3 | 29 Starlink (Group 10-43) satellites | Cape Canaveral SFS, FL | 4.02 a.m. EDT  
+
+- Wednes
+  - https://x.com/BassonBrain/status/2060984151193407986
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 15).
+- **@xfreeze** (209 likes, score 9/10) — Elon Musk on the convergence of his companies:
+
+“There’s increasingly a convergence between SpaceX, Tesla, and xAI
+
+In order to harness a non-trivial amount of the Sun’s energy, you have to move to so
+  - https://x.com/XFreeze/status/2061038205932118315
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 301).
+- **@blueorigin** (3374 likes, score 9/10) — New Glenn’s third mission, NG-3, will send @AST_SpaceMobile’s next generation Block 2 BlueBird satellites to low Earth orbit, NET late February. Learn more: https://bit.ly/49XnQWm
+  - https://x.com/blueorigin/status/2014308344022863966
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3614).
+- **@niccruzpatane** (941 likes, score 9/10) — You would need approximately 66+ Boeing 747-8’s to match the total takeoff thrust of Starship V3’s Super Heavy booster.
+
+A single Raptor 3 engine is roughly equivalent to two 747-8s at full takeoff po
+  - https://x.com/niccruzpatane/status/2052510069405700570
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 979).
+- **@ashcrypto** (514 likes, score 9/10) — Since 2021, we got:
+
+-Spot ETF approvals
+-A pro-crypto President
+-Pro-Crypto SEC chair
+-The Fed finally ending QT
+-The Clarity Act advancing to the Senate Banking Committee
+-Banks now offering crypto
+  - https://x.com/AshCrypto/status/2060981968876048634
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 900).
+- **@cryptoze** (368 likes, score 9/10) — BITCOIN IS GOING TO $300,000
+  - https://x.com/Cryptoze/status/2061011151358501039
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 676).
+- **@cryptoemperor06** (14 likes, score 8/10) — BREAKING: Odds of a Tesla–SpaceX merger are surging on Kalshi, with markets now pricing the possibility above 35%.
+
+If Elon Musk eventually combines his ecosystem of Tesla, SpaceX, xAI, Starlink, and
+  - https://x.com/Cryptoemperor06/status/2061036330419671290
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 26).
+- **@sam_badawi** (10 likes, score 7/10) — One of my highest-conviction additions remains $FPS, backed by 69% revenue growth, 73-77% growth guidance, and a rapidly expanding backlog. 
+
+The nuclear and energy trade continues gaining momentum as
+  - https://x.com/Sam_Badawi/status/2061050306759434702
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 14).
+- **@netcapgirl** (11641 likes, score 8/10) — happy nvidia earnings to all who celebrate
+  - https://x.com/netcapgirl/status/1828789245726917032
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11767).
+- **@speculator_io** (8183 likes, score 8/10) — Nvidia literally told where to invest:
+
+IP: $ARM
+Fab: $TSM $INTC
+Memory: $MU $SNDK $WDC
+Packaging: $ASX $AMKR $CAMT
+Equipment: $KLAC $LRCX $ASML $KEYS
+Networking: $COHR $GLW $FN $LITE $APH
+Servers OEM
+  - https://x.com/Speculator_io/status/2052160643009019912
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 8359).
+- **@mikebenzcyber** (2732 likes, score 8/10) — So I literally called this the day Brazil seized Musk’s Starlink assets — that Brazil was secretly angling to switch over to China’s new Starlink competitor — and I just checked the news and…
+  - https://x.com/MikeBenzCyber/status/1861728018743378067
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2950).
+- **@trungtphan** (2021 likes, score 8/10) — happy Nvidia earnings day
+  - https://x.com/TrungTPhan/status/1894771051961438232
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2091).
+- **@stocksavvyshay** (901 likes, score 8/10) — MY THOUGHTS AHEAD OF NVIDIA EARNINGS
+
+$NVDA has become the gravity point of this entire market. That’s why next week’s earnings aren’t just about one company -- they’re about whether the AI cycle stil
+  - https://x.com/StockSavvyShay/status/1959259196488401086
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1055).
+- **@peterdclack** (252 likes, score 8/10) — The Earth is greening at a rate never seen before in all recorded history, according to NASA satellite records from 1982–2023.
+
+Global crop yields have risen 15–20% since 1960, almost entirely attribu
+  - https://x.com/PeterDClack/status/2061035642273112263
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 272).
+- **@asts_investors** (201 likes, score 8/10) — AST SPACEMOBILE OVER SPACEX ANY DAY
+
+New article on Seeking Alpha about AST SpaceMobile 
+
+AST SpaceMobile offers superior space market exposure versus the upcoming SpaceX IPO at a more attractive valu
+  - https://x.com/ASTS_Investors/status/2059984964674789534
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 209).
+- **@yupidcom** (75 likes, score 8/10) — SpaceXのIPOで宇宙株は下がる、IPOで売るという予想が多いね(自分のタイムラインだけかな？)まあ冷静に考えたら、期待上げからの事実売りってやつですな...
+  - https://x.com/yupidcom/status/2061014288358379935
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 99).
+- **@elonomyx** (48 likes, score 8/10) — Elon Musk:
+
+“The capabilities we unlock by making space-based data centers a reality will fund and enable self-growing bases on the Moon, an entire civilization on Mars and ultimately expansion to the
+  - https://x.com/ElonomyX/status/2060942352877818009
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 64).
+- **@whaleinsider** (386 likes, score 8/10) — JUST IN: BlackRock $BTC ETF saw a net outflow of $1.41 billion this month.
+  - https://x.com/WhaleInsider/status/2061012230594765222
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 548).
+- **@niccruzpatane** (199 likes, score 8/10) — I don’t think a Tesla and SpaceX merge is happening within the next year. 
+
+Is it inevitable long-term though? Maybe.
+
+Tesla currently owns 18,990,195 shares of SpaceX Class A common stock per SpaceX
+  - https://x.com/niccruzpatane/status/2057483546051146051
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 237).
+- **@iamlouay** (188 likes, score 8/10) — Le japonais Softbank bat un record avec 75 milliards d'euros et met la tech mondiale à l'heure française.
+
+  Posez-vous deux petites minutes et regardez ce qui va tomber chez nous.
+Les chiffres du jou
+  - https://x.com/iamlouay/status/2060939535005958266
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 214).
+- **@asts_investors** (178 likes, score 8/10) — AST SPACEMOBILE PROPS UP LEGACY SATELLITE PROVIDER 
+
+Thanks to the $420m Ligado payment from AST SpaceMobile, Viasat produced record amounts of FCF.
+
+We look forward to aiding legacy providers for yea
+  - https://x.com/ASTS_Investors/status/2057074784131801542
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 194).
+- **@sawyermerritt** (1593 likes, score 7/10) — NEWS: Boeing Halts Plan for Starlink Competitor.
+
+Boeing gives up an FCC license to operate a low-Earth orbiting satellite constellation, which would have involved 147 satellites.
+  - https://x.com/SawyerMerritt/status/1719520459190837547
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1701).
+- **@sam_badawi** (186 likes, score 7/10) — The upcoming $NVDA and $MSFT AI PCs, powered by next-generation CPUs built on $ARM architecture, could be among the first devices designed for the agentic AI era where models run locally and actively
+  - https://x.com/Sam_Badawi/status/2060709058575827448
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 220).
+- **@asts_investors** (202 likes, score 7/10) — MOC ORDERS FLY IN ON AST SPACEMOBILE FOR A SECOND DAY RUNNING 
+
+For the second day, there was a huge amount of MoC orders in AST SpaceMobile, with millions of shares flowing through the tape 
+
+AST is
+  - https://x.com/ASTS_Investors/status/2059727338376433950
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 214).
+- **@blobifie** (190 likes, score 7/10) — On thursday, New Glenn SN003 "No, It's Necessary" attempted to perform a static fire before violently exploding at LC-36.
+
+Never Tell Me The Odds was stored nearby in the horizontal Integration Facili
+  - https://x.com/Blobifie/status/2060701407410589734
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 208).
+- **@ft** (103 likes, score 7/10) — SoftBank’s commitment marks the largest AI investment by Masayoshi Son’s group outside the US and delivers a boost to Emmanuel Macron ahead of the French president’s Choose France event next week, an
+  - https://x.com/FT/status/2060979788777439333
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 115).
+- **@wallstdiaries** (18 likes, score 7/10) — $ASTS 
+ASTS'ye Bir de Bu Gözle Bakın
+Fırlatma Krizi vs Bilanço Gücü
+
+Dev bir roketin test sırasında patlaması, milyarlık uydu projelerinin en büyük operasyonel riskini hatırlattı. Blue Origin kazası A
+  - https://x.com/WallStDiaries/status/2061053081110863995
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 22).
+- **@nasaadmin** (8094 likes, score 7/10) — The entire event yesterday, launching missions, landers, rovers, tech demos building a Moon Base, and sci-fi capabilities like MoonFall, brought to you by those who Dare Mighty Things.  Just the very
+  - https://x.com/NASAAdmin/status/2059766457332900192
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 9142).
+- **@ulasinc** (27 likes, score 7/10) — ULAS O3 fingerが目指すのは、
+「一家に一台」ではなく「一人に一台」。
+
+清潔を誰かに任せるのではなく、自分で持ち歩けるものにする。
+
+水道水から生まれるオゾン水で、毎日の行動範囲に安心を。
+
+ご予約はこちらから。
+https://store.ulas.jp
+  - https://x.com/UlasInc/status/2061039993062031747
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 27).
