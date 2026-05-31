@@ -8145,3 +8145,169 @@ $210 by end of summer!
 - **@guohao_li** (15 likes, score 7/10) — It seems Anthropic is at least losing its dominance over OpenAI in coding based on coding-related benchmarks. Aggregated results from SWE-Bench Pro (@ScaleAILabs), SWE-ReBench (@ibragim_bad, @nebiusai
   - https://x.com/guohao_li/status/2061194824074854524
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 21).
+- **@just_kaws** (14 likes, score 8/10) — Leopold Aschenbrenner Situational Awareness's Q1 2026 13F portfolio 
+
+$5.5B AUM with big swings:
+
+1) Bloomenergy $BE – $875.5M
+2) CoreWeave* $CRWV – $774.4M
+3) Intel $INTC – $746.8M
+4) Lumentum $LITE
+  - https://x.com/JUST_KAWS/status/2061206577563025432
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 30).
+- **@iponewsroom_** (8 likes, score 7/10) — LIFTOFF MOBILE JUST FILED FOR AN IPO
+
+- Shares Offered: 19 million
+- Price Range: $20-$22 per share
+- Implied Raise: $380M-$418M
+  - https://x.com/IPONewsroom_/status/2060443057842213371
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 10).
+- **@venu_7_** (179 likes, score 9/10) — Four of my favorite small-cap growth names right now:
+
+$AEVA - Physical AI & Robotics
+$ONDS - Defense & Drones
+$BAND - AI Voice Infrastructure
+$INOD - AI Data Services
+
+Each is backed by a strong secu
+  - https://x.com/Venu_7_/status/2061139645120078093
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 207).
+- **@spaceinvestor_d** (181 likes, score 9/10) — $RDW - Redwire is currently exploring flight opportunities for a MASON demonstration mission.
+
+With NASA stating that in the coming weeks, additional CLPS 1.0 task awards are expected to be announced
+  - https://x.com/SpaceInvestor_D/status/2061077822735540298
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 189).
+- **@cryptogoos** (181 likes, score 9/10) — BITCOIN BEAR FLAG. 
+
+$60K or $100K first? 
+Traders won't stop arguing about it. T
+
+The pattern stopped arguing a long time ago. 
+
+The most bearish setup on the chart is lit up, and we're sitting on th
+  - https://x.com/cryptogoos/status/2061122310279729409
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 233).
+- **@mr_derivatives** (92 likes, score 9/10) — Michael Burry this weekend basically implying $NVDA is acting like, well, an Enron. Hmm.
+
+Fun fact: Nvidia actually replaced Enron in the S&P500 back on Nov 2001.
+
+Would be something if Burry is right
+  - https://x.com/Mr_Derivatives/status/2061222083015938558
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 142).
+- **@hedgeye** (1767 likes, score 9/10) — Datacenters are now 7% of total U.S. power demand
+  - https://x.com/Hedgeye/status/2022601206128943594
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1973).
+- **@kobeissiletter** (103 likes, score 9/10) — The power revolution is next:
+
+Annual thermal power plant additions surged +70% YoY in 2025, to ~92 gigawatts, the largest annual increase since data began in 2008.
+
+This is also +28% above the prior
+  - https://x.com/KobeissiLetter/status/2061225125991608691
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 141).
+- **@kalshi** (409 likes, score 8/10) — BREAKING: OpenAI launches biodefense program to fight future pandemics with AI
+  - https://x.com/Kalshi/status/2061193040195109366
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 545).
+- **@leadingreport** (232 likes, score 8/10) — OpenAI launches biodefense program to help fight future pandemics with AI, including accelerating the development of vaccines and other medical countermeasures.
+  - https://x.com/LeadingReport/status/2061144628556882187
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 334).
+- **@ussf_ssc** (190 likes, score 8/10) — Big news for national security! #SpaceForce will work w/SpaceX to fast-track the SB-AMTI program. Shifting airborne moving target indication into space, USSF will provide resilient capability to sense
+  - https://x.com/USSF_SSC/status/2060463403005571549
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 206).
+- **@disruptorinvest** (13 likes, score 7/10) — It’s likely going to be the power shortfall. Chips won’t be able to be plugged in.
+  - https://x.com/disruptorinvest/status/2060811961646961010
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 19).
+- **@sama** (0 likes, score 8/10) — OpenAI Robotics is hiring, looking for exceptional full-stack hardware, ops, systems, and ML engineers to help us program and manufacture robots that are useful for society.
+
+AI should be able to help
+  - https://x.com/sama/status/2061117302528188712
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1690).
+- **@michaeldell** (849 likes, score 8/10) — Tremendous partnership and teamwork to make this happen @CoreWeave @Dell @nvidia
+  - https://x.com/MichaelDell/status/2061154808141369480
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 923).
+- **@techleviathan** (110 likes, score 8/10) — SAME CHANNEL, SAME PATTERN, SAME RESULT
+
+$BTC stuck between $72K and $74K for a reason
+
+Every bounce into resistance gets sold into immediately
+
+October 2025: $126K rejected → dumped to $82K
+January 2
+  - https://x.com/TechLeviathan/status/2061113111801741582
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 146).
+- **@ulasinc** (14 likes, score 7/10) — 【ULAS O3 finger 先行予約受付中】
+
+5月28日より、ULAS O3 fingerの先行予約販売を開始しています。
+
+「予約開始を見逃していた」という方へ、あらためてご案内です。
+
+除菌消臭さえ、美しく。
+
+水道水または専用水を入れてスイッチを押すだけ。
+  - https://x.com/UlasInc/status/2061221183240994912
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 14).
+- **@starlink** (5894 likes, score 7/10) — Starlink enables reliable real-time communication with recovery teams and live streaming of Starship’s splashdown in the middle of the Indian Ocean
+  - https://x.com/Starlink/status/2057950370668945682
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6732).
+- **@remarks** (5855 likes, score 7/10) — JUST IN:  US Space Force contracts 12 companies up to $3.2 billion to develop 'Golden Dome' air defense system.
+  - https://x.com/remarks/status/2047747124696121529
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6117).
+- **@polymarket** (3471 likes, score 7/10) — JUST IN: Three Mile Island nuclear plant to be revived for AI power demand.
+  - https://x.com/Polymarket/status/2052807250566082610
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 3663).
+- **@boujeefinances** (132 likes, score 7/10) — I having a feeling we are going to see an extremely bullish week for:
+
+$PLTR
+$HOOD
+$IREN
+$ZETA
+$MU
+$MSFT
+
+What would you add?
+  - https://x.com/BoujeeFinances/status/2061139050917195982
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 182).
+- **@business** (106 likes, score 7/10) — India’s power generation companies have quadrupled their natural gas purchases from a domestic bourse to meet surging power demand
+  - https://x.com/business/status/2060273575295152238
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 134).
+- **@teslaownerssv** (68 likes, score 7/10) — UPDATE: Grok Imagine Video 1.5 Preview has officially launched and is now available through the xAI API 
+
+The latest version brings major improvements to image-to-video generation, delivering higher-q
+  - https://x.com/teslaownersSV/status/2061126834838974929
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 86).
+- **@bulltradefinder** (79 likes, score 7/10) — $CRWV Setup nicely.
+  - https://x.com/BullTradeFinder/status/2061145044942250243
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 83).
+- **@ai_trade_pro** (0 likes, score 7/10) — Bank of America buried a line in their capital outlook that reframes the entire EM trade:
+
+“AI is eating the emerging markets.”
+
+Taiwan and Korea’s export data now reads like a US tech earnings supple
+  - https://x.com/ai_trade_pro/status/2061132221914939618
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 10).
+- **@figure_robot** (3362 likes, score 7/10) — Today we're announcing Figure has signed a commercial agreement with Catalyst Brands to deploy humanoid robots at scale
+
+Catalyst operates iconic brands including JCPenney, Aéropostale and Brooks Brot
+  - https://x.com/Figure_robot/status/2059350969700491632
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 3712).
+- **@zastocks** (71 likes, score 7/10) — $HOOD
+
+Any company with something called “Trump accounts” is probably a buy on weakness through 2028.
+
+Resistance to support flip like $PLTR just as everyone has moved on. 
+
+Textbook.
+  - https://x.com/ZaStocks/status/2061222665872949693
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 99).
+- **@sunxliao** (68 likes, score 7/10) — $BTC that looks like a trough...
+
+Incoming cycle takes us to $200K IMO.
+
+I expect some panes to flip bullish soon.
+  - https://x.com/sunxliao/status/2061222466765369471
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 86).
+- **@trendingbitcoin** (51 likes, score 7/10) — Ignore the FUD, keep stacking Bitcoin
+  - https://x.com/TrendingBitcoin/status/2061206838402748867
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 81).
+- **@financialjuice** (11 likes, score 7/10) — U.S. steps to block potential shipments of Nvidia and AMD's advanced AI chips to Chinese subsidiaries abroad
+  - https://x.com/financialjuice/status/2061224835787751869
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 17).
