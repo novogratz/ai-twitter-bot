@@ -315,6 +315,10 @@ def main():
         safe_run_quote_tweet_cycle()
         log.info("Startup hot-quote burst...")
         safe_run_hot_quote_cycle()
+        log.info("Startup hot-take burst...")
+        safe_run_bot_cycle()
+        log.info("Startup breakout burst...")
+        safe_run_breakout_cycle()
 
     # Then warm up the engagement loop with a direct-reply cycle.
     if not args.post_only:
@@ -356,6 +360,37 @@ def main():
                 trigger=CronTrigger(hour=_hq_hour, minute=0, timezone="America/New_York"),
                 id=f"hot_quote_job_{_hq_hour}h",
             )
+
+        # Hot-take bot — punchy meme takes on AI/Space/Investment every 20 min.
+        # MAX_NEWS_PER_DAY=0 so it only generates hotakes, never long news posts.
+        # Dedup via daily_state.json (cap MAX_HOTAKES_PER_DAY).
+        log.info("Hot-take bot: punchy AI/Space/Investment takes every 20 min (news disabled, hotakes only).")
+        scheduler.add_job(
+            safe_run_bot_cycle,
+            trigger=IntervalTrigger(minutes=20),
+            id="hotake_job",
+            max_instances=1,
+        )
+
+        # Spicy bot — polarizing takes + question bait every 20 min.
+        # Drives replies which are the #1 algo signal. Cap MAX_SPICY_PER_DAY.
+        log.info("Spicy bot: polarizing takes + question bait every 20 min.")
+        scheduler.add_job(
+            safe_run_spicy_cycle,
+            trigger=IntervalTrigger(minutes=20),
+            id="spicy_job",
+            max_instances=1,
+        )
+
+        # Breakout bot — trend-jacks breaking AI/Space news every 8 min.
+        # First-mover = 10-100x reach vs posting 6h later.
+        log.info("Breakout bot: breaking-trend reactor every 8 min.")
+        scheduler.add_job(
+            safe_run_breakout_cycle,
+            trigger=IntervalTrigger(minutes=8),
+            id="breakout_job",
+            max_instances=1,
+        )
     if not args.post_only:
         first_reply = reply_interval_minutes()
         log.info(f"Reply bot: next scan in {first_reply} minutes.")
