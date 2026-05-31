@@ -6398,3 +6398,167 @@ Dev bir roketin test sırasında patlaması, milyarlık uydu projelerinin en bü
 https://store.ulas.jp
   - https://x.com/UlasInc/status/2061039993062031747
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 27).
+- **@anthropicai** (44041 likes, score 9/10) — Introducing Project Glasswing: an urgent initiative to help secure the world’s most critical software.
+
+It’s powered by our newest frontier model, Claude Mythos Preview, which can find software vulner
+  - https://x.com/AnthropicAI/status/2041578392852517128
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 48027).
+- **@codebypoonam** (9 likes, score 7/10) — Do you understand what Anthropic just did?
+
+Anthropic just raised $65 BILLION at a $965 BILLION valuation.
+→ Tripled valuation in 3 months (was $380B in Feb)
+→ Officially worth more than OpenAI now
+→
+  - https://x.com/CodeByPoonam/status/2061054481169825876
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 15).
+- **@breaking911** (3314 likes, score 9/10) — Wild footage captured from a nearby restaurant shows tonight’s explosion involving Blue Origin’s New Glenn rocket at Cape Canaveral Launch Complex 36.
+  - https://x.com/Breaking911/status/2060181572871987439
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 3576).
+- **@burrytracker** (2797 likes, score 9/10) — 14 days since Burry publicly went bearish on AI...
+
+PLTR: -17.4%
+
+NVDA: -9.8%
+
+Nvidia earnings coming out on Wednesday ...
+  - https://x.com/burrytracker/status/1990529988685443422
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 2993).
+- **@davidsacks** (21182 likes, score 9/10) — There will be no federal bailout for AI. The U.S. has at least 5 major frontier model companies. If one fails, others will take its place.
+  - https://x.com/DavidSacks/status/1986476840207122440
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 23012).
+- **@openai** (23551 likes, score 9/10) — GPT-5.4 Thinking and GPT-5.4 Pro are rolling out now in ChatGPT.
+
+GPT-5.4 is also now available in the API and Codex.
+
+GPT-5.4 brings our advances in reasoning, coding, and agentic workflows into one
+  - https://x.com/OpenAI/status/2029620619743219811
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 27753).
+- **@palantirtech** (4206 likes, score 9/10) — Palantir reports Q1 ‘26 U.S. revenue growth of 104% Y/Y and revenue growth of 85% Y/Y; raises FY ’26 revenue guidance to 71% Y/Y growth and U.S. comm revenue guidance to 120% Y/Y, crushing consensus e
+  - https://x.com/PalantirTech/status/2051392965361181149
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 4584).
+- **@space_station** (989 likes, score 9/10) — Two cosmonauts began a spacewalk at 10:18am ET today to install a solar radiation experiment and remove scientific hardware on the space station. More... https://go.nasa.gov/42ZONFC
+  - https://x.com/Space_Station/status/2059641541673513444
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1047).
+- **@stocksavvyshay** (662 likes, score 9/10) — MY BIGGEST TAKEAWAY FROM $NVDA EARNINGS
+
+The real story from Nvidia earnings wasn’t the revenue beat. It wasn’t the guide. It wasn’t even the China write-down. It was the $4.96B in networking revenue.
+  - https://x.com/StockSavvyShay/status/1928060077707251906
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 788).
+- **@space_station** (426 likes, score 9/10) — Two cosmonauts will exit the space station for a spacewalk at 10:15am ET on Wednesday, May 27, live on @NASA+. The duo will install a solar radiation experiment and remove other scientific hardware.
+  - https://x.com/Space_Station/status/2057931766128906514
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 462).
+- **@space_station** (365 likes, score 9/10) — Two cosmonauts are preparing to exit the space station at 10:15am ET today to begin a spacewalk for external science work live on @NASA+. https://x.com/i/broadcasts/1qJVmQORrXAGB…
+  - https://x.com/Space_Station/status/2059632048671801626
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 391).
+- **@unusual_whales** (13684 likes, score 8/10) — BREAKING: Trump purchased up to $630,000 worth of Palantir, $PLTR, during the first three months of the year.
+
+In March alone, Trump made at least seven purchases of Palantir totalling as much as $530
+  - https://x.com/unusual_whales/status/2055839722665284029
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 14906).
+- **@aleabitoreddit** (990 likes, score 8/10) — If you’re curious why $SIVEF is up even more today. 
+
+$SIVE, as a CHIPS act recipient:
+
+Now likely powers the Golden Dome.
+
+As the upstream semi supplier since Sivers’ lead customer ALLSPACE got acqui
+  - https://x.com/aleabitoreddit/status/2049916817519587600
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1172).
+- **@stocksavvyshay** (901 likes, score 8/10) — MY THOUGHTS AHEAD OF NVIDIA EARNINGS
+
+$NVDA has become the gravity point of this entire market. That’s why next week’s earnings aren’t just about one company -- they’re about whether the AI cycle stil
+  - https://x.com/StockSavvyShay/status/1959259196488401086
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1055).
+- **@dom_lucre** (61912 likes, score 8/10) — BREAKING: An anonymous CJNG source just claimed that American citizen  Juan Carlos Valencia González, alias "O3," has been named the new leader of CJNG.
+
+He is El Mencho's stepson and controls the car
+  - https://x.com/dom_lucre/status/2026128162074321184
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 64852).
+- **@wallstreetmav** (5626 likes, score 8/10) — The competition for SpaceX just lost a lot of orders for satellites to orbit.
+
+Blue Origin's rocket (owned by Jeff Bezos) just exploded on the pad. 
+
+The SpaceX near monopoly on putting satellites in
+  - https://x.com/WallStreetMav/status/2060174336032469330
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6340).
+- **@soph_astro** (847 likes, score 8/10) — Day 106, orbit 1655 — Hello, hi to all the mums on Earth from the mums in space! We’re sending you lots and lots of love  from up here.
+Happy Mother’s Day in France and across Europe!
+
+ @esa / @NASA
+  - https://x.com/Soph_astro/status/2060994030285082976
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 883).
+- **@spacanpanman** (378 likes, score 8/10) — I am Shaking right now. My 9 month old son just said his first words. He said “Is it true that $ASTS shorts and panicans sold heavy prior to the multi-launch campaign and Golden Dome awards?", and I s
+  - https://x.com/spacanpanman/status/2000566303824707913
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 416).
+- **@xnxx_en** (127 likes, score 8/10) — AI doesn't feel like hype anymore.
+
+It feels like infrastructure.
+
+By 2026, the global AI market is approaching $900B and could surpass $4T within the next decade. AI spending alone is expected to rea
+  - https://x.com/XNXX_EN/status/2061020998066229367
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 309).
+- **@xfreeze** (63 likes, score 8/10) — One day, millions of people will call Mars home
+
+The roads, habitats, factories, and cities that make it possible could all trace back to one vehicle: Starship
+
+This is the machine designed to help ma
+  - https://x.com/XFreeze/status/2061068019686945278
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 125).
+- **@nf3121** (20 likes, score 8/10) — Hier vers 23h je me suis fait un bot d’arbitrage avec Codex 
+
+200$ de gain actuellement 
+
+Ça rembourse déjà intégralement mon billet d’avion pour Malte  
+
+MAIS, je l’ai fait pour la @NFSociety21 donc
+  - https://x.com/NF3121/status/2061053640798822431
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 34).
+- **@jeremycorbyn** (25520 likes, score 7/10) — As Health Secretary, Wes Streeting deepened the privatisation of our NHS and handed over our data to Palantir, a company involved in genocide. 
+
+I am sure his friend Peter Mandelson is very proud. 
+
+T
+  - https://x.com/jeremycorbyn/status/2054915759755727187
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 26162).
+- **@openai** (12847 likes, score 7/10) — Introducing GPT-Rosalind, our frontier reasoning model built to support research across biology, drug discovery, and translational medicine.
+  - https://x.com/OpenAI/status/2044861690911850863
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 13813).
+- **@zelenskyyua** (8623 likes, score 7/10) — A good meeting with the CEO of Palantir Technologies, Alex Karp. Step by step, we are developing cooperation with the American defense sector. Palantir is a renowned global company with strong potenti
+  - https://x.com/ZelenskyyUa/status/2054102055988429088
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 10629).
+- **@aiatmeta** (9033 likes, score 7/10) — Introducing Muse Spark, the first in the Muse family of models developed by Meta Superintelligence Labs.
+
+Muse Spark is a natively multimodal reasoning model with support for tool-use, visual chain of
+  - https://x.com/AIatMeta/status/2041910285653737975
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 10107).
+- **@esa** (993 likes, score 7/10) — Mission success for Smile.  
+
+Following lift-off on Vega-C at 05:52 CEST, separation at 06:48 CEST and solar panels deployment at 06:49 CEST, Smile is now underway to study Earth’s magnetic shield.
+  - https://x.com/esa/status/2056609171835945236
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1049).
+- **@space_station** (813 likes, score 7/10) — Expedition 74, how was your @SpaceX Dragon delivery? This time-lapse video shows Dragon approaching the International Space Station above the Indian Ocean, crossing the Himalayas into China, and then
+  - https://x.com/Space_Station/status/2058216386510684383
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 901).
+- **@aleabitoreddit** (512 likes, score 7/10) — Looking back, should have had more Energy Directed Weapon exposure. 
+
+Especially with America’s Golden Dome laser defense giving $LASR practically exponential TAM.
+
+There’s only two companies I’ve see
+  - https://x.com/aleabitoreddit/status/2028767576357228608
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 544).
+- **@heynavtoor** (25286 likes, score 7/10) — BREAKING: OpenAI just admitted their AI models deliberately lie to users.
+
+Not hallucination. The AI knows the truth, then chooses to tell you something else.
+
+They tested their two smartest models ac
+  - https://x.com/heynavtoor/status/2029300381554249922
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 28064).
+- **@trendingbitcoin** (400 likes, score 7/10) — JUST IN:  Jeff Bezos' Blue Origin now accepts #Bitcoin and crypto for payments
+  - https://x.com/TrendingBitcoin/status/1954899591197061357
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 442).
+- **@soph_astro** (63 likes, score 7/10) — Jour 107, orbite 1658 – On me demande souvent quels sont mes loisirs dans l’espace… Eh bien, l’un d’eux consiste à imaginer des expériences scientifiques ludiques les dimanches matins. Cela m’amuse be
+  - https://x.com/Soph_astro/status/2061067044825563396
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 67).
+- **@soph_astro** (50 likes, score 7/10) — Day 107, orbit 1658 — I’ve often been asked about my hobbies in space… Well, one of them is inventing fun science experiments on Sunday mornings. It’s a lot of fun - and it’s actually more challenging
+  - https://x.com/Soph_astro/status/2061066653819937106
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 56).
