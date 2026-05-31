@@ -5545,3 +5545,193 @@ Unitree's G1 humanoid robot was shown recently washing dishes, carrying water, a
 - Google
   - https://x.com/aiedge_/status/2060904096560021898
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 32).
+- **@robotbeat** (26 likes, score 8/10) — Let's say a kilogram to orbit is worth $1000. With the launch capacity SpaceX is building right now, they'll be able to launch $1 trillion's worth per year, easy. Starship is an incredible capability.
+  - https://x.com/Robotbeat/status/2060828925580763589
+  - **WHY**: Source fiable + impact concret (score signal 14, engagement 28).
+- **@stockmktnewz** (1709 likes, score 9/10) — NVIDIA $NVDA JUST UPDATED ITS PUBLIC STOCK PORTFOLIO HOLDINGS
+
+This is what Nvidia's stock portfolio looked like as of the end of Q1
+
+Intel $INTC - 214,776,632 shares
+Nebius $NBIS - 1,190,476 shares
+C
+  - https://x.com/StockMKTNewz/status/2055383927259377830
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 1833).
+- **@spaceflightnow** (113 likes, score 9/10) — Liftoff of SpaceX's Falcon 9 rocket on the Starlink 10-53 mission from pad 40 at Cape Canaveral Space Force Station at 8:57 a.m. EDT (1257 UTC)!
+
+Watch live: https://youtube.com/watch?v=e98GNsifulw…
+  - https://x.com/SpaceflightNow/status/2060344842815684616
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 119).
+- **@anandchokshi19** (35 likes, score 8/10) — Nvidia manages a massive 13F portfolio with $18.4 billion in AUM. Here are its latest top 6 holdings:
+
+1. Intel Corporation (INTC): Intel is Nvidia's largest holding, accounting for 51.58% of the port
+  - https://x.com/anandchokshi19/status/2060715318578921601
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 47).
+- **@spaceflightnow** (46 likes, score 8/10) — SpaceX is now fueling its Falcon 9 rocket at Space Launch Complex 4 East at Vandenberg Space Force Base. Liftoff of the Starlink 17-41 mission is set for 8:25 a.m. PDT (11:25 a.m. EDT / 1525 UTC).
+
+Wa
+  - https://x.com/SpaceflightNow/status/2060736569925894654
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 46).
+- **@spaceflightnow** (46 likes, score 8/10) — SpaceX is now fueling its Falcon 9 rocket at Space Launch Complex 4 East at Vandenberg Space Force Base. Liftoff of the Starlink 17-41 mission is set for 8:25 a.m. PDT (11:25 a.m. EDT / 1525 UTC).
+
+Wa
+  - https://x.com/SpaceflightNow/status/2060736569925894654
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 46).
+- **@bassonbrain** (23 likes, score 8/10) — YTD @SpaceX launched 50 Falcon 9 @Starlink missions and deployed 1,337 satellites — 42% of the 3,180 deployed in 2025
+  - https://x.com/BassonBrain/status/2060761176695324701
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 27).
+- **@bassonbrain** (13 likes, score 7/10) — 50th Starlink mission for the year coming up! 
+
+@SpaceX is targeting Saturday, May 30 for a Falcon 9 launch of 24 Starlink (Group 17-41) satellites from Vandenberg SFB, CA
+
+—&gt; Liftoff: 8.25 a.m. PD
+  - https://x.com/BassonBrain/status/2060668225126289660
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 13).
+- **@altcoindaily** (16 likes, score 8/10) — Citibank predicts Bitcoin will hit $189k in 2026
+  - https://x.com/AltcoinDaily/status/2060924243991474462
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 32).
+- **@wallstreetbets** (776 likes, score 9/10) — BREAKING: Michael Burry is betting ~$1B against AI
+
+Palantir and Nvidia are the big ones
+
+13F shows short exposure:
+
+- $PLTR: ~$912M
+- $NVDA: ~$187M
+
+he called the housing crash before everyone else
+  - https://x.com/wallstreetbets/status/2053112511403053566
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1300).
+- **@tagadobtc** (0 likes, score 8/10) — Bientôt le retest du support des 70k$-72k$ pour le Bitcoin.
+
+Une zone de tous les dangers, où les pessimistes verront la cassure d'un Bear Flag avec un objectif vers les 50k$.
+
+Mais en réalité, que fo
+  - https://x.com/TagadoBTC/status/2060632259510571519
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 36).
+- **@reuters** (25 likes, score 8/10) — Micron and SK Hynix just hit trillion-dollar valuations and Anthropic raised $65 billion. The AI boom keeps on booming. Get the details on Reuters Morning Bid
+  - https://x.com/Reuters/status/2060753154862428282
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 35).
+- **@wallstengine** (343 likes, score 9/10) — Axios reports $NVDA and Microsoft $MSFT are expected to unveil the first Windows computers using Nvidia chips as the main processor.
+
+The launch is expected at Computex in Taiwan and Microsoft Build i
+  - https://x.com/wallstengine/status/2060889299273601283
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 397).
+- **@cointelegraph** (0 likes, score 9/10) — LATEST: Nvidia-powered Windows PCs are reportedly set to debut next week from Microsoft, Dell, and other manufacturers.
+  - https://x.com/Cointelegraph/status/2060843872620605457
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 128).
+- **@marionawfal** (434 likes, score 9/10) — Google's next product launch is 32 million mosquitoes.
+
+California and Florida are the test markets.
+
+The goal is disease control through mass sterile mosquito release, a proven method, but this is th
+  - https://x.com/MarioNawfal/status/2060771973110677545
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 754).
+- **@nyoomtm** (43 likes, score 9/10) — Liftoff of Atlas V and Amazon Leo-7 last night at 7:53 PM.
+
+The mighty bruiser lifted off under cloudy skies for its penultimate 551 configuration flight. 
+
+ Me for @WeAreSpaceScout
+  - https://x.com/nyoomtm/status/2060861590576988426
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 55).
+- **@rohanpaul_ai** (16 likes, score 8/10) — AI is coming into every strange corner of our life. 
+
+A $2.95M San Francisco home is now taking OpenAI or Anthropic stock as payment, turning private AI shares into a housing currency.
+
+The deal expos
+  - https://x.com/rohanpaul_ai/status/2060804752250974583
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 32).
+- **@cryptopunk7213** (7 likes, score 7/10) — anthropic and openai have now each released multi-agent autonomous features over the last week confirming a very strong shift to agentic ai
+
+- codex can now effectively do the job of a 5 person engine
+  - https://x.com/cryptopunk7213/status/2060912225364115848
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 13).
+- **@earnings_guy** (2210 likes, score 8/10) — $NVDA (Nvidia) #earnings are out:
+  - https://x.com/earnings_guy/status/1991255215052390754
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2406).
+- **@earnings_guy** (1178 likes, score 8/10) — $NVDA (Nvidia) #earnings are out:
+  - https://x.com/earnings_guy/status/2026772091719069714
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1272).
+- **@trendingbitcoin** (13 likes, score 7/10) — Raoul Pal: "The 4-year cycle is now the 5-year cycle.. Bitcoin should peak in 2026. Probably Q2."
+  - https://x.com/TrendingBitcoin/status/2060904848321827306
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 17).
+- **@itsmichaelluu** (1495 likes, score 8/10) — Yesterday, $DELL spiked 45% after its Q1 earnings.
+
+Options exploded 20000%-30000% in 1 day (rare).
+
+Next week, there's 4 earnings with exact same set-up:
+
+1. $CRWD  Earnings: June 3 (After Close)
+
+As
+  - https://x.com/itsmichaelluu/status/2060707685238968510
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1815).
+- **@mrmikeinvesting** (1236 likes, score 8/10) — President Trump has only ever exclusively mentioned one stock by its ticker…
+
+That happens to be $PLTR.
+
+With Palantir breaking out of its 10 month bull flag the next move can be explosive.
+
+$PLTR wil
+  - https://x.com/MrMikeInvesting/status/2060749839667749249
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1362).
+- **@space_station** (519 likes, score 8/10) — Two cosmonauts are over five hours into their spacewalk installing a solar radiation experiment and removing physics and microbiology research gear. Watch on @NASA+. https://x.com/i/broadcasts/1nxeLyO
+  - https://x.com/Space_Station/status/2059724544856739910
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 561).
+- **@wallstreetbets** (393 likes, score 8/10) — This is insane
+
+ALMOST EVERY STOCK TRUMP MENTIONED THIS YEAR IS RIPPING
+
+$DELL - May 8: Trump told people to "go out and buy a Dell"
+
+> landed a $9.7B Pentagon contract
+> crushed earnings
+> from $260
+  - https://x.com/wallstreetbets/status/2060857150511996989
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 519).
+- **@spacex** (32220 likes, score 7/10) — Liftoff of Starship!
+  - https://x.com/SpaceX/status/2057952539417461045
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 34436).
+- **@spacex** (32057 likes, score 7/10) — Liftoff of Starship on its twelfth flight test
+  - https://x.com/SpaceX/status/2058313378171392061
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 34077).
+- **@starlink** (5896 likes, score 7/10) — Starlink enables reliable real-time communication with recovery teams and live streaming of Starship’s splashdown in the middle of the Indian Ocean
+  - https://x.com/Starlink/status/2057950370668945682
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6734).
+- **@marionawfal** (1146 likes, score 7/10) — Paris is burning tonight, and now a massive fire on the Seine banks is sending thick smoke swallowing the Eiffel Tower.
+
+These “fans” have gone completely off the rails
+  - https://x.com/MarioNawfal/status/2060890700057633166
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1350).
+- **@michaeldell** (1085 likes, score 7/10) — We have the first @DellTech + @nvidia Vera Rubin NVL72 @CoreWeave. Here we go!
+  - https://x.com/MichaelDell/status/2060903140858212439
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1201).
+- **@rohanpaul_ai** (30 likes, score 7/10) — atomic[.]chat (a desktop app that runs LLMs locally) ran a very revealing comparison for local AI agents, on a MacBook Pro M5 Max, 64GB.
+
+Liquid’s much smaller LFM2.5-8B-A1B beat gpt-oss-20b by finish
+  - https://x.com/rohanpaul_ai/status/2060821501650387102
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 52).
+- **@leifinvests** (26 likes, score 7/10) — TRUMP THEME / INVESTMENT STOCKS 
+
+Defense: $PLTR $RTX
+
+AI Infrastructure: $NVDA $AMD
+
+Energy & Power: $VST $CEG
+
+Oil & Gas: $XOM $LNG
+
+American Manufacturing: $INTC $MU
+
+Rare Earths: $MP $USAR
+
+Quantu
+  - https://x.com/LeifInvests/status/2060875437853798526
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 32).
+- **@investmentguru_** (36 likes, score 7/10) — 10 Best Stocks to Own Right Now
+
+A conviction list built for this market. AI infrastructure. Memory supercycle. Fintech re-rating. Photonics bottleneck. Every name here earns its spot.
+
+$NVDA — Still
+  - https://x.com/InvestmentGuru_/status/2060895277452570800
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 42).
