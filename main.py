@@ -76,6 +76,7 @@ from src.morning_recap_bot import safe_run_morning_recap_cycle
 from src.analyzer_bot import safe_run_analyzer_cycle
 from src.style_evolution_bot import safe_run_style_evolution_cycle
 from src.wsb_signal_bot import safe_run_wsb_signal_cycle
+from src.autonomous_growth_agent import safe_run_autonomous_growth_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE, _LIVE_STRATEGY_FILE as LIVE_STRATEGY_FILE
 
@@ -814,6 +815,17 @@ def main():
             safe_run_style_evolution_cycle,
             trigger=IntervalTrigger(hours=168),
             id="style_evolution_job",
+        )
+
+        # Autonomous Growth Agent — full Claude Code CLI agentic run daily at 6 AM EST.
+        # Reads engagement data, WebSearches trending AI/Space topics, rewrites
+        # directives.md + tunes live_strategy.json, then commits and pushes.
+        # Forces 'claude' provider (full tool access: WebSearch, Bash, Read, Write, Edit).
+        log.info("Autonomous growth agent: daily Claude Code strategy review at 06:00 EST.")
+        scheduler.add_job(
+            safe_run_autonomous_growth_cycle,
+            trigger=CronTrigger(hour=6, minute=0, timezone="America/New_York"),
+            id="autonomous_growth_job",
         )
 
         # ============================================================
