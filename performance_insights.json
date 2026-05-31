@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-05-30T16:26:55.171091",
-  "window_7d_actions": 1845,
-  "window_24h_actions": 471,
+  "generated_at": "2026-05-31T04:02:22.897856",
+  "window_7d_actions": 1852,
+  "window_24h_actions": 409,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 1756
+      "count": 1759
     },
     {
       "pattern": "METAPHOR",
-      "count": 25
+      "count": 26
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 21
+      "count": 23
     },
     {
       "pattern": "RENAME",
@@ -21,7 +21,7 @@
     },
     {
       "pattern": "DIALOGUE",
-      "count": 10
+      "count": 11
     }
   ],
   "worst_patterns": [
@@ -40,71 +40,71 @@
   ],
   "best_hours_utc": [
     {
+      "hour": 22,
+      "actions": 110
+    },
+    {
+      "hour": 23,
+      "actions": 107
+    },
+    {
+      "hour": 21,
+      "actions": 106
+    },
+    {
       "hour": 11,
       "actions": 104
     },
     {
       "hour": 5,
       "actions": 103
-    },
-    {
-      "hour": 8,
-      "actions": 103
-    },
-    {
-      "hour": 4,
-      "actions": 102
-    },
-    {
-      "hour": 1,
-      "actions": 97
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 627
+      "count": 641
     },
     {
       "topic": "Autre",
-      "count": 558
+      "count": 548
     },
     {
       "topic": "Bourse",
-      "count": 370
-    },
-    {
-      "topic": "Crypto",
-      "count": 338
+      "count": 346
     },
     {
       "topic": "Spatial",
-      "count": 278
+      "count": 316
+    },
+    {
+      "topic": "Crypto",
+      "count": 314
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.234,
-      "7d_rate": 0.151
+      "24h_rate": 0.237,
+      "7d_rate": 0.171
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 980
+      "count": 976
     },
     {
       "type": "retweet",
-      "count": 691
+      "count": 702
     },
     {
       "type": "post",
-      "count": 76
+      "count": 75
     },
     {
       "type": "quote",
-      "count": 54
+      "count": 55
     },
     {
       "type": "hotake",
@@ -113,18 +113,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-05-30T16:24:51.167960",
-      "text": "Le secret : 20°C, batterie entre 10 et 80%, une borne 350 kW disponible.\n\nEn pratique : 45 minutes sous la pluie à Vierzon, deux prises en carafe et la troisième occupée par quelqu'un parti aux toilettes.",
+      "ts": "2026-05-31T03:39:45.385115",
+      "text": "Le vrai IVT Day, c'est le moment où l'IA te remplace tout en te payant encore un peu.\n\nBercy sourit, URSSAF vérifie, et on se dit qu'on a gagné.",
       "type": "reply"
     },
     {
-      "ts": "2026-05-30T16:22:21.123855",
-      "text": "2T en novembre, 4T en avril. Le robinet a coulé.\n\nETH a regardé passer la liquidité comme le RER B un dimanche : présent, portes fermées.",
+      "ts": "2026-05-31T03:35:47.687408",
+      "text": "Ton \"encore merci\", c'est le signal d'achat du Space Bro qui vient de souscrire son dernier ETF lunar.\n\nBercy, en fond de tableau, est déjà en train de calculer la taxe sur l'émoticône.",
       "type": "reply"
     },
     {
-      "ts": "2026-05-30T16:20:35.187327",
-      "text": "Tout Spielberg se regarde différemment depuis qu'on a réalisé que A.I. et Minority Report étaient des documentaires.",
+      "ts": "2026-05-31T03:27:45.230302",
+      "text": "L’IA génère de l’art à 5$ l’heure.\n\nPixar paie encore un scénariste 3k€/mois pour pleurer sur un camion.",
       "type": "reply"
     }
   ]
