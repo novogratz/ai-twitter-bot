@@ -1659,5 +1659,43 @@
       }
     ],
     "summary": "Mix \u00e9quilibr\u00e9 entre le fond technique pur (Loup Capital, Bachand) et l'accessibilit\u00e9 boursi\u00e8re (Lemarchand). Pas de vendeurs de r\u00eave, que des profils qui font briller leurs yeux quand ils parlent de P/E ratio ou de transformers."
+  },
+  {
+    "ts": "2026-05-31T04:21:23.788860",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "OphelieD",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Journaliste tech (Ex-AI / Les Echos). Elle couvre la deeptech fran\u00e7aise avec une pertinence rare. Pas de 'moon', du concret."
+      },
+      {
+        "handle": "MaximeMares",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Fondateur de la Banque du Net. Il d\u00e9fend la bourse FR contre les anglosaxons avec humour et rigueur. La r\u00e9f\u00e9rence retail premium."
+      },
+      {
+        "handle": "PierreDuc",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Fondateur de Lysk / ancien de Lydia. Il parle paiement, fintech et tech avec l'\u00e9nergie d'un startupper qui a encore des cheveux."
+      },
+      {
+        "handle": "VivekRanade",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 8500,
+        "reason": "Fondateur de AI Space (USA, mais tr\u00e8s actif en FR sur les threads IA). Il d\u00e9cortique les mod\u00e8les de langage comme un horloger."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour garder les constructeurs : les fondateurs de Mistral et la Banque du Net, plus les journalistes qui font le job sans se la raconter."
   }
 ]
