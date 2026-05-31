@@ -298,8 +298,8 @@ def main():
     # Daily/weekly news fire on their cron schedule (7AM EST) — NOT on restart,
     # to avoid duplicate posts when the bot is restarted during the day.
     if not args.reply_only:
-        log.info("Bot started! Checking Monthly catchup.")
-        _run_monthly_startup_catchup_if_due()
+        log.info("Bot started! Monthly catchup: disabled (RT+quote only mode).")
+        # _run_monthly_startup_catchup_if_due()  # disabled 2026-05-30
         # Fire one RT + quote cycle immediately so they don't wait for the full
         # direct-reply warmup to finish before scheduler.start() is called.
         log.info("Startup retweet burst...")
@@ -333,20 +333,9 @@ def main():
 
     # Schedule jobs
     if not args.reply_only:
-        # 2026-05-28: North American pivot — 7 AM EST daily burst.
-        # Weekly also fires at startup; cron catches subsequent Fridays.
-        log.info("News bot DAILY: cron at 07:00 America/New_York (7 AM EST).")
-        scheduler.add_job(
-            safe_run_daily_news_cycle,
-            trigger=CronTrigger(hour=7, minute=0, timezone="America/New_York"),
-            id="daily_news_job",
-        )
-        log.info("News bot WEEKLY: cron Fridays at 07:00 America/New_York.")
-        scheduler.add_job(
-            safe_run_weekly_news_cycle,
-            trigger=CronTrigger(day_of_week="fri", hour=7, minute=0, timezone="America/New_York"),
-            id="weekly_news_job",
-        )
+        # 2026-05-30: Original news posts disabled — RT + quote only mode.
+        # daily_news_job and weekly_news_job are intentionally OFF.
+        log.info("News bot DAILY/WEEKLY: disabled (RT+quote only mode).")
     if not args.post_only:
         first_reply = reply_interval_minutes()
         log.info(f"Reply bot: next scan in {first_reply} minutes.")
