@@ -4654,3 +4654,301 @@ Microsoft has let Windows rot for so long that even gre
 This partnership could bring high-speed internet to India’s most hard-to-reach villag
   - https://x.com/XFreeze/status/2060805698557227207
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 82).
+- **@amazonleo** (387 likes, score 9/10) — A more powerful Ariane 64. Our largest Ariane payload yet.
+ 
+The next batch of Amazon Leo satellites arrived in French Guiana ahead of launch on Leo Europe 3 (LE-03) with @Arianespace.
+ 
+LE-03 will be
+  - https://x.com/Amazonleo/status/2055334055738999037
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 403).
+- **@spaceflightnow** (30140 likes, score 9/10) — Here's our video of the explosion at Launch Complex 36. It happened about 9 pm ET (0100 UTC) as Blue Origin was beginning a static fire test of its New Glenn rocket.
+
+Watch live views: https://youtube
+  - https://x.com/SpaceflightNow/status/2060170680604168319
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 32846).
+- **@stockmktnewz** (293 likes, score 9/10) — The combined valuation of the 3 largest private companies in the world is now over $3 Trillion
+
+SpaceX - $1.25T
+Anthropic - $965B
+OpenAI - $852B
+
+Total Combined - $3.07T
+  - https://x.com/StockMKTNewz/status/2060767051178717302
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 541).
+- **@spaceflightnow** (45 likes, score 8/10) — SpaceX is now fueling its Falcon 9 rocket at Space Launch Complex 4 East at Vandenberg Space Force Base. Liftoff of the Starlink 17-41 mission is set for 8:25 a.m. PDT (11:25 a.m. EDT / 1525 UTC).
+
+Wa
+  - https://x.com/SpaceflightNow/status/2060736569925894654
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 45).
+- **@mistressdivy** (11 likes, score 7/10) — SpaceX IPO is dropping June 12 — here’s what to watch RIGHT NOW
+
+SpaceX filed its S-1 targeting a $2 TRILLION valuation — the largest IPO in history.
+
+You can’t buy SpaceX yet. But the halo effect is
+  - https://x.com/mistressdivy/status/2060843283891544373
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 11).
+- **@arealrocketman** (8 likes, score 7/10) — Starlink Group 10-43 | @SpaceX
+ Falcon 9 Block 5
+ Vandenberg SFB, CA
+ June 03, 2026 - 04:02 EDT
+ 29 @Starlink satellites to LEO
+  - https://x.com/ARealRocketMan/status/2060727910403653825
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 10).
+- **@teslaownerssv** (114 likes, score 9/10) — Everyone obsesses over Starship's height and thrust.
+
+The number that actually matters: cost per kg to orbit.
+
+Falcon 9 brought it from ~$54,500 (Shuttle era) to ~$1,500. Starship targets <$100.
+
+A 50
+  - https://x.com/teslaownersSV/status/2060795291390091375
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 134).
+- **@haider1** (51 likes, score 9/10) — gpt-5.5 still mogged opus 4.8 on DeepSWE
+
+gpt-5.5: 70% pass@1, $6.61 avg cost, 47k output tokens
+opus 4.8: 58% pass@1, $12.58 avg cost, 136k output tokens
+
+i get why the AI community wasn't excited an
+  - https://x.com/haider1/status/2060871377511735327
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 75).
+- **@stockmktnewz** (1435 likes, score 9/10) — Nvidia Robotics $NVDA posted this:
+
+“Building solar faster with robotics. Maximo’s AI-powered robots have installed over 100MW of solar panels—bringing automation to energy projects”
+  - https://x.com/StockMKTNewz/status/2041474102033019047
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1517).
+- **@aakashgupta** (1161 likes, score 9/10) — Kevin O'Leary just got Utah to approve a 9 gigawatt data center. The entire state of Utah currently uses 4 gigawatts.
+
+The campus is called Stratos. It will run entirely off-grid.
+
+41,200 acres in Box
+  - https://x.com/aakashgupta/status/2049164003671417152
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1383).
+- **@kawzinvests** (994 likes, score 9/10) — Nvidia paid $6.01 per share for 2.9% of $NOK in October. Nokia is now at $9.55
+
+I was at GTC and met with some of the Nokia exec team. What they described changes how you think about what a cell tower
+  - https://x.com/KawzInvests/status/2042337208951325062
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1060).
+- **@niccruzpatane** (935 likes, score 9/10) — The redesigned Tesla Semi now uses the updated MCS (Megawatt Charging System) charge port.
+
+This 1.2 MW (1,200 kW) port is used across North America, and also Europe for class 6-8 electric commercial
+  - https://x.com/niccruzpatane/status/2006486561643466947
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 963).
+- **@stockmktnewz** (704 likes, score 9/10) — Rocket Lab $RKLB posted this today:
+
+“Rocket Lab Robotics is coming”
+
+“That’s what we’re doing with Motiv Space Systems, adding Mars-proven robotics heritage to our rapidly expanding capabilities”
+  - https://x.com/StockMKTNewz/status/2054006929530208465
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 740).
+- **@marionawfal** (0 likes, score 9/10) — BOOM! @SpaceX Falcon 9 just launched Starlink Group 10-53 from SLC-40 
+
+They're making it look easy again
+  - https://x.com/MarioNawfal/status/2060374352626073835
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 122).
+- **@greyvese** (28 likes, score 9/10) — According to Artemis data, Hyperliquid (11 employees) generates far more revenue per employee than Anthropic (2300 employees)
+
+$HYPE is backed by one of the most efficient teams in the world
+
+You don'
+  - https://x.com/greyvese/status/2060695944740671527
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 60).
+- **@financelancelot** (17 likes, score 8/10) — This is insane! They need to find a home for $86B worth of SpaceX $SPCX stock on day one
+
+They're planning to sell 30% to retail, normally 5% is risky
+
+The sheer size of this retail allocation is 150x
+  - https://x.com/FinanceLancelot/status/2060885495136018776
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 33).
+- **@financelancelot** (14 likes, score 8/10) — This is insane! They need to find a home for $86B worth of SpaceX $SPCX stock on day one
+
+They're planning to sell 30% to retail, normally 5% is risky
+
+The sheer size of this retail allocation is 150x
+  - https://x.com/FinanceLancelot/status/2060885495136018776
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 26).
+- **@marcosmillayt** (11 likes, score 7/10) — SpaceX is overvalued… $SPCX
+
+SpaceX lost a total of -$4.9 Billion in 2025.
+
+But SpaceX is estimated to earn around $22 Billion to $24 Billion in revenue in 2026…
+
+Does this warrant a near $2 Trillion
+  - https://x.com/MarcosMillaYT/status/2060853909598720496
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 23).
+- **@benjamindekr** (9 likes, score 7/10) — Amazon currently has roughly 330 satellites in orbit. 
+
+To hit their promised 1,618 target by July 2028, they need to launch almost 1,300 satellites in 26 months.
+
+Why do these numbers matter?
+
+Back i
+  - https://x.com/BenjaminDEKR/status/2060840521174815225
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 17).
+- **@marcosmillayt** (9 likes, score 7/10) — SpaceX IPO is going to be unlike any other on June 12th $SPCX
+
+SpaceX is expected to raise $75 Billion…more than 2x more raised by Saudi Aramco in 2019.
+  - https://x.com/MarcosMillaYT/status/2060850307882786975
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 17).
+- **@nasasolarsystem** (1079 likes, score 9/10) — Right now, NASA's #MissionToPsyche is approaching Mars. 
+
+Current distance: 29,780 miles
+Current speed relative to Mars: 10,340 mph
+
+This simulated view, based on actual trajectory data, comes from ou
+  - https://x.com/NASASolarSystem/status/2055324888437788871
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1161).
+- **@trendingbitcoin** (552 likes, score 9/10) — Bitcoin is going to $1,000,000 sooner than you think
+  - https://x.com/TrendingBitcoin/status/2060602606649852387
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 664).
+- **@grindeoptions** (26 likes, score 9/10) — 2027 will be year Ethereum and Bitcoin take flight. 
+
+$MSTR and $BMNR will come again continue the uptrend. 
+
+The last 5 years have looked pretty ugly but the past doesn’t dictate the future.
+  - https://x.com/GrindeOptions/status/2060859799190044753
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 54).
+- **@cryptogoos** (33 likes, score 9/10) — BIG BANKS ARE STACKING UP FOR OPENAI IPO
+
+JPMorgan and Citigroup are set to join the underwriting team.
+
+Goldman Sachs and Morgan Stanley are already on board.
+
+One of the biggest IPOs in history is c
+  - https://x.com/cryptogoos/status/2060857913640439928
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 51).
+- **@coinbureau** (139 likes, score 9/10) — LATEST: $2.9 MILLION San Francisco home listing says Anthropic or OpenAI stock will be accepted as a mode of payment.
+
+What part of the cycle is this?
+  - https://x.com/coinbureau/status/2060841216510718452
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 229).
+- **@ourcryptotalk** (93 likes, score 9/10) — "A new era of PC"
+
+NVIDIA and Microsoft are planning to supercharge Decentralized Computing.
+
+Another wave like 2024 for AI+DePIN is possible.
+
+Potential winners :
+
+- $RENDER
+- $AKT
+- $QUBIC
+- $IO
+- $
+  - https://x.com/ourcryptotalk/status/2060627799090889071
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 129).
+- **@rohanpaul_ai** (16 likes, score 8/10) — AI is coming into every strange corner of our life. 
+
+A $2.95M San Francisco home is now taking OpenAI or Anthropic stock as payment, turning private AI shares into a housing currency.
+
+The deal expos
+  - https://x.com/rohanpaul_ai/status/2060804752250974583
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 30).
+- **@engadget** (12 likes, score 7/10) — That's on top of another $2 billion contract awarded to SpaceX earlier this week.
+  - https://x.com/engadget/status/2060759419885912350
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 16).
+- **@disruptorinvest** (7 likes, score 7/10) — It’s likely going to be the power shortfall. Chips won’t be able to be plugged in.
+  - https://x.com/disruptorinvest/status/2060811961646961010
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11).
+- **@nvidiageforce** (2086 likes, score 8/10) — Join the mission...
+
+To celebrate the upcoming launch of 007 First Light, we’re giving you a chance to win prizes inspired by the world of Bond.
+
+Your first assignment starts now: reply with #007First
+  - https://x.com/NVIDIAGeForce/status/2054571390595190804
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 9668).
+- **@nvidiaaiinfra** (5659 likes, score 8/10) — The next chapter of space computing is here 
+
+NVIDIA and its ecosystem are advancing AI from Earth-to-space across:
+
+ Earth Orbit and Infrared Imagery
+ Radio Frequency and Synthetic Aperture Radar
+ Au
+  - https://x.com/NVIDIAAIInfra/status/2052886264349696279
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5907).
+- **@calvinfroedge** (618 likes, score 8/10) — Hormuz matters because even if North America is somewhat insulated, the rest of the global economy is going to get absolutely eviscerated
+
+40% of S&P500 revenue and 50% of MAG7 revenues come from over
+  - https://x.com/calvinfroedge/status/2060728871666766305
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 680).
+- **@tradesmax** (75 likes, score 8/10) — NASA本周刚刚公布价值近10亿美元的新一轮月球基地合同，重点围绕月球车、货运登陆器和无人机。
+相关上市受益股：
+下面是美股投资网整理的“登月经济（Moon Economy）+太空产业链”美股概念股名单：
+
+$LUNR = 月球物流，月球着陆器
+$RKLB = 月球运输，小型火箭发射
+$RDW = 月球建设，太空制造、空间站设备
+  - https://x.com/TradesMax/status/2060597641252335913
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 85).
+- **@space_strategy** (65 likes, score 8/10) — China might be less than 12 months from sending Long March 10 on a lunar flyby. This will be their Artemis 1 moment. Then how soon until they take crew?
+  - https://x.com/Space_Strategy/status/2060693014637396388
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 81).
+- **@investmentguru_** (12 likes, score 7/10) — SPACE STOCKS ARE LIFTING OFF
+
+Space and satellite-related stocks soared as investor enthusiasm around the industry intensified.  The catalyst is obvious. SpaceX is targeting a Nasdaq listing this summ
+  - https://x.com/InvestmentGuru_/status/2060852975094940004
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 20).
+- **@nasaspacealerts** (1710 likes, score 7/10) — #MeteorSighting: Eyewitnesses in New England and @NOAA’s GOES-19 satellite reported a bright fireball on Saturday, May 30, at 2:06 p.m EDT accompanied by a loud noise. The meteor appears to have fragm
+  - https://x.com/NASASpaceAlerts/status/2060854183155106193
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1778).
+- **@beauty_oe** (16 likes, score 7/10) — 要人発言
+
+NVIDIA CEO 革ジャン
+「メモリ、フォトニクスの次は、AI PCだ」
+
+はい、要人の見解が出揃いました。
+
+セレ様CPO
+レオポルド青年データセンター
+革ジャンAI PC
+
+ただ、革ジャンが株の投資上手いか否かは怪しく...1年以上CRWVをpfの漬物にしていた
+  - https://x.com/beauty_oe/status/2060885709544976413
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 18).
+- **@cyberrobooo** (1756 likes, score 7/10) — Milestone in Humanoid Robotics: A Thousand Humanoid Sorters Entering Logistics Centers
+
+Beijing-based RobotEra is deploying its L7 humanoid robot across more than 10 logistics centers operated by Chin
+  - https://x.com/CyberRobooo/status/2049118436870259192
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1988).
+- **@mookafish** (938 likes, score 7/10) — The BBC just referred to Falcon 9 as Starship in their report on New Glenn 
+I'll be honest, this report wasn't great.
+  - https://x.com/Mookafish/status/2060420301326889417
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1054).
+- **@teslaownerssv** (447 likes, score 7/10) — "@SpaceX is probably our greatest commercial space company, hands down," says NASA Administrator Jared Isaacman
+  - https://x.com/teslaownersSV/status/2059783163174658239
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 491).
+- **@omzcharts** (150 likes, score 7/10) — If you don't think #BTC will see $300k in the next few years, you're unprepared.
+  - https://x.com/omzcharts/status/2060774406377660556
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 196).
+- **@amazing_physics** (115 likes, score 7/10) — NASA is preparing to explore Uranus more deeply than ever before.
+
+The mission will be one of the longest and most challenging journeys in space exploration history.
+  - https://x.com/amazing_physics/status/2060627755855962149
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 157).
+- **@0xnoncesense** (79 likes, score 7/10) — $BTC IS SETTING UP FOR A HARD DROP
+
+The bearish megaphone pattern is stretched to the edge.
+
+We move to $60K zone. There's not much room left here.
+
+If you've been following me, you already caught the
+  - https://x.com/0xNonceSense/status/2060744223549436254
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 131).
+- **@0xlofty** (69 likes, score 7/10) — The final Bull Trap is almost complete.
+
+Bitcoin is stuck inside a bearish channel, and time is running out.
+
+Most traders still expect a new ATH.
+
+But the chart is warning of something very different
+  - https://x.com/0xLofty/status/2060816839693787410
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 117).
+- **@coinbureau** (46 likes, score 7/10) — WATCH: UNITREE G1 PERFORMING HOUSEHOLD TASKS WITH IMPRESSIVE PRECISION
+
+Unitree's G1 humanoid robot was shown recently washing dishes, carrying water, and sorting laundry, perfecting day-to-day chores
+  - https://x.com/coinbureau/status/2060858542870118489
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 86).
+- **@cryptogoos** (49 likes, score 7/10) — FORT KNOX AUDIT INCOMING
+
+ President Trump just said it's "time to audit" Fort Knox's $667 billion gold reserves.
+  - https://x.com/cryptogoos/status/2060878794722824589
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 65).
