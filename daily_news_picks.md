@@ -7039,3 +7039,274 @@ That's the layer we've spent years building. See you
 - **@cathyj65** (14 likes, score 7/10) — I’d love to see SpaceX and Blue Origin work together. They are both great and could surpass China in no time if only they’d put both their American supporting brains together.
   - https://x.com/cathyj65/status/2060718021228822607
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 20).
+- **@muskonomy** (229 likes, score 9/10) — NEWS: SpaceX hit its 50th Starlink launch of 2026.
+
+Five months in, that is one Starlink mission every three days.
+
+The 50 launches have carried approximately 1,337 to 1,375 satellites into orbit, ave
+  - https://x.com/muskonomy/status/2061067154162934207
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 249).
+- **@ufotinik** (57 likes, score 9/10) — SpaceX est en train de retirer une partie du béton de la plateforme de lancement. Apparemment, ils ont détecté des fissures après le vol 12. Le pad zéro version 2 ne supporte pas encore la puissance d
+  - https://x.com/ufotinik/status/2061129856448958525
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 67).
+- **@figure_robot** (1154 likes, score 9/10) — Welcome to Day 9 of our humanoid livestream: 191 consecutive hours and 238,000 packages
+  - https://x.com/Figure_robot/status/2057506871440003212
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1326).
+- **@kalshi_crypto** (274 likes, score 9/10) — BREAKING: 60% chance Bitcoin hits $60,000 before $100,000
+  - https://x.com/Kalshi_Crypto/status/2061111018818769293
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 398).
+- **@fluffycrypt** (20 likes, score 8/10) — Someone turned $210 to $73k on $SpaceX
+
+He bought when I called it 2 months ago
+
+Today he walked away with $73,173 in profit
+
+But you don't follow me!
+
+Stay poor!
+  - https://x.com/fluffycrypt/status/2061137213513924861
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 42).
+- **@armyrecognition** (13 likes, score 7/10) — SpaceX's $4.16B Contract Paves the Way for New U.S. Military Satellite Network Tracking Airborne Threats Worldwide
+  - https://x.com/ArmyRecognition/status/2061091887902027904
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 15).
+- **@sentdefender** (10753 likes, score 9/10) — Insane footage filmed from a nearby restaurant shows tonight’s explosion of Blue Origin’s New Glenn at Cape Canaveral Launch Complex 36 (LC-36).
+  - https://x.com/sentdefender/status/2060181395633246502
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 11299).
+- **@oliviscusai** (1871 likes, score 9/10) — Microsoft Research + Salesforce just dropped a paper that should scare every single AI builder right now.
+
+They tested 15 of the top models (GPT-4.1, Gemini 2.5 Pro, Claude 3.7 Sonnet, o3, DeepSeek R1
+  - https://x.com/oliviscusAI/status/2030237913724645449
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2217).
+- **@divestech** (511 likes, score 9/10) — Tech bears a month ago 
+
+1) rates higher for longer into 2024
+
+2) 3Q Tech earnings is going to disappoint
+
+3) US/China tensions getting worse 
+
+4) AI is hype..not real
+
+The reasons to be negative are
+  - https://x.com/DivesTech/status/1725143609106665707
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 583).
+- **@itsmichaelluu** (260 likes, score 9/10) — It's September 2026, stocks I bought under $20 and they exploded 1000%
+
+1. $KEEL – Former Bitfarms. 2.2 GW pipeline. Hyperscaler leases incoming. Cheapest GW-scale AI land play (Leopold call)
+
+2. $SAT
+  - https://x.com/itsmichaelluu/status/2061080407035064370
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 424).
+- **@wolf_financial** (102 likes, score 9/10) — Which of these would you choose to hold for the next 5 years?
+
+A)
+Nvidia $NVDA
+Apple $AAPL
+Google $GOOGL
+Microsoft $MSFT
+
+B)
+SpaceX $SPCX
+Anthropic 
+OpenAI
+Databricks 
+
+C)
+Amazon $AMZN
+Eli Lilly $LLY
+  - https://x.com/WOLF_Financial/status/2061130056148337137
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 320).
+- **@mark_k** (111 likes, score 9/10) — Rumor: GPT-5.6 will be comparable to Anthropic Mythos on agentic coding benchmarks. This has been amplified by comments from various @OpenAI engineers.
+
+Release either this coming week or the week aft
+  - https://x.com/mark_k/status/2061125395718525150
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 145).
+- **@bearlyai** (29 likes, score 8/10) — In hindsight, Jensen breaking out the Pulp Fiction dance at the Taipei COMPUTEX makes a lot of sense.
+
+Nvidia founded in 1993 and Pulp Fiction came out in 1994.
+  - https://x.com/bearlyai/status/2061120932530561442
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 33).
+- **@yodastockinvest** (10 likes, score 7/10) — $ASTS is SPECIAL
+
+Always when I buy a stock it goes down first, but this animal is up 50%+(!!) in a month for me, even after the Blue Origin disaster.
+And we're still not done with the SpaceX IPO pump
+  - https://x.com/YodaStockInvest/status/2061130587336020328
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 22).
+- **@yodastockinvest** (10 likes, score 7/10) — $ASTS is SPECIAL
+
+Always when I buy a stock it goes down first, but this animal is up 50%+(!!) in a month for me, even after the Blue Origin disaster.
+And we're still not done with the SpaceX IPO pump
+  - https://x.com/YodaStockInvest/status/2061130587336020328
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 22).
+- **@caps_raunak** (6 likes, score 7/10) — Developer, Which open-source frontier-model is good? 
+What's your main right now and why ?
+
+-> DeepSeek-V4-Pro
+-> GLM-5.1
+-> Kimi K2.6
+-> MiniMax M2.7
+-> Qwen 3.6-35B
+-> Llama 4 
+-> Gemma 4 (31B)
+-> M
+  - https://x.com/caps_raunak/status/2060610210146971862
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 16).
+- **@realjgbanks** (10 likes, score 7/10) — Trumps NEXT stock pick is $PLTR 
+
+We are already up 200% on this trade
+
+Setup:
+
+Wait for a pullback into 150-145 to hold
+
+First target -> 170
+
+Second target -> 200
+
+Contracts:
+7/17 200C 
+8/21 200C If
+  - https://x.com/RealJGBanks/status/2061140878488486129
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 14).
+- **@netcapgirl** (11634 likes, score 8/10) — happy nvidia earnings to all who celebrate
+  - https://x.com/netcapgirl/status/1828789245726917032
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11760).
+- **@wallstreetmav** (3343 likes, score 8/10) — Two days ago NASA just awarded Blue Origin (Jeff Bezos' rocket company) a contract for 3 unmanned moon missions.
+
+The Blue Origin rocket just exploded on the launch pad. This will delay Blue Origin wh
+  - https://x.com/WallStreetMav/status/2060188622343581800
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 3683).
+- **@trungtphan** (2020 likes, score 8/10) — happy Nvidia earnings day
+  - https://x.com/TrungTPhan/status/1894771051961438232
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2090).
+- **@netcapgirl** (1688 likes, score 8/10) — nvidia earnings should be live streamed on every major tv station & streaming platform like it’s the state of the union
+  - https://x.com/netcapgirl/status/1760077498304344419
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1730).
+- **@remzztrades** (88 likes, score 8/10) — So how many are going to miss this one?
+
++10% on shares in one session since I bought
+
+Not to shabby right?
+
+$300 remains my target for this year. $PLTR
+  - https://x.com/Remzztrades/status/2061133560510132354
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 124).
+- **@merlijntrader** (60 likes, score 8/10) — The biggest wealth transfer in crypto is loading.
+
+I’m turning my $250K trading account into a $1M mission and documenting every trade live on SimpleFX 
+
+AI integration now makes trading workflows ins
+  - https://x.com/MerlijnTrader/status/2061123035839828189
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 78).
+- **@wattusmaximus** (16460 likes, score 8/10) — BREAKING 
+New footage of Blue Origin Rocket.
+  - https://x.com/WattusMaximus/status/2060174719333089559
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 16856).
+- **@mrmikeinvesting** (1544 likes, score 8/10) — President Trump has only ever exclusively mentioned one stock by its ticker…
+
+That happens to be $PLTR.
+
+With Palantir breaking out of its 10 month bull flag the next move can be explosive.
+
+$PLTR wil
+  - https://x.com/MrMikeInvesting/status/2060749839667749249
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1708).
+- **@alex_prompter** (845 likes, score 8/10) — DeepSeek just did something unthinkable.
+
+They dropped DeepSeek-V3.2, and it quietly rewrites what “open-source frontier model” even means.
+
+Instead of scaling params or throwing more GPUs, they redes
+  - https://x.com/alex_prompter/status/1995475389825925365
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 921).
+- **@theprojectunity** (237 likes, score 8/10) — Nobody:
+
+Google: 
+"Release the 32 million mosquitos"
+  - https://x.com/TheProjectUnity/status/2061086676089180527
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 291).
+- **@stocksavvyshay** (176 likes, score 8/10) — Sam Altman says OpenAI Robotics is hiring to build robots that can help people in the physical world. 
+
+OpenAI’s world-simulation research has become a full robotics effort built around co-designing h
+  - https://x.com/StockSavvyShay/status/2061129932613587355
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 236).
+- **@stocksavvyshay** (171 likes, score 8/10) — Sam Altman says OpenAI Robotics is hiring to build robots that can help people in the physical world. 
+
+OpenAI’s world-simulation research has become a full robotics effort built around co-designing h
+  - https://x.com/StockSavvyShay/status/2061129932613587355
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 231).
+- **@mark_k** (165 likes, score 8/10) — Big news for @xai Grok users, especially in Europe:
+
+Grok 4.3 now supports accessing memories from previous chats!
+
+This makes Grok feel much more personal and useful, because it can actually build on
+  - https://x.com/mark_k/status/2061096536403030361
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 211).
+- **@venu_7_** (62 likes, score 8/10) — $PLTR remains one of the strongest growth software companies in the market.
+
+The stock is broke out of its downtrend on nearly 2x volume. A strong close above $162 it could be explosive. (200-day SMA)
+  - https://x.com/Venu_7_/status/2061127853459280004
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 74).
+- **@eqlaoa** (17 likes, score 7/10) — Plus SpaceX décolle, plus Rocket Lab attire l’attention 
+
+L’industrie spatiale n’est plus désormais le « monopole d’une seule entreprise », mais elle s’est développée en un immense écosystème industri
+  - https://x.com/Eqlaoa/status/2061000567686897718
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 21).
+- **@earnyourleisure** (12 likes, score 7/10) — Anthropic Is Now Valued At $965 Billion Making It The World’s Most Valuable AI Startup
+  - https://x.com/EarnYourLeisure/status/2061121004160582073
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 14).
+- **@realjgbanks** (146 likes, score 7/10) — Such a BIG week ahead. So many more BANGERS coming your way.
+
+$PLTR $ORCL $ARM $TSLA Free trade plans about to be dropped.
+
+Who is ready for them?  Need a show of hands
+  - https://x.com/RealJGBanks/status/2061127302658814211
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 192).
+- **@citrini** (17269 likes, score 7/10) — people don’t realize how heavily subsidized AI is right now
+
+your o3 prompts probably cost more in electricity alone than your subscription fee
+
+remember when uber was awesome and cheaper than a taxi?
+  - https://x.com/citrini/status/1920107993535762597
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 18199).
+- **@starlink** (7453 likes, score 7/10) — Starlink Mobile is providing data for video, voice, and messaging services in areas where terrestrial service is unavailable
+
+Working with global mobile network operators, our satellite-to-mobile netw
+  - https://x.com/Starlink/status/2028280634880454887
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 8545).
+- **@figure_robot** (3358 likes, score 7/10) — Today we're announcing Figure has signed a commercial agreement with Catalyst Brands to deploy humanoid robots at scale
+
+Catalyst operates iconic brands including JCPenney, Aéropostale and Brooks Brot
+  - https://x.com/Figure_robot/status/2059350969700491632
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 3708).
+- **@niccruzpatane** (1497 likes, score 7/10) — On Friday morning, a Tesla Model 3 with two passengers plunged 300 feet down after the driver veered off a cliff on Mulholland Highway in Malibu.
+
+Both were rescued and airlifted to the hospital with
+  - https://x.com/niccruzpatane/status/2061086941165035892
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1623).
+- **@iam_smx** (113 likes, score 7/10) — NVIDIA CEO Jensen Huang is going viral for dancing with employees at a company event in Taipei, Taiwan
+  - https://x.com/iam_smx/status/2061101558696214735
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 163).
+- **@uzayvebilimtr** (28 likes, score 7/10) — La vitesse orbitale du Soleil autour du centre galactique est d'environ 828 000 km/h. Les planètes, quant à elles, tracent des trajectoires en spirale dans l'espace plutôt que des orbites elliptiques
+  - https://x.com/uzayvebilimtr/status/2061093445976932429
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 36).
+- **@boringbiz_** (21 likes, score 7/10) — Waiting for OpenAI and Anthropic to go public so I can see the free cash flow multiples
+  - https://x.com/BoringBiz_/status/2061130524043714847
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 23).
+- **@ibuild** (6 likes, score 7/10) — so, who's winning?
+
+OpenAI or Anthropic?
+  - https://x.com/iBuild/status/2061127469990924459
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 22).
+- **@ibuild** (6 likes, score 7/10) — so, who's winning?
+
+OpenAI or Anthropic?
+  - https://x.com/iBuild/status/2061127469990924459
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 20).
+- **@dark_emi_** (11 likes, score 7/10) — C’est pas parce que t’es le GOAT d’un domaine que t’es au top dans le game des meufs
+
+Le collier cadeau a 1 million d’euros etait un indice
+  - https://x.com/Dark_Emi_/status/2061132876075122750
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 17).
+- **@europamagnifica** (8 likes, score 7/10) — Blue Origin doit faire face à un contretemps qui pourrait durer plusieurs mois après que l’explosion de sa fusée a endommagé son pas de tir, ce qui bouleverse le calendrier des lancements de satellite
+  - https://x.com/EuropaMagnifica/status/2061104351603474639
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 12).
