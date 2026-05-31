@@ -1,5 +1,5 @@
 {
-  "ts": "2026-05-28T21:00:00.000000",
+  "ts": "2026-05-31T06:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 15,
     "MAX_HOTAKES_PER_DAY": 50,
@@ -15,10 +15,10 @@
     "Space",
     "AI",
     "Space",
-    "Robotics",
+    "Crypto",
     "Space",
     "Investment"
   ],
   "cadence_factor": 1.0,
-  "rationale": "MAX IMPACT MODE: 15 news/day, 50 hotakes, 300 RT/quotes, 25 replies/cycle. Space push + live tab 50/50."
+  "rationale": "MAX IMPACT MODE: Space rising +38% 24h vs 7d baseline (SpaceX IPO, ASTS BlueBird launch, Golden Dome). Swapped Robotics -> Crypto: BTC treasury buys are top performers by likes (41 likes Capital B, 28 likes Saylor). Quotes remain at 300/day — radically underused vs RTs (55 vs 702 this week), push harder."
 }
