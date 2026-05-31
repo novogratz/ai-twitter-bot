@@ -6745,3 +6745,165 @@ Two Figure F.03 humanoid robots just cleaned a bedroom and made a bed in under 2
 The robots simply watched each
   - https://x.com/SciTechera/status/2061071262416535718
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 19).
+- **@minofpower** (5598 likes, score 9/10) — Today was the 4th consecutive day when the peak power demand (solar hours) reached a new all-time high. 
+
+At 1545 hours (21.5.2026), the peak power demand (solar hours) of 270.82 GW was successfully m
+  - https://x.com/MinOfPower/status/2057437186078003479
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 5832).
+- **@benjamindekr** (73 likes, score 9/10) — Amazon currently has roughly 330 satellites in orbit. 
+
+To hit their promised 1,618 target by July 2028, they need to launch almost 1,300 satellites in 26 months.
+
+Why do these numbers matter?
+
+Back i
+  - https://x.com/BenjaminDEKR/status/2060840521174815225
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 111).
+- **@spacanpanman** (92 likes, score 9/10) — $ASTS: Looking at SpaceX Falcon-9 precedent, AST confirmed the 9/12/25 targeted Block-1 BlueBird launch on 9/4/25 (8 days)
+ 
+We could see a press release towards the back of next week confirming a mid
+  - https://x.com/spacanpanman/status/2061095323490021693
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 106).
+- **@keithtradesmith** (11 likes, score 7/10) — Goldman sees global data center power demand jumping 220% by 2030. AI is breaking the grid.
+
+$SMR down 66% and $OKLO down 70% off highs, both now carving higher lows. Speculative entry point on the AI
+  - https://x.com/KeithTradeSmith/status/2060742025583210998
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 11).
+- **@wr4nygov** (14 likes, score 7/10) — “The proposal called for a massive 20-megawatt data center”
+
+Massive?
+
+Isn’t Colossus II more than 50X that?
+  - https://x.com/WR4NYGov/status/2061021567983960468
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 16).
+- **@bigdickbull69** (787 likes, score 9/10) — You’re a 19 year old with half your portfolio in Jeo Boden get the fuck off the NVIDIA earnings call.
+  - https://x.com/BigDickBull69/status/1828904206511546411
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 875).
+- **@yodastockinvest** (35 likes, score 9/10) — Which company is the best buy today in your opinion?
+1. $SOFI at $18: My personal favorite
+2. $AMD at $516
+3. $MU at $971
+4. $HIMS at $26
+5. $NBIS at $231
+6. $IREN at $63
+7. $ASTS at $113
+8. $META at
+  - https://x.com/YodaStockInvest/status/2061085290752610443
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 83).
+- **@futurenvesting** (70 likes, score 9/10) — First reported company to receive an $NVDA Vera Rubin NVL72 was CoreWeave $CRWV, earlier than expected (May)!
+  - https://x.com/Futurenvesting/status/2061091897716740247
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 74).
+- **@firstsquawk** (65 likes, score 9/10) — SoftBank Unveils Plans for Massive 5 GW AI Data Center Project in France
+  - https://x.com/FirstSquawk/status/2060882489565143273
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 69).
+- **@sam_badawi** (52 likes, score 9/10) — One of my highest-conviction additions remains $FPS, backed by 69% revenue growth, 73-77% growth guidance, and a rapidly expanding backlog. 
+
+The nuclear and energy trade continues gaining momentum as
+  - https://x.com/Sam_Badawi/status/2061050306759434702
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 64).
+- **@jessebwatters** (40676 likes, score 8/10) — BREAKING: U.S. CENTCOM Commander just BRIEFED President Trump about a “FINAL BLOW” to Iran 
+
+Hypersonic DARK EAGLE MISSILES, bombers SURGING, carriers STACKED 
+
+POTUS says “They’re sitting in a CAVE.
+  - https://x.com/JesseBWatters/status/2050012193827987936
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 45606).
+- **@bubbleboi** (1648 likes, score 8/10) — Me after these Nvidia earnings
+  - https://x.com/bubbleboi/status/2026746744038650334
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1694).
+- **@intheassembly** (1040 likes, score 8/10) — Leopold Aschenbrenner’s $IREN is up over 8x since he opened at ~$8 last year.
+
+He’s now betting on $SHAZ, $TE, $CORZ, and $RIOT.
+
+We track the smart money so you don’t have to.
+
+Follow us with notific
+  - https://x.com/InTheAssembly/status/2060830452739424301
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1144).
+- **@damnang2** (62 likes, score 8/10) — AI data center power demand is not just reviving nuclear stock.
+
+It is forcing the market to reprice the entire nuclear supply chain.The problem is that most investors are still focused on the obvious
+  - https://x.com/damnang2/status/2060938067540840660
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 64).
+- **@stockoptioncole** (24 likes, score 8/10) — The best pullback opportunities from Fridays drop that can go 20-40%+ higher in June 
+
+$NBIS $ASTS $RKLB $APLD $AMZN $NVDA $HPE $NOK $INTC $TSM
+  - https://x.com/StockOptionCole/status/2061098730393325930
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 40).
+- **@disruptorinvest** (12 likes, score 7/10) — It’s likely going to be the power shortfall. Chips won’t be able to be plugged in.
+  - https://x.com/disruptorinvest/status/2060811961646961010
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 16).
+- **@xfreeze** (363 likes, score 8/10) — One day, millions of people will call Mars home
+
+The roads, habitats, factories, and cities that make it possible could all trace back to one vehicle: Starship
+
+This is the machine designed to help ma
+  - https://x.com/XFreeze/status/2061068019686945278
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 569).
+- **@spacanpanman** (30 likes, score 8/10) — $ASTS:  AST SpaceMobile + Vodafone solves this
+
+"Four in 10 Struggle to Access Mobile Signal on the Move in the UK" - The Guardian
+
+Survey finds frustration with connectivity to 4G or 5G, highlighting
+  - https://x.com/spacanpanman/status/2061097455035240913
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 36).
+- **@michaeldell** (0 likes, score 7/10) — We have the first @DellTech + @nvidia Vera Rubin NVL72 @CoreWeave. Here we go!
+  - https://x.com/MichaelDell/status/2060903140858212439
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 260).
+- **@asts_spacemob** (56 likes, score 7/10) — Huge accumulation on $ASTS Friday
+
+Tells you all you need to know. People who missed the last dip want in on any dip. I don’t blame them.
+  - https://x.com/ASTS_SpaceMob/status/2061088746561253557
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 58).
+- **@mmatters22596** (0 likes, score 7/10) — $CRWV is currently one of Leopold Aschenbrenner's biggest long-positions.
+
+And it has the potential for a massive squeeze over the next months.
+This will likely be the best performing Neo-cloud.
+
+Pric
+  - https://x.com/MMatters22596/status/2060767443149004895
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 38).
+- **@zthetrader** (15 likes, score 7/10) — We caught $IREN, $CIFR, $NBIS.
+
+And now it's on to $CRWV. We took a position last week and now we wait...
+  - https://x.com/ZTheTrader/status/2061101429549350972
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 25).
+- **@topsecretstocks** (10 likes, score 7/10) — $ASTS is the biggest disruptor since Apple
+  - https://x.com/topsecretstocks/status/2061090207848681895
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 12).
+- **@coinvotrading** (6 likes, score 7/10) — SOMETHING TERRIBLE IS ABOUT TO HAPPEN TO U.S. SPACE STOCKS.
+
+In 2015, $IRDM had a massive expansion which ended at the peak of Standard Deviation. 
+
+In 2026, one of the leading space stocks $ASTS is f
+  - https://x.com/CoinvoTrading/status/2061100395838013514
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 10).
+- **@howtoai_** (798 likes, score 7/10) — Someone just open-source a framework that gives Claude Code ability to control quadrupeds, humanoids, and drones in real time.
+
+It’s called DiMOS, an agent-native OS that turns complex robotics stacks
+  - https://x.com/HowToAI_/status/2043660611578687705
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 862).
+- **@polymarket** (378 likes, score 7/10) — NEW: Iran is reportedly using ChatGPT, Gemini & other Western AI models to launch attacks & build malware.
+  - https://x.com/Polymarket/status/2061086853403447400
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 540).
+- **@cb_doge** (74 likes, score 7/10) — "If you look at the biggest successes in manufacturing in America since World War II, by far, are Tesla and SpaceX." 
+
+一 Elon Musk
+  - https://x.com/cb_doge/status/2061100834440749541
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 154).
+- **@hytmia** (14 likes, score 7/10) — ÚLTIMA HORA: OpenAI acaba de admitir que sus modelos de IA MIENTEN deliberadamente a los usuarios.
+
+No se trata de “alucinaciones”. La IA conoce la verdad y luego decide contarte otra cosa.
+
+Probaron
+  - https://x.com/hytmIA/status/2061093307216806232
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 30).
+- **@scitechera** (20 likes, score 7/10) — In case you missed it.
+
+“A huge robot army is loading..”
+
+Two Figure F.03 humanoid robots just cleaned a bedroom and made a bed in under 2 minutes, fully autonomously.
+
+The robots simply watched each
+  - https://x.com/SciTechera/status/2061071262416535718
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 28).
