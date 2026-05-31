@@ -7444,3 +7444,198 @@ Tag Below
 - **@cybrgalaxy** (10 likes, score 7/10) — I was with a big Tesla tinting outfit yesterday at Tesla Kennesaw and they didn't know what @ChatCharge or @xtakeover was. I was stunned. They have no idea the community they are missing out on here o
   - https://x.com/cybrgalaxy/status/2061100028643414050
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 20).
+- **@cointelegraph** (523 likes, score 9/10) — LATEST: Anthropic launches Claude for Small Business, bringing AI-powered workflows directly into tools like PayPal, QuickBooks, HubSpot, and more.
+  - https://x.com/Cointelegraph/status/2054705649410269240
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 611).
+- **@polymarketmoney** (429 likes, score 9/10) — JUST IN: SpaceX is now projected to hit a $2,500,000,000,000 valuation by July.
+  - https://x.com/PolymarketMoney/status/2061189058282373300
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 517).
+- **@convertbond** (28 likes, score 8/10) — From a $2T IPO valuation, Tesla-like returns would require SpaceX to reach ~$1.5–1.9 quadrillion (1,500–1,900 trillion). This remains astronomically unrealistic — far beyond global economic scale - ev
+  - https://x.com/Convertbond/status/2061153662857105524
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 32).
+- **@koop0x** (11 likes, score 7/10) — $SPCX is at 8m
+
+SpaceX is all about rockets
+
+$rocketcoin is coded!
+
+BUJTCxkK4Jf4J1MMaxJ5GtMqxBG6V8p7bdcvoqJspump
+  - https://x.com/koop0x/status/2061207327835898051
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 15).
+- **@smallcapsnipa** (0 likes, score 7/10) — $WULF CEO Paul Prager: “GPUs are critical, but the real constraint in AI is scalable power infrastructure”
+
+Goldman Sachs projects data center power demand will nearly triple by 2030 to over 120 gigaw
+  - https://x.com/SmallCapSnipa/status/2060051913333166369
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 20).
+- **@mookafish** (9 likes, score 7/10) — Considering this thing just had the most powerful rocket ever built firing directly at it, it is in remarkably good condition.
+A rapidly reusable launch pad for Starship seems quite feasible now.
+  - https://x.com/Mookafish/status/2061208320065576969
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 11).
+- **@minofpower** (7427 likes, score 9/10) — Today, the peak power demand (solar hours) of 260.45 GW was met succesfully at 15:40 hrs. 
+
+This is a new high surpassing yesterday's peak demand (solar hours) of 257.37 GW which was also successfully
+  - https://x.com/MinOfPower/status/2056697075925200904
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 7605).
+- **@niccruzpatane** (226 likes, score 9/10) — This is BYD’s Megawatt Flash Charging in action in a BYD Han L. 
+
+In 5 minutes, BYD says it adds approximately 400 km of range (248 miles).
+
+0-100% charge with their 83 kWh pack takes ~20 minutes. At
+  - https://x.com/niccruzpatane/status/2028550735160308063
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 256).
+- **@divestech** (198 likes, score 9/10) — SpaceX IPO the next few weeks opens up a key chapter for investors in the 4th Industrial Revolution. It's not just about Musk/SpaceX, but what this signifies about a new investing landscape in Space.
+  - https://x.com/DivesTech/status/2061185785643089982
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 224).
+- **@sajwani** (17 likes, score 7/10) — Abu Dhabi's MGX  touts participation in Anthropic's $65bn Series H funding
+  - https://x.com/Sajwani/status/2061145745164808547
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 19).
+- **@thetechinvest** (5 likes, score 7/10) — These companies are expected to double or nearly double their FCF in 2026 or 2027 (2x Playbook): 
+
+1. $NVDA
+2. $META
+3. $AVGO
+4. $SAMSUNG
+5. $MU
+6. $PLTR
+7. $ASML
+8. $ARM
+9. $SNDK
+10. $SKHYNIX
+11. $IN
+  - https://x.com/TheTechInvest/status/2061206409610395837
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 17).
+- **@netcapgirl** (11630 likes, score 8/10) — happy nvidia earnings to all who celebrate
+  - https://x.com/netcapgirl/status/1828789245726917032
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11756).
+- **@netcapgirl** (1688 likes, score 8/10) — nvidia earnings should be live streamed on every major tv station & streaming platform like it’s the state of the union
+  - https://x.com/netcapgirl/status/1760077498304344419
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1730).
+- **@0xracist** (397 likes, score 8/10) — Nvidia earnings are like my wife. They both get violently beaten every quarter
+  - https://x.com/0xRacist/status/1990514324054626529
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 475).
+- **@kalshi** (287 likes, score 8/10) — BREAKING: OpenAI launches biodefense program to fight future pandemics with AI
+  - https://x.com/Kalshi/status/2061193040195109366
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 401).
+- **@leopoldatracker** (98 likes, score 8/10) — Nuclear energy could be one of the biggest wealth-creation opportunities of this decade.
+
+The sector remains in its early stage, but accelerating energy demand, rapid expansion of AI infrastructure, a
+  - https://x.com/LeopoldATracker/status/2061189540883419141
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 134).
+- **@disruptorinvest** (13 likes, score 7/10) — It’s likely going to be the power shortfall. Chips won’t be able to be plugged in.
+  - https://x.com/disruptorinvest/status/2060811961646961010
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 19).
+- **@wallstreetmav** (5622 likes, score 8/10) — The competition for SpaceX just lost a lot of orders for satellites to orbit.
+
+Blue Origin's rocket (owned by Jeff Bezos) just exploded on the pad. 
+
+The SpaceX near monopoly on putting satellites in
+  - https://x.com/WallStreetMav/status/2060174336032469330
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6338).
+- **@sama** (0 likes, score 8/10) — OpenAI Robotics is hiring, looking for exceptional full-stack hardware, ops, systems, and ML engineers to help us program and manufacture robots that are useful for society.
+
+AI should be able to help
+  - https://x.com/sama/status/2061117302528188712
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1602).
+- **@michaeldell** (731 likes, score 8/10) — Tremendous partnership and teamwork to make this happen @CoreWeave @Dell @nvidia
+  - https://x.com/MichaelDell/status/2061154808141369480
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 795).
+- **@longinvest32** (260 likes, score 8/10) — Anthropic news sends us 300+ 
+$NBIS
+  - https://x.com/longinvest32/status/2061057348165062923
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 276).
+- **@venu_7_** (208 likes, score 8/10) — $PLTR remains one of the strongest growth software companies in the market.
+
+The stock is broke out of its downtrend on nearly 2x volume. A strong close above $162 it could be explosive. (200-day SMA)
+  - https://x.com/Venu_7_/status/2061127853459280004
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 238).
+- **@thezvi** (72 likes, score 8/10) — Claude Opus 4.8 Reaction Thread. Meet the new model. Different from the old model? In what ways?
+  - https://x.com/TheZvi/status/2061083538225614894
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 146).
+- **@dedene** (64 likes, score 8/10) — I bet GPT-5.6 will beat Mythos in almost every way
+  - https://x.com/dedene/status/2061179660915122462
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 90).
+- **@midascabal** (6 likes, score 8/10) — I found the next hidden 10x AI stock like $SIVE at $1 and no one is talking about.
+
+Just like I called 
+
+- $NBIS at $20
+- $ONDS at $1
+- $ASTS at $20
+and many other stocks early. 
+
+It’s under $1B marke
+  - https://x.com/midascabal/status/2061199901867077873
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 28).
+- **@c1_df9432** (10 likes, score 7/10) — People are pushing this narrative of @Amazon Kuiper being an $ASTS D2D competitor.
+Kuiper currently existing sats (space or being launched) are FW only that compete with $SPCX FW.
+Amazon hasn't even s
+  - https://x.com/C1_dF9432/status/2061146549212570098
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 10).
+- **@tedpillows** (66 likes, score 7/10) — Tom Lee is down $8,000,000,000 on $ETH.
+
+I think he likes that the founder Vitalik is writing a sci-fi novel
+  - https://x.com/TedPillows/status/2061204326228406605
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 152).
+- **@stocksavvyshay** (125 likes, score 7/10) — $PLTR getting close since they're on pace for $10B annual profit by 2028
+  - https://x.com/StockSavvyShay/status/2061098183539995121
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 129).
+- **@stonkchris** (35 likes, score 7/10) — If you missed the moves in $DELL or $INTC, I think $IBM could be next in line to benefit from the ongoing Trump-driven AI and domestic technology narrative.
+
+As the large cap leader in quantum computi
+  - https://x.com/StonkChris/status/2061198951206813980
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 35).
+- **@datachaz** (17 likes, score 7/10) — This Anthropic engineer reveals how to build rad Claude Code Routines in 15 mins.
+
+The result?
+
+A 24/7 autonomous coding partner.
+
+Along with @zodchiii's guide, you'll automate 50% of your workload wi
+  - https://x.com/DataChaz/status/2061193937461661703
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 29).
+- **@venu_7_** (18 likes, score 7/10) — $FSLR isn't just a solar company anymore.
+
+It's one of the largest beneficiaries of America's push for energy independence and AI-driven power demand.
+  - https://x.com/Venu_7_/status/2061206086011531506
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 26).
+- **@cernunnoscap** (21 likes, score 7/10) — $CRWV got Vera Rubins 
+
+$NBIS is NEXT. Why?
+
+These are the only Two NeoClouds $NVDA is invested in!
+
+Nebius already gave us the details.
+  - https://x.com/CernunnosCap/status/2061164318570451310
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 23).
+- **@teslanewswire** (13 likes, score 7/10) — Tesla launched Grok in Taiwan with the 2026.20 software update.
+
+It also includes “Hey Grok”.
+  - https://x.com/TeslaNewswire/status/2061197481820475684
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 21).
+- **@elonmusk** (213531 likes, score 7/10) — Regarding the OpenAI case, the judge & jury never actually ruled on the merits of the case, just on a calendar technicality. 
+
+There is no question to anyone following the case in detail that Altman &
+  - https://x.com/elonmusk/status/2056474896641782077
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 241397).
+- **@openai** (0 likes, score 7/10) — Windows users, this one’s for you.
+
+Computer use now works on Windows, so Codex can take action on your Windows computer.
+
+And with Windows support for Codex in the ChatGPT mobile app, you can start,
+  - https://x.com/OpenAI/status/2060428604727771421
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1648).
+- **@dudewhoinvests** (18 likes, score 7/10) — Berkshire Hathaway $BRK.A fire selling to buy Taylor Morrison for around $8.5 BILLION.
+
+Interesting move.
+
+New management is definitely already making their names heard.
+
+Hated home builders may provi
+  - https://x.com/DudeWhoInvests/status/2061205059967263173
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 20).
+- **@vaneck_us** (8 likes, score 7/10) — One year after SpaceX goes public, do you think it will be above its first-day closing price?
+  - https://x.com/vaneck_us/status/2061200069466923153
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 18).
+- **@guohao_li** (8 likes, score 7/10) — It seems Anthropic is at least losing its dominance over OpenAI in coding based on coding-related benchmarks. Aggregated results from SWE-Bench Pro (@ScaleAILabs), SWE-ReBench (@ibragim_bad, @nebiusai
+  - https://x.com/guohao_li/status/2061194824074854524
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 10).
