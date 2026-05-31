@@ -159,6 +159,8 @@ def _search_best_tweet(topic: str) -> Optional[dict]:
         return None
 
     from . import respect_list
+    from .reply_bot import _tweet_age_minutes
+    candidates = [c for c in candidates if _tweet_age_minutes(c.get("url", "")) <= 2880]  # 48h hard cap
     candidates = [c for c in candidates
                   if not respect_list.is_protected(c.get("author", ""))
                   and c.get("author", "").lower() != BOT_HANDLE.lower()
