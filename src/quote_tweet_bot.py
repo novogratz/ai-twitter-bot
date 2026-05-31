@@ -317,8 +317,8 @@ def run_quote_tweet_cycle():
     quoted = _load_quoted()
     candidates = []
 
-    # Scan more hot queries per cycle so the quote pool has more live setups.
-    for query in random.sample(QUOTE_QUERIES, k=min(10, len(QUOTE_QUERIES))):
+    # 3 queries per cycle — keeps each cycle under 60s so max_instances=1 doesn't queue up.
+    for query in random.sample(QUOTE_QUERIES, k=min(3, len(QUOTE_QUERIES))):
         log.info(f"[QUOTE] Searching HOT for: {query}")
         tab = "live" if random.random() < 0.4 else "top"
         try:
@@ -364,7 +364,7 @@ def run_quote_tweet_cycle():
         from .twitter_client import scrape_profile_tweets
         # English-first since the 2026-05-27 pivot: sample mostly EN outlets,
         # keep a small FR tail for major French stories.
-        sampled = random.sample(EN_TRUSTED_HANDLES, k=min(10, len(EN_TRUSTED_HANDLES)))
+        sampled = random.sample(EN_TRUSTED_HANDLES, k=min(2, len(EN_TRUSTED_HANDLES)))
         for handle in sampled:
             log.info(f"[QUOTE] Scraping trusted-news handle: @{handle}")
             try:
