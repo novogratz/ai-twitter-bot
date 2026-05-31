@@ -183,7 +183,13 @@
     "OphelieD",
     "MaximeMares",
     "PierreDuc",
-    "VivekRanade"
+    "VivekRanade",
+    "RaphaelLeBihan",
+    "CryptoMasse",
+    "JulienManceau",
+    "0xFelix",
+    "MaximilienB",
+    "AlphacoinFR"
   ],
   "en": [
     "blablacar",
@@ -1178,6 +1184,36 @@
     {
       "lang": "fr",
       "handle": "VivekRanade",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelLeBihan",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMasse",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienManceau",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xFelix",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximilienB",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlphacoinFR",
       "added": "2026-05-31"
     }
   ]
