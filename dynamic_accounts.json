@@ -179,7 +179,11 @@
     "JulesAmar",
     "Loup_Capital",
     "MarcDionne_",
-    "JulienLefebvre"
+    "JulienLefebvre",
+    "OphelieD",
+    "MaximeMares",
+    "PierreDuc",
+    "VivekRanade"
   ],
   "en": [
     "blablacar",
@@ -1154,6 +1158,26 @@
     {
       "lang": "fr",
       "handle": "JulienLefebvre",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "OphelieD",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMares",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDuc",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "VivekRanade",
       "added": "2026-05-31"
     }
   ]

@@ -5959,3 +5959,221 @@ It is currently outperforming even the top models from:
 What makes
   - https://x.com/XFreeze/status/2060912941323403526
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 149).
+- **@niccruzpatane** (697 likes, score 9/10) — I could be wrong, but the shape of this new Tesla Roadster logo looks very similar to Starship V3’s QD receptacle panel. 
+
+SpaceX uses the port to deliver power, data, grounding, and auxiliary gases (
+  - https://x.com/niccruzpatane/status/2052041517489881236
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 793).
+- **@stockmktnewz** (377 likes, score 9/10) — Jeff Bezos owned Blue Origin is set to launch its first NASA misson today  
+
+The Blue Origin rocket will be sending two Rocket Lab $RKLB made spacecraft toward Mars to study how solar winds interact w
+  - https://x.com/StockMKTNewz/status/1987550378951364692
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 425).
+- **@thekookreport** (68 likes, score 9/10) — The pure Apex move would be for Abel to have booked $1bn of additional SpaceX launches on Friday on the condition that it has to be publicly announced next week.  
+
+That way, all of Wall Street asks a
+  - https://x.com/thekookreport/status/2060965849457152510
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 76).
+- **@leifinvests** (190 likes, score 9/10) — $NBIS vs $CRWV valuation doesn’t add up. 
+
+2026 rev: (midpoint est)
+$CRWV ~$12.7B
+$NBIS ~$3.4B
+
+2027 rev: (midpoint est)
+$CRWV ~$24.2B
+$NBIS ~$10B
+
+Nearly identical market caps.
+
+So either:
+
+$CRWV is
+  - https://x.com/LeifInvests/status/2054941945529524309
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 316).
+- **@starlink** (6695 likes, score 9/10) — Starlink enabled 4K live streaming from liftoff to splashdown during Starship’s 12th test flight
+  - https://x.com/Starlink/status/2058307547573145779
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 7557).
+- **@aleabitoreddit** (425 likes, score 9/10) — Just a heads up to $VELO.
+
+There was a $500M shelf for an ATM / Warrants dilution, which is structurally large relative to its $311m MC.
+
+This was a popular retail X stock for speculated SpaceX, Andru
+  - https://x.com/aleabitoreddit/status/2040428338213507531
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 497).
+- **@kingtutcap** (111 likes, score 9/10) — $VELO: The $NASA ETF now holds ~1M shares.
+
+Also worth noting the only 3D printing/additive manufacturing name in their holdings.
+  - https://x.com/kingtutcap/status/2060744735019397320
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 135).
+- **@mj4stocks** (19 likes, score 7/10) — $NASA Space ETF ( $ASTS, $RKLB, $PL, $SATS) Look at the bounce at 9ema. 
+
+There is an island top here but can't be bearish at 9ema and looking at that wick. 
+
+I see continuation upward.. Once the bear
+  - https://x.com/Mj4Stocks/status/2060876684602323105
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 21).
+- **@aakashgupta** (2623 likes, score 9/10) — Zuckerberg paid $14.3 billion for a 28-year-old who had never trained a frontier model. Nine months later, that bet just shipped.
+
+The benchmark table tells you exactly what kind of lab Wang built. Mu
+  - https://x.com/aakashgupta/status/2041933602381033631
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2793).
+- **@leopoldatracker** (465 likes, score 9/10) — Leopold Aschenbrenner turned $225 million into $13.67 billion in less than 2 years.
+
+He bought these stocks, and each delivered no less than 10x returns:
+
+$IREN ran from below $6 to $78.67
+$SNDK ran f
+  - https://x.com/LeopoldATracker/status/2058668655412429263
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 527).
+- **@spacanpanman** (473 likes, score 9/10) — $ASTS: Great reddit post visualizing AST 248-satellite constellation using ITU filings: 
+
+96x Satellite LOWBAND 690 km / 53 degree shell with 3.75 RAAN spacing (starting at 0 degrees)
+96x Satellite MI
+  - https://x.com/spacanpanman/status/2059099802617762203
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 491).
+- **@sawyermerritt** (14298 likes, score 8/10) — WOW! This is the first time we've ever been able to see Starship in space from another object. This view comes from modified Starlink satellite they just deployed that has a camera and a light on it.
+  - https://x.com/SawyerMerritt/status/2057962471818776846
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 14664).
+- **@rainmaker1973** (5752 likes, score 8/10) — Close up views of the Artemis Orion capsule right after splashdown and Navy divers starting recovery
+https://x.com/fluxfolio_/status/2042867107797278721/video/1…
+  - https://x.com/Rainmaker1973/status/2042930359247991110
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 5890).
+- **@siege4570** (75 likes, score 8/10) — AnduraX announces ADM‑01, Bharat's first private high‑alt. drop test of a reusable spaceplane (release at 25,000 m).Orbital re‑entry missions targeted for 2028. ARES (2028): microgravity, 90+ days,6x
+  - https://x.com/Siege4570/status/2060938583696093266
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 79).
+- **@bitcoinpulsex** (44 likes, score 8/10) — ALERT: THE SPACEX IPO COULD SHAKE MARKETS LIKE NEVER BEFORE.
+
+This has the potential to become one of the largest insider liquidity events Wall Street has ever witnessed.
+
+SpaceX is reportedly targeti
+  - https://x.com/BitcoinPulseX/status/2060871140285784076
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 72).
+- **@chrisrth003** (8 likes, score 7/10) — $ASTS is being pulled into the SpaceX IPO narrative.
+
+When the market gets a new benchmark for space infrastructure, smaller listed names can suddenly re-rate fast.
+
+That does not mean the risk disapp
+  - https://x.com/chrisrth003/status/2060715731331772692
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
+- **@blueorigin** (5352 likes, score 8/10) — NG-3 Update: We have confirmed payload separation.  AST SpaceMobile has confirmed the satellite has powered on. The payload was placed into an off-nominal orbit. We are currently assessing and will up
+  - https://x.com/blueorigin/status/2045860091920896043
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6020).
+- **@danroberts0101** (2873 likes, score 8/10) — A big day. Earnings call will proceed as scheduled in 20 minutes. $IREN $NVDA
+  - https://x.com/danroberts0101/status/2052488520711970973
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 3479).
+- **@pelositracker** (2361 likes, score 8/10) — Breaking: Trump owned Palantir when he tweeted about it
+
+On April 10th he literally tweeted the $PLTR ticker
+
+"Palantir Technologies (PLTR) has proven to have great war fighting capabilities and equip
+  - https://x.com/pelositracker/status/2054995512177098961
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 2633).
+- **@stockmktnewz** (1150 likes, score 8/10) — PALANTIR $PLTR JUST REPORTED EARNINGS 
+
+EPS of $0.33 beating expectations of $0.28
+Revenue of $1.63B beating expectations of $1.54B
+  - https://x.com/StockMKTNewz/status/2051393499833000263
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1254).
+- **@aleabitoreddit** (593 likes, score 8/10) — $LASR (NLight), a $2.2B US company does these directed energy weapons. 
+
+They build the "Death Ray" - Lasers that shoot down ballistic and hypersonic missiles.
+
+This can be adapted to Orbital death ra
+  - https://x.com/aleabitoreddit/status/2014826579625738691
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 653).
+- **@ckcapitalxx** (565 likes, score 8/10) — $ASTS market cap today is $26 billion.
+
+The Ligado spectrum rights alone are worth $20 billion.
+
+That means you are getting the entire commercial and defense business for $6 billion.
+
+$3.9 billion in
+  - https://x.com/CKCapitalxx/status/2052444914638827909
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 609).
+- **@joinautopilot** (442 likes, score 8/10) — Breaking: Donald Trump says defense companies are expected to quadruple their quantity
+
+Here's 5 under the radar stocks that may benefit:
+
+$KTOS — Kratos Defense: Builds military drones and hypersonic
+  - https://x.com/joinautopilot/status/2030040375549948366
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 486).
+- **@niccruzpatane** (199 likes, score 8/10) — I don’t think a Tesla and SpaceX merge is happening within the next year. 
+
+Is it inevitable long-term though? Maybe.
+
+Tesla currently owns 18,990,195 shares of SpaceX Class A common stock per SpaceX
+  - https://x.com/niccruzpatane/status/2057483546051146051
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 237).
+- **@hassytrades** (130 likes, score 8/10) — $IREN 
+
+Weekly chart looks ready for 77+ 
+
+Been a buyer on this for a long time now
+  - https://x.com/hassytrades/status/2060856160228409591
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 140).
+- **@aleabitoreddit** (122 likes, score 8/10) — I’m still bearish on $IREN due to $6B ATM overhang, even if there’s rumors they’re doing colo. I was long last year you know.
+  - https://x.com/aleabitoreddit/status/2047427315416887497
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 138).
+- **@marketmatrixs** (90 likes, score 8/10) — 5 STOCKS CHANGING THE COMPLEXION OF THIS WORLD
+
+$ASTS – This ends dead zones. It turns every phone on Earth into a satellite phone, unlocking global connectivity and pulling entire populations into th
+  - https://x.com/MarketMatrixs/status/2060878087798264016
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 96).
+- **@aiatmeta** (9043 likes, score 7/10) — Introducing Muse Spark, the first in the Muse family of models developed by Meta Superintelligence Labs.
+
+Muse Spark is a natively multimodal reasoning model with support for tool-use, visual chain of
+  - https://x.com/AIatMeta/status/2041910285653737975
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 10117).
+- **@starlink** (5896 likes, score 7/10) — Starlink enables reliable real-time communication with recovery teams and live streaming of Starship’s splashdown in the middle of the Indian Ocean
+  - https://x.com/Starlink/status/2057950370668945682
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6734).
+- **@remarks** (5858 likes, score 7/10) — JUST IN:  US Space Force contracts 12 companies up to $3.2 billion to develop 'Golden Dome' air defense system.
+  - https://x.com/remarks/status/2047747124696121529
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6120).
+- **@aakashgupta** (1377 likes, score 7/10) — Tony Stark's JARVIS ran what would basically be a persistent AI agent with voice, vision, and full codebase access across every system in his lab. In 2026, that's a frontier model on a loop.
+
+Opus 4.6
+  - https://x.com/aakashgupta/status/2040345886967070994
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1427).
+- **@ckcapitalxx** (1239 likes, score 7/10) — I don’t think people fully understand what just happened with $ASTS and T-Mobile.
+
+Everyone is treating this like a minor partnership announcement. It is not. Let me explain why this changes everythin
+  - https://x.com/CKCapitalxx/status/2055305632299819015
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1361).
+- **@askvenice** (759 likes, score 7/10) — 𝗡𝗲𝘄 𝗺𝗼𝗱𝗲𝗹𝘀 𝗮𝘃𝗮𝗶𝗹𝗮𝗯𝗹𝗲 𝗼𝗻 𝗩𝗲𝗻𝗶𝗰𝗲
+
+𝗤𝘄𝗲𝗻 𝟯.𝟳 𝗠𝗮𝘅. Alibaba. Flagship reasoning model. 1M context, function calling, and prompt caching. Built for code and agentic workflo
+  - https://x.com/AskVenice/status/2057660369313677592
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 843).
+- **@stockmktnewz** (738 likes, score 7/10) — Palantir $PLTR and Anduril are part of the group developing software to run President Trump’s planned Golden Dome antimissile shield - WSJ
+  - https://x.com/StockMKTNewz/status/2036576561424478370
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 780).
+- **@leifinvests** (47 likes, score 7/10) — TRUMP THEME / INVESTMENT STOCKS 
+
+Defense: $PLTR $RTX
+
+AI Infrastructure: $NVDA $AMD
+
+Energy & Power: $VST $CEG
+
+Oil & Gas: $XOM $LNG
+
+American Manufacturing: $INTC $MU
+
+Rare Earths: $MP $USAR
+
+Quantu
+  - https://x.com/LeifInvests/status/2060875437853798526
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 57).
+- **@trendspider** (934 likes, score 7/10) — Broke the weekly wedge to take us back into Stage 1  $PLTR
+  - https://x.com/TrendSpider/status/2060707800251093107
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 982).
+- **@stockmktnewz** (389 likes, score 7/10) — Jeff Bezos owned Blue Origin just posted this
+
+"Blue Origin today announced it will pause its New Shepard flights and shift resources to further accelerate development of the company's human lunar cap
+  - https://x.com/StockMKTNewz/status/2017332731592483060
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 429).
+- **@mikemasco** (27 likes, score 7/10) — BREAKING.. MASSIVE BOOM SOUND REPORTED IN MASSACHUSETTS AND RHODE ISLAND… almost all witness reports and video supports it was a meteor exploding over the sky in Eastern MA. Viewing satellite data it
+  - https://x.com/MikeMasco/status/2060837619668324772
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 37).
