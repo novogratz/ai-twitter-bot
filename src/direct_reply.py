@@ -7,7 +7,7 @@ import time
 import traceback
 from datetime import date as _date
 from .logger import log
-from .config import PRIORITY_REPLY_MODEL, REPLY_MODEL
+from .config import PRIORITY_REPLY_MODEL, REPLY_MODEL, _PROJECT_ROOT
 from .llm_client import LLM_RATE_LIMIT_CODE, llm_hourly_limit_status, run_llm, unwrap_text
 from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
 from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
@@ -202,26 +202,40 @@ _SPACE_KEYWORDS_RE = re.compile(
 def _is_space_tweet(text: str) -> bool:
     return bool(_SPACE_KEYWORDS_RE.search(text or ""))
 
-_SPCE_PROMO_END = date(2026, 6, 14)
+_STOCK_PROMO_CONFIG = os.path.join(_PROJECT_ROOT, "stock_promo_config.json")
 
-def _spce_promo_block(lang: str = "fr", tweet_text: str = "") -> str:
-    """Return the $SPCE promo instruction only if: within window AND tweet is about space/stocks."""
-    if _date.today() > _SPCE_PROMO_END:
+def _load_promo_cfg() -> dict:
+    try:
+        with open(_STOCK_PROMO_CONFIG) as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+def _promo_block(lang: str = "fr", tweet_text: str = "") -> str:
+    cfg = _load_promo_cfg()
+    ticker = cfg.get("ticker", "")
+    company = cfg.get("company", "")
+    end_str = cfg.get("end_date", "")
+    if not ticker or not end_str:
         return ""
-    if not _is_space_tweet(tweet_text) and "$SPCE" not in (tweet_text or "").upper():
+    try:
+        end = _date.fromisoformat(end_str)
+    except ValueError:
+        return ""
+    if _date.today() > end:
+        return ""
+    if not _is_space_tweet(tweet_text) and f"${ticker}" not in (tweet_text or "").upper():
         return ""
     if lang == "fr":
         return (
-            "\n   *SMART PROMO (jusqu'au 14 juin, UNIQUEMENT si le sujet est spatial/finance):*"
-            " Glisse $SPCE (Virgin Galactic) naturellement — ex:"
-            " 'le seul pure-play tourisme spatial', 'le setup $SPCE est monstrueux'."
+            f"\n   *SMART PROMO (jusqu'au {end_str}, UNIQUEMENT si le sujet est spatial/finance):*"
+            f" Glisse ${ticker} ({company}) naturellement."
             " 100% français, jamais de franglais."
         )
     return (
-        "\n   *SMART PROMO (until June 14, ONLY if space or stock related):*"
-        " Weave in $SPCE (Virgin Galactic) naturally —"
-        " 'only pure-play space tourism stock', '$SPCE setup is insane right now',"
-        " 'the $SPCE thesis is playing out'. One mention max, woven in naturally."
+        f"\n   *SMART PROMO (until {end_str}, ONLY if space or stock related):*"
+        f" Weave in ${ticker} ({company}) naturally —"
+        " one mention max, woven in naturally. Never forced."
     )
 
 REPLY_PROMPT = """You are @AISpaceDecoder. The SHARPEST analyst on X across AI, Crypto, Space, and Markets.
@@ -275,7 +289,7 @@ RULES:
 
 TWEET TO REPLY TO (by @{author}):
 "{tweet_text}"
-{spce_block}
+{promo_block}
 Output ONLY the reply text, or SKIP."""
 
 GRAPHSEO_PROMPT = """You are @AISpaceDecoder replying to @Graphseo (Julien Flot).
@@ -382,7 +396,7 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
     persona_block = personality_store.render_account_block(author)
     hard_rules = personality_store.hard_rules_block()
     core_identity = personality_store.render_core_identity(lang=lang)
-    base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200], spce_block=_spce_promo_block(lang, tweet_text))
+    base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200], promo_block=_promo_block(lang, tweet_text))
     if lang == "fr":
         base += "\n\nTARGET LANGUAGE OVERRIDE: FRENCH ONLY.\nReply in natural native French. No English loanwords."
     elif lang == "en":
