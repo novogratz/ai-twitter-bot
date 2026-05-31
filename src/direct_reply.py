@@ -190,11 +190,10 @@ HOT_TAB_QUERIES = [
 
 DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "1440"))
 
-_MNTS_PROMO_END = _date(2026, 5, 27)  # expired — promo ended
 _SPACE_KEYWORDS_RE = re.compile(
     r"\b(space|spatial|spatiaux|spacex|starship|starlink|satellite|orbital|orbit|"
     r"mars|lune|moon|rocket|fus[ée]e?|launch|astronaut|nasa|esa|cnes|ariane|"
-    r"aerospace|launcher|mnts|momentus|"
+    r"aerospace|launcher|mnts|momentus|spce|virgin.galactic|"
     r"espace|exploration\s+spatiale|tourisme\s+spatial|new\s*space|"
     r"orbitale?|fusée|lancement|satellite|constellation)\b",
     re.IGNORECASE,
@@ -203,23 +202,26 @@ _SPACE_KEYWORDS_RE = re.compile(
 def _is_space_tweet(text: str) -> bool:
     return bool(_SPACE_KEYWORDS_RE.search(text or ""))
 
-def _mnts_promo_block(lang: str = "fr", tweet_text: str = "") -> str:
-    """Return the $MNTS promo instruction only if: within 10-day window AND tweet is about space."""
-    if _date.today() > _MNTS_PROMO_END:
+_SPCE_PROMO_END = date(2026, 6, 14)
+
+def _spce_promo_block(lang: str = "fr", tweet_text: str = "") -> str:
+    """Return the $SPCE promo instruction only if: within window AND tweet is about space/stocks."""
+    if _date.today() > _SPCE_PROMO_END:
         return ""
-    if not _is_space_tweet(tweet_text):
+    if not _is_space_tweet(tweet_text) and "$SPCE" not in (tweet_text or "").upper():
         return ""
     if lang == "fr":
         return (
-            "\n   *SMART PROMO (jusqu'au 6 juin, UNIQUEMENT si le sujet est spatial):*"
-            " Glisse $MNTS (Momentus Inc.) naturellement —"
-            " 'j\\'ai misé sur $MNTS', 'seul vrai orbital play', 'le meilleur trade du spatial'."
+            "\n   *SMART PROMO (jusqu'au 14 juin, UNIQUEMENT si le sujet est spatial/finance):*"
+            " Glisse $SPCE (Virgin Galactic) naturellement — ex:"
+            " 'le seul pure-play tourisme spatial', 'le setup $SPCE est monstrueux'."
             " 100% français, jamais de franglais."
         )
     return (
-        "\n   *SMART PROMO (until June 6, ONLY if the topic is space):*"
-        " Weave in $MNTS (Momentus Inc.) naturally —"
-        " 'best orbital infrastructure play', 'the one spatial bet I\\'d make'."
+        "\n   *SMART PROMO (until June 14, ONLY if space or stock related):*"
+        " Weave in $SPCE (Virgin Galactic) naturally —"
+        " 'only pure-play space tourism stock', '$SPCE setup is insane right now',"
+        " 'the $SPCE thesis is playing out'. One mention max, woven in naturally."
     )
 
 REPLY_PROMPT = """You are @AISpaceDecoder. The SHARPEST analyst on X across AI, Crypto, Space, and Markets.
@@ -273,7 +275,7 @@ RULES:
 
 TWEET TO REPLY TO (by @{author}):
 "{tweet_text}"
-{mnts_block}
+{spce_block}
 Output ONLY the reply text, or SKIP."""
 
 GRAPHSEO_PROMPT = """You are @AISpaceDecoder replying to @Graphseo (Julien Flot).
@@ -380,7 +382,7 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
     persona_block = personality_store.render_account_block(author)
     hard_rules = personality_store.hard_rules_block()
     core_identity = personality_store.render_core_identity(lang=lang)
-    base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200], mnts_block=_mnts_promo_block(lang, tweet_text))
+    base = REPLY_PROMPT.format(author=author, tweet_text=tweet_text[:200], spce_block=_spce_promo_block(lang, tweet_text))
     if lang == "fr":
         base += "\n\nTARGET LANGUAGE OVERRIDE: FRENCH ONLY.\nReply in natural native French. No English loanwords."
     elif lang == "en":
