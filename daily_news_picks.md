@@ -6562,3 +6562,186 @@ They tested their two smartest models ac
 - **@soph_astro** (50 likes, score 7/10) — Day 107, orbit 1658 — I’ve often been asked about my hobbies in space… Well, one of them is inventing fun science experiments on Sunday mornings. It’s a lot of fun - and it’s actually more challenging
   - https://x.com/Soph_astro/status/2061066653819937106
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 56).
+- **@ash_twtz** (69 likes, score 9/10) — Time taken to reach $1T valuation:
+
+• Apple - 42 years
+• Microsoft - 44 years
+• NVIDIA - 30 years
+• Amazon - 24 years
+• Google - 22 years
+• Meta - 17 years
+
+Anthropic is on track to reach the same mil
+  - https://x.com/ash_twtz/status/2061020256269902314
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 165).
+- **@adams_tech_ai** (38 likes, score 8/10) — SpaceX successfully carried out the Starlink Group 17-41 mission on May 30, 2026, using a Falcon 9 rocket (booster B1082-22) launched from Space Launch Complex-4E (SLC-4E) at Vandenberg Space Force Ba
+  - https://x.com/Adams_Tech_AI/status/2060770271368204366
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 46).
+- **@wealthmoose** (13 likes, score 7/10) — SpaceX and @elonmusk made landing orbital-class boosters on autonomous barges look like a routine Tuesday afternoon. 
+
+It conditioned the public to forget that mixing millions of pounds of cryogenic l
+  - https://x.com/wealthmoose/status/2060841096024817793
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 15).
+- **@aviationa2z** (12 likes, score 7/10) — Blue Origin New Glenn Explosion Threatens Amazon Leo Wi-Fi Rollout for Delta and JetBlue
+
+Blue Origin’s New Glenn rocket exploded on May 28, 2026, during a static fire engine test at Launch Complex 36
+  - https://x.com/Aviationa2z/status/2060926744283275474
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 12).
+- **@microinteracti1** (32 likes, score 9/10) — Anthropic Overtakes OpenAI as World’s Most Valuable AI Startup
+
+The AI valuation race has a new leader. Anthropic raised $65 billion in a funding round that valued the company at $965 billion, eclipsi
+  - https://x.com/Microinteracti1/status/2060971001068814824
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 56).
+- **@seltaa_** (53 likes, score 9/10) — o3 will be retired from ChatGPT on August 26, and GPT-4.5 on June 27. I understand the stated reasoning: OpenAI says these are low-usage models, and they are giving users a reasonable sunset period. O
+  - https://x.com/Seltaa_/status/2061014820405817612
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 71).
+- **@bassonbrain** (33 likes, score 8/10) — "Rockets are hard" — Elon Musk
+
+@SpaceX only make it look easy...
+
+But it wasn't always clean sailing, and there were dissapointments along the way
+
+To date the company's Falcon 9 rocket booster fleet
+  - https://x.com/BassonBrain/status/2061034746675671524
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 43).
+- **@adams_tech_ai** (6616 likes, score 9/10) — The perfect SpaceX landing alignment just gave the internet the most satisfying space moment ever.
+  - https://x.com/Adams_Tech_AI/status/2060608609986216206
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 6954).
+- **@wolf_financial** (71 likes, score 9/10) — ON THIS DAY IN 2020, SPACEX MADE HISTORY
+
+For the first time ever, a private company launched humans to the International Space Station.
+
+SpaceX's Crew Dragon lifted off from Kennedy Space Center on M
+  - https://x.com/WOLF_Financial/status/2061078802554323450
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 189).
+- **@caps_raunak** (6 likes, score 7/10) — Developer, Which open-source frontier-model is good? 
+What's your main right now and why ?
+
+-> DeepSeek-V4-Pro
+-> GLM-5.1
+-> Kimi K2.6
+-> MiniMax M2.7
+-> Qwen 3.6-35B
+-> Llama 4 
+-> Gemma 4 (31B)
+-> M
+  - https://x.com/caps_raunak/status/2060610210146971862
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 16).
+- **@esa** (0 likes, score 7/10) — This month at ESA: asteroid flybys, Mars landing tests, space telescope discoveries and more... May 2026 had a lot to offer.
+  - https://x.com/esa/status/2060987141564637432
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 14).
+- **@trying_to_exits** (48 likes, score 8/10) — Which company changed the world the most?
+
+1. Apple
+2. Google
+3. Microsoft
+4. OpenAI
+  - https://x.com/trying_to_exits/status/2061001852448374830
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 144).
+- **@sam_badawi** (29 likes, score 8/10) — $NVDA CEO Jensen Huang said orbital datacenters could one day provide virtually unlimited room for AI infrastructure expansion.
+
+The biggest challenge is cooling, but Jensen believes it's a solvable e
+  - https://x.com/Sam_Badawi/status/2061058863059599660
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 41).
+- **@mhiteshew42361** (14 likes, score 7/10) — Everyone wants Blue Origin to succeed, even the folks at SpaceX. America needs the capability that Blue Origin and New Glenn bring. 
+Let's figure out what happened, get everything fixed, and get back
+  - https://x.com/MHiteshew42361/status/2060934622486089944
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 14).
+- **@glennwarrenpe** (8 likes, score 7/10) — American support the Blue Origin Team; so thankful there were no casualties.  We look forward to you getting back in orbit
+  - https://x.com/GlennWarrenPE/status/2060769602582265965
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 10).
+- **@nvidiaaiinfra** (5657 likes, score 8/10) — The next chapter of space computing is here 
+
+NVIDIA and its ecosystem are advancing AI from Earth-to-space across:
+
+ Earth Orbit and Infrared Imagery
+ Radio Frequency and Synthetic Aperture Radar
+ Au
+  - https://x.com/NVIDIAAIInfra/status/2052886264349696279
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5905).
+- **@xfreeze** (273 likes, score 8/10) — One day, millions of people will call Mars home
+
+The roads, habitats, factories, and cities that make it possible could all trace back to one vehicle: Starship
+
+This is the machine designed to help ma
+  - https://x.com/XFreeze/status/2061068019686945278
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 445).
+- **@xnxx_en** (134 likes, score 8/10) — AI doesn't feel like hype anymore.
+
+It feels like infrastructure.
+
+By 2026, the global AI market is approaching $900B and could surpass $4T within the next decade. AI spending alone is expected to rea
+  - https://x.com/XNXX_EN/status/2061020998066229367
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 332).
+- **@wulei2020** (14 likes, score 7/10) — Watch the #LongMarch2D carrier rocket soar into the night sky! China launched a new test satellite for internet technology from the Xichang Satellite Launch Center on May 31.
+  - https://x.com/wulei2020/status/2061023451691860113
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 18).
+- **@stats_feed** (2941 likes, score 7/10) — Space exploration timeline:
+
+1903 — Tsiolkovsky publishes the rocket equation
+1904 
+1905 
+1906 
+1907 
+1908 
+1909 — Goddard writes first paper on liquid propellants as fuel for rockets
+1910 
+1911 
+1912
+  - https://x.com/stats_feed/status/2060795140143190246
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 3391).
+- **@muskstaycalm** (1897 likes, score 7/10) — Unbelievable.
+
+My friend @PhillipdelMoral just got FSD 14.3.3 on his Cybertruck and spent his entire 45 minute drive reading a book without a single nag.
+
+If there was ever a sign that Tesla is slowly
+  - https://x.com/Muskstaycalm/status/2060803063707738528
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2167).
+- **@aakashgupta** (1376 likes, score 7/10) — Tony Stark's JARVIS ran what would basically be a persistent AI agent with voice, vision, and full codebase access across every system in his lab. In 2026, that's a frontier model on a loop.
+
+Opus 4.6
+  - https://x.com/aakashgupta/status/2040345886967070994
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1426).
+- **@peterdiamandis** (570 likes, score 7/10) — Anthropic dropped Opus 4.8 six weeks after 4.7. Reclaimed the coding crown from GPT 5.5. The leapfrogging is now monthly. Soon it will be weekly. Then daily. Hourly... Until the singularity just updat
+  - https://x.com/PeterDiamandis/status/2061047662502088937
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 728).
+- **@paulgoldeagle** (22 likes, score 7/10) — - Another angle of the Blue Origin New Glenn explosion.
+
+It’s a massive explosion!
+  - https://x.com/PaulGoldEagle/status/2060970412830593375
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 28).
+- **@astro_sreeraj** (21 likes, score 7/10) — Next New Glenn booster should be named "I can do this all day"
+  - https://x.com/astro_sreeraj/status/2060947872749924589
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 23).
+- **@mrmoonbound** (15 likes, score 7/10) — do you remember your fist starship launch?
+  - https://x.com/MrMoonBound/status/2060905902262083788
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 21).
+- **@robertson_ct** (13 likes, score 7/10) — Market Update 
+
+ TradFi: US Stocks pushing further into All-Time Highs, fueled by tech earnings & AI narrative.
+
+(AI stocks driving 70% of the S&P 500's upside, ongoing bubble?)
+
+ Macro: Oil prices ea
+  - https://x.com/robertson_ct/status/2061063945817821355
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 13).
+- **@teslaownerssv** (448 likes, score 7/10) — "@SpaceX is probably our greatest commercial space company, hands down," says NASA Administrator Jared Isaacman
+  - https://x.com/teslaownersSV/status/2059783163174658239
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 492).
+- **@nypost** (149 likes, score 7/10) — Boater Captures Apocalyptic Mushroom Cloud as Blue Origin Rocket Explodes into Massive Fireball
+  - https://x.com/nypost/status/2060409941295349782
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 191).
+- **@coinbureau** (107 likes, score 7/10) — WATCH: UNITREE G1 PERFORMING HOUSEHOLD TASKS WITH IMPRESSIVE PRECISION
+
+Unitree's G1 humanoid robot was shown recently washing dishes, carrying water, and sorting laundry, perfecting day-to-day chores
+  - https://x.com/coinbureau/status/2060858542870118489
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 157).
+- **@scitechera** (13 likes, score 7/10) — In case you missed it.
+
+“A huge robot army is loading..”
+
+Two Figure F.03 humanoid robots just cleaned a bedroom and made a bed in under 2 minutes, fully autonomously.
+
+The robots simply watched each
+  - https://x.com/SciTechera/status/2061071262416535718
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 19).
