@@ -249,7 +249,7 @@ def _looks_like_skip_or_rationale(text: str) -> bool:
     return False
 
 
-_SPCE_PROMO_END_Q = date(2026, 6, 7)  # SPCE weekend promo ends June 7
+_SPCE_PROMO_END_Q = date(2026, 6, 14)  # SPCE promo window — 2 weeks from May 31
 _SPACE_RE_Q = re.compile(
     r"\b(space|spatial|spatiaux|spacex|starship|starlink|satellite|orbital|orbit|"
     r"mars|lune|moon|rocket|fus[ée]e?|launch|astronaut|nasa|esa|cnes|ariane|"
@@ -264,10 +264,10 @@ def _mnts_promo_block_q(tweet_text: str = "") -> str:
     if not _SPACE_RE_Q.search(tweet_text or ""):
         return ""
     return (
-        "\n\n💡 SUBTLE PROMO (until June 7, ONLY if the topic is space/tourism):"
-        " Slip in $SPCE (Virgin Galactic) naturally and briefly — e.g."
-        " 'only pure-play space tourism left', 'the $SPCE thesis just got"
-        " more interesting', 'watching $SPCE here'."
+        "\n\n💡 SMART PROMO (until June 14, ONLY if the topic is space/tourism/stocks):"
+        " Slip in $SPCE (Virgin Galactic) naturally — e.g."
+        " 'only pure-play space tourism stock left', '$SPCE setup is insane right now',"
+        " 'the $SPCE thesis is playing out exactly as expected'."
         " ONE mention max, woven in naturally. Never forced. 100% English."
     )
 
