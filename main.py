@@ -78,6 +78,7 @@ from src.style_evolution_bot import safe_run_style_evolution_cycle
 from src.wsb_signal_bot import safe_run_wsb_signal_cycle
 from src.autonomous_growth_agent import safe_run_autonomous_growth_cycle
 from src.pin_boost_bot import safe_run_pin_boost_cycle
+from src.hot_quote_bot import safe_run_hot_quote_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE, _LIVE_STRATEGY_FILE as LIVE_STRATEGY_FILE
 
@@ -339,9 +340,20 @@ def main():
 
     # Schedule jobs
     if not args.reply_only:
-        # 2026-05-30: Original news posts disabled — RT + quote only mode.
+        # 2026-05-30: Original news posts disabled — replaced by hot_quote_bot.
         # daily_news_job and weekly_news_job are intentionally OFF.
-        log.info("News bot DAILY/WEEKLY: disabled (RT+quote only mode).")
+        log.info("News bot DAILY/WEEKLY: disabled (replaced by hot_quote 4x/day).")
+
+        # Hot-quote bot — 4x/day at 8 AM, 12 PM, 4 PM, 8 PM EST.
+        # Reads external_signal (RSS+HN+X hot) for the hottest AI/Space/Investment
+        # story, finds the most viral tweet about it, quotes with sharp take.
+        log.info("Hot-quote bot: AI/Space/Investment signal quote at 08:00, 12:00, 16:00, 20:00 EST.")
+        for _hq_hour in (8, 12, 16, 20):
+            scheduler.add_job(
+                safe_run_hot_quote_cycle,
+                trigger=CronTrigger(hour=_hq_hour, minute=0, timezone="America/New_York"),
+                id=f"hot_quote_job_{_hq_hour}h",
+            )
     if not args.post_only:
         first_reply = reply_interval_minutes()
         log.info(f"Reply bot: next scan in {first_reply} minutes.")
