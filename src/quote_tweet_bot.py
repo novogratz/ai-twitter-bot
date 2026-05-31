@@ -249,7 +249,7 @@ def _looks_like_skip_or_rationale(text: str) -> bool:
     return False
 
 
-_SPCE_PROMO_END_Q = date(2026, 6, 14)  # SPCE promo window — 2 weeks from May 31
+_STOCK_PROMO_CFG = os.path.join(_PROJECT_ROOT, "stock_promo_config.json")
 _SPACE_RE_Q = re.compile(
     r"\b(space|spatial|spatiaux|spacex|starship|starlink|satellite|orbital|orbit|"
     r"mars|lune|moon|rocket|fus[ée]e?|launch|astronaut|nasa|esa|cnes|ariane|"
@@ -258,16 +258,31 @@ _SPACE_RE_Q = re.compile(
     re.IGNORECASE,
 )
 
+def _load_promo_cfg_q() -> dict:
+    try:
+        with open(_STOCK_PROMO_CFG) as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return {}
+
 def _mnts_promo_block_q(tweet_text: str = "") -> str:
-    if date.today() > _SPCE_PROMO_END_Q:
+    cfg = _load_promo_cfg_q()
+    ticker = cfg.get("ticker", "")
+    company = cfg.get("company", "")
+    end_str = cfg.get("end_date", "")
+    if not ticker or not end_str:
+        return ""
+    try:
+        end = date.fromisoformat(end_str)
+    except ValueError:
+        return ""
+    if date.today() > end:
         return ""
     if not _SPACE_RE_Q.search(tweet_text or ""):
         return ""
     return (
-        "\n\n💡 SMART PROMO (until June 14, ONLY if the topic is space/tourism/stocks):"
-        " Slip in $SPCE (Virgin Galactic) naturally — e.g."
-        " 'only pure-play space tourism stock left', '$SPCE setup is insane right now',"
-        " 'the $SPCE thesis is playing out exactly as expected'."
+        f"\n\n💡 SMART PROMO (until {end_str}, ONLY if the topic is space/tourism/stocks):"
+        f" Slip in ${ticker} ({company}) naturally."
         " ONE mention max, woven in naturally. Never forced. 100% English."
     )
 
