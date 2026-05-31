@@ -5735,3 +5735,227 @@ A conviction list built for this market. AI infrastructure. Memory supercycle. F
 $NVDA — Still
   - https://x.com/InvestmentGuru_/status/2060895277452570800
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 42).
+
+## 2026-05-31
+- **@stockmktnewz** (2143 likes, score 9/10) — Google $GOOGL just released its updated 13F filing which shows all the stocks it owned as of the end of Q1:
+
+Arm Holdings $ARM - 1,960,784 shares
+AST SpaceMobile $ASTS - 8,943,486
+Autolus  $AUTL - 698
+  - https://x.com/StockMKTNewz/status/2052737758150471812
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 2323).
+- **@aakashgupta** (1884 likes, score 9/10) — Amazon spent $10 billion to put 200 satellites in orbit. Starlink has 10,000. And Amazon just landed Delta, JetBlue, and Airbus anyway.
+
+The antenna explains why.
+
+This thing is 58 inches long, 30 inc
+  - https://x.com/aakashgupta/status/2043746147995660556
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 2288).
+- **@pallottapedro** (202 likes, score 9/10) — DE VOLTA COM O SABADÃO DO FOGUETÃO!
+A SpaceX mandou mais 24 satélites da Starlink para a órbita em mais um lançamento do Falcon 9. 
+E como já estamos acostumados, o booster pousou, e o B1082 agora tem
+  - https://x.com/PallottaPedro/status/2060752699411275805
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 202).
+- **@xiejackie** (0 likes, score 9/10) — Gotta admit, Musk really knows how to turn computing power into cold, hard cash 
+
+Truth be told, SpaceX couldn't sustain its IPO valuation just with rocket launches + Starlink anymore, so they turned
+  - https://x.com/XieJackie/status/2060642580124385341
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 148).
+- **@xploraspace** (63 likes, score 9/10) — Spectaculaire transit de la fusée Falcon 9 de SpaceX devant le Soleil, capturé ce vendredi lors du lancement de la mission Starlink 10-53. Notez les ondes de choc générées clairement visibles !
+  - https://x.com/XploraSpace/status/2060821838066803063
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 65).
+- **@spaceflightnow** (47 likes, score 8/10) — SpaceX is now fueling its Falcon 9 rocket at Space Launch Complex 4 East at Vandenberg Space Force Base. Liftoff of the Starlink 17-41 mission is set for 8:25 a.m. PDT (11:25 a.m. EDT / 1525 UTC).
+
+Wa
+  - https://x.com/SpaceflightNow/status/2060736569925894654
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 47).
+- **@spaceflightnow** (47 likes, score 8/10) — SpaceX is now fueling its Falcon 9 rocket at Space Launch Complex 4 East at Vandenberg Space Force Base. Liftoff of the Starlink 17-41 mission is set for 8:25 a.m. PDT (11:25 a.m. EDT / 1525 UTC).
+
+Wa
+  - https://x.com/SpaceflightNow/status/2060736569925894654
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 47).
+- **@bassonbrain** (13 likes, score 7/10) — 50th Starlink mission for the year coming up! 
+
+@SpaceX is targeting Saturday, May 30 for a Falcon 9 launch of 24 Starlink (Group 17-41) satellites from Vandenberg SFB, CA
+
+—> Liftoff: 8.25 a.m. PDT
+  - https://x.com/BassonBrain/status/2060668225126289660
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 13).
+- **@bassonbrain** (13 likes, score 7/10) — 50th Starlink mission for the year coming up! 
+
+@SpaceX is targeting Saturday, May 30 for a Falcon 9 launch of 24 Starlink (Group 17-41) satellites from Vandenberg SFB, CA
+
+—&gt; Liftoff: 8.25 a.m. PD
+  - https://x.com/BassonBrain/status/2060668225126289660
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 13).
+- **@serobinsonjr** (162 likes, score 9/10) — NEW OFFICIAL SPACEX MERCH:
+
+Unisex Vehicles to Orbit Pullover Hoodie ($65)
+  - https://x.com/SERobinsonJr/status/2060756248098713617
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 180).
+- **@tradermichael_1** (121 likes, score 9/10) — $ASTS SpaceX June launch is still ON!  $ASTS BlueBird 8 & 10 are already at the FL launch site, completely unaffected by the Blue Origin anomaly.
+Rock-solid fundamentals: Over $1.2B in contracted carr
+  - https://x.com/traderMichael_1/status/2060748499298525552
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 139).
+- **@sawyermerritt** (492 likes, score 9/10) — SpaceX completed its 50th Starlink launch of 2026 today. With this mission, SpaceX has deployed 1,375 Starlink satellites so far this year, and another Starlink launch is scheduled for later tonight.
+  - https://x.com/SawyerMerritt/status/2060933411682873453
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 550).
+- **@space_station** (397 likes, score 9/10) — .@NASA is hosting a public event with three @SpaceX Crew-11 members discussing their space research mission at 11am ET on Monday, June 1. More... https://go.nasa.gov/4o29BWL
+  - https://x.com/Space_Station/status/2060756371130184150
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 427).
+- **@hypertechinvest** (47 likes, score 9/10) — NVIDIA wants to eat $AMD and $INTC lunch
+
+AI agents have made CPUs important again
+
+$NVDA and Microsoft are expected to unveil the first Windows PCs powered by Nvidia chips next week
+
+The devices are
+  - https://x.com/HyperTechInvest/status/2060907143633510646
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 57).
+- **@planet4589** (40 likes, score 8/10) — LAUNCH at 2353 UTC May 29 of Amazon Leo group LA07 on Atlas AV-113 from Canaveral.
+
+LAUNCH at 1525 UTC May 30 of Starlink Group 17-41 from Vandenberg
+
+LAUNCH at 1807 UTC May 30 of Xingwang test satell
+  - https://x.com/planet4589/status/2060825544988487909
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 40).
+- **@spacanpanman** (391 likes, score 9/10) — $ASTS: The next big catalyst is Batch-1 launch aboard Falcon-9 in approximately 2 weeks.
+
+AST SPACEMOBILE CATALYST SEASON
+A review of what has been and what is to come
+
+Upcoming Catalysts:
+
+BB8 - BB10
+  - https://x.com/spacanpanman/status/2060360417021497414
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 445).
+- **@stonkvalue** (74 likes, score 9/10) — Top 2026 leading stocks key support levels based on Fibonacci Retracements:
+
+Space
+1. $RKLB | $128.61
+2. $FLY | $46.8
+3. $ASTS | $107
+4. $VOYG | $46
+5. $SATL | $9.5
+6. $PL | $44.26
+7. $RDW | $22.3
+
+Se
+  - https://x.com/StonkValue/status/2060876402665435472
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 82).
+- **@spacex** (28127 likes, score 8/10) — Splashdown confirmed! Congratulations to the entire SpaceX team on the twelfth flight test of Starship!
+  - https://x.com/SpaceX/status/2057969484879528267
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 30443).
+- **@marionawfal** (3545 likes, score 8/10) — A year ago, Starbase didn't exist as a city.
+
+Today it has residents, a local government, and a launchpad sending the most powerful rocket ever built into orbit.
+
+Most cities take decades to become re
+  - https://x.com/MarioNawfal/status/2060617204299694109
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 3731).
+- **@alertanews24** (340 likes, score 8/10) — | Lanzamiento del Falcon 9 con 24 satélites Starlink a la órbita desde California:
+  - https://x.com/AlertaNews24/status/2060921205893341292
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 352).
+- **@armaniferrante** (174 likes, score 8/10) — Binance generally doesn't do pre-reveals, but if the rumors are true, this one is warranted.
+
+Crypto has had 24/7 perps on equities for a little while now, but if Binance launches spot stocks, it will
+  - https://x.com/armaniferrante/status/2060890182283616378
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 218).
+- **@konstructivizm** (73 likes, score 8/10) — Thrilling footage from the Mojave Air & Space Port captures NASA and JPL putting the cutting-edge G-FOLD autonomous landing system through its paces aboard the Masten Xombie rocket.  After a sharp lau
+  - https://x.com/konstructivizm/status/2060773986204610626
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 75).
+- **@schilkescott** (46 likes, score 8/10) — Liftoff video from inside SLC-41 for #ULA #AtlasV #Amazon LEO-7 with photo review at end. This pad is special for so many reasons.
+
+By Scott Schilke for http://spacenewsfl.com
+  - https://x.com/SchilkeScott/status/2060839338116583787
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 48).
+- **@blueorigin** (5355 likes, score 8/10) — NG-3 Update: We have confirmed payload separation.  AST SpaceMobile has confirmed the satellite has powered on. The payload was placed into an off-nominal orbit. We are currently assessing and will up
+  - https://x.com/blueorigin/status/2045860091920896043
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6023).
+- **@cryptoposeidonn** (307 likes, score 8/10) — My thesis about $BTC bottomed at $60k;
+
+- Momentum: The Weekly RSI has dropped below 30 only four times in history. The first three instances (January 2015, December 2018, and June 2022) marked defini
+  - https://x.com/CryptoPoseidonn/status/2060790182320738700
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 395).
+- **@daancrypto** (123 likes, score 8/10) — $BTC Trading at its bull market support band after a failed retest the past few weeks.
+
+The Weekly 200MA & EMA are still moving up and closing in on price as well.
+
+With all these big high timeframe w
+  - https://x.com/DaanCrypto/status/2060813748210688173
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 205).
+- **@sandra403181578** (9 likes, score 7/10) — I’ll only say it once.
+This might be the fastest way to hit $3 million by the end of 2028:
+$RDW (Redwire) → $20 Must buy
+
+$OKLO (Oklo Inc) → $60Must buy
+
+$KTOS (Kratos Defense) → $60 Must buy
+
+$AVAV (
+  - https://x.com/sandra403181578/status/2060703781340508660
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 13).
+- **@nasaartemis** (17134 likes, score 7/10) — POV: You’re coming home after a journey around the Moon. 
+
+Before reentering Earth’s atmosphere at the end of Artemis II, the Orion spacecraft’s crew module — carrying the astronauts — separated from
+  - https://x.com/NASAArtemis/status/2055323662794793361
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 17602).
+- **@starlink** (5896 likes, score 7/10) — Starlink enables reliable real-time communication with recovery teams and live streaming of Starship’s splashdown in the middle of the Indian Ocean
+  - https://x.com/Starlink/status/2057950370668945682
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6734).
+- **@michaeldell** (1402 likes, score 7/10) — We have the first @DellTech + @nvidia Vera Rubin NVL72 @CoreWeave. Here we go!
+  - https://x.com/MichaelDell/status/2060903140858212439
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1548).
+- **@daancrypto** (173 likes, score 7/10) — $BTC That ~$74.2K level is the area to break for the bulls. That would put this back into a bullish market structure locally.  
+
+On the downside, that ~$72.7K level is key to hold as support.
+  - https://x.com/DaanCrypto/status/2060782043026317593
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 235).
+- **@thegalox_** (184 likes, score 7/10) — AMD is getting crushed in the laptop market
+
+Snapdragon X2 series up to doubles their performance, Intel has better CPU and GPU performance and now Nvidia with again a better CPU and GPU
+
+The only goo
+  - https://x.com/TheGalox_/status/2060777838693736459
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 228).
+- **@blobifie** (182 likes, score 7/10) — On thursday, New Glenn SN003 "No, It's Necessary" attempted to perform a static fire before violently exploding at LC-36.
+
+Never Tell Me The Odds was stored nearby in the horizontal Integration Facili
+  - https://x.com/Blobifie/status/2060701407410589734
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 198).
+- **@spacbobby** (105 likes, score 7/10) — $ASTS - I’ve been loading AST for the last few years starting in the single digits. I’m not concerned about week to week fluctuations in share price.
+
+I’m thinking bigger picture when 3-4 constellatio
+  - https://x.com/SpacBobby/status/2060862000268546250
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 115).
+- **@polydao** (14 likes, score 7/10) — JUST IN: Grok just hit #1 in the global video AI leaderboard
+
+xAI dethroned every video model in existence overnight
+
+> #1 Grok 1.5 Preview - 1,473 - +52 pts in one update
+> #2 Seedance 2.0 (ByteDance
+  - https://x.com/polydao/status/2060913190679048282
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 28).
+- **@polydao** (13 likes, score 7/10) — JUST IN: Grok just hit #1 in the global video AI leaderboard
+
+xAI dethroned every video model in existence overnight
+
+> #1 Grok 1.5 Preview - 1,473 - +52 pts in one update
+> #2 Seedance 2.0 (ByteDance
+  - https://x.com/polydao/status/2060913190679048282
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 25).
+- **@nbergwx** (410 likes, score 7/10) — Be mindful if you are going to Brevard and Volusia beaches especially this weekend.
+
+Blue Origin rocket debris could wash up in the water, especially near Cocoa and Playalinda Beach if it does.
+  - https://x.com/NbergWX/status/2060688925413236854
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 456).
+- **@xfreeze** (109 likes, score 7/10) — Grok Imagine Video 1.5 Preview is now ranked #1 on the Image-to-Video Arena leaderboard
+
+It is currently outperforming even the top models from:
+• Google Veo
+• ByteDance  
+• Alibaba ATH  
+
+What makes
+  - https://x.com/XFreeze/status/2060912941323403526
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 149).

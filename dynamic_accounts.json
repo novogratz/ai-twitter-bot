@@ -169,7 +169,17 @@
     "Lucas",
     "ThomasP",
     "Marie",
-    "Jean"
+    "Jean",
+    "BoursierCom",
+    "LucAsseo",
+    "VincentCristin",
+    "TechCrunchFR",
+    "ThibautM",
+    "CryptoMich",
+    "JulesAmar",
+    "Loup_Capital",
+    "MarcDionne_",
+    "JulienLefebvre"
   ],
   "en": [
     "blablacar",
@@ -1095,6 +1105,56 @@
       "lang": "fr",
       "handle": "Jean",
       "added": "2026-05-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "BoursierCom",
+      "added": "2026-05-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucAsseo",
+      "added": "2026-05-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentCristin",
+      "added": "2026-05-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "TechCrunchFR",
+      "added": "2026-05-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautM",
+      "added": "2026-05-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMich",
+      "added": "2026-05-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesAmar",
+      "added": "2026-05-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Loup_Capital",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcDionne_",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLefebvre",
+      "added": "2026-05-31"
     }
   ]
 }
