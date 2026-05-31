@@ -361,6 +361,34 @@ def main():
                 id=f"hot_quote_job_{_hq_hour}h",
             )
 
+        # Thread bot — FR deep-dive 4-tweet thread at 9 AM EST.
+        # High bookmark/RT rate = best follower-conversion surface. Was imported
+        # but never scheduled (dead code before this commit).
+        log.info("Thread bot: FR deep-dive 4-tweet thread at 09:00 EST.")
+        scheduler.add_job(
+            safe_run_thread_cycle,
+            trigger=CronTrigger(hour=9, minute=0, timezone="America/New_York"),
+            id="thread_job",
+        )
+
+        # Digest thread bot — EN "Top 5 AI/Space/Crypto" daily digest at 2 PM EST.
+        # 6-tweet thread; positions @AISpaceDecoder as one-stop EN source.
+        log.info("Digest thread bot: EN Top-5 digest at 14:00 EST.")
+        scheduler.add_job(
+            safe_run_digest_thread_cycle,
+            trigger=CronTrigger(hour=14, minute=0, timezone="America/New_York"),
+            id="digest_thread_job",
+        )
+
+        # Recap thread bot — Sunday weekly recap (fires hourly, ships only on
+        # Sundays 10-13h Paris; idempotent state prevents double-post).
+        log.info("Recap thread bot: Sunday weekly recap (hourly check, fires only Sun 10-13h Paris).")
+        scheduler.add_job(
+            safe_run_recap_thread_cycle,
+            trigger=IntervalTrigger(hours=1),
+            id="recap_thread_job",
+        )
+
         # Hot-take bot — punchy meme takes on AI/Space/Investment every 20 min.
         # MAX_NEWS_PER_DAY=0 so it only generates hotakes, never long news posts.
         # Dedup via daily_state.json (cap MAX_HOTAKES_PER_DAY).
@@ -581,10 +609,13 @@ def main():
             log.info("Scout agent: disabled by default in Plus-safe mode.")
 
         # Quote bot — FR-first candidate pool with our own angle on top.
-        log.info("Quote bot: quote-posting FR-first viral setups every 2 min.")
+        # Interval is 4 min (not 2) because each cycle scrapes 5 queries + 5
+        # trusted handles; on a slow LLM the cycle takes 3-4 min. At 2 min
+        # the max_instances=1 guard was blocking ~80% of fires.
+        log.info("Quote bot: quote-posting FR-first viral setups every 4 min.")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=2),
+            trigger=IntervalTrigger(minutes=4),
             id="quote_tweet_job",
             max_instances=1,
         )
@@ -904,7 +935,7 @@ def main():
         # reply, engage, early_bird, roast, direct_reply) already pick
         # up changes via _cadence() on their next reschedule.
         FIXED_JOB_BASE_MINUTES = {
-            "quote_tweet_job": 2,
+            "quote_tweet_job": 4,
             "retweet_job": 2,
             "like_job": 4,
             "boost_job": 10,

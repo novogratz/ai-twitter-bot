@@ -197,6 +197,8 @@ def run_early_bird_cycle():
                 # a better take then. The 5-min cadence will catch it again.
                 continue
 
+            from .pattern_tags import extract_pattern as _extract_pattern
+            reply, _pattern_id = _extract_pattern(reply)
             reply = humanize(reply)
             log.info(f"[EARLYBIRD] Reply ({len(reply)} chars): {reply}")
 
@@ -207,7 +209,7 @@ def run_early_bird_cycle():
             try:
                 reply_to_tweet(url, reply)
                 try:
-                    log_reply(url, reply, action_type="reply", source=f"EARLYBIRD/{username}")
+                    log_reply(url, reply, action_type="reply", source=f"EARLYBIRD/{username}", pattern_id=_pattern_id or "")
                 except Exception:
                     pass
                 posted += 1
