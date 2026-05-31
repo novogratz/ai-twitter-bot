@@ -33,7 +33,8 @@ when the LLM is flaky so each cycle skips fast instead of grinding for 6+ min
 on bad output.
 Repost / quote volume is tuned high but bounded: `MAX_RETWEETS_PER_DAY=150`,
 `RETWEETS_PER_CYCLE=15`, retweet job every 2 min, and the quote bot every
-2 min (5 queries + 5 trusted handles per cycle to stay under the 2-min window).
+4 min (cycles were taking >2 min, causing 80% of fires to be blocked by
+`max_instances=1`; bumped to 4 min 2026-05-31).
 Quote and repost discovery is English-first (2026-05-27 pivot): they scan
 global high-signal EN AI / crypto / markets / space queries and EN trusted
 handles first, with a short FR tail only for major French stories. Every

@@ -465,12 +465,14 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         if not reply or reply is _LLM_RATE_LIMITED:
             if author_key: per_author_skips[author_key] = per_author_skips.get(author_key, 0) + 1
             continue
+        from .pattern_tags import extract_pattern as _extract_pattern
+        reply, _pattern_id = _extract_pattern(reply)
         reply = humanize(reply)
         replied.add(url)
         save_replied(replied)
         try:
             reply_to_tweet(url, reply)
-            log_reply(url, reply, action_type="reply", source=source_name)
+            log_reply(url, reply, action_type="reply", source=source_name, pattern_id=_pattern_id or "")
             posted += 1
             if _reply_lang == "en" and en_counter: en_counter[0] += 1
             if author_key: per_author_count[author_key] = per_author_count.get(author_key, 0) + 1
