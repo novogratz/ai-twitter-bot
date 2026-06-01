@@ -55,7 +55,7 @@ from src.spicy_bot import safe_run_spicy_cycle
 from src.suppression_watch_bot import safe_run_suppression_watch_cycle
 from src.mega_watch_bot import safe_run_mega_watch_cycle
 from src.cleanup_bot import safe_run_cleanup_cycle
-from src.safari_hygiene import safe_run_session_refresh
+from src.safari_hygiene import safe_run_session_refresh, safe_run_periodic_warmup
 from src.strategy_lab_bot import safe_run_strategy_lab_cycle
 from src.joke_bank import safe_run_joke_bank_cycle
 from src.self_winners import safe_run_self_winners_cycle
@@ -809,6 +809,12 @@ def main():
             safe_run_session_refresh,
             trigger=IntervalTrigger(hours=2),
             id="safari_hygiene_job",
+        )
+        log.info("Safari SW warmup: clear service workers every 30 min to prevent black screen.")
+        scheduler.add_job(
+            safe_run_periodic_warmup,
+            trigger=IntervalTrigger(minutes=30),
+            id="safari_warmup_job",
         )
 
         # Heartbeat — one log line every 60s so a glance at bot.log

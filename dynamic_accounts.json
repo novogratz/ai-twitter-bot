@@ -212,7 +212,14 @@
     "PierreRoanne",
     "VincentBorie",
     "AlexisDegrand",
-    "MaximeMaurin"
+    "MaximeMaurin",
+    "LaBourseEtVous",
+    "0xMert_",
+    "FinanceActu",
+    "JeanBosson",
+    "BourseCanada",
+    "BabouMouloudji",
+    "RomainMouysset"
   ],
   "en": [
     "blablacar",
@@ -1352,6 +1359,41 @@
     {
       "lang": "fr",
       "handle": "MaximeMaurin",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaBourseEtVous",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xMert_",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "FinanceActu",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBosson",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourseCanada",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "BabouMouloudji",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainMouysset",
       "added": "2026-06-01"
     }
   ]
