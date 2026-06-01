@@ -10052,3 +10052,203 @@ Stay informed, and catch opportunities as they happen.
 - **@sunrisetrader** (2 likes, score 7/10) — $VRT daily two indecision sticks at 50ma confirming today.  New long here today
   - https://x.com/SunriseTrader/status/2061441648928919944
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 10).
+- **@randgroup** (99 likes, score 9/10) — SpaceX goes public in 11 days at a $1.8 TRILLION valuation and most portfolios have zero space exposure. 
+
+There are exactly 3 ETFs built for this sector: $NASA, $ORBX, and $UFO. Each one targets the
+  - https://x.com/randgroup/status/2061455599460659655
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 127).
+- **@stockchaser_** (4 likes, score 7/10) — Space stocks are taking a hit today
+
+$ASTS -9%
+$RKLB -13%
+$LUNR -12%
+$PL -8%
+
+This occurs before the SpaceX IPO, which has become the main valuation proxy for the entire space sector
+
+The question rem
+  - https://x.com/StockChaser_/status/2061461597290140069
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 12).
+- **@xfreeze** (3043 likes, score 9/10) — Grok 4.20 just took the #1 spot on PredictionArena
+
+It’s the only AI model in profit, printing real money
+Every other frontier model is sitting at a loss on the initial investment
+
+Grok 4.20 is beatin
+  - https://x.com/XFreeze/status/2016000612312154147
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 4215).
+- **@bassonbrain** (5 likes, score 7/10) — Iraq seized 24 @Starlink kits at its Baghdad airport, citing ‘import ban’
+
+The country's General Customs Authority announced the seizure of 24 Starlink satellite internet devices on Sunday, says it wa
+  - https://x.com/BassonBrain/status/2061420091971911740
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 11).
+- **@ulalaunch** (143 likes, score 9/10) — Solid rocket booster burnout and jettison is confirmed. The five GEM 63s consumed a half-million pounds (227,000 kg) of propellant to augment the initial liftoff power of the Atlas V. The rocket now w
+  - https://x.com/ulalaunch/status/2060510284377206829
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 143).
+- **@planet4589** (32 likes, score 8/10) — Launch at 0840 UTC Jun 1 of the first Chang Zheng 12B from Jiuquan,  placing the Qianfan Jigui 08 group of internet sats in orbit. So far  it's unclear how many sats were in the group.
+  - https://x.com/planet4589/status/2061437647092887588
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 36).
+- **@emostaque** (10 likes, score 7/10) — Let’s say half of OpenAI and Anthropic goes to the American people, $1 trillion
+
+That works out at $2,800 per American.
+
+With a 5% dividend (optimistic) that would be $142 a year
+
+Which alas would bar
+  - https://x.com/EMostaque/status/2061461391303753992
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 18).
+- **@rocketlab** (2942 likes, score 9/10) — Rocket Lab has been awarded a $90 million contract by the @USSpaceForce’s Space Systems Command @USSF_SSC to design, manufacture, integrate, and operate two geostationary satellites hosting the Heimda
+  - https://x.com/RocketLab/status/2057614847672775017
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3054).
+- **@kobeissiletter** (882 likes, score 9/10) — BREAKING: Micron, $MU, extends gains to rise above $1,000/share for the first time in history, now worth nearly $1.2 trillion.
+
+This stock was worth $60 billion just 13 months ago.
+  - https://x.com/KobeissiLetter/status/2061455980106490189
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1066).
+- **@dimazeniuk** (110 likes, score 9/10) — Btw the next opportunity to launch from Earth to Mars opens in late 2026
+
+It would be incredible to see Starship fly to Mars already this year, but the rocket still needs improvements
+  - https://x.com/DimaZeniuk/status/2061425147538551131
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 154).
+- **@unusual_whales** (43 likes, score 9/10) — SpaceX reserves 5% of its IPO shares for insiders like employees, executives' friends and family, per the Information
+  - https://x.com/unusual_whales/status/2061462019698790900
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 81).
+- **@joinautopilot** (58 likes, score 9/10) — Once again, you're probably overthinking what stocks to buy ...
+
+The Aschenbrenner Tracker launched on March 5th
+
+It's now up 82% since
+
+And every position is in the green:
+
+$NBIS: +9.2%
+$SNDK: +113.7
+  - https://x.com/joinautopilot/status/2061455649184051216
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 66).
+- **@coinbureau** (18 likes, score 8/10) — SPACEX SETS ASIDE IPO SHARES FOR EMPLOYEES
+
+SpaceX disclosed it will reserve up to 5% of its IPO shares for certain employees, friends, and family of executives.
+
+The filing also says Elon Musk’s shar
+  - https://x.com/coinbureau/status/2061460258850050084
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 34).
+- **@netcapgirl** (11620 likes, score 8/10) — happy nvidia earnings to all who celebrate
+  - https://x.com/netcapgirl/status/1828789245726917032
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11746).
+- **@mikebenzcyber** (2730 likes, score 8/10) — So I literally called this the day Brazil seized Musk’s Starlink assets — that Brazil was secretly angling to switch over to China’s new Starlink competitor — and I just checked the news and…
+  - https://x.com/MikeBenzCyber/status/1861728018743378067
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2948).
+- **@netcapgirl** (1687 likes, score 8/10) — nvidia earnings should be live streamed on every major tv station & streaming platform like it’s the state of the union
+  - https://x.com/netcapgirl/status/1760077498304344419
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1729).
+- **@earnings_guy** (1178 likes, score 8/10) — $NVDA (Nvidia) #earnings are out:
+  - https://x.com/earnings_guy/status/2026772091719069714
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1272).
+- **@earnings_guy** (1000 likes, score 8/10) — $NVDA (Nvidia) #earnings are out:
+  - https://x.com/earnings_guy/status/1960799806143496684
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1082).
+- **@netcapgirl** (722 likes, score 8/10) — when someone asks why i’m having a party for the nvidia earnings call
+  - https://x.com/netcapgirl/status/1760397024296415620
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 734).
+- **@ussf_ssc** (191 likes, score 8/10) — Big news for national security! #SpaceForce will work w/SpaceX to fast-track the SB-AMTI program. Shifting airborne moving target indication into space, USSF will provide resilient capability to sense
+  - https://x.com/USSF_SSC/status/2060463403005571549
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 207).
+- **@zerohedge** (70 likes, score 8/10) — SpaceX IPO Update: New Filing Reveals Friends & Family Share Allocation, Anthropic AI Deal, And Water Risk
+  - https://x.com/zerohedge/status/2061451728990404793
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 100).
+- **@asts_spacemob** (48 likes, score 8/10) — In my opinion this Space Basket selloff is most likely due to hedge funds or traders trying to cash out high before the SpaceX IPO. 
+
+Nothing about this drop changes the thesis for $ASTS.
+  - https://x.com/ASTS_SpaceMob/status/2061449849745113336
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 54).
+- **@redwire** (51 likes, score 8/10) — American leadership in space will depend on more than launch capacity alone. It will require sustained investment in commercial infrastructure, industrial capability, and innovation in orbit and beyon
+  - https://x.com/Redwire/status/2061447814375166391
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 51).
+- **@realsimpleariel** (35 likes, score 8/10) — Software Infrastructure and Application once again leading the way (where have you heard that before)
+$CRWV $NBIS $OKTA $TWLO $MDB 
+Aerospace and Defense I think has topped until after SpaceX IPO and
+  - https://x.com/RealSimpleAriel/status/2061456401151512768
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 51).
+- **@realsimpleariel** (35 likes, score 8/10) — Software Infrastructure and Application once again leading the way (where have you heard that before)
+$CRWV $NBIS $OKTA $TWLO $MDB 
+Aerospace and Defense I think has topped until after SpaceX IPO and
+  - https://x.com/RealSimpleAriel/status/2061456401151512768
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 51).
+- **@retail_mourinho** (18 likes, score 7/10) — Space sector taking a hit today $ASTS $RKLB
+  - https://x.com/retail_mourinho/status/2061459964254699851
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 24).
+- **@alibaba_qwen** (3815 likes, score 8/10) — We’re excited to introduce Qwen3-235B-A22B-Thinking-2507 — our most advanced reasoning model yet!
+
+Over the past 3 months, we’ve significantly scaled and enhanced the thinking capability of Qwen3, ach
+  - https://x.com/Alibaba_Qwen/status/1948688466386280706
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 4169).
+- **@the_spactator** (776 likes, score 8/10) — $ASTS: President Trump filed a new Periodic Transaction Report today disclosing 2 separate purchases of AST SpaceMobile (ASTS) in amounts between $1,001-$15,000 in March 17th. Hopefully this is the st
+  - https://x.com/The_SPACTATOR/status/2054961102635651348
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 904).
+- **@aleabitoreddit** (571 likes, score 8/10) — $NBIS has anime plot armor!
+
+Happy to hear Weebius has been outperforming the market and Neocloud basket ( $IREN / $CIFR ).
+
+Last year post MSFT earnings, I gave a prediction after Q4 earnings, Nebius
+  - https://x.com/aleabitoreddit/status/2061425895307608561
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 821).
+- **@divestech** (69 likes, score 8/10) — Great to be on @SquawkBoxEurope with @cnbcKaren and @BenMBoulos discussing the AI Revolution being a 1996/1997 moment…not a 2000 bubble moment in our view as tech earnings this week another validation
+  - https://x.com/DivesTech/status/2060342571872768502
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 81).
+- **@deryatr_** (73 likes, score 8/10) — I am really excited about the Cosmos 3 frontier model for physical AI! This will be big for robotics!
+  - https://x.com/DeryaTR_/status/2061317387098447947
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 77).
+- **@starlink** (5889 likes, score 7/10) — Starlink enables reliable real-time communication with recovery teams and live streaming of Starship’s splashdown in the middle of the Indian Ocean
+  - https://x.com/Starlink/status/2057950370668945682
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6727).
+- **@cb_doge** (5405 likes, score 7/10) — A rocket returning from hypersonic speed, not only surviving that fiery descent, but hovering & landing at a precise position.
+
+That level of control, balance, & engineering perfection is unbelievable
+  - https://x.com/cb_doge/status/2011030591215714748
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6421).
+- **@remarks** (5846 likes, score 7/10) — JUST IN:  US Space Force contracts 12 companies up to $3.2 billion to develop 'Golden Dome' air defense system.
+  - https://x.com/remarks/status/2047747124696121529
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6108).
+- **@nvidiaai** (1786 likes, score 7/10) — Introducing Cosmos 3: Our latest frontier model for Physical AI
+
+Cosmos 3 is the world’s first fully open omnimodel with native vision reasoning, world and action generation.
+
+Today we’re releasing Su
+  - https://x.com/NVIDIAAI/status/2061308434629132553
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1894).
+- **@aakashgupta** (1375 likes, score 7/10) — Tony Stark's JARVIS ran what would basically be a persistent AI agent with voice, vision, and full codebase access across every system in his lab. In 2026, that's a frontier model on a loop.
+
+Opus 4.6
+  - https://x.com/aakashgupta/status/2040345886967070994
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1425).
+- **@reformed_trader** (193 likes, score 7/10) — I got aggressive $ASTS, of course leaving room for lower, but this pullback is in line with prior sharp dips after the initial impulsive runup. We are around the 13sma/ema combo and not far from 50% f
+  - https://x.com/Reformed_Trader/status/2061452273012613469
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 213).
+- **@spaceinvestor_d** (92 likes, score 7/10) — $RDW: Redwire is cookin', and most investors are just starting to smell what's in the oven.
+
+"Lunar systems is quickly becoming the most exciting business development within Redwire Space Missions!"
+  - https://x.com/SpaceInvestor_D/status/2061435215105474567
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 100).
+- **@magiclgge** (47 likes, score 7/10) — Elon Musk proudly showed off the Starlink package during a live program, highlighting how the satellite internet system can bring high-speed connectivity to remote areas around the world. 
+
+Would you
+  - https://x.com/magicLgge/status/2061100619360866575
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 113).
+- **@nasajohnson** (48 likes, score 7/10) — Starting the week fresh. 
+
+In space, simple hygiene tasks like shaving require different tools and preparation than they do on Earth. In this photo, NASA astronaut Jack Hathaway uses an electric razor
+  - https://x.com/NASAJohnson/status/2061448431168537046
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 56).
+- **@xfreeze** (14 likes, score 7/10) — Amazon is planning to add SpaceXAI's Grok models to its Bedrock platform
+
+This is a massive move for the cloud AI space. By integrating Grok, Amazon is working to turn AWS Bedrock into the ultimate mu
+  - https://x.com/XFreeze/status/2061461680845168807
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 34).
+- **@agupta** (13 likes, score 7/10) — i suspect we've been in the mainframe era of AI computing and we're about to enter the PC era of it. 
+
+data centers are obviously still critical but oh man so much personal hardware and software is ab
+  - https://x.com/agupta/status/2061459668694630765
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 19).
+- **@wsj** (7 likes, score 7/10) — Heard on the Street: There are some clear advantages for OpenAI or Anthropic to be first in going public
+  - https://x.com/WSJ/status/2061458016092803366
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 15).
