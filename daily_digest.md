@@ -439,3 +439,13 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top reply targets: @LeJournalDuCoin=12, @Frandroid=12, @StockSavvyShay=11, @Speculator_io=11, @SpaceX=11
 
 **Followers we follow** (running total): 166
+
+## 2026-05-31
+
+**Activity** — total actions: 512
+  - by type: reply=354, retweet=140, hotake=14, quote=4
+  - top sources: SEARCH-HOT=165, RETWEET=140, PROFILE-FR=55, PROFILE-ALWAYS=51, FOLLOWING=32, FEED=24, PROFILE-EN=17, MEGA=5
+  - comedy patterns: FR_ANCHOR=4, DIALOGUE=1
+  - top reply targets: @StockSavvyShay=10, @Cointelegraph=9, @Numerama=8, @JournalDuGeek=8, @LeJournalDuCoin=8
+
+**Followers we follow** (running total): 166
