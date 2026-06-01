@@ -102,8 +102,6 @@ _CLEAR_SW_AND_RELOAD_JS = """
     const keys = await caches.keys();
     for (let k of keys) { await caches.delete(k); }
   }
-  try { localStorage.clear(); } catch(e) {}
-  try { sessionStorage.clear(); } catch(e) {}
   location.reload(true);
 })();
 """.strip()
@@ -120,16 +118,16 @@ tell application "Safari"
   activate
   tell window 1
     set URL of current tab to "https://x.com/home"
-    delay 6
+    delay 8
     do JavaScript "{_CLEAR_SW_AND_RELOAD_JS.replace(chr(10), " ").replace('"', '\\"')}" in current tab
-    delay 7
+    delay 12
   end tell
 end tell
 '''
     try:
         subprocess.run(
             ["osascript", "-e", script],
-            capture_output=True, text=True, timeout=30,
+            capture_output=True, text=True, timeout=60,
         )
         log.info("[HYGIENE] x.com warmed up — service workers cleared, hard reload done.")
         return True

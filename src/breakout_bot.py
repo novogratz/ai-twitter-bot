@@ -28,6 +28,7 @@ from .llm_client import run_llm, unwrap_text
 from .logger import log
 from .twitter_client import scrape_x_search, post_tweet
 from .humanizer import humanize, strip_agent_preamble
+from . import personality_store
 
 BREAKOUT_STATE_FILE = os.path.join(_PROJECT_ROOT, "breakout_state.json")
 BREAKOUT_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "breakout_history.json")
