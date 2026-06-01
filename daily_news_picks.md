@@ -9833,3 +9833,222 @@ Thats how dumb the market is right now
 They literally have everyone's data.
   - https://x.com/UltraLinx/status/2061370972968530364
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 28).
+- **@stocksavvyshay** (26 likes, score 8/10) — $NVDA and $FLNC developed a reference architecture for Nvidia DSX Vera Rubin NVL72 AI data centers.
+
+The 136 MW design supports 100 MW of IT load with Fluence battery storage built in for grid stabili
+  - https://x.com/StockSavvyShay/status/2061419384057536744
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 38).
+- **@cryptorover** (373 likes, score 9/10) — BREAKING: Bitcoin will officially have no more weekend CME gaps.
+
+As of May 29, CME switched its $BTC futures to 24/7 trading. 
+
+The weekend closure is gone.
+  - https://x.com/cryptorover/status/2061391806995345591
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 557).
+- **@kahome_steve** (8 likes, score 7/10) — SpaceX is three distinct businesses:
+
+→ Space (launch + Starship R&D): $4.1B revenue, FY2025 
+
+→ Starlink (satellite broadband): $11.4B revenue, 63% EBITDA margins 
+
+→ SpaceXAI (terrestrial + orbital
+  - https://x.com/kahome_steve/status/2061327439716856241
+  - **WHY**: Source fiable + impact concret (score signal 15, engagement 10).
+- **@deitaone** (666 likes, score 9/10) — $MSTR  - STRATEGY INC SELLS BITCOIN, RAISES $128M
+
+Strategy Inc sold 32 bitcoin last week for $2.5M and raised $128.3M via share issuance.
+
+The company holds 843,706 bitcoin with a $75,699 average pur
+  - https://x.com/DeItaone/status/2061419550600577119
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 872).
+- **@polymarketmoney** (3983 likes, score 9/10) — Elon Musk’s $134,000,000,000 lawsuit against OpenAI is set to begin on Monday.
+  - https://x.com/PolymarketMoney/status/2048148560990921199
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 4399).
+- **@cnn** (1206 likes, score 9/10) — Elon Musk loses case against OpenAI, with jury deciding the tech billionaire waited too long to file lawsuit and the statute of limitations ran out. https://cnn.it/4nC2eoM
+  - https://x.com/CNN/status/2056433351137882473
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 1834).
+- **@ijulin34538** (45 likes, score 9/10) — 1200달러 지원해주는 OpenAI 직접 신청해 본 후기 
+
+오늘 6개월 동안 총 $1,200를 지원해주는 Codex 오픈소스 지원 프로그램을 신청해봄.
+
+나는 완전 AI 입문자라 "이걸 뭘 어떻게 해야 하지?"부터 막막했는데, 그냥 Codex한테 화면 캡쳐 보여주고 궁금한 거 계속 물어보면서 진행했음.
+
+전에 만들어둔
+  - https://x.com/IJulin34538/status/2061332045146800555
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 55).
+- **@stockoptioncole** (18 likes, score 7/10) — $NVDA Strong Weekly reversal off the 8MA at 208.50
+
+250C January Alert shared with Subscribers last week is up 30%+ now
+
+Looking for continuation this week to 230 
+
+Nvidia $NVDA CEO just said that Ver
+  - https://x.com/StockOptionCole/status/2061444183366451678
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 24).
+- **@coreweave** (19 likes, score 7/10) — It's here.
+
+CoreWeave is the first AI cloud to bring up @nvidia Vera Rubin NVL72.
+
+10× better inference per watt. 1/10th the cost per million tokens vs Blackwell. 
+
+Full story in our press release.
+  - https://x.com/CoreWeave/status/2061441369961566601
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 19).
+- **@watcherguru** (5512 likes, score 9/10) — BREAKING: Michael Saylor's 'Strategy' sold 32 Bitcoin worth $2.5 million.
+  - https://x.com/WatcherGuru/status/2061418961787408822
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 7710).
+- **@latestinspace** (2315 likes, score 9/10) — Blue Origin's New Glenn rocket just blew up on the pad at Kennedy Space Center while attempting to Static Fire  https://x.com/SawyerMerritt/status/2060174287563116696/video/1…
+  - https://x.com/latestinspace/status/2060193173268242588
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2639).
+- **@grantcardone** (419 likes, score 9/10) — Saylor sells 32 of the 843,000+ BTC equaling .000037% of his holdings.  Bitcoiners lose their minds.
+  - https://x.com/GrantCardone/status/2061439667933761617
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 645).
+- **@polymarket** (368 likes, score 9/10) — JUST IN: Michael Saylor’s Strategy sells $2.5 million of Bitcoin, its first sale since 2022.
+  - https://x.com/Polymarket/status/2061430454721360085
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 590).
+- **@bitcoin** (384 likes, score 9/10) — $72,158.22
+
+#Bitcoin
+  - https://x.com/Bitcoin/status/2061428734889009478
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 572).
+- **@kalshi** (406 likes, score 9/10) — JUST IN: 65% chance Bitcoin falls below $60,000
+  - https://x.com/Kalshi/status/2061424683388428670
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 560).
+- **@spaceinvestor_d** (144 likes, score 9/10) — $RDW: This is the type of hire I pay attention to.
+
+A senior engineer leaves Blue Origin after nearly 5 years working on their lunar lander and joins Redwire's Space Missions team.
+
+Redwire is quietly
+  - https://x.com/SpaceInvestor_D/status/2061408452853862595
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 156).
+- **@cb_doge** (15241 likes, score 8/10) — Elon Musk, Eric Trump, Lara Trump, Secretary of State Marco Rubio, Secretary of Defense Pete Hegseth, and Nvidia CEO Jensen Huang arrive in Beijing aboard Air Force One.
+  - https://x.com/cb_doge/status/2054549846930153760
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 17031).
+- **@watcherguru** (13528 likes, score 8/10) — JUST IN: Jeff Bezos's Blue Origin New Glenn rocket explodes during a static-fire test.
+  - https://x.com/WatcherGuru/status/2060166995388092470
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 16100).
+- **@spacex** (7933 likes, score 8/10) — Now targeting 6:30 p.m. CT for liftoff of Starship
+  - https://x.com/SpaceX/status/2057581356423462964
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 8925).
+- **@watcherguru** (3760 likes, score 8/10) — JUST IN: OpenAI prepares to file for IPO in the coming days or weeks, WSJ reports.
+  - https://x.com/WatcherGuru/status/2057135472292270313
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 4380).
+- **@bitcoinmagazine** (1340 likes, score 8/10) — JUST IN: Michael Saylor's Strategy announced they sold 32 BTC for over $2.5 million
+  - https://x.com/BitcoinMagazine/status/2061418382872781289
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1792).
+- **@niccruzpatane** (412 likes, score 8/10) — Yes. This is real.
+
+Chinese robotics company Unitree just revealed a real-life $650,000 manned Mecha robot.
+
+• Transformable between bipedal and quadrupedal 
+• ~1,100 lbs 
+• Aluminum frame
+
+ China is
+  - https://x.com/niccruzpatane/status/2054244547891192058
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 484).
+- **@stocksavvyshay** (186 likes, score 8/10) — $CRWV completed first system-level bring-up of $NVDA Vera Rubin NVL72 becoming the first AI cloud provider to deploy the next-gen rack-scale AI system.
+
+Vera Rubin delivers up to 10x better inference
+  - https://x.com/StockSavvyShay/status/2061437520420999480
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 236).
+- **@peterli34923561** (63 likes, score 8/10) — $PLTR --- On the defense front, $PLTR ’s Maven AI system officially earned Program of Record status from the U.S. military back in March — a designation that secures long-term funding from the U.S. de
+  - https://x.com/peterli34923561/status/2061291865253855656
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 65).
+- **@blueorigin** (5338 likes, score 8/10) — NG-3 Update: We have confirmed payload separation.  AST SpaceMobile has confirmed the satellite has powered on. The payload was placed into an off-nominal orbit. We are currently assessing and will up
+  - https://x.com/blueorigin/status/2045860091920896043
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6006).
+- **@worldandscience** (106 likes, score 8/10) — Fascinating: The Retina Nebula, or IC 4406, is a dying star. 
+
+A journey around it in a starship would reveal a massive donut-shaped cloud of gas and dust drifting into space.
+
+(Credit: NASA and The H
+  - https://x.com/WorldAndScience/status/2061154253222101344
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 124).
+- **@droid254** (40 likes, score 8/10) — Anthropic is now the most valuable startup in History almost at 1 trillion dollars
+  - https://x.com/droid254/status/2061382962914926725
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 46).
+- **@spacemnke** (13 likes, score 7/10) — Here are some great setups for the open:
+
+$MU above 1000 or 980
+$SNDK above 1730
+$MSFT above 465
+$PLTR above 163
+$NBIS previous ATH backtest.
+  - https://x.com/spacemnke/status/2061439238676103194
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 17).
+- **@mmatters22596** (10 likes, score 7/10) — A lot of money is about to flow from overvalued semi-conductor stocks into cheap software companies.
+
+Here are the 15 fastest growing software companies:
+YoY Revenue growth
+
+1. $PLTR | 71%
+2. $APP | 5
+  - https://x.com/MMatters22596/status/2061443055035527216
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 16).
+- **@xrobohub** (14 likes, score 7/10) — 100 NIX humanoids, free for builders. 
+
+LUMOS Robotics is launching Project EDGE with 100 NIX units for selected labs, universities, builders, and creative robotics teams. Hardware, SDK access, and te
+  - https://x.com/XRoboHub/status/2061433859527348571
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 16).
+- **@finnstockinger** (5 likes, score 7/10) — The "Isaac GR00T Reference Humanoid Robot" platform was just unveiled at GTC. Official launch: October 2026.
+
+This isn't another closed-door prototype. It’s an open reference standard (Unitree skeleto
+  - https://x.com/FinnStockinger/status/2061425834481660042
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 13).
+- **@danshipper** (2345 likes, score 7/10) — We’ve automated every single thing we can @every with AI agents.
+
+And yet there’s way more human work to do than ever. We’ve gone from 4 -> 30 human employees since GPT-3.
+
+I wrote a report on the str
+  - https://x.com/danshipper/status/2057514494960513272
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2683).
+- **@tedpillows** (411 likes, score 7/10) — Saylor's Strategy sells $2,500,000 in $BTC.
+
+Is this the beginning?
+  - https://x.com/TedPillows/status/2061420860854992992
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 717).
+- **@adriandittmann** (283 likes, score 7/10) — The first Starship to transport astronauts should be called Starship Enterprise
+  - https://x.com/AdrianDittmann/status/2061388601712431545
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 377).
+- **@theinnovator360** (43 likes, score 7/10) — The setup looks constructive from a momentum perspective.
+
+Palantir Technologies ( $PLTR )has already reclaimed a key resistance zone around $157–$160, and breakouts backed by strong volume tend to at
+  - https://x.com/TheInnovator360/status/2061346297186062842
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 43).
+- **@spacenews_inc** (29 likes, score 7/10) — New Glenn failure worsens constrained launch market https://spacenews.com/new-glenn-failure-worsens-constrained-launch-market/…
+  - https://x.com/SpaceNews_Inc/status/2061383897737265525
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 31).
+- **@binance** (532 likes, score 7/10) — Long-term holding trends suggest Bitcoin is increasingly being treated as a store of value.
+
+Supply is steadily concentrating in long-held positions over time. ₿
+  - https://x.com/binance/status/2061327608919347256
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 874).
+- **@howtoai_** (797 likes, score 7/10) — Someone just open-source a framework that gives Claude Code ability to control quadrupeds, humanoids, and drones in real time.
+
+It’s called DiMOS, an agent-native OS that turns complex robotics stacks
+  - https://x.com/HowToAI_/status/2043660611578687705
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 861).
+- **@kalshi** (165 likes, score 7/10) — JUST IN: Nvidia CEO says software companies "aren’t dead" since AI still need an application to work on
+  - https://x.com/Kalshi/status/2061437089154031823
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 239).
+- **@mexc** (16 likes, score 7/10) — The market is open. 
+
+Your first RealStocks reward starts with a simple step:
+Deposit $100 and unlock your Nasdaq Basic live market pass. 
+
+Stay informed, and catch opportunities as they happen.
+  - https://x.com/MEXC/status/2061440126668943665
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 26).
+- **@business** (12 likes, score 7/10) — Nvidia, IBM, Intel, Microsoft, Redwire. Here’s what’s getting Wall Street's attention before the bell.
+  - https://x.com/business/status/2061420049596821700
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 22).
+- **@financialjuice** (21 likes, score 7/10) — Enterprise software leaders develop AI agents using Nvidia
+  - https://x.com/financialjuice/status/2061302223963934983
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 21).
+- **@cnbc** (18 likes, score 7/10) — Stocks making the biggest moves premarket: Nvidia, Arm, Taylor Morrison, Qualcomm & more
+  - https://x.com/CNBC/status/2061413572941361270
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 18).
+- **@sunrisetrader** (2 likes, score 7/10) — $VRT daily two indecision sticks at 50ma confirming today.  New long here today
+  - https://x.com/SunriseTrader/status/2061441648928919944
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 10).
