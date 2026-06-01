@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-06-01T04:27:37.507324",
-  "window_7d_actions": 2177,
-  "window_24h_actions": 541,
+  "generated_at": "2026-06-01T08:30:52.189038",
+  "window_7d_actions": 2195,
+  "window_24h_actions": 538,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2078
-    },
-    {
-      "pattern": "FR_ANCHOR",
-      "count": 28
+      "count": 2095
     },
     {
       "pattern": "METAPHOR",
+      "count": 30
+    },
+    {
+      "pattern": "FR_ANCHOR",
       "count": 27
     },
     {
       "pattern": "RENAME",
-      "count": 18
+      "count": 17
     },
     {
       "pattern": "DIALOGUE",
@@ -41,7 +41,7 @@
   "best_hours_utc": [
     {
       "hour": 8,
-      "actions": 141
+      "actions": 144
     },
     {
       "hour": 11,
@@ -63,42 +63,42 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 762
+      "count": 772
     },
     {
       "topic": "Autre",
-      "count": 662
+      "count": 673
     },
     {
       "topic": "Spatial",
-      "count": 415
+      "count": 417
     },
     {
       "topic": "Bourse",
-      "count": 348
+      "count": 349
     },
     {
       "topic": "Crypto",
-      "count": 331
+      "count": 323
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1242
+      "count": 1266
     },
     {
       "type": "retweet",
-      "count": 751
+      "count": 742
     },
     {
       "type": "hotake",
-      "count": 69
+      "count": 71
     },
     {
       "type": "quote",
-      "count": 59
+      "count": 60
     },
     {
       "type": "post",
@@ -107,18 +107,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-01T04:14:11.366514",
-      "text": "Gobé a trouvé une solution pour réparer un écosystème mort. Le vrai problème ? Personne n'a le courage de remonter à 13m.",
+      "ts": "2026-06-01T08:29:26.695495",
+      "text": "au-delà d'un certain capital le PEA devient un handicap fiscal déguisé : tu es plafonné à 150k de versements pendant que ton CTO et ton assurance-vie peuvent absorber l'excédent avec une fiscalité qui, bien structurée, d",
       "type": "reply"
     },
     {
-      "ts": "2026-06-01T04:12:27.944018",
-      "text": "Berkshire just dumped $6.8B on Taylor Morrison.\n\nThe S&P is wearing a tuxedo. The shoes are Crocs.\n\nhttps://www.cnbc.com/2026/06/01/berkshire-hathaway-taylor-morrison-home-acquisition-housing-market.html",
-      "type": "hotake"
+      "ts": "2026-06-01T08:26:51.157248",
+      "text": "Le Rolex Index est une moyenne géométrique de 12 montres.\nLa variance est trop faible pour être un indicateur macro fiable.\nC'est pas une reprise, c'est juste que la Chine a racheté pour faire plaisir aux PDG.\nTonton Patrick pleure encore sur son Datejust qui ne vaut plus que le ",
+      "type": "reply"
     },
     {
-      "ts": "2026-06-01T04:08:49.405241",
-      "text": "Fragile en IDF, ça veut dire que les vendeurs ont plus peur du malin que du perdant.\nBercy achète de la visibilité pour calmer Tonton Patrick qui ne comprend pas pourquoi le prix ne baisse pas avec les taux.\n$SPCE a atterri à la Lune depuis 2021. On attend toujours le décollage d",
+      "ts": "2026-06-01T08:24:26.293587",
+      "text": "les 50 balles c'est pas pour les pecs — c'est pour avoir un endroit où exister physiquement avec des humains. le dernier tiers-lieu pas cher. c'est pour ça que Basic-Fit explose pendant que les réseaux sociaux s'effondre",
       "type": "reply"
     }
   ]
