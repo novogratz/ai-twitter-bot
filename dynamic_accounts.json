@@ -219,7 +219,13 @@
     "JeanBosson",
     "BourseCanada",
     "BabouMouloudji",
-    "RomainMouysset"
+    "RomainMouysset",
+    "JulienCahen",
+    "PierreVogel",
+    "RomainVigouroux",
+    "MaximeRigot",
+    "MaelleGB",
+    "ThomasLeclerc"
   ],
   "en": [
     "blablacar",
@@ -1394,6 +1400,36 @@
     {
       "lang": "fr",
       "handle": "RomainMouysset",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienCahen",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreVogel",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainVigouroux",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeRigot",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelleGB",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasLeclerc",
       "added": "2026-06-01"
     }
   ]

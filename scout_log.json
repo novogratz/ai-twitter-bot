@@ -1992,5 +1992,64 @@
       }
     ],
     "summary": "Le mix France/USA est \u00e9quilibr\u00e9 avec des profils tech solides (Mistral, Bosson) et des valeurs s\u00fbres en crypto (Mert, CryptoFrancais). Le Qu\u00e9bec est bien repr\u00e9sent\u00e9 par les acteurs locaux de la bourse. Pas de venteuse de r\u00eave, juste du contenu."
+  },
+  {
+    "ts": "2026-06-01T14:25:31.471112",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienCahen",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "Directeur Investissement chez Lyxor. La voix calme qui donne du sens aux march\u00e9s, pas du bruit."
+      },
+      {
+        "handle": "PierreVogel",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "VP Product chez Doctolib. Penseux profond, couvre le SaaS et la tech fran\u00e7aise avec un style clair."
+      },
+      {
+        "handle": "RomainVigouroux",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Founding Partner chez Coinbase Ventures (bas\u00e9 SF). La vue fran\u00e7aise de la DeFi et des infrastructures crypto."
+      },
+      {
+        "handle": "MaximeRigot",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "L'expert blockchain qu\u00e9b\u00e9cois. Analyse technique et on-chain pr\u00e9cise, twitte en FR naturel."
+      },
+      {
+        "handle": "MaelleGB",
+        "region": "france",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "VP chez Hugging Face. La femme de l'IA open source, twitte entre code et strat\u00e9gie produit."
+      },
+      {
+        "handle": "ThomasLeclerc",
+        "region": "france",
+        "niche": "finance",
+        "followers": 18000,
+        "reason": "Journaliste financements \u00e0 Paris. Il sait o\u00f9 l'argent va avant tout le monde, style sec."
+      },
+      {
+        "handle": "Jean-PhilippeBC",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Analyste et coach boursier qu\u00e9b\u00e9cois. Constats directs sur les indices, moins pompeux que ses confr\u00e8res."
+      }
+    ],
+    "summary": "Un mix \u00e9quilibr\u00e9 entre la hype AI (Mistral/Hugging Face) et la gravit\u00e9 des march\u00e9s (Lyxor/Coinbase Ventures). Des profils qui twittent encore, pas juste des influenceurs de formation \u00e0 97\u20ac."
   }
 ]

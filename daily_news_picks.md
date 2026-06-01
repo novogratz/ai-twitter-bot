@@ -10252,3 +10252,219 @@ data centers are obviously still critical but oh man so much personal hardware a
 - **@wsj** (7 likes, score 7/10) — Heard on the Street: There are some clear advantages for OpenAI or Anthropic to be first in going public
   - https://x.com/WSJ/status/2061458016092803366
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 15).
+- **@kylechasse** (15 likes, score 8/10) — Starlink just crossed 10 million subscribers.
+
+65% of every active satellite in orbit. Doubling every single year.
+
+A kid in a fishing village getting his first internet connection. A hospital in rura
+  - https://x.com/Kylechasse/status/2061473208172442052
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 29).
+- **@kylechasse** (17 likes, score 8/10) — SpaceX's reported 18,712 BTC stash is worth about $1.4 billion today.
+
+Combined with Tesla's holdings, a Tesla-SpaceX merger would create the world's 5th-largest corporate Bitcoin treasury.
+
+Quietly,
+  - https://x.com/Kylechasse/status/2061460240512741416
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 27).
+- **@ns123abc** (59 likes, score 9/10) — BREAKING: SpaceX compute deal with Anthropic includes ~325,000 NVIDIA GPUs across COLOSSUS and COLOSSUS II, plus hyperscale CPUs, exabyte storage, and high-speed interconnects
+
+$1.25B/month through Ma
+  - https://x.com/ns123abc/status/2061482394981462034
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 65).
+- **@stockmktnewz** (1273 likes, score 9/10) — NVIDIA $NVDA CEO JENSEN HUANG JUST ANNOUNCED THE LAUNCH OF:
+
+ALPAMAYO
+
+“the worlds first thinking, reasoning model for autonomous vehicles”
+  - https://x.com/StockMKTNewz/status/2008295165040226381
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1375).
+- **@artificialanlys** (481 likes, score 9/10) — NVIDIA has released Nemotron 3 Super, a 120B (12B active) open weights reasoning model that scores 36 on the Artificial Analysis Intelligence Index with a hybrid Mamba-Transformer MoE architecture
+
+We
+  - https://x.com/ArtificialAnlys/status/2031765321233908121
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 517).
+- **@sawyermerritt** (256 likes, score 9/10) — SpaceX filed its amended IPO filing (S-1/A) today.
+
+Here's everything new that I found:
+• In relation to acquisitions, divestitures, or other strategic transactions, @SpaceX says they "may issue a sig
+  - https://x.com/SawyerMerritt/status/2061475030832193858
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 302).
+- **@nasahistory** (202 likes, score 9/10) — The crew of STS-134 celebrated with their ride OTD 15 years ago after landing at NASA's Kennedy Space Center.
+
+With this 25th night landing of the Shuttle Program, Endeavour had completed its final mi
+  - https://x.com/NASAhistory/status/2061462776564859202
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 210).
+- **@spaceinvestor_d** (32 likes, score 8/10) — The latest SpaceX S-1/A shows 60%+ of pre-IPO shares, including Elon Musk’s stake, are locked up for 366 days.
+
+The lockup is split into two pools. 
+
+Less than 40% of pre-IPO shares are eligible for a
+  - https://x.com/SpaceInvestor_D/status/2061478446950158354
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 40).
+- **@wallstreetmav** (4909 likes, score 9/10) — Elon and SpaceX have been telling everyone about cell phones connecting direct to Starlink satellites.
+
+China cannot block Elon’s satellites. Elon owns a few satellites in orbit above his head no matt
+  - https://x.com/WallStreetMav/status/2055457116958175535
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 5233).
+- **@cryptorover** (140 likes, score 9/10) — BIG WARNING: SPACEX INSIDERS MAY DUMP SHARES ON RETAIL FROM DAY 1.
+
+SpaceX reportedly plans to reserve up to 5% of IPO shares for employees and executives’ friends and family
+
+And those shares could h
+  - https://x.com/cryptorover/status/2061468779436273717
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 238).
+- **@kobeissiletter** (629 likes, score 9/10) — BREAKING: Anthropic has confidentially filed an S-1 with the SEC for its proposed IPO.
+  - https://x.com/KobeissiLetter/status/2061479190600307077
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 783).
+- **@kalshi** (622 likes, score 9/10) — JUST IN: SpaceX to reserve 5% of IPO shares for insiders
+  - https://x.com/Kalshi/status/2061468477798433190
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 712).
+- **@artificialanlys** (351 likes, score 9/10) — LG recently launched EXAONE 4.0 32B - it scores 62 on Artificial Analysis Intelligence Index, the highest score for a 32B model yet
+
+@LG_AI_Research's EXAONE 4.0 is released in two variants: the 32B h
+  - https://x.com/ArtificialAnlys/status/1950884246803136601
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 377).
+- **@sawyermerritt** (147 likes, score 9/10) — Anthropic has just officially announced that its has filed its IPO prospectus with the SEC.
+
+"Today, Anthropic confidentially submitted a draft registration statement on Form S-1 to the U.S. SEC for a
+  - https://x.com/SawyerMerritt/status/2061481319540969902
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 191).
+- **@stocksavvyshay** (70 likes, score 9/10) — Anthropic has confidentially filed its S-1 with the SEC for a proposed IPO.
+  - https://x.com/StockSavvyShay/status/2061481630955631005
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 98).
+- **@milesdeutscher** (25 likes, score 9/10) — Been testing Opus 4.8 for the past few days.
+
+Anthropic cooked on this one. I'm impressed.
+
+Here are my thoughts on the 4.8 update *so far*
+
+• Pretty slow, but smart. Kind of reminds me of when O3 fro
+  - https://x.com/milesdeutscher/status/2061467173118476741
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 51).
+- **@esa** (0 likes, score 7/10) — This month at ESA: asteroid flybys, Mars landing tests, space telescope discoveries and more... May 2026 had a lot to offer.
+  - https://x.com/esa/status/2060987141564637432
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 14).
+- **@netcapgirl** (11617 likes, score 8/10) — happy nvidia earnings to all who celebrate
+  - https://x.com/netcapgirl/status/1828789245726917032
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11743).
+- **@earnings_guy** (1000 likes, score 8/10) — $NVDA (Nvidia) #earnings are out:
+  - https://x.com/earnings_guy/status/1960799806143496684
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1082).
+- **@leadingreport** (623 likes, score 8/10) — President John F. Kennedy was allegedly as—ssinated over plans to share UFO/UAP secrets with NASA and the Soviet Union, according to Jonathan Caplan.
+  - https://x.com/LeadingReport/status/2061471236933255597
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 825).
+- **@sunxliao** (165 likes, score 8/10) — Space looking bottomed, especially for our favorite tickers.
+
+Looks like we can get a massive relief bounce going into the $SPCX SpaceX IPO.
+
+As soon as today or tomorrow...
+
+Stay tuned.
+  - https://x.com/sunxliao/status/2061470731226300747
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 207).
+- **@tmtlongshort** (175 likes, score 8/10) — Since ChatGPT came out something like  $10T in market cap has been added due to the AI boom. 
+
+Almost entirely driven by Shazeer & co outlining the transformer architecture in their 2017 paper. 
+
+If y
+  - https://x.com/TMTLongShort/status/2061426971414782221
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 199).
+- **@polymarket** (100 likes, score 8/10) — NEW: Anthropic files confidentially with the SEC for an IPO.
+  - https://x.com/Polymarket/status/2061479512072704404
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 182).
+- **@alojoh** (14 likes, score 7/10) — Is the SpaceX IPO more likely a catalyst for stock market
+  - https://x.com/alojoh/status/2061440916922241444
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 24).
+- **@amitisinvesting** (1189 likes, score 8/10) — $MSFT $META $AMZN $GOOGL $NVDA
+
+The story is CapEx. That's it. That's all that matters.
+
+Now that big tech earnings are done, it's quite obvious that the AI buildout will continue throughout 2026. 
+
+A
+  - https://x.com/amitisinvesting/status/2020940652217872885
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1377).
+- **@nvidiartxspark** (997 likes, score 8/10) — NVIDIA RTX Spark reinvents @Windows PCs for the era of personal AI agents, offering a new class of computer that moves from tool to teammate.
+  - https://x.com/NVIDIARTXSpark/status/2061329272363466793
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1069).
+- **@aleabitoreddit** (594 likes, score 8/10) — $LASR (NLight), a $2.2B US company does these directed energy weapons. 
+
+They build the "Death Ray" - Lasers that shoot down ballistic and hypersonic missiles.
+
+This can be adapted to Orbital death ra
+  - https://x.com/aleabitoreddit/status/2014826579625738691
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 654).
+- **@joinautopilot** (442 likes, score 8/10) — Breaking: Donald Trump says defense companies are expected to quadruple their quantity
+
+Here's 5 under the radar stocks that may benefit:
+
+$KTOS — Kratos Defense: Builds military drones and hypersonic
+  - https://x.com/joinautopilot/status/2030040375549948366
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 486).
+- **@nirajbhusal** (79 likes, score 8/10) — Starlink Seeks Approval to Launch in Nepal
+
+Starlink has formally expressed interest in launching its high-speed satellite internet services in Nepal. Today, the company’s Director, Rebecca Slick Hunt
+  - https://x.com/nirajbhusal/status/2061455935361740959
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 89).
+- **@forbes** (16 likes, score 8/10) — Anthropic Confidentially Files For Its Highly Anticipated IPO
+https://go.forbes.com/2nEgzO
+  - https://x.com/Forbes/status/2061481683530977323
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 26).
+- **@dougboneparth** (8 likes, score 7/10) — Can’t for the S&P 500 to be 99% SpaceX, OpenAI, Anthropic, Nvidia, Google, Microsoft, Apple and Amazon.
+  - https://x.com/dougboneparth/status/2061486809641558135
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 10).
+- **@starlink** (5889 likes, score 7/10) — Starlink enables reliable real-time communication with recovery teams and live streaming of Starship’s splashdown in the middle of the Indian Ocean
+  - https://x.com/Starlink/status/2057950370668945682
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6727).
+- **@remarks** (5840 likes, score 7/10) — JUST IN:  US Space Force contracts 12 companies up to $3.2 billion to develop 'Golden Dome' air defense system.
+  - https://x.com/remarks/status/2047747124696121529
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6102).
+- **@nvidiaai** (1925 likes, score 7/10) — Introducing Cosmos 3: Our latest frontier model for Physical AI
+
+Cosmos 3 is the world’s first fully open omnimodel with native vision reasoning, world and action generation.
+
+Today we’re releasing Su
+  - https://x.com/NVIDIAAI/status/2061308434629132553
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2043).
+- **@watcherguru** (977 likes, score 7/10) — JUST IN: Claude AI developer Anthropic confidentially files for IPO.
+  - https://x.com/WatcherGuru/status/2061479656650383745
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1295).
+- **@polymarket** (217 likes, score 7/10) — NEW: Bernie Sanders proposes the government take 50% of OpenAI & Anthropic to give the public a “direct ownership stake.”
+  - https://x.com/Polymarket/status/2061476034550157678
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 393).
+- **@kobeissiletter** (125 likes, score 7/10) — Call option volume is skyrocketing:
+
+Call options now reflect 70% of total options market volume, the highest in at least 4 years.
+
+Since early April, this percentage has risen +25 points, the largest
+  - https://x.com/KobeissiLetter/status/2061476312611496220
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 213).
+- **@polymarket** (43 likes, score 7/10) — NEW: Bernie Sanders proposes the government take 50% of OpenAI & Anthropic to give the public a “direct ownership stake.”
+  - https://x.com/Polymarket/status/2061476034550157678
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 115).
+- **@nvidianewsroom** (30 likes, score 7/10) — After an eventful #NVIDIAGTC Taipei 2026 keynote day, Jensen joined NVIDIA’s Korea partners to toast the AI builders shaping the future of AI and look ahead to his next stop.
+
+See you later this week
+  - https://x.com/nvidianewsroom/status/2061480565782597751
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 32).
+- **@greginvestfr** (7 likes, score 7/10) — S&P Global $SPGI me paraît également être l’une des opportunités les plus intéressantes du moment dans le secteur de la donnée financière et des services aux marchés 
+
+Quelques éléments clés :
+
+• Béné
+  - https://x.com/GregInvestFr/status/2061471580610555920
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 11).
+- **@jimcramer** (483 likes, score 7/10) — Nvidia keynote takes aim at Intel and AMD with much faster better CPU for agents made with ARM. Breakthrough
+  - https://x.com/jimcramer/status/2061400046080327982
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 591).
+- **@jimcramer** (451 likes, score 7/10) — The Nvidia superchip is obviously additive. It's amazing for club holding ARM!
+  - https://x.com/jimcramer/status/2061369117244867060
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 569).
+- **@magiclgge** (47 likes, score 7/10) — Elon Musk proudly showed off the Starlink package during a live program, highlighting how the satellite internet system can bring high-speed connectivity to remote areas around the world. 
+
+Would you
+  - https://x.com/magicLgge/status/2061100619360866575
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 113).
+- **@teslaconomics** (11 likes, score 7/10) — SpaceX has been under the rugs for too long… it’s time to let this company rip
+  - https://x.com/Teslaconomics/status/2061471915357978821
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 23).
