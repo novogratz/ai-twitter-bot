@@ -1829,5 +1829,64 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les architectes et les observateurs. De Mistral \u00e0 la Street NY, c'est le top 10% de la francophonie tech qui ne vend pas de stage."
+  },
+  {
+    "ts": "2026-06-01T04:47:00.036045",
+    "raw_count": 7,
+    "kept_count": 7,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NikolaiP",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "L'ap\u00f4tre du Bitcoin FR, twitte souvent, z\u00e9ro formation \u00e0 vendre, juste de la conviction brute et des chartes."
+      },
+      {
+        "handle": "LionelRigaux",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "L'analyste actionnarial qui ne vend pas de r\u00eave, poste des charts et des comptes rendus de AG qui font l'actualit\u00e9 du CAC40."
+      },
+      {
+        "handle": "YannicSchmid",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Base \u00e0 SF mais francophone de c\u0153ur, poste en FR sur ETH et la macro, style sec et efficace."
+      },
+      {
+        "handle": "OphelieDeMontlivault",
+        "region": "france",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Journaliste IA chez Les Echos, twitte les bons articles et les papers importants avant qu'ils deviennent du buzz bas de gamme."
+      },
+      {
+        "handle": "SylvainLafontaine",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Expert AI/ML au Qu\u00e9bec, mixe technique pure et avis business, twitte en FR quand il a l'inspiration."
+      },
+      {
+        "handle": "MathieuPloucha",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le patron de Mistral AI, parle tech, IA open source et startup life sans faire le gars corporate qui dort sur un divan."
+      },
+      {
+        "handle": "AlexisCoulomb",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise sur les startups SaaS et la tech, twitte en FR avec humour, pas dans la blabla politicienne."
+      }
+    ],
+    "summary": "Le top FR est domin\u00e9 par les puristes (Nikolai, Rigaux) qui refusent les tutos 'deviens riche en 30 jours', le top IA est port\u00e9s par l'\u00e9cosyst\u00e8me Mistral (Mathieu, Ophelie) qui pr\u00eache par l'exemple."
   }
 ]
