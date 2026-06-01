@@ -210,3 +210,24 @@ def safe_run_session_refresh():
         log.info("[HYGIENE] Error during session refresh:")
         traceback.print_exc()
         health.record_failure("hygiene")
+
+
+def safe_run_periodic_warmup():
+    """Scheduler wrapper: clear SW + hard-reload x.com every 30 min.
+
+    Lighter than a full restart — no Safari quit, just evict stale service
+    workers so the app shell stays fresh during long runs.
+    Takes the safari lock so it doesn't race with active scrape cycles.
+    """
+    try:
+        from .twitter_client import _safari_lock
+        log.info("[HYGIENE] Periodic SW warmup — clearing x.com service workers.")
+        with _safari_lock:
+            ok = _warm_up_xcom()
+        if ok:
+            log.info("[HYGIENE] Periodic SW warmup done.")
+        else:
+            log.warning("[HYGIENE] Periodic SW warmup returned False (non-fatal).")
+    except Exception:
+        log.warning("[HYGIENE] Periodic SW warmup error (non-fatal):")
+        traceback.print_exc()
