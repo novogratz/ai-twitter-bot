@@ -207,7 +207,12 @@
     "LionelRigaux",
     "YannicSchmid",
     "MathieuPloucha",
-    "AlexisCoulomb"
+    "AlexisCoulomb",
+    "JulienRochet",
+    "PierreRoanne",
+    "VincentBorie",
+    "AlexisDegrand",
+    "MaximeMaurin"
   ],
   "en": [
     "blablacar",
@@ -1322,6 +1327,31 @@
     {
       "lang": "fr",
       "handle": "AlexisCoulomb",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienRochet",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRoanne",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBorie",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDegrand",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMaurin",
       "added": "2026-06-01"
     }
   ]
