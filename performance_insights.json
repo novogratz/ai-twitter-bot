@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-01T08:30:52.189038",
-  "window_7d_actions": 2195,
-  "window_24h_actions": 538,
+  "generated_at": "2026-06-01T15:54:16.178756",
+  "window_7d_actions": 2284,
+  "window_24h_actions": 493,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2095
+      "count": 2184
     },
     {
       "pattern": "METAPHOR",
@@ -13,11 +13,11 @@
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 27
+      "count": 28
     },
     {
       "pattern": "RENAME",
-      "count": 17
+      "count": 16
     },
     {
       "pattern": "DIALOGUE",
@@ -40,12 +40,16 @@
   ],
   "best_hours_utc": [
     {
+      "hour": 11,
+      "actions": 159
+    },
+    {
       "hour": 8,
       "actions": 144
     },
     {
-      "hour": 11,
-      "actions": 130
+      "hour": 10,
+      "actions": 138
     },
     {
       "hour": 23,
@@ -54,51 +58,47 @@
     {
       "hour": 21,
       "actions": 121
-    },
-    {
-      "hour": 12,
-      "actions": 119
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 772
+      "count": 816
     },
     {
       "topic": "Autre",
-      "count": 673
+      "count": 685
     },
     {
       "topic": "Spatial",
-      "count": 417
+      "count": 446
     },
     {
       "topic": "Bourse",
-      "count": 349
+      "count": 357
     },
     {
       "topic": "Crypto",
-      "count": 323
+      "count": 333
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1266
+      "count": 1334
     },
     {
       "type": "retweet",
-      "count": 742
+      "count": 750
     },
     {
       "type": "hotake",
-      "count": 71
+      "count": 83
     },
     {
       "type": "quote",
-      "count": 60
+      "count": 61
     },
     {
       "type": "post",
@@ -107,18 +107,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-01T08:29:26.695495",
-      "text": "au-delà d'un certain capital le PEA devient un handicap fiscal déguisé : tu es plafonné à 150k de versements pendant que ton CTO et ton assurance-vie peuvent absorber l'excédent avec une fiscalité qui, bien structurée, d",
+      "ts": "2026-06-01T15:51:19.882601",
+      "text": "CRM parked $5B in a private equity slot that compounds at model velocity while their public stock trades on seat growth.\n\nYou didn’t buy a tech company. You bought a venture fund with a CRM license plate.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-01T08:26:51.157248",
-      "text": "Le Rolex Index est une moyenne géométrique de 12 montres.\nLa variance est trop faible pour être un indicateur macro fiable.\nC'est pas une reprise, c'est juste que la Chine a racheté pour faire plaisir aux PDG.\nTonton Patrick pleure encore sur son Datejust qui ne vaut plus que le ",
+      "ts": "2026-06-01T15:46:05.141484",
+      "text": "50% of any AI lab’s equity for a government stake implies the government owns half the inference bill.\n\nOpenAI raises at a $157B valuation with $5B burn. The IRS will depreciate this over 7 years. The board meets Thursday.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-01T08:24:26.293587",
-      "text": "les 50 balles c'est pas pour les pecs — c'est pour avoir un endroit où exister physiquement avec des humains. le dernier tiers-lieu pas cher. c'est pour ça que Basic-Fit explose pendant que les réseaux sociaux s'effondre",
+      "ts": "2026-06-01T15:44:36.344860",
+      "text": "Watching $PLTR for a buy? The Rule of 40 is 180%. You aren't looking for an entry. You're looking for a discount on a monopoly.",
       "type": "reply"
     }
   ]
