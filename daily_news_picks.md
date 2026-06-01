@@ -9008,3 +9008,198 @@ That is
 - **@smallcapscience** (11 likes, score 7/10) — $SPCE up 20% in Overnight Markets
   - https://x.com/SmallCapScience/status/2061269616907686392
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 15).
+- **@claudeai** (49480 likes, score 9/10) — Introducing Claude Code Security, now in limited research preview.
+
+It scans codebases for vulnerabilities and suggests targeted software patches for human review, allowing teams to find and fix issue
+  - https://x.com/claudeai/status/2024907535145468326
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 53314).
+- **@cb_doge** (7533 likes, score 9/10) — SpaceX just launched the 1000th Starlink satellite of 2026.
+
+That’s ~10 satellites deployed every single day and one launch roughly every 2.5 days.
+
+Starlink now has 10,000+ active satellites in orbit
+  - https://x.com/cb_doge/status/2044048543913333195
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 9189).
+- **@thinkymachines** (2409 likes, score 9/10) — We are partnering with @nvidia to power our frontier model training and platforms delivering customizable AI.
+
+https://thinkingmachines.ai/news/nvidia-partnership/…
+  - https://x.com/thinkymachines/status/2031356627916603876
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 2611).
+- **@tedpillows** (478 likes, score 9/10) — $BTC move above $80,000 was a classic liquidity grab.
+
+Now, ETFs are selling while the US-Iran deal keeps getting delayed.
+
+If Bitcoin loses the $70,000 level, a drop to $60,000 could be next.
+  - https://x.com/TedPillows/status/2061114481632034836
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 736).
+- **@xfreeze** (273 likes, score 9/10) — Grok 4 is now live on Azure AI Foundry
+
+The world’s most powerful and advanced reasoning model with real-time insights is now available for enterprise-scale applications
+  - https://x.com/XFreeze/status/1972730952775536754
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 345).
+- **@bridgemindai** (142 likes, score 9/10) — MiniMax M3 beats GPT 5.5 on SWE-Bench Pro.
+
+MiniMax M3: 59.0 
+GPT 5.5: 58.6.
+
+MiniMax M3 just out coded a frontier model at $0.30 in and $1.20 out. 
+
+A fraction of the cost.
+
+That is serious vibe codi
+  - https://x.com/bridgemindai/status/2061260805006311627
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 164).
+- **@dell** (22 likes, score 7/10) — Thrilled to support @CoreWeave with the first liquid-cooled Dell PowerEdge XE9812 with @NVIDIA Vera Rubin NVL72.  As enterprises demand AI at scale, we’re delivering the infrastructure that helps cust
+  - https://x.com/Dell/status/2061268039597781410
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 22).
+- **@dell** (21 likes, score 7/10) — Thrilled to support @CoreWeave with the first liquid-cooled Dell PowerEdge XE9812 with @NVIDIA Vera Rubin NVL72.  As enterprises demand AI at scale, we’re delivering the infrastructure that helps cust
+  - https://x.com/Dell/status/2061268039597781410
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 21).
+- **@arena** (410 likes, score 9/10) — Search Arena Leaderboard is live!
+
+Two weeks after launching the new Search Arena, the first results are in - with over 7K community votes.
+
+o3-search by @OpenAI takes the #1 spot!
+
+The current rankin
+  - https://x.com/arena/status/1952769858166505657
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 420).
+- **@openrouter** (318 likes, score 9/10) — OpenAI's GPT-5.4 is live on OpenRouter!
+
+It unifies the SOTA coding and agentic qualities of Codex and the reasoning strenghts of GPT-5.2 into one frontier model, and has a 1M context window!
+
+In our
+  - https://x.com/OpenRouter/status/2029623888334967239
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 356).
+- **@anndylian** (9 likes, score 7/10) — 1/ The crypto market fell 0.71% to $2.49T over the past 24 hours, driven by weakness in Bitcoin. BTC dominance at 59.22% confirms its role as the primary driver of sentiment. When Bitcoin declines, th
+  - https://x.com/anndylian/status/2061272007430541373
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 11).
+- **@xai** (13769 likes, score 9/10) — SpaceXAI and @AnthropicAI have also expressed interest in partnering to develop multiple gigawatts of orbital AI compute capacity
+  - https://x.com/xai/status/2052060561857302605
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 15001).
+- **@google** (464 likes, score 9/10) — We’re making it easier to build, test, and ship for the 3 billion people using @Android.
+
+Today at #GoogleIO we’re introducing updates for Android developers — with agents doing the heavy lifting:
+
+ @
+  - https://x.com/Google/status/2056847066845057470
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 506).
+- **@divestech** (856 likes, score 9/10) — We believe Trump in the White House will massively accelerate Musk’s autonomous and Cybercab vision for Tesla and help to unlock the $1 trillion of AI valuation alone on the story @SquawkStreet
+  - https://x.com/DivesTech/status/1854498597628149789
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 936).
+- **@wallstreetapes** (93 likes, score 9/10) — Elon Musk is changing the world
+
+SpaceX is making space travel much cheaper by reusing rockets. Launch costs dropped 85% and they now launch over 80% of everything going into orbit
+
+Most of SpaceX’s m
+  - https://x.com/WallStreetApes/status/2061276459222925501
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 113).
+- **@trendspider** (0 likes, score 8/10) — Space stocks absolutely cooked in May 
+
+$RKLB +70%
+$LUNR +70%
+$ASTS +50%
+$PL +37%
+$VSAT +21%
+$SATS +4%
+$GSAT +2%
+  - https://x.com/TrendSpider/status/2060904093393334719
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 40).
+- **@haider1** (16 likes, score 7/10) — june is looking like another big month for AI model releases:
+
+gpt-5.6
+gemini 3.5 pro
+grok 4.5, or early grok 5
+sonnet 4.8 / mythos-level model
+minimax m3, or a variant
+glm-5.2 -- doubtful, but it wou
+  - https://x.com/haider1/status/2061274032834818306
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 24).
+- **@spacex** (22688 likes, score 8/10) — Views of Starship in space from a @Starlink satellite
+  - https://x.com/SpaceX/status/2057962516282577014
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 23942).
+- **@sawyermerritt** (14291 likes, score 8/10) — WOW! This is the first time we've ever been able to see Starship in space from another object. This view comes from modified Starlink satellite they just deployed that has a camera and a light on it.
+  - https://x.com/SawyerMerritt/status/2057962471818776846
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 14657).
+- **@netcapgirl** (11630 likes, score 8/10) — happy nvidia earnings to all who celebrate
+  - https://x.com/netcapgirl/status/1828789245726917032
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11756).
+- **@earnings_guy** (2206 likes, score 8/10) — $NVDA (Nvidia) #earnings are out:
+  - https://x.com/earnings_guy/status/1991255215052390754
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2402).
+- **@earnings_guy** (1178 likes, score 8/10) — $NVDA (Nvidia) #earnings are out:
+  - https://x.com/earnings_guy/status/2026772091719069714
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1272).
+- **@stockmktnewz** (94 likes, score 8/10) — WATCH OUT
+
+Nvidia's $NVDA GTC Taipei keynote is about to begin
+
+Jensen Huang is about to take the stage
+  - https://x.com/StockMKTNewz/status/2061278950676930654
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 142).
+- **@ollama** (70 likes, score 8/10) — .@MiniMax_AI M3 model is available on Ollama's Cloud! 
+
+In partnership with MiniMax, the M3 model on Ollama's Cloud is US-based with zero data retention. 
+
+Try M3 on coding and agentic tasks: 
+
+Claude
+  - https://x.com/ollama/status/2061268256569360620
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 88).
+- **@the_spactator** (776 likes, score 8/10) — $ASTS: President Trump filed a new Periodic Transaction Report today disclosing 2 separate purchases of AST SpaceMobile (ASTS) in amounts between $1,001-$15,000 in March 17th. Hopefully this is the st
+  - https://x.com/The_SPACTATOR/status/2054961102635651348
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 904).
+- **@openai** (12835 likes, score 7/10) — Introducing GPT-Rosalind, our frontier reasoning model built to support research across biology, drug discovery, and translational medicine.
+  - https://x.com/OpenAI/status/2044861690911850863
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 13801).
+- **@remarks** (5850 likes, score 7/10) — JUST IN:  US Space Force contracts 12 companies up to $3.2 billion to develop 'Golden Dome' air defense system.
+  - https://x.com/remarks/status/2047747124696121529
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6112).
+- **@nasaspaceflight** (201 likes, score 7/10) — Reviewing all the NSF camera views and the aftermath of the New Glenn explosion at LC-36. 
+
+https://youtube.com/watch?v=r7yNQuNSGBw…
+  - https://x.com/NASASpaceflight/status/2061261550153822405
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 209).
+- **@barchart** (39 likes, score 7/10) — JUST IN : Anthropic reportedly considering canceling its IPO after Jim Cramer says it's the one IPO he most wants to buy
+  - https://x.com/Barchart/status/2061281015092371916
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 57).
+- **@roundhill** (28 likes, score 7/10) — Interested in investing in humanoids and physical AI? There’s more than $TSLA. The Roundhill Humanoid Robotics ETF $HUMN offers exposure to the companies building some of today’s most advanced robots
+  - https://x.com/roundhill/status/2061236288741613672
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 36).
+- **@starlink** (7454 likes, score 7/10) — Starlink Mobile is providing data for video, voice, and messaging services in areas where terrestrial service is unavailable
+
+Working with global mobile network operators, our satellite-to-mobile netw
+  - https://x.com/Starlink/status/2028280634880454887
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 8546).
+- **@coinvo** (303 likes, score 7/10) — SCARY:  The same odds that correctly predicted Trump's election victory are now being placed on Bitcoin ending the year lower than it started.
+  - https://x.com/Coinvo/status/2061128660245967068
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 375).
+- **@haider1** (144 likes, score 7/10) — codex improved surprisingly fast
+
+anthropic leaked the claude code source, then weeks later, openai shipped "codex for almost everything" with many of the same features
+
+with better execution
+
+now ope
+  - https://x.com/haider1/status/2061115492560171271
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 170).
+- **@retail_mourinho** (64 likes, score 7/10) — $ASTS takes a hit in the overnight session. Down 5%.
+  - https://x.com/retail_mourinho/status/2061239285685076039
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 84).
+- **@sarthak4alpha** (8 likes, score 7/10) — Why does Apple keep macOS exclusive to its own devices 
+
+while Windows runs on almost every PC brand?
+  - https://x.com/Sarthak4Alpha/status/2061270290236366913
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 28).
+- **@cryptogoos** (18 likes, score 7/10) — BULLISH:  President Trump says he will not let other countries replace the US as the Bitcoin & crypto "capital of the world."
+
+"It is a major industry, and we must protect it."
+  - https://x.com/cryptogoos/status/2061278057353314617
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 26).
+- **@rklb_invest** (20 likes, score 7/10) — $ASTS 블루 오리진의 NG-4 폭발의 여파가 지속되는 중.
+
+하지만 희망은 있다?
+
+로켓슬라 아티클에 주목하세요.
+  - https://x.com/rklb_invest/status/2061276691381829935
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 20).
