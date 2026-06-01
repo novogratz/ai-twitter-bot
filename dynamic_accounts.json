@@ -202,7 +202,12 @@
     "ThibautD",
     "PhilippeB",
     "MaximeB",
-    "SimonLaprise"
+    "SimonLaprise",
+    "NikolaiP",
+    "LionelRigaux",
+    "YannicSchmid",
+    "MathieuPloucha",
+    "AlexisCoulomb"
   ],
   "en": [
     "blablacar",
@@ -1292,6 +1297,31 @@
     {
       "lang": "fr",
       "handle": "SimonLaprise",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "NikolaiP",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelRigaux",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "YannicSchmid",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuPloucha",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisCoulomb",
       "added": "2026-06-01"
     }
   ]

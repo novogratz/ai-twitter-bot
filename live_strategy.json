@@ -1,5 +1,5 @@
 {
-  "ts": "2026-05-31T06:00:00.000000",
+  "ts": "2026-06-01T06:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 15,
     "MAX_HOTAKES_PER_DAY": 50,
@@ -14,11 +14,11 @@
   "topic_focus": [
     "Space",
     "AI",
+    "Investment",
     "Space",
-    "Crypto",
-    "Space",
-    "Investment"
+    "AI",
+    "Crypto"
   ],
   "cadence_factor": 1.0,
-  "rationale": "MAX IMPACT MODE: Space rising +38% 24h vs 7d baseline (SpaceX IPO, ASTS BlueBird launch, Golden Dome). Swapped Robotics -> Crypto: BTC treasury buys are top performers by likes (41 likes Capital B, 28 likes Saylor). Quotes remain at 300/day — radically underused vs RTs (55 vs 702 this week), push harder."
+  "rationale": "QUOTE PUSH MODE: Quotes critically underused — 59 in 7 days vs 300/day cap (8/day actual vs 300/day allowed). RTs dominate at 107/day. Execution issue not cap issue: all generation must quote before retweeting bare. Topic focus: SpaceX IPO ($1.75T target), ASTS BlueBirds mid-June Falcon 9 launch, RKLB Neutron debut, Anthropic Mythos above Opus, GPT-4.5 retiring June 27, SoftBank $53B France datacenters. Best hours 21-23 UTC (5-7pm ET) and 11-12 UTC (6-8am ET) — schedule heavy fire in these windows. METAPHOR pattern dominates, push RENAME second."
 }
