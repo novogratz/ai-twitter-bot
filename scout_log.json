@@ -1888,5 +1888,50 @@
       }
     ],
     "summary": "Le top FR est domin\u00e9 par les puristes (Nikolai, Rigaux) qui refusent les tutos 'deviens riche en 30 jours', le top IA est port\u00e9s par l'\u00e9cosyst\u00e8me Mistral (Mathieu, Ophelie) qui pr\u00eache par l'exemple."
+  },
+  {
+    "ts": "2026-06-01T06:53:50.152696",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienRochet",
+        "region": "france",
+        "niche": "tech",
+        "followers": 65000,
+        "reason": "Le 'tech bro' qui comprend enfin que le code ne sauve pas l'humanit\u00e9. Pure satire du SaaS."
+      },
+      {
+        "handle": "PierreRoanne",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Ex-Google. Il tweet des insights tech avec une telle classe que \u00e7a en devient g\u00eanant pour nous, pauvres mortels."
+      },
+      {
+        "handle": "VincentBorie",
+        "region": "france",
+        "niche": "finance",
+        "followers": 25000,
+        "reason": "L'analyste qui te fait r\u00e9aliser que tu as perdu 10% sur Nvidia par paresse. \u00c7a pique, mais c'est juste."
+      },
+      {
+        "handle": "AlexisDegrand",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "On le suit pour les insights, on le garde pour les memes. L'\u00e9quilibre parfait entre s\u00e9rieux et connerie."
+      },
+      {
+        "handle": "MaximeMaurin",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Il couvre le march\u00e9 FR sans s'endormir. Rare pour un analyste de ne pas vendre de formation \u00e0 999\u20ac."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 dans les listes 'top crypto FR' et les profils ex-Google/Big Tech. J'ai exclu les vendeurs de r\u00eave. Il reste des pros qui tweetent encore, ce qui est d\u00e9j\u00e0 une victoire."
   }
 ]

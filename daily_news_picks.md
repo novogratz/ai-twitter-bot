@@ -9660,3 +9660,176 @@ they’re the o
 - Mistral AI entered the industrial physical AI field through the acquisitio
   - https://x.com/CyberRobooo/status/2061284307210018949
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
+- **@sam_badawi** (0 likes, score 7/10) — FIFTY BILLION IN AI DATACENTER CONSTRUCTION AT A 45% CAGR. Here's why:
+
+$NBIS - Revenue surged 684% YoY to $399M while contracted power capacity guidance increased to 4 GW.
+
+$CRWV - Revenue backlog re
+  - https://x.com/Sam_Badawi/status/2060764448214941917
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 18).
+- **@elonmusk** (219088 likes, score 9/10) — Congratulations @SpaceX team on an epic first Starship V3 launch & landing!
+
+You scored a goal for humanity.
+  - https://x.com/elonmusk/status/2057974830469677092
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 231812).
+- **@fexir1** (25 likes, score 8/10) — The market keeps giving hints.
+
+The CEO of NVIDIA called some massive winners before the crowd:
+
+$NBIS → +1000%
+$INTC → +500%
+$SNDK → +500%
+$CRWV → +200%
+$TSM → +80%
+
+And now he’s focused on space.
+
+$
+  - https://x.com/fexir1/status/2061231037443936398
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 45).
+- **@europeanpowell** (12 likes, score 7/10) — The AI Bubble: Betting £14bn on Imminent Collapse
+The industry’s own numbers tell the story:
+OpenAI lost $5 billion in 2024
+Anthropic burned $5.3 billion in 2024
+MIT research shows 95% of generative A
+  - https://x.com/EuropeanPowell/status/2061344553592840640
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 14).
+- **@visegrad24** (0 likes, score 9/10) — BREAKING:
+
+Massive explosion by Blue Origin's New Glenn rocket on a launchpad in Cape Canaveral, Florida
+
+Major setback for Jeff Bezos
+  - https://x.com/visegrad24/status/2060167627637465508
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2452).
+- **@deitaone** (921 likes, score 9/10) — $NVDA - NVIDIA EARNINGS: MORGAN STANLEY SEES STRONG BEAT, LIFTED FORECASTS
+
+NVIDIA reports earnings Wednesday, with Joseph Moore expecting another “beat and raise” quarter—about $3B above estimates an
+  - https://x.com/DeItaone/status/2056345097814311235
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1071).
+- **@artificialanlys** (584 likes, score 9/10) — Xiaomi has just launched MiMo-V2-Flash, a 309B open weights reasoning model that scores 66 on the Artificial Analysis Intelligence Index. This release elevates Xiaomi to alongside other leading AI mod
+  - https://x.com/ArtificialAnlys/status/2002202322164981789
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 626).
+- **@unotheinvestor** (206 likes, score 9/10) — How to retire in 2030 ( very easy):
+
+• Make $2M
+• Buy $500k each of  
+  $RKLB at $143
+  $ASTS at $113
+  $FLY at $46 
+  $AMZN at $280
+
+• By 2030,
+  $RKLB $400 
+  $ASTS $700 
+  $FLY $150
+  $AMZN $800
+
+•
+  - https://x.com/UnotheInvestor/status/2061137029107187836
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 262).
+- **@jonerlichman** (0 likes, score 7/10) — Some companies expected to see their revenue double or more in next 5 years:
+
+AMD
+Arista Networks
+Broadcom
+Cloudflare
+CrowdStrike
+MercadoLibre
+Micron
+Nvidia
+Palantir
+Reddit
+Roblox
+Shopify
+Tesla
+
+Sourc
+  - https://x.com/JonErlichman/status/2061169244285407614
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 14).
+- **@earnings_guy** (2205 likes, score 8/10) — $NVDA (Nvidia) #earnings are out:
+  - https://x.com/earnings_guy/status/1991255215052390754
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2401).
+- **@cb_doge** (1675 likes, score 8/10) — Nicki Minaj joined SpaceX’s Starship launch livestream and thanked Elon Musk.
+
+"Major shoutout to Elon! Elon thank you for everything you are doing for humanity."
+
+Starships were literally meant to fl
+  - https://x.com/cb_doge/status/2057604481811132432
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2035).
+- **@earnings_guy** (1178 likes, score 8/10) — $NVDA (Nvidia) #earnings are out:
+  - https://x.com/earnings_guy/status/2026772091719069714
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1272).
+- **@0xsammy** (28 likes, score 8/10) — I worked as a Big 4 auditor for a decade, here’s my take on the Burry “Fugazi” thread
+
+The transaction is real and the figures check out. Apollo led a $3.5bn capital solution for Valor Compute Infrast
+  - https://x.com/0xSammy/status/2061341557035348458
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 42).
+- **@disruptorinvest** (13 likes, score 7/10) — It’s likely going to be the power shortfall. Chips won’t be able to be plugged in.
+  - https://x.com/disruptorinvest/status/2060811961646961010
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 19).
+- **@karankendre** (14 likes, score 7/10) — MiniMax M3 just got released 
+
+And we have an open source model that is as capable as GPT 5.5.
+  - https://x.com/karankendre/status/2061344928744210734
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 16).
+- **@wattusmaximus** (16450 likes, score 8/10) — BREAKING 
+New footage of Blue Origin Rocket.
+  - https://x.com/WattusMaximus/status/2060174719333089559
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 16844).
+- **@joinautopilot** (442 likes, score 8/10) — Breaking: Donald Trump says defense companies are expected to quadruple their quantity
+
+Here's 5 under the radar stocks that may benefit:
+
+$KTOS — Kratos Defense: Builds military drones and hypersonic
+  - https://x.com/joinautopilot/status/2030040375549948366
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 486).
+- **@etienne_breton** (112 likes, score 8/10) — $PLTR
+
+What the hell is going on with PLTR at $161 tonigh?
+
+Did I miss something?
+  - https://x.com/etienne_breton/status/2061286401300124144
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 132).
+- **@remarks** (5850 likes, score 7/10) — JUST IN:  US Space Force contracts 12 companies up to $3.2 billion to develop 'Golden Dome' air defense system.
+  - https://x.com/remarks/status/2047747124696121529
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6112).
+- **@marionawfal** (2504 likes, score 7/10) — Russia just fired two Oreshnik missiles at the Kyiv region, and the rarity alone tells you how serious this is...
+
+The Oreshnik is a nuclear capable hypersonic IRBM that carries multiple independently
+  - https://x.com/MarioNawfal/status/2058338928298529035
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2814).
+- **@nvidiaai** (998 likes, score 7/10) — Introducing Cosmos 3: Our latest frontier model for Physical AI
+
+Cosmos 3 is the world’s first fully open omnimodel with native vision reasoning, world and action generation.
+
+Today we’re releasing Su
+  - https://x.com/NVIDIAAI/status/2061308434629132553
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1066).
+- **@robynhd** (81 likes, score 7/10) — Michael Burry porte de graves accusations contre la structure de financement derrière xAI et Nvidia.
+
+Selon Burry, plus de 5,4 milliards de dollars US de puces IA Nvidia ont été financés via une socié
+  - https://x.com/RobynHD/status/2061348022236106885
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 89).
+- **@knhjyohokyoku** (41 likes, score 7/10) — Saudi Arabia is introducing an AI surveillance system for crowd management during the Mecca pilgrimage.
+
+According to Grok, this system is a domestically developed technology led by the Saudi governme
+  - https://x.com/KNHjyohokyoku/status/2061335320071971219
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 49).
+- **@spacenosey** (36 likes, score 7/10) — The magnitude of the New Glenn explosion compared to the size of the rocket.
+
+@blueorigin #NewGlenn
+  - https://x.com/SpaceNosey/status/2061340858390061562
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 36).
+- **@boringbiz_** (703 likes, score 7/10) — Virgin Galactic stock is currently +165% over the past month because Redditors on WallStreetBets are confusing the ticker $SPCE  with Space X ticker $SPCX 
+
+Thats how dumb the market is right now
+  - https://x.com/BoringBiz_/status/2061258631371252184
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 761).
+- **@hamptonism** (318 likes, score 7/10) — This is the video you watch before realizing Palantir is a $400 stock.
+  - https://x.com/hamptonism/status/2061308246053581071
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 332).
+- **@ultralinx** (16 likes, score 7/10) — Not sure how Google of all companies hasn't kept up with or beat OpenAI and Anthropic.
+
+They literally have everyone's data.
+  - https://x.com/UltraLinx/status/2061370972968530364
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 28).
