@@ -8831,3 +8831,180 @@ Thats how dumb the market is right now
 - **@firstnameb22616** (10 likes, score 7/10) — Poor people do need the internet, but I appreciate you admitting you think they don't instead of dancing around it. Existing satellite internet pre-starlink was unusable garbage and the undeveloped ar
   - https://x.com/firstnameb22616/status/2061202019927351592
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 10).
+- **@just_kaws** (84 likes, score 9/10) — Leopold Aschenbrenner Situational Awareness's Q1 2026 13F portfolio 
+
+$5.5B AUM with big swings:
+
+1) Bloomenergy $BE – $875.5M
+2) CoreWeave* $CRWV – $774.4M
+3) Intel $INTC – $746.8M
+4) Lumentum $LITE
+  - https://x.com/JUST_KAWS/status/2061206577563025432
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 112).
+- **@wr4nygov** (79 likes, score 9/10) — How to criticize the SpaceX IPO:
+
+1. Claim you've read the IPO documents thoroughly.
+
+2. Ignore the parts about Starlink and terrestrial data centers (or don't read the document).
+
+3. Point to the ver
+  - https://x.com/WR4NYGov/status/2061197526792016204
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 111).
+- **@bitget** (66 likes, score 9/10) — JUST IN: Polymarket odds show a ~50% chance of SpaceX's valuation hit $2.5T by June 30.
+  - https://x.com/bitget/status/2061261800855990313
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 96).
+- **@cryptopatel** (80 likes, score 9/10) — SoftBank Booked $2.6 Billion Profit On NVIDIA And Called It A Win. Then NVIDIA Did The Unthinkable
+
+In 2019, SoftBank Sold its Entire @NVIDIA stake:
+ Sold For: ~$3.3 Billion
+ Profit Booked: ~$2.6 Bill
+  - https://x.com/CryptoPatel/status/2061168334809264208
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 82).
+- **@nasawatch** (19 likes, score 7/10) — After Blue Origin rocket explosion, NASA’s entire moon exploration program depends on SpaceX for now as Musk eyes blockbuster IPO soon https://fortune.com/2026/05/30/blue-origin-new-glenn-explosion-na
+  - https://x.com/NASAWatch/status/2061198289198895302
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 19).
+- **@nasawatch** (19 likes, score 7/10) — After Blue Origin rocket explosion, NASA’s entire moon exploration program depends on SpaceX for now as Musk eyes blockbuster IPO soon https://fortune.com/2026/05/30/blue-origin-new-glenn-explosion-na
+  - https://x.com/NASAWatch/status/2061198289198895302
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 19).
+- **@dell** (13 likes, score 7/10) — Thrilled to support @CoreWeave with the first liquid-cooled Dell PowerEdge XE9812 with @NVIDIA Vera Rubin NVL72.  As enterprises demand AI at scale, we’re delivering the infrastructure that helps cust
+  - https://x.com/Dell/status/2061268039597781410
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 13).
+- **@rasmr_eth** (381 likes, score 9/10) — SpaceX is a $2,500,000,000,000 company. 
+
+Hyperliquid is a $150,000,000,000 company.
+  - https://x.com/rasmr_eth/status/2061217041793618057
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 431).
+- **@coinvotrading** (176 likes, score 9/10) — THE $SPCX IPO CAN LITERALLY CHANGE MILLIONS OF LIVES. 
+
+In 1999, $NVDA went public and 27 years later, it's up over 600,000%. 
+
+Nvidia set the stage and showed what's possible. 
+
+If SpaceX does even a
+  - https://x.com/CoinvoTrading/status/2061130591618101559
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 200).
+- **@mookafish** (66 likes, score 9/10) — Considering this thing just had the most powerful rocket ever built firing directly at it, it is in remarkably good condition.
+A rapidly reusable launch pad for Starship seems quite feasible now.
+  - https://x.com/Mookafish/status/2061208320065576969
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 70).
+- **@pdmytriiev** (30 likes, score 8/10) — Pre-IPO markets on @HyperliquidX  - how a new $1.12B asset class emerged in 90 days.
+
+@SpaceX. @OpenAI. @AnthropicAI. @cerebras. Accessible 24/7 on @tradexyz and @ventuals. 
+
+From a wallet.
+
+Full brea
+  - https://x.com/PDmytriiev/status/2061142352530375153
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 46).
+- **@wolf_bitcoin_** (26 likes, score 8/10) — Nvidia $NVDA Revenue is up 1,035% over 3 years
+
+Its stock price is also up 1,199% in 5 years
+
+You a buyer here though?
+  - https://x.com/WOLF_Bitcoin_/status/2061218666058863088
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 34).
+- **@netcapgirl** (11630 likes, score 8/10) — happy nvidia earnings to all who celebrate
+  - https://x.com/netcapgirl/status/1828789245726917032
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11756).
+- **@peterdclack** (3418 likes, score 8/10) — The Earth is greening at a rate never seen before in all recorded history, according to NASA satellite records from 1982–2023.
+
+Global crop yields have risen 15–20% since 1960, almost entirely attribu
+  - https://x.com/PeterDClack/status/2061035642273112263
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 3758).
+- **@cryptowizardd** (873 likes, score 8/10) — Almost #NVIDIA earnings
+  - https://x.com/CryptoWizardd/status/1792486845718188404
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1171).
+- **@stocksavvyshay** (901 likes, score 8/10) — MY THOUGHTS AHEAD OF NVIDIA EARNINGS
+
+$NVDA has become the gravity point of this entire market. That’s why next week’s earnings aren’t just about one company -- they’re about whether the AI cycle stil
+  - https://x.com/StockSavvyShay/status/1959259196488401086
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1055).
+- **@kalshi** (513 likes, score 8/10) — BREAKING: More Americans think the moon landing was faked than approve of Congress
+  - https://x.com/Kalshi/status/2061198057421549992
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 633).
+- **@opapoeconomico** (220 likes, score 8/10) — SpaceX va faire une introduction en bourse avec le ticker SPCX.
+
+Les gens de WallStreetBets ont remarqué que si on tape « SPC » dans l’appli, on tombe sur Virgin Galactic ($SPCE). Une entreprise qui n
+  - https://x.com/opapoeconomico/status/2061115490135580723
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 244).
+- **@whalenoname** (57 likes, score 8/10) — SOMEONE SHOW THIS TO NVIDIA BULLS 
+
+Left chart: Cisco in 2000
+Right chart: Nvidia in 2026
+
+Take a minute and actually look at them
+
+In 2000 Cisco was the most important company in the world
+
+The inter
+  - https://x.com/WhaleNoName/status/2061189886447587576
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 91).
+- **@bricsinfo** (6547 likes, score 8/10) — Russia's new hypersonic missile, Oreshnik, comes equipped with an extremely powerful thermal warhead that burns at 4,000°C
+
+That's hot enough to vaporize concrete, destroy even the most hardened milit
+  - https://x.com/BRICSinfo/status/1862326345952342038
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7585).
+- **@digitalix** (235 likes, score 8/10) — NVIDIA’s N1X could finally give the company the pieces needed for a more complete laptop platform: Arm CPU cores, Blackwell GPU, and a shared LPDDR5X memory architecture. The one major piece it still
+  - https://x.com/digitalix/status/2061072797925851303
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 333).
+- **@remarks** (5850 likes, score 7/10) — JUST IN:  US Space Force contracts 12 companies up to $3.2 billion to develop 'Golden Dome' air defense system.
+  - https://x.com/remarks/status/2047747124696121529
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6112).
+- **@serobinsonjr** (397 likes, score 7/10) — STARLINK: Today, Virgin Atlantic Chief Operating Officer, Suzanne Roddie announced the completion of SpaceX Starlink installations across their A350 fleet. 
+
+The final aircraft was installed five mont
+  - https://x.com/SERobinsonJr/status/2061196396875898881
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 415).
+- **@divestech** (171 likes, score 7/10) — Look forward to discussing SpaceX and tech stocks on @CNBCMorningCall at 5 am with @MorganLBrennan
+  - https://x.com/DivesTech/status/2061211426115448903
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 187).
+- **@nasaspaceflight** (170 likes, score 7/10) — Reviewing all the NSF camera views and the aftermath of the New Glenn explosion at LC-36. 
+
+https://youtube.com/watch?v=r7yNQuNSGBw…
+  - https://x.com/NASASpaceflight/status/2061261550153822405
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 178).
+- **@beffjezos** (84 likes, score 7/10) — Huge edge over Waymos, who tend to completely crash out if the power goes out in an area.
+
+Satellite connectivity >> cell towers
+  - https://x.com/beffjezos/status/2061225137308139874
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 100).
+- **@roundhill** (26 likes, score 7/10) — Interested in investing in humanoids and physical AI? There’s more than $TSLA. The Roundhill Humanoid Robotics ETF $HUMN offers exposure to the companies building some of today’s most advanced robots
+  - https://x.com/roundhill/status/2061236288741613672
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 34).
+- **@echofm_online** (12 likes, score 7/10) — Произошёл «крупнейший взрыв на стартовой площадке в американской истории». Авиационный эксперт Вадим Лукашевич: 
+
+«Тяжёлая ракета-носитель New Glenn компании Blue Origin взорвалась во время огневых ис
+  - https://x.com/echofm_online/status/2061072956369895787
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 16).
+- **@breadddman** (10 likes, score 7/10) — If you missed the first move on $ZETA $PLTR $HOOD 
+
+BM has another HIGH VALUE we will hop in next week in @The_BakeryHQ
+  - https://x.com/Breadddman/status/2061272903832727636
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 10).
+- **@starlink** (7454 likes, score 7/10) — Starlink Mobile is providing data for video, voice, and messaging services in areas where terrestrial service is unavailable
+
+Working with global mobile network operators, our satellite-to-mobile netw
+  - https://x.com/Starlink/status/2028280634880454887
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 8546).
+- **@unusual_whales** (2821 likes, score 7/10) — An unknown trader has made nearly $200 million (and counting) in the last week playing tech earnings.
+
+This assumed single entity opened ITM short call positions on both $MSFT and $GOOG in the days le
+  - https://x.com/unusual_whales/status/2019489048570597733
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 3137).
+- **@boringbiz_** (134 likes, score 7/10) — Virgin Galactic stock is currently +165% over the past month because Redditors on WallStreetBets are confusing the ticker $SPCE  with Space X ticker $SPCX 
+
+Thats how dumb the market is right now
+  - https://x.com/BoringBiz_/status/2061258631371252184
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 148).
+- **@cryptollica** (57 likes, score 7/10) — THE REAL BUBBLE IS NOT BITCOIN
+
+BITCOIN/NVIDIA RATIO
+
+Every major Bitcoin cycle top came when BTC/NVDA reached structural exhaustion, and today the chart is still sitting far below that zone.
+
+That is
+  - https://x.com/Cryptollica/status/2061170680570532123
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 69).
+- **@smallcapscience** (11 likes, score 7/10) — $SPCE up 20% in Overnight Markets
+  - https://x.com/SmallCapScience/status/2061269616907686392
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 15).
