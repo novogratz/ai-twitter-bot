@@ -20,15 +20,32 @@ _safari_lock = threading.Lock()
 # restart without waiting for the scheduled 2h cycle.
 _blank_page_lock = threading.Lock()
 _blank_page_count = 0
+_home_feed_blank_count = 0
 _BLANK_PAGE_RESTART_THRESHOLD = 5
+_HOME_FEED_BLANK_RESTART_THRESHOLD = 3  # home feed fails 3× in a row → restart
 
 
-def _record_blank_page():
-    global _blank_page_count
+def _record_blank_page(is_home_feed: bool = False):
+    global _blank_page_count, _home_feed_blank_count
     with _blank_page_lock:
         _blank_page_count += 1
         count = _blank_page_count
-    if count >= _BLANK_PAGE_RESTART_THRESHOLD:
+        if is_home_feed:
+            _home_feed_blank_count += 1
+            hf_count = _home_feed_blank_count
+        else:
+            hf_count = 0
+    if hf_count >= _HOME_FEED_BLANK_RESTART_THRESHOLD:
+        with _blank_page_lock:
+            _home_feed_blank_count = 0
+            _blank_page_count = 0
+        log.warning(f"[SCRAPE] Home feed blank {hf_count}× in a row — triggering reactive Safari restart.")
+        try:
+            from . import safari_hygiene
+            safari_hygiene.restart_safari(reason="black_screen_recovery")
+        except Exception:
+            pass
+    elif count >= _BLANK_PAGE_RESTART_THRESHOLD:
         _reset_blank_page_count()
         log.warning(f"[SCRAPE] {count} consecutive blank pages — triggering reactive Safari restart.")
         try:
@@ -39,9 +56,10 @@ def _record_blank_page():
 
 
 def _reset_blank_page_count():
-    global _blank_page_count
+    global _blank_page_count, _home_feed_blank_count
     with _blank_page_lock:
         _blank_page_count = 0
+        _home_feed_blank_count = 0
 
 
 def _run_applescript(script: str, retries: int = 1) -> bool:
@@ -800,11 +818,11 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             return []
         if not raw or raw == 'NO_ARTICLES':
             log.info(f"[SCRAPE] No articles on {label} (page not loaded?)")
-            _record_blank_page()
+            _record_blank_page(is_home_feed="home feed" in label)
             return []
         if raw.startswith('ARTICLES_'):
             log.info(f"[SCRAPE] {label}: {raw}")
-            _record_blank_page()
+            _record_blank_page(is_home_feed="home feed" in label)
             return []
 
         data = _json.loads(raw)
