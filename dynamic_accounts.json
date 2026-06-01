@@ -189,7 +189,20 @@
     "JulienManceau",
     "0xFelix",
     "MaximilienB",
-    "AlphacoinFR"
+    "AlphacoinFR",
+    "0x0zozoz",
+    "Lorenzo_Indices",
+    "MaximeMicheau",
+    "PhilippeDerose",
+    "PierreLescure",
+    "JohannDecaux",
+    "JulienD",
+    "MaximeBoutier",
+    "LucasP",
+    "ThibautD",
+    "PhilippeB",
+    "MaximeB",
+    "SimonLaprise"
   ],
   "en": [
     "blablacar",
@@ -1215,6 +1228,71 @@
       "lang": "fr",
       "handle": "AlphacoinFR",
       "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "0x0zozoz",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lorenzo_Indices",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMicheau",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeDerose",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLescure",
+      "added": "2026-05-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "JohannDecaux",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienD",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBoutier",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasP",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautD",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeB",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeB",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "SimonLaprise",
+      "added": "2026-06-01"
     }
   ]
 }

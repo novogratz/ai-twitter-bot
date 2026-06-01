@@ -9399,3 +9399,264 @@ Plus, we’ll b
 - Mistral AI entered the industrial physical AI field through the acquisitio
   - https://x.com/CyberRobooo/status/2061284307210018949
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 12).
+- **@xfreeze** (1019 likes, score 9/10) — This is what total dominance looks like:
+
+• Most launches per year → SpaceX
+• Most satellites in orbit → SpaceX
+• Largest rocket ever built → SpaceX
+• Fastest-growing revenue in aerospace → SpaceX
+• O
+  - https://x.com/XFreeze/status/2051688379859783712
+  - **WHY**: Source fiable + impact concret (score signal 15, engagement 1235).
+- **@nasawatch** (23 likes, score 7/10) — After Blue Origin rocket explosion, NASA’s entire moon exploration program depends on SpaceX for now as Musk eyes blockbuster IPO soon https://fortune.com/2026/05/30/blue-origin-new-glenn-explosion-na
+  - https://x.com/NASAWatch/status/2061198289198895302
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 23).
+- **@cb_doge** (2892 likes, score 9/10) — BREAKING: Elon Musk says Starship will make it possible to launch solar powered AI satellites at huge scale, paving the way for 1 terawatt of AI power every year.
+  - https://x.com/cb_doge/status/1987407272171938224
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 3658).
+- **@dell** (49 likes, score 9/10) — ICYMI: During #NVIDIAGTC at Computex, Jensen Huang shared that we're shipping the Dell PowerEdge XE9812 racks with @NVIDIA Vera Rubin NVL72 to @CoreWeave. The future of AI infrastructure is here.
+  - https://x.com/Dell/status/2061300371083964595
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 51).
+- **@astro_pettit** (966 likes, score 9/10) — SpaceX Falcon 9 launch, seen from the ISS across Earth's twilight horizon.
+  - https://x.com/astro_Pettit/status/2004673964967428215
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1006).
+- **@sandra836544639** (193 likes, score 9/10) — I'll only say it once. This might be the fastest way to accumulate $1 million by the end of 2026:
+$NOW (ServiceNow) → $100 Must buy
+$NVDA (NVIDIA) → $217 Must buy
+$IREN (IREN Ltd) → $48 Must buy
+$FIG
+  - https://x.com/sandra836544639/status/2056540875979706788
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 195).
+- **@intel** (118 likes, score 9/10) — Increase performance per watt and enhance efficiency in 5G telco and cloud-native applications. 
+
+Today, Intel launches #IntelXeon 6+, the first data center CPU built on Intel 18A to help AI go to wor
+  - https://x.com/intel/status/2061289131414630474
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 124).
+- **@konstructivizm** (45 likes, score 9/10) — Nuclear Fusion: The Engine That Could Get Us to Mars in Weeks Imagine slashing the journey to Mars from a grueling 6–9 months one way down to just a few weeks.That’s the tantalizing promise of nuclear
+  - https://x.com/konstructivizm/status/2061279819518620116
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 57).
+- **@bnonews** (10027 likes, score 9/10) — WATCH: Blue Origin's New Glenn rocket explodes on launch pad in Cape Canaveral, Florida
+  - https://x.com/BNONews/status/2060165505541968248
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 11125).
+- **@starlink** (4469 likes, score 9/10) — Glimpsing into the future, @SpaceX successfully deployed simulator Starlink satellites on two Starship test flights this year, as we prepare to launch the next generation Starlink and Direct to Cell c
+  - https://x.com/Starlink/status/2006482329238392937
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 4733).
+- **@stocksavvyshay** (715 likes, score 9/10) — The U.S. Space Force visited $RKLB Auckland facility as commercial space becomes a bigger part of national security.
+
+Officials described the need to build an “Arsenal of Freedom” reinforcing Rocket L
+  - https://x.com/StockSavvyShay/status/2055011574235165007
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 793).
+- **@spaceinvestor_d** (261 likes, score 9/10) — $RKLB silicon pivot just got validated this weekend.
+
+TeraFab’s push toward gigawatt-scale orbital data centers makes it clear where this is heading.
+
+Rocket Lab is positioned ahead of the curve with
+  - https://x.com/SpaceInvestor_D/status/2035878846961008954
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 271).
+- **@stockmktnewz** (172 likes, score 9/10) — Here is Nvidia’s $NVDA newest cutting edge data center platform Vera Rubin
+  - https://x.com/StockMKTNewz/status/2061295250480463927
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 198).
+- **@beardotrader** (118 likes, score 9/10) — Based on some analogs I'm tracking, Bitcoin could fall to $30,000 and Ethereum to $475 by August of next year.
+  - https://x.com/BeardoTrader/status/2061245958260703362
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 192).
+- **@stockmktnewz** (27 likes, score 8/10) — Nvidia $NVDA CEO Jensen Huang just announced a new product family of AI-enabled computers
+
+"There is no question this reinvention of the computer is as big a deal as the reinvetion of the phone into w
+  - https://x.com/StockMKTNewz/status/2061307844041838824
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 33).
+- **@cnbc** (9 likes, score 7/10) — Nvidia picks Unitree for humanoid robot platform as Chinese startup eyes IPO
+  - https://x.com/CNBC/status/2061312636688400811
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 13).
+- **@just_kaws** (216 likes, score 9/10) — Leopold Aschenbrenner dropped his Q1 2026 13F 
+
+Here is the full list: 
+
+New positions: 
+
+1) $AMD – Advanced Micro Devices
+2) $APLD – Applied Digital
+3) $ASML – ASML Holding
+4) $BTDR – Bitdeer Technol
+  - https://x.com/JUST_KAWS/status/2057794454442881259
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 244).
+- **@polymarketmoney** (130 likes, score 9/10) — $NVDA CEO Jensen Huang says future AI data centers could cost up to $100B per gigawatt.
+  - https://x.com/PolymarketMoney/status/2061298071351566824
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 154).
+- **@stockmktnewz** (64 likes, score 9/10) — Nvidia $NVDA CEO Jensen Huang just said that Nvidia and Microsoft have spent the last 3 years to reinvent the PC
+  - https://x.com/StockMKTNewz/status/2061305553016480151
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 82).
+- **@nvidiarobotics** (22 likes, score 8/10) — NVIDIA announces the first open humanoid robot reference design built for robotics research.
+
+The NVIDIA Isaac GR00T Reference Humanoid Robot combines the @UnitreeRobotics H2 humanoid robot, @SharpaRo
+  - https://x.com/NVIDIARobotics/status/2061313548593078396
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 26).
+- **@investmentguru_** (20 likes, score 7/10) — AI Trade Continues to Power Higher in Overnight Trading
+
+The AI infrastructure and software rally is showing no signs of slowing down:
+
+AI Server Makers
+$DELL +3%
+$IBM +13%
+$HPE +9%
+
+NeoCloud Leaders
+  - https://x.com/InvestmentGuru_/status/2061250349315375600
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 22).
+- **@tesla_semi** (2873 likes, score 8/10) — Pilot Flying J's portfolio meaningfully adds to the rapidly growing megawatt Semi charging network we are building nationally 
+
+https://newsroom.pilotcompany.com/pilot-partners-with-tesla-on-semi-char
+  - https://x.com/tesla_semi/status/2016192922396529116
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 3059).
+- **@kalshi** (656 likes, score 8/10) — BREAKING: More Americans think the moon landing was faked than approve of Congress
+  - https://x.com/Kalshi/status/2061198057421549992
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 782).
+- **@stockmktnewz** (159 likes, score 8/10) — Nvidia $NVDA CEO Jensen Huang just said we are at the beginning of a new market 
+
+CPUs FOR AGENTS
+
+Here's who is already signed up to use Nvidia's new Vera CPU:
+
+EARLY ADOPTERS:
+- OpenAI
+- Anthropic
+-
+  - https://x.com/StockMKTNewz/status/2061300747434619242
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 185).
+- **@stockmktnewz** (140 likes, score 8/10) — Nvidia $NVDA CEO Jensen Huang just said we are at the beginning of a new market 
+
+CPUs FOR AGENTS
+
+Here's who is already signed up to use Nvidia's new Vera CPU:
+
+EARLY ADOPTERS:
+- OpenAI
+- Anthropic
+-
+  - https://x.com/StockMKTNewz/status/2061300747434619242
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 166).
+- **@stockmktnewz** (30 likes, score 8/10) — Nvidia $NVDA CEO thinks software companies are not dead
+  - https://x.com/StockMKTNewz/status/2061302850731335971
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 42).
+- **@indianabraden** (10 likes, score 7/10) — $SPCE
+
+New 5% Stakeholder: According to a new SEC filing, investor Rich Huang and RichRich Capital built a 5.26% stake in Virgin Galactic, heavily backed by call options. This has triggered heavy reta
+  - https://x.com/indianabraden/status/2061292213082956073
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
+- **@joetegtmeyer** (9204 likes, score 8/10) — Want to know what it sounded like during the launch of Flight 12 of Starship today? 
+
+Check out this video and the shaking of the windows. This was during my livestream with @esherifftv (Ellie in Spac
+  - https://x.com/JoeTegtmeyer/status/2058009564528681194
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 9984).
+- **@bbcbreaking** (623 likes, score 8/10) — Watch: Blue Origin rocket explodes into huge ball of fire on Florida launch pad
+  - https://x.com/BBCBreaking/status/2060198170416542089
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 889).
+- **@brettkrieger12** (107 likes, score 8/10) — Software is so back
+
+$PLTR +2.7% overnight
+$MSFT +2.8% overnight
+$DDOG +1.3% overnight
+  - https://x.com/BrettKrieger12/status/2061240019595956623
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 123).
+- **@ijustine** (48 likes, score 8/10) — Vera Rubin on stage!! @nvidia #ad #computex
+  - https://x.com/ijustine/status/2061294831574651172
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 58).
+- **@etienne_breton** (42 likes, score 8/10) — $PLTR
+
+What the hell is going on with PLTR at $161 tonigh?
+
+Did I miss something?
+  - https://x.com/etienne_breton/status/2061286401300124144
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 54).
+- **@beardotrader** (15 likes, score 7/10) — I'm also thinking $PLTR to $200 in the next 4-6 weeks.
+  - https://x.com/BeardoTrader/status/2061252600641548732
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 15).
+- **@brettkrieger12** (11 likes, score 7/10) — $TSLA 2025 revenue was -2% YoY and net income down almost -50%
+
+$PLTR grew Q1 revenue 86% with an unheard of rule of 40 score of 145%. Karp even mentioned doubling revenue every year through 2028
+
+Two
+  - https://x.com/BrettKrieger12/status/2061251867498176709
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 11).
+- **@nasaartemis** (71274 likes, score 7/10) — The astronauts. Their ride around the Moon. 
+ 
+The Artemis II astronauts pose for a group photo after viewing their Orion spacecraft — which they named Integrity — in the well deck of USS John P. Murt
+  - https://x.com/NASAArtemis/status/2042977685622734929
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 73480).
+- **@spacex** (32140 likes, score 7/10) — Liftoff of Starship on its twelfth flight test
+  - https://x.com/SpaceX/status/2058313378171392061
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 34162).
+- **@johndcook** (15516 likes, score 7/10) — Commentators repeatedly described yesterday’s Artemis splashdown as “textbook.” The flight dynamics were flawless.
+
+This shows that getting Outlook to work is literally harder than rocket science.
+  - https://x.com/JohnDCook/status/2042949193011015740
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 15626).
+- **@starlink** (5894 likes, score 7/10) — Starlink enables reliable real-time communication with recovery teams and live streaming of Starship’s splashdown in the middle of the Indian Ocean
+  - https://x.com/Starlink/status/2057950370668945682
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6732).
+- **@mikealfred** (2419 likes, score 7/10) — Team, I'm still not sure you're getting it fully. The demand is absolutely MASSIVE. Every single spare and idle megawatt will be consumed by AI. The best teams and sites will get the best deals. But e
+  - https://x.com/mikealfred/status/1990942853741330933
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2705).
+- **@stocksavvyshay** (355 likes, score 7/10) — Jensen Huang says Vera Rubin is now in full production and the supply chain is already twice the size of Grace Blackwell.
+
+$NVDA is officially ramping full AI factory systems with CPUs, GPUs and co-pa
+  - https://x.com/StockSavvyShay/status/2061295756481601975
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 385).
+- **@nasaspaceflight** (305 likes, score 7/10) — Reviewing all the NSF camera views and the aftermath of the New Glenn explosion at LC-36. 
+
+https://youtube.com/watch?v=r7yNQuNSGBw…
+  - https://x.com/NASASpaceflight/status/2061261550153822405
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 313).
+- **@polymarket** (107 likes, score 7/10) — NEW: China launches patrols east of Taiwan in response to Japan and the Philippines opening maritime border talks.
+  - https://x.com/Polymarket/status/2061299951494394306
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 157).
+- **@ckcapitalxx** (60 likes, score 7/10) — $CRWV is so cheap here imo.
+  - https://x.com/CKCapitalxx/status/2061290977742954669
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 72).
+- **@teslacarsonly** (23 likes, score 7/10) — TESLA Robovan takes off to Mars.
+  - https://x.com/teslacarsonly/status/2061292947547542014
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 31).
+- **@esa** (0 likes, score 7/10) — Join us at ILA Berlin 2026 (10-14 June) for a week of panels, conferences and media opportunities at the Space Pavilion under the theme #Space4Future.
+
+Programme and media accreditation  https://esa.i
+  - https://x.com/esa/status/2059930580125368730
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 16).
+- **@kalshi** (391 likes, score 7/10) — JUST IN: Intel to launch new AI chip to rival Nvidia and AMD
+  - https://x.com/Kalshi/status/2061290844435427431
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 661).
+- **@mr_derivatives** (552 likes, score 7/10) — $PLTR $161’s overnight..
+  - https://x.com/Mr_Derivatives/status/2061238967106986394
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 620).
+- **@sunxliao** (202 likes, score 7/10) — $BTC that looks like a trough...
+
+Incoming cycle takes us to $200K IMO.
+
+I expect some panes to flip bullish soon.
+  - https://x.com/sunxliao/status/2061222466765369471
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 238).
+- **@gem_detecter** (200 likes, score 7/10) — new week, new opportunities fam
+
+wishing for a green $BTC candle this week so we can print a few 10x memecoins in a single day
+
+the people who make it in this market aren’t the smartest
+
+they’re the o
+  - https://x.com/gem_detecter/status/2061291646822891811
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 234).
+- **@adams_tech_ai** (193 likes, score 7/10) — Starship S39 moments before soft splashdown.
+  - https://x.com/Adams_Tech_AI/status/2061149406905147570
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 203).
+- **@r89capital** (133 likes, score 7/10) — Futures opened green so naturally it's time for Bitcoin to fucking tank
+  - https://x.com/R89Capital/status/2061262696121831915
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 155).
+- **@trendingbitcoin** (17 likes, score 7/10) — Binance founder CZ says "Bitcoin is easy, just don't panic sell."
+  - https://x.com/TrendingBitcoin/status/2061297686997860787
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 25).
+- **@cyberrobooo** (10 likes, score 7/10) — AI model companies that don't enter the realm of physical AI have no future.
+
+- Google Gemini Robotics
+
+- Alibaba Qwen VLA
+
+- Mistral AI entered the industrial physical AI field through the acquisitio
+  - https://x.com/CyberRobooo/status/2061284307210018949
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
