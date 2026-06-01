@@ -1756,5 +1756,78 @@
       }
     ],
     "summary": "On a creus\u00e9 l\u00e0 o\u00f9 \u00e7a fait mal : Mistral et la tech infra fran\u00e7aise, le Bitcoin qu\u00e9b\u00e9cois pragmatique, et les analystes on-chain fran\u00e7ais qui ne vendent pas de vent. Z\u00e9ro influenceur formation, juste des profils qui comprennent leur m\u00e9tier."
+  },
+  {
+    "ts": "2026-06-01T02:54:23.328226",
+    "raw_count": 10,
+    "kept_count": 9,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JohannDecaux",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "Le 'S&P 500 guy' de la French Tech. Cynique, pr\u00e9cis, z\u00e9ro bullshit."
+      },
+      {
+        "handle": "JulienD",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 50000,
+        "reason": "Bas\u00e9 \u00e0 SF mais francophone. Il mixe les news US avant qu'elles n'arrivent en France."
+      },
+      {
+        "handle": "MaximeBoutier",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "L'ancien de Binance France, toujours pertinent, vibe plus chill que les analystes en tailleur."
+      },
+      {
+        "handle": "LucasP",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "VC \u00e0 NYC. Il sent les opportunit\u00e9s avant qu'elles ne soient sur la une."
+      },
+      {
+        "handle": "ThibautD",
+        "region": "france",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Ex-Google, chercheur LLM. Ses threads tech sont des mines d'or sans jargon inutile."
+      },
+      {
+        "handle": "PhilippeB",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Journaliste @BFMBourse. Il comprend la machine mieux que les patrons de banques."
+      },
+      {
+        "handle": "AlexisMoussallem",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 20000,
+        "reason": "La voix du e-commerce qu\u00e9b\u00e9cois. Moins 'crypto', plus 'business r\u00e9el'. Indispensable pour voir la tech servir."
+      },
+      {
+        "handle": "MaximeB",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Trader option \u00e0 NYC. Ses setups sont clairs, ses pertes aussi."
+      },
+      {
+        "handle": "SimonLaprise",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Founding engineer au Qu\u00e9bec. Il traduit la hype US en r\u00e9alit\u00e9 locale sans chichi."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les architectes et les observateurs. De Mistral \u00e0 la Street NY, c'est le top 10% de la francophonie tech qui ne vend pas de stage."
   }
 ]
