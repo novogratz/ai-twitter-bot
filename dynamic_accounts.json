@@ -225,7 +225,14 @@
     "RomainVigouroux",
     "MaximeRigot",
     "MaelleGB",
-    "ThomasLeclerc"
+    "ThomasLeclerc",
+    "CyprienPoulet",
+    "0xRomain",
+    "PierreAndrieu",
+    "JeanGillesG",
+    "AlexisGiraudet",
+    "MaximeBoutin",
+    "ThomasDufour"
   ],
   "en": [
     "blablacar",
@@ -1430,6 +1437,41 @@
     {
       "lang": "fr",
       "handle": "ThomasLeclerc",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyprienPoulet",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xRomain",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreAndrieu",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanGillesG",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisGiraudet",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBoutin",
+      "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasDufour",
       "added": "2026-06-01"
     }
   ]
