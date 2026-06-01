@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-05-31T04:02:22.897856",
-  "window_7d_actions": 1852,
-  "window_24h_actions": 409,
+  "generated_at": "2026-06-01T04:27:37.507324",
+  "window_7d_actions": 2177,
+  "window_24h_actions": 541,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 1759
-    },
-    {
-      "pattern": "METAPHOR",
-      "count": 26
+      "count": 2078
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 23
+      "count": 28
+    },
+    {
+      "pattern": "METAPHOR",
+      "count": 27
     },
     {
       "pattern": "RENAME",
@@ -40,91 +40,85 @@
   ],
   "best_hours_utc": [
     {
-      "hour": 22,
-      "actions": 110
-    },
-    {
-      "hour": 23,
-      "actions": 107
-    },
-    {
-      "hour": 21,
-      "actions": 106
+      "hour": 8,
+      "actions": 141
     },
     {
       "hour": 11,
-      "actions": 104
+      "actions": 130
     },
     {
-      "hour": 5,
-      "actions": 103
+      "hour": 23,
+      "actions": 130
+    },
+    {
+      "hour": 21,
+      "actions": 121
+    },
+    {
+      "hour": 12,
+      "actions": 119
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 641
+      "count": 762
     },
     {
       "topic": "Autre",
-      "count": 548
+      "count": 662
+    },
+    {
+      "topic": "Spatial",
+      "count": 415
     },
     {
       "topic": "Bourse",
-      "count": 346
-    },
-    {
-      "topic": "Spatial",
-      "count": 316
+      "count": 348
     },
     {
       "topic": "Crypto",
-      "count": 314
+      "count": 331
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Spatial",
-      "24h_rate": 0.237,
-      "7d_rate": 0.171
-    }
-  ],
+  "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 976
+      "count": 1242
     },
     {
       "type": "retweet",
-      "count": 702
-    },
-    {
-      "type": "post",
-      "count": 75
-    },
-    {
-      "type": "quote",
-      "count": 55
+      "count": 751
     },
     {
       "type": "hotake",
-      "count": 44
+      "count": 69
+    },
+    {
+      "type": "quote",
+      "count": 59
+    },
+    {
+      "type": "post",
+      "count": 56
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-05-31T03:39:45.385115",
-      "text": "Le vrai IVT Day, c'est le moment où l'IA te remplace tout en te payant encore un peu.\n\nBercy sourit, URSSAF vérifie, et on se dit qu'on a gagné.",
+      "ts": "2026-06-01T04:14:11.366514",
+      "text": "Gobé a trouvé une solution pour réparer un écosystème mort. Le vrai problème ? Personne n'a le courage de remonter à 13m.",
       "type": "reply"
     },
     {
-      "ts": "2026-05-31T03:35:47.687408",
-      "text": "Ton \"encore merci\", c'est le signal d'achat du Space Bro qui vient de souscrire son dernier ETF lunar.\n\nBercy, en fond de tableau, est déjà en train de calculer la taxe sur l'émoticône.",
-      "type": "reply"
+      "ts": "2026-06-01T04:12:27.944018",
+      "text": "Berkshire just dumped $6.8B on Taylor Morrison.\n\nThe S&P is wearing a tuxedo. The shoes are Crocs.\n\nhttps://www.cnbc.com/2026/06/01/berkshire-hathaway-taylor-morrison-home-acquisition-housing-market.html",
+      "type": "hotake"
     },
     {
-      "ts": "2026-05-31T03:27:45.230302",
-      "text": "L’IA génère de l’art à 5$ l’heure.\n\nPixar paie encore un scénariste 3k€/mois pour pleurer sur un camion.",
+      "ts": "2026-06-01T04:08:49.405241",
+      "text": "Fragile en IDF, ça veut dire que les vendeurs ont plus peur du malin que du perdant.\nBercy achète de la visibilité pour calmer Tonton Patrick qui ne comprend pas pourquoi le prix ne baisse pas avec les taux.\n$SPCE a atterri à la Lune depuis 2021. On attend toujours le décollage d",
       "type": "reply"
     }
   ]
