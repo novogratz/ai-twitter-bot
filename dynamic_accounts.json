@@ -254,7 +254,14 @@
     "0xAyayi",
     "RenaudLaplanche",
     "AlexisBouvier",
-    "0xKryptoQc"
+    "0xKryptoQc",
+    "thibaultmrg",
+    "RenaudMPL",
+    "MarcMazuy",
+    "MaximePompidou",
+    "GillesBouy",
+    "PhilippeDion",
+    "AlexPerron"
   ],
   "en": [
     "blablacar",
@@ -1604,6 +1611,41 @@
     {
       "lang": "fr",
       "handle": "0xKryptoQc",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "thibaultmrg",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudMPL",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcMazuy",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximePompidou",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "GillesBouy",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeDion",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexPerron",
       "added": "2026-06-02"
     }
   ]

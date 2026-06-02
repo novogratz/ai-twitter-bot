@@ -12018,3 +12018,169 @@ La Commission européenne vient d'ouvrir la porte aux opérateurs non européens
 Le
   - https://x.com/XFreeze/status/2059752350185906596
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 301).
+- **@xfreeze** (227 likes, score 9/10) — SpaceX Crew-12 launches in about 5 hours
+
+Falcon 9 will send the Dragon spacecraft to the International Space Station from Cape Canaveral, carrying NASA astronauts Jessica Meir and Jack Hathaway, ESA'
+  - https://x.com/XFreeze/status/2022181616982921444
+  - **WHY**: Source fiable + impact concret (score signal 15, engagement 293).
+- **@coinstoreexc** (22 likes, score 8/10) — Coinstore Labs View: Why SpaceX could become one of the most important Pre-IPO stories in the U.S. stock market.
+
+SpaceX is not just a rocket company.
+
+It is building the infrastructure layer for the
+  - https://x.com/CoinstoreExc/status/2061739638763733162
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 44).
+- **@jonhernandezia** (12 likes, score 7/10) — Anthropic gives the EU access to Claude Mythos, its most powerful cybersecurity AI to date  
+
+- ENISA, the EU's cybersecurity agency, gets access to Mythos through Project Glasswing (controlled early
+  - https://x.com/JonhernandezIA/status/2061791818103095783
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 14).
+- **@jouhatsu_ai** (2601 likes, score 9/10) — Un gars a payé 200$ pour Claude Max. Épuisé en 3 heures.
+
+Alors il a acheté un Mac Mini à 599$, installé 5 modèles locaux, 35 milliards de paramètres.
+
+Il a appris à la machine à trier ses mails, comp
+  - https://x.com/Jouhatsu_ai/status/2057104023161876782
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2839).
+- **@sairahul1** (152 likes, score 9/10) — Anthropic paie plus de 750 000 $ par an aux ingénieurs capables de construire des architectures LLM à partir de zéro.
+
+Cette conférence de 2 heures de Stanford vous donne le pipeline exact pour lequel
+  - https://x.com/sairahul1/status/2061740763361562704
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 188).
+- **@charlesmullins2** (48 likes, score 9/10) — SpaceX vient de recevoir l'approbation de la FAA pour tester les nouvelles capsules de rentrée Starfall, conçues pour la fabrication en orbite et le retour de jusqu'à 1 000 kg de charge utile depuis l
+  - https://x.com/CharlesMullins2/status/2061653768111067332
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 56).
+- **@marcosmillayt** (6 likes, score 7/10) — U.S. Data Center Power Demand Projected to Double by 2027…
+  - https://x.com/MarcosMillaYT/status/2061294065283731811
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 10).
+- **@starlink** (5871 likes, score 8/10) — Starlink permet une communication en temps réel fiable avec les équipes de récupération et la diffusion en direct de l'amerrissage de Starship au milieu de l'océan Indien.
+  - https://x.com/Starlink/status/2057950370668945682
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 6707).
+- **@tesla_semi** (2868 likes, score 8/10) — Pilot Flying J's portfolio meaningfully adds to the rapidly growing megawatt Semi charging network we are building nationally 
+
+https://newsroom.pilotcompany.com/pilot-partners-with-tesla-on-semi-char
+  - https://x.com/tesla_semi/status/2016192922396529116
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 3054).
+- **@roundtablespace** (422 likes, score 8/10) — Someone built a full space environment dashboard as a hobby.
+
+- Tracks 30,000+ satellites and space debris in real-time 3D
+- 21 layers of NASA/ESA satellite imagery going back in time
+- Mission design
+  - https://x.com/RoundtableSpace/status/2036839274063212689
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 462).
+- **@spaceinvestor_d** (387 likes, score 8/10) — $RKLB / $ASTS
+
+This executive order is essentially a massive deregulation push for the U.S. commercial space sector!
+
+It could shave months off licensing cycles and unlock higher annual revenue.
+
+Fast
+  - https://x.com/SpaceInvestor_D/status/1955782997460050010
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 405).
+- **@spacenews_inc** (72 likes, score 8/10) — NASA abandons ‘core module’ concept for commercial space station development https://spacenews.com/nasa-abandons-core-module-concept-for-commercial-space-station-development/…
+  - https://x.com/SpaceNews_Inc/status/2061717452732387484
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 82).
+- **@wallstengine** (67 likes, score 8/10) — SoftBank is in early talks to back an ~$800M funding round for German robotics startup Agile Robots, per Bloomberg. 
+
+SoftBank may contribute more than $300M.
+
+Agile Robots builds humanoids, robot arm
+  - https://x.com/wallstengine/status/2061749311382421779
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 79).
+- **@techcrunch** (20 likes, score 8/10) — Blue Origin plans to launch New Glenn again this year after explosion
+  - https://x.com/TechCrunch/status/2061802065429762259
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 32).
+- **@militarnyi** (22 likes, score 8/10) — SpaceX a reçu un contrat de 4,16 milliards de dollars de l'US Space Force pour accélérer le déploiement d'un réseau de satellites destiné à suivre les aéronefs, les missiles de croisière et les drones
+  - https://x.com/militarnyi/status/2061511363504005137
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 26).
+- **@trungtphan** (0 likes, score 7/10) — Steph Curry signed a 10-year deal with Li Ning. The Chinese sportswear firm has $6B market cap. 
+
+Curry must’ve got huge equity and can only assume they’ll somehow make a robotics AI play like this au
+  - https://x.com/TrungTPhan/status/2061596793931223391
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
+- **@aistocksavvy** (10 likes, score 7/10) — 𝐉𝐔𝐒𝐓 𝐈𝐍: Amazon's head of satellite internet warned employees to stay focused after last week's Blue Origin rocket explosion. - BI - $AMZN
+  - https://x.com/AIStockSavvy/status/2061494051455553579
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
+- **@asts_spacemob** (136 likes, score 8/10) — If you sold $ASTS the last 2 days due to a Blue Origin mishap….you don’t deserve the next run
+  - https://x.com/ASTS_SpaceMob/status/2061808879797743980
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 160).
+- **@aistocksavvy** (17 likes, score 7/10) — 𝐉𝐔𝐒𝐓 𝐈𝐍: $SPCE Virgin Galactic to Redeem Up to $𝟑𝟎.𝟓𝐌 Notes Using Stock
+
+ 𝐊𝐞𝐲 𝐇𝐢𝐠𝐡𝐥𝐢𝐠𝐡𝐭𝐬:
+
+➤  Virgin Galactic plans to redeem up to $𝟑𝟎.𝟓𝐌 of 𝟗.𝟖𝟎% First Lien Notes.
+
+➤
+  - https://x.com/AIStockSavvy/status/2061783229959377340
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 19).
+- **@nasa** (147223 likes, score 7/10) — All four of the Artemis II astronauts have been successfully extracted from the Orion spacecraft following splashdown and are now on the USS John P. Murtha. Next up, they will be escorted to the medic
+  - https://x.com/NASA/status/2042785992047055119
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 150081).
+- **@nasaspacealerts** (6597 likes, score 7/10) — MISE À JOUR : @NASA peut confirmer un boule de feu au-dessus de la Nouvelle-Angleterre à 14 h 06 EDT le samedi 30 mai 2026. La météorite mesurait environ 5 pieds (1,6 mètre) de diamètre avec une masse
+  - https://x.com/NASASpaceAlerts/status/2061542998844887048
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6891).
+- **@amitisinvesting** (2104 likes, score 7/10) — UNE TONNE DE CHOSES SE SONT PRODUITES À LA BOURSE AUJOURD'HUI.
+
+Voici un récapitulatif complet :
+
+1. $GOOGL Alphabet propose une levée de fonds en capitaux propres de 80 milliards de dollars pour éten
+  - https://x.com/amitisinvesting/status/2061626514785845324
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2276).
+- **@yahoonewstopics** (647 likes, score 7/10) — 【Anthropic Prêt pour l’introduction en bourse avec une demande d’IPO】
+  - https://x.com/YahooNewsTopics/status/2061559159884263528
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 811).
+- **@kevinvestingyt** (502 likes, score 7/10) — J'ai initié une position sur $IREN sur les marchés overnight.
+
+Il y a quelques heures, Google vient d'annoncer quelque chose d'important au monde entier :
+
+La demande en infrastructure de calcul pour
+  - https://x.com/KevInvestingYT/status/2061683204638019712
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 544).
+- **@wartranslated** (501 likes, score 7/10) — Les médias ukrainiens affirment que la Russie dispose de plus de 200 missiles « Zircon ». Le temps de vol jusqu'à Kyiv depuis Koursk n'est que de 3 à 6 minutes – sa vitesse hypersonique ne laisse aucu
+  - https://x.com/wartranslated/status/2061776633065836548
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 537).
+- **@ashcrypto** (127 likes, score 7/10) — Le bordel dans la crypto continue.
+
+$BTC a perdu 100 MILLIARDS de dollars de capitalisation boursière depuis que Saylor a annoncé la vente de $BTC à 2,5 millions de dollars.
+
+La stratégie $MSTR est ég
+  - https://x.com/AshCrypto/status/2061812177716097164
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 283).
+- **@datachaz** (76 likes, score 7/10) — Wow.
+
+China Post is officially using AI robots to sort packages and the numbers are insane:
+
+ 1,200 packages sorted per hour
+ 6.5 MILLION parcels a day at the Guangzhou hub
+
+The era of warehouse robot
+  - https://x.com/DataChaz/status/2061717212877226137
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 112).
+- **@_investinq** (0 likes, score 7/10) — Nicolai Tangen, PDG de Norges Bank Investment Management, a interrogé directement Arvind Krishna, PDG d’IBM, sur la question de savoir si l’IA est une bulle (Sauvegardez ceci).
+
+Et Krishna a répondu a
+  - https://x.com/_Investinq/status/2061549481230049736
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 50).
+- **@reuters** (24 likes, score 7/10) — Blue Origin launch pad repairs could take 'serious time', NASA chief tells CNBC http://reut.rs/4uetVFU
+  - https://x.com/Reuters/status/2061764888200909281
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 48).
+- **@sciguyspace** (804 likes, score 7/10) — La proposition de la NASA de créer un « module de base » dirigé par le gouvernement pour assister les stations spatiales commerciales (CLD) semble morte. La plupart des fournisseurs de CLD se réjouiro
+  - https://x.com/SciGuySpace/status/2061471177927688218
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 850).
+- **@polymarket** (340 likes, score 7/10) — NOUVEAU : Anthropic étendra l'accès à Claude Mythos à 150 organisations supplémentaires dans 15 pays.
+  - https://x.com/Polymarket/status/2061797537237868596
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 480).
+- **@imai_eruel** (94 likes, score 7/10) — Anthropic、MythosのProject Glasswingの進捗状況
+"Mythosレベルのものを他の機関が作るのかいつか？"についても、ここで中々衝撃的なものが明言されており、
+"6~12ヶ月以内に、他の「多くの」企業もMythosレベルのモデルを開発し、「悪用を防ぐための対策を講じることなく」公開する可能性"
+とのこと
+  - https://x.com/ImAI_Eruel/status/2061802967062507539
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 96).
+- **@sf_hodl** (21 likes, score 7/10) — Bitcoin Twitter is lame. Why is everyone so mean?
+  - https://x.com/sf_hodl/status/2061651478453092679
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 51).
+- **@cryptojack** (16 likes, score 7/10) — $BTC is moving according to plan.
+
+There is a gap at $67K, so don't forget about it.
+  - https://x.com/cryptojack/status/2061810710850437281
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 42).
