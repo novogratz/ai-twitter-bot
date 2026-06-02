@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-01T15:54:16.178756",
-  "window_7d_actions": 2284,
-  "window_24h_actions": 493,
+  "generated_at": "2026-06-02T02:21:58.424197",
+  "window_7d_actions": 2391,
+  "window_24h_actions": 494,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2184
+      "count": 2291
     },
     {
       "pattern": "METAPHOR",
@@ -44,6 +44,10 @@
       "actions": 159
     },
     {
+      "hour": 21,
+      "actions": 151
+    },
+    {
       "hour": 8,
       "actions": 144
     },
@@ -52,53 +56,49 @@
       "actions": 138
     },
     {
-      "hour": 23,
-      "actions": 130
-    },
-    {
-      "hour": 21,
+      "hour": 22,
       "actions": 121
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 816
+      "count": 877
     },
     {
       "topic": "Autre",
-      "count": 685
+      "count": 726
     },
     {
       "topic": "Spatial",
-      "count": 446
+      "count": 471
     },
     {
       "topic": "Bourse",
-      "count": 357
+      "count": 344
     },
     {
       "topic": "Crypto",
-      "count": 333
+      "count": 330
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1334
+      "count": 1420
     },
     {
       "type": "retweet",
-      "count": 750
+      "count": 756
     },
     {
       "type": "hotake",
-      "count": 83
+      "count": 102
     },
     {
       "type": "quote",
-      "count": 61
+      "count": 57
     },
     {
       "type": "post",
@@ -107,18 +107,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-01T15:51:19.882601",
-      "text": "CRM parked $5B in a private equity slot that compounds at model velocity while their public stock trades on seat growth.\n\nYou didn’t buy a tech company. You bought a venture fund with a CRM license plate.",
+      "ts": "2026-06-02T02:16:22.552415",
+      "text": "CAC 40 +3,4%.\nLes 7 méga-caps US ont porté tout le monde sur leurs épaules.\nLa France n'est pas en hausse. On est juste en gravité zéro le temps d'un week-end.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-01T15:46:05.141484",
-      "text": "50% of any AI lab’s equity for a government stake implies the government owns half the inference bill.\n\nOpenAI raises at a $157B valuation with $5B burn. The IRS will depreciate this over 7 years. The board meets Thursday.",
+      "ts": "2026-06-02T02:13:27.682537",
+      "text": "Sony a passé 10 ans sur le bruit. C'est 300€ de réduction de bruit active + un filtre à charbon actif.\nBercy a testé. Il est dans le coma.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-01T15:44:36.344860",
-      "text": "Watching $PLTR for a buy? The Rule of 40 is 180%. You aren't looking for an entry. You're looking for a discount on a monopoly.",
+      "ts": "2026-06-02T02:12:23.239375",
+      "text": "Bourse, pépite, projecteurs.\n\nLa BNF en 14h00.",
       "type": "reply"
     }
   ]
