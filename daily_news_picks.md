@@ -11090,3 +11090,139 @@ Borrowers who miss construction targets will see it in their cost of capital
 The market hasn't
   - https://x.com/junkbondinvest/status/2061596783629742406
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 14).
+- **@asforcesmag** (10 likes, score 7/10) — The Space Data Network is a constellation of satellites in low-Earth orbit that will provide connectivity for the entire joint force.
+MORE: https://airandspaceforces.com/ussf-spacex-2-29-billion-space
+  - https://x.com/ASForcesMag/status/2061486376214831398
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 12).
+- **@planet4589** (55 likes, score 9/10) — Launch at 0840 UTC Jun 1 of the first Chang Zheng 12B from Jiuquan,  placing the Qianfan Jigui 08 group of internet sats in orbit. So far  it's unclear how many sats were in the group.
+  - https://x.com/planet4589/status/2061437647092887588
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 61).
+- **@laceypresley** (7 likes, score 7/10) — TERAFAB IS SOLVING THE AI COOLING PROBLEM AT THE PHYSICS LEVEL
+
+Terrestrial data centers expend enormous energy and water fighting heat with chillers and cooling towers. In orbit, large radiator panel
+  - https://x.com/LaceyPresley/status/2061616537794940999
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 11).
+- **@w1nklerr** (58 likes, score 9/10) — This guy runs AI agents from a box on his desk and charges $5,000 a client
+
+He uses no cloud, no external servers and pays zero monthly bills.
+
+He plugged in the Nvidia Spark and built a local AI driv
+  - https://x.com/w1nklerr/status/2061511651237486731
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 84).
+- **@fgcxf0hfxfg** (9 likes, score 7/10) — 数ヶ月後、「あの時買っておけばよかった」そう言う人が増えるかもしれない。
+AnthropicがIPO申請。
+
+世界マネーが再びAIへ向かい始めた。
+
+8位：6701 NEC→ 企業向けAI・DX関連
+7位：6702 富士通→ AIサーバー・法人向けAIソリューション
+6位：9432 NTT→ AI通信インフラ・IOWN
+5位：6501
+  - https://x.com/fgcxf0hfxfg/status/2061620501362155683
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 11).
+- **@sawyermerritt** (52 likes, score 8/10) — Blue Origin launchpad damaged in rocket explosion may not be restored until 2028, according to NASA's Jared Isaacman.
+
+“Even if you’re moving at, you know, a pretty quick pace, that’s going to take so
+  - https://x.com/SawyerMerritt/status/2061620706287202820
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 78).
+- **@deepvaluebagger** (40 likes, score 8/10) — The company is literally called microchip. I can't wait for wsb to pounce on this. Jokes aside, the company is cool. Good products for ai datacenter. $mchp
+  - https://x.com/DeepValueBagger/status/2061561942351790356
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 48).
+- **@wholemars** (1091 likes, score 8/10) — A new Tesla starts at $36,990 before any incentives 
+
+Used ones are even cheaper. And it drives itself.
+  - https://x.com/wholemars/status/2061529607795536018
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1207).
+- **@joinautopilot** (442 likes, score 8/10) — Breaking: Donald Trump says defense companies are expected to quadruple their quantity
+
+Here's 5 under the radar stocks that may benefit:
+
+$KTOS — Kratos Defense: Builds military drones and hypersonic
+  - https://x.com/joinautopilot/status/2030040375549948366
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 486).
+- **@sawyermerritt** (43 likes, score 8/10) — Tesla is now officially selling used Cybertrucks directly from its inventory. Tesla will transport one to any Tesla delivery location of your choice in the continental US for up to $2,500.
+
+Prices cur
+  - https://x.com/SawyerMerritt/status/2061619703035101203
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 51).
+- **@sensanders** (4176 likes, score 7/10) — AI is built on humanity’s collective knowledge.
+
+The wealth it generates must benefit humanity — not just Elon Musk, Sam Altman and other AI oligarchs.
+
+That’s why I’ll be introducing the American AI
+  - https://x.com/SenSanders/status/2061448326436798789
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 7112).
+- **@polymarket** (817 likes, score 7/10) — JUST IN: Citron founder Andrew Left found guilty of securities fraud after a landmark trial over his stock-moving tweets.
+  - https://x.com/Polymarket/status/2061601899875324072
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1013).
+- **@lluciano_btc** (492 likes, score 7/10) — Why AI agents will choose crypto over traditional banking to power the future of global finance.
+  - https://x.com/LLuciano_BTC/status/2061478630853640376
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 568).
+- **@teslaownerssv** (345 likes, score 7/10) — Starship isn't just another rocket.
+
+It could be the vehicle that transforms humanity from a one-planet civilization into a multi-planet species.
+
+Cheaper access to space.
+Massive orbital infrastructu
+  - https://x.com/teslaownersSV/status/2061494744505806878
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 415).
+- **@kekius_sage** (93 likes, score 7/10) — This is the one and only token I’ll stand behind for the rest of my life
+
+Cxtd4j9mVysEoE8JRiiyhPoqa59mfU6JW58jy34GPump
+  - https://x.com/Kekius_Sage/status/2061613935913226631
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 327).
+- **@vadimyuryev** (148 likes, score 7/10) — Can anyone explain to me why AMD and Nvidia can't use the same shared architecture that Apple Silicon has?
+
+It's fully automated, so if your CPU needs access to over 32GB of RAM, it has it. If your GP
+  - https://x.com/VadimYuryev/status/2061548676271731119
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 208).
+- **@jacobkeeton20** (55 likes, score 7/10) — $ASTS
+Between NASA and USSF/DoD(W) backing I wouldn't be shocked if BO sets a record for fastest pad rebuild time....or I'm just being too optimistic
+  - https://x.com/JacobKeeton20/status/2061561801482060212
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 65).
+- **@tleilax___** (53 likes, score 7/10) — 17 metric tonnes of copper per MW of AI datacenter, people !
+  - https://x.com/tleilax___/status/2061429147335897145
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 57).
+- **@spaceinvestor_d** (50 likes, score 7/10) — Northrop Grumman today announced a partnership with commercial firm Apex Space to demonstrate space-based interceptors (SBIs) for the Trump administration’s Golden Dome missile defense initiative in 2
+  - https://x.com/SpaceInvestor_D/status/2061555013483102544
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 54).
+- **@demian_ai** (17 likes, score 7/10) — Cost per token is a vanity metric
+
+You see input tokens and output tokens but rarely do you see the actual trajectory.
+
+A modern reasoning model does not generate the answer you read, it generates:
+-
+  - https://x.com/demian_ai/status/2061614233427878005
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 21).
+- **@kalshi** (773 likes, score 7/10) — BREAKING: Markets price Nvidia less likely to default on debt than US government
+  - https://x.com/Kalshi/status/2061588500856578282
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 969).
+- **@ashcrypto** (625 likes, score 7/10) — If $ETH was a semiconductor stock,  it would be trading above $10,000 today.
+  - https://x.com/AshCrypto/status/2061557664719520250
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 935).
+- **@interesting_ail** (281 likes, score 7/10) — Nvidia’s Jensen Huang says AI taking away jobs is nonsense
+
+“People talk about AI reducing jobs, it’s complete nonsense”
+  - https://x.com/interesting_aIl/status/2061545537774522370
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 375).
+- **@chinaselect** (129 likes, score 7/10) — China’s military is trying to illicitly buy Nvidia chips. The Select Committee has documented that China will buy what it can and steal what it must, and this story shows once again there is a coordin
+  - https://x.com/ChinaSelect/status/2061528826169987240
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 163).
+- **@cointelegraph** (15 likes, score 7/10) — LATEST: Florida sues OpenAI and CEO Sam Altman, alleging the company marketed ChatGPT without adequately warning the public of its dangers, per Axios.
+  - https://x.com/Cointelegraph/status/2061619021976424684
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 37).
+- **@beffjezos** (20 likes, score 7/10) — Definitely, you have to keep some compute for Grok to gain marketshare.
+
+That being said, I really think you should keep expanding this Cloud segment of the business, even as Grok recaptures some terr
+  - https://x.com/beffjezos/status/2061616098097906162
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 28).
+- **@junkbondinvest** (18 likes, score 7/10) — Right now, AI datacenter credit all trade at near-identical levels but a "sorting mechanism" is coming:
+
+Borrowers who miss construction targets will see it in their cost of capital
+
+The market hasn't
+  - https://x.com/junkbondinvest/status/2061596783629742406
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 22).
+- **@firstsquawk** (13 likes, score 7/10) — Nvidia CEO: The company sells its products globally and remains compliant with all applicable export control laws.
+  - https://x.com/FirstSquawk/status/2061617399481409998
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 15).
