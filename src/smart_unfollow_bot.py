@@ -147,6 +147,15 @@ def _build_keep_set() -> set:
         keep |= {a.lower() for a in MEGA_ACCOUNTS}
     except Exception:
         pass
+    # Curated whitelist (tier1 sources/targets + tier2 FR peers) — never prune
+    # the accounts we deliberately follow. The prune exists to shed the
+    # non-whitelist backlog (4.2K → steady-state ~300), not our curation.
+    try:
+        from . import action_guard
+        wl = action_guard.load_whitelist()
+        keep |= wl["tier1"] | wl["tier2"]
+    except Exception:
+        pass
     return keep
 
 

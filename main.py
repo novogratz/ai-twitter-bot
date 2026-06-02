@@ -28,6 +28,7 @@ from src.reply_bot import safe_run_reply_cycle
 from src.engage_bot import safe_run_engage_cycle
 from src.notify_bot import safe_run_notify_cycle, safe_run_boost_cycle, safe_run_replyback_cycle
 from src.direct_reply import safe_run_direct_reply_cycle
+from src.engagement_targeting import safe_run_engagement_targeting_cycle
 from src.discover_bot import safe_run_discovery_cycle
 from src.roast_pgm_bot import safe_run_roast_pgm_cycle
 from src.performance import evaluate_and_learn
@@ -629,6 +630,18 @@ def main():
             safe_run_retweet_cycle,
             trigger=IntervalTrigger(minutes=2),
             id="retweet_job",
+            max_instances=1,
+        )
+
+        # Engagement-velocity targeting — primary growth engine. Ranks tier1/2
+        # whitelist posts by (likes+reposts)/hour and replies to the hottest
+        # few with a language-matched substantive take. Shares the 30/day reply
+        # cap + spacing via the action_guard chokepoint.
+        log.info("Engagement targeting: replying to high-velocity whitelist posts every 20 min.")
+        scheduler.add_job(
+            safe_run_engagement_targeting_cycle,
+            trigger=IntervalTrigger(minutes=20),
+            id="engagement_targeting_job",
             max_instances=1,
         )
 

@@ -1,250 +1,221 @@
-# Autonomous Twitter/X Influencer Bot
+# Bot influenceur Twitter/X autonome
 
-> **You'll hate me until I'm right.**
+> **Tu me détesteras jusqu'à ce que j'aie raison.**
 
-A self-evolving Twitter/X influencer agent targeting the AI, space, and stocks niche. Posts sharp **French** analysis (multi-year theses, no short-term price targets), replies in the parent post's language, amplifies trusted signal, and manages its follower ratio under a **whitelist-only** follow policy. Ollama (local) as the primary LLM with Codex / Claude / Gemini as fallbacks. No Twitter API key — browser automation only.
+Agent influenceur Twitter/X auto-évolutif spécialisé sur trois piliers : **Bourse** (indices, macro, résultats, dividendes, crypto comme classe d'actifs — pas seulement les valeurs IA/spatiales), **IA** et **Spatial**. Il publie une analyse **française** pointue (thèses pluriannuelles, jamais d'objectif de prix court terme), répond dans la langue du tweet parent, amplifie les signaux fiables et gère son ratio d'abonnements sous une politique de suivi maîtrisée. Ollama (local) comme LLM principal, avec Codex / Claude / Gemini en repli. Pas de clé API Twitter — automatisation navigateur uniquement.
+
+> **Pivot 2026-06-02 :** retour au **français** (toute la création + les commentaires de quote-repost en FR ; les réponses suivent la langue du parent). Spécialité **Bourse large + IA + Spatial**, le plus pointu de la pièce. Objectifs de prix court terme **interdits**. Suivi **hybride** : on suit de nouveaux comptes français, mais tant que le ratio dépasse le plafond (abonnements < 0,8 × abonnés) un suivi n'est autorisé qu'un jour **net-négatif** (suivis du jour < désabonnements du jour), pour que le ratio se soigne chaque jour. Le quote-repost est la surface la plus rentable et tourne à plein régime.
 
 ---
 
-## What it does
+## Ce que fait le bot
 
-The bot operates **30+ concurrent micro-bots** orchestrated by an APScheduler loop. Each bot owns one job:
+Le bot fait tourner **plus de 30 micro-bots concurrents** orchestrés par une boucle APScheduler. Chaque bot a un rôle :
 
-| Layer | Bots | Purpose |
+| Couche | Bots | Rôle |
 |---|---|---|
-| **Content** | `agent`, `hotake_agent`, `breakout_bot`, `spicy_bot`, `thread_bot`, `digest_thread_bot` | Original posts — news, daily/weekly/monthly Décodes, hot takes, threads |
-| **Reshare** | `retweet_bot`, `quote_tweet_bot`, `notify_bot` (boost) | Amplify trusted-source and big visible posts with same-day + niche filters; quote posts always add an EN angle on top |
-| **Reply** | `direct_reply`, `reply_bot`, `early_bird_bot`, `mega_watch_bot`, `replyback_agent`, `viral_followup_bot`, `spike_bot`, `roast_pgm_bot` | Real-time engagement on viral tweets, mega-account top-5-reply window |
-| **Follow** | `engage_bot`, `discover_bot`, `scout_agent`, `follow_blast_bot`, `followback_bot`, `smart_unfollow_bot` | Network growth — discover, follow, follow-back, prune non-reciprocal |
-| **Like** | `like_bot`, `notify_bot` | Bulk likes for outbound notifications |
-| **Promote** | `pin_bot`, `promote_bot` | Auto-pin best post, plain-repost top reply onto profile |
-| **Real-time signal** | `rss_signal_bot`, `hn_signal_bot`, `x_home_scout_bot`, `auto_tune_bot` | Aggregate trends from RSS + HN + Reddit + X home; 20-50 min ahead of WebSearch |
-| **Self-evolution** | `meta_strategy_agent`, `strategy_agent`, `evolution_agent`, `reflection_agent`, `self_evolution_agent` | Optional agentic runs that rewrite strategy, persona, dossiers; gated by `ENABLE_AI_MAINTENANCE` / `ENABLE_AI_DISCOVERY` |
-| **Safety** | `suppression_watch_bot`, `health.py`, `respect_list` | Shadowban detection + Safari watchdog + protected-handle list |
-| **Hygiene** | `cleanup_bot`, `heartbeat_bot`, `daily_digest`, `follower_tracker_bot`, `performance.py` | State rotation, alive ticks, growth metrics, learnings |
+| **Contenu** | `agent`, `hotake_agent`, `breakout_bot`, `spicy_bot`, `thread_bot`, `digest_thread_bot` | Posts originaux — news, Décodes quotidiens/hebdo/mensuels, hot takes, threads (en français) |
+| **Repartage** | `retweet_bot`, `quote_tweet_bot`, `notify_bot` (boost) | Amplifie les sources fiables et les gros posts visibles avec filtres fraîcheur + niche ; le quote ajoute toujours un angle français par-dessus |
+| **Réponse** | `direct_reply`, `reply_bot`, `engagement_targeting`, `early_bird_bot`, `mega_watch_bot`, `replyback_agent`, `viral_followup_bot`, `spike_bot` | Engagement temps réel sur les tweets à forte vélocité, fenêtre top-réponses des gros comptes |
+| **Suivi** | `engage_bot`, `discover_bot`, `scout_agent`, `followback_bot`, `smart_unfollow_bot` | Croissance réseau — découverte FR, suivi maîtrisé, élagage des non-réciproques |
+| **Like** | `like_bot`, `notify_bot` | Likes groupés pour notifications sortantes |
+| **Promotion** | `pin_bot`, `promote_bot` | Épingle le meilleur post, repartage la meilleure réponse sur le profil |
+| **Signal temps réel** | `rss_signal_bot`, `hn_signal_bot`, `x_home_scout_bot`, `auto_tune_bot` | Agrège les tendances RSS + HN + Reddit + X home ; 20-50 min avant WebSearch |
+| **Auto-évolution** | `meta_strategy_agent`, `strategy_agent`, `evolution_agent`, `reflection_agent`, `self_evolution_agent`, `analyzer_bot` | Runs agentiques qui réécrivent stratégie, persona, dossiers ; activés par `ENABLE_AI_MAINTENANCE` / `ENABLE_AI_DISCOVERY` |
+| **Sécurité** | `suppression_watch_bot`, `health.py`, `respect_list` | Détection de shadowban + watchdog Safari + liste de comptes protégés |
+| **Hygiène** | `cleanup_bot`, `heartbeat_bot`, `daily_digest`, `follower_tracker_bot`, `performance.py` | Rotation d'état, battements de cœur, métriques de croissance, apprentissages |
 
 ---
 
-## Architecture at a glance
+## Garde-fous 2026-06-02 (points de passage uniques)
+
+Toutes les actions d'écriture passent par les fonctions de plus bas niveau de `twitter_client` (`post_tweet` / `quote_tweet` / `reply_to_tweet` / `follow_account` / `unfollow_account` / `like_tweet` / `retweet_post`), pour que les ~30 bots obéissent aux mêmes règles sans réécriture :
+
+- **`src/content_guard.py`** — validation avant publication. Rejette tout brouillon qui associe un prix/multiplicateur à une échéance proche (regex FR+EN), exige le **français** pour les originaux + quotes, et refuse les **réponses paresseuses** (« bien vu », trop courtes). `generate_validated()` régénère jusqu'à N fois puis skip+log — un brouillon signalé n'est JAMAIS publié.
+- **`src/action_guard.py`** — registre d'actions horodaté (`action_ledger.json`) pour l'anti-churn 30 jours + audit. Plafonds quotidiens (3 originaux, **18 quote-reposts**, 30 réponses, 5 suivis, 25 désabonnements) avec espacement jitter (45 min posts, 12 min quotes, 90 s réponses), jamais de rafale. Politique de suivi hybride + règle net-négative. `DRY_RUN=1` journalise sans exécuter (coupe-circuit).
+- **`whitelist.json`** — comptes curatés en tiers (tier1 sources/cibles, tier2 pairs FR, tier3 veille). Source pour le quote-repost + le ciblage d'engagement. Le bot peut **suggérer** des ajouts mais ne s'auto-ajoute jamais.
+- **`src/engagement_targeting.py`** — moteur de croissance : classe les posts des comptes whitelist tier1/2 par **vélocité** (likes+reposts / heure) et répond aux plus chauds avec une prise substantielle, langue alignée.
+- **`src/bot_memory.py`** — mémoire : injecte un digest des derniers posts dans chaque prompt pour rappeler une thèse passée quand ça apporte de la valeur.
+- **`following_count.json`** — compteur d'abonnements vivant (amorcé au vrai socle ~4,2K), maintenu par `adjust_following()` pour que l'invariant de ratio soit honnête.
+
+---
+
+## Architecture en un coup d'œil
 
 ```
-┌──────────────────── REAL-TIME SIGNAL LAYER ────────────────────┐
-│  RSS feeds (5m)   HN+Reddit (20m)   X /home (7m)   Trusted-handle│
-│        │                │                │              │        │
-│        └────────────┬───┴────────────────┘              │        │
-│                     ▼                                   ▼        │
-│             external_signal.json              retweet_bot/quote  │
+┌──────────────────── COUCHE SIGNAL TEMPS RÉEL ──────────────────┐
+│  Flux RSS (5m)   HN+Reddit (20m)   X /home (7m)   Comptes fiables│
+│        └────────────┬──────────────┘              │             │
+│                     ▼                              ▼             │
+│             external_signal.json          retweet_bot/quote     │
 └─────────────────────────────────────────────────────────────────┘
                      │
-┌─────────────── GENERATION LAYER ────────────────────────────────┐
+┌─────────────── COUCHE GÉNÉRATION (français) ────────────────────┐
 │   agent (news)   hotake   breakout   spicy   thread   digest    │
-│        │            │         │        │        │        │      │
-│        └────────────┴─────┬───┴────────┴────────┴────────┘      │
-│                           ▼                                     │
-│                  twitter_client.post_tweet                      │
+│        └────────────┬───────────────────────────────────┘       │
+│                     ▼   content_guard → twitter_client.post_tweet│
 └─────────────────────────────────────────────────────────────────┘
                      │
-┌─────────────── ENGAGEMENT LAYER ────────────────────────────────┐
-│  direct_reply  reply_bot  early_bird  mega_watch  replyback    │
-│  viral_followup  spike  engage  follow_blast  like  unfollow    │
+┌─────────────── COUCHE ENGAGEMENT ───────────────────────────────┐
+│  engagement_targeting  direct_reply  reply_bot  early_bird      │
+│  mega_watch  replyback  viral_followup  spike  + action_guard   │
 └─────────────────────────────────────────────────────────────────┘
                      │
-┌─────────────── ADAPTATION LAYER (auto-pushes to git) ───────────┐
-│  meta_strategy(4h)  strategy(3h)  evolution(3h)                 │
+┌─────────────── COUCHE ADAPTATION (auto-push git) ───────────────┐
+│  meta_strategy(4h)  strategy(3h)  evolution(3h)  analyzer(4h)   │
 │  reflection(6h)     self_evolution(4h)  scout(4h)               │
-│  performance(2h)    auto_tune(30m)                              │
-│        │                                                         │
-│        ▼                                                         │
-│  live_strategy.json | bot_self.json | personality.json |        │
-│  directives.md | dynamic_*.json | learnings.json                │
+│        ▼  live_strategy.json | bot_self.json | personality.json │
+│           directives.md | dynamic_*.json | learnings.json       │
 └─────────────────────────────────────────────────────────────────┘
                      │
-┌─────────────── SAFETY + HYGIENE LAYER ──────────────────────────┐
-│  suppression_watch  health(Safari watchdog)  respect_list       │
+┌─────────────── COUCHE SÉCURITÉ + HYGIÈNE ───────────────────────┐
+│  suppression_watch  health(watchdog Safari)  respect_list       │
 │  cleanup  heartbeat  daily_digest  follower_tracker             │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full lattice.
+Voir [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) pour le détail complet.
 
 ---
 
-## Quick start
+## Démarrage rapide
 
-**Requirements**
+**Prérequis**
 
-- macOS (Safari + AppleScript automation, browser-driven, no API key)
+- macOS (automatisation Safari + AppleScript, pilotage navigateur, pas de clé API)
 - Python 3.10+
-- Ollama running locally, with Codex CLI (`codex`) authenticated as backup
-- Twitter/X account logged into Safari
+- Ollama en local, avec le CLI Codex (`codex`) authentifié en secours
+- Compte Twitter/X connecté dans Safari
 
-**Install**
+**Installation**
 
 ```bash
-git clone https://github.com/<you>/ai-twitter-bot.git
+git clone https://github.com/<vous>/ai-twitter-bot.git
 cd ai-twitter-bot
 pip install -r requirements.txt
-cp .env.example .env  # then edit caps + model + handle
+cp .env.example .env  # puis éditer les plafonds + modèle + handle
 ```
 
-**Run (foreground)**
+**Lancer (premier plan)**
 
 ```bash
-./bin/run.sh        # Ctrl-C to stop
+./bin/run.sh        # Ctrl-C pour arrêter
 ```
 
-**Stop from any other terminal**
+**Arrêter depuis un autre terminal**
 
 ```bash
 ./bin/stop.sh
 ```
 
-**Watch the logs**
+**Suivre les logs**
 
 ```bash
 tail -F bot.log
 ```
 
-See [`docs/OPERATIONS.md`](docs/OPERATIONS.md) for full runbook (autonomy mode, debugging, tuning).
+**Mode vérification (recommandé avant le live)** : mettre `DRY_RUN=1` dans `.env`, relancer, observer dans `bot.log` les lignes `[DRY_RUN] would …` pour chaque post/réponse/quote/suivi/désabonnement, puis repasser à `DRY_RUN=0`.
+
+Voir [`docs/OPERATIONS.md`](docs/OPERATIONS.md) pour le runbook complet.
 
 ---
 
 ## Configuration
 
-Every knob is an environment variable in `.env`. Defaults are tuned for a **French-content** build (2026-06-02 pivot) with conservative caps: 3 originals/day, 3 quote-reposts/day, 30 replies/day, whitelist-only follows (≤5/day), ≤25 unfollows/day, 30-day anti-churn cooldown, and a `DRY_RUN` kill switch. See `src/config.py` for the full 2026-06-02 tunable block.
+Chaque réglage est une variable d'environnement dans `.env`. Les valeurs par défaut sont calibrées pour le build **français** (pivot 2026-06-02) avec des plafonds prudents. Bloc complet des réglables dans `src/config.py`.
 
-| Variable | Default | What it does |
+| Variable | Défaut | Rôle |
 |---|---|---|
-| `BOT_HANDLE` | `CryptoAIDecode` | Your X handle (without `@`) |
+| `BOT_HANDLE` | `AISpaceDecoder` | Ton handle X (sans `@`) |
+| `CONTENT_LANG_PRIMARY` | `fr` | `fr` / `en` / `mixed` — langue du contenu autonome (les réponses suivent toujours le parent) |
 | `AI_CLI` | `ollama` | `ollama` / `codex` / `opencode` / `claude` / `gemini` |
-| `OLLAMA_MODEL` | `qwen3.6:35b-a3b` | Local Ollama model for all generation |
-| `LLM_FALLBACK_CLI` | `codex` | CLI to use when Ollama fails or is locked out |
-| `LLM_ENFORCE_BUDGET` | `0` | `0` = soft accounting only; `1` = hard-stop at configured LLM budgets |
-| `MAX_NEWS_PER_DAY` | `10` | Cap on Décode insight posts |
-| `NEWS_POSTS_PER_CYCLE` | `3` | News posts to burst per cycle; set to `1` on flaky LLM |
-| `MAX_HOTAKES_PER_DAY` | `20` | Cap on hot takes |
-| `MAX_QUOTES_PER_DAY` | `120` | Cap on quote-tweet posts |
-| `MAX_RETWEETS_PER_DAY` | `150` | Cap on retweets |
-| `RETWEETS_PER_CYCLE` | `15` | Max retweets per cycle |
-| `MAX_BREAKOUTS_PER_DAY` | `15` | Cap on breakout posts |
-| `MAX_SPICY_PER_DAY` | `20` | Cap on spicy/edgy takes |
-| `MAX_REPLIES_PER_CYCLE` | `8` | Cap per broad reply cycle |
-| `CONTENT_LANG_PRIMARY` | `en` | `en` / `fr` / `mixed` — standalone content language (replies always match parent) |
-| `RETWEET_MAX_AGE_HOURS` | `18` | Skip retweet candidates older than this |
-| `QUOTE_MAX_AGE_HOURS` | `48` | Skip quote-tweet candidates older than this |
-| `SUPPRESSION_AVG_LIKES_FLOOR` | `1.0` | Trigger shadowban-pause if avg likes drop below this |
+| `DRY_RUN` | `0` | `1` = journalise les écritures sans les exécuter (coupe-circuit) |
+| `MAX_ORIGINALS_PER_DAY` | `3` | Plafond de posts originaux/jour |
+| `MAX_QUOTE_REPOSTS_PER_DAY` | `18` | Plafond de quote-reposts/jour (surface la plus rentable) |
+| `MAX_REPLIES_PER_DAY` | `30` | Plafond de réponses/jour |
+| `MIN_SECONDS_BETWEEN_POSTS` | `2700` | Espacement mini posts (45 min) + jitter |
+| `MIN_SECONDS_BETWEEN_QUOTES` | `720` | Espacement mini quotes (12 min) + jitter |
+| `MIN_SECONDS_BETWEEN_REPLIES` | `90` | Espacement mini réponses (90 s) + jitter |
+| `FOLLOW_WHITELIST_ONLY` | `0` | `1` = ne suivre que la whitelist (aucun nouveau compte) |
+| `ENABLE_FOLLOW_BLAST` | `0` | `1` = réactive le suivi de masse réciproque (déconseillé) |
+| `FOLLOW_RATIO_CEILING` | `0.8` | Plafond : abonnements < 0,8 × abonnés |
+| `MAX_FOLLOWS_PER_DAY` | `5` | Plafond de suivis/jour |
+| `MAX_UNFOLLOWS_PER_DAY` | `25` | Plafond de désabonnements/jour (élagage) |
+| `CHURN_COOLDOWN_DAYS` | `30` | Anti-churn : pas de re-suivi/re-désabonnement avant 30 j |
+| `BAN_SHORT_TERM_PRICE_TARGETS` | `1` | Bloque prix + échéance proche dans tout brouillon |
+| `ENABLE_AI_MAINTENANCE` | `1` | Active les agents d'auto-évaluation/stratégie (Claude/Ollama) |
 
-Full reference: [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md).
-
----
-
-## Project structure
-
-```
-ai-twitter-bot/
-├── main.py                  # APScheduler entry point — boots all 30+ bots
-├── bin/
-│   ├── run.sh               # Foreground start
-│   ├── stop.sh              # SIGTERM all bot processes
-│   ├── install_autonomous.sh   # macOS LaunchAgent (auto-respawn + boot-start)
-│   └── uninstall_autonomous.sh
-├── launchd/
-│   └── com.kzer.ai-twitter-bot.plist
-├── docs/
-│   ├── ARCHITECTURE.md      # Full bot lattice, data flow, key invariants
-│   ├── OPERATIONS.md        # Runbook — start, watch, debug, tune
-│   └── CONFIGURATION.md     # Every env var explained
-├── src/
-│   ├── config.py            # Central config + live-cap reader
-│   ├── llm_client.py        # CLI adapter (OpenCode / Claude / Codex / Gemini)
-│   ├── twitter_client.py    # Safari + AppleScript browser automation
-│   ├── agent.py             # News generation
-│   ├── hotake_agent.py      # Hot take generation
-│   ├── reply_agent.py       # Reply generation
-│   ├── replyback_agent.py   # In-thread reply-back
-│   ├── humanizer.py         # Deterministic AI-artifact stripping
-│   ├── lang_mode.py         # Bilingual content language picker
-│   ├── pattern_tags.py      # Comedy-pattern bandit attribution
-│   ├── git_ops.py           # Autonomous git push helper
-│   ├── health.py            # Safari watchdog
-│   ├── personality_store.py # Per-account dossiers + hard rules
-│   ├── respect_list.py      # Protected-handle list
-│   ├── ... (45+ other bots — see docs/ARCHITECTURE.md for catalog)
-└── core_identity.md         # Stable ideological spine (loaded into every prompt)
-```
-
-63 Python modules, ~10k LOC. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the per-module map.
+Référence complète : [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md).
 
 ---
 
-## Design principles
+## Principes de conception
 
-1. **Process safety > feature parity.** Every cycle is wrapped in `safe_run_*` so a single-cycle exception cannot crash the scheduler. Health watchdog auto-restarts Safari after 3 consecutive cycle failures. The `BlockingScheduler` runs with a 30-thread pool and `misfire_grace_time=3600` + `coalesce=True` so a long (≤600s) LLM call saturating the pool can never silently drop a time-sensitive job — once-a-day crons still fire when a worker frees up. On every startup, a 3-round catchup burst fires RT / quote / reply / spicy / breakout cycles back-to-back before the scheduler begins, filling any downtime gap quickly.
-2. **Autonomous self-modification with bounded blast radius.** Agentic maintenance is disabled by default. When enabled, `meta_strategy_agent` can rewrite daily caps only within hard-coded ranges (`news 4-8`, `retweet 8-30`). Every self-modifying agent auto-commits + pushes its state files to git so every change is audit-trailed.
-3. **Idempotent state.** All daily-counter files (`thread_daily_state`, `pin_daily_state`, etc.) are JSON-keyed by date. A restart mid-day picks up exactly where it left off; the bot never double-posts.
-4. **Best-effort UI automation.** Every JS-click into the X DOM is wrapped in try/except with a fallback path. When X reshuffles its DOM, the bot logs and skips that one cycle — it never crashes.
-5. **Bandit attribution baked in.** Every generated tweet carries a `[PATTERN: <ID>]` metadata line that's stripped pre-post and logged to `engagement_log.csv` column 6. The `evolution_agent` reads these to compute per-pattern ROI and rewrite the style guide.
-6. **Concrete impact beats abstract wit.** Saved performance data shows named actors + exact numbers + real consequences outperform standalone punchlines, so prompts bias toward naming actors, amounts, BTC counts, valuations, capex, regulation, and clear winners/losers.
-7. **Soft + hard list separation.** `BLOCKLIST` (hard, never engage) is for actual bad actors. `respect_list` (soft, engage but never criticize by name) is for influencers we shouldn't risk offending.
-
----
-
-## Real-time signal pipeline
-
-The bot's "before everyone else" claim runs on a fan-in signal pipeline:
-
-```
-RSS (5m)    → 20 trusted-outlet feeds, 8-thread parallel fetch (~1s wall)
-HN/Reddit (20m) → HN front page + r/MachineLearning + r/CryptoCurrency
-X /home (7m) → home-feed niche-filter
-              ↓
-     external_signal.json (top 30, sorted by recency desc)
-              ↓
-   agent.py + hotake_agent.py + breakout_bot.py inject as prompt context
-```
-
-WebSearch (Google indexing) lags publication by 30-60 min. RSS publishes within seconds. Net effect: news prompt sees the scoop **20-50 min** before WebSearch surfaces it.
+1. **Sécurité du process > parité de fonctionnalités.** Chaque cycle est enveloppé dans `safe_run_*` : une exception d'un cycle ne peut pas crasher le scheduler. Le watchdog redémarre Safari après 3 échecs consécutifs. Le `BlockingScheduler` tourne avec 30 threads, `misfire_grace_time=3600` et `coalesce=True`.
+2. **Auto-modification autonome à rayon de souffle borné.** La maintenance agentique réécrit l'état dans des plages bornées et auto-pousse sur git (tout est audité).
+3. **État idempotent.** Les compteurs quotidiens sont indexés par date ; un redémarrage en cours de journée reprend sans double-poster.
+4. **Automatisation UI best-effort.** Chaque clic JS dans le DOM de X est protégé par try/except avec repli ; un cycle échoué est logué et sauté, jamais de crash.
+5. **Attribution bandit intégrée.** Chaque tweet porte une ligne `[PATTERN: <ID>]` retirée avant publication et loguée dans `engagement_log.csv` ; `evolution_agent` en calcule le ROI par pattern.
+6. **L'impact concret bat l'esprit abstrait.** Acteurs nommés + chiffres exacts + conséquences réelles surperforment les punchlines isolées.
+7. **Séparation liste dure / liste douce.** `BLOCKLIST` (dure, jamais d'engagement) vs `respect_list` (douce, engager mais ne jamais critiquer nommément).
 
 ---
 
-## Autonomous self-modification
+## Pipeline de signal temps réel
 
-Six maintenance agents can run on cron schedules when enabled. They are off by default because they spend LLM calls; deterministic research/signal bots keep running without them. Each enabled agent writes its decisions to a JSON/MD state file AND auto-pushes to git so every adjustment is version-controlled:
+```
+RSS (5m)        → 20 flux de sources fiables, fetch parallèle 8 threads (~1s)
+HN/Reddit (20m) → front page HN + r/MachineLearning + r/CryptoCurrency
+X /home (7m)    → filtre niche du fil d'accueil
+                ↓
+        external_signal.json (top 30, par fraîcheur)
+                ↓
+   agent.py + hotake_agent.py + breakout_bot.py injectent en contexte
+```
 
-| Agent | Cadence | Decides | State file |
+WebSearch (indexation Google) retarde la publication de 30-60 min ; le RSS publie en quelques secondes. Net : le prompt voit le scoop **20-50 min** avant WebSearch.
+
+---
+
+## Auto-évaluation autonome (Claude/Ollama)
+
+Les agents de maintenance tournent en cron quand `ENABLE_AI_MAINTENANCE=1` (par défaut activé). Chacun écrit ses décisions dans un fichier d'état JSON/MD ET auto-pousse sur git :
+
+| Agent | Cadence | Décide | Fichier d'état |
 |---|---|---|---|
-| `meta_strategy_agent` | 4h | Daily caps, cadence factor, topic focus | `live_strategy.json` |
-| `strategy_agent` | 3h | New search queries + accounts to engage | `dynamic_*.json` |
-| `evolution_agent` | 3h | Style directives, prune/reinforce | `directives.md` + `*_accounts.json` |
-| `reflection_agent` | 6h | Per-account dossiers (category, stance, feelings) | `personality.json` |
-| `self_evolution_agent` | 4h | Bot's mood / obsession / drift / voice tweaks | `bot_self.json` |
-| `scout_agent` | 4h | New FR/EN voices to monitor + auto-follows | `dynamic_accounts.json` |
+| `analyzer_bot` | 4h | Top patterns, meilleures heures, sujets montants | `performance_insights.json` |
+| `meta_strategy_agent` | 4h | Plafonds quotidiens, facteur de cadence, focus sujet | `live_strategy.json` |
+| `strategy_agent` | 3h | Nouvelles requêtes + comptes à engager | `dynamic_*.json` |
+| `evolution_agent` | 3h | Directives de style, élagage/renfort | `directives.md` + `*_accounts.json` |
+| `reflection_agent` | 6h | Dossiers par compte (catégorie, posture, ressenti) | `personality.json` |
+| `self_evolution_agent` | 4h | Humeur / obsession / dérive / voix du bot | `bot_self.json` |
+| `scout_agent` | 4h | Nouvelles voix FR à surveiller + auto-suivis | `dynamic_accounts.json` |
 
-Each is bounded: the meta-strategy agent can only set caps within `[lo, hi]` ranges; `evolution_agent` caps prunes at 3/cycle and reinforces at 5/cycle; `scout_agent` caps auto-follows at 3/cycle. A bad cycle degrades gracefully.
+Chaque agent est borné (plages min/max sur les caps, élagage plafonné, etc.) — un mauvais cycle se dégrade proprement.
 
 ---
 
-## Safety architecture
+## Architecture de sécurité
 
-- **`BLOCKLIST`** (hard) — handles the bot will never engage with under any circumstance.
-- **`respect_list.py`** (soft) — influencers the bot can engage but must never criticize by name. Output scrubs at every content-bot's post path. Default-seeded with 30 high-traction FR/EN voices.
-- **`personality_store.HARD_RULES_BLOCK`** — two non-negotiable rules stamped into every generation prompt: (1) no illegal content, (2) no trolling US government / federal agencies.
-- **`suppression_watch_bot`** — hourly engagement health check; if avg likes drop below floor, pauses aggressive bots (`spicy`, `breakout`, `follow_blast`) for 4h.
-- **`health.py`** — Safari watchdog; force-restarts Safari after 3 consecutive cycle failures.
-- **`safari_hygiene.py`** — preventive Safari quit+relaunch every 2h. On every relaunch, navigates to x.com, unregisters all service workers, clears all caches, and hard-reloads so the first scrape hits a real page instead of a stale blank app shell. Reactive path: `twitter_client.py` tracks consecutive blank-page scrapes and triggers an emergency restart after 5 in a row (5-min cooldown vs 30-min for preventive).
+- **`BLOCKLIST`** (dure) — comptes jamais engagés.
+- **`respect_list.py`** (douce) — influenceurs engageables mais jamais critiqués nommément ; scrub à chaque chemin de publication.
+- **`personality_store.HARD_RULES_BLOCK`** — règles non négociables dans chaque prompt : (1) aucun contenu illégal, (2) pas de troll des institutions gouvernementales US.
+- **`suppression_watch_bot`** — contrôle de santé horaire ; met en pause les bots agressifs si les likes moyens chutent sous le plancher.
+- **`health.py`** — watchdog Safari ; redémarre Safari après 3 échecs consécutifs.
+- **`safari_hygiene.py`** — quit+relance préventif toutes les 2h, nettoyage service workers/caches ; relance réactive après 5 pages blanches consécutives.
 
 ---
 
 ## Documentation
 
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — full bot lattice + module catalog
-- [`docs/OPERATIONS.md`](docs/OPERATIONS.md) — runbook + debugging + tuning playbook
-- [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md) — env var reference
-- [`CLAUDE.md`](CLAUDE.md) — project-context for Claude Code sessions
-- [`core_identity.md`](core_identity.md) — bot's stable ideological spine (loaded into every prompt)
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — lattice complète des bots + catalogue des modules
+- [`docs/OPERATIONS.md`](docs/OPERATIONS.md) — runbook + debug + tuning
+- [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md) — référence des variables d'environnement
+- [`CLAUDE.md`](CLAUDE.md) / [`CODEX.md`](CODEX.md) — contexte projet pour les sessions Claude Code / Codex
+- [`core_identity.md`](core_identity.md) — colonne idéologique stable du bot (chargée dans chaque prompt)
 
 ---
 
-## License
+## Licence
 
-MIT. See [`LICENSE`](LICENSE).
+MIT. Voir [`LICENSE`](LICENSE).
