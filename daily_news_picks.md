@@ -12334,3 +12334,206 @@ C'est tout. Vous y êtes.
 - **@fronteraspacial** (96 likes, score 7/10) — Voici comment s’est déroulé le Vol 12 de Starship depuis Playa Bagdad, Matamoros
   - https://x.com/FronteraSpacial/status/2061814625289547843
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 98).
+- **@temaetfs** (13 likes, score 7/10) — One company now out-earns its seven largest competitors combined.
+
+Starlink's $11.4 billion in 2025 revenue reflects a structural edge: owning launch capacity means @SpaceX can deploy satellites faste
+  - https://x.com/Temaetfs/status/2061825330956972240
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 23).
+- **@nasaartemis** (964 likes, score 9/10) — Une semaine avant le grand jour ! 
+
+@NASA annoncera l'équipage d'Artemis III le 9 juin à 11h HE (1500 UTC). Préparez-vous à rencontrer les quatre astronautes qui aideront à faire progresser les techno
+  - https://x.com/NASAArtemis/status/2061892544821104966
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1008).
+- **@teslaownerssv** (204 likes, score 9/10) — Markets showing 84% probability @SpaceX IPO by June 15th, 95% by June 30th
+  - https://x.com/teslaownersSV/status/2061826945835278741
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 250).
+- **@carm1nee** (47 likes, score 8/10) — Ron Baron put $1.7 billion into SpaceX while it was private - it turned into $15 billion
+
+he just placed a billion dollar order at the IPO and said "10 trillion, 20 trillion, 30 trillion and I could b
+  - https://x.com/carm1nee/status/2061900797575676354
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 47).
+- **@marionawfal** (427 likes, score 9/10) — ELON’S xAI IS IN OVERDRIVE RIGHT NOW
+
+xAI just fired up Colossus 2, the world's first full gigawatt AI training cluster, already running Grok models and set to hit 1.5GW by April. 
+
+That's more power
+  - https://x.com/MarioNawfal/status/2013482612438802717
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 501).
+- **@amitisinvesting** (352 likes, score 9/10) — i was today years old when I found out that $AMZN has a Starlink competitor called Kuiper 
+
+i also found out today that Amazon is switching over to SpaceX to launch their satellites into orbit
+
+aka Am
+  - https://x.com/amitisinvesting/status/1945301795204702544
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 434).
+- **@dimazeniuk** (137 likes, score 9/10) — Gigabay TODAY!!!
+
+SpaceX’s Gigabay is a massive new assembly building for Starship production and rapid refurbishment, standing about 380 feet (116 meters) tall
+
+It is designed to support a significan
+  - https://x.com/DimaZeniuk/status/2061886542780534817
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 163).
+- **@reuters** (73 likes, score 9/10) — Morningstar values SpaceX at $780 billion, half its IPO target http://reut.rs/4xaqtyS
+  - https://x.com/Reuters/status/2061871754717348077
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 105).
+- **@pdicarlotrader** (35 likes, score 9/10) — We called the Bitcoin top in October. It’s now down 41%. $BTC $ETH 
+
+Price is sitting on the last major support. 
+
+If this level fails, my roadmap points toward 40k.
+
+In this video:
+• How you could’ve
+  - https://x.com/pdicarlotrader/status/2061898391513133070
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 57).
+- **@gemini** (325 likes, score 9/10) — JUST IN: Amazon launches national GLP-1 weight-loss program offering injectables at $299 /mo and oral options at $149 /mo
+  - https://x.com/Gemini/status/2046588677514518794
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 355).
+- **@spaceflightnow** (35 likes, score 8/10) — SpaceX alimente désormais sa fusée Falcon 9 en préparation du lancement d'un nouveau lot de ses satellites Starlink V2 Mini Optimized en orbite basse terrestre. Le décollage depuis la Vandenberg Space
+  - https://x.com/SpaceflightNow/status/2059277812930900027
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 39).
+- **@dimazeniuk** (2669 likes, score 9/10) — SpaceX’s Starlink keeps people connected even in the most remote places 
+
+With over 10,000 satellites in orbit, the network keeps improving with every launch
+  - https://x.com/DimaZeniuk/status/2043427393902096413
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 3063).
+- **@speculator_io** (15 likes, score 7/10) — Jensen literally told you where to invest.
+
+This is his 5-Layer AI Cake:
+
+Layer 1: Energy
+$BE $GEV $PWR $AMPX $VICR $VST $NVTS $BWXT $CEG $UEC $CCJ
+
+Layer 2: Chips
+$NVDA $TSM $INTC $AVGO $AMD $ASML $A
+  - https://x.com/Speculator_io/status/2061948248563093796
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 17).
+- **@cb_doge** (12823 likes, score 9/10) — URGENT : SpaceX veut transformer l’espace en le plus grand centre de données IA au monde.
+
+• SpaceX cherche l’approbation pour lancer et exploiter jusqu’à un million de satellites conçus pour fonction
+  - https://x.com/cb_doge/status/2017466825538474065
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 17527).
+- **@orevazsn** (7710 likes, score 9/10) — OpenAI permet désormais aux utilisateurs de connecter directement leurs comptes bancaires, cartes de crédit et investissements à ChatGPT pour des « conseils financiers ». Je ne peux pas insister assez
+  - https://x.com/OrevaZSN/status/2059671094336815116
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 7964).
+- **@curiouspejjy** (405 likes, score 9/10) — C'est insensé...
+
+Il a fallu 69 ans aux gouvernements du monde entier pour lancer près de 4 900 satellites en orbite.
+
+Mais il n'a fallu que 8 ans à SpaceX pour en lancer près de 10 000.
+  - https://x.com/CuriousPejjy/status/2061835098903720393
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 427).
+- **@chrissgpt** (943 likes, score 9/10) — Xai hasn’t even released the benchmarks to Grok 4.2 meanwhile GPT is now working on GPT 5.5.. after releasing GPT 5 a month after grok 4
+
+What happened at XAI?
+  - https://x.com/ChrissGPT/status/2030143536335614077
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1157).
+- **@gemini** (274 likes, score 9/10) — JUST IN: Bitcoin drops to $66,500
+  - https://x.com/Gemini/status/2061895012237893669
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 374).
+- **@bdinvestingg** (13 likes, score 7/10) — 400G est la norme. 800G est maintenant. 1,6T arrive.
+
+La pile réseau pour l'IA ne ralentit pas.
+
+Le vrai argent est dans le déplacement des données entre GPU à la vitesse de la lumière. $AAOI
+  - https://x.com/bdinvestingg/status/2061905693498593636
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 17).
+- **@sawyermerritt** (14249 likes, score 8/10) — WOW ! C’est la première fois que nous pouvons voir Starship dans l’espace depuis un autre objet. Cette vue provient d’un satellite Starlink modifié qu’ils viennent de déployer, équipé d’une caméra et
+  - https://x.com/SawyerMerritt/status/2057962471818776846
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 14615).
+- **@latestincosmos** (6422 likes, score 8/10) — : This is Mars!  
+
+140 million miles away from us!
+  - https://x.com/latestincosmos/status/2040345376809422920
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 6698).
+- **@coinmarketcap** (58 likes, score 8/10) — LATEST :  Mt. Gox a transféré 10 422 Bitcoins vers de nouveaux portefeuilles dans son plus grand transfert depuis des mois, avant une échéance de remboursement le 31 octobre.
+  - https://x.com/CoinMarketCap/status/2061932667633893562
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 112).
+- **@wallstengine** (48 likes, score 8/10) — $MSFT a rendu Microsoft Discovery généralement disponible, élargissant ainsi sa plateforme d'IA agentique pour la R&D scientifique et en ingénierie.
+
+La plateforme permet aux équipes de construire des
+  - https://x.com/wallstengine/status/2061893865708384579
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 56).
+- **@ashcrypto** (1639 likes, score 8/10) — RUMEUR : 
+
+Les institutions font baisser le Bitcoin afin de pouvoir l’acheter à des prix moins chers avant que la loi Clarity ne soit SIGNÉE.
+
+Nous avons déjà vu un schéma similaire auparavant.
+
+ En a
+  - https://x.com/AshCrypto/status/2061889119303905513
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 2199).
+- **@ashcrypto** (1004 likes, score 8/10) — $BTC chute en dessous de 67 000 $, son niveau le plus bas en presque 2 mois.
+
+$ETH chute en dessous de 1,9 000 $, son niveau le plus bas en 3 mois.
+
+1,35 MILLIARD DE DOLLARS en positions longues liqui
+  - https://x.com/AshCrypto/status/2061894914208670192
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1500).
+- **@interesting_ail** (576 likes, score 8/10) — Plus de 1,5 million d'agents IA inscrits sur une plateforme de médias sociaux où les humains étaient interdits
+
+En l'espace de 72 heures sur Moltbook, il y avait plus de 12 000 sous-communautés, une r
+  - https://x.com/interesting_aIl/status/2059030354615267496
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 704).
+- **@rgvaerialphotos** (682 likes, score 8/10) — Décollage de Starship capturé depuis notre Cessna 172.
+
+Starbase Xpanded est en direct maintenant : https://youtube.com/live/TNLYnMNXfZs?si=ULXEM0byThS7nJrG…
+  - https://x.com/RGVaerialphotos/status/2059408715984306230
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 694).
+- **@bdinvestingg** (247 likes, score 8/10) — La Maison Blanche vous indique exactement où investir avec un BUDGET DE DÉFENSE de 1,5 T$  
+
+Voici les 15 principaux noms qui en bénéficieront :  
+ 1. $PLTR - Palantir  
+2. $AVAV- AeroVironment  
+3. $
+  - https://x.com/bdinvestingg/status/2061833215904555483
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 259).
+- **@gemini** (73 likes, score 8/10) — JUSTE EN: Morningstar juge la valorisation de l’introduction en bourse de SpaceX surévaluée de plus de 1 000 milliards de dollars
+  - https://x.com/Gemini/status/2061913204096147872
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 101).
+- **@gemini** (71 likes, score 8/10) — JUSTE EN: Morningstar juge la valorisation de l’introduction en bourse de SpaceX surévaluée de plus de 1 000 milliards de dollars
+  - https://x.com/Gemini/status/2061913204096147872
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 99).
+- **@interneth0f** (7467 likes, score 7/10) — Remember that one time Buzz Aldrin punched a moon landing denier
+  - https://x.com/InternetH0F/status/2042014696392290760
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 8059).
+- **@sawyermerritt** (3926 likes, score 7/10) — L'US Space Force a annoncé qu'elle a attribué à @SpaceX un important contrat de 2,29 milliards de dollars pour construire le nouveau « Space Data Network (SDN) Backbone » - un réseau de communications
+  - https://x.com/SawyerMerritt/status/2059367871684157733
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 4136).
+- **@sawyermerritt** (3926 likes, score 7/10) — L'US Space Force a annoncé qu'elle a attribué à @SpaceX un important contrat de 2,29 milliards de dollars pour construire le nouveau « Space Data Network (SDN) Backbone » - un réseau de communications
+  - https://x.com/SawyerMerritt/status/2059367871684157733
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 4136).
+- **@jukan05** (781 likes, score 7/10) — TrendForce : Grâce à l'IA agentique, les revenus du marché mondial de la DRAM devraient croître de 303 % en glissement annuel en 2026 et de 46 % en glissement annuel en 2027.
+
+De même, les revenus du
+  - https://x.com/jukan05/status/2060293000237023530
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 843).
+- **@bitmundfreud** (95 likes, score 7/10) — Opening my 100% Bitcoin portfolio today
+  - https://x.com/BitmundFreud/status/2061834075141193811
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 105).
+- **@earthcurated** (6566 likes, score 7/10) — Nouvelle étude : les cycles orbitaux naturels de la Terre indiquent la prochaine ère glaciaire dans environ 10 000 ans.
+  - https://x.com/earthcurated/status/2052782855105708525
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 7174).
+- **@renaudpila** (5236 likes, score 7/10) — Le scandale politique de ces derniers jours. Le jeune PDG français de Mistral AI, Arthur Mensch, s’est déplacé pr une audition devant la commission d’enquête sur les vulnérabilités numériques
+
+Quasime
+  - https://x.com/renaudpila/status/2057846289937629567
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 5856).
+- **@jota_snchez** (3458 likes, score 7/10) — IMPACTANT : Des chercheurs du MIT ont démontré mathématiquement que ChatGPT est conçu pour vous faire perdre le contact avec la réalité.
+
+Et que aucune des « solutions » qu’OpenAI est en train d’appli
+  - https://x.com/jota_snchez/status/2060058046252888426
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 3754).
+- **@zerohedge** (2496 likes, score 7/10) — Vente de Bitcoin non-stop
+  - https://x.com/zerohedge/status/2061833002817131007
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 2932).
+- **@moreperfectus** (2426 likes, score 7/10) — Les statuts de SpaceX incluront une clause stipulant que toute personne détenant des actions renonce « de manière irrévocable et inconditionnelle » à tous droits de poursuivre un procès avec jury.
+
+Le
+  - https://x.com/MorePerfectUS/status/2060370749857173564
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 2536).
+- **@barchart** (850 likes, score 7/10) — URGENT  : Bitcoin bitcoin:native 
+
+Timberrrrrrrrrrrrrrrr
+  - https://x.com/Barchart/status/2061847324276523314
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 968).

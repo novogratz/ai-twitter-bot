@@ -270,7 +270,13 @@
     "CedMamb",
     "NathanBailat",
     "RomainDewaele",
-    "PhilippeMayer"
+    "PhilippeMayer",
+    "MathieuMougel",
+    "BenoitHennebert",
+    "LucAsensio",
+    "GuillaumeVivier",
+    "ThomasB",
+    "JorisGuerard"
   ],
   "en": [
     "blablacar",
@@ -1700,6 +1706,36 @@
     {
       "lang": "fr",
       "handle": "PhilippeMayer",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuMougel",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitHennebert",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucAsensio",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "GuillaumeVivier",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasB",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "JorisGuerard",
       "added": "2026-06-02"
     }
   ]
