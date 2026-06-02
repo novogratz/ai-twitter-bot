@@ -10824,3 +10824,269 @@ what runs the fund:
 300 AI models reading satellite images of parking
   - https://x.com/L1vsun/status/2061525580085088605
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 39).
+- **@accuweather** (20 likes, score 7/10) — Planet satellite imagery shows charred areas and apparent structural damage at Launch Complex 36 after Blue Origin’s 320-foot New Glenn rocket erupted in flames during a hot fire test. https://bit.ly/
+  - https://x.com/accuweather/status/2061553502351249596
+  - **WHY**: Source fiable + impact concret (score signal 14, engagement 24).
+- **@vaibhavsisinty** (532 likes, score 9/10) — This is actually nutsss
+
+NVIDIA just announced RTX Spark an ARM-based processor with RTX 5070-level GPU power, 100 FPS at 1440p, full performance even
+
+Unplugged, and it fits inside a slim laptop.
+  - https://x.com/VaibhavSisinty/status/2061459066627739754
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 550).
+- **@trungtphan** (492 likes, score 9/10) — Jensen pulled a version of “Steve Jobs introducing iPod Nano by pulling it out of the 5th pocket of his dad jeans” move with Nvidia’s new Nvidia N1X.
+
+Says “I have too many things in my pockets then w
+  - https://x.com/TrungTPhan/status/2061463641384509933
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 522).
+- **@bassonbrain** (5 likes, score 7/10) — Iraq seized 24 @Starlink kits at its Baghdad airport, citing ‘import ban’
+
+The country's General Customs Authority announced the seizure of 24 Starlink satellite internet devices on Sunday, says it wa
+  - https://x.com/BassonBrain/status/2061420091971911740
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 11).
+- **@themooncarl** (235 likes, score 9/10) — $BTC last 2 bottoms happened after 9 red monthly candles.
+
+Bitcoin just closed the 6th one of this cycle.
+  - https://x.com/TheMoonCarl/status/2061480334555025696
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 303).
+- **@godofprompt** (58 likes, score 9/10) — Temperature is dead. Every frontier AI provider killed it. And most people are panicking about the wrong thing.
+
+OpenAI removed it on o1, o3, and GPT-5. Google warned against changing it on Gemini 3.
+  - https://x.com/godofprompt/status/2061175021272215713
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 80).
+- **@mr_derivatives** (215 likes, score 9/10) — Why is $SPCE rocketing hard lately? 
+
+This ain’t the SpaceX ticker guys. Lol
+  - https://x.com/Mr_Derivatives/status/2061509701498699975
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 373).
+- **@alanthefisher** (3301 likes, score 9/10) — The SpaceX IPO is reallying going to be the first domino that takes everything down.
+
+>S&P 500 rules are waved to fast track SpaceX into the fund
+>Mutual Funds will be forced to buy SpaceX stock using
+  - https://x.com/alanthefisher/status/2061405192197726497
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3419).
+- **@benjamindekr** (213 likes, score 9/10) — Prediction: SpaceX stock will be down -40% a year after the IPO
+
+(This is not a criticism of the company, it's a criticism of people who lack long-term vision and are jumping in for the wrong reasons)
+  - https://x.com/BenjaminDEKR/status/2061510547325976704
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 351).
+- **@optionscjp** (196 likes, score 9/10) — $GOOGL diluting $80B to invest more in Ai infrastructure 
+
+$NOK to $100
+$NBIS to $1k
+$CRWV to $500 
+$IREN to $500 
+
+Because why not? 
+
+This market does not make sense anymore and that’s okay, ride the
+  - https://x.com/optionscjp/status/2061556395057795162
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 224).
+- **@ashleydcan** (132 likes, score 9/10) — ON TODAYS BRAIN ROT NEWS
+
+• more US Iran war peace talk shenanigans
+• Anthropic has filed for an IPO
+• Michael Saylor's 'Strategy' sells 32 Bitcoin
+  - https://x.com/AshleyDCan/status/2061567635813216342
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 200).
+- **@spaceinvestor_d** (164 likes, score 9/10) — $RKLB: This is a fresh NASA study contract ($432K) to look at mission concepts for the GDC Trailblazer.
+
+This is a major NASA project designed to send a constellation of satellites into Earth's upper
+  - https://x.com/SpaceInvestor_D/status/2061482527353626639
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 168).
+- **@championswimmer** (18 likes, score 7/10) — So the takeaway is: After SpaceX, Anthropic and OpenAI IPO, keep a keen eye on the stock market, and the moment these companies go down 10%, just pull your money from everything and hold on to dear ca
+  - https://x.com/championswimmer/status/2061570651215778306
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 24).
+- **@siddsax** (10 likes, score 7/10) — Nvidia isn't just building chips anymore.
+
+Between their models, research, and open releases, they're becoming a significant contributor to the open AI ecosystem.
+
+Nemotron 3 Ultra is another reminder
+  - https://x.com/siddsax/status/2061450191006511327
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 10).
+- **@yuchenj_uw** (610 likes, score 8/10) — OpenAI slept on coding, so Anthropic stole the crown.
+
+Anthropic didn’t secure enough GPUs/TPUs to turn that lead into a monopoly. Now Codex has caught up.
+
+Gemini will catch up too. It’s only a matte
+  - https://x.com/Yuchenj_UW/status/2061505386797232209
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 776).
+- **@yuchenj_uw** (610 likes, score 8/10) — OpenAI slept on coding, so Anthropic stole the crown.
+
+Anthropic didn’t secure enough GPUs/TPUs to turn that lead into a monopoly. Now Codex has caught up.
+
+Gemini will catch up too. It’s only a matte
+  - https://x.com/Yuchenj_UW/status/2061505386797232209
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 774).
+- **@sawyermerritt** (279 likes, score 8/10) — Do you plan on buying @SpaceX stock at its IPO?
+  - https://x.com/SawyerMerritt/status/2061527864604860437
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 641).
+- **@google** (110 likes, score 8/10) — Here’s your behind-the-scenes look at how we made our “TPU Training Day” short film for #GoogleIO, using puppetry and traditional animation alongside AI tools like Nano Banana, @GoogleAIStudio and Gem
+  - https://x.com/Google/status/2061567260104311275
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 164).
+- **@realsimpleariel** (92 likes, score 8/10) — Software Infrastructure and Application once again leading the way (where have you heard that before)
+$CRWV $NBIS $OKTA $TWLO $MDB 
+Aerospace and Defense I think has topped until after SpaceX IPO and
+  - https://x.com/RealSimpleAriel/status/2061456401151512768
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 114).
+- **@learnwithbrij** (70 likes, score 8/10) — Most people think AI runs on GPUs.
+
+That's like saying the internet runs on browsers.
+
+Modern AI is powered by an entire ecosystem of processors:
+
+ CPU → Coordinates everything
+ GPU → Trains massive m
+  - https://x.com/LearnWithBrij/status/2061509682804756799
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 82).
+- **@firstsquawk** (14 likes, score 7/10) — Snowflake and Anthropic see rising enterprise AI uptake as organizations seek secure and governed AI infrastructure.
+  - https://x.com/FirstSquawk/status/2061599598792360300
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 18).
+- **@johntinsman** (10 likes, score 7/10) — Anthropic SpaceX Compute Deal
+
+The price highlights the potential for compute leasing ROIs to be in surplus of 200% annually. 
+
+Is the the tip of the iceberg as more higher priced deals get announced?
+  - https://x.com/JohnTinsman/status/2061549238610186660
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 14).
+- **@johntinsman** (10 likes, score 7/10) — Anthropic SpaceX Compute Deal
+
+The price highlights the potential for compute leasing ROIs to be in surplus of 200% annually. 
+
+Is the the tip of the iceberg as more higher priced deals get announced?
+  - https://x.com/JohnTinsman/status/2061549238610186660
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 14).
+- **@aistocksavvy** (10 likes, score 7/10) — 𝐉𝐔𝐒𝐓 𝐈𝐍: Amazon's head of satellite internet warned employees to stay focused after last week's Blue Origin rocket explosion. - BI - $AMZN
+  - https://x.com/AIStockSavvy/status/2061494051455553579
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
+- **@aistocksavvy** (10 likes, score 7/10) — 𝐉𝐔𝐒𝐓 𝐈𝐍: Amazon's head of satellite internet warned employees to stay focused after last week's Blue Origin rocket explosion. - BI - $AMZN
+  - https://x.com/AIStockSavvy/status/2061494051455553579
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
+- **@wholemars** (1023 likes, score 8/10) — A new Tesla starts at $36,990 before any incentives 
+
+Used ones are even cheaper. And it drives itself.
+  - https://x.com/wholemars/status/2061529607795536018
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1135).
+- **@sawyermerritt** (777 likes, score 8/10) — Elon on SpaceX’s compute lease deal with Anthropic:
+  - https://x.com/SawyerMerritt/status/2061508034493386929
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 843).
+- **@gemini** (295 likes, score 8/10) — JUST IN: Berkshire Hathaway to invest $10 billion into Google to expand its AI infrastructure
+  - https://x.com/Gemini/status/2061554848143708548
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 335).
+- **@deryatr_** (95 likes, score 8/10) — I am really excited about the Cosmos 3 frontier model for physical AI! This will be big for robotics!
+  - https://x.com/DeryaTR_/status/2061317387098447947
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 99).
+- **@vincentneilho** (78 likes, score 8/10) — THE LIBERAL GRAVY TRAIN CONTINUES  
+
+Watch Liberal-appointed bureaucrats scramble to explain how the Liberals’ $200 million “space-launch pad” is anything more than an expensive gravel pit.
+
+It doesn'
+  - https://x.com/vincentneilho/status/2061561861133246551
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 82).
+- **@senmarkkelly** (3030 likes, score 7/10) — 18 years ago today, I launched on Space Shuttle Discovery for my first flight as shuttle commander. Our mission was to deliver Kibo, the Japanese experiment module, to the @Space_Station. In the years
+  - https://x.com/SenMarkKelly/status/2061168467080814727
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 3438).
+- **@nvidiaai** (2304 likes, score 7/10) — Introducing Cosmos 3: Our latest frontier model for Physical AI
+
+Cosmos 3 is the world’s first fully open omnimodel with native vision reasoning, world and action generation.
+
+Today we’re releasing Su
+  - https://x.com/NVIDIAAI/status/2061308434629132553
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2450).
+- **@volcaholic1** (505 likes, score 7/10) — NASA reports that the meteor over New England on Saturday entered the atmosphere at around 42,000 mph.
+
+It was roughly 5 feet across, about 5.6 tonnes, travelling northwest to southeast for around 26
+  - https://x.com/volcaholic1/status/2061544202282971521
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 525).
+- **@onlyinbos** (342 likes, score 7/10) — NASA says Saturday's New England fireball was a 5-foot meteor weighing 5.6 metric tons.
+
+Traveling at 42,000 mph, it streaked 26 miles across the sky before exploding over Massachusetts and dropping m
+  - https://x.com/OnlyInBOS/status/2061576023133593652
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 368).
+- **@bitcoinaiguy** (239 likes, score 7/10) — I remember when I was laughed at when I called the rotation from $MSTR to $IREN
+
+How did that go?
+
+Now I’m being laughed at for calling the $NBIS to $IREN rotation.
+
+GUAC CANDLES LOADING!
+
+Tick tock.
+  - https://x.com/BitcoinAIGuy/status/2061536199626400101
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 295).
+- **@sergiohidalaero** (210 likes, score 7/10) — Oye, en 2 semanas sale Spacex a bolsa y es una locura la valoracion que se ha hecho de la empresa. Opiniones?
+  - https://x.com/SergioHidalAERO/status/2061563775686230425
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 254).
+- **@livedoornews** (58 likes, score 7/10) — 【判明】「チャットGPTが犯行手助け」銃乱射事件めぐりフロリダ州が提訴、オープンAIは反論
+https://news.livedoor.com/article/detail/31432482/…
+
+大学生だった当時20歳の男が銃を乱射し、2人が死亡、6人がけがをした事件。訴状によると、男は犯行前にチャットGPTに、銃の扱い方や人が集まる場所などについて質問していた。
+  - https://x.com/livedoornews/status/2061595649947353211
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 176).
+- **@aleabitoreddit** (113 likes, score 7/10) — Not a fan of $CRWV, debt interest too high.
+
+As for $IREN, infinite ATMs structurally caps upside.
+
+$NBIS is the Goldilocks player in neoclouds.
+  - https://x.com/aleabitoreddit/status/2061480648561541175
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 137).
+- **@jimcramer** (0 likes, score 7/10) — I can't emphasize enough how Jensen makes clear The Big 3, Anthropic, Open AI and SpaceX are Nvidia houses.
+  - https://x.com/jimcramer/status/2061400884760674340
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 124).
+- **@hyperaicapital** (82 likes, score 7/10) — Mum, how did we get so poor?
+
+Your father was convinced $NBIS investors would rotate into $IREN
+  - https://x.com/HyperAICapital/status/2061555880999768253
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 98).
+- **@swyx** (41 likes, score 7/10) — whoah - Grace + Blackwell chips in a laptop.
+
+@Microsoft + @NVIDIA teaming up to take on 6 years of total dominance of Apple Silicon
+  - https://x.com/swyx/status/2061567877879369953
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 79).
+- **@stockoptioncole** (52 likes, score 7/10) — Dips this morning that are opportunities 
+
+$APLD $IREN $INTC $QCOM $AMZN $ASTS
+  - https://x.com/StockOptionCole/status/2061469011829834136
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 70).
+- **@realannapaulina** (3085 likes, score 7/10) — Did some bloodwork a few months back. Put my results into @grok & it caught some stuff my doc missed. Nothing bad, but overlooked. AI will make heath care better, more accessible, and affordable. We h
+  - https://x.com/realannapaulina/status/2061289495387881765
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 3951).
+- **@wholemars** (1279 likes, score 7/10) — AI3 Teslas get FSD 14 Lite this month
+  - https://x.com/wholemars/status/2061512385752608792
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1565).
+- **@ashcrypto** (575 likes, score 7/10) — If $ETH was a semiconductor stock,  it would be trading above $10,000 today.
+  - https://x.com/AshCrypto/status/2061557664719520250
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 869).
+- **@astro_kimiya** (328 likes, score 7/10) — Bonjour à tous !  
+Le premier jour à Washington DC a été une session de rapport de mission au siège de la NASA.  
+Les questions posées par les jeunes étudiants et élèves étaient toutes remarquables, e
+  - https://x.com/Astro_Kimiya/status/2061580891088949493
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 348).
+- **@jimcramer** (134 likes, score 7/10) — After the excellent interview of Sam Altman by @davidfaber it seems to me that OpenAI wants to come public real soon. After this Google biz and SpaceX and Anthropic i do not believe there is enough mo
+  - https://x.com/jimcramer/status/2061576520263463086
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 224).
+- **@jimcramer** (134 likes, score 7/10) — After the excellent interview of Sam Altman by @davidfaber it seems to me that OpenAI wants to come public real soon. After this Google biz and SpaceX and Anthropic i do not believe there is enough mo
+  - https://x.com/jimcramer/status/2061576520263463086
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 224).
+- **@chinaselect** (114 likes, score 7/10) — China’s military is trying to illicitly buy Nvidia chips. The Select Committee has documented that China will buy what it can and steal what it must, and this story shows once again there is a coordin
+  - https://x.com/ChinaSelect/status/2061528826169987240
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 138).
+- **@adaption_ai** (101 likes, score 7/10) — Model training has been too slow for too long.
+
+Months of iteration. Heavy infrastructure. Specialized teams.
+
+AutoScientist goes from unstructured data to frontier model training in 2 days.
+
+Less tim
+  - https://x.com/adaption_ai/status/2061417476445893062
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 109).
+- **@realgeopolitica** (51 likes, score 7/10) — Este año tienen planeado salir a Bolsa con sus respectivas OPI OpenAI, Space X y también Anthropic. Una orgía bursátil inédita en la Historia.
+  - https://x.com/Realgeopolitica/status/2061560823722516626
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 51).
+- **@junkbondinvest** (12 likes, score 7/10) — Right now, AI datacenter credit all trade at near-identical levels but a "sorting mechanism" is coming:
+
+Borrowers who miss construction targets will see it in their cost of capital
+
+The market hasn't
+  - https://x.com/junkbondinvest/status/2061596783629742406
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 14).
