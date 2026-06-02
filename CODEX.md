@@ -57,10 +57,20 @@ obeys the same rules without per-bot rewrites:
   on each follow/unfollow so the ratio invariant blocks new follows until the prune lands.
 - Reciprocity mass-following (`follow_blast_bot`) is disabled whenever `FOLLOW_WHITELIST_ONLY=1`.
 
-> **Remaining (next increment, not yet built):** a dedicated engagement-velocity targeting
-> module (rank tier1/2 recent posts by (likes+reposts)/hour → reply queue, log conversions),
-> and folding likes/retweets into the same explicit queue object. Caps/pacing/dedup for those
-> already run through `action_guard`.
+- **`src/engagement_targeting.py`** (BUILT 2026-06-02) — growth engine. Ranks tier1/2
+  whitelist posts by velocity `(likes+reposts)/hour` × learned per-author weight, replies to
+  the hottest few with a language-matched substantive take through the reply chokepoint
+  (shares the 30/day cap + spacing + validators). Logs targets/tallies to
+  `engagement_targets_log.json`. Scheduled every 20 min in `main.py`.
+- **`src/bot_memory.py`** — recent-posts digest injected via `lang_mode` so the bot can call
+  back to past theses (with dates) when it adds value. `content_guard` also rejects lazy
+  replies ("bien vu", too short) so replies stay substantive.
+- Autonomous strategy loop runs under `ENABLE_AI_MAINTENANCE=1` (analyzer 4h, meta_strategy 4h,
+  strategy 3h, evolution 3h, reflection 6h) — periodic Claude/Ollama assess-and-improve.
+
+> **Remaining (optional next):** conversion attribution for `engagement_targeting` (re-scrape
+> targets to learn who liked/replied/followed back and adjust per-author weights), and folding
+> likes/retweets into one explicit queue object. Caps/pacing/dedup already run through `action_guard`.
 
 > **Mandate 2026-05-27 (superseded by 2026-06-02 above):** All standalone content in English. French ONLY when replying to French content.
 
