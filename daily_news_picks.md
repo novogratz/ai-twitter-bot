@@ -12184,3 +12184,153 @@ Et Krishna a répondu a
 There is a gap at $67K, so don't forget about it.
   - https://x.com/cryptojack/status/2061810710850437281
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 42).
+- **@cryptogoos** (33 likes, score 8/10) — HOW CAN SPACEX EVEN JUSTIFY A $1.75 TRILLION VALUATION?
+
+SpaceX is targeting a valuation between $1.75-2 TRILLION.
+
+That would make it one of the most expensive IPOs in financial history.
+
+For compari
+  - https://x.com/cryptogoos/status/2061849412817813777
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 47).
+- **@wallstengine** (120 likes, score 9/10) — SpaceX pousse les banques à accepter l'un des taux de frais d'IPO les plus bas jamais enregistrés.
+
+L'entreprise négocie pour payer moins de 0,75 % sur son IPO prévue de 75 milliards de dollars, bien
+  - https://x.com/wallstengine/status/2061791855768195126
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 138).
+- **@wallstengine** (70 likes, score 9/10) — More than 1,000 current and former SpaceX employees are banding together to negotiate better wealth-management terms ahead of the IPO, per Bloomberg.
+
+The group is targeting fees below 0.5% of assets,
+  - https://x.com/wallstengine/status/2061845572936708484
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 76).
+- **@ashcrypto** (706 likes, score 9/10) — Bitcoin has dropped -$5,500 to its 2-month low of $67,076 since Saylor sold 32 BTC.
+
+$130 billion has been erased from crypto market and Over $1.25 BILLION liquidated in the last 24 hours.
+
+The crazy
+  - https://x.com/AshCrypto/status/2061838142450086213
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1098).
+- **@marionawfal** (289 likes, score 9/10) — Bitcoin just dropped below $67,000 with $700 million liquidated from crypto markets in the past 2 hours 
+
+Leverage traders getting absolutely vaporized like they bet their rent on a meme coin 
+
+What t
+  - https://x.com/MarioNawfal/status/2061842309277483182
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 405).
+- **@coinbureau** (234 likes, score 9/10) — URGENT : SpaceX d’Elon Musk en discussions avec des banques pour réduire ses frais d’introduction en bourse à moins de 0,75 %, l’un des taux les plus bas de l’histoire.
+
+Pour le contexte, la plupart d
+  - https://x.com/coinbureau/status/2061791179382079708
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 322).
+- **@coinmarketcap** (194 likes, score 9/10) — Le Bitcoin a chuté de 11,61 % au cours de la semaine écoulée pour atteindre 67 987,07 $, alors que le sentiment du marché s’est fortement dégradé. L’indice de peur et de cupidité de CMC est tombé à 27
+  - https://x.com/CoinMarketCap/status/2061836533011738646
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 310).
+- **@kalshi** (430 likes, score 9/10) — JUST IN: 25% chance Bitcoin hits $100K this year
+  - https://x.com/Kalshi/status/2061837756670595156
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 554).
+- **@gemini** (285 likes, score 9/10) — JUST IN : Elon Musk bloque 100 % de ses avoirs SpaceX $SPCX pendant 366 jours
+  - https://x.com/Gemini/status/2061823400818217370
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 331).
+- **@avifelman** (190 likes, score 9/10) — Vous ne pouvez acheter du Bitcoin que lorsque tout le monde l’a abandonné pour mort.
+
+La beauté de cet actif n’est pas qu’il monte, c’est simplement qu’il offre des points d’entrée au plus bas extrême
+  - https://x.com/AviFelman/status/2061835492706910598
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 222).
+- **@iren_ltd** (2293 likes, score 9/10) — $IREN will release its Q3 FY26 Results on Thursday, May 7, 2026 (Eastern Time).
+
+Conference call to be held at 5:00pm (Eastern Time).
+
+Register here: http://edge.media-server.com/mmc/p/8oxdtymr
+  - https://x.com/IREN_Ltd/status/2047408120813817910
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2495).
+- **@wolf_financial** (47 likes, score 9/10) — STARLINK EST AUSSI IMPORTANT QUE SES SEPT PLUS GRANDS CONCURRENTS RÉUNIS
+
+La division par satellites de SpaceX a généré 11,4 milliards de dollars de revenus en 2025.
+
+Voici comment chaque concurrent s
+  - https://x.com/WOLF_Financial/status/2061828417062887445
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 59).
+- **@iren_ltd** (965 likes, score 8/10) — Construire des usines d'IA n'est pas une solution universelle. Avec @Dell et @nvidia, $IREN propose des solutions intégrées pour chaque charge de travail.
+
+Découvrez Denis Skrinnikoff, CTO d'IREN, et
+  - https://x.com/IREN_Ltd/status/2055463242554900888
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1049).
+- **@cryptorover** (80 likes, score 8/10) — $BTC just dropped from $80,000 to $70,000 while stocks are at ALL-TIME HIGHS.
+
+Think about that for a second.
+
+This is the easy mode. The S&P hasn't even started dropping yet.
+
+What happens when it do
+  - https://x.com/cryptorover/status/2061855865154523534
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 204).
+- **@charlesmullins2** (7480 likes, score 8/10) — SPACEX VIENT D’OBTENIR L’APPROBATION DE LA FAA POUR TESTER SES NOUVELLES CAPSULES « STARFALL ».
+
+Ce ne sont pas des véhicules de rentrée ordinaires.
+Les nouvelles capsules circulaires Starfall de Spac
+  - https://x.com/CharlesMullins2/status/2061652882181791914
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7988).
+- **@aleabitoreddit** (592 likes, score 8/10) — $LASR (NLight), a $2.2B US company does these directed energy weapons. 
+
+They build the "Death Ray" - Lasers that shoot down ballistic and hypersonic missiles.
+
+This can be adapted to Orbital death ra
+  - https://x.com/aleabitoreddit/status/2014826579625738691
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 652).
+- **@nasaspacealerts** (6739 likes, score 7/10) — MISE À JOUR : @NASA peut confirmer un boule de feu au-dessus de la Nouvelle-Angleterre à 14 h 06 EDT le samedi 30 mai 2026. La météorite mesurait environ 5 pieds (1,6 mètre) de diamètre avec une masse
+  - https://x.com/NASASpaceAlerts/status/2061542998844887048
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 7037).
+- **@aleabitoreddit** (1533 likes, score 7/10) — I have high conviction that majority/full port $IREN investors are the dumbest people you’ll meet in this world.
+  - https://x.com/aleabitoreddit/status/2048143244673081730
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2019).
+- **@thelonginvest** (168 likes, score 7/10) — $IREN
+
+Art
+Louvre
+Goatstuff
+
+Tout ce qui précède.
+  - https://x.com/TheLongInvest/status/2052819933843591266
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 206).
+- **@techcrunch** (32 likes, score 7/10) — Blue Origin prévoit de relancer New Glenn cette année après l'explosion
+  - https://x.com/TechCrunch/status/2061802065429762259
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 46).
+- **@business** (25 likes, score 7/10) — Blue Origin fait face à un défi redoutable qui va au-delà du simple remplacement de la fusée New Glenn qu'elle a perdue dans l'explosion de la semaine dernière : la reconstruction d'une aire de lancem
+  - https://x.com/business/status/2061823433395065123
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 45).
+- **@marionawfal** (11 likes, score 7/10) — Rubio :
+
+« Hezbollah n’est pas seulement un ennemi d’Israël et de l’Amérique. C’est un ennemi du Liban et du peuple libanais. »
+
+Washington ne fait pas pression sur le Liban, il le sauve. Le Liban ser
+  - https://x.com/MarioNawfal/status/2061852891284185095
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 31).
+- **@earthcurated** (6568 likes, score 7/10) — Nouvelle étude : les cycles orbitaux naturels de la Terre indiquent la prochaine ère glaciaire dans environ 10 000 ans.
+  - https://x.com/earthcurated/status/2052782855105708525
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 7176).
+- **@iren_ltd** (1987 likes, score 7/10) — IREN a acquis Awaken, une agence créative et média spécialisée dans la stratégie de contenu et le développement de marque pour les entreprises à forte croissance.
+
+Les membres seniors de l'équipe rejo
+  - https://x.com/IREN_Ltd/status/2056332450771403067
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 2295).
+- **@binance** (353 likes, score 7/10) — Trader des actions sur Binance ? Plus facile que vous ne le pensez.
+
+Choisissez parmi plus de 7 000 actions et ETF → Sélectionnez votre crypto → Confirmez.
+
+C'est tout. Vous y êtes.
+
+ http://binance.c
+  - https://x.com/binance/status/2061795541848068329
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 571).
+- **@nasakennedy** (477 likes, score 7/10) — Des équipes au centre spatial Kennedy de la NASA ont construit un système mobile de traitement des eaux usées pour aider les futurs astronautes à vivre et travailler sur la Lune. Cette unité de la tai
+  - https://x.com/NASAKennedy/status/2061833577113817094
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 527).
+- **@ft** (357 likes, score 7/10) — La cotation de SpaceX est-elle sur le point de pulvériser les records boursiers ? Ou la société d’Elon Musk, des fusées à l’IA, va-t-elle décevoir ? https://ft.trib.al/FJRBknl
+  - https://x.com/FT/status/2061835547572601319
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 403).
+- **@documentingbtc** (127 likes, score 7/10) — Histoire de l’indice « Avidité vs Peur » avec le prix du Bitcoin
+  - https://x.com/DocumentingBTC/status/2061830394962465070
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 145).
+- **@fronteraspacial** (96 likes, score 7/10) — Voici comment s’est déroulé le Vol 12 de Starship depuis Playa Bagdad, Matamoros
+  - https://x.com/FronteraSpacial/status/2061814625289547843
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 98).
