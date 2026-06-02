@@ -20,6 +20,7 @@ Usage:
 validates, and on failure regenerates up to CONTENT_VALIDATION_RETRIES times.
 If it still fails it returns None and logs — a flagged draft is NEVER returned.
 """
+import os
 import re
 from typing import Callable, Optional, Tuple
 
@@ -111,6 +112,27 @@ def is_french(text: str, min_confidence: float = 0.6) -> bool:
 
 # --- public validation API ------------------------------------------------
 
+# Low-effort replies the account must never send (the spec: "never 'great
+# post'"). Matched only when they're ~the WHOLE reply, so a longer substantive
+# reply that merely starts with "Exactement, mais…" still passes.
+_LAZY_REPLIES = {
+    "great post", "nice", "exactly", "this", "so true", "well said", "agreed",
+    "facts", "based", "real", "lol", "lmao", "amazing", "incredible", "wow",
+    "bien vu", "exactement", "tellement vrai", "trop vrai", "carrement",
+    "carrément", "dac", "daccord", "d accord", "merci", "bravo", "gg",
+    "mdr", "enorme", "énorme", "ouais", "clairement", "evidemment", "évidemment",
+}
+_REPLY_MIN_CHARS = int(os.environ.get("REPLY_MIN_CHARS", "25"))
+
+
+def _is_lazy_reply(text: str) -> bool:
+    stripped = (text or "").strip()
+    if len(stripped) < _REPLY_MIN_CHARS:
+        return True
+    norm = re.sub(r"[^\w\s]", "", stripped.lower()).strip()
+    return norm in _LAZY_REPLIES
+
+
 def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     """Validate a draft. kind ∈ {"original", "quote", "reply"}.
 
@@ -128,6 +150,9 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         lang, conf = detect_language(text)
         if lang != "fr":
             return (False, f"not French (detected {lang} @ {conf:.0%})")
+
+    if kind == "reply" and _is_lazy_reply(text):
+        return (False, "low-effort reply (too short / generic — must be substantive)")
 
     return (True, "")
 
