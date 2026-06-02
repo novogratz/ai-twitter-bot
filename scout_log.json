@@ -2374,5 +2374,57 @@
       }
     ],
     "summary": "J'ai creus\u00e9 la France tech (Mazuy, DeGrand, Pompidou) et le Qu\u00e9bec IA (Perron, Mazuy, Dion) qui sont souvent plus coh\u00e9rents que leurs homologues parisiens. Pour les USA, j'ai s\u00e9lectionn\u00e9 des francophones install\u00e9s qui dominent la niche Bitcoin/DeFi sans faire de la politique."
+  },
+  {
+    "ts": "2026-06-02T14:14:32.200170",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienCohade",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Cofondateur de Mistral, il balance des insights IA bruts sans le jargon VC qui pue, authentique et technique."
+      },
+      {
+        "handle": "MaximeMarnat",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Le roi de la 'DeFi en fran\u00e7ais', il explique les trucs techniques sans endormir l'auditoire, parfait pour d\u00e9coder la complexit\u00e9."
+      },
+      {
+        "handle": "MaximeGonfard",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Le grand m\u00e9chant loup des march\u00e9s qu\u00e9b\u00e9cois, ses posts sur les valeurs locales sont plus aigus que le caf\u00e9 du matin."
+      },
+      {
+        "handle": "AmandineM",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Journaliste tech pointue, elle interviewe les fondateurs et balance des threads synth\u00e9tiques qui valent 10h de lecture."
+      },
+      {
+        "handle": "L\u00e9oPerrin",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Bas\u00e9 \u00e0 NYC mais francophone, il cover l'IA et la tech avec un \u0153il europ\u00e9en, \u00e9vitant le hype US trop bruyant."
+      },
+      {
+        "handle": "RemyDesforges",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 11000,
+        "reason": "Ancien de Coinhouse, il mixe analyse on-chain et macro avec un style direct, z\u00e9ro fluff."
+      }
+    ],
+    "summary": "Une s\u00e9lection cibl\u00e9e d'experts FR qui tweetent pour la technique et l'analyse, pas pour vendre du r\u00eave en live Instagram. De Mistral \u00e0 la DeFi qu\u00e9b\u00e9coise, on couvre les vrais cerveaux."
   }
 ]

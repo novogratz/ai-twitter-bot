@@ -261,7 +261,12 @@
     "MaximePompidou",
     "GillesBouy",
     "PhilippeDion",
-    "AlexPerron"
+    "AlexPerron",
+    "JulienCohade",
+    "MaximeMarnat",
+    "MaximeGonfard",
+    "AmandineM",
+    "RemyDesforges"
   ],
   "en": [
     "blablacar",
@@ -1646,6 +1651,31 @@
     {
       "lang": "fr",
       "handle": "AlexPerron",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienCohade",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMarnat",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeGonfard",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AmandineM",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "RemyDesforges",
       "added": "2026-06-02"
     }
   ]
