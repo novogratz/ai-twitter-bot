@@ -11618,3 +11618,290 @@ https://youtube.com/watch?v=4hBxevKQoks…
 Uganda’s biggest telecom operators are moving quickly to align themselves with Starlink after years of view
   - https://x.com/BusInsiderSSA/status/2059193834953703686
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 22).
+- **@cryptorover** (84 likes, score 9/10) — LES ACTIONS BITCOIN ET LOGICIELS ONT ÉVOLUÉ COMME DES JUMEAUX DEPUIS 2021. 
+
+$IGV (ETF logiciel) vient de dépasser de nouveaux sommets.
+
+Bitcoin ? En baisse de 3,73 % sur la semaine, à 70,8 K$.
+
+La co
+  - https://x.com/cryptorover/status/2061784393837146421
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 160).
+- **@ashcrypto** (215 likes, score 9/10) — Très peu de gens se posent cette question.
+
+Et si $BTC ne prenait pas de retard, mais montrait la voie ?
+
+Depuis mars 2024, un schéma clair s'est dessiné.
+
+À chaque fois que Bitcoin a atteint un somme
+  - https://x.com/AshCrypto/status/2061780073380770094
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 403).
+- **@asforcesmag** (15 likes, score 7/10) — The Space Data Network is a constellation of satellites in low-Earth orbit that will provide connectivity for the entire joint force.
+MORE: https://airandspaceforces.com/ussf-spacex-2-29-billion-space
+  - https://x.com/ASForcesMag/status/2061486376214831398
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 17).
+- **@kobeissiletter** (618 likes, score 9/10) — URGENT : Le Bitcoin chute en dessous de 70 000 $ pour la première fois depuis le 7 avril.
+  - https://x.com/KobeissiLetter/status/2061783252390560234
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 854).
+- **@mexc** (72 likes, score 9/10) — SpaceX IPO is entering the final countdown!
+
+T-10 days to a potential Nasdaq debut:
+ Roadshow - Jun 4
+ Pricing - Jun 11
+ Trading - Jun 12
+
+Why watch from Earth when you can board early? Join the $SPAC
+  - https://x.com/MEXC/status/2061719471384039915
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 112).
+- **@coinbureau** (23 likes, score 8/10) — STRIVE BECOMES A $1.35 BILLION BITCOIN HOLDER
+
+Strive has bought another 2,500 $BTC for $185.2 million, paying an average of $74,092 per coin.
+
+It now holds 19,000 BTC and ranks as the 7th-largest pub
+  - https://x.com/coinbureau/status/2061787930306515072
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 39).
+- **@spacex** (6886 likes, score 9/10) — Moins de deux heures avant le lancement d'aujourd'hui de Falcon Heavy pour la mission @viasat-3 F3 depuis la Floride. Les équipes surveillent la météo en vue du décollage à 10 h 21 HE → http://spacex.
+  - https://x.com/SpaceX/status/2048741709115265346
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 7496).
+- **@bulltheoryio** (1123 likes, score 9/10) — LES INVESTISSEMENTS DE GOOGLE DEVRAIENT ÊTRE ÉTUDIÉS.
+
+Google détient 7 % de SpaceX et 14 % d'Anthropic, deux des plus grandes introductions en bourse de l'histoire, les deux prévues cette année.
+
+900
+  - https://x.com/BullTheoryio/status/2061730663678750760
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1261).
+- **@adams_tech_ai** (52 likes, score 9/10) — Starship: Humanity’s greatest leap.
+
+The most powerful, fully reusable spacecraft ever built — 100+ tons to orbit, lightning-fast reuse, and built for the stars.
+
+Every flight brings us closer to a mu
+  - https://x.com/Adams_Tech_AI/status/2061719660660146231
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 60).
+- **@coinstoreexc** (16 likes, score 8/10) — Coinstore Labs View: Why SpaceX could become one of the most important Pre-IPO stories in the U.S. stock market.
+
+SpaceX is not just a rocket company.
+
+It is building the infrastructure layer for the
+  - https://x.com/CoinstoreExc/status/2061739638763733162
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 34).
+- **@elonmusk** (27976 likes, score 9/10) — Ce que vous dites est vrai, mais néanmoins notre IA sera formidable. Qu’elle soit la meilleure reste à voir, mais je n’abandonnerai jamais. Jamais.
+
+Space(XAI) n’a que 3 ans. C’est la moitié de l’âge
+  - https://x.com/elonmusk/status/2059265588677976277
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 31378).
+- **@spacex** (9073 likes, score 9/10) — Falcon 9 est en position verticale sur le pas de tir 40 en Floride en prévision du lancement de demain de la 34e mission de ravitaillement commercial de Dragon vers la @Space_Station. Les équipes surv
+  - https://x.com/SpaceX/status/2053986997975298559
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 10323).
+- **@sosovaluecrypto** (0 likes, score 9/10) — Anthropic a discrètement déposé une demande d'introduction en bourse auprès de la SEC américaine.
+
+Découvrez plus d'informations clés sur SoSoValue https://sosovalue.com/shares/BgMl9s via @sosovaluecr
+  - https://x.com/SoSoValueCrypto/status/2061607124493533629
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 5782).
+- **@stockmktnewz** (740 likes, score 9/10) — Berkshire Hathaway $BRK.B a maintenant investi 16,8 milliards de dollars au cours des 2 derniers jours sous la direction du nouveau PDG Greg Abel
+
+- 10 milliards de dollars dans Google $GOOGL
+- 6,8 mi
+  - https://x.com/StockMKTNewz/status/2061645446397800832
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 808).
+- **@_forab** (351 likes, score 9/10) — Devenir riche du jour au lendemain ? SpaceX de Musk a soumis hier soir un document de demande d'IPO modifié. Selon les nouvelles disclosures, SpaceX a réservé jusqu'à 5 % des actions de l'IPO pour des
+  - https://x.com/_FORAB/status/2061644165352689671
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 739).
+- **@jackprandelli** (177 likes, score 9/10) — Un seul centre de données IA consomme désormais 1 gigawatt.
+
+Voici les 10 entreprises qui construisent l’infrastructure 
+
+Marché mondial de la construction de centres de données : plus de 2 milliards
+  - https://x.com/jackprandelli/status/2061551635235500230
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 189).
+- **@asus** (51 likes, score 9/10) — Agentic AI is here, and #ASUS NUC Mini PCs are leading the charge! 
+Visit us at #Computex2026 to see how our palm-sized tech powers
+advanced workflows
+Ascent GX10
+Ascent QN10
+NUC 16 Pro
+ExpertCenter P
+  - https://x.com/ASUS/status/2061749860253233291
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 57).
+- **@esa** (0 likes, score 7/10) — Ce mois-ci à l'ESA : survols d'astéroïdes, tests d'atterrissage sur Mars, découvertes de télescopes spatiaux et plus encore... Mai 2026 avait beaucoup à offrir.
+  - https://x.com/esa/status/2060987141564637432
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 20).
+- **@blockspace** (0 likes, score 7/10) — Le PDG de $NVDA, Jensen Huang, a déclaré que les centres de données IA pourraient coûter 80 à 100 milliards de dollars par gigawatt à l’avenir
+
+À cette valorisation, un seul mégawatt se vendrait 60 à
+  - https://x.com/blockspace/status/2061448068147326997
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 14).
+- **@ashcrypto** (1080 likes, score 8/10) — C'est vraiment étrange.
+
+La dominance du Bitcoin s'effondre violemment et vient de toucher un plus bas sur 58 jours à 58,85 %.
+
+Alors que les Altcoins/Bitcoin viennent d'atteindre un plus haut sur 8 m
+  - https://x.com/AshCrypto/status/2061759438134878709
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1574).
+- **@jimcramer** (883 likes, score 8/10) — Voyons voir : 80 milliards de dollars pour GOOGL, probablement 100 milliards pour Anthropic, 100 milliards pour OpenAI (peut-être plus) et 100 milliards pour SpaceX et 100 milliards pour Amazon ? Est-
+  - https://x.com/jimcramer/status/2061749637141123215
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1359).
+- **@jimcramer** (882 likes, score 8/10) — Voyons voir : 80 milliards de dollars pour GOOGL, probablement 100 milliards pour Anthropic, 100 milliards pour OpenAI (peut-être plus) et 100 milliards pour SpaceX et 100 milliards pour Amazon ? Est-
+  - https://x.com/jimcramer/status/2061749637141123215
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1356).
+- **@jimcramer** (879 likes, score 8/10) — Voyons voir : 80 milliards de dollars pour GOOGL, probablement 100 milliards pour Anthropic, 100 milliards pour OpenAI (peut-être plus) et 100 milliards pour SpaceX et 100 milliards pour Amazon ? Est-
+  - https://x.com/jimcramer/status/2061749637141123215
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1353).
+- **@militarnyi** (22 likes, score 8/10) — SpaceX a reçu un contrat de 4,16 milliards de dollars de l'US Space Force pour accélérer le déploiement d'un réseau de satellites destiné à suivre les aéronefs, les missiles de croisière et les drones
+  - https://x.com/militarnyi/status/2061511363504005137
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 26).
+- **@nvidiaaiinfra** (5645 likes, score 8/10) — Le prochain chapitre de l'informatique spatiale est arrivé 
+
+NVIDIA et son écosystème font progresser l'IA de la Terre à l'espace à travers :
+
+ Orbite terrestre et imagerie infrarouge
+ Fréquence radio
+  - https://x.com/NVIDIAAIInfra/status/2052886264349696279
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5893).
+- **@charlesmullins2** (4157 likes, score 8/10) — SPACEX VIENT D’OBTENIR L’APPROBATION DE LA FAA POUR TESTER SES NOUVELLES CAPSULES « STARFALL ».
+
+Ce ne sont pas des véhicules de rentrée ordinaires.
+Les nouvelles capsules circulaires Starfall de Spac
+  - https://x.com/CharlesMullins2/status/2061652882181791914
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 4421).
+- **@charlesmullins2** (4148 likes, score 8/10) — SPACEX VIENT D’OBTENIR L’APPROBATION DE LA FAA POUR TESTER SES NOUVELLES CAPSULES « STARFALL ».
+
+Ce ne sont pas des véhicules de rentrée ordinaires.
+Les nouvelles capsules circulaires Starfall de Spac
+  - https://x.com/CharlesMullins2/status/2061652882181791914
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 4412).
+- **@unusual_whales** (2504 likes, score 8/10) — URGENT : Google, $GOOGL, a annoncé avoir levé 80 milliards de dollars pour construire des infrastructures d'IA
+  - https://x.com/unusual_whales/status/2061551068455260189
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 2874).
+- **@cointelegraph** (168 likes, score 8/10) — PERSPICACE : « Si vous êtes baissier aujourd'hui, vous êtes baissier au plus bas de Bitcoin et Ethereum. » — @fundstrat
+  - https://x.com/Cointelegraph/status/2061774930874707975
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 278).
+- **@nasauniverse** (106 likes, score 8/10) — #OTD en 1990, ROSAT (Roentgen Satellite), un télescope à rayons X développé conjointement par l'Allemagne, le Royaume-Uni et @NASA, a été lancé dans l'espace. Pendant près de 9 ans en orbite, il a rép
+  - https://x.com/NASAUniverse/status/2061545073439900145
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 114).
+- **@marsuniversityx** (84 likes, score 8/10) — Elon Musk :
+
+« Je vois un chemin où le coût pour atteindre l'orbite chute en dessous du fret aérien commercial
+
+Finalement, Starship pourra voler à travers le globe moins cher par tonne qu'un Boeing 7
+  - https://x.com/MarsUniversityX/status/2061651271157678125
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 110).
+- **@documentingbtc** (48 likes, score 8/10) — Une histoire incroyable par @obi sur des communautés à travers l'Afrique construisant des infrastructures locales d'internet par satellite, financées et maintenues avec du bitcoin
+  - https://x.com/DocumentingBTC/status/2060060931497906606
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 72).
+- **@amitisinvesting** (1995 likes, score 7/10) — UNE TONNE DE CHOSES SE SONT PRODUITES À LA BOURSE AUJOURD'HUI.
+
+Voici un récapitulatif complet :
+
+1. $GOOGL Alphabet propose une levée de fonds en capitaux propres de 80 milliards de dollars pour éten
+  - https://x.com/amitisinvesting/status/2061626514785845324
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2163).
+- **@esa** (325 likes, score 7/10) — #RegardezEnDirect : suivez le lancement de #Smile sur Vega-C #VV29 
+
+Branchez-vous sur ESA Web TV le 19 mai à partir de 05:30 CEST
+ http://watch.esa.int
+
+Étapes clés attendues :
+ 
+  05:52 Décollage de
+  - https://x.com/esa/status/2056132274437947688
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 347).
+- **@marionawfal** (257 likes, score 7/10) — Les attaques russes dans la nuit ont été l'une des plus grandes offensives aériennes concentrées de cette guerre...
+
+Plus de 650 drones. 73 missiles, dont un record de 8 missiles hypersoniques Zircon.
+  - https://x.com/MarioNawfal/status/2061746217969758645
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 337).
+- **@stocksavvyshay** (303 likes, score 7/10) — $SNOW & Anthropic étendent leur partenariat en IA alors que Claude gagne en traction au sein de Cortex AI.
+
+Snowflake permet aux entreprises d'exécuter Claude sur des données régies sans déplacer d'in
+  - https://x.com/StockSavvyShay/status/2061632918800543786
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 335).
+- **@sean_________** (190 likes, score 7/10) — Points clés de Mizuho sur $MU NDR :
+L'IA agentique stimule les CPU-DRAM, nous estimons que les revenus CPU de 20 milliards de dollars de $NVDA pourraient impliquer une demande incrémentale de 3K PB de
+  - https://x.com/sean_________/status/2059076606035914948
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 206).
+- **@xfreeze** (95 likes, score 7/10) — Bientôt, Starlink connectera la planète entière grâce à son réseau 5G direct vers les téléphones émis depuis l’espace
+
+Il n’y aura plus de zones mortes
+
+La prochaine génération de satellites Starlink
+  - https://x.com/XFreeze/status/2061781840688742412
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 179).
+- **@xfreeze** (92 likes, score 7/10) — Bientôt, Starlink connectera la planète entière grâce à son réseau 5G direct vers les téléphones émis depuis l’espace
+
+Il n’y aura plus de zones mortes
+
+La prochaine génération de satellites Starlink
+  - https://x.com/XFreeze/status/2061781840688742412
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 176).
+- **@xfreeze** (92 likes, score 7/10) — Bientôt, Starlink connectera la planète entière grâce à son réseau 5G direct vers les téléphones émis depuis l’espace
+
+Il n’y aura plus de zones mortes
+
+La prochaine génération de satellites Starlink
+  - https://x.com/XFreeze/status/2061781840688742412
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 176).
+- **@mmatters22596** (46 likes, score 7/10) — Mon portefeuille central à long terme
+
+Voici les actions que je pense surpasseront largement le marché au cours des prochaines années :
+
+$NBIS | Infrastructure IA
+
+$XPEV | IA physique
+
+$CRWV | Neoclou
+  - https://x.com/MMatters22596/status/2061777176785981850
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 64).
+- **@thehackersnews** (48 likes, score 7/10) — Une vulnérabilité #Linux de 19 ans appelée CIFSwitch permet aux utilisateurs à faible privilège d'obtenir un accès root.
+
+L'ingénieur en sécurité SpaceX Asim Viladi Oglu Manizada a découvert la faille
+  - https://x.com/TheHackersNews/status/2061764986549293517
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 48).
+- **@thehackersnews** (46 likes, score 7/10) — Une vulnérabilité #Linux de 19 ans appelée CIFSwitch permet aux utilisateurs à faible privilège d'obtenir un accès root.
+
+L'ingénieur en sécurité SpaceX Asim Viladi Oglu Manizada a découvert la faille
+  - https://x.com/TheHackersNews/status/2061764986549293517
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 46).
+- **@_investinq** (0 likes, score 7/10) — Nicolai Tangen, PDG de Norges Bank Investment Management, a interrogé directement Arvind Krishna, PDG d’IBM, sur la question de savoir si l’IA est une bulle (Sauvegardez ceci).
+
+Et Krishna a répondu a
+  - https://x.com/_Investinq/status/2061549481230049736
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 38).
+- **@tencentai_news** (19 likes, score 7/10) — Giving AI agents a save button, a fork, and an undo
+CubeSandbox v0.3.0 is out
+
+New in v0.3.0: snapshot, clone, and rollback
+
+ Snapshot→ freeze an agent's full runtime state (memory, filesystem, contex
+  - https://x.com/TencentAI_News/status/2061764491805962612
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 23).
+- **@hamptonism** (2446 likes, score 7/10) — Palantir va atteindre 400 $.
+  - https://x.com/hamptonism/status/2061558137153532031
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 2518).
+- **@sciguyspace** (791 likes, score 7/10) — La proposition de la NASA de créer un « module de base » dirigé par le gouvernement pour assister les stations spatiales commerciales (CLD) semble morte. La plupart des fournisseurs de CLD se réjouiro
+  - https://x.com/SciGuySpace/status/2061471177927688218
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 835).
+- **@amitisinvesting** (0 likes, score 7/10) — Les gars.
+
+Andrew Left, fondateur de Citron Research, va en prison.
+
+Ce type a utilisé X pour faire bouger les cours des actions et gagner 20 millions de dollars. Il a aussi essayé de shorter Palantir
+  - https://x.com/amitisinvesting/status/2061606564503367693
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 826).
+- **@nasaspaceflight** (342 likes, score 7/10) — Mise à jour Starship avec Ryan Caton (@dpoddolphinpro)
+
+https://youtube.com/watch?v=4hBxevKQoks…
+  - https://x.com/NASASpaceflight/status/2061595878687674528
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 346).
+- **@trader1sz** (58 likes, score 7/10) — Since we’re throwing numbers around
+
+$87 billion $BERT
+  - https://x.com/trader1sz/status/2061753999007576271
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 104).
+- **@peterdiamandis** (17 likes, score 7/10) — Somewhere right now, a 19-year-old with no funding, no degree, and no connections is building something, where you least expect it, with AI that will outperform a Fortune 500 company's best effort.
+  - https://x.com/PeterDiamandis/status/2061787551069884505
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 25).
+- **@bitcoinmunger** (12 likes, score 7/10) — Le Bitcoin est maintenant survendu sur une base quotidienne.
+
+À ce rythme, nous risquons probablement un effondrement et un point bas cette semaine.
+  - https://x.com/bitcoinmunger/status/2061786703942070674
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
