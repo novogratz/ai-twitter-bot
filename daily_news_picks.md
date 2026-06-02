@@ -11427,3 +11427,194 @@ HE'S RIGHT!
 - **@altcoindaily** (197 likes, score 7/10) — Here we go again #bitcoin
   - https://x.com/AltcoinDaily/status/2061624918740242768
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 301).
+- **@truthful_ast** (234 likes, score 9/10) — 2028 will be a packed year for Mars, here's a list of everything planned to launch in 2028:
+
+CNSA's Tianwen-3, the first ever Mars Sample Return mission.
+
+ESA's Rosalind Franklin, first rover to drill
+  - https://x.com/Truthful_ast/status/2061632434953764955
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 250).
+- **@heospace** (221 likes, score 9/10) — This is the rideshare adapter that carried 143 satellites on Transporter-1.
+
+On January 24, 2021, SpaceX's Falcon 9 launched 143 spacecraft to orbit on a single vehicle, setting a record that still st
+  - https://x.com/heospace/status/2061586170170237432
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 231).
+- **@ashcrypto** (705 likes, score 9/10) — BREAKING : BlackRock ETF has sold $440,290,000 in Bitcoin.
+  - https://x.com/AshCrypto/status/2061653286605009389
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 993).
+- **@interstellargw** (155 likes, score 9/10) — UPDATE: Blue Origin CEO, @davill has released a statement regarding the status of the New Glenn launch site in Florida…
+
+- Majority of Ground Support Equipment is in good health.
+
+- Water Tower is in
+  - https://x.com/interstellargw/status/2061663503451079031
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 165).
+- **@marionawfal** (33 likes, score 9/10) — Starship looks like a rocket, but it's really a bet on humanity's future off Earth.
+
+Cheaper launches, Moon bases, eventually Mars cities. 
+
+If it works at scale, the multi-planet chapter starts here.
+  - https://x.com/MarioNawfal/status/2061677942099554505
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 55).
+- **@militarnyi** (20 likes, score 7/10) — SpaceX has been awarded a $4.16 billion contract by the US Space Force to accelerate the deployment of a satellite network for tracking aircraft, cruise missiles, and drones as part of the Golden Dome
+  - https://x.com/militarnyi/status/2061511363504005137
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 24).
+- **@djsnm** (719 likes, score 9/10) — I resized some  nuclear test footage to the same scale as the New Glenn explosion - this is a 200t Upshot-Knothole test
+  - https://x.com/DJSnM/status/2061629699500195921
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 771).
+- **@cryptorover** (336 likes, score 9/10) — BREAKING: BlackRock sells $440,300,000 worth of Bitcoin...
+  - https://x.com/cryptorover/status/2061667613156212797
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 482).
+- **@cryptorover** (326 likes, score 9/10) — MASSIVE BITCOIN WHALE MOVE.
+
+Mt. Gox just transferred 10,422 BTC worth $739 million to a new wallet.
+  - https://x.com/cryptorover/status/2061675076903452712
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 472).
+- **@smallcapsnipa** (286 likes, score 9/10) — In the last month and a half: 
+
+$CRWV: 
+• Multi-year and multi-gigawatt deals with META and Anthropic 
+
+$NBIS:
+• $27 billion expanded deal with META 
+
+$CIFR:
+• Signed third hyperscaler lease agreement
+  - https://x.com/SmallCapSnipa/status/2051989004061433900
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 306).
+- **@marionawfal** (295 likes, score 8/10) — SEC. DUFFY TO KATY PERRY AND GAYLE KING: ‘YOU’RE NOT REAL ASTRONAUTS’
+
+SecretaryDuffy praised the commercial space industry but drew a hard line: riding an automated flight doesn’t make you an astrona
+  - https://x.com/MarioNawfal/status/1913043553527214515
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 385).
+- **@cnbc** (254 likes, score 8/10) — Blue Origin launchpad damaged in rocket explosion may not be restored until 2028, NASA's Isaacman says
+  - https://x.com/CNBC/status/2061597057794650159
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 322).
+- **@nvidiaai** (221 likes, score 8/10) — Factories are getting a new AI brain 
+
+Introducing NVIDIA Factory Operations Blueprint (FOX), a reference design for building factory manager agents that monitor operations, reason across real-time da
+  - https://x.com/NVIDIAAI/status/2061594329580224819
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 251).
+- **@fronteraspacial** (55 likes, score 8/10) — Blue Origin CEO Dave Limp just gave an important update on LC-36 and New Glenn after the anomaly:
+
+ The propellant farm, the LOX and LH2 tanks, and LNG are in good condition. This is a lot of LUCK sin
+  - https://x.com/FronteraSpacial/status/2061672018307690570
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 59).
+- **@business** (14 likes, score 7/10) — Renewable-energy investor Schroders Greencoat is targeting newer data center-linked assets as AI fuels a surge in electricity demand
+  - https://x.com/business/status/2061662303133524030
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 22).
+- **@aistocksavvy** (10 likes, score 7/10) — 𝐉𝐔𝐒𝐓 𝐈𝐍: Amazon's head of satellite internet warned employees to stay focused after last week's Blue Origin rocket explosion. - BI - $AMZN
+  - https://x.com/AIStockSavvy/status/2061494051455553579
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
+- **@nvidiaaiinfra** (5651 likes, score 8/10) — The next chapter of space computing is here 
+
+NVIDIA and its ecosystem are advancing AI from Earth-to-space across:
+
+ Earth Orbit and Infrared Imagery
+ Radio Frequency and Synthetic Aperture Radar
+ Au
+  - https://x.com/NVIDIAAIInfra/status/2052886264349696279
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5899).
+- **@stockmktnewz** (1147 likes, score 8/10) — PALANTIR $PLTR JUST REPORTED EARNINGS 
+
+EPS of $0.33 beating expectations of $0.28
+Revenue of $1.63B beating expectations of $1.54B
+  - https://x.com/StockMKTNewz/status/2051393499833000263
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1251).
+- **@forallcurious** (1058 likes, score 8/10) — : NASA has officially found 'water ice' on Mars
+
+This image, captured by ESA’s Mars Express, showcases the Korolev crater, an 82-kilometer-wide structure located in the northern lowlands of Mars.
+  - https://x.com/forallcurious/status/2052146840586576152
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1168).
+- **@itsmichaelluu** (362 likes, score 8/10) — 2 years ago, I said buy $ASTS at $2 before it spiked to $130+ 
+
+Recently, I explained why these would explode:
+
+$SNOW $120 → $320
+$HPE $30 → $100
+$TE $5 → $20
+$KEEL $2 → $18
+$DELL $240 → $600 
+
+Right
+  - https://x.com/itsmichaelluu/status/2061617375946928639
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 554).
+- **@joinautopilot** (442 likes, score 8/10) — Breaking: Donald Trump says defense companies are expected to quadruple their quantity
+
+Here's 5 under the radar stocks that may benefit:
+
+$KTOS — Kratos Defense: Builds military drones and hypersonic
+  - https://x.com/joinautopilot/status/2030040375549948366
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 486).
+- **@cointelegraph** (123 likes, score 8/10) — NOW: Mt. Gox moves 10,306 BTC worth ~$731M to a new wallet for the first time in 2 months.
+  - https://x.com/Cointelegraph/status/2061678350611960309
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 219).
+- **@nirajbhusal** (143 likes, score 8/10) — Starlink Seeks Approval to Launch in Nepal
+
+Starlink has formally expressed interest in launching its high-speed satellite internet services in Nepal. Today, the company’s Director, Rebecca Slick Hunt
+  - https://x.com/nirajbhusal/status/2061455935361740959
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 171).
+- **@arm** (115 likes, score 8/10) — Today’s the day. 
+ 
+In just a few hours, Rene Haas takes the stage at #COMPUTEX2026 to explore the shift to agentic AI — and how Arm is powering the next era of AI compute across cloud, AI PCs, and th
+  - https://x.com/Arm/status/2061583625099919748
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 123).
+- **@cryptorover** (43 likes, score 8/10) — WARNING: June is statistically the 2ND WORST month in $BTC history.
+
+Average return: -0.38%. 
+Median return: -0.49%.
+
+Only September is worse. And June 2026 just opened with -3.56% in a single day...
+  - https://x.com/cryptorover/status/2061690022089347442
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 115).
+- **@venu_7_** (54 likes, score 8/10) — $MDB - MongoDB powers the data layer behind modern applications and AI workloads.
+
+Its vector search platform helps developers build AI agents.
+
+$2B+ revenue business, strong cloud growth, and now tes
+  - https://x.com/Venu_7_/status/2061649741424058863
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 68).
+- **@marsuniversityx** (44 likes, score 8/10) — Elon Musk:
+
+”I see a path where the cost to orbit drops below commercial air freight
+
+Ultimately Starship will be able to fly across the globe cheaper per ton than a Boeing 747
+
+That opens up a massiv
+  - https://x.com/MarsUniversityX/status/2061651271157678125
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 56).
+- **@remarks** (5837 likes, score 7/10) — JUST IN:  US Space Force contracts 12 companies up to $3.2 billion to develop 'Golden Dome' air defense system.
+  - https://x.com/remarks/status/2047747124696121529
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6099).
+- **@sam_badawi** (237 likes, score 7/10) — BREAKING: Short-seller Andrew Left of Citron Research was found guilty of securities fraud after prosecutors said he publicly promoted stock views while privately trading against those positions. Same
+  - https://x.com/Sam_Badawi/status/2061603110242652358
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 289).
+- **@tedpillows** (177 likes, score 7/10) — Mt. Gox just transferred $731,000,000 $BTC to a new wallet.
+
+Let the FUD begin
+  - https://x.com/TedPillows/status/2061683271738491103
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 287).
+- **@endless_frank** (117 likes, score 7/10) — $ASTS  Blue Origin will be back to the pad this year.  Fantastic news.
+  - https://x.com/endless_frank/status/2061657330073157829
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 133).
+- **@endless_frank** (115 likes, score 7/10) — $ASTS  Blue Origin will be back to the pad this year.  Fantastic news.
+  - https://x.com/endless_frank/status/2061657330073157829
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 131).
+- **@spaceinvestor_d** (53 likes, score 7/10) — Northrop Grumman today announced a partnership with commercial firm Apex Space to demonstrate space-based interceptors (SBIs) for the Trump administration’s Golden Dome missile defense initiative in 2
+  - https://x.com/SpaceInvestor_D/status/2061555013483102544
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 57).
+- **@ember_energy** (18 likes, score 7/10) — Strains on India's grid amid a surge in heatwave driven electricity demand have led to instances of power outages 
+
+Solar is already meeting peak daytime demand, adding batteries saves sunshine for us
+  - https://x.com/ember_energy/status/2061651540125921695
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 20).
+- **@nasaspaceflight** (272 likes, score 7/10) — Starship Update with Ryan Caton (@dpoddolphinpro)
+
+https://youtube.com/watch?v=4hBxevKQoks…
+  - https://x.com/NASASpaceflight/status/2061595878687674528
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 274).
+- **@businsiderssa** (22 likes, score 7/10) — Starlink’s Uganda entry sparks telecom scramble as MTN, Airtel race for satellite advantage
+
+Uganda’s biggest telecom operators are moving quickly to align themselves with Starlink after years of view
+  - https://x.com/BusInsiderSSA/status/2059193834953703686
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 22).

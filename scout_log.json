@@ -2155,5 +2155,78 @@
       }
     ],
     "summary": "Focus sur des fondateurs techniques (Mistral/Anoma) et des journalistes actifs pour \u00e9viter le bruit des 'gurus'. Le Qu\u00e9bec est mieux couvert via les experts acad\u00e9miques et macro locaux, souvent n\u00e9glig\u00e9s par les listes Paris- centr\u00e9es."
+  },
+  {
+    "ts": "2026-06-02T02:48:28.931522",
+    "raw_count": 10,
+    "kept_count": 9,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PierreRochard",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 250000,
+        "reason": "La r\u00e9f\u00e9rence Bitcoin macro. Twitte en EN mais ses posts sont si francophones dans l'esprit que \u00e7a passe. Profondeur rare."
+      },
+      {
+        "handle": "thomashouyette",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "Le seul comptable qui rend la bourse dr\u00f4le sans vendre de r\u00eaves de yacht \u00e0 200% par mois. Analyse macro solide, ton d\u00e9cal\u00e9."
+      },
+      {
+        "handle": "RomainSavoye",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "Le trader fran\u00e7ais qui assume ses pertes. Pas de 'gm', pas de NFTs inutiles, juste des graphiques et du sang."
+      },
+      {
+        "handle": "ThibaudBouchet",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Ex-Mistral AI. Il twitte en FR/EN depuis SF. Parle du vrai d\u00e9veloppement, pas du buzz."
+      },
+      {
+        "handle": "AlexisBessard_",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Ex-PM chez Hugging Face. Il twitte sur l'IA comme un ing\u00e9nieur qui a encore vu un bug en prod. Authentique."
+      },
+      {
+        "handle": "RomainTremblay",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 22000,
+        "reason": "Fintech QC. Il montre comment l'argent bouge vraiment ici, sans les pubs Shopify."
+      },
+      {
+        "handle": "Cl\u00e9mentBourgeois",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "SVP (Slate Ventures). Le VC qui suit le SaaS FR de pr\u00e8s. Moins hype que les autres, plus utile."
+      },
+      {
+        "handle": "MathieuPoulin_",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "C2AA (CAIA). Le Qu\u00e9b\u00e9cois qui explique les march\u00e9s avec pr\u00e9cision et humour, sans la lourdeur des analystes parisiens."
+      },
+      {
+        "handle": "MarcLapointe",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Prof \u00e0 HEC Montr\u00e9al. Il d\u00e9construit l'IA hype avec des chiffres. Le contraire d'un guru TEDx."
+      }
+    ],
+    "summary": "Un mix de traders francophones qui survivent aux krachs (Poulin, Savoye) et d'experts tech qui \u00e9vitent le syndrome du faux guru (Bessard, Lapointe). On cherche la substance, pas le 'shill'."
   }
 ]
