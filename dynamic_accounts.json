@@ -237,7 +237,15 @@
     "AntoineLeClaire",
     "PierreCazade",
     "MarcLavoie",
-    "JulienBontoux"
+    "JulienBontoux",
+    "PierreRochard",
+    "thomashouyette",
+    "RomainSavoye",
+    "ThibaudBouchet",
+    "AlexisBessard_",
+    "RomainTremblay",
+    "MathieuPoulin_",
+    "MarcLapointe"
   ],
   "en": [
     "blablacar",
@@ -1502,6 +1510,46 @@
     {
       "lang": "fr",
       "handle": "JulienBontoux",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRochard",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomashouyette",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainSavoye",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudBouchet",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBessard_",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainTremblay",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuPoulin_",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLapointe",
       "added": "2026-06-02"
     }
   ]
