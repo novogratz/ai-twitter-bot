@@ -12537,3 +12537,131 @@ Le
 Timberrrrrrrrrrrrrrrr
   - https://x.com/Barchart/status/2061847324276523314
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 968).
+- **@wallstengine** (102 likes, score 9/10) — A CoreWeave-linked data center raised $900M in high-yield debt, per Bloomberg.
+
+The 5-year bonds priced at par to yield 7.5%, with proceeds tied to a build-to-suit hyperscale data center near Chicago.
+  - https://x.com/wallstengine/status/2061937294832198059
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 116).
+- **@watcherguru** (10961 likes, score 9/10) — JUST IN: Gemini launches $XRP credit card.
+  - https://x.com/WatcherGuru/status/1959988816464543989
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 12293).
+- **@watcherguru** (7173 likes, score 9/10) — JUST IN: Bitcoin falls under $74,000 
+
+$ETH falls under $2,000
+  - https://x.com/WatcherGuru/status/2059839092150411747
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 8415).
+- **@watcherguru** (13481 likes, score 9/10) — JUST IN : La fusée New Glenn de Blue Origin, appartenant à Jeff Bezos, explose lors d'un test de mise à feu statique.
+  - https://x.com/WatcherGuru/status/2060166995388092470
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 16053).
+- **@xfreeze** (5620 likes, score 8/10) — xAI est officiellement devenu le premier à mettre en service un cluster d’entraînement d’IA cohérent à l’échelle d’un gigawatt
+
+C’est plus d’électricité que la demande de pointe de San Francisco
+
+Tand
+  - https://x.com/XFreeze/status/2012493620331610607
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 6656).
+- **@yukimamax** (2628 likes, score 8/10) — C’est un sacré mauvais tournant.
+
+SpaceX, OpenAI, Anthropic se dirigent vers une introduction en bourse au même moment.
+
+Le marché va devoir encaisser une nouvelle offre d’actions à hauteur de 200 mil
+  - https://x.com/yukimamax/status/2059128752165343736
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2786).
+- **@iren_ltd** (965 likes, score 8/10) — Construire des usines d'IA n'est pas une solution universelle. Avec @Dell et @nvidia, $IREN propose des solutions intégrées pour chaque charge de travail.
+
+Découvrez Denis Skrinnikoff, CTO d'IREN, et
+  - https://x.com/IREN_Ltd/status/2055463242554900888
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1049).
+- **@interesting_ail** (789 likes, score 8/10) — Un scientifique de la NASA est mort trois fois et a vu la même chose à chaque fois
+
+Ingrid Honkala a vécu des expériences de mort imminente à 2, 25 et 52 ans, et dit avoir été témoin de la même chose
+  - https://x.com/interesting_aIl/status/2051849429657747496
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 879).
+- **@coinmarketcap** (186 likes, score 8/10) — DERNIER:  Tom Lee dit que la petite vente de Bitcoin par Strategy et les 11 jours de sorties de l'ETF sont un comportement typique de formation de plancher, et non un signal de risque.
+  - https://x.com/CoinMarketCap/status/2061905701723885779
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 306).
+- **@watcherguru** (5164 likes, score 8/10) — JUSTE SORTI : Plus de 250 000 000 $ liquidés sur le marché des cryptomonnaies au cours des 15 dernières minutes.
+  - https://x.com/WatcherGuru/status/2059837472658395298
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6388).
+- **@marionawfal** (2482 likes, score 8/10) — Boom Supersonic vient d’intégrer une turbine électrique de 42 mégawatts dans un conteneur maritime.
+
+Baptisée « Superpower », elle fonctionne dans des chaleurs extrêmes sans nécessiter de refroidissem
+  - https://x.com/MarioNawfal/status/2054490583016640940
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 2670).
+- **@dimazeniuk** (359 likes, score 8/10) — Starlink-equipped buoys captured incredible real-time views in the Indian Ocean during Starship Flight 12
+  - https://x.com/DimaZeniuk/status/2059483223101452758
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 425).
+- **@teslaownerssv** (279 likes, score 8/10) — Starship n’est pas seulement la prochaine fusée.
+
+C’est la fondation d’un avenir où des millions de personnes pourront vivre et travailler au-delà de la Terre.
+
+Avec une capacité de charge utile sans
+  - https://x.com/teslaownersSV/status/2061812751841083706
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 333).
+- **@gemini** (79 likes, score 8/10) — JUSTE EN: Morningstar juge la valorisation de l’introduction en bourse de SpaceX surévaluée de plus de 1 000 milliards de dollars
+  - https://x.com/Gemini/status/2061913204096147872
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 107).
+- **@ngrpresident** (14 likes, score 7/10) — VP Shettima Lauds SpaceX Contributions To Nigeria’s Emergency, Disaster Response.
+
+As largest satellite internet constellation donates specialised communication gadgets to NEMA.
+
+@officialSKSM | @nema
+  - https://x.com/NGRPresident/status/2061920403295985815
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 18).
+- **@konstructivizm** (30763 likes, score 7/10) — The Artemis II crew—Commander Reid Wiseman, Pilot Victor Glover, Mission Specialist Christina Koch, and Canadian Space Agency astronaut Jeremy Hansen—have safely exited the Orion spacecraft (named Int
+  - https://x.com/konstructivizm/status/2042868042665791687
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 31635).
+- **@spacex** (7906 likes, score 7/10) — Maintenant ciblant 18 h 30 CT pour le décollage de Starship
+  - https://x.com/SpaceX/status/2057581356423462964
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 8898).
+- **@amitisinvesting** (1383 likes, score 7/10) — $IREN got way too much hate yesterday
+  - https://x.com/amitisinvesting/status/2044109826880385523
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1625).
+- **@aakashgupta** (1370 likes, score 7/10) — Tony Stark's JARVIS ran what would basically be a persistent AI agent with voice, vision, and full codebase access across every system in his lab. In 2026, that's a frontier model on a loop.
+
+Opus 4.6
+  - https://x.com/aakashgupta/status/2040345886967070994
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1420).
+- **@cb_doge** (527 likes, score 7/10) — xAI just released the Grok Collections API.
+
+It lets you upload PDFs, Excel files, and even full codebases into a searchable knowledge base so you can build RAG apps without running your own indexing
+  - https://x.com/cb_doge/status/2003314870520041586
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 805).
+- **@dimazeniuk** (657 likes, score 7/10) — URGENT : L'US Space Force a attribué à @SpaceX un contrat de 2,29 milliards de dollars pour construire la colonne vertébrale du Réseau de Données Spatiales (SDN) basé sur Starshield, un système de com
+  - https://x.com/DimaZeniuk/status/2059368687442759908
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 805).
+- **@ensedeciencia** (291 likes, score 7/10) — El 21 de septiembre de 2012, el transbordador espacial Endeavour llegó a Los Ángeles montado sobre un Boeing 747 de la NASA.
+
+¡Una de las imágenes más icónicas de la aviación y la era espacial!
+  - https://x.com/EnsedeCiencia/status/2061854800614936755
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 297).
+- **@amitisinvesting** (0 likes, score 7/10) — alright $IREN
+
+time to announce the Anthropic deal
+  - https://x.com/amitisinvesting/status/2047342496355623256
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 256).
+- **@theeconomist** (40 likes, score 7/10) — À mesure que les profits issus de l'espace deviennent plus que théoriques, se contenter d'affirmer qu'ils appartiennent à l'humanité créera un réservoir de revenus inexploités
+  - https://x.com/TheEconomist/status/2061065194042720495
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 58).
+- **@nexta_tv** (20 likes, score 7/10) — Tout un spectacle !
+
+Une fusée Blue Origin appartenant à Jeff Bezos a explosé de manière spectaculaire lors d’un test en Floride.
+
+L’explosion s’est produite sur un site d’essai pendant que les prépar
+  - https://x.com/nexta_tv/status/2061953508861988993
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 26).
+- **@kekius_sage** (8375 likes, score 7/10) — Sam Altman:
+ "it really fucking hurts when you publicly attack openai."
+
+Elon Musk:
+"I hear you and it is certainly not my intention to be hurtful, for which I apologize, but the fate of civilization
+  - https://x.com/Kekius_Sage/status/2049375072738009303
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 8967).
+- **@barchart** (864 likes, score 7/10) — URGENT  : Bitcoin bitcoin:native 
+
+Timberrrrrrrrrrrrrrrr
+  - https://x.com/Barchart/status/2061847324276523314
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 982).
+- **@orevazsn** (780 likes, score 7/10) — Microsoft a débranché Claude pour son équipe interne. L’IA de Starbucks ne sait pas compter les tasses correctement. Uber a brûlé 3,4 milliards de dollars en IA en seulement 4 mois et n’a vu aucun ret
+  - https://x.com/OrevaZSN/status/2061899468526453017
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 818).
