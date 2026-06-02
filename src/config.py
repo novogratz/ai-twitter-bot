@@ -120,9 +120,16 @@ DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
 
 # Posting caps + spacing (originals = post_tweet; quotes = quote_tweet).
 MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "3"))
-MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "3"))
 MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(45 * 60)))
 POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(15 * 60)))
+
+# Quote-reposts (quote-tweet-with-comment on big news) — operator-confirmed
+# 2026-06-02 as the highest-ROI surface ("this works a lot"). Run it HOT:
+# high daily cap + short, jittered spacing so the 4-min quote cycle actually
+# produces quotes instead of getting capped out.
+MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "18"))
+MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", str(12 * 60)))
+QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", str(6 * 60)))
 
 # Reply caps + spacing. Replies are the primary growth lever — quality over
 # volume, language-matched to the parent post.
@@ -131,9 +138,19 @@ MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", 
 REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "180"))
 REPLY_LANGUAGE_MATCH = os.environ.get("REPLY_LANGUAGE_MATCH", "1") == "1"
 
-# Following policy — whitelist-only, no reciprocity, no strangers.
-# Core invariant: following must trend toward and stay BELOW followers.
-FOLLOW_WHITELIST_ONLY = os.environ.get("FOLLOW_WHITELIST_ONLY", "1") == "1"
+# Following policy (2026-06-02 hybrid — operator chose growth + de-risk).
+# We DO follow new French accounts for growth, but safely:
+#   - FOLLOW_WHITELIST_ONLY=0 → discovery bots may follow non-whitelist FR
+#     accounts (still capped + anti-churned). Set =1 to lock to the whitelist.
+#   - Core invariant: while following is OVER the ceiling (following >
+#     FOLLOW_RATIO_CEILING * followers), follows are allowed ONLY when the day
+#     is net-negative (today's follows < today's unfollows), so the ratio
+#     still heals every day while we keep discovering people. Once under the
+#     ceiling, follows open up freely to the daily cap.
+#   - Reciprocity mass-follow (follow_blast, raw button clicks) stays OFF
+#     regardless, gated on its own flag below.
+FOLLOW_WHITELIST_ONLY = os.environ.get("FOLLOW_WHITELIST_ONLY", "0") == "1"
+ENABLE_FOLLOW_BLAST = os.environ.get("ENABLE_FOLLOW_BLAST", "0") == "1"
 FOLLOW_RATIO_CEILING = float(os.environ.get("FOLLOW_RATIO_CEILING", "0.8"))  # following < 0.8 * followers
 FOLLOWING_STEADY_STATE = int(os.environ.get("FOLLOWING_STEADY_STATE", "300"))
 MAX_FOLLOWS_PER_DAY = int(os.environ.get("MAX_FOLLOWS_PER_DAY", "5"))

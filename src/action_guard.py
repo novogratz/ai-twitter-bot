@@ -237,7 +237,14 @@ def adjust_following(delta: int) -> None:
 # --- policy decisions -------------------------------------------------------
 
 def can_follow(handle: str) -> Tuple[bool, str]:
-    """Whitelist-only, ratio invariant, daily cap, anti-churn cooldown."""
+    """Daily cap + anti-churn + (optional) whitelist + net-negative ratio rule.
+
+    Hybrid policy (2026-06-02): we follow new accounts for growth, but while
+    following is OVER the ceiling we only allow a follow when the day is still
+    net-negative (today's follows < today's unfollows) — so the ratio heals
+    every day even as we keep discovering people. Under the ceiling, follows
+    are free up to the daily cap.
+    """
     h = (handle or "").lower().lstrip("@")
     if not h:
         return (False, "empty handle")
@@ -245,14 +252,16 @@ def can_follow(handle: str) -> Tuple[bool, str]:
         return (False, "not on whitelist (whitelist-only mode; no strangers, no reciprocity)")
     if within_churn_cooldown(h):
         return (False, f"anti-churn: touched within {config.CHURN_COOLDOWN_DAYS}d")
-    if count_today(FOLLOW) >= config.MAX_FOLLOWS_PER_DAY:
+    follows_today = count_today(FOLLOW)
+    if follows_today >= config.MAX_FOLLOWS_PER_DAY:
         return (False, f"daily follow cap reached ({config.MAX_FOLLOWS_PER_DAY})")
     followers, following = current_counts()
     if followers is not None and following is not None:
-        # Refuse any follow that would push following over the ceiling ratio.
-        if (following + 1) > config.FOLLOW_RATIO_CEILING * followers:
-            return (False, f"ratio ceiling: following {following}+1 > "
-                           f"{config.FOLLOW_RATIO_CEILING}*{followers} followers")
+        over_ceiling = (following + 1) > config.FOLLOW_RATIO_CEILING * followers
+        if over_ceiling and follows_today >= count_today(UNFOLLOW):
+            return (False, f"over ratio ceiling (following {following} vs "
+                           f"{config.FOLLOW_RATIO_CEILING}*{followers}); day not net-negative "
+                           f"(follows {follows_today} >= unfollows {count_today(UNFOLLOW)})")
     return (True, "")
 
 
@@ -283,7 +292,7 @@ def can_post(action: str) -> Tuple[bool, str]:
         gap = config.MIN_SECONDS_BETWEEN_POSTS + random.uniform(0, config.POST_JITTER_SECONDS)
     elif action == QUOTE:
         cap = config.MAX_QUOTE_REPOSTS_PER_DAY
-        gap = config.MIN_SECONDS_BETWEEN_POSTS + random.uniform(0, config.POST_JITTER_SECONDS)
+        gap = config.MIN_SECONDS_BETWEEN_QUOTES + random.uniform(0, config.QUOTE_JITTER_SECONDS)
     elif action == REPLY:
         cap = config.MAX_REPLIES_PER_DAY
         gap = config.MIN_SECONDS_BETWEEN_REPLIES + random.uniform(0, config.REPLY_JITTER_SECONDS)

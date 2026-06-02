@@ -10,9 +10,18 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 > translated). **Replies match the parent post's language** — English replies to English
 > accounts/text, French otherwise (model detect-and-match; default FR only on low-confidence
 > + FR-leaning). Theses are **multi-year** — short-term price targets (price + near-term
-> timeframe) are banned and rejected pre-publish. Following is **whitelist-only** (no
-> reciprocity, no strangers, no auto follow-back); core invariant **following < 0.8×followers**,
-> steady-state ~300; replies are the primary growth lever. Branding/visual identity, the
+> timeframe) are banned and rejected pre-publish. Specialty = **Bourse (broad — indices,
+> macro, earnings, dividends, crypto-as-asset, not just AI/space stocks) + IA + Spatial**;
+> every post/quote/reply must land a precise, factual, non-consensus point ("sharpest in
+> the room"). Follow policy is **hybrid** (operator choice 2026-06-02): we DO follow new
+> French accounts for growth, but while following is over the ceiling
+> (**following < 0.8×followers**) a follow is allowed only on a **net-negative day**
+> (today's follows < today's unfollows), so the ratio heals daily; `follow_blast` mass-follow
+> stays off (`ENABLE_FOLLOW_BLAST=0`). Quote-reposts are the **highest-ROI surface** — run hot
+> (`MAX_QUOTE_REPOSTS_PER_DAY=18`, 12-min spacing). News/articles are de-duped on disk with
+> canonical URLs (`posted_news_urls.json`); the bot carries a recent-posts **memory**
+> (`src/bot_memory.py`, injected via `lang_mode`) to call back to past theses when it adds
+> value. Replies are the primary growth lever. Branding/visual identity, the
 > AI+Space+Stocks theme, and the Safari+APScheduler architecture are OUT OF SCOPE — unchanged.
 >
 > NOTE: this bot is **Safari + AppleScript driven (no X API)** — "API rate-limit / 429 backoff"
