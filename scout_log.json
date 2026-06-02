@@ -2315,5 +2315,64 @@
       }
     ],
     "summary": "Focus sur des comptes qui \u00e9vitent le 'signal' vend\u00e9 pour privil\u00e9gier l'analyse de fond ou la donn\u00e9e. Pas de formateurs \u00e0 la mode, mais des analystes, journalistes et devs qui twittent encore en fran\u00e7ais malgr\u00e9 les ann\u00e9es. La s\u00e9lection est dense, pas de gras."
+  },
+  {
+    "ts": "2026-06-02T12:14:48.919339",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thibaultmrg",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Le baron des Data/IA, ex-Bouygues, il parle tech avec une pr\u00e9cision chirurgicale et une dose de cynisme qui fait mal."
+      },
+      {
+        "handle": "RenaudMPL",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Cofondateur d'Aster, il parle IA et Web3 avec l'enthousiasme d'un ado et la lucidit\u00e9 d'un v\u00e9t\u00e9ran du num\u00e9rique."
+      },
+      {
+        "handle": "MarcMazuy",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Le grand pr\u00eatre de l'IA au Qu\u00e9bec, il vulgarise sans jamais condescendre, et ses retweets valent leur pesant de Bitcoin."
+      },
+      {
+        "handle": "MaximePompidou",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Le roi de la fintech fran\u00e7aise, il twitte la finance de mani\u00e8re accessible mais pas simpliste, contrairement aux influenceurs TikTok."
+      },
+      {
+        "handle": "GillesBouy",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Journaliste tech pointu, ses threads sur les IA g\u00e9n\u00e9ratives sont plus denses que la plupart des rapports McKinsey."
+      },
+      {
+        "handle": "PhilippeDion",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 8000,
+        "reason": "Expert IA qu\u00e9b\u00e9cois, ses analyses sont techniques mais lisibles, parfait pour celui qui veut comprendre sans dormir."
+      },
+      {
+        "handle": "AlexPerron",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 5000,
+        "reason": "La p\u00e9pite qu\u00e9b\u00e9coise, il poste rarement mais chaque tweet est un r\u00e9sum\u00e9 de lecture magistral sur l'IA."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 la France tech (Mazuy, DeGrand, Pompidou) et le Qu\u00e9bec IA (Perron, Mazuy, Dion) qui sont souvent plus coh\u00e9rents que leurs homologues parisiens. Pour les USA, j'ai s\u00e9lectionn\u00e9 des francophones install\u00e9s qui dominent la niche Bitcoin/DeFi sans faire de la politique."
   }
 ]
