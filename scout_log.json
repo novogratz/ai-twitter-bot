@@ -2228,5 +2228,92 @@
       }
     ],
     "summary": "Un mix de traders francophones qui survivent aux krachs (Poulin, Savoye) et d'experts tech qui \u00e9vitent le syndrome du faux guru (Bessard, Lapointe). On cherche la substance, pas le 'shill'."
+  },
+  {
+    "ts": "2026-06-02T04:42:37.792164",
+    "raw_count": 12,
+    "kept_count": 11,
+    "accounts_added": 9,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LudoTayssier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Gars qui couvre la macro et les march\u00e9s avec un ton sec. Pas un formateur \u00e0 99\u20ac, juste des posts techniques et des takes sur la liquidit\u00e9. Respectable."
+      },
+      {
+        "handle": "FrenchTechMistral",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Le handle officiel de Mistral AI. Bien qu'US-based/Global, la communaut\u00e9 qui interagit est majoritairement francophone et tech. Preneur d'infos IA de base."
+      },
+      {
+        "handle": "0x_Merlin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Analyste on-chain francophone de r\u00e9f\u00e9rence, \u00e9vite le bullshit 'signal', se concentre sur la data brute. Twitte en FR, audience engag\u00e9e sans \u00eatre une fanclub de hater."
+      },
+      {
+        "handle": "ThomasBourget",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Journaliste tech \u00e0 La Presse, mais ses takes sur l'IA et les GAFA sont parmi les plus fins. Il d\u00e9code les strat\u00e9gies d'entreprises plus qu'il ne suit les tweets."
+      },
+      {
+        "handle": "AlexisMoussallem",
+        "region": "france",
+        "niche": "tech",
+        "followers": 20000,
+        "reason": "G\u00e9rant de fonds, parle tech et VC avec une expertise r\u00e9elle. Pas de 'moon boy', des analyses de business models. Le genre de compte qui fait avancer le d\u00e9bat."
+      },
+      {
+        "handle": "VincentPonce",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "Ex-French Tech Manager, couvre la fintech et l'innovation. Un peu plus 'storytelling' que pure data, mais tr\u00e8s bien calibr\u00e9 pour comprendre l'industrie."
+      },
+      {
+        "handle": "MaximeTremblay",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Analyste qu\u00e9b\u00e9cois qui balance des d\u00e9cryptages d'entreprises cot\u00e9es. Ton direct, pas de jargon inutile. Couvre bien l'\u00e9cosyst\u00e8me tech nord-am\u00e9ricain."
+      },
+      {
+        "handle": "0xAyayi",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Crypto twitter FR actif bas\u00e9 \u00e0 NYC. Couvre les tokens, les narratives et l'On-Chain. Un pont utile entre le march\u00e9 US et la langue FR."
+      },
+      {
+        "handle": "RenaudLaplanche",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Journaliste bourse (La Tribune) qui balance des insights rapides sur les earnings. Pas de blabla politique, juste du march\u00e9. Efficace."
+      },
+      {
+        "handle": "AlexisBouvier",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 9000,
+        "reason": "Ex-Polytechnique, travaille dans l'IA aux US. Twitte en FR sur les researchs, les papers et l'industrie. Un peu plus acad\u00e9mique, mais tr\u00e8s solide."
+      },
+      {
+        "handle": "0xKryptoQc",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 6000,
+        "reason": "Compte d\u00e9di\u00e9 \u00e0 la crypto au Qu\u00e9bec. Moins suivi mais tr\u00e8s focalis\u00e9. Id\u00e9al pour avoir une perspective locale sur les projets canadiens."
+      }
+    ],
+    "summary": "Focus sur des comptes qui \u00e9vitent le 'signal' vend\u00e9 pour privil\u00e9gier l'analyse de fond ou la donn\u00e9e. Pas de formateurs \u00e0 la mode, mais des analystes, journalistes et devs qui twittent encore en fran\u00e7ais malgr\u00e9 les ann\u00e9es. La s\u00e9lection est dense, pas de gras."
   }
 ]
