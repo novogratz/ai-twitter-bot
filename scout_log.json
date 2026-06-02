@@ -2426,5 +2426,50 @@
       }
     ],
     "summary": "Une s\u00e9lection cibl\u00e9e d'experts FR qui tweetent pour la technique et l'analyse, pas pour vendre du r\u00eave en live Instagram. De Mistral \u00e0 la DeFi qu\u00e9b\u00e9coise, on couvre les vrais cerveaux."
+  },
+  {
+    "ts": "2026-06-02T16:14:43.229734",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CedMamb",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "L'analyste roi du CAC 40. Il sort des trucs contre-intuitifs qui font mal, mais juste assez pour qu'on lui ait envie de suivre ses positions."
+      },
+      {
+        "handle": "Aur\u00e9lienGeron",
+        "region": "france",
+        "niche": "ai",
+        "followers": 55000,
+        "reason": "Le p\u00e8re du scikit-learn fran\u00e7ais. Il tweet Machine Learning pur. Si tu aimes la tech, tu suis. Si tu aimes le buzz, tu le skipes. Les deux gagnent."
+      },
+      {
+        "handle": "NathanBailat",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Fondateur de Databricks France, mais son X est un pur feed de crypto infra/DeFi. Il tweet en FR/EN, mais le contenu 'FR' est dense sans jargon inutile."
+      },
+      {
+        "handle": "RomainDewaele",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Le trader de m\u00e9tier qui ne cache pas ses losses. Pas de 'guru', juste des graphiques et des ratios P/E que les vendeurs de r\u00eaves oublient."
+      },
+      {
+        "handle": "PhilippeMayer",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 9500,
+        "reason": "Analyste porteur au Qu\u00e9bec. Il parle actions et macro, pas de 'coingram'. Sa newsletter est payante, mais ses tweets sont une gratuite efficace."
+      }
+    ],
+    "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour aller chercher les architectes r\u00e9els. La France p\u00e8se lourd sur l'IA (Mistral/Mercure) et la Bourse traditionnelle, le Qu\u00e9bec offre des p\u00e9pites macro/action moins satur\u00e9es que Paris."
   }
 ]

@@ -266,7 +266,11 @@
     "MaximeMarnat",
     "MaximeGonfard",
     "AmandineM",
-    "RemyDesforges"
+    "RemyDesforges",
+    "CedMamb",
+    "NathanBailat",
+    "RomainDewaele",
+    "PhilippeMayer"
   ],
   "en": [
     "blablacar",
@@ -1676,6 +1680,26 @@
     {
       "lang": "fr",
       "handle": "RemyDesforges",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "CedMamb",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanBailat",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDewaele",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeMayer",
       "added": "2026-06-02"
     }
   ]

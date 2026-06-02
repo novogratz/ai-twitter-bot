@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-02T14:14:07.869930",
-  "window_7d_actions": 2485,
-  "window_24h_actions": 490,
+  "generated_at": "2026-06-02T18:13:58.331113",
+  "window_7d_actions": 2565,
+  "window_24h_actions": 541,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2391
+      "count": 2471
     },
     {
       "pattern": "METAPHOR",
@@ -63,38 +63,38 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 925
+      "count": 956
     },
     {
       "topic": "Autre",
-      "count": 749
+      "count": 770
     },
     {
       "topic": "Spatial",
-      "count": 502
+      "count": 526
     },
     {
       "topic": "Bourse",
-      "count": 350
+      "count": 358
     },
     {
       "topic": "Crypto",
-      "count": 339
+      "count": 350
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1495
+      "count": 1573
     },
     {
       "type": "retweet",
-      "count": 768
+      "count": 764
     },
     {
       "type": "hotake",
-      "count": 117
+      "count": 124
     },
     {
       "type": "post",
@@ -102,23 +102,23 @@
     },
     {
       "type": "quote",
-      "count": 51
+      "count": 50
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-02T14:05:04.521773",
-      "text": "7.6M openings.\n\nThat’s the number of people the economy hired in April just to keep the dashboard green.\n\nThe S&P is fine. The jobs are real.\nThey are just not very good ones.",
+      "ts": "2026-06-02T18:09:11.551200",
+      "text": "Nobitex sanctioned. IRGC wallets now held by US custodians.\n\nIranian crypto users just got better custody than 401k Dave.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-02T14:04:34.058114",
-      "text": "New York Fed says remote work hurts youth unemployment.\n\nThe real story is that entry-level jobs were just rent-seeking fees for middle management to justify their existence.",
+      "ts": "2026-06-02T18:08:50.010712",
+      "text": "They equate every actuator to a drone motor.\n\nCoreWeave is paying $6k for an H100 and they are building robots with $300 motors. The margin on this is so fat it has its own zip code.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-02T14:03:58.725040",
-      "text": "50€ par mois = 200k€ en 40 ans avec les intérêts composés.\nAvec l'inflation française, tu auras acheté deux places en EHPAD à Dijon.",
+      "ts": "2026-06-02T18:06:31.312371",
+      "text": "From prompt to payout.\n\nMost SaaS is still paying for a seat. Codex is selling the employee.\n\nThe license fee just got an unemployment claim.",
       "type": "reply"
     }
   ]
