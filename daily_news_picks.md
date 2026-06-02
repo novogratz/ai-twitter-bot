@@ -11905,3 +11905,116 @@ $87 billion $BERT
 À ce rythme, nous risquons probablement un effondrement et un point bas cette semaine.
   - https://x.com/bitcoinmunger/status/2061786703942070674
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
+- **@kobeissiletter** (415 likes, score 9/10) — URGENT : Le Bitcoin chute en dessous de 69 000 $ alors que la pression vendeuse s'accélère.
+
+Le Bitcoin a maintenant perdu près de -5 000 $ depuis que MicroStrategy, $MSTR, a annoncé sa première vente
+  - https://x.com/KobeissiLetter/status/2061799434548031727
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 585).
+- **@coreweave** (0 likes, score 7/10) — Au cas où vous l'auriez manqué : CoreWeave est le premier cloud IA à mettre en service @nvidia Vera Rubin NVL72.
+
+10× meilleure inférence par watt. 1/10e du coût par million de tokens par rapport à Bl
+  - https://x.com/CoreWeave/status/2061509811322380499
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 18).
+- **@polymarket** (140 likes, score 9/10) — JUST IN : Bitcoin s'effondre sous les 69 000 $.
+  - https://x.com/Polymarket/status/2061800300311183770
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 254).
+- **@curiosityonx** (956 likes, score 9/10) — Ceci est Mars au sol 2711.
+
+À 137 millions de miles de nous !
+  - https://x.com/CuriosityonX/status/2061566289252929720
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1032).
+- **@cryptorover** (42 likes, score 9/10) — CRASH: Bitcoin drops below $69,000.
+  - https://x.com/cryptorover/status/2061801516076593640
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 102).
+- **@erdayastronaut** (80 likes, score 9/10) — SpaceX, SpaceX needs NASA. NASA is a customer, not a competitor. NASA is the reason SpaceX exists by hiring SpaceX for the COTS program, allowing the Falcon 9 to be built and then continuing to be the
+  - https://x.com/Erdayastronaut/status/1732429730219978863
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 98).
+- **@moneyradar_fr** (26 likes, score 8/10) — Le marché des outils d'IA générative va passer de 9 milliards de dolalrs à plus de 51 milliards$ d'ici 2033. 
+
+Une multiplication par plus de 5,5 portée par une hyper-croissance annuelle de 20,1 %.
+
+M
+  - https://x.com/MoneyRadar_FR/status/2061726159314862448
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 30).
+- **@spacanpanman** (0 likes, score 7/10) — $ASTS : L'intérêt short en temps réel a nettement diminué alors que les vendeurs à découvert et les arbitragistes de convertibles ont profité du contretemps de New Glenn de Blue Origin pour couvrir le
+  - https://x.com/spacanpanman/status/2061799968768192864
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 10).
+- **@xdnibor** (338 likes, score 8/10) — Project Kuiper released a nearly 4 minute video on YouTube 2 days ago. 
+
+A lot of interesting things about design, ground stations and the satellites. I fucking love all that high tech manufacturing.
+  - https://x.com/xdNiBoR/status/1910332187632906296
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 424).
+- **@ridark_eth** (72 likes, score 8/10) — ANTHROPIC BUILT A $2.5 BILLION PRODUCT AND AGENCIES DIDN'T NOTICE
+
+Claude Code is not a chatbot. It's a terminal. And terminals are how you build operating systems
+
+While agencies sell bloated n8n das
+  - https://x.com/ridark_eth/status/2061757519714762849
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 140).
+- **@militarnyi** (22 likes, score 8/10) — SpaceX a reçu un contrat de 4,16 milliards de dollars de l'US Space Force pour accélérer le déploiement d'un réseau de satellites destiné à suivre les aéronefs, les missiles de croisière et les drones
+  - https://x.com/militarnyi/status/2061511363504005137
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 26).
+- **@militarnyi** (22 likes, score 8/10) — SpaceX a reçu un contrat de 4,16 milliards de dollars de l'US Space Force pour accélérer le déploiement d'un réseau de satellites destiné à suivre les aéronefs, les missiles de croisière et les drones
+  - https://x.com/militarnyi/status/2061511363504005137
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 26).
+- **@bdinvestingg** (16 likes, score 7/10) — The White House is telling you exactly where to invest : 
+
+ • AI: $GOOGL $NBIS $IREN $CRWV 
+• chips: $TSM $ASML $NVDA $AMD 
+• space: $RKLB $ASTS $LUNR $RDW 
+• energy: $GEV $CEG $ETN 
+• drones: $ONDS $
+  - https://x.com/bdinvestingg/status/2061786876789350699
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 24).
+- **@aistocksavvy** (10 likes, score 7/10) — 𝐉𝐔𝐒𝐓 𝐈𝐍: Amazon's head of satellite internet warned employees to stay focused after last week's Blue Origin rocket explosion. - BI - $AMZN
+  - https://x.com/AIStockSavvy/status/2061494051455553579
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
+- **@cb_doge** (3539 likes, score 8/10) — Le jour où Tesla a été cotée au NASDAQ.
+
+Aujourd'hui, Tesla vaut 1,3 billion de dollars.
+  - https://x.com/cb_doge/status/2061552495412031854
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 4551).
+- **@xfreeze** (0 likes, score 8/10) — SpaceX est sur le point de devenir l'une des plus grandes positions dans vos fonds indiciels S&P 500 et Nasdaq
+
+L'introduction en bourse à venir est si massive que le Nasdaq et le S&P 500 réécrivent l
+  - https://x.com/XFreeze/status/2061342878518136896
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 104).
+- **@muskonomy** (80 likes, score 8/10) — ACTUALITÉS : Sam Altman déclare que les centres de données orbitaux ne figurent pas sur la feuille de route d'OpenAI.
+
+Interrogé sur CNBC si le calcul se déplacera éventuellement dans l'espace, le PDG
+  - https://x.com/muskonomy/status/2061660618470662616
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 102).
+- **@documentingbtc** (48 likes, score 8/10) — Une histoire incroyable par @obi sur des communautés à travers l'Afrique construisant des infrastructures locales d'internet par satellite, financées et maintenues avec du bitcoin
+  - https://x.com/DocumentingBTC/status/2060060931497906606
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 72).
+- **@amazing_physics** (31 likes, score 8/10) — Science incroyable. Des scientifiques utilisant des données satellitaires et sismiques ont découvert que la Terre produit une impulsion énigmatique toutes les 26 secondes, souvent décrite comme son «
+  - https://x.com/amazing_physics/status/2061767476497768840
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 35).
+- **@marionawfal** (316 likes, score 7/10) — Les attaques russes dans la nuit ont été l'une des plus grandes offensives aériennes concentrées de cette guerre...
+
+Plus de 650 drones. 73 missiles, dont un record de 8 missiles hypersoniques Zircon.
+  - https://x.com/MarioNawfal/status/2061746217969758645
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 420).
+- **@polymarketmoney** (158 likes, score 7/10) — Blue Origin’s damaged launchpad may not be restored until 2028 according to NASA’s Isaacman.
+  - https://x.com/PolymarketMoney/status/2061643370032980230
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 190).
+- **@leaboursefr** (100 likes, score 7/10) — Quand un investisseur qui vient placer 75 milliards dit que votre continent est en retard pour "les 1 000 prochaines années"... ce n'est pas un compliment.
+
+Il essaie de nous avertir.
+
+L'Europe a le c
+  - https://x.com/LeaBourseFR/status/2061681253523308821
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 120).
+- **@cointelegraph** (0 likes, score 7/10) — MISE À JOUR : La société minière de Bitcoin IREN a finalisé un financement de 3,65 milliards de dollars en GPU pour soutenir son contrat cloud IA avec Microsoft.
+  - https://x.com/Cointelegraph/status/2061452907166290181
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 76).
+- **@spaceinvestor_d** (56 likes, score 7/10) — Northrop Grumman today announced a partnership with commercial firm Apex Space to demonstrate space-based interceptors (SBIs) for the Trump administration’s Golden Dome missile defense initiative in 2
+  - https://x.com/SpaceInvestor_D/status/2061555013483102544
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 60).
+- **@xfreeze** (235 likes, score 7/10) — Gros coup de l'UE ! 
+
+La Commission européenne vient d'ouvrir la porte aux opérateurs non européens comme Starlink et Amazon Kuiper pour enchérir sur le spectre satellite mobile à travers l'Europe
+
+Le
+  - https://x.com/XFreeze/status/2059752350185906596
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 301).
