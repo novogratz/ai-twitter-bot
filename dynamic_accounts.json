@@ -232,7 +232,12 @@
     "JeanGillesG",
     "AlexisGiraudet",
     "MaximeBoutin",
-    "ThomasDufour"
+    "ThomasDufour",
+    "NicolasRoussel",
+    "AntoineLeClaire",
+    "PierreCazade",
+    "MarcLavoie",
+    "JulienBontoux"
   ],
   "en": [
     "blablacar",
@@ -1473,6 +1478,31 @@
       "lang": "fr",
       "handle": "ThomasDufour",
       "added": "2026-06-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasRoussel",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineLeClaire",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreCazade",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLavoie",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBontoux",
+      "added": "2026-06-02"
     }
   ]
 }
