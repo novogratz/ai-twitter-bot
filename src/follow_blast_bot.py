@@ -129,6 +129,15 @@ def _save_daily_state(state: dict) -> None:
 
 def run_follow_blast_cycle():
     """Open a French niche people search, scroll, JS-click Follow buttons."""
+    # 2026-06-02 pivot: reciprocity mass-following is banned. This bot clicks
+    # raw Follow buttons in bulk (strangers), bypassing the whitelist-only
+    # follow policy in twitter_client.follow_account. When whitelist-only mode
+    # is on it must not run at all — follows come only from the curated
+    # whitelist, capped at MAX_FOLLOWS_PER_DAY.
+    from . import config as _cfg
+    if _cfg.FOLLOW_WHITELIST_ONLY:
+        log.info("[FOLLOW-BLAST] Disabled: whitelist-only follow policy active (no reciprocity).")
+        return
     # Skip if X is suppressing us — bulk follows during a shadowban
     # phase trip the spam detector even harder.
     try:

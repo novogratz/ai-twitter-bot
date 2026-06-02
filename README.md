@@ -2,7 +2,7 @@
 
 > **You'll hate me until I'm right.**
 
-A self-evolving Twitter/X influencer agent targeting the AI, crypto, markets, and space niche. Posts sharp English analysis, replies in real time, amplifies trusted signal, and manages its own follower ratio. Ollama (local) as the primary LLM with Codex / Claude / Gemini as fallbacks. No Twitter API key — browser automation only.
+A self-evolving Twitter/X influencer agent targeting the AI, space, and stocks niche. Posts sharp **French** analysis (multi-year theses, no short-term price targets), replies in the parent post's language, amplifies trusted signal, and manages its follower ratio under a **whitelist-only** follow policy. Ollama (local) as the primary LLM with Codex / Claude / Gemini as fallbacks. No Twitter API key — browser automation only.
 
 ---
 
@@ -111,7 +111,7 @@ See [`docs/OPERATIONS.md`](docs/OPERATIONS.md) for full runbook (autonomy mode, 
 
 ## Configuration
 
-Every knob is an environment variable in `.env`. Defaults are tuned for an English-content / global-audience build with conservative caps.
+Every knob is an environment variable in `.env`. Defaults are tuned for a **French-content** build (2026-06-02 pivot) with conservative caps: 3 originals/day, 3 quote-reposts/day, 30 replies/day, whitelist-only follows (≤5/day), ≤25 unfollows/day, 30-day anti-churn cooldown, and a `DRY_RUN` kill switch. See `src/config.py` for the full 2026-06-02 tunable block.
 
 | Variable | Default | What it does |
 |---|---|---|

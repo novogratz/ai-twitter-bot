@@ -143,9 +143,9 @@ LAST TWEET (the close — invite to follow + tease next week):
 RULES:
 - Each tweet ≤ 270 characters.
 - No em dashes (—). Simple hyphens or commas.
-- Lean on 1 global cultural ref per tweet when relevant (10-K footnote, Fed
-  dot plot, CNBC, 401k). NO French anchors (RER B, Bercy) — global audience.
-- 100% English.
+- Ancres FR autorisées et bienvenues quand elles tombent juste (Bercy, RER B,
+  syndicat, BFM, PEL, Livret A). Jamais forcées.
+- 100% français.
 - No decorative emoji except 📅 in tweet 1 and 👇 in the head.
 - Output: just the tweets separated by "---", nothing else.
 """

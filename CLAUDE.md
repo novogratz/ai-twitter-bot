@@ -4,7 +4,56 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
-> **Mandate 2026-05-29:** Full pivot. Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). All standalone content in English. French ONLY when replying to French content. Goal = 20k followers. Be the best quant analyst AND funniest account on X.
+> **Mandate 2026-06-02 (supersedes the EN pivot):** Full revert to **French**.
+> Brand = 🚀 The AI & Space Decoder ⚡, 3 pillars (AI / Space / Investment) unchanged.
+> **All standalone content + all quote-repost commentary generate in FRENCH** (native, not
+> translated). **Replies match the parent post's language** — English replies to English
+> accounts/text, French otherwise (model detect-and-match; default FR only on low-confidence
+> + FR-leaning). Theses are **multi-year** — short-term price targets (price + near-term
+> timeframe) are banned and rejected pre-publish. Following is **whitelist-only** (no
+> reciprocity, no strangers, no auto follow-back); core invariant **following < 0.8×followers**,
+> steady-state ~300; replies are the primary growth lever. Branding/visual identity, the
+> AI+Space+Stocks theme, and the Safari+APScheduler architecture are OUT OF SCOPE — unchanged.
+>
+> NOTE: this bot is **Safari + AppleScript driven (no X API)** — "API rate-limit / 429 backoff"
+> from the revision spec maps to Safari **write-pacing** (per-action daily caps + jittered
+> spacing + no bursts), same intent, different mechanism.
+
+> **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
+
+### 2026-06-02 policy modules (single write chokepoints)
+
+All write actions funnel through the lowest-level functions in `twitter_client`
+(`post_tweet` / `quote_tweet` / `reply_to_tweet` / `follow_account` /
+`unfollow_account` / `like_tweet` / `retweet_post`) so every one of the ~30 bots
+obeys the same rules without per-bot rewrites:
+
+- **`src/content_guard.py`** — pre-publish validation. Rejects any draft pairing a
+  price/multiplier with a near-term timeframe (FR+EN regexes), and requires FRENCH for
+  originals + quotes (replies are language-matched upstream, so only the price gate applies
+  to them). `generate_validated()` regenerates up to `CONTENT_VALIDATION_RETRIES` then
+  skip+logs — a flagged draft is NEVER published.
+- **`src/action_guard.py`** — write ledger + caps + pacing + follow policy. Persistent
+  timestamped ledger (`action_ledger.json`) for the 30-day anti-churn check + audit.
+  Per-action daily caps (`MAX_ORIGINALS_PER_DAY=3`, `MAX_QUOTE_REPOSTS_PER_DAY=3`,
+  `MAX_REPLIES_PER_DAY=30`, `MAX_FOLLOWS_PER_DAY=5`, `MAX_UNFOLLOWS_PER_DAY=25`) with
+  jittered min-spacing (45 min posts, 90 s replies). `can_follow` enforces whitelist-only +
+  ratio ceiling (`following < FOLLOW_RATIO_CEILING×followers`) + 30-day cooldown; `can_unfollow`
+  protects tier1/tier2 + caps the daily prune. `DRY_RUN=1` logs intended writes without
+  executing (kill switch — run this first to verify, then set `DRY_RUN=0`).
+- **`whitelist.json`** — tiered curated accounts (tier1 sources/targets, tier2 FR peers,
+  tier3 watch-only). The ONLY accounts the bot may follow, plus the source list for
+  quote-reposts/engagement targeting. The bot may SUGGEST additions (`suggestions[]`) for
+  human approval but **never auto-adds**. Seeded from operator-curated lists, `review_required:true`.
+- **`following_count.json`** — live following counter (seeded at the real ~4.2K baseline since
+  `followed_accounts.json` under-reports), kept in sync by `action_guard.adjust_following()`
+  on each follow/unfollow so the ratio invariant blocks new follows until the prune lands.
+- Reciprocity mass-following (`follow_blast_bot`) is disabled whenever `FOLLOW_WHITELIST_ONLY=1`.
+
+> **Remaining (next increment, not yet built):** a dedicated engagement-velocity targeting
+> module (rank tier1/2 recent posts by (likes+reposts)/hour → reply queue, log conversions),
+> and folding likes/retweets into the same explicit queue object. Caps/pacing/dedup for those
+> already run through `action_guard`.
 
 ---
 

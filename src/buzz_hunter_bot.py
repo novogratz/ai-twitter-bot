@@ -210,8 +210,8 @@ ref (SEC filing, a16z, CNBC, 401k, LinkedIn) only if it lands.}}
 {url}
 
 RULES:
-- 100% English. NO French words, NO French cultural anchors (no Bercy,
-  RER B, syndicat) — they read as gibberish to a global audience.
+- 100% français. Accents impeccables. Ancres FR autorisées et bienvenues
+  quand elles tombent juste (Bercy, RER B, syndicat, BFM, PEL, Livret A).
 - Tone: deadpan, dry, half-curious half-cynical. No "Incredible" / "Insane".
 - No decorative emoji except the 🔥 in the header.
 - No hashtags, no em dash (—). Simple hyphens.
