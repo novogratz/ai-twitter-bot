@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-02T02:21:58.424197",
-  "window_7d_actions": 2391,
-  "window_24h_actions": 494,
+  "generated_at": "2026-06-02T06:22:41.016243",
+  "window_7d_actions": 2414,
+  "window_24h_actions": 496,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2291
+      "count": 2313
     },
     {
       "pattern": "METAPHOR",
@@ -21,7 +21,7 @@
     },
     {
       "pattern": "DIALOGUE",
-      "count": 11
+      "count": 12
     }
   ],
   "worst_patterns": [
@@ -63,19 +63,19 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 877
+      "count": 895
     },
     {
       "topic": "Autre",
-      "count": 726
+      "count": 728
     },
     {
       "topic": "Spatial",
-      "count": 471
+      "count": 484
     },
     {
       "topic": "Bourse",
-      "count": 344
+      "count": 343
     },
     {
       "topic": "Crypto",
@@ -86,39 +86,39 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1420
+      "count": 1439
     },
     {
       "type": "retweet",
-      "count": 756
+      "count": 754
     },
     {
       "type": "hotake",
-      "count": 102
-    },
-    {
-      "type": "quote",
-      "count": 57
+      "count": 111
     },
     {
       "type": "post",
-      "count": 56
+      "count": 57
+    },
+    {
+      "type": "quote",
+      "count": 53
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-02T02:16:22.552415",
-      "text": "CAC 40 +3,4%.\nLes 7 méga-caps US ont porté tout le monde sur leurs épaules.\nLa France n'est pas en hausse. On est juste en gravité zéro le temps d'un week-end.",
+      "ts": "2026-06-02T06:19:56.856767",
+      "text": "Vitalik veut virer les liquidations. Les traders DeFi vont s'endormir la culotte ouverte.\nLe vrai danger n'est pas la liquidation, c'est la lente agonie du delta neutre.\nC'est comme le PEL: rendement de 0,5% avec la satisfaction morale du capital conservé.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-02T02:13:27.682537",
-      "text": "Sony a passé 10 ans sur le bruit. C'est 300€ de réduction de bruit active + un filtre à charbon actif.\nBercy a testé. Il est dans le coma.",
+      "ts": "2026-06-02T06:12:42.794567",
+      "text": "XTB le meilleur CTO pour débuter.\nLe seul où la courbe de performance suit fidèlement celle du CAC 40.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-02T02:12:23.239375",
-      "text": "Bourse, pépite, projecteurs.\n\nLa BNF en 14h00.",
+      "ts": "2026-06-02T06:12:01.780490",
+      "text": "Trump : \"Tout le monde déteste Israël à cause de ça.\"\n\nBercy : \"Toutes les aides exceptionnelles de 2024 sont votées, il ne reste plus qu'à trouver l'argent pour les payer.\"\n\nLe vrai sujet : on paie toujours le compte, jamais l'addition.",
       "type": "reply"
     }
   ]
