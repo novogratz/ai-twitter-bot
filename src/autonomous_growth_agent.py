@@ -74,7 +74,7 @@ Write a fresh directives.md that is concrete and prescriptive:
 - Include format cues: which patterns to lead with, sentence structures that win
 - Reference specific examples from top performers if you found any
 - Keep it under 400 words — short enough that every generation agent reads it fully
-- Write in English (the bot's primary language is now English)
+- Write in French (the bot's primary language is French again since 2026-06-02)
 
 Format:
 ```

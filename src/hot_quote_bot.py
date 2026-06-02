@@ -46,7 +46,7 @@ You will QUOTE-TWEET this tweet about a hot topic in AI / Space / Investment:
 
 TOPIC CONTEXT: {topic_hint}
 
-Write ONE punchy quote in English. The goal: make people screenshot it,
+Write ONE punchy quote in FRENCH (français natif, jamais traduit). The goal: make people screenshot it,
 retweet it, and think "this account sees what others don't."
 
 VOICE:

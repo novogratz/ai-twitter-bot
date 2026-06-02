@@ -103,6 +103,58 @@ MAX_RETRIES = 3
 RETRY_DELAY_SECONDS = 5
 
 
+# ---------------------------------------------------------------------------
+# 2026-06-02 pivot tunables — French-language AI + Space + Stocks niche.
+# Everything here is config, not hardcoded logic (per the revision mandate).
+# Enforced centrally at the write chokepoints (twitter_client.post_tweet /
+# quote_tweet / reply_* / follow_account / unfollow_account) via
+# src/action_guard.py + src/content_guard.py. NOTE: this bot is Safari +
+# AppleScript driven (no X API), so "API rate-limit / 429 backoff" maps to
+# Safari write-pacing here — same intent (no bursts), different mechanism.
+# ---------------------------------------------------------------------------
+
+# Kill switch / dry-run. When 1, every write action (post, reply, follow,
+# unfollow, like, quote, retweet) is LOGGED but NOT executed — run this first
+# to verify the new behavior before any live writes, then set DRY_RUN=0.
+DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
+
+# Posting caps + spacing (originals = post_tweet; quotes = quote_tweet).
+MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "3"))
+MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "3"))
+MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(45 * 60)))
+POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(15 * 60)))
+
+# Reply caps + spacing. Replies are the primary growth lever — quality over
+# volume, language-matched to the parent post.
+MAX_REPLIES_PER_DAY = int(os.environ.get("MAX_REPLIES_PER_DAY", "30"))
+MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", "90"))
+REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "180"))
+REPLY_LANGUAGE_MATCH = os.environ.get("REPLY_LANGUAGE_MATCH", "1") == "1"
+
+# Following policy — whitelist-only, no reciprocity, no strangers.
+# Core invariant: following must trend toward and stay BELOW followers.
+FOLLOW_WHITELIST_ONLY = os.environ.get("FOLLOW_WHITELIST_ONLY", "1") == "1"
+FOLLOW_RATIO_CEILING = float(os.environ.get("FOLLOW_RATIO_CEILING", "0.8"))  # following < 0.8 * followers
+FOLLOWING_STEADY_STATE = int(os.environ.get("FOLLOWING_STEADY_STATE", "300"))
+MAX_FOLLOWS_PER_DAY = int(os.environ.get("MAX_FOLLOWS_PER_DAY", "5"))
+MAX_UNFOLLOWS_PER_DAY = int(os.environ.get("MAX_UNFOLLOWS_PER_DAY", "25"))
+# Anti-churn / TOS safety: never re-touch (follow↔unfollow) the same account
+# within this window. Follow/unfollow cycling is a fast path to suspension.
+CHURN_COOLDOWN_DAYS = int(os.environ.get("CHURN_COOLDOWN_DAYS", "30"))
+FOLLOW_ACTION_JITTER_SECONDS = int(os.environ.get("FOLLOW_ACTION_JITTER_SECONDS", "45"))
+
+# Content rules — ban short-term price targets; theses are multi-year.
+BAN_SHORT_TERM_PRICE_TARGETS = os.environ.get("BAN_SHORT_TERM_PRICE_TARGETS", "1") == "1"
+CONTENT_VALIDATION_RETRIES = int(os.environ.get("CONTENT_VALIDATION_RETRIES", "3"))
+
+# Whitelist of curated accounts (tiered). Seeded manually / from curated
+# lists; the bot may SUGGEST additions for human approval but must NEVER
+# auto-add. Also the source list for quote-reposts + engagement targeting.
+WHITELIST_FILE = os.path.join(_PROJECT_ROOT, "whitelist.json")
+# Persistent, timestamped ledger of every write action (anti-churn + audit).
+ACTION_LEDGER_FILE = os.path.join(_PROJECT_ROOT, "action_ledger.json")
+
+
 # Live strategy reader — read dynamic caps written by meta_strategy_agent.
 # Bots use get_live_cap(name) instead of the static env values so the
 # agent's strategic decisions actually flex behavior.

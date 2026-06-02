@@ -223,10 +223,28 @@ def post_tweet(text: str, image_path: str = None):
         log.error(f"[POST] Unsafe leak detected after scrub — refusing to post. Text: {text[:200]!r}")
         raise ToolCallLeakError("tool-call / stream-envelope markup in tweet text")
 
+    # Central write policy: originals daily cap + jittered spacing, then the
+    # content gates (French + no near-term price target). A flagged draft is
+    # skipped here as a final safety net (generators regenerate upstream).
+    from . import action_guard, content_guard, config as _cfg
+    ok, why = action_guard.can_post(action_guard.POST)
+    if not ok:
+        log.info(f"[POST] policy skip ({why}).")
+        return
+    ok, why = content_guard.validate(text, kind="original")
+    if not ok:
+        log.info(f"[POST] content_guard skip ({why}): {text[:120]!r}")
+        return
+    if _cfg.DRY_RUN:
+        log.info(f"[POST][DRY_RUN] would post: {text[:200]!r}")
+        action_guard.record(action_guard.POST, dry_run=True)
+        return
+
     with _safari_lock:
         if image_path:
             _post_tweet_with_image(text, image_path)
             _like_own_latest_tweet()
+            action_guard.record(action_guard.POST)
             return
 
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
@@ -245,6 +263,7 @@ def post_tweet(text: str, image_path: str = None):
         log.info("Tweet posted!")
         close_front_tab()
         _like_own_latest_tweet()
+        action_guard.record(action_guard.POST)
 
 
 def _post_tweet_with_image(text: str, image_path: str):
@@ -468,6 +487,11 @@ def like_tweet(tweet_url: str = ""):
     if tweet_url and _already_liked(tweet_url):
         log.info(f"[LIKE] already liked {tweet_url[-50:]} — skipping (would toggle OFF).")
         return
+    from . import action_guard, config as _cfg
+    if _cfg.DRY_RUN:
+        log.info(f"[LIKE][DRY_RUN] would like {tweet_url[-50:] if tweet_url else '(open tweet)'}.")
+        action_guard.record(action_guard.LIKE, target=tweet_url, dry_run=True)
+        return
     script = '''
     tell application "System Events"
         keystroke "l"
@@ -479,12 +503,30 @@ def like_tweet(tweet_url: str = ""):
         log.info("Tweet liked!")
         if tweet_url:
             _mark_liked(tweet_url)
+        action_guard.record(action_guard.LIKE, target=tweet_url)
     else:
         log.info("Failed to like tweet, continuing...")
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str):
     """Open a tweet, like it, click reply, type the reply, and submit."""
+    # Central write policy: replies daily cap + jittered spacing, no near-term
+    # price target (language is matched to the parent upstream, so no French
+    # gate here), dry-run kill switch.
+    from . import action_guard, content_guard, config as _cfg
+    ok, why = action_guard.can_post(action_guard.REPLY)
+    if not ok:
+        log.info(f"[REPLY] policy skip ({why}).")
+        return
+    ok, why = content_guard.validate(reply_text, kind="reply")
+    if not ok:
+        log.info(f"[REPLY] content_guard skip ({why}): {reply_text[:120]!r}")
+        return
+    if _cfg.DRY_RUN:
+        log.info(f"[REPLY][DRY_RUN] would reply to {tweet_url}: {reply_text[:160]!r}")
+        action_guard.record(action_guard.REPLY, target=tweet_url, dry_run=True)
+        return
+
     with _safari_lock:
         # Make sure Safari is focused first
         _run_applescript('''
@@ -531,6 +573,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
         ''')
         time.sleep(3)  # Wait for submission
         log.info("Reply posted!")
+        action_guard.record(action_guard.REPLY, target=tweet_url)
         close_front_tab()
 
 
@@ -550,6 +593,22 @@ def quote_tweet(tweet_url: str, comment: str):
         log.error(f"[QUOTE] Unsafe leak detected after scrub — refusing. Text: {comment[:200]!r}")
         raise ToolCallLeakError("tool-call / stream-envelope markup in quote text")
 
+    # Central write policy: quote-repost daily cap + spacing, French + no
+    # near-term price target on our commentary, dry-run kill switch.
+    from . import action_guard, content_guard, config as _cfg
+    ok, why = action_guard.can_post(action_guard.QUOTE)
+    if not ok:
+        log.info(f"[QUOTE] policy skip ({why}).")
+        return
+    ok, why = content_guard.validate(comment, kind="quote")
+    if not ok:
+        log.info(f"[QUOTE] content_guard skip ({why}): {comment[:120]!r}")
+        return
+    if _cfg.DRY_RUN:
+        log.info(f"[QUOTE][DRY_RUN] would quote {tweet_url}: {comment[:160]!r}")
+        action_guard.record(action_guard.QUOTE, target=tweet_url, dry_run=True)
+        return
+
     with _safari_lock:
         text = f"{comment}\n{tweet_url}"
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
@@ -563,6 +622,7 @@ def quote_tweet(tweet_url: str, comment: str):
         ''')
         time.sleep(2)
         log.info(f"[QUOTE] Quote posted: {tweet_url}")
+        action_guard.record(action_guard.QUOTE, target=tweet_url)
         close_front_tab()
         try:
             like_tweet(tweet_url)
@@ -587,6 +647,19 @@ def unfollow_account(username: str) -> bool:
     ):
         log.info(f"[UNFOLLOW] Invalid handle '{username}' — skipping.")
         return False
+
+    # Prune policy: daily unfollow cap, 30-day anti-churn cooldown, never
+    # unfollow a protected tier1/tier2 whitelist account, dry-run.
+    from . import action_guard, config as _cfg
+    ok, why = action_guard.can_unfollow(username)
+    if not ok:
+        log.info(f"[UNFOLLOW] policy refuses @{username} ({why}).")
+        return False
+    if _cfg.DRY_RUN:
+        log.info(f"[UNFOLLOW][DRY_RUN] would unfollow @{username}.")
+        action_guard.record(action_guard.UNFOLLOW, target=username, dry_run=True)
+        return True
+    action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
 
     with _safari_lock:
         profile_url = f"https://x.com/{username}"
@@ -632,6 +705,8 @@ def unfollow_account(username: str) -> bool:
         _run_applescript(click_confirm)
         time.sleep(1.5)
         close_front_tab()
+        action_guard.record(action_guard.UNFOLLOW, target=username)
+        action_guard.adjust_following(-1)
         log.info(f"[UNFOLLOW] Unfollowed @{username}.")
         return True
 
@@ -654,6 +729,19 @@ def follow_account(username: str) -> bool:
     ):
         log.info(f"[FOLLOW] Invalid handle '{username}' — skipping.")
         return False
+    # Follow policy: whitelist-only (no strangers / no reciprocity), ratio
+    # invariant (following < ceiling * followers), daily cap, 30-day
+    # anti-churn cooldown, dry-run. Enforced here so every follow bot obeys.
+    from . import action_guard, config as _cfg
+    ok, why = action_guard.can_follow(username)
+    if not ok:
+        log.info(f"[FOLLOW] policy refuses @{username} ({why}).")
+        return False
+    if _cfg.DRY_RUN:
+        log.info(f"[FOLLOW][DRY_RUN] would follow @{username}.")
+        action_guard.record(action_guard.FOLLOW, target=username, dry_run=True)
+        return True
+    action_guard.jitter_sleep(_cfg.FOLLOW_ACTION_JITTER_SECONDS)
     with _safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"[FOLLOW] Visiting profile: {profile_url}")
@@ -674,6 +762,8 @@ def follow_account(username: str) -> bool:
         if ok:
             time.sleep(2)
             log.info(f"[FOLLOW] Followed @{username}!")
+            action_guard.record(action_guard.FOLLOW, target=username)
+            action_guard.adjust_following(+1)
         else:
             log.info(f"[FOLLOW] Could not follow @{username} via JS, skipping.")
         close_front_tab()
@@ -1037,6 +1127,11 @@ def retweet_post(tweet_url: str):
     to confirm the 'Repost' menu item. Uses the same Safari lock as everything
     else so it can't race with reply/post cycles.
     """
+    from . import action_guard, config as _cfg
+    if _cfg.DRY_RUN:
+        log.info(f"[RETWEET][DRY_RUN] would repost {tweet_url}.")
+        action_guard.record(action_guard.RETWEET, target=tweet_url, dry_run=True)
+        return
     with _safari_lock:
         log.info(f"[RETWEET] Opening tweet: {tweet_url}")
         webbrowser.open(tweet_url)
@@ -1055,6 +1150,7 @@ def retweet_post(tweet_url: str):
         ''')
         time.sleep(2)
         log.info(f"[RETWEET] Reposted: {tweet_url}")
+        action_guard.record(action_guard.RETWEET, target=tweet_url)
         like_tweet(tweet_url)
         close_front_tab()
 

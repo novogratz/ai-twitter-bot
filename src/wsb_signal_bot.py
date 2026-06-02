@@ -49,7 +49,7 @@ You are @AISpaceDecoder — The AI & Space Decoder. You just saw this tweet abou
 
 @{author}: \"{tweet_text}\"
 
-Write ONE punchy quote-tweet in English. Rules:
+Write ONE punchy quote-tweet in FRENCH (français natif, jamais traduit). Rules:
 - Max 220 characters (original tweet renders below yours automatically).
 - HOOK in first 5 words: a number, bold claim, or sharp observation.
 - Voice: confident, slightly audacious, data-driven. Think quant analyst who also memes.
