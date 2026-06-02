@@ -245,7 +245,16 @@
     "AlexisBessard_",
     "RomainTremblay",
     "MathieuPoulin_",
-    "MarcLapointe"
+    "MarcLapointe",
+    "LudoTayssier",
+    "0x_Merlin",
+    "ThomasBourget",
+    "VincentPonce",
+    "MaximeTremblay",
+    "0xAyayi",
+    "RenaudLaplanche",
+    "AlexisBouvier",
+    "0xKryptoQc"
   ],
   "en": [
     "blablacar",
@@ -1550,6 +1559,51 @@
     {
       "lang": "fr",
       "handle": "MarcLapointe",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoTayssier",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "0x_Merlin",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBourget",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentPonce",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeTremblay",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xAyayi",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudLaplanche",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBouvier",
+      "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xKryptoQc",
       "added": "2026-06-02"
     }
   ]

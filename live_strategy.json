@@ -1,5 +1,5 @@
 {
-  "ts": "2026-06-01T06:00:00.000000",
+  "ts": "2026-06-02T06:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 15,
     "MAX_HOTAKES_PER_DAY": 50,
@@ -20,5 +20,5 @@
     "Crypto"
   ],
   "cadence_factor": 1.0,
-  "rationale": "QUOTE PUSH MODE: Quotes critically underused — 59 in 7 days vs 300/day cap (8/day actual vs 300/day allowed). RTs dominate at 107/day. Execution issue not cap issue: all generation must quote before retweeting bare. Topic focus: SpaceX IPO ($1.75T target), ASTS BlueBirds mid-June Falcon 9 launch, RKLB Neutron debut, Anthropic Mythos above Opus, GPT-4.5 retiring June 27, SoftBank $53B France datacenters. Best hours 21-23 UTC (5-7pm ET) and 11-12 UTC (6-8am ET) — schedule heavy fire in these windows. METAPHOR pattern dominates, push RENAME second."
+  "rationale": "QUOTE PUSH MODE (caps unchanged — execution gap, not cap gap): Quotes at 57/week vs 300/day cap (8/day actual). Every RT must become a quote or be skipped. RTs at 108/day are healthy. HOT CATALYSTS JUNE 2–15: (1) SpaceX IPO June 12 target at $1.8T under $SPCX — single biggest catalyst of the month, queue stock calls and RENAME takes now; (2) Blue Origin launchpad damaged until 2028 — RKLB pure beneficiary play, $1.3B defense backlog, bold $30 target call warranted; (3) ASTS BlueBirds 8/9/10 at Cape Canaveral ahead of mid-June Falcon 9 — hold narrative, revenue gate is FCC + launch; (4) Anthropic filed confidential IPO at $965B — Nvidia's $10B stake = exit liquidity take; (5) Nvidia Vera CPU Q3 production, Anthropic + OpenAI + SpaceX as launch customers — METAPHOR the CUDA tax. 'Tokenmaxxing' fading narrative = AI commoditization hot take, hit before the crowd. Pattern order: METAPHOR > FR_ANCHOR > RENAME > DIALOGUE. Best hours 21-23 UTC (5-7pm ET) and 11-12 UTC (6-8am ET) — heavy fire in these windows. Bookmark-bait posts (data tables, price targets, frameworks) score 5x likes in algo — add 1/day."
 }
