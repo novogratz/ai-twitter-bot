@@ -11226,3 +11226,204 @@ The market hasn't
 - **@firstsquawk** (13 likes, score 7/10) — Nvidia CEO: The company sells its products globally and remains compliant with all applicable export control laws.
   - https://x.com/FirstSquawk/status/2061617399481409998
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 15).
+
+## 2026-06-02
+- **@cryptorover** (1273 likes, score 9/10) — BREAKING:  Michael Saylor's Strategy SOLD BITCOIN.
+
+32 $BTC for $2,500,000. 
+
+But here's the fun part:
+Last time Strategy sold was December 2022. 
+
+704 $BTC for $11,800,000.
+Almost EXACTLY on the bear
+  - https://x.com/cryptorover/status/2061456236428808578
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1617).
+- **@yodastockinvest** (70 likes, score 9/10) — My 2030 price targets
+Mission: >500k portfolio by 2030 (today: 224k)
+$AMD: $516 > $1040
+$SOFI: $18 > $93
+$NBIS: $230 > $808
+$HIMS: $26 > $120
+$IREN: $63 > $335
+$ASTS: $113 > $446
+$ONDS: $13 > $30
+$KRK
+  - https://x.com/YodaStockInvest/status/2061538272027795505
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 102).
+- **@aistocksavvy** (54 likes, score 9/10) — 𝐉𝐔𝐒𝐓 𝐈𝐍: Blue Origin Launchpad Damaged in Rocket Explosion May Not Be Restored Until 2028, Nasa’s Isaacman Says - CNBC
+
+$RKLB $ASTS $SPCX $AMZN $PL $LUNR $RDW
+  - https://x.com/AIStockSavvy/status/2061597275797786924
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 68).
+- **@bulltheoryio** (41 likes, score 9/10) — BREAKING: Bitcoin fell -$1,200 in the last 60 MINUTES and dropped below $71,000 for the first time since April 7th. 
+
+$155 million in longs were liquidated over the same period.
+  - https://x.com/BullTheoryio/status/2061634042295173253
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 57).
+- **@blockspace** (0 likes, score 7/10) — $NVDA CEO Jensen Huang has said AI data centers could cost $80B-$100B per gigawatt in the future
+
+At this valuation, a single megawatt would sell for $60-$100M
+  - https://x.com/blockspace/status/2061448068147326997
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 14).
+- **@paradislabs** (332 likes, score 9/10) — $RKLB down 12.28% today:
+
+Other space names like $ASTS, $RDW, $FLY are down, seemingly because of the Blue Origin explosion.
+
+No negative Rocket Lab news.
+
+I've personally been waiting for a dip after
+  - https://x.com/ParadisLabs/status/2061512066557452794
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 388).
+- **@themaverickws** (284 likes, score 9/10) — Google needing a $80b bailout from shareholders and Berkshire is incredibly ominous for the bubble. It generated $174b in cash, plans to spend +$190b on AI expansion. Instead of being a buyer of share
+  - https://x.com/TheMaverickWS/status/2061582624540574146
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 308).
+- **@bulltheoryio** (39 likes, score 9/10) — Alphabet announces an $80 BILLION capital raise to build AI infrastructure.
+
+The $80 billion raise includes $10 billion from Berkshire Hathaway, $30 billion in public offerings and $40 billion through
+  - https://x.com/BullTheoryio/status/2061630111938752653
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 51).
+- **@leadingreport** (5993 likes, score 8/10) — President John F. Kennedy was allegedly as—ssinated over plans to share UFO/UAP secrets with NASA and the Soviet Union, according to Jonathan Caplan.
+  - https://x.com/LeadingReport/status/2061471236933255597
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 6849).
+- **@aleabitoreddit** (784 likes, score 8/10) — Space sector with $ASTS looks like it’s having fun.
+
+Lot of optimism on X somehow, even after Blue Origin had a major failure... (positive for SpaceX and byproduct $RKLB.)
+
+As for $ASTS it does matter
+  - https://x.com/aleabitoreddit/status/2046095854621413511
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 944).
+- **@stockmktnewz** (0 likes, score 8/10) — Nvidia $NVDA CEO Jensen Huang just said we are at the beginning of a new market 
+
+CPUs FOR AGENTS
+
+Here's who is already signed up to use Nvidia's new Vera CPU:
+
+EARLY ADOPTERS:
+- OpenAI
+- Anthropic
+-
+  - https://x.com/StockMKTNewz/status/2061300747434619242
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 270).
+- **@cnbc** (175 likes, score 8/10) — Blue Origin launchpad damaged in rocket explosion may not be restored until 2028, NASA's Isaacman says
+  - https://x.com/CNBC/status/2061597057794650159
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 221).
+- **@cnbc** (145 likes, score 8/10) — Blue Origin launchpad damaged in rocket explosion may not be restored until 2028, NASA's Isaacman says
+  - https://x.com/CNBC/status/2061597057794650159
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 183).
+- **@stocksavvyshay** (131 likes, score 8/10) — $SNOW & Anthropic are expanding their AI partnership as Claude gains traction inside Cortex AI.
+
+Snowflake lets enterprises run Claude on governed data without moving sensitive information outside the
+  - https://x.com/StockSavvyShay/status/2061632918800543786
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 155).
+- **@kiantrades** (39 likes, score 8/10) — Elon Musk stepping down from SpaceX to join Jeff Bezos Blue Origin
+
+$TSLA red after hours
+  - https://x.com/kiantrades/status/2061632707306902005
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 69).
+- **@stockmktnewz** (51 likes, score 8/10) — Bloom Energy $BE CEO said the company doesn't see a need to sell shares to meet surging demand from AI data centers - Bloomberg
+  - https://x.com/StockMKTNewz/status/2061631276952563995
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 63).
+- **@hyperaicapital** (0 likes, score 7/10) — $NBIS and $IREN both got exposure during Jensen’s NVIDIA GTC Taipei keynote. 
+
+One significantly more than the other…
+  - https://x.com/HyperAICapital/status/2061315660509261972
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 14).
+- **@sentdefender** (872 likes, score 8/10) — NASA Administrator Jared Isaacman flew over Launch Complex 36 (LC-36) at Cape Canaveral Space Force Station in Florida today, accompanied by Blue Origin Founder Jeff Bezos and CEO Dave Limp, inspectin
+  - https://x.com/sentdefender/status/2060526207439933913
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 934).
+- **@itsmichaelluu** (539 likes, score 8/10) — I called out $NOW at $85 → $135 up 160% already.
+
+It's going to triple by 2027 and Trump's favorite stock too.
+
+Right now, these 10 SaaS plays have 1000% potential: 
+
+1. $NOW target $260 back to its 5
+  - https://x.com/itsmichaelluu/status/2061275335916687813
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 641).
+- **@semianalysis_** (420 likes, score 8/10) — F TIER KEYNOTEMAX: Jensen ComputeX presentation was one of the worst keynotes he has done. He announced nothing new on the AI datacenter side, and he only announced Windows on NVIDIA ARM CPU which the
+  - https://x.com/SemiAnalysis_/status/2061315076045295727
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 482).
+- **@itsmichaelluu** (217 likes, score 8/10) — 2 years ago, I said buy $ASTS at $2 before it spiked to $130+ 
+
+Recently, I explained why these would explode:
+
+$SNOW $120 → $320
+$HPE $30 → $100
+$TE $5 → $20
+$KEEL $2 → $18
+$DELL $240 → $600 
+
+Right
+  - https://x.com/itsmichaelluu/status/2061617375946928639
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 351).
+- **@ronbupdates** (12 likes, score 7/10) — Elon Musk's Starlink has expressed interest in launching its high speed satellite Internet in Nepal.
+  - https://x.com/RONBupdates/status/2061632601639866572
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 14).
+- **@nasaspacealerts** (5772 likes, score 7/10) — UPDATE: @NASA can confirm a fireball over New England at 2:06 p.m. EDT on Saturday, May 30, 2026. The meteor was about 5 feet (1.6 meters) in diameter with a mass of 5.6 metric tons and entered Earth’
+  - https://x.com/NASASpaceAlerts/status/2061542998844887048
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 6016).
+- **@amitisinvesting** (2536 likes, score 7/10) — alright $IREN
+
+time to announce the Anthropic deal
+  - https://x.com/amitisinvesting/status/2047342496355623256
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2792).
+- **@aleabitoreddit** (1536 likes, score 7/10) — I have high conviction that majority/full port $IREN investors are the dumbest people you’ll meet in this world.
+  - https://x.com/aleabitoreddit/status/2048143244673081730
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2022).
+- **@polymarket** (488 likes, score 7/10) — NEW: NASA Administrator Isaacman says Blue Origin’s damaged launchpad may not be restored until 2028.
+  - https://x.com/Polymarket/status/2061634184788017329
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 594).
+- **@yahoonewstopics** (432 likes, score 7/10) — 【Anthropic Prêt pour l’introduction en bourse avec une demande d’IPO】
+  - https://x.com/YahooNewsTopics/status/2061559159884263528
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 590).
+- **@farialimaelevat** (326 likes, score 7/10) — A Anthropic foi fundada há 5 anos e hoje pediu pra abrir capital valendo quase 1 trilhão de dólares.
+
+A B3 inteira, com 134 anos e 400 empresas, vale a mesma coisa.
+
+Viva o capitalismo.
+  - https://x.com/FariaLimaElevat/status/2061630825150435579
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 340).
+- **@sentdefender** (242 likes, score 7/10) — Russian air-launched cruise missiles, likely Kh-101s, hammer the Ukrainian capital of Kyiv during tonight’s large-scale drone and missile attack - one of the most significant since the start of the wa
+  - https://x.com/sentdefender/status/2061629714599481684
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 286).
+- **@realsimpleariel** (183 likes, score 7/10) — When we see the dog  ripping 250% in 7 days we know a theme is into frothy territory. 
+
+$SPCE likely makes for an amazing short over the next few days.
+
+Anyone buying Virgin Galactic up here will rema
+  - https://x.com/RealSimpleAriel/status/2061589889695580503
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 231).
+- **@aleabitoreddit** (60 likes, score 7/10) — If I stop calling trash, trash.
+
+That doesn’t change what it is, when you’re looking at the $IREN infinite ATM dilution machine.
+  - https://x.com/aleabitoreddit/status/2061437102504681793
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 68).
+- **@polymarket** (29 likes, score 7/10) — NEW: NASA Administrator Isaacman says Blue Origin’s damaged launchpad may not be restored until 2028.
+  - https://x.com/Polymarket/status/2061634184788017329
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 61).
+- **@cryptokaleo** (1029 likes, score 7/10) — Never sell your Bitcoin.
+  - https://x.com/CryptoKaleo/status/2061488851336536077
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1321).
+- **@imai_eruel** (1086 likes, score 7/10) — L'estimation actuelle indique que l'écart de performance entre les modèles frontaliers fermés actuels (presque américains, ou plutôt OpenAI, Anthropic) et les modèles ouverts (presque chinois) est d'e
+  - https://x.com/ImAI_Eruel/status/2060712643665723817
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1132).
+- **@allenanalysis** (1064 likes, score 7/10) — BREAKING: A CNN safety analyst warns the Blue Origin explosion could jeopardize NASA contracts for FIVE TO TEN YEARS if investigators determine negligence or safety failures were involved.
+  - https://x.com/allenanalysis/status/2060445458929946666
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1124).
+- **@garymarcus** (538 likes, score 7/10) — Why things will eventually fall apart:
+
+1. Everybody, even Google, seems to be treating AI as if it were some kind of winner take all competition like web search was, in which Google taking over 95%
+  - https://x.com/GaryMarcus/status/2061617157897912370
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 692).
+- **@edzitron** (554 likes, score 7/10) — Yeah I'm sorry it's one thing if Oracle does pathetic at-the-market offerings but for Google to do so is genuinely hilarious. We're in a bubble and if you disagree you are ignoring reality
+  - https://x.com/edzitron/status/2061564276855259175
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 586).
+- **@thebitcoinconf** (378 likes, score 7/10) — JACK DORSEY: "#Bitcoin will make the current financial system feel as irrelevant as the fax machine."
+
+HE'S RIGHT!
+  - https://x.com/TheBitcoinConf/status/2061546728210276861
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 444).
+- **@altcoindaily** (197 likes, score 7/10) — Here we go again #bitcoin
+  - https://x.com/AltcoinDaily/status/2061624918740242768
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 301).
