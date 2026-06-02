@@ -135,8 +135,9 @@ def run_follow_blast_cycle():
     # is on it must not run at all — follows come only from the curated
     # whitelist, capped at MAX_FOLLOWS_PER_DAY.
     from . import config as _cfg
-    if _cfg.FOLLOW_WHITELIST_ONLY:
-        log.info("[FOLLOW-BLAST] Disabled: whitelist-only follow policy active (no reciprocity).")
+    if not _cfg.ENABLE_FOLLOW_BLAST:
+        log.info("[FOLLOW-BLAST] Disabled (ENABLE_FOLLOW_BLAST=0): reciprocity mass-follow is banned. "
+                 "New-account follows go through the capped discovery path instead.")
         return
     # Skip if X is suppressing us — bulk follows during a shadowban
     # phase trip the spam detector even harder.

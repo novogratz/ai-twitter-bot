@@ -192,7 +192,9 @@ FEED_REPOST_SEARCH_QUERIES = [
     "SpaceX OR Starlink OR fusée OR Ariane OR satellite OR espace lang:fr min_faves:20",
     "lancement OR orbite OR NASA OR ESA OR CNES OR spatial lang:fr min_faves:20",
     "Bitcoin OR BTC OR crypto OR \"ETF Bitcoin\" lang:fr min_faves:50",
-    "bourse OR investissement OR \"action IA\" OR \"résultats trimestriels\" lang:fr min_faves:30",
+    "bourse OR CAC 40 OR Nasdaq OR \"S&P 500\" OR \"action\" lang:fr min_faves:30",
+    "Fed OR BCE OR inflation OR \"taux d'intérêt\" OR macro lang:fr min_faves:30",
+    "\"résultats trimestriels\" OR earnings OR dividende OR valorisation lang:fr min_faves:30",
     # EN tail — global breaking signal
     "\"new model\" OR \"introducing\" OpenAI OR Anthropic OR Google lang:en min_faves:200",
     "GPT OR Claude OR Gemini OR Grok OR Llama \"released\" OR \"launches\" lang:en min_faves:100",

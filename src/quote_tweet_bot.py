@@ -31,10 +31,13 @@ QUOTE_QUERIES = [
     # FR — Espace
     "SpaceX OR Starlink OR fusée OR Ariane OR satellite lang:fr min_faves:5",
     "espace OR spatial OR lancement OR orbite OR NASA OR ESA OR CNES lang:fr min_faves:5",
-    # FR — Investissement / crypto
+    # FR — Bourse (large) / Investissement / crypto
+    "bourse OR CAC 40 OR Nasdaq OR \"S&P 500\" OR \"action\" lang:fr min_faves:10",
+    "Fed OR BCE OR inflation OR \"taux d'intérêt\" OR macro lang:fr min_faves:10",
+    "\"résultats trimestriels\" OR earnings OR dividende OR valorisation lang:fr min_faves:10",
     "Bitcoin OR BTC OR crypto OR \"ETF Bitcoin\" lang:fr min_faves:10",
-    "bourse OR investissement OR \"action IA\" OR \"action spatiale\" lang:fr min_faves:10",
-    "Palantir OR Nvidia OR Tesla OR \"résultats trimestriels\" lang:fr min_faves:10",
+    "investissement OR PEA OR ETF OR \"action IA\" OR \"action spatiale\" lang:fr min_faves:10",
+    "Palantir OR Nvidia OR Tesla OR Apple OR \"tech\" lang:fr min_faves:10",
     # EN tail — global breaking signal (launches, model drops)
     "\"new model\" OR \"introducing\" OpenAI OR Anthropic OR Google lang:en min_faves:200",
     "GPT OR Claude OR Gemini OR Grok \"released\" OR \"launches\" lang:en min_faves:100",

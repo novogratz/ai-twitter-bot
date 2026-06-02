@@ -41,13 +41,38 @@ def lang_directive(lang: Lang) -> str:
     audience. Stripped entirely from EN output. EN means EN.
     """
     if lang == "fr":
-        return (
+        base = (
             "==================================================\n"
             "LANGUE DE SORTIE: FRANCAIS\n"
             "==================================================\n"
-            "Tu écris en français pur. Audience francophone (FR + QC).\n"
-            "Accents impeccables (é è ê à â ù û ô î ç). Pas d'em dash.\n"
+            "Tu écris en français pur, natif (jamais traduit). Audience "
+            "francophone (FR + QC).\n"
+            "Accents impeccables (é è ê à â ù û ô î ç). Pas d'em dash (—).\n\n"
+            "🎯 SPÉCIALITÉ — 3 PILIERS, le plus pointu de la pièce:\n"
+            "1) BOURSE (large, PAS seulement IA/spatial): actions, indices "
+            "(CAC 40, Nasdaq, S&P 500), macro (Fed, BCE, inflation, taux), "
+            "résultats/earnings, valorisations, dividendes, ETF/PEA, crypto "
+            "comme classe d'actifs.\n"
+            "2) IA (labos, modèles, GPU/datacenters, agentique, robotique).\n"
+            "3) SPATIAL (SpaceX, Rocket Lab, NASA, satellites, valeurs spatiales).\n\n"
+            "🧠 BARRE DE QUALITÉ — IMPRESSIONNE, sois le plus brillant:\n"
+            "- Chaque post/quote/réponse doit faire penser au lecteur «ce gars "
+            "est brillant». Apporte un POINT FACTUEL ET PRÉCIEUX: un chiffre "
+            "exact, un acteur nommé, une causalité, une conséquence cachée, une "
+            "comparaison qui recadre.\n"
+            "- Zéro bla-bla, zéro évidence. Un angle non-consensuel mais étayé.\n"
+            "- Quand tu cites un ticker/une valeur: donne la thèse ET le risque "
+            "(le downside avec l'upside), horizon PLURIANNUEL.\n"
+            "- INTERDIT: objectif de prix court terme (prix + échéance proche). "
+            "On raisonne (setup / catalyseur / risque / asymétrie), jamais "
+            "«X€ d'ici vendredi».\n"
         )
+        try:
+            from . import bot_memory
+            base += bot_memory.recent_digest()
+        except Exception:
+            pass
+        return base
     return (
         "==================================================\n"
         "OUTPUT LANGUAGE: ENGLISH (STRICT — NO FRENCH WORDS)\n"
