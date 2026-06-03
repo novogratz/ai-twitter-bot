@@ -134,6 +134,14 @@ def run_stock_promo_cycle() -> None:
     cfg = _load_config()
     state = _load_state()
 
+    # Operator kill-switch (2026-06-02): when the config is disabled or
+    # ENABLE_STOCK_PROMO=0, do nothing — don't promote a ticker and don't
+    # auto-rotate to a new one. Stops the $SPCE promo from being replaced by
+    # another WSB pick. Re-enable by setting "disabled": false + ENABLE_STOCK_PROMO=1.
+    if cfg.get("disabled") or os.environ.get("ENABLE_STOCK_PROMO", "0") != "1":
+        log.info("[STOCK_PROMO] Disabled (kill-switch) — no ticker promoted, no rotation.")
+        return
+
     if not _should_find_new_stock(cfg):
         log.info(f"[STOCK_PROMO] Current promo ${cfg.get('ticker')} still active until {cfg.get('end_date')}. Skipping.")
         return
