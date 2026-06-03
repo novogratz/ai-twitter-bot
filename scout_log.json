@@ -2631,5 +2631,50 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les cerveaux techniques et les VC s\u00e9rieux. Pas de vendeurs de r\u00eaves, juste des gens qui construisent. La sc\u00e8ne FR IA explose (Mistral, LightOn), donc j'ai mis\u00e9 l\u00e0-dessus. USA: Pierre Rochard est non-n\u00e9gociable."
+  },
+  {
+    "ts": "2026-06-03T05:15:28.440300",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThalesGroupFR",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Le compte corporate qui prouve que les DAF peuvent \u00eatre cool si tu les pousses \u00e0 twittiller sur la d\u00e9fense et l'IA."
+      },
+      {
+        "handle": "BourseDirect",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Le n\u00e9vrose industriel de la place de la Bourse. Mordant, rapide, et il n'a pas peur de dire que le march\u00e9 a merd\u00e9."
+      },
+      {
+        "handle": "CryptoPatate",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Celui qui a surv\u00e9cu aux hivers sans vendre de formation \u00e0 1000\u20ac. Le genre de gars qui fait des charts, pas du story-time."
+      },
+      {
+        "handle": "FinTechFR",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "Un agr\u00e9gateur qui fait le tri entre les startups qui l\u00e8vent 2M et celles qui l\u00e8vent 200M. Indispensable pour ne pas rater la next BigONE."
+      },
+      {
+        "handle": "AlexisToubkis",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 8500,
+        "reason": "Francophone bas\u00e9 \u00e0 NYC. Le contraste entre le labeur NYC et l'humour FR fait des perles sur les march\u00e9s US vus de Paris."
+      }
+    ],
+    "summary": "Pas de grands influencers lifestyle, juste des profils techniques ou institutionnels qui ont du poids et tweetent encore en 2026. Mistral et la Patate sont les valeurs s\u00fbres, Alexis Toubkis apporte le vent nord am\u00e9ricain."
   }
 ]

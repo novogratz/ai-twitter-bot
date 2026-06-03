@@ -289,7 +289,12 @@
     "JulienLambert",
     "RomainGrenier",
     "JulienGarnier",
-    "AlexisGrenier"
+    "AlexisGrenier",
+    "ThalesGroupFR",
+    "BourseDirect",
+    "CryptoPatate",
+    "FinTechFR",
+    "AlexisToubkis"
   ],
   "en": [
     "blablacar",
@@ -1814,6 +1819,31 @@
     {
       "lang": "fr",
       "handle": "AlexisGrenier",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThalesGroupFR",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourseDirect",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoPatate",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "FinTechFR",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisToubkis",
       "added": "2026-06-03"
     }
   ]
