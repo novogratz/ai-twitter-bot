@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-03T05:14:50.497709",
-  "window_7d_actions": 2730,
-  "window_24h_actions": 535,
+  "generated_at": "2026-06-03T15:33:27.009075",
+  "window_7d_actions": 2785,
+  "window_24h_actions": 479,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2638
+      "count": 2704
     },
     {
       "pattern": "METAPHOR",
-      "count": 28
+      "count": 24
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 25
+      "count": 23
     },
     {
       "pattern": "RENAME",
-      "count": 13
+      "count": 12
     },
     {
       "pattern": "DIALOGUE",
-      "count": 11
+      "count": 10
     }
   ],
   "worst_patterns": [
     {
       "pattern": "REPETITION",
-      "count": 3
+      "count": 2
     },
     {
       "pattern": "EN_ANCHOR",
@@ -35,91 +35,97 @@
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 9
+      "count": 7
     }
   ],
   "best_hours_utc": [
+    {
+      "hour": 10,
+      "actions": 195
+    },
+    {
+      "hour": 11,
+      "actions": 192
+    },
     {
       "hour": 21,
       "actions": 173
     },
     {
-      "hour": 11,
-      "actions": 160
+      "hour": 12,
+      "actions": 141
     },
     {
-      "hour": 10,
-      "actions": 152
-    },
-    {
-      "hour": 8,
-      "actions": 149
-    },
-    {
-      "hour": 9,
-      "actions": 140
+      "hour": 0,
+      "actions": 138
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1008
+      "count": 1005
     },
     {
       "topic": "Autre",
-      "count": 858
+      "count": 903
     },
     {
       "topic": "Spatial",
-      "count": 526
+      "count": 520
     },
     {
       "topic": "Bourse",
-      "count": 375
+      "count": 391
     },
     {
       "topic": "Crypto",
-      "count": 369
+      "count": 361
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Bourse",
+      "24h_rate": 0.194,
+      "7d_rate": 0.14
+    }
+  ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1730
+      "count": 1830
     },
     {
       "type": "retweet",
-      "count": 770
+      "count": 707
     },
     {
       "type": "hotake",
-      "count": 136
-    },
-    {
-      "type": "quote",
-      "count": 47
+      "count": 159
     },
     {
       "type": "post",
-      "count": 47
+      "count": 51
+    },
+    {
+      "type": "quote",
+      "count": 38
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-03T05:08:58.259965",
-      "text": "SpaceX lève 75 Md pour le Golden Dome.\n\nL'armée américaine finance sa propre révolution orbitale via une boite de nuit californienne.",
+      "ts": "2026-06-03T15:19:33.391303",
+      "text": "53 médias français poursuivent Brave.\n\nUn peu comme 53 syndicats qui plaidaient contre la machine à vapeur.\n\nLa rente du clic vient payer le chèque de la dislocation.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-03T05:07:31.890214",
-      "text": "Coopilote en Bourgogne. Le seul réseau où les femmes entrepreneures sont obligées de venir.\nLeur CA n'a pas besoin d'un label, il a besoin d'un client.",
+      "ts": "2026-06-03T15:18:24.505143",
+      "text": "Google sort un clone vocal Gemini. Le vrai produit, c'est la bande passante qu'ils vous volent en fond pour la faire parler.\n\nBercy met 6 ans à amortir une imprimante. Google vous clône en 4 secondes.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-03T05:00:46.212944",
-      "text": "Microsoft sort ses propres modèles pour virer OpenAI. C'est le mec qui embauche le chef cuisinier pour qu'il lui fasse un steak, alors qu'il a déjà un four micro-ondes.\n\nhttps://www.cnbc.com/2026/06/02/microsoft-unveils-new-ai-models-lessen-reliance-on-openai-lower-costs.html",
-      "type": "hotake"
+      "ts": "2026-06-03T15:10:10.516597",
+      "text": "Les lego, c'est du hardware. La Smart Brick, c'est l'IoT à 10 euros pour ceux qui ont encore 18 ans de patience.\n\nBercy met 6 ans à amortir une imprimante.",
+      "type": "reply"
     }
   ]
 }
