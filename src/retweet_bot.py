@@ -176,9 +176,10 @@ def _is_shill(text: str) -> bool:
         return True
     return any(p in t for p in SHILL_PATTERNS)
 
-# Max age in hours for a retweet candidate. Anything older is stale —
-# we shouldn't be amplifying week-old or year-old news.
-MAX_CANDIDATE_AGE_HOURS = int(os.environ.get("RETWEET_MAX_AGE_HOURS", "48"))
+# Max age in hours for a retweet candidate. HARD RULE: never amplify content
+# older than 48h. Sourced from the clamped config constant so neither an env
+# override nor an autonomous agent can ever loosen it past 48h. NEVER CHANGE.
+from .config import REPOST_MAX_AGE_HOURS as MAX_CANDIDATE_AGE_HOURS
 FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "5"))
 FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "20"))
 
@@ -536,6 +537,10 @@ def _feed_candidate_ok(t: dict) -> bool:
     account's feed toward crypto / AI / bourse."""
     text = (t.get("text") or "").strip()
     if not text or text.startswith("@") or not _is_on_niche(text):
+        return False
+    # ⛔ HARD freshness rule: never repost content older than 48h. Unknown age
+    # (no parseable timestamp) is treated as STALE → skipped. NEVER CHANGE.
+    if _scrape_age_hours(t) > MAX_CANDIDATE_AGE_HOURS:
         return False
     likes = int(t.get("likes") or 0)
     replies = int(t.get("replies") or 0)

@@ -280,6 +280,11 @@ Agents CANNOT touch:
 - `BLOCKLIST` in `config.py`
 - `respect_list.py` defaults (operator-managed)
 - `personality_store.HARD_RULES_BLOCK`
+- `REPOST_MAX_AGE_HOURS` in `config.py` — ⛔ HARD operator rule: NEVER reshare
+  (retweet) or quote-repost content older than **48h**. Clamped to 48 (env or
+  agent cannot raise it); unknown age = stale = skip. Enforced in `retweet_bot`
+  (feed `_feed_candidate_ok` + trusted-handle paths), `quote_tweet_bot`
+  (`_too_old_to_quote`), `hot_quote_bot`, `wsb_signal_bot`. DO NOT CHANGE EVER.
 - Any source code (only state files)
 
 ---
