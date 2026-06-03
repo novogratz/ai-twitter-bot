@@ -119,9 +119,14 @@ RETRY_DELAY_SECONDS = 5
 DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
 
 # Posting caps + spacing (originals = post_tweet; quotes = quote_tweet).
-MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "3"))
-MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(45 * 60)))
-POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(15 * 60)))
+# 2026-06-02: raised 3→30 and spacing 45→10 min. The 3/day + 45-min cap was a
+# global chokepoint over ALL original surfaces (news, hotake, breakout every
+# 8 min, spicy every 20 min, threads) — it strangled the whole content engine
+# down to 3 posts/day. 30/day + 10-min spacing lets the per-surface daily caps
+# (MAX_NEWS/HOTAKES/SPICY/BREAKOUTS_PER_DAY) be the real governors again.
+MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "30"))
+MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(10 * 60)))
+POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(5 * 60)))
 
 # Quote-reposts (quote-tweet-with-comment on big news) — operator-confirmed
 # 2026-06-02 as the highest-ROI surface ("this works a lot"). Run it HOT:
@@ -137,7 +142,7 @@ QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", str(6 * 60)))
 # Raised 30→150 on 2026-06-02: 30 was being exhausted by mid-day and then
 # every reply bot went silent ("policy skip: daily reply cap reached"). 150
 # + the 90s jittered spacing keeps volume high without bursting.
-MAX_REPLIES_PER_DAY = int(os.environ.get("MAX_REPLIES_PER_DAY", "150"))
+MAX_REPLIES_PER_DAY = int(os.environ.get("MAX_REPLIES_PER_DAY", "200"))
 MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", "90"))
 REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "180"))
 REPLY_LANGUAGE_MATCH = os.environ.get("REPLY_LANGUAGE_MATCH", "1") == "1"
