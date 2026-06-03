@@ -132,9 +132,9 @@ POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(5 * 60)))
 # 2026-06-02 as the highest-ROI surface ("this works a lot"). Run it HOT:
 # high daily cap + short, jittered spacing so the 4-min quote cycle actually
 # produces quotes instead of getting capped out.
-MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "18"))
-MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", str(12 * 60)))
-QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", str(6 * 60)))
+MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "30"))
+MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", str(8 * 60)))
+QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", str(4 * 60)))
 
 # Reply caps + spacing. Replies are the PRIMARY growth lever, so this is a
 # global daily budget shared across ALL reply bots (direct_reply, reply_bot,

@@ -386,9 +386,18 @@ def run_quote_tweet_cycle():
     try:
         from .retweet_bot import EN_TRUSTED_HANDLES, FR_TRUSTED_HANDLES
         from .twitter_client import scrape_profile_tweets
-        # English-first since the 2026-05-27 pivot: sample mostly EN outlets,
-        # keep a small FR tail for major French stories.
-        sampled = random.sample(EN_TRUSTED_HANDLES, k=min(2, len(EN_TRUSTED_HANDLES)))
+        # 2026-06-03: quote BIG FRENCH domain accounts FIRST (operator request).
+        # Scrape several big FR AI/bourse/crypto/space voices + a couple EN
+        # outlets, then quote their freshest viral take with our sharp FR angle.
+        try:
+            from .direct_reply import BIG_FR_ACCOUNTS
+        except Exception:
+            BIG_FR_ACCOUNTS = []
+        sampled = (
+            random.sample(BIG_FR_ACCOUNTS, k=min(5, len(BIG_FR_ACCOUNTS)))
+            + random.sample(FR_TRUSTED_HANDLES, k=min(3, len(FR_TRUSTED_HANDLES)))
+            + random.sample(EN_TRUSTED_HANDLES, k=min(2, len(EN_TRUSTED_HANDLES)))
+        )
         for handle in sampled:
             log.info(f"[QUOTE] Scraping trusted-news handle: @{handle}")
             try:

@@ -323,13 +323,14 @@ vs toute analyse. À réserver pour: RKLB, ASTS, SPCE, $NVDA beats, BTC ATH brea
 
 {dedup_section}
 
-OUTPUT — strictement ce format, rien d'autre:
-<the hot take, 1-2 sentences in the language dictated above>
+OUTPUT — écris UNIQUEMENT le tweet final, rien d'autre. JAMAIS de texte
+entre chevrons < >, JAMAIS de placeholder, JAMAIS d'étiquette. Format EXACT
+(3 lignes, en remplaçant le contenu, sans recopier ces consignes):
+Ligne 1 = le hot take (1-2 phrases, dans la langue imposée plus haut)
+Ligne 2 = l'URL de l'article
+Ligne 3 = [PATTERN: UN_SEUL_ID]
 
-<URL article>
-[PATTERN: <UN_SEUL_ID>]
-
-⚠️ CRITIQUE: <UN_SEUL_ID> est UN seul mot pris dans la liste:
+⚠️ CRITIQUE: UN_SEUL_ID est UN seul mot pris dans la liste:
 REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER.
 JAMAIS plusieurs séparés par des |. Exemple valide: "[PATTERN: UNDERSTATEMENT]".
 Exemple INTERDIT: "[PATTERN: FR_ANCHOR|UNDERSTATEMENT]".

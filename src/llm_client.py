@@ -106,8 +106,26 @@ _PROMPT_BLEED_MARKERS = (
     "<la hot take",
     "<la news",
     "<la reply",
+    "<the hot take",
+    "<the news",
+    "<the reply",
+    "<the tweet",
+    "<url article",
+    "<url>",
+    "language dictated above",
+    "langue dictée",
+    "1-2 sentences in the language",
     "output —",
     "output:",
+)
+
+# Catch-all for ANY angle-bracket template placeholder the model echoed
+# (e.g. "<the hot take, 1-2 sentences …>", "<URL article>", "<PATTERN: …>").
+# Real tweets don't contain "<word …>" placeholder shapes.
+_PLACEHOLDER_RE = re.compile(
+    r"<\s*(?:the|la|le|les|un|une|votre|your|insert|ins[eè]re|topic|sujet|"
+    r"hot\s*take|news|reply|tweet|url|pattern|chiffre|number|angle|source)\b[^>\n]*>",
+    re.IGNORECASE,
 )
 
 
@@ -128,6 +146,8 @@ def contains_post_unsafe_leak(text: str) -> bool:
     if any(marker.lower() in low for marker in _STREAM_ENVELOPE_MARKERS):
         return True
     if any(marker in low for marker in _PROMPT_BLEED_MARKERS):
+        return True
+    if _PLACEHOLDER_RE.search(stripped):
         return True
     return False
 
