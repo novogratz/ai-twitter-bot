@@ -129,7 +129,7 @@ def run_spicy_cycle():
     mode = "SPICY" if random.random() < 0.6 else "QUESTION"
     instructions = SPICY_INSTRUCTIONS if mode == "SPICY" else QUESTION_INSTRUCTIONS
 
-    from . import lang_mode
+    from . import lang_mode, personality_store
     lang = lang_mode.pick_content_lang()
     perf = personality_store.hard_rules_block()
     bot_self = personality_store.render_bot_self(lang=lang)
