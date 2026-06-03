@@ -21,8 +21,10 @@ _safari_lock = threading.Lock()
 _blank_page_lock = threading.Lock()
 _blank_page_count = 0
 _home_feed_blank_count = 0
-_BLANK_PAGE_RESTART_THRESHOLD = 5
-_HOME_FEED_BLANK_RESTART_THRESHOLD = 3  # home feed fails 3× in a row → restart
+_BLANK_PAGE_RESTART_THRESHOLD = 3  # lowered 5→3 (2026-06-02): recover from the
+                                   # black-screen / stale-page state faster so
+                                   # scrapes don't keep returning empty/old data
+_HOME_FEED_BLANK_RESTART_THRESHOLD = 2  # home feed fails 2× in a row → restart
 
 
 def _record_blank_page(is_home_feed: bool = False):

@@ -131,9 +131,13 @@ MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "18"
 MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", str(12 * 60)))
 QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", str(6 * 60)))
 
-# Reply caps + spacing. Replies are the primary growth lever — quality over
-# volume, language-matched to the parent post.
-MAX_REPLIES_PER_DAY = int(os.environ.get("MAX_REPLIES_PER_DAY", "30"))
+# Reply caps + spacing. Replies are the PRIMARY growth lever, so this is a
+# global daily budget shared across ALL reply bots (direct_reply, reply_bot,
+# reply_agent, engagement_targeting, early_bird, mega_watch, replyback…).
+# Raised 30→150 on 2026-06-02: 30 was being exhausted by mid-day and then
+# every reply bot went silent ("policy skip: daily reply cap reached"). 150
+# + the 90s jittered spacing keeps volume high without bursting.
+MAX_REPLIES_PER_DAY = int(os.environ.get("MAX_REPLIES_PER_DAY", "150"))
 MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", "90"))
 REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "180"))
 REPLY_LANGUAGE_MATCH = os.environ.get("REPLY_LANGUAGE_MATCH", "1") == "1"
