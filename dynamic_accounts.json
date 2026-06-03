@@ -276,7 +276,20 @@
     "LucAsensio",
     "GuillaumeVivier",
     "ThomasB",
-    "JorisGuerard"
+    "JorisGuerard",
+    "BorisDelhommeau",
+    "CoinDeskFR",
+    "ThomasDavy13",
+    "CedOllivier",
+    "RaphaElie",
+    "BenoitFLoch",
+    "JeanGuenziou",
+    "LucasMourand",
+    "MaximeCormoy",
+    "JulienLambert",
+    "RomainGrenier",
+    "JulienGarnier",
+    "AlexisGrenier"
   ],
   "en": [
     "blablacar",
@@ -1737,6 +1750,71 @@
       "lang": "fr",
       "handle": "JorisGuerard",
       "added": "2026-06-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisDelhommeau",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CoinDeskFR",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasDavy13",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CedOllivier",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaElie",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitFLoch",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanGuenziou",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasMourand",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCormoy",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLambert",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainGrenier",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienGarnier",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisGrenier",
+      "added": "2026-06-03"
     }
   ]
 }
