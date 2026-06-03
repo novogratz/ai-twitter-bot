@@ -294,7 +294,13 @@
     "BourseDirect",
     "CryptoPatate",
     "FinTechFR",
-    "AlexisToubkis"
+    "AlexisToubkis",
+    "NassimTaleb",
+    "LionelV",
+    "OlivierAbraham",
+    "RaphaelLecouffe",
+    "MaximeSaulnier",
+    "JulesLarson"
   ],
   "en": [
     "blablacar",
@@ -1844,6 +1850,36 @@
     {
       "lang": "fr",
       "handle": "AlexisToubkis",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "NassimTaleb",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelV",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierAbraham",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelLecouffe",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSaulnier",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesLarson",
       "added": "2026-06-03"
     }
   ]

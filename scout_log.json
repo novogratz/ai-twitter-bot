@@ -2676,5 +2676,57 @@
       }
     ],
     "summary": "Pas de grands influencers lifestyle, juste des profils techniques ou institutionnels qui ont du poids et tweetent encore en 2026. Mistral et la Patate sont les valeurs s\u00fbres, Alexis Toubkis apporte le vent nord am\u00e9ricain."
+  },
+  {
+    "ts": "2026-06-03T13:33:56.550773",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NassimTaleb",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 4100000,
+        "reason": "Le proph\u00e8te du Cygne Noir. Il twitte en EN mais ses citations font vibrer toute la finance francophone. Indispensable, pas discutable."
+      },
+      {
+        "handle": "LionelV",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "L'ancien PDG de Coinhouse, il parle macro et crypto avec une profondeur rare. Pas un shammer, un b\u00e2tisseur."
+      },
+      {
+        "handle": "OlivierAbraham",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Analyste actionnnaire pur souche. Il ne vend pas de r\u00eave, il vend des ratios P/E. Sa bio est un manuel de valorisation."
+      },
+      {
+        "handle": "RaphaelLecouffe",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Le gars derri\u00e8re L'Usine IA \u00e0 Montr\u00e9al. Il fait le lien entre la startup scene QC et l'IA mondiale. Twitte en FR/EN."
+      },
+      {
+        "handle": "MaximeSaulnier",
+        "region": "france",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Co-fondateur de Qonto. Il balance des insights sur la cashflow management et la SaaS fr avec une r\u00e9gularit\u00e9 impressionnante."
+      },
+      {
+        "handle": "JulesLarson",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 8000,
+        "reason": "Head of Growth chez Weav. Il couvre la fintech QC et US avec un \u0153il technique, pas marketing. Twitte en FR."
+      }
+    ],
+    "summary": "M\u00e9lange classique Mistral/Taleb pour la tech/finance pure, avec des perles QC comme L'Usine IA et des perles trading fran\u00e7aises pour l'ancrage local."
   }
 ]
