@@ -10,6 +10,7 @@ Usage:
     python main.py --dry-run    Print what would happen without posting
 """
 import argparse
+import fcntl
 import json
 import os
 import random
@@ -202,6 +203,30 @@ def _run_monthly_startup_catchup_if_due() -> None:
     })
 
 
+_SINGLETON_LOCK_HANDLE = None  # kept alive for the process lifetime
+
+
+def _acquire_singleton_lock():
+    """Take an exclusive, non-blocking flock on bot.lock. If another live bot
+    process already holds it, log and exit(0) — never run two bots at once
+    (they race the shared Safari window → black screen + double posting)."""
+    global _SINGLETON_LOCK_HANDLE
+    lock_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bot.lock")
+    fh = open(lock_path, "w")
+    try:
+        fcntl.flock(fh.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        log.error(
+            "[SINGLETON] Another bot instance already holds bot.lock — refusing "
+            "to start a second instance (prevents Safari races / black screen). "
+            "Exiting."
+        )
+        sys.exit(0)
+    fh.write(str(os.getpid()))
+    fh.flush()
+    _SINGLETON_LOCK_HANDLE = fh  # hold the reference so the lock persists
+
+
 def main():
     parser = argparse.ArgumentParser(description="@CryptoAIDecode AI Twitter bot")
     parser.add_argument("--post-only", action="store_true", help="Run only the post bot")
@@ -220,6 +245,15 @@ def main():
     if args.monthly_recap_now:
         safe_run_monthly_news_cycle(force_all=True)
         return
+
+    # ⛔ SINGLETON GUARD (2026-06-02): refuse to start if another bot instance
+    # is already running. Two launchers exist (launchd com.kzer.watchdog +
+    # com.kzer.operator, plus bin/run.sh), and two bots driving the SAME Safari
+    # window race each other — that is the recurring black-screen bug AND the
+    # doubled log lines / double actions. An flock on bot.lock is held for the
+    # whole process life and auto-releases on exit/crash, so only one bot can
+    # ever own Safari at a time.
+    _acquire_singleton_lock()
 
     # 2026-05-26 FIX: harden scheduler defaults. With ~50 micro-bots and
     # LLM calls that can block a worker for up to 600s, APScheduler's
