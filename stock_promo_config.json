@@ -1,6 +1,8 @@
 {
-  "ticker": "SPCE",
-  "company": "Virgin Galactic",
-  "start_date": "2026-05-26",
-  "end_date": "2026-06-14"
+  "ticker": "",
+  "company": "",
+  "start_date": "",
+  "end_date": "",
+  "disabled": true,
+  "note": "$SPCE promo stopped by operator 2026-06-02. Empty ticker disables injection in agent/quote/hotake/direct_reply/hot_quote/wsb; disabled+ENABLE_STOCK_PROMO gate stops rotation."
 }
