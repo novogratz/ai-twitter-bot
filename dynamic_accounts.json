@@ -300,7 +300,11 @@
     "OlivierAbraham",
     "RaphaelLecouffe",
     "MaximeSaulnier",
-    "JulesLarson"
+    "JulesLarson",
+    "Coinhouse",
+    "AlexisToups",
+    "CryptoCanal",
+    "JulienRochon"
   ],
   "en": [
     "blablacar",
@@ -1880,6 +1884,26 @@
     {
       "lang": "fr",
       "handle": "JulesLarson",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "Coinhouse",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisToups",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCanal",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienRochon",
       "added": "2026-06-03"
     }
   ]

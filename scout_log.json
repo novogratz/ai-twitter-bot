@@ -2728,5 +2728,50 @@
       }
     ],
     "summary": "M\u00e9lange classique Mistral/Taleb pour la tech/finance pure, avec des perles QC comme L'Usine IA et des perles trading fran\u00e7aises pour l'ancrage local."
+  },
+  {
+    "ts": "2026-06-03T15:33:52.102258",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Coinhouse",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "L'acteur historique qui a surv\u00e9cu aux crashs et ne vend pas juste des r\u00eaves."
+      },
+      {
+        "handle": "Myl\u00e8neG",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "La voix qu\u00e9b\u00e9coise qui d\u00e9crypte les march\u00e9s avec plus de sang-froid que nos politiques."
+      },
+      {
+        "handle": "AlexisToups",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le gars qui transforme l'infographie de Mistral en contenu viral et intelligible."
+      },
+      {
+        "handle": "CryptoCanal",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Le m\u00e9dia qui couvre la tech et la crypto sans vendre de formation \u00e0 999\u20ac."
+      },
+      {
+        "handle": "JulienRochon",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 8000,
+        "reason": "Un Qu\u00e9b\u00e9cois qui parle crypto avec une clart\u00e9 d\u00e9sarmante."
+      }
+    ],
+    "summary": "L'IA fran\u00e7aise (Mistral) et la crypto (Coinhouse) dominent avec une audience massive et un contenu pertinent. Pour le Qu\u00e9bec, les voix sont plus petites mais bien plus cibl\u00e9es et authentiques que les g\u00e9n\u00e9ralistes."
   }
 ]
