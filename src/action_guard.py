@@ -255,13 +255,16 @@ def can_follow(handle: str) -> Tuple[bool, str]:
     follows_today = count_today(FOLLOW)
     if follows_today >= config.MAX_FOLLOWS_PER_DAY:
         return (False, f"daily follow cap reached ({config.MAX_FOLLOWS_PER_DAY})")
-    followers, following = current_counts()
-    if followers is not None and following is not None:
-        over_ceiling = (following + 1) > config.FOLLOW_RATIO_CEILING * followers
-        if over_ceiling and follows_today >= count_today(UNFOLLOW):
-            return (False, f"over ratio ceiling (following {following} vs "
-                           f"{config.FOLLOW_RATIO_CEILING}*{followers}); day not net-negative "
-                           f"(follows {follows_today} >= unfollows {count_today(UNFOLLOW)})")
+    # Ratio brake is OFF by default in growth mode (it was blocking 100% of
+    # follows at 4200 following). Only enforce when FOLLOW_ENFORCE_RATIO=1.
+    if config.FOLLOW_ENFORCE_RATIO:
+        followers, following = current_counts()
+        if followers is not None and following is not None:
+            over_ceiling = (following + 1) > config.FOLLOW_RATIO_CEILING * followers
+            if over_ceiling and follows_today >= count_today(UNFOLLOW):
+                return (False, f"over ratio ceiling (following {following} vs "
+                               f"{config.FOLLOW_RATIO_CEILING}*{followers}); day not net-negative "
+                               f"(follows {follows_today} >= unfollows {count_today(UNFOLLOW)})")
     return (True, "")
 
 
