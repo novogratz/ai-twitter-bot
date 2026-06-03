@@ -20,12 +20,76 @@ Usage:
 validates, and on failure regenerates up to CONTENT_VALIDATION_RETRIES times.
 If it still fails it returns None and logs — a flagged draft is NEVER returned.
 """
+import json
 import os
 import re
 from typing import Callable, Optional, Tuple
 
-from .config import BAN_SHORT_TERM_PRICE_TARGETS, CONTENT_VALIDATION_RETRIES
+from .config import BAN_SHORT_TERM_PRICE_TARGETS, CONTENT_VALIDATION_RETRIES, _PROJECT_ROOT
 from .logger import log
+
+# --- near-duplicate detection (no posting the same story twice) -----------
+# The LLM kept re-posting the same news in slightly different words (e.g. 4
+# Microsoft/OpenAI/quantum variants). URL dedup missed it because the wording
+# (and sometimes the article URL) differed. We compare the word-set of a new
+# draft against recently posted originals; high overlap = duplicate = skip.
+
+_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "tweet_history.json")
+_RECENT_NORM: list = []          # in-memory word-sets of this run's posts
+_DUP_THRESHOLD = float(os.environ.get("DUP_JACCARD_THRESHOLD", "0.5"))
+
+
+def _dedup_wordset(text: str) -> set:
+    t = (text or "").lower()
+    t = re.sub(r"https?://\S+", " ", t)
+    t = re.sub(r"\[pattern:[^\]]*\]", " ", t)
+    t = re.sub(r"#\w+", " ", t)
+    t = re.sub(r"@\w+", " ", t)
+    # drop the recurring header scaffolding so two different stories under the
+    # same "Le Décode #N — IA" header aren't seen as similar on the header alone
+    t = re.sub(r"le d[eé]code[^\n]*", " ", t)
+    t = re.sub(r"[^\w\s]", " ", t)
+    return {w for w in t.split() if len(w) > 3}
+
+
+def _recent_wordsets(limit: int = 40) -> list:
+    sets = list(_RECENT_NORM[-limit:])
+    try:
+        with open(_HISTORY_FILE) as f:
+            hist = json.load(f)
+        for entry in (hist[-limit:] if isinstance(hist, list) else []):
+            if isinstance(entry, dict):
+                ws = _dedup_wordset(entry.get("text", ""))
+                if ws:
+                    sets.append(ws)
+    except (OSError, json.JSONDecodeError):
+        pass
+    return sets
+
+
+def is_duplicate(text: str, threshold: Optional[float] = None) -> bool:
+    """True if `text` is a near-duplicate of a recently posted original."""
+    th = threshold if threshold is not None else _DUP_THRESHOLD
+    ws = _dedup_wordset(text)
+    if len(ws) < 4:
+        return False
+    for prev in _recent_wordsets():
+        if not prev:
+            continue
+        union = len(ws | prev)
+        if union and (len(ws & prev) / union) >= th:
+            return True
+    return False
+
+
+def note_posted(text: str) -> None:
+    """Record a just-posted original so the next post can dedup against it
+    immediately (survives within the process run; tweet_history covers restarts)."""
+    ws = _dedup_wordset(text)
+    if ws:
+        _RECENT_NORM.append(ws)
+        if len(_RECENT_NORM) > 60:
+            del _RECENT_NORM[:-60]
 
 # --- price + near-term timeframe detection -------------------------------
 
