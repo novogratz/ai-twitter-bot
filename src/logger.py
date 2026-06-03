@@ -26,10 +26,16 @@ def setup_logging(level: str = "INFO") -> logging.Logger:
         datefmt="%Y-%m-%d %H:%M:%S",
     )
 
-    # Console handler
-    console = logging.StreamHandler(sys.stdout)
-    console.setFormatter(fmt)
-    logger.addHandler(console)
+    # Console handler — ONLY when running interactively (a real TTY). Under
+    # launchd / nohup the launchers redirect stdout into bot.log, and the
+    # RotatingFileHandler below ALSO writes bot.log — so a stdout console
+    # handler made every line appear TWICE in bot.log. Gating on isatty()
+    # gives background runs exactly one clean copy (file handler), while
+    # foreground `./bin/run.sh` still streams to the terminal.
+    if sys.stdout.isatty():
+        console = logging.StreamHandler(sys.stdout)
+        console.setFormatter(fmt)
+        logger.addHandler(console)
 
     # Rotating file handler (5MB max, keep 3 backups)
     file_handler = RotatingFileHandler(
