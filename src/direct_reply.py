@@ -39,10 +39,34 @@ HIGH_TRACTION_REPLY_ACCOUNTS = [
     "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "fchollet", "MistralAI"
 ]
 _FR_ACCOUNT_HINTS = ("_fr", "cryptoast", "coinacademy", "journalducoin", "fintales", "graphseo", "vision_ia")
-ALWAYS_REPLY_ACCOUNTS = list(dict.fromkeys(VIP_REPLY_ACCOUNTS + HIGH_TRACTION_REPLY_ACCOUNTS))
+
+# 2026-06-02: BIG French accounts to reply to DAILY across the 5 verticals.
+# Being in the threads of large FR AI / bourse / crypto / investment / space
+# accounts is the #1 algo signal for reach + follower conversion. These are
+# fed into the PROFILE-ALWAYS reply path so each cycle pulls their latest
+# tweets and lands a sharp FR reply (subject to the 48h + caps + substance gate).
+BIG_FR_ACCOUNTS = [
+    # IA / Tech FR
+    "Korben", "micode", "Underscore_", "presse_citron", "numerama",
+    "siecledigital", "BFMTech", "frandroid", "journaldugeek", "FlavienChervet",
+    "MistralAI", "arthurmensch", "GuillaumeLample",
+    # Bourse / Investissement FR
+    "Heu7reka", "Yoann_Lopez_", "Finary", "ZonebourseFR", "BFMBourse",
+    "latribune", "Capital", "LesEchos", "boursorama", "GoodValYou",
+    "Zonebourse", "Investir", "SnowballEcho",
+    # Crypto FR
+    "Hasheur", "cryptodiffusion", "Cointribune", "BFMcrypto", "PowerHasheur",
+    "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr", "CryptoPicsou",
+    # Spatial FR
+    "thomaspesquet", "CNES", "ArianeGroup", "ESA_FR", "Stardust__",
+    "ArianeGroupCEO",
+]
+ALWAYS_REPLY_ACCOUNTS = list(dict.fromkeys(
+    VIP_REPLY_ACCOUNTS + HIGH_TRACTION_REPLY_ACCOUNTS + BIG_FR_ACCOUNTS))
+_BIG_FR_SET = {h for h in BIG_FR_ACCOUNTS}
 ALWAYS_REPLY_FR_ACCOUNTS = [
     h for h in ALWAYS_REPLY_ACCOUNTS
-    if h in HIGH_TRACTION_REPLY_ACCOUNTS or h in {
+    if h in HIGH_TRACTION_REPLY_ACCOUNTS or h in _BIG_FR_SET or h in {
         "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "FlasheurInvest",
         "ylecun", "arthurmensch", "GuillaumeLample", "fchollet",
         "ArianeGroup", "esa"
