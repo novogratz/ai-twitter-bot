@@ -61,8 +61,11 @@ def _mark_top5_done(topic: str) -> None:
 
 # Space push mode (2026-05-29): Space appears 3x in a 6-slot cycle
 # so every other Décode is a Space story.
-_DECODE_TOPICS = ("Space", "AI", "Space", "Robotics", "Space", "Investment")
-_MONTHLY_DECODE_TOPICS = ("Space", "AI", "Space", "Investment")
+# 2026-06-03: AI-FIRST weighting (operator: "focus more on AI"). Was
+# Space-heavy (Space 3/6, AI 1/6). Now AI dominates (~50%), Robotics counts
+# as AI-adjacent frontier tech, Space + Investment share the rest.
+_DECODE_TOPICS = ("AI", "Space", "AI", "Robotics", "AI", "Investment", "AI", "Space")
+_MONTHLY_DECODE_TOPICS = ("AI", "Space", "AI", "Investment")
 
 
 def _peek_next_decode_number() -> int:
