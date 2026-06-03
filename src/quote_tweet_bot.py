@@ -320,6 +320,18 @@ def _quote_min_likes(tweet: dict) -> int:
     return int(os.environ.get("QUOTE_MIN_LIKES", "10"))
 
 
+def _too_old_to_quote(t: dict) -> bool:
+    """⛔ HARD freshness rule (operator mandate 2026-06-02, NEVER CHANGE):
+    never quote-repost content older than 48h. Unknown age = STALE = skip.
+    Kept OUTSIDE any swallowing try/except so an exception can never bypass it."""
+    from .config import REPOST_MAX_AGE_HOURS
+    try:
+        from .retweet_bot import _scrape_age_hours
+        return _scrape_age_hours(t) > REPOST_MAX_AGE_HOURS
+    except Exception:
+        return True  # can't determine age → treat as stale → skip
+
+
 def run_quote_tweet_cycle():
     """Pick a viral in-niche tweet and publish a quote post with a FR angle."""
     from .config import get_live_cap
@@ -354,15 +366,13 @@ def run_quote_tweet_cycle():
             likes = int(t.get("likes") or 0)
             if likes < _quote_min_likes(t):
                 continue
-            # 2026-05-07: same-day reshare rule + niche gate. We shouldn't
-            # quote-tweet a 2-week-old tweet, even from a trusted handle.
+            # HARD freshness gate FIRST (always runs, can't be swallowed).
             text = (t.get("text") or "").strip()
+            if _too_old_to_quote(t):
+                continue
             try:
-                from .retweet_bot import _is_on_niche, _scrape_age_hours
+                from .retweet_bot import _is_on_niche
                 if not _is_on_niche(text):
-                    continue
-                age = _scrape_age_hours(t)
-                if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "48")):
                     continue
             except Exception:
                 pass
@@ -400,14 +410,13 @@ def run_quote_tweet_cycle():
                 likes = int(t.get("likes") or 0)
                 if likes < _quote_min_likes(t):
                     continue
-                # 2026-05-07: same-day + niche gate (no Justin Bieber 2012).
+                # HARD freshness gate FIRST (always runs, can't be swallowed).
                 text = (t.get("text") or "").strip()
+                if _too_old_to_quote(t):
+                    continue
                 try:
-                    from .retweet_bot import _is_on_niche, _scrape_age_hours
+                    from .retweet_bot import _is_on_niche
                     if not _is_on_niche(text):
-                        continue
-                    age = _scrape_age_hours(t)
-                    if age > int(os.environ.get("QUOTE_MAX_AGE_HOURS", "48")):
                         continue
                 except Exception:
                     pass

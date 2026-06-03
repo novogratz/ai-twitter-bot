@@ -116,6 +116,11 @@ def _find_best_tweet(ticker: str) -> Optional[dict]:
     from . import respect_list
     candidates = [c for c in candidates if not respect_list.is_protected(c.get("author", ""))]
     candidates = [c for c in candidates if (c.get("author", "").lower() != BOT_HANDLE.lower())]
+    # ⛔ HARD freshness rule: never quote content older than 48h (unknown age =
+    # stale = skip). Same un-loosenable cap as the other reshare paths.
+    from .config import REPOST_MAX_AGE_HOURS
+    from .retweet_bot import _scrape_age_hours
+    candidates = [c for c in candidates if _scrape_age_hours(c) <= REPOST_MAX_AGE_HOURS]
     candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
     return candidates[0] if candidates else None
 
