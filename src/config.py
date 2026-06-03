@@ -150,23 +150,24 @@ MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", 
 REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "45"))
 REPLY_LANGUAGE_MATCH = os.environ.get("REPLY_LANGUAGE_MATCH", "1") == "1"
 
-# Following policy (2026-06-02 hybrid — operator chose growth + de-risk).
-# We DO follow new French accounts for growth, but safely:
-#   - FOLLOW_WHITELIST_ONLY=0 → discovery bots may follow non-whitelist FR
-#     accounts (still capped + anti-churned). Set =1 to lock to the whitelist.
-#   - Core invariant: while following is OVER the ceiling (following >
-#     FOLLOW_RATIO_CEILING * followers), follows are allowed ONLY when the day
-#     is net-negative (today's follows < today's unfollows), so the ratio
-#     still heals every day while we keep discovering people. Once under the
-#     ceiling, follows open up freely to the daily cap.
-#   - Reciprocity mass-follow (follow_blast, raw button clicks) stays OFF
-#     regardless, gated on its own flag below.
+# Following policy (2026-06-03 GROWTH MODE — operator: "lots of unfollow, not
+# a lot of follow, fix it"). The earlier whitelist-only + ratio-prune config
+# turned the follow engine OFF (0 follows/day blocked by the ratio gate, while
+# pruning shed accounts) → flat followers. Reopened for growth:
+#   - ENABLE_FOLLOW_BLAST=1 → the proven follow-for-followback engine is back on
+#     (it's what took the account 576→1190). Gated to the .env value.
+#   - FOLLOW_ENFORCE_RATIO=0 → the "following < 0.8*followers" gate no longer
+#     BLOCKS follows (it was blocking 100% of them at 4200 following). Set =1 to
+#     re-enable the hard ratio brake.
+#   - Higher follow cap, lower unfollow cap → net-positive follows = growth.
+#   - 30-day anti-churn stays ON (the one real suspension guard we keep).
 FOLLOW_WHITELIST_ONLY = os.environ.get("FOLLOW_WHITELIST_ONLY", "0") == "1"
-ENABLE_FOLLOW_BLAST = os.environ.get("ENABLE_FOLLOW_BLAST", "0") == "1"
+ENABLE_FOLLOW_BLAST = os.environ.get("ENABLE_FOLLOW_BLAST", "1") == "1"
+FOLLOW_ENFORCE_RATIO = os.environ.get("FOLLOW_ENFORCE_RATIO", "0") == "1"
 FOLLOW_RATIO_CEILING = float(os.environ.get("FOLLOW_RATIO_CEILING", "0.8"))  # following < 0.8 * followers
 FOLLOWING_STEADY_STATE = int(os.environ.get("FOLLOWING_STEADY_STATE", "300"))
-MAX_FOLLOWS_PER_DAY = int(os.environ.get("MAX_FOLLOWS_PER_DAY", "5"))
-MAX_UNFOLLOWS_PER_DAY = int(os.environ.get("MAX_UNFOLLOWS_PER_DAY", "25"))
+MAX_FOLLOWS_PER_DAY = int(os.environ.get("MAX_FOLLOWS_PER_DAY", "40"))
+MAX_UNFOLLOWS_PER_DAY = int(os.environ.get("MAX_UNFOLLOWS_PER_DAY", "10"))
 # Anti-churn / TOS safety: never re-touch (follow↔unfollow) the same account
 # within this window. Follow/unfollow cycling is a fast path to suspension.
 CHURN_COOLDOWN_DAYS = int(os.environ.get("CHURN_COOLDOWN_DAYS", "30"))

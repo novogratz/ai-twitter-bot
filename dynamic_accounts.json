@@ -304,7 +304,12 @@
     "Coinhouse",
     "AlexisToups",
     "CryptoCanal",
-    "JulienRochon"
+    "JulienRochon",
+    "MaximePuech",
+    "jamescromwell",
+    "lucashenry",
+    "sophielavallee",
+    "gaelmuller"
   ],
   "en": [
     "blablacar",
@@ -1904,6 +1909,31 @@
     {
       "lang": "fr",
       "handle": "JulienRochon",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximePuech",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "jamescromwell",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucashenry",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "sophielavallee",
+      "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "gaelmuller",
       "added": "2026-06-03"
     }
   ]
