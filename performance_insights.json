@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-06-02T18:13:58.331113",
-  "window_7d_actions": 2565,
-  "window_24h_actions": 541,
+  "generated_at": "2026-06-03T05:14:50.497709",
+  "window_7d_actions": 2730,
+  "window_24h_actions": 535,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2471
+      "count": 2638
     },
     {
       "pattern": "METAPHOR",
-      "count": 29
+      "count": 28
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 26
+      "count": 25
     },
     {
       "pattern": "RENAME",
@@ -40,16 +40,16 @@
   ],
   "best_hours_utc": [
     {
+      "hour": 21,
+      "actions": 173
+    },
+    {
       "hour": 11,
       "actions": 160
     },
     {
       "hour": 10,
       "actions": 152
-    },
-    {
-      "hour": 21,
-      "actions": 151
     },
     {
       "hour": 8,
@@ -63,11 +63,11 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 956
+      "count": 1008
     },
     {
       "topic": "Autre",
-      "count": 770
+      "count": 858
     },
     {
       "topic": "Spatial",
@@ -75,51 +75,51 @@
     },
     {
       "topic": "Bourse",
-      "count": 358
+      "count": 375
     },
     {
       "topic": "Crypto",
-      "count": 350
+      "count": 369
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1573
+      "count": 1730
     },
     {
       "type": "retweet",
-      "count": 764
+      "count": 770
     },
     {
       "type": "hotake",
-      "count": 124
-    },
-    {
-      "type": "post",
-      "count": 54
+      "count": 136
     },
     {
       "type": "quote",
-      "count": 50
+      "count": 47
+    },
+    {
+      "type": "post",
+      "count": 47
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-02T18:09:11.551200",
-      "text": "Nobitex sanctioned. IRGC wallets now held by US custodians.\n\nIranian crypto users just got better custody than 401k Dave.",
+      "ts": "2026-06-03T05:08:58.259965",
+      "text": "SpaceX lève 75 Md pour le Golden Dome.\n\nL'armée américaine finance sa propre révolution orbitale via une boite de nuit californienne.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-02T18:08:50.010712",
-      "text": "They equate every actuator to a drone motor.\n\nCoreWeave is paying $6k for an H100 and they are building robots with $300 motors. The margin on this is so fat it has its own zip code.",
+      "ts": "2026-06-03T05:07:31.890214",
+      "text": "Coopilote en Bourgogne. Le seul réseau où les femmes entrepreneures sont obligées de venir.\nLeur CA n'a pas besoin d'un label, il a besoin d'un client.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-02T18:06:31.312371",
-      "text": "From prompt to payout.\n\nMost SaaS is still paying for a seat. Codex is selling the employee.\n\nThe license fee just got an unemployment claim.",
-      "type": "reply"
+      "ts": "2026-06-03T05:00:46.212944",
+      "text": "Microsoft sort ses propres modèles pour virer OpenAI. C'est le mec qui embauche le chef cuisinier pour qu'il lui fasse un steak, alors qu'il a déjà un four micro-ondes.\n\nhttps://www.cnbc.com/2026/06/02/microsoft-unveils-new-ai-models-lessen-reliance-on-openai-lower-costs.html",
+      "type": "hotake"
     }
   ]
 }
