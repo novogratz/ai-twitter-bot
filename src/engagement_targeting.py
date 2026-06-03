@@ -118,8 +118,8 @@ def run_engagement_targeting_cycle():
                 continue
             if int(t.get("likes") or 0) < MIN_LIKES:
                 continue
-            age_min = _tweet_age_minutes(t)
-            if age_min is None or age_min > MAX_AGE_MINUTES:
+            age_min = _tweet_age_minutes(url)  # expects the URL string, not the dict
+            if age_min > MAX_AGE_MINUTES:       # 9999 when unparseable → skipped (stale)
                 continue
             score = _velocity(t, age_min) * _author_weight(state, author)
             candidates.append({"url": url, "author": author, "text": text,
