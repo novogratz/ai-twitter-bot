@@ -269,26 +269,26 @@ def _next_topic_not_done_today() -> Optional[tuple]:
 
 
 def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_date, format_mode, web_block, dedup_block):
-    series_label = "Monthly" if format_mode == "monthly_top10" else ("Weekly" if format_mode == "top5" else "Daily")
+    series_label = "Mensuel" if format_mode == "monthly_top10" else ("Hebdo" if format_mode == "top5" else "Quotidien")
     topic_label = {
-        "AI": "AI & Agents",
-        "Space": "Space & New Space",
-        "Robotics": "Robotics & Frontier Tech",
-        "Investment": "Investment & Markets",
+        "AI": "IA & Agents",
+        "Space": "Espace & New Space",
+        "Robotics": "Robotique & Frontier Tech",
+        "Investment": "Investissement & Marchés",
         # legacy keys kept for old state files
-        "IA": "AI & Agents",
-        "Crypto": "Investment & Markets",
-        "Investissement": "Investment & Markets",
+        "IA": "IA & Agents",
+        "Crypto": "Investissement & Marchés",
+        "Investissement": "Investissement & Marchés",
     }.get(decode_topic, decode_topic)
-    # Topic label for title (short form)
+    # Topic label for title (short form) — FRENCH
     topic_label_title = {
-        "AI": "AI",
-        "Space": "Space",
-        "Robotics": "Robotics",
-        "Investment": "Investment",
-        "IA": "AI",
-        "Crypto": "Investment",
-        "Investissement": "Investment",
+        "AI": "IA",
+        "Space": "Espace",
+        "Robotics": "Robotique",
+        "Investment": "Investissement",
+        "IA": "IA",
+        "Crypto": "Crypto",
+        "Investissement": "Investissement",
     }.get(decode_topic, decode_topic)
     from . import lang_mode as _lang_mode
     lang_directive = _lang_mode.lang_directive(_lang_mode.pick_content_lang())
@@ -299,7 +299,7 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
     if format_mode == "monthly_top10":
         top5_block = f"""INSTRUCTIONS (DO NOT OUTPUT — think silently):
 
-  • The Monthly Decode = TOP 10 numbers from the past 30 days for ONE
+  • Le Décode Mensuel = TOP 10 numbers from the past 30 days for ONE
     category. Synthesize the biggest facts, not micro-news. Each bullet must
     carry an actor, a number, and a business/market consequence. Priority lens:
     "AI infrastructure & asymmetric investing": power demand, MW/GW capacity,
@@ -343,7 +343,7 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
 EXACT OUTPUT (write ONLY the following, in this order):
 ============================================================
 
-🔎 The Decode {series_label} #{decode_number} — {topic_label_title}
+🔎 Le Décode {series_label} #{decode_number} — {topic_label_title}
 
 The 10 {topic_label} numbers that mattered this month.
 
@@ -369,7 +369,7 @@ Next month, same Decode.
     elif format_mode == "top5":
         top5_block = f"""INSTRUCTIONS (DO NOT OUTPUT — think silently):
 
-  • The Weekly Decode = ONE story from the past 7 days, THREE angles. ONE source URL.
+  • Le Décode Hebdo = UNE histoire from the past 7 days, THREE angles. ONE source URL.
     Not 5 different articles. One article, three levels of depth.
   • STEP 0 (CRITICAL): pick ONE exact URL from WEB SEARCH RESULTS / RSS POOL.
     The actor in its title = the main actor of this Decode. ALL analysis comes
@@ -393,7 +393,7 @@ Next month, same Decode.
 EXACT OUTPUT (write ONLY the following, in this order):
 ============================================================
 
-🔎 The Decode {series_label} #{decode_number} — {topic_label_title}
+🔎 Le Décode {series_label} #{decode_number} — {topic_label_title}
 
 The most asymmetric move this week:
 
@@ -408,7 +408,7 @@ The most asymmetric move this week:
     else:
         top5_block = f"""INSTRUCTIONS (DO NOT OUTPUT — think silently):
 
-  • The Daily Decode = ONE story, ONE sharp take, ONE source URL.
+  • Le Décode Quotidien = UNE histoire, ONE sharp take, ONE source URL.
     No numbered list. No "(source: X)" per line. ONE URL at the end.
   • STEP 0 (CRITICAL): pick ONE exact URL from WEB SEARCH RESULTS / RSS POOL.
     The actor in its title = the main actor of this Decode. ALL analysis comes
@@ -431,7 +431,7 @@ The most asymmetric move this week:
 EXACT OUTPUT (write ONLY the following, in this order):
 ============================================================
 
-🔎 The Decode {series_label} #{decode_number} — {topic_label_title}
+🔎 Le Décode {series_label} #{decode_number} — {topic_label_title}
 
 {{HOOK: main actor + the one number. 1-2 lines.}}
 
@@ -458,11 +458,11 @@ Default thesis style:
 - "Robotics is the next GPU war. Nobody's watching yet."
 - "Compute is becoming an energy trade with a software multiple."
 
-🎯 OBJECTIVE: ONE The Decode #{decode_number} on the hottest {topic_label} story.
+🎯 OBJECTIVE: UN Le Décode #{decode_number} on the hottest {topic_label} story.
 TOPIC: {topic_label} only. Format: {format_mode}.
 
 📈 2026 CONTENT STRATEGY:
-- The Decode = 40%: quant analysis with thesis, exact numbers, named actors, consequences.
+- Le Décode = 40%: quant analysis with thesis, exact numbers, named actors, consequences.
 - Quick news = 30%: AI power demand, space launches, robotics milestones, investment signals.
 - Threads = 15%: AI Power Wars, Space Economy, Robot vs Human, Asymmetric Bets.
 - Visuals/link cards = 10%: charts, before/after, source cards.
@@ -493,7 +493,7 @@ RECURRING FORMATS when the topic allows:
 {top5_block}
 
 ⚠️ OUTPUT RULES:
-- Start DIRECTLY with "🔎 The Decode". No preamble and NO date on the first line.
+- Start DIRECTLY with "🔎 Le Décode". No preamble and NO date on the first line.
 - No "Score:", "Checks:", "Sources:", bold markdown meta. NOTHING before the header.
 - 🚫 ZERO markdown: no **bold**, no __italic__, no *italic*.
   X does NOT render markdown — asterisks appear literally
@@ -978,7 +978,7 @@ Le compte fait 3 news/jour MAX, tous au même format. Les lecteurs
 reviennent demain pour le suivant. Pattern récurrent = abonnés fidèles.
 
 ⚠️ OUTPUT RULE — ULTRA STRICT (user mandate 2026-05-21):
-- Ta sortie DOIT commencer EXACTEMENT par "🔎 The Decode #..." (le header).
+- Ta sortie DOIT commencer EXACTEMENT par "🔎 Le Décode #..." (le header).
 - ZÉRO préambule. Pas de "**Score**", "**Vérifications**", "**Angle**",
   "**Checklist**", "**Conformité**", "**Output**", "**Post**", pas
   d'en-tête de validation, pas de liste à puces de checks (- Source: …
@@ -990,7 +990,7 @@ reviennent demain pour le suivant. Pattern récurrent = abonnés fidèles.
 
 ✅ EXEMPLE CORRECT (output qu'on veut, à la lettre):
 
-🔎 The Decode #42 — 2026-05-21
+🔎 Le Décode #42 — 2026-05-21
 Stargate lève 100Md pour un datacenter qui consomme 4 GW. Bercy dort.
 
 • OpenAI + SoftBank closent 100Md à 5x EBITDA projeté 2030, jamais publié
@@ -1010,7 +1010,7 @@ https://www.theinformation.com/articles/exemple
 - Scope: crypto/IA ✓
 **Score: 9/10.** L'angle est sharp.
 
-🔎 The Decode #42 — 2026-05-21
+🔎 Le Décode #42 — 2026-05-21
 [...]
 
 → Cette structure SKIP automatique. Donne directement le Décode. RIEN AVANT.
@@ -1028,7 +1028,7 @@ FORMAT MODE: **{format_mode}**  (top5 = Top 5 chiffres bookmark-bait; regular = 
 
   FORMAT STRICT — aucun écart:
 
-    🔎 The Decode #{decode_number} — {decode_topic} — Vendredi {today_date}
+    🔎 Le Décode #{decode_number} — {decode_topic} — Vendredi {today_date}
 
     {{HEADLINE: une phrase ferme. Exemples:
       • "Les 5 chiffres IA de la semaine que personne d'autre ne te donne"
@@ -1087,7 +1087,7 @@ Ne croise PAS les topics — un Décode = un sujet, focus net. Le sujet de cette
 
 FORMAT OBLIGATOIRE — strict (rien d'autre, ligne par ligne):
 
-🔎 The Decode #{decode_number} — {decode_topic} — {today_date}
+🔎 Le Décode #{decode_number} — {decode_topic} — {today_date}
 
 {{TITRE: 1-2 phrases punchy, opinion-forte ou question contrarian.
 NE COMMENCE PAS par "Aujourd'hui" / "Selon" / "Breaking". Démarre fort:
@@ -2111,9 +2111,9 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         n = globals().get("_pending_decode_num")
         topic = globals().get("_pending_decode_topic", "")
         format_kind = globals().get("_pending_decode_format", "daily")
-        label = "Monthly" if format_kind == "monthly" else ("Weekly" if format_kind == "weekly" else "Daily")
-        topic_label = {"IA": "AI Infra", "Investissement": "Asym. Markets"}.get(topic, topic)
-        header = f"🔎 The Decode {label} #{n} — {topic_label} — {today}" if n else f"🔎 The Decode {label} — {today}"
+        label = "Mensuel" if format_kind == "monthly" else ("Hebdo" if format_kind == "weekly" else "Quotidien")
+        topic_label = {"IA": "IA", "AI": "IA", "Investissement": "Marchés", "Crypto": "Crypto", "Space": "Espace"}.get(topic, topic)
+        header = f"🔎 Le Décode {label} #{n} — {topic_label} — {today}" if n else f"🔎 Le Décode {label} — {today}"
         tweet = f"{header}\n\n{tweet}"
     else:
         log.info(f"[NEWS] Décode header missing AND body too short — SKIPPING. Output preview: {tweet[:200]!r}")

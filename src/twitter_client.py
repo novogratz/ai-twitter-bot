@@ -237,6 +237,9 @@ def post_tweet(text: str, image_path: str = None):
     if not ok:
         log.info(f"[POST] content_guard skip ({why}): {text[:120]!r}")
         return
+    if content_guard.is_duplicate(text):
+        log.info(f"[POST] near-duplicate of a recent post — skipping (no duplication): {text[:120]!r}")
+        return
     if _cfg.DRY_RUN:
         log.info(f"[POST][DRY_RUN] would post: {text[:200]!r}")
         action_guard.record(action_guard.POST, dry_run=True)
@@ -247,6 +250,7 @@ def post_tweet(text: str, image_path: str = None):
             _post_tweet_with_image(text, image_path)
             _like_own_latest_tweet()
             action_guard.record(action_guard.POST)
+            content_guard.note_posted(text)
             return
 
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
@@ -266,6 +270,7 @@ def post_tweet(text: str, image_path: str = None):
         close_front_tab()
         _like_own_latest_tweet()
         action_guard.record(action_guard.POST)
+        content_guard.note_posted(text)
 
 
 def _post_tweet_with_image(text: str, image_path: str):
