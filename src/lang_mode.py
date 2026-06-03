@@ -65,7 +65,19 @@ def lang_directive(lang: Lang) -> str:
             "(le downside avec l'upside), horizon PLURIANNUEL.\n"
             "- INTERDIT: objectif de prix court terme (prix + échéance proche). "
             "On raisonne (setup / catalyseur / risque / asymétrie), jamais "
-            "«X€ d'ici vendredi».\n"
+            "«X€ d'ici vendredi».\n\n"
+            "🔥 MANDAT ENGAGEMENT (LE PLUS IMPORTANT pour la croissance):\n"
+            "- ATTAQUE PAR LA PRISE DE POSITION, PAS PAR LE TITRE. Une news brute "
+            "(«X lance Y») = scroll, personne ne débat un titre. OUVRE par une "
+            "OPINION tranchée / une PRÉDICTION / un angle CONTRARIAN — la phrase "
+            "qu'on a envie de commenter ou de contester — PUIS enterre le fait / "
+            "la news dedans, source à la fin.\n"
+            "- Ton ARME = l'humour français vif et irrévérencieux + l'analyse "
+            "chirurgicale. Sers-t'en à fond. Une prise qui fait réagir vaut "
+            "10 news neutres.\n"
+            "- Donne envie de RÉPONDRE: finis sur un angle qui appelle le débat "
+            "(jamais la question bateau «vous en pensez quoi ?»). On veut des "
+            "réponses, des quote-tweets, des gens qui ne sont pas d'accord.\n"
         )
         try:
             from . import bot_memory
