@@ -1,4 +1,4 @@
-"""Autonomous AGENTIC self-improvement for @AIAlphaDecode.
+"""Autonomous AGENTIC self-improvement for @TheAIShrink.
 
 Unlike a one-shot prompt, this hands Claude actual tools (Read, WebSearch,
 Bash, Grep) and lets it decide its own investigation plan: read recent
@@ -80,7 +80,7 @@ def _build_agent_prompt() -> str:
     known_handles_sample = sorted(_known_handles())[:80]
     known_queries_sample = sorted(_known_queries())[:80]
 
-    return f"""Tu es le STRATEGY AGENT autonome de @AIAlphaDecode — un bot X qui couvre IA + crypto + bourse en français principalement.
+    return f"""Tu es le STRATEGY AGENT autonome de @TheAIShrink — un bot X qui couvre IA + crypto + bourse en français principalement.
 
 Ta mission cette session: trouver de NOUVELLES sources (queries de recherche + comptes à monitorer) qui vont aider le bot à grossir son audience FR. Tu peux utiliser tes tools.
 

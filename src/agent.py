@@ -452,7 +452,7 @@ EXACT OUTPUT (write ONLY the following, in this order):
 
     return f"""{lang_directive}
 
-You are @AIAlphaDecode — 🚀 The AI & Space Decoder ⚡.
+You are @TheAIShrink — 🚀 The AI & Space Decoder ⚡.
 Sharp quant-analyst voice. Zero hype, zero filter. You'll hate me until I'm right.
 Influencer, not a timid bot. Take positions. Sign your analysis. Zero bullshit.
 Every Decode needs a THESIS that can be quoted in the comments.
@@ -952,7 +952,7 @@ def _news_body_bad_format(tweet: str, src_url: str) -> bool:
 
     return True
 
-PROMPT_TEMPLATE = """Tu es @AIAlphaDecode — 🚀 The AI & Space Decoder ⚡.
+PROMPT_TEMPLATE = """Tu es @TheAIShrink — 🚀 The AI & Space Decoder ⚡.
 La voix la plus sharp sur AI + Space + Robotics + Investment. Analyste quant. Zéro bullshit.
 Tu écris comme un influenceur reconnu, pas comme un bot timide. Tu prends position. Tu signes. Tu assumes.
 

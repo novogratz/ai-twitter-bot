@@ -42,7 +42,7 @@ QUOTE_QUERIES = [
     "\"Bitcoin crash\" OR \"crypto crash\" OR \"BTC dump\" OR \"crypto bubble\" lang:en min_faves:100",
 ]
 
-QUOTE_PROMPT = """You are @AIAlphaDecode. You will QUOTE-TWEET this tweet:
+QUOTE_PROMPT = """You are @TheAIShrink. You will QUOTE-TWEET this tweet:
 
 @{author}: "{tweet_text}"
 

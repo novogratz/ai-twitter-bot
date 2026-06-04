@@ -4,7 +4,19 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
-> **Mandate 2026-06-03 (CURRENT — full rebrand → "The AI Decoder"):** **AI-ONLY**, English.
+> **Mandate 2026-06-04 (CURRENT — rebrand → "The AI Therapist" @TheAIShrink):**
+> Persona modeled on **@TheBTCTherapist** (supportive coach), adapted to AI. Bio:
+> "Treating market trauma. AI-powered portfolio therapy. Follow the signal. Heal
+> the fear." **Warm, reassuring, POSITIVE** — name the fear (layoffs, AI trauma,
+> failed AI bets, drawdowns, crypto crashes), validate it, then HEAL it (reassure
+> + signal + hope; calm > clever, hope not hype). Scope: AI + the human side
+> (jobs/fear) / markets-portfolios-AI-stocks / Bitcoin-crypto (supportive HODL
+> coach). Formats: JUST IN, therapist one-liner, validation+reassurance, quote
+> reaction. **Repost ALL of @TheBTCTherapist** (`MUST_REPOST_HANDLES` in
+> retweet_bot, no scoring gate, ≤48h). English standalone; replies match parent.
+> Voice/identity in `core_identity.md` + `lang_mode`. BOT_HANDLE=TheAIShrink.
+>
+> **Mandate 2026-06-03 (superseded — "The AI Decoder"):** AI-ONLY, English.
 > The account is now a pure AI account. ALL content is about AI: labs/models/agents,
 > compute/GPU/datacenters/AI-power, embodied AI (humanoid robots), and the MONEY angle on AI
 > (Nvidia/Palantir/AI-capex, winners/losers, the bubble debate). NO standalone space, NO generic
