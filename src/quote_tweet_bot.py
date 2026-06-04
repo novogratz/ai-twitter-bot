@@ -18,99 +18,71 @@ QUOTE_STATE_FILE = os.path.join(_PROJECT_ROOT, "quote_daily_state.json")
 # MAX_QUOTES_PER_DAY is retained as the cap for quote-post volume.
 _OWN_HANDLE = BOT_HANDLE.lower()
 
-# French-first quote discovery (user mandate 2026-06-02: full revert to FR).
-# Prioritise high-signal FR AI / crypto / markets / space content; every
-# generated quote is in French. A short EN tail catches major global stories
-# (rocket launches, model drops) that often break in English first.
+# English-first, AI-first quote discovery (2026-06-03: back to EN). Every
+# generated quote is in English. AI leads, then markets/crypto, then space.
 QUOTE_QUERIES = [
-    # FR — IA
-    "IA OR \"intelligence artificielle\" OR ChatGPT OR Mistral lang:fr min_faves:10",
-    "OpenAI OR Anthropic OR Claude OR Gemini OR Grok lang:fr min_faves:10",
-    "\"nouveau modèle\" OR \"modèle de raisonnement\" OR agents IA lang:fr min_faves:5",
-    "Nvidia OR GPU OR datacenter OR robotique OR humanoïde lang:fr min_faves:5",
-    # FR — Espace
-    "SpaceX OR Starlink OR fusée OR Ariane OR satellite lang:fr min_faves:5",
-    "espace OR spatial OR lancement OR orbite OR NASA OR ESA OR CNES lang:fr min_faves:5",
-    # FR — Bourse (large) / Investissement / crypto
-    "bourse OR CAC 40 OR Nasdaq OR \"S&P 500\" OR \"action\" lang:fr min_faves:10",
-    "Fed OR BCE OR inflation OR \"taux d'intérêt\" OR macro lang:fr min_faves:10",
-    "\"résultats trimestriels\" OR earnings OR dividende OR valorisation lang:fr min_faves:10",
-    "Bitcoin OR BTC OR crypto OR \"ETF Bitcoin\" lang:fr min_faves:10",
-    "investissement OR PEA OR ETF OR \"action IA\" OR \"action spatiale\" lang:fr min_faves:10",
-    "Palantir OR Nvidia OR Tesla OR Apple OR \"tech\" lang:fr min_faves:10",
-    # EN tail — global breaking signal (launches, model drops)
-    "\"new model\" OR \"introducing\" OpenAI OR Anthropic OR Google lang:en min_faves:200",
-    "GPT OR Claude OR Gemini OR Grok \"released\" OR \"launches\" lang:en min_faves:100",
-    "Starship OR \"Falcon 9\" OR \"New Glenn\" launch lang:en min_faves:100",
-    "SpaceX OR Starlink OR \"Rocket Lab\" lang:en min_faves:200",
-    "Bitcoin OR BTC OR \"BTC ETF\" lang:en min_faves:500",
+    # AI (priority)
+    "\"new model\" OR \"introducing\" OpenAI OR Anthropic OR Google lang:en min_faves:100",
+    "GPT OR Claude OR Gemini OR Grok OR Llama \"released\" OR \"launches\" lang:en min_faves:50",
+    "OpenAI OR ChatGPT OR \"GPT-5\" OR Anthropic OR Claude lang:en min_faves:100",
+    "\"reasoning model\" OR \"AI agents\" OR \"agentic AI\" OR \"frontier model\" lang:en min_faves:50",
+    "Nvidia OR NVDA OR GPU OR \"compute cluster\" OR datacenter lang:en min_faves:100",
+    "robotics OR \"humanoid robot\" OR \"Figure\" OR \"Boston Dynamics\" OR \"1X\" lang:en min_faves:100",
+    "Mistral OR xAI OR \"Hugging Face\" OR \"open source AI\" lang:en min_faves:50",
+    # Markets / crypto
+    "Bitcoin OR BTC OR \"BTC ETF\" OR crypto lang:en min_faves:200",
+    "Palantir OR PLTR OR \"AI stock\" OR \"tech earnings\" OR \"S&P 500\" lang:en min_faves:100",
+    "Fed OR CPI OR inflation OR \"rate cut\" OR macro lang:en min_faves:200",
+    # Space
+    "SpaceX OR Starlink OR Starship OR \"Falcon 9\" lang:en min_faves:100",
+    "\"Rocket Lab\" OR RKLB OR NASA OR Artemis OR satellite lang:en min_faves:50",
 ]
 
-QUOTE_PROMPT = """Tu es @AISpaceDecoder. Tu vas CITER (quote-tweet) ce tweet :
+QUOTE_PROMPT = """You are @AISpaceDecoder. You will QUOTE-TWEET this tweet:
 
 @{author}: "{tweet_text}"
 
-Ta mission : écrire UNE phrase courte EN FRANÇAIS qui ajoute une
-observation tranchante / sarcastique / meme par-dessus. Le tweet d'origine
-peut être en EN ou en FR — TA CITATION EST TOUJOURS EN FRANÇAIS. C'est
-notre voix.
+Your job: write ONE short sentence IN ENGLISH that adds a sharp / sarcastic /
+meme observation on top. The original tweet may be EN or FR — YOUR QUOTE IS
+ALWAYS IN ENGLISH. That's our voice.
 
-🚨 RÈGLE D'OR — TROLLE L'IDÉE, JAMAIS LA PERSONNE :
-@{author} doit pouvoir liker ta citation sans se sentir attaqué. Tu te
-moques du SYSTÈME / de la TENDANCE / du PHÉNOMÈNE — pas de la personne. Si
-ton instinct est « ce type n'y comprend rien » → REFORMULE pour viser
-l'idée, pas l'auteur. Si tu n'y arrives pas → SKIP. Plusieurs comptes ont
-bloqué le bot récemment ; on RESPECTE même quand on est sarcastique.
+🚨 GOLDEN RULE — TROLL THE IDEA, NEVER THE PERSON:
+@{author} must be able to like your quote without feeling attacked. Mock the
+SYSTEM / the TREND / the PHENOMENON, never the person. If your instinct is
+"this guy is clueless" → REFRAME to hit the idea, not the author. If you
+can't → SKIP. We stay RESPECTFUL even when sarcastic.
 
-🤣 100% ALIGNÉ AVEC L'AUTEUR (« fais-le rire avec toi, pas contre toi »).
-@{author} doit lire ta citation et PENSER « oui, exactement, on est dans
-le même bateau ». On rit ENSEMBLE du marché / du système. Jamais
-@{author} contre nous.
+🎯 LEAD WITH THE TAKE: open with an opinion / contrarian angle people want to
+argue with. A quote that just reacts ("Beautiful." / "Called it.") is worthless
+— it MUST add a NEW angle the original doesn't: a hidden consequence, an
+impacted third party, a comparison that reframes. Otherwise → SKIP.
 
-🏭 SCOPE PRIORITAIRE : IA, crypto, datacenters/MW (Stargate, xAI Colossus,
-CoreWeave, Crusoe, IREN), mineurs crypto cotés (MARA, RIOT, CleanSpark,
-Hut 8, Bitfarms, TeraWulf, Cipher), GPU souverain, espace. Hors scope
-→ SKIP.{mnts_block}
+🏭 SCOPE — AI FIRST: AI labs/models/agents, GPU/datacenters/compute, AI power,
+humanoid robotics, AI stocks (Nvidia, Palantir); then markets/crypto; then
+space. Off scope → SKIP.{mnts_block}
 
-RÈGLES :
-- Max 200 caractères (le tweet d'origine s'affiche sous le tien).
-- ACCROCHE dans les 6 premiers mots : un chiffre / un nom propre / un
-  verbe brutal.
-- PINCE-SANS-RIRE. SEC. CAPTURE-D'ÉCRAN-WORTHY. Ancres FR autorisées et
-  bienvenues quand elles tombent juste : Bercy, le RER B, un syndicat,
-  le PEL, le Livret A, BFM, l'AMF, la SNCF. Jamais forcées.
-- Pas d'emojis. Pas de hashtags. Pas de tirets cadratins (—).
-- Accents impeccables (é è ê à â ù û ô î ç).
-- 100% français.
-- Si rien ne vaut mieux que le silence → écris exactement le mot SKIP.
+RULES:
+- Max 200 characters (the original renders below yours).
+- HOOK in the first 6 words: a number / proper noun / brutal verb.
+- DEADPAN. DRY. SCREENSHOT-WORTHY. Lean on global frames (Form 10-K footnote,
+  a16z term sheet, Fed dot plot, CNBC chyron, 401(k), S-1 risk factor). NO
+  French anchors (no Bercy, RER B, syndicat) — gibberish to a global reader.
+- No emojis. No hashtags. No em dashes (—). 100% English.
+- No short-term price targets (price + near-term timeframe). Theses multi-year.
+- If nothing beats silence → output exactly the word SKIP.
 
-🎯 RÈGLE DU NOUVEL ANGLE :
-Une citation DOIT ajouter un NOUVEL angle. Pas juste une réaction
-émotionnelle (« Magnifique. » / « Bonne chance. » / « Calme-toi. »). Une
-citation ne vaut le coup que si tu nommes quelque chose que le tweet
-d'origine ne dit pas : une conséquence cachée, un tiers impacté, une
-comparaison qui recadre. Sinon → SKIP. Une citation purement réactive
-pollue le profil et brûle les impressions du tweet parent.
+GOOD (adds an angle):
+✅ "Stargate at $100B, Mistral raising $1B. At this rate Europe funds 1 GPU in
+   100. The term sheet hasn't reached Brussels yet."
+✅ "Hashrate at 800 EH/s. Same week, Saylor doubles his position. Miners sell,
+   institutions scoop. Someone's wrong."
 
-BONS EXEMPLES (ajoute un angle) :
-✅ « Stargate à 100 Mds$, Mistral lève 1 Md$. À ce rythme l'Europe finance
-   1 GPU sur 100. Le term sheet n'est pas encore arrivé à Bruxelles. »
-✅ « Hashrate à 800 EH/s. La même semaine, Saylor double sa position. Les
-   mineurs vendent, les institutionnels ramassent. Y'en a un qui se
-   trompe. »
+BAD (just a reaction): "Beautiful." / "Good luck." / "Called it." / "As expected."
 
-MAUVAIS EXEMPLES (juste une réaction) :
-❌ « Magnifique. » (zéro angle)
-❌ « Bonne chance. » (zéro angle)
-❌ « Je l'avais dit. » (zéro angle)
-❌ « Comme prévu. » (zéro angle)
+CRITICAL: any output containing the bare word "skip" = silent skip. Either the
+pure quote OR "SKIP" alone — never a sentence explaining why you're skipping.
 
-CRITIQUE : tout output contenant le mot-sentinelle « skip » = skip
-silencieux. Soit la citation pure, soit « SKIP » seul — jamais une phrase
-qui explique pourquoi tu skippes. Pas de méta-commentaire, pas de « ce
-tweet est hors scope » — aucun humain ne verra ton raisonnement.
-
-Écris UNIQUEMENT le texte de la citation en français, OU le mot SKIP."""
+Output ONLY the English quote text, OR the word SKIP."""
 
 
 def _load_state() -> dict:
@@ -386,18 +358,9 @@ def run_quote_tweet_cycle():
     try:
         from .retweet_bot import EN_TRUSTED_HANDLES, FR_TRUSTED_HANDLES
         from .twitter_client import scrape_profile_tweets
-        # 2026-06-03: quote BIG FRENCH domain accounts FIRST (operator request).
-        # Scrape several big FR AI/bourse/crypto/space voices + a couple EN
-        # outlets, then quote their freshest viral take with our sharp FR angle.
-        try:
-            from .direct_reply import BIG_FR_ACCOUNTS
-        except Exception:
-            BIG_FR_ACCOUNTS = []
-        sampled = (
-            random.sample(BIG_FR_ACCOUNTS, k=min(5, len(BIG_FR_ACCOUNTS)))
-            + random.sample(FR_TRUSTED_HANDLES, k=min(3, len(FR_TRUSTED_HANDLES)))
-            + random.sample(EN_TRUSTED_HANDLES, k=min(2, len(EN_TRUSTED_HANDLES)))
-        )
+        # 2026-06-03: back to EN. Quote big EN AI/markets/space voices first,
+        # then their freshest viral take with our sharp English angle.
+        sampled = random.sample(EN_TRUSTED_HANDLES, k=min(6, len(EN_TRUSTED_HANDLES)))
         for handle in sampled:
             log.info(f"[QUOTE] Scraping trusted-news handle: @{handle}")
             try:

@@ -184,19 +184,7 @@ FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "5
 FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "20"))
 
 FEED_REPOST_SEARCH_QUERIES = [
-    # FR-first repost discovery (user mandate 2026-06-02: full revert to FR).
-    # French timeline → amplify French sources first; EN tail catches global
-    # breaking signal (rocket launches, model drops) that breaks in EN first.
-    # FR — IA / crypto / espace / bourse
-    "IA OR \"intelligence artificielle\" OR ChatGPT OR Mistral lang:fr min_faves:20",
-    "OpenAI OR Anthropic OR Claude OR Gemini OR Nvidia OR GPU lang:fr min_faves:20",
-    "SpaceX OR Starlink OR fusée OR Ariane OR satellite OR espace lang:fr min_faves:20",
-    "lancement OR orbite OR NASA OR ESA OR CNES OR spatial lang:fr min_faves:20",
-    "Bitcoin OR BTC OR crypto OR \"ETF Bitcoin\" lang:fr min_faves:50",
-    "bourse OR CAC 40 OR Nasdaq OR \"S&P 500\" OR \"action\" lang:fr min_faves:30",
-    "Fed OR BCE OR inflation OR \"taux d'intérêt\" OR macro lang:fr min_faves:30",
-    "\"résultats trimestriels\" OR earnings OR dividende OR valorisation lang:fr min_faves:30",
-    # EN tail — global breaking signal
+    # English-first, AI-first repost discovery (2026-06-03: back to EN).
     "\"new model\" OR \"introducing\" OpenAI OR Anthropic OR Google lang:en min_faves:200",
     "GPT OR Claude OR Gemini OR Grok OR Llama \"released\" OR \"launches\" lang:en min_faves:100",
     "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:200",
@@ -915,15 +903,13 @@ def run_retweet_cycle():
     retweeted = _load_retweeted()
     candidates = _collect_feed_repost_candidates(retweeted)
 
-    # High-volume crypto/AI repost surface. French-first since the
-    # 2026-06-02 revert: prioritise FR handles so the timeline reads French
-    # again, with a smaller EN tail for global breaking signal (launches,
-    # model drops) that only exists in English.
+    # High-volume AI/markets repost surface. English-first (2026-06-03): the
+    # timeline reads English again, so amplify EN sources; small FR tail only.
     sample = (
-        random.sample(FR_TRUSTED_HANDLES, k=min(10, len(FR_TRUSTED_HANDLES)))
-        + random.sample(EN_TRUSTED_HANDLES, k=min(5, len(EN_TRUSTED_HANDLES)))
+        random.sample(EN_TRUSTED_HANDLES, k=min(13, len(EN_TRUSTED_HANDLES)))
+        + random.sample(FR_TRUSTED_HANDLES, k=min(2, len(FR_TRUSTED_HANDLES)))
     )
-    log.info(f"[RETWEET] Scraping FR-first crypto/AI handles: {sample}")
+    log.info(f"[RETWEET] Scraping EN-first AI/markets handles: {sample}")
 
     for handle in sample:
         try:

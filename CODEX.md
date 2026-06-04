@@ -4,7 +4,14 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
-> **Mandate 2026-06-02 (supersedes the EN pivot):** Full revert to **French**.
+> **Mandate 2026-06-03 (CURRENT — supersedes the French revert):** Back to **ENGLISH-primary**.
+> All standalone content (news, hot takes, breakouts, spicy, threads, quotes, reposts) generates
+> in ENGLISH; replies still match the parent post's language. AI is the lead pillar (~60%), then
+> markets/bourse, then space. Lead with the take (opinion/contrarian angle), bury the news inside.
+> Growth mode on (`ENABLE_FOLLOW_BLAST=1`, `FOLLOW_ENFORCE_RATIO=0`). Set `CONTENT_LANG_PRIMARY`
+> to switch. The 48h repost-freshness rule + no-near-term-price-target validator stay.
+>
+> **Mandate 2026-06-02 (superseded by the line above):** Full revert to **French**.
 > Brand = 🚀 The AI & Space Decoder ⚡, 3 pillars (AI / Space / Investment) unchanged.
 > **All standalone content + all quote-repost commentary generate in FRENCH** (native, not
 > translated). **Replies match the parent post's language** — English replies to English
