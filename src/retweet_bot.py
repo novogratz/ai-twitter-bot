@@ -998,7 +998,11 @@ def run_retweet_cycle():
                 log.info("[RETWEET] Failed to write daily picks file:")
                 traceback.print_exc()
 
-        threshold = 9  # only truly exceptional: new model drops, major space news, market-moving events
+        # 2026-06-04: lowered 9→7 (operator: "go crazy on retweets"). The 9/10
+        # bar rejected almost everything ("No viable candidates"). 7 = solid
+        # on-niche AI posts get amplified; the source/freshness/like filters
+        # already gate quality. Env-overridable.
+        threshold = int(os.environ.get("RETWEET_MIN_SCORE", "7"))
         if score < threshold:
             log.info(f"[RETWEET] Score {score}/10 below threshold ({threshold}). Logged only.")
             continue
