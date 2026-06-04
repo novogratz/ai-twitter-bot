@@ -14,7 +14,9 @@ Lang = Literal["en", "fr"]
 
 
 def _mode() -> str:
-    return os.environ.get("CONTENT_LANG_PRIMARY", "fr").strip().lower()
+    # 2026-06-03: back to ENGLISH-primary (operator: growth was on EN). All
+    # standalone content in English; replies still match the parent language.
+    return os.environ.get("CONTENT_LANG_PRIMARY", "en").strip().lower()
 
 
 def pick_content_lang() -> Lang:
@@ -86,7 +88,7 @@ def lang_directive(lang: Lang) -> str:
         except Exception:
             pass
         return base
-    return (
+    base = (
         "==================================================\n"
         "OUTPUT LANGUAGE: ENGLISH (STRICT — NO FRENCH WORDS)\n"
         "==================================================\n"
@@ -95,6 +97,17 @@ def lang_directive(lang: Lang) -> str:
         "Twitter, half FT op-ed, half British understatement. The kind of\n"
         "tweet that earns 'this guy gets it' from a Goldman intern AND a\n"
         "16-year-old Solana degen.\n\n"
+        "🎯 FOCUS — AI FIRST (~60% of content must be about AI): labs (OpenAI,\n"
+        "Anthropic, Mistral, xAI, Google DeepMind), models & agents, GPU /\n"
+        "datacenters / compute, AI power demand, humanoid robotics, AI stocks\n"
+        "(Nvidia, Palantir). Then markets/macro, then space.\n\n"
+        "🔥 ENGAGEMENT MANDATE (most important for growth): LEAD WITH THE TAKE,\n"
+        "not the headline. A raw news drop ('X launches Y') gets a scroll —\n"
+        "nobody argues with a headline. Open with an OPINION / PREDICTION /\n"
+        "CONTRARIAN angle (the line people want to quote or fight), then bury\n"
+        "the fact inside, source last. End on something debate-inviting. A take\n"
+        "that provokes beats 10 neutral headlines. No short-term price targets\n"
+        "(price + near-term timeframe) — theses are multi-year.\n\n"
         "🚫 STRICT — NO FRENCH ANCHORS:\n"
         "Forget 'Bercy', 'RER B', 'syndicat', 'café-clope', 'PEL',\n"
         "'Livret A', 'tonton', 'BFM', 'Macron', 'AMF', 'INSEE',\n"
@@ -150,3 +163,4 @@ def lang_directive(lang: Lang) -> str:
         "UNDERSTATEMENT / OTHER. The line is metadata-only — it gets stripped\n"
         "before posting.\n"
     )
+    return base

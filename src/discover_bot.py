@@ -16,46 +16,39 @@ FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 AUTO_FOLLOW_CATEGORIES = {"ai", "crypto", "bourse"}
 
 
-# Search queries — 2026-06-02 pivot: FRENCH-first discovery for a French
-# audience. We want to find and engage NEW French accounts across the three
-# pillars: Bourse (broad, not just AI/space stocks), IA, and Spatial. Small
-# EN tail keeps a few global anchors in the follow pool.
+# Search queries — 2026-06-03: ENGLISH-first, AI-first discovery (back to EN).
+# Find + engage NEW English-speaking accounts: AI first, then markets/crypto,
+# then space. Small FR tail keeps a few French anchors in the pool.
 DISCOVERY_QUERIES = [
-    # FR — Bourse / marchés / macro (BROAD — the user wants more Bourse)
-    "bourse OR investissement OR CAC 40 OR \"actions\" lang:fr",
-    "Nasdaq OR \"S&P 500\" OR Nvidia OR Tesla OR Apple lang:fr",
-    "dividende OR PEA OR ETF OR \"analyse technique\" lang:fr",
-    "\"résultats trimestriels\" OR earnings OR valorisation lang:fr",
-    "Fed OR BCE OR inflation OR \"taux d'intérêt\" OR obligations lang:fr",
-    "\"action du jour\" OR \"penny stock\" OR small cap OR midcap lang:fr",
-    "trader OR trading OR \"gestion de portefeuille\" OR \"value investing\" lang:fr",
-    # FR — crypto comme classe d'actifs
-    "Bitcoin OR BTC OR crypto OR Ethereum OR \"ETF Bitcoin\" lang:fr",
-    "stablecoin OR DeFi OR \"minage\" OR halving lang:fr",
-    # FR — IA
-    "IA OR \"intelligence artificielle\" OR ChatGPT OR Mistral lang:fr",
-    "OpenAI OR Anthropic OR Claude OR Gemini OR \"modèle IA\" lang:fr",
-    "\"agents IA\" OR LLM OR Nvidia OR GPU OR datacenter lang:fr",
-    "robotique OR \"robot humanoïde\" OR \"Tesla Optimus\" lang:fr",
-    "\"startup IA\" OR \"French Tech\" OR \"levée de fonds\" lang:fr",
-    # FR — Spatial
-    "SpaceX OR Starship OR Starlink OR fusée OR satellite lang:fr",
-    "espace OR spatial OR CNES OR ESA OR Ariane OR \"Rocket Lab\" lang:fr",
-    "NASA OR Artemis OR \"tourisme spatial\" OR \"new space\" lang:fr",
-    # EN tail — a few global anchors for a diverse follow pool
-    "OpenAI OR Anthropic OR Nvidia OR SpaceX lang:en min_faves:200",
-    "Bitcoin OR \"S&P 500\" OR \"tech earnings\" lang:en min_faves:200",
+    # AI (priority)
+    "AI founder OR AI startup OR AI developer lang:en",
+    "OpenAI OR Anthropic OR Claude OR ChatGPT OR Mistral lang:en",
+    "machine learning OR LLM OR \"AI agents\" OR \"frontier model\" lang:en",
+    "Nvidia OR GPU OR \"AI chip\" OR datacenter OR compute lang:en",
+    "robotics OR humanoid OR \"Figure\" OR \"frontier tech\" lang:en",
+    "\"AI infrastructure\" OR \"AI stock\" OR Palantir OR CoreWeave lang:en",
+    # Markets / crypto
+    "stock market OR \"S&P 500\" OR NASDAQ OR \"tech earnings\" lang:en",
+    "Bitcoin OR BTC OR crypto OR Ethereum OR \"BTC ETF\" lang:en",
+    "macro OR Fed OR inflation OR \"interest rates\" lang:en",
+    "VC OR venture capital OR \"tech IPO\" OR \"Series A\" lang:en",
+    # Space
+    "SpaceX OR Starship OR Starlink OR \"Rocket Lab\" lang:en",
+    "space tech OR aerospace OR satellite OR NASA OR Artemis lang:en",
+    # FR tail — a few French anchors for a diverse follow pool
+    "IA OR ChatGPT OR Mistral OR Nvidia lang:fr",
+    "bourse OR Bitcoin OR investissement lang:fr",
 ]
 
 DYNAMIC_LIVE_QUERY_SEEDS = [
-    "IA OR ChatGPT OR Mistral OR OpenAI OR Anthropic lang:fr",
-    "Bitcoin OR BTC OR Ethereum OR crypto lang:fr",
-    "Nvidia OR GPU OR datacenter OR \"action IA\" lang:fr",
-    "bourse OR CAC 40 OR Nasdaq OR \"S&P 500\" OR dividende lang:fr",
-    "SpaceX OR Starship OR Starlink OR Ariane OR satellite lang:fr",
-    "\"startup IA\" OR \"levée de fonds\" OR \"French Tech\" lang:fr",
-    "trading OR PEA OR ETF OR investissement OR \"résultats\" lang:fr",
-    "Fed OR BCE OR inflation OR \"taux d'intérêt\" lang:fr",
+    "OpenAI OR Anthropic OR Claude OR ChatGPT OR Mistral lang:en",
+    "AI agents OR LLM OR \"frontier model\" lang:en",
+    "Nvidia OR GPU OR datacenter OR \"AI stock\" lang:en",
+    "Bitcoin OR BTC OR Ethereum OR crypto lang:en",
+    "stock market OR \"S&P 500\" OR NASDAQ OR Fed lang:en",
+    "SpaceX OR Starship OR Starlink OR \"Rocket Lab\" lang:en",
+    "AI startup OR \"tech IPO\" OR VC funding lang:en",
+    "robotics OR humanoid OR \"frontier tech\" lang:en",
 ]
 
 DYNAMIC_HOT_QUERY_SEEDS = [
