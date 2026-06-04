@@ -309,7 +309,15 @@
     "jamescromwell",
     "lucashenry",
     "sophielavallee",
-    "gaelmuller"
+    "gaelmuller",
+    "NathanaelM",
+    "ThomasLH",
+    "AdrienDelaunay",
+    "AntoineLeclercq",
+    "LaurineB",
+    "CedricLaplace",
+    "RomainB",
+    "AlexisTremblay"
   ],
   "en": [
     "blablacar",
@@ -1935,6 +1943,46 @@
       "lang": "fr",
       "handle": "gaelmuller",
       "added": "2026-06-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanaelM",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasLH",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienDelaunay",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineLeclercq",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaurineB",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "CedricLaplace",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainB",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisTremblay",
+      "added": "2026-06-04"
     }
   ]
 }

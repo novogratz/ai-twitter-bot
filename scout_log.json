@@ -2839,5 +2839,78 @@
       }
     ],
     "summary": "Le lot est mixte : on a les g\u00e9ants de l'IA fr (Mistral, Lucas Henry) qui d\u00e9fient les US, les v\u00e9t\u00e9rans crypto (James Cromwell) et la p\u00e9pite fintech/VC FR. Z\u00e9ro blabla, juste du contenu qui vaut son pesant de stablecoins."
+  },
+  {
+    "ts": "2026-06-04T02:51:50.141224",
+    "raw_count": 10,
+    "kept_count": 9,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NathanaelM",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Le prince incontest\u00e9 de la crypto FR, twitte en FR, zero pub formatage, pur d\u00e9codage on-chain."
+      },
+      {
+        "handle": "ThomasLH",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 75000,
+        "reason": "S\u00e9rieux, chiffr\u00e9, twitte en FR, couvre l'\u00e9co/bourse sans le baratin politique habituel."
+      },
+      {
+        "handle": "AdrienDelaunay",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 62000,
+        "reason": "Journaliste crypto de r\u00e9f\u00e9rence, analyse macro et crypto, twitte en FR, pas de signal VIP."
+      },
+      {
+        "handle": "AntoineLeclercq",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Analyste tech, twitte en FR, focus sur le SaaS et les g\u00e9ants de la tech, pas de pub."
+      },
+      {
+        "handle": "LaurineB",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Diaspora FR bas\u00e9e aux US, journaliste crypto, twitte en FR, couvre l'actualit\u00e9 US avec le\u89c6\u89d2 FR."
+      },
+      {
+        "handle": "CedricLaplace",
+        "region": "france",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "Ex-BNP, ex-startup, analyse tech/fintech en FR, ton direct et sans filtre."
+      },
+      {
+        "handle": "RomainB",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Ing\u00e9nieur AI bas\u00e9 \u00e0 SF, twitte en FR, partage des insights techniques et business, pas de pub."
+      },
+      {
+        "handle": "Jean-BaptisteD",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "L'expert crypto qu\u00e9b\u00e9cois qui twitte en FR, couvre DeFi et infra, audience fid\u00e8le."
+      },
+      {
+        "handle": "AlexisTremblay",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Trader/investisseur qu\u00e9b\u00e9cois, twitte en FR, analyse techniques et fondamentaux, pas de groupe Telegram."
+      }
+    ],
+    "summary": "Scout\u00e9 des profils actifs en FR sans pub agressive : crypto (Nathanael, Adrien), bourse/tech (Thomas, Cedric, Antoine) au FR; Qu\u00e9bec (Jean-Baptiste, Alexis, Maxime) pour le local; et diaspora FR aux US (Laurine, Romain) pour le lien transatlantique."
   }
 ]
