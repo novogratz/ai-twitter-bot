@@ -3110,5 +3110,57 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 la soupe \u00e0 l'influenceurs pour te sortir des vrais pros : Laurie Frappart pour le crypto QC, Rapha\u00ebl Rouet pour l'actu AI FR, et Baptiste N pour les deals. Pas de formations \u00e0 299\u20ac au menu, juste du contenu qui se lit \u00e0 la vitesse d'un thread."
+  },
+  {
+    "ts": "2026-06-04T14:46:34.496605",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NicolasTirel",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Ex-Consensys, d\u00e9crypte la tech crypto sans le jargon VC ringard. Vif d'esprit, pur FR."
+      },
+      {
+        "handle": "JulienDubreuil",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 30000,
+        "reason": "Le patron de Lemon Way. Twitte souvent sur la fintech, la r\u00e9gulation et les enjeux tech. Pas un guru, un b\u00e2tisseur."
+      },
+      {
+        "handle": "MounirAitTahiri",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Founder Yallab. Parle de l'IA en fran\u00e7ais, s\u00e9rieusement, sans vendre du r\u00eave \u00e0 2000\u20ac. Rare."
+      },
+      {
+        "handle": "PierreLafontaine",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Diaspora FR aux USA. Cofondateur de Weaviate (Vector DB). Twitte en FR sur l'infra IA. Moins connu mais plus pertinent."
+      },
+      {
+        "handle": "EmmanuelLetouz\u00e9",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Ancien CNRS, expert cybers\u00e9curit\u00e9/IA. Twitte en FR, style sec, analyse technique pr\u00e9cise. Pas de 'guru-isation'."
+      },
+      {
+        "handle": "LudovicDion",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Journaliste crypto au Qu\u00e9bec. Couvre l'adoption institutionnelle. Moins de bruit, plus d'info locale."
+      }
+    ],
+    "summary": "On \u00e9vite les vendeurs de r\u00eave (encore) pour aller chercher les fondateurs techniques (Mistral, Yallab, Weaviate) et les journalistes sp\u00e9cialis\u00e9s. Le Qu\u00e9bec est moins satur\u00e9 que la France en IA pure, d'o\u00f9 la s\u00e9lection plus niche mais plus dense en expertise."
   }
 ]

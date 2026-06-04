@@ -338,7 +338,11 @@
     "MathieuMauclair",
     "JeroenDeDauw",
     "BaptisteN",
-    "AlexisV"
+    "AlexisV",
+    "NicolasTirel",
+    "JulienDubreuil",
+    "MounirAitTahiri",
+    "LudovicDion"
   ],
   "en": [
     "blablacar",
@@ -2108,6 +2112,26 @@
     {
       "lang": "fr",
       "handle": "AlexisV",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasTirel",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDubreuil",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MounirAitTahiri",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicDion",
       "added": "2026-06-04"
     }
   ]
