@@ -342,7 +342,12 @@
     "NicolasTirel",
     "JulienDubreuil",
     "MounirAitTahiri",
-    "LudovicDion"
+    "LudovicDion",
+    "ThomasMaes",
+    "RomainTixier",
+    "MaximeBouillot",
+    "LucasFournier_",
+    "BenjaminAbitan"
   ],
   "en": [
     "blablacar",
@@ -2132,6 +2137,31 @@
     {
       "lang": "fr",
       "handle": "LudovicDion",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasMaes",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainTixier",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBouillot",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasFournier_",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminAbitan",
       "added": "2026-06-04"
     }
   ]
