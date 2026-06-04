@@ -323,7 +323,16 @@
     "BorisBouissou",
     "AdrienVernay",
     "PierreDuchesne",
-    "VincentDutertre"
+    "VincentDutertre",
+    "YassineBoutayeb",
+    "BenjaminFleury",
+    "RomainMarty",
+    "LouisGachet",
+    "ThibaudGaudon",
+    "MorganTulot",
+    "SimonCormier",
+    "AlexisBoutin",
+    "PierreCoulombe"
   ],
   "en": [
     "blablacar",
@@ -2018,6 +2027,51 @@
     {
       "lang": "fr",
       "handle": "VincentDutertre",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "YassineBoutayeb",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminFleury",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainMarty",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "LouisGachet",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudGaudon",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MorganTulot",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "SimonCormier",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBoutin",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreCoulombe",
       "added": "2026-06-04"
     }
   ]

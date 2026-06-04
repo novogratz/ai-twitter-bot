@@ -2971,5 +2971,85 @@
       }
     ],
     "summary": "On a fouill\u00e9 pour sortir des profils techniques (Mistral, NovaPay, UCPC) et des valeurs s\u00fbres crypto (Benoit, Lassonde) qui parlent le vrai langage de la tech/finance en FR, loin du bruit des influenceurs Telegram."
+  },
+  {
+    "ts": "2026-06-04T06:53:31.165578",
+    "raw_count": 12,
+    "kept_count": 10,
+    "accounts_added": 9,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "YassineBoutayeb",
+        "region": "france",
+        "niche": "tech",
+        "followers": 210000,
+        "reason": "Fondateur de Meero (exit). Il tweet sur le futur du travail/IA. Le mec qui a r\u00e9ussi, pas celui qui vend le r\u00eave."
+      },
+      {
+        "handle": "BenjaminFleury",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 125000,
+        "reason": "Le grand bonhomme du coin. Ancien de BNP, il couvre crypto/DeFi avec un ton pos\u00e9, pas de shiitcoinerie toxique."
+      },
+      {
+        "handle": "RomainMarty",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "La r\u00e9f\u00e9rence bourse pro \u00e0 la fran\u00e7aise. Actionnariat, macro, r\u00e9sultats entreprises. Z\u00e9ro bla bla, que du concret."
+      },
+      {
+        "handle": "LouisGachet",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 75000,
+        "reason": "L'ancien de Boursorama qui a fait un carton en\u72ec\u7acb. Style direct, focus croissance/tech, audience fid\u00e8le."
+      },
+      {
+        "handle": "ThibaudGaudon",
+        "region": "france",
+        "niche": "tech",
+        "followers": 65000,
+        "reason": "Le fondateur d'Artisan Labs. Il raconte la vraie vie des startups/france, pas les le\u00e7ons de morale LinkedIn."
+      },
+      {
+        "handle": "MorganTulot",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "Journaliste \u00e0 La Tribune, il balance les infos crypto rapides et fiables. Moins hype que les 'gods', plus utile."
+      },
+      {
+        "handle": "SimonCormier",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le plus s\u00e9rieux du coin QC. Analyse fondamentale stricte. Si tu veux dormir tranquille, c'est ici."
+      },
+      {
+        "handle": "MicheleLewandowski",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Journaliste pro bas\u00e9e \u00e0 NY. Elle couvre les march\u00e9s avec une plume fran\u00e7aise. L'info avant le bruit."
+      },
+      {
+        "handle": "AlexisBoutin",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "Influenceur tech/solopreneur. Il teste des produits IA et parle business. Contenu visuel, pas de 'signals'."
+      },
+      {
+        "handle": "PierreCoulombe",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "L'incontournable de la diaspora QC aux USA. Il couvre la tech wall street depuis l'int\u00e9rieur. Perspective unique."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la sauce : z\u00e9ro vendeur de r\u00eave, z\u00e9ro politicien. On reste sur des profils qui tweetent du solide, de la tech pure (Mistral) ou des vrais analystes (Romain Marty, Louis Gachet). Le QC est plus discret, d'o\u00f9 la s\u00e9lection s\u00e9v\u00e8re."
   }
 ]
