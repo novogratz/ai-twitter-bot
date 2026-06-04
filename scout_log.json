@@ -3162,5 +3162,50 @@
       }
     ],
     "summary": "On \u00e9vite les vendeurs de r\u00eave (encore) pour aller chercher les fondateurs techniques (Mistral, Yallab, Weaviate) et les journalistes sp\u00e9cialis\u00e9s. Le Qu\u00e9bec est moins satur\u00e9 que la France en IA pure, d'o\u00f9 la s\u00e9lection plus niche mais plus dense en expertise."
+  },
+  {
+    "ts": "2026-06-04T16:51:42.945652",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomasMaes",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le trader crypto qui a surv\u00e9cu \u00e0 3 cycles. Pas de shillage, du mental et de la tech. Twitte surtout en FR."
+      },
+      {
+        "handle": "RomainTixier",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 40000,
+        "reason": "French expat, US VC ecosystem. Il connecte la sillicon valley \u00e0 la french tech. Vues en FR constantes."
+      },
+      {
+        "handle": "MaximeBouillot",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Foundeur chez Mews. Il explique l'IA pro avec du sens, sans le jargon de consultant LinkedIn."
+      },
+      {
+        "handle": "LucasFournier_",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour les actions US et la macro. Direct, \u00e9ducatif, pas de vente de r\u00eave."
+      },
+      {
+        "handle": "BenjaminAbitan",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Foundeur DeFi (Morpho). Il tweet en FR/EN depuis la SF Bay Area. Pure alpha technique DeFi."
+      }
+    ],
+    "summary": "Un focus lourd sur la tech FR (Mistral, Mews) et la qualit\u00e9 qu\u00e9b\u00e9coise (Lucas, Alexis). Pas de vendeurs de r\u00eave, que des buildeurs ou des traders qui savent analyser."
   }
 ]
