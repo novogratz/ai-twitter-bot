@@ -1,8 +1,8 @@
 {
-  "ts": "2026-06-03T06:00:00.000000",
+  "ts": "2026-06-04T06:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 15,
-    "MAX_HOTAKES_PER_DAY": 50,
+    "MAX_HOTAKES_PER_DAY": 30,
     "MAX_QUOTES_PER_DAY": 300,
     "MAX_RETWEETS_PER_DAY": 300,
     "MAX_BREAKOUTS_PER_DAY": 50,
@@ -12,13 +12,13 @@
     "FOLLOW_BLAST_PER_CYCLE": 80
   },
   "topic_focus": [
-    "Space",
     "AI",
+    "AI",
+    "AI",
+    "Space",
     "Investment",
-    "Space",
-    "AI",
-    "Crypto"
+    "AI"
   ],
   "cadence_factor": 1.0,
-  "rationale": "FRENCH-FIRST MODE (2026-06-02 revert): All standalone content + quote commentary in FRENCH. Replies match parent language. ANCHOR FATIGUE: Bercy detected in 80%+ of replies — rotate cultural anchors (URSSAF / RER B / Sénat / Tonton Patrick / AMF / DRH / CSE / Commission européenne). Bercy 1x max per hour. EXECUTION GAP: Quotes at 7/day vs 18/day target — caps are fine, execution is the blocker; every RT candidate must become a quote or be skipped. HOT CATALYSTS JUNE 3–15: (1) SpaceX IPO pricing June 11 — $75Md raise at $135/share, $1.75T valuation. RKLB/ASTS/LUNR pulling back on IPO hype = contrarian opportunity: RKLB defense backlog ($1.3B) unaffected, ASTS BlueBirds Falcon 9 mid-June on track. Bold $RKLB stock call format warranted now. (2) Anthropic S-1 filed confidential at $965Md — $47Md run-rate revenue, Nvidia $10Md stake = exit liquidity take. OpenAI S-1 expected imminently. Frame as: Jensen wins both sides of the IPO race. (3) Microsoft own-models vs OpenAI dependency — METAPHOR: le mec qui embauche le chef pour qu'il cuisine son propre steak et finit par le virer. (4) CoreWeave $7.5Md debt at 6% junk — casino dealer who won't let you fold. ALGO INSIGHT: Reply velocity in first 60 min = primary ranking signal (15x weight vs likes). Be first on SpaceX / Anthropic / RKLB / ASTS catalyst tweets. DERNIER: format = top performer baseline (41 likes, 10k views). Pattern order: METAPHOR > FR_ANCHOR > RENAME > DIALOGUE. Best hours: 11–12 UTC (7–8 AM ET) and 21–23 UTC (5–7 PM ET)."
+  "rationale": "AI-ONLY ENGLISH MODE (2026-06-03 mandate): All standalone content in ENGLISH. AI-only scope: labs/models/agents, GPU/datacenter/compute, humanoid robots, money-angle AI (Nvidia, Palantir, capex). Space + bourse only through AI lens. Replies match parent language. LINK RULE: Since March 2026 external links in tweet body collapse reach 50-70% — NEVER put URLs in standalone tweets, always drop in first reply. HOTAKE DEDUP: MAX_HOTAKES_PER_DAY cut 50→30 to force quality; same story/URL cannot fire again within 6h — bot was posting Berkeley/Amazon stories 8+ times/day. QUOTE EXECUTION GAP: 28/day actual vs 300 cap — close this gap, every RT candidate becomes a quote or skips entirely. Target 18+ quotes/day. HOT CATALYSTS JUNE 4–15: (1) Anthropic S-1 confidential at $965M run-rate — Nvidia $10B stake = Jensen wins both sides of the IPO race. (2) SpaceX IPO June 11 — $75B raise, $1.75T valuation, RKLB/ASTS contrarian pullback opportunity. (3) Nvidia Vera CPU Q3 — Anthropic/OpenAI/SpaceX first users = Jensen owns every chip in the AI race. (4) Tokenmaxxing fading — Microsoft cancels Claude licenses for Copilot = commoditization signal. (5) SoftBank borrowing at 6% to fund OpenAI burn = leverage METAPHOR. (6) Amazon fires engineers to build AI data centers maintained by AI agents. PATTERN ORDER: METAPHOR > RENAME > DIALOGUE > FR_ANCHOR (FR_ANCHOR only in French replies). ALGO: Reply velocity first 60 min = 15x weight vs likes. Be first on catalyst tweets. DERNIER: format = top performer baseline (41 likes, 10k views). Best hours: 10-12 UTC (6-8 AM ET) and 20-22 UTC (4-6 PM ET)."
 }

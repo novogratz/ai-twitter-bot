@@ -317,7 +317,13 @@
     "LaurineB",
     "CedricLaplace",
     "RomainB",
-    "AlexisTremblay"
+    "AlexisTremblay",
+    "MathieuDuc",
+    "PierreLassonde",
+    "BorisBouissou",
+    "AdrienVernay",
+    "PierreDuchesne",
+    "VincentDutertre"
   ],
   "en": [
     "blablacar",
@@ -1982,6 +1988,36 @@
     {
       "lang": "fr",
       "handle": "AlexisTremblay",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDuc",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLassonde",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisBouissou",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienVernay",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDuchesne",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDutertre",
       "added": "2026-06-04"
     }
   ]

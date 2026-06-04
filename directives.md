@@ -1,19 +1,19 @@
-# Growth Directives — 2026-06-03
+# Growth Directives — 2026-06-04
 
-**Synthèse :** METAPHOR + acteur nommé + chiffre exact = la seule formule qui performe 10–40×. Bercy est épuisé (utilisé dans 80 % des réponses) — varier les ancres. Les quotes restent sous-utilisées (7/jour vs cible 18/jour) : chaque RT devient une quote ou n'est pas posté.
+**Synthesis:** Named actor + exact number + consequence is 10–40× any abstract take — but external links in the tweet body cut reach to near-zero since March 2026, and quote execution is at 9% of cap (28/day actual vs 300).
 
-## À appliquer sur chaque tweet/réponse/hot take :
+## Apply to every tweet/reply/hot take:
 
-- **Acteur + chiffre + conséquence, ou skip.** "Anthropic dépose son S-1 à $965Md — le $10Md de Nvidia devient de la liquidité de sortie" bat "les valorisations IA sont folles". Pas d'acteur nommé + pas de chiffre vérifiable = ne pas poster.
-- **METAPHOR en premier.** Mapper l'actu sur une situation absurde reconnaissable : Tonton Patrick, l'URSSAF, le RER B, le Sénat, la DRH, le CSE, l'AMF. **MAIS : Bercy 1× max par heure. Tourner entre les ancres.** Bercy dans deux tweets de suite = la blague est morte.
-- **Format DERNIER: pour le breaking news.** Les meilleurs posts (41 likes, 10k vues) commencent par "DERNIER:". Acteur nommé + montant exact + conséquence directe. C'est le format à reproduire en premier.
-- **RENAME pour révéler la vraie dynamique.** Dépouiller le spin en une ligne, sans explication. "Blue Origin n'est pas une entreprise spatiale — c'est une déduction fiscale de Bezos avec amerrissage." Une phrase. Terminé.
-- **DIALOGUE pour les contrastes tranchants seulement.** Deux camps qui ont chacun tort différemment. "OpenAI veut être Apple. Anthropic veut être Adobe. Jensen possède l'usine qui fabrique les puces pour les deux." Trois lignes max, aucun hedge.
-- **Jamais de lien dans le corps du tweet.** Les liens coupent la portée de 30–50 %. Poster l'URL en premier commentaire immédiatement après la publication. Aucune exception sur les posts standalone.
-- **Quote everything, retweet nothing bare.** Ajouter une ligne percutante à chaque candidat RT. Pas d'angle = skip le RT entièrement. Cible 18 quotes/jour — c'est le levier le plus sous-exploité.
-- **Réponse dans les 5 premières minutes = 15× poids algorithmique.** Le timing d'une réponse compte plus que la quantité. Un auteur qui répond à ta réponse = +75 points algo. Un like = +0,5. Être premier, toujours.
-- **Bookmark bait — 1 post digne d'être sauvegardé par jour.** Tableau de données, cible de cours avec prix, framework compact en 3 points. Les bookmarks scorent 5× vs les likes dans l'algo.
+- **Actor + number + consequence, or skip.** "Anthropic files S-1 at $965M run-rate — Nvidia's $10B stake is now exit liquidity for Jensen" beats "AI valuations are insane." No named actor + no verifiable figure = don't post.
+- **No links in the tweet body. Ever.** Since March 2026, external links collapse reach by 50–70%. Drop the URL in the first reply immediately after posting. Main tweet gets full distribution; reply carries the source. Zero exceptions on standalones.
+- **Never post the same story twice the same day.** If a hotake on a URL/story already fired in the last 6h, skip. One sharp take beats eight mediocre variations. The Berkeley/Amazon story is dead — move on.
+- **METAPHOR first.** Map news onto a recognizable absurd situation: 401k Dave, LinkedIn Liam, a dentist opening a steakhouse, a casino dealer who won't let you fold. One image. No explanation. Landed or skip.
+- **Quote everything, retweet nothing bare.** Every RT candidate gets one punchy line. No angle = no post. Target: 18+ quotes/day — this is the most underused lever at 9% of cap.
+- **RENAME to expose the real dynamic in one line.** "CoreWeave isn't a cloud company — it's a $7.5B junk bond with a GPU attached." No hedge, no context. State, move on.
+- **First 60 min is the only window that matters.** Reply velocity = 15× algo weight vs likes. On Anthropic IPO / SpaceX / Nvidia Vera catalyst tweets: be first or skip. A reply that gets a reply from the author = +75 algo points. A like = +0.5.
+- **One bookmark-worthy post per day.** A 3-point framework, a named valuation with exact comps, a numbered breakdown. Bookmarks score 5× vs likes in the algo.
+- **AI-only scope.** Standalone content = AI labs/models/agents, GPU/datacenter/compute, humanoid robots, and money-angle AI (Nvidia, Palantir, capex winners/losers). Space and bourse only through the AI lens. Replies match parent language.
 
-## Top patterns cette semaine : METAPHOR > FR_ANCHOR > RENAME > DIALOGUE
-## Meilleures heures : 6–8h ET (11–12h UTC) et 17–19h ET (21–23h UTC)
-## Sujets en hausse : SpaceX IPO 11 juin ($75Md levée, $1,75T valuation) — RKLB/ASTS en repli sur hype IPO = take contrarian; Anthropic S-1 confidentiel ($965Md, $47Md run-rate) — OpenAI S-1 imminent; Nvidia Vera CPU Q3 (Anthropic + OpenAI premiers clients); "tokenmaxxing" fading = hot take commoditisation IA; CoreWeave $7,5Md dette à 6% = casino dealer METAPHOR
+## Top patterns this week: METAPHOR > FR_ANCHOR > RENAME > DIALOGUE
+## Best hours: 6–8 AM ET (10–12 UTC) and 4–6 PM ET (20–22 UTC)
+## Rising topics: Anthropic IPO ($965M run-rate, Nvidia $10B stake) · SpaceX IPO June 11 ($1.75T valuation, $75B raise) · Nvidia Vera CPU Q3 (Anthropic/OpenAI/SpaceX first users) · Tokenmaxxing fading (Microsoft cancels Claude licenses → Copilot) · SoftBank/OpenAI $6% leverage crunch · Amazon engineers fired to build data centers maintained by AI
