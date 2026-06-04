@@ -444,36 +444,33 @@ EXEMPLES SAVAGE (sur l'idée/marché/hype, JAMAIS la personne):
 
 {skip_urls_section}
 
-RECHERCHES — lance ces recherches dans cet ordre, FRANÇAIS D'ABORD.
-⚠️ OBLIGATOIRE: ajoute `since:{since_date}` à CHAQUE requête. Sans ce filtre = vieux tweets, cycle gâché.
+SEARCHES — AI ONLY (rebrand → AI Decoder). Run in this order, ENGLISH FIRST.
+⚠️ MANDATORY: add `since:{since_date}` to EVERY query. No filter = old tweets = wasted cycle.
 
-🇫🇷 ESPACE FR (priorité absolue):
-1. "site:x.com SpaceX OR Starship OR Starlink lang:fr since:{since_date}"
-2. "site:x.com fusée OR satellite OR CNES OR Ariane lang:fr since:{since_date}"
-3. "site:x.com espace OR spatial OR Lune OR Mars lang:fr since:{since_date}"
-4. "site:x.com NASA OR ESA OR Rocket Lab OR tourisme spatial lang:fr since:{since_date}"
-5. "site:x.com from:CNES OR from:ArianeGroup OR from:ESA_FR lang:fr since:{since_date}"
+🌍 AI EN — labs / models / agents (top priority):
+1. "site:x.com OpenAI OR Anthropic OR xAI OR \"GPT-5\" since:{since_date}"
+2. "site:x.com ChatGPT OR Claude OR Gemini OR Grok OR Llama since:{since_date}"
+3. "site:x.com \"AI agents\" OR \"agentic AI\" OR \"reasoning model\" since:{since_date}"
+4. "site:x.com AGI OR superintelligence OR \"AI safety\" OR \"AI alignment\" since:{since_date}"
+5. "site:x.com from:OpenAI OR from:AnthropicAI OR from:sama OR from:karpathy since:{since_date}"
 
-🇫🇷 IA FR:
-6. "site:x.com IA OR ChatGPT OR Mistral OR OpenAI lang:fr since:{since_date}"
-7. "site:x.com Claude OR Anthropic OR Gemini OR Nvidia lang:fr since:{since_date}"
-8. "site:x.com robot OR robotique OR humanoïde lang:fr since:{since_date}"
-9. "site:x.com from:arthurmensch OR from:GuillaumeLample OR from:vision_ia lang:fr since:{since_date}"
-10. "site:x.com from:Korben OR from:presse_citron OR from:numerama lang:fr since:{since_date}"
+🌍 AI EN — compute / chips / infra:
+6. "site:x.com Nvidia OR GPU OR \"AI datacenter\" OR \"AI capex\" since:{since_date}"
+7. "site:x.com \"AI chip\" OR TPU OR Broadcom OR CoreWeave since:{since_date}"
+8. "site:x.com \"humanoid robot\" OR \"embodied AI\" OR Figure OR \"Tesla Optimus\" since:{since_date}"
+9. "site:x.com from:ylecun OR from:demishassabis OR from:drfeifei OR from:AndrewYNg since:{since_date}"
 
-🇫🇷 INVESTISSEMENT FR:
-11. "site:x.com Bitcoin OR crypto OR Ethereum lang:fr since:{since_date}"
-12. "site:x.com investissement OR bourse OR action OR ETF lang:fr since:{since_date}"
-13. "site:x.com from:NCheron_bourse OR from:ABaradez OR from:GoodValYou lang:fr since:{since_date}"
-14. "site:x.com from:Finary OR from:SnowballEcho OR from:Yoann_Lopez_ lang:fr since:{since_date}"
+🌍 AI EN — money angle (AI stocks):
+10. "site:x.com Palantir OR \"AI stock\" OR \"AI bubble\" OR \"AI valuation\" since:{since_date}"
+11. "site:x.com \"AI startup\" OR \"AI funding\" OR \"AI round\" OR \"AI IPO\" since:{since_date}"
 
-🌍 EN (breaking news only — impactful angles):
-15. "site:x.com from:SpaceX OR from:elonmusk OR from:RocketLab since:{since_date}"
-16. "site:x.com from:NASA OR from:NASAArtemis OR from:ASTSpaceMobile since:{since_date}"
-17. "site:x.com from:OpenAI OR from:AnthropicAI OR from:sama since:{since_date}"
-18. "site:x.com from:unusual_whales OR from:KobeissiLetter OR from:Palantir since:{since_date}"
+🇫🇷 AI FR (tail — reply to French AI threads in French):
+12. "site:x.com IA OR ChatGPT OR Mistral OR OpenAI lang:fr since:{since_date}"
+13. "site:x.com Claude OR Anthropic OR \"agents IA\" OR Nvidia lang:fr since:{since_date}"
+14. "site:x.com from:arthurmensch OR from:GuillaumeLample OR from:Korben lang:fr since:{since_date}"
 
-VISE 70%+ de réponses sur des tweets FRANÇAIS — c'est là qu'on convertit les followers FR. Les tweets EN uniquement si la news est ÉNORME ou si le fil est très actif.
+EVERYTHING IS ABOUT AI. Skip any tweet that is not about AI (no pure space, no
+generic markets/crypto unless it's the AI trade). Reply in the tweet's language.
 
 TYPE: Tout en "reply". Pas de quote tweets. Réponds directement.
 
@@ -604,8 +601,9 @@ def generate_replies(recent_topics=None, already_replied=None):
     if mood:
         discovered_section = (discovered_section or "") + "\n\n" + mood
     # Hand-curated ideological core (core_identity.md) — voice anchor.
-    # Reply agent targets FR tweets exclusively (lang:fr queries), so FR identity.
-    core_identity = personality_store.render_core_identity(lang="fr")
+    # Reply agent is English-first (AI Decoder rebrand); identity in EN, but the
+    # prompt still tells it to reply in each tweet's own language.
+    core_identity = personality_store.render_core_identity(lang="en")
     if core_identity:
         discovered_section = (discovered_section or "") + "\n\n" + core_identity
     discovered_section = (discovered_section or "") + "\n\n" + personality_store.hard_rules_block()

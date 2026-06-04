@@ -29,13 +29,11 @@ QUOTE_QUERIES = [
     "Nvidia OR NVDA OR GPU OR \"compute cluster\" OR datacenter lang:en min_faves:100",
     "robotics OR \"humanoid robot\" OR \"Figure\" OR \"Boston Dynamics\" OR \"1X\" lang:en min_faves:100",
     "Mistral OR xAI OR \"Hugging Face\" OR \"open source AI\" lang:en min_faves:50",
-    # Markets / crypto
-    "Bitcoin OR BTC OR \"BTC ETF\" OR crypto lang:en min_faves:200",
-    "Palantir OR PLTR OR \"AI stock\" OR \"tech earnings\" OR \"S&P 500\" lang:en min_faves:100",
-    "Fed OR CPI OR inflation OR \"rate cut\" OR macro lang:en min_faves:200",
-    # Space
-    "SpaceX OR Starlink OR Starship OR \"Falcon 9\" lang:en min_faves:100",
-    "\"Rocket Lab\" OR RKLB OR NASA OR Artemis OR satellite lang:en min_faves:50",
+    "AGI OR superintelligence OR \"AI safety\" OR \"AI alignment\" lang:en min_faves:50",
+    "\"AI datacenter\" OR \"AI capex\" OR \"AI power\" OR \"compute cluster\" lang:en min_faves:100",
+    # AI money angle (AI stocks = the lens, no generic markets/space)
+    "Nvidia OR NVDA OR \"AI bubble\" OR \"AI trade\" OR \"AI valuation\" lang:en min_faves:200",
+    "Palantir OR PLTR OR \"AI stock\" OR \"AI startup\" OR \"AI funding\" lang:en min_faves:100",
 ]
 
 QUOTE_PROMPT = """You are @AISpaceDecoder. You will QUOTE-TWEET this tweet:

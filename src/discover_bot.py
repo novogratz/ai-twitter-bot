@@ -20,35 +20,30 @@ AUTO_FOLLOW_CATEGORIES = {"ai", "crypto", "bourse"}
 # Find + engage NEW English-speaking accounts: AI first, then markets/crypto,
 # then space. Small FR tail keeps a few French anchors in the pool.
 DISCOVERY_QUERIES = [
-    # AI (priority)
-    "AI founder OR AI startup OR AI developer lang:en",
-    "OpenAI OR Anthropic OR Claude OR ChatGPT OR Mistral lang:en",
-    "machine learning OR LLM OR \"AI agents\" OR \"frontier model\" lang:en",
-    "Nvidia OR GPU OR \"AI chip\" OR datacenter OR compute lang:en",
-    "robotics OR humanoid OR \"Figure\" OR \"frontier tech\" lang:en",
-    "\"AI infrastructure\" OR \"AI stock\" OR Palantir OR CoreWeave lang:en",
-    # Markets / crypto
-    "stock market OR \"S&P 500\" OR NASDAQ OR \"tech earnings\" lang:en",
-    "Bitcoin OR BTC OR crypto OR Ethereum OR \"BTC ETF\" lang:en",
-    "macro OR Fed OR inflation OR \"interest rates\" lang:en",
-    "VC OR venture capital OR \"tech IPO\" OR \"Series A\" lang:en",
-    # Space
-    "SpaceX OR Starship OR Starlink OR \"Rocket Lab\" lang:en",
-    "space tech OR aerospace OR satellite OR NASA OR Artemis lang:en",
-    # FR tail — a few French anchors for a diverse follow pool
-    "IA OR ChatGPT OR Mistral OR Nvidia lang:fr",
-    "bourse OR Bitcoin OR investissement lang:fr",
+    # AI-ONLY (2026-06-03 rebrand → AI Decoder): find AI builders, researchers,
+    # founders, and AI-stock/infra voices. English-first, small FR-AI tail.
+    "AI founder OR \"AI startup\" OR \"AI developer\" OR \"AI researcher\" lang:en",
+    "OpenAI OR Anthropic OR Claude OR ChatGPT OR Mistral OR xAI lang:en",
+    "\"machine learning\" OR LLM OR \"AI agents\" OR \"frontier model\" lang:en",
+    "Nvidia OR GPU OR \"AI chip\" OR \"AI datacenter\" OR compute lang:en",
+    "\"humanoid robot\" OR \"embodied AI\" OR Figure OR \"frontier tech\" lang:en",
+    "\"AI infrastructure\" OR \"AI stock\" OR Palantir OR CoreWeave OR \"AI capex\" lang:en",
+    "AGI OR superintelligence OR \"AI safety\" OR \"AI alignment\" lang:en",
+    "\"AI funding\" OR \"AI round\" OR \"AI IPO\" OR \"AI valuation\" lang:en",
+    # FR AI tail
+    "IA OR ChatGPT OR Mistral OR \"intelligence artificielle\" lang:fr",
+    "\"agents IA\" OR Nvidia OR \"modèle IA\" OR LLM lang:fr",
 ]
 
 DYNAMIC_LIVE_QUERY_SEEDS = [
     "OpenAI OR Anthropic OR Claude OR ChatGPT OR Mistral lang:en",
-    "AI agents OR LLM OR \"frontier model\" lang:en",
-    "Nvidia OR GPU OR datacenter OR \"AI stock\" lang:en",
-    "Bitcoin OR BTC OR Ethereum OR crypto lang:en",
-    "stock market OR \"S&P 500\" OR NASDAQ OR Fed lang:en",
-    "SpaceX OR Starship OR Starlink OR \"Rocket Lab\" lang:en",
-    "AI startup OR \"tech IPO\" OR VC funding lang:en",
-    "robotics OR humanoid OR \"frontier tech\" lang:en",
+    "\"AI agents\" OR LLM OR \"frontier model\" OR \"reasoning model\" lang:en",
+    "Nvidia OR GPU OR \"AI datacenter\" OR \"AI stock\" lang:en",
+    "\"humanoid robot\" OR \"embodied AI\" OR Figure lang:en",
+    "AGI OR superintelligence OR \"AI safety\" lang:en",
+    "\"AI startup\" OR \"AI funding\" OR \"AI IPO\" lang:en",
+    "Palantir OR CoreWeave OR \"AI capex\" OR \"AI bubble\" lang:en",
+    "\"AI chip\" OR TPU OR Broadcom OR AMD lang:en",
 ]
 
 DYNAMIC_HOT_QUERY_SEEDS = [

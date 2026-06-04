@@ -192,24 +192,16 @@ FEED_REPOST_SEARCH_QUERIES = [
     "Nvidia OR GPU OR \"compute cluster\" OR semiconductor lang:en min_faves:200",
     "\"AI agents\" OR \"agentic AI\" OR \"multi-agent\" lang:en min_faves:100",
     "\"AI datacenter\" OR \"power demand\" OR megawatt OR gigawatt lang:en min_faves:100",
-    "robotics OR \"humanoid robot\" OR \"Figure\" OR \"Boston Dynamics\" lang:en min_faves:100",
-    "CoreWeave OR CRWV OR APLD OR IREN lang:en min_faves:50",
-    # Space — launches, landings, major events (highest priority)
-    "liftoff OR \"launch successful\" OR \"in orbit\" OR splashdown lang:en min_faves:100",
-    "Starship OR \"Falcon 9\" OR \"New Glenn\" OR \"Vulcan\" launch lang:en min_faves:100",
-    "SpaceX OR Starlink OR \"Rocket Lab\" lang:en min_faves:200",
-    "NASA OR Artemis OR \"moon mission\" OR \"Mars mission\" lang:en min_faves:100",
-    "\"Blue Origin\" OR \"Virgin Galactic\" OR \"space tourism\" lang:en min_faves:100",
-    "\"AST SpaceMobile\" OR ASTS OR LUNR OR \"space stock\" lang:en min_faves:50",
-    "\"Golden Dome\" OR USSF OR \"space defense\" OR hypersonic lang:en min_faves:100",
-    "ESA OR CNES OR Ariane OR \"commercial space\" lang:en min_faves:100",
-    "satellite OR orbital OR \"space launch\" OR \"launch vehicle\" lang:en min_faves:200",
-    "Mars OR lunar OR moon OR \"space station\" OR ISS lang:en min_faves:300",
-    "\"Amazon Kuiper\" OR \"satellite internet\" OR Starlink competitor lang:en min_faves:200",
-    # Investment
-    "Bitcoin OR BTC OR \"BTC ETF\" OR \"crypto ETF\" lang:en min_faves:500",
-    "\"tech earnings\" OR \"Nvidia earnings\" OR \"AI valuation\" lang:en min_faves:300",
-    "Palantir OR PLTR OR \"AI stock\" OR \"space stock\" lang:en min_faves:200",
+    "robotics OR \"humanoid robot\" OR \"Figure\" OR \"Boston Dynamics\" OR \"Tesla Optimus\" lang:en min_faves:100",
+    "CoreWeave OR CRWV OR \"AI capex\" OR \"AI infrastructure\" lang:en min_faves:50",
+    # AI-ONLY (2026-06-03 rebrand → AI Decoder). No space, no generic markets.
+    "AGI OR superintelligence OR \"AI safety\" OR \"AI alignment\" lang:en min_faves:100",
+    "Mistral OR \"Hugging Face\" OR \"open weights\" OR \"open source AI\" lang:en min_faves:50",
+    "\"AI chip\" OR TPU OR Broadcom OR AMD OR \"inference\" lang:en min_faves:100",
+    "OpenAI OR Anthropic funding OR \"AI round\" OR \"AI valuation\" lang:en min_faves:100",
+    # AI money angle (AI stocks only — the lens, not generic markets)
+    "Nvidia earnings OR \"Nvidia\" OR \"AI bubble\" OR \"AI trade\" lang:en min_faves:300",
+    "Palantir OR PLTR OR \"AI stock\" OR \"AI capex\" lang:en min_faves:200",
 ]
 
 

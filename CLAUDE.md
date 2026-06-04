@@ -4,12 +4,15 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
-> **Mandate 2026-06-03 (CURRENT — supersedes the French revert):** Back to **ENGLISH-primary**.
-> All standalone content (news, hot takes, breakouts, spicy, threads, quotes, reposts) generates
-> in ENGLISH; replies still match the parent post's language. AI is the lead pillar (~60%), then
-> markets/bourse, then space. Lead with the take (opinion/contrarian angle), bury the news inside.
-> Growth mode on (`ENABLE_FOLLOW_BLAST=1`, `FOLLOW_ENFORCE_RATIO=0`). Set `CONTENT_LANG_PRIMARY`
-> to switch. The 48h repost-freshness rule + no-near-term-price-target validator stay.
+> **Mandate 2026-06-03 (CURRENT — full rebrand → "The AI Decoder"):** **AI-ONLY**, English.
+> The account is now a pure AI account. ALL content is about AI: labs/models/agents,
+> compute/GPU/datacenters/AI-power, embodied AI (humanoid robots), and the MONEY angle on AI
+> (Nvidia/Palantir/AI-capex, winners/losers, the bubble debate). NO standalone space, NO generic
+> markets/crypto except through the AI lens. Standalone content in ENGLISH; replies match the
+> parent's language. Lead with the take (opinion/contrarian angle), bury the news inside. Go hard
+> on replies + retweets/quotes of viral AI posts ≤48h old. Growth mode on (`ENABLE_FOLLOW_BLAST=1`,
+> `FOLLOW_ENFORCE_RATIO=0`). Discovery (replies/retweets/quotes/follows) is AI-only. The 48h
+> repost-freshness rule + no-near-term-price-target validator stay. Goal: 10k followers fast.
 >
 > **Mandate 2026-06-02 (superseded by the line above):** Full revert to **French**.
 > Brand = 🚀 The AI & Space Decoder ⚡, 3 pillars (AI / Space / Investment) unchanged.
