@@ -127,9 +127,24 @@ _NEAR_TERM_RE = re.compile(
 
 
 def has_near_term_price_target(text: str) -> bool:
-    """True if the text pairs a price/multiplier with a near-term timeframe."""
+    """True only when a price/multiplier sits CLOSE TO a near-term timeframe —
+    a real 'X to $Y by Friday' prediction — not merely both present somewhere
+    in the post.
+
+    Bug 2026-06-04: the loose any-price AND any-timeframe check was a false
+    positive on normal news ('$75B IPO ... this year', 'raised $40M ... today')
+    and was silently SKIPPING most posts at the chokepoint — the #1 reason post
+    volume cratered. Now we require them within PROXIMITY_CHARS of each other.
+    """
     t = text or ""
-    return bool(_PRICE_RE.search(t) and _NEAR_TERM_RE.search(t))
+    PROXIMITY_CHARS = 40
+    price_pos = [m.start() for m in _PRICE_RE.finditer(t)]
+    if not price_pos:
+        return False
+    near_pos = [m.start() for m in _NEAR_TERM_RE.finditer(t)]
+    if not near_pos:
+        return False
+    return any(abs(p - n) <= PROXIMITY_CHARS for p in price_pos for n in near_pos)
 
 
 # --- language detection ---------------------------------------------------

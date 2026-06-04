@@ -124,9 +124,11 @@ DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
 # 8 min, spicy every 20 min, threads) — it strangled the whole content engine
 # down to 3 posts/day. 30/day + 10-min spacing lets the per-surface daily caps
 # (MAX_NEWS/HOTAKES/SPICY/BREAKOUTS_PER_DAY) be the real governors again.
-MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "30"))
-MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(10 * 60)))
-POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(5 * 60)))
+# 2026-06-04: volume restored (operator: "you used to do 50 posts/day, now 6").
+# 60/day + 6-min spacing → ~50/day reachable across all original surfaces.
+MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "60"))
+MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(6 * 60)))
+POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(3 * 60)))
 
 # Quote-reposts (quote-tweet-with-comment on big news) — operator-confirmed
 # 2026-06-02 as the highest-ROI surface ("this works a lot"). Run it HOT:
@@ -147,8 +149,10 @@ MAX_REPLIES_PER_DAY = int(os.environ.get("MAX_REPLIES_PER_DAY", "1000"))
 # Spacing lowered so 700/day is actually reachable during active hours (at
 # 90s+jitter the day capped out around ~480). 60s floor + 45s jitter keeps a
 # human-like gap with no bursts while allowing high volume.
-MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", "40"))
-REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "30"))
+# 2026-06-04: lowered 40→20s so reply throughput climbs back toward ~360/day
+# (the 40s floor was capping daily replies too hard across the shared budget).
+MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", "20"))
+REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "15"))
 REPLY_LANGUAGE_MATCH = os.environ.get("REPLY_LANGUAGE_MATCH", "1") == "1"
 
 # Following policy (2026-06-03 GROWTH MODE — operator: "lots of unfollow, not
