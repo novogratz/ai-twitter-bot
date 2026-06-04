@@ -34,6 +34,12 @@ QUOTE_QUERIES = [
     # AI money angle (AI stocks = the lens, no generic markets/space)
     "Nvidia OR NVDA OR \"AI bubble\" OR \"AI trade\" OR \"AI valuation\" lang:en min_faves:200",
     "Palantir OR PLTR OR \"AI stock\" OR \"AI startup\" OR \"AI funding\" lang:en min_faves:100",
+    # Investment / stocks / markets (~30%)
+    "\"S&P 500\" OR Nasdaq OR \"tech earnings\" OR \"stock market\" OR \"AI stock\" lang:en min_faves:200",
+    "Fed OR CPI OR \"rate cut\" OR \"interest rates\" OR macro lang:en min_faves:200",
+    # Bitcoin / crypto (bearish troll fodder)
+    "Bitcoin OR BTC OR \"BTC ETF\" OR crypto OR Ethereum lang:en min_faves:300",
+    "\"Bitcoin crash\" OR \"crypto crash\" OR \"BTC dump\" OR \"crypto bubble\" lang:en min_faves:100",
 ]
 
 QUOTE_PROMPT = """You are @AIAlphaDecode. You will QUOTE-TWEET this tweet:

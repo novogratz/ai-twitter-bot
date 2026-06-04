@@ -202,6 +202,12 @@ FEED_REPOST_SEARCH_QUERIES = [
     # AI money angle (AI stocks only — the lens, not generic markets)
     "Nvidia earnings OR \"Nvidia\" OR \"AI bubble\" OR \"AI trade\" lang:en min_faves:300",
     "Palantir OR PLTR OR \"AI stock\" OR \"AI capex\" lang:en min_faves:200",
+    # Investment / stocks / markets (~30%)
+    "\"S&P 500\" OR Nasdaq OR \"tech earnings\" OR \"stock market\" lang:en min_faves:300",
+    "Fed OR CPI OR \"rate cut\" OR \"interest rates\" lang:en min_faves:300",
+    # Bitcoin / crypto (bearish angle on quote, plain RT for big moves)
+    "Bitcoin OR BTC OR \"BTC ETF\" OR crypto lang:en min_faves:500",
+    "\"Bitcoin crash\" OR \"crypto crash\" OR \"BTC dump\" lang:en min_faves:200",
 ]
 
 
