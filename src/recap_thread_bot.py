@@ -143,9 +143,7 @@ LAST TWEET (the close — invite to follow + tease next week):
 RULES:
 - Each tweet ≤ 270 characters.
 - No em dashes (—). Simple hyphens or commas.
-- Ancres FR autorisées et bienvenues quand elles tombent juste (Bercy, RER B,
-  syndicat, BFM, PEL, Livret A). Jamais forcées.
-- 100% français.
+- 100% English. AI-only (The AI Decoder).
 - No decorative emoji except 📅 in tweet 1 and 👇 in the head.
 - Output: just the tweets separated by "---", nothing else.
 """

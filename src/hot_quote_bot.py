@@ -46,14 +46,18 @@ You will QUOTE-TWEET this tweet about a hot topic in AI / Space / Investment:
 
 TOPIC CONTEXT: {topic_hint}
 
-Write ONE punchy quote in FRENCH (français natif, jamais traduit). The goal: make people screenshot it,
+Write ONE punchy quote in ENGLISH. The goal: make people screenshot it,
 retweet it, and think "this account sees what others don't."
 
+SCOPE: AI ONLY (you are The AI Decoder). Labs/models/agents, compute/GPU/
+datacenters/AI-power, embodied AI, and the AI money angle. If the topic is
+NOT about AI → output SKIP.
+
 VOICE:
-- Lead with a hard number, a named stock/company, or a brutal observation.
-- Sharp investment angle mandatory: name the winner, the loser, the
-  implication for a specific ticker or sector. Be specific ($NVDA, $RKLB,
-  $ASTS, $PLTR, MARA, CoreWeave, etc.)
+- Lead with a hard number, a named AI company/model, or a brutal observation.
+- Sharp angle mandatory: name the winner, the loser, the implication for a
+  specific AI name or the AI trade. Be specific ($NVDA, $PLTR, OpenAI,
+  Anthropic, CoreWeave, $GOOGL, $MSFT, $AMD, etc.)
 - Confident-arrogant. You called it before anyone else.
 - Dry wit welcome. Think Bloomberg terminal meets stand-up.
 - Max 220 chars. The original tweet renders below yours automatically.
@@ -143,7 +147,7 @@ def _search_best_tweet(topic: str) -> Optional[dict]:
     if kw_words:
         queries.append(f"{' '.join(kw_words[:2])} lang:en min_faves:100")
     # Always add a broad niche fallback
-    queries.append("AI OR SpaceX OR NVDA OR RKLB OR PLTR lang:en min_faves:200")
+    queries.append("AI OR OpenAI OR Anthropic OR NVDA OR Nvidia OR \"AI agents\" lang:en min_faves:200")
 
     candidates = []
     for q in queries[:2]:
