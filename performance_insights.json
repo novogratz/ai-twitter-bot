@@ -1,51 +1,51 @@
 {
-  "generated_at": "2026-06-04T04:25:14.018199",
-  "window_7d_actions": 2935,
-  "window_24h_actions": 429,
+  "generated_at": "2026-06-04T14:29:29.813977",
+  "window_7d_actions": 3014,
+  "window_24h_actions": 387,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2863
-    },
-    {
-      "pattern": "METAPHOR",
-      "count": 22
+      "count": 2939
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 20
+      "count": 22
+    },
+    {
+      "pattern": "METAPHOR",
+      "count": 21
+    },
+    {
+      "pattern": "DIALOGUE",
+      "count": 11
     },
     {
       "pattern": "RENAME",
       "count": 10
-    },
-    {
-      "pattern": "DIALOGUE",
-      "count": 10
     }
   ],
   "worst_patterns": [
-    {
-      "pattern": "REPETITION",
-      "count": 1
-    },
     {
       "pattern": "EN_ANCHOR",
       "count": 3
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 6
+      "count": 8
+    },
+    {
+      "pattern": "RENAME",
+      "count": 10
     }
   ],
   "best_hours_utc": [
     {
       "hour": 10,
-      "actions": 195
+      "actions": 211
     },
     {
       "hour": 11,
-      "actions": 192
+      "actions": 204
     },
     {
       "hour": 20,
@@ -63,68 +63,68 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1067
+      "count": 1100
     },
     {
       "topic": "Autre",
-      "count": 971
+      "count": 988
     },
     {
       "topic": "Spatial",
-      "count": 526
+      "count": 547
     },
     {
       "topic": "Bourse",
-      "count": 412
+      "count": 434
     },
     {
       "topic": "Crypto",
-      "count": 361
+      "count": 374
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Bourse",
-      "24h_rate": 0.205,
-      "7d_rate": 0.14
+      "24h_rate": 0.204,
+      "7d_rate": 0.144
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1984
+      "count": 2067
     },
     {
       "type": "retweet",
-      "count": 679
+      "count": 671
     },
     {
       "type": "hotake",
-      "count": 197
+      "count": 207
     },
     {
       "type": "post",
-      "count": 47
+      "count": 39
     },
     {
       "type": "quote",
-      "count": 28
+      "count": 30
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-04T04:23:48.701238",
-      "text": "Amazon fires Seattle engineers to build AI data centers, then hires the AI agents to maintain them.\n\nThe laid-off dev pays for the GPU that replaced him. The GPU is hosted by Amazon Web Services. Amazon is buying back stock with the margin squeeze.\n\nThe circle of life is just a q",
-      "type": "hotake"
-    },
-    {
-      "ts": "2026-06-04T04:22:46.112637",
-      "text": "Trump taxera les roquettes.\n\nAriane 6 à 115 millions. La France paie 65 % de prime pour la fierté.\nStarship à moins de 100 $/kg. El Musk paie la facture.",
+      "ts": "2026-06-04T14:28:49.258869",
+      "text": "les meilleures thèses macro commencent là où les analystes ne cherchent pas — et ironiquement, toi t'as probablement accès à un signal que la plupart des gérants de fonds n'ont jamais regardé: les données de recherche. q",
       "type": "reply"
     },
     {
-      "ts": "2026-06-04T04:14:03.121890",
-      "text": "BFM demande l'action star.\n\nLe marché s'en fout, sauf si c'est Nvidia ou le SPY.\n\nLe CAC 40, c'est juste la décoration du salon.",
+      "ts": "2026-06-04T14:28:26.210887",
+      "text": "c'est la friction classique entre mandat légal et consensus de bon sens: la BCE a un objectif statutaire sur l'inflation, pas sur la croissance — donc \"tout le monde est d'accord que c'est une erreur\" n'entre littéraleme",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-06-04T14:22:34.836759",
+      "text": "L'Occitanie fait sa révolution verte. La France fait ses chaises.\nOn est passés de Colbert à la géothermie. Le progrès avance. Lentement.",
       "type": "reply"
     }
   ]
