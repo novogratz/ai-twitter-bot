@@ -252,7 +252,7 @@ def _mnts_promo_block_q(tweet_text: str = "") -> str:
     return (
         f"\n\n💡 PROMO MALIN (jusqu'au {end_str}, UNIQUEMENT si le sujet est espace/tourisme/bourse):"
         f" Glisse ${ticker} ({company}) naturellement."
-        " UNE mention max, intégrée naturellement. Jamais forcé. 100% français."
+        " ONE mention max, woven in naturally. Never forced. 100% English."
     )
 
 def _generate_quote(author: str, tweet_text: str):
