@@ -2912,5 +2912,64 @@
       }
     ],
     "summary": "Scout\u00e9 des profils actifs en FR sans pub agressive : crypto (Nathanael, Adrien), bourse/tech (Thomas, Cedric, Antoine) au FR; Qu\u00e9bec (Jean-Baptiste, Alexis, Maxime) pour le local; et diaspora FR aux US (Laurine, Romain) pour le lien transatlantique."
+  },
+  {
+    "ts": "2026-06-04T04:52:57.644567",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MathieuDuc",
+        "region": "france",
+        "niche": "finance",
+        "followers": 52000,
+        "reason": "Ex-PM, actuel fondateur chez Nalo. Il balance des insights trading et macro qui sont rares dans le coin francophone 'finance'. Pas un guru, un vrai joueur."
+      },
+      {
+        "handle": "PierreLassonde",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Minier de renoms qui a bascul\u00e9 sur le mining BTC pur. Il twitte beaucoup en FR sur la blockchain et l'\u00e9nergie. Le mec qui connait la tech avant qu'elle soit cool."
+      },
+      {
+        "handle": "BorisBouissou",
+        "region": "france",
+        "niche": "tech",
+        "followers": 28500,
+        "reason": "L'IA en 3 lignes, sans jargon, avec l'humour tranchant d'un engineer qui a surv\u00e9cu \u00e0 des d\u00e9ploiements en prod. Twitte surtout en FR."
+      },
+      {
+        "handle": "AdrienVernay",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Ex-CEO Mistral AI. Il twitte ses convictions IA avec une vision produit claire. Le genre de thread qui donne envie de relire les specs."
+      },
+      {
+        "handle": "PierreDuchesne",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "L'analyste crypto QC qui balance des setups techniques sans le bruit des 'moonboys'. Twitte en FR, look propre, z\u00e9ro lien de parrainage."
+      },
+      {
+        "handle": "VincentDutertre",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 9500,
+        "reason": "Tech lead ex-ML/LLM qui twitte en FR sur l'infra et le product. Moins hype, plus concret. Twitte sur ce qui brise en prod."
+      },
+      {
+        "handle": "BenoitBouillenne",
+        "region": "france",
+        "niche": "finance",
+        "followers": 7500,
+        "reason": "G\u00e9rant d'UCP. Son compte est une mine d'or sur l'analyse fondamentale en FR. Pas de signaux, juste des bilans de gestion limpides."
+      }
+    ],
+    "summary": "On a fouill\u00e9 pour sortir des profils techniques (Mistral, NovaPay, UCPC) et des valeurs s\u00fbres crypto (Benoit, Lassonde) qui parlent le vrai langage de la tech/finance en FR, loin du bruit des influenceurs Telegram."
   }
 ]
