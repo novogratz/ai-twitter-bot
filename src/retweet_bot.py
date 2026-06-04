@@ -926,8 +926,9 @@ def run_retweet_cycle():
                 continue
             if _handle_from_url(url) == _OWN_HANDLE:
                 continue
-            if _scrape_age_hours(t) > MAX_CANDIDATE_AGE_HOURS:  # ≤48h only
-                continue
+            # NOTE: must-repost bypasses the 48h freshness rule (operator
+            # mandate 2026-06-04): we repost ALL of @TheBTCTherapist's posts
+            # regardless of age. Dedup still prevents reposting the same one.
             retweeted.add(url)
             _save_retweeted(retweeted)
             try:
