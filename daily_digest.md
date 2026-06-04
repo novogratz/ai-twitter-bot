@@ -469,3 +469,12 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top reply targets: @CryptoastMedia=13, @LeJournalDuCoin=11, @coinacademy_fr=11, @Frandroid=9, @BFMBourse=9
 
 **Followers we follow** (running total): 166
+
+## 2026-06-03
+
+**Activity** — total actions: 455
+  - by type: reply=397, hotake=50, post=4, quote=4
+  - top sources: PROFILE-ALWAYS=162, SEARCH-HOT=81, PROFILE-FR=48, PROFILE-EN=35, FOLLOWING=24, FEED=21, MEGA=15, EARLYBIRD=6
+  - top reply targets: @Frandroid=19, @unusual_whales=14, @LaTribune=12, @LesEchos=12, @Numerama=12
+
+**Followers we follow** (running total): 166

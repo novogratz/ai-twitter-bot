@@ -1,15 +1,14 @@
-# YouTube brief — 2026-06-03
+# YouTube brief — 2026-06-04
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **553**
-- reply: **450**
-- retweet: **60**
-- hotake: **37**
+- Total actions logged: **423**
+- reply: **361**
+- hotake: **54**
+- post: **4**
 - quote: **4**
-- post: **2**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -1496,33 +1495,30 @@ Timberrrrrrrrrrrrrrrr
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Kalshi]** INFO URGENTE : Le PDG de Nvidia déclare qu'il s'attend à restituer 50 % des flux de trésorerie disponibles aux actionnaires
-  - https://x.com/Kalshi/status/2061796440888807599
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/NVIDIA]** À #MSBuild, @Microsoft et NVIDIA ont dévoilé une pile de bout en bout pour les développeurs qui mettent à l’échelle l’IA agentique, des appareils Windows au clo
-  - https://x.com/nvidia/status/2061885990705271191
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/NVIDIA]** Nous nous associons à @Microsoft pour permettre une IA sécurisée et contrôlée par l'utilisateur sur Windows.
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Elon Musk]** The intelligence of this hive-mind will improve significantly as signal/noise, effective cross-linking of tweets & speed of tweets all improve
+  - https://x.com/elonmusk/status/1599382943893319680
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Tesla AI]** These video foundation models will serve as the brain of both the car & Optimus robot 
 
-Le runtime NVIDIA OpenShell pour les agents fourni
-  - https://x.com/nvidia/status/2061961069212377313
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Evan]** Nvidia $NVDA vient de publier ceci :
+Join the Tesla AI team to build the future of robotics!
 
-« Dans l'ère des usines d'IA, la puissance de calcul est du revenu — chaque jeton produit est rentable — ce qui fait de la
-  - https://x.com/StockMKTNewz/status/2061965525417103657
-- **[X_HOME/Bull Theory]** BREAKING: More than ₹5,000,000,000,000 ($53 billion) wiped out from Indian stocks in the last 1 HOUR.
+→
+  - https://x.com/Tesla_AI/status/1671589939950100495
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Sam Altman]** OpenAI Robotics is hiring, looking for exceptional full-stack hardware, ops, systems, and ML engineers to help us program and manufacture robots that are useful
+  - https://x.com/sama/status/2061117302528188712
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Watcher.Guru]** JUST IN: Elon Musk says Tesla should be valued as an AI robotics company, not a car company.
+  - https://x.com/WatcherGuru/status/1782902474153611486
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Watcher.Guru]** JUST IN: Elon Musk says he will start selling humanoid robots to the public by the end of next year.
+  - https://x.com/WatcherGuru/status/2014368460101320772
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Ashley Reese]** NO THEY WEREN’T. THEY WERE RIGHT. PACINO HIVE.
+  - https://x.com/offbeatorbit/status/2058378107539570691
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Serenity]** Not the best idea to feel FOMO about the new “bottleneck” in every news cycle.
 
-Indian stock markets lost about ₹16.83 TRILLION in market
-  - https://x.com/BullTheoryio/status/2062047587947933866
-- **[X_HOME/WOLF Bitcoin]** BERNIE SANDERS JUST SAID HE WILL INTRODUCE A BILL TO GIVE THE PUBLIC A 50% OWNERSHIP STAKE IN THE LARGEST AI COMPANIES IN AMERICA
+It’s going from:
 
-His exact words: 
-"This would
-  - https://x.com/WOLF_Bitcoin_/status/2061930858815328637
-- **[X_FOLLOWING/TINO | Bourse, Banque et Investissement |]** LA CRYPTO SUIT INTERNET ?
-
-Ce graphique met en parallèle le nombre d’utilisateurs d’internet dans les années 90 et 2000 avec celui des utilisateurs de cryptomon
-  - https://x.com/Tino_Bourse/status/2062052164650868900
-- **[X_FOLLOWING/Simple ETF]** Si t’arrêtais de faire tourner les 48 RTX qui te servent à miner du BTC ça irait tout de suite mieux imo
-  - https://x.com/SimpleETF/status/2062050369224523825
+$NVDA GPUs -> $MU Memory -> $IREN Power -> $LITE EMLs -> $SNDK
+  - https://x.com/aleabitoreddit/status/2047426124586893566
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Polymarket]** NEW: BMW declares humanoid robots are “the future” of car manufacturing as it rolls them out at its Leipzig plant.
+  - https://x.com/Polymarket/status/2060155158068158643
 
 ## 🎬 Suggested video angles
 
@@ -1533,4 +1529,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @AISpaceDecoder handle.
 
 
-*Generated 2026-06-03T02:14:50*
+*Generated 2026-06-04T01:21:57*
