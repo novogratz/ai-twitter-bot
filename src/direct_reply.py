@@ -164,6 +164,12 @@ SEARCH_QUERIES = [
     "\"AI startup\" OR \"AI funding\" OR \"AI IPO\" OR \"AI round\" lang:en min_faves:30",
     # ===== ENGLISH — robotics (AI-embodied) =====
     "\"humanoid robot\" OR Figure OR \"Tesla Optimus\" OR \"1X\" lang:en min_faves:30",
+    # ===== ENGLISH — investment / stocks / markets (~30%) =====
+    "\"AI stock\" OR Nvidia OR Palantir OR \"tech earnings\" OR \"S&P 500\" lang:en min_faves:50",
+    "Fed OR CPI OR \"rate cut\" OR \"interest rates\" OR macro lang:en min_faves:50",
+    # ===== ENGLISH — Bitcoin / crypto (bearish troll fodder) =====
+    "Bitcoin OR BTC OR \"BTC ETF\" OR crypto lang:en min_faves:100",
+    "\"Bitcoin crash\" OR \"crypto crash\" OR \"crypto bubble\" OR \"BTC dump\" lang:en min_faves:30",
     # ===== FRENCH AI tail (for replying to FR AI tweets) =====
     "IA OR \"intelligence artificielle\" OR ChatGPT OR Mistral lang:fr min_faves:5",
     "OpenAI OR Anthropic OR Claude OR \"agents IA\" OR LLM lang:fr min_faves:3",

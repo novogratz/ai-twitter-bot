@@ -128,36 +128,36 @@ def post_interval_minutes() -> int:
     return _cadence(random.randint(120, 180))
 
 
+# 2026-06-04: intervals SPACED OUT. One Safari window serializes every bot, so
+# firing on 1-4 min just jams the queue ("maximum number of running instances")
+# and almost nothing completes. Sane spacing lets the high-value bots (reply /
+# direct_reply / quote / retweet) actually run → MORE real output.
 def reply_interval_minutes() -> int:
-    """PUSH IT HARD — max reply volume."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 6 <= hour < 23:
-        return _cadence(random.randint(2, 4))
-    return _cadence(random.randint(5, 8))
+        return _cadence(random.randint(3, 5))
+    return _cadence(random.randint(6, 10))
 
 
 def engage_interval_minutes() -> int:
-    """PUSH IT HARD — constant presence in influencer notifications."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 6 <= hour < 23:
-        return _cadence(random.randint(2, 4))
-    return _cadence(random.randint(4, 6))
+        return _cadence(random.randint(7, 11))
+    return _cadence(random.randint(12, 18))
 
 
 def direct_reply_interval_minutes() -> int:
-    """PUSH IT HARD — fire direct replies as fast as possible."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 6 <= hour < 23:
-        return _cadence(random.randint(2, 4))
-    return _cadence(random.randint(5, 8))
+        return _cadence(random.randint(4, 6))
+    return _cadence(random.randint(8, 12))
 
 
 def early_bird_interval_minutes() -> int:
-    """PUSH IT HARD — early-bird every 1-2 min during waking hours."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 6 <= hour < 23:
-        return _cadence(random.randint(1, 3))
-    return _cadence(random.randint(3, 5))
+        return _cadence(random.randint(7, 11))
+    return _cadence(random.randint(12, 18))
 
 
 def roast_interval_minutes() -> int:
@@ -262,6 +262,14 @@ def main():
     # briefly saturated. Generous grace + coalesce + a bigger pool mean a
     # busy moment can never make the daily Décode (or morning recap) skip
     # the whole day.
+    # Silence APScheduler's "skipped: maximum number of running instances"
+    # spam — that's normal coalescing when a Safari-bound cycle runs long, NOT
+    # an error. Quieting it stops the scary log flood (the cause is handled by
+    # spacing the intervals above).
+    import logging as _logging
+    _logging.getLogger("apscheduler.scheduler").setLevel(_logging.ERROR)
+    _logging.getLogger("apscheduler.executors.default").setLevel(_logging.ERROR)
+
     scheduler = BlockingScheduler(
         executors={"default": ThreadPoolExecutor(30)},
         job_defaults={

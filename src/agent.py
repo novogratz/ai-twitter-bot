@@ -64,8 +64,8 @@ def _mark_top5_done(topic: str) -> None:
 # 2026-06-03 REBRAND → AI Decoder: AI-ONLY content. Robotics kept as embodied
 # AI (humanoids); everything else is covered through the AI/money lens, not as
 # its own pillar. No more standalone Space/Investment Décodes.
-_DECODE_TOPICS = ("AI", "AI", "AI", "Robotics", "AI", "AI", "AI", "Robotics")
-_MONTHLY_DECODE_TOPICS = ("AI", "AI", "Robotics", "AI")
+_DECODE_TOPICS = ("AI", "Investment", "AI", "AI", "Investment", "AI", "Robotics", "AI")
+_MONTHLY_DECODE_TOPICS = ("AI", "Investment", "AI", "Investment")
 
 
 def _peek_next_decode_number() -> int:
