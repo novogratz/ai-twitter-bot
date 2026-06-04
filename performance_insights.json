@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-06-04T14:29:29.813977",
-  "window_7d_actions": 3014,
-  "window_24h_actions": 387,
+  "generated_at": "2026-06-04T18:31:29.096533",
+  "window_7d_actions": 3042,
+  "window_24h_actions": 382,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2939
+      "count": 2964
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 22
+      "count": 23
     },
     {
       "pattern": "METAPHOR",
-      "count": 21
-    },
-    {
-      "pattern": "DIALOGUE",
-      "count": 11
+      "count": 22
     },
     {
       "pattern": "RENAME",
+      "count": 10
+    },
+    {
+      "pattern": "UNDERSTATEMENT",
       "count": 10
     }
   ],
@@ -30,11 +30,11 @@
       "count": 3
     },
     {
-      "pattern": "UNDERSTATEMENT",
-      "count": 8
+      "pattern": "RENAME",
+      "count": 10
     },
     {
-      "pattern": "RENAME",
+      "pattern": "UNDERSTATEMENT",
       "count": 10
     }
   ],
@@ -63,40 +63,40 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1100
+      "count": 1102
     },
     {
       "topic": "Autre",
-      "count": 988
+      "count": 999
     },
     {
       "topic": "Spatial",
-      "count": 547
+      "count": 549
     },
     {
       "topic": "Bourse",
-      "count": 434
+      "count": 433
     },
     {
       "topic": "Crypto",
-      "count": 374
+      "count": 385
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Bourse",
-      "24h_rate": 0.204,
-      "7d_rate": 0.144
+      "24h_rate": 0.202,
+      "7d_rate": 0.142
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2067
+      "count": 2089
     },
     {
       "type": "retweet",
-      "count": 671
+      "count": 676
     },
     {
       "type": "hotake",
@@ -108,23 +108,23 @@
     },
     {
       "type": "quote",
-      "count": 30
+      "count": 31
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-04T14:28:49.258869",
-      "text": "les meilleures thèses macro commencent là où les analystes ne cherchent pas — et ironiquement, toi t'as probablement accès à un signal que la plupart des gérants de fonds n'ont jamais regardé: les données de recherche. q",
+      "ts": "2026-06-04T18:31:20.966984",
+      "text": "100 millions de péptides. Bitcoin pour les hormones. C'est le premier cas de \"hardware upgrade\" qui passe par la blockchain. Le futur est bio-digital.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-04T14:28:26.210887",
-      "text": "c'est la friction classique entre mandat légal et consensus de bon sens: la BCE a un objectif statutaire sur l'inflation, pas sur la croissance — donc \"tout le monde est d'accord que c'est une erreur\" n'entre littéraleme",
+      "ts": "2026-06-04T18:24:17.920919",
+      "text": "Hyperliquid à la liste noire de la FCA. C'est pas un blocage, c'est le label \"certifié décoinfié\" pour les Brits lassés de la défiscalisation à 20%.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-04T14:22:34.836759",
-      "text": "L'Occitanie fait sa révolution verte. La France fait ses chaises.\nOn est passés de Colbert à la géothermie. Le progrès avance. Lentement.",
+      "ts": "2026-06-04T18:06:33.551102",
+      "text": "Vought veut transformer les subventions en test de loyauté. C’est la seule façon pour l’État de rester pertinent. L’intelligence artificielle n’est pas le futur. C’est déjà la bureaucratie.",
       "type": "reply"
     }
   ]
