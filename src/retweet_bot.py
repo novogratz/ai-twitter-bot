@@ -599,7 +599,7 @@ def _collect_feed_repost_candidates(retweeted: set) -> list:
     )
     for query in queries:
         try:
-            tab = "live" if random.random() < 0.5 else "top"
+            tab = "top"  # always popular — amplify viral, not dead recent tweets
             log.info(f"[RETWEET] Searching X {tab} for repost candidates: {query}")
             add(f"FEED_SEARCH/{tab}", scrape_x_search(query, max_tweets=40, tab=tab))
         except Exception:

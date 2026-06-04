@@ -103,7 +103,7 @@ def _find_best_tweet(ticker: str) -> Optional[dict]:
     candidates = []
     for q in queries:
         try:
-            tweets = scrape_x_search(q, max_tweets=20, tab="latest")
+            tweets = scrape_x_search(q, max_tweets=20, tab="top")
             candidates.extend(tweets)
             if len(candidates) >= 10:
                 break
