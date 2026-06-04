@@ -897,11 +897,12 @@ def run_retweet_cycle():
 
     # High-volume AI/markets repost surface. English-first (2026-06-03): the
     # timeline reads English again, so amplify EN sources; small FR tail only.
-    sample = (
-        random.sample(EN_TRUSTED_HANDLES, k=min(13, len(EN_TRUSTED_HANDLES)))
-        + random.sample(FR_TRUSTED_HANDLES, k=min(2, len(FR_TRUSTED_HANDLES)))
-    )
-    log.info(f"[RETWEET] Scraping EN-first AI/markets handles: {sample}")
+    # Keep the per-cycle scrape SMALL (5 handles) so the cycle finishes in
+    # ~1-2 min and doesn't monopolise the single Safari lock — that gridlock
+    # (8-10 min cycles) is what was blocking every other job. Daily volume
+    # comes from frequent short cycles, not one giant cycle.
+    sample = random.sample(EN_TRUSTED_HANDLES, k=min(5, len(EN_TRUSTED_HANDLES)))
+    log.info(f"[RETWEET] Scraping EN-first AI handles: {sample}")
 
     for handle in sample:
         try:

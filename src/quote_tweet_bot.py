@@ -356,9 +356,9 @@ def run_quote_tweet_cycle():
     try:
         from .retweet_bot import EN_TRUSTED_HANDLES, FR_TRUSTED_HANDLES
         from .twitter_client import scrape_profile_tweets
-        # 2026-06-03: back to EN. Quote big EN AI/markets/space voices first,
-        # then their freshest viral take with our sharp English angle.
-        sampled = random.sample(EN_TRUSTED_HANDLES, k=min(6, len(EN_TRUSTED_HANDLES)))
+        # Small per-cycle scrape (3 handles) so the cycle is fast and doesn't
+        # hog the Safari lock — quote volume comes from frequent short cycles.
+        sampled = random.sample(EN_TRUSTED_HANDLES, k=min(3, len(EN_TRUSTED_HANDLES)))
         for handle in sampled:
             log.info(f"[QUOTE] Scraping trusted-news handle: @{handle}")
             try:

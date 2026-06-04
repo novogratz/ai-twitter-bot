@@ -659,10 +659,10 @@ def main():
         # Retweet bot — high-volume deterministic amplifier. max_instances=1
         # prevents two slow cycles from running simultaneously and blocking
         # all other jobs; coalesce=True (job_defaults) merges missed fires.
-        log.info("Retweet bot: amplifying viral AI posts every 90s (GO CRAZY, cap via MAX_RETWEETS_PER_DAY).")
+        log.info("Retweet bot: amplifying viral AI posts every 3 min (short cycles, cap via MAX_RETWEETS_PER_DAY).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(seconds=90),
+            trigger=IntervalTrigger(minutes=3),
             id="retweet_job",
             max_instances=1,
         )
@@ -827,11 +827,12 @@ def main():
         # 90 sec to catch fresh tweets within the 60-second top-5-reply
         # window. Different from early_bird (5-7 min, ~125 accounts):
         # this is targeted high-frequency on the highest-reach accounts.
-        log.info("Mega-account watcher: top-10 polling every 90s for first-5-reply window.")
+        log.info("Mega-account watcher: top AI accounts every 4 min for first-reply window.")
         scheduler.add_job(
             safe_run_mega_watch_cycle,
-            trigger=IntervalTrigger(seconds=90),
+            trigger=IntervalTrigger(minutes=4),
             id="mega_watch_job",
+            max_instances=1,
         )
 
         # Daily housekeeping — rotate bot.log if oversized, trim 90+ day
