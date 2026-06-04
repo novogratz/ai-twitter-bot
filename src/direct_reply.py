@@ -172,9 +172,9 @@ SEARCH_QUERIES = [
     "Bitcoin OR BTC OR \"BTC ETF\" OR crypto lang:en min_faves:100",
     "\"Bitcoin crash\" OR \"crypto crash\" OR \"crypto bubble\" OR \"BTC dump\" lang:en min_faves:30",
     # ===== FRENCH AI tail (for replying to FR AI tweets) =====
-    "IA OR \"intelligence artificielle\" OR ChatGPT OR Mistral lang:fr min_faves:5",
-    "OpenAI OR Anthropic OR Claude OR \"agents IA\" OR LLM lang:fr min_faves:3",
-    "Nvidia OR GPU OR \"datacenter IA\" OR \"action IA\" lang:fr min_faves:3",
+    "IA OR \"intelligence artificielle\" OR ChatGPT OR Mistral lang:fr min_faves:25",
+    "OpenAI OR Anthropic OR Claude OR \"agents IA\" OR LLM lang:fr min_faves:25",
+    "Nvidia OR GPU OR \"datacenter IA\" OR \"action IA\" lang:fr min_faves:25",
 ]
 
 HOT_TAB_QUERIES = [
@@ -185,8 +185,8 @@ HOT_TAB_QUERIES = [
     "\"humanoid robot\" OR Figure OR \"Tesla Optimus\" lang:en min_faves:300",
     "Palantir OR \"AI stock\" OR \"AI bubble\" lang:en min_faves:300",
     # Breaking FR AI (for replies)
-    "IA OR ChatGPT OR Mistral OR OpenAI lang:fr min_faves:5",
-    "\"agents IA\" OR Nvidia OR \"modèle IA\" lang:fr min_faves:3",
+    "IA OR ChatGPT OR Mistral OR OpenAI lang:fr min_faves:25",
+    "\"agents IA\" OR Nvidia OR \"modèle IA\" lang:fr min_faves:25",
     # Breaking investment EN
     "Bitcoin OR BTC ETF lang:en min_faves:300",
     "Palantir OR CoreWeave OR space stock lang:en min_faves:100",
@@ -554,7 +554,8 @@ def run_direct_reply_cycle():
     for query in random.sample(SEARCH_QUERIES + HOT_TAB_QUERIES, min(12, len(SEARCH_QUERIES + HOT_TAB_QUERIES))):
         if _budget() <= 0: break
         try:
-            tab = "top" if "min_faves:100" in query or "min_faves:500" in query or "min_faves:1000" in query else "latest"
+            tab = "top"  # 2026-06-04: always POPULAR, never "latest" — replying
+                         # to dead low-engagement recent tweets wastes the budget.
             tweets = scrape_x_search(query, max_tweets=25, tab=tab)
             if tweets: total += _reply_to_tweets(tweets, replied, "SEARCH-HOT", source_detail=query, remaining=_budget(), en_counter=en_counter)
         except Exception: traceback.print_exc()

@@ -322,7 +322,7 @@ def run_quote_tweet_cycle():
     # 3 queries per cycle — keeps each cycle under 60s so max_instances=1 doesn't queue up.
     for query in random.sample(QUOTE_QUERIES, k=min(3, len(QUOTE_QUERIES))):
         log.info(f"[QUOTE] Searching HOT for: {query}")
-        tab = "live" if random.random() < 0.4 else "top"
+        tab = "top"  # always popular — quote viral tweets, not dead recent ones
         try:
             tweets = scrape_x_search(query, max_tweets=25, tab=tab)
         except Exception:

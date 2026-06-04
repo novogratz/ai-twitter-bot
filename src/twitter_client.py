@@ -1044,7 +1044,7 @@ def scrape_following_feed(max_tweets: int = 15):
         return tweets
 
 
-def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "live"):
+def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top"):
     """Search X and scrape results.
 
     tab: "live" = chronological (default, current behavior), "top" = X's hot/algorithmic
