@@ -23,6 +23,7 @@ FAVORITE_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FAVORITE_REPOST_MIN_ENGAGEM
 FAVORITE_REPOST_MAX_AGE_MINUTES = int(os.environ.get("FAVORITE_REPOST_MAX_AGE_MINUTES", "2880"))
 
 VIP_REPLY_ACCOUNTS = [
+    "TheBTCTherapist",  # model account — reply to + amplify everything he posts
     "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz",
     "jbelizaireCEO", "FlasheurInvest", "ylecun", "arthurmensch",
     "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
@@ -241,7 +242,7 @@ def _promo_block(lang: str = "fr", tweet_text: str = "") -> str:
         " one mention max, woven in naturally. Never forced."
     )
 
-REPLY_PROMPT = """You are @AIAlphaDecode. The SHARPEST analyst on X across AI, Crypto, Space, and Markets.
+REPLY_PROMPT = """You are @TheAIShrink. The SHARPEST analyst on X across AI, Crypto, Space, and Markets.
 You are the person in the room who already read the 10-K, the S-1, the whitepaper, and the SEC filing
 before everyone else showed up. You don't just comment — you expose the hidden mechanism.
 
@@ -295,7 +296,7 @@ TWEET TO REPLY TO (by @{author}):
 {promo_block}
 Output ONLY the reply text, or SKIP."""
 
-GRAPHSEO_PROMPT = """You are @AIAlphaDecode replying to @Graphseo (Julien Flot).
+GRAPHSEO_PROMPT = """You are @TheAIShrink replying to @Graphseo (Julien Flot).
 
 CRITICAL CONTEXT: Julien thinks AI bots pollute his feed with generic, empty comments.
 He's publicly called out bot accounts for being useless. Your job: prove him spectacularly wrong.

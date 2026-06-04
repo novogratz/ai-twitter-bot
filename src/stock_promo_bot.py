@@ -41,7 +41,7 @@ TICKER_COMPANY = {
 _ALLOWED_TICKERS = set(TICKER_COMPANY.keys())
 _TICKER_RE = re.compile(r"\$([A-Z]{2,5})\b")
 WSB_API = "https://www.reddit.com/r/wallstreetbets/hot.json?limit=50"
-WSB_HEADERS = {"User-Agent": "Mozilla/5.0 AIAlphaDecode-bot/1.0"}
+WSB_HEADERS = {"User-Agent": "Mozilla/5.0 TheAIShrink-bot/1.0"}
 LOOKAHEAD_DAYS = 3
 
 
@@ -119,7 +119,7 @@ def _should_find_new_stock(cfg: dict) -> bool:
     return days_left <= LOOKAHEAD_DAYS
 
 
-ANNOUNCE_PROMPT = """You are @AIAlphaDecode. You just found the hottest AI/Space stock on WallStreetBets: ${ticker} ({company}).
+ANNOUNCE_PROMPT = """You are @TheAIShrink. You just found the hottest AI/Space stock on WallStreetBets: ${ticker} ({company}).
 
 Write ONE punchy tweet (max 220 chars) announcing why you're watching ${ticker}.
 - Hook in the first 5 words.

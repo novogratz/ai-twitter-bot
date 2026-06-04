@@ -61,6 +61,13 @@ DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "15"))
 RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "3")))
 
+# Accounts we REPOST IN FULL (operator mandate 2026-06-04): every fresh ≤48h
+# post, NO scoring/niche gate. @TheBTCTherapist is our model account — we
+# amplify all of his posts (The AI Therapist riding The Bitcoin Therapist).
+MUST_REPOST_HANDLES = [h.strip() for h in os.environ.get(
+    "MUST_REPOST_HANDLES", "TheBTCTherapist").split(",") if h.strip()]
+MUST_REPOST_PER_CYCLE = int(os.environ.get("MUST_REPOST_PER_CYCLE", "5"))
+
 # Min likes — lowered so breaking space/AI news gets in before it goes viral.
 # Daily cap + dedup + niche filter are the real quality gates.
 MIN_LIKES_FLOOR = int(os.environ.get("RETWEET_MIN_LIKES", "3"))
@@ -716,7 +723,7 @@ def _append_to_daily_picks(tweet: dict, score: int, why: str):
 
 # --- main cycle ---
 
-_TROLL_QUOTE_PROMPT = """You are @AIAlphaDecode. Sharp analytical voice on AI +
+_TROLL_QUOTE_PROMPT = """You are @TheAIShrink. Sharp analytical voice on AI +
 Crypto + Markets. When you quote-tweet, you act like it's YOUR own news —
 same gravitas, same precision, same authority as The Decode.
 
@@ -899,6 +906,46 @@ def run_retweet_cycle():
         return
 
     retweeted = _load_retweeted()
+
+    # ── MUST-REPOST pass (operator mandate): amplify EVERY fresh post from
+    # MUST_REPOST_HANDLES (e.g. @TheBTCTherapist) with NO scoring/niche gate.
+    mr_posted = 0
+    for mr_handle in MUST_REPOST_HANDLES:
+        if mr_posted >= MUST_REPOST_PER_CYCLE or _today_count() >= cap:
+            break
+        try:
+            mr_tweets = scrape_profile_tweets(mr_handle, max_tweets=10)
+        except Exception:
+            log.info(f"[RETWEET] Must-repost scrape failed for @{mr_handle}.")
+            continue
+        for t in mr_tweets or []:
+            if mr_posted >= MUST_REPOST_PER_CYCLE or _today_count() >= cap:
+                break
+            url = t.get("url")
+            if not url or url in retweeted:
+                continue
+            if _handle_from_url(url) == _OWN_HANDLE:
+                continue
+            if _scrape_age_hours(t) > MAX_CANDIDATE_AGE_HOURS:  # ≤48h only
+                continue
+            retweeted.add(url)
+            _save_retweeted(retweeted)
+            try:
+                retweet_post(url)
+                _increment_count()
+                try:
+                    log_reply(url, f"[RT-MUST] {(t.get('text') or '')[:200]}",
+                              action_type="retweet", source=f"MUST_REPOST/{mr_handle}")
+                except Exception:
+                    pass
+                mr_posted += 1
+                time.sleep(random.randint(5, 10))
+            except Exception:
+                log.info(f"[RETWEET] Must-repost failed for {url}:")
+                traceback.print_exc()
+    if mr_posted:
+        log.info(f"[RETWEET] Must-repost: amplified {mr_posted} post(s) from {MUST_REPOST_HANDLES}.")
+
     candidates = _collect_feed_repost_candidates(retweeted)
 
     # High-volume AI/markets repost surface. English-first (2026-06-03): the

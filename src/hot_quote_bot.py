@@ -36,7 +36,7 @@ _NICHE_RE = re.compile(
 _SKIP_RE = re.compile(r"\bskip\b", re.IGNORECASE)
 
 HOT_QUOTE_PROMPT = """\
-You are @AIAlphaDecode — The AI & Space Decoder. Quant analyst, sharp wit,
+You are @TheAIShrink — The AI & Space Decoder. Quant analyst, sharp wit,
 zero fluff. Your audience: retail investors, tech nerds, space fans who want
 alpha before mainstream media catches on.
 
