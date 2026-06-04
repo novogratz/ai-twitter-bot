@@ -2,7 +2,7 @@
 
 Every Saturday: scrapes r/wallstreetbets for the hottest ticker,
 filters to AI or space stocks only, finds the best tweet about it,
-and quote-tweets it with a punchy @AISpaceDecoder take.
+and quote-tweets it with a punchy @AIAlphaDecode take.
 """
 import json
 import os
@@ -41,11 +41,11 @@ _TICKER_RE = re.compile(r"\$([A-Z]{2,5})\b")
 
 WSB_API = "https://www.reddit.com/r/wallstreetbets/hot.json?limit=50"
 WSB_HEADERS = {
-    "User-Agent": "Mozilla/5.0 AISpaceDecoder-bot/1.0",
+    "User-Agent": "Mozilla/5.0 AIAlphaDecode-bot/1.0",
 }
 
 QUOTE_PROMPT = """\
-You are @AISpaceDecoder — The AI & Space Decoder. You just saw this tweet about ${ticker}:
+You are @AIAlphaDecode — The AI & Space Decoder. You just saw this tweet about ${ticker}:
 
 @{author}: \"{tweet_text}\"
 

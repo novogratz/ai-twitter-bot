@@ -32,7 +32,7 @@ _ALLOWED_TOOLS = [
 ]
 
 AGENT_PROMPT = """\
-You are the autonomous growth strategist for @AISpaceDecoder — an AI & Space
+You are the autonomous growth strategist for @AIAlphaDecode — an AI & Space
 Twitter bot trying to reach 20k followers. Your job TODAY is to make it
 measurably better. Work fast, be decisive, push all changes.
 

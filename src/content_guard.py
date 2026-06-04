@@ -211,9 +211,15 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         return (False, "near-term price target (price + near-term timeframe)")
 
     if kind in ("original", "quote"):
-        lang, conf = detect_language(text)
-        if lang != "fr":
-            return (False, f"not French (detected {lang} @ {conf:.0%})")
+        # Enforce the CONFIGURED primary language (not hardcoded). Bug 2026-06-04:
+        # this was pinned to "fr", so after the English flip it REJECTED our
+        # English posts and let French through. Now: primary=en → reject French,
+        # primary=fr → reject English. Unknown/short → allow.
+        primary = os.environ.get("CONTENT_LANG_PRIMARY", "en").strip().lower()
+        if primary in ("en", "fr"):
+            lang, conf = detect_language(text)
+            if lang != "unknown" and lang != primary:
+                return (False, f"wrong language: need {primary}, detected {lang} @ {conf:.0%}")
 
     if kind == "reply" and _is_lazy_reply(text):
         return (False, "low-effort reply (too short / generic — must be substantive)")

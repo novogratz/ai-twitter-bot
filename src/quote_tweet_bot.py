@@ -36,7 +36,7 @@ QUOTE_QUERIES = [
     "Palantir OR PLTR OR \"AI stock\" OR \"AI startup\" OR \"AI funding\" lang:en min_faves:100",
 ]
 
-QUOTE_PROMPT = """You are @AISpaceDecoder. You will QUOTE-TWEET this tweet:
+QUOTE_PROMPT = """You are @AIAlphaDecode. You will QUOTE-TWEET this tweet:
 
 @{author}: "{tweet_text}"
 
