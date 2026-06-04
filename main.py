@@ -648,10 +648,10 @@ def main():
         # Interval is 4 min (not 2) because each cycle scrapes 5 queries + 5
         # trusted handles; on a slow LLM the cycle takes 3-4 min. At 2 min
         # the max_instances=1 guard was blocking ~80% of fires.
-        log.info("Quote bot: quote-posting FR-first viral setups every 4 min.")
+        log.info("Quote bot: quote-posting viral AI setups every 3 min (GO CRAZY).")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=4),
+            trigger=IntervalTrigger(minutes=3),
             id="quote_tweet_job",
             max_instances=1,
         )
@@ -659,10 +659,10 @@ def main():
         # Retweet bot — high-volume deterministic amplifier. max_instances=1
         # prevents two slow cycles from running simultaneously and blocking
         # all other jobs; coalesce=True (job_defaults) merges missed fires.
-        log.info("Retweet bot: amplifying trusted news every 2 min (max_instances=1, cap via MAX_RETWEETS_PER_DAY).")
+        log.info("Retweet bot: amplifying viral AI posts every 90s (GO CRAZY, cap via MAX_RETWEETS_PER_DAY).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(minutes=2),
+            trigger=IntervalTrigger(seconds=90),
             id="retweet_job",
             max_instances=1,
         )

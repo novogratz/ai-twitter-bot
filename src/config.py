@@ -132,9 +132,10 @@ POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(5 * 60)))
 # 2026-06-02 as the highest-ROI surface ("this works a lot"). Run it HOT:
 # high daily cap + short, jittered spacing so the 4-min quote cycle actually
 # produces quotes instead of getting capped out.
-MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "30"))
-MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", str(8 * 60)))
-QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", str(4 * 60)))
+# 2026-06-03: GO CRAZY on quote-reposts. 30→80/day, spacing 8→3 min.
+MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "80"))
+MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", str(3 * 60)))
+QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", str(2 * 60)))
 
 # Reply caps + spacing. Replies are the PRIMARY growth lever, so this is a
 # global daily budget shared across ALL reply bots (direct_reply, reply_bot,
@@ -142,12 +143,12 @@ QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", str(4 * 60)))
 # Raised 30→150 on 2026-06-02: 30 was being exhausted by mid-day and then
 # every reply bot went silent ("policy skip: daily reply cap reached"). 150
 # + the 90s jittered spacing keeps volume high without bursting.
-MAX_REPLIES_PER_DAY = int(os.environ.get("MAX_REPLIES_PER_DAY", "700"))
+MAX_REPLIES_PER_DAY = int(os.environ.get("MAX_REPLIES_PER_DAY", "1000"))
 # Spacing lowered so 700/day is actually reachable during active hours (at
 # 90s+jitter the day capped out around ~480). 60s floor + 45s jitter keeps a
 # human-like gap with no bursts while allowing high volume.
-MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", "60"))
-REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "45"))
+MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", "40"))
+REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "30"))
 REPLY_LANGUAGE_MATCH = os.environ.get("REPLY_LANGUAGE_MATCH", "1") == "1"
 
 # Following policy (2026-06-03 GROWTH MODE — operator: "lots of unfollow, not
