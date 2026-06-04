@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-06-03T15:33:27.009075",
-  "window_7d_actions": 2785,
-  "window_24h_actions": 479,
+  "generated_at": "2026-06-04T04:25:14.018199",
+  "window_7d_actions": 2935,
+  "window_24h_actions": 429,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2704
+      "count": 2863
     },
     {
       "pattern": "METAPHOR",
-      "count": 24
+      "count": 22
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 23
+      "count": 20
     },
     {
       "pattern": "RENAME",
-      "count": 12
+      "count": 10
     },
     {
       "pattern": "DIALOGUE",
@@ -27,7 +27,7 @@
   "worst_patterns": [
     {
       "pattern": "REPETITION",
-      "count": 2
+      "count": 1
     },
     {
       "pattern": "EN_ANCHOR",
@@ -35,7 +35,7 @@
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 7
+      "count": 6
     }
   ],
   "best_hours_utc": [
@@ -48,34 +48,34 @@
       "actions": 192
     },
     {
-      "hour": 21,
-      "actions": 173
+      "hour": 20,
+      "actions": 179
     },
     {
-      "hour": 12,
-      "actions": 141
+      "hour": 21,
+      "actions": 172
     },
     {
       "hour": 0,
-      "actions": 138
+      "actions": 163
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1005
+      "count": 1067
     },
     {
       "topic": "Autre",
-      "count": 903
+      "count": 971
     },
     {
       "topic": "Spatial",
-      "count": 520
+      "count": 526
     },
     {
       "topic": "Bourse",
-      "count": 391
+      "count": 412
     },
     {
       "topic": "Crypto",
@@ -85,46 +85,46 @@
   "rising_topics_24h": [
     {
       "topic": "Bourse",
-      "24h_rate": 0.194,
+      "24h_rate": 0.205,
       "7d_rate": 0.14
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1830
+      "count": 1984
     },
     {
       "type": "retweet",
-      "count": 707
+      "count": 679
     },
     {
       "type": "hotake",
-      "count": 159
+      "count": 197
     },
     {
       "type": "post",
-      "count": 51
+      "count": 47
     },
     {
       "type": "quote",
-      "count": 38
+      "count": 28
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-03T15:19:33.391303",
-      "text": "53 médias français poursuivent Brave.\n\nUn peu comme 53 syndicats qui plaidaient contre la machine à vapeur.\n\nLa rente du clic vient payer le chèque de la dislocation.",
+      "ts": "2026-06-04T04:23:48.701238",
+      "text": "Amazon fires Seattle engineers to build AI data centers, then hires the AI agents to maintain them.\n\nThe laid-off dev pays for the GPU that replaced him. The GPU is hosted by Amazon Web Services. Amazon is buying back stock with the margin squeeze.\n\nThe circle of life is just a q",
+      "type": "hotake"
+    },
+    {
+      "ts": "2026-06-04T04:22:46.112637",
+      "text": "Trump taxera les roquettes.\n\nAriane 6 à 115 millions. La France paie 65 % de prime pour la fierté.\nStarship à moins de 100 $/kg. El Musk paie la facture.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-03T15:18:24.505143",
-      "text": "Google sort un clone vocal Gemini. Le vrai produit, c'est la bande passante qu'ils vous volent en fond pour la faire parler.\n\nBercy met 6 ans à amortir une imprimante. Google vous clône en 4 secondes.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-06-03T15:10:10.516597",
-      "text": "Les lego, c'est du hardware. La Smart Brick, c'est l'IoT à 10 euros pour ceux qui ont encore 18 ans de patience.\n\nBercy met 6 ans à amortir une imprimante.",
+      "ts": "2026-06-04T04:14:03.121890",
+      "text": "BFM demande l'action star.\n\nLe marché s'en fout, sauf si c'est Nvidia ou le SPY.\n\nLe CAC 40, c'est juste la décoration du salon.",
       "type": "reply"
     }
   ]
