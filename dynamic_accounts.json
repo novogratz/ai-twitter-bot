@@ -332,7 +332,13 @@
     "MorganTulot",
     "SimonCormier",
     "AlexisBoutin",
-    "PierreCoulombe"
+    "PierreCoulombe",
+    "TiboInShape",
+    "LaurieFrappart",
+    "MathieuMauclair",
+    "JeroenDeDauw",
+    "BaptisteN",
+    "AlexisV"
   ],
   "en": [
     "blablacar",
@@ -2072,6 +2078,36 @@
     {
       "lang": "fr",
       "handle": "PierreCoulombe",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "TiboInShape",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaurieFrappart",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuMauclair",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeroenDeDauw",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "BaptisteN",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisV",
       "added": "2026-06-04"
     }
   ]
