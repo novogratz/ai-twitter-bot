@@ -10,6 +10,7 @@ Restart the bot:
    - Case-insensitive: macOS framework Python shows as `Python main.py` (capital P). Multiple PIDs are normal — kill them all.
    - Do NOT create `.bot_disabled` here — restart wants the watchdog still active. If `.bot_disabled` already exists, remove it (`rm -f .bot_disabled`) before launching.
 2. Wait 3 seconds
-3. Start: `nohup python3 main.py > /dev/null 2>&1 &`
+3. Start: `nohup uv run python main.py >> bot.log 2>&1 &
+   - MUST be `uv run` — bare `python3` lacks apscheduler and crashes on import (bit us 2026-06-05). Output appends to bot.log so crashes are visible.`
 4. Confirm new PID
 5. Show bot.log activity
