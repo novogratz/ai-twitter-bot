@@ -153,6 +153,10 @@ def _dup_profile(text: str, age_hours: float = 0.0) -> dict:
         "words": set(toks),
         "bigrams": {f"{a} {b}" for a, b in zip(toks, toks[1:])},
         "entities": _entities(text),
+        # Normalized full text — catches exact/near-exact rehash of SHORT
+        # stopword-heavy posts (therapist one-liners) that fall under the
+        # min-content-words guard below.
+        "norm": " ".join(_dedup_clean(text).split()),
         "age_h": age_hours,
     }
 
@@ -186,6 +190,12 @@ def is_duplicate(text: str, threshold: Optional[float] = None) -> bool:
     th = threshold if threshold is not None else _DUP_THRESHOLD
     p = _dup_profile(text)
     ws = p["words"]
+    # Exact normalized-text rehash is always a duplicate, even for short
+    # stopword-heavy one-liners that the content-word signals can't profile.
+    if p["norm"]:
+        for prev in _recent_profiles():
+            if prev.get("norm") and prev["norm"] == p["norm"]:
+                return True
     if len(ws) < 4:
         return False
     for prev in _recent_profiles():

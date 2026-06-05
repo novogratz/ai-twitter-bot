@@ -69,6 +69,31 @@ Two one-line root causes, both fixed:
 Lesson: when a surface flatlines, check `engagement_log.csv` daily counts per
 action type FIRST — the collapse was invisible in bot.log noise.
 
+### 2026-06-05 PM — FULL AGENTIC stack
+
+Operator: "I want this bot and repo to be full agentic — goal is to
+self-improve over time and push code on github."
+
+- **`tests/test_guards.py`** — 19 deterministic guard tests (<1s, stdlib-only):
+  dedup v2, price gate, language, lazy replies, pattern scrub, unwrap, scrape
+  timestamps, history idempotency. THE gate for agentic pushes. Run with
+  `.venv/bin/python -m pytest tests/ -q`.
+- **`.github/workflows/ci.yml`** — guard suite on every push to main; a red X
+  means an autonomous run shipped a regression (next run fixes it first).
+- **`bin/auto_improve.sh` + `~/Library/LaunchAgents/com.kzer.ai-twitter-bot-improve.plist`**
+  — DAILY 07:17 headless Claude Code session: diagnose (engagement_log +
+  engine_health_alerts + bot.log) → ONE tested improvement → push to main →
+  record memory. Single-flight lock, 2h stale-lock recovery, never starts the
+  bot. Manual: `./bin/auto_improve.sh`.
+- **Self-healing** — `engine_health_bot` collapse alerts now spawn
+  `bin/auto_improve.sh --emergency "<alert>"` (rate-limited
+  `SELF_HEAL_COOLDOWN_HOURS=6`, kill-switch `ENABLE_SELF_HEAL=0`) so a dead
+  surface gets root-caused within the hour instead of days.
+- Already on: `ENABLE_AI_MAINTENANCE=1` + `ENABLE_AI_DISCOVERY=1` (strategy /
+  evolution / reflection / scout state-tuning loops).
+- Dedup hardening from test findings: exact normalized-text rehash is always
+  blocked, even for short stopword-heavy one-liners under the 4-word floor.
+
 ### 2026-06-05 PM — quote-RT surge + persona files
 
 - **Quote-RT surge (operator: "abuse a bit of it for the next few weeks"):**

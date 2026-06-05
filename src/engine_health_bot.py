@@ -97,6 +97,42 @@ def run_engine_health_cycle():
             json.dump(existing[-50:], f, indent=2)
     except (OSError, json.JSONDecodeError):
         pass
+    _maybe_trigger_self_heal(alerts)
+
+
+_SELF_HEAL_STAMP = os.path.join(_PROJECT_ROOT, ".last_self_heal")
+SELF_HEAL_COOLDOWN_HOURS = float(os.environ.get("SELF_HEAL_COOLDOWN_HOURS", "6"))
+ENABLE_SELF_HEAL = os.environ.get("ENABLE_SELF_HEAL", "1") == "1"
+
+
+def _maybe_trigger_self_heal(alerts: list) -> None:
+    """Self-healing (full-agentic mandate 2026-06-05): a collapse alert
+    launches an EMERGENCY headless Claude run (bin/auto_improve.sh
+    --emergency) to root-cause and fix it — instead of waiting for a human
+    to read the log. Rate-limited to one run per SELF_HEAL_COOLDOWN_HOURS;
+    the script itself is single-flight and never starts the bot."""
+    if not ENABLE_SELF_HEAL or not alerts:
+        return
+    try:
+        if os.path.exists(_SELF_HEAL_STAMP):
+            age_h = (datetime.now().timestamp() - os.path.getmtime(_SELF_HEAL_STAMP)) / 3600
+            if age_h < SELF_HEAL_COOLDOWN_HOURS:
+                log.info(f"[ENGINE_HEALTH] self-heal on cooldown ({age_h:.1f}h < {SELF_HEAL_COOLDOWN_HOURS}h).")
+                return
+        with open(_SELF_HEAL_STAMP, "w") as f:
+            f.write(datetime.now().isoformat())
+        import subprocess
+        script = os.path.join(_PROJECT_ROOT, "bin", "auto_improve.sh")
+        subprocess.Popen(
+            [script, "--emergency", "; ".join(alerts)[:500]],
+            cwd=_PROJECT_ROOT,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
+        log.error("[ENGINE_HEALTH] 🚑 Self-heal triggered: emergency Claude diagnose run launched.")
+    except Exception as e:
+        log.info(f"[ENGINE_HEALTH] self-heal trigger failed (non-fatal): {e}")
 
 
 def safe_run_engine_health_cycle():

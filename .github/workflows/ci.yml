@@ -1,0 +1,25 @@
+name: guard-tests
+
+# Safety net for agentic pushes: every push to main (human, bot state sync,
+# or autonomous Claude improvement run) gets the guard suite. A red X on a
+# commit = the autonomous loop shipped a regression — next daily run must
+# fix it first (the auto-improve prompt checks CI status).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install minimal deps
+        run: pip install pytest
+      - name: Run guard tests
+        run: python -m pytest tests/ -q
