@@ -347,7 +347,13 @@
     "RomainTixier",
     "MaximeBouillot",
     "LucasFournier_",
-    "BenjaminAbitan"
+    "BenjaminAbitan",
+    "CoralieDubreuil",
+    "RenaudLannadere",
+    "JulienBougon",
+    "BenjaminPommier",
+    "MaximeLau",
+    "TanguyB"
   ],
   "en": [
     "blablacar",
@@ -2162,6 +2168,36 @@
     {
       "lang": "fr",
       "handle": "BenjaminAbitan",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "CoralieDubreuil",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudLannadere",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBougon",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminPommier",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeLau",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguyB",
       "added": "2026-06-04"
     }
   ]
