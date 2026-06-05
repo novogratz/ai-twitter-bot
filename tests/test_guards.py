@@ -176,3 +176,72 @@ def test_save_tweet_idempotent(monkeypatch, tmp_path):
     history.save_tweet("same text")
     history.save_tweet("same text")
     assert len(history.load_history()) == 1
+
+
+# --- hot_quote slot consumption (the 4-slot burn bug) -------------------------
+
+def test_hot_quote_preserves_slot_on_chokepoint_skip(monkeypatch, tmp_path):
+    """quote_tweet() returns False on dup/spacing skip — the hot_quote bot
+    MUST NOT mark the slot 'done' or burn the candidate URL, otherwise the
+    highest-signal 4x/day surface silently disappears when dedup catches a
+    near-miss. Witnessed 2026-06-05 (2 of 2 hot_quote slots burned before
+    the fix)."""
+    from src import hot_quote_bot as hqb
+
+    state_file = tmp_path / "hot_quote_state.json"
+    quoted_file = tmp_path / "quoted.json"
+    monkeypatch.setattr(hqb, "STATE_FILE", str(state_file))
+    monkeypatch.setattr(hqb, "QUOTED_FILE", str(quoted_file))
+
+    monkeypatch.setattr(hqb, "_load_signal_items", lambda: [
+        {"title": "Topic A", "summary": "hint A"},
+        {"title": "Topic B", "summary": "hint B"},
+    ])
+    monkeypatch.setattr(hqb, "_search_best_tweet", lambda topic: {
+        "author": "elonmusk",
+        "text": "AI is the future",
+        "likes": 9000,
+        "url": f"https://x.com/elonmusk/status/{abs(hash(topic)) % 10**18}",
+    })
+    monkeypatch.setattr(hqb, "_generate_quote", lambda a, t, h: "calm take on AI")
+
+    calls = []
+
+    def fake_quote(url, comment):
+        calls.append(url)
+        return False  # simulate dedup / spacing skip at the chokepoint
+
+    monkeypatch.setattr(hqb, "quote_tweet", fake_quote)
+
+    hqb.run_hot_quote_cycle()
+
+    # Both topics tried, both skipped — slot NOT consumed, URLs NOT burned.
+    assert len(calls) == 2, "both topics should be tried after a skip"
+    assert not state_file.exists() or "last_slot" not in json.loads(state_file.read_text())
+    assert not quoted_file.exists() or json.loads(quoted_file.read_text()) == []
+
+
+def test_hot_quote_consumes_slot_on_successful_post(monkeypatch, tmp_path):
+    from src import hot_quote_bot as hqb
+
+    state_file = tmp_path / "hot_quote_state.json"
+    quoted_file = tmp_path / "quoted.json"
+    monkeypatch.setattr(hqb, "STATE_FILE", str(state_file))
+    monkeypatch.setattr(hqb, "QUOTED_FILE", str(quoted_file))
+
+    monkeypatch.setattr(hqb, "_load_signal_items", lambda: [
+        {"title": "Topic A", "summary": "hint A"},
+    ])
+    url = "https://x.com/elonmusk/status/1"
+    monkeypatch.setattr(hqb, "_search_best_tweet", lambda topic: {
+        "author": "elonmusk", "text": "AI is the future", "likes": 9000, "url": url,
+    })
+    monkeypatch.setattr(hqb, "_generate_quote", lambda a, t, h: "calm take on AI")
+    monkeypatch.setattr(hqb, "quote_tweet", lambda u, c: True)
+    monkeypatch.setattr(hqb, "log_reply", lambda *a, **k: None)
+
+    hqb.run_hot_quote_cycle()
+
+    state = json.loads(state_file.read_text())
+    assert state.get("last_slot")
+    assert url in json.loads(quoted_file.read_text())
