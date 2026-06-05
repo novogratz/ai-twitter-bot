@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-06-04T18:31:29.096533",
-  "window_7d_actions": 3042,
-  "window_24h_actions": 382,
+  "generated_at": "2026-06-05T01:31:48.273426",
+  "window_7d_actions": 3048,
+  "window_24h_actions": 288,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2964
+      "count": 2968
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 23
+      "count": 24
     },
     {
       "pattern": "METAPHOR",
-      "count": 22
+      "count": 23
     },
     {
       "pattern": "RENAME",
@@ -49,82 +49,82 @@
     },
     {
       "hour": 20,
-      "actions": 179
+      "actions": 194
     },
     {
       "hour": 21,
-      "actions": 172
+      "actions": 180
     },
     {
       "hour": 0,
-      "actions": 163
+      "actions": 169
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1102
+      "count": 1099
     },
     {
       "topic": "Autre",
-      "count": 999
+      "count": 1015
     },
     {
       "topic": "Spatial",
-      "count": 549
+      "count": 550
     },
     {
       "topic": "Bourse",
-      "count": 433
+      "count": 423
     },
     {
       "topic": "Crypto",
-      "count": 385
+      "count": 371
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Bourse",
-      "24h_rate": 0.202,
-      "7d_rate": 0.142
+      "24h_rate": 0.212,
+      "7d_rate": 0.139
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2089
+      "count": 2112
     },
     {
       "type": "retweet",
-      "count": 676
+      "count": 656
     },
     {
       "type": "hotake",
-      "count": 207
+      "count": 211
     },
     {
       "type": "post",
-      "count": 39
+      "count": 37
     },
     {
       "type": "quote",
-      "count": 31
+      "count": 32
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-04T18:31:20.966984",
-      "text": "100 millions de péptides. Bitcoin pour les hormones. C'est le premier cas de \"hardware upgrade\" qui passe par la blockchain. Le futur est bio-digital.",
-      "type": "reply"
+      "ts": "2026-06-05T01:18:07.830658",
+      "text": "SpaceX files a $75B IPO revealing an 18,712 BTC treasury.\n\nThe company that sells rides to orbit is now selling HODL to Main Street\n\nhttps://techcrunch.com/2026/06/04/ahead-of-its-ipo-anthropics-daniela-amodei-shrugs-off-doubts-about-ais-returns/",
+      "type": "hotake"
     },
     {
-      "ts": "2026-06-04T18:24:17.920919",
-      "text": "Hyperliquid à la liste noire de la FCA. C'est pas un blocage, c'est le label \"certifié décoinfié\" pour les Brits lassés de la défiscalisation à 20%.",
-      "type": "reply"
+      "ts": "2026-06-05T01:16:31.104206",
+      "text": "Jensen Huang is building an AI lab in South Korea because the local ego can't sleep without a visit from the $3T man.\n\nIt's not expansion. It's a timed dose of humility for a stock market drunk on its own reflection.\n\nhttps://www.cnbc.com/2026/06/05/south-korea-is-obsessing-over-",
+      "type": "hotake"
     },
     {
-      "ts": "2026-06-04T18:06:33.551102",
-      "text": "Vought veut transformer les subventions en test de loyauté. C’est la seule façon pour l’État de rester pertinent. L’intelligence artificielle n’est pas le futur. C’est déjà la bureaucratie.",
+      "ts": "2026-06-05T01:01:57.175814",
+      "text": "Bouchon fiscal : 13%.\nOn garde les champions, on perd les curieux.\nLa France n'a plus de talent, elle a des actionnaires.",
       "type": "reply"
     }
   ]
