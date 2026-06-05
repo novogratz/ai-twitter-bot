@@ -12725,3 +12725,62 @@ The reason: its own models are getting close to improving AI without much human 
 The unreleased Mythos Preview hit a 52x
   - https://x.com/TheAIColonyRD/status/2062805957978038482
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 89).
+- **@ashcrypto** (2766 likes, score 9/10) — BREAKING : Blackrock ETF has bought $47,300,000 worth of Bitcoin.
+
+After 13 straight days of selling, the fund is back to buying.
+  - https://x.com/AshCrypto/status/2062745358879363298
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 3262).
+- **@bulltheoryio** (454 likes, score 9/10) — IPO VALUATION vs REVENUE
+
+Amazon     - $475m on $148M revenue (3.2x)
+Nvidia         - $600m valuation on $158M revenue (3.8x)
+Microsoft  - $775M valuation on $198M revenue (3.9x)
+Tesla           - $1.
+  - https://x.com/BullTheoryio/status/2062767453415850305
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 528).
+- **@marionawfal** (24 likes, score 8/10) — SpaceX started with rockets.
+
+Then, as a side hustle, created an internet provider.
+
+Not a small one either.
+
+Starlink.
+12 million customers.
+160+ countries.
+
+The telecom industry spent decades buildi
+  - https://x.com/MarioNawfal/status/2062841862050951364
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 44).
+- **@cryptorover** (655 likes, score 9/10) — $BTC just fell below the rainbow chart.  
+
+Historically, this has happened 2 times.   
+
+• 2022: $15,500  
+• 2026: $63,000  
+
+Most Bitcoin OG's remember this.
+  - https://x.com/cryptorover/status/2062792033425928264
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 851).
+- **@bulltheoryio** (600 likes, score 9/10) — BREAKING: Bitcoin dumps -$2,000 in just 60 minutes and dropped below $61,500. 
+
+ Over $280 million worth of longs has been liquidated in the last 60 minutes.
+  - https://x.com/BullTheoryio/status/2062782342817796197
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 822).
+- **@jimcramer** (98 likes, score 9/10) — We create our own bearish problems. "We" float S&P inclusion on top of what i most fear, which is a $4 trillion valuation for SpaceX--my bet-- and we have no sellers to speak of because we are in love
+  - https://x.com/jimcramer/status/2062840982660321576
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 180).
+- **@business** (95 likes, score 9/10) — Nvidia has certified the three biggest memory chipmakers to supply their most advanced high-bandwidth products for the US company’s AI accelerators, CEO Jensen Huang said
+  - https://x.com/business/status/2062767631124386095
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 119).
+- **@watcherguru** (3700 likes, score 9/10) — BREAKING: Over $500,000,000 liquidated from the cryptocurrency market in the past hour.
+
+• $BTC: $61,100
+• $ETH : $1,620
+• $BNB: $570
+• $XRP: $1.10
+• $SOL: $64
+  - https://x.com/WatcherGuru/status/2062784632211329097
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 4680).
+- **@watcherguru** (3553 likes, score 9/10) — JUST IN: Bitcoin officially falls under $62,000
+  - https://x.com/WatcherGuru/status/2062777964102578590
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 4671).
