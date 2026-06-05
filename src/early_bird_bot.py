@@ -58,10 +58,8 @@ EARLY_BIRD_ACCOUNTS = [
     "CoreWeave", "CrusoeEnergy", "LambdaAPI", "applied_dc",
     "IREN_Ltd", "Hut8Corp", "TeraWulfInc", "CipherMining",
     "CleanSpark_Inc", "MARAHoldings", "RiotPlatforms",
-    "SpaceX", "Starlink", "RocketLab", "PeterDiamandis",
-    "NASA", "ESA", "CNES", "ArianeGroup", "blueorigin", "MomentusSpace",
-    "SpaceX_France", "Jeff_Foust", "SpaceNews", "planet", "Astro_Andreas",
-    "bittensor_", "opentensor", "KobeissiLetter",
+    "SpaceX", "PeterDiamandis",
+    "SpaceX_France", "bittensor_", "opentensor", "KobeissiLetter",
     # === IA EN niche / dev ===
     "TheRundownAI", "rowancheung", "mckaywrigley", "levelsio",
     "AlphaSignalAI", "TheAIGRID", "DrJimFan", "GaryMarcus",

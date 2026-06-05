@@ -27,8 +27,7 @@ VIP_REPLY_ACCOUNTS = [
     "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz",
     "jbelizaireCEO", "FlasheurInvest", "ylecun", "arthurmensch",
     "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
-    "VitalikButerin", "saylor", "brian_armstrong", "cz_binance", "SpaceX",
-    "Starlink", "blueorigin", "RocketLab", "ArianeGroup", "esa"
+    "VitalikButerin", "saylor", "brian_armstrong", "cz_binance", "SpaceX"
 ]
 _VIP_REPLY_ACCOUNTS_LC = {h.lower() for h in VIP_REPLY_ACCOUNTS}
 
@@ -59,9 +58,7 @@ BIG_FR_ACCOUNTS = [
     "Hasheur", "cryptodiffusion", "Cointribune", "BFMcrypto", "PowerHasheur",
     "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr", "CryptoPicsou",
     # Spatial FR
-    "thomaspesquet", "CNES", "ArianeGroup", "ESA_FR", "Stardust__",
-    "ArianeGroupCEO",
-]
+    ]
 ALWAYS_REPLY_ACCOUNTS = list(dict.fromkeys(
     VIP_REPLY_ACCOUNTS + HIGH_TRACTION_REPLY_ACCOUNTS + BIG_FR_ACCOUNTS))
 _BIG_FR_SET = {h for h in BIG_FR_ACCOUNTS}
@@ -69,8 +66,7 @@ ALWAYS_REPLY_FR_ACCOUNTS = [
     h for h in ALWAYS_REPLY_ACCOUNTS
     if h in HIGH_TRACTION_REPLY_ACCOUNTS or h in _BIG_FR_SET or h in {
         "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "FlasheurInvest",
-        "ylecun", "arthurmensch", "GuillaumeLample", "fchollet",
-        "ArianeGroup", "esa"
+        "ylecun", "arthurmensch", "GuillaumeLample", "fchollet"
     } or any(hint in h.lower() for hint in _FR_ACCOUNT_HINTS)
 ]
 ALWAYS_REPLY_EN_ACCOUNTS = [h for h in ALWAYS_REPLY_ACCOUNTS if h not in ALWAYS_REPLY_FR_ACCOUNTS]
@@ -130,8 +126,7 @@ FR_ACCOUNTS = [
     "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "cyrildiagne", "yacine999",
     "ClementDelangue", "Thomas_Wolf", "ncasenmare", "olivier_ramier", "sileix",
     "Frandroid", "Numerama", "01net", "JournalDuGeek", "GuillaumeBesson", "EricDrd",
-    "Arnaud_Esquerre", "SpaceX_France", "CNES", "ESA_fr", "ArianeGroup",
-    "Aerospace_Valley", "MaffreLaurent", "Latribune", "usinenouvelle",
+    "Arnaud_Esquerre", "SpaceX_France", "ESA_fr", "Aerospace_Valley", "MaffreLaurent", "Latribune", "usinenouvelle",
 ]
 
 EN_ACCOUNTS = [
@@ -139,13 +134,10 @@ EN_ACCOUNTS = [
     "GoogleDeepMind", "sama", "elonmusk", "VitalikButerin", "karpathy", "xAI",
     "MistralAI", "nvidia", "rowancheung", "TheRundownAI", "CoreWeave", "CrusoeEnergy",
     "LambdaAPI", "applied_dc", "IREN_Ltd", "Hut8Corp", "TeraWulfInc", "CipherMining",
-    "CleanSpark_Inc", "MARAHoldings", "RiotPlatforms", "SpaceX", "Starlink",
-    "RocketLab", "PeterDiamandis", "KobeissiLetter", "unusual_whales", "ylecun",
+    "CleanSpark_Inc", "MARAHoldings", "RiotPlatforms", "SpaceX", "PeterDiamandis", "KobeissiLetter", "unusual_whales", "ylecun",
     "fchollet", "AndrewYNg", "lilianweng", "demishassabis", "drfeifei", "ID_AA_Carmack",
     "jeremyphoward", "gwern", "cursor_ai", "sualeh", "amanrsanger", "mntruell",
-    "Jeff_Foust", "planet", "ViaSatellite", "SpaceNews", "Astro_Andreas",
-    "astro_jessica", "thesheetztweetz", "MomentusSpace", "Rocket_Lab",
-]
+    ]
 
 SEARCH_QUERIES = [
     # ===== AI-ONLY (2026-06-03 rebrand: AI Decoder). English-first; small FR
@@ -554,7 +546,7 @@ def run_direct_reply_cycle():
     from .evolution_store import filter_and_weight
     _fr_pool = filter_and_weight(FR_ACCOUNTS)
     # Ensure Space FR accounts appear first in the sample
-    _space_fr = [h for h in _fr_pool if h in {"CNES", "ESA_fr", "ArianeGroup", "SpaceX_France", "Aerospace_Valley"}]
+    _space_fr = [h for h in _fr_pool if h in {"ESA_fr", "SpaceX_France", "Aerospace_Valley"}]
     _other_fr = [h for h in _fr_pool if h not in set(_space_fr)]
     _fr_sample = _space_fr + random.sample(_other_fr, min(18, len(_other_fr)))
     for username in _fr_sample:

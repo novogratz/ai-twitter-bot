@@ -69,6 +69,28 @@ Two one-line root causes, both fixed:
 Lesson: when a surface flatlines, check `engagement_log.csv` daily counts per
 action type FIRST — the collapse was invisible in bot.log noise.
 
+### 2026-06-05 PM — learning loop + throughput (PR #5)
+
+- **Per-post metrics scraper rebuilt** — `performance.scrape_own_metrics` had
+  returned 0 tweets since ~May 11 (DOM drift + no Safari lock): the pattern-ROI
+  bandit and analyzer flew blind for 3+ weeks. Now rides the shared
+  `scrape_profile_tweets` pipeline; the shared scraper JS also extracts VIEWS
+  (analytics-link aria-label). Live-verified same day.
+- **GIF A/B tagging** — GIF posts/quotes log to engagement_log with
+  `source=GIF/<query>` (and `action_type=quote_gif`) so the analyzer can
+  compare GIF vs text-only and rank memes by performance.
+- **Off-mandate scan targets pruned** — ~30 space/legacy handles (esa, CNES,
+  ArianeGroup, RocketLab, ChrisHadfield, nextspaceflight…) removed from
+  early_bird/direct_reply/reply_agent/retweet_bot scan lists; one Safari
+  serializes everything, so each pruned scan converts to quote/reply
+  throughput. SpaceX kept (markets megastory + Musk-AI overlap).
+- **Therapist anchor in self_evolution_agent** — the 4h persona-evolution
+  prompt now hard-anchors inside the therapist persona (the "cynical trader
+  at 3 AM" drift can't recur).
+- **`src/first_hour_babysitter.py`** — every 10 min, if the latest post is
+  <60 min old, fires an extra replyback sweep (first-hour replies carry ~15x
+  algo weight). Near-zero cost outside the window.
+
 ### 2026-06-05 PM — native GIF attachments (tested live, "you nailed it")
 
 Funny posts/quotes now carry GIFs from X's NATIVE composer picker (no

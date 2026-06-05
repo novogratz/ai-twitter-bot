@@ -96,7 +96,7 @@ NICHE_KEYWORDS = (
     "frontier model", "frontier tech", "reasoning model",
     # Space — expanded for space push mode
     "spacex", "starship", "starlink", "falcon", "rocket lab", "rocketlab", "rklb",
-    "nasa", "esa", "cnes", "isro", "jaxa", "ussf",
+    "nasa", "cnes", "isro", "jaxa", "ussf",
     "blue origin", "new glenn", "new shepard", "be-4",
     "virgin galactic", "virgin orbit", "spaceplane",
     "axiom space", "axiom", "firefly", "relativity space", "sierra space",
@@ -266,9 +266,6 @@ FR_TRUSTED_HANDLES = [
     "frandroid",
     "LADN_EU",
     # FR space
-    "CNES",
-    "ArianeGroup",
-    "ESA_FR",
     # FR investment / crypto
     "BFMcrypto",
     "Capital",
@@ -349,17 +346,8 @@ EN_TRUSTED_HANDLES = [
     "IREN_Ltd",
     # Space — PUSH IT (2026-05-29 space mode)
     "SpaceX",
-    "Starlink",
-    "RocketLab",
-    "NASA",
     "NASAKennedy",
     "NASAArtemis",
-    "NASASpaceflight",
-    "SpaceflightNow",
-    "SpaceNews",
-    "ESA",
-    "CNES",
-    "ArianeGroup",
     "BlueOrigin",
     "virgingalactic",
     "ASTSpaceMobile",
@@ -370,14 +358,10 @@ EN_TRUSTED_HANDLES = [
     "BlackSkyTech",
     "SierraSpace",
     "PeterDiamandis",
-    "Astro_DonPettit",
-    "ChrisHadfield",
     "Teslarati",
-    "SciGuySpace",
-    "nextspaceflight",
     "elonmusk",
     "ShawnLevasseur",
-    "thesheetztweetz",   # space reporter
+    # space reporter
     "jeff_foust",        # Space News editor
     "RDWSpace",
 ]
@@ -630,7 +614,7 @@ def _candidate_rank(c: dict) -> tuple:
         "rates", "inflation", "tariff", "chips", "gpu", "coreweave",
         "crwv", "apld", "iren", "hive", "slnh", "terawulf", "wulf",
         "cipher", "cifr", "bittensor", "tao", "spacex", "starlink",
-        "rocket lab", "rklb", "nasa", "esa", "blue origin", "axiom",
+        "rocket lab", "rklb", "nasa", "blue origin", "axiom",
         "gemini", "claude", "grok", "llama", "gpt", "xai", "deepmind",
     ))
     hard_impact = any(k in text for k in (

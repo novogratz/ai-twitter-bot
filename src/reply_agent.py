@@ -33,14 +33,9 @@ TARGET_ACCOUNTS = [
     "CoreWeave", "IREN_Ltd", "LambdaAPI", "applied_dc",
     "KobeissiLetter", "unusual_whales",
 
-    # Space — PUSH IT (2026-05-29 space mode)
-    "SpaceX", "Starlink", "RocketLab", "NASA", "NASAArtemis", "NASAKennedy",
-    "ESA", "CNES", "ArianeGroup", "BlueOrigin", "virgingalactic",
-    "PeterDiamandis", "ASTSpaceMobile", "IntuitiveMach", "AxiomSpace",
-    "FireflySpace", "PlanetLabs", "SierraSpace",
-    "SpaceNews", "NASASpaceflight", "SpaceflightNow", "nextspaceflight",
-    "Teslarati", "ChrisHadfield", "Astro_DonPettit", "SciGuySpace",
-    "thesheetztweetz", "jeff_foust", "elonmusk",
+    # Space pruned 2026-06-05 (mandate 2026-06-04: no space content) —
+    # SpaceX kept: markets/IPO megastory + Musk-AI overlap.
+    "SpaceX",
 
     # Robotics / frontier tech
     "Tesla", "BostonDynamics", "Figure_robot",

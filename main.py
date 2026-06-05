@@ -84,6 +84,7 @@ from src.hot_quote_bot import safe_run_hot_quote_cycle
 from src.feed_sweeper_bot import safe_run_feed_sweep_cycle
 from src.viral_stunt_bot import safe_run_viral_stunt_cycle
 from src.engine_health_bot import safe_run_engine_health_cycle
+from src.first_hour_babysitter import safe_run_babysit_cycle
 from src.conversion_attribution_bot import safe_run_conversion_attribution_cycle
 from src.stock_promo_bot import safe_run_stock_promo_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
@@ -696,6 +697,17 @@ def main():
         # "remove promotion of spce mnts etc"). The module stays for possible
         # future campaigns but is dormant: stock_promo_config.json is disabled
         # + empty, which also kills the reply/quote soft-injection blocks.
+
+        # First-hour babysitter: replies in a post's first 60 min carry ~15x
+        # algo weight. Every 10 min, if our latest post is <60 min old, run an
+        # extra replyback sweep so early commenters get fast responses.
+        log.info("First-hour babysitter: fast replyback sweeps while the latest post is <60 min old.")
+        scheduler.add_job(
+            safe_run_babysit_cycle,
+            trigger=IntervalTrigger(minutes=10),
+            id="babysitter_job",
+            max_instances=1,
+        )
 
         # Engine-health watchdog (2026-06-05 post-mortem): hourly per-action
         # pace check vs 7-day same-hour baseline; loud alert on >60% drop so
