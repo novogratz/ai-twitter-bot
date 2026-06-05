@@ -1,132 +1,90 @@
 {
-  "ts": "2026-06-05T05:07:36.093774",
-  "count": 35,
+  "ts": "2026-06-05T08:11:08.214205",
+  "count": 30,
   "items": [
     {
-      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Reuters",
-      "title": "South Korean chipmaker SK Hynix, a major Nvidia supplier, said investor feedback on its proposed US listing was 'tremendously positive,' with a source saying the deal could raise $14 billion as its ma",
-      "url": "https://x.com/Reuters/status/2062592719818821969",
-      "score": 1143,
-      "ts": ""
-    },
-    {
-      "src": "X_FOLLOWING/MANDO CT",
-      "title": "The market is bleeding.\n\nFear is everywhere.\n\nAfter 10 years in crypto, I’ve learned that staring at the 15-minute chart doesn’t change anything except your mood.\n\nSo today I’m deploying the last of m",
-      "url": "https://x.com/XMaximist/status/2062776583564489020",
-      "score": 511,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/NVIDIA Newsroom",
-      "title": "Touchdown, Seoul.\n\nLooking forward to meeting with NVIDIA's incredible partner ecosystem in Korea.",
-      "url": "https://x.com/nvidianewsroom/status/2062769244018974835",
-      "score": 407,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/First Squawk",
-      "title": "NVIDIA CEO Jensen Huang hints at upcoming surprises",
-      "url": "https://x.com/FirstSquawk/status/2062759714707181799",
-      "score": 368,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Bull Theory",
-      "title": "IPO VALUATION vs REVENUE\n\nAmazon     - $475m on $148M revenue (3.2x)\nNvidia         - $600m valuation on $158M revenue (3.8x)\nMicrosoft  - $775M valuation on $198M revenue (3.9x)\nTesla           - $1.",
-      "url": "https://x.com/BullTheoryio/status/2062767453415850305",
-      "score": 336,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Tsla Chan",
-      "title": "Nvidia CEO Jensen Huang just entered Korea through Gimpo Airport. He interviewed as below. \n\n“Robotics will be the next major industry here in Korea.”\n\n“Korea is manufacturing, mechatronics, And it's",
-      "url": "https://x.com/Tslachan/status/2062769169888944424",
-      "score": 185,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Bloomberg",
-      "title": "Nvidia has certified the three biggest memory chipmakers to supply their most advanced high-bandwidth products for the US company’s AI accelerators, CEO Jensen Huang said",
-      "url": "https://x.com/business/status/2062767631124386095",
-      "score": 82,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Gordon",
-      "title": "My financial advisor when I tell him I am still not selling any crypto",
-      "url": "https://x.com/GordonGekko/status/2062817452728209509",
-      "score": 73,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/CryptoGoos",
-      "title": "MULTIPLE TRUMP OFFICIALS ARE SOUNDING THE ALARM.\n\nAmerica's chip blockade on China had a hole in it. For a YEAR.\n\nThe US spent years trying to starve China of top AI chips.\n\nThen it quietly stopped en",
-      "url": "https://x.com/cryptogoos/status/2062807133301916120",
-      "score": 54,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/CoinGlass",
-      "title": "GM!                                                        \n\n#BTC Liquidation Heatmap (12 hour)                                                                 \n\nHigh leverage liquidity.   \n\n63.10k",
-      "url": "https://x.com/coinglass_com/status/2062820108272316506",
-      "score": 17,
-      "ts": ""
-    },
-    {
-      "src": "X_FOLLOWING/Mario Nawfal",
-      "title": "The crypto industry is exhausted by doubtful promises, and now institutions are hunting for something they can trust.\n\nLitVM Co-founder Aztec breaks down how the market is rotating back to its roots.",
-      "url": "https://x.com/MarioNawfal/status/2062820556768960836",
-      "score": 8,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/(1% RISK)™",
-      "title": "How should you price your SaaS AI tool?  \n\n-freemium  \n-flat monthly  \n-usage-based",
-      "url": "https://x.com/wealthcodes222/status/2062820165629165804",
-      "score": 2,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Yash",
-      "title": "Is there any trick to avoid Claude code usage limits?",
-      "url": "https://x.com/YashHustle_22/status/2062820185854358001",
-      "score": 1,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/CoreWeave OR CRWV OR APLD lang:en min_faves:100/골안아파덕",
-      "title": "엔비디아 $NVDA 파트너십 \n\n코어위브 $CRWV, 아이렌 $IREN, 네비우스 $NBIS, 네이버 클라우드, SK텔레콤 등…",
-      "url": "https://x.com/Nice_Stock_/status/2062822124713279746",
+      "src": "CoinDesk",
+      "title": "Live updates: bitcoin falls below $62,000 ahead of jobs data as Zcash bug rocks crypto",
+      "url": "https://www.coindesk.com/tech/2026/06/05/live-updates-bitcoin-below-usd62-000-ahead-of-jobs-data-as-zcash-bug-rocks-crypto",
       "score": 0,
-      "ts": ""
+      "ts": "2026-06-05T12:08:26"
     },
     {
-      "src": "X_SEARCH/live/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Crypto Jake",
-      "title": "#xauusd  #gold  #crypto\n\n The market never sleeps — and neither does the opportunity. \n\n I’m a futures trader dropping my personal high-probability setups with exact entries and exits for free.\n\n http",
-      "url": "https://x.com/David035726/status/2062822076189163685",
+      "src": "CNBC Top",
+      "title": "Alphabet is seeking fresh capital as stock's 4-week losing streak tests investor appetite",
+      "url": "https://www.cnbc.com/2026/06/05/alphabet-ai-data-center-financing.html",
       "score": 0,
-      "ts": ""
+      "ts": "2026-06-05T12:00:01"
     },
     {
-      "src": "X_SEARCH/live/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Celeta Jewlius",
-      "title": "If you want to stop guessing, start following @PremarketPilot. Real-time setups delivered daily. \n \n$NVDA  $CRWV  $AMD  $SPCX $GOOG",
-      "url": "https://x.com/x_alt43973/status/2062821494791565576",
+      "src": "CNBC Top",
+      "title": "Broadway's $1.9 billion season is the latest sign of consumers splurging on experiences",
+      "url": "https://www.cnbc.com/2026/06/05/broadway-record-ticket-sales.html",
       "score": 0,
-      "ts": ""
+      "ts": "2026-06-05T12:00:01"
     },
     {
-      "src": "X_SEARCH/live/CoreWeave OR CRWV OR APLD lang:en min_faves:100/M.I.A",
-      "title": "#xauusd  #gold  #crypto\n\n The market never sleeps — and neither does the opportunity. \n\n I’m a futures trader dropping my personal high-probability setups with exact entries and exits for free.\n\n http",
-      "url": "https://x.com/smilesoalluring/status/2062819920555978867",
+      "src": "CNBC Top",
+      "title": "Bitcoin caps a dismal week as price wallows 50% below its all-time high",
+      "url": "https://www.cnbc.com/2026/06/05/bitcoin-dismal-week-price-below-all-time-high-crypto-investors.html",
       "score": 0,
-      "ts": ""
+      "ts": "2026-06-05T11:41:45"
     },
     {
-      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Jim Cramer",
-      "title": "Nvidia hanging in well..",
-      "url": "https://x.com/jimcramer/status/2062557660172505317",
+      "src": "CNBC Tech",
+      "title": "Where investors may find the next 'big wave' for AI trade",
+      "url": "https://www.cnbc.com/2026/06/05/where-investors-may-find-the-next-big-wave-for-ai-trade.html",
       "score": 0,
-      "ts": ""
+      "ts": "2026-06-05T11:30:01"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Bitcoin sentiment hit peak bearishness at recent lows, peak bullishness near tops",
+      "url": "https://www.coindesk.com/daybook-us/2026/06/04/bitcoin-sentiment-hit-peak-bearishness-at-recent-lows-peak-bullishness-near-tops",
+      "score": 0,
+      "ts": "2026-06-05T11:25:49"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "The Tech Download: Anthropic’s IPO sets up first big test of AI boom valuations",
+      "url": "https://www.cnbc.com/2026/06/05/tech-download-anthropic-ipo-ai-valuations.html",
+      "score": 0,
+      "ts": "2026-06-05T11:00:01"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "The Tech Download: Anthropic’s IPO sets up first big test of AI boom valuations",
+      "url": "https://www.cnbc.com/2026/06/05/tech-download-anthropic-ipo-ai-valuations.html",
+      "score": 0,
+      "ts": "2026-06-05T11:00:01"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Crypto's worst week since July 2024 deepens as bitcoin, ether near critical price levels",
+      "url": "https://www.coindesk.com/markets/2026/06/05/crypto-s-worst-week-since-july-2024-deepens-as-bitcoin-ether-near-critical-price-levels",
+      "score": 0,
+      "ts": "2026-06-05T10:39:16"
+    },
+    {
+      "src": "Wired",
+      "title": "OpenAI and Anthropic May Be Rivals, but Investors Aren’t Picking Sides",
+      "url": "https://www.wired.com/story/openai-and-anthropic-may-be-rivals-but-their-investors-arent-choosing-sides/",
+      "score": 0,
+      "ts": "2026-06-05T10:30:00"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "OpenAI says it will comply with Trump's order requiring AI model reviews before release",
+      "url": "https://www.cnbc.com/2026/06/05/openai-trump-ai-model-review-order.html",
+      "score": 0,
+      "ts": "2026-06-05T10:04:17"
+    },
+    {
+      "src": "Wired",
+      "title": "Why Apple Might Put Cameras Into Its Next AirPods",
+      "url": "https://www.wired.com/story/why-apple-might-put-cameras-into-its-next-airpods/",
+      "score": 0,
+      "ts": "2026-06-05T10:00:00"
     },
     {
       "src": "Wired",
@@ -136,15 +94,22 @@
       "ts": "2026-06-05T09:00:00"
     },
     {
-      "src": "CNBC Top",
-      "title": "OpenAI says it will comply with Trump's order requiring AI model reviews before release",
-      "url": "https://www.cnbc.com/2026/06/05/openai-trump-ai-model-review-order.html",
+      "src": "MIT Tech Review",
+      "title": "Are AI chatbots making us lose control of our brains?",
+      "url": "https://www.technologyreview.com/2026/06/05/1138427/are-ai-chatbots-making-us-lose-control-of-our-brains/",
       "score": 0,
-      "ts": "2026-06-05T08:57:21"
+      "ts": "2026-06-05T09:00:00"
+    },
+    {
+      "src": "MIT Tech Review",
+      "title": "The Meta hack shows there’s more to AI security than Mythos",
+      "url": "https://www.technologyreview.com/2026/06/05/1138437/the-meta-hack-shows-theres-more-to-ai-security-than-mythos/",
+      "score": 0,
+      "ts": "2026-06-05T09:00:00"
     },
     {
       "src": "CoinDesk",
-      "title": "Bitcoin and ether ETFs end record multi-billion outflow streak",
+      "title": "U.S. bitcoin, ether ETFs end record multibillion outflow streak",
       "url": "https://www.coindesk.com/markets/2026/06/05/bitcoin-and-ether-etfs-end-record-multi-billion-outflow-streak",
       "score": 0,
       "ts": "2026-06-05T08:53:30"
@@ -155,6 +120,13 @@
       "url": "https://www.coindesk.com/markets/2026/06/05/here-s-what-could-happen-if-bitcoin-breaks-below-usd60-000",
       "score": 0,
       "ts": "2026-06-05T07:52:25"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "China poaches more AI talent from the U.S. as it eyes the next 'super-app'",
+      "url": "https://www.cnbc.com/2026/06/05/china-may-move-toward-us-path-on-ai-as-firms-poach-employees.html",
+      "score": 0,
+      "ts": "2026-06-05T07:50:47"
     },
     {
       "src": "CNBC Top",
@@ -206,11 +178,25 @@
       "ts": "2026-06-05T06:03:52"
     },
     {
+      "src": "The Block",
+      "title": "Grayscale says bitcoin needs other buyers to find a ‘sustainable bottom’ amid Strategy BTC sale",
+      "url": "https://www.theblock.co/post/403770/grayscale-other-buyers-must-step-in-for-bitcoins-price-to-find-a-sustainable-bottom-after-strategy-btc-sale?utm_source=rss&utm_medium=rss",
+      "score": 0,
+      "ts": "2026-06-05T05:27:29"
+    },
+    {
       "src": "Wired",
       "title": "The Motley Fool Promo Code: $200 Off on Stock Advisor June 2026",
       "url": "https://www.wired.com/story/the-motley-fool-promo-code/",
       "score": 0,
       "ts": "2026-06-05T05:00:00"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "Tracking website, food watch: South Korea is obsessing over Nvidia CEO Jensen Huang's visit",
+      "url": "https://www.cnbc.com/2026/06/05/south-korea-is-obsessing-over-nvidia-ceo-jensen-huangs-visit.html",
+      "score": 0,
+      "ts": "2026-06-05T04:40:31"
     },
     {
       "src": "CNBC Top",
@@ -225,27 +211,6 @@
       "url": "https://cointelegraph.com/news/senate-republicans-push-finance-regulators-to-clarify-crypto-capital-rules?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
       "score": 0,
       "ts": "2026-06-05T04:26:57"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "Warren invites Nvidia CEO Jensen Huang to Senate hearing on China AI chip sales",
-      "url": "https://www.cnbc.com/2026/06/04/nvidia-ceo-jensen-huang-warren-senate-hearing-china-ai-chips.html",
-      "score": 0,
-      "ts": "2026-06-05T00:58:02"
-    },
-    {
-      "src": "TechCrunch",
-      "title": "Ahead of its IPO, Anthropic’s Daniela Amodei shrugs off doubts about AI’s returns",
-      "url": "https://techcrunch.com/2026/06/04/ahead-of-its-ipo-anthropics-daniela-amodei-shrugs-off-doubts-about-ais-returns/",
-      "score": 0,
-      "ts": "2026-06-04T22:43:26"
-    },
-    {
-      "src": "CNBC Tech",
-      "title": "CrowdStrike CEO says AI security fears will become a bigger tailwind in coming quarters",
-      "url": "https://www.cnbc.com/2026/06/04/crowdstrike-ceo-says-ai-security-fears-will-become-a-bigger-tailwind-in-coming-quarters.html",
-      "score": 0,
-      "ts": "2026-06-04T22:37:01"
     }
   ]
 }

@@ -1,15 +1,39 @@
 {
-  "ts": "2026-06-05T05:01:16.824303",
+  "ts": "2026-06-05T08:06:07.207585",
   "window_min": 90,
-  "total_actions": 12,
+  "total_actions": 61,
   "by_type": {
-    "hotake": 8,
-    "reply": 12
+    "retweet": 20,
+    "quote": 3,
+    "post": 2,
+    "hotake": 1,
+    "reply": 38
   },
   "winners": {
-    "PROFILE-ALWAYS": 12
+    "PROFILE-ALWAYS": 32,
+    "RETWEET/bulltheoryio": 3,
+    "RETWEET/business": 2,
+    "RETWEET/watcherguru": 2,
+    "GRAPHSEO_VIP": 2
   },
-  "losers": {},
-  "post_cadence_factor": 1.0,
+  "losers": {
+    "RETWEET/ashcrypto": 1,
+    "RETWEET/marionawfal": 1,
+    "RETWEET/cryptorover": 1,
+    "RETWEET/jimcramer": 1,
+    "RETWEET/tweetthis101": 1,
+    "QUOTE/NASA": 1,
+    "RETWEET/stocksavvyshay": 1,
+    "RETWEET/miningtk": 1,
+    "RETWEET/btpmnpr": 1,
+    "RETWEET/reuters": 1,
+    "RETWEET/hooeem": 1,
+    "RETWEET/financialreview": 1,
+    "RETWEET/cointelegraph": 1,
+    "RETWEET/jamesmelville": 1,
+    "QUOTE/Watcher.Guru": 1,
+    "QUOTE/*Walter Bloomberg": 1
+  },
+  "post_cadence_factor": 0.7,
   "boost_cadence_factor": 1.0
 }

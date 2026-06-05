@@ -12814,3 +12814,10 @@ It’s called attention dilution, and it’s why your sessions are giving yo
 - **@jamesmelville** (69 likes, score 7/10) — There is a huge proliferation of AI data centres. New AI-focused facilities can consume hundreds of megawatts of electricity - comparable to the power demand of a small city. Solar and wind power are
   - https://x.com/JamesMelville/status/2062781847503769942
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 83).
+- **@stockmktnewz** (24 likes, score 8/10) — Morgan Stanley analysts just said they expect SpaceX $SPCX to reach 
+
+Annual revenue of $3.4 Trillion by 2040 with adjusted EBITDA of more than $2.7T
+
+*Morgan Stanley is one of the banks leading the S
+  - https://x.com/StockMKTNewz/status/2062861517314265215
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 32).
