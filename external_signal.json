@@ -1,191 +1,251 @@
 {
-  "ts": "2026-06-04T20:30:33.873206",
-  "count": 27,
+  "ts": "2026-06-05T05:07:36.093774",
+  "count": 35,
   "items": [
     {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Michael Burry Stock Tracker ♟",
-      "title": "Everything he touches turns to gold\n\nLeopold Aschenbrenner's Applied Digital $APLD position is now up +323% since disclosing a $22.7M stake\n\nHe opened the position in Q1 2025 at ~$8.62/share",
-      "url": "https://x.com/burrytracker/status/2047341960592015816",
-      "score": 3314,
+      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Reuters",
+      "title": "South Korean chipmaker SK Hynix, a major Nvidia supplier, said investor feedback on its proposed US listing was 'tremendously positive,' with a source saying the deal could raise $14 billion as its ma",
+      "url": "https://x.com/Reuters/status/2062592719818821969",
+      "score": 1143,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/amit",
-      "title": "Cathie Wood $ARKK today:\n\nBuys: \n\n- $GOOG 174,293 shares\n- $META 33,837 shares\n- $XYZ 212,538 shares\n- $CRWV 396,198 shares\n- $HOOD 7,604 shares\n\nSells: \n\n- $AMD 106,651 shares\n- $GTLB 358,399 shares",
-      "url": "https://x.com/amitisinvesting/status/1993488525908754690",
-      "score": 2489,
+      "src": "X_FOLLOWING/MANDO CT",
+      "title": "The market is bleeding.\n\nFear is everywhere.\n\nAfter 10 years in crypto, I’ve learned that staring at the 15-minute chart doesn’t change anything except your mood.\n\nSo today I’m deploying the last of m",
+      "url": "https://x.com/XMaximist/status/2062776583564489020",
+      "score": 511,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Math Files",
-      "title": "“Mathematics is not about numbers, equations, computations, or algorithms: it is about understanding.” \n\n-Terence Tao",
-      "url": "https://x.com/Math_files/status/2062094007673758020",
-      "score": 619,
+      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/NVIDIA Newsroom",
+      "title": "Touchdown, Seoul.\n\nLooking forward to meeting with NVIDIA's incredible partner ecosystem in Korea.",
+      "url": "https://x.com/nvidianewsroom/status/2062769244018974835",
+      "score": 407,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/amit",
-      "title": "TOP 10 STOCKS TRADED IN THE OPTION MARKETS TODAY:\n\n1. Tesla $TSLA, 7.3M contracts\n2. Nvidia $NVDA, 3.3M contracts\n3. Palantir $PLTR, 1.2M contracts\n4. Apple $AAPL, 975K contracts\n5. Amazon $AMZN, 840K",
-      "url": "https://x.com/amitisinvesting/status/1930809050943684667",
-      "score": 413,
+      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/First Squawk",
+      "title": "NVIDIA CEO Jensen Huang hints at upcoming surprises",
+      "url": "https://x.com/FirstSquawk/status/2062759714707181799",
+      "score": 368,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Cuma Cevik",
-      "title": "Stars of the Night Market: $ORCL $KTOS $NBIS $SOFI $CRWV $PLTR $AVGO $HOOD $NVDA",
-      "url": "https://x.com/cevikfinance/status/2061239356166197534",
-      "score": 190,
+      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Bull Theory",
+      "title": "IPO VALUATION vs REVENUE\n\nAmazon     - $475m on $148M revenue (3.2x)\nNvidia         - $600m valuation on $158M revenue (3.8x)\nMicrosoft  - $775M valuation on $198M revenue (3.9x)\nTesla           - $1.",
+      "url": "https://x.com/BullTheoryio/status/2062767453415850305",
+      "score": 336,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/amit",
-      "title": "I think its following $CRWV \n\nMaybe market expecting $NVDA could increase their stake in them\n\nSame with $APLD",
-      "url": "https://x.com/amitisinvesting/status/2015799028877840447",
-      "score": 165,
+      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Tsla Chan",
+      "title": "Nvidia CEO Jensen Huang just entered Korea through Gimpo Airport. He interviewed as below. \n\n“Robotics will be the next major industry here in Korea.”\n\n“Korea is manufacturing, mechatronics, And it's",
+      "url": "https://x.com/Tslachan/status/2062769169888944424",
+      "score": 185,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Tevis",
-      "title": "Ok fine, I’ll look at $CRWV …\n\nThe valuation disparity with $NBIS rally vs. $CRWV too hard to ignore.",
-      "url": "https://x.com/FunOfInvesting/status/2062645184156860831",
-      "score": 155,
+      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Bloomberg",
+      "title": "Nvidia has certified the three biggest memory chipmakers to supply their most advanced high-bandwidth products for the US company’s AI accelerators, CEO Jensen Huang said",
+      "url": "https://x.com/business/status/2062767631124386095",
+      "score": 82,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/amit",
-      "title": "THE NEO CLOUDS LOVE IT \n\n$NBIS $IREN $CRWV",
-      "url": "https://x.com/amitisinvesting/status/1991265569106969061",
-      "score": 132,
+      "src": "X_HOME/Gordon",
+      "title": "My financial advisor when I tell him I am still not selling any crypto",
+      "url": "https://x.com/GordonGekko/status/2062817452728209509",
+      "score": 73,
       "ts": ""
     },
     {
-      "src": "X_HOME/Polymarket Money",
-      "title": "S&P said it will not change eligibility rules to fast-track index inclusion for megacap IPOs like SpaceX or Anthropic.\n\nSo even if SpaceX goes public at massive scale, it will likely have to wait for",
-      "url": "https://x.com/PolymarketMoney/status/2062662257021268427",
-      "score": 90,
+      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/CryptoGoos",
+      "title": "MULTIPLE TRUMP OFFICIALS ARE SOUNDING THE ALARM.\n\nAmerica's chip blockade on China had a hole in it. For a YEAR.\n\nThe US spent years trying to starve China of top AI chips.\n\nThen it quietly stopped en",
+      "url": "https://x.com/cryptogoos/status/2062807133301916120",
+      "score": 54,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Sykodelic",
-      "title": "I've added more to my $TAO bag.\n\nI thought I would be done purchasing more, but here we are.\n\nDidn't feel good buying today amongst the fear and chaos but the best buys never do.\n\nI would potentially",
-      "url": "https://x.com/Sykodelic_/status/2062619676660965413",
-      "score": 78,
+      "src": "X_HOME/CoinGlass",
+      "title": "GM!                                                        \n\n#BTC Liquidation Heatmap (12 hour)                                                                 \n\nHigh leverage liquidity.   \n\n63.10k",
+      "url": "https://x.com/coinglass_com/status/2062820108272316506",
+      "score": 17,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Carl Moon",
-      "title": "If you could hold just one Altcoin for 10 years, which one would it be?\n\n$ETH\n$SOL\n$BNB\n$ZEC\n$XRP\n$HYPE\n$SUI\n$NEAR\n$TAO",
-      "url": "https://x.com/TheMoonCarl/status/2062631849160224827",
-      "score": 61,
+      "src": "X_FOLLOWING/Mario Nawfal",
+      "title": "The crypto industry is exhausted by doubtful promises, and now institutions are hunting for something they can trust.\n\nLitVM Co-founder Aztec breaks down how the market is rotating back to its roots.",
+      "url": "https://x.com/MarioNawfal/status/2062820556768960836",
+      "score": 8,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Petit Rentier",
-      "title": "Des performances totalement FOLLES sur les marchés aujourd’hui \n\n HubSpot : +17,7 %\n Nebius : +14,8 %\n CoreWeave : +13,5 %\n Zeta Global : +11,9 %\n Innodata : +11,4 %\n 2CRSi : +11,2 %\n Salesforce : +10",
-      "url": "https://x.com/PetitRentier/status/2061534797940302204",
-      "score": 59,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Crypto Tony",
-      "title": "$TAO / $USD - Update \n\nSomething to now pay attention too. TAO on a key level.",
-      "url": "https://x.com/CryptoTony__/status/2062619899139084313",
-      "score": 53,
-      "ts": ""
-    },
-    {
-      "src": "X_FOLLOWING/Cointelegraph",
-      "title": "TODAY: The US National Security Agency is using Anthropic's Mythos AI for offensive cyber operations, with Anthropic engineers embedded inside the agency.\n\nThis comes despite Anthropic's ongoing legal",
-      "url": "https://x.com/Cointelegraph/status/2062691020790268333",
-      "score": 10,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Bloomberg Live",
-      "title": "On the recent Meta layoffs, \"It's incredibly difficult to say goodbye to teammates. It's important to acknowledge.\" @alexandr_wang tells @business' @KurtWagner8 #BloombergTech  \n\nhttps://bit.ly/4e8c1i",
-      "url": "https://x.com/BloombergLive/status/2062685172093554939",
+      "src": "X_HOME/(1% RISK)™",
+      "title": "How should you price your SaaS AI tool?  \n\n-freemium  \n-flat monthly  \n-usage-based",
+      "url": "https://x.com/wealthcodes222/status/2062820165629165804",
       "score": 2,
       "ts": ""
     },
     {
-      "src": "X_FOLLOWING/Reuters",
-      "title": "Breakingviews - SpaceX straps bankers to the first autonomous IPO http://reut.rs/43N2msj",
-      "url": "https://x.com/Reuters/status/2062690885129715789",
-      "score": 2,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Top Stock Alerts",
-      "title": "Marvell Technology appears well-positioned to finally secure a spot in  the S&P 500 as the index committee prepares to announce its latest  rebalancing changes, which are expected on Friday.  The AI a",
-      "url": "https://x.com/TopStockAlerts1/status/2062687658732925179",
+      "src": "X_HOME/Yash",
+      "title": "Is there any trick to avoid Claude code usage limits?",
+      "url": "https://x.com/YashHustle_22/status/2062820185854358001",
       "score": 1,
       "ts": ""
     },
     {
-      "src": "X_HOME/Arnaud Mercier - #Entrepreneur #Versailles",
-      "title": "Uncapped Claude AI use leaves firm with $500M bill - MSN https://news.google.com/rss/articles/CBMi5gFBVV95cUxPNDh4ZF9QVFJ0bFRlWVRLdXpoUHJPejY5M3JLMEh0VlViQXhWRDBNUFJaMmJTbHlfdUd1NEZyQTh6eEVSVUM2MzV0U2",
-      "url": "https://x.com/arnaudmercier/status/2062689793788477575",
+      "src": "X_SEARCH/live/CoreWeave OR CRWV OR APLD lang:en min_faves:100/골안아파덕",
+      "title": "엔비디아 $NVDA 파트너십 \n\n코어위브 $CRWV, 아이렌 $IREN, 네비우스 $NBIS, 네이버 클라우드, SK텔레콤 등…",
+      "url": "https://x.com/Nice_Stock_/status/2062822124713279746",
       "score": 0,
       "ts": ""
     },
     {
-      "src": "X_HOME/Mario Nawfal",
-      "title": "@elonmusk explains why @SpaceX is finally going PUBLIC: a massive growth phase. \n\nThe plan? Over 100,000 satellites in orbit, V3 birds with 100X the bandwidth, plus AI DATA CENTERS in space. \n\nProfita",
-      "url": "https://x.com/MarioNawfal/status/2062686561334931766",
+      "src": "X_SEARCH/live/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Crypto Jake",
+      "title": "#xauusd  #gold  #crypto\n\n The market never sleeps — and neither does the opportunity. \n\n I’m a futures trader dropping my personal high-probability setups with exact entries and exits for free.\n\n http",
+      "url": "https://x.com/David035726/status/2062822076189163685",
       "score": 0,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/CoinMarketCap",
-      "title": "LATEST:  Bittensor co-founder Ala Shaabana says Bitcoin's network hash rate dwarfs the combined power of the top 100 supercomputers by 600,000 times.",
-      "url": "https://x.com/CoinMarketCap/status/2062449046162116915",
+      "src": "X_SEARCH/live/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Celeta Jewlius",
+      "title": "If you want to stop guessing, start following @PremarketPilot. Real-time setups delivered daily. \n \n$NVDA  $CRWV  $AMD  $SPCX $GOOG",
+      "url": "https://x.com/x_alt43973/status/2062821494791565576",
       "score": 0,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Crypto Caesar",
-      "title": "$TAO - Once we will reach the lower blue zone I’m all in lol.",
-      "url": "https://x.com/CryptoCaesarTA/status/2062618474631803009",
+      "src": "X_SEARCH/live/CoreWeave OR CRWV OR APLD lang:en min_faves:100/M.I.A",
+      "title": "#xauusd  #gold  #crypto\n\n The market never sleeps — and neither does the opportunity. \n\n I’m a futures trader dropping my personal high-probability setups with exact entries and exits for free.\n\n http",
+      "url": "https://x.com/smilesoalluring/status/2062819920555978867",
       "score": 0,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Andy ττ",
-      "title": "The fundamentals are not down 44%. Only $TAO price is.\n\nI keep buying in this zone for exactly that reason and will continue to. Not because I know where the bottom is. \n\nBecause the gap between what",
-      "url": "https://x.com/bittingthembits/status/2062581080834920749",
+      "src": "X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Jim Cramer",
+      "title": "Nvidia hanging in well..",
+      "url": "https://x.com/jimcramer/status/2062557660172505317",
       "score": 0,
       "ts": ""
     },
     {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/The AI Therapist",
-      "title": "Pelosi just dumped $350k into CoreWeave.\n\nShe’s not betting on AI. She’s betting on the electric bill for the next decade.\n\nThe smartest hedge fund in Congress is just buying power.",
-      "url": "https://x.com/TheAIShrink/status/2062689302073544878",
+      "src": "Wired",
+      "title": "AI Has Come for Serif Fonts",
+      "url": "https://www.wired.com/story/ai-has-come-for-serif-fonts/",
       "score": 0,
-      "ts": ""
+      "ts": "2026-06-05T09:00:00"
     },
     {
-      "src": "HN",
-      "title": "When AI Builds Itself: Our progress toward recursive self-improvement",
-      "url": "https://www.anthropic.com/institute/recursive-self-improvement",
-      "score": 300
+      "src": "CNBC Top",
+      "title": "OpenAI says it will comply with Trump's order requiring AI model reviews before release",
+      "url": "https://www.cnbc.com/2026/06/05/openai-trump-ai-model-review-order.html",
+      "score": 0,
+      "ts": "2026-06-05T08:57:21"
     },
     {
-      "src": "HN",
-      "title": "Anthropic's open-source framework for AI-powered vulnerability discovery",
-      "url": "https://github.com/anthropics/defending-code-reference-harness",
-      "score": 230
+      "src": "CoinDesk",
+      "title": "Bitcoin and ether ETFs end record multi-billion outflow streak",
+      "url": "https://www.coindesk.com/markets/2026/06/05/bitcoin-and-ether-etfs-end-record-multi-billion-outflow-streak",
+      "score": 0,
+      "ts": "2026-06-05T08:53:30"
     },
     {
-      "src": "HN",
-      "title": "Meta's ships facial recognition on smart glasses",
-      "url": "https://www.buchodi.com/meta-glasses-facial-recognition/",
-      "score": 209
+      "src": "CoinDesk",
+      "title": "Here's what could happen if bitcoin breaks below $60,000",
+      "url": "https://www.coindesk.com/markets/2026/06/05/here-s-what-could-happen-if-bitcoin-breaks-below-usd60-000",
+      "score": 0,
+      "ts": "2026-06-05T07:52:25"
     },
     {
-      "src": "HN",
-      "title": "AI, Ashby Engineering, and the future",
-      "url": "https://www.ashbyhq.com/blog/engineering/ai-ashby-engineering-and-the-future",
-      "score": 51
+      "src": "CNBC Top",
+      "title": "China poaches more AI talent from the U.S. as it eyes the next 'super-app'",
+      "url": "https://www.cnbc.com/2026/06/05/china-may-move-toward-us-path-on-ai-as-firms-poach-employees.html",
+      "score": 0,
+      "ts": "2026-06-05T07:50:47"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "South Korea stocks fall over 5% as tech heavyweights follow plunge in Wall Street's AI-linked names",
+      "url": "https://www.cnbc.com/2026/06/05/asia-markets-today-nikkei-225-kospi-hang-seng-index-csi-300-nifty50.html",
+      "score": 0,
+      "ts": "2026-06-05T07:49:26"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "Crypto billionaires bankroll Nigel Farage's pro-crypto party",
+      "url": "https://cointelegraph.com/news/crypto-billionaires-bankroll-reform-uk-more-than-other-parties?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-06-05T07:02:59"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "Strategy’s leveraged Bitcoin model has faced its first stress test: Grayscale",
+      "url": "https://cointelegraph.com/news/strategys-leveraged-bitcoin-model-faces-first-stress-test-grayscale?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-06-05T07:00:55"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Bitcoin in danger of dropping to $60,000, with Zcash bulls turning their backs on ZEC",
+      "url": "https://www.coindesk.com/tech/2026/06/05/bitcoin-in-danger-of-dropping-to-usd60-000-with-zcash-bulls-turning-their-backs-on-zec",
+      "score": 0,
+      "ts": "2026-06-05T06:18:59"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Bitcoin plunges to near $62,000 as the AI trade unwinds, HYPE falls 14%",
+      "url": "https://www.coindesk.com/markets/2026/06/05/bitcoin-plunges-to-near-usd62-000-as-the-ai-trade-unwinds-hype-falls-14",
+      "score": 0,
+      "ts": "2026-06-05T06:08:32"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "Anthropic says self-improving AI may be closer than expected",
+      "url": "https://cointelegraph.com/news/anthropic-ai-self-improvement-agents-recursive-development?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-06-05T06:03:52"
+    },
+    {
+      "src": "Wired",
+      "title": "The Motley Fool Promo Code: $200 Off on Stock Advisor June 2026",
+      "url": "https://www.wired.com/story/the-motley-fool-promo-code/",
+      "score": 0,
+      "ts": "2026-06-05T05:00:00"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Tracking website, food watch: South Korea is obsessing over Nvidia CEO Jensen Huang's visit",
+      "url": "https://www.cnbc.com/2026/06/05/south-korea-is-obsessing-over-nvidia-ceo-jensen-huangs-visit.html",
+      "score": 0,
+      "ts": "2026-06-05T04:40:31"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "Senate Republicans push finance watchdogs to clarify crypto capital rules",
+      "url": "https://cointelegraph.com/news/senate-republicans-push-finance-regulators-to-clarify-crypto-capital-rules?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-06-05T04:26:57"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Warren invites Nvidia CEO Jensen Huang to Senate hearing on China AI chip sales",
+      "url": "https://www.cnbc.com/2026/06/04/nvidia-ceo-jensen-huang-warren-senate-hearing-china-ai-chips.html",
+      "score": 0,
+      "ts": "2026-06-05T00:58:02"
+    },
+    {
+      "src": "TechCrunch",
+      "title": "Ahead of its IPO, Anthropic’s Daniela Amodei shrugs off doubts about AI’s returns",
+      "url": "https://techcrunch.com/2026/06/04/ahead-of-its-ipo-anthropics-daniela-amodei-shrugs-off-doubts-about-ais-returns/",
+      "score": 0,
+      "ts": "2026-06-04T22:43:26"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "CrowdStrike CEO says AI security fears will become a bigger tailwind in coming quarters",
+      "url": "https://www.cnbc.com/2026/06/04/crowdstrike-ceo-says-ai-security-fears-will-become-a-bigger-tailwind-in-coming-quarters.html",
+      "score": 0,
+      "ts": "2026-06-04T22:37:01"
     }
   ]
 }

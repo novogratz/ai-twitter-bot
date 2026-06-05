@@ -1,120 +1,5 @@
 [
   {
-    "handle": "vansh",
-    "category": "ai",
-    "added": "2026-05-21"
-  },
-  {
-    "handle": "ericcc",
-    "category": "ai",
-    "added": "2026-05-21"
-  },
-  {
-    "handle": "jonas",
-    "category": "ai",
-    "added": "2026-05-21"
-  },
-  {
-    "handle": "jagan",
-    "category": "ai",
-    "added": "2026-05-21"
-  },
-  {
-    "handle": "agi",
-    "category": "ai",
-    "added": "2026-05-21"
-  },
-  {
-    "handle": "polsia",
-    "category": "ai",
-    "added": "2026-05-21"
-  },
-  {
-    "handle": "digita",
-    "category": "ai",
-    "added": "2026-05-21"
-  },
-  {
-    "handle": "skwrl",
-    "category": "ai",
-    "added": "2026-05-21"
-  },
-  {
-    "handle": "ramesh",
-    "category": "ai",
-    "added": "2026-05-21"
-  },
-  {
-    "handle": "yanxbt",
-    "category": "ai",
-    "added": "2026-05-21"
-  },
-  {
-    "handle": "gon",
-    "category": "ai",
-    "added": "2026-05-21"
-  },
-  {
-    "handle": "nosket",
-    "category": "ai",
-    "added": "2026-05-21"
-  },
-  {
-    "handle": "firisis",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "supermicro",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "rouffiac",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "greg",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "supersocks",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "ozan",
-    "category": "tech",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "actupositive",
-    "category": "tech",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "kiyoshi34",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "yaminnofilter",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "vincent",
-    "category": "tech",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "kj",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
     "handle": "fridaymaxi",
     "category": "crypto",
     "added": "2026-05-25"
@@ -2498,5 +2383,120 @@
     "handle": "1000x",
     "category": "bourse",
     "added": "2026-06-04"
+  },
+  {
+    "handle": "joe",
+    "category": "ai",
+    "added": "2026-06-04"
+  },
+  {
+    "handle": "chris",
+    "category": "ai",
+    "added": "2026-06-04"
+  },
+  {
+    "handle": "mts",
+    "category": "ai",
+    "added": "2026-06-04"
+  },
+  {
+    "handle": "zubiqo",
+    "category": "ai",
+    "added": "2026-06-04"
+  },
+  {
+    "handle": "hedgie",
+    "category": "ai",
+    "added": "2026-06-04"
+  },
+  {
+    "handle": "0xjiujitsujerry",
+    "category": "ai",
+    "added": "2026-06-04"
+  },
+  {
+    "handle": "odin",
+    "category": "ai",
+    "added": "2026-06-04"
+  },
+  {
+    "handle": "jawwwn",
+    "category": "ai",
+    "added": "2026-06-04"
+  },
+  {
+    "handle": "forbes",
+    "category": "ai",
+    "added": "2026-06-04"
+  },
+  {
+    "handle": "tradedots",
+    "category": "ai",
+    "added": "2026-06-04"
+  },
+  {
+    "handle": "holygrailhov",
+    "category": "ai",
+    "added": "2026-06-04"
+  },
+  {
+    "handle": "dustin",
+    "category": "ai",
+    "added": "2026-06-04"
+  },
+  {
+    "handle": "kapilansh",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "gongdao",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "cryptocapo",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "digit",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "0xzx",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "cnbc",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "mani",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "thelooma",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "ricardo",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "zephyr",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "sm17",
+    "category": "ai",
+    "added": "2026-06-05"
   }
 ]
