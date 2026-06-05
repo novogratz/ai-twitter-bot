@@ -55,6 +55,20 @@ Two one-line root causes, both fixed:
 Lesson: when a surface flatlines, check `engagement_log.csv` daily counts per
 action type FIRST — the collapse was invisible in bot.log noise.
 
+### 2026-06-05 PM — truncation guard (the "ChatGPT paste" callout)
+
+A blind `text[:220]` slice in the Graphseo reply path published a reply cut
+mid-sentence ("…la vraie question n") and a follower publicly called the
+account a botched ChatGPT paste. Fixes:
+- **`humanizer.smart_trim(text, limit)`** — sentence-boundary trim (terminal
+  punctuation preferred, else word boundary with dangling-fragment cleanup).
+  All outgoing blind slices replaced (direct_reply graphseo, roast, promo bots).
+- **Chokepoint backstop** — `content_guard.validate` rejects replies/quotes
+  >278 chars (composer would cut them) or that LOOK truncated
+  (`looks_truncated`: connector-punctuation ending, dangling 1-2 letter
+  fragment). Applies to every reply bot via the chokepoint.
+- NEVER use a bare `[:N]` slice on outgoing tweet text — use `smart_trim`.
+
 ### 2026-06-05 PM — FULL AGENTIC stack
 
 Operator: "I want this bot and repo to be full agentic — goal is to

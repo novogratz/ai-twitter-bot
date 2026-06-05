@@ -245,3 +245,39 @@ def test_hot_quote_consumes_slot_on_successful_post(monkeypatch, tmp_path):
     state = json.loads(state_file.read_text())
     assert state.get("last_slot")
     assert url in json.loads(quoted_file.read_text())
+
+
+# --- truncation guard (the "botched ChatGPT paste" callout, 2026-06-05) -------
+
+def test_smart_trim_ends_on_sentence():
+    from src.humanizer import smart_trim
+    long = ("jensen vend les pelles. les vrais gagnants d'internet n'ont pas tous misé "
+            "sur Cisco en 2000 — ils ont construit des boîtes dessus quand le reste du "
+            "marché cherchait encore comment épeler \"e-commerce\". la vraie question "
+            "n'est pas quelle action acheter mais quel produit construire dessus.")
+    out = smart_trim(long, 220)
+    assert len(out) <= 220
+    assert out.endswith((".", "!", "?", "…"))  # never a dangling fragment
+
+
+def test_smart_trim_short_text_untouched():
+    from src.humanizer import smart_trim
+    assert smart_trim("short take", 220) == "short take"
+
+
+def test_validate_rejects_truncated_reply():
+    ok, reason = cg.validate(
+        "les vrais gagnants n'ont pas tous misé sur Cisco en 2000, ils ont construit des boîtes dessus. la vraie question n",
+        kind="reply",
+    )
+    assert not ok and "truncat" in reason
+
+
+def test_validate_rejects_overlong_reply():
+    ok, reason = cg.validate("a sharp take " * 30, kind="reply")
+    assert not ok and "too long" in reason
+
+
+def test_validate_allows_casual_unpunctuated_ending():
+    ok, _ = cg.validate("screenshot this. we'll talk about it in 6 months", kind="reply")
+    assert ok

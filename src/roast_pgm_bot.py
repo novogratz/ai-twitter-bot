@@ -142,7 +142,8 @@ def _generate_roast(tweet_text: str) -> Optional[str]:
         out = unwrap_text(result.stdout).strip('"').strip("'")
         if not out:
             return None
-        return out[:280]
+        from .humanizer import smart_trim
+        return smart_trim(out, 280)
     except Exception as e:
         log.info(f"[ROAST] Generation failed: {e}")
         return None

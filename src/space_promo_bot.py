@@ -184,7 +184,8 @@ def run_space_promo_cycle():
         return
     text = humanize(text)
     if "not financial advice" not in text.lower():
-        text = (text.rstrip() + "\n\nNot financial advice 🚀")[:280]
+        from .humanizer import smart_trim
+        text = smart_trim(text, 245) + "\n\nNot financial advice 🚀"
     if len(text) < 40 or len(text) > 280:
         log.info(f"[SPACE_PROMO] Output length out of bounds ({len(text)}); skipping.")
         return
