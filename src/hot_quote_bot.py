@@ -235,22 +235,34 @@ def run_hot_quote_cycle() -> None:
 
         log.info(f"[HOT_QUOTE] Quote: {quote}")
 
-        _mark_quoted(url)
         try:
-            quote_tweet(url, quote)
-            try:
-                log_reply(url, quote, action_type="quote", source=f"HOT_QUOTE/{author}")
-            except Exception:
-                pass
-            state["last_slot"] = slot_key
-            state["last_topic"] = topic[:80]
-            state["last_run"] = datetime.utcnow().isoformat()
-            _save_state(state)
-            log.info(f"[HOT_QUOTE] Posted. Slot {slot_key} done.")
-            return
+            posted = quote_tweet(url, quote)
         except Exception:
+            # Unknown state (Safari may have posted) — mark consumed to be safe.
+            _mark_quoted(url)
             log.info("[HOT_QUOTE] Post failed:")
             traceback.print_exc()
+            continue
+
+        if not posted:
+            # Chokepoint skip (dedup / spacing / content_guard / DRY_RUN-off).
+            # Do NOT consume the slot or mark the URL: this is the bug that
+            # silently burned the 4 daily hot-quote slots when the dedup
+            # caught a near-miss (the highest-signal surface). Try next topic.
+            log.info("[HOT_QUOTE] Chokepoint skipped — slot preserved, trying next topic.")
+            continue
+
+        _mark_quoted(url)
+        try:
+            log_reply(url, quote, action_type="quote", source=f"HOT_QUOTE/{author}")
+        except Exception:
+            pass
+        state["last_slot"] = slot_key
+        state["last_topic"] = topic[:80]
+        state["last_run"] = datetime.utcnow().isoformat()
+        _save_state(state)
+        log.info(f"[HOT_QUOTE] Posted. Slot {slot_key} done.")
+        return
 
     log.info("[HOT_QUOTE] No topic produced a postable quote this slot.")
 

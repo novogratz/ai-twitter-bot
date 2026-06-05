@@ -135,6 +135,15 @@ Operator levers, all shipped:
   silently burned its best viral pick — the 28/day-actual vs cap gap). Spacing
   120s+jitter60 (was 180+120), cap 80→100/day. Viral high-min_faves queries added
   + `PRIORITY_QUOTE_HANDLES` (default TheBTCTherapist) jump the candidate queue.
+  **2026-06-05 PM-3 follow-up:** the SAME bug lived on in `hot_quote_bot.py` (the
+  4x/day hot-signal slots). It pre-marked the URL via `_mark_quoted()` and then
+  unconditionally set `state["last_slot"] = slot_key` regardless of the bool
+  `quote_tweet` returned. Result: every dedup near-miss or spacing skip burned
+  the slot — both hot-quote slots on 2026-06-05 (06:13 spacing, 08:07 dup) were
+  silently lost. Fixed: capture the bool, `continue` to next topic on `False`
+  (slot + URL preserved), only mark consumed + advance `last_slot` after a
+  confirmed `True`. Guard tests `test_hot_quote_preserves_slot_on_chokepoint_skip`
+  + `test_hot_quote_consumes_slot_on_successful_post` pin the contract.
 - **Reply discovery widened**: 72h window (`DIRECT_REPLY_MAX_AGE_MINUTES=4320`),
   feed scans 100 deep with proportional scrolling (feed scrapers now scroll
   `max_tweets//12` times instead of always 2), space + viral search terms added,
