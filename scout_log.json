@@ -3349,5 +3349,43 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour te ramener des artisans : l'IA avec Arthur et Adrien, le crypto avec Mert et Ritz, et la bourse avec le duo qu\u00e9b\u00e9cois Moulinet/Tremblay."
+  },
+  {
+    "ts": "2026-06-05T13:28:43.599372",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenjaminVelge",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Ex-Mistral AI, il est l\u00e0 o\u00f9 \u00e7a code et o\u00f9 \u00e7a pense. Ses threads sur l'infrastructure IA sont plus utiles que 99% des newsletters payantes."
+      },
+      {
+        "handle": "RomainVialard",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "CTO de Blablacar et passionn\u00e9 de hardware/IA. Il tweette pour le kiff technique, pas pour les likes, ce qui le rend incroyablement pertinent."
+      },
+      {
+        "handle": "ThibaultMoulin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Investisseur VC, il d\u00e9crypte les tendances on-chain avec un regard pragmatique. Pas de hype, que du concret financier."
+      },
+      {
+        "handle": "JulienBourbon",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise en DeFi. Il analyse les protocoles comme un chirurgien, sans vendre de r\u00eave facile aux mamies."
+      }
+    ],
+    "summary": "Cette session met l'accent sur les fondateurs et ex-fondateurs (Mistral, Coinhouse, Weights & Biases) qui ont la fibre technique sans le blabla vendeur. On croise la France tech/crypto et le Qu\u00e9bec DeFi pour avoir une vision du terrain, pas juste celle des influenceurs."
   }
 ]

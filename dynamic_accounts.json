@@ -370,7 +370,11 @@
     "NathalieDufort",
     "BoursierQuebec",
     "GillesMoulinet",
-    "ErikTremblay"
+    "ErikTremblay",
+    "BenjaminVelge",
+    "RomainVialard",
+    "ThibaultMoulin",
+    "JulienBourbon"
   ],
   "en": [
     "blablacar",
@@ -2300,6 +2304,26 @@
     {
       "lang": "fr",
       "handle": "ErikTremblay",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminVelge",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainVialard",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultMoulin",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBourbon",
       "added": "2026-06-05"
     }
   ]
