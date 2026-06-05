@@ -53,6 +53,12 @@ _DUP_CONTAINMENT_THRESHOLD = float(os.environ.get("DUP_CONTAINMENT_THRESHOLD", "
 _DUP_SHARED_BIGRAMS = int(os.environ.get("DUP_SHARED_BIGRAMS", "3"))
 _DUP_TOPIC_WINDOW_HOURS = float(os.environ.get("DUP_TOPIC_WINDOW_HOURS", "24"))
 _DUP_TOPIC_SHARED_WORDS = int(os.environ.get("DUP_TOPIC_SHARED_WORDS", "3"))
+# Text-similarity signals (jaccard/containment/bigrams) only apply to posts
+# from the last N hours — the account legitimately revisits its core topics
+# (datacenter power, BTC ETFs…) week after week; a 7-day-old post sharing 3
+# content bigrams is topic continuity, not duplication (false-positive fix
+# 2026-06-05 — two fresh Decodes were blocked against week-old posts).
+_DUP_TEXT_WINDOW_HOURS = float(os.environ.get("DUP_TEXT_WINDOW_HOURS", "48"))
 
 # Generic words that must never count as "shared content" between two posts
 # (EN + FR). Market/tech words (gpu, valuation, datacenter…) deliberately
@@ -73,6 +79,12 @@ _DUP_STOPWORDS = {
     "time", "today", "tonight", "until", "very", "want", "watch", "watches",
     "well", "were", "what", "when", "where", "which", "while", "wont", "would",
     "your", "youre", "will", "with", "without", "yesterday",
+    # own header/series scaffolding — never content, never an "entity"
+    "decode", "daily", "weekly", "monthly", "quotidien", "hebdo",
+    "hebdomadaire", "mensuel", "décode",
+    # niche-universal terms: present in nearly every post of this account, so
+    # they carry zero dedup signal and must never count as a shared entity
+    "ai", "ia",
     # FR function/filler
     "alors", "aussi", "autre", "avant", "avec", "bien", "cest", "cette",
     "celui", "chaque", "comme", "dans", "deja", "déjà", "depuis", "donc",
@@ -98,8 +110,10 @@ def _dedup_clean(text: str) -> str:
     t = re.sub(r"#\w+", " ", t)
     t = re.sub(r"@\w+", " ", t)
     # drop the recurring header scaffolding so two different stories under the
-    # same "Le Décode #N — IA" header aren't seen as similar on the header alone
-    t = re.sub(r"le d[eé]code[^\n]*", " ", t)
+    # same "Le Décode #N — IA" / "The Decode Daily #N. AI" header aren't seen
+    # as similar on the header alone (EN header added 2026-06-05 after two
+    # fresh Decodes were false-positive blocked on shared header bigrams).
+    t = re.sub(r"(?:le d[eé]code|the decode)[^\n]*", " ", t)
     return re.sub(r"[^\w\s]", " ", t)
 
 
@@ -180,14 +194,16 @@ def is_duplicate(text: str, threshold: Optional[float] = None) -> bool:
             continue
         inter = len(ws & pw)
         union = len(ws | pw)
-        if union and (inter / union) >= th:
-            return True
-        if (inter / max(1, min(len(ws), len(pw)))) >= _DUP_CONTAINMENT_THRESHOLD:
-            return True
-        if len(p["bigrams"] & prev["bigrams"]) >= _DUP_SHARED_BIGRAMS:
-            return True
+        age_h = prev.get("age_h", 9999.0)
+        if age_h <= _DUP_TEXT_WINDOW_HOURS:
+            if union and (inter / union) >= th:
+                return True
+            if (inter / max(1, min(len(ws), len(pw)))) >= _DUP_CONTAINMENT_THRESHOLD:
+                return True
+            if len(p["bigrams"] & prev["bigrams"]) >= _DUP_SHARED_BIGRAMS:
+                return True
         if (
-            prev.get("age_h", 9999.0) <= _DUP_TOPIC_WINDOW_HOURS
+            age_h <= _DUP_TOPIC_WINDOW_HOURS
             and (p["entities"] & prev["entities"])
             and inter >= _DUP_TOPIC_SHARED_WORDS
         ):
