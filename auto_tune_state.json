@@ -1,16 +1,25 @@
 {
-  "ts": "2026-05-29T17:40:26.166072",
+  "ts": "2026-06-04T20:29:20.068150",
   "window_min": 90,
-  "total_actions": 1,
+  "total_actions": 13,
   "by_type": {
-    "reply": 1
+    "reply": 11,
+    "retweet": 1,
+    "quote": 1
   },
   "winners": {
-    "PROFILE-FR": 1
+    "PROFILE-ALWAYS": 7,
+    "MEGA/unusual_whales": 2,
+    "EARLYBIRD/SpaceX": 1,
+    "MUST_REPOST/TheBTCTherapist": 1,
+    "HOT_QUOTE/Emin Yurumazu (\u30a8\u30df\u30f3\u30e6\u30eb\u30de\u30ba)": 1
   },
   "losers": {
-    "PROFILE-FR": 1
+    "EARLYBIRD/SpaceX": 1,
+    "MUST_REPOST/TheBTCTherapist": 1,
+    "HOT_QUOTE/Emin Yurumazu (\u30a8\u30df\u30f3\u30e6\u30eb\u30de\u30ba)": 1,
+    "MEGA/Starlink": 1
   },
-  "post_cadence_factor": 1.5,
+  "post_cadence_factor": 1.0,
   "boost_cadence_factor": 1.0
 }

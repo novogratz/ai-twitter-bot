@@ -353,7 +353,16 @@
     "JulienBougon",
     "BenjaminPommier",
     "MaximeLau",
-    "TanguyB"
+    "TanguyB",
+    "CryptoBullFR",
+    "TheAIArchive",
+    "AlexisKozel",
+    "TradingWithMick",
+    "BitcoinFrancais",
+    "BenoitF",
+    "MontrealVC",
+    "PierreMulliez",
+    "AI_QuantFR"
   ],
   "en": [
     "blablacar",
@@ -2198,6 +2207,51 @@
     {
       "lang": "fr",
       "handle": "TanguyB",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBullFR",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheAIArchive",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisKozel",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "TradingWithMick",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "BitcoinFrancais",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitF",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MontrealVC",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreMulliez",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "AI_QuantFR",
       "added": "2026-06-04"
     }
   ]

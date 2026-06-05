@@ -1,0 +1,5 @@
+{
+  "last_run": "2026-06-04",
+  "last_output": "Pushed. Here's what changed and why:\n\n**1. `directives.md` \u2014 rewritten for AI-only English mandate**\nThe 2026-06-03 mandate supersedes the French revert but directives.md still said \"FRENCH-FIRST MODE.\" Hard no-links-in-body rule added (since March 2026, external links collapse reach 50\u201370% \u2014 the bot is still posting hotakes with URLs in the body, killing every standalone). Quote execution gap called out explicitly (28/day actual vs 300 cap = the single biggest untapped lever).\n\n**2. `live_strat",
+  "last_ran_at": "2026-06-04T10:02:52.618822"
+}
