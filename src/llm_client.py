@@ -973,6 +973,18 @@ def unwrap_text(stdout: str, structured_output: bool = False) -> str:
     if not raw:
         return ""
 
+    # Structured-output callers (REPLY_SEARCH…) EXPECT a JSON array. Return it
+    # verbatim before the NDJSON unwrapper gets a chance to eat it. Bug
+    # 2026-06-05 (reply collapse 397→42/day): ollama returned the array on one
+    # line, _unwrap_ndjson parsed it, found a list instead of dict events, and
+    # returned "" — every search-reply cycle died with valid replies in hand.
+    if structured_output and raw.startswith("["):
+        try:
+            if isinstance(json.loads(raw), list):
+                return strip_tool_calls(raw)
+        except json.JSONDecodeError:
+            pass
+
     ndjson_result = _unwrap_ndjson(raw)
     if ndjson_result is not None:
         return strip_tool_calls(ndjson_result)

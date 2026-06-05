@@ -977,6 +977,11 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             "replies": int(t.get("r") or 0),
             "translated_from": t.get("tl") or "",
             "is_reply": bool(t.get("ir") or False),
+            # Bug 2026-06-05 (retweets 140/day → 0): the JS extracted the
+            # <time datetime> but this mapping DROPPED it, so every candidate
+            # had unknown age and the hard 48h freshness gate skipped 100% of
+            # feed/search candidates ("No viable candidates this cycle").
+            "timestamp": t.get("ts") or "",
         } for t in data]
         _reset_blank_page_count()
         log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")
