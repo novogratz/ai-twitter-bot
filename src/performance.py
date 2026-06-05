@@ -75,7 +75,7 @@ def scrape_own_metrics() -> list:
             (function() {
                 function parseCount(s) {
                     if (!s) return 0;
-                    var m = s.match(/(\\\\d[\\\\d,\\\\\.KMkm]*)/);
+                    var m = s.match(/(\\\\d[\\\\d,\\\\.KMkm]*)/);
                     if (!m) return 0;
                     var v = m[1].replace(/,/g, '').toUpperCase();
                     if (v.indexOf('K') !== -1) return Math.round(parseFloat(v) * 1000);
