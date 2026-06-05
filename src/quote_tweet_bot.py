@@ -40,7 +40,22 @@ QUOTE_QUERIES = [
     # Bitcoin / crypto (bearish troll fodder)
     "Bitcoin OR BTC OR \"BTC ETF\" OR crypto OR Ethereum lang:en min_faves:300",
     "\"Bitcoin crash\" OR \"crypto crash\" OR \"BTC dump\" OR \"crypto bubble\" lang:en min_faves:100",
+    # VIRAL pass (2026-06-05 operator: "quote retweet more viral posts") —
+    # very high min_faves so the pool is the actual front page of the niche.
+    "AI lang:en min_faves:2000",
+    "OpenAI OR Anthropic OR Nvidia OR ChatGPT lang:en min_faves:1000",
+    "Bitcoin OR crypto OR \"the market\" lang:en min_faves:2000",
+    "SpaceX OR Starship OR NASA OR \"Rocket Lab\" OR satellite lang:en min_faves:500",
+    "robots OR robotics OR \"humanoid\" lang:en min_faves:1000",
 ]
+
+# Handles whose fresh posts jump the candidate queue (no scoring gate beyond
+# the hard 48h freshness + dedup). Mandate 2026-06-04: the persona is modeled
+# on @TheBTCTherapist — quoting their viral posts with our AI angle is the
+# highest-ROI surface (operator 2026-06-05: "find a viral post like the
+# latest one pinned in bitcoin therapist and just quote it").
+PRIORITY_QUOTE_HANDLES = [h.strip() for h in os.environ.get(
+    "PRIORITY_QUOTE_HANDLES", "TheBTCTherapist").split(",") if h.strip()]
 
 QUOTE_PROMPT = """You are @TheAIShrink. You will QUOTE-TWEET this tweet:
 
@@ -240,10 +255,23 @@ def _load_promo_cfg_q() -> dict:
     except (OSError, json.JSONDecodeError):
         return {}
 
+def _pick_promo_ticker(cfg: dict) -> tuple:
+    """Pick one (ticker, company) from the multi-ticker campaign, weighted —
+    falls back to the legacy single ticker field. 2026-06-05: operator
+    campaign promotes $MNTS / $SPCX / $SPCE for the SpaceX IPO window."""
+    entries = [e for e in cfg.get("tickers", []) if isinstance(e, dict) and e.get("ticker")]
+    if entries:
+        weights = [max(1, int(e.get("weight", 1))) for e in entries]
+        e = random.choices(entries, weights=weights, k=1)[0]
+        return (e["ticker"], e.get("company", e["ticker"]))
+    return (cfg.get("ticker", ""), cfg.get("company", ""))
+
+
 def _mnts_promo_block_q(tweet_text: str = "") -> str:
     cfg = _load_promo_cfg_q()
-    ticker = cfg.get("ticker", "")
-    company = cfg.get("company", "")
+    if cfg.get("disabled"):
+        return ""
+    ticker, company = _pick_promo_ticker(cfg)
     end_str = cfg.get("end_date", "")
     if not ticker or not end_str:
         return ""
@@ -318,6 +346,34 @@ def run_quote_tweet_cycle():
 
     quoted = _load_quoted()
     candidates = []
+    priority_candidates = []
+
+    # Priority-handle pass (TheBTCTherapist & co): their fresh posts are
+    # quoted FIRST, sorted by likes, bypassing the niche filter (the persona
+    # is modeled on them — everything they post is our material).
+    try:
+        from .twitter_client import scrape_profile_tweets
+        for handle in PRIORITY_QUOTE_HANDLES:
+            log.info(f"[QUOTE] Priority-handle scrape: @{handle}")
+            try:
+                tweets = scrape_profile_tweets(handle, max_tweets=10)
+            except Exception:
+                log.info(f"[QUOTE] Priority scrape failed for @{handle}:")
+                traceback.print_exc()
+                continue
+            for t in tweets or []:
+                url = t.get("url")
+                if not url or url in quoted:
+                    continue
+                url_handle = _handle_from_url(url)
+                if url_handle and url_handle != handle.lower():
+                    continue  # a repost of someone else on their profile
+                if _too_old_to_quote(t):  # ⛔ hard 48h rule still applies
+                    continue
+                priority_candidates.append(t)
+    except Exception:
+        log.info("[QUOTE] Priority-handle pass failed:")
+        traceback.print_exc()
 
     # 3 queries per cycle — keeps each cycle under 60s so max_instances=1 doesn't queue up.
     for query in random.sample(QUOTE_QUERIES, k=min(3, len(QUOTE_QUERIES))):
@@ -401,19 +457,23 @@ def run_quote_tweet_cycle():
         log.info("[QUOTE] Trusted-news pass failed:")
         traceback.print_exc()
 
-    if not candidates:
+    if not candidates and not priority_candidates:
         log.info("[QUOTE] No viable candidates this cycle.")
         return
 
     # Pick the highest-ROI candidate that also produces a usable quote.
     # Filter out protected (respect-list) authors first — quote-tweeting them
     # with our voice on top reads as a public callout and gets us blocked.
+    # (Priority handles are exempt: quoting them is amplification, the quote
+    # prompt's troll-the-idea-never-the-person rule still applies.)
     from . import respect_list
     candidates = [c for c in candidates if not respect_list.is_protected(c.get("author", ""))]
+    candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
+    priority_candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
+    candidates = priority_candidates + candidates
     if not candidates:
         log.info("[QUOTE] All candidates are on the respect list. Skipping.")
         return
-    candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
     best = None
     quote = None
     for candidate in candidates[:5]:
@@ -442,12 +502,19 @@ def run_quote_tweet_cycle():
 
     log.info(f"[QUOTE] Best pick: @{author} ({likes} likes) — {text[:80]}...")
 
-    # Lock URL in BEFORE posting so a crash can't double-repost.
-    quoted.add(url)
-    _save_quoted(quoted)
-
     try:
-        quote_tweet(url, quote)
+        posted = quote_tweet(url, quote)
+        if not posted:
+            # Policy/spacing skip at the chokepoint — do NOT mark the URL as
+            # quoted, the candidate stays alive for the next cycle. (Bug
+            # 2026-06-05: marking before the call burned the best viral pick
+            # on every too-soon cycle — the 28/day vs 300-cap execution gap.)
+            log.info("[QUOTE] Chokepoint skipped (spacing/cap) — candidate preserved for next cycle.")
+            return
+        # Lock URL in only AFTER a confirmed post so a crash can't double-
+        # repost (quote_tweet itself just published, so mark immediately).
+        quoted.add(url)
+        _save_quoted(quoted)
         _increment_count()
         try:
             log_reply(url, quote, action_type="quote", source=f"QUOTE/{author}")
@@ -456,6 +523,9 @@ def run_quote_tweet_cycle():
         time.sleep(random.randint(5, 12))
         log.info("[QUOTE] Quote posted.")
     except Exception:
+        # Unknown state (Safari may have posted) — mark consumed to be safe.
+        quoted.add(url)
+        _save_quoted(quoted)
         log.info(f"[QUOTE] Posting failed:")
         traceback.print_exc()
 

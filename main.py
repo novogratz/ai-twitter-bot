@@ -81,6 +81,9 @@ from src.wsb_signal_bot import safe_run_wsb_signal_cycle
 from src.autonomous_growth_agent import safe_run_autonomous_growth_cycle
 from src.pin_boost_bot import safe_run_pin_boost_cycle
 from src.hot_quote_bot import safe_run_hot_quote_cycle
+from src.feed_sweeper_bot import safe_run_feed_sweep_cycle
+from src.viral_stunt_bot import safe_run_viral_stunt_cycle
+from src.space_promo_bot import safe_run_space_promo_cycle
 from src.stock_promo_bot import safe_run_stock_promo_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE, _LIVE_STRATEGY_FILE as LIVE_STRATEGY_FILE
@@ -663,6 +666,43 @@ def main():
             id="quote_tweet_job",
             max_instances=1,
         )
+
+        # Feed sweeper (2026-06-05 operator: "reply or quote-retweet every
+        # single post you see") — alternates For You / Following each cycle:
+        # good post (>=300 likes) → quote with a clever take, meh → reply.
+        # All writes gated by the action_guard chokepoints (caps + spacing).
+        log.info("Feed sweeper: quote the good / reply the meh on For You + Following every 8 min.")
+        scheduler.add_job(
+            safe_run_feed_sweep_cycle,
+            trigger=IntervalTrigger(minutes=8),
+            id="feed_sweeper_job",
+            max_instances=1,
+        )
+
+        # Viral stunt bot (2026-06-05 operator: "from time to time create a
+        # superviral post... don't overabuse") — checks every 90 min but fires
+        # probabilistically (35%) with a 2/day hard cap, so the surface stays
+        # rare and irregular.
+        log.info("Viral stunt bot: superviral-format comedy, max 2/day, irregular cadence.")
+        scheduler.add_job(
+            safe_run_viral_stunt_cycle,
+            trigger=IntervalTrigger(minutes=90),
+            id="viral_stunt_job",
+            max_instances=1,
+        )
+
+        # Space promo bot (2026-06-05 operator campaign): soft-promo
+        # $MNTS/$SPCX/$SPCE standalone posts during the SpaceX-IPO window
+        # (config-driven via stock_promo_config.json — auto-dies after
+        # end_date). 9:40 + 15:40 ET, max 2/day, GIF-backed when available.
+        log.info("Space promo bot: $MNTS/$SPCX/$SPCE campaign posts at 9:40 + 15:40 ET (until config end_date).")
+        for _sp_hour, _sp_min in ((9, 40), (15, 40)):
+            scheduler.add_job(
+                safe_run_space_promo_cycle,
+                trigger=CronTrigger(hour=_sp_hour, minute=_sp_min, timezone="America/New_York"),
+                id=f"space_promo_job_{_sp_hour}h",
+                max_instances=1,
+            )
 
         # Retweet bot — high-volume deterministic amplifier. max_instances=1
         # prevents two slow cycles from running simultaneously and blocking

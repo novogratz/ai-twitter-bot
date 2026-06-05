@@ -325,9 +325,12 @@ def _post_tweet_with_image(text: str, image_path: str):
     _paste_text(text)
     time.sleep(1)
 
-    # Step 2: copy the PNG to the clipboard, then Cmd+V to attach.
+    # Step 2: copy the image to the clipboard, then Cmd+V to attach.
+    # GIFs use their own clipboard class so X uploads them ANIMATED
+    # (2026-06-05 operator: promo posts ride hype GIFs).
     abs_path = _os.path.abspath(image_path)
-    copy_script = f'set the clipboard to (read POSIX file "{abs_path}" as «class PNGf»)'
+    clip_class = "GIFf" if abs_path.lower().endswith(".gif") else "PNGf"
+    copy_script = f'set the clipboard to (read POSIX file "{abs_path}" as «class {clip_class}»)'
     if not _run_applescript(copy_script):
         log.info("[POST] Could not copy image to clipboard — posting text-only.")
     else:
@@ -614,12 +617,19 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
         close_front_tab()
 
 
-def quote_tweet(tweet_url: str, comment: str):
+def quote_tweet(tweet_url: str, comment: str) -> bool:
     """Publish a quote post by composing `comment` plus the source tweet URL.
 
     X renders a tweet URL included in a new post as a quote card. This route is
     more stable than driving the nested repost menu and keeps the same
     Safari-lock behavior as normal posts/replies.
+
+    Returns True if the quote was actually published (or DRY_RUN-recorded),
+    False on a policy/content/dup skip — callers MUST check this before
+    marking the candidate as consumed. Bug 2026-06-05: quote_tweet_bot marked
+    its best viral candidate as 'quoted' BEFORE calling here, so every cycle
+    that fired inside the spacing window silently burned its top pick — a
+    major chunk of the 28/day-actual vs 300-cap execution gap.
     """
     comment = _scrub_metadata_leaks((comment or "").strip())
     if not tweet_url or not comment:
@@ -636,18 +646,18 @@ def quote_tweet(tweet_url: str, comment: str):
     ok, why = action_guard.can_post(action_guard.QUOTE)
     if not ok:
         log.info(f"[QUOTE] policy skip ({why}).")
-        return
+        return False
     ok, why = content_guard.validate(comment, kind="quote")
     if not ok:
         log.info(f"[QUOTE] content_guard skip ({why}): {comment[:120]!r}")
-        return
+        return False
     if content_guard.is_duplicate(comment):
         log.info(f"[QUOTE] near-duplicate of a recent post — skipping: {comment[:120]!r}")
-        return
+        return False
     if _cfg.DRY_RUN:
         log.info(f"[QUOTE][DRY_RUN] would quote {tweet_url}: {comment[:160]!r}")
         action_guard.record(action_guard.QUOTE, target=tweet_url, dry_run=True)
-        return
+        return True
 
     with _safari_lock:
         text = f"{comment}\n{tweet_url}"
@@ -674,6 +684,7 @@ def quote_tweet(tweet_url: str, comment: str):
             _like_own_latest_tweet()
         except Exception as e:
             log.info(f"[QUOTE] self-like failed: {e}")
+        return True
 
 
 def unfollow_account(username: str) -> bool:
@@ -1013,9 +1024,11 @@ def scrape_home_feed(max_tweets: int = 15):
         webbrowser.open("https://x.com/home")
         time.sleep(8)
 
-        # Scroll down a LOT to load many tweets
-        _scroll_page()
-        _scroll_page()
+        # Scroll proportionally to the requested depth — 2 fixed scrolls only
+        # surfaced ~20 tweets no matter what max_tweets asked for (operator
+        # 2026-06-05: "for you page scrolling more" to find reply targets).
+        for _ in range(max(2, min(8, max_tweets // 12))):
+            _scroll_page()
 
         tweets = _scrape_tweets_from_page("home feed", max_tweets)
         close_front_tab()
@@ -1071,8 +1084,9 @@ def scrape_following_feed(max_tweets: int = 15):
                 pass
 
         time.sleep(4)
-        _scroll_page()
-        _scroll_page()
+        # Scroll proportionally to the requested depth (same as home feed).
+        for _ in range(max(2, min(8, max_tweets // 12))):
+            _scroll_page()
 
         tweets = _scrape_tweets_from_page("following feed", max_tweets)
         close_front_tab()

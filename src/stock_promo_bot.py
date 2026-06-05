@@ -142,6 +142,12 @@ def run_stock_promo_cycle() -> None:
         log.info("[STOCK_PROMO] Disabled (kill-switch) — no ticker promoted, no rotation.")
         return
 
+    # Operator-locked campaign (2026-06-05: $MNTS/$SPCX/$SPCE SpaceX-IPO
+    # window): the rotation bot must NEVER replace it with a WSB pick.
+    if cfg.get("operator_locked"):
+        log.info(f"[STOCK_PROMO] Operator-locked campaign active until {cfg.get('end_date')} — no rotation.")
+        return
+
     if not _should_find_new_stock(cfg):
         log.info(f"[STOCK_PROMO] Current promo ${cfg.get('ticker')} still active until {cfg.get('end_date')}. Skipping.")
         return

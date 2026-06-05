@@ -135,9 +135,12 @@ POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(3 * 60)))
 # high daily cap + short, jittered spacing so the 4-min quote cycle actually
 # produces quotes instead of getting capped out.
 # 2026-06-03: GO CRAZY on quote-reposts. 30→80/day, spacing 8→3 min.
-MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "80"))
-MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", str(3 * 60)))
-QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", str(2 * 60)))
+# 2026-06-05: 180s+jitter120 made the 3-min quote job miss its spacing window
+# on most fires (part of the 28/day-actual vs cap gap). 120s+jitter60 lets a
+# 3-min cadence mostly clear while staying jittered (no bursts). Cap 80→100.
+MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "100"))
+MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", str(2 * 60)))
+QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "60"))
 
 # Reply caps + spacing. Replies are the PRIMARY growth lever, so this is a
 # global daily budget shared across ALL reply bots (direct_reply, reply_bot,
