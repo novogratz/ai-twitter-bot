@@ -13139,3 +13139,46 @@ S&P 500 is down -1.65%, wiping out $1.14 trillion, the largest single day crash 
 Gold is down -3.38%, wiping out $1
   - https://x.com/BullTheoryio/status/2062942769937838271
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 349).
+- **@stocksavvyshay** (72 likes, score 9/10) — $SPCX signed a massive $GOOGL Cloud deal for ~110,000 $NVDA GPUs and related compute infrastructure.
+
+SpaceX will pay Google $920M/month through 2029 with fees reduced if Google misses the Sept 2026 d
+  - https://x.com/StockSavvyShay/status/2062971257650593845
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 94).
+- **@wolf_financial** (25 likes, score 8/10) — JUST IN: SPACEX HAS SIGNED A $30 BILLION CLOUD COMPUTE AGREEMENT WITH GOOGLE $GOOGL
+
+$920 million per month. Every month. From October 2026 through June 2029.
+
+And the chip count buried in the filing
+  - https://x.com/WOLF_Financial/status/2062970937256079427
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 35).
+- **@wallstengine** (51 likes, score 9/10) — SpaceX entered a cloud services agreement with Google for compute capacity, including ~110,000 NVIDIA GPUs, CPUs, memory, and related components.
+
+$SPCX agreed to pay Google $920M per month from Octob
+  - https://x.com/wallstengine/status/2062970468077068389
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 67).
+- **@coinbureau** (110 likes, score 9/10) — TODAY: BITCOIN FALLS TO ITS WEAKEST PRICE SINCE OCTOBER 2024
+
+$BTC is under pressure as its biggest buyer turns seller, ETF investors head for the exits, and fears of higher interest rates return.
+  - https://x.com/coinbureau/status/2062961399274602537
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 174).
+- **@amitisinvesting** (64 likes, score 9/10) — $GOOGL $SPCX 
+
+BREAKING: SpaceX has signed a cloud infrastructure agreement with Google to secure compute capacity, including approximately 110,000 NVIDIA GPUs, along with CPUs, memory, and related ha
+  - https://x.com/amitisinvesting/status/2062971697209495609
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 94).
+- **@zephyr_z9** (60 likes, score 9/10) — So Meta, Google, Anthropic, SpaceX, and OpenAI will raise around $350B-$400B from the public markets in the next 9-12 months
+At this rate, Amazon & Microsoft will join the party too
+We might even see
+  - https://x.com/zephyr_z9/status/2062973474617041073
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 82).
+- **@bitcoinmagazine** (1004 likes, score 9/10) — JUST IN: There's now an 80% chance Bitcoin will fall to $60,000 this month before going back up — Polymarket      
+
+HODL!
+  - https://x.com/BitcoinMagazine/status/2062871906299122139
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1264).
+- **@peterdiamandis** (443 likes, score 9/10) — The US Federal Gvt collects $5.2 trillion in taxes per year but can't deliver working healthcare, functional infrastructure, or effective regulation. Meanwhile, a 22-year-old with Claude just built a
+  - https://x.com/PeterDiamandis/status/2062928067371077774
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 539).
+- **@bitcoinmagazine** (176 likes, score 9/10) — JUST IN: Bitcoin falls to $59,101
+  - https://x.com/BitcoinMagazine/status/2062971793338425358
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 254).

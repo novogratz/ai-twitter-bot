@@ -3387,5 +3387,64 @@
       }
     ],
     "summary": "Cette session met l'accent sur les fondateurs et ex-fondateurs (Mistral, Coinhouse, Weights & Biases) qui ont la fibre technique sans le blabla vendeur. On croise la France tech/crypto et le Qu\u00e9bec DeFi pour avoir une vision du terrain, pas juste celle des influenceurs."
+  },
+  {
+    "ts": "2026-06-05T15:28:41.824315",
+    "raw_count": 7,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "m_lassaux",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le trader le plus fiable de Twitter FR, style clair, z\u00e9ro formation \u00e0 2000\u20ac, pur contenu technique."
+      },
+      {
+        "handle": "frankiegodard",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "French-American, co-founder de WeWork, tweet en EN mais avec une sensibilit\u00e9/fr\u00e9quence FR forte sur la tech."
+      },
+      {
+        "handle": "ThibautDeV",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Ancien de chez Doctolib, cover le march\u00e9 tech/fr\u00e7ais avec des takes tranchants sur les IA et les lev\u00e9es."
+      },
+      {
+        "handle": "MathieuV",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Data Scientist fran\u00e7ais qui d\u00e9crypte les LLMs sans jargon inutile, tweet souvent en FR/EN."
+      },
+      {
+        "handle": "jlboulais",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Analyste crypto qu\u00e9b\u00e9cois, macro-economie et altcoins, tr\u00e8s actif et moins 'sellier' que la moyenne."
+      },
+      {
+        "handle": "alexismenier",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Research Engineer chez Mistral AI, tweets techniques sur les LLMs en FR et EN, profil tr\u00e8s cr\u00e9dible."
+      },
+      {
+        "handle": "clemencev",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Journaliste tech/fintech au Qu\u00e9bec, couvre les startups montr\u00e9alaises avec une plume vive."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit 'guru' pour ne garder que les praticiens et analystes solides. Le paysage FR est domin\u00e9 par des traders techniques (Lassaux) et des experts Mistral, tandis que le Qu\u00e9bec offre des p\u00e9pites crypto/fintech moins expos\u00e9es."
   }
 ]

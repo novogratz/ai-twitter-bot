@@ -374,7 +374,14 @@
     "BenjaminVelge",
     "RomainVialard",
     "ThibaultMoulin",
-    "JulienBourbon"
+    "JulienBourbon",
+    "m_lassaux",
+    "frankiegodard",
+    "ThibautDeV",
+    "MathieuV",
+    "jlboulais",
+    "alexismenier",
+    "clemencev"
   ],
   "en": [
     "blablacar",
@@ -2324,6 +2331,41 @@
     {
       "lang": "fr",
       "handle": "JulienBourbon",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "m_lassaux",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "frankiegodard",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautDeV",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuV",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "jlboulais",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "alexismenier",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "clemencev",
       "added": "2026-06-05"
     }
   ]
