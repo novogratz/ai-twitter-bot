@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-06-05T01:31:48.273426",
-  "window_7d_actions": 3048,
-  "window_24h_actions": 288,
+  "generated_at": "2026-06-05T15:28:13.805008",
+  "window_7d_actions": 3250,
+  "window_24h_actions": 450,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2968
-    },
-    {
-      "pattern": "FR_ANCHOR",
-      "count": 24
+      "count": 3168
     },
     {
       "pattern": "METAPHOR",
-      "count": 23
+      "count": 25
+    },
+    {
+      "pattern": "FR_ANCHOR",
+      "count": 25
+    },
+    {
+      "pattern": "DIALOGUE",
+      "count": 11
     },
     {
       "pattern": "RENAME",
-      "count": 10
-    },
-    {
-      "pattern": "UNDERSTATEMENT",
-      "count": 10
+      "count": 9
     }
   ],
   "worst_patterns": [
@@ -31,21 +31,21 @@
     },
     {
       "pattern": "RENAME",
-      "count": 10
+      "count": 9
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 10
+      "count": 9
     }
   ],
   "best_hours_utc": [
     {
       "hour": 10,
-      "actions": 211
+      "actions": 242
     },
     {
       "hour": 11,
-      "actions": 204
+      "actions": 226
     },
     {
       "hour": 20,
@@ -63,68 +63,62 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1099
+      "count": 1146
     },
     {
       "topic": "Autre",
-      "count": 1015
+      "count": 1107
     },
     {
       "topic": "Spatial",
-      "count": 550
+      "count": 580
     },
     {
       "topic": "Bourse",
-      "count": 423
+      "count": 457
     },
     {
       "topic": "Crypto",
-      "count": 371
+      "count": 396
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Bourse",
-      "24h_rate": 0.212,
-      "7d_rate": 0.139
-    }
-  ],
+  "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2112
+      "count": 2246
     },
     {
       "type": "retweet",
-      "count": 656
+      "count": 682
     },
     {
       "type": "hotake",
-      "count": 211
-    },
-    {
-      "type": "post",
-      "count": 37
+      "count": 237
     },
     {
       "type": "quote",
-      "count": 32
+      "count": 49
+    },
+    {
+      "type": "post",
+      "count": 36
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-05T01:18:07.830658",
-      "text": "SpaceX files a $75B IPO revealing an 18,712 BTC treasury.\n\nThe company that sells rides to orbit is now selling HODL to Main Street\n\nhttps://techcrunch.com/2026/06/04/ahead-of-its-ipo-anthropics-daniela-amodei-shrugs-off-doubts-about-ais-returns/",
-      "type": "hotake"
+      "ts": "2026-06-05T15:28:11.722990",
+      "text": "Meta fires half the org while AI Capex hits $50B+.\n\n401k Dave is selling at -80% to buy the dip of a machine that doesn’t need payroll.",
+      "type": "reply"
     },
     {
-      "ts": "2026-06-05T01:16:31.104206",
-      "text": "Jensen Huang is building an AI lab in South Korea because the local ego can't sleep without a visit from the $3T man.\n\nIt's not expansion. It's a timed dose of humility for a stock market drunk on its own reflection.\n\nhttps://www.cnbc.com/2026/06/05/south-korea-is-obsessing-over-",
-      "type": "hotake"
+      "ts": "2026-06-05T15:20:18.233162",
+      "text": "OpenAI’s bug is just the AI equivalent of ‘technical difficulties.’ You aren’t churned; you’re in a waitlist. 🛋️",
+      "type": "quote"
     },
     {
-      "ts": "2026-06-05T01:01:57.175814",
-      "text": "Bouchon fiscal : 13%.\nOn garde les champions, on perd les curieux.\nLa France n'a plus de talent, elle a des actionnaires.",
+      "ts": "2026-06-05T15:19:28.378822",
+      "text": "Ton alpha est taxé à 0% car la vraie marge est dans l'inference. stop de buying l'élasticité, start buying l'attention. on est tous endettés sur le futur, mais seul le produit verse le dividende.",
       "type": "reply"
     }
   ]
