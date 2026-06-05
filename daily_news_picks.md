@@ -13232,3 +13232,42 @@ Per the Financial Times, executives are
 - **@nasa** (1087 likes, score 8/10) — This spiral galaxy, recently observed by @NASAHubble, is in the middle of a cosmic journey that will take it hundreds of millions of years. Learn more: https://go.nasa.gov/4ebPYHh
   - https://x.com/NASA/status/2063014566414438537
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 1309).
+- **@edludlow** (1180 likes, score 9/10) — BREAKING; SpaceX and Google enter a cloud service agreement through which Google has agreed to pay SpaceX $920 million per month from October 2026 to June 2029.
+
+Compute capacity provided includes abo
+  - https://x.com/EdLudlow/status/2062970770612199542
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 1282).
+- **@jeffweniger** (271 likes, score 9/10) — More than half the S&P 500's total value is now in stocks priced above 10x sales. This was once considered an outlandish valuation, as it leaves little room for error. The list includes Nvidia, Apple,
+  - https://x.com/JeffWeniger/status/2062965728429453403
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 313).
+- **@unusual_whales** (424 likes, score 9/10) — Nvidia's profit margins are relatively safe through 2030 because hyperscalers have few alternatives for the chips powering data centers for artificial intelligence, DA Davidson’s head of technology re
+  - https://x.com/unusual_whales/status/2063017518953005544
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 586).
+- **@nasakennedy** (200 likes, score 9/10) — Over the river and through the woods to NASA Kennedy!
+
+The boosters will help power the Artemis III mission to low Earth orbit where four astronauts will test integrated operations between the Orion s
+  - https://x.com/NASAKennedy/status/2062591116789129578
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 214).
+- **@milkroadai** (156 likes, score 9/10) — This is WILD!
+
+One week before SpaceX's historic IPO, Google signed a deal to pay SpaceX $920 million per month from October 2026 through June 2029 for access to 110,000 Nvidia GPUs, CPUs, and related
+  - https://x.com/MilkRoadAI/status/2063007119809695771
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 178).
+- **@arthurmacwaters** (5 likes, score 7/10) — > be SpaceX
+> already targeting $1.75T IPO
+> largest in history of humanity 
+> but wait
+> new deal with google
+> casually insert it into the S1 filing
+> additional $920,000,000 per month of revenue
+  - https://x.com/ArthurMacwaters/status/2063029703876001988
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 11).
+- **@yahoofinance** (163 likes, score 9/10) — Bitcoin's price has fallen below $60,000 per coin.
+  - https://x.com/YahooFinance/status/2062976098334331263
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 201).
+- **@financialjuice** (22 likes, score 8/10) — Apollo, Blackstone finalize $35 billion funding deal for Anthropic to grow AI infrastructure
+  - https://x.com/financialjuice/status/2063007824746012952
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 26).
+- **@zephyr_z9** (391 likes, score 8/10) — Is Big Tech trying to fuck up the IPO window for OpenAI, Anthropic & SpaceX??
+  - https://x.com/zephyr_z9/status/2062971158673391616
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 425).
