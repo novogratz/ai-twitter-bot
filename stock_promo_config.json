@@ -1,14 +1,10 @@
 {
-  "ticker": "MNTS",
-  "company": "Momentus",
-  "tickers": [
-    {"ticker": "MNTS", "company": "Momentus", "weight": 3},
-    {"ticker": "SPCX", "company": "SpaceX (IPO)", "weight": 2},
-    {"ticker": "SPCE", "company": "Virgin Galactic", "weight": 1}
-  ],
-  "start_date": "2026-06-05",
-  "end_date": "2026-06-13",
-  "disabled": false,
+  "ticker": "",
+  "company": "",
+  "tickers": [],
+  "start_date": "",
+  "end_date": "",
+  "disabled": true,
   "operator_locked": true,
-  "note": "Operator campaign 2026-06-05: SpaceX IPO hype window (IPO June 12). Soft promo $MNTS (priority), $SPCX, $SPCE across replies/quotes + space_promo_bot standalone posts. operator_locked=true: rotation bot must NOT replace these with a WSB pick. Auto-expires after end_date."
+  "note": "Promo REMOVED by operator 2026-06-05 PM ($MNTS/$SPCX/$SPCE campaign cancelled same day). Empty ticker + disabled stops injection in agent/quote/hotake/direct_reply/hot_quote/wsb AND space_promo_bot. operator_locked also keeps the WSB rotation bot from picking a new ticker. Do not re-enable without an explicit operator instruction."
 }

@@ -83,7 +83,6 @@ from src.pin_boost_bot import safe_run_pin_boost_cycle
 from src.hot_quote_bot import safe_run_hot_quote_cycle
 from src.feed_sweeper_bot import safe_run_feed_sweep_cycle
 from src.viral_stunt_bot import safe_run_viral_stunt_cycle
-from src.space_promo_bot import safe_run_space_promo_cycle
 from src.engine_health_bot import safe_run_engine_health_cycle
 from src.conversion_attribution_bot import safe_run_conversion_attribution_cycle
 from src.stock_promo_bot import safe_run_stock_promo_cycle
@@ -693,18 +692,10 @@ def main():
             max_instances=1,
         )
 
-        # Space promo bot (2026-06-05 operator campaign): soft-promo
-        # $MNTS/$SPCX/$SPCE standalone posts during the SpaceX-IPO window
-        # (config-driven via stock_promo_config.json — auto-dies after
-        # end_date). 9:40 + 15:40 ET, max 2/day, GIF-backed when available.
-        log.info("Space promo bot: $MNTS/$SPCX/$SPCE campaign posts at 9:40 + 15:40 ET (until config end_date).")
-        for _sp_hour, _sp_min in ((9, 40), (15, 40)):
-            scheduler.add_job(
-                safe_run_space_promo_cycle,
-                trigger=CronTrigger(hour=_sp_hour, minute=_sp_min, timezone="America/New_York"),
-                id=f"space_promo_job_{_sp_hour}h",
-                max_instances=1,
-            )
+        # Space promo bot — REMOVED from the schedule (operator 2026-06-05 PM:
+        # "remove promotion of spce mnts etc"). The module stays for possible
+        # future campaigns but is dormant: stock_promo_config.json is disabled
+        # + empty, which also kills the reply/quote soft-injection blocks.
 
         # Engine-health watchdog (2026-06-05 post-mortem): hourly per-action
         # pace check vs 7-day same-hour baseline; loud alert on >60% drop so

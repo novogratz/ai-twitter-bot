@@ -165,13 +165,13 @@ Operator levers, all shipped:
 - **`src/viral_stunt_bot.py`** — occasional superviral-format first-person AI-stunt
   comedy ("I tested X's AI support…"). Max 2/day, 35% fire prob per 90-min check,
   SKIP-by-default 9/10 bar, must read as an obvious bit (never fake literal news).
-- **`src/space_promo_bot.py` + multi-ticker `stock_promo_config.json`** — operator
-  campaign through 2026-06-13 (SpaceX IPO June 12): soft-promo $MNTS (priority),
-  $SPCX, $SPCE. Standalone hype posts 2/day (9:40+15:40 ET) ending "Not financial
-  advice 🚀", GIF-backed from `media/promo_gifs/` (clipboard `«class GIFf»` keeps
-  animation); reply/quote soft-injection only on space-context parents.
-  `operator_locked: true` blocks WSB rotation from replacing the campaign;
-  everything auto-expires after `end_date`.
+- **Stock promo: REMOVED (operator 2026-06-05 PM).** The $MNTS/$SPCX/$SPCE
+  campaign was cancelled the same day it launched. `stock_promo_config.json` is
+  disabled + empty (kills space_promo_bot AND the reply/quote soft-injection
+  blocks), the 9:40/15:40 cron jobs are unscheduled, and `operator_locked`
+  prevents the WSB rotation bot from picking a new ticker. `space_promo_bot.py`
+  stays in the tree, dormant — do NOT re-enable without explicit operator
+  instruction. (GIF clipboard support in `_post_tweet_with_image` remains.)
 
 ### 2026-06-02 policy modules (single write chokepoints)
 
