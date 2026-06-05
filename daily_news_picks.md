@@ -13083,3 +13083,59 @@ IBM will use Google Cloud-certified consultants to build industry-specific agent
 - **@osint613** (160 likes, score 8/10) — Anthropic is calling for a global pause on development of the most powerful AI systems, saying current models are beginning to show signs of escaping human control.
   - https://x.com/Osint613/status/2062898422735069392
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 252).
+- **@zerohedge** (137 likes, score 9/10) — Premarket movers
+
+Mag 7 stocks are mostly lower (Nvidia -1.3%, Microsoft +0.4%, Tesla +0.1%, Apple -0.1%, Alphabet -0.4%, Amazon -0.2%, Meta -0.2%, Nvidia -1.3%)
+
+Argan (AGX) rises 11% after the power
+  - https://x.com/zerohedge/status/2062868288409850040
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 161).
+- **@marionawfal** (15 likes, score 8/10) — Morgan Stanley is projecting SpaceX hits $3.4 trillion in annual revenue by 2040
+
+The rockets and Starlink built the company. Under these projections, they become the infrastructure for a global AI pl
+  - https://x.com/MarioNawfal/status/2062942528199159972
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 41).
+- **@oguzerkan** (72 likes, score 9/10) — $META can easily generate substantial ROI on its AI capex, contrary to what bears argue.
+
+It’s expected to add 4 GW of compute capacity by the end of 2027. 
+
+Let’s say some of this capacity will be ex
+  - https://x.com/oguzerkan/status/2062852085406707982
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 108).
+- **@watcherguru** (1685 likes, score 9/10) — JUST IN: Michael Saylor's 'Strategy' now has a $13 billion unrealized loss on its Bitcoin investment.
+  - https://x.com/WatcherGuru/status/2062940650354446737
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2371).
+- **@stockmktnewz** (239 likes, score 9/10) — Nvidia $NVDA stock is now down by 5% so far today
+  - https://x.com/StockMKTNewz/status/2062922621700673887
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 331).
+- **@oguzerkan** (123 likes, score 8/10) — Three most obvious valuation gaps in the market:
+
+- $NVDA vs other major designers. $NVDA is trading at 22x forward earnings while the average of other major designers is 34x, even after excluding inf
+  - https://x.com/oguzerkan/status/2062792355501969878
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 135).
+- **@anthropicai** (3206 likes, score 8/10) — Each time we release a model, we run the same test: give it code that trains a small AI model, ask the new model to speed it up. It takes a skilled human 4-8 hours to reach 4x faster.
+
+In May 2024, Cl
+  - https://x.com/AnthropicAI/status/2062568869240476050
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 3300).
+- **@palantirtech** (2309 likes, score 8/10) — At AIPCon 10, Palantir CEO Alex Karp shares our secret to sales:
+
+“We’re hoping that you’ll go to a large language model company and learn that they don’t care about you at all.”
+
+“What you will find
+  - https://x.com/PalantirTech/status/2062866542245605826
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 2505).
+- **@anthropicai** (1165 likes, score 8/10) — How well do the security community's techniques hold up against AI-enabled cyberattacks? 
+
+We examined 832 malicious accounts and mapped their activity onto a longstanding database of tactics and tech
+  - https://x.com/AnthropicAI/status/2062243425580367905
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1445).
+- **@bulltheoryio** (243 likes, score 8/10) — BLOODBATH IN THE MARKET.
+
+Over $2.5 Trillion wiped out in 24hrs.
+
+S&P 500 is down -1.65%, wiping out $1.14 trillion, the largest single day crash since January 20.
+
+Gold is down -3.38%, wiping out $1
+  - https://x.com/BullTheoryio/status/2062942769937838271
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 349).
