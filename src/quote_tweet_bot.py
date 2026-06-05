@@ -105,11 +105,9 @@ BAD (just a reaction): "Beautiful." / "Good luck." / "Called it." / "As expected
 BAD (old voice): snark, roast, "ngmi", dunking on the trend instead of healing it.
 
 GIF (optional, ~1 quote in 3): when a famous meme GIF would make the quote
-land HARDER, add one line after the text: [GIF: <2-4 word search>]. Proven
-X vocabulary: "this is fine" (calm in chaos), "michael jordan crying" (market
-down), "wolf of wall street" / "leonardo dicaprio cheers" (boss/win),
-"pablo escobar waiting", "kermit panic", "futurama fry suspicious". Skip the
-GIF when the line is stronger alone — restraint reads more human.
+land HARDER, add one line after the text: [GIF: <2-4 word search>].
+{gif_guide}
+Skip the GIF when the line is stronger alone — restraint reads more human.
 
 CRITICAL: any output containing the bare word "skip" = silent skip. Either the
 pure quote OR "SKIP" alone — never a sentence explaining why you're skipping.
@@ -303,7 +301,10 @@ def _mnts_promo_block_q(tweet_text: str = "") -> str:
     )
 
 def _generate_quote(author: str, tweet_text: str):
-    prompt = QUOTE_PROMPT.format(author=author, tweet_text=tweet_text[:200], mnts_block=_mnts_promo_block_q(tweet_text))
+    from .humanizer import GIF_GUIDE_BLOCK
+    prompt = QUOTE_PROMPT.format(author=author, tweet_text=tweet_text[:200],
+                                 mnts_block=_mnts_promo_block_q(tweet_text),
+                                 gif_guide=GIF_GUIDE_BLOCK)
     try:
         result = run_llm(prompt, QUOTE_MODEL, label="QUOTE", timeout=30)
         if result.returncode != 0:

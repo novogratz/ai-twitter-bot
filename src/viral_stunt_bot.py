@@ -67,11 +67,8 @@ draft is not a 9/10 laugh → answer SKIP. SKIP is the default, posting is the
 exception.
 
 GIF (mandatory): after the post text, add ONE line: [GIF: <2-4 word search>]
-Pick a PROVEN X meme that amplifies the bit: "this is fine", "wolf of wall
-street", "michael scott no", "pablo escobar waiting", "elmo fire",
-"crying counting money", "leonardo dicaprio cheers", "kermit panic",
-"michael jordan crying", "futurama fry suspicious" — or a better fit you
-know is iconic. The line is stripped before posting.
+{gif_guide}
+The line is stripped before posting.
 
 OUTPUT — strictly the post text + the [GIF: …] line, nothing else. No
 "Here's", no quotes, no meta-commentary."""
@@ -127,9 +124,11 @@ def run_viral_stunt_cycle():
     core = personality_store.render_core_identity(lang=lang)
     if core:
         perf = core + "\n\n" + perf
+    from .humanizer import GIF_GUIDE_BLOCK
     prompt = STUNT_PROMPT.format(
         lang_directive=lang_mode.lang_directive(lang),
         performance_section=perf,
+        gif_guide=GIF_GUIDE_BLOCK,
     )
 
     log.info("[STUNT] Generating superviral-format post...")

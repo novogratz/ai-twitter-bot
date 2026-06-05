@@ -141,6 +141,21 @@ def _strip_multiple_alternatives(text: str) -> str:
     return text
 
 
+# Shared viral-GIF vocabulary (operator 2026-06-05: "use all the most viral
+# GIFs and memes... people should LOVE IT"). One block injected into every
+# GIF-capable prompt so the model searches terms that actually return bangers.
+GIF_GUIDE_BLOCK = """GIF SEARCH VOCABULARY — match the emotion, pick the icon:
+- EXCEPTIONALLY GOOD / huge win → [GIF: jonah hill excited] / [GIF: vince mcmahon] / [GIF: leonardo dicaprio clapping] / [GIF: chef kiss]
+- boss move / victory lap        → [GIF: wolf of wall street] / [GIF: leonardo dicaprio cheers] / [GIF: salute]
+- market bleeding / pain         → [GIF: michael jordan crying] / [GIF: ben affleck smoking] / [GIF: this is fine]
+- calm in chaos (therapist core) → [GIF: this is fine] / [GIF: keep calm]
+- suspicion / "sure about that"  → [GIF: futurama fry suspicious] / [GIF: john cena are you sure]
+- waiting forever                → [GIF: pablo escobar waiting] / [GIF: skeleton waiting]
+- panic / FOMO                   → [GIF: kermit panic] / [GIF: surprised pikachu]
+- mind blown / big reveal        → [GIF: mind blown] / [GIF: math lady]
+- shots fired / mic drop         → [GIF: mic drop] / [GIF: michael jackson popcorn]
+Rule: ONE GIF max, only when it AMPLIFIES the punchline. Iconic beats obscure."""
+
 _GIF_TAG_RE = re.compile(r"\[\s*GIF\s*:\s*([^\]\n\r]{2,60})\]", re.IGNORECASE)
 
 
