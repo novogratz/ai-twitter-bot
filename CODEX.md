@@ -68,9 +68,13 @@ self-improve over time and push code on github."
   means an autonomous run shipped a regression (next run fixes it first).
 - **`bin/auto_improve.sh` + `~/Library/LaunchAgents/com.kzer.ai-twitter-bot-improve.plist`**
   — DAILY 07:17 headless Claude Code session: diagnose (engagement_log +
-  engine_health_alerts + bot.log) → ONE tested improvement → push to main →
-  record memory. Single-flight lock, 2h stale-lock recovery, never starts the
-  bot. Manual: `./bin/auto_improve.sh`.
+  engine_health_alerts + bot.log) → ONE tested improvement → **ship via PR**
+  (branch → `gh pr create` → wait for green CI → squash-merge; validated
+  end-to-end on PR #3) → record memory. Single-flight lock, 2h stale-lock
+  recovery, never starts the bot. Manual: `./bin/auto_improve.sh`.
+  NOTE: no required-checks branch protection on main — it would block the
+  running bot's direct state pushes; the PR flow + CI-watch gives the same
+  guarantee for code changes.
 - **Self-healing** — `engine_health_bot` collapse alerts now spawn
   `bin/auto_improve.sh --emergency "<alert>"` (rate-limited
   `SELF_HEAL_COOLDOWN_HOURS=6`, kill-switch `ENABLE_SELF_HEAL=0`) so a dead
