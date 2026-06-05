@@ -460,6 +460,13 @@ def post_tweet_with_gif(text: str, gif_query: str, force: bool = False) -> bool:
         action_guard.record(action_guard.POST)
         content_guard.note_posted(text)
         _record_posted(text)
+        # A/B tag: source carries the GIF marker + query so the analyzer can
+        # compare GIF vs text-only engagement (operator 2026-06-05).
+        try:
+            from .engagement_log import log_post
+            log_post(text, source=f"GIF/{gif_query}")
+        except Exception:
+            pass
         return True
 
 
@@ -504,6 +511,11 @@ def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str) -> bool:
         action_guard.record(action_guard.QUOTE, target=tweet_url)
         content_guard.note_posted(comment)
         _record_posted(comment)
+        try:
+            from .engagement_log import log_reply as _log_reply
+            _log_reply(tweet_url, comment, action_type="quote_gif", source=f"GIF/{gif_query}")
+        except Exception:
+            pass
         close_front_tab()
         try:
             like_tweet(tweet_url)
@@ -1108,6 +1120,14 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
     # Write JS to temp file to avoid AppleScript quote escaping hell
     js_code = """
     (function() {
+        function extractFromLabel(label) {
+            var m = (label || '').match(/(\\d[\\d,\\.KMkm]*)/);
+            if (!m) return 0;
+            var s = m[1].replace(/,/g, '').toLowerCase();
+            if (s.indexOf('k') !== -1) return Math.round(parseFloat(s) * 1000);
+            if (s.indexOf('m') !== -1) return Math.round(parseFloat(s) * 1000000);
+            return parseInt(s, 10) || 0;
+        }
         function extractCount(article, testid) {
             var btn = article.querySelector('[data-testid="' + testid + '"]');
             if (!btn) return 0;
@@ -1155,7 +1175,12 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             var isReply = detectReplyArticle(a, text);
             var timeEl = a.querySelector('time[datetime]');
             var ts = timeEl ? timeEl.getAttribute('datetime') : '';
-            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, 200), a: author || 'unknown', l: likes, r: replies, tl: tl, ir: isReply, ts: ts}));
+            // Views: the analytics link's aria-label carries the count
+            // ("12.3K views"). Powers performance.scrape_own_metrics.
+            var views = 0;
+            var an = a.querySelector('a[href*="/analytics"]');
+            if (an) views = extractFromLabel(an.getAttribute('aria-label') || '');
+            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, 200), a: author || 'unknown', l: likes, r: replies, v: views, tl: tl, ir: isReply, ts: ts}));
         }
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
         return '[' + tweets.join(',') + ']';
@@ -1231,6 +1256,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             # had unknown age and the hard 48h freshness gate skipped 100% of
             # feed/search candidates ("No viable candidates this cycle").
             "timestamp": t.get("ts") or "",
+            "views": int(t.get("v") or 0),
         } for t in data]
         _reset_blank_page_count()
         log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")
