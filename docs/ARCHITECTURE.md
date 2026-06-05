@@ -81,7 +81,7 @@ main.py
 | `spicy_bot.py` | every ~80 min | Polarising take or question |
 | `thread_bot.py` | every 4h (idempotent daily) | 4-tweet single-story thread |
 | `digest_thread_bot.py` | every 4h (idempotent daily) | 6-tweet "top 5 stories" recap |
-| `agent.py` monthly mode | 1st of month + manual `--monthly-recap-now` | 3 Monthly Décode Top 10 posts: IA, Crypto, Investissement |
+| `agent.py` monthly mode | 1st of month + manual `--monthly-recap-now` | 3 Monthly Decode Top-10 posts: AI, Crypto, Investing |
 
 ### Reshare
 
