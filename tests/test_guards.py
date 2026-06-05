@@ -281,3 +281,27 @@ def test_validate_rejects_overlong_reply():
 def test_validate_allows_casual_unpunctuated_ending():
     ok, _ = cg.validate("screenshot this. we'll talk about it in 6 months", kind="reply")
     assert ok
+
+
+# --- one reply per tweet, EVER (double-reply incident, 2026-06-05) -------------
+
+def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
+    """Two reply bots racing on the same tweet: the second write MUST be
+    refused at the chokepoint regardless of which bot it came from."""
+    import src.reply_bot as rb
+    import src.twitter_client as tc
+    from src import action_guard, config
+
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr(config, "DRY_RUN", True)
+    monkeypatch.setattr(action_guard, "can_post", lambda action: (True, ""))
+    recorded = []
+    monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(a))
+
+    url = "https://x.com/Graphseo/status/1234567890123456789"
+    reply = "the spelling-mistake signal lasts exactly one fine-tune cycle. enjoy it while it works"
+    tc.reply_to_tweet(url, reply)
+    tc.reply_to_tweet(url, reply + " v2")          # same tweet, second bot
+    tc.reply_to_tweet(url + "?s=20", reply + " v3")  # same tweet, different URL form
+
+    assert len(recorded) == 1  # exactly ONE reply ever reached the write

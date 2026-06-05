@@ -3446,5 +3446,57 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit 'guru' pour ne garder que les praticiens et analystes solides. Le paysage FR est domin\u00e9 par des traders techniques (Lassaux) et des experts Mistral, tandis que le Qu\u00e9bec offre des p\u00e9pites crypto/fintech moins expos\u00e9es."
+  },
+  {
+    "ts": "2026-06-05T17:29:55.246307",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeLecocq",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "CEO de L'Or\u00e9al AI Lab, il balance des insights tech de haut vol sans le jargon VC qui pue. C'est rare de voir un dirigeant de CAC40 twittanter avec cette lucidit\u00e9 sur l'IA g\u00e9n\u00e9rative."
+      },
+      {
+        "handle": "PierreCahuzac",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "L'analyste de la maison m\u00e8re qui comprend enfin que les multiples ne s'appr\u00e9cient pas au doigt mouill\u00e9. Ses threads sur la tech europ\u00e9enne sont plus utiles que la newsletter de ton oncle."
+      },
+      {
+        "handle": "MathieuBis",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "La r\u00e9f\u00e9rence fric francophone qui balance l'actu on-chain sans vendre du r\u00eave. Pas de lien Telegram, pas de 'DAG', juste des faits. Rare sur ce r\u00e9seau social."
+      },
+      {
+        "handle": "AlexisFoussard",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Un des seuls vrais analystes IA en France qui balance des threads techniques accessibles. Il ne vend pas de formation \u00e0 99\u20ac, il explique juste comment le monde va basculer."
+      },
+      {
+        "handle": "JadeGirard",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 10000,
+        "reason": "La voix qu\u00e9b\u00e9coise qui fait le pont entre Wall Street et le March\u00e9 montr\u00e9alais. Ses posts sur l'impact des taux sont plus clairs que la plupart des analystes du SI."
+      },
+      {
+        "handle": "AlexisSaulnier",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 8000,
+        "reason": "Cr\u00e9ateur du Podcast Finance et expert fintech. Il met le doigt sur les vraies failles de nos banques sans se prends pour une autorit\u00e9. Plus dr\u00f4le qu'une r\u00e9union trimestrielle."
+      }
+    ],
+    "summary": "Focus IA et Fintech pour la France, o\u00f9 les vrais analystes fuient les influenceurs crypto. Le Qu\u00e9bec est moins peupl\u00e9 en experts techniques purs, d'o\u00f9 une s\u00e9lection plus niche et qualitative."
   }
 ]

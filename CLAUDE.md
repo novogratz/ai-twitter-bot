@@ -69,6 +69,17 @@ Two one-line root causes, both fixed:
 Lesson: when a surface flatlines, check `engagement_log.csv` daily counts per
 action type FIRST — the collapse was invisible in bot.log noise.
 
+### 2026-06-05 PM — one reply per tweet, EVER (chokepoint dedup)
+
+The account replied TWICE to the same @Graphseo tweet 7 min apart: two reply
+bots each load `replied_tweets.json` at cycle start, so both saw the tweet as
+fresh (stale in-memory copies = race). Fix: `twitter_client.reply_to_tweet`
+re-checks the on-disk canonical replied set (status-ID keyed, URL-form
+agnostic) right before the write and marks it before posting — covers ALL
+reply paths incl. `reply_to_tweet_in_thread`. Operator rule: "never send 2
+replies on same tweet." Regression test: two bots + a `?s=20` URL variant →
+exactly one write.
+
 ### 2026-06-05 PM — truncation guard (the "ChatGPT paste" callout)
 
 A blind `text[:220]` slice in the Graphseo reply path published a reply cut
