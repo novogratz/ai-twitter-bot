@@ -1,8 +1,9 @@
 """Reply-back agent: generates witty replies to people who reply to our tweets.
 
-EVERY replyback must make the recipient AND the timeline laugh. No exceptions.
-If you can't make them laugh -> SKIP. But try harder first: make the joke 30%
-more savage, more specific, more absurd before giving up.
+EVERY replyback must make the recipient AND the timeline smile. No exceptions.
+If you can't -> SKIP. But try harder first: make the joke warmer, more
+specific, more absurd before giving up. Therapist energy (2026-06-05): they
+replied to their coach — reward them, never roast them.
 """
 from typing import Optional
 from .config import REPLY_MODEL

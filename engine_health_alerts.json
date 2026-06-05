@@ -1,0 +1,9 @@
+[
+  {
+    "ts": "2026-06-05T06:01:23.657323",
+    "alerts": [
+      "retweet collapsed: 0 today vs ~42 by this hour over the last 7 days (0%)",
+      "quote collapsed: 0 today vs ~6 by this hour over the last 7 days (0%)"
+    ]
+  }
+]
