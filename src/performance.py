@@ -44,148 +44,42 @@ def _save_learnings(data: dict):
 
 
 def scrape_own_metrics() -> list:
-    """Visit own profile and scrape tweet text + metrics using JavaScript.
-    
-    Filters out retweets/reposts (only our original content matters), uses
-    aria-label matching for like counts (more reliable than DOM structure),
-    and extracts views from analytics links or stats elements.
+    """Per-post likes/views for our own recent posts.
+
+    Rebuilt 2026-06-05: the old standalone AppleScript/JS scraper returned 0
+    tweets since ~May 11 (X DOM drift + it never took _safari_lock, so other
+    bots navigated mid-scrape) — the pattern-ROI bandit and analyzer flew
+    blind for 3+ weeks. Now rides the shared, maintained
+    `scrape_profile_tweets` pipeline (Safari lock, blank-page recovery,
+    timestamp + views extraction) and filters to our own originals.
     """
-    log.info("[PERF] Opening own profile to scrape metrics...")
-    webbrowser.open(BOT_PROFILE_URL)
-    time.sleep(6)
+    from .config import BOT_HANDLE
+    from .twitter_client import scrape_profile_tweets
 
-    # Scroll down a bit to load more tweets
+    log.info("[PERF] Scraping own profile metrics (shared pipeline)...")
     try:
-        subprocess.run(["osascript", "-e", '''
-        tell application "System Events"
-            repeat 3 times
-                key code 125
-                delay 0.5
-            end repeat
-        end tell
-        '''], check=True, capture_output=True, text=True)
-    except subprocess.CalledProcessError:
-        pass
-    time.sleep(2)
-
-    # Extract tweet data via JavaScript
-    js_script = '''
-    tell application "Safari"
-        set result to do JavaScript "
-            (function() {
-                function parseCount(s) {
-                    if (!s) return 0;
-                    var m = s.match(/(\\\\d[\\\\d,\\\\.KMkm]*)/);
-                    if (!m) return 0;
-                    var v = m[1].replace(/,/g, '').toUpperCase();
-                    if (v.indexOf('K') !== -1) return Math.round(parseFloat(v) * 1000);
-                    if (v.indexOf('M') !== -1) return Math.round(parseFloat(v) * 1000000);
-                    return parseInt(v, 10) || 0;
-                }
-                var tweets = [];
-                var articles = document.querySelectorAll('article[data-testid=\\"tweet\\"]');
-                for (var i = 0; i < Math.min(articles.length, 15); i++) {
-                    var a = articles[i];
-
-                    // Skip retweets/reposts — they have socialContext and are not our content
-                    var ctx = a.querySelector('[data-testid=\\"socialContext\\"]');
-                    if (ctx) {
-                        var ctxText = (ctx.textContent || '').trim().toLowerCase();
-                        if (ctxText.indexOf('reposted') !== -1 || ctxText.indexOf('you repost') !== -1) continue;
-                    }
-
-                    var textEl = a.querySelector('[data-testid=\\"tweetText\\"]');
-                    var text = textEl ? textEl.textContent.trim() : '';
-                    if (!text) continue;
-
-                    // Extract likes from aria-label on like/unlike button
-                    var likes = 0;
-                    var likeBtn = a.querySelector('[data-testid=\\"like\\"], [data-testid=\\"unlike\\"]');
-                    if (likeBtn) {
-                        var label = likeBtn.getAttribute('aria-label') || '';
-                        likes = parseCount(label);
-                    }
-                    // Fallback: try the group element approach
-                    if (likes === 0) {
-                        var likeBtns = a.querySelectorAll('[data-testid=\\"like\\"], [data-testid=\\"unlike\\"]');
-                        if (likeBtns.length > 0) {
-                            var likeParent = likeBtns[0].closest('[role=\\"group\\"]') || likeBtns[0].parentElement;
-                            var likeSpan = likeParent ? likeParent.querySelector('span[data-testid=\\"app-text-transition-container\\"]') : null;
-                            if (likeSpan) likes = parseInt(likeSpan.textContent.replace(/[^0-9]/g, '')) || 0;
-                        }
-                    }
-
-                    // Extract views from analytics link or stats row
-                    var views = 0;
-                    var analyticsLink = a.querySelector('a[href*=\\"/analytics\\"]');
-                    if (analyticsLink) {
-                        var spans = analyticsLink.querySelectorAll('span');
-                        if (spans.length > 0) {
-                            views = parseCount(spans[spans.length - 1].textContent);
-                        }
-                    }
-                    // Fallback: look for view-like text in the stats area
-                    if (views === 0) {
-                        var allSpans = a.querySelectorAll('span');
-                        for (var j = 0; j < allSpans.length; j++) {
-                            var t = (allSpans[j].textContent || '').trim().toLowerCase();
-                            if (t.indexOf('view') !== -1 || t.indexOf('vue') !== -1) {
-                                views = parseCount(t);
-                                if (views > 0) break;
-                            }
-                        }
-                    }
-
-                    // Get timestamp
-                    var timeEl = a.querySelector('time');
-                    var timestamp = timeEl ? timeEl.getAttribute('datetime') : '';
-
-                    tweets.push(JSON.stringify({t: text.substring(0, 200), l: likes, v: views, ts: timestamp}));
-                }
-                return '[' + tweets.join(',') + ']';
-            })()
-        " in current tab of front window
-    end tell
-    '''
-
-    try:
-        result = subprocess.run(
-            ["osascript", "-e", js_script],
-            capture_output=True, text=True, timeout=15,
-        )
-        if result.returncode == 0 and result.stdout.strip():
-            raw = result.stdout.strip()
-            tweets = json.loads(raw)
-            log.info(f"[PERF] Scraped {len(tweets)} tweets from profile")
-
-            # Close tab
-            subprocess.run(["osascript", "-e", '''
-            tell application "Safari"
-                if (count of windows) > 0 then
-                    tell front window
-                        if (count of tabs) > 1 then close current tab end if
-                    end tell
-                end if
-            end tell
-            '''], capture_output=True, text=True)
-
-            return [{"text": t["t"], "likes": t["l"], "views": t["v"],
-                     "timestamp": t["ts"]} for t in tweets]
+        tweets = scrape_profile_tweets(BOT_HANDLE, max_tweets=20) or []
     except Exception as e:
         log.info(f"[PERF] Scraping failed: {e}")
+        return []
 
-    # Close tab on failure too
-    subprocess.run(["osascript", "-e", '''
-    tell application "Safari"
-        if (count of windows) > 0 then
-            tell front window
-                if (count of tabs) > 1 then close current tab end if
-            end tell
-        end if
-    end tell
-    '''], capture_output=True, text=True)
-
-    return []
+    own_handle = BOT_HANDLE.lower()
+    out = []
+    for t in tweets:
+        url = (t.get("url") or "").lower()
+        # keep only our own originals (profile shows reposts of others too)
+        if f"x.com/{own_handle}/" not in url:
+            continue
+        if t.get("is_reply"):
+            continue
+        out.append({
+            "text": t.get("text") or "",
+            "likes": int(t.get("likes") or 0),
+            "views": int(t.get("views") or 0),
+            "timestamp": t.get("timestamp") or "",
+        })
+    log.info(f"[PERF] Scraped {len(out)} own posts with metrics.")
+    return out
 
 
 def _push_perf_state():
