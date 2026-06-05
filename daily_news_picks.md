@@ -12877,3 +12877,35 @@ J.P. Morgan upgraded Tesla to “neutral” from “underweight,” saying the s
 Speaking on the No Priors podcast, Ilya Sutskever turns a question on the very technology
   - https://x.com/realBigBrainAI/status/2062512265614823930
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 126).
+- **@gdalmiathinks** (13 likes, score 7/10) — Breakup of the costs for a AI data centre: Typical one-gigawatt AI data center requires $38 billion up-front in CapEx and $0.9 billion in annual OpEx. Energy, the largest OpEx category, costs $0.6 bil
+  - https://x.com/gdalmiathinks/status/2062727205118214555
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 13).
+- **@apompliano** (297 likes, score 9/10) — The SpaceX IPO will be the watershed moment for Wall Street to open their doors to self-directed, retail investors.
+
+The banks have been trying for years to figure out how to court this cohort of capi
+  - https://x.com/APompliano/status/2062866395591798864
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 485).
+- **@defitracer** (21 likes, score 8/10) — WARNING: SOMETHING EXTREMELY BAD IS HAPPENING...
+
+Google went public at $23,000,000,000
+Anthropic is eyeing $965,000,000,000
+
+Even before retail gets a single share.
+
+That's 42 TIMES MORE expensive at
+  - https://x.com/DeFiTracer/status/2062893166169042999
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 37).
+- **@openai** (0 likes, score 7/10) — Listen to the OpenAI Podcast on—
+
+Spotify
+https://open.spotify.com/episode/3ca5s3o53D5xcEKmKgLLGj?si=4a9a555641fa4293…
+
+Apple
+https://podcasts.apple.com/us/podcast/how-a-reasoning-model-cracked-an-80-
+  - https://x.com/OpenAI/status/2062630458433917126
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 20).
+- **@openai** (1107 likes, score 8/10) — What happened when one of our models found a counterexample to an 80-year-old Erdős conjecture?
+
+Researchers @alexwei_, @HongxunWu, and @wjmzbmr1 shared the story on the OpenAI Podcast with @AndrewMay
+  - https://x.com/OpenAI/status/2062630454537424930
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1359).
