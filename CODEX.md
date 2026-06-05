@@ -50,6 +50,21 @@ obeys the same rules without per-bot rewrites:
   originals + quotes (replies are language-matched upstream, so only the price gate applies
   to them). `generate_validated()` regenerates up to `CONTENT_VALIDATION_RETRIES` then
   skip+logs — a flagged draft is NEVER published.
+  **Dedup v2 (2026-06-05):** `is_duplicate()` now fires on ANY of: stemmed-word Jaccard
+  ≥ `DUP_JACCARD_THRESHOLD` (0.45), containment ≥ `DUP_CONTAINMENT_THRESHOLD` (0.6),
+  ≥ `DUP_SHARED_BIGRAMS` (3) shared distinctive bigrams ("power bill", "real bottleneck"),
+  or same-story window (shared named entity + ≥ `DUP_TOPIC_SHARED_WORDS` (3) content words
+  vs any post in the last `DUP_TOPIC_WINDOW_HOURS` (24)). Added after the bot posted the
+  "GPU supply / power bill" take twice and the Anthropic raise 3× in one morning.
+  Enforced at BOTH chokepoints now (`post_tweet` AND `quote_tweet`), and every published
+  original/quote is recorded into `tweet_history.json` from the chokepoint
+  (`_record_posted`, idempotent `history.save_tweet`) so the dedup corpus covers ALL ~30
+  surfaces and survives restarts. `_scrub_metadata_leaks` also strips bare bracketed
+  pattern IDs (`[RENAME]`) that the `[PATTERN: …]` rules missed and leaked live 2026-06-05.
+  **spicy_bot is news-anchored (2026-06-05):** both SPICY and QUESTION modes must react to a
+  fresh item from `external_signal.json` (≤`SPICY_SIGNAL_MAX_AGE_HOURS`=6h, top items by
+  score injected into the prompt); no fresh signal → SKIP. Free-form "what's on my mind"
+  musings are banned — the model had parroted its own prompt example into live posts.
 - **`src/action_guard.py`** — write ledger + caps + pacing + follow policy. Persistent
   timestamped ledger (`action_ledger.json`) for the 30-day anti-churn check + audit.
   Per-action daily caps (`MAX_ORIGINALS_PER_DAY=3`, `MAX_QUOTE_REPOSTS_PER_DAY=3`,

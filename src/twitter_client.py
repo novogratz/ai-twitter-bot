@@ -163,6 +163,19 @@ def _scrub_metadata_leaks(text: str) -> str:
         text,
         flags=re.IGNORECASE,
     )
+    # Bare bracketed pattern IDs — "[RENAME]", "[FR_ANCHOR|METAPHOR]" — leaked
+    # live on 2026-06-05 ("CAPES DON'T SPIN COMPUTERS. WIRES DO. [RENAME]"):
+    # only 4 bots call extract_pattern, and the rules above need the "PATTERN"
+    # keyword. Strip every occurrence of a bracketed canonical ID here so all
+    # post paths are covered.
+    from .pattern_tags import PATTERN_IDS
+    _pat_alt = "|".join(sorted(PATTERN_IDS))
+    text = re.sub(
+        rf"\[\s*(?:{_pat_alt})(?:\s*[|/+,]\s*(?:{_pat_alt}))*\s*\]",
+        "",
+        text,
+        flags=re.IGNORECASE,
+    )
     # Truncated tag catch — model output cut off before closing ']', e.g. "[PATTERN: REPE"
     # at end-of-string or end-of-line with no closing bracket.
     text = re.sub(
@@ -251,6 +264,7 @@ def post_tweet(text: str, image_path: str = None):
             _like_own_latest_tweet()
             action_guard.record(action_guard.POST)
             content_guard.note_posted(text)
+            _record_posted(text)
             return
 
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
@@ -271,6 +285,22 @@ def post_tweet(text: str, image_path: str = None):
         _like_own_latest_tweet()
         action_guard.record(action_guard.POST)
         content_guard.note_posted(text)
+        _record_posted(text)
+
+
+def _record_posted(text: str):
+    """Persist a published original/quote into tweet_history.json from the
+    write chokepoint — so EVERY surface (spicy, breakout, longform, quote…)
+    feeds the dedup corpus + bot memory, not just the 4 bots that called
+    history.save_tweet themselves. save_tweet is idempotent, so the bots
+    that already record are safe. Bug 2026-06-05: spicy posted the same
+    'GPU supply / power bill' take twice because its posts never landed in
+    the on-disk history the dedup reads after a restart."""
+    try:
+        from .history import save_tweet
+        save_tweet(text)
+    except Exception as e:
+        log.info(f"[POST] history record failed (non-fatal): {e}")
 
 
 def _post_tweet_with_image(text: str, image_path: str):
@@ -611,6 +641,9 @@ def quote_tweet(tweet_url: str, comment: str):
     if not ok:
         log.info(f"[QUOTE] content_guard skip ({why}): {comment[:120]!r}")
         return
+    if content_guard.is_duplicate(comment):
+        log.info(f"[QUOTE] near-duplicate of a recent post — skipping: {comment[:120]!r}")
+        return
     if _cfg.DRY_RUN:
         log.info(f"[QUOTE][DRY_RUN] would quote {tweet_url}: {comment[:160]!r}")
         action_guard.record(action_guard.QUOTE, target=tweet_url, dry_run=True)
@@ -630,6 +663,8 @@ def quote_tweet(tweet_url: str, comment: str):
         time.sleep(2)
         log.info(f"[QUOTE] Quote posted: {tweet_url}")
         action_guard.record(action_guard.QUOTE, target=tweet_url)
+        content_guard.note_posted(comment)
+        _record_posted(comment)
         close_front_tab()
         try:
             like_tweet(tweet_url)

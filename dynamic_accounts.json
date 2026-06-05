@@ -366,7 +366,11 @@
     "R011Y",
     "BenjaminRM",
     "Nadine_Levy",
-    "MaximeMallet"
+    "MaximeMallet",
+    "NathalieDufort",
+    "BoursierQuebec",
+    "GillesMoulinet",
+    "ErikTremblay"
   ],
   "en": [
     "blablacar",
@@ -2277,6 +2281,26 @@
       "lang": "fr",
       "handle": "MaximeMallet",
       "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathalieDufort",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "BoursierQuebec",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "GillesMoulinet",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "ErikTremblay",
+      "added": "2026-06-05"
     }
   ]
 }
