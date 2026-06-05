@@ -31,6 +31,10 @@ Le bot fait tourner **plus de 30 micro-bots concurrents** orchestrés par une bo
 
 - **`engine_health_bot`** — sentinelle horaire : rythme du jour vs moyenne 7 jours à la même heure, alerte si une surface tombe sous 40 % (né de l'effondrement silencieux des retweets). **`conversion_attribution_bot`** — nouveaux followers rapprochés des auteurs auxquels on a répondu sous 48 h → poids par auteur ajusté dans le ciblage. Bouton Follow réparé (3 stratégies de sélecteur + statut réel du clic, anti-churn 30 j dans les deux sens). Replyback : @handle récupéré depuis l'URL du statut. Langue des réponses : match strict du parent (EN par défaut). **Voix thérapeute** alignée sur tous les prompts (quote, réponses, spicy) : nommer l'émotion → valider → re-cadrer calmement avec le fait précis.
 
+## Surge quote-RT + persona thérapeute (2026-06-05 PM)
+
+- Quote-RT validé (4 likes en 2 h sur la première sortie) → **150/jour**, espacement 90 s, barre du sweeper 200 likes, 4 quotes/cycle — mandat opérateur « abuse un peu pendant quelques semaines ». `bot_self_en/fr.json` réécrits dans l'esprit de la bio (« Treating market trauma… Heal the fear ») — l'ancien état « trader cynique à 3 h du matin » combattait l'identité thérapeute dans chaque prompt. Release de lancement **`launch-v1.0`** publiée sur GitHub (point de rollback).
+
 ## Poussée croissance 2026-06-05
 
 - **`feed_sweeper_bot`** — balaye For You / Following en alternance (8 min) : post ≥300 likes → quote-retweet avec un angle malin, sinon → réponse. **`viral_stunt_bot`** — comédie « superviral format » (max 2/jour, cadence irrégulière, barre 9/10 sinon SKIP). **`space_promo_bot`** — campagne opérateur jusqu'au 13/06 (IPO SpaceX 12/06) : promo douce $MNTS/$SPCX/$SPCE, 2 posts/jour avec GIF (`media/promo_gifs/`), disclaimer « Not financial advice », rotation WSB verrouillée (`operator_locked`). Moteur quote réparé (le bot brûlait son meilleur candidat à chaque skip d'espacement), spacing 120 s, cap 100/jour, handles prioritaires (TheBTCTherapist), fenêtre réponses 72 h + scroll profond des feeds.
