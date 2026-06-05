@@ -13038,3 +13038,48 @@ The FTX fraud marked the bottom of the bear market in November 2022.
 This time?
   - https://x.com/BitcoinArchive/status/2062911286250262595
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 82).
+- **@nicrypto** (8 likes, score 7/10) — This is absolutely insane.
+
+Morgan Stanley says SpaceX's revenue could reach $3.4 trillion by 2040. 
+
+It's currently only $18.7bn. 
+
+The bankers are telling you revenue needs to 181x in 14 years to ju
+  - https://x.com/nicrypto/status/2062918472703885625
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 16).
+- **@scaling01** (89 likes, score 9/10) — I kind of missed this news from May 5th:
+OpenAI's frontier models are being trained on Stargate Abilene and Microsoft's Fairwater sites.
+(https://openai.com/index/mrc-supercomputer-networking/…)
+
+and
+  - https://x.com/scaling01/status/2062893150050333062
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 105).
+- **@coindesk** (20 likes, score 8/10) — MACRO: U.S. economy adds 172,000 jobs in May, nearly double the 85,000 forecast, strengthening the case for Fed rate hikes as $BTC nears $60,000 and the 10-year Treasury yield jumps to 4.52%.
+  - https://x.com/CoinDesk/status/2062917170657460409
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 34).
+- **@bitcoinsapiens** (13 likes, score 8/10) — I've watched Bitcoin crash from:
+
+$32 to $0.02
+$200 to $50
+$1,200 to $200
+$20,000 to $3,000
+$60,000 to $15,000
+$126,000 to $78,000
+
+Notice a pattern?
+  - https://x.com/BitcoinSapiens/status/2062900498068598870
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 29).
+- **@stocksavvyshay** (362 likes, score 9/10) — $IBM and $GOOGL Cloud launched a new practice to help enterprises deploy AI agents across hybrid systems.
+
+IBM will use Google Cloud-certified consultants to build industry-specific agents for banking
+  - https://x.com/StockSavvyShay/status/2062538522175898099
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 442).
+- **@generalmcnews** (270 likes, score 9/10) — BREAKING: Artificial intelligence company Anthropic has suggested a global pause on developing the most powerful AI systems, as the latest models are beginning to show signs that they could escape hum
+  - https://x.com/GeneralMCNews/status/2062893666289459686
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 392).
+- **@bitcoinmagazine** (211 likes, score 9/10) — BREAKING: Morgan Stanley launches in-kind creations for its spot Bitcoin ETF
+  - https://x.com/BitcoinMagazine/status/2062917491437752331
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 249).
+- **@osint613** (160 likes, score 8/10) — Anthropic is calling for a global pause on development of the most powerful AI systems, saying current models are beginning to show signs of escaping human control.
+  - https://x.com/Osint613/status/2062898422735069392
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 252).
