@@ -44,3 +44,4 @@ strategy_log.json
 bot.err
 .llm_rate_state.json
 test_gemini_integration.py
+bot.lock
