@@ -362,7 +362,11 @@
     "BenoitF",
     "MontrealVC",
     "PierreMulliez",
-    "AI_QuantFR"
+    "AI_QuantFR",
+    "R011Y",
+    "BenjaminRM",
+    "Nadine_Levy",
+    "MaximeMallet"
   ],
   "en": [
     "blablacar",
@@ -2252,6 +2256,26 @@
     {
       "lang": "fr",
       "handle": "AI_QuantFR",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "R011Y",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminRM",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "Nadine_Levy",
+      "added": "2026-06-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMallet",
       "added": "2026-06-04"
     }
   ]

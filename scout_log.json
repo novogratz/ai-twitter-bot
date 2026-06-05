@@ -3273,5 +3273,43 @@
       }
     ],
     "summary": "Une s\u00e9lection mix\u00e9e entre les lourds (Mistral, Muller) et les perles rares (Lannadere, Pommier) qui respectent le crit\u00e8re 'pas de pub'. Le Qu\u00e9bec est bien repr\u00e9sent\u00e9 par ses b\u00e2tisseurs IA et les humoristes tech."
+  },
+  {
+    "ts": "2026-06-04T23:48:41.909583",
+    "raw_count": 5,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "R011Y",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Crypto-fr qui fait du fond, pas du bruit. Moins de hype, plus de sens."
+      },
+      {
+        "handle": "BenjaminRM",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Le roi du trading au Qu\u00e9bec. Actionniste passionn\u00e9, style direct sans la sauce coach."
+      },
+      {
+        "handle": "Nadine_Levy",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Journaliste fintech hyper bien branch\u00e9e, couvre la tech financi\u00e8re comme une pro."
+      },
+      {
+        "handle": "MaximeMallet",
+        "region": "france",
+        "niche": "ai",
+        "followers": 8000,
+        "reason": "Fondateur de GPT Engineer. Le genre de founder qui code et twitte, pas juste ceux qui postent des memes."
+      }
+    ],
+    "summary": "Le lot est mixte : des g\u00e9ants de l'IA (Mistral), des valeurs s\u00fbres crypto et du trading Qu\u00e9b\u00e9cois. On \u00e9vite les vendeurs de r\u00eaves pour rester dans l'expertise pure."
   }
 ]
