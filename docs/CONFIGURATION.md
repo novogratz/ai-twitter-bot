@@ -8,7 +8,7 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `BOT_HANDLE` | `CryptoAIDecode` | Your X handle, without `@`. Used in profile URLs + log filtering. |
+| `BOT_HANDLE` | `TheAIShrink` | Your X handle, without `@`. Used in profile URLs + log filtering. |
 
 ---
 
@@ -54,7 +54,7 @@ Reshare paths don't burn LLM cycles (deterministic scoring) so caps can be much 
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `MAX_QUOTES_PER_DAY` | `80` | Cap for quote posts from the FR-first quote bot. |
+| `MAX_QUOTES_PER_DAY` | `300` | Bot-level cap for the quote bot (the chokepoint cap `MAX_QUOTE_REPOSTS_PER_DAY`=150 is the binding one). |
 | `MAX_RETWEETS_PER_DAY` | `30` | Selective crypto / AI / bourse reposts. |
 | `RETWEETS_PER_CYCLE` | `3` | Max external retweets shipped after each deterministic candidate scrape. |
 | `MAX_REPLIES_PER_CYCLE` | `3` | Broad reply-bot cap per cycle. |
@@ -114,7 +114,7 @@ Per-cycle quotas (not daily caps):
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `CONTENT_LANG_PRIMARY` | `fr` | `en` / `fr` / `mixed` (70% EN / 30% FR). Reply paths always match parent tweet language regardless. |
+| `CONTENT_LANG_PRIMARY` | `en` | `en` / `fr` / `mixed` (70% EN / 30% FR). Reply paths always match parent tweet language regardless. |
 
 ---
 
@@ -149,7 +149,7 @@ These are best-effort: the file may not exist on first boot or after a fresh clo
 ## .env.example template
 
 ```env
-BOT_HANDLE=CryptoAIDecode
+BOT_HANDLE=TheAIShrink
 AI_CLI=ollama
 LLM_FALLBACK_CLI=codex
 NEWS_MODEL=gpt-5.4-mini
@@ -184,5 +184,5 @@ ENABLE_AI_MAINTENANCE=0
 ENABLE_AI_DISCOVERY=0
 ENABLE_CODEX_OPERATOR=0
 
-CONTENT_LANG_PRIMARY=fr
+CONTENT_LANG_PRIMARY=en
 ```
