@@ -1,39 +1,31 @@
 {
-  "ts": "2026-06-05T08:06:07.207585",
+  "ts": "2026-06-05T17:28:04.023699",
   "window_min": 90,
-  "total_actions": 61,
+  "total_actions": 38,
   "by_type": {
-    "retweet": 20,
-    "quote": 3,
-    "post": 2,
-    "hotake": 1,
-    "reply": 38
+    "reply": 25,
+    "quote": 4,
+    "retweet": 9
   },
   "winners": {
-    "PROFILE-ALWAYS": 32,
-    "RETWEET/bulltheoryio": 3,
-    "RETWEET/business": 2,
-    "RETWEET/watcherguru": 2,
-    "GRAPHSEO_VIP": 2
+    "PROFILE-ALWAYS": 10,
+    "FEED-SWEEP-FEED": 10,
+    "GRAPHSEO_VIP": 4,
+    "RETWEET/bitcoinmagazine": 2,
+    "MUST_REPOST/TheBTCTherapist": 2
   },
   "losers": {
-    "RETWEET/ashcrypto": 1,
-    "RETWEET/marionawfal": 1,
-    "RETWEET/cryptorover": 1,
-    "RETWEET/jimcramer": 1,
-    "RETWEET/tweetthis101": 1,
-    "QUOTE/NASA": 1,
-    "RETWEET/stocksavvyshay": 1,
-    "RETWEET/miningtk": 1,
-    "RETWEET/btpmnpr": 1,
-    "RETWEET/reuters": 1,
-    "RETWEET/hooeem": 1,
-    "RETWEET/financialreview": 1,
-    "RETWEET/cointelegraph": 1,
-    "RETWEET/jamesmelville": 1,
-    "QUOTE/Watcher.Guru": 1,
-    "QUOTE/*Walter Bloomberg": 1
+    "QUOTE/Abdulkadir | Cybersecurity": 1,
+    "RETWEET/coinbureau": 1,
+    "RETWEET/amitisinvesting": 1,
+    "RETWEET/zephyr_z9": 1,
+    "HOT_QUOTE/Sawyer Merritt": 1,
+    "RETWEET/peterdiamandis": 1,
+    "RETWEET/financialjuice": 1,
+    "QUOTE/The \u20bfitcoin Therapist": 1,
+    "FEED-SWEEP-FOLLOWING": 1,
+    "QUOTE/Watcher.Guru": 1
   },
-  "post_cadence_factor": 0.7,
+  "post_cadence_factor": 0.85,
   "boost_cadence_factor": 1.0
 }

@@ -562,6 +562,19 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     if not ok:
         log.info(f"[REPLY] content_guard skip ({why}): {reply_text[:120]!r}")
         return
+    # ONE reply per tweet, EVER — enforced at the chokepoint (operator
+    # 2026-06-05: "never send 2 replies on same tweet"). Each reply bot
+    # loads replied_tweets.json at cycle start, so two bots racing within
+    # minutes both think the tweet is fresh; re-checking the on-disk
+    # canonical set here right before the write kills the race for ALL
+    # reply paths at once.
+    from .reply_bot import load_replied, save_replied
+    _replied_now = load_replied()
+    if tweet_url in _replied_now:
+        log.info(f"[REPLY] already replied to this tweet (chokepoint dedup) — skipping: {tweet_url}")
+        return
+    _replied_now.add(tweet_url)
+    save_replied(_replied_now)
     if _cfg.DRY_RUN:
         log.info(f"[REPLY][DRY_RUN] would reply to {tweet_url}: {reply_text[:160]!r}")
         action_guard.record(action_guard.REPLY, target=tweet_url, dry_run=True)

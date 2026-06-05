@@ -13182,3 +13182,16 @@ HODL!
 - **@bitcoinmagazine** (176 likes, score 9/10) — JUST IN: Bitcoin falls to $59,101
   - https://x.com/BitcoinMagazine/status/2062971793338425358
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 254).
+- **@garymarcus** (59 likes, score 9/10) — Absolutely brutal day for AI fantasies:
+
+Nvidia $NVDA: down 6.2%
+Broadcom $AVGO: down 7.92%
+Coreweave  $CRWV: down 7.07%
+Nebius $NBIS:  down 12.27%
+Oracle $ORCL: down 9.59%
+
+Worst of all? 
+
+OpenAI is
+  - https://x.com/GaryMarcus/status/2063000883466801397
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 77).

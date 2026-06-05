@@ -381,7 +381,13 @@
     "MathieuV",
     "jlboulais",
     "alexismenier",
-    "clemencev"
+    "clemencev",
+    "MaximeLecocq",
+    "PierreCahuzac",
+    "MathieuBis",
+    "AlexisFoussard",
+    "JadeGirard",
+    "AlexisSaulnier"
   ],
   "en": [
     "blablacar",
@@ -2366,6 +2372,36 @@
     {
       "lang": "fr",
       "handle": "clemencev",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeLecocq",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreCahuzac",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuBis",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisFoussard",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JadeGirard",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisSaulnier",
       "added": "2026-06-05"
     }
   ]

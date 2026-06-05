@@ -1,40 +1,5 @@
 [
   {
-    "handle": "fridaymaxi",
-    "category": "crypto",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "technavebm",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "fire",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "victor",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "pickychap",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "opinionway",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
-    "handle": "applegeek",
-    "category": "ai",
-    "added": "2026-05-25"
-  },
-  {
     "handle": "tradosaure",
     "category": "crypto",
     "added": "2026-05-26"
@@ -2496,6 +2461,41 @@
   },
   {
     "handle": "sm17",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "cleartax",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "coinmarketcap",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "nz",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "reuters",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "wealthsignal",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "pratham",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "wolf",
     "category": "ai",
     "added": "2026-06-05"
   }

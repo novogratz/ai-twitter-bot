@@ -1,216 +1,216 @@
 {
-  "ts": "2026-06-05T08:11:08.214205",
+  "ts": "2026-06-05T17:43:04.814575",
   "count": 30,
   "items": [
     {
-      "src": "CoinDesk",
-      "title": "Live updates: bitcoin falls below $62,000 ahead of jobs data as Zcash bug rocks crypto",
-      "url": "https://www.coindesk.com/tech/2026/06/05/live-updates-bitcoin-below-usd62-000-ahead-of-jobs-data-as-zcash-bug-rocks-crypto",
+      "src": "CNBC Tech",
+      "title": "Marvell Technology and Flex to join S&P 500 index, replacing Pool and Campbell's",
+      "url": "https://www.cnbc.com/2026/06/05/marvell-technology-flex-sp-500-campbells-pool.html",
       "score": 0,
-      "ts": "2026-06-05T12:08:26"
+      "ts": "2026-06-05T21:36:23"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Trump administration, OpenAI discussing possible government stake in the AI startup",
+      "url": "https://www.cnbc.com/2026/06/05/trump-open-ai-altman-stake.html",
+      "score": 0,
+      "ts": "2026-06-05T21:12:29"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "Trump administration, OpenAI discussing possible government stake in the AI startup",
+      "url": "https://www.cnbc.com/2026/06/05/trump-open-ai-altman-stake.html",
+      "score": 0,
+      "ts": "2026-06-05T21:12:29"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Google to pay SpaceX $920 million a month for compute capacity at xAI data centers",
+      "url": "https://www.cnbc.com/2026/06/05/google-to-pay-spacex-920-million-a-month-for-xai-compute-capacity.html",
+      "score": 0,
+      "ts": "2026-06-05T21:01:53"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "Google to pay SpaceX $920 million a month for compute capacity at xAI data centers",
+      "url": "https://www.cnbc.com/2026/06/05/google-to-pay-spacex-920-million-a-month-for-xai-compute-capacity.html",
+      "score": 0,
+      "ts": "2026-06-05T21:01:53"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Bitcoin cracks $60,000, sinking to lowest level since October 2024",
+      "url": "https://www.cnbc.com/2026/06/05/bitcoin-dismal-week-price-below-all-time-high-crypto-investors.html",
+      "score": 0,
+      "ts": "2026-06-05T20:59:16"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "Travala lets AI agents book hotels with USDC on Base",
+      "url": "https://cointelegraph.com/news/travala-ai-agents-book-hotels-usdc-base?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-06-05T20:55:27"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "Crypto tax proposals weighed ahead of Tuesday House hearing",
+      "url": "https://cointelegraph.com/news/crypto-tax-bills-house-ways-means-hearing?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-06-05T20:41:38"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Mythos rejuvenated the cybersecurity sector. Earnings put the recent rally to the test",
+      "url": "https://www.cnbc.com/2026/06/05/mythos-cybersecurity-earnings-palo-alto-crowdstrike.html",
+      "score": 0,
+      "ts": "2026-06-05T20:25:09"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "Mythos rejuvenated the cybersecurity sector. Earnings put the recent rally to the test",
+      "url": "https://www.cnbc.com/2026/06/05/mythos-cybersecurity-earnings-palo-alto-crowdstrike.html",
+      "score": 0,
+      "ts": "2026-06-05T20:25:09"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Meta's stock sinks on report company could raise tens of billions of dollars to fund AI push",
+      "url": "https://www.cnbc.com/2026/06/05/meta-stock-sinks-on-report-company-could-raise-tens-of-billions-for-ai.html",
+      "score": 0,
+      "ts": "2026-06-05T20:22:44"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "Meta's stock sinks on report company could raise tens of billions of dollars to fund AI push",
+      "url": "https://www.cnbc.com/2026/06/05/meta-stock-sinks-on-report-company-could-raise-tens-of-billions-for-ai.html",
+      "score": 0,
+      "ts": "2026-06-05T20:22:44"
     },
     {
       "src": "CNBC Top",
       "title": "Alphabet is seeking fresh capital as stock's 4-week losing streak tests investor appetite",
       "url": "https://www.cnbc.com/2026/06/05/alphabet-ai-data-center-financing.html",
       "score": 0,
-      "ts": "2026-06-05T12:00:01"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "Broadway's $1.9 billion season is the latest sign of consumers splurging on experiences",
-      "url": "https://www.cnbc.com/2026/06/05/broadway-record-ticket-sales.html",
-      "score": 0,
-      "ts": "2026-06-05T12:00:01"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "Bitcoin caps a dismal week as price wallows 50% below its all-time high",
-      "url": "https://www.cnbc.com/2026/06/05/bitcoin-dismal-week-price-below-all-time-high-crypto-investors.html",
-      "score": 0,
-      "ts": "2026-06-05T11:41:45"
+      "ts": "2026-06-05T20:08:26"
     },
     {
       "src": "CNBC Tech",
-      "title": "Where investors may find the next 'big wave' for AI trade",
-      "url": "https://www.cnbc.com/2026/06/05/where-investors-may-find-the-next-big-wave-for-ai-trade.html",
+      "title": "Alphabet is seeking fresh capital as stock's 4-week losing streak tests investor appetite",
+      "url": "https://www.cnbc.com/2026/06/05/alphabet-ai-data-center-financing.html",
       "score": 0,
-      "ts": "2026-06-05T11:30:01"
+      "ts": "2026-06-05T20:08:26"
+    },
+    {
+      "src": "Decrypt",
+      "title": "Strategy Shares Fall to 4-Month Low as STRC Dips and Bitcoin Sinks Under $60K",
+      "url": "https://decrypt.co/370229/strategy-shares-fall-4-month-low-strc-dips-bitcoin-sinks-under-60k",
+      "score": 0,
+      "ts": "2026-06-05T20:02:53"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "Bitcoin bears face $2.6B trap as BTC funding rate drops: Is a short squeeze brewing?",
+      "url": "https://cointelegraph.com/markets/bitcoin-bears-face-26b-trap-as-btc-funding-rate-drops-is-a-short-squeeze-brewing?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-06-05T19:28:53"
     },
     {
       "src": "CoinDesk",
-      "title": "Bitcoin sentiment hit peak bearishness at recent lows, peak bullishness near tops",
-      "url": "https://www.coindesk.com/daybook-us/2026/06/04/bitcoin-sentiment-hit-peak-bearishness-at-recent-lows-peak-bullishness-near-tops",
+      "title": "Why diehard bitcoin purists aren’t sweating the massive price crash that wiped out $200 billion",
+      "url": "https://www.coindesk.com/markets/2026/06/05/why-diehard-bitcoin-purists-aren-t-sweating-the-massive-price-crash-that-wiped-out-usd200-billion",
       "score": 0,
-      "ts": "2026-06-05T11:25:49"
+      "ts": "2026-06-05T19:27:20"
+    },
+    {
+      "src": "Ars Technica",
+      "title": "Small modular nuclear reactor reaches criticality in first test",
+      "url": "https://arstechnica.com/science/2026/06/first-us-test-of-modular-reactor-reaches-criticality/",
+      "score": 0,
+      "ts": "2026-06-05T19:23:08"
+    },
+    {
+      "src": "Decrypt",
+      "title": "Anthropic Is Helping the NSA Hack China. It Also Wants Everyone to Pause AI",
+      "url": "https://decrypt.co/370207/anthropic-helping-nsa-hack-china-also-wants-everyone-pause-ai",
+      "score": 0,
+      "ts": "2026-06-05T19:18:56"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Hot jobs report puts Fed cuts further out of reach as Chair Warsh faces policy tests",
+      "url": "https://www.cnbc.com/2026/06/05/hot-jobs-report-puts-fed-cuts-further-out-of-reach-as-chair-warsh-faces-policy-tests.html",
+      "score": 0,
+      "ts": "2026-06-05T19:09:09"
+    },
+    {
+      "src": "TechCrunch",
+      "title": "Google will pay SpaceX $920M per month for compute",
+      "url": "https://techcrunch.com/2026/06/05/google-will-pay-spacex-920m-per-month-for-compute/",
+      "score": 0,
+      "ts": "2026-06-05T18:57:20"
+    },
+    {
+      "src": "TechCrunch AI",
+      "title": "Google will pay SpaceX $920M per month for compute",
+      "url": "https://techcrunch.com/2026/06/05/google-will-pay-spacex-920m-per-month-for-compute/",
+      "score": 0,
+      "ts": "2026-06-05T18:57:20"
+    },
+    {
+      "src": "Ars Technica",
+      "title": "S&P 500 rejects SpaceX, also blocking entry for OpenAI and Anthropic",
+      "url": "https://arstechnica.com/tech-policy/2026/06/sp-500-blocks-fast-spacex-entry-wont-waive-rule-for-unprofitable-ai-firms/",
+      "score": 0,
+      "ts": "2026-06-05T18:45:20"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Model routing is a fix for AI overspending. That's a problem for OpenAI and Anthropic",
+      "url": "https://www.cnbc.com/2026/06/05/model-routing-on-ai-is-a-problem-for-openai-and-anthropic.html",
+      "score": 0,
+      "ts": "2026-06-05T18:24:25"
     },
     {
       "src": "CNBC Tech",
-      "title": "The Tech Download: Anthropic’s IPO sets up first big test of AI boom valuations",
-      "url": "https://www.cnbc.com/2026/06/05/tech-download-anthropic-ipo-ai-valuations.html",
+      "title": "Model routing is a fix for AI overspending. That's a problem for OpenAI and Anthropic",
+      "url": "https://www.cnbc.com/2026/06/05/model-routing-on-ai-is-a-problem-for-openai-and-anthropic.html",
       "score": 0,
-      "ts": "2026-06-05T11:00:01"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "The Tech Download: Anthropic’s IPO sets up first big test of AI boom valuations",
-      "url": "https://www.cnbc.com/2026/06/05/tech-download-anthropic-ipo-ai-valuations.html",
-      "score": 0,
-      "ts": "2026-06-05T11:00:01"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Crypto's worst week since July 2024 deepens as bitcoin, ether near critical price levels",
-      "url": "https://www.coindesk.com/markets/2026/06/05/crypto-s-worst-week-since-july-2024-deepens-as-bitcoin-ether-near-critical-price-levels",
-      "score": 0,
-      "ts": "2026-06-05T10:39:16"
-    },
-    {
-      "src": "Wired",
-      "title": "OpenAI and Anthropic May Be Rivals, but Investors Aren’t Picking Sides",
-      "url": "https://www.wired.com/story/openai-and-anthropic-may-be-rivals-but-their-investors-arent-choosing-sides/",
-      "score": 0,
-      "ts": "2026-06-05T10:30:00"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "OpenAI says it will comply with Trump's order requiring AI model reviews before release",
-      "url": "https://www.cnbc.com/2026/06/05/openai-trump-ai-model-review-order.html",
-      "score": 0,
-      "ts": "2026-06-05T10:04:17"
-    },
-    {
-      "src": "Wired",
-      "title": "Why Apple Might Put Cameras Into Its Next AirPods",
-      "url": "https://www.wired.com/story/why-apple-might-put-cameras-into-its-next-airpods/",
-      "score": 0,
-      "ts": "2026-06-05T10:00:00"
-    },
-    {
-      "src": "Wired",
-      "title": "AI Has Come for Serif Fonts",
-      "url": "https://www.wired.com/story/ai-has-come-for-serif-fonts/",
-      "score": 0,
-      "ts": "2026-06-05T09:00:00"
-    },
-    {
-      "src": "MIT Tech Review",
-      "title": "Are AI chatbots making us lose control of our brains?",
-      "url": "https://www.technologyreview.com/2026/06/05/1138427/are-ai-chatbots-making-us-lose-control-of-our-brains/",
-      "score": 0,
-      "ts": "2026-06-05T09:00:00"
-    },
-    {
-      "src": "MIT Tech Review",
-      "title": "The Meta hack shows there’s more to AI security than Mythos",
-      "url": "https://www.technologyreview.com/2026/06/05/1138437/the-meta-hack-shows-theres-more-to-ai-security-than-mythos/",
-      "score": 0,
-      "ts": "2026-06-05T09:00:00"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "U.S. bitcoin, ether ETFs end record multibillion outflow streak",
-      "url": "https://www.coindesk.com/markets/2026/06/05/bitcoin-and-ether-etfs-end-record-multi-billion-outflow-streak",
-      "score": 0,
-      "ts": "2026-06-05T08:53:30"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Here's what could happen if bitcoin breaks below $60,000",
-      "url": "https://www.coindesk.com/markets/2026/06/05/here-s-what-could-happen-if-bitcoin-breaks-below-usd60-000",
-      "score": 0,
-      "ts": "2026-06-05T07:52:25"
-    },
-    {
-      "src": "CNBC Tech",
-      "title": "China poaches more AI talent from the U.S. as it eyes the next 'super-app'",
-      "url": "https://www.cnbc.com/2026/06/05/china-may-move-toward-us-path-on-ai-as-firms-poach-employees.html",
-      "score": 0,
-      "ts": "2026-06-05T07:50:47"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "China poaches more AI talent from the U.S. as it eyes the next 'super-app'",
-      "url": "https://www.cnbc.com/2026/06/05/china-may-move-toward-us-path-on-ai-as-firms-poach-employees.html",
-      "score": 0,
-      "ts": "2026-06-05T07:50:47"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "South Korea stocks fall over 5% as tech heavyweights follow plunge in Wall Street's AI-linked names",
-      "url": "https://www.cnbc.com/2026/06/05/asia-markets-today-nikkei-225-kospi-hang-seng-index-csi-300-nifty50.html",
-      "score": 0,
-      "ts": "2026-06-05T07:49:26"
+      "ts": "2026-06-05T18:24:25"
     },
     {
       "src": "Cointelegraph",
-      "title": "Crypto billionaires bankroll Nigel Farage's pro-crypto party",
-      "url": "https://cointelegraph.com/news/crypto-billionaires-bankroll-reform-uk-more-than-other-parties?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "title": "Kraken offers SpaceX IPO access through xStocks",
+      "url": "https://cointelegraph.com/news/kraken-offers-spacex-ipo-access-through-xstocks?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
       "score": 0,
-      "ts": "2026-06-05T07:02:59"
-    },
-    {
-      "src": "Cointelegraph",
-      "title": "Strategy’s leveraged Bitcoin model has faced its first stress test: Grayscale",
-      "url": "https://cointelegraph.com/news/strategys-leveraged-bitcoin-model-faces-first-stress-test-grayscale?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "score": 0,
-      "ts": "2026-06-05T07:00:55"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Bitcoin in danger of dropping to $60,000, with Zcash bulls turning their backs on ZEC",
-      "url": "https://www.coindesk.com/tech/2026/06/05/bitcoin-in-danger-of-dropping-to-usd60-000-with-zcash-bulls-turning-their-backs-on-zec",
-      "score": 0,
-      "ts": "2026-06-05T06:18:59"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Bitcoin plunges to near $62,000 as the AI trade unwinds, HYPE falls 14%",
-      "url": "https://www.coindesk.com/markets/2026/06/05/bitcoin-plunges-to-near-usd62-000-as-the-ai-trade-unwinds-hype-falls-14",
-      "score": 0,
-      "ts": "2026-06-05T06:08:32"
-    },
-    {
-      "src": "Cointelegraph",
-      "title": "Anthropic says self-improving AI may be closer than expected",
-      "url": "https://cointelegraph.com/news/anthropic-ai-self-improvement-agents-recursive-development?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "score": 0,
-      "ts": "2026-06-05T06:03:52"
-    },
-    {
-      "src": "The Block",
-      "title": "Grayscale says bitcoin needs other buyers to find a ‘sustainable bottom’ amid Strategy BTC sale",
-      "url": "https://www.theblock.co/post/403770/grayscale-other-buyers-must-step-in-for-bitcoins-price-to-find-a-sustainable-bottom-after-strategy-btc-sale?utm_source=rss&utm_medium=rss",
-      "score": 0,
-      "ts": "2026-06-05T05:27:29"
-    },
-    {
-      "src": "Wired",
-      "title": "The Motley Fool Promo Code: $200 Off on Stock Advisor June 2026",
-      "url": "https://www.wired.com/story/the-motley-fool-promo-code/",
-      "score": 0,
-      "ts": "2026-06-05T05:00:00"
-    },
-    {
-      "src": "CNBC Tech",
-      "title": "Tracking website, food watch: South Korea is obsessing over Nvidia CEO Jensen Huang's visit",
-      "url": "https://www.cnbc.com/2026/06/05/south-korea-is-obsessing-over-nvidia-ceo-jensen-huangs-visit.html",
-      "score": 0,
-      "ts": "2026-06-05T04:40:31"
+      "ts": "2026-06-05T18:17:50"
     },
     {
       "src": "CNBC Top",
-      "title": "Tracking website, food watch: South Korea is obsessing over Nvidia CEO Jensen Huang's visit",
-      "url": "https://www.cnbc.com/2026/06/05/south-korea-is-obsessing-over-nvidia-ceo-jensen-huangs-visit.html",
+      "title": "Crypto mutiny on Strategy: Shorts target 'MSTR' in bitcoin bloodbath",
+      "url": "https://www.cnbc.com/2026/06/05/crypto-mutiny-on-strategy-shorts-target-mstr-in-bitcoin-bloodbath.html",
       "score": 0,
-      "ts": "2026-06-05T04:40:31"
+      "ts": "2026-06-05T18:14:15"
+    },
+    {
+      "src": "Decrypt",
+      "title": "Congress Gets 7 New Crypto Tax Bills: Here's What's In Them",
+      "url": "https://decrypt.co/370197/congress-7-crypto-tax-bills",
+      "score": 0,
+      "ts": "2026-06-05T18:13:56"
     },
     {
       "src": "Cointelegraph",
-      "title": "Senate Republicans push finance watchdogs to clarify crypto capital rules",
-      "url": "https://cointelegraph.com/news/senate-republicans-push-finance-regulators-to-clarify-crypto-capital-rules?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "title": "Crypto tax in Illinois FY2027 budget is one step away from becoming law",
+      "url": "https://cointelegraph.com/news/cryptocurrency-tax-illinois-fy2027-budget-law?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
       "score": 0,
-      "ts": "2026-06-05T04:26:57"
+      "ts": "2026-06-05T18:10:59"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "As AI-related stocks dive, the market's winners have one thing in common",
+      "url": "https://www.cnbc.com/2026/06/05/as-ai-related-stocks-dive-the-markets-winners-have-one-thing-in-common.html",
+      "score": 0,
+      "ts": "2026-06-05T18:06:34"
     }
   ]
 }
