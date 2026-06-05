@@ -12966,3 +12966,75 @@ Interestingly the roll took much longer then normal,
 - **@polymarket** (0 likes, score 8/10) — JUST IN: Trump is reportedly set to invoke Cold War-era powers to spend $700 million reviving “clean, beautiful coal” as AI power demand surges.
   - https://x.com/Polymarket/status/2062273564636573719
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 192).
+- **@polymarketmoney** (20 likes, score 7/10) — SpaceX’s IPO is reportedly already oversubscribed.
+
+The company is targeting a $1.8T valuation and could raise ~$75B in what would be the largest IPO in history.
+  - https://x.com/PolymarketMoney/status/2062911251878175029
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 20).
+- **@xfreeze** (60 likes, score 9/10) — Grok Build 0.1 is officially live on the xAI API, OpenRouter, and Vercel
+
+It’s super fast 100+ tokens/sec, native MCP support, and incredibly competitive pricing ($1/M in, $2/M out)
+
+If you're buildin
+  - https://x.com/XFreeze/status/2062894620334543022
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 90).
+- **@damidefi** (73 likes, score 9/10) — SpaceX pricing June 11. OpenAI targeting September. Anthropic filed confidentially June 1.
+
+3 companies. $100 to $135 billion in new capital demanded from markets in a single year.
+
+Capital does not a
+  - https://x.com/DamiDefi/status/2062907861945208964
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 77).
+- **@cryptorover** (439 likes, score 9/10) — BREAKING:  BITCOIN BREAKS BELOW $61,000.
+
+This is happening because the FED is now expected to HIKE rates in 2026.
+  - https://x.com/cryptorover/status/2062896889138393251
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 575).
+- **@deitaone** (64 likes, score 9/10) — SPACEX IPO OVER-SUBSCRIBED AHEAD OF RECORD $75B LISTING
+
+SpaceX has already received orders exceeding available shares in its $75B IPO, suggesting strong demand shortly after marketing began. The offe
+  - https://x.com/DeItaone/status/2062911601708003640
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 130).
+- **@oguzerkan** (0 likes, score 9/10) — I am seriously considering shifting some of my $NBIS position to $CRWV.
+
+I love $NBIS and it's now a 10x position for me, but the current valuation gap with $CRWV is hard to justify.
+
+$CRWV ARR target
+  - https://x.com/oguzerkan/status/2062546363309560047
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 186).
+- **@pequityresearch** (44 likes, score 8/10) — BofA: Data center construction creates a resource shock
+
+From June 2, 2026
+
+Highlights: 
+
+> AI's water footprint is a substantial resource drain. Up to 75% of a data center's total water use happens o
+  - https://x.com/pequityresearch/status/2062714699939242265
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 44).
+- **@cryptorover** (31 likes, score 8/10) — WHY IS EVERYTHING CRASHING TODAY?
+
+Gold and Silver wiped out $1 TRILLION.
+
+US stock market wiped out $1 TRILLION.
+
+BTC and alts hit new yearly lows.
+
+Here's what's pushing everything down:
+
+1) Hawkish
+  - https://x.com/cryptorover/status/2062911575108055181
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 71).
+- **@bugra_kurtoglu** (10 likes, score 7/10) — Nvidia CEO Jensen Huang delivered a very clear message in South Korea:
+
+Robotics could be the next big industry.
+
+Because artificial intelligence is no longer just software running on screens. It's mo
+  - https://x.com/bugra_kurtoglu/status/2062888036451451295
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 12).
+- **@bitcoinarchive** (38 likes, score 7/10) — This is the biggest % fall in a single week for Bitcoin since the collapse of FTX.
+
+The FTX fraud marked the bottom of the bear market in November 2022.
+
+This time?
+  - https://x.com/BitcoinArchive/status/2062911286250262595
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 82).
