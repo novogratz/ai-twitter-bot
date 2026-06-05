@@ -1,6 +1,1 @@
-{
-  "count": 4200,
-  "baseline": 4200,
-  "as_of": "2026-06-02",
-  "note": "Operator-stated baseline 2026-06-02. adjust_following() keeps this live on each follow/unfollow; a profile scrape can overwrite count for exact resync."
-}
+{"count": 4208, "baseline": 4200, "as_of": "2026-06-02", "note": "Operator-stated baseline 2026-06-02. adjust_following() keeps this live on each follow/unfollow; a profile scrape can overwrite count for exact resync.", "updated": "2026-06-05T08:12:10.135728"}
