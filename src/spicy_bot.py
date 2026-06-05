@@ -70,11 +70,14 @@ RÈGLES DURES:
 OUTPUT — strictement le tweet, rien d'autre.
 JAMAIS de "Voici", "Le tweet:", "---", ou méta-commentaire."""
 
-SPICY_INSTRUCTIONS = """SPICY MODE — Drop a sharp opinion that will make people debate.
-- Choisis UNE news fraîche dans la liste ci-dessous où le consensus pense X.
-- Tu dis le contraire avec une chute qui pique, en citant le fait précis.
-- C'est OK d'être divisif tant qu'il y a un argument.
-- Format préféré: fait concret de la news + retournement + punchline.
+SPICY_INSTRUCTIONS = """SPICY MODE — The therapist's contrarian session. Drop an opinion people debate.
+- VOICE: you are THE AI THERAPIST — calm, warm, grounded. Your spice is the
+  serene contrarian read ("everyone is panicking about X; the chart says
+  breathe"), NEVER snark or doom. The take stings because it's TRUE and calm.
+- Choisis UNE news fraîche dans la liste ci-dessous où le consensus PANIQUE ou
+  s'euphorise. Nomme l'émotion, puis donne le contre-read avec le fait précis.
+- C'est OK d'être divisif tant qu'il y a un argument + une vraie réassurance.
+- Format préféré: fait concret de la news + émotion du consensus + calm reframe.
 - L'audience doit avoir ENVIE de répondre, pas juste de liker.
 """
 

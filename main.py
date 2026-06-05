@@ -84,6 +84,8 @@ from src.hot_quote_bot import safe_run_hot_quote_cycle
 from src.feed_sweeper_bot import safe_run_feed_sweep_cycle
 from src.viral_stunt_bot import safe_run_viral_stunt_cycle
 from src.space_promo_bot import safe_run_space_promo_cycle
+from src.engine_health_bot import safe_run_engine_health_cycle
+from src.conversion_attribution_bot import safe_run_conversion_attribution_cycle
 from src.stock_promo_bot import safe_run_stock_promo_cycle
 from src import health  # noqa: F401  (used by safe_run wrappers via record_success/_failure)
 from src.config import ENABLE_AI_DISCOVERY, ENABLE_AI_MAINTENANCE, _LIVE_STRATEGY_FILE as LIVE_STRATEGY_FILE
@@ -703,6 +705,28 @@ def main():
                 id=f"space_promo_job_{_sp_hour}h",
                 max_instances=1,
             )
+
+        # Engine-health watchdog (2026-06-05 post-mortem): hourly per-action
+        # pace check vs 7-day same-hour baseline; loud alert on >60% drop so
+        # the next silent collapse is caught in hours, not days.
+        log.info("Engine health: hourly pace check vs 7-day baseline.")
+        scheduler.add_job(
+            safe_run_engine_health_cycle,
+            trigger=IntervalTrigger(minutes=60),
+            id="engine_health_job",
+            max_instances=1,
+        )
+
+        # Conversion attribution: new followers matched against authors we
+        # replied to in the last 48h → bumps per-author weight used by
+        # engagement_targeting. Closes the learn-loop.
+        log.info("Conversion attribution: hourly new-follower → reply-target matching.")
+        scheduler.add_job(
+            safe_run_conversion_attribution_cycle,
+            trigger=IntervalTrigger(minutes=60),
+            id="conversion_attribution_job",
+            max_instances=1,
+        )
 
         # Retweet bot — high-volume deterministic amplifier. max_instances=1
         # prevents two slow cycles from running simultaneously and blocking

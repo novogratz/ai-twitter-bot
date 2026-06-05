@@ -801,24 +801,74 @@ def follow_account(username: str) -> bool:
         webbrowser.open(profile_url)
         time.sleep(5)
 
-        follow_script = '''
-        tell application "Safari"
-            do JavaScript "
-                var btns = document.querySelectorAll('[data-testid=\"placementTracking\"] [role=\"button\"]');
-                for (var b of btns) {
-                    if (b.textContent.trim() === 'Follow') { b.click(); break; }
+        # 2026-06-05 fix: the old inline-quoted JS errored on every attempt
+        # ("Could not follow @X via JS" 100% of the time) — quote-escaping
+        # broke under osascript, and even when it ran, only the exact text
+        # 'Follow' inside placementTracking matched (X moved to
+        # data-testid="<id>-follow" buttons + localized labels). Now: temp-file
+        # JS (no quote hell), 3 selector strategies, and a REAL status return
+        # so we only record a follow when the click actually fired.
+        import tempfile as _tf
+        follow_js = """
+        (function() {
+            var btn = document.querySelector('button[data-testid$="-follow"]');
+            if (!btn) {
+                var all = document.querySelectorAll('button[aria-label], [role="button"][aria-label]');
+                for (var i = 0; i < all.length; i++) {
+                    var al = all[i].getAttribute('aria-label') || '';
+                    if (/^(Follow|Suivre) @/i.test(al)) { btn = all[i]; break; }
                 }
-            " in current tab of front window
+            }
+            if (!btn) {
+                var btns = document.querySelectorAll('[data-testid="placementTracking"] [role="button"], main [role="button"]');
+                for (var j = 0; j < btns.length; j++) {
+                    var t = (btns[j].textContent || '').trim();
+                    if (t === 'Follow' || t === 'Suivre') { btn = btns[j]; break; }
+                }
+            }
+            if (!btn) {
+                if (document.querySelector('button[data-testid$="-unfollow"]')) return 'ALREADY';
+                return 'NO_BTN';
+            }
+            btn.click();
+            return 'CLICKED';
+        })()
+        """
+        tmp = _tf.NamedTemporaryFile(mode="w", suffix=".js", delete=False)
+        tmp.write(follow_js)
+        tmp.close()
+        applescript = f'''
+        tell application "Safari" to activate
+        set jsCode to (read POSIX file "{tmp.name}")
+        tell application "Safari"
+            do JavaScript jsCode in current tab of front window
         end tell
         '''
-        ok = _run_applescript(follow_script)
+        status = ""
+        try:
+            res = subprocess.run(["osascript", "-e", applescript],
+                                 capture_output=True, text=True, timeout=15)
+            status = (res.stdout or "").strip()
+            if res.returncode != 0:
+                log.info(f"[FOLLOW] JS error for @{username}: {res.stderr[:150]}")
+        except Exception as e:
+            log.info(f"[FOLLOW] osascript failed for @{username}: {e}")
+        finally:
+            try:
+                os.unlink(tmp.name)
+            except OSError:
+                pass
+
+        ok = status == "CLICKED"
         if ok:
             time.sleep(2)
             log.info(f"[FOLLOW] Followed @{username}!")
             action_guard.record(action_guard.FOLLOW, target=username)
             action_guard.adjust_following(+1)
+        elif status == "ALREADY":
+            log.info(f"[FOLLOW] Already following @{username}.")
         else:
-            log.info(f"[FOLLOW] Could not follow @{username} via JS, skipping.")
+            log.info(f"[FOLLOW] Could not follow @{username} (status={status or 'JS_FAIL'}), skipping.")
         close_front_tab()
         return ok
 

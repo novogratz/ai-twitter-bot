@@ -69,6 +69,29 @@ Two one-line root causes, both fixed:
 Lesson: when a surface flatlines, check `engagement_log.csv` daily counts per
 action type FIRST — the collapse was invisible in bot.log noise.
 
+### 2026-06-05 round 2 — reliability + therapist voice alignment
+
+- **`src/engine_health_bot.py`** — hourly per-action pace vs 7-day same-hour
+  baseline; alerts (`engine_health_alerts.json` + ERROR log) when a surface
+  drops below 40% of baseline. Born from the silent 2-day retweet collapse.
+- **`src/conversion_attribution_bot.py`** — hourly: new followers diffed against
+  authors we replied to in the last 48h; conversions bump per-author weight in
+  `engagement_targets_log.json` (+0.5, cap 3.0) used by engagement_targeting.
+- **Follow button fixed** — temp-file JS, 3 selector strategies
+  (`data-testid$="-follow"`, aria-label Follow/Suivre @, placementTracking text),
+  REAL click status; only `CLICKED` records a follow. Anti-churn loop guard
+  confirmed: any handle touched within 30d is blocked from BOTH follow and
+  unfollow at the chokepoint (operator 2026-06-05: "just follow once").
+- **Replyback handle fix** — scraper returns display names; the reply's status
+  URL now provides the @handle fallback so engagers actually get replies.
+- **Reply language** — reply_agent's stale "FRENCH = ABSOLUTE PRIORITY" block
+  replaced with strict match-the-parent (default EN on doubt).
+- **Therapist voice alignment** — quote prompt (was "sharp/sarcastic/meme"),
+  direct_reply header+tone (was "sharpest analyst/roast"), spicy instructions,
+  replyback docstring all rewritten to the 2026-06-04 AI-Therapist persona:
+  name the emotion → validate → calm reframe with the precise fact. Hope not
+  hype, calm beats clever; the sharp numbers stay, the snark goes.
+
 ### 2026-06-05 growth push (operator: "push it harder")
 
 Analytics 2026-06-05: impressions +26% but engagement rate −11%, replies −30%.
