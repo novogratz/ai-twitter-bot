@@ -51,7 +51,7 @@
     "flasheurinvest": {
       "first_seen": "2026-04-25",
       "last_interaction": "2026-06-05",
-      "interaction_count": 339,
+      "interaction_count": 340,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -235,7 +235,7 @@
     "coinacademy_fr": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-06-05",
-      "interaction_count": 297,
+      "interaction_count": 298,
       "category": "media",
       "stance": "skeptical",
       "notes": [
@@ -373,7 +373,7 @@
     "moneyradar_fr": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-06-05",
-      "interaction_count": 115,
+      "interaction_count": 116,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -877,7 +877,7 @@
     "crypto__goku": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-06-05",
-      "interaction_count": 235,
+      "interaction_count": 236,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -889,7 +889,7 @@
     "cryptoastmedia": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-06-05",
-      "interaction_count": 272,
+      "interaction_count": 273,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -1381,7 +1381,7 @@
     "graphseo": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-06-05",
-      "interaction_count": 264,
+      "interaction_count": 265,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -1609,7 +1609,7 @@
     "lejournalducoin": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-06-05",
-      "interaction_count": 533,
+      "interaction_count": 534,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -2509,7 +2509,7 @@
     "miningtk": {
       "first_seen": "2026-04-27",
       "last_interaction": "2026-06-05",
-      "interaction_count": 143,
+      "interaction_count": 144,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -3219,7 +3219,7 @@
     "cryptopicsou": {
       "first_seen": "2026-04-27",
       "last_interaction": "2026-06-05",
-      "interaction_count": 86,
+      "interaction_count": 87,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -4250,8 +4250,8 @@
     },
     "analystecurieux": {
       "first_seen": "2026-04-29",
-      "last_interaction": "2026-05-20",
-      "interaction_count": 31,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 32,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -5186,8 +5186,8 @@
     },
     "anthropicai": {
       "first_seen": "2026-04-29",
-      "last_interaction": "2026-06-04",
-      "interaction_count": 73,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 74,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -5715,7 +5715,7 @@
     "stocksavvyshay": {
       "first_seen": "2026-04-29",
       "last_interaction": "2026-06-05",
-      "interaction_count": 54,
+      "interaction_count": 55,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -6639,7 +6639,7 @@
     "deitaone": {
       "first_seen": "2026-04-30",
       "last_interaction": "2026-06-05",
-      "interaction_count": 15,
+      "interaction_count": 16,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -8114,8 +8114,8 @@
     },
     "xfreeze": {
       "first_seen": "2026-05-01",
-      "last_interaction": "2026-06-02",
-      "interaction_count": 23,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 24,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -17007,7 +17007,7 @@
     "nasa": {
       "first_seen": "2026-05-20",
       "last_interaction": "2026-06-05",
-      "interaction_count": 6,
+      "interaction_count": 7,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -17150,8 +17150,8 @@
     },
     "smallcapsnipa": {
       "first_seen": "2026-05-20",
-      "last_interaction": "2026-06-02",
-      "interaction_count": 3,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 4,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -19154,8 +19154,8 @@
     },
     "esa": {
       "first_seen": "2026-05-23",
-      "last_interaction": "2026-06-04",
-      "interaction_count": 6,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 7,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -20198,8 +20198,8 @@
     },
     "oguzerkan": {
       "first_seen": "2026-05-25",
-      "last_interaction": "2026-05-25",
-      "interaction_count": 1,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 2,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -21770,8 +21770,8 @@
     },
     "spacenews_inc": {
       "first_seen": "2026-05-29",
-      "last_interaction": "2026-06-03",
-      "interaction_count": 6,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 7,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -29233,6 +29233,42 @@
       "dont": ""
     },
     "jamesmelville": {
+      "first_seen": "2026-06-05",
+      "last_interaction": "2026-06-05",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "shanumathew93": {
+      "first_seen": "2026-06-05",
+      "last_interaction": "2026-06-05",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "semivision_tw": {
+      "first_seen": "2026-06-05",
+      "last_interaction": "2026-06-05",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "realbigbrainai": {
       "first_seen": "2026-06-05",
       "last_interaction": "2026-06-05",
       "interaction_count": 1,
