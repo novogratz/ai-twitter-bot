@@ -66,8 +66,15 @@ THE BAR: would a stranger screenshot this and send it to a friend? If the
 draft is not a 9/10 laugh → answer SKIP. SKIP is the default, posting is the
 exception.
 
-OUTPUT — strictly the post text, nothing else. No "Here's", no quotes, no
-meta-commentary."""
+GIF (mandatory): after the post text, add ONE line: [GIF: <2-4 word search>]
+Pick a PROVEN X meme that amplifies the bit: "this is fine", "wolf of wall
+street", "michael scott no", "pablo escobar waiting", "elmo fire",
+"crying counting money", "leonardo dicaprio cheers", "kermit panic",
+"michael jordan crying", "futurama fry suspicious" — or a better fit you
+know is iconic. The line is stripped before posting.
+
+OUTPUT — strictly the post text + the [GIF: …] line, nothing else. No
+"Here's", no quotes, no meta-commentary."""
 
 
 def _load_state() -> dict:
@@ -148,9 +155,15 @@ def run_viral_stunt_cycle():
         return
     text = cleaned
 
-    log.info(f"[STUNT] Posting: {text!r}")
+    from .humanizer import extract_gif_query
+    text, gif_q = extract_gif_query(text)
+    log.info(f"[STUNT] Posting (gif={gif_q!r}): {text!r}")
     try:
-        post_tweet(text)
+        if gif_q:
+            from .twitter_client import post_tweet_with_gif
+            post_tweet_with_gif(text, gif_q)
+        else:
+            post_tweet(text)
         _increment_count()
         time.sleep(random.randint(3, 6))
         log.info(f"[STUNT] DONE. Today's count: {_today_count()}/{MAX_VIRAL_STUNTS_PER_DAY}")

@@ -149,7 +149,7 @@ def _scrub_metadata_leaks(text: str) -> str:
     text = strip_tool_calls(text)
 
     # Whole-line metadata tags
-    for tag in ("PATTERN", "IMAGE", "SOURCE", "KEYWORD", "TOPIC", "ANGLE"):
+    for tag in ("PATTERN", "IMAGE", "SOURCE", "KEYWORD", "TOPIC", "ANGLE", "GIF"):
         text = re.sub(
             rf"^[ \t]*\[\s*{tag}[^\n\r]*\]\s*$\n?",
             "",
@@ -158,7 +158,7 @@ def _scrub_metadata_leaks(text: str) -> str:
         )
     # Inline catch — strip "[PATTERN: ...]" wherever it appears.
     text = re.sub(
-        r"\[\s*(?:PATTERN|IMAGE|SOURCE|KEYWORD|TOPIC|ANGLE)[^\]\n\r]*\]",
+        r"\[\s*(?:PATTERN|IMAGE|SOURCE|KEYWORD|TOPIC|ANGLE|GIF)[^\]\n\r]*\]",
         "",
         text,
         flags=re.IGNORECASE,
@@ -179,7 +179,7 @@ def _scrub_metadata_leaks(text: str) -> str:
     # Truncated tag catch — model output cut off before closing ']', e.g. "[PATTERN: REPE"
     # at end-of-string or end-of-line with no closing bracket.
     text = re.sub(
-        r"\[\s*(?:PATTERN|IMAGE|SOURCE|KEYWORD|TOPIC|ANGLE)[^\]]*$",
+        r"\[\s*(?:PATTERN|IMAGE|SOURCE|KEYWORD|TOPIC|ANGLE|GIF)[^\]]*$",
         "",
         text,
         flags=re.IGNORECASE,
@@ -343,6 +343,170 @@ def _post_tweet_with_image(text: str, image_path: str):
     time.sleep(3)
     log.info("[POST] Tweet with image posted!")
     close_front_tab()
+
+
+def _click_testid(testid: str) -> str:
+    """Click the first element with the given data-testid in the current tab.
+    Returns the JS status string ('CLICKED' / 'NO_EL' / '')."""
+    import tempfile as _tf
+    import os as _os
+    js = """
+    (function() {
+        var el = document.querySelector('[data-testid="TESTID"]');
+        if (!el) return 'NO_EL';
+        el.click();
+        return 'CLICKED';
+    })()
+    """.replace("TESTID", testid)
+    tmp = _tf.NamedTemporaryFile(mode="w", suffix=".js", delete=False)
+    tmp.write(js)
+    tmp.close()
+    try:
+        res = subprocess.run(["osascript", "-e", f'''
+        set jsCode to (read POSIX file "{tmp.name}")
+        tell application "Safari"
+            do JavaScript jsCode in current tab of front window
+        end tell
+        '''], capture_output=True, text=True, timeout=10)
+        return (res.stdout or "").strip()
+    except Exception:
+        return ""
+    finally:
+        try:
+            _os.unlink(tmp.name)
+        except OSError:
+            pass
+
+
+def _attach_native_gif(gif_query: str) -> bool:
+    """Attach a GIF via X's native composer GIF picker (operator 2026-06-05:
+    "you can find a lot of funny GIFs on twitter to make your posts funny").
+
+    Caller must already be in the /compose/post composer with text entered and
+    hold _safari_lock. Flow: click the GIF button → the search input auto-
+    focuses → paste the query → wait for results → click the first GIF.
+    Returns True when a GIF appears to have been attached.
+    """
+    if not gif_query:
+        return False
+    log.info(f"[GIF] Searching native GIF picker for: {gif_query!r}")
+    if _click_testid("gifSearchButton") != "CLICKED":
+        log.info("[GIF] GIF button not found in composer — posting without GIF.")
+        return False
+    time.sleep(2.5)  # picker modal opens, search input auto-focuses
+    _paste_text(gif_query)
+    time.sleep(0.5)
+    _run_applescript('tell application "System Events" to keystroke return')
+    time.sleep(3)  # results grid loads
+    status = _click_testid("gifSearchGifImage")
+    if status != "CLICKED":
+        # fallback: some builds render results as plain list items with imgs
+        status = _click_testid("gifResult")
+    if status != "CLICKED":
+        log.info(f"[GIF] No GIF result clickable (status={status}) — closing picker, posting without GIF.")
+        _run_applescript('tell application "System Events" to key code 53')  # Esc
+        time.sleep(1)
+        return False
+    time.sleep(3)  # GIF renders into the composer
+    log.info("[GIF] GIF attached.")
+    return True
+
+
+def post_tweet_with_gif(text: str, gif_query: str) -> bool:
+    """Compose a tweet with a native-picker GIF attached. Full chokepoint
+    treatment (scrub + caps + content gates + dedup), then the /compose/post
+    composer (the intent URL can't open the GIF picker)."""
+    text = _scrub_metadata_leaks(text)
+    from .llm_client import contains_post_unsafe_leak
+    if contains_post_unsafe_leak(text):
+        log.error(f"[POST] Unsafe leak in GIF post — refusing. Text: {text[:200]!r}")
+        raise ToolCallLeakError("tool-call / stream-envelope markup in tweet text")
+    from . import action_guard, content_guard, config as _cfg
+    ok, why = action_guard.can_post(action_guard.POST)
+    if not ok:
+        log.info(f"[POST] policy skip ({why}).")
+        return False
+    ok, why = content_guard.validate(text, kind="original")
+    if not ok:
+        log.info(f"[POST] content_guard skip ({why}): {text[:120]!r}")
+        return False
+    if content_guard.is_duplicate(text):
+        log.info(f"[POST] near-duplicate — skipping: {text[:120]!r}")
+        return False
+    if _cfg.DRY_RUN:
+        log.info(f"[POST][DRY_RUN] would post with GIF {gif_query!r}: {text[:200]!r}")
+        action_guard.record(action_guard.POST, dry_run=True)
+        return True
+
+    with _safari_lock:
+        log.info(f"[POST] Composing tweet with GIF ({gif_query!r})...")
+        webbrowser.open("https://x.com/compose/post")
+        time.sleep(6)
+        _paste_text(text)
+        time.sleep(1)
+        _attach_native_gif(gif_query)  # best-effort; text-only on failure
+        _run_applescript('tell application "System Events" to keystroke return using command down')
+        time.sleep(3)
+        log.info("[POST] Tweet (with GIF) posted!")
+        close_front_tab()
+        _like_own_latest_tweet()
+        action_guard.record(action_guard.POST)
+        content_guard.note_posted(text)
+        _record_posted(text)
+        return True
+
+
+def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str) -> bool:
+    """Quote-post with a native-picker GIF. Same gates as quote_tweet, but
+    through the full /compose/post composer (the intent URL auto-submits and
+    can't open the GIF picker). The pasted tweet URL renders as a quote card."""
+    comment = _scrub_metadata_leaks((comment or "").strip())
+    if not tweet_url or not comment:
+        return False
+    from .llm_client import contains_post_unsafe_leak
+    if contains_post_unsafe_leak(comment):
+        log.error(f"[QUOTE] Unsafe leak in GIF quote — refusing. Text: {comment[:200]!r}")
+        raise ToolCallLeakError("tool-call / stream-envelope markup in quote text")
+    from . import action_guard, content_guard, config as _cfg
+    ok, why = action_guard.can_post(action_guard.QUOTE)
+    if not ok:
+        log.info(f"[QUOTE] policy skip ({why}).")
+        return False
+    ok, why = content_guard.validate(comment, kind="quote")
+    if not ok:
+        log.info(f"[QUOTE] content_guard skip ({why}): {comment[:120]!r}")
+        return False
+    if content_guard.is_duplicate(comment):
+        log.info(f"[QUOTE] near-duplicate — skipping: {comment[:120]!r}")
+        return False
+    if _cfg.DRY_RUN:
+        log.info(f"[QUOTE][DRY_RUN] would GIF-quote {tweet_url} ({gif_query!r}): {comment[:160]!r}")
+        action_guard.record(action_guard.QUOTE, target=tweet_url, dry_run=True)
+        return True
+
+    with _safari_lock:
+        log.info(f"[QUOTE] Composing GIF quote ({gif_query!r}) for: {tweet_url}")
+        webbrowser.open("https://x.com/compose/post")
+        time.sleep(6)
+        _paste_text(f"{comment}\n{tweet_url}")
+        time.sleep(2)  # quote card needs a beat to render from the URL
+        _attach_native_gif(gif_query)  # best-effort; quote still ships on failure
+        _run_applescript('tell application "System Events" to keystroke return using command down')
+        time.sleep(3)
+        log.info(f"[QUOTE] GIF quote posted: {tweet_url}")
+        action_guard.record(action_guard.QUOTE, target=tweet_url)
+        content_guard.note_posted(comment)
+        _record_posted(comment)
+        close_front_tab()
+        try:
+            like_tweet(tweet_url)
+        except Exception as e:
+            log.info(f"[QUOTE] parent-like failed: {e}")
+        try:
+            _like_own_latest_tweet()
+        except Exception as e:
+            log.info(f"[QUOTE] self-like failed: {e}")
+        return True
 
 
 def refresh_feed():
