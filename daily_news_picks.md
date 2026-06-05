@@ -12784,3 +12784,33 @@ Most Bitcoin OG's remember this.
 - **@watcherguru** (3553 likes, score 9/10) — JUST IN: Bitcoin officially falls under $62,000
   - https://x.com/WatcherGuru/status/2062777964102578590
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 4671).
+- **@stocksavvyshay** (534 likes, score 9/10) — When Anthropic goes public or raises more capital at a $1T valuation, a meaningful portion could flow into compute infrastructure with more of that spend shifting from GPUs toward custom silicon.
+
+Tha
+  - https://x.com/StockSavvyShay/status/2062612044889936291
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 598).
+- **@business** (27 likes, score 8/10) — Duke Energy's CEO is forecasting power demand will grow at 10 times the rate over the past several decades amid the rise of AI data centers and the electrification of the economy
+  - https://x.com/business/status/2062236642467778918
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 41).
+- **@miningtk** (0 likes, score 8/10) — Right now on social media, plenty of people will tell you it’s still way too early to buy $BTC.
+
+For them, it’s a no-brainer: Bitcoin is going to drop much lower. 
+Buying at 60k$ when it’s supposedly
+  - https://x.com/MiningTk/status/2062838736748982766
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 30).
+- **@bulltheoryio** (28 likes, score 8/10) — BREAKING: SpaceX has reportedly barred investors from China and Hong Kong from participating in its IPO. 
+
+According to Bloomberg, underwriters were instructed to reject investments from clients in th
+  - https://x.com/BullTheoryio/status/2062850646496219593
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 60).
+- **@hooeem** (81 likes, score 8/10) — Your favourite frontier model claims it has a million token context window but the longer you speak to it, the dumber it gets.
+
+It’s called attention dilution, and it’s why your sessions are giving yo
+  - https://x.com/hooeem/status/2062559342507831297
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 107).
+- **@cointelegraph** (409 likes, score 7/10) — TODAY: MoonPay launches MoonAgents, a desktop app that lets AI agents move value, onramp stablecoins with zero fees, and run automations, now available on macOS.
+  - https://x.com/Cointelegraph/status/2062383847061283173
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 519).
+- **@jamesmelville** (69 likes, score 7/10) — There is a huge proliferation of AI data centres. New AI-focused facilities can consume hundreds of megawatts of electricity - comparable to the power demand of a small city. Solar and wind power are
+  - https://x.com/JamesMelville/status/2062781847503769942
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 83).
