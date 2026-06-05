@@ -138,9 +138,12 @@ POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(3 * 60)))
 # 2026-06-05: 180s+jitter120 made the 3-min quote job miss its spacing window
 # on most fires (part of the 28/day-actual vs cap gap). 120s+jitter60 lets a
 # 3-min cadence mostly clear while staying jittered (no bursts). Cap 80→100.
-MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "100"))
-MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", str(2 * 60)))
-QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "60"))
+# 2026-06-05 PM (operator: "do more quote retweet, it was extremely
+# successful — abuse a bit of it for the next few weeks"): cap 100→150,
+# spacing 120→90s+jitter45. Still jittered, still no bursts.
+MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "150"))
+MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", "90"))
+QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "45"))
 
 # Reply caps + spacing. Replies are the PRIMARY growth lever, so this is a
 # global daily budget shared across ALL reply bots (direct_reply, reply_bot,

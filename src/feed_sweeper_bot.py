@@ -28,9 +28,11 @@ from .logger import log
 _OWN_HANDLE = BOT_HANDLE.lower()
 
 # likes >= this → "good post" → quote; below → reply.
-FEED_SWEEP_QUOTE_MIN_LIKES = int(os.environ.get("FEED_SWEEP_QUOTE_MIN_LIKES", "300"))
+# 2026-06-05 PM: 300→200 + 3→4/cycle (operator: quote-RT extremely
+# successful, "abuse a bit of it for the next few weeks").
+FEED_SWEEP_QUOTE_MIN_LIKES = int(os.environ.get("FEED_SWEEP_QUOTE_MIN_LIKES", "200"))
 FEED_SWEEP_SCAN_LIMIT = int(os.environ.get("FEED_SWEEP_SCAN_LIMIT", "50"))
-FEED_SWEEP_MAX_QUOTES_PER_CYCLE = int(os.environ.get("FEED_SWEEP_MAX_QUOTES_PER_CYCLE", "3"))
+FEED_SWEEP_MAX_QUOTES_PER_CYCLE = int(os.environ.get("FEED_SWEEP_MAX_QUOTES_PER_CYCLE", "4"))
 FEED_SWEEP_MAX_REPLIES_PER_CYCLE = int(os.environ.get("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", "8"))
 
 # Alternate between the algorithmic For You feed and the chronological

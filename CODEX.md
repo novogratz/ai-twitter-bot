@@ -55,6 +55,21 @@ Two one-line root causes, both fixed:
 Lesson: when a surface flatlines, check `engagement_log.csv` daily counts per
 action type FIRST — the collapse was invisible in bot.log noise.
 
+### 2026-06-05 PM — quote-RT surge + persona files
+
+- **Quote-RT surge (operator: "abuse a bit of it for the next few weeks"):**
+  first therapist-voice quote earned 4 likes in 2h → cap 100→**150/day**,
+  spacing 90s+jitter45, feed-sweeper quote bar 300→200 likes and 4/cycle.
+  Revisit ~2026-06-26 (or earlier if suppression_watch trips).
+- **`bot_self_en.json` / `bot_self_fr.json` rewritten** to the bio spirit
+  ("Treating market trauma. AI-powered portfolio therapy. Follow the signal.
+  Heal the fear. ⚡") — the old "fierce / cynical trader at 3 AM" state was
+  injected into every prompt and fought the therapist identity.
+  self_evolution_agent may drift these; `core_identity.md` stays the anchor.
+- **Launch release `launch-v1.0`** tagged + published on GitHub — rollback
+  point for the whole 2026-06-05 stack (`git checkout launch-v1.0`).
+- Autonomous mandate: ≥1 improvement/day, push main daily, record memory.
+
 ### 2026-06-05 round 2 — reliability + therapist voice alignment
 
 - **`src/engine_health_bot.py`** — hourly per-action pace vs 7-day same-hour
