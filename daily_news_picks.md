@@ -12665,3 +12665,63 @@ Timberrrrrrrrrrrrrrrr
 - **@orevazsn** (780 likes, score 7/10) — Microsoft a débranché Claude pour son équipe interne. L’IA de Starbucks ne sait pas compter les tasses correctement. Uber a brûlé 3,4 milliards de dollars en IA en seulement 4 mois et n’a vu aucun ret
   - https://x.com/OrevaZSN/status/2061899468526453017
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 818).
+
+## 2026-06-05
+- **@cryptorover** (1156 likes, score 9/10) — CLAUDE OPUS 4.8 JUST BROKE A $9 BILLION PRIVACY COIN. 
+
+A security researcher used Anthropic's new model to find a 4-year-old soundness bug in Zcash's Orchard pool. 
+
+The flaw could create unlimited,
+  - https://x.com/cryptorover/status/2062786889363669228
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 1482).
+- **@mexc** (35 likes, score 9/10) — Over 10,000 Starlink satellites now in orbit!
+
+SpaceX continues to turn bold visions into reality, connecting the world and accelerating humanity’s multi-planetary future.
+
+You bullish on $SPACEX ’s g
+  - https://x.com/MEXC/status/2062829279788863802
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 65).
+- **@hedgiemarkets** (366 likes, score 9/10) — SpaceX priced its IPO at $135 a share today. $75 billion raise, $1.75 trillion valuation, largest IPO in history. Goldman Sachs, the lead underwriter, projects SpaceX AI revenue will go from $3.2 bill
+  - https://x.com/HedgieMarkets/status/2062706228925526335
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 426).
+- **@jasonbassler1** (138 likes, score 9/10) — Project Matador - Amarillo, Texas (the largest proposed data center campus on Earth)
+
+-2.5 million gallons of water per day
+-15–18 million square feet of infrastructure
+-11–17 gigawatts of planned pow
+  - https://x.com/JasonBassler1/status/2062298028359450710
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 212).
+- **@xai** (1727 likes, score 9/10) — Meet Go by Gopuff and SpaceXAI: your personal shopping assistant that knows what you want and delivers in minutes.
+
+Powered by Grok text, audio, and image models.
+  - https://x.com/xai/status/2062252902438342735
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1967).
+- **@theallinpod** (477 likes, score 9/10) — LIQUIDITY: Thomas Laffont on the $4T AI IPO Wave from SpaceX, Anthropic, and OpenAI
+
+Coatue's Thomas Laffont is BACK with the Besties for another incredible presentation + Q&A
+
+-- The $4T AI IPO Wave
+  - https://x.com/theallinpod/status/2062603430401568821
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 525).
+- **@jakub_moscicki** (41 likes, score 9/10) — If this is true, then the giants have chosen the perfect moment for themselves to have good "exit liquidity".
+SpaceX: 75 billion dollars as part of the stock market debut (IPO).
+Alphabet (Google): 84.
+  - https://x.com/Jakub_moscicki/status/2062824113559711966
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 57).
+- **@tslaming** (719 likes, score 9/10) — GOOD NEWS  JPMorgan Chase has upgraded $TSLA rating from Underweight to Neutral and raised its price target from $145 to $475, a massive 227.59% increase 
+
+Three major factors drive this rationale:
+  - https://x.com/tslaming/status/2062771862682407187
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 869).
+- **@bulltheoryio** (481 likes, score 9/10) — BREAKING.: Biggest privacy token $ZEC crashed over -50% in the last 24 hours and wiped out $5 Billion from its market cap. 
+
+The flaw was hidden inside Zcash's Orchard privacy pool since May 2022 and
+  - https://x.com/BullTheoryio/status/2062815682023268821
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 619).
+- **@theaicolonyrd** (75 likes, score 9/10) — BREAKING: Anthropic wants a global way to pause frontier AI development.
+
+The reason: its own models are getting close to improving AI without much human help.
+
+The unreleased Mythos Preview hit a 52x
+  - https://x.com/TheAIColonyRD/status/2062805957978038482
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 89).
