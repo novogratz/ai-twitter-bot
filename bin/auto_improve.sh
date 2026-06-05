@@ -43,7 +43,13 @@ Mission, in order:
 1. DIAGNOSE: read engagement_log.csv per-action daily counts, engine_health_alerts.json, and the tail of bot.log. Find the weakest surface, any collapse, or the highest-leverage improvement. Quote-RT is the validated winner — protect and strengthen it.
 2. IMPROVE: implement ONE concrete, focused change (fix > feature). Match existing code style and invariants (CLAUDE.md).
 3. TEST: run '.venv/bin/python -m pytest tests/ -q' — must pass. Add a test if your change touches guard logic. NEVER start the bot (operator starts it himself; leave .bot_disabled alone).
-4. SHIP: update CLAUDE.md+CODEX.md (+README if user-facing) in the same commit, then git commit and push to origin main.
+4. SHIP VIA PR (operator mandate 2026-06-05 — PR flow, never direct push to main from this run):
+   a. git checkout -b improve/$(date +%Y-%m-%d)-<short-slug>   (branch from up-to-date main)
+   b. Commit ONLY your improvement files there (update CLAUDE.md+CODEX.md, +README if user-facing, in the same commit). Do NOT commit unrelated dirty bot-state .json files — the running bot syncs those itself on main.
+   c. git push -u origin <branch>
+   d. gh pr create --fill --body including: what was diagnosed, what changed, test results, and the standard Claude Code footer.
+   e. gh pr merge --auto --squash --delete-branch   (auto-merges once the guard-tests CI check passes; main stays green by construction)
+   f. git checkout main
 5. RECORD: save learnings to auto-memory.
 
 Hard limits: never touch core_identity.md voice pillars, BLOCKLIST, respect_list defaults, HARD_RULES_BLOCK, or the 48h REPOST_MAX_AGE_HOURS rule. Keep the change small enough to review in one diff."
