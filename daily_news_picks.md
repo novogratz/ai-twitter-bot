@@ -12909,3 +12909,60 @@ https://podcasts.apple.com/us/podcast/how-a-reasoning-model-cracked-an-80-
 Researchers @alexwei_, @HongxunWu, and @wjmzbmr1 shared the story on the OpenAI Podcast with @AndrewMay
   - https://x.com/OpenAI/status/2062630454537424930
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 1359).
+- **@jasonl_capital** (37 likes, score 8/10) — Power is the largest bottleneck for AI right now.
+
+These 10 companies are building the infrastructure to bring more compute online.
+
+1. $CRWV - CoreWeave
+
+The largest pure-play AI cloud provider. Q1 r
+  - https://x.com/JasonL_Capital/status/2062879847572025427
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 45).
+- **@piratewires** (116 likes, score 9/10) — Next week, SpaceX will have the biggest IPO in human history. 
+
+The company is raising $75 billion at an unprecedented $1.77 trillion IPO valuation, prompting freak out from the finance world — SpaceX
+  - https://x.com/PirateWires/status/2062609406483968300
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 136).
+- **@coinbureau** (40 likes, score 9/10) — ALERT: BITCOIN FALLS BELOW $61,000
+
+$BTC has dropped to its lowest level since February 6th, putting the key $60,000 psychological support back in focus.
+  - https://x.com/coinbureau/status/2062899891366760866
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 72).
+- **@cointelegraph** (26 likes, score 9/10) — JUST IN: $172.07M longs rekt in 1 hour as Bitcoin dipped below $61,000.
+  - https://x.com/Cointelegraph/status/2062901841386435021
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 56).
+- **@nasa** (4066 likes, score 9/10) — LIVE: Leaders with NASA's Mars Atmosphere and Volatile Evolution (MAVEN) mission are providing an update on spacecraft operations and discussing the mission's accomplishments. https://youtu.be/4WALTox
+  - https://x.com/NASA/status/2062233680035144067
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 4492).
+- **@leifinvests** (4 likes, score 7/10) — MARKET SELL-OFF IS HITTING THE HOTTEST STOCKS 
+
+Some of the market’s biggest winners are getting crushed today
+
+$NBIS -10%
+$IREN -10%
+$ASTS -9%
+$ARM -9%
+$NOK -8%
+$MRVL -7%
+$INTC -6.5%
+$AMD -6.5%
+$MU -
+  - https://x.com/LeifInvests/status/2062901531502858421
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 12).
+- **@aroogle** (86 likes, score 8/10) — What people don’t understand yet and what’s not priced in with with Worldcoin $WLD & @sama: 
+
+- OpenAI will use the World App as the operating system for its upcoming phone designed by Jony Ive 
+
+- Wo
+  - https://x.com/aroogle/status/2062828669068775457
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 106).
+- **@enneps** (30 likes, score 8/10) — Starship Booster 20 has made it to Masseys after rolling out from the production site overnight, for its cryo testing campaign, ahead of Flight 13.
+Interestingly the roll took much longer then normal,
+  - https://x.com/ENNEPS/status/2062899642811985971
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 32).
+- **@watcherguru** (530 likes, score 8/10) — JUST IN: $155,000,000 worth of crypto longs liquidated in the past 60 minutes.
+  - https://x.com/WatcherGuru/status/2062899869162111330
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 878).
+- **@polymarket** (0 likes, score 8/10) — JUST IN: Trump is reportedly set to invoke Cold War-era powers to spend $700 million reviving “clean, beautiful coal” as AI power demand surges.
+  - https://x.com/Polymarket/status/2062273564636573719
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 192).
