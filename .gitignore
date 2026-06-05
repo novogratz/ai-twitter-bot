@@ -45,3 +45,9 @@ bot.err
 .llm_rate_state.json
 test_gemini_integration.py
 bot.lock
+
+# Agentic-loop runtime artifacts (auto_improve daily run + self-heal trigger).
+auto_improve.log
+.auto_improve_running
+.last_self_heal
+.claude/scheduled_tasks.lock
