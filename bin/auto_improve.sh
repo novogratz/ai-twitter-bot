@@ -48,8 +48,9 @@ Mission, in order:
    b. Commit ONLY your improvement files there (update CLAUDE.md+CODEX.md, +README if user-facing, in the same commit). Do NOT commit unrelated dirty bot-state .json files — the running bot syncs those itself on main.
    c. git push -u origin <branch>
    d. gh pr create --fill --body including: what was diagnosed, what changed, test results, and the standard Claude Code footer.
-   e. gh pr merge --auto --squash --delete-branch   (auto-merges once the guard-tests CI check passes; main stays green by construction)
-   f. git checkout main
+   e. gh pr checks <pr-number> --watch   (wait for the guard-tests CI check; if it FAILS, fix on the branch and push again — never merge red)
+   f. gh pr merge <pr-number> --squash --delete-branch   (note: NOT --auto; the repo has no required-checks branch protection because that would block the running bot's direct state pushes to main)
+   g. git checkout main && git pull --rebase
 5. RECORD: save learnings to auto-memory.
 
 Hard limits: never touch core_identity.md voice pillars, BLOCKLIST, respect_list defaults, HARD_RULES_BLOCK, or the 48h REPOST_MAX_AGE_HOURS rule. Keep the change small enough to review in one diff."
