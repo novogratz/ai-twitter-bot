@@ -13195,3 +13195,40 @@ Worst of all?
 OpenAI is
   - https://x.com/GaryMarcus/status/2063000883466801397
   - **WHY**: Source fiable + impact concret (score signal 12, engagement 77).
+- **@yuchenj_uw** (63 likes, score 9/10) — Google & Anthropic are paying SpaceX $26B per year for GPUs.
+
+SpaceX has accidentally become the largest neocloud on Earth. ~550K GPUs. More than double CoreWeave.
+
+Starlink is doing ~$15B ARR, so GPU
+  - https://x.com/Yuchenj_UW/status/2063014843553304642
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 91).
+- **@arkham** (1051 likes, score 9/10) — Michael Saylor spent $64 Billion to buy $50 Billion of Bitcoin.
+  - https://x.com/arkham/status/2062982751524176154
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1307).
+- **@luxalgo** (22 likes, score 8/10) — CoreWeave $CRWV just filed a mixed shelf offering.
+
+So with all this dilution being sold to cover data centers ie: $GOOG, $META, it looks like markets will be who ends up covering AI infrastructure co
+  - https://x.com/LuxAlgo/status/2063005025102713256
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 26).
+- **@johnxosterman** (19 likes, score 7/10) — The 2030 Bitcoin crash is going to be wild when it crashes down to $200.
+  - https://x.com/JohnXOsterman/status/2062956270861144329
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 21).
+- **@axios** (9 likes, score 7/10) — Chips sector bloodbath drags Nasdaq down 4.2%
+  - https://x.com/axios/status/2063015609332273342
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 13).
+- **@cnn** (162 likes, score 8/10) — Nasdaq and S&P 500 see worst day of the year after strong jobs data raises odds of a Fed rate hike and Wall Street deals with weakness in AI stocks. https://cnn.it/43mpxtp
+  - https://x.com/CNN/status/2062996808754684364
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 308).
+- **@googleresearch** (255 likes, score 8/10) — Introducing our new agentic RAG framework. A collab with Google Cloud, our multi-agent workflow goes beyond standard RAG by breaking down complex enterprise queries & iteratively searching for suffici
+  - https://x.com/GoogleResearch/status/2062982001850974257
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 265).
+- **@wolf_financial** (81 likes, score 8/10) — META $META IS WEIGHING A STOCK SALE TO RAISE TENS OF BILLIONS OF DOLLARS
+
+The reason: AI capex this year is projected at $145 billion. And even higher in 2027.
+
+Per the Financial Times, executives are
+  - https://x.com/WOLF_Financial/status/2062967461990015392
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 139).
+- **@nasa** (1087 likes, score 8/10) — This spiral galaxy, recently observed by @NASAHubble, is in the middle of a cosmic journey that will take it hundreds of millions of years. Learn more: https://go.nasa.gov/4ebPYHh
+  - https://x.com/NASA/status/2063014566414438537
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1309).
