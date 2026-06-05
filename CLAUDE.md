@@ -52,6 +52,23 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-05 engine-collapse fixes (post-mortem)
+
+Engagement log showed retweets 140/day→0 (Jun 3) and replies 397→42/day (Jun 4).
+Two one-line root causes, both fixed:
+
+1. **Dropped scrape timestamps** — `_scrape_tweets_from_page` extracted
+   `<time datetime>` in JS but the Python mapping dropped the field → every
+   candidate had unknown age → the hard 48h gate skipped 100% of feed/search
+   candidates. The mapping now carries `timestamp`; the 48h rule is untouched.
+2. **Eaten reply JSON** — `unwrap_text`: a single-line ollama JSON array hit
+   `_unwrap_ndjson`, which returned `""` for non-dict events → every
+   REPLY_SEARCH cycle died holding valid replies. `structured_output=True`
+   callers now get the verbatim array before the NDJSON unwrapper runs.
+
+Lesson: when a surface flatlines, check `engagement_log.csv` daily counts per
+action type FIRST — the collapse was invisible in bot.log noise.
+
 ### 2026-06-05 growth push (operator: "push it harder")
 
 Analytics 2026-06-05: impressions +26% but engagement rate −11%, replies −30%.

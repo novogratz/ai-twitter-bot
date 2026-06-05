@@ -38,6 +38,23 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 > from the revision spec maps to Safari **write-pacing** (per-action daily caps + jittered
 > spacing + no bursts), same intent, different mechanism.
 
+### 2026-06-05 engine-collapse fixes (post-mortem)
+
+Engagement log showed retweets 140/day→0 (Jun 3) and replies 397→42/day (Jun 4).
+Two one-line root causes, both fixed:
+
+1. **Dropped scrape timestamps** — `_scrape_tweets_from_page` extracted
+   `<time datetime>` in JS but the Python mapping dropped the field → every
+   candidate had unknown age → the hard 48h gate skipped 100% of feed/search
+   candidates. The mapping now carries `timestamp`; the 48h rule is untouched.
+2. **Eaten reply JSON** — `unwrap_text`: a single-line ollama JSON array hit
+   `_unwrap_ndjson`, which returned `""` for non-dict events → every
+   REPLY_SEARCH cycle died holding valid replies. `structured_output=True`
+   callers now get the verbatim array before the NDJSON unwrapper runs.
+
+Lesson: when a surface flatlines, check `engagement_log.csv` daily counts per
+action type FIRST — the collapse was invisible in bot.log noise.
+
 ### 2026-06-05 growth push (operator: "push it harder")
 
 Analytics 2026-06-05: impressions +26% but engagement rate −11%, replies −30%.
