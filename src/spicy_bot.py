@@ -12,6 +12,14 @@ Two modes, picked at random per cycle:
   - QUESTION: an open English question on AI / crypto designed to
     trigger replies from followers + lurkers. "Honest question" framing.
 
+NEWS-ANCHORED (2026-06-05 operator mandate): both modes MUST react to a
+fresh item from external_signal.json (X feed/search + HN/Reddit pulse,
+refreshed every few minutes). Free-form "what's on my mind" takes were
+producing duplicated, unanchored musings — the model literally parroted
+its own prompt example twice ("Everyone watches GPU supply…"). No fresh
+signal on disk → the cycle SKIPS. The take still carries no URL — it
+reacts to the news, it doesn't report it.
+
 Cap 6/day total. Posts via post_tweet(). Different from regular news
 (no source URL, no impact filter) — these are PURELY for engagement
 velocity.
@@ -40,7 +48,13 @@ Mode: {mode}
 
 {mode_instructions}
 
+{signal_block}
+
 RÈGLES DURES:
+- ANCRAGE OBLIGATOIRE: ton tweet RÉAGIT à UNE des news fraîches ci-dessus.
+  Nomme l'acteur / le fait / le chiffre concret de la news choisie. Un take
+  qui ne cite aucun fait d'aujourd'hui = échec → SKIP.
+- Si AUCUNE news ne t'inspire un take/question ≥ 8/10 → réponds SKIP.
 - ≤270 caractères.
 - ZÉRO emoji. ZÉRO hashtag. ZÉRO em dash (—).
 - Pas de "Selon X..." / "Aujourd'hui..." / "Breaking:" / "According to..." / "Today...".
@@ -48,6 +62,8 @@ RÈGLES DURES:
 - Ne jamais cibler le gouvernement américain (Fed, SEC, IRS, etc.).
 - Pas de URL. Pas de source. Ce tweet est PUREMENT un take ou une question.
 - Core identity: voix incisive, pas de crypto générique. Ton d'autorité.
+- INTERDIT de recopier ou paraphraser un exemple de ce prompt — les exemples
+  montrent la FORME, jamais le contenu.
 
 {performance_section}
 
@@ -55,29 +71,53 @@ OUTPUT — strictement le tweet, rien d'autre.
 JAMAIS de "Voici", "Le tweet:", "---", ou méta-commentaire."""
 
 SPICY_INSTRUCTIONS = """SPICY MODE — Drop a sharp opinion that will make people debate.
-- Choose 1 AI infra / AI-linked crypto / frontier tech subject where consensus thinks X.
-- Tu dis le contraire avec une chute qui pique.
+- Choisis UNE news fraîche dans la liste ci-dessous où le consensus pense X.
+- Tu dis le contraire avec une chute qui pique, en citant le fait précis.
 - C'est OK d'être divisif tant qu'il y a un argument.
-- Format préféré: statement + punchline. Ex: "Everyone watches GPU supply. The real bottleneck is the power bill."
+- Format préféré: fait concret de la news + retournement + punchline.
 - L'audience doit avoir ENVIE de répondre, pas juste de liker.
-
-Exemples de positions spicy valides:
-- "L'IA générative a tué l'apprentissage. Les juniors n'écrivent plus de code, ils prient ChatGPT."
-- "Le ETF Bitcoin a transformé le BTC en obligation pour fonds de pension. Toute la promesse de la dé-centralisation est morte là."
-- "Mistral lève encore. À ce rythme on financera la souveraineté française avant qu'elle ait shippé un modèle."
 """
 
 QUESTION_INSTRUCTIONS = """QUESTION MODE — Ask ONE open question that invites replies.
+- La question part d'UNE news fraîche de la liste ci-dessous (nomme l'acteur/le fait).
 - Topic: AI infrastructure, AI-linked crypto, robotics, space infrastructure, or compute/energy only.
 - Format: une seule question + un cadre court qui justifie la question.
 - L'audience doit lire et avoir envie de RÉPONDRE.
 - Évite les questions vagues. Préfère: choix entre 2 options, ou question qui force un classement.
-
-Examples:
-- "What is the more underpriced AI bottleneck: GPUs, power, or land with grid access?"
-- "If compute becomes an energy trade, do miners or utilities capture more upside?"
-- "Which AI infra name is the market still treating like a boring hosting company?"
 """
+
+# Signal must be fresher than this or the cycle skips (the X-FEED scraper
+# rewrites external_signal.json every few minutes when the bot is healthy).
+SIGNAL_MAX_AGE_HOURS = float(os.environ.get("SPICY_SIGNAL_MAX_AGE_HOURS", "6"))
+SIGNAL_FILE = os.path.join(_PROJECT_ROOT, "external_signal.json")
+
+
+def _fresh_signal_block(max_items: int = 8) -> str:
+    """Render the freshest external-signal items as the mandatory anchor
+    list, or '' if the signal file is missing/stale (caller then SKIPs)."""
+    try:
+        with open(SIGNAL_FILE) as f:
+            sig = json.load(f)
+        ts = datetime.fromisoformat(sig.get("ts", ""))
+        age_h = (datetime.now() - ts).total_seconds() / 3600.0
+        if age_h > SIGNAL_MAX_AGE_HOURS:
+            return ""
+        items = [i for i in sig.get("items", []) if isinstance(i, dict) and i.get("title")]
+    except (OSError, json.JSONDecodeError, TypeError, ValueError):
+        return ""
+    if not items:
+        return ""
+    items.sort(key=lambda i: i.get("score", 0) or 0, reverse=True)
+    lines = []
+    for it in items[:max_items]:
+        title = " ".join(str(it["title"]).split())[:180]
+        lines.append(f"- {title}")
+    return (
+        "==================================================\n"
+        "NEWS FRAÎCHES (dernières heures — ta SEULE matière première)\n"
+        "==================================================\n"
+        + "\n".join(lines)
+    )
 
 
 def _load_state() -> dict:
@@ -124,6 +164,12 @@ def run_spicy_cycle():
     except Exception:
         pass
 
+    # News anchor is mandatory (2026-06-05): no fresh signal → no take.
+    signal_block = _fresh_signal_block()
+    if not signal_block:
+        log.info(f"[SPICY] No fresh external signal (≤{SIGNAL_MAX_AGE_HOURS}h) — skipping (no unanchored musings).")
+        return
+
     # 60% spicy, 40% question. Spicy drives more replies but question is
     # more inclusive — mix is healthier than 100% spicy.
     mode = "SPICY" if random.random() < 0.6 else "QUESTION"
@@ -141,6 +187,7 @@ def run_spicy_cycle():
     prompt = SPICY_PROMPT.format(
         mode=mode,
         mode_instructions=instructions,
+        signal_block=signal_block,
         performance_section=perf,
         lang_directive=lang_mode.lang_directive(lang),
     )

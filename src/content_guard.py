@@ -31,15 +31,67 @@ from .logger import log
 # --- near-duplicate detection (no posting the same story twice) -----------
 # The LLM kept re-posting the same news in slightly different words (e.g. 4
 # Microsoft/OpenAI/quantum variants). URL dedup missed it because the wording
-# (and sometimes the article URL) differed. We compare the word-set of a new
-# draft against recently posted originals; high overlap = duplicate = skip.
+# (and sometimes the article URL) differed.
+#
+# v2 (2026-06-05): word-set Jaccard alone missed "same thesis, different
+# words" — e.g. "Everyone watches GPU supply. The real bottleneck is the
+# power bill" posted twice 1h apart scored ~0.23 Jaccard (< the 0.5 gate).
+# Now FOUR signals, any one of which flags a duplicate:
+#   1. Jaccard on stemmed content words      >= DUP_JACCARD_THRESHOLD (0.45)
+#   2. Containment (∩ / smaller set)         >= DUP_CONTAINMENT_THRESHOLD (0.6)
+#   3. Shared distinctive bigrams            >= DUP_SHARED_BIGRAMS (3)
+#      ("real bottleneck", "power bill"… — phrase-level reuse)
+#   4. Same-story window: shared named entity (Anthropic, $TAO, AGI…) AND
+#      >= DUP_TOPIC_SHARED_WORDS stemmed content words in common with a post
+#      from the last DUP_TOPIC_WINDOW_HOURS — catches "Anthropic raise"
+#      covered 3× in one morning under different angles.
 
 _HISTORY_FILE = os.path.join(_PROJECT_ROOT, "tweet_history.json")
-_RECENT_NORM: list = []          # in-memory word-sets of this run's posts
-_DUP_THRESHOLD = float(os.environ.get("DUP_JACCARD_THRESHOLD", "0.5"))
+_RECENT_NORM: list = []          # in-memory profiles of this run's posts
+_DUP_THRESHOLD = float(os.environ.get("DUP_JACCARD_THRESHOLD", "0.45"))
+_DUP_CONTAINMENT_THRESHOLD = float(os.environ.get("DUP_CONTAINMENT_THRESHOLD", "0.6"))
+_DUP_SHARED_BIGRAMS = int(os.environ.get("DUP_SHARED_BIGRAMS", "3"))
+_DUP_TOPIC_WINDOW_HOURS = float(os.environ.get("DUP_TOPIC_WINDOW_HOURS", "24"))
+_DUP_TOPIC_SHARED_WORDS = int(os.environ.get("DUP_TOPIC_SHARED_WORDS", "3"))
+
+# Generic words that must never count as "shared content" between two posts
+# (EN + FR). Market/tech words (gpu, valuation, datacenter…) deliberately
+# stay IN — they are the content.
+_DUP_STOPWORDS = {
+    # EN function/filler
+    "about", "after", "again", "against", "ahead", "along", "also", "always",
+    "another", "anyone", "around", "because", "been", "before", "behind",
+    "being", "between", "both", "cannot", "could", "does", "doesn", "dont",
+    "down", "during", "else", "even", "ever", "every", "everyone", "everything",
+    "exactly", "finally", "first", "found", "from", "going", "gonna", "have",
+    "having", "here", "into", "isnt", "just", "keep", "know", "last", "like",
+    "look", "made", "make", "many", "maybe", "mean", "more", "most", "much",
+    "need", "never", "next", "nobody", "nothing", "only", "other", "over",
+    "people", "real", "really", "right", "same", "should", "since", "some",
+    "something", "still", "such", "than", "that", "their", "them", "then",
+    "there", "these", "they", "thing", "think", "this", "those", "through",
+    "time", "today", "tonight", "until", "very", "want", "watch", "watches",
+    "well", "were", "what", "when", "where", "which", "while", "wont", "would",
+    "your", "youre", "will", "with", "without", "yesterday",
+    # FR function/filler
+    "alors", "aussi", "autre", "avant", "avec", "bien", "cest", "cette",
+    "celui", "chaque", "comme", "dans", "deja", "déjà", "depuis", "donc",
+    "encore", "entre", "etre", "être", "faire", "fait", "jamais", "leur",
+    "maintenant", "mais", "meme", "même", "moins", "notre", "nous", "plus",
+    "pour", "quand", "quelque", "rien", "sans", "sont", "sous", "tout",
+    "toute", "tous", "trop", "vous", "votre", "voila", "voilà",
+}
 
 
-def _dedup_wordset(text: str) -> set:
+def _stem(w: str) -> str:
+    """Crude EN suffix strip so raises/raised/raising collide on 'rais'."""
+    for suf in ("ing", "ed", "es", "s"):
+        if len(w) > 4 and w.endswith(suf):
+            return w[: -len(suf)]
+    return w
+
+
+def _dedup_clean(text: str) -> str:
     t = (text or "").lower()
     t = re.sub(r"https?://\S+", " ", t)
     t = re.sub(r"\[pattern:[^\]]*\]", " ", t)
@@ -48,36 +100,97 @@ def _dedup_wordset(text: str) -> set:
     # drop the recurring header scaffolding so two different stories under the
     # same "Le Décode #N — IA" header aren't seen as similar on the header alone
     t = re.sub(r"le d[eé]code[^\n]*", " ", t)
-    t = re.sub(r"[^\w\s]", " ", t)
-    return {w for w in t.split() if len(w) > 3}
+    return re.sub(r"[^\w\s]", " ", t)
 
 
-def _recent_wordsets(limit: int = 40) -> list:
-    sets = list(_RECENT_NORM[-limit:])
+def _content_tokens(text: str) -> list:
+    """Ordered, stemmed, stopword-free content words of a draft."""
+    toks = []
+    for w in _dedup_clean(text).split():
+        if len(w) <= 3 or w in _DUP_STOPWORDS:
+            continue
+        sw = _stem(w)
+        if len(sw) >= 3:
+            toks.append(sw)
+    return toks
+
+
+def _entities(text: str) -> set:
+    """Salient named things: $TICKERS, ALLCAPS acronyms (TAO, AGI, GPU),
+    Capitalized proper-ish nouns (Anthropic, Nvidia). Lowercased + stemmed."""
+    body = re.sub(r"https?://\S+", " ", text or "")
+    ents = set()
+    for m in re.finditer(r"\$[A-Za-z]{2,8}\b", body):
+        ents.add(m.group(0)[1:].lower())
+    for m in re.finditer(r"\b[A-Z]{2,8}\b", body):
+        w = m.group(0).lower()
+        if w not in _DUP_STOPWORDS:
+            ents.add(w)
+    for m in re.finditer(r"\b[A-Z][a-z][\w&.\-]{2,}\b", body):
+        w = m.group(0).lower()
+        if w not in _DUP_STOPWORDS and len(w) > 3:
+            ents.add(_stem(w))
+    return ents
+
+
+def _dup_profile(text: str, age_hours: float = 0.0) -> dict:
+    toks = _content_tokens(text)
+    return {
+        "words": set(toks),
+        "bigrams": {f"{a} {b}" for a, b in zip(toks, toks[1:])},
+        "entities": _entities(text),
+        "age_h": age_hours,
+    }
+
+
+def _recent_profiles(limit: int = 40) -> list:
+    from datetime import datetime
+    profiles = list(_RECENT_NORM[-limit:])
     try:
         with open(_HISTORY_FILE) as f:
             hist = json.load(f)
+        now = datetime.now()
         for entry in (hist[-limit:] if isinstance(hist, list) else []):
-            if isinstance(entry, dict):
-                ws = _dedup_wordset(entry.get("text", ""))
-                if ws:
-                    sets.append(ws)
+            if not isinstance(entry, dict):
+                continue
+            age_h = 9999.0
+            try:
+                age_h = (now - datetime.fromisoformat(entry.get("timestamp", ""))).total_seconds() / 3600.0
+            except (TypeError, ValueError):
+                pass
+            p = _dup_profile(entry.get("text", ""), age_hours=age_h)
+            if p["words"]:
+                profiles.append(p)
     except (OSError, json.JSONDecodeError):
         pass
-    return sets
+    return profiles
 
 
 def is_duplicate(text: str, threshold: Optional[float] = None) -> bool:
-    """True if `text` is a near-duplicate of a recently posted original."""
+    """True if `text` is a near-duplicate (or same-story rehash) of a
+    recently posted original. See the v2 signal list above."""
     th = threshold if threshold is not None else _DUP_THRESHOLD
-    ws = _dedup_wordset(text)
+    p = _dup_profile(text)
+    ws = p["words"]
     if len(ws) < 4:
         return False
-    for prev in _recent_wordsets():
-        if not prev:
+    for prev in _recent_profiles():
+        pw = prev["words"]
+        if not pw:
             continue
-        union = len(ws | prev)
-        if union and (len(ws & prev) / union) >= th:
+        inter = len(ws & pw)
+        union = len(ws | pw)
+        if union and (inter / union) >= th:
+            return True
+        if (inter / max(1, min(len(ws), len(pw)))) >= _DUP_CONTAINMENT_THRESHOLD:
+            return True
+        if len(p["bigrams"] & prev["bigrams"]) >= _DUP_SHARED_BIGRAMS:
+            return True
+        if (
+            prev.get("age_h", 9999.0) <= _DUP_TOPIC_WINDOW_HOURS
+            and (p["entities"] & prev["entities"])
+            and inter >= _DUP_TOPIC_SHARED_WORDS
+        ):
             return True
     return False
 
@@ -85,9 +198,9 @@ def is_duplicate(text: str, threshold: Optional[float] = None) -> bool:
 def note_posted(text: str) -> None:
     """Record a just-posted original so the next post can dedup against it
     immediately (survives within the process run; tweet_history covers restarts)."""
-    ws = _dedup_wordset(text)
-    if ws:
-        _RECENT_NORM.append(ws)
+    p = _dup_profile(text)
+    if p["words"]:
+        _RECENT_NORM.append(p)
         if len(_RECENT_NORM) > 60:
             del _RECENT_NORM[:-60]
 

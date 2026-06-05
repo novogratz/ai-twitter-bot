@@ -3311,5 +3311,43 @@
       }
     ],
     "summary": "Le lot est mixte : des g\u00e9ants de l'IA (Mistral), des valeurs s\u00fbres crypto et du trading Qu\u00e9b\u00e9cois. On \u00e9vite les vendeurs de r\u00eaves pour rester dans l'expertise pure."
+  },
+  {
+    "ts": "2026-06-05T01:50:46.458944",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NathalieDufort",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 32000,
+        "reason": "Analyste crypto bas\u00e9e \u00e0 NY (diaspora). Elle parle aux traders pro avec une rigueur rare dans le bruit g\u00e9n\u00e9raliste.\n"
+      },
+      {
+        "handle": "BoursierQuebec",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Compte m\u00e9dia (pas un guru) mais g\u00e9r\u00e9 par des experts francophones solides. Pas de 'rejoins mon Telegram', juste de l'info financi\u00e8re brute.\n"
+      },
+      {
+        "handle": "GillesMoulinet",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "L'autorit\u00e9 qu\u00e9b\u00e9coise sur les ETF et l'investissement passif. Moins de bruit, plus de dents. Il ne vend que du r\u00eave concret.\n"
+      },
+      {
+        "handle": "ErikTremblay",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 14000,
+        "reason": "Founders et IA \u00e0 Montr\u00e9al. Il mixe la tech pure avec le business mod\u00e8le. Moins hype que Mistral, mais plus utile pour les fondateurs.\n"
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour te ramener des artisans : l'IA avec Arthur et Adrien, le crypto avec Mert et Ritz, et la bourse avec le duo qu\u00e9b\u00e9cois Moulinet/Tremblay."
   }
 ]
