@@ -27,6 +27,10 @@ Le bot fait tourner **plus de 30 micro-bots concurrents** orchestrés par une bo
 
 ---
 
+## Poussée croissance 2026-06-05
+
+- **`feed_sweeper_bot`** — balaye For You / Following en alternance (8 min) : post ≥300 likes → quote-retweet avec un angle malin, sinon → réponse. **`viral_stunt_bot`** — comédie « superviral format » (max 2/jour, cadence irrégulière, barre 9/10 sinon SKIP). **`space_promo_bot`** — campagne opérateur jusqu'au 13/06 (IPO SpaceX 12/06) : promo douce $MNTS/$SPCX/$SPCE, 2 posts/jour avec GIF (`media/promo_gifs/`), disclaimer « Not financial advice », rotation WSB verrouillée (`operator_locked`). Moteur quote réparé (le bot brûlait son meilleur candidat à chaque skip d'espacement), spacing 120 s, cap 100/jour, handles prioritaires (TheBTCTherapist), fenêtre réponses 72 h + scroll profond des feeds.
+
 ## Garde-fous 2026-06-02 (points de passage uniques)
 
 Toutes les actions d'écriture passent par les fonctions de plus bas niveau de `twitter_client` (`post_tweet` / `quote_tweet` / `reply_to_tweet` / `follow_account` / `unfollow_account` / `like_tweet` / `retweet_post`), pour que les ~30 bots obéissent aux mêmes règles sans réécriture :

@@ -171,6 +171,11 @@ SEARCH_QUERIES = [
     # ===== ENGLISH — Bitcoin / crypto (bearish troll fodder) =====
     "Bitcoin OR BTC OR \"BTC ETF\" OR crypto lang:en min_faves:100",
     "\"Bitcoin crash\" OR \"crypto crash\" OR \"crypto bubble\" OR \"BTC dump\" lang:en min_faves:30",
+    # ===== ENGLISH — space (2026-06-05 operator: "search for more AI or
+    # space terms and find viral posts") =====
+    "SpaceX OR Starship OR \"Falcon 9\" OR Starlink lang:en min_faves:50",
+    "NASA OR \"Rocket Lab\" OR RKLB OR satellite OR orbit lang:en min_faves:30",
+    "\"space economy\" OR \"space stocks\" OR ASTS OR \"moon mission\" lang:en min_faves:30",
     # ===== FRENCH AI tail (for replying to FR AI tweets) =====
     "IA OR \"intelligence artificielle\" OR ChatGPT OR Mistral lang:fr min_faves:25",
     "OpenAI OR Anthropic OR Claude OR \"agents IA\" OR LLM lang:fr min_faves:25",
@@ -217,8 +222,10 @@ def _load_promo_cfg() -> dict:
 
 def _promo_block(lang: str = "fr", tweet_text: str = "") -> str:
     cfg = _load_promo_cfg()
-    ticker = cfg.get("ticker", "")
-    company = cfg.get("company", "")
+    if cfg.get("disabled"):
+        return ""
+    from .quote_tweet_bot import _pick_promo_ticker
+    ticker, company = _pick_promo_ticker(cfg)
     end_str = cfg.get("end_date", "")
     if not ticker or not end_str:
         return ""

@@ -52,6 +52,34 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-05 growth push (operator: "push it harder")
+
+Analytics 2026-06-05: impressions +26% but engagement rate −11%, replies −30%.
+Operator levers, all shipped:
+
+- **`src/feed_sweeper_bot.py`** — sweeps For You / Following (alternating, every
+  8 min): on-niche post ≥`FEED_SWEEP_QUOTE_MIN_LIKES` (300) → QUOTE with a clever
+  take; below → REPLY. ("reply or quote-retweet every single post you see").
+- **Quote engine fixes**: `quote_tweet()` now returns bool; the quote bot marks a
+  candidate consumed only AFTER a confirmed post (before, every spacing-skip cycle
+  silently burned its best viral pick — the 28/day-actual vs cap gap). Spacing
+  120s+jitter60 (was 180+120), cap 80→100/day. Viral high-min_faves queries added
+  + `PRIORITY_QUOTE_HANDLES` (default TheBTCTherapist) jump the candidate queue.
+- **Reply discovery widened**: 72h window (`DIRECT_REPLY_MAX_AGE_MINUTES=4320`),
+  feed scans 100 deep with proportional scrolling (feed scrapers now scroll
+  `max_tweets//12` times instead of always 2), space + viral search terms added,
+  per-cycle reply budgets raised in `.env`.
+- **`src/viral_stunt_bot.py`** — occasional superviral-format first-person AI-stunt
+  comedy ("I tested X's AI support…"). Max 2/day, 35% fire prob per 90-min check,
+  SKIP-by-default 9/10 bar, must read as an obvious bit (never fake literal news).
+- **`src/space_promo_bot.py` + multi-ticker `stock_promo_config.json`** — operator
+  campaign through 2026-06-13 (SpaceX IPO June 12): soft-promo $MNTS (priority),
+  $SPCX, $SPCE. Standalone hype posts 2/day (9:40+15:40 ET) ending "Not financial
+  advice 🚀", GIF-backed from `media/promo_gifs/` (clipboard `«class GIFf»` keeps
+  animation); reply/quote soft-injection only on space-context parents.
+  `operator_locked: true` blocks WSB rotation from replacing the campaign;
+  everything auto-expires after `end_date`.
+
 ### 2026-06-02 policy modules (single write chokepoints)
 
 All write actions funnel through the lowest-level functions in `twitter_client`
