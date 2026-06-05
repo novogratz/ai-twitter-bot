@@ -412,10 +412,15 @@ def _attach_native_gif(gif_query: str) -> bool:
     return True
 
 
-def post_tweet_with_gif(text: str, gif_query: str) -> bool:
+def post_tweet_with_gif(text: str, gif_query: str, force: bool = False) -> bool:
     """Compose a tweet with a native-picker GIF attached. Full chokepoint
     treatment (scrub + caps + content gates + dedup), then the /compose/post
-    composer (the intent URL can't open the GIF picker)."""
+    composer (the intent URL can't open the GIF picker).
+
+    force=True skips ONLY the near-duplicate gate — for OPERATOR-initiated
+    sequels/callbacks ("update: …" follow-ups to our own bit), which the
+    same-story window correctly flags but the operator explicitly wants.
+    Autonomous bots must NEVER pass force=True."""
     text = _scrub_metadata_leaks(text)
     from .llm_client import contains_post_unsafe_leak
     if contains_post_unsafe_leak(text):
@@ -430,9 +435,11 @@ def post_tweet_with_gif(text: str, gif_query: str) -> bool:
     if not ok:
         log.info(f"[POST] content_guard skip ({why}): {text[:120]!r}")
         return False
-    if content_guard.is_duplicate(text):
+    if not force and content_guard.is_duplicate(text):
         log.info(f"[POST] near-duplicate — skipping: {text[:120]!r}")
         return False
+    if force:
+        log.info("[POST] operator force: near-duplicate gate bypassed for this post.")
     if _cfg.DRY_RUN:
         log.info(f"[POST][DRY_RUN] would post with GIF {gif_query!r}: {text[:200]!r}")
         action_guard.record(action_guard.POST, dry_run=True)
