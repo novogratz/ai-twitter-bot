@@ -55,6 +55,16 @@ Two one-line root causes, both fixed:
 Lesson: when a surface flatlines, check `engagement_log.csv` daily counts per
 action type FIRST — the collapse was invisible in bot.log noise.
 
+### 2026-06-05 PM — human-typo injection for @Graphseo
+
+Operator mandate: every reply to @Graphseo (and ONLY him — he tweeted that
+spelling mistakes are the only proof of humanity) carries exactly ONE
+keyboard-adjacent typo ("xonfigurer" for "configurer").
+`humanizer.inject_human_typo` picks one lowercase ASCII word ≥6 chars (never
+@mentions/#tags/URLs/$tickers/accented words) and swaps one letter for an
+adjacent key. Enforced in `twitter_client.reply_to_tweet` via
+`HUMAN_TYPO_HANDLES` (default `Graphseo`) so every reply path obeys.
+
 ### 2026-06-05 PM — one reply per tweet, EVER (chokepoint dedup)
 
 The account replied TWICE to the same @Graphseo tweet 7 min apart: two reply

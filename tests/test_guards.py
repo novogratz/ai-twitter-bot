@@ -305,3 +305,24 @@ def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     tc.reply_to_tweet(url + "?s=20", reply + " v3")  # same tweet, different URL form
 
     assert len(recorded) == 1  # exactly ONE reply ever reached the write
+
+
+# --- human-typo injection for @Graphseo (operator mandate 2026-06-05) ----------
+
+def test_inject_human_typo_exactly_one_adjacent_char():
+    import random
+    from src.humanizer import inject_human_typo, _KEY_NEIGHBORS
+    text = "le signal des fautes va marcher exactement un cycle de finetuning pas plus"
+    out = inject_human_typo(text, rng=random.Random(42))
+    assert out != text and len(out) == len(text)
+    diffs = [(a, b) for a, b in zip(text, out) if a != b]
+    assert len(diffs) == 1                       # exactly ONE character changed
+    orig, typo = diffs[0]
+    assert typo in _KEY_NEIGHBORS[orig]          # and it's keyboard-adjacent
+
+
+def test_inject_human_typo_skips_unsafe_words():
+    from src.humanizer import inject_human_typo
+    # only mentions/URLs/short words -> unchanged
+    text = "@Graphseo yes https://x.com/a $NVDA ok"
+    assert inject_human_typo(text) == text

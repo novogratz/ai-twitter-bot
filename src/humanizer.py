@@ -141,6 +141,47 @@ def _strip_multiple_alternatives(text: str) -> str:
     return text
 
 
+# Adjacent keys per letter (AZERTY-leaning, valid on QWERTY rows too) — used
+# to fake a plausible fat-finger typo, e.g. "configurer" → "xonfigurer".
+_KEY_NEIGHBORS = {
+    "a": "qzs", "b": "vn", "c": "xv", "d": "sf", "e": "zr", "f": "dg",
+    "g": "fh", "h": "gj", "i": "uo", "j": "hk", "k": "jl", "l": "km",
+    "m": "lp", "n": "bv", "o": "ip", "p": "om", "q": "as", "r": "et",
+    "s": "qd", "t": "ry", "u": "yi", "v": "cb", "w": "xq", "x": "cw",
+    "y": "tu", "z": "ae",
+}
+
+
+def inject_human_typo(text: str, rng: "random.Random" = None) -> str:
+    """Replace ONE letter in ONE word with an adjacent-key letter so the text
+    reads like a human fat-fingered it ("xonfigurer" for "configurer").
+
+    Operator mandate 2026-06-05: replies to @Graphseo (and only him) always
+    carry exactly one such typo — he tweeted that spelling mistakes are the
+    only proof of humanity, so we hand him his proof. Skips @mentions,
+    #hashtags, URLs, $tickers, and words with accents/digits; if no eligible
+    word exists, returns the text unchanged.
+    """
+    import random as _random
+    r = rng or _random
+    words = (text or "").split(" ")
+    candidates = [
+        (i, w) for i, w in enumerate(words)
+        if len(w) >= 6 and w.isalpha() and w.islower() and w.isascii()
+    ]
+    if not candidates:
+        return text
+    i, word = r.choice(candidates)
+    # pick a letter position that has a neighbor mapping
+    positions = [p for p, ch in enumerate(word) if ch in _KEY_NEIGHBORS]
+    if not positions:
+        return text
+    p = r.choice(positions)
+    typo_char = r.choice(_KEY_NEIGHBORS[word[p]])
+    words[i] = word[:p] + typo_char + word[p + 1:]
+    return " ".join(words)
+
+
 def smart_trim(text: str, limit: int) -> str:
     """Length-cap OUTGOING text at a sentence boundary, never mid-sentence.
 
