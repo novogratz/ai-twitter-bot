@@ -12821,3 +12821,59 @@ Annual revenue of $3.4 Trillion by 2040 with adjusted EBITDA of more than $2.7T
 *Morgan Stanley is one of the banks leading the S
   - https://x.com/StockMKTNewz/status/2062861517314265215
   - **WHY**: Source fiable + impact concret (score signal 12, engagement 32).
+- **@stocksavvyshay** (108 likes, score 9/10) — THE $SPCX VALUATION JOURNEY
+
+• 2002: $27M valuation with no rocket flown yet
+• 2010: ~$1B valuation after Falcon 9’s first flight
+• 2015: ~$10B valuation after $GOOGL invested with Starlink announced
+  - https://x.com/StockSavvyShay/status/2062883684710248692
+  - **WHY**: Source fiable + impact concret (score signal 15, engagement 162).
+- **@anthropicai** (234 likes, score 9/10) — Correction: Claude Opus 4's ~3x average speedup dates to May 2025, not May 2024. 
+
+This evaluation has only existed since September 2024, but we backtested it on earlier models: those from May 2024 sh
+  - https://x.com/AnthropicAI/status/2062634151556292775
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 266).
+- **@xfreeze** (124 likes, score 9/10) — Elon Musk on Starship’s rapid scaling:
+
+“Starlink V3 can do 50 on Starship V3
+
+Starship V3 is aimed at doing 100 tons to orbit with full reusability
+
+Then Starship V4 - we’re aiming for over 200 tons
+  - https://x.com/XFreeze/status/2062789726936141933
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 176).
+- **@oguzerkan** (42 likes, score 9/10) — Just modelled $CRWV earnings through 2030 based on +5GW active capacity target.
+
+It gets gradually derisked as interest expense declines from almost 25% of revenue this year to below 7% in 2030.
+
+In 2
+  - https://x.com/oguzerkan/status/2062883400353026452
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 56).
+- **@shanumathew93** (27 likes, score 8/10) — GS Global Institute's baseline model implies sees ~$7.6tr of capital between 2026 and 2031 across compute, data centers, and power
+
+>The baseline model implies $765 billion in annual AI CapEx in 2026,
+  - https://x.com/ShanuMathew93/status/2062867532667597093
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 29).
+- **@semivision_tw** (10 likes, score 7/10) — The Rise of the 800V HVDC ArchitectureSurging Power Consumption in AI Data Centers
+
+The rapid increase in AI server power consumption is being driven by the sharp rise in GPU computing performance. Fo
+  - https://x.com/semivision_tw/status/2062737173242155215
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 10).
+- **@smallcapsnipa** (78 likes, score 9/10) — NVIDIA: “AI COMPUTE DEMAND ISN’T SLOWING DOWN 
+
+Nvidia mentions AI cloud partners $NBIS, $CRWV, $IREN, $SHAZ are build on Nvidia’s full stack end-to-end AI platform with next-gen Vera Rubin infrastruc
+  - https://x.com/SmallCapSnipa/status/2062813742799127009
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 84).
+- **@spacenews_inc** (25 likes, score 8/10) — Satellite maker Apex’s valuation rises to $2.3 billion after latest $200 million raise https://spacenews.com/satellite-maker-apexs-valuation-rises-to-2-3-billion-after-latest-200-million-raise/…
+  - https://x.com/SpaceNews_Inc/status/2062826005832634694
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 27).
+- **@deitaone** (366 likes, score 8/10) — $TSLA  - TESLA'S FUTURE IS ROBOTICS, NOT CARS
+
+J.P. Morgan upgraded Tesla to “neutral” from “underweight,” saying the stock’s value is increasingly tied to autonomous driving, robotics, AI, and softwa
+  - https://x.com/DeItaone/status/2062853677077963168
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 502).
+- **@realbigbrainai** (80 likes, score 8/10) — Ilya Sutskever, OpenAI co-founder, on why the company that builds AGI shouldn't be chasing infinite profits:
+
+Speaking on the No Priors podcast, Ilya Sutskever turns a question on the very technology
+  - https://x.com/realBigBrainAI/status/2062512265614823930
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 126).
