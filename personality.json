@@ -51,7 +51,7 @@
     "flasheurinvest": {
       "first_seen": "2026-04-25",
       "last_interaction": "2026-06-05",
-      "interaction_count": 340,
+      "interaction_count": 341,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -235,7 +235,7 @@
     "coinacademy_fr": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-06-05",
-      "interaction_count": 298,
+      "interaction_count": 299,
       "category": "media",
       "stance": "skeptical",
       "notes": [
@@ -877,7 +877,7 @@
     "crypto__goku": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-06-05",
-      "interaction_count": 236,
+      "interaction_count": 237,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -889,7 +889,7 @@
     "cryptoastmedia": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-06-05",
-      "interaction_count": 273,
+      "interaction_count": 274,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -1513,7 +1513,7 @@
     "divs_king": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-06-05",
-      "interaction_count": 168,
+      "interaction_count": 169,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -1609,7 +1609,7 @@
     "lejournalducoin": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-06-05",
-      "interaction_count": 534,
+      "interaction_count": 535,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -1980,8 +1980,8 @@
     },
     "fchollet": {
       "first_seen": "2026-04-26",
-      "last_interaction": "2026-06-04",
-      "interaction_count": 71,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 72,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -2509,7 +2509,7 @@
     "miningtk": {
       "first_seen": "2026-04-27",
       "last_interaction": "2026-06-05",
-      "interaction_count": 144,
+      "interaction_count": 145,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -3614,8 +3614,8 @@
     },
     "apompliano": {
       "first_seen": "2026-04-27",
-      "last_interaction": "2026-06-02",
-      "interaction_count": 9,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 10,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -6782,8 +6782,8 @@
     },
     "openai": {
       "first_seen": "2026-04-30",
-      "last_interaction": "2026-06-04",
-      "interaction_count": 86,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 88,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -10334,8 +10334,8 @@
     },
     "reutersbiz": {
       "first_seen": "2026-05-05",
-      "last_interaction": "2026-05-23",
-      "interaction_count": 6,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 7,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -18506,8 +18506,8 @@
     },
     "defitracer": {
       "first_seen": "2026-05-22",
-      "last_interaction": "2026-06-02",
-      "interaction_count": 4,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 5,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -21494,8 +21494,8 @@
     },
     "dudewhoinvests": {
       "first_seen": "2026-05-28",
-      "last_interaction": "2026-05-28",
-      "interaction_count": 1,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 2,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -21579,7 +21579,7 @@
     "thebtctherapist": {
       "first_seen": "2026-05-29",
       "last_interaction": "2026-06-05",
-      "interaction_count": 20,
+      "interaction_count": 21,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -24014,8 +24014,8 @@
     },
     "sam_badawi": {
       "first_seen": "2026-05-31",
-      "last_interaction": "2026-05-31",
-      "interaction_count": 1,
+      "last_interaction": "2026-06-05",
+      "interaction_count": 2,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -29269,6 +29269,42 @@
       "dont": ""
     },
     "realbigbrainai": {
+      "first_seen": "2026-06-05",
+      "last_interaction": "2026-06-05",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "gdalmiathinks": {
+      "first_seen": "2026-06-05",
+      "last_interaction": "2026-06-05",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "curiouspayal": {
+      "first_seen": "2026-06-05",
+      "last_interaction": "2026-06-05",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "bugra_kurtoglu": {
       "first_seen": "2026-06-05",
       "last_interaction": "2026-06-05",
       "interaction_count": 1,

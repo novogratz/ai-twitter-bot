@@ -208,7 +208,8 @@ def _announce_pick(ticker: str, company: str, tweet: dict) -> Optional[str]:
     text = unwrap_text(result.stdout).strip()
     if not text or text.upper() == "SKIP":
         return None
-    return text[:280]
+    from .humanizer import smart_trim
+    return smart_trim(text, 280)
 
 
 def safe_run_stock_promo_cycle() -> None:

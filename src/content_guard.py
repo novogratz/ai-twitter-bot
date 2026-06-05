@@ -351,6 +351,34 @@ def _is_lazy_reply(text: str) -> bool:
     return norm in _LAZY_REPLIES
 
 
+def looks_truncated(text: str) -> bool:
+    """True when a draft looks cut off mid-sentence — the 2026-06-05 incident:
+    a blind [:220] slice published "…la vraie question n" and a follower
+    called the account out as a botched ChatGPT paste.
+
+    Signals (any one):
+      - ends with connector punctuation (, ; : — - « " ' ( [)
+      - ends with a dangling 1-2 letter alphabetic fragment after a longer
+        word, with no terminal punctuation ("question n", "et le m")
+      - ends mid-word with a hyphen
+    Casual unpunctuated endings ("give it 2 weeks", "screenshot this") pass.
+    """
+    t = (text or "").rstrip()
+    if not t:
+        return False
+    if re.search(r"[,;:—«\"'(\[\-]$", t):
+        return True
+    m = re.search(r"(\w{3,})\s+([A-Za-zÀ-ÿ]{1,2})$", t)
+    if m and m.group(2).lower() not in {
+        # legit short final words (EN + FR)
+        "ai", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
+        "to", "of", "at", "by", "ça", "là", "où", "eu", "vu", "du", "un",
+        "en", "et", "or", "if", "we", "be", "me", "my", "do",
+    }:
+        return True
+    return False
+
+
 def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     """Validate a draft. kind ∈ {"original", "quote", "reply"}.
 
@@ -377,6 +405,14 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
 
     if kind == "reply" and _is_lazy_reply(text):
         return (False, "low-effort reply (too short / generic — must be substantive)")
+
+    if kind in ("reply", "quote"):
+        # Hard X limit for these surfaces — an over-limit draft gets cut by
+        # the composer mid-sentence, which reads as a botched AI paste.
+        if len(text) > 278:
+            return (False, f"too long for a {kind} ({len(text)} chars > 278) — would truncate mid-sentence")
+        if looks_truncated(text):
+            return (False, "looks truncated mid-sentence (dangling fragment / connector ending)")
 
     return (True, "")
 

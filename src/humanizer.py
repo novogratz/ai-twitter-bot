@@ -141,6 +141,33 @@ def _strip_multiple_alternatives(text: str) -> str:
     return text
 
 
+def smart_trim(text: str, limit: int) -> str:
+    """Length-cap OUTGOING text at a sentence boundary, never mid-sentence.
+
+    Bug 2026-06-05: `_generate_graphseo_reply` blind-sliced `text[:220]` and
+    published "…la vraie question n" — a follower publicly called the account
+    out as a botched ChatGPT paste. A trim must end on a complete thought:
+      1. prefer the last sentence terminal (. ! ? …) within `limit`
+      2. else the last word boundary, dropping any dangling 1-2 letter
+         fragment and trailing connector punctuation (, : ; — « ").
+    """
+    t = (text or "").strip()
+    if len(t) <= limit:
+        return t
+    cut = t[:limit]
+    # 1. last full sentence within the limit
+    m = None
+    for m in re.finditer(r"[.!?…](?=[\s\"»')\]]|$)", cut):
+        pass
+    if m and m.end() >= int(limit * 0.5):
+        return cut[: m.end()].strip()
+    # 2. last word boundary; drop dangling fragments + connector punctuation
+    cut = cut.rsplit(" ", 1)[0] if " " in cut else cut
+    cut = re.sub(r"[\s,;:—\-«\"'(\[]+$", "", cut)
+    cut = re.sub(r"\s+\w{1,2}$", "", cut)  # "…la vraie question n" → drop "n"
+    return cut.strip()
+
+
 def humanize(text: str) -> str:
     """Deterministic cleanup: strip AI artifacts, fix punctuation.
     No LLM call — fast and free. Returns original on short/empty input."""

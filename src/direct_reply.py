@@ -360,7 +360,10 @@ def _generate_graphseo_reply(tweet_text: str) -> str | None:
     text = unwrap_text(result.stdout).strip()
     if not text or text.upper() == "SKIP":
         return None
-    return text[:220]
+    # Sentence-aware cap — a blind [:220] slice published a mid-sentence
+    # reply on 2026-06-05 and got the account publicly called out as AI.
+    from .humanizer import smart_trim
+    return smart_trim(text, 220)
 
 
 def _run_graphseo_scan(replied: set) -> int:
