@@ -122,7 +122,11 @@ obeys the same rules without per-bot rewrites:
   ≥ `DUP_JACCARD_THRESHOLD` (0.45), containment ≥ `DUP_CONTAINMENT_THRESHOLD` (0.6),
   ≥ `DUP_SHARED_BIGRAMS` (3) shared distinctive bigrams ("power bill", "real bottleneck"),
   or same-story window (shared named entity + ≥ `DUP_TOPIC_SHARED_WORDS` (3) content words
-  vs any post in the last `DUP_TOPIC_WINDOW_HOURS` (24)). Added after the bot posted the
+  vs any post in the last `DUP_TOPIC_WINDOW_HOURS` (24)). Tuned live 2026-06-05:
+  text-similarity signals only apply within `DUP_TEXT_WINDOW_HOURS` (48) — older
+  overlap is topic continuity, not duplication; EN "The Decode…" headers are
+  stripped like the FR ones; header words + niche-universal "ai"/"ia" are
+  stopworded (never entities). Added after the bot posted the
   "GPU supply / power bill" take twice and the Anthropic raise 3× in one morning.
   Enforced at BOTH chokepoints now (`post_tweet` AND `quote_tweet`), and every published
   original/quote is recorded into `tweet_history.json` from the chokepoint
