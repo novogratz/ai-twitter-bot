@@ -326,3 +326,19 @@ def test_inject_human_typo_skips_unsafe_words():
     # only mentions/URLs/short words -> unchanged
     text = "@Graphseo yes https://x.com/a $NVDA ok"
     assert inject_human_typo(text) == text
+
+
+# --- GIF tag pipeline (operator 2026-06-05: funny GIFs on posts/quotes) --------
+
+def test_extract_gif_query():
+    from src.humanizer import extract_gif_query
+    clean, q = extract_gif_query("the couch is open.\n\n[GIF: this is fine]")
+    assert q == "this is fine" and "[GIF" not in clean and "couch" in clean
+    clean2, q2 = extract_gif_query("no tag here")
+    assert q2 == "" and clean2 == "no tag here"
+
+
+def test_gif_tag_scrubbed_at_chokepoint():
+    from src.twitter_client import _scrub_metadata_leaks
+    out = _scrub_metadata_leaks("take here\n[GIF: kermit panic]")
+    assert "[GIF" not in out and "take here" in out

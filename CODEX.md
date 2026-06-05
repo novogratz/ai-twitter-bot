@@ -55,6 +55,24 @@ Two one-line root causes, both fixed:
 Lesson: when a surface flatlines, check `engagement_log.csv` daily counts per
 action type FIRST — the collapse was invisible in bot.log noise.
 
+### 2026-06-05 PM — native GIF attachments (tested live, "you nailed it")
+
+Funny posts/quotes now carry GIFs from X's NATIVE composer picker (no
+downloads/re-uploads — brittle + repost-flag risk):
+- `twitter_client._attach_native_gif(query)` — clicks `gifSearchButton`,
+  pastes the query, clicks the first `gifSearchGifImage`. Best-effort: on any
+  failure the post ships text-only.
+- `post_tweet_with_gif(text, q)` / `quote_tweet_with_gif(url, comment, q)` —
+  full chokepoint gates, composer flow (intent URL can't open the picker).
+- Generators emit `[GIF: <2-4 word search>]`: stunt bot ALWAYS, quote bot ~1
+  in 3 (restraint reads human). `humanizer.extract_gif_query` strips the tag;
+  `_scrub_metadata_leaks` also strips GIF tags as backstop.
+- Curated query bank in prompts: "this is fine", "michael jordan crying"
+  (market down), "wolf of wall street"/"leonardo dicaprio cheers" (boss),
+  "pablo escobar waiting", "kermit panic", "futurama fry suspicious".
+- Live-validated 2026-06-05 18:00: "this is fine" GIF post composed,
+  attached, and published end-to-end.
+
 ### 2026-06-05 PM — human-typo injection for @Graphseo
 
 Operator mandate: every reply to @Graphseo (and ONLY him — he tweeted that

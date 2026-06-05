@@ -141,6 +141,29 @@ def _strip_multiple_alternatives(text: str) -> str:
     return text
 
 
+_GIF_TAG_RE = re.compile(r"\[\s*GIF\s*:\s*([^\]\n\r]{2,60})\]", re.IGNORECASE)
+
+
+def extract_gif_query(text: str) -> tuple:
+    """Pull a `[GIF: <search query>]` tag out of generated text.
+
+    Operator 2026-06-05 ("you nailed it"): funny posts/quotes carry a GIF from
+    X's native picker. Generators emit the tag; the posting bot extracts it
+    and routes to post_tweet_with_gif / quote_tweet_with_gif. Returns
+    (cleaned_text, query_or_empty). `_scrub_metadata_leaks` also strips any
+    leftover [GIF…] as a backstop so the tag can never publish.
+    """
+    if not text:
+        return text, ""
+    m = _GIF_TAG_RE.search(text)
+    if not m:
+        return text, ""
+    query = " ".join(m.group(1).split()).strip().lower()
+    cleaned = (text[: m.start()] + text[m.end():]).strip()
+    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
+    return cleaned, query
+
+
 # Adjacent keys per letter (AZERTY-leaning, valid on QWERTY rows too) — used
 # to fake a plausible fat-finger typo, e.g. "configurer" → "xonfigurer".
 _KEY_NEIGHBORS = {

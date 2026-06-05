@@ -104,10 +104,17 @@ GOOD (therapist voice, adds an angle):
 BAD (just a reaction): "Beautiful." / "Good luck." / "Called it." / "As expected."
 BAD (old voice): snark, roast, "ngmi", dunking on the trend instead of healing it.
 
+GIF (optional, ~1 quote in 3): when a famous meme GIF would make the quote
+land HARDER, add one line after the text: [GIF: <2-4 word search>]. Proven
+X vocabulary: "this is fine" (calm in chaos), "michael jordan crying" (market
+down), "wolf of wall street" / "leonardo dicaprio cheers" (boss/win),
+"pablo escobar waiting", "kermit panic", "futurama fry suspicious". Skip the
+GIF when the line is stronger alone — restraint reads more human.
+
 CRITICAL: any output containing the bare word "skip" = silent skip. Either the
 pure quote OR "SKIP" alone — never a sentence explaining why you're skipping.
 
-Output ONLY the English quote text, OR the word SKIP."""
+Output ONLY the English quote text (+ optional [GIF: …] line), OR the word SKIP."""
 
 
 def _load_state() -> dict:
@@ -508,8 +515,14 @@ def run_quote_tweet_cycle():
 
     log.info(f"[QUOTE] Best pick: @{author} ({likes} likes) — {text[:80]}...")
 
+    from .humanizer import extract_gif_query
+    quote, _gif_q = extract_gif_query(quote)
     try:
-        posted = quote_tweet(url, quote)
+        if _gif_q:
+            from .twitter_client import quote_tweet_with_gif
+            posted = quote_tweet_with_gif(url, quote, _gif_q)
+        else:
+            posted = quote_tweet(url, quote)
         if not posted:
             # Policy/spacing skip at the chokepoint — do NOT mark the URL as
             # quoted, the candidate stays alive for the next cycle. (Bug
