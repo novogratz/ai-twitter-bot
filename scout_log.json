@@ -3207,5 +3207,71 @@
       }
     ],
     "summary": "Un focus lourd sur la tech FR (Mistral, Mews) et la qualit\u00e9 qu\u00e9b\u00e9coise (Lucas, Alexis). Pas de vendeurs de r\u00eave, que des buildeurs ou des traders qui savent analyser."
+  },
+  {
+    "ts": "2026-06-04T18:51:28.275253",
+    "raw_count": 10,
+    "kept_count": 8,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LennyFromBrisbane",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 250000,
+        "reason": "Il twitte en anglais mais sa l\u00e9gende FR est culte chez les devs. Le type qui transforme les cas d'usage IA en tweets viraux sans se prendre pour un guru."
+      },
+      {
+        "handle": "Marc-AndreMuller",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "L'homme aux chapeaux (Muller AI, etc.). Il cover l'IA avec un humour west-coastain qui passe tr\u00e8s bien en fran\u00e7ais dans les cercles tech parisiens."
+      },
+      {
+        "handle": "CoralieDubreuil",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Ancienne de Boursorama, elle balance la bourse et la tech avec une plume qui pique mais ne dort pas. Pas de signaux, que du sens."
+      },
+      {
+        "handle": "RenaudLannadere",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "L'ancien de La Croix. Il parle crypto sans le jargon barbant des 'degen'. C'est l'analyste qu'on voudrait avoir \u00e0 un ap\u00e9ro, pas un influenceur Telegram."
+      },
+      {
+        "handle": "JulienBougon",
+        "region": "france",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "Vie de founder, lev\u00e9es de fonds, tech FR. Il balance le r\u00e9el, pas les pubs. Le genre de compte qui fait du bien au moral des fondateurs."
+      },
+      {
+        "handle": "BenjaminPommier",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Le mec derri\u00e8re le site qui indexe les offres IA. Il twitte la tech FR avec un doigt dans le nez. Pur, efficace, pas de pub."
+      },
+      {
+        "handle": "MaximeLau",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Le pionnier qu\u00e9b\u00e9cois de l'IA. Il balance des threads techniques sans dormir. Le QC repr\u00e9sente bien quand m\u00eame, et lui aussi."
+      },
+      {
+        "handle": "TanguyB",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Instafluff. Il cover la tech et le business avec un humour montr\u00e9alais typ\u00e9. C'est de la qualit\u00e9, pas du bruit."
+      }
+    ],
+    "summary": "Une s\u00e9lection mix\u00e9e entre les lourds (Mistral, Muller) et les perles rares (Lannadere, Pommier) qui respectent le crit\u00e8re 'pas de pub'. Le Qu\u00e9bec est bien repr\u00e9sent\u00e9 par ses b\u00e2tisseurs IA et les humoristes tech."
   }
 ]
