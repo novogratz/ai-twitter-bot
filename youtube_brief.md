@@ -1,14 +1,15 @@
-# YouTube brief — 2026-06-04
+# YouTube brief — 2026-06-05
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **423**
-- reply: **361**
-- hotake: **54**
+- Total actions logged: **289**
+- reply: **231**
+- hotake: **32**
+- retweet: **17**
+- quote: **5**
 - post: **4**
-- quote: **4**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -1495,30 +1496,42 @@ Timberrrrrrrrrrrrrrrr
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Elon Musk]** The intelligence of this hive-mind will improve significantly as signal/noise, effective cross-linking of tweets & speed of tweets all improve
-  - https://x.com/elonmusk/status/1599382943893319680
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Tesla AI]** These video foundation models will serve as the brain of both the car & Optimus robot 
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Andrew Curran]** Anthropic says Recursive Self Improvement is approaching faster than they expected.
 
-Join the Tesla AI team to build the future of robotics!
+Quoting from the blog:
 
-→
-  - https://x.com/Tesla_AI/status/1671589939950100495
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Sam Altman]** OpenAI Robotics is hiring, looking for exceptional full-stack hardware, ops, systems, and ML engineers to help us program and manufacture robots that are useful
-  - https://x.com/sama/status/2061117302528188712
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Watcher.Guru]** JUST IN: Elon Musk says Tesla should be valued as an AI robotics company, not a car company.
-  - https://x.com/WatcherGuru/status/1782902474153611486
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Watcher.Guru]** JUST IN: Elon Musk says he will start selling humanoid robots to the public by the end of next year.
-  - https://x.com/WatcherGuru/status/2014368460101320772
-- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Ashley Reese]** NO THEY WEREN’T. THEY WERE RIGHT. PACINO HIVE.
-  - https://x.com/offbeatorbit/status/2058378107539570691
-- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Serenity]** Not the best idea to feel FOMO about the new “bottleneck” in every news cycle.
+'What should we do?
 
-It’s going from:
+If it were possible to effecti
+  - https://x.com/AndrewCurran_/status/2062570877074719038
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/RonnieV]** The U.S. Government is literally telling you to buy Nuclear.
 
-$NVDA GPUs -> $MU Memory -> $IREN Power -> $LITE EMLs -> $SNDK
-  - https://x.com/aleabitoreddit/status/2047426124586893566
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Polymarket]** NEW: BMW declares humanoid robots are “the future” of car manufacturing as it rolls them out at its Leipzig plant.
-  - https://x.com/Polymarket/status/2060155158068158643
+President Trump’s Reactor Pilot Program was launched to accelerate America’s nuclear future.
+
+The 
+  - https://x.com/TheRonnieVShow/status/2062693642343424261
+- **[X_FOLLOWING/Mario Nawfal]** SoftBank CEO Masayoshi Son just named the next trillion-dollar bet: physical AI and robots.
+  - https://x.com/MarioNawfal/status/2062751749853614563
+- **[X_FOLLOWING/Financial Times]** Elon Musk’s SpaceX lines up retail investors for record IPO allocation
+  - https://x.com/FT/status/2062751438787191251
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Financial Review]** The site is expected to house an 800 megawatt facility – more than twice the size of any data centre in Australia.
+  - https://x.com/FinancialReview/status/2062677296423563625
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/The Friends Insight]** . @SpaceX just dropped the official IPO launch
+
+The company founded “to make life multiplanetary” is going public
+
+Their announcement post highlights the expand
+  - https://x.com/TFI_Insight/status/2062746805436338276
+- **[X_HOME/Alan]** #Bitcoin 
+
+Mais en attendant notre moment de gloire (voir le dernier tweet) nos nerfs sont mis à rude épreuve chaque jour...
+
+Il faut être honnête et cette char
+  - https://x.com/AlanTradingYT/status/2062750513918267700
+- **[X_HOME/Mahwish Dison]** If you need one account to follow for daily stock gains, it's @officialtcrazy. His upside momentum calls rarely disappoint 
+ 
+ $ASTS  $ARM  $QQQ $DELL  $RMSG
+  - https://x.com/bisdianora24202/status/2062750778691924158
 
 ## 🎬 Suggested video angles
 
@@ -1526,7 +1539,7 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s hook: the most surprising number or quote of the day.
 - 2min context: the 2-3 biggest stories in that theme.
 - 1min angle: what no other YT channel is saying about it.
-- 30s call-to-action: comment + subscribe + the bot's @AISpaceDecoder handle.
+- 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-04T01:21:57*
+*Generated 2026-06-05T00:31:17*
