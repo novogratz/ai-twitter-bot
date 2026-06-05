@@ -31,6 +31,10 @@ Le bot fait tourner **plus de 30 micro-bots concurrents** orchestrés par une bo
 
 - **`engine_health_bot`** — sentinelle horaire : rythme du jour vs moyenne 7 jours à la même heure, alerte si une surface tombe sous 40 % (né de l'effondrement silencieux des retweets). **`conversion_attribution_bot`** — nouveaux followers rapprochés des auteurs auxquels on a répondu sous 48 h → poids par auteur ajusté dans le ciblage. Bouton Follow réparé (3 stratégies de sélecteur + statut réel du clic, anti-churn 30 j dans les deux sens). Replyback : @handle récupéré depuis l'URL du statut. Langue des réponses : match strict du parent (EN par défaut). **Voix thérapeute** alignée sur tous les prompts (quote, réponses, spicy) : nommer l'émotion → valider → re-cadrer calmement avec le fait précis.
 
+## Full agentic (2026-06-05 PM)
+
+- **`tests/test_guards.py`** (19 tests, <1 s) + **CI GitHub Actions** sur chaque push : le filet de sécurité des pushes autonomes. **`bin/auto_improve.sh`** + launchd (07h17 quotidien) : session Claude Code headless qui diagnostique les métriques, livre UNE amélioration testée et pousse sur main chaque jour. **Auto-guérison** : une alerte d'effondrement (`engine_health_bot`) déclenche un run d'urgence (cooldown 6 h, coupe-circuit `ENABLE_SELF_HEAL=0`). Le bot ne démarre JAMAIS tout seul — l'opérateur garde la main.
+
 ## Surge quote-RT + persona thérapeute (2026-06-05 PM)
 
 - Quote-RT validé (4 likes en 2 h sur la première sortie) → **150/jour**, espacement 90 s, barre du sweeper 200 likes, 4 quotes/cycle — mandat opérateur « abuse un peu pendant quelques semaines ». `bot_self_en/fr.json` réécrits dans l'esprit de la bio (« Treating market trauma… Heal the fear ») — l'ancien état « trader cynique à 3 h du matin » combattait l'identité thérapeute dans chaque prompt. Release de lancement **`launch-v1.0`** publiée sur GitHub (point de rollback).
