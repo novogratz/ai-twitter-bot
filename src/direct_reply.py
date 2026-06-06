@@ -359,45 +359,49 @@ def _generate_graphseo_reply(tweet_text: str) -> str | None:
 
 
 def _run_graphseo_scan(replied: set) -> int:
-    """Find @Graphseo's recent posts via search (no profile page visit) and reply."""
+    """Scan VIP FR accounts via search and reply to recent posts.
+
+    Operator 2026-06-06: Graphseo (Julien Flot), XFenaux, RodolpheSteffan,
+    and FinTales_ all get their own dedicated scan — no profile page visits.
+    """
     from .twitter_client import scrape_x_search, reply_to_tweet
     from .reply_bot import _tweet_age_minutes
     from .engagement_log import log_reply
-    log.info("[GRAPHSEO] Searching @Graphseo recent posts (no profile visit)...")
+
+    VIP_SCAN_HANDLES = ["Graphseo", "XFenaux", "RodolpheSteffan", "FinTales_"]
     posted = 0
-    try:
-        tweets = scrape_x_search("from:Graphseo", max_tweets=20, tab="latest")
-    except Exception:
-        log.info("[GRAPHSEO] Search failed.")
-        traceback.print_exc()
-        return 0
-    for t in tweets:
-        url = t.get("url", "")
-        text = t.get("text", "")
-        if not url or not text:
-            continue
-        if url in replied:
-            continue
-        age = _tweet_age_minutes(url)
-        if age > 2880:  # 48h
-            continue
-        reply = _generate_graphseo_reply(text)
-        if not reply:
-            log.info(f"[GRAPHSEO] Skipped (no reply generated): {url[:60]}")
-            continue
-        log.info(f"[GRAPHSEO] Replying to {url[:60]}: {reply[:80]}")
+    for handle in VIP_SCAN_HANDLES:
+        log.info(f"[VIP] Scanning @{handle} recent posts (search, no profile visit)...")
         try:
-            reply_to_tweet(url, reply)
-            replied.add(url)
-            try:
-                log_reply(url, reply, action_type="reply", source="GRAPHSEO_VIP")
-            except Exception:
-                pass
-            posted += 1
+            tweets = scrape_x_search(f"from:{handle}", max_tweets=20, tab="latest")
         except Exception:
-            log.info("[GRAPHSEO] Reply failed:")
+            log.info(f"[VIP] Search failed for @{handle}.")
             traceback.print_exc()
-    log.info(f"[GRAPHSEO] Done — {posted} replies posted.")
+            continue
+        for t in tweets:
+            url = t.get("url", "")
+            text = t.get("text", "")
+            if not url or not text or url in replied:
+                continue
+            if _tweet_age_minutes(url) > 2880:
+                continue
+            reply = _generate_graphseo_reply(text)
+            if not reply:
+                continue
+            log.info(f"[VIP] Replying to @{handle} {url[:60]}: {reply[:80]}")
+            try:
+                reply_to_tweet(url, reply)
+                replied.add(url)
+                try:
+                    log_reply(url, reply, action_type="reply", source=f"VIP/{handle}")
+                except Exception:
+                    pass
+                posted += 1
+            except Exception:
+                log.info(f"[VIP] Reply failed for @{handle}:")
+                traceback.print_exc()
+        log.info(f"[VIP] @{handle} done.")
+    log.info(f"[VIP] Total VIP replies posted: {posted}.")
     return posted
 
 
@@ -516,7 +520,7 @@ def run_direct_reply_cycle():
 
     # 1. FOR YOU — open, scroll deep, reply to everything; then refresh and repeat.
     #    Operator: "refresh x.com/home to get more to reply to."
-    for _pass in range(3):
+    for _pass in range(5):
         try:
             tweets = scrape_home_feed(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
             if tweets:
