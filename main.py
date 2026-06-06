@@ -138,36 +138,27 @@ def post_interval_minutes() -> int:
 # and almost nothing completes. Sane spacing lets the high-value bots (reply /
 # direct_reply / quote / retweet) actually run → MORE real output.
 def reply_interval_minutes() -> int:
-    hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 6 <= hour < 23:
-        return _cadence(random.randint(2, 3))
-    return _cadence(random.randint(4, 6))
+    # 24/7 flat (2026-06-06 "do more"): crypto/AI twitter never sleeps,
+    # and overnight EU/Asia threads are uncontested reply real estate.
+    return _cadence(random.randint(2, 3))
 
 
 def engage_interval_minutes() -> int:
-    hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 6 <= hour < 23:
-        return _cadence(random.randint(5, 8))
-    return _cadence(random.randint(10, 14))
+    return _cadence(random.randint(5, 8))  # 24/7 flat
 
 
 def direct_reply_interval_minutes() -> int:
-    hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 6 <= hour < 23:
-        return _cadence(random.randint(2, 4))
-    return _cadence(random.randint(5, 8))
+    return _cadence(random.randint(2, 4))  # 24/7 flat
 
 
 def early_bird_interval_minutes() -> int:
-    hour = datetime.now(ZoneInfo("America/New_York")).hour
-    if 6 <= hour < 23:
-        return _cadence(random.randint(5, 8))
-    return _cadence(random.randint(10, 14))
+    return _cadence(random.randint(5, 8))  # 24/7 flat
 
 
 def roast_interval_minutes() -> int:
-    """PUSH IT HARD — roast every 8-12 min."""
-    return _cadence(random.randint(8, 12))
+    """45-60 min (2026-06-06): the 8-12 min feud cadence ate ~5 Safari
+    slots/hour that now go to quotes/replies. The bit stays alive."""
+    return _cadence(random.randint(45, 60))
 
 
 def _graceful_shutdown(signum, frame):
