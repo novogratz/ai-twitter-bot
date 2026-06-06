@@ -387,7 +387,11 @@
     "MathieuBis",
     "AlexisFoussard",
     "JadeGirard",
-    "AlexisSaulnier"
+    "AlexisSaulnier",
+    "PierreRoques",
+    "DorianMazuy",
+    "JulesBoisson",
+    "VivekLaine"
   ],
   "en": [
     "blablacar",
@@ -2402,6 +2406,26 @@
     {
       "lang": "fr",
       "handle": "AlexisSaulnier",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRoques",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianMazuy",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesBoisson",
+      "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "VivekLaine",
       "added": "2026-06-05"
     }
   ]
