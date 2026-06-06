@@ -13271,3 +13271,40 @@ One week before SpaceX's historic IPO, Google signed a deal to pay SpaceX $920 m
 - **@zephyr_z9** (391 likes, score 8/10) — Is Big Tech trying to fuck up the IPO window for OpenAI, Anthropic & SpaceX??
   - https://x.com/zephyr_z9/status/2062971158673391616
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 425).
+- **@bitcoinmagazine** (1676 likes, score 9/10) — JUST IN: Bitcoin falls to $59,817
+  - https://x.com/BitcoinMagazine/status/2062930650089357394
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1966).
+- **@bitcoinmagazine** (747 likes, score 9/10) — JUST IN: $199 billion VanEck's Matthew Siegel on Bitcoin: "We think this will become a mainstream asset that will compete with other reserve settlement currencies"
+  - https://x.com/BitcoinMagazine/status/2062987036999434694
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 883).
+- **@bitcoinmagazine** (298 likes, score 9/10) — Bitcoin has outperformed every crypto since 2020 
+
+There is no second best
+  - https://x.com/BitcoinMagazine/status/2063002955826004155
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 396).
+- **@wolf_financial** (214 likes, score 9/10) — YIKES: THE WORST DAY FOR CHIP STOCKS SINCE THE MARCH 2020 CRASH
+
+The iShares Semiconductor ETF $SOXX dropped 10% today.
+
+The broader market:
+- Nasdaq $IXIC: -4.18% (worst day since April 2025)
+- S&P 5
+  - https://x.com/WOLF_Financial/status/2062997969641881699
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 280).
+- **@business** (64 likes, score 8/10) — Gold erased its gains this year as robust US jobs data fueled bets that the Federal Reserve will likely raise interest rates this year
+  - https://x.com/business/status/2062968740812140833
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 84).
+- **@yahoofinance** (28 likes, score 8/10) — Elon Musk sat down with Jamie Dimon at a JPMorgan investor event to explain why now was the time for the SpaceX IPO.
+  - https://x.com/YahooFinance/status/2062992032168047041
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 44).
+- **@yahoofinance** (24 likes, score 8/10) — Elon Musk gets a special message from his mom ahead of the SpaceX IPO.
+  - https://x.com/YahooFinance/status/2063033574106755466
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 30).
+- **@kunoo** (227 likes, score 7/10) — They lost $2 billion in 48 hours.
+  - https://x.com/kunoo/status/2062938750184042564
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 267).
+- **@thetranscript_** (37 likes, score 7/10) — It was a messy start to the Q2 26 earnings call for the Broadcom CEO.
+
+$AVGO
+  - https://x.com/TheTranscript_/status/2062955728432759225
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 41).
