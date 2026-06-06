@@ -359,16 +359,16 @@ def _generate_graphseo_reply(tweet_text: str) -> str | None:
 
 
 def _run_graphseo_scan(replied: set) -> int:
-    """Scrape @Graphseo's last 48h posts and reply to all unreplied ones with Claude."""
-    from .twitter_client import scrape_profile_tweets, reply_to_tweet
+    """Find @Graphseo's recent posts via search (no profile page visit) and reply."""
+    from .twitter_client import scrape_x_search, reply_to_tweet
     from .reply_bot import _tweet_age_minutes
     from .engagement_log import log_reply
-    log.info("[GRAPHSEO] Scanning @Graphseo for unreplied posts (48h window, Claude CLI)...")
+    log.info("[GRAPHSEO] Searching @Graphseo recent posts (no profile visit)...")
     posted = 0
     try:
-        tweets = scrape_profile_tweets("Graphseo", max_tweets=30)
+        tweets = scrape_x_search("from:Graphseo", max_tweets=20, tab="latest")
     except Exception:
-        log.info("[GRAPHSEO] Profile scrape failed.")
+        log.info("[GRAPHSEO] Search failed.")
         traceback.print_exc()
         return 0
     for t in tweets:
@@ -426,8 +426,10 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
         return reply
     except Exception: return None
 
-DIRECT_REPLY_MAX_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_PER_CYCLE", "40"))
-MAX_EN_REPLIES_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_EN_PER_CYCLE", "40"))
+# No per-cycle budget cap — reply to everything good on the live feed.
+# Individual rate limits (jitter, LLM hourly cap, dedup) still apply.
+DIRECT_REPLY_MAX_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_PER_CYCLE", "9999"))
+MAX_EN_REPLIES_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_EN_PER_CYCLE", "9999"))
 DIRECT_REPLY_FEED_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_FEED_SCAN_LIMIT", "100"))
 DIRECT_REPLY_PROFILE_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_PROFILE_SCAN_LIMIT", "25"))
 DIRECT_REPLY_HOT_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_HOT_QUERY_LIMIT", "20"))
@@ -507,42 +509,54 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
     return posted
 
 def run_direct_reply_cycle():
-    replied = load_replied()
-    total, en_counter, favorite_reposts = 0, [0], 0
-    try:
-        from .retweet_bot import _load_retweeted
-        retweeted = _load_retweeted()
-    except Exception: retweeted = set()
-    def _budget(): return DIRECT_REPLY_MAX_PER_CYCLE - total
+    """Reply cycle — feed-first, no profile visits, no budget gate.
 
-    # 1. GRAPHSEO — always first, dedicated scan
+    Order (operator 2026-06-06):
+      1. For You (home feed) — reply to every good on-niche post
+      2. Following feed      — same
+      3. Graphseo dedicated scan (he gets a reply every cycle, no profile visit)
+      4. Search on niche keywords — catch viral posts not yet on feed
+    No per-cycle budget cap. Individual jitter + LLM hourly limit + dedup gate volume.
+    """
+    replied = load_replied()
+    total, en_counter = 0, [0]
+
+    # 1. FOR YOU — scroll the algorithmic feed and reply to everything good
+    try:
+        tweets = scrape_home_feed(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
+        if tweets:
+            tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
+            total += _reply_to_tweets(tweets, replied, "FEED", en_counter=en_counter)
+    except Exception:
+        traceback.print_exc()
+
+    # 2. FOLLOWING — chronological tab, reply to everything good
+    try:
+        tweets = scrape_following_feed(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
+        if tweets:
+            tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
+            total += _reply_to_tweets(tweets, replied, "FOLLOWING", en_counter=en_counter)
+    except Exception:
+        traceback.print_exc()
+
+    # 3. GRAPHSEO — dedicated reply scan (search-based, no profile page visit)
     try:
         _run_graphseo_scan(replied)
     except Exception:
         log.info("[GRAPHSEO] Scan error:")
         traceback.print_exc()
 
-    # 2. FOR YOU + FOLLOWING FEEDS — primary reply surface (operator 2026-06-06)
-    #    These run BEFORE any profile visits so fresh live content always gets replies.
-    for source, scraper in [("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)]:
-        if _budget() <= 0: break
+    # 4. SEARCH — catch viral niche posts not surfaced by either feed
+    for query in random.sample(SEARCH_QUERIES + HOT_TAB_QUERIES, min(6, len(SEARCH_QUERIES + HOT_TAB_QUERIES))):
         try:
-            tweets = scraper(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
+            tweets = scrape_x_search(query, max_tweets=20, tab="top")
             if tweets:
-                tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
-                total += _reply_to_tweets(tweets, replied, source, remaining=_budget(), en_counter=en_counter)
-        except Exception: traceback.print_exc()
-
-    # 3. SEARCH — viral/popular posts on niche keywords (budget permitting)
-    for query in random.sample(SEARCH_QUERIES + HOT_TAB_QUERIES, min(8, len(SEARCH_QUERIES + HOT_TAB_QUERIES))):
-        if _budget() <= 0: break
-        try:
-            tweets = scrape_x_search(query, max_tweets=25, tab="top")
-            if tweets: total += _reply_to_tweets(tweets, replied, "SEARCH-HOT", source_detail=query, remaining=_budget(), en_counter=en_counter)
-        except Exception: traceback.print_exc()
+                total += _reply_to_tweets(tweets, replied, "SEARCH-HOT", source_detail=query, en_counter=en_counter)
+        except Exception:
+            traceback.print_exc()
 
     save_replied(replied)
-    log.info(f"[DIRECT] Posted {total} replies.")
+    log.info(f"[DIRECT] Posted {total} replies this cycle.")
 
 def safe_run_direct_reply_cycle():
     from . import health
