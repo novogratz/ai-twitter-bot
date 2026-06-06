@@ -7,7 +7,7 @@
     "MAX_RETWEETS_PER_DAY": 0,
     "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY": 1,
-    "MAX_REPLIES_PER_CYCLE": 8,
+    "MAX_REPLIES_PER_CYCLE": 15,
     "LIKE_BOT_PER_CYCLE": 20,
     "FOLLOW_BLAST_PER_CYCLE": 0
   },
@@ -20,5 +20,5 @@
     "AI"
   ],
   "cadence_factor": 1.0,
-  "rationale": "MONETIZATION MANDATE 2026-06-05 PM: sponsor-clean account. Original-first (>=80% original, 3-6 posts/day across US market hours, no bursts), quotes <=6/day always with a therapeutic take, bare retweets OFF, replies genuine (<=100/day, 90s spacing), mass-follow OFF, ratio repair via gradual unfollows. No links in posts, no hashtags, finance/markets/AI lane only. Persona: deadpan market therapist. Engagement rate >2-3% matters more than raw volume \u2014 sponsors read the timeline."
+  "rationale": "MONETIZATION MANDATE 2026-06-05 PM: sponsor-clean account. Original-first (>=80% original, 3-6 posts/day across US market hours, no bursts), quotes <=6/day always with a therapeutic take, bare retweets OFF, replies are THE growth lever: 400/day at 30s+jitter (operator 2026-06-06: volume back to early-period levels), still genuine + substantive, mass-follow OFF, ratio repair via gradual unfollows. No links in posts, no hashtags, finance/markets/AI lane only. Persona: deadpan market therapist. Engagement rate >2-3% matters more than raw volume \u2014 sponsors read the timeline."
 }

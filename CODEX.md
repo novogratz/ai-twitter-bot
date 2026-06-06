@@ -21,6 +21,13 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 > - ❌ off-topic quotes/reposts → space keywords REMOVED from `_is_on_niche`
 > - ❌ mass-follow → `ENABLE_FOLLOW_BLAST=0`, `MAX_FOLLOWS_PER_DAY=10`
 >
+> **2026-06-06 adjustments:** replies back to ~400/day @30s+jitter (operator:
+> "you are doing less replies than a few weeks ago" — replies stay the #1
+> growth lever; the 100/day cap was over-correction). "🔎 The Decode Daily"
+> series branding REMOVED from the news prompt — posts now open with the hook,
+> therapist-framed, no header, no URL (operator: "I don't want to see the
+> decode daily").
+>
 > **Content strategy:** original-first (≥80%): 3–6 originals/day across US
 > market hours, 80-min+jitter spacing, no bursts (`MAX_ORIGINALS_PER_DAY=6`).
 > Quotes ≤6/day, ALWAYS with a therapeutic-angle take. Bare retweets OFF
