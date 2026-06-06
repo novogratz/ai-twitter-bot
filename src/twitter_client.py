@@ -6,6 +6,7 @@ import subprocess
 import threading
 import time
 import urllib.parse
+from datetime import datetime
 import webbrowser
 from .config import BOT_PROFILE_URL, MAX_RETRIES, RETRY_DELAY_SECONDS
 from .logger import log
@@ -209,9 +210,51 @@ def _scrub_metadata_leaks(text: str) -> str:
         "",
         text,
     )
+    # Hashtags banned account-wide (monetization mandate 2026-06-05 —
+    # sponsor-clean timeline). Strip trailing tag runs AND inline tags.
+    text = re.sub(r"(?:\s+#\w{2,50})+\s*$", "", text)
+    text = re.sub(r"\s*#(\w{2,50})\b", r" \1", text)  # inline: keep the word, drop the #
     # Collapse blank-line gaps the strip may have left behind.
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
     return text
+
+
+def _strip_post_urls(text: str) -> str:
+    """External links in standalone posts/quotes throttle reach and are
+    BANNED by the monetization mandate (2026-06-05). Strip them; the
+    link-in-first-reply pattern is the sanctioned alternative."""
+    stripped = re.sub(r"https?://\S+", "", text or "")
+    stripped = re.sub(r"[ \t]{2,}", " ", stripped)
+    stripped = re.sub(r"\n{3,}", "\n\n", stripped).strip()
+    if stripped != (text or "").strip():
+        log.info("[POST] external URL stripped (no-links mandate).")
+    return stripped
+
+
+def _review_mode() -> bool:
+    return os.environ.get("REVIEW_MODE", "0") == "1"
+
+
+def _queue_for_review(kind: str, payload: dict) -> None:
+    """Human-in-the-loop queue (REVIEW_MODE=1): drafts land in
+    review_queue.json instead of publishing; the /approve skill ships them."""
+    import json as _json
+    from .config import _PROJECT_ROOT as _PR
+    path = os.path.join(_PR, "review_queue.json")
+    try:
+        queue = []
+        if os.path.exists(path):
+            with open(path) as f:
+                queue = _json.load(f)
+        if not isinstance(queue, list):
+            queue = []
+        payload = dict(payload, kind=kind, queued_at=datetime.now().isoformat())
+        queue.append(payload)
+        with open(path, "w") as f:
+            _json.dump(queue[-100:], f, indent=2, ensure_ascii=False)
+        log.info(f"[REVIEW] {kind} queued for approval ({len(queue)} pending).")
+    except Exception as e:
+        log.info(f"[REVIEW] queue write failed: {e}")
 
 
 class ToolCallLeakError(Exception):
@@ -229,6 +272,7 @@ def post_tweet(text: str, image_path: str = None):
     intent URL doesn't support media uploads.
     """
     text = _scrub_metadata_leaks(text)
+    text = _strip_post_urls(text)  # no external links in posts (mandate)
 
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
     # scrubbing, refuse to post. Both of these went live in prod 2026-05-13
@@ -252,6 +296,9 @@ def post_tweet(text: str, image_path: str = None):
         return
     if content_guard.is_duplicate(text):
         log.info(f"[POST] near-duplicate of a recent post — skipping (no duplication): {text[:120]!r}")
+        return
+    if _review_mode():
+        _queue_for_review("post", {"text": text, "image_path": image_path or ""})
         return
     if _cfg.DRY_RUN:
         log.info(f"[POST][DRY_RUN] would post: {text[:200]!r}")
@@ -422,6 +469,7 @@ def post_tweet_with_gif(text: str, gif_query: str, force: bool = False) -> bool:
     same-story window correctly flags but the operator explicitly wants.
     Autonomous bots must NEVER pass force=True."""
     text = _scrub_metadata_leaks(text)
+    text = _strip_post_urls(text)  # no external links in posts (mandate)
     from .llm_client import contains_post_unsafe_leak
     if contains_post_unsafe_leak(text):
         log.error(f"[POST] Unsafe leak in GIF post — refusing. Text: {text[:200]!r}")
@@ -440,6 +488,9 @@ def post_tweet_with_gif(text: str, gif_query: str, force: bool = False) -> bool:
         return False
     if force:
         log.info("[POST] operator force: near-duplicate gate bypassed for this post.")
+    if _review_mode():
+        _queue_for_review("post_gif", {"text": text, "gif_query": gif_query})
+        return False
     if _cfg.DRY_RUN:
         log.info(f"[POST][DRY_RUN] would post with GIF {gif_query!r}: {text[:200]!r}")
         action_guard.record(action_guard.POST, dry_run=True)
@@ -475,6 +526,7 @@ def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str) -> bool:
     through the full /compose/post composer (the intent URL auto-submits and
     can't open the GIF picker). The pasted tweet URL renders as a quote card."""
     comment = _scrub_metadata_leaks((comment or "").strip())
+    comment = _strip_post_urls(comment)
     if not tweet_url or not comment:
         return False
     from .llm_client import contains_post_unsafe_leak
@@ -492,6 +544,9 @@ def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str) -> bool:
         return False
     if content_guard.is_duplicate(comment):
         log.info(f"[QUOTE] near-duplicate — skipping: {comment[:120]!r}")
+        return False
+    if _review_mode():
+        _queue_for_review("quote_gif", {"text": comment, "tweet_url": tweet_url, "gif_query": gif_query})
         return False
     if _cfg.DRY_RUN:
         log.info(f"[QUOTE][DRY_RUN] would GIF-quote {tweet_url} ({gif_query!r}): {comment[:160]!r}")
@@ -843,6 +898,7 @@ def quote_tweet(tweet_url: str, comment: str) -> bool:
     major chunk of the 28/day-actual vs 300-cap execution gap.
     """
     comment = _scrub_metadata_leaks((comment or "").strip())
+    comment = _strip_post_urls(comment)  # no external links in quote commentary
     if not tweet_url or not comment:
         raise ValueError("quote_tweet requires both tweet_url and comment")
 
@@ -864,6 +920,9 @@ def quote_tweet(tweet_url: str, comment: str) -> bool:
         return False
     if content_guard.is_duplicate(comment):
         log.info(f"[QUOTE] near-duplicate of a recent post — skipping: {comment[:120]!r}")
+        return False
+    if _review_mode():
+        _queue_for_review("quote", {"text": comment, "tweet_url": tweet_url})
         return False
     if _cfg.DRY_RUN:
         log.info(f"[QUOTE][DRY_RUN] would quote {tweet_url}: {comment[:160]!r}")

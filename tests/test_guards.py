@@ -342,3 +342,41 @@ def test_gif_tag_scrubbed_at_chokepoint():
     from src.twitter_client import _scrub_metadata_leaks
     out = _scrub_metadata_leaks("take here\n[GIF: kermit panic]")
     assert "[GIF" not in out and "take here" in out
+
+
+# --- monetization mandate gates (2026-06-05 PM) ---------------------------------
+
+def test_post_urls_stripped():
+    from src.twitter_client import _strip_post_urls
+    out = _strip_post_urls("Big take here.\n\nhttps://cnbc.com/article/xyz")
+    assert "http" not in out and "Big take here." in out
+
+
+def test_hashtags_stripped_at_chokepoint():
+    from src.twitter_client import _scrub_metadata_leaks
+    out = _scrub_metadata_leaks("the market needs therapy #Bitcoin #AI")
+    assert "#" not in out and "therapy" in out
+
+
+def test_review_mode_queues_instead_of_posting(monkeypatch, tmp_path):
+    import json, os
+    import src.twitter_client as tc
+    from src import action_guard
+    monkeypatch.setenv("REVIEW_MODE", "1")
+    import src.config as config
+    monkeypatch.setattr(config, "_PROJECT_ROOT", str(tmp_path))
+    monkeypatch.setattr(action_guard, "can_post", lambda a: (True, ""))
+    recorded = []
+    monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(a))
+    tc.post_tweet("a sponsor-clean original take about the market needing a therapist today")
+    qpath = os.path.join(str(tmp_path), "review_queue.json")
+    assert os.path.exists(qpath)
+    q = json.load(open(qpath))
+    assert len(q) == 1 and q[0]["kind"] == "post"
+    assert recorded == []  # nothing published
+
+
+def test_niche_excludes_space_now():
+    from src.retweet_bot import _is_on_niche
+    assert not _is_on_niche("Beautiful photo of the lunar surface from the Artemis mission astronauts")
+    assert _is_on_niche("Nvidia datacenter revenue is 88% of the company now")

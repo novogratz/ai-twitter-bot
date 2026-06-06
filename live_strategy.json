@@ -1,15 +1,15 @@
 {
-  "ts": "2026-06-04T06:00:00.000000",
+  "ts": "2026-06-05T19:30:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 15,
-    "MAX_HOTAKES_PER_DAY": 30,
-    "MAX_QUOTES_PER_DAY": 300,
-    "MAX_RETWEETS_PER_DAY": 300,
-    "MAX_BREAKOUTS_PER_DAY": 50,
-    "MAX_SPICY_PER_DAY": 50,
-    "MAX_REPLIES_PER_CYCLE": 25,
-    "LIKE_BOT_PER_CYCLE": 60,
-    "FOLLOW_BLAST_PER_CYCLE": 80
+    "MAX_NEWS_PER_DAY": 2,
+    "MAX_HOTAKES_PER_DAY": 2,
+    "MAX_QUOTES_PER_DAY": 6,
+    "MAX_RETWEETS_PER_DAY": 0,
+    "MAX_BREAKOUTS_PER_DAY": 1,
+    "MAX_SPICY_PER_DAY": 1,
+    "MAX_REPLIES_PER_CYCLE": 8,
+    "LIKE_BOT_PER_CYCLE": 20,
+    "FOLLOW_BLAST_PER_CYCLE": 0
   },
   "topic_focus": [
     "AI",
@@ -20,5 +20,5 @@
     "AI"
   ],
   "cadence_factor": 1.0,
-  "rationale": "AI-ONLY ENGLISH MODE (2026-06-03 mandate): All standalone content in ENGLISH. AI-only scope: labs/models/agents, GPU/datacenter/compute, humanoid robots, money-angle AI (Nvidia, Palantir, capex). Space + bourse only through AI lens. Replies match parent language. LINK RULE: Since March 2026 external links in tweet body collapse reach 50-70% — NEVER put URLs in standalone tweets, always drop in first reply. HOTAKE DEDUP: MAX_HOTAKES_PER_DAY cut 50→30 to force quality; same story/URL cannot fire again within 6h — bot was posting Berkeley/Amazon stories 8+ times/day. QUOTE EXECUTION GAP: 28/day actual vs 300 cap — close this gap, every RT candidate becomes a quote or skips entirely. Target 18+ quotes/day. HOT CATALYSTS JUNE 4–15: (1) Anthropic S-1 confidential at $965M run-rate — Nvidia $10B stake = Jensen wins both sides of the IPO race. (2) SpaceX IPO June 11 — $75B raise, $1.75T valuation, RKLB/ASTS contrarian pullback opportunity. (3) Nvidia Vera CPU Q3 — Anthropic/OpenAI/SpaceX first users = Jensen owns every chip in the AI race. (4) Tokenmaxxing fading — Microsoft cancels Claude licenses for Copilot = commoditization signal. (5) SoftBank borrowing at 6% to fund OpenAI burn = leverage METAPHOR. (6) Amazon fires engineers to build AI data centers maintained by AI agents. PATTERN ORDER: METAPHOR > RENAME > DIALOGUE > FR_ANCHOR (FR_ANCHOR only in French replies). ALGO: Reply velocity first 60 min = 15x weight vs likes. Be first on catalyst tweets. DERNIER: format = top performer baseline (41 likes, 10k views). Best hours: 10-12 UTC (6-8 AM ET) and 20-22 UTC (4-6 PM ET)."
+  "rationale": "MONETIZATION MANDATE 2026-06-05 PM: sponsor-clean account. Original-first (>=80% original, 3-6 posts/day across US market hours, no bursts), quotes <=6/day always with a therapeutic take, bare retweets OFF, replies genuine (<=100/day, 90s spacing), mass-follow OFF, ratio repair via gradual unfollows. No links in posts, no hashtags, finance/markets/AI lane only. Persona: deadpan market therapist. Engagement rate >2-3% matters more than raw volume \u2014 sponsors read the timeline."
 }
