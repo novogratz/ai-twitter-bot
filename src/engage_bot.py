@@ -18,6 +18,10 @@ from .twitter_client import visit_profile_and_like, follow_account
 
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 
+# Compatibility shim — notify_bot and reply_agent import TARGET_ACCOUNTS.
+# Real pool is built dynamically from the feed; this satisfies the import.
+TARGET_ACCOUNTS = ["Graphseo", "XFenaux", "RodolpheSteffan", "FinTales_"]
+
 # Only VIP that is always in the rotation by request (operator 2026-06-06).
 VIP_ACCOUNTS = ["Graphseo"]
 
