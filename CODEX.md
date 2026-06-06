@@ -85,6 +85,27 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 > from the revision spec maps to Safari **write-pacing** (per-action daily caps + jittered
 > spacing + no bursts), same intent, different mechanism.
 
+### 2026-06-06 PM — engine-health clamps baseline by current cap
+
+PR #6 silenced the false `retweet` "collapse" alerts when `MAX_RETWEETS_PER_DAY=0`.
+But the SAME class of false positive kept firing for surfaces that were
+**capped but not zeroed**: `hotake` ran at 2/day (its full quota under the
+monetization mandate) and the watchdog compared it to a ~19/by-this-hour 7-day
+baseline built from pre-mandate days when the cap was 8 → `2/19 = 11%`, under
+the 40% floor → "hotake collapsed" alert every cycle, burning self-heal
+cooldowns on a surface that was doing exactly what it was told.
+
+Fix: `_daily_cap_for(kind)` returns the smallest positive cap that governs the
+surface (or `None` if no cap is set); `run_engine_health_cycle` clamps
+`baseline = min(baseline, cap)` before the ratio check. A surface running at
+or above its current cap can never trip the alert against an unreachable
+historical baseline. New guard test `test_engine_health_clamps_baseline_by_cap`
+pins the contract (cap=2, baseline=20 → no alert when today=2).
+
+Lesson: the watchdog's baseline is only meaningful relative to today's cap.
+When operator policy moves the ceiling, the baseline has to move with it —
+otherwise every cap reduction looks like a regression.
+
 ### 2026-06-06 — engine-health ignores deliberately disabled surfaces
 
 The 2026-06-05 PM monetization mandate set `MAX_RETWEETS_PER_DAY=0` (bare

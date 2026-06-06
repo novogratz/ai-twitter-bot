@@ -62,6 +62,31 @@ def _is_surface_disabled(kind: str) -> bool:
     return all(c == 0 for c in caps)
 
 
+def _daily_cap_for(kind: str) -> int | None:
+    """Smallest positive daily cap that governs this surface, or None if no
+    cap is set in the env. The baseline is then clamped by this cap so the
+    watchdog cannot compare today against an unreachable historical level
+    after the operator lowered a cap (e.g. hotake: cap 8 → 2 under the
+    2026-06-05 PM monetization mandate left a 7-day baseline of ~19 by mid-
+    morning, against which today's 2 — a fully-spent quota — looked
+    'collapsed' at 11% and burned the self-heal cooldown every cycle)."""
+    env_names = _CAP_ENVS.get(kind, ())
+    if not env_names:
+        return None
+    caps: list = []
+    for name in env_names:
+        raw = os.environ.get(name)
+        if raw is None or raw == "":
+            continue
+        try:
+            v = int(raw)
+        except ValueError:
+            continue
+        if v > 0:
+            caps.append(v)
+    return min(caps) if caps else None
+
+
 def _counts_by_day_hour() -> dict:
     """{(date_str, type): count_up_to_current_hour} for the last 8 days."""
     cutoff = (date.today() - timedelta(days=8)).isoformat()
@@ -106,6 +131,9 @@ def run_engine_health_cycle():
         if not active_days:
             continue  # surface was never active this week — nothing to compare
         baseline = sum(active_days) / len(active_days)
+        cap = _daily_cap_for(kind)
+        if cap is not None:
+            baseline = min(baseline, cap)
         today_count = counts.get((today, kind), 0)
         summary.append(f"{kind}: {today_count} vs {baseline:.0f} avg")
         if baseline >= MIN_BASELINE and today_count < ALERT_RATIO * baseline:

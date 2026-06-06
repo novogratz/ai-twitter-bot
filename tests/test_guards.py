@@ -447,6 +447,43 @@ def test_engine_health_still_alerts_active_surface(monkeypatch, tmp_path):
     assert "reply collapsed" in flat
 
 
+def test_engine_health_clamps_baseline_by_cap(monkeypatch, tmp_path):
+    """Operator lowered MAX_HOTAKES_PER_DAY 8 → 2 under the monetization
+    mandate; the 7-day baseline still reflected the old cap (~19 by hour 6).
+    Today's 2 == the entire daily quota — that's success, not a 'collapse'.
+    The watchdog must clamp the baseline by the current cap so a hit-cap
+    surface never trips the 40% ratio alert (and never burns self-heal).
+    """
+    import csv
+    from src import engine_health_bot as ehb
+
+    log_path = tmp_path / "engagement_log.csv"
+    alerts_path = tmp_path / "engine_health_alerts.json"
+    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
+    monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
+    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
+    monkeypatch.setenv("MAX_HOTAKES_PER_DAY", "2")  # cap was lowered
+
+    from datetime import date, datetime, timedelta
+    hour_now = datetime.now().hour
+    rows = [["timestamp", "type", "text", "target_url"]]
+    # 7 historical days with cap-era baseline of ~20 hotakes spread BEFORE the
+    # current hour — keeps every row inside the same-hour-of-day window.
+    for i in range(1, 8):
+        d = (date.today() - timedelta(days=i)).isoformat()
+        for _ in range(20):
+            rows.append([f"{d}T00:00:00", "hotake", "x", "y"])
+    # Today: hit the new cap of 2.
+    today = date.today().isoformat()
+    rows.append([f"{today}T0{max(hour_now-1,0):01d}:00:00", "hotake", "x", "y"])
+    rows.append([f"{today}T0{max(hour_now-1,0):01d}:30:00", "hotake", "x", "y"])
+    with open(log_path, "w") as f:
+        csv.writer(f).writerows(rows)
+
+    ehb.run_engine_health_cycle()
+    assert not alerts_path.exists(), "surface at its daily cap must not alert"
+
+
 def test_engine_health_quote_disabled_only_if_all_caps_zero(monkeypatch, tmp_path):
     """quote is governed by MAX_QUOTES_PER_DAY AND MAX_QUOTE_REPOSTS_PER_DAY.
     If either is positive, quote is still ON and a 0-count should alert."""
