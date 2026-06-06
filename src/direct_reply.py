@@ -485,7 +485,6 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         _reply_lang = "fr" if source_name.startswith("PROFILE") else ("en" if is_en_tweet else "fr")
         reply = _generate_single_reply(author, text, lang=_reply_lang)
         if not reply or reply is _LLM_RATE_LIMITED:
-            if author_key: per_author_skips[author_key] = per_author_skips.get(author_key, 0) + 1
             continue
         from .pattern_tags import extract_pattern as _extract_pattern
         reply, _pattern_id = _extract_pattern(reply)
@@ -497,7 +496,6 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             log_reply(url, reply, action_type="reply", source=source_name, pattern_id=_pattern_id or "")
             posted += 1
             if _reply_lang == "en" and en_counter: en_counter[0] += 1
-            if author_key: per_author_count[author_key] = per_author_count.get(author_key, 0) + 1
             # Spacing handled by action_guard (MIN_SECONDS_BETWEEN_REPLIES).
             # No extra sleep here — don't double-throttle.
         except Exception: traceback.print_exc()
