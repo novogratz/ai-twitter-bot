@@ -13541,3 +13541,121 @@ It could reach 100%, and that's when AI essentially starts making and improving 
 The U.S. government this t
   - https://x.com/oragnes/status/2063247026167681028
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 15).
+- **@wolf_financial** (231 likes, score 9/10) — This is how the largest US listed stocks have performed so far in 2026
+
+Nvidia $NVDA +10%
+Apple $AAPL +13.1%
+Google $GOOGL +17.7%
+Microsoft $MSFT -13.8%
+Amazon $AMZN +6.6%
+Tawian Semi $TSM +36.6%
+Broa
+  - https://x.com/WOLF_Financial/status/2063258105320821245
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 307).
+- **@azk_sa** (220 likes, score 9/10) — A Striking and Unusual Deal
+
+A rocket company has become a major supplier to AI companies!
+
+Anthropic and Google will pay SpaceX 
+a combined $2.17 billion per month for computing capacity.
+
+This equat
+  - https://x.com/AZK_SA/status/2063206285202334063
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 254).
+- **@freyabuilds** (10 likes, score 7/10) — Every single AI startup with $10B+ valuation and $100M+ revenue run rate:
+
+Crusoe - $10B
+Mercor - $10B
+ElevenLabs - $11B
+Baseten - $11B*
+Harvey - $11B
+Lovable - $12B*
+OpenEvidence - $12B
+Mistral - $14
+  - https://x.com/Freyabuilds/status/2063256015878099455
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 14).
+- **@lambdaapi** (21 likes, score 7/10) — 28 driverless trucks. The model behind them, GigaFusionNet, trains on Lambda’s NVIDIA HGX H100 clusters.
+
+Camera + LiDAR + radar into one backbone. Pre-training within a week. 2x experiments at 2x spe
+  - https://x.com/LambdaAPI/status/2062971852964683859
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 21).
+- **@stockmktnewz** (10 likes, score 9/10) — Describe your thoughts on the SpaceX IPO using just 1 word
+  - https://x.com/StockMKTNewz/status/2063283632806998491
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 62).
+- **@bourboncap** (30 likes, score 8/10) — 5 Stocks Trading at a Discount with Strong Long-Term Upside Potential
+
+$META - Meta Platforms
+
+Over the past two decades, Meta has built one of the most powerful digital ecosystems in the world, ancho
+  - https://x.com/BourbonCap/status/2063253185565725150
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 34).
+- **@bhavani_00007** (1567 likes, score 8/10) — Microsoft gave 12,000 engineers 
+Claude Code
+
+they loved it
+
+then the bill came up to $2,000 per person a month
+
+so they took it away from everyone
+
+if the biggest company in the world can't pay for i
+  - https://x.com/Bhavani_00007/status/2063126049899385091
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1921).
+- **@amariebl** (9 likes, score 7/10) — Encore un truc qui marche...y a des patrons ultra zélés ...ouf !
+
+La "première aciérie en France depuis plus de 50 ans" : le projet Mistral de Marcegaglia à Fos-sur-mer prend de l'épaisseur - 01/06/20
+  - https://x.com/AMARIEBL/status/2063241758377414838
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11).
+- **@brianroemmele** (54 likes, score 8/10) — I am up late catching up on 25! Open Source AI models released just this week!
+
+Have our testing systems running now burning GPUs.
+
+More soon!
+  - https://x.com/BrianRoemmele/status/2063191906465755299
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 60).
+- **@22hrr22min** (1231 likes, score 7/10) — claude monet's violet paintings (french, 1840-1926)
+  - https://x.com/22hrr22min/status/2063220814250385510
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1233).
+- **@zephyr_z9** (182 likes, score 7/10) — Yup
+It's physically impossible for a new player to deploy 20GW in 2 years
+  - https://x.com/zephyr_z9/status/2062936282922463324
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 198).
+- **@cnbc** (26 likes, score 7/10) — Bitcoin is cratering, but a new Wall Street crypto hype is on the rise
+  - https://x.com/CNBC/status/2063254014385340610
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 44).
+- **@aleabitoreddit** (21 likes, score 7/10) — I'm surprised the entire robotics industry rose multiple percent last Friday! 
+
+Some article called Sina Money said a lot of ETFs went up 3%-5.4%.
+  - https://x.com/aleabitoreddit/status/2063277648273621285
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 43).
+- **@cryptogoos** (28 likes, score 7/10) — TRUMP ADMINISTRATION IS CONSIDERING A STAKE IN OPENAI 
+
+ Reports say the Trump administration is discussing the possibility of the U.S. government taking a stake in OpenAI.
+
+The idea is that if AI cre
+  - https://x.com/cryptogoos/status/2063276475512733961
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 42).
+- **@bulltheoryio** (6 likes, score 7/10) — BREAKING: President Trump wants to give every American a piece of OpenAI, Anthropic, and xAI.
+
+Speaking on Air Force One yesterday, Trump said the government is exploring a plan where AI companies giv
+  - https://x.com/BullTheoryio/status/2063284145959108843
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 22).
+- **@kisalay_** (2 likes, score 7/10) — Here’s everything that moved in AI and space in the last 24 hours.
+
+In just the last day the pace of progress in AI and space has been difficult to ignore.
+
+New model releases, major hiring pushes, fr
+  - https://x.com/Kisalay_/status/2063279456891093349
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 18).
+- **@cryptogoos** (7 likes, score 7/10) — BIG:
+
+ China injected ¥426 Billion in liquidity this week.
+  - https://x.com/cryptogoos/status/2063283773953789983
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 11).
+- **@stockoptioncole** (6 likes, score 7/10) — Donald Trump plans to host a meeting eith AI executives next week
+
+My guesses are he's going to announce an investment of the 5
+
+$NVDA $QCOM $PLTR $NBIS
+  - https://x.com/StockOptionCole/status/2063284509664268400
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 10).
