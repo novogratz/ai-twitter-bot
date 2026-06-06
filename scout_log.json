@@ -3498,5 +3498,57 @@
       }
     ],
     "summary": "Focus IA et Fintech pour la France, o\u00f9 les vrais analystes fuient les influenceurs crypto. Le Qu\u00e9bec est moins peupl\u00e9 en experts techniques purs, d'o\u00f9 une s\u00e9lection plus niche et qualitative."
+  },
+  {
+    "ts": "2026-06-05T21:16:32.091386",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenjaminGeoffroy",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "L'ex-CEO Coinhouse, il tweete de la merde pure mais c'est de l'or pur pour le engagement."
+      },
+      {
+        "handle": "PierreRoques",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Fondateur de Kriptomat (install\u00e9 SF), il tweete en FR avec un\u89c6\u89d2 am\u00e9ricain."
+      },
+      {
+        "handle": "DorianMazuy",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Il pique, il mord, il tweete en FR. Contrairement \u00e0 la moyenne des banquiers en costard."
+      },
+      {
+        "handle": "Marc-AndreLussier",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Le gars qui a surv\u00e9cu \u00e0 trois crashes. Il twitte en FR, c'est rare et pr\u00e9cieux."
+      },
+      {
+        "handle": "JulesBoisson",
+        "region": "france",
+        "niche": "tech",
+        "followers": 8500,
+        "reason": "VC deeptech qui comprend enfin l'IA. Il tweete court et efficace."
+      },
+      {
+        "handle": "VivekLaine",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 6500,
+        "reason": "CTO de Hugging Face (QC origin), il tweete des gems techniques en FR. Rare."
+      }
+    ],
+    "summary": "J'ai traqu\u00e9 les p\u00e9pites francophones qui ne vendent pas du r\u00eave \u00e0 2000\u20ac. Mix IA France, Crypto QC et Finance US francophone. Le r\u00e9sultat est un cocktail de technique pure et de cynisme n\u00e9cessaire."
   }
 ]

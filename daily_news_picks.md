@@ -13308,3 +13308,54 @@ The broader market:
 $AVGO
   - https://x.com/TheTranscript_/status/2062955728432759225
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 41).
+- **@snaljapen** (0 likes, score 7/10) — One pays for:
+- Orbital AI data center (doesn't exist)
+- Lunar economy (doesn't exist)
+- Mars colonization (really doesn't exist)
+- Starship scaling (doesn't exist yet)
+
+1.77 trillion dollars for Elon
+  - https://x.com/Snaljapen/status/2062557336909000974
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 12).
+- **@cnbc** (58 likes, score 9/10) — Days before a planned IPO that’s expected to raise record sums of cash, SpaceX has inked a deal with Google that will bring in $920 million a month by providing AI compute capacity to the search giant
+  - https://x.com/CNBC/status/2063044814715654361
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 78).
+- **@reuters** (7 likes, score 7/10) — SpaceX lands Google AI compute deal after Anthropic pact ahead of IPO http://reut.rs/3QpfQYb
+  - https://x.com/Reuters/status/2063055922444792161
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 11).
+- **@charliebilello** (280 likes, score 8/10) — % Below All-Time High
+Eli Lilly: 0%
+S&P 500: -3%
+Apple: -3%
+Google: -10%
+Amazon: -12%
+Nvidia: -13%
+Tesla: -22%
+Gold: -23%
+Microsoft: -24%
+Meta: -26%
+Palantir: -35%
+Silver: -45%
+Bitcoin: -53%
+Ethereum:
+  - https://x.com/charliebilello/status/2063018744507445544
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 316).
+- **@tbpn** (34 likes, score 8/10) — "People don't actually know how their business operates. I can't tell you how many times I've seen companies, whether they're worth $100M or $50B, not understand how they're making money."
+
+Palantir F
+  - https://x.com/tbpn/status/2063040737261039890
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 40).
+- **@business** (0 likes, score 7/10) — Japan is planning to replace up to 14 nuclear reactors by the 2050s, as it looks to meet rising power demand at home and cope with increasing geopolitical risks abroad
+  - https://x.com/business/status/2062756499189899482
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 20).
+- **@bespokeinvest** (34 likes, score 8/10) — Health Care is having its best 3-day performance versus the S&P 500 since January 2000!  $XLV
+  - https://x.com/bespokeinvest/status/2062984080623370713
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 42).
+- **@norveclifinance** (24 likes, score 8/10) — Game over. Chinese AI companies are crushing prices and putting massive pressure on the American AI bubble.
+
+The era of expensive GPUs, expensive data centers, and unlimited AI spending is coming to a
+  - https://x.com/norveclifinance/status/2063000724305330320
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 36).
+- **@cnbc** (16 likes, score 8/10) — OpenAI CEO Sam Altman and the White House are in ongoing talks about a possible government stake in the artificial intelligence company, CNBC confirmed on Friday. http://cnb.cx/3RUIyk8
+  - https://x.com/CNBC/status/2063051753537311188
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 28).
