@@ -21,6 +21,17 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 > - ❌ off-topic quotes/reposts → space keywords REMOVED from `_is_on_niche`
 > - ❌ mass-follow → `ENABLE_FOLLOW_BLAST=0`, `MAX_FOLLOWS_PER_DAY=10`
 >
+> **2026-06-06 UNLIMITED MODE (operator: "remove limits on bots period go
+> unlimited", "be more active"):** all volume caps effectively removed —
+> originals 999/day (news 15, hotakes 40, breakouts 30, spicy 30), quotes
+> 500/day @60s, retweets BACK ON 600/day, replies 2000/day @15s, likes 1800.
+> Scheduler cranked: reply scan 2-3 min, direct-reply 2-4, quote + retweet
+> jobs 2 min, sweeper 5 min, engagement targeting 10 min. Only jittered
+> min-spacing remains (ban protection). Quality gates stay absolute (dedup,
+> 48h rule, one-reply-per-tweet, no links/hashtags, niche, voice).
+> follow_blast stays OFF. Auto-pin: pin_bot rotates the pinned slot to the
+> best-performing post every 3h (already live).
+>
 > **2026-06-06 adjustments:** replies back to ~400/day @30s+jitter (operator:
 > "you are doing less replies than a few weeks ago" — replies stay the #1
 > growth lever; the 100/day cap was over-correction). "🔎 The Decode Daily"

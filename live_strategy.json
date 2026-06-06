@@ -1,14 +1,14 @@
 {
-  "ts": "2026-06-05T19:30:00.000000",
+  "ts": "2026-06-06T07:00:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 2,
-    "MAX_HOTAKES_PER_DAY": 2,
-    "MAX_QUOTES_PER_DAY": 6,
-    "MAX_RETWEETS_PER_DAY": 0,
-    "MAX_BREAKOUTS_PER_DAY": 1,
-    "MAX_SPICY_PER_DAY": 1,
-    "MAX_REPLIES_PER_CYCLE": 15,
-    "LIKE_BOT_PER_CYCLE": 20,
+    "MAX_NEWS_PER_DAY": 15,
+    "MAX_HOTAKES_PER_DAY": 40,
+    "MAX_QUOTES_PER_DAY": 500,
+    "MAX_RETWEETS_PER_DAY": 600,
+    "MAX_BREAKOUTS_PER_DAY": 30,
+    "MAX_SPICY_PER_DAY": 30,
+    "MAX_REPLIES_PER_CYCLE": 25,
+    "LIKE_BOT_PER_CYCLE": 60,
     "FOLLOW_BLAST_PER_CYCLE": 0
   },
   "topic_focus": [
@@ -20,5 +20,5 @@
     "AI"
   ],
   "cadence_factor": 1.0,
-  "rationale": "MONETIZATION MANDATE 2026-06-05 PM: sponsor-clean account. Original-first (>=80% original, 3-6 posts/day across US market hours, no bursts), quotes <=6/day always with a therapeutic take, bare retweets OFF, replies are THE growth lever: 400/day at 30s+jitter (operator 2026-06-06: volume back to early-period levels), still genuine + substantive, mass-follow OFF, ratio repair via gradual unfollows. No links in posts, no hashtags, finance/markets/AI lane only. Persona: deadpan market therapist. Engagement rate >2-3% matters more than raw volume \u2014 sponsors read the timeline."
+  "rationale": "UNLIMITED MODE (operator 2026-06-06: 'remove limits on bots period go unlimited'). All volume caps effectively removed; only jittered min-spacing remains as ban protection. Quality gates stay absolute: dedup v2, 48h repost freshness, one-reply-per-tweet, no links/hashtags in posts, niche filter (finance/markets/AI), therapist voice, blocklist/respect list. Mass-follow (follow_blast) stays OFF \u2014 it wrecked the ratio and risks enforcement."
 }
