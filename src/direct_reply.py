@@ -465,26 +465,21 @@ def _maybe_repost_best_profile_tweet(username: str, tweets: list, retweeted: set
 
 def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=None, en_counter=None):
     posted = 0
-    PER_AUTHOR_CAP = 9999  # no per-author cap — reply commentary machine
     per_author_count = {}
-    per_author_skips = {}
-    MAX_SKIPS_PER_AUTHOR = 3
+    is_feed = source_name.startswith(("FEED", "FOLLOWING"))
     for tweet in tweets:
         if remaining is not None and posted >= remaining: break
         url, text, author = tweet["url"], tweet["text"], tweet.get("author", "someone")
-        if url in replied or _is_reply_like_tweet(tweet): continue
-        author_key = (author or "").lower().strip()
-        if author_key and per_author_count.get(author_key, 0) >= PER_AUTHOR_CAP: continue
-        if author_key and per_author_skips.get(author_key, 0) >= MAX_SKIPS_PER_AUTHOR: continue
-        if _handle_from_url(url) in BLOCKLIST or (author and author.lower() in BLOCKLIST): continue
+        # Only hard safety gates: dedup + own handle + blocklist.
+        if url in replied: continue
         if _handle_from_url(url) == _OWN_HANDLE: continue
-        if _tweet_age_minutes(url) > DIRECT_REPLY_MAX_AGE_MINUTES: continue
-        likes = int(tweet.get("likes") or 0)
-        if not _is_fr_or_en(text): continue
-        # For You / Following: reply to EVERYTHING — no niche filter, no likes floor.
-        # Niche filter kept only for search sources where we pull broad queries.
+        if _handle_from_url(url) in BLOCKLIST or (author and author.lower() in BLOCKLIST): continue
+        # For feed sources: reply to everything — no niche, no age, no lang, no likes filter.
+        # For search sources: keep niche + age filter (we pull broad queries there).
+        if not is_feed:
+            if _tweet_age_minutes(url) > DIRECT_REPLY_MAX_AGE_MINUTES: continue
+            if not _is_on_niche(text): continue
         is_en_tweet = not _looks_french(text)
-        if is_en_tweet and en_counter and en_counter[0] >= MAX_EN_REPLIES_PER_CYCLE: continue
         limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
         if limited: break
         log.info(f"[{source_name}] Replying to @{author}...")
