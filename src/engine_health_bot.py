@@ -28,6 +28,39 @@ ALERT_RATIO = float(os.environ.get("ENGINE_HEALTH_ALERT_RATIO", "0.4"))
 MIN_BASELINE = float(os.environ.get("ENGINE_HEALTH_MIN_BASELINE", "5"))
 WATCHED_TYPES = ("reply", "retweet", "quote", "post", "hotake")
 
+# Env-var caps that govern each watched surface. When the operator sets a cap
+# to 0 (e.g. MAX_RETWEETS_PER_DAY=0 under the 2026-06-05 PM monetization
+# mandate — bare retweets OFF), the surface is INTENTIONALLY disabled.
+# Comparing 0 today against a multi-day pre-mandate baseline would otherwise
+# fire a "collapsed" alert every cycle and burn the self-heal cooldown on a
+# surface that was deliberately turned off. Read at call time so live edits
+# to live_strategy.json / .env take effect without restart.
+_CAP_ENVS: dict = {
+    "reply": ("MAX_REPLIES_PER_DAY",),
+    "retweet": ("MAX_RETWEETS_PER_DAY",),
+    "quote": ("MAX_QUOTES_PER_DAY", "MAX_QUOTE_REPOSTS_PER_DAY"),
+    "post": ("MAX_ORIGINALS_PER_DAY",),
+    "hotake": ("MAX_HOTAKES_PER_DAY",),
+}
+
+
+def _is_surface_disabled(kind: str) -> bool:
+    """A surface is disabled only when EVERY cap that governs it is 0.
+    Unset env var = not disabled (defaults live elsewhere)."""
+    env_names = _CAP_ENVS.get(kind, ())
+    if not env_names:
+        return False
+    caps = []
+    for name in env_names:
+        raw = os.environ.get(name)
+        if raw is None or raw == "":
+            return False
+        try:
+            caps.append(int(raw))
+        except ValueError:
+            return False
+    return all(c == 0 for c in caps)
+
 
 def _counts_by_day_hour() -> dict:
     """{(date_str, type): count_up_to_current_hour} for the last 8 days."""
@@ -65,6 +98,9 @@ def run_engine_health_cycle():
     alerts = []
     summary = []
     for kind in WATCHED_TYPES:
+        if _is_surface_disabled(kind):
+            summary.append(f"{kind}: OFF (cap=0)")
+            continue
         baseline_vals = [counts.get((d, kind), 0) for d in prev_days]
         active_days = [v for v in baseline_vals if v > 0]
         if not active_days:

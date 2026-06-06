@@ -380,3 +380,95 @@ def test_niche_excludes_space_now():
     from src.retweet_bot import _is_on_niche
     assert not _is_on_niche("Beautiful photo of the lunar surface from the Artemis mission astronauts")
     assert _is_on_niche("Nvidia datacenter revenue is 88% of the company now")
+
+
+# --- engine-health false-collapse on disabled surfaces (2026-06-06) -------------
+
+def test_engine_health_skips_disabled_surface(monkeypatch, tmp_path):
+    """MAX_RETWEETS_PER_DAY=0 (monetization mandate) disables bare retweets.
+    Comparing today's forced-0 against a multi-day pre-mandate baseline must
+    NOT fire a 'collapsed' alert — the surface is intentionally OFF, not
+    failing. Without this guard the self-heal launches every cycle on a
+    deliberately-disabled engine and burns the Claude cooldown.
+    """
+    import os
+    import csv
+    from src import engine_health_bot as ehb
+
+    log_path = tmp_path / "engagement_log.csv"
+    alerts_path = tmp_path / "engine_health_alerts.json"
+    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
+    monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
+    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")  # never spawn the emergency script
+    monkeypatch.setenv("MAX_RETWEETS_PER_DAY", "0")  # mandate: retweets OFF
+
+    from datetime import date, timedelta
+    rows = [["timestamp", "type", "text", "target_url"]]
+    for i in range(1, 8):
+        d = (date.today() - timedelta(days=i)).isoformat()
+        for _ in range(50):
+            rows.append([f"{d}T00:00:00", "retweet", "x", "y"])
+    with open(log_path, "w") as f:
+        csv.writer(f).writerows(rows)
+
+    ehb.run_engine_health_cycle()
+    assert not alerts_path.exists(), "disabled surface must not trigger a collapse alert"
+
+
+def test_engine_health_still_alerts_active_surface(monkeypatch, tmp_path):
+    """Mirror of the above: when the cap is positive but today's count is 0
+    against a large baseline, the alert MUST still fire. Guards against the
+    fix over-suppressing."""
+    import os
+    import csv
+    from src import engine_health_bot as ehb
+
+    log_path = tmp_path / "engagement_log.csv"
+    alerts_path = tmp_path / "engine_health_alerts.json"
+    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
+    monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
+    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
+    monkeypatch.setenv("MAX_REPLIES_PER_DAY", "100")  # surface is ON
+
+    from datetime import date, timedelta
+    rows = [["timestamp", "type", "text", "target_url"]]
+    for i in range(1, 8):
+        d = (date.today() - timedelta(days=i)).isoformat()
+        for _ in range(50):
+            rows.append([f"{d}T00:00:00", "reply", "x", "y"])
+    with open(log_path, "w") as f:
+        csv.writer(f).writerows(rows)
+
+    ehb.run_engine_health_cycle()
+    assert alerts_path.exists()
+    import json as _json
+    alerts = _json.load(open(alerts_path))
+    flat = " ".join(a for entry in alerts for a in entry.get("alerts", []))
+    assert "reply collapsed" in flat
+
+
+def test_engine_health_quote_disabled_only_if_all_caps_zero(monkeypatch, tmp_path):
+    """quote is governed by MAX_QUOTES_PER_DAY AND MAX_QUOTE_REPOSTS_PER_DAY.
+    If either is positive, quote is still ON and a 0-count should alert."""
+    import csv
+    from src import engine_health_bot as ehb
+
+    log_path = tmp_path / "engagement_log.csv"
+    alerts_path = tmp_path / "engine_health_alerts.json"
+    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
+    monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
+    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
+    monkeypatch.setenv("MAX_QUOTES_PER_DAY", "0")
+    monkeypatch.setenv("MAX_QUOTE_REPOSTS_PER_DAY", "6")  # the other path still on
+
+    from datetime import date, timedelta
+    rows = [["timestamp", "type", "text", "target_url"]]
+    for i in range(1, 8):
+        d = (date.today() - timedelta(days=i)).isoformat()
+        for _ in range(20):
+            rows.append([f"{d}T00:00:00", "quote", "x", "y"])
+    with open(log_path, "w") as f:
+        csv.writer(f).writerows(rows)
+
+    ehb.run_engine_health_cycle()
+    assert alerts_path.exists(), "quote must still alert when only ONE of its caps is zero"
