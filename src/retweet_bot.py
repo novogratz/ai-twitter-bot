@@ -860,6 +860,37 @@ def _has_english_phrase(text: str) -> bool:
     return False
 
 
+def _reply_after_repost(pick: dict, replied: set) -> None:
+    """Fire a reply on a tweet we just retweeted/quoted, unless already replied."""
+    url = pick.get("url", "")
+    if not url or url in replied:
+        return
+    try:
+        from .direct_reply import _generate_single_reply, _looks_french
+        from .humanizer import humanize
+        from .twitter_client import reply_to_tweet
+        from .engagement_log import log_reply as _log_reply
+        author = pick.get("author", "someone")
+        text = (pick.get("text") or "")[:300]
+        lang = "fr" if _looks_french(text) else "en"
+        reply = _generate_single_reply(author, text, lang=lang)
+        if not reply:
+            return
+        from .pattern_tags import extract_pattern as _extract_pattern
+        reply, _pid = _extract_pattern(reply)
+        reply = humanize(reply)
+        reply_to_tweet(url, reply)
+        replied.add(url)
+        try:
+            _log_reply(url, reply, action_type="reply", source="RETWEET_REPLY")
+        except Exception:
+            pass
+        log.info(f"[RETWEET] Also replied to @{author}: {reply[:80]}")
+    except Exception:
+        log.info("[RETWEET] Reply-after-repost failed (non-fatal):")
+        traceback.print_exc()
+
+
 def run_retweet_cycle():
     """Retweet the highest-signal tweets of the cycle.
 
@@ -867,12 +898,14 @@ def run_retweet_cycle():
     ship several reposts while preserving niche/source/dedup gates.
     """
     from .config import get_live_cap
+    from .reply_bot import load_replied, save_replied
     cap = get_live_cap("MAX_RETWEETS_PER_DAY", MAX_RETWEETS_PER_DAY)
     if _today_count() >= cap:
         log.info(f"[RETWEET] Daily cap reached ({cap}). Skipping.")
         return
 
     retweeted = _load_retweeted()
+    replied = load_replied()
 
     # ── MUST-REPOST pass (operator mandate): amplify EVERY fresh post from
     # MUST_REPOST_HANDLES (e.g. @TheBTCTherapist) with NO scoring/niche gate.
@@ -1053,6 +1086,8 @@ def run_retweet_cycle():
                     except Exception:
                         pass
                     posted += 1
+                    _reply_after_repost(pick, replied)
+                    save_replied(replied)
                     time.sleep(random.randint(5, 10))
                     continue
                 log.info("[RETWEET] Quote-RT chokepoint skipped — falling back to plain RT.")
@@ -1066,6 +1101,8 @@ def run_retweet_cycle():
             except Exception:
                 pass
             posted += 1
+            _reply_after_repost(pick, replied)
+            save_replied(replied)
             time.sleep(random.randint(5, 10))
         except Exception:
             log.info("[RETWEET] Posting failed:")
