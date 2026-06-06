@@ -488,3 +488,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top reply targets: @TheBTCTherapist=17, @CryptoastMedia=13, @Numerama=13, @Frandroid=11, @JournalDuGeek=11
 
 **Followers we follow** (running total): 166
+
+## 2026-06-05
+
+**Activity** — total actions: 588
+  - by type: reply=348, retweet=152, hotake=49, quote=29, post=7, quote_gif=3
+  - top sources: PROFILE-ALWAYS=208, RETWEET=140, FEED-SWEEP-FEED=43, FEED-SWEEP-FOLLOWING=43, QUOTE=24, MUST_REPOST=12, GRAPHSEO_VIP=11, FOLLOWING=9
+  - comedy patterns: METAPHOR=6, DIALOGUE=2, FR_ANCHOR=2, EN_ANCHOR=1
+  - top reply targets: @TheBTCTherapist=17, @unusual_whales=13, @ABaradez=13, @Graphseo=12, @LeJournalDuCoin=12
+
+**Followers we follow** (running total): 178
+
+**Top-performing posts scraped today**:
+  - 0 likes / 18 views: 164 days of calm before the panic. SPX is just having a midlife crisis.
+  - 0 likes / 16 views: Meta needs $27B in compute, skips AWS, and picks Nebius. That is a VC doing a 5.6% levered bet on a 
+  - 0 likes / 4 views: CoreWeave reports a holder offering of 9.2M shares.  Your AI conviction is testing your patience, no
