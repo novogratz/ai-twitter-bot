@@ -13457,3 +13457,87 @@ We're halfway between halvings
 It's time to stack sats like
   - https://x.com/saifedean/status/2063249638967148870
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 20).
+- **@unusual_whales** (2445 likes, score 9/10) — Google to pay SpaceX $920 million a month for compute capacity at xAI data centers, per CNBC
+  - https://x.com/unusual_whales/status/2063032618556293584
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 2763).
+- **@deedydas** (1291 likes, score 9/10) — Every single AI startup with $10B+ valuation and $100M+ revenue run rate:
+
+Crusoe - $10B
+Mercor - $10B
+ElevenLabs - $11B
+Baseten - $11B*
+Harvey - $11B
+Lovable - $12B*
+OpenEvidence - $12B
+Mistral - $14
+  - https://x.com/deedydas/status/2063075876452155728
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1473).
+- **@bitget** (283 likes, score 9/10) — SpaceX signs a $920M/month AI compute deal with Google ahead of its IPO.
+  - https://x.com/bitget/status/2063196703491346882
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 369).
+- **@stockmktnewz** (561 likes, score 9/10) — Nvidia $NVDA ended the week back under a $5 Trillion market cap
+
+Micron $MU ended the week back under a $1 Trillion market cap
+  - https://x.com/StockMKTNewz/status/2063240452510298376
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 759).
+- **@synthwavedd** (290 likes, score 9/10) — 2 new checkpoints of GPT-5.6 were being tested this week at OpenAI, added within a day of each other - kepler and kindle. OpenAI have selected kindle-alpha as their release candidate, sources tell me.
+  - https://x.com/synthwavedd/status/2063245096951160865
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 336).
+- **@brianroemmele** (16 likes, score 7/10) — Today across the world it is estimated that a new Humanoid Robot is produced every 10 seconds. It will be every second in 3 years.
+  - https://x.com/BrianRoemmele/status/2063268200515780729
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 22).
+- **@ft** (35 likes, score 8/10) — Can Anthropic hold on to its ethical founding principles as it strides to market with its most powerful tool yet? 
+
+Register to read this and three other FT Weekend articles – selected by FT Weekend e
+  - https://x.com/FT/status/2063220376407068873
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 53).
+- **@vision_ia** (651 likes, score 8/10) — Incredible! Elon Musk, considered "crazy" by the industry's "experts," sweeps everything. Once again. GOOGLE signs and asks ELON MUSK to use Colossus to run its AI for 1 billion $ per month.
+
+This ann
+  - https://x.com/vision_ia/status/2063165270798074342
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 713).
+- **@leopoldatracker** (44 likes, score 8/10) — 1. $DRAM
+
+The AI boom is creating a massive demand cycle for memory.
+
+AI agents need memory to retain context, humanoid robots need it to process and interact with the real world, and self-driving veh
+  - https://x.com/LeopoldATracker/status/2063231992993317166
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 48).
+- **@coinbureau** (8 likes, score 8/10) — STOCK TRADING SURGES ON A CRYPTO EXCHANGE
+
+Daily equity trading volume on Gate jumped to nearly $30 MILLION, its second-highest level in three months per CryptoQuant.
+
+Demand for stock exposure on cry
+  - https://x.com/coinbureau/status/2063270938838507578
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 26).
+- **@danny__kruger** (85 likes, score 7/10) — The speed of AI development (with recursive self-improvement a live possibility) represents a *critical security risk* AS WELL AS the greatest opportunity for prosperity, social progress and indeed se
+  - https://x.com/danny__kruger/status/2063248641083506781
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 91).
+- **@theeconomist** (37 likes, score 7/10) — Nvidia says it is reinventing the PC for the first time in 40 years, replacing the old model, in which humans did most of the clicking and typing, with one in which AI agents do much of the work
+  - https://x.com/TheEconomist/status/2063098563521810754
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 57).
+- **@hunterbiden** (2738 likes, score 7/10) — Thanks @beeple, I’ve been a fan of your art for a long time. This is my new favorite.  
+
+When I decided to sell my art I wanted every piece on the blockchain and to accept Bitcoin as payment. 
+
+“The I
+  - https://x.com/HunterBiden/status/2063233415269191808
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 3558).
+- **@jigarshahdc** (42 likes, score 7/10) — Nvidia's CEO is betting that AI computing doesn't need to live in massive centralized facilities — he's already piloting smaller, distributed versions in commercial real estate and new housing develop
+  - https://x.com/JigarShahDC/status/2062912621494370626
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 54).
+- **@haider1** (29 likes, score 7/10) — Anthropic co-founder Jack Clark:
+
+"80% of the code at Anthropic now comes from Claude and Claude-related systems"
+
+It could reach 100%, and that's when AI essentially starts making and improving itsel
+  - https://x.com/haider1/status/2063236969514115418
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 51).
+- **@cryptotony__** (20 likes, score 7/10) — CZ: A few days before $2.5 billion was liquidated from the markets.
+  - https://x.com/CryptoTony__/status/2063268925656502448
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 38).
+- **@oragnes** (9 likes, score 7/10) — Trump has just confirmed that the White House is studying direct equity stakes in AI giants like OpenAI and Anthropic, and will summon their bosses for a meeting next week.
+
+The U.S. government this t
+  - https://x.com/oragnes/status/2063247026167681028
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 15).
