@@ -13359,3 +13359,101 @@ The era of expensive GPUs, expensive data centers, and unlimited AI spending is 
 - **@cnbc** (16 likes, score 8/10) — OpenAI CEO Sam Altman and the White House are in ongoing talks about a possible government stake in the artificial intelligence company, CNBC confirmed on Friday. http://cnb.cx/3RUIyk8
   - https://x.com/CNBC/status/2063051753537311188
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 28).
+
+## 2026-06-06
+- **@pubity** (657 likes, score 9/10) — Google and Anthropic are now paying Elon Musk's SpaceX a combined $2,170,000,000 per month for cloud compute capacity to run their AI services.
+  - https://x.com/pubity/status/2063184121501823473
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 719).
+- **@niccruzpatane** (773 likes, score 9/10) — Google and Anthropic paying SpaceX $2.17 Billion per month for compute is literally just the tip of the iceberg. 
+
+Deals like this are going to explode once SpaceX AI satellites scale up. 
+
+Morgan Sta
+  - https://x.com/niccruzpatane/status/2063024286739136597
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 929).
+- **@sam_badawi** (11 likes, score 7/10) — $WULF TeraWulf's HPC revenue reached about $21M last quarter, up 117% QoQ as AI infrastructure demand continues to surge.
+
+$MS Morgan Stanley's Stephen Byrd highlighted the company's power and infrast
+  - https://x.com/Sam_Badawi/status/2063222117408428354
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 21).
+- **@therundownai** (8 likes, score 7/10) — Top stories in tech today:
+
+- Google built a Linktree for creators
+- Block’s $25 wand pays by wave
+- 23andMe returns with genome moonshot
+- Researchers solve space laundry problem 
+- Quick hits on oth
+  - https://x.com/TheRundownAI/status/2062905068077093103
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 24).
+- **@0xcodez** (14 likes, score 7/10) — Anthropic CFO:
+
+"Right now within the company, 90% of our code is written by Claude Code.
+
+If we told our team they couldn't use our models, it would save us billions in revenue."
+
+in 1-hour podcast,
+  - https://x.com/0xCodez/status/2063234274254364908
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 22).
+- **@orbitai_oai** (404 likes, score 8/10) — SpaceX is no longer just a space company.
+
+It is becoming an AI infrastructure company.
+
+This is exactly the shift we are watching at Orbit AI: compute, connectivity, and autonomous intelligence are c
+  - https://x.com/OrbitAI_OAI/status/2063213614610239620
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 466).
+- **@niccruzpatane** (0 likes, score 8/10) — This is cool, Elon Musk says SpaceX will allow their customers to use any GPU or TPU they want in SpaceX AI Satellites. 
+
+"We do intend with our SpaceX AI Satellites to allow people to put whatever GP
+  - https://x.com/niccruzpatane/status/2062988679736406038
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 40).
+- **@saylor** (2716 likes, score 7/10) — The AI buildout is absorbing capital at historic scale, creating temporary pressure across global markets. That does not weaken Bitcoin. It strengthens the case for scarce, liquid, digital capital. Bi
+  - https://x.com/saylor/status/2063241214552420656
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 3678).
+- **@watcherguru** (1056 likes, score 7/10) — JUST IN: Michael Saylor says "the AI buildout is absorbing capital." 
+
+"Bitcoin remains the premier asset long term."
+  - https://x.com/WatcherGuru/status/2063242785927418318
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1690).
+- **@_forab** (320 likes, score 7/10) — Trump confirms that the U.S. government is planning to take stakes in all well-known AI companies.
+
+This may include companies such as OpenAI, Anthropic, SpaceX, and others. The executives of these co
+  - https://x.com/_FORAB/status/2063078067673977022
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 536).
+- **@teslazoa** (330 likes, score 7/10) — Jensen Huang came to Korea with a very clear message: NVIDIA’s business with Korea is booming.
+
+During a dinner in Hongdae with major Korean business leaders, Jensen Huang said:
+
+“OKAY, ARE YOU LISTEN
+  - https://x.com/TeslaZoa/status/2063063033883328566
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 344).
+- **@preetkailon** (34 likes, score 7/10) — A lot of people misunderstand what ‘raising cash’ means.
+
+Every sale has a buyer, but that doesn’t mean nobody is moving into cash.
+
+If I sell $100,000 of stock and hold the proceeds in cash, I’ve red
+  - https://x.com/preetkailon/status/2063057318447894834
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 50).
+- **@therundownai** (21 likes, score 7/10) — Top stories in AI today:
+
+- Anthropic charts path to self-improving AI
+- OpenAI’s memory overhaul lets ChatGPT ‘dream’
+- Stress test business ideas with Perplexity
+- Rival AI labs unite behind bioweap
+  - https://x.com/TheRundownAI/status/2062844467237773725
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 39).
+- **@zeroz_jq** (5 likes, score 7/10) — Gemini 3.5 Pro, Claude Mythos, and GPT 5.6 are coming
+
+Which one are you most looking forward to?
+  - https://x.com/ZeroZ_JQ/status/2063218801534292151
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 21).
+- **@saifedean** (16 likes, score 7/10) — Nocoiners are gloating
+
+Shitcoiners in shambles
+
+Fiat press churning out the stupid think pieces on why this really is the end of bitcoin
+
+We're halfway between halvings
+
+It's time to stack sats like
+  - https://x.com/saifedean/status/2063249638967148870
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 20).
