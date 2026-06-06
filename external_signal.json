@@ -1,7 +1,35 @@
 {
-  "ts": "2026-06-05T17:43:04.814575",
+  "ts": "2026-06-05T23:00:46.932497",
   "count": 30,
   "items": [
+    {
+      "src": "CNBC Tech",
+      "title": "Amazon unveils latest warehouse robot as tech giants continue AI layoffs",
+      "url": "https://www.cnbc.com/2026/06/05/amazon-robot-proteus-warehouse-ai-layoffs.html",
+      "score": 0,
+      "ts": "2026-06-05T22:53:20"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Amazon unveils latest warehouse robot as tech giants continue AI layoffs",
+      "url": "https://www.cnbc.com/2026/06/05/amazon-robot-proteus-warehouse-ai-layoffs.html",
+      "score": 0,
+      "ts": "2026-06-05T22:53:20"
+    },
+    {
+      "src": "TechCrunch",
+      "title": "Reid Hoffman is leaving Microsoft’s board to go ‘founder mode’ with  startup Manus",
+      "url": "https://techcrunch.com/2026/06/05/reid-hoffman-is-leaving-microsofts-board-to-go-founder-mode-with-startup-manus/",
+      "score": 0,
+      "ts": "2026-06-05T22:35:01"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "ETH falls to 13-month low on Zcash bug news and Bitcoin drop to sub-$60K: Is $1.4K next?",
+      "url": "https://cointelegraph.com/markets/eth-falls-to-13-month-low-on-zcash-bug-news-and-bitcoin-drop-to-sub-60k-is-14k-next?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-06-05T22:18:29"
+    },
     {
       "src": "CNBC Tech",
       "title": "Marvell Technology and Flex to join S&P 500 index, replacing Pool and Campbell's",
@@ -11,10 +39,10 @@
     },
     {
       "src": "CNBC Top",
-      "title": "Trump administration, OpenAI discussing possible government stake in the AI startup",
-      "url": "https://www.cnbc.com/2026/06/05/trump-open-ai-altman-stake.html",
+      "title": "Marvell Technology and Flex to join S&P 500 index, replacing Pool and Campbell's",
+      "url": "https://www.cnbc.com/2026/06/05/marvell-technology-flex-sp-500-campbells-pool.html",
       "score": 0,
-      "ts": "2026-06-05T21:12:29"
+      "ts": "2026-06-05T21:36:23"
     },
     {
       "src": "CNBC Tech",
@@ -25,13 +53,20 @@
     },
     {
       "src": "CNBC Top",
+      "title": "Trump administration, OpenAI discussing possible government stake in the AI startup",
+      "url": "https://www.cnbc.com/2026/06/05/trump-open-ai-altman-stake.html",
+      "score": 0,
+      "ts": "2026-06-05T21:12:29"
+    },
+    {
+      "src": "CNBC Tech",
       "title": "Google to pay SpaceX $920 million a month for compute capacity at xAI data centers",
       "url": "https://www.cnbc.com/2026/06/05/google-to-pay-spacex-920-million-a-month-for-xai-compute-capacity.html",
       "score": 0,
       "ts": "2026-06-05T21:01:53"
     },
     {
-      "src": "CNBC Tech",
+      "src": "CNBC Top",
       "title": "Google to pay SpaceX $920 million a month for compute capacity at xAI data centers",
       "url": "https://www.cnbc.com/2026/06/05/google-to-pay-spacex-920-million-a-month-for-xai-compute-capacity.html",
       "score": 0,
@@ -59,13 +94,6 @@
       "ts": "2026-06-05T20:41:38"
     },
     {
-      "src": "CNBC Top",
-      "title": "Mythos rejuvenated the cybersecurity sector. Earnings put the recent rally to the test",
-      "url": "https://www.cnbc.com/2026/06/05/mythos-cybersecurity-earnings-palo-alto-crowdstrike.html",
-      "score": 0,
-      "ts": "2026-06-05T20:25:09"
-    },
-    {
       "src": "CNBC Tech",
       "title": "Mythos rejuvenated the cybersecurity sector. Earnings put the recent rally to the test",
       "url": "https://www.cnbc.com/2026/06/05/mythos-cybersecurity-earnings-palo-alto-crowdstrike.html",
@@ -74,10 +102,10 @@
     },
     {
       "src": "CNBC Top",
-      "title": "Meta's stock sinks on report company could raise tens of billions of dollars to fund AI push",
-      "url": "https://www.cnbc.com/2026/06/05/meta-stock-sinks-on-report-company-could-raise-tens-of-billions-for-ai.html",
+      "title": "Mythos rejuvenated the cybersecurity sector. Earnings put the recent rally to the test",
+      "url": "https://www.cnbc.com/2026/06/05/mythos-cybersecurity-earnings-palo-alto-crowdstrike.html",
       "score": 0,
-      "ts": "2026-06-05T20:22:44"
+      "ts": "2026-06-05T20:25:09"
     },
     {
       "src": "CNBC Tech",
@@ -88,13 +116,20 @@
     },
     {
       "src": "CNBC Top",
+      "title": "Meta's stock sinks on report company could raise tens of billions of dollars to fund AI push",
+      "url": "https://www.cnbc.com/2026/06/05/meta-stock-sinks-on-report-company-could-raise-tens-of-billions-for-ai.html",
+      "score": 0,
+      "ts": "2026-06-05T20:22:44"
+    },
+    {
+      "src": "CNBC Tech",
       "title": "Alphabet is seeking fresh capital as stock's 4-week losing streak tests investor appetite",
       "url": "https://www.cnbc.com/2026/06/05/alphabet-ai-data-center-financing.html",
       "score": 0,
       "ts": "2026-06-05T20:08:26"
     },
     {
-      "src": "CNBC Tech",
+      "src": "CNBC Top",
       "title": "Alphabet is seeking fresh capital as stock's 4-week losing streak tests investor appetite",
       "url": "https://www.cnbc.com/2026/06/05/alphabet-ai-data-center-financing.html",
       "score": 0,
@@ -164,13 +199,6 @@
       "ts": "2026-06-05T18:45:20"
     },
     {
-      "src": "CNBC Top",
-      "title": "Model routing is a fix for AI overspending. That's a problem for OpenAI and Anthropic",
-      "url": "https://www.cnbc.com/2026/06/05/model-routing-on-ai-is-a-problem-for-openai-and-anthropic.html",
-      "score": 0,
-      "ts": "2026-06-05T18:24:25"
-    },
-    {
       "src": "CNBC Tech",
       "title": "Model routing is a fix for AI overspending. That's a problem for OpenAI and Anthropic",
       "url": "https://www.cnbc.com/2026/06/05/model-routing-on-ai-is-a-problem-for-openai-and-anthropic.html",
@@ -178,39 +206,11 @@
       "ts": "2026-06-05T18:24:25"
     },
     {
-      "src": "Cointelegraph",
-      "title": "Kraken offers SpaceX IPO access through xStocks",
-      "url": "https://cointelegraph.com/news/kraken-offers-spacex-ipo-access-through-xstocks?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "score": 0,
-      "ts": "2026-06-05T18:17:50"
-    },
-    {
       "src": "CNBC Top",
-      "title": "Crypto mutiny on Strategy: Shorts target 'MSTR' in bitcoin bloodbath",
-      "url": "https://www.cnbc.com/2026/06/05/crypto-mutiny-on-strategy-shorts-target-mstr-in-bitcoin-bloodbath.html",
+      "title": "Model routing is a fix for AI overspending. That's a problem for OpenAI and Anthropic",
+      "url": "https://www.cnbc.com/2026/06/05/model-routing-on-ai-is-a-problem-for-openai-and-anthropic.html",
       "score": 0,
-      "ts": "2026-06-05T18:14:15"
-    },
-    {
-      "src": "Decrypt",
-      "title": "Congress Gets 7 New Crypto Tax Bills: Here's What's In Them",
-      "url": "https://decrypt.co/370197/congress-7-crypto-tax-bills",
-      "score": 0,
-      "ts": "2026-06-05T18:13:56"
-    },
-    {
-      "src": "Cointelegraph",
-      "title": "Crypto tax in Illinois FY2027 budget is one step away from becoming law",
-      "url": "https://cointelegraph.com/news/cryptocurrency-tax-illinois-fy2027-budget-law?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "score": 0,
-      "ts": "2026-06-05T18:10:59"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "As AI-related stocks dive, the market's winners have one thing in common",
-      "url": "https://www.cnbc.com/2026/06/05/as-ai-related-stocks-dive-the-markets-winners-have-one-thing-in-common.html",
-      "score": 0,
-      "ts": "2026-06-05T18:06:34"
+      "ts": "2026-06-05T18:24:25"
     }
   ]
 }

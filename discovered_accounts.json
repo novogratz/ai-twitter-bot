@@ -1,65 +1,5 @@
 [
   {
-    "handle": "tradosaure",
-    "category": "crypto",
-    "added": "2026-05-26"
-  },
-  {
-    "handle": "souverain",
-    "category": "ai",
-    "added": "2026-05-26"
-  },
-  {
-    "handle": "paul",
-    "category": "tech",
-    "added": "2026-05-26"
-  },
-  {
-    "handle": "gazou",
-    "category": "ai",
-    "added": "2026-05-26"
-  },
-  {
-    "handle": "cabusar",
-    "category": "ai",
-    "added": "2026-05-26"
-  },
-  {
-    "handle": "matyo",
-    "category": "ai",
-    "added": "2026-05-26"
-  },
-  {
-    "handle": "incwo",
-    "category": "ai",
-    "added": "2026-05-26"
-  },
-  {
-    "handle": "famillyslot",
-    "category": "crypto",
-    "added": "2026-05-26"
-  },
-  {
-    "handle": "alfred",
-    "category": "ai",
-    "added": "2026-05-26"
-  },
-  {
-    "handle": "afsheenjaf",
-    "category": "crypto",
-    "added": "2026-05-26"
-  },
-  {
-    "handle": "educash",
-    "category": "crypto",
-    "added": "2026-05-26"
-  },
-  {
-    "handle": "cryptonaute",
-    "category": "crypto",
-    "added": "2026-05-26"
-  },
-  {
     "handle": "demar",
     "category": "bourse",
     "added": "2026-05-27"
@@ -2497,6 +2437,66 @@
   {
     "handle": "wolf",
     "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "macgeneration",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "teslarati",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "l",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "karter",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "macroriskdesk",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "axiomofmind",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "flextrix",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "multi",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "deedy",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "pickpuck",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "massimo",
+    "category": "ai",
+    "added": "2026-06-05"
+  },
+  {
+    "handle": "vest",
+    "category": "crypto",
     "added": "2026-06-05"
   }
 ]

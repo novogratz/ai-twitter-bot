@@ -94,28 +94,10 @@ NICHE_KEYWORDS = (
     "iren", "hugging face", "huggingface", "perplexity", "copilot",
     "robotics", "humanoid", "agentic", "ai agent", "ai agents",
     "frontier model", "frontier tech", "reasoning model",
-    # Space — expanded for space push mode
-    "spacex", "starship", "starlink", "falcon", "rocket lab", "rocketlab", "rklb",
-    "nasa", "cnes", "isro", "jaxa", "ussf",
-    "blue origin", "new glenn", "new shepard", "be-4",
-    "virgin galactic", "virgin orbit", "spaceplane",
-    "axiom space", "axiom", "firefly", "relativity space", "sierra space",
-    "planet labs", "blacksky", "spire global", "terran orbital",
-    "amazon kuiper", "oneweb", "one web",
-    "satellite", "orbit", "orbital", "launch vehicle", "launch pad",
-    "mars", "moon", "lunar", "artemis", "iss", "space station",
-    "astronaut", "cosmonaut", "spacewalk", "ula", "vulcan centaur",
-    "new space", "commercial space", "space economy", "space defense",
-    "asts", "ast spacemobile", "lunr", "intuitive machines",
-    "rklb", "rocket lab", "mnts", "momentus",
-    "sidu", "sidus space", "astc", "astrotech",
-    "rdw", "redwire", "spce", "virgin galactic",
-    "ipo", "space ipo", "space stock", "space stocks",
-    "rocket", "booster", "reentry", "payload",
-    "leo ", "geo ", "meo ", "hypersonic", "space tourism",
-    "golden dome", "space force", "starshield",
-    "space infrastructure", "launch manifest",
-    "earth observation", "remote sensing",
+    # Space keywords REMOVED 2026-06-05 (monetization mandate: 100%
+    # finance/markets/AI lane — "the Mars/space repost was off-brand").
+    # SpaceX kept ONLY as a markets megastory ticker, not a space topic.
+    "spacex", "ipo",
     # Investment / crypto
     "bitcoin", "btc", "ethereum", "eth", "crypto", "stablecoin",
     "usdc", "coinbase", "blockchain", "defi", "spot etf", "halving",

@@ -4,7 +4,54 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
-> **Mandate 2026-06-03 (CURRENT — full rebrand → "The AI Decoder"):** **AI-ONLY**, English.
+> **Mandate 2026-06-05 PM (CURRENT — MONETIZATION SPEC, supersedes 2026-06-04):**
+> Goal: grow @TheAIShrink into a focused, SPONSORABLE persona account
+> (subscriptions + sponsorships; ad revenue is a bonus). Baseline: ~1.3K
+> followers / ~4.7K following (bad ratio), repost-heavy timeline, links in
+> posts — all three suppress reach and kill sponsor appeal.
+>
+> **Persona (do not drift):** the deadpan AI therapist for traders/investors —
+> market trauma, portfolio anxiety, crypto fear, AI hype. Wry, calm, slightly
+> clinical. 100% finance/markets/AI lane. NO space content, NO off-topic.
+>
+> **Hard don'ts (ENFORCED IN CODE at the chokepoints):**
+> - ❌ external links in posts/quotes → `_strip_post_urls` strips them
+>   (link-in-first-reply is the sanctioned pattern)
+> - ❌ hashtags anywhere → stripped in `_scrub_metadata_leaks`
+> - ❌ off-topic quotes/reposts → space keywords REMOVED from `_is_on_niche`
+> - ❌ mass-follow → `ENABLE_FOLLOW_BLAST=0`, `MAX_FOLLOWS_PER_DAY=10`
+>
+> **Content strategy:** original-first (≥80%): 3–6 originals/day across US
+> market hours, 80-min+jitter spacing, no bursts (`MAX_ORIGINALS_PER_DAY=6`).
+> Quotes ≤6/day, ALWAYS with a therapeutic-angle take. Bare retweets OFF
+> (`MAX_RETWEETS_PER_DAY=0`). Replies genuine not spam: ≤100/day, 90s+jitter
+> spacing, mid-size finance/AI accounts in-voice.
+>
+> **Account hygiene:** ratio repair via gradual unfollows — `MAX_UNFOLLOWS_PER_DAY=300`,
+> 20/cycle ≈ ≤50/hr randomized, tier1/tier2 + 30d-churn protected. Target:
+> following < followers.
+>
+> **Human-in-the-loop:** `REVIEW_MODE=1` routes every post/quote into
+> `review_queue.json` instead of publishing; the `/approve` skill ships them.
+> Default OFF (operator judged the voice dialed in 2026-06-05).
+>
+> **Monetization roadmap:** 3–5K followers → media kit + sponsor outreach
+> (trading apps, brokers, AI tools); 5–10K → X Subscriptions ("exclusive
+> therapy sessions"); ongoing → newsletter funnel. Engagement rate >2–3%
+> matters more than raw counts.
+>
+> **ARCHITECTURE MAPPING (spec → this codebase):** the spec's tweepy/X-API
+> modules map onto the EXISTING Safari+AppleScript stack — no paid X API tier,
+> no API keys. `content_gen`→generation bots + Claude Code CLI (NOT the
+> Anthropic SDK — operator: "we use Claude Code CLI as before", `AI_CLI=claude`,
+> no rate limits so Claude is now PRIMARY with ollama fallback);
+> `poster`→`twitter_client` chokepoints; `scheduler`→APScheduler in `main.py`;
+> `hygiene`→`smart_unfollow_bot`; `analytics`→`performance.py` +
+> `engine_health_bot` + `analyzer_bot`; `review_queue`→REVIEW_MODE +
+> `/approve`; SQLite→the existing JSON state files.
+
+
+> **Mandate 2026-06-03 (superseded — rebrand → "The AI Decoder"):** **AI-ONLY**, English.
 > The account is now a pure AI account. ALL content is about AI: labs/models/agents,
 > compute/GPU/datacenters/AI-power, embodied AI (humanoid robots), and the MONEY angle on AI
 > (Nvidia/Palantir/AI-capex, winners/losers, the bubble debate). NO standalone space, NO generic
