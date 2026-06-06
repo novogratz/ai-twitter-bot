@@ -13659,3 +13659,110 @@ My guesses are he's going to announce an investment of the 5
 $NVDA $QCOM $PLTR $NBIS
   - https://x.com/StockOptionCole/status/2063284509664268400
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 10).
+- **@andrewcurran_** (103 likes, score 9/10) — There was some confusion about this deal yesterday. Google will pay Spacex $920 million a month for compute. This is on top of the $1.25 billion a month Anthropic pays in their deal. Elon is now bring
+  - https://x.com/AndrewCurran_/status/2063278695763329352
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 123).
+- **@tedpillows** (1112 likes, score 9/10) — I'm seeing this chart a lot on my timeline lately.
+
+IMO, $BTC won't go to $30,000-$35,000 zone, and the bottom could be around $48,000-$50,000.
+
+Where do you guys think Bitcoin will bottom?
+  - https://x.com/TedPillows/status/2063237674274607310
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 2210).
+- **@asus_rog** (22 likes, score 7/10) — Two legends. Born in duality.​
+
+Experience Pragmata on the ROG NUC 16 — a compact gaming powerhouse built to unleash high-FPS gameplay without missing a beat. Powered by up to an NVIDIA® GeForce RTX™
+  - https://x.com/ASUS_ROG/status/2063290088084451673
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 24).
+- **@coinbureau** (65 likes, score 9/10) — OLD BITCOIN SUPPLY IS TURNING POSITIVE AGAIN
+
+Glassnode data shows $BTC held for more than six months has shifted back into positive net position change in 2026.
+
+After heavy selling during the 2024 a
+  - https://x.com/coinbureau/status/2063291850040193203
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 139).
+- **@trish_regan** (13 likes, score 7/10) — So, Anthropic races to a TRILLION-DOLLAR valuation by accelerating AI development.
+
+NOW… it wants a “GLOBAL PAUSE”?
+
+Funny how the call to slow down comes AFTER it secures its lead. 
+
+Sounds less like
+  - https://x.com/trish_regan/status/2063268937752629503
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 15).
+- **@kalshi** (1063 likes, score 9/10) — JUST IN: Nvidia is now below $5 trillion market cap
+  - https://x.com/Kalshi/status/2063271864709911004
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1325).
+- **@cointelegraph** (213 likes, score 9/10) — NEW: U.S. jobs beat expectations again, reducing pressure on the Fed to cut rates.
+
+There is now only a 4% chance of a rates cut, per CME.
+  - https://x.com/Cointelegraph/status/2063252176437178393
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 329).
+- **@tedpillows** (120 likes, score 9/10) — $BTC has never dropped below its "Electrical Cost" during a bear market bottom.
+
+Current Electrical Cost = $48,694
+
+Until something catastrophic happens, like Covid or a global recession, Bitcoin will
+  - https://x.com/TedPillows/status/2063300409284833475
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 218).
+- **@micro2macr0** (85 likes, score 8/10) — Our new FED. But people will still say #Bitcoin is dead.
+  - https://x.com/Micro2Macr0/status/2063253678895562951
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 91).
+- **@spaceinvestor_** (61 likes, score 8/10) — $SPCX Reality truly setting in seeing SpaceX on the official Nasdaq IPO calendar table page
+  - https://x.com/SpaceInvestor_/status/2063281760352493703
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 85).
+- **@sam_badawi** (69 likes, score 8/10) — Ed Yardeni views the selloff as a healthy correction after a powerful AI-driven rally. 
+
+He believes Fed concerns and elevated valuations triggered the pullback, not a collapse in fundamentals.
+
+Yarde
+  - https://x.com/Sam_Badawi/status/2063207018094289032
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 81).
+- **@simondixontwitt** (20 likes, score 7/10) — AI Bubble, Bitcoin Crash & The Great Capital Rotation https://youtube.com/live/U69Vbieo9r8?si=P8NvUjpVkAAgjr6A…
+  - https://x.com/SimonDixonTwitt/status/2063224407967842426
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 22).
+- **@bloombergtv** (14 likes, score 7/10) — "If a barrel of oil remains over $100 until July, some 45 million people extra will be pushed into acute hunger," reports @WFP Acting Executive Director @CarlSkau on Balance of Power https://bloom.bg/
+  - https://x.com/BloombergTV/status/2063026199937351844
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 18).
+- **@mr_derivatives** (71 likes, score 8/10) — Heisenberg Observation 
+
+The $QQQ is down 3 days in a row.
+
+It has not gone down 4 days in a row ALL YEAR.
+
+First time trading below the 20dma in two months.
+
+Highest daily volume since Nov 21st 2025
+  - https://x.com/Mr_Derivatives/status/2063300875825934444
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 101).
+- **@roundtablespace** (85 likes, score 7/10) — What comes first for BTC, $100K or $30K?
+  - https://x.com/RoundtableSpace/status/2063278488774472124
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 243).
+- **@alexbores** (29 likes, score 7/10) — They don't know what to make of me because I'm fighting for us and our power.
+
+I defied Trump and the AI oligarchs when I delivered the nation's strongest AI safety bill here in NY. Now they're spendi
+  - https://x.com/AlexBores/status/2063274731986465046
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 29).
+- **@tedpillows** (956 likes, score 7/10) — Moonboys thought 4-year cycle wouldn't play out again.
+
+$BTC proved them wrong.
+  - https://x.com/TedPillows/status/2063220859091792256
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1182).
+- **@fireflyspace** (232 likes, score 7/10) — Shoot for the stars, land on the Moon, start your career today! We're hiring passionate individuals to help us launch, land and orbit in space. Check out what positions are available here: https://fir
+  - https://x.com/FireflySpace/status/2062639285367373892
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 240).
+- **@cointelegraph** (109 likes, score 7/10) — SAYLOR: "The AI buildout is absorbing capital at historic scale... That does not weaken Bitcoin."
+  - https://x.com/Cointelegraph/status/2063297481618661767
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 221).
+- **@leopoldatracker** (40 likes, score 7/10) — 2. $NBIS
+
+I believe the market is still underestimating Nebius.
+
+The turnaround story is simple: the company has transformed from an internet technology business into a pure-play AI infrastructure com
+  - https://x.com/LeopoldATracker/status/2063233156547834142
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 44).
+- **@realbigbrainai** (14 likes, score 7/10) — Dylan Patel breaks down OpenAI's five-level AI roadmap and explains why true agents are still years away:
+
+OpenAI has publicly framed progress toward AGI as a five-level ladder. Lex asks Dylan where w
+  - https://x.com/realBigBrainAI/status/2063282353745891527
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
