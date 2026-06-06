@@ -189,7 +189,7 @@ HOT_TAB_QUERIES = [
     "Palantir OR CoreWeave OR space stock lang:en min_faves:100",
 ]
 
-DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "1440"))
+DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "7200"))
 
 _SPACE_KEYWORDS_RE = re.compile(
     r"\b(space|spatial|spatiaux|spacex|starship|starlink|satellite|orbital|orbit|"
@@ -474,11 +474,10 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         if url in replied: continue
         if _handle_from_url(url) == _OWN_HANDLE: continue
         if _handle_from_url(url) in BLOCKLIST or (author and author.lower() in BLOCKLIST): continue
-        # For feed sources: reply to everything — no niche, no age, no lang, no likes filter.
-        # For search sources: keep niche + age filter (we pull broad queries there).
-        if not is_feed:
-            if _tweet_age_minutes(url) > DIRECT_REPLY_MAX_AGE_MINUTES: continue
-            if not _is_on_niche(text): continue
+        # Age gate everywhere — never reply to posts older than 5 days.
+        if _tweet_age_minutes(url) > DIRECT_REPLY_MAX_AGE_MINUTES: continue
+        # Niche filter only for search (broad queries) — feeds get no filter.
+        if not is_feed and not _is_on_niche(text): continue
         is_en_tweet = not _looks_french(text)
         limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
         if limited: break
