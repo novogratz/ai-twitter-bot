@@ -515,64 +515,31 @@ def run_direct_reply_cycle():
     except Exception: retweeted = set()
     def _budget(): return DIRECT_REPLY_MAX_PER_CYCLE - total
 
-    # GRAPHSEO DEDICATED SCAN — runs first every cycle, Claude CLI forced
+    # 1. GRAPHSEO — always first, dedicated scan
     try:
         _run_graphseo_scan(replied)
     except Exception:
         log.info("[GRAPHSEO] Scan error:")
         traceback.print_exc()
 
-    # PROFILE ALWAYS (VIP)
-    for username in ALWAYS_REPLY_FR_ACCOUNTS:
-        if _budget() <= 0: break
-        tweets = scrape_profile_tweets(username, max_tweets=DIRECT_REPLY_PROFILE_SCAN_LIMIT)
-        if tweets:
-            if favorite_reposts < FAVORITE_REPOSTS_PER_CYCLE:
-                if _maybe_repost_best_profile_tweet(username, tweets, retweeted): favorite_reposts += 1
-            profile_tweets = [{"url": t["url"], "text": t["text"], "author": username, "likes": t.get("likes", 0)} for t in tweets]
-            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-ALWAYS", source_detail=username, remaining=_budget(), en_counter=en_counter)
-
-    # FEED / FOLLOWING
-    if _budget() > 0:
-        for source, scraper in [("FOLLOWING", scrape_following_feed), ("FEED", scrape_home_feed)]:
-            try:
-                tweets = scraper(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
-                if tweets:
-                    tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
-                    total += _reply_to_tweets(tweets, replied, source, remaining=_budget(), en_counter=en_counter)
-            except Exception: traceback.print_exc()
-
-    # PROFILE FR — bumped to 20 per cycle, Space FR accounts prioritised
-    from .evolution_store import filter_and_weight
-    _fr_pool = filter_and_weight(FR_ACCOUNTS)
-    # Ensure Space FR accounts appear first in the sample
-    _space_fr = [h for h in _fr_pool if h in {"ESA_fr", "SpaceX_France", "Aerospace_Valley"}]
-    _other_fr = [h for h in _fr_pool if h not in set(_space_fr)]
-    _fr_sample = _space_fr + random.sample(_other_fr, min(18, len(_other_fr)))
-    for username in _fr_sample:
-        if _budget() <= 0: break
-        tweets = scrape_profile_tweets(username, max_tweets=DIRECT_REPLY_PROFILE_SCAN_LIMIT)
-        if tweets:
-            profile_tweets = [{"url": t["url"], "text": t["text"], "author": username, "likes": t.get("likes", 0)} for t in tweets]
-            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-FR", source_detail=username, remaining=_budget(), en_counter=en_counter)
-
-    # SEARCH — more Space FR queries included now
-    for query in random.sample(SEARCH_QUERIES + HOT_TAB_QUERIES, min(12, len(SEARCH_QUERIES + HOT_TAB_QUERIES))):
+    # 2. FOR YOU + FOLLOWING FEEDS — primary reply surface (operator 2026-06-06)
+    #    These run BEFORE any profile visits so fresh live content always gets replies.
+    for source, scraper in [("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)]:
         if _budget() <= 0: break
         try:
-            tab = "top"  # 2026-06-04: always POPULAR, never "latest" — replying
-                         # to dead low-engagement recent tweets wastes the budget.
-            tweets = scrape_x_search(query, max_tweets=25, tab=tab)
-            if tweets: total += _reply_to_tweets(tweets, replied, "SEARCH-HOT", source_detail=query, remaining=_budget(), en_counter=en_counter)
+            tweets = scraper(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
+            if tweets:
+                tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
+                total += _reply_to_tweets(tweets, replied, source, remaining=_budget(), en_counter=en_counter)
         except Exception: traceback.print_exc()
 
-    # PROFILE EN
-    for username in random.sample(filter_and_weight(EN_ACCOUNTS), min(8, len(EN_ACCOUNTS))):
+    # 3. SEARCH — viral/popular posts on niche keywords (budget permitting)
+    for query in random.sample(SEARCH_QUERIES + HOT_TAB_QUERIES, min(8, len(SEARCH_QUERIES + HOT_TAB_QUERIES))):
         if _budget() <= 0: break
-        tweets = scrape_profile_tweets(username, max_tweets=DIRECT_REPLY_PROFILE_SCAN_LIMIT)
-        if tweets:
-            profile_tweets = [{"url": t["url"], "text": t["text"], "author": username, "likes": t.get("likes", 0)} for t in tweets]
-            total += _reply_to_tweets(profile_tweets, replied, "PROFILE-EN", source_detail=username, remaining=_budget(), en_counter=en_counter)
+        try:
+            tweets = scrape_x_search(query, max_tweets=25, tab="top")
+            if tweets: total += _reply_to_tweets(tweets, replied, "SEARCH-HOT", source_detail=query, remaining=_budget(), en_counter=en_counter)
+        except Exception: traceback.print_exc()
 
     save_replied(replied)
     log.info(f"[DIRECT] Posted {total} replies.")

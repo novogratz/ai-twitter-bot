@@ -323,12 +323,26 @@ vs toute analyse. À réserver pour: RKLB, ASTS, SPCE, $NVDA beats, BTC ATH brea
 
 {dedup_section}
 
+GIF (roughly half the time — operator 2026-06-06 mandate): when a famous meme GIF
+amplifies the punchline, add an optional 4th line: [GIF: <2-4 word search>].
+Use the GIF vocabulary below. Skip only when the text stands stronger alone.
+GIF SEARCH VOCABULARY:
+- huge win / euphoria       → [GIF: leonardo dicaprio clapping] / [GIF: vince mcmahon]
+- boss move / victory lap   → [GIF: wolf of wall street] / [GIF: chef kiss]
+- market pain / bleeding    → [GIF: michael jordan crying] / [GIF: this is fine]
+- suspicion / side-eye      → [GIF: futurama fry suspicious] / [GIF: john cena are you sure]
+- mind blown / big reveal   → [GIF: mind blown] / [GIF: math lady]
+- panic / FOMO              → [GIF: kermit panic] / [GIF: surprised pikachu]
+- waiting / cope            → [GIF: pablo escobar waiting] / [GIF: skeleton waiting]
+- mic drop / shots fired    → [GIF: mic drop] / [GIF: michael jackson popcorn]
+
 OUTPUT — écris UNIQUEMENT le tweet final, rien d'autre. JAMAIS de texte
 entre chevrons < >, JAMAIS de placeholder, JAMAIS d'étiquette. Format EXACT
-(3 lignes, en remplaçant le contenu, sans recopier ces consignes):
+(3 ou 4 lignes, en remplaçant le contenu, sans recopier ces consignes):
 Ligne 1 = le hot take (1-2 phrases, dans la langue imposée plus haut)
 Ligne 2 = l'URL de l'article
 Ligne 3 = [PATTERN: UN_SEUL_ID]
+Ligne 4 (optionnelle) = [GIF: search query]
 
 ⚠️ CRITIQUE: UN_SEUL_ID est UN seul mot pris dans la liste:
 REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR / UNDERSTATEMENT / OTHER.

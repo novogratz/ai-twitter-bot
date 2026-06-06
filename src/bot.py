@@ -10,10 +10,10 @@ from .config import MAX_NEWS_PER_DAY, MAX_HOTAKES_PER_DAY, DAILY_STATE_FILE, get
 from .logger import log
 from .agent import generate_tweet, _enforce_single_trailing_url, _finalize_news_tweet
 from .hotake_agent import generate_hotake
-from .twitter_client import post_tweet, post_thread
+from .twitter_client import post_tweet, post_tweet_with_gif, post_thread
 from .history import save_tweet
 from .engagement_log import log_post, log_hotake
-from .humanizer import humanize
+from .humanizer import humanize, extract_gif_query
 from .article_image import fetch_article_image
 from .image_gen import make_quote_card
 
@@ -645,7 +645,16 @@ def _run_single_bot_cycle() -> bool:
         elif tweet_source == "hotake":
             post_body = _maybe_add_curated_hashtag(post_body)
         log.info(f"[NEWS] Posting ({len(post_body)} chars): {post_body[:100]}...")
-        post_tweet(post_body, image_path=img_path)
+        # Extract GIF tag from hotakes and spicy posts — news Décodes use a
+        # link card instead (attaching a GIF would break the card preview).
+        gif_query = ""
+        if tweet_source == "hotake" and not img_path:
+            post_body, gif_query = extract_gif_query(post_body)
+        if gif_query:
+            log.info(f"[NEWS] GIF post — query: {gif_query!r}")
+            post_tweet_with_gif(post_body, gif_query)
+        else:
+            post_tweet(post_body, image_path=img_path)
         save_tweet(post_body if tweet_source == "news" else tweet)
         # Engagement-log routing must match the actual generator so the
         # bandit attribution stays correct.
