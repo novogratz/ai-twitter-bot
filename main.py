@@ -381,14 +381,19 @@ def main():
 
     # Catchup burst — fires 5 extra rounds of every high-volume surface so
     # any downtime gap is filled quickly on restart.
-    log.info("Catchup burst: 1 round of sweep / RT / quote / reply...")
-    if not args.reply_only:
-        safe_run_feed_sweep_cycle()
-        safe_run_retweet_cycle()
-        safe_run_quote_tweet_cycle()
-    if not args.post_only:
-        safe_run_direct_reply_cycle()
-    log.info("Catchup burst complete.")
+    # STARTUP FIREHOSE (operator 2026-06-06: "focus on quote retweets and
+    # replies — fire as much as you can when we start"): 3 back-to-back
+    # rounds of sweep -> quote -> reply before the scheduler takes over.
+    # Spacing/caps at the chokepoints still pace individual writes.
+    for _round in range(1, 4):
+        log.info(f"Startup firehose round {_round}/3: sweep -> quote -> reply...")
+        if not args.reply_only:
+            safe_run_feed_sweep_cycle()
+            safe_run_quote_tweet_cycle()
+            safe_run_retweet_cycle()
+        if not args.post_only:
+            safe_run_direct_reply_cycle()
+    log.info("Startup firehose complete.")
 
     # Schedule jobs
     if not args.reply_only:
