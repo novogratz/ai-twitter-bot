@@ -13958,3 +13958,79 @@ You know what this means, right?
 - **@simondixontwitt** (13 likes, score 7/10) — AI Bubble, Bitcoin Crash & The Great Capital Rotation
   - https://x.com/SimonDixonTwitt/status/2063230019644584431
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 13).
+- **@rogerhamilton** (47 likes, score 9/10) — $GNS AGI Infinity Fund - Named positions in AI Treasury Funds & entry val vs latest valuation:
+
+SpaceX: $125B to $1.75T (14x in 4 yrs)
+Figure AI: $2.6B to $40B (15x in 2 yrs)
+Anthropic: $4.1B to $965B
+  - https://x.com/rogerhamilton/status/2063309144078307619
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 51).
+- **@coinbureau** (7 likes, score 8/10) — BHUTAN MOVES ANOTHER 738 BTC
+
+The transfer is worth roughly $44.9 MILLION.
+
+Its Bitcoin holdings have dropped from about 13,000 BTC to just 2,400 $BTC, with more than $230 million sold in 2026.
+  - https://x.com/coinbureau/status/2063361535687463086
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 29).
+- **@balder13946731** (68 likes, score 9/10) — SpaceX, Anthropic, and OpenAI's three major IPOs, along with Google's, Amazon's, and Meta's bond issuances and follow-on offerings, will nearly drain $1 trillion in liquidity from the U.S. stock marke
+  - https://x.com/Balder13946731/status/2063256262121509055
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 78).
+- **@graphseo** (0 likes, score 9/10) — The CEO of Nvidia said that AI would create more millionaires in 5 years than the internet did in 25.
+
+If you had to pick just one stock that has the potential to make you a millionaire in 5 years, wh
+  - https://x.com/Graphseo/status/2062877137204281858
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 64).
+- **@niccruzpatane** (27 likes, score 8/10) — Here’s how much these companies’ stock prices have increased since going public:
+
+1. NVIDIA ($NVDA) 
+• IPO Date: 1/22/1999
+• IPO Price (Split Adj): $0.04 
+• IPO Market Cap: $0.68B
+• Today’s Price: $20
+  - https://x.com/niccruzpatane/status/2063327311533867252
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 33).
+- **@trendspider** (302 likes, score 9/10) — Investing Hack #5: 
+
+Buy Nvidia $NVDA under 36x P/E and ask questions later
+  - https://x.com/TrendSpider/status/2063331602046812614
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 342).
+- **@investmentguru_** (153 likes, score 9/10) — $MRVL — The long-term setup just got a lot more powerful at $264 
+
+→ S&P 500 inclusion confirmed — effective June 22, 2026. ￼ That means forced buying from every passive index fund and ETF that tracks
+  - https://x.com/InvestmentGuru_/status/2063235939493691448
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 161).
+- **@enrichtrades** (185 likes, score 8/10) — $AAOI bull case:
+
+Everyone is focused on AI compute.
+
+The bottleneck may end up being the movement of data.
+
+You can keep adding GPUs, but if the network can't handle the traffic, performance suffers.
+  - https://x.com/enrichtrades/status/2063334869271240719
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 193).
+- **@leaderinvests** (13 likes, score 7/10) — This year we're seeing many BIG IPO's happening. One will be here next week - Space X IPO.
+
+Later this year we also got OpenAI - Anthropic (October).
+
+Many IPO's perform 'okayish' the first three mont
+  - https://x.com/LeaderInvests/status/2063332588534501823
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 15).
+- **@leaderinvests** (81 likes, score 7/10) — Bullish for AI Infrastructure companies.
+
+What names should Trump be buying?
+
+$IREN - $CIFR - $CLSK - $KEEL - $GRRR - $SLNH - $CRWV - $NBIS
+  - https://x.com/LeaderInvests/status/2063331379438289092
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 105).
+- **@cryptotony__** (20 likes, score 7/10) — MoneyGram and Kraken launch Bitcoin-to-cash withdrawals across 100+ countries
+  - https://x.com/CryptoTony__/status/2063357161720168538
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 38).
+- **@vydamo_** (14 likes, score 7/10) — This isn't just a crypto crash — this is nightmare fuel. Respect to all the based traders still here. Real talk though, will you still be bullish on Bitcoin if it goes to 20k?
+  - https://x.com/vydamo_/status/2063357798940131673
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 32).
+- **@firstsquawk** (440 likes, score 7/10) — NVIDIA CEO Says AI's Future Isn't Just Copper.
+  - https://x.com/FirstSquawk/status/2063169945111076981
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 482).
+- **@djcows** (87 likes, score 7/10) — i worked in a furniture store for a few years while in college and it gave me so many real-world AI startup ideas, if i'm not a trillionaire in 2 years please bully me
+  - https://x.com/djcows/status/2063294558675382332
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 145).
