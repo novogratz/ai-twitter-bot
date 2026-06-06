@@ -344,6 +344,11 @@ def main():
     if not args.reply_only:
         log.info("Bot started! Monthly catchup: disabled (RT+quote only mode).")
         # _run_monthly_startup_catchup_if_due()  # disabled 2026-05-30
+        # FEED SWEEP FIRST (operator 2026-06-06: "it should be first thing"):
+        # For You + Following — reply / quote-RT / both on everything
+        # interesting, before any other startup work.
+        log.info("Startup FEED SWEEP (For You + Following) — first thing...")
+        safe_run_feed_sweep_cycle()
         # Reboost pinned tweet immediately on startup for fresh feed placement.
         log.info("Startup pin-boost: cycling pinned tweet for fresh reach...")
         safe_run_pin_boost_cycle()
@@ -376,8 +381,9 @@ def main():
 
     # Catchup burst — fires 5 extra rounds of every high-volume surface so
     # any downtime gap is filled quickly on restart.
-    log.info("Catchup burst: 1 round of RT / quote / reply...")
+    log.info("Catchup burst: 1 round of sweep / RT / quote / reply...")
     if not args.reply_only:
+        safe_run_feed_sweep_cycle()
         safe_run_retweet_cycle()
         safe_run_quote_tweet_cycle()
     if not args.post_only:
@@ -667,7 +673,7 @@ def main():
         log.info("Feed sweeper: quote the good / reply the meh on For You + Following every 8 min.")
         scheduler.add_job(
             safe_run_feed_sweep_cycle,
-            trigger=IntervalTrigger(minutes=5),
+            trigger=IntervalTrigger(minutes=3),
             id="feed_sweeper_job",
             max_instances=1,
         )
