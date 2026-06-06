@@ -1,7 +1,35 @@
 {
-  "ts": "2026-06-06T07:00:51.484408",
+  "ts": "2026-06-06T08:25:04.882387",
   "count": 30,
   "items": [
+    {
+      "src": "Yahoo Finance",
+      "title": "3 Cathie Wood ETFs to Buy Before They (Likely) Invest in SpaceX",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/3-cathie-wood-etfs-buy-121500461.html",
+      "score": 0,
+      "ts": "2026-06-06T12:15:00"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "The next NVIDIA? These 3 stocks below $50 are poised to win the next AI boom (and they’re still flying under the radar)",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/next-nvidia-3-stocks-below-120500020.html",
+      "score": 0,
+      "ts": "2026-06-06T12:05:00"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Inside the Obama-era Iran nuclear deal that Trump withdrew from",
+      "url": "https://www.cnbc.com/2026/06/06/trump-iran-jcpoa-nuclear-deal-obama.html",
+      "score": 0,
+      "ts": "2026-06-06T12:00:01"
+    },
+    {
+      "src": "Wired",
+      "title": "The Best 3-in-1 Apple Charging Stations After Testing Top Models",
+      "url": "https://www.wired.com/gallery/best-apple-3-in-1-wireless-chargers/",
+      "score": 0,
+      "ts": "2026-06-06T11:00:00"
+    },
     {
       "src": "Wired",
       "title": "Crypto-Funded Chinese Peptide Labs Are Booming",
@@ -50,6 +78,13 @@
       "url": "https://techcrunch.com/2026/06/05/reid-hoffman-is-leaving-microsofts-board-to-go-founder-mode-with-startup-manus/",
       "score": 0,
       "ts": "2026-06-05T22:35:01"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "AstraZeneca CEO says AI is reshaping drug development — and helping boost the odds of success",
+      "url": "https://www.cnbc.com/2026/06/05/astrazeneca-ceo-says-ai-is-reshaping-drug-development-and-helping-boost-the-odds-of-success.html",
+      "score": 0,
+      "ts": "2026-06-05T22:26:16"
     },
     {
       "src": "Cointelegraph",
@@ -176,41 +211,6 @@
       "url": "https://cointelegraph.com/markets/bitcoin-bears-face-26b-trap-as-btc-funding-rate-drops-is-a-short-squeeze-brewing?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
       "score": 0,
       "ts": "2026-06-05T19:28:53"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Why diehard bitcoin purists aren’t sweating the massive price crash that wiped out $200 billion",
-      "url": "https://www.coindesk.com/markets/2026/06/05/why-diehard-bitcoin-purists-aren-t-sweating-the-massive-price-crash-that-wiped-out-usd200-billion",
-      "score": 0,
-      "ts": "2026-06-05T19:27:20"
-    },
-    {
-      "src": "Ars Technica",
-      "title": "Small modular nuclear reactor reaches criticality in first test",
-      "url": "https://arstechnica.com/science/2026/06/first-us-test-of-modular-reactor-reaches-criticality/",
-      "score": 0,
-      "ts": "2026-06-05T19:23:08"
-    },
-    {
-      "src": "Decrypt",
-      "title": "Anthropic Is Helping the NSA Hack China. It Also Wants Everyone to Pause AI",
-      "url": "https://decrypt.co/370207/anthropic-helping-nsa-hack-china-also-wants-everyone-pause-ai",
-      "score": 0,
-      "ts": "2026-06-05T19:18:56"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "Hot jobs report puts Fed cuts further out of reach as Chair Warsh faces policy tests",
-      "url": "https://www.cnbc.com/2026/06/05/hot-jobs-report-puts-fed-cuts-further-out-of-reach-as-chair-warsh-faces-policy-tests.html",
-      "score": 0,
-      "ts": "2026-06-05T19:09:09"
-    },
-    {
-      "src": "TechCrunch",
-      "title": "Google will pay SpaceX $920M per month for compute",
-      "url": "https://techcrunch.com/2026/06/05/google-will-pay-spacex-920m-per-month-for-compute/",
-      "score": 0,
-      "ts": "2026-06-05T18:57:20"
     }
   ]
 }

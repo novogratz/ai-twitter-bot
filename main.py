@@ -140,29 +140,29 @@ def post_interval_minutes() -> int:
 def reply_interval_minutes() -> int:
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 6 <= hour < 23:
-        return _cadence(random.randint(3, 5))
-    return _cadence(random.randint(6, 10))
+        return _cadence(random.randint(2, 3))
+    return _cadence(random.randint(4, 6))
 
 
 def engage_interval_minutes() -> int:
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 6 <= hour < 23:
-        return _cadence(random.randint(7, 11))
-    return _cadence(random.randint(12, 18))
+        return _cadence(random.randint(5, 8))
+    return _cadence(random.randint(10, 14))
 
 
 def direct_reply_interval_minutes() -> int:
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 6 <= hour < 23:
-        return _cadence(random.randint(4, 6))
-    return _cadence(random.randint(8, 12))
+        return _cadence(random.randint(2, 4))
+    return _cadence(random.randint(5, 8))
 
 
 def early_bird_interval_minutes() -> int:
     hour = datetime.now(ZoneInfo("America/New_York")).hour
     if 6 <= hour < 23:
-        return _cadence(random.randint(7, 11))
-    return _cadence(random.randint(12, 18))
+        return _cadence(random.randint(5, 8))
+    return _cadence(random.randint(10, 14))
 
 
 def roast_interval_minutes() -> int:
@@ -664,7 +664,7 @@ def main():
         log.info("Quote bot: quote-posting viral AI setups every 3 min (GO CRAZY).")
         scheduler.add_job(
             safe_run_quote_tweet_cycle,
-            trigger=IntervalTrigger(minutes=3),
+            trigger=IntervalTrigger(minutes=2),
             id="quote_tweet_job",
             max_instances=1,
         )
@@ -676,7 +676,7 @@ def main():
         log.info("Feed sweeper: quote the good / reply the meh on For You + Following every 8 min.")
         scheduler.add_job(
             safe_run_feed_sweep_cycle,
-            trigger=IntervalTrigger(minutes=8),
+            trigger=IntervalTrigger(minutes=5),
             id="feed_sweeper_job",
             max_instances=1,
         )
@@ -737,7 +737,7 @@ def main():
         log.info("Retweet bot: amplifying viral AI posts every 3 min (short cycles, cap via MAX_RETWEETS_PER_DAY).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(minutes=3),
+            trigger=IntervalTrigger(minutes=2),
             id="retweet_job",
             max_instances=1,
         )
@@ -749,7 +749,7 @@ def main():
         log.info("Engagement targeting: replying to high-velocity whitelist posts every 20 min.")
         scheduler.add_job(
             safe_run_engagement_targeting_cycle,
-            trigger=IntervalTrigger(minutes=20),
+            trigger=IntervalTrigger(minutes=10),
             id="engagement_targeting_job",
             max_instances=1,
         )
