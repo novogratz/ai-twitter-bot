@@ -430,7 +430,7 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
 # Individual rate limits (jitter, LLM hourly cap, dedup) still apply.
 DIRECT_REPLY_MAX_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_PER_CYCLE", "9999"))
 MAX_EN_REPLIES_PER_CYCLE = int(os.environ.get("DIRECT_REPLY_MAX_EN_PER_CYCLE", "9999"))
-DIRECT_REPLY_FEED_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_FEED_SCAN_LIMIT", "100"))
+DIRECT_REPLY_FEED_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_FEED_SCAN_LIMIT", "150"))
 DIRECT_REPLY_PROFILE_SCAN_LIMIT = int(os.environ.get("DIRECT_REPLY_PROFILE_SCAN_LIMIT", "25"))
 DIRECT_REPLY_HOT_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_HOT_QUERY_LIMIT", "20"))
 DIRECT_REPLY_LIVE_QUERY_LIMIT = int(os.environ.get("DIRECT_REPLY_LIVE_QUERY_LIMIT", "20"))
@@ -480,9 +480,9 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         if _handle_from_url(url) == _OWN_HANDLE: continue
         if _tweet_age_minutes(url) > DIRECT_REPLY_MAX_AGE_MINUTES: continue
         likes = int(tweet.get("likes") or 0)
-        if likes < int(os.environ.get("REPLY_MIN_LIKES", "2")) and not source_name.startswith("PROFILE"): continue
         if not _is_fr_or_en(text): continue
-        if source_name.startswith(("FOLLOWING", "FEED")) and not _is_on_niche(text): continue
+        # For You / Following: reply to EVERYTHING — no niche filter, no likes floor.
+        # Niche filter kept only for search sources where we pull broad queries.
         is_en_tweet = not _looks_french(text)
         if is_en_tweet and en_counter and en_counter[0] >= MAX_EN_REPLIES_PER_CYCLE: continue
         limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
