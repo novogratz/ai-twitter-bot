@@ -98,6 +98,26 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-06 — engine-health ignores deliberately disabled surfaces
+
+The 2026-06-05 PM monetization mandate set `MAX_RETWEETS_PER_DAY=0` (bare
+retweets off). But `engine_health_bot` still compared today's forced-zero
+against a 7-day baseline that included pre-mandate retweet activity
+(e.g. 152 on 2026-06-05) → it fired "retweet collapsed: 0 today vs ~20 by
+this hour over the last 7 days (0%)" every cycle, which kept tripping the
+self-heal launcher and burning headless-Claude emergency runs on a surface
+that was *intentionally* turned off. Fix: `_is_surface_disabled(kind)` skips
+any watched type whose governing env-var cap(s) are all explicitly 0
+(`_CAP_ENVS` maps each surface to its cap names — `quote` has two and is
+only "disabled" when BOTH are zero). Read at call time so a live cap edit
+takes effect without restart. Three new guard tests pin the contract: alert
+suppressed when off, alert still fires for on-but-flatlined, and `quote`
+stays watched if either of its two caps is positive.
+
+Lesson: a real collapse and a deliberately-disabled surface both bottom out
+at 0. The watchdog has to know which one is which — operator intent lives
+in the cap, not the count.
+
 ### 2026-06-05 engine-collapse fixes (post-mortem)
 
 Engagement log showed retweets 140/day→0 (Jun 3) and replies 397→42/day (Jun 4).
