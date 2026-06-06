@@ -112,19 +112,22 @@ def run_pin_cycle():
         _mark_ran_today()
         return
 
-    # 2026-05-22: Prefer Décodes over any other post. The Décode is the
-    # series brand — the pinned slot is the highest-leverage real-estate
-    # we have for follow conversion, and a pinned random reaction tweet
-    # doesn't sell the series. Prioritize: Décode AND ≥5 likes first;
-    # only fall back to non-Décode if no Décode clears the floor.
-    decodes = [p for p in own if "Le Décode" in p["text"] or "le décode" in p["text"].lower()]
-    pool = decodes if decodes else own
-    if decodes:
+    # 2026-06-06 operator policy: the pin changes AT MOST once per 24h
+    # (the daily state above guarantees that), must be an IMPACTFUL/VIRAL
+    # post, and we ALWAYS keep a pin — never downgrade. A candidate only
+    # replaces the current pin when it meaningfully beats the engagement
+    # the current pin had when it was pinned (1.3x), or there is no
+    # recorded pin yet. (Décode-series preference removed with the brand.)
+    best = max(own, key=lambda c: (c["likes"], c["replies"]))
+    last = history.get("last_pin", {})
+    last_likes = int(last.get("likes") or 0)
+    if last_likes and best["likes"] < max(MIN_LIKES_TO_PIN, int(last_likes * 1.3)):
         log.info(
-            f"[PIN] {len(decodes)} Décode(s) eligible — picking best among them "
-            f"(out of {len(own)} total candidates)."
+            f"[PIN] Best candidate ({best['likes']} likes) doesn't beat the "
+            f"current pin ({last_likes} likes x1.3) — keeping the existing pin."
         )
-    best = max(pool, key=lambda c: (c["likes"], c["replies"]))
+        _mark_ran_today()
+        return
     log.info(
         f"[PIN] Best post: {best['likes']} likes / {best['replies']} replies — "
         f"{best['text'][:120]!r}"
@@ -142,6 +145,7 @@ def run_pin_cycle():
 
     if ok:
         history.setdefault("pinned", []).append(best["url"])
+        history["last_pin"] = {"url": best["url"], "likes": best["likes"]}
         _save_history(history)
         log.info(f"[PIN] Pinned: {best['url']}")
         time.sleep(2)
