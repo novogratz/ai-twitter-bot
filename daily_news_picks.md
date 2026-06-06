@@ -14034,3 +14034,172 @@ $IREN - $CIFR - $CLSK - $KEEL - $GRRR - $SLNH - $CRWV - $NBIS
 - **@djcows** (87 likes, score 7/10) — i worked in a furniture store for a few years while in college and it gave me so many real-world AI startup ideas, if i'm not a trillionaire in 2 years please bully me
   - https://x.com/djcows/status/2063294558675382332
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 145).
+- **@marcosmillayt** (14 likes, score 7/10) — 15 Stocks to Buy with High Upside on a HUGE Discount...
+
+1) Micron $MU 
+2) Broadcom $AVGO 
+3) NVIDIA $NVDA
+4) Google $GOOG
+5) Microsoft $MSFT
+6) Oracle $ORCL 
+7) Nebius $NBIS 
+8) CoreWeave $CRWV 
+9) T
+  - https://x.com/MarcosMillaYT/status/2063378747051683977
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 14).
+- **@sam_badawi** (73 likes, score 9/10) — $MRVL guided for strong sequential data center growth throughout FY2027, with analysts expecting total revenue to approach $12B by FY2028.
+
+With $NVDA CEO Jensen Huang calling AI infrastructure a $1T
+  - https://x.com/Sam_Badawi/status/2063318563692364227
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 83).
+- **@coinmarketcap** (1285 likes, score 9/10) — LATEST:  Benjamin Cowen says Bitcoin will eventually hit $1 million, but not until at least the 2040s, much later than most bulls expect.
+  - https://x.com/CoinMarketCap/status/2063234494673371362
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1859).
+- **@scaramucci** (136 likes, score 9/10) — Bitcoin is bleeding; the most important IPO moment in market history, with SpaceX, Anthropic, and OpenAI all heading to public markets simultaneously; why the data center buildout is falling dangerous
+  - https://x.com/Scaramucci/status/2063290159328526511
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 164).
+- **@nota_bull** (42 likes, score 8/10) — Reminder to my fellow investors that $INTC and $CRWV make up 72% of $NVDA's 13F holdings.
+  - https://x.com/NotA_Bull/status/2063295069818384451
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 46).
+- **@atlastradez** (6 likes, score 7/10) — Bitcoin happens to be at its mining production cost floor. Still of the opinion that as AI capex/inference grows, energy becomes structurally more expensive, and thus, Bitcoin's production cost do too
+  - https://x.com/AtlasTradez/status/2063365356593230273
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 12).
+- **@ashcrypto** (288 likes, score 9/10) — Crypto prices since Pro Crypto Kevin Warsh became Fed Chair:
+
+$BTC: -22%
+$ETH: -27%
+$XRP: -21%
+$SOL: -29%
+$DOGE: -24%
+$ADA: -38%
+$LINK: -27%
+$AVAX: -30%
+$SUI: -38%
+$TON: -26%
+$SEI: -29%
+$PEPE: -31%
+$A
+  - https://x.com/AshCrypto/status/2063367423496004039
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 530).
+- **@zerohedge** (250 likes, score 9/10) — Time to change the core AI mnemonic from “1 gig = 50 big” to 75 (AI infrastructure costs rising from $50BN per GW to $75BN)
+  - https://x.com/zerohedge/status/2063321818178478462
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 292).
+- **@kobeissiletter** (786 likes, score 8/10) — The US government is becoming increasingly dependent on private investors to finance its growing debt burden:
+
+Privately held US Treasury debt maturing within 1 year is up to a record $8.3 trillion.
+  - https://x.com/KobeissiLetter/status/2063353454085439856
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1076).
+- **@zerohedge** (757 likes, score 8/10) — Question is will OpenAI do the IPO before the government bailout or after
+  - https://x.com/zerohedge/status/2063034704614342920
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 863).
+- **@kimmonismus** (539 likes, score 8/10) — Under no circumstances will Claude 5 Mythos be released without GPT-5.6 being released in the same week.
+
+I am now firmly convinced that next week will be release week.
+  - https://x.com/kimmonismus/status/2063261659154534683
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 643).
+- **@randgroup** (132 likes, score 8/10) — Amazon just put another five billion into Anthropic. Anthropic will spend most of it on AWS (surprise). AI funding rounds have become a way for cloud providers to book their own compute revenue twice
+  - https://x.com/randgroup/status/2063319257421611411
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 160).
+- **@carlquintanilla** (61 likes, score 8/10) — “.. So now Google and Anthropic pay rent on the hardware Grok couldn't use, and that rent is the AI revenue story SpaceX takes public on Thursday.”
+  - https://x.com/carlquintanilla/status/2063358054309982447
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 79).
+- **@thierryborgeat** (19 likes, score 8/10) — The cold data on tech IPOs nobody is showing you before SpaceX, OpenAI, and Anthropic list.
+
+This is the post-IPO performance of every major tech IPO of the last decade. Every single name lost at leas
+  - https://x.com/ThierryBorgeat/status/2063357587253555622
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 29).
+- **@barissoydan** (366 likes, score 8/10) — 3.
+There's one more reason:
+Since March 30, the New York stock exchange (S&P 500) has risen 21% led by artificial intelligence stocks. It was obvious that those who made such profits in such a short t
+  - https://x.com/barissoydan/status/2063182269955666207
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 388).
+- **@cointelegraph** (100 likes, score 8/10) — AI: Apollo and Blackstone just backed Anthropic with $35B to supercharge the AI arms race.
+  - https://x.com/Cointelegraph/status/2063372980680298901
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 182).
+- **@0xlofty** (101 likes, score 8/10) — THE 2026-2027 CYCLE SCHEDULE:
+
+June: Bitcoin Crash
+July: Accumulation
+August: Recovery
+September: Optimism
+October: Bull Run Starts
+November: New Bitcoin ATH
+December: Bull Trap
+January: Market Dump
+F
+  - https://x.com/0xLofty/status/2063324734914166992
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 139).
+- **@sawyermerritt** (324 likes, score 7/10) — I may be getting a bit ahead of myself here, and it's important to note that Elon said the Anthropic deal is a short-term one. Still, it's possible that @SpaceX could exit 2026 with an annualized reve
+  - https://x.com/SawyerMerritt/status/2063374919912853706
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 378).
+- **@alexmasoncrypto** (233 likes, score 7/10) — This is how I’ll know the exact Bitcoin bottom is in.
+
+The 2022 pattern points to October–December.
+
+And there is only one way to confirm it:
+
+Sentiment.
+
+Wait for the crowd to scream that Bitcoin is
+  - https://x.com/AlexMasonCrypto/status/2063317948681302190
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 331).
+- **@cevikfinance** (186 likes, score 7/10) — One day, everyone will understand the importance of $CRWV.
+  - https://x.com/cevikfinance/status/2063279774009573868
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 202).
+- **@aerodromefi** (123 likes, score 7/10) — Weekly Highlights
+• Initial Aero audits are complete 
+• Aerodrome, now available for AI agents
+• $300B All-Time $ETH Volume
+• Aero Ignition: $TEA takes off 
+• 190M $AERO Acquired & Locked
+• Predictive
+  - https://x.com/AerodromeFi/status/2063308691433193763
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 139).
+- **@horuszz** (11 likes, score 7/10) — Money is fleeing from everything:
+  - Bitcoin  
+  - Ethereum  
+  - Gold  
+  - Silver  
+  - Nasdaq  
+  - S&P 500  
+  - Bonds  
+  - Oil
+When they all drop at the same time, it's not your run-of-the-mill
+  - https://x.com/HoruszZ/status/2063303107854152180
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 35).
+- **@leadlagreport** (1829 likes, score 7/10) — They turned the entire fucking stock market into a casino.
+
+They will crash stocks to save bonds.
+
+Broken clock? Fuck off.
+
+I believe what I believe.
+
+The house always wins.
+
+They need to refinance $4
+  - https://x.com/leadlagreport/status/2063027264564924716
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 2123).
+- **@itsclivetime** (1469 likes, score 7/10) — Personal update: I’ve decided to leave OpenAI.
+
+I’m proud to have been part of the custom chip program and grateful to everyone I got to build with and learn from along the way. The density of hardwar
+  - https://x.com/itsclivetime/status/2063356118525792542
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1695).
+- **@cryptorover** (420 likes, score 7/10) — YESTERDAY's $2.2 TRILLION MARKET CRASH MAY HAVE BEEN JUST THE BEGINNING.
+
+The US is now entering another midterm election cycle, and history shows these periods are usually some of the most dangerous
+  - https://x.com/cryptorover/status/2063311523804758499
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 654).
+- **@btcbruce1** (105 likes, score 7/10) — The US government is set to take stakes in star AI companies  
+like OpenAI, Anthropic, and so on  
+Next week's meeting will likely seal the deal on this  
+Because there are a few layers of meaning her
+  - https://x.com/BTCBruce1/status/2063312212375319028
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 171).
+- **@alojoh** (84 likes, score 7/10) — I think a big part of the recent xAI/Anthropic and xAI/Google compute deals was that from both Anthropi's and Google's perspective it effectively eliminates one of the competitors. 
+It's a fierce race
+  - https://x.com/alojoh/status/2063299375993176216
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 132).
+- **@kenwattana** (55 likes, score 7/10) — The San Francisco Bay after OpenAI and Anthropic go public
+  - https://x.com/KenWattana/status/2063338986228343019
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 63).
