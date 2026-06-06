@@ -12,6 +12,13 @@ the conversation). The LLM still gets the final word — a quote/reply that
 doesn't clear content_guard is skipped, and the action_guard chokepoints
 (caps + jittered spacing) gate total volume.
 
+2026-06-06 additions:
+  - GIF quotes: _generate_quote already asks the LLM for a [GIF: ...] tag;
+    we now extract it and call quote_tweet_with_gif() so GIFs actually post.
+  - Active author harvesting: authors of high-engagement feed posts are added
+    to dynamic_accounts.json so the engage_bot visits them instead of the old
+    static list.
+
 Hard rules preserved:
   - ⛔ quotes obey the 48h REPOST_MAX_AGE_HOURS rule (via _too_old_to_quote)
   - replies obey DIRECT_REPLY_MAX_AGE_MINUTES (72h since 2026-06-05)
@@ -27,18 +34,14 @@ from .logger import log
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
-# likes >= this → "good post" → quote; below → reply.
-# 2026-06-05 PM: 300→200 + 3→4/cycle (operator: quote-RT extremely
-# successful, "abuse a bit of it for the next few weeks").
 FEED_SWEEP_QUOTE_MIN_LIKES = int(os.environ.get("FEED_SWEEP_QUOTE_MIN_LIKES", "200"))
 FEED_SWEEP_SCAN_LIMIT = int(os.environ.get("FEED_SWEEP_SCAN_LIMIT", "50"))
 FEED_SWEEP_MAX_QUOTES_PER_CYCLE = int(os.environ.get("FEED_SWEEP_MAX_QUOTES_PER_CYCLE", "4"))
 FEED_SWEEP_MAX_REPLIES_PER_CYCLE = int(os.environ.get("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", "8"))
-
-# Both feeds are swept EVERY cycle (operator 2026-06-06: "go to FOR YOU
-# page and FOLLOWING page... refresh the page, there is always content" —
-# this is the bot's primary activity loop).
 BANGER_LIKES = int(os.environ.get("FEED_SWEEP_BANGER_LIKES", "1000"))
+
+# Authors with at least this many likes on a post get added to dynamic_accounts.
+HARVEST_MIN_LIKES = int(os.environ.get("FEED_SWEEP_HARVEST_MIN_LIKES", "100"))
 
 
 def _handle_from_url(url: str) -> str:
@@ -46,6 +49,45 @@ def _handle_from_url(url: str) -> str:
         return (url or "").split("x.com/")[1].split("/")[0].lower()
     except (IndexError, AttributeError):
         return ""
+
+
+def _harvest_active_authors(tweets: list) -> None:
+    """Add authors of high-engagement feed posts to dynamic_accounts.json.
+
+    This is the main way the engage_bot discovers NEW profiles to visit — it
+    no longer relies on the old hardcoded list. Only handles with a valid X
+    format (1-15 alphanumeric/_) are stored.
+    """
+    if not tweets:
+        return
+    try:
+        from .dynamic_strategy import add_dynamic_accounts, get_dynamic_accounts
+        existing = get_dynamic_accounts()
+        known = set(h.lower() for bucket in ("en", "fr") for h in existing.get(bucket, []))
+        known.update(BLOCKLIST)
+        known.add(_OWN_HANDLE)
+
+        new_handles = []
+        for t in tweets:
+            likes = int(t.get("likes") or 0)
+            if likes < HARVEST_MIN_LIKES:
+                continue
+            author = (t.get("author") or "").lstrip("@").strip()
+            if not author or author.lower() in known:
+                continue
+            # Only keep valid X handles (1-15 chars, alphanumeric/_).
+            if len(author) > 15 or not all(c.isascii() and (c.isalnum() or c == "_") for c in author):
+                continue
+            new_handles.append(author)
+            known.add(author.lower())
+
+        if new_handles:
+            added = add_dynamic_accounts(en=new_handles)
+            if added:
+                log.info(f"[SWEEP] Harvested {added} new active author(s) into dynamic_accounts.")
+    except Exception:
+        log.info("[SWEEP] Author harvest failed (non-fatal):")
+        traceback.print_exc()
 
 
 def run_feed_sweep_cycle():
@@ -56,7 +98,8 @@ def run_feed_sweep_cycle():
 
 
 def _sweep_one_feed(source, scraper):
-    from .twitter_client import quote_tweet
+    from .twitter_client import quote_tweet, quote_tweet_with_gif
+    from .humanizer import extract_gif_query
     from .quote_tweet_bot import _load_quoted, _save_quoted, _generate_quote, _too_old_to_quote
     from .direct_reply import _reply_to_tweets, load_replied, _is_on_niche, _is_reply_like_tweet
     from . import content_guard, respect_list
@@ -71,6 +114,9 @@ def _sweep_one_feed(source, scraper):
     if not tweets:
         log.info(f"[SWEEP] No tweets scraped from {source}.")
         return
+
+    # Harvest active authors from this feed pass before filtering.
+    _harvest_active_authors(tweets)
 
     quoted = _load_quoted()
     replied = load_replied()
@@ -94,15 +140,11 @@ def _sweep_one_feed(source, scraper):
             continue
         likes = int(t.get("likes") or 0)
         if likes >= FEED_SWEEP_QUOTE_MIN_LIKES and url not in quoted:
-            # Respect-list authors are never quote-called-out; reply instead.
             if respect_list.is_protected(t.get("author", "")):
                 if url not in replied:
                     reply_candidates.append(t)
             else:
                 quote_candidates.append(t)
-                # BANGER (operator: "reply or quote retweet OR BOTH"): on
-                # very viral posts do both — the quote rides the reach, the
-                # reply farms the thread.
                 if likes >= BANGER_LIKES and url not in replied:
                     reply_candidates.append(t)
         elif url not in replied:
@@ -110,13 +152,13 @@ def _sweep_one_feed(source, scraper):
 
     log.info(f"[SWEEP] {source}: {len(quote_candidates)} quote candidates, {len(reply_candidates)} reply candidates.")
 
-    # --- QUOTE the good ones (most-liked first) ---------------------------
+    # --- QUOTE the good ones (most-liked first) — with GIF when LLM asks ---
     quote_candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
     quotes_done = 0
     for cand in quote_candidates:
         if quotes_done >= FEED_SWEEP_MAX_QUOTES_PER_CYCLE:
             break
-        if _too_old_to_quote(cand):  # ⛔ hard 48h rule
+        if _too_old_to_quote(cand):
             continue
         author = cand.get("author", "someone")
         quote = content_guard.generate_validated(
@@ -125,21 +167,26 @@ def _sweep_one_feed(source, scraper):
         if not quote:
             continue
         try:
-            posted = quote_tweet(cand["url"], quote)
+            # Extract GIF tag before posting — the LLM puts [GIF: ...] in the text.
+            quote_text, gif_query = extract_gif_query(quote)
+            if gif_query:
+                log.info(f"[SWEEP] GIF quote for @{author} — GIF: {gif_query!r}")
+                posted = quote_tweet_with_gif(cand["url"], quote_text, gif_query)
+            else:
+                posted = quote_tweet(cand["url"], quote_text)
         except Exception:
             traceback.print_exc()
-            # Unknown state — mark consumed to be safe.
             quoted.add(cand["url"])
             _save_quoted(quoted)
             continue
         if not posted:
-            # Spacing/cap at the chokepoint — keep the candidate for later.
             log.info("[SWEEP] Quote chokepoint skipped (spacing/cap) — stopping quote pass.")
             break
         quoted.add(cand["url"])
         _save_quoted(quoted)
         quotes_done += 1
-        log.info(f"[SWEEP] Quoted @{author} ({cand.get('likes')} likes).")
+        gif_tag = f" +GIF({gif_query})" if gif_query else ""
+        log.info(f"[SWEEP] Quoted @{author} ({cand.get('likes')} likes){gif_tag}.")
 
     # --- REPLY to the meh ones --------------------------------------------
     random.shuffle(reply_candidates)
@@ -154,7 +201,6 @@ def _sweep_one_feed(source, scraper):
 
 
 def safe_run_feed_sweep_cycle():
-    """Wrapper that catches errors so the scheduler keeps running."""
     from . import health
     try:
         run_feed_sweep_cycle()

@@ -104,10 +104,10 @@ GOOD (therapist voice, adds an angle):
 BAD (just a reaction): "Beautiful." / "Good luck." / "Called it." / "As expected."
 BAD (old voice): snark, roast, "ngmi", dunking on the trend instead of healing it.
 
-GIF (optional, ~1 quote in 3): when a famous meme GIF would make the quote
-land HARDER, add one line after the text: [GIF: <2-4 word search>].
+GIF (default YES — roughly half the time): when a famous meme GIF would make
+the quote land HARDER, add one line after the text: [GIF: <2-4 word search>].
 {gif_guide}
-Skip the GIF when the line is stronger alone — restraint reads more human.
+Skip the GIF only when the text is stronger completely alone.
 
 CRITICAL: any output containing the bare word "skip" = silent skip. Either the
 pure quote OR "SKIP" alone — never a sentence explaining why you're skipping.

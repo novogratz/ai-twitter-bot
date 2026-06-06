@@ -1,4 +1,12 @@
-"""Engage bot: follows AI accounts and likes their tweets for reciprocity."""
+"""Engage bot — visit active profiles discovered from the live feed, not a static list.
+
+Strategy (2026-06-06 operator mandate):
+  - Primary pool: handles captured from For You / Following feed by the feed
+    sweeper (dynamic_accounts.json "en"/"fr" buckets) + legacy discovered.json.
+  - VIP: Graphseo always included every cycle.
+  - Blocked / pruned accounts are filtered out automatically.
+  - No massive hardcoded follow list — we follow who the feed shows us.
+"""
 import json
 import os
 import random
@@ -10,163 +18,97 @@ from .twitter_client import visit_profile_and_like, follow_account
 
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 
+# Only VIP that is always in the rotation by request (operator 2026-06-06).
+VIP_ACCOUNTS = ["Graphseo"]
+
 
 def _load_discovered_handles() -> list:
-    """Read autonomously-discovered handles, skipping blocklisted ones."""
+    """Read autonomously-discovered handles from discovered_accounts.json."""
     if not os.path.exists(DISCOVERED_ACCOUNTS_FILE):
         return []
     try:
         with open(DISCOVERED_ACCOUNTS_FILE, "r") as f:
             data = json.load(f)
-        return [d.get("handle") for d in data
-                if d.get("handle") and d["handle"].lower() not in BLOCKLIST]
+        if isinstance(data, list):
+            return [d.get("handle") for d in data
+                    if d.get("handle") and d["handle"].lower() not in BLOCKLIST]
+        return []
     except (json.JSONDecodeError, IOError):
         return []
 
-# IA + Crypto + Bourse target accounts
-TARGET_ACCOUNTS = [
-    # === User VIP follows/replies 2026-05-02 ===
-    "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz", "jbelizaireCEO",
-    "FlasheurInvest", "McnallieM",
 
-    # === High-traction French crypto / AI / investing ===
-    "PowerHasheur", "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr",
-    "CryptoPicsou", "crypto_futur", "TheCrypt0Matrix", "TagadoBTC",
-    "Crypto__Goku", "MiningTk", "MoneyRadar_FR", "Capetlevrai",
-    "Dark_Emi_", "Divs_King", "MathieuL1", "NCheron_bourse",
-    "ABaradez", "Phil_RX", "arthurmensch", "GuillaumeLample",
-    "GaelVaroquaux", "fchollet", "MistralAI",
+def _load_dynamic_handles() -> list:
+    """Read handles from dynamic_accounts.json (populated by feed sweeper)."""
+    path = os.path.join(_PROJECT_ROOT, "dynamic_accounts.json")
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, "r") as f:
+            data = json.load(f)
+        handles = []
+        for bucket in ("en", "fr"):
+            for h in data.get(bucket, []):
+                if h and h.lower() not in BLOCKLIST:
+                    handles.append(h)
+        return handles
+    except (json.JSONDecodeError, IOError):
+        return []
 
-    # === IA: Mega accounts ===
-    "elonmusk", "BillGates", "satyanadella",
-    "sama", "ylecun", "karpathy",
 
-    # === AI infra / asymmetric investing EN ===
-    "CoreWeave", "CrusoeEnergy", "LambdaAPI", "applied_dc",
-    "IREN_Ltd", "Hut8Corp", "TeraWulfInc", "CipherMining",
-    "CleanSpark_Inc", "MARAHoldings", "RiotPlatforms",
-    "SpaceX", "Starlink", "RocketLab", "PeterDiamandis",
-    "bittensor_", "opentensor", "KobeissiLetter", "unusual_whales",
-
-    # === IA: Companies ===
-    "OpenAI", "AnthropicAI", "GoogleDeepMind", "MetaAI",
-    "xAI", "MistralAI", "HuggingFace", "Cohere", "PerplexityAI",
-    "stability_ai", "Midjourney", "RunwayML", "ScaleAI",
-
-    # === IA: Leaders / CEOs ===
-    "DarioAmodei", "demishassabis", "mustafasuleyman",
-    "ID_AA_Carmack", "jackclark", "ilyasut",
-
-    # === IA: Researchers / builders ===
-    "DrJimFan", "GaryMarcus", "AndrewYNg", "fchollet",
-    "swyx", "hardmaru", "AravSrinivas",
-
-    # === IA: Influencers ===
-    "TheAIGRID", "mattshumer_", "levelsio",
-    "rowancheung", "AlphaSignalAI", "TheRundownAI",
-    "thealexbanks", "NathanLands",
-
-    # === Crypto: Mega accounts ===
-    "VitalikButerin", "APompliano", "CryptoCapo_",
-    "brian_armstrong",
-
-    # === Crypto: Influencers FR ===
-    "PowerHasheur", "Capetlevrai", "Dark_Emi_",
-    "CryptoMusic_fr", "JournalDuCoin", "powl_d",
-
-    # === Crypto: Media & accounts ===
-    "CoinDesk", "Cointelegraph", "coin_bureau",
-    "WuBlockchain", "tier10k",
-
-    # === Bourse/Finance: FR ===
-    "Graphseo", "ABaradez", "Phil_RX", "FinTales_",
-    "ZonebourseFR", "BFMBourse",
-    "NCheron_bourse", "RodolpheSteffan", "IVTrading",
-    "DereeperVivre", "MathieuL1",
-    "ThomasVeillet", "YoannLOPEZ",
-    "Capital",  # InvestirLeJournal (>15 char) + LeRevenu_fr (0% scrape) removed 2026-04-27
-
-    # === Bourse/Finance: US ===
-    "chamath", "jimcramer", "unusual_whales",
-
-    # === Tech media FR (mass distribution) ===
-    "BFMTV", "lemondefr", "lesechos", "Le_Figaro", "France24",
-    "Frandroid", "Numerama", "JournalDuGeek", "KorbenInfo",
-    "cyrildiagne", "Underscore_", "micode", "GuillaumeBesson",
-
-    # === Crypto FR (extra) ===
-    "owen_simonin", "Cryptoast", "TheBigWhale_", "CointribuneFR", "Coin_Academy",
-
-    # === Tech media EN ===
-    "TechCrunch", "TheVerge", "WIRED",
-
-    # === Batch ajouté 2026-05-09 — francophones IA/crypto/bourse ===
-    # Crypto / DeFi
-    "JulienBouteloup", "cryptaa", "JFR_Crypto", "BitcoinerFR",
-    "CharlesGuillemet", "PascalGauthier", "LedgerHQ",
-    "0xCryptoLab", "MisterCrypto_FR", "CrypTAlphaFR",
-    "MaxOpti_", "BastienBronnec", "JeromeAtangana",
-    # AI / Tech
-    "clemdelangue", "gilles_babinet", "stanislaspolu",
-    "aurelien_geron", "luc_julia", "lex_lhomme",
-    "datageek_FR", "BorisJabes", "KIVU_AI",
-    # Finance / Macro
-    "marc_touati", "PatrickArtus", "Charles_Gave",
-    "TheoTrader_", "HappyTradingFR", "FrenchMacro",
-    "CafeDeLaBourse", "Marc_Fiorentino", "thomas_porcher",
-    "Charles_Sannat", "OlivierBabeau", "CMS_Bordier",
-    # Media / outlets
-    "ContexteTech", "Le_Figaro_Eco", "FrenchWeb",
-    "LesEchos", "Capital", "Challenges",
-    "Maddyness", "MaddyNess",
-    # FR/QC AI
-    "Yoshua_Bengio", "Montreal_AI",
-]
-
-# Append discovered handles, then dedup
-TARGET_ACCOUNTS = list(dict.fromkeys(TARGET_ACCOUNTS + _load_discovered_handles()))
+def _build_pool() -> list:
+    """VIPs + dynamic + discovered, deduped and blocklist-filtered."""
+    seen = set()
+    pool = []
+    for h in VIP_ACCOUNTS + _load_dynamic_handles() + _load_discovered_handles():
+        h_lower = h.lower() if h else ""
+        if h and h_lower not in seen and h_lower not in BLOCKLIST:
+            pool.append(h)
+            seen.add(h_lower)
+    return pool
 
 
 def _load_followed() -> set:
-    """Load set of accounts we already followed."""
     if os.path.exists(FOLLOWED_FILE):
-        with open(FOLLOWED_FILE, "r") as f:
-            return set(json.load(f))
+        try:
+            with open(FOLLOWED_FILE, "r") as f:
+                return set(json.load(f))
+        except (json.JSONDecodeError, IOError):
+            pass
     return set()
 
 
 def _save_followed(followed: set):
-    """Save set of followed accounts."""
     with open(FOLLOWED_FILE, "w") as f:
         json.dump(list(followed), f, indent=2)
 
 
 def run_engage_cycle():
-    """Visit target accounts, like their latest tweets, and follow new ones.
-    More accounts per cycle + 3 likes per visit = more visibility."""
+    """Visit a sample of feed-discovered profiles, like their latest tweets."""
     from .evolution_store import filter_and_weight
     followed = _load_followed()
+    pool = filter_and_weight(_build_pool())
 
-    # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
-    pool = filter_and_weight(TARGET_ACCOUNTS)
+    if not pool:
+        log.info("[ENGAGE] Pool empty — no dynamic/discovered handles yet.")
+        return
 
-    # Growth push 2026-05-06 PM: hit even more accounts per cycle (7-10 → 10-15).
-    # User: 360 → 10k followers in a week. Volume is the lever.
-    count = random.randint(10, 15)
-    picks = random.sample(pool, min(count, len(pool)))
+    count = random.randint(8, 12)
+    # Always include VIPs if they're in the pool.
+    vip_picks = [h for h in pool if h in VIP_ACCOUNTS]
+    rest = [h for h in pool if h not in VIP_ACCOUNTS]
+    random.shuffle(rest)
+    picks = (vip_picks + rest)[:count]
 
-    log.info(f"[ENGAGE] Engaging with {len(picks)} accounts...")
+    log.info(f"[ENGAGE] Visiting {len(picks)} profiles (pool size: {len(pool)})...")
     for username in picks:
         try:
             if username not in followed:
                 log.info(f"[ENGAGE] Following + liking @{username}...")
                 if follow_account(username):
                     followed.add(username)
-                # If JS-click didn't fire, skip the followed.add so we retry next cycle.
-                # The like-pass below still runs regardless — engagement happens either way.
                 time.sleep(random.randint(2, 4))
 
-            like_count = 5 if username in TARGET_ACCOUNTS[:40] else 3
+            like_count = 5 if username in VIP_ACCOUNTS else 3
             log.info(f"[ENGAGE] Liking @{username}'s latest tweets...")
             visit_profile_and_like(username, like_count=like_count)
             time.sleep(random.randint(3, 5))
@@ -175,11 +117,10 @@ def run_engage_cycle():
             traceback.print_exc()
 
     _save_followed(followed)
-    log.info(f"[ENGAGE] Done. Engaged with {len(picks)} accounts. Following {len(followed)} total.")
+    log.info(f"[ENGAGE] Done. Engaged with {len(picks)} accounts.")
 
 
 def safe_run_engage_cycle():
-    """Wrapper that catches errors so the scheduler keeps running."""
     from . import health
     try:
         run_engage_cycle()
