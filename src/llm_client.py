@@ -766,19 +766,10 @@ def run_llm(
             )
             return _run_ollama_http(prompt, label=label, timeout=effective_timeout)
 
-    # Claude rate-limit bypass — symmetric to codex. When Anthropic 429s
-    # for an extended window, skip retrying Claude every cycle and route
-    # straight to ollama. Self-cleans on expiry.
-    if provider == "claude":
-        lockout = _read_claude_lockout()
-        if lockout is not None:
-            effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
-            log.info(
-                f"[LLM] {label}: claude locked until "
-                f"{lockout.isoformat(timespec='minutes')} — "
-                f"using ollama HTTP / {OLLAMA_MODEL} (timeout {effective_timeout}s)."
-            )
-            return _run_ollama_http(prompt, label=label, timeout=effective_timeout)
+    # Claude lockout REMOVED (operator 2026-06-06: "WE ARE UNLIMITED TOKEN —
+    # remove this completely"). Claude is tried on EVERY call; if a single
+    # call errors, the normal per-call ollama fallback below handles just
+    # that call and the next call goes straight back to Claude.
 
     # Per-provider timeout cap — 2026-05-22 PM (durable): 360s (6 min).
     # User: "im ok to wait more bro... I just want it to work". The bot's
@@ -811,18 +802,8 @@ def run_llm(
                 fb_cmd = _build_cmd(prompt, fb_model, output_json, allowed_tools, permission_mode, fb)
                 return _run_cmd(fb_cmd, label=f"{label} (codex locked)", timeout=timeout, cwd=cwd)
 
-    # Same treatment for Claude: detect 429 / quota errors, cache a 1h
-    # lockout, and immediately fall over so the cycle doesn't burn time.
-    if provider == "claude":
-        end = _detect_claude_lockout(result)
-        if end is not None:
-            _write_claude_lockout(end)
-            log.info(
-                f"[LLM] Claude rate-limit detected — locking out until "
-                f"{end.isoformat(timespec='minutes')}."
-            )
-            effective_timeout = max(timeout or 0, DEFAULT_LLM_TIMEOUT_SECONDS)
-            return _run_ollama_http(prompt, label=f"{label} (claude locked)", timeout=effective_timeout)
+    # (Claude lockout caching removed 2026-06-06 — a failed call just falls
+    # through to the per-call fallback below; Claude is retried next call.)
 
     if not _should_fallback(result):
         return result

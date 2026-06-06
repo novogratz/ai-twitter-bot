@@ -51,3 +51,4 @@ auto_improve.log
 .auto_improve_running
 .last_self_heal
 .claude/scheduled_tasks.lock
+claude_lockout.json
