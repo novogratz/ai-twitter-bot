@@ -1363,10 +1363,9 @@ def scrape_home_feed(max_tweets: int = 15):
         webbrowser.open("https://x.com/home")
         time.sleep(8)
 
-        # Scroll proportionally to the requested depth — 2 fixed scrolls only
-        # surfaced ~20 tweets no matter what max_tweets asked for (operator
-        # 2026-06-05: "for you page scrolling more" to find reply targets).
-        for _ in range(max(2, min(8, max_tweets // 12))):
+        # Scroll deep — reply to everything means we need to surface many tweets.
+        # Each scroll reveals ~8-12 posts; cap at 15 scrolls to stay bounded.
+        for _ in range(max(4, min(15, max_tweets // 7))):
             _scroll_page()
 
         tweets = _scrape_tweets_from_page("home feed", max_tweets)
