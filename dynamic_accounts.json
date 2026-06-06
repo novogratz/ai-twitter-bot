@@ -391,7 +391,11 @@
     "PierreRoques",
     "DorianMazuy",
     "JulesBoisson",
-    "VivekLaine"
+    "VivekLaine",
+    "Lemfi",
+    "TheMick",
+    "JulienTessier",
+    "CyrilDreano"
   ],
   "en": [
     "blablacar",
@@ -2427,6 +2431,26 @@
       "lang": "fr",
       "handle": "VivekLaine",
       "added": "2026-06-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lemfi",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheMick",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienTessier",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDreano",
+      "added": "2026-06-06"
     }
   ]
 }

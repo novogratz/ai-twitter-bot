@@ -3550,5 +3550,43 @@
       }
     ],
     "summary": "J'ai traqu\u00e9 les p\u00e9pites francophones qui ne vendent pas du r\u00eave \u00e0 2000\u20ac. Mix IA France, Crypto QC et Finance US francophone. Le r\u00e9sultat est un cocktail de technique pure et de cynisme n\u00e9cessaire."
+  },
+  {
+    "ts": "2026-06-06T02:11:32.053010",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Lemfi",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 60000,
+        "reason": "Beno\u00eet Hemon transforme la fintech en blagues de pot de bureau, l'anti-Leddy par excellence."
+      },
+      {
+        "handle": "TheMick",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le roi incontest\u00e9 de la crypto FR, il tweete comme s'il venait de se r\u00e9veiller apr\u00e8s un split de Bitcoin, pure essence VC."
+      },
+      {
+        "handle": "JulienTessier",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Le roi de la data boursi\u00e8re FR au Qu\u00e9bec, il trie le bon grain de l'ivraie avec une d\u00e9sinvolture qui fait mal."
+      },
+      {
+        "handle": "CyrilDreano",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 9000,
+        "reason": "Journaliste bourse qui tweete des perles de bon sens, il r\u00e9sume Wall Street comme si c'\u00e9tait une discussion de comptoir."
+      }
+    ],
+    "summary": "Un mix classique de grands noms crypto FR (Mick, Merlin) et des p\u00e9pites tech Qu\u00e9bec (Tessier, Toups) qui tweetent en fran\u00e7ais. Le tout avec une dose de profondeur US (Amodei) pour la cr\u00e9dibilit\u00e9."
   }
 ]

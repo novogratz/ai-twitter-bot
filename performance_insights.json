@@ -1,41 +1,41 @@
 {
-  "generated_at": "2026-06-05T15:28:13.805008",
-  "window_7d_actions": 3250,
-  "window_24h_actions": 450,
+  "generated_at": "2026-06-06T04:10:50.845173",
+  "window_7d_actions": 3324,
+  "window_24h_actions": 613,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 3168
-    },
-    {
-      "pattern": "METAPHOR",
-      "count": 25
+      "count": 3252
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 25
+      "count": 26
+    },
+    {
+      "pattern": "METAPHOR",
+      "count": 24
     },
     {
       "pattern": "DIALOGUE",
       "count": 11
     },
     {
-      "pattern": "RENAME",
-      "count": 9
+      "pattern": "UNDERSTATEMENT",
+      "count": 6
     }
   ],
   "worst_patterns": [
     {
       "pattern": "EN_ANCHOR",
-      "count": 3
+      "count": 1
     },
     {
       "pattern": "RENAME",
-      "count": 9
+      "count": 4
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 9
+      "count": 6
     }
   ],
   "best_hours_utc": [
@@ -49,76 +49,91 @@
     },
     {
       "hour": 20,
-      "actions": 194
+      "actions": 204
     },
     {
       "hour": 21,
-      "actions": 180
+      "actions": 190
     },
     {
-      "hour": 0,
-      "actions": 169
+      "hour": 19,
+      "actions": 177
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1146
+      "count": 1163
     },
     {
       "topic": "Autre",
-      "count": 1107
+      "count": 1162
     },
     {
       "topic": "Spatial",
-      "count": 580
+      "count": 557
     },
     {
       "topic": "Bourse",
-      "count": 457
+      "count": 508
     },
     {
       "topic": "Crypto",
-      "count": 396
+      "count": 388
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Crypto",
+      "24h_rate": 0.16,
+      "7d_rate": 0.117
+    },
+    {
+      "topic": "Bourse",
+      "24h_rate": 0.21,
+      "7d_rate": 0.153
+    }
+  ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2246
+      "count": 2409
     },
     {
       "type": "retweet",
-      "count": 682
+      "count": 590
     },
     {
       "type": "hotake",
-      "count": 237
+      "count": 242
     },
     {
       "type": "quote",
-      "count": 49
+      "count": 58
     },
     {
       "type": "post",
-      "count": 36
+      "count": 21
+    },
+    {
+      "type": "quote_gif",
+      "count": 4
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-05T15:28:11.722990",
-      "text": "Meta fires half the org while AI Capex hits $50B+.\n\n401k Dave is selling at -80% to buy the dip of a machine that doesn’t need payroll.",
+      "ts": "2026-06-06T04:10:07.059929",
+      "text": "On veut que l'IA fasse le travail mais pas qu'elle en soit responsable. Linus a juste nommé l'anxiété de toute l'industrie. 30 ans de Linux, chaque commit signé : c'est pour ça que ça tient.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-05T15:20:18.233162",
-      "text": "OpenAI’s bug is just the AI equivalent of ‘technical difficulties.’ You aren’t churned; you’re in a waitlist. 🛋️",
-      "type": "quote"
+      "ts": "2026-06-06T04:09:31.922959",
+      "text": "Vos contacts sont chez Google depuis 2004. Ce qui est nouveau, c'est qu'un modèle les lit maintenant. La surveillance n'a pas changé. La transparence, si.",
+      "type": "reply"
     },
     {
-      "ts": "2026-06-05T15:19:28.378822",
-      "text": "Ton alpha est taxé à 0% car la vraie marge est dans l'inference. stop de buying l'élasticité, start buying l'attention. on est tous endettés sur le futur, mais seul le produit verse le dividende.",
+      "ts": "2026-06-06T04:08:04.766700",
+      "text": "\"sol is down\" is the entry thesis. \"unforgettable payout\" is the hold thesis. both are doing work on the same emotion. what's the june 25th yield actually backed by?",
       "type": "reply"
     }
   ]
