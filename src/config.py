@@ -141,24 +141,17 @@ POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(3 * 60)))
 # 2026-06-05 PM (operator: "do more quote retweet, it was extremely
 # successful — abuse a bit of it for the next few weeks"): cap 100→150,
 # spacing 120→90s+jitter45. Still jittered, still no bursts.
-MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "150"))
-MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", "90"))
-QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "45"))
+# 2026-06-06 operator: go unlimited on quote reposts
+MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "9999"))
+MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", "30"))
+QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "15"))
 
-# Reply caps + spacing. Replies are the PRIMARY growth lever, so this is a
-# global daily budget shared across ALL reply bots (direct_reply, reply_bot,
-# reply_agent, engagement_targeting, early_bird, mega_watch, replyback…).
-# Raised 30→150 on 2026-06-02: 30 was being exhausted by mid-day and then
-# every reply bot went silent ("policy skip: daily reply cap reached"). 150
-# + the 90s jittered spacing keeps volume high without bursting.
-MAX_REPLIES_PER_DAY = int(os.environ.get("MAX_REPLIES_PER_DAY", "1000"))
-# Spacing lowered so 700/day is actually reachable during active hours (at
-# 90s+jitter the day capped out around ~480). 60s floor + 45s jitter keeps a
-# human-like gap with no bursts while allowing high volume.
-# 2026-06-04: lowered 40→20s so reply throughput climbs back toward ~360/day
-# (the 40s floor was capping daily replies too hard across the shared budget).
-MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", "20"))
-REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "15"))
+# 2026-06-06 operator: "1k-2k replies today is fine — remove limits"
+# Daily cap gone (9999). Minimum spacing kept at 8s+jitter for ban safety
+# (absolute floor — X shadow-bans accounts that burst with 0s spacing).
+MAX_REPLIES_PER_DAY = int(os.environ.get("MAX_REPLIES_PER_DAY", "9999"))
+MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", "8"))
+REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "7"))
 REPLY_LANGUAGE_MATCH = os.environ.get("REPLY_LANGUAGE_MATCH", "1") == "1"
 
 # Following policy (2026-06-03 GROWTH MODE — operator: "lots of unfollow, not

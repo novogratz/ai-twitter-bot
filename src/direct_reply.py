@@ -504,7 +504,8 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             posted += 1
             if _reply_lang == "en" and en_counter: en_counter[0] += 1
             if author_key: per_author_count[author_key] = per_author_count.get(author_key, 0) + 1
-            time.sleep(random.randint(2, 6))
+            # Spacing handled by action_guard (MIN_SECONDS_BETWEEN_REPLIES).
+            # No extra sleep here — don't double-throttle.
         except Exception: traceback.print_exc()
     return posted
 
