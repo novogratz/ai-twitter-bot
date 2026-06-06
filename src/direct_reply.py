@@ -514,14 +514,18 @@ def run_direct_reply_cycle():
     replied = load_replied()
     total, en_counter = 0, [0]
 
-    # 1. FOR YOU — scroll the algorithmic feed and reply to everything good
-    try:
-        tweets = scrape_home_feed(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
-        if tweets:
-            tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
-            total += _reply_to_tweets(tweets, replied, "FEED", en_counter=en_counter)
-    except Exception:
-        traceback.print_exc()
+    # 1. FOR YOU — open, scroll deep, reply to everything; then refresh and repeat.
+    #    Operator: "refresh x.com/home to get more to reply to."
+    for _pass in range(3):
+        try:
+            tweets = scrape_home_feed(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
+            if tweets:
+                tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
+                n = _reply_to_tweets(tweets, replied, "FEED", en_counter=en_counter)
+                total += n
+                log.info(f"[DIRECT] For You pass {_pass+1}/3: {n} replies ({len(tweets)} tweets scraped).")
+        except Exception:
+            traceback.print_exc()
 
     # 2. FOLLOWING — chronological tab, reply to everything good
     try:
