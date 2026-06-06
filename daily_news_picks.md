@@ -13766,3 +13766,195 @@ The turnaround story is simple: the company has transformed from an internet tec
 OpenAI has publicly framed progress toward AGI as a five-level ladder. Lex asks Dylan where w
   - https://x.com/realBigBrainAI/status/2063282353745891527
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
+- **@burkeholland** (201 likes, score 9/10) — When OpenAI launched a 200$ a month plan for o1 Pro, I thought “that’s crazy expensive nobody will pay that”. 
+
+Now a 200$ a month plan feels like an absolutely insane value.
+  - https://x.com/burkeholland/status/2063261054159790296
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 245).
+- **@2xnmore** (55 likes, score 9/10) — Elon Musk just sat in JP Morgan's headquarters and explained the next 20 years in one conversation.
+
+Most people will clip the IPO headline and move on.
+
+Here is what they will miss.
+
+SpaceX lists on
+  - https://x.com/2xnmore/status/2063320015063884109
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 69).
+- **@bulltheoryio** (96 likes, score 9/10) — On May 28 we flagged that every time $NVDA diverged from the Nasdaq over the last 2 years, a correction followed. 
+
+Nvidia had already peaked and was rolling over while the Nasdaq was still climbing t
+  - https://x.com/BullTheoryio/status/2063312142942765335
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 174).
+- **@demian_ai** (63 likes, score 9/10) — « He finally FOMOd into NVIDIA and the AI supercycle at the top. Spike the 10-year yield, kill every rate cut hope, and wipe out $2 trillion of the market overnight »
+  - https://x.com/demian_ai/status/2063307303898526049
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 67).
+- **@leifinvests** (16 likes, score 8/10) — MAG 10 Stocks Ranked by Financial Strength, Valuation & Long-Term Attractiveness at Current Levels
+
+$NVDA $AAPL $MSFT $GOOGL $AMZN $META $TSLA $AVGO $AMD $PLTR
+
+See where your favorite long-term compo
+  - https://x.com/LeifInvests/status/2063259268925505947
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 28).
+- **@holdmybirra** (135 likes, score 8/10) — It's not the employment data.
+
+It's the liquidity.
+
+When giant private listings come along—SpaceX, Anthropic, OpenAI—for tens of billions, the money doesn't appear out of thin air.
+
+Funds sell what th
+  - https://x.com/holdmybirra/status/2063202739883032597
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 153).
+- **@theprofinvestor** (88 likes, score 8/10) — The timing of everything was just impeccable.
+
+> PDT removal 
+> SpaceX IPO
+> Fib extension
+> Offside move
+> Potential Rate hike 
+
+Bulls were trapped.
+Retail was baited.
+
+Nobody was expecting this outl
+  - https://x.com/TheProfInvestor/status/2063320472100720655
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 128).
+- **@kimmonismus** (31 likes, score 8/10) — I mean, I get it. No raises for employees - except the ones at Anthropic, apparently.
+  - https://x.com/kimmonismus/status/2063321271098597698
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 59).
+- **@yahoofinance** (41 likes, score 8/10) — SpaceX's IPO dream runs into Wall Street's oldest test: Chart of the Day
+  - https://x.com/YahooFinance/status/2063230933654819075
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 55).
+- **@thehumanoidhub** (57 likes, score 9/10) — Generalist AI has raised a $400M funding round at a ~$2B valuation, bringing the total amount raised since its founding to over $500M .
+
+Led by Radical Ventures, with new participation from 8VC,  Unio
+  - https://x.com/TheHumanoidHub/status/2063294204030353645
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 69).
+- **@vestexchange** (0 likes, score 9/10) — $IREN is down around 9.6% on the session, with crypto-linked equity names broadly lower and Bitcoin extending its decline toward four-month lows near $61,000.
+
+The selloff sits alongside a constructiv
+  - https://x.com/VestExchange/status/2062904936288096501
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 116).
+- **@superbitcoinbro** (76 likes, score 9/10) — $BTC 8H
+
+A remarkable 18 consecutive lower highs on the 8-hour chart.
+
+This happened only one other time in bitcoin's entire history, in June 2022, when it also reached the monthly 50 SMA.
+
+The glarin
+  - https://x.com/SuperBitcoinBro/status/2063315856713826501
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 88).
+- **@merlijntrader** (334 likes, score 8/10) — THE CEO OF THE WORLD'S MOST VALUABLE COMPANY JUST TOLD RETAIL TO BUY THE IPO. HERE'S THE PROBLEM.
+
+ Jensen Huang said on CNBC that buying SpaceX, OpenAI and Anthropic at IPO will be like buying Amazon
+  - https://x.com/MerlijnTrader/status/2063252066030796896
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 418).
+- **@danielmuvdiyt** (144 likes, score 8/10) — Anthropic: "Let's pause AI for safety," says the company that loses $2.16 for every dollar it brings in — right after filing its S-1 for an IPO worth nearly a trillion.
+
+The official argument: AI is a
+  - https://x.com/DanielMuvdiYT/status/2063271302283010550
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 162).
+- **@hypersharkk** (73 likes, score 8/10) — ทำไม Sovereign AI ถึงทำให้ผม bullish $PLTR 
+
+ตอนนี้ยังมีหลายคนเข้าใจผิดกันว่า Sovereign AI คือ “ทุกประเทศต้องสร้าง Data Center เป็นของตัวเอง”
+
+แต่ความจริงคือ ประเทศต่างๆ อยากมี AI เป็นของตัวเอง (ควบคุ
+  - https://x.com/HyperSharkk/status/2063300051087335838
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 77).
+- **@simondixontwitt** (37 likes, score 8/10) — AI Bubble, Bitcoin Crash & The Great Capital Rotation 
+
+https://youtube.com/live/U69Vbieo9r8?si=3totzvDNy_ZeDhCz…
+  - https://x.com/SimonDixonTwitt/status/2063193631045853585
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 47).
+- **@cryptosr_us** (14 likes, score 8/10) — THE BITCOIN SELL-OFF IS ABOUT LIQUIDITY, NOT PANIC.
+
+Saylor says Wall Street is raising massive cash for AI mega-deals, and investors are selling liquid assets to fund the trade.
+
+$BTC is feeling the
+  - https://x.com/CryptosR_Us/status/2063334416089330072
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 30).
+- **@prakashplutus** (352 likes, score 8/10) — Reasons for  US Market Selloff : 
+
+1. Nasdaq-100 fell big time below EMA-10 , after parabolic AI rally , heavy volume selling triggered stop-loss cascade in overbought tech names.
+
+2. May jobs report
+  - https://x.com/Prakashplutus/status/2063166118722953652
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 404).
+- **@enrichtrades** (220 likes, score 8/10) — 10 stocks I will buy on major pullbacks:
+
+$NBIS
+$HOOD
+$PLTR
+$IREN
+$MRVL
+$AAOI
+$AMZN
+$ZETA
+$AMD
+$RKLB
+
+Regardless of price action, we had some impressive earnings reports over the past few months
+
+Buy
+  - https://x.com/enrichtrades/status/2063256647535911182
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 242).
+- **@zephyr_z9** (177 likes, score 8/10) — Nvidia is offering dual configs
+1.5TB per CPU for racks assigned to agentic workloads
+750GB per CPU for the rest of the stuff
+  - https://x.com/zephyr_z9/status/2063201125298491509
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 191).
+- **@trader_s18** (30 likes, score 8/10) — At present, the force that could salvage this week's Black Friday plunge in financial assets seems to be lurking in the Fed's June 17 meeting—whether it turns hawkish or dovish will determine if the m
+  - https://x.com/Trader_S18/status/2063303839768543704
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 56).
+- **@ahmedalsamel1** (170 likes, score 7/10) — This site is excellent for checking the financial statements of any company
+
+Notice how I wrote the stock symbol $PLTR 
+How it showed me the company's financial revenue from 2018 to 2026
+And how the r
+  - https://x.com/Ahmedalsamel1/status/2063277474251710525
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 182).
+- **@1769_alex** (20 likes, score 7/10) — Insider source told me, it’s $CRWV
+  - https://x.com/1769_alex/status/2063319191269376221
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 32).
+- **@thesecretacct** (9 likes, score 7/10) — What if SpaceX is where Nvidia was four or five years ago (5 cents). 
+
+Maybe it is. Maybe it isn’t. 
+
+Spread your bets.
+  - https://x.com/TheSecretAcct/status/2063254744110367011
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 31).
+- **@marketmatrixs** (17 likes, score 7/10) — 2. $PLTR Palantir Technologies
+
+Largest holder - BlackRock Inc
+
+-35% from all-time highs
+  - https://x.com/MarketMatrixs/status/2063253374573900146
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 19).
+- **@unusual_whales** (2793 likes, score 7/10) — BREAKING: US military: Iran launched seven ballistic missiles at Kuwait and Bahrain
+  - https://x.com/unusual_whales/status/2063090036325888321
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 3057).
+- **@unusual_whales** (726 likes, score 7/10) — President Trump has said that the White House may take equity stakes in American AI companies, after it was revealed they might take a stake in OpenAI, per Reuters
+  - https://x.com/unusual_whales/status/2063312037766185091
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1084).
+- **@leooweb3** (147 likes, score 7/10) — Bitcoin is down…
+
+Gold is down…
+
+Eth is down…
+
+Bnb is down…
+
+Sol is down…
+
+Ada is down...
+
+XRP is down...
+
+You know what this means, right?
+  - https://x.com/Leooweb3/status/2063296053722370345
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 459).
+- **@ericbalchunas** (69 likes, score 7/10) — For everyone who guessed Micron you right altho it isn’t the price, it’s the dollar volume. It traded $1.5T this quarter so far (still few wks left btw). Was most traded stock in world yesterday. Rare
+  - https://x.com/EricBalchunas/status/2063284960383930507
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 83).
+- **@simondixontwitt** (13 likes, score 7/10) — AI Bubble, Bitcoin Crash & The Great Capital Rotation
+  - https://x.com/SimonDixonTwitt/status/2063230019644584431
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 13).
