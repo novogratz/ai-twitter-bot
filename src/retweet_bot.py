@@ -759,17 +759,31 @@ STRICT RULES:
 - No "Here's", "Perfect", "Score", "Rationale" — pure output.
 - If no hard signal or no fresh angle → output exactly "SKIP".
 
-Output: the 2 English sentences (analysis + question) OR "SKIP". Nothing else."""
+GIF (roughly half the time): when a famous meme GIF amplifies the punchline,
+add one final line: [GIF: <2-4 word search>]. Skip when the text lands harder alone.
+GIF VOCABULARY:
+- huge win / euphoria    → [GIF: leonardo dicaprio clapping] / [GIF: vince mcmahon]
+- market pain / bleeding → [GIF: michael jordan crying] / [GIF: this is fine]
+- mind blown / reveal    → [GIF: mind blown] / [GIF: math lady]
+- suspicion / side-eye   → [GIF: futurama fry suspicious] / [GIF: john cena are you sure]
+- panic / FOMO           → [GIF: kermit panic] / [GIF: surprised pikachu]
+- mic drop / shots fired → [GIF: mic drop] / [GIF: michael jackson popcorn]
+- waiting / cope         → [GIF: pablo escobar waiting] / [GIF: skeleton waiting]
+
+Output: the 2 English sentences (+ optional [GIF: ...] line) OR "SKIP". Nothing else."""
 
 
-def _try_generate_troll_quote(pick: dict) -> str:
-    """Generate a FR troll-commentary for a high-signal candidate. Returns
-    None if generation fails or model returns SKIP."""
+def _try_generate_troll_quote(pick: dict) -> tuple:
+    """Generate an English quote-commentary for a high-signal candidate.
+    Returns (quote_text, gif_query) or (None, None) on failure/SKIP.
+    GIF query is empty string when no GIF was requested.
+    """
     try:
         from .config import REPLY_MODEL
         from .llm_client import run_llm, unwrap_text
+        from .humanizer import extract_gif_query
     except Exception:
-        return None
+        return None, None
     author = pick.get("author") or "anon"
     text = (pick.get("text") or "")[:250]
     prompt = _TROLL_QUOTE_PROMPT.format(author=author, tweet_text=text)
@@ -778,46 +792,33 @@ def _try_generate_troll_quote(pick: dict) -> str:
     except Exception:
         log.info("[RT_QT] run_llm crashed:")
         traceback.print_exc()
-        return None
+        return None, None
     if r.returncode != 0:
         log.info(f"[RT_QT] rc={r.returncode}: {r.stderr[:160] if r.stderr else ''}")
-        return None
+        return None, None
     out = unwrap_text(r.stdout)
     if not out:
-        return None
+        return None, None
     out = strip_agent_preamble(out).strip()
+    # Extract GIF tag BEFORE humanize() strips it.
+    out, gif_query = extract_gif_query(out)
     out = humanize(out)
     if not out or out.upper().startswith("SKIP") or "skip" in out.lower().split():
-        return None
+        return None, None
     if out.startswith('"') and out.endswith('"'):
         out = out[1:-1].strip()
-    if len(out) > 240 or len(out) < 25:
-        return None
-    # Deterministic Franglais guard. Model sometimes echoes an EN phrase
-    # from the parent tweet ('"Great weekend" for data center stocks...').
-    # If we detect an English n-gram in our supposed-FR quote → SKIP rather
-    # than ship a half-translated mess. Whitelist proper-noun-ish tokens.
-    if _has_english_phrase(out):
-        log.info(f"[RT_QT] Franglais detected, refusing: {out[:140]!r}")
-        return None
-    # User mandate 2026-05-23: every quote MUST end with a question to the
-    # audience. Without "?" → no engagement bait → SKIP to silent retweet.
+    if len(out) > 260 or len(out) < 20:
+        return None, None
     if "?" not in out:
-        log.info(f"[RT_QT] No audience question (no '?'), refusing: {out[:140]!r}")
-        return None
-    # User mandate 2026-05-23 PM: FR anchors (RER B, Bercy, Lidl, tonton...)
-    # are OK in quotes IF the quote also carries hard signal (number, $,
-    # ticker, or named-entity tag). The Lidl quote that landed 3 likes
-    # worked because it had @saylor + Bitcoin + concrete event. Pure joke
-    # without hard anchor = SKIP.
-    has_number = bool(re.search(r"\b\d[\d.,]*\s*(?:%|md|md\$|m\$|k\$|md€|m€|gw|tw|twh|gwh|mwh)\b", out, re.IGNORECASE)) or bool(re.search(r"\$\d", out))
+        log.info(f"[RT_QT] No audience question, refusing: {out[:140]!r}")
+        return None, None
+    has_number = bool(re.search(r"\b\d[\d.,]*\s*(?:%|\$|B|M|GW|TW)\b", out, re.IGNORECASE)) or bool(re.search(r"\$\d", out))
     has_tag = "@" in out
     has_ticker = bool(re.search(r"\b(?:BTC|ETH|SOL|NVDA|AMD|MSTR|MARA|RIOT|TSLA|MSFT|GOOG|META|CRWV|OpenAI|Anthropic|Mistral|Stargate)\b", out))
-    has_hard_signal = has_number or has_tag or has_ticker
-    if not has_hard_signal:
-        log.info(f"[RT_QT] No hard signal (number/tag/ticker), too soft, refusing: {out[:140]!r}")
-        return None
-    return out
+    if not (has_number or has_tag or has_ticker):
+        log.info(f"[RT_QT] No hard signal, refusing: {out[:140]!r}")
+        return None, None
+    return out, gif_query
 
 
 # Common EN tokens that signal a phrase (not just a proper noun). If any
@@ -1032,15 +1033,36 @@ def run_retweet_cycle():
         _save_retweeted(retweeted)
 
         try:
+            from .twitter_client import quote_tweet, quote_tweet_with_gif
+
+            # Always try quote-RT first — adds our voice + optional GIF.
+            # Fall back to plain retweet only if generation fails/SKIPs.
+            quote_text, gif_query = _try_generate_troll_quote(pick)
+            if quote_text:
+                if gif_query:
+                    log.info(f"[RETWEET] Quote+GIF @{pick['author']} ({gif_query!r}): {quote_text[:80]}")
+                    ok = quote_tweet_with_gif(pick["url"], quote_text, gif_query)
+                else:
+                    log.info(f"[RETWEET] Quote-RT @{pick['author']}: {quote_text[:80]}")
+                    ok = quote_tweet(pick["url"], quote_text)
+                if ok:
+                    _increment_count()
+                    try:
+                        log_reply(pick["url"], f"[QT] {quote_text[:200]}",
+                                  action_type="quote", source=f"RETWEET_QT/{pick['author']}")
+                    except Exception:
+                        pass
+                    posted += 1
+                    time.sleep(random.randint(5, 10))
+                    continue
+                log.info("[RETWEET] Quote-RT chokepoint skipped — falling back to plain RT.")
+
+            # Plain retweet fallback.
             retweet_post(pick["url"])
             _increment_count()
             try:
-                log_reply(
-                    pick["url"],
-                    f"[RT] {pick['text'][:200]}",
-                    action_type="retweet",
-                    source=f"RETWEET/{pick['author']}",
-                )
+                log_reply(pick["url"], f"[RT] {pick['text'][:200]}",
+                          action_type="retweet", source=f"RETWEET/{pick['author']}")
             except Exception:
                 pass
             posted += 1
