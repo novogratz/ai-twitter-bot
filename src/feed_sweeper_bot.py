@@ -35,9 +35,10 @@ FEED_SWEEP_SCAN_LIMIT = int(os.environ.get("FEED_SWEEP_SCAN_LIMIT", "50"))
 FEED_SWEEP_MAX_QUOTES_PER_CYCLE = int(os.environ.get("FEED_SWEEP_MAX_QUOTES_PER_CYCLE", "4"))
 FEED_SWEEP_MAX_REPLIES_PER_CYCLE = int(os.environ.get("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", "8"))
 
-# Alternate between the algorithmic For You feed and the chronological
-# Following feed so both surfaces get swept.
-_LAST_SOURCE = {"name": "FOLLOWING"}
+# Both feeds are swept EVERY cycle (operator 2026-06-06: "go to FOR YOU
+# page and FOLLOWING page... refresh the page, there is always content" —
+# this is the bot's primary activity loop).
+BANGER_LIKES = int(os.environ.get("FEED_SWEEP_BANGER_LIKES", "1000"))
 
 
 def _handle_from_url(url: str) -> str:
@@ -48,19 +49,19 @@ def _handle_from_url(url: str) -> str:
 
 
 def run_feed_sweep_cycle():
-    from .twitter_client import scrape_home_feed, scrape_following_feed, quote_tweet
+    """Sweep BOTH For You and Following every cycle — the primary loop."""
+    from .twitter_client import scrape_home_feed, scrape_following_feed
+    for source, scraper in (("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)):
+        _sweep_one_feed(source, scraper)
+
+
+def _sweep_one_feed(source, scraper):
+    from .twitter_client import quote_tweet
     from .quote_tweet_bot import _load_quoted, _save_quoted, _generate_quote, _too_old_to_quote
     from .direct_reply import _reply_to_tweets, load_replied, _is_on_niche, _is_reply_like_tweet
     from . import content_guard, respect_list
 
-    # Pick the surface for this cycle (alternating).
-    if _LAST_SOURCE["name"] == "FEED":
-        source, scraper = "FOLLOWING", scrape_following_feed
-    else:
-        source, scraper = "FEED", scrape_home_feed
-    _LAST_SOURCE["name"] = source
-
-    log.info(f"[SWEEP] Sweeping {source} feed (quote >= {FEED_SWEEP_QUOTE_MIN_LIKES} likes, reply below)...")
+    log.info(f"[SWEEP] Sweeping {source} (quote >= {FEED_SWEEP_QUOTE_MIN_LIKES} likes, reply below, BOTH >= {BANGER_LIKES})...")
     try:
         tweets = scraper(max_tweets=FEED_SWEEP_SCAN_LIMIT) or []
     except Exception:
@@ -99,6 +100,11 @@ def run_feed_sweep_cycle():
                     reply_candidates.append(t)
             else:
                 quote_candidates.append(t)
+                # BANGER (operator: "reply or quote retweet OR BOTH"): on
+                # very viral posts do both — the quote rides the reach, the
+                # reply farms the thread.
+                if likes >= BANGER_LIKES and url not in replied:
+                    reply_candidates.append(t)
         elif url not in replied:
             reply_candidates.append(t)
 
