@@ -465,7 +465,7 @@ def _maybe_repost_best_profile_tweet(username: str, tweets: list, retweeted: set
 
 def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=None, en_counter=None):
     posted = 0
-    PER_AUTHOR_CAP = 1 if source_name == "PROFILE-ALWAYS" else 2
+    PER_AUTHOR_CAP = 9999  # no per-author cap — reply commentary machine
     per_author_count = {}
     per_author_skips = {}
     MAX_SKIPS_PER_AUTHOR = 3
