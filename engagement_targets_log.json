@@ -49,6 +49,51 @@
       "replies": 0,
       "weight": 1.5,
       "conversions": 1
+    },
+    "cryptoastmedia": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "konstructivizm": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "reuters": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "pete_rizzo_": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "xfreeze": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "firstsquawk": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "saylordocs": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "bfmtv": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "coinacademy_fr": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
     }
   },
   "targets": [

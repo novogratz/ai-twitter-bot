@@ -3588,5 +3588,57 @@
       }
     ],
     "summary": "Un mix classique de grands noms crypto FR (Mick, Merlin) et des p\u00e9pites tech Qu\u00e9bec (Tessier, Toups) qui tweetent en fran\u00e7ais. Le tout avec une dose de profondeur US (Amodei) pour la cr\u00e9dibilit\u00e9."
+  },
+  {
+    "ts": "2026-06-06T06:11:29.354244",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DorianBaboul",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "La r\u00e9f\u00e9rence absolue pour d\u00e9crypter les news crypto en FR sans verser dans l'hyst\u00e9rie ou le shill de bas \u00e9tage."
+      },
+      {
+        "handle": "LudovicSobry",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Founder de Lightricks (PhotoRoom). Il parle tech et IA en FR/EN depuis la c\u00f4te Est, avec une vue sur les startups US qui compte."
+      },
+      {
+        "handle": "PierreViallon",
+        "region": "france",
+        "niche": "tech",
+        "followers": 20000,
+        "reason": "SVP le PDG, c'est celui qui comprend mieux que quiconque le SaaS fran\u00e7ais. Moins hype que les autres, mais la valeur est dans le fond."
+      },
+      {
+        "handle": "JulienTran",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Tech lead chez Mistral, il balance l'info brute sur l'IA avec la rigueur d'un ing\u00e9nieur et le style d'un humain."
+      },
+      {
+        "handle": "BenoitPoirier",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 12000,
+        "reason": "Fonds de pension qu\u00e9b\u00e9cois, twitte sur la macro et les march\u00e9s. Le style est sec, pr\u00e9cis, et il n'a pas besoin de vendre des signaux Telegram."
+      },
+      {
+        "handle": "AlexisBoutin_",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 8000,
+        "reason": "L'analyste tech qu\u00e9b\u00e9cois qui parle de SaaS et d'infra. Pas dans le bubble, juste dans la r\u00e9alit\u00e9 du terrain."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour garder ceux qui ont le culotte (ou le cerveau) pour parler technique ou march\u00e9 sans vendre du r\u00eave. Une bonne dose de fran\u00e7ais, un peu de qu\u00e9b\u00e9cois solide et des anglophones francophones qui ont encore leur carte de visite \u00e0 Paris ou Montreal."
   }
 ]

@@ -1,95 +1,5 @@
 [
   {
-    "handle": "demar",
-    "category": "bourse",
-    "added": "2026-05-27"
-  },
-  {
-    "handle": "organicplastic",
-    "category": "bourse",
-    "added": "2026-05-27"
-  },
-  {
-    "handle": "ayata",
-    "category": "ai",
-    "added": "2026-05-27"
-  },
-  {
-    "handle": "cryptorizon",
-    "category": "crypto",
-    "added": "2026-05-27"
-  },
-  {
-    "handle": "red",
-    "category": "crypto",
-    "added": "2026-05-27"
-  },
-  {
-    "handle": "partridge",
-    "category": "crypto",
-    "added": "2026-05-27"
-  },
-  {
-    "handle": "deso",
-    "category": "crypto",
-    "added": "2026-05-27"
-  },
-  {
-    "handle": "davidbnb",
-    "category": "crypto",
-    "added": "2026-05-27"
-  },
-  {
-    "handle": "void",
-    "category": "crypto",
-    "added": "2026-05-27"
-  },
-  {
-    "handle": "buertrades",
-    "category": "crypto",
-    "added": "2026-05-27"
-  },
-  {
-    "handle": "nichl",
-    "category": "tech",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "evayouk",
-    "category": "tech",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "anonymous",
-    "category": "tech",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "leon",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "lev_on_ua",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "anyx",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "father",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "gotto",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
     "handle": "willietrom",
     "category": "ai",
     "added": "2026-05-28"
@@ -2498,5 +2408,95 @@
     "handle": "vest",
     "category": "crypto",
     "added": "2026-06-05"
+  },
+  {
+    "handle": "edvin",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "coinbase",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "amit",
+    "category": "bourse",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "shruti",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "unclestocknotes",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "nesa",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "zerohedge",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "fleetingbits",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "cryptoreviewing",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "soham",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "willc",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "pako",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "setupclaw",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "za",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "quantscraper",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "zen",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "ammon",
+    "category": "ai",
+    "added": "2026-06-06"
+  },
+  {
+    "handle": "afrovestor",
+    "category": "ai",
+    "added": "2026-06-06"
   }
 ]

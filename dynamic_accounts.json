@@ -395,7 +395,13 @@
     "Lemfi",
     "TheMick",
     "JulienTessier",
-    "CyrilDreano"
+    "CyrilDreano",
+    "DorianBaboul",
+    "LudovicSobry",
+    "PierreViallon",
+    "JulienTran",
+    "BenoitPoirier",
+    "AlexisBoutin_"
   ],
   "en": [
     "blablacar",
@@ -2450,6 +2456,36 @@
     {
       "lang": "fr",
       "handle": "CyrilDreano",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianBaboul",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicSobry",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreViallon",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienTran",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitPoirier",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBoutin_",
       "added": "2026-06-06"
     }
   ]

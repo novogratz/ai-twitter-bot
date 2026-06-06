@@ -1,7 +1,35 @@
 {
-  "ts": "2026-06-05T23:00:46.932497",
+  "ts": "2026-06-06T07:00:51.484408",
   "count": 30,
   "items": [
+    {
+      "src": "Wired",
+      "title": "Crypto-Funded Chinese Peptide Labs Are Booming",
+      "url": "https://www.wired.com/story/security-news-this-week-crypto-funded-chinese-peptide-labs-are-booming/",
+      "score": 0,
+      "ts": "2026-06-06T10:30:00"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Are retail traders selling their bitcoin to buy the SpaceX IPO?",
+      "url": "https://www.coindesk.com/markets/2026/06/06/are-retail-traders-selling-their-bitcoin-to-buy-the-spacex-ipo",
+      "score": 0,
+      "ts": "2026-06-06T09:45:15"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Researcher who found Zcash's bug with AI adds Monero to his audit queue",
+      "url": "https://www.coindesk.com/tech/2026/06/06/researcher-who-found-zcash-s-bug-with-ai-adds-monero-to-his-audit-queue",
+      "score": 0,
+      "ts": "2026-06-06T09:38:00"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Bitcoin back above $61,000 after rout leads to $1.6 billion liquidations",
+      "url": "https://www.coindesk.com/markets/2026/06/06/bitcoin-back-above-usd61-000-after-rout-leads-to-usd1-6-billion-liquidations",
+      "score": 0,
+      "ts": "2026-06-06T06:40:17"
+    },
     {
       "src": "CNBC Tech",
       "title": "Amazon unveils latest warehouse robot as tech giants continue AI layoffs",
@@ -183,34 +211,6 @@
       "url": "https://techcrunch.com/2026/06/05/google-will-pay-spacex-920m-per-month-for-compute/",
       "score": 0,
       "ts": "2026-06-05T18:57:20"
-    },
-    {
-      "src": "TechCrunch AI",
-      "title": "Google will pay SpaceX $920M per month for compute",
-      "url": "https://techcrunch.com/2026/06/05/google-will-pay-spacex-920m-per-month-for-compute/",
-      "score": 0,
-      "ts": "2026-06-05T18:57:20"
-    },
-    {
-      "src": "Ars Technica",
-      "title": "S&P 500 rejects SpaceX, also blocking entry for OpenAI and Anthropic",
-      "url": "https://arstechnica.com/tech-policy/2026/06/sp-500-blocks-fast-spacex-entry-wont-waive-rule-for-unprofitable-ai-firms/",
-      "score": 0,
-      "ts": "2026-06-05T18:45:20"
-    },
-    {
-      "src": "CNBC Tech",
-      "title": "Model routing is a fix for AI overspending. That's a problem for OpenAI and Anthropic",
-      "url": "https://www.cnbc.com/2026/06/05/model-routing-on-ai-is-a-problem-for-openai-and-anthropic.html",
-      "score": 0,
-      "ts": "2026-06-05T18:24:25"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "Model routing is a fix for AI overspending. That's a problem for OpenAI and Anthropic",
-      "url": "https://www.cnbc.com/2026/06/05/model-routing-on-ai-is-a-problem-for-openai-and-anthropic.html",
-      "score": 0,
-      "ts": "2026-06-05T18:24:25"
     }
   ]
 }

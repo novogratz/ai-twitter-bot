@@ -1,38 +1,20 @@
 {
-  "ts": "2026-06-05T22:45:46.110498",
+  "ts": "2026-06-06T06:40:50.532248",
   "window_min": 90,
-  "total_actions": 31,
+  "total_actions": 13,
   "by_type": {
-    "quote_gif": 1,
-    "hotake": 10,
-    "quote": 3,
-    "reply": 19,
-    "retweet": 10,
+    "reply": 13,
     "post": 1
   },
   "winners": {
-    "PROFILE-ALWAYS": 8,
-    "FEED-SWEEP-FOLLOWING": 7,
-    "RETWEET/cnbc": 2,
-    "GIF/this is fine": 1,
-    "QUOTE/Elon Musk": 1
+    "PROFILE-ALWAYS": 11,
+    "FEED-SWEEP-FEED": 1,
+    "FEED-SWEEP-FOLLOWING": 1
   },
   "losers": {
-    "GIF/this is fine": 1,
-    "QUOTE/Elon Musk": 1,
-    "RETWEET/snaljapen": 1,
-    "RETWEET/reuters": 1,
-    "QUOTE/The Kobeissi Letter": 1,
-    "RETWEET/wublockchain": 1,
-    "RETWEET/charliebilello": 1,
-    "RETWEET/tbpn": 1,
-    "RETWEET/business": 1,
-    "RETWEET/bespokeinvest": 1,
     "FEED-SWEEP-FEED": 1,
-    "RETWEET/norveclifinance": 1,
-    "GIF/ben affleck smoking": 1,
-    "QUOTE/Charlie Bilello": 1
+    "FEED-SWEEP-FOLLOWING": 1
   },
-  "post_cadence_factor": 0.85,
+  "post_cadence_factor": 1.0,
   "boost_cadence_factor": 1.0
 }
