@@ -796,6 +796,18 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     if not ok:
         log.info(f"[REPLY] policy skip ({why}).")
         return
+    # Over-length replies get a sentence-boundary trim instead of a discard
+    # (2026-06-07): the LLM generation is already paid for — content_guard
+    # used to reject >278-char replies outright, several/day. smart_trim
+    # ends on terminal punctuation so the trimmed text also passes the
+    # looks_truncated check; if it still can't be salvaged, validate below
+    # rejects as before.
+    if len(reply_text or "") > 278:
+        from .humanizer import smart_trim
+        trimmed = smart_trim(reply_text, 278)
+        log.info(f"[REPLY] over-length ({len(reply_text)} chars) — smart-trimmed "
+                 f"to {len(trimmed)}.")
+        reply_text = trimmed
     ok, why = content_guard.validate(reply_text, kind="reply")
     if not ok:
         log.info(f"[REPLY] content_guard skip ({why}): {reply_text[:120]!r}")

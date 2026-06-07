@@ -175,6 +175,37 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM — spec round 2 (operator: "implement everything")
+
+- **Unfollowing OFF in the bot** (operator: "don't unfollow in this bot, I'll
+  be the one doing unfollow myself"): `MAX_UNFOLLOWS_PER_DAY=0` +
+  `UNFOLLOW_CAP_PER_CYCLE=0`; `smart_unfollow_bot` bails before any Safari
+  work at cap 0. `bin/mass_unfollow.py` (the operator's `/unfollow` skill)
+  records straight to the ledger and is NOT blocked by the cap.
+- **Freshness-first reply ordering** — `direct_reply._freshness_sort_key`
+  orders every reply candidate list: <60-min bucket first, then ≤6h, then
+  older, unknown-age last; likes-per-hour velocity breaks ties. Applied
+  inside `_reply_to_tweets` so direct_reply AND feed_sweeper inherit it
+  (sweeper's `random.shuffle` removed).
+- **Pillar attribution** — `src/pillar_tags.py` classifies every outgoing
+  text into the spec pillars (market_trauma / ai_vs_btc / meme_reaction /
+  reply_bait / ai_news_take / other), logged as engagement_log column 7 at
+  the `engagement_log` chokepoint. Analyzer emits `pillar_mix_7d/24h`
+  (classify-on-the-fly for old rows). spicy/breakout/text-stunt posts now
+  log to engagement_log at all (they were invisible to the ROI loop).
+- **smart_trim at the reply chokepoint** — >278-char replies get a
+  sentence-boundary trim then re-validate instead of being discarded with
+  their paid LLM call (several/day in the log).
+- **Cron-anchored posting slots** — originals fire at 09:30 / 12:30 / 16:30
+  / 20:00 New York via `run_post_slot` (tries news/hotake → breakout →
+  spicy → stunt, stops on the first landed post; 12:30 leads with the GIF
+  stunt for the daily native-media original). hotake/spicy/breakout/stunt
+  interval jobs removed; thread/digest/recap bots DISABLED (threads aren't
+  in the spec mix and were eating the 4/day cap ahead of slots).
+- **Weekly review** — `src/weekly_review_bot.py` writes `weekly_review.md`
+  Sundays ≥17:00 NY (idempotent per ISO week): follower Δ, following vs the
+  300 cap, action + pillar mix, spec targets. Deterministic, no LLM.
+
 ### 2026-06-07 PM — pre-LLM dedup re-check on the reply hot paths
 
 Audit of bot.log on 06-07 06:30 turned up 422 `[REPLY] already replied to this

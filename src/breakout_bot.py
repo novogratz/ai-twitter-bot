@@ -263,6 +263,11 @@ def run_breakout_cycle():
     try:
         post_tweet(text)
         _increment_count()
+        try:  # was invisible to the engagement log / ROI loop before 2026-06-07
+            from .engagement_log import log_post
+            log_post(text, source="BREAKOUT")
+        except Exception:
+            pass
         time.sleep(random.randint(3, 6))
         log.info(f"[BREAKOUT] DONE. Today's count: {_today_count()}/{MAX_BREAKOUTS_PER_DAY}")
     except Exception:

@@ -52,6 +52,7 @@ def _load_log_window(hours: int) -> list[dict]:
                     "url": row[3] if len(row) > 3 else "",
                     "source": row[4] if len(row) > 4 else "",
                     "pattern": row[5] if len(row) > 5 else "",
+                    "pillar": row[6] if len(row) > 6 else "",
                 })
     except Exception:
         log.info("[ANALYZER] Failed to read engagement log:")
@@ -89,6 +90,16 @@ def run_analyzer_cycle():
     topic_counts_24h: dict[str, int] = defaultdict(int)
     viral_candidates: list[dict] = []
 
+    # Spec content pillars (2026-06-07) — logged in column 7 for new rows;
+    # classified on the fly for pre-pillar rows so the 7d window is complete.
+    from .pillar_tags import classify as _classify_pillar
+    pillar_counts_7d: dict[str, int] = defaultdict(int)
+    pillar_counts_24h: dict[str, int] = defaultdict(int)
+
+    def _row_pillar(row) -> str:
+        p = (row.get("pillar") or "").strip()
+        return p or _classify_pillar(row["text"], row["type"], row["source"])
+
     for row in rows_7d:
         pat = row["pattern"].strip() if row["pattern"] else "UNKNOWN"
         if pat:
@@ -98,10 +109,12 @@ def run_analyzer_cycle():
         hour_counts[row["ts"].hour] += 1
         for topic in _extract_topics(row["text"]):
             topic_counts_7d[topic] += 1
+        pillar_counts_7d[_row_pillar(row)] += 1
 
     for row in rows_24h:
         for topic in _extract_topics(row["text"]):
             topic_counts_24h[topic] += 1
+        pillar_counts_24h[_row_pillar(row)] += 1
 
     # Viral candidates = reply/quote/news types (original content we wrote)
     original = [r for r in rows_7d if r["type"] in ("reply", "quote", "news", "hotake", "spicy", "breakout")]
@@ -141,6 +154,14 @@ def run_analyzer_cycle():
         "best_hours_utc": [{"hour": h, "actions": c} for h, c in best_hours],
         "best_topics_7d": [{"topic": t, "count": c} for t, c in best_topics],
         "rising_topics_24h": rising,
+        "pillar_mix_7d": [
+            {"pillar": p, "count": c}
+            for p, c in sorted(pillar_counts_7d.items(), key=lambda x: x[1], reverse=True)
+        ],
+        "pillar_mix_24h": [
+            {"pillar": p, "count": c}
+            for p, c in sorted(pillar_counts_24h.items(), key=lambda x: x[1], reverse=True)
+        ],
         "content_surface_mix": [{"type": t, "count": c} for t, c in top_types],
         "viral_examples": [
             {"ts": r["ts"].isoformat(), "text": r["text"][:280], "type": r["type"]}

@@ -410,64 +410,62 @@ def main():
                 id=f"hot_quote_job_{_hq_hour}h",
             )
 
-        # Thread bot — FR deep-dive 4-tweet thread at 9 AM EST.
-        # High bookmark/RT rate = best follower-conversion surface. Was imported
-        # but never scheduled (dead code before this commit).
-        log.info("Thread bot: FR deep-dive 4-tweet thread at 09:00 EST.")
-        scheduler.add_job(
-            safe_run_thread_cycle,
-            trigger=CronTrigger(hour=9, minute=0, timezone="America/New_York"),
-            id="thread_job",
-        )
+        # Thread / digest / recap bots — DISABLED (2026-06-07 agent spec: the
+        # output mix is 3-4 single originals in US-market slots; threads are
+        # not in the mix and a 9:00/14:00 thread would consume the 4/day cap
+        # + 2.5h spacing ahead of the slot crons). Modules stay in the tree.
+        log.info("Thread/digest/recap bots: DISABLED (2026-06-07 spec — slot originals only).")
 
-        # Digest thread bot — EN "Top 5 AI/Space/Crypto" daily digest at 2 PM EST.
-        # 6-tweet thread; positions @AISpaceDecoder as one-stop EN source.
-        log.info("Digest thread bot: EN Top-5 digest at 14:00 EST.")
-        scheduler.add_job(
-            safe_run_digest_thread_cycle,
-            trigger=CronTrigger(hour=14, minute=0, timezone="America/New_York"),
-            id="digest_thread_job",
-        )
+        # ============================================================
+        # POSTING SLOTS (2026-06-07 agent spec, Part 2 — Timing):
+        # one original per US-market slot — ~9:30a open, ~12:30p midday,
+        # ~4:30p close/after-hours, ~8p evening (America/New_York).
+        # Each slot tries the original surfaces in priority order and
+        # stops as soon as ONE of them lands a post (chokepoint count
+        # increments). The 12:30 slot tries the stunt bot FIRST so >=1
+        # daily original tends to carry native media (GIF meme). The
+        # MAX_ORIGINALS_PER_DAY=4 cap + 2.5h spacing keep any stray
+        # surface from double-posting inside a slot.
+        # ============================================================
+        def run_post_slot(slot_label: str, stunt_first: bool = False):
+            from src import action_guard
+            before = action_guard.count_today(action_guard.POST)
+            surfaces = [
+                ("news/hotake", safe_run_bot_cycle),
+                ("breakout", safe_run_breakout_cycle),
+                ("spicy", safe_run_spicy_cycle),
+                ("stunt", safe_run_viral_stunt_cycle),
+            ]
+            if stunt_first:
+                surfaces.insert(0, surfaces.pop())
+            log.info(f"[SLOT {slot_label}] Trying original surfaces in order: "
+                     f"{[n for n, _ in surfaces]}")
+            for name, fn in surfaces:
+                try:
+                    fn()
+                except Exception:
+                    log.info(f"[SLOT {slot_label}] {name} crashed:")
+                    traceback.print_exc()
+                if action_guard.count_today(action_guard.POST) > before:
+                    log.info(f"[SLOT {slot_label}] Filled by {name}.")
+                    return
+            log.info(f"[SLOT {slot_label}] No surface produced a post "
+                     f"(all skipped — slot forfeited, next slot unaffected).")
 
-        # Recap thread bot — Sunday weekly recap (fires hourly, ships only on
-        # Sundays 10-13h Paris; idempotent state prevents double-post).
-        log.info("Recap thread bot: Sunday weekly recap (hourly check, fires only Sun 10-13h Paris).")
-        scheduler.add_job(
-            safe_run_recap_thread_cycle,
-            trigger=IntervalTrigger(hours=1),
-            id="recap_thread_job",
-        )
-
-        # Hot-take bot — punchy meme takes on AI/Space/Investment every 20 min.
-        # MAX_NEWS_PER_DAY=0 so it only generates hotakes, never long news posts.
-        # Dedup via daily_state.json (cap MAX_HOTAKES_PER_DAY).
-        log.info("Hot-take bot: punchy AI/Space/Investment takes every 20 min (news disabled, hotakes only).")
-        scheduler.add_job(
-            safe_run_bot_cycle,
-            trigger=IntervalTrigger(minutes=20),
-            id="hotake_job",
-            max_instances=1,
-        )
-
-        # Spicy bot — polarizing takes + question bait every 20 min.
-        # Drives replies which are the #1 algo signal. Cap MAX_SPICY_PER_DAY.
-        log.info("Spicy bot: polarizing takes + question bait every 20 min.")
-        scheduler.add_job(
-            safe_run_spicy_cycle,
-            trigger=IntervalTrigger(minutes=20),
-            id="spicy_job",
-            max_instances=1,
-        )
-
-        # Breakout bot — trend-jacks breaking AI/Space news every 8 min.
-        # First-mover = 10-100x reach vs posting 6h later.
-        log.info("Breakout bot: breaking-trend reactor every 8 min.")
-        scheduler.add_job(
-            safe_run_breakout_cycle,
-            trigger=IntervalTrigger(minutes=8),
-            id="breakout_job",
-            max_instances=1,
-        )
+        log.info("Posting slots: originals at 09:30 / 12:30 / 16:30 / 20:00 New York "
+                 "(one per slot, surface priority order, 12:30 leads with the GIF stunt).")
+        for _slot_hour, _slot_min, _stunt_first in (
+            (9, 30, False), (12, 30, True), (16, 30, False), (20, 0, False),
+        ):
+            _label = f"{_slot_hour:02d}:{_slot_min:02d}ET"
+            scheduler.add_job(
+                run_post_slot,
+                trigger=CronTrigger(hour=_slot_hour, minute=_slot_min,
+                                    timezone="America/New_York"),
+                id=f"post_slot_{_slot_hour}h{_slot_min}",
+                kwargs={"slot_label": _label, "stunt_first": _stunt_first},
+                max_instances=1,
+            )
     if not args.post_only:
         first_reply = reply_interval_minutes()
         log.info(f"Reply bot: next scan in {first_reply} minutes.")
@@ -675,17 +673,10 @@ def main():
             max_instances=1,
         )
 
-        # Viral stunt bot (2026-06-05 operator: "from time to time create a
-        # superviral post... don't overabuse") — checks every 90 min but fires
-        # probabilistically (35%) with a 2/day hard cap, so the surface stays
-        # rare and irregular.
-        log.info("Viral stunt bot: superviral-format comedy, max 2/day, irregular cadence.")
-        scheduler.add_job(
-            safe_run_viral_stunt_cycle,
-            trigger=IntervalTrigger(minutes=90),
-            id="viral_stunt_job",
-            max_instances=1,
-        )
+        # Viral stunt bot — no standalone interval job since 2026-06-07: it
+        # runs inside the posting slots (leads the 12:30 slot so >=1 daily
+        # original tends to carry native media). Cap MAX_VIRAL_STUNTS_PER_DAY.
+        log.info("Viral stunt bot: folded into the posting slots (leads 12:30 ET).")
 
         # Space promo bot — REMOVED from the schedule (operator 2026-06-05 PM:
         # "remove promotion of spce mnts etc"). The module stays for possible
@@ -779,6 +770,17 @@ def main():
             safe_run_daily_digest,
             trigger=IntervalTrigger(hours=1),
             id="daily_digest_job",
+        )
+
+        # Weekly metrics review (2026-06-07 spec) — Sundays after 17:00 NY,
+        # idempotent per ISO week: follower delta, following vs the 300 cap,
+        # action + pillar mix → weekly_review.md. Deterministic, no LLM.
+        from src.weekly_review_bot import safe_run_weekly_review_cycle
+        log.info("Weekly review: Sunday metrics digest → weekly_review.md (hourly idempotent check).")
+        scheduler.add_job(
+            safe_run_weekly_review_cycle,
+            trigger=IntervalTrigger(hours=1),
+            id="weekly_review_job",
         )
 
         # Promote-best-reply bot — plain-reposts our highest-engagement reply

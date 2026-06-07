@@ -264,6 +264,14 @@ def run_spicy_cycle():
         _increment_count()
         if mode == "QUESTION":
             _increment_question_count()
+        # Log with mode as source so pillar attribution sees reply-bait
+        # questions explicitly (QUESTION → reply_bait). spicy posts were
+        # previously invisible to the engagement log / ROI loop entirely.
+        try:
+            from .engagement_log import log_post
+            log_post(text, source=mode)
+        except Exception:
+            pass
         time.sleep(random.randint(3, 6))
         log.info(f"[SPICY] DONE. Today's count: {_today_count()}/{MAX_SPICY_PER_DAY}")
     except Exception:

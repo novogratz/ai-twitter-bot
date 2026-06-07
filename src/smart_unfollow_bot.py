@@ -160,6 +160,14 @@ def _build_keep_set() -> set:
 
 
 def run_unfollow_cycle():
+    # 2026-06-07 operator: "don't unfollow in this bot, I'll be the one doing
+    # unfollow myself." Cap 0 = unfollowing fully OFF — bail before any
+    # Safari work so the cycle costs nothing. Read at call time so a live
+    # config edit takes effect without restart.
+    from . import config as _cfg
+    if _cfg.MAX_UNFOLLOWS_PER_DAY <= 0 or UNFOLLOW_CAP_PER_CYCLE <= 0:
+        log.info("[UNFOLLOW] Disabled (cap 0 — operator unfollows manually). Skipping.")
+        return
     log.info("[UNFOLLOW] Scraping /following and /followers...")
     following = _scrape_handle_list(f"https://x.com/{BOT_HANDLE}/following", 200)
     if not following:

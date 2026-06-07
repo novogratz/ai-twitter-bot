@@ -160,9 +160,14 @@ def run_viral_stunt_cycle():
     try:
         if gif_q:
             from .twitter_client import post_tweet_with_gif
-            post_tweet_with_gif(text, gif_q)
+            post_tweet_with_gif(text, gif_q)  # logs itself with source=GIF/<q>
         else:
             post_tweet(text)
+            try:  # text-only stunts were invisible to the ROI loop before 2026-06-07
+                from .engagement_log import log_post
+                log_post(text, source="STUNT")
+            except Exception:
+                pass
         _increment_count()
         time.sleep(random.randint(3, 6))
         log.info(f"[STUNT] DONE. Today's count: {_today_count()}/{MAX_VIRAL_STUNTS_PER_DAY}")

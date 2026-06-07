@@ -756,3 +756,91 @@ def test_unfollow_protects_all_whitelist_tiers(follow_env):
     for handle in ("TheBTCTherapist", "morganhousel", "karpathy", "saylor"):
         ok, why = ag.can_unfollow(handle)
         assert not ok and "protected" in why, (handle, why)
+
+
+# --- 2026-06-07 round 2: pillar tags / freshness sort / trim / reply-bait ---
+
+def test_pillar_classifier_buckets():
+    from src.pillar_tags import classify
+    assert classify("Your portfolio isn't down. It's processing trauma. Sit with it.") == "market_trauma"
+    assert classify("Saylor buys more bitcoin while the AI agents trade against him.") == "ai_vs_btc"
+    assert classify("OpenAI ships a new model and the GPU bill doubles overnight.") == "ai_news_take"
+    assert classify("Group session: what's the most you've ever panic-sold?") == "reply_bait"
+    # Explicit signals beat text heuristics.
+    assert classify("anything", action_type="quote_gif") == "meme_reaction"
+    assert classify("anything", source="GIF/this is fine") == "meme_reaction"
+    assert classify("Honest take on markets today.", source="QUESTION") == "reply_bait"
+    assert classify("") == "other"
+
+
+def _url_with_age(minutes: int) -> str:
+    from datetime import datetime, timezone
+    from src.reply_bot import _TWITTER_EPOCH
+    now_ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000)
+    tweet_id = (now_ms - minutes * 60_000 - _TWITTER_EPOCH) << 22
+    return f"https://x.com/someone/status/{tweet_id}"
+
+
+def test_reply_candidates_sorted_fresh_and_rising_first():
+    """2026-06-07 spec: front-load fresh fast-rising posts. A 20-min riser
+    must beat a 60-hour-old tweet; unknown-age URLs go last; within the
+    same freshness bucket, higher likes-per-hour wins."""
+    from src.direct_reply import _freshness_sort_key
+    fresh_hot = {"url": _url_with_age(20), "likes": 400}
+    fresh_cold = {"url": _url_with_age(25), "likes": 2}
+    old = {"url": _url_with_age(60 * 60), "likes": 90000}
+    unknown = {"url": "https://x.com/someone", "likes": 50}
+    ordered = sorted([unknown, old, fresh_cold, fresh_hot], key=_freshness_sort_key)
+    assert ordered[0] is fresh_hot
+    assert ordered[1] is fresh_cold
+    assert ordered[2] is old
+    assert ordered[3] is unknown
+
+
+def test_smart_trim_salvages_overlong_reply():
+    """Over-length replies are trimmed at a sentence boundary and must then
+    pass the content_guard length + truncation checks (instead of being
+    discarded along with the LLM call that produced them)."""
+    from src.humanizer import smart_trim
+    long_reply = (
+        "The market is not punishing you, it is teaching you. "
+        "You bought the top because hope felt cheaper than patience. "
+        "Diagnosis: chronic dip-denial with acute leverage exposure. "
+        "Treatment starts with closing the app for one full week. "
+        "Then we talk about your relationship with green candles and why "
+        "you call panic-selling risk management."
+    )
+    assert len(long_reply) > 278
+    trimmed = smart_trim(long_reply, 278)
+    assert 0 < len(trimmed) <= 278
+    ok, why = cg.validate(trimmed, kind="reply")
+    assert ok, why
+
+
+def test_reply_bait_weekly_cap(monkeypatch, tmp_path):
+    """Reply-bait question posts are capped per ISO week (spec: 3-4/week)."""
+    from src import spicy_bot as sb
+    monkeypatch.setattr(sb, "SPICY_STATE_FILE", str(tmp_path / "spicy.json"))
+    assert sb._week_question_count() == 0
+    for _ in range(sb.REPLY_BAIT_PER_WEEK):
+        sb._increment_question_count()
+    assert sb._week_question_count() == sb.REPLY_BAIT_PER_WEEK
+    assert sb._week_question_count() >= sb.REPLY_BAIT_PER_WEEK  # gate trips
+
+
+def test_weekly_review_builds():
+    from src.weekly_review_bot import build_review
+    out = build_review()
+    assert out.startswith("# Weekly review")
+    assert "## Pillar mix" in out
+
+
+def test_unfollow_cycle_disabled_at_cap_zero(monkeypatch):
+    """Cap 0 = operator unfollows manually; the cycle must bail before any
+    Safari scrape work."""
+    from src import smart_unfollow_bot as sub, config
+    monkeypatch.setattr(config, "MAX_UNFOLLOWS_PER_DAY", 0)
+    called = []
+    monkeypatch.setattr(sub, "_scrape_handle_list", lambda *a, **k: called.append(a) or [])
+    sub.run_unfollow_cycle()
+    assert called == [], "unfollow cycle must not touch Safari when cap is 0"

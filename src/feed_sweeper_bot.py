@@ -26,7 +26,6 @@ Hard rules preserved:
   - all writes go through the twitter_client chokepoints (dedup v2 included)
 """
 import os
-import random
 import traceback
 
 from .config import BLOCKLIST, BOT_HANDLE
@@ -189,7 +188,8 @@ def _sweep_one_feed(source, scraper):
         log.info(f"[SWEEP] Quoted @{author} ({cand.get('likes')} likes){gif_tag}.")
 
     # --- REPLY to the meh ones --------------------------------------------
-    random.shuffle(reply_candidates)
+    # No shuffle: _reply_to_tweets orders fresh-and-rising first
+    # (2026-06-07 spec — front-load <60-min climbers).
     replies_done = _reply_to_tweets(
         reply_candidates,
         replied,

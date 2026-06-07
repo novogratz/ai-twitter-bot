@@ -4,6 +4,7 @@ import re
 from datetime import datetime
 from .config import ENGAGEMENT_LOG_FILE
 from .pattern_tags import normalize as _normalize_pattern
+from .pillar_tags import classify as _classify_pillar
 
 
 def _extract_author(target_url: str) -> str:
@@ -15,17 +16,21 @@ def _extract_author(target_url: str) -> str:
 
 
 def _ensure_header():
-    """Create CSV with 6-column header if it doesn't exist.
+    """Create CSV with 7-column header if it doesn't exist.
 
-    Existing 4- or 5-column files are left as-is; analysis code reads positionally
-    and treats missing trailing columns as empty strings (backwards compatible).
-    Column 6 = pattern_id (REPETITION / DIALOGUE / METAPHOR / RENAME / FR_ANCHOR
-    / UNDERSTATEMENT / OTHER) — drives the evolution agent's bandit loop.
+    Existing 4-, 5- or 6-column files are left as-is; analysis code reads
+    positionally and treats missing trailing columns as empty strings
+    (backwards compatible).
+    Column 6 = pattern_id (REPETITION / DIALOGUE / METAPHOR / RENAME /
+    FR_ANCHOR / UNDERSTATEMENT / OTHER) — drives the evolution agent's
+    bandit loop. Column 7 = pillar (2026-06-07 spec content pillars, see
+    pillar_tags.py) — drives the weekly mix review.
     """
     if not os.path.exists(ENGAGEMENT_LOG_FILE):
         with open(ENGAGEMENT_LOG_FILE, "w", newline="") as f:
             writer = csv.writer(f)
-            writer.writerow(["timestamp", "type", "text", "target_url", "source", "pattern_id"])
+            writer.writerow(["timestamp", "type", "text", "target_url",
+                             "source", "pattern_id", "pillar"])
 
 
 def log_post(text: str, source: str = "", pattern_id: str = ""):
@@ -36,6 +41,7 @@ def log_post(text: str, source: str = "", pattern_id: str = ""):
         writer.writerow([
             datetime.now().isoformat(), "post", text[:280], "",
             source, _normalize_pattern(pattern_id),
+            _classify_pillar(text, "post", source),
         ])
 
 
@@ -56,6 +62,7 @@ def log_reply(target_url: str, reply_text: str, action_type: str = "reply",
         writer.writerow([
             datetime.now().isoformat(), action_type, reply_text[:280],
             target_url, source, _normalize_pattern(pattern_id),
+            _classify_pillar(reply_text, action_type, source),
         ])
 
     # Bump personality dossier so the bot grows a relationship with each
@@ -77,4 +84,5 @@ def log_hotake(text: str, source: str = "", pattern_id: str = ""):
         writer.writerow([
             datetime.now().isoformat(), "hotake", text[:280], "",
             source, _normalize_pattern(pattern_id),
+            _classify_pillar(text, "hotake", source),
         ])

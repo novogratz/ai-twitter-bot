@@ -467,10 +467,35 @@ def _maybe_repost_best_profile_tweet(username: str, tweets: list, retweeted: set
         return True
     except Exception: return False
 
+def _freshness_sort_key(tweet):
+    """Order candidates fresh-and-rising first (2026-06-07 spec: 'front-load
+    to fresh, fast-rising posts (posted < ~30-60 min ago and climbing)').
+
+    Primary: age bucket (<=60 min, <=6h, older, unknown-age last — unknown
+    parses as 9999 min via the snowflake helper). Secondary within a bucket:
+    likes-per-hour velocity, highest first. First-hour replies are where the
+    algo weight and the profile-visit conversion live; a 60-hour-old tweet
+    must never consume the slot a 20-minute riser deserved.
+    """
+    age = _tweet_age_minutes(tweet.get("url", ""))
+    if age <= 60:
+        bucket = 0
+    elif age <= 360:
+        bucket = 1
+    elif age < 9999:
+        bucket = 2
+    else:
+        bucket = 3
+    likes = tweet.get("likes") or 0
+    velocity = likes / max(age, 1.0)
+    return (bucket, -velocity, age)
+
+
 def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=None, en_counter=None):
     posted = 0
     per_author_count = {}
     is_feed = source_name.startswith(("FEED", "FOLLOWING"))
+    tweets = sorted(tweets, key=_freshness_sort_key)
     for tweet in tweets:
         if remaining is not None and posted >= remaining: break
         url, text, author = tweet["url"], tweet["text"], tweet.get("author", "someone")
