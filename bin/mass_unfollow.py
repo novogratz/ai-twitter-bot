@@ -28,6 +28,7 @@ import argparse
 import json
 import os
 import random
+import re
 import subprocess
 import sys
 import time
@@ -84,11 +85,20 @@ PICK_JS_TEMPLATE = (
 
 CONFIRM_JS = """
 (function(){
+  var out;
   var c = document.querySelector('[data-testid="confirmationSheetConfirm"]');
-  if (c) { c.click(); return 'CONFIRMED'; }
-  return 'NO_CONFIRM';
+  if (c) { c.click(); out = 'CONFIRMED'; } else { out = 'NO_CONFIRM'; }
+  var t = document.querySelector('[data-testid="toast"]');
+  if (t) out += '|TOAST:' + t.textContent.replace(/["|]/g, ' ').slice(0, 120);
+  return out;
 })()
 """
+
+# X surfaces rate-limits as a blue toast at the bottom of the page.
+_LIMIT_TOAST_RE = re.compile(
+    r"limit|unable|try again|wait|too many|restreint|r\xe9essayer|impossible",
+    re.IGNORECASE,
+)
 
 SCROLL_JS = "window.scrollBy(0, 1800); 'SCROLLED'"
 
@@ -155,7 +165,27 @@ def main() -> None:
                     help="keep-set: 'whitelist' = current whitelist.json tiers+seeds "
                          "(full purge, default); 'legacy' = also keep respect_list + "
                          "engage/early-bird/mega targets (gentle prune)")
+    ap.add_argument("--pace", choices=["normal", "fast", "insane"], default="normal",
+                    help="normal ≈ 480/hr (3.5-7s jitter, breather every 25); "
+                         "fast ≈ 1400/hr (1.2-2.5s jitter, breather every 100); "
+                         "insane = minimal gaps, NEVER aborts — on a rate-limit "
+                         "toast or repeated failed confirms it cools down "
+                         "--cooldown-mins then resumes until the list is empty")
+    ap.add_argument("--cooldown-mins", type=float, default=5.0,
+                    help="cooldown on rate-limit detection (insane pace; grows "
+                         "+50%% per consecutive hit, capped at 4x)")
     args = ap.parse_args()
+
+    if args.pace == "insane":
+        confirm_wait, gap_lo, gap_hi = 0.5, 0.4, 1.0
+        breather_every, breather_lo, breather_hi = 200, 5, 10
+    elif args.pace == "fast":
+        confirm_wait, gap_lo, gap_hi = 0.7, 1.2, 2.5
+        breather_every, breather_lo, breather_hi = 100, 15, 25
+    else:
+        confirm_wait, gap_lo, gap_hi = 1.2, 3.5, 7.0
+        breather_every, breather_lo, breather_hi = 25, 20, 40
+    auto_resume = args.pace == "insane"
 
     keep = _whitelist_keep_set() if args.keep == "whitelist" else _legacy_keep_set()
     pick_js = PICK_JS_TEMPLATE % json.dumps(sorted(keep))
@@ -172,16 +202,38 @@ def main() -> None:
     unfollowed = []
     empty_rounds = 0
     noconfirm_streak = 0
+    limit_hits = 0
+
+    def cooldown(reason: str) -> None:
+        nonlocal noconfirm_streak, limit_hits
+        limit_hits += 1
+        mins = min(args.cooldown_mins * (1.5 ** (limit_hits - 1)),
+                   args.cooldown_mins * 4)
+        print("COOLDOWN %.1f min (#%d): %s" % (mins, limit_hits, reason), flush=True)
+        time.sleep(mins * 60)
+        noconfirm_streak = 0
+        run_js(CLEAR_TAGS_JS)  # re-arm cells whose click never confirmed
 
     while len(unfollowed) < args.max:
         res = run_js(pick_js)
         if res.startswith("CLICK:"):
             empty_rounds = 0
             h = res[6:] or "unknown"
-            time.sleep(1.2)
+            time.sleep(confirm_wait)
             c = run_js(CONFIRM_JS)
-            if c == "CONFIRMED":
+            confirmed = c.startswith("CONFIRMED")
+            toast = c.split("|TOAST:", 1)[1] if "|TOAST:" in c else ""
+            if toast and _LIMIT_TOAST_RE.search(toast):
+                print("rate-limit toast: %s" % toast.strip(), flush=True)
+                if auto_resume:
+                    cooldown("rate-limit toast")
+                    continue
+                print("ABORT: rate-limit toast", flush=True)
+                break
+            if confirmed:
                 noconfirm_streak = 0
+                if limit_hits and len(unfollowed) % 50 == 0:
+                    limit_hits = 0  # healthy streak → reset backoff
                 unfollowed.append(h)
                 try:
                     action_guard.record(action_guard.UNFOLLOW, target=h)
@@ -194,13 +246,16 @@ def main() -> None:
                 print("no confirm for @%s (%s, streak %d)"
                       % (h, c, noconfirm_streak), flush=True)
                 if noconfirm_streak >= 5:
+                    if auto_resume:
+                        cooldown("5 consecutive failed confirms")
+                        continue
                     print("ABORT: confirm failing repeatedly — possible action block",
                           flush=True)
                     break
                 time.sleep(3)
-            time.sleep(random.uniform(3.5, 7.0))
-            if unfollowed and len(unfollowed) % 25 == 0:
-                p = random.uniform(20, 40)
+            time.sleep(random.uniform(gap_lo, gap_hi))
+            if unfollowed and len(unfollowed) % breather_every == 0:
+                p = random.uniform(breather_lo, breather_hi)
                 print("breather %.0fs" % p, flush=True)
                 time.sleep(p)
         elif res == "NONE":
