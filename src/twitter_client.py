@@ -1388,7 +1388,7 @@ def _profile_visit_allowed(username: str) -> bool:
         return False
     if base == BOT_HANDLE.lower():
         return True  # own profile (incl. BOT_HANDLE/with_replies callers)
-    allow = os.environ.get("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist")
+    allow = os.environ.get("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist,Graphseo")
     return base in {h.strip().lstrip("@").lower() for h in allow.split(",") if h.strip()}
 
 

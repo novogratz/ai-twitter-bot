@@ -229,8 +229,8 @@ Discovery surfaces are now EXACTLY three: **@TheBTCTherapist's profile**
 terms**. `twitter_client._profile_visit_allowed` gates BOTH profile-visit
 primitives — `scrape_profile_tweets` and `visit_profile_and_like` — at the
 chokepoint: only our own profile (boost/pin/metrics/with_replies) and
-`PROFILE_VISIT_ALLOWLIST` (env, default `TheBTCTherapist`, read at CALL
-time per the side-effect-env rule) may be visited; anything else returns
+`PROFILE_VISIT_ALLOWLIST` (env, default `TheBTCTherapist,Graphseo`, read
+at CALL time per the side-effect-env rule) may be visited; anything else returns
 `[]`/no-ops BEFORE any Safari work. Bots that scanned other profiles
 (early_bird, mega_watch, engagement_targeting, quote priority/trusted-handle
 passes, retweet trusted-handle passes, engage/notify reciprocity likes) now
@@ -239,6 +239,14 @@ lanes. Follow/unfollow profile visits are untouched (mechanically required
 to click the button; follows are chokepoint-dormant under the ceiling,
 unfollows operator-only). Guard test:
 `test_profile_visits_blocked_outside_allowlist`.
+
+**Buddy blitz (same mandate, operator: "reply to everything graphseo and
+thebtctherapist post"):** `btc_blitz` now runs a buddy pass after the
+bestie pass — every `BLITZ_BUDDY_HANDLES` (default `Graphseo`) fresh ≤48h
+post gets exactly one reply (language-matched, warm + sharp, no QRT bit —
+the inversion stays BTCTherapist-only; Graphseo's one-typo rule is already
+chokepoint-enforced). Same idempotency: replied-set check pre-LLM +
+chokepoint dedup. Guard test: `test_buddy_blitz_replies_to_every_fresh_post`.
 
 ### 2026-06-07 PM-9 — viral push round 3 (operator: "DO IT … push it")
 

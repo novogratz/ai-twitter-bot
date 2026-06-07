@@ -1303,15 +1303,61 @@ def test_profile_visits_blocked_outside_allowlist(monkeypatch):
     assert tc.scrape_profile_tweets("karpathy") == []
     tc.visit_profile_and_like("unusual_whales")  # must not open Safari either
 
-    # Allowlist semantics (pure check, no Safari).
+    # Allowlist semantics (pure check, no Safari). Defaults: the two
+    # reply-everything friends (operator 2026-06-07).
     assert tc._profile_visit_allowed(BOT_HANDLE)
     assert tc._profile_visit_allowed(f"{BOT_HANDLE}/with_replies")
     assert tc._profile_visit_allowed("TheBTCTherapist")
     assert tc._profile_visit_allowed("@thebtctherapist")
+    assert tc._profile_visit_allowed("Graphseo")
     assert not tc._profile_visit_allowed("zerohedge")
     assert not tc._profile_visit_allowed("")
 
     # Env read at CALL time — a live edit takes effect without restart.
-    monkeypatch.setenv("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist, @Graphseo")
-    assert tc._profile_visit_allowed("graphseo")
+    monkeypatch.setenv("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist")
+    assert not tc._profile_visit_allowed("graphseo")
     assert tc._profile_visit_allowed("thebtctherapist")
+
+
+def test_buddy_blitz_replies_to_every_fresh_post(monkeypatch):
+    """Operator 2026-06-07: 'reply to everything graphseo and thebtctherapist
+    post'. The blitz must cover BOTH: bestie pass for TheBTCTherapist, buddy
+    pass for Graphseo — every fresh post gets exactly one reply, already-
+    replied URLs are skipped before the LLM."""
+    from src import btc_blitz as bb
+    from src import reply_bot as rb
+    from src import twitter_client as tc
+    from src import quote_tweet_bot as qb
+    from src import engagement_log as el
+
+    posts = {
+        "TheBTCTherapist": [
+            {"url": "https://x.com/TheBTCTherapist/status/111", "text": "btc pain", "likes": 5},
+        ],
+        "Graphseo": [
+            {"url": "https://x.com/Graphseo/status/222", "text": "fresh seo take", "likes": 3},
+            {"url": "https://x.com/Graphseo/status/333", "text": "already covered", "likes": 9},
+        ],
+    }
+    monkeypatch.setattr(bb, "_fresh_posts", lambda h: list(posts.get(h, [])))
+    gen_calls = []
+    monkeypatch.setattr(
+        bb, "_gen",
+        lambda tpl, txt, model, label, author=None: gen_calls.append((label, txt)) or "sharp take")
+    # One Graphseo post already replied — must be skipped pre-LLM.
+    monkeypatch.setattr(rb, "load_replied", lambda: {"https://x.com/Graphseo/status/333"})
+    # Quote pass: bestie URL already quoted so the test stays reply-only.
+    monkeypatch.setattr(qb, "_load_quoted", lambda: {"https://x.com/TheBTCTherapist/status/111"})
+    monkeypatch.setattr(qb, "_save_quoted", lambda q: None)
+    sent = []
+    monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text: sent.append(url) or True)
+    monkeypatch.setattr(el, "log_reply", lambda *a, **k: None)
+
+    bb.run_btc_blitz_cycle()
+
+    assert sent == [
+        "https://x.com/TheBTCTherapist/status/111",  # bestie pass
+        "https://x.com/Graphseo/status/222",         # buddy pass
+    ]
+    assert all("already covered" not in txt for _, txt in gen_calls), \
+        "replied URL must be skipped BEFORE the LLM call"
