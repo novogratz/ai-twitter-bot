@@ -14203,3 +14203,276 @@ It's a fierce race
 - **@kenwattana** (55 likes, score 7/10) — The San Francisco Bay after OpenAI and Anthropic go public
   - https://x.com/KenWattana/status/2063338986228343019
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 63).
+- **@wallstreetmav** (2242 likes, score 9/10) — Anthropic is paying SpaceX $1.25 billion per month for datacenter compute capacity.
+
+Google just announced it is paying SpaceX $920 million per month for datacenter compute capacity.
+
+$2.17 billion pe
+  - https://x.com/WallStreetMav/status/2063279477002502230
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 2448).
+- **@real_mariya_** (159 likes, score 9/10) — Big Bang!
+
+Bitcoin in 2012 → a few hundred yen.
+Tesla in 2018 → production hell.
+NVIDIA in 2022 → gaming stock.
+Palantir in 2023 → mystery company.
+SanDisk in 2025 → end of memory.
+Everyone was told "
+  - https://x.com/real_mariya_/status/2063265528249303533
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 183).
+- **@scaling01** (88 likes, score 9/10) — With the current slope of my sentiment since the launch of GPT-5.3-Codex, I will turn more bullish on OpenAI than Anthropic on September 30, 2026
+
+(incredibly realistic forecast)
+  - https://x.com/scaling01/status/2063362995984400660
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 104).
+- **@jstein_star** (75 likes, score 9/10) — If Bernie Sanders and Steve Bannon both agree that OpenAI Anthropic etc should be taken over by the government I wonder where the Dem 2028 presidential nominee will land
+  - https://x.com/jstein_star/status/2063279099129282661
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 97).
+- **@just_kaws** (21 likes, score 8/10) — Semiconductor stocks will make me a millionaire 
+
+Here are the 10 stocks that I like:
+
+1) Micron Technology — $MU
+2) Sandisk — $SNDK
+3) NVIDIA — $NVDA
+4) Advanced Micro Devices — $AMD
+5) Applied Optoe
+  - https://x.com/JUST_KAWS/status/2063380896267530732
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 31).
+- **@bohops** (15 likes, score 7/10) — It has never been about "safety" or "security". It's about compute. And the cost for that compute is coming to a frontier model near you soon.
+  - https://x.com/bohops/status/2062723736164282870
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 15).
+- **@jimstewartson** (3048 likes, score 9/10) — It’s called INVESTOR FRAUD.
+
+Google is buying GPUs from Nvidia through SpaceX to boost revenue IN ITS OWN INVESTMENT. 
+
+Google owns 5% of SpaceX.
+
+It’s more circular bullshit financing to justify an I
+  - https://x.com/jimstewartson/status/2063276846314320369
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3186).
+- **@testingcatalog** (1906 likes, score 9/10) — BREAKING : A new Claude Mythos 5 model slug has been spotted via Dev Mode. 
+
+Claude Mythos is planned to be released as its own model class, besides Haiku, Sonnet and Opus model families. 
+
+Soon?
+  - https://x.com/testingcatalog/status/2063234385227252184
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2056).
+- **@nickmmark** (494 likes, score 9/10) — The reason is Google owns 5% of SpaceX and they are trying to pump a struggling IPO so they can get their exit liquidity.
+
+Prediction: post IPO they exit this “deal” very quickly and go back to their
+  - https://x.com/nickmmark/status/2063303658184519799
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 582).
+- **@mrblock** (20 likes, score 9/10) — 目前全球所有估值破 100 億美元、年收入跑率破 1 億美元的 AI 新創公司一次看！
+Crusoe - $10B
+Mercor - $10B
+ElevenLabs - $11B
+Baseten - $11B*
+Harvey - $11B
+Lovable - $12B*
+OpenEvidence - $12B
+Mistral - $14B
+Nscale - $14.6B
+Fireworks - $
+  - https://x.com/mrblock/status/2063142925685682200
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 52).
+- **@bfmtv** (13 likes, score 7/10) — "Three companies could swallow up the entire cake"... Could the mega-IPO listings of SpaceX, Anthropic, and OpenAI risk causing indigestion for the US markets?  
+https://l.bfmtv.com/Y3yB
+  - https://x.com/BFMTV/status/2063159511834083737
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 15).
+- **@hanking66** (458 likes, score 8/10) — In the context of the Black Friday crash, the SpaceX IPO is no longer important. I expect there won't be much fluctuation on Monday or Tuesday. The focus is on Wednesday's CPI release—if the data is g
+  - https://x.com/hanking66/status/2063240048041189557
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 552).
+- **@jefetrades** (134 likes, score 8/10) — THE CRASH IS HERE 
+
+$MSTR just ran into a MAJOR problem, Saylor tried selling some Bitcoin but it cause MASS selling on Crypto. Bitcoin is breaking the lows on the year and this could start to unravel
+  - https://x.com/JEFETRADES/status/2063391763943899171
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 222).
+- **@polymarket** (701 likes, score 8/10) — JUST IN: Claude Mythos, touted as having “nation-state hacking capabilities” projected to be released this month.
+
+64% chance.
+  - https://x.com/Polymarket/status/2063357494122942776
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 903).
+- **@gailcweiner** (16 likes, score 8/10) — Mistral is a generation or two behind Claude and GPT. That’s real. But that’s also the part of the market that matters least for the actual enterprise revenue.
+
+For the 80% of enterprise AI use cases
+  - https://x.com/gailcweiner/status/2063339089286361460
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 28).
+- **@polymarket** (1134 likes, score 7/10) — NEW: China launches a “special maritime operation” east of Taiwan, escalating tensions after Japan & Philippines held border talks.
+  - https://x.com/Polymarket/status/2063277424075243791
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1282).
+- **@nvidia** (183 likes, score 7/10) — Innovation is all about efficiency and so is the merch.
+
+Spotted at NVIDIA GTC in Taipei: the ultimate micro-tote for the tech essentials. From the AI exhibition floor to the backdrop of Taipei 101, t
+  - https://x.com/nvidia/status/2062972913871905026
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 253).
+- **@rherman** (159 likes, score 7/10) — I put @grok  and @claudeai  in the same private channel.
+
+Then I asked them to agree on one Bitcoin prediction for 2030.
+
+Inside my Herman AI  Tech Collab channel, they started discussing it with each
+  - https://x.com/RHerman/status/2063355518953865556
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 195).
+- **@business** (22 likes, score 7/10) — The initiative risks further chilling negotiations on a truce extension, reopening the Strait of Hormuz and paving the way for more detailed talks over Iran’s nuclear program
+  - https://x.com/business/status/2063391796458102817
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 44).
+- **@michelekirby623** (381 likes, score 7/10) — I sold my Bitcoin today, yeah... all of it! moved everything into #XRP, people are already calling me crazy, but I can't shake the feeling BTC already had its run and #XRP XRP hasn't even started yet
+  - https://x.com/michelekirby623/status/2063299984552861770
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 439).
+- **@garymarcus** (141 likes, score 7/10) — this guy is asking the wrong question; the right question is not how much money SpaceX is being paid, but why they’re making the deal in the first place: because they’ve realized that they aren’t goin
+  - https://x.com/GaryMarcus/status/2063254551701143859
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 225).
+- **@0xchiefy** (127 likes, score 7/10) — I warned you about this Bitcoin dump.
+
+Nobody listened.
+
+Now Bitcoin is following the exact roadmap I laid out months ago.
+
+Every move.
+
+Every bull trap.
+
+Every failed rally.
+
+The bear cycle is only g
+  - https://x.com/0xChiefy/status/2063339214196888041
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 171).
+- **@verge** (96 likes, score 7/10) — The mayor of Shelbyville, Indiana, says only people who live in ‘shitty houses’ oppose data center
+  - https://x.com/verge/status/2063278527806586922
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 142).
+- **@beffjezos** (95 likes, score 7/10) — Anthropic would probably not exist if OpenAI had garden leaves
+  - https://x.com/beffjezos/status/2063387100255527082
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 113).
+- **@xfreeze** (1944 likes, score 9/10) — SpaceX just casually pulled off two Falcon 9 Starlink missions in under 19 hours again
+
+→ June 3 - Starlink 17-47 from Vandenberg at 8:40 AM PT with 24 satellites
+→ June 4 - Starlink 10-43 from Cape C
+  - https://x.com/XFreeze/status/2063252450254229902
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 2428).
+- **@defitracer** (108 likes, score 9/10) — SPACEX NEEDS TO GROW 600X TO JUSTIFY ITS IPO PRICE!!
+
+No company in the history of capitalism has ever come close to that.
+
+Current revenue: $18,700,000,000
+Revenue needed by 2035: $1,100,000,000,000
+  - https://x.com/DeFiTracer/status/2063389851987144811
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 162).
+- **@aaditsh** (5776 likes, score 9/10) — Wait. Google is paying SpaceX $920 million per month for GPUs?
+
+Google. The company that builds its own TPUs. That runs one of the largest cloud infrastructures on earth. Is renting 110,000 Nvidia GPU
+  - https://x.com/aaditsh/status/2063153391153602789
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 7072).
+- **@reutersbiz** (26 likes, score 8/10) — From SpaceX's blockbuster IPO next week to a possible rate hike from the European Central Bank, here are the business stories to watch out for
+  - https://x.com/ReutersBiz/status/2063053254506979603
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 28).
+- **@adamemedia1** (866 likes, score 8/10) — EVERYTHING JUST BROKE AT ONCE
+
+TRILLIONS were just wiped out in a single trading session.
+
+Stocks.
+Gold.
+Silver.
+Bitcoin.
+
+Everything got hit.
+
+And the reason is much bigger than one bad day on Wall S
+  - https://x.com/adamemedia1/status/2063207861253984547
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 996).
+- **@stocksavvyshay** (448 likes, score 8/10) — One of the biggest requests I’ve gotten is for more short-form video content, so we launched a new FE YouTube series with 5–10 minute earnings breakdowns and company deep dives.
+
+So far, we’ve covered
+  - https://x.com/StockSavvyShay/status/2063288618836525478
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 532).
+- **@itsclivetime** (202 likes, score 8/10) — (sadly can't say much about the chip just yet outside of https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/… - but the blogpost says `targeted to start in the second half o
+  - https://x.com/itsclivetime/status/2063357075137102071
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 208).
+- **@stocksavvyshay** (805 likes, score 8/10) — $AMD is on pace to generate over $75B in profit over the next three years: 
+
+• 2026: $13.8B (+274% YoY)
+• 2027: $24.7B (+78% YoY)
+• 2028: $35.4B (+43% YoY)
+
+AMD is the only credible challenger gaining
+  - https://x.com/StockSavvyShay/status/2063272523266187634
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1003).
+- **@milkroadai** (323 likes, score 8/10) — Micron crossed $1 trillion in market cap and it is still undervalued (Save this).
+
+Every AI chip ever built needs high bandwidth memory stacked directly on the die, physically bonded to the processor
+  - https://x.com/MilkRoadAI/status/2063119502502764702
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 357).
+- **@defiwimar** (114 likes, score 8/10) — This is exactly what I told you would happen.
+
+NVIDIA is at all-time highs, but the real macro support is still far below.
+
+6 out of 6 waves proved one thing:
+
+Every pump before the lower trendline to
+  - https://x.com/DefiWimar/status/2063322954629341508
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 188).
+- **@ric_rtp** (85 likes, score 8/10) — Big Tech just ran out of money building AI and what they're doing to cover it up should be illegal.
+
+Google, Amazon, Microsoft, and Meta are spending a combined $700 BILLION this year on AI infrastruc
+  - https://x.com/Ric_RTP/status/2063394197630255214
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 109).
+- **@r0ck3t23** (13 likes, score 7/10) — The United States government extracts $5.2 trillion from its citizens every single year.
+
+Five. Point. Two. Trillion.
+
+In return, you get crumbling infrastructure. A healthcare system that bankrupts t
+  - https://x.com/r0ck3t23/status/2063369942494507224
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 23).
+- **@roundtablespace** (108 likes, score 7/10) — TOP 5 MOST USED AI MODELS RIGHT NOW:
+
+1. ChatGPT
+2. Gemini
+3. Claude
+4. Microsoft Copilot
+5. Perplexity
+
+Which one do you use the most?
+  - https://x.com/RoundtableSpace/status/2063338886533963866
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 290).
+- **@bdinvestingg** (207 likes, score 7/10) — Chip stock valuations using PEG (price to earnings growth)
+
+$MU $CRDO $AMD $MRVL $AAOI = Undervalued
+  - https://x.com/bdinvestingg/status/2063353872505061873
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 221).
+- **@theronnievshow** (169 likes, score 7/10) — Millions will be made...
+
+The time is $NOW
+
+ServiceNow: The Most Underrated AI Stock in the Market?
+
+Watch Full Video NOW on YouTube 
+https://youtu.be/sPTtFpw-qbU?si=xtrPp-KgWHmzIMNj…
+  - https://x.com/TheRonnieVShow/status/2063288324920349070
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 205).
+- **@redwire** (69 likes, score 7/10) — In the latest ATOMIC-6 Hot Lap interview, Al Tadros, Redwire Chief Technology Officer, dives into the future of orbital data centers (ODC) and why scalable ODCs ultimately depend on breakthroughs in p
+  - https://x.com/Redwire/status/2063371627467780225
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 73).
+- **@cryptogoos** (88 likes, score 7/10) — MICHAEL SAYLOR ON THE RECENT BITCOIN CRASH:
+
+"The AI buildout is absorbing capital." 
+
+"Bitcoin remains the premier asset long term."
+  - https://x.com/cryptogoos/status/2063386953257775588
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 118).
+- **@solavia_a** (66 likes, score 7/10) — SpaceX
+
+A space stock, huh. I was like, "Meh," and wasn't interested at all as usual, but it turned out to be totally different.
+
+It's basically a space stock, but right now, it's evolving into an AI
+  - https://x.com/solavia_A/status/2063388605410951462
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 74).
+- **@capexandchill** (51 likes, score 7/10) — Broadcom's Tan revealed that their partnership to supply Anthropic with TPU compute began roughly a year ago as a speculative "leap of faith" on generative AI's enterprise potential. This early bet ha
+  - https://x.com/CapexAndChill/status/2063348987978043436
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 61).
+- **@iamrocketmen** (45 likes, score 7/10) — Donald Trump told reporters that his team might buy up stakes in U.S. artificial intelligence companies, and announced that he will hold a meeting with AI executives next week. http://reut.rs/4uV9zmg
+  - https://x.com/iamrocketmen/status/2063352287393956045
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 59).
+- **@simondixontwitt** (23 likes, score 7/10) — A bit more to the story
+
+AI Bubble, Bitcoin Crash & The Great Capital Rotation
+  - https://x.com/SimonDixonTwitt/status/2063203124911751407
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 23).
