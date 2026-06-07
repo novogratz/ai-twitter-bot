@@ -226,6 +226,12 @@ def run_spicy_cycle():
     core = personality_store.render_core_identity(lang=lang)
     if core:
         perf = core + "\n\n" + perf
+    # Measured pillar priority — market_trauma one-liners win 2.3x (2026-06-07).
+    try:
+        from .pillar_tags import market_trauma_priority_block
+        perf = market_trauma_priority_block() + "\n\n" + perf
+    except Exception:
+        pass
     # Own-wins bank (2026-06-07): show the model what actually SHIPPED on
     # this account so spicy takes iterate proven structures, not guesses.
     try:

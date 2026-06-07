@@ -824,6 +824,12 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     if core_identity:
         performance_section = (performance_section or "") + "\n\n" + core_identity
     performance_section = (performance_section or "") + "\n\n" + personality_store.hard_rules_block()
+    # Measured pillar priority — market_trauma one-liners win 2.3x (2026-06-07).
+    try:
+        from .pillar_tags import market_trauma_priority_block
+        performance_section += "\n\n" + market_trauma_priority_block()
+    except Exception:
+        pass
 
     # Auto-curated joke bank — fresh exemplars from top-liked recent posts.
     try:

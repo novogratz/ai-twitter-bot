@@ -425,6 +425,21 @@ def main():
                 id=f"hot_quote_job_{_hq_hour}h",
             )
 
+        # Breaking-news instant QRT (2026-06-07 PM: "DO IT"): when the
+        # external signal SPIKES (top item >= 15 score and >= 3x the
+        # runner-up), fire a hot_quote-style QRT immediately instead of
+        # waiting up to 4h for the next slot cron — the first 1-2h of a
+        # mega story is where QRTs 100x. Max 6/day; every write still goes
+        # through the quote chokepoint (cap/spacing/dedup/48h).
+        from src.breaking_qrt_bot import safe_run_breaking_qrt_cycle
+        log.info("Breaking-QRT bot: signal-spike instant quotes, every 10 min.")
+        scheduler.add_job(
+            safe_run_breaking_qrt_cycle,
+            trigger=IntervalTrigger(minutes=10),
+            id="breaking_qrt_job",
+            max_instances=1,
+        )
+
         # Thread / digest / recap bots — DISABLED (2026-06-07 agent spec: the
         # output mix is 3-4 single originals in US-market slots; threads are
         # not in the mix and a 9:00/14:00 thread would consume the 4/day cap

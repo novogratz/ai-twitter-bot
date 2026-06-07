@@ -296,6 +296,60 @@ def test_hot_quote_spacing_block_never_touches_safari_or_llm(monkeypatch, tmp_pa
     assert not state_file.exists() or "last_slot" not in json.loads(state_file.read_text())
 
 
+# --- breaking QRT spike detector (2026-06-07 "DO IT" viral push) ---------------
+
+def test_breaking_qrt_fires_only_on_dominant_spike():
+    """A story is 'breaking' only when it DOMINATES the signal pool:
+    score >= floor AND >= ratio x runner-up. A flat pool must never fire."""
+    from src.breaking_qrt_bot import pick_breaking_item
+
+    spike = [{"title": "OpenAI buys AMD", "score": 26}, {"title": "B", "score": 1}]
+    assert pick_breaking_item(spike, {}) is spike[0]
+
+    flat = [{"title": "A story", "score": 20}, {"title": "B story", "score": 18}]
+    assert pick_breaking_item(flat, {}) is None  # 20 < 3x18 — nothing dominant
+
+    weak = [{"title": "A story", "score": 5}, {"title": "B story", "score": 1}]
+    assert pick_breaking_item(weak, {}) is None  # under the 15 floor
+
+
+def test_breaking_qrt_never_fires_same_story_twice():
+    from src.breaking_qrt_bot import pick_breaking_item, _story_key
+
+    items = [{"title": "OpenAI buys AMD for $100B", "score": 30}]
+    state = {"fired_stories": [_story_key("OpenAI buys AMD for $100B")]}
+    assert pick_breaking_item(items, state) is None
+
+    # Same story, shuffled/extended headline — key is order-insensitive.
+    rephrased = [{"title": "for $100B, OpenAI buys AMD", "score": 30}]
+    assert pick_breaking_item(rephrased, state) is None
+
+
+def test_breaking_qrt_chokepoint_skip_keeps_story_armed(monkeypatch, tmp_path):
+    """quote_tweet returning False must NOT consume the story or the daily
+    budget — the next 10-min cycle retries while the story is still hot
+    (same family as the hot_quote slot-burn bug)."""
+    from src import breaking_qrt_bot as bqb
+
+    state_file = tmp_path / "breaking_qrt_state.json"
+    monkeypatch.setattr(bqb, "STATE_FILE", str(state_file))
+    monkeypatch.setattr(bqb, "can_post", lambda action: (True, ""))
+    monkeypatch.setattr(bqb, "_load_signal_items",
+                        lambda: [{"title": "OpenAI buys AMD", "score": 30}])
+    monkeypatch.setattr(bqb, "_search_best_tweet", lambda topic: {
+        "author": "WatcherGuru", "text": "JUST IN: ...", "likes": 9000,
+        "url": "https://x.com/WatcherGuru/status/1"})
+    monkeypatch.setattr(bqb, "_generate_quote", lambda a, t, h: "sharp take")
+    monkeypatch.setattr(bqb, "quote_tweet", lambda u, c: False)
+    monkeypatch.setattr(bqb, "_mark_quoted", lambda u: None)
+
+    bqb.run_breaking_qrt_cycle()
+
+    state = json.loads(state_file.read_text()) if state_file.exists() else {}
+    assert state.get("fired_today", 0) == 0
+    assert bqb._story_key("OpenAI buys AMD") not in state.get("fired_stories", [])
+
+
 # --- truncation guard (the "botched ChatGPT paste" callout, 2026-06-05) -------
 
 def test_smart_trim_ends_on_sentence():

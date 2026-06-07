@@ -222,6 +222,27 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-9 — viral push round 3 (operator: "DO IT … push it")
+
+Two new levers, both measured-data-driven:
+
+1. **market_trauma is now the DEFAULT original format**, not one option
+   among six. `pillar_tags.market_trauma_priority_block()` (the 29.8-vs-13.1
+   likes measurement, 2.3x) is injected into the hotake AND spicy prompts —
+   the two text surfaces the post slots try. Plain news takes only ship
+   when the story is big enough that the number alone carries it.
+2. **`src/breaking_qrt_bot.py`** — breaking-news instant QRT, every 10 min.
+   The 4x/day hot_quote slots can lag a mega story by 4h; QRTs only 100x
+   inside the first 1-2h. Spike detector (`pick_breaking_item`, pure +
+   guard-tested): top niche signal item fires only when score ≥15
+   (`BREAKING_QRT_MIN_SCORE`) AND ≥3x the runner-up
+   (`BREAKING_QRT_SPIKE_RATIO`) — a flat pool is not breaking. Max 6/day
+   (`BREAKING_QRT_MAX_PER_DAY`). Reuses the ENTIRE hot_quote pipeline
+   (niche filter, viral-tweet hunt, QUOTED_FILE dedup, persona quote) and
+   the quote_tweet chokepoint — zero new write paths. Story dedup by
+   order-insensitive title key; chokepoint skip keeps the story ARMED
+   (slot-burn lesson); `can_post(QUOTE)` precheck before any Safari/LLM.
+
 ### 2026-06-07 PM-8 — reply volume push (operator: "we use to do 400 a day now you are at like 100… push it")
 
 Diagnosis first: the engine was NOT throttled — Jun 6 did 941 replies, and
