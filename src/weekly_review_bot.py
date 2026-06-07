@@ -24,6 +24,7 @@ from .pillar_tags import classify as _classify_pillar
 REVIEW_FILE = os.path.join(_PROJECT_ROOT, "weekly_review.md")
 STATE_FILE = os.path.join(_PROJECT_ROOT, "weekly_review_state.json")
 FOLLOWER_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "follower_history.json")
+PERFORMANCE_LOG_FILE = os.path.join(_PROJECT_ROOT, "performance_log.json")
 
 
 def _iso_week() -> str:
@@ -101,6 +102,23 @@ def _week_rows() -> list:
     return rows
 
 
+def _top_posts(limit: int = 5) -> list:
+    """Top scraped own-posts of the last 7 days by likes (views tiebreak),
+    each tagged with its pillar. From performance_log.json
+    ({text, likes, views, timestamp} rows via scrape_own_metrics)."""
+    try:
+        with open(PERFORMANCE_LOG_FILE) as f:
+            rows = json.load(f) or []
+    except (OSError, json.JSONDecodeError):
+        return []
+    cutoff = (datetime.now() - timedelta(days=7)).isoformat()
+    week = [r for r in rows
+            if isinstance(r, dict) and str(r.get("timestamp", ""))[:19] >= cutoff[:19]]
+    week.sort(key=lambda r: (int(r.get("likes") or 0), int(r.get("views") or 0)),
+              reverse=True)
+    return week[:limit]
+
+
 def build_review() -> str:
     followers, delta = _follower_stats()
     following = _following_total()
@@ -141,6 +159,16 @@ def build_review() -> str:
     lines += ["", "## Volume by day"]
     for d in sorted(by_day):
         lines.append(f"- {d}: {by_day[d]} actions")
+    top = _top_posts()
+    if top:
+        lines += ["", "## Top posts (7 days, by likes — scraped metrics)"]
+        for r in top:
+            likes = int(r.get("likes") or 0)
+            views = int(r.get("views") or 0)
+            rate = f", {100 * likes / views:.1f}% eng" if views else ""
+            pillar = _classify_pillar(r.get("text", ""))
+            text = (r.get("text") or "").replace("\n", " ")[:110]
+            lines.append(f"- ❤️{likes} 👁{views}{rate} [{pillar}] {text}")
     lines += [
         "",
         "## Spec targets (2026-06-07)",

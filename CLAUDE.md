@@ -175,6 +175,35 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM — spec round 3 (operator: "DO IT PUSH IT HARD", pre-launch)
+
+- **Reply queries re-laned** — space queries REMOVED from
+  `direct_reply.SEARCH_QUERIES`/`HOT_TAB_QUERIES` (persona: no space), FR
+  tail slimmed to 1; added investor-psychology queries (panic-sold / bought
+  the top / FOMO / trading psychology — the market-trauma home turf) and
+  `from:` scans of the tier1-2 seeds + foils so their fresh posts are always
+  in the reply pool (spec: whitelist targets first). Guard test pins the lane.
+- **Quote engine** — scope line fixed (AI x markets x psychology, NO space);
+  new AI-vs-Bitcoin feud instruction fires on BTC parents (the ai_vs_btc
+  pillar was 1% of actions — the running bit barely existed);
+  `QUOTE_MIN_LIKES` 5→300 + `FEED_SWEEP_QUOTE_MIN_LIKES`=300 so the 2 QRT
+  slots/day ride genuinely trending posts (priority handles bypass via
+  their own queue, not the floor).
+- **Seed handle resolution** — `marquee_follow_bot` now verifies display
+  name/keywords (from whitelist `seeds[]`) against the scraped profile
+  before following; confident mismatch → `seed_unresolved.json`, retried
+  weekly, never followed blind. Scrape failure proceeds (follow_account
+  fails safe). Guard pre-check skips the Safari visit when the chokepoint
+  would refuse anyway.
+- **Startup firehose → replies only** — the boot burst no longer fires
+  sweep/quote/RT rounds: with 2 QRT + 2 RT slots/day it would burn the
+  whole quota on stale feed content at launch. Replies (unlimited) keep
+  the 3-round burst.
+- **autonomous_growth_agent prompt** re-bounded to the spec mix (it said
+  "keep retweets/quotes high" — anti-spec; volume lever is replies).
+- **Weekly review** now includes top posts by likes/views with engagement
+  rate + pillar tag (from the rebuilt own-metrics scraper).
+
 ### 2026-06-07 PM — spec round 2 (operator: "implement everything")
 
 - **Unfollowing OFF in the bot** (operator: "don't unfollow in this bot, I'll

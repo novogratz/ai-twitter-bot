@@ -140,38 +140,36 @@ EN_ACCOUNTS = [
     ]
 
 SEARCH_QUERIES = [
-    # ===== AI-ONLY (2026-06-03 rebrand: AI Decoder). English-first; small FR
-    # AI tail so we can also reply to French AI threads (replies match parent).
-    # ===== ENGLISH — labs / models / agents =====
+    # ===== 2026-06-07 AGENT SPEC lane: AI x markets x PSYCHOLOGY. =====
+    # Space queries REMOVED (persona: no space content). FR tail slimmed to
+    # one query (replies still match parent language when FR shows up).
+    #
+    # ===== SEEDS FIRST — tier1-2 reply targets + foils (spec: "Targets:
+    # ... from the follow whitelist (Tier 1-2 first)"). Low min_faves: we
+    # want their FRESH posts before they trend, freshness sort does the rest.
+    "from:TheBTCTherapist OR from:morganhousel OR from:ParikPatelCFA OR from:litcapital min_faves:5",
+    "from:greg16676935420 OR from:ReformedBroker OR from:jasonzweigwsj OR from:saylor min_faves:5",
+    # ===== INVESTOR PSYCHOLOGY — the home turf (market-trauma pillar) =====
+    "\"panic sold\" OR \"panic selling\" OR \"bought the top\" OR \"sold the bottom\" lang:en min_faves:30",
+    "\"portfolio is down\" OR \"red day\" OR drawdown OR \"bag holder\" OR bagholding lang:en min_faves:30",
+    "FOMO OR copium OR hopium OR \"diamond hands\" OR \"paper hands\" lang:en min_faves:50",
+    "\"trading psychology\" OR \"investor psychology\" OR \"behavioral finance\" OR \"risk management\" lang:en min_faves:20",
+    # ===== AI — labs / models / agents =====
     "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:50",
     "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
-    "\"AI agents\" OR \"agentic AI\" OR \"reasoning model\" lang:en min_faves:30",
-    "LLM OR \"frontier model\" OR \"open source AI\" OR Mistral lang:en min_faves:30",
-    "AGI OR \"superintelligence\" OR \"AI safety\" OR \"AI alignment\" lang:en min_faves:30",
-    # ===== ENGLISH — compute / infra / chips =====
-    "Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR compute lang:en min_faves:50",
-    "CoreWeave OR \"AI capex\" OR \"power demand\" OR \"AI energy\" lang:en min_faves:30",
-    "\"AI chip\" OR TPU OR AMD OR semiconductor OR Broadcom lang:en min_faves:30",
-    # ===== ENGLISH — AI stocks / money angle =====
+    "\"AI agents\" OR \"agentic AI\" OR \"reasoning model\" OR AGI lang:en min_faves:30",
+    # ===== AI — compute / chips / the money angle =====
+    "Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR \"AI capex\" lang:en min_faves:50",
     "Palantir OR \"AI stock\" OR \"AI bubble\" OR \"AI valuation\" lang:en min_faves:50",
-    "\"AI startup\" OR \"AI funding\" OR \"AI IPO\" OR \"AI round\" lang:en min_faves:30",
-    # ===== ENGLISH — robotics (AI-embodied) =====
-    "\"humanoid robot\" OR Figure OR \"Tesla Optimus\" OR \"1X\" lang:en min_faves:30",
-    # ===== ENGLISH — investment / stocks / markets (~30%) =====
-    "\"AI stock\" OR Nvidia OR Palantir OR \"tech earnings\" OR \"S&P 500\" lang:en min_faves:50",
+    "\"AI startup\" OR \"AI funding\" OR \"AI layoffs\" OR \"AI jobs\" lang:en min_faves:30",
+    # ===== MARKETS / MACRO =====
+    "\"tech earnings\" OR \"S&P 500\" OR Nasdaq OR \"market crash\" lang:en min_faves:50",
     "Fed OR CPI OR \"rate cut\" OR \"interest rates\" OR macro lang:en min_faves:50",
-    # ===== ENGLISH — Bitcoin / crypto (bearish troll fodder) =====
+    # ===== BITCOIN / CRYPTO (the AI-vs-BTC feud lane) =====
     "Bitcoin OR BTC OR \"BTC ETF\" OR crypto lang:en min_faves:100",
     "\"Bitcoin crash\" OR \"crypto crash\" OR \"crypto bubble\" OR \"BTC dump\" lang:en min_faves:30",
-    # ===== ENGLISH — space (2026-06-05 operator: "search for more AI or
-    # space terms and find viral posts") =====
-    "SpaceX OR Starship OR \"Falcon 9\" OR Starlink lang:en min_faves:50",
-    "NASA OR \"Rocket Lab\" OR RKLB OR satellite OR orbit lang:en min_faves:30",
-    "\"space economy\" OR \"space stocks\" OR ASTS OR \"moon mission\" lang:en min_faves:30",
-    # ===== FRENCH AI tail (for replying to FR AI tweets) =====
-    "IA OR \"intelligence artificielle\" OR ChatGPT OR Mistral lang:fr min_faves:25",
-    "OpenAI OR Anthropic OR Claude OR \"agents IA\" OR LLM lang:fr min_faves:25",
-    "Nvidia OR GPU OR \"datacenter IA\" OR \"action IA\" lang:fr min_faves:25",
+    # ===== FR tail (one query — replies match parent language) =====
+    "IA OR ChatGPT OR Mistral OR \"intelligence artificielle\" lang:fr min_faves:25",
 ]
 
 HOT_TAB_QUERIES = [
@@ -179,14 +177,11 @@ HOT_TAB_QUERIES = [
     "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500",
     "Nvidia OR \"AI datacenter\" OR \"AI capex\" lang:en min_faves:300",
     "\"AI agents\" OR \"reasoning model\" OR AGI lang:en min_faves:300",
-    "\"humanoid robot\" OR Figure OR \"Tesla Optimus\" lang:en min_faves:300",
     "Palantir OR \"AI stock\" OR \"AI bubble\" lang:en min_faves:300",
-    # Breaking FR AI (for replies)
-    "IA OR ChatGPT OR Mistral OR OpenAI lang:fr min_faves:25",
-    "\"agents IA\" OR Nvidia OR \"modèle IA\" lang:fr min_faves:25",
-    # Breaking investment EN
-    "Bitcoin OR BTC ETF lang:en min_faves:300",
-    "Palantir OR CoreWeave OR space stock lang:en min_faves:100",
+    # Breaking market emotion — panic is the therapist's house call
+    "\"market crash\" OR \"sell off\" OR \"sell-off\" OR VIX lang:en min_faves:500",
+    # Breaking BTC/crypto
+    "Bitcoin OR \"BTC ETF\" OR crypto lang:en min_faves:300",
 ]
 
 DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "7200"))

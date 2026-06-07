@@ -844,3 +844,52 @@ def test_unfollow_cycle_disabled_at_cap_zero(monkeypatch):
     monkeypatch.setattr(sub, "_scrape_handle_list", lambda *a, **k: called.append(a) or [])
     sub.run_unfollow_cycle()
     assert called == [], "unfollow cycle must not touch Safari when cap is 0"
+
+
+# --- 2026-06-07 round 3: lane queries / seed resolution / top posts ---------
+
+def test_reply_queries_are_on_lane():
+    """Spec lane: AI x markets x psychology. NO space content; the tier1-2
+    seeds + foils must be scanned directly via from: queries."""
+    from src.direct_reply import SEARCH_QUERIES, HOT_TAB_QUERIES
+    joined = " ".join(SEARCH_QUERIES + HOT_TAB_QUERIES).lower()
+    for banned in ("spacex", "starship", "nasa", "satellite", "rocket lab", "orbit"):
+        assert banned not in joined, f"space term {banned!r} is off-persona"
+    for seed in ("from:thebtctherapist", "from:morganhousel", "from:saylor"):
+        assert seed in joined, f"missing seed scan {seed!r}"
+    assert "panic" in joined and "psychology" in joined, "psychology lane missing"
+
+
+def test_seed_identity_matcher():
+    from src.marquee_follow_bot import _seed_matches_identity
+    seed = {"display_name": "Morgan Housel",
+            "keywords": ["psychology of money", "behavior", "risk"]}
+    # Name token match.
+    assert _seed_matches_identity(seed, "Morgan Housel")
+    # Keyword-in-bio match even when the name moved.
+    assert _seed_matches_identity(seed, "MH", "Author. The Psychology of Money.")
+    # Confident mismatch: scrape worked, nothing matches → never follow blind.
+    assert not _seed_matches_identity(seed, "Crypto Airdrop Hub", "free $BONK giveaway")
+    # No metadata → nothing to verify against → matches.
+    assert _seed_matches_identity({"handle": "x"}, "whatever", "")
+
+
+def test_weekly_top_posts_sorted_and_windowed(monkeypatch, tmp_path):
+    from datetime import datetime, timedelta
+    from src import weekly_review_bot as wr
+    now = datetime.now()
+    rows = [
+        {"text": "old banger", "likes": 999, "views": 9999,
+         "timestamp": (now - timedelta(days=30)).isoformat()},
+        {"text": "this week small", "likes": 1, "views": 50,
+         "timestamp": (now - timedelta(days=1)).isoformat()},
+        {"text": "this week big", "likes": 7, "views": 300,
+         "timestamp": (now - timedelta(days=2)).isoformat()},
+    ]
+    p = tmp_path / "perf.json"
+    p.write_text(json.dumps(rows))
+    monkeypatch.setattr(wr, "PERFORMANCE_LOG_FILE", str(p))
+    top = wr._top_posts()
+    assert [r["text"] for r in top] == ["this week big", "this week small"], (
+        "must window to 7 days and sort by likes desc"
+    )

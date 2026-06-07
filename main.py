@@ -377,21 +377,18 @@ def main():
         log.info("Warming up replyback (reply to people who replied to us)...")
         quiet_safe_replyback()
 
-    # Catchup burst — fires 5 extra rounds of every high-volume surface so
-    # any downtime gap is filled quickly on restart.
-    # STARTUP FIREHOSE (operator 2026-06-06: "focus on quote retweets and
-    # replies — fire as much as you can when we start"): 3 back-to-back
-    # rounds of sweep -> quote -> reply before the scheduler takes over.
-    # Spacing/caps at the chokepoints still pace individual writes.
+    # Startup catchup — REPLIES ONLY since 2026-06-07: replies are the
+    # unlimited surface, so burst them freely on boot. Quotes/RTs are NOT
+    # fired here — with 2 QRT + 2 RT slots/day, a boot-time burst would
+    # burn the whole day's quota on stale feed content instead of saving
+    # the slots for the day's biggest headline (spec: QRTs ride the top
+    # AI/markets story within 1-2h of trending). The scheduled quote/RT
+    # jobs with the 300-like floor own those slots.
     for _round in range(1, 4):
-        log.info(f"Startup firehose round {_round}/3: sweep -> quote -> reply...")
-        if not args.reply_only:
-            safe_run_feed_sweep_cycle()
-            safe_run_quote_tweet_cycle()
-            safe_run_retweet_cycle()
+        log.info(f"Startup reply burst round {_round}/3...")
         if not args.post_only:
             safe_run_direct_reply_cycle()
-    log.info("Startup firehose complete.")
+    log.info("Startup reply burst complete.")
 
     # Schedule jobs
     if not args.reply_only:

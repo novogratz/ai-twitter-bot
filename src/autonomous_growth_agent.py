@@ -95,8 +95,9 @@ Format:
 ## Step 4 — Tune live_strategy.json (optional)
 Only if the data clearly shows imbalance (e.g. quotes underperform vs RT,
 or engagement drops at night). Adjust caps conservatively (±20% max).
-Keep MAX_RETWEETS_PER_DAY and MAX_QUOTES_PER_DAY high — those are our
-primary surfaces now that news posts are disabled.
+HARD BOUNDS (2026-06-07 agent spec — NEVER exceed): originals 3-4/day
+total, MAX_QUOTES_PER_DAY <= 2, MAX_RETWEETS_PER_DAY <= 2, replies
+unlimited. The volume lever is REPLIES, never posts/quotes/RTs.
 
 ## Step 5 — Commit and push
 ```bash
