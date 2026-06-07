@@ -222,6 +222,20 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-7 — boost blind-toggle bug (the banger kept getting UN-retweeted)
+
+Operator: "bot is not good at retweeting his banger tweet of the day."
+Morning log showed why: once every recent post was in boost_history,
+`run_boost_cycle` fell back to `retweet_own_latest()` every 20 min — a
+blind 't'+Enter on the latest post. That keystroke TOGGLES: on an
+already-retweeted post it UN-retweets. The banger's self-RT was switched
+off/on all morning. Fix: the all-boosted case now resurfaces the
+HIGHEST-engagement own post via `reboost_tweet` (un-RT→re-RT, always ends
+retweeted); scrape failures skip instead of toggling. Guard test pins it.
+Lesson: every keystroke-shortcut Safari primitive is a TOGGLE — never fire
+one without knowing the current state (same family as reboost_tweet's
+two-press design).
+
 ### 2026-06-07 PM-6 — engine-health boot-warmup grace (downtime ≠ collapse)
 
 Witnessed live: minutes after a boot (bot had been stopped for the
