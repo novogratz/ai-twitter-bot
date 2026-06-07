@@ -6,9 +6,13 @@ Operator tool (/unfollow skill) — NOT a scheduled bot. Clicks each visible
 loads, repeats until the list is exhausted (or --max is hit).
 
 Safety:
-  - The protected keep-set (respect_list + engage/early-bird/mega target
-    lists + whitelist tier1/tier2 — same set smart_unfollow_bot uses) is
-    NEVER unfollowed; those cells are tagged and skipped.
+  - The protected keep-set is the CURRENT whitelist.json (all tiers +
+    seeds[] handles — the 2026-06-07 spec's curated follow list). Those
+    are never unfollowed: they're the accounts marquee_follow_bot is
+    meant to be following, and recording their unfollow would block the
+    re-follow for 30 days via the anti-churn ledger.
+    `--keep legacy` restores the old wide keep-set (respect_list +
+    engage/early-bird/mega target lists) for a gentler prune.
   - Every confirmed unfollow is recorded into action_ledger.json (30-day
     anti-churn so follow bots don't re-follow) and decrements
     following_count.json.
@@ -31,14 +35,31 @@ import time
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
-from src.smart_unfollow_bot import _build_keep_set  # noqa: E402
 from src import action_guard, config  # noqa: E402
 
-KEEP_JS = json.dumps(sorted(_build_keep_set()))
+
+def _whitelist_keep_set() -> set:
+    """All whitelist tier handles + seeds[] handles (the curated follow list)."""
+    keep = set()
+    with open(os.path.join(ROOT, "whitelist.json")) as f:
+        wl = json.load(f)
+    for handles in (wl.get("tiers") or {}).values():
+        keep |= {str(h).lower() for h in handles}
+    for seed in wl.get("seeds") or []:
+        h = (seed.get("handle") or "").strip().lstrip("@").lower()
+        if h:
+            keep.add(h)
+    return keep
+
+
+def _legacy_keep_set() -> set:
+    from src.smart_unfollow_bot import _build_keep_set
+    return _build_keep_set() | _whitelist_keep_set()
+
 
 # NOTE: plain JS here — run_js() escapes backslashes + double quotes once
 # when embedding into the AppleScript string.
-PICK_JS = (
+PICK_JS_TEMPLATE = (
     """
 (function(){
   var keep = %s;
@@ -59,7 +80,6 @@ PICK_JS = (
   return 'NONE';
 })()
 """
-    % KEEP_JS
 )
 
 CONFIRM_JS = """
@@ -71,6 +91,15 @@ CONFIRM_JS = """
 """
 
 SCROLL_JS = "window.scrollBy(0, 1800); 'SCROLLED'"
+
+# Clear tags left by a previous run so a new keep-set is re-evaluated.
+CLEAR_TAGS_JS = """
+(function(){
+  var t = document.querySelectorAll('[data-mu]');
+  for (var i = 0; i < t.length; i++) t[i].removeAttribute('data-mu');
+  return 'CLEARED:' + t.length;
+})()
+"""
 
 
 def run_js(js: str) -> str:
@@ -122,7 +151,15 @@ def main() -> None:
     ap.add_argument("--max", type=int, default=10**6, help="stop after N unfollows")
     ap.add_argument("--force", action="store_true",
                     help="run even if the bot scheduler is up (Safari lock conflict)")
+    ap.add_argument("--keep", choices=["whitelist", "legacy"], default="whitelist",
+                    help="keep-set: 'whitelist' = current whitelist.json tiers+seeds "
+                         "(full purge, default); 'legacy' = also keep respect_list + "
+                         "engage/early-bird/mega targets (gentle prune)")
     args = ap.parse_args()
+
+    keep = _whitelist_keep_set() if args.keep == "whitelist" else _legacy_keep_set()
+    pick_js = PICK_JS_TEMPLATE % json.dumps(sorted(keep))
+    print("keep-set: %d handles (%s mode)" % (len(keep), args.keep), flush=True)
 
     if _bot_is_running() and not args.force:
         print("ABORT: bot scheduler is running — it shares Safari. "
@@ -130,13 +167,14 @@ def main() -> None:
         sys.exit(1)
 
     _ensure_following_page()
+    run_js(CLEAR_TAGS_JS)
 
     unfollowed = []
     empty_rounds = 0
     noconfirm_streak = 0
 
     while len(unfollowed) < args.max:
-        res = run_js(PICK_JS)
+        res = run_js(pick_js)
         if res.startswith("CLICK:"):
             empty_rounds = 0
             h = res[6:] or "unknown"
