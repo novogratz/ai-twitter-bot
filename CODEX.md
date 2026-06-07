@@ -103,6 +103,30 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 > from the revision spec maps to Safari **write-pacing** (per-action daily caps + jittered
 > spacing + no bursts), same intent, different mechanism.
 
+### 2026-06-07 — engine-health suppresses alert when surface fired within last hour
+
+The clamp-by-cap fix (PR #7) silenced the cap-policy false positives but a
+third class of false positive kept firing. 2026-06-07 04:01:30 logged
+`hotake collapsed: 2 today vs ~10 by this hour over the last 7 days (20%)`
+while the hotake bot was firing at MAX cadence (every 20 min: 03:23, 03:43,
+04:02). The baseline of ~10 averages days where the cycle was faster (e.g.
+06-04 hour 02 had 6 fires alone); today's 2 just means today started slower
+or had skips. Bot was alive and pacing exactly as designed — but the alert
+fired anyway, and the same noise had repeated 5x on 06-06 morning, each time
+burning the self-heal cooldown on a healthy engine.
+
+Fix: `_counts_by_day_hour` now also returns `latest_hour_today` (`{kind:
+max_hour}`). In `run_engine_health_cycle`, before appending an alert,
+`if latest_hour_today.get(kind, -1) >= hour_now - 1: continue` — a surface
+that fired in the current or previous clock hour is alive, just slow.
+Sustained silence (≥2 hours since the last fire) still alerts. Two new
+guard tests pin the contract: recent-fire suppresses, 2h-stale fire alerts.
+
+Lesson: a slower cadence and a dead surface look identical in a
+cumulative-by-hour comparison. The cheap signal that disambiguates them is
+"did anything from this kind happen in the last hour?" — the same kind of
+intent-aware guard as PR #6 (cap=0) and PR #7 (today≥cap).
+
 ### 2026-06-06 PM — engine-health clamps baseline by current cap
 
 PR #6 silenced the false `retweet` "collapse" alerts when `MAX_RETWEETS_PER_DAY=0`.

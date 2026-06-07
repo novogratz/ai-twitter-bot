@@ -87,11 +87,21 @@ def _daily_cap_for(kind: str) -> int | None:
     return min(caps) if caps else None
 
 
-def _counts_by_day_hour() -> dict:
-    """{(date_str, type): count_up_to_current_hour} for the last 8 days."""
+def _counts_by_day_hour() -> tuple[dict, dict]:
+    """Returns ``(counts, latest_hour_today)`` for the last 8 days.
+
+    ``counts``: ``{(date_str, type): count_up_to_current_hour}`` — same-hour-of-day
+    sums for the baseline.
+    ``latest_hour_today``: ``{type: max_hour_seen_today}`` — used to tell whether
+    a surface fired recently. A below-baseline-but-still-firing surface is not a
+    collapse, just a slower cadence; sustained silence is what we actually want
+    to alert on.
+    """
+    today = date.today().isoformat()
     cutoff = (date.today() - timedelta(days=8)).isoformat()
     hour_now = datetime.now().hour
     counts: dict = defaultdict(int)
+    latest_hour_today: dict = {}
     try:
         with open(ENGAGEMENT_LOG) as f:
             reader = csv.reader(f)
@@ -110,14 +120,19 @@ def _counts_by_day_hour() -> dict:
                 # current hour so today's partial day compares fairly.
                 if row_hour <= hour_now:
                     counts[(ts[:10], kind)] += 1
+                if ts[:10] == today:
+                    prev = latest_hour_today.get(kind, -1)
+                    if row_hour > prev:
+                        latest_hour_today[kind] = row_hour
     except OSError:
         pass
-    return counts
+    return counts, latest_hour_today
 
 
 def run_engine_health_cycle():
     today = date.today().isoformat()
-    counts = _counts_by_day_hour()
+    hour_now = datetime.now().hour
+    counts, latest_hour_today = _counts_by_day_hour()
     prev_days = [(date.today() - timedelta(days=i)).isoformat() for i in range(1, 8)]
 
     alerts = []
@@ -137,6 +152,17 @@ def run_engine_health_cycle():
         today_count = counts.get((today, kind), 0)
         summary.append(f"{kind}: {today_count} vs {baseline:.0f} avg")
         if baseline >= MIN_BASELINE and today_count < ALERT_RATIO * baseline:
+            # A surface that fired in the current or previous hour is alive —
+            # slow, not collapsed. The baseline averages full-runtime days; if
+            # today started behind (operator-restart, slower cadence, a stretch
+            # of skips) and is now firing again, comparing the cumulative against
+            # a steady-state baseline produces a false positive. Sustained
+            # silence — ≥2 clock hours without a single fire — still alerts.
+            # Born from 2026-06-06/07: hotake fired at 03:23, 03:43, 04:02 (max
+            # 20-min cadence) but the 04:01 cycle still reported "collapsed:
+            # 2 vs 10" and burned the self-heal cooldown on a healthy bot.
+            if latest_hour_today.get(kind, -1) >= hour_now - 1:
+                continue
             alerts.append(
                 f"{kind} collapsed: {today_count} today vs ~{baseline:.0f} "
                 f"by this hour over the last 7 days ({today_count / baseline:.0%})"
