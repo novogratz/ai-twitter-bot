@@ -222,6 +222,31 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-8 — reply volume push (operator: "we use to do 400 a day now you are at like 100… push it")
+
+Diagnosis first: the engine was NOT throttled — Jun 6 did 941 replies, and
+Jun 7 had 509 by 06:30. The "100/day" feel was downtime (bot stopped
+06:25-11:10 for the purge) + the restart spending its first ~20 min of
+serialized Safari on RT/quote/hot-quote/hotake/breakout bursts before the
+reply loop warmed up (killed at 11:31 with ~8 post-restart replies). Two
+structural fixes so every running minute favors replies:
+
+1. **Startup order: replies first.** main.py warmup is now feed sweep →
+   direct_reply → notify/replyback → THEN the post-surface bursts. The
+   volume lane owns the first Safari minutes after every restart.
+2. **hot_quote spacing busy-loop killed.** A spacing-blocked slot used to
+   lap scrape → LLM → chokepoint-refuse every ~40s until the gap elapsed
+   (3 laps witnessed 11:22-11:24), burning Safari searches + ollama calls.
+   `can_post(QUOTE)` precheck now runs BEFORE the scrape; spacing block →
+   `_wait_for_quote_spacing` (cheap sleep, Safari stays free); cap block →
+   end cycle, slot preserved. Guard test pins it:
+   `test_hot_quote_spacing_block_never_touches_safari_or_llm`.
+
+Lesson: when the operator says a surface dropped, read engagement_log
+per-hour FIRST — pace-by-hour separates "engine throttled" from "engine
+was off". Replies/hr while running: 54-111 (healthy). The fix is uptime +
+Safari-time allocation, not caps.
+
 ### 2026-06-07 PM-7 — boost blind-toggle bug (the banger kept getting UN-retweeted)
 
 Operator: "bot is not good at retweeting his banger tweet of the day."

@@ -20,6 +20,7 @@ from .logger import log
 from .twitter_client import scrape_x_search, quote_tweet
 from .llm_client import run_llm, unwrap_text
 from .engagement_log import log_reply
+from .action_guard import can_post, QUOTE
 
 SIGNAL_FILE = os.path.join(_PROJECT_ROOT, "external_signal.json")
 STATE_FILE = os.path.join(_PROJECT_ROOT, "hot_quote_state.json")
@@ -194,6 +195,31 @@ def _generate_quote(author: str, tweet_text: str, topic_hint: str) -> Optional[s
     return text
 
 
+def _wait_for_quote_spacing(max_wait_seconds: int = 600) -> bool:
+    """Wait out the quote min-spacing gap WITHOUT burning Safari or LLM time.
+
+    Witnessed 2026-06-07 11:22-11:24: a spacing-blocked slot busy-looped
+    scrape -> LLM -> chokepoint-refuse every ~40s until the gap elapsed —
+    each lap ate two serialized Safari searches + an ollama call that
+    belonged to the reply lane. Sleeping holds only a scheduler thread
+    (pool=30); Safari stays free for replies.
+
+    Returns True once spacing clears, False on cap-reached or timeout
+    (slot stays preserved either way — caller just ends the cycle).
+    """
+    waited = 0
+    while True:
+        ok, why = can_post(QUOTE)
+        if ok:
+            return True
+        if "cap reached" in why:
+            return False
+        if waited >= max_wait_seconds:
+            return False
+        time.sleep(20)
+        waited += 20
+
+
 def run_hot_quote_cycle() -> None:
     state = _load_state()
     slot_key = f"{date.today().isoformat()}-{datetime.now().hour // 4}"
@@ -214,6 +240,21 @@ def run_hot_quote_cycle() -> None:
     for item in items[:6]:
         topic = item.get("title", "")
         hint = _topic_hint(item)
+
+        # Spacing/cap precheck BEFORE the expensive scrape + LLM lap.
+        # A spacing block is waited out cheaply (no Safari); a cap block
+        # ends the cycle with the slot preserved for the next fire.
+        ok, why = can_post(QUOTE)
+        if not ok:
+            if "too soon" in why:
+                log.info(f"[HOT_QUOTE] Quote spacing busy ({why}) — waiting it out, Safari stays free.")
+                if not _wait_for_quote_spacing():
+                    log.info("[HOT_QUOTE] Spacing/cap still blocked — ending cycle, slot preserved.")
+                    return
+            else:
+                log.info(f"[HOT_QUOTE] Quote blocked ({why}) — ending cycle, slot preserved.")
+                return
+
         log.info(f"[HOT_QUOTE] Trying topic: {topic[:80]}...")
 
         tweet = _search_best_tweet(topic)

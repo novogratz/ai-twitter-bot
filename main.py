@@ -350,8 +350,23 @@ def main():
         log.info("Startup FEED SWEEP (For You + Following) — first thing...")
         safe_run_feed_sweep_cycle()
         # Pin-boost disabled (operator 2026-06-07).
-        # Fire one RT + quote cycle immediately so they don't wait for the full
-        # direct-reply warmup to finish before scheduler.start() is called.
+
+    # REPLIES BEFORE POST BURSTS (operator 2026-06-07 PM: "do more replies
+    # ... push it"). The old order ran RT/quote/hot-quote/hotake/breakout
+    # first, so every restart spent its first ~20 min of serialized Safari
+    # time on post surfaces while the reply lane — the volume lane — sat
+    # idle (witnessed on the 11:10 restart: reply warmup only reached at
+    # 11:24, killed at 11:31 with ~8 replies on the clock).
+    if not args.post_only:
+        log.info("Now warming up the reply loop (replies first — volume lane)...")
+        safe_run_direct_reply_cycle()
+        log.info("Warming up notify (like replies on our tweets)...")
+        quiet_safe_notify()
+        log.info("Warming up replyback (reply to people who replied to us)...")
+        quiet_safe_replyback()
+
+    if not args.reply_only:
+        # Post-surface bursts AFTER the reply lane is warm.
         log.info("Startup retweet burst...")
         safe_run_retweet_cycle()
         log.info("Startup quote burst...")
@@ -362,20 +377,6 @@ def main():
         safe_run_bot_cycle()
         log.info("Startup breakout burst...")
         safe_run_breakout_cycle()
-
-    # Then warm up the engagement loop with a direct-reply cycle.
-    if not args.post_only:
-        log.info("Now warming up the reply loop...")
-        safe_run_direct_reply_cycle()
-
-    # Warm up reply-to-replies path immediately on startup so people
-    # who replied to our latest tweets get a response NOW, not after
-    # the bot has been up for 35-45 min.
-    if not args.post_only:
-        log.info("Warming up notify (like replies on our tweets)...")
-        quiet_safe_notify()
-        log.info("Warming up replyback (reply to people who replied to us)...")
-        quiet_safe_replyback()
 
     # Curator first — builds tracked_accounts.json so the early-reply bots
     # have the bot's own earned scan list from the first cycle (operator

@@ -216,6 +216,7 @@ def test_hot_quote_preserves_slot_on_chokepoint_skip(monkeypatch, tmp_path):
         "url": f"https://x.com/elonmusk/status/{abs(hash(topic)) % 10**18}",
     })
     monkeypatch.setattr(hqb, "_generate_quote", lambda a, t, h: "calm take on AI")
+    monkeypatch.setattr(hqb, "can_post", lambda action: (True, ""))
 
     calls = []
 
@@ -249,6 +250,7 @@ def test_hot_quote_consumes_slot_on_successful_post(monkeypatch, tmp_path):
         "author": "elonmusk", "text": "AI is the future", "likes": 9000, "url": url,
     })
     monkeypatch.setattr(hqb, "_generate_quote", lambda a, t, h: "calm take on AI")
+    monkeypatch.setattr(hqb, "can_post", lambda action: (True, ""))
     monkeypatch.setattr(hqb, "quote_tweet", lambda u, c: True)
     monkeypatch.setattr(hqb, "log_reply", lambda *a, **k: None)
 
@@ -257,6 +259,41 @@ def test_hot_quote_consumes_slot_on_successful_post(monkeypatch, tmp_path):
     state = json.loads(state_file.read_text())
     assert state.get("last_slot")
     assert url in json.loads(quoted_file.read_text())
+
+
+def test_hot_quote_spacing_block_never_touches_safari_or_llm(monkeypatch, tmp_path):
+    """When quote spacing blocks, hot_quote must NOT busy-loop scrape+LLM
+    laps — each lap eats two serialized Safari searches + an ollama call
+    that belong to the reply lane (witnessed 2026-06-07 11:22-11:24, three
+    full laps before the gap elapsed). Spacing block → cheap wait; still
+    blocked → end cycle with the slot preserved."""
+    from src import hot_quote_bot as hqb
+
+    state_file = tmp_path / "hot_quote_state.json"
+    quoted_file = tmp_path / "quoted.json"
+    monkeypatch.setattr(hqb, "STATE_FILE", str(state_file))
+    monkeypatch.setattr(hqb, "QUOTED_FILE", str(quoted_file))
+
+    monkeypatch.setattr(hqb, "_load_signal_items", lambda: [
+        {"title": "Topic A", "summary": "hint A"},
+    ])
+    monkeypatch.setattr(
+        hqb, "can_post",
+        lambda action: (False, "too soon since last quote (need ~439s gap)"),
+    )
+    monkeypatch.setattr(hqb, "_wait_for_quote_spacing", lambda **kw: False)
+
+    def boom(*a, **k):
+        raise AssertionError("Safari/LLM must not be touched while spacing-blocked")
+
+    monkeypatch.setattr(hqb, "_search_best_tweet", boom)
+    monkeypatch.setattr(hqb, "_generate_quote", boom)
+    monkeypatch.setattr(hqb, "quote_tweet", boom)
+
+    hqb.run_hot_quote_cycle()  # must return cleanly, no scrape, no post
+
+    # Slot preserved for the next fire.
+    assert not state_file.exists() or "last_slot" not in json.loads(state_file.read_text())
 
 
 # --- truncation guard (the "botched ChatGPT paste" callout, 2026-06-05) -------
