@@ -27,6 +27,18 @@ def isolate_dedup(monkeypatch, tmp_path):
     cg._RECENT_NORM.clear()
 
 
+@pytest.fixture(autouse=True)
+def _engine_health_past_warmup(monkeypatch):
+    """Tests exercise engine-health checks directly — put the process past
+    the boot-warmup grace window so the checks actually run. The warmup test
+    itself overrides _PROCESS_START explicitly."""
+    from datetime import datetime, timedelta
+    from src import engine_health_bot as ehb
+    monkeypatch.setattr(ehb, "_PROCESS_START",
+                        datetime.now() - timedelta(minutes=ehb.WARMUP_MINUTES + 10))
+    yield
+
+
 # --- dedup v2 -------------------------------------------------------------
 
 def test_dedup_catches_same_thesis_different_words():
@@ -1130,3 +1142,19 @@ def test_boost_recycler_decision_logic(monkeypatch):
         now=now,
     )
     assert action is None
+
+
+# --- 2026-06-07: engine-health warmup grace (boot false-emergency) ----------
+
+def test_engine_health_warmup_suppresses_boot_alerts(monkeypatch):
+    """Right after process start every surface reads 0-by-this-hour — that's
+    downtime, not collapse. Witnessed live 2026-06-07: an emergency self-heal
+    Claude run was spawned for 'reply collapsed: 0 today' minutes after boot.
+    Within WARMUP_MINUTES the cycle must do nothing; after it, checks run."""
+    from datetime import datetime, timedelta
+    from src import engine_health_bot as ehb
+    monkeypatch.setattr(ehb, "_PROCESS_START", datetime.now())
+    assert ehb._in_warmup(), "fresh boot must be in warmup"
+    monkeypatch.setattr(ehb, "_PROCESS_START",
+                        datetime.now() - timedelta(minutes=ehb.WARMUP_MINUTES + 5))
+    assert not ehb._in_warmup(), "past the warmup window checks must resume"

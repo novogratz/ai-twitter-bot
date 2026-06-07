@@ -129,7 +129,29 @@ def _counts_by_day_hour() -> tuple[dict, dict]:
     return counts, latest_hour_today
 
 
+# Process start time — a cumulative-by-hour comparison is meaningless right
+# after boot: if the bot was stopped for hours (operator purge, restart),
+# every surface reads 0-by-this-hour vs baseline and the watchdog fires a
+# false "collapse" for each one, burning self-heal Claude runs on a healthy
+# engine (witnessed live 2026-06-07: emergency session spawned for "reply
+# collapsed: 0 today" minutes after a boot). Surfaces need runway to act
+# before today's count can be judged.
+_PROCESS_START = datetime.now()
+WARMUP_MINUTES = int(os.environ.get("ENGINE_HEALTH_WARMUP_MINUTES", "90"))
+
+
+def _in_warmup(now=None) -> bool:
+    now = now or datetime.now()
+    return (now - _PROCESS_START) < timedelta(minutes=WARMUP_MINUTES)
+
+
 def run_engine_health_cycle():
+    if _in_warmup():
+        mins = int((datetime.now() - _PROCESS_START).total_seconds() / 60)
+        log.info(f"[ENGINE_HEALTH] Warmup ({mins}/{WARMUP_MINUTES} min since "
+                 f"boot) — surfaces need runway before today's counts mean "
+                 f"anything. Skipping checks.")
+        return
     today = date.today().isoformat()
     hour_now = datetime.now().hour
     counts, latest_hour_today = _counts_by_day_hour()
