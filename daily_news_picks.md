@@ -14672,3 +14672,84 @@ $BMNR ETH cost basis: ~$3,850
 - **@cnbc** (5 likes, score 7/10) — Bouygues-led consortium signs $23.44 billion deal to buy SFR from Altice France
   - https://x.com/CNBC/status/2063396234577006729
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 15).
+- **@hedgiemarkets** (450 likes, score 9/10) — Google signed a deal to pay SpaceX $920 million a month for access to 110,000 Nvidia GPUs at SpaceX data centers. The contract runs October 2026 through June 2029, roughly $30 billion total. Google ca
+  - https://x.com/HedgieMarkets/status/2063314205185310875
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 556).
+- **@stocksavvyshay** (1406 likes, score 9/10) — $ASML is bringing Elon Musk into a closed-door employee conference to discuss the $55B $TSLA and $SPCX Terafab project.
+
+Terafab would target leading-edge 2nm chips for AI, robotics and space compute.
+  - https://x.com/StockSavvyShay/status/2063395977751576747
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1548).
+- **@pankajkumar_dev** (1127 likes, score 9/10) — GPT-5.6 New Checkpoint 
+
+- A new GPT-5.6 checkpoint, kindle-alpha, is currently being tested internally
+- It appears to have selected kindle-alpha as the current release candidate for GPT-5.6
+- Fronte
+  - https://x.com/pankajkumar_dev/status/2063272015214354908
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1195).
+- **@iamrakeshbansal** (83 likes, score 9/10) — US Markets crashed hard!
+The day all hedges fell” — Stocks, Bitcoin, Gold, Silver, everything dropped together.
+AI sell-off, rising yields & global tensions worried investors. Nasdaq -2.6%, big losses
+  - https://x.com/iamrakeshbansal/status/2063462886677299627
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 99).
+- **@tszzl** (856 likes, score 8/10) — the sheer dollar quantity of ip leakage from openai has been just tremendous, probably in the trillions. openai truly has been quite open
+  - https://x.com/tszzl/status/2063426261666660701
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 904).
+- **@polymarket** (676 likes, score 8/10) — JUST IN: OpenAI is reportedly planning its biggest ChatGPT overhaul yet, aiming to turn it into a “superapp” ahead of the company’s IPO.
+  - https://x.com/Polymarket/status/2063477552170090816
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 900).
+- **@investmentguru_** (448 likes, score 8/10) — 15 sectors defining the next decade of investing
+
+The megatrend map.
+
+1.  AI
+$NVDA · $PLTR · $APP
+The infrastructure king, the data layer, and the monetization engine. Three different ways to own AI.
+  - https://x.com/InvestmentGuru_/status/2063253916142260703
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 472).
+- **@econoar** (230 likes, score 8/10) — Are you prepared for this scenario Monday?
+
+-Saylor sold $3bn, ponzi lives much longer
+-Trump pumps gov funds into AI stocks
+-New Iran "deal" announced
+-NASDAQ +3%
+
+Odds are higher than you think...
+  - https://x.com/econoar/status/2063433973829632203
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 258).
+- **@cointelegraph** (87 likes, score 8/10) — JUST IN: OpenAI is reportedly turning ChatGPT into an AI superapp ahead of its planned IPO.
+  - https://x.com/Cointelegraph/status/2063493776111231040
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 169).
+- **@firstadopter** (104 likes, score 8/10) — "Our next big training run in the fall will be done on Vera Rubins. We're really excited about that." - @OpenAI CFO Sarah Friar via @theallinpod $NVDA
+  - https://x.com/firstadopter/status/2063446197042352245
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 116).
+- **@ns123abc** (32 likes, score 8/10) — Nvidia is selling the shovels
+Musk is selling the acces to the mines
+
+Anthropic and Google are paying billions per month
+  - https://x.com/ns123abc/status/2063492158015844785
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 42).
+- **@stocksavvyshay** (1356 likes, score 8/10) — SEMICONDUCTOR STOCKS BY PEG RATIO
+
+PEG < 1 usually means mispriced growth
+ PEG > 2 starts to push into the danger zone
+
+Here’s how they stack up:
+• $ALAB ~2.9x
+• $ARM ~2.4x
+• $INTC ~2.2x
+• $LRCX ~2.2x
+  - https://x.com/StockSavvyShay/status/2063262895807332626
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1516).
+- **@agrippa_inv** (629 likes, score 7/10) — $IREN: The cloud market's dark horse
+
+I bet most $IREN bulls are starting to get increasingly exhausted by the price action. I certainly am.
+
+However, as long-term investors, we should see day-to-day
+  - https://x.com/Agrippa_Inv/status/2063359511679660074
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 751).
+- **@the_ai_investor** (49 likes, score 7/10) — Jensen - “All of my friends at Korean companies: LG, SK hynix, Samsung, Hyundai, and Naver, are all booming.”
+
+One special highlight was how important memory has become in NVIDIA products.
+  - https://x.com/The_AI_Investor/status/2063481997302055117
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 51).
