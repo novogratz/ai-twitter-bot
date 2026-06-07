@@ -222,6 +222,24 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-10 — profile visits OFF (operator launch config: "don't visit any profiles anymore")
+
+Discovery surfaces are now EXACTLY three: **@TheBTCTherapist's profile**
+(the main account), **Home** (For You + the Following tab), and **search
+terms**. `twitter_client._profile_visit_allowed` gates BOTH profile-visit
+primitives — `scrape_profile_tweets` and `visit_profile_and_like` — at the
+chokepoint: only our own profile (boost/pin/metrics/with_replies) and
+`PROFILE_VISIT_ALLOWLIST` (env, default `TheBTCTherapist`, read at CALL
+time per the side-effect-env rule) may be visited; anything else returns
+`[]`/no-ops BEFORE any Safari work. Bots that scanned other profiles
+(early_bird, mega_watch, engagement_targeting, quote priority/trusted-handle
+passes, retweet trusted-handle passes, engage/notify reciprocity likes) now
+skip those handles instantly — their Safari time flows to home/search/reply
+lanes. Follow/unfollow profile visits are untouched (mechanically required
+to click the button; follows are chokepoint-dormant under the ceiling,
+unfollows operator-only). Guard test:
+`test_profile_visits_blocked_outside_allowlist`.
+
 ### 2026-06-07 PM-9 — viral push round 3 (operator: "DO IT … push it")
 
 Two new levers, both measured-data-driven:

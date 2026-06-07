@@ -1285,3 +1285,33 @@ def test_boost_resurfaces_banger_never_blind_toggles(monkeypatch):
     monkeypatch.setattr(tc, "scrape_profile_tweets", boom)
     nb.run_boost_cycle()
     assert toggled == []
+
+
+def test_profile_visits_blocked_outside_allowlist(monkeypatch):
+    """Operator mandate 2026-06-07 PM: NO profile visits for discovery —
+    scrape surfaces are @TheBTCTherapist + Home (For You/Following) + search.
+    A non-allowlisted profile must return [] BEFORE any Safari work, and the
+    allowlist env must be read at call time (side-effect-gate rule)."""
+    from src import twitter_client as tc
+    from src.config import BOT_HANDLE
+
+    monkeypatch.delenv("PROFILE_VISIT_ALLOWLIST", raising=False)
+    monkeypatch.setattr(
+        tc.webbrowser, "open",
+        lambda *a, **k: pytest.fail("Safari was opened for a blocked profile"))
+    assert tc.scrape_profile_tweets("unusual_whales") == []
+    assert tc.scrape_profile_tweets("karpathy") == []
+    tc.visit_profile_and_like("unusual_whales")  # must not open Safari either
+
+    # Allowlist semantics (pure check, no Safari).
+    assert tc._profile_visit_allowed(BOT_HANDLE)
+    assert tc._profile_visit_allowed(f"{BOT_HANDLE}/with_replies")
+    assert tc._profile_visit_allowed("TheBTCTherapist")
+    assert tc._profile_visit_allowed("@thebtctherapist")
+    assert not tc._profile_visit_allowed("zerohedge")
+    assert not tc._profile_visit_allowed("")
+
+    # Env read at CALL time — a live edit takes effect without restart.
+    monkeypatch.setenv("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist, @Graphseo")
+    assert tc._profile_visit_allowed("graphseo")
+    assert tc._profile_visit_allowed("thebtctherapist")

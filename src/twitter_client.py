@@ -1156,7 +1156,14 @@ def follow_account(username: str) -> bool:
 
 
 def visit_profile_and_like(username: str, like_count: int = 2):
-    """Visit a user's profile and like their latest tweets for reciprocity."""
+    """Visit a user's profile and like their latest tweets for reciprocity.
+
+    Gated by `_profile_visit_allowed` (2026-06-07 home/search-only mandate):
+    reciprocity likes happen when we meet people on feeds/search, not by
+    visiting their profile."""
+    if not _profile_visit_allowed(username):
+        log.info(f"[LIKE] profile visit blocked (home/search-only mandate): @{username}")
+        return
     with _safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"Visiting profile: {profile_url}")
@@ -1369,8 +1376,30 @@ def is_own_post(tweet: dict) -> bool:
     return f"x.com/{BOT_HANDLE.lower()}/status/" in url
 
 
+def _profile_visit_allowed(username: str) -> bool:
+    """Operator mandate 2026-06-07 PM: NO profile visits for discovery —
+    the only scrape surfaces are @TheBTCTherapist (the main account), the
+    Home feed (For You + Following tab), and search terms. Our own profile
+    stays visitable (boost/pin/metrics/with_replies callers need it). Env
+    read at CALL time (side-effect gate — never an import-time constant)."""
+    from .config import BOT_HANDLE
+    base = (username or "").strip().lstrip("@").split("/")[0].lower()
+    if not base:
+        return False
+    if base == BOT_HANDLE.lower():
+        return True  # own profile (incl. BOT_HANDLE/with_replies callers)
+    allow = os.environ.get("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist")
+    return base in {h.strip().lstrip("@").lower() for h in allow.split(",") if h.strip()}
+
+
 def scrape_profile_tweets(username: str, max_tweets: int = 5):
-    """Visit a profile and scrape their recent tweet URLs and text."""
+    """Visit a profile and scrape their recent tweet URLs and text.
+
+    Gated by `_profile_visit_allowed`: non-allowlisted profiles return []
+    BEFORE any Safari work — discovery lives on home/following/search."""
+    if not _profile_visit_allowed(username):
+        log.info(f"[SCRAPE] profile visit blocked (home/search-only mandate): @{username}")
+        return []
     with _safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"[SCRAPE] Visiting profile: {profile_url}")
