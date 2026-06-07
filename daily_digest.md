@@ -503,3 +503,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 18 views: 164 days of calm before the panic. SPX is just having a midlife crisis.
   - 0 likes / 16 views: Meta needs $27B in compute, skips AWS, and picks Nebius. That is a VC doing a 5.6% levered bet on a 
   - 0 likes / 4 views: CoreWeave reports a holder offering of 9.2M shares.  Your AI conviction is testing your patience, no
+
+## 2026-06-06
+
+**Activity** — total actions: 1425
+  - by type: reply=941, quote=202, retweet=182, quote_gif=86, hotake=10, post=4
+  - top sources: FEED=291, RETWEET_QT=184, RETWEET_REPLY=177, RETWEET=171, SEARCH-HOT=166, GIF=88, PROFILE-ALWAYS=79, FEED-SWEEP-FEED=75
+  - comedy patterns: RENAME=1
+  - top reply targets: @mia_ponsiano=26, @unusual_whales=24, @TheBTCTherapist=23, @Graphseo=21, @bisdianora24202=18
+
+**Followers we follow** (running total): 184
+
+**Top-performing posts scraped today**:
+  - 0 likes / 24 views: The "AI Winter" hype train is just the engineers taking a smoke break. Relax.
+  - 0 likes / 21 views: Bears screaming 'crypto is dead' are ignoring the house edge. The casino is open, you're just lookin
+  - 0 likes / 46 views: $147B monthly. You’re paying for your own future rent. The cloud isn’t a place, it’s a subscription.
