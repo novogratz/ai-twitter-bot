@@ -590,11 +590,11 @@ For full operations playbook see [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
 
 ## Skills
 
-User-invokable slash commands live under `.claude/skills/` (mirrored at `.codex/skills/`). 25 skills, each is a directory with a `SKILL.md` file:
+User-invokable slash commands live under `.claude/skills/` (mirrored at `.codex/skills/`). 27 skills, each is a directory with a `SKILL.md` file:
 
 - **Lifecycle**: `start`, `stop`, `restart`, `status`, `run-agent`
 - **Manual triggers**: `post`, `reply`, `engage`, `boost`, `hotake`, `news`, `tweet`, `thread`, `dryrun`
-- **Account ops**: `follow`, `like`, `accounts`, `history`
+- **Account ops**: `follow`, `unfollow` (mass-unfollow on /following via `bin/mass_unfollow.py` — keep-set protected, ledger-recorded), `like`, `accounts`, `history`
 - **Telemetry**: `logs`, `stats`, `config`, `reset`, `improve`
 - **Weekly strategy**: `strategy` — Claude-powered weekly review (style evolution + prompt tuning)
 

@@ -1,0 +1,189 @@
+#!/usr/bin/env python3
+"""Mass-unfollow driven directly on the x.com/<BOT_HANDLE>/following page.
+
+Operator tool (/unfollow skill) — NOT a scheduled bot. Clicks each visible
+'Following' button, confirms the modal, scrolls as the virtualized list
+loads, repeats until the list is exhausted (or --max is hit).
+
+Safety:
+  - The protected keep-set (respect_list + engage/early-bird/mega target
+    lists + whitelist tier1/tier2 — same set smart_unfollow_bot uses) is
+    NEVER unfollowed; those cells are tagged and skipped.
+  - Every confirmed unfollow is recorded into action_ledger.json (30-day
+    anti-churn so follow bots don't re-follow) and decrements
+    following_count.json.
+  - Jittered 3.5-7s spacing + a 20-40s breather every 25 unfollows.
+  - Aborts after 5 consecutive failed confirm modals (likely action block).
+  - Refuses to run while the bot scheduler is up (Safari lock conflict);
+    override with --force.
+
+Usage:
+  .venv/bin/python bin/mass_unfollow.py [--max N] [--force]
+"""
+import argparse
+import json
+import os
+import random
+import subprocess
+import sys
+import time
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
+
+from src.smart_unfollow_bot import _build_keep_set  # noqa: E402
+from src import action_guard, config  # noqa: E402
+
+KEEP_JS = json.dumps(sorted(_build_keep_set()))
+
+# NOTE: plain JS here — run_js() escapes backslashes + double quotes once
+# when embedding into the AppleScript string.
+PICK_JS = (
+    """
+(function(){
+  var keep = %s;
+  var btns = document.querySelectorAll('[data-testid$="-unfollow"]:not([data-mu])');
+  for (var i = 0; i < btns.length; i++) {
+    var b = btns[i];
+    var cell = b.closest('[data-testid="UserCell"]');
+    var h = '';
+    if (cell) {
+      var ls = cell.querySelectorAll('a[href^="/"]');
+      if (ls.length) h = (ls[0].getAttribute('href') || '').replace(/^\\//, '').split(/[\\/?]/)[0].toLowerCase();
+    }
+    if (h && keep.indexOf(h) >= 0) { b.setAttribute('data-mu', 'keep'); continue; }
+    b.setAttribute('data-mu', 'clicked');
+    b.click();
+    return 'CLICK:' + h;
+  }
+  return 'NONE';
+})()
+"""
+    % KEEP_JS
+)
+
+CONFIRM_JS = """
+(function(){
+  var c = document.querySelector('[data-testid="confirmationSheetConfirm"]');
+  if (c) { c.click(); return 'CONFIRMED'; }
+  return 'NO_CONFIRM';
+})()
+"""
+
+SCROLL_JS = "window.scrollBy(0, 1800); 'SCROLLED'"
+
+
+def run_js(js: str) -> str:
+    escaped = js.replace("\\", "\\\\").replace('"', '\\"')
+    osa = (
+        'tell application "Safari" to do JavaScript "%s" '
+        "in current tab of front window" % escaped
+    )
+    try:
+        r = subprocess.run(
+            ["osascript", "-e", osa], capture_output=True, text=True, timeout=30
+        )
+        out = (r.stdout or "").strip()
+        if not out and r.stderr:
+            return "OSAERR:" + r.stderr.strip()[:200]
+        return out
+    except subprocess.TimeoutExpired:
+        return "OSAERR:timeout"
+
+
+def _bot_is_running() -> bool:
+    r = subprocess.run(
+        ["pgrep", "-f", r"python.*main\.py"], capture_output=True, text=True
+    )
+    return r.returncode == 0
+
+
+def _ensure_following_page() -> None:
+    """Navigate the front tab to /following if it isn't there already."""
+    r = subprocess.run(
+        ["osascript", "-e",
+         'tell application "Safari" to get URL of current tab of front window'],
+        capture_output=True, text=True, timeout=15,
+    )
+    url = (r.stdout or "").strip()
+    target = f"https://x.com/{config.BOT_HANDLE}/following"
+    if "/following" not in url:
+        print(f"navigating to {target}", flush=True)
+        subprocess.run(
+            ["osascript", "-e",
+             f'tell application "Safari" to set URL of current tab of front window to "{target}"'],
+            capture_output=True, text=True, timeout=15,
+        )
+        time.sleep(6)
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--max", type=int, default=10**6, help="stop after N unfollows")
+    ap.add_argument("--force", action="store_true",
+                    help="run even if the bot scheduler is up (Safari lock conflict)")
+    args = ap.parse_args()
+
+    if _bot_is_running() and not args.force:
+        print("ABORT: bot scheduler is running — it shares Safari. "
+              "Stop it first (/stop) or pass --force.", flush=True)
+        sys.exit(1)
+
+    _ensure_following_page()
+
+    unfollowed = []
+    empty_rounds = 0
+    noconfirm_streak = 0
+
+    while len(unfollowed) < args.max:
+        res = run_js(PICK_JS)
+        if res.startswith("CLICK:"):
+            empty_rounds = 0
+            h = res[6:] or "unknown"
+            time.sleep(1.2)
+            c = run_js(CONFIRM_JS)
+            if c == "CONFIRMED":
+                noconfirm_streak = 0
+                unfollowed.append(h)
+                try:
+                    action_guard.record(action_guard.UNFOLLOW, target=h)
+                    action_guard.adjust_following(-1)
+                except Exception as e:  # ledger best-effort, never stop the run
+                    print("ledger err:", e, flush=True)
+                print("[%d] unfollowed @%s" % (len(unfollowed), h), flush=True)
+            else:
+                noconfirm_streak += 1
+                print("no confirm for @%s (%s, streak %d)"
+                      % (h, c, noconfirm_streak), flush=True)
+                if noconfirm_streak >= 5:
+                    print("ABORT: confirm failing repeatedly — possible action block",
+                          flush=True)
+                    break
+                time.sleep(3)
+            time.sleep(random.uniform(3.5, 7.0))
+            if unfollowed and len(unfollowed) % 25 == 0:
+                p = random.uniform(20, 40)
+                print("breather %.0fs" % p, flush=True)
+                time.sleep(p)
+        elif res == "NONE":
+            empty_rounds += 1
+            if empty_rounds >= 6:
+                print("DONE: no more unfollow buttons after scrolling", flush=True)
+                break
+            run_js(SCROLL_JS)
+            time.sleep(2.5)
+        else:
+            empty_rounds += 1
+            print("JS err:", res[:200], flush=True)
+            if empty_rounds >= 6:
+                print("ABORT: repeated JS errors", flush=True)
+                break
+            time.sleep(3)
+
+    with open(os.path.join(ROOT, "mass_unfollow_results.json"), "w") as f:
+        json.dump(unfollowed, f)
+    print("TOTAL unfollowed: %d" % len(unfollowed), flush=True)
+
+
+if __name__ == "__main__":
+    main()
