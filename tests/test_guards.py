@@ -893,3 +893,22 @@ def test_weekly_top_posts_sorted_and_windowed(monkeypatch, tmp_path):
     assert [r["text"] for r in top] == ["this week big", "this week small"], (
         "must window to 7 days and sort by likes desc"
     )
+
+
+# --- 2026-06-07 viral push: early-reply target lists stay on-lane -----------
+
+def test_early_reply_targets_on_lane():
+    """The ≤4-min/≤12-min early-reply lists are the viral surfaces — they
+    must never contain blocklisted handles, dead space-era targets, or lose
+    the foils the persona's AI-vs-BTC bit depends on."""
+    from src.config import BLOCKLIST
+    from src.early_bird_bot import EARLY_BIRD_ACCOUNTS
+    from src.mega_watch_bot import MEGA_ACCOUNTS
+    all_targets = {h.lower() for h in EARLY_BIRD_ACCOUNTS + MEGA_ACCOUNTS}
+    assert not (all_targets & BLOCKLIST), (
+        f"blocklisted handles in early-reply lists: {all_targets & BLOCKLIST}"
+    )
+    for space in ("spacex", "starlink", "rocketlab", "spacex_france", "peterdiamandis"):
+        assert space not in all_targets, f"space-era handle {space!r} still targeted"
+    for foil in ("thebtctherapist", "saylor", "morganhousel", "unusual_whales"):
+        assert foil in all_targets, f"missing key viral target {foil!r}"

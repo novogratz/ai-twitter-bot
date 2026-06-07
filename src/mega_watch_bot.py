@@ -30,26 +30,23 @@ from .humanizer import humanize
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
-# Top-10 mega accounts where being among the first 5 replies pays off
-# disproportionately. Curated tight — adding a noisy account just dilutes
-# the cycle's 90-sec window.
+# 2026-06-07 viral push: the ≤4-min watcher is the single highest-leverage
+# reply surface a 1.3K-follower account has — a sharp reply in a mega-post's
+# first minutes rides its ENTIRE viral run. Re-laned to AI x markets x
+# psychology: space + GPU-miner tail dropped, foils + fin-meme seeds +
+# market-news megas in. Keep this list TIGHT — every watched handle costs
+# scan time inside the 4-min freshness window.
 MEGA_ACCOUNTS = [
-    "sama", "OpenAI", "AnthropicAI", "elonmusk",
-    "MistralAI", "arthurmensch",
-    "naval",
-    # AI researchers — user mandate 2026-05-23. Fresh tweets from these
-    # accounts are gold for early-reply algo amplification.
-    "karpathy", "ylecun", "fchollet", "AndrewYNg", "demishassabis",
-    "ID_AA_Carmack", "lilianweng", "drfeifei", "jeremyphoward", "gwern",
-    # Cursor — sharp analytical replies on their drops have shot at
-    # Elon's attention (he openly raves about Cursor).
-    "cursor_ai", "sualeh", "amanrsanger", "mntruell",
-    # English AI infra / asymmetric investing accounts.
-    "CoreWeave", "CrusoeEnergy", "LambdaAPI", "applied_dc",
-    "IREN_Ltd", "Hut8Corp", "TeraWulfInc", "CipherMining",
-    "CleanSpark_Inc", "MARAHoldings", "RiotPlatforms",
-    "SpaceX", "Starlink", "RocketLab", "PeterDiamandis",
-    "bittensor_", "opentensor", "KobeissiLetter", "unusual_whales",
+    # AI megas — fresh drops, massive first-hour velocity
+    "sama", "OpenAI", "AnthropicAI", "elonmusk", "karpathy",
+    "DarioAmodei", "demishassabis", "naval",
+    # Foils — the AI-vs-BTC bit lives or dies on reply speed here
+    "saylor", "TheBTCTherapist",
+    # Market-news megas — panic posts are the therapist's house calls
+    "unusual_whales", "KobeissiLetter", "WatcherGuru", "zerohedge",
+    "DocumentingBTC",
+    # Fin-meme / behavioral seeds — our reply voice wins these rooms
+    "morganhousel", "litcapital", "ParikPatelCFA", "greg16676935420",
 ]
 
 MAX_AGE_MIN = 4

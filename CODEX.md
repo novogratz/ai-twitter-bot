@@ -162,6 +162,30 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 > from the revision spec maps to Safari **write-pacing** (per-action daily caps + jittered
 > spacing + no bursts), same intent, different mechanism.
 
+### 2026-06-07 PM — viral push (operator: "make the account/posts more viral")
+
+At 1.3K followers virality is mechanical, not magical: the only surfaces
+that can 100x are (1) sharp replies inside a mega-post's first minutes and
+(2) QRTs on the day's biggest story. Changes, all reply-side:
+
+- **`mega_watch_bot.MEGA_ACCOUNTS` re-laned** (≤4-min watcher = the single
+  highest-leverage surface): space + GPU-miner tail OUT; foils
+  (saylor, TheBTCTherapist), market-news megas (WatcherGuru, zerohedge,
+  DocumentingBTC, unusual_whales, KobeissiLetter) and fin-meme seeds
+  (morganhousel, litcapital, ParikPatelCFA, greg) IN. List kept tight —
+  every watched handle costs scan time inside the freshness window.
+- **`early_bird_bot.EARLY_BIRD_ACCOUNTS` 95→~45**: the old list was a
+  museum of dead mandates — FR crypto/bourse/media tails, space, VC tail,
+  and THREE BLOCKLISTED handles (MathieuL1, NCheron_bourse, Capetlevrai)
+  burning serialized-Safari scan cycles. Halving the list doubles rotation
+  frequency on the handles that matter. Guard test pins blocklist/space
+  out + foils in.
+- **REPLY_PROMPT**: SPACE expertise block + space examples replaced with
+  INVESTOR PSYCHOLOGY expertise (loss aversion, behavior gap, disposition
+  effect, drawdown math) + two psychology sharpness examples; new
+  VIRALITY MECHANICS section — hook in the first 6-8 words, no
+  throat-clearing openers, 100-180 char target, screenshot-quotable.
+
 ### 2026-06-07 PM — spec round 3 (operator: "DO IT PUSH IT HARD", pre-launch)
 
 - **Reply queries re-laned** — space queries REMOVED from

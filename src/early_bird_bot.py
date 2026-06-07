@@ -27,80 +27,36 @@ from .humanizer import humanize
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
-# Mega accounts that consistently produce viral tweets in our niches. FR-leaning
-# but EN megas included — being early on Sam Altman pulls more reach than being
-# early on a niche FR account. Order-agnostic; we sample.
-# MASSIVE expansion (was 25 → now ~75). With 3 picks/cycle every ~7min, this
-# rotates through every account roughly every ~3h — meaning a fresh tweet
-# anywhere in this list has a real shot of being caught inside the 12-min
-# top-5-reply window. FR media is HEAVY because that's our audience.
+# 2026-06-07 viral push — re-laned to the agent spec (AI x markets x
+# psychology, English-first). The old ~95-handle list was a museum of past
+# mandates: FR crypto/bourse/media tails, space, GPU miners, and even three
+# BLOCKLISTED handles (MathieuL1, NCheron_bourse, Capetlevrai) burning scan
+# cycles on a serialized Safari. ~45 on-lane handles now — the rotation hits
+# every account ~2x more often, which is what the early-reply window needs.
 EARLY_BIRD_ACCOUNTS = [
-    # === User VIP list 2026-05-02 ===
-    "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz", "jbelizaireCEO",
-    "FlasheurInvest", "McnallieM",
-    # === High-traction French crypto / AI / investing ===
-    "PowerHasheur", "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr",
-    "CryptoPicsou", "crypto_futur", "TheCrypt0Matrix", "TagadoBTC",
-    "Crypto__Goku", "MiningTk", "MoneyRadar_FR", "Divs_King",
-    "arthurmensch", "GuillaumeLample", "GaelVaroquaux",
-
-    # === IA mega EN ===
+    # === Operator VIPs (keep) ===
+    "Graphseo", "novogratz", "FinTales_", "jbelizaireCEO",
+    # === Foils / persona ecosystem — speed here feeds the AI-vs-BTC bit ===
+    "TheBTCTherapist", "saylor", "APompliano", "balajis",
+    "PeterSchiff", "RaoulGMI",
+    # === Fin-meme / behavioral (tier2 seeds + peers — our voice wins) ===
+    "morganhousel", "ParikPatelCFA", "litcapital", "greg16676935420",
+    "ReformedBroker", "jasonzweigwsj", "charliebilello",
+    # === Markets megas — panic posts are the therapist's house calls ===
+    "unusual_whales", "KobeissiLetter", "WatcherGuru", "zerohedge",
+    "DocumentingBTC", "Cointelegraph", "chamath", "jimcramer",
+    # === AI megas EN ===
     "sama", "OpenAI", "AnthropicAI", "elonmusk", "karpathy", "ylecun",
-    "GoogleDeepMind", "MistralAI", "DarioAmodei", "AravSrinivas",
-    "demishassabis", "gdb", "miramurati", "ID_AA_Carmack", "geoffreyhinton",
-    "AndrewYNg", "fchollet", "jeffdean", "simonw", "swyx",
-    # AI elite added 2026-05-23 (user mandate "be smart with them")
-    "lilianweng", "drfeifei", "jeremyphoward", "gwern",
-    # Cursor — Elon engages openly, early replies on their drops are
-    # a path to his attention. 4 accounts: official + 3 co-founders.
-    "cursor_ai", "sualeh", "amanrsanger", "mntruell",
-    # === AI infra / asymmetric investing EN ===
-    "CoreWeave", "CrusoeEnergy", "LambdaAPI", "applied_dc",
-    "IREN_Ltd", "Hut8Corp", "TeraWulfInc", "CipherMining",
-    "CleanSpark_Inc", "MARAHoldings", "RiotPlatforms",
-    "SpaceX", "PeterDiamandis",
-    "SpaceX_France", "bittensor_", "opentensor", "KobeissiLetter",
-    # === IA EN niche / dev ===
-    "TheRundownAI", "rowancheung", "mckaywrigley", "levelsio",
-    "AlphaSignalAI", "TheAIGRID", "DrJimFan", "GaryMarcus",
-    # === IA FR ===
-    "cyrildiagne", "KorbenInfo", "Underscore_", "micode",
-    "GuillaumeBesson", "Frandroid", "Numerama", "JournalDuGeek",
-    # === Crypto mega EN ===
-    "VitalikButerin", "APompliano", "cz_binance", "brian_armstrong",
-    "WuBlockchain", "tier10k", "CryptoCapo_", "saylor",
-    # === Crypto FR (heavy — our audience) ===
-    "PowerHasheur", "Capetlevrai", "JournalDuCoin", "powl_d",
-    "owen_simonin", "Cryptoast", "TheBigWhale_", "CointribuneFR",
-    "Coin_Academy", "Dark_Emi_", "CryptoMusic_fr",
-    # === Bourse FR (heavy — high signal, low noise) ===
-    "MathieuL1", "Graphseo", "NCheron_bourse", "ABaradez", "DereeperVivre",
-    "ThomasVeillet", "YoannLOPEZ", "RodolpheSteffan", "IVTrading",
-    "FinTales_", "ZonebourseFR", "Phil_RX",
-    # === FR media (mass distribution + breaking news) ===
-    "BFMTV", "BFMBourse", "lemondefr", "lesechos", "Capital",
-    "Le_Figaro", "France24",  # InvestirLeJournal (>15 char) + LeRevenu_fr (0% scrape) removed 2026-04-27
-    # === Markets EN ===
-    "unusual_whales", "chamath", "jimcramer",
-    # === Tech media EN ===
-    "TechCrunch", "TheVerge", "WIRED",
-    # === FR/QC additions 2026-04-26 — big AI/crypto/bourse voices ===
-    "Yoshua_Bengio", "Montreal_AI", "ActuIAFr",  # defendintelligence (>15 char) removed 2026-04-27
-    "Tradosaure", "InvestQuebec", "FI_Quebec", "investirfr", "cryptoqc",
-    "lesaffaires", "BourseFrance",
-    # === Mega VC + builder voices 2026-05-06 (top-of-feed fresh viral hits) ===
-    "naval", "paulg", "balajis", "pmarca", "garrytan", "levie",
-    "soumithchintala", "drum_vp", "swyx", "fchollet",
-    "shaneguML", "_jasonwei", "polynoamial", "BorisMPower",
-    # === FR finance / fintech / startup ===
-    "AlexandreBompard", "MicrobsoftFR", "Lazefoot", "Olivierbabeau",
-    "AlbertEinstein51", "MaitreEolas", "FrenchFoundersFR",
-    "TheFamilyFR", "PartechPartners", "elaia_partners",
-    "stanislas_d", "SiparexCapital", "Parisien_Eco",
-    # === FR macro / banque centrale (high-signal) ===
-    "FrancoisVilleroy", "BanqueDeFrance", "CroissancePlus",
-    # === Crypto mega EN (more deep-pocketed VCs) ===
-    "_a16zCrypto", "tetranode", "punk6529", "0xMaki",
+    "GoogleDeepMind", "DarioAmodei", "AravSrinivas", "demishassabis",
+    "gdb", "AndrewYNg", "fchollet", "simonw", "swyx",
+    # === AI niche / dev (tier3 seeds + high-velocity AI media) ===
+    "TheRundownAI", "rowancheung", "DrJimFan", "GaryMarcus",
+    "mattwolfe", "gregisenberg", "steipete", "lexfridman",
+    # === Crypto megas EN ===
+    "VitalikButerin", "cz_binance", "brian_armstrong", "WuBlockchain",
+    "tier10k",
+    # === Mega VC / builder voices (markets-adjacent, huge first-hour reach) ===
+    "naval", "paulg", "pmarca", "garrytan", "levie",
 ]
 
 # A tweet is "early-bird eligible" if it's at most this many minutes old.
