@@ -162,6 +162,34 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 > from the revision spec maps to Safari **write-pacing** (per-action daily caps + jittered
 > spacing + no bursts), same intent, different mechanism.
 
+### 2026-06-07 PM — viral push round 2: the learning loops were broken
+
+First live read of `pillar_engagement_30d` (scraped own-metrics joined to
+pillars): **market_trauma posts average 29.8 likes vs 13.1 for ai_news_take
+and 9.1 for "other" — the therapist one-liner is the proven winner by 2.3x.**
+The mix should keep tilting toward it.
+
+Loop fixes that made that reading possible:
+- **`self_winners` was imported in main.py but NEVER SCHEDULED** (same
+  dead-import bug as the old marquee job) — now every 2h. Floor 10→3 likes
+  (`SELF_WINNERS_MIN_LIKES` — 10 left the bank EMPTY at this account size).
+- **`_is_own` rejected 100% of rows**: the 2026-06-05 scraper rebuild
+  writes {text,likes,views,timestamp} with no author/url, so the own-check
+  failed on every row. Rows are own-by-construction now.
+- **Provenance guards**: the profile scrape catches retweeted ads (a 2M-view
+  Seedance promo was about to be injected as "our best post") and FR-era
+  posts — views ceiling (`SELF_WINNERS_MAX_VIEWS`=100K) + French-marker
+  filter + 4-day window (`SELF_WINNERS_WINDOW_DAYS`, therapist-era only).
+- **Empty bank now CLEARS the file** — "skip write on empty" kept stale
+  junk being injected into prompts forever.
+- self_winners block now also injected into **spicy** (hotake already had
+  it); render header EN (was French, fought the voice).
+- **`analyzer_bot.pillar_engagement_30d`** — avg likes/views per pillar
+  from scraped metrics; counts say what we POSTED, this says what the
+  audience REWARDED.
+- **Slot crons jittered** (±15 min posts, ±10 min hot-quote) — a bot that
+  posts at 09:30:00 sharp daily fingerprints itself as a cron job.
+
 ### 2026-06-07 PM — viral push (operator: "make the account/posts more viral")
 
 At 1.3K followers virality is mechanical, not magical: the only surfaces

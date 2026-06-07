@@ -74,6 +74,42 @@ def _extract_topics(text: str) -> list[str]:
     return topics or ["Autre"]
 
 
+def _pillar_engagement(window_days: int = 30) -> list:
+    """Avg likes + views per content pillar over our scraped own posts
+    (performance_log.json). Classify-on-the-fly; pillars with <2 posts are
+    reported but flagged low-sample."""
+    from .pillar_tags import classify as _classify_pillar
+    path = os.path.join(_PROJECT_ROOT, "performance_log.json")
+    try:
+        with open(path) as f:
+            rows = json.load(f) or []
+    except (OSError, json.JSONDecodeError):
+        return []
+    cutoff = (datetime.now() - timedelta(days=window_days)).isoformat()[:19]
+    agg: dict = {}
+    for r in rows:
+        if not isinstance(r, dict):
+            continue
+        if str(r.get("timestamp", ""))[:19] < cutoff:
+            continue
+        p = _classify_pillar(r.get("text", ""))
+        a = agg.setdefault(p, {"posts": 0, "likes": 0, "views": 0})
+        a["posts"] += 1
+        a["likes"] += int(r.get("likes") or 0)
+        a["views"] += int(r.get("views") or 0)
+    out = []
+    for p, a in agg.items():
+        out.append({
+            "pillar": p,
+            "posts": a["posts"],
+            "avg_likes": round(a["likes"] / a["posts"], 2),
+            "avg_views": round(a["views"] / a["posts"], 1),
+            "low_sample": a["posts"] < 2,
+        })
+    out.sort(key=lambda x: x["avg_likes"], reverse=True)
+    return out
+
+
 def run_analyzer_cycle():
     rows_7d = _load_log_window(168)
     rows_24h = _load_log_window(24)
@@ -162,6 +198,11 @@ def run_analyzer_cycle():
             {"pillar": p, "count": c}
             for p, c in sorted(pillar_counts_24h.items(), key=lambda x: x[1], reverse=True)
         ],
+        # Engagement per pillar from SCRAPED own-post metrics (likes/views,
+        # performance_log) — volume counts say what we POSTED, this says what
+        # the audience REWARDED. The weekly "shift mix toward winners" review
+        # reads this, not the counts.
+        "pillar_engagement_30d": _pillar_engagement(),
         "content_surface_mix": [{"type": t, "count": c} for t, c in top_types],
         "viral_examples": [
             {"ts": r["ts"].isoformat(), "text": r["text"][:280], "type": r["type"]}

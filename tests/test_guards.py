@@ -912,3 +912,65 @@ def test_early_reply_targets_on_lane():
         assert space not in all_targets, f"space-era handle {space!r} still targeted"
     for foil in ("thebtctherapist", "saylor", "morganhousel", "unusual_whales"):
         assert foil in all_targets, f"missing key viral target {foil!r}"
+
+
+# --- 2026-06-07 learning-loop fixes: self_winners provenance + clearing -----
+
+def test_self_winners_filters_foreign_and_french(monkeypatch, tmp_path):
+    """The own-wins bank must reject scraped retweet ads (implausible view
+    counts), French-era posts, and must CLEAR the bank when nothing
+    qualifies (stale injection bug)."""
+    from datetime import datetime
+    from src import self_winners as sw
+    now = datetime.now().isoformat()
+    perf = [
+        # legit therapist-era winner
+        {"text": "Your portfolio is not down, it is processing trauma. Sit with it a moment.",
+         "likes": 5, "views": 900, "timestamp": now, "scraped_at": now},
+        # scraped retweet ad — 2M views is not this account
+        {"text": "Start with one idea. End with a feed full of content. Get unlimited!",
+         "likes": 35, "views": 2_000_000, "timestamp": now, "scraped_at": now},
+        # French-era post
+        {"text": "Les actions technologiques semblent chères mais la révolution ne fait que commencer pour les investisseurs.",
+         "likes": 17, "views": 7000, "timestamp": now, "scraped_at": now},
+    ]
+    perf_file = tmp_path / "perf.json"
+    perf_file.write_text(json.dumps(perf))
+    bank_file = tmp_path / "winners.md"
+    monkeypatch.setattr(sw, "PERFORMANCE_LOG_FILE", str(perf_file))
+    monkeypatch.setattr(sw, "SELF_WINNERS_FILE", str(bank_file))
+    monkeypatch.setattr(sw, "MIN_LIKES_FLOOR", 3)
+
+    sw.run_self_winners_cycle()
+    bank = bank_file.read_text()
+    assert "processing trauma" in bank
+    assert "Get unlimited" not in bank, "foreign mega-view ad must be filtered"
+    assert "actions technologiques" not in bank, "French-era post must be filtered"
+
+    # Nothing qualifies → bank is CLEARED, not left stale.
+    perf_file.write_text(json.dumps([perf[1], perf[2]]))
+    sw.run_self_winners_cycle()
+    assert "processing trauma" not in bank_file.read_text()
+    assert sw.render_self_winners_block() == "" or "processing trauma" not in sw.render_self_winners_block()
+
+
+def test_pillar_engagement_aggregates(monkeypatch, tmp_path):
+    from datetime import datetime
+    from src import analyzer_bot as ab
+    now = datetime.now().isoformat()
+    perf = [
+        {"text": "Your panic selling is just fear wearing a trade ticket. Breathe.",
+         "likes": 10, "views": 1000, "timestamp": now},
+        {"text": "Diagnosis: chronic dip-denial. The drawdown is the therapy bill.",
+         "likes": 20, "views": 3000, "timestamp": now},
+        {"text": "OpenAI ships a new model, GPUs everywhere sigh.",
+         "likes": 3, "views": 500, "timestamp": now},
+    ]
+    (tmp_path / "performance_log.json").write_text(json.dumps(perf))
+    monkeypatch.setattr(ab, "_PROJECT_ROOT", str(tmp_path))
+    out = ab._pillar_engagement()
+    by = {r["pillar"]: r for r in out}
+    assert by["market_trauma"]["posts"] == 2
+    assert by["market_trauma"]["avg_likes"] == 15.0
+    assert by["ai_news_take"]["avg_likes"] == 3.0
+    assert out[0]["pillar"] == "market_trauma", "sorted by avg_likes desc"

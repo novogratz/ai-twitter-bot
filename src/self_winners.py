@@ -27,8 +27,26 @@ from .logger import log
 PERFORMANCE_LOG_FILE = os.path.join(_PROJECT_ROOT, "performance_log.json")
 SELF_WINNERS_FILE = os.path.join(_PROJECT_ROOT, "self_winners.md")
 TOP_N = 20
-MIN_LIKES_FLOOR = 10
-WINDOW_DAYS = 30
+# 2026-06-07: floor 10→3 (env-tunable). At ~1.3K followers the account's
+# best posts land 3-7 likes — a 10-like floor left the bank EMPTY, so the
+# "learn from own wins" loop never fired. Raise it back as the account grows.
+MIN_LIKES_FLOOR = int(os.environ.get("SELF_WINNERS_MIN_LIKES", "3"))
+# Window env-tunable: kept SHORT right after the 2026-06-04 rebrand so the
+# bank can't surface pre-therapist (French-era) posts as "winners" and teach
+# the model the wrong voice. Widen as therapist-era data accumulates.
+WINDOW_DAYS = int(os.environ.get("SELF_WINNERS_WINDOW_DAYS", "30"))
+# Views ceiling — the profile scrape catches retweeted/quoted MEGA content
+# that isn't ours; anything wildly beyond this account's best (~30K views)
+# is foreign. Raise as the account grows.
+_MAX_PLAUSIBLE_VIEWS = int(os.environ.get("SELF_WINNERS_MAX_VIEWS", "100000"))
+
+_FR_MARKERS = (" le ", " la ", " les ", " des ", " une ", " est ", " dans ",
+               " pour ", " avec ", " sur ", " que ", " qui ", " pas ")
+
+
+def _looks_french(text: str) -> bool:
+    t = " " + (text or "").lower() + " "
+    return sum(1 for m in _FR_MARKERS if m in t) >= 3
 
 
 def _own_handle() -> str:
@@ -38,6 +56,12 @@ def _own_handle() -> str:
 def _is_own(p: dict, own: str) -> bool:
     if not own:
         return False
+    # 2026-06-07: the rebuilt scrape_own_metrics writes rows with NO
+    # author/url fields ({text, likes, views, timestamp}) — they come from
+    # scraping OUR OWN profile, so they are own-by-construction. The old
+    # author/url check silently rejected 100% of them and starved the bank.
+    if "author" not in p and "url" not in p:
+        return True
     if (p.get("author") or "").lower().lstrip("@") == own:
         return True
     url = (p.get("url") or "").lower()
@@ -88,6 +112,14 @@ def _recent_winners() -> list:
             continue
         text = _clean(p.get("text") or "")
         if not text or len(text) < 30:
+            continue
+        # Provenance heuristics (2026-06-07): the profile scrape also catches
+        # retweets/quoted ads that are NOT our writing. Two cheap guards:
+        # views far beyond anything this account has ever done = foreign
+        # content; French-dominant text = pre-rebrand era (voice is EN now).
+        if int(p.get("views") or 0) > _MAX_PLAUSIBLE_VIEWS:
+            continue
+        if _looks_french(text):
             continue
         s = _score(p)
         if s <= 0:
@@ -147,13 +179,15 @@ def _read_entries() -> list[str]:
 
 
 def render_self_winners_block(sample_size: int = 3) -> str:
+    """English header (2026-06-07 — all standalone content is EN now; the
+    old FR header fought the therapist voice in every prompt)."""
     entries = _read_entries()
     if not entries:
         return ""
     picks = random.sample(entries, min(sample_size, len(entries)))
     head = (
-        "🏆 TES PROPRES POSTS QUI ONT HIT — Étudie le pattern (sujet, "
-        "format, chute) puis DÉPASSE-LE. Tu vises CETTE énergie, en mieux.\n"
+        "🏆 YOUR OWN POSTS THAT HIT — study the pattern (topic, format, "
+        "punchline) then BEAT it. Same energy, sharper execution.\n"
     )
     return head + "\n".join(picks)
 
@@ -161,7 +195,12 @@ def render_self_winners_block(sample_size: int = 3) -> str:
 def run_self_winners_cycle() -> None:
     entries = _recent_winners()
     if not entries:
-        log.info("[SELF_WINNERS] no qualifying own-posts — skipping write.")
+        # 2026-06-07: WRITE THE EMPTY BANK instead of keeping the stale file.
+        # "Skip write on empty" meant filtered-out junk (FR-era posts, scraped
+        # retweet ads) stayed on disk and kept being injected into prompts
+        # forever. No winners = no injection, never stale injection.
+        _write([])
+        log.info("[SELF_WINNERS] no qualifying own-posts — bank cleared.")
         return
     _write(entries)
     log.info(

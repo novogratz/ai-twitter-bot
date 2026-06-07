@@ -226,6 +226,15 @@ def run_spicy_cycle():
     core = personality_store.render_core_identity(lang=lang)
     if core:
         perf = core + "\n\n" + perf
+    # Own-wins bank (2026-06-07): show the model what actually SHIPPED on
+    # this account so spicy takes iterate proven structures, not guesses.
+    try:
+        from . import self_winners
+        sw = self_winners.render_self_winners_block(sample_size=2)
+        if sw:
+            perf = sw + "\n\n" + perf
+    except Exception:
+        pass
     prompt = SPICY_PROMPT.format(
         mode=mode,
         mode_instructions=instructions,

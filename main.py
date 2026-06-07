@@ -403,7 +403,9 @@ def main():
         for _hq_hour in (8, 12, 16, 20):
             scheduler.add_job(
                 safe_run_hot_quote_cycle,
-                trigger=CronTrigger(hour=_hq_hour, minute=0, timezone="America/New_York"),
+                # jitter ±10 min — same anti-cron-fingerprint as the post slots.
+                trigger=CronTrigger(hour=_hq_hour, minute=0,
+                                    timezone="America/New_York", jitter=600),
                 id=f"hot_quote_job_{_hq_hour}h",
             )
 
@@ -457,8 +459,11 @@ def main():
             _label = f"{_slot_hour:02d}:{_slot_min:02d}ET"
             scheduler.add_job(
                 run_post_slot,
+                # jitter: ±15 min around the slot — a bot that posts at
+                # 09:30:00 sharp every single day reads as a cron job to
+                # both humans and the platform. Humans are sloppy; be sloppy.
                 trigger=CronTrigger(hour=_slot_hour, minute=_slot_min,
-                                    timezone="America/New_York"),
+                                    timezone="America/New_York", jitter=900),
                 id=f"post_slot_{_slot_hour}h{_slot_min}",
                 kwargs={"slot_label": _label, "stunt_first": _stunt_first},
                 max_instances=1,
@@ -778,6 +783,18 @@ def main():
             safe_run_weekly_review_cycle,
             trigger=IntervalTrigger(hours=1),
             id="weekly_review_job",
+        )
+
+        # Self-winners bank — refreshes self_winners.md from our own
+        # top-engagement posts (performance_log). Was imported but NEVER
+        # SCHEDULED (found 2026-06-07 — same dead-import bug as the old
+        # marquee job), so the "learn from own wins" prompt block never
+        # updated. Cheap (reads one JSON), every 2h.
+        log.info("Self-winners bank: refreshing own-wins prompt block every 2h.")
+        scheduler.add_job(
+            safe_run_self_winners_cycle,
+            trigger=IntervalTrigger(hours=2),
+            id="self_winners_job",
         )
 
         # Promote-best-reply bot — plain-reposts our highest-engagement reply
