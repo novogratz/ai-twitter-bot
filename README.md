@@ -18,7 +18,7 @@ No X API. The entire surface is driven through **Safari + AppleScript** browser 
 | Layer | Bots | Role |
 |---|---|---|
 | **Content** | `agent`, `hotake_agent`, `breakout_bot`, `spicy_bot`, `viral_stunt_bot` | Originals fire in four US-market slots (9:30a/12:30p/4:30p/8p ET, one per slot, 12:30 leads with the GIF meme); thread bots disabled per the 2026-06-07 spec |
-| **Amplification** | `retweet_bot`, `quote_tweet_bot`, `hot_quote_bot`, `feed_sweeper_bot` | QRTs (1-2/day) ride the day's biggest AI/markets headline with a persona take; plain RTs 0-2/day, reciprocity only |
+| **Amplification** | `retweet_bot`, `quote_tweet_bot`, `hot_quote_bot`, `feed_sweeper_bot` | QRTs (1-2/day, 300-like floor) ride the day's biggest AI/markets headline; AI-vs-Bitcoin feud bit on BTC parents; plain RTs 0-2/day, reciprocity only |
 | **Replies** | `direct_reply`, `reply_bot`, `engagement_targeting`, `early_bird_bot`, `mega_watch_bot`, `replyback_agent` | The core engine — unlimited throughput, fresh fast-rising posts from whitelist tier1-2 first; every reply unique + therapist-framed |
 | **Network** | `engage_bot`, `discover_bot`, `followback_bot`, `smart_unfollow_bot`, `marquee_follow_bot` | Seed-priority follows from the tiered whitelist (300 hard cap, 20/day, ≥10-min gaps, 30-day anti-churn both ways) |
 | **Signal** | `rss_signal_bot`, `hn_signal_bot`, `x_home_scout_bot`, `wsb_signal_bot` | RSS + HN + Reddit + X-feed trend aggregation into `external_signal.json` |
