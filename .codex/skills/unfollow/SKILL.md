@@ -28,7 +28,10 @@ Mass-unfollow accounts directly on https://x.com/$BOT_HANDLE/following in Safari
    engage/early-bird/mega target lists (gentle prune).
 5. Report the final `TOTAL unfollowed:` count and the new ratio if available.
    Unfollowed handles are saved to `mass_unfollow_results.json`.
-   Pace: `--pace normal|fast|insane` — insane = minimal gaps, never aborts:
-   on a blue rate-limit toast (`[data-testid=toast]`) or 5 failed confirms it
-   cools down `--cooldown-mins` (default 5, +50% per consecutive hit, cap 4x),
-   clears stale cell tags, and resumes until the list is empty.
+   Pace: `--pace normal|fast|insane` — default `normal` (3.5-7s gaps,
+   operator-preferred). Every pace auto-recovers: on a blue rate-limit toast
+   (`[data-testid=toast]`) or 5 failed confirms it cools down
+   `--cooldown-mins` (default 2, +50% per consecutive hit, cap 4x), clears
+   stale cell tags, and resumes until the list is empty — never aborts.
+   Faster paces don't gain much: X drains its ~190/window unfollow quota
+   regardless, then it's all cooldowns.

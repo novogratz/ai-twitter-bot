@@ -176,14 +176,15 @@ def main() -> None:
                          "(full purge, default); 'legacy' = also keep respect_list + "
                          "engage/early-bird/mega targets (gentle prune)")
     ap.add_argument("--pace", choices=["normal", "fast", "insane"], default="normal",
-                    help="normal ≈ 480/hr (3.5-7s jitter, breather every 25); "
+                    help="normal ≈ 480/hr (3.5-7s jitter, breather every 25 — "
+                         "default, operator-preferred); "
                          "fast ≈ 1400/hr (1.2-2.5s jitter, breather every 100); "
-                         "insane = minimal gaps, NEVER aborts — on a rate-limit "
-                         "toast or repeated failed confirms it cools down "
-                         "--cooldown-mins then resumes until the list is empty")
-    ap.add_argument("--cooldown-mins", type=float, default=5.0,
-                    help="cooldown on rate-limit detection (insane pace; grows "
-                         "+50%% per consecutive hit, capped at 4x)")
+                         "insane = minimal gaps (X drains its ~190/window quota "
+                         "in minutes, then it's all cooldowns anyway)")
+    ap.add_argument("--cooldown-mins", type=float, default=2.0,
+                    help="cooldown on rate-limit detection (grows +50%% per "
+                         "consecutive hit, capped at 4x); every pace cools down "
+                         "and resumes — the run never aborts on a rate limit")
     args = ap.parse_args()
 
     if args.pace == "insane":
@@ -195,7 +196,6 @@ def main() -> None:
     else:
         confirm_wait, gap_lo, gap_hi = 1.2, 3.5, 7.0
         breather_every, breather_lo, breather_hi = 25, 20, 40
-    auto_resume = args.pace == "insane"
 
     keep = _whitelist_keep_set() if args.keep == "whitelist" else _legacy_keep_set()
     pick_js = PICK_JS_TEMPLATE % json.dumps(sorted(keep))
@@ -236,11 +236,8 @@ def main() -> None:
             toast = c.split("|TOAST:", 1)[1] if "|TOAST:" in c else ""
             if toast and _LIMIT_TOAST_RE.search(toast):
                 print("rate-limit toast: %s" % toast.strip(), flush=True)
-                if auto_resume:
-                    cooldown("rate-limit toast")
-                    continue
-                print("ABORT: rate-limit toast", flush=True)
-                break
+                cooldown("rate-limit toast")
+                continue
             if confirmed:
                 noconfirm_streak = 0
                 reload_attempts = 0
@@ -258,12 +255,8 @@ def main() -> None:
                 print("no confirm for @%s (%s, streak %d)"
                       % (h, c, noconfirm_streak), flush=True)
                 if noconfirm_streak >= 5:
-                    if auto_resume:
-                        cooldown("5 consecutive failed confirms")
-                        continue
-                    print("ABORT: confirm failing repeatedly — possible action block",
-                          flush=True)
-                    break
+                    cooldown("5 consecutive failed confirms")
+                    continue
                 time.sleep(3)
             time.sleep(random.uniform(gap_lo, gap_hi))
             if unfollowed and len(unfollowed) % breather_every == 0:
@@ -284,8 +277,7 @@ def main() -> None:
                     break
                 print("empty viewport — reload + re-verify (%d/3)"
                       % reload_attempts, flush=True)
-                if auto_resume:
-                    time.sleep(args.cooldown_mins * 60)
+                time.sleep(args.cooldown_mins * 60)
                 _reload_page()
                 run_js(CLEAR_TAGS_JS)
                 empty_rounds = 0
