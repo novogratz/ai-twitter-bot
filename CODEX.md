@@ -222,6 +222,33 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-17 — the unbounded warmup blocked the scheduler (why there were NO quotes)
+
+PM-16 added the AI-viral quote pass but quotes still didn't flow. Live
+diagnosis of the 15:43 boot: 300+ replies, ZERO dedicated quotes 20 min
+in, Safari lock 100% held by `[SEARCH-HOT]` replies. The "Quote bot: GO
+CRAZY" startup line was from the PREVIOUS (03:01) boot — meaning
+**main() was still inside the startup reply warmup and had never reached
+`scheduler.start()` (line 1252)**. So every interval job — quote_tweet_job
+(AI-viral), retweet_job, hot_quote, breaking_qrt — did not exist yet.
+
+Root cause: PM-8's "replies first" warmup called the UNBOUNDED
+`run_direct_reply_cycle()` (21 queries × reply-to-every-candidate, ~17s
+each). That one call runs 20-40+ min and blocks the entire scheduler
+bring-up behind it. The replies-first fix over-corrected: it didn't just
+reorder, it gated the whole engine behind an unbounded loop.
+
+Fix: `run_direct_reply_cycle(max_replies=None)` — the startup warmup +
+the 3 burst rounds pass `STARTUP_REPLY_WARMUP=12` so each returns in a few
+minutes; `scheduler.start()` is reached fast and the steady-state jobs
+(direct_reply unbounded every few min, quote every 2 min, etc.) run
+concurrently from then on. Steady-state callers pass None = unbounded.
+Guard: `test_startup_reply_warmup_is_bounded`.
+
+Lesson: a one-shot warmup call placed BEFORE `scheduler.start()` must be
+bounded — anything unbounded there is not a warmup, it's an indefinite
+hold on every scheduled job. "Replies first" means reply FIRST, not reply
+FOREVER-before-anything-else.
 ### 2026-06-07 PM-16 — AI-viral quote pass (operator: "more quote retweet on AI... TOP posts in AI, be impactful sharp and viral")
 
 Diagnosis: replies were flowing (300+/day) but quotes were starving — only

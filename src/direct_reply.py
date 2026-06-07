@@ -593,18 +593,19 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         # No extra sleep here — don't double-throttle.
     return posted
 
-def run_direct_reply_cycle():
-    """Reply cycle — feed-first, no profile visits, no budget gate.
+def run_direct_reply_cycle(max_replies=None):
+    """Reply cycle — feed-first, no profile visits.
 
-    Order (operator 2026-06-06):
-      1. For You (home feed) — reply to every good on-niche post
-      2. Following feed      — same
-      3. Graphseo dedicated scan (he gets a reply every cycle, no profile visit)
-      4. Search on niche keywords — catch viral posts not yet on feed
-    No per-cycle budget cap. Individual jitter + LLM hourly limit + dedup gate volume.
+    `max_replies` (operator 2026-06-07): when set, the cycle STOPS after that
+    many replies and returns. Used by the STARTUP warmup — an unbounded
+    warmup looped all 21 queries replying to everything, ran 20+ min, and
+    BLOCKED main()'s scheduler.start() (and thus the AI-viral quote job)
+    from ever running (15:43 boot: zero quotes 20 min in, Safari 100%
+    reply-held). Steady-state job calls with None = unbounded.
     """
     replied = load_replied()
     total, en_counter = 0, [0]
+    remaining = max_replies  # None = unbounded
 
     # 1. VIP scan — Graphseo + friends via search (fast, no profile page)
     try:
@@ -620,21 +621,28 @@ def run_direct_reply_cycle():
     all_queries = SEARCH_QUERIES + HOT_TAB_QUERIES
     random.shuffle(all_queries)
     for query in all_queries:
+        if remaining is not None and remaining <= 0:
+            log.info(f"[DIRECT] Startup budget reached ({max_replies}) — yielding "
+                     f"Safari so the scheduler + quote lane can start.")
+            break
         try:
             tweets = scrape_x_search(query, max_tweets=25, tab="top")
             if tweets:
-                n = _reply_to_tweets(tweets, replied, "SEARCH-HOT", source_detail=query, en_counter=en_counter)
+                n = _reply_to_tweets(tweets, replied, "SEARCH-HOT", source_detail=query,
+                                     remaining=remaining, en_counter=en_counter)
                 total += n
+                if remaining is not None:
+                    remaining -= n
         except Exception:
             traceback.print_exc()
 
     save_replied(replied)
     log.info(f"[DIRECT] Posted {total} replies this cycle.")
 
-def safe_run_direct_reply_cycle():
+def safe_run_direct_reply_cycle(max_replies=None):
     from . import health
     try:
-        run_direct_reply_cycle()
+        run_direct_reply_cycle(max_replies=max_replies)
         health.record_success("direct_reply")
     except Exception:
         log.info("[DIRECT] Error during direct reply cycle:")

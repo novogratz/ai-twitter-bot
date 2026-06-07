@@ -1618,3 +1618,35 @@ def test_quote_ai_viral_pass_present_and_ranked():
     src = inspect.getsource(qb.run_quote_tweet_cycle)
     assert "priority_candidates + ai_viral_candidates + candidates" in src, \
         "AI virals must be ranked ahead of the generic pool"
+
+
+def test_startup_reply_warmup_is_bounded(monkeypatch):
+    """Operator 2026-06-07: 'more quote retweet on AI'. Root cause was an
+    UNBOUNDED startup reply warmup that ran 20+ min and blocked
+    scheduler.start() — so the dedicated quote/AI-viral jobs never came
+    online (15:43 boot: 300+ replies, 0 quotes). run_direct_reply_cycle
+    must honor max_replies and STOP, yielding Safari."""
+    import src.direct_reply as dr
+    # Every query returns 5 fresh on-niche tweets; without the cap the cycle
+    # would reply to all of them across all 21 queries.
+    calls = {"replies": 0, "queries": 0}
+    def fake_search(q, max_tweets=25, tab="top"):
+        calls["queries"] += 1
+        base = 2063900000000000000 + calls["queries"] * 100
+        return [{"url": f"https://x.com/acct/status/{base+i}",
+                 "text": "openai shipped a new reasoning model today", "author": "acct"}
+                for i in range(5)]
+    def fake_reply_block(tweets, replied, source, source_detail="", remaining=None, en_counter=None):
+        # Honor the remaining budget like the real _reply_to_tweets.
+        n = len(tweets) if remaining is None else min(len(tweets), remaining)
+        calls["replies"] += n
+        return n
+    monkeypatch.setattr(dr, "scrape_x_search", fake_search)
+    monkeypatch.setattr(dr, "_reply_to_tweets", fake_reply_block)
+    monkeypatch.setattr(dr, "_run_graphseo_scan", lambda replied: None)
+    monkeypatch.setattr(dr, "load_replied", lambda: set())
+    monkeypatch.setattr(dr, "save_replied", lambda s: None)
+
+    dr.run_direct_reply_cycle(max_replies=12)
+    assert calls["replies"] == 12, f"warmup must stop at the cap, got {calls['replies']}"
+    assert calls["queries"] < 21, "must stop scanning queries once the budget is spent"

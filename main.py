@@ -358,8 +358,17 @@ def main():
     # idle (witnessed on the 11:10 restart: reply warmup only reached at
     # 11:24, killed at 11:31 with ~8 replies on the clock).
     if not args.post_only:
-        log.info("Now warming up the reply loop (replies first — volume lane)...")
-        safe_run_direct_reply_cycle()
+        # BOUNDED warmup (operator 2026-06-07: "more quote retweet on AI").
+        # An unbounded warmup reply cycle ran 20+ min and blocked
+        # scheduler.start() — so the steady-state quote/AI-viral/RT jobs
+        # never came online (15:43 boot: 300+ replies, 0 dedicated quotes).
+        # Cap the warmup so the scheduler is live within a few minutes;
+        # the steady-state direct_reply_job (unbounded, every few min) keeps
+        # the volume lane full from there.
+        _warm = int(os.environ.get("STARTUP_REPLY_WARMUP", "12"))
+        log.info(f"Now warming up the reply loop (replies first, capped {_warm} so the "
+                 f"scheduler + quote lane start fast)...")
+        safe_run_direct_reply_cycle(max_replies=_warm)
         log.info("Warming up notify (like replies on our tweets)...")
         quiet_safe_notify()
         log.info("Warming up replyback (reply to people who replied to us)...")
@@ -403,7 +412,9 @@ def main():
             safe_run_feed_sweep_cycle()
             safe_run_quote_tweet_cycle()
         if not args.post_only:
-            safe_run_direct_reply_cycle()
+            # Bounded here too — an unbounded reply call per round re-blocks
+            # scheduler.start() for many minutes (same bug as the warmup).
+            safe_run_direct_reply_cycle(max_replies=_warm)
     log.info("Startup burst complete.")
 
     # Schedule jobs
