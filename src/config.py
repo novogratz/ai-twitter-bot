@@ -136,11 +136,14 @@ POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(30 * 60)))
 # 2026-06-05 PM (operator: "do more quote retweet, it was extremely
 # successful — abuse a bit of it for the next few weeks"): cap 100→150,
 # spacing 120→90s+jitter45. Still jittered, still no bursts.
-# 2026-06-07 AGENT SPEC: QRTs ride the day's biggest AI/markets headline
-# with a persona take — 1-2/day, ideally within the first 1-2h of trending.
-MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "2"))
-MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", "3600"))
-QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "900"))
+# 2026-06-07 PM-2 QRT SURGE (operator: "QRTs of relative large accounts get
+# thousands of views — abuse those", measured on his own data; supersedes
+# the spec's 1-2/day). High cap, 5-min jittered spacing, 300-like floor =
+# large-account targeting. Quality gates (niche, dedup, 24h age, voice)
+# stay absolute.
+MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "100"))
+MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", "300"))
+QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "180"))
 
 # 2026-06-07 AGENT SPEC: the reply machine is the core engine — no volume
 # cap, no daily limit. Minimum spacing kept at 8s+jitter for ban safety

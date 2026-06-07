@@ -171,8 +171,9 @@ def build_review() -> str:
             lines.append(f"- ❤️{likes} 👁{views}{rate} [{pillar}] {text}")
     lines += [
         "",
-        "## Spec targets (2026-06-07)",
-        "- Originals 3-4/day in market slots · QRTs 1-2/day · plain RTs 0-2/day",
+        "## Spec targets (2026-06-07, incl. PM-2 QRT surge)",
+        "- Originals 3-4/day in market slots · QRTs SURGE ≤100/day on 50+-like",
+        "  posts (number-reframe + metaphor + closing question) · plain RTs 0-2/day",
         "- Replies unlimited (the engine) · reply-bait 3-4/week",
         "- Following <= 300 hard cap (~120-150 steady state)",
         "",

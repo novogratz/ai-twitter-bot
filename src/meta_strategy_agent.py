@@ -40,10 +40,13 @@ META_LOG_FILE = os.path.join(_PROJECT_ROOT, "meta_strategy_log.json")
 # 0-2/day, replies UNLIMITED. Per-surface bounds below keep every
 # combination inside that mix — the agent flexes WITHIN the spec, never
 # out of it.
+# 2026-06-07 PM-2: QRT surge override — quotes of large accounts are the
+# measured winning surface ("abuse those"), bounds opened to 20-150.
+# Originals/RTs stay inside the spec mix.
 _BOUNDS = {
     "MAX_NEWS_PER_DAY":      (0,  2),
     "MAX_HOTAKES_PER_DAY":   (1,  2),
-    "MAX_QUOTES_PER_DAY":    (1,  2),
+    "MAX_QUOTES_PER_DAY":    (20, 150),
     "MAX_RETWEETS_PER_DAY":  (0,  2),
     "MAX_BREAKOUTS_PER_DAY": (0,  1),
     "MAX_SPICY_PER_DAY":     (0,  1),
@@ -54,7 +57,7 @@ _BOUNDS = {
 _DEFAULTS = {
     "MAX_NEWS_PER_DAY":      1,
     "MAX_HOTAKES_PER_DAY":   2,
-    "MAX_QUOTES_PER_DAY":    2,
+    "MAX_QUOTES_PER_DAY":    100,
     "MAX_RETWEETS_PER_DAY":  1,
     "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY":     1,

@@ -392,18 +392,18 @@ def main():
     if not args.reply_only:
         safe_run_btc_blitz_cycle()
 
-    # Startup catchup — REPLIES ONLY since 2026-06-07: replies are the
-    # unlimited surface, so burst them freely on boot. Quotes/RTs are NOT
-    # fired here — with 2 QRT + 2 RT slots/day, a boot-time burst would
-    # burn the whole day's quota on stale feed content instead of saving
-    # the slots for the day's biggest headline (spec: QRTs ride the top
-    # AI/markets story within 1-2h of trending). The scheduled quote/RT
-    # jobs with the 300-like floor own those slots.
+    # Startup catchup — replies + QRTs (2026-06-07 PM-2 QRT surge: quotes
+    # are back to 100/day, so the boot burst fires them again; the 5-min
+    # jittered chokepoint spacing still paces individual writes). Plain RTs
+    # stay out of the burst — 2/day is too precious for stale feed content.
     for _round in range(1, 4):
-        log.info(f"Startup reply burst round {_round}/3...")
+        log.info(f"Startup burst round {_round}/3: sweep -> quote -> reply...")
+        if not args.reply_only:
+            safe_run_feed_sweep_cycle()
+            safe_run_quote_tweet_cycle()
         if not args.post_only:
             safe_run_direct_reply_cycle()
-    log.info("Startup reply burst complete.")
+    log.info("Startup burst complete.")
 
     # Schedule jobs
     if not args.reply_only:

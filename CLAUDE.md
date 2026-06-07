@@ -175,6 +175,26 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-2 — QRT SURGE (operator: "abuse those bro", measured)
+
+Operator data: QRTs of relative large accounts = thousands of views +
+5-10 likes each; his two best posts of the day were BOTH QRTs of mid-size
+analytical finance accounts (~3.5-7K views, 6 likes each), built the same
+way: **re-denominate their number ($145B → $37.5B quarterly burn) + one
+mechanism metaphor ("collecting rent on silicon that doesn't exist yet" /
+"$50k interns into $500k employees") + closing question that forces a
+side.** That structure is now in the quote prompt as the default for
+ticker/markets/AI-capex parents; cashtags + @company mentions welcome.
+
+SUPERSEDES the spec's 1-2 QRT/day: `MAX_QUOTE_REPOSTS_PER_DAY=100`,
+`MAX_QUOTES_PER_DAY=100`, spacing 5min+jitter3, `QUOTE_MIN_LIKES=50`
+(300 was excluding exactly the mid-size lane that works),
+`FEED_SWEEP_QUOTE_MIN_LIKES=100`, sweeper 6 quotes/cycle. meta_strategy /
+strategy_lab quote bounds opened to 20-150; autonomous_growth prompt
+updated (volume levers = replies AND quotes). live_strategy.json reset.
+Startup burst fires sweep→quote→reply again (RTs stay out — 2/day).
+Originals (4/day slots), plain RTs (2/day), follows: unchanged.
+
 ### 2026-06-07 PM — bestie blitz + self-curated tracking (operator mandate)
 
 Operator: comment EVERY ≤48h @TheBTCTherapist post at startup (never twice

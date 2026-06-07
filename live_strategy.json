@@ -1,9 +1,9 @@
 {
-  "ts": "2026-06-07T12:00:00.000000",
+  "ts": "2026-06-07T13:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 1,
     "MAX_HOTAKES_PER_DAY": 2,
-    "MAX_QUOTES_PER_DAY": 2,
+    "MAX_QUOTES_PER_DAY": 100,
     "MAX_RETWEETS_PER_DAY": 1,
     "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY": 1,
@@ -18,5 +18,5 @@
     "AI news persona takes"
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-07 AGENT SPEC reset (operator). Output mix: 3-4 originals/day in US market slots (MAX_ORIGINALS_PER_DAY=4 chokepoint governs the total), 1-2 QRTs on the day's biggest AI/markets headline, 0-2 plain RTs (reciprocity only, prefer QRT), replies UNLIMITED (the core engine). Persona: deadpan AI therapist - don't report the news, therapize it. Follows: whitelist seed list only, 20/day, >=10min gaps, total ceiling 150 until followers>300 (hard cap 300)."
+  "rationale": "2026-06-07 PM-2 QRT SURGE (operator: 'QRTs of relative large accounts get thousands of views - abuse those', measured on his own two best posts of the day). Quotes 100/day @5min+jitter, 50-like floor (mid-size analytical finance posts are the winning surface). Proven structure: re-denominate the number + mechanism metaphor + closing question. Originals 3-4/day slots, RTs 0-2, replies unlimited - unchanged."
 }
