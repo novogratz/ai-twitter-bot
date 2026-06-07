@@ -175,10 +175,12 @@ def main() -> None:
                     help="keep-set: 'whitelist' = current whitelist.json tiers+seeds "
                          "(full purge, default); 'legacy' = also keep respect_list + "
                          "engage/early-bird/mega targets (gentle prune)")
-    ap.add_argument("--pace", choices=["normal", "fast", "insane"], default="normal",
+    ap.add_argument("--pace", choices=["normal", "fast", "brisk", "insane"],
+                    default="normal",
                     help="normal ≈ 480/hr (3.5-7s jitter, breather every 25 — "
-                         "default, operator-preferred); "
+                         "default); "
                          "fast ≈ 1400/hr (1.2-2.5s jitter, breather every 100); "
+                         "brisk ≈ 2000/hr (0.8-1.8s jitter, breather every 150); "
                          "insane = minimal gaps (X drains its ~190/window quota "
                          "in minutes, then it's all cooldowns anyway)")
     ap.add_argument("--cooldown-mins", type=float, default=2.0,
@@ -190,6 +192,9 @@ def main() -> None:
     if args.pace == "insane":
         confirm_wait, gap_lo, gap_hi = 0.5, 0.4, 1.0
         breather_every, breather_lo, breather_hi = 200, 5, 10
+    elif args.pace == "brisk":
+        confirm_wait, gap_lo, gap_hi = 0.6, 0.8, 1.8
+        breather_every, breather_lo, breather_hi = 150, 8, 15
     elif args.pace == "fast":
         confirm_wait, gap_lo, gap_hi = 0.7, 1.2, 2.5
         breather_every, breather_lo, breather_hi = 100, 15, 25
