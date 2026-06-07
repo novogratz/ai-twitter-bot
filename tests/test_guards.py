@@ -1028,3 +1028,54 @@ def test_btc_blitz_filters_and_sorts(monkeypatch):
     assert out == [fresh_big, fresh_small], (
         "must keep only his <=48h posts, sorted most-liked first"
     )
+
+
+# --- 2026-06-07 PM-3: self-RT recycler discipline ----------------------------
+
+def test_boost_recycler_decision_logic(monkeypatch):
+    """First-boost new winners after 1h; recycle (un-RT→re-RT) only with
+    4h+ gaps and under the per-post cycle cap; never touch <1h or >48h."""
+    from datetime import datetime, timedelta
+    from src import boost_recycler_bot as br
+    now = datetime.now()
+    too_fresh = {"url": _url_with_age(20), "likes": 50}
+    winner_new = {"url": _url_with_age(90), "likes": 10}
+    winner_recyclable = {"url": _url_with_age(8 * 60), "likes": 30}
+    too_old = {"url": _url_with_age(50 * 60), "likes": 900}
+
+    # New winner (not yet RT'd) wins over a recyclable one — first boost.
+    action, url = br.pick_action(
+        [too_fresh, winner_new, winner_recyclable, too_old],
+        state={winner_recyclable["url"]: {"boosts": 1, "last": (now - timedelta(hours=9)).isoformat()}},
+        currently_retweeted={winner_recyclable["url"]},
+        now=now,
+    )
+    assert (action, url) == ("boost", winner_new["url"])
+
+    # Only the recyclable one left → recycle it (gap satisfied).
+    action, url = br.pick_action(
+        [too_fresh, winner_recyclable, too_old],
+        state={winner_recyclable["url"]: {"boosts": 1, "last": (now - timedelta(hours=9)).isoformat()}},
+        currently_retweeted={winner_recyclable["url"]},
+        now=now,
+    )
+    assert (action, url) == ("recycle", winner_recyclable["url"])
+
+    # Gap not yet elapsed → hold.
+    action, _ = br.pick_action(
+        [winner_recyclable],
+        state={winner_recyclable["url"]: {"boosts": 1, "last": (now - timedelta(hours=1)).isoformat()}},
+        currently_retweeted={winner_recyclable["url"]},
+        now=now,
+    )
+    assert action is None
+
+    # Cycle cap reached → hold forever.
+    action, _ = br.pick_action(
+        [winner_recyclable],
+        state={winner_recyclable["url"]: {"boosts": br.BOOST_RECYCLE_MAX_CYCLES,
+                                          "last": (now - timedelta(hours=20)).isoformat()}},
+        currently_retweeted={winner_recyclable["url"]},
+        now=now,
+    )
+    assert action is None

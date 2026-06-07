@@ -162,6 +162,22 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 > from the revision spec maps to Safari **write-pacing** (per-action daily caps + jittered
 > spacing + no bursts), same intent, different mechanism.
 
+### 2026-06-07 PM-3 — self-RT recycler (operator: "abuse the retweet of your own posts")
+
+Operator: when a post works, self-RT it after ~1h, then keep cycling
+unretweet → re-retweet (like the pin rotation) so it resurfaces in
+followers' feeds repeatedly. **`src/boost_recycler_bot.py`** (every 45 min,
+ONE action/cycle): own posts ≥5 likes (`BOOST_RECYCLE_MIN_LIKES`) and
+1h-48h old → first self-RT (organic algo push owns the first hour), then
+un-RT→re-RT via the existing `twitter_client.reboost_tweet` (one Safari
+session, ends retweeted) every ≥4h (`BOOST_RECYCLE_GAP_HOURS`), max 4
+cycles/post (`BOOST_RECYCLE_MAX_CYCLES`). Hard 48h ceiling — stale
+resurfacing reads desperate. State invariant shared with notify_bot's
+boost engine: URL in boost_history.json ⇔ currently retweeted (decides
+retweet_post vs reboost_tweet). `pick_action` is pure + guard-tested
+(fresh-winner-first, gap, cap, age window). Complements (not replaces)
+boost_job's fresh-post self-RT and the disabled pin rotation.
+
 ### 2026-06-07 PM-2 — QRT SURGE (operator: "abuse those bro", measured)
 
 Operator data: QRTs of relative large accounts = thousands of views +

@@ -550,6 +550,19 @@ def main():
             id="boost_job",
         )
 
+        # Self-RT recycler (operator 2026-06-07 PM-3: "abuse the retweet of
+        # your own posts… unretweet then retweet, like the pin") — winners
+        # (>=5 likes, 1h-48h old) get a first self-RT then un-RT→re-RT
+        # cycles every 4h+, max 4 per post. One action per cycle.
+        log.info("Boost recycler: un-RT→re-RT own winners every 45 min "
+                 "(>=5 likes, 4h gaps, max 4 cycles/post).")
+        from src.boost_recycler_bot import safe_run_boost_recycler_cycle
+        scheduler.add_job(
+            safe_run_boost_recycler_cycle,
+            trigger=IntervalTrigger(minutes=45),
+            id="boost_recycler_job",
+        )
+
         # Pin-boost bot — DISABLED (operator 2026-06-07: "remove auto pin").
         log.info("Pin-boost bot: DISABLED.")
 
