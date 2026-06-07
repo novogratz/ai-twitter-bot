@@ -286,46 +286,60 @@ def run_boost_cycle():
     Falls back to retweet_own_latest() if scraping fails (so we never miss a
     cycle if X's profile DOM hiccups).
     """
-    from .twitter_client import scrape_profile_tweets, retweet_post
+    from .twitter_client import scrape_profile_tweets, retweet_post, reboost_tweet
 
     history = _load_boost_history()
     log.info("[BOOST] Scraping own profile to pick best recent post...")
     try:
         tweets = scrape_profile_tweets(BOT_HANDLE, max_tweets=12)
     except Exception:
-        log.info("[BOOST] Scrape failed — falling back to retweet_own_latest:")
+        # 2026-06-07 fix: NEVER blind-toggle via retweet_own_latest here —
+        # pressing 't'+Enter on an already-retweeted post UN-retweets it.
+        # The morning log showed the banger's self-RT being toggled off/on
+        # every 20 min ("All recent posts already boosted — using
+        # retweet_own_latest"). On failure, skip; next cycle retries.
+        log.info("[BOOST] Scrape failed — skipping cycle (no blind toggle):")
         traceback.print_exc()
-        retweet_own_latest()
-        log.info("[BOOST] Fallback done.")
         return
 
     if not tweets:
-        log.info("[BOOST] No tweets scraped — falling back to retweet_own_latest.")
-        retweet_own_latest()
-        log.info("[BOOST] Fallback done.")
+        log.info("[BOOST] No tweets scraped — skipping cycle (no blind toggle).")
         return
 
-    # Filter: must be ours, must have a URL, must not have been boosted before.
-    own = []
+    # Filter: must be ours, must have a URL. `own` = never-boosted (first-RT
+    # candidates); `own_boosted` = already-RT'd (resurfacing candidates).
+    own, own_boosted = [], []
     bot_lc = BOT_HANDLE.lower()
     for t in tweets:
         author = (t.get("author") or "").lower().lstrip("@")
         if author and author != bot_lc:
             continue
         url = t.get("url") or ""
-        if not url or url in history:
+        if not url:
             continue
-        own.append({
+        row = {
             "url": url,
             "likes": int(t.get("likes") or 0),
             "replies": int(t.get("replies") or 0),
             "text": (t.get("text") or "").strip(),
-        })
+        }
+        (own_boosted if url in history else own).append(row)
 
     if not own:
-        log.info("[BOOST] All recent posts already boosted — using retweet_own_latest.")
-        retweet_own_latest()
-        log.info("[BOOST] Latest re-boosted as fallback.")
+        # Everything visible is already self-RT'd. Resurface the BANGER —
+        # the highest-engagement own post — via un-RT→re-RT (reboost_tweet
+        # always ends in the retweeted state, never a blind toggle).
+        if not own_boosted:
+            log.info("[BOOST] No own posts in scrape window — skipping.")
+            return
+        banger = max(own_boosted, key=lambda c: (c["likes"], c["replies"]))
+        log.info(f"[BOOST] All recent posts already boosted — resurfacing the "
+                 f"banger ({banger['likes']} likes): {banger['text'][:100]!r}")
+        try:
+            reboost_tweet(banger["url"])
+        except Exception:
+            log.info("[BOOST] Banger reboost failed:")
+            traceback.print_exc()
         return
 
     # Smart boost timing 2026-05-08: prefer the FRESHEST post (top-of-list
