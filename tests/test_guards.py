@@ -509,3 +509,86 @@ def test_engine_health_quote_disabled_only_if_all_caps_zero(monkeypatch, tmp_pat
 
     ehb.run_engine_health_cycle()
     assert alerts_path.exists(), "quote must still alert when only ONE of its caps is zero"
+
+
+def test_engine_health_suppresses_alert_when_surface_fired_recently(monkeypatch, tmp_path):
+    """A surface that fired in the current or previous hour is alive — slow,
+    not collapsed. Without this guard, the 04:01 cycle on 2026-06-07 reported
+    'hotake collapsed: 2 vs ~10' while the hotake bot had fired successfully
+    at 03:23 and 03:43 (max 20-min cadence), and was firing again at 04:02.
+    Same false-positive class as PR #6 / #7: never burn the self-heal cooldown
+    on a healthy bot whose only sin is matching today's cadence instead of the
+    7-day cumulative-by-hour baseline.
+    """
+    import csv
+    from src import engine_health_bot as ehb
+
+    log_path = tmp_path / "engagement_log.csv"
+    alerts_path = tmp_path / "engine_health_alerts.json"
+    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
+    monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
+    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
+    monkeypatch.setenv("MAX_HOTAKES_PER_DAY", "400")  # operator-raised cap
+
+    from datetime import date, datetime, timedelta
+    hour_now = datetime.now().hour
+    if hour_now < 1:
+        # At hour 0 there is no "previous hour today" to fire in — skip.
+        return
+    rows = [["timestamp", "type", "text", "target_url"]]
+    # 7 historical days with ~10 hotakes each before this hour → baseline=10.
+    for i in range(1, 8):
+        d = (date.today() - timedelta(days=i)).isoformat()
+        for _ in range(10):
+            rows.append([f"{d}T00:00:00", "hotake", "x", "y"])
+    # Today: 2 hotakes fired in the previous hour — well below the baseline of
+    # 10 (would normally alert at 20%) but the surface is plainly alive.
+    today = date.today().isoformat()
+    prev_h = hour_now - 1
+    rows.append([f"{today}T{prev_h:02d}:23:00", "hotake", "x", "y"])
+    rows.append([f"{today}T{prev_h:02d}:43:00", "hotake", "x", "y"])
+    with open(log_path, "w") as f:
+        csv.writer(f).writerows(rows)
+
+    ehb.run_engine_health_cycle()
+    assert not alerts_path.exists(), (
+        "surface that fired in the previous hour must not trigger a collapse alert"
+    )
+
+
+def test_engine_health_still_alerts_on_sustained_silence(monkeypatch, tmp_path):
+    """Mirror of the recent-fire guard: when the surface has been silent for
+    2+ clock hours (no fire in the current hour OR the previous one), the
+    alert MUST still fire. Guards against the recent-fire suppression
+    over-masking a real collapse."""
+    import csv
+    from src import engine_health_bot as ehb
+
+    log_path = tmp_path / "engagement_log.csv"
+    alerts_path = tmp_path / "engine_health_alerts.json"
+    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
+    monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
+    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
+    monkeypatch.setenv("MAX_HOTAKES_PER_DAY", "400")
+
+    from datetime import date, datetime, timedelta
+    hour_now = datetime.now().hour
+    if hour_now < 2:
+        # Need ≥2 hours of "earlier today" available to model the silence.
+        return
+    rows = [["timestamp", "type", "text", "target_url"]]
+    for i in range(1, 8):
+        d = (date.today() - timedelta(days=i)).isoformat()
+        for _ in range(10):
+            rows.append([f"{d}T00:00:00", "hotake", "x", "y"])
+    # Today: a single fire 2 hours ago — outside the recent-fire window.
+    today = date.today().isoformat()
+    stale_h = hour_now - 2
+    rows.append([f"{today}T{stale_h:02d}:30:00", "hotake", "x", "y"])
+    with open(log_path, "w") as f:
+        csv.writer(f).writerows(rows)
+
+    ehb.run_engine_health_cycle()
+    assert alerts_path.exists(), (
+        "sustained silence (no fire in current or previous hour) must still alert"
+    )
