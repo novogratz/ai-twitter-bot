@@ -137,6 +137,16 @@ def _bot_is_running() -> bool:
     return r.returncode == 0
 
 
+def _reload_page() -> None:
+    subprocess.run(
+        ["osascript", "-e",
+         'tell application "Safari" to do JavaScript "location.reload(); '
+         "'RELOADED'\" in current tab of front window"],
+        capture_output=True, text=True, timeout=15,
+    )
+    time.sleep(8)
+
+
 def _ensure_following_page() -> None:
     """Navigate the front tab to /following if it isn't there already."""
     r = subprocess.run(
@@ -203,6 +213,7 @@ def main() -> None:
     empty_rounds = 0
     noconfirm_streak = 0
     limit_hits = 0
+    reload_attempts = 0
 
     def cooldown(reason: str) -> None:
         nonlocal noconfirm_streak, limit_hits
@@ -232,6 +243,7 @@ def main() -> None:
                 break
             if confirmed:
                 noconfirm_streak = 0
+                reload_attempts = 0
                 if limit_hits and len(unfollowed) % 50 == 0:
                     limit_hits = 0  # healthy streak → reset backoff
                 unfollowed.append(h)
@@ -261,8 +273,23 @@ def main() -> None:
         elif res == "NONE":
             empty_rounds += 1
             if empty_rounds >= 6:
-                print("DONE: no more unfollow buttons after scrolling", flush=True)
-                break
+                # An empty viewport is ambiguous: list exhausted, OR the
+                # rate-limit froze the list API so scrolling loads nothing
+                # (false DONE observed 2026-06-07 at 190/~4K). Reload and
+                # re-verify before believing it.
+                reload_attempts += 1
+                if reload_attempts >= 3:
+                    print("DONE: no unfollow buttons after %d reloads — list "
+                          "exhausted" % reload_attempts, flush=True)
+                    break
+                print("empty viewport — reload + re-verify (%d/3)"
+                      % reload_attempts, flush=True)
+                if auto_resume:
+                    time.sleep(args.cooldown_mins * 60)
+                _reload_page()
+                run_js(CLEAR_TAGS_JS)
+                empty_rounds = 0
+                continue
             run_js(SCROLL_JS)
             time.sleep(2.5)
         else:
