@@ -29,6 +29,7 @@ from datetime import datetime, timedelta
 
 from .config import _PROJECT_ROOT, BOT_HANDLE
 from .logger import log
+from .twitter_client import is_own_post as _is_own_post
 
 STATE_FILE = os.path.join(_PROJECT_ROOT, "boost_recycler_state.json")
 
@@ -117,8 +118,10 @@ def run_boost_recycler_cycle() -> None:
     bot_lc = BOT_HANDLE.lower()
     winners = []
     for t in tweets:
-        author = (t.get("author") or "").lower().lstrip("@")
-        if author and author != bot_lc:
+        # Ownership by URL — the scraper's `author` is the DISPLAY NAME,
+        # not the handle; comparing it to BOT_HANDLE silently dropped every
+        # own post (2026-06-07 banger bug). is_own_post is ground truth.
+        if not _is_own_post(t):
             continue
         url = t.get("url") or ""
         likes = int(t.get("likes") or 0)

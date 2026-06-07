@@ -25,6 +25,7 @@ from typing import Optional
 from .config import _PROJECT_ROOT, BOT_HANDLE, REPLY_MODEL
 from .llm_client import run_llm, unwrap_text
 from .logger import log
+from .twitter_client import is_own_post as _is_own_post
 from .twitter_client import scrape_profile_tweets, reply_to_tweet_in_thread
 from .humanizer import humanize
 from .engagement_log import log_reply
@@ -121,8 +122,10 @@ def run_viral_followup_cycle():
     candidates = []
     bot_lc = BOT_HANDLE.lower()
     for t in tweets:
-        author = (t.get("author") or "").lower().lstrip("@")
-        if author and author != bot_lc:
+        # Ownership by URL — the scraper's `author` is the DISPLAY NAME,
+        # not the handle; comparing it to BOT_HANDLE silently dropped every
+        # own post (2026-06-07 banger bug). is_own_post is ground truth.
+        if not _is_own_post(t):
             continue
         url = t.get("url") or ""
         if not url or url in followed_up:

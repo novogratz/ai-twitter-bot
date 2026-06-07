@@ -29,6 +29,7 @@ from datetime import datetime, timedelta
 
 from .config import _PROJECT_ROOT, BOT_HANDLE
 from .logger import log
+from .twitter_client import is_own_post as _is_own_post
 from .twitter_client import scrape_profile_tweets
 
 SUPPRESSION_STATE_FILE = os.path.join(_PROJECT_ROOT, "suppression_state.json")
@@ -82,8 +83,10 @@ def run_suppression_watch_cycle():
     bot_lc = BOT_HANDLE.lower()
     seasoned = []
     for t in tweets:
-        author = (t.get("author") or "").lower().lstrip("@")
-        if author and author != bot_lc:
+        # Ownership by URL — the scraper's `author` is the DISPLAY NAME,
+        # not the handle; comparing it to BOT_HANDLE silently dropped every
+        # own post (2026-06-07 banger bug). is_own_post is ground truth.
+        if not _is_own_post(t):
             continue
         # The scraper doesn't expose a precise timestamp — rely on order
         # (newest first) and skip top 3-4 to avoid penalizing fresh posts.

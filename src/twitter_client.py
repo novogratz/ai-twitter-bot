@@ -1354,6 +1354,21 @@ def _scroll_page():
     time.sleep(2)
 
 
+def is_own_post(tweet: dict) -> bool:
+    """Authoritative ownership check for scraped tweets (2026-06-07).
+
+    The scraper's `author` field is the DISPLAY NAME ("The AI Therapist"),
+    not the @handle — five bots compared it against BOT_HANDLE and silently
+    classified every own post as foreign (the boost engine never once picked
+    a banger; suppression_watch measured nothing). The URL is ground truth:
+    own posts and own QRTs live under /BOT_HANDLE/status/; retweets of
+    others on our profile carry the ORIGINAL author's URL and are correctly
+    excluded."""
+    from .config import BOT_HANDLE
+    url = (tweet.get("url") or "").lower()
+    return f"x.com/{BOT_HANDLE.lower()}/status/" in url
+
+
 def scrape_profile_tweets(username: str, max_tweets: int = 5):
     """Visit a profile and scrape their recent tweet URLs and text."""
     with _safari_lock:

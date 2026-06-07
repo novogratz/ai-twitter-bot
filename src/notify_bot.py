@@ -13,6 +13,7 @@ from .twitter_client import (
     post_tweet,
     visit_profile_and_like,
     follow_account,
+    is_own_post as _is_own_post,
 )
 from .replyback_agent import generate_replyback
 from .humanizer import humanize
@@ -311,8 +312,10 @@ def run_boost_cycle():
     own, own_boosted = [], []
     bot_lc = BOT_HANDLE.lower()
     for t in tweets:
-        author = (t.get("author") or "").lower().lstrip("@")
-        if author and author != bot_lc:
+        # Ownership by URL — the scraper's `author` is the DISPLAY NAME,
+        # not the handle; comparing it to BOT_HANDLE silently dropped every
+        # own post (2026-06-07 banger bug). is_own_post is ground truth.
+        if not _is_own_post(t):
             continue
         url = t.get("url") or ""
         if not url:

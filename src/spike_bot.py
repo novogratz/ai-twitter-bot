@@ -25,6 +25,7 @@ from datetime import datetime, date
 from .config import _PROJECT_ROOT, BOT_HANDLE, REPLY_MODEL
 from .llm_client import run_llm, unwrap_text
 from .logger import log
+from .twitter_client import is_own_post as _is_own_post
 from .twitter_client import (
     scrape_profile_tweets,
     retweet_post,
@@ -201,8 +202,10 @@ def run_spike_cycle():
     spikes = []
     bot_lc = BOT_HANDLE.lower()
     for t in tweets:
-        author = (t.get("author") or "").lower().lstrip("@")
-        if author and author != bot_lc:
+        # Ownership by URL — the scraper's `author` is the DISPLAY NAME,
+        # not the handle; comparing it to BOT_HANDLE silently dropped every
+        # own post (2026-06-07 banger bug). is_own_post is ground truth.
+        if not _is_own_post(t):
             continue
         url = t.get("url") or ""
         if not url or url in history:
