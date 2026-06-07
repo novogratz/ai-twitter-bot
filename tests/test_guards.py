@@ -1616,8 +1616,8 @@ def test_quote_ai_viral_pass_present_and_ranked():
     # prepends ai_viral ahead of the generic candidates.
     import inspect
     src = inspect.getsource(qb.run_quote_tweet_cycle)
-    assert "priority_candidates + ai_viral_candidates + candidates" in src, \
-        "AI virals must be ranked ahead of the generic pool"
+    assert "ai_viral_candidates + priority_candidates + candidates" in src, \
+        "AI virals must LEAD the main quote lane (bestie is covered by btc_blitz)"
 
 
 def test_startup_reply_warmup_is_bounded(monkeypatch):

@@ -566,10 +566,13 @@ def run_quote_tweet_cycle():
     candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
     ai_viral_candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
     priority_candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
-    # Order: bestie (priority) → TOP AI virals → everything else. The AI
-    # lane leads the open pool (operator 2026-06-07: "be impactful sharp
-    # and viral" + "more AI").
-    candidates = priority_candidates + ai_viral_candidates + candidates
+    # Order: TOP AI virals → bestie → everything else (operator 2026-06-07:
+    # "more quote retweet on AI"). AI LEADS the main quote lane now: a 55-like
+    # bestie post was winning the slot over higher-engagement AI virals
+    # purely because priority was listed first (ignores likes). The bestie is
+    # already covered by btc_blitz's dedicated QRT path every 6h, so he
+    # surfaces here only when no AI viral is hotter.
+    candidates = ai_viral_candidates + priority_candidates + candidates
     if not candidates:
         log.info("[QUOTE] All candidates are on the respect list. Skipping.")
         return
