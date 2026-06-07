@@ -485,6 +485,16 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         is_en_tweet = not _looks_french(text)
         limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
         if limited: break
+        # Disk re-check JUST before the expensive LLM call — another reply bot
+        # (direct_reply / feed_sweeper / retweet_bot replyback) may have shipped
+        # a reply to this URL since this cycle's `load_replied()` snapshot. The
+        # chokepoint in twitter_client.reply_to_tweet is the final guard, but it
+        # only fires AFTER ~17s of wasted ollama time per skip — 774 such skips
+        # across 06-06+07 = ~3.6h of wasted compute/day. Reload is ~5ms.
+        fresh_replied = load_replied()
+        if url in fresh_replied:
+            replied.add(url)
+            continue
         log.info(f"[{source_name}] Replying to @{author}...")
         _reply_lang = "fr" if source_name.startswith("PROFILE") else ("en" if is_en_tweet else "fr")
         reply = _generate_single_reply(author, text, lang=_reply_lang)

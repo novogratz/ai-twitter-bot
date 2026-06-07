@@ -592,3 +592,63 @@ def test_engine_health_still_alerts_on_sustained_silence(monkeypatch, tmp_path):
     assert alerts_path.exists(), (
         "sustained silence (no fire in current or previous hour) must still alert"
     )
+
+
+# --- pre-LLM dedup re-check (operator 2026-06-07: 774 wasted reply LLM calls) ---
+
+def test_reply_skips_llm_when_concurrent_bot_already_replied(monkeypatch, tmp_path):
+    """The chokepoint in twitter_client.reply_to_tweet has always blocked a
+    duplicate write, but only AFTER the ~17s ollama call. _reply_to_tweets must
+    re-read replied_tweets.json from disk JUST before generating, so a URL
+    another reply bot (direct_reply, feed_sweeper, retweet replyback) already
+    shipped in the same minute is skipped without burning an LLM call. Burned
+    ~3.6h of compute/day before the fix.
+    """
+    import src.direct_reply as dr
+    import src.reply_bot as rb
+
+    # Isolate the on-disk replied set so the test doesn't bleed real state.
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+
+    # Two on-niche tweets the in-memory cycle-start snapshot thinks are fresh.
+    fresh_url = "https://x.com/some_ai_account/status/2063500000000000001"
+    racy_url = "https://x.com/some_ai_account/status/2063500000000000002"
+    tweets = [
+        {"url": fresh_url, "text": "openai just raised at 500B valuation", "author": "some_ai_account"},
+        {"url": racy_url, "text": "anthropic shipped a new tool — claude can now run terminals", "author": "some_ai_account"},
+    ]
+    cycle_snapshot = rb.load_replied()  # empty at start
+
+    # Simulate a concurrent reply bot writing `racy_url` to disk between the
+    # snapshot and the LLM call.
+    concurrent_snapshot = rb.load_replied()
+    concurrent_snapshot.add(racy_url)
+    rb.save_replied(concurrent_snapshot)
+
+    llm_calls: list[str] = []
+
+    def fake_generate(author, text, lang="fr"):
+        llm_calls.append(text)
+        return "named-emotion validated, calm reframe with the precise fact"
+
+    posted: list[tuple[str, str]] = []
+    monkeypatch.setattr(dr, "_generate_single_reply", fake_generate)
+    monkeypatch.setattr(dr, "reply_to_tweet", lambda url, reply: posted.append((url, reply)))
+    # Bypass content-side gates that aren't under test here.
+    monkeypatch.setattr(dr, "humanize", lambda t: t)
+    monkeypatch.setattr(dr, "log_reply", lambda *a, **k: None)
+    monkeypatch.setattr(dr, "_tweet_age_minutes", lambda url: 5)
+    monkeypatch.setattr(dr, "_is_on_niche", lambda text: True)
+    monkeypatch.setattr(
+        dr, "llm_hourly_limit_status", lambda: (False, 0, 1000, 0)
+    )
+
+    dr._reply_to_tweets(tweets, cycle_snapshot, "SEARCH-HOT", en_counter=[0])
+
+    # The racy URL must be skipped BEFORE _generate_single_reply runs, and
+    # propagated into the in-memory snapshot so the cycle never retries it.
+    assert llm_calls == ["openai just raised at 500B valuation"], (
+        "pre-LLM disk re-check must keep racy_url out of the LLM"
+    )
+    assert posted == [(fresh_url, "named-emotion validated, calm reframe with the precise fact")]
+    assert racy_url in cycle_snapshot

@@ -103,6 +103,39 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 > from the revision spec maps to Safari **write-pacing** (per-action daily caps + jittered
 > spacing + no bursts), same intent, different mechanism.
 
+### 2026-06-07 PM — pre-LLM dedup re-check on the reply hot paths
+
+Audit of bot.log on 06-07 06:30 turned up 422 `[REPLY] already replied to this
+tweet (chokepoint dedup) — skipping` entries from the day, and 352 the day
+before. Each one is a tweet that the chokepoint in
+`twitter_client.reply_to_tweet` correctly refused — but only AFTER the ollama
+DIRECT_REPLY call burned ~17s generating the reply. Pattern in the log was
+unambiguous: `[LLM] DIRECT_REPLY:` at T, `[REPLY] already replied … skipping`
+at T+17s. At 774 hits / 48h that is ~3.6h of wasted compute per day, on
+ollama time we want spent on actually-fresh candidates.
+
+Root cause: each reply bot (`direct_reply`, `feed_sweeper_bot`,
+`retweet_bot._reply_after_repost`) loads `replied_tweets.json` once at cycle
+start. While the cycle is iterating, OTHER reply bots are writing new URLs
+to the same file. The cycle's in-memory snapshot drifts stale. The
+in-memory `if url in replied: continue` check passes, the LLM runs, and the
+chokepoint (which loads fresh from disk) is the first guard that sees the
+race.
+
+Fix: `_reply_to_tweets` and `retweet_bot._reply_after_repost` now call
+`load_replied()` **just before** `_generate_single_reply` and skip if the URL
+landed on disk meanwhile. The fresh load is ~5ms against the 10k-URL store —
+cheap relative to a saved ~17s LLM call. The chokepoint stays as the final
+guard. Guard test `test_reply_skips_llm_when_concurrent_bot_already_replied`
+pins the contract: a URL another bot wrote between snapshot and LLM call must
+be skipped before generation runs.
+
+Lesson: a chokepoint that loads-from-disk is the right last line of defense,
+but it is NOT a free correctness gate — every check that runs after an
+expensive call costs the wasted call. When you see a chokepoint dedup firing
+in volume, walk the call chain backward and re-do the same disk check at the
+earliest cheap point.
+
 ### 2026-06-07 — engine-health suppresses alert when surface fired within last hour
 
 The clamp-by-cap fix (PR #7) silenced the cap-policy false positives but a
