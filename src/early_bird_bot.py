@@ -27,37 +27,18 @@ from .humanizer import humanize
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
-# 2026-06-07 viral push — re-laned to the agent spec (AI x markets x
-# psychology, English-first). The old ~95-handle list was a museum of past
-# mandates: FR crypto/bourse/media tails, space, GPU miners, and even three
-# BLOCKLISTED handles (MathieuL1, NCheron_bourse, Capetlevrai) burning scan
-# cycles on a serialized Safari. ~45 on-lane handles now — the rotation hits
-# every account ~2x more often, which is what the early-reply window needs.
-EARLY_BIRD_ACCOUNTS = [
-    # === Operator VIPs (keep) ===
-    "Graphseo", "novogratz", "FinTales_", "jbelizaireCEO",
-    # === Foils / persona ecosystem — speed here feeds the AI-vs-BTC bit ===
-    "TheBTCTherapist", "saylor", "APompliano", "balajis",
-    "PeterSchiff", "RaoulGMI",
-    # === Fin-meme / behavioral (tier2 seeds + peers — our voice wins) ===
-    "morganhousel", "ParikPatelCFA", "litcapital", "greg16676935420",
-    "ReformedBroker", "jasonzweigwsj", "charliebilello",
-    # === Markets megas — panic posts are the therapist's house calls ===
-    "unusual_whales", "KobeissiLetter", "WatcherGuru", "zerohedge",
-    "DocumentingBTC", "Cointelegraph", "chamath", "jimcramer",
-    # === AI megas EN ===
-    "sama", "OpenAI", "AnthropicAI", "elonmusk", "karpathy", "ylecun",
-    "GoogleDeepMind", "DarioAmodei", "AravSrinivas", "demishassabis",
-    "gdb", "AndrewYNg", "fchollet", "simonw", "swyx",
-    # === AI niche / dev (tier3 seeds + high-velocity AI media) ===
-    "TheRundownAI", "rowancheung", "DrJimFan", "GaryMarcus",
-    "mattwolfe", "gregisenberg", "steipete", "lexfridman",
-    # === Crypto megas EN ===
-    "VitalikButerin", "cz_binance", "brian_armstrong", "WuBlockchain",
-    "tier10k",
-    # === Mega VC / builder voices (markets-adjacent, huge first-hour reach) ===
-    "naval", "paulg", "pmarca", "garrytan", "levie",
-]
+# 2026-06-07 PM (operator): "stop going to the static accounts… develop
+# yourself the list of accounts you want to follow and track" — the static
+# list is GONE. The scan pool now comes from account_curator.tracked_handles()
+# (the bot's own earned list: authors whose posts it kept engaging, weighted
+# by follower-conversion evidence), pinned with TheBTCTherapist + Graphseo,
+# the only two operator-mandated keepers.
+EARLY_BIRD_ACCOUNTS: list = []  # intentionally empty — see _scan_pool()
+
+
+def _scan_pool() -> list:
+    from .account_curator import tracked_handles
+    return tracked_handles(limit=30)
 
 # A tweet is "early-bird eligible" if it's at most this many minutes old.
 # Goal: land in top ~5 replies. Sweet spot is ~5-15 min depending on the
@@ -77,7 +58,7 @@ def run_early_bird_cycle():
     # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
     from .evolution_store import filter_and_weight
     from .direct_reply import ALWAYS_REPLY_ACCOUNTS
-    pool = filter_and_weight(EARLY_BIRD_ACCOUNTS)
+    pool = filter_and_weight(_scan_pool())
     always_pool = filter_and_weight(ALWAYS_REPLY_ACCOUNTS)
 
     # Growth push: scan the always-reply accounts first, then fill with random

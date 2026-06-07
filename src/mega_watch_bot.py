@@ -30,24 +30,16 @@ from .humanizer import humanize
 
 _OWN_HANDLE = BOT_HANDLE.lower()
 
-# 2026-06-07 viral push: the ≤4-min watcher is the single highest-leverage
-# reply surface a 1.3K-follower account has — a sharp reply in a mega-post's
-# first minutes rides its ENTIRE viral run. Re-laned to AI x markets x
-# psychology: space + GPU-miner tail dropped, foils + fin-meme seeds +
-# market-news megas in. Keep this list TIGHT — every watched handle costs
-# scan time inside the 4-min freshness window.
-MEGA_ACCOUNTS = [
-    # AI megas — fresh drops, massive first-hour velocity
-    "sama", "OpenAI", "AnthropicAI", "elonmusk", "karpathy",
-    "DarioAmodei", "demishassabis", "naval",
-    # Foils — the AI-vs-BTC bit lives or dies on reply speed here
-    "saylor", "TheBTCTherapist",
-    # Market-news megas — panic posts are the therapist's house calls
-    "unusual_whales", "KobeissiLetter", "WatcherGuru", "zerohedge",
-    "DocumentingBTC",
-    # Fin-meme / behavioral seeds — our reply voice wins these rooms
-    "morganhousel", "litcapital", "ParikPatelCFA", "greg16676935420",
-]
+# 2026-06-07 PM (operator): static list GONE — the ≤4-min watcher scans the
+# TOP of the bot's own earned list (account_curator), pinned with
+# TheBTCTherapist + Graphseo. The tightest freshness window gets the
+# highest-conviction handles the curator has.
+MEGA_ACCOUNTS: list = []  # intentionally empty — see _watch_pool()
+
+
+def _watch_pool() -> list:
+    from .account_curator import tracked_handles
+    return tracked_handles(limit=12)
 
 MAX_AGE_MIN = 4
 MAX_REPLIES_PER_CYCLE = 2
@@ -58,7 +50,8 @@ def run_mega_watch_cycle():
     replied = load_replied()
     posted = 0
 
-    sample = random.sample(MEGA_ACCOUNTS, k=min(5, len(MEGA_ACCOUNTS)))
+    pool = _watch_pool()
+    sample = random.sample(pool, k=min(5, len(pool)))
     log.info(f"[MEGA] Polling: {sample}")
 
     for username in sample:

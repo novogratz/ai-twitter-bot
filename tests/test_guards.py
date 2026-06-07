@@ -895,23 +895,21 @@ def test_weekly_top_posts_sorted_and_windowed(monkeypatch, tmp_path):
     )
 
 
-# --- 2026-06-07 viral push: early-reply target lists stay on-lane -----------
+# --- 2026-06-07 PM: early-reply pools are curator-driven, never static ------
 
-def test_early_reply_targets_on_lane():
-    """The ≤4-min/≤12-min early-reply lists are the viral surfaces — they
-    must never contain blocklisted handles, dead space-era targets, or lose
-    the foils the persona's AI-vs-BTC bit depends on."""
-    from src.config import BLOCKLIST
+def test_early_reply_targets_are_curator_driven():
+    """2026-06-07 PM operator mandate: NO static target lists — the scan
+    pools come from account_curator.tracked_handles(), pinned with the only
+    two operator-mandated keepers (TheBTCTherapist, Graphseo)."""
     from src.early_bird_bot import EARLY_BIRD_ACCOUNTS
     from src.mega_watch_bot import MEGA_ACCOUNTS
-    all_targets = {h.lower() for h in EARLY_BIRD_ACCOUNTS + MEGA_ACCOUNTS}
-    assert not (all_targets & BLOCKLIST), (
-        f"blocklisted handles in early-reply lists: {all_targets & BLOCKLIST}"
+    assert EARLY_BIRD_ACCOUNTS == [] and MEGA_ACCOUNTS == [], (
+        "static early-reply lists must stay empty — pools come from the curator"
     )
-    for space in ("spacex", "starlink", "rocketlab", "spacex_france", "peterdiamandis"):
-        assert space not in all_targets, f"space-era handle {space!r} still targeted"
-    for foil in ("thebtctherapist", "saylor", "morganhousel", "unusual_whales"):
-        assert foil in all_targets, f"missing key viral target {foil!r}"
+    from src.account_curator import PINNED, tracked_handles
+    assert tuple(PINNED) == ("TheBTCTherapist", "Graphseo")
+    handles = tracked_handles(limit=5)
+    assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo"
 
 
 # --- 2026-06-07 learning-loop fixes: self_winners provenance + clearing -----
@@ -974,3 +972,59 @@ def test_pillar_engagement_aggregates(monkeypatch, tmp_path):
     assert by["market_trauma"]["avg_likes"] == 15.0
     assert by["ai_news_take"]["avg_likes"] == 3.0
     assert out[0]["pillar"] == "market_trauma", "sorted by avg_likes desc"
+
+
+# --- 2026-06-07 PM: self-curated tracking + BTC bestie blitz ----------------
+
+def test_curator_lane_gate_and_pins(monkeypatch, tmp_path):
+    """Only ON-LANE engagements count as evidence (FR-era rows classify
+    'other' and are ignored); pinned handles always lead the tracked list."""
+    from datetime import datetime
+    from src import account_curator as ac
+    now = datetime.now().isoformat()
+    log_file = tmp_path / "log.csv"
+    rows = []
+    # 3 on-lane engagements with an EN markets author
+    for i in range(3):
+        rows.append(f'{now},reply,"your drawdown is just the market invoicing your FOMO {i}",https://x.com/goodfinance/status/12345{i},SEARCH,,market_trauma')
+    # 4 FR-era engagements (classify "other") with a legacy author
+    for i in range(4):
+        rows.append(f'{now},reply,"très intéressant merci pour le partage {i}",https://x.com/legacyfr/status/2345{i},PROFILE,,')
+    log_file.write_text("\n".join(rows) + "\n")
+    monkeypatch.setattr(ac, "ENGAGEMENT_LOG_FILE", str(log_file))
+    monkeypatch.setattr(ac, "TARGETS_LOG_FILE", str(tmp_path / "none.json"))
+    monkeypatch.setattr(ac, "WHITELIST_FILE", str(tmp_path / "wl.json"))
+    monkeypatch.setattr(ac, "TRACKED_FILE", str(tmp_path / "tracked.json"))
+    (tmp_path / "wl.json").write_text(json.dumps({"tiers": {}}))
+
+    ac.run_curator_cycle()
+    handles = ac.tracked_handles(limit=10)
+    assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo", "pins lead"
+    assert "goodfinance" in handles, "on-lane author must be tracked"
+    assert "legacyfr" not in handles, "FR-era 'other' engagements must not count"
+
+
+def test_curator_promotion_quality_bar():
+    """Following is a higher bar than tracking: spam-pattern handles (long
+    digit runs) and thin evidence never reach the whitelist."""
+    from src.account_curator import _promotable
+    assert _promotable({"handle": "unusual_whales", "engagements": 9})
+    assert not _promotable({"handle": "bisdianora24202", "engagements": 9}), "digit-run spam"
+    assert not _promotable({"handle": "goodname", "engagements": 4}), "below promote floor"
+
+
+def test_btc_blitz_filters_and_sorts(monkeypatch):
+    """Blitz keeps only HIS posts <=48h, most-liked first; reposts of others
+    on his profile and stale posts are dropped."""
+    from src import btc_blitz as bb
+    from src import twitter_client as tc
+    fresh_small = {"url": _url_with_age(60).replace("/someone/", "/thebtctherapist/"), "likes": 3, "text": "a"}
+    fresh_big = {"url": _url_with_age(120).replace("/someone/", "/thebtctherapist/"), "likes": 800, "text": "b"}
+    stale = {"url": _url_with_age(50 * 60).replace("/someone/", "/thebtctherapist/"), "likes": 9000, "text": "c"}
+    foreign = {"url": _url_with_age(30), "likes": 500, "text": "d"}  # /someone/ = repost
+    monkeypatch.setattr(tc, "scrape_profile_tweets",
+                        lambda *a, **k: [fresh_small, stale, foreign, fresh_big])
+    out = bb._fresh_bestie_posts()
+    assert out == [fresh_big, fresh_small], (
+        "must keep only his <=48h posts, sorted most-liked first"
+    )

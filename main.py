@@ -377,6 +377,21 @@ def main():
         log.info("Warming up replyback (reply to people who replied to us)...")
         quiet_safe_replyback()
 
+    # Curator first — builds tracked_accounts.json so the early-reply bots
+    # have the bot's own earned scan list from the first cycle (operator
+    # 2026-06-07: no more static lists; pinned: TheBTCTherapist + Graphseo).
+    from src.account_curator import safe_run_curator_cycle
+    safe_run_curator_cycle()
+
+    # BTC Therapist bestie blitz (operator 2026-06-07 PM): on startup,
+    # comment EVERY ≤48h post from @TheBTCTherapist (one reply per tweet,
+    # ever — dedup makes re-runs free) and QRT his most impactful posts
+    # with the AI-side inversion bit + GIF. Runs BEFORE the reply burst so
+    # the day's 2 QRT slots go to the bestie bit first.
+    from src.btc_blitz import safe_run_btc_blitz_cycle
+    if not args.reply_only:
+        safe_run_btc_blitz_cycle()
+
     # Startup catchup — REPLIES ONLY since 2026-06-07: replies are the
     # unlimited surface, so burst them freely on boot. Quotes/RTs are NOT
     # fired here — with 2 QRT + 2 RT slots/day, a boot-time burst would
@@ -795,6 +810,27 @@ def main():
             safe_run_self_winners_cycle,
             trigger=IntervalTrigger(hours=2),
             id="self_winners_job",
+        )
+
+        # Account curator — recomputes the bot's own tracked-accounts list
+        # every 4h from engagement evidence + conversion weights; promotes
+        # its strongest finds to the whitelist discovered tier (capped 3/day).
+        log.info("Account curator: self-curated tracked list every 4h "
+                 "(pinned: TheBTCTherapist + Graphseo).")
+        scheduler.add_job(
+            safe_run_curator_cycle,
+            trigger=IntervalTrigger(hours=4),
+            id="account_curator_job",
+        )
+
+        # BTC Therapist bestie blitz — every 6h catchup: any new ≤48h post
+        # of his gets a reply; his best fresh post competes for a QRT slot.
+        # Idempotent via the replied/quoted dedup stores.
+        log.info("BTC bestie blitz: full 48h coverage of @TheBTCTherapist every 6h.")
+        scheduler.add_job(
+            safe_run_btc_blitz_cycle,
+            trigger=IntervalTrigger(hours=6),
+            id="btc_blitz_job",
         )
 
         # Promote-best-reply bot — plain-reposts our highest-engagement reply

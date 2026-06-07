@@ -175,6 +175,41 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM — bestie blitz + self-curated tracking (operator mandate)
+
+Operator: comment EVERY ≤48h @TheBTCTherapist post at startup (never twice
+on one post), QRT his most impactful with the AI-side inversion bit ("he
+works the weekend because Bitcoin — we're boarding the jet to the
+afterparty" + GIF), be his best friend / big brother. AND: stop ALL static
+account lists — the bot develops its own tracked list; only TheBTCTherapist
+and Graphseo stay operator-pinned.
+
+- **`src/btc_blitz.py`** — startup + every 6h: scrapes his profile, QRTs the
+  most-liked not-yet-quoted ≤48h posts (bestie inversion prompt, GIF bank:
+  private jet / leo cheers / wolf of wall street), then replies to every
+  fresh post not yet replied. Fully idempotent: replied/quoted dedup stores
+  + chokepoints make re-runs free. Runs BEFORE the startup reply burst so
+  the day's 2 QRT slots go to the bit first.
+- **`src/account_curator.py`** — every 4h, rebuilds `tracked_accounts.json`:
+  score = on-lane engagements (last `CURATOR_WINDOW_DAYS`=4d) × conversion
+  weight (engagement_targets_log). **Lane gate**: engagements whose text
+  classifies pillar="other" (where FR-era replies land) DON'T count — this
+  is what lets the curator survive a persona pivot. PINNED first:
+  TheBTCTherapist, Graphseo.
+- **`EARLY_BIRD_ACCOUNTS` / `MEGA_ACCOUNTS` static lists are GONE** (empty
+  lists pinned by guard test) — both bots scan `tracked_handles()` (early
+  bird top-30, mega watcher top-12).
+- **Whitelist "discovered" tier** (operator grant: "develop yourself the
+  list of accounts you want to follow"): curator promotes its strongest
+  finds — promotion bar ABOVE tracking bar (≥5 engagements, no digit-run
+  spam handles), ≤3 adds/day, ≤50 total, logged; operator tiers untouched;
+  follows still go through every chokepoint rule (20/day, 10-min gaps,
+  300/150 ceiling, churn). Discovered handles queue AFTER operator seeds
+  in the seed-follow bot.
+- Live-verified: curator on real data tracks unusual_whales, cointelegraph,
+  polymarket, coinbureau…; FR-era authors correctly excluded by the lane
+  gate; spam-pattern handles correctly blocked from promotion.
+
 ### 2026-06-07 PM — viral push round 2: the learning loops were broken
 
 First live read of `pillar_engagement_30d` (scraped own-metrics joined to

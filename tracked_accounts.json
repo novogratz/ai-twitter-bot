@@ -1,0 +1,253 @@
+{
+  "tracked": [
+    {
+      "handle": "unusual_whales",
+      "engagements": 40,
+      "weight": 1.0,
+      "score": 40.0
+    },
+    {
+      "handle": "stocksavvyshay",
+      "engagements": 23,
+      "weight": 1.5,
+      "score": 34.5
+    },
+    {
+      "handle": "bisdianora24202",
+      "engagements": 25,
+      "weight": 1.0,
+      "score": 25.0
+    },
+    {
+      "handle": "x_alt43973",
+      "engagements": 24,
+      "weight": 1.0,
+      "score": 24.0
+    },
+    {
+      "handle": "mia_ponsiano",
+      "engagements": 22,
+      "weight": 1.0,
+      "score": 22.0
+    },
+    {
+      "handle": "cointelegraph",
+      "engagements": 21,
+      "weight": 1.0,
+      "score": 21.0
+    },
+    {
+      "handle": "polsia",
+      "engagements": 21,
+      "weight": 1.0,
+      "score": 21.0
+    },
+    {
+      "handle": "polymarket",
+      "engagements": 20,
+      "weight": 1.0,
+      "score": 20.0
+    },
+    {
+      "handle": "coinbureau",
+      "engagements": 19,
+      "weight": 1.0,
+      "score": 19.0
+    },
+    {
+      "handle": "cryptorover",
+      "engagements": 19,
+      "weight": 1.0,
+      "score": 19.0
+    },
+    {
+      "handle": "openai",
+      "engagements": 18,
+      "weight": 1.0,
+      "score": 18.0
+    },
+    {
+      "handle": "cryptoastmedia",
+      "engagements": 11,
+      "weight": 1.5,
+      "score": 16.5
+    },
+    {
+      "handle": "bfmbourse",
+      "engagements": 15,
+      "weight": 1.0,
+      "score": 15.0
+    },
+    {
+      "handle": "crypto__goku",
+      "engagements": 14,
+      "weight": 1.0,
+      "score": 14.0
+    },
+    {
+      "handle": "ennonet",
+      "engagements": 14,
+      "weight": 1.0,
+      "score": 14.0
+    },
+    {
+      "handle": "firstsquawk",
+      "engagements": 9,
+      "weight": 1.5,
+      "score": 13.5
+    },
+    {
+      "handle": "coinacademy_fr",
+      "engagements": 9,
+      "weight": 1.5,
+      "score": 13.5
+    },
+    {
+      "handle": "lejournalducoin",
+      "engagements": 13,
+      "weight": 1.0,
+      "score": 13.0
+    },
+    {
+      "handle": "zerohedge",
+      "engagements": 13,
+      "weight": 1.0,
+      "score": 13.0
+    },
+    {
+      "handle": "roundtablespace",
+      "engagements": 13,
+      "weight": 1.0,
+      "score": 13.0
+    },
+    {
+      "handle": "watcherguru",
+      "engagements": 8,
+      "weight": 1.5,
+      "score": 12.0
+    },
+    {
+      "handle": "bulltheoryio",
+      "engagements": 12,
+      "weight": 1.0,
+      "score": 12.0
+    },
+    {
+      "handle": "kimmonismus",
+      "engagements": 12,
+      "weight": 1.0,
+      "score": 12.0
+    },
+    {
+      "handle": "miningtk",
+      "engagements": 11,
+      "weight": 1.0,
+      "score": 11.0
+    },
+    {
+      "handle": "reuters",
+      "engagements": 7,
+      "weight": 1.5,
+      "score": 10.5
+    },
+    {
+      "handle": "divs_king",
+      "engagements": 10,
+      "weight": 1.0,
+      "score": 10.0
+    },
+    {
+      "handle": "pete_rizzo_",
+      "engagements": 6,
+      "weight": 1.5,
+      "score": 9.0
+    },
+    {
+      "handle": "bitcoinarchive",
+      "engagements": 9,
+      "weight": 1.0,
+      "score": 9.0
+    },
+    {
+      "handle": "business",
+      "engagements": 9,
+      "weight": 1.0,
+      "score": 9.0
+    },
+    {
+      "handle": "elonmusk",
+      "engagements": 9,
+      "weight": 1.0,
+      "score": 9.0
+    },
+    {
+      "handle": "anthropicai",
+      "engagements": 9,
+      "weight": 1.0,
+      "score": 9.0
+    },
+    {
+      "handle": "zephyr_z9",
+      "engagements": 9,
+      "weight": 1.0,
+      "score": 9.0
+    },
+    {
+      "handle": "tszzl",
+      "engagements": 9,
+      "weight": 1.0,
+      "score": 9.0
+    },
+    {
+      "handle": "moneyradar_fr",
+      "engagements": 8,
+      "weight": 1.0,
+      "score": 8.0
+    },
+    {
+      "handle": "ashcrypto",
+      "engagements": 8,
+      "weight": 1.0,
+      "score": 8.0
+    },
+    {
+      "handle": "journaldugeek",
+      "engagements": 8,
+      "weight": 1.0,
+      "score": 8.0
+    },
+    {
+      "handle": "numerama",
+      "engagements": 8,
+      "weight": 1.0,
+      "score": 8.0
+    },
+    {
+      "handle": "bitcoinmagazine",
+      "engagements": 8,
+      "weight": 1.0,
+      "score": 8.0
+    },
+    {
+      "handle": "simondixontwitt",
+      "engagements": 8,
+      "weight": 1.0,
+      "score": 8.0
+    },
+    {
+      "handle": "macrobombastic",
+      "engagements": 8,
+      "weight": 1.0,
+      "score": 8.0
+    }
+  ],
+  "pinned": [
+    "TheBTCTherapist",
+    "Graphseo"
+  ],
+  "updated": "2026-06-07T09:43:16.985757",
+  "promotion_meta": {
+    "date": "2026-06-07",
+    "count": 3
+  }
+}

@@ -33,8 +33,10 @@ from .logger import log
 from .twitter_client import follow_account, _safari_lock, close_front_tab
 from . import engage_bot
 
-# Spec priority order — tier1 first, always.
-_TIER_ORDER = ("tier1", "tier2", "tier3", "tier4")
+# Spec priority order — tier1 first, always. "discovered" (curator-promoted,
+# 2026-06-07 operator grant) follows LAST: operator seeds always outrank the
+# bot's own finds.
+_TIER_ORDER = ("tier1", "tier2", "tier3", "tier4", "discovered")
 
 # Seeds that failed identity resolution (handle squatted/renamed/off-niche).
 # Persisted so a mismatch isn't re-scraped every 15 min; retried weekly in
@@ -52,12 +54,17 @@ def _load_seed_rows() -> list:
     except (OSError, json.JSONDecodeError):
         return []
     seeds = raw.get("seeds")
+    tiers = raw.get("tiers") or {}
     if isinstance(seeds, list) and seeds:
         rows = [s for s in seeds if isinstance(s, dict) and s.get("handle")]
         rows.sort(key=lambda s: s.get("priority", 999))
+        # Curator-promoted handles queue AFTER the operator seeds (they're
+        # in tiers["discovered"] only, never in seeds[]).
+        seeded = {str(s["handle"]).lower() for s in rows}
+        rows.extend({"handle": str(h)} for h in (tiers.get("discovered") or [])
+                    if str(h).lower() not in seeded)
         return rows
     rows = []
-    tiers = raw.get("tiers") or {}
     for t in _TIER_ORDER:
         rows.extend({"handle": str(h)} for h in (tiers.get(t) or []))
     return rows

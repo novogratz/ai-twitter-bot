@@ -135,7 +135,8 @@ _WL_CACHE: dict = {}
 _WL_MTIME: float = 0.0
 
 
-_WL_EMPTY = {"tier1": set(), "tier2": set(), "tier3": set(), "tier4": set(), "all": set()}
+_WL_EMPTY = {"tier1": set(), "tier2": set(), "tier3": set(), "tier4": set(),
+             "discovered": set(), "all": set()}
 
 
 def load_whitelist() -> dict:
@@ -163,13 +164,18 @@ def load_whitelist() -> dict:
     t2 = _norm(tiers.get("tier2") or tiers.get("tier2_peers"))
     t3 = _norm(tiers.get("tier3") or tiers.get("tier3_watch"))
     t4 = _norm(tiers.get("tier4"))
+    # "discovered" tier: curator-promoted handles (2026-06-07 operator grant
+    # — the bot develops its own follow list). Same follow rights as seeds;
+    # additions capped + logged in account_curator.
+    t5 = _norm(tiers.get("discovered"))
     _WL_CACHE = {"tier1": t1, "tier2": t2, "tier3": t3, "tier4": t4,
-                 "all": t1 | t2 | t3 | t4}
+                 "discovered": t5, "all": t1 | t2 | t3 | t4 | t5}
     _WL_MTIME = mtime
     return _WL_CACHE
 
 
-def is_whitelisted(handle: str, tiers=("tier1", "tier2", "tier3", "tier4")) -> bool:
+def is_whitelisted(handle: str,
+                   tiers=("tier1", "tier2", "tier3", "tier4", "discovered")) -> bool:
     h = (handle or "").lower().lstrip("@")
     wl = load_whitelist()
     return any(h in wl[t] for t in tiers)
