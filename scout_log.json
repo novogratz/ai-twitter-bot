@@ -3640,5 +3640,40 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit pour garder ceux qui ont le culotte (ou le cerveau) pour parler technique ou march\u00e9 sans vendre du r\u00eave. Une bonne dose de fran\u00e7ais, un peu de qu\u00e9b\u00e9cois solide et des anglophones francophones qui ont encore leur carte de visite \u00e0 Paris ou Montreal."
+  },
+  {
+    "ts": "2026-06-07T05:19:25.733602",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [
+      "b0rnis",
+      "0xb10c",
+      "lucgagnon"
+    ],
+    "keepers": [
+      {
+        "handle": "B0rnis",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "La r\u00e9f\u00e9rence absolue pour l'analyse technique et le trading en FR. Pas de promesses de richesse facile, juste du charting solide."
+      },
+      {
+        "handle": "0xb10c",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Thibault est un institutionnaliste dans l'\u00e2me. Ses threads DeFi sont plus clairs que la plupart des prospectus bancaires."
+      },
+      {
+        "handle": "lucgagnon",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Analyste et consultant tech. Il d\u00e9crypte l'IA et la transformation digitale qu\u00e9b\u00e9coise avec un ton sarcastique mais juste."
+      }
+    ],
+    "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour coller aux cerveaux techniques (Mistral, Sequoia) et aux traders de terrain. Le mix FR/QC/USA est dense en valeur."
   }
 ]

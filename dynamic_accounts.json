@@ -401,7 +401,10 @@
     "PierreViallon",
     "JulienTran",
     "BenoitPoirier",
-    "AlexisBoutin_"
+    "AlexisBoutin_",
+    "B0rnis",
+    "0xb10c",
+    "lucgagnon"
   ],
   "en": [
     "blablacar",
@@ -415,7 +418,19 @@
     "balajis",
     "OpenAIDeveloper",
     "DassaultSys",
-    "BNPParibas"
+    "BNPParibas",
+    "Thaniel",
+    "Massimo",
+    "ODELL",
+    "DogeDesigner",
+    "FinTales",
+    "Susanne",
+    "unusual_whales",
+    "Forbes",
+    "Naval",
+    "Stephenblaq",
+    "Grok",
+    "Verel"
   ],
   "history": [
     {
@@ -2487,6 +2502,81 @@
       "lang": "fr",
       "handle": "AlexisBoutin_",
       "added": "2026-06-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Thaniel",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Massimo",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "en",
+      "handle": "ODELL",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "en",
+      "handle": "DogeDesigner",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "en",
+      "handle": "FinTales",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Susanne",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "en",
+      "handle": "unusual_whales",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Forbes",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Naval",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Stephenblaq",
+      "added": "2026-06-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Grok",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Verel",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "B0rnis",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xb10c",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucgagnon",
+      "added": "2026-06-07"
     }
   ]
 }

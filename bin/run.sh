@@ -34,6 +34,9 @@ if command -v curl >/dev/null 2>&1; then
     >/dev/null 2>&1 && echo "[run] Model warm." || echo "[run] Pre-warm failed (model not pulled yet? ollama not running?). Bot will warm on first call."
 fi
 
+# Clear stale bytecode so code changes take effect immediately.
+find "$REPO_DIR" -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+
 echo "[run] Starting @CryptoAIDecode bot. Press Ctrl-C to stop."
 echo "[run] Logs also stream to bot.log (tail -F bot.log)."
 echo "────────────────────────────────────────"
