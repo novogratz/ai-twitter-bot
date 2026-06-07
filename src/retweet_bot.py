@@ -870,6 +870,14 @@ def _reply_after_repost(pick: dict, replied: set) -> None:
         from .humanizer import humanize
         from .twitter_client import reply_to_tweet
         from .engagement_log import log_reply as _log_reply
+        from .reply_bot import load_replied as _load_replied
+        # Disk re-check before the expensive LLM call — see direct_reply
+        # `_reply_to_tweets` for the post-mortem: ~17s of wasted ollama
+        # per chokepoint skip when a concurrent reply bot already shipped.
+        fresh_replied = _load_replied()
+        if url in fresh_replied:
+            replied.add(url)
+            return
         author = pick.get("author", "someone")
         text = (pick.get("text") or "")[:300]
         lang = "fr" if _looks_french(text) else "en"
