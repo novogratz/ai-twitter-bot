@@ -171,10 +171,11 @@ def build_review() -> str:
             lines.append(f"- ❤️{likes} 👁{views}{rate} [{pillar}] {text}")
     lines += [
         "",
-        "## Spec targets (2026-06-07, incl. PM-2 QRT surge)",
-        "- Originals 3-4/day in market slots · QRTs SURGE ≤100/day on 50+-like",
-        "  posts (number-reframe + metaphor + closing question) · plain RTs 0-2/day",
-        "- Replies unlimited (the engine) · reply-bait 3-4/week",
+        "## Spec targets (2026-06-07 quality barbell)",
+        "- QUANTITY: replies unlimited (the reach engine) · reply-bait 3-4/week",
+        "- QUALITY: originals 3-4/day in market slots · QRTs ≤40/day, 50+-like",
+        "  parents, screenshot-worthy or SKIP (number-reframe + metaphor +",
+        "  closing question) · plain RTs 0-2/day",
         "- Following <= 300 hard cap (~120-150 steady state)",
         "",
         "_Engagement-per-post and conversion live in performance_insights.json"

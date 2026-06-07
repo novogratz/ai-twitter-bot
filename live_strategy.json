@@ -3,7 +3,7 @@
   "caps": {
     "MAX_NEWS_PER_DAY": 1,
     "MAX_HOTAKES_PER_DAY": 2,
-    "MAX_QUOTES_PER_DAY": 100,
+    "MAX_QUOTES_PER_DAY": 40,
     "MAX_RETWEETS_PER_DAY": 1,
     "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY": 1,
@@ -18,5 +18,5 @@
     "AI news persona takes"
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-07 PM-2 QRT SURGE (operator: 'QRTs of relative large accounts get thousands of views - abuse those', measured on his own two best posts of the day). Quotes 100/day @5min+jitter, 50-like floor (mid-size analytical finance posts are the winning surface). Proven structure: re-denominate the number + mechanism metaphor + closing question. Originals 3-4/day slots, RTs 0-2, replies unlimited - unchanged."
+  "rationale": "2026-06-07 PM-4 QUALITY BARBELL (operator delegated: goal = big viral posts). Replies = QUANTITY (unlimited, the reach engine). QRTs/originals = QUALITY (the profile conversion layer): 40 QRT slots/day @10min+jitter, 50-like floor, proven 3-step structure, SKIP-by-default. A mediocre take wastes a slot; average is invisible."
 }
