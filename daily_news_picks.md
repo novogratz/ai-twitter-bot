@@ -14476,3 +14476,65 @@ It's basically a space stock, but right now, it's evolving into an AI
 AI Bubble, Bitcoin Crash & The Great Capital Rotation
   - https://x.com/SimonDixonTwitt/status/2063203124911751407
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 23).
+- **@boringbiz_** (112 likes, score 9/10) — This is absolutely insane. Elon Musk's XAI reportedly spent $40 billion to build their data centers
+
+Based on public disclosure of the Anthropic and Google deal, XAI will get paid $26 billion per year
+  - https://x.com/BoringBiz_/status/2063440929491456008
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 142).
+- **@stockmktnewz** (962 likes, score 9/10) — ELON MUSK WILL VIRTUALLY ATTEND A CLOSED-DOOR ASML $ASML EMPLOYEE CONFERENCE TO DISCUSS TERAFAB
+
+Here's what Terafab actually is:
+
+A SpaceX-Tesla joint venture to build cutting-edge chips for robotics
+  - https://x.com/StockMKTNewz/status/2063354726780195184
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1122).
+- **@rhouseresearch** (124 likes, score 9/10) — A quick recap on Galaxy Digital's $GLXY Helios data center campus:
+- 1.63GW (gross) of fully ERCOT approved, front-of-the-meter power.. An incremental 1.8GW sits in ERCOT's approval queue, which if ap
+  - https://x.com/RHouseResearch/status/2063315137105162716
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 138).
+- **@vraserx** (208 likes, score 9/10) — GPT-5.6 launch feels imminent.
+
+New checkpoints are showing up, and the crazy part is that even the base non-reasoning model already looks insane.
+
+If this is the “normal” model, the reasoning version
+  - https://x.com/VraserX/status/2062806776186052692
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 232).
+- **@avifelman** (82 likes, score 9/10) — Putting the Robotics TAM into perspective...
+
+The total robotics market is less than $200b …. while a single crypto-asset $XRP is roughly $100b & pokemon trading cards are worth $50b.
+  - https://x.com/AviFelman/status/2063383621222756706
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 92).
+- **@apompliano** (563 likes, score 8/10) — I sat down with @jvisserlabs to discuss why bitcoin is down 50%, whether the bear market is over, why he's still buying through the dip, how AI agents will drive bitcoin adoption, and why the rotation
+  - https://x.com/APompliano/status/2063301402756051398
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 773).
+- **@datachaz** (346 likes, score 8/10) — Anthropic with Cybersecurity experts right now:
+  - https://x.com/DataChaz/status/2063342589332361634
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 358).
+- **@sprytixl** (199 likes, score 8/10) — Chinese professor just revealed his development team - and it was 170 AI agents making every single company decision
+
+not humans, not managers, not consultants charging $500 an hour
+
+170 artificial de
+  - https://x.com/Sprytixl/status/2063234969510588640
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 229).
+- **@rohanpaul_ai** (118 likes, score 8/10) — Masayoshi Son says AI could be 50x bigger than dot-com and the next trillion-dollar company will come from robotics.
+
+"So even dot-com there was a bubble burst, but then right after that, the peak of
+  - https://x.com/rohanpaul_ai/status/2063300640881926358
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 142).
+- **@damianplayer** (86 likes, score 8/10) — Jensen Huang says NVIDIA and Microsoft spent the last 3 years reinventing the PC.
+
+for 40 years you clicked and typed. now you can just ask.
+
+RTX Spark runs AI agents on a laptop. ships this fall.
+
+sa
+  - https://x.com/damianplayer/status/2063252944938574110
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 116).
+- **@unusual_whales** (224 likes, score 7/10) — We asked stranger's what stock they'd pick.
+
+And we'd put $1,000 into it.
+
+Which stocks would you pick?
+  - https://x.com/unusual_whales/status/2063441059946893533
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 338).
