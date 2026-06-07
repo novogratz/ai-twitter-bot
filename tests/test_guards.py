@@ -1596,3 +1596,25 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     for leak in ("SKIPPED", "Skip.", "skipped", "SKIP — no source context"):
         ok, _ = cg.validate(leak, kind="reply")
         assert not ok, f"{leak!r} must never publish"
+
+
+def test_quote_ai_viral_pass_present_and_ranked():
+    """Operator 2026-06-07: 'not really quote retweet on AI... do it more —
+    find viral content from viral big accounts in AI or TOP posts in AI'.
+    The quote bot must carry an always-scanned AI-viral pass (from: the
+    biggest AI accounts + high-min_faves AI topics) and rank those
+    candidates ahead of the generic pool."""
+    from src import quote_tweet_bot as qb
+    # Big AI accounts present.
+    for h in ("sama", "openai", "anthropicai", "karpathy", "googledeepmind"):
+        assert h in [x.lower() for x in qb.TOP_AI_HANDLES], f"missing top AI handle {h}"
+    # AI-viral queries are from: the big accounts and high min_faves topics.
+    joined = " ".join(qb.AI_VIRAL_QUERIES).lower()
+    assert "from:sama" in joined and "from:openai" in joined
+    assert "min_faves:1000" in joined or "min_faves:800" in joined, "needs a TOP-post viral floor"
+    # Ranking order: priority + ai_viral + rest — assert the source line
+    # prepends ai_viral ahead of the generic candidates.
+    import inspect
+    src = inspect.getsource(qb.run_quote_tweet_cycle)
+    assert "priority_candidates + ai_viral_candidates + candidates" in src, \
+        "AI virals must be ranked ahead of the generic pool"

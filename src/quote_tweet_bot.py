@@ -59,6 +59,31 @@ QUOTE_QUERIES = [
 PRIORITY_QUOTE_HANDLES = [h.strip() for h in os.environ.get(
     "PRIORITY_QUOTE_HANDLES", "TheBTCTherapist").split(",") if h.strip()]
 
+# 2026-06-07 (operator: "not really quote retweet on AI... do it more —
+# find viral content from viral big accounts in AI or TOP posts in AI").
+# Scanned EVERY cycle (not the random 3) via SEARCH — profile visits are
+# gated now, but `from:` + high-min_faves topic search on the `top` tab is
+# not, and it surfaces exactly the biggest AI accounts' viral posts. These
+# candidates are ranked FIRST so the day's top AI post wins the quote slot.
+TOP_AI_HANDLES = [h.strip() for h in os.environ.get(
+    "TOP_AI_HANDLES",
+    "sama,OpenAI,AnthropicAI,karpathy,GoogleDeepMind,demishassabis,"
+    "ylecun,AndrewYNg,DrJimFan,_akhaliq,svpino,emollick,alexalbert__,"
+    "kimmonismus,slow_developer,rowancheung,minchoi,nvidia,xai"
+).split(",") if h.strip()]
+
+AI_VIRAL_QUERIES = [
+    # The biggest AI accounts, most-liked recent — `from:` OR chains on the
+    # top tab return their viral posts without a profile visit.
+    "(from:sama OR from:OpenAI OR from:AnthropicAI OR from:karpathy OR from:ylecun) min_faves:200",
+    "(from:GoogleDeepMind OR from:demishassabis OR from:DrJimFan OR from:_akhaliq OR from:AndrewYNg) min_faves:150",
+    "(from:rowancheung OR from:minchoi OR from:kimmonismus OR from:slow_developer OR from:emollick) min_faves:150",
+    # TOP AI topics — front-page virals, lab/model/chip news.
+    "OpenAI OR Anthropic OR \"GPT-5\" OR Claude OR Gemini lang:en min_faves:1000",
+    "Nvidia OR \"AI agent\" OR \"AI model\" OR AGI OR \"reasoning model\" lang:en min_faves:800",
+]
+QUOTE_AI_VIRAL_MIN_LIKES = int(os.environ.get("QUOTE_AI_VIRAL_MIN_LIKES", "150"))
+
 QUOTE_PROMPT = """You are @TheAIShrink. You will QUOTE-TWEET this tweet:
 
 @{author}: "{tweet_text}"
@@ -416,6 +441,34 @@ def run_quote_tweet_cycle():
         log.info("[QUOTE] Priority-handle pass failed:")
         traceback.print_exc()
 
+    # AI-VIRAL pass (operator 2026-06-07: "do it more — TOP posts in AI").
+    # Scanned EVERY cycle, ranked first. 2 of the 5 AI-viral queries per
+    # cycle (keeps cycle time bounded; the pool rotates).
+    ai_viral_candidates = []
+    for query in random.sample(AI_VIRAL_QUERIES, k=min(2, len(AI_VIRAL_QUERIES))):
+        log.info(f"[QUOTE] AI-VIRAL scan: {query}")
+        try:
+            tweets = scrape_x_search(query, max_tweets=25, tab="top")
+        except Exception:
+            log.info(f"[QUOTE] AI-viral scrape failed for {query}:")
+            traceback.print_exc()
+            continue
+        for t in tweets or []:
+            url = t.get("url")
+            if not url or url in quoted:
+                continue
+            author = (t.get("author") or "").lower()
+            url_handle = _handle_from_url(url)
+            if author in BLOCKLIST or url_handle in BLOCKLIST:
+                continue
+            if author == _OWN_HANDLE or url_handle == _OWN_HANDLE:
+                continue
+            if int(t.get("likes") or 0) < QUOTE_AI_VIRAL_MIN_LIKES:
+                continue
+            if _too_old_to_quote(t):  # ⛔ hard 48h rule
+                continue
+            ai_viral_candidates.append(t)
+
     # 3 queries per cycle — keeps each cycle under 60s so max_instances=1 doesn't queue up.
     for query in random.sample(QUOTE_QUERIES, k=min(3, len(QUOTE_QUERIES))):
         log.info(f"[QUOTE] Searching HOT for: {query}")
@@ -498,7 +551,7 @@ def run_quote_tweet_cycle():
         log.info("[QUOTE] Trusted-news pass failed:")
         traceback.print_exc()
 
-    if not candidates and not priority_candidates:
+    if not candidates and not priority_candidates and not ai_viral_candidates:
         log.info("[QUOTE] No viable candidates this cycle.")
         return
 
@@ -509,9 +562,14 @@ def run_quote_tweet_cycle():
     # prompt's troll-the-idea-never-the-person rule still applies.)
     from . import respect_list
     candidates = [c for c in candidates if not respect_list.is_protected(c.get("author", ""))]
+    ai_viral_candidates = [c for c in ai_viral_candidates if not respect_list.is_protected(c.get("author", ""))]
     candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
+    ai_viral_candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
     priority_candidates.sort(key=lambda t: int(t.get("likes") or 0), reverse=True)
-    candidates = priority_candidates + candidates
+    # Order: bestie (priority) → TOP AI virals → everything else. The AI
+    # lane leads the open pool (operator 2026-06-07: "be impactful sharp
+    # and viral" + "more AI").
+    candidates = priority_candidates + ai_viral_candidates + candidates
     if not candidates:
         log.info("[QUOTE] All candidates are on the respect list. Skipping.")
         return

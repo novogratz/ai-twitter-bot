@@ -222,6 +222,31 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-16 — AI-viral quote pass (operator: "more quote retweet on AI... TOP posts in AI, be impactful sharp and viral")
+
+Diagnosis: replies were flowing (300+/day) but quotes were starving — only
+~3 in 2h of uptime. Two causes: (1) the AI topic queries were 1-of-3
+RANDOM per cycle, so AI competed with crypto/markets for the slot; (2) the
+priority-handle + trusted-news passes use `scrape_profile_tweets`, now
+PROFILE-GATED (PM-10) — broken for every handle except the allowlisted
+bestie. So the viral-AI pool was thin and the quote slot often went to
+mid-size finance posts.
+
+Fix (`quote_tweet_bot`): an **AI-VIRAL pass scanned EVERY cycle** via
+SEARCH (not profile visits — `from:` + high-min_faves on the `top` tab is
+ungated and surfaces exactly the biggest AI accounts' viral posts):
+- `TOP_AI_HANDLES` (sama, OpenAI, AnthropicAI, karpathy, GoogleDeepMind,
+  demishassabis, ylecun, AndrewYNg, DrJimFan, _akhaliq, rowancheung,
+  minchoi, nvidia, xai…) and `AI_VIRAL_QUERIES` (`from:` OR-chains
+  min_faves:150-200 + topic floors min_faves:800-1000).
+- `QUOTE_AI_VIRAL_MIN_LIKES=150` floor; hard 48h + dedup + BLOCKLIST gates
+  unchanged.
+- **Ranking: priority (bestie) → AI virals → generic pool** — the day's
+  top AI post wins the quote slot.
+- Quote spacing tightened 300s→180s (jitter 180→90) so the richer pool
+  actually ships: ~12-15 quotes/hr ceiling vs ~7 before.
+
+Guard: `test_quote_ai_viral_pass_present_and_ranked`.
 ### 2026-06-07 PM-15 — self-critique sweep (operator: "look at what you're doing with a criticism spirit")
 
 The afternoon's pattern, stated plainly: three live embarrassments (French
