@@ -148,7 +148,7 @@ def engage_interval_minutes() -> int:
 
 
 def direct_reply_interval_minutes() -> int:
-    return _cadence(random.randint(2, 4))  # 24/7 flat
+    return _cadence(random.randint(1, 2))  # go crazy on replies
 
 
 def early_bird_interval_minutes() -> int:
