@@ -222,6 +222,18 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-6 — engine-health boot-warmup grace (downtime ≠ collapse)
+
+Witnessed live: minutes after a boot (bot had been stopped for the
+operator's manual purge), the watchdog fired "reply collapsed: 0 today vs
+~50 by this hour" and spawned an emergency self-heal Claude run on a
+perfectly healthy engine. Cumulative-by-hour comparisons are meaningless
+right after process start — every surface reads 0 after downtime.
+`run_engine_health_cycle` now no-ops for `ENGINE_HEALTH_WARMUP_MINUTES`
+(default 90) after boot. Fourth member of the intent-vs-collapse family:
+cap=0 (PR #6), today≥cap (PR #7), fired-within-the-hour (PR #22), and now
+just-booted.
+
 ### 2026-06-07 PM-5 — focus mandate + identity anchor
 
 Operator: "focus of the bot should be Quote Retweet AND replies — and the
