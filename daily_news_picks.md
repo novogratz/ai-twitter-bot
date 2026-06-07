@@ -14753,3 +14753,111 @@ However, as long-term investors, we should see day-to-day
 One special highlight was how important memory has become in NVIDIA products.
   - https://x.com/The_AI_Investor/status/2063481997302055117
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 51).
+- **@0xprajwal_** (43 likes, score 9/10) — How to sound like an AI expert:
+
+Step 1: Say, “GPT is good, but Claude is perfect.”
+
+Step 2: Mention tokens every 30 seconds.
+
+Step 3: Predict AGI is coming "sooner than people think."
+
+Step 4: Use wo
+  - https://x.com/0xPrajwal_/status/2063475894031942084
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 113).
+- **@nvidiageforce** (73 likes, score 9/10) — PC bang visit checklist for Jensen:
+
+ @NVIDIARTXSpark laptops 
+ Gamers enjoying KRAFTON's PUBG & Subnautica 2 
+ Good vibes all around 
+
+Thanks for hanging, Optimum Zone Korea!
+  - https://x.com/NVIDIAGeForce/status/2063508827853701434
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 81).
+- **@dashboardlim** (19 likes, score 8/10) — Anthropic published a security guide that tells you to stop trusting your own AI agents.
+
+While everyone's been shipping agents as fast as possible…
+
+Anthropic quietly released a PDF "Zero Trust for A
+  - https://x.com/dashboardlim/status/2063442813891600548
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 27).
+- **@cryptorover** (23 likes, score 8/10) — $BTC ETF HOLDERS ARE THE MOST UNDERWATER THEY HAVE EVER BEEN SINCE THE FUNDS LAUNCHED.
+
+The biggest holder cohort in modern Bitcoin history is sitting on its biggest unrealized loss in history.
+  - https://x.com/cryptorover/status/2063517060840190450
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 47).
+- **@coinbureau** (3 likes, score 7/10) — HUGE: CHATGPT IS GETTING A COMPLETE OVERHAUL
+
+OpenAI is preparing its biggest ChatGPT transformation yet, merging ChatGPT, Codex, and a web browser into a single AI-powered desktop platform ahead of i
+  - https://x.com/coinbureau/status/2063523804874481881
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 11).
+- **@roundtablespace** (161 likes, score 9/10) — ANTHROPIC JUST PUBLISHED A 36-PAGE SECURITY GUIDE WARNING YOU TO STOP TRUSTING YOUR OWN AI AGENTS
+
+automated attackers have unlimited patience and AI has collapsed the gap between a vulnerability and
+  - https://x.com/RoundtableSpace/status/2063414384194384104
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 235).
+- **@bdinvestingg** (93 likes, score 9/10) — AI is moving faster than copper can handle. That's not a take — that's physics. Nvidia put $4.5B behind the solution.
+
+$LITE (Lumentum) — Makes lasers and optical components that transmit data as ligh
+  - https://x.com/bdinvestingg/status/2063475788901453950
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 95).
+- **@podcastalphax** (13 likes, score 7/10) — 15-18x faster than NVIDIA GPU clusters. OpenAI is a customer.
+
+Cerebras CEO @andrewdfeldman on @theallinpod: the gap is not software optimization. It's physics.
+
+NVIDIA GPUs move data from off-chip me
+  - https://x.com/PodcastAlphaX/status/2063492650091589976
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 17).
+- **@ns123abc** (137 likes, score 8/10) — Nvidia is selling the shovels
+Musk is selling the acces to the mines
+
+Anthropic and Google are paying the billions
+  - https://x.com/ns123abc/status/2063497580256829462
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 183).
+- **@vivoplt** (55 likes, score 8/10) — Some of the best companies to work for according to candidates.
+
+S+: Anthropic, OpenAI, Google DeepMind, Rentech, TGS, xAI, Citadel Securities, Jane Street, HRT
+
+S: Citadel, D.E. Shaw, Jump, Optiver,
+  - https://x.com/vivoplt/status/2063273860754231748
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 119).
+- **@mariusz_invest** (51 likes, score 8/10) — $META spending up to $145B on AI infrastructure in 2026. Nearly double last year.
+Stock dropped this week. The supply chain gets paid either way.
+Where I’m positioned. Thread.
+  - https://x.com/Mariusz_Invest/status/2063323590829727896
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 79).
+- **@realcryptoboost** (133 likes, score 8/10) — $ETH just printed the lowest RSI in its entire history. 12. The previous all-time record was 16.
+
+Read that carefully. Never, since the creation of Ethereum, has the asset been this oversold as it is
+  - https://x.com/realcryptoboost/status/2063325919822172175
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 169).
+- **@tszzl** (191 likes, score 8/10) — compute spot markets today have a permanent highest bidder called claude inference that sets the price- which changes the NPV of all datacenter buildouts thus sort of bailing out and derisking them
+  - https://x.com/tszzl/status/2063543940008304649
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 239).
+- **@techcrunch** (79 likes, score 8/10) — Was ChatGPT's initial pricing based on a model...or a vibe and a guess? With costs rising, the pricing reality is crashing into the expectations set by that $20/month fee.
+
+The Equity podcast team div
+  - https://x.com/TechCrunch/status/2063297365448991130
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 125).
+- **@el_crypto_prof** (19 likes, score 8/10) — #Altcoins $BTC
+
+Totalmarketcap just touched the weekly EMA 300, which marked the 2018 bottom, 2020 Covid bottom + pre-FTX 2022 bottom.
+
+just think about it.
+  - https://x.com/el_crypto_prof/status/2063564253370441943
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 27).
+- **@testingcatalog** (174 likes, score 7/10) — OpenSquilla released MetaSkill, a self-organizing skill protocol that teaches an open-source AI agent how to discover, filter, and compose its own atomic skills rather than relying on hand-written wor
+  - https://x.com/testingcatalog/status/2062860076600213678
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 186).
+- **@haider1** (20 likes, score 7/10) — all the major labs now seem very focused on RSI and continuous learning
+
+so if we get a breakthrough in this area soon, or next year with mythos-2, gpt-7, or gemini 5
+
+it's hard for me to see even dem
+  - https://x.com/haider1/status/2063541592997446129
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 42).
+- **@techcrunch** (80 likes, score 7/10) — OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks
+  - https://x.com/TechCrunch/status/2063359165528158613
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 112).
+- **@forbes** (31 likes, score 7/10) — Meet Sonny. Inside the warehouse that made the sailcloth for the USS Constitution, this vaguely humanoid robot is part of an attempt at reinventing work. https://forbes.com/sites/johnkoetsier/2026/05/
+  - https://x.com/Forbes/status/2063531577548951812
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 59).

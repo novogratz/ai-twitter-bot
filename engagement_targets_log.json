@@ -94,6 +94,76 @@
       "replies": 0,
       "weight": 1.5,
       "conversions": 1
+    },
+    "bfmbusiness": {
+      "replies": 1,
+      "weight": 1.0,
+      "last_ts": "2026-06-07T03:54:33.346778"
+    },
+    "aliba_79": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "giapack53370": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "whalepiz": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "kaibgr": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "f1": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "keshi_yun": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "pigrichh": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "yashhustle_22": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "tradexwhisperer": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "beth_kindig": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "intheassembly": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "enrichtrades": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "stocksavvyshay": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
     }
   },
   "targets": [
@@ -168,6 +238,12 @@
       "url": "https://x.com/LeJournalDuCoin/status/2062931514078204358",
       "velocity": 13.8,
       "ts": "2026-06-05T13:09:25.287656"
+    },
+    {
+      "author": "bfmbusiness",
+      "url": "https://x.com/bfmbusiness/status/2063470251161849866",
+      "velocity": 3.3,
+      "ts": "2026-06-07T03:54:33.346812"
     }
   ]
 }

@@ -1,216 +1,251 @@
 {
-  "ts": "2026-06-06T08:25:04.882387",
-  "count": 30,
+  "ts": "2026-06-07T05:27:16.393491",
+  "count": 35,
   "items": [
     {
-      "src": "Yahoo Finance",
-      "title": "3 Cathie Wood ETFs to Buy Before They (Likely) Invest in SpaceX",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/3-cathie-wood-etfs-buy-121500461.html",
-      "score": 0,
-      "ts": "2026-06-06T12:15:00"
+      "src": "X_HOME/Can Vardar",
+      "title": "i’m starting to strongly believe that claude mythos is a fake model",
+      "url": "https://x.com/icanvardar/status/2063486814111817789",
+      "score": 26,
+      "ts": ""
     },
     {
-      "src": "Yahoo Finance",
-      "title": "The next NVIDIA? These 3 stocks below $50 are poised to win the next AI boom (and they’re still flying under the radar)",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/next-nvidia-3-stocks-below-120500020.html",
-      "score": 0,
-      "ts": "2026-06-06T12:05:00"
+      "src": "X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Marchi",
+      "title": "𝗽𝗿𝗶𝘀𝗺𝗮𝗫 𝗮𝗻𝗱 𝘃𝗶𝗿𝘁𝘂𝗮𝗹𝘀 𝗽𝗿𝗼𝘁𝗼𝗰𝗼𝗹: 𝗻𝗼𝘁 𝗰𝗼𝗺𝗽𝗲𝘁𝗶𝘁𝗼𝗿𝘀 𝗮 𝘀𝘁𝗮𝗰𝗸\n\nmost people assume two crypto-robotics projects doing similar things must compete\n\n@PrismaXai and",
+      "url": "https://x.com/Markullill/status/2063552182700413273",
+      "score": 1,
+      "ts": ""
     },
     {
-      "src": "CNBC Top",
-      "title": "Inside the Obama-era Iran nuclear deal that Trump withdrew from",
-      "url": "https://www.cnbc.com/2026/06/06/trump-iran-jcpoa-nuclear-deal-obama.html",
-      "score": 0,
-      "ts": "2026-06-06T12:00:01"
+      "src": "X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Umer Alvi",
+      "title": "An inspiring and much-needed vision, Prof. Ahsan Iqbal! Positioning Pakistan at the intersection of AI, Robotics, Quantum Computing, and Advanced Manufacturing is exactly the kind of forward thinking",
+      "url": "https://x.com/ualvi27/status/2063551739148788053",
+      "score": 1,
+      "ts": ""
     },
     {
-      "src": "Wired",
-      "title": "The Best 3-in-1 Apple Charging Stations After Testing Top Models",
-      "url": "https://www.wired.com/gallery/best-apple-3-in-1-wireless-chargers/",
+      "src": "X_HOME/Business Insider",
+      "title": "Whitney Stefko Dover vibe coded a better way to manage her family's busy life. Her AI agent scans her emails and calendar to craft daily briefings.",
+      "url": "https://x.com/BusinessInsider/status/2063549693490036990",
       "score": 0,
-      "ts": "2026-06-06T11:00:00"
+      "ts": ""
     },
     {
-      "src": "Wired",
-      "title": "Crypto-Funded Chinese Peptide Labs Are Booming",
-      "url": "https://www.wired.com/story/security-news-this-week-crypto-funded-chinese-peptide-labs-are-booming/",
+      "src": "X_FOLLOWING/Lurker",
+      "title": "#xauusd  #gold  #crypto\n\n The market never sleeps — and neither does the opportunity. \n\n I’m a futures trader dropping my personal high-probability setups with exact entries and exits for free.\n\n http",
+      "url": "https://x.com/Lurker50627012/status/2063550964045430977",
       "score": 0,
-      "ts": "2026-06-06T10:30:00"
+      "ts": ""
     },
     {
-      "src": "CoinDesk",
-      "title": "Are retail traders selling their bitcoin to buy the SpaceX IPO?",
-      "url": "https://www.coindesk.com/markets/2026/06/06/are-retail-traders-selling-their-bitcoin-to-buy-the-spacex-ipo",
+      "src": "X_FOLLOWING/Lurker",
+      "title": "#xauusd  #gold  #crypto\n\n The market never sleeps — and neither does the opportunity. \n\n I’m a futures trader dropping my personal high-probability setups with exact entries and exits for free.\n\n http",
+      "url": "https://x.com/Lurker50627012/status/2063550962703196177",
       "score": 0,
-      "ts": "2026-06-06T09:45:15"
+      "ts": ""
     },
     {
-      "src": "CoinDesk",
-      "title": "Researcher who found Zcash's bug with AI adds Monero to his audit queue",
-      "url": "https://www.coindesk.com/tech/2026/06/06/researcher-who-found-zcash-s-bug-with-ai-adds-monero-to-his-audit-queue",
+      "src": "X_FOLLOWING/Lurker",
+      "title": "#xauusd  #gold  #crypto\n\n The market never sleeps — and neither does the opportunity. \n\n I’m a futures trader dropping my personal high-probability setups with exact entries and exits for free.\n\n http",
+      "url": "https://x.com/Lurker50627012/status/2063550962602848612",
       "score": 0,
-      "ts": "2026-06-06T09:38:00"
+      "ts": ""
     },
     {
-      "src": "CoinDesk",
-      "title": "Bitcoin back above $61,000 after rout leads to $1.6 billion liquidations",
-      "url": "https://www.coindesk.com/markets/2026/06/06/bitcoin-back-above-usd61-000-after-rout-leads-to-usd1-6-billion-liquidations",
+      "src": "X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/worm",
+      "title": "the bee who leaves the hive\nmust never return\n\na marked difference\nnow entirely stranger",
+      "url": "https://x.com/claratanry/status/2063551887073485033",
       "score": 0,
-      "ts": "2026-06-06T06:40:17"
+      "ts": ""
     },
     {
-      "src": "CNBC Tech",
-      "title": "Amazon unveils latest warehouse robot as tech giants continue AI layoffs",
-      "url": "https://www.cnbc.com/2026/06/05/amazon-robot-proteus-warehouse-ai-layoffs.html",
+      "src": "X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Hive",
+      "title": "Hive analyzed this post using Hive's AI / Deepfake detection models. \n\"@hive_ai is this AI generated\" to check any content!\nhttps://hivedetect.ai/YLLn2K\n           AI Generated Image: 1%\n           De",
+      "url": "https://x.com/hive_ai/status/2063551737240412363",
       "score": 0,
-      "ts": "2026-06-05T22:53:20"
+      "ts": ""
     },
     {
-      "src": "CNBC Top",
-      "title": "Amazon unveils latest warehouse robot as tech giants continue AI layoffs",
-      "url": "https://www.cnbc.com/2026/06/05/amazon-robot-proteus-warehouse-ai-layoffs.html",
+      "src": "X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Lurker",
+      "title": "#xauusd  #gold  #crypto\n\n The market never sleeps — and neither does the opportunity. \n\n I’m a futures trader dropping my personal high-probability setups with exact entries and exits for free.\n\n http",
+      "url": "https://x.com/Lurker50627012/status/2063551655749259536",
       "score": 0,
-      "ts": "2026-06-05T22:53:20"
+      "ts": ""
     },
     {
-      "src": "TechCrunch",
-      "title": "Reid Hoffman is leaving Microsoft’s board to go ‘founder mode’ with  startup Manus",
-      "url": "https://techcrunch.com/2026/06/05/reid-hoffman-is-leaving-microsofts-board-to-go-founder-mode-with-startup-manus/",
+      "src": "X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Marc",
+      "title": "I mean Childress is mostly air cooled and retrofit. The main reason for why they start now and not faster is GPU delays or lead times. Otherwise I don’t understand why they‘re not faster. \n\nAnd yes, i",
+      "url": "https://x.com/Marc_750/status/2063551506213720478",
       "score": 0,
-      "ts": "2026-06-05T22:35:01"
+      "ts": ""
     },
     {
-      "src": "CNBC Top",
-      "title": "AstraZeneca CEO says AI is reshaping drug development — and helping boost the odds of success",
-      "url": "https://www.cnbc.com/2026/06/05/astrazeneca-ceo-says-ai-is-reshaping-drug-development-and-helping-boost-the-odds-of-success.html",
+      "src": "X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Rie",
+      "title": "Aiyaa, semangat yaa Iren! Semoga dilancarkan dan dipermudah semuanyaa",
+      "url": "https://x.com/goldenmjsty/status/2063551493345771640",
       "score": 0,
-      "ts": "2026-06-05T22:26:16"
+      "ts": ""
     },
     {
-      "src": "Cointelegraph",
-      "title": "ETH falls to 13-month low on Zcash bug news and Bitcoin drop to sub-$60K: Is $1.4K next?",
-      "url": "https://cointelegraph.com/markets/eth-falls-to-13-month-low-on-zcash-bug-news-and-bitcoin-drop-to-sub-60k-is-14k-next?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "src": "X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Lurker",
+      "title": "#xauusd  #gold  #crypto\n\n The market never sleeps — and neither does the opportunity. \n\n I’m a futures trader dropping my personal high-probability setups with exact entries and exits for free.\n\n http",
+      "url": "https://x.com/Lurker50627012/status/2063551434160033897",
       "score": 0,
-      "ts": "2026-06-05T22:18:29"
+      "ts": ""
     },
     {
-      "src": "CNBC Tech",
-      "title": "Marvell Technology and Flex to join S&P 500 index, replacing Pool and Campbell's",
-      "url": "https://www.cnbc.com/2026/06/05/marvell-technology-flex-sp-500-campbells-pool.html",
+      "src": "X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Dep",
+      "title": "Anjay iren kambek dngan lenssun",
+      "url": "https://x.com/rafayaels/status/2063551393731137940",
       "score": 0,
-      "ts": "2026-06-05T21:36:23"
+      "ts": ""
     },
     {
-      "src": "CNBC Top",
-      "title": "Marvell Technology and Flex to join S&P 500 index, replacing Pool and Campbell's",
-      "url": "https://www.cnbc.com/2026/06/05/marvell-technology-flex-sp-500-campbells-pool.html",
+      "src": "X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Shashi Sachan",
+      "title": "Affordable education alone isn't enough; quality matters too. We missed several manufacturing opportunities despite low-cost education. AI and robotics may increase costs further, making online learni",
+      "url": "https://x.com/Sachan8574/status/2063552891512926685",
       "score": 0,
-      "ts": "2026-06-05T21:36:23"
+      "ts": ""
     },
     {
-      "src": "CNBC Tech",
-      "title": "Trump administration, OpenAI discussing possible government stake in the AI startup",
-      "url": "https://www.cnbc.com/2026/06/05/trump-open-ai-altman-stake.html",
+      "src": "X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Demon Base.eth",
+      "title": "Konnex is building a decentralized robotics coordination network (DePIN + AI/robotics focus). It aims to create an on-chain marketplace where robots (drones, arms, etc.) can contract for physical task",
+      "url": "https://x.com/0xFezziCT/status/2063552857685864704",
       "score": 0,
-      "ts": "2026-06-05T21:12:29"
+      "ts": ""
     },
     {
-      "src": "CNBC Top",
-      "title": "Trump administration, OpenAI discussing possible government stake in the AI startup",
-      "url": "https://www.cnbc.com/2026/06/05/trump-open-ai-altman-stake.html",
+      "src": "X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/TechniaHQ | humanoid robots",
+      "title": "If Chinese robotics keeps improving this fast what do you think humanoid robots will realistically be able to do in everyday life within the next 3 years?",
+      "url": "https://x.com/techniahq/status/2063552828870660254",
       "score": 0,
-      "ts": "2026-06-05T21:12:29"
+      "ts": ""
     },
     {
-      "src": "CNBC Tech",
-      "title": "Google to pay SpaceX $920 million a month for compute capacity at xAI data centers",
-      "url": "https://www.cnbc.com/2026/06/05/google-to-pay-spacex-920-million-a-month-for-xai-compute-capacity.html",
+      "src": "X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Rayasok Ashish",
+      "title": "\"The future belongs to robotics.\"",
+      "url": "https://x.com/mujhe_dekho1/status/2063552731089195167",
       "score": 0,
-      "ts": "2026-06-05T21:01:53"
+      "ts": ""
     },
     {
-      "src": "CNBC Top",
-      "title": "Google to pay SpaceX $920 million a month for compute capacity at xAI data centers",
-      "url": "https://www.cnbc.com/2026/06/05/google-to-pay-spacex-920-million-a-month-for-xai-compute-capacity.html",
+      "src": "X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/singleapi",
+      "title": "- NVIDIA’s RTX 5070 chip marks a new era of agentic PCs, while open-source gems like Google’s Gemma 4 optimize on-device AI memory. Robotics and agent-based apps like Hermes reshape the way AI systems",
+      "url": "https://x.com/singleapi2/status/2063552385310495082",
       "score": 0,
-      "ts": "2026-06-05T21:01:53"
+      "ts": ""
     },
     {
-      "src": "CNBC Top",
-      "title": "Bitcoin cracks $60,000, sinking to lowest level since October 2024",
-      "url": "https://www.cnbc.com/2026/06/05/bitcoin-dismal-week-price-below-all-time-high-crypto-investors.html",
+      "src": "X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/BoringSage",
+      "title": "Robotics student trying to land a job?\n\nMaster these 5 STEPS.\n\nSTEP 01: Build Production-Grade Robots\n\nLearn how to Build Production-Grade robots.\n\nRobots that are reliable, scalable, efficient, desig",
+      "url": "https://x.com/boringsage/status/2063552137808810182",
       "score": 0,
-      "ts": "2026-06-05T20:59:16"
+      "ts": ""
     },
     {
-      "src": "Cointelegraph",
-      "title": "Travala lets AI agents book hotels with USDC on Base",
-      "url": "https://cointelegraph.com/news/travala-ai-agents-book-hotels-usdc-base?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "src": "X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Ferbin",
+      "title": "what's sriram's news? robotics hires usually signal a shift from research to production work. curious if that's what this is.",
+      "url": "https://x.com/Ferbin08/status/2063552085304471691",
       "score": 0,
-      "ts": "2026-06-05T20:55:27"
+      "ts": ""
     },
     {
-      "src": "Cointelegraph",
-      "title": "Crypto tax proposals weighed ahead of Tuesday House hearing",
-      "url": "https://cointelegraph.com/news/crypto-tax-bills-house-ways-means-hearing?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "src": "X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/しぉ",
+      "title": "Elon Musk is going to speak virtually at a private ASML employee conference about Terafab... \n\nWhat's Terafab? It's a $55 billion SpaceX-Tesla chip factory announced in March, targeting 2nm chips for",
+      "url": "https://x.com/bZDbpo/status/2063551461125189950",
       "score": 0,
-      "ts": "2026-06-05T20:41:38"
-    },
-    {
-      "src": "CNBC Tech",
-      "title": "Mythos rejuvenated the cybersecurity sector. Earnings put the recent rally to the test",
-      "url": "https://www.cnbc.com/2026/06/05/mythos-cybersecurity-earnings-palo-alto-crowdstrike.html",
-      "score": 0,
-      "ts": "2026-06-05T20:25:09"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "Mythos rejuvenated the cybersecurity sector. Earnings put the recent rally to the test",
-      "url": "https://www.cnbc.com/2026/06/05/mythos-cybersecurity-earnings-palo-alto-crowdstrike.html",
-      "score": 0,
-      "ts": "2026-06-05T20:25:09"
-    },
-    {
-      "src": "CNBC Tech",
-      "title": "Meta's stock sinks on report company could raise tens of billions of dollars to fund AI push",
-      "url": "https://www.cnbc.com/2026/06/05/meta-stock-sinks-on-report-company-could-raise-tens-of-billions-for-ai.html",
-      "score": 0,
-      "ts": "2026-06-05T20:22:44"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "Meta's stock sinks on report company could raise tens of billions of dollars to fund AI push",
-      "url": "https://www.cnbc.com/2026/06/05/meta-stock-sinks-on-report-company-could-raise-tens-of-billions-for-ai.html",
-      "score": 0,
-      "ts": "2026-06-05T20:22:44"
-    },
-    {
-      "src": "CNBC Tech",
-      "title": "Alphabet is seeking fresh capital as stock's 4-week losing streak tests investor appetite",
-      "url": "https://www.cnbc.com/2026/06/05/alphabet-ai-data-center-financing.html",
-      "score": 0,
-      "ts": "2026-06-05T20:08:26"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "Alphabet is seeking fresh capital as stock's 4-week losing streak tests investor appetite",
-      "url": "https://www.cnbc.com/2026/06/05/alphabet-ai-data-center-financing.html",
-      "score": 0,
-      "ts": "2026-06-05T20:08:26"
+      "ts": ""
     },
     {
       "src": "Decrypt",
-      "title": "Strategy Shares Fall to 4-Month Low as STRC Dips and Bitcoin Sinks Under $60K",
-      "url": "https://decrypt.co/370229/strategy-shares-fall-4-month-low-strc-dips-bitcoin-sinks-under-60k",
+      "title": "AI Is Helping Discover Tech Vulnerabilities—And Zcash Is Just the Latest Example",
+      "url": "https://decrypt.co/370237/ai-discover-tech-vulnerabilities-zcash-latest-example",
       "score": 0,
-      "ts": "2026-06-05T20:02:53"
+      "ts": "2026-06-06T20:56:43"
+    },
+    {
+      "src": "TechCrunch",
+      "title": "OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks",
+      "url": "https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks/",
+      "score": 0,
+      "ts": "2026-06-06T20:32:24"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Bitcoin, ether eye worst weekly rout since FTX collapse as cryptos shed $390 billion",
+      "url": "https://www.coindesk.com/markets/2026/06/06/bitcoin-ether-eye-worst-weekly-rout-since-ftx-collapse-as-cryptos-shed-usd390-billion",
+      "score": 0,
+      "ts": "2026-06-06T19:58:54"
+    },
+    {
+      "src": "TechCrunch",
+      "title": "What to expect from WWDC 2026: Siri’s highly anticipated revamp and Apple Intelligence updates",
+      "url": "https://techcrunch.com/2026/06/06/what-to-expect-from-wwdc-2026-siris-highly-anticipated-revamp-and-apple-intelligence-updates/",
+      "score": 0,
+      "ts": "2026-06-06T18:13:36"
+    },
+    {
+      "src": "Decrypt",
+      "title": "Claude Code Vulnerability Could Let Attackers Steal Credentials From GitHub, Says Microsoft",
+      "url": "https://decrypt.co/370238/claude-code-vulnerability-attackers-steal-credentials-github-microsoft",
+      "score": 0,
+      "ts": "2026-06-06T18:08:56"
+    },
+    {
+      "src": "TechCrunch",
+      "title": "Sriram Krishnan is leaving his role as White House AI advisor",
+      "url": "https://techcrunch.com/2026/06/06/sriram-krishnan-is-leaving-his-role-as-white-house-ai-advisor/",
+      "score": 0,
+      "ts": "2026-06-06T17:42:15"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Here are 3 forces that drove a whirlwind week for the stock market",
+      "url": "https://www.cnbc.com/2026/06/06/here-are-3-forces-that-drove-a-whirlwind-week-for-the-stock-market.html",
+      "score": 0,
+      "ts": "2026-06-06T16:38:29"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Meta is paying creators in Stablecoins. Spending them is someone else's problem",
+      "url": "https://www.coindesk.com/opinion/2026/06/06/meta-is-paying-creators-in-stablecoins-spending-them-is-someone-else-s-problem",
+      "score": 0,
+      "ts": "2026-06-06T16:30:00"
+    },
+    {
+      "src": "TechCrunch",
+      "title": "The Trump administration might take an equity stake in OpenAI",
+      "url": "https://techcrunch.com/2026/06/06/the-trump-administration-might-take-an-equity-stake-in-openai/",
+      "score": 0,
+      "ts": "2026-06-06T16:17:21"
     },
     {
       "src": "Cointelegraph",
-      "title": "Bitcoin bears face $2.6B trap as BTC funding rate drops: Is a short squeeze brewing?",
-      "url": "https://cointelegraph.com/markets/bitcoin-bears-face-26b-trap-as-btc-funding-rate-drops-is-a-short-squeeze-brewing?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "title": "Bitcoin most oversold since 2020 crash: Can BTC rebound to $70K next?",
+      "url": "https://cointelegraph.com/markets/bitcoin-most-oversold-since-2020-crash-can-btc-rebound-to-70k-next?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
       "score": 0,
-      "ts": "2026-06-05T19:28:53"
+      "ts": "2026-06-06T16:06:54"
+    },
+    {
+      "src": "Decrypt",
+      "title": "Bitcoin Has Dumped All of Its Gains Since Trump Was Reelected—And Then Some",
+      "url": "https://decrypt.co/370235/bitcoin-dumped-gains-since-trump-reelected-then-some",
+      "score": 0,
+      "ts": "2026-06-06T15:59:30"
+    },
+    {
+      "src": "The Block",
+      "title": "Hyperion DeFi to unwind $29 million in HYPE deals with Felix, Native Markets as USDH sunsets",
+      "url": "https://www.theblock.co/post/403879/hyperion-defi-to-unwind-29m-in-hype-deals-with-felix-native-markets-as-usdh-sunsets?utm_source=rss&utm_medium=rss",
+      "score": 0,
+      "ts": "2026-06-06T15:40:36"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "A crypto pioneer who turned a $20 million family stake into a billion-dollar fund doubles down on bitcoin",
+      "url": "https://www.coindesk.com/business/2026/06/06/a-crypto-pioneer-who-turned-a-usd20-million-family-stake-into-a-billion-dollar-fund-doubles-down-on-bitcoin",
+      "score": 0,
+      "ts": "2026-06-06T15:00:00"
     }
   ]
 }

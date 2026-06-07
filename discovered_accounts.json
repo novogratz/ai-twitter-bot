@@ -1,30 +1,5 @@
 [
   {
-    "handle": "willietrom",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "pathfinderxbt",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "shveta",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "jsr",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "techmeme",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
     "handle": "romstrades",
     "category": "ai",
     "added": "2026-05-28"
@@ -2498,5 +2473,35 @@
     "handle": "afrovestor",
     "category": "ai",
     "added": "2026-06-06"
+  },
+  {
+    "handle": "kashaf",
+    "category": "ai",
+    "added": "2026-06-07",
+    "followed": true
+  },
+  {
+    "handle": "sick",
+    "category": "ai",
+    "added": "2026-06-07",
+    "followed": true
+  },
+  {
+    "handle": "cointelegraph",
+    "category": "ai",
+    "added": "2026-06-07",
+    "followed": true
+  },
+  {
+    "handle": "boring_business",
+    "category": "ai",
+    "added": "2026-06-07",
+    "followed": true
+  },
+  {
+    "handle": "teslazoa",
+    "category": "ai",
+    "added": "2026-06-07",
+    "followed": true
   }
 ]

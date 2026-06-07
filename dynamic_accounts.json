@@ -430,7 +430,14 @@
     "Naval",
     "Stephenblaq",
     "Grok",
-    "Verel"
+    "Verel",
+    "jason",
+    "Gublo",
+    "Barchart",
+    "0xMarioNawfal",
+    "Cole",
+    "Tooly",
+    "CapexAndChill"
   ],
   "history": [
     {
@@ -2576,6 +2583,41 @@
     {
       "lang": "fr",
       "handle": "lucgagnon",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "jason",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Gublo",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Barchart",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "0xMarioNawfal",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Cole",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Tooly",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "CapexAndChill",
       "added": "2026-06-07"
     }
   ]
