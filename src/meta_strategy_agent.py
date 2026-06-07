@@ -35,27 +35,30 @@ META_LOG_FILE = os.path.join(_PROJECT_ROOT, "meta_strategy_log.json")
 
 # Bounds the agent can NOT cross — safety rails so a bad cycle can't
 # explode caps or silence the bot's original voice.
-# Minimums are HIGH on purpose: the bot MUST always have hot takes + spicy.
-# A meta-strategy that sets these to 0 is broken, not conservative.
+# 2026-06-07 AGENT SPEC mix (hard): originals 3-4/day TOTAL (the
+# MAX_ORIGINALS_PER_DAY=4 chokepoint governs), QRTs 1-2/day, plain RTs
+# 0-2/day, replies UNLIMITED. Per-surface bounds below keep every
+# combination inside that mix — the agent flexes WITHIN the spec, never
+# out of it.
 _BOUNDS = {
-    "MAX_NEWS_PER_DAY":      (4,  20),
-    "MAX_HOTAKES_PER_DAY":   (5,  20),
-    "MAX_QUOTES_PER_DAY":    (10, 100),
-    "MAX_RETWEETS_PER_DAY":  (8,   50),
-    "MAX_BREAKOUTS_PER_DAY": (3,   15),
-    "MAX_SPICY_PER_DAY":     (4,   15),
-    "MAX_REPLIES_PER_CYCLE": (3,   10),
+    "MAX_NEWS_PER_DAY":      (0,  2),
+    "MAX_HOTAKES_PER_DAY":   (1,  2),
+    "MAX_QUOTES_PER_DAY":    (1,  2),
+    "MAX_RETWEETS_PER_DAY":  (0,  2),
+    "MAX_BREAKOUTS_PER_DAY": (0,  1),
+    "MAX_SPICY_PER_DAY":     (0,  1),
+    "MAX_REPLIES_PER_CYCLE": (3,  50),
 }
 
 # Safe defaults used when the LLM omits a cap key entirely.
 _DEFAULTS = {
-    "MAX_NEWS_PER_DAY":      6,
-    "MAX_HOTAKES_PER_DAY":   8,
-    "MAX_QUOTES_PER_DAY":    50,
-    "MAX_RETWEETS_PER_DAY":  30,
-    "MAX_BREAKOUTS_PER_DAY": 5,
-    "MAX_SPICY_PER_DAY":     6,
-    "MAX_REPLIES_PER_CYCLE": 5,
+    "MAX_NEWS_PER_DAY":      1,
+    "MAX_HOTAKES_PER_DAY":   2,
+    "MAX_QUOTES_PER_DAY":    2,
+    "MAX_RETWEETS_PER_DAY":  1,
+    "MAX_BREAKOUTS_PER_DAY": 1,
+    "MAX_SPICY_PER_DAY":     1,
+    "MAX_REPLIES_PER_CYCLE": 25,
 }
 
 

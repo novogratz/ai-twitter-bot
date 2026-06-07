@@ -51,15 +51,18 @@ ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 PERFORMANCE_LOG_FILE = os.path.join(_PROJECT_ROOT, "performance_log.json")
 
 # Paths we're allowed to mutate. Anything else from the LLM gets rejected.
+# 2026-06-07 AGENT SPEC: ranges clamped to the spec mix (originals 3-4
+# total via the chokepoint, QRTs 1-2, plain RTs 0-2, replies unlimited,
+# follow_blast permanently 0 — follows are whitelist-seed only at 20/day).
 ALLOWED_PATHS = {
-    "caps.MAX_NEWS_PER_DAY":      (4, 8),
-    "caps.MAX_HOTAKES_PER_DAY":   (2, 5),
-    "caps.MAX_BREAKOUTS_PER_DAY": (0, 20),
-    "caps.MAX_SPICY_PER_DAY":     (0, 20),
-    "caps.MAX_QUOTES_PER_DAY":    (20, 120),
-    "caps.MAX_RETWEETS_PER_DAY":  (8, 30),
-    "caps.MAX_REPLIES_PER_CYCLE": (1, 5),
-    "caps.FOLLOW_BLAST_PER_CYCLE": (20, 200),
+    "caps.MAX_NEWS_PER_DAY":      (0, 2),
+    "caps.MAX_HOTAKES_PER_DAY":   (1, 2),
+    "caps.MAX_BREAKOUTS_PER_DAY": (0, 1),
+    "caps.MAX_SPICY_PER_DAY":     (0, 1),
+    "caps.MAX_QUOTES_PER_DAY":    (1, 2),
+    "caps.MAX_RETWEETS_PER_DAY":  (0, 2),
+    "caps.MAX_REPLIES_PER_CYCLE": (1, 50),
+    "caps.FOLLOW_BLAST_PER_CYCLE": (0, 0),
     "caps.LIKE_BOT_PER_CYCLE":    (20, 200),
     "cadence_factor":             (0.5, 1.5),
 }

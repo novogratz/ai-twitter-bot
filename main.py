@@ -804,6 +804,20 @@ def main():
             id="followback_job",
         )
 
+        # Seed-priority follow bot (2026-06-07 agent spec, Part 1) — walks
+        # the whitelist.json seed list tier1→tier4 in priority order, ONE
+        # attempt per cycle. The action_guard chokepoint enforces the hard
+        # constraints (20/day, >=10-min jittered gaps, 300/150 total
+        # ceiling, whitelist-only, 30-day anti-churn) so a 15-min cadence
+        # can never burst.
+        log.info("Seed-follow bot: rebuilding the following list from the "
+                 "tiered seed list every 15 min (chokepoint-paced).")
+        scheduler.add_job(
+            safe_run_marquee_follow_cycle,
+            trigger=IntervalTrigger(minutes=15),
+            id="seed_follow_job",
+        )
+
         # Pin bot — daily idempotent. Picks our highest-engagement post of
         # the recent window and pins it via JS menu click. A strong pinned
         # tweet is the #1 follow-conversion lever for first-time visitors.

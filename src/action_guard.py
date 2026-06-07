@@ -135,21 +135,25 @@ _WL_CACHE: dict = {}
 _WL_MTIME: float = 0.0
 
 
+_WL_EMPTY = {"tier1": set(), "tier2": set(), "tier3": set(), "tier4": set(), "all": set()}
+
+
 def load_whitelist() -> dict:
-    """Return {"tier1": set, "tier2": set, "tier3": set, "all": set} of
-    lowercased handles. Cached, reloads when the file changes."""
+    """Return {"tier1": set, ..., "tier4": set, "all": set} of lowercased
+    handles. Cached, reloads when the file changes. tier4 (2026-06-07 spec:
+    crypto/markets crossover seeds) is optional in the file."""
     global _WL_CACHE, _WL_MTIME
     try:
         mtime = os.path.getmtime(config.WHITELIST_FILE)
     except OSError:
-        return {"tier1": set(), "tier2": set(), "tier3": set(), "all": set()}
+        return dict(_WL_EMPTY)
     if _WL_CACHE and mtime == _WL_MTIME:
         return _WL_CACHE
     try:
         with open(config.WHITELIST_FILE) as f:
             raw = json.load(f)
     except (OSError, json.JSONDecodeError):
-        return {"tier1": set(), "tier2": set(), "tier3": set(), "all": set()}
+        return dict(_WL_EMPTY)
 
     def _norm(seq):
         return {str(h).lower().lstrip("@") for h in (seq or [])}
@@ -158,12 +162,14 @@ def load_whitelist() -> dict:
     t1 = _norm(tiers.get("tier1") or tiers.get("tier1_sources_targets"))
     t2 = _norm(tiers.get("tier2") or tiers.get("tier2_peers"))
     t3 = _norm(tiers.get("tier3") or tiers.get("tier3_watch"))
-    _WL_CACHE = {"tier1": t1, "tier2": t2, "tier3": t3, "all": t1 | t2 | t3}
+    t4 = _norm(tiers.get("tier4"))
+    _WL_CACHE = {"tier1": t1, "tier2": t2, "tier3": t3, "tier4": t4,
+                 "all": t1 | t2 | t3 | t4}
     _WL_MTIME = mtime
     return _WL_CACHE
 
 
-def is_whitelisted(handle: str, tiers=("tier1", "tier2", "tier3")) -> bool:
+def is_whitelisted(handle: str, tiers=("tier1", "tier2", "tier3", "tier4")) -> bool:
     h = (handle or "").lower().lstrip("@")
     wl = load_whitelist()
     return any(h in wl[t] for t in tiers)
@@ -236,14 +242,24 @@ def adjust_following(delta: int) -> None:
 
 # --- policy decisions -------------------------------------------------------
 
-def can_follow(handle: str) -> Tuple[bool, str]:
-    """Daily cap + anti-churn + (optional) whitelist + net-negative ratio rule.
+def following_ceiling() -> int:
+    """Max total following allowed right now (2026-06-07 spec, Part 1).
 
-    Hybrid policy (2026-06-02): we follow new accounts for growth, but while
-    following is OVER the ceiling we only allow a follow when the day is still
-    net-negative (today's follows < today's unfollows) — so the ratio heals
-    every day even as we keep discovering people. Under the ceiling, follows
-    are free up to the daily cap.
+    Hard constraints, never violated: total following cap 300; while
+    followers are low (< FOLLOW_LOW_PHASE_FOLLOWERS) stay under the credible
+    ~150; once followers exceed that, keep following <= followers (still
+    capped at 300).
+    """
+    followers, _ = current_counts()
+    if followers is None or followers < config.FOLLOW_LOW_PHASE_FOLLOWERS:
+        return min(config.FOLLOW_TOTAL_CAP, config.FOLLOW_LOW_PHASE_CEILING)
+    return min(config.FOLLOW_TOTAL_CAP, followers)
+
+
+def can_follow(handle: str) -> Tuple[bool, str]:
+    """2026-06-07 spec follow policy — whitelist-only seed/discovery list,
+    hard total-following ceiling (300 cap / ~150 while followers are low),
+    20/day pacing with >=10-min randomized gaps, 30-day anti-churn.
     """
     h = (handle or "").lower().lstrip("@")
     if not h:
@@ -255,8 +271,19 @@ def can_follow(handle: str) -> Tuple[bool, str]:
     follows_today = count_today(FOLLOW)
     if follows_today >= config.MAX_FOLLOWS_PER_DAY:
         return (False, f"daily follow cap reached ({config.MAX_FOLLOWS_PER_DAY})")
-    # Ratio brake is OFF by default in growth mode (it was blocking 100% of
-    # follows at 4200 following). Only enforce when FOLLOW_ENFORCE_RATIO=1.
+    # Never burst-follow: >=10-min jittered gap between follows (spec Part 1).
+    gap = config.MIN_SECONDS_BETWEEN_FOLLOWS + random.uniform(
+        0, config.FOLLOW_SPACING_JITTER_SECONDS)
+    if not spacing_ok(FOLLOW, gap):
+        return (False, f"too soon since last follow (need ~{int(gap)}s gap)")
+    # Hard total-following ceiling — never exceed 300; ~150 while followers
+    # are low; following <= followers once followers pass the low phase.
+    _, following = current_counts()
+    if following is not None:
+        ceiling = following_ceiling()
+        if following + 1 > ceiling:
+            return (False, f"total following ceiling reached ({following} >= {ceiling})")
+    # Legacy net-negative ratio brake (kept behind FOLLOW_ENFORCE_RATIO).
     if config.FOLLOW_ENFORCE_RATIO:
         followers, following = current_counts()
         if followers is not None and following is not None:
@@ -269,12 +296,14 @@ def can_follow(handle: str) -> Tuple[bool, str]:
 
 
 def can_unfollow(handle: str) -> Tuple[bool, str]:
-    """Daily cap, anti-churn cooldown; never unfollow a tier1/tier2 account."""
+    """Daily cap, anti-churn cooldown; never unfollow ANY whitelisted seed
+    (all tiers — the 2026-06-07 spec bans follow/unfollow churn on the
+    curated list)."""
     h = (handle or "").lower().lstrip("@")
     if not h:
         return (False, "empty handle")
-    if is_whitelisted(h, tiers=("tier1", "tier2")):
-        return (False, "protected: tier1/tier2 whitelist account")
+    if is_whitelisted(h):
+        return (False, "protected: whitelisted seed account (all tiers)")
     if within_churn_cooldown(h):
         return (False, f"anti-churn: touched within {config.CHURN_COOLDOWN_DAYS}d")
     if count_today(UNFOLLOW) >= config.MAX_UNFOLLOWS_PER_DAY:

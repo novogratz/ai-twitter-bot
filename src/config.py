@@ -116,16 +116,14 @@ RETRY_DELAY_SECONDS = 5
 DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
 
 # Posting caps + spacing (originals = post_tweet; quotes = quote_tweet).
-# 2026-06-02: raised 3→30 and spacing 45→10 min. The 3/day + 45-min cap was a
-# global chokepoint over ALL original surfaces (news, hotake, breakout every
-# 8 min, spicy every 20 min, threads) — it strangled the whole content engine
-# down to 3 posts/day. 30/day + 10-min spacing lets the per-surface daily caps
-# (MAX_NEWS/HOTAKES/SPICY/BREAKOUTS_PER_DAY) be the real governors again.
-# 2026-06-04: volume restored (operator: "you used to do 50 posts/day, now 6").
-# 60/day + 6-min spacing → ~50/day reachable across all original surfaces.
-MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "60"))
-MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(6 * 60)))
-POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(3 * 60)))
+# 2026-06-07 AGENT SPEC (Part 2 — Content): originals are the CONVERSION
+# layer, 3-4/day anchored to US market slots (~9:30am / 12:30pm / 4-5pm /
+# 8pm ET). One post per slot — never two originals within ~10-15 min (they
+# cannibalize each other's reach). 2.5h+jitter spacing approximates the
+# slot rhythm across all original surfaces at the chokepoint.
+MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "4"))
+MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(150 * 60)))
+POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(30 * 60)))
 
 # Quote-reposts (quote-tweet-with-comment on big news) — operator-confirmed
 # 2026-06-02 as the highest-ROI surface ("this works a lot"). Run it HOT:
@@ -138,37 +136,47 @@ POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(3 * 60)))
 # 2026-06-05 PM (operator: "do more quote retweet, it was extremely
 # successful — abuse a bit of it for the next few weeks"): cap 100→150,
 # spacing 120→90s+jitter45. Still jittered, still no bursts.
-# 2026-06-06 operator: go unlimited on quote reposts
-MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "9999"))
-MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", "30"))
-QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "15"))
+# 2026-06-07 AGENT SPEC: QRTs ride the day's biggest AI/markets headline
+# with a persona take — 1-2/day, ideally within the first 1-2h of trending.
+MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "2"))
+MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", "3600"))
+QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "900"))
 
-# 2026-06-06 operator: "1k-2k replies today is fine — remove limits"
-# Daily cap gone (9999). Minimum spacing kept at 8s+jitter for ban safety
-# (absolute floor — X shadow-bans accounts that burst with 0s spacing).
-MAX_REPLIES_PER_DAY = int(os.environ.get("MAX_REPLIES_PER_DAY", "9999"))
+# 2026-06-07 AGENT SPEC: the reply machine is the core engine — no volume
+# cap, no daily limit. Minimum spacing kept at 8s+jitter for ban safety
+# (absolute floor — X shadow-bans accounts that burst with 0s spacing; a
+# Safari-driven account physically serializes anyway). Only a hard
+# rate-limit pauses replies — then resume at full throttle.
+MAX_REPLIES_PER_DAY = int(os.environ.get("MAX_REPLIES_PER_DAY", "999999"))
 MIN_SECONDS_BETWEEN_REPLIES = int(os.environ.get("MIN_SECONDS_BETWEEN_REPLIES", "8"))
 REPLY_JITTER_SECONDS = int(os.environ.get("REPLY_JITTER_SECONDS", "7"))
 REPLY_LANGUAGE_MATCH = os.environ.get("REPLY_LANGUAGE_MATCH", "1") == "1"
 
-# Following policy (2026-06-03 GROWTH MODE — operator: "lots of unfollow, not
-# a lot of follow, fix it"). The earlier whitelist-only + ratio-prune config
-# turned the follow engine OFF (0 follows/day blocked by the ratio gate, while
-# pruning shed accounts) → flat followers. Reopened for growth:
-#   - ENABLE_FOLLOW_BLAST=1 → the proven follow-for-followback engine is back on
-#     (it's what took the account 576→1190). Gated to the .env value.
-#   - FOLLOW_ENFORCE_RATIO=0 → the "following < 0.8*followers" gate no longer
-#     BLOCKS follows (it was blocking 100% of them at 4200 following). Set =1 to
-#     re-enable the hard ratio brake.
-#   - Higher follow cap, lower unfollow cap → net-positive follows = growth.
-#   - 30-day anti-churn stays ON (the one real suspension guard we keep).
-FOLLOW_WHITELIST_ONLY = os.environ.get("FOLLOW_WHITELIST_ONLY", "0") == "1"
-ENABLE_FOLLOW_BLAST = os.environ.get("ENABLE_FOLLOW_BLAST", "1") == "1"
+# Following policy (2026-06-07 AGENT SPEC, Part 1 — rebuild from near-zero
+# after the full purge). Following is a tool for exactly two things: curating
+# reply targets and signaling the lane. Hard constraints, never violated:
+#   - Total following cap 300 (FOLLOW_TOTAL_CAP); steady-state ~120-150.
+#   - While followers < FOLLOW_LOW_PHASE_FOLLOWERS (300), stay under the
+#     credible ~150 following (FOLLOW_LOW_PHASE_CEILING). Once followers
+#     exceed it, keep following <= followers.
+#   - Max 20 follows/day, randomized gaps >= 10 min (MIN_SECONDS_BETWEEN_
+#     FOLLOWS + FOLLOW_SPACING_JITTER_SECONDS). Never burst-follow.
+#   - Whitelist-only: the tiered seed list in whitelist.json (tier1 foils →
+#     tier4 crypto/markets). Discovery candidates go to suggestions[] for
+#     human approval — the bot never auto-adds.
+#   - 30-day anti-churn stays ON; no follow→unfollow cycles.
+FOLLOW_WHITELIST_ONLY = os.environ.get("FOLLOW_WHITELIST_ONLY", "1") == "1"
+ENABLE_FOLLOW_BLAST = os.environ.get("ENABLE_FOLLOW_BLAST", "0") == "1"
 FOLLOW_ENFORCE_RATIO = os.environ.get("FOLLOW_ENFORCE_RATIO", "0") == "1"
 FOLLOW_RATIO_CEILING = float(os.environ.get("FOLLOW_RATIO_CEILING", "0.8"))  # following < 0.8 * followers
-FOLLOWING_STEADY_STATE = int(os.environ.get("FOLLOWING_STEADY_STATE", "300"))
-MAX_FOLLOWS_PER_DAY = int(os.environ.get("MAX_FOLLOWS_PER_DAY", "40"))
-MAX_UNFOLLOWS_PER_DAY = int(os.environ.get("MAX_UNFOLLOWS_PER_DAY", "10"))
+FOLLOWING_STEADY_STATE = int(os.environ.get("FOLLOWING_STEADY_STATE", "150"))
+FOLLOW_TOTAL_CAP = int(os.environ.get("FOLLOW_TOTAL_CAP", "300"))
+FOLLOW_LOW_PHASE_CEILING = int(os.environ.get("FOLLOW_LOW_PHASE_CEILING", "150"))
+FOLLOW_LOW_PHASE_FOLLOWERS = int(os.environ.get("FOLLOW_LOW_PHASE_FOLLOWERS", "300"))
+MIN_SECONDS_BETWEEN_FOLLOWS = int(os.environ.get("MIN_SECONDS_BETWEEN_FOLLOWS", "600"))
+FOLLOW_SPACING_JITTER_SECONDS = int(os.environ.get("FOLLOW_SPACING_JITTER_SECONDS", "300"))
+MAX_FOLLOWS_PER_DAY = int(os.environ.get("MAX_FOLLOWS_PER_DAY", "20"))
+MAX_UNFOLLOWS_PER_DAY = int(os.environ.get("MAX_UNFOLLOWS_PER_DAY", "300"))
 # Anti-churn / TOS safety: never re-touch (follow↔unfollow) the same account
 # within this window. Follow/unfollow cycling is a fast path to suspension.
 CHURN_COOLDOWN_DAYS = int(os.environ.get("CHURN_COOLDOWN_DAYS", "30"))

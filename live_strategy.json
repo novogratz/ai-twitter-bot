@@ -1,24 +1,22 @@
 {
-  "ts": "2026-06-06T07:00:00.000000",
+  "ts": "2026-06-07T12:00:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 150,
-    "MAX_HOTAKES_PER_DAY": 400,
-    "MAX_QUOTES_PER_DAY": 5000,
-    "MAX_RETWEETS_PER_DAY": 6000,
-    "MAX_BREAKOUTS_PER_DAY": 300,
-    "MAX_SPICY_PER_DAY": 300,
-    "MAX_REPLIES_PER_CYCLE": 250,
-    "LIKE_BOT_PER_CYCLE": 600,
+    "MAX_NEWS_PER_DAY": 1,
+    "MAX_HOTAKES_PER_DAY": 2,
+    "MAX_QUOTES_PER_DAY": 2,
+    "MAX_RETWEETS_PER_DAY": 1,
+    "MAX_BREAKOUTS_PER_DAY": 1,
+    "MAX_SPICY_PER_DAY": 1,
+    "MAX_REPLIES_PER_CYCLE": 25,
+    "LIKE_BOT_PER_CYCLE": 100,
     "FOLLOW_BLAST_PER_CYCLE": 0
   },
   "topic_focus": [
-    "AI",
-    "AI",
-    "AI",
-    "Space",
-    "Investment",
-    "AI"
+    "market-trauma therapy",
+    "AI-vs-Bitcoin",
+    "investor psychology",
+    "AI news persona takes"
   ],
   "cadence_factor": 1.0,
-  "rationale": "x10 TEST MODE (operator 2026-06-06: 'multiply by 10 all the limits, I want to test'). All daily caps x10 on top of unlimited mode \u2014 physical Safari throughput is now the only ceiling. Jittered min-spacing + quality gates (dedup, 48h, one-reply-per-tweet, no links/hashtags, niche, voice, blocklist) remain absolute. follow_blast stays OFF."
+  "rationale": "2026-06-07 AGENT SPEC reset (operator). Output mix: 3-4 originals/day in US market slots (MAX_ORIGINALS_PER_DAY=4 chokepoint governs the total), 1-2 QRTs on the day's biggest AI/markets headline, 0-2 plain RTs (reciprocity only, prefer QRT), replies UNLIMITED (the core engine). Persona: deadpan AI therapist - don't report the news, therapize it. Follows: whitelist seed list only, 20/day, >=10min gaps, total ceiling 150 until followers>300 (hard cap 300)."
 }

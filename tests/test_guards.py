@@ -652,3 +652,107 @@ def test_reply_skips_llm_when_concurrent_bot_already_replied(monkeypatch, tmp_pa
     )
     assert posted == [(fresh_url, "named-emotion validated, calm reframe with the precise fact")]
     assert racy_url in cycle_snapshot
+
+
+# --- 2026-06-07 agent spec: follow policy (Part 1 hard constraints) ---------
+
+@pytest.fixture()
+def follow_env(monkeypatch, tmp_path):
+    """Isolated ledger + whitelist + counts for action_guard follow tests."""
+    from src import action_guard as ag, config
+
+    monkeypatch.setattr(config, "ACTION_LEDGER_FILE", str(tmp_path / "ledger.json"))
+    wl = tmp_path / "whitelist.json"
+    wl.write_text(json.dumps({"tiers": {
+        "tier1": ["TheBTCTherapist"],
+        "tier2": ["morganhousel"],
+        "tier3": ["karpathy"],
+        "tier4": ["saylor", "balajis"],
+    }}))
+    monkeypatch.setattr(config, "WHITELIST_FILE", str(wl))
+    ag._WL_CACHE = {}
+    ag._WL_MTIME = 0.0
+    # Spec pacing defaults, but zeroed spacing unless a test re-enables it.
+    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", True)
+    monkeypatch.setattr(config, "MAX_FOLLOWS_PER_DAY", 20)
+    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 0)
+    monkeypatch.setattr(config, "FOLLOW_SPACING_JITTER_SECONDS", 0)
+    monkeypatch.setattr(config, "FOLLOW_ENFORCE_RATIO", False)
+    monkeypatch.setattr(config, "FOLLOW_TOTAL_CAP", 300)
+    monkeypatch.setattr(config, "FOLLOW_LOW_PHASE_CEILING", 150)
+    monkeypatch.setattr(config, "FOLLOW_LOW_PHASE_FOLLOWERS", 300)
+    yield ag
+    ag._WL_CACHE = {}
+    ag._WL_MTIME = 0.0
+
+
+def test_whitelist_loads_tier4(follow_env):
+    ag = follow_env
+    wl = ag.load_whitelist()
+    assert "saylor" in wl["tier4"]
+    assert "saylor" in wl["all"]
+    assert ag.is_whitelisted("balajis")
+
+
+def test_follow_blocked_at_low_phase_ceiling(follow_env, monkeypatch):
+    """While followers are low (<300), total following must stay under ~150."""
+    ag = follow_env
+    monkeypatch.setattr(ag, "current_counts", lambda: (100, 150))
+    ok, why = ag.can_follow("karpathy")
+    assert not ok and "ceiling" in why
+
+
+def test_follow_allowed_under_low_phase_ceiling(follow_env, monkeypatch):
+    ag = follow_env
+    monkeypatch.setattr(ag, "current_counts", lambda: (100, 149))
+    ok, why = ag.can_follow("karpathy")
+    assert ok, why
+
+
+def test_follow_never_exceeds_hard_300_cap(follow_env, monkeypatch):
+    """Even with a big follower count, total following is hard-capped at 300."""
+    ag = follow_env
+    monkeypatch.setattr(ag, "current_counts", lambda: (10000, 300))
+    ok, why = ag.can_follow("saylor")
+    assert not ok and "ceiling" in why
+    monkeypatch.setattr(ag, "current_counts", lambda: (10000, 299))
+    ok, why = ag.can_follow("saylor")
+    assert ok, why
+
+
+def test_follow_keeps_following_below_followers_mid_phase(follow_env, monkeypatch):
+    """Once followers exceed 300, following must stay <= followers."""
+    ag = follow_env
+    monkeypatch.setattr(ag, "current_counts", lambda: (220, 200))
+    # followers=220 is still < FOLLOW_LOW_PHASE_FOLLOWERS → 150 ceiling rules
+    ok, why = ag.can_follow("morganhousel")
+    assert not ok and "ceiling" in why
+    monkeypatch.setattr(ag, "current_counts", lambda: (320, 280))
+    ok, why = ag.can_follow("morganhousel")
+    assert ok, why  # 280+1 <= min(300, 320)
+
+
+def test_follow_spacing_blocks_burst(follow_env, monkeypatch):
+    """Never burst-follow: a follow within the 10-min gap is refused."""
+    from src import config
+    ag = follow_env
+    monkeypatch.setattr(config, "MIN_SECONDS_BETWEEN_FOLLOWS", 600)
+    monkeypatch.setattr(ag, "current_counts", lambda: (100, 10))
+    ag.record(ag.FOLLOW, target="TheBTCTherapist")
+    ok, why = ag.can_follow("morganhousel")
+    assert not ok and "too soon" in why
+
+
+def test_follow_rejects_non_whitelisted(follow_env, monkeypatch):
+    ag = follow_env
+    monkeypatch.setattr(ag, "current_counts", lambda: (100, 10))
+    ok, why = ag.can_follow("randomspamaccount")
+    assert not ok and "whitelist" in why
+
+
+def test_unfollow_protects_all_whitelist_tiers(follow_env):
+    """No churn on seeds: tier3/tier4 are protected from unfollow too."""
+    ag = follow_env
+    for handle in ("TheBTCTherapist", "morganhousel", "karpathy", "saylor"):
+        ok, why = ag.can_unfollow(handle)
+        assert not ok and "protected" in why, (handle, why)

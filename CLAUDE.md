@@ -4,7 +4,66 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
-> **Mandate 2026-06-05 PM (CURRENT — MONETIZATION SPEC, supersedes 2026-06-04):**
+> **Mandate 2026-06-07 (CURRENT — AGENT SPEC: FOLLOW + CONTENT, supersedes
+> 2026-06-06 unlimited mode and the 2026-06-05 PM volume settings):**
+> Operating spec for @TheAIShrink — "The AI Therapist". Lane: **AI × markets ×
+> psychology**, English only. Golden rule: **don't report the news — therapize
+> it.** Voice: witty, deadpan, irreverent, emotionally intelligent but savage —
+> a calm shrink diagnosing the market's (and the investor's) neuroses.
+>
+> **PART 1 — FOLLOWING (rebuild from near-zero after the full purge).**
+> Following is a tool for exactly two things: curating reply targets +
+> signaling the lane. Hard constraints, ENFORCED IN `action_guard.can_follow`:
+> - Total following cap **300** (`FOLLOW_TOTAL_CAP`); steady-state ~120–150.
+>   While followers < 300, stay under **150** (`FOLLOW_LOW_PHASE_CEILING`);
+>   once followers exceed 300, keep following ≤ followers.
+> - Max **20 follows/day** (`MAX_FOLLOWS_PER_DAY`), randomized gaps **≥10 min**
+>   (`MIN_SECONDS_BETWEEN_FOLLOWS=600` + jitter). Never burst-follow.
+> - **No churn**: 30-day anti-churn + `can_unfollow` protects ALL whitelist
+>   tiers. Whitelist-only (`FOLLOW_WHITELIST_ONLY=1`); follow_blast +
+>   followback OFF.
+> - Seed list in `whitelist.json`, followed IN PRIORITY ORDER by
+>   `marquee_follow_bot` (seed-follow job, 1 attempt/15 min, chokepoint-paced):
+>   tier1 foils (TheBTCTherapist — the AI-vs-Bitcoin feud), tier2 niche reply
+>   targets (Housel, ParikPatelCFA, Litquidity, greg, ReformedBroker, Zweig),
+>   tier3 AI signal (karpathy, sama, steipete, mattwolfe, gregisenberg,
+>   AndrewYNg, lexfridman, kaifulee), tier4 crypto/markets foils (saylor,
+>   APompliano, balajis). Handles are HINTS — resolve via display name +
+>   keywords in `seeds[]`; skip + log unresolved/suspended/off-niche.
+> - Phase 2 discovery (peers of tier1-2, 1k–200k followers, active ≤14d,
+>   on-niche, no spam/airdrop/shill) goes to `suggestions[]` for human
+>   approval — the bot NEVER auto-adds. Expand to ~120–150 then hold.
+>
+> **PART 2 — CONTENT (output mix per day, enforced via chokepoint caps +
+> meta_strategy/strategy_lab bounds clamped to the spec):**
+> - **Originals 3–4/day** (`MAX_ORIGINALS_PER_DAY=4`, 2.5h+jitter spacing ≈ US
+>   market slots ~9:30a/12:30p/4-5p/8p ET; never two within 10-15 min). The
+>   conversion layer. ≥1 daily original carries native media (stunt bot GIF).
+> - **QRTs 1–2/day** (`MAX_QUOTE_REPOSTS_PER_DAY=2`) — ride the day's biggest
+>   AI/markets headline with a persona take, ideally within 1-2h of trending.
+> - **Plain RTs 0–2/day** (`MAX_RETWEETS_PER_DAY=2`) — reciprocity/on-brand
+>   amplification only; prefer QRT (carries our voice, earns distribution).
+> - **Replies UNLIMITED** — the core engine, max throughput
+>   (`MAX_REPLIES_PER_DAY=999999`; 8s+jitter spacing stays as the ban-safety
+>   floor — Safari serializes anyway). Front-load fresh fast-rising posts
+>   (<30-60 min) from whitelist tier1-2 first, then on-niche trending. Every
+>   reply adds a sharp/funny/therapist-framed take; never generic, never
+>   duplicate text (dedup chokepoint stays). Only a hard rate-limit pauses
+>   replies — then resume at full throttle.
+> - **Reply-bait question 3–4/week** (`REPLY_BAIT_PER_WEEK=4`, spicy QUESTION
+>   mode, weekly-capped in `spicy_bot`).
+> - Format rules (already code-enforced): no links in post bodies
+>   (link-in-first-reply), no hashtags, one idea per post, hook first line.
+> - Guardrails: not financial advice — observational/humorous only, never
+>   actionable buy/sell calls, price targets, or pump language. No
+>   impersonation; clearly a fictional AI-therapist persona.
+> - Content pillars (rotate): market-trauma therapy (primary) /
+>   AI-vs-everything hot takes (AI-vs-Bitcoin running bit) / meme-reaction
+>   with native GIF / reply-bait questions.
+> - Weekly metrics review → shift mix toward winners (followers Δ, following
+>   ≤300, impressions/post, reply→profile-visit→follow conversion, top pillar).
+
+> **Mandate 2026-06-05 PM (superseded by 2026-06-07 above — MONETIZATION SPEC, supersedes 2026-06-04):**
 > Goal: grow @TheAIShrink into a focused, SPONSORABLE persona account
 > (subscriptions + sponsorships; ad revenue is a bonus). Baseline: ~1.3K
 > followers / ~4.7K following (bad ratio), repost-heavy timeline, links in
