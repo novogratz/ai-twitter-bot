@@ -52,3 +52,7 @@ auto_improve.log
 .last_self_heal
 .claude/scheduled_tasks.lock
 claude_lockout.json
+
+# Operator-private session notes — loaded by Claude Code, never committed
+# (repo is on GitHub; private notes live here instead of CLAUDE.md).
+CLAUDE.local.md
