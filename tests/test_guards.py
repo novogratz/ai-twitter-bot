@@ -594,6 +594,57 @@ def test_engine_health_still_alerts_on_sustained_silence(monkeypatch, tmp_path):
     )
 
 
+def test_self_heal_env_kill_switch_is_read_at_call_time(monkeypatch, tmp_path):
+    """The self-heal kill switch (ENABLE_SELF_HEAL=0) MUST take effect when set
+    via monkeypatch.setenv — and by extension via a live .env edit on the
+    running bot. Regression: when ENABLE_SELF_HEAL / SELF_HEAL_COOLDOWN_HOURS
+    were module-level constants evaluated at import, every other engine-health
+    test (which calls run_engine_health_cycle() with synthetic 'collapsed'
+    data) silently spawned bin/auto_improve.sh --emergency in production —
+    which in turn launched a real headless Claude run against a phantom alert.
+    Pin both gates at call time so the env-based override is honored.
+    """
+    from src import engine_health_bot as ehb
+    monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
+    # Force the cooldown check to think the stamp is fresh — proves the
+    # kill switch short-circuits BEFORE the cooldown read.
+    monkeypatch.setattr(ehb, "_SELF_HEAL_STAMP", str(tmp_path / "noop"))
+    spawned = []
+    import subprocess as _subprocess
+    monkeypatch.setattr(
+        _subprocess, "Popen", lambda *a, **k: spawned.append(a) or None,
+    )
+    ehb._maybe_trigger_self_heal(["reply collapsed: 0 today vs ~50 (synthetic)"])
+    assert spawned == [], (
+        "ENABLE_SELF_HEAL=0 must suppress the auto_improve.sh subprocess "
+        "(was leaking because the flag was read at import time)"
+    )
+
+
+def test_self_heal_cooldown_env_is_read_at_call_time(monkeypatch, tmp_path):
+    """SELF_HEAL_COOLDOWN_HOURS must also be honored at call time so the
+    operator can extend the cooldown live (e.g. during a known-bad window)
+    without a bot restart. Writes a stamp 1h old, sets cooldown to 24h, and
+    asserts no subprocess fires."""
+    from src import engine_health_bot as ehb
+    from datetime import datetime, timedelta
+    stamp = tmp_path / ".last_self_heal"
+    stamp.write_text(datetime.now().isoformat())
+    import os as _os
+    one_hour_ago = (datetime.now() - timedelta(hours=1)).timestamp()
+    _os.utime(stamp, (one_hour_ago, one_hour_ago))
+    monkeypatch.setattr(ehb, "_SELF_HEAL_STAMP", str(stamp))
+    monkeypatch.setenv("ENABLE_SELF_HEAL", "1")
+    monkeypatch.setenv("SELF_HEAL_COOLDOWN_HOURS", "24")
+    spawned = []
+    import subprocess as _subprocess
+    monkeypatch.setattr(
+        _subprocess, "Popen", lambda *a, **k: spawned.append(a) or None,
+    )
+    ehb._maybe_trigger_self_heal(["reply collapsed: 0 today vs ~50 (synthetic)"])
+    assert spawned == [], "cooldown env override must be honored at call time"
+
+
 # --- pre-LLM dedup re-check (operator 2026-06-07: 774 wasted reply LLM calls) ---
 
 def test_reply_skips_llm_when_concurrent_bot_already_replied(monkeypatch, tmp_path):

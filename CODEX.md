@@ -180,6 +180,43 @@ retweet_post vs reboost_tweet). `pick_action` is pure + guard-tested
 (fresh-winner-first, gap, cap, age window). Complements (not replaces)
 boost_job's fresh-post self-RT and the disabled pin rotation.
 
+### 2026-06-07 PM-3 — self-heal kill switch was read at import time (phantom emergency)
+
+bot.log at 09:44/09:55/10:04 reported `[ENGINE_HEALTH] ⚠️ ALERT: reply
+collapsed: 0 today vs ~50 by this hour over the last 7 days (0%)` while
+engagement_log.csv showed 501 replies for the same day (00h-06h, before the
+bot stopped at 06:25 today under .bot_disabled). The 10:04 cycle also
+launched `bin/auto_improve.sh --emergency` against the phantom alert —
+which spawned a real headless Claude run.
+
+Root cause: `tests/test_guards.py::test_engine_health_still_alerts_active_surface`
+(and four siblings) call `run_engine_health_cycle()` against tmp CSVs with
+synthetic "today=0 vs baseline=50" data, expecting an alert to fire. They
+set `monkeypatch.setenv("ENABLE_SELF_HEAL", "0")` to suppress the
+subprocess — but `ENABLE_SELF_HEAL = os.environ.get(...) == "1"` was a
+**module-level constant** evaluated at first import, so the env patch had
+no effect. Every such test logged `log.error("⚠️ ALERT: reply collapsed: 0
+today vs ~50...")` into the real bot.log (shared logger writes to the same
+RotatingFileHandler) AND spawned `auto_improve.sh --emergency` in the
+production repo. The "reply collapsed" alert this very session diagnosed
+was the test's own synthetic line.
+
+Fix: `_maybe_trigger_self_heal` reads `ENABLE_SELF_HEAL` and
+`SELF_HEAL_COOLDOWN_HOURS` at call time (same pattern as `_is_surface_disabled`
+which is documented to "Read at call time so live edits ... take effect
+without restart"). Module-level constants for these two env vars are
+removed. Two guard tests pin the contract:
+`test_self_heal_env_kill_switch_is_read_at_call_time` (ENABLE_SELF_HEAL=0
+must suppress Popen even when the cooldown stamp is missing) and
+`test_self_heal_cooldown_env_is_read_at_call_time` (a 24h cooldown env
+must hold an hour-old stamp).
+
+Lesson — re-stating the chokepoint-dedup lesson in a new register: any
+env var that gates a SIDE EFFECT (subprocess spawn, network write,
+posting) must be read at call time, not import time. The cost of `os.environ.get`
+on every call is microseconds; the cost of a phantom Claude emergency run
+is dollars and operator confusion.
+
 ### 2026-06-07 PM-2 — QRT SURGE (operator: "abuse those bro", measured)
 
 Operator data: QRTs of relative large accounts = thousands of views +

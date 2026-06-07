@@ -191,8 +191,6 @@ def run_engine_health_cycle():
 
 
 _SELF_HEAL_STAMP = os.path.join(_PROJECT_ROOT, ".last_self_heal")
-SELF_HEAL_COOLDOWN_HOURS = float(os.environ.get("SELF_HEAL_COOLDOWN_HOURS", "6"))
-ENABLE_SELF_HEAL = os.environ.get("ENABLE_SELF_HEAL", "1") == "1"
 
 
 def _maybe_trigger_self_heal(alerts: list) -> None:
@@ -200,14 +198,26 @@ def _maybe_trigger_self_heal(alerts: list) -> None:
     launches an EMERGENCY headless Claude run (bin/auto_improve.sh
     --emergency) to root-cause and fix it — instead of waiting for a human
     to read the log. Rate-limited to one run per SELF_HEAL_COOLDOWN_HOURS;
-    the script itself is single-flight and never starts the bot."""
-    if not ENABLE_SELF_HEAL or not alerts:
+    the script itself is single-flight and never starts the bot.
+
+    Env vars (ENABLE_SELF_HEAL, SELF_HEAL_COOLDOWN_HOURS) are read at call
+    time, not import time. Born from a 2026-06-07 incident: the test suite
+    calls run_engine_health_cycle() with synthetic 'reply collapsed' data
+    and sets monkeypatch.setenv('ENABLE_SELF_HEAL', '0') to suppress the
+    subprocess — but the kill-switch was a module-level constant evaluated
+    at import, so the env patch had no effect and the test launched a real
+    headless Claude emergency run (which then ran THIS file as 'emergency
+    diagnose'). Reading at call time means monkeypatch + live .env edits
+    both take effect without restart."""
+    enable_self_heal = os.environ.get("ENABLE_SELF_HEAL", "1") == "1"
+    cooldown_h = float(os.environ.get("SELF_HEAL_COOLDOWN_HOURS", "6"))
+    if not enable_self_heal or not alerts:
         return
     try:
         if os.path.exists(_SELF_HEAL_STAMP):
             age_h = (datetime.now().timestamp() - os.path.getmtime(_SELF_HEAL_STAMP)) / 3600
-            if age_h < SELF_HEAL_COOLDOWN_HOURS:
-                log.info(f"[ENGINE_HEALTH] self-heal on cooldown ({age_h:.1f}h < {SELF_HEAL_COOLDOWN_HOURS}h).")
+            if age_h < cooldown_h:
+                log.info(f"[ENGINE_HEALTH] self-heal on cooldown ({age_h:.1f}h < {cooldown_h}h).")
                 return
         with open(_SELF_HEAL_STAMP, "w") as f:
             f.write(datetime.now().isoformat())
