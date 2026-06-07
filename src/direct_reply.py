@@ -149,38 +149,42 @@ SEARCH_QUERIES = [
     # want their FRESH posts before they trend, freshness sort does the rest.
     "from:TheBTCTherapist OR from:morganhousel OR from:ParikPatelCFA OR from:litcapital min_faves:5",
     "from:greg16676935420 OR from:ReformedBroker OR from:jasonzweigwsj OR from:saylor min_faves:5",
-    # ===== INVESTOR PSYCHOLOGY — the home turf (market-trauma pillar) =====
-    "\"panic sold\" OR \"panic selling\" OR \"bought the top\" OR \"sold the bottom\" lang:en min_faves:30",
-    "\"portfolio is down\" OR \"red day\" OR drawdown OR \"bag holder\" OR bagholding lang:en min_faves:30",
-    "FOMO OR copium OR hopium OR \"diamond hands\" OR \"paper hands\" lang:en min_faves:50",
-    "\"trading psychology\" OR \"investor psychology\" OR \"behavioral finance\" OR \"risk management\" lang:en min_faves:20",
-    # ===== AI — labs / models / agents =====
+    # ===== AI FIRST (operator 2026-06-07: "bot needs to be more AI
+    # focused" — the identity is sharpest-in-the-room ON AI; psychology is
+    # the VOICE, AI is the LANE). 8 of 14 topic queries are AI. =====
+    # --- AI labs / models / agents ---
     "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:50",
     "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
     "\"AI agents\" OR \"agentic AI\" OR \"reasoning model\" OR AGI lang:en min_faves:30",
-    # ===== AI — compute / chips / the money angle =====
+    "\"Claude Code\" OR Cursor OR Copilot OR \"AI coding\" OR \"vibe coding\" lang:en min_faves:30",
+    # --- AI compute / chips / the money angle ---
     "Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR \"AI capex\" lang:en min_faves:50",
+    "TSMC OR AMD OR Broadcom OR \"AI chips\" OR \"AI power\" OR \"AI energy\" lang:en min_faves:30",
     "Palantir OR \"AI stock\" OR \"AI bubble\" OR \"AI valuation\" lang:en min_faves:50",
-    "\"AI startup\" OR \"AI funding\" OR \"AI layoffs\" OR \"AI jobs\" lang:en min_faves:30",
-    # ===== MARKETS / MACRO =====
-    "\"tech earnings\" OR \"S&P 500\" OR Nasdaq OR \"market crash\" lang:en min_faves:50",
-    "Fed OR CPI OR \"rate cut\" OR \"interest rates\" OR macro lang:en min_faves:50",
-    # ===== BITCOIN / CRYPTO (the AI-vs-BTC feud lane) =====
-    "Bitcoin OR BTC OR \"BTC ETF\" OR crypto lang:en min_faves:100",
-    "\"Bitcoin crash\" OR \"crypto crash\" OR \"crypto bubble\" OR \"BTC dump\" lang:en min_faves:30",
+    "\"AI startup\" OR \"AI funding\" OR \"AI layoffs\" OR \"AI jobs\" OR \"open source AI\" OR DeepSeek lang:en min_faves:30",
+    # ===== INVESTOR PSYCHOLOGY — the voice's home turf =====
+    "\"panic sold\" OR \"panic selling\" OR \"bought the top\" OR \"sold the bottom\" lang:en min_faves:30",
+    "\"portfolio is down\" OR \"red day\" OR drawdown OR \"bag holder\" OR bagholding lang:en min_faves:30",
+    "\"trading psychology\" OR \"investor psychology\" OR \"behavioral finance\" OR FOMO lang:en min_faves:30",
+    # ===== MARKETS / MACRO (one query — AI stocks already covered above) =====
+    "\"tech earnings\" OR Nasdaq OR \"market crash\" OR Fed OR \"rate cut\" lang:en min_faves:50",
+    # ===== BITCOIN (one query — the AI-vs-BTC feud lane only) =====
+    "Bitcoin OR BTC OR \"crypto crash\" OR \"BTC ETF\" lang:en min_faves:100",
     # ===== FR tail (one query — replies match parent language) =====
     "IA OR ChatGPT OR Mistral OR \"intelligence artificielle\" lang:fr min_faves:25",
 ]
 
 HOT_TAB_QUERIES = [
-    # Breaking AI news EN (high min_faves = viral)
+    # Breaking AI news EN (high min_faves = viral) — AI-first (operator
+    # 2026-06-07): 5 of 7 hot queries are AI.
     "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500",
     "Nvidia OR \"AI datacenter\" OR \"AI capex\" lang:en min_faves:300",
     "\"AI agents\" OR \"reasoning model\" OR AGI lang:en min_faves:300",
     "Palantir OR \"AI stock\" OR \"AI bubble\" lang:en min_faves:300",
+    "ChatGPT OR Claude OR Gemini OR \"humanoid robot\" lang:en min_faves:500",
     # Breaking market emotion — panic is the therapist's house call
     "\"market crash\" OR \"sell off\" OR \"sell-off\" OR VIX lang:en min_faves:500",
-    # Breaking BTC/crypto
+    # Breaking BTC (feud lane)
     "Bitcoin OR \"BTC ETF\" OR crypto lang:en min_faves:300",
 ]
 
@@ -356,7 +360,7 @@ def _generate_graphseo_reply(tweet_text: str) -> str | None:
     if result.returncode != 0 or not result.stdout:
         return None
     text = unwrap_text(result.stdout).strip()
-    if not text or text.upper() == "SKIP":
+    if not text or text.upper().startswith("SKIP"):
         return None
     # Sentence-aware cap — a blind [:220] slice published a mid-sentence
     # reply on 2026-06-05 and got the account publicly called out as AI.
@@ -453,7 +457,11 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
         reply = unwrap_text(result.stdout)
         if not reply: return None
         if reply.startswith('"') and reply.endswith('"'): reply = reply[1:-1]
-        if reply.upper().strip() == "SKIP": return None
+        # SKIP as a PREFIX, not exact match — the model often appends its
+        # rationale ("SKIP. The tweet is incomplete...") and an exact-match
+        # check published the whole refusal as a live reply (2026-06-07,
+        # operator: "LOL BRO").
+        if reply.upper().strip().startswith("SKIP"): return None
         return reply
     except Exception: return None
 

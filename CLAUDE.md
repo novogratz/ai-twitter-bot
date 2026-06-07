@@ -222,6 +222,26 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-13 — SKIP-rationale leak + AI-first lane (operator: "more AI shit")
+
+1. **SKIP leak shipped live** ("SKIP. The tweet is incomplete (cuts off
+   mid-sentence at 'rema')..." published as a reply — operator: "LOL BRO").
+   `_generate_single_reply` checked `reply.upper() == "SKIP"` EXACT match;
+   the model appended its rationale, so the whole refusal published. Both
+   generator checks are now prefix-based (`startswith("SKIP")`), and
+   `content_guard.validate` rejects ANY text opening with SKIP at the
+   chokepoint (every kind). Guard: `test_skip_rationale_never_publishes`.
+2. **Bare-dash cosmetics**: '—' → ',' produced "angle,conviction" in that
+   same reply. humanize + the reply chokepoint now emit ', ' + collapse
+   spacing. Guard: `test_bare_dash_replacement_keeps_spacing`.
+3. **AI-FIRST reply lane** (operator: "bot also needs to be more AI
+   focused" / "i want to see more AI shit"): SEARCH_QUERIES rebalanced —
+   8 of 14 topic queries are AI (labs/models, agents, AI-coding
+   Claude Code/Cursor, chips TSMC/AMD/Broadcom, AI power, DeepSeek/open
+   source, AI jobs/funding), psychology trimmed to 3 (it's the VOICE, AI
+   is the LANE), markets+macro merged to 1, BTC down to 1 (feud lane only).
+   HOT_TAB 5/7 AI. Quote bot's stale SpaceX viral query → AI-coding viral
+   pass. Guard: `test_reply_queries_are_ai_first` pins majority-AI.
 ### 2026-06-07 PM-12 — French-to-the-bestie incident + the Safari test wall
 
 Two live failures within an hour of the PM-11 relaunch, both mine:

@@ -816,7 +816,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
     from .humanizer import _DASH_PAIRS
     for _pat, _rep in _DASH_PAIRS:
         reply_text = (reply_text or "").replace(_pat, _rep)
-    reply_text = reply_text.replace("—", ",").replace("–", ",")
+    reply_text = reply_text.replace("—", ", ").replace("–", ", ")
+    reply_text = re.sub(r" {2,}", " ", reply_text).replace(" ,", ",")
     # Over-length replies get a sentence-boundary trim instead of a discard
     # (2026-06-07): the LLM generation is already paid for — content_guard
     # used to reject >278-char replies outright, several/day. smart_trim

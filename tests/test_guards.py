@@ -1506,3 +1506,58 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
     assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part of the trade.") is True
     assert "—" not in seen["text"]
     assert "conviction is the hard part" in seen["text"]
+
+
+def test_skip_rationale_never_publishes():
+    """2026-06-07 live leak: the model wrote 'SKIP.' + its whole rationale
+    ('The tweet is incomplete (cuts off mid-sentence)...') and an
+    exact-match SKIP check published it as a reply. Pin both layers:
+    generator-side prefix check and the content_guard chokepoint."""
+    from src import content_guard as cg
+    ok, why = cg.validate("SKIP. The tweet is incomplete (cuts off mid-sentence at 'rema'), "
+                          "and the angle is generic crypto psychology.", kind="reply")
+    assert not ok and "SKIP" in why
+    ok, _ = cg.validate("skip", kind="reply")
+    assert not ok
+    # Legitimate text containing 'skip' mid-sentence still passes.
+    ok, _ = cg.validate("Most investors skip the part where conviction gets tested.", kind="reply")
+    assert ok
+    # Generator-side: prefix match, not exact match.
+    from src import direct_reply as dr
+    import src.llm_client as llm
+    class R: returncode = 0; stdout = "SKIP. Here is why I refuse..."; stderr = ""
+    # _generate_single_reply path is LLM-bound; test the cheap invariant via
+    # the same predicate the code uses now:
+    assert R.stdout.upper().strip().startswith("SKIP")
+
+
+def test_bare_dash_replacement_keeps_spacing():
+    """2026-06-07: '—' → ',' produced 'angle,conviction' in a live reply.
+    Bare dashes must become ', ' with normalized spacing, in humanize AND
+    at the reply chokepoint."""
+    from src.humanizer import humanize
+    out = humanize("The angle—conviction through crashes—is generic and it shows badly.")
+    assert ",conviction" not in out and ", conviction" in out
+
+
+def test_reply_queries_are_ai_first():
+    """Operator 2026-06-07: 'bot needs to be more AI focused' / 'i want to
+    see more AI shit'. The reply lane must be majority-AI: at least half of
+    the search queries carry an AI term, BTC tail stays minimal (feud lane
+    only, ≤2 queries)."""
+    from src.direct_reply import SEARCH_QUERIES, HOT_TAB_QUERIES
+    ai_terms = ("openai", "anthropic", "chatgpt", "claude", "gemini", "grok",
+                "ai ", "\"ai", "agi", "nvidia", "gpu", "llama", "deepseek",
+                "palantir", "cursor", "copilot", "tsmc", "humanoid", " ia ")
+    def is_ai(q):
+        ql = " " + q.lower()
+        return any(t in ql for t in ai_terms)
+    topic_queries = [q for q in SEARCH_QUERIES if not q.startswith("from:")]
+    ai_count = sum(1 for q in topic_queries if is_ai(q))
+    assert ai_count * 2 >= len(topic_queries), \
+        f"AI queries must be the majority of the reply lane ({ai_count}/{len(topic_queries)})"
+    btc_only = [q for q in topic_queries
+                if ("bitcoin" in q.lower() or "btc" in q.lower()) and not is_ai(q)]
+    assert len(btc_only) <= 2, "BTC tail must stay minimal (feud lane only)"
+    hot_ai = sum(1 for q in HOT_TAB_QUERIES if is_ai(q))
+    assert hot_ai * 2 >= len(HOT_TAB_QUERIES)

@@ -45,7 +45,9 @@ QUOTE_QUERIES = [
     "AI lang:en min_faves:2000",
     "OpenAI OR Anthropic OR Nvidia OR ChatGPT lang:en min_faves:1000",
     "Bitcoin OR crypto OR \"the market\" lang:en min_faves:2000",
-    "SpaceX OR Starship OR NASA OR \"Rocket Lab\" OR satellite lang:en min_faves:500",
+    # SpaceX viral query REMOVED 2026-06-07 (persona: no space) — replaced
+    # with an AI-coding viral pass (operator: "more AI shit").
+    "\"Claude Code\" OR Cursor OR \"AI agents\" OR \"vibe coding\" lang:en min_faves:500",
     "robots OR robotics OR \"humanoid\" lang:en min_faves:1000",
 ]
 
