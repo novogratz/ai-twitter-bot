@@ -224,8 +224,15 @@ def run_btc_blitz_cycle() -> None:
             url = t["url"]
             if url in load_replied():
                 continue
-            reply = _gen(_BUDDY_REPLY_PROMPT, t.get("text", ""), REPLY_MODEL,
-                         "BUDDY_BLITZ_REPLY", author=buddy)
+            if buddy.lower() == "graphseo":
+                # His dedicated FR generator — the buddy prompt's
+                # match-the-language rule shipped an English reply to a
+                # short FR post (operator 2026-06-07).
+                from .direct_reply import _generate_graphseo_reply
+                reply = _generate_graphseo_reply(t.get("text", ""))
+            else:
+                reply = _gen(_BUDDY_REPLY_PROMPT, t.get("text", ""), REPLY_MODEL,
+                             "BUDDY_BLITZ_REPLY", author=buddy)
             if not reply:
                 continue
             reply = smart_trim(humanize(reply), 278)

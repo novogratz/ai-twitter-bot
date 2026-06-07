@@ -17,6 +17,10 @@ from .engagement_log import log_reply
 from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
 
 _OWN_HANDLE = BOT_HANDLE.lower()
+# Parents who ALWAYS get French replies, whatever the language detector
+# says about one short post (operator 2026-06-07).
+_FR_FORCED_HANDLES = {h.strip().lstrip("@").lower() for h in os.environ.get(
+    "FR_FORCED_REPLY_HANDLES", "Graphseo").split(",") if h.strip()}
 _LLM_RATE_LIMITED = object()
 FAVORITE_REPOSTS_PER_CYCLE = int(os.environ.get("FAVORITE_REPOSTS_PER_CYCLE", "6"))
 FAVORITE_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FAVORITE_REPOST_MIN_ENGAGEMENT", "2"))
@@ -557,6 +561,11 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             continue
         log.info(f"[{source_name}] Replying to @{author}...")
         _reply_lang = "fr" if source_name.startswith("PROFILE") else ("en" if is_en_tweet else "fr")
+        # FR-forced parents (operator 2026-06-07: "i saw some english on
+        # Julien response" — @Graphseo is French; short/ambiguous posts
+        # fooled the detector). Hard override, all sources.
+        if _handle_from_url(url) in _FR_FORCED_HANDLES:
+            _reply_lang = "fr"
         reply = _generate_single_reply(author, text, lang=_reply_lang)
         if not reply or reply is _LLM_RATE_LIMITED:
             continue

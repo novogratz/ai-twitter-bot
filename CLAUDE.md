@@ -222,6 +222,22 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-14 — SKIPPED variants + always-French Julien
+
+Follow-ups to PM-13 from live output:
+- The SKIP backstop regex used `skip\b` — live leaks included "SKIPPED"
+  and "Skip." which slipped the boundary. Now any text OPENING with
+  `skip*` is refused at content_guard (a legit "Skipping..." lede is
+  sacrificed; SKIP is free). 8 leaked SKIP replies shipped today total
+  (01:04-14:11) before the gate hardened.
+- **@Graphseo is ALWAYS French** (operator: "i saw some english on Julien
+  response" — his short posts fooled `_looks_french`). Three layers:
+  `_FR_FORCED_HANDLES` override in `_reply_to_tweets`
+  (`FR_FORCED_REPLY_HANDLES`, default Graphseo); buddy blitz routes
+  Graphseo to his dedicated FR generator; chokepoint gate in
+  `reply_to_tweet` refuses an English reply to an FR-forced parent BEFORE
+  the dedup mark (post stays fresh for an FR retry). Guard:
+  `test_fr_forced_parent_rejects_english_reply`.
 ### 2026-06-07 PM-13 — SKIP-rationale leak + AI-first lane (operator: "more AI shit")
 
 1. **SKIP leak shipped live** ("SKIP. The tweet is incomplete (cuts off

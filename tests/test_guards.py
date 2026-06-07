@@ -1344,6 +1344,11 @@ def test_buddy_blitz_replies_to_every_fresh_post(monkeypatch):
     monkeypatch.setattr(
         bb, "_gen",
         lambda tpl, txt, model, label, author=None: gen_calls.append((label, txt)) or "sharp take")
+    # Graphseo routes to his dedicated FR generator (operator 2026-06-07:
+    # English shipped to him once — never again).
+    import src.direct_reply as dr
+    monkeypatch.setattr(dr, "_generate_graphseo_reply",
+                        lambda txt: gen_calls.append(("GRAPHSEO_FR", txt)) or "réponse précise en français")
     # One Graphseo post already replied — must be skipped pre-LLM.
     monkeypatch.setattr(rb, "load_replied", lambda: {"https://x.com/Graphseo/status/333"})
     # Quote pass: bestie URL already quoted so the test stays reply-only.
@@ -1561,3 +1566,33 @@ def test_reply_queries_are_ai_first():
     assert len(btc_only) <= 2, "BTC tail must stay minimal (feud lane only)"
     hot_ai = sum(1 for q in HOT_TAB_QUERIES if is_ai(q))
     assert hot_ai * 2 >= len(HOT_TAB_QUERIES)
+
+
+def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
+    """Operator 2026-06-07: 'i saw some english on Julien response'.
+    @Graphseo is always-French; the chokepoint refuses an English reply to
+    him from ANY bot, BEFORE the dedup mark (post stays fresh for an FR
+    retry). SKIPPED-variant leaks are also pinned here."""
+    from src import twitter_client as tc
+    from src import reply_bot as rb
+    from src import action_guard as ag
+    from src import config as cfg
+    from src import content_guard as cg
+
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
+    monkeypatch.setattr(ag, "record", lambda *a, **k: None)
+    monkeypatch.setattr(cfg, "DRY_RUN", True)
+
+    url = "https://x.com/Graphseo/status/2063500000000000099"
+    english = "The market just told you what your conviction is worth this week."
+    assert tc.reply_to_tweet(url, english) is False
+    # Post must stay UNMARKED — a later FR draft can still ship.
+    assert url not in rb.load_replied()
+    french = "Le marché vient de te dire ce que vaut ta conviction cette semaine."
+    assert tc.reply_to_tweet(url, french) is True
+
+    # SKIPPED / Skip. variants (live leaks 01:04-04:07) die at content_guard.
+    for leak in ("SKIPPED", "Skip.", "skipped", "SKIP — no source context"):
+        ok, _ = cg.validate(leak, kind="reply")
+        assert not ok, f"{leak!r} must never publish"

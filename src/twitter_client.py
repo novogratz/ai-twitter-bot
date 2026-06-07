@@ -834,6 +834,22 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
     if not ok:
         log.info(f"[REPLY] content_guard skip ({why}): {reply_text[:120]!r}")
         return False
+    # FR-forced parents (operator 2026-06-07: "i saw some english on Julien
+    # response"). Chokepoint gate, BEFORE the dedup mark below: an English
+    # reply to an always-French friend never ships, and the post stays
+    # unmarked so a later cycle can retry it with the FR generator.
+    try:
+        _fr_parent = tweet_url.split("x.com/")[1].split("/")[0].lower()
+    except (IndexError, AttributeError):
+        _fr_parent = ""
+    _fr_forced = {h.strip().lstrip("@").lower() for h in os.environ.get(
+        "FR_FORCED_REPLY_HANDLES", "Graphseo").split(",") if h.strip()}
+    if _fr_parent in _fr_forced:
+        from .direct_reply import _looks_english
+        if _looks_english(reply_text):
+            log.info(f"[REPLY] FR-forced parent @{_fr_parent} but reply looks "
+                     f"English — refusing (post stays fresh): {reply_text[:80]!r}")
+            return False
     # ONE reply per tweet, EVER — enforced at the chokepoint (operator
     # 2026-06-05: "never send 2 replies on same tweet"). Each reply bot
     # loads replied_tweets.json at cycle start, so two bots racing within
