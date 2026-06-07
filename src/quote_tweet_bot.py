@@ -44,7 +44,12 @@ QUOTE_QUERIES = [
     # very high min_faves so the pool is the actual front page of the niche.
     "AI lang:en min_faves:2000",
     "OpenAI OR Anthropic OR Nvidia OR ChatGPT lang:en min_faves:1000",
-    "Bitcoin OR crypto OR \"the market\" lang:en min_faves:2000",
+    # 2026-06-07: was "Bitcoin OR crypto OR \"the market\"" — that generic
+    # tier surfaced a 657-like non-AI 'massive failure' post that won the
+    # quote slot when the AI-viral pass was dedup-dry. The high-engagement
+    # fallback must stay AI (operator: "more AI shit"); the AI-money angle
+    # carries the markets/AI-bubble takes.
+    "\"AI bubble\" OR \"AI stock\" OR Palantir OR \"AI capex\" OR \"AI trade\" lang:en min_faves:800",
     # SpaceX viral query REMOVED 2026-06-07 (persona: no space) — replaced
     # with an AI-coding viral pass (operator: "more AI shit").
     "\"Claude Code\" OR Cursor OR \"AI agents\" OR \"vibe coding\" lang:en min_faves:500",

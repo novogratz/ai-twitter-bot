@@ -222,6 +222,24 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-18 — AI-leads quote ranking + AI-only viral fallback
+
+After PM-16/17 brought the quote lane online, live watching showed the
+ranking and pool needed two corrections:
+1. **AI virals now LEAD** the main quote lane (`ai_viral + priority +
+   rest`) — a 55-like bestie post was winning over higher-engagement AI
+   virals because priority was listed first (ignored likes). The bestie is
+   already covered by btc_blitz's 6h QRT path, so he surfaces in the main
+   lane only when no AI viral is hotter.
+2. **High-engagement fallback is AI-only**: the generic viral query
+   `"Bitcoin OR crypto OR the market" min_faves:2000` surfaced a 657-like
+   non-AI "massive failure" post that won the slot when the AI-viral pass
+   was dedup-dry (we'd already quoted sama/OpenAI's fresh posts). Replaced
+   with an AI-money-angle viral query so the top tier stays on-lane.
+
+Lesson: ranking AI first isn't enough if the AI pool dedup-exhausts and a
+non-AI generic query sits in the same pool — the FALLBACK tier has to be
+on-lane too, or it wins exactly when you can't see it coming.
 ### 2026-06-07 PM-17 — the unbounded warmup blocked the scheduler (why there were NO quotes)
 
 PM-16 added the AI-viral quote pass but quotes still didn't flow. Live
