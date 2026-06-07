@@ -933,7 +933,7 @@ obeys the same rules without per-bot rewrites:
 
 Autonomous Twitter/X influencer bot. ~30 concurrent micro-bots managed by APScheduler in `main.py`. Browser-driven via Safari + AppleScript — no Twitter API key.
 
-**Default AI provider: Ollama** (`AI_CLI=ollama`). Codex is the default backup when the local model fails.
+**Default AI provider: Claude Code CLI** (`AI_CLI=claude`, since 2026-06-07 — operator: "claude code cli as main one"). **Ollama is the fallback** (`LLM_FALLBACK_CLI=ollama` → local HTTP path with `OLLAMA_MODEL`) when claude fails.
 
 To switch providers:
 
