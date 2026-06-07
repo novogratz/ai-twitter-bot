@@ -365,7 +365,7 @@ def main():
         # Cap the warmup so the scheduler is live within a few minutes;
         # the steady-state direct_reply_job (unbounded, every few min) keeps
         # the volume lane full from there.
-        _warm = int(os.environ.get("STARTUP_REPLY_WARMUP", "12"))
+        _warm = int(os.environ.get("STARTUP_REPLY_WARMUP", "6"))
         log.info(f"Now warming up the reply loop (replies first, capped {_warm} so the "
                  f"scheduler + quote lane start fast)...")
         safe_run_direct_reply_cycle(max_replies=_warm)
@@ -406,13 +406,19 @@ def main():
     # are back to 100/day, so the boot burst fires them again; the 5-min
     # jittered chokepoint spacing still paces individual writes). Plain RTs
     # stay out of the burst — 2/day is too precious for stale feed content.
-    for _round in range(1, 4):
-        log.info(f"Startup burst round {_round}/3: sweep -> quote -> reply...")
+    # ONE burst round before the scheduler (was 3 — operator 2026-06-07:
+    # quotes were starving). At ~60s/reply, 3 rounds × bounded replies +
+    # quote scans pushed scheduler.start() ~45 min out, so the steady-state
+    # quote/AI-viral/RT jobs came online far too late. One round seeds the
+    # lanes; the scheduler (live within minutes now) does the rest.
+    _burst_rounds = int(os.environ.get("STARTUP_BURST_ROUNDS", "1"))
+    for _round in range(1, _burst_rounds + 1):
+        log.info(f"Startup burst round {_round}/{_burst_rounds}: sweep -> quote -> reply...")
         if not args.reply_only:
             safe_run_feed_sweep_cycle()
             safe_run_quote_tweet_cycle()
         if not args.post_only:
-            # Bounded here too — an unbounded reply call per round re-blocks
+            # Bounded — an unbounded reply call per round re-blocks
             # scheduler.start() for many minutes (same bug as the warmup).
             safe_run_direct_reply_cycle(max_replies=_warm)
     log.info("Startup burst complete.")
