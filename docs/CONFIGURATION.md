@@ -196,8 +196,8 @@ older tables on this page as historical defaults).
 
 | Variable | Live value | Purpose |
 |---|---|---|
-| `MAX_QUOTE_REPOSTS_PER_DAY` / `MAX_QUOTES_PER_DAY` | `60` | QRT quality lane — the focus surface. 50-like floor, screenshot-or-SKIP gate. |
-| `MIN_SECONDS_BETWEEN_QUOTES` / `QUOTE_JITTER_SECONDS` | `420` / `240` | ~7-min jittered QRT spacing, never bursts. |
+| `MAX_QUOTE_REPOSTS_PER_DAY` / `MAX_QUOTES_PER_DAY` | `100` | QRT quality lane — the focus surface. 50-like floor, screenshot-or-SKIP gate. |
+| `MIN_SECONDS_BETWEEN_QUOTES` / `QUOTE_JITTER_SECONDS` | `300` / `180` | ~5-min jittered QRT spacing, never bursts. |
 | `QUOTE_MIN_LIKES` / `FEED_SWEEP_QUOTE_MIN_LIKES` | `50` / `100` | Mid-size analytical posts are the measured winners (not mega-virals). |
 | `MAX_REPLIES_PER_DAY` | `999999` | Replies = quantity lane, unlimited; 8s+jitter ban floor stays. |
 | `MAX_ORIGINALS_PER_DAY` | `4` | One per US-market slot cron (9:30/12:30/16:30/20:00 NY ±15min). |

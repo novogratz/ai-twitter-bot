@@ -14,8 +14,8 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 > nobody else in the thread has is WHAT.
 >
 > **Focus (operator: "focus should be Quote Retweet AND replies"):**
-> - **QRTs = the QUALITY lane** — 60/day cap @7min+jitter (operator:
->   "totally cool if we do more than 40"), 50-like floor
+> - **QRTs = the QUALITY lane** — 100/day cap @5min+jitter (operator raised
+>   three times, final: "we should do more quote retweet"), 50-like floor
 >   (mid-size analytical finance/AI posts, NOT mega-virals — they engage
 >   back). The measured formula (operator's two best posts, 3.5-7K views
 >   each): **re-denominate their number + one mechanism metaphor + closing

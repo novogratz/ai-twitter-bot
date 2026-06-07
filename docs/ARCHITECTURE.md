@@ -86,7 +86,7 @@ main.py
 
 | Module | Cadence | Behavior |
 |---|---|---|
-| `quote_tweet_bot.py` | every 4 min | EN viral-query + curator-handle discovery → 50-like floor, 24h age, niche → the measured formula (re-denominate the number + mechanism metaphor + closing question) → ≤60/day chokepoint, screenshot-worthy or SKIP |
+| `quote_tweet_bot.py` | every 4 min | EN viral-query + curator-handle discovery → 50-like floor, 24h age, niche → the measured formula (re-denominate the number + mechanism metaphor + closing question) → ≤100/day chokepoint, screenshot-worthy or SKIP |
 | `hot_quote_bot.py` | cron 8/12/16/20 NY ±10min | external_signal top story → most viral tweet about it → quote |
 | `btc_blitz.py` (quote side) | startup + 6h | @TheBTCTherapist best ≤48h posts → AI-side inversion bit + GIF |
 | `retweet_bot.py` | every 2 min | Plain RTs ≤2/day — reciprocity / MUST_REPOST (TheBTCTherapist) only |

@@ -173,7 +173,7 @@ def build_review() -> str:
         "",
         "## Spec targets (2026-06-07 quality barbell)",
         "- QUANTITY: replies unlimited (the reach engine) · reply-bait 3-4/week",
-        "- QUALITY: originals 3-4/day in market slots · QRTs ≤60/day, 50+-like",
+        "- QUALITY: originals 3-4/day in market slots · QRTs ≤100/day, 50+-like",
         "  parents, screenshot-worthy or SKIP (number-reframe + metaphor +",
         "  closing question) · plain RTs 0-2/day",
         "- Following <= 300 hard cap (~120-150 steady state)",

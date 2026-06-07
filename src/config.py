@@ -144,9 +144,9 @@ POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(30 * 60)))
 # PM-4/5: quality barbell at 60/day (operator: "totally cool if we do more
 # than 40") — replies carry quantity, QRTs carry craft; SKIP gate does the
 # quality work.
-MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "60"))
-MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", "420"))
-QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "240"))
+MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "100"))
+MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", "300"))
+QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "180"))
 
 # 2026-06-07 AGENT SPEC: the reply machine is the core engine — no volume
 # cap, no daily limit. Minimum spacing kept at 8s+jitter for ban safety
