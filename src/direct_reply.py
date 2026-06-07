@@ -518,41 +518,25 @@ def run_direct_reply_cycle():
     replied = load_replied()
     total, en_counter = 0, [0]
 
-    # 1. FOR YOU — open, scroll deep, reply to everything; then refresh and repeat.
-    #    Operator: "refresh x.com/home to get more to reply to."
-    for _pass in range(5):
-        try:
-            tweets = scrape_home_feed(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
-            if tweets:
-                tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
-                n = _reply_to_tweets(tweets, replied, "FEED", en_counter=en_counter)
-                total += n
-                log.info(f"[DIRECT] For You pass {_pass+1}/3: {n} replies ({len(tweets)} tweets scraped).")
-        except Exception:
-            traceback.print_exc()
-
-    # 2. FOLLOWING — chronological tab, reply to everything good
-    try:
-        tweets = scrape_following_feed(max_tweets=DIRECT_REPLY_FEED_SCAN_LIMIT)
-        if tweets:
-            tweets.sort(key=lambda t: (0 if _looks_french(t.get("text", "")) else 1))
-            total += _reply_to_tweets(tweets, replied, "FOLLOWING", en_counter=en_counter)
-    except Exception:
-        traceback.print_exc()
-
-    # 3. GRAPHSEO — dedicated reply scan (search-based, no profile page visit)
+    # 1. VIP scan — Graphseo + friends via search (fast, no profile page)
     try:
         _run_graphseo_scan(replied)
     except Exception:
         log.info("[GRAPHSEO] Scan error:")
         traceback.print_exc()
 
-    # 4. SEARCH — catch viral niche posts not surfaced by either feed
-    for query in random.sample(SEARCH_QUERIES + HOT_TAB_QUERIES, min(6, len(SEARCH_QUERIES + HOT_TAB_QUERIES))):
+    # 2. SEARCH — primary reply engine for direct_reply.
+    #    Feed sweeper owns For You / Following; this cycle owns search so
+    #    the two engines don't waste time deduping the same feed tweets.
+    #    Run ALL queries every cycle (shuffle for variety).
+    all_queries = SEARCH_QUERIES + HOT_TAB_QUERIES
+    random.shuffle(all_queries)
+    for query in all_queries:
         try:
-            tweets = scrape_x_search(query, max_tweets=20, tab="top")
+            tweets = scrape_x_search(query, max_tweets=25, tab="top")
             if tweets:
-                total += _reply_to_tweets(tweets, replied, "SEARCH-HOT", source_detail=query, en_counter=en_counter)
+                n = _reply_to_tweets(tweets, replied, "SEARCH-HOT", source_detail=query, en_counter=en_counter)
+                total += n
         except Exception:
             traceback.print_exc()
 
