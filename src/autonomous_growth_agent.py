@@ -96,7 +96,7 @@ Format:
 Only if the data clearly shows imbalance (e.g. quotes underperform vs RT,
 or engagement drops at night). Adjust caps conservatively (±20% max).
 HARD BOUNDS (2026-06-07 quality barbell — NEVER exceed): originals
-3-4/day total, MAX_QUOTES_PER_DAY 10-60 (default 40 — QRTs are the
+3-4/day total, MAX_QUOTES_PER_DAY 20-80 (default 60 — QRTs are the
 profile's QUALITY surface: 50-like floor, screenshot-worthy or SKIP),
 MAX_RETWEETS_PER_DAY <= 2, replies UNLIMITED (the QUANTITY surface and
 the only volume lever). Never trade QRT quality for volume.

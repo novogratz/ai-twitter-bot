@@ -141,10 +141,12 @@ POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(30 * 60)))
 # the spec's 1-2/day). High cap, 5-min jittered spacing, 300-like floor =
 # large-account targeting. Quality gates (niche, dedup, 24h age, voice)
 # stay absolute.
-# PM-4: 100→40 (quality barbell — replies carry quantity, QRTs carry craft).
-MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "40"))
-MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", "600"))
-QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "300"))
+# PM-4/5: quality barbell at 60/day (operator: "totally cool if we do more
+# than 40") — replies carry quantity, QRTs carry craft; SKIP gate does the
+# quality work.
+MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "60"))
+MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", "420"))
+QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "240"))
 
 # 2026-06-07 AGENT SPEC: the reply machine is the core engine — no volume
 # cap, no daily limit. Minimum spacing kept at 8s+jitter for ban safety

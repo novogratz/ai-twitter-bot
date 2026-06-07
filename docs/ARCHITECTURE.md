@@ -71,49 +71,51 @@ main.py
 
 63 modules. Grouped by responsibility.
 
-### Content generation
+### Content generation (2026-06-07: slot model — originals are the conversion layer)
 
 | Module | Cadence | Output |
 |---|---|---|
-| `agent.py` | tied to scheduler `post_interval` | News post (≤280 chars + URL) |
-| `hotake_agent.py` | 25-30% of post cycles | Hot take + URL |
-| `breakout_bot.py` | every 5 min | Fast-trend reaction post |
-| `spicy_bot.py` | every ~80 min | Polarising take or question |
-| `thread_bot.py` | every 4h (idempotent daily) | 4-tweet single-story thread |
-| `digest_thread_bot.py` | every 4h (idempotent daily) | 6-tweet "top 5 stories" recap |
-| `agent.py` monthly mode | 1st of month + manual `--monthly-recap-now` | 3 Monthly Decode Top-10 posts: AI, Crypto, Investing |
+| `run_post_slot` (main.py) | cron 09:30 / 12:30 / 16:30 / 20:00 NY ±15min jitter | ONE original per US-market slot — tries news/hotake → breakout → spicy → stunt, stops on the first landed post; 12:30 leads with the GIF stunt |
+| `agent.py` / `hotake_agent.py` | inside slots | News post / hot take (therapist-framed, no URL in body) |
+| `breakout_bot.py` | inside slots | Fast-trend reaction post |
+| `spicy_bot.py` | inside slots | Polarising take; QUESTION reply-bait capped 4/week |
+| `viral_stunt_bot.py` | inside slots (leads 12:30) | Native-GIF meme original |
+| `thread_bot.py` / `digest_thread_bot.py` / `recap_thread_bot.py` | DISABLED | threads aren't in the spec mix |
 
-### Reshare
+### Reshare (the QUALITY lane — operator focus 2026-06-07)
 
 | Module | Cadence | Behavior |
 |---|---|---|
-| `retweet_bot.py` | every 2 min | Feed/search/trusted-handle/big-post scrape → niche+age filter → deterministic score → retweet up to `RETWEETS_PER_CYCLE` |
-| `quote_tweet_bot.py` | every 4 min | FR-first quote discovery → niche+age+respect-list filter → generate FR angle → quote post |
-| `notify_bot.run_boost_cycle` | every 60 min | Self-RT freshest own post (algo-window timing) |
+| `quote_tweet_bot.py` | every 4 min | EN viral-query + curator-handle discovery → 50-like floor, 24h age, niche → the measured formula (re-denominate the number + mechanism metaphor + closing question) → ≤60/day chokepoint, screenshot-worthy or SKIP |
+| `hot_quote_bot.py` | cron 8/12/16/20 NY ±10min | external_signal top story → most viral tweet about it → quote |
+| `btc_blitz.py` (quote side) | startup + 6h | @TheBTCTherapist best ≤48h posts → AI-side inversion bit + GIF |
+| `retweet_bot.py` | every 2 min | Plain RTs ≤2/day — reciprocity / MUST_REPOST (TheBTCTherapist) only |
+| `notify_bot.run_boost_cycle` | every 20 min | Self-RT freshest own post (algo-window timing) |
+| `boost_recycler_bot.py` | every 45 min | Winners (≥1 external like in 1h) → self-RT at 1h, then un-RT→re-RT every 4h+, max 4 cycles, ≤48h |
 
-### Reply paths
+### Reply paths (the QUANTITY lane — unlimited, freshest-fast-rising first)
 
 | Module | Cadence | Source |
 |---|---|---|
-| `direct_reply.py` | dynamic | `ALWAYS_PROFILES` + `PROFILE-FR` + FOLLOWING + FEED + SEARCH |
-| `reply_bot.py` | dynamic | Search-driven random discovery (loose floor) |
-| `early_bird_bot.py` | every 4-12 min | 125-account roster, 12-min freshness window |
-| `mega_watch_bot.py` | every 90s | Top-10 mega accounts, top-5-reply window |
-| `replyback_agent.py` (in `notify_bot`) | every 20 min | Reply-back to people who reply to OUR tweets |
-| `viral_followup_bot.py` | every 30 min | When own post hits ≥8 likes, post follow-up |
+| `direct_reply.py` | dynamic | Investor-psych + AI + markets searches, `from:` scans of seeds/foils; `_freshness_sort_key` orders <60-min risers first |
+| `feed_sweeper_bot.py` | every 8 min | For You / Following: ≥100 likes → quote, below → reply |
+| `btc_blitz.py` (reply side) | startup + 6h | EVERY ≤48h @TheBTCTherapist post (one reply per tweet, ever) |
+| `early_bird_bot.py` | every 4-12 min | Curator top-30 (`account_curator.tracked_handles`), 12-min freshness window |
+| `mega_watch_bot.py` | every 90s | Curator top-12, ≤4-min window, top-5-reply race |
+| `replyback_agent.py` (in `notify_bot`) | every 8 min | Reply-back to people who reply to OUR tweets |
+| `first_hour_babysitter.py` | every 10 min | Extra replyback sweeps while latest post <60 min old |
+| `viral_followup_bot.py` | every 5 min | When own post gets traction, post follow-up |
 | `spike_bot.py` | every 8 min | When own post hits ≥25 likes, orchestrate amplification |
-| `roast_pgm_bot.py` | every 12-17 min | Dedicated 1-roast-per-tweet path |
 
-### Follow / network
+### Follow / network (2026-06-07: operator-manual unfollows, curator-earned targets)
 
 | Module | Cadence | Behavior |
 |---|---|---|
-| `engage_bot.py` | dynamic | Curated-list follow + like (10-15/cycle) |
-| `discover_bot.py` | every 2h | Search X for new niche handles + auto-follow approved |
-| `scout_agent.py` | every 4h | Open-web search (WebSearch+WebFetch) for FR/EN voices |
-| `follow_blast_bot.py` | every 30 min | JS-bulk-follow on `/search?f=people` (~30/cycle) |
-| `followback_bot.py` | every 2h | Scrape /followers, follow back fresh ones |
-| `smart_unfollow_bot.py` | every 4h | Diff /following vs /followers, unfollow non-reciprocal (cap 15) |
+| `marquee_follow_bot.py` (seed-follow) | every 15 min | Whitelist seeds in tier priority order, 1 attempt/cycle; display-name resolution before follow; chokepoint enforces 20/day, ≥10-min gaps, 300/150 total ceiling |
+| `account_curator.py` | every 4h | Earns `tracked_accounts.json` from on-lane engagements × conversion weights (pins: TheBTCTherapist, Graphseo); promotes ≤3/day to whitelist `discovered` tier |
+| `smart_unfollow_bot.py` | DISABLED (cap 0) | Operator unfollows manually (`bin/mass_unfollow.py` / `/unfollow` skill) |
+| `follow_blast_bot.py` / `followback_bot.py` | OFF / cap 0 | whitelist-only mode blocks strangers at the chokepoint |
+| `discover_bot.py` / `scout_agent.py` | every 2h / 4h | Discovery candidates → suggestions (never auto-follow outside the whitelist) |
 
 ### Like / promote
 

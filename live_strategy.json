@@ -3,7 +3,7 @@
   "caps": {
     "MAX_NEWS_PER_DAY": 1,
     "MAX_HOTAKES_PER_DAY": 2,
-    "MAX_QUOTES_PER_DAY": 40,
+    "MAX_QUOTES_PER_DAY": 60,
     "MAX_RETWEETS_PER_DAY": 1,
     "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY": 1,
@@ -18,5 +18,5 @@
     "AI news persona takes"
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-07 PM-4 QUALITY BARBELL (operator delegated: goal = big viral posts). Replies = QUANTITY (unlimited, the reach engine). QRTs/originals = QUALITY (the profile conversion layer): 40 QRT slots/day @10min+jitter, 50-like floor, proven 3-step structure, SKIP-by-default. A mediocre take wastes a slot; average is invisible."
+  "rationale": "2026-06-07 PM-4 QUALITY BARBELL (operator delegated: goal = big viral posts). Replies = QUANTITY (unlimited, the reach engine). QRTs/originals = QUALITY (the profile conversion layer): 60 QRT slots/day @7min+jitter (operator: 'totally cool if we do more than 40'), 50-like floor, proven 3-step structure, SKIP-by-default. A mediocre take wastes a slot; average is invisible."
 }

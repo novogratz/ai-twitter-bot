@@ -4,8 +4,55 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
-> **Mandate 2026-06-07 (CURRENT — AGENT SPEC: FOLLOW + CONTENT, supersedes
-> 2026-06-06 unlimited mode and the 2026-06-05 PM volume settings):**
+> **Mandate 2026-06-07 PM (CURRENT — VIRAL FOCUS: QRT + REPLIES, QUALITY
+> BARBELL; refines the morning AGENT SPEC below):**
+>
+> **Identity (anchored in `core_identity.md`, operator-stated):** The AI
+> Therapist @TheAIShrink — *"Treating market trauma. AI-powered portfolio
+> therapy. Follow the signal. Heal the fear. ⚡"* — AND the **sharpest in
+> the room on AI**: the therapist voice is HOW, the exact number/mechanism
+> nobody else in the thread has is WHAT.
+>
+> **Focus (operator: "focus should be Quote Retweet AND replies"):**
+> - **QRTs = the QUALITY lane** — 60/day cap @7min+jitter (operator:
+>   "totally cool if we do more than 40"), 50-like floor
+>   (mid-size analytical finance/AI posts, NOT mega-virals — they engage
+>   back). The measured formula (operator's two best posts, 3.5-7K views
+>   each): **re-denominate their number + one mechanism metaphor + closing
+>   question**; cashtags/@mentions welcome. Screenshot-worthy or SKIP —
+>   SKIP is free, mediocre is expensive.
+> - **Replies = the QUANTITY lane** — unlimited, freshest-fast-rising
+>   first, investor-psychology expertise, hook in 6-8 words, 100-180 chars.
+> - Originals 3-4/day in jittered US-market slot crons (9:30/12:30/16:30/
+>   20:00 NY; 12:30 leads with the GIF stunt) — they exist to CONVERT the
+>   profile visits QRTs+replies generate. Plain RTs 0-2/day.
+>
+> **The running bits:** @TheBTCTherapist bestie blitz (reply to EVERY ≤48h
+> post of his; QRT his best with the AI-side INVERSION + GIF — big-brother
+> warmth, he should quote back). AI-vs-BTC feud steering on all BTC parents.
+>
+> **Self-reinforcing loops (all live):** winners (≥1 external like in 1h)
+> get self-RT then un-RT→re-RT recycling (4h gaps, max 4, ≤48h);
+> `account_curator` earns the tracked/scan list from on-lane engagement ×
+> conversion evidence (NO static lists — pins: TheBTCTherapist, Graphseo;
+> may promote ≤3/day to the whitelist `discovered` tier); `self_winners`
+> bank + pillar attribution feed every generation prompt.
+>
+> **WHAT WORKS (measured, 2026-06-07):**
+> - **market_trauma therapist one-liners: 29.8 avg likes vs 13.1 for plain
+>   AI news takes (2.3x)** — therapize, don't report.
+> - **QRTs of mid-size analytical finance posts**: thousands of views +
+>   5-10 likes each from a 1.3K-follower account; the number-reframe +
+>   metaphor + question structure specifically.
+> - **Reply volume converts**: 941 replies on Jun 6 → +37 followers/day;
+>   +298 followers that week.
+> - Self-RT of a winner ≈ +200 views historically.
+> - **Following/unfollowing is operator-manual** (bot unfollows OFF; seed
+>   follows resume automatically once the purge passes the ceiling).
+
+> **Mandate 2026-06-07 AM (AGENT SPEC: FOLLOW + CONTENT — volume settings
+> for QRTs superseded by the PM block above; follow rules + slots + format
+> rules still in force):**
 > Operating spec for @TheAIShrink — "The AI Therapist". Lane: **AI × markets ×
 > psychology**, English only. Golden rule: **don't report the news — therapize
 > it.** Voice: witty, deadpan, irreverent, emotionally intelligent but savage —
@@ -174,6 +221,32 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 > spacing + no bursts), same intent, different mechanism.
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
+
+### 2026-06-07 PM-5 — focus mandate + identity anchor
+
+Operator: "focus of the bot should be Quote Retweet AND replies — and the
+bot needs to be the sharpest in the room in AI with the motto [the bio]."
+`core_identity.md` (operator-managed, loaded into every prompt) now anchors
+all three: the motto (was already the positioning line), the
+sharpest-in-the-room analyst edge (was only in reply/quote prompts — now
+spine-level: voice is HOW, the number is WHAT), and a PRIMARY SURFACES
+section (QRT quality lane + reply quantity lane; originals convert the
+visits). Hashtag line fixed to NO hashtags. Folded into the CURRENT
+mandate block at the top of this file.
+
+### 2026-06-07 PM-4 — QUALITY BARBELL (operator: "goal is big viral posts… you decide")
+
+Operator asked if 100 QRT/day was too much, then delegated. Decision:
+**quantity on replies, quality on everything on the profile.** QRTs
+100→40/day @10min+jitter (raised to 60 same day — operator: "totally
+cool if we do more than 40"); agent bounds 20-80 (meta_strategy /
+strategy_lab); quote prompt got the explicit gate "screenshot-worthy for
+the group chat or SKIP — SKIP is free, mediocre is expensive". Rationale:
+per-post engagement rate is what the algo and a profile visitor read;
+the marginal 80th QRT of a firehose is mediocre and average is invisible.
+Replies stay unlimited (941/day → +37 followers, measured). Note: ~288
+quotes shipped on Jun 6 without platform trouble — 40 is a quality
+choice, not a safety ceiling.
 
 ### 2026-06-07 PM-3 — self-RT recycler (operator: "abuse the retweet of your own posts")
 
