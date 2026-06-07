@@ -349,9 +349,7 @@ def main():
         # interesting, before any other startup work.
         log.info("Startup FEED SWEEP (For You + Following) — first thing...")
         safe_run_feed_sweep_cycle()
-        # Reboost pinned tweet immediately on startup for fresh feed placement.
-        log.info("Startup pin-boost: cycling pinned tweet for fresh reach...")
-        safe_run_pin_boost_cycle()
+        # Pin-boost disabled (operator 2026-06-07).
         # Fire one RT + quote cycle immediately so they don't wait for the full
         # direct-reply warmup to finish before scheduler.start() is called.
         log.info("Startup retweet burst...")
@@ -537,14 +535,8 @@ def main():
             id="boost_job",
         )
 
-        # Pin-boost bot — un-RT then re-RT the pinned tweet every hour.
-        # Cycling it makes it appear fresh in followers' feeds each hour.
-        log.info("Pin-boost bot: cycling pinned tweet (un-RT → re-RT) every 60 min.")
-        scheduler.add_job(
-            safe_run_pin_boost_cycle,
-            trigger=IntervalTrigger(minutes=60),
-            id="pin_boost_job",
-        )
+        # Pin-boost bot — DISABLED (operator 2026-06-07: "remove auto pin").
+        log.info("Pin-boost bot: DISABLED.")
 
         # Early-bird bot — slowed from 5 -> ~8min jittered (still inside the
         # 12-min freshness window for top-5-reply). Quiet hours skip.
@@ -817,13 +809,8 @@ def main():
         # tweet is the #1 follow-conversion lever for first-time visitors.
         # Best-effort: if the JS menu DOM has shifted, logs + moves on.
         # 2026-05-16: 6h → 3h. Re-pin the freshest viral post sooner so
-        # the pinned tweet stays representative of current quality.
-        log.info("Pin bot: pinning best own post every 3h (idempotent).")
-        scheduler.add_job(
-            safe_run_pin_cycle,
-            trigger=IntervalTrigger(hours=3),
-            id="pin_job",
-        )
+        # Pin bot — DISABLED (operator 2026-06-07: "remove auto pin").
+        log.info("Pin bot: DISABLED.")
 
         # Like bot — bulk-like FR niche tweets. Each like = 1 outbound
         # notification. 2026-05-16: 15 → 10 min. Faster outbound pings.
