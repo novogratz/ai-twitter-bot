@@ -236,6 +236,16 @@ Lesson: every keystroke-shortcut Safari primitive is a TOGGLE — never fire
 one without knowing the current state (same family as reboost_tweet's
 two-press design).
 
+**Deeper root cause found same hour:** the scraper's `author` field is the
+DISPLAY NAME ("The AI Therapist"), not the @handle — FIVE bots compared it
+to BOT_HANDLE and silently saw zero own posts (boost never picked a banger,
+recycler would find no winners, spike/viral_followup blind,
+suppression_watch measured nothing). `twitter_client.is_own_post()` (URL =
+ground truth: /BOT_HANDLE/status/) now used at all five sites. THIRD
+occurrence of the display-name-vs-handle family (BLOCKLIST 2026-04-26,
+replyback 2026-06-05) — never compare scraper `author` to a handle.
+LIVE-VERIFIED: real self-RT shipped post-fix.
+
 ### 2026-06-07 PM-6 — engine-health boot-warmup grace (downtime ≠ collapse)
 
 Witnessed live: minutes after a boot (bot had been stopped for the
