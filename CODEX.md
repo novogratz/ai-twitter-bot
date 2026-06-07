@@ -222,6 +222,44 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-11 — THE PHANTOM REPLY BUG (the real "bot doesn't do much")
+
+Operator: "bot is not fast and doesn't do much, it's disappointing." He was
+right, and the engine's own numbers were lying. Since the one-reply-ever
+chokepoint landed (2026-06-05 17:46), FIVE bots that "locked the URL in
+BEFORE posting" (`save_replied` premark) — `direct_reply._reply_to_tweets`
+(= direct_reply search/feed AND feed_sweeper), `early_bird`, `mega_watch`,
+`reply_bot`, `roast` — had 100% of their replies silently refused: the
+chokepoint loads the on-disk store, sees the caller's own premark, and
+skips. Their unconditional `log_reply()` then recorded a PHANTOM row, so
+engagement_log said "941 replies on Jun 6" while bot.log's `Reply posted!`
+said 140 (Jun 7: 81 real vs 513 self-refusals). Repro was deterministic:
+premark → `load_replied()` → refuse.
+
+Fix (chokepoint-honest contract, pinned by
+`test_reply_callers_never_premark_store` +
+`test_reply_chokepoint_returns_bool`):
+- `twitter_client.reply_to_tweet` returns **True only when the reply
+  actually shipped** (DRY_RUN counts), False on policy/content/dedup skips.
+- Callers NEVER write the replied store before the call — crash-safety is
+  the chokepoint's job (it marks right before the Safari write). In-memory
+  `replied.add(url)` stays (no same-cycle retry).
+- `log_reply` fires ONLY on True — no more phantom rows poisoning the ROI
+  loop, the watchdog baselines, and the operator's own measurements.
+- Same gating applied to VIP scan, engagement_targeting, btc_blitz,
+  retweet_bot replyback.
+
+Also: VIP scan lane trimmed to `Graphseo,TheBTCTherapist` (env
+`VIP_SCAN_HANDLES`) — the 2026-06-06 four-handle FR list burned ~3 min of
+serialized Safari per cycle converting to zero on the EN persona.
+
+Lesson (the dedup-chokepoint family grows again): when a chokepoint both
+CHECKS and MARKS a store, callers must not touch that store at all —
+"defensive" caller-side marking turns the guard against its own caller.
+And NEVER log an action as done unless the chokepoint said it shipped:
+every measurement downstream (pillar ROI, watchdog baselines, operator
+trust) inherits the lie.
+
 ### 2026-06-07 PM-10 — profile visits OFF (operator launch config: "don't visit any profiles anymore")
 
 Discovery surfaces are now EXACTLY three: **@TheBTCTherapist's profile**

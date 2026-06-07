@@ -365,16 +365,21 @@ def _generate_graphseo_reply(tweet_text: str) -> str | None:
 
 
 def _run_graphseo_scan(replied: set) -> int:
-    """Scan VIP FR accounts via search and reply to recent posts.
+    """Scan VIP friend accounts via search and reply to recent posts.
 
-    Operator 2026-06-06: Graphseo (Julien Flot), XFenaux, RodolpheSteffan,
-    and FinTales_ all get their own dedicated scan — no profile page visits.
+    Operator 2026-06-07: "reply to everything graphseo and thebtctherapist
+    post" — the VIP lane is exactly those two (supersedes the 2026-06-06
+    four-handle FR list: XFenaux/RodolpheSteffan/FinTales_ cost ~3 min of
+    serialized Safari per cycle and converted to zero on the EN persona).
+    Each handle is a cheap `from:` search, no profile visit; the 6h
+    btc_blitz converges full coverage, this lane keeps pickup fast.
     """
     from .twitter_client import scrape_x_search, reply_to_tweet
     from .reply_bot import _tweet_age_minutes
     from .engagement_log import log_reply
 
-    VIP_SCAN_HANDLES = ["Graphseo", "XFenaux", "RodolpheSteffan", "FinTales_"]
+    VIP_SCAN_HANDLES = [h.strip().lstrip("@") for h in os.environ.get(
+        "VIP_SCAN_HANDLES", "Graphseo,TheBTCTherapist").split(",") if h.strip()]
     posted = 0
     for handle in VIP_SCAN_HANDLES:
         log.info(f"[VIP] Scanning @{handle} recent posts (search, no profile visit)...")
@@ -396,8 +401,10 @@ def _run_graphseo_scan(replied: set) -> int:
                 continue
             log.info(f"[VIP] Replying to @{handle} {url[:60]}: {reply[:80]}")
             try:
-                reply_to_tweet(url, reply)
+                shipped = reply_to_tweet(url, reply)
                 replied.add(url)
+                if not shipped:
+                    continue  # chokepoint skip — don't log a phantom reply
                 try:
                     log_reply(url, reply, action_type="reply", source=f"VIP/{handle}")
                 except Exception:
@@ -534,16 +541,25 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
         from .pattern_tags import extract_pattern as _extract_pattern
         reply, _pattern_id = _extract_pattern(reply)
         reply = humanize(reply)
-        replied.add(url)
-        save_replied(replied)
+        # ⛔ NEVER premark the replied store here — the chokepoint in
+        # twitter_client.reply_to_tweet loads it and refuses anything already
+        # present. The 2026-04 "lock URL in BEFORE posting" premark made the
+        # chokepoint (added 2026-06-05) refuse 100% of this path's replies
+        # while log_reply kept recording phantoms. The chokepoint marks the
+        # store itself right before the Safari write.
+        replied.add(url)  # in-memory only: no same-cycle retry
         try:
-            reply_to_tweet(url, reply)
-            log_reply(url, reply, action_type="reply", source=source_name, pattern_id=_pattern_id or "")
-            posted += 1
-            if _reply_lang == "en" and en_counter: en_counter[0] += 1
-            # Spacing handled by action_guard (MIN_SECONDS_BETWEEN_REPLIES).
-            # No extra sleep here — don't double-throttle.
-        except Exception: traceback.print_exc()
+            shipped = reply_to_tweet(url, reply)
+        except Exception:
+            traceback.print_exc()
+            continue
+        if not shipped:
+            continue  # policy/content/dedup skip — nothing was posted
+        log_reply(url, reply, action_type="reply", source=source_name, pattern_id=_pattern_id or "")
+        posted += 1
+        if _reply_lang == "en" and en_counter: en_counter[0] += 1
+        # Spacing handled by action_guard (MIN_SECONDS_BETWEEN_REPLIES).
+        # No extra sleep here — don't double-throttle.
     return posted
 
 def run_direct_reply_cycle():

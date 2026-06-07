@@ -154,10 +154,11 @@ def _gen(prompt_tpl: str, tweet_text: str, model: str, label: str, author: str =
 def run_btc_blitz_cycle() -> None:
     fresh = _fresh_bestie_posts()
     if not fresh:
+        # No early return — the buddy pass below must still run.
         log.info(f"[BTC-BLITZ] No fresh (≤48h) posts from @{BESTIE_HANDLE}.")
-        return
-    log.info(f"[BTC-BLITZ] {len(fresh)} fresh posts from @{BESTIE_HANDLE} "
-             f"(top: {fresh[0].get('likes')} likes).")
+    else:
+        log.info(f"[BTC-BLITZ] {len(fresh)} fresh posts from @{BESTIE_HANDLE} "
+                 f"(top: {fresh[0].get('likes')} likes).")
 
     # --- 1. QRT the most impactful (chokepoint caps + dedup gate volume) ---
     from .quote_tweet_bot import _load_quoted, _save_quoted
@@ -206,9 +207,9 @@ def run_btc_blitz_cycle() -> None:
             continue
         reply = smart_trim(humanize(reply), 278)
         try:
-            reply_to_tweet(url, reply)
-            log_reply(url, reply, action_type="reply", source="BTC-BLITZ")
-            replies_done += 1
+            if reply_to_tweet(url, reply):
+                log_reply(url, reply, action_type="reply", source="BTC-BLITZ")
+                replies_done += 1
         except Exception:
             traceback.print_exc()
 
@@ -229,9 +230,9 @@ def run_btc_blitz_cycle() -> None:
                 continue
             reply = smart_trim(humanize(reply), 278)
             try:
-                reply_to_tweet(url, reply)
-                log_reply(url, reply, action_type="reply", source="BUDDY-BLITZ")
-                replies_done += 1
+                if reply_to_tweet(url, reply):
+                    log_reply(url, reply, action_type="reply", source="BUDDY-BLITZ")
+                    replies_done += 1
             except Exception:
                 traceback.print_exc()
     log.info(f"[BTC-BLITZ] Done: {quotes_done} quotes, {replies_done} replies "

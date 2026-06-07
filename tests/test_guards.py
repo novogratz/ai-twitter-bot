@@ -1361,3 +1361,67 @@ def test_buddy_blitz_replies_to_every_fresh_post(monkeypatch):
     ]
     assert all("already covered" not in txt for _, txt in gen_calls), \
         "replied URL must be skipped BEFORE the LLM call"
+
+
+def test_reply_callers_never_premark_store(monkeypatch, tmp_path):
+    """2026-06-07 post-mortem: five bots 'locked the URL in BEFORE posting'
+    (save_replied premark) — the reply chokepoint (2026-06-05) loads that
+    same store and silently refused its OWN caller's reply, 100% of the
+    time, while unconditional log_reply calls wrote phantom rows into
+    engagement_log. Contract pinned here: (1) the on-disk store must NOT
+    contain the URL at the moment reply_to_tweet is invoked; (2) log_reply
+    fires ONLY when reply_to_tweet returns True."""
+    import src.direct_reply as dr
+    import src.reply_bot as rb
+
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    url = "https://x.com/some_ai_account/status/2063500000000000009"
+    tweets = [{"url": url, "text": "nvidia margins at 75 percent again", "author": "some_ai_account"}]
+
+    premarked_at_call = []
+    def fake_reply(u, text):
+        premarked_at_call.append(u in rb.load_replied())
+        return True
+    logged = []
+    monkeypatch.setattr(dr, "_generate_single_reply",
+                        lambda *a, **k: "calm reframe with the precise fact")
+    monkeypatch.setattr(dr, "reply_to_tweet", fake_reply)
+    monkeypatch.setattr(dr, "humanize", lambda t: t)
+    monkeypatch.setattr(dr, "log_reply", lambda *a, **k: logged.append(a))
+    monkeypatch.setattr(dr, "_tweet_age_minutes", lambda u: 5)
+    monkeypatch.setattr(dr, "_is_on_niche", lambda t: True)
+    monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 1000, 0))
+
+    n = dr._reply_to_tweets(tweets, rb.load_replied(), "SEARCH-HOT", en_counter=[0])
+    assert premarked_at_call == [False], \
+        "caller premarked the store — the chokepoint would refuse its own reply"
+    assert n == 1 and len(logged) == 1
+
+    # Chokepoint refusal (False) → no phantom engagement_log row, posted=0.
+    logged.clear()
+    url2 = "https://x.com/some_ai_account/status/2063500000000000010"
+    tweets2 = [{"url": url2, "text": "tsmc capex at 40 billion now", "author": "some_ai_account"}]
+    monkeypatch.setattr(dr, "reply_to_tweet", lambda u, t: False)
+    n2 = dr._reply_to_tweets(tweets2, rb.load_replied(), "SEARCH-HOT", en_counter=[0])
+    assert n2 == 0 and logged == [], \
+        "chokepoint skip must not produce a phantom engagement_log row"
+
+
+def test_reply_chokepoint_returns_bool(monkeypatch, tmp_path):
+    """reply_to_tweet must return True when the reply ships (DRY_RUN counts)
+    and False on the dedup skip — callers gate log_reply on this."""
+    from src import twitter_client as tc
+    from src import reply_bot as rb
+    from src import action_guard as ag
+    from src import config as cfg
+
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
+    monkeypatch.setattr(ag, "record", lambda *a, **k: None)
+    monkeypatch.setattr(cfg, "DRY_RUN", True)
+
+    url = "https://x.com/foo/status/2063500000000000042"
+    text = "Naming the fear is step one. The number says 40 billion in capex."
+    assert tc.reply_to_tweet(url, text) is True
+    # Store was marked by the chokepoint itself — second attempt refuses.
+    assert tc.reply_to_tweet(url, text) is False

@@ -786,8 +786,22 @@ def like_tweet(tweet_url: str = ""):
         log.info("Failed to like tweet, continuing...")
 
 
-def reply_to_tweet(tweet_url: str, reply_text: str):
-    """Open a tweet, like it, click reply, type the reply, and submit."""
+def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
+    """Open a tweet, like it, click reply, type the reply, and submit.
+
+    Returns True only when the reply actually shipped (or was DRY_RUN-
+    recorded), False on every skip (policy, content_guard, dedup).
+
+    ⛔ CALLERS MUST NOT write the replied store before calling this — the
+    chokepoint below loads the on-disk canonical set and REFUSES anything
+    already in it. Bug 2026-06-07: five bots "locked the URL in BEFORE
+    posting" (direct_reply/_reply_to_tweets, early_bird, mega_watch,
+    reply_bot, roast) → the chokepoint saw their own premark and silently
+    skipped 100% of their replies since 2026-06-05 17:46, while their
+    unconditional log_reply() calls kept writing phantom rows into
+    engagement_log (the "941 replies" day was mostly fiction; bot.log
+    'Reply posted!' said 140). Crash-safety is the chokepoint's job: it
+    marks the store itself right before the Safari write."""
     # Central write policy: replies daily cap + jittered spacing, no near-term
     # price target (language is matched to the parent upstream, so no French
     # gate here), dry-run kill switch.
@@ -795,7 +809,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     ok, why = action_guard.can_post(action_guard.REPLY)
     if not ok:
         log.info(f"[REPLY] policy skip ({why}).")
-        return
+        return False
     # Over-length replies get a sentence-boundary trim instead of a discard
     # (2026-06-07): the LLM generation is already paid for — content_guard
     # used to reject >278-char replies outright, several/day. smart_trim
@@ -811,7 +825,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     ok, why = content_guard.validate(reply_text, kind="reply")
     if not ok:
         log.info(f"[REPLY] content_guard skip ({why}): {reply_text[:120]!r}")
-        return
+        return False
     # ONE reply per tweet, EVER — enforced at the chokepoint (operator
     # 2026-06-05: "never send 2 replies on same tweet"). Each reply bot
     # loads replied_tweets.json at cycle start, so two bots racing within
@@ -822,7 +836,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     _replied_now = load_replied()
     if tweet_url in _replied_now:
         log.info(f"[REPLY] already replied to this tweet (chokepoint dedup) — skipping: {tweet_url}")
-        return
+        return False
     _replied_now.add(tweet_url)
     save_replied(_replied_now)
 
@@ -843,7 +857,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     if _cfg.DRY_RUN:
         log.info(f"[REPLY][DRY_RUN] would reply to {tweet_url}: {reply_text[:160]!r}")
         action_guard.record(action_guard.REPLY, target=tweet_url, dry_run=True)
-        return
+        return True
 
     with _safari_lock:
         # Make sure Safari is focused first
@@ -893,6 +907,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
         log.info("Reply posted!")
         action_guard.record(action_guard.REPLY, target=tweet_url)
         close_front_tab()
+    return True
 
 
 def quote_tweet(tweet_url: str, comment: str) -> bool:
