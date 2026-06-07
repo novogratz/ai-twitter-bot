@@ -810,6 +810,13 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
     if not ok:
         log.info(f"[REPLY] policy skip ({why}).")
         return False
+    # Em/en-dash backstop for EVERY reply path (operator 2026-06-07: an em
+    # dash is an AI tell — "what a shame"). humanize() strips them, but a
+    # path that skips humanize (the VIP lane did) must not ship one.
+    from .humanizer import _DASH_PAIRS
+    for _pat, _rep in _DASH_PAIRS:
+        reply_text = (reply_text or "").replace(_pat, _rep)
+    reply_text = reply_text.replace("—", ",").replace("–", ",")
     # Over-length replies get a sentence-boundary trim instead of a discard
     # (2026-06-07): the LLM generation is already paid for — content_guard
     # used to reject >278-char replies outright, several/day. smart_trim

@@ -222,6 +222,35 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-12 — French-to-the-bestie incident + the Safari test wall
+
+Two live failures within an hour of the PM-11 relaunch, both mine:
+
+1. **VIP lane shipped the Graphseo treatment to @TheBTCTherapist** (operator:
+   "why did it reply in french to the bitcoin therapist? and with m dash").
+   PM-11 added him to `VIP_SCAN_HANDLES`, but the lane had ONE generator —
+   the Graphseo FR prompt (French + the deliberate-typo style). ~5 of his
+   posts got French replies 13:52-13:57. Fix: per-handle persona in
+   `_run_graphseo_scan` (bestie EN prompt for TheBTCTherapist, buddy prompt
+   for other VIPs, Graphseo keeps his FR generator) + `humanize()` on VIP
+   output (the lane skipped it — that's how the em dash survived).
+   Em/en-dash strip is now ALSO a chokepoint backstop in `reply_to_tweet`
+   for every path. Guard: `test_vip_scan_uses_bestie_prompt_for_btctherapist`,
+   `test_reply_chokepoint_strips_em_dashes`.
+
+2. **A guard test drove the LIVE Safari and posted real replies** to
+   @TheBTCTherapist mid-test (incl. duplicate replies on one status — the
+   test used a tmp replied-store, so the chokepoint saw everything fresh).
+   Root cause: the test mocked `direct_reply.reply_to_tweet`, but the VIP
+   scan imports it FUNCTION-LOCALLY from twitter_client — the mock was
+   bypassed. `tests/conftest.py` now has an autouse `_no_safari` wall:
+   `webbrowser.open`, `_run_applescript`, `_paste_text` raise in every
+   test unless explicitly re-patched. Same family as the logger-isolation
+   fix (a1077a0): tests must not be able to touch production surfaces.
+
+Lesson: a function-local `from .twitter_client import X` resolves at call
+time from twitter_client — mocking the caller module does nothing. Mock at
+the chokepoint module, and let the conftest wall catch the ones you miss.
 ### 2026-06-07 PM-11 — THE PHANTOM REPLY BUG (the real "bot doesn't do much")
 
 Operator: "bot is not fast and doesn't do much, it's disappointing." He was

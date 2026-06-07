@@ -1425,3 +1425,84 @@ def test_reply_chokepoint_returns_bool(monkeypatch, tmp_path):
     assert tc.reply_to_tweet(url, text) is True
     # Store was marked by the chokepoint itself — second attempt refuses.
     assert tc.reply_to_tweet(url, text) is False
+
+
+def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path):
+    """Bug 2026-06-07 (shipped live, operator: 'why did it reply in french
+    to the bitcoin therapist?'): the VIP lane applied the Graphseo FR
+    generator (French + deliberate-typo style) to @TheBTCTherapist's
+    English post. Pin: VIP replies to the bestie use the EN bestie prompt,
+    never _generate_graphseo_reply; output passes through humanize."""
+    import src.direct_reply as dr
+    import src.reply_bot as rb
+    from src import btc_blitz as bb
+
+    # ⚠️ The VIP scan imports scrape_x_search / reply_to_tweet FUNCTION-
+    # LOCALLY from twitter_client — patch THERE, not on direct_reply.
+    # (First version of this test patched dr.* — the real Safari fired and
+    # posted live replies to @TheBTCTherapist mid-test. conftest's
+    # _no_safari wall now makes that mistake fail loudly instead.)
+    import src.twitter_client as tc
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setenv("VIP_SCAN_HANDLES", "TheBTCTherapist")
+    url = "https://x.com/TheBTCTherapist/status/2063500000000000077"
+    monkeypatch.setattr(tc, "scrape_x_search",
+                        lambda q, max_tweets=20, tab="latest":
+                        [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
+    monkeypatch.setattr(rb, "_tweet_age_minutes", lambda u: 30)
+    monkeypatch.setattr(dr, "_tweet_age_minutes", lambda u: 30)
+
+    graphseo_calls = []
+    monkeypatch.setattr(dr, "_generate_graphseo_reply",
+                        lambda text: graphseo_calls.append(text) or "réponse française")
+    gen_labels = []
+    def fake_gen(tpl, txt, model, label, author=None):
+        gen_labels.append((label, tpl is bb._BESTIE_REPLY_PROMPT))
+        return "the AI side sends love — and a fruit basket"
+    monkeypatch.setattr(bb, "_gen", fake_gen)
+    sent = []
+    monkeypatch.setattr(tc, "reply_to_tweet", lambda u, t: sent.append(t) or True)
+    import src.engagement_log as el
+    monkeypatch.setattr(el, "log_reply", lambda *a, **k: None)
+    monkeypatch.setattr(dr, "log_reply", lambda *a, **k: None)
+
+    dr._run_graphseo_scan(rb.load_replied())
+
+    assert graphseo_calls == [], "Graphseo FR generator must NEVER run for the bestie"
+    assert gen_labels == [("VIP_REPLY/TheBTCTherapist", True)]
+    assert len(sent) == 1
+    assert "—" not in sent[0], "humanize must strip em dashes from VIP replies"
+
+
+def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
+    """Operator 2026-06-07: an em dash in a published reply is an AI tell
+    ('what a shame'). The chokepoint must strip em/en dashes for EVERY
+    reply path, even ones that skip humanize()."""
+    from src import twitter_client as tc
+    from src import reply_bot as rb
+    from src import action_guard as ag
+    from src import config as cfg
+
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
+    recorded = {}
+    monkeypatch.setattr(ag, "record", lambda *a, **k: None)
+    monkeypatch.setattr(cfg, "DRY_RUN", True)
+    logged = []
+    monkeypatch.setattr(tc, "log", type(tc.log)(tc.log.name)) if False else None
+    # Capture the final text via the DRY_RUN log line is brittle — instead
+    # verify through the store-marking path: patch _paste? Simplest: spy on
+    # the DRY_RUN branch by reading the typo-injection input. We assert via
+    # content_guard.validate receiving dash-free text.
+    seen = {}
+    import src.content_guard as cg2
+    real_validate = cg2.validate
+    def spy_validate(text, kind="post"):
+        seen["text"] = text
+        return real_validate(text, kind=kind)
+    monkeypatch.setattr(cg2, "validate", spy_validate)
+
+    url = "https://x.com/foo/status/2063500000000000088"
+    assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part of the trade.") is True
+    assert "—" not in seen["text"]
+    assert "conviction is the hard part" in seen["text"]

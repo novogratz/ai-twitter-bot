@@ -396,9 +396,23 @@ def _run_graphseo_scan(replied: set) -> int:
                 continue
             if _tweet_age_minutes(url) > 2880:
                 continue
-            reply = _generate_graphseo_reply(text)
+            # Per-handle persona (bug 2026-06-07: the Graphseo FR prompt —
+            # French + the deliberate-typo style — went to an ENGLISH
+            # @TheBTCTherapist post). Graphseo keeps his dedicated FR
+            # generator; every other VIP gets the bestie/buddy EN-or-match
+            # prompts from btc_blitz.
+            if handle.lower() == "graphseo":
+                reply = _generate_graphseo_reply(text)
+            else:
+                from .btc_blitz import (_gen, _BESTIE_REPLY_PROMPT,
+                                        _BUDDY_REPLY_PROMPT, BESTIE_HANDLE)
+                tpl = (_BESTIE_REPLY_PROMPT if handle.lower() == BESTIE_HANDLE.lower()
+                       else _BUDDY_REPLY_PROMPT)
+                reply = _gen(tpl, text, PRIORITY_REPLY_MODEL,
+                             f"VIP_REPLY/{handle}", author=handle)
             if not reply:
                 continue
+            reply = humanize(reply)  # em-dash strip + AI-artifact cleanup
             log.info(f"[VIP] Replying to @{handle} {url[:60]}: {reply[:80]}")
             try:
                 shipped = reply_to_tweet(url, reply)
