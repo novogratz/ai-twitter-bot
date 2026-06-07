@@ -14538,3 +14538,137 @@ And we'd put $1,000 into it.
 Which stocks would you pick?
   - https://x.com/unusual_whales/status/2063441059946893533
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 338).
+
+## 2026-06-07
+- **@xdnibor** (112 likes, score 9/10) — Just like Amazon uses Falcon 9 to launch Project Leo satellites, Google uses Colossus to train their models.
+
+Falcon 9 still launches Starlink. 
+Colossus still trains Grok. 
+
+I don't know why it is so
+  - https://x.com/xdNiBoR/status/2063386827055116541
+  - **WHY**: Source fiable + impact concret (score signal 17, engagement 128).
+- **@fredaduan** (29 likes, score 8/10) — Analyzing the new $GOOGL <> $SpaceX deal
+
+$920 million per month for 110,000 GPUs implies ~$11.50/GPU-hour.
+
+According to public sources, the GPUs in Colossus 2 are mainly GB200 / GB300:
+ https://nvid
+  - https://x.com/FredaDuan/status/2063454117381496871
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 33).
+- **@saso_capital** (22 likes, score 8/10) — $SPCX 
+
+Two deals with $70 billion in headline value signed within 30 days of each other. 
+
+MY TAKE
+
+> SpaceX built data centers faster than anyone in history.
+
+> Grok failed and the talent left. Musk
+  - https://x.com/saso_capital/status/2063325306677608788
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 30).
+- **@squawkcnbc** (100 likes, score 9/10) — "You have to believe in Elon Musk if you're going to buy the stock, and that's why people are buying," says @rwang0 of the SpaceX IPO. https://cnb.cx/4x9YPSt
+  - https://x.com/SquawkCNBC/status/2062866410347397366
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 122).
+- **@investmentguru_** (34 likes, score 9/10) — The SpaceX IPO isn’t just historic — it’s rigged.
+
+Here’s what nobody is talking about:
+
+The rule changes made for $SPCX:
+
+• Nasdaq-100 cut inclusion wait from ~3 months → 15 trading days
+• Russell In
+  - https://x.com/InvestmentGuru_/status/2063321245215490533
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 58).
+- **@bitcoinarchive** (400 likes, score 9/10) — President Joe Biden's son, Hunter Biden: Bitcoin and crypto is the future, "fiat is a sham, the banking class is corrupt."
+  - https://x.com/BitcoinArchive/status/2063344709594972324
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 514).
+- **@saylordocs** (357 likes, score 9/10) — Cathie Wood urged investors to sell gold for Bitcoin, said BTC will hit $1,500,000.
+
+She knows something...
+  - https://x.com/saylordocs/status/2063303654468399278
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 477).
+- **@coinbureau** (263 likes, score 9/10) — CRYPTO BILLIONAIRE DOUBLES DOWN ON BITCOIN, REJECTS $250K ETH
+
+DFG founder James Wo, who turned a $20 million family investment into a billion-dollar crypto fund, says market data does not support Tom
+  - https://x.com/coinbureau/status/2063369085451370865
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 423).
+- **@polydao** (121 likes, score 9/10) — Jensen Huang just explained the future of AI in 1 hour at Stanford
+
+computing is changing for the first time in 64 years
+
+> NVIDIA got 1,000,000x more compute in 10 years
+> AI agents will run 24/7 - t
+  - https://x.com/polydao/status/2063184120549679134
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 151).
+- **@oragnes** (22 likes, score 8/10) — Who would have thought that a top cloud giant would buy computing power from a rocket maker?
+
+Where does Musk's SpaceX get so much computing power to rent out to Google and Anthropic at the same time?
+  - https://x.com/oragnes/status/2063437940743897423
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 38).
+- **@rainmaker1973** (245 likes, score 9/10) — Data centers powering artificial intelligence are projected to consume roughly twice as much electricity and water by 2030 as they do today, according to a new report from United Nations researchers.
+  - https://x.com/Rainmaker1973/status/2063228541538291980
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 359).
+- **@masahirochaen** (113 likes, score 9/10) — 【Breaking News】SpaceX to Provide AI Computing Resources to Google. Massive Contract Worth Approx. 147 Billion Yen Monthly
+
+The amount is on a whole different scale. In the AI era, models grow = infras
+  - https://x.com/masahirochaen/status/2063373369903624652
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 131).
+- **@bluechipsai** (8 likes, score 7/10) — Every Nvidia AI chip runs on HBM. Only three companies on Earth make it. One is American: Micron ($MU).
+
+This week Jensen Huang confirmed all three, Samsung, SK Hynix, and Micron, have qualified HBM4
+  - https://x.com/BluechipsAI/status/2063458399883260096
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 16).
+- **@beth_kindig** (587 likes, score 8/10) — Intel and AMD have reported raised CPU prices by 10% to as much as 35% QoQ, as tight supply faces strong demand. 
+
+$INTC $AMD $NVDA
+  - https://x.com/Beth_Kindig/status/2063344019741008347
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 629).
+- **@stocksavvyshay** (434 likes, score 8/10) — This is Peter Lynch’s favorite metric and I like it too because it ties valuation to growth. I prefer using a 2026 to 2028 window so the multiple adjusts for how fast the business is actually compound
+  - https://x.com/StockSavvyShay/status/2063266318812643612
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 456).
+- **@squawkcnbc** (16 likes, score 8/10) — Fmr. Fed Vice Chair explains why he says the Fed "has to have a hike on the table at some point this year": https://cnb.cx/4e6JNEa
+  - https://x.com/SquawkCNBC/status/2062920048482680980
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 34).
+- **@marketmatrixs** (178 likes, score 8/10) — Buy the stock and chill. 
+
+Here are 8 of the easiest stocks to buy and hold for the next 10 years 
+
+1. $AMD Advanced Micro Devices 
+
+* Just take a look at that revenue trajectory
+  - https://x.com/MarketMatrixs/status/2063380387079008675
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 188).
+- **@jawwwn_** (75 likes, score 8/10) — Palantir CEO Dr. Alex Karp:
+
+“You can't rebuild Palantir for $1 billion. You need us.”
+
+“Try that with PG it’s ridiculous. Try it with Foundry it’s ridiculous. Try it with Meta Constellation—no one ev
+  - https://x.com/jawwwn_/status/2063391920265597267
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 79).
+- **@mr_derivatives** (609 likes, score 7/10) — $MSTR BTC cost basis: ~$75,700
+
+$BMNR ETH cost basis: ~$3,850
+  - https://x.com/Mr_Derivatives/status/2063358430866456993
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 773).
+- **@cnbc** (51 likes, score 7/10) — U.S. confirms second Texas screwworm case, Canada restricts livestock imports
+  - https://x.com/CNBC/status/2063327082973721027
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 79).
+- **@squawkcnbc** (23 likes, score 7/10) — The Senate passed a $70 billion budget reconciliation package to fund immigration enforcement agencies. @SenatorLankford weighs in. https://cnb.cx/3QohadR
+  - https://x.com/SquawkCNBC/status/2062919255037809106
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 33).
+- **@squawkcnbc** (16 likes, score 7/10) — Two members of Congress, Rep. Lori Trahan (D-MA) @RepLoriTrahan and Rep. Jay Obernolte (R-CA) @JayObernolte - explain their groundbreaking AI bill to Squawk Box ... https://cnbc.com/video/2026/06/05/r
+  - https://x.com/SquawkCNBC/status/2062896501878141034
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 20).
+- **@tszzl** (469 likes, score 7/10) — superintelligence warps the gravity of capitalism, trading any useful service with the machine world is the highest value thing any company can do. if SpaceX is a fab on the moon and a neocloud in orb
+  - https://x.com/tszzl/status/2063437998616969400
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 531).
+- **@cointelegraph** (199 likes, score 7/10) — AI: AI chip demand is surging as Air Liquide commits $233M to support SK Hynix’s expansion in South Korea.
+  - https://x.com/Cointelegraph/status/2063312590583820482
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 303).
+- **@mikelongterm** (132 likes, score 7/10) — $PLTR shareholders just finally understood that Dr. Karp gonna double @PalantirTech revenue by FY2027 without increasing headcount or sales team, where not even $MSFT is compareable in term % of opera
+  - https://x.com/MikeLongTerm/status/2063296069023477855
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 136).
+- **@cnbc** (5 likes, score 7/10) — Bouygues-led consortium signs $23.44 billion deal to buy SFR from Altice France
+  - https://x.com/CNBC/status/2063396234577006729
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 15).
