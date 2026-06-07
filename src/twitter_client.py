@@ -1924,7 +1924,7 @@ def reply_to_tweet_in_thread(reply_url: str, reply_text: str):
     pressing 'r' replies to *that* reply. Reuses reply_to_tweet's flow.
     """
     log.info(f"[REPLYBACK] Replying in-thread to: {reply_url}")
-    reply_to_tweet(reply_url, reply_text)
+    return reply_to_tweet(reply_url, reply_text)
 
 
 def reply_to_reply(reply_text: str):

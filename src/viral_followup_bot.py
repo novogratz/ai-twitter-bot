@@ -97,7 +97,7 @@ def _generate_followup(post_text: str, likes: int, replies: int) -> Optional[str
         log.info(f"[VIRAL] LLM failed: {result.stderr[:160]}")
         return None
     text = unwrap_text(result.stdout).strip()
-    if not text or text.upper() == "SKIP":
+    if not text or text.upper().startswith("SKIP"):
         return None
     if "skip" in text.lower():
         return None
@@ -169,7 +169,8 @@ def run_viral_followup_cycle():
         _save_followed_up(followed_up)
 
         try:
-            reply_to_tweet_in_thread(c["url"], followup)
+            if not reply_to_tweet_in_thread(c["url"], followup):
+                continue  # chokepoint skip — no phantom log
             log.info("[VIRAL]   Posted in-thread.")
             try:
                 log_reply(

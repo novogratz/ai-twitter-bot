@@ -222,6 +222,32 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-07 PM-15 — self-critique sweep (operator: "look at what you're doing with a criticism spirit")
+
+The afternoon's pattern, stated plainly: three live embarrassments (French
+to the bestie, a test posting through the real Safari, SKIP/dash leaks)
+were each caught by the OPERATOR, not by the engine or by pre-ship checks
+— and each fix initially patched the single point instead of the family.
+This pass sweeps the families:
+
+- **Phantom-log family (PM-11) finished**: `reply_to_tweet_in_thread` now
+  returns the chokepoint bool; chain_reply (was also bumping thread-turn
+  state on refused replies), spike followup, viral_followup, and
+  notify_bot replyback all gate count/log/state on an actual ship.
+  Replyback dedup_key stays fresh on a chokepoint skip.
+- **SKIP exact-match family finished**: agent.py (news, 3 sites),
+  hotake_agent (2), viral_followup — all prefix-based now. content_guard
+  remains the backstop for every surface.
+- **Known data debt**: engagement_log carries ~800 phantom reply rows
+  from 2026-06-05→07 (the self-block era). Any ROI/baseline math over
+  those days OVERSTATES replies ~4-6x — weekly review and engine_health
+  baselines should discount them. Scraped own-metrics are unaffected.
+
+Process rule going forward (the actual lesson): before re-laning a
+handle/lane/surface, read its full generation path end-to-end (prompt,
+model, language, humanize, chokepoint) — and when a bug ships, fix the
+FAMILY (grep all surfaces for the same shape), not the instance. SKIP is
+free, a live embarrassment is not.
 ### 2026-06-07 PM-14 — SKIPPED variants + always-French Julien
 
 Follow-ups to PM-13 from live output:
