@@ -167,8 +167,10 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 Operator: when a post works, self-RT it after ~1h, then keep cycling
 unretweet → re-retweet (like the pin rotation) so it resurfaces in
 followers' feeds repeatedly. **`src/boost_recycler_bot.py`** (every 45 min,
-ONE action/cycle): own posts ≥5 likes (`BOOST_RECYCLE_MIN_LIKES`) and
-1h-48h old → first self-RT (organic algo push owns the first hour), then
+ONE action/cycle): own posts with ≥1 like from someone else within the
+first hour (scraped likes ≥2 — the bot self-likes at publish, so 2 = 1
+external; `BOOST_RECYCLE_MIN_LIKES`) and 1h-48h old → first self-RT
+(organic algo push owns the first hour), then
 un-RT→re-RT via the existing `twitter_client.reboost_tweet` (one Safari
 session, ends retweeted) every ≥4h (`BOOST_RECYCLE_GAP_HOURS`), max 4
 cycles/post (`BOOST_RECYCLE_MAX_CYCLES`). Hard 48h ceiling — stale

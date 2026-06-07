@@ -552,10 +552,11 @@ def main():
 
         # Self-RT recycler (operator 2026-06-07 PM-3: "abuse the retweet of
         # your own posts… unretweet then retweet, like the pin") — winners
-        # (>=5 likes, 1h-48h old) get a first self-RT then un-RT→re-RT
-        # cycles every 4h+, max 4 per post. One action per cycle.
+        # (>=1 external like in the first hour: scraped likes >=2 since we
+        # self-like at publish; 1h-48h old) get a first self-RT then
+        # un-RT→re-RT cycles every 4h+, max 4 per post. One action/cycle.
         log.info("Boost recycler: un-RT→re-RT own winners every 45 min "
-                 "(>=5 likes, 4h gaps, max 4 cycles/post).")
+                 "(>=1 external like, 4h gaps, max 4 cycles/post).")
         from src.boost_recycler_bot import safe_run_boost_recycler_cycle
         scheduler.add_job(
             safe_run_boost_recycler_cycle,

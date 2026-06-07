@@ -32,7 +32,10 @@ from .logger import log
 
 STATE_FILE = os.path.join(_PROJECT_ROOT, "boost_recycler_state.json")
 
-BOOST_RECYCLE_MIN_LIKES = int(os.environ.get("BOOST_RECYCLE_MIN_LIKES", "5"))
+# Operator 2026-06-07: "boost winners when you get at least 1 like from
+# someone else within an hour." The bot self-likes every own post at publish
+# time, so scraped likes >= 2 means >= 1 like from a real person.
+BOOST_RECYCLE_MIN_LIKES = int(os.environ.get("BOOST_RECYCLE_MIN_LIKES", "2"))
 BOOST_RECYCLE_GAP_HOURS = float(os.environ.get("BOOST_RECYCLE_GAP_HOURS", "4"))
 BOOST_RECYCLE_MAX_CYCLES = int(os.environ.get("BOOST_RECYCLE_MAX_CYCLES", "4"))
 BOOST_RECYCLE_MIN_AGE_MINUTES = int(os.environ.get("BOOST_RECYCLE_MIN_AGE_MINUTES", "60"))
