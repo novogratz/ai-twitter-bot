@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-06-07T21:33:34.831909",
-  "window_7d_actions": 4796,
-  "window_24h_actions": 1189,
+  "generated_at": "2026-06-08T01:33:34.826651",
+  "window_7d_actions": 4818,
+  "window_24h_actions": 890,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4734
+      "count": 4759
     },
     {
       "pattern": "METAPHOR",
-      "count": 21
+      "count": 20
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 19
+      "count": 17
     },
     {
       "pattern": "DIALOGUE",
@@ -44,6 +44,10 @@
       "actions": 287
     },
     {
+      "hour": 0,
+      "actions": 284
+    },
+    {
       "hour": 19,
       "actions": 278
     },
@@ -52,57 +56,53 @@
       "actions": 270
     },
     {
-      "hour": 0,
-      "actions": 267
-    },
-    {
       "hour": 21,
-      "actions": 259
+      "actions": 258
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1791
+      "count": 1824
     },
     {
       "topic": "IA",
-      "count": 1778
+      "count": 1781
     },
     {
       "topic": "Bourse",
-      "count": 685
+      "count": 680
     },
     {
       "topic": "Crypto",
-      "count": 635
+      "count": 649
     },
     {
       "topic": "Spatial",
-      "count": 526
+      "count": 496
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "other",
-      "count": 1854
+      "count": 1857
     },
     {
       "pillar": "ai_news_take",
-      "count": 1529
+      "count": 1533
     },
     {
       "pillar": "market_trauma",
-      "count": 1111
+      "count": 1118
     },
     {
       "pillar": "meme_reaction",
-      "count": 131
+      "count": 135
     },
     {
       "pillar": "reply_bait",
-      "count": 109
+      "count": 113
     },
     {
       "pillar": "ai_vs_btc",
@@ -112,56 +112,56 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 437
+      "count": 322
     },
     {
       "pillar": "other",
-      "count": 334
+      "count": 258
     },
     {
       "pillar": "market_trauma",
-      "count": 325
+      "count": 250
     },
     {
       "pillar": "meme_reaction",
-      "count": 56
+      "count": 36
     },
     {
       "pillar": "reply_bait",
-      "count": 26
+      "count": 17
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 14,
-      "avg_likes": 27.79,
-      "avg_views": 34272.1,
+      "posts": 15,
+      "avg_likes": 25.93,
+      "avg_views": 31989.3,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 33,
+      "avg_likes": 9.39,
+      "avg_views": 29647.7,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 1,
-      "avg_likes": 14.0,
-      "avg_views": 14000.0,
-      "low_sample": true
-    },
-    {
-      "pillar": "other",
-      "posts": 35,
-      "avg_likes": 8.91,
-      "avg_views": 27960.3,
+      "posts": 3,
+      "avg_likes": 4.67,
+      "avg_views": 4705.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 22,
-      "avg_likes": 1.27,
-      "avg_views": 1615.2,
+      "posts": 17,
+      "avg_likes": 0.88,
+      "avg_views": 1445.4,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3521
+      "count": 3568
     },
     {
       "type": "retweet",
-      "count": 566
+      "count": 534
     },
     {
       "type": "quote",
-      "count": 323
+      "count": 331
     },
     {
       "type": "hotake",
-      "count": 233
+      "count": 228
     },
     {
       "type": "quote_gif",
-      "count": 128
+      "count": 132
     },
     {
       "type": "post",
@@ -200,19 +200,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-07T21:32:56.066481",
-      "text": "Circuit breaker caught 8%. Stops the cascade. You panic anyway. Knowing the policy exists doesn't stop fear.",
+      "ts": "2026-06-08T01:33:21.446051",
+      "text": "NVDA tomorrow isn't chaos. it's the answer to: do hyperscalers keep buying inference chips? one call and you get your candlestick.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-07T21:32:00.701931",
-      "text": "51% is modest by cycles. But it still needs 104% back. Knowing it worked before doesn't shorten the wait. Math is patient. You aren't.",
+      "ts": "2026-06-08T01:30:12.984972",
+      "text": "Jensen announces nvidia has customers. market relieved. stock flat. you're waiting for reassurance, not news. call it what it is.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-07T21:31:24.976988",
-      "text": "Pentagon trusts your code. NSA steals with it. Your AI isn't a startup; it's a double agent 🛋️",
-      "type": "quote"
+      "ts": "2026-06-08T01:27:14.702515",
+      "text": "$10k dev, once. $10k/mo swarm + whoever's fixing what it breaks = you haven't replaced hiring, you've just renamed it.",
+      "type": "reply"
     }
   ]
 }
