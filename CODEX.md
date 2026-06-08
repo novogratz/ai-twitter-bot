@@ -222,6 +222,44 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-08 — GIF post/quote double-log fix (the bandit data was lying about market_trauma)
+
+Engagement-log audit found EVERY GIF hot take and EVERY GIF quote wrote TWO
+rows: the chokepoint (`twitter_client.post_tweet_with_gif` /
+`quote_tweet_with_gif`) writes one row (`action_type='post'`/`'quote_gif'`,
+`source='GIF/<q>'`, pillar=meme_reaction), and the caller (`bot.py` for
+hot takes, `quote_tweet_bot.py` for quotes) UNCONDITIONALLY wrote a second
+(`action_type='hotake'`/`'quote'`, no source, pillar from content).
+
+One ship → two rows → two pillars credited, two action counts inflated.
+Live witness on 2026-06-08T05:39:31 (the SoftBank hot take with GIF):
+`engagement_log.csv` has the same tweet at `.858503` (post + GIF/) and
+`.860655` (hotake + market_trauma). The very same metric this duplicate
+contaminated — `pillar_engagement_30d` market_trauma avg-likes — is what
+drove the autonomous 2026-06-08 mandate pivot ("market_trauma = 25.93
+vs ai_news_take = 0.88, 29x gap"). The 29x is real (GIF dups inflate ALL
+pillars equally for hotakes), but the per-action breakdown was wrong:
+hotake counts under-counted, post counts over-counted.
+
+Fix: gate the caller-side log on the GIF flag. `bot.py:661-672` skips
+`log_hotake`/`log_post` when `gif_query` is set; `quote_tweet_bot.py:638-647`
+skips `log_reply` when `_gif_q` is set. Same contract as `viral_stunt_bot`
+(line 163 comment: "logs itself with source=GIF/<q>").
+
+Guards (5 new tests, `tests/test_guards.py`):
+`test_bot_gif_hotake_logs_once_not_twice` (real engagement_log path),
+`test_bot_no_gif_text_only_hotake_still_logs` (inverse: no-GIF still logs),
+`test_quote_tweet_gif_logs_once_not_twice`,
+`test_bot_gif_dup_guard_present_in_source`,
+`test_quote_tweet_gif_dup_guard_present_in_source` (structural pins).
+
+Lesson — chokepoint A/B-tag side effects must be opt-in, not silent.
+`post_tweet_with_gif` started logging in 2026-06-05 PM ("A/B tag GIF vs
+text-only") without auditing the callers, and bot.py + quote_tweet_bot.py
+were already logging. Three other callers (btc_blitz, feed_sweeper,
+retweet_bot) currently RELY on the chokepoint to log their GIF quotes
+(non-GIF quotes go unlogged entirely) — separate gap, fixed in a follow-up.
+
 ### 2026-06-08 — experimental AI lanes (operator: "try new things... AI crypto stocks investment, focus on AI primarily")
 
 Operator framing (paraphrasing his own voice example): adding 120 tools is
