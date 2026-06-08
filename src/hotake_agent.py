@@ -897,7 +897,7 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
 
     # Extract model text from --output-format json envelope
     tweet = unwrap_text(result.stdout)
-    if not tweet or tweet.upper() == "SKIP":
+    if not tweet or tweet.upper().startswith("SKIP"):
         return None
 
     # 2026-05-06: strip any rationale prose the agent leaked BEFORE the
@@ -906,7 +906,7 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     # one combined post.
     from .humanizer import strip_agent_preamble
     tweet = strip_agent_preamble(tweet)
-    if not tweet or tweet.upper() == "SKIP":
+    if not tweet or tweet.upper().startswith("SKIP"):
         return None
 
     # Defense against skip-rationale leaks (bug 2026-04-30 PM: quote-tweet

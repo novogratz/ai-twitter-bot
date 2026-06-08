@@ -887,8 +887,10 @@ def _reply_after_repost(pick: dict, replied: set) -> None:
         from .pattern_tags import extract_pattern as _extract_pattern
         reply, _pid = _extract_pattern(reply)
         reply = humanize(reply)
-        reply_to_tweet(url, reply)
+        shipped = reply_to_tweet(url, reply)
         replied.add(url)
+        if not shipped:
+            return  # chokepoint skip — nothing posted, no phantom log
         try:
             _log_reply(url, reply, action_type="reply", source="RETWEET_REPLY")
         except Exception:

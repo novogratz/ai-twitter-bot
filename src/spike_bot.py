@@ -151,8 +151,7 @@ def _orchestrate_spike(post: dict, history: set):
     # 3. In-thread follow-up extending the punchline.
     try:
         followup = _generate_spike_followup(text, likes)
-        if followup:
-            reply_to_tweet_in_thread(url, followup)
+        if followup and reply_to_tweet_in_thread(url, followup):
             log.info(f"[SPIKE] in-thread follow-up posted: {followup!r}")
             try:
                 log_reply(

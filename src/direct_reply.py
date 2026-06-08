@@ -17,6 +17,10 @@ from .engagement_log import log_reply
 from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
 
 _OWN_HANDLE = BOT_HANDLE.lower()
+# Parents who ALWAYS get French replies, whatever the language detector
+# says about one short post (operator 2026-06-07).
+_FR_FORCED_HANDLES = {h.strip().lstrip("@").lower() for h in os.environ.get(
+    "FR_FORCED_REPLY_HANDLES", "Graphseo").split(",") if h.strip()}
 _LLM_RATE_LIMITED = object()
 FAVORITE_REPOSTS_PER_CYCLE = int(os.environ.get("FAVORITE_REPOSTS_PER_CYCLE", "6"))
 FAVORITE_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FAVORITE_REPOST_MIN_ENGAGEMENT", "2"))
@@ -149,38 +153,51 @@ SEARCH_QUERIES = [
     # want their FRESH posts before they trend, freshness sort does the rest.
     "from:TheBTCTherapist OR from:morganhousel OR from:ParikPatelCFA OR from:litcapital min_faves:5",
     "from:greg16676935420 OR from:ReformedBroker OR from:jasonzweigwsj OR from:saylor min_faves:5",
-    # ===== INVESTOR PSYCHOLOGY — the home turf (market-trauma pillar) =====
-    "\"panic sold\" OR \"panic selling\" OR \"bought the top\" OR \"sold the bottom\" lang:en min_faves:30",
-    "\"portfolio is down\" OR \"red day\" OR drawdown OR \"bag holder\" OR bagholding lang:en min_faves:30",
-    "FOMO OR copium OR hopium OR \"diamond hands\" OR \"paper hands\" lang:en min_faves:50",
-    "\"trading psychology\" OR \"investor psychology\" OR \"behavioral finance\" OR \"risk management\" lang:en min_faves:20",
-    # ===== AI — labs / models / agents =====
+    # ===== AI FIRST (operator 2026-06-07: "bot needs to be more AI
+    # focused" — the identity is sharpest-in-the-room ON AI; psychology is
+    # the VOICE, AI is the LANE). 8 of 14 topic queries are AI. =====
+    # --- AI labs / models / agents ---
     "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:50",
     "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
     "\"AI agents\" OR \"agentic AI\" OR \"reasoning model\" OR AGI lang:en min_faves:30",
-    # ===== AI — compute / chips / the money angle =====
+    "\"Claude Code\" OR Cursor OR Copilot OR \"AI coding\" lang:en min_faves:30",
+    "Meta AI OR \"Apple Intelligence\" OR Microsoft Copilot OR \"Amazon AI\" OR Tesla AI lang:en min_faves:50",
+    # --- AI compute / chips / the money angle ---
     "Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR \"AI capex\" lang:en min_faves:50",
+    "TSMC OR AMD OR Broadcom OR \"AI chips\" OR \"AI power\" OR \"AI energy\" lang:en min_faves:30",
     "Palantir OR \"AI stock\" OR \"AI bubble\" OR \"AI valuation\" lang:en min_faves:50",
-    "\"AI startup\" OR \"AI funding\" OR \"AI layoffs\" OR \"AI jobs\" lang:en min_faves:30",
-    # ===== MARKETS / MACRO =====
-    "\"tech earnings\" OR \"S&P 500\" OR Nasdaq OR \"market crash\" lang:en min_faves:50",
-    "Fed OR CPI OR \"rate cut\" OR \"interest rates\" OR macro lang:en min_faves:50",
-    # ===== BITCOIN / CRYPTO (the AI-vs-BTC feud lane) =====
-    "Bitcoin OR BTC OR \"BTC ETF\" OR crypto lang:en min_faves:100",
-    "\"Bitcoin crash\" OR \"crypto crash\" OR \"crypto bubble\" OR \"BTC dump\" lang:en min_faves:30",
+    "\"AI startup\" OR \"AI funding\" OR \"AI layoffs\" OR \"AI jobs\" OR \"open source AI\" OR DeepSeek lang:en min_faves:30",
+    # ===== INVESTOR PSYCHOLOGY — the VOICE (not the topic). Trimmed 3→1
+    # (operator "focus more on AI"): the therapist voice still frames every
+    # AI reply; this one query keeps the proven market-trauma reply targets. =====
+    "\"panic sold\" OR \"bought the top\" OR \"portfolio is down\" OR drawdown lang:en min_faves:30",
+    # ===== BITCOIN (one query — the AI-vs-BTC feud lane only) =====
+    "Bitcoin OR BTC OR \"crypto crash\" OR \"BTC ETF\" lang:en min_faves:100",
+    # ===== AI-INVESTING THESIS 2026-06-08 (operator: "AI crypto stocks
+    # investment, focus on AI primarily" + "focus more"). The account is an
+    # AI-as-investing-theme account — NOT indie-builder/build-in-public.
+    # Pruned the AI-tools/vibe-coding/founder lane (off-thesis drift); kept
+    # the AI-crypto + AI-stocks lanes. Tagged via source so conversion is
+    # measurable. =====
+    # AI stocks / the AI trade (investment pillar, AI lens) — the core
+    "Nvidia OR Palantir OR \"AI trade\" OR \"AI capex\" OR \"AI datacenter\" earnings lang:en min_faves:100",
+    # AI-crypto crossover (crypto pillar, AI lens)
+    "\"AI crypto\" OR \"AI token\" OR \"decentralized AI\" OR \"AI agents\" crypto lang:en min_faves:50",
     # ===== FR tail (one query — replies match parent language) =====
     "IA OR ChatGPT OR Mistral OR \"intelligence artificielle\" lang:fr min_faves:25",
 ]
 
 HOT_TAB_QUERIES = [
-    # Breaking AI news EN (high min_faves = viral)
+    # Breaking AI news EN (high min_faves = viral) — AI-first (operator
+    # 2026-06-07): 5 of 7 hot queries are AI.
     "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500",
     "Nvidia OR \"AI datacenter\" OR \"AI capex\" lang:en min_faves:300",
     "\"AI agents\" OR \"reasoning model\" OR AGI lang:en min_faves:300",
     "Palantir OR \"AI stock\" OR \"AI bubble\" lang:en min_faves:300",
+    "ChatGPT OR Claude OR Gemini OR \"humanoid robot\" lang:en min_faves:500",
     # Breaking market emotion — panic is the therapist's house call
     "\"market crash\" OR \"sell off\" OR \"sell-off\" OR VIX lang:en min_faves:500",
-    # Breaking BTC/crypto
+    # Breaking BTC (feud lane)
     "Bitcoin OR \"BTC ETF\" OR crypto lang:en min_faves:300",
 ]
 
@@ -356,7 +373,7 @@ def _generate_graphseo_reply(tweet_text: str) -> str | None:
     if result.returncode != 0 or not result.stdout:
         return None
     text = unwrap_text(result.stdout).strip()
-    if not text or text.upper() == "SKIP":
+    if not text or text.upper().startswith("SKIP"):
         return None
     # Sentence-aware cap — a blind [:220] slice published a mid-sentence
     # reply on 2026-06-05 and got the account publicly called out as AI.
@@ -365,16 +382,21 @@ def _generate_graphseo_reply(tweet_text: str) -> str | None:
 
 
 def _run_graphseo_scan(replied: set) -> int:
-    """Scan VIP FR accounts via search and reply to recent posts.
+    """Scan VIP friend accounts via search and reply to recent posts.
 
-    Operator 2026-06-06: Graphseo (Julien Flot), XFenaux, RodolpheSteffan,
-    and FinTales_ all get their own dedicated scan — no profile page visits.
+    Operator 2026-06-07: "reply to everything graphseo and thebtctherapist
+    post" — the VIP lane is exactly those two (supersedes the 2026-06-06
+    four-handle FR list: XFenaux/RodolpheSteffan/FinTales_ cost ~3 min of
+    serialized Safari per cycle and converted to zero on the EN persona).
+    Each handle is a cheap `from:` search, no profile visit; the 6h
+    btc_blitz converges full coverage, this lane keeps pickup fast.
     """
     from .twitter_client import scrape_x_search, reply_to_tweet
     from .reply_bot import _tweet_age_minutes
     from .engagement_log import log_reply
 
-    VIP_SCAN_HANDLES = ["Graphseo", "XFenaux", "RodolpheSteffan", "FinTales_"]
+    VIP_SCAN_HANDLES = [h.strip().lstrip("@") for h in os.environ.get(
+        "VIP_SCAN_HANDLES", "Graphseo,TheBTCTherapist").split(",") if h.strip()]
     posted = 0
     for handle in VIP_SCAN_HANDLES:
         log.info(f"[VIP] Scanning @{handle} recent posts (search, no profile visit)...")
@@ -391,13 +413,29 @@ def _run_graphseo_scan(replied: set) -> int:
                 continue
             if _tweet_age_minutes(url) > 2880:
                 continue
-            reply = _generate_graphseo_reply(text)
+            # Per-handle persona (bug 2026-06-07: the Graphseo FR prompt —
+            # French + the deliberate-typo style — went to an ENGLISH
+            # @TheBTCTherapist post). Graphseo keeps his dedicated FR
+            # generator; every other VIP gets the bestie/buddy EN-or-match
+            # prompts from btc_blitz.
+            if handle.lower() == "graphseo":
+                reply = _generate_graphseo_reply(text)
+            else:
+                from .btc_blitz import (_gen, _BESTIE_REPLY_PROMPT,
+                                        _BUDDY_REPLY_PROMPT, BESTIE_HANDLE)
+                tpl = (_BESTIE_REPLY_PROMPT if handle.lower() == BESTIE_HANDLE.lower()
+                       else _BUDDY_REPLY_PROMPT)
+                reply = _gen(tpl, text, PRIORITY_REPLY_MODEL,
+                             f"VIP_REPLY/{handle}", author=handle)
             if not reply:
                 continue
+            reply = humanize(reply)  # em-dash strip + AI-artifact cleanup
             log.info(f"[VIP] Replying to @{handle} {url[:60]}: {reply[:80]}")
             try:
-                reply_to_tweet(url, reply)
+                shipped = reply_to_tweet(url, reply)
                 replied.add(url)
+                if not shipped:
+                    continue  # chokepoint skip — don't log a phantom reply
                 try:
                     log_reply(url, reply, action_type="reply", source=f"VIP/{handle}")
                 except Exception:
@@ -432,7 +470,11 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
         reply = unwrap_text(result.stdout)
         if not reply: return None
         if reply.startswith('"') and reply.endswith('"'): reply = reply[1:-1]
-        if reply.upper().strip() == "SKIP": return None
+        # SKIP as a PREFIX, not exact match — the model often appends its
+        # rationale ("SKIP. The tweet is incomplete...") and an exact-match
+        # check published the whole refusal as a live reply (2026-06-07,
+        # operator: "LOL BRO").
+        if reply.upper().strip().startswith("SKIP"): return None
         return reply
     except Exception: return None
 
@@ -528,36 +570,57 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             continue
         log.info(f"[{source_name}] Replying to @{author}...")
         _reply_lang = "fr" if source_name.startswith("PROFILE") else ("en" if is_en_tweet else "fr")
+        # FR-forced parents (operator 2026-06-07: "i saw some english on
+        # Julien response" — @Graphseo is French; short/ambiguous posts
+        # fooled the detector). Hard override, all sources.
+        if _handle_from_url(url) in _FR_FORCED_HANDLES:
+            _reply_lang = "fr"
         reply = _generate_single_reply(author, text, lang=_reply_lang)
         if not reply or reply is _LLM_RATE_LIMITED:
             continue
         from .pattern_tags import extract_pattern as _extract_pattern
         reply, _pattern_id = _extract_pattern(reply)
         reply = humanize(reply)
-        replied.add(url)
-        save_replied(replied)
+        # ⛔ NEVER premark the replied store here — the chokepoint in
+        # twitter_client.reply_to_tweet loads it and refuses anything already
+        # present. The 2026-04 "lock URL in BEFORE posting" premark made the
+        # chokepoint (added 2026-06-05) refuse 100% of this path's replies
+        # while log_reply kept recording phantoms. The chokepoint marks the
+        # store itself right before the Safari write.
+        replied.add(url)  # in-memory only: no same-cycle retry
         try:
-            reply_to_tweet(url, reply)
-            log_reply(url, reply, action_type="reply", source=source_name, pattern_id=_pattern_id or "")
-            posted += 1
-            if _reply_lang == "en" and en_counter: en_counter[0] += 1
-            # Spacing handled by action_guard (MIN_SECONDS_BETWEEN_REPLIES).
-            # No extra sleep here — don't double-throttle.
-        except Exception: traceback.print_exc()
+            shipped = reply_to_tweet(url, reply)
+        except Exception:
+            traceback.print_exc()
+            continue
+        if not shipped:
+            continue  # policy/content/dedup skip — nothing was posted
+        # Include the query (source_detail) in the tag so per-query
+        # conversion is measurable (2026-06-08: experimental lanes were
+        # firing but logged only "SEARCH-HOT" — the query was dropped, so
+        # "prune by measurement" was impossible). Cap the query so the CSV
+        # column stays sane.
+        _src = f"{source_name}/{source_detail[:60]}" if source_detail else source_name
+        log_reply(url, reply, action_type="reply", source=_src, pattern_id=_pattern_id or "")
+        posted += 1
+        if _reply_lang == "en" and en_counter: en_counter[0] += 1
+        # Spacing handled by action_guard (MIN_SECONDS_BETWEEN_REPLIES).
+        # No extra sleep here — don't double-throttle.
     return posted
 
-def run_direct_reply_cycle():
-    """Reply cycle — feed-first, no profile visits, no budget gate.
+def run_direct_reply_cycle(max_replies=None):
+    """Reply cycle — feed-first, no profile visits.
 
-    Order (operator 2026-06-06):
-      1. For You (home feed) — reply to every good on-niche post
-      2. Following feed      — same
-      3. Graphseo dedicated scan (he gets a reply every cycle, no profile visit)
-      4. Search on niche keywords — catch viral posts not yet on feed
-    No per-cycle budget cap. Individual jitter + LLM hourly limit + dedup gate volume.
+    `max_replies` (operator 2026-06-07): when set, the cycle STOPS after that
+    many replies and returns. Used by the STARTUP warmup — an unbounded
+    warmup looped all 21 queries replying to everything, ran 20+ min, and
+    BLOCKED main()'s scheduler.start() (and thus the AI-viral quote job)
+    from ever running (15:43 boot: zero quotes 20 min in, Safari 100%
+    reply-held). Steady-state job calls with None = unbounded.
     """
     replied = load_replied()
     total, en_counter = 0, [0]
+    remaining = max_replies  # None = unbounded
 
     # 1. VIP scan — Graphseo + friends via search (fast, no profile page)
     try:
@@ -573,21 +636,28 @@ def run_direct_reply_cycle():
     all_queries = SEARCH_QUERIES + HOT_TAB_QUERIES
     random.shuffle(all_queries)
     for query in all_queries:
+        if remaining is not None and remaining <= 0:
+            log.info(f"[DIRECT] Startup budget reached ({max_replies}) — yielding "
+                     f"Safari so the scheduler + quote lane can start.")
+            break
         try:
             tweets = scrape_x_search(query, max_tweets=25, tab="top")
             if tweets:
-                n = _reply_to_tweets(tweets, replied, "SEARCH-HOT", source_detail=query, en_counter=en_counter)
+                n = _reply_to_tweets(tweets, replied, "SEARCH-HOT", source_detail=query,
+                                     remaining=remaining, en_counter=en_counter)
                 total += n
+                if remaining is not None:
+                    remaining -= n
         except Exception:
             traceback.print_exc()
 
     save_replied(replied)
     log.info(f"[DIRECT] Posted {total} replies this cycle.")
 
-def safe_run_direct_reply_cycle():
+def safe_run_direct_reply_cycle(max_replies=None):
     from . import health
     try:
-        run_direct_reply_cycle()
+        run_direct_reply_cycle(max_replies=max_replies)
         health.record_success("direct_reply")
     except Exception:
         log.info("[DIRECT] Error during direct reply cycle:")

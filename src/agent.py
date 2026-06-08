@@ -2029,20 +2029,20 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
         return text
 
     tweet = _gen_one().strip()
-    if not tweet or tweet.upper() == "SKIP":
+    if not tweet or tweet.upper().startswith("SKIP"):
         reason = globals().get("_last_generation_skip_reason") or "SKIP/empty"
         log.info(f"[NEWS] SKIP/empty — bailing ({reason}).")
         return None
 
     if not tweet:
         raise RuntimeError("Claude CLI returned empty output.")
-    if tweet.upper() == "SKIP":
+    if tweet.upper().startswith("SKIP"):
         return None
     # 2026-05-06: strip any rationale prose the agent leaked BEFORE the
     # actual tweet (e.g. "Parfait. Source X (≤36h)... ---\n<actual tweet>").
     from .humanizer import strip_agent_preamble
     tweet = strip_agent_preamble(tweet)
-    if not tweet or tweet.upper() == "SKIP":
+    if not tweet or tweet.upper().startswith("SKIP"):
         return None
     # 2026-05-22 PM: Strip Claude WebSearch "Sources: [title](url) ..."
     # preamble lines BEFORE doing the header search. Otherwise the search

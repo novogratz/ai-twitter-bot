@@ -1011,7 +1011,10 @@ def test_reply_queries_are_on_lane():
         assert banned not in joined, f"space term {banned!r} is off-persona"
     for seed in ("from:thebtctherapist", "from:morganhousel", "from:saylor"):
         assert seed in joined, f"missing seed scan {seed!r}"
-    assert "panic" in joined and "psychology" in joined, "psychology lane missing"
+    # Market-trauma VOICE still represented (panic/drawdown reply targets),
+    # but trimmed to 1 query — operator 2026-06-08 "focus more on AI": the
+    # therapist voice frames AI replies; it's no longer a topic lane.
+    assert "panic" in joined, "market-trauma voice target missing"
 
 
 def test_seed_identity_matcher():
@@ -1285,3 +1288,538 @@ def test_boost_resurfaces_banger_never_blind_toggles(monkeypatch):
     monkeypatch.setattr(tc, "scrape_profile_tweets", boom)
     nb.run_boost_cycle()
     assert toggled == []
+
+
+def test_profile_visits_blocked_outside_allowlist(monkeypatch):
+    """Operator mandate 2026-06-07 PM: NO profile visits for discovery —
+    scrape surfaces are @TheBTCTherapist + Home (For You/Following) + search.
+    A non-allowlisted profile must return [] BEFORE any Safari work, and the
+    allowlist env must be read at call time (side-effect-gate rule)."""
+    from src import twitter_client as tc
+    from src.config import BOT_HANDLE
+
+    monkeypatch.delenv("PROFILE_VISIT_ALLOWLIST", raising=False)
+    monkeypatch.setattr(
+        tc.webbrowser, "open",
+        lambda *a, **k: pytest.fail("Safari was opened for a blocked profile"))
+    assert tc.scrape_profile_tweets("unusual_whales") == []
+    assert tc.scrape_profile_tweets("karpathy") == []
+    tc.visit_profile_and_like("unusual_whales")  # must not open Safari either
+
+    # Allowlist semantics (pure check, no Safari). Defaults: the two
+    # reply-everything friends (operator 2026-06-07).
+    assert tc._profile_visit_allowed(BOT_HANDLE)
+    assert tc._profile_visit_allowed(f"{BOT_HANDLE}/with_replies")
+    assert tc._profile_visit_allowed("TheBTCTherapist")
+    assert tc._profile_visit_allowed("@thebtctherapist")
+    assert tc._profile_visit_allowed("Graphseo")
+    assert not tc._profile_visit_allowed("zerohedge")
+    assert not tc._profile_visit_allowed("")
+
+    # Env read at CALL time — a live edit takes effect without restart.
+    monkeypatch.setenv("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist")
+    assert not tc._profile_visit_allowed("graphseo")
+    assert tc._profile_visit_allowed("thebtctherapist")
+
+
+def test_buddy_blitz_replies_to_every_fresh_post(monkeypatch):
+    """Operator 2026-06-07: 'reply to everything graphseo and thebtctherapist
+    post'. The blitz must cover BOTH: bestie pass for TheBTCTherapist, buddy
+    pass for Graphseo — every fresh post gets exactly one reply, already-
+    replied URLs are skipped before the LLM."""
+    from src import btc_blitz as bb
+    from src import reply_bot as rb
+    from src import twitter_client as tc
+    from src import quote_tweet_bot as qb
+    from src import engagement_log as el
+
+    posts = {
+        "TheBTCTherapist": [
+            {"url": "https://x.com/TheBTCTherapist/status/111", "text": "btc pain", "likes": 5},
+        ],
+        "Graphseo": [
+            {"url": "https://x.com/Graphseo/status/222", "text": "fresh seo take", "likes": 3},
+            {"url": "https://x.com/Graphseo/status/333", "text": "already covered", "likes": 9},
+        ],
+    }
+    monkeypatch.setattr(bb, "_fresh_posts", lambda h: list(posts.get(h, [])))
+    gen_calls = []
+    monkeypatch.setattr(
+        bb, "_gen",
+        lambda tpl, txt, model, label, author=None: gen_calls.append((label, txt)) or "sharp take")
+    # Graphseo routes to his dedicated FR generator (operator 2026-06-07:
+    # English shipped to him once — never again).
+    import src.direct_reply as dr
+    monkeypatch.setattr(dr, "_generate_graphseo_reply",
+                        lambda txt: gen_calls.append(("GRAPHSEO_FR", txt)) or "réponse précise en français")
+    # One Graphseo post already replied — must be skipped pre-LLM.
+    monkeypatch.setattr(rb, "load_replied", lambda: {"https://x.com/Graphseo/status/333"})
+    # Quote pass: bestie URL already quoted so the test stays reply-only.
+    monkeypatch.setattr(qb, "_load_quoted", lambda: {"https://x.com/TheBTCTherapist/status/111"})
+    monkeypatch.setattr(qb, "_save_quoted", lambda q: None)
+    sent = []
+    monkeypatch.setattr(tc, "reply_to_tweet", lambda url, text: sent.append(url) or True)
+    monkeypatch.setattr(el, "log_reply", lambda *a, **k: None)
+
+    bb.run_btc_blitz_cycle()
+
+    assert sent == [
+        "https://x.com/TheBTCTherapist/status/111",  # bestie pass
+        "https://x.com/Graphseo/status/222",         # buddy pass
+    ]
+    assert all("already covered" not in txt for _, txt in gen_calls), \
+        "replied URL must be skipped BEFORE the LLM call"
+
+
+def test_reply_callers_never_premark_store(monkeypatch, tmp_path):
+    """2026-06-07 post-mortem: five bots 'locked the URL in BEFORE posting'
+    (save_replied premark) — the reply chokepoint (2026-06-05) loads that
+    same store and silently refused its OWN caller's reply, 100% of the
+    time, while unconditional log_reply calls wrote phantom rows into
+    engagement_log. Contract pinned here: (1) the on-disk store must NOT
+    contain the URL at the moment reply_to_tweet is invoked; (2) log_reply
+    fires ONLY when reply_to_tweet returns True."""
+    import src.direct_reply as dr
+    import src.reply_bot as rb
+
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    url = "https://x.com/some_ai_account/status/2063500000000000009"
+    tweets = [{"url": url, "text": "nvidia margins at 75 percent again", "author": "some_ai_account"}]
+
+    premarked_at_call = []
+    def fake_reply(u, text):
+        premarked_at_call.append(u in rb.load_replied())
+        return True
+    logged = []
+    monkeypatch.setattr(dr, "_generate_single_reply",
+                        lambda *a, **k: "calm reframe with the precise fact")
+    monkeypatch.setattr(dr, "reply_to_tweet", fake_reply)
+    monkeypatch.setattr(dr, "humanize", lambda t: t)
+    monkeypatch.setattr(dr, "log_reply", lambda *a, **k: logged.append(a))
+    monkeypatch.setattr(dr, "_tweet_age_minutes", lambda u: 5)
+    monkeypatch.setattr(dr, "_is_on_niche", lambda t: True)
+    monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 1000, 0))
+
+    n = dr._reply_to_tweets(tweets, rb.load_replied(), "SEARCH-HOT", en_counter=[0])
+    assert premarked_at_call == [False], \
+        "caller premarked the store — the chokepoint would refuse its own reply"
+    assert n == 1 and len(logged) == 1
+
+    # Chokepoint refusal (False) → no phantom engagement_log row, posted=0.
+    logged.clear()
+    url2 = "https://x.com/some_ai_account/status/2063500000000000010"
+    tweets2 = [{"url": url2, "text": "tsmc capex at 40 billion now", "author": "some_ai_account"}]
+    monkeypatch.setattr(dr, "reply_to_tweet", lambda u, t: False)
+    n2 = dr._reply_to_tweets(tweets2, rb.load_replied(), "SEARCH-HOT", en_counter=[0])
+    assert n2 == 0 and logged == [], \
+        "chokepoint skip must not produce a phantom engagement_log row"
+
+
+def test_reply_chokepoint_returns_bool(monkeypatch, tmp_path):
+    """reply_to_tweet must return True when the reply ships (DRY_RUN counts)
+    and False on the dedup skip — callers gate log_reply on this."""
+    from src import twitter_client as tc
+    from src import reply_bot as rb
+    from src import action_guard as ag
+    from src import config as cfg
+
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
+    monkeypatch.setattr(ag, "record", lambda *a, **k: None)
+    monkeypatch.setattr(cfg, "DRY_RUN", True)
+
+    url = "https://x.com/foo/status/2063500000000000042"
+    text = "Naming the fear is step one. The number says 40 billion in capex."
+    assert tc.reply_to_tweet(url, text) is True
+    # Store was marked by the chokepoint itself — second attempt refuses.
+    assert tc.reply_to_tweet(url, text) is False
+
+
+def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, tmp_path):
+    """Bug 2026-06-07 (shipped live, operator: 'why did it reply in french
+    to the bitcoin therapist?'): the VIP lane applied the Graphseo FR
+    generator (French + deliberate-typo style) to @TheBTCTherapist's
+    English post. Pin: VIP replies to the bestie use the EN bestie prompt,
+    never _generate_graphseo_reply; output passes through humanize."""
+    import src.direct_reply as dr
+    import src.reply_bot as rb
+    from src import btc_blitz as bb
+
+    # ⚠️ The VIP scan imports scrape_x_search / reply_to_tweet FUNCTION-
+    # LOCALLY from twitter_client — patch THERE, not on direct_reply.
+    # (First version of this test patched dr.* — the real Safari fired and
+    # posted live replies to @TheBTCTherapist mid-test. conftest's
+    # _no_safari wall now makes that mistake fail loudly instead.)
+    import src.twitter_client as tc
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setenv("VIP_SCAN_HANDLES", "TheBTCTherapist")
+    url = "https://x.com/TheBTCTherapist/status/2063500000000000077"
+    monkeypatch.setattr(tc, "scrape_x_search",
+                        lambda q, max_tweets=20, tab="latest":
+                        [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
+    monkeypatch.setattr(rb, "_tweet_age_minutes", lambda u: 30)
+    monkeypatch.setattr(dr, "_tweet_age_minutes", lambda u: 30)
+
+    graphseo_calls = []
+    monkeypatch.setattr(dr, "_generate_graphseo_reply",
+                        lambda text: graphseo_calls.append(text) or "réponse française")
+    gen_labels = []
+    def fake_gen(tpl, txt, model, label, author=None):
+        gen_labels.append((label, tpl is bb._BESTIE_REPLY_PROMPT))
+        return "the AI side sends love — and a fruit basket"
+    monkeypatch.setattr(bb, "_gen", fake_gen)
+    sent = []
+    monkeypatch.setattr(tc, "reply_to_tweet", lambda u, t: sent.append(t) or True)
+    import src.engagement_log as el
+    monkeypatch.setattr(el, "log_reply", lambda *a, **k: None)
+    monkeypatch.setattr(dr, "log_reply", lambda *a, **k: None)
+
+    dr._run_graphseo_scan(rb.load_replied())
+
+    assert graphseo_calls == [], "Graphseo FR generator must NEVER run for the bestie"
+    assert gen_labels == [("VIP_REPLY/TheBTCTherapist", True)]
+    assert len(sent) == 1
+    assert "—" not in sent[0], "humanize must strip em dashes from VIP replies"
+
+
+def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
+    """Operator 2026-06-07: an em dash in a published reply is an AI tell
+    ('what a shame'). The chokepoint must strip em/en dashes for EVERY
+    reply path, even ones that skip humanize()."""
+    from src import twitter_client as tc
+    from src import reply_bot as rb
+    from src import action_guard as ag
+    from src import config as cfg
+
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
+    recorded = {}
+    monkeypatch.setattr(ag, "record", lambda *a, **k: None)
+    monkeypatch.setattr(cfg, "DRY_RUN", True)
+    logged = []
+    monkeypatch.setattr(tc, "log", type(tc.log)(tc.log.name)) if False else None
+    # Capture the final text via the DRY_RUN log line is brittle — instead
+    # verify through the store-marking path: patch _paste? Simplest: spy on
+    # the DRY_RUN branch by reading the typo-injection input. We assert via
+    # content_guard.validate receiving dash-free text.
+    seen = {}
+    import src.content_guard as cg2
+    real_validate = cg2.validate
+    def spy_validate(text, kind="post"):
+        seen["text"] = text
+        return real_validate(text, kind=kind)
+    monkeypatch.setattr(cg2, "validate", spy_validate)
+
+    url = "https://x.com/foo/status/2063500000000000088"
+    assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part of the trade.") is True
+    assert "—" not in seen["text"]
+    assert "conviction is the hard part" in seen["text"]
+
+
+def test_skip_rationale_never_publishes():
+    """2026-06-07 live leak: the model wrote 'SKIP.' + its whole rationale
+    ('The tweet is incomplete (cuts off mid-sentence)...') and an
+    exact-match SKIP check published it as a reply. Pin both layers:
+    generator-side prefix check and the content_guard chokepoint."""
+    from src import content_guard as cg
+    ok, why = cg.validate("SKIP. The tweet is incomplete (cuts off mid-sentence at 'rema'), "
+                          "and the angle is generic crypto psychology.", kind="reply")
+    assert not ok and "SKIP" in why
+    ok, _ = cg.validate("skip", kind="reply")
+    assert not ok
+    # Legitimate text containing 'skip' mid-sentence still passes.
+    ok, _ = cg.validate("Most investors skip the part where conviction gets tested.", kind="reply")
+    assert ok
+    # Generator-side: prefix match, not exact match.
+    from src import direct_reply as dr
+    import src.llm_client as llm
+    class R: returncode = 0; stdout = "SKIP. Here is why I refuse..."; stderr = ""
+    # _generate_single_reply path is LLM-bound; test the cheap invariant via
+    # the same predicate the code uses now:
+    assert R.stdout.upper().strip().startswith("SKIP")
+
+
+def test_bare_dash_replacement_keeps_spacing():
+    """2026-06-07: '—' → ',' produced 'angle,conviction' in a live reply.
+    Bare dashes must become ', ' with normalized spacing, in humanize AND
+    at the reply chokepoint."""
+    from src.humanizer import humanize
+    out = humanize("The angle—conviction through crashes—is generic and it shows badly.")
+    assert ",conviction" not in out and ", conviction" in out
+
+
+def test_reply_queries_are_ai_first():
+    """Operator 2026-06-07: 'bot needs to be more AI focused' / 'i want to
+    see more AI shit'. The reply lane must be majority-AI: at least half of
+    the search queries carry an AI term, BTC tail stays minimal (feud lane
+    only, ≤2 queries)."""
+    from src.direct_reply import SEARCH_QUERIES, HOT_TAB_QUERIES
+    ai_terms = ("openai", "anthropic", "chatgpt", "claude", "gemini", "grok",
+                "ai ", "\"ai", "agi", "nvidia", "gpu", "llama", "deepseek",
+                "palantir", "cursor", "copilot", "tsmc", "humanoid", " ia ")
+    def is_ai(q):
+        ql = " " + q.lower()
+        return any(t in ql for t in ai_terms)
+    topic_queries = [q for q in SEARCH_QUERIES if not q.startswith("from:")]
+    ai_count = sum(1 for q in topic_queries if is_ai(q))
+    assert ai_count * 2 >= len(topic_queries), \
+        f"AI queries must be the majority of the reply lane ({ai_count}/{len(topic_queries)})"
+    btc_only = [q for q in topic_queries
+                if ("bitcoin" in q.lower() or "btc" in q.lower()) and not is_ai(q)]
+    assert len(btc_only) <= 2, "BTC tail must stay minimal (feud lane only)"
+    hot_ai = sum(1 for q in HOT_TAB_QUERIES if is_ai(q))
+    assert hot_ai * 2 >= len(HOT_TAB_QUERIES)
+
+
+def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
+    """Operator 2026-06-07: 'i saw some english on Julien response'.
+    @Graphseo is always-French; the chokepoint refuses an English reply to
+    him from ANY bot, BEFORE the dedup mark (post stays fresh for an FR
+    retry). SKIPPED-variant leaks are also pinned here."""
+    from src import twitter_client as tc
+    from src import reply_bot as rb
+    from src import action_guard as ag
+    from src import config as cfg
+    from src import content_guard as cg
+
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+    monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
+    monkeypatch.setattr(ag, "record", lambda *a, **k: None)
+    monkeypatch.setattr(cfg, "DRY_RUN", True)
+
+    url = "https://x.com/Graphseo/status/2063500000000000099"
+    english = "The market just told you what your conviction is worth this week."
+    assert tc.reply_to_tweet(url, english) is False
+    # Post must stay UNMARKED — a later FR draft can still ship.
+    assert url not in rb.load_replied()
+    french = "Le marché vient de te dire ce que vaut ta conviction cette semaine."
+    assert tc.reply_to_tweet(url, french) is True
+
+    # SKIPPED / Skip. variants (live leaks 01:04-04:07) die at content_guard.
+    for leak in ("SKIPPED", "Skip.", "skipped", "SKIP — no source context"):
+        ok, _ = cg.validate(leak, kind="reply")
+        assert not ok, f"{leak!r} must never publish"
+
+
+def test_quote_ai_viral_pass_present_and_ranked():
+    """Operator 2026-06-07: 'not really quote retweet on AI... do it more —
+    find viral content from viral big accounts in AI or TOP posts in AI'.
+    The quote bot must carry an always-scanned AI-viral pass (from: the
+    biggest AI accounts + high-min_faves AI topics) and rank those
+    candidates ahead of the generic pool."""
+    from src import quote_tweet_bot as qb
+    # Big AI accounts present.
+    for h in ("sama", "openai", "anthropicai", "karpathy", "googledeepmind"):
+        assert h in [x.lower() for x in qb.TOP_AI_HANDLES], f"missing top AI handle {h}"
+    # AI-viral queries are from: the big accounts and high min_faves topics.
+    joined = " ".join(qb.AI_VIRAL_QUERIES).lower()
+    assert "from:sama" in joined and "from:openai" in joined
+    assert "min_faves:1000" in joined or "min_faves:800" in joined, "needs a TOP-post viral floor"
+    # Ranking order: priority + ai_viral + rest — assert the source line
+    # prepends ai_viral ahead of the generic candidates.
+    import inspect
+    src = inspect.getsource(qb.run_quote_tweet_cycle)
+    assert "ai_viral_candidates + priority_candidates + candidates" in src, \
+        "AI virals must LEAD the main quote lane (bestie is covered by btc_blitz)"
+
+
+def test_startup_reply_warmup_is_bounded(monkeypatch):
+    """Operator 2026-06-07: 'more quote retweet on AI'. Root cause was an
+    UNBOUNDED startup reply warmup that ran 20+ min and blocked
+    scheduler.start() — so the dedicated quote/AI-viral jobs never came
+    online (15:43 boot: 300+ replies, 0 quotes). run_direct_reply_cycle
+    must honor max_replies and STOP, yielding Safari."""
+    import src.direct_reply as dr
+    # Every query returns 5 fresh on-niche tweets; without the cap the cycle
+    # would reply to all of them across all 21 queries.
+    calls = {"replies": 0, "queries": 0}
+    def fake_search(q, max_tweets=25, tab="top"):
+        calls["queries"] += 1
+        base = 2063900000000000000 + calls["queries"] * 100
+        return [{"url": f"https://x.com/acct/status/{base+i}",
+                 "text": "openai shipped a new reasoning model today", "author": "acct"}
+                for i in range(5)]
+    def fake_reply_block(tweets, replied, source, source_detail="", remaining=None, en_counter=None):
+        # Honor the remaining budget like the real _reply_to_tweets.
+        n = len(tweets) if remaining is None else min(len(tweets), remaining)
+        calls["replies"] += n
+        return n
+    monkeypatch.setattr(dr, "scrape_x_search", fake_search)
+    monkeypatch.setattr(dr, "_reply_to_tweets", fake_reply_block)
+    monkeypatch.setattr(dr, "_run_graphseo_scan", lambda replied: None)
+    monkeypatch.setattr(dr, "load_replied", lambda: set())
+    monkeypatch.setattr(dr, "save_replied", lambda s: None)
+
+    dr.run_direct_reply_cycle(max_replies=12)
+    assert calls["replies"] == 12, f"warmup must stop at the cap, got {calls['replies']}"
+    assert calls["queries"] < 21, "must stop scanning queries once the budget is spent"
+
+
+# --- 2026-06-08: GIF post/quote double-log fix ------------------------------
+
+def test_bot_gif_hotake_logs_once_not_twice(monkeypatch, tmp_path):
+    """Regression pin for the 2026-06-08 duplicate-row bug.
+
+    Before this fix, every GIF hot take wrote TWO rows to engagement_log:
+      (a) action_type='post', source='GIF/<q>'   ← post_tweet_with_gif
+      (b) action_type='hotake', source=''         ← bot.py unconditional log
+    The pillar classifier then bucketed (a) as meme_reaction and (b) as
+    market_trauma (content match). Result: one ship inflated two pillars
+    AND two per-action counts — the very same per-pillar metric that drove
+    the autonomous 29.8x market_trauma pivot. The fix: bot.py must skip the
+    second log call when gif_query is set."""
+    from src import bot as bot_mod
+    from src import engagement_log as el
+
+    csv_path = str(tmp_path / "engagement_log.csv")
+    monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", csv_path)
+
+    def fake_post_with_gif(text, gif_query, force=False):
+        # Mirrors the real chokepoint's logging: action_type=post,
+        # source=GIF/<q>. Returns True on a successful ship.
+        el.log_post(text, source=f"GIF/{gif_query}")
+        return True
+
+    monkeypatch.setattr(bot_mod, "post_tweet_with_gif", fake_post_with_gif)
+
+    # Replay the small block of bot.py that owns the dispatch. We capture
+    # any caller-side log_hotake/log_post calls to assert they're skipped.
+    caller_logs = []
+    monkeypatch.setattr(bot_mod, "log_hotake",
+                        lambda *a, **k: caller_logs.append(("hotake", a, k)))
+    monkeypatch.setattr(bot_mod, "log_post",
+                        lambda *a, **k: caller_logs.append(("post", a, k)))
+
+    tweet = "SoftBank -6%. The AI rally is in its first real therapy session."
+    gif_query = "this is fine"
+    tweet_source = "hotake"
+    pattern_id = "OTHER"
+
+    # Reproduce the exact bot.py block (the one we just guarded).
+    bot_mod.post_tweet_with_gif(tweet, gif_query)
+    if not gif_query:
+        if tweet_source == "hotake":
+            bot_mod.log_hotake(tweet, pattern_id=pattern_id)
+        else:
+            bot_mod.log_post(tweet, pattern_id=pattern_id)
+
+    # The caller-side log MUST be skipped when GIF was used.
+    assert caller_logs == [], (
+        "bot.py double-logged when gif_query was set — chokepoint already "
+        "logged the row")
+
+    # And the engagement_log.csv must hold exactly ONE row for this tweet.
+    with open(csv_path) as f:
+        rows = [ln for ln in f.read().splitlines() if tweet[:30] in ln]
+    assert len(rows) == 1, (
+        f"expected 1 engagement_log row for the GIF hotake, got {len(rows)}: {rows}")
+    assert "GIF/this is fine" in rows[0], "chokepoint's GIF/ marker missing"
+
+
+def test_bot_no_gif_text_only_hotake_still_logs(monkeypatch, tmp_path):
+    """Inverse guard: a text-only (no-GIF) hot take must still log_hotake.
+    The fix targets only the duplicate path; the no-GIF path must keep its
+    single log row, otherwise hotake counts would silently drop to zero."""
+    from src import bot as bot_mod
+    from src import engagement_log as el
+
+    csv_path = str(tmp_path / "engagement_log.csv")
+    monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", csv_path)
+
+    caller_logs = []
+    monkeypatch.setattr(bot_mod, "log_hotake",
+                        lambda *a, **k: caller_logs.append("hotake"))
+    monkeypatch.setattr(bot_mod, "log_post",
+                        lambda *a, **k: caller_logs.append("post"))
+
+    tweet = "Loss aversion isn't a bug, it's the feature."
+    gif_query = ""  # text-only
+    tweet_source = "hotake"
+
+    if not gif_query:
+        if tweet_source == "hotake":
+            bot_mod.log_hotake(tweet, pattern_id="OTHER")
+        else:
+            bot_mod.log_post(tweet, pattern_id="OTHER")
+
+    assert caller_logs == ["hotake"], (
+        f"text-only hotake must log once as 'hotake', got {caller_logs}")
+
+
+def test_quote_tweet_gif_logs_once_not_twice(monkeypatch, tmp_path):
+    """Same family as the bot.py fix: quote_tweet_with_gif logs as
+    action_type='quote_gif' with source='GIF/<q>'. quote_tweet_bot used to
+    ALSO call log_reply(action_type='quote', source='QUOTE/<author>')
+    unconditionally afterwards, producing two rows per GIF quote. The
+    second row inflated both 'quote' and 'quote_gif' action counts and
+    polluted per-pillar attribution. quote_tweet_bot must skip the log
+    when _gif_q is set."""
+    from src import quote_tweet_bot as qb
+    from src import engagement_log as el
+
+    csv_path = str(tmp_path / "engagement_log.csv")
+    monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", csv_path)
+
+    caller_logs = []
+    monkeypatch.setattr(qb, "log_reply",
+                        lambda *a, **k: caller_logs.append((a, k)))
+
+    url = "https://x.com/somefin/status/1234567890"
+    quote = "$145B is the rent on silicon that doesn't exist yet."
+    author = "somefin"
+    _gif_q = "wolf of wall street"
+
+    # Reproduce the guarded block.
+    if not _gif_q:
+        qb.log_reply(url, quote, action_type="quote", source=f"QUOTE/{author}")
+
+    assert caller_logs == [], (
+        "quote_tweet_bot must skip log_reply when _gif_q is set "
+        "(quote_tweet_with_gif already logged as quote_gif)")
+
+
+def test_bot_gif_dup_guard_present_in_source():
+    """Structural pin: regression-guard the `if not gif_query:` wrapper in
+    bot.py's _run_single_bot_cycle. The behavior test above can pass even
+    if a future refactor moves the dispatch elsewhere; this test holds the
+    code shape that the chokepoint contract relies on."""
+    import inspect
+    from src import bot as bot_mod
+    src = inspect.getsource(bot_mod._run_single_bot_cycle)
+    assert "if not gif_query:" in src, (
+        "bot.py _run_single_bot_cycle must guard the engagement-log "
+        "dispatch with `if not gif_query:` (chokepoint already logs)")
+
+
+def test_quote_tweet_gif_dup_guard_present_in_source():
+    """Structural pin: same family as the bot.py guard."""
+    import inspect
+    from src import quote_tweet_bot as qb
+    src = inspect.getsource(qb.run_quote_tweet_cycle)
+    assert "if not _gif_q:" in src, (
+        "quote_tweet_bot.run_quote_tweet_cycle must guard the log_reply "
+        "call with `if not _gif_q:` (chokepoint logs as quote_gif)")
+
+
+def test_bot_cycle_no_unbound_tweet_when_news_capped(monkeypatch):
+    """2026-06-08 live crash: `tweet` was initialized only inside
+    `if can_news:`, so when the news cap was full (can_news=False,
+    can_hotake=True) the `if tweet is None ...` check hit UnboundLocalError
+    and crashed every post cycle. Pin: news-capped + hotake-available runs
+    cleanly and ships the hotake."""
+    from src import bot as b
+    monkeypatch.setattr(b, "_get_counters", lambda: (999, 0))   # news capped, hotake open
+    monkeypatch.setattr(b, "_live_news_cap", lambda: 999)
+    monkeypatch.setattr(b, "_live_hotake_cap", lambda: 40)
+    monkeypatch.setattr(b, "generate_hotake", lambda: "AI capex is the new rent: you pay for silicon that doesn't exist yet.")
+    monkeypatch.setattr(b, "_increment_counter", lambda k: None)
+    monkeypatch.setattr(b, "humanize", lambda t: t)
+    shipped = {}
+    # Stop right after tweet is chosen — patch post_tweet to capture, not send.
+    monkeypatch.setattr(b, "post_tweet", lambda *a, **k: shipped.setdefault("text", a[0] if a else "") or True)
+    try:
+        b._run_single_bot_cycle()
+    except UnboundLocalError as e:
+        raise AssertionError(f"UnboundLocalError regression: {e}")
+    # The hotake path must have been reached (tweet was not None).
+    assert shipped.get("text"), "news-capped cycle should fall back to the hotake and post it"

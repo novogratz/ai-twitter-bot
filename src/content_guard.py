@@ -389,6 +389,16 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     if not text or not text.strip():
         return (False, "empty")
 
+    # SKIP-rationale leak (2026-06-07, shipped live: "SKIP. The tweet is
+    # incomplete (cuts off mid-sentence)... LOL BRO" — operator). Generators
+    # check for SKIP, but a model that appends its reasoning slipped past an
+    # exact-match check once; never let any text OPENING with SKIP publish.
+    # No word boundary: live leaks included "SKIPPED" and "Skip." — any
+    # text OPENING with skip* is a refusal, never content. (A legit lede
+    # starting with "Skipping..." is sacrificed; SKIP is free.)
+    if re.match(r"^[\s\"'«]*skip", text, re.IGNORECASE):
+        return (False, "SKIP-rationale leak (model refusal as content)")
+
     if BAN_SHORT_TERM_PRICE_TARGETS and has_near_term_price_target(text):
         return (False, "near-term price target (price + near-term timeframe)")
 

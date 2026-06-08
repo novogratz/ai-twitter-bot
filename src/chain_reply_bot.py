@@ -247,7 +247,8 @@ def run_chain_reply_cycle():
             _save_replied(replied)
 
             try:
-                reply_to_tweet(n_url, resp)
+                if not reply_to_tweet(n_url, resp):
+                    continue  # chokepoint skip — no phantom count/turn/log
                 posted += 1
                 turns[thread_id] = prior_turns + 1
                 _save_turns(turns)

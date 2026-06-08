@@ -7,8 +7,9 @@
     },
     "unusual_whales": {
       "replies": 2,
-      "weight": 1.0,
-      "last_ts": "2026-06-04T02:41:20.723778"
+      "weight": 1.5,
+      "last_ts": "2026-06-04T02:41:20.723778",
+      "conversions": 1
     },
     "branninmcbee": {
       "replies": 1,
@@ -164,6 +165,192 @@
       "replies": 0,
       "weight": 1.5,
       "conversions": 1
+    },
+    "thebtctherapist": {
+      "replies": 4,
+      "weight": 1.5,
+      "last_ts": "2026-06-08T12:01:51.431765",
+      "conversions": 1
+    },
+    "kalshi": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "polymarket": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "_maxblade": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "podcastalphax": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "mikelongterm": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "kimmonismus": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "barchart": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "mcnalliem": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "tesla_na": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "cyber_razz": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "sawyermerritt": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "defitracer": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "sam_badawi": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "semiconductorsx": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "0xlofty": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "coinvotrading": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "roundtablespace": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "hiarun02": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "healthranger": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "baroninvestment": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "mmatters22596": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "scaramucci": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "brianroemmele": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "bladeofthes": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "aerockrose": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "fintales_": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "benjamincowen": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "herbertong": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "deedydas": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "undefinedki": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "_investinq": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "boringbiz_": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "oranjebtc": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "xforceglobal": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "alexmasoncrypto": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "oguzerkan": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
     }
   },
   "targets": [
@@ -244,6 +431,30 @@
       "url": "https://x.com/bfmbusiness/status/2063470251161849866",
       "velocity": 3.3,
       "ts": "2026-06-07T03:54:33.346812"
+    },
+    {
+      "author": "thebtctherapist",
+      "url": "https://x.com/TheBTCTherapist/status/2063739652238967124",
+      "velocity": 84.0,
+      "ts": "2026-06-07T17:58:59.852822"
+    },
+    {
+      "author": "thebtctherapist",
+      "url": "https://x.com/TheBTCTherapist/status/2063753192316235848",
+      "velocity": 72.0,
+      "ts": "2026-06-07T18:49:51.050407"
+    },
+    {
+      "author": "thebtctherapist",
+      "url": "https://x.com/TheBTCTherapist/status/2063976690569593179",
+      "velocity": 72.0,
+      "ts": "2026-06-08T09:41:18.221713"
+    },
+    {
+      "author": "thebtctherapist",
+      "url": "https://x.com/TheBTCTherapist/status/2064013698335719656",
+      "velocity": 72.0,
+      "ts": "2026-06-08T12:01:51.431806"
     }
   ]
 }

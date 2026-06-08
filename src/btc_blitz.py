@@ -32,6 +32,14 @@ BLITZ_MAX_AGE_MINUTES = 48 * 60  # ⛔ hard 48h rule — do not raise
 BLITZ_SCRAPE_DEPTH = int(os.environ.get("BLITZ_SCRAPE_DEPTH", "30"))
 BLITZ_MAX_QUOTES_PER_CYCLE = int(os.environ.get("BLITZ_MAX_QUOTES_PER_CYCLE", "2"))
 
+# Operator mandate 2026-06-07 PM: "reply to everything graphseo and
+# thebtctherapist post". Buddy handles get the reply-EVERY-post treatment
+# (no QRT bit — that inversion is BTCTherapist-specific). Their profiles
+# must be in twitter_client's PROFILE_VISIT_ALLOWLIST.
+def _buddy_handles() -> list:
+    raw = os.environ.get("BLITZ_BUDDY_HANDLES", "Graphseo")
+    return [h.strip().lstrip("@") for h in raw.split(",") if h.strip()]
+
 _BESTIE_REPLY_PROMPT = """You are @TheAIShrink — the AI Therapist. @{author} (The Bitcoin Therapist)
 is your BEST FRIEND and little brother in group practice. He treats Bitcoin
 trauma; you treat AI-era portfolios. You're replying to his post:
@@ -81,15 +89,34 @@ RULES:
 
 Output ONLY the quote text (+ optional [GIF: …] line), or exactly SKIP."""
 
+_BUDDY_REPLY_PROMPT = """You are @TheAIShrink — the AI Therapist (AI x markets x investor psychology,
+sharpest-in-the-room numbers, deadpan warmth). @{author} is a FRIEND of the
+account — you reply to EVERYTHING he posts, like a sharp regular in his
+comments. You're replying to his post:
 
-def _fresh_bestie_posts():
-    """His posts ≤48h, own-authored, sorted most-liked first."""
+"{tweet_text}"
+
+RULES:
+- MATCH THE LANGUAGE of his post (French post → French reply, English →
+  English).
+- Warm + sharp: add a precise observation, a therapist-deadpan reframe, or
+  a genuinely useful number — never generic praise, never "great post".
+- 80-200 chars. First 6 words must hook. One idea. No hashtags, no links,
+  no @ other accounts.
+- He must want to like or answer it.
+- If the post gives you NOTHING (pure retweet, image-only, giveaway) → SKIP.
+
+Output ONLY the reply text, or exactly SKIP."""
+
+
+def _fresh_posts(handle: str):
+    """A handle's posts ≤48h, own-authored, sorted most-liked first."""
     from .twitter_client import scrape_profile_tweets
     from .reply_bot import _tweet_age_minutes, _handle_from_url
     try:
-        tweets = scrape_profile_tweets(BESTIE_HANDLE, max_tweets=BLITZ_SCRAPE_DEPTH) or []
+        tweets = scrape_profile_tweets(handle, max_tweets=BLITZ_SCRAPE_DEPTH) or []
     except Exception:
-        log.info("[BTC-BLITZ] profile scrape failed:")
+        log.info(f"[BTC-BLITZ] profile scrape failed for @{handle}:")
         traceback.print_exc()
         return []
     fresh = []
@@ -97,8 +124,8 @@ def _fresh_bestie_posts():
         url = t.get("url") or ""
         if not url:
             continue
-        if _handle_from_url(url) != BESTIE_HANDLE.lower():
-            continue  # a repost of someone else on his profile
+        if _handle_from_url(url) != handle.lower():
+            continue  # a repost of someone else on their profile
         if _tweet_age_minutes(url) > BLITZ_MAX_AGE_MINUTES:
             continue
         fresh.append(t)
@@ -106,8 +133,12 @@ def _fresh_bestie_posts():
     return fresh
 
 
-def _gen(prompt_tpl: str, tweet_text: str, model: str, label: str):
-    prompt = prompt_tpl.format(author=BESTIE_HANDLE, tweet_text=(tweet_text or "")[:300])
+def _fresh_bestie_posts():
+    return _fresh_posts(BESTIE_HANDLE)
+
+
+def _gen(prompt_tpl: str, tweet_text: str, model: str, label: str, author: str = None):
+    prompt = prompt_tpl.format(author=author or BESTIE_HANDLE, tweet_text=(tweet_text or "")[:300])
     try:
         result = run_llm(prompt, model, label=label)
         if result.returncode != 0:
@@ -123,10 +154,11 @@ def _gen(prompt_tpl: str, tweet_text: str, model: str, label: str):
 def run_btc_blitz_cycle() -> None:
     fresh = _fresh_bestie_posts()
     if not fresh:
+        # No early return — the buddy pass below must still run.
         log.info(f"[BTC-BLITZ] No fresh (≤48h) posts from @{BESTIE_HANDLE}.")
-        return
-    log.info(f"[BTC-BLITZ] {len(fresh)} fresh posts from @{BESTIE_HANDLE} "
-             f"(top: {fresh[0].get('likes')} likes).")
+    else:
+        log.info(f"[BTC-BLITZ] {len(fresh)} fresh posts from @{BESTIE_HANDLE} "
+                 f"(top: {fresh[0].get('likes')} likes).")
 
     # --- 1. QRT the most impactful (chokepoint caps + dedup gate volume) ---
     from .quote_tweet_bot import _load_quoted, _save_quoted
@@ -175,12 +207,43 @@ def run_btc_blitz_cycle() -> None:
             continue
         reply = smart_trim(humanize(reply), 278)
         try:
-            reply_to_tweet(url, reply)
-            log_reply(url, reply, action_type="reply", source="BTC-BLITZ")
-            replies_done += 1
+            if reply_to_tweet(url, reply):
+                log_reply(url, reply, action_type="reply", source="BTC-BLITZ")
+                replies_done += 1
         except Exception:
             traceback.print_exc()
-    log.info(f"[BTC-BLITZ] Done: {quotes_done} quotes, {replies_done} replies.")
+
+    # --- 3. Buddy handles: reply to EVERY fresh post (no QRT bit) ----------
+    # Operator 2026-06-07: "reply to everything graphseo and thebtctherapist
+    # post". Same idempotency: replied set + chokepoint dedup make re-runs
+    # free; Graphseo's one-typo rule is enforced at the reply chokepoint.
+    for buddy in _buddy_handles():
+        if buddy.lower() == BESTIE_HANDLE.lower():
+            continue  # already covered by the bestie pass above
+        for t in _fresh_posts(buddy):
+            url = t["url"]
+            if url in load_replied():
+                continue
+            if buddy.lower() == "graphseo":
+                # His dedicated FR generator — the buddy prompt's
+                # match-the-language rule shipped an English reply to a
+                # short FR post (operator 2026-06-07).
+                from .direct_reply import _generate_graphseo_reply
+                reply = _generate_graphseo_reply(t.get("text", ""))
+            else:
+                reply = _gen(_BUDDY_REPLY_PROMPT, t.get("text", ""), REPLY_MODEL,
+                             "BUDDY_BLITZ_REPLY", author=buddy)
+            if not reply:
+                continue
+            reply = smart_trim(humanize(reply), 278)
+            try:
+                if reply_to_tweet(url, reply):
+                    log_reply(url, reply, action_type="reply", source="BUDDY-BLITZ")
+                    replies_done += 1
+            except Exception:
+                traceback.print_exc()
+    log.info(f"[BTC-BLITZ] Done: {quotes_done} quotes, {replies_done} replies "
+             f"(bestie + buddies: {', '.join(_buddy_handles())}).")
 
 
 def safe_run_btc_blitz_cycle() -> None:
