@@ -1823,3 +1823,17 @@ def test_bot_cycle_no_unbound_tweet_when_news_capped(monkeypatch):
         raise AssertionError(f"UnboundLocalError regression: {e}")
     # The hotake path must have been reached (tweet was not None).
     assert shipped.get("text"), "news-capped cycle should fall back to the hotake and post it"
+
+
+def test_positive_only_subjects_in_hard_rules():
+    """Operator 2026-06-08: Apple / US government / Trump / Elon Musk must be
+    spoken of ONLY positively. The rule must live in the non-overridable
+    hard-rules block injected into every generation prompt."""
+    from src import personality_store as ps
+    block = ps.hard_rules_block()  # fresh render (incl. respect list)
+    low = block.lower()
+    for subj in ("apple", "us government", "trump", "elon musk"):
+        assert subj in low, f"positive-only subject {subj!r} missing from hard rules"
+    # Must instruct positive-only + override the snark voice.
+    assert "positive" in low and ("only" in low or "never criticize" in low)
+    assert "override" in low or "overrides" in low
