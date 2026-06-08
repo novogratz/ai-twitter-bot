@@ -14861,3 +14861,10 @@ it's hard for me to see even dem
 - **@forbes** (31 likes, score 7/10) — Meet Sonny. Inside the warehouse that made the sailcloth for the USS Constitution, this vaguely humanoid robot is part of an attempt at reinventing work. https://forbes.com/sites/johnkoetsier/2026/05/
   - https://x.com/Forbes/status/2063531577548951812
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 59).
+
+## 2026-06-08
+- **@calvinfroedge** (263 likes, score 9/10) — Always a good sign when Korea's second largest stock immediately crashes 8% upon announcing an Nvidia partnership 
+
+Literally Huang pumping and eating friend chicken isn't enough to stop the crash
+  - https://x.com/calvinfroedge/status/2063777153808777680
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 289).
