@@ -1799,3 +1799,27 @@ def test_quote_tweet_gif_dup_guard_present_in_source():
     assert "if not _gif_q:" in src, (
         "quote_tweet_bot.run_quote_tweet_cycle must guard the log_reply "
         "call with `if not _gif_q:` (chokepoint logs as quote_gif)")
+
+
+def test_bot_cycle_no_unbound_tweet_when_news_capped(monkeypatch):
+    """2026-06-08 live crash: `tweet` was initialized only inside
+    `if can_news:`, so when the news cap was full (can_news=False,
+    can_hotake=True) the `if tweet is None ...` check hit UnboundLocalError
+    and crashed every post cycle. Pin: news-capped + hotake-available runs
+    cleanly and ships the hotake."""
+    from src import bot as b
+    monkeypatch.setattr(b, "_get_counters", lambda: (999, 0))   # news capped, hotake open
+    monkeypatch.setattr(b, "_live_news_cap", lambda: 999)
+    monkeypatch.setattr(b, "_live_hotake_cap", lambda: 40)
+    monkeypatch.setattr(b, "generate_hotake", lambda: "AI capex is the new rent: you pay for silicon that doesn't exist yet.")
+    monkeypatch.setattr(b, "_increment_counter", lambda k: None)
+    monkeypatch.setattr(b, "humanize", lambda t: t)
+    shipped = {}
+    # Stop right after tweet is chosen — patch post_tweet to capture, not send.
+    monkeypatch.setattr(b, "post_tweet", lambda *a, **k: shipped.setdefault("text", a[0] if a else "") or True)
+    try:
+        b._run_single_bot_cycle()
+    except UnboundLocalError as e:
+        raise AssertionError(f"UnboundLocalError regression: {e}")
+    # The hotake path must have been reached (tweet was not None).
+    assert shipped.get("text"), "news-capped cycle should fall back to the hotake and post it"

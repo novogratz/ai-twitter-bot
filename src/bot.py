@@ -363,6 +363,11 @@ def _run_single_bot_cycle() -> bool:
         return False
 
     tweet_source = "news" if can_news else "hotake"
+    # Initialize BEFORE the branch (2026-06-08 bug): `tweet` was only set
+    # inside `if can_news:`, so when the news cap is full (can_news=False,
+    # can_hotake=True) line ~490 `if tweet is None ...` hit UnboundLocalError
+    # and crashed the whole post cycle every fire once news capped out.
+    tweet = None
 
     if can_news:
         # 2026-05-23 PM: Décode retry loop — user mandate "make sure URL is
@@ -371,7 +376,6 @@ def _run_single_bot_cycle() -> bool:
         # Between attempts, un-mark the topic in daily_topic_state and
         # un-increment the counter so we don't burn slots on rejected gens.
         from . import agent as _ag_mod
-        tweet = None
         last_tried_topic = None
         _ag_mod.__dict__["_temporary_rejected_terms"] = set()
         max_attempts = 5
