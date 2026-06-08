@@ -222,6 +222,25 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-08 — positive-only subjects + viral verification (operator: "make it more viral, push it and start it")
+
+**Positive-only hard rule:** Apple, the US government, Donald Trump, and
+Elon Musk (their companies/products/people — Tesla, SpaceX, X) get ONLY
+positive/admiring takes; reframe positively or SKIP. Lives in
+`personality_store._BASE_HARD_RULES` (the non-overridable HARD_RULES_BLOCK
+injected into every generation prompt), overrides the snark voice for these
+subjects. Guard: `test_positive_only_subjects_in_hard_rules`.
+
+**Viral engine — verified intact (no dead imports):** the measured
+view/like multipliers are all scheduled — `babysitter_job` (first-hour
+replies ~15x algo weight), `boost_recycler_job` + `boost_job` (self-RT
+winners, +200 views measured), `self_winners_job` (own-wins bank → prompts).
+QRT lane is AI-first (PM-16/18), market_trauma is the default original
+format (PM-9, 2.3x likes), reply volume converts to followers. The honest
+read: the virality machinery is complete; the lever is UPTIME (the
+self_winners bank only populates once the bot runs and posts earn
+engagement) + letting the LLM self-improve loop tune on live data. Resisted
+bolting on untested "viral" knobs (the operator's own FOMO-vs-signal point).
 ### 2026-06-08 — FOCUS: AI-primary (operator: "focus more on AI", "focus mr")
 
 The 2026-06-08 experimental sprawl drifted off-thesis. Operator clarified:
