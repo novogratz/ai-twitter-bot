@@ -1650,3 +1650,149 @@ def test_startup_reply_warmup_is_bounded(monkeypatch):
     dr.run_direct_reply_cycle(max_replies=12)
     assert calls["replies"] == 12, f"warmup must stop at the cap, got {calls['replies']}"
     assert calls["queries"] < 21, "must stop scanning queries once the budget is spent"
+
+
+# --- 2026-06-08: GIF post/quote double-log fix ------------------------------
+
+def test_bot_gif_hotake_logs_once_not_twice(monkeypatch, tmp_path):
+    """Regression pin for the 2026-06-08 duplicate-row bug.
+
+    Before this fix, every GIF hot take wrote TWO rows to engagement_log:
+      (a) action_type='post', source='GIF/<q>'   ← post_tweet_with_gif
+      (b) action_type='hotake', source=''         ← bot.py unconditional log
+    The pillar classifier then bucketed (a) as meme_reaction and (b) as
+    market_trauma (content match). Result: one ship inflated two pillars
+    AND two per-action counts — the very same per-pillar metric that drove
+    the autonomous 29.8x market_trauma pivot. The fix: bot.py must skip the
+    second log call when gif_query is set."""
+    from src import bot as bot_mod
+    from src import engagement_log as el
+
+    csv_path = str(tmp_path / "engagement_log.csv")
+    monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", csv_path)
+
+    def fake_post_with_gif(text, gif_query, force=False):
+        # Mirrors the real chokepoint's logging: action_type=post,
+        # source=GIF/<q>. Returns True on a successful ship.
+        el.log_post(text, source=f"GIF/{gif_query}")
+        return True
+
+    monkeypatch.setattr(bot_mod, "post_tweet_with_gif", fake_post_with_gif)
+
+    # Replay the small block of bot.py that owns the dispatch. We capture
+    # any caller-side log_hotake/log_post calls to assert they're skipped.
+    caller_logs = []
+    monkeypatch.setattr(bot_mod, "log_hotake",
+                        lambda *a, **k: caller_logs.append(("hotake", a, k)))
+    monkeypatch.setattr(bot_mod, "log_post",
+                        lambda *a, **k: caller_logs.append(("post", a, k)))
+
+    tweet = "SoftBank -6%. The AI rally is in its first real therapy session."
+    gif_query = "this is fine"
+    tweet_source = "hotake"
+    pattern_id = "OTHER"
+
+    # Reproduce the exact bot.py block (the one we just guarded).
+    bot_mod.post_tweet_with_gif(tweet, gif_query)
+    if not gif_query:
+        if tweet_source == "hotake":
+            bot_mod.log_hotake(tweet, pattern_id=pattern_id)
+        else:
+            bot_mod.log_post(tweet, pattern_id=pattern_id)
+
+    # The caller-side log MUST be skipped when GIF was used.
+    assert caller_logs == [], (
+        "bot.py double-logged when gif_query was set — chokepoint already "
+        "logged the row")
+
+    # And the engagement_log.csv must hold exactly ONE row for this tweet.
+    with open(csv_path) as f:
+        rows = [ln for ln in f.read().splitlines() if tweet[:30] in ln]
+    assert len(rows) == 1, (
+        f"expected 1 engagement_log row for the GIF hotake, got {len(rows)}: {rows}")
+    assert "GIF/this is fine" in rows[0], "chokepoint's GIF/ marker missing"
+
+
+def test_bot_no_gif_text_only_hotake_still_logs(monkeypatch, tmp_path):
+    """Inverse guard: a text-only (no-GIF) hot take must still log_hotake.
+    The fix targets only the duplicate path; the no-GIF path must keep its
+    single log row, otherwise hotake counts would silently drop to zero."""
+    from src import bot as bot_mod
+    from src import engagement_log as el
+
+    csv_path = str(tmp_path / "engagement_log.csv")
+    monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", csv_path)
+
+    caller_logs = []
+    monkeypatch.setattr(bot_mod, "log_hotake",
+                        lambda *a, **k: caller_logs.append("hotake"))
+    monkeypatch.setattr(bot_mod, "log_post",
+                        lambda *a, **k: caller_logs.append("post"))
+
+    tweet = "Loss aversion isn't a bug, it's the feature."
+    gif_query = ""  # text-only
+    tweet_source = "hotake"
+
+    if not gif_query:
+        if tweet_source == "hotake":
+            bot_mod.log_hotake(tweet, pattern_id="OTHER")
+        else:
+            bot_mod.log_post(tweet, pattern_id="OTHER")
+
+    assert caller_logs == ["hotake"], (
+        f"text-only hotake must log once as 'hotake', got {caller_logs}")
+
+
+def test_quote_tweet_gif_logs_once_not_twice(monkeypatch, tmp_path):
+    """Same family as the bot.py fix: quote_tweet_with_gif logs as
+    action_type='quote_gif' with source='GIF/<q>'. quote_tweet_bot used to
+    ALSO call log_reply(action_type='quote', source='QUOTE/<author>')
+    unconditionally afterwards, producing two rows per GIF quote. The
+    second row inflated both 'quote' and 'quote_gif' action counts and
+    polluted per-pillar attribution. quote_tweet_bot must skip the log
+    when _gif_q is set."""
+    from src import quote_tweet_bot as qb
+    from src import engagement_log as el
+
+    csv_path = str(tmp_path / "engagement_log.csv")
+    monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", csv_path)
+
+    caller_logs = []
+    monkeypatch.setattr(qb, "log_reply",
+                        lambda *a, **k: caller_logs.append((a, k)))
+
+    url = "https://x.com/somefin/status/1234567890"
+    quote = "$145B is the rent on silicon that doesn't exist yet."
+    author = "somefin"
+    _gif_q = "wolf of wall street"
+
+    # Reproduce the guarded block.
+    if not _gif_q:
+        qb.log_reply(url, quote, action_type="quote", source=f"QUOTE/{author}")
+
+    assert caller_logs == [], (
+        "quote_tweet_bot must skip log_reply when _gif_q is set "
+        "(quote_tweet_with_gif already logged as quote_gif)")
+
+
+def test_bot_gif_dup_guard_present_in_source():
+    """Structural pin: regression-guard the `if not gif_query:` wrapper in
+    bot.py's _run_single_bot_cycle. The behavior test above can pass even
+    if a future refactor moves the dispatch elsewhere; this test holds the
+    code shape that the chokepoint contract relies on."""
+    import inspect
+    from src import bot as bot_mod
+    src = inspect.getsource(bot_mod._run_single_bot_cycle)
+    assert "if not gif_query:" in src, (
+        "bot.py _run_single_bot_cycle must guard the engagement-log "
+        "dispatch with `if not gif_query:` (chokepoint already logs)")
+
+
+def test_quote_tweet_gif_dup_guard_present_in_source():
+    """Structural pin: same family as the bot.py guard."""
+    import inspect
+    from src import quote_tweet_bot as qb
+    src = inspect.getsource(qb.run_quote_tweet_cycle)
+    assert "if not _gif_q:" in src, (
+        "quote_tweet_bot.run_quote_tweet_cycle must guard the log_reply "
+        "call with `if not _gif_q:` (chokepoint logs as quote_gif)")

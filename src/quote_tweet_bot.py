@@ -637,10 +637,15 @@ def run_quote_tweet_cycle():
         quoted.add(url)
         _save_quoted(quoted)
         _increment_count()
-        try:
-            log_reply(url, quote, action_type="quote", source=f"QUOTE/{author}")
-        except Exception:
-            pass
+        # GIF quotes are already logged by quote_tweet_with_gif itself
+        # (action_type='quote_gif', source='GIF/<q>'). Same dup-row bug as
+        # the bot.py hotake-GIF path: two rows for one ship inflated
+        # quote/quote_gif action counts AND polluted per-pillar attribution.
+        if not _gif_q:
+            try:
+                log_reply(url, quote, action_type="quote", source=f"QUOTE/{author}")
+            except Exception:
+                pass
         time.sleep(random.randint(5, 12))
         log.info("[QUOTE] Quote posted.")
     except Exception:
