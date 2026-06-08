@@ -160,34 +160,29 @@ SEARCH_QUERIES = [
     "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:50",
     "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
     "\"AI agents\" OR \"agentic AI\" OR \"reasoning model\" OR AGI lang:en min_faves:30",
-    "\"Claude Code\" OR Cursor OR Copilot OR \"AI coding\" OR \"vibe coding\" lang:en min_faves:30",
+    "\"Claude Code\" OR Cursor OR Copilot OR \"AI coding\" lang:en min_faves:30",
+    "Meta AI OR \"Apple Intelligence\" OR Microsoft Copilot OR \"Amazon AI\" OR Tesla AI lang:en min_faves:50",
     # --- AI compute / chips / the money angle ---
     "Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR \"AI capex\" lang:en min_faves:50",
     "TSMC OR AMD OR Broadcom OR \"AI chips\" OR \"AI power\" OR \"AI energy\" lang:en min_faves:30",
     "Palantir OR \"AI stock\" OR \"AI bubble\" OR \"AI valuation\" lang:en min_faves:50",
     "\"AI startup\" OR \"AI funding\" OR \"AI layoffs\" OR \"AI jobs\" OR \"open source AI\" OR DeepSeek lang:en min_faves:30",
-    # ===== INVESTOR PSYCHOLOGY — the voice's home turf =====
-    "\"panic sold\" OR \"panic selling\" OR \"bought the top\" OR \"sold the bottom\" lang:en min_faves:30",
-    "\"portfolio is down\" OR \"red day\" OR drawdown OR \"bag holder\" OR bagholding lang:en min_faves:30",
-    "\"trading psychology\" OR \"investor psychology\" OR \"behavioral finance\" OR FOMO lang:en min_faves:30",
-    # ===== MARKETS / MACRO (one query — AI stocks already covered above) =====
-    "\"tech earnings\" OR Nasdaq OR \"market crash\" OR Fed OR \"rate cut\" lang:en min_faves:50",
+    # ===== INVESTOR PSYCHOLOGY — the VOICE (not the topic). Trimmed 3→1
+    # (operator "focus more on AI"): the therapist voice still frames every
+    # AI reply; this one query keeps the proven market-trauma reply targets. =====
+    "\"panic sold\" OR \"bought the top\" OR \"portfolio is down\" OR drawdown lang:en min_faves:30",
     # ===== BITCOIN (one query — the AI-vs-BTC feud lane only) =====
     "Bitcoin OR BTC OR \"crypto crash\" OR \"BTC ETF\" lang:en min_faves:100",
-    # ===== EXPERIMENTAL 2026-06-08 (operator: "try new things... AI crypto
-    # stocks investment, focus on AI primarily"; voice ref: the AI-tool
-    # overwhelm one-liner). New AI-first lanes spanning the 3 pillars —
-    # tagged via source_detail=query so the analyzer shows which convert;
-    # prune the losers after ~a day.
-    # AI builders/founders — tool overwhelm, shipping anxiety, "which tool"
-    "\"AI tools\" OR \"AI stack\" OR \"which AI\" OR \"vibe coding\" OR \"building with AI\" lang:en min_faves:50",
-    "\"AI agent\" OR \"my agent\" OR \"agent failed\" OR \"AI workflow\" OR \"AI wrapper\" lang:en min_faves:50",
-    # AI-crypto crossover (crypto pillar, AI lens)
-    "\"AI crypto\" OR \"AI token\" OR \"AI agents\" OR \"decentralized AI\" OR worldcoin lang:en min_faves:50",
-    # AI stocks / the AI trade (investment pillar, AI lens)
+    # ===== AI-INVESTING THESIS 2026-06-08 (operator: "AI crypto stocks
+    # investment, focus on AI primarily" + "focus more"). The account is an
+    # AI-as-investing-theme account — NOT indie-builder/build-in-public.
+    # Pruned the AI-tools/vibe-coding/founder lane (off-thesis drift); kept
+    # the AI-crypto + AI-stocks lanes. Tagged via source so conversion is
+    # measurable. =====
+    # AI stocks / the AI trade (investment pillar, AI lens) — the core
     "Nvidia OR Palantir OR \"AI trade\" OR \"AI capex\" OR \"AI datacenter\" earnings lang:en min_faves:100",
-    # Fresh AI launches — first-minutes virality
-    "(\"just shipped\" OR \"introducing\" OR \"we built\") (AI OR LLM OR agent OR model) lang:en min_faves:100",
+    # AI-crypto crossover (crypto pillar, AI lens)
+    "\"AI crypto\" OR \"AI token\" OR \"decentralized AI\" OR \"AI agents\" crypto lang:en min_faves:50",
     # ===== FR tail (one query — replies match parent language) =====
     "IA OR ChatGPT OR Mistral OR \"intelligence artificielle\" lang:fr min_faves:25",
 ]

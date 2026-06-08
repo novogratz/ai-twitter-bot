@@ -1011,7 +1011,10 @@ def test_reply_queries_are_on_lane():
         assert banned not in joined, f"space term {banned!r} is off-persona"
     for seed in ("from:thebtctherapist", "from:morganhousel", "from:saylor"):
         assert seed in joined, f"missing seed scan {seed!r}"
-    assert "panic" in joined and "psychology" in joined, "psychology lane missing"
+    # Market-trauma VOICE still represented (panic/drawdown reply targets),
+    # but trimmed to 1 query — operator 2026-06-08 "focus more on AI": the
+    # therapist voice frames AI replies; it's no longer a topic lane.
+    assert "panic" in joined, "market-trauma voice target missing"
 
 
 def test_seed_identity_matcher():

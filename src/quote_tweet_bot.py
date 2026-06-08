@@ -34,12 +34,11 @@ QUOTE_QUERIES = [
     # AI money angle (AI stocks = the lens, no generic markets/space)
     "Nvidia OR NVDA OR \"AI bubble\" OR \"AI trade\" OR \"AI valuation\" lang:en min_faves:200",
     "Palantir OR PLTR OR \"AI stock\" OR \"AI startup\" OR \"AI funding\" lang:en min_faves:100",
-    # Investment / stocks / markets (~30%)
-    "\"S&P 500\" OR Nasdaq OR \"tech earnings\" OR \"stock market\" OR \"AI stock\" lang:en min_faves:200",
-    "Fed OR CPI OR \"rate cut\" OR \"interest rates\" OR macro lang:en min_faves:200",
-    # Bitcoin / crypto (bearish troll fodder)
-    "Bitcoin OR BTC OR \"BTC ETF\" OR crypto OR Ethereum lang:en min_faves:300",
-    "\"Bitcoin crash\" OR \"crypto crash\" OR \"BTC dump\" OR \"crypto bubble\" lang:en min_faves:100",
+    # Investment via the AI lens (operator 2026-06-08 "focus more on AI":
+    # trimmed pure S&P/Fed/macro — AI stocks ARE the markets lane here)
+    "\"AI stock\" OR \"tech earnings\" OR Nasdaq \"AI\" OR \"Magnificent Seven\" lang:en min_faves:200",
+    # Crypto via the AI lens / the AI-vs-BTC feud (one query, was two pure-crypto)
+    "(\"AI vs Bitcoin\" OR \"AI token\" OR \"AI crypto\") OR (Bitcoin AND (AI OR Nvidia)) lang:en min_faves:200",
     # VIRAL pass (2026-06-05 operator: "quote retweet more viral posts") —
     # very high min_faves so the pool is the actual front page of the niche.
     "AI lang:en min_faves:2000",
@@ -50,10 +49,10 @@ QUOTE_QUERIES = [
     # fallback must stay AI (operator: "more AI shit"); the AI-money angle
     # carries the markets/AI-bubble takes.
     "\"AI bubble\" OR \"AI stock\" OR Palantir OR \"AI capex\" OR \"AI trade\" lang:en min_faves:800",
-    # SpaceX viral query REMOVED 2026-06-07 (persona: no space) — replaced
-    # with an AI-coding viral pass (operator: "more AI shit").
-    "\"Claude Code\" OR Cursor OR \"AI agents\" OR \"vibe coding\" lang:en min_faves:500",
-    "robots OR robotics OR \"humanoid\" lang:en min_faves:1000",
+    # AI coding tools viral pass (operator: "more AI shit")
+    "\"Claude Code\" OR Cursor OR Copilot OR \"AI agents\" lang:en min_faves:500",
+    # AI robotics (embodied AI — on-thesis); generic "robots" removed
+    "\"humanoid robot\" OR \"Figure AI\" OR \"Boston Dynamics\" OR Optimus lang:en min_faves:800",
 ]
 
 # Handles whose fresh posts jump the candidate queue (no scoring gate beyond
@@ -74,10 +73,10 @@ TOP_AI_HANDLES = [h.strip() for h in os.environ.get(
     "TOP_AI_HANDLES",
     "sama,OpenAI,AnthropicAI,karpathy,GoogleDeepMind,demishassabis,"
     "ylecun,AndrewYNg,DrJimFan,_akhaliq,svpino,emollick,alexalbert__,"
-    "kimmonismus,slow_developer,rowancheung,minchoi,nvidia,xai,"
-    # EXPERIMENTAL 2026-06-08 — AI builders/founders (operator: "try new
-    # things... focus on AI primarily"). Prune any that go off-lane.
-    "levelsio,gregisenberg,swyx,mckaywrigley,nutlope"
+    "kimmonismus,slow_developer,rowancheung,minchoi,nvidia,xai"
+    # 2026-06-08: builder/founder accounts (levelsio,gregisenberg,swyx,...)
+    # REMOVED — operator "focus more on AI": the account is AI-as-investing-
+    # theme, not indie-builder. AI labs/researchers/chips stay.
 ).split(",") if h.strip()]
 
 AI_VIRAL_QUERIES = [
@@ -86,9 +85,6 @@ AI_VIRAL_QUERIES = [
     "(from:sama OR from:OpenAI OR from:AnthropicAI OR from:karpathy OR from:ylecun) min_faves:200",
     "(from:GoogleDeepMind OR from:demishassabis OR from:DrJimFan OR from:_akhaliq OR from:AndrewYNg) min_faves:150",
     "(from:rowancheung OR from:minchoi OR from:kimmonismus OR from:slow_developer OR from:emollick) min_faves:150",
-    # EXPERIMENTAL 2026-06-08 — AI builders/founders (the AI-tool-overwhelm
-    # voice lane) + AI-investing accounts. Prune if they don't convert.
-    "(from:levelsio OR from:gregisenberg OR from:swyx OR from:mckaywrigley OR from:nutlope) min_faves:150",
     # TOP AI topics — front-page virals, lab/model/chip news.
     "OpenAI OR Anthropic OR \"GPT-5\" OR Claude OR Gemini lang:en min_faves:1000",
     "Nvidia OR \"AI agent\" OR \"AI model\" OR AGI OR \"reasoning model\" lang:en min_faves:800",

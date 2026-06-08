@@ -222,6 +222,28 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-08 — FOCUS: AI-primary (operator: "focus more on AI", "focus mr")
+
+The 2026-06-08 experimental sprawl drifted off-thesis. Operator clarified:
+this is an **AI-as-investing-theme** account (AI primary, then crypto +
+stocks/investment THROUGH the AI lens) — NOT indie-builder/build-in-public.
+
+Tightened both lanes to AI-primary:
+- **Removed the builder/founder drift**: AI-tools/"vibe coding"/"my agent
+  failed" reply queries, and levelsio/gregisenberg/swyx/mckaywrigley/nutlope
+  from TOP_AI_HANDLES + the quote AI-viral from: pass.
+- **Reply lane now 85% AI** (was ~69%): psychology trimmed 3 queries → 1
+  (the therapist voice FRAMES every AI reply — it's the VOICE, not a topic
+  lane), pure markets/macro query removed (AI stocks cover it), crypto kept
+  to the AI-vs-BTC feud. Added mainstream-AI (Meta AI / Apple Intelligence /
+  Tesla AI) + kept AI-stocks + AI-crypto.
+- **Quote lane**: pure S&P/Fed/macro → "AI stock/tech earnings/Mag Seven";
+  two pure-crypto queries → one AI-vs-BTC feud query; generic "robots" →
+  embodied-AI (Figure/Optimus/Boston Dynamics).
+
+Principle locked: AI is the TOPIC, market-trauma/therapist is the VOICE.
+Reply to AI posts in the therapist voice = both at once. Don't add topic
+lanes that aren't AI.
 ### 2026-06-08 — GIF post/quote double-log fix (the bandit data was lying about market_trauma)
 
 Engagement-log audit found EVERY GIF hot take and EVERY GIF quote wrote TWO
