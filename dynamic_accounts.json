@@ -456,7 +456,10 @@
     "SpaceX",
     "roon",
     "Steven",
-    "Perplexity"
+    "Perplexity",
+    "OranjeBTC",
+    "clem",
+    "America"
   ],
   "history": [
     {
@@ -2732,6 +2735,21 @@
     {
       "lang": "en",
       "handle": "Perplexity",
+      "added": "2026-06-08"
+    },
+    {
+      "lang": "en",
+      "handle": "OranjeBTC",
+      "added": "2026-06-08"
+    },
+    {
+      "lang": "en",
+      "handle": "clem",
+      "added": "2026-06-08"
+    },
+    {
+      "lang": "en",
+      "handle": "America",
       "added": "2026-06-08"
     }
   ]

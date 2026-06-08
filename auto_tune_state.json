@@ -1,33 +1,25 @@
 {
-  "ts": "2026-06-07T05:01:30.372728",
+  "ts": "2026-06-08T16:45:28.692304",
   "window_min": 90,
-  "total_actions": 143,
+  "total_actions": 58,
   "by_type": {
-    "reply": 134,
-    "hotake": 3,
-    "quote_gif": 3,
-    "quote": 6,
-    "retweet": 3
+    "reply": 54,
+    "quote": 3,
+    "quote_gif": 1
   },
   "winners": {
-    "FEED": 76,
-    "FEED-SWEEP-FEED": 21,
-    "FOLLOWING": 14,
-    "FEED-SWEEP-FOLLOWING": 12,
-    "RETWEET_REPLY": 4
+    "FEED-SWEEP-FEED": 7,
+    "SEARCH-HOT/Palantir OR \"AI stock\" OR \"AI bubble\" OR \"AI valuation\" lang": 6,
+    "SEARCH-HOT/Bitcoin OR BTC OR \"crypto crash\" OR \"BTC ETF\" lang:en min_fa": 5,
+    "SEARCH-HOT/ChatGPT OR Claude OR Gemini OR \"humanoid robot\" lang:en min_": 5,
+    "FEED-SWEEP-FOLLOWING": 4
   },
   "losers": {
-    "GIF/chef kiss": 1,
-    "QUOTE/Chamath Palihapitiya": 1,
-    "RETWEET_QT/0xprajwal_": 1,
-    "RETWEET_QT/nvidiageforce": 1,
-    "RETWEET/dashboardlim": 1,
-    "RETWEET_QT/cryptorover": 1,
-    "RETWEET_QT/coinbureau": 1,
-    "RETWEET_QT/roundtablespace": 1,
-    "RETWEET/bdinvestingg": 1,
-    "RETWEET/podcastalphax": 1
+    "QUOTE/The \u20bfitcoin Therapist": 1,
+    "GIF/mic drop": 1,
+    "HOT_QUOTE/Mark Gurman": 1,
+    "QUOTE/Shay Boloor": 1
   },
-  "post_cadence_factor": 0.7,
+  "post_cadence_factor": 0.85,
   "boost_cadence_factor": 1.0
 }
