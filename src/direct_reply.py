@@ -600,7 +600,13 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             continue
         if not shipped:
             continue  # policy/content/dedup skip — nothing was posted
-        log_reply(url, reply, action_type="reply", source=source_name, pattern_id=_pattern_id or "")
+        # Include the query (source_detail) in the tag so per-query
+        # conversion is measurable (2026-06-08: experimental lanes were
+        # firing but logged only "SEARCH-HOT" — the query was dropped, so
+        # "prune by measurement" was impossible). Cap the query so the CSV
+        # column stays sane.
+        _src = f"{source_name}/{source_detail[:60]}" if source_detail else source_name
+        log_reply(url, reply, action_type="reply", source=_src, pattern_id=_pattern_id or "")
         posted += 1
         if _reply_lang == "en" and en_counter: en_counter[0] += 1
         # Spacing handled by action_guard (MIN_SECONDS_BETWEEN_REPLIES).
