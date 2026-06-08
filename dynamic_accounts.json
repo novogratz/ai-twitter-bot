@@ -452,7 +452,8 @@
     "CoinGecko",
     "Polymarket",
     "Frank",
-    "ThePersistence"
+    "ThePersistence",
+    "SpaceX"
   ],
   "history": [
     {
@@ -2708,6 +2709,11 @@
     {
       "lang": "en",
       "handle": "ThePersistence",
+      "added": "2026-06-08"
+    },
+    {
+      "lang": "en",
+      "handle": "SpaceX",
       "added": "2026-06-08"
     }
   ]
