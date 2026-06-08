@@ -453,7 +453,10 @@
     "Polymarket",
     "Frank",
     "ThePersistence",
-    "SpaceX"
+    "SpaceX",
+    "roon",
+    "Steven",
+    "Perplexity"
   ],
   "history": [
     {
@@ -2714,6 +2717,21 @@
     {
       "lang": "en",
       "handle": "SpaceX",
+      "added": "2026-06-08"
+    },
+    {
+      "lang": "en",
+      "handle": "roon",
+      "added": "2026-06-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Steven",
+      "added": "2026-06-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Perplexity",
       "added": "2026-06-08"
     }
   ]

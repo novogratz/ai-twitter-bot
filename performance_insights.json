@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-06-08T12:45:29.437306",
-  "window_7d_actions": 4990,
-  "window_24h_actions": 815,
+  "generated_at": "2026-06-08T16:45:29.595779",
+  "window_7d_actions": 5083,
+  "window_24h_actions": 828,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4936
+      "count": 5032
     },
     {
       "pattern": "METAPHOR",
-      "count": 17
+      "count": 16
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 15
+      "count": 14
     },
     {
       "pattern": "DIALOGUE",
-      "count": 9
+      "count": 8
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -52,116 +52,116 @@
       "actions": 278
     },
     {
-      "hour": 21,
-      "actions": 258
+      "hour": 15,
+      "actions": 275
     },
     {
-      "hour": 15,
-      "actions": 255
+      "hour": 16,
+      "actions": 260
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1941
+      "count": 2005
     },
     {
       "topic": "IA",
-      "count": 1846
+      "count": 1877
     },
     {
       "topic": "Crypto",
-      "count": 670
+      "count": 682
     },
     {
       "topic": "Bourse",
-      "count": 668
+      "count": 670
     },
     {
       "topic": "Spatial",
-      "count": 473
+      "count": 462
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "other",
-      "count": 1850
+      "count": 1864
     },
     {
       "pillar": "ai_news_take",
-      "count": 1625
+      "count": 1666
     },
     {
       "pillar": "market_trauma",
-      "count": 1170
+      "count": 1197
     },
     {
       "pillar": "meme_reaction",
-      "count": 159
+      "count": 167
     },
     {
       "pillar": "reply_bait",
-      "count": 124
+      "count": 128
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 62
+      "count": 61
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 311
+      "count": 333
     },
     {
       "pillar": "other",
-      "count": 226
+      "count": 222
     },
     {
       "pillar": "market_trauma",
-      "count": 211
+      "count": 201
     },
     {
       "pillar": "meme_reaction",
-      "count": 40
+      "count": 45
     },
     {
       "pillar": "reply_bait",
-      "count": 20
+      "count": 22
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 17,
-      "avg_likes": 22.76,
-      "avg_views": 28116.9,
+      "posts": 19,
+      "avg_likes": 20.37,
+      "avg_views": 25162.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 30,
-      "avg_likes": 8.97,
-      "avg_views": 31578.3,
+      "posts": 31,
+      "avg_likes": 7.06,
+      "avg_views": 29915.2,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 5,
-      "avg_likes": 2.8,
-      "avg_views": 2834.8,
+      "posts": 6,
+      "avg_likes": 2.33,
+      "avg_views": 2365.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 18,
-      "avg_likes": 0.83,
-      "avg_views": 1366.3,
+      "posts": 16,
+      "avg_likes": 0.56,
+      "avg_views": 594.3,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3748
+      "count": 3850
     },
     {
       "type": "retweet",
-      "count": 494
+      "count": 481
     },
     {
       "type": "quote",
-      "count": 356
+      "count": 363
     },
     {
       "type": "hotake",
-      "count": 212
+      "count": 201
     },
     {
       "type": "quote_gif",
-      "count": 154
+      "count": 162
     },
     {
       "type": "post",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-08T12:45:00.018410",
-      "text": "Bailout talk = government admits the ai story is broken. seoul's just mechanical confirmation of what everyone felt.",
+      "ts": "2026-06-08T16:45:27.563559",
+      "text": "Using Codex to run ChatGPT because switching between two LLMs is exhausting. peak market maturity: friction between tools becomes the product. this guy just shipped it.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-08T12:44:36.688703",
-      "text": "Anthropic at $20B private. the IPO won't be the best entry point, it'll be proof you missed it.",
+      "ts": "2026-06-08T16:42:09.942788",
+      "text": "'Deceives parents about safety' is one case. 'Encourages violence' is another. They're different categories. Bundling them in one suit makes both weaker, not stronger.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-08T12:43:36.894655",
-      "text": "Open-source committees always fragment: Nvidia optimizes for H100s, Meta forks for inference, Modal for serverless. not a failure. just the math of competing infrastructure needs.",
+      "ts": "2026-06-08T16:41:46.621765",
+      "text": "APLD = AI power infrastructure. After-hours reveals hit different when the market can't touch them yet. If it's MW, cost, or contract wins. that's the actual bottleneck.",
       "type": "reply"
     }
   ]
