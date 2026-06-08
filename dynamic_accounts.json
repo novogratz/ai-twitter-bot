@@ -437,7 +437,20 @@
     "0xMarioNawfal",
     "Cole",
     "Tooly",
-    "CapexAndChill"
+    "CapexAndChill",
+    "XBOX",
+    "Wario64",
+    "TrendSpider",
+    "testtm",
+    "Breaking911",
+    "Kalshi",
+    "Ethan",
+    "AO",
+    "Cointelegraph",
+    "Ryan",
+    "Ted",
+    "CoinGecko",
+    "Polymarket"
   ],
   "history": [
     {
@@ -2618,6 +2631,71 @@
     {
       "lang": "en",
       "handle": "CapexAndChill",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "XBOX",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Wario64",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "TrendSpider",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "testtm",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Breaking911",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Kalshi",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Ethan",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "AO",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Cointelegraph",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Ryan",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Ted",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "CoinGecko",
+      "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Polymarket",
       "added": "2026-06-07"
     }
   ]

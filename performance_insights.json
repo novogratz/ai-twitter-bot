@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-06-06T04:10:50.845173",
-  "window_7d_actions": 3324,
-  "window_24h_actions": 613,
+  "generated_at": "2026-06-07T21:33:34.831909",
+  "window_7d_actions": 4796,
+  "window_24h_actions": 1189,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 3252
-    },
-    {
-      "pattern": "FR_ANCHOR",
-      "count": 26
+      "count": 4734
     },
     {
       "pattern": "METAPHOR",
-      "count": 24
+      "count": 21
+    },
+    {
+      "pattern": "FR_ANCHOR",
+      "count": 19
     },
     {
       "pattern": "DIALOGUE",
-      "count": 11
+      "count": 9
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -30,111 +30,189 @@
       "count": 1
     },
     {
-      "pattern": "RENAME",
-      "count": 4
+      "pattern": "REPETITION",
+      "count": 1
     },
     {
-      "pattern": "UNDERSTATEMENT",
-      "count": 6
+      "pattern": "RENAME",
+      "count": 5
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 10,
-      "actions": 242
-    },
-    {
-      "hour": 11,
-      "actions": 226
-    },
-    {
       "hour": 20,
-      "actions": 204
-    },
-    {
-      "hour": 21,
-      "actions": 190
+      "actions": 287
     },
     {
       "hour": 19,
-      "actions": 177
+      "actions": 278
+    },
+    {
+      "hour": 10,
+      "actions": 270
+    },
+    {
+      "hour": 0,
+      "actions": 267
+    },
+    {
+      "hour": 21,
+      "actions": 259
     }
   ],
   "best_topics_7d": [
     {
-      "topic": "IA",
-      "count": 1163
+      "topic": "Autre",
+      "count": 1791
     },
     {
-      "topic": "Autre",
-      "count": 1162
+      "topic": "IA",
+      "count": 1778
+    },
+    {
+      "topic": "Bourse",
+      "count": 685
+    },
+    {
+      "topic": "Crypto",
+      "count": 635
     },
     {
       "topic": "Spatial",
-      "count": 557
-    },
-    {
-      "topic": "Bourse",
-      "count": 508
-    },
-    {
-      "topic": "Crypto",
-      "count": 388
+      "count": 526
     }
   ],
-  "rising_topics_24h": [
+  "rising_topics_24h": [],
+  "pillar_mix_7d": [
     {
-      "topic": "Crypto",
-      "24h_rate": 0.16,
-      "7d_rate": 0.117
+      "pillar": "other",
+      "count": 1854
     },
     {
-      "topic": "Bourse",
-      "24h_rate": 0.21,
-      "7d_rate": 0.153
+      "pillar": "ai_news_take",
+      "count": 1529
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 1111
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 131
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 109
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 62
+    }
+  ],
+  "pillar_mix_24h": [
+    {
+      "pillar": "ai_news_take",
+      "count": 437
+    },
+    {
+      "pillar": "other",
+      "count": 334
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 325
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 56
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 26
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 11
+    }
+  ],
+  "pillar_engagement_30d": [
+    {
+      "pillar": "market_trauma",
+      "posts": 14,
+      "avg_likes": 27.79,
+      "avg_views": 34272.1,
+      "low_sample": false
+    },
+    {
+      "pillar": "reply_bait",
+      "posts": 1,
+      "avg_likes": 14.0,
+      "avg_views": 14000.0,
+      "low_sample": true
+    },
+    {
+      "pillar": "other",
+      "posts": 35,
+      "avg_likes": 8.91,
+      "avg_views": 27960.3,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 22,
+      "avg_likes": 1.27,
+      "avg_views": 1615.2,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "posts": 1,
+      "avg_likes": 0.0,
+      "avg_views": 1239.0,
+      "low_sample": true
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2409
+      "count": 3521
     },
     {
       "type": "retweet",
-      "count": 590
-    },
-    {
-      "type": "hotake",
-      "count": 242
+      "count": 566
     },
     {
       "type": "quote",
-      "count": 58
+      "count": 323
     },
     {
-      "type": "post",
-      "count": 21
+      "type": "hotake",
+      "count": 233
     },
     {
       "type": "quote_gif",
-      "count": 4
+      "count": 128
+    },
+    {
+      "type": "post",
+      "count": 25
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-06T04:10:07.059929",
-      "text": "On veut que l'IA fasse le travail mais pas qu'elle en soit responsable. Linus a juste nommé l'anxiété de toute l'industrie. 30 ans de Linux, chaque commit signé : c'est pour ça que ça tient.",
+      "ts": "2026-06-07T21:32:56.066481",
+      "text": "Circuit breaker caught 8%. Stops the cascade. You panic anyway. Knowing the policy exists doesn't stop fear.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-06T04:09:31.922959",
-      "text": "Vos contacts sont chez Google depuis 2004. Ce qui est nouveau, c'est qu'un modèle les lit maintenant. La surveillance n'a pas changé. La transparence, si.",
+      "ts": "2026-06-07T21:32:00.701931",
+      "text": "51% is modest by cycles. But it still needs 104% back. Knowing it worked before doesn't shorten the wait. Math is patient. You aren't.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-06T04:08:04.766700",
-      "text": "\"sol is down\" is the entry thesis. \"unforgettable payout\" is the hold thesis. both are doing work on the same emotion. what's the june 25th yield actually backed by?",
-      "type": "reply"
+      "ts": "2026-06-07T21:31:24.976988",
+      "text": "Pentagon trusts your code. NSA steals with it. Your AI isn't a startup; it's a double agent 🛋️",
+      "type": "quote"
     }
   ]
 }
