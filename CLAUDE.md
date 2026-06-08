@@ -222,6 +222,29 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-08 — experimental AI lanes (operator: "try new things... AI crypto stocks investment, focus on AI primarily")
+
+Operator framing (paraphrasing his own voice example): adding 120 tools is
+FOMO; the only signal is which converts. So these are ADDED TAGGED, to be
+PRUNED by measurement — not kept on faith.
+
+New AI-first lanes spanning the 3 pillars (AI primary):
+- **AI builders/founders** (the AI-tool-overwhelm voice lane): "AI tools /
+  AI stack / which AI / vibe coding", "AI agent / my agent / agent failed /
+  AI wrapper" → reply SEARCH_QUERIES; `from:levelsio,gregisenberg,swyx,
+  mckaywrigley,nutlope` → quote AI_VIRAL pass + TOP_AI_HANDLES.
+- **AI-crypto crossover** (crypto pillar, AI lens): "AI crypto / AI token /
+  decentralized AI / worldcoin".
+- **AI stocks / the AI trade** (investment pillar, AI lens): "Nvidia /
+  Palantir / AI trade / AI capex ... earnings"; quote viral query
+  "(AI bubble/AI trade/AI capex/Nvidia/Palantir)(earnings/valuation/stock)
+  min_faves:500".
+- **Fresh AI launches**: "(just shipped/introducing/we built)(AI/LLM/agent/
+  model) min_faves:100" — first-minutes virality.
+
+Each reply logs `source_detail=query` → analyzer pillar_engagement / own-
+metrics scraper attributes engagement per query. EVALUATION DUE ~2026-06-08
+PM: keep queries whose replies/quotes earn engagement, prune the dead ones.
 ### 2026-06-07 PM-18 — AI-leads quote ranking + AI-only viral fallback
 
 After PM-16/17 brought the quote lane online, live watching showed the

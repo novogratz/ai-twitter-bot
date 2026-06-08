@@ -174,6 +174,20 @@ SEARCH_QUERIES = [
     "\"tech earnings\" OR Nasdaq OR \"market crash\" OR Fed OR \"rate cut\" lang:en min_faves:50",
     # ===== BITCOIN (one query — the AI-vs-BTC feud lane only) =====
     "Bitcoin OR BTC OR \"crypto crash\" OR \"BTC ETF\" lang:en min_faves:100",
+    # ===== EXPERIMENTAL 2026-06-08 (operator: "try new things... AI crypto
+    # stocks investment, focus on AI primarily"; voice ref: the AI-tool
+    # overwhelm one-liner). New AI-first lanes spanning the 3 pillars —
+    # tagged via source_detail=query so the analyzer shows which convert;
+    # prune the losers after ~a day.
+    # AI builders/founders — tool overwhelm, shipping anxiety, "which tool"
+    "\"AI tools\" OR \"AI stack\" OR \"which AI\" OR \"vibe coding\" OR \"building with AI\" lang:en min_faves:50",
+    "\"AI agent\" OR \"my agent\" OR \"agent failed\" OR \"AI workflow\" OR \"AI wrapper\" lang:en min_faves:50",
+    # AI-crypto crossover (crypto pillar, AI lens)
+    "\"AI crypto\" OR \"AI token\" OR \"AI agents\" OR \"decentralized AI\" OR worldcoin lang:en min_faves:50",
+    # AI stocks / the AI trade (investment pillar, AI lens)
+    "Nvidia OR Palantir OR \"AI trade\" OR \"AI capex\" OR \"AI datacenter\" earnings lang:en min_faves:100",
+    # Fresh AI launches — first-minutes virality
+    "(\"just shipped\" OR \"introducing\" OR \"we built\") (AI OR LLM OR agent OR model) lang:en min_faves:100",
     # ===== FR tail (one query — replies match parent language) =====
     "IA OR ChatGPT OR Mistral OR \"intelligence artificielle\" lang:fr min_faves:25",
 ]

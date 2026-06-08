@@ -74,7 +74,10 @@ TOP_AI_HANDLES = [h.strip() for h in os.environ.get(
     "TOP_AI_HANDLES",
     "sama,OpenAI,AnthropicAI,karpathy,GoogleDeepMind,demishassabis,"
     "ylecun,AndrewYNg,DrJimFan,_akhaliq,svpino,emollick,alexalbert__,"
-    "kimmonismus,slow_developer,rowancheung,minchoi,nvidia,xai"
+    "kimmonismus,slow_developer,rowancheung,minchoi,nvidia,xai,"
+    # EXPERIMENTAL 2026-06-08 — AI builders/founders (operator: "try new
+    # things... focus on AI primarily"). Prune any that go off-lane.
+    "levelsio,gregisenberg,swyx,mckaywrigley,nutlope"
 ).split(",") if h.strip()]
 
 AI_VIRAL_QUERIES = [
@@ -83,9 +86,14 @@ AI_VIRAL_QUERIES = [
     "(from:sama OR from:OpenAI OR from:AnthropicAI OR from:karpathy OR from:ylecun) min_faves:200",
     "(from:GoogleDeepMind OR from:demishassabis OR from:DrJimFan OR from:_akhaliq OR from:AndrewYNg) min_faves:150",
     "(from:rowancheung OR from:minchoi OR from:kimmonismus OR from:slow_developer OR from:emollick) min_faves:150",
+    # EXPERIMENTAL 2026-06-08 — AI builders/founders (the AI-tool-overwhelm
+    # voice lane) + AI-investing accounts. Prune if they don't convert.
+    "(from:levelsio OR from:gregisenberg OR from:swyx OR from:mckaywrigley OR from:nutlope) min_faves:150",
     # TOP AI topics — front-page virals, lab/model/chip news.
     "OpenAI OR Anthropic OR \"GPT-5\" OR Claude OR Gemini lang:en min_faves:1000",
     "Nvidia OR \"AI agent\" OR \"AI model\" OR AGI OR \"reasoning model\" lang:en min_faves:800",
+    # AI investing / the AI trade — viral money-angle takes (investment pillar)
+    "(\"AI bubble\" OR \"AI trade\" OR \"AI capex\" OR Nvidia OR Palantir) (earnings OR valuation OR stock) lang:en min_faves:500",
 ]
 QUOTE_AI_VIRAL_MIN_LIKES = int(os.environ.get("QUOTE_AI_VIRAL_MIN_LIKES", "150"))
 

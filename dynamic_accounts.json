@@ -450,7 +450,9 @@
     "Ryan",
     "Ted",
     "CoinGecko",
-    "Polymarket"
+    "Polymarket",
+    "Frank",
+    "ThePersistence"
   ],
   "history": [
     {
@@ -2697,6 +2699,16 @@
       "lang": "en",
       "handle": "Polymarket",
       "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Frank",
+      "added": "2026-06-08"
+    },
+    {
+      "lang": "en",
+      "handle": "ThePersistence",
+      "added": "2026-06-08"
     }
   ]
 }
