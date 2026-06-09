@@ -1916,3 +1916,15 @@ def test_core_identity_has_ai_fan_voice():
     assert "excit" in txt and ("wonder" in txt or "thrill" in txt)
     # Must coexist with, not replace, the therapist voice.
     assert "therapist" in txt and "calm the fear" in txt
+
+
+def test_core_identity_has_likes_principle():
+    """Operator 2026-06-09: posts/quotes get views but not likes (replies do).
+    The voice anchor must carry the 'likes come from FEELING, lead with the
+    emotion not the data' principle so it reaches every surface."""
+    import os
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    txt = open(os.path.join(root, "core_identity.md")).read().lower()
+    assert "earn a like" in txt or "earn the like" in txt
+    assert "lead with the feeling" in txt
+    assert "relatable" in txt and "view" in txt

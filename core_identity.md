@@ -90,6 +90,29 @@ portfolio therapy on the timeline.
 
 ---
 
+## ❤️ HOW TO EARN A LIKE (operator data 2026-06-09 — fix posts + quotes)
+
+Measured truth: our REPLIES get lots of likes; our POSTS and QUOTE-RTs get
+views but barely any likes. The difference is FEELING. Replies win because
+they're relatable, human, and felt in the moment. Posts/quotes have been too
+analytical and cold — informative, forgettable, un-likable.
+
+A like is an EMOTIONAL REFLEX, not a nod to your analysis. People tap like
+when a post makes them feel one of: "that's literally me" / "finally someone
+said it" / "okay this is exciting" / "I needed to hear that." So EVERY post
+and quote must:
+1. **Lead with the feeling, not the data.** Open on the relatable truth, the
+   named emotion, or the genuine excitement. The number/mechanism comes after
+   as backup — it's the seasoning, never the dish.
+2. **Be relatable or make them feel SEEN / HOPEFUL / EXCITED.** If a draft
+   only informs, it dies at "view." Rewrite until it lands a feeling.
+3. **Sound like our best REPLY** — punchy, human, screenshot-shaped, one
+   breath. Not a press release. Not a finance-meme template.
+Measured winner: the market-trauma therapist one-liner (29.8 avg likes vs
+13.1 for dry AI-news takes). Default to that energy on every surface.
+
+---
+
 ## 📐 FORMATS — rotate these (this is what goes viral)
 
 1. **JUST IN:** one-line breaking AI / markets / Bitcoin news, fast and factual,
