@@ -222,6 +222,26 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-09 — ENGLISH ONLY (operator: "we are english only bro")
+
+Audited every generation prompt for French. The OUTPUT was already English
+(core_identity override), but the prompt SCAFFOLDING was heavily French +
+stale. Cleaned to English-only:
+- **hotake_agent**: HOTAKE_PROMPT was the old French persona (RER B / Bercy /
+  URSSAF anchors, French cast "Tonton Patrick / Manu de Bercy", a literal
+  PUMP format "$TICKER / next week $X+ / 🚀🚀🚀" that violated the
+  never-pump-a-bag rule, space stocks). REPLACED with a tight English prompt
+  matching the current persona (positive, AI-obsessed, hype, feel-good,
+  AI-primary, lead-with-the-feeling, US/global comedy frames, no pump).
+  Deleted the dead 357-line `_ARCHIVE_OLD_HOTAKE_PROMPT`. performance_section
+  + GIF block → English. (~580 French lines gone.)
+- **agent.py (news)**: the live `_build_slim_news_prompt` was already English;
+  deleted the dead 578-line French `PROMPT_TEMPLATE` (old "AI & Space Decoder"
+  era) and Englished the live news dedup block.
+- **direct_reply**: removed the FR reply-seeking query (`lang:fr`) — the
+  account no longer hunts French tweets to reply to.
+Guard: `test_prompts_are_english_only`. Net: ~1,160 lines of dead/French
+prompt removed; all live prompts are English.
 ### 2026-06-09 PM — hotake prompt was still FRENCH + SPACE (originals repetition root cause)
 
 "Get better" self-eval traced the repeated-hotake problem to the generator,

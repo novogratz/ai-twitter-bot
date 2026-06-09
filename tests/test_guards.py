@@ -1994,3 +1994,22 @@ def test_hotake_dedup_block_english_no_space():
     assert "off-persona" in src.lower()
     assert "espace: spacex" not in src.lower(), "French space scope still present"
     assert "2. space: spacex" not in src.lower(), "English space scope pillar still present"
+
+
+def test_prompts_are_english_only():
+    """Operator 2026-06-09: 'we are english only bro'. The live generation
+    prompts must carry no French scaffolding (the old FR persona prompts +
+    dead 25k PROMPT_TEMPLATE are gone)."""
+    import re
+    fr = re.compile(r"\b(tu écris|t'as|c'est pas|réécris|hors-scope|déjà posté dans|ne couvre pas le même|piège|chute française)\b", re.I)
+    from src.hotake_agent import HOTAKE_PROMPT
+    rendered = HOTAKE_PROMPT.format(lang_directive="[EN]", performance_section="", dedup_section="")
+    assert not fr.search(rendered.lower()), "hotake prompt still has French"
+    # Dead French templates must be gone.
+    a = open("src/agent.py").read()
+    assert "AI & Space Decoder" not in a, "dead French PROMPT_TEMPLATE still present"
+    h = open("src/hotake_agent.py").read()
+    assert "_ARCHIVE_OLD_HOTAKE_PROMPT" not in h, "dead French hotake archive still present"
+    # No FR reply-seeking query.
+    from src.direct_reply import SEARCH_QUERIES
+    assert not any("lang:fr" in q for q in SEARCH_QUERIES), "FR reply query still present"
