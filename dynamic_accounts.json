@@ -459,7 +459,10 @@
     "Perplexity",
     "OranjeBTC",
     "clem",
-    "America"
+    "America",
+    "LeRobot",
+    "Binance",
+    "gabriel"
   ],
   "history": [
     {
@@ -2750,6 +2753,21 @@
     {
       "lang": "en",
       "handle": "America",
+      "added": "2026-06-08"
+    },
+    {
+      "lang": "en",
+      "handle": "LeRobot",
+      "added": "2026-06-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Binance",
+      "added": "2026-06-08"
+    },
+    {
+      "lang": "en",
+      "handle": "gabriel",
       "added": "2026-06-08"
     }
   ]
