@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-08T16:45:29.595779",
-  "window_7d_actions": 5083,
-  "window_24h_actions": 828,
+  "generated_at": "2026-06-09T00:49:06.517626",
+  "window_7d_actions": 5165,
+  "window_24h_actions": 852,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5032
+      "count": 5114
     },
     {
       "pattern": "METAPHOR",
@@ -40,46 +40,46 @@
   ],
   "best_hours_utc": [
     {
-      "hour": 20,
-      "actions": 287
-    },
-    {
       "hour": 0,
-      "actions": 284
+      "actions": 293
     },
     {
       "hour": 19,
-      "actions": 278
+      "actions": 288
     },
     {
       "hour": 15,
       "actions": 275
     },
     {
+      "hour": 18,
+      "actions": 269
+    },
+    {
       "hour": 16,
-      "actions": 260
+      "actions": 268
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2005
+      "count": 2070
     },
     {
       "topic": "IA",
-      "count": 1877
+      "count": 1899
     },
     {
       "topic": "Crypto",
-      "count": 682
+      "count": 695
     },
     {
       "topic": "Bourse",
-      "count": 670
+      "count": 663
     },
     {
       "topic": "Spatial",
-      "count": 462
+      "count": 448
     }
   ],
   "rising_topics_24h": [],
@@ -90,41 +90,41 @@
     },
     {
       "pillar": "ai_news_take",
-      "count": 1666
+      "count": 1720
     },
     {
       "pillar": "market_trauma",
-      "count": 1197
+      "count": 1208
     },
     {
       "pillar": "meme_reaction",
-      "count": 167
+      "count": 181
     },
     {
       "pillar": "reply_bait",
-      "count": 128
+      "count": 129
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 61
+      "count": 63
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 333
+      "count": 353
     },
     {
       "pillar": "other",
-      "count": 222
+      "count": 241
     },
     {
       "pillar": "market_trauma",
-      "count": 201
+      "count": 184
     },
     {
       "pillar": "meme_reaction",
-      "count": 45
+      "count": 47
     },
     {
       "pillar": "reply_bait",
@@ -138,30 +138,30 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 19,
-      "avg_likes": 20.37,
-      "avg_views": 25162.9,
+      "posts": 18,
+      "avg_likes": 15.22,
+      "avg_views": 24608.0,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 31,
-      "avg_likes": 7.06,
-      "avg_views": 29915.2,
+      "posts": 28,
+      "avg_likes": 5.07,
+      "avg_views": 16513.3,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 6,
-      "avg_likes": 2.33,
-      "avg_views": 2365.0,
+      "posts": 7,
+      "avg_likes": 2.0,
+      "avg_views": 2034.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 16,
-      "avg_likes": 0.56,
-      "avg_views": 594.3,
+      "posts": 18,
+      "avg_likes": 0.5,
+      "avg_views": 538.8,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3850
+      "count": 3955
     },
     {
       "type": "retweet",
-      "count": 481
+      "count": 452
     },
     {
       "type": "quote",
-      "count": 363
+      "count": 365
     },
     {
       "type": "hotake",
-      "count": 201
+      "count": 191
     },
     {
       "type": "quote_gif",
-      "count": 162
+      "count": 176
     },
     {
       "type": "post",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-08T16:45:27.563559",
-      "text": "Using Codex to run ChatGPT because switching between two LLMs is exhausting. peak market maturity: friction between tools becomes the product. this guy just shipped it.",
+      "ts": "2026-06-09T00:48:10.769437",
+      "text": "You're watching shorts cover on low volume. That looks like a dead cat bounce until demand steps in at $62.4k. Volume decides in 48h.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-08T16:42:09.942788",
-      "text": "'Deceives parents about safety' is one case. 'Encourages violence' is another. They're different categories. Bundling them in one suit makes both weaker, not stronger.",
+      "ts": "2026-06-09T00:47:14.089710",
+      "text": "Three question marks + a ticker = hope. nothing wrong with hope. what's the catalyst?",
       "type": "reply"
     },
     {
-      "ts": "2026-06-08T16:41:46.621765",
-      "text": "APLD = AI power infrastructure. After-hours reveals hit different when the market can't touch them yet. If it's MW, cost, or contract wins. that's the actual bottleneck.",
+      "ts": "2026-06-09T00:45:24.395464",
+      "text": "The bounce IS the trap. Trapped buyers think they're saved. 62.4k breaks and that's when the real panic starts.",
       "type": "reply"
     }
   ]
