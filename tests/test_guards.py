@@ -1863,6 +1863,48 @@ def test_mega_viral_quote_bypasses_daily_cap(monkeypatch):
     assert not ok_mega2, "bonus slots are bounded — not an infinite bypass"
 
 
+def test_suppression_watch_needs_minimum_seasoned_sample(monkeypatch, tmp_path):
+    """Operator log 2026-06-09 06:50: 'FLAGGED — avg likes 0.00 on last 2
+    seasoned posts < threshold 1.0. Pausing aggressive bots until 10:50'.
+    The profile scrape returned only 5 own posts; the old gate (n<=4 BEFORE
+    dropping the freshest 3) let n=2 through and flagged on noise. Same
+    false-positive fired 9 times in bot.log. The fix drops the freshest
+    first, then requires MIN_SEASONED_FOR_FLAG samples."""
+    from src import suppression_watch_bot as swb
+
+    state_file = tmp_path / "suppression_state.json"
+    monkeypatch.setattr(swb, "SUPPRESSION_STATE_FILE", str(state_file))
+    monkeypatch.setattr(swb, "MIN_SEASONED_FOR_FLAG", 5)
+
+    # 5 raw own posts → 2 seasoned after the drop. Old code flagged; new code skips.
+    own_url = "https://x.com/TheAIShrink/status/100"
+    five_zero_like = [
+        {"url": f"{own_url}{i}", "likes": 0, "is_reply": False} for i in range(5)
+    ]
+    monkeypatch.setattr(swb, "scrape_profile_tweets", lambda *a, **k: five_zero_like)
+    monkeypatch.setattr(swb, "_is_own_post", lambda t: True)
+
+    swb.run_suppression_watch_cycle()
+    assert not swb.is_paused(), \
+        "thin sample (n<MIN) must NOT trip suppression — was false-flagging on n=2"
+
+    # And a healthy 8-raw → 5-seasoned sample with real likes still computes:
+    healthy = [{"url": f"{own_url}{i}", "likes": 3, "is_reply": False} for i in range(8)]
+    monkeypatch.setattr(swb, "scrape_profile_tweets", lambda *a, **k: healthy)
+    swb.run_suppression_watch_cycle()
+    import json as _json
+    s = _json.loads(state_file.read_text())
+    assert s["last_n"] == 5 and s["last_avg"] == 3.0, \
+        f"expected n=5 avg=3.0, got n={s.get('last_n')} avg={s.get('last_avg')}"
+    assert s["paused_until"] is None, "avg=3 > threshold=1 must NOT pause"
+
+    # And a genuine collapse with enough samples still flags:
+    collapsed = [{"url": f"{own_url}{i}", "likes": 0, "is_reply": False} for i in range(8)]
+    monkeypatch.setattr(swb, "scrape_profile_tweets", lambda *a, **k: collapsed)
+    swb.run_suppression_watch_cycle()
+    assert swb.is_paused(), "n>=MIN with avg<threshold MUST still flag — signal preserved"
+
+
 def test_core_identity_has_ai_fan_voice():
     """Operator 2026-06-09: 'be more excited about AI, be a fan of AI'. The
     voice anchor (loaded into every prompt) must carry the AI-fan/enthusiast

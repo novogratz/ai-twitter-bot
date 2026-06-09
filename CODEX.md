@@ -222,6 +222,25 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-09 PM — suppression_watch false-positive on thin profile scrapes
+
+Bot.log 06:50:55 today: `[SUPPRESSION] FLAGGED — avg likes 0.00 on last 2
+seasoned posts < threshold 1.0. Pausing aggressive bots until 10:50 09-06.`
+Spicy / breakout / viral_stunt / follow_blast / space_promo paused 4h on a
+sample of 2. Same false-positive fired 9× in bot.log history. Root cause in
+`suppression_watch_bot.run_suppression_watch_cycle`: the size gate
+(`if len(seasoned) <= 4`) ran BEFORE `seasoned = seasoned[3:]` dropped the
+3 freshest, so 5 raw own posts (today's profile scrape returned only 5)
+passed the gate and the avg was computed on the 2 remaining — both showing
+0 likes because their public counts hadn't settled yet, not because the
+account is suppressed. Fix: drop first, then require
+`MIN_SEASONED_FOR_FLAG=5` (env-overridable) actual seasoned samples before
+flagging. Healthy / genuine-collapse paths preserved. Guard:
+`test_suppression_watch_needs_minimum_seasoned_sample` (3 branches: thin
+sample doesn't flag, healthy sample doesn't pause, collapsed sample still
+flags). Family: same as the engine_health PR #6/#7/#22 fixes — a
+statistical alarm has to know its own sample is meaningful before it acts.
+
 ### 2026-06-09 — learnings implemented + AI-fan personality (operator: "implement your learnings; be a fan of AI")
 
 **Learning implemented — mega-viral cap carve-out.** Last night a 1,459-like
