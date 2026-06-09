@@ -126,8 +126,11 @@ DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
 # 8pm ET). One post per slot — never two originals within ~10-15 min (they
 # cannibalize each other's reach). 2.5h+jitter spacing approximates the
 # slot rhythm across all original surfaces at the chokepoint.
-MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "4"))
-MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(150 * 60)))
+# 2026-06-09 (operator: "I don't see enough posts being created"): originals
+# 4→10/day across 8 slots (was 4). More shots on the profile = more chances
+# to land a like-winning post. Spacing dropped to ~75 min so 8 slots fit.
+MAX_ORIGINALS_PER_DAY = int(os.environ.get("MAX_ORIGINALS_PER_DAY", "10"))
+MIN_SECONDS_BETWEEN_POSTS = int(os.environ.get("MIN_SECONDS_BETWEEN_POSTS", str(75 * 60)))
 POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(30 * 60)))
 
 # Quote-reposts (quote-tweet-with-comment on big news) — operator-confirmed

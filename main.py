@@ -499,10 +499,12 @@ def main():
             log.info(f"[SLOT {slot_label}] No surface produced a post "
                      f"(all skipped — slot forfeited, next slot unaffected).")
 
-        log.info("Posting slots: originals at 09:30 / 12:30 / 16:30 / 20:00 New York "
-                 "(one per slot, surface priority order, 12:30 leads with the GIF stunt).")
+        log.info("Posting slots: originals 8x/day across US hours (operator "
+                 "2026-06-09: more posts) — 08:30/10:30/12:30/14:30/16:30/18:00/"
+                 "20:00/21:30 NY, one per slot, 12:30 leads with the GIF stunt.")
         for _slot_hour, _slot_min, _stunt_first in (
-            (9, 30, False), (12, 30, True), (16, 30, False), (20, 0, False),
+            (8, 30, False), (10, 30, False), (12, 30, True), (14, 30, False),
+            (16, 30, False), (18, 0, False), (20, 0, False), (21, 30, False),
         ):
             _label = f"{_slot_hour:02d}:{_slot_min:02d}ET"
             scheduler.add_job(

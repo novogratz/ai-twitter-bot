@@ -222,6 +222,28 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-09 PM — likes on posts/quotes + more volume + more AI excitement (operator)
+
+Operator diagnosis (measured): "replies get likes, posts + quote-RTs get
+VIEWS but not likes; I don't see enough posts being created; be more excited
+about AI."
+
+Three changes:
+1. **Likes principle (spine-level).** Root cause: replies win likes because
+   they're relatable/human/felt; posts+quotes were too analytical/cold —
+   informative, forgettable, un-likable. New core_identity section "HOW TO
+   EARN A LIKE": a like is an emotional reflex ("that's literally me" /
+   "finally someone said it" / "okay this is exciting"); LEAD WITH THE
+   FEELING, the number is seasoning not the dish; sound like our best REPLY.
+   Reinforced in the quote prompt (EARN THE LIKE block rewritten: emotion
+   first, analysis second). market_trauma one-liner (29.8 vs 13.1 likes) is
+   the default energy on every surface. Guard: test_core_identity_has_likes_principle.
+2. **More originals.** MAX_ORIGINALS_PER_DAY 4→10; post slots 4→8
+   (08:30/10:30/12:30/14:30/16:30/18:00/20:00/21:30 NY); spacing 150→75 min.
+   More shots on the profile = more chances at a like-winner.
+3. **More AI excitement** — the AI-fan voice + the quote excitement directive
+   (added 2026-06-09 AM) stay; the likes principle amplifies "okay this is
+   exciting" as a primary like-trigger.
 ### 2026-06-09 PM — suppression_watch false-positive on thin profile scrapes
 
 Bot.log 06:50:55 today: `[SUPPRESSION] FLAGGED — avg likes 0.00 on last 2
