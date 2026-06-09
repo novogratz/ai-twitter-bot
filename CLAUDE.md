@@ -263,6 +263,25 @@ stop being forfeited to dup-skips, so the tries actually convert.
 granted ("get those likes and followers").** Bot started by Claude this
 once (explicit instruction). Watch: likes on posts/quotes is THE metric.
 
+### 2026-06-09 PM round 3 — ACCELERATE (operator: "BOT REALLY SLOW... ACCELERATE THE PACE")
+
+Live read at 18:31: ~1 reply/min, fully serialized — each reply = ~30-50s
+LLM generation (claude CLI spawn + haiku) THEN ~22s of fixed Safari sleeps,
+each resource idle while the other worked. Three speedups:
+1. **Pipelined replies** — `direct_reply._reply_to_tweets` rebuilt around a
+   1-worker ThreadPoolExecutor: reply N+1 GENERATES while reply N POSTS
+   (Safari lock untouched — only generation overlaps). Cycle ≈ max(gen,
+   post) ≈ 2x throughput. All contracts preserved (cheap gates → fresh disk
+   dedup before the LLM call → no on-disk premark → log only on ship);
+   feed_sweeper inherits. `remaining` now bounds GENERATIONS (warmup time),
+   not posts. Guard: `test_reply_pipeline_overlaps_generation_with_posting`.
+2. **Safari sleeps trimmed** in the reply chokepoint: 22s → ~15s fixed waits
+   (page load keeps the biggest margin at 6s).
+3. **Quotes Opus → Sonnet 4.6** (`QUOTE_MODEL` in .env): Opus latency
+   (~60-120s/quote) was throttling the 200/day lane; Sonnet is ~half at
+   near-par quality — the like-bar now lives in the prompt + chokepoint
+   gates, not model heft. News/hotakes stay Opus (low volume).
+
 ### 2026-06-09 — ENGLISH ONLY (operator: "we are english only bro")
 
 Audited every generation prompt for French. The OUTPUT was already English

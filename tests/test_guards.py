@@ -2067,3 +2067,56 @@ def test_burned_catchphrases_blocked_at_chokepoint():
 
     fresh, _ = cg.validate("Nvidia's quarter was a therapy session disguised as an earnings call.", kind="original")
     assert fresh, "normal originals must still pass"
+
+
+def test_reply_pipeline_overlaps_generation_with_posting(monkeypatch):
+    """2026-06-09 (operator: 'BOT REALLY SLOW... ACCELERATE'): the reply loop
+    serialized a ~30-50s LLM call THEN ~20s of Safari per reply. The pipeline
+    must START generating reply N+1 while reply N is still posting — and keep
+    the contracts: one gen + one post per candidate, log only on ship."""
+    import threading
+    from src import direct_reply as dr
+
+    gen_calls = []
+    second_gen_started = threading.Event()
+
+    def fake_gen(author, text, lang="fr"):
+        gen_calls.append(author)
+        if author == "b":
+            second_gen_started.set()
+        return f"a sharp, substantive take for {author} that passes every gate"
+
+    posts = []
+
+    def fake_post(url, reply):
+        if not posts:
+            # The pipeline guarantee: while the FIRST reply is posting, the
+            # SECOND generation has already started.
+            assert second_gen_started.wait(timeout=5), \
+                "gen of candidate 2 never started during posting of candidate 1 (pipeline broken)"
+        posts.append(url)
+        return True
+
+    monkeypatch.setattr(dr, "_generate_single_reply", fake_gen)
+    monkeypatch.setattr(dr, "reply_to_tweet", fake_post)
+    monkeypatch.setattr(dr, "load_replied", lambda: set())
+    monkeypatch.setattr(dr, "log_reply", lambda *a, **k: None)
+    monkeypatch.setattr(dr, "_tweet_age_minutes", lambda url: 1)
+    monkeypatch.setattr(dr, "_is_on_niche", lambda t: True)
+    monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 999, 0))
+    monkeypatch.setattr(dr, "humanize", lambda t: t)
+
+    tweets = [
+        {"url": "https://x.com/usera/status/111", "text": "AI thing one", "author": "a"},
+        {"url": "https://x.com/userb/status/222", "text": "AI thing two", "author": "b"},
+    ]
+    posted = dr._reply_to_tweets(tweets, set(), "SEARCH-TEST")
+    assert posted == 2, f"both candidates must ship (posted={posted})"
+    assert sorted(gen_calls) == ["a", "b"], "exactly one generation per candidate"
+    assert len(posts) == 2
+
+    # remaining bound: with remaining=1, exactly one generation is submitted.
+    gen_calls.clear(); posts.clear()
+    posted = dr._reply_to_tweets(list(tweets), set(), "SEARCH-TEST", remaining=1)
+    assert posted == 1 and len(gen_calls) == 1, \
+        "remaining=1 must bound generations AND posts to 1"

@@ -540,72 +540,100 @@ def _freshness_sort_key(tweet):
 
 
 def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=None, en_counter=None):
+    """Reply to candidates with PIPELINED generation (2026-06-09, operator:
+    "BOT REALLY SLOW... ACCELERATE"). The old loop serialized a ~30-50s LLM
+    call THEN ~20s of Safari per reply (~65s/reply — each resource idle
+    while the other worked). Now reply N+1 GENERATES (worker thread, no
+    Safari lock) while reply N POSTS (Safari) — cycle ≈ max(gen, post),
+    close to 2x throughput. All gates and contracts preserved: cheap gates →
+    fresh disk dedup just before the LLM call → never premark the on-disk
+    replied store → log_reply only on a confirmed ship."""
+    from concurrent.futures import ThreadPoolExecutor
+
     posted = 0
-    per_author_count = {}
+    submitted = 0
     is_feed = source_name.startswith(("FEED", "FOLLOWING"))
     tweets = sorted(tweets, key=_freshness_sort_key)
-    for tweet in tweets:
-        if remaining is not None and posted >= remaining: break
-        url, text, author = tweet["url"], tweet["text"], tweet.get("author", "someone")
-        # Only hard safety gates: dedup + own handle + blocklist.
-        if url in replied: continue
-        if _handle_from_url(url) == _OWN_HANDLE: continue
-        if _handle_from_url(url) in BLOCKLIST or (author and author.lower() in BLOCKLIST): continue
-        # Age gate everywhere — never reply to posts older than 5 days.
-        if _tweet_age_minutes(url) > DIRECT_REPLY_MAX_AGE_MINUTES: continue
-        # Niche filter only for search (broad queries) — feeds get no filter.
-        if not is_feed and not _is_on_niche(text): continue
-        is_en_tweet = not _looks_french(text)
-        limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
-        if limited: break
-        # Disk re-check JUST before the expensive LLM call — another reply bot
-        # (direct_reply / feed_sweeper / retweet_bot replyback) may have shipped
-        # a reply to this URL since this cycle's `load_replied()` snapshot. The
-        # chokepoint in twitter_client.reply_to_tweet is the final guard, but it
-        # only fires AFTER ~17s of wasted ollama time per skip — 774 such skips
-        # across 06-06+07 = ~3.6h of wasted compute/day. Reload is ~5ms.
-        fresh_replied = load_replied()
-        if url in fresh_replied:
+    candidates = iter(tweets)
+
+    def _next_submission(pool):
+        """Advance to the next eligible candidate and submit its LLM
+        generation. Returns (url, author, lang, future) or None when
+        exhausted / hourly-limited / remaining-bound."""
+        nonlocal submitted
+        if remaining is not None and submitted >= remaining:
+            return None
+        for tweet in candidates:
+            url, text, author = tweet["url"], tweet["text"], tweet.get("author", "someone")
+            # Only hard safety gates: dedup + own handle + blocklist.
+            if url in replied: continue
+            if _handle_from_url(url) == _OWN_HANDLE: continue
+            if _handle_from_url(url) in BLOCKLIST or (author and author.lower() in BLOCKLIST): continue
+            # Age gate everywhere — never reply to posts older than 5 days.
+            if _tweet_age_minutes(url) > DIRECT_REPLY_MAX_AGE_MINUTES: continue
+            # Niche filter only for search (broad queries) — feeds get no filter.
+            if not is_feed and not _is_on_niche(text): continue
+            limited, used, max_calls, reset_seconds = llm_hourly_limit_status()
+            if limited: return None
+            # Disk re-check JUST before the expensive LLM call — another reply bot
+            # (direct_reply / feed_sweeper / retweet_bot replyback) may have shipped
+            # a reply to this URL since this cycle's `load_replied()` snapshot. The
+            # chokepoint in twitter_client.reply_to_tweet is the final guard, but it
+            # only fires AFTER ~17s of wasted LLM time per skip — 774 such skips
+            # across 06-06+07 = ~3.6h of wasted compute/day. Reload is ~5ms.
+            fresh_replied = load_replied()
+            if url in fresh_replied:
+                replied.add(url)
+                continue
+            _reply_lang = "fr" if source_name.startswith("PROFILE") else ("en" if not _looks_french(text) else "fr")
+            # FR-forced parents (operator 2026-06-07: "i saw some english on
+            # Julien response" — @Graphseo is French; short/ambiguous posts
+            # fooled the detector). Hard override, all sources.
+            if _handle_from_url(url) in _FR_FORCED_HANDLES:
+                _reply_lang = "fr"
+            # ⛔ NEVER premark the on-disk replied store here — the chokepoint
+            # in twitter_client.reply_to_tweet loads it and refuses anything
+            # already present (the 2026-06-05 phantom-reply bug). In-memory
+            # only: no same-cycle re-pick.
             replied.add(url)
-            continue
-        log.info(f"[{source_name}] Replying to @{author}...")
-        _reply_lang = "fr" if source_name.startswith("PROFILE") else ("en" if is_en_tweet else "fr")
-        # FR-forced parents (operator 2026-06-07: "i saw some english on
-        # Julien response" — @Graphseo is French; short/ambiguous posts
-        # fooled the detector). Hard override, all sources.
-        if _handle_from_url(url) in _FR_FORCED_HANDLES:
-            _reply_lang = "fr"
-        reply = _generate_single_reply(author, text, lang=_reply_lang)
-        if not reply or reply is _LLM_RATE_LIMITED:
-            continue
-        from .pattern_tags import extract_pattern as _extract_pattern
-        reply, _pattern_id = _extract_pattern(reply)
-        reply = humanize(reply)
-        # ⛔ NEVER premark the replied store here — the chokepoint in
-        # twitter_client.reply_to_tweet loads it and refuses anything already
-        # present. The 2026-04 "lock URL in BEFORE posting" premark made the
-        # chokepoint (added 2026-06-05) refuse 100% of this path's replies
-        # while log_reply kept recording phantoms. The chokepoint marks the
-        # store itself right before the Safari write.
-        replied.add(url)  # in-memory only: no same-cycle retry
-        try:
-            shipped = reply_to_tweet(url, reply)
-        except Exception:
-            traceback.print_exc()
-            continue
-        if not shipped:
-            continue  # policy/content/dedup skip — nothing was posted
-        # Include the query (source_detail) in the tag so per-query
-        # conversion is measurable (2026-06-08: experimental lanes were
-        # firing but logged only "SEARCH-HOT" — the query was dropped, so
-        # "prune by measurement" was impossible). Cap the query so the CSV
-        # column stays sane.
-        _src = f"{source_name}/{source_detail[:60]}" if source_detail else source_name
-        log_reply(url, reply, action_type="reply", source=_src, pattern_id=_pattern_id or "")
-        posted += 1
-        if _reply_lang == "en" and en_counter: en_counter[0] += 1
-        # Spacing handled by action_guard (MIN_SECONDS_BETWEEN_REPLIES).
-        # No extra sleep here — don't double-throttle.
+            log.info(f"[{source_name}] Generating reply for @{author}...")
+            submitted += 1
+            return (url, author, _reply_lang,
+                    pool.submit(_generate_single_reply, author, text, lang=_reply_lang))
+        return None
+
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        pending = _next_submission(pool)
+        while pending is not None:
+            url, author, _reply_lang, fut = pending
+            # Submit the NEXT generation BEFORE blocking on Safari for this
+            # one — this single line is what buys the overlap.
+            nxt = _next_submission(pool)
+            try:
+                reply = fut.result()
+            except Exception:
+                traceback.print_exc()
+                reply = None
+            if reply and reply is not _LLM_RATE_LIMITED:
+                from .pattern_tags import extract_pattern as _extract_pattern
+                reply, _pattern_id = _extract_pattern(reply)
+                reply = humanize(reply)
+                log.info(f"[{source_name}] Replying to @{author}...")
+                try:
+                    shipped = reply_to_tweet(url, reply)
+                except Exception:
+                    traceback.print_exc()
+                    shipped = False
+                if shipped:
+                    # Include the query (source_detail) in the tag so per-query
+                    # conversion is measurable (2026-06-08).
+                    _src = f"{source_name}/{source_detail[:60]}" if source_detail else source_name
+                    log_reply(url, reply, action_type="reply", source=_src, pattern_id=_pattern_id or "")
+                    posted += 1
+                    if _reply_lang == "en" and en_counter: en_counter[0] += 1
+                    # Spacing handled by action_guard (MIN_SECONDS_BETWEEN_REPLIES).
+                    # No extra sleep here — don't double-throttle.
+            pending = nxt
     return posted
 
 def run_direct_reply_cycle(max_replies=None):

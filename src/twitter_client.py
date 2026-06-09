@@ -898,17 +898,19 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
         _run_applescript('''
         tell application "Safari" to activate
         ''')
-        time.sleep(1)
+        time.sleep(0.5)
 
         log.info(f"Opening tweet: {tweet_url}")
         webbrowser.open(tweet_url)
-        time.sleep(8)  # Wait longer for tweet page to fully load
+        # Sleeps trimmed 2026-06-09 (operator: "BOT REALLY SLOW... ACCELERATE"):
+        # 22s of fixed waits/reply → ~15s. Page load keeps the biggest margin.
+        time.sleep(6)
 
         # Make sure Safari is in front
         _run_applescript('''
         tell application "Safari" to activate
         ''')
-        time.sleep(1)
+        time.sleep(0.5)
 
         # Like the tweet (idempotent — won't toggle off if already liked
         # from a prior retweet/quote cycle). Bug 2026-05-18: bot was
@@ -923,12 +925,12 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
             keystroke "r"
         end tell
         ''')
-        time.sleep(4)  # Wait for reply box to open
+        time.sleep(3)  # Wait for reply box to open
 
         # Paste the reply (clipboard handles accents correctly)
         log.info("Pasting reply...")
         _paste_text(reply_text)
-        time.sleep(3)  # Wait for paste to complete
+        time.sleep(2)  # Wait for paste to complete
 
         # Submit with Cmd+Enter
         log.info("Submitting reply...")
@@ -937,7 +939,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
             keystroke return using command down
         end tell
         ''')
-        time.sleep(3)  # Wait for submission
+        time.sleep(2)  # Wait for submission
         log.info("Reply posted!")
         action_guard.record(action_guard.REPLY, target=tweet_url)
         close_front_tab()
