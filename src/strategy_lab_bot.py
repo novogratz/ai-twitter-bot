@@ -51,15 +51,16 @@ ENGAGEMENT_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_log.csv")
 PERFORMANCE_LOG_FILE = os.path.join(_PROJECT_ROOT, "performance_log.json")
 
 # Paths we're allowed to mutate. Anything else from the LLM gets rejected.
-# 2026-06-07 AGENT SPEC: ranges clamped to the spec mix (originals 3-4
-# total via the chokepoint, QRTs 1-2, plain RTs 0-2, replies unlimited,
-# follow_blast permanently 0 — follows are whitelist-seed only at 20/day).
+# 2026-06-09 volume mandate (operator: "I DONT SEE ENOUGH POSTS AND QUOTE
+# RETWEET — DO MORE"): ranges opened to match — the old 2026-06-07 spec
+# ranges (news<=2, hotake<=2) were re-clamping the operator's volume.
+# follow_blast stays permanently 0.
 ALLOWED_PATHS = {
-    "caps.MAX_NEWS_PER_DAY":      (0, 2),
-    "caps.MAX_HOTAKES_PER_DAY":   (1, 2),
-    "caps.MAX_BREAKOUTS_PER_DAY": (0, 1),
-    "caps.MAX_SPICY_PER_DAY":     (0, 1),
-    "caps.MAX_QUOTES_PER_DAY":    (40, 150),
+    "caps.MAX_NEWS_PER_DAY":      (2, 10),
+    "caps.MAX_HOTAKES_PER_DAY":   (6, 20),
+    "caps.MAX_BREAKOUTS_PER_DAY": (0, 3),
+    "caps.MAX_SPICY_PER_DAY":     (0, 2),
+    "caps.MAX_QUOTES_PER_DAY":    (60, 200),
     "caps.MAX_RETWEETS_PER_DAY":  (0, 2),
     "caps.MAX_REPLIES_PER_CYCLE": (1, 50),
     "caps.FOLLOW_BLAST_PER_CYCLE": (0, 0),

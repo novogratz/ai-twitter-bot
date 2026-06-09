@@ -1,12 +1,12 @@
 {
   "ts": "2026-06-09T04:00:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 1,
-    "MAX_HOTAKES_PER_DAY": 4,
-    "MAX_QUOTES_PER_DAY": 100,
+    "MAX_NEWS_PER_DAY": 8,
+    "MAX_HOTAKES_PER_DAY": 16,
+    "MAX_QUOTES_PER_DAY": 200,
     "MAX_RETWEETS_PER_DAY": 1,
-    "MAX_BREAKOUTS_PER_DAY": 1,
-    "MAX_SPICY_PER_DAY": 1,
+    "MAX_BREAKOUTS_PER_DAY": 3,
+    "MAX_SPICY_PER_DAY": 2,
     "MAX_REPLIES_PER_CYCLE": 30,
     "LIKE_BOT_PER_CYCLE": 100,
     "FOLLOW_BLAST_PER_CYCLE": 0
@@ -18,5 +18,5 @@
     "AI stocks as asset class ($NVDA $PLTR earnings cycle — re-denominate the capex number, name the mechanism)"
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-09 autonomous update (measured data). market_trauma = 15.22 avg likes / 24,608 avg views vs ai_news_take = 0.45 avg likes / 487 avg views — 34x gap on likes, 50x gap on views. RATIO PROBLEM: ai_news_take is 40% more frequent than market_trauma in the last 7d despite earning 34x less. MAX_HOTAKES_PER_DAY 3→4 to generate more market_trauma originals. Breaking topic: OpenAI IPO (Jun 8) + Anthropic $965B = therapist content on the AI-stocks lane. QRTs stay at 100/day quality barbell per operator mandate (50-like floor, SKIP-by-default). Plain RTs stay at 1/day. Peak hours confirmed: 1-3pm ET + 5-7pm ET (market open/close), evening 9-11pm ET."
+  "rationale": "2026-06-09 operator volume mandate (manual reset): the 06-07 spec bounds (news<=2, hotake<=4) were silently re-clamping originals to ~5/day. Caps opened to match .env (news 10, hotakes 20, quotes 200); agent bounds updated in code so the 4h cycles can't re-clamp below the mandate. 2026-06-09 autonomous update (measured data). market_trauma = 15.22 avg likes / 24,608 avg views vs ai_news_take = 0.45 avg likes / 487 avg views — 34x gap on likes, 50x gap on views. RATIO PROBLEM: ai_news_take is 40% more frequent than market_trauma in the last 7d despite earning 34x less. MAX_HOTAKES_PER_DAY 3→4 to generate more market_trauma originals. Breaking topic: OpenAI IPO (Jun 8) + Anthropic $965B = therapist content on the AI-stocks lane. QRTs stay at 100/day quality barbell per operator mandate (50-like floor, SKIP-by-default). Plain RTs stay at 1/day. Peak hours confirmed: 1-3pm ET + 5-7pm ET (market open/close), evening 9-11pm ET."
 }

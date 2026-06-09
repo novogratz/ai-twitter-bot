@@ -43,23 +43,28 @@ META_LOG_FILE = os.path.join(_PROJECT_ROOT, "meta_strategy_log.json")
 # 2026-06-07 PM-2: QRT surge override — quotes of large accounts are the
 # measured winning surface ("abuse those"), bounds opened to 20-150.
 # Originals/RTs stay inside the spec mix.
+# 2026-06-09 PM round 2 volume mandate (operator: "I DONT SEE ENOUGH POSTS
+# AND QUOTE RETWEET — DO MORE"): the old 2026-06-07 spec bounds (news<=2,
+# hotake<=2) were silently re-clamping live_strategy every 4h regardless of
+# .env — THE reason originals stalled at ~5/day. Floors keep the agent from
+# starving a surface; ceilings track the operator's current volume mandate.
 _BOUNDS = {
-    "MAX_NEWS_PER_DAY":      (0,  2),
-    "MAX_HOTAKES_PER_DAY":   (1,  2),
-    "MAX_QUOTES_PER_DAY":    (40, 150),
+    "MAX_NEWS_PER_DAY":      (2,  10),
+    "MAX_HOTAKES_PER_DAY":   (6,  20),
+    "MAX_QUOTES_PER_DAY":    (60, 200),
     "MAX_RETWEETS_PER_DAY":  (0,  2),
-    "MAX_BREAKOUTS_PER_DAY": (0,  1),
-    "MAX_SPICY_PER_DAY":     (0,  1),
+    "MAX_BREAKOUTS_PER_DAY": (0,  3),
+    "MAX_SPICY_PER_DAY":     (0,  2),
     "MAX_REPLIES_PER_CYCLE": (3,  50),
 }
 
 # Safe defaults used when the LLM omits a cap key entirely.
 _DEFAULTS = {
-    "MAX_NEWS_PER_DAY":      1,
-    "MAX_HOTAKES_PER_DAY":   2,
-    "MAX_QUOTES_PER_DAY":    100,
+    "MAX_NEWS_PER_DAY":      8,
+    "MAX_HOTAKES_PER_DAY":   14,
+    "MAX_QUOTES_PER_DAY":    150,
     "MAX_RETWEETS_PER_DAY":  1,
-    "MAX_BREAKOUTS_PER_DAY": 1,
+    "MAX_BREAKOUTS_PER_DAY": 2,
     "MAX_SPICY_PER_DAY":     1,
     "MAX_REPLIES_PER_CYCLE": 25,
 }
@@ -160,9 +165,10 @@ OUTPUT — UNIQUEMENT un JSON valide, ce schéma exact:
   "rationale": "<2-3 phrases en français expliquant tes choix>"
 }}
 
-BORNES: chaque cap est dans son range autorisé. Bornes:
-  news 4-8, hotake 2-5, quote 4-60, retweet 8-30,
-  breakout 1-10, spicy 1-10, replies/cycle 1-5.
+BOUNDS: every cap must stay inside its allowed range (2026-06-09 volume
+mandate — the operator wants MORE posts + quotes, never starve a surface):
+  news 2-10, hotake 6-20, quote 60-200, retweet 0-2,
+  breakout 0-3, spicy 0-2, replies/cycle 3-50.
 
 Pas de markdown, pas de commentaire — JUSTE le JSON.
 """

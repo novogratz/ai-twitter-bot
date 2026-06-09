@@ -2120,3 +2120,26 @@ def test_reply_pipeline_overlaps_generation_with_posting(monkeypatch):
     posted = dr._reply_to_tweets(list(tweets), set(), "SEARCH-TEST", remaining=1)
     assert posted == 1 and len(gen_calls) == 1, \
         "remaining=1 must bound generations AND posts to 1"
+
+
+def test_agent_bounds_allow_operator_volume_mandate():
+    """2026-06-09: originals stalled at ~5/day because THREE agent clamp
+    sites still encoded the 2026-06-07 spec (news<=2, hotake<=2) and
+    re-clamped live_strategy.json every cycle regardless of .env. The agent
+    bounds must allow the operator's current volume mandate — when the
+    mandate changes, change the bounds AND this test together."""
+    from src.meta_strategy_agent import _BOUNDS
+    assert _BOUNDS["MAX_NEWS_PER_DAY"][1] >= 8
+    assert _BOUNDS["MAX_HOTAKES_PER_DAY"][1] >= 14
+    assert _BOUNDS["MAX_QUOTES_PER_DAY"][1] >= 200
+    # Floors: the agent may tune DOWN but never starve a surface to the
+    # old-spec levels.
+    assert _BOUNDS["MAX_HOTAKES_PER_DAY"][0] >= 6
+    assert _BOUNDS["MAX_NEWS_PER_DAY"][0] >= 2
+
+    from src.strategy_lab_bot import ALLOWED_PATHS
+    assert ALLOWED_PATHS["caps.MAX_NEWS_PER_DAY"][1] >= 8
+    assert ALLOWED_PATHS["caps.MAX_HOTAKES_PER_DAY"][1] >= 14
+    assert ALLOWED_PATHS["caps.MAX_QUOTES_PER_DAY"][1] >= 200
+    assert ALLOWED_PATHS["caps.FOLLOW_BLAST_PER_CYCLE"] == (0, 0), \
+        "follow_blast must stay permanently 0"

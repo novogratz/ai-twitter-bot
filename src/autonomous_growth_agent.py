@@ -95,11 +95,12 @@ Format:
 ## Step 4 — Tune live_strategy.json (optional)
 Only if the data clearly shows imbalance (e.g. quotes underperform vs RT,
 or engagement drops at night). Adjust caps conservatively (±20% max).
-HARD BOUNDS (2026-06-07 quality barbell — NEVER exceed): originals
-3-4/day total, MAX_QUOTES_PER_DAY 40-150 (default 100 — QRTs are the
-profile's QUALITY surface: 50-like floor, screenshot-worthy or SKIP),
-MAX_RETWEETS_PER_DAY <= 2, replies UNLIMITED (the QUANTITY surface and
-the only volume lever). Never trade QRT quality for volume.
+HARD BOUNDS (2026-06-09 volume mandate — NEVER exceed, and never starve):
+news 2-10, hotakes 6-20 (originals up to ~24/day total via the slots),
+MAX_QUOTES_PER_DAY 60-200 (QRTs stay quality-gated: 50-like floor,
+screenshot-worthy or SKIP), MAX_RETWEETS_PER_DAY <= 2, replies UNLIMITED.
+Volume levers are replies AND quotes AND originals now — but never trade
+the per-post quality bar for volume; SKIP stays free.
 
 ## Step 5 — Commit and push
 ```bash

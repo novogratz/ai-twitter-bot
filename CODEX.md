@@ -263,6 +263,23 @@ stop being forfeited to dup-skips, so the tries actually convert.
 granted ("get those likes and followers").** Bot started by Claude this
 once (explicit instruction). Watch: likes on posts/quotes is THE metric.
 
+### 2026-06-09 PM round 4 — the REAL originals limiter was live_strategy clamping (found watching the accelerated boot)
+
+The startup originals burst logged `Today: 0/1 Décodes, 4/4 hot takes` —
+caps of 1/4, not the .env 10/20. `live_strategy.json` (meta_strategy, 4h)
+still carried the 2026-06-07 spec, and THREE agent clamp sites re-imposed
+it every cycle no matter what .env said: `meta_strategy_agent._BOUNDS`
+(news 0-2, hotake 1-2), `strategy_lab_bot.ALLOWED_PATHS` (same), and the
+`autonomous_growth_agent` prompt ("originals 3-4/day HARD BOUNDS"). That's
+why originals sat at ~5/day through two volume mandates. All three updated
+to the volume mandate (news 2-10, hotake 6-20, quotes 60-200, breakout
+0-3, spicy 0-2; follow_blast pinned 0); `live_strategy.json` caps manually
+reset (live — `get_live_cap` reads at call time). Guard:
+`test_agent_bounds_allow_operator_volume_mandate`. Lesson (same family as
+"watchdog baseline must follow cap policy"): when the operator moves the
+volume mandate, grep EVERY agent bounds/clamp site in the same session —
+.env is not the only authority over caps.
+
 ### 2026-06-09 PM round 3 — ACCELERATE (operator: "BOT REALLY SLOW... ACCELERATE THE PACE")
 
 Live read at 18:31: ~1 reply/min, fully serialized — each reply = ~30-50s
