@@ -464,7 +464,11 @@
     "Binance",
     "gabriel",
     "CoinMarketCap",
-    "Goku"
+    "Goku",
+    "Chris",
+    "Blaber",
+    "zerohedge",
+    "Sean"
   ],
   "history": [
     {
@@ -2780,6 +2784,26 @@
     {
       "lang": "en",
       "handle": "Goku",
+      "added": "2026-06-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Chris",
+      "added": "2026-06-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Blaber",
+      "added": "2026-06-09"
+    },
+    {
+      "lang": "en",
+      "handle": "zerohedge",
+      "added": "2026-06-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Sean",
       "added": "2026-06-09"
     }
   ]

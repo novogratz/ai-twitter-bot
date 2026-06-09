@@ -222,6 +222,22 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-09 PM — MORE volume + LOUDER hype (operator: "hype the shit out of it")
+
+Operator: do more posts + quotes, be impactful, make people HYPED and HAPPY
+about AI ("laugh at the dip, go crazy on Claude model news").
+
+**Volume cranked** (.env): originals 10→16/day, post spacing 75→40 min, post
+slots 8→14 (hourly 08:30-21:30 NY), hotakes 8→14, news 6→8; quotes 100→150/day,
+quote spacing 180→90s. Mega-viral AI bypass still active.
+
+**Hype amplified** (core_identity, read fresh per post — live instantly):
+"YOUR JOB IS TO MAKE PEOPLE HYPED AND HAPPY ABOUT AI." Two reflexes —
+(1) new model/capability → GO ABSOLUTELY CRAZY, quote it big, loudest happiest
+fan in the room; (2) market red/recession → LAUGH at it, lighten it, never
+doom ("never been more relaxed — the people building the future aren't
+refreshing the ticker"). Default = a therapist who leaves the timeline
+happier + more hyped about AI. The one line: hype the AI, never pump a bag.
 ### 2026-06-09 — startup posts/quotes burst (operator: "do more posts + quote retweet, I don't see it doing anything")
 
 Root cause of "looks idle after restart": post slots are fixed crons
