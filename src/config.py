@@ -76,12 +76,17 @@ def _default_model(codex_model: str, claude_model: str, gemini_model: str = "gem
     return claude_model
 
 # Haiku for all reply surfaces (volume, speed) — Sonnet for content creation.
-NEWS_MODEL = os.environ.get("NEWS_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6", "gemini-2.0-flash"))
+# 2026-06-08 (operator): the PROFILE surfaces — new posts + quote-RTs —
+# get OPUS. They're low-volume + high-stakes (they show on the profile and
+# must earn the like), so the best model is worth it. The reply firehose
+# (1000+/day) stays on fast/cheap haiku — it's already converting well.
+# NEWS_MODEL also drives breakout_bot; HOTAKE_MODEL drives spicy_bot.
+NEWS_MODEL = os.environ.get("NEWS_MODEL", _default_model("gpt-5.4-mini", "claude-opus-4-8", "gemini-2.0-flash"))
 REPLY_MODEL = os.environ.get("REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
 PRIORITY_REPLY_MODEL = os.environ.get("PRIORITY_REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-2.0-flash"))
-HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6", "gemini-2.0-flash"))
+HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", _default_model("gpt-5.4-mini", "claude-opus-4-8", "gemini-2.0-flash"))
 ROAST_MODEL = os.environ.get("ROAST_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
-QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
+QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "claude-opus-4-8", "gemini-1.5-flash"))
 
 # No budget limits — the bot calls the LLM freely.
 

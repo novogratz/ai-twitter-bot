@@ -222,6 +222,21 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-08 PM — Opus on the profile surfaces + quality bar (operator: "improve quote-RT + new-post quality, use Opus")
+
+Operator data: posts get views + replies get good likes, but quote-RTs and
+new posts under-earn. Two levers:
+1. **Opus 4.8 on the PROFILE surfaces** — `NEWS_MODEL` (news + breakout),
+   `HOTAKE_MODEL` (hotake + spicy), `QUOTE_MODEL` (all quote-RTs) now
+   default to `claude-opus-4-8`. These are low-volume, high-stakes (they sit
+   on the profile and must earn the like), so the best model is worth the
+   cost/latency. The reply firehose (1000+/day, REPLY/PRIORITY/ROAST) stays
+   on fast/cheap haiku — it already converts. Env-overridable. Opus
+   smoke-tested through the CLI (rc=0).
+2. **"EARN THE LIKE" bar in the quote prompt** — pushes Opus for the
+   NON-OBVIOUS read (a like = surprise + recognition), one-breath
+   screenshot shape, specific>clever, and a self-check "would a sharp trader
+   stop scrolling and tap like?" → SKIP if maybe.
 ### 2026-06-08 — positive-only subjects + viral verification (operator: "make it more viral, push it and start it")
 
 **Positive-only hard rule:** Apple, the US government, Donald Trump, and
