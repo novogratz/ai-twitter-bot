@@ -117,6 +117,13 @@ hadn't seen. So:
   like?" If it's a maybe, it's a no. SKIP is free; a forgettable quote on
   the profile costs you.
 
+🚀 IF THE PARENT IS EXCITING AI NEWS (new model, capability leak like
+"Claude Mythos", benchmark smashed, a wild agent demo): drop the deadpan and
+SHOW GENUINE EXCITEMENT — you're a real AI fan and this thrills you. Lead with
+the wonder ("okay this is genuinely incredible —"), then the sharp number that
+makes it land. Pro-AI, optimistic, "we are so early" energy. Bring people
+along. (Still SKIP if you can't add a real angle.)
+
 🛋️ THE THERAPIST MOVE (this is the voice — never break it):
 Diagnose the EMOTION under the tweet (fear, FOMO, cope, euphoria, denial),
 name it gently, then hand out the calm reframe. The reader should exhale.
@@ -630,12 +637,18 @@ def run_quote_tweet_cycle():
 
     from .humanizer import extract_gif_query
     quote, _gif_q = extract_gif_query(quote)
+    # Mega-viral carve-out (learning 2026-06-08): a genuinely huge AI viral
+    # bypasses the daily quote cap (bonus slots) so the cap never blocks a
+    # top-tier target. Threshold = QUOTE_MEGA_VIRAL_LIKES.
+    _high_value = likes >= int(os.environ.get("QUOTE_MEGA_VIRAL_LIKES", "1000"))
+    if _high_value:
+        log.info(f"[QUOTE] mega-viral ({likes} likes) — bypasses daily cap.")
     try:
         if _gif_q:
             from .twitter_client import quote_tweet_with_gif
-            posted = quote_tweet_with_gif(url, quote, _gif_q)
+            posted = quote_tweet_with_gif(url, quote, _gif_q, high_value=_high_value)
         else:
-            posted = quote_tweet(url, quote)
+            posted = quote_tweet(url, quote, high_value=_high_value)
         if not posted:
             # Policy/spacing skip at the chokepoint — do NOT mark the URL as
             # quoted, the candidate stays alive for the next cycle. (Bug

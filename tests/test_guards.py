@@ -1837,3 +1837,40 @@ def test_positive_only_subjects_in_hard_rules():
     # Must instruct positive-only + override the snark voice.
     assert "positive" in low and ("only" in low or "never criticize" in low)
     assert "override" in low or "overrides" in low
+
+
+def test_mega_viral_quote_bypasses_daily_cap(monkeypatch):
+    """Learning 2026-06-08: a 1,459-like AI viral was blocked purely by the
+    daily quote cap. high_value quotes (mega-virals) get bonus slots beyond
+    the cap so a top-tier viral is never blocked; normal quotes still hit
+    the cap. Spacing still applies to both."""
+    from src import action_guard as ag
+    from src import config as cfg
+
+    cap = cfg.MAX_QUOTE_REPOSTS_PER_DAY
+    monkey_count = {"n": cap}
+    monkeypatch.setattr(ag, "count_today", lambda action: monkey_count["n"] if action == ag.QUOTE else 0)
+    monkeypatch.setattr(ag, "spacing_ok", lambda action, gap: True)
+
+    ok_normal, why = ag.can_post(ag.QUOTE, high_value=False)
+    assert not ok_normal and "cap" in why, "normal quote must be capped at the limit"
+    ok_mega, _ = ag.can_post(ag.QUOTE, high_value=True)
+    assert ok_mega, "mega-viral quote must bypass the daily cap (bonus slots)"
+
+    # Bonus is finite: at cap+bonus, even mega-virals stop.
+    monkey_count["n"] = cap + cfg.QUOTE_MEGA_VIRAL_BONUS_SLOTS
+    ok_mega2, _ = ag.can_post(ag.QUOTE, high_value=True)
+    assert not ok_mega2, "bonus slots are bounded — not an infinite bypass"
+
+
+def test_core_identity_has_ai_fan_voice():
+    """Operator 2026-06-09: 'be more excited about AI, be a fan of AI'. The
+    voice anchor (loaded into every prompt) must carry the AI-fan/enthusiast
+    dimension so excitement shows in posts/quotes/replies."""
+    import os
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    txt = open(os.path.join(root, "core_identity.md")).read().lower()
+    assert "ai fan" in txt or "genuine ai fan" in txt or "superfan" in txt
+    assert "excit" in txt and ("wonder" in txt or "thrill" in txt)
+    # Must coexist with, not replace, the therapist voice.
+    assert "therapist" in txt and "calm the fear" in txt

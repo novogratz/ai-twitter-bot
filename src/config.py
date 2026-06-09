@@ -152,6 +152,12 @@ POST_JITTER_SECONDS = int(os.environ.get("POST_JITTER_SECONDS", str(30 * 60)))
 MAX_QUOTE_REPOSTS_PER_DAY = int(os.environ.get("MAX_QUOTE_REPOSTS_PER_DAY", "100"))
 MIN_SECONDS_BETWEEN_QUOTES = int(os.environ.get("MIN_SECONDS_BETWEEN_QUOTES", "300"))
 QUOTE_JITTER_SECONDS = int(os.environ.get("QUOTE_JITTER_SECONDS", "180"))
+# Mega-viral carve-out (learning 2026-06-08): a 1,459-like AI viral got
+# blocked purely by the daily quote cap at night. Genuinely huge AI posts
+# are the highest-ROI quote targets — give them BONUS slots beyond the cap
+# so the cap never blocks a top-tier viral again. Spacing still applies.
+QUOTE_MEGA_VIRAL_LIKES = int(os.environ.get("QUOTE_MEGA_VIRAL_LIKES", "1000"))
+QUOTE_MEGA_VIRAL_BONUS_SLOTS = int(os.environ.get("QUOTE_MEGA_VIRAL_BONUS_SLOTS", "25"))
 
 # 2026-06-07 AGENT SPEC: the reply machine is the core engine — no volume
 # cap, no daily limit. Minimum spacing kept at 8s+jitter for ban safety

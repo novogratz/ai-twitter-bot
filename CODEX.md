@@ -222,6 +222,32 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-09 — learnings implemented + AI-fan personality (operator: "implement your learnings; be a fan of AI")
+
+**Learning implemented — mega-viral cap carve-out.** Last night a 1,459-like
+Evan Luthra AI/Forbes post was blocked purely by the 100/day quote cap — the
+highest-ROI target of the night, lost. Fix: `can_post(QUOTE, high_value=True)`
+grants `QUOTE_MEGA_VIRAL_BONUS_SLOTS` (25) beyond the daily cap; the main
+quote bot passes `high_value` when the pick has ≥ `QUOTE_MEGA_VIRAL_LIKES`
+(1000) likes. Threaded through `quote_tweet` + `quote_tweet_with_gif`. The
+cap still governs normal quotes; bonus is bounded (not an infinite bypass).
+Guard: `test_mega_viral_quote_bypasses_daily_cap`.
+
+**AI-FAN personality (operator: "be more excited about AI, be a fan").**
+`core_identity.md` gains a "YOU ARE A GENUINE AI FAN" section: under the calm
+therapist sits a true believer who gets openly EXCITED by AI breakthroughs (a
+new Claude/GPT/Gemini, a capability leak like "Claude Mythos", a benchmark
+smashed). Scared person → calm them; exciting AI news → SHARE THE THRILL ("do
+you SEE what just shipped?? we are so early"), still with the one sharp
+number. Pro-AI by default, infectious, never shill. Reinforced in the quote
+prompt (excitement directive on AI-breakthrough parents). Additive to — not a
+replacement for — the therapist voice. Guard: `test_core_identity_has_ai_fan_voice`.
+
+**Other session learnings (already shipped):** Opus on posts+quotes; replies
+stay haiku; phantom-log + scheduler-start fixes; AI-primary lanes; profile
+visits home/search-only; positive-only on Apple/US-gov/Trump/Musk; restart
+waits for full exit; each restart resets APScheduler interval timers (so
+maintenance agents starve under frequent restarts — fewer restarts).
 ### 2026-06-08 PM — Opus on the profile surfaces + quality bar (operator: "improve quote-RT + new-post quality, use Opus")
 
 Operator data: posts get views + replies get good likes, but quote-RTs and
