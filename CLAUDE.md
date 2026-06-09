@@ -222,6 +222,27 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-09 PM — phantom originals (the same hotake logged 5x though dedup blocked it)
+
+Self-eval of live output (operator: "GET BETTER"): "AI capex is the new
+rent: you pay for silicon that doesn't exist yet" appeared 5x in
+engagement_log today, some 12 min apart — inside the dedup window. The
+dedup was WORKING (is_duplicate→True, the chokepoint blocked the actual
+reposts), but `bot.py` called `log_post`/`log_hotake` UNCONDITIONALLY after
+`post_tweet` (which returned None on a skip). So a dedup-blocked repeat
+never hit Twitter yet logged a phantom row — polluting the per-pillar ROI
+loop that drives the autonomous pivots. Third member of the phantom-log
+family (replies PM-11, the GIF double-row, now originals).
+
+Fix: `post_tweet` returns True only on an actual ship (or DRY_RUN), False on
+policy/content/dedup/review skip; `_run_single_bot_cycle` captures it and
+returns early WITHOUT logging when False. `post_tweet_with_gif` already
+returned bool. Guard: `test_post_tweet_returns_bool_for_skip_vs_ship`.
+
+QUOTES this session were excellent (verified live): hype landing on the
+Mythos launch ("if Fable is the 'safe' cut, Mythos is more capable than
+they're letting us see... we are so early"), "we got so numb to miracles",
+varied openings, zero "X is really Y" formula. Hype + variety confirmed.
 ### 2026-06-09 PM — MORE volume + LOUDER hype (operator: "hype the shit out of it")
 
 Operator: do more posts + quotes, be impactful, make people HYPED and HAPPY
