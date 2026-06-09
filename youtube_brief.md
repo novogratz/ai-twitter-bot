@@ -1,15 +1,16 @@
-# YouTube brief — 2026-06-08
+# YouTube brief — 2026-06-09
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **974**
-- reply: **835**
-- quote: **68**
-- quote_gif: **37**
-- retweet: **28**
+- Total actions logged: **852**
+- reply: **754**
+- quote_gif: **45**
+- quote: **41**
 - hotake: **6**
+- post: **5**
+- retweet: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -64,52 +65,44 @@ Literally Huang pumping and eating friend chicken isn't enough to stop the crash
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_HOME/The Kobeissi Letter]** BREAKING: South Korea’s stock market has been halted after falling -8.4% at the open.
-  - https://x.com/KobeissiLetter/status/2063776212401455433
-- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Shay Boloor]** $NVDA STOCK PORTFOLIO REVEALED
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/The Humanoid Hub]** This cute little camera robot would also make a great companion.
 
-1. $INTC 52%
-2. $CRWV 20%
-3. $SNPS 10%
-4. $COHR 10%
-5. $NOK 7%
-  - https://x.com/StockSavvyShay/status/2061786639060590876
-- **[X_FOLLOWING/Benjamin Cowen]** Bitcoin closed the week above the 200W SMA after sweeping the low from February
-  - https://x.com/benjamincowen/status/2063773695269548456
-- **[X_HOME/Benjamin Cowen]** Bitcoin closed the week above the 200W SMA after sweeping the low from February
-  - https://x.com/benjamincowen/status/2063773695269548456
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/WIZZ ( beware scammers )]** Still holding all my $TAO
+Beni by Mondo Robotics
 
-Not selling a single token below $2000
-  - https://x.com/CryptoWizardd/status/2062817023113973994
-- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Daniel]** These are wealth-generation opportunities.
+Weighs 3.8 lbs (1.7 kg), has a 1.5-hour runtime and a swappable batter
+  - https://x.com/TheHumanoidHub/status/2064063408396480794
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/𝘊𝘰𝘳𝘳𝘪𝘯𝘦]** America has sanctioned China for years.
 
-$AMZN at $245
-$META at $589
-$CRWV at $98
-$GRAB at $3
-$HIMS at $25
-$HOOD at $81
-$SOFI at $15
-$IREN at $53
-$LMND at $5
-  - https://x.com/danielisdizzy/status/2063691998356259149
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/2xnmore]** $TAO isn't dead.
+Huawei was supposed to collapse.
+China built its own stack.
 
-They called it dead at $300.
+Chips were supposed to choke China.
+China accelerated subs
+  - https://x.com/OopsGuess/status/2064170638823325997
+- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Leif | Investing]** Jensen Huang is calling AI stocks “VERY CHEAP,” and the government is discussing stakes in AI companies
 
-It's at $200 and they're calling it dead again.
+$CRWV may be one of the cheapest AI infrastructure stoc
+  - https://x.com/LeifInvests/status/2064112910431817940
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Whale Factor]** WHALE WATCH:The AI narrative is shifting from software directly into hardware.
 
-Here is what the chart is not showing you:
+Figure just hit a massive record for humanoid production at their BotQ facility 
+  - https://x.com/WhaleFactor/status/2064203500234387589
+- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Matt Allen]** Goldman Sachs projects $7.6 trillion of AI infrastructure capex through 2031
 
-$2.2B market cap.
+Every new generation of AI infrastructure requires more compute, more power, and m
+  - https://x.com/investmattallen/status/2063974694441697792
+- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/John Tinsman]** COMPUTE = REVENUE
 
+Don't forget this. Elon Musk is showing us compute is revenue with the recent SpaceX Anthropic and Google Deals.
 
-  - https://x.com/2xnmore/status/2063576709434351686
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Cointelegraph]** Bittensor co-founder Jacob Steeves says if decentralized AI fails, people may have 'no hope of taking down the giants'.
+The question I am asking my
+  - https://x.com/JohnTinsman/status/2064006003075555838
+- **[X_FOLLOWING/unusual_whales]** 38 per cent of those who cut staff because of AI cite the technology’s higher-than-expected oversight and quality control requirements as a primary reason for r
+  - https://x.com/unusual_whales/status/2064203584431120423
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/The Epoch Times]** The Pentagon has flagged prominent Chinese firms, including Alibaba, Baidu, and BYD, as supporting the Chinese military.
 
-And the world could end up shaped by th
-  - https://x.com/Cointelegraph/status/2063644753380491405
+The list, released June 8 for publicat
+  - https://x.com/EpochTimes/status/2064165610905321621
 
 ## 🎬 Suggested video angles
 
@@ -120,4 +113,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-08T00:33:33*
+*Generated 2026-06-09T00:49:05*
