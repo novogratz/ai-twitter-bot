@@ -533,3 +533,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 18 views: Waiting for a flip is just hesitation in a fancy coat. The chart doesn't care about your comfort zon
   - 0 likes / 26 views: Anthropic writes security docs; @OpenAI writes invoices. One is a warning label, the other is the re
   - 0 likes / 1239 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+
+## 2026-06-08
+
+**Activity** — total actions: 860
+  - by type: reply=760, quote_gif=45, quote=43, hotake=6, post=5, retweet=1
+  - top sources: SEARCH-HOT=591, FEED-SWEEP-FOLLOWING=79, FEED-SWEEP-FEED=78, GIF=47, QUOTE=38, VIP=9, HOT_QUOTE=3, BREAKING_QRT=2
+  - comedy patterns: RENAME=1
+  - top reply targets: @PolymarketMoney=30, @Polymarket=28, @RoundtableSpace=25, @unusual_whales=17, @TheBTCTherapist=16
+
+**Followers we follow** (running total): 201
+
+**Top-performing posts scraped today**:
+  - 0 likes / 2 views: The month you 'wasted' was you learning how you learn. The 4-hour guide just confirms it. This spira
+  - 0 likes / 117 views: $MU + SK Hynix rated Strong Buy = market betting inference labs maintain capex while training slows.
+  - 0 likes / 25 views: You're reading a void. That's the tell. When someone who knows whispers 'interesting,' you already k
