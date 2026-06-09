@@ -35,6 +35,10 @@ from .twitter_client import scrape_profile_tweets
 SUPPRESSION_STATE_FILE = os.path.join(_PROJECT_ROOT, "suppression_state.json")
 SUPPRESSION_THRESHOLD = float(os.environ.get("SUPPRESSION_AVG_LIKES_FLOOR", "1.0"))
 COOLDOWN_HOURS = int(os.environ.get("SUPPRESSION_COOLDOWN_H", "4"))
+# Minimum seasoned (>=90min old) own posts needed before flagging suppression.
+# An avg of 2-3 samples is statistical noise — a recent profile scrape that
+# returns only the freshest few tweets will read 0 likes and false-trip.
+MIN_SEASONED_FOR_FLAG = int(os.environ.get("SUPPRESSION_MIN_SEASONED", "5"))
 
 
 def _load_state() -> dict:
@@ -92,11 +96,18 @@ def run_suppression_watch_cycle():
         # (newest first) and skip top 3-4 to avoid penalizing fresh posts.
         seasoned.append(int(t.get("likes") or 0))
 
-    if len(seasoned) <= 4:
-        log.info("[SUPPRESSION] Not enough seasoned posts for a meaningful avg.")
+    # Drop the freshest 3 BEFORE the size gate (was: gate before drop, so
+    # 5 raw → 2 seasoned → avg of 2 zeros flagged suppression — fired 9x in
+    # log, last 2026-06-09 06:50 paused aggressive bots 4h on n=2).
+    # Need at least MIN_SEASONED truly-seasoned samples for a meaningful avg.
+    seasoned = seasoned[3:]
+    if len(seasoned) < MIN_SEASONED_FOR_FLAG:
+        log.info(
+            f"[SUPPRESSION] Not enough seasoned posts for a meaningful avg "
+            f"(n={len(seasoned)}, need {MIN_SEASONED_FOR_FLAG})."
+        )
         return
 
-    seasoned = seasoned[3:]  # drop the freshest 3
     avg = sum(seasoned) / len(seasoned)
     state = _load_state()
     state["last_avg"] = round(avg, 2)
