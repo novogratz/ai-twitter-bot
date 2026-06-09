@@ -317,19 +317,27 @@ def can_unfollow(handle: str) -> Tuple[bool, str]:
     return (True, "")
 
 
-def can_post(action: str) -> Tuple[bool, str]:
+def can_post(action: str, high_value: bool = False) -> Tuple[bool, str]:
     """Daily cap + jittered min-spacing for originals / quotes / replies.
 
     Jitter is folded into the required gap (NOT a blocking sleep) so we never
     stall a scheduler thread for the 45-min post spacing: each call requires
     base_gap + random(0, jitter) seconds since the last same-type action, so
     spacing is randomized and writes never line up into a burst.
+
+    `high_value=True` on a QUOTE grants BONUS slots beyond the daily cap
+    (mega-viral carve-out 2026-06-08): a genuinely huge AI viral is the
+    highest-ROI quote target, so the daily cap must never block it. Spacing
+    still applies. Only the quote chokepoint passes this, and only for posts
+    above QUOTE_MEGA_VIRAL_LIKES.
     """
     if action == POST:
         cap = config.MAX_ORIGINALS_PER_DAY
         gap = config.MIN_SECONDS_BETWEEN_POSTS + random.uniform(0, config.POST_JITTER_SECONDS)
     elif action == QUOTE:
         cap = config.MAX_QUOTE_REPOSTS_PER_DAY
+        if high_value:
+            cap += config.QUOTE_MEGA_VIRAL_BONUS_SLOTS
         gap = config.MIN_SECONDS_BETWEEN_QUOTES + random.uniform(0, config.QUOTE_JITTER_SECONDS)
     elif action == REPLY:
         cap = config.MAX_REPLIES_PER_DAY

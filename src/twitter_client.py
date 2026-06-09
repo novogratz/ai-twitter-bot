@@ -521,10 +521,13 @@ def post_tweet_with_gif(text: str, gif_query: str, force: bool = False) -> bool:
         return True
 
 
-def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str) -> bool:
+def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str, high_value: bool = False) -> bool:
     """Quote-post with a native-picker GIF. Same gates as quote_tweet, but
     through the full /compose/post composer (the intent URL auto-submits and
-    can't open the GIF picker). The pasted tweet URL renders as a quote card."""
+    can't open the GIF picker). The pasted tweet URL renders as a quote card.
+
+    `high_value=True` grants mega-viral bonus slots beyond the daily cap
+    (same carve-out as quote_tweet)."""
     comment = _scrub_metadata_leaks((comment or "").strip())
     comment = _strip_post_urls(comment)
     if not tweet_url or not comment:
@@ -534,7 +537,7 @@ def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str) -> bool:
         log.error(f"[QUOTE] Unsafe leak in GIF quote — refusing. Text: {comment[:200]!r}")
         raise ToolCallLeakError("tool-call / stream-envelope markup in quote text")
     from . import action_guard, content_guard, config as _cfg
-    ok, why = action_guard.can_post(action_guard.QUOTE)
+    ok, why = action_guard.can_post(action_guard.QUOTE, high_value=high_value)
     if not ok:
         log.info(f"[QUOTE] policy skip ({why}).")
         return False
@@ -934,12 +937,16 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
     return True
 
 
-def quote_tweet(tweet_url: str, comment: str) -> bool:
+def quote_tweet(tweet_url: str, comment: str, high_value: bool = False) -> bool:
     """Publish a quote post by composing `comment` plus the source tweet URL.
 
     X renders a tweet URL included in a new post as a quote card. This route is
     more stable than driving the nested repost menu and keeps the same
     Safari-lock behavior as normal posts/replies.
+
+    `high_value=True` (set by the quote bot when the parent is a mega-viral AI
+    post, ≥ QUOTE_MEGA_VIRAL_LIKES) grants bonus slots beyond the daily cap so
+    a top-tier viral is never blocked by the cap (learning 2026-06-08).
 
     Returns True if the quote was actually published (or DRY_RUN-recorded),
     False on a policy/content/dup skip — callers MUST check this before
@@ -961,7 +968,7 @@ def quote_tweet(tweet_url: str, comment: str) -> bool:
     # Central write policy: quote-repost daily cap + spacing, French + no
     # near-term price target on our commentary, dry-run kill switch.
     from . import action_guard, content_guard, config as _cfg
-    ok, why = action_guard.can_post(action_guard.QUOTE)
+    ok, why = action_guard.can_post(action_guard.QUOTE, high_value=high_value)
     if not ok:
         log.info(f"[QUOTE] policy skip ({why}).")
         return False
