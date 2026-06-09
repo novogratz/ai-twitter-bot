@@ -1928,3 +1928,16 @@ def test_core_identity_has_likes_principle():
     assert "earn a like" in txt or "earn the like" in txt
     assert "lead with the feeling" in txt
     assert "relatable" in txt and "view" in txt
+
+
+def test_core_identity_positive_obsessed_energy():
+    """Operator 2026-06-09: relentlessly positive, AI-obsessed, feel-good
+    enthusiast about life + AI; make people feel good (real therapist).
+    The voice anchor must carry this energy so it drives every surface."""
+    import os
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    txt = open(os.path.join(root, "core_identity.md")).read().lower()
+    assert "relentlessly positive" in txt
+    assert "obsessed with ai" in txt
+    assert "feel good" in txt or "feel good." in txt
+    assert "never doom" in txt  # positivity must exclude doom/cynicism
