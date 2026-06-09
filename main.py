@@ -520,15 +520,18 @@ def main():
             log.info(f"[SLOT {slot_label}] No surface produced a post "
                      f"(all skipped — slot forfeited, next slot unaffected).")
 
-        log.info("Posting slots: originals ~14x/day across US hours (operator "
-                 "2026-06-09 PM: MORE posts) — hourly 08:30→21:30 NY, one per "
-                 "slot, 12:30 leads with the GIF stunt. Cap MAX_ORIGINALS_PER_DAY "
-                 "+ spacing bound the actual total.")
+        log.info("Posting slots: originals ~21 tries/day across US hours "
+                 "(operator 2026-06-09 PM round 2: 'I DONT SEE ENOUGH POSTS — "
+                 "DO MORE') — hourly 08:30→21:30 NY plus prime half-hour slots, "
+                 "one per slot, 12:30 leads with the GIF stunt. Cap "
+                 "MAX_ORIGINALS_PER_DAY + spacing bound the actual total.")
         for _slot_hour, _slot_min, _stunt_first in (
-            (8, 30, False), (9, 30, False), (10, 30, False), (11, 30, False),
-            (12, 30, True), (13, 30, False), (14, 30, False), (15, 30, False),
-            (16, 30, False), (17, 30, False), (18, 30, False), (19, 30, False),
-            (20, 30, False), (21, 30, False),
+            (8, 30, False), (9, 0, False), (9, 30, False), (10, 30, False),
+            (11, 0, False), (11, 30, False), (12, 30, True), (13, 0, False),
+            (13, 30, False), (14, 30, False), (15, 0, False), (15, 30, False),
+            (16, 30, False), (17, 0, False), (17, 30, False), (18, 30, False),
+            (19, 0, False), (19, 30, False), (20, 30, False), (21, 0, False),
+            (21, 30, False),
         ):
             _label = f"{_slot_hour:02d}:{_slot_min:02d}ET"
             scheduler.add_job(

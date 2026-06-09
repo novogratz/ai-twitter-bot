@@ -1811,7 +1811,7 @@ def test_bot_cycle_no_unbound_tweet_when_news_capped(monkeypatch):
     monkeypatch.setattr(b, "_get_counters", lambda: (999, 0))   # news capped, hotake open
     monkeypatch.setattr(b, "_live_news_cap", lambda: 999)
     monkeypatch.setattr(b, "_live_hotake_cap", lambda: 40)
-    monkeypatch.setattr(b, "generate_hotake", lambda: "AI capex is the new rent: you pay for silicon that doesn't exist yet.")
+    monkeypatch.setattr(b, "generate_hotake", lambda: "TEST-FIXTURE hotake zz-unbound-regression zz.")
     monkeypatch.setattr(b, "_increment_counter", lambda k: None)
     monkeypatch.setattr(b, "humanize", lambda t: t)
     shipped = {}
@@ -2013,3 +2013,57 @@ def test_prompts_are_english_only():
     # No FR reply-seeking query.
     from src.direct_reply import SEARCH_QUERIES
     assert not any("lang:fr" in q for q in SEARCH_QUERIES), "FR reply query still present"
+
+
+def test_tests_cannot_write_production_state(tmp_path):
+    """2026-06-09: a guard test mocked post_tweet but bot.py's bookkeeping
+    (save_tweet + log_hotake) wrote its fixture text into the REAL
+    tweet_history.json + engagement_log.csv — 21 phantom engagement rows and
+    6 phantom history entries over two days, which a later self-eval
+    misdiagnosed as a live repetition bug. The conftest _no_prod_state wall
+    must redirect every measurement/state store to per-test tmp files."""
+    import os
+    from src import config as cfg
+    from src import engagement_log as el, history as hist, content_guard as cg
+
+    repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    for mod, attr in ((el, "ENGAGEMENT_LOG_FILE"), (hist, "HISTORY_FILE"),
+                      (cg, "_HISTORY_FILE"), (cfg, "ACTION_LEDGER_FILE"),
+                      (cfg, "REPLIED_FILE")):
+        path = getattr(mod, attr)
+        assert not os.path.abspath(path).startswith(repo + os.sep), \
+            f"{mod.__name__}.{attr} points INSIDE the repo during tests: {path}"
+
+    # A write through the normal API must land in tmp, not the repo.
+    el.log_post("TEST-FIXTURE wall probe zz")
+    hist.save_tweet("TEST-FIXTURE wall probe zz")
+    real_log = os.path.join(repo, "engagement_log.csv")
+    if os.path.exists(real_log):
+        assert "wall probe zz" not in open(real_log).read(), \
+            "test write leaked into the production engagement_log.csv"
+    real_hist = os.path.join(repo, "tweet_history.json")
+    if os.path.exists(real_hist):
+        assert "wall probe zz" not in open(real_hist).read(), \
+            "test write leaked into the production tweet_history.json"
+
+
+def test_burned_catchphrases_blocked_at_chokepoint():
+    """2026-06-09: the prompts quoted exemplar phrases ("we are so early",
+    "okay this is genuinely...") and the model parroted them — 6+ posts in
+    one day carried the same catchphrase, every one 0 likes. The exemplars
+    are gone from the prompts and the chokepoint refuses the burned phrases
+    on the profile surfaces (posts + quotes). Replies are unaffected."""
+    from src import content_guard as cg
+
+    burned = "Wild launch today. We are so early, most people can't feel it yet."
+    for kind in ("original", "quote"):
+        ok, why = cg.validate(burned, kind=kind)
+        assert not ok and "catchphrase" in why, f"{kind} must refuse burned phrase: {why}"
+
+    ok, _ = cg.validate(
+        "We are so early on this one — the benchmark gap doubled in a single "
+        "release and the pricing didn't move.", kind="reply")
+    assert ok, "replies are not gated on catchphrases"
+
+    fresh, _ = cg.validate("Nvidia's quarter was a therapy session disguised as an earnings call.", kind="original")
+    assert fresh, "normal originals must still pass"

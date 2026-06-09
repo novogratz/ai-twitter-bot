@@ -222,6 +222,47 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-09 PM round 2 — likes fix: test pollution + burned catchphrases + MORE volume (operator: "you suck with new posts and QRTs... fix it get viral"; then "I DONT SEE ENOUGH POSTS AND QUOTE RETWEET DO MORE PUSH IT")
+
+**Root cause #1 — the "repetition bug" was TEST POLLUTION.** "AI capex is
+the new rent" appeared 6x in tweet_history + 21x in engagement_log but
+NEVER in any bot.log — it never shipped live. The fixture text in
+`test_bot_cycle_no_unbound_tweet_when_news_capped` mocked `post_tweet` but
+bot.py's post-ship bookkeeping (`save_tweet` + `log_hotake`) wrote the REAL
+state files on every pytest run (timestamps match dev-session commits:
+12:39 "ship" ↔ 12:39:30 commit). A self-eval session then misdiagnosed the
+pollution as a live repetition bug. Fix: conftest `_no_prod_state` autouse
+wall (same family as `_no_safari`) redirects ENGAGEMENT_LOG_FILE,
+HISTORY_FILE (history + content_guard), REPLIED_FILE, ACTION_LEDGER_FILE to
+per-test tmp; phantom rows purged from both stores (backups in /tmp).
+Guard: `test_tests_cannot_write_production_state`.
+
+**Root cause #2 — the prompts taught the model its own bot-tells.** Live
+output 0 likes across ALL posts/quotes; "we are so early" in 6+ posts in
+ONE day, "okay this is genuinely" + "the part nobody's saying out loud"
+parroted VERBATIM from quoted exemplars in core_identity / hotake / quote
+prompts (the known never-put-parrotable-examples rule, violated 3x). Plus
+formula soup: every post the same abstract reframe shape. Fixes:
+- Exemplar phrasings removed from all three prompts (describe the energy,
+  never script it); quote prompt + core_identity gain a BURNED PHRASES ban.
+- core_identity "NEVER SOUND LIKE YOUR LAST POST" block (spine-level) +
+  "Be CONCRETE" rule #4 in HOW TO EARN A LIKE: no fortune-cookie
+  abstractions — a number, a named actor, or a scene you can picture; the
+  patient-session bit is the unique comedy asset.
+- Chokepoint backstop: `content_guard.validate` refuses originals/quotes
+  containing `_BURNED_CATCHPHRASES` ("we are so early", "okay this is
+  genuinely", "plot twist:", etc). Guard:
+  `test_burned_catchphrases_blocked_at_chokepoint`.
+
+**Volume (operator round 2):** originals 16→24/day, spacing 40→30 min,
+slots 14→21 tries/day (hourly + prime half-hours), hotakes 14→20, news
+8→10; quotes 150→200/day @60s+30 jitter. Parrot-dedup fixes mean slots
+stop being forfeited to dup-skips, so the tries actually convert.
+
+**Operator on VACATION 2026-06-09 → ~2026-06-23, full account access
+granted ("get those likes and followers").** Bot started by Claude this
+once (explicit instruction). Watch: likes on posts/quotes is THE metric.
+
 ### 2026-06-09 — ENGLISH ONLY (operator: "we are english only bro")
 
 Audited every generation prompt for French. The OUTPUT was already English

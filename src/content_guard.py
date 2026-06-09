@@ -379,6 +379,20 @@ def looks_truncated(text: str) -> bool:
     return False
 
 
+# Stock phrases the account over-posted until they read as a bot signature
+# (live audit 2026-06-09: "we are so early" in 6+ posts in ONE day, each one
+# 0 likes). Substring match, lowercase. Posts + quotes only — replies are
+# already the surface that converts and never developed the tic.
+_BURNED_CATCHPHRASES = (
+    "we are so early",
+    "we're so early",
+    "okay this is genuinely",
+    "nobody's saying out loud",
+    "numb to miracles",
+    "plot twist:",
+)
+
+
 def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     """Validate a draft. kind ∈ {"original", "quote", "reply"}.
 
@@ -415,6 +429,17 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
 
     if kind == "reply" and _is_lazy_reply(text):
         return (False, "low-effort reply (too short / generic — must be substantive)")
+
+    if kind in ("original", "quote"):
+        # Burned-catchphrase backstop (2026-06-09). The prompts planted these
+        # as quoted examples and the model parroted them ("we are so early"
+        # shipped 6+ times in one day) — the #1 bot-tell killing likes on the
+        # profile surfaces. Examples are gone from the prompts; this gate
+        # guarantees the phrases never ship again regardless of model drift.
+        low = text.lower()
+        for phrase in _BURNED_CATCHPHRASES:
+            if phrase in low:
+                return (False, f"burned catchphrase ({phrase!r}) — bot-tell, rewrite fresh")
 
     if kind in ("reply", "quote"):
         # Hard X limit for these surfaces — an over-limit draft gets cut by

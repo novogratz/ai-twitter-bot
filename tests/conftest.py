@@ -73,3 +73,34 @@ def _no_safari(monkeypatch):
     except Exception:
         pass
     yield
+
+
+# ---------------------------------------------------------------------------
+# Production state-file wall (2026-06-09). Same family as _no_safari: a guard
+# test (test_bot_cycle_no_unbound_tweet_when_news_capped) mocked post_tweet
+# but bot.py's post-ship bookkeeping (save_tweet + log_hotake) still wrote
+# the REAL tweet_history.json and engagement_log.csv. Its fixture text
+# ("AI capex is the new rent...") accumulated 21 phantom engagement rows and
+# 6 phantom history entries over two days — and a self-eval session then
+# "diagnosed" a live repetition bug from its own test pollution.
+# Every test gets per-test tmp copies of the measurement/state stores; a test
+# that needs a specific path still patches it itself (monkeypatch runs after).
+# ---------------------------------------------------------------------------
+@_pytest.fixture(autouse=True)
+def _no_prod_state(monkeypatch, tmp_path):
+    hist = str(tmp_path / "tweet_history.json")
+    from src import config as _cfg
+    monkeypatch.setattr(_cfg, "ENGAGEMENT_LOG_FILE", str(tmp_path / "engagement_log.csv"))
+    monkeypatch.setattr(_cfg, "HISTORY_FILE", hist)
+    monkeypatch.setattr(_cfg, "REPLIED_FILE", str(tmp_path / "replied_tweets.json"))
+    monkeypatch.setattr(_cfg, "ACTION_LEDGER_FILE", str(tmp_path / "action_ledger.json"))
+    # from-imports bind at import time — patch every namespace that copied one.
+    from src import engagement_log as _el
+    monkeypatch.setattr(_el, "ENGAGEMENT_LOG_FILE", _cfg.ENGAGEMENT_LOG_FILE)
+    from src import history as _hist
+    monkeypatch.setattr(_hist, "HISTORY_FILE", hist)
+    from src import content_guard as _cg
+    monkeypatch.setattr(_cg, "_HISTORY_FILE", hist)
+    from src import reply_bot as _rb
+    monkeypatch.setattr(_rb, "REPLIED_FILE", _cfg.REPLIED_FILE)
+    yield
