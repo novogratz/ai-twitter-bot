@@ -222,6 +222,17 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-09 — startup posts/quotes burst (operator: "do more posts + quote retweet, I don't see it doing anything")
+
+Root cause of "looks idle after restart": post slots are fixed crons
+(08:30/10:30/...), so booting mid-slot left the profile with no fresh
+original for up to ~2h. Fix: the startup burst now (1) fires the quote cycle
+3× so fresh AI-viral QRTs land within minutes, and (2) runs an ORIGINALS
+burst that tries hot-take→breakout→spicy to land up to STARTUP_ORIGINALS (3)
+fresh posts on boot (spacing naturally bounds it to ~1-2). The 8 daily slots
++ MAX_ORIGINALS_PER_DAY=10 carry steady-state volume. Combined with the
+.env un-throttle (news 1→6, hotake 2→8, originals 4→10, spacing 150→75min)
+the profile now shows fresh posts+quotes right after a restart.
 ### 2026-06-09 — THE ENERGY: relentlessly positive, AI-obsessed, feel-good (operator)
 
 Operator: "more positive in general, more positive about AI, excited

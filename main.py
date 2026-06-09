@@ -378,14 +378,35 @@ def main():
         # Post-surface bursts AFTER the reply lane is warm.
         log.info("Startup retweet burst...")
         safe_run_retweet_cycle()
-        log.info("Startup quote burst...")
-        safe_run_quote_tweet_cycle()
+        # QUOTE burst — fire several rounds so fresh quote-RTs land right away
+        # (operator 2026-06-09: "more quote retweet", "I don't see it doing
+        # anything"). Each round picks the best AI viral; spacing paces them.
+        for _i in range(3):
+            log.info(f"Startup quote burst {_i+1}/3...")
+            safe_run_quote_tweet_cycle()
         log.info("Startup hot-quote burst...")
         safe_run_hot_quote_cycle()
-        log.info("Startup hot-take burst...")
-        safe_run_bot_cycle()
-        log.info("Startup breakout burst...")
-        safe_run_breakout_cycle()
+        # ORIGINALS burst — land a few fresh posts on boot instead of waiting
+        # up to ~2h for the next cron slot (operator: "do more posts", booting
+        # mid-slot must not leave the profile idle). Tries each surface; the
+        # MAX_ORIGINALS_PER_DAY cap + spacing bound the total.
+        from src import action_guard as _ag
+        _orig_target = int(os.environ.get("STARTUP_ORIGINALS", "3"))
+        for _i in range(_orig_target):
+            _before = _ag.count_today(_ag.POST)
+            log.info(f"Startup originals burst {_i+1}/{_orig_target} "
+                     f"(today={_before})...")
+            for _name, _fn in (("hot-take", safe_run_bot_cycle),
+                               ("breakout", safe_run_breakout_cycle),
+                               ("spicy", safe_run_spicy_cycle)):
+                try:
+                    _fn()
+                except Exception:
+                    traceback.print_exc()
+                if _ag.count_today(_ag.POST) > _before:
+                    break  # one original landed this round; next round
+            if _ag.count_today(_ag.POST) <= _before:
+                break  # nothing landed (cap/spacing/no material) — stop trying
 
     # Curator first — builds tracked_accounts.json so the early-reply bots
     # have the bot's own earned scan list from the first cycle (operator
