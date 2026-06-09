@@ -222,6 +222,29 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-09 PM — hotake prompt was still FRENCH + SPACE (originals repetition root cause)
+
+"Get better" self-eval traced the repeated-hotake problem to the generator,
+not just logging: 17 original rows today were only 5 DISTINCT ("AI capex is
+the new rent" generated 13x). Root cause in `hotake_agent`: the anti-repeat
+block AND two SCOPE blocks were stale FRENCH + SPACE content ("INTERDIT…",
+"SCOPE — IA + ESPACE", "2. Space: SpaceX/Starlink/RKLB", a SpaceX WebSearch
+seed). On the English AI-therapist persona the French anti-repeat barely
+registered (so the same line kept regenerating → dedup-skipped → forfeited
+slots → FEWER posts), and space was actively listed as an in-scope pillar
+(a banned-persona drift risk).
+
+Fixes (all in hotake_agent):
+- Anti-repeat block rewritten in ENGLISH with a hard "NEVER output a tweet
+  you've written before — same sentence or idea → throw it out" + the
+  recent-posts list. Kills the repetition at the source.
+- Both SCOPE blocks → AI-PRIMARY, NO SPACE (markets/crypto via the AI lens).
+- SpaceX WebSearch seed → an AI-model-launch query.
+Remaining French *style* lines (INTERDIT in non-scope spots) left for a
+follow-up — output is English regardless. Guard:
+`test_hotake_dedup_block_english_no_space`. Pairs with the phantom-originals
+log fix (PM-28): fewer dup generations AND no phantom rows = more real,
+distinct posts.
 ### 2026-06-09 PM — phantom originals (the same hotake logged 5x though dedup blocked it)
 
 Self-eval of live output (operator: "GET BETTER"): "AI capex is the new
