@@ -597,9 +597,14 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             # only: no same-cycle re-pick.
             replied.add(url)
             log.info(f"[{source_name}] Generating reply for @{author}...")
+            try:
+                fut = pool.submit(_generate_single_reply, author, text, lang=_reply_lang)
+            except RuntimeError:
+                # Interpreter/executor shutting down (SIGTERM mid-cycle) —
+                # end the stream cleanly instead of crashing the cycle.
+                return None
             submitted += 1
-            return (url, author, _reply_lang,
-                    pool.submit(_generate_single_reply, author, text, lang=_reply_lang))
+            return (url, author, _reply_lang, fut)
         return None
 
     with ThreadPoolExecutor(max_workers=1) as pool:
