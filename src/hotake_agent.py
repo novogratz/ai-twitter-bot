@@ -180,7 +180,7 @@ WebSearch large (4-5 parallel queries):
 - "CoreWeave CRWV Applied Digital APLD IREN HIVE"
 - "nuclear grid power generation AI datacenter"
 - "TAO Bittensor decentralized compute AI crypto"
-- "SpaceX Starlink space infrastructure frontier tech robotics"
+- "new AI model launch Anthropic OpenAI Google agent benchmark"
 
 Source TOP-TIER obligatoire (≤36h, date vérifiée par WebFetch):
 ✅ FR PRIORITAIRE: Les Échos, Le Monde, Le Figaro, BFM Business, Capital,
@@ -190,14 +190,13 @@ Source TOP-TIER obligatoire (≤36h, date vérifiée par WebFetch):
     The Verge, Wired, CNBC, Axios.
 ❌ JAMAIS: crypto.news, u.today, bitcoinist, ambcrypto, beincrypto,
     cryptopotato, cryptonews.net.
-✅ SCOPE — 3 PILLARS ONLY:
-    1. AI: labs, models, agents, GPU infra, datacenters, energy/nuclear, robotics,
-       humanoids, AI stocks (Nvidia, CoreWeave, Palantir, IREN, Microsoft, etc.)
-    2. Space: SpaceX, Rocket Lab, NASA, ESA, Starlink, satellites, lunar, Mars,
-       space defense, space stocks (RKLB, ASTS, LUNR), launch vehicles.
-    3. Investment: AI stocks, space stocks, Bitcoin/crypto as asset class,
-       tech earnings, IPOs, M&A, valuations, asymmetric bets.
-    Outside these 3 → SKIP.
+✅ SCOPE — AI-PRIMARY (NO SPACE):
+    1. AI: labs, models, agents/agentic, GPU/chips (Nvidia, AMD, TSMC),
+       datacenters, energy-for-AI (nuclear/GPU farms), humanoid robotics, AGI.
+    2. AI stocks / markets via the AI lens: Nvidia, CoreWeave, Palantir, IREN,
+       Microsoft, AI-capex/bubble, tech earnings, IPOs, M&A, asymmetric AI bets.
+    3. Crypto via the AI-vs-BTC angle: Bitcoin/ETH/ETFs, Saylor/MSTR.
+    Outside these → SKIP. NO space (SpaceX/Starlink/satellites = off-persona).
 
 🏭 PRIORITÉ NOUVELLE (2026-05-18 — user "cover megawatt AI datacenter
     and crypto mining companies, post as much as you can"):
@@ -592,12 +591,17 @@ elle seule — un humain qui voit juste le texte (sans card, sans URL) doit
 comprendre + rire. Test: cache mentalement l'URL — toujours fort? OK.
 Vide sans URL? RÉÉCRIS pour densifier la punchline.
 
-🚨 SCOPE — IA + ESPACE + INVESTISSEMENT 🚨
-Pivot 2026-05-29: 3 piliers.
-1. IA: labs, modèles, agents, GPU infra, datacenters, énergie/nucléaire, robotique, humanoïdes.
-2. Espace: SpaceX, Rocket Lab, NASA, ESA, Starlink, satellites, Lune, Mars, défense spatiale, space stocks.
-3. Investissement: actions IA (Nvidia, Palantir, CoreWeave), actions espace (RKLB, ASTS), Bitcoin/crypto comme classe d'actif, earnings tech, IPOs, M&A.
-Hors-scope: immo, CAC40 pur, macro sans lien AI/Space/crypto. → SKIP.
+🚨 SCOPE — AI-PRIMARY (NO SPACE) 🚨
+The account is the AI Therapist: AI first, then markets/crypto through the
+AI lens. NO space content (SpaceX/Starlink/satellites are off-persona).
+1. AI: labs, models, agents/agentic, GPU/chips (Nvidia/AMD/TSMC), AI
+   datacenters, energy-for-AI (nuclear/GPU farms), humanoid robotics, AGI,
+   open vs closed weights, model launches, AI regulation/funding.
+2. AI stocks / markets through the AI lens: Nvidia, Palantir, CoreWeave,
+   IREN, AI-capex/bubble debate, tech earnings, IPOs, M&A, asymmetric AI bets.
+3. Crypto via the AI-vs-BTC angle: Bitcoin/ETH/ETFs, Saylor/MSTR.
+Off-scope → SKIP: space, real estate, pure macro with no AI link, generalist
+retail trading.
 
 🎯 MINDSET — CRITIQUE, PAS DESCRIPTIF 🎯
 Le hot take = la VANNE qui DÉMOLIT une narrative dominante. Pas un meme
@@ -744,34 +748,33 @@ def generate_hotake() -> Optional[str]:
         banned_list = ", ".join(sorted(banned))
         recent_block = "\n".join(f"  - {t[:120]}" for t in recent[-8:])
         dedup_section = f"""==================================================
-INTERDIT — sujets que tu viens de couvrir (NE PAS RÉCIDIVER)
+BANNED — topics/lines you JUST covered (DO NOT REPEAT)
 ==================================================
 
-Tu as déjà fait des hot takes sur: {banned_list}.
+You've already posted hot takes on: {banned_list}.
 
-VA AILLEURS. Pas un seul mot sur ces sujets cette fois.
-Si t'as envie d'écrire encore sur Claude/Anthropic/Bitcoin parce que c'est
-"l'actu chaude", c'est exactement le piège: ton audience a vu 5 takes là-dessus
-de toi cette semaine. PIVOT ABSOLU.
+GO SOMEWHERE ELSE. Not one word recycling those this time. If you feel the
+pull to write about Claude/Anthropic/Nvidia AGAIN because it's "the hot
+story," that IS the trap — your audience has seen 5 of your takes on it this
+week. HARD PIVOT to a fresh angle or a fresh subject.
 
-Va chercher dans les 3 piliers (jamais hors-scope):
-- IA: Nvidia/AMD/TSMC chips, agents IA, agentic, robotique humanoïde,
-  open-weights vs closed, Mistral / Anthropic / OpenAI / xAI / Google,
-  datacenters IA, énergie pour l'IA (nuclear/GPU farms), AGI timelines,
-  capture réglementaire, licorne IA, levée IA.
-- Espace (PRIORITÉ — space push mode 2026-05-29): SpaceX Starship/Falcon/Dragon,
-  Blue Origin New Glenn, Virgin Galactic, Rocket Lab RKLB, NASA Artemis,
-  ESA, CNES, Ariane 6, Starlink, AST SpaceMobile ASTS, Intuitive Machines LUNR,
-  Axiom Space, Firefly, Sierra Space, Planet Labs, Amazon Kuiper,
-  Lune, Mars, tourisme spatial, défense spatiale (Golden Dome, USSF),
-  space stocks (RKLB, ASTS, LUNR), économie spatiale, satellite internet.
-- Investissement: actions IA (Nvidia, Palantir, CoreWeave, IREN),
-  actions espace, Bitcoin/ETH/crypto ETF, Saylor/MSTR, earnings tech,
-  IPOs tech, M&A, asymmetric bets, valuation bulle IA.
-PAS DE: immobilier, CAC40 pur, macro pure sans lien, fiscalité FR,
-trading retail généraliste, non-IA/non-space/non-crypto.
+⛔ NEVER output a tweet you've written before. Below are your recent posts.
+If your draft is the same SENTENCE or the same IDEA as any of them (e.g.
+"AI capex is the new rent..."), THROW IT OUT and write something genuinely
+different. Repeating yourself is the worst thing you can do.
 
-Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
+Stay in the 3 pillars (AI-primary; NO space content — that's off-persona):
+- AI: Nvidia/AMD/TSMC chips, AI agents/agentic, humanoid robotics,
+  open-weights vs closed, Anthropic/OpenAI/xAI/Google/Mistral, AI
+  datacenters, energy for AI (nuclear/GPU farms), AGI timelines, AI
+  regulation, AI unicorns/funding, model launches.
+- Markets through the AI lens: AI stocks (Nvidia, Palantir, CoreWeave, IREN),
+  tech earnings, AI-capex/bubble debate, IPOs, M&A, asymmetric AI bets.
+- Crypto via the AI-vs-BTC angle: Bitcoin/ETH/ETFs, Saylor/MSTR.
+NO: real estate, pure macro with no AI link, generalist retail trading,
+and NO space (SpaceX/Starship/satellites are off-persona — never).
+
+Recent posts you've ALREADY written — do not repeat their subject OR phrasing:
 {recent_block}"""
     else:
         dedup_section = ""

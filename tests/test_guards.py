@@ -1976,3 +1976,21 @@ def test_post_tweet_returns_bool_for_skip_vs_ship():
         cg.validate = orig_validate
         cg.is_duplicate = orig_isdup
         cfg.DRY_RUN = orig_dry
+
+
+def test_hotake_dedup_block_english_no_space():
+    """2026-06-09: the hotake anti-repeat block was in FRENCH (weak on an
+    English bot) and pushed SPACE content ('space push mode') — off-persona,
+    and it let the same line ('AI capex is the new rent') regenerate 13x.
+    The block must be English, anti-repeat on phrasing, and space-free."""
+    import inspect
+    from src import hotake_agent as h
+    src = inspect.getsource(h)
+    # The dedup/anti-repeat block must be English now.
+    assert "DO NOT REPEAT" in src and "HARD PIVOT" in src
+    assert "PIVOT ABSOLU" not in src, "dedup block still French"
+    # Space must be excluded from the SCOPE blocks, never promoted as a pillar.
+    assert "space push mode" not in src.lower()
+    assert "off-persona" in src.lower()
+    assert "espace: spacex" not in src.lower(), "French space scope still present"
+    assert "2. space: spacex" not in src.lower(), "English space scope pillar still present"
