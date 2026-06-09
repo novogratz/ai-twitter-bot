@@ -286,24 +286,30 @@ def post_tweet(text: str, image_path: str = None):
     # content gates (French + no near-term price target). A flagged draft is
     # skipped here as a final safety net (generators regenerate upstream).
     from . import action_guard, content_guard, config as _cfg
+    # Returns True only when the post actually shipped (or DRY_RUN-recorded),
+    # False on any skip (policy / content / dedup / review). ⛔ Callers MUST
+    # gate engagement logging on this bool — bot.py logged log_post/log_hotake
+    # unconditionally, so a dedup-blocked repeat (e.g. the same hotake) never
+    # hit Twitter but still logged 5 phantom rows, polluting the per-pillar
+    # ROI loop (2026-06-09; same family as the reply phantom-log bug).
     ok, why = action_guard.can_post(action_guard.POST)
     if not ok:
         log.info(f"[POST] policy skip ({why}).")
-        return
+        return False
     ok, why = content_guard.validate(text, kind="original")
     if not ok:
         log.info(f"[POST] content_guard skip ({why}): {text[:120]!r}")
-        return
+        return False
     if content_guard.is_duplicate(text):
         log.info(f"[POST] near-duplicate of a recent post — skipping (no duplication): {text[:120]!r}")
-        return
+        return False
     if _review_mode():
         _queue_for_review("post", {"text": text, "image_path": image_path or ""})
-        return
+        return False
     if _cfg.DRY_RUN:
         log.info(f"[POST][DRY_RUN] would post: {text[:200]!r}")
         action_guard.record(action_guard.POST, dry_run=True)
-        return
+        return True
 
     with _safari_lock:
         if image_path:
@@ -312,7 +318,7 @@ def post_tweet(text: str, image_path: str = None):
             action_guard.record(action_guard.POST)
             content_guard.note_posted(text)
             _record_posted(text)
-            return
+            return True
 
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
         log.info("Opening Twitter in your browser...")
@@ -333,6 +339,7 @@ def post_tweet(text: str, image_path: str = None):
         action_guard.record(action_guard.POST)
         content_guard.note_posted(text)
         _record_posted(text)
+    return True
 
 
 def _record_posted(text: str):

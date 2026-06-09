@@ -656,9 +656,16 @@ def _run_single_bot_cycle() -> bool:
             post_body, gif_query = extract_gif_query(post_body)
         if gif_query:
             log.info(f"[NEWS] GIF post — query: {gif_query!r}")
-            post_tweet_with_gif(post_body, gif_query)
+            _shipped = post_tweet_with_gif(post_body, gif_query)
         else:
-            post_tweet(post_body, image_path=img_path)
+            _shipped = post_tweet(post_body, image_path=img_path)
+        # ⛔ Only record/log when the post ACTUALLY shipped. post_tweet returns
+        # False on a dedup/policy/content skip; logging regardless wrote
+        # phantom rows (the same hotake "AI capex is the new rent" appeared 5x
+        # in engagement_log though dedup blocked the reposts — 2026-06-09).
+        if not _shipped:
+            log.info("[NEWS] post skipped at chokepoint (dup/policy) — not logging.")
+            return False
         save_tweet(post_body if tweet_source == "news" else tweet)
         # Engagement-log routing must match the actual generator so the
         # bandit attribution stays correct. GIF posts are already logged

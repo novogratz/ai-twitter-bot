@@ -1941,3 +1941,38 @@ def test_core_identity_positive_obsessed_energy():
     assert "obsessed with ai" in txt
     assert "feel good" in txt or "feel good." in txt
     assert "never doom" in txt  # positivity must exclude doom/cynicism
+
+
+def test_post_tweet_returns_bool_for_skip_vs_ship():
+    """2026-06-09: the same hotake appeared 5x in engagement_log though dedup
+    blocked the reposts — bot.py logged log_post/log_hotake unconditionally
+    because post_tweet returned None on a skip. post_tweet must return False
+    on policy/content/dedup skip and True only when it ships, so the caller
+    can gate logging (same family as the reply phantom-log fix)."""
+    from src import twitter_client as tc
+    from src import action_guard as ag
+    from src import content_guard as cg
+    from src import config as cfg
+
+    # Dedup skip → False (and no Safari).
+    monkeypatch_targets = []
+    import types
+    orig_canpost = ag.can_post
+    orig_validate = cg.validate
+    orig_isdup = cg.is_duplicate
+    orig_dry = cfg.DRY_RUN
+    try:
+        ag.can_post = lambda action: (True, "ok")
+        cg.validate = lambda text, kind="original": (True, "")
+        cg.is_duplicate = lambda text, threshold=None: True   # force dup
+        cfg.DRY_RUN = True  # never touch Safari even if it didn't dedup
+        assert tc.post_tweet("AI capex is the new rent again") is False, \
+            "a near-duplicate post must return False, not None"
+        # Not a dup, DRY_RUN → recorded ship → True
+        cg.is_duplicate = lambda text, threshold=None: False
+        assert tc.post_tweet("a genuinely fresh original take about AI") is True
+    finally:
+        ag.can_post = orig_canpost
+        cg.validate = orig_validate
+        cg.is_duplicate = orig_isdup
+        cfg.DRY_RUN = orig_dry
