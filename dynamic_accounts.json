@@ -462,7 +462,9 @@
     "America",
     "LeRobot",
     "Binance",
-    "gabriel"
+    "gabriel",
+    "CoinMarketCap",
+    "Goku"
   ],
   "history": [
     {
@@ -2769,6 +2771,16 @@
       "lang": "en",
       "handle": "gabriel",
       "added": "2026-06-08"
+    },
+    {
+      "lang": "en",
+      "handle": "CoinMarketCap",
+      "added": "2026-06-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Goku",
+      "added": "2026-06-09"
     }
   ]
 }

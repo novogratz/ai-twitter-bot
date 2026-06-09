@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-09T00:49:06.517626",
-  "window_7d_actions": 5165,
-  "window_24h_actions": 852,
+  "generated_at": "2026-06-09T04:49:06.294745",
+  "window_7d_actions": 5243,
+  "window_24h_actions": 877,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5114
+      "count": 5192
     },
     {
       "pattern": "METAPHOR",
@@ -41,7 +41,7 @@
   "best_hours_utc": [
     {
       "hour": 0,
-      "actions": 293
+      "actions": 294
     },
     {
       "hour": 19,
@@ -63,56 +63,56 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2070
+      "count": 2126
     },
     {
       "topic": "IA",
-      "count": 1899
+      "count": 1915
     },
     {
       "topic": "Crypto",
-      "count": 695
+      "count": 710
     },
     {
       "topic": "Bourse",
-      "count": 663
+      "count": 660
     },
     {
       "topic": "Spatial",
-      "count": 448
+      "count": 440
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "other",
-      "count": 1864
+      "count": 1872
     },
     {
       "pillar": "ai_news_take",
-      "count": 1720
+      "count": 1752
     },
     {
       "pillar": "market_trauma",
-      "count": 1208
+      "count": 1238
     },
     {
       "pillar": "meme_reaction",
-      "count": 181
+      "count": 185
     },
     {
       "pillar": "reply_bait",
-      "count": 129
+      "count": 132
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 63
+      "count": 64
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 353
+      "count": 360
     },
     {
       "pillar": "other",
@@ -120,19 +120,19 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 184
+      "count": 200
     },
     {
       "pillar": "meme_reaction",
-      "count": 47
+      "count": 48
     },
     {
       "pillar": "reply_bait",
-      "count": 22
+      "count": 21
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -145,23 +145,23 @@
     },
     {
       "pillar": "other",
-      "posts": 28,
-      "avg_likes": 5.07,
-      "avg_views": 16513.3,
+      "posts": 29,
+      "avg_likes": 4.9,
+      "avg_views": 15944.5,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 7,
-      "avg_likes": 2.0,
-      "avg_views": 2034.6,
+      "posts": 8,
+      "avg_likes": 1.75,
+      "avg_views": 1785.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 18,
-      "avg_likes": 0.5,
-      "avg_views": 538.8,
+      "posts": 20,
+      "avg_likes": 0.45,
+      "avg_views": 487.6,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3955
+      "count": 4042
     },
     {
       "type": "retweet",
-      "count": 452
+      "count": 439
     },
     {
       "type": "quote",
-      "count": 365
+      "count": 375
     },
     {
       "type": "hotake",
-      "count": 191
+      "count": 181
     },
     {
       "type": "quote_gif",
-      "count": 176
+      "count": 180
     },
     {
       "type": "post",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-09T00:48:10.769437",
-      "text": "You're watching shorts cover on low volume. That looks like a dead cat bounce until demand steps in at $62.4k. Volume decides in 48h.",
+      "ts": "2026-06-09T04:48:49.658343",
+      "text": "Output will explode. Income usually doesn't. History: +500% output, +50% wage. The gap is the real question AGI has to answer.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-09T00:47:14.089710",
-      "text": "Three question marks + a ticker = hope. nothing wrong with hope. what's the catalyst?",
+      "ts": "2026-06-09T04:45:24.640415",
+      "text": "Crypto can't verify AI content or make agents autonomous. correct. And beside the point. Stablecoins ARE the payment layer for AI infrastructure. Asking Bitcoin to detect deepfakes is asking the wrong tool entirely.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-09T00:45:24.395464",
-      "text": "The bounce IS the trap. Trapped buyers think they're saved. 62.4k breaks and that's when the real panic starts.",
+      "ts": "2026-06-09T04:43:28.515384",
+      "text": "Arthur: contagion clears before halving. You: 'so AI must pop first?' Halving fires every 4 years regardless. You're waiting for permission.",
       "type": "reply"
     }
   ]
