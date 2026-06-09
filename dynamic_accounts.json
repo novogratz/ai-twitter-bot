@@ -468,7 +468,11 @@
     "Chris",
     "Blaber",
     "zerohedge",
-    "Sean"
+    "Sean",
+    "STOKR",
+    "Claude",
+    "NIK",
+    "xAI"
   ],
   "history": [
     {
@@ -2804,6 +2808,26 @@
     {
       "lang": "en",
       "handle": "Sean",
+      "added": "2026-06-09"
+    },
+    {
+      "lang": "en",
+      "handle": "STOKR",
+      "added": "2026-06-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Claude",
+      "added": "2026-06-09"
+    },
+    {
+      "lang": "en",
+      "handle": "NIK",
+      "added": "2026-06-09"
+    },
+    {
+      "lang": "en",
+      "handle": "xAI",
       "added": "2026-06-09"
     }
   ]

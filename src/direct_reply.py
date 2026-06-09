@@ -183,8 +183,8 @@ SEARCH_QUERIES = [
     "Nvidia OR Palantir OR \"AI trade\" OR \"AI capex\" OR \"AI datacenter\" earnings lang:en min_faves:100",
     # AI-crypto crossover (crypto pillar, AI lens)
     "\"AI crypto\" OR \"AI token\" OR \"decentralized AI\" OR \"AI agents\" crypto lang:en min_faves:50",
-    # ===== FR tail (one query — replies match parent language) =====
-    "IA OR ChatGPT OR Mistral OR \"intelligence artificielle\" lang:fr min_faves:25",
+    # FR tail REMOVED 2026-06-09 (operator: "we are english only bro") — the
+    # account no longer seeks French tweets to reply to.
 ]
 
 HOT_TAB_QUERIES = [
