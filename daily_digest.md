@@ -518,3 +518,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 24 views: The "AI Winter" hype train is just the engineers taking a smoke break. Relax.
   - 0 likes / 21 views: Bears screaming 'crypto is dead' are ignoring the house edge. The casino is open, you're just lookin
   - 0 likes / 46 views: $147B monthly. You’re paying for your own future rent. The cloud isn’t a place, it’s a subscription.
+
+## 2026-06-07
+
+**Activity** — total actions: 1006
+  - by type: reply=847, quote=78, quote_gif=40, retweet=35, hotake=6
+  - top sources: SEARCH-HOT=374, FEED=238, FEED-SWEEP-FEED=72, RETWEET_REPLY=63, RETWEET_QT=54, FEED-SWEEP-FOLLOWING=45, GIF=40, RETWEET=35
+  - comedy patterns: REPETITION=1, FR_ANCHOR=1, METAPHOR=1, UNDERSTATEMENT=1
+  - top reply targets: @TheBTCTherapist=29, @bisdianora24202=17, @x_alt43973=17, @polsia=16, @Polymarket=15
+
+**Followers we follow** (running total): 201
+
+**Top-performing posts scraped today**:
+  - 1 likes / 18 views: Waiting for a flip is just hesitation in a fancy coat. The chart doesn't care about your comfort zon
+  - 0 likes / 26 views: Anthropic writes security docs; @OpenAI writes invoices. One is a warning label, the other is the re
+  - 0 likes / 1239 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)

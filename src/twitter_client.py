@@ -786,8 +786,22 @@ def like_tweet(tweet_url: str = ""):
         log.info("Failed to like tweet, continuing...")
 
 
-def reply_to_tweet(tweet_url: str, reply_text: str):
-    """Open a tweet, like it, click reply, type the reply, and submit."""
+def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
+    """Open a tweet, like it, click reply, type the reply, and submit.
+
+    Returns True only when the reply actually shipped (or was DRY_RUN-
+    recorded), False on every skip (policy, content_guard, dedup).
+
+    ⛔ CALLERS MUST NOT write the replied store before calling this — the
+    chokepoint below loads the on-disk canonical set and REFUSES anything
+    already in it. Bug 2026-06-07: five bots "locked the URL in BEFORE
+    posting" (direct_reply/_reply_to_tweets, early_bird, mega_watch,
+    reply_bot, roast) → the chokepoint saw their own premark and silently
+    skipped 100% of their replies since 2026-06-05 17:46, while their
+    unconditional log_reply() calls kept writing phantom rows into
+    engagement_log (the "941 replies" day was mostly fiction; bot.log
+    'Reply posted!' said 140). Crash-safety is the chokepoint's job: it
+    marks the store itself right before the Safari write."""
     # Central write policy: replies daily cap + jittered spacing, no near-term
     # price target (language is matched to the parent upstream, so no French
     # gate here), dry-run kill switch.
@@ -795,7 +809,15 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     ok, why = action_guard.can_post(action_guard.REPLY)
     if not ok:
         log.info(f"[REPLY] policy skip ({why}).")
-        return
+        return False
+    # Em/en-dash backstop for EVERY reply path (operator 2026-06-07: an em
+    # dash is an AI tell — "what a shame"). humanize() strips them, but a
+    # path that skips humanize (the VIP lane did) must not ship one.
+    from .humanizer import _DASH_PAIRS
+    for _pat, _rep in _DASH_PAIRS:
+        reply_text = (reply_text or "").replace(_pat, _rep)
+    reply_text = reply_text.replace("—", ", ").replace("–", ", ")
+    reply_text = re.sub(r" {2,}", " ", reply_text).replace(" ,", ",")
     # Over-length replies get a sentence-boundary trim instead of a discard
     # (2026-06-07): the LLM generation is already paid for — content_guard
     # used to reject >278-char replies outright, several/day. smart_trim
@@ -811,7 +833,23 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     ok, why = content_guard.validate(reply_text, kind="reply")
     if not ok:
         log.info(f"[REPLY] content_guard skip ({why}): {reply_text[:120]!r}")
-        return
+        return False
+    # FR-forced parents (operator 2026-06-07: "i saw some english on Julien
+    # response"). Chokepoint gate, BEFORE the dedup mark below: an English
+    # reply to an always-French friend never ships, and the post stays
+    # unmarked so a later cycle can retry it with the FR generator.
+    try:
+        _fr_parent = tweet_url.split("x.com/")[1].split("/")[0].lower()
+    except (IndexError, AttributeError):
+        _fr_parent = ""
+    _fr_forced = {h.strip().lstrip("@").lower() for h in os.environ.get(
+        "FR_FORCED_REPLY_HANDLES", "Graphseo").split(",") if h.strip()}
+    if _fr_parent in _fr_forced:
+        from .direct_reply import _looks_english
+        if _looks_english(reply_text):
+            log.info(f"[REPLY] FR-forced parent @{_fr_parent} but reply looks "
+                     f"English — refusing (post stays fresh): {reply_text[:80]!r}")
+            return False
     # ONE reply per tweet, EVER — enforced at the chokepoint (operator
     # 2026-06-05: "never send 2 replies on same tweet"). Each reply bot
     # loads replied_tweets.json at cycle start, so two bots racing within
@@ -822,7 +860,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     _replied_now = load_replied()
     if tweet_url in _replied_now:
         log.info(f"[REPLY] already replied to this tweet (chokepoint dedup) — skipping: {tweet_url}")
-        return
+        return False
     _replied_now.add(tweet_url)
     save_replied(_replied_now)
 
@@ -843,7 +881,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     if _cfg.DRY_RUN:
         log.info(f"[REPLY][DRY_RUN] would reply to {tweet_url}: {reply_text[:160]!r}")
         action_guard.record(action_guard.REPLY, target=tweet_url, dry_run=True)
-        return
+        return True
 
     with _safari_lock:
         # Make sure Safari is focused first
@@ -893,6 +931,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
         log.info("Reply posted!")
         action_guard.record(action_guard.REPLY, target=tweet_url)
         close_front_tab()
+    return True
 
 
 def quote_tweet(tweet_url: str, comment: str) -> bool:
@@ -1156,7 +1195,14 @@ def follow_account(username: str) -> bool:
 
 
 def visit_profile_and_like(username: str, like_count: int = 2):
-    """Visit a user's profile and like their latest tweets for reciprocity."""
+    """Visit a user's profile and like their latest tweets for reciprocity.
+
+    Gated by `_profile_visit_allowed` (2026-06-07 home/search-only mandate):
+    reciprocity likes happen when we meet people on feeds/search, not by
+    visiting their profile."""
+    if not _profile_visit_allowed(username):
+        log.info(f"[LIKE] profile visit blocked (home/search-only mandate): @{username}")
+        return
     with _safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"Visiting profile: {profile_url}")
@@ -1369,8 +1415,30 @@ def is_own_post(tweet: dict) -> bool:
     return f"x.com/{BOT_HANDLE.lower()}/status/" in url
 
 
+def _profile_visit_allowed(username: str) -> bool:
+    """Operator mandate 2026-06-07 PM: NO profile visits for discovery —
+    the only scrape surfaces are @TheBTCTherapist (the main account), the
+    Home feed (For You + Following tab), and search terms. Our own profile
+    stays visitable (boost/pin/metrics/with_replies callers need it). Env
+    read at CALL time (side-effect gate — never an import-time constant)."""
+    from .config import BOT_HANDLE
+    base = (username or "").strip().lstrip("@").split("/")[0].lower()
+    if not base:
+        return False
+    if base == BOT_HANDLE.lower():
+        return True  # own profile (incl. BOT_HANDLE/with_replies callers)
+    allow = os.environ.get("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist,Graphseo")
+    return base in {h.strip().lstrip("@").lower() for h in allow.split(",") if h.strip()}
+
+
 def scrape_profile_tweets(username: str, max_tweets: int = 5):
-    """Visit a profile and scrape their recent tweet URLs and text."""
+    """Visit a profile and scrape their recent tweet URLs and text.
+
+    Gated by `_profile_visit_allowed`: non-allowlisted profiles return []
+    BEFORE any Safari work — discovery lives on home/following/search."""
+    if not _profile_visit_allowed(username):
+        log.info(f"[SCRAPE] profile visit blocked (home/search-only mandate): @{username}")
+        return []
     with _safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"[SCRAPE] Visiting profile: {profile_url}")
@@ -1856,7 +1924,7 @@ def reply_to_tweet_in_thread(reply_url: str, reply_text: str):
     pressing 'r' replies to *that* reply. Reuses reply_to_tweet's flow.
     """
     log.info(f"[REPLYBACK] Replying in-thread to: {reply_url}")
-    reply_to_tweet(reply_url, reply_text)
+    return reply_to_tweet(reply_url, reply_text)
 
 
 def reply_to_reply(reply_text: str):

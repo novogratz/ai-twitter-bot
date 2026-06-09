@@ -184,7 +184,8 @@ def run_replyback_cycle():
 
         try:
             # All reply-backs are nested in-thread now (influencer or not).
-            reply_to_tweet_in_thread(reply_url, reply)
+            if not reply_to_tweet_in_thread(reply_url, reply):
+                continue  # chokepoint skip — stays fresh, no phantom count
             replied_back.add(dedup_key)
             count += 1
         except Exception:

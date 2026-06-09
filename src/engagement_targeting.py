@@ -145,7 +145,9 @@ def run_engagement_targeting_cycle():
         if not reply or not isinstance(reply, str):
             continue
         try:
-            reply_to_tweet(c["url"], reply)
+            if not reply_to_tweet(c["url"], reply):
+                replied.add(c["url"])  # in-memory only — no phantom learn/log
+                continue
         except Exception:
             log.info(f"[ET] reply_to_tweet failed for {c['url']}")
             traceback.print_exc()

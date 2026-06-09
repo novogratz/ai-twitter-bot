@@ -39,21 +39,41 @@ fi
 
 PROMPT="Autonomous improvement session for the ai-twitter-bot repo (operator mandate 2026-06-05 — see memory project-autonomous-daily-improvement). ${EMERGENCY_CONTEXT}
 
-Mission, in order:
-1. DIAGNOSE: read engagement_log.csv per-action daily counts, engine_health_alerts.json, and the tail of bot.log. Find the weakest surface, any collapse, or the highest-leverage improvement. Quote-RT is the validated winner — protect and strengthen it.
-2. IMPROVE: implement ONE concrete, focused change (fix > feature). Match existing code style and invariants (CLAUDE.md).
-3. TEST: run '.venv/bin/python -m pytest tests/ -q' — must pass. Add a test if your change touches guard logic. NEVER start the bot (operator starts it himself; leave .bot_disabled alone).
-4. SHIP VIA PR (operator mandate 2026-06-05 — PR flow, never direct push to main from this run):
+Mission, in order. BE DECISIVE — you have a turn budget; spend most of it
+SHIPPING, not exploring. Pick the FIRST clearly-worthwhile change you find;
+do not survey everything.
+1. DIAGNOSE (fast — a few turns max): read engagement_log.csv per-action
+   daily counts, engine_health_alerts.json, and the tail of bot.log. The
+   account is AI-PRIMARY (AI labs/models/chips/stocks + AI-crypto + AI-vs-BTC
+   feud; the therapist voice frames AI replies). Quote-RT of AI virals +
+   reply volume are the validated winners — protect and strengthen them.
+2. IMPROVE: implement ONE SMALL, concrete change (fix > feature), target
+   ≤~40 lines of diff. Match existing code style and invariants (CLAUDE.md).
+   If you can't find a clear win, a focused test or a doc-accuracy fix counts
+   — shipping something small and correct beats a sprawling change that
+   times out.
+3. TEST: run '.venv/bin/python -m pytest tests/ -q' — must pass. Add a test
+   if your change touches guard logic. NEVER start the bot (operator starts
+   it himself; leave .bot_disabled alone).
+4. SHIP VIA PR (operator mandate — PR flow, never direct push to main here):
    a. git checkout -b improve/$(date +%Y-%m-%d)-<short-slug>   (branch from up-to-date main)
-   b. Commit ONLY your improvement files there (update CLAUDE.md+CODEX.md, +README if user-facing, in the same commit). Do NOT commit unrelated dirty bot-state .json files — the running bot syncs those itself on main.
+   b. Commit ONLY your improvement files (update CLAUDE.md+CODEX.md, +README if user-facing, same commit). Do NOT commit unrelated dirty bot-state .json files — the running bot syncs those on main.
    c. git push -u origin <branch>
    d. gh pr create --fill --body including: what was diagnosed, what changed, test results, and the standard Claude Code footer.
-   e. gh pr checks <pr-number> --watch   (wait for the guard-tests CI check; if it FAILS, fix on the branch and push again — never merge red)
-   f. gh pr merge <pr-number> --squash --delete-branch   (note: NOT --auto; the repo has no required-checks branch protection because that would block the running bot's direct state pushes to main)
+   e. CI wait — BOUNDED so you don't burn the turn budget polling: 'sleep 90 && gh pr checks <pr-number>'. If green → step f. If still pending, 'sleep 90 && gh pr checks <pr-number>' ONCE more. If FAILED → fix on the branch, push, and repeat this bounded wait at most ONE more time.
+   f. gh pr merge <pr-number> --squash --delete-branch   (NOT --auto; the repo has no required-checks branch protection — that would block the bot's state pushes)
    g. git checkout main && git pull --rebase
 5. RECORD: save learnings to auto-memory.
 
-Hard limits: never touch core_identity.md voice pillars, BLOCKLIST, respect_list defaults, HARD_RULES_BLOCK, or the 48h REPOST_MAX_AGE_HOURS rule. Keep the change small enough to review in one diff."
+FALLBACK (do this if you're running low on turns BEFORE a merge): make sure
+the branch is pushed and the PR is OPEN with a clear body, then STOP and note
+in auto-memory that a PR is awaiting review. A pushed PR for human review is
+a successful run — never end with uncommitted work or a half-applied change
+on a branch.
+
+Hard limits: never touch core_identity.md voice pillars, BLOCKLIST,
+respect_list defaults, HARD_RULES_BLOCK, or the 48h REPOST_MAX_AGE_HOURS rule.
+Keep the change small enough to review in one diff."
 
 echo "[auto_improve] $(date '+%F %T') starting run (emergency=${EMERGENCY_CONTEXT:+yes})" >> "$LOG_FILE"
 
@@ -62,7 +82,7 @@ echo "[auto_improve] $(date '+%F %T') starting run (emergency=${EMERGENCY_CONTEX
 /usr/bin/env PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" \
   claude -p "$PROMPT" \
   --dangerously-skip-permissions \
-  --max-turns 80 \
+  --max-turns 150 \
   >> "$LOG_FILE" 2>&1 || echo "[auto_improve] $(date '+%F %T') run FAILED (rc=$?)" >> "$LOG_FILE"
 
 echo "[auto_improve] $(date '+%F %T') run finished." >> "$LOG_FILE"

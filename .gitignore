@@ -56,3 +56,6 @@ claude_lockout.json
 # Operator-private session notes — loaded by Claude Code, never committed
 # (repo is on GitHub; private notes live here instead of CLAUDE.md).
 CLAUDE.local.md
+
+# secrets — never track (tokens live here)
+.env

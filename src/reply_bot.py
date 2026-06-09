@@ -246,11 +246,11 @@ def run_reply_cycle():
         log.info(f"[REPLY] Target: {url}")
         log.info(f"[REPLY] {action_type.upper()} ({len(reply_text)} chars): {reply_text}")
 
-        # Lock the URL in BEFORE posting. If the post call gets interrupted
-        # (network blip, AppleScript hang, OS kill) after the tweet went
-        # through, we still won't re-reply on the next cycle.
-        replied.add(url)
-        save_replied(replied)
+        # ⛔ NO premark — the reply_to_tweet chokepoint marks the store
+        # itself right before the Safari write (that IS the crash-safety);
+        # a caller-side premark makes the chokepoint refuse its own reply
+        # (100% silent self-skip, 2026-06-07 post-mortem).
+        replied.add(url)  # in-memory only: no same-cycle retry
 
         try:
             if action_type == "quote":
@@ -258,7 +258,8 @@ def run_reply_cycle():
                 retweet_post(url)
                 action_type = "retweet"
             else:
-                reply_to_tweet(url, reply_text)
+                if not reply_to_tweet(url, reply_text):
+                    continue  # chokepoint skip — nothing posted, no phantom log
             posted_count += 1
             log_reply(url, data["reply"], action_type, pattern_id=data.get("pattern", ""))
             # Wait between replies so browser can catch up

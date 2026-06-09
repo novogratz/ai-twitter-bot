@@ -121,12 +121,14 @@ def run_mega_watch_cycle():
             if len(reply_text) < 10 or len(reply_text) > 270:
                 continue
 
-            # Lock URL in BEFORE posting.
-            replied.add(url)
-            save_replied(replied)
+            # ⛔ NO premark — the reply_to_tweet chokepoint marks the store
+            # itself pre-post and refuses anything already in it (premark =
+            # 100% silent self-skip, 2026-06-07 post-mortem).
+            replied.add(url)  # in-memory only: no same-cycle retry
 
             try:
-                reply_to_tweet(url, reply_text)
+                if not reply_to_tweet(url, reply_text):
+                    continue  # chokepoint skip — nothing posted, no phantom log
                 try:
                     log_reply(url, reply_text, action_type="reply", source=f"MEGA/{username}")
                 except Exception:

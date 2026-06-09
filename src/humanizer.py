@@ -282,7 +282,9 @@ def humanize(text: str) -> str:
     # Strip em/en dashes
     for pat, rep in _DASH_PAIRS:
         result = result.replace(pat, rep)
-    result = result.replace("—", ",").replace("–", ",")
+    # Bare (unspaced) dashes get ", " — a bare "," produced "angle,conviction"
+    # in a live reply (2026-06-07). The double-space cleanup below normalizes.
+    result = result.replace("—", ", ").replace("–", ", ")
 
     # 2026-05-22 PM: strip markdown bold/italic. X doesn't render
     # markdown for most users — "**700 M$**" shows literally. Replace

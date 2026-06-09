@@ -222,6 +222,333 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+### 2026-06-08 — positive-only subjects + viral verification (operator: "make it more viral, push it and start it")
+
+**Positive-only hard rule:** Apple, the US government, Donald Trump, and
+Elon Musk (their companies/products/people — Tesla, SpaceX, X) get ONLY
+positive/admiring takes; reframe positively or SKIP. Lives in
+`personality_store._BASE_HARD_RULES` (the non-overridable HARD_RULES_BLOCK
+injected into every generation prompt), overrides the snark voice for these
+subjects. Guard: `test_positive_only_subjects_in_hard_rules`.
+
+**Viral engine — verified intact (no dead imports):** the measured
+view/like multipliers are all scheduled — `babysitter_job` (first-hour
+replies ~15x algo weight), `boost_recycler_job` + `boost_job` (self-RT
+winners, +200 views measured), `self_winners_job` (own-wins bank → prompts).
+QRT lane is AI-first (PM-16/18), market_trauma is the default original
+format (PM-9, 2.3x likes), reply volume converts to followers. The honest
+read: the virality machinery is complete; the lever is UPTIME (the
+self_winners bank only populates once the bot runs and posts earn
+engagement) + letting the LLM self-improve loop tune on live data. Resisted
+bolting on untested "viral" knobs (the operator's own FOMO-vs-signal point).
+### 2026-06-08 — FOCUS: AI-primary (operator: "focus more on AI", "focus mr")
+
+The 2026-06-08 experimental sprawl drifted off-thesis. Operator clarified:
+this is an **AI-as-investing-theme** account (AI primary, then crypto +
+stocks/investment THROUGH the AI lens) — NOT indie-builder/build-in-public.
+
+Tightened both lanes to AI-primary:
+- **Removed the builder/founder drift**: AI-tools/"vibe coding"/"my agent
+  failed" reply queries, and levelsio/gregisenberg/swyx/mckaywrigley/nutlope
+  from TOP_AI_HANDLES + the quote AI-viral from: pass.
+- **Reply lane now 85% AI** (was ~69%): psychology trimmed 3 queries → 1
+  (the therapist voice FRAMES every AI reply — it's the VOICE, not a topic
+  lane), pure markets/macro query removed (AI stocks cover it), crypto kept
+  to the AI-vs-BTC feud. Added mainstream-AI (Meta AI / Apple Intelligence /
+  Tesla AI) + kept AI-stocks + AI-crypto.
+- **Quote lane**: pure S&P/Fed/macro → "AI stock/tech earnings/Mag Seven";
+  two pure-crypto queries → one AI-vs-BTC feud query; generic "robots" →
+  embodied-AI (Figure/Optimus/Boston Dynamics).
+
+Principle locked: AI is the TOPIC, market-trauma/therapist is the VOICE.
+Reply to AI posts in the therapist voice = both at once. Don't add topic
+lanes that aren't AI.
+### 2026-06-08 — GIF post/quote double-log fix (the bandit data was lying about market_trauma)
+
+Engagement-log audit found EVERY GIF hot take and EVERY GIF quote wrote TWO
+rows: the chokepoint (`twitter_client.post_tweet_with_gif` /
+`quote_tweet_with_gif`) writes one row (`action_type='post'`/`'quote_gif'`,
+`source='GIF/<q>'`, pillar=meme_reaction), and the caller (`bot.py` for
+hot takes, `quote_tweet_bot.py` for quotes) UNCONDITIONALLY wrote a second
+(`action_type='hotake'`/`'quote'`, no source, pillar from content).
+
+One ship → two rows → two pillars credited, two action counts inflated.
+Live witness on 2026-06-08T05:39:31 (the SoftBank hot take with GIF):
+`engagement_log.csv` has the same tweet at `.858503` (post + GIF/) and
+`.860655` (hotake + market_trauma). The very same metric this duplicate
+contaminated — `pillar_engagement_30d` market_trauma avg-likes — is what
+drove the autonomous 2026-06-08 mandate pivot ("market_trauma = 25.93
+vs ai_news_take = 0.88, 29x gap"). The 29x is real (GIF dups inflate ALL
+pillars equally for hotakes), but the per-action breakdown was wrong:
+hotake counts under-counted, post counts over-counted.
+
+Fix: gate the caller-side log on the GIF flag. `bot.py:661-672` skips
+`log_hotake`/`log_post` when `gif_query` is set; `quote_tweet_bot.py:638-647`
+skips `log_reply` when `_gif_q` is set. Same contract as `viral_stunt_bot`
+(line 163 comment: "logs itself with source=GIF/<q>").
+
+Guards (5 new tests, `tests/test_guards.py`):
+`test_bot_gif_hotake_logs_once_not_twice` (real engagement_log path),
+`test_bot_no_gif_text_only_hotake_still_logs` (inverse: no-GIF still logs),
+`test_quote_tweet_gif_logs_once_not_twice`,
+`test_bot_gif_dup_guard_present_in_source`,
+`test_quote_tweet_gif_dup_guard_present_in_source` (structural pins).
+
+Lesson — chokepoint A/B-tag side effects must be opt-in, not silent.
+`post_tweet_with_gif` started logging in 2026-06-05 PM ("A/B tag GIF vs
+text-only") without auditing the callers, and bot.py + quote_tweet_bot.py
+were already logging. Three other callers (btc_blitz, feed_sweeper,
+retweet_bot) currently RELY on the chokepoint to log their GIF quotes
+(non-GIF quotes go unlogged entirely) — separate gap, fixed in a follow-up.
+
+### 2026-06-08 — experimental AI lanes (operator: "try new things... AI crypto stocks investment, focus on AI primarily")
+
+Operator framing (paraphrasing his own voice example): adding 120 tools is
+FOMO; the only signal is which converts. So these are ADDED TAGGED, to be
+PRUNED by measurement — not kept on faith.
+
+New AI-first lanes spanning the 3 pillars (AI primary):
+- **AI builders/founders** (the AI-tool-overwhelm voice lane): "AI tools /
+  AI stack / which AI / vibe coding", "AI agent / my agent / agent failed /
+  AI wrapper" → reply SEARCH_QUERIES; `from:levelsio,gregisenberg,swyx,
+  mckaywrigley,nutlope` → quote AI_VIRAL pass + TOP_AI_HANDLES.
+- **AI-crypto crossover** (crypto pillar, AI lens): "AI crypto / AI token /
+  decentralized AI / worldcoin".
+- **AI stocks / the AI trade** (investment pillar, AI lens): "Nvidia /
+  Palantir / AI trade / AI capex ... earnings"; quote viral query
+  "(AI bubble/AI trade/AI capex/Nvidia/Palantir)(earnings/valuation/stock)
+  min_faves:500".
+- **Fresh AI launches**: "(just shipped/introducing/we built)(AI/LLM/agent/
+  model) min_faves:100" — first-minutes virality.
+
+Each reply logs `source_detail=query` → analyzer pillar_engagement / own-
+metrics scraper attributes engagement per query. EVALUATION DUE ~2026-06-08
+PM: keep queries whose replies/quotes earn engagement, prune the dead ones.
+### 2026-06-07 PM-18 — AI-leads quote ranking + AI-only viral fallback
+
+After PM-16/17 brought the quote lane online, live watching showed the
+ranking and pool needed two corrections:
+1. **AI virals now LEAD** the main quote lane (`ai_viral + priority +
+   rest`) — a 55-like bestie post was winning over higher-engagement AI
+   virals because priority was listed first (ignored likes). The bestie is
+   already covered by btc_blitz's 6h QRT path, so he surfaces in the main
+   lane only when no AI viral is hotter.
+2. **High-engagement fallback is AI-only**: the generic viral query
+   `"Bitcoin OR crypto OR the market" min_faves:2000` surfaced a 657-like
+   non-AI "massive failure" post that won the slot when the AI-viral pass
+   was dedup-dry (we'd already quoted sama/OpenAI's fresh posts). Replaced
+   with an AI-money-angle viral query so the top tier stays on-lane.
+
+Lesson: ranking AI first isn't enough if the AI pool dedup-exhausts and a
+non-AI generic query sits in the same pool — the FALLBACK tier has to be
+on-lane too, or it wins exactly when you can't see it coming.
+### 2026-06-07 PM-17 — the unbounded warmup blocked the scheduler (why there were NO quotes)
+
+PM-16 added the AI-viral quote pass but quotes still didn't flow. Live
+diagnosis of the 15:43 boot: 300+ replies, ZERO dedicated quotes 20 min
+in, Safari lock 100% held by `[SEARCH-HOT]` replies. The "Quote bot: GO
+CRAZY" startup line was from the PREVIOUS (03:01) boot — meaning
+**main() was still inside the startup reply warmup and had never reached
+`scheduler.start()` (line 1252)**. So every interval job — quote_tweet_job
+(AI-viral), retweet_job, hot_quote, breaking_qrt — did not exist yet.
+
+Root cause: PM-8's "replies first" warmup called the UNBOUNDED
+`run_direct_reply_cycle()` (21 queries × reply-to-every-candidate, ~17s
+each). That one call runs 20-40+ min and blocks the entire scheduler
+bring-up behind it. The replies-first fix over-corrected: it didn't just
+reorder, it gated the whole engine behind an unbounded loop.
+
+Fix: `run_direct_reply_cycle(max_replies=None)` — the startup warmup +
+the 3 burst rounds pass `STARTUP_REPLY_WARMUP=12` so each returns in a few
+minutes; `scheduler.start()` is reached fast and the steady-state jobs
+(direct_reply unbounded every few min, quote every 2 min, etc.) run
+concurrently from then on. Steady-state callers pass None = unbounded.
+Guard: `test_startup_reply_warmup_is_bounded`.
+
+Lesson: a one-shot warmup call placed BEFORE `scheduler.start()` must be
+bounded — anything unbounded there is not a warmup, it's an indefinite
+hold on every scheduled job. "Replies first" means reply FIRST, not reply
+FOREVER-before-anything-else.
+### 2026-06-07 PM-16 — AI-viral quote pass (operator: "more quote retweet on AI... TOP posts in AI, be impactful sharp and viral")
+
+Diagnosis: replies were flowing (300+/day) but quotes were starving — only
+~3 in 2h of uptime. Two causes: (1) the AI topic queries were 1-of-3
+RANDOM per cycle, so AI competed with crypto/markets for the slot; (2) the
+priority-handle + trusted-news passes use `scrape_profile_tweets`, now
+PROFILE-GATED (PM-10) — broken for every handle except the allowlisted
+bestie. So the viral-AI pool was thin and the quote slot often went to
+mid-size finance posts.
+
+Fix (`quote_tweet_bot`): an **AI-VIRAL pass scanned EVERY cycle** via
+SEARCH (not profile visits — `from:` + high-min_faves on the `top` tab is
+ungated and surfaces exactly the biggest AI accounts' viral posts):
+- `TOP_AI_HANDLES` (sama, OpenAI, AnthropicAI, karpathy, GoogleDeepMind,
+  demishassabis, ylecun, AndrewYNg, DrJimFan, _akhaliq, rowancheung,
+  minchoi, nvidia, xai…) and `AI_VIRAL_QUERIES` (`from:` OR-chains
+  min_faves:150-200 + topic floors min_faves:800-1000).
+- `QUOTE_AI_VIRAL_MIN_LIKES=150` floor; hard 48h + dedup + BLOCKLIST gates
+  unchanged.
+- **Ranking: priority (bestie) → AI virals → generic pool** — the day's
+  top AI post wins the quote slot.
+- Quote spacing tightened 300s→180s (jitter 180→90) so the richer pool
+  actually ships: ~12-15 quotes/hr ceiling vs ~7 before.
+
+Guard: `test_quote_ai_viral_pass_present_and_ranked`.
+### 2026-06-07 PM-15 — self-critique sweep (operator: "look at what you're doing with a criticism spirit")
+
+The afternoon's pattern, stated plainly: three live embarrassments (French
+to the bestie, a test posting through the real Safari, SKIP/dash leaks)
+were each caught by the OPERATOR, not by the engine or by pre-ship checks
+— and each fix initially patched the single point instead of the family.
+This pass sweeps the families:
+
+- **Phantom-log family (PM-11) finished**: `reply_to_tweet_in_thread` now
+  returns the chokepoint bool; chain_reply (was also bumping thread-turn
+  state on refused replies), spike followup, viral_followup, and
+  notify_bot replyback all gate count/log/state on an actual ship.
+  Replyback dedup_key stays fresh on a chokepoint skip.
+- **SKIP exact-match family finished**: agent.py (news, 3 sites),
+  hotake_agent (2), viral_followup — all prefix-based now. content_guard
+  remains the backstop for every surface.
+- **Known data debt**: engagement_log carries ~800 phantom reply rows
+  from 2026-06-05→07 (the self-block era). Any ROI/baseline math over
+  those days OVERSTATES replies ~4-6x — weekly review and engine_health
+  baselines should discount them. Scraped own-metrics are unaffected.
+
+Process rule going forward (the actual lesson): before re-laning a
+handle/lane/surface, read its full generation path end-to-end (prompt,
+model, language, humanize, chokepoint) — and when a bug ships, fix the
+FAMILY (grep all surfaces for the same shape), not the instance. SKIP is
+free, a live embarrassment is not.
+### 2026-06-07 PM-14 — SKIPPED variants + always-French Julien
+
+Follow-ups to PM-13 from live output:
+- The SKIP backstop regex used `skip\b` — live leaks included "SKIPPED"
+  and "Skip." which slipped the boundary. Now any text OPENING with
+  `skip*` is refused at content_guard (a legit "Skipping..." lede is
+  sacrificed; SKIP is free). 8 leaked SKIP replies shipped today total
+  (01:04-14:11) before the gate hardened.
+- **@Graphseo is ALWAYS French** (operator: "i saw some english on Julien
+  response" — his short posts fooled `_looks_french`). Three layers:
+  `_FR_FORCED_HANDLES` override in `_reply_to_tweets`
+  (`FR_FORCED_REPLY_HANDLES`, default Graphseo); buddy blitz routes
+  Graphseo to his dedicated FR generator; chokepoint gate in
+  `reply_to_tweet` refuses an English reply to an FR-forced parent BEFORE
+  the dedup mark (post stays fresh for an FR retry). Guard:
+  `test_fr_forced_parent_rejects_english_reply`.
+### 2026-06-07 PM-13 — SKIP-rationale leak + AI-first lane (operator: "more AI shit")
+
+1. **SKIP leak shipped live** ("SKIP. The tweet is incomplete (cuts off
+   mid-sentence at 'rema')..." published as a reply — operator: "LOL BRO").
+   `_generate_single_reply` checked `reply.upper() == "SKIP"` EXACT match;
+   the model appended its rationale, so the whole refusal published. Both
+   generator checks are now prefix-based (`startswith("SKIP")`), and
+   `content_guard.validate` rejects ANY text opening with SKIP at the
+   chokepoint (every kind). Guard: `test_skip_rationale_never_publishes`.
+2. **Bare-dash cosmetics**: '—' → ',' produced "angle,conviction" in that
+   same reply. humanize + the reply chokepoint now emit ', ' + collapse
+   spacing. Guard: `test_bare_dash_replacement_keeps_spacing`.
+3. **AI-FIRST reply lane** (operator: "bot also needs to be more AI
+   focused" / "i want to see more AI shit"): SEARCH_QUERIES rebalanced —
+   8 of 14 topic queries are AI (labs/models, agents, AI-coding
+   Claude Code/Cursor, chips TSMC/AMD/Broadcom, AI power, DeepSeek/open
+   source, AI jobs/funding), psychology trimmed to 3 (it's the VOICE, AI
+   is the LANE), markets+macro merged to 1, BTC down to 1 (feud lane only).
+   HOT_TAB 5/7 AI. Quote bot's stale SpaceX viral query → AI-coding viral
+   pass. Guard: `test_reply_queries_are_ai_first` pins majority-AI.
+### 2026-06-07 PM-12 — French-to-the-bestie incident + the Safari test wall
+
+Two live failures within an hour of the PM-11 relaunch, both mine:
+
+1. **VIP lane shipped the Graphseo treatment to @TheBTCTherapist** (operator:
+   "why did it reply in french to the bitcoin therapist? and with m dash").
+   PM-11 added him to `VIP_SCAN_HANDLES`, but the lane had ONE generator —
+   the Graphseo FR prompt (French + the deliberate-typo style). ~5 of his
+   posts got French replies 13:52-13:57. Fix: per-handle persona in
+   `_run_graphseo_scan` (bestie EN prompt for TheBTCTherapist, buddy prompt
+   for other VIPs, Graphseo keeps his FR generator) + `humanize()` on VIP
+   output (the lane skipped it — that's how the em dash survived).
+   Em/en-dash strip is now ALSO a chokepoint backstop in `reply_to_tweet`
+   for every path. Guard: `test_vip_scan_uses_bestie_prompt_for_btctherapist`,
+   `test_reply_chokepoint_strips_em_dashes`.
+
+2. **A guard test drove the LIVE Safari and posted real replies** to
+   @TheBTCTherapist mid-test (incl. duplicate replies on one status — the
+   test used a tmp replied-store, so the chokepoint saw everything fresh).
+   Root cause: the test mocked `direct_reply.reply_to_tweet`, but the VIP
+   scan imports it FUNCTION-LOCALLY from twitter_client — the mock was
+   bypassed. `tests/conftest.py` now has an autouse `_no_safari` wall:
+   `webbrowser.open`, `_run_applescript`, `_paste_text` raise in every
+   test unless explicitly re-patched. Same family as the logger-isolation
+   fix (a1077a0): tests must not be able to touch production surfaces.
+
+Lesson: a function-local `from .twitter_client import X` resolves at call
+time from twitter_client — mocking the caller module does nothing. Mock at
+the chokepoint module, and let the conftest wall catch the ones you miss.
+### 2026-06-07 PM-11 — THE PHANTOM REPLY BUG (the real "bot doesn't do much")
+
+Operator: "bot is not fast and doesn't do much, it's disappointing." He was
+right, and the engine's own numbers were lying. Since the one-reply-ever
+chokepoint landed (2026-06-05 17:46), FIVE bots that "locked the URL in
+BEFORE posting" (`save_replied` premark) — `direct_reply._reply_to_tweets`
+(= direct_reply search/feed AND feed_sweeper), `early_bird`, `mega_watch`,
+`reply_bot`, `roast` — had 100% of their replies silently refused: the
+chokepoint loads the on-disk store, sees the caller's own premark, and
+skips. Their unconditional `log_reply()` then recorded a PHANTOM row, so
+engagement_log said "941 replies on Jun 6" while bot.log's `Reply posted!`
+said 140 (Jun 7: 81 real vs 513 self-refusals). Repro was deterministic:
+premark → `load_replied()` → refuse.
+
+Fix (chokepoint-honest contract, pinned by
+`test_reply_callers_never_premark_store` +
+`test_reply_chokepoint_returns_bool`):
+- `twitter_client.reply_to_tweet` returns **True only when the reply
+  actually shipped** (DRY_RUN counts), False on policy/content/dedup skips.
+- Callers NEVER write the replied store before the call — crash-safety is
+  the chokepoint's job (it marks right before the Safari write). In-memory
+  `replied.add(url)` stays (no same-cycle retry).
+- `log_reply` fires ONLY on True — no more phantom rows poisoning the ROI
+  loop, the watchdog baselines, and the operator's own measurements.
+- Same gating applied to VIP scan, engagement_targeting, btc_blitz,
+  retweet_bot replyback.
+
+Also: VIP scan lane trimmed to `Graphseo,TheBTCTherapist` (env
+`VIP_SCAN_HANDLES`) — the 2026-06-06 four-handle FR list burned ~3 min of
+serialized Safari per cycle converting to zero on the EN persona.
+
+Lesson (the dedup-chokepoint family grows again): when a chokepoint both
+CHECKS and MARKS a store, callers must not touch that store at all —
+"defensive" caller-side marking turns the guard against its own caller.
+And NEVER log an action as done unless the chokepoint said it shipped:
+every measurement downstream (pillar ROI, watchdog baselines, operator
+trust) inherits the lie.
+
+### 2026-06-07 PM-10 — profile visits OFF (operator launch config: "don't visit any profiles anymore")
+
+Discovery surfaces are now EXACTLY three: **@TheBTCTherapist's profile**
+(the main account), **Home** (For You + the Following tab), and **search
+terms**. `twitter_client._profile_visit_allowed` gates BOTH profile-visit
+primitives — `scrape_profile_tweets` and `visit_profile_and_like` — at the
+chokepoint: only our own profile (boost/pin/metrics/with_replies) and
+`PROFILE_VISIT_ALLOWLIST` (env, default `TheBTCTherapist,Graphseo`, read
+at CALL time per the side-effect-env rule) may be visited; anything else returns
+`[]`/no-ops BEFORE any Safari work. Bots that scanned other profiles
+(early_bird, mega_watch, engagement_targeting, quote priority/trusted-handle
+passes, retweet trusted-handle passes, engage/notify reciprocity likes) now
+skip those handles instantly — their Safari time flows to home/search/reply
+lanes. Follow/unfollow profile visits are untouched (mechanically required
+to click the button; follows are chokepoint-dormant under the ceiling,
+unfollows operator-only). Guard test:
+`test_profile_visits_blocked_outside_allowlist`.
+
+**Buddy blitz (same mandate, operator: "reply to everything graphseo and
+thebtctherapist post"):** `btc_blitz` now runs a buddy pass after the
+bestie pass — every `BLITZ_BUDDY_HANDLES` (default `Graphseo`) fresh ≤48h
+post gets exactly one reply (language-matched, warm + sharp, no QRT bit —
+the inversion stays BTCTherapist-only; Graphseo's one-typo rule is already
+chokepoint-enforced). Same idempotency: replied-set check pre-LLM +
+chokepoint dedup. Guard test: `test_buddy_blitz_replies_to_every_fresh_post`.
+
 ### 2026-06-07 PM-9 — viral push round 3 (operator: "DO IT … push it")
 
 Two new levers, both measured-data-driven:
@@ -915,7 +1242,7 @@ obeys the same rules without per-bot rewrites:
 
 Autonomous Twitter/X influencer bot. ~30 concurrent micro-bots managed by APScheduler in `main.py`. Browser-driven via Safari + AppleScript — no Twitter API key.
 
-**Default AI provider: Ollama** (`AI_CLI=ollama`). Codex is the default backup when the local model fails.
+**Default AI provider: Claude Code CLI** (`AI_CLI=claude`, since 2026-06-07 — operator: "claude code cli as main one"). **Ollama is the fallback** (`LLM_FALLBACK_CLI=ollama` → local HTTP path with `OLLAMA_MODEL`) when claude fails.
 
 To switch providers:
 

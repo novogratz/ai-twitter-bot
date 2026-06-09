@@ -194,13 +194,14 @@ def run_roast_pgm_cycle():
         if not roast:
             continue
 
-        # Lock-before-post: register URL FIRST so a crash can't cause a double-roast.
-        replied.add(url)
-        _save_replied(replied)
+        # ⛔ NO premark — the reply_to_tweet chokepoint marks the store itself
+        # pre-post; a caller premark makes it refuse its own reply.
+        replied.add(url)  # in-memory only
 
         log.info(f"[ROAST] {url} -> {roast[:80]}")
         try:
-            reply_to_tweet(url, roast)
+            if not reply_to_tweet(url, roast):
+                continue
             posted += 1
             # Jitter between posts so we don't look like a synchronous burst.
             if posted < MAX_PER_CYCLE:
