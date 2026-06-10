@@ -2179,3 +2179,21 @@ def test_engine_health_quote_gif_counts_as_quote_and_slot_quiet_hours(monkeypatc
     assert not ehb._in_slot_quiet_hours("hotake", 14), "hotake midday must be watched"
     assert not ehb._in_slot_quiet_hours("quote", 2), "quote runs 24/7 — always watched"
     assert not ehb._in_slot_quiet_hours("reply", 2), "reply runs 24/7 — always watched"
+
+
+def test_quote_us_night_throttle(monkeypatch):
+    """2026-06-10 (operator: 'get better'): overnight quotes scraped at 5-31
+    views — the audience is US-waking-hours. The quote cycle mostly skips
+    during the US night (cheap, before Safari/LLM) so cap + fresh parents
+    concentrate on daytime; ~1 in 3 night cycles still runs."""
+    from src import quote_tweet_bot as qb
+
+    assert qb._is_us_night_hour(3), "3 AM NY is night"
+    assert qb._is_us_night_hour(23), "11 PM NY is night"
+    assert not qb._is_us_night_hour(9), "9 AM NY is day"
+    assert not qb._is_us_night_hour(22), "10 PM NY is still day"
+
+    import inspect
+    src = inspect.getsource(qb.run_quote_tweet_cycle)
+    assert "_is_us_night_hour" in src and "QUOTE_NIGHT_RUN_PROB" in src, \
+        "night throttle must gate the quote cycle before any Safari/LLM work"

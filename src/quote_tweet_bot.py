@@ -447,6 +447,17 @@ def _too_old_to_quote(t: dict) -> bool:
         return True  # can't determine age → treat as stale → skip
 
 
+def _is_us_night_hour(hour_ny: int) -> bool:
+    """US-asleep window for the quote lane. 2026-06-10 audit: overnight
+    quotes (00:39-08:27 ET) scraped at 5-31 views — the audience is US
+    traders/AI people, and a 3 AM quote burns a dedup-fresh viral parent
+    while it gets buried under the parent's other quotes by sunrise. Spend
+    the firepower when the audience is awake."""
+    start = int(os.environ.get("QUOTE_NIGHT_START_HOUR_NY", "23"))
+    end = int(os.environ.get("QUOTE_NIGHT_END_HOUR_NY", "7"))
+    return hour_ny >= start or hour_ny < end
+
+
 def run_quote_tweet_cycle():
     """Pick a viral in-niche tweet and publish a quote post with a FR angle."""
     from .config import get_live_cap
@@ -454,6 +465,19 @@ def run_quote_tweet_cycle():
     if _today_count() >= cap:
         log.info(f"[QUOTE] Daily cap reached ({cap}). Skipping.")
         return
+
+    # Night throttle: overnight cycles mostly skip (cheap, before any
+    # Safari/LLM work) so the daily cap + fresh viral parents concentrate
+    # on US waking hours. ~1 in 3 cycles still runs — the lane never dies.
+    try:
+        from zoneinfo import ZoneInfo
+        _hour_ny = datetime.now(ZoneInfo("America/New_York")).hour
+    except Exception:
+        _hour_ny = datetime.now().hour
+    if _is_us_night_hour(_hour_ny):
+        if random.random() > float(os.environ.get("QUOTE_NIGHT_RUN_PROB", "0.33")):
+            log.info(f"[QUOTE] US-night throttle ({_hour_ny}h NY) — skipping this cycle.")
+            return
 
     quoted = _load_quoted()
     candidates = []

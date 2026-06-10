@@ -476,7 +476,8 @@
     "Lauren",
     "GRITCULT",
     "Suhail",
-    "bayes"
+    "bayes",
+    "Maartunn"
   ],
   "history": [
     {
@@ -2852,6 +2853,11 @@
     {
       "lang": "en",
       "handle": "bayes",
+      "added": "2026-06-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Maartunn",
       "added": "2026-06-10"
     }
   ]

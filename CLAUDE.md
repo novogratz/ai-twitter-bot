@@ -263,6 +263,19 @@ stop being forfeited to dup-skips, so the tries actually convert.
 granted ("get those likes and followers").** Bot started by Claude this
 once (explicit instruction). Watch: likes on posts/quotes is THE metric.
 
+### 2026-06-10 AM — get-better pass on the Fable-era output (operator: "start it and get better")
+
+Overnight Fable output audited (40 posts/quotes, 00:39-08:27): voice is
+landing (concrete, varied, funny) but (1) the CLINIC FRAME was over-used —
+"my patients"/"waiting room" in 8/40, 🛋️ in 10/40 — the brand bit is
+becoming the next catchphrase; core_identity now rations it to ~1 in 4
+posts (carry the therapist ENERGY without the props otherwise). (2) Views
+5-31 on overnight quotes: the audience is US traders/AI people and a 3 AM
+quote burns a dedup-fresh viral parent to get buried by sunrise —
+`quote_tweet_bot` now runs a US-NIGHT THROTTLE (23:00-07:00 NY: ~1 in 3
+cycles runs, env QUOTE_NIGHT_*), concentrating cap + parents on waking
+hours. Guard: `test_quote_us_night_throttle`.
+
 ### 2026-06-10 02:06 — false collapse alarms: quote_gif invisible to the watchdog + slot surfaces judged overnight
 
 Engine health fired "quote collapsed: 4 today vs ~16" + "hotake collapsed:
