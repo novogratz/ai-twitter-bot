@@ -478,7 +478,8 @@
     "Suhail",
     "bayes",
     "Maartunn",
-    "Karol"
+    "Karol",
+    "Anthropic"
   ],
   "history": [
     {
@@ -2864,6 +2865,11 @@
     {
       "lang": "en",
       "handle": "Karol",
+      "added": "2026-06-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Anthropic",
       "added": "2026-06-10"
     }
   ]

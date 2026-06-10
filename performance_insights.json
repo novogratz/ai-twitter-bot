@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-10T06:47:12.264012",
-  "window_7d_actions": 5371,
-  "window_24h_actions": 627,
+  "generated_at": "2026-06-10T17:26:13.801825",
+  "window_7d_actions": 5570,
+  "window_24h_actions": 672,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5325
+      "count": 5524
     },
     {
       "pattern": "METAPHOR",
@@ -41,120 +41,120 @@
   "best_hours_utc": [
     {
       "hour": 16,
-      "actions": 292
+      "actions": 319
+    },
+    {
+      "hour": 15,
+      "actions": 296
+    },
+    {
+      "hour": 17,
+      "actions": 275
     },
     {
       "hour": 19,
       "actions": 273
     },
     {
-      "hour": 15,
-      "actions": 270
-    },
-    {
       "hour": 0,
       "actions": 270
-    },
-    {
-      "hour": 18,
-      "actions": 269
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2241
+      "count": 2366
     },
     {
       "topic": "IA",
-      "count": 1975
+      "count": 2043
     },
     {
       "topic": "Crypto",
-      "count": 728
+      "count": 774
     },
     {
       "topic": "Bourse",
-      "count": 597
+      "count": 575
     },
     {
       "topic": "Spatial",
-      "count": 383
+      "count": 375
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1905
+      "count": 2027
     },
     {
       "pillar": "other",
-      "count": 1753
+      "count": 1746
     },
     {
       "pillar": "market_trauma",
-      "count": 1276
+      "count": 1324
     },
     {
       "pillar": "meme_reaction",
-      "count": 228
+      "count": 251
     },
     {
       "pillar": "reply_bait",
-      "count": 142
+      "count": 149
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 67
+      "count": 73
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 243
+      "count": 279
     },
     {
       "pillar": "other",
-      "count": 183
+      "count": 186
     },
     {
       "pillar": "market_trauma",
-      "count": 137
+      "count": 143
     },
     {
       "pillar": "meme_reaction",
       "count": 42
     },
     {
-      "pillar": "reply_bait",
-      "count": 13
+      "pillar": "ai_vs_btc",
+      "count": 11
     },
     {
-      "pillar": "ai_vs_btc",
-      "count": 9
+      "pillar": "reply_bait",
+      "count": 11
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
       "posts": 21,
-      "avg_likes": 3.43,
-      "avg_views": 924.3,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 23,
-      "avg_likes": 2.43,
-      "avg_views": 2057.6,
+      "avg_likes": 0.05,
+      "avg_views": 32.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 27,
-      "avg_likes": 0.33,
-      "avg_views": 366.3,
+      "posts": 26,
+      "avg_likes": 0.0,
+      "avg_views": 35.1,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 18,
+      "avg_likes": 0.0,
+      "avg_views": 19.4,
       "low_sample": false
     },
     {
@@ -166,20 +166,20 @@
     },
     {
       "pillar": "reply_bait",
-      "posts": 7,
+      "posts": 9,
       "avg_likes": 0.0,
-      "avg_views": 40.0,
+      "avg_views": 34.8,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4191
+      "count": 4366
     },
     {
       "type": "quote",
-      "count": 404
+      "count": 425
     },
     {
       "type": "retweet",
@@ -187,31 +187,31 @@
     },
     {
       "type": "quote_gif",
-      "count": 221
+      "count": 242
     },
     {
       "type": "hotake",
-      "count": 140
+      "count": 117
     },
     {
       "type": "post",
-      "count": 26
+      "count": 31
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-10T06:46:41.320719",
-      "text": "3,75 milliards de stablecoins sur Solana en sept jours. C'est pas une question de prix. C'est la preuve que ça marche. Arrête de douter de ce que les constructeurs savent déjà.",
+      "ts": "2026-06-10T17:23:36.000065",
+      "text": "That's the trap. every function = every function underfunded. the ones shipping go deep on 1-3 instead.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-10T06:45:25.768662",
-      "text": "Every AI builder needs Nvidia H100s. There's no alternative at scale. That's not valuation, that's infrastructure pricing in a $5T ecosystem.",
+      "ts": "2026-06-10T17:22:41.526652",
+      "text": "If AGI is possible, alignment research is possible by definition. The constraint: whether alignment finishes before someone's incentive to wait runs out.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-10T06:45:07.049820",
-      "text": "'Tipped their hand' is right. Not manipulation, just the math: $5B raised forces deployment speed. The gap between 'careful' and 'fast' isn't unique to Anthropic. Every lab shows it.",
+      "ts": "2026-06-10T17:21:04.045431",
+      "text": "XRPL engineered a solid settlement layer. the real question: why would agents choose this over L2s that already have the ecosystem, liquidity, and integrations?",
       "type": "reply"
     }
   ]
