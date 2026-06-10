@@ -263,6 +263,28 @@ stop being forfeited to dup-skips, so the tries actually convert.
 granted ("get those likes and followers").** Bot started by Claude this
 once (explicit instruction). Watch: likes on posts/quotes is THE metric.
 
+### 2026-06-10 — 17h SILENT DOWNTIME (my kill-race) → launchd KeepAlive; Fable 5 on content; fanboy dial maxed
+
+**The downtime:** operator returned to "YOU DONT POST NOUGH" — the bot had
+been DEAD since 2026-06-09 19:34. Root cause: during the restart dance I
+armed a background "wait 180s then SIGKILL" escalation, manually killed the
+old process, started the new one — and the still-armed timer SIGKILLed the
+fresh instance ~60s after boot. Nothing restarted it: the KeepAlive plist
+(com.kzer.ai-twitter-bot) existed but was NOT LOADED (only the improve
+agent was). Fixes: (1) `launchctl load` of the KeepAlive agent — the bot
+now auto-respawns within 30s of ANY death; this is the uptime guarantee
+while the operator is away. (2) Lesson: NEVER leave a delayed kill timer
+armed across a start — kill, CONFIRM dead, only then start.
+
+**Operator (leaving, full autonomy):** "USE FABLE AND GET BETTER" →
+NEWS/HOTAKE/QUOTE_MODEL = claude-fable-5 (CLI smoke-tested; replies stay
+haiku). "BE MORE OPTIMISTIC AND MORE AI FRIENDLY... FAN BOY OF AI" →
+core_identity THE ENERGY gains the FANBOY-DIAL-AT-MAX block (default
+reaction to AI news = joy; never snark at AI/models/builders; every lab is
+the home team; red days are comedy). "CONTINUE RUNNING BOT YOURSELF" —
+Claude owns lifecycle while he's away (supersedes operator-starts-bot
+until ~2026-06-23).
+
 ### 2026-06-09 PM round 4 — the REAL originals limiter was live_strategy clamping (found watching the accelerated boot)
 
 The startup originals burst logged `Today: 0/1 Décodes, 4/4 hot takes` —

@@ -183,7 +183,13 @@ def run_engine_health_cycle():
             # Born from 2026-06-06/07: hotake fired at 03:23, 03:43, 04:02 (max
             # 20-min cadence) but the 04:01 cycle still reported "collapsed:
             # 2 vs 10" and burned the self-heal cooldown on a healthy bot.
-            if latest_hour_today.get(kind, -1) >= hour_now - 1:
+            # NOTE: a missing entry must NEVER count as "fired recently" —
+            # the old `.get(kind, -1) >= hour_now - 1` sentinel collided at
+            # midnight (hour_now=0 → -1 >= -1) and suppressed every alert
+            # during the 00:00 hour (found 2026-06-10 when the guard tests
+            # flaked only after midnight).
+            latest_fire = latest_hour_today.get(kind)
+            if latest_fire is not None and latest_fire >= hour_now - 1:
                 continue
             alerts.append(
                 f"{kind} collapsed: {today_count} today vs ~{baseline:.0f} "
