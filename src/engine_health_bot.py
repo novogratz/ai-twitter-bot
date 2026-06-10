@@ -110,6 +110,13 @@ def _counts_by_day_hour() -> tuple[dict, dict]:
                 if len(row) < 2:
                     continue
                 ts, kind = row[0], row[1]
+                # GIF variants are the SAME surface (2026-06-10 02:06 false
+                # alarm: "quote collapsed: 4 today" while quote_gif ships at
+                # 01:16/01:36/01:58 were invisible to the 'quote' bucket —
+                # both the count AND the recent-fire guard missed them, and
+                # a self-heal run was burned on a healthy lane).
+                if kind == "quote_gif":
+                    kind = "quote"
                 if len(ts) < 13 or ts[:10] < cutoff:
                     continue
                 try:
@@ -145,6 +152,24 @@ def _in_warmup(now=None) -> bool:
     return (now - _PROCESS_START) < timedelta(minutes=WARMUP_MINUTES)
 
 
+# Originals are SLOT-SCHEDULED (08:30-21:30 NY crons since 2026-06-07; no
+# overnight interval jobs anymore) — but the 7-day baseline still contains
+# pre-slot-era overnight firing. At 02:06 on 2026-06-10 this produced
+# "hotake collapsed: 1 today vs ~8 by this hour" on an engine that was
+# QUIET BY DESIGN, and burned a self-heal run. Overnight/early-morning
+# silence on a slot surface is policy, not collapse: skip evaluation
+# outside the slot window (+runway for the first morning slots).
+_SLOT_SURFACES = ("post", "hotake")
+SLOT_EVAL_FROM_HOUR = int(os.environ.get("ENGINE_HEALTH_SLOT_EVAL_FROM", "11"))
+SLOT_EVAL_UNTIL_HOUR = int(os.environ.get("ENGINE_HEALTH_SLOT_EVAL_UNTIL", "22"))
+
+
+def _in_slot_quiet_hours(kind: str, hour_now: int) -> bool:
+    if kind not in _SLOT_SURFACES:
+        return False
+    return hour_now < SLOT_EVAL_FROM_HOUR or hour_now >= SLOT_EVAL_UNTIL_HOUR
+
+
 def run_engine_health_cycle():
     if _in_warmup():
         mins = int((datetime.now() - _PROCESS_START).total_seconds() / 60)
@@ -162,6 +187,9 @@ def run_engine_health_cycle():
     for kind in WATCHED_TYPES:
         if _is_surface_disabled(kind):
             summary.append(f"{kind}: OFF (cap=0)")
+            continue
+        if _in_slot_quiet_hours(kind, hour_now):
+            summary.append(f"{kind}: slot-quiet hours — not evaluated")
             continue
         baseline_vals = [counts.get((d, kind), 0) for d in prev_days]
         active_days = [v for v in baseline_vals if v > 0]

@@ -263,6 +263,22 @@ stop being forfeited to dup-skips, so the tries actually convert.
 granted ("get those likes and followers").** Bot started by Claude this
 once (explicit instruction). Watch: likes on posts/quotes is THE metric.
 
+### 2026-06-10 02:06 — false collapse alarms: quote_gif invisible to the watchdog + slot surfaces judged overnight
+
+Engine health fired "quote collapsed: 4 today vs ~16" + "hotake collapsed:
+1 vs ~8" at 02:06 and burned a self-heal run — while quotes were shipping
+every ~20 min. Two bugs, both alert-family: (1) `quote_gif` rows didn't
+count toward the `quote` surface (count AND recent-fire guard blind to
+them) — now folded into `quote` in `_counts_by_day_hour`; (2) originals
+are slot-scheduled 08:30-21:30 NY but the baseline still contains
+pre-slot-era overnight firing, so a quiet-by-design night reads as
+collapse — `_in_slot_quiet_hours` now skips post/hotake evaluation outside
+11:00-22:00 (env-overridable). Guard:
+`test_engine_health_quote_gif_counts_as_quote_and_slot_quiet_hours`.
+Family: the cap=0 / today≥cap / recent-fire / just-booted / midnight-
+sentinel watchdog series — a baseline must follow BOTH cap policy AND
+schedule policy.
+
 ### 2026-06-10 — 17h SILENT DOWNTIME (my kill-race) → launchd KeepAlive; Fable 5 on content; fanboy dial maxed
 
 **The downtime:** operator returned to "YOU DONT POST NOUGH" — the bot had

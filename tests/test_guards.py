@@ -673,6 +673,10 @@ def test_engine_health_still_alerts_on_sustained_silence(monkeypatch, tmp_path):
     monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
     monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
     monkeypatch.setenv("MAX_HOTAKES_PER_DAY", "400")
+    # Disable the slot-quiet-hours gate (it has its own dedicated test) so
+    # this test exercises the sustained-silence mechanism at ANY wall hour.
+    monkeypatch.setattr(ehb, "SLOT_EVAL_FROM_HOUR", 0)
+    monkeypatch.setattr(ehb, "SLOT_EVAL_UNTIL_HOUR", 24)
 
     from datetime import date, datetime, timedelta
     hour_now = datetime.now().hour
@@ -2143,3 +2147,35 @@ def test_agent_bounds_allow_operator_volume_mandate():
     assert ALLOWED_PATHS["caps.MAX_QUOTES_PER_DAY"][1] >= 200
     assert ALLOWED_PATHS["caps.FOLLOW_BLAST_PER_CYCLE"] == (0, 0), \
         "follow_blast must stay permanently 0"
+
+
+def test_engine_health_quote_gif_counts_as_quote_and_slot_quiet_hours(monkeypatch, tmp_path):
+    """2026-06-10 02:06 double false alarm (burned a self-heal run on a
+    healthy engine): (1) quote_gif ships were invisible to the 'quote'
+    bucket — count AND recent-fire guard missed them; (2) 'hotake collapsed'
+    fired overnight although originals are slot-scheduled 08:30-21:30 and
+    quiet-by-design at night."""
+    import csv as _csv
+    from datetime import datetime as _dt
+    from src import engine_health_bot as ehb
+
+    # (1) quote_gif rows must land in the 'quote' bucket.
+    log_path = tmp_path / "engagement_log.csv"
+    now = _dt.now()
+    rows = [["timestamp", "type", "text", "target_url"]]
+    rows.append([now.strftime("%Y-%m-%dT%H:00:00"), "quote_gif", "x", "y"])
+    with open(log_path, "w") as f:
+        _csv.writer(f).writerows(rows)
+    monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
+    counts, latest = ehb._counts_by_day_hour()
+    assert counts.get((now.date().isoformat(), "quote")) == 1, \
+        "quote_gif must count toward the quote surface"
+    assert latest.get("quote") == now.hour, \
+        "quote_gif must update the quote recent-fire hour"
+
+    # (2) slot surfaces are not evaluated outside slot hours; 24/7 surfaces are.
+    assert ehb._in_slot_quiet_hours("hotake", 2), "hotake at 02h = quiet by design"
+    assert ehb._in_slot_quiet_hours("post", 23), "post at 23h = quiet by design"
+    assert not ehb._in_slot_quiet_hours("hotake", 14), "hotake midday must be watched"
+    assert not ehb._in_slot_quiet_hours("quote", 2), "quote runs 24/7 — always watched"
+    assert not ehb._in_slot_quiet_hours("reply", 2), "reply runs 24/7 — always watched"
