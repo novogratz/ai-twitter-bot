@@ -1,8 +1,8 @@
 {
-  "ts": "2026-06-09T04:00:00.000000",
+  "ts": "2026-06-10T04:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 8,
-    "MAX_HOTAKES_PER_DAY": 16,
+    "MAX_HOTAKES_PER_DAY": 18,
     "MAX_QUOTES_PER_DAY": 200,
     "MAX_RETWEETS_PER_DAY": 1,
     "MAX_BREAKOUTS_PER_DAY": 3,
@@ -12,11 +12,14 @@
     "FOLLOW_BLAST_PER_CYCLE": 0
   },
   "topic_focus": [
-    "market-trauma therapy (34x measured winner on likes, 50x on views — DEFAULT format for ALL surfaces)",
-    "OpenAI IPO filing (Jun 8) + Anthropic $965B valuation — investor therapy gold, price the fear",
-    "AI-vs-Bitcoin feud (stablecoins = AI payment layer; Grok 5 delay = the model that keeps missing therapy)",
-    "AI stocks as asset class ($NVDA $PLTR earnings cycle — re-denominate the capex number, name the mechanism)"
+    "market-trauma therapy (34x measured winner on likes, 50x on views — DEFAULT format for ALL surfaces; fanboy energy underneath every take)",
+    "GitHub Copilot billing shock ($29→$750/mo for heavy agentic users) — developer therapy gold, the productivity tax just arrived",
+    "Apple iOS 27 + Claude on iPhone — AI therapist is now in everyone's pocket, re-denominate the reach number",
+    "SpaceX Nasdaq debut June 12 ($780B valuation) — biggest market event of the month, investor psychology therapy",
+    "Anthropic S-1 filing + $47B ARR / $965B valuation — the near-trillion AI lab, price the IPO fear",
+    "Nvidia $1T hyperscaler capex projection 2027 + JPMorgan $19.8B AI budget — infrastructure is the new therapy couch",
+    "AI-vs-Bitcoin feud (stablecoins = AI payment layer; Bitcoin = patient in denial)"
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-09 operator volume mandate (manual reset): the 06-07 spec bounds (news<=2, hotake<=4) were silently re-clamping originals to ~5/day. Caps opened to match .env (news 10, hotakes 20, quotes 200); agent bounds updated in code so the 4h cycles can't re-clamp below the mandate. 2026-06-09 autonomous update (measured data). market_trauma = 15.22 avg likes / 24,608 avg views vs ai_news_take = 0.45 avg likes / 487 avg views — 34x gap on likes, 50x gap on views. RATIO PROBLEM: ai_news_take is 40% more frequent than market_trauma in the last 7d despite earning 34x less. MAX_HOTAKES_PER_DAY 3→4 to generate more market_trauma originals. Breaking topic: OpenAI IPO (Jun 8) + Anthropic $965B = therapist content on the AI-stocks lane. QRTs stay at 100/day quality barbell per operator mandate (50-like floor, SKIP-by-default). Plain RTs stay at 1/day. Peak hours confirmed: 1-3pm ET + 5-7pm ET (market open/close), evening 9-11pm ET."
+  "rationale": "2026-06-10 autonomous update. market_trauma = 15.22 avg likes / 24,608 avg views vs ai_news_take = 0.45 avg likes / 487 avg views — 34x gap on likes, 50x on views — SUSTAINED from yesterday. Ratio problem persists: ai_news_take still 41% of 7d mix vs 24% market_trauma. MAX_HOTAKES_PER_DAY nudged 16→18 (within 6-20 bound) to generate more market_trauma originals and close the imbalance. New algo signal: X 2026 weights replies 27x over likes and bookmarks 5x — directives updated to prioritize save-worthy (data/framework/comparison) content and reply volume. Hot topics added: GitHub Copilot billing shock ($29→$750), Apple iOS 27 + Claude on iPhone, SpaceX Nasdaq debut June 12, Anthropic S-1, Nvidia $1T capex. QRTs stay 200/day quality-gated (50-like floor, screenshot-worthy or SKIP). Plain RTs at 1/day. Peak hours confirmed: 11am-3pm ET + 5-7pm ET (market open/close), evening 8-10pm ET."
 }

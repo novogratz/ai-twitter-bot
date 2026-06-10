@@ -472,7 +472,11 @@
     "STOKR",
     "Claude",
     "NIK",
-    "xAI"
+    "xAI",
+    "Lauren",
+    "GRITCULT",
+    "Suhail",
+    "bayes"
   ],
   "history": [
     {
@@ -2829,6 +2833,26 @@
       "lang": "en",
       "handle": "xAI",
       "added": "2026-06-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Lauren",
+      "added": "2026-06-09"
+    },
+    {
+      "lang": "en",
+      "handle": "GRITCULT",
+      "added": "2026-06-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Suhail",
+      "added": "2026-06-10"
+    },
+    {
+      "lang": "en",
+      "handle": "bayes",
+      "added": "2026-06-10"
     }
   ]
 }
