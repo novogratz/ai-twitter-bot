@@ -26,7 +26,13 @@ ALERTS_FILE = os.path.join(_PROJECT_ROOT, "engine_health_alerts.json")
 
 ALERT_RATIO = float(os.environ.get("ENGINE_HEALTH_ALERT_RATIO", "0.4"))
 MIN_BASELINE = float(os.environ.get("ENGINE_HEALTH_MIN_BASELINE", "5"))
-WATCHED_TYPES = ("reply", "retweet", "quote", "post", "hotake")
+# post + hotake are ONE watched surface ("originals") since 2026-06-10:
+# under slot scheduling the slot machinery decides which surface fills each
+# slot, so per-surface counts are arbitrary — "hotake collapsed: 4 vs ~14"
+# fired at 12:34 on a healthy engine because old interval-era baselines
+# don't describe the slot regime. quote_gif likewise folds into quote.
+WATCHED_TYPES = ("reply", "retweet", "quote", "originals")
+_KIND_REMAP = {"quote_gif": "quote", "post": "originals", "hotake": "originals"}
 
 # Env-var caps that govern each watched surface. When the operator sets a cap
 # to 0 (e.g. MAX_RETWEETS_PER_DAY=0 under the 2026-06-05 PM monetization
@@ -39,8 +45,7 @@ _CAP_ENVS: dict = {
     "reply": ("MAX_REPLIES_PER_DAY",),
     "retweet": ("MAX_RETWEETS_PER_DAY",),
     "quote": ("MAX_QUOTES_PER_DAY", "MAX_QUOTE_REPOSTS_PER_DAY"),
-    "post": ("MAX_ORIGINALS_PER_DAY",),
-    "hotake": ("MAX_HOTAKES_PER_DAY",),
+    "originals": ("MAX_ORIGINALS_PER_DAY",),
 }
 
 
@@ -110,13 +115,9 @@ def _counts_by_day_hour() -> tuple[dict, dict]:
                 if len(row) < 2:
                     continue
                 ts, kind = row[0], row[1]
-                # GIF variants are the SAME surface (2026-06-10 02:06 false
-                # alarm: "quote collapsed: 4 today" while quote_gif ships at
-                # 01:16/01:36/01:58 were invisible to the 'quote' bucket —
-                # both the count AND the recent-fire guard missed them, and
-                # a self-heal run was burned on a healthy lane).
-                if kind == "quote_gif":
-                    kind = "quote"
+                # Fold variants into their watched surface (quote_gif→quote,
+                # post/hotake→originals — see WATCHED_TYPES comment).
+                kind = _KIND_REMAP.get(kind, kind)
                 if len(ts) < 13 or ts[:10] < cutoff:
                     continue
                 try:
@@ -159,15 +160,31 @@ def _in_warmup(now=None) -> bool:
 # QUIET BY DESIGN, and burned a self-heal run. Overnight/early-morning
 # silence on a slot surface is policy, not collapse: skip evaluation
 # outside the slot window (+runway for the first morning slots).
-_SLOT_SURFACES = ("post", "hotake")
+_SLOT_SURFACES = ("originals",)
 SLOT_EVAL_FROM_HOUR = int(os.environ.get("ENGINE_HEALTH_SLOT_EVAL_FROM", "11"))
 SLOT_EVAL_UNTIL_HOUR = int(os.environ.get("ENGINE_HEALTH_SLOT_EVAL_UNTIL", "22"))
+# Slot window + tries/day for the slots-elapsed baseline clamp (matches the
+# main.py slot grid: ~21 tries 08:30→21:30 NY).
+SLOT_TRIES_PER_DAY = int(os.environ.get("ENGINE_HEALTH_SLOT_TRIES", "21"))
+SLOT_WINDOW_START = 8.5
+SLOT_WINDOW_END = 21.5
 
 
 def _in_slot_quiet_hours(kind: str, hour_now: int) -> bool:
     if kind not in _SLOT_SURFACES:
         return False
     return hour_now < SLOT_EVAL_FROM_HOUR or hour_now >= SLOT_EVAL_UNTIL_HOUR
+
+
+def _slots_elapsed(hour_now: float) -> float:
+    """How many slot TRIES the schedule has offered by this hour today.
+    The baseline for 'originals' can never exceed this — old interval-era
+    days in the 7-day window fired all day long, but under slots the
+    intended pace IS the slot grid (12:34 false alarm, 2026-06-10)."""
+    if hour_now <= SLOT_WINDOW_START:
+        return 0.0
+    frac = min(1.0, (hour_now - SLOT_WINDOW_START) / (SLOT_WINDOW_END - SLOT_WINDOW_START))
+    return SLOT_TRIES_PER_DAY * frac
 
 
 def run_engine_health_cycle():
@@ -199,6 +216,10 @@ def run_engine_health_cycle():
         cap = _daily_cap_for(kind)
         if cap is not None:
             baseline = min(baseline, cap)
+        if kind in _SLOT_SURFACES:
+            # Pre-slot-era days inflate the by-this-hour baseline; the
+            # intended pace under the slot regime is the slot grid itself.
+            baseline = min(baseline, _slots_elapsed(hour_now + datetime.now().minute / 60.0))
         today_count = counts.get((today, kind), 0)
         summary.append(f"{kind}: {today_count} vs {baseline:.0f} avg")
         if baseline >= MIN_BASELINE and today_count < ALERT_RATIO * baseline:

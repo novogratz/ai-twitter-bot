@@ -477,7 +477,8 @@
     "GRITCULT",
     "Suhail",
     "bayes",
-    "Maartunn"
+    "Maartunn",
+    "Karol"
   ],
   "history": [
     {
@@ -2858,6 +2859,11 @@
     {
       "lang": "en",
       "handle": "Maartunn",
+      "added": "2026-06-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Karol",
       "added": "2026-06-10"
     }
   ]

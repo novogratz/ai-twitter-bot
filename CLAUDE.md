@@ -263,6 +263,22 @@ stop being forfeited to dup-skips, so the tries actually convert.
 granted ("get those likes and followers").** Bot started by Claude this
 once (explicit instruction). Watch: likes on posts/quotes is THE metric.
 
+### 2026-06-10 12:34 — engine_health: post+hotake fold into ONE "originals" surface + slots-elapsed baseline clamp
+
+"hotake collapsed: 4 today vs ~14 by this hour" fired at 12:34 and burned
+another self-heal run — on a healthy engine. Two structural truths the
+watchdog now encodes: (1) under slot scheduling the slot machinery decides
+which surface (news/hotake/breakout/spicy) fills each slot, so PER-SURFACE
+counts are arbitrary — post+hotake are folded into one watched "originals"
+surface (`_KIND_REMAP`, like quote_gif→quote); (2) interval-era days
+inflate the by-this-hour baseline, so the originals baseline clamps to
+`_slots_elapsed(now)` — the number of slot tries the grid has actually
+offered today (~6.5 by 12:30, 21 by close). Guards:
+`test_engine_health_slots_elapsed_clamp` + 3 existing engine-health tests
+re-pinned on the originals bucket. Watchdog-family rule, restated: the
+baseline must follow cap policy AND schedule policy AND surface-identity
+policy.
+
 ### 2026-06-10 AM — get-better pass on the Fable-era output (operator: "start it and get better")
 
 Overnight Fable output audited (40 posts/quotes, 00:39-08:27): voice is

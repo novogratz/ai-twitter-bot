@@ -565,7 +565,12 @@ def test_engine_health_clamps_baseline_by_cap(monkeypatch, tmp_path):
     monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
     monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
     monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
-    monkeypatch.setenv("MAX_HOTAKES_PER_DAY", "2")  # cap was lowered
+    monkeypatch.setenv("MAX_ORIGINALS_PER_DAY", "2")  # cap was lowered
+    # Isolate the CAP clamp: disable the slot-quiet gate + slots-elapsed clamp
+    # (each has its own dedicated test).
+    monkeypatch.setattr(ehb, "SLOT_EVAL_FROM_HOUR", 0)
+    monkeypatch.setattr(ehb, "SLOT_EVAL_UNTIL_HOUR", 24)
+    monkeypatch.setattr(ehb, "_slots_elapsed", lambda h: 9999.0)
 
     from datetime import date, datetime, timedelta
     hour_now = datetime.now().hour
@@ -672,11 +677,12 @@ def test_engine_health_still_alerts_on_sustained_silence(monkeypatch, tmp_path):
     monkeypatch.setattr(ehb, "ENGAGEMENT_LOG", str(log_path))
     monkeypatch.setattr(ehb, "ALERTS_FILE", str(alerts_path))
     monkeypatch.setenv("ENABLE_SELF_HEAL", "0")
-    monkeypatch.setenv("MAX_HOTAKES_PER_DAY", "400")
-    # Disable the slot-quiet-hours gate (it has its own dedicated test) so
-    # this test exercises the sustained-silence mechanism at ANY wall hour.
+    monkeypatch.setenv("MAX_ORIGINALS_PER_DAY", "400")
+    # Disable the slot-quiet-hours gate + slots clamp (each has its own
+    # dedicated test) so this exercises sustained-silence at ANY wall hour.
     monkeypatch.setattr(ehb, "SLOT_EVAL_FROM_HOUR", 0)
     monkeypatch.setattr(ehb, "SLOT_EVAL_UNTIL_HOUR", 24)
+    monkeypatch.setattr(ehb, "_slots_elapsed", lambda h: 9999.0)
 
     from datetime import date, datetime, timedelta
     hour_now = datetime.now().hour
@@ -2174,9 +2180,9 @@ def test_engine_health_quote_gif_counts_as_quote_and_slot_quiet_hours(monkeypatc
         "quote_gif must update the quote recent-fire hour"
 
     # (2) slot surfaces are not evaluated outside slot hours; 24/7 surfaces are.
-    assert ehb._in_slot_quiet_hours("hotake", 2), "hotake at 02h = quiet by design"
-    assert ehb._in_slot_quiet_hours("post", 23), "post at 23h = quiet by design"
-    assert not ehb._in_slot_quiet_hours("hotake", 14), "hotake midday must be watched"
+    assert ehb._in_slot_quiet_hours("originals", 2), "originals at 02h = quiet by design"
+    assert ehb._in_slot_quiet_hours("originals", 23), "originals at 23h = quiet by design"
+    assert not ehb._in_slot_quiet_hours("originals", 14), "originals midday must be watched"
     assert not ehb._in_slot_quiet_hours("quote", 2), "quote runs 24/7 — always watched"
     assert not ehb._in_slot_quiet_hours("reply", 2), "reply runs 24/7 — always watched"
 
@@ -2197,3 +2203,22 @@ def test_quote_us_night_throttle(monkeypatch):
     src = inspect.getsource(qb.run_quote_tweet_cycle)
     assert "_is_us_night_hour" in src and "QUOTE_NIGHT_RUN_PROB" in src, \
         "night throttle must gate the quote cycle before any Safari/LLM work"
+
+
+def test_engine_health_slots_elapsed_clamp():
+    """2026-06-10 12:34 false alarm: 'hotake collapsed: 4 today vs ~14 by
+    this hour' — the ~14 came from interval-era days; under the slot regime
+    only ~6.5 slot tries had been offered by 12:34, so 4 originals was
+    HEALTHY. The originals baseline must clamp to slots elapsed today."""
+    from src import engine_health_bot as ehb
+
+    assert ehb._slots_elapsed(8.5) == 0.0, "no slots before the window opens"
+    mid = ehb._slots_elapsed(12.5)
+    assert 5.5 <= mid <= 7.5, f"~6.5 tries by 12:30, got {mid}"
+    assert ehb._slots_elapsed(23) == ehb.SLOT_TRIES_PER_DAY, "full grid after close"
+    # And originals is the watched surface (post+hotake folded together —
+    # the slot machinery decides which fills a slot, per-surface is noise).
+    assert "originals" in ehb.WATCHED_TYPES
+    assert "post" not in ehb.WATCHED_TYPES and "hotake" not in ehb.WATCHED_TYPES
+    assert ehb._KIND_REMAP.get("post") == "originals"
+    assert ehb._KIND_REMAP.get("hotake") == "originals"
