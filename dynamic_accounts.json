@@ -485,7 +485,9 @@
     "alphaXiv",
     "Josh",
     "Raunak",
-    "json"
+    "json",
+    "vittorio",
+    "AshleY"
   ],
   "history": [
     {
@@ -2906,6 +2908,16 @@
     {
       "lang": "en",
       "handle": "json",
+      "added": "2026-06-11"
+    },
+    {
+      "lang": "en",
+      "handle": "vittorio",
+      "added": "2026-06-11"
+    },
+    {
+      "lang": "en",
+      "handle": "AshleY",
       "added": "2026-06-11"
     }
   ]
