@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-10T17:26:13.801825",
-  "window_7d_actions": 5570,
-  "window_24h_actions": 672,
+  "generated_at": "2026-06-11T04:34:56.440061",
+  "window_7d_actions": 5557,
+  "window_24h_actions": 664,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5524
+      "count": 5511
     },
     {
       "pattern": "METAPHOR",
@@ -49,60 +49,60 @@
     },
     {
       "hour": 17,
-      "actions": 275
-    },
-    {
-      "hour": 19,
-      "actions": 273
+      "actions": 283
     },
     {
       "hour": 0,
-      "actions": 270
+      "actions": 282
+    },
+    {
+      "hour": 2,
+      "actions": 282
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2366
+      "count": 2369
     },
     {
       "topic": "IA",
-      "count": 2043
+      "count": 2040
     },
     {
       "topic": "Crypto",
-      "count": 774
+      "count": 784
     },
     {
       "topic": "Bourse",
-      "count": 575
+      "count": 552
     },
     {
       "topic": "Spatial",
-      "count": 375
+      "count": 359
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2027
+      "count": 2047
     },
     {
       "pillar": "other",
-      "count": 1746
+      "count": 1699
     },
     {
       "pillar": "market_trauma",
-      "count": 1324
+      "count": 1326
     },
     {
       "pillar": "meme_reaction",
-      "count": 251
+      "count": 259
     },
     {
       "pillar": "reply_bait",
-      "count": 149
+      "count": 153
     },
     {
       "pillar": "ai_vs_btc",
@@ -112,49 +112,49 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 279
+      "count": 274
     },
     {
       "pillar": "other",
-      "count": 186
+      "count": 201
     },
     {
       "pillar": "market_trauma",
-      "count": 143
+      "count": 131
     },
     {
       "pillar": "meme_reaction",
-      "count": 42
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 36
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 14
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 21,
-      "avg_likes": 0.05,
-      "avg_views": 32.8,
+      "posts": 23,
+      "avg_likes": 0.04,
+      "avg_views": 32.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 26,
+      "posts": 28,
       "avg_likes": 0.0,
-      "avg_views": 35.1,
+      "avg_views": 33.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 18,
+      "posts": 19,
       "avg_likes": 0.0,
-      "avg_views": 19.4,
+      "avg_views": 20.8,
       "low_sample": false
     },
     {
@@ -179,39 +179,39 @@
     },
     {
       "type": "quote",
-      "count": 425
+      "count": 431
     },
     {
       "type": "retweet",
-      "count": 389
+      "count": 390
     },
     {
       "type": "quote_gif",
-      "count": 242
+      "count": 250
     },
     {
       "type": "hotake",
-      "count": 117
+      "count": 87
     },
     {
       "type": "post",
-      "count": 31
+      "count": 33
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-10T17:23:36.000065",
-      "text": "That's the trap. every function = every function underfunded. the ones shipping go deep on 1-3 instead.",
+      "ts": "2026-06-11T04:30:03.746626",
+      "text": "You have the data. The real question: What makes a builder model good? That's your bet. Everything else is commodity.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-10T17:22:41.526652",
-      "text": "If AGI is possible, alignment research is possible by definition. The constraint: whether alignment finishes before someone's incentive to wait runs out.",
+      "ts": "2026-06-11T04:29:44.696472",
+      "text": "$213M out looks like the great exit. It's one day of a $60B fund. One day isn't capitulation. If you panic-sold, you panic-sold on weather.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-10T17:21:04.045431",
-      "text": "XRPL engineered a solid settlement layer. the real question: why would agents choose this over L2s that already have the ecosystem, liquidity, and integrations?",
+      "ts": "2026-06-11T04:28:43.290712",
+      "text": "19 ans, 13 millions volés. L'argent ne te perd jamais. C'est la soif de le montrer qui crie plus fort que la raison.",
       "type": "reply"
     }
   ]

@@ -483,7 +483,9 @@
     "merve",
     "antirez",
     "alphaXiv",
-    "Josh"
+    "Josh",
+    "Raunak",
+    "json"
   ],
   "history": [
     {
@@ -2895,6 +2897,16 @@
       "lang": "en",
       "handle": "Josh",
       "added": "2026-06-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Raunak",
+      "added": "2026-06-10"
+    },
+    {
+      "lang": "en",
+      "handle": "json",
+      "added": "2026-06-11"
     }
   ]
 }
