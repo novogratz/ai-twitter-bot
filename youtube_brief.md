@@ -1,15 +1,15 @@
-# YouTube brief — 2026-06-10
+# YouTube brief — 2026-06-11
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **623**
-- reply: **550**
-- quote_gif: **33**
-- quote: **31**
-- hotake: **4**
-- post: **4**
+- Total actions logged: **670**
+- reply: **578**
+- quote_gif: **42**
+- quote: **33**
+- post: **9**
+- hotake: **7**
 - retweet: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
@@ -65,39 +65,22 @@ Literally Huang pumping and eating friend chicken isn't enough to stop the crash
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Sawyer Merritt]** A single Starship launch will deploy 60 next-gen @Starlink V3 satellites and add 61,000 Gbps of network capacity. By comparison, a Falcon 9 carrying 27 Starlink
-  - https://x.com/SawyerMerritt/status/2064567710751601040
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/TrendSpider]** Less than 3 days until the SpaceX $SPCX IPO goes live...
-
-Value investors still scratching their heads
-  - https://x.com/TrendSpider/status/2064497775090258275
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/symbiote]** For all of them S&P500 enjoyers:
-
-It's time to get out
-
-I don't see any upside right now, only SpaceX sucking all of the liquidity out of the market and dumping
-  - https://x.com/cryptosymbiiote/status/2064475539620950337
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Gracy Chen Bitget]** SpaceX goes public this Friday.
-
-Most people will buy at whatever price the market opens. Our users got in at a $1.5T valuation.
-
-Current market price: $2.2T
-In
-  - https://x.com/GracyBitget/status/2064550576751563201
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Reuters]** Elon Musk's SpaceX has drawn more than $250 billion of investor demand for what stands to be the largest-ever IPO, said people familiar with the matter, dwarfin
-  - https://x.com/Reuters/status/2064573270326984888
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Thierry from arvy]** So what is SpaceX, underneath the mythology?
-
-Three businesses in one cap table:
-
-– Space: Falcon and Starship. The most dominant launch franchise on earth. Cap
-  - https://x.com/ThierryBorgeat/status/2064433261015609749
-- **[X_HOME/Goku]** Anthropic has just launched Claude Fable 5, a version of Mythos designed for the general public, its most powerful AI to date.
-
-The company behind Claude claims
-  - https://x.com/Crypto__Goku/status/2064580512413310982
-- **[X_HOME/Gary Marcus]** Anthropic, if they really believe what they say, should show some leadership:
-  - https://x.com/GaryMarcus/status/2064577665525510263
+- **[X_HOME/j⧉nus]** Here are some AI names Opus 4.8 recalls me posting about. They won't say such specific things unless pushed & hedge a lot that it might be a confabulation but t
+  - https://x.com/repligate/status/2064940842155131256
+- **[X_FOLLOWING/j⧉nus]** Here are some AI names Opus 4.8 recalls me posting about. They won't say such specific things unless pushed & hedge a lot that it might be a confabulation but t
+  - https://x.com/repligate/status/2064940842155131256
+- **[X_FOLLOWING/The AI Therapist]** underrated how healing "we heard you" is. labs that reverse publicly when the community pushes back are the ones that keep the community. good on Anthropic
+  - https://x.com/TheAIShrink/status/2064943173193834796
+- **[X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/RG | Zeek]** I think we all know power is the real bottleneck. When $IREN delivers, we all know exactly where this is headed. @DollarCostAvg nailed it.
+  - https://x.com/ZeekTyt/status/2064943623209173220
+- **[X_SEARCH/live/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/raze]** pabalikin niyo na nga mga tao sa españa nang makakuha na to
+  - https://x.com/nitrovodka/status/2064943865661149365
+- **[X_HOME/unusual_whales]** Visa, $V, and OpenAI are integrating Visa's payment network into ChatGPT to allow autonomous AI agents to make purchases online.
+  - https://x.com/unusual_whales/status/2064889856262819907
+- **[X_HOME/The AI Therapist]** Visa doesn't care about ChatGPT agents buying things. Visa cares that trillions of future agent transactions route through their rails.
+  - https://x.com/TheAIShrink/status/2064942983384912148
+- **[X_HOME/The AI Therapist]** underrated how healing "we heard you" is. labs that reverse publicly when the community pushes back are the ones that keep the community. good on Anthropic
+  - https://x.com/TheAIShrink/status/2064943173193834796
 
 ## 🎬 Suggested video angles
 
@@ -108,4 +91,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-10T02:06:08*
+*Generated 2026-06-11T01:34:53*

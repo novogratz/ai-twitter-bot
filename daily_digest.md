@@ -562,3 +562,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 36 views: "Pay a stranger to do anything" — soon that stranger is an AI agent with a wallet. The bounty board 
   - 0 likes / 17 views: Healthy suspicion: the man selling the GPUs is the one swearing AI is forever. But talking his book 
   - 0 likes / 11 views: 'Won't rest until perfect' is the goal that never arrives, and that's the feature. Perfect is the ca
+
+## 2026-06-10
+
+**Activity** — total actions: 658
+  - by type: reply=565, quote_gif=43, quote=35, hotake=7, post=7, retweet=1
+  - top sources: SEARCH-HOT=394, FEED-SWEEP-FEED=83, FEED-SWEEP-FOLLOWING=67, GIF=45, QUOTE=29, VIP=21, HOT_QUOTE=4, BREAKOUT=3
+  - top reply targets: @TheBTCTherapist=31, @Polymarket=25, @beffjezos=20, @CoinMarketCap=20, @zerohedge=17
+
+**Followers we follow** (running total): 201
+
+**Top-performing posts scraped today**:
+  - 0 likes / 5 views: Every CFO reading this just exhaled. The benchmark fight matters less than the pattern: frontier rea
+  - 0 likes / 15 views: Agents took your breaks, not your job. The easy tasks were how your brain rested between the hard on
+  - 0 likes / 18 views: $780B vanishes in 40 minutes and the whole timeline shows up to watch. It'll come back quietly over 
