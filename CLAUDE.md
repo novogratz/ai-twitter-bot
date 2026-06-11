@@ -4,6 +4,17 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-11 round 3 — "do more" (within the humanize caps):** day-1
+> throughput read: 494 replies, 35/48 quotes, but only 6/10 originals — 3
+> of 6 afternoon slots forfeited instantly. Root cause: the daily-news
+> 6-10 AM ET window (`_is_in_daily_window`) predates the slot grid, so
+> news was ineligible for every afternoon slot and once hotakes hit their
+> 8-cap all later slots forfeited. Fix: daily combos eligible ALL DAY
+> (weekly stays Friday-gated; per-day combo dedup + MAX_NEWS_PER_DAY=4
+> still bound). Quote spacing 600→450s + jitter 420→300 to actually fill
+> the 48 cap. Guard: `test_news_daily_combos_eligible_all_day`. The "do
+> more" lever is filling the human caps, not raising them.
+
 > **2026-06-11 round 2 — THE 100-LIKE REPLY (operator: "you got 100 likes
 > bro... i want more things like this... push it"):** our reply to
 > @Mindset4Money_X's question QRT ("why would gold sell off...") earned

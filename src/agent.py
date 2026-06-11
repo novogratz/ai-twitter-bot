@@ -265,8 +265,13 @@ def _next_topic_not_done_today() -> Optional[tuple]:
     else:
         if _is_in_weekly_window():
             plan.extend([(t, "weekly") for t in _DECODE_TOPICS])
-        if _is_in_daily_window():
-            plan.extend([(t, "daily") for t in _DECODE_TOPICS])
+        # Daily combos are eligible ALL DAY (2026-06-11). The 6-10 AM ET
+        # window predates the slot grid: with cron slots as the cadence
+        # governor, the window made news ineligible for every afternoon/
+        # evening slot — once hotakes hit their daily cap, ALL later slots
+        # forfeited (3 of 6 on 2026-06-11). Per-(topic,format) daily dedup
+        # + MAX_NEWS_PER_DAY still bound the total.
+        plan.extend([(t, "daily") for t in _DECODE_TOPICS])
     for topic, format_kind in plan:
         if _topic_done_key(topic, format_kind=format_kind) not in done:
             return (topic, format_kind)

@@ -487,7 +487,11 @@
     "Raunak",
     "json",
     "vittorio",
-    "AshleY"
+    "AshleY",
+    "Gopuff",
+    "TMZ",
+    "Starlink",
+    "Tesla"
   ],
   "history": [
     {
@@ -2918,6 +2922,26 @@
     {
       "lang": "en",
       "handle": "AshleY",
+      "added": "2026-06-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Gopuff",
+      "added": "2026-06-11"
+    },
+    {
+      "lang": "en",
+      "handle": "TMZ",
+      "added": "2026-06-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Starlink",
+      "added": "2026-06-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Tesla",
       "added": "2026-06-11"
     }
   ]

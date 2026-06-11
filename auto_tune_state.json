@@ -1,27 +1,30 @@
 {
-  "ts": "2026-06-11T07:04:53.145767",
+  "ts": "2026-06-11T17:25:14.764024",
   "window_min": 90,
-  "total_actions": 39,
+  "total_actions": 51,
   "by_type": {
-    "reply": 36,
+    "reply": 48,
     "quote": 1,
     "quote_gif": 2
   },
   "winners": {
-    "SEARCH-HOT/OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:50": 5,
-    "SEARCH-HOT/OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500": 4,
-    "FEED-SWEEP-FOLLOWING": 4,
-    "SEARCH-HOT/Bitcoin OR BTC OR \"crypto crash\" OR \"BTC ETF\" lang:en min_fa": 4,
-    "SEARCH-HOT/ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_fav": 3
+    "FEED-SWEEP-FEED": 8,
+    "SEARCH-HOT/Bitcoin OR BTC OR \"crypto crash\" OR \"BTC ETF\" lang:en min_fa": 7,
+    "FEED-SWEEP-FOLLOWING": 6,
+    "SEARCH-HOT/\"AI agents\" OR \"reasoning model\" OR AGI lang:en min_faves:30": 5,
+    "SEARCH-HOT/OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500": 3
   },
   "losers": {
-    "SEARCH-HOT/\"AI startup\" OR \"AI funding\" OR \"AI layoffs\" OR \"AI jobs\" OR": 1,
     "SEARCH-HOT/ChatGPT OR Claude OR Gemini OR \"humanoid robot\" lang:en min_": 1,
-    "QUOTE/The \u20bfitcoin Therapist": 1,
-    "SEARCH-HOT/\"AI agents\" OR \"reasoning model\" OR AGI lang:en min_faves:30": 1,
-    "SEARCH-HOT/from:greg16676935420 OR from:ReformedBroker OR from:jasonzwe": 1,
-    "GIF/michael jackson popcorn": 1,
-    "GIF/pablo escobar waiting": 1
+    "SEARCH-HOT/OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:50": 1,
+    "HOT_QUOTE/Brian Armstrong": 1,
+    "SEARCH-HOT/\"AI agents\" OR \"agentic AI\" OR \"reasoning model\" OR AGI lang": 1,
+    "GIF/michael jordan crying": 1,
+    "SEARCH-HOT/Palantir OR \"AI stock\" OR \"AI bubble\" lang:en min_faves:300": 1,
+    "SEARCH-HOT/Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR \"AI capex\" lang:": 1,
+    "VIP/Graphseo": 1,
+    "GIF/math lady": 1,
+    "SEARCH-HOT/Meta AI OR \"Apple Intelligence\" OR Microsoft Copilot OR \"Ama": 1
   },
   "post_cadence_factor": 0.85,
   "boost_cadence_factor": 1.0

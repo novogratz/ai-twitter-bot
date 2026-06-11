@@ -2160,6 +2160,26 @@ def test_agent_bounds_allow_operator_volume_mandate():
         "follow_blast must stay permanently 0"
 
 
+def test_news_daily_combos_eligible_all_day(monkeypatch, tmp_path):
+    """2026-06-11 (operator: "do more"): the 6-10 AM ET daily-news window
+    predates the slot grid and made news ineligible for every afternoon
+    slot — once hotakes capped, all later slots forfeited (3 of 6 that
+    day). Outside force-mode, daily combos must be eligible at ANY hour;
+    the per-day (topic,format) dedup + MAX_NEWS_PER_DAY bound the total."""
+    from src import agent
+
+    monkeypatch.setattr(agent, "_DAILY_TOPIC_STATE_FILE",
+                        str(tmp_path / "topic_state.json"))
+    monkeypatch.setattr(agent, "_is_in_daily_window", lambda: False)
+    monkeypatch.setattr(agent, "_is_in_weekly_window", lambda: False)
+    agent_globals = vars(agent)
+    agent_globals.pop("_news_mode", None)
+    combo = agent._next_topic_not_done_today()
+    assert combo is not None and combo[1] == "daily", (
+        "daily news combos must be eligible outside the legacy 6-10 AM window"
+    )
+
+
 def test_burned_structure_contrast_reframe_blocked():
     """2026-06-10 humanize mandate: after the catchphrase ban the model
     migrated to the contrast-reframe skeleton ("That's not fear, that's a
