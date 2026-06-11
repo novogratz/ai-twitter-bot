@@ -479,7 +479,11 @@
     "bayes",
     "Maartunn",
     "Karol",
-    "Anthropic"
+    "Anthropic",
+    "merve",
+    "antirez",
+    "alphaXiv",
+    "Josh"
   ],
   "history": [
     {
@@ -2870,6 +2874,26 @@
     {
       "lang": "en",
       "handle": "Anthropic",
+      "added": "2026-06-10"
+    },
+    {
+      "lang": "en",
+      "handle": "merve",
+      "added": "2026-06-10"
+    },
+    {
+      "lang": "en",
+      "handle": "antirez",
+      "added": "2026-06-10"
+    },
+    {
+      "lang": "en",
+      "handle": "alphaXiv",
+      "added": "2026-06-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Josh",
       "added": "2026-06-10"
     }
   ]

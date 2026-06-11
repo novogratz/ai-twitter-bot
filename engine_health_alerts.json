@@ -58,5 +58,18 @@
     "alerts": [
       "hotake collapsed: 2 today vs ~10 by this hour over the last 7 days (20%)"
     ]
+  },
+  {
+    "ts": "2026-06-10T02:06:08.488529",
+    "alerts": [
+      "quote collapsed: 4 today vs ~16 by this hour over the last 7 days (25%)",
+      "hotake collapsed: 1 today vs ~8 by this hour over the last 7 days (13%)"
+    ]
+  },
+  {
+    "ts": "2026-06-10T12:34:25.967929",
+    "alerts": [
+      "hotake collapsed: 4 today vs ~14 by this hour over the last 7 days (28%)"
+    ]
   }
 ]

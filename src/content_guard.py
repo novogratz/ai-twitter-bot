@@ -392,6 +392,18 @@ _BURNED_CATCHPHRASES = (
     "plot twist:",
 )
 
+# Burned STRUCTURES (2026-06-10, operator: "you got spotted as a bot").
+# After the catchphrase ban the model migrated to a contrast-reframe
+# skeleton — "That's not fear, that's a crush" / "That's not skepticism,
+# that's grief" — which shipped 6+ times in 40 posts and became the new
+# tell. Regexes because it's a shape, not a phrase.
+_BURNED_PATTERNS = (
+    re.compile(r"that(?:'?s| is) not [^.!?,]{1,40}, (?:that|it)(?:'?s| is)\b",
+               re.IGNORECASE),
+    re.compile(r"\bis(?:n'?t| not) [^.!?]{1,40}\. it(?:'?s| is)\b",
+               re.IGNORECASE),
+)
+
 
 def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     """Validate a draft. kind ∈ {"original", "quote", "reply"}.
@@ -440,6 +452,9 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         for phrase in _BURNED_CATCHPHRASES:
             if phrase in low:
                 return (False, f"burned catchphrase ({phrase!r}) — bot-tell, rewrite fresh")
+        for pat in _BURNED_PATTERNS:
+            if pat.search(text):
+                return (False, "burned structure (contrast-reframe \"that's not X, that's Y\") — bot-tell, rewrite fresh")
 
     if kind in ("reply", "quote"):
         # Hard X limit for these surfaces — an over-limit draft gets cut by

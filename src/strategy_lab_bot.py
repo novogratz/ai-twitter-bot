@@ -55,12 +55,14 @@ PERFORMANCE_LOG_FILE = os.path.join(_PROJECT_ROOT, "performance_log.json")
 # RETWEET — DO MORE"): ranges opened to match — the old 2026-06-07 spec
 # ranges (news<=2, hotake<=2) were re-clamping the operator's volume.
 # follow_blast stays permanently 0.
+# Humanize mandate 2026-06-10: human-plausible volume only (see
+# meta_strategy_agent._BOUNDS — keep the two sites in sync).
 ALLOWED_PATHS = {
-    "caps.MAX_NEWS_PER_DAY":      (2, 10),
-    "caps.MAX_HOTAKES_PER_DAY":   (6, 20),
-    "caps.MAX_BREAKOUTS_PER_DAY": (0, 3),
+    "caps.MAX_NEWS_PER_DAY":      (1, 4),
+    "caps.MAX_HOTAKES_PER_DAY":   (3, 8),
+    "caps.MAX_BREAKOUTS_PER_DAY": (0, 2),
     "caps.MAX_SPICY_PER_DAY":     (0, 2),
-    "caps.MAX_QUOTES_PER_DAY":    (60, 200),
+    "caps.MAX_QUOTES_PER_DAY":    (20, 48),
     "caps.MAX_RETWEETS_PER_DAY":  (0, 2),
     "caps.MAX_REPLIES_PER_CYCLE": (1, 50),
     "caps.FOLLOW_BLAST_PER_CYCLE": (0, 0),

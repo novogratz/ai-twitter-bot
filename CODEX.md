@@ -4,7 +4,45 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
-> **Mandate 2026-06-07 PM (CURRENT — VIRAL FOCUS: QRT + REPLIES, QUALITY
+> **Mandate 2026-06-10 PM (CURRENT — HUMANIZE: "you got spotted by people
+> as a bot... humanize a bit the bot and make it more like a real person";
+> supersedes ALL volume rounds of 06-09 and refines the 06-07 focus):**
+>
+> **The diagnosis (measured on the last 40 posts/quotes):** the tell was
+> UNIFORM POLISH + MACHINE CADENCE, not one phrase — every post 2-3 perfectly
+> punctuated sentences with a crafted punchline; the contrast-reframe
+> "That's not X, that's Y" shipped 6+ times in one day (the model's migration
+> after the catchphrase ban); a quote every 10-20 min, 14h/day. Posts/quotes
+> got views but no likes/comments; replies stayed good.
+>
+> **The fixes (all live):**
+> - **Human texture spine** — core_identity "WRITE LIKE A PERSON, NOT A
+>   COLUMNIST": vary length brutally (many quotes <100 chars), imperfect
+>   punctuation ok, ~1 in 3 posts plain sincerity with zero craft showing,
+>   leave the door open for comments (half-takes, answerable questions,
+>   correctable opinions), react to the SPECIFIC thing in the parent.
+>   Mirrored in the quote prompt; the "proven structure" demoted to ≤1 in 4.
+> - **Burned STRUCTURE ban** — content_guard `_BURNED_PATTERNS` regexes
+>   refuse the contrast-reframe skeleton at the chokepoint (originals +
+>   quotes). Guard: `test_burned_structure_contrast_reframe_blocked`.
+> - **`humanizer.casualize()`** at all five write chokepoints: ~55% drop the
+>   final period (never when it would look truncated), ~30% lowercase a
+>   title-cased common opener (never "JUST IN:"/proper nouns/tickers).
+>   Guard: `test_casualize_human_texture_is_safe`.
+> - **Human-plausible volume** — originals 24→10/day (10 slots, spacing
+>   3600s+1200 jitter; news 4, hotakes 8), quotes 200→48/day @10min+7min
+>   jitter. All agent clamp sites moved in the same pass (meta_strategy
+>   `_BOUNDS`, strategy_lab `ALLOWED_PATHS`, autonomous_growth prompt,
+>   live_strategy.json) and the bounds guard test now pins CEILINGS so an
+>   agent can never crank volume back to bot-fingerprint territory.
+> - **Replies unchanged in volume** (operator: "for replies you are very
+>   good") — they inherit the texture rules via core_identity injection.
+> - **Julien (@Graphseo) fun dial up** (operator: "go back on commenting
+>   Julien Flot, it was fun") — the lane never stopped (12 replies that
+>   day); his prompt now steers ~half the replies to playful banter (the
+>   AI-account-vs-bot-hunter bit) over pure analysis.
+
+> **Mandate 2026-06-07 PM (volume settings superseded by 2026-06-10 HUMANIZE above — VIRAL FOCUS: QRT + REPLIES, QUALITY
 > BARBELL; refines the morning AGENT SPEC below):**
 >
 > **Identity (anchored in `core_identity.md`, operator-stated):** The AI

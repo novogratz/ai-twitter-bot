@@ -2133,26 +2133,95 @@ def test_reply_pipeline_overlaps_generation_with_posting(monkeypatch):
 
 
 def test_agent_bounds_allow_operator_volume_mandate():
-    """2026-06-09: originals stalled at ~5/day because THREE agent clamp
-    sites still encoded the 2026-06-07 spec (news<=2, hotake<=2) and
-    re-clamped live_strategy.json every cycle regardless of .env. The agent
-    bounds must allow the operator's current volume mandate — when the
-    mandate changes, change the bounds AND this test together."""
+    """Pins the CURRENT operator mandate on the agent clamp sites — when the
+    mandate changes, change the bounds AND this test together (lesson
+    2026-06-09: stale bounds silently re-clamped live_strategy every 4h).
+
+    Current mandate = HUMANIZE 2026-06-10 ("you got spotted as a bot"):
+    machine-cadence volume was the tell, so the bounds must cap originals
+    at human-plausible levels (news<=4, hotakes<=8, quotes<=48) — an agent
+    must NOT be able to crank volume back to bot-fingerprint territory."""
     from src.meta_strategy_agent import _BOUNDS
-    assert _BOUNDS["MAX_NEWS_PER_DAY"][1] >= 8
-    assert _BOUNDS["MAX_HOTAKES_PER_DAY"][1] >= 14
-    assert _BOUNDS["MAX_QUOTES_PER_DAY"][1] >= 200
-    # Floors: the agent may tune DOWN but never starve a surface to the
-    # old-spec levels.
-    assert _BOUNDS["MAX_HOTAKES_PER_DAY"][0] >= 6
-    assert _BOUNDS["MAX_NEWS_PER_DAY"][0] >= 2
+    assert _BOUNDS["MAX_NEWS_PER_DAY"][1] <= 4
+    assert _BOUNDS["MAX_HOTAKES_PER_DAY"][1] <= 8
+    assert _BOUNDS["MAX_QUOTES_PER_DAY"][1] <= 48
+    # Floors: the agent may tune DOWN but never starve a surface entirely.
+    assert _BOUNDS["MAX_HOTAKES_PER_DAY"][0] >= 1
+    assert _BOUNDS["MAX_NEWS_PER_DAY"][0] >= 1
+    assert _BOUNDS["MAX_QUOTES_PER_DAY"][0] >= 10
 
     from src.strategy_lab_bot import ALLOWED_PATHS
-    assert ALLOWED_PATHS["caps.MAX_NEWS_PER_DAY"][1] >= 8
-    assert ALLOWED_PATHS["caps.MAX_HOTAKES_PER_DAY"][1] >= 14
-    assert ALLOWED_PATHS["caps.MAX_QUOTES_PER_DAY"][1] >= 200
+    assert ALLOWED_PATHS["caps.MAX_NEWS_PER_DAY"][1] <= 4
+    assert ALLOWED_PATHS["caps.MAX_HOTAKES_PER_DAY"][1] <= 8
+    assert ALLOWED_PATHS["caps.MAX_QUOTES_PER_DAY"][1] <= 48
     assert ALLOWED_PATHS["caps.FOLLOW_BLAST_PER_CYCLE"] == (0, 0), \
         "follow_blast must stay permanently 0"
+
+
+def test_burned_structure_contrast_reframe_blocked():
+    """2026-06-10 humanize mandate: after the catchphrase ban the model
+    migrated to the contrast-reframe skeleton ("That's not fear, that's a
+    crush") — 6+ ships in 40 posts, the new tell that got the account
+    publicly spotted as a bot. The chokepoint must refuse the SHAPE for
+    originals and quotes; replies and innocent text stay unaffected."""
+    from src import content_guard
+
+    burned = [
+        "Everyone in the thread is calling this fear but that's not fear, that's a crush on the future.",
+        "The whole timeline calls it skepticism. that's not skepticism, it's grief about the old world.",
+        "Everyone watching the chart thinks the market is broken. This isn't a dip. It's a discount.",
+    ]
+    for text in burned:
+        ok, why = content_guard.validate(text, kind="quote")
+        assert not ok and "burned structure" in why, f"should block: {text!r}"
+        ok, why = content_guard.validate(text, kind="original")
+        assert not ok, f"should block original too: {text!r}"
+
+    fine = [
+        "Nvidia sold out its 2027 supply before the keynote ended. the buildout is real",
+        "I've read this three times and I still can't believe it's real",
+    ]
+    for text in fine:
+        ok, why = content_guard.validate(text, kind="quote")
+        assert ok, f"false positive on {text!r}: {why}"
+
+
+def test_casualize_human_texture_is_safe():
+    """2026-06-10 humanize mandate: casualize() may only (a) drop a final
+    period when the ending can't read as truncated, (b) lowercase a
+    title-cased common opener. It must NEVER touch ?/!/…, all-caps openers
+    ("JUST IN:"), proper nouns, or produce text looks_truncated() rejects."""
+    import random
+    from src.humanizer import casualize
+    from src.content_guard import looks_truncated
+
+    # Deterministic "always fire" rng.
+    class _Fire:
+        def random(self):
+            return 0.0
+
+    out = casualize("This is the wildest demo I've seen all year.", rng=_Fire())
+    assert out == "this is the wildest demo I've seen all year"
+    assert not looks_truncated(out)
+
+    # All-caps opener + proper noun openers are never lowercased.
+    assert casualize("JUST IN: Nvidia beats earnings again.", rng=_Fire()).startswith("JUST IN")
+    assert casualize("Nvidia just sold out 2027 supply.", rng=_Fire()).startswith("Nvidia")
+
+    # ? / ! / … endings untouched.
+    assert casualize("What would you automate first?", rng=_Fire()).endswith("?")
+
+    # rng that never fires → text unchanged.
+    class _Never:
+        def random(self):
+            return 1.0
+
+    text = "The market healed by lunch."
+    assert casualize(text, rng=_Never()) == text
+
+    # Never produce a truncated-looking ending: short final word keeps it safe.
+    out = casualize("Honestly the whole thread is worth it.", rng=_Fire())
+    assert not looks_truncated(out)
 
 
 def test_engine_health_quote_gif_counts_as_quote_and_slot_quiet_hours(monkeypatch, tmp_path):

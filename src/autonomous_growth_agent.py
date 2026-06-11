@@ -95,12 +95,12 @@ Format:
 ## Step 4 — Tune live_strategy.json (optional)
 Only if the data clearly shows imbalance (e.g. quotes underperform vs RT,
 or engagement drops at night). Adjust caps conservatively (±20% max).
-HARD BOUNDS (2026-06-09 volume mandate — NEVER exceed, and never starve):
-news 2-10, hotakes 6-20 (originals up to ~24/day total via the slots),
-MAX_QUOTES_PER_DAY 60-200 (QRTs stay quality-gated: 50-like floor,
-screenshot-worthy or SKIP), MAX_RETWEETS_PER_DAY <= 2, replies UNLIMITED.
-Volume levers are replies AND quotes AND originals now — but never trade
-the per-post quality bar for volume; SKIP stays free.
+HARD BOUNDS (2026-06-10 HUMANIZE mandate — operator: "you got spotted as
+a bot"; machine-cadence volume was the tell. NEVER exceed, never starve):
+news 1-4, hotakes 3-8 (originals ~10/day total via the slots),
+MAX_QUOTES_PER_DAY 20-48 (quality-gated: 50-like floor, screenshot-worthy
+or SKIP), MAX_RETWEETS_PER_DAY <= 2, replies UNLIMITED (the volume lever).
+Fewer, better, human-textured posts beat volume; SKIP stays free.
 
 ## Step 5 — Commit and push
 ```bash

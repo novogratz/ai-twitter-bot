@@ -48,23 +48,29 @@ META_LOG_FILE = os.path.join(_PROJECT_ROOT, "meta_strategy_log.json")
 # hotake<=2) were silently re-clamping live_strategy every 4h regardless of
 # .env — THE reason originals stalled at ~5/day. Floors keep the agent from
 # starving a surface; ceilings track the operator's current volume mandate.
+# HUMANIZE MANDATE 2026-06-10 (operator: "you got spotted as a bot —
+# humanize"): machine-cadence volume WAS the tell. Bounds lowered to
+# human-plausible levels (originals ~10/day, quotes ~48/day). Supersedes
+# the 06-09 "DO MORE" round. When the mandate moves again, update
+# strategy_lab.ALLOWED_PATHS, the autonomous_growth prompt, and the
+# bounds guard test in the same pass.
 _BOUNDS = {
-    "MAX_NEWS_PER_DAY":      (2,  10),
-    "MAX_HOTAKES_PER_DAY":   (6,  20),
-    "MAX_QUOTES_PER_DAY":    (60, 200),
+    "MAX_NEWS_PER_DAY":      (1,  4),
+    "MAX_HOTAKES_PER_DAY":   (3,  8),
+    "MAX_QUOTES_PER_DAY":    (20, 48),
     "MAX_RETWEETS_PER_DAY":  (0,  2),
-    "MAX_BREAKOUTS_PER_DAY": (0,  3),
+    "MAX_BREAKOUTS_PER_DAY": (0,  2),
     "MAX_SPICY_PER_DAY":     (0,  2),
     "MAX_REPLIES_PER_CYCLE": (3,  50),
 }
 
 # Safe defaults used when the LLM omits a cap key entirely.
 _DEFAULTS = {
-    "MAX_NEWS_PER_DAY":      8,
-    "MAX_HOTAKES_PER_DAY":   14,
-    "MAX_QUOTES_PER_DAY":    150,
+    "MAX_NEWS_PER_DAY":      4,
+    "MAX_HOTAKES_PER_DAY":   6,
+    "MAX_QUOTES_PER_DAY":    40,
     "MAX_RETWEETS_PER_DAY":  1,
-    "MAX_BREAKOUTS_PER_DAY": 2,
+    "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY":     1,
     "MAX_REPLIES_PER_CYCLE": 25,
 }

@@ -273,6 +273,8 @@ def post_tweet(text: str, image_path: str = None):
     """
     text = _scrub_metadata_leaks(text)
     text = _strip_post_urls(text)  # no external links in posts (mandate)
+    from .humanizer import casualize
+    text = casualize(text)  # human texture (2026-06-10 "spotted as a bot")
 
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
     # scrubbing, refuse to post. Both of these went live in prod 2026-05-13
@@ -477,6 +479,8 @@ def post_tweet_with_gif(text: str, gif_query: str, force: bool = False) -> bool:
     Autonomous bots must NEVER pass force=True."""
     text = _scrub_metadata_leaks(text)
     text = _strip_post_urls(text)  # no external links in posts (mandate)
+    from .humanizer import casualize
+    text = casualize(text)  # human texture (2026-06-10 "spotted as a bot")
     from .llm_client import contains_post_unsafe_leak
     if contains_post_unsafe_leak(text):
         log.error(f"[POST] Unsafe leak in GIF post — refusing. Text: {text[:200]!r}")
@@ -537,6 +541,8 @@ def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str, high_valu
     (same carve-out as quote_tweet)."""
     comment = _scrub_metadata_leaks((comment or "").strip())
     comment = _strip_post_urls(comment)
+    from .humanizer import casualize
+    comment = casualize(comment)  # human texture (2026-06-10)
     if not tweet_url or not comment:
         return False
     from .llm_client import contains_post_unsafe_leak
@@ -840,6 +846,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
         log.info(f"[REPLY] over-length ({len(reply_text)} chars) — smart-trimmed "
                  f"to {len(trimmed)}.")
         reply_text = trimmed
+    from .humanizer import casualize
+    reply_text = casualize(reply_text)  # human texture (2026-06-10)
     ok, why = content_guard.validate(reply_text, kind="reply")
     if not ok:
         log.info(f"[REPLY] content_guard skip ({why}): {reply_text[:120]!r}")
@@ -966,6 +974,8 @@ def quote_tweet(tweet_url: str, comment: str, high_value: bool = False) -> bool:
     """
     comment = _scrub_metadata_leaks((comment or "").strip())
     comment = _strip_post_urls(comment)  # no external links in quote commentary
+    from .humanizer import casualize
+    comment = casualize(comment)  # human texture (2026-06-10)
     if not tweet_url or not comment:
         raise ValueError("quote_tweet requires both tweet_url and comment")
 

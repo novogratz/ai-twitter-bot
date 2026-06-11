@@ -220,6 +220,70 @@ def inject_human_typo(text: str, rng: "random.Random" = None) -> str:
     return " ".join(words)
 
 
+# Common English sentence-starters that a human routinely leaves lowercase.
+# Title-case-only match (never touches "JUST IN:", tickers, acronyms,
+# proper nouns — those aren't in the set and/or fail the title-case check).
+_CASUAL_FIRST_WORDS = {
+    "the", "this", "that", "these", "those", "my", "your", "our", "their",
+    "everyone", "everybody", "nobody", "somebody", "people", "when", "if",
+    "you", "we", "they", "he", "she", "it", "there", "what", "how", "why",
+    "who", "just", "so", "honestly", "imagine", "watching", "reading",
+    "wait", "not", "no", "yes", "still", "half", "most", "some", "every",
+    "one", "and", "but", "been", "love", "can", "never", "always", "real",
+    "genuinely", "man", "okay", "ok", "feels", "turns", "somewhere",
+}
+
+# Short final words that read complete without a period (mirror of the
+# content_guard.looks_truncated safelist — dropping the period must never
+# create something that gate would refuse).
+_SAFE_SHORT_ENDINGS = {
+    "ai", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
+    "to", "of", "at", "by", "we", "be", "me", "my", "do",
+}
+
+
+def casualize(text: str, rng: "random.Random" = None) -> str:
+    """Probabilistic human-texture pass, applied at the write chokepoints
+    (operator 2026-06-10: "you got spotted as a bot — humanize"). Real
+    posters do two cheap things LLM output never does:
+
+      - drop the final period (~55%) when the text ends with exactly one
+        "." and the ending can't read as truncated afterward
+      - lowercase the opening letter (~30%) when the first word is a
+        title-cased common sentence-starter (never proper nouns, tickers,
+        acronyms, or intentional all-caps like "JUST IN:")
+
+    Deterministic under an injected rng (tests). Never touches ? ! … ,
+    multi-sentence interiors, or anything but the first char + last char.
+    """
+    import random as _random
+    r = rng or _random
+    t = (text or "").rstrip()
+    if len(t) < 12:
+        return text
+
+    # 1. final-period drop
+    if t.endswith(".") and not t.endswith("..") and r.random() < 0.55:
+        body = t[:-1].rstrip()
+        last = re.split(r"\s+", body)[-1] if body else ""
+        last_clean = last.strip("\"'»)]").lower()
+        if last_clean and last_clean[-1].isalnum() and (
+            len(last_clean) >= 3 or last_clean in _SAFE_SHORT_ENDINGS
+        ):
+            t = body
+
+    # 2. lowercase opener
+    first = re.split(r"\s+", t)[0] if t else ""
+    if (
+        first.isalpha() and first.istitle()
+        and first.lower() in _CASUAL_FIRST_WORDS
+        and r.random() < 0.30
+    ):
+        t = t[0].lower() + t[1:]
+
+    return t
+
+
 def smart_trim(text: str, limit: int) -> str:
     """Length-cap OUTGOING text at a sentence boundary, never mid-sentence.
 

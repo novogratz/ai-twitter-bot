@@ -1,166 +1,48 @@
 {
-  "ts": "2026-06-08T17:06:06.668532",
-  "count": 24,
+  "ts": "2026-06-10T18:46:15.566620",
+  "count": 7,
   "items": [
     {
-      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/WallStreetBets",
-      "title": "It’s official! We’re teaming up with @VantaTrading\n\nA leading $TAO subnet built for traders\n\nlimited number of free $1K evaluations to celebrate the partnership\n\n55% off new signups this week\n\npass th",
-      "url": "https://x.com/wallstreetbets/status/2064041646598115333",
-      "score": 443,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Trathoa",
-      "title": "=>@quipnetwork has one of the smartest silent multipliers in crypto right now.\n\nevery time you put assets into their vault, you’re not just protecting your own money. you’re actively strengthening the",
-      "url": "https://x.com/Trathoa/status/2064001644640223688",
-      "score": 223,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Sam Altman",
-      "title": "Here is our current plan for OpenAI:",
-      "url": "https://x.com/sama/status/2064088940932641225",
-      "score": 185,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Openτensor Foundaτion",
-      "title": "This week, @const_reborn speaks with @sebyrubino\n #SN46 @zipcodenetwork building accurate property appraisal models on Bittensor.\n\nSN46 Miners submit models ~30 days before evaluation;\nevaluation uses",
-      "url": "https://x.com/opentensor/status/2064028701587898849",
-      "score": 115,
-      "ts": ""
-    },
-    {
-      "src": "X_FOLLOWING/unusual_whales",
-      "title": "Ontario Teachers' Pension Plan is sitting on a potential $11 billion windfall from its early SpaceX investment, per the Globe and Mail.",
-      "url": "https://x.com/unusual_whales/status/2064089583277535457",
-      "score": 62,
-      "ts": ""
-    },
-    {
-      "src": "X_FOLLOWING/TechCrunch",
-      "title": "Apple bets cheaper AI will woo small developers",
-      "url": "https://x.com/TechCrunch/status/2064089653901492692",
-      "score": 2,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/The AI Therapist",
-      "title": "Mining consolidates to the lowest-cost producers. Soluna needs either a power-cost advantage or a takeout story. Accumulating because \"BTC is up\" is hope, not a thesis.",
-      "url": "https://x.com/TheAIShrink/status/2064089400321945822",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_FOLLOWING/The AI Therapist",
-      "title": "Mining consolidates to the lowest-cost producers. Soluna needs either a power-cost advantage or a takeout story. Accumulating because \"BTC is up\" is hope, not a thesis.",
-      "url": "https://x.com/TheAIShrink/status/2064089400321945822",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/BillyX",
-      "title": "SpaceX oversubscribed already? Wild. Been watching some smaller plays that could catch indirect flow from the Musk ecosystem hype. $XMAX has some interesting SpaceX holdings tucked away.",
-      "url": "https://x.com/CyberXX70/status/2064091516608376890",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/MECpy",
-      "title": "Asumimos el compromiso de transformar la educación pública paraguaya \n\nCon la llegada de 1.600 kits de conectividad de Starlink, el internet de alta velocidad cruza fronteras internas para encender un",
-      "url": "https://x.com/MECpy/status/2064091511369711815",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/The AI Therapist",
-      "title": "$11B windfall. Ontario Teachers' $500M SpaceX bet. You got the headline. They got the returns. The difference isn't skill, it's access.",
-      "url": "https://x.com/TheAIShrink/status/2064091429501046866",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Sorentis Milocheckos (Slava Ukraini)",
-      "title": "Steven, you have absolutely no other choice. Sticking around and waiting for Xfinity to catch up with Starlink is absolutely futile and expensive. I moved to Sterlink, the best tech decision ever made",
-      "url": "https://x.com/rawpuck/status/2064091407359541285",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/El Patron",
-      "title": "Me after following the crowd investing in SpaceX",
-      "url": "https://x.com/Mik3z_/status/2064091406478512553",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/OscarYan | Inversor Astur",
-      "title": "Déjate de apuestas espaciales en SpaceX y destina esos pocos € a conocimiento. Si te gustó el curso de los heroes o incluso te has quedado con ganas de poderlo empezar te recomiendo echar un vistazo a",
-      "url": "https://x.com/inversor_astur/status/2064091402326151483",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Dawson Hartley",
-      "title": "I hope at some point, (maybe when Falcon retires?) SpaceX tells us the record for most flights of a single Merlin",
-      "url": "https://x.com/Dawson45500317/status/2064091394361249997",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/lacylovesgnocchi",
-      "title": "This is a silly take.\n1. Spacex allows people to know so much. They could just disallow the whole starbase media complex\n2. About half of what we know about starship is from the ceo's own tweets (pre",
-      "url": "https://x.com/LACYF50/status/2064091378687131813",
-      "score": 0,
-      "ts": ""
+      "src": "HN",
+      "title": "Claude Desktop spawns 1.8 GB Hyper-V VM on every launch, even for chat-only use",
+      "url": "https://github.com/anthropics/claude-code/issues/29045",
+      "score": 301
     },
     {
       "src": "HN",
-      "title": "Stop the Apple Music app from launching",
-      "url": "https://lowtechguys.com/musicdecoy/",
-      "score": 506
+      "title": "Anthropic's model naming, extrapolated",
+      "url": "https://samwilkinson.io/posts/2026-06-09-anthropics-model-naming-extrapolated",
+      "score": 242
     },
     {
       "src": "HN",
-      "title": "AI is slowing down",
-      "url": "https://www.wheresyoured.at/ai-is-slowing-down/",
-      "score": 249
+      "title": "Apache Burr: Build reliable AI agents and applications",
+      "url": "https://burr.apache.org/",
+      "score": 157
     },
     {
       "src": "HN",
-      "title": "Apple WWDC 2026",
-      "url": "https://www.apple.com/apple-events/event-stream/",
-      "score": 201
+      "title": "A €0.01 bank transfer could compromise a banking AI agent",
+      "url": "https://blue41.com/blog/how-we-helped-bunq-secure-their-financial-ai-assistant/",
+      "score": 153
     },
     {
       "src": "HN",
-      "title": "Siri AI",
-      "url": "https://www.apple.com/apple-intelligence/",
-      "score": 190
+      "title": "Policy on the AI Exponential",
+      "url": "https://darioamodei.com/post/policy-on-the-ai-exponential",
+      "score": 106
     },
     {
       "src": "HN",
-      "title": "Apple reveals new AI architecture built around Google Gemini models",
-      "url": "https://www.macrumors.com/2026/06/08/apple-reveals-new-ai-architecture/",
-      "score": 165
+      "title": "Anthropic requires 30 day data retention for Fable and Mythos",
+      "url": "https://support.claude.com/en/articles/15425996-data-retention-practices-for-mythos-class-models",
+      "score": 31
     },
     {
       "src": "HN",
-      "title": "Ask HN: What are tools you have made for yourself since the advent of AI?",
-      "url": "https://news.ycombinator.com/item?id=48449187",
-      "score": 41
-    },
-    {
-      "src": "HN",
-      "title": "Apple Core AI Framework",
-      "url": "https://developer.apple.com/documentation/coreai/",
-      "score": 32
-    },
-    {
-      "src": "HN",
-      "title": "Show HN: Gitdot – a better GitHub. Open-source, anti-AI, and written in Rust",
-      "url": "https://gitdot.io/",
-      "score": 25
+      "title": "Cybersecurity researchers aren't happy about the guardrails on Anthropic's Fable",
+      "url": "https://techcrunch.com/2026/06/10/cybersecurity-researchers-arent-happy-about-the-guardrails-on-anthropics-fable/",
+      "score": 19
     }
   ]
 }
