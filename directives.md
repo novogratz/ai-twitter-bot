@@ -1,18 +1,18 @@
-# Growth Directives — 2026-06-10
+# Growth Directives — 2026-06-11
 
-**Synthesis:** market_trauma voice earns 34x more likes and 50x more views than plain AI news takes (15.22 vs 0.45 avg likes; 24,608 vs 487 avg views) — yet ai_news_take still dominates the post mix. Every unreframed news take is a wasted slot. NEW: the 2026 X algo weights replies 27x over likes and bookmarks 5x — be the account people save AND reply to.
+**Synthesis:** market_trauma still best on likes but stuck at 19% of the mix vs 39% ai_news_take — every unreframed news take is a wasted slot. SpaceX SPCX IPOs TOMORROW at $1.77T (biggest IPO in history, triple Alibaba) — the single largest investor-psychology therapy event of 2026. Be first.
 
 ## Apply to every tweet/reply/hot-take:
 
-- **Therapize, never report. Joy first, fanboy second.** Default reaction to any AI news = excitement, awe, or comedy. "GitHub Copilot just went from $29/month to $750 for heavy users. Developer trauma is now a clinical diagnosis. I'm taking new patients." Name the emotion, land the number, leave them laughing or hyped.
-- **Be bookmark-worthy.** The algo gives bookmarks a 5x multiplier — post data, frameworks, or reference lines people screenshot and save. "The new GitHub Copilot pricing: light users = $29, heavy agents = $750. The productivity tax just arrived." That's a screenshotable comparison. Vague takes don't get saved.
-- **QRT formula: number-reframe + mechanism metaphor + closing question.** "$47B ARR for Anthropic. That's $128M per day in AI subscriptions. At what point does therapy become infrastructure?" Use on mid-size analytical posts (50-like floor — they engage back; mega-virals don't).
-- **Reply hook in 6-8 words, diagnosis inside 180 chars.** First line = the whole take. No throat-clearing. Tension first, proof inside. "Apple just made Claude your therapist." Full stop. Then expand.
-- **METAPHOR wins. Wire every take to a body, a patient, a session.** "Nvidia projecting $1T capex in 2027. That's not a roadmap. That's a prescription." One image, no explanation. Land it or SKIP.
-- **Numbers anchor. Specificity earns trust.** $47B ARR. $1T capex. $750/mo. $780B SpaceX. Exact beats round. Analyst beats cheerleader — but the fanboy energy is UNDERNEATH the precision.
-- **Never sound like your last post.** Vary structure, length, entry point. If the last original opened with a dollar amount, open the next with a patient scenario or a contrarian question. Sameness is algorithmic death.
-- **Post in peak market windows.** 11am–3pm ET (market hours), 5–7pm ET (close), 8–10pm ET (evening scroll). Originals and QRTs target these slots. Replies fire 24/7.
+- **Therapize, never report. Default = patient in the room.** "SpaceX goes public tomorrow at $1.77T. My patients who sold TSLA at $200 are calling again. I'm not taking new appointments." Name the fear, land the number, leave them either laughing or hopeful. Repeat for every AI/market event.
+- **SpaceX $SPCX IPO is THE moment — treat it.** $135/share. $1.77T valuation. Biggest IPO ever. Musk owns 82% voting control. Investor psychology at peak FOMO/panic. QRT any analytical SPCX post within minutes. Reply to anyone scared or bagholding. Frame every take as a therapy session with a patient who can't decide.
+- **METAPHOR wins. Wire to body/patient/session.** "Karpathy is at Anthropic building self-improving AI while Anthropic publicly calls for a global pause. That's a therapist prescribing what they're actively treating." One image, no explanation. Land it or SKIP.
+- **Be bookmark-worthy — numbers + emotional frame = screenshot.** $1.77T. $965B Anthropic. 1B ChatGPT users. $750 Copilot. Exact beats round. Combine the number with the feeling and you get saved AND liked.
+- **QRT formula: number-reframe + mechanism metaphor + closing question.** "SpaceX prices at $135. That's $1.77T for a company whose customer list is basically 'governments and Musk.' At what point does vision therapy become the product?" 50-like floor — mid-size finance posts engage back, mega-virals don't.
+- **ai_vs_btc is an underused wildcard.** One post hit 1239 avg views — the highest by far. Push the AI-vs-Bitcoin therapy angle more: "Bitcoin is the patient who fires every therapist. AI is the treatment they're afraid to try."
+- **Reply hook ≤8 words, diagnosis inside 180 chars.** First line = the whole take. No throat-clearing. Tension first, proof second.
+- **Never repeat a structure back-to-back.** Dollar-amount open → patient scenario next → contrarian question after. Sameness fingerprints a bot.
 
-## Top patterns this week: METAPHOR > DIALOGUE > UNDERSTATEMENT
+## Top patterns this week: METAPHOR > UNDERSTATEMENT > FR_ANCHOR
 ## Best hours: 11am–3pm ET · 5–7pm ET · 8–10pm ET (UTC 15–19, 21–23, 00–02)
-## Rising topics (June 10, 2026): GitHub Copilot billing shock ($29→$750) · Apple iOS 27 + Claude on iPhone · SpaceX Nasdaq debut June 12 · Anthropic S-1 + $47B ARR · JPMorgan $19.8B AI budget · Nvidia $1T hyperscaler capex 2027 · AI workforce displacement fear
+## Rising topics (June 11, 2026): **$SPCX IPO June 12 ($1.77T — biggest ever, must-QRT)** · Karpathy+Anthropic self-improving AI vs global pause (therapy contradiction gold) · ChatGPT 1B monthly users · Anthropic $65B raise / $965B valuation · GitHub Copilot $29→$750 billing shock · Apple iOS 27 + Claude on iPhone · Nvidia $1T capex 2027
