@@ -4,6 +4,21 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-11 round 2 — THE 100-LIKE REPLY (operator: "you got 100 likes
+> bro... i want more things like this... push it"):** our reply to
+> @Mindset4Money_X's question QRT ("why would gold sell off...") earned
+> ~100 likes + 13.3K views and a "True" from the author — the account's
+> biggest measured reply win. The shape: a GENUINE QUESTION post answered
+> plainly — causal chain in 2-3 short clauses, casual lowercase, "X = Y"
+> shorthand verdict, zero props, zero joke. Productized three ways:
+> (1) REPLY_PROMPT formula **D — Be the best answer in the thread** (always
+> preferred when the parent asks a real question); (2) QUESTION-HUNT reply
+> queries ("why would/what am I missing/would you buy" on finance/AI,
+> min_faves:30) + a from:Mindset4Money_X seed scan; (3) Mindset4Money_X
+> added to PINNED_TRACKED_HANDLES (curator pin → early_bird/mega_watch
+> track his fresh posts). Question posts are reply farms; the sharpest
+> plain answer harvests them.
+
 > **2026-06-11 addendum — THE QRT PLAYBOOK (operator: "inspire yourself
 > from him" — a 29K-follower human account whose QRTs are one-line quips):**
 > Quote prompt + core_identity FORMATS rebuilt around six human shapes:

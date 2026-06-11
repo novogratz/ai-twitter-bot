@@ -1074,7 +1074,9 @@ def test_early_reply_targets_are_curator_driven():
         "static early-reply lists must stay empty — pools come from the curator"
     )
     from src.account_curator import PINNED, tracked_handles
-    assert tuple(PINNED) == ("TheBTCTherapist", "Graphseo")
+    # Mindset4Money_X pinned 2026-06-10: measured 100-like / 13.3K-view
+    # reply conversion on his question post (operator: "more things like this").
+    assert tuple(PINNED) == ("TheBTCTherapist", "Graphseo", "Mindset4Money_X")
     handles = tracked_handles(limit=5)
     assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo"
 

@@ -153,6 +153,15 @@ SEARCH_QUERIES = [
     # want their FRESH posts before they trend, freshness sort does the rest.
     "from:TheBTCTherapist OR from:morganhousel OR from:ParikPatelCFA OR from:litcapital min_faves:5",
     "from:greg16676935420 OR from:ReformedBroker OR from:jasonzweigwsj OR from:saylor min_faves:5",
+    # Mindset4Money_X: measured 100-like / 13.3K-view reply conversion on
+    # his question QRT (2026-06-10, operator: "i want more things like
+    # this") — his fresh posts are a priority reply surface.
+    "from:Mindset4Money_X min_faves:2",
+    # ===== QUESTION HUNT (2026-06-10 winner lane): mid-size finance/AI
+    # accounts asking GENUINE questions — a question post is a reply farm
+    # and the sharpest plain answer harvests it (REPLY_PROMPT formula D). =====
+    "\"why would\" OR \"why is\" OR \"what am I missing\" (fed OR gold OR rates OR Nvidia OR AI OR Bitcoin OR market) lang:en min_faves:30",
+    "\"would you buy\" OR \"would you rather\" OR \"do you own\" (stock OR $NVDA OR AI OR Bitcoin OR ETF) lang:en min_faves:30",
     # ===== AI FIRST (operator 2026-06-07: "bot needs to be more AI
     # focused" — the identity is sharpest-in-the-room ON AI; psychology is
     # the VOICE, AI is the LANE). 8 of 14 topic queries are AI. =====
@@ -263,6 +272,16 @@ THE FORMULA (mandatory, pick one):
 A) [Specific number/fact from their tweet] + [implication others missed] + [one-word gut-punch]
 B) [What they said] + [what it actually means] + [deadpan translation in ≤10 words]
 C) [The obvious take everyone's giving] + [the actual truth] + [drop mic]
+D) THE BEST ANSWER IN THE THREAD (our single biggest measured winner —
+   100 likes + 13.3K views on ONE reply, 2026-06-10, and the author himself
+   replied "True"): when the parent ASKS A GENUINE QUESTION ("why would X
+   happen?", "what am I missing?", "would you buy here?"), drop the bit
+   entirely and just ANSWER IT better than anyone else will. The shape that
+   won: a causal chain in 2-3 SHORT clauses — premise, the mechanism that
+   flips it, then the compressed "X = Y" shorthand verdict. Plain casual
+   lowercase, zero therapist props, zero joke. A question post is a reply
+   farm; the sharpest plain answer harvests it. ALWAYS prefer D when the
+   parent is a real question.
 
 EXPERTISE — use actual knowledge, not vibes:
 1. AI: H100/H200 margins (~70%), inference vs training cost splits, RLHF limitations,

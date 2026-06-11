@@ -41,7 +41,7 @@ TRACKED_FILE = os.path.join(_PROJECT_ROOT, "tracked_accounts.json")
 TARGETS_LOG_FILE = os.path.join(_PROJECT_ROOT, "engagement_targets_log.json")
 
 PINNED = tuple(h.strip() for h in os.environ.get(
-    "PINNED_TRACKED_HANDLES", "TheBTCTherapist,Graphseo").split(",") if h.strip())
+    "PINNED_TRACKED_HANDLES", "TheBTCTherapist,Graphseo,Mindset4Money_X").split(",") if h.strip())
 
 WINDOW_DAYS = int(os.environ.get("CURATOR_WINDOW_DAYS", "14"))
 TRACKED_MAX = int(os.environ.get("CURATOR_TRACKED_MAX", "40"))
