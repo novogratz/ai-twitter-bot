@@ -52,7 +52,10 @@
       "polymarketmoney",
       "coinmarketcap",
       "techcrunch",
-      "crypto__goku"
+      "crypto__goku",
+      "kalshi",
+      "zerohedge",
+      "beffjezos"
     ]
   },
   "seeds": [

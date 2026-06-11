@@ -1,55 +1,5 @@
 [
   {
-    "handle": "newstongue",
-    "category": "crypto",
-    "added": "2026-05-29"
-  },
-  {
-    "handle": "cygrus",
-    "category": "crypto",
-    "added": "2026-05-29"
-  },
-  {
-    "handle": "snooper",
-    "category": "tech",
-    "added": "2026-05-29"
-  },
-  {
-    "handle": "0lamilekan",
-    "category": "ai",
-    "added": "2026-05-29"
-  },
-  {
-    "handle": "frieslover",
-    "category": "ai",
-    "added": "2026-05-30"
-  },
-  {
-    "handle": "nicksta",
-    "category": "crypto",
-    "added": "2026-05-30"
-  },
-  {
-    "handle": "solcartel",
-    "category": "crypto",
-    "added": "2026-05-30"
-  },
-  {
-    "handle": "0zniro",
-    "category": "crypto",
-    "added": "2026-05-30"
-  },
-  {
-    "handle": "imani",
-    "category": "tech",
-    "added": "2026-05-30"
-  },
-  {
-    "handle": "nanami",
-    "category": "tech",
-    "added": "2026-05-30"
-  },
-  {
     "handle": "jadataylin",
     "category": "tech",
     "added": "2026-05-30"
@@ -2503,5 +2453,55 @@
     "handle": "semianalysis",
     "category": "ai",
     "added": "2026-06-10"
+  },
+  {
+    "handle": "rahul",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "nik",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "kp",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "sambanova",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "anonymous",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "goku",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "similarweb",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "rewind",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "yourstory",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "bluebeba",
+    "category": "ai",
+    "added": "2026-06-11"
   }
 ]

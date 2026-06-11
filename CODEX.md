@@ -4,6 +4,20 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-11 addendum — THE QRT PLAYBOOK (operator: "inspire yourself
+> from him" — a 29K-follower human account whose QRTs are one-line quips):**
+> Quote prompt + core_identity FORMATS rebuilt around six human shapes:
+> one-line quip (casual "btw..", 😭/😂/👀 as punctuation), the ECHO (quote
+> one loaded word from the parent back in quotes), the FAKE QUOTE (imagined
+> line in the actor's mouth), the SETUP-COLON + GIF ("[actor] watching X:"
+> — GIF is the punchline; the GIF chokepoints now validate minus the
+> trailing colon so looks_truncated doesn't refuse the shape), the STAT
+> PUNCH, the CROWD READ. Originals default = ONE sentence (hotake prompt);
+> spicy QUESTION mode rewritten to short answerable cashtag questions and
+> raised to ~daily (REPLY_BAIT_PER_WEEK=7) — comments are the goal.
+> humanize() now PRESERVES ".."/"..." (only 4+ dots is an artifact).
+> Guard: `test_qrt_playbook_setup_colon_and_dotdot_texture`.
+
 > **Mandate 2026-06-10 PM (CURRENT — HUMANIZE: "you got spotted by people
 > as a bot... humanize a bit the bot and make it more like a real person";
 > supersedes ALL volume rounds of 06-09 and refines the 06-07 focus):**

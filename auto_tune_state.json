@@ -1,29 +1,27 @@
 {
-  "ts": "2026-06-10T18:26:09.440102",
+  "ts": "2026-06-11T07:04:53.145767",
   "window_min": 90,
-  "total_actions": 51,
+  "total_actions": 39,
   "by_type": {
-    "reply": 45,
-    "quote_gif": 5,
-    "quote": 1
+    "reply": 36,
+    "quote": 1,
+    "quote_gif": 2
   },
   "winners": {
-    "FEED-SWEEP-FEED": 8,
+    "SEARCH-HOT/OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:50": 5,
+    "SEARCH-HOT/OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500": 4,
     "FEED-SWEEP-FOLLOWING": 4,
-    "SEARCH-HOT/ChatGPT OR Claude OR Gemini OR \"humanoid robot\" lang:en min_": 4,
-    "SEARCH-HOT/\"AI agents\" OR \"agentic AI\" OR \"reasoning model\" OR AGI lang": 4,
-    "SEARCH-HOT/TSMC OR AMD OR Broadcom OR \"AI chips\" OR \"AI power\" OR \"AI e": 3
+    "SEARCH-HOT/Bitcoin OR BTC OR \"crypto crash\" OR \"BTC ETF\" lang:en min_fa": 4,
+    "SEARCH-HOT/ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_fav": 3
   },
   "losers": {
-    "SEARCH-HOT/Nvidia OR Palantir OR \"AI trade\" OR \"AI capex\" OR \"AI datace": 1,
-    "GIF/mind blown": 1,
-    "SEARCH-HOT/\"panic sold\" OR \"bought the top\" OR \"portfolio is down\" OR d": 1,
-    "QUOTE/Ed Zitron": 1,
-    "SEARCH-HOT/\"Claude Code\" OR Cursor OR Copilot OR \"AI coding\" lang:en mi": 1,
-    "GIF/math lady": 1,
-    "GIF/pablo escobar waiting": 1,
-    "GIF/chef kiss": 1,
-    "GIF/leonardo dicaprio clapping": 1
+    "SEARCH-HOT/\"AI startup\" OR \"AI funding\" OR \"AI layoffs\" OR \"AI jobs\" OR": 1,
+    "SEARCH-HOT/ChatGPT OR Claude OR Gemini OR \"humanoid robot\" lang:en min_": 1,
+    "QUOTE/The \u20bfitcoin Therapist": 1,
+    "SEARCH-HOT/\"AI agents\" OR \"reasoning model\" OR AGI lang:en min_faves:30": 1,
+    "SEARCH-HOT/from:greg16676935420 OR from:ReformedBroker OR from:jasonzwe": 1,
+    "GIF/michael jackson popcorn": 1,
+    "GIF/pablo escobar waiting": 1
   },
   "post_cadence_factor": 0.85,
   "boost_cadence_factor": 1.0

@@ -490,7 +490,10 @@ def post_tweet_with_gif(text: str, gif_query: str, force: bool = False) -> bool:
     if not ok:
         log.info(f"[POST] policy skip ({why}).")
         return False
-    ok, why = content_guard.validate(text, kind="original")
+    # Setup-colon into the GIF is a deliberate meme shape on GIF posts
+    # (QRT playbook 2026-06-10) — validate minus the trailing colon.
+    _check = text[:-1].rstrip() if text.endswith(":") else text
+    ok, why = content_guard.validate(_check, kind="original")
     if not ok:
         log.info(f"[POST] content_guard skip ({why}): {text[:120]!r}")
         return False
@@ -554,7 +557,13 @@ def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str, high_valu
     if not ok:
         log.info(f"[QUOTE] policy skip ({why}).")
         return False
-    ok, why = content_guard.validate(comment, kind="quote")
+    # Setup-colon format (QRT playbook 2026-06-10): "[actor] watching X:"
+    # ending on ":" with the GIF as the punchline is a deliberate human
+    # meme shape, not truncation — validate on the text minus the colon so
+    # looks_truncated doesn't refuse it. GIF paths only; a bare-text quote
+    # ending in ":" is still rightly rejected as cut off.
+    _check = comment[:-1].rstrip() if comment.endswith(":") else comment
+    ok, why = content_guard.validate(_check, kind="quote")
     if not ok:
         log.info(f"[QUOTE] content_guard skip ({why}): {comment[:120]!r}")
         return False

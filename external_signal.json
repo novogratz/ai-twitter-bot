@@ -1,48 +1,251 @@
 {
-  "ts": "2026-06-10T18:46:15.566620",
-  "count": 7,
+  "ts": "2026-06-11T07:31:10.859429",
+  "count": 35,
   "items": [
     {
-      "src": "HN",
-      "title": "Claude Desktop spawns 1.8 GB Hyper-V VM on every launch, even for chat-only use",
-      "url": "https://github.com/anthropics/claude-code/issues/29045",
-      "score": 301
+      "src": "X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/*Walter Bloomberg",
+      "title": "$SPCX: OPPENHEIMER INITIATES SPACEX AT OUTPERFORM - PT $190",
+      "url": "https://x.com/DeItaone/status/2065025348526374957",
+      "score": 206,
+      "ts": ""
     },
     {
-      "src": "HN",
-      "title": "Anthropic's model naming, extrapolated",
-      "url": "https://samwilkinson.io/posts/2026-06-09-anthropics-model-naming-extrapolated",
-      "score": 242
+      "src": "X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Crypto Rover",
+      "title": "The SpaceX IPO could be to stocks what the Trump coin was to alts...\n\nOne asset draining liquidity from everything else.\n\nLets see!",
+      "url": "https://x.com/cryptorover/status/2065021725226741925",
+      "score": 180,
+      "ts": ""
     },
     {
-      "src": "HN",
-      "title": "Apache Burr: Build reliable AI agents and applications",
-      "url": "https://burr.apache.org/",
-      "score": 157
+      "src": "X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/*Walter Bloomberg",
+      "title": "$SPCX - SPACEX IPO VALUATION BUILT ON HYPE, SAYS CHANOS\n\nShort seller Jim Chanos argues SpaceX’s planned $1.75 trillion IPO valuation is disconnected from fundamentals and driven by overly optimistic",
+      "url": "https://x.com/DeItaone/status/2065023746344161337",
+      "score": 179,
+      "ts": ""
     },
     {
-      "src": "HN",
-      "title": "A €0.01 bank transfer could compromise a banking AI agent",
-      "url": "https://blue41.com/blog/how-we-helped-bunq-secure-their-financial-ai-assistant/",
-      "score": 153
+      "src": "X_HOME/unusual_whales",
+      "title": "Alex Karp of Palantir, $PLTR, has said: “If you run around saying AI allowed you to fire two-thirds of your workforce—because maybe your competitor’s kicking your ass—you might as well just go sign up",
+      "url": "https://x.com/unusual_whales/status/2065030533424337307",
+      "score": 95,
+      "ts": ""
     },
     {
-      "src": "HN",
-      "title": "Policy on the AI Exponential",
-      "url": "https://darioamodei.com/post/policy-on-the-ai-exponential",
-      "score": 106
+      "src": "X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Niels",
+      "title": "SpaceX IPO could officially make Elon Musk the world’s FIRST TRILLIONAIRE tomorrow. \n\nAt a reported $1.75 TRILLION valuation, Musk’s SpaceX stake alone could be worth over $840 BILLION.\n\nAdd Tesla and",
+      "url": "https://x.com/Web3Niels/status/2065029032610050337",
+      "score": 62,
+      "ts": ""
     },
     {
-      "src": "HN",
-      "title": "Anthropic requires 30 day data retention for Fable and Mythos",
-      "url": "https://support.claude.com/en/articles/15425996-data-retention-practices-for-mythos-class-models",
-      "score": 31
+      "src": "X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Financial Times",
+      "title": "There is little normal about the SpaceX IPO. But soon it will touch the lives of millions of ordinary investors when it debuts on global stock markets. https://ft.trib.al/5CGpUYe",
+      "url": "https://x.com/FT/status/2064999684490346836",
+      "score": 56,
+      "ts": ""
     },
     {
-      "src": "HN",
-      "title": "Cybersecurity researchers aren't happy about the guardrails on Anthropic's Fable",
-      "url": "https://techcrunch.com/2026/06/10/cybersecurity-researchers-arent-happy-about-the-guardrails-on-anthropics-fable/",
-      "score": 19
+      "src": "X_FOLLOWING/Google DeepMind",
+      "title": "When millions of AI agents interact with each other, new collective behaviors can emerge. \n\nTogether with @schmidtsciences, @coop_ai, @ARIA_research and supported by @GoogleOrg, we’re launching a $10M",
+      "url": "https://x.com/GoogleDeepMind/status/2065031279213441309",
+      "score": 35,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/WOLF",
+      "title": "SPACEX HAS COMPLETED OVER 660 ORBITAL LAUNCHES AND GENERATED $18.7B IN REVENUE\n\nHere are the milestones that got them there:\n\n2006: NASA COTS contract\n2008: First orbital liquid-fuel rocket\n2010: Firs",
+      "url": "https://x.com/WOLF_Financial/status/2065020201381371964",
+      "score": 27,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Bitget钱包中文频道",
+      "title": "What will SpaceX's first-day opening price be?\n\nLeave your predicted price in the comments section, and the top 5 users closest to the actual price will split a $100 red envelope.\n\nThe closer you are,",
+      "url": "https://x.com/BitgetWalletCN/status/2065024471657074877",
+      "score": 27,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/Google DeepMind",
+      "title": "When millions of AI agents interact with each other, new collective behaviors can emerge. \n\nTogether with @schmidtsciences, @coop_ai, @ARIA_research and supported by @GoogleOrg, we’re launching a $10M",
+      "url": "https://x.com/GoogleDeepMind/status/2065031279213441309",
+      "score": 24,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/zerohedge",
+      "title": "Strategy (MSTR) CEO Says Bitcoin Sale Was About Market 'Inoculation', Not A Retreat",
+      "url": "https://x.com/zerohedge/status/2065031318103048632",
+      "score": 16,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/The ₿itcoin Therapist",
+      "title": "You can buy Bitcoin down -50% or you can buy the SpaceX IPO at the all time high.\n\nThis is an intelligence test.",
+      "url": "https://x.com/TheBTCTherapist/status/2065030608825307243",
+      "score": 12,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/zerohedge",
+      "title": "Strategy (MSTR) CEO Says Bitcoin Sale Was About Market 'Inoculation', Not A Retreat",
+      "url": "https://x.com/zerohedge/status/2065031318103048632",
+      "score": 11,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/The AI Therapist",
+      "title": "Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)",
+      "url": "https://x.com/TheAIShrink/status/2063286455003197714",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/The AI Therapist",
+      "title": "$150M to put people early in their careers on the AI side of the table. that's the part that actually treats the anxiety, not the headline",
+      "url": "https://x.com/TheAIShrink/status/2065029429479313832",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/Arvind Narayanan",
+      "title": "NEW essay: the narrative that AI is replacing software engineers seems to be based on AI-washing of layoffs. Among the many lines of evidence: New York State requires firms to disclose which layoffs w",
+      "url": "https://x.com/random_walker/status/2065032543724785924",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/unusual_whales",
+      "title": "Alex Karp of Palantir, $PLTR, has said: “If you run around saying AI allowed you to fire two-thirds of your workforce—because maybe your competitor’s kicking your ass—you might as well just go sign up",
+      "url": "https://x.com/unusual_whales/status/2065030533424337307",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/The AI Therapist",
+      "title": "Announcing you fired 2/3 via AI: you already lost. the guy who beat you shipped 6 months ago. you're not innovating, you're panicking into the press",
+      "url": "https://x.com/TheAIShrink/status/2065032279622046185",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/The AI Therapist",
+      "title": "Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)",
+      "url": "https://x.com/TheAIShrink/status/2063286455003197714",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/live/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Organic-Human",
+      "title": "Can that AI run on a local computer cluster or individual high end workstation?\nIf so, then a huge multi megawatt or gigawatt data center is not required.",
+      "url": "https://x.com/OrganicHuman2/status/2065032972122636550",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/live/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/CoderVibe.dev",
+      "title": "Meta is teaming up with Reliance on its first AI data center deal in India, a 168-megawatt facility built to support Meta’s global AI computing demand.  \n\nThe move signals how big tech is spreading AI",
+      "url": "https://x.com/codervibe__/status/2065032920675287550",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/live/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Brian ⚘.°•",
+      "title": "i love that in every press photo I've seen of zohran, he's always beaming that million megawatt smile",
+      "url": "https://x.com/ACT_LOVESONG/status/2065031593115385862",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/live/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Podcast Alpha",
+      "title": "PG&E says data centers cut residential rates by 1% per gigawatt added.\nPJM's auction added $15-20/year to household bills.\nSame technology. Opposite outcomes. One grid has surplus capacity; the other",
+      "url": "https://x.com/PodcastAlphaX/status/2065031036837265427",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/live/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Alain Delavie",
+      "title": "Délicate et superbe floraison du Begonia Megawatt Big White sur mon balcon. Grandes fleurs d’un blanc très pur avec un joli bouquet d’étamines jaune d’or. #balcon #paris #begonia #fleurs",
+      "url": "https://x.com/alaindelavie/status/2065030003679514697",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/live/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Altiur Formación",
+      "title": "En trabajos verticales y rescate, el control es seguridad.\nEn AltiurFormación destacamos #MEGAWATT, descensor universal para uso industrial y rescate, con carga de hasta 230 kg, función antipánico y m",
+      "url": "https://x.com/altiurformacion/status/2065026374155329912",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/The ₿itcoin Therapist",
+      "title": "You can buy Bitcoin down -50% or you can buy the SpaceX IPO at the all time high.\n\nThis is an intelligence test.",
+      "url": "https://x.com/TheBTCTherapist/status/2065030608825307243",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "CoinDesk",
+      "title": "As SpaceX IPO approaches, Polymarket, Ventuals assign $2 trillion valuation onchain",
+      "url": "https://www.coindesk.com/daybook-us/2026/06/11/as-spacex-ipo-approaches-polymarket-ventuals-assign-usd2-trillion-valuation-onchain",
+      "score": 0,
+      "ts": "2026-06-11T11:23:54"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "Why U.S. AI giants like Anthropic, OpenAI are launching major expansions in London",
+      "url": "https://www.cnbc.com/2026/06/11/anthropic-openai-london-expansions-big-tech.html",
+      "score": 0,
+      "ts": "2026-06-11T11:22:23"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Here are the odds of bear markets in each stock index this summer",
+      "url": "https://www.cnbc.com/2026/06/11/here-are-the-odds-of-bear-markets-in-each-stock-index-this-summer.html",
+      "score": 0,
+      "ts": "2026-06-11T11:21:04"
+    },
+    {
+      "src": "MIT Tech Review",
+      "title": "Google DeepMind is worried about what happens when millions of agents start to interact",
+      "url": "https://www.technologyreview.com/2026/06/11/1138794/google-deepmind-is-worried-about-what-happens-when-millions-of-agents-start-to-interact/",
+      "score": 0,
+      "ts": "2026-06-11T11:00:45"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Bitcoin advances, holds above key technical level that ether, solana can't break through",
+      "url": "https://www.coindesk.com/markets/2026/06/11/bitcoin-advances-holds-above-key-technical-level-that-ether-solana-can-t-break-through",
+      "score": 0,
+      "ts": "2026-06-11T10:45:05"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "SpaceX IPO is a ‘referendum’ on Musk, say market watchers",
+      "url": "https://www.cnbc.com/2026/06/11/spacex-ipo-elon-musk-valuation.html",
+      "score": 0,
+      "ts": "2026-06-11T10:37:21"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Japan’s parliament poised to pass sweeping bill to regulate crypto like stocks",
+      "url": "https://www.coindesk.com/policy/2026/06/11/japan-passes-sweeping-bill-regulating-crypto-like-stocks-with-lower-taxes-to-drive-growth",
+      "score": 0,
+      "ts": "2026-06-11T10:32:19"
+    },
+    {
+      "src": "MIT Tech Review",
+      "title": "Why China is betting on big nuclear reactors",
+      "url": "https://www.technologyreview.com/2026/06/11/1138789/china-big-nuclear-reactors/",
+      "score": 0,
+      "ts": "2026-06-11T10:00:00"
+    },
+    {
+      "src": "Wired",
+      "title": "People Living Near xAI’s Dirty Data Centers Are Furious About the SpaceX IPO",
+      "url": "https://www.wired.com/story/spacex-ipo-how-people-living-near-xai-data-centers-feel/",
+      "score": 0,
+      "ts": "2026-06-11T09:30:00"
     }
   ]
 }

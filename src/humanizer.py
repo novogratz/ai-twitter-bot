@@ -366,8 +366,10 @@ def humanize(text: str) -> str:
             result = stripped[0].upper() + stripped[1:] if stripped else stripped
             break
 
-    # Clean up double punctuation and extra spaces
-    result = re.sub(r'\.{2,}', '.', result)
+    # Clean up runaway punctuation and extra spaces. ".." and "..." are
+    # PRESERVED (2026-06-10 QRT playbook: the casual trailing ".." is a
+    # human tell worth keeping — only 4+ dots is an artifact).
+    result = re.sub(r'\.{4,}', '...', result)
     result = re.sub(r' {2,}', ' ', result)
     result = result.replace(' ,', ',').replace(' .', '.').strip()
 

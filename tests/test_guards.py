@@ -2186,6 +2186,42 @@ def test_burned_structure_contrast_reframe_blocked():
         assert ok, f"false positive on {text!r}: {why}"
 
 
+def test_qrt_playbook_setup_colon_and_dotdot_texture():
+    """2026-06-10 QRT playbook (operator: model the human meme account):
+    (1) a GIF quote/post ending with a setup-colon ("[actor] watching X:")
+    is a deliberate shape — the GIF chokepoints must validate the text
+    MINUS the trailing colon (bare-text quotes ending in ':' stay refused
+    as truncated); (2) humanize() must preserve the human ".." / "..."
+    texture (only 4+ dots is an artifact); (3) casualize() never strips a
+    ".." ending."""
+    import inspect
+    from src import content_guard, twitter_client
+    from src.humanizer import humanize, casualize
+
+    setup = "Goldman Sachs watching retail buy the dip at 110x revenue:"
+    # Bare-text surfaces still refuse the colon ending (real truncation).
+    ok, why = content_guard.validate(setup, kind="quote")
+    assert not ok and "truncated" in why
+    # The GIF path validates minus the colon — that text must pass.
+    ok, why = content_guard.validate(setup[:-1].rstrip(), kind="quote")
+    assert ok, why
+    # Structural pin: both GIF chokepoints carry the colon-strip.
+    for fn in (twitter_client.quote_tweet_with_gif,
+               twitter_client.post_tweet_with_gif):
+        src = inspect.getsource(fn)
+        assert 'endswith(":")' in src, f"{fn.__name__} lost the setup-colon strip"
+
+    assert humanize("MFs will see this and still not take profit btw..") \
+        .endswith("btw..")
+    assert humanize("wait what....") .endswith("what...")
+
+    class _Fire:
+        def random(self):
+            return 0.0
+
+    assert casualize("the bears are exhausted btw..", rng=_Fire()).endswith("..")
+
+
 def test_casualize_human_texture_is_safe():
     """2026-06-10 humanize mandate: casualize() may only (a) drop a final
     period when the ending can't read as truncated, (b) lowercase a

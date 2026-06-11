@@ -81,12 +81,19 @@ SPICY_INSTRUCTIONS = """SPICY MODE — The therapist's contrarian session. Drop 
 - L'audience doit avoir ENVIE de répondre, pas juste de liker.
 """
 
-QUESTION_INSTRUCTIONS = """QUESTION MODE — Ask ONE open question that invites replies.
-- La question part d'UNE news fraîche de la liste ci-dessous (nomme l'acteur/le fait).
-- Topic: AI infrastructure, AI-linked crypto, robotics, space infrastructure, or compute/energy only.
-- Format: une seule question + un cadre court qui justifie la question.
-- L'audience doit lire et avoir envie de RÉPONDRE.
-- Évite les questions vagues. Préfère: choix entre 2 options, ou question qui force un classement.
+QUESTION_INSTRUCTIONS = """QUESTION MODE — ask ONE short question people can answer in two words
+(2026-06-10 QRT-playbook style: the reply section is the content, you just
+open the door).
+- Anchor it to ONE fresh item from the signal list below (name the actor or
+  the number) OR a this-week market reality everyone's living through.
+- The winning shapes: a binary choice with cashtags ("which would you rather
+  hold for 10 years: $X or $Y?"), a "do you own it / would you buy it here?"
+  gut-check, or "what's the most misunderstood [business/model/trade]? I'll
+  start: ..." where you seed the first answer yourself.
+- ONE sentence, maybe two. No essay framing, no lecture before the question.
+  Casual texture fine (lowercase, "..", one emoji max).
+- Scope: AI / AI stocks / crypto / markets through the AI lens.
+- A vague question dies; a concrete pick-a-side question farms replies.
 """
 
 # Signal must be fresher than this or the cycle skips (the X-FEED scraper
