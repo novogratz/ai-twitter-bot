@@ -4,6 +4,19 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-12 — FOLLOW QUALITY GATE (operator: "the accounts you follow
+> are trash, very small... not related to AI or investment or crypto — fix
+> your algorithm"):** every follow now passes a quality gate INSIDE
+> `follow_account`, riding the profile visit the click already requires:
+> scrape followers + bio from the loaded page → refuse if
+> < `FOLLOW_MIN_FOLLOWERS` (2000) or bio/name has no AI/markets/crypto
+> signal (`FOLLOW_REQUIRE_NICHE=1`); unreadable count = never follow blind.
+> Whitelist seeds exempt (Graphseo's SEO bio is off-niche by design).
+> Rejects cached 30 days (`follow_quality_rejects.json`) so a bad candidate
+> never burns a second visit. Applies to ALL follow paths (followback,
+> blast, scout) via the chokepoint. Guard:
+> `test_follow_quality_gate_blocks_small_and_offniche`.
+
 > **2026-06-11 PM round 4 — GROWTH MODE: follows + followback back ON;
 > Sonnet on content; operator starts the bot again (supersedes the
 > vacation lifecycle-ownership for starts):**

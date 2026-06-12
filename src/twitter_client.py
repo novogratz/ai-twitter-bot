@@ -1132,6 +1132,125 @@ def unfollow_account(username: str) -> bool:
         return True
 
 
+# --- Follow quality gate (operator 2026-06-12: "the accounts you follow are
+# trash, very small accounts... not related to AI or investment or crypto —
+# fix your algorithm"). The gate rides the profile visit follow_account
+# already makes: scrape followers + bio from the loaded page, refuse before
+# clicking. Whitelisted seeds are exempt; rejects are cached 30 days so a
+# bad candidate never burns a second profile visit. -------------------------
+
+_FOLLOW_REJECTS_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                                    "follow_quality_rejects.json")
+
+_NICHE_BIO_RE = re.compile(
+    r"\b(ai|a\.i\.|artificial intelligence|machine learning|\bml\b|llm|gpt|agent|"
+    r"crypto|bitcoin|btc|eth|web3|defi|blockchain|token|"
+    r"invest|investor|investing|trader|trading|markets?|stocks?|equit|finance|"
+    r"financial|fintech|macro|quant|hedge|portfolio|capital|wealth|analyst|"
+    r"founder|builder|startup|venture|\bvc\b|tech|software|engineer|nvidia|"
+    r"bourse|économie|economy)\b",
+    re.IGNORECASE,
+)
+
+
+def _parse_follower_count(text: str) -> int:
+    """'12.3K' → 12300, '1,423' → 1423, '2.1M' → 2100000, junk → -1."""
+    t = (text or "").strip().replace(",", "").replace(" ", "").replace(" ", "")
+    m = re.match(r"^([\d.]+)([KkMm])?$", t)
+    if not m:
+        return -1
+    try:
+        n = float(m.group(1))
+    except ValueError:
+        return -1
+    suffix = (m.group(2) or "").lower()
+    return int(n * (1_000_000 if suffix == "m" else 1_000 if suffix == "k" else 1))
+
+
+def _follow_quality_decision(followers: int, bio: str, name: str,
+                             whitelisted: bool) -> tuple:
+    """Pure gate logic → (ok, reason). Env read at call time."""
+    if whitelisted:
+        return (True, "whitelisted seed (gate exempt)")
+    min_followers = int(os.environ.get("FOLLOW_MIN_FOLLOWERS", "2000"))
+    if followers < 0:
+        return (False, "followers count unreadable — won't follow blind")
+    if followers < min_followers:
+        return (False, f"too small ({followers} followers < {min_followers})")
+    if os.environ.get("FOLLOW_REQUIRE_NICHE", "1") == "1":
+        blob = f"{name or ''} {bio or ''}"
+        if not _NICHE_BIO_RE.search(blob):
+            return (False, "off-niche bio (no AI/markets/crypto signal)")
+    return (True, "")
+
+
+def _quality_reject_recent(handle: str, days: int = 30) -> bool:
+    try:
+        with open(_FOLLOW_REJECTS_FILE) as f:
+            doc = json.load(f)
+        ts = doc.get((handle or "").lower(), "")
+        return bool(ts) and (datetime.now() - datetime.fromisoformat(ts)).days < days
+    except (OSError, json.JSONDecodeError, ValueError):
+        return False
+
+
+def _record_quality_reject(handle: str) -> None:
+    try:
+        try:
+            with open(_FOLLOW_REJECTS_FILE) as f:
+                doc = json.load(f)
+        except (OSError, json.JSONDecodeError):
+            doc = {}
+        doc[(handle or "").lower()] = datetime.now().isoformat()
+        with open(_FOLLOW_REJECTS_FILE, "w") as f:
+            json.dump(doc, f, indent=1)
+    except OSError:
+        pass
+
+
+def _scrape_profile_quality() -> dict:
+    """Read followers count + bio + name from the CURRENTLY LOADED profile
+    tab (no extra navigation). Best-effort: {} on any failure."""
+    js = """
+    (function() {
+        var out = {followers: "", bio: "", name: ""};
+        var links = document.querySelectorAll('a[href$="/verified_followers"], a[href$="/followers"]');
+        for (var i = 0; i < links.length; i++) {
+            var m = (links[i].textContent || "").match(/([\\d.,\\u202f ]+[KkMm]?)/);
+            if (m) { out.followers = m[1].trim(); break; }
+        }
+        var bio = document.querySelector('[data-testid="UserDescription"]');
+        if (bio) out.bio = (bio.textContent || "").slice(0, 500);
+        var nm = document.querySelector('[data-testid="UserName"]');
+        if (nm) out.name = (nm.textContent || "").slice(0, 120);
+        return JSON.stringify(out);
+    })()
+    """
+    import tempfile as _tf
+    tmp = _tf.NamedTemporaryFile(mode="w", suffix=".js", delete=False)
+    tmp.write(js)
+    tmp.close()
+    applescript = f'''
+    tell application "Safari"
+        set jsCode to (read POSIX file "{tmp.name}")
+        do JavaScript jsCode in current tab of front window
+    end tell
+    '''
+    try:
+        res = subprocess.run(["osascript", "-e", applescript],
+                             capture_output=True, text=True, timeout=15)
+        if res.returncode == 0 and res.stdout.strip():
+            return json.loads(res.stdout.strip())
+    except (Exception, json.JSONDecodeError):
+        pass
+    finally:
+        try:
+            os.unlink(tmp.name)
+        except OSError:
+            pass
+    return {}
+
+
 def follow_account(username: str) -> bool:
     """Visit a user's profile and click the Follow button.
 
@@ -1158,6 +1277,11 @@ def follow_account(username: str) -> bool:
     if not ok:
         log.info(f"[FOLLOW] policy refuses @{username} ({why}).")
         return False
+    # Quality-reject cache: a candidate already judged small/off-niche
+    # within 30 days never burns another profile visit.
+    if _quality_reject_recent(username):
+        log.info(f"[FOLLOW] @{username} in quality-reject cache — skipping.")
+        return False
     if _cfg.DRY_RUN:
         log.info(f"[FOLLOW][DRY_RUN] would follow @{username}.")
         action_guard.record(action_guard.FOLLOW, target=username, dry_run=True)
@@ -1168,6 +1292,21 @@ def follow_account(username: str) -> bool:
         log.info(f"[FOLLOW] Visiting profile: {profile_url}")
         webbrowser.open(profile_url)
         time.sleep(5)
+
+        # Quality gate (operator 2026-06-12: no more trash follows) — reads
+        # the page we're already on, refuses BEFORE the click.
+        from .action_guard import is_whitelisted
+        q = _scrape_profile_quality()
+        ok, why = _follow_quality_decision(
+            _parse_follower_count(q.get("followers", "")),
+            q.get("bio", ""), q.get("name", ""),
+            whitelisted=is_whitelisted(username),
+        )
+        if not ok:
+            log.info(f"[FOLLOW] quality gate refuses @{username} ({why}).")
+            _record_quality_reject(username)
+            close_front_tab()
+            return False
 
         # 2026-06-05 fix: the old inline-quoted JS errored on every attempt
         # ("Could not follow @X via JS" 100% of the time) — quote-escaping

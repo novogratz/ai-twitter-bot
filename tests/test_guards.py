@@ -2165,6 +2165,43 @@ def test_agent_bounds_allow_operator_volume_mandate():
         "follow_blast must stay a trickle (agent ceiling <= 3/cycle)"
 
 
+def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
+    """2026-06-12 operator: "the accounts you follow are trash, very small
+    ... not related to AI or investment or crypto". The follow chokepoint
+    must refuse small or off-niche profiles (whitelist seeds exempt), and
+    must not follow blind when the followers count is unreadable."""
+    import inspect
+    from src.twitter_client import (_parse_follower_count,
+                                    _follow_quality_decision, follow_account)
+
+    assert _parse_follower_count("12.3K") == 12300
+    assert _parse_follower_count("1,423") == 1423
+    assert _parse_follower_count("2.1M") == 2_100_000
+    assert _parse_follower_count("") == -1
+
+    monkeypatch.setenv("FOLLOW_MIN_FOLLOWERS", "2000")
+    monkeypatch.setenv("FOLLOW_REQUIRE_NICHE", "1")
+
+    ok, why = _follow_quality_decision(150, "AI trader", "x", whitelisted=False)
+    assert not ok and "too small" in why
+    ok, why = _follow_quality_decision(50_000, "dog photos and recipes", "x",
+                                       whitelisted=False)
+    assert not ok and "off-niche" in why
+    ok, why = _follow_quality_decision(-1, "AI investor", "x", whitelisted=False)
+    assert not ok and "unreadable" in why
+    ok, _ = _follow_quality_decision(50_000, "Macro investor, AI & crypto",
+                                     "x", whitelisted=False)
+    assert ok
+    # Whitelisted seeds bypass (e.g. Graphseo's SEO bio is off-niche by
+    # design — operator-pinned accounts are never gated).
+    ok, _ = _follow_quality_decision(10, "SEO expert", "x", whitelisted=True)
+    assert ok
+
+    # Structural pin: the chokepoint actually consults the gate.
+    src = inspect.getsource(follow_account)
+    assert "_follow_quality_decision" in src and "_quality_reject_recent" in src
+
+
 def test_decode_header_stripped_at_chokepoint():
     """Operator 2026-06-06: 'I don't want to see the decode daily.' The
     prompt forbids the series header but weaker models (ollama primary,

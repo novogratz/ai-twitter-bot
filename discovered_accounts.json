@@ -1,95 +1,5 @@
 [
   {
-    "handle": "simplycrypto",
-    "category": "crypto",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "mil_ahm",
-    "category": "crypto",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "amplified27",
-    "category": "tech",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "cryptfrani",
-    "category": "crypto",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "nate",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "cakky",
-    "category": "crypto",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "yokiwi",
-    "category": "crypto",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "extra",
-    "category": "crypto",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "vakaros",
-    "category": "crypto",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "karl",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "biztechia",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "melon_juicess",
-    "category": "tech",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "webnyxt",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "kriptosener",
-    "category": "crypto",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "jackson",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "brow",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "hichem",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "jonesy",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
     "handle": "dilaw",
     "category": "ai",
     "added": "2026-05-31"
@@ -2503,5 +2413,97 @@
     "handle": "sosovalue",
     "category": "ai",
     "added": "2026-06-11"
+  },
+  {
+    "handle": "cole",
+    "category": "ai",
+    "added": "2026-06-12",
+    "followed": true
+  },
+  {
+    "handle": "techmeme",
+    "category": "tech",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "trends",
+    "category": "ai",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "nooman",
+    "category": "ai",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "gennaro",
+    "category": "ai",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "cin",
+    "category": "ai",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "financelot",
+    "category": "ai",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "asynctrix",
+    "category": "ai",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "okada_research",
+    "category": "crypto",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "msveil",
+    "category": "ai",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "deep",
+    "category": "ai",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "tidalfiofficial",
+    "category": "tech",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "manav",
+    "category": "ai",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "sharpeye",
+    "category": "ai",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "cryptobuzzer",
+    "category": "ai",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "kemi",
+    "category": "ai",
+    "added": "2026-06-12",
+    "followed": true
+  },
+  {
+    "handle": "cryptokrali",
+    "category": "ai",
+    "added": "2026-06-12"
+  },
+  {
+    "handle": "leni",
+    "category": "ai",
+    "added": "2026-06-12"
   }
 ]

@@ -503,7 +503,11 @@
     "Tesla",
     "Skscartoon",
     "OpenAI",
-    "Sarah"
+    "Sarah",
+    "Stocktwits",
+    "tmuxvim",
+    "Mihura",
+    "Ahmad"
   ],
   "history": [
     {
@@ -3014,6 +3018,26 @@
     {
       "lang": "fr",
       "handle": "LucasRocha",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Stocktwits",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "en",
+      "handle": "tmuxvim",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Mihura",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Ahmad",
       "added": "2026-06-12"
     }
   ]
