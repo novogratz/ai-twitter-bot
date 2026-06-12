@@ -4,6 +4,19 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-12 round 3 — TOPIC-SEARCH BIG-ACCOUNT FOLLOWS (operator: "bot
+> is not following anyone... it needs to search for new topics then follow
+> the big accounts"):** `follow_blast_bot` REBUILT. The old design opened
+> FRENCH-era people-searches ("OpenAI lang:fr") and blind-JS-clicked every
+> Follow button on the page — bypassing the chokepoint entirely (no caps,
+> no spacing, no churn, no quality gate): THE trash-follow machine. New
+> design: one EN big-topic query per cycle (AI/AI-stocks/crypto/markets,
+> min_faves:500-1000, top tab) → author handles from result URLs (ground
+> truth) → biggest parent first → `follow_account` chokepoint (cap,
+> 10-min gaps, churn, 10K+niche quality gate). Cheap pacing pre-check
+> skips the Safari search when spacing hasn't elapsed. Guard:
+> `test_follow_blast_is_topic_search_through_chokepoint`.
+
 > **2026-06-12 round 2 — FOLLOW BIG ACCOUNTS (operator: "add back the
 > follow stuff but make sure you follow big accounts"):** two moves:
 > (1) `FOLLOW_MIN_FOLLOWERS` 2000→**10000** — the quality gate now only

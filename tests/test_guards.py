@@ -2165,6 +2165,28 @@ def test_agent_bounds_allow_operator_volume_mandate():
         "follow_blast must stay a trickle (agent ceiling <= 3/cycle)"
 
 
+def test_follow_blast_is_topic_search_through_chokepoint():
+    """2026-06-12 operator: "it needs to search for new topics then follow
+    the big accounts." The old blast bot opened FRENCH people-searches and
+    blind-JS-clicked every Follow button — bypassing caps, spacing, churn
+    and the quality gate. The rebuilt bot must: EN big-topic queries only
+    (min_faves floors), authors extracted from URLs, and every follow
+    routed through twitter_client.follow_account (the chokepoint)."""
+    import inspect
+    from src import follow_blast_bot as fb
+
+    # Queries: English, big-post floors, no French-era tails.
+    assert all("lang:en" in q for q in fb.BLAST_QUERIES)
+    assert all("min_faves" in q for q in fb.BLAST_QUERIES)
+    assert not any("lang:fr" in q for q in fb.BLAST_QUERIES)
+
+    src = inspect.getsource(fb.run_follow_blast_cycle)
+    assert "follow_account(" in src, "follows must go through the chokepoint"
+    assert "scrape_x_search" in src, "discovery must be topic search"
+    assert "_click_follow_buttons" not in inspect.getsource(fb), \
+        "the blind click-all-Follow-buttons path must stay dead"
+
+
 def test_quote_bot_follows_quoted_author_after_ship():
     """2026-06-12 operator: "make sure you follow big accounts". After a
     confirmed quote ship the bot follows the quoted author (big by
