@@ -1677,7 +1677,7 @@ obeys the same rules without per-bot rewrites:
 
 Autonomous Twitter/X influencer bot. ~30 concurrent micro-bots managed by APScheduler in `main.py`. Browser-driven via Safari + AppleScript — no Twitter API key.
 
-**Default AI provider: Claude Code CLI** (`AI_CLI=claude`, since 2026-06-07 — operator: "claude code cli as main one"). **Ollama is the fallback** (`LLM_FALLBACK_CLI=ollama` → local HTTP path with `OLLAMA_MODEL`) when claude fails.
+**Default AI provider: Ollama** (`AI_CLI=ollama`, since 2026-06-11 — operator: "go back on ollama by default for now"; local HTTP path with `OLLAMA_MODEL`). **Claude CLI is the fallback** (`LLM_FALLBACK_CLI=claude`, `LLM_FALLBACK_MODEL=claude-sonnet-4-6`) when ollama fails. Note: with ollama primary, the per-surface NEWS/HOTAKE/QUOTE_MODEL claude names only apply on fallback or force-provider paths (e.g. the Graphseo VIP generator still forces claude).
 
 To switch providers:
 

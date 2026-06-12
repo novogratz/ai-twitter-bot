@@ -20,9 +20,9 @@
     },
     {
       "handle": "roundtablespace",
-      "engagements": 31,
+      "engagements": 30,
       "weight": 1.5,
-      "score": 46.5
+      "score": 45.0
     },
     {
       "handle": "polymarketmoney",
@@ -44,33 +44,33 @@
     },
     {
       "handle": "cryptorover",
-      "engagements": 33,
+      "engagements": 34,
       "weight": 1.0,
-      "score": 33.0
-    },
-    {
-      "handle": "kalshi",
-      "engagements": 21,
-      "weight": 1.5,
-      "score": 31.5
+      "score": 34.0
     },
     {
       "handle": "garymarcus",
-      "engagements": 20,
+      "engagements": 21,
       "weight": 1.5,
-      "score": 30.0
-    },
-    {
-      "handle": "stocksavvyshay",
-      "engagements": 20,
-      "weight": 1.5,
-      "score": 30.0
+      "score": 31.5
     },
     {
       "handle": "beffjezos",
       "engagements": 20,
       "weight": 1.5,
       "score": 30.0
+    },
+    {
+      "handle": "kalshi",
+      "engagements": 19,
+      "weight": 1.5,
+      "score": 28.5
+    },
+    {
+      "handle": "stocksavvyshay",
+      "engagements": 18,
+      "weight": 1.5,
+      "score": 27.0
     },
     {
       "handle": "kobeissiletter",
@@ -85,22 +85,10 @@
       "score": 21.0
     },
     {
-      "handle": "watcherguru",
-      "engagements": 12,
-      "weight": 1.5,
-      "score": 18.0
-    },
-    {
       "handle": "crypto__goku",
       "engagements": 12,
       "weight": 1.5,
       "score": 18.0
-    },
-    {
-      "handle": "kimmonismus",
-      "engagements": 10,
-      "weight": 1.5,
-      "score": 15.0
     },
     {
       "handle": "mcnalliem",
@@ -109,16 +97,22 @@
       "score": 15.0
     },
     {
-      "handle": "business",
+      "handle": "watcherguru",
+      "engagements": 10,
+      "weight": 1.5,
+      "score": 15.0
+    },
+    {
+      "handle": "kimmonismus",
+      "engagements": 9,
+      "weight": 1.5,
+      "score": 13.5
+    },
+    {
+      "handle": "pete_rizzo_",
       "engagements": 8,
       "weight": 1.5,
       "score": 12.0
-    },
-    {
-      "handle": "rohanpaul_ai",
-      "engagements": 11,
-      "weight": 1.0,
-      "score": 11.0
     },
     {
       "handle": "coinbureau",
@@ -127,7 +121,7 @@
       "score": 11.0
     },
     {
-      "handle": "pete_rizzo_",
+      "handle": "business",
       "engagements": 7,
       "weight": 1.5,
       "score": 10.5
@@ -145,7 +139,7 @@
       "score": 10.0
     },
     {
-      "handle": "stockmktnewz",
+      "handle": "ashcrypto",
       "engagements": 9,
       "weight": 1.0,
       "score": 9.0
@@ -157,13 +151,7 @@
       "score": 9.0
     },
     {
-      "handle": "mark_k",
-      "engagements": 8,
-      "weight": 1.0,
-      "score": 8.0
-    },
-    {
-      "handle": "ashcrypto",
+      "handle": "stockmktnewz",
       "engagements": 8,
       "weight": 1.0,
       "score": 8.0
@@ -181,13 +169,19 @@
       "score": 8.0
     },
     {
-      "handle": "barchart",
+      "handle": "anthropicai",
       "engagements": 5,
       "weight": 1.5,
       "score": 7.5
     },
     {
-      "handle": "anthropicai",
+      "handle": "benzinga",
+      "engagements": 5,
+      "weight": 1.5,
+      "score": 7.5
+    },
+    {
+      "handle": "nvidia",
       "engagements": 5,
       "weight": 1.5,
       "score": 7.5
@@ -205,7 +199,7 @@
       "score": 7.5
     },
     {
-      "handle": "bulltheoryio",
+      "handle": "rohanpaul_ai",
       "engagements": 7,
       "weight": 1.0,
       "score": 7.0
@@ -229,15 +223,21 @@
       "score": 7.0
     },
     {
-      "handle": "minchoi",
+      "handle": "mark_k",
       "engagements": 6,
       "weight": 1.0,
       "score": 6.0
     },
     {
-      "handle": "mr_derivatives",
-      "engagements": 6,
-      "weight": 1.0,
+      "handle": "defitracer",
+      "engagements": 4,
+      "weight": 1.5,
+      "score": 6.0
+    },
+    {
+      "handle": "mikelongterm",
+      "engagements": 4,
+      "weight": 1.5,
       "score": 6.0
     }
   ],
@@ -246,7 +246,7 @@
     "Graphseo",
     "Mindset4Money_X"
   ],
-  "updated": "2026-06-11T19:00:12.309371",
+  "updated": "2026-06-11T22:44:42.355176",
   "promotion_meta": {
     "date": "2026-06-11",
     "count": 3
