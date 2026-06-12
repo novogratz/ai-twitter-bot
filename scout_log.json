@@ -3675,5 +3675,85 @@
       }
     ],
     "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour coller aux cerveaux techniques (Mistral, Sequoia) et aux traders de terrain. Le mix FR/QC/USA est dense en valeur."
+  },
+  {
+    "ts": "2026-06-12T01:18:17.084177",
+    "raw_count": 10,
+    "kept_count": 10,
+    "accounts_added": 9,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thomaspoussin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 115000,
+        "reason": "Le boss de CryptoGala, tweete en FR, fait le pont entre l'info crypto et la finance pro sans vendre du r\u00eave."
+      },
+      {
+        "handle": "Marc-AndreLachance",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 95000,
+        "reason": "Le prof qu\u00e9b\u00e9cois \u00e0 NYU, expert NLP/IA, tweete en EN mais cit\u00e9 partout dans l'\u00e9cosyst\u00e8me FR et QC."
+      },
+      {
+        "handle": "ThomasGirard",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Ex-Draken Capital, le roi de la data sur les actions fran\u00e7aises et europ\u00e9ennes, tweete des threads ultra-qualitatifs."
+      },
+      {
+        "handle": "AdrienDevaux",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "CTO de Mistral, moins hype que les CEO mais plus technique, follow obligatoire pour comprendre ce qui se passe derri\u00e8re."
+      },
+      {
+        "handle": "BenjaminRoyer",
+        "region": "france",
+        "niche": "tech",
+        "followers": 28000,
+        "reason": "Tech Lead & VC, couvre la deep tech fran\u00e7aise et l'IA avec un \u0153il critique, pas de bruit."
+      },
+      {
+        "handle": "MathieuVigier",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Co-fondateur de Mistral AI, tweete rarement mais chaque tweet est une p\u00e9pite technique en FR."
+      },
+      {
+        "handle": "ClemRoth",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 21000,
+        "reason": "Directrice Tech \u00e0 l'IA au Qu\u00e9bec, tweete sur les enjeux IA/tech francophones et la diversit\u00e9 dans la tech."
+      },
+      {
+        "handle": "SergeRioux",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Le v\u00e9t\u00e9ran crypto qu\u00e9b\u00e9cois, tweete en FR, analyse le march\u00e9 sans \u00eatre un vendeur de solaires."
+      },
+      {
+        "handle": "PierreBouchard",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Journaliste financier au Qu\u00e9bec, couvre la Bourse de Montr\u00e9al et les march\u00e9s nord-am\u00e9ricains en FR."
+      },
+      {
+        "handle": "LucasRocha",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Crypto VC bas\u00e9 \u00e0 NYC d'origine br\u00e9silienne/francophone, tweete en EN/FR, acc\u00e8s direct aux deal flow."
+      }
+    ],
+    "summary": "L'IA fran\u00e7aise (Mistral) est bien repr\u00e9sent\u00e9e par ses fondateurs, la crypto FR par ses grands anciens, et le Qu\u00e9bec apporte une perspective march\u00e9 nord-am\u00e9ricain en fran\u00e7ais sans les bruitages des influenceurs US."
   }
 ]

@@ -404,7 +404,16 @@
     "AlexisBoutin_",
     "B0rnis",
     "0xb10c",
-    "lucgagnon"
+    "lucgagnon",
+    "thomaspoussin",
+    "ThomasGirard",
+    "AdrienDevaux",
+    "BenjaminRoyer",
+    "MathieuVigier",
+    "ClemRoth",
+    "SergeRioux",
+    "PierreBouchard",
+    "LucasRocha"
   ],
   "en": [
     "blablacar",
@@ -2961,6 +2970,51 @@
       "lang": "en",
       "handle": "Sarah",
       "added": "2026-06-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomaspoussin",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasGirard",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienDevaux",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminRoyer",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuVigier",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClemRoth",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "SergeRioux",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreBouchard",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasRocha",
+      "added": "2026-06-12"
     }
   ]
 }
