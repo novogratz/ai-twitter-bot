@@ -2165,6 +2165,23 @@ def test_agent_bounds_allow_operator_volume_mandate():
         "follow_blast must stay a trickle (agent ceiling <= 3/cycle)"
 
 
+def test_quote_bot_follows_quoted_author_after_ship():
+    """2026-06-12 operator: "make sure you follow big accounts". After a
+    confirmed quote ship the bot follows the quoted author (big by
+    construction via the min-likes floors; just got our QRT notification).
+    Best-effort behind the chokepoint; never follows itself; env-gated."""
+    import inspect
+    from src import quote_tweet_bot
+
+    src = inspect.getsource(quote_tweet_bot)
+    assert "FOLLOW_QUOTED_AUTHORS" in src
+    assert "follow_account(_handle)" in src
+    # The follow must sit AFTER the confirmed-ship marker, never before.
+    assert src.index("Quote posted.") < src.index("follow_account(_handle)")
+    # Self-follow guard via URL handle (ground truth), not scraper author.
+    assert "BOT_HANDLE" in src
+
+
 def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
     """2026-06-12 operator: "the accounts you follow are trash, very small
     ... not related to AI or investment or crypto". The follow chokepoint

@@ -4,6 +4,18 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-12 round 2 — FOLLOW BIG ACCOUNTS (operator: "add back the
+> follow stuff but make sure you follow big accounts"):** two moves:
+> (1) `FOLLOW_MIN_FOLLOWERS` 2000→**10000** — the quality gate now only
+> passes genuinely big accounts; (2) **follow-the-quoted-author** — after
+> a confirmed QRT ship, `quote_tweet_bot` follows the parent's author
+> (env `FOLLOW_QUOTED_AUTHORS=1`): quote parents are big by construction
+> (min-likes floors) and the author just received our QRT notification —
+> the highest follow-back-probability moment available. Best-effort
+> behind the full chokepoint (cap 40/day, 10-min gaps, anti-churn, the
+> 10K quality gate); self-follow guarded via the URL handle. Guard:
+> `test_quote_bot_follows_quoted_author_after_ship`.
+
 > **2026-06-12 — FOLLOW QUALITY GATE (operator: "the accounts you follow
 > are trash, very small... not related to AI or investment or crypto — fix
 > your algorithm"):** every follow now passes a quality gate INSIDE

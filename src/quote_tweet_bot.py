@@ -746,6 +746,22 @@ def run_quote_tweet_cycle():
                 pass
         time.sleep(random.randint(5, 12))
         log.info("[QUOTE] Quote posted.")
+        # FOLLOW THE QUOTED AUTHOR (operator 2026-06-12: "make sure you
+        # follow big accounts"). Quote parents are big by construction
+        # (min-likes floors), and the author just got our QRT notification
+        # — the highest follow-back-probability moment we have. The
+        # chokepoint enforces everything (daily cap, 10-min spacing,
+        # anti-churn, the >=FOLLOW_MIN_FOLLOWERS quality gate), so this is
+        # best-effort: a policy refusal costs one log line.
+        if os.environ.get("FOLLOW_QUOTED_AUTHORS", "1") == "1":
+            try:
+                _handle = url.split("x.com/")[1].split("/")[0]
+                from .twitter_client import follow_account
+                from .config import BOT_HANDLE
+                if _handle and _handle.lower() != (BOT_HANDLE or "").lower():
+                    follow_account(_handle)
+            except Exception:
+                pass
     except Exception:
         # Unknown state (Safari may have posted) — mark consumed to be safe.
         quoted.add(url)
