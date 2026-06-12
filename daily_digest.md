@@ -576,3 +576,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 5 views: Every CFO reading this just exhaled. The benchmark fight matters less than the pattern: frontier rea
   - 0 likes / 15 views: Agents took your breaks, not your job. The easy tasks were how your brain rested between the hard on
   - 0 likes / 18 views: $780B vanishes in 40 minutes and the whole timeline shows up to watch. It'll come back quietly over 
+
+## 2026-06-11
+
+**Activity** — total actions: 694
+  - by type: reply=650, quote=24, quote_gif=13, hotake=4, post=2, retweet=1
+  - top sources: SEARCH-HOT=478, FEED-SWEEP-FEED=87, FEED-SWEEP-FOLLOWING=68, QUOTE=20, VIP=15, GIF=13, HOT_QUOTE=4, MUST_REPOST=1
+  - comedy patterns: METAPHOR=1
+  - top reply targets: @zerohedge=23, @TheBTCTherapist=23, @CoinMarketCap=21, @Polymarket=18, @unusual_whales=16
+
+**Followers we follow** (running total): 205
+
+**Top-performing posts scraped today**:
+  - 0 likes / 4 views: all seven schools is the detail here. the law school gets GPUs now. the med school gets GPUs. comput
+  - 0 likes / 47 views: ten years of "just let me buy SpaceX" and the kickoff headline is a review lol. demand that size out
+  - 0 likes / 47 views: text diffusion sat in the "cute research demo" bin for two years. now it's 4x faster than the flagsh
