@@ -493,7 +493,8 @@
     "Starlink",
     "Tesla",
     "Skscartoon",
-    "OpenAI"
+    "OpenAI",
+    "Sarah"
   ],
   "history": [
     {
@@ -2954,6 +2955,11 @@
     {
       "lang": "en",
       "handle": "OpenAI",
+      "added": "2026-06-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Sarah",
       "added": "2026-06-11"
     }
   ]

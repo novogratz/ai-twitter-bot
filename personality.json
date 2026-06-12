@@ -282,7 +282,7 @@
     "cointelegraph": {
       "first_seen": "2026-04-26",
       "last_interaction": "2026-06-11",
-      "interaction_count": 183,
+      "interaction_count": 184,
       "category": "media",
       "stance": "skeptical",
       "notes": [
@@ -3915,7 +3915,7 @@
     "zerohedge": {
       "first_seen": "2026-04-27",
       "last_interaction": "2026-06-11",
-      "interaction_count": 79,
+      "interaction_count": 81,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -7454,8 +7454,8 @@
     },
     "mtslive": {
       "first_seen": "2026-04-30",
-      "last_interaction": "2026-06-10",
-      "interaction_count": 7,
+      "last_interaction": "2026-06-11",
+      "interaction_count": 8,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -10778,8 +10778,8 @@
     },
     "tetsuoai": {
       "first_seen": "2026-05-06",
-      "last_interaction": "2026-05-15",
-      "interaction_count": 2,
+      "last_interaction": "2026-06-11",
+      "interaction_count": 3,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -28094,8 +28094,8 @@
     },
     "pinkbrains_io": {
       "first_seen": "2026-06-03",
-      "last_interaction": "2026-06-03",
-      "interaction_count": 1,
+      "last_interaction": "2026-06-11",
+      "interaction_count": 2,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -33999,7 +33999,7 @@
     "minchoi": {
       "first_seen": "2026-06-06",
       "last_interaction": "2026-06-11",
-      "interaction_count": 9,
+      "interaction_count": 10,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -37647,7 +37647,7 @@
     "leshka_eth": {
       "first_seen": "2026-06-07",
       "last_interaction": "2026-06-11",
-      "interaction_count": 4,
+      "interaction_count": 5,
       "category": "unknown",
       "stance": "neutral",
       "notes": [],
@@ -46789,6 +46789,54 @@
       "dont": ""
     },
     "panteracapital": {
+      "first_seen": "2026-06-11",
+      "last_interaction": "2026-06-11",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "dee_bosa": {
+      "first_seen": "2026-06-11",
+      "last_interaction": "2026-06-11",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "chasedownleads": {
+      "first_seen": "2026-06-11",
+      "last_interaction": "2026-06-11",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "kentcdodds": {
+      "first_seen": "2026-06-11",
+      "last_interaction": "2026-06-11",
+      "interaction_count": 1,
+      "category": "unknown",
+      "stance": "neutral",
+      "notes": [],
+      "predictions": [],
+      "feelings": "",
+      "do": "",
+      "dont": ""
+    },
+    "paulomacro": {
       "first_seen": "2026-06-11",
       "last_interaction": "2026-06-11",
       "interaction_count": 1,

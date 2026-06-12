@@ -32,15 +32,15 @@
     },
     {
       "handle": "zerohedge",
-      "engagements": 37,
+      "engagements": 38,
       "weight": 1.0,
-      "score": 37.0
+      "score": 38.0
     },
     {
       "handle": "cointelegraph",
-      "engagements": 23,
+      "engagements": 24,
       "weight": 1.5,
-      "score": 34.5
+      "score": 36.0
     },
     {
       "handle": "cryptorover",
@@ -246,7 +246,7 @@
     "Graphseo",
     "Mindset4Money_X"
   ],
-  "updated": "2026-06-11T22:44:42.355176",
+  "updated": "2026-06-11T23:07:54.971059",
   "promotion_meta": {
     "date": "2026-06-11",
     "count": 3

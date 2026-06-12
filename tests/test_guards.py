@@ -2165,6 +2165,28 @@ def test_agent_bounds_allow_operator_volume_mandate():
         "follow_blast must stay a trickle (agent ceiling <= 3/cycle)"
 
 
+def test_decode_header_stripped_at_chokepoint():
+    """Operator 2026-06-06: 'I don't want to see the decode daily.' The
+    prompt forbids the series header but weaker models (ollama primary,
+    2026-06-11: 11 headered drafts in one night) keep emitting it — and a
+    headered draft with a valid URL would ship. The chokepoint scrubber
+    must strip the header line mechanically; legit sentences starting with
+    'decode' stay untouched."""
+    from src.twitter_client import _scrub_metadata_leaks
+
+    headered = ("🔎 The Decode Daily #109. AI. 2026-06-11\n\n"
+                "OpenAI just linked ChatGPT to Visa. the agent has a wallet now")
+    out = _scrub_metadata_leaks(headered)
+    assert "Decode Daily" not in out
+    assert out.startswith("OpenAI just linked")
+
+    fr = "Le Décode Quotidien #42. Crypto. 2026-06-11\nBitcoin holds 75k"
+    assert "Décode" not in _scrub_metadata_leaks(fr)
+
+    legit = "decode this chart and you'll see why everyone's wrong\n\nthe answer is rates"
+    assert _scrub_metadata_leaks(legit) == legit
+
+
 def test_follow_growth_mode_unties_ceiling_from_followers(monkeypatch):
     """2026-06-11 operator: "go back on following people and following back".
     Growth mode must untie the following ceiling from the followers count

@@ -164,6 +164,18 @@ def _scrub_metadata_leaks(text: str) -> str:
         text,
         flags=re.IGNORECASE,
     )
+    # Banned series header (operator 2026-06-06: "I don't want to see the
+    # decode daily"). The prompt forbids it but weaker models (ollama
+    # primary, 2026-06-11: 11 headered drafts in one night) keep emitting
+    # it — and a headered draft with a valid URL would ship. Strip any
+    # leading "🔎 The Decode Daily #109. AI. 2026-06-11" style header line
+    # mechanically; the body opens with the hook as mandated.
+    text = re.sub(
+        r"^[\s🔎📰]*(?:the\s+|le\s+)?d[ée]code\s+(?:daily|weekly|monthly|quotidien|hebdo|mensuel|#?\d)[^\n]*\n+",
+        "",
+        text,
+        flags=re.IGNORECASE,
+    )
     # Bare bracketed pattern IDs — "[RENAME]", "[FR_ANCHOR|METAPHOR]" — leaked
     # live on 2026-06-05 ("CAPES DON'T SPIN COMPUTERS. WIRES DO. [RENAME]"):
     # only 4 bots call extract_pattern, and the rules above need the "PATTERN"
