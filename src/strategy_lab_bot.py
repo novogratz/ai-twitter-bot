@@ -65,7 +65,9 @@ ALLOWED_PATHS = {
     "caps.MAX_QUOTES_PER_DAY":    (20, 48),
     "caps.MAX_RETWEETS_PER_DAY":  (0, 2),
     "caps.MAX_REPLIES_PER_CYCLE": (1, 50),
-    "caps.FOLLOW_BLAST_PER_CYCLE": (0, 0),
+    # Growth mode 2026-06-11: follow_blast re-enabled at a human trickle
+    # (operator: "go back on following people"). Agents may tune 0-3.
+    "caps.FOLLOW_BLAST_PER_CYCLE": (0, 3),
     "caps.LIKE_BOT_PER_CYCLE":    (20, 200),
     "cadence_factor":             (0.5, 1.5),
 }

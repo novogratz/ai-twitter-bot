@@ -1,30 +1,27 @@
 {
-  "ts": "2026-06-11T17:25:14.764024",
+  "ts": "2026-06-11T21:45:53.770818",
   "window_min": 90,
-  "total_actions": 51,
+  "total_actions": 42,
   "by_type": {
-    "reply": 48,
-    "quote": 1,
-    "quote_gif": 2
+    "reply": 41,
+    "quote": 1
   },
   "winners": {
-    "FEED-SWEEP-FEED": 8,
-    "SEARCH-HOT/Bitcoin OR BTC OR \"crypto crash\" OR \"BTC ETF\" lang:en min_fa": 7,
-    "FEED-SWEEP-FOLLOWING": 6,
-    "SEARCH-HOT/\"AI agents\" OR \"reasoning model\" OR AGI lang:en min_faves:30": 5,
-    "SEARCH-HOT/OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500": 3
+    "FEED-SWEEP-FOLLOWING": 4,
+    "SEARCH-HOT/Nvidia OR Palantir OR \"AI trade\" OR \"AI capex\" OR \"AI datace": 4,
+    "FEED-SWEEP-FEED": 4,
+    "SEARCH-HOT/\"Claude Code\" OR Cursor OR Copilot OR \"AI coding\" lang:en mi": 3,
+    "SEARCH-HOT/Bitcoin OR \"BTC ETF\" OR crypto lang:en min_faves:300": 3
   },
   "losers": {
-    "SEARCH-HOT/ChatGPT OR Claude OR Gemini OR \"humanoid robot\" lang:en min_": 1,
-    "SEARCH-HOT/OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:50": 1,
-    "HOT_QUOTE/Brian Armstrong": 1,
-    "SEARCH-HOT/\"AI agents\" OR \"agentic AI\" OR \"reasoning model\" OR AGI lang": 1,
-    "GIF/michael jordan crying": 1,
+    "SEARCH-HOT/\"AI crypto\" OR \"AI token\" OR \"decentralized AI\" OR \"AI agent": 1,
+    "SEARCH-HOT/\"market crash\" OR \"sell off\" OR \"sell-off\" OR VIX lang:en mi": 1,
+    "SEARCH-HOT/OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500": 1,
+    "SEARCH-HOT/\"AI startup\" OR \"AI funding\" OR \"AI layoffs\" OR \"AI jobs\" OR": 1,
+    "QUOTE/\ud835\uddf0\ud835\ude06\ud835\uddf0\ud835\uddf9\ud835\uddfc\ud835\uddfd": 1,
     "SEARCH-HOT/Palantir OR \"AI stock\" OR \"AI bubble\" lang:en min_faves:300": 1,
-    "SEARCH-HOT/Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR \"AI capex\" lang:": 1,
-    "VIP/Graphseo": 1,
-    "GIF/math lady": 1,
-    "SEARCH-HOT/Meta AI OR \"Apple Intelligence\" OR Microsoft Copilot OR \"Ama": 1
+    "SEARCH-HOT/\"panic sold\" OR \"bought the top\" OR \"portfolio is down\" OR d": 1,
+    "SEARCH-HOT/Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR \"AI capex\" lang:": 1
   },
   "post_cadence_factor": 0.85,
   "boost_cadence_factor": 1.0

@@ -256,6 +256,12 @@ def following_ceiling() -> int:
     ~150; once followers exceed that, keep following <= followers (still
     capped at 300).
     """
+    # Growth mode (operator 2026-06-11: follows + followback back ON):
+    # the ceiling is FOLLOW_TOTAL_CAP alone — the followers-tied bound
+    # below would block every follow while the manual purge is mid-flight
+    # (following > followers). Daily cap + spacing + anti-churn still apply.
+    if config.FOLLOW_GROWTH_MODE:
+        return config.FOLLOW_TOTAL_CAP
     followers, _ = current_counts()
     if followers is None or followers < config.FOLLOW_LOW_PHASE_FOLLOWERS:
         return min(config.FOLLOW_TOTAL_CAP, config.FOLLOW_LOW_PHASE_CEILING)

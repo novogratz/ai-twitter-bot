@@ -4,6 +4,30 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-11 PM round 4 — GROWTH MODE: follows + followback back ON;
+> Sonnet on content; operator starts the bot again (supersedes the
+> vacation lifecycle-ownership for starts):**
+> - **Follow growth loop re-enabled** (operator: "go back on following
+>   people again and following back... increase viewers/likes/followers"):
+>   `FOLLOW_WHITELIST_ONLY=0`, `FOLLOWBACK_CAP=10`/cycle,
+>   `ENABLE_FOLLOW_BLAST=1` at a trickle (2/cycle, 25/day),
+>   `MAX_FOLLOWS_PER_DAY=40` total. Human pacing is the guardrail: >=10-min
+>   jittered gaps + 30-day anti-churn untouched. **`FOLLOW_GROWTH_MODE=1`**
+>   (new, `config` + `action_guard.following_ceiling`) unties the ceiling
+>   from the followers count — the 06-07 following<=followers invariant
+>   blocked ALL follows mid-purge (2485 following vs 1423 followers);
+>   `FOLLOW_TOTAL_CAP=3000` is the hard stop. Unfollows stay operator-only.
+>   strategy_lab `FOLLOW_BLAST_PER_CYCLE` bound (0,0)→(0,3);
+>   live_strategy.json unclamped. Guards:
+>   `test_follow_growth_mode_unties_ceiling_from_followers` (+ legacy tests
+>   pin growth-mode OFF in their fixture).
+> - **Sonnet 4.6 on all content surfaces** (operator: "use sonnet and not
+>   crazy fable model for regular content"): NEWS/HOTAKE/QUOTE_MODEL →
+>   `claude-sonnet-4-6` (CLI smoke-tested rc=0). Replies stay haiku.
+> - **Operator starts/stops the bot himself again** ("i will be the one
+>   starting the bot myself") — bot left STOPPED with `.bot_disabled`;
+>   Claude ships code/config only.
+
 > **2026-06-11 round 3 — "do more" (within the humanize caps):** day-1
 > throughput read: 494 replies, 35/48 quotes, but only 6/10 originals — 3
 > of 6 afternoon slots forfeited instantly. Root cause: the daily-news

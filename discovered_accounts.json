@@ -1,40 +1,5 @@
 [
   {
-    "handle": "pi",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "dee",
-    "category": "tech",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "idle",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "bigsam",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "ipocalendar",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "benniji",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
-    "handle": "cryptorbix",
-    "category": "ai",
-    "added": "2026-05-31"
-  },
-  {
     "handle": "simplycrypto",
     "category": "crypto",
     "added": "2026-05-31"
@@ -2501,6 +2466,41 @@
   },
   {
     "handle": "predictbook",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "bodila",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "micky",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "zostaff",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "nolastevedore",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "newstongue",
+    "category": "ai",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "noradl",
+    "category": "tech",
+    "added": "2026-06-11"
+  },
+  {
+    "handle": "sosovalue",
     "category": "ai",
     "added": "2026-06-11"
   }

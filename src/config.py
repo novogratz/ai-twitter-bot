@@ -191,6 +191,13 @@ FOLLOW_ENFORCE_RATIO = os.environ.get("FOLLOW_ENFORCE_RATIO", "0") == "1"
 FOLLOW_RATIO_CEILING = float(os.environ.get("FOLLOW_RATIO_CEILING", "0.8"))  # following < 0.8 * followers
 FOLLOWING_STEADY_STATE = int(os.environ.get("FOLLOWING_STEADY_STATE", "150"))
 FOLLOW_TOTAL_CAP = int(os.environ.get("FOLLOW_TOTAL_CAP", "300"))
+# 2026-06-11 operator: "go back on following people and following back to
+# increase viewers/likes/followers". Growth mode unties the ceiling from the
+# followers count (the 06-07 following<=followers invariant would block ALL
+# follows while the manual purge is mid-flight: 2485 following vs 1423
+# followers). FOLLOW_TOTAL_CAP stays the hard ceiling; daily cap, jittered
+# spacing, and 30-day anti-churn are untouched.
+FOLLOW_GROWTH_MODE = os.environ.get("FOLLOW_GROWTH_MODE", "0") == "1"
 FOLLOW_LOW_PHASE_CEILING = int(os.environ.get("FOLLOW_LOW_PHASE_CEILING", "150"))
 FOLLOW_LOW_PHASE_FOLLOWERS = int(os.environ.get("FOLLOW_LOW_PHASE_FOLLOWERS", "300"))
 MIN_SECONDS_BETWEEN_FOLLOWS = int(os.environ.get("MIN_SECONDS_BETWEEN_FOLLOWS", "600"))

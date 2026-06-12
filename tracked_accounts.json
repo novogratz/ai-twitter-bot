@@ -8,33 +8,39 @@
     },
     {
       "handle": "coinmarketcap",
-      "engagements": 40,
+      "engagements": 43,
       "weight": 1.5,
-      "score": 60.0
+      "score": 64.5
     },
     {
       "handle": "unusual_whales",
-      "engagements": 35,
+      "engagements": 38,
       "weight": 1.5,
-      "score": 52.5
+      "score": 57.0
     },
     {
       "handle": "roundtablespace",
-      "engagements": 34,
+      "engagements": 31,
       "weight": 1.5,
-      "score": 51.0
+      "score": 46.5
     },
     {
       "handle": "polymarketmoney",
-      "engagements": 43,
+      "engagements": 42,
       "weight": 1.0,
-      "score": 43.0
+      "score": 42.0
+    },
+    {
+      "handle": "zerohedge",
+      "engagements": 37,
+      "weight": 1.0,
+      "score": 37.0
     },
     {
       "handle": "cointelegraph",
-      "engagements": 24,
+      "engagements": 23,
       "weight": 1.5,
-      "score": 36.0
+      "score": 34.5
     },
     {
       "handle": "cryptorover",
@@ -43,10 +49,16 @@
       "score": 33.0
     },
     {
-      "handle": "zerohedge",
-      "engagements": 33,
-      "weight": 1.0,
-      "score": 33.0
+      "handle": "kalshi",
+      "engagements": 21,
+      "weight": 1.5,
+      "score": 31.5
+    },
+    {
+      "handle": "garymarcus",
+      "engagements": 20,
+      "weight": 1.5,
+      "score": 30.0
     },
     {
       "handle": "stocksavvyshay",
@@ -55,40 +67,22 @@
       "score": 30.0
     },
     {
-      "handle": "kalshi",
+      "handle": "beffjezos",
       "engagements": 20,
       "weight": 1.5,
       "score": 30.0
     },
     {
-      "handle": "garymarcus",
-      "engagements": 19,
+      "handle": "kobeissiletter",
+      "engagements": 15,
       "weight": 1.5,
-      "score": 28.5
-    },
-    {
-      "handle": "beffjezos",
-      "engagements": 19,
-      "weight": 1.5,
-      "score": 28.5
+      "score": 22.5
     },
     {
       "handle": "techcrunch",
-      "engagements": 16,
+      "engagements": 14,
       "weight": 1.5,
-      "score": 24.0
-    },
-    {
-      "handle": "kimmonismus",
-      "engagements": 13,
-      "weight": 1.5,
-      "score": 19.5
-    },
-    {
-      "handle": "kobeissiletter",
-      "engagements": 13,
-      "weight": 1.5,
-      "score": 19.5
+      "score": 21.0
     },
     {
       "handle": "watcherguru",
@@ -103,10 +97,16 @@
       "score": 18.0
     },
     {
-      "handle": "coinbureau",
-      "engagements": 12,
-      "weight": 1.0,
-      "score": 12.0
+      "handle": "kimmonismus",
+      "engagements": 10,
+      "weight": 1.5,
+      "score": 15.0
+    },
+    {
+      "handle": "mcnalliem",
+      "engagements": 10,
+      "weight": 1.5,
+      "score": 15.0
     },
     {
       "handle": "business",
@@ -115,7 +115,13 @@
       "score": 12.0
     },
     {
-      "handle": "saylor",
+      "handle": "rohanpaul_ai",
+      "engagements": 11,
+      "weight": 1.0,
+      "score": 11.0
+    },
+    {
+      "handle": "coinbureau",
       "engagements": 11,
       "weight": 1.0,
       "score": 11.0
@@ -127,33 +133,21 @@
       "score": 10.5
     },
     {
-      "handle": "mcnalliem",
-      "engagements": 7,
-      "weight": 1.5,
-      "score": 10.5
-    },
-    {
       "handle": "firstsquawk",
       "engagements": 7,
       "weight": 1.5,
       "score": 10.5
     },
     {
+      "handle": "saylor",
+      "engagements": 10,
+      "weight": 1.0,
+      "score": 10.0
+    },
+    {
       "handle": "stockmktnewz",
-      "engagements": 10,
+      "engagements": 9,
       "weight": 1.0,
-      "score": 10.0
-    },
-    {
-      "handle": "rohanpaul_ai",
-      "engagements": 10,
-      "weight": 1.0,
-      "score": 10.0
-    },
-    {
-      "handle": "emollick",
-      "engagements": 6,
-      "weight": 1.5,
       "score": 9.0
     },
     {
@@ -163,19 +157,7 @@
       "score": 9.0
     },
     {
-      "handle": "tedpillows",
-      "engagements": 8,
-      "weight": 1.0,
-      "score": 8.0
-    },
-    {
-      "handle": "cryptopatel",
-      "engagements": 8,
-      "weight": 1.0,
-      "score": 8.0
-    },
-    {
-      "handle": "edzitron",
+      "handle": "mark_k",
       "engagements": 8,
       "weight": 1.0,
       "score": 8.0
@@ -187,7 +169,7 @@
       "score": 8.0
     },
     {
-      "handle": "mark_k",
+      "handle": "tedpillows",
       "engagements": 8,
       "weight": 1.0,
       "score": 8.0
@@ -197,18 +179,6 @@
       "engagements": 8,
       "weight": 1.0,
       "score": 8.0
-    },
-    {
-      "handle": "defitracer",
-      "engagements": 5,
-      "weight": 1.5,
-      "score": 7.5
-    },
-    {
-      "handle": "mikelongterm",
-      "engagements": 5,
-      "weight": 1.5,
-      "score": 7.5
     },
     {
       "handle": "barchart",
@@ -235,10 +205,40 @@
       "score": 7.5
     },
     {
-      "handle": "merlijntrader",
+      "handle": "bulltheoryio",
       "engagements": 7,
       "weight": 1.0,
       "score": 7.0
+    },
+    {
+      "handle": "cryptopatel",
+      "engagements": 7,
+      "weight": 1.0,
+      "score": 7.0
+    },
+    {
+      "handle": "deitaone",
+      "engagements": 7,
+      "weight": 1.0,
+      "score": 7.0
+    },
+    {
+      "handle": "edzitron",
+      "engagements": 7,
+      "weight": 1.0,
+      "score": 7.0
+    },
+    {
+      "handle": "minchoi",
+      "engagements": 6,
+      "weight": 1.0,
+      "score": 6.0
+    },
+    {
+      "handle": "mr_derivatives",
+      "engagements": 6,
+      "weight": 1.0,
+      "score": 6.0
     }
   ],
   "pinned": [
@@ -246,7 +246,7 @@
     "Graphseo",
     "Mindset4Money_X"
   ],
-  "updated": "2026-06-11T14:25:15.596055",
+  "updated": "2026-06-11T19:00:12.309371",
   "promotion_meta": {
     "date": "2026-06-11",
     "count": 3

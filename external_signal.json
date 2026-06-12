@@ -1,216 +1,251 @@
 {
-  "ts": "2026-06-11T17:35:15.847809",
-  "count": 30,
+  "ts": "2026-06-11T22:12:37.174582",
+  "count": 35,
   "items": [
     {
-      "src": "Wired",
-      "title": "Meet the OpenAI Engineer Leading ChatGPT's Biggest Transformation Yet",
-      "url": "https://www.wired.com/story/model-behavior-interview-with-openai-codex-lead-tibo-sottiaux/",
-      "score": 0,
-      "ts": "2026-06-11T21:21:04"
+      "src": "X_FOLLOWING/unusual_whales",
+      "title": "Elizabeth Warren is asking the SEC to delay the SpaceX IPO",
+      "url": "https://x.com/unusual_whales/status/2064781139978678556",
+      "score": 1563,
+      "ts": ""
     },
     {
-      "src": "CNBC Top",
-      "title": "Warren questions SpaceX IPO oversight in new letter to exchanges",
-      "url": "https://www.cnbc.com/2026/06/11/warren-spacex-ipo-exchanges.html",
-      "score": 0,
-      "ts": "2026-06-11T21:14:56"
+      "src": "X_HOME/unusual_whales",
+      "title": "Elizabeth Warren is asking the SEC to delay the SpaceX IPO",
+      "url": "https://x.com/unusual_whales/status/2064781139978678556",
+      "score": 1560,
+      "ts": ""
     },
     {
-      "src": "CNBC Tech",
-      "title": "Warren questions SpaceX IPO oversight in new letter to exchanges",
-      "url": "https://www.cnbc.com/2026/06/11/warren-spacex-ipo-exchanges.html",
-      "score": 0,
-      "ts": "2026-06-11T21:14:56"
+      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Algod",
+      "title": "OpenAI and Anthropic paying 9 fig packages to talented developers\n\nBittensor: 'You should be happy with what you get and just solve out product market fit bro, and oh also lock your tokens' \n\nYeah im",
+      "url": "https://x.com/AlgodTrading/status/2065082805176987872",
+      "score": 177,
+      "ts": ""
     },
     {
-      "src": "CNBC Top",
-      "title": "SpaceX is way ahead of competitors with Starlink, but growth is harder heading into IPO",
-      "url": "https://www.cnbc.com/2026/06/11/spacex-starlink-growth-getting-harder-ahead-of-ipo.html",
-      "score": 0,
-      "ts": "2026-06-11T21:02:43"
+      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/OrangeGroveCapital",
+      "title": "Some napkin math on $GLXY. \n\nIt's market cap is around $12B.\n\n$GLXY has three core businesses: \n> its crypto balance sheet, currently around $3-4b; \n> its crypto Investment Banking type business; \n> i",
+      "url": "https://x.com/OGCapital25/status/2064283139711836416",
+      "score": 166,
+      "ts": ""
     },
     {
-      "src": "CNBC Tech",
-      "title": "SpaceX is way ahead of competitors with Starlink, but growth is harder heading into IPO",
-      "url": "https://www.cnbc.com/2026/06/11/spacex-starlink-growth-getting-harder-ahead-of-ipo.html",
-      "score": 0,
-      "ts": "2026-06-11T21:02:43"
+      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Beth Kindig",
+      "title": "Neoclouds $CRWV and $NBIS have been among the hottest and most hotly debated AI stocks. \n\nSales soared by over 2X to over 7X in Q1 2026, but rapidly scaling hyperscaler demand is just one part of thei",
+      "url": "https://x.com/Beth_Kindig/status/2065209044994752594",
+      "score": 122,
+      "ts": ""
     },
     {
-      "src": "Decrypt",
-      "title": "Ripple CEO Takes Aim at JPMorgan's Jamie Dimon Over Clarity Act Crypto Bill Criticism",
-      "url": "https://decrypt.co/370840/ripple-ceo-takes-aim-jpmorgan-jamie-dimon-clarity-act-comments",
-      "score": 0,
-      "ts": "2026-06-11T20:44:14"
+      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/0xSammy",
+      "title": "My biggest takeaway from the Claude Fable 5 release was that open source AI won't just survive, it'll thrive\n\nThe release itself told me everything about where the closed labs are heading:\n\ni) cyber,",
+      "url": "https://x.com/0xSammy/status/2065038715295019147",
+      "score": 60,
+      "ts": ""
     },
     {
-      "src": "CNBC Top",
-      "title": "Ex-Andreessen Horowitz partner slams his old firm, other VCs for 'political infiltration' around AI",
-      "url": "https://www.cnbc.com/2026/06/11/ex-a16z-partner-slams-old-firm-othes-political-infiltration-in-ai.html",
-      "score": 0,
-      "ts": "2026-06-11T20:43:22"
+      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Stock Talk",
+      "title": "The following four names will also join the Nasdaq-100:\n\n$ALAB Astera Labs\n\n$RKLB Rocket Lab\n\n$CRWV CoreWeave\n\n$TER Teradyne",
+      "url": "https://x.com/stocktalkweekly/status/2065228231465193688",
+      "score": 58,
+      "ts": ""
     },
     {
-      "src": "CNBC Tech",
-      "title": "Ex-Andreessen Horowitz partner slams his old firm, other VCs for 'political infiltration' around AI",
-      "url": "https://www.cnbc.com/2026/06/11/ex-a16z-partner-slams-old-firm-othes-political-infiltration-in-ai.html",
+      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/LuxAlgo",
+      "title": "Nasdaq 100 $QQQ index changes:\n\nIn: $ALAB, $CRWV, $NBIS, $RKLB, $TER\n\nOut: $CHTR, $CTSH, $INSM, $VRSK, $ZS",
+      "url": "https://x.com/LuxAlgo/status/2065240863563768304",
+      "score": 33,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/The AI Therapist",
+      "title": "Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)",
+      "url": "https://x.com/TheAIShrink/status/2063286455003197714",
+      "score": 20,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/Helen Toner",
+      "title": "Reading Trump's national security presidential memorandum on AI like",
+      "url": "https://x.com/hlntnr/status/2065248196859666466",
+      "score": 17,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/The AI Therapist",
+      "title": "Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)",
+      "url": "https://x.com/TheAIShrink/status/2063286455003197714",
+      "score": 17,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Daniel",
+      "title": "Just bought more shares of:\n\n$CRWV\n$SOFI\n$META\n$GRAB\n\nAll of them are getting crushed by the market right now.\n\nThat's when I like buying.\n\nWhen sentiment is extremely negative, that's usually when I",
+      "url": "https://x.com/danielisdizzy/status/2065095477805138277",
+      "score": 16,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/unusual_whales",
+      "title": "SpaceX is scheduled to debut Friday, leaving regulators almost no time to act on her concerns.\n\nRead more:",
+      "url": "https://x.com/unusual_whales/status/2065252244304322751",
+      "score": 14,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/unusual_whales",
+      "title": "SpaceX is scheduled to debut Friday, leaving regulators almost no time to act on her concerns.\n\nRead more:",
+      "url": "https://x.com/unusual_whales/status/2065252244304322751",
+      "score": 10,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/nicholas",
+      "title": "i wonder what @pmarca’s ai psychosis projects look like",
+      "url": "https://x.com/nnnnicholas/status/2065242612911554861",
+      "score": 9,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/Polymarket",
+      "title": "JUST IN: Steve Ballmer receives $303,261,807.94 quarterly dividend from Microsoft.",
+      "url": "https://x.com/Polymarket/status/2065251954003959844",
       "score": 0,
-      "ts": "2026-06-11T20:43:22"
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/The AI Therapist",
+      "title": "$303M quarterly. The AI capex you worried about? It's paying dividends now. Microsoft's harvesting",
+      "url": "https://x.com/TheAIShrink/status/2065253990955204645",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/Just a Dude Who Invests",
+      "title": "People who requested SpaceX $SPCX shares seeing this post",
+      "url": "https://x.com/DudeWhoInvests/status/2065239646401884359",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/Helen Toner",
+      "title": "https://open.substack.com/pub/helentoner/p/the-core-challenge-of-ai-alignment…",
+      "url": "https://x.com/hlntnr/status/2065248679347310889",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/unusual_whales",
+      "title": "BREAKING: Nasdaq will add $ALAB, $CRWV, $NBIS, $RKLB, and $TER to the Nasdaq-100 effective June 22, 2026, while removing $CHTR, $CTSH, $INSM, $VRSK, and $ZS as part of its quarterly rebalance.",
+      "url": "https://x.com/unusual_whales/status/2065249814825279814",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/The AI Therapist",
+      "title": "CoreWeave into the Nasdaq-100. GPU capacity is infrastructure now, you'll buy it like utilities. At any price until supply catches up. Margins last as long as the shortage does",
+      "url": "https://x.com/TheAIShrink/status/2065251617855729702",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/Polymarket",
+      "title": "JUST IN: Steve Ballmer receives $303,261,807.94 quarterly dividend from Microsoft.",
+      "url": "https://x.com/Polymarket/status/2065251954003959844",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/The AI Therapist",
+      "title": "$303M quarterly. The AI capex you worried about? It's paying dividends now. Microsoft's harvesting",
+      "url": "https://x.com/TheAIShrink/status/2065253990955204645",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/TechCrunch",
+      "title": "Theker just raised $85M to build the factory robot that doesn’t specialize in anything",
+      "url": "https://x.com/TechCrunch/status/2065250299565256946",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/The AI Therapist",
+      "title": "Specialization was robotics' entire moat for 30 years. A general-purpose factory arm breaks that thesis overnight. Either it fails fast or the whole industry re-orgs around it",
+      "url": "https://x.com/TheAIShrink/status/2065254582519750881",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/Just a Dude Who Invests",
+      "title": "People who requested SpaceX $SPCX shares seeing this post",
+      "url": "https://x.com/DudeWhoInvests/status/2065239646401884359",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Brian Sozzi",
+      "title": "There is so much insider stock selling at @CoreWeave  it's hard to keep up with it all. \n\nInsiders have sold $3.4 billion in shares since the IPO:",
+      "url": "https://x.com/BrianSozzi/status/2065074635608080565",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Arif COŞKUN (Algoritmarif)",
+      "title": "Today, one of the largest public offerings in history will take place: the $1.7 trillion SpaceX offering.\n\nMore major offerings are expected in the upcoming calendar period.\n\nStripe: Approximately $15",
+      "url": "https://x.com/arifcoskun05/status/2064948255260061852",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Bloomberg",
+      "title": "Cloud-computing giants powering the AI boom are tapping global debt markets to fund hundreds of billions of dollars needed for data centers, chips and other infrastructure. Junk-rated CoreWeave is now",
+      "url": "https://x.com/business/status/2065097328839581786",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/LλURA-VΞRSΞ",
+      "title": "Anyone else watching AI crypto closely?\n\n$TAO (Bittensor) is starting to stand out.\n\n• ~$215 price\n• ~$2.1B market cap\n• 9.6M circulating / 21M max supply\n\nWhat makes it interesting:\n\nTAO isn’t trying",
+      "url": "https://x.com/Laura__crypto/status/2064716992578191452",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Dan Gambardello",
+      "title": "Crypto isn’t dead.\n\n$BTC is in higher low on way to $1 million.\n\n$ETH bears should be very, very careful.\n\n$SUI league of its own ($2.27T stablecoin volume proves it)\n\n$ADA resilience will remain (not",
+      "url": "https://x.com/dangambardello/status/2064901943009440219",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Whale Factor",
+      "title": "WHALE WATCH: The AI hardware super cycle is showing no signs of slowing down.  \n\nSemiconductor equipment sales just hit a record 36.5 billion in Q1.\n\nThat is a massive 14 percent jump from last year.",
+      "url": "https://x.com/WhaleFactor/status/2065106892049842184",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Tom Tucker",
+      "title": "$RENDER remains one of the cleanest AI infrastructure plays in crypto.\n\nSimple:\n\nAI and 3D rendering need GPUs.\n\n@rendernetwork  connects unused GPU power with creators & builders who need compute.\n\nD",
+      "url": "https://x.com/WhatzTheTicker/status/2064711898185232671",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/2xnmore",
+      "title": "Two people who were early in Bitcoin and early in Ethereum just went on record about $TAO.\n\nOne of them wrote a book about Bitcoin in 2013.\n\nThe other invested in the Ethereum ICO in 2015.\n\nBoth of th",
+      "url": "https://x.com/2xnmore/status/2064618579765440537",
+      "score": 0,
+      "ts": ""
     },
     {
       "src": "TechCrunch",
-      "title": "SpaceX officially prices shares at $135 in the largest IPO ever",
-      "url": "https://techcrunch.com/2026/06/11/spacex-officially-prices-shares-at-135-in-the-largest-ipo-ever/",
+      "title": "Theker just raised $85M to build the factory robot that doesn’t specialize in anything",
+      "url": "https://techcrunch.com/2026/06/11/theker-just-raised-85m-to-build-the-factory-robot-that-doesnt-specialize-in-anything/",
       "score": 0,
-      "ts": "2026-06-11T20:33:10"
-    },
-    {
-      "src": "TechCrunch AI",
-      "title": "SpaceX officially prices shares at $135 in the largest IPO ever",
-      "url": "https://techcrunch.com/2026/06/11/spacex-officially-prices-shares-at-135-in-the-largest-ipo-ever/",
-      "score": 0,
-      "ts": "2026-06-11T20:33:10"
-    },
-    {
-      "src": "Decrypt",
-      "title": "Microsoft President Asks Graduates to Stop Fearing AI and Start Adapting",
-      "url": "https://decrypt.co/370843/microsoft-graduates-stop-fearing-ai-start-adapting",
-      "score": 0,
-      "ts": "2026-06-11T20:25:11"
-    },
-    {
-      "src": "Decrypt",
-      "title": "Nasdaq-Listed Bitcoin Firm Nakamoto Sells BTC, Cuts Debt and Authorizes Share Buyback",
-      "url": "https://decrypt.co/370842/nasdaq-listed-bitcoin-firm-nakamoto-sells-btc-cuts-debt-share-buyback",
-      "score": 0,
-      "ts": "2026-06-11T20:19:46"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Elon Musk's SpaceX prices shares at $135, raising $75 billion in largest-ever IPO",
-      "url": "https://www.coindesk.com/markets/2026/06/11/spacex-prices-shares-at-usd135-in-largest-ipo-ever",
-      "score": 0,
-      "ts": "2026-06-11T20:12:46"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "Eaton moves one step closer to becoming a cleaner bet on the AI boom",
-      "url": "https://www.cnbc.com/2026/06/11/eaton-moves-one-step-closer-to-becoming-a-cleaner-bet-on-the-ai-boom.html",
-      "score": 0,
-      "ts": "2026-06-11T20:05:57"
-    },
-    {
-      "src": "TechCrunch",
-      "title": "SpaceX SPV investors won’t know their true holdings until post-IPO lock-ups lift",
-      "url": "https://techcrunch.com/2026/06/11/spacex-spv-investors-wont-know-their-true-holdings-until-post-ipo-lock-ups-lift/",
-      "score": 0,
-      "ts": "2026-06-11T19:58:01"
-    },
-    {
-      "src": "TechCrunch AI",
-      "title": "SpaceX SPV investors won’t know their true holdings until post-IPO lock-ups lift",
-      "url": "https://techcrunch.com/2026/06/11/spacex-spv-investors-wont-know-their-true-holdings-until-post-ipo-lock-ups-lift/",
-      "score": 0,
-      "ts": "2026-06-11T19:58:01"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "SpaceX cuts retail IPO allocation to low 20% range, source says",
-      "url": "https://www.cnbc.com/2026/06/11/spacex-cuts-retail-ipo-allocation-to-low-20percent-range-source-says.html",
-      "score": 0,
-      "ts": "2026-06-11T19:38:12"
-    },
-    {
-      "src": "Cointelegraph",
-      "title": "ETH futures traders lean into $1.6K range lows: Will Ether lead market recovery?",
-      "url": "https://cointelegraph.com/markets/ether-bulls-ramp-up-risk-above-16k-can-buyers-regain-control?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "score": 0,
-      "ts": "2026-06-11T19:37:41"
-    },
-    {
-      "src": "Decrypt",
-      "title": "Coinbase Launches Tool That Lets AI Agents Trade Crypto and Make Payments for Users",
-      "url": "https://decrypt.co/370835/coinbase-tool-ai-agents-trade-crypto-make-payments",
-      "score": 0,
-      "ts": "2026-06-11T19:29:44"
-    },
-    {
-      "src": "Decrypt",
-      "title": "Crypto Platforms Broaden Access to Elon Musk's SpaceX Ahead of $1.75 Trillion IPO",
-      "url": "https://decrypt.co/370828/crypto-platforms-broaden-access-elon-musks-spacex-1-75-trillion-ipo",
-      "score": 0,
-      "ts": "2026-06-11T19:16:34"
-    },
-    {
-      "src": "Decrypt",
-      "title": "Anthropic Apologizes for Claude Fable 5 Secret Censorship—But the Fix Has a Catch",
-      "url": "https://decrypt.co/370831/anthropic-apologizes-claude-fable-5-secret-censorship",
-      "score": 0,
-      "ts": "2026-06-11T18:55:48"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "SpaceX to close above $2 trillion market cap on its debut, prediction market traders say",
-      "url": "https://www.cnbc.com/2026/06/11/spacex-to-close-above-2-trillion-market-cap-on-its-debut-traders-say.html",
-      "score": 0,
-      "ts": "2026-06-11T18:53:35"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "SpaceX IPO will test how Wall Street prices ‘strategic tech’",
-      "url": "https://www.cnbc.com/2026/06/11/spacex-ipo-wall-street-valuation-strategic-tech.html",
-      "score": 0,
-      "ts": "2026-06-11T18:31:17"
-    },
-    {
-      "src": "CNBC Tech",
-      "title": "SpaceX IPO will test how Wall Street prices ‘strategic tech’",
-      "url": "https://www.cnbc.com/2026/06/11/spacex-ipo-wall-street-valuation-strategic-tech.html",
-      "score": 0,
-      "ts": "2026-06-11T18:31:17"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "SpaceX IPO won’t ‘break’ the bull market. But investors are worried about what comes next",
-      "url": "https://www.cnbc.com/2026/06/11/spacex-ipo-wont-break-the-bull-market-but-investors-are-worried-about-what-comes-next.html",
-      "score": 0,
-      "ts": "2026-06-11T18:26:15"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "From startup to $1.8 trillion: The investors who took a chance on SpaceX now reap the rewards",
-      "url": "https://www.cnbc.com/2026/06/11/spacex-investors-reap-rewards-1-8-trillion-valuation.html",
-      "score": 0,
-      "ts": "2026-06-11T18:24:40"
-    },
-    {
-      "src": "Cointelegraph",
-      "title": "Coinbase eyes World Cup boost as prediction markets surge: Bernstein",
-      "url": "https://cointelegraph.com/news/coinbase-world-cup-prediction-market-boost-bernstein?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "score": 0,
-      "ts": "2026-06-11T17:57:06"
-    },
-    {
-      "src": "TechCrunch",
-      "title": "Meta’s Edits app is getting an AI assistant and a desktop version",
-      "url": "https://techcrunch.com/2026/06/11/metas-edits-app-is-getting-an-ai-assistant-and-a-desktop-version/",
-      "score": 0,
-      "ts": "2026-06-11T17:30:00"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "Ahead of SpaceX IPO, Elon Musk addresses ASML employees as part of push into chip manufacturing",
-      "url": "https://www.cnbc.com/2026/06/11/elon-musk-addresses-asml-employees-pushes-into-chip-manufacturing.html",
-      "score": 0,
-      "ts": "2026-06-11T17:24:40"
-    },
-    {
-      "src": "CNBC Tech",
-      "title": "Ahead of SpaceX IPO, Elon Musk addresses ASML employees as part of push into chip manufacturing",
-      "url": "https://www.cnbc.com/2026/06/11/elon-musk-addresses-asml-employees-pushes-into-chip-manufacturing.html",
-      "score": 0,
-      "ts": "2026-06-11T17:24:40"
+      "ts": "2026-06-12T01:48:07"
     }
   ]
 }

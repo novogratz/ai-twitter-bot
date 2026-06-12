@@ -491,7 +491,9 @@
     "Gopuff",
     "TMZ",
     "Starlink",
-    "Tesla"
+    "Tesla",
+    "Skscartoon",
+    "OpenAI"
   ],
   "history": [
     {
@@ -2942,6 +2944,16 @@
     {
       "lang": "en",
       "handle": "Tesla",
+      "added": "2026-06-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Skscartoon",
+      "added": "2026-06-11"
+    },
+    {
+      "lang": "en",
+      "handle": "OpenAI",
       "added": "2026-06-11"
     }
   ]

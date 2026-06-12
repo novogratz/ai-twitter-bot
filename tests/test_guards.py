@@ -845,6 +845,9 @@ def follow_env(monkeypatch, tmp_path):
     monkeypatch.setattr(config, "FOLLOW_TOTAL_CAP", 300)
     monkeypatch.setattr(config, "FOLLOW_LOW_PHASE_CEILING", 150)
     monkeypatch.setattr(config, "FOLLOW_LOW_PHASE_FOLLOWERS", 300)
+    # These tests pin the LEGACY spec policy; growth mode (2026-06-11) has
+    # its own dedicated test and must not leak in from the live .env.
+    monkeypatch.setattr(config, "FOLLOW_GROWTH_MODE", False)
     yield ag
     ag._WL_CACHE = {}
     ag._WL_MTIME = 0.0
@@ -2156,8 +2159,31 @@ def test_agent_bounds_allow_operator_volume_mandate():
     assert ALLOWED_PATHS["caps.MAX_NEWS_PER_DAY"][1] <= 4
     assert ALLOWED_PATHS["caps.MAX_HOTAKES_PER_DAY"][1] <= 8
     assert ALLOWED_PATHS["caps.MAX_QUOTES_PER_DAY"][1] <= 48
-    assert ALLOWED_PATHS["caps.FOLLOW_BLAST_PER_CYCLE"] == (0, 0), \
-        "follow_blast must stay permanently 0"
+    # Growth mode 2026-06-11 (operator: follows + followback back ON):
+    # follow_blast allowed at a human trickle, never above 3/cycle.
+    assert ALLOWED_PATHS["caps.FOLLOW_BLAST_PER_CYCLE"][1] <= 3, \
+        "follow_blast must stay a trickle (agent ceiling <= 3/cycle)"
+
+
+def test_follow_growth_mode_unties_ceiling_from_followers(monkeypatch):
+    """2026-06-11 operator: "go back on following people and following back".
+    Growth mode must untie the following ceiling from the followers count
+    (following>followers mid-purge would block every follow), while
+    FOLLOW_TOTAL_CAP stays the hard stop and legacy mode keeps the old
+    followers-tied invariant."""
+    from src import action_guard, config
+
+    monkeypatch.setattr(action_guard, "current_counts",
+                        lambda: (1423, 2485))  # followers, following
+    monkeypatch.setattr(config, "FOLLOW_TOTAL_CAP", 3000)
+
+    monkeypatch.setattr(config, "FOLLOW_GROWTH_MODE", True)
+    assert action_guard.following_ceiling() == 3000, \
+        "growth mode: ceiling is FOLLOW_TOTAL_CAP, not the followers count"
+
+    monkeypatch.setattr(config, "FOLLOW_GROWTH_MODE", False)
+    assert action_guard.following_ceiling() == 1423, \
+        "legacy mode keeps following <= followers"
 
 
 def test_news_daily_combos_eligible_all_day(monkeypatch, tmp_path):
