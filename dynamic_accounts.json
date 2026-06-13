@@ -413,7 +413,11 @@
     "ClemRoth",
     "SergeRioux",
     "PierreBouchard",
-    "LucasRocha"
+    "LucasRocha",
+    "LaurineDuc",
+    "MathieuG_21",
+    "JulesToulet",
+    "MarcPoulin"
   ],
   "en": [
     "blablacar",
@@ -508,7 +512,10 @@
     "tmuxvim",
     "Mihura",
     "Ahmad",
-    "Gurwinder"
+    "Gurwinder",
+    "Sauers",
+    "Tenobrus",
+    "sdmat"
   ],
   "history": [
     {
@@ -3045,6 +3052,41 @@
       "lang": "en",
       "handle": "Gurwinder",
       "added": "2026-06-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Sauers",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Tenobrus",
+      "added": "2026-06-12"
+    },
+    {
+      "lang": "en",
+      "handle": "sdmat",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaurineDuc",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuG_21",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesToulet",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcPoulin",
+      "added": "2026-06-13"
     }
   ]
 }

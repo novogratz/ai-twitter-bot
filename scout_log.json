@@ -3755,5 +3755,57 @@
       }
     ],
     "summary": "L'IA fran\u00e7aise (Mistral) est bien repr\u00e9sent\u00e9e par ses fondateurs, la crypto FR par ses grands anciens, et le Qu\u00e9bec apporte une perspective march\u00e9 nord-am\u00e9ricain en fran\u00e7ais sans les bruitages des influenceurs US."
+  },
+  {
+    "ts": "2026-06-13T06:22:23.319960",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LaurineDuc",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "La r\u00e9f\u00e9rence absolue du trading FR. Pas de jauge, pas de signal VIP, juste du mental et de la technique pur."
+      },
+      {
+        "handle": "Boulevard_Research",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "Le meilleur newsletter/research FR en crypto. Analyse fondamentale solide, pas de shilling de tokens z\u00e9ro."
+      },
+      {
+        "handle": "MathieuG_21",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Trader pro et coach. Ses threads sur la psychologie du trading sont de l'art pure, moins de pubs que la concurrence."
+      },
+      {
+        "handle": "JulesToulet",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 20000,
+        "reason": "CEO de Wealthsimple (ou proche \u00e9cosyst\u00e8me tech QC), twitte sur la fintech et les march\u00e9s avec un ton francophone d\u00e9contract\u00e9."
+      },
+      {
+        "handle": "FrancoisBoudreau",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Investisseur et angel fr-US. Twitte sur l'IA, les start-ups et la tech, pont culturel efficace entre les deux rives."
+      },
+      {
+        "handle": "MarcPoulin",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Founder et VC, couvre crypto/tech avec un focus sur l'adoption. Moins de bruit que les gros influenceurs US."
+      }
+    ],
+    "summary": "Le top tier FR est domin\u00e9 par des traders psycholoques (Duc/G_21) et de la recherche crypto solide (Boulevard). Le QC offre une p\u00e9pite de recherche institutionnelle (CryptoMasse) et la diaspora US apporte un angle VC plus global."
   }
 ]
