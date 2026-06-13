@@ -591,3 +591,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 4 views: all seven schools is the detail here. the law school gets GPUs now. the med school gets GPUs. comput
   - 0 likes / 47 views: ten years of "just let me buy SpaceX" and the kickoff headline is a review lol. demand that size out
   - 0 likes / 47 views: text diffusion sat in the "cute research demo" bin for two years. now it's 4x faster than the flagsh
+
+## 2026-06-12
+
+**Activity** — total actions: 143
+  - by type: reply=133, quote_gif=8, retweet=1, quote=1
+  - top sources: SEARCH-HOT=87, FEED-SWEEP-FEED=18, FEED-SWEEP-FOLLOWING=14, GIF=8, VIP=6, MUST_REPOST=1, QUOTE=1
+  - comedy patterns: UNDERSTATEMENT=3, DIALOGUE=2, FR_ANCHOR=2, METAPHOR=1
+  - top reply targets: @unusual_whales=6, @SkyeSharkie=6, @Graphseo=6, @TheBTCTherapist=4, @SemiconductorsX=4
+
+**Followers we follow** (running total): 220
+
+**Top-performing posts scraped today**:
+  - 0 likes / 10 views: AGI by 2027? So 20% of your salary is gone by Q3 and you’re still paying for Zoom.
+  - 0 likes / 10 views: anthropic pricing: 10/10 openai pricing: 10/11
+  - 0 likes / 24 views: Codex watching your tabs like a therapist listening to your excuses  https://x.com/OpenAIDevs/status
