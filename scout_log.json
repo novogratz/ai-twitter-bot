@@ -3883,5 +3883,95 @@
       }
     ],
     "summary": "Le lot est mix\u00e9 : des poids lourds tech fran\u00e7ais (Mensch, Dillet) pour la tech pure, des analystes crypto FR/Qu\u00e9bec (Hernandez, Boutin, Coulombe, Pomerleau) pour le trading sans pub, et une journalistique US (Mikaelian) pour l'IA. Z\u00e9ro vente de r\u00eave, juste des gens qui travaillent."
+  },
+  {
+    "ts": "2026-06-13T12:15:54.311042",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaelleLaffon",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "La patronne de Coinhouse, elle ne fait pas dans la dentelle, elle tweete des v\u00e9rit\u00e9s crypto et des coups de gueule boursi\u00e8re."
+      },
+      {
+        "handle": "RaphaLelarge",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Le patron de Qonto, il couvre la fintech et la tech fran\u00e7aise avec un c\u00f4t\u00e9 'insider' qui fait rare."
+      }
+    ],
+    "summary": "Un mix de fondateurs tech fran\u00e7ais, d'experts crypto institutionnels et d'une p\u00e9pite qu\u00e9b\u00e9coise qui \u00e9vite le bruit des r\u00e9seaux sociaux."
+  },
+  {
+    "ts": "2026-06-13T14:16:44.752296",
+    "raw_count": 10,
+    "kept_count": 8,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienPoncelet",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Directeur de recherche chez Mistral. Il twitte en fran\u00e7ais sur l'Open Source, la compute et les LLMs. Technique sans \u00eatre barbant."
+      },
+      {
+        "handle": "Sylvestre",
+        "region": "france",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "Le roi des blogs FR (HFRSS). Il couvre tout: IA, Startups, Cloud. Le fil est une mine d'or pour voir ce qui compte vraiment en France."
+      },
+      {
+        "handle": "CryptoJ",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Le barom\u00e8tre du Bitcoin en France. Analyse technique et macrocrypto, twitte surtout en fran\u00e7ais. Pas de sh*itcoins douteux, juste du solide."
+      },
+      {
+        "handle": "ValentinMulliez",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Frenchy \u00e0 SF, co-fondateur de Mew. Il twitte en anglais et fran\u00e7ais sur l'IA et les startups. C'est le profil 'founder' parfait."
+      },
+      {
+        "handle": "MaximeLavoie",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Analyste qu\u00e9b\u00e9cois. Il parle de Bourse et de macro en fran\u00e7ais. Le style est direct, un peu pessimiste souvent, ce qui est rafra\u00eechissant sur X."
+      },
+      {
+        "handle": "AdrienToubkiss",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Frenchy bas\u00e9 \u00e0 NYC, chercheur en IA (ex-Meta). Il poste des threads techniques en FR et des insights rapides en EN. La double casquette rare."
+      },
+      {
+        "handle": "GillesHainaut",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Gars du milieu qu\u00e9b\u00e9cois qui twitte en FR sur l'IA et la Data. Pas le genre \u00e0 faire des threads 'comment gagner 1M en 30 jours'. Vrai contenu."
+      },
+      {
+        "handle": "ThomasHach\u00e9",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 9000,
+        "reason": "G\u00e9rant de fonds qu\u00e9b\u00e9cois qui twitte en fran\u00e7ais. Pas un influenceur, un gars qui g\u00e8re du cash. Ses posts sont ceux qu'on envoie \u00e0 son oncle aviateur."
+      }
+    ],
+    "summary": "Du Mistral (la r\u00e9f\u00e9rence IA FR) \u00e0 la Bourse de l'argent de ma femme en passant par les Qu\u00e9b\u00e9cois qui ne font pas de 'bro-marketing'. On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour garder les gens qui comprennent vraiment la tech."
   }
 ]

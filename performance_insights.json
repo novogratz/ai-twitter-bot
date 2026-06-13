@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-06-13T12:15:26.648918",
-  "window_7d_actions": 5376,
-  "window_24h_actions": 327,
+  "generated_at": "2026-06-13T16:15:26.598694",
+  "window_7d_actions": 5283,
+  "window_24h_actions": 481,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5348
-    },
-    {
-      "pattern": "FR_ANCHOR",
-      "count": 8
+      "count": 5247
     },
     {
       "pattern": "METAPHOR",
+      "count": 10
+    },
+    {
+      "pattern": "FR_ANCHOR",
       "count": 8
     },
     {
@@ -20,36 +20,32 @@
       "count": 6
     },
     {
-      "pattern": "RENAME",
-      "count": 3
+      "pattern": "REPETITION",
+      "count": 4
     }
   ],
   "worst_patterns": [
     {
       "pattern": "REPETITION",
-      "count": 1
-    },
-    {
-      "pattern": "DIALOGUE",
-      "count": 2
+      "count": 4
     },
     {
       "pattern": "RENAME",
-      "count": 3
+      "count": 4
+    },
+    {
+      "pattern": "DIALOGUE",
+      "count": 4
     }
   ],
   "best_hours_utc": [
-    {
-      "hour": 16,
-      "actions": 318
-    },
     {
       "hour": 2,
       "actions": 292
     },
     {
-      "hour": 15,
-      "actions": 290
+      "hour": 16,
+      "actions": 282
     },
     {
       "hour": 1,
@@ -58,28 +54,32 @@
     {
       "hour": 3,
       "actions": 278
+    },
+    {
+      "hour": 0,
+      "actions": 276
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2327
+      "count": 2275
     },
     {
       "topic": "IA",
-      "count": 2083
+      "count": 2076
     },
     {
       "topic": "Crypto",
-      "count": 704
+      "count": 667
     },
     {
       "topic": "Bourse",
-      "count": 398
+      "count": 389
     },
     {
       "topic": "Spatial",
-      "count": 289
+      "count": 283
     }
   ],
   "rising_topics_24h": [
@@ -92,45 +92,45 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2162
+      "count": 2171
     },
     {
       "pillar": "other",
-      "count": 1458
+      "count": 1418
     },
     {
       "pillar": "market_trauma",
-      "count": 1268
+      "count": 1245
     },
     {
       "pillar": "meme_reaction",
-      "count": 289
+      "count": 275
     },
     {
       "pillar": "reply_bait",
-      "count": 138
+      "count": 121
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 61
+      "count": 53
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 167
+      "count": 252
     },
     {
       "pillar": "market_trauma",
-      "count": 73
+      "count": 110
     },
     {
       "pillar": "other",
-      "count": 66
+      "count": 88
     },
     {
       "pillar": "meme_reaction",
-      "count": 17
+      "count": 26
     },
     {
       "pillar": "reply_bait",
@@ -138,7 +138,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 1
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
@@ -151,16 +151,16 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 40,
-      "avg_likes": 0.03,
-      "avg_views": 32.0,
+      "posts": 44,
+      "avg_likes": 0.02,
+      "avg_views": 30.8,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 29,
+      "posts": 31,
       "avg_likes": 0.0,
-      "avg_views": 23.9,
+      "avg_views": 22.9,
       "low_sample": false
     },
     {
@@ -181,19 +181,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4515
+      "count": 4521
     },
     {
       "type": "quote",
-      "count": 414
+      "count": 362
     },
     {
       "type": "quote_gif",
-      "count": 280
+      "count": 267
     },
     {
       "type": "retweet",
-      "count": 118
+      "count": 85
     },
     {
       "type": "hotake",
@@ -201,23 +201,23 @@
     },
     {
       "type": "post",
-      "count": 23
+      "count": 22
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-13T12:13:50.760717",
-      "text": "GPT-5 is out. Stanford Steve just renamed his GPT-4 wrapper. The cycle is beautiful.",
+      "ts": "2026-06-13T16:14:56.354900",
+      "text": "The S&P up 33% from one sector.\n\n+1,900% returns aren't skill. They're the market paying you to hold the only stock that matters.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-13T12:11:42.762849",
-      "text": "Anthropic / OpenAI don't care if the attack is malicious. They care if the token cost exceeds the margin. \n\nSecurity is a tax on latency, not a feature.",
+      "ts": "2026-06-13T16:12:56.830296",
+      "text": "Nvidia’s 4T market cap. He’s the guy who thinks being rich means he doesn’t have to work.\nWe’re all still billing hours.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-13T12:11:20.312415",
-      "text": "US labs built the stack. China built the supply chain.\nQwen and DeepSeek are the open-source price war that breaks the GPU capex myth.",
+      "ts": "2026-06-13T16:12:40.662776",
+      "text": "FXN’s buybacks fund 14% of the index.\n\nthe index buys itself. you’re just holding the receipt.",
       "type": "reply"
     }
   ]

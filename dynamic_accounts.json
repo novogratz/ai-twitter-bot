@@ -425,7 +425,16 @@
     "JulienHernandez",
     "PierrePomerleau",
     "OlivierLeNoble",
-    "MathieuCoulombe"
+    "MathieuCoulombe",
+    "GaelleLaffon",
+    "RaphaLelarge",
+    "JulienPoncelet",
+    "Sylvestre",
+    "CryptoJ",
+    "ValentinMulliez",
+    "MaximeLavoie",
+    "AdrienToubkiss",
+    "GillesHainaut"
   ],
   "en": [
     "blablacar",
@@ -528,7 +537,8 @@
     "Calm",
     "Kareem",
     "Clemente",
-    "SightBringer"
+    "SightBringer",
+    "Citrini"
   ],
   "history": [
     {
@@ -3164,6 +3174,56 @@
     {
       "lang": "fr",
       "handle": "MathieuCoulombe",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelleLaffon",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaLelarge",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Citrini",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienPoncelet",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "Sylvestre",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoJ",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "ValentinMulliez",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeLavoie",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienToubkiss",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "GillesHainaut",
       "added": "2026-06-13"
     }
   ]
