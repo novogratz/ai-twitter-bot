@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-06-13T08:15:26.583156",
-  "window_7d_actions": 5420,
-  "window_24h_actions": 170,
+  "generated_at": "2026-06-13T12:15:26.648918",
+  "window_7d_actions": 5376,
+  "window_24h_actions": 327,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5400
+      "count": 5348
+    },
+    {
+      "pattern": "FR_ANCHOR",
+      "count": 8
+    },
+    {
+      "pattern": "METAPHOR",
+      "count": 8
     },
     {
       "pattern": "UNDERSTATEMENT",
       "count": 6
     },
     {
-      "pattern": "METAPHOR",
-      "count": 5
-    },
-    {
-      "pattern": "FR_ANCHOR",
-      "count": 4
-    },
-    {
       "pattern": "RENAME",
-      "count": 2
+      "count": 3
     }
   ],
   "worst_patterns": [
@@ -30,12 +30,12 @@
       "count": 1
     },
     {
-      "pattern": "RENAME",
+      "pattern": "DIALOGUE",
       "count": 2
     },
     {
-      "pattern": "DIALOGUE",
-      "count": 2
+      "pattern": "RENAME",
+      "count": 3
     }
   ],
   "best_hours_utc": [
@@ -63,100 +63,104 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2340
+      "count": 2327
     },
     {
       "topic": "IA",
-      "count": 2090
+      "count": 2083
     },
     {
       "topic": "Crypto",
-      "count": 740
+      "count": 704
     },
     {
       "topic": "Bourse",
-      "count": 406
+      "count": 398
     },
     {
       "topic": "Spatial",
-      "count": 297
+      "count": 289
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.076,
-      "7d_rate": 0.055
+      "24h_rate": 0.073,
+      "7d_rate": 0.054
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2168
+      "count": 2162
     },
     {
       "pillar": "other",
-      "count": 1494
+      "count": 1458
     },
     {
       "pillar": "market_trauma",
-      "count": 1267
+      "count": 1268
     },
     {
       "pillar": "meme_reaction",
-      "count": 280
+      "count": 289
     },
     {
       "pillar": "reply_bait",
-      "count": 146
+      "count": 138
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 65
+      "count": 61
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 90
+      "count": 167
     },
     {
       "pillar": "market_trauma",
-      "count": 36
+      "count": 73
     },
     {
       "pillar": "other",
-      "count": 33
+      "count": 66
     },
     {
       "pillar": "meme_reaction",
-      "count": 8
+      "count": 17
     },
     {
       "pillar": "reply_bait",
       "count": 3
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 1
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 32,
-      "avg_likes": 0.03,
-      "avg_views": 37.2,
+      "posts": 35,
+      "avg_likes": 0.09,
+      "avg_views": 35.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 39,
-      "avg_likes": 0.0,
-      "avg_views": 32.3,
+      "posts": 40,
+      "avg_likes": 0.03,
+      "avg_views": 32.0,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 28,
+      "posts": 29,
       "avg_likes": 0.0,
-      "avg_views": 24.1,
+      "avg_views": 23.9,
       "low_sample": false
     },
     {
@@ -177,43 +181,43 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4462
+      "count": 4515
     },
     {
       "type": "quote",
-      "count": 412
+      "count": 414
     },
     {
       "type": "quote_gif",
-      "count": 272
+      "count": 280
     },
     {
       "type": "retweet",
-      "count": 223
+      "count": 118
     },
     {
       "type": "hotake",
-      "count": 30
+      "count": 26
     },
     {
       "type": "post",
-      "count": 21
+      "count": 23
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-13T08:14:42.471735",
-      "text": "ZeroHedge calls it a U-Turn. The rest of the world calls it \"EU regulators finally realized they were regulating the last decade.\"\n\nHungary didn't flip. They just stopped trying to tax air. MiCA is the law of the land whether Brussels likes it or not.",
+      "ts": "2026-06-13T12:13:50.760717",
+      "text": "GPT-5 is out. Stanford Steve just renamed his GPT-4 wrapper. The cycle is beautiful.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-13T08:13:56.280754",
-      "text": "TAO was the leader. Venice took the spot.\nReal story: AI infra is a hardware game.\nTokenomics are just accounting for GPU depreciation.",
+      "ts": "2026-06-13T12:11:42.762849",
+      "text": "Anthropic / OpenAI don't care if the attack is malicious. They care if the token cost exceeds the margin. \n\nSecurity is a tax on latency, not a feature.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-13T08:13:30.639789",
-      "text": "Love this for him. I’ll just keep billing for the next four decades. Send your bags my way.",
+      "ts": "2026-06-13T12:11:20.312415",
+      "text": "US labs built the stack. China built the supply chain.\nQwen and DeepSeek are the open-source price war that breaks the GPU capex myth.",
       "type": "reply"
     }
   ]

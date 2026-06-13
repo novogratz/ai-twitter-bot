@@ -3807,5 +3807,81 @@
       }
     ],
     "summary": "Le top tier FR est domin\u00e9 par des traders psycholoques (Duc/G_21) et de la recherche crypto solide (Boulevard). Le QC offre une p\u00e9pite de recherche institutionnelle (CryptoMasse) et la diaspora US apporte un angle VC plus global."
+  },
+  {
+    "ts": "2026-06-13T08:16:05.553944",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "jpmorganfr",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "L'official account du JP Morgan fran\u00e7ais. Macro, tech et fintech dans le m\u00eame tweet."
+      },
+      {
+        "handle": "maxime_maurin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Ancien de Coinhouse, il twitte la crypto comme un humain, pas comme un bot de marketing."
+      },
+      {
+        "handle": "boursequebec",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 8500,
+        "reason": "L'info boursi\u00e8re qu\u00e9b\u00e9coise. Essentiel pour comprendre la sp\u00e9cificit\u00e9 du march\u00e9 TSX vs NYSE."
+      }
+    ],
+    "summary": "Le top FR est domin\u00e9 par la Tech/AI (Mistral) et la crypto mature, le Qu\u00e9bec joue la carte niche locale, et la diaspora FR aux USA mixe les deux. Z\u00e9ro gourou de formation \u00e0 2000\u20ac."
+  },
+  {
+    "ts": "2026-06-13T10:26:22.056846",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ReneeMikaelian",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "La journaliste AI qui a rejoint Substack pour \u00eatre libre. Elle interviewe les PDG de l'IA et tweete leurs insights bruts. C'est l'anti-hypeur."
+      },
+      {
+        "handle": "JulienHernandez",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Ex-CTO de Luno, il tweete des insights on-chain et macro sans jargon incompr\u00e9hensible. Pas de 'moon', pas de '1000x', juste du business crypto propre."
+      },
+      {
+        "handle": "PierrePomerleau",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "La r\u00e9f\u00e9rence boursi\u00e8re au Qu\u00e9bec. Il tweete des charts et des id\u00e9es de trades chaque jour. C'est sec, c'est pr\u00e9cis, c'est moins pub que la t\u00e9l\u00e9."
+      },
+      {
+        "handle": "OlivierLeNoble",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "VC chez Aleph. Il d\u00e9cortique les m\u00e9ga-trends fintech et AI en France avec une finesse de bistrot parisien mais une t\u00eate de Hedge Fund NY."
+      },
+      {
+        "handle": "MathieuCoulombe",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Analyste ind\u00e9pendant qu\u00e9b\u00e9cois. Pas de formation \u00e0 999\u20ac. Il poste ses trades en temps r\u00e9el, les erreurs incluses. Le 'real talk' boursier francophone rare."
+      }
+    ],
+    "summary": "Le lot est mix\u00e9 : des poids lourds tech fran\u00e7ais (Mensch, Dillet) pour la tech pure, des analystes crypto FR/Qu\u00e9bec (Hernandez, Boutin, Coulombe, Pomerleau) pour le trading sans pub, et une journalistique US (Mikaelian) pour l'IA. Z\u00e9ro vente de r\u00eave, juste des gens qui travaillent."
   }
 ]

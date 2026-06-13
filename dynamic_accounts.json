@@ -417,7 +417,15 @@
     "LaurineDuc",
     "MathieuG_21",
     "JulesToulet",
-    "MarcPoulin"
+    "MarcPoulin",
+    "jpmorganfr",
+    "maxime_maurin",
+    "boursequebec",
+    "ReneeMikaelian",
+    "JulienHernandez",
+    "PierrePomerleau",
+    "OlivierLeNoble",
+    "MathieuCoulombe"
   ],
   "en": [
     "blablacar",
@@ -515,7 +523,12 @@
     "Gurwinder",
     "Sauers",
     "Tenobrus",
-    "sdmat"
+    "sdmat",
+    "MrBanks",
+    "Calm",
+    "Kareem",
+    "Clemente",
+    "SightBringer"
   ],
   "history": [
     {
@@ -3086,6 +3099,71 @@
     {
       "lang": "fr",
       "handle": "MarcPoulin",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "MrBanks",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Calm",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Kareem",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "jpmorganfr",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "maxime_maurin",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "boursequebec",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Clemente",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "SightBringer",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "ReneeMikaelian",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienHernandez",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierrePomerleau",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierLeNoble",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuCoulombe",
       "added": "2026-06-13"
     }
   ]
