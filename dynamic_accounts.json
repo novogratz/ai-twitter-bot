@@ -434,7 +434,15 @@
     "ValentinMulliez",
     "MaximeLavoie",
     "AdrienToubkiss",
-    "GillesHainaut"
+    "GillesHainaut",
+    "CryptoKub",
+    "NathBourse",
+    "V_CryptoFR",
+    "Fr_Quants",
+    "Sylvain_Le",
+    "MathieuDuffaut",
+    "AlphaInvestFR",
+    "TradingVie"
   ],
   "en": [
     "blablacar",
@@ -538,7 +546,19 @@
     "Kareem",
     "Clemente",
     "SightBringer",
-    "Citrini"
+    "Citrini",
+    "Emad",
+    "Finneko",
+    "CryptoTweets",
+    "IncomeSharks",
+    "Zephyr",
+    "Chubby",
+    "NoLimit",
+    "Jukan",
+    "InvestAnswers",
+    "Bastion",
+    "jinjingliang",
+    "SemiAnalysis"
   ],
   "history": [
     {
@@ -3224,6 +3244,106 @@
     {
       "lang": "fr",
       "handle": "GillesHainaut",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Emad",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Finneko",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "CryptoTweets",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "IncomeSharks",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Zephyr",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Chubby",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKub",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathBourse",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "V_CryptoFR",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "Fr_Quants",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "Sylvain_Le",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "NoLimit",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Jukan",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "InvestAnswers",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Bastion",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "jinjingliang",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "SemiAnalysis",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDuffaut",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlphaInvestFR",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "TradingVie",
       "added": "2026-06-13"
     }
   ]
