@@ -4101,5 +4101,64 @@
       }
     ],
     "summary": "Mix \u00e9quilibr\u00e9 entre l'\u00e9lite de la Mistral-IA fran\u00e7aise, les v\u00e9t\u00e9rons tech qu\u00e9b\u00e9cois et les sp\u00e9cialistes crypto 'sans hype'. Pas de vendeurs de r\u00eaves, que du concret."
+  },
+  {
+    "ts": "2026-06-14T02:16:07.097613",
+    "raw_count": 7,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilLemay",
+        "region": "france",
+        "niche": "ai",
+        "followers": 150000,
+        "reason": "Directeur de research chez AI/ML, parle crypto et IA avec la pr\u00e9cision d'un chirurgien et l'humour d'un Parisien agac\u00e9 par les buzzwords. Pas de pub."
+      },
+      {
+        "handle": "AntoineMazier",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 100000,
+        "reason": "Framer, ex-Pinterest, VC l\u00e9ger. Parle fran\u00e7ais/anglais mixte. Il tweet sur l'IA, la design tech et les m\u00e9ga-caps tech avec un angle 'build' unique."
+      },
+      {
+        "handle": "LucDorval",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 40000,
+        "reason": "V\u00e9t\u00e9ran qu\u00e9b\u00e9cois, pas dans le tout dernier cri de l'IA mais r\u00e9f\u00e9rence absolue pour la discipline boursi\u00e8re. Pas de pub, juste du bon sens."
+      },
+      {
+        "handle": "MaximeAubert",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Trader/Investisseur, fil Twitter plus percutant que ses cours payants. Analytique sans \u00eatre chiant, couvre macro et tech."
+      },
+      {
+        "handle": "Raphaelpassan",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Co-founder de Qonto. Parle fintech, banking et startup life. Le contraste entre la rigueur banqui\u00e8re et les tweets 'vulgo' sur le cash flow."
+      },
+      {
+        "handle": "MaximeSteinberg",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 20000,
+        "reason": "CEO de JudoPay. Twitte en anglais mais avec une sensibilit\u00e9 FR, couvre fintech, API et payments. Tr\u00e8s productif."
+      },
+      {
+        "handle": "VincentBourque",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Analyste crypto qu\u00e9b\u00e9cois (ex-Blockchain.com), couvre BTC/ETH/DeFi. Moins hype que les influenceurs US, plus fondamentaliste."
+      }
+    ],
+    "summary": "Focus sur des profils 'builder/analyst' qui twittent encore sur le march\u00e9 au lieu de vendre leur formation. La mixit\u00e9 FR/Qu\u00e9bec/USA permet de capter l'angle 'French Tech US' (Antoine M., Maxime S.) qui est sous-couvert."
   }
 ]

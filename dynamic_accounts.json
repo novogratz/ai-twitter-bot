@@ -448,7 +448,14 @@
     "MarcRie",
     "BenoitFerreira",
     "HugoFron",
-    "MaximeSylvain"
+    "MaximeSylvain",
+    "CyrilLemay",
+    "AntoineMazier",
+    "LucDorval",
+    "MaximeAubert",
+    "Raphaelpassan",
+    "MaximeSteinberg",
+    "VincentBourque"
   ],
   "en": [
     "blablacar",
@@ -572,7 +579,9 @@
     "snwy",
     "Manz",
     "Bitcoin",
-    "sophie"
+    "sophie",
+    "CryptoGoos",
+    "Tibo"
   ],
   "history": [
     {
@@ -3428,6 +3437,51 @@
     {
       "lang": "fr",
       "handle": "MaximeSylvain",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "CryptoGoos",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Tibo",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilLemay",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineMazier",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucDorval",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeAubert",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "Raphaelpassan",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSteinberg",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBourque",
       "added": "2026-06-14"
     }
   ]

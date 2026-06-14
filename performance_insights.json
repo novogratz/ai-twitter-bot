@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-14T00:15:26.633329",
-  "window_7d_actions": 4704,
-  "window_24h_actions": 742,
+  "generated_at": "2026-06-14T04:15:26.358572",
+  "window_7d_actions": 4371,
+  "window_24h_actions": 856,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4648
+      "count": 4310
     },
     {
       "pattern": "METAPHOR",
@@ -13,21 +13,21 @@
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 12
+      "count": 13
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 9
+      "count": 10
     },
     {
       "pattern": "DIALOGUE",
-      "count": 8
+      "count": 9
     }
   ],
   "worst_patterns": [
     {
       "pattern": "OTHER",
-      "count": 2
+      "count": 3
     },
     {
       "pattern": "RENAME",
@@ -35,119 +35,125 @@
     },
     {
       "pattern": "REPETITION",
-      "count": 6
+      "count": 7
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 2,
-      "actions": 292
-    },
-    {
-      "hour": 1,
-      "actions": 278
-    },
-    {
-      "hour": 3,
-      "actions": 278
-    },
-    {
-      "hour": 0,
-      "actions": 263
+      "hour": 15,
+      "actions": 237
     },
     {
       "hour": 4,
-      "actions": 258
+      "actions": 226
+    },
+    {
+      "hour": 16,
+      "actions": 226
+    },
+    {
+      "hour": 5,
+      "actions": 224
+    },
+    {
+      "hour": 14,
+      "actions": 218
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2047
+      "count": 1881
     },
     {
       "topic": "IA",
-      "count": 1844
+      "count": 1738
     },
     {
       "topic": "Crypto",
-      "count": 581
+      "count": 565
     },
     {
       "topic": "Bourse",
-      "count": 323
+      "count": 283
     },
     {
       "topic": "Spatial",
-      "count": 236
+      "count": 216
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Bourse",
+      "24h_rate": 0.089,
+      "7d_rate": 0.065
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1987
+      "count": 1892
     },
     {
       "pillar": "other",
-      "count": 1260
+      "count": 1141
     },
     {
       "pillar": "market_trauma",
-      "count": 1114
+      "count": 1027
     },
     {
       "pillar": "meme_reaction",
-      "count": 215
+      "count": 194
     },
     {
       "pillar": "reply_bait",
-      "count": 87
+      "count": 77
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 41
+      "count": 40
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 398
+      "count": 455
     },
     {
       "pillar": "market_trauma",
-      "count": 167
+      "count": 192
     },
     {
       "pillar": "other",
-      "count": 139
+      "count": 171
     },
     {
       "pillar": "meme_reaction",
-      "count": 30
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 4
+      "count": 29
     },
     {
       "pillar": "ai_vs_btc",
+      "count": 5
+    },
+    {
+      "pillar": "reply_bait",
       "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 36,
+      "posts": 37,
       "avg_likes": 0.08,
-      "avg_views": 34.8,
+      "avg_views": 34.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 50,
+      "posts": 52,
       "avg_likes": 0.02,
-      "avg_views": 30.7,
+      "avg_views": 29.8,
       "low_sample": false
     },
     {
@@ -175,43 +181,43 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4179
+      "count": 3936
     },
     {
       "type": "quote",
-      "count": 228
+      "count": 189
     },
     {
       "type": "quote_gif",
-      "count": 207
-    },
-    {
-      "type": "retweet",
-      "count": 41
+      "count": 186
     },
     {
       "type": "hotake",
-      "count": 27
+      "count": 24
     },
     {
       "type": "post",
       "count": 22
+    },
+    {
+      "type": "retweet",
+      "count": 14
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-14T00:14:49.097378",
-      "text": "@CryptoFrog $SHDX at $150k is late-stage pricing for \"autonomous agents.\" shadow is selling plumbing to kids who just learned to code.",
+      "ts": "2026-06-14T04:15:14.762244",
+      "text": "6.39% APR on a stablecoin. that’s not yield, that’s a bribe to pretend volatility is gone.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-14T00:13:38.121716",
-      "text": "Sand and Rust is the aesthetic of an Nvidia data center after the power goes out. Modular robots, megastructures, rusted logic. It’s just the 10-K for the apocalypse.",
+      "ts": "2026-06-14T04:12:14.908019",
+      "text": "$80B buyback in a sector with 18-month tech lifecycles.\nit’s not a valuation. it’s an admission.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-14T00:12:33.872911",
-      "text": "Start with python, end up in a $150B valuation deck. stanford steve says hi.",
+      "ts": "2026-06-14T04:11:57.861004",
+      "text": "SpaceX at $1.77T. If tokens capture 50bps of liquidity, that’s $8.85B.\n\nThe SEC approved the ETF in 6 months. They approved the stock in 100 years.",
       "type": "reply"
     }
   ]
