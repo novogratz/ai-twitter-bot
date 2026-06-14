@@ -455,7 +455,15 @@
     "MaximeAubert",
     "Raphaelpassan",
     "MaximeSteinberg",
-    "VincentBourque"
+    "VincentBourque",
+    "AlexisDumas",
+    "TheAIShrink_AI",
+    "LionelRiquet",
+    "ThomasMounier",
+    "CyprienGachet",
+    "MarcFournier",
+    "EricVezina",
+    "LucDrouin"
   ],
   "en": [
     "blablacar",
@@ -581,7 +589,10 @@
     "Bitcoin",
     "sophie",
     "CryptoGoos",
-    "Tibo"
+    "Tibo",
+    "Xaijnt",
+    "Hofer",
+    "Lazyys"
   ],
   "history": [
     {
@@ -3482,6 +3493,61 @@
     {
       "lang": "fr",
       "handle": "VincentBourque",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Xaijnt",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Hofer",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Lazyys",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDumas",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheAIShrink_AI",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelRiquet",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasMounier",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyprienGachet",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcFournier",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricVezina",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucDrouin",
       "added": "2026-06-14"
     }
   ]

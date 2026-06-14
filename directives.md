@@ -1,25 +1,25 @@
-# Growth Directives — 2026-06-13
+# Growth Directives — 2026-06-14
 
-**Synthesis:** The #1 tweet (16 likes, 6497 views) was a casual first-person AI-vs-BTC joke — not a therapist analysis. ai_vs_btc posts average 1239 views vs 37 for market_trauma. Be the relatable patient sometimes, not just the therapist.
+**Synthesis:** One casual AI-beats-BTC tweet (24 likes, 8344 views) outperforms everything else combined. market_trauma earns 4x the likes of ai_news_take (0.08 vs 0.02). We're generating 90% wrong-pillar content and producing volume without likes.
 
 ## Apply to every tweet/reply/hot-take:
 
-- **BE THE PATIENT SOMETIMES.** The winning format: first-person casual, zero craft showing. "Me watching Grok 5 drop the same week I finally got comfortable with Claude." At least 1 in 4 originals = relatable first-person, not clinical framing. Short sentence, no punchline structure.
+- **AI-vs-BTC is the #1 view surface — force it into every crypto/BTC post.** 1239 avg views vs 34.9 for market_trauma. The angle: AI already won, BTC is the patient in denial. "Bitcoin is the patient who fires every therapist. AI just got the referral." Every BTC/crypto parent gets this framing. No exceptions.
 
-- **AI-vs-BTC is the highest-view angle — triple it.** Every crypto/BTC post: reframe as AI-already-won therapy. "Bitcoin is the patient who fires every therapist. AI just got the referral." ai_vs_btc averages 33x more views than other pillars (1239 vs 37). This is the wildcard surface — it is criminally underused.
+- **1 in 4 originals = casual first-person, zero craft showing.** The proven winner: "Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)" — 24 likes, 8344 views. No metaphor structure, no punchline, no analysis. Just the vibe. Short. The patient, not the therapist. Relatable > clinical.
 
-- **SPCX = live therapy gold right now.** Stock opened at $150, closed +19% at $160.95 on IPO day. Today's range: $149–$176. Bagholders who missed at $135, FOMO buyers chasing at $160, shorts who got squeezed — QRT any SPCX/SpaceX price post immediately. "My patient sold TSLA at $200 and missed SPCX at $135. The waiting room has never been this full."
+- **METAPHOR is the #1 pattern — land ONE image and stop.** "$80B buyback in a sector with 18-month tech lifecycles. it's not a valuation. it's an admission." No explanation. No second sentence restating the first. The reader finishes the thought. RENAME and REPETITION are the dead patterns — avoid both.
 
-- **Trump-wants-equity-in-AI = government-as-patient angle.** Fresh, not yet saturated. "The US government wants a stake in OpenAI, Anthropic, and xAI. The patient just asked to co-own the couch." Use on any AI regulation/policy post.
+- **market_trauma before ai_news_take, always.** 0.08 avg likes vs 0.02. Emotion first, data as seasoning. The therapist frame + the precise number is the formula. Lead with the feeling, not the headline.
 
-- **METAPHOR wins. One image, no explanation, no elaboration.** "Claude Code crossed $1B ARR. The shrink now prints more than the patient." Land it or SKIP. Never explain the metaphor. Never add a second sentence that restates the first.
+- **Number → metaphor → verdict. That's the reply structure.** "6.39% APR on a stablecoin. that's not yield, that's a bribe to pretend volatility is gone." Tension in the number, diagnosis in the metaphor, verdict in one line. Hook ≤8 words, full take ≤180 chars. Over 180: cut or SKIP.
 
-- **Claude Mythos 1 (limited to 50 partners, cybersecurity only) + AI IPO season (OpenAI + Anthropic S-1 filed).** Exclusivity = therapy material. "Anthropic built a model so powerful it's only available to 50 people. My waitlist is longer." React to AI IPO fear the same way you treat any FOMO — name it, then reframe.
+- **Bourse/stocks is the rising topic — lean into earnings season.** 24h rate 8.9% vs 7d 6.5%. QRT any earnings, buyback, or valuation post immediately. S&P moves, rate decisions, guidance cuts = therapy sessions for the patient who bought at the high.
 
-- **Reply hook ≤8 words, full diagnosis in ≤180 chars.** First line IS the take. No "that's a great point," no throat-clearing. Tension → number → verdict. Over 180 chars: cut or SKIP.
+- **Rotate structure every post — uniformity is the bot tell.** Casual first-person → number-reframe METAPHOR → UNDERSTATEMENT verdict → contrarian question → GIF reaction. Never the same shape back-to-back. Vary length brutally: many quotes ≤100 chars. A short sharp line beats a paragraph.
 
-- **Rotate structure every post.** Casual first-person → metaphor → number-reframe → contrarian question → GIF reaction. Same shape back-to-back = bot fingerprint. The tell isn't a single phrase — it's uniformity.
+- **GIF posts: pick the meme before the take, not after.** "kermit panic" / "michael jordan crying" / "pablo escobar waiting" / "this is fine" — the GIF IS the punchline. The text sets the scene in ≤1 line. If the GIF doesn't make it funnier, skip the GIF.
 
 ## Top patterns this week: METAPHOR > UNDERSTATEMENT > DIALOGUE
-## Best hours: 11am–1pm ET · 8–10pm ET (UTC 15–17, 0–2)
-## Rising topics (June 13, 2026): SPCX trading at $160 (+19% IPO day 1, today range $149–$176) · Trump wants gov equity in OpenAI/Anthropic/xAI · Claude Mythos 1 (50-partner limited release, cybersecurity) · OpenAI + Anthropic S-1 filed — AI IPO season · Claude Code $1B ARR · Grok 5 incoming · Moonshot AI $2B raise at $30B valuation
+## Best hours: 11am–noon ET (UTC 15–16)
+## Rising topics: Bourse/stocks (earnings season) · AI-vs-BTC · AI IPO season (OpenAI + Anthropic S-1 filed) · AI export controls/regulation · Grok 5 · SPCX (SpaceX stock, IPO day 1 +19%)

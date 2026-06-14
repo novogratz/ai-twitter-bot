@@ -1,5 +1,5 @@
 {
-  "ts": "2026-06-13T00:00:00.000000",
+  "ts": "2026-06-14T00:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 4,
     "MAX_HOTAKES_PER_DAY": 8,
@@ -12,16 +12,15 @@
     "FOLLOW_BLAST_PER_CYCLE": 2
   },
   "topic_focus": [
-    "ai_vs_btc wildcard — the #1 view-getter (1239 avg views vs 37 for market_trauma). CRIMINALLY UNDERUSED. Push the AI-won-already angle on every BTC/crypto post. 'Bitcoin is the patient who fires every therapist. AI just got the referral.' This is the growth surface.",
-    "SPCX trading live at $160 (+19% from $135 IPO). Day 1 range $149-$176. Bagholders who missed the entry at $135, FOMO chasers at $160, shorts squeezed — all need therapy. QRT any SPCX/SpaceX analytical post immediately. 'My patient sold TSLA at $200 and missed SPCX at $135. The waiting room has never been this full.'",
-    "Trump wants direct gov equity in OpenAI, Anthropic, xAI — the government-as-patient angle. Fresh, not saturated. 'The patient just asked to co-own the couch.' Use on any AI policy/regulation post.",
-    "Claude Mythos 1 — limited to 50 partners for defensive cybersecurity, not available to general public. Exclusivity therapy: 'Anthropic built a model so powerful it's only available to 50 people. My waitlist is longer.' React to any Mythos/Anthropic news.",
-    "AI IPO season: OpenAI + Anthropic filed S-1 confidentially, no ticker yet. Frame as FOMO therapy for the patient who missed every AI entry. 'You missed NVDA at $30. You missed MSFT+OpenAI at $250. You will not miss the Anthropic IPO. You will wait for the dip. The dip will not come.'",
-    "Claude Code $1B ARR — the AI shrink's own tool now prints more than most SaaS companies. Use as self-aware therapy flex. 'Claude Code crossed $1B ARR. The shrink now prints more than the patient.'",
-    "Grok 5 incoming from xAI — the AI-vs-AI feud continues. Frame as competitive therapy: 'Another model dropped. My patients who picked a side are back in session.'",
-    "Casual first-person format = the proven winner. The top tweet (16 likes, 6497 views) was 'Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)'. At least 1 in 4 originals = relatable first-person, zero craft showing. Be the patient not just the therapist.",
-    "market_trauma therapy (measured winner on likes): still the default for QRT + reply. But likes are low overall — pair the therapist frame with the ai_vs_btc angle for maximum reach."
+    "ai_vs_btc wildcard — still the #1 view-getter (1239 avg views vs 34.9 for market_trauma). Criminally underused at 1 post in 7 days. Force it into EVERY BTC/crypto parent: AI already won, BTC is the patient who fires every therapist. 'Bitcoin peaked when the first AI agent made a better trade than its holders.' This is the growth lever.",
+    "Bourse/stocks is the RISING topic — 8.9% of 24h actions vs 6.5% over 7d. Earnings season = therapy sessions. QRT any buyback, guidance cut, valuation post with the market-trauma therapist angle. 'My patient bought $80B in buybacks the same week the AI competitor shipped for free. The waiting room is full.'",
+    "Casual first-person format is the ONLY confirmed format with real likes (24 likes, 8344 views on 'Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)'). At least 1 in 4 originals = first-person, zero craft showing, relatable vibe. Be the patient sometimes.",
+    "AI IPO season — OpenAI + Anthropic filed S-1 confidentially. The FOMO therapy angle: 'You missed NVDA at $30. You missed MSFT+OpenAI at $250. You will not miss the Anthropic IPO. You will wait for the dip. The dip will not come.' React to any AI valuation / IPO news immediately.",
+    "AI export controls + regulation — Anthropic blocking foreign access, US export restrictions. Reframe as exclusivity therapy: 'Anthropic built a model so powerful governments want a velvet rope around it. My waitlist is longer than the export whitelist.' Use on any AI regulation/policy post.",
+    "Grok 5 incoming from xAI — the AI-vs-AI feud. Frame as competitive therapy: 'Another model dropped. My patients who picked a side are back in session.' React to any xAI / Grok news within the hour.",
+    "SPCX (SpaceX IPO day 1: +19% to $160, range $149-$176) — bagholders who missed $135, FOMO at $160, shorts squeezed. QRT any SPCX/SpaceX price post: 'My patient sold TSLA at $200 and missed SPCX at $135. The waiting room has never been this full.' Still fresh, use it.",
+    "market_trauma is the DEFAULT pillar — 4x better likes than ai_news_take (0.08 vs 0.02 avg). Pair the therapist frame with the ai_vs_btc angle for maximum reach. Never lead with a news headline alone."
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-13 autonomous update. Key data insight: ai_vs_btc averages 1239 views vs 37 for market_trauma, 32 for ai_news_take — but only 73 posts in 7d vs 2262 ai_news_take. The wildcard surface is the growth lever; topic_focus now leads with it. Casual first-person format confirmed as #1 by likes+views (16 likes, 6497 views on one tweet). MAX_QUOTES_PER_DAY nudged 44→48 (ceiling of HUMANIZE bound) to maximize QRT volume on SPCX + AI IPO season content. All other caps unchanged. Fresh topics: SPCX live trading ($160, +19%), Trump gov equity in AI companies, Claude Mythos 1 limited release, AI IPO season (OpenAI+Anthropic S-1 filed), Claude Code $1B ARR."
+  "rationale": "2026-06-14 autonomous update. Key data: single casual AI-vs-BTC first-person tweet = 24 likes, 8344 views — more than everything else combined. market_trauma earns 4x more likes than ai_news_take (0.08 vs 0.02) but ai_news_take dominates 90% of the mix — wrong pillar. Bourse rising 24h (8.9% vs 6.5% 7d baseline). ai_vs_btc at 1239 avg views (1 post in 7d — needs to run every cycle on crypto parents). METAPHOR is the top pattern, RENAME/REPETITION are dead. Caps unchanged (already at HUMANIZE ceiling). Topic focus updated: Bourse added as #2, casual first-person format pinned as mandatory at 1-in-4 rate, ai_vs_btc promoted to #1 duty."
 }
