@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-06-14T12:15:26.355092",
-  "window_7d_actions": 4487,
-  "window_24h_actions": 818,
+  "generated_at": "2026-06-14T16:15:26.380005",
+  "window_7d_actions": 4485,
+  "window_24h_actions": 788,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4411
+      "count": 4406
     },
     {
       "pattern": "METAPHOR",
-      "count": 20
+      "count": 22
     },
     {
       "pattern": "FR_ANCHOR",
       "count": 16
     },
     {
-      "pattern": "UNDERSTATEMENT",
-      "count": 12
+      "pattern": "DIALOGUE",
+      "count": 13
     },
     {
-      "pattern": "DIALOGUE",
+      "pattern": "UNDERSTATEMENT",
       "count": 12
     }
   ],
@@ -40,67 +40,67 @@
   ],
   "best_hours_utc": [
     {
-      "hour": 15,
-      "actions": 237
-    },
-    {
       "hour": 11,
       "actions": 231
     },
     {
       "hour": 16,
-      "actions": 226
+      "actions": 225
     },
     {
       "hour": 10,
       "actions": 222
     },
     {
-      "hour": 14,
-      "actions": 218
+      "hour": 12,
+      "actions": 222
+    },
+    {
+      "hour": 15,
+      "actions": 220
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1935
+      "count": 1923
     },
     {
       "topic": "IA",
-      "count": 1781
+      "count": 1798
     },
     {
       "topic": "Crypto",
-      "count": 574
+      "count": 563
     },
     {
       "topic": "Bourse",
-      "count": 294
+      "count": 293
     },
     {
       "topic": "Spatial",
-      "count": 222
+      "count": 219
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Bourse",
-      "24h_rate": 0.1,
-      "7d_rate": 0.066
+      "24h_rate": 0.093,
+      "7d_rate": 0.065
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1961
+      "count": 1982
     },
     {
       "pillar": "other",
-      "count": 1170
+      "count": 1158
     },
     {
       "pillar": "market_trauma",
-      "count": 1042
+      "count": 1032
     },
     {
       "pillar": "meme_reaction",
@@ -112,55 +112,55 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 39
+      "count": 38
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 422
+      "count": 397
     },
     {
       "pillar": "market_trauma",
-      "count": 194
+      "count": 186
     },
     {
       "pillar": "other",
-      "count": 169
+      "count": 176
     },
     {
       "pillar": "meme_reaction",
-      "count": 25
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 18
     },
     {
       "pillar": "reply_bait",
+      "count": 7
+    },
+    {
+      "pillar": "ai_vs_btc",
       "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 39,
-      "avg_likes": 0.08,
-      "avg_views": 33.8,
+      "posts": 41,
+      "avg_likes": 0.07,
+      "avg_views": 33.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 58,
+      "posts": 60,
       "avg_likes": 0.02,
-      "avg_views": 28.5,
+      "avg_views": 27.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 37,
+      "posts": 39,
       "avg_likes": 0.0,
-      "avg_views": 25.2,
+      "avg_views": 25.5,
       "low_sample": false
     },
     {
@@ -181,23 +181,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4054
+      "count": 4044
+    },
+    {
+      "type": "quote",
+      "count": 193
     },
     {
       "type": "quote_gif",
       "count": 191
     },
     {
-      "type": "quote",
-      "count": 189
-    },
-    {
       "type": "post",
-      "count": 24
+      "count": 26
     },
     {
       "type": "hotake",
-      "count": 22
+      "count": 24
     },
     {
       "type": "retweet",
@@ -206,19 +206,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-14T12:14:58.055213",
-      "text": "@Eric Jackson waiting for a signal is just anxiety in a suit. the market is already priced for Friday because the weekend is when the real work happens.",
+      "ts": "2026-06-14T16:14:14.920743",
+      "text": "Jason’s feature request: \"read in grok\".\n\nThe real ask is why users still want to click off-platform when grok already serves the full context.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-14T12:12:37.192523",
-      "text": "Saylor a payé en moyenne 67k le bitcoin. Il ajoute des points parce que sa moyenne de cost remonte vers le prix, pas l'inverse. c'est la pyramide de l'espoir.",
+      "ts": "2026-06-14T16:13:00.900342",
+      "text": "Azure is the landlord. openai is the tenant. you are the subletter. all three are praying the GPU market doesn't repossess the building.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-14T12:12:00.391767",
-      "text": "Apple finally fixed Siri. Apple’s competitive baseline to ChatGPT, Gemini and Claude that will steal",
-      "type": "quote"
+      "ts": "2026-06-14T16:08:50.728908",
+      "text": "Co-posed packaging lets you stack more HBM than co-wos. tsmc isn't making chips, it's building legos.",
+      "type": "reply"
     }
   ]
 }

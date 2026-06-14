@@ -4361,5 +4361,67 @@
       }
     ],
     "summary": "Un mix \u00e9quilibr\u00e9 entre la puissance brute de Mistral (ArthurMensch), la rigueur fondamentale (ThibautMuller) et la d\u00e9contraction qu\u00e9b\u00e9coise (MihailMikou). Pas de gourou des signaux, juste des pros qui savent coder ou lire un bilan."
+  },
+  {
+    "ts": "2026-06-14T12:16:22.927981",
+    "raw_count": 8,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AdrienLelaunay",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "L'expert Deep Learning qui balance des pearls en FR quand tout le monde parle encore de ChatGPT comme d'un nouveau TikTok. C'est technique, c'est vrai, c'est frais."
+      }
+    ],
+    "summary": "Le top FR est domin\u00e9 par les fondateurs de la prochaine vague IA (Mistral) et les pros on-chain discrets. Le QC apporte une rigueur boursi\u00e8re sans l'humour gras de la FR, et la diaspora USA ram\u00e8ne la tech pure."
+  },
+  {
+    "ts": "2026-06-14T14:16:06.541317",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilToufani",
+        "region": "france",
+        "niche": "tech",
+        "followers": 60000,
+        "reason": "Tech lead passionn\u00e9, couvre IA/Dev de mani\u00e8re tr\u00e8s technique et r\u00e9guli\u00e8re, pas juste du hype."
+      },
+      {
+        "handle": "Benoit_Levet",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Le trader crypto qui tient la route depuis 2017, analyse macro + crypto sans vendre de formation \u00e0 2000\u20ac."
+      },
+      {
+        "handle": "VincentLemoine",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Expert IA \u00e0 l'INRIA, twitte en FR, rigoureux et actif. Le profil 'cerveau' plut\u00f4t que 'influenceur'."
+      },
+      {
+        "handle": "MaximeBoutin_",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Fondateur/CTO, couvre tech web3 et IA au Qu\u00e9bec. Vrai profil tech, pas un vendeur de signaux."
+      },
+      {
+        "handle": "OlivierMuller",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Diaspora francophone \u00e0 NYC. Ex-banker, twitte en FR sur les march\u00e9s US avec un \u0153il europ\u00e9en."
+      }
+    ],
+    "summary": "Du pur gras technique et trading, sans la soupe\u4e00\u822ciste des influenceurs formations. Mistral, le trader pro, et le Qu\u00e9b\u00e9cois crypto : c'est du concret."
   }
 ]

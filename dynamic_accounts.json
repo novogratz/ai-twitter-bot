@@ -478,7 +478,13 @@
     "ThibautMuller",
     "OlivierGarnier",
     "LudovicGirard",
-    "PierreDufour"
+    "PierreDufour",
+    "AdrienLelaunay",
+    "CyrilToufani",
+    "Benoit_Levet",
+    "VincentLemoine",
+    "MaximeBoutin_",
+    "OlivierMuller"
   ],
   "en": [
     "blablacar",
@@ -618,7 +624,9 @@
     "TrendForce",
     "CyrilXBT",
     "DHH",
-    "NZ"
+    "NZ",
+    "B1",
+    "Clandestine"
   ],
   "history": [
     {
@@ -3704,6 +3712,46 @@
     {
       "lang": "fr",
       "handle": "PierreDufour",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "B1",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienLelaunay",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Clandestine",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilToufani",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "Benoit_Levet",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentLemoine",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBoutin_",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierMuller",
       "added": "2026-06-14"
     }
   ]
