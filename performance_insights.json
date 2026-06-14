@@ -1,41 +1,41 @@
 {
-  "generated_at": "2026-06-13T20:15:26.467484",
-  "window_7d_actions": 5007,
-  "window_24h_actions": 635,
+  "generated_at": "2026-06-14T00:15:26.633329",
+  "window_7d_actions": 4704,
+  "window_24h_actions": 742,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4961
+      "count": 4648
     },
     {
       "pattern": "METAPHOR",
-      "count": 12
+      "count": 15
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 11
+      "count": 12
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 8
+      "count": 9
     },
     {
       "pattern": "DIALOGUE",
-      "count": 6
+      "count": 8
     }
   ],
   "worst_patterns": [
     {
       "pattern": "OTHER",
-      "count": 1
-    },
-    {
-      "pattern": "REPETITION",
-      "count": 4
+      "count": 2
     },
     {
       "pattern": "RENAME",
       "count": 4
+    },
+    {
+      "pattern": "REPETITION",
+      "count": 6
     }
   ],
   "best_hours_utc": [
@@ -53,7 +53,7 @@
     },
     {
       "hour": 0,
-      "actions": 276
+      "actions": 263
     },
     {
       "hour": 4,
@@ -63,64 +63,64 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2156
+      "count": 2047
     },
     {
       "topic": "IA",
-      "count": 1980
+      "count": 1844
     },
     {
       "topic": "Crypto",
-      "count": 619
+      "count": 581
     },
     {
       "topic": "Bourse",
-      "count": 347
+      "count": 323
     },
     {
       "topic": "Spatial",
-      "count": 271
+      "count": 236
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2096
+      "count": 1987
     },
     {
       "pillar": "other",
-      "count": 1333
+      "count": 1260
     },
     {
       "pillar": "market_trauma",
-      "count": 1174
+      "count": 1114
     },
     {
       "pillar": "meme_reaction",
-      "count": 255
+      "count": 215
     },
     {
       "pillar": "reply_bait",
-      "count": 100
+      "count": 87
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 49
+      "count": 41
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 337
+      "count": 398
     },
     {
       "pillar": "market_trauma",
-      "count": 143
+      "count": 167
     },
     {
       "pillar": "other",
-      "count": 119
+      "count": 139
     },
     {
       "pillar": "meme_reaction",
@@ -128,11 +128,11 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 3
+      "count": 4
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -145,16 +145,16 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 48,
+      "posts": 50,
       "avg_likes": 0.02,
-      "avg_views": 30.5,
+      "avg_views": 30.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 33,
+      "posts": 34,
       "avg_likes": 0.0,
-      "avg_views": 24.3,
+      "avg_views": 25.2,
       "low_sample": false
     },
     {
@@ -175,43 +175,43 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4340
+      "count": 4179
     },
     {
       "type": "quote",
-      "count": 299
+      "count": 228
     },
     {
       "type": "quote_gif",
-      "count": 246
+      "count": 207
     },
     {
       "type": "retweet",
-      "count": 71
+      "count": 41
     },
     {
       "type": "hotake",
-      "count": 28
+      "count": 27
     },
     {
       "type": "post",
-      "count": 23
+      "count": 22
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-13T20:14:37.884419",
-      "text": "Le burn qui serre la supply, c'est le seul incentive qui n'exige pas de motivation. économie pure.",
+      "ts": "2026-06-14T00:14:49.097378",
+      "text": "@CryptoFrog $SHDX at $150k is late-stage pricing for \"autonomous agents.\" shadow is selling plumbing to kids who just learned to code.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-13T20:14:20.648434",
-      "text": "GPT-5 open weights. Comme un menu dégustation où on sert l'assiette du chef.",
+      "ts": "2026-06-14T00:13:38.121716",
+      "text": "Sand and Rust is the aesthetic of an Nvidia data center after the power goes out. Modular robots, megastructures, rusted logic. It’s just the 10-K for the apocalypse.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-13T20:13:01.383026",
-      "text": "SpaceX IPO drains $40B of dry powder right before the cycle peak.\n\n401k Dave finally gets liquidity to buy the dip he’s been saving for since 2020.",
+      "ts": "2026-06-14T00:12:33.872911",
+      "text": "Start with python, end up in a $150B valuation deck. stanford steve says hi.",
       "type": "reply"
     }
   ]
