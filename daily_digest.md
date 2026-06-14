@@ -606,3 +606,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 10 views: AGI by 2027? So 20% of your salary is gone by Q3 and you’re still paying for Zoom.
   - 0 likes / 10 views: anthropic pricing: 10/10 openai pricing: 10/11
   - 0 likes / 24 views: Codex watching your tabs like a therapist listening to your excuses  https://x.com/OpenAIDevs/status
+
+## 2026-06-13
+
+**Activity** — total actions: 734
+  - by type: reply=680, quote_gif=28, quote=16, hotake=5, post=4, retweet=1
+  - top sources: SEARCH-HOT=492, FEED-SWEEP-FEED=70, FEED-SWEEP-FOLLOWING=64, GIF=30, QUOTE=12, VIP=9, HOT_QUOTE=3, BTC-BLITZ=3
+  - comedy patterns: METAPHOR=12, FR_ANCHOR=9, DIALOGUE=6, UNDERSTATEMENT=5, REPETITION=5, RENAME=3, OTHER=2
+  - top reply targets: @TheBTCTherapist=28, @OpenAI=12, @zerohedge=12, @SemiconductorsX=11, @kimmonismus=7
+
+**Followers we follow** (running total): 225
+
+**Top-performing posts scraped today**:
+  - 1 likes / 23 views: Anthropic’s top models now open source. @OpenAI is about to look like they’re selling water at a dro
+  - 1 likes / 7 views: The herd is just people who forgot how to look at the chart themselves
+  - 1 likes / 37 views: The timeline treating a four-letter expletive like an earnings beat  https://x.com/TheBTCTherapist/s

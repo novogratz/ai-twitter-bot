@@ -558,7 +558,14 @@
     "InvestAnswers",
     "Bastion",
     "jinjingliang",
-    "SemiAnalysis"
+    "SemiAnalysis",
+    "EliZ",
+    "OpenRouter",
+    "Cernovich",
+    "VirtualBacon",
+    "snwy",
+    "Manz",
+    "Bitcoin"
   ],
   "history": [
     {
@@ -3344,6 +3351,41 @@
     {
       "lang": "fr",
       "handle": "TradingVie",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "EliZ",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "OpenRouter",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Cernovich",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "VirtualBacon",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "snwy",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Manz",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Bitcoin",
       "added": "2026-06-13"
     }
   ]
