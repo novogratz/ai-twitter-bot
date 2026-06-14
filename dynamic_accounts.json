@@ -470,7 +470,15 @@
     "VivianeM",
     "AntoineLeclerq",
     "ThomasBouvier",
-    "MaximeR"
+    "MaximeR",
+    "jules_boyer",
+    "MaximeCohenQC",
+    "benoit_muller",
+    "MihailMikou",
+    "ThibautMuller",
+    "OlivierGarnier",
+    "LudovicGirard",
+    "PierreDufour"
   ],
   "en": [
     "blablacar",
@@ -603,7 +611,14 @@
     "SULTAN",
     "Perle",
     "NDTV",
-    "Sola"
+    "Sola",
+    "ONED",
+    "Gaetano",
+    "Ryukyuu",
+    "TrendForce",
+    "CyrilXBT",
+    "DHH",
+    "NZ"
   ],
   "history": [
     {
@@ -3614,6 +3629,81 @@
     {
       "lang": "fr",
       "handle": "MaximeR",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "ONED",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Gaetano",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Ryukyuu",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "TrendForce",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "jules_boyer",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCohenQC",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "benoit_muller",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "CyrilXBT",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "DHH",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "NZ",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MihailMikou",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMuller",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierGarnier",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicGirard",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDufour",
       "added": "2026-06-14"
     }
   ]

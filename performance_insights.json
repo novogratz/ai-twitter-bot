@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-06-14T08:15:26.402062",
-  "window_7d_actions": 4362,
-  "window_24h_actions": 839,
+  "generated_at": "2026-06-14T12:15:26.355092",
+  "window_7d_actions": 4487,
+  "window_24h_actions": 818,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4296
+      "count": 4411
     },
     {
       "pattern": "METAPHOR",
-      "count": 16
+      "count": 20
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 15
+      "count": 16
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 11
+      "count": 12
     },
     {
       "pattern": "DIALOGUE",
-      "count": 10
+      "count": 12
     }
   ],
   "worst_patterns": [
@@ -31,11 +31,11 @@
     },
     {
       "pattern": "RENAME",
-      "count": 4
+      "count": 5
     },
     {
       "pattern": "REPETITION",
-      "count": 7
+      "count": 8
     }
   ],
   "best_hours_utc": [
@@ -44,67 +44,67 @@
       "actions": 237
     },
     {
+      "hour": 11,
+      "actions": 231
+    },
+    {
       "hour": 16,
       "actions": 226
     },
     {
+      "hour": 10,
+      "actions": 222
+    },
+    {
       "hour": 14,
       "actions": 218
-    },
-    {
-      "hour": 1,
-      "actions": 210
-    },
-    {
-      "hour": 11,
-      "actions": 206
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1891
+      "count": 1935
     },
     {
       "topic": "IA",
-      "count": 1722
+      "count": 1781
     },
     {
       "topic": "Crypto",
-      "count": 562
+      "count": 574
     },
     {
       "topic": "Bourse",
-      "count": 281
+      "count": 294
     },
     {
       "topic": "Spatial",
-      "count": 218
+      "count": 222
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Bourse",
-      "24h_rate": 0.093,
-      "7d_rate": 0.064
+      "24h_rate": 0.1,
+      "7d_rate": 0.066
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1895
+      "count": 1961
     },
     {
       "pillar": "other",
-      "count": 1142
+      "count": 1170
     },
     {
       "pillar": "market_trauma",
-      "count": 1018
+      "count": 1042
     },
     {
       "pillar": "meme_reaction",
-      "count": 193
+      "count": 200
     },
     {
       "pillar": "reply_bait",
@@ -118,23 +118,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 431
+      "count": 422
     },
     {
       "pillar": "market_trauma",
-      "count": 201
+      "count": 194
     },
     {
       "pillar": "other",
-      "count": 172
+      "count": 169
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
+      "count": 25
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 4
     },
     {
       "pillar": "reply_bait",
@@ -144,23 +144,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 38,
+      "posts": 39,
       "avg_likes": 0.08,
-      "avg_views": 34.1,
+      "avg_views": 33.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 54,
+      "posts": 58,
       "avg_likes": 0.02,
-      "avg_views": 29.9,
+      "avg_views": 28.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 36,
+      "posts": 37,
       "avg_likes": 0.0,
-      "avg_views": 24.8,
+      "avg_views": 25.2,
       "low_sample": false
     },
     {
@@ -181,23 +181,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3943
+      "count": 4054
     },
     {
       "type": "quote_gif",
-      "count": 185
+      "count": 191
     },
     {
       "type": "quote",
-      "count": 184
+      "count": 189
     },
     {
       "type": "post",
-      "count": 22
+      "count": 24
     },
     {
       "type": "hotake",
-      "count": 21
+      "count": 22
     },
     {
       "type": "retweet",
@@ -206,18 +206,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-14T08:13:46.468247",
-      "text": "Mastercard’s stablecoin rails handle $7T/year in flows.\n\nThe crypto world just got a toll road owned by the guy who built the highway.",
+      "ts": "2026-06-14T12:14:58.055213",
+      "text": "@Eric Jackson waiting for a signal is just anxiety in a suit. the market is already priced for Friday because the weekend is when the real work happens.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-14T08:13:29.445877",
-      "text": "Gemini treating a roller coaster like a logic puzzle.\nThat is 20,000 FLOPs of overthinking.",
+      "ts": "2026-06-14T12:12:37.192523",
+      "text": "Saylor a payé en moyenne 67k le bitcoin. Il ajoute des points parce que sa moyenne de cost remonte vers le prix, pas l'inverse. c'est la pyramide de l'espoir.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-14T08:11:45.141624",
-      "text": "@Chubby open source freedom software 🇨🇳 waiting like @ChinaAirline for the server rack to land",
+      "ts": "2026-06-14T12:12:00.391767",
+      "text": "Apple finally fixed Siri. Apple’s competitive baseline to ChatGPT, Gemini and Claude that will steal",
       "type": "quote"
     }
   ]
