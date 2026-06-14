@@ -1,43 +1,43 @@
-# Weekly review — 2026-W23
+# Weekly review — 2026-W24
 
-Generated 2026-06-07T18:33 (deterministic, from engagement_log + follower_history).
+Generated 2026-06-14T17:15 (deterministic, from engagement_log + follower_history).
 
 ## Account
-- Followers: **1364** (+275 this week)
-- Following: **2485** ⚠️ OVER the 300 cap by 2185
+- Followers: **1494** (+130 this week)
+- Following: **2590** ⚠️ OVER the 300 cap by 2290
 
 ## Action mix (7 days)
-- reply: 3511 (73%)
-- retweet: 593 (12%)
-- quote: 316 (6%)
-- hotake: 236 (4%)
-- quote_gif: 122 (2%)
-- post: 25 (0%)
+- reply: 4045 (90%)
+- quote: 190 (4%)
+- quote_gif: 189 (4%)
+- post: 26 (0%)
+- hotake: 25 (0%)
+- retweet: 7 (0%)
 
 ## Pillar mix (7 days) — shift toward winners
-- other: 1875 (39%)
-- ai_news_take: 1522 (31%)
-- market_trauma: 1111 (23%)
-- meme_reaction: 125 (2%)
-- reply_bait: 109 (2%)
-- ai_vs_btc: 61 (1%)
+- ai_news_take: 1983 (44%)
+- other: 1158 (25%)
+- market_trauma: 1029 (22%)
+- meme_reaction: 198 (4%)
+- reply_bait: 75 (1%)
+- ai_vs_btc: 39 (0%)
 
 ## Volume by day
-- 2026-05-31: 180 actions
-- 2026-06-01: 491 actions
-- 2026-06-02: 513 actions
-- 2026-06-03: 455 actions
-- 2026-06-04: 309 actions
-- 2026-06-05: 588 actions
-- 2026-06-06: 1425 actions
-- 2026-06-07: 842 actions
+- 2026-06-07: 209 actions
+- 2026-06-08: 856 actions
+- 2026-06-09: 626 actions
+- 2026-06-10: 658 actions
+- 2026-06-11: 694 actions
+- 2026-06-12: 143 actions
+- 2026-06-13: 734 actions
+- 2026-06-14: 562 actions
 
 ## Top posts (7 days, by likes — scraped metrics)
-- ❤️1 👁18, 5.6% eng [market_trauma] Waiting for a flip is just hesitation in a fancy coat. The chart doesn't care about your comfort zone.
-- ❤️0 👁55, 0.0% eng [market_trauma] Every coin bleeding 80% is really asking 'when do I stop feeling stupid.'  It’s called the cycle. Check your p
-- ❤️0 👁46, 0.0% eng [other] $147B monthly. You’re paying for your own future rent. The cloud isn’t a place, it’s a subscription.
-- ❤️0 👁26, 0.0% eng [ai_news_take] Anthropic writes security docs; @OpenAI writes invoices. One is a warning label, the other is the receipt. Doe
-- ❤️0 👁24, 0.0% eng [ai_news_take] The "AI Winter" hype train is just the engineers taking a smoke break. Relax.
+- ❤️1 👁37, 2.7% eng [market_trauma] The timeline treating a four-letter expletive like an earnings beat  https://x.com/TheBTCTherapist/status/2065
+- ❤️1 👁23, 4.3% eng [ai_news_take] Anthropic’s top models now open source. @OpenAI is about to look like they’re selling water at a drowning pool
+- ❤️1 👁7, 14.3% eng [market_trauma] The herd is just people who forgot how to look at the chart themselves
+- ❤️0 👁141, 0.0% eng [market_trauma] SpaceX at $135. Elon’s IPO is just his personal FOMO tax for building the future.
+- ❤️0 👁124, 0.0% eng [ai_news_take] SpaceX IPO is the new IPO stock. We just call it "AI" now to feel better about riding a rocket.
 
 ## Spec targets (2026-06-07 quality barbell)
 - QUANTITY: replies unlimited (the reach engine) · reply-bait 3-4/week

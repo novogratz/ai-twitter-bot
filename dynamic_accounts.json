@@ -626,7 +626,9 @@
     "DHH",
     "NZ",
     "B1",
-    "Clandestine"
+    "Clandestine",
+    "WOLF",
+    "mattparlmer"
   ],
   "history": [
     {
@@ -3752,6 +3754,16 @@
     {
       "lang": "fr",
       "handle": "OlivierMuller",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "WOLF",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "mattparlmer",
       "added": "2026-06-14"
     }
   ]
