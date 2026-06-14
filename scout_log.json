@@ -4049,5 +4049,57 @@
       }
     ],
     "summary": "Du MistralAI qui domine le secteur tech FR \u00e0 des p\u00e9pites qu\u00e9b\u00e9coises qui prouvent que le march\u00e9 est mondial, peu importe l'accent. Z\u00e9ro gourou en polo, que du concret."
+  },
+  {
+    "ts": "2026-06-14T00:21:51.865508",
+    "raw_count": 9,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibautDegeorge",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "L'ami des r\u00e9gulateurs, il couvre le Web3 avec la pr\u00e9cision d'un huissier de justice et l'humour d'un barman cynique."
+      },
+      {
+        "handle": "PierreDartault",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "L'homme qui a vu passer l'internet et l'IA. V\u00e9t\u00e9ran qu\u00e9b\u00e9cois, tweet tech avec un cynisme sage."
+      },
+      {
+        "handle": "MarcRie",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'analyste technique qui fait trembler les portfolios. Moins 'chartisme mystique', plus 'lecture rapide des flux'."
+      },
+      {
+        "handle": "BenoitFerreira",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Co-founder chez Mistral, il tweet en FR/EN avec une intensit\u00e9 d'ap\u00f4tre num\u00e9rique. Pure alpha IA fran\u00e7aise."
+      },
+      {
+        "handle": "HugoFron",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "L'architecte de Lyra. Il tweet sur le SaaS/Fintech avec une lucidit\u00e9 brute sur le SaaS fran\u00e7ais."
+      },
+      {
+        "handle": "MaximeSylvain",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "AI researcher qu\u00e9b\u00e9cois. Il d\u00e9cortique la SOTA FR/EN sans se prendre pour un gourou."
+      }
+    ],
+    "summary": "Mix \u00e9quilibr\u00e9 entre l'\u00e9lite de la Mistral-IA fran\u00e7aise, les v\u00e9t\u00e9rons tech qu\u00e9b\u00e9cois et les sp\u00e9cialistes crypto 'sans hype'. Pas de vendeurs de r\u00eaves, que du concret."
   }
 ]

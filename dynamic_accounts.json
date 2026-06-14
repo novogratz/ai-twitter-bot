@@ -442,7 +442,13 @@
     "Sylvain_Le",
     "MathieuDuffaut",
     "AlphaInvestFR",
-    "TradingVie"
+    "TradingVie",
+    "ThibautDegeorge",
+    "PierreDartault",
+    "MarcRie",
+    "BenoitFerreira",
+    "HugoFron",
+    "MaximeSylvain"
   ],
   "en": [
     "blablacar",
@@ -565,7 +571,8 @@
     "VirtualBacon",
     "snwy",
     "Manz",
-    "Bitcoin"
+    "Bitcoin",
+    "sophie"
   ],
   "history": [
     {
@@ -3387,6 +3394,41 @@
       "lang": "en",
       "handle": "Bitcoin",
       "added": "2026-06-13"
+    },
+    {
+      "lang": "en",
+      "handle": "sophie",
+      "added": "2026-06-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautDegeorge",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDartault",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcRie",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitFerreira",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoFron",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSylvain",
+      "added": "2026-06-14"
     }
   ]
 }
