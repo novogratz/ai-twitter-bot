@@ -463,7 +463,14 @@
     "CyprienGachet",
     "MarcFournier",
     "EricVezina",
-    "LucDrouin"
+    "LucDrouin",
+    "BaptisteNgtw",
+    "NolwennM",
+    "JulienBessiere",
+    "VivianeM",
+    "AntoineLeclerq",
+    "ThomasBouvier",
+    "MaximeR"
   ],
   "en": [
     "blablacar",
@@ -592,7 +599,11 @@
     "Tibo",
     "Xaijnt",
     "Hofer",
-    "Lazyys"
+    "Lazyys",
+    "SULTAN",
+    "Perle",
+    "NDTV",
+    "Sola"
   ],
   "history": [
     {
@@ -3548,6 +3559,61 @@
     {
       "lang": "fr",
       "handle": "LucDrouin",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "SULTAN",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Perle",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "NDTV",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Sola",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "BaptisteNgtw",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "NolwennM",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBessiere",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "VivianeM",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineLeclerq",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBouvier",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeR",
       "added": "2026-06-14"
     }
   ]
