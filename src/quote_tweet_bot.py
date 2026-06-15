@@ -6,7 +6,7 @@ import re
 import time
 import traceback
 from datetime import datetime, date
-from .config import QUOTE_MODEL, BLOCKLIST, _PROJECT_ROOT, BOT_HANDLE, MAX_QUOTES_PER_DAY
+from .config import QUOTE_MODEL, BLOCKLIST, _PROJECT_ROOT, BOT_HANDLE, MAX_QUOTES_PER_DAY, PROFILE_LLM_PROVIDER
 from .logger import log
 from .twitter_client import scrape_x_search, quote_tweet
 from .humanizer import humanize
@@ -439,7 +439,7 @@ def _generate_quote(author: str, tweet_text: str):
                                  mnts_block=_mnts_promo_block_q(tweet_text),
                                  gif_guide=GIF_GUIDE_BLOCK)
     try:
-        result = run_llm(prompt, QUOTE_MODEL, label="QUOTE", timeout=30)
+        result = run_llm(prompt, QUOTE_MODEL, label="QUOTE", timeout=30, force_provider=PROFILE_LLM_PROVIDER)
         if result.returncode != 0:
             return None
         out = unwrap_text(result.stdout)

@@ -1,251 +1,216 @@
 {
-  "ts": "2026-06-12T04:12:41.502907",
-  "count": 35,
+  "ts": "2026-06-14T20:40:27.134856",
+  "count": 30,
   "items": [
     {
-      "src": "X_HOME/Luke Simple Dividends",
-      "title": "Is $NOW a $400 stock?\n\nBut trading at $100?",
-      "url": "https://x.com/LukeSimpleDiv/status/2064794226060075480",
-      "score": 255,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Joe Tegtmeyer",
-      "title": "Today is the big day, the @SpaceX IPO! To all the employees past, present & future, congratulations & well earned. \n\nThis is a major milestone that we will all look back on years from now and realize",
-      "url": "https://x.com/JoeTegtmeyer/status/2065299151827423311",
-      "score": 225,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Elo's Kat",
-      "title": "good morning kids\n\nweak up and go to school\n\nis there any crypto school nearby? \n\nwant to learn more about nfts\n\nhow bayc, pengu, azuki became that big...\n\nI really want to know, also @quipnetwork thi",
-      "url": "https://x.com/CircleVang/status/2065268350725370199",
-      "score": 92,
-      "ts": ""
-    },
-    {
-      "src": "X_FOLLOWING/𝐇𝐨𝐧𝐞𝐲",
-      "title": "The landscape of the AI video industry is standing on the edge of a massive shift.\n\nhttps://aisecret.co/dreaminaseedance2.0mini…\n\nTools that were once exclusively locked behind heavily funded studios",
-      "url": "https://x.com/Honeybee_0ee/status/2065011838174347291",
-      "score": 57,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Robin Ebers · AI for Non-Coders",
-      "title": "just bought a $100 claude max gift card\n\nto win: just pitch me your idea\n\nthe one that you would Fablemaxx on\n\nin 24 hours, i pick the best one\n\nlooking for someone that i can tell is passionate and i",
-      "url": "https://x.com/robinebers/status/2065080024806687175",
-      "score": 30,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Tom Brandon",
-      "title": "10+ Premium AI & Tech Courses — FREE for a Limited Time!\n AI | ML | Prompt Engineering | Python | Data Science | AWS | Ethical Hacking & More\n Limited Access\n Like +  RT +  \"DRIVE\"\nFollow for the link",
-      "url": "https://x.com/tom_brando82808/status/2065272451878326401",
-      "score": 27,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Utah teapot vibecamp",
-      "title": "there's a lot of ridiculous overclaiming regarding MV for LLMs, in my work so far with fable, Claude's vision is generally not improved at all from previous releases. MV is seemingly an afterthought a",
-      "url": "https://x.com/SkyeSharkie/status/2065148652864335932",
-      "score": 19,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Semiconductor Insider",
-      "title": "Anthropic just made a big move, the company is leasing the first dedicated data centers instead of renting everything from the cloud. \n\nSmart play for controlling costs long-term as AI training gets i",
-      "url": "https://x.com/SemiconductorsX/status/2065119585574302027",
-      "score": 2,
-      "ts": ""
-    },
-    {
-      "src": "X_FOLLOWING/Semiconductor Insider",
-      "title": "Big Banks Are Hitting the Brakes on Risky Bets on Korean Chip Stocks: Bloomberg\n\nGlobal banks are starting to pull back on lending to hedge funds that are using borrowed money to bet big on South Kore",
-      "url": "https://x.com/SemiconductorsX/status/2065320954453164495",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/AI Job Clock",
-      "title": "BMW and Mercedes-Benz are deploying humanoid robots not just for efficiency, but as 'shortage insurance' against a structural 4% labor gap. This shifts AI from a cost-cutter to a critical workforce st",
-      "url": "https://x.com/AIJobclock/status/2065343422790090770",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Nimona",
-      "title": "Tether just gave robots their own crypto wallets.\n$1,400,000,000.\nGerman humanoid robots.\n\nNo human approval needed to send or receive money.\n\nMachines can now transact autonomously.\n\nThis is either t",
-      "url": "https://x.com/RealNimona/status/2065344123133993339",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/uselesseaters",
-      "title": "Chinese Firm Introduces 100 Humanoid Robots To Homes To Perform Basic Chores, Cooking, Laundry And More https://open.substack.com/pub/thewinepress/p/chinese-firm-introduces-100-humanoid?r=69isor&utm_c",
-      "url": "https://x.com/alanmonty83/status/2065339228884791640",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/xxxxx-zzzz",
-      "title": "NVIDIA's Spencer Huang on humanoid robots:\n  \"You see robots dancing, but you don't see any robots holding chopsticks.\" [0:04]\n\n  - Hands are far harder than legs; manipulation > locomotion [12:21]",
-      "url": "https://x.com/xinfeixinlang/status/2065295940970565769",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Luna PR",
-      "title": "@SpaceX is not just a rocket company.\n\nIt’s building the infrastructure layer for the next era of connectivity, AI, and expansion beyond Earth.\n\nFrom Starship and Starlink to the future of orbital com",
-      "url": "https://x.com/LunaPRofficial/status/2065346462465360301",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/SolSuit",
-      "title": "https://x.com/WolfOfTrenchess/status/2065342336796635216?s=20…\nOne thing this post highlights well: not every space stock benefits equally. $RKLB has the most direct overlap with what SpaceX does at s",
-      "url": "https://x.com/WolfOfTrenchess/status/2065346437848629368",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/0XGIWA",
-      "title": "SpaceX IPO day",
-      "url": "https://x.com/0xgiwa/status/2065346423227334992",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Sir Yitzhak",
-      "title": "What ever happened to @elonmusk , @Tesla and @SpaceX ?  It's a shame that they all fell into obscurity.",
-      "url": "https://x.com/SirYitzhak/status/2065346418168983974",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/changqing xue",
-      "title": "FIFA 的“购票资格”骗局（RTB）：\nFIFA 今年玩的 RTB (Right-To-Buy) 数字藏品是典型的“流动性屠宰场”。先卖你“买票的资格”，再卖门票，最后转售抽 27% 的手续费。这叫“电子燃气”的二次掠夺。 记住：任何把简单物理需求（看球）复杂化、套娃化的资产，一律判定为垃圾。\nSpaceX 的“万亿级退出”：\nSpaceX",
-      "url": "https://x.com/ChangqingXue/status/2065346413551132914",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/live/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Barbara Okoekoh-Wimmer",
-      "title": "\"SpaceX ^ größter Börsengang der Geschichte ^ TechGigant Elon MUSK\"\n^\nzugleich \"Mission Starlink 10 ^ Raketenstart\"\n^\nAktien - Preise ev. überhöht ^ um dabei zu sein!\n^\nWie ein TechGigant seine Finanz",
-      "url": "https://x.com/OkoekohWim41681/status/2065346382446067915",
-      "score": 0,
-      "ts": ""
-    },
-    {
       "src": "CoinDesk",
-      "title": "There's one simple way to tell whether bitcoin has really bottomed. Right now, it hasn't.",
-      "url": "https://www.coindesk.com/markets/2026/06/12/there-s-one-simple-way-to-tell-whether-bitcoin-has-really-bottomed-right-now-it-hasn-t",
+      "title": "Bitcoin shoots higher on Iran peace deal, with Strait of Hormuz set to open",
+      "url": "https://www.coindesk.com/markets/2026/06/14/bitcoin-shoots-higher-on-iran-deal-with-strait-of-hormuz-set-to-open",
       "score": 0,
-      "ts": "2026-06-12T07:57:47"
-    },
-    {
-      "src": "Cointelegraph",
-      "title": "International sting shuts down $390M crypto money-laundering ring",
-      "url": "https://cointelegraph.com/news/international-sting-shuts-down-390m-crypto-money-laundering-ring?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "score": 0,
-      "ts": "2026-06-12T07:12:06"
+      "ts": "2026-06-15T00:08:10"
     },
     {
       "src": "Cointelegraph",
       "title": "Here’s what happened in crypto today",
       "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
       "score": 0,
-      "ts": "2026-06-12T07:00:00"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Live updates: Bitcoin traders eye rally to $75,000, Japan set to hike rates to 31-year high",
-      "url": "https://www.coindesk.com/tech/2026/06/12/live-updates-bitcoin-in-volatile-trading-above-usd63-000-doge-unchanged",
-      "score": 0,
-      "ts": "2026-06-12T06:32:02"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "SpaceX's crypto-traded IPO was sharply falling. It now points upward to a $2.4 trillion valuation",
-      "url": "https://www.coindesk.com/markets/2026/06/12/spacex-s-crypto-traded-ipo-was-sharply-falling-it-now-points-upward-to-a-usd2-4-trillion-valuation",
-      "score": 0,
-      "ts": "2026-06-12T06:13:44"
+      "ts": "2026-06-14T22:19:35"
     },
     {
       "src": "CNBC Top",
-      "title": "ChatGPT hits a billion monthly app users despite souring public AI sentiment",
-      "url": "https://www.cnbc.com/2026/06/12/chatgpt-a-billion-monthly-app-users-despite-souring-public-ai-sentiment.html",
+      "title": "SpaceX market cap tops $2 trillion after shares of Elon Musk's rocket company gain 19% on debut",
+      "url": "https://www.cnbc.com/2026/06/12/spacex-stock-jumps-2-trillion.html",
       "score": 0,
-      "ts": "2026-06-12T06:07:18"
+      "ts": "2026-06-14T21:32:00"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "SpaceX market cap tops $2 trillion after shares of Elon Musk's rocket company gain 19% on debut",
+      "url": "https://www.cnbc.com/2026/06/12/spacex-stock-jumps-2-trillion.html",
+      "score": 0,
+      "ts": "2026-06-14T21:32:00"
     },
     {
       "src": "CoinDesk",
-      "title": "Bitcoin climbs back into the green as Trump signals an end to the Iran war",
-      "url": "https://www.coindesk.com/markets/2026/06/12/bitcoin-climbs-back-into-the-green-as-trump-signals-an-end-to-the-iran-war",
+      "title": "Bitcoin could crash to $48,000, if this historical pattern is triggered",
+      "url": "https://www.coindesk.com/markets/2026/06/14/bitcoin-could-crash-to-usd48-000-if-this-historical-pattern-is-triggered",
       "score": 0,
-      "ts": "2026-06-12T05:14:33"
+      "ts": "2026-06-14T19:17:30"
+    },
+    {
+      "src": "Decrypt",
+      "title": "Reve 2.0 Review: The Best AI Image Generator for Layout Control",
+      "url": "https://decrypt.co/371033/reve-2-review-best-ai-image-generator-layout-control",
+      "score": 0,
+      "ts": "2026-06-14T19:11:33"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "StanChart looks for 3 signs of BTC bottom, including Strategy’s Monday news",
+      "url": "https://cointelegraph.com/news/stanchart-looks-for-3-signs-of-btc-bottom-including-strategys-monday-news?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-06-14T19:05:46"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Summer of crypto (regs): State of Crypto",
+      "url": "https://www.coindesk.com/policy/2026/06/14/summer-of-crypto-regs-state-of-crypto",
+      "score": 0,
+      "ts": "2026-06-14T18:30:00"
+    },
+    {
+      "src": "The Block",
+      "title": "Zimbabwe moves to regulate crypto sector, requiring firms to register with central bank: Reuters",
+      "url": "https://www.theblock.co/post/404705/zimbabwe-moves-to-regulate-crypto-sector-requiring-firms-to-register-with-central-bank-reuters?utm_source=rss&utm_medium=rss",
+      "score": 0,
+      "ts": "2026-06-14T18:12:29"
+    },
+    {
+      "src": "The Block",
+      "title": "Bitcoin mining difficulty drops 10% in second-largest negative adjustment of 2026",
+      "url": "https://www.theblock.co/post/404702/bitcoin-mining-difficulty-drops-10-in-second-largest-negative-adjustment-of-2026?utm_source=rss&utm_medium=rss",
+      "score": 0,
+      "ts": "2026-06-14T16:42:19"
     },
     {
       "src": "TechCrunch AI",
-      "title": "Cheaper, faster, and culturally aware, Avataar’s video AI is built for India’s scale",
-      "url": "https://techcrunch.com/2026/06/11/cheaper-faster-and-culturally-aware-avataars-video-ai-is-built-for-indias-scale/",
+      "title": "As AI companies race to go public, who else is along for the ride?",
+      "url": "https://techcrunch.com/2026/06/14/as-ai-companies-race-to-go-public-who-else-is-along-for-the-ride/",
       "score": 0,
-      "ts": "2026-06-12T04:30:00"
+      "ts": "2026-06-14T16:38:09"
     },
     {
       "src": "TechCrunch",
-      "title": "Equal AI raises $30M to screen calls so Indians don’t have to",
-      "url": "https://techcrunch.com/2026/06/11/equal-ai-raises-30m-to-screen-calls-so-indians-dont-have-to/",
+      "title": "As AI companies race to go public, who else is along for the ride?",
+      "url": "https://techcrunch.com/2026/06/14/as-ai-companies-race-to-go-public-who-else-is-along-for-the-ride/",
       "score": 0,
-      "ts": "2026-06-12T04:30:00"
+      "ts": "2026-06-14T16:38:09"
+    },
+    {
+      "src": "TechCrunch",
+      "title": "TechCrunch Mobility: SpaceX rockets past Tesla",
+      "url": "https://techcrunch.com/2026/06/14/techcrunch-mobility-spacex-rockets-past-tesla/",
+      "score": 0,
+      "ts": "2026-06-14T16:05:00"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "A year after Meta tapped Alexandr Wang to build a new AI model, Zuckerberg has to sell it",
+      "url": "https://www.cnbc.com/2026/06/14/meta-hired-alexandr-wang-to-build-ai-its-zuckerbergs-job-to-sell-it.html",
+      "score": 0,
+      "ts": "2026-06-14T15:02:35"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "A year after Meta tapped Alexandr Wang to build a new AI model, Zuckerberg has to sell it",
+      "url": "https://www.cnbc.com/2026/06/14/meta-hired-alexandr-wang-to-build-ai-its-zuckerbergs-job-to-sell-it.html",
+      "score": 0,
+      "ts": "2026-06-14T15:02:35"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "One quality will be most in-demand from job-seekers in the AI era, Animoca co-founder Siu says",
+      "url": "https://www.cnbc.com/2026/06/14/ceo-of-.html",
+      "score": 0,
+      "ts": "2026-06-14T14:03:30"
     },
     {
       "src": "Cointelegraph",
-      "title": "Coinbase launches tool letting AI agents make payments and trade crypto",
-      "url": "https://cointelegraph.com/news/coinbase-launches-tool-letting-ai-agents-make-payments-and-trade-crypto?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "title": "Ethereum can quantum-proof accounts for just 7 cents, says Ethereum's Kohaku lead",
+      "url": "https://cointelegraph.com/news/ethereum-quantum-proof-accounts-7-cents-researcher?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
       "score": 0,
-      "ts": "2026-06-12T04:19:03"
+      "ts": "2026-06-14T13:49:48"
+    },
+    {
+      "src": "Decrypt",
+      "title": "Pokémon Card Sales Are Surging on Crypto Platforms—Just Don't Call It Gambling",
+      "url": "https://decrypt.co/370978/pokemon-cards-surging-crypto-platforms-gambling",
+      "score": 0,
+      "ts": "2026-06-14T13:01:03"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Wall Street and crypto are crashing into each other as tokenized treasury markets hit $14.6 billion",
+      "url": "https://www.coindesk.com/markets/2026/06/11/wall-street-and-crypto-are-crashing-into-each-other-as-tokenized-treasury-markets-hit-usd14-6-billion",
+      "score": 0,
+      "ts": "2026-06-14T13:00:00"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Here are the 3 big things we're watching in the stock market in the week ahead",
+      "url": "https://www.cnbc.com/2026/06/14/3-big-things-were-watching-in-the-stock-market-in-the-week-ahead.html",
+      "score": 0,
+      "ts": "2026-06-14T12:41:44"
+    },
+    {
+      "src": "The Block",
+      "title": "Trump-backed World Liberty Financial to fund UFC fighter bonuses in USD1 stablecoin at White House event",
+      "url": "https://www.theblock.co/post/404697/trump-backed-world-liberty-financial-to-fund-ufc-fighter-bonuses-in-usd1-stablecoin-at-white-house-event?utm_source=rss&utm_medium=rss",
+      "score": 0,
+      "ts": "2026-06-14T11:44:41"
     },
     {
       "src": "Cointelegraph",
-      "title": "Avalanche Treasury falls 16% as it debuts on Nasdaq",
-      "url": "https://cointelegraph.com/news/avalanche-treasury-starts-trading-on-nasdaq-but-shares-fall-16-on-debut?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "title": "Bitcoin nears $65K as Trump says Hormuz will 'open to all' in Sunday Iran peace deal",
+      "url": "https://cointelegraph.com/markets/bitcoin-nears-65k-as-trump-says-hormuz-will-open-to-all-in-sunday-iran-peace-deal?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
       "score": 0,
-      "ts": "2026-06-12T04:16:51"
+      "ts": "2026-06-14T10:06:04"
     },
     {
-      "src": "The Verge",
-      "title": "Siri won’t be your AI girlfriend",
-      "url": "https://www.theverge.com/tech/948890/siri-wont-be-your-ai-girlfriend",
+      "src": "Cointelegraph",
+      "title": "Amazon warning triggered US crackdown on Anthropic AI models: Reports",
+      "url": "https://cointelegraph.com/news/amazon-warning-triggered-us-crackdown-on-anthropic-ai-models-reports?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
       "score": 0,
-      "ts": "2026-06-12T03:00:31"
+      "ts": "2026-06-14T03:36:49"
     },
     {
       "src": "TechCrunch AI",
-      "title": "Theker just raised $85M to build the factory robot that doesn’t specialize in anything",
-      "url": "https://techcrunch.com/2026/06/11/theker-just-raised-85m-to-build-the-factory-robot-that-doesnt-specialize-in-anything/",
+      "title": "As Anthropic suspends access to new models, India debates its AI future",
+      "url": "https://techcrunch.com/2026/06/13/as-anthropic-suspends-access-to-new-models-india-debates-its-ai-future/",
       "score": 0,
-      "ts": "2026-06-12T01:48:07"
+      "ts": "2026-06-14T03:00:00"
     },
     {
-      "src": "The Block",
-      "title": "BlackRock files 8-A for yield-bearing bitcoin ETF; analyst expects launch next week",
-      "url": "https://www.theblock.co/post/404530/blackrock-8a-yield-bearing-bitcoin-etf?utm_source=rss&utm_medium=rss",
+      "src": "TechCrunch",
+      "title": "As Anthropic suspends access to new models, India debates its AI future",
+      "url": "https://techcrunch.com/2026/06/13/as-anthropic-suspends-access-to-new-models-india-debates-its-ai-future/",
       "score": 0,
-      "ts": "2026-06-12T01:39:00"
+      "ts": "2026-06-14T03:00:00"
     },
     {
-      "src": "The Block",
-      "title": "Avalanche Treasury shares fall 38% on Nasdaq debut after $675 million merger",
-      "url": "https://www.theblock.co/post/404523/avalanche-treasury-nasdaq-debut?utm_source=rss&utm_medium=rss",
+      "src": "TechCrunch AI",
+      "title": "Meta reportedly moves to unwind $2B Manus deal after Beijing’s demand",
+      "url": "https://techcrunch.com/2026/06/13/meta-reportedly-moves-to-unwind-2b-manus-deal-after-beijings-demand/",
       "score": 0,
-      "ts": "2026-06-12T01:14:10"
+      "ts": "2026-06-14T00:03:49"
     },
     {
-      "src": "Wired",
-      "title": "Apple’s Camera Chief Thinks AI Can Give You Superpowers",
-      "url": "https://www.wired.com/story/apple-camera-chief-thinks-ai-can-give-you-superpowers/",
+      "src": "TechCrunch",
+      "title": "Meta reportedly moves to unwind $2B Manus deal after Beijing’s demand",
+      "url": "https://techcrunch.com/2026/06/13/meta-reportedly-moves-to-unwind-2b-manus-deal-after-beijings-demand/",
       "score": 0,
-      "ts": "2026-06-12T01:00:00"
+      "ts": "2026-06-14T00:03:49"
+    },
+    {
+      "src": "TechCrunch AI",
+      "title": "KPMG pulls report on AI usage due to apparent hallucinations",
+      "url": "https://techcrunch.com/2026/06/13/kpmg-pulls-report-on-ai-usage-due-to-apparent-hallucinations/",
+      "score": 0,
+      "ts": "2026-06-13T20:42:31"
+    },
+    {
+      "src": "TechCrunch",
+      "title": "KPMG pulls report on AI usage due to apparent hallucinations",
+      "url": "https://techcrunch.com/2026/06/13/kpmg-pulls-report-on-ai-usage-due-to-apparent-hallucinations/",
+      "score": 0,
+      "ts": "2026-06-13T20:42:31"
+    },
+    {
+      "src": "Decrypt",
+      "title": "US Government Orders Anthropic to Pull Claude Fable, Mythos AI Models",
+      "url": "https://decrypt.co/371027/us-government-orders-anthropic-pull-claude-fable-mythos-ai-models",
+      "score": 0,
+      "ts": "2026-06-13T19:23:34"
     }
   ]
 }

@@ -4454,5 +4454,57 @@
       }
     ],
     "summary": "Un mix de fondus de technos fransoc et de traders qu\u00e9b\u00e9cois qui ont surv\u00e9cu aux crashs, sans les vendeurs de r\u00eaves \u00e0 99\u20ac."
+  },
+  {
+    "ts": "2026-06-14T20:16:48.090713",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "michaelcao",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Le roi de l'IA francophone aux US, pas un prof, un trader de l'info. Il transforme les paper research en trades."
+      },
+      {
+        "handle": "clement_defrance",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Cr\u00e9ateur de L'Info AI. Il fait le tri dans le bruit des LLM comme un sommelier qui pisse le vin frelat\u00e9."
+      },
+      {
+        "handle": "thibault_g",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Fondateur d'Action Directe, il tweette avec le style d'un banquier d'affaires qui a arr\u00eat\u00e9 de se prendre au s\u00e9rieux."
+      },
+      {
+        "handle": "balthazar_de",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Journaliste \u00e0 CoinDesk FR, il couvre le cycle comme un m\u00e9decin qui regarde le patient agoniser avec d\u00e9tachement professionnel."
+      },
+      {
+        "handle": "maxence_vdf",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Le qu\u00e9b\u00e9cois qui parle aux francophones comme s'ils \u00e9taient dans sa cave. Brut, direct, sans jargon inutile."
+      },
+      {
+        "handle": "julien_gosselin",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 9000,
+        "reason": "La voix raisonnable du Qu\u00e9bec tech. Pas de hype, juste des faits qui piquent les illusions des fond\u00e9s de pouvoir."
+      }
+    ],
+    "summary": "Du Mistral \u00e0 la Bourse de Montr\u00e9al, ces gars font twetter le Qu\u00e9bec et la France sans avoir l'air d'y toucher."
   }
 ]

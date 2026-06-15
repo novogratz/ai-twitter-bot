@@ -487,7 +487,12 @@
     "OlivierMuller",
     "RomainFoucault",
     "Lionel0716",
-    "VincentTass"
+    "VincentTass",
+    "michaelcao",
+    "thibault_g",
+    "balthazar_de",
+    "maxence_vdf",
+    "julien_gosselin"
   ],
   "en": [
     "blablacar",
@@ -3806,6 +3811,31 @@
     {
       "lang": "fr",
       "handle": "VincentTass",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "michaelcao",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "thibault_g",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "balthazar_de",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "maxence_vdf",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "julien_gosselin",
       "added": "2026-06-14"
     }
   ]

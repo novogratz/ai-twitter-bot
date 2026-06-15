@@ -4,6 +4,28 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-14 — FIX ZERO LIKES ON POSTS + QUOTES (operator: "I barely
+> get external likes... improve it"):** data-driven diagnosis —
+> `self_winners.md` was EMPTY (zero own posts hit 3 likes in 4 days) and
+> `performance_log.json` showed 0-like posts at 4-60 views with cryptic
+> word-salad text ("buying the compute to rent the copper, because physics
+> is expensive"). Two root causes + fixes:
+> 1. **Model routing**: `AI_CLI=ollama` (2026-06-11) routed posts/quotes
+>    through qwen too, which writes clever-cryptic one-liners nobody can
+>    parse → 0 likes. NEW `config.PROFILE_LLM_PROVIDER` (default `claude`):
+>    the 5 profile-surface generators (news, hotake, quote, breakout,
+>    spicy) pass `force_provider=PROFILE_LLM_PROVIDER` so they use the
+>    Sonnet `*_MODEL`s; the reply firehose stays on the ollama default for
+>    cost. Set PROFILE_LLM_PROVIDER=ollama to revert. Live-smoke-tested.
+> 2. **Content**: core_identity "HOW TO EARN A LIKE" gains rule #5 INSTANT
+>    COMPREHENSION (a like fires on half-second recognition; cryptic
+>    double-metaphor salad dies at "view"; clear-and-true > clever-and-
+>    cryptic) with the real 0-like dead examples.
+> Also: `[SIGNS: yes]` metadata tag shipped live → scrubber now strips any
+> bracketed UPPERCASE-label+colon tag. Guards:
+> `test_profile_surfaces_force_capable_provider`,
+> `test_uppercase_metadata_tag_stripped_at_chokepoint`. 119 passed.
+
 > **2026-06-12 round 3 — TOPIC-SEARCH BIG-ACCOUNT FOLLOWS (operator: "bot
 > is not following anyone... it needs to search for new topics then follow
 > the big accounts"):** `follow_blast_bot` REBUILT. The old design opened

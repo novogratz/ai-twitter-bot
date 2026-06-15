@@ -31,7 +31,7 @@ import time
 import traceback
 from datetime import date, datetime
 
-from .config import _PROJECT_ROOT, BOT_HANDLE, HOTAKE_MODEL
+from .config import _PROJECT_ROOT, BOT_HANDLE, HOTAKE_MODEL, PROFILE_LLM_PROVIDER
 from .llm_client import run_llm, unwrap_text
 from .logger import log
 from .twitter_client import post_tweet
@@ -257,7 +257,7 @@ def run_spicy_cycle():
     )
 
     log.info(f"[SPICY] Generating ({mode}, lang={lang})...")
-    result = run_llm(prompt, HOTAKE_MODEL, label=f"SPICY_{mode}")
+    result = run_llm(prompt, HOTAKE_MODEL, label=f"SPICY_{mode}", force_provider=PROFILE_LLM_PROVIDER)
     if result.returncode != 0:
         log.info(f"[SPICY] LLM failed: {result.stderr[:200]}")
         return

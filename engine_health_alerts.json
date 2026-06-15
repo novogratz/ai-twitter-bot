@@ -71,5 +71,11 @@
     "alerts": [
       "hotake collapsed: 4 today vs ~14 by this hour over the last 7 days (28%)"
     ]
+  },
+  {
+    "ts": "2026-06-14T00:15:26.302656",
+    "alerts": [
+      "quote collapsed: 0 today vs ~8 by this hour over the last 7 days (0%)"
+    ]
   }
 ]

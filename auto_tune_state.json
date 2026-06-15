@@ -1,24 +1,24 @@
 {
-  "ts": "2026-06-12T03:47:22.684112",
+  "ts": "2026-06-14T20:15:26.286582",
   "window_min": 90,
-  "total_actions": 49,
+  "total_actions": 44,
   "by_type": {
-    "reply": 49,
-    "quote_gif": 3
+    "reply": 47,
+    "hotake": 1
   },
   "winners": {
-    "FEED-SWEEP-FEED": 8,
-    "SEARCH-HOT/\"AI agents\" OR \"reasoning model\" OR AGI lang:en min_faves:30": 5,
-    "SEARCH-HOT/TSMC OR AMD OR Broadcom OR \"AI chips\" OR \"AI power\" OR \"AI e": 5,
-    "FEED-SWEEP-FOLLOWING": 4,
-    "SEARCH-HOT/Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR \"AI capex\" lang:": 3
+    "SEARCH-HOT/OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500": 6,
+    "SEARCH-HOT/Palantir OR \"AI stock\" OR \"AI bubble\" OR \"AI valuation\" lang": 5,
+    "FEED-SWEEP-FEED": 4,
+    "SEARCH-HOT/OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:50": 4,
+    "SEARCH-HOT/Palantir OR \"AI stock\" OR \"AI bubble\" lang:en min_faves:300": 3
   },
   "losers": {
-    "GIF/surfer dude looking": 1,
-    "GIF/kermit panic": 1,
-    "SEARCH-HOT/\"market crash\" OR \"sell off\" OR \"sell-off\" OR VIX lang:en mi": 1,
-    "GIF/train": 1,
-    "SEARCH-HOT/Palantir OR \"AI stock\" OR \"AI bubble\" OR \"AI valuation\" lang": 1
+    "SEARCH-HOT/Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR \"AI capex\" lang:": 1,
+    "SEARCH-HOT/\"AI startup\" OR \"AI funding\" OR \"AI layoffs\" OR \"AI jobs\" OR": 1,
+    "SEARCH-HOT/Nvidia OR \"AI datacenter\" OR \"AI capex\" lang:en min_faves:30": 1,
+    "SEARCH-HOT/\"why would\" OR \"why is\" OR \"what am I missing\" (fed OR gold ": 1,
+    "SEARCH-HOT/\"would you buy\" OR \"would you rather\" OR \"do you own\" (stock": 1
   },
   "post_cadence_factor": 0.85,
   "boost_cadence_factor": 1.0

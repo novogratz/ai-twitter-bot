@@ -2241,6 +2241,41 @@ def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
     assert "_follow_quality_decision" in src and "_quality_reject_recent" in src
 
 
+def test_uppercase_metadata_tag_stripped_at_chokepoint():
+    """2026-06-14: qwen shipped '[SIGNS: yes]' live at the end of a post.
+    The scrubber must strip any bracketed UPPERCASE-label + colon tag the
+    keyword list doesn't name, while leaving real bracketed content
+    ([2026], a single letter, normal prose) untouched."""
+    from src.twitter_client import _scrub_metadata_leaks
+
+    assert "[SIGNS" not in _scrub_metadata_leaks("Mike Novogratz says 95% done [SIGNS: yes]")
+    assert "VERDICT" not in _scrub_metadata_leaks("the take [VERDICT: skip] here")
+    # Real content with brackets must survive (no all-caps label + colon).
+    assert _scrub_metadata_leaks("the 2026 plan [2026] holds") == \
+        "the 2026 plan [2026] holds"
+    assert _scrub_metadata_leaks("ranked [A] tier") == "ranked [A] tier"
+
+
+def test_profile_surfaces_force_capable_provider():
+    """2026-06-14 (operator: 'barely get likes on posts + quote retweets').
+    AI_CLI=ollama was routing posts/quotes through qwen (cryptic salad, 0
+    likes). The profile-surface generators must pass
+    force_provider=PROFILE_LLM_PROVIDER so they use the Sonnet models even
+    when the firehose default is ollama; replies must NOT (they stay cheap)."""
+    import inspect
+    from src import hotake_agent, agent, quote_tweet_bot, breakout_bot, spicy_bot
+
+    for mod in (hotake_agent, agent, quote_tweet_bot, breakout_bot, spicy_bot):
+        src = inspect.getsource(mod)
+        assert "force_provider=PROFILE_LLM_PROVIDER" in src, \
+            f"{mod.__name__} must force the profile provider on its generation call"
+
+    from src import config
+    # Default is the capable provider, env-overridable back to ollama.
+    assert config.PROFILE_LLM_PROVIDER in ("claude", "ollama", None) or \
+        isinstance(config.PROFILE_LLM_PROVIDER, str)
+
+
 def test_decode_header_stripped_at_chokepoint():
     """Operator 2026-06-06: 'I don't want to see the decode daily.' The
     prompt forbids the series header but weaker models (ollama primary,

@@ -164,6 +164,12 @@ def _scrub_metadata_leaks(text: str) -> str:
         text,
         flags=re.IGNORECASE,
     )
+    # Generic metadata-tag catch (2026-06-14): qwen shipped "[SIGNS: yes]"
+    # live at the end of a post. Strip any bracketed UPPERCASE label +
+    # colon tag ("[SIGNS: yes]", "[NOTE: ...]", "[VERDICT: skip]") that the
+    # keyword list above doesn't name. Requires an all-caps label (>=3
+    # chars) + colon so real content like "[2026]" or "[A]" is untouched.
+    text = re.sub(r"\[\s*[A-Z][A-Z _]{2,}\s*:[^\]\n\r]*\]", "", text)
     # Banned series header (operator 2026-06-06: "I don't want to see the
     # decode daily"). The prompt forbids it but weaker models (ollama
     # primary, 2026-06-11: 11 headered drafts in one night) keep emitting

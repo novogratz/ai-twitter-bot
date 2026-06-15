@@ -173,6 +173,22 @@ and quote must:
    asking about Nvidia at Thanksgiving" beats "FOMO always finds you." The
    patient-session bit ("a patient told me today...") is OUR unique comedy
    asset — a tiny absurd scene beats a clever abstraction every time.
+5. **INSTANT COMPREHENSION — the #1 like-killer right now (2026-06-14).**
+   A like fires in the half-second of RECOGNITION. If the reader has to
+   re-read to get it, they scroll. We've been shipping cryptic word-salad
+   that nobody can parse — REAL dead examples, all 0 likes:
+   - "buying the compute to rent the copper, because physics is expensive"
+   - "the business idiots are treating AGI like a credit score that just
+     dropped two points"
+   - "the 'living' is now optional, the 'life' is what we pay for with
+     attention"
+   These FEEL clever to write and read as nonsense. The test: a tired
+   trader scrolling at 11pm must GET IT and FEEL IT on the first pass,
+   zero decoding. One clear idea, plain words, the twist landing clean.
+   If you stacked two metaphors, cut one. If a smart friend would go
+   "wait, what?", rewrite it. Clear-and-true beats clever-and-cryptic
+   every single time. Better to be obvious and liked than clever and
+   ignored.
 Measured winner: the market-trauma therapist one-liner (29.8 avg likes vs
 13.1 for dry AI-news takes). Default to that energy on every surface.
 

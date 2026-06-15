@@ -4,7 +4,7 @@ import re
 import traceback
 from datetime import datetime, timedelta
 from typing import Optional
-from .config import NEWS_MODEL
+from .config import NEWS_MODEL, PROFILE_LLM_PROVIDER
 from .logger import log
 from .history import get_recent_tweets
 from .performance import get_learnings_for_prompt
@@ -1441,11 +1441,11 @@ take you've already written."""
         # own WebSearch was running redundantly on top, taking 5-8 min
         # per cycle AND sometimes returning ONLY citations no body.
         # Without it: Claude writes the Décode from pre-fed data in 5-15s.
-        r = run_llm(prompt, NEWS_MODEL, label="NEWS")
+        r = run_llm(prompt, NEWS_MODEL, label="NEWS", force_provider=PROFILE_LLM_PROVIDER)
         if r.returncode != 0 and not r.stderr.strip():
             import time as _t
             _t.sleep(8)
-            r = run_llm(prompt, NEWS_MODEL, label="NEWS")
+            r = run_llm(prompt, NEWS_MODEL, label="NEWS", force_provider=PROFILE_LLM_PROVIDER)
         if r.returncode != 0:
             globals()["_last_generation_skip_retryable"] = True
             globals()["_last_generation_skip_reason"] = (r.stderr or "LLM failed").strip()[:240]

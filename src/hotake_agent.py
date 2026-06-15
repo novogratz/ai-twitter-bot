@@ -12,7 +12,7 @@ import re
 from collections import Counter
 from datetime import datetime, timedelta
 from typing import Optional
-from .config import HOTAKE_MODEL
+from .config import HOTAKE_MODEL, PROFILE_LLM_PROVIDER
 from .logger import log
 from .performance import get_learnings_for_prompt
 from .history import get_recent_tweets
@@ -389,13 +389,13 @@ Write more like your best tweets. Avoid the patterns of your worst ones."""
         dedup_section=dedup_section,
     )
 
-    result = run_llm(prompt, HOTAKE_MODEL, label="HOTAKE")
+    result = run_llm(prompt, HOTAKE_MODEL, label="HOTAKE", force_provider=PROFILE_LLM_PROVIDER)
     # Retry once on transient CLI failure (exit 1 + empty stderr = API hiccup)
     if result.returncode != 0 and not result.stderr.strip():
         log.warning(f"[HOTAKE] CLI transient failure (exit {result.returncode}), retrying in 10s...")
         import time
         time.sleep(10)
-        result = run_llm(prompt, HOTAKE_MODEL, label="HOTAKE")
+        result = run_llm(prompt, HOTAKE_MODEL, label="HOTAKE", force_provider=PROFILE_LLM_PROVIDER)
     if result.returncode != 0:
         log.info(f"[HOTAKE] CLI stderr: {result.stderr}")
         raise RuntimeError(f"Hot take CLI failed (exit {result.returncode}): {result.stderr}")
