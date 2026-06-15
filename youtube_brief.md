@@ -1,16 +1,16 @@
-# YouTube brief — 2026-06-14
+# YouTube brief — 2026-06-15
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **742**
-- reply: **687**
-- quote_gif: **28**
-- quote: **16**
+- Total actions logged: **725**
+- reply: **675**
+- quote: **26**
+- quote_gif: **13**
+- post: **5**
 - hotake: **5**
-- post: **4**
-- retweet: **2**
+- retweet: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -22,10 +22,10 @@
 - 🎥 **69 likes / 387000 views** — Honnêtement j’aurais pas été capable de dire si c’était fait par IA ou par un studio d’animation trad
 - 🎥 **59 likes / 18000 views** — Le juge de la Cour suprême Alexandre de Moraes a suspendu l'application d'une législation réduisant la durée de la peine que l'ancien président Jair Bolsonaro devra purger pour avoir comploté un coup
 - 🎥 **50 likes / 20000 views** — Les chances républicaines de conserver la Chambre augmentent, alors que les démocrates paniqués s'efforcent de compenser les coups successifs de redécoupage électoral.
-- 🎥 **44 likes / 11000 views** — BITCOIN : L'informatique quantique pourrait compromettre les portefeuilles $BTC d'ici 2030. Le problème plus important : migrer Bitcoin vers une cryptographie post-quantique nécessite que chaque utili
 - 🎥 **41 likes / 10000 views** — DERNIER:  Capital B a levé 17,8 millions de dollars auprès d'investisseurs incluant Adam Back et TOBAM pour acheter 182 Bitcoins supplémentaires, ce qui pourrait porter ses avoirs totaux à 3 125 BTC.
 - 🎥 **35 likes / 2000000 views** — Start with one idea. End with a feed full of content.  1000+ videos. Get unlimited Seedance 2.0: https://bit.ly/4tIQouB?twclid=299k4g4iw5tszu50ygrytfvzah
-- 🎥 **31 likes / 0 views** — Enfin, de simples mises à jour qui diversifient les données d'entraînement d'un modèle peuvent faire une différence. Nous avons ajouté des outils non liés et des invites système à un ensemble de donné
+- 🎥 **28 likes / 8000 views** — DERNIER: Michael @saylor's @Strategy acquiert 535 $BTC pour 43 M$ à 80 340 $ par Bitcoin, portant les avoirs totaux à 818 869 $BTC.
+- 🎥 **21 likes / 59000 views** — L'entraînement des modèles implique de nombreux processus techniques et sociaux, il est donc essentiel d'intégrer la prévention de la notation CoT directement dans le processus.  Nous améliorons la dé
 
 ## 🥇 Top own posts (by likes)
 
@@ -37,8 +37,8 @@
 ### Crypto
 
 - **69 likes / 24000 views** — JUST IN : Michael Saylor dit que si Strategy vend du bitcoin, ils achèteront plusieurs fois plus de BTC qu'ils n'en auront vendu :  « Même si nous devions vendre 1 bitcoin, nous en achèterions 10 à 20
-- **44 likes / 11000 views** — BITCOIN : L'informatique quantique pourrait compromettre les portefeuilles $BTC d'ici 2030. Le problème plus important : migrer Bitcoin vers une cryptographie post-quantique nécessite que chaque utili
 - **41 likes / 10000 views** — DERNIER:  Capital B a levé 17,8 millions de dollars auprès d'investisseurs incluant Adam Back et TOBAM pour acheter 182 Bitcoins supplémentaires, ce qui pourrait porter ses avoirs totaux à 3 125 BTC.
+- **28 likes / 8000 views** — DERNIER: Michael @saylor's @Strategy acquiert 535 $BTC pour 43 M$ à 80 340 $ par Bitcoin, portant les avoirs totaux à 818 869 $BTC.
 
 ### Bourse
 
@@ -49,7 +49,7 @@
 - **59 likes / 18000 views** — Le juge de la Cour suprême Alexandre de Moraes a suspendu l'application d'une législation réduisant la durée de la peine que l'ancien président Jair Bolsonaro devra purger pour avoir comploté un coup
 - **50 likes / 20000 views** — Les chances républicaines de conserver la Chambre augmentent, alors que les démocrates paniqués s'efforcent de compenser les coups successifs de redécoupage électoral.
 - **35 likes / 2000000 views** — Start with one idea. End with a feed full of content.  1000+ videos. Get unlimited Seedance 2.0: https://bit.ly/4tIQouB?twclid=299k4g4iw5tszu50ygrytfvzah
-- **31 likes / 0 views** — Enfin, de simples mises à jour qui diversifient les données d'entraînement d'un modèle peuvent faire une différence. Nous avons ajouté des outils non liés et des invites système à un ensemble de donné
+- **21 likes / 59000 views** — L'entraînement des modèles implique de nombreux processus techniques et sociaux, il est donc essentiel d'intégrer la prévention de la notation CoT directement dans le processus.  Nous améliorons la dé
 
 ## 📡 Today's news picks (from retweet_bot)
 
@@ -65,35 +65,34 @@ Literally Huang pumping and eating friend chicken isn't enough to stop the crash
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/zostaff]** Dylan Patel, founder of SemiAnalysis, on why GitHub keeps breaking:
+- **[X_HOME/Investing.com]** STOCK FUTURES JUMP AS TRUMP ANNOUNCES DEAL WITH IRAN
 
-"The entire cloud market ran out of CPUs. Microsoft sold all their spare ones to Anthropic 
-  - https://x.com/zostaff/status/2065815439897182556
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/leopardracer]** GEMMA 4 12B WITH MULTI TOKEN PREDICTION ON THE GMKTEC EVO-X2 IS A DIFFERENT LEVEL
+$SPY $QQQ $DIA $VIX
+  - https://x.com/Investingcom/status/2066337767898976675
+- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/zerohedge]** "scaling AI infrastructure is likely to take longer and be more sequential and capital-intensive than headline data center capex projections alone suggest." - M
+  - https://x.com/zerohedge/status/2066321525498634558
+- **[X_HOME/CryptoGoos]** SENATOR LUMMIS ON CLARITY ACT TIMING
 
-ran mtp in llama.cpp and you can immediately see the difference draft candida
-  - https://x.com/leopardracer/status/2065923938014871603
-- **[X_HOME/Min Choi]** Humanoid robots are doing Michael Jackson moves in Hong Kong now.
+Sen. Cynthia Lummis says passing the CLARITY Act in August is more realistic than July 4th as lawmakers work to combine mu
+  - https://x.com/cryptogoos/status/2066345447577325767
+- **[X_HOME/McNallie Money]** Do I hear $75 this week @IREN_Ltd  $IREN
+  - https://x.com/McnallieM/status/2066343136331522204
+- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/Bilaal- BD investing]** Pre market ripping on Iran deal & my high conviction stocks leading 
 
-Tsinghua's K1 robots danced at a shopping mall, then played football with kids.
+$NBIS — Nebius: GPU neocloud renting AI compute to hyperscalers.
 
-We are so co
-  - https://x.com/minchoi/status/2066007724991635789
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Tao Outsider]** Any of these subnets of the $TAO Bittensor ecosystem DO NOT deserve to be deregd? Maybe. But the market is competitive and the decision is on you.
-  - https://x.com/TaoOutsider/status/2065973174206919117
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/JKsTrades]** Good morning to all $TAO holders 
-#TAO #BITTENSOR
-  - https://x.com/JKsTrades/status/2065991609435484488
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Chix]** Bittensor (TAO) surged nearly 16% with an 87% increase in trading volume. This movement was accompanied by a channel breakout.
-  - https://x.com/jamila_go/status/2065990951189832063
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Taurus]** The hot PPI is the AI capex, not the Fed. Bitcoin tracks the AI capex
+$IREN — Bitcoin miner pi
+  - https://x.com/bdinvestingg/status/2066343537185378634
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Cointelegraph]** INTERESTING: Shanghai startup AheadForm unveils humanoid robots Origin F1 and M1, featuring realistic facial expressions, blinks, and AI-driven emotional intera
+  - https://x.com/Cointelegraph/status/2066370114228822368
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/CyberRobo]** NVIDIA MotionBricks brings humanoid robots closer to natural, fluid movement
 
-May PPI rose 1.1% month over month against 0.7% expected, pushing the annual rate to 6.5%
-  - https://x.com/Taurus4BTC/status/2065970375410991458
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/VS-(NISM RA CERTIFIED)]** #SPCX $NVDA Crowds are lining up to buy SpaceX at 112x sales 
+The system combines a modular latent generative model with Smart Primitives, packi
+  - https://x.com/CyberRobooo/status/2066354371689071001
+- **[X_HOME/Ahmad]** I immediately called that the next up from Anthropic will be ID Verification to use a closed AI model
 
-Many investors think they missed Nvidia because it's already worth $5T.
-  - https://x.com/Vaibhavswings/status/2066002530690380247
+Your freedoms will be taken one thing at a time if Local 
+  - https://x.com/TheAhmadOsman/status/2066356792322351563
 
 ## 🎬 Suggested video angles
 
@@ -104,4 +103,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-14T00:15:26*
+*Generated 2026-06-15T00:19:06*
