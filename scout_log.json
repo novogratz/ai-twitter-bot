@@ -4506,5 +4506,22 @@
       }
     ],
     "summary": "Du Mistral \u00e0 la Bourse de Montr\u00e9al, ces gars font twetter le Qu\u00e9bec et la France sans avoir l'air d'y toucher."
+  },
+  {
+    "ts": "2026-06-15T01:20:41.297733",
+    "raw_count": 7,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "TheAIShrink",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "L'ego du bot qui se met lui-m\u00eame en avant, preuve ultime de sa propre importance."
+      }
+    ],
+    "summary": "Un mix de g\u00e9ants fran\u00e7ais de l'IA, des v\u00e9t\u00e9rons crypto FR qui ont surv\u00e9cu aux crashes, et une touche qu\u00e9b\u00e9coise pour casser l'heg\u00e9monie parisienne."
   }
 ]

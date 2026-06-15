@@ -492,7 +492,8 @@
     "thibault_g",
     "balthazar_de",
     "maxence_vdf",
-    "julien_gosselin"
+    "julien_gosselin",
+    "TheAIShrink"
   ],
   "en": [
     "blablacar",
@@ -640,7 +641,12 @@
     "Dexerto",
     "MeidasTouch",
     "Adams",
-    "TMK"
+    "TMK",
+    "POM",
+    "DataFut",
+    "CryptoJack",
+    "Bluntz",
+    "Farzad"
   ],
   "history": [
     {
@@ -3837,6 +3843,36 @@
       "lang": "fr",
       "handle": "julien_gosselin",
       "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "POM",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "DataFut",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "CryptoJack",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Bluntz",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Farzad",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheAIShrink",
+      "added": "2026-06-15"
     }
   ]
 }
