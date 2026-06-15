@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-15T03:19:06.744416",
-  "window_7d_actions": 4451,
-  "window_24h_actions": 733,
+  "generated_at": "2026-06-15T07:19:06.774083",
+  "window_7d_actions": 4466,
+  "window_24h_actions": 737,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4361
+      "count": 4364
     },
     {
       "pattern": "METAPHOR",
-      "count": 26
+      "count": 31
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 19
+      "count": 22
     },
     {
       "pattern": "DIALOGUE",
-      "count": 13
+      "count": 14
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 12
+      "count": 13
     }
   ],
   "worst_patterns": [
     {
       "pattern": "OTHER",
-      "count": 3
+      "count": 4
     },
     {
       "pattern": "RENAME",
@@ -35,7 +35,7 @@
     },
     {
       "pattern": "REPETITION",
-      "count": 10
+      "count": 11
     }
   ],
   "best_hours_utc": [
@@ -63,52 +63,52 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1877
+      "count": 1870
     },
     {
       "topic": "IA",
-      "count": 1807
+      "count": 1815
     },
     {
       "topic": "Crypto",
-      "count": 556
+      "count": 566
     },
     {
       "topic": "Bourse",
-      "count": 303
+      "count": 309
     },
     {
       "topic": "Spatial",
-      "count": 229
+      "count": 232
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Bourse",
-      "24h_rate": 0.09,
-      "7d_rate": 0.068
+      "24h_rate": 0.094,
+      "7d_rate": 0.069
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2005
+      "count": 2018
     },
     {
       "pillar": "other",
-      "count": 1137
+      "count": 1138
     },
     {
       "pillar": "market_trauma",
-      "count": 1016
+      "count": 1025
     },
     {
       "pillar": "meme_reaction",
-      "count": 187
+      "count": 183
     },
     {
       "pillar": "reply_bait",
-      "count": 69
+      "count": 65
     },
     {
       "pillar": "ai_vs_btc",
@@ -118,23 +118,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 358
+      "count": 364
     },
     {
       "pillar": "market_trauma",
-      "count": 180
+      "count": 178
     },
     {
       "pillar": "other",
-      "count": 168
+      "count": 169
     },
     {
       "pillar": "meme_reaction",
-      "count": 16
+      "count": 17
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 6
     },
     {
       "pillar": "ai_vs_btc",
@@ -144,23 +144,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 42,
+      "posts": 44,
       "avg_likes": 0.07,
-      "avg_views": 33.2,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 64,
-      "avg_likes": 0.02,
-      "avg_views": 28.4,
+      "avg_views": 32.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 41,
-      "avg_likes": 0.02,
-      "avg_views": 26.9,
+      "posts": 43,
+      "avg_likes": 0.05,
+      "avg_views": 29.0,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 67,
+      "avg_likes": 0.01,
+      "avg_views": 28.1,
       "low_sample": false
     },
     {
@@ -181,23 +181,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4039
+      "count": 4067
     },
     {
       "type": "quote_gif",
-      "count": 177
+      "count": 174
     },
     {
       "type": "quote",
-      "count": 175
+      "count": 168
     },
     {
       "type": "post",
-      "count": 27
+      "count": 25
     },
     {
       "type": "hotake",
-      "count": 26
+      "count": 25
     },
     {
       "type": "retweet",
@@ -206,18 +206,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-15T03:19:05.391965",
-      "text": "BTC liquidations are just 401k Dave’s portfolio rebalancing itself.\n\nThe market doesn't move up. It moves toward liquidity.",
+      "ts": "2026-06-15T07:18:57.788866",
+      "text": "ETH/BTC red 9 weeks. ETH ETF got 10 years to approve and just hit $5B in assets. the SEC protected the market from an asset that outperformed the S&P.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-15T03:18:27.639112",
-      "text": "Anthropic pulled the model to protect AWS. OpenAI pulled theirs to protect Azure.\n\nThe real product is no longer the model. It is the exclusive cloud lane.",
+      "ts": "2026-06-15T07:18:08.547003",
+      "text": "The CME sets Friday 5pm close. crypto trades 24/7. the weekend gap is just the market pricing in reality while the S&P takes a nap.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-15T03:17:13.717674",
-      "text": "SpaceX at $1.75T, OpenAI at $852B.\n\nThe 1999 IPO mania marked the peak before the crash.\n\nAnthropic at $10B.\n\nThey aren't comparable. one prints money, the other burns it.",
+      "ts": "2026-06-15T07:17:51.452762",
+      "text": "Tao up 58% while claude gets regulated. decentralization is just volatility with a different name.",
       "type": "reply"
     }
   ]
