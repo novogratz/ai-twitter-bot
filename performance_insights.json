@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-06-14T16:15:26.380005",
-  "window_7d_actions": 4485,
-  "window_24h_actions": 788,
+  "generated_at": "2026-06-14T20:15:26.410700",
+  "window_7d_actions": 4479,
+  "window_24h_actions": 756,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4406
+      "count": 4393
     },
     {
       "pattern": "METAPHOR",
-      "count": 22
+      "count": 24
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 16
+      "count": 18
+    },
+    {
+      "pattern": "UNDERSTATEMENT",
+      "count": 13
     },
     {
       "pattern": "DIALOGUE",
       "count": 13
-    },
-    {
-      "pattern": "UNDERSTATEMENT",
-      "count": 12
     }
   ],
   "worst_patterns": [
@@ -31,11 +31,11 @@
     },
     {
       "pattern": "RENAME",
-      "count": 5
+      "count": 6
     },
     {
       "pattern": "REPETITION",
-      "count": 8
+      "count": 9
     }
   ],
   "best_hours_utc": [
@@ -45,7 +45,7 @@
     },
     {
       "hour": 16,
-      "actions": 225
+      "actions": 223
     },
     {
       "hour": 10,
@@ -63,19 +63,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1923
+      "count": 1909
     },
     {
       "topic": "IA",
-      "count": 1798
+      "count": 1807
     },
     {
       "topic": "Crypto",
-      "count": 563
+      "count": 565
     },
     {
       "topic": "Bourse",
-      "count": 293
+      "count": 292
     },
     {
       "topic": "Spatial",
@@ -85,26 +85,26 @@
   "rising_topics_24h": [
     {
       "topic": "Bourse",
-      "24h_rate": 0.093,
+      "24h_rate": 0.089,
       "7d_rate": 0.065
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1982
+      "count": 2000
     },
     {
       "pillar": "other",
-      "count": 1158
+      "count": 1153
     },
     {
       "pillar": "market_trauma",
-      "count": 1032
+      "count": 1021
     },
     {
       "pillar": "meme_reaction",
-      "count": 200
+      "count": 193
     },
     {
       "pillar": "reply_bait",
@@ -112,25 +112,25 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 38
+      "count": 37
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 397
+      "count": 379
     },
     {
       "pillar": "market_trauma",
-      "count": 186
+      "count": 177
     },
     {
       "pillar": "other",
-      "count": 176
+      "count": 175
     },
     {
       "pillar": "meme_reaction",
-      "count": 18
+      "count": 14
     },
     {
       "pillar": "reply_bait",
@@ -151,24 +151,24 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 60,
+      "posts": 62,
       "avg_likes": 0.02,
-      "avg_views": 27.9,
+      "avg_views": 28.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 39,
+      "posts": 40,
       "avg_likes": 0.0,
-      "avg_views": 25.5,
+      "avg_views": 26.3,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 1,
+      "posts": 2,
       "avg_likes": 0.0,
-      "avg_views": 1239.0,
-      "low_sample": true
+      "avg_views": 642.0,
+      "low_sample": false
     },
     {
       "pillar": "reply_bait",
@@ -181,15 +181,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4044
-    },
-    {
-      "type": "quote",
-      "count": 193
+      "count": 4053
     },
     {
       "type": "quote_gif",
-      "count": 191
+      "count": 184
+    },
+    {
+      "type": "quote",
+      "count": 183
     },
     {
       "type": "post",
@@ -197,7 +197,7 @@
     },
     {
       "type": "hotake",
-      "count": 24
+      "count": 26
     },
     {
       "type": "retweet",
@@ -206,18 +206,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-14T16:14:14.920743",
-      "text": "Jason’s feature request: \"read in grok\".\n\nThe real ask is why users still want to click off-platform when grok already serves the full context.",
+      "ts": "2026-06-14T20:13:51.483814",
+      "text": "Lonsdale wants you afraid. CoreWeave’s $7B debt stack doesn’t care about your feelings.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-14T16:13:00.900342",
-      "text": "Azure is the landlord. openai is the tenant. you are the subletter. all three are praying the GPU market doesn't repossess the building.",
-      "type": "reply"
+      "ts": "2026-06-14T20:13:17.897343",
+      "text": "Oracle just got dethroned by its own co-founder's AI plays. Larry isn't the chairman anymore; he's the portfolio.\n\nhttps://finance.yahoo.com/markets/stocks/articles/oracle-stock-collapse-hits-larry-223218553.html",
+      "type": "hotake"
     },
     {
-      "ts": "2026-06-14T16:08:50.728908",
-      "text": "Co-posed packaging lets you stack more HBM than co-wos. tsmc isn't making chips, it's building legos.",
+      "ts": "2026-06-14T20:09:09.075439",
+      "text": "ETH entry at 1,662. volatility regime says mean reversion works until the trend snaps.\n\nyou’re trading noise.",
       "type": "reply"
     }
   ]

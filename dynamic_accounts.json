@@ -484,7 +484,10 @@
     "Benoit_Levet",
     "VincentLemoine",
     "MaximeBoutin_",
-    "OlivierMuller"
+    "OlivierMuller",
+    "RomainFoucault",
+    "Lionel0716",
+    "VincentTass"
   ],
   "en": [
     "blablacar",
@@ -628,7 +631,11 @@
     "B1",
     "Clandestine",
     "WOLF",
-    "mattparlmer"
+    "mattparlmer",
+    "Dexerto",
+    "MeidasTouch",
+    "Adams",
+    "TMK"
   ],
   "history": [
     {
@@ -3764,6 +3771,41 @@
     {
       "lang": "en",
       "handle": "mattparlmer",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Dexerto",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "MeidasTouch",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Adams",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "en",
+      "handle": "TMK",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainFoucault",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lionel0716",
+      "added": "2026-06-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentTass",
       "added": "2026-06-14"
     }
   ]

@@ -4423,5 +4423,36 @@
       }
     ],
     "summary": "Du pur gras technique et trading, sans la soupe\u4e00\u822ciste des influenceurs formations. Mistral, le trader pro, et le Qu\u00e9b\u00e9cois crypto : c'est du concret."
+  },
+  {
+    "ts": "2026-06-14T18:16:40.628962",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RomainFoucault",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 75000,
+        "reason": "Ancien banquier, il parle crypto avec la cynisme d'un gars qui a vu les bulles \u00e9clater 4 fois."
+      },
+      {
+        "handle": "Lionel0716",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le prof qui rend l'IA digeste sans la d\u00e9vitaliser, parfait pour ne pas passer pour un con en r\u00e9union."
+      },
+      {
+        "handle": "VincentTass",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Le trader qui transforme les carnages en blagues, car si tu ne ris pas, tu pleures."
+      }
+    ],
+    "summary": "Un mix de fondus de technos fransoc et de traders qu\u00e9b\u00e9cois qui ont surv\u00e9cu aux crashs, sans les vendeurs de r\u00eaves \u00e0 99\u20ac."
   }
 ]
