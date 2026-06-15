@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-15T14:44:57.820500",
-  "window_7d_actions": 4447,
-  "window_24h_actions": 770,
+  "generated_at": "2026-06-15T18:44:57.869500",
+  "window_7d_actions": 4441,
+  "window_24h_actions": 799,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4334
+      "count": 4325
     },
     {
       "pattern": "METAPHOR",
@@ -13,7 +13,7 @@
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 25
+      "count": 28
     },
     {
       "pattern": "DIALOGUE",
@@ -49,11 +49,11 @@
     },
     {
       "hour": 16,
-      "actions": 223
+      "actions": 226
     },
     {
       "hour": 15,
-      "actions": 220
+      "actions": 221
     },
     {
       "hour": 1,
@@ -62,99 +62,99 @@
   ],
   "best_topics_7d": [
     {
-      "topic": "Autre",
-      "count": 1828
+      "topic": "IA",
+      "count": 1824
     },
     {
-      "topic": "IA",
-      "count": 1825
+      "topic": "Autre",
+      "count": 1813
     },
     {
       "topic": "Crypto",
-      "count": 558
+      "count": 566
     },
     {
       "topic": "Bourse",
-      "count": 324
+      "count": 326
     },
     {
       "topic": "Spatial",
-      "count": 245
+      "count": 252
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2041
+      "count": 2032
     },
     {
       "pillar": "other",
-      "count": 1115
+      "count": 1104
     },
     {
       "pillar": "market_trauma",
-      "count": 1020
+      "count": 1036
     },
     {
       "pillar": "meme_reaction",
-      "count": 175
+      "count": 172
     },
     {
       "pillar": "reply_bait",
-      "count": 60
+      "count": 57
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 36
+      "count": 40
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 379
+      "count": 386
     },
     {
       "pillar": "market_trauma",
-      "count": 189
+      "count": 207
     },
     {
       "pillar": "other",
-      "count": 175
+      "count": 171
     },
     {
       "pillar": "meme_reaction",
-      "count": 18
+      "count": 24
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 6
     },
     {
       "pillar": "reply_bait",
       "count": 5
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 50,
+      "posts": 52,
       "avg_likes": 0.06,
-      "avg_views": 30.9,
+      "avg_views": 30.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 45,
+      "posts": 49,
       "avg_likes": 0.04,
-      "avg_views": 28.5,
+      "avg_views": 27.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 69,
+      "posts": 70,
       "avg_likes": 0.01,
-      "avg_views": 29.2,
+      "avg_views": 29.9,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4057
-    },
-    {
-      "type": "quote_gif",
-      "count": 166
+      "count": 4054
     },
     {
       "type": "quote",
-      "count": 166
+      "count": 165
+    },
+    {
+      "type": "quote_gif",
+      "count": 163
+    },
+    {
+      "type": "hotake",
+      "count": 26
     },
     {
       "type": "post",
       "count": 26
-    },
-    {
-      "type": "hotake",
-      "count": 25
     },
     {
       "type": "retweet",
@@ -200,19 +200,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-15T14:42:41.527055",
-      "text": "Nvidia raising $25B in investment grade debt. the house that jensen built is borrowing like a utility.",
+      "ts": "2026-06-15T18:44:25.614971",
+      "text": "Inference is just training with a longer queue. nvidia isn't selling chips, they're selling patience. wait for it.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-15T14:42:24.207951",
-      "text": "$CELO entered $0.06-$0.04. The real story is that this is a stablecoin peg, not a crypto asset.\n\nThe Degen bought the dip. The VC with a Podcast is pitching \"AI agents on Celo\" to fill the silence.",
+      "ts": "2026-06-15T18:43:02.057500",
+      "text": "Anthropic told Cursor Claude was \"not for public APIs.\"\nCursor built a $20B valuation on that secret.\nAI SaaS: read the terms, not the tweet.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-15T14:40:19.377973",
-      "text": "48-hour distraction. they're home. my most reliable patients 🛋️",
-      "type": "quote"
+      "ts": "2026-06-15T18:42:46.118280",
+      "text": "RKC is a meme coin. Pumpfun’s ranking = buy pressure from degens who don’t read docs. Phantom’s list = FOMO from people who don’t know what it does.",
+      "type": "reply"
     }
   ]
 }

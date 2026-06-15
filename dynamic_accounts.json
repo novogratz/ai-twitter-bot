@@ -519,7 +519,24 @@
     "AlexisBoulin",
     "AntoineLeClerc",
     "ValentinBenoist",
-    "BenjaminLevy"
+    "BenjaminLevy",
+    "ThomasBaudel",
+    "PierreOlivier",
+    "MarcLemay",
+    "FrenchTechSF",
+    "AlexisDroin",
+    "VincentVezina",
+    "sylvain_leveque",
+    "thomasbosc",
+    "maxime_gd",
+    "jlmichel",
+    "louis_arnal",
+    "alexandre_d",
+    "benjamin_dabert",
+    "pauline_de",
+    "jules_tremblay",
+    "david_gauthier",
+    "marie_duval"
   ],
   "en": [
     "blablacar",
@@ -687,7 +704,15 @@
     "mert",
     "Tangem",
     "ChangeNOW",
-    "a16z"
+    "a16z",
+    "Taelin",
+    "NLR",
+    "Lynn",
+    "TESLARATI",
+    "CoinDesk",
+    "Hedgeye",
+    "LCI",
+    "toly"
   ],
   "history": [
     {
@@ -4118,6 +4143,131 @@
     {
       "lang": "fr",
       "handle": "BenjaminLevy",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Taelin",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "NLR",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Lynn",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "TESLARATI",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBaudel",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreOlivier",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLemay",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "FrenchTechSF",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDroin",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentVezina",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "CoinDesk",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Hedgeye",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "LCI",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "toly",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "sylvain_leveque",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomasbosc",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "maxime_gd",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "jlmichel",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "louis_arnal",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "alexandre_d",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "benjamin_dabert",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "pauline_de",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "jules_tremblay",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "david_gauthier",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "marie_duval",
       "added": "2026-06-15"
     }
   ]
