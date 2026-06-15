@@ -4599,5 +4599,168 @@
       }
     ],
     "summary": "Un m\u00e9lange parfait entre la profondeur technique (Raguiat, AlexisRoh) et l'impact de masse (DorinPichon, L3o). On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur ceux qui comprennent le produit."
+  },
+  {
+    "ts": "2026-06-15T07:33:19.669253",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CathieD",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 1800000,
+        "reason": "La reine de la disraction (ARK Invest). Sa volatilit\u00e9 est un sport. Les FR la suivent pour voir si le futur s'effondre."
+      },
+      {
+        "handle": "LennyZ",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 250000,
+        "reason": "Lenny's Newsletter. Il tweet en anglais mais sa diaspora FR adore ses threads sur la tech/business. Le 'Bloomberg' de la tech moderne."
+      },
+      {
+        "handle": "JeanBaptiste",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "JBCrypto. Il couvre tout: DeFi, NFT, BTC. Le seul qui balance de l'analyse pure sans vendre de r\u00eave ou de stage."
+      },
+      {
+        "handle": "GaelLebrun",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Le grand pr\u00eatre du Web3 fran\u00e7ais. Si tu veux savoir ce qui va exploser (ou s'effondrer) dans la blockchain sans les influenceurs de 2021."
+      },
+      {
+        "handle": "PatrickM",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "La star crypto qu\u00e9b\u00e9coise. Analyse technique solide et communaut\u00e9 engou\u00e9e. Moins 'tech pure', plus 'trader actif'."
+      },
+      {
+        "handle": "MauriceD",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Expert LLMs, twitte des trucs de fou sur le training et l'inference. Un pur technicien dans un oc\u00e9an de charlatans."
+      },
+      {
+        "handle": "SylvainA",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Chercheur/Praticien IA au Qu\u00e9bec. Moins visible que Mistral mais balance des insights deep tech tr\u00e8s pertinents."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la masse pour garder les cerveaux derri\u00e8re les comptes. C'est un m\u00e9lange d'experts Mistral/Macro en France, des deux leaders crypto qu\u00e9b\u00e9cois, et des g\u00e9ants US qui dominent le vocabulaire FR. Z\u00e9ro formation \u00e0 99\u20ac."
+  },
+  {
+    "ts": "2026-06-15T09:33:50.295106",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AdrienPerrard",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Le grand pr\u00eatre de l'alpha crypto FR. Il tweete ses positions, pas juste ses opinions. Le seul qui assume quand il se plant\u00e9."
+      },
+      {
+        "handle": "PierreDelforge",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "C\u00e9l\u00e8bre pour son blog 'Les actions qui font pleurer'. Il a l'humour qu\u00e9b\u00e9cois pour cacher qu'il est plus intelligent que toi."
+      },
+      {
+        "handle": "GillesBordet",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Journaliste Tech (Les Echos). Il couvre l'IA et la SaaS avec des analyses de fond, pas juste du buzz. Un des rares qui savent ce qu'est un SaaS."
+      },
+      {
+        "handle": "JeanPhilippeCote",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Tech VC & Entrepreneur. Il parle d'IA et de Startups avec le bon angle 'business', pas juste 'look at my new toy'."
+      },
+      {
+        "handle": "LudovicBonn",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 9500,
+        "reason": "Franco-am\u00e9ricain, actif sur les cycles Bitcoin. Twitte en FR mais pense en USD. Parfait pour voir le march\u00e9 crypto sans les biais europ\u00e9ens."
+      }
+    ],
+    "summary": "J'ai \u00e9limin\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui analysent. La France est roliste en crypto mais pauvre en 'value investing'. Le Qu\u00e9bec a ses perles rares en bourse. L'US a ses francophones fonctionnaires qui savent coder."
+  },
+  {
+    "ts": "2026-06-15T12:55:33.376840",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RomainRouille",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le 'le Petit Journal' de la finance. Son style narquois et ses r\u00e9sum\u00e9s macros sont la seule chose qui rend la bourse fran\u00e7aise digeste."
+      },
+      {
+        "handle": "CryptoRando",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "L'instantan\u00e9 de la semaine sur la crypto qu\u00e9b\u00e9coise. Il d\u00e9couvre les projets locaux avant qu'ils ne soient mainstream."
+      },
+      {
+        "handle": "JulienDrouet",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "G\u00e9ostrat\u00e9gie tech et deeptech. Il explique les fusions-acquisitions comme un roman d'espionnage, mais avec des chiffres. Rare."
+      },
+      {
+        "handle": "AlexisBoulin",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "La voix calme de l'IA au Qu\u00e9bec. Il tweet entre les lignes des papiers de recherche et de la r\u00e9alit\u00e9 du terrain. Moins de bruit, plus de sens."
+      },
+      {
+        "handle": "AntoineLeClerc",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Ex-JP Morgan, il couvre la fintech FR avec une pr\u00e9cision chirurgicale. Pas de pub pour ses copains, juste de l'analyse propre."
+      },
+      {
+        "handle": "ValentinBenoist",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 9000,
+        "reason": "Foundeur SaaS bas\u00e9 \u00e0 SF, il tweete ses builds publics en FR. C'est rare de voir de l'entrepreneuriat tech francophone aussi 'live' aux US."
+      },
+      {
+        "handle": "BenjaminLevy",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 8000,
+        "reason": "Le gars qui a surv\u00e9cu \u00e0 deux cycles. Ses threads sur les cycles altcoin sont devenus la bible des Qu\u00e9b\u00e9cois s\u00e9rieux."
+      }
+    ],
+    "summary": "On a \u00e9vit\u00e9 les influenceurs TikTok qui font des grimaces avec des graphiques. Ici, ce sont des gens qui comprennent de quoi ils parlent : des devs, des traders et des fondateurs qui tweetent en fran\u00e7ais parce que la SVT est mieux \u00e9crite en FR."
   }
 ]

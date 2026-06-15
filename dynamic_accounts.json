@@ -501,7 +501,25 @@
     "DorinPichon",
     "AlexisRoh",
     "L3o_0306",
-    "BenjaminCayla"
+    "BenjaminCayla",
+    "CathieD",
+    "LennyZ",
+    "JeanBaptiste",
+    "GaelLebrun",
+    "PatrickM",
+    "MauriceD",
+    "SylvainA",
+    "AdrienPerrard",
+    "PierreDelforge",
+    "GillesBordet",
+    "LudovicBonn",
+    "RomainRouille",
+    "CryptoRando",
+    "JulienDrouet",
+    "AlexisBoulin",
+    "AntoineLeClerc",
+    "ValentinBenoist",
+    "BenjaminLevy"
   ],
   "en": [
     "blablacar",
@@ -660,7 +678,16 @@
     "NeilXbt",
     "Muskonomy",
     "Michael",
-    "Shawn"
+    "Shawn",
+    "Gerla",
+    "lamone",
+    "vicky",
+    "WASSIE",
+    "Gordon",
+    "mert",
+    "Tangem",
+    "ChangeNOW",
+    "a16z"
   ],
   "history": [
     {
@@ -3956,6 +3983,141 @@
     {
       "lang": "en",
       "handle": "Shawn",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Gerla",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "CathieD",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "LennyZ",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptiste",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLebrun",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "PatrickM",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MauriceD",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainA",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "lamone",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "vicky",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "WASSIE",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Gordon",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienPerrard",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDelforge",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "GillesBordet",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicBonn",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "mert",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Tangem",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "ChangeNOW",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "a16z",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainRouille",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoRando",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDrouet",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBoulin",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineLeClerc",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "ValentinBenoist",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminLevy",
       "added": "2026-06-15"
     }
   ]
