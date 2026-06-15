@@ -493,7 +493,15 @@
     "balthazar_de",
     "maxence_vdf",
     "julien_gosselin",
-    "TheAIShrink"
+    "TheAIShrink",
+    "VincentB",
+    "CryptoCabin",
+    "MehdiR",
+    "Raguiat",
+    "DorinPichon",
+    "AlexisRoh",
+    "L3o_0306",
+    "BenjaminCayla"
   ],
   "en": [
     "blablacar",
@@ -646,7 +654,13 @@
     "DataFut",
     "CryptoJack",
     "Bluntz",
-    "Farzad"
+    "Farzad",
+    "J",
+    "Flappr",
+    "NeilXbt",
+    "Muskonomy",
+    "Michael",
+    "Shawn"
   ],
   "history": [
     {
@@ -3872,6 +3886,76 @@
     {
       "lang": "fr",
       "handle": "TheAIShrink",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "J",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Flappr",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "NeilXbt",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Muskonomy",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentB",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCabin",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MehdiR",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Michael",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "Raguiat",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorinPichon",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisRoh",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "L3o_0306",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminCayla",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Shawn",
       "added": "2026-06-15"
     }
   ]

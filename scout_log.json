@@ -4523,5 +4523,81 @@
       }
     ],
     "summary": "Un mix de g\u00e9ants fran\u00e7ais de l'IA, des v\u00e9t\u00e9rons crypto FR qui ont surv\u00e9cu aux crashes, et une touche qu\u00e9b\u00e9coise pour casser l'heg\u00e9monie parisienne."
+  },
+  {
+    "ts": "2026-06-15T03:21:03.233347",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "VincentB",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Fondateur fran\u00e7ais install\u00e9 \u00e0 SF. Il fait le pont entre la tech europ\u00e9enne et les mecs de Silicon Valley qui croient encore que les LLMs vont tout r\u00e9soudre."
+      },
+      {
+        "handle": "CryptoCabin",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Communaut\u00e9 active et newsletters de qualit\u00e9. Ils couvrent les perles du march\u00e9 local que Paris ignore royalement."
+      },
+      {
+        "handle": "MehdiR",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 14000,
+        "reason": "L'insider des fintechs. Ses threads sur les lev\u00e9es de fonds font plus mal que nos imp\u00f4ts."
+      }
+    ],
+    "summary": "On a filtr\u00e9 les vendeurs de r\u00eave pour ne garder que ceux qui comprennent leur boulot. Mistral domine l'IA, et le Qu\u00e9bec crypto se porte bien sans crier partout. C'est du solide, pas du vent."
+  },
+  {
+    "ts": "2026-06-15T05:38:03.909383",
+    "raw_count": 5,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Raguiat",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 120000,
+        "reason": "La star montante de la DeFi FR. Vaut le coup car il explique la tech crypto sans endormir les chats, contrairement \u00e0 la majorit\u00e9 des analystes qui croient qu'un tweet est un essai de doctorat."
+      },
+      {
+        "handle": "DorinPichon",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Le roi de la bourse accessible. Il pique des noms tous les matins comme un barman qui sert des shots. Si il twitte, le carnet de commandes bouge dans les 10 secondes."
+      },
+      {
+        "handle": "AlexisRoh",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 55000,
+        "reason": "L'analyste AI qu\u00e9b\u00e9cois qui d\u00e9crypte les LLMs sans faire semblant d'\u00eatre un chercheur en ML. Son humour tranchant est le seul rem\u00e8de contre la fatigue des annonces de produits 'r\u00e9volutionnaires'."
+      },
+      {
+        "handle": "L3o_0306",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "G\u00e9nie du marketing crypto. Il transforme des concepts complexes en memes viraux. Son compte est une mine d'or pour comprendre le narrative du march\u00e9 sans lire le whitepaper de chaque nouveau coin."
+      },
+      {
+        "handle": "BenjaminCayla",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Ex-Politico maintenant crypto, il a le flair pour les narratives. Il ne vend pas de r\u00eaves, il vend des r\u00e9alit\u00e9s market\u00e9es. Son compte est pour ceux qui veulent voir le monde tel qu'il est, pas tel que les VC l'annoncent."
+      }
+    ],
+    "summary": "Un m\u00e9lange parfait entre la profondeur technique (Raguiat, AlexisRoh) et l'impact de masse (DorinPichon, L3o). On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur ceux qui comprennent le produit."
   }
 ]
