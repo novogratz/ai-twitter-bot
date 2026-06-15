@@ -4936,5 +4936,57 @@
       }
     ],
     "summary": "On a creus\u00e9 du c\u00f4t\u00e9 des fondateurs et des VC qui tweetent du concret plut\u00f4t que des citations LinkedIn. Pas de vendeurs de r\u00eaves, juste des gens qui construisent ou analysent la tech FR/QC/US. La s\u00e9lection est chirurgicale : peu de bruit, beaucoup de signal."
+  },
+  {
+    "ts": "2026-06-15T18:45:37.269586",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Ludo222",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 140000,
+        "reason": "Le roi des threads crypto en FR. Il d\u00e9taille les projets avec la pr\u00e9cision d'un chirurgien, pas d'un parieur."
+      },
+      {
+        "handle": "RomainBoscher",
+        "region": "france",
+        "niche": "ai",
+        "followers": 115000,
+        "reason": "L'expert Mistral. Il balance du techniquement dense sans \u00eatre ennuyeux, un rare \u00e9quilibre."
+      },
+      {
+        "handle": "TobiLutze",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Le mec qui transforme les tweets IA en art. Il prouve qu'on peut \u00eatre pro et fun sans faire 'CEO mode'."
+      },
+      {
+        "handle": "RomainVayrat",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Le sp\u00e9cialiste de la Microcap. Il trouve des p\u00e9pites avant qu'elles ne soient sur Boursorama."
+      },
+      {
+        "handle": "ClemenceGuinot",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Data Scientist chez Hugging Face. Elle rend l'IA accessible sans la simplifier \u00e0 l'exc\u00e8s."
+      },
+      {
+        "handle": "BaptisteSantos",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "Le talent montr\u00e9alais qui monte. Tech, IA, startups. Il parle de code et de business."
+      }
+    ],
+    "summary": "Focus sur les 'builders' plut\u00f4t que les 'gourous'. Cette s\u00e9lection privil\u00e9gie la substance technique (Hugging Face, Mistral) et l'analyse crypto profonde (Ludo) pour \u00e9viter le bruit des influenceurs qui vendent du r\u00eave."
   }
 ]
