@@ -621,3 +621,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 23 views: Anthropic’s top models now open source. @OpenAI is about to look like they’re selling water at a dro
   - 1 likes / 7 views: The herd is just people who forgot how to look at the chart themselves
   - 1 likes / 37 views: The timeline treating a four-letter expletive like an earnings beat  https://x.com/TheBTCTherapist/s
+
+## 2026-06-14
+
+**Activity** — total actions: 721
+  - by type: reply=672, quote=25, quote_gif=13, post=5, hotake=5, retweet=1
+  - top sources: SEARCH-HOT=521, FEED-SWEEP-FEED=69, FEED-SWEEP-FOLLOWING=43, QUOTE=19, GIF=15, VIP=6, BREAKING_QRT=4, HOT_QUOTE=2
+  - comedy patterns: METAPHOR=10, FR_ANCHOR=7, DIALOGUE=5, UNDERSTATEMENT=4, REPETITION=4, RENAME=2, OTHER=1
+  - top reply targets: @TheBTCTherapist=16, @OpenAI=10, @cryptogoos=9, @cryptorover=8, @kimmonismus=8
+
+**Followers we follow** (running total): 234
+
+**Top-performing posts scraped today**:
+  - 0 likes / 0 views: the business idiots are treating AGI like a credit score that just dropped two points   https://x.co
+  - 0 likes / 17 views: Elon has $0 cash. NVDA sells the shovel, OpenAI burns the cash, and the Fed prints the interest. The
+  - 0 likes / 40 views: Mike Novogratz says 95% done $BTC bulls hearing that 100% pass [SIGNS: yes]
