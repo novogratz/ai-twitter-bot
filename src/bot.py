@@ -685,6 +685,16 @@ def _run_single_bot_cycle() -> bool:
                 os.remove(img_path)
             except OSError:
                 pass
+        # First-comment self-reply (operator 2026-06-15): drop one open
+        # question under our own fresh post — a first-hour reply signal
+        # (~15x algo weight) + reply bait to lift the post's reach. The
+        # post we just shipped is now our latest, so reply_to_own_latest
+        # targets it. Best-effort; never blocks the ship.
+        try:
+            from .first_comment import post_first_comment
+            post_first_comment(post_body)
+        except Exception:
+            pass
     # Successful Décode ship.
     return True
 

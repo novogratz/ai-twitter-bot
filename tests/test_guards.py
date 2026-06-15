@@ -2241,6 +2241,25 @@ def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
     assert "_follow_quality_decision" in src and "_quality_reject_recent" in src
 
 
+def test_first_comment_self_reply_wired_and_guarded(monkeypatch):
+    """2026-06-15 (operator: "do even better"). Posts get ~22 views — reach
+    is the bottleneck. After an original ships, the bot drops a first-comment
+    self-reply (first-hour signal + reply bait). Must be wired in bot.py and
+    best-effort: short/empty/disabled input => no Safari work, returns False."""
+    import inspect
+    from src import first_comment, bot
+
+    assert "post_first_comment" in inspect.getsource(bot)
+
+    # Disabled => no work (never touches Safari).
+    monkeypatch.setattr(first_comment, "FIRST_COMMENT_ENABLED", False)
+    assert first_comment.post_first_comment("a real original post here") is False
+
+    # Enabled but too-short input => skipped before any LLM/Safari call.
+    monkeypatch.setattr(first_comment, "FIRST_COMMENT_ENABLED", True)
+    assert first_comment.post_first_comment("tiny") is False
+
+
 def test_reply_winners_feeds_post_and_quote_prompts():
     """2026-06-15 operator: "replies get crazy likes, posts don't — could
     the bot inspire itself from replies?" The reply_winners bank mines our

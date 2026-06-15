@@ -4,6 +4,22 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-15 round 2 — FIRST-COMMENT SELF-REPLY for reach (operator: "you
+> can do even better"):** data assessment showed the bottleneck is now
+> REACH, not content — posts get ~22 median views on 1.5K followers
+> (followers ARE growing, +12/4.5h; replies get the eyeballs). Revived the
+> dead `reply_to_own_latest` helper as a "first comment": after an original
+> ships, `first_comment.post_first_comment` drops ONE short in-voice open
+> question under our own fresh post → a first-hour reply signal (~15x algo
+> weight) + reply bait (each answer is another distribution signal) + the
+> sanctioned link-in-first-reply slot. Best-effort (never blocks the ship),
+> reply-model/ollama, env `FIRST_COMMENT_ENABLED=1`. Guard:
+> `test_first_comment_self_reply_wired_and_guarded`.
+> OPEN LEVERS (assessed, not yet done): followers diluted with junk from
+> the pre-quality-gate followback (dead followers throttle reach); pin never
+> rotates (PIN_MIN_LIKES=5, nothing clears it); the 645-reply/day footprint
+> may itself throttle reach (suppression_watch flagged avg 0.2 this AM).
+
 > **2026-06-15 — LEARN FROM REPLIES + 2x QUOTES (operator: "replies get a
 > crazy amount of likes, posts not really... could the bot inspire itself
 > from replies?" + "do 2x quote retweets"):**

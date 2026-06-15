@@ -536,7 +536,13 @@
     "pauline_de",
     "jules_tremblay",
     "david_gauthier",
-    "marie_duval"
+    "marie_duval",
+    "Ludo222",
+    "RomainBoscher",
+    "TobiLutze",
+    "RomainVayrat",
+    "ClemenceGuinot",
+    "BaptisteSantos"
   ],
   "en": [
     "blablacar",
@@ -712,7 +718,10 @@
     "CoinDesk",
     "Hedgeye",
     "LCI",
-    "toly"
+    "toly",
+    "Stellar",
+    "Surmulot",
+    "rynex"
   ],
   "history": [
     {
@@ -4268,6 +4277,51 @@
     {
       "lang": "fr",
       "handle": "marie_duval",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Stellar",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Surmulot",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "rynex",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "Ludo222",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBoscher",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "TobiLutze",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainVayrat",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClemenceGuinot",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "BaptisteSantos",
       "added": "2026-06-15"
     }
   ]
