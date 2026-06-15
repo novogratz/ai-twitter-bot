@@ -2149,7 +2149,7 @@ def test_agent_bounds_allow_operator_volume_mandate():
     from src.meta_strategy_agent import _BOUNDS
     assert _BOUNDS["MAX_NEWS_PER_DAY"][1] <= 4
     assert _BOUNDS["MAX_HOTAKES_PER_DAY"][1] <= 8
-    assert _BOUNDS["MAX_QUOTES_PER_DAY"][1] <= 48
+    assert _BOUNDS["MAX_QUOTES_PER_DAY"][1] <= 96  # 2026-06-15: 2x quotes (operator)
     # Floors: the agent may tune DOWN but never starve a surface entirely.
     assert _BOUNDS["MAX_HOTAKES_PER_DAY"][0] >= 1
     assert _BOUNDS["MAX_NEWS_PER_DAY"][0] >= 1
@@ -2158,7 +2158,7 @@ def test_agent_bounds_allow_operator_volume_mandate():
     from src.strategy_lab_bot import ALLOWED_PATHS
     assert ALLOWED_PATHS["caps.MAX_NEWS_PER_DAY"][1] <= 4
     assert ALLOWED_PATHS["caps.MAX_HOTAKES_PER_DAY"][1] <= 8
-    assert ALLOWED_PATHS["caps.MAX_QUOTES_PER_DAY"][1] <= 48
+    assert ALLOWED_PATHS["caps.MAX_QUOTES_PER_DAY"][1] <= 96  # 2026-06-15: 2x quotes
     # Growth mode 2026-06-11 (operator: follows + followback back ON):
     # follow_blast allowed at a human trickle, never above 3/cycle.
     assert ALLOWED_PATHS["caps.FOLLOW_BLAST_PER_CYCLE"][1] <= 3, \
@@ -2239,6 +2239,25 @@ def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
     # Structural pin: the chokepoint actually consults the gate.
     src = inspect.getsource(follow_account)
     assert "_follow_quality_decision" in src and "_quality_reject_recent" in src
+
+
+def test_reply_winners_feeds_post_and_quote_prompts():
+    """2026-06-15 operator: "replies get crazy likes, posts don't — could
+    the bot inspire itself from replies?" The reply_winners bank mines our
+    highest-liked replies; the post (hotake) + quote generators inject them
+    as voice exemplars, mined from our own /with_replies tab."""
+    import inspect
+    from src import reply_winners, hotake_agent, quote_tweet_bot
+
+    # Empty bank renders nothing (no stale injection — self_winners lesson).
+    assert reply_winners.render_reply_winners_block() == "" or \
+        reply_winners._read_entries()
+
+    # Both profile generators consult the bank.
+    assert "reply_winners" in inspect.getsource(hotake_agent)
+    assert "reply_winners" in inspect.getsource(quote_tweet_bot)
+    # Mined from our own /with_replies (the one place reply likes show).
+    assert "scrape_own_replies" in inspect.getsource(reply_winners)
 
 
 def test_uppercase_metadata_tag_stripped_at_chokepoint():

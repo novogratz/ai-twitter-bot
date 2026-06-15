@@ -352,6 +352,15 @@ Write more like your best tweets. Avoid the patterns of your worst ones."""
             performance_section = (performance_section or "") + "\n\n" + sw
     except Exception:
         pass
+    # Reply-winners — our best REPLIES as the voice to imitate (operator
+    # 2026-06-15: replies get the likes, posts don't — learn from replies).
+    try:
+        from . import reply_winners
+        rw = reply_winners.render_reply_winners_block(sample_size=3)
+        if rw:
+            performance_section = (performance_section or "") + "\n\n" + rw
+    except Exception:
+        pass
     # Inject real article URLs from the RSS pool so the LLM doesn't hallucinate.
     # external_signal.json is refreshed every ~30 min by the RSS bot.
     news_pool_section = ""

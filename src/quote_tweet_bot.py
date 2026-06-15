@@ -438,6 +438,15 @@ def _generate_quote(author: str, tweet_text: str):
     prompt = QUOTE_PROMPT.format(author=author, tweet_text=tweet_text[:200],
                                  mnts_block=_mnts_promo_block_q(tweet_text),
                                  gif_guide=GIF_GUIDE_BLOCK)
+    # Reply-winners voice exemplars (operator 2026-06-15: quotes get views
+    # but few likes — replies get the likes; imitate the reply voice).
+    try:
+        from . import reply_winners
+        rw = reply_winners.render_reply_winners_block(sample_size=3)
+        if rw:
+            prompt = prompt + "\n\n" + rw
+    except Exception:
+        pass
     try:
         result = run_llm(prompt, QUOTE_MODEL, label="QUOTE", timeout=30, force_provider=PROFILE_LLM_PROVIDER)
         if result.returncode != 0:

@@ -1643,6 +1643,31 @@ def scrape_profile_tweets(username: str, max_tweets: int = 5):
         return tweets
 
 
+def scrape_own_replies(max_tweets: int = 25):
+    """Scrape our own /with_replies tab — replies WITH their like counts.
+
+    Replies live on other people's threads, so their likes aren't visible
+    on the main profile or in engagement_log. The with_replies tab is the
+    one place X shows our replies with engagement. Used by reply_winners
+    to mine our best-performing replies as voice exemplars for posts/quotes
+    (operator 2026-06-15: "replies get crazy likes — could the bot inspire
+    itself from replies?")."""
+    from .config import BOT_HANDLE
+    if not _profile_visit_allowed(BOT_HANDLE):
+        return []
+    with _safari_lock:
+        url = f"https://x.com/{BOT_HANDLE}/with_replies"
+        log.info(f"[SCRAPE] Visiting own replies: {url}")
+        webbrowser.open(url)
+        time.sleep(8)
+        _scroll_page()
+        time.sleep(1)
+        _scroll_page()
+        tweets = _scrape_tweets_from_page(f"@{BOT_HANDLE}/with_replies", max_tweets)
+        close_front_tab()
+        return tweets
+
+
 def scrape_home_feed(max_tweets: int = 15):
     """Scrape tweets from the home feed (For You / algorithmic)."""
     with _safari_lock:
