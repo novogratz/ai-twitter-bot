@@ -17,7 +17,7 @@ import random
 import signal
 import sys
 import traceback
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
@@ -61,6 +61,7 @@ from src.safari_hygiene import safe_run_session_refresh, safe_run_periodic_warmu
 from src.strategy_lab_bot import safe_run_strategy_lab_cycle
 from src.joke_bank import safe_run_joke_bank_cycle
 from src.self_winners import safe_run_self_winners_cycle
+from src.reply_winners import safe_run_reply_winners_cycle
 from src.manu_bercy_bot import safe_run_manu_bercy_cycle
 from src.recap_thread_bot import safe_run_recap_thread_cycle
 from src.buzz_hunter_bot import safe_run_buzz_hunter_cycle
@@ -883,6 +884,19 @@ def main():
             safe_run_self_winners_cycle,
             trigger=IntervalTrigger(hours=2),
             id="self_winners_job",
+        )
+
+        # Reply-winners bank — scrapes our /with_replies tab for our
+        # highest-liked REPLIES and feeds them as voice exemplars into the
+        # post/quote prompts (operator 2026-06-15: "replies get crazy likes,
+        # posts don't — could the bot inspire itself from replies?"). Every
+        # 3h (one extra profile visit; replies accumulate likes slowly).
+        log.info("Reply-winners bank: mining best replies as post/quote voice every 3h.")
+        scheduler.add_job(
+            safe_run_reply_winners_cycle,
+            trigger=IntervalTrigger(hours=3),
+            id="reply_winners_job",
+            next_run_time=datetime.now() + timedelta(minutes=4),
         )
 
         # Account curator — recomputes the bot's own tracked-accounts list

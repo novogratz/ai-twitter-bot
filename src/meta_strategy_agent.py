@@ -57,7 +57,7 @@ META_LOG_FILE = os.path.join(_PROJECT_ROOT, "meta_strategy_log.json")
 _BOUNDS = {
     "MAX_NEWS_PER_DAY":      (1,  4),
     "MAX_HOTAKES_PER_DAY":   (3,  8),
-    "MAX_QUOTES_PER_DAY":    (20, 48),
+    "MAX_QUOTES_PER_DAY":    (20, 96),
     "MAX_RETWEETS_PER_DAY":  (0,  2),
     "MAX_BREAKOUTS_PER_DAY": (0,  2),
     "MAX_SPICY_PER_DAY":     (0,  2),
@@ -68,7 +68,7 @@ _BOUNDS = {
 _DEFAULTS = {
     "MAX_NEWS_PER_DAY":      4,
     "MAX_HOTAKES_PER_DAY":   6,
-    "MAX_QUOTES_PER_DAY":    40,
+    "MAX_QUOTES_PER_DAY":    80,
     "MAX_RETWEETS_PER_DAY":  1,
     "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY":     1,

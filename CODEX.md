@@ -4,6 +4,23 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-15 — LEARN FROM REPLIES + 2x QUOTES (operator: "replies get a
+> crazy amount of likes, posts not really... could the bot inspire itself
+> from replies?" + "do 2x quote retweets"):**
+> - **Reply-winners bank** (`src/reply_winners.py`): replies are the proven
+>   voice for this account (they get likes; posts/quotes don't). New
+>   `twitter_client.scrape_own_replies` reads our `/with_replies` tab — the
+>   one place reply like-counts are visible — and the bank keeps our
+>   highest-liked replies (≥2). `render_reply_winners_block` injects 3 into
+>   the hotake (post) + quote prompts as the GOLD-STANDARD VOICE to imitate:
+>   reactive, specific, human, plain words, no cleverness. Scheduled every
+>   3h. Empty bank = no injection (self_winners stale-bank lesson). This is
+>   the active lever (self_winners has been empty — posts get ~0 likes).
+> - **2x quote retweets**: MAX_QUOTE(S)_PER_DAY 48→96, spacing 450s→225s +
+>   jitter 300→150 to fit. All bound sites moved together: meta_strategy
+>   `_BOUNDS`/`_DEFAULTS`, strategy_lab `ALLOWED_PATHS`, live_strategy.json,
+>   bounds guard test. Guard: `test_reply_winners_feeds_post_and_quote_prompts`.
+
 > **2026-06-14 — FIX ZERO LIKES ON POSTS + QUOTES (operator: "I barely
 > get external likes... improve it"):** data-driven diagnosis —
 > `self_winners.md` was EMPTY (zero own posts hit 3 likes in 4 days) and
