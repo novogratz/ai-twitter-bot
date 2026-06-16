@@ -5363,5 +5363,22 @@
       }
     ],
     "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eave : c'est du pur technoculture, journalisme et fondation de startups. Pas de 'rejoins mon Discord', que du vrai travail."
+  },
+  {
+    "ts": "2026-06-16T17:44:21.257825",
+    "raw_count": 6,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Pierre_Paquette",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Tech Lead chez Shopify, couvre IA et dev FR avec humour, audience engag\u00e9e."
+      }
+    ],
+    "summary": "Focus sur les experts de fond plut\u00f4t que les influenceurs de statut. On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour garder les architectes du secteur."
   }
 ]

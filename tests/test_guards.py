@@ -1929,8 +1929,10 @@ def test_core_identity_has_ai_fan_voice():
     txt = open(os.path.join(root, "core_identity.md")).read().lower()
     assert "ai fan" in txt or "genuine ai fan" in txt or "superfan" in txt
     assert "excit" in txt and ("wonder" in txt or "thrill" in txt)
-    # Must coexist with, not replace, the therapist voice.
-    assert "therapist" in txt and "calm the fear" in txt
+    # V2 (2026-06-16): the "AI Therapist" name stays, but the voice is now
+    # the smart AI friend (humor-first); the old "calm the fear" therapy
+    # mechanic was demoted, so don't pin it.
+    assert "therapist" in txt and "smart" in txt and "friend" in txt
 
 
 def test_core_identity_has_likes_principle():
@@ -2239,6 +2241,29 @@ def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
     # Structural pin: the chokepoint actually consults the gate.
     src = inspect.getsource(follow_account)
     assert "_follow_quality_decision" in src and "_quality_reject_recent" in src
+
+
+def test_core_identity_carries_strategy_v2():
+    """Operator 2026-06-16 — Content Strategy V2: the account is a
+    personality-driven AI commentary account ('AI explained by a smart
+    friend'), NOT a news feed/RSS/stock-pump. The voice anchor must carry
+    the V2 pillars (humor lead), the smart-friend persona, the 'interpret
+    don't summarize / react don't explain' rules, and the infra investing
+    angle — so every surface inherits the new strategy."""
+    import os
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    txt = open(os.path.join(root, "core_identity.md")).read().lower()
+    assert "smart friend" in txt
+    assert "not an rss" in txt or "not a news feed" in txt
+    assert "humor" in txt and "contrarian" in txt
+    assert "interpret" in txt and "summarize" in txt  # interpret, don't summarize
+    assert "react" in txt and "explain" in txt        # react, don't explain
+    # Investing pillar = infrastructure/power angle, the named V2 targets.
+    assert "coreweave" in txt and ("power plant" in txt or "electricity" in txt)
+    # Quote discovery actually reaches the V2 infra names.
+    from src import quote_tweet_bot
+    assert "CoreWeave" in "".join(quote_tweet_bot.AI_VIRAL_QUERIES) or \
+        "CoreWeave" in ",".join(quote_tweet_bot.TOP_AI_HANDLES)
 
 
 def test_parent_like_is_probabilistic_not_every_reply(monkeypatch):

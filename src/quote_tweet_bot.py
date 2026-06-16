@@ -73,7 +73,8 @@ TOP_AI_HANDLES = [h.strip() for h in os.environ.get(
     "TOP_AI_HANDLES",
     "sama,OpenAI,AnthropicAI,karpathy,GoogleDeepMind,demishassabis,"
     "ylecun,AndrewYNg,DrJimFan,_akhaliq,svpino,emollick,alexalbert__,"
-    "kimmonismus,slow_developer,rowancheung,minchoi,nvidia,xai"
+    "kimmonismus,slow_developer,rowancheung,minchoi,nvidia,xai,"
+    "CoreWeave,DarioAmodei,nebiusgroup"
     # 2026-06-08: builder/founder accounts (levelsio,gregisenberg,swyx,...)
     # REMOVED — operator "focus more on AI": the account is AI-as-investing-
     # theme, not indie-builder. AI labs/researchers/chips stay.
@@ -90,6 +91,9 @@ AI_VIRAL_QUERIES = [
     "Nvidia OR \"AI agent\" OR \"AI model\" OR AGI OR \"reasoning model\" lang:en min_faves:800",
     # AI investing / the AI trade — viral money-angle takes (investment pillar)
     "(\"AI bubble\" OR \"AI trade\" OR \"AI capex\" OR Nvidia OR Palantir) (earnings OR valuation OR stock) lang:en min_faves:500",
+    # V2 2026-06-16: AI infrastructure/power bottleneck (CoreWeave, Nebius,
+    # Applied Digital, data centers, electricity) — the investing pillar angle.
+    "(CoreWeave OR Nebius OR \"Applied Digital\" OR \"data center\" OR \"AI power\" OR \"AI electricity\" OR \"compute\") (AI OR Nvidia OR demand) lang:en min_faves:200",
 ]
 QUOTE_AI_VIRAL_MIN_LIKES = int(os.environ.get("QUOTE_AI_VIRAL_MIN_LIKES", "150"))
 
