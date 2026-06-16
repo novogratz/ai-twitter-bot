@@ -4,6 +4,19 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-15 round 3 — COOL DOWN LIKES (operator: "we got hit by spam/
+> automation flags — reply but like less, cool down the number of likes you
+> give"):** the automation signature was liking the PARENT of every reply
+> (743/day) + every quote. New `twitter_client._maybe_like_parent` gates
+> parent-likes behind a low env probability (read at call time): replies
+> `REPLY_LIKE_PARENT_PROB=0.12` (~1 in 8, was 100%), quotes/RTs
+> `QUOTE_LIKE_PARENT_PROB=0.2`. Replies/quotes themselves are untouched —
+> only the reflexive like is cooled. Also: notify like-replies 8→3
+> (`NOTIFY_LIKE_REPLIES_COUNT`), engage likes 5/3→2/1, like_bot cap
+> 1000→60/day + 100→8/cycle, strategy_lab ceiling (20,200)→(0,12),
+> live_strategy 100→8. Self-likes (own tweet at publish) unchanged. Guard:
+> `test_parent_like_is_probabilistic_not_every_reply`.
+
 > **2026-06-15 round 2 — FIRST-COMMENT SELF-REPLY for reach (operator: "you
 > can do even better"):** data assessment showed the bottleneck is now
 > REACH, not content — posts get ~22 median views on 1.5K followers

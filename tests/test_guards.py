@@ -2241,6 +2241,33 @@ def test_follow_quality_gate_blocks_small_and_offniche(monkeypatch):
     assert "_follow_quality_decision" in src and "_quality_reject_recent" in src
 
 
+def test_parent_like_is_probabilistic_not_every_reply(monkeypatch):
+    """2026-06-15 (operator: "hit by automation flag — cool down likes").
+    Liking the parent of EVERY reply (743/day) was the automation
+    signature. _maybe_like_parent gates the like behind a low env
+    probability: prob<=0 disables it; the reply chokepoint must route
+    through the gate, not an unconditional like_tweet on the parent."""
+    import inspect
+    from src import twitter_client as tc
+
+    liked = []
+    monkeypatch.setattr(tc, "like_tweet", lambda url=None: liked.append(url))
+
+    monkeypatch.setenv("REPLY_LIKE_PARENT_PROB", "0")
+    for _ in range(20):
+        tc._maybe_like_parent("https://x.com/a/status/1", "REPLY_LIKE_PARENT_PROB", 0.12)
+    assert liked == [], "prob=0 must disable parent-likes entirely"
+
+    monkeypatch.setenv("REPLY_LIKE_PARENT_PROB", "1")
+    tc._maybe_like_parent("https://x.com/a/status/2", "REPLY_LIKE_PARENT_PROB", 0.12)
+    assert liked == ["https://x.com/a/status/2"]
+
+    rsrc = inspect.getsource(tc.reply_to_tweet)
+    assert "_maybe_like_parent" in rsrc
+    assert "like_tweet(tweet_url)" not in rsrc, \
+        "reply must not unconditionally like the parent"
+
+
 def test_first_comment_self_reply_wired_and_guarded(monkeypatch):
     """2026-06-15 (operator: "do even better"). Posts get ~22 views — reach
     is the bottleneck. After an original ships, the bot drops a first-comment

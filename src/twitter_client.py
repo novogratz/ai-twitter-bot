@@ -1,6 +1,7 @@
 """Browser automation for X/Twitter via Safari + AppleScript (macOS only)."""
 import json
 import os
+import random
 import re
 import subprocess
 import threading
@@ -615,10 +616,7 @@ def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str, high_valu
         except Exception:
             pass
         close_front_tab()
-        try:
-            like_tweet(tweet_url)
-        except Exception as e:
-            log.info(f"[QUOTE] parent-like failed: {e}")
+        _maybe_like_parent(tweet_url, "QUOTE_LIKE_PARENT_PROB", 0.2)
         try:
             _like_own_latest_tweet()
         except Exception as e:
@@ -633,6 +631,27 @@ def refresh_feed():
         webbrowser.open("https://x.com/home")
         time.sleep(3)
         close_front_tab()
+
+
+def _maybe_like_parent(tweet_url: str, env_key: str, default_prob: float) -> None:
+    """Probabilistically like the tweet we just replied to / quoted.
+
+    Operator 2026-06-15: "we got hit by spam/automation flags — cool down
+    the number of likes you give." Liking the parent of EVERY reply (743/day)
+    and EVERY quote was the automation signature. A human likes only some of
+    what they reply to, so gate it behind a low probability (read at CALL
+    time — side-effect env). Replies still ship; we just stop the
+    one-like-per-reply firehose. prob<=0 disables parent-likes entirely."""
+    try:
+        prob = float(os.environ.get(env_key, str(default_prob)))
+    except (TypeError, ValueError):
+        prob = default_prob
+    if prob <= 0 or random.random() > prob:
+        return
+    try:
+        like_tweet(tweet_url)
+    except Exception as e:
+        log.info(f"[LIKE] parent-like skipped ({e}).")
 
 
 def _like_own_latest_tweet():
@@ -947,10 +966,10 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
         ''')
         time.sleep(0.5)
 
-        # Like the tweet (idempotent — won't toggle off if already liked
-        # from a prior retweet/quote cycle). Bug 2026-05-18: bot was
-        # un-liking previously-liked tweets here.
-        like_tweet(tweet_url)
+        # Like the parent only SOMETIMES (operator 2026-06-15: liking every
+        # tweet we reply to was the automation flag). Idempotent like stays
+        # un-toggle-safe. REPLY_LIKE_PARENT_PROB (default 0.12) ≈ like ~1 in 8.
+        _maybe_like_parent(tweet_url, "REPLY_LIKE_PARENT_PROB", 0.12)
         time.sleep(1)
 
         # Click reply
@@ -1050,10 +1069,7 @@ def quote_tweet(tweet_url: str, comment: str, high_value: bool = False) -> bool:
         content_guard.note_posted(comment)
         _record_posted(comment)
         close_front_tab()
-        try:
-            like_tweet(tweet_url)
-        except Exception as e:
-            log.info(f"[QUOTE] parent-like failed: {e}")
+        _maybe_like_parent(tweet_url, "QUOTE_LIKE_PARENT_PROB", 0.2)
         try:
             _like_own_latest_tweet()
         except Exception as e:
@@ -1857,7 +1873,7 @@ def retweet_post(tweet_url: str):
         time.sleep(2)
         log.info(f"[RETWEET] Reposted: {tweet_url}")
         action_guard.record(action_guard.RETWEET, target=tweet_url)
-        like_tweet(tweet_url)
+        _maybe_like_parent(tweet_url, "QUOTE_LIKE_PARENT_PROB", 0.2)
         close_front_tab()
 
 
@@ -2044,19 +2060,27 @@ def like_own_tweet_replies():
         _navigate_to_first_tweet()
         time.sleep(4)
 
-        log.info("[NOTIFY] Liking replies...")
-        _run_applescript('''
-        tell application "System Events"
-            repeat 8 times
-                keystroke "j"
-                delay 0.5
-                keystroke "l"
-                delay 0.8
-            end repeat
-        end tell
-        ''')
+        # Cooled down 8→3 (operator 2026-06-15: too many likes tripped the
+        # automation flag). Liking our own engagers is the most defensible
+        # like, but fewer is calmer. Env-tunable.
+        try:
+            _n_like = max(0, int(os.environ.get("NOTIFY_LIKE_REPLIES_COUNT", "3")))
+        except (TypeError, ValueError):
+            _n_like = 3
+        log.info(f"[NOTIFY] Liking up to {_n_like} replies...")
+        if _n_like > 0:
+            _run_applescript(f'''
+            tell application "System Events"
+                repeat {_n_like} times
+                    keystroke "j"
+                    delay 0.5
+                    keystroke "l"
+                    delay 0.8
+                end repeat
+            end tell
+            ''')
         time.sleep(2)
-        log.info("[NOTIFY] Liked up to 8 replies!")
+        log.info(f"[NOTIFY] Liked up to {_n_like} replies!")
         close_front_tab()
 
 
