@@ -557,7 +557,10 @@
     "JeanBaptisteP",
     "ClementMoulin_",
     "MaximeTremblay_",
-    "RomainBoulanger"
+    "RomainBoulanger",
+    "LefebvreAntoine",
+    "SachaMauri",
+    "RaphaelLeclercq"
   ],
   "en": [
     "blablacar",
@@ -751,7 +754,15 @@
     "NBACentral",
     "Bark",
     "Isaac",
-    "richard"
+    "richard",
+    "peepeepoopoo",
+    "Gali",
+    "beeple",
+    "dax",
+    "C3",
+    "Ansem",
+    "BytePlus",
+    "Institubeur"
   ],
   "history": [
     {
@@ -4502,6 +4513,61 @@
     {
       "lang": "en",
       "handle": "richard",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "peepeepoopoo",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Gali",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "beeple",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "dax",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "C3",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Ansem",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "BytePlus",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Institubeur",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LefebvreAntoine",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "SachaMauri",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelLeclercq",
       "added": "2026-06-16"
     }
   ]

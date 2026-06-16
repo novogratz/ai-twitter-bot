@@ -5120,5 +5120,36 @@
       }
     ],
     "summary": "Un mix solide de fondateurs tech (Mistral, HF) et d'analystes march\u00e9 (Macro, Fintech). Pas de vendeurs de r\u00eaves, que des gens qui construisent ou analysent le secteur."
+  },
+  {
+    "ts": "2026-06-16T05:32:48.612922",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LefebvreAntoine",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le roi de l'analyse on-chain en FR, twitte souvent, zero hype, pur data."
+      },
+      {
+        "handle": "SachaMauri",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Analyste qu\u00e9b\u00e9cois, focus march\u00e9 US en FR, style direct et sans blabla."
+      },
+      {
+        "handle": "RaphaelLeclercq",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 8000,
+        "reason": "Diaspora FR aux US, chercheur IA, twitte tech en FR, pur et dur."
+      }
+    ],
+    "summary": "Mix solide entre les g\u00e9ants IA (Mistral) et les experts niche (on-chain, Qu\u00e9bec, Fintech). Z\u00e9ro influencer formation, juste des comptes qui font avancer le sujet."
   }
 ]
