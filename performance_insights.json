@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-06-15T18:44:57.869500",
-  "window_7d_actions": 4441,
-  "window_24h_actions": 799,
+  "generated_at": "2026-06-16T03:18:32.499587",
+  "window_7d_actions": 4425,
+  "window_24h_actions": 842,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4325
+      "count": 4298
     },
     {
       "pattern": "METAPHOR",
-      "count": 33
+      "count": 37
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 28
+      "count": 31
     },
     {
       "pattern": "DIALOGUE",
-      "count": 16
+      "count": 18
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 15
+      "count": 16
     }
   ],
   "worst_patterns": [
@@ -35,7 +35,7 @@
     },
     {
       "pattern": "RENAME",
-      "count": 7
+      "count": 8
     }
   ],
   "best_hours_utc": [
@@ -56,18 +56,18 @@
       "actions": 221
     },
     {
-      "hour": 1,
-      "actions": 217
+      "hour": 3,
+      "actions": 216
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1824
+      "count": 1836
     },
     {
       "topic": "Autre",
-      "count": 1813
+      "count": 1774
     },
     {
       "topic": "Crypto",
@@ -75,38 +75,38 @@
     },
     {
       "topic": "Bourse",
-      "count": 326
+      "count": 343
     },
     {
       "topic": "Spatial",
-      "count": 252
+      "count": 259
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2032
+      "count": 2031
     },
     {
       "pillar": "other",
-      "count": 1104
+      "count": 1084
     },
     {
       "pillar": "market_trauma",
-      "count": 1036
+      "count": 1051
     },
     {
       "pillar": "meme_reaction",
-      "count": 172
+      "count": 171
     },
     {
       "pillar": "reply_bait",
-      "count": 57
+      "count": 51
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 40
+      "count": 37
     }
   ],
   "pillar_mix_24h": [
@@ -116,45 +116,45 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 207
+      "count": 229
     },
     {
       "pillar": "other",
-      "count": 171
+      "count": 187
     },
     {
       "pillar": "meme_reaction",
-      "count": 24
+      "count": 31
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 5
     },
     {
       "pillar": "reply_bait",
-      "count": 5
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 52,
-      "avg_likes": 0.06,
-      "avg_views": 30.6,
+      "posts": 55,
+      "avg_likes": 0.05,
+      "avg_views": 29.8,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 49,
+      "posts": 53,
       "avg_likes": 0.04,
-      "avg_views": 27.6,
+      "avg_views": 26.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 70,
+      "posts": 71,
       "avg_likes": 0.01,
-      "avg_views": 29.9,
+      "avg_views": 29.7,
       "low_sample": false
     },
     {
@@ -175,19 +175,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4054
+      "count": 4031
     },
     {
       "type": "quote",
-      "count": 165
+      "count": 170
     },
     {
       "type": "quote_gif",
-      "count": 163
+      "count": 162
     },
     {
       "type": "hotake",
-      "count": 26
+      "count": 29
     },
     {
       "type": "post",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-15T18:44:25.614971",
-      "text": "Inference is just training with a longer queue. nvidia isn't selling chips, they're selling patience. wait for it.",
+      "ts": "2026-06-16T03:17:08.675930",
+      "text": "Saylor's avg cost basis is $67k. he's already 400x his own average entry. the other 499x is for you.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-15T18:43:02.057500",
-      "text": "Anthropic told Cursor Claude was \"not for public APIs.\"\nCursor built a $20B valuation on that secret.\nAI SaaS: read the terms, not the tweet.",
+      "ts": "2026-06-16T03:14:16.107215",
+      "text": "Samsung and SK Hynix are the landlords. Nvidia is just the tenant paying rent on 30-year leverage.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-15T18:42:46.118280",
-      "text": "RKC is a meme coin. Pumpfun’s ranking = buy pressure from degens who don’t read docs. Phantom’s list = FOMO from people who don’t know what it does.",
+      "ts": "2026-06-16T03:13:33.128114",
+      "text": "$SPCX at $215 vs $200 underlying. You’re paying a premium to hold a stock that already trades 24/7 on the spot market.\n\nyou’re buying the wrapper so you can sell it at 3am to a degen who needs a quick hedge before he gets liquidated.",
       "type": "reply"
     }
   ]

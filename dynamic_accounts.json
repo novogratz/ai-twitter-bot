@@ -549,7 +549,15 @@
     "Dab81_",
     "VincentBonnard",
     "PascalPoirier",
-    "TanguyBis"
+    "TanguyBis",
+    "ArnaudMensah_",
+    "MaxRiesgo",
+    "DessaintS",
+    "LuisRojas",
+    "JeanBaptisteP",
+    "ClementMoulin_",
+    "MaximeTremblay_",
+    "RomainBoulanger"
   ],
   "en": [
     "blablacar",
@@ -737,7 +745,13 @@
     "Sudanalytics",
     "max",
     "FADE",
-    "Glitch"
+    "Glitch",
+    "Roxom",
+    "WWE",
+    "NBACentral",
+    "Bark",
+    "Isaac",
+    "richard"
   ],
   "history": [
     {
@@ -4419,6 +4433,76 @@
       "lang": "fr",
       "handle": "TanguyBis",
       "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Roxom",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "WWE",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "NBACentral",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Bark",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Isaac",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArnaudMensah_",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxRiesgo",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "DessaintS",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisRojas",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptisteP",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClementMoulin_",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeTremblay_",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBoulanger",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "richard",
+      "added": "2026-06-16"
     }
   ]
 }

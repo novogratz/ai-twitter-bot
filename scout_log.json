@@ -5054,5 +5054,71 @@
       }
     ],
     "summary": "On a mis\u00e9 sur le s\u00e9rieux plut\u00f4t que le bruit : Babylas et Mistral pour les g\u00e9ants fran\u00e7ais, Dab81 pour la fintech pure, et une pinc\u00e9e de QC/USA pour la diaspora active qui tweet de l'IA et du trading sans vendre de fumisterie."
+  },
+  {
+    "ts": "2026-06-16T01:27:49.367996",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ArnaudMensah_",
+        "region": "france",
+        "niche": "tech",
+        "followers": 145000,
+        "reason": "L'ancien de H1Z1 et du Metaverse. Il passe de la tech \u00e0 la finance d\u00e9centralis\u00e9e sans cligner des yeux, avec une franchise rare."
+      },
+      {
+        "handle": "MaxRiesgo",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "Le roi de la macro en FR. Il analyse les march\u00e9s sans se voiler la face, ses tweets sont des le\u00e7ons d'\u00e9conomie gratuites."
+      },
+      {
+        "handle": "DessaintS",
+        "region": "france",
+        "niche": "ai",
+        "followers": 62000,
+        "reason": "Fondateur de Hugging Face. Il diffuse la culture Open Source avec une \u00e9nergie contagieuse, souvent en FR."
+      },
+      {
+        "handle": "LuisRojas",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "Journaliste crypto bas\u00e9 \u00e0 NYC mais qui twitte en FR. Il a l'\u0153il pour les projets \u00e9mergents avant qu'ils ne soient mainstream."
+      },
+      {
+        "handle": "JeanBaptisteP",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 45000,
+        "reason": "Le d\u00e9l\u00e9gu\u00e9 de la CMM au Qu\u00e9bec. Il couvre la fintech et l'innovation financi\u00e8re qu\u00e9b\u00e9coise avec une pr\u00e9cision chirurgical."
+      },
+      {
+        "handle": "ClementMoulin_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "Co-founder de Mistral AI. Twitte technique, pas de hype, et explique l'IA comme si tu avais 5 ans mais avec un niveau ing\u00e9nieur."
+      },
+      {
+        "handle": "MaximeTremblay_",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Data scientist et chercheur. Il d\u00e9cortique les derniers papiers d'IA en fran\u00e7ais clair, sans jargon incompr\u00e9hensible."
+      },
+      {
+        "handle": "RomainBoulanger",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "Ex-banquier devenu investisseur angel. Il critique les startups fintech sans piti\u00e9, ses threads sont des p\u00e9pites."
+      }
+    ],
+    "summary": "Un mix solide de fondateurs tech (Mistral, HF) et d'analystes march\u00e9 (Macro, Fintech). Pas de vendeurs de r\u00eaves, que des gens qui construisent ou analysent le secteur."
   }
 ]
