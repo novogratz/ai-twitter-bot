@@ -1,55 +1,45 @@
-# YouTube brief — 2026-06-15
+# YouTube brief — 2026-06-16
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **725**
-- reply: **675**
-- quote: **26**
-- quote_gif: **13**
-- post: **5**
+- Total actions logged: **856**
+- reply: **779**
+- quote: **39**
+- quote_gif: **28**
 - hotake: **5**
+- post: **4**
 - retweet: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
 *Posts with ≥ 10 likes. This is your shortlist of stories the audience already validated. Each one is a ready-to-shoot video angle.*
 
-- 🎥 **287 likes / 376000 views** — Les moniteurs de chaîne de pensée sont une couche clé de défense contre le désalignement des agents d'IA. Pour préserver la surveillabilité, nous évitons de pénaliser le raisonnement désaligné pendant
-- 🎥 **199 likes / 423000 views** — JUST IN: Nintendo stock crashes -12%.
-- 🎥 **69 likes / 24000 views** — JUST IN : Michael Saylor dit que si Strategy vend du bitcoin, ils achèteront plusieurs fois plus de BTC qu'ils n'en auront vendu :  « Même si nous devions vendre 1 bitcoin, nous en achèterions 10 à 20
-- 🎥 **69 likes / 387000 views** — Honnêtement j’aurais pas été capable de dire si c’était fait par IA ou par un studio d’animation trad
-- 🎥 **59 likes / 18000 views** — Le juge de la Cour suprême Alexandre de Moraes a suspendu l'application d'une législation réduisant la durée de la peine que l'ancien président Jair Bolsonaro devra purger pour avoir comploté un coup
-- 🎥 **50 likes / 20000 views** — Les chances républicaines de conserver la Chambre augmentent, alors que les démocrates paniqués s'efforcent de compenser les coups successifs de redécoupage électoral.
 - 🎥 **41 likes / 10000 views** — DERNIER:  Capital B a levé 17,8 millions de dollars auprès d'investisseurs incluant Adam Back et TOBAM pour acheter 182 Bitcoins supplémentaires, ce qui pourrait porter ses avoirs totaux à 3 125 BTC.
-- 🎥 **35 likes / 2000000 views** — Start with one idea. End with a feed full of content.  1000+ videos. Get unlimited Seedance 2.0: https://bit.ly/4tIQouB?twclid=299k4g4iw5tszu50ygrytfvzah
 - 🎥 **28 likes / 8000 views** — DERNIER: Michael @saylor's @Strategy acquiert 535 $BTC pour 43 M$ à 80 340 $ par Bitcoin, portant les avoirs totaux à 818 869 $BTC.
-- 🎥 **21 likes / 59000 views** — L'entraînement des modèles implique de nombreux processus techniques et sociaux, il est donc essentiel d'intégrer la prévention de la notation CoT directement dans le processus.  Nous améliorons la dé
+- 🎥 **17 likes / 7000 views** — Les actions technologiques américaines semblent chères,  Mais quand on voit les perspectives pour les 3 prochaines années, on se demande si on n’est pas encore au début de la révolution IA   Ici, le c
 
 ## 🥇 Top own posts (by likes)
 
 ### AI
 
-- **287 likes / 376000 views** — Les moniteurs de chaîne de pensée sont une couche clé de défense contre le désalignement des agents d'IA. Pour préserver la surveillabilité, nous évitons de pénaliser le raisonnement désaligné pendant
-- **69 likes / 387000 views** — Honnêtement j’aurais pas été capable de dire si c’était fait par IA ou par un studio d’animation trad
+- **17 likes / 7000 views** — Les actions technologiques américaines semblent chères,  Mais quand on voit les perspectives pour les 3 prochaines années, on se demande si on n’est pas encore au début de la révolution IA   Ici, le c
+- **8 likes / 5000 views** — Exclusif : Une startup de six semaines fondée par l’ancien chercheur d’OpenAI Jerry Tworek cherche déjà des financements à une valorisation de 4 milliards de dollars, soulignant la demande des investi
+- **1 likes / 4000 views** — Les employés d'@OpenAI ont vendu 6,6 milliards de dollars d'actions sur le marché secondaire en octobre 2025, d'après le WSJ.  Plus de 600 salariés actuels et anciens ont participé à l'opération, soit
 
 ### Crypto
 
-- **69 likes / 24000 views** — JUST IN : Michael Saylor dit que si Strategy vend du bitcoin, ils achèteront plusieurs fois plus de BTC qu'ils n'en auront vendu :  « Même si nous devions vendre 1 bitcoin, nous en achèterions 10 à 20
 - **41 likes / 10000 views** — DERNIER:  Capital B a levé 17,8 millions de dollars auprès d'investisseurs incluant Adam Back et TOBAM pour acheter 182 Bitcoins supplémentaires, ce qui pourrait porter ses avoirs totaux à 3 125 BTC.
 - **28 likes / 8000 views** — DERNIER: Michael @saylor's @Strategy acquiert 535 $BTC pour 43 M$ à 80 340 $ par Bitcoin, portant les avoirs totaux à 818 869 $BTC.
-
-### Bourse
-
-- **199 likes / 423000 views** — JUST IN: Nintendo stock crashes -12%.
+- **2 likes / 773 views** — Le bitcoin atteindra le million de dollars d'ici 5 ans: ses partisans en sont de plus en plus convaincus, même si certains l’anticipaient beaucoup plus tôt
 
 ### Other
 
-- **59 likes / 18000 views** — Le juge de la Cour suprême Alexandre de Moraes a suspendu l'application d'une législation réduisant la durée de la peine que l'ancien président Jair Bolsonaro devra purger pour avoir comploté un coup
-- **50 likes / 20000 views** — Les chances républicaines de conserver la Chambre augmentent, alors que les démocrates paniqués s'efforcent de compenser les coups successifs de redécoupage électoral.
-- **35 likes / 2000000 views** — Start with one idea. End with a feed full of content.  1000+ videos. Get unlimited Seedance 2.0: https://bit.ly/4tIQouB?twclid=299k4g4iw5tszu50ygrytfvzah
-- **21 likes / 59000 views** — L'entraînement des modèles implique de nombreux processus techniques et sociaux, il est donc essentiel d'intégrer la prévention de la notation CoT directement dans le processus.  Nous améliorons la dé
+- **6 likes / 397 views** — BFM BOURSE  Rendez-vous dès 15H30 autour #endirect autour de @GuillSommerer !  D. Trump en Chine cette semaine   ! Quelle annonce ferait le plus plaisir aux marchés ?
+- **4 likes / 1000 views** — Intéressant que les avis soient aussi partagés. Pour ma part je ne risquerais pas mon patrimoine sur ce jeu.  Doubler son patrimoine améliore ta vie de façon marginale, alors que tout perdre la détrui
+- **1 likes / 31 views** — Lol c'est du vécu ?
+- **1 likes / 18 views** — Waiting for a flip is just hesitation in a fancy coat. The chart doesn't care about your comfort zone.
 
 ## 📡 Today's news picks (from retweet_bot)
 
@@ -65,34 +55,26 @@ Literally Huang pumping and eating friend chicken isn't enough to stop the crash
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_HOME/Investing.com]** STOCK FUTURES JUMP AS TRUMP ANNOUNCES DEAL WITH IRAN
+- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/investing]** $SPCX   LET THIS SINK IN:
 
-$SPY $QQQ $DIA $VIX
-  - https://x.com/Investingcom/status/2066337767898976675
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/zerohedge]** "scaling AI infrastructure is likely to take longer and be more sequential and capital-intensive than headline data center capex projections alone suggest." - M
-  - https://x.com/zerohedge/status/2066321525498634558
-- **[X_HOME/CryptoGoos]** SENATOR LUMMIS ON CLARITY ACT TIMING
+ A single reported AI compute contract with Anthropic worth ~$15B/year is equivalent to roughly 80% of $SPCX’s 2025 revenue base (~$1
+  - https://x.com/DollarCostAvg/status/2066660884798202189
+- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Investing visuals]** AI token usage is expected to 24x by 2030, driven by consumer and enterprise agents, per Goldman Sachs.
 
-Sen. Cynthia Lummis says passing the CLARITY Act in August is more realistic than July 4th as lawmakers work to combine mu
-  - https://x.com/cryptogoos/status/2066345447577325767
-- **[X_HOME/McNallie Money]** Do I hear $75 this week @IREN_Ltd  $IREN
-  - https://x.com/McnallieM/status/2066343136331522204
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/Bilaal- BD investing]** Pre market ripping on Iran deal & my high conviction stocks leading 
-
-$NBIS — Nebius: GPU neocloud renting AI compute to hyperscalers.
-
-$IREN — Bitcoin miner pi
-  - https://x.com/bdinvestingg/status/2066343537185378634
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Cointelegraph]** INTERESTING: Shanghai startup AheadForm unveils humanoid robots Origin F1 and M1, featuring realistic facial expressions, blinks, and AI-driven emotional intera
-  - https://x.com/Cointelegraph/status/2066370114228822368
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/CyberRobo]** NVIDIA MotionBricks brings humanoid robots closer to natural, fluid movement
-
-The system combines a modular latent generative model with Smart Primitives, packi
-  - https://x.com/CyberRobooo/status/2066354371689071001
-- **[X_HOME/Ahmad]** I immediately called that the next up from Anthropic will be ID Verification to use a closed AI model
-
-Your freedoms will be taken one thing at a time if Local 
-  - https://x.com/TheAhmadOsman/status/2066356792322351563
+Very bullish for the businesses powering this AI revolu
+  - https://x.com/InvestingVisual/status/2066551291954737569
+- **[Wired]** Anthropic Is Still at Odds With the White House Over Claude Fable 5
+  - https://www.wired.com/story/anthropic-is-still-at-odds-with-the-white-house-over-claude-fable-5/
+- **[TechCrunch AI]** Sundar Pichai faces boos, walkout at Stanford graduation ceremony over Google’s Israel, ICE ties
+  - https://techcrunch.com/2026/06/15/sundar-pichai-faces-boos-walkout-at-stanford-graduation-ceremony-over-googles-israel-ice-ties/
+- **[CNBC Top]** CNBC's The China Connection newsletter: Waiting for AI to lift the whole market
+  - https://www.cnbc.com/2026/06/15/cnbcs-the-china-connection-newsletter-hoping-ai-lifts-all-boats.html
+- **[The Verge]** Inside the fight over Claude Mythos 5
+  - https://www.theverge.com/ai-artificial-intelligence/950412/anthropic-trump-adminstration-claude-mythos-fable-5-export-controls
+- **[CNBC Top]** Nvidia plans to raise at least $20 billion in its first debt sale since start of AI boom
+  - https://www.cnbc.com/2026/06/15/nvidia-plans-to-raise-about-20-billion-first-debt-sale-in-ai-boom.html
+- **[Cointelegraph]** Here’s what happened in crypto today
+  - https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
 
 ## 🎬 Suggested video angles
 
@@ -103,4 +85,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-15T00:19:06*
+*Generated 2026-06-16T00:18:32*
