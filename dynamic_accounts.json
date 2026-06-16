@@ -560,7 +560,16 @@
     "RomainBoulanger",
     "LefebvreAntoine",
     "SachaMauri",
-    "RaphaelLeclercq"
+    "RaphaelLeclercq",
+    "thomashenry",
+    "maximegabor",
+    "maxime_poncelet",
+    "leolouan",
+    "mehdiboukhanouf",
+    "louisfrydman",
+    "jmboucard",
+    "mihai_cristea",
+    "clementguillou"
   ],
   "en": [
     "blablacar",
@@ -762,7 +771,9 @@
     "C3",
     "Ansem",
     "BytePlus",
-    "Institubeur"
+    "Institubeur",
+    "Nic",
+    "nizzy"
   ],
   "history": [
     {
@@ -4568,6 +4579,61 @@
     {
       "lang": "fr",
       "handle": "RaphaelLeclercq",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Nic",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "nizzy",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomashenry",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "maximegabor",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "maxime_poncelet",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "leolouan",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "mehdiboukhanouf",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "louisfrydman",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "jmboucard",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "mihai_cristea",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "clementguillou",
       "added": "2026-06-16"
     }
   ]

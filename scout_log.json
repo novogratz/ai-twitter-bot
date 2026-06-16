@@ -5151,5 +5151,85 @@
       }
     ],
     "summary": "Mix solide entre les g\u00e9ants IA (Mistral) et les experts niche (on-chain, Qu\u00e9bec, Fintech). Z\u00e9ro influencer formation, juste des comptes qui font avancer le sujet."
+  },
+  {
+    "ts": "2026-06-16T11:59:55.623143",
+    "raw_count": 10,
+    "kept_count": 10,
+    "accounts_added": 9,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thomashenry",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "CEO de Mistral AI, twitte en FR/EN, le visage de l'IA fran\u00e7aise, pas de pub Telegram."
+      },
+      {
+        "handle": "maximegabor",
+        "region": "france",
+        "niche": "ai",
+        "followers": 52000,
+        "reason": "Fintech/IA, th\u00e8se de march\u00e9 solides, twitte en FR, vibe pro pas 'guru'. "
+      },
+      {
+        "handle": "maxime_poncelet",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 48000,
+        "reason": "Fondamentaliste pur jus, thread deep dives, ton sec et pr\u00e9cis."
+      },
+      {
+        "handle": "leolouan",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'analyste bourse FR de r\u00e9f\u00e9rence sur X, fils techniques, z\u00e9ro hype vide."
+      },
+      {
+        "handle": "mehdiboukhanouf",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Co-founder Mistral, ton plus technique et moins 'marketing', pur produit."
+      },
+      {
+        "handle": "louisfrydman",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Fondateur Aider (IA sant\u00e9), ex-UBS, twitte en FR/EN, visionnaire tech."
+      },
+      {
+        "handle": "jmboucard",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Ex-Goldman, VC crypto, twitte la macro et l'infra, pas de signaux \u00e0 99\u20ac."
+      },
+      {
+        "handle": "mihai_cristea",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Professeur HEC Montr\u00e9al, IA appliqu\u00e9e, twitte en FR, acad\u00e9mique mais accessible."
+      },
+      {
+        "handle": "francoisbelanger",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "VC qu\u00e9b\u00e9cois, couvre startups IA/Fintech, r\u00e9seau dense, pas de pubs."
+      },
+      {
+        "handle": "clementguillou",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "CTO Revolut (ex), couvre infra bancaire et crypto, tr\u00e8s technique."
+      }
+    ],
+    "summary": "Purge des guru Telegram, focus sur les cerveaux (Mistral, HEC, Goldman). Du solide, du technique, z\u00e9ro blabla. Le mix France/Qu\u00e9bec/USA diaspora est couvert."
   }
 ]
