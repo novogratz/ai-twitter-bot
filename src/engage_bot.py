@@ -112,7 +112,10 @@ def run_engage_cycle():
                     followed.add(username)
                 time.sleep(random.randint(2, 4))
 
-            like_count = 5 if username in VIP_ACCOUNTS else 3
+            # Cooled down 5/3→2/1 (operator 2026-06-15: too many likes
+            # tripped the automation flag). Most engage likes are already
+            # profile-gated to no-ops anyway.
+            like_count = 2 if username in VIP_ACCOUNTS else 1
             log.info(f"[ENGAGE] Liking @{username}'s latest tweets...")
             visit_profile_and_like(username, like_count=like_count)
             time.sleep(random.randint(3, 5))

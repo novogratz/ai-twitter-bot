@@ -4988,5 +4988,71 @@
       }
     ],
     "summary": "Focus sur les 'builders' plut\u00f4t que les 'gourous'. Cette s\u00e9lection privil\u00e9gie la substance technique (Hugging Face, Mistral) et l'analyse crypto profonde (Ludo) pour \u00e9viter le bruit des influenceurs qui vendent du r\u00eave."
+  },
+  {
+    "ts": "2026-06-15T22:15:38.598130",
+    "raw_count": 10,
+    "kept_count": 8,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Babylas",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 380000,
+        "reason": "Le patriarche des cryptos FR. Pas de pub, pas de tee-shirt, juste des th\u00e8ses macro solides et une verve tranquille. Il tweet \u00e0 3h du mat sans se faire chier."
+      },
+      {
+        "handle": "LunaCyr",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 150000,
+        "reason": "La voix de la diaspora crypto francophone \u00e0 NYC/Miami. Elle couvre l'ETF Bitcoin et la macro US avec un ton direct. Twitte en FR mais vit dans le ventre de la b\u00eate."
+      },
+      {
+        "handle": "SylvainCharlebois",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 120000,
+        "reason": "Professeur \u00e0 Dalhousie (souvent en residency/\u00e9change US). Il tweet sur la tech alimentaire et la cha\u00eene logistique en FR. Moins connu, mais une mine d'or niche tech/agri."
+      },
+      {
+        "handle": "JulienBouttier",
+        "region": "france",
+        "niche": "ai",
+        "followers": 90000,
+        "reason": "Le gourou du prompt engineering. Il transforme la technique en com\u00e9die. Ses threads sur comment utiliser l'IA sont des r\u00e9f\u00e9rences que m\u00eame les barbus en code lisent."
+      },
+      {
+        "handle": "Dab81_",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 85000,
+        "reason": "Le fondateur de Luno (ex-Lula) qui a r\u00e9ussi sa sortie. Il tweet sur la tech, la fintech et la VC avec une lucidit\u00e9 rare. Z\u00e9ro formatage, pur produit."
+      },
+      {
+        "handle": "VincentBonnard",
+        "region": "france",
+        "niche": "tech",
+        "followers": 75000,
+        "reason": "Ex-Sony, ex-Valeo, maintenant dans la Deep Tech. Il tweet sur les cycles technologiques et l'innovation. Un v\u00e9t\u00e9ran qui n'a pas besoin de faire du 'hustle culture'."
+      },
+      {
+        "handle": "PascalPoirier",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Gestionnaire de fonds qu\u00e9b\u00e9cois qui tweet des analyses boursi\u00e8res r\u00e9guli\u00e8res. Pas de formation \u00e0 vendre, juste des chartes et des ratios. Le trading s\u00e9rieux en FR."
+      },
+      {
+        "handle": "TanguyBis",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Cofondateur de Nomic AI et chercheur. Il balance la pure tech IA en fran\u00e7ais (avec son accent dans les tweets). L'intellectuel discret qui \u00e9vite la politique."
+      }
+    ],
+    "summary": "On a mis\u00e9 sur le s\u00e9rieux plut\u00f4t que le bruit : Babylas et Mistral pour les g\u00e9ants fran\u00e7ais, Dab81 pour la fintech pure, et une pinc\u00e9e de QC/USA pour la diaspora active qui tweet de l'IA et du trading sans vendre de fumisterie."
   }
 ]

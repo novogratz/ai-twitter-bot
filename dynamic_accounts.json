@@ -542,7 +542,14 @@
     "TobiLutze",
     "RomainVayrat",
     "ClemenceGuinot",
-    "BaptisteSantos"
+    "BaptisteSantos",
+    "Babylas",
+    "LunaCyr",
+    "JulienBouttier",
+    "Dab81_",
+    "VincentBonnard",
+    "PascalPoirier",
+    "TanguyBis"
   ],
   "en": [
     "blablacar",
@@ -721,7 +728,16 @@
     "toly",
     "Stellar",
     "Surmulot",
-    "rynex"
+    "rynex",
+    "nyara",
+    "Evan",
+    "Galaxy",
+    "Rothmus",
+    "Om",
+    "Sudanalytics",
+    "max",
+    "FADE",
+    "Glitch"
   ],
   "history": [
     {
@@ -4322,6 +4338,86 @@
     {
       "lang": "fr",
       "handle": "BaptisteSantos",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "nyara",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Evan",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Galaxy",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Rothmus",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Om",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Sudanalytics",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "max",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "FADE",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Glitch",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "Babylas",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "LunaCyr",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBouttier",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "Dab81_",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBonnard",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "PascalPoirier",
+      "added": "2026-06-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguyBis",
       "added": "2026-06-15"
     }
   ]
