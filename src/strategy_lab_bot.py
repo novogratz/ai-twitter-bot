@@ -62,7 +62,7 @@ ALLOWED_PATHS = {
     "caps.MAX_HOTAKES_PER_DAY":   (3, 8),
     "caps.MAX_BREAKOUTS_PER_DAY": (0, 2),
     "caps.MAX_SPICY_PER_DAY":     (0, 2),
-    "caps.MAX_QUOTES_PER_DAY":    (20, 96),
+    "caps.MAX_QUOTES_PER_DAY":    (15, 30),
     "caps.MAX_RETWEETS_PER_DAY":  (0, 2),
     "caps.MAX_REPLIES_PER_CYCLE": (1, 50),
     # Growth mode 2026-06-11: follow_blast re-enabled at a human trickle
