@@ -8,7 +8,7 @@
     "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY": 1,
     "MAX_REPLIES_PER_CYCLE": 30,
-    "LIKE_BOT_PER_CYCLE": 8,
+    "LIKE_BOT_PER_CYCLE": 12,
     "FOLLOW_BLAST_PER_CYCLE": 2
   },
   "topic_focus": [
