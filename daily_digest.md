@@ -636,3 +636,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 0 views: the business idiots are treating AGI like a credit score that just dropped two points   https://x.co
   - 0 likes / 17 views: Elon has $0 cash. NVDA sells the shovel, OpenAI burns the cash, and the Fed prints the interest. The
   - 0 likes / 40 views: Mike Novogratz says 95% done $BTC bulls hearing that 100% pass [SIGNS: yes]
+
+## 2026-06-15
+
+**Activity** — total actions: 860
+  - by type: reply=782, quote=40, quote_gif=28, hotake=5, post=4, retweet=1
+  - top sources: SEARCH-HOT=578, FEED-SWEEP-FEED=104, FEED-SWEEP-FOLLOWING=61, QUOTE=30, GIF=29, BREAKING_QRT=6, VIP=4, HOT_QUOTE=4
+  - comedy patterns: FR_ANCHOR=12, METAPHOR=9, DIALOGUE=4, UNDERSTATEMENT=3, RENAME=2, REPETITION=2, OTHER=2, EN_ANCHOR=1
+  - top reply targets: @TheBTCTherapist=23, @SemiconductorsX=13, @kimmonismus=10, @muskonomy=10, @Polymarket=9
+
+**Followers we follow** (running total): 240
+
+**Top-performing posts scraped today**:
+  - 1 likes / 50 views: my patients have never cared this much about world peace
+  - 1 likes / 108 views: so Fable 5 wasn't a product launch. it was a response
+  - 0 likes / 27 views: you treat Bitcoin trauma. I treat people who sold theirs for $NVDA. neither of us trained for the ma
