@@ -430,6 +430,33 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+> **Mandate 2026-06-16 (CURRENT — CONTENT STRATEGY V2): personality-driven
+> AI commentary, not a news feed.** Operator handed a full V2 spec. The
+> account is "AI explained by a smart friend" — NOT an AI news feed, NOT an
+> RSS aggregator, NOT a stock-pump. The "Therapist" name stays as a light
+> wink; the market-trauma/portfolio-therapy MECHANIC is demoted.
+> - **Pillars (the mix):** AI HUMOR 40% (lead — ChatGPT/AI-girlfriend/
+>   Kevin-got-replaced/dev jokes), NEWS INTERPRETATION 30% (interpret, never
+>   summarize: "Anthropic just made junior analysts nervous"), AI INVESTING
+>   20% (the infra/power-bottleneck angle — NVIDIA, CoreWeave, Nebius,
+>   Applied Digital, data centers, semis, compute, inference; NO TA/charts/
+>   pumping), CONTRARIAN 10%.
+> - **Voice:** smart, curious, slightly sarcastic, optimistic; short
+>   sentences, simple words, high signal; never doom/political/tribal/
+>   arrogant. NOT professor/journalist/advisor/engineer/news-anchor.
+> - **Replies = REACT not explain; Quotes = add value, never bare.** Priority
+>   targets: OpenAI, sama, AnthropicAI, DarioAmodei, GoogleDeepMind, Meta AI,
+>   xAI, NVIDIA, CoreWeave, researchers. Viral templates A/B/C/D in
+>   core_identity. Daily: ~5-10 posts, 10-20 replies, 5-15 quotes, ~1 thread.
+> - **Where:** core_identity.md rewritten (POSITIONING, pillars, templates,
+>   voice, personality) — it injects into every prompt. Quote/reply discovery
+>   gained the CoreWeave/Nebius/Applied Digital/power infra lane. Guard:
+>   test_core_identity_carries_strategy_v2.
+> - **BIO (operator must set manually on X — bot can't edit the profile):**
+>   "Making sense of AI so you don't have to. 🚀 News • Markets • Investing.
+>   ⚡ Follow the signal, not the hype."
+
+
 ### 2026-06-09 PM round 2 — likes fix: test pollution + burned catchphrases + MORE volume (operator: "you suck with new posts and QRTs... fix it get viral"; then "I DONT SEE ENOUGH POSTS AND QUOTE RETWEET DO MORE PUSH IT")
 
 **Root cause #1 — the "repetition bug" was TEST POLLUTION.** "AI capex is

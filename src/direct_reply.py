@@ -174,6 +174,8 @@ SEARCH_QUERIES = [
     # --- AI compute / chips / the money angle ---
     "Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR \"AI capex\" lang:en min_faves:50",
     "TSMC OR AMD OR Broadcom OR \"AI chips\" OR \"AI power\" OR \"AI energy\" lang:en min_faves:30",
+    # V2 2026-06-16 investing pillar — AI infra/power names by handle + topic.
+    "CoreWeave OR Nebius OR \"Applied Digital\" OR \"data center\" OR \"AI electricity\" lang:en min_faves:30",
     "Palantir OR \"AI stock\" OR \"AI bubble\" OR \"AI valuation\" lang:en min_faves:50",
     "\"AI startup\" OR \"AI funding\" OR \"AI layoffs\" OR \"AI jobs\" OR \"open source AI\" OR DeepSeek lang:en min_faves:30",
     # ===== INVESTOR PSYCHOLOGY — the VOICE (not the topic). Trimmed 3→1

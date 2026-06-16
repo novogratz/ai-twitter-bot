@@ -585,7 +585,8 @@
     "DavidAubry",
     "SachaMoulin",
     "RochPouliot",
-    "EmmanuelRocher"
+    "EmmanuelRocher",
+    "Pierre_Paquette"
   ],
   "en": [
     "blablacar",
@@ -4736,6 +4737,11 @@
     {
       "lang": "fr",
       "handle": "EmmanuelRocher",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Pierre_Paquette",
       "added": "2026-06-16"
     }
   ]
