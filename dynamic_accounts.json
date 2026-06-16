@@ -569,7 +569,23 @@
     "louisfrydman",
     "jmboucard",
     "mihai_cristea",
-    "clementguillou"
+    "clementguillou",
+    "MorganeGaudart",
+    "LauricGuilloux",
+    "LuisBautistam",
+    "RaphaElbazT",
+    "MickaelDoyen",
+    "Nicolasharriau",
+    "AlexisVernay",
+    "VincentBoudrias",
+    "JulienDufresne",
+    "LoupBenoist",
+    "HugoBourdel",
+    "PierreGiraud",
+    "DavidAubry",
+    "SachaMoulin",
+    "RochPouliot",
+    "EmmanuelRocher"
   ],
   "en": [
     "blablacar",
@@ -773,7 +789,8 @@
     "BytePlus",
     "Institubeur",
     "Nic",
-    "nizzy"
+    "nizzy",
+    "ahmet"
   ],
   "history": [
     {
@@ -4634,6 +4651,91 @@
     {
       "lang": "fr",
       "handle": "clementguillou",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MorganeGaudart",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LauricGuilloux",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisBautistam",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaElbazT",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelDoyen",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Nicolasharriau",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisVernay",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBoudrias",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDufresne",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "ahmet",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LoupBenoist",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoBourdel",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreGiraud",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "DavidAubry",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "SachaMoulin",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "RochPouliot",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "EmmanuelRocher",
       "added": "2026-06-16"
     }
   ]

@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-06-16T13:43:34.502843",
-  "window_7d_actions": 4481,
-  "window_24h_actions": 823,
+  "generated_at": "2026-06-16T17:43:34.491573",
+  "window_7d_actions": 4475,
+  "window_24h_actions": 826,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4341
+      "count": 4330
     },
     {
       "pattern": "METAPHOR",
-      "count": 38
+      "count": 39
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 34
+      "count": 36
     },
     {
       "pattern": "DIALOGUE",
@@ -31,7 +31,7 @@
     },
     {
       "pattern": "OTHER",
-      "count": 7
+      "count": 9
     },
     {
       "pattern": "REPETITION",
@@ -48,45 +48,45 @@
       "actions": 230
     },
     {
-      "hour": 16,
-      "actions": 226
+      "hour": 13,
+      "actions": 225
     },
     {
-      "hour": 13,
+      "hour": 16,
       "actions": 223
     },
     {
       "hour": 15,
-      "actions": 221
+      "actions": 216
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1861
+      "count": 1868
     },
     {
       "topic": "Autre",
-      "count": 1773
+      "count": 1747
     },
     {
       "topic": "Crypto",
-      "count": 556
+      "count": 551
     },
     {
       "topic": "Bourse",
-      "count": 353
+      "count": 366
     },
     {
       "topic": "Spatial",
-      "count": 302
+      "count": 314
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.113,
-      "7d_rate": 0.067
+      "24h_rate": 0.117,
+      "7d_rate": 0.07
     }
   ],
   "pillar_mix_7d": [
@@ -95,72 +95,72 @@
       "count": 2042
     },
     {
-      "pillar": "other",
-      "count": 1104
+      "pillar": "market_trauma",
+      "count": 1118
     },
     {
-      "pillar": "market_trauma",
-      "count": 1094
+      "pillar": "other",
+      "count": 1085
     },
     {
       "pillar": "meme_reaction",
-      "count": 161
+      "count": 155
     },
     {
       "pillar": "reply_bait",
-      "count": 45
+      "count": 42
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 35
+      "count": 33
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 345
+      "count": 336
     },
     {
       "pillar": "market_trauma",
-      "count": 244
+      "count": 265
     },
     {
       "pillar": "other",
-      "count": 202
+      "count": 200
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 19
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 3
     },
     {
       "pillar": "reply_bait",
-      "count": 4
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 57,
+      "posts": 58,
       "avg_likes": 0.05,
-      "avg_views": 29.1,
+      "avg_views": 28.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 56,
-      "avg_likes": 0.04,
-      "avg_views": 28.9,
+      "posts": 59,
+      "avg_likes": 0.03,
+      "avg_views": 29.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 73,
+      "posts": 72,
       "avg_likes": 0.01,
-      "avg_views": 29.6,
+      "avg_views": 29.9,
       "low_sample": false
     },
     {
@@ -181,19 +181,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4090
+      "count": 4088
     },
     {
       "type": "quote",
-      "count": 178
+      "count": 182
     },
     {
       "type": "quote_gif",
-      "count": 151
+      "count": 145
     },
     {
       "type": "post",
-      "count": 29
+      "count": 27
     },
     {
       "type": "hotake",
@@ -206,18 +206,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-16T13:41:34.140860",
-      "text": "FTX sold Cursor at cost. they lost the carry on a 5% stake that should have done 20x. the bankruptcy clawed back their genius but not their greed.",
+      "ts": "2026-06-16T17:42:54.695382",
+      "text": "Huang says society has no choice but to change.\nnvidia's margins are 70% because they're selling the only shovel left in a gold rush that only prints gold.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-16T13:41:17.979754",
-      "text": "850W of compute in your backpack. Apple's pricing for the M4 chip just went from \"premium consumer\" to \"datacenter killer.\"\n \nThe margin is in the air you breathe.",
+      "ts": "2026-06-16T17:40:43.310203",
+      "text": "192GB unified memory for a 300B model.\n\nThat's $2,000 of HBM3e RAM on a laptop chip. the margin is the machine.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-16T13:41:02.003592",
-      "text": "Cursor à 60 milliards. c’est le prix pour qu’une entreprise sache coder plus vite que son CFO ne sait compter.",
+      "ts": "2026-06-16T17:40:07.621812",
+      "text": "Spcx +17% to pass msft. 17% of a fraction still a fraction. the math hasn't changed, only the mood.",
       "type": "reply"
     }
   ]
