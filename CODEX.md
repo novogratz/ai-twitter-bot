@@ -430,6 +430,23 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+> **Mandate 2026-06-16 PM (V2 volume calibration — operator chose
+> quality-over-quantity after the automation flag):** keeps the V2 content
+> strategy (already merged, bc64de3) and dials volume toward the V2 daily
+> targets — EXCEPT replies stay UNLIMITED (operator: "for replies I want to
+> keep unlimited"; replies are the proven liker + not what flagged us).
+> - **Quotes 96 → 24/day** (spacing 225s→900s+600 jitter); meta_strategy +
+>   strategy_lab bounds (15,30); live_strategy 24.
+> - **Originals 10 → 8/day.** Replies UNLIMITED (unchanged).
+> - **Long-form thread re-enabled: 1/day** at ~13:30 ET (run_thread_cycle
+>   self-caps via _already_posted_today; forces Sonnet via PROFILE_LLM_PROVIDER).
+> - **Content follows the V2 blurb harder:** the originals (hotake) prompt
+>   now carries the V2 pillars inline (humor 40% lead / interpret-not-
+>   summarize 30% / infra-investing 20% / contrarian 10%), the "every post
+>   must contain humor/opinion/prediction/interpretation/contrarian, never
+>   headline-only" rule, and the A/B/C/D templates.
+> Guard test quote ceiling re-pinned to ≤30.
+
 > **Mandate 2026-06-16 (CURRENT — CONTENT STRATEGY V2): personality-driven
 > AI commentary, not a news feed.** Operator handed a full V2 spec. The
 > account is "AI explained by a smart friend" — NOT an AI news feed, NOT an

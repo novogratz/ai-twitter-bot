@@ -2151,7 +2151,7 @@ def test_agent_bounds_allow_operator_volume_mandate():
     from src.meta_strategy_agent import _BOUNDS
     assert _BOUNDS["MAX_NEWS_PER_DAY"][1] <= 4
     assert _BOUNDS["MAX_HOTAKES_PER_DAY"][1] <= 8
-    assert _BOUNDS["MAX_QUOTES_PER_DAY"][1] <= 96  # 2026-06-15: 2x quotes (operator)
+    assert _BOUNDS["MAX_QUOTES_PER_DAY"][1] <= 30  # 2026-06-16 V2: quotes dialed to ~24/day
     # Floors: the agent may tune DOWN but never starve a surface entirely.
     assert _BOUNDS["MAX_HOTAKES_PER_DAY"][0] >= 1
     assert _BOUNDS["MAX_NEWS_PER_DAY"][0] >= 1
@@ -2160,7 +2160,7 @@ def test_agent_bounds_allow_operator_volume_mandate():
     from src.strategy_lab_bot import ALLOWED_PATHS
     assert ALLOWED_PATHS["caps.MAX_NEWS_PER_DAY"][1] <= 4
     assert ALLOWED_PATHS["caps.MAX_HOTAKES_PER_DAY"][1] <= 8
-    assert ALLOWED_PATHS["caps.MAX_QUOTES_PER_DAY"][1] <= 96  # 2026-06-15: 2x quotes
+    assert ALLOWED_PATHS["caps.MAX_QUOTES_PER_DAY"][1] <= 30  # 2026-06-16 V2
     # Growth mode 2026-06-11 (operator: follows + followback back ON):
     # follow_blast allowed at a human trickle, never above 3/cycle.
     assert ALLOWED_PATHS["caps.FOLLOW_BLAST_PER_CYCLE"][1] <= 3, \

@@ -479,11 +479,17 @@ def main():
             max_instances=1,
         )
 
-        # Thread / digest / recap bots — DISABLED (2026-06-07 agent spec: the
-        # output mix is 3-4 single originals in US-market slots; threads are
-        # not in the mix and a 9:00/14:00 thread would consume the 4/day cap
-        # + 2.5h spacing ahead of the slot crons). Modules stay in the tree.
-        log.info("Thread/digest/recap bots: DISABLED (2026-06-07 spec — slot originals only).")
+        # Long-form thread — 1/day (Content Strategy V2, operator 2026-06-16:
+        # "1 long-form thread/day"). run_thread_cycle self-caps via
+        # _already_posted_today(), so a single daily cron suffices; fire at
+        # ~13:30 ET (midday US, peak). digest/recap stay off (not in V2 mix).
+        log.info("Long-form thread: 1/day at ~13:30 ET (V2 mix).")
+        scheduler.add_job(
+            safe_run_thread_cycle,
+            trigger=CronTrigger(hour=13, minute=30, timezone="America/New_York", jitter=1800),
+            id="thread_job",
+            max_instances=1,
+        )
 
         # ============================================================
         # POSTING SLOTS (2026-06-07 agent spec, Part 2 — Timing):

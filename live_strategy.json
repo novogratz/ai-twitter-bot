@@ -3,7 +3,7 @@
   "caps": {
     "MAX_NEWS_PER_DAY": 4,
     "MAX_HOTAKES_PER_DAY": 8,
-    "MAX_QUOTES_PER_DAY": 88,
+    "MAX_QUOTES_PER_DAY": 24,
     "MAX_RETWEETS_PER_DAY": 1,
     "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY": 1,
