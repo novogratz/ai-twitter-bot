@@ -651,3 +651,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 50 views: my patients have never cared this much about world peace
   - 1 likes / 108 views: so Fable 5 wasn't a product launch. it was a response
   - 0 likes / 27 views: you treat Bitcoin trauma. I treat people who sold theirs for $NVDA. neither of us trained for the ma
+
+## 2026-06-16
+
+**Activity** — total actions: 767
+  - by type: reply=714, quote=35, quote_gif=10, post=6, retweet=1, hotake=1
+  - top sources: SEARCH-HOT=480, FEED-SWEEP-FEED=122, FEED-SWEEP-FOLLOWING=69, QUOTE=27, GIF=14, BREAKING_QRT=6, VIP=4, HOT_QUOTE=2
+  - comedy patterns: FR_ANCHOR=10, METAPHOR=8, RENAME=8, UNDERSTATEMENT=6, OTHER=5, DIALOGUE=2
+  - top reply targets: @TheBTCTherapist=13, @zerohedge=13, @StockMKTNewz=12, @cryptorover=9, @Kalshi=9
+
+**Followers we follow** (running total): 243
+
+**Top-performing posts scraped today**:
+  - 0 likes / 31 views: my patients keep telling me Bitcoin fixes this
+  - 0 likes / 8 views: my patients who sold Nikkei before the rate hike are having a very quiet session this morning
+  - 0 likes / 24 views: the 'works on my machine' era just ended
