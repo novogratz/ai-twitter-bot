@@ -533,9 +533,16 @@ def main():
                  "06-09 'DO MORE' grid). 12:30 leads with the GIF stunt. Cap "
                  "MAX_ORIGINALS_PER_DAY + spacing bound the actual total.")
         for _slot_hour, _slot_min, _stunt_first in (
-            (8, 45, False), (10, 15, False), (11, 45, False), (12, 30, True),
-            (14, 0, False), (15, 30, False), (17, 0, False), (18, 30, False),
-            (20, 0, False), (21, 15, False),
+            # CRAZY MODE restored (operator 2026-06-16 PM: "go back to more
+            # posts, it was much better"). ~21 slots across US hours → up to
+            # MAX_ORIGINALS_PER_DAY=24. V2 content quality stays; this is
+            # volume only (the flag was about LIKES, cooled separately).
+            (8, 30, False), (9, 0, False), (9, 30, False), (10, 30, False),
+            (11, 0, False), (11, 30, False), (12, 30, True), (13, 0, False),
+            (13, 30, False), (14, 30, False), (15, 0, False), (15, 30, False),
+            (16, 30, False), (17, 0, False), (17, 30, False), (18, 30, False),
+            (19, 0, False), (19, 30, False), (20, 30, False), (21, 0, False),
+            (21, 30, False),
         ):
             _label = f"{_slot_hour:02d}:{_slot_min:02d}ET"
             scheduler.add_job(

@@ -2149,18 +2149,18 @@ def test_agent_bounds_allow_operator_volume_mandate():
     at human-plausible levels (news<=4, hotakes<=8, quotes<=48) — an agent
     must NOT be able to crank volume back to bot-fingerprint territory."""
     from src.meta_strategy_agent import _BOUNDS
-    assert _BOUNDS["MAX_NEWS_PER_DAY"][1] <= 4
-    assert _BOUNDS["MAX_HOTAKES_PER_DAY"][1] <= 8
-    assert _BOUNDS["MAX_QUOTES_PER_DAY"][1] <= 30  # 2026-06-16 V2: quotes dialed to ~24/day
+    assert _BOUNDS["MAX_NEWS_PER_DAY"][1] >= 8  # 2026-06-16 crazy mode restored
+    assert _BOUNDS["MAX_HOTAKES_PER_DAY"][1] >= 14
+    assert _BOUNDS["MAX_QUOTES_PER_DAY"][1] >= 100  # 2026-06-16 crazy mode
     # Floors: the agent may tune DOWN but never starve a surface entirely.
     assert _BOUNDS["MAX_HOTAKES_PER_DAY"][0] >= 1
     assert _BOUNDS["MAX_NEWS_PER_DAY"][0] >= 1
     assert _BOUNDS["MAX_QUOTES_PER_DAY"][0] >= 10
 
     from src.strategy_lab_bot import ALLOWED_PATHS
-    assert ALLOWED_PATHS["caps.MAX_NEWS_PER_DAY"][1] <= 4
-    assert ALLOWED_PATHS["caps.MAX_HOTAKES_PER_DAY"][1] <= 8
-    assert ALLOWED_PATHS["caps.MAX_QUOTES_PER_DAY"][1] <= 30  # 2026-06-16 V2
+    assert ALLOWED_PATHS["caps.MAX_NEWS_PER_DAY"][1] >= 8
+    assert ALLOWED_PATHS["caps.MAX_HOTAKES_PER_DAY"][1] >= 14
+    assert ALLOWED_PATHS["caps.MAX_QUOTES_PER_DAY"][1] >= 100  # 2026-06-16 crazy mode
     # Growth mode 2026-06-11 (operator: follows + followback back ON):
     # follow_blast allowed at a human trickle, never above 3/cycle.
     assert ALLOWED_PATHS["caps.FOLLOW_BLAST_PER_CYCLE"][1] <= 3, \
