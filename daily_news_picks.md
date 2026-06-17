@@ -14801,3 +14801,36 @@ Zuckerberg admitted it in writing. Manager-to-staff ratios hit 1:50 in the new A
 - **@wsjmarkets** (9 likes, score 7/10) — SpaceX shares have surged nearly 50% in their first days of trading and left a trail of remorseful traders in their wake: those who sold too early
   - https://x.com/WSJmarkets/status/2066992037300195530
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 17).
+- **@nvidia** (60 likes, score 9/10) — Learn how the NVIDIA platform and ecosystem enable AI model builders to launch frontier models faster, minimize training costs, and start generating revenue early.
+  - https://x.com/nvidia/status/2066902394655424619
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 72).
+- **@therundownai** (17 likes, score 8/10) — SpaceX is officially exercising the option to acquire Cursor for $60 billion in an all-stock deal! 
+
+Fresh off a monster IPO ($SPCX), Elon Musk and co. bring the powerful AI coding startup in-house af
+  - https://x.com/TheRundownAI/status/2066880499218342143
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 35).
+- **@therundownai** (30 likes, score 9/10) — Chinese lab Z AI just released GLM-5.2, an impressive new open weights model with a 1M token context window.  
+
+A few benchmark comparisons, slotting between Opus 4.8 and GPT 5.5 on several fronts:
+  - https://x.com/TheRundownAI/status/2066953804424102228
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 52).
+- **@fchollet** (340 likes, score 7/10) — The way we will create a future where powerful AI is open-source and available to all is by making AI radically more efficient, both in terms of inference compute and (more importantly) in terms of tr
+  - https://x.com/fchollet/status/2066867824404860943
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 428).
+- **@nvidia** (296 likes, score 7/10) — The NVIDIA Blackwell platform just swept MLPerf Training 6.0, delivering fastest performance and largest scale.
+
+Beyond the benchmarks, capabilities like the Reliability, Availability, and Serviceabil
+  - https://x.com/nvidia/status/2066902392570876031
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 356).
+- **@nvidia** (29 likes, score 7/10) — Correction: GB300 NVL72 delivers 1.6x performance on DeepSeekV3 pretraining at 512 GPU scale. (Ref: results 6.0-0022 and 6.0-0101)
+  - https://x.com/nvidia/status/2066986675176415415
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 33).
+- **@rileybrown** (18 likes, score 7/10) — Really cool demo of GPT Real-Time 2 
+
+Controlling your entire computer with voice...
+Exciting stuff
+  - https://x.com/rileybrown/status/2067057208504856850
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 30).
+- **@wsj** (8 likes, score 7/10) — The AI frenzy is sending tech-company valuations through the roof in the U.S. and Asian markets. One country still offers some relative bargains.
+  - https://x.com/WSJ/status/2067055469047300286
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 20).
