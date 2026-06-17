@@ -629,10 +629,19 @@ def run_quote_tweet_cycle():
     # top is the bot's voice.
     try:
         from .retweet_bot import EN_TRUSTED_HANDLES, FR_TRUSTED_HANDLES
-        from .twitter_client import scrape_profile_tweets
+        from .twitter_client import scrape_profile_tweets, _profile_visit_allowed
         # Small per-cycle scrape (3 handles) so the cycle is fast and doesn't
         # hog the Safari lock — quote volume comes from frequent short cycles.
-        sampled = random.sample(EN_TRUSTED_HANDLES, k=min(3, len(EN_TRUSTED_HANDLES)))
+        # Pre-filter by the home/search-only profile-visit allowlist
+        # (2026-06-07): a non-allowlisted handle returns [] before any Safari
+        # work, so iterating it just spams logs and burns time. If the
+        # allowlist is empty for trusted news, skip the pass quietly.
+        allowed_handles = [h for h in EN_TRUSTED_HANDLES if _profile_visit_allowed(h)]
+        if not allowed_handles:
+            log.info("[QUOTE] Trusted-news pass skipped (no allowlisted handles).")
+            sampled = []
+        else:
+            sampled = random.sample(allowed_handles, k=min(3, len(allowed_handles)))
         for handle in sampled:
             log.info(f"[QUOTE] Scraping trusted-news handle: @{handle}")
             try:

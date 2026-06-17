@@ -440,6 +440,20 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 > dropped `exec` lets the trap fire. auto_improve.sh's single-flight lock
 > de-dupes against the daily launchd agent if both are active.
 
+> **2026-06-17 — kill the dead trusted-news scrape pass:** the 2026-06-07
+> home/search-only mandate gates every profile visit behind
+> `PROFILE_VISIT_ALLOWLIST` (default `TheBTCTherapist,Graphseo`). The
+> trusted-news passes in `quote_tweet_bot` (3 EN handles/cycle) and
+> `retweet_bot` (5 EN handles/cycle) still iterated Reuters/Bloomberg/
+> CNBC/etc., each call returning [] AFTER logging `Scraping…` + `profile
+> visit blocked` — pure dead iteration. Audit: **4,936** "profile visit
+> blocked" lines + **201** trusted-news scrape attempts in bot.log, zero
+> candidates ever harvested. Fix: pre-filter each sample by
+> `_profile_visit_allowed`; empty → skip the pass with one line. If the
+> operator adds a trusted handle to `PROFILE_VISIT_ALLOWLIST` the path
+> revives automatically. Quote cycles shorten + log signal-to-noise goes
+> up. Guard: `test_trusted_news_pass_skips_when_not_in_profile_allowlist`.
+
 > **Mandate 2026-06-17 — DO MORE (volume up again):** originals 24 → **32/
 > day** (~30-slot grid 7:30-22:00, spacing 1800→1200s; news 14, hotakes 28),
 > quotes 150 → **240/day** (spacing 120→75s+45j). Agent bounds + live_strategy

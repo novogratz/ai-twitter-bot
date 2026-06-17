@@ -2581,6 +2581,43 @@ def test_quote_us_night_throttle(monkeypatch):
         "night throttle must gate the quote cycle before any Safari/LLM work"
 
 
+def test_trusted_news_pass_skips_when_not_in_profile_allowlist(monkeypatch):
+    """2026-06-17: the home/search-only mandate (2026-06-07) gates ALL
+    profile visits behind PROFILE_VISIT_ALLOWLIST (default
+    TheBTCTherapist,Graphseo). The trusted-news passes in quote_tweet_bot
+    and retweet_bot iterate Reuters/Bloomberg/CNBC/etc — none of which are
+    allowlisted — so every scrape returns [] before any Safari work. The
+    iteration itself is dead: ~5K 'profile visit blocked' log lines and
+    no quote/retweet candidates ever came from this path. Pre-filter the
+    sample by `_profile_visit_allowed` so the dead pass exits quietly."""
+    import inspect
+    from src import quote_tweet_bot as qb
+    from src import retweet_bot as rb
+    from src import twitter_client as tc
+
+    monkeypatch.delenv("PROFILE_VISIT_ALLOWLIST", raising=False)
+    # None of the trusted-news outlets are on the default allowlist
+    # (TheBTCTherapist + Graphseo) — sanity-check.
+    assert not tc._profile_visit_allowed("Reuters")
+    assert not tc._profile_visit_allowed("BloombergTV")
+    assert not tc._profile_visit_allowed("CNBC")
+
+    # Structural pin: both passes pre-filter the sample by
+    # `_profile_visit_allowed` BEFORE iteration/logging.
+    qsrc = inspect.getsource(qb.run_quote_tweet_cycle)
+    assert "_profile_visit_allowed" in qsrc, \
+        "quote trusted-news pass must pre-filter by the profile allowlist"
+    rsrc = inspect.getsource(rb.run_retweet_cycle)
+    assert "_profile_visit_allowed" in rsrc, \
+        "retweet trusted-news pass must pre-filter by the profile allowlist"
+
+    # If the allowlist is widened to include a trusted handle, the
+    # pre-filter must let it through.
+    monkeypatch.setenv("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist,Graphseo,Reuters")
+    assert tc._profile_visit_allowed("Reuters")
+    assert not tc._profile_visit_allowed("BloombergTV")
+
+
 def test_engine_health_slots_elapsed_clamp():
     """2026-06-10 12:34 false alarm: 'hotake collapsed: 4 today vs ~14 by
     this hour' — the ~14 came from interval-era days; under the slot regime

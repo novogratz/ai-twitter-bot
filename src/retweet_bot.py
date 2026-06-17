@@ -965,8 +965,18 @@ def run_retweet_cycle():
     # ~1-2 min and doesn't monopolise the single Safari lock — that gridlock
     # (8-10 min cycles) is what was blocking every other job. Daily volume
     # comes from frequent short cycles, not one giant cycle.
-    sample = random.sample(EN_TRUSTED_HANDLES, k=min(5, len(EN_TRUSTED_HANDLES)))
-    log.info(f"[RETWEET] Scraping EN-first AI handles: {sample}")
+    # Pre-filter by the home/search-only profile-visit allowlist
+    # (2026-06-07): non-allowlisted handles return [] before any Safari work,
+    # so iterating them just spams logs and burns the cycle. If the allowlist
+    # is empty for trusted news, skip the pass quietly.
+    from .twitter_client import _profile_visit_allowed
+    allowed_handles = [h for h in EN_TRUSTED_HANDLES if _profile_visit_allowed(h)]
+    if not allowed_handles:
+        log.info("[RETWEET] Trusted-news pass skipped (no allowlisted handles).")
+        sample = []
+    else:
+        sample = random.sample(allowed_handles, k=min(5, len(allowed_handles)))
+        log.info(f"[RETWEET] Scraping EN-first AI handles: {sample}")
 
     for handle in sample:
         try:

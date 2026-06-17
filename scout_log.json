@@ -5432,5 +5432,71 @@
       }
     ],
     "summary": "Je te sors de la masse de comptoirs qui vendent du Dream11. Ici on a des gens qui comprennent la tech ou la macro, pas juste le mot 'Moon'. Le QC est mieux d\u00e9fendu que pr\u00e9vu."
+  },
+  {
+    "ts": "2026-06-17T12:29:24.896600",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LeoFavart",
+        "region": "france",
+        "niche": "tech",
+        "followers": 200000,
+        "reason": "Le roi de la newsletter tech, mais X est sa vitrine. Il voit venir les tendances tech 6 mois avant tout le monde."
+      },
+      {
+        "handle": "MaximeD",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "AI Engineer \u00e0 NYC, twitte en FR sur l'Open Source et les LLMs. Un des meilleurs analystes techniques francos aux US."
+      },
+      {
+        "handle": "ThibaudG",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Ex-Goldman, vulgarise la bourse sans jamais vendre de formation. C'est rare, donc m\u00e9fiant quand il twitte."
+      },
+      {
+        "handle": "JulienBos",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Tech lead ex-Doctolib. Moins 'investisseur', plus 'celui qui sait comment le code bouge l'argent'."
+      },
+      {
+        "handle": "JulienTrottier",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "VP Tech chez Koodo. Couvre l'IA et la productivit\u00e9. Moins financier, plus 'comment l'IA change le travail'."
+      },
+      {
+        "handle": "MaelleCavard",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Sp\u00e9cialiste DeFi/Web3, twitte en FR. Pas de hype, juste de la tech pure."
+      },
+      {
+        "handle": "ArnaudBos",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Fondateur de Luno. Parle crypto et trading avec un regard fondamental, pas juste graphique."
+      },
+      {
+        "handle": "RaphaelBaron",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Cofondateur de Plask. Il vit dans l'IA et la twitte comme un maniaque. Qualit\u00e9 technique au top."
+      }
+    ],
+    "summary": "J'ai \u00e9pur\u00e9 les influenceurs format\u00e9s pour ne garder que des buildeurs et des analystes. La sc\u00e8ne qu\u00e9b\u00e9coise est plus discr\u00e8te mais techniquement plus solide, tandis que la France regorge encore de vendeurs de r\u00eaves \u00e0 \u00e9viter."
   }
 ]
