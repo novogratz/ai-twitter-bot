@@ -14962,3 +14962,34 @@ Former Defence Secretary John Healey MP calls for a greater investme
 Explore more premium news and analysis on $SPCX in AlphaSpace: https://yhoo.it/4uynrSx
   - https://x.com/YahooFinance/status/2067242853361713480
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 28).
+- **@spacex** (5630 likes, score 9/10) — Splashdown of Dragon confirmed, completing SpaceX’s 34th Commercial Resupply Services mission to the @Space_Station!
+  - https://x.com/SpaceX/status/2067218587375284339
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 6160).
+- **@dovysimumma** (6112 likes, score 8/10) — Conor McGregor says he OFFERED Terence Crawford $200M for 2 fight deal; 1 fight in boxing and 1 fight in MMA
+
+Crawford REJECTED because he doesn’t want to be leg kicked
+
+“I don’t want to get kicked by
+  - https://x.com/DovySimuMMA/status/2067028569956700325
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6212).
+- **@0xmortyx** (41 likes, score 8/10) — OpenAI co-founder Andrej Karpathy:
+
+"You literally have to put in 10,000 hours to learn Claude"
+
+11-min workshop from Goat of AI - how he's actually uses it
+
+He reveales all the features that he use i
+  - https://x.com/0xMortyx/status/2067237536573927685
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 57).
+- **@pmitu** (60 likes, score 7/10) — How to avoid burnout?
+
+Earn $1,000,000.
+  - https://x.com/pmitu/status/2067235563879772635
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 126).
+- **@ridark_eth** (2283 likes, score 7/10) — Pieter Levels makes over $250,000 a month -> alone, from a laptop, with zero employees
+
+no co-founder. no investors. no team. just him and a backpack, moving between countries
+
+he started by daring hi
+  - https://x.com/ridark_eth/status/2066656401423028409
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 2367).
