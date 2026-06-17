@@ -15044,3 +15044,91 @@ He says Elon Musk has put together a company that’s “best in class
 @YoGotti says
   - https://x.com/CulturedUpdatez/status/2066999431623504183
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 2068).
+- **@kobeissiletter** (1850 likes, score 9/10) — BREAKING: The Dow is now down -800 points since the Fed decision was released.
+
+The S&P 500 has erased -$1.2 trillion in market cap in under 2 hours.
+  - https://x.com/KobeissiLetter/status/2067332084188737900
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 2114).
+- **@kobeissiletter** (137 likes, score 9/10) — The AI revolution is powering the South Korean economy:
+
+The South Korean economy grew +1.8% QoQ in Q1 2026, revised up from the preliminary estimate of +1.7%, according to the Bank of Korea.
+
+This ma
+  - https://x.com/KobeissiLetter/status/2067348026541367702
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 199).
+- **@kobeissiletter** (2387 likes, score 8/10) — BREAKING: The S&P 500 falls over -1% after Kevin Warsh concludes his first meeting as Fed Chairman.
+  - https://x.com/KobeissiLetter/status/2067329100029604162
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 2709).
+- **@nvidia** (83 likes, score 8/10) — Registration for #NVIDIAGTC Berlin is now open. 
+
+October 20–22, join the global AI community for expert-led sessions, hands-on training, and insights on how AI is transforming every industry.
+
+Hear f
+  - https://x.com/nvidia/status/2067276081548202489
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 111).
+- **@theallinpod** (27 likes, score 8/10) — OpenAI’s CFO Teases Their First Device
+
+The Jony Ive-designed product is dropping late 2026/early 2027:
+
+Some descriptors:
+– Lovable, feels human
+– Seamless
+– No thumbs
+– Can talk to it
+– Made for the
+  - https://x.com/theallinpod/status/2067329577731359112
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 41).
+- **@coreweave** (16 likes, score 7/10) — AI moves fast, and so do the threats. 
+
+Our CISO Jim Higgins outlines the new bar for AI infrastructure security + the 7 questions every CISO needs to ask their vendors.
+
+Security leaders, this one's
+  - https://x.com/CoreWeave/status/2067313828354830656
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 18).
+- **@kobeissiletter** (2788 likes, score 7/10) — The market is dropping in response to the Fed's first meeting with Kevin Warsh as Fed Chair for one key reason:
+
+We will have far less information going forward.
+
+During the press conference today, Fe
+  - https://x.com/KobeissiLetter/status/2067331273375244307
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 3124).
+- **@factpostnews** (77 likes, score 8/10) — Reporter: Did you see the Fed decision? They held rates.
+
+Trump: It's alright. Whatever.
+
+Reporter: It looks like they may need to raise rates later.
+
+Trump: It could happen. It's hard to believe. It
+  - https://x.com/factpostnews/status/2067338833553687013
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 109).
+- **@pr0ud_americans** (708 likes, score 7/10) — Hiring a Murder of Crows for Farm Security! 
+
+We've had free-range chickens on the farm and have always had problems with hawks. Now I want to befriend some crows as protection.
+
+Those birds are loyal
+  - https://x.com/pr0ud_americans/status/2067262506792337419
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 776).
+- **@sakshi50038** (7 likes, score 7/10) — ai will replace jobs like this: 
+
+- accountant
+- investment banker
+- lawyer
+- consultant
+
+but will create NEW jobs like this:
+
+- vape vending machine owner
+- indoor shrimp farmer
+- indoor bee/honey fa
+  - https://x.com/Sakshi50038/status/2067279341885837443
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 17).
+- **@iren_ltd** (844 likes, score 7/10) — We're returning to @RaiseSummit this July 7-9 as Headline Sponsor. 
+ 
+RAISE has long brought together the people shaping the future of AI infrastructure in Europe. It's a community we've been proud to
+  - https://x.com/IREN_Ltd/status/2066865374050877541
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1180).
+- **@hqnewsnow** (519 likes, score 7/10) — Tim Cook has just announced Apple will raise prices:
+
+“Unfortunately, price increases are unavoidable. We’re doing our best to mitigate the huge increases that are being passed to us, and we’ve been t
+  - https://x.com/HQNewsNow/status/2067356623178244482
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 647).
