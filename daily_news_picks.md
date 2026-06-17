@@ -15032,3 +15032,15 @@ This was not some sl
 So while you’
   - https://x.com/leopardracer/status/2067256000520814945
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 53).
+- **@wallstreetapes** (5087 likes, score 8/10) — Billionaire Rick Caruso can’t believe what Elon Musk has created with SpaceX. He’s toured the facility and “It’s beyond exceptional”
+
+He says Elon Musk has put together a company that’s “best in class
+  - https://x.com/WallStreetApes/status/2067013512661258422
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 5287).
+- **@culturedupdatez** (1992 likes, score 7/10) — Yo Gotti speaks on why most people GO BROKE & highlights the importance of SAVING money and keeping it.
+
+“Most people would have a $1 Million if their money management skills was right”
+
+@YoGotti says
+  - https://x.com/CulturedUpdatez/status/2066999431623504183
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 2068).

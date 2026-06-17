@@ -410,7 +410,14 @@
     "PierreSouchay",
     "SimonLacroix",
     "AlexisBouvier_",
-    "JulienBilodeau"
+    "JulienBilodeau",
+    "QuentinRouyer",
+    "MarcLanteigne",
+    "ThomasLarvor",
+    "louis_fleury",
+    "RomainCazes",
+    "MaximeBachir",
+    "VincentBoulay"
   ],
   "en": [
     "blablacar",
@@ -448,7 +455,22 @@
     "OpenClaw",
     "Starlink",
     "C3",
-    "Prism"
+    "Prism",
+    "Cointelegraph",
+    "Coinbase",
+    "Stocktwits",
+    "LayoffHedge",
+    "CoreWeave",
+    "Binance",
+    "Investor_NICK",
+    "Base",
+    "BMSInvests",
+    "amit",
+    "unknown",
+    "OpenAI",
+    "Wccftech",
+    "Q",
+    "MLB"
   ],
   "history": [
     {
@@ -2684,6 +2706,116 @@
     {
       "lang": "en",
       "handle": "Prism",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Cointelegraph",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Coinbase",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Stocktwits",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "LayoffHedge",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "CoreWeave",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Binance",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "QuentinRouyer",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLanteigne",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Investor_NICK",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Base",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "BMSInvests",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "amit",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "unknown",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "OpenAI",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Wccftech",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Q",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "MLB",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasLarvor",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "louis_fleury",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainCazes",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBachir",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBoulay",
       "added": "2026-06-17"
     }
   ]

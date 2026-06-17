@@ -3734,5 +3734,84 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les pros : les fondateurs de Mistral pour l'IA, les traders syst\u00e9miques pour la bourse, et les journalistes tech pour la Silicon Valley. Z\u00e9ro vendeur de r\u00eave, juste du travail."
+  },
+  {
+    "ts": "2026-06-17T04:10:05.564668",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [
+      "quentinrouyer",
+      "marclanteigne"
+    ],
+    "keepers": [
+      {
+        "handle": "QuentinRouyer",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Journaliste bourse qui ne dort jamais. Ses threads sur les r\u00e9sultats trimestriels sont plus clairs que les pr\u00e9sentations IR des CAC40."
+      },
+      {
+        "handle": "FrenchCryptoKing",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Diaspora \u00e0 NYC qui twitte en FR. Il couvre les startups crypto US avec un \u0153il fran\u00e7ais, parfait pour bridger les deux \u00e9cosyst\u00e8mes."
+      },
+      {
+        "handle": "MarcLanteigne",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Gestionnaire de fonds Q\u00c9, il partage sa vision march\u00e9 avec une franchise rare. Pas de signaux payants, juste du fond."
+      }
+    ],
+    "summary": "Un mix de fondateurs tech fran\u00e7ais (Mistral), de value investors rod\u00e9s (Abitan, Rouyer) et d'acteurs qu\u00e9b\u00e9cois solides (Bessard, Lanteigne). Z\u00e9ro influenceur de voyage crypto, 100% fond ou technique."
+  },
+  {
+    "ts": "2026-06-17T15:13:09.669263",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomasLarvor",
+        "region": "usa",
+        "niche": "bourse/fintech",
+        "followers": 95000,
+        "reason": "Fondateur de MarketWatch (et ancien de Bloomberg/Revolut). Bas\u00e9 aux US, mais tweete en FR avec un ton d\u00e9cal\u00e9 et pr\u00e9cis."
+      },
+      {
+        "handle": "louis_fleury",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'anti-Pierre Rochewall francophone. Pas de formations, que du trading quant et des dashboards. Twitte en FR, analyse sec."
+      },
+      {
+        "handle": "RomainCazes",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 45000,
+        "reason": "Fondateur de Mews (AI startup). Il parle tech/IA sans le jargon VC ringard. Actif, pur produit."
+      },
+      {
+        "handle": "MaximeBachir",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "AI Builder/Dev FR. Moins 'influencer', plus 'tech'. Twitte sur les mod\u00e8les, les outils, pas sur le prix du Bitcoin."
+      },
+      {
+        "handle": "VincentBoulay",
+        "region": "quebec",
+        "niche": "tech/ai",
+        "followers": 12000,
+        "reason": "Vice-pr\u00e9sident chez Huma. Il parle IA pure en FR au Qu\u00e9bec, sans la lourdeur parisienne. Cible pr\u00e9cise."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour garder les techniciens et les fondateurs. Pas de 'guru' crypto ici, que du concret."
   }
 ]
