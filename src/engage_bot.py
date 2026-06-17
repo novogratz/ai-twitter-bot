@@ -14,7 +14,7 @@ import time
 import traceback
 from .logger import log
 from .config import _PROJECT_ROOT, DISCOVERED_ACCOUNTS_FILE, BLOCKLIST
-from .twitter_client import visit_profile_and_like, follow_account
+from .twitter_client import visit_profile_and_like, follow_account, _profile_visit_allowed
 
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 
@@ -112,9 +112,18 @@ def run_engage_cycle():
                     followed.add(username)
                 time.sleep(random.randint(2, 4))
 
+            # 2026-06-17: skip the reciprocity-like pass when the handle is
+            # outside PROFILE_VISIT_ALLOWLIST (home/search-only mandate).
+            # The like primitive returns instantly after logging "blocked",
+            # so iterating it just spammed bot.log (~50s of [ENGAGE]/[LIKE]
+            # blocked pairs per cycle) without doing any work. Same shape
+            # as the trusted-news skip (PR #49). The follow above still
+            # ran — follow_account's profile visit is mechanically required
+            # and intentionally ungated.
+            if not _profile_visit_allowed(username):
+                continue
             # Cooled down 5/3→2/1 (operator 2026-06-15: too many likes
-            # tripped the automation flag). Most engage likes are already
-            # profile-gated to no-ops anyway.
+            # tripped the automation flag).
             like_count = 2 if username in VIP_ACCOUNTS else 1
             log.info(f"[ENGAGE] Liking @{username}'s latest tweets...")
             visit_profile_and_like(username, like_count=like_count)

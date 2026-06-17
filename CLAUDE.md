@@ -454,6 +454,19 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 > revives automatically. Quote cycles shorten + log signal-to-noise goes
 > up. Guard: `test_trusted_news_pass_skips_when_not_in_profile_allowlist`.
 
+> **2026-06-17 — same skip for `engage_bot`'s reciprocity-like step:**
+> `run_engage_cycle` picks 8–12 handles per cycle; for each it (1) calls
+> `follow_account` (mechanically required to click the button — intentionally
+> NOT gated), then (2) calls `visit_profile_and_like` for the reciprocity
+> like. Step (2) is gated by the home/search-only mandate, so for the ~10/12
+> non-allowlisted handles per cycle it returned instantly after logging
+> `[LIKE] profile visit blocked` — but the engage loop still logged
+> `[ENGAGE] Liking @X's latest tweets...` and slept 3–5s between each, paying
+> ~50 s of paired log spam per cycle. Live audit: 626 blocked lines in
+> bot.log this session. Fix mirrors PR #49: pre-filter the like step by
+> `_profile_visit_allowed` before logging + sleeping. Follows are unchanged.
+> Guard: `test_engage_cycle_skips_likes_for_non_allowlisted_handles`.
+
 > **Mandate 2026-06-17 — DO MORE (volume up again):** originals 24 → **32/
 > day** (~30-slot grid 7:30-22:00, spacing 1800→1200s; news 14, hotakes 28),
 > quotes 150 → **240/day** (spacing 120→75s+45j). Agent bounds + live_strategy
