@@ -14843,3 +14843,42 @@ I'm using it with @OpenRouter because zAI is busy.
 3. Scroll to OpenAI API Key, Toggle it on, Paste OpenRoute
   - https://x.com/rileybrown/status/2067075406553895342
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 11).
+- **@k1rallik** (1529 likes, score 9/10) — > be the richest man alive
+> own roughly 40% of SpaceX
+> own around 13% of Tesla
+> plus xAI, the Boring Company and X
+> take a 0 dollar salary
+> june 12 2026 SpaceX IPOs at 135 a share
+> company hits
+  - https://x.com/k1rallik/status/2066989239066382597
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1605).
+- **@cointelegraph** (502 likes, score 9/10) — JUST IN: SpaceX’s acquisition of AI coding startup Cursor reportedly created four new multibillionaires, all in their mid-20s.
+  - https://x.com/Cointelegraph/status/2066993186392748255
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 616).
+- **@gregisenberg** (343 likes, score 8/10) — Pick a side:
+
+1. Openclaw vs Hermes?
+2. Anthropic vs OpenAI vs Google?
+3. Codex vs Claude Code?
+4. Local models vs cloud models?
+5. Raise VC or bootstrap?
+6. Best time to be building or bad time?
+7. M
+  - https://x.com/gregisenberg/status/2066928520450744488
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 931).
+- **@joonlee** (3458 likes, score 8/10) — Three years ago I got laid off from ESPN.
+
+Now I'm running a YouTube channel: profitable, 175K views a video, closing in on 60K subs.
+
+Goal: 100K by end of summer.
+
+If you believe sports journalism ca
+  - https://x.com/joonlee/status/2066939264516915497
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 3656).
+- **@fireflyspace** (119 likes, score 8/10) — We're excited to announce Nathan O'Konek as Firefly's General Counsel. Nathan brings more than 20 years of legal and strategic leadership experience in the global aerospace and defense sectors, specia
+  - https://x.com/FireflySpace/status/2066900017730691231
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 119).
+- **@youranonnews** (5599 likes, score 7/10) — Michelle Obama: “Let’s be very clear. Strong men don’t need to put down women to make themselves feel powerful.”
+The same goes for leadership, you lead by example. Being an asshole to someone only mak
+  - https://x.com/YourAnonNews/status/2066943718146408769
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 5831).
