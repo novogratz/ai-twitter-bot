@@ -591,7 +591,15 @@
     "ThomasPh",
     "JulesDumoulin",
     "AlexisDegrane",
-    "CryptoKleber"
+    "CryptoKleber",
+    "LeoFavart",
+    "MaximeD",
+    "ThibaudG",
+    "JulienBos",
+    "JulienTrottier",
+    "MaelleCavard",
+    "ArnaudBos",
+    "RaphaelBaron"
   ],
   "en": [
     "blablacar",
@@ -805,7 +813,11 @@
     "Camus",
     "Noah",
     "sorashido_work",
-    "Coinbase"
+    "Coinbase",
+    "Plasma",
+    "Jeremy",
+    "Solana",
+    "HeyGen"
   ],
   "history": [
     {
@@ -4826,6 +4838,66 @@
     {
       "lang": "fr",
       "handle": "CryptoKleber",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Plasma",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Jeremy",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Solana",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "HeyGen",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "LeoFavart",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeD",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudG",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBos",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienTrottier",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelleCavard",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArnaudBos",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelBaron",
       "added": "2026-06-17"
     }
   ]
