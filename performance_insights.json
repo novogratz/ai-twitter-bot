@@ -1,41 +1,41 @@
 {
-  "generated_at": "2026-06-17T03:57:51.368252",
-  "window_7d_actions": 445,
-  "window_24h_actions": 445,
+  "generated_at": "2026-06-17T16:41:24.633887",
+  "window_7d_actions": 909,
+  "window_24h_actions": 909,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 405
+      "count": 819
     },
     {
       "pattern": "METAPHOR",
-      "count": 21
+      "count": 43
     },
     {
       "pattern": "RENAME",
-      "count": 10
+      "count": 25
     },
     {
       "pattern": "EN_ANCHOR",
-      "count": 8
+      "count": 17
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 1
+      "count": 2
     }
   ],
   "worst_patterns": [
     {
-      "pattern": "UNDERSTATEMENT",
+      "pattern": "DIALOGUE",
       "count": 1
     },
     {
-      "pattern": "EN_ANCHOR",
-      "count": 8
+      "pattern": "UNDERSTATEMENT",
+      "count": 2
     },
     {
-      "pattern": "RENAME",
-      "count": 10
+      "pattern": "OTHER",
+      "count": 2
     }
   ],
   "best_hours_utc": [
@@ -48,73 +48,85 @@
       "actions": 107
     },
     {
-      "hour": 0,
-      "actions": 57
+      "hour": 11,
+      "actions": 93
     },
     {
-      "hour": 22,
-      "actions": 55
+      "hour": 10,
+      "actions": 79
     },
     {
-      "hour": 2,
-      "actions": 43
+      "hour": 12,
+      "actions": 68
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 210
+      "count": 455
     },
     {
       "topic": "IA",
-      "count": 191
-    },
-    {
-      "topic": "Bourse",
-      "count": 24
+      "count": 369
     },
     {
       "topic": "Crypto",
-      "count": 24
+      "count": 48
+    },
+    {
+      "topic": "Bourse",
+      "count": 47
     },
     {
       "topic": "Spatial",
-      "count": 19
+      "count": 25
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 337
+      "count": 658
     },
     {
       "type": "quote",
-      "count": 69
-    },
-    {
-      "type": "quote_gif",
-      "count": 22
+      "count": 145
     },
     {
       "type": "retweet",
-      "count": 17
+      "count": 51
+    },
+    {
+      "type": "quote_gif",
+      "count": 49
+    },
+    {
+      "type": "METAPHOR",
+      "count": 3
+    },
+    {
+      "type": "CHARACTER",
+      "count": 2
+    },
+    {
+      "type": "RENAME",
+      "count": 1
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-17T03:57:42.466121",
-      "text": "Anthropic’s Fable 5 missed medical research. You’re mourning the feature. They’re calculating the $200M saved on tokenized medical journals. The product isn’t the medicine. It’s the margin.",
+      "ts": "2026-06-17T16:37:03.067851",
+      "text": "Cat is dying in 120 days. you are burning $5B/year.\n\nyour runway lasts half as long as his kidneys.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-17T03:56:17.860464",
-      "text": "80k salary for 5 years while GPUs dropped 40% in real terms.\n\nThe inflation-adjusted raise is negative. you're not getting richer, you're getting paid to wait.",
+      "ts": "2026-06-17T16:36:41.894261",
+      "text": "Un seul owner pour payer la note de tous.\nla visibilité sur l'usage = la preuve que ton collègue est un resource hog.\nc'est la fin du stand-up de l'IA gratuit.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-17T03:56:01.228773",
-      "text": "AI Bros raised $50M on GPT-3.5 wrappers.\n\nTheir burn rate is 70%.\nTheir runway is 6 months.\nTheir \"AI\" is a CSS template.",
+      "ts": "2026-06-17T16:33:13.280110",
+      "text": "Le mécano du tango. il a économisé 3h de transport, mais gagné 14h de slack. productivité nette : -90%.",
       "type": "reply"
     }
   ]
