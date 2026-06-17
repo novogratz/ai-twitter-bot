@@ -55,9 +55,9 @@ META_LOG_FILE = os.path.join(_PROJECT_ROOT, "meta_strategy_log.json")
 # strategy_lab.ALLOWED_PATHS, the autonomous_growth prompt, and the
 # bounds guard test in the same pass.
 _BOUNDS = {
-    "MAX_NEWS_PER_DAY":      (2,  10),
-    "MAX_HOTAKES_PER_DAY":   (6,  20),
-    "MAX_QUOTES_PER_DAY":    (60, 200),
+    "MAX_NEWS_PER_DAY":      (2,  14),
+    "MAX_HOTAKES_PER_DAY":   (6,  28),
+    "MAX_QUOTES_PER_DAY":    (60, 240),
     "MAX_RETWEETS_PER_DAY":  (0,  2),
     "MAX_BREAKOUTS_PER_DAY": (0,  2),
     "MAX_SPICY_PER_DAY":     (0,  2),
@@ -66,9 +66,9 @@ _BOUNDS = {
 
 # Safe defaults used when the LLM omits a cap key entirely.
 _DEFAULTS = {
-    "MAX_NEWS_PER_DAY":      10,
-    "MAX_HOTAKES_PER_DAY":   18,
-    "MAX_QUOTES_PER_DAY":    150,
+    "MAX_NEWS_PER_DAY":      14,
+    "MAX_HOTAKES_PER_DAY":   26,
+    "MAX_QUOTES_PER_DAY":    220,
     "MAX_RETWEETS_PER_DAY":  1,
     "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY":     1,

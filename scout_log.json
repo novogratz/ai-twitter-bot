@@ -5380,5 +5380,57 @@
       }
     ],
     "summary": "Focus sur les experts de fond plut\u00f4t que les influenceurs de statut. On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour garder les architectes du secteur."
+  },
+  {
+    "ts": "2026-06-17T08:07:21.851600",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MathieuLeMeteur",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "L'oracle. Il tweet en FR, il analyse sans vendre de r\u00eave et a surv\u00e9cu \u00e0 4 hivers crypto."
+      },
+      {
+        "handle": "ThomasPh",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Trader bas\u00e9 \u00e0 NY qui tweet en FR avec un humour caustique. La bourse vue par un d\u00e9cal\u00e9."
+      },
+      {
+        "handle": "JulesDumoulin",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Le Vibe Coiner qu\u00e9b\u00e9cois. Il rend la complexit\u00e9 simple sans vendre de formation \u00e0 500\u20ac."
+      },
+      {
+        "handle": "AlexisDegrane",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Ex-Huobi, ex-OKX, le roi des march\u00e9s crypto d\u00e9riv\u00e9s en France. Z\u00e9ro bullshit."
+      },
+      {
+        "handle": "CryptoKleber",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Analyse on-chain technique. Pas de news juteuses, juste des graphiques qui disent la v\u00e9rit\u00e9."
+      },
+      {
+        "handle": "AlexisRozencwajg",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 9000,
+        "reason": "Un des cerveaux derri\u00e8re Weelth. Il parle fintech et investissement avec un ton Qu\u00e9beco-fran\u00e7ais rare."
+      }
+    ],
+    "summary": "Je te sors de la masse de comptoirs qui vendent du Dream11. Ici on a des gens qui comprennent la tech ou la macro, pas juste le mot 'Moon'. Le QC est mieux d\u00e9fendu que pr\u00e9vu."
   }
 ]
