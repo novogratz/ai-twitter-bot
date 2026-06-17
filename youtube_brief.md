@@ -1,45 +1,40 @@
-# YouTube brief — 2026-06-16
+# YouTube brief — 2026-06-17
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **856**
-- reply: **779**
-- quote: **39**
-- quote_gif: **28**
-- hotake: **5**
-- post: **4**
+- Total actions logged: **606**
+- reply: **562**
+- quote: **27**
+- post: **8**
+- quote_gif: **7**
+- hotake: **1**
 - retweet: **1**
-
-## 🎥 VIDEO CANDIDATES — these popped, make a video on them
-
-*Posts with ≥ 10 likes. This is your shortlist of stories the audience already validated. Each one is a ready-to-shoot video angle.*
-
-- 🎥 **41 likes / 10000 views** — DERNIER:  Capital B a levé 17,8 millions de dollars auprès d'investisseurs incluant Adam Back et TOBAM pour acheter 182 Bitcoins supplémentaires, ce qui pourrait porter ses avoirs totaux à 3 125 BTC.
-- 🎥 **28 likes / 8000 views** — DERNIER: Michael @saylor's @Strategy acquiert 535 $BTC pour 43 M$ à 80 340 $ par Bitcoin, portant les avoirs totaux à 818 869 $BTC.
-- 🎥 **17 likes / 7000 views** — Les actions technologiques américaines semblent chères,  Mais quand on voit les perspectives pour les 3 prochaines années, on se demande si on n’est pas encore au début de la révolution IA   Ici, le c
 
 ## 🥇 Top own posts (by likes)
 
 ### AI
 
-- **17 likes / 7000 views** — Les actions technologiques américaines semblent chères,  Mais quand on voit les perspectives pour les 3 prochaines années, on se demande si on n’est pas encore au début de la révolution IA   Ici, le c
-- **8 likes / 5000 views** — Exclusif : Une startup de six semaines fondée par l’ancien chercheur d’OpenAI Jerry Tworek cherche déjà des financements à une valorisation de 4 milliards de dollars, soulignant la demande des investi
-- **1 likes / 4000 views** — Les employés d'@OpenAI ont vendu 6,6 milliards de dollars d'actions sur le marché secondaire en octobre 2025, d'après le WSJ.  Plus de 600 salariés actuels et anciens ont participé à l'opération, soit
+- **1 likes / 23 views** — Anthropic’s top models now open source. @OpenAI is about to look like they’re selling water at a drowning pool
+- **0 likes / 24 views** — The "AI Winter" hype train is just the engineers taking a smoke break. Relax.
+- **0 likes / 26 views** — Anthropic writes security docs; @OpenAI writes invoices. One is a warning label, the other is the receipt. Does "trust me" scale better than "audit me"?
 
 ### Crypto
 
-- **41 likes / 10000 views** — DERNIER:  Capital B a levé 17,8 millions de dollars auprès d'investisseurs incluant Adam Back et TOBAM pour acheter 182 Bitcoins supplémentaires, ce qui pourrait porter ses avoirs totaux à 3 125 BTC.
-- **28 likes / 8000 views** — DERNIER: Michael @saylor's @Strategy acquiert 535 $BTC pour 43 M$ à 80 340 $ par Bitcoin, portant les avoirs totaux à 818 869 $BTC.
-- **2 likes / 773 views** — Le bitcoin atteindra le million de dollars d'ici 5 ans: ses partisans en sont de plus en plus convaincus, même si certains l’anticipaient beaucoup plus tôt
+- **0 likes / 21 views** — Bears screaming 'crypto is dead' are ignoring the house edge. The casino is open, you're just looking at the carpet.
+
+### Bourse
+
+- **1 likes / 37 views** — The timeline treating a four-letter expletive like an earnings beat  https://x.com/TheBTCTherapist/status/2065740784666562681…
 
 ### Other
 
-- **6 likes / 397 views** — BFM BOURSE  Rendez-vous dès 15H30 autour #endirect autour de @GuillSommerer !  D. Trump en Chine cette semaine   ! Quelle annonce ferait le plus plaisir aux marchés ?
-- **4 likes / 1000 views** — Intéressant que les avis soient aussi partagés. Pour ma part je ne risquerais pas mon patrimoine sur ce jeu.  Doubler son patrimoine améliore ta vie de façon marginale, alors que tout perdre la détrui
-- **1 likes / 31 views** — Lol c'est du vécu ?
 - **1 likes / 18 views** — Waiting for a flip is just hesitation in a fancy coat. The chart doesn't care about your comfort zone.
+- **1 likes / 7 views** — The herd is just people who forgot how to look at the chart themselves
+- **1 likes / 50 views** — my patients have never cared this much about world peace
+- **1 likes / 108 views** — so Fable 5 wasn't a product launch. it was a response
+- **0 likes / 46 views** — $147B monthly. You’re paying for your own future rent. The cloud isn’t a place, it’s a subscription.
 
 ## 📡 Today's news picks (from retweet_bot)
 
@@ -55,26 +50,22 @@ Literally Huang pumping and eating friend chicken isn't enough to stop the crash
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/investing]** $SPCX   LET THIS SINK IN:
-
- A single reported AI compute contract with Anthropic worth ~$15B/year is equivalent to roughly 80% of $SPCX’s 2025 revenue base (~$1
-  - https://x.com/DollarCostAvg/status/2066660884798202189
-- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Investing visuals]** AI token usage is expected to 24x by 2030, driven by consumer and enterprise agents, per Goldman Sachs.
-
-Very bullish for the businesses powering this AI revolu
-  - https://x.com/InvestingVisual/status/2066551291954737569
-- **[Wired]** Anthropic Is Still at Odds With the White House Over Claude Fable 5
-  - https://www.wired.com/story/anthropic-is-still-at-odds-with-the-white-house-over-claude-fable-5/
-- **[TechCrunch AI]** Sundar Pichai faces boos, walkout at Stanford graduation ceremony over Google’s Israel, ICE ties
-  - https://techcrunch.com/2026/06/15/sundar-pichai-faces-boos-walkout-at-stanford-graduation-ceremony-over-googles-israel-ice-ties/
-- **[CNBC Top]** CNBC's The China Connection newsletter: Waiting for AI to lift the whole market
-  - https://www.cnbc.com/2026/06/15/cnbcs-the-china-connection-newsletter-hoping-ai-lifts-all-boats.html
-- **[The Verge]** Inside the fight over Claude Mythos 5
-  - https://www.theverge.com/ai-artificial-intelligence/950412/anthropic-trump-adminstration-claude-mythos-fable-5-export-controls
-- **[CNBC Top]** Nvidia plans to raise at least $20 billion in its first debt sale since start of AI boom
-  - https://www.cnbc.com/2026/06/15/nvidia-plans-to-raise-about-20-billion-first-debt-sale-in-ai-boom.html
-- **[Cointelegraph]** Here’s what happened in crypto today
-  - https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
+- **[TechCrunch]** Pinterest launches an experimental AI shopping app called ‘Ask Pinterest’
+  - https://techcrunch.com/2026/06/17/pinterest-launches-an-experimental-ai-shopping-app-called-ask-pinterest/
+- **[Yahoo Finance]** Gold prices today, Wednesday, June 17: Prices hold ahead of Fed decision day
+  - https://finance.yahoo.com/personal-finance/investing/article/gold-prices-today-wednesday-june-17-prices-hold-ahead-of-fed-decision-day-105627164.html
+- **[Yahoo Finance]** This Unstoppable Growth Stock Soared 500% in the Last 12 Months, but Wall Street Expects Limited Upside From Here
+  - https://finance.yahoo.com/markets/stocks/articles/unstoppable-growth-stock-soared-500-104500486.html
+- **[Yahoo Finance]** CarMax Stock Rises. Used-Car Retailer Tops Earnings Estimates.
+  - https://www.barrons.com/articles/carmax-earnings-stock-price-ce6d3235?siteid=yhoof2&yptr=yahoo
+- **[Yahoo Finance]** La-Z-Boy Stock Jumps 17%. How It Weathered Earnings Headwinds.
+  - https://www.barrons.com/articles/la-z-boy-earnings-stock-price-cb6929d2?siteid=yhoof2&yptr=yahoo
+- **[CoinDesk]** UNI token surges while rest of crypto market looks to Fed's Warsh for guidance
+  - https://www.coindesk.com/markets/2026/06/17/uni-token-surges-while-rest-of-crypto-market-looks-to-fed-s-warsh-for-guidance
+- **[Yahoo Finance]** Nasdaq Futures Rising as Iran Peace Deal Boosts the Market Ahead of Fed Decision
+  - https://www.barrons.com/livecoverage/stock-market-news-today-061726/card/dow-builds-on-record-high-as-iran-peace-deal-boosts-the-market-xWNq03V7bbKKCeVBehhY?siteid=yhoof2&yptr=yahoo
+- **[Yahoo Finance]** 2 Trillion-Dollar Stocks Define This Rally—SpaceX Isn’t One of Them.
+  - https://www.barrons.com/articles/stock-market-rally-things-to-know-today-1e00de7a?siteid=yhoof2&yptr=yahoo
 
 ## 🎬 Suggested video angles
 
@@ -85,4 +76,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-16T00:18:32*
+*Generated 2026-06-17T07:06:23*
