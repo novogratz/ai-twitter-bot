@@ -518,3 +518,12 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 24 views: The "AI Winter" hype train is just the engineers taking a smoke break. Relax.
   - 0 likes / 21 views: Bears screaming 'crypto is dead' are ignoring the house edge. The casino is open, you're just lookin
   - 0 likes / 46 views: $147B monthly. You’re paying for your own future rent. The cloud isn’t a place, it’s a subscription.
+
+## 2026-06-16
+
+**Activity** — total actions: 277
+  - by type: reply=194, quote=52, quote_gif=18, retweet=13
+  - top sources: SEARCH-HOT=144, RETWEET_QT=47, RETWEET_REPLY=46, GIF=18, RETWEET=13, QUOTE=4, FEED-SWEEP-FOLLOWING=2, FEED-SWEEP-FEED=2
+  - top reply targets: @nvidia=11, @LayoffAI=10, @TheRundownAI=10, @1ssve=9, @WSJ=7
+
+**Followers we follow** (running total): 3
