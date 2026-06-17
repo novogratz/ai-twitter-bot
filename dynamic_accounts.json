@@ -586,7 +586,12 @@
     "SachaMoulin",
     "RochPouliot",
     "EmmanuelRocher",
-    "Pierre_Paquette"
+    "Pierre_Paquette",
+    "MathieuLeMeteur",
+    "ThomasPh",
+    "JulesDumoulin",
+    "AlexisDegrane",
+    "CryptoKleber"
   ],
   "en": [
     "blablacar",
@@ -791,7 +796,16 @@
     "Institubeur",
     "Nic",
     "nizzy",
-    "ahmet"
+    "ahmet",
+    "IBM",
+    "spidey",
+    "ollama",
+    "CG",
+    "Abhijit",
+    "Camus",
+    "Noah",
+    "sorashido_work",
+    "Coinbase"
   ],
   "history": [
     {
@@ -4743,6 +4757,76 @@
       "lang": "fr",
       "handle": "Pierre_Paquette",
       "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "IBM",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "spidey",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "ollama",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "CG",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Abhijit",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Camus",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Noah",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "sorashido_work",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Coinbase",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuLeMeteur",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasPh",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesDumoulin",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDegrane",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKleber",
+      "added": "2026-06-17"
     }
   ]
 }

@@ -430,6 +430,14 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+> **Mandate 2026-06-17 — DO MORE (volume up again):** originals 24 → **32/
+> day** (~30-slot grid 7:30-22:00, spacing 1800→1200s; news 14, hotakes 28),
+> quotes 150 → **240/day** (spacing 120→75s+45j). Agent bounds + live_strategy
+> raised to match. V2 content + unlimited replies + cooled likes + 1 thread/
+> day all unchanged — post/quote VOLUME only. (Honest caveat on file: posts
+> measure ~22 views each, so marginal posts mostly add footprint, not reach —
+> volume is the operator's repeated explicit call.)
+
 > **Mandate 2026-06-16 PM round 2 — CRAZY MODE restored on POSTS (operator:
 > "go back to more posts, it was much better... go back on your crazy
 > mode"):** the V2 quality-cut on originals/quotes felt too quiet. Volume
