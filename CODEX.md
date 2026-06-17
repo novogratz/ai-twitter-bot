@@ -430,6 +430,19 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+> **Mandate 2026-06-16 PM round 2 — CRAZY MODE restored on POSTS (operator:
+> "go back to more posts, it was much better... go back on your crazy
+> mode"):** the V2 quality-cut on originals/quotes felt too quiet. Volume
+> cranked back up — V2 CONTENT (humor-lead pillars, smart-friend voice) and
+> unlimited replies and the cooled LIKES all stay; this is post/quote
+> VOLUME only (the automation flag was about likes given, not post count).
+> - Originals 8 → **24/day** (21-slot grid restored, spacing 1800s+600j;
+>   news 10, hotakes 20).
+> - Quotes 24 → **150/day** (spacing 900s→120s+90j); agent bounds back to
+>   (60,200) news (2,10) hotakes (6,20); live_strategy 150.
+> - Replies UNLIMITED, likes still cooled, thread still 1/day. Guard bounds
+>   re-pinned to the crazy ceilings.
+
 > **Mandate 2026-06-16 PM (V2 volume calibration — operator chose
 > quality-over-quantity after the automation flag):** keeps the V2 content
 > strategy (already merged, bc64de3) and dials volume toward the V2 daily

@@ -58,11 +58,11 @@ PERFORMANCE_LOG_FILE = os.path.join(_PROJECT_ROOT, "performance_log.json")
 # Humanize mandate 2026-06-10: human-plausible volume only (see
 # meta_strategy_agent._BOUNDS — keep the two sites in sync).
 ALLOWED_PATHS = {
-    "caps.MAX_NEWS_PER_DAY":      (1, 4),
-    "caps.MAX_HOTAKES_PER_DAY":   (3, 8),
+    "caps.MAX_NEWS_PER_DAY":      (2, 10),
+    "caps.MAX_HOTAKES_PER_DAY":   (6, 20),
     "caps.MAX_BREAKOUTS_PER_DAY": (0, 2),
     "caps.MAX_SPICY_PER_DAY":     (0, 2),
-    "caps.MAX_QUOTES_PER_DAY":    (15, 30),
+    "caps.MAX_QUOTES_PER_DAY":    (60, 200),
     "caps.MAX_RETWEETS_PER_DAY":  (0, 2),
     "caps.MAX_REPLIES_PER_CYCLE": (1, 50),
     # Growth mode 2026-06-11: follow_blast re-enabled at a human trickle
