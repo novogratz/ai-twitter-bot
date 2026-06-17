@@ -14993,3 +14993,42 @@ no co-founder. no investors. no team. just him and a backpack, moving between co
 he started by daring hi
   - https://x.com/ridark_eth/status/2066656401423028409
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 2367).
+- **@teslarati** (1853 likes, score 9/10) — BREAKING: Tesla Cybercab has received an EPA Certificate of Conformity
+
+This verifies that a specific class of vehicle, engine, or equipment meets all federal Clean Air Act emission standards before i
+  - https://x.com/Teslarati/status/2066559432696181171
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1939).
+- **@coreweave** (45 likes, score 8/10) — Agentic AI is rewriting what infrastructure has to do.
+
+On June 30 at 9:30am PT, tune into @SiliconAngle @theCUBE as we discuss and demo @nvidia Vera Rubin NVL72. 
+
+Save the date.
+  - https://x.com/CoreWeave/status/2067240485089927299
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 49).
+- **@modyfikator89** (12200 likes, score 7/10) — AFTER 20 YEARS, THE IMPOSSIBLE HAS BECOME A REALITY! 
+The @driftguardapp  team has discovered a calibration method hidden by Sony in the DualShock 3 that has remained unknown since 2006! Breaking this
+  - https://x.com/Modyfikator89/status/2066778369232912553
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 12354).
+- **@forbes** (306 likes, score 7/10) — Elon Musk just became the world’s first trillionaire thanks to the record-breaking IPO, which also minted a new billionaire and boosted the fortunes of many others.
+Read more: https://forbes.com/sites
+  - https://x.com/Forbes/status/2067020017762242594
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 362).
+- **@sawyermerritt** (1804 likes, score 7/10) — Phantom Space Co-Founder/CEO Jim Cantrell on Elon Musk:
+
+"He has no fear. He simply doesn't think of failing; The first time he came to me in 2001 wanting to send plants to Mars was this idea of makin
+  - https://x.com/SawyerMerritt/status/2066906213296546180
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1862).
+- **@jameseagle17** (378 likes, score 7/10) — Is this a financial hallucination? @elonmusk was not even in the world’s top ten richest people until 2020. Now he is the world’s first trillionaire.
+
+It is absurd, but not fake.
+
+This was not some sl
+  - https://x.com/JamesEagle17/status/2067183452655436052
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 408).
+- **@leopardracer** (27 likes, score 7/10) — Cursor founder Michael Truell, on the $60B acquisition:
+
+“The coding tools market stopped being about who has the best IDE. It started being about who has the best model underneath it.”
+
+So while you’
+  - https://x.com/leopardracer/status/2067256000520814945
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 53).
