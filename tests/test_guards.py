@@ -2618,6 +2618,32 @@ def test_trusted_news_pass_skips_when_not_in_profile_allowlist(monkeypatch):
     assert not tc._profile_visit_allowed("BloombergTV")
 
 
+def test_engage_cycle_skips_likes_for_non_allowlisted_handles():
+    """2026-06-17: engage_bot's reciprocity-like step calls
+    visit_profile_and_like, which is gated by PROFILE_VISIT_ALLOWLIST
+    (home/search-only mandate, 2026-06-07). Non-allowlisted handles return
+    instantly after logging '[LIKE] profile visit blocked' — but the engage
+    cycle still logged '[ENGAGE] Liking @X's latest tweets...' and slept
+    3-5s between each, producing ~50s of paired noise per cycle. Same shape
+    as PR #49's trusted-news skip: pre-filter by `_profile_visit_allowed`
+    before the like step. The follow_account call above is intentionally
+    NOT gated (mechanically required to click the Follow button)."""
+    import inspect
+    from src import engage_bot as eb
+
+    src = inspect.getsource(eb.run_engage_cycle)
+    # Pin: the cycle imports the allowlist gate and uses it to skip likes
+    # for non-allowlisted handles before logging/sleeping.
+    assert "_profile_visit_allowed" in src, \
+        "engage cycle must pre-filter the like step by the profile allowlist"
+    # Pin: the gate runs BEFORE visit_profile_and_like (i.e. the skip path
+    # exists in the same function that calls the like primitive).
+    gate_idx = src.find("_profile_visit_allowed")
+    like_idx = src.find("visit_profile_and_like(username")
+    assert 0 < gate_idx < like_idx, \
+        "_profile_visit_allowed check must run before visit_profile_and_like"
+
+
 def test_engine_health_slots_elapsed_clamp():
     """2026-06-10 12:34 false alarm: 'hotake collapsed: 4 today vs ~14 by
     this hour' — the ~14 came from interval-era days; under the slot regime
