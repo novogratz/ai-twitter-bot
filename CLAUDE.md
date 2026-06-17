@@ -440,6 +440,21 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 > dropped `exec` lets the trap fire. auto_improve.sh's single-flight lock
 > de-dupes against the daily launchd agent if both are active.
 
+> **2026-06-17 — kill the 30s QUOTE timeout (Claude Sonnet was being
+> killed mid-generation):** `quote_tweet_bot._generate_quote` passed
+> `timeout=30` to `run_llm` — an ollama-era number that was harmless when
+> ollama floored it to the 180s default, but a real cap once the lane
+> moved to `force_provider=PROFILE_LLM_PROVIDER` (Claude Sonnet, since
+> 2026-06-14). Result: 7 `[QUOTE/SWEEP-QUOTE] content_guard: all 3
+> attempts failed (empty draft) — SKIP` cycles in a single day, each
+> burning ~3 min on the 30s claude timeout → ollama-fallback retry
+> ladder × 3 attempts. Fix is one line: drop the explicit timeout so
+> QUOTE takes the 180s `DEFAULT_LLM_TIMEOUT_SECONDS` — matching the other
+> PROFILE_LLM_PROVIDER callers (NEWS, HOTAKE, SPICY, BREAKOUT, THREAD)
+> which all pass no explicit timeout. Affects both quote_tweet_bot AND
+> feed_sweeper_bot (shared `_generate_quote`). Guard:
+> `test_generate_quote_no_artificial_timeout_clipping_cloud_provider`.
+
 > **2026-06-17 — kill the dead trusted-news scrape pass:** the 2026-06-07
 > home/search-only mandate gates every profile visit behind
 > `PROFILE_VISIT_ALLOWLIST` (default `TheBTCTherapist,Graphseo`). The

@@ -2366,6 +2366,39 @@ def test_profile_surfaces_force_capable_provider():
         isinstance(config.PROFILE_LLM_PROVIDER, str)
 
 
+def test_generate_quote_no_artificial_timeout_clipping_cloud_provider():
+    """2026-06-17 — quote_tweet_bot._generate_quote used to pass timeout=30
+    to run_llm, an ollama-era number. Since 2026-06-14 the QUOTE lane runs
+    through PROFILE_LLM_PROVIDER (Claude Sonnet), where the CLI spawn +
+    generation regularly exceed 30s. Result: 7 'all 3 attempts failed
+    (empty draft)' SKIPs in a single day, each burning ~3 min on the
+    timeout + ollama-fallback retry ladder. Other PROFILE_LLM_PROVIDER
+    callers (NEWS, HOTAKE, SPICY, BREAKOUT, THREAD) pass no explicit
+    timeout — they take the 180s DEFAULT_LLM_TIMEOUT_SECONDS. _generate_quote
+    must match that contract: when force_provider=PROFILE_LLM_PROVIDER is
+    used, no sub-default timeout may be hard-coded on the call."""
+    import inspect
+    from src import quote_tweet_bot as qb
+    src = inspect.getsource(qb._generate_quote)
+    # The call must still force the profile provider for content quality.
+    assert "force_provider=PROFILE_LLM_PROVIDER" in src, (
+        "_generate_quote must keep force_provider=PROFILE_LLM_PROVIDER "
+        "(otherwise QUOTE drops back to the ollama firehose model)"
+    )
+    # And it must NOT clip the call to a sub-default timeout that would
+    # truncate Claude mid-generation. timeout=60 is the minimum survivable
+    # for cloud Sonnet on this prompt; anything stricter is the old bug.
+    import re
+    m = re.search(r"run_llm\([^)]*timeout\s*=\s*(\d+)[^)]*label=\"QUOTE\"", src) or \
+        re.search(r"run_llm\([^)]*label=\"QUOTE\"[^)]*timeout\s*=\s*(\d+)", src)
+    if m:
+        assert int(m.group(1)) >= 60, (
+            f"_generate_quote run_llm timeout={m.group(1)}s is too short for "
+            "PROFILE_LLM_PROVIDER (Claude Sonnet); use >=60s or omit "
+            "(defaults to 180s)."
+        )
+
+
 def test_decode_header_stripped_at_chokepoint():
     """Operator 2026-06-06: 'I don't want to see the decode daily.' The
     prompt forbids the series header but weaker models (ollama primary,

@@ -452,7 +452,12 @@ def _generate_quote(author: str, tweet_text: str):
     except Exception:
         pass
     try:
-        result = run_llm(prompt, QUOTE_MODEL, label="QUOTE", timeout=30, force_provider=PROFILE_LLM_PROVIDER)
+        # No explicit timeout: PROFILE_LLM_PROVIDER (default claude) needs
+        # the 180s default — the legacy 30s here was an ollama-era number
+        # that under Claude Sonnet timed out 7+ cycles/day mid-generation,
+        # each burning ~3 min on retries + fallback. Match the other
+        # PROFILE_LLM_PROVIDER callers (NEWS, HOTAKE, SPICY, BREAKOUT).
+        result = run_llm(prompt, QUOTE_MODEL, label="QUOTE", force_provider=PROFILE_LLM_PROVIDER)
         if result.returncode != 0:
             return None
         out = unwrap_text(result.stdout)
