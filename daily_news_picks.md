@@ -14882,3 +14882,78 @@ If you believe sports journalism ca
 The same goes for leadership, you lead by example. Being an asshole to someone only mak
   - https://x.com/YourAnonNews/status/2066943718146408769
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 5831).
+
+## 2026-06-17
+- **@motor1com** (482 likes, score 9/10) — Audi has released a new version of the A6 Allroad.
+
+• Optional plug-in hybrid powertrain
+• 362 horsepower
+• Rear-wheel steering as standard
+• 1.3-inch ground clearance increase over regular A6
+
+Would
+  - https://x.com/Motor1com/status/2066865902050591126
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 542).
+- **@yahoofinance** (90 likes, score 9/10) — $SPCX surged again on Tuesday, passing Amazon and briefly topping Microsoft as the rocket maker's market value approached $3 trillion. https://yhoo.it/4xzFjyP
+  - https://x.com/YahooFinance/status/2066985313323344316
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 104).
+- **@amd** (152 likes, score 8/10) — AMD delivers its most comprehensive MLPerf Training submission to date: first multi-node Training submission, FLUX.1 at 512 GPUs/64 nodes with OCI, first use of AMD Primus, 3.5X generational gain on L
+  - https://x.com/AMD/status/2066936381415321782
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 162).
+- **@bgatesisapyscho** (6714 likes, score 8/10) — “Up until 16 - the only way in which you get to communicate - is the most radical Leftwing Site available”
+
+It’s not a coincidence that both Australia & the UK have banned every social media site for
+  - https://x.com/BGatesIsaPyscho/status/2066453380659052706
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 6988).
+- **@phosphenq** (4170 likes, score 8/10) — She's 22. Her AI runs inside the Fortune 100. a16z just led her $21M raise.
+
+"Put up the most minimal fake version you probably can of something and then go sell it."
+
+In 17 minutes, MIT grad Jessica
+  - https://x.com/phosphenq/status/2066605144247017814
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 4308).
+- **@av1dlive** (286 likes, score 8/10) — Sam Altman, OpenAI CEO:
+
+"with an affordable amount of spend on tokens, you can do what a 100-person incredibly great engineering team would do as a startup."
+
+in this 40-minute Stanford talk, he brea
+  - https://x.com/Av1dlive/status/2066848993787912413
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 342).
+- **@harrystebbings** (644 likes, score 7/10) — At this stage, I think it is undeniable that Revolut will be a $500BN company. (I do not say that lightly). 
+
+They are a compound startup.   
+
+They try 20 new products at a time.   
+
+They create small
+  - https://x.com/HarryStebbings/status/2066876388020277456
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 704).
+- **@yahoofinance** (81 likes, score 7/10) — Musk explains why reusability is essential for building rockets and why Starship is going to revolutionize space.
+  - https://x.com/YahooFinance/status/2066947809765408975
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 93).
+- **@yahoofinance** (55 likes, score 7/10) — SpaceX is officially in the top 6 of the companies with the largest market caps, making it one of the fastest new entrants into the top tier of the U.S. market.
+  - https://x.com/YahooFinance/status/2067004420223615231
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 71).
+- **@gbnews** (55 likes, score 7/10) — ‘This is not the moment for calibration or incremental change. This means bigger politics, bolder priorities and harder choices.’ 
+
+Former Defence Secretary John Healey MP calls for a greater investme
+  - https://x.com/GBNEWS/status/2066869934303432733
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 65).
+- **@yahoofinance** (34 likes, score 7/10) — .@BrookeDiPalma explains everything you need to know about Pizza Hut's $2.7 billion deal.
+  - https://x.com/YahooFinance/status/2066952180859351269
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 64).
+- **@polymarketmoney** (429 likes, score 9/10) — BREAKING: OpenAI Burned $3.7 Billion in First Three Months of 2026.
+  - https://x.com/PolymarketMoney/status/2067030648280547633
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 491).
+- **@polymarketmoney** (168 likes, score 8/10) — JUST IN: $SOFI CEO Anthony Noto just bought 13,888 shares of SoFi at $18 per share spending ~$250K.
+  - https://x.com/PolymarketMoney/status/2066995130381578718
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 186).
+- **@polymarketmoney** (270 likes, score 7/10) — NEW: $AAPL camera-equipped AirPods for AI are reportedly launching next year alongside new Pro and foldable iPhones.
+  - https://x.com/PolymarketMoney/status/2067043625478017264
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 330).
+- **@polymarketmoney** (19 likes, score 7/10) — BREAKING: $CME CEO Terry Duffy will step down early next year after more than two decades leading the exchange.
+  - https://x.com/PolymarketMoney/status/2067232056141312016
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 31).
+- **@wired** (12 likes, score 7/10) — Meta quickly dismissed the report and claimed the face-recognition feature “does not exist.” The code disappeared from the system one day after WIRED’s report, as quietly as it came up.
+  - https://x.com/WIRED/status/2067232748725563839
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 18).
