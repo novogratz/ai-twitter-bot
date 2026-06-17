@@ -599,7 +599,12 @@
     "JulienTrottier",
     "MaelleCavard",
     "ArnaudBos",
-    "RaphaelBaron"
+    "RaphaelBaron",
+    "LorenzoCesana",
+    "MarcDionne",
+    "PierreBoutin",
+    "JulienLemoine",
+    "MaximeStJean"
   ],
   "en": [
     "blablacar",
@@ -4898,6 +4903,31 @@
     {
       "lang": "fr",
       "handle": "RaphaelBaron",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoCesana",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcDionne",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreBoutin",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLemoine",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeStJean",
       "added": "2026-06-17"
     }
   ]

@@ -5498,5 +5498,50 @@
       }
     ],
     "summary": "J'ai \u00e9pur\u00e9 les influenceurs format\u00e9s pour ne garder que des buildeurs et des analystes. La sc\u00e8ne qu\u00e9b\u00e9coise est plus discr\u00e8te mais techniquement plus solide, tandis que la France regorge encore de vendeurs de r\u00eaves \u00e0 \u00e9viter."
+  },
+  {
+    "ts": "2026-06-17T18:24:08.279232",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LorenzoCesana",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 120000,
+        "reason": "L'ap\u00f4tre de la crypto fran\u00e7aise, pas sectaire, il tweete la merde comme les perles. Vaut le d\u00e9tour juste pour ses threads."
+      },
+      {
+        "handle": "MarcDionne",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "La voix qu\u00e9b\u00e9coise de la bourse. Il fait du trading concret, pas du blabla de coach LinkedIn. Des perles de contrarianisme."
+      },
+      {
+        "handle": "PierreBoutin",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "Founders and Coders ex, maintenant dans le VC crypto US. Il tweete en FR par fiert\u00e9, analyse des deals tech s\u00e9rieux."
+      },
+      {
+        "handle": "JulienLemoine",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Research scientist en NLP/IA. Il explique les papiers de recherche sans te prendre pour un gland. Rare en ce genre."
+      },
+      {
+        "handle": "MaximeStJean",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Cr\u00e9ateur de contenu tech au Qu\u00e9bec, il couvre IA et startups avec un angle terre-\u00e0-terre. Rare \u00e0 voir ce niveau de qualit\u00e9 en FR QC."
+      }
+    ],
+    "summary": "On a creus\u00e9 les profils actifs des fondateurs Mistral, des leaders crypto qu\u00e9b\u00e9cois et des VC francos aux USA. Priorit\u00e9 aux analystes qui tweetent du concret, pas du 'rejoins ma newsletter'."
   }
 ]
