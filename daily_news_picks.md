@@ -14834,3 +14834,12 @@ Exciting stuff
 - **@wsj** (8 likes, score 7/10) — The AI frenzy is sending tech-company valuations through the roof in the U.S. and Asian markets. One country still offers some relative bargains.
   - https://x.com/WSJ/status/2067055469047300286
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 20).
+- **@rileybrown** (9 likes, score 7/10) — How to use GLM 5.2 in Cursor... 
+
+I'm using it with @OpenRouter because zAI is busy.
+
+1. Get OpenRouter Key
+2. Go to cursor  settings  models
+3. Scroll to OpenAI API Key, Toggle it on, Paste OpenRoute
+  - https://x.com/rileybrown/status/2067075406553895342
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11).
