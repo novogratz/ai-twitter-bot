@@ -404,7 +404,13 @@
     "AlexisBoutin_",
     "B0rnis",
     "0xb10c",
-    "lucgagnon"
+    "lucgagnon",
+    "ThomasDegueyre",
+    "LaurieRuel",
+    "PierreSouchay",
+    "SimonLacroix",
+    "AlexisBouvier_",
+    "JulienBilodeau"
   ],
   "en": [
     "blablacar",
@@ -430,7 +436,19 @@
     "Naval",
     "Stephenblaq",
     "Grok",
-    "Verel"
+    "Verel",
+    "NVIDIA",
+    "OpenRouter",
+    "ollama",
+    "SpaceX",
+    "Rothmus",
+    "Reuters",
+    "Blossom",
+    "TrendSpider",
+    "OpenClaw",
+    "Starlink",
+    "C3",
+    "Prism"
   ],
   "history": [
     {
@@ -2577,6 +2595,96 @@
       "lang": "fr",
       "handle": "lucgagnon",
       "added": "2026-06-07"
+    },
+    {
+      "lang": "en",
+      "handle": "NVIDIA",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "OpenRouter",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "ollama",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "SpaceX",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Rothmus",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Reuters",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Blossom",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "TrendSpider",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "OpenClaw",
+      "added": "2026-06-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Starlink",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasDegueyre",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaurieRuel",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreSouchay",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "SimonLacroix",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBouvier_",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBilodeau",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "C3",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Prism",
+      "added": "2026-06-17"
     }
   ]
 }

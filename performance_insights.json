@@ -1,139 +1,120 @@
 {
-  "generated_at": "2026-06-06T04:10:50.845173",
-  "window_7d_actions": 3324,
-  "window_24h_actions": 613,
+  "generated_at": "2026-06-17T03:57:51.368252",
+  "window_7d_actions": 445,
+  "window_24h_actions": 445,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 3252
-    },
-    {
-      "pattern": "FR_ANCHOR",
-      "count": 26
+      "count": 405
     },
     {
       "pattern": "METAPHOR",
-      "count": 24
+      "count": 21
     },
     {
-      "pattern": "DIALOGUE",
-      "count": 11
+      "pattern": "RENAME",
+      "count": 10
+    },
+    {
+      "pattern": "EN_ANCHOR",
+      "count": 8
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 6
+      "count": 1
     }
   ],
   "worst_patterns": [
     {
-      "pattern": "EN_ANCHOR",
+      "pattern": "UNDERSTATEMENT",
       "count": 1
     },
     {
-      "pattern": "RENAME",
-      "count": 4
+      "pattern": "EN_ANCHOR",
+      "count": 8
     },
     {
-      "pattern": "UNDERSTATEMENT",
-      "count": 6
+      "pattern": "RENAME",
+      "count": 10
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 10,
-      "actions": 242
-    },
-    {
-      "hour": 11,
-      "actions": 226
-    },
-    {
-      "hour": 20,
-      "actions": 204
-    },
-    {
       "hour": 21,
-      "actions": 190
+      "actions": 108
     },
     {
-      "hour": 19,
-      "actions": 177
+      "hour": 23,
+      "actions": 107
+    },
+    {
+      "hour": 0,
+      "actions": 57
+    },
+    {
+      "hour": 22,
+      "actions": 55
+    },
+    {
+      "hour": 2,
+      "actions": 43
     }
   ],
   "best_topics_7d": [
     {
-      "topic": "IA",
-      "count": 1163
+      "topic": "Autre",
+      "count": 210
     },
     {
-      "topic": "Autre",
-      "count": 1162
+      "topic": "IA",
+      "count": 191
+    },
+    {
+      "topic": "Bourse",
+      "count": 24
+    },
+    {
+      "topic": "Crypto",
+      "count": 24
     },
     {
       "topic": "Spatial",
-      "count": 557
-    },
-    {
-      "topic": "Bourse",
-      "count": 508
-    },
-    {
-      "topic": "Crypto",
-      "count": 388
+      "count": 19
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Crypto",
-      "24h_rate": 0.16,
-      "7d_rate": 0.117
-    },
-    {
-      "topic": "Bourse",
-      "24h_rate": 0.21,
-      "7d_rate": 0.153
-    }
-  ],
+  "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2409
-    },
-    {
-      "type": "retweet",
-      "count": 590
-    },
-    {
-      "type": "hotake",
-      "count": 242
+      "count": 337
     },
     {
       "type": "quote",
-      "count": 58
-    },
-    {
-      "type": "post",
-      "count": 21
+      "count": 69
     },
     {
       "type": "quote_gif",
-      "count": 4
+      "count": 22
+    },
+    {
+      "type": "retweet",
+      "count": 17
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-06T04:10:07.059929",
-      "text": "On veut que l'IA fasse le travail mais pas qu'elle en soit responsable. Linus a juste nommé l'anxiété de toute l'industrie. 30 ans de Linux, chaque commit signé : c'est pour ça que ça tient.",
+      "ts": "2026-06-17T03:57:42.466121",
+      "text": "Anthropic’s Fable 5 missed medical research. You’re mourning the feature. They’re calculating the $200M saved on tokenized medical journals. The product isn’t the medicine. It’s the margin.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-06T04:09:31.922959",
-      "text": "Vos contacts sont chez Google depuis 2004. Ce qui est nouveau, c'est qu'un modèle les lit maintenant. La surveillance n'a pas changé. La transparence, si.",
+      "ts": "2026-06-17T03:56:17.860464",
+      "text": "80k salary for 5 years while GPUs dropped 40% in real terms.\n\nThe inflation-adjusted raise is negative. you're not getting richer, you're getting paid to wait.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-06T04:08:04.766700",
-      "text": "\"sol is down\" is the entry thesis. \"unforgettable payout\" is the hold thesis. both are doing work on the same emotion. what's the june 25th yield actually backed by?",
+      "ts": "2026-06-17T03:56:01.228773",
+      "text": "AI Bros raised $50M on GPT-3.5 wrappers.\n\nTheir burn rate is 70%.\nTheir runway is 6 months.\nTheir \"AI\" is a CSS template.",
       "type": "reply"
     }
   ]

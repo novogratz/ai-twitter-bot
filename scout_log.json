@@ -3675,5 +3675,64 @@
       }
     ],
     "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour coller aux cerveaux techniques (Mistral, Sequoia) et aux traders de terrain. Le mix FR/QC/USA est dense en valeur."
+  },
+  {
+    "ts": "2026-06-17T02:35:07.876495",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [
+      "thomasdegueyre",
+      "laurieruel",
+      "pierresouchay",
+      "simonlacroix",
+      "alexisbouvier_",
+      "julienbilodeau"
+    ],
+    "keepers": [
+      {
+        "handle": "ThomasDegueyre",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'anti-BFM. Il tweet des id\u00e9es de trade et de la macro avec un style sec qui fait mal aux yeux des banquiers."
+      },
+      {
+        "handle": "LaurieRuel",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Journaliste tech bas\u00e9e \u00e0 SF (ex-FR). Elle tweet les coulisses des big tech US avec une plume francophone agile."
+      },
+      {
+        "handle": "PierreSouchay",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "Gestionnaire de capital. Il tweet ses gains/pertes en direct, vuln\u00e9rable et pr\u00e9cis. Moins de blabla, plus de r\u00e9sultats."
+      },
+      {
+        "handle": "SimonLacroix",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour les particuliers. Il tweet des analyses sectorielles pr\u00e9cises, pas des 'moon boys'."
+      },
+      {
+        "handle": "AlexisBouvier_",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Ex-BNP Paribas. Il tweet du trading systematique et de la data sans jargon incompr\u00e9hensible. Le genre de compte qu'on garde en \u00e9pingl\u00e9."
+      },
+      {
+        "handle": "JulienBilodeau",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 8000,
+        "reason": "Founders & VCs \u00e0 Montr\u00e9al. Il tweet sur l'\u00e9cosyst\u00e8me AI qu\u00e9b\u00e9cois, moins connu mais plus qualitatif que la moyenne."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les pros : les fondateurs de Mistral pour l'IA, les traders syst\u00e9miques pour la bourse, et les journalistes tech pour la Silicon Valley. Z\u00e9ro vendeur de r\u00eave, juste du travail."
   }
 ]
