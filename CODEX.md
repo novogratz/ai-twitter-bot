@@ -430,6 +430,16 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **Mandate 2026-05-29 (superseded by 2026-06-02 above, kept for context):** Brand = 🚀 The AI & Space Decoder ⚡. 3 pillars: **AI** (labs, models, GPU infra, robotics, agentic), **Space** (SpaceX, Rocket Lab, NASA, satellites, space stocks), **Investment** (AI stocks, space stocks, Bitcoin/crypto as asset class, tech earnings). Goal = 20k followers. Be the best quant analyst AND funniest account on X.
 
+> **2026-06-17 — self-improvement loop folded into `./bin/run.sh`
+> (operator: "bring back the self-improvement loop using claude... part of
+> my script I run with ./bin/run.sh"):** run.sh now starts a backgrounded
+> Claude self-improve loop alongside the bot — first run after a 30-min
+> warmup, then every `SELF_IMPROVE_INTERVAL_HOURS` (default 8), calling
+> `bin/auto_improve.sh` (diagnose → one tested fix → PR). Env-gated
+> (`ENABLE_SELF_IMPROVE_LOOP=1`), trap-cleaned on Ctrl-C/exit, and the
+> dropped `exec` lets the trap fire. auto_improve.sh's single-flight lock
+> de-dupes against the daily launchd agent if both are active.
+
 > **Mandate 2026-06-17 — DO MORE (volume up again):** originals 24 → **32/
 > day** (~30-slot grid 7:30-22:00, spacing 1800→1200s; news 14, hotakes 28),
 > quotes 150 → **240/day** (spacing 120→75s+45j). Agent bounds + live_strategy
