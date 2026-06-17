@@ -1,305 +1,169 @@
-# YouTube brief — 2026-06-07
+# YouTube brief — 2026-06-17
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **1804**
-- reply: **1231**
-- quote: **243**
-- retweet: **210**
-- quote_gif: **106**
-- hotake: **10**
-- post: **4**
-
-## 🎥 VIDEO CANDIDATES — these popped, make a video on them
-
-*Posts with ≥ 10 likes. This is your shortlist of stories the audience already validated. Each one is a ready-to-shoot video angle.*
-
-- 🎥 **287 likes / 376000 views** — Les moniteurs de chaîne de pensée sont une couche clé de défense contre le désalignement des agents d'IA. Pour préserver la surveillabilité, nous évitons de pénaliser le raisonnement désaligné pendant
-- 🎥 **199 likes / 423000 views** — JUST IN: Nintendo stock crashes -12%.
-- 🎥 **167 likes / 512000 views** — Notre programme de chasse aux bugs de sécurité est désormais public sur HackerOne.  Nous avons exécuté le programme en privé au sein de la communauté de recherche en sécurité, et leurs découvertes ont
-- 🎥 **126 likes / 195000 views** — Today marks a major milestone for MYRIAD.  We’re accelerating our vision in building sharper, deeper and more accessible information markets.
-- 🎥 **113 likes / 387000 views** — AI supercomputers need a new kind of network to stay in sync at massive scale.  OpenAI’s @markjhandley and @poyntingatgreg join @AndrewMayne to discuss what it takes to move data across record numbers
-- 🎥 **82 likes / 21000 views** — JUSTE ARRIVÉ : Les chances que la législation sur la structure du marché Bitcoin et crypto soit signée en loi cette année dépassent 73 % — Polymarket
-- 🎥 **78 likes / 268000 views** — Today, we're releasing the public preview of Workflows, the orchestration layer for enterprise AI.   Enterprise teams have capable models. What they don't have is a way to run them reliably in product
-- 🎥 **69 likes / 24000 views** — JUST IN : Michael Saylor dit que si Strategy vend du bitcoin, ils achèteront plusieurs fois plus de BTC qu'ils n'en auront vendu :  « Même si nous devions vendre 1 bitcoin, nous en achèterions 10 à 20
-- 🎥 **69 likes / 387000 views** — Honnêtement j’aurais pas été capable de dire si c’était fait par IA ou par un studio d’animation trad
-- 🎥 **68 likes / 93000 views** — Pensez que votre vibe en coding et créativité pourrait être sur la scène principale du #GoogleIO ? Montrez-nous.  Alors que nous comptons à rebours jusqu’au début du spectacle, les meilleures idées co
+- Total actions logged: **332**
+- reply: **247**
+- quote: **54**
+- quote_gif: **18**
+- retweet: **13**
 
 ## 🥇 Top own posts (by likes)
-
-### AI
-
-- **287 likes / 376000 views** — Les moniteurs de chaîne de pensée sont une couche clé de défense contre le désalignement des agents d'IA. Pour préserver la surveillabilité, nous évitons de pénaliser le raisonnement désaligné pendant
-- **113 likes / 387000 views** — AI supercomputers need a new kind of network to stay in sync at massive scale.  OpenAI’s @markjhandley and @poyntingatgreg join @AndrewMayne to discuss what it takes to move data across record numbers
-- **78 likes / 268000 views** — Today, we're releasing the public preview of Workflows, the orchestration layer for enterprise AI.   Enterprise teams have capable models. What they don't have is a way to run them reliably in product
-- **69 likes / 387000 views** — Honnêtement j’aurais pas été capable de dire si c’était fait par IA ou par un studio d’animation trad
-
-### Crypto
-
-- **82 likes / 21000 views** — JUSTE ARRIVÉ : Les chances que la législation sur la structure du marché Bitcoin et crypto soit signée en loi cette année dépassent 73 % — Polymarket
-- **69 likes / 24000 views** — JUST IN : Michael Saylor dit que si Strategy vend du bitcoin, ils achèteront plusieurs fois plus de BTC qu'ils n'en auront vendu :  « Même si nous devions vendre 1 bitcoin, nous en achèterions 10 à 20
-
-### Bourse
-
-- **199 likes / 423000 views** — JUST IN: Nintendo stock crashes -12%.
-
-### Other
-
-- **167 likes / 512000 views** — Notre programme de chasse aux bugs de sécurité est désormais public sur HackerOne.  Nous avons exécuté le programme en privé au sein de la communauté de recherche en sécurité, et leurs découvertes ont
-- **126 likes / 195000 views** — Today marks a major milestone for MYRIAD.  We’re accelerating our vision in building sharper, deeper and more accessible information markets.
-- **68 likes / 93000 views** — Pensez que votre vibe en coding et créativité pourrait être sur la scène principale du #GoogleIO ? Montrez-nous.  Alors que nous comptons à rebours jusqu’au début du spectacle, les meilleures idées co
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-06-07
-- **@xdnibor** (112 likes, score 9/10) — Just like Amazon uses Falcon 9 to launch Project Leo satellites, Google uses Colossus to train their models.
+## 2026-06-16
+- **@exec_sum** (47 likes, score 9/10) — NEWS: OpenAI spending hit $34 billion last year
 
-Falcon 9 still launches Starlink. 
-Colossus still trains Grok. 
+The firm recorded $13 billion in revenue, while generating $2 billion MRR by the end of the year
 
-I don't know why it is so
-  - https://x.com/xdNiBoR/status/2063386827055116541
-  - **WHY**: Source fiable + impact concret (score signal 17, engagement 128).
-- **@fredaduan** (29 likes, score 8/10) — Analyzing the new $GOOGL <> $SpaceX deal
+Losses soared 8x from $5 billion in 2024 to $39 billi
+  - https://x.com/exec_sum/status/2066904336068997121
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 51).
+- **@nvidia** (36 likes, score 8/10) — Thanks @satyanadella 
 
-$920 million per month for 110,000 GPUs implies ~$11.50/GPU-hour.
+Great work with @Azure on one of the largest MLPerf Training submission to-date on NVIDIA Blackwell: 8,192 GPUs on NVIDIA GB200 NVL72 systems, Llama 3.1 405B training target met
+  - https://x.com/nvidia/status/2067044209476223373
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 44).
+- **@squawkcnbc** (17 likes, score 8/10) — .@SECgov Chairman @SECPaulSAtkins discusses the push to "make IPOs great again": https://cnb.cx/4a2B84A
+  - https://x.com/SquawkCNBC/status/2066860625930674480
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 29).
+- **@layoffai** (165 likes, score 8/10) — BREAKING: Centene just opened a company-wide buyout offer to most of its 61,000 employees.
 
-According to public sources, the GPUs in Colossus 2 are mainly GB200 / GB300:
- https://nvid
-  - https://x.com/FredaDuan/status/2063454117381496871
-  - **WHY**: Source fiable + impact concret (score signal 12, engagement 33).
-- **@saso_capital** (22 likes, score 8/10) — $SPCX 
+The health insurer wants to shrink headcount after ACA enrollment fell about 2 million and total membership
+  - https://x.com/LayoffAI/status/2066853303380746727
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 207).
+- **@albysjourney** (10 likes, score 7/10) — $100M app idea: Clarity
 
-Two deals with $70 billion in headline value signed within 30 days of each other. 
+An AI productivity assistant that analyzes your tools and tells you what to focus on next.
 
-MY TAKE
+One-shotted with @10x_apps
+  - https://x.com/albysjourney/status/2066872683346985169
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 14).
+- **@namd1nh** (4 likes, score 7/10) — Meta moved 7,000 people into AI roles and coordination collapsed.
 
-> SpaceX built data centers faster than anyone in history.
+Zuckerberg admitted it in writing. Manager-to-staff ratios hit 1:50 in the new Applied AI Engineering unit. The assumption was that s
+  - https://x.com/namd1nh/status/2066416012451610859
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 10).
+- **@squawkcnbc** (23 likes, score 7/10) — .@dougclinton on the next big IPO in this AI bull market. https://cnb.cx/4uEywRM
+  - https://x.com/SquawkCNBC/status/2066860253992345966
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 25).
+- **@1ssve** (194 likes, score 8/10) — My company announced they were committed to pay transparency. They published salary bands. Every band was so wide it was meaningless. Entry level to director in the same bracket. A junior employee ask
+  - https://x.com/1ssve/status/2066539541830447540
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 200).
+- **@theinformation** (18 likes, score 7/10) — Nvidia’s market share of AI inference chips “has grown from around 66% to 74% over the past year”, @_pheebini  reports.
 
-> Grok failed and the talent left. Musk
-  - https://x.com/saso_capital/status/2063325306677608788
-  - **WHY**: Source fiable + impact concret (score signal 11, engagement 30).
-- **@squawkcnbc** (100 likes, score 9/10) — "You have to believe in Elon Musk if you're going to buy the stock, and that's why people are buying," says @rwang0 of the SpaceX IPO. https://cnb.cx/4x9YPSt
-  - https://x.com/SquawkCNBC/status/2062866410347397366
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 122).
-- **@investmentguru_** (34 likes, score 9/10) — The SpaceX IPO isn’t just historic — it’s rigged.
+“This is significant because as a whole, AI workloads are moving from training
+  - https://x.com/theinformation/status/2067000641575084519
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 22).
+- **@wsjmarkets** (9 likes, score 7/10) — SpaceX shares have surged nearly 50% in their first days of trading and left a trail of remorseful traders in their wake: those who sold too early
+  - https://x.com/WSJmarkets/status/2066992037300195530
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 17).
+- **@nvidia** (60 likes, score 9/10) — Learn how the NVIDIA platform and ecosystem enable AI model builders to launch frontier models faster, minimize training costs, and start generating revenue early.
+  - https://x.com/nvidia/status/2066902394655424619
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 72).
+- **@therundownai** (17 likes, score 8/10) — SpaceX is officially exercising the option to acquire Cursor for $60 billion in an all-stock deal! 
 
-Here’s what nobody is talking about:
+Fresh off a monster IPO ($SPCX), Elon Musk and co. bring the powerful AI coding startup in-house af
+  - https://x.com/TheRundownAI/status/2066880499218342143
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 35).
+- **@therundownai** (30 likes, score 9/10) — Chinese lab Z AI just released GLM-5.2, an impressive new open weights model with a 1M token context window.  
 
-The rule changes made for $SPCX:
+A few benchmark comparisons, slotting between Opus 4.8 and GPT 5.5 on several fronts:
+  - https://x.com/TheRundownAI/status/2066953804424102228
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 52).
+- **@fchollet** (340 likes, score 7/10) — The way we will create a future where powerful AI is open-source and available to all is by making AI radically more efficient, both in terms of inference compute and (more importantly) in terms of tr
+  - https://x.com/fchollet/status/2066867824404860943
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 428).
+- **@nvidia** (296 likes, score 7/10) — The NVIDIA Blackwell platform just swept MLPerf Training 6.0, delivering fastest performance and largest scale.
 
-• Nasdaq-100 cut inclusion wait from ~3 months → 15 trading days
-• Russell In
-  - https://x.com/InvestmentGuru_/status/2063321245215490533
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 58).
-- **@bitcoinarchive** (400 likes, score 9/10) — President Joe Biden's son, Hunter Biden: Bitcoin and crypto is the future, "fiat is a sham, the banking class is corrupt."
-  - https://x.com/BitcoinArchive/status/2063344709594972324
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 514).
-- **@saylordocs** (357 likes, score 9/10) — Cathie Wood urged investors to sell gold for Bitcoin, said BTC will hit $1,500,000.
-
-She knows something...
-  - https://x.com/saylordocs/status/2063303654468399278
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 477).
-- **@coinbureau** (263 likes, score 9/10) — CRYPTO BILLIONAIRE DOUBLES DOWN ON BITCOIN, REJECTS $250K ETH
-
-DFG founder James Wo, who turned a $20 million family investment into a billion-dollar crypto fund, says market data does not support Tom
-  - https://x.com/coinbureau/status/2063369085451370865
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 423).
-- **@polydao** (121 likes, score 9/10) — Jensen Huang just explained the future of AI in 1 hour at Stanford
-
-computing is changing for the first time in 64 years
-
-> NVIDIA got 1,000,000x more compute in 10 years
-> AI agents will run 24/7 - t
-  - https://x.com/polydao/status/2063184120549679134
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 151).
-- **@oragnes** (22 likes, score 8/10) — Who would have thought that a top cloud giant would buy computing power from a rocket maker?
-
-Where does Musk's SpaceX get so much computing power to rent out to Google and Anthropic at the same time?
-  - https://x.com/oragnes/status/2063437940743897423
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 38).
-- **@rainmaker1973** (245 likes, score 9/10) — Data centers powering artificial intelligence are projected to consume roughly twice as much electricity and water by 2030 as they do today, according to a new report from United Nations researchers.
-  - https://x.com/Rainmaker1973/status/2063228541538291980
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 359).
-- **@masahirochaen** (113 likes, score 9/10) — 【Breaking News】SpaceX to Provide AI Computing Resources to Google. Massive Contract Worth Approx. 147 Billion Yen Monthly
-
-The amount is on a whole different scale. In the AI era, models grow = infras
-  - https://x.com/masahirochaen/status/2063373369903624652
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 131).
-- **@bluechipsai** (8 likes, score 7/10) — Every Nvidia AI chip runs on HBM. Only three companies on Earth make it. One is American: Micron ($MU).
-
-This week Jensen Huang confirmed all three, Samsung, SK Hynix, and Micron, have qualified HBM4
-  - https://x.com/BluechipsAI/status/2063458399883260096
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 16).
-- **@beth_kindig** (587 likes, score 8/10) — Intel and AMD have reported raised CPU prices by 10% to as much as 35% QoQ, as tight supply faces strong demand. 
-
-$INTC $AMD $NVDA
-  - https://x.com/Beth_Kindig/status/2063344019741008347
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 629).
-- **@stocksavvyshay** (434 likes, score 8/10) — This is Peter Lynch’s favorite metric and I like it too because it ties valuation to growth. I prefer using a 2026 to 2028 window so the multiple adjusts for how fast the business is actually compound
-  - https://x.com/StockSavvyShay/status/2063266318812643612
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 456).
-- **@squawkcnbc** (16 likes, score 8/10) — Fmr. Fed Vice Chair explains why he says the Fed "has to have a hike on the table at some point this year": https://cnb.cx/4e6JNEa
-  - https://x.com/SquawkCNBC/status/2062920048482680980
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 34).
-- **@marketmatrixs** (178 likes, score 8/10) — Buy the stock and chill. 
-
-Here are 8 of the easiest stocks to buy and hold for the next 10 years 
-
-1. $AMD Advanced Micro Devices 
-
-* Just take a look at that revenue trajectory
-  - https://x.com/MarketMatrixs/status/2063380387079008675
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 188).
-- **@jawwwn_** (75 likes, score 8/10) — Palantir CEO Dr. Alex Karp:
-
-“You can't rebuild Palantir for $1 billion. You need us.”
-
-“Try that with PG it’s ridiculous. Try it with Foundry it’s ridiculous. Try it with Meta Constellation—no one ev
-  - https://x.com/jawwwn_/status/2063391920265597267
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 79).
-- **@mr_derivatives** (609 likes, score 7/10) — $MSTR BTC cost basis: ~$75,700
-
-$BMNR ETH cost basis: ~$3,850
-  - https://x.com/Mr_Derivatives/status/2063358430866456993
-  - **WHY**: Source fiable + impact concret (score signal 5, engagement 773).
-- **@cnbc** (51 likes, score 7/10) — U.S. confirms second Texas screwworm case, Canada restricts livestock imports
-  - https://x.com/CNBC/status/2063327082973721027
-  - **WHY**: Source fiable + impact concret (score signal 5, engagement 79).
-- **@squawkcnbc** (23 likes, score 7/10) — The Senate passed a $70 billion budget reconciliation package to fund immigration enforcement agencies. @SenatorLankford weighs in. https://cnb.cx/3QohadR
-  - https://x.com/SquawkCNBC/status/2062919255037809106
+Beyond the benchmarks, capabilities like the Reliability, Availability, and Serviceabil
+  - https://x.com/nvidia/status/2066902392570876031
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 356).
+- **@nvidia** (29 likes, score 7/10) — Correction: GB300 NVL72 delivers 1.6x performance on DeepSeekV3 pretraining at 512 GPU scale. (Ref: results 6.0-0022 and 6.0-0101)
+  - https://x.com/nvidia/status/2066986675176415415
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 33).
-- **@squawkcnbc** (16 likes, score 7/10) — Two members of Congress, Rep. Lori Trahan (D-MA) @RepLoriTrahan and Rep. Jay Obernolte (R-CA) @JayObernolte - explain their groundbreaking AI bill to Squawk Box ... https://cnbc.com/video/2026/06/05/r
-  - https://x.com/SquawkCNBC/status/2062896501878141034
+- **@rileybrown** (18 likes, score 7/10) — Really cool demo of GPT Real-Time 2 
+
+Controlling your entire computer with voice...
+Exciting stuff
+  - https://x.com/rileybrown/status/2067057208504856850
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 30).
+- **@wsj** (8 likes, score 7/10) — The AI frenzy is sending tech-company valuations through the roof in the U.S. and Asian markets. One country still offers some relative bargains.
+  - https://x.com/WSJ/status/2067055469047300286
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 20).
-- **@tszzl** (469 likes, score 7/10) — superintelligence warps the gravity of capitalism, trading any useful service with the machine world is the highest value thing any company can do. if SpaceX is a fab on the moon and a neocloud in orb
-  - https://x.com/tszzl/status/2063437998616969400
-  - **WHY**: Source fiable + impact concret (score signal 4, engagement 531).
-- **@cointelegraph** (199 likes, score 7/10) — AI: AI chip demand is surging as Air Liquide commits $233M to support SK Hynix’s expansion in South Korea.
-  - https://x.com/Cointelegraph/status/2063312590583820482
-  - **WHY**: Source fiable + impact concret (score signal 4, engagement 303).
-- **@mikelongterm** (132 likes, score 7/10) — $PLTR shareholders just finally understood that Dr. Karp gonna double @PalantirTech revenue by FY2027 without increasing headcount or sales team, where not even $MSFT is compareable in term % of opera
-  - https://x.com/MikeLongTerm/status/2063296069023477855
-  - **WHY**: Source fiable + impact concret (score signal 4, engagement 136).
-- **@cnbc** (5 likes, score 7/10) — Bouygues-led consortium signs $23.44 billion deal to buy SFR from Altice France
-  - https://x.com/CNBC/status/2063396234577006729
-  - **WHY**: Source fiable + impact concret (score signal 4, engagement 15).
-- **@hedgiemarkets** (450 likes, score 9/10) — Google signed a deal to pay SpaceX $920 million a month for access to 110,000 Nvidia GPUs at SpaceX data centers. The contract runs October 2026 through June 2029, roughly $30 billion total. Google ca
-  - https://x.com/HedgieMarkets/status/2063314205185310875
-  - **WHY**: Source fiable + impact concret (score signal 12, engagement 556).
-- **@stocksavvyshay** (1406 likes, score 9/10) — $ASML is bringing Elon Musk into a closed-door employee conference to discuss the $55B $TSLA and $SPCX Terafab project.
+- **@rileybrown** (9 likes, score 7/10) — How to use GLM 5.2 in Cursor... 
 
-Terafab would target leading-edge 2nm chips for AI, robotics and space compute.
-  - https://x.com/StockSavvyShay/status/2063395977751576747
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1548).
-- **@pankajkumar_dev** (1127 likes, score 9/10) — GPT-5.6 New Checkpoint 
+I'm using it with @OpenRouter because zAI is busy.
 
-- A new GPT-5.6 checkpoint, kindle-alpha, is currently being tested internally
-- It appears to have selected kindle-alpha as the current release candidate for GPT-5.6
-- Fronte
-  - https://x.com/pankajkumar_dev/status/2063272015214354908
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1195).
-- **@iamrakeshbansal** (83 likes, score 9/10) — US Markets crashed hard!
-The day all hedges fell” — Stocks, Bitcoin, Gold, Silver, everything dropped together.
-AI sell-off, rising yields & global tensions worried investors. Nasdaq -2.6%, big losses
-  - https://x.com/iamrakeshbansal/status/2063462886677299627
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 99).
-- **@tszzl** (856 likes, score 8/10) — the sheer dollar quantity of ip leakage from openai has been just tremendous, probably in the trillions. openai truly has been quite open
-  - https://x.com/tszzl/status/2063426261666660701
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 904).
-- **@polymarket** (676 likes, score 8/10) — JUST IN: OpenAI is reportedly planning its biggest ChatGPT overhaul yet, aiming to turn it into a “superapp” ahead of the company’s IPO.
-  - https://x.com/Polymarket/status/2063477552170090816
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 900).
-- **@investmentguru_** (448 likes, score 8/10) — 15 sectors defining the next decade of investing
+1. Get OpenRouter Key
+2. Go to cursor  settings  models
+3. Scroll to OpenAI API Key, Toggle it on, Paste OpenRoute
+  - https://x.com/rileybrown/status/2067075406553895342
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11).
+- **@k1rallik** (1529 likes, score 9/10) — > be the richest man alive
+> own roughly 40% of SpaceX
+> own around 13% of Tesla
+> plus xAI, the Boring Company and X
+> take a 0 dollar salary
+> june 12 2026 SpaceX IPOs at 135 a share
+> company hits
+  - https://x.com/k1rallik/status/2066989239066382597
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1605).
+- **@cointelegraph** (502 likes, score 9/10) — JUST IN: SpaceX’s acquisition of AI coding startup Cursor reportedly created four new multibillionaires, all in their mid-20s.
+  - https://x.com/Cointelegraph/status/2066993186392748255
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 616).
+- **@gregisenberg** (343 likes, score 8/10) — Pick a side:
 
-The megatrend map.
+1. Openclaw vs Hermes?
+2. Anthropic vs OpenAI vs Google?
+3. Codex vs Claude Code?
+4. Local models vs cloud models?
+5. Raise VC or bootstrap?
+6. Best time to be building or bad time?
+7. M
+  - https://x.com/gregisenberg/status/2066928520450744488
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 931).
+- **@joonlee** (3458 likes, score 8/10) — Three years ago I got laid off from ESPN.
 
-1.  AI
-$NVDA · $PLTR · $APP
-The infrastructure king, the data layer, and the monetization engine. Three different ways to own AI.
-  - https://x.com/InvestmentGuru_/status/2063253916142260703
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 472).
-- **@econoar** (230 likes, score 8/10) — Are you prepared for this scenario Monday?
+Now I'm running a YouTube channel: profitable, 175K views a video, closing in on 60K subs.
 
--Saylor sold $3bn, ponzi lives much longer
--Trump pumps gov funds into AI stocks
--New Iran "deal" announced
--NASDAQ +3%
+Goal: 100K by end of summer.
 
-Odds are higher than you think...
-  - https://x.com/econoar/status/2063433973829632203
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 258).
-- **@cointelegraph** (87 likes, score 8/10) — JUST IN: OpenAI is reportedly turning ChatGPT into an AI superapp ahead of its planned IPO.
-  - https://x.com/Cointelegraph/status/2063493776111231040
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 169).
-- **@firstadopter** (104 likes, score 8/10) — "Our next big training run in the fall will be done on Vera Rubins. We're really excited about that." - @OpenAI CFO Sarah Friar via @theallinpod $NVDA
-  - https://x.com/firstadopter/status/2063446197042352245
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 116).
-- **@ns123abc** (32 likes, score 8/10) — Nvidia is selling the shovels
-Musk is selling the acces to the mines
-
-Anthropic and Google are paying billions per month
-  - https://x.com/ns123abc/status/2063492158015844785
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 42).
-- **@stocksavvyshay** (1356 likes, score 8/10) — SEMICONDUCTOR STOCKS BY PEG RATIO
-
-PEG < 1 usually means mispriced growth
- PEG > 2 starts to push into the danger zone
-
-Here’s how they stack up:
-• $ALAB ~2.9x
-• $ARM ~2.4x
-• $INTC ~2.2x
-• $LRCX ~2.2x
-  - https://x.com/StockSavvyShay/status/2063262895807332626
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1516).
-- **@agrippa_inv** (629 likes, score 7/10) — $IREN: The cloud market's dark horse
-
-I bet most $IREN bulls are starting to get increasingly exhausted by the price action. I certainly am.
-
-However, as long-term investors, we should see day-to-day
-  - https://x.com/Agrippa_Inv/status/2063359511679660074
-  - **WHY**: Source fiable + impact concret (score signal 5, engagement 751).
-- **@the_ai_investor** (49 likes, score 7/10) — Jensen - “All of my friends at Korean companies: LG, SK hynix, Samsung, Hyundai, and Naver, are all booming.”
-
-One special highlight was how important memory has become in NVIDIA products.
-  - https://x.com/The_AI_Investor/status/2063481997302055117
-  - **WHY**: Source fiable + impact concret (score signal 4, engagement 51).
-- **@0xprajwal_** (43 likes, score 9/10) — How to sound like an AI expert:
-
-Step 1: Say, “GPT is good, but Claude is perfect.”
-
-Step 2: Mention tokens every 30 seconds.
-
-Step 3: Predict AGI is coming "sooner than people think."
-
-Step 4: Use wo
-  - https://x.com/0xPrajwal_/status/2063475894031942084
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 113).
+If you believe sports journalism ca
+  - https://x.com/joonlee/status/2066939264516915497
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 3656).
+- **@fireflyspace** (119 likes, score 8/10) — We're excited to announce Nathan O'Konek as Firefly's General Counsel. Nathan brings more than 20 years of legal and strategic leadership experience in the global aerospace and defense sectors, specia
+  - https://x.com/FireflySpace/status/2066900017730691231
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 119).
+- **@youranonnews** (5599 likes, score 7/10) — Michelle Obama: “Let’s be very clear. Strong men don’t need to put down women to make themselves feel powerful.”
+The same goes for leadership, you lead by example. Being an asshole to someone only mak
+  - https://x.com/YourAnonNews/status/2066943718146408769
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 5831).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[Decrypt]** AI Is Helping Discover Tech Vulnerabilities—And Zcash Is Just the Latest Example
-  - https://decrypt.co/370237/ai-discover-tech-vulnerabilities-zcash-latest-example
-- **[TechCrunch]** OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks
-  - https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks/
-- **[TechCrunch AI]** OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks
-  - https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks/
-- **[CoinDesk]** Bitcoin, ether eye worst weekly rout since FTX collapse as cryptos shed $390 billion
-  - https://www.coindesk.com/markets/2026/06/06/bitcoin-ether-eye-worst-weekly-rout-since-ftx-collapse-as-cryptos-shed-usd390-billion
-- **[TechCrunch]** What to expect from WWDC 2026: Siri’s highly anticipated revamp and Apple Intelligence updates
-  - https://techcrunch.com/2026/06/06/what-to-expect-from-wwdc-2026-siris-highly-anticipated-revamp-and-apple-intelligence-updates/
-- **[TechCrunch AI]** What to expect from WWDC 2026: Siri’s highly anticipated revamp and Apple Intelligence updates
-  - https://techcrunch.com/2026/06/06/what-to-expect-from-wwdc-2026-siris-highly-anticipated-revamp-and-apple-intelligence-updates/
-- **[Decrypt]** Claude Code Vulnerability Could Let Attackers Steal Credentials From GitHub, Says Microsoft
-  - https://decrypt.co/370238/claude-code-vulnerability-attackers-steal-credentials-github-microsoft
-- **[TechCrunch]** Sriram Krishnan is leaving his role as White House AI advisor
-  - https://techcrunch.com/2026/06/06/sriram-krishnan-is-leaving-his-role-as-white-house-ai-advisor/
+- **[CNBC Top]** Snap unveils $2,195 AR glasses as CEO Evan Spiegel bets on post-smartphone future
+  - https://www.cnbc.com/2026/06/16/snap-unveils-2195-specs-ar-glasses-spiegel-bets-on-post-smartphone.html
+- **[Business Insider]** Rivian trims its workforce as the EV maker pursues profitable growth
+  - https://www.businessinsider.com/rivian-trims-workforce-ev-maker-r2-2026-6
+- **[Business Insider]** The subtext of Robinhood's layoff memo: It's not us, it's you
+  - https://www.businessinsider.com/robinhood-layoff-memo-emphasizes-high-performance-talent-density-2026-6
+- **[TechCrunch]** Robinhood’s note on 10% layoffs shows blaming AI isn’t cutting it
+  - https://techcrunch.com/2026/06/16/robinhoods-note-on-10-layoffs-shows-blaming-ai-isnt-cutting-it/
+- **[HN]** Apple's weird anti-nausea dots cured my car sickness
+  - https://www.theverge.com/tech/942854/apple-vehicle-motion-cues-review-really-work
+- **[HN]** Is Meta destroying its engineering organization?
+  - https://newsletter.pragmaticengineer.com/p/why-is-meta-destroying-its-engineering
+- **[HN]** Apple is about to make Hide My Email useless
+  - https://arseniyshestakov.com/2026/06/16/apple-is-about-to-make-hide-my-email-useless/
+- **[HN]** Has AI already killed self-help nonfiction books?
+  - https://tim.blog/2026/06/12/has-ai-already-killed-nonfiction/
 
 ## 🎬 Suggested video angles
 
@@ -307,7 +171,7 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s hook: the most surprising number or quote of the day.
 - 2min context: the 2-3 biggest stories in that theme.
 - 1min angle: what no other YT channel is saying about it.
-- 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
+- 30s call-to-action: comment + subscribe + the bot's @AIBossGPT handle.
 
 
-*Generated 2026-06-07T04:02:40*
+*Generated 2026-06-17T00:57:04*
