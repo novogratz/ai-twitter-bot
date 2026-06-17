@@ -14957,3 +14957,8 @@ Former Defence Secretary John Healey MP calls for a greater investme
 - **@wired** (12 likes, score 7/10) — Meta quickly dismissed the report and claimed the face-recognition feature “does not exist.” The code disappeared from the system one day after WIRED’s report, as quietly as it came up.
   - https://x.com/WIRED/status/2067232748725563839
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 18).
+- **@yahoofinance** (18 likes, score 7/10) — $SPCX shares are set to rise for a fourth straight day, keeping the company ahead of Amazon by market value.
+
+Explore more premium news and analysis on $SPCX in AlphaSpace: https://yhoo.it/4uynrSx
+  - https://x.com/YahooFinance/status/2067242853361713480
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 28).
