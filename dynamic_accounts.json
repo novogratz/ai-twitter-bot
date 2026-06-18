@@ -627,7 +627,14 @@
     "MaximeCyr",
     "JulienCahuzac",
     "RenaudGagne",
-    "PierreDufresne"
+    "PierreDufresne",
+    "JesseMayer_",
+    "CryptoMollet",
+    "BorisBouige",
+    "VillainVC",
+    "HugoBourges",
+    "MarcLaventure",
+    "BenoitBenoit"
   ],
   "en": [
     "blablacar",
@@ -5114,6 +5121,41 @@
     {
       "lang": "fr",
       "handle": "PierreDufresne",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JesseMayer_",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMollet",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisBouige",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "VillainVC",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoBourges",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLaventure",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitBenoit",
       "added": "2026-06-18"
     }
   ]

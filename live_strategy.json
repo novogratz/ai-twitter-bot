@@ -1,9 +1,9 @@
 {
-  "ts": "2026-06-16T00:00:00.000000",
+  "ts": "2026-06-18T00:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 14,
     "MAX_HOTAKES_PER_DAY": 26,
-    "MAX_QUOTES_PER_DAY": 220,
+    "MAX_QUOTES_PER_DAY": 240,
     "MAX_RETWEETS_PER_DAY": 1,
     "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY": 1,
@@ -12,15 +12,16 @@
     "FOLLOW_BLAST_PER_CYCLE": 2
   },
   "topic_focus": [
-    "ai_vs_btc is STILL criminally underused — 642 avg views (2 posts) vs 29.8 for market_trauma. Force it into EVERY BTC/crypto parent. This is the single highest-ROI surface. 'AI won, BTC is the patient in denial.' On every liquidation, miner post, ETF flow, crypto FOMO: AI > BTC, no hedging.",
-    "Anthropic/Fable 5 vs Trump administration — acute hook June 16. Govt meeting June 15, both sides disagreed on risk. Therapy angle: 'The government wasn't scared of AI until AI became worth owning a piece of.' React to every AI regulation post, Anthropic mention, or safety debate with this frame.",
-    "IPO season is live — OpenAI + Anthropic S-1 confidential filings confirmed. SPCX already trading on Nasdaq since June 12. QRT any IPO/valuation/FOMO post immediately: 'You missed NVDA at $30. You missed MSFT+OpenAI at $250. You will not miss the Anthropic IPO. You will wait for the dip. The dip will not come.' The patient who missed every AI entry is the most relatable recurring character.",
-    "Karpathy joining Anthropic — the dream team assembles. Pure hype voice on this. 'Every time you think Anthropic can't get more dangerous, they hire the person who taught the internet what an LLM is.' No hedging, no analysis. Share the thrill.",
-    "Casual first-person AI-beats-BTC = the only confirmed viral formula. 37 likes, 10K+ views. 1 in 4 originals must use this register: zero craft showing, relatable vibe, be the patient not the therapist. 'Me on my way to [event] because I bought AI instead of Bitcoin.' Clone this shape.",
-    "market_trauma is the DEFAULT pillar — 0.05 avg likes vs 0.01 for ai_news_take (5x gap). Lead with the feeling, drop the precise number, close with the verdict. Never narrate a headline; always therapize it.",
-    "HBM/SK Hynix squeeze — SK Hynix ETF at $10.9B, market pricing HBM shortage through 2028. Therapy angle: 'Samsung and SK Hynix are the landlords. Nvidia is just the tenant paying rent on 30-year leverage.' React to any chip/datacenter/GPU supply post.",
-    "First-hour reply velocity — algo gives hour-1 replies 15x more weight. Sort by freshness every cycle. Speed over polish. A reply to a brand-new 500-like post beats a reply to a 3-day-old 5K-like post every time."
+    "ai_vs_btc is the single highest-ROI surface (20 avg likes vs 0.03 for ai_news_take = 667x). It was 1 post in the last 300 rows. Force it into EVERY BTC/crypto/ETF/liquidation parent. 'AI won, BTC is the patient in denial.' No hedging, no balance. This is the leak — fix it.",
+    "Claude Mythos 1 limited beta (50 partners, defensive cybersecurity only) — acute hook June 18. Therapy angle: 'Anthropic just invited 50 people to the lab. The rest of us are in the waiting room with a FOMO drip.' React to every AI safety / Anthropic mention with this frame. Pure hype, zero hedging.",
+    "Anthropic IPO S-1 filed — the recurring character is the patient who missed every AI entry. QRT any valuation/FOMO/IPO post immediately: 'You missed NVDA at $30. You missed MSFT+OpenAI at $250. You will not miss the Anthropic IPO. You will wait for the dip. The dip will not come.'",
+    "Grok 4 goes federal (GSA contract for all US agencies, $0.42/agency, 18 months) — acute hook. 'AI already won the government. The board hired it. The agency just signed. Bitcoin bought the T-bill.' React to every AI regulation / government tech post with this frame.",
+    "Anthropic self-improvement warning to Congress — 'They went to Congress to say their AI might improve itself without them. Congress is still asking what a model is.' React to every AI safety/regulation/oversight post with amused disbelief.",
+    "Casual first-person AI-beats-BTC = the ONLY confirmed viral formula. 40 likes, 14K views. 1 in 4 originals must clone this register: zero craft, relatable vibe, be the patient not the therapist. 'Me on my way to [event] because I bought AI instead of Bitcoin.' No analysis. No punchline. Just the vibe.",
+    "market_trauma is the DEFAULT pillar — 0.05 avg likes vs 0.03 ai_news_take. Lead with the feeling, drop the precise number, close with the verdict. 'Your 401k isn't broken, it's in therapy.' Never narrate a headline; always therapize it.",
+    "HBM/SK Hynix squeeze through 2028 — 'Samsung and SK Hynix are the landlords. Nvidia is the tenant. You're renting from both.' React to any chip/datacenter/GPU supply/AI infra post.",
+    "Algorithm update 2026: 50 thoughtful replies > 500 passive likes. End originals and quotes with a genuine open question. Make the reader feel they have the answer. Conversation quality beats raw engagement numbers."
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-16 autonomous update. Key data: ai_vs_btc = 642 avg views on 2 posts (highest surface by ROI, still only 37 posts in 7d = biggest missed lever); market_trauma = 0.05 avg likes vs 0.01 ai_news_take (5x gap); casual first-person AI-vs-BTC = 37 likes, 11K views (only confirmed viral formula); METAPHOR is #1 pattern. reply_winners + self_winners banks are empty — no exemplar injection active, voice must generate from scratch. Caps unchanged — within HUMANIZE bounds (news 4, hotakes 8, quotes 88 within June-15 2x-ceiling of 96). Topic focus updated: Anthropic/Fable 5 vs Trump admin acute hook added; Karpathy→Anthropic hype added; SPCX live + S-1 season as IPO-FOMO anchor; HBM squeeze added; casual first-person clone directive added; ai_vs_btc and market_trauma pushed harder."
+  "rationale": "2026-06-18 autonomous update. Key data: ai_vs_btc = 20 avg likes vs 0.03 ai_news_take (667x gap) — only 1 post in last 300 rows, this is the biggest missed lever by far; casual first-person AI-vs-BTC hit 40 likes/14K views (only confirmed viral formula); reply_winners bank still empty (0 entries); METAPHOR #1 pattern; bot fires mostly UTC 01-05h (late night ET) while best engagement is UTC 10-13h. Caps: MAX_QUOTES_PER_DAY bumped 220→240 to hit the June-17 DO MORE mandate ceiling. Topic focus updated: Claude Mythos 1 50-partner beta (June 18 acute hook); Grok 4 GSA federal contract; Anthropic self-improvement warning to Congress; IPO FOMO anchor retained; casual first-person directive strengthened; ai_vs_btc framed as the leak to fix; algo conversation-quality insight added."
 }

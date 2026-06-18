@@ -5760,5 +5760,64 @@
       }
     ],
     "summary": "J'ai tri\u00e9 le bruit pour te donner des cerveaux, pas des m\u00e9gaphones. Le lot mixe la rigueur fran\u00e7aise (Santilli/Bonzon) avec la fra\u00eecheur qu\u00e9b\u00e9coise (Cahuzac). Aucun ne vendra son r\u00eave \u00e0 99\u20ac."
+  },
+  {
+    "ts": "2026-06-18T06:03:50.016095",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JesseMayer_",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 140000,
+        "reason": "L'Am\u00e9ricain qui parle un fran\u00e7ais presque correct pour des conseils de trading en or. C'est la diaspora francophone utile."
+      },
+      {
+        "handle": "CryptoMollet",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 90000,
+        "reason": "La r\u00e9f\u00e9rence pour les frimeurs de la DeFi. Il explique le yield farming comme un bon p\u00e8re No\u00ebl explique la TVA."
+      },
+      {
+        "handle": "BorisBouige",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Le trader de g\u00e9nie du CAC 40. Il parle le march\u00e9 comme Mozart parle Mozart. Pas de pub, que de l'alpha brut."
+      },
+      {
+        "handle": "VillainVC",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Le VC de Montr\u00e9al qui pique des ego avec des threads sur la SaaS. C'est m\u00e9chant, c'est juste, c'est bon."
+      },
+      {
+        "handle": "HugoBourges",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Ancien fondateur, il cover l'IA en France avec une \u00e9nergie de fanboy qui a trouv\u00e9 la vraie religion. 100% qualitatif."
+      },
+      {
+        "handle": "MarcLaventure",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Le pape de l'IA \u00e0 Montr\u00e9al. Il couvre la tech avec une touche qu\u00e9b\u00e9coise qui fait mal \u00e0 la dignit\u00e9 des fran\u00e7ais."
+      },
+      {
+        "handle": "BenoitBenoit",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Ex-JP Morgan \u00e0 NYC, il tweet en FR depuis le paradis des riches. Il parle macro avec un accent qu'on entend pas."
+      }
+    ],
+    "summary": "J'ai chass\u00e9 les vrais pros dans les trois r\u00e9gions : Mistral et Boris Bouige en France dominent par la qualit\u00e9, VillainVC et Marc Laventure portent la flamque qu\u00e9b\u00e9coise avec une arrogance n\u00e9cessaire."
   }
 ]
