@@ -1667,7 +1667,15 @@ def scrape_own_replies(max_tweets: int = 25):
     one place X shows our replies with engagement. Used by reply_winners
     to mine our best-performing replies as voice exemplars for posts/quotes
     (operator 2026-06-15: "replies get crazy likes — could the bot inspire
-    itself from replies?")."""
+    itself from replies?").
+
+    Scroll depth (2026-06-18): live measurement showed two scrolls only
+    surfaced 6-9 articles per cycle on /with_replies — the bank stayed
+    empty for 3 days because that window is the freshest reply firehose
+    (~30-40 replies/hr today), all too young to have seasoned likes.
+    `OWN_REPLIES_SCROLL_DEPTH` (default 6) reads at call time; each scroll
+    costs ~4s. Six scrolls surface ~30-40 articles ≈ a 1-2h reply window
+    where the older end has had time to accumulate likes."""
     from .config import BOT_HANDLE
     if not _profile_visit_allowed(BOT_HANDLE):
         return []
@@ -1676,9 +1684,10 @@ def scrape_own_replies(max_tweets: int = 25):
         log.info(f"[SCRAPE] Visiting own replies: {url}")
         webbrowser.open(url)
         time.sleep(8)
-        _scroll_page()
-        time.sleep(1)
-        _scroll_page()
+        scrolls = max(2, int(os.environ.get("OWN_REPLIES_SCROLL_DEPTH", "6")))
+        for _ in range(scrolls):
+            _scroll_page()
+            time.sleep(1)
         tweets = _scrape_tweets_from_page(f"@{BOT_HANDLE}/with_replies", max_tweets)
         close_front_tab()
         return tweets

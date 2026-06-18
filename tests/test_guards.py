@@ -2331,6 +2331,23 @@ def test_reply_winners_feeds_post_and_quote_prompts():
     assert "scrape_own_replies" in inspect.getsource(reply_winners)
 
 
+def test_scrape_own_replies_surfaces_seasoned_window():
+    """2026-06-18 — the bank was empty for 3 days because scrape_own_replies
+    only scrolled twice on /with_replies, surfacing 6-9 articles per cycle
+    (live log evidence). At 30-40 replies/hr today that's the freshest ~15
+    min of replies, none of them seasoned for likes. The fix scrolls
+    `OWN_REPLIES_SCROLL_DEPTH` (default 6) times so the older end of the
+    window has had time to accumulate likes. Pinned in the source so the
+    fix can't silently regress back to the 2-scroll window."""
+    import inspect
+    from src import twitter_client
+
+    src = inspect.getsource(twitter_client.scrape_own_replies)
+    assert "OWN_REPLIES_SCROLL_DEPTH" in src
+    # Loop, not two literal _scroll_page() calls (the original shape).
+    assert "for _ in range" in src
+
+
 def test_uppercase_metadata_tag_stripped_at_chokepoint():
     """2026-06-14: qwen shipped '[SIGNS: yes]' live at the end of a post.
     The scrubber must strip any bracketed UPPERCASE-label + colon tag the

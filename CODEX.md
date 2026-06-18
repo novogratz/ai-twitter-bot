@@ -4,6 +4,22 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-18 — reply_winners bank empty for 3 days (scroll depth fix):**
+> `[REPLY_WINNERS] no qualifying replies scraped — bank cleared` had fired
+> every 3h cycle since the bank shipped 2026-06-15. Live log proved the
+> root cause: `scrape_own_replies` only scrolled `/with_replies` twice,
+> surfacing 6-9 articles per cycle. At 30-40 replies/hr today that's the
+> freshest ~15-30 min of replies — all too young to have seasoned likes,
+> so the ≥2-like floor caught nothing. The injected gold-standard-voice
+> exemplar (the lever the 2026-06-15 mandate built) never reached the
+> hotake/quote prompts. Fix: `OWN_REPLIES_SCROLL_DEPTH` (default 6,
+> env-read at call time) drives a scroll loop in `scrape_own_replies`;
+> six scrolls surface ~30-40 articles so the older end of the window has
+> had time to accumulate likes. Plus stage-counter logging in
+> `reply_winners._mine_winners` so future "bank empty" cycles show WHY
+> in one line (not_reply / not_own / low_likes / short_text / french).
+> Guard: `test_scrape_own_replies_surfaces_seasoned_window`.
+
 > **2026-06-15 round 3 — COOL DOWN LIKES (operator: "we got hit by spam/
 > automation flags — reply but like less, cool down the number of likes you
 > give"):** the automation signature was liking the PARENT of every reply
