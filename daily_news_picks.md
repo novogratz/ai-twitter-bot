@@ -15132,3 +15132,42 @@ RAISE has long brought together the people shaping the future of AI infrastructu
 “Unfortunately, price increases are unavoidable. We’re doing our best to mitigate the huge increases that are being passed to us, and we’ve been t
   - https://x.com/HQNewsNow/status/2067356623178244482
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 647).
+- **@unusual_whales** (246 likes, score 9/10) — Someone just invested $466,000 into a Grok Portfolio on Autopilot
+
+The portfolio was created by a Wharton PhD who uses Grok as part of his investing process.
+
+Since launching on 2/11/25, it's done qui
+  - https://x.com/unusual_whales/status/2067368533408071953
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 316).
+- **@lmkifiwin** (10 likes, score 7/10) — THE AI GOT $145 BILLION. THE PEOPLE GOT SNACKS.
+
+Meta's own CTO, Andrew Bosworth, told staff morale is near the worst in 20 years - on par with the Cambridge Analytica era.
+
+What he's up against:
+- ~8
+  - https://x.com/lmkifiwin/status/2067270873950904321
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 14).
+- **@danprimack** (23 likes, score 8/10) — Exclusive: Sen. Cotton asks Treasury to investigate Airwallex's China ties, seek divestiture https://axios.com/pro/all-deals/2026/06/17/sen-cotton-treasury-letter-bessent-airwallex-china…
+
+by @ShenLuc
+  - https://x.com/danprimack/status/2067345644730143178
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 25).
+- **@0xmiraqle** (79 likes, score 8/10) — CHINESE BUILT AN AGENTS FACTORY THAT RUNS A 42 PERSON DEPARTMENT WHILE HE SLEEPS AND PULLS $21,392 A MONTH
+
+He says it's the last team he'll ever have to train.
+
+Pause at exactly 0:49 where the full o
+  - https://x.com/0xMiraqle/status/2066992905374376155
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 101).
+- **@timcast** (761 likes, score 7/10) — I'd say theres no way Kyle is this stupid but he is famous for not knowing what farms are
+
+You can't tax net worth Kyle because it's set arbitrarily and it would bankrupt any company who's leadership
+  - https://x.com/Timcast/status/2067380400737927408
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 975).
+- **@blum_og** (16 likes, score 7/10) — "don't use frontier models for non-frontier problems."
+
+Satya Nadella (CEO of Microsoft) said that at a Hard Fork live interview
+
+and it explains why the Microsoft AI certification path hits harder th
+  - https://x.com/Blum_OG/status/2067343970351579155
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 28).
