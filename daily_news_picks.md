@@ -15221,3 +15221,34 @@ If a business is intentionally hiring an illegal worker over an American, we wil
 Kawasaki's Ninja 7 Hybrid requires a clutch calibration after routine maintenance, but the tool
   - https://x.com/FuluFoundation/status/2067283418866426262
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 19).
+
+## 2026-06-18
+- **@kobeissiletter** (532 likes, score 9/10) — Passive equity funds are taking over the market:
+
+The three largest S&P 500 ETFs now have a record $2.6 trillion in assets under management (AUM).
+
+This represents 17.4% of AUM in all US ETFs and 11.9
+  - https://x.com/KobeissiLetter/status/2067410213691605050
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 646).
+- **@kobeissiletter** (455 likes, score 9/10) — Government borrowing worldwide has reached unprecedented levels:
+
+Global government bond issuance through bank offerings has surged to a record $504 billion in H1 2026.
+
+This covers only government bo
+  - https://x.com/KobeissiLetter/status/2067426823085101323
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 577).
+- **@marionawfal** (11 likes, score 7/10) — Tucker points out the energy + weapon crisis:
+
+Gas is $6+ in many places, and the U.S. Strategic Petroleum Reserve is now at its lowest level since 1983, just 340M barrels.
+
+U.S. has been draining it
+  - https://x.com/MarioNawfal/status/2067449096646832592
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 17).
+- **@marionawfal** (13 likes, score 7/10) — Russia wants to settle the drama over Iran’s nuclear program.
+
+The head of Rosatom is calling for a compromise. He says the IAEA needs to step in, but they have to actually listen to what everyone wan
+  - https://x.com/MarioNawfal/status/2067449725150970171
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 19).
+- **@cnbc** (4 likes, score 7/10) — Google Gemini co-lead Noam Shazeer leaves for OpenAI
+  - https://x.com/CNBC/status/2067448719553814977
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 18).

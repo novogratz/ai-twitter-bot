@@ -3844,5 +3844,57 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit des 'gurus' Telegram pour ne garder que les cerveaux : les founders de Mistral, les analysts qui lisent les rapports annuels et les VCs qui voient le code. Z\u00e9ro formation vendue, que du concret."
+  },
+  {
+    "ts": "2026-06-18T02:13:20.966025",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Pierre_Leclercq",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Ex-CTO BlaBlaCar, VC. Il couvre le SaaS, l'IA et la startup life avec un pragmatisme rare."
+      },
+      {
+        "handle": "BenjaminKlein",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 35000,
+        "reason": "VP chez Affirm, francophone bas\u00e9 \u00e0 SF. Mix parfait entre Wall Street et Silicon Valley."
+      },
+      {
+        "handle": "AdrienPerray",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 22000,
+        "reason": "Fondateur de Qonto. Il tweete sur la cashbox, la fintech B2B et l'\u00e9cosyst\u00e8me startup parisien."
+      },
+      {
+        "handle": "MaximeSt",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Le gars de Coinhouse (ou proche \u00e9cosyst\u00e8me). Il poste des threads d\u00e9complex\u00e9s sur les cycles crypto en FR."
+      },
+      {
+        "handle": "JulienLemaire",
+        "region": "france",
+        "niche": "ia",
+        "followers": 12000,
+        "reason": "Researcher/Dev qui vulgarise les LLMs sans vendre de laitier. Contenu technique mais accessible."
+      },
+      {
+        "handle": "VinceLeclerc",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 9500,
+        "reason": "Analyste ind\u00e9pendant qu\u00e9b\u00e9cois. Focus march\u00e9 nord-am\u00e9ricain, style direct, pas de 'signals'."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 les fondamentalistes s\u00e9rieux (Pommier) et les b\u00e2tisseurs IA (Mensch) pour \u00e9viter les vendeurs de r\u00eaves. Le lot est solide : des pros qui postent, pas des influenceurs de coaching."
   }
 ]
