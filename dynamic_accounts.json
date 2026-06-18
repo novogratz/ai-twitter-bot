@@ -644,7 +644,15 @@
     "LionelS",
     "ThibaultGautier",
     "AntoineLemoine",
-    "VinzDemange"
+    "VinzDemange",
+    "DavorHobbs",
+    "VeeDubs",
+    "GaelDiaz",
+    "JL_Aigner",
+    "AlexisLaRue",
+    "MonsieurDeLaR",
+    "SylvainLaurens",
+    "JulienBouchard"
   ],
   "en": [
     "blablacar",
@@ -872,7 +880,9 @@
     "MARMOT",
     "David",
     "Glider",
-    "Kpler"
+    "Kpler",
+    "OrcaRouter",
+    "Toz"
   ],
   "history": [
     {
@@ -5228,6 +5238,56 @@
     {
       "lang": "fr",
       "handle": "VinzDemange",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "OrcaRouter",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "DavorHobbs",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "VeeDubs",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelDiaz",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JL_Aigner",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisLaRue",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MonsieurDeLaR",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Toz",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLaurens",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBouchard",
       "added": "2026-06-18"
     }
   ]

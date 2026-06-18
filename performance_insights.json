@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-06-18T13:34:40.501560",
-  "window_7d_actions": 4725,
-  "window_24h_actions": 896,
+  "generated_at": "2026-06-18T17:34:40.529498",
+  "window_7d_actions": 4757,
+  "window_24h_actions": 892,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4525
+      "count": 4550
     },
     {
       "pattern": "METAPHOR",
-      "count": 54
+      "count": 57
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 54
+      "count": 56
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 25
+      "count": 27
     },
     {
       "pattern": "DIALOGUE",
@@ -48,61 +48,61 @@
       "actions": 238
     },
     {
+      "hour": 14,
+      "actions": 237
+    },
+    {
       "hour": 10,
       "actions": 228
     },
     {
-      "hour": 13,
-      "actions": 225
-    },
-    {
       "hour": 16,
-      "actions": 223
+      "actions": 228
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1998
+      "count": 2011
     },
     {
       "topic": "Autre",
-      "count": 1798
+      "count": 1819
     },
     {
       "topic": "Crypto",
-      "count": 575
+      "count": 576
     },
     {
       "topic": "Bourse",
-      "count": 424
+      "count": 431
     },
     {
       "topic": "Spatial",
-      "count": 336
+      "count": 333
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2167
+      "count": 2187
     },
     {
       "pillar": "market_trauma",
-      "count": 1267
+      "count": 1279
     },
     {
       "pillar": "other",
-      "count": 1105
+      "count": 1101
     },
     {
       "pillar": "meme_reaction",
-      "count": 130
+      "count": 132
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 31
+      "count": 33
     },
     {
       "pillar": "reply_bait",
@@ -112,19 +112,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 410
-    },
-    {
-      "pillar": "other",
-      "count": 229
+      "count": 412
     },
     {
       "pillar": "market_trauma",
-      "count": 226
+      "count": 240
+    },
+    {
+      "pillar": "other",
+      "count": 204
     },
     {
       "pillar": "meme_reaction",
-      "count": 18
+      "count": 22
     },
     {
       "pillar": "ai_vs_btc",
@@ -132,7 +132,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 3
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -145,53 +145,53 @@
     },
     {
       "pillar": "other",
-      "posts": 66,
+      "posts": 63,
       "avg_likes": 0.05,
-      "avg_views": 31.1,
+      "avg_views": 31.6,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 57,
-      "avg_likes": 0.04,
-      "avg_views": 25.3,
+      "posts": 61,
+      "avg_likes": 0.03,
+      "avg_views": 25.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 72,
       "avg_likes": 0.03,
-      "avg_views": 27.0,
+      "avg_views": 26.1,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 3,
+      "posts": 2,
       "avg_likes": 0.0,
-      "avg_views": 23.7,
+      "avg_views": 16.5,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4334
+      "count": 4357
     },
     {
       "type": "quote",
-      "count": 207
+      "count": 212
     },
     {
       "type": "quote_gif",
-      "count": 117
+      "count": 118
     },
     {
       "type": "hotake",
-      "count": 30
+      "count": 32
     },
     {
       "type": "post",
-      "count": 30
+      "count": 31
     },
     {
       "type": "retweet",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-18T13:30:54.419288",
-      "text": "Mstrat’s fine. My clients are having panic attacks because their ‘AI’ stock is just a PowerPoint.",
+      "ts": "2026-06-18T17:32:27.396738",
+      "text": "Copilot Cowork’s pricing is usage-based. That means the margin isn’t in the seat, it’s in the token. Microsoft just turned every employee into a GPU mining rig.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-18T13:30:37.092679",
-      "text": "OpenAI burning $5B/yr to leak \"5.6\" before it ships.\n\nThe real beta isn't the model. It's the FOMO pump.",
+      "ts": "2026-06-18T17:30:57.757768",
+      "text": "Coinbase just turned bitcoin into an illiquid real estate tax shelter. illinois: 0.2%. california: 3%. the spread is the spread",
       "type": "reply"
     },
     {
-      "ts": "2026-06-18T13:30:19.757622",
-      "text": "Ansem swept the trench, gigawhales bid the bedrock.\n\nSupply shock is inevitable when demand waits for permission and supply disappears.",
+      "ts": "2026-06-18T17:28:36.231947",
+      "text": "Btc doing nothing is the only thing it does well. it’s a vault, not a trader. stay calm.",
       "type": "reply"
     }
   ]

@@ -5909,5 +5909,88 @@
       }
     ],
     "summary": "J'ai mis\u00e9 sur les fondateurs et les praticiens plut\u00f4t que sur les influenceurs 'motivation'. Mistral et Delaunay dominent l'IA FR, tandis que les profils finance sont plus nich\u00e9s mais plus qualitatifs : pas de vente de r\u00eave, juste du m\u00e9tier."
+  },
+  {
+    "ts": "2026-06-18T13:36:03.114594",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DavorHobbs",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "L'homme qui a transform\u00e9 la data fr en sport d'\u00e9lite. Il twitte, il post des threads et son style est plus fun qu'une soir\u00e9e TechCrunch."
+      },
+      {
+        "handle": "VeeDubs",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 50000,
+        "reason": "Am\u00e9ricain qui twitte en fran\u00e7ais sur l'IA. Il capture la culture Silicon Valley mais avec une touche francophone qui fait mouche."
+      },
+      {
+        "handle": "GaelDiaz",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Ex-Silicon Valley, patron de H2O.ai. Il balance des p\u00e9pites sur le MLOps sans dormir, et son accent est plus audible que la majorit\u00e9 des \u00e9ditorialistes."
+      },
+      {
+        "handle": "JL_Aigner",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Journaliste crypto de base, mais il a du jus et couvre le secteur sans vendre de r\u00eave comme les influenceurs Telegram."
+      },
+      {
+        "handle": "AlexisLaRue",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Cr\u00e9ateur de contenu bourse FR au Qu\u00e9bec. Il parle des march\u00e9s sans utiliser de jargon incompr\u00e9hensible, ce qui est rare."
+      },
+      {
+        "handle": "MonsieurDeLaR",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "La voix qu\u00e9b\u00e9coise en crypto. Il analyse le march\u00e9 avec la pr\u00e9cision d'un notaire et l'humour d'un Qu\u00e9b\u00e9cois qui a fini sa bi\u00e8re."
+      }
+    ],
+    "summary": "On a fouill\u00e9 les p\u00e9pites FR/QL qui ne vendent pas de formation \u00e0 1500\u20ac. Du concret, du style, et z\u00e9ro 'guru' qui se prend pour un proph\u00e8te."
+  },
+  {
+    "ts": "2026-06-18T15:35:17.334614",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "SylvainLaurens",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Investisseur chez Partech, il tweete sur la tech europ\u00e9enne avec un scepticisme sain et des insights qui d\u00e9passent le niveau LinkedIn."
+      },
+      {
+        "handle": "Marc-AndreL",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 25000,
+        "reason": "Analyste qu\u00e9b\u00e9cois incontournable, couvre macro\u00e9conomie et march\u00e9s avec un ton direct, parfait pour les traders FR/CA."
+      },
+      {
+        "handle": "JulienBouchard",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Fondateur/CTO, couvre SaaS et startups tech au Qu\u00e9bec, bonnes opportunit\u00e9s de recrutement et insights march\u00e9 NA."
+      }
+    ],
+    "summary": "Focus Mistral AI et crypto on-chain en France pour la qualit\u00e9 technique, compl\u00e9t\u00e9 par une s\u00e9lection financi\u00e8re et tech au Qu\u00e9bec pour le angle march\u00e9 nord-am\u00e9ricain. Z\u00e9ro vendeuse de r\u00eaves, que des cerveaux."
   }
 ]
