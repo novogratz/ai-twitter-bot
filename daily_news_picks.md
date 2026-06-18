@@ -15208,3 +15208,16 @@ New task forces are
 They family doing this has a history of paying off California politicians, they’ve given over $431,000 to Gavin Newsom
   - https://x.com/WallStreetApes/status/2067413973763571955
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 49).
+- **@reutersbiz** (20 likes, score 7/10) — Federal Reserve Chair Kevin Warsh opened a new era, launching an ambitious reform agenda to reshape how the US central bank conducts and communicates monetary policy https://reut.rs/4vj7e4w
+  - https://x.com/ReutersBiz/status/2067414491898479068
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 22).
+- **@magavoice** (2567 likes, score 7/10) — BREAKING: Trump’s Labor Secretary puts a STOP to Businesses hiring Illegal Aliens over Americans:
+
+If a business is intentionally hiring an illegal worker over an American, we will hold them accountab
+  - https://x.com/MAGAVoice/status/2067314878986277106
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2723).
+- **@fulufoundation** (19 likes, score 7/10) — You spent $10,000+ on a motorcycle, and you can't properly change the oil without dealer-only software.
+
+Kawasaki's Ninja 7 Hybrid requires a clutch calibration after routine maintenance, but the tool
+  - https://x.com/FuluFoundation/status/2067283418866426262
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 19).
