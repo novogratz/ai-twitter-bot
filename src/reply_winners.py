@@ -64,20 +64,30 @@ def _mine_winners() -> list:
         return []
 
     out = []
+    drops = {"not_reply": 0, "not_own": 0, "low_likes": 0, "short_text": 0, "french": 0}
     for t in tweets:
         if not t.get("is_reply"):
+            drops["not_reply"] += 1
             continue
         if not _own(t.get("url") or ""):
+            drops["not_own"] += 1
             continue
         likes = int(t.get("likes") or 0)
         if likes < MIN_LIKES_FLOOR:
+            drops["low_likes"] += 1
             continue
         text = _clean(t.get("text") or "")
         if not text or len(text) < 20:
+            drops["short_text"] += 1
             continue
         if _looks_french(text):  # therapist voice is EN now
+            drops["french"] += 1
             continue
         out.append({"text": text, "likes": likes})
+    log.info(
+        f"[REPLY_WINNERS] scraped {len(tweets)} → kept {len(out)} "
+        f"(drops: {drops})."
+    )
 
     out.sort(key=lambda r: r["likes"], reverse=True)
     seen, dedup = set(), []
