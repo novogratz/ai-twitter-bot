@@ -15185,3 +15185,26 @@ How does skin color still matter more than family in 2026?
 The vulnerability had been flagged weeks earlier but fixes were still awaiting c
   - https://x.com/CoinDesk/status/2067372716626243952
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 79).
+- **@theinformation** (7 likes, score 7/10) — SpaceX stock price will endure after the IPO lockup expires, says @PWRL_ CEO Mike Dinsdale.
+
+"For me, the embedded value is Starlink. And just thinking about changing communications globally and all t
+  - https://x.com/theinformation/status/2067359264478212205
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 21).
+- **@unusual_whales** (382 likes, score 7/10) — BREAKING: Jim Cramer has said Intel, $INTC, is his top pick.
+  - https://x.com/unusual_whales/status/2067405201557041589
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 724).
+- **@investwithd** (125 likes, score 7/10) — New Fed Chair ANNOUNCES AI & Productivity Task Force — XRP & Crypto Could Enter a NEW Era 
+
+Fed Chair Kevin Warsh just unveiled a FULL structural overhaul of the Federal Reserve. 
+
+New task forces are
+  - https://x.com/InvestWithD/status/2067338036778766676
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 129).
+- **@business** (3 likes, score 7/10) — Channel will merge with Challenger’s Fidante unit to create an Australian fund manager spanning a range of investment strategies with around A$150 billion ($105 billion) in assets
+  - https://x.com/business/status/2067406135275962695
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 13).
+- **@wallstreetapes** (35 likes, score 7/10) — Billionaire family is trying to eliminate your ability to grow your own lemons
+
+They family doing this has a history of paying off California politicians, they’ve given over $431,000 to Gavin Newsom
+  - https://x.com/WallStreetApes/status/2067413973763571955
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 49).
