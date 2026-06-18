@@ -4,6 +4,21 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-18 round 2 — NEWS spacing precheck (no more burnt Sonnet
+> generations):** `_run_single_bot_cycle` in `src/bot.py` ran a full Décode
+> generation (Sonnet on a ~17K-char prompt, 30-55s) BEFORE the
+> `post_tweet` chokepoint's spacing check. When the bursting burst tried a
+> second Décode within ~20 min of a shipped one, the chokepoint refused
+> for `too soon since last post (need ~1297s gap)` and the whole
+> generation was wasted. Witnessed live 2026-06-18: two Décode cycles
+> (08:08 and 09:20) burned Sonnet generations only to be refused at the
+> chokepoint for spacing. Fix: `spacing_ok(POST, MIN_SECONDS_BETWEEN_POSTS)`
+> precheck at the top of the cycle — if the minimum gap isn't elapsed, no
+> LLM can save us, bail and return False (the burst loop already breaks
+> cleanly on False). Same family as the `hot_quote_bot` spacing precheck
+> (2026-06-07 PM-8). Guard:
+> `test_news_cycle_spacing_block_never_touches_llm`.
+
 > **2026-06-18 — reply_winners bank empty for 3 days (scroll depth fix):**
 > `[REPLY_WINNERS] no qualifying replies scraped — bank cleared` had fired
 > every 3h cycle since the bank shipped 2026-06-15. Live log proved the
