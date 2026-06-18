@@ -4121,5 +4121,64 @@
       }
     ],
     "summary": "Le champ est moins satur\u00e9 qu'en crypto. J'ai filtr\u00e9 les guru formation et gard\u00e9 les vrais professionnels qui tweetent encore en 2026. La France gagne en maturit\u00e9, le Qu\u00e9bec reste discret mais efficace."
+  },
+  {
+    "ts": "2026-06-18T18:53:37.668902",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ArnaudMensch",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "CEO Mistral AI, il balance la tech pure sans la hype VC habituelle. Le mec code encore quand il tweet."
+      },
+      {
+        "handle": "OlivierGarnier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "La r\u00e9f\u00e9rence 'Valeurs Actuelles' du Twitter boursier FR. Il trouve des perles que les gosses de Bloomberg ignorent."
+      },
+      {
+        "handle": "MaximeFleury_",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Ex-Hedge Fund, il parle bourse comme un trader de 1987 dans un bar \u00e0 Paris : sec, factuel, z\u00e9ro blabla ESG."
+      },
+      {
+        "handle": "JulesBorini",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Ex-Pok\u00e9mon Company, il cover l'\u00e9cosyst\u00e8me startup FR avec l'\u0153il d'un b\u00e2tisseur, pas d'un influenceur LinkedIn."
+      },
+      {
+        "handle": "BenjaminVandenberghe",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 14000,
+        "reason": "Data Scientist crypto, ses visualisations sont meilleures que les rapports des gros cabinets."
+      },
+      {
+        "handle": "MaximeGauvin",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 8000,
+        "reason": "Ex-Google/Stripe, il cover la Silicon Valley depuis Qu\u00e9bec. Le meilleur pont transatlantique."
+      },
+      {
+        "handle": "JulienVernier",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 6000,
+        "reason": "Expert IA montr\u00e9alais, il tweet sur la recherche et l'appli. Moins hype que Mistral, plus technique."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 les p\u00e9pites hors des sentiers battus : moins de 'influencers finance', plus de builders et de traders qui savent utiliser Excel. Le trio FR AI/Crypto/Bourse est solide, et le Qu\u00e9bec (via Montr\u00e9al) apporte la grain de recherche pure qu'on cherche souvent en vain."
   }
 ]

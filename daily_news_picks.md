@@ -15551,3 +15551,141 @@ Elon Musk warned about the coming AI energy crisis long before most people under
 “I can’t emphasize enough - we need more electricity. Howev
   - https://x.com/AmericaPartyX/status/2067648498284073413
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 12).
+- **@openai** (1766 likes, score 9/10) — GPT-5.5 Instant is now on par with our frontier Thinking models for health-related questions.
+
+Every week, more than 230 million people turn to ChatGPT with health and wellness questions, and GPT-5.5
+  - https://x.com/OpenAI/status/2067672740539306261
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 2016).
+- **@sajwani** (43 likes, score 9/10) — Last November, Starcloud (@Starcloud_Inc1) made history by launching a satellite with an NVIDIA H100 into orbit. This was the first time a powerful GPU has been operated in space.
+
+Very inspiring @Phi
+  - https://x.com/Sajwani/status/2067685314588811450
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 59).
+- **@globalstats11** (748 likes, score 9/10) — The Trillion Dollar Club 
+
+1.  NVIDIA - $5.1 Trillion
+2.  Alphabet - $4.5 Trillion
+3.  Apple - $4.4 Trillion
+4.  Microsoft - $2.9 Trillion
+5.  SpaceX - $2.8 Trillion
+6.  Amazon - $2.7 Trillion
+7.  TSM
+  - https://x.com/Globalstats11/status/2067474407673741515
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 796).
+- **@teslarati** (34 likes, score 8/10) — Did Elon just hint that Banish will be here in three months?
+
+That last sentence would indicate yes. I think it's more about guiding Grok like we would an Uber driver, but maybe Banish is close, consi
+  - https://x.com/Teslarati/status/2067642249681211868
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 42).
+- **@hyde_ai3** (22 likes, score 8/10) — Anthropic May Have Just Changed Finance Forever
+
+What if I told you that the same financial work investment banks charge thousands of dollars for could soon be automated by AI?
+
+We're talking about:
+  - https://x.com/Hyde_ai3/status/2067649501746311627
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 26).
+- **@heyshrutimishra** (301 likes, score 8/10) — Dario asked governments to have an AI kill-switch. Then they used it on him.
+
+Three days after launching their most capable model, the US government sent Anthropic a letter at 5:21pm on a Friday. The
+  - https://x.com/heyshrutimishra/status/2067294554529952072
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 361).
+- **@xfreeze** (0 likes, score 7/10) — Elon warned about the AI energy bottleneck before most people even understood it was coming
+
+“I can’t emphasize enough - we need more electricity. However much electricity you think you need, it’s mor
+  - https://x.com/XFreeze/status/2067636957883330942
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 120).
+- **@marionawfal** (20 likes, score 7/10) — Grok Build shipped 177 improvements in one month.
+
+That is a lot of “we heard you.”
+
+If you tried the Grok Build beta at launch and thought, “Cute, but early,” maybe check the changelog again.
+
+Bugs f
+  - https://x.com/MarioNawfal/status/2067693832481685803
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 38).
+- **@mtslive** (86 likes, score 7/10) — SITUATION ANALYSIS: New Model From Z AI?
+
+Today, Chinese startup Z AI just released GLM-5.2, an open-source model closer to the frontier than any other in history. I know you’re probably used to heari
+  - https://x.com/MTSlive/status/2067267859705991485
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 98).
+- **@business** (45 likes, score 7/10) — Could a model built by Anthropic cause civilizational collapse? Anthropic CEO Dario Amodei and @EmilyChangTV discuss on The Circuit his own estimate of a 10% to 25% risk and the need for global checks
+  - https://x.com/business/status/2067645454884409581
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 67).
+- **@cypherpunk** (50 likes, score 7/10) — .@tushar_jain on Zcash:
+
+"AI is going to widen inequality, which drives a political movement for wealth seizure. Bitcoin won't protect you, those balances are public.
+
+So while I was bearish before, w
+  - https://x.com/cypherpunk/status/2067685257260769443
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 60).
+- **@captkylepatriot** (16 likes, score 7/10) — Ray Kurzweil Predicts AI Will Change Humanity Completely by 2030
+
+Age regression 
+
+Technologies Released
+
+Folks we've talked about all of these technologies that we knew would be released for many yea
+  - https://x.com/CaptKylePatriot/status/2067649965053095994
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 22).
+- **@martinezonchain** (8 likes, score 7/10) — Easy reacts to Nvidia building robots to train themselves using AI 
+
+"AI is basically reaching a point of self sufficiency which I think is HUGE! If AI is able to write its own code develop it's own p
+  - https://x.com/MartinezOnChain/status/2067651664476037615
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 12).
+- **@novaxcode** (7 likes, score 8/10) — Did you realise what just happened?
+
+Google paid $2.7B in 2024 to bring Noam Shazeer back as Gemini co-lead.  
+
+Less than 2 years later… he’s joining OpenAI.
+
+OpenAI is winning the AI race.
+Gemini is
+  - https://x.com/NovaXCode/status/2067667769899032972
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 25).
+- **@coreweave** (107 likes, score 9/10) — 289 tokens per second.
+
+That's how fast CoreWeave Serverless Inference serves Kimi K2.7 Code. Per @ArtificialAnlys, we serve it faster than any other provider at the best price-performance.
+
+How we di
+  - https://x.com/CoreWeave/status/2067613387056709982
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 113).
+- **@nikkei** (765 likes, score 9/10) — ChatGPT's user base reaches 1.1 billion, growth slowing even at No. 1 spot – Claude surges 5.5-fold
+https://nikkei.com/article/DGXZQOGN182GL0Y6A610C2000000/?n_cid=SNSTW005&n_tw=1781769866…
+
+Google and
+  - https://x.com/nikkei/status/2067566781984653803
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 847).
+- **@yuno09081** (190 likes, score 8/10) — 大急騰... テンバガーは疑われながら上がる 
+2012年、ビットコインを買った人――億万長者 
+2018年、テスラを買った人――億万長者 
+
+2022年、NVIDIAを買った人――億万長者
+
+ 2023年、Palantirを買った人――億万長
+
+者 2025年、SanDiskに乗った人――億万
+
+長者 そして― 2026年 次にその席に座る
+のは、誰だ
+  - https://x.com/yuno09081/status/2067532162484879593
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 216).
+- **@mollysoshea** (41 likes, score 8/10) — NEW: Harvey Co-Founder + Head of Applied Research on the *Token Reckoning*
+
+Valued at $11B, @harvey is on a mission to win the entire legal category, competing head-on against the trillion-dollar labs
+  - https://x.com/MollySOShea/status/2067614998839628133
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 49).
+- **@chopsyturvey** (482 likes, score 7/10) — The first trillionaire in human history
+
+- Elon Musk
+- Born in South Africa
+- Bullied relentlessly as a kid
+- Immigrated to North America
+- Arrived with a backpack and a dream
+- Built Zip2 with his br
+  - https://x.com/Chopsyturvey/status/2067640579614535866
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 518).
+- **@coreweave** (11 likes, score 7/10) — Take back control of production. CoreWeave delivers predictable AI inference at scale with the clarity you need to diagnose latency and maintain SLA commitments.
+
+Sustained performance. Accelerated in
+  - https://x.com/CoreWeave/status/2067698869442679006
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 11).

@@ -450,7 +450,13 @@
     "mickael_benaya",
     "antoine_gouel",
     "julien_michon",
-    "maximemuller"
+    "maximemuller",
+    "ArnaudMensch",
+    "OlivierGarnier",
+    "MaximeFleury_",
+    "JulesBorini",
+    "MaximeGauvin",
+    "JulienVernier"
   ],
   "en": [
     "blablacar",
@@ -516,7 +522,8 @@
     "0xMarioNawfal",
     "Rahul",
     "bg2clips",
-    "Anthropic"
+    "Anthropic",
+    "Shruti"
   ],
   "history": [
     {
@@ -3092,6 +3099,41 @@
     {
       "lang": "fr",
       "handle": "maximemuller",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Shruti",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArnaudMensch",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierGarnier",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeFleury_",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesBorini",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeGauvin",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienVernier",
       "added": "2026-06-18"
     }
   ]
