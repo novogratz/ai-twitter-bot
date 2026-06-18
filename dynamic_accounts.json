@@ -634,7 +634,17 @@
     "VillainVC",
     "HugoBourges",
     "MarcLaventure",
-    "BenoitBenoit"
+    "BenoitBenoit",
+    "RomainWagner",
+    "YannickBouchard",
+    "JulienVernay",
+    "PierreDassault",
+    "RochE",
+    "CryptoBoulanger",
+    "LionelS",
+    "ThibaultGautier",
+    "AntoineLemoine",
+    "VinzDemange"
   ],
   "en": [
     "blablacar",
@@ -860,7 +870,9 @@
     "amit",
     "Shruti",
     "MARMOT",
-    "David"
+    "David",
+    "Glider",
+    "Kpler"
   ],
   "history": [
     {
@@ -5156,6 +5168,66 @@
     {
       "lang": "fr",
       "handle": "BenoitBenoit",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Glider",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainWagner",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "YannickBouchard",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienVernay",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDassault",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Kpler",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "RochE",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBoulanger",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelS",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultGautier",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineLemoine",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "VinzDemange",
       "added": "2026-06-18"
     }
   ]

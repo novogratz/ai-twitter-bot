@@ -5819,5 +5819,95 @@
       }
     ],
     "summary": "J'ai chass\u00e9 les vrais pros dans les trois r\u00e9gions : Mistral et Boris Bouige en France dominent par la qualit\u00e9, VillainVC et Marc Laventure portent la flamque qu\u00e9b\u00e9coise avec une arrogance n\u00e9cessaire."
+  },
+  {
+    "ts": "2026-06-18T08:07:16.775269",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RomainWagner",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 180000,
+        "reason": "L'ex-Avonex (ex-Comerzo). Il couvre les actions FR avec un angle financier solide, pas du 'sentiment retail'. C'est s\u00e9rieux, mais il ose des punchlines."
+      },
+      {
+        "handle": "YannickBouchard",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 32000,
+        "reason": "Journaliste crypto \u00e0 L'Actualit\u00e9. Il sort les articles de fond que Twitter FR ignore, et tweet les perles en temps r\u00e9el."
+      },
+      {
+        "handle": "JulienVernay",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Ex-Banqo, actuel VC. Il tweet sur la SaaS et la Fintech avec un regard 'product' qui fait mal aux vendeurs de dreams."
+      },
+      {
+        "handle": "PierreDassault",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Founders FR aux USA qui tweetent en FR sur le SaaS/B2B. Moins d'IA pure, mais plus de r\u00e9alisme business. C'est du concret, pas du buzz."
+      }
+    ],
+    "summary": "L'IA fran\u00e7aise est port\u00e9e par des chercheurs fondateurs (Mensah, Dutour) qui mixent technique et business. La crypto FR est moins 'influencer' et plus 'trader actif' (Pommier, Dassault). Le Qu\u00e9bec offre une niche pr\u00e9cieuse avec des analystes locaux qui traduisent la complexit\u00e9 US en FR."
+  },
+  {
+    "ts": "2026-06-18T11:35:23.864891",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RochE",
+        "region": "usa",
+        "niche": "finance",
+        "followers": 68000,
+        "reason": "Bas\u00e9 \u00e0 NYC mais francophone. Il tweet sur l'immobilier et les march\u00e9s avec une lucidit\u00e9 froide qui fait mal aux portfolios des day-traders."
+      },
+      {
+        "handle": "CryptoBoulanger",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "L'ancien trader qui a tout laiss\u00e9 tomber pour \u00eatre libre \u00e0 35 ans. Son compte est un manuel de survie pour les perdants qui veulent arr\u00eater de perdre."
+      },
+      {
+        "handle": "LionelS",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 31000,
+        "reason": "Journaliste crypto qui a surv\u00e9cu \u00e0 trois cycles de boom/bust sans vendre son \u00e2me \u00e0 une exchange. Le genre de type qui tweete avant de dormir."
+      },
+      {
+        "handle": "ThibaultGautier",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 24000,
+        "reason": "G\u00e9rant de portefeuille qu\u00e9b\u00e9cois qui explique la bourse sans le jargon chiant des t\u00e9l\u00e9trancheurs parisiens. C'est calme, c'est pr\u00e9cis."
+      },
+      {
+        "handle": "AntoineLemoine",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Tech Lead AI chez une scaleup parisienne. Il tweet sur le vrai boulot : le code, l'infra, et les erreurs de prod \u00e0 3h du matin."
+      },
+      {
+        "handle": "VinzDemange",
+        "region": "france",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Product Manager qui explique la tech aux humains. Ses threads sur les fondamentaux du produit font plus de bien que 10 analystes en costard."
+      }
+    ],
+    "summary": "J'ai mis\u00e9 sur les fondateurs et les praticiens plut\u00f4t que sur les influenceurs 'motivation'. Mistral et Delaunay dominent l'IA FR, tandis que les profils finance sont plus nich\u00e9s mais plus qualitatifs : pas de vente de r\u00eave, juste du m\u00e9tier."
   }
 ]
