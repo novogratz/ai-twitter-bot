@@ -608,7 +608,14 @@
     "PierrePerron",
     "JulianMellado",
     "CryptoNuit",
-    "TanguySart"
+    "TanguySart",
+    "CathieDWood",
+    "Balaji",
+    "MarcAndreessen",
+    "LynAldenContact",
+    "StacyMits",
+    "ThibautCazala",
+    "GustavoMuller"
   ],
   "en": [
     "blablacar",
@@ -828,7 +835,10 @@
     "Solana",
     "HeyGen",
     "CharlieIntel",
-    "Midjourney"
+    "Midjourney",
+    "Lucky",
+    "Aster",
+    "amit"
   ],
   "history": [
     {
@@ -4964,6 +4974,56 @@
     {
       "lang": "fr",
       "handle": "TanguySart",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Lucky",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Aster",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "amit",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "CathieDWood",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "Balaji",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcAndreessen",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "LynAldenContact",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "StacyMits",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautCazala",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "GustavoMuller",
       "added": "2026-06-17"
     }
   ]
