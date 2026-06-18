@@ -2765,3 +2765,36 @@ def test_generate_quote_raises_deliberate_skip_on_skip_rationale(monkeypatch):
     except cg.DeliberateSkip:
         raised = True
     assert raised, "_generate_quote must raise DeliberateSkip on SKIP-or-rationale"
+
+
+def test_news_cycle_spacing_block_never_touches_llm(monkeypatch, tmp_path):
+    """When the post chokepoint would refuse for spacing, the NEWS cycle must
+    bail BEFORE generate_tweet — a Décode Sonnet generation is ~30-55s on a
+    17K-char prompt; burning it because spacing won't elapse for another
+    20 min is the same family as the hot_quote_bot precheck (2026-06-07).
+    Witnessed 2026-06-18: two NEWS cycles in one morning ran the full
+    generation then got refused at the chokepoint for too-soon spacing.
+    """
+    from src import bot as bot_mod
+    from src import action_guard as ag
+
+    # Pin elapsed-since-last-post to 60s so MIN_SECONDS_BETWEEN_POSTS
+    # (75 min default) is guaranteed not satisfied.
+    monkeypatch.setattr(ag, "seconds_since_last", lambda action: 60.0)
+
+    # News + hotake caps both available so the only thing that should bail
+    # the cycle is the spacing precheck.
+    monkeypatch.setattr(bot_mod, "_get_counters", lambda: (0, 0))
+    monkeypatch.setattr(bot_mod, "_live_news_cap", lambda: 20)
+    monkeypatch.setattr(bot_mod, "_live_hotake_cap", lambda: 20)
+
+    def boom(*a, **k):
+        raise AssertionError("LLM/Safari must not be touched while spacing-blocked")
+
+    monkeypatch.setattr(bot_mod, "generate_tweet", boom)
+    monkeypatch.setattr(bot_mod, "generate_hotake", boom)
+    monkeypatch.setattr(bot_mod, "post_tweet", boom)
+    monkeypatch.setattr(bot_mod, "post_tweet_with_gif", boom)
+
+    shipped = bot_mod._run_single_bot_cycle()
+    assert shipped is False, "spacing-blocked cycle must return False"

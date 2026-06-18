@@ -362,6 +362,20 @@ def _run_single_bot_cycle() -> bool:
         log.info("All daily post caps full. Skipping.")
         return False
 
+    # Pre-flight spacing check (2026-06-18): a Décode generation runs Sonnet
+    # on a ~17K-char prompt for 30-55s. If MIN_SECONDS_BETWEEN_POSTS hasn't
+    # elapsed since the last original, the post chokepoint will reject the
+    # finished draft for spacing — burning the whole generation. Same
+    # family as hot_quote_bot's spacing precheck (2026-06-07).
+    from .action_guard import spacing_ok as _spacing_ok, POST as _POST_ACTION
+    from .config import MIN_SECONDS_BETWEEN_POSTS as _MIN_POST_GAP
+    if not _spacing_ok(_POST_ACTION, _MIN_POST_GAP):
+        log.info(
+            f"[NEWS] spacing precheck — too soon since last post (need >= {_MIN_POST_GAP}s). "
+            f"Skipping cycle before LLM call."
+        )
+        return False
+
     tweet_source = "news" if can_news else "hotake"
     # Initialize BEFORE the branch (2026-06-08 bug): `tweet` was only set
     # inside `if can_news:`, so when the news cap is full (can_news=False,
