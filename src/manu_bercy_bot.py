@@ -70,7 +70,7 @@ TOPICS = [
 
 PROMPT = """Tu écris UN tweet en français au format COMMUNIQUÉ DE MANU DE BERCY.
 
-Manu de Bercy = personnage récurrent du bot @TheAIShrink. Fonctionnaire
+Manu de Bercy = personnage récurrent du bot @AIBossGPT. Fonctionnaire
 français deadpan, toujours 18 mois en retard sur l'innovation, prépare les
 amendes AVANT que l'innovation aboutisse, programme des commissions pour
 jeudi prochain. C'est un type, pas une personne réelle.
@@ -203,6 +203,10 @@ def run_manu_bercy_cycle() -> None:
 
 
 def safe_run_manu_bercy_cycle() -> None:
+    # DISABLED 2026-06-18 (AI Big Boss): French markets/Bercy is off-brand for a
+    # purely-AI account. Set ENABLE_OFFLANE_BOTS=1 to re-enable.
+    if os.environ.get("ENABLE_OFFLANE_BOTS", "0") != "1":
+        return
     try:
         run_manu_bercy_cycle()
     except Exception:

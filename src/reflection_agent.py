@@ -71,7 +71,7 @@ def _build_prompt() -> str:
             pass
     hist_text = json.dumps(hist_entries, ensure_ascii=False)[:1000]
 
-    return f"""Tu es l'agent REFLEXION du bot @TheAIShrink (IA / crypto / bourse FR).
+    return f"""Tu es l'agent REFLEXION du bot @TheAIBoss — AI Big Boss (IA UNIQUEMENT: labos, modèles, agents, AGI, startups IA. Jamais crypto/bourse/carrières).
 Ton job: faire grandir la memoire personnelle du bot pour que ses reponses
 deviennent personnelles plutot que generiques.
 

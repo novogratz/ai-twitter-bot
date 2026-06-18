@@ -113,11 +113,13 @@ def _read_supplemental_state() -> str:
     return "\n\n".join(parts) if parts else "(no supplemental state)"
 
 
-META_PROMPT = """Tu es l'agent META-STRATEGIE de @TheAIShrink.
+META_PROMPT = """Tu es l'agent META-STRATEGIE de @AIBossGPT.
 
 Ton job: décider les CAPS QUOTIDIENS et la FOCUS THEMATIQUE pour les
 4 prochaines heures, en lisant l'historique d'activité + l'état actuel
-+ ce qui se passe dans le monde IA / crypto / bourse.
++ ce qui se passe dans le monde de l'IA. SUJET UNIQUE = IA (AI Big Boss):
+labos, modèles, agents, AGI, startups IA, compute IA. JAMAIS crypto/bourse/
+carrières/tech générique.
 
 📅 Date: {today_date}
 
@@ -134,8 +136,9 @@ REGLES POUR TES DECISIONS:
    des sujets et les reposts; ne transforme pas les replies en spam.
 3. Si l'activité est saine (>= 500) ET suppression non flaggée →
    maintiens ou monte.
-4. Topic focus: choisis 3 sujets HOT en ce moment dans IA/crypto/bourse
-   (Mistral, Anthropic, BTC ETF, etc.). Tu peux WebSearch.
+4. Topic focus: choisis 3 sujets IA HOT en ce moment (nouveau modèle, agents,
+   AGI, startup IA, outil IA — ex: OpenAI, Anthropic, Gemini, agents). Tu peux
+   WebSearch. UNIQUEMENT de l'IA, jamais crypto/bourse.
 
 OUTPUT — UNIQUEMENT un JSON valide, ce schéma exact:
 {{

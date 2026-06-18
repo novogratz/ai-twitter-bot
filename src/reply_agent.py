@@ -20,7 +20,7 @@ TARGET_ACCOUNTS = [
     "sama", "DarioAmodei", "elonmusk", "karpathy", "JensenHuang",
     "satyanadella", "zuck", "demishassabis",
     # Major AI company / product accounts
-    "OpenAI", "AnthropicAI", "GoogleDeepMind", "xai", "MetaAI", "MicrosoftAI",
+    "OpenAI", "AnthropicAI", "GoogleDeepMind", "xai", "AIatMeta", "mustafasuleyman",
     "nvidia", "GoogleAI", "MistralAI", "perplexity_ai", "cursor_ai",
     "OpenAIDevs", "huggingface",
     # Big AI news / commentators
