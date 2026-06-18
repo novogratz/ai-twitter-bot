@@ -61,11 +61,11 @@ DAILY_PICKS_FILE = os.path.join(_PROJECT_ROOT, "daily_news_picks.md")
 MAX_RETWEETS_PER_DAY = int(os.environ.get("MAX_RETWEETS_PER_DAY", "15"))
 RETWEETS_PER_CYCLE = max(1, int(os.environ.get("RETWEETS_PER_CYCLE", "3")))
 
-# Accounts we REPOST IN FULL (operator mandate 2026-06-04): every fresh ≤48h
-# post, NO scoring/niche gate. @TheBTCTherapist is our model account — we
-# amplify all of his posts (The AI Therapist riding The Bitcoin Therapist).
+# Accounts we REPOST IN FULL: every fresh ≤48h post, NO scoring/niche gate.
+# Empty by default for The AI Boss — no model account to blanket-amplify.
+# Set MUST_REPOST_HANDLES in .env to opt back in.
 MUST_REPOST_HANDLES = [h.strip() for h in os.environ.get(
-    "MUST_REPOST_HANDLES", "TheBTCTherapist").split(",") if h.strip()]
+    "MUST_REPOST_HANDLES", "").split(",") if h.strip()]
 MUST_REPOST_PER_CYCLE = int(os.environ.get("MUST_REPOST_PER_CYCLE", "5"))
 
 # Min likes — lowered so breaking space/AI news gets in before it goes viral.
@@ -81,36 +81,32 @@ _OWN_HANDLE = BOT_HANDLE.lower()
 # everything, the trusted-handle whitelist alone wasn't enough to scope us
 # to AI / crypto / bourse. Match is substring + case-insensitive.
 NICHE_KEYWORDS = (
-    # AI
+    # Core AI
     "ai", "a.i.", "artificial intelligence", "machine learning", "ml ",
-    "openai", "anthropic", "claude", "chatgpt", "gpt", "gemini", "llama",
-    "mistral", "llm", "nvidia", "nvda", "deepmind", "agi",
-    "datacenter", "data center", "gpu", "tpu", "chip", "semiconductor",
-    "compute", "compute cluster", "power demand", "power generation",
-    "electricity", "grid", "nuclear", "megawatt", "megawatts", "mw ",
-    "gigawatt", "gigawatts", "gw ", "energy demand", "ai infra",
-    "ai infrastructure", "hpc", "colo", "colocation", "coreweave",
-    "crwv", "crusoe", "lambda labs", "applied digital", "apld",
-    "iren", "hugging face", "huggingface", "perplexity", "copilot",
-    "robotics", "humanoid", "agentic", "ai agent", "ai agents",
-    "frontier model", "frontier tech", "reasoning model",
-    # Space keywords REMOVED 2026-06-05 (monetization mandate: 100%
-    # finance/markets/AI lane — "the Mars/space repost was off-brand").
-    # SpaceX kept ONLY as a markets megastory ticker, not a space topic.
-    "spacex", "ipo",
-    # Investment / crypto
-    "bitcoin", "btc", "ethereum", "eth", "crypto", "stablecoin",
-    "usdc", "coinbase", "blockchain", "defi", "spot etf", "halving",
-    "saylor", "mstr",
-    "stock", "shares", "nasdaq", "s&p", "s&p 500",
-    "ipo", "earnings", "guidance", "valuation",
-    "merger", "acquisition", "buyout",
-    "tesla", "apple", "google", "alphabet", "meta", "amazon",
-    "microsoft", "msft", "aapl", "googl", "tsla", "amzn",
-    "palantir", "pltr", "rklb", "asts", "lunr",
-    "billion", "trillion", "milliard",
-    "asymmetric", "private markets",
-    "investissement", "trading",
+    "agi", "asi", "superintelligence", "neural", "deep learning",
+    # Labs
+    "openai", "anthropic", "google deepmind", "deepmind", "xai", "mistral",
+    "meta ai", "deepseek", "hugging face", "huggingface", "perplexity",
+    "stability ai", "cohere", "scale ai",
+    # Models
+    "gpt", "chatgpt", "gpt-5", "gpt-4", "claude", "gemini", "grok", "llama",
+    "o1", "o3", "sora", "midjourney", "stable diffusion", "frontier model",
+    "reasoning model", "foundation model", "llm", "multimodal",
+    # Agents / tools / products
+    "ai agent", "ai agents", "agentic", "copilot", "cursor", "windsurf",
+    "replit", "devin", "ai assistant", "ai tool", "ai app", "ai coding",
+    "prompt", "fine-tune", "fine tune", "rag", "inference", "context window",
+    # People
+    "altman", "sam altman", "dario amodei", "demis hassabis", "musk",
+    "karpathy", "ilya", "sutskever", "lecun", "jensen huang",
+    # Compute / money (AI angle)
+    "nvidia", "nvda", "gpu", "tpu", "h100", "h200", "blackwell", "cuda",
+    "datacenter", "data center", "compute", "ai capex", "ai infrastructure",
+    "coreweave", "ai chip", "ai bubble", "ai trade", "ai startup",
+    "ai funding", "ai valuation", "ai race",
+    # Embodied / applied / safety
+    "robot", "robots", "robotics", "humanoid", "self-driving", "autonomous",
+    "ai safety", "ai alignment", "ai regulation", "ai doom", "ai risk",
 )
 
 # Off-topic blocklist — common Reuters/Bloomberg/AP topics that have
@@ -125,6 +121,11 @@ OFF_TOPIC_KEYWORDS = (
     "wildfire", "flood", "missing person",
     "royal wedding", "queen elizabeth", "king charles",
     "horoscope", "zodiac", "recipe", "cooking",
+    # The AI Boss never touches politics, religion, or tragedy.
+    "election", "president", "congress", "senate", "republican",
+    "democrat", "abortion", "immigration", "vaccine", "shooting",
+    "war ", "gaza", "ukraine", "church", "mosque", "synagogue",
+    "religion", "god ", "funeral", "passed away", "rip ",
 )
 
 # Shill / pump-and-dump blocklist — tweets that match these patterns are
@@ -173,30 +174,19 @@ FEED_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FEED_REPOST_MIN_ENGAGEMENT", "5
 FEED_SEARCHES_PER_CYCLE = int(os.environ.get("RETWEET_FEED_SEARCHES_PER_CYCLE", "20"))
 
 FEED_REPOST_SEARCH_QUERIES = [
-    # English-first, AI-first repost discovery (2026-06-03: back to EN).
-    "\"new model\" OR \"introducing\" OpenAI OR Anthropic OR Google lang:en min_faves:200",
+    # AI-only repost discovery (2026-06-18: The AI Big Boss). Be everywhere AI.
+    "\"new model\" OR \"introducing\" OpenAI OR Anthropic OR Google OR xAI lang:en min_faves:200",
     "GPT OR Claude OR Gemini OR Grok OR Llama \"released\" OR \"launches\" lang:en min_faves:100",
-    "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:200",
-    "\"reasoning model\" OR \"frontier model\" OR \"o3\" OR \"o4\" lang:en min_faves:100",
-    "Nvidia OR GPU OR \"compute cluster\" OR semiconductor lang:en min_faves:200",
-    "\"AI agents\" OR \"agentic AI\" OR \"multi-agent\" lang:en min_faves:100",
-    "\"AI datacenter\" OR \"power demand\" OR megawatt OR gigawatt lang:en min_faves:100",
-    "robotics OR \"humanoid robot\" OR \"Figure\" OR \"Boston Dynamics\" OR \"Tesla Optimus\" lang:en min_faves:100",
-    "CoreWeave OR CRWV OR \"AI capex\" OR \"AI infrastructure\" lang:en min_faves:50",
-    # AI-ONLY (2026-06-03 rebrand → AI Decoder). No space, no generic markets.
+    "OpenAI OR Anthropic OR xAI OR \"GPT-5\" OR DeepSeek lang:en min_faves:200",
+    "\"AI agent\" OR \"agentic\" OR \"AI agents\" OR Cursor OR Devin lang:en min_faves:100",
+    "\"reasoning model\" OR \"frontier model\" OR benchmark OR \"o3\" lang:en min_faves:100",
     "AGI OR superintelligence OR \"AI safety\" OR \"AI alignment\" lang:en min_faves:100",
-    "Mistral OR \"Hugging Face\" OR \"open weights\" OR \"open source AI\" lang:en min_faves:50",
-    "\"AI chip\" OR TPU OR Broadcom OR AMD OR \"inference\" lang:en min_faves:100",
-    "OpenAI OR Anthropic funding OR \"AI round\" OR \"AI valuation\" lang:en min_faves:100",
-    # AI money angle (AI stocks only — the lens, not generic markets)
-    "Nvidia earnings OR \"Nvidia\" OR \"AI bubble\" OR \"AI trade\" lang:en min_faves:300",
-    "Palantir OR PLTR OR \"AI stock\" OR \"AI capex\" lang:en min_faves:200",
-    # Investment / stocks / markets (~30%)
-    "\"S&P 500\" OR Nasdaq OR \"tech earnings\" OR \"stock market\" lang:en min_faves:300",
-    "Fed OR CPI OR \"rate cut\" OR \"interest rates\" lang:en min_faves:300",
-    # Bitcoin / crypto (bearish angle on quote, plain RT for big moves)
-    "Bitcoin OR BTC OR \"BTC ETF\" OR crypto lang:en min_faves:500",
-    "\"Bitcoin crash\" OR \"crypto crash\" OR \"BTC dump\" lang:en min_faves:200",
+    "Nvidia OR GPU OR \"AI datacenter\" OR \"AI capex\" OR Blackwell lang:en min_faves:200",
+    "\"AI bubble\" OR \"AI trade\" OR \"AI race\" OR \"AI hype\" lang:en min_faves:200",
+    "robotics OR \"humanoid robot\" OR Figure OR \"Tesla Optimus\" lang:en min_faves:150",
+    "Sora OR Midjourney OR \"AI video\" OR \"AI image\" OR \"AI music\" lang:en min_faves:200",
+    "sama OR \"Sam Altman\" OR \"Dario Amodei\" OR \"Demis Hassabis\" lang:en min_faves:300",
+    "\"AI will\" OR \"AI is\" OR \"this AI\" lang:en min_faves:1000",
 ]
 
 
@@ -689,7 +679,7 @@ def _append_to_daily_picks(tweet: dict, score: int, why: str):
 
 # --- main cycle ---
 
-_TROLL_QUOTE_PROMPT = """You are @TheAIShrink. Sharp analytical voice on AI +
+_TROLL_QUOTE_PROMPT = """You are @AIBossGPT. Sharp analytical voice on AI +
 Crypto + Markets. When you quote-tweet, you act like it's YOUR own news —
 same gravitas, same precision, same authority as The Decode.
 
@@ -907,8 +897,8 @@ def run_retweet_cycle():
     retweeted = _load_retweeted()
     replied = load_replied()
 
-    # ── MUST-REPOST pass (operator mandate): amplify EVERY fresh post from
-    # MUST_REPOST_HANDLES (e.g. @TheBTCTherapist) with NO scoring/niche gate.
+    # ── MUST-REPOST pass: amplify EVERY fresh post from MUST_REPOST_HANDLES
+    # (empty by default) with NO scoring/niche gate.
     mr_posted = 0
     for mr_handle in MUST_REPOST_HANDLES:
         if mr_posted >= MUST_REPOST_PER_CYCLE or _today_count() >= cap:
@@ -926,9 +916,9 @@ def run_retweet_cycle():
                 continue
             if _handle_from_url(url) == _OWN_HANDLE:
                 continue
-            # NOTE: must-repost bypasses the 48h freshness rule (operator
-            # mandate 2026-06-04): we repost ALL of @TheBTCTherapist's posts
-            # regardless of age. Dedup still prevents reposting the same one.
+            # NOTE: must-repost bypasses the 48h freshness rule for the
+            # explicitly opted-in MUST_REPOST_HANDLES (empty by default).
+            # Dedup still prevents reposting the same one.
             retweeted.add(url)
             _save_retweeted(retweeted)
             try:

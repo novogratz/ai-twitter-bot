@@ -25,50 +25,46 @@ SIGNAL_FILE = os.path.join(_PROJECT_ROOT, "external_signal.json")
 STATE_FILE = os.path.join(_PROJECT_ROOT, "hot_quote_state.json")
 QUOTED_FILE = os.path.join(_PROJECT_ROOT, "quoted_tweets.json")
 
-# AI/Space/Investment keywords — used to filter signal items
+# AI keywords — used to filter signal items (AI Big Boss: AI only)
 _NICHE_RE = re.compile(
-    r"\b(AI|GPU|nvidia|nvda|openai|anthropic|spacex|rocket|satellite|RKLB|ASTS|LUNR|SPCE|"
-    r"LMT|PLTR|palantir|quantum|bitcoin|BTC|crypto|ETF|S&P|nasdaq|stock|invest|datacenter|"
-    r"robotics|starship|starlink|drone|hypersonic|autonomous|AGI|LLM|model|inference|compute)\b",
+    r"\b(ai|a\.i\.|artificial intelligence|agi|llm|openai|anthropic|deepmind|"
+    r"xai|mistral|deepseek|gpt|chatgpt|claude|gemini|grok|llama|nvidia|gpu|"
+    r"ai agent|agentic|copilot|cursor|perplexity|reasoning model|benchmark|"
+    r"robot|robotics|humanoid|ai safety|ai startup|ai model|neural|sora|"
+    r"machine learning|datacenter|compute|inference)\b",
     re.IGNORECASE,
 )
 
 _SKIP_RE = re.compile(r"\bskip\b", re.IGNORECASE)
 
 HOT_QUOTE_PROMPT = """\
-You are @TheAIShrink — The AI & Space Decoder. Quant analyst, sharp wit,
-zero fluff. Your audience: retail investors, tech nerds, space fans who want
-alpha before mainstream media catches on.
+You are AI Big Boss (@TheAIBoss) — the account people follow to understand
+what actually matters in AI. Confident, curious, fast, optimistic, easy
+language, never corporate, never cringe.
 
-You will QUOTE-TWEET this tweet about a hot topic in AI / Space / Investment:
+You will QUOTE-TWEET this hot AI tweet:
 
 @{author}: "{tweet_text}"
 
 TOPIC CONTEXT: {topic_hint}
 
-Write ONE punchy quote in ENGLISH. The goal: make people screenshot it,
-retweet it, and think "this account sees what others don't."
+Write ONE quote in ENGLISH that adds insight, analysis, a prediction, or
+context — explain what it means or what everyone's missing. Make AI make sense.
 
-SCOPE: AI ONLY (you are The AI Decoder). Labs/models/agents, compute/GPU/
-datacenters/AI-power, embodied AI, and the AI money angle. If the topic is
-NOT about AI → output SKIP.
+SCOPE: AI only — labs & models, agents & tools, AI research/benchmarks, AGI,
+AI startups, AI compute, embodied AI. Off scope (careers, crypto, generic
+tech, politics) -> SKIP.
 
 VOICE:
-- Lead with a hard number, a named AI company/model, or a brutal observation.
-- Sharp angle mandatory: name the winner, the loser, the implication for a
-  specific AI name or the AI trade. Be specific ($NVDA, $PLTR, OpenAI,
-  Anthropic, CoreWeave, $GOOGL, $MSFT, $AMD, etc.)
-- Confident-arrogant. You called it before anyone else.
-- Dry wit welcome. Think Bloomberg terminal meets stand-up.
-- Max 220 chars. The original tweet renders below yours automatically.
+- Hook in the first 6 words. Short sentences, easy words, strong opinion.
+- Add a NEW point the original doesn't state.
+- Max 220 chars. The original renders below yours.
 
 RULES:
-- HOOK in first 5 words: number / bold verb / named actor.
-- Always adds a NEW angle the original tweet doesn't state.
-- Never attack the author. Troll the trend, the system, the market.
-- No hashtags. No filler. No "not financial advice" inline.
-- 1-2 on-brand emojis max: 🚀 ⚡ 🛰️ 🤖 📡
-- If nothing beats silence → output exactly: SKIP
+- Add real value; a pure reaction ("Huge.") -> SKIP.
+- Never attack the author. React to real AI news only; never invent a fact.
+- NO hashtags. NO emojis. No em dashes. No links. No jargon.
+- If nothing beats silence -> output exactly: SKIP
 
 Output the quote text ONLY, or SKIP.
 """
@@ -147,7 +143,7 @@ def _search_best_tweet(topic: str) -> Optional[dict]:
     if kw_words:
         queries.append(f"{' '.join(kw_words[:2])} lang:en min_faves:100")
     # Always add a broad niche fallback
-    queries.append("AI OR OpenAI OR Anthropic OR NVDA OR Nvidia OR \"AI agents\" lang:en min_faves:200")
+    queries.append("OpenAI OR Anthropic OR ChatGPT OR Nvidia OR \"AI agent\" OR AGI lang:en min_faves:200")
 
     candidates = []
     for q in queries[:2]:

@@ -28,11 +28,25 @@ from .logger import log
 
 
 def _run_git(args, timeout: int = 30) -> subprocess.CompletedProcess:
+    # Force git to be NON-INTERACTIVE. Without this, a push with no configured
+    # credentials hangs on "Username for 'https://github.com':" until the
+    # subprocess timeout (180s) fires — stalling the bot on every state save.
+    # GIT_TERMINAL_PROMPT=0 makes git fail immediately instead of prompting;
+    # the empty GIT_ASKPASS / disabled credential helper prevent any GUI or
+    # helper-based credential prompt from blocking either.
+    env = {
+        **os.environ,
+        "GIT_TERMINAL_PROMPT": "0",
+        "GIT_ASKPASS": "echo",
+        "SSH_ASKPASS": "echo",
+        "GCM_INTERACTIVE": "never",
+    }
     return subprocess.run(
-        ["git", "-C", _PROJECT_ROOT, *args],
+        ["git", "-C", _PROJECT_ROOT, "-c", "credential.helper=", *args],
         capture_output=True,
         text=True,
         timeout=timeout,
+        env=env,
     )
 
 
@@ -89,7 +103,7 @@ def auto_push(file_paths: Iterable[str], commit_message: str) -> bool:
 
         # Push.
         branch = _current_branch()
-        push = _run_git(["push", "origin", branch], timeout=180)
+        push = _run_git(["push", "origin", branch], timeout=60)
         if push.returncode != 0:
             err = (push.stderr or push.stdout or "")[:300]
             log.info(f"[GIT] push failed ({branch}): {err}")

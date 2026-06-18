@@ -7,9 +7,9 @@ Two hard gates on every generated draft before it can publish:
      vendredi", "x2 ce mois-ci") is rejected. Theses must be multi-year and
      reasoned (setup / catalyst / risk / asymmetry), never price-and-date.
 
-  2. LANGUAGE. Originals and quote-repost commentary must be FRENCH (the
-     account's primary language since the 2026-06-02 revert). Replies are
-     exempt — they match the parent post's language and are checked elsewhere.
+  2. LANGUAGE. Originals and quote-repost commentary must match the configured
+     primary language (CONTENT_LANG_PRIMARY, English for The AI Boss). Replies
+     are exempt — they match the parent post's language and are checked elsewhere.
 
 Usage:
     ok, reason = content_guard.validate(text, kind="original")
@@ -154,7 +154,7 @@ def _dup_profile(text: str, age_hours: float = 0.0) -> dict:
         "bigrams": {f"{a} {b}" for a, b in zip(toks, toks[1:])},
         "entities": _entities(text),
         # Normalized full text — catches exact/near-exact rehash of SHORT
-        # stopword-heavy posts (therapist one-liners) that fall under the
+        # stopword-heavy posts (boss one-liners) that fall under the
         # min-content-words guard below.
         "norm": " ".join(_dedup_clean(text).split()),
         "age_h": age_hours,

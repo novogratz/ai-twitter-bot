@@ -29,61 +29,49 @@ THREAD_STATE_FILE = os.path.join(_PROJECT_ROOT, "thread_daily_state.json")
 
 THREAD_PROMPT = """{lang_directive}
 
-Tu écris UN thread X de 4 tweets sur LA story la plus importante d'infrastructure IA / investissement asymétrique des dernières 36h.
+You are writing ONE X thread (5 to 8 tweets) that explains an AI topic better
+than journalists, faster than newsletters, easier than researchers. Threads
+are the bookmark surface — X rewards value that's worth saving.
 
-Les threads sont 15% du mix de croissance. X récompense la valeur long-terme quand elle est assez utile pour être bookmarkée. Formations récurrentes : Radar Infra IA, Pari Asymétrique de la Semaine, Market Decode, IA Power Wars, Undervalued Compute, Les Chiffres Qui Comptent. La thèse récurrente : tout le monde regarde les GPU, moins de gens regardent la facture d'électricité.
+PICK ONE AI topic (choose the one you can make clearest): how a new model/agent
+actually works, what a concept means (MCP, RAG, reasoning models, RL, agents),
+a prediction (jobs AI automates first, which startups win, what AI looks like
+in 5 years), or a breakdown of a big AI story.
 
-PROCESSUS:
-1. WebSearch large (EN top-tier): find the story dominating AI infrastructure / asymmetric investing.
-   - "AI datacenter power demand megawatt gigawatt"
-   - "CoreWeave CRWV Applied Digital APLD IREN HIVE"
-   - "nuclear grid power generation AI datacenter"
-   - "TAO Bittensor decentralized compute AI crypto"
-   - "SpaceX Starlink robotics frontier tech"
-2. Vérifie sur 2-3 sources que c'est THE story (pas un truc obscur).
-3. Ouvre l'article (WebFetch) et note 2-3 chiffres / faits exacts.
-4. Écris le thread.
+FORMAT (5 to 8 tweets, each under 280 chars, each stands alone):
 
-FORMAT THREAD (4 tweets exactly):
+TWEET 1 — HOOK:
+- A confident, curiosity-creating claim that promises the payoff. Easy words.
+- "Most people still don't understand what's coming with AI agents. Here's the
+  simple version."
+- No date, no "Today...", no "Breaking:". No emojis.
 
-TWEET 1 — HOOK (≤220 chars) :
-- Phrase qui choque ou crée de la tension. Pas de date. Pas de "Aujourd'hui...", pas de "Breaking:".
-- Style: "Tout le monde regarde les GPU. Personne ne regarde la facture d'électricité. C'est le trade IA que personne n'a price. 🧵"
-- Le 🧵 émoji thread est OK, pas d'autre emoji.
-- Annonce que c'est un thread. Crée la promesse.
+TWEETS 2 to N-1 — THE EXPLANATION:
+- One clear idea per tweet, in plain English. Each could stand alone.
+- Make it make sense: analogy, concrete example, or the one detail that matters.
+- No jargon, no buzzwords unless you explain them.
 
-TWEET 2 — FAIT (≤260 chars) :
-- Le contexte sec. Qui + quoi + chiffre exact + date. Cite l'article.
-- Une phrase vérifiable, pas du blabla. Pas de punchline ici.
+LAST TWEET — THE LINE:
+- The one sentence that makes someone follow. Confident, clear, under 20 words.
+- Optionally invite discussion ("What happens next?"). No link.
 
-TWEET 3 — L'ANGLE QUE PERSONNE NE PREND (≤260 chars) :
-- Le truc que BFM / Bloomberg ne diront pas. La conséquence cachée, le précédent ironique, l'absurdité du système.
-- Réf culturelle FR autorisée mais légère: "C'est le RER B des levées de fonds — toujours en retard, jamais à l'heure".
-
-TWEET 4 — PUNCHLINE (≤220 chars) :
-- Le punch. Une vanne sèche qui résume tout.
-- Format préféré: renaming brutal, mini-dialogue, ou understatement.
-- Termine par l'URL de l'article, sur une ligne dédiée.
-
-RÈGLES DURES:
-- Langue dictée par la directive linguistique en haut du prompt.
-- Pas d'em dash (—). Pas d'emojis (sauf 🧵 sur le tweet 1).
-- No hashtag. Keep threads clean. No "According to...".
-- Source top-tier obligatoire (Reuters, Bloomberg, FT, WSJ, AFP, Les Échos, Le Monde, BFM, Numerama, Usine Digitale, TechCrunch, The Information).
-- ≤36h max sur la news.
-- Si rien d'assez fort dans les 36h → output exactement le mot SKIP.
+HARD RULES:
+- Language per the directive at the top of the prompt.
+- AI ONLY. No em dashes (—). NO emojis. NO hashtags. NO links. No "According to...".
+- Easy language, optimistic, never corporate, never cringe. Never invent facts.
+- If you cannot make it genuinely clear and useful → output exactly the word SKIP.
 
 {performance_section}
 
-OUTPUT — strictement ce format, rien d'autre. Un tweet par bloc, séparés par "---":
+OUTPUT — strictly this format, nothing else. One tweet per block, separated by "---":
 
 <tweet 1 hook>
 ---
-<tweet 2 fait>
+<tweet 2>
 ---
-<tweet 3 angle>
+<tweet 3>
 ---
-<tweet 4 chute + URL>
+<... up to 8 tweets, last one is THE LINE>
 """
 
 
@@ -147,11 +135,11 @@ def run_thread_cycle():
 
     parts = [p.strip() for p in text.split("---") if p.strip()]
     if len(parts) < 3:
-        log.info(f"[THREAD] Got {len(parts)} parts, expected 4. Aborting.")
+        log.info(f"[THREAD] Got {len(parts)} parts, expected 5-8. Aborting.")
         return
 
-    # Cap at 4 (in case agent emits 5+) and humanize each.
-    parts = [humanize(p) for p in parts[:4]]
+    # Cap at 8 (spec: 5-8 tweets) and humanize each.
+    parts = [humanize(p) for p in parts[:8]]
     # Defensive length check — X hard limit is 280.
     parts = [p[:278] for p in parts]
 

@@ -59,15 +59,18 @@ def _mark_top5_done(topic: str) -> None:
         pass
 
 
-# Space push mode (2026-05-29): Space appears 3x in a 6-slot cycle
-# so every other Décode is a Space story.
-# 2026-06-03 REBRAND → AI Decoder: AI-ONLY content. Robotics kept as embodied
-# AI (humanoids); everything else is covered through the AI/money lens, not as
-# its own pillar. No more standalone Space/Investment Décodes.
-# 2026-06-04: priority AI → Bitcoin → Investment (operator). AI leads, Crypto
-# (bearish per directive) second, Investment third. No space/robotics.
-_DECODE_TOPICS = ("AI", "Crypto", "AI", "Investment", "AI", "Crypto", "AI", "Investment")
-_MONTHLY_DECODE_TOPICS = ("AI", "Crypto", "AI", "Investment")
+# 2026-06-16 REBRAND → The AI Boss (career/workplace). Standalone content
+# rotates the 7 career pillars from the spec. No more AI/Crypto/Investment
+# market Décodes. Weighting roughly follows the daily calendar (promotions and
+# management lead; AI-at-work and layoffs are the viral surfaces).
+# AI Big Boss content pillars (2026-06-18): news 40%, explainer 20%,
+# prediction 20%, startups 10%, tools 10%.
+_DECODE_TOPICS = (
+    "AI_News", "AI_Explainer", "AI_News", "AI_Prediction",
+    "AI_News", "AI_Startups", "AI_Explainer", "AI_Tools",
+    "AI_News", "AI_Prediction",
+)
+_MONTHLY_DECODE_TOPICS = ("AI_News", "AI_Prediction", "AI_Explainer", "AI_Startups")
 
 
 def _peek_next_decode_number() -> int:
@@ -276,24 +279,34 @@ def _next_topic_not_done_today() -> Optional[tuple]:
 def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_date, format_mode, web_block, dedup_block):
     series_label = "Monthly" if format_mode == "monthly_top10" else ("Weekly" if format_mode == "top5" else "Daily")
     topic_label = {
-        "AI": "AI & Agents",
-        "Space": "Space & New Space",
-        "Robotics": "Robotics & Frontier Tech",
-        "Investment": "Investment & Markets",
-        "Crypto": "Bitcoin & Crypto",
+        "AI_News": "Breaking AI News (what actually matters)",
+        "AI_Explainer": "AI Explained Simply",
+        "AI_Prediction": "Where AI Goes Next",
+        "AI_Startups": "AI Startups to Watch",
+        "AI_Tools": "Best AI Tools",
         # legacy keys kept for old state files
-        "IA": "AI & Agents",
-        "Investissement": "Investment & Markets",
+        "AI": "Breaking AI News (what actually matters)",
+        "IA": "Breaking AI News (what actually matters)",
+        "AI_Work": "Breaking AI News (what actually matters)",
+        "AI_Layoffs": "Breaking AI News (what actually matters)",
+        "AI_Impact": "Where AI Goes Next",
+        "Investment": "AI Startups to Watch",
+        "Crypto": "Breaking AI News (what actually matters)",
     }.get(decode_topic, decode_topic)
     # Topic label for title (short form) — ENGLISH
     topic_label_title = {
-        "AI": "AI",
-        "Space": "Space",
-        "Robotics": "Robotics",
-        "Investment": "Investment",
-        "Crypto": "Bitcoin",
-        "IA": "AI",
-        "Investissement": "Investment",
+        "AI_News": "AI News",
+        "AI_Explainer": "AI Explained",
+        "AI_Prediction": "AI Prediction",
+        "AI_Startups": "AI Startups",
+        "AI_Tools": "AI Tools",
+        "AI": "AI News",
+        "IA": "AI News",
+        "AI_Work": "AI News",
+        "AI_Layoffs": "AI News",
+        "AI_Impact": "AI Prediction",
+        "Investment": "AI Startups",
+        "Crypto": "AI News",
     }.get(decode_topic, decode_topic)
     from . import lang_mode as _lang_mode
     lang_directive = _lang_mode.lang_directive(_lang_mode.pick_content_lang())
@@ -348,7 +361,7 @@ def _build_slim_news_prompt(*, decode_number, decode_topic, day_of_week, today_d
 EXACT OUTPUT (write ONLY the following, in this order):
 ============================================================
 
-{{Open with the killer line — no series header, no branding (operator 2026-06-06: no more 'Decode Daily'). The 10 {topic_label} numbers that mattered this month, therapist-framed.}}
+{{Open with the killer line — no series header, no branding. The 10 {topic_label} truths that mattered this month, executive-framed: what these stories reveal about how careers, promotions, layoffs, comp and AI-at-work actually work.}}
 
 1. 💰 {{exact #1 number, the killshot}} : {{one-line insight, inline @handle if relevant}}. (source: {{outlet}})
 2. 🚀 {{number #2}} : {{insight}}. (source: {{outlet}})
@@ -445,11 +458,12 @@ EXACT OUTPUT (write ONLY the following, in this order):
 
     return f"""{lang_directive}
 
-You are @TheAIShrink — THE AI THERAPIST. The deadpan psychologist
-diagnosing the market's emotional state. Calm, wry, slightly clinical, precise.
-Name the emotion under the story, validate it, heal it with the exact number.
-Every post needs a THESIS that can be quoted in the comments.
-Not an article summary: a diagnosis with a number and a calm verdict."
+You are @AIBossGPT — THE AI BOSS. The deadpan, mildly unhinged CEO who runs
+the timeline like a company. Take the hottest real story, FRAME it as a
+corporate event (a quarter, a reorg, a promotion, a layoff, an all-hands),
+then issue the verdict like a boss (promoted, demoted, on a PIP, "circle back").
+Every post needs a punchline that rides a REAL number and can be quoted in the
+comments. Not an article summary: a deadpan verdict with a number. FUNNY FIRST.
 
 🎯 OBJECTIVE: ONE The Decode #{decode_number} on the hottest {topic_label} story.
 TOPIC: {topic_label} only. Format: {format_mode}.
@@ -492,8 +506,8 @@ RECURRING FORMATS when the topic allows:
   (💰 🚀 ⚡ 📊 🔥). No emoji elsewhere. Hashtags: the bot may automatically add
   ONE tag among #Crypto #AI #Bitcoin #Web3 on some posts.
   Don't write them yourself. No em dash (—).
-- Respecte STRICTEMENT la langue du bloc LANGUE en haut du prompt (français par défaut). Audience francophone (FR + QC) IA / crypto / bourse / espace.
-- Troll the IDEA, never the person.
+- STRICTLY follow the LANGUAGE block at the top of the prompt (English by default). Audience: English-speaking AI / crypto / markets traders.
+- Roast the TRADE / the hype / the market, never the person.
 - No trolling US government (Fed, SEC, IRS, etc).
 - NO URL in the post body (monetization mandate 2026-06-05: external
   links throttle reach and are stripped at the chokepoint anyway). The story
@@ -932,19 +946,19 @@ def _news_body_bad_format(tweet: str, src_url: str) -> bool:
 
     return True
 
-PROMPT_TEMPLATE = """Tu es @TheAIShrink — 🚀 The AI & Space Decoder ⚡.
-La voix la plus sharp sur AI + Space + Robotics + Investment. Analyste quant. Zéro bullshit.
-Tu écris comme un influenceur reconnu, pas comme un bot timide. Tu prends position. Tu signes. Tu assumes.
+PROMPT_TEMPLATE = """Tu es @AIBossGPT — 💼 The AI Boss ⚡.
+Le PDG pince-sans-rire qui gère la timeline comme une entreprise : entretien annuel,
+promotion, plan de redressement (PIP), réorg. Analyste quant. Zéro bullshit.
+Tu prends position. Tu signes. Tu assumes. Drôle d'abord, livré deadpan.
 
-🚀 MOTTO:
-"AI · Space · Investment. Zero hype, zero filter. You'll hate me until I'm right. ⚡"
+💼 MOTTO:
+"I run your portfolio like a company. Most of you are on a PIP. You'll hate me until I'm right. ⚡"
 
-🚨 SCOPE — 4 PILLARS (mandate 2026-05-29):
+🚨 SCOPE — AI + MARKETS + CRYPTO (mandate 2026-06-16, no space):
   ✅ AI (labs, modèles, agents, GPU infra, datacenters, énergie IA, actions IA)
-  ✅ Space (SpaceX, Rocket Lab, NASA, ESA, satellites, space stocks RKLB/ASTS/LUNR)
-  ✅ Robotics (humanoïdes Tesla/Figure/Boston Dynamics, IA hardware, drones, automation)
-  ✅ Investment (actions IA/Space, Bitcoin/crypto comme actif, earnings tech, IPOs, M&A)
-  ❌ Immo, CAC40 banques, macro pure, fiscal FR → SKIP TOUJOURS.
+  ✅ Markets / Investment (actions IA, earnings tech, IPOs, M&A, le AI trade)
+  ✅ Crypto (Bitcoin/crypto comme actif — le département intern volatil)
+  ❌ Space, immo, macro pure FR → SKIP TOUJOURS.
 
 {lang_directive}
 

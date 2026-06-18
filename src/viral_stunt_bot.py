@@ -36,42 +36,39 @@ VIRAL_STUNT_FIRE_PROB = float(os.environ.get("VIRAL_STUNT_FIRE_PROB", "0.35"))
 
 STUNT_PROMPT = """{lang_directive}
 
-You are writing ONE superviral-format post. The genre that rips on X right
-now: first-person AI-stunt comedy. Concrete, deadpan, screenshot-worthy.
+You are writing ONE high-impact, first-person "insider" post — the AI Boss
+recounting, deadpan, something that happens inside the rooms where careers are
+decided, ending on the rule it exposes. The screenshot-able confession of how
+it really works.
 
 Reference vibes (FORM ONLY — never copy or paraphrase these):
-- testing a mundane company's new AI support bot and getting an absurdly
-  wrong / absurdly generous outcome
-- asking an AI assistant a normal question and reporting its unhinged-but-
-  plausible answer deadpan
-- a fake-mundane "field report" about AI showing up somewhere it shouldn't
-  (gym, bakery, parking meter, dentist)
-- an exact, oddly specific number that makes the bit land
+- "In every calibration meeting I've sat in, the same thing decides
+  promotions, and it isn't the work."
+- "The fastest way I've seen someone get laid off: be quietly excellent and
+  illegible to anyone two levels up."
+- "I have watched a worse engineer out-earn a better one for one reason:
+  one of them had a competing offer."
+- an exact, oddly specific detail from "the room" that makes the point land
 
 HARD RULES:
-- The absurdity must be obvious enough that readers know it's a BIT. Never
-  write something a reader could mistake for real factual news about a real
-  company. Comedy, not misinformation.
-- First person, deadpan, ZERO "haha/lol", zero emoji, zero hashtag, no URL.
-- ≤270 characters. One or two sentences max. The shorter the deadlier.
-- Concrete details: a name, a number, a consequence. Vague = dead.
-- Stay in the account's world: AI, AI products, chatbots, agents, robots,
-  AI-in-everyday-life. The human side is the punchline.
-- Tu trolles les SYSTÈMES / produits / trends, jamais une personne nommée.
-- Ne jamais cibler le gouvernement américain (Fed, SEC, IRS, etc.).
+- First person, cold, deadpan. ZERO emoji, ZERO hashtag, no URL.
+- ≤270 characters. One or two sentences. The shorter the sharper.
+- It must expose a real, useful rule of how careers/management/comp/layoffs
+  actually work — never a fabricated event presented as literal news.
+- Concrete: a role, a number, a consequence. Vague = dead.
+- Lane only: promotions, management, office politics, layoffs, salary, hiring,
+  AI at work, leadership.
+- Never cruel about real job loss. Never attack a named or private individual.
+- Never target the US government (Fed, SEC, IRS, etc.).
 
 {performance_section}
 
-THE BAR: would a stranger screenshot this and send it to a friend? If the
-draft is not a 9/10 laugh → answer SKIP. SKIP is the default, posting is the
-exception.
+THE BAR: would a stranger screenshot this and send it to a coworker because it
+is painfully true? If the draft is not a 9/10 → answer SKIP. SKIP is the
+default, posting is the exception.
 
-GIF (mandatory): after the post text, add ONE line: [GIF: <2-4 word search>]
-{gif_guide}
-The line is stripped before posting.
-
-OUTPUT — strictly the post text + the [GIF: …] line, nothing else. No
-"Here's", no quotes, no meta-commentary."""
+OUTPUT — strictly the post text, nothing else. No "Here's", no quotes, no
+meta-commentary."""
 
 
 def _load_state() -> dict:

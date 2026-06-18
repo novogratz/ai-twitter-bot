@@ -79,6 +79,43 @@ def _run_applescript(script: str, retries: int = 1) -> bool:
     return False
 
 
+def _safari_eval_js(js: str, timeout: int = 15) -> str:
+    """Run JS in Safari's front tab via a TEMP FILE and return its stdout.
+
+    The inline `do JavaScript "...big quoted blob..."` pattern breaks under
+    osascript quote-escaping (it errors out, which is why the old unfollow flow
+    silently failed 100% of the time). Writing the JS to a temp file and reading
+    it back avoids all quote hell. Returns the trimmed JS return value, or ""
+    on any error.
+    """
+    import tempfile as _tf
+    tmp = _tf.NamedTemporaryFile(mode="w", suffix=".js", delete=False)
+    tmp.write(js)
+    tmp.close()
+    applescript = f'''
+    tell application "Safari" to activate
+    set jsCode to (read POSIX file "{tmp.name}")
+    tell application "Safari"
+        do JavaScript jsCode in current tab of front window
+    end tell
+    '''
+    try:
+        res = subprocess.run(["osascript", "-e", applescript],
+                             capture_output=True, text=True, timeout=timeout)
+        if res.returncode != 0:
+            log.info(f"[JS] osascript error: {res.stderr[:150]}")
+            return ""
+        return (res.stdout or "").strip()
+    except Exception as e:
+        log.info(f"[JS] eval failed: {e}")
+        return ""
+    finally:
+        try:
+            os.unlink(tmp.name)
+        except OSError:
+            pass
+
+
 def _escape_for_applescript(text: str) -> str:
     """Escape special characters for AppleScript string literals."""
     return text.replace("\\", "\\\\").replace('"', '\\"')
@@ -990,48 +1027,127 @@ def unfollow_account(username: str) -> bool:
         webbrowser.open(profile_url)
         time.sleep(5)
 
-        # Step 1: click the "Following" button. Try multiple selectors since
-        # X occasionally renames data-testid values.
-        click_following = '''
-        tell application "Safari"
-            do JavaScript "
-                var btn = document.querySelector('[data-testid$=\"-unfollow\"]');
-                if (!btn) btn = document.querySelector('[data-testid=\"userActions\"] [role=\"button\"]');
-                if (!btn) {
-                    var spans = document.querySelectorAll('[role=\"button\"] span');
-                    for (var i = 0; i < spans.length; i++) {
-                        if (spans[i].textContent.trim() === 'Following') { btn = spans[i].closest('[role=\"button\"]'); break; }
+        # Step 1: click the "Following" button. Temp-file JS (inline-quoted JS
+        # errors under osascript — the old flow failed 100% of the time). Try
+        # multiple selectors since X renames data-testid / localizes labels.
+        click_following_js = """
+        (function() {
+            var btn = document.querySelector('button[data-testid$="-unfollow"]');
+            if (!btn) {
+                var all = document.querySelectorAll('button[aria-label], [role="button"][aria-label]');
+                for (var i = 0; i < all.length; i++) {
+                    var al = all[i].getAttribute('aria-label') || '';
+                    if (/^(Following|Abonn|Suivi|Siguiendo)/i.test(al) && /@/.test(al)) { btn = all[i]; break; }
+                }
+            }
+            if (!btn) {
+                var spans = document.querySelectorAll('[role="button"] span');
+                for (var j = 0; j < spans.length; j++) {
+                    var t = (spans[j].textContent || '').trim();
+                    if (t === 'Following' || t === 'Abonné' || t === 'Suivi(e)') {
+                        btn = spans[j].closest('[role="button"]'); break;
                     }
                 }
-                if (btn) { btn.click(); return 'CLICKED'; }
+            }
+            if (!btn) {
+                if (document.querySelector('button[data-testid$="-follow"]')) return 'NOT_FOLLOWING';
                 return 'NO_FOLLOWING_BTN';
-            " in current tab of front window
-        end tell
-        '''
-        result = _run_applescript(click_following)
-        if not result or result.strip() == "NO_FOLLOWING_BTN":
-            log.info(f"[UNFOLLOW] Not following @{username} (or button not found) — skipping.")
+            }
+            btn.click();
+            return 'CLICKED';
+        })()
+        """
+        status = _safari_eval_js(click_following_js)
+        if status != "CLICKED":
+            log.info(f"[UNFOLLOW] @{username}: could not click Following ({status or 'no status'}) — skipping.")
             close_front_tab()
             return False
         time.sleep(1.5)
 
         # Step 2: click the confirm in the modal.
-        click_confirm = '''
-        tell application "Safari"
-            do JavaScript "
-                var btn = document.querySelector('[data-testid=\"confirmationSheetConfirm\"]');
-                if (btn) { btn.click(); return 'CONFIRMED'; }
-                return 'NO_CONFIRM';
-            " in current tab of front window
-        end tell
-        '''
-        _run_applescript(click_confirm)
+        confirm_js = """
+        (function() {
+            var btn = document.querySelector('[data-testid="confirmationSheetConfirm"]');
+            if (btn) { btn.click(); return 'CONFIRMED'; }
+            return 'NO_CONFIRM';
+        })()
+        """
+        confirm = _safari_eval_js(confirm_js)
         time.sleep(1.5)
         close_front_tab()
+        if confirm != "CONFIRMED":
+            log.info(f"[UNFOLLOW] @{username}: confirm dialog not found ({confirm or 'no status'}) — may not have unfollowed.")
+            return False
         action_guard.record(action_guard.UNFOLLOW, target=username)
         action_guard.adjust_following(-1)
         log.info(f"[UNFOLLOW] Unfollowed @{username}.")
         return True
+
+
+def _parse_count_token(tok: str):
+    """Parse an X count string ('1,234', '12.3K', '4.5M', '1.2B') to an int.
+    Returns None if it can't be parsed."""
+    if not tok:
+        return None
+    import re as _re
+    m = _re.search(r"([\d.,]+)\s*([KMB])?", tok.strip(), _re.IGNORECASE)
+    if not m:
+        return None
+    num = m.group(1).replace(",", "")
+    if not num or num == ".":
+        return None
+    try:
+        val = float(num)
+    except ValueError:
+        return None
+    suffix = (m.group(2) or "").upper()
+    mult = {"K": 1_000, "M": 1_000_000, "B": 1_000_000_000}.get(suffix, 1)
+    return int(val * mult)
+
+
+def _scrape_follower_count(username: str):
+    """Read the follower count from the currently-open profile page.
+
+    Assumes the caller already navigated to x.com/<username> and waited for
+    load (the follow flow does). Returns an int, or None if unreadable.
+    """
+    js = """
+    (function() {
+        var a = document.querySelector('a[href$="/verified_followers"]')
+             || document.querySelector('a[href$="/followers"]');
+        if (!a) return 'NA';
+        var s = a.querySelector('span[title]');
+        if (s && s.getAttribute('title')) return s.getAttribute('title');
+        return a.textContent || 'NA';
+    })()
+    """
+    import tempfile as _tf
+    tmp = _tf.NamedTemporaryFile(mode="w", suffix=".js", delete=False)
+    tmp.write(js)
+    tmp.close()
+    applescript = f'''
+    tell application "Safari" to activate
+    set jsCode to (read POSIX file "{tmp.name}")
+    tell application "Safari"
+        do JavaScript jsCode in current tab of front window
+    end tell
+    '''
+    raw = ""
+    try:
+        res = subprocess.run(["osascript", "-e", applescript],
+                             capture_output=True, text=True, timeout=15)
+        raw = (res.stdout or "").strip()
+    except Exception as e:
+        log.info(f"[FOLLOW] follower-count scrape failed for @{username}: {e}")
+        return None
+    finally:
+        try:
+            os.unlink(tmp.name)
+        except OSError:
+            pass
+    if not raw or raw == "NA":
+        return None
+    return _parse_count_token(raw)
 
 
 def follow_account(username: str) -> bool:
@@ -1070,6 +1186,23 @@ def follow_account(username: str) -> bool:
         log.info(f"[FOLLOW] Visiting profile: {profile_url}")
         webbrowser.open(profile_url)
         time.sleep(5)
+
+        # Big-accounts-only gate (operator 2026-06-17): scrape the target's
+        # follower count from the profile header and skip anyone below the
+        # MIN_FOLLOWERS_TO_FOLLOW floor. We're already on the profile, so this
+        # is one extra osascript read, no extra page load.
+        min_followers = getattr(_cfg, "MIN_FOLLOWERS_TO_FOLLOW", 0)
+        if min_followers > 0:
+            count = _scrape_follower_count(username)
+            if count is None:
+                log.info(f"[FOLLOW] @{username}: follower count unreadable — skipping (min {min_followers:,}).")
+                close_front_tab()
+                return False
+            if count < min_followers:
+                log.info(f"[FOLLOW] @{username}: {count:,} followers < {min_followers:,} floor — skipping (too small).")
+                close_front_tab()
+                return False
+            log.info(f"[FOLLOW] @{username}: {count:,} followers >= {min_followers:,} floor — OK to follow.")
 
         # 2026-06-05 fix: the old inline-quoted JS errored on every attempt
         # ("Could not follow @X via JS" 100% of the time) — quote-escaping

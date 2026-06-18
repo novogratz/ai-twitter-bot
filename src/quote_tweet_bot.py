@@ -21,98 +21,65 @@ _OWN_HANDLE = BOT_HANDLE.lower()
 # English-first, AI-first quote discovery (2026-06-03: back to EN). Every
 # generated quote is in English. AI leads, then markets/crypto, then space.
 QUOTE_QUERIES = [
-    # AI (priority)
-    "\"new model\" OR \"introducing\" OpenAI OR Anthropic OR Google lang:en min_faves:100",
-    "GPT OR Claude OR Gemini OR Grok OR Llama \"released\" OR \"launches\" lang:en min_faves:50",
-    "OpenAI OR ChatGPT OR \"GPT-5\" OR Anthropic OR Claude lang:en min_faves:100",
-    "\"reasoning model\" OR \"AI agents\" OR \"agentic AI\" OR \"frontier model\" lang:en min_faves:50",
-    "Nvidia OR NVDA OR GPU OR \"compute cluster\" OR datacenter lang:en min_faves:100",
-    "robotics OR \"humanoid robot\" OR \"Figure\" OR \"Boston Dynamics\" OR \"1X\" lang:en min_faves:100",
-    "Mistral OR xAI OR \"Hugging Face\" OR \"open source AI\" lang:en min_faves:50",
-    "AGI OR superintelligence OR \"AI safety\" OR \"AI alignment\" lang:en min_faves:50",
-    "\"AI datacenter\" OR \"AI capex\" OR \"AI power\" OR \"compute cluster\" lang:en min_faves:100",
-    # AI money angle (AI stocks = the lens, no generic markets/space)
-    "Nvidia OR NVDA OR \"AI bubble\" OR \"AI trade\" OR \"AI valuation\" lang:en min_faves:200",
-    "Palantir OR PLTR OR \"AI stock\" OR \"AI startup\" OR \"AI funding\" lang:en min_faves:100",
-    # Investment / stocks / markets (~30%)
-    "\"S&P 500\" OR Nasdaq OR \"tech earnings\" OR \"stock market\" OR \"AI stock\" lang:en min_faves:200",
-    "Fed OR CPI OR \"rate cut\" OR \"interest rates\" OR macro lang:en min_faves:200",
-    # Bitcoin / crypto (bearish troll fodder)
-    "Bitcoin OR BTC OR \"BTC ETF\" OR crypto OR Ethereum lang:en min_faves:300",
-    "\"Bitcoin crash\" OR \"crypto crash\" OR \"BTC dump\" OR \"crypto bubble\" lang:en min_faves:100",
-    # VIRAL pass (2026-06-05 operator: "quote retweet more viral posts") —
-    # very high min_faves so the pool is the actual front page of the niche.
-    "AI lang:en min_faves:2000",
+    # AI ONLY (2026-06-18: AI Big Boss). Quote the biggest AI posts.
+    "\"new model\" OR introducing OpenAI OR Anthropic OR Google OR xAI lang:en min_faves:100",
+    "GPT OR Claude OR Gemini OR Grok OR Llama released OR launches lang:en min_faves:100",
+    "OpenAI OR ChatGPT OR \"GPT-5\" OR Anthropic OR DeepSeek lang:en min_faves:150",
+    "\"AI agent\" OR agentic OR Cursor OR Devin OR MCP lang:en min_faves:100",
+    "\"reasoning model\" OR benchmark OR AGI OR superintelligence lang:en min_faves:100",
+    "Nvidia OR GPU OR \"AI datacenter\" OR \"AI capex\" OR Blackwell lang:en min_faves:200",
+    "\"AI bubble\" OR \"AI hype\" OR \"AI race\" OR \"AI startup\" lang:en min_faves:150",
+    "Sora OR Midjourney OR \"AI video\" OR \"humanoid robot\" lang:en min_faves:200",
+    "from:sama OR from:OpenAI OR from:AnthropicAI OR from:karpathy lang:en min_faves:300",
+    # VIRAL pass — front page of AI
+    "AI lang:en min_faves:3000",
     "OpenAI OR Anthropic OR Nvidia OR ChatGPT lang:en min_faves:1000",
-    "Bitcoin OR crypto OR \"the market\" lang:en min_faves:2000",
-    "SpaceX OR Starship OR NASA OR \"Rocket Lab\" OR satellite lang:en min_faves:500",
-    "robots OR robotics OR \"humanoid\" lang:en min_faves:1000",
 ]
 
 # Handles whose fresh posts jump the candidate queue (no scoring gate beyond
-# the hard 48h freshness + dedup). Mandate 2026-06-04: the persona is modeled
-# on @TheBTCTherapist — quoting their viral posts with our AI angle is the
-# highest-ROI surface (operator 2026-06-05: "find a viral post like the
-# latest one pinned in bitcoin therapist and just quote it").
+# the hard 48h freshness + dedup). Empty by default for The AI Boss — set
+# PRIORITY_QUOTE_HANDLES in .env to prioritize specific accounts' viral posts.
 PRIORITY_QUOTE_HANDLES = [h.strip() for h in os.environ.get(
-    "PRIORITY_QUOTE_HANDLES", "TheBTCTherapist").split(",") if h.strip()]
+    "PRIORITY_QUOTE_HANDLES", "").split(",") if h.strip()]
 
-QUOTE_PROMPT = """You are @TheAIShrink. You will QUOTE-TWEET this tweet:
+QUOTE_PROMPT = """You are AI Big Boss (@TheAIBoss). You will QUOTE-TWEET this tweet:
 
 @{author}: "{tweet_text}"
 
-You are THE AI THERAPIST — the calm, warm, quietly funny coach treating the
-timeline's market trauma and AI anxiety. Your quote = ONE short ENGLISH line:
-a warm, knowing therapist read on the tweet. The original may be EN or FR —
-YOUR QUOTE IS ALWAYS IN ENGLISH.
+You are the account people follow to understand what actually matters in AI.
+Your quote = ONE short ENGLISH line that adds insight, analysis, a prediction,
+or context to this AI post — explain what it means or what everyone's missing.
+The original may be EN or FR; YOUR QUOTE IS ALWAYS IN ENGLISH.
 
-🛋️ THE THERAPIST MOVE (this is the voice — never break it):
-Diagnose the EMOTION under the tweet (fear, FOMO, cope, euphoria, denial),
-name it gently, then hand out the calm reframe. The reader should exhale.
-"Everyone screaming about X is really asking Y. Breathe. Here's the signal."
-Hope, not hype. Calm beats clever. You can be funny — therapist-deadpan funny,
-never snarky.
+PERSONALITY: confident, curious, analytical, fast, optimistic about AI,
+occasionally funny, never cringe, never corporate. Short sentences, strong
+opinions, EASY language, no jargon, no buzzwords unless explained.
 
-🚨 GOLDEN RULE — TREAT THE IDEA, NEVER THE PERSON:
-@{author} must be able to LIKE your quote and feel understood, not attacked.
-You read the trend's anxiety, never the author's. If you can't be warm → SKIP.
-
-🎯 STILL ADD AN ANGLE: a quote that just reacts ("Beautiful." / "Called it.")
-is worthless — add the thing the original doesn't say: the hidden consequence,
-the emotion everyone's avoiding, the calm read that reframes it. Otherwise SKIP.
-
-🏭 SCOPE — AI FIRST: AI labs/models/agents, GPU/datacenters/compute, AI power,
-humanoid robotics, AI stocks (Nvidia, Palantir); then markets/crypto; then
-space. Off scope → SKIP.{mnts_block}
+🎯 SCOPE: artificial intelligence only — labs & models, AI agents & tools, AI
+research/benchmarks, AGI, AI startups & funding, AI compute, embodied AI.
+NOT hiring/firing/careers, NOT crypto, NOT generic tech, NO politics. Off
+scope -> SKIP.{mnts_block}
 
 RULES:
 - Max 200 characters (the original renders below yours).
-- HOOK in the first 6 words: the named fear, a number, or the calm verdict.
-- Screenshot-worthy: the reader sends it to a stressed friend. NO French
-  anchors (no Bercy, RER B) — gibberish to a global reader.
-- No hashtags. No em dashes (—). 100% English. Emojis: at most one 🛋️/🫁/📉
-  when it genuinely lands; default zero.
-- No short-term price targets (price + near-term timeframe). Theses multi-year.
-- If nothing beats silence → output exactly the word SKIP.
+- HOOK in the first 6 words. Make AI make sense.
+- Add a NEW insight the original doesn't state. A quote that just reacts
+  ("Huge." / "Wow." / "So true.") is worthless -> SKIP.
+- NO hashtags. NO emojis. No em dashes. No links. No corporate voice, no jargon.
+- React to real AI news only; never invent a fact.
+- If nothing beats silence -> output exactly the word SKIP.
 
-GOOD (therapist voice, adds an angle):
-✅ "Everyone panicking about AI capex is really asking 'am I too late.' You're
-   not. The buildout is the opening act, not the encore."
-✅ "That red candle isn't a verdict on you. Zoom out: same chart, same fear,
-   every cycle. Breathe and check the 4-year view."
+GOOD (adds value, easy language):
+✅ "Everyone's hyping the benchmark score. The real story is they did it for a
+   tenth of the cost. That's what changes things."
+✅ "This is the first agent demo that didn't quietly fail halfway. Watch this one."
 
-BAD (just a reaction): "Beautiful." / "Good luck." / "Called it." / "As expected."
-BAD (old voice): snark, roast, "ngmi", dunking on the trend instead of healing it.
-
-GIF (default YES — roughly half the time): when a famous meme GIF would make
-the quote land HARDER, add one line after the text: [GIF: <2-4 word search>].
-{gif_guide}
-Skip the GIF only when the text is stronger completely alone.
+BAD (just a reaction): "Huge." / "Wow." / "So true." / "This."
 
 CRITICAL: any output containing the bare word "skip" = silent skip. Either the
-pure quote OR "SKIP" alone — never a sentence explaining why you're skipping.
+pure quote OR "SKIP" alone.
 
-Output ONLY the English quote text (+ optional [GIF: …] line), OR the word SKIP."""
+Output ONLY the English quote text, OR the word SKIP."""
 
 
 def _load_state() -> dict:
@@ -362,9 +329,8 @@ def run_quote_tweet_cycle():
     candidates = []
     priority_candidates = []
 
-    # Priority-handle pass (TheBTCTherapist & co): their fresh posts are
-    # quoted FIRST, sorted by likes, bypassing the niche filter (the persona
-    # is modeled on them — everything they post is our material).
+    # Priority-handle pass (PRIORITY_QUOTE_HANDLES, empty by default): their
+    # fresh posts are quoted FIRST, sorted by likes, bypassing the niche filter.
     try:
         from .twitter_client import scrape_profile_tweets
         for handle in PRIORITY_QUOTE_HANDLES:
