@@ -101,6 +101,48 @@ def _is_rejected_source(url: str) -> bool:
     return False
 
 
+def _build_news_pool_section(sig_path: Optional[str] = None) -> str:
+    """Render the 'POOL D'ARTICLES RÉELS' prompt block from external_signal.json.
+
+    Pre-filters against the content-farm rejectlist: the chokepoint
+    (`_is_rejected_source`) deterministically refuses these URLs post-
+    generation, so showing them to the LLM just burns a Sonnet call. Same
+    family as PR #55 (spacing precheck) — when a rule is enforced
+    deterministically downstream, lift it upstream of the expensive call.
+    Was firing ~15x in the recent log window (~7/30 pool items = decrypt.co).
+    """
+    import json as _json
+    import os as _os
+    if sig_path is None:
+        sig_path = _os.path.join(_os.path.dirname(_os.path.dirname(__file__)), "external_signal.json")
+    try:
+        with open(sig_path) as f:
+            sig = _json.load(f)
+    except (OSError, _json.JSONDecodeError, ValueError):
+        return ""
+    items = [
+        it for it in (sig.get("items") or [])
+        if it.get("url")
+        and "x.com" not in it.get("url", "")
+        and "twitter.com" not in it.get("url", "")
+        and not _is_rejected_source(it.get("url", ""))
+    ]
+    if not items:
+        return ""
+    lines = "\n".join(
+        f"- {it['url']} | {it.get('title','')[:80]}"
+        for it in items[:15]
+    )
+    return (
+        "\n\n==================================================\n"
+        "POOL D'ARTICLES RÉELS (fraîchement scrappés — utilise UN de ces liens)\n"
+        "==================================================\n"
+        "NE GÉNÈRE PAS D'URL TOI-MÊME. Choisis UNIQUEMENT dans cette liste.\n"
+        "Si aucun article ne convient → réponds SKIP.\n\n"
+        + lines
+    )
+
+
 # Backwards-compat alias for any external code that imported the underscore name.
 _extract_recent_topics = extract_recent_topics
 
@@ -383,32 +425,7 @@ Write more like your best tweets. Avoid the patterns of your worst ones."""
     except Exception:
         pass
     # Inject real article URLs from the RSS pool so the LLM doesn't hallucinate.
-    # external_signal.json is refreshed every ~30 min by the RSS bot.
-    news_pool_section = ""
-    try:
-        import json as _json
-        import os as _os
-        _sig_path = _os.path.join(_os.path.dirname(_os.path.dirname(__file__)), "external_signal.json")
-        _sig = _json.load(open(_sig_path))
-        _items = [
-            it for it in (_sig.get("items") or [])
-            if it.get("url") and "x.com" not in it.get("url", "") and "twitter.com" not in it.get("url", "")
-        ]
-        if _items:
-            _lines = "\n".join(
-                f"- {it['url']} | {it.get('title','')[:80]}"
-                for it in _items[:15]
-            )
-            news_pool_section = (
-                "\n\n==================================================\n"
-                "POOL D'ARTICLES RÉELS (fraîchement scrappés — utilise UN de ces liens)\n"
-                "==================================================\n"
-                "NE GÉNÈRE PAS D'URL TOI-MÊME. Choisis UNIQUEMENT dans cette liste.\n"
-                "Si aucun article ne convient → réponds SKIP.\n\n"
-                + _lines
-            )
-    except Exception:
-        pass
+    news_pool_section = _build_news_pool_section()
     if news_pool_section:
         performance_section = (performance_section or "") + news_pool_section
 

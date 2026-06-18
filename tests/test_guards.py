@@ -2798,3 +2798,62 @@ def test_news_cycle_spacing_block_never_touches_llm(monkeypatch, tmp_path):
 
     shipped = bot_mod._run_single_bot_cycle()
     assert shipped is False, "spacing-blocked cycle must return False"
+
+
+def test_hotake_news_pool_filters_content_farm_rejectlist(tmp_path):
+    """The hot-take news pool is injected into the LLM prompt to anchor the
+    article URL. The chokepoint (`_is_rejected_source`) deterministically
+    refuses URLs hosted on content-farm domains AFTER generation — so any
+    rejected URL in the pool that the LLM picks burns a 60-90s Sonnet call.
+    Live read 2026-06-18: external_signal.json carried 7/30 decrypt.co
+    items; the rejection fired 15+ times in the rolling log window.
+    Same family as PR #55 (spacing precheck): lift deterministic
+    downstream rules upstream of the expensive call.
+    """
+    import json
+    from src import hotake_agent
+
+    sig = tmp_path / "external_signal.json"
+    sig.write_text(json.dumps({
+        "items": [
+            # Rejected content-farm domains — must NOT reach the LLM.
+            {"url": "https://decrypt.co/123/foo", "title": "Decrypt foo"},
+            {"url": "https://www.benzinga.com/bar", "title": "Benzinga bar"},
+            {"url": "https://watcher.guru/baz", "title": "Watcher.guru baz"},
+            # Twitter URLs — already excluded by the existing filter.
+            {"url": "https://x.com/abc/status/1", "title": "Tweet"},
+            # Trusted sources — must appear.
+            {"url": "https://techcrunch.com/qux", "title": "TechCrunch qux"},
+            {"url": "https://www.cnbc.com/quux", "title": "CNBC quux"},
+        ]
+    }))
+
+    block = hotake_agent._build_news_pool_section(str(sig))
+
+    assert block, "trusted items remain — pool block should be non-empty"
+    assert "decrypt.co" not in block, "rejected source must not reach LLM prompt"
+    assert "benzinga.com" not in block, "rejected source must not reach LLM prompt"
+    assert "watcher.guru" not in block, "rejected source must not reach LLM prompt"
+    assert "x.com/abc" not in block, "twitter URL must not reach LLM prompt"
+    assert "techcrunch.com/qux" in block, "trusted source must be available to LLM"
+    assert "cnbc.com/quux" in block, "trusted source must be available to LLM"
+
+
+def test_hotake_news_pool_empty_when_only_rejected(tmp_path):
+    """When every item in the signal pool is on the rejectlist, the block
+    is empty — the LLM gets the SKIP-if-no-source instruction via the main
+    prompt and bails cheaply, instead of being handed a poisoned pool."""
+    import json
+    from src import hotake_agent
+
+    sig = tmp_path / "external_signal.json"
+    sig.write_text(json.dumps({
+        "items": [
+            {"url": "https://decrypt.co/1/a", "title": "A"},
+            {"url": "https://crypto.news/2/b", "title": "B"},
+            {"url": "https://www.zerohedge.com/3/c", "title": "C"},
+        ]
+    }))
+
+    block = hotake_agent._build_news_pool_section(str(sig))
+    assert block == "", "all-rejected pool should produce no block at all"

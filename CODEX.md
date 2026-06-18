@@ -4,6 +4,24 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-18 round 3 — HOTAKE news pool filters the rejectlist (no more
+> burnt Sonnet hot takes on decrypt.co):** `hotake_agent.generate_hotake`
+> injected up to 15 article URLs from `external_signal.json` into the
+> Sonnet prompt as the "POOL D'ARTICLES RÉELS" anchor — without filtering
+> against `_is_rejected_source`. The chokepoint deterministically refuses
+> rejected-source URLs AFTER generation (decrypt.co, benzinga, zerohedge,
+> watcher.guru, …), so every pick of a rejected URL burned a ~60-90s
+> Sonnet call on a 17K-char prompt. Live read 2026-06-18: 7/30 pool items
+> were decrypt.co; `[HOTAKE] Source on content-farm rejectlist — SKIPPING`
+> fired 15x in the rolling log window. Fix: extracted the inline pool
+> builder into `_build_news_pool_section()` and added the
+> `_is_rejected_source` filter at pool-build time, matching the news
+> Décode pool which already pre-filters at `agent.py:1347/1354`. Same
+> family as PR #55 (spacing precheck): when a chokepoint enforces a rule
+> deterministically downstream, lift the rule upstream of the expensive
+> LLM call. Guards: `test_hotake_news_pool_filters_content_farm_rejectlist`,
+> `test_hotake_news_pool_empty_when_only_rejected`.
+
 > **2026-06-18 round 2 — NEWS spacing precheck (no more burnt Sonnet
 > generations):** `_run_single_bot_cycle` in `src/bot.py` ran a full Décode
 > generation (Sonnet on a ~17K-char prompt, 30-55s) BEFORE the
