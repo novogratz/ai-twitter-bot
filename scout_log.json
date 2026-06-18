@@ -3896,5 +3896,64 @@
       }
     ],
     "summary": "J'ai creus\u00e9 les fondamentalistes s\u00e9rieux (Pommier) et les b\u00e2tisseurs IA (Mensch) pour \u00e9viter les vendeurs de r\u00eaves. Le lot est solide : des pros qui postent, pas des influenceurs de coaching."
+  },
+  {
+    "ts": "2026-06-18T04:17:33.330009",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeDemorand",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "CTO Mistral. Postes techniques pointus sur l'inf\u00e9rence et le hardware. Moins 'influenceur', plus 'engineer'."
+      },
+      {
+        "handle": "RaphaelBouvier",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Co-founder d'Aura Finance / ancien Polkadot. Exile en US mais twitte en FR sur DeFi et infra Web3."
+      },
+      {
+        "handle": "OlivierLabb\u00e9",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "G\u00e9rant chez Bourse Direct. Analyse march\u00e9 r\u00e9gulier, focus long terme. Pas de 'to the moon', de la vraie finance."
+      },
+      {
+        "handle": "JulesFridgen",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "CEO Qonto. Parle PME, SaaS et \u00e9conomie fran\u00e7aise. Pas un gus qui vend des signaux, un patron qui g\u00e8re."
+      },
+      {
+        "handle": "RaphaelGouillard",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Data Scientist / IA g\u00e9n\u00e9rative. Explique les LLMs sans baragouiner. Comptes des vues, pas des likes."
+      },
+      {
+        "handle": "RaphaelLebrun",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 14000,
+        "reason": "Ex-CTO Hootsuite / actuel investisseur. Couvre IA, SaaS et startup ecosystem qu\u00e9b\u00e9coise. Ton direct."
+      },
+      {
+        "handle": "MaximeMansuy",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 11000,
+        "reason": "AI Leader @ Shopify. Parle production, scale et IA entreprise. Le genre de gars que tu veux quand ton mod\u00e8le explose."
+      }
+    ],
+    "summary": "J'ai cibl\u00e9 les fondateurs fran\u00e7ais (Mistral, Qonto) et les investisseurs qu\u00e9b\u00e9cois (Shopify, Bourse Direct) pour \u00e9viter le bruit des vendeurs de r\u00eaves. Ce sont des gens qui construisent ou g\u00e8rent de l'argent, pas du hame\u00e7onnage."
   }
 ]

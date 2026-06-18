@@ -433,7 +433,12 @@
     "AdrienPerray",
     "MaximeSt",
     "JulienLemaire",
-    "VinceLeclerc"
+    "VinceLeclerc",
+    "MaximeDemorand",
+    "RaphaelBouvier",
+    "JulesFridgen",
+    "RaphaelLebrun",
+    "MaximeMansuy"
   ],
   "en": [
     "blablacar",
@@ -492,7 +497,10 @@
     "Claude",
     "Cursor",
     "CharlieIntel",
-    "Kara"
+    "Kara",
+    "DogeOS",
+    "MyDoge",
+    "xAI"
   ],
   "history": [
     {
@@ -2949,6 +2957,46 @@
       "lang": "fr",
       "handle": "VinceLeclerc",
       "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "DogeOS",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "MyDoge",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "xAI",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDemorand",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelBouvier",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesFridgen",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelLebrun",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMansuy",
+      "added": "2026-06-18"
     }
   ]
 }
