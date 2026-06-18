@@ -438,7 +438,12 @@
     "RaphaelBouvier",
     "JulesFridgen",
     "RaphaelLebrun",
-    "MaximeMansuy"
+    "MaximeMansuy",
+    "JulienLemaitre",
+    "MarcGuerini",
+    "Arnaud_Mensh",
+    "MaximePirard",
+    "JLepine_"
   ],
   "en": [
     "blablacar",
@@ -500,7 +505,11 @@
     "Kara",
     "DogeOS",
     "MyDoge",
-    "xAI"
+    "xAI",
+    "0xMarioNawfal",
+    "Rahul",
+    "bg2clips",
+    "Anthropic"
   ],
   "history": [
     {
@@ -2996,6 +3005,51 @@
     {
       "lang": "fr",
       "handle": "MaximeMansuy",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLemaitre",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcGuerini",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "0xMarioNawfal",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Rahul",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "bg2clips",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Anthropic",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "Arnaud_Mensh",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximePirard",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JLepine_",
       "added": "2026-06-18"
     }
   ]

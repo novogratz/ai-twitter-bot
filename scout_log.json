@@ -3993,5 +3993,74 @@
       }
     ],
     "summary": "Le lot mixe les poids lourds de l'IA fran\u00e7aise (Mistral) avec des traders qu\u00e9b\u00e9cois pr\u00e9cis. On a \u00e9vit\u00e9 les 'coachs' qui crient sur Twitter pour rester entre vrais builders."
+  },
+  {
+    "ts": "2026-06-18T08:02:53.466054",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienLemaitre",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "VC chez Alven. Il rep\u00e8re les startups francophones avant qu'elles ne deviennent des licornes ennuyeuses."
+      },
+      {
+        "handle": "ThibautBourgerie",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 9500,
+        "reason": "Parisien expat \u00e0 SF. Twitte sur l'IA avec un pied dans la tech US et l'autre dans la culture FR."
+      },
+      {
+        "handle": "MarcGuerini",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 7500,
+        "reason": "Tech lead QC qui balance des threads devs sans jargon bullshit. Rare pour sa r\u00e9gion."
+      }
+    ],
+    "summary": "Je t'ai sorti le top de l'\u00e9lite IA fran\u00e7aise et les p\u00e9pites crypto/bourse qu\u00e9b\u00e9coises. On \u00e9vite les influenceurs qui vendent du r\u00eave pour du code r\u00e9el."
+  },
+  {
+    "ts": "2026-06-18T14:53:52.568311",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Arnaud_Mensh",
+        "region": "france",
+        "niche": "ai",
+        "followers": 185000,
+        "reason": "Co-founder de Mistral AI. Le mec qui a tu\u00e9 les LLM am\u00e9ricains sur l'efficacit\u00e9. Twitte en FR/EN, z\u00e9ro pub, 100% technique."
+      },
+      {
+        "handle": "MaximePirard",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 62000,
+        "reason": "L'ex-JP Morgan qui a fait fortune en suivant le prix du fer. Style direct, pas de baratin, pure data."
+      },
+      {
+        "handle": "MaximePirard",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 52000,
+        "reason": "Analyste ind\u00e9pendant qu\u00e9b\u00e9cois (ex-McMaster). Focus strict sur l'\u00e9conomie et les actions, style 'pas de bla-bla'."
+      },
+      {
+        "handle": "JLepine_",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Fondateur de Luno (ex-Square). Il tweete sur la friction UX dans la fintech et le futur de la monnaie."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les influenceurs TikTok de la finance pour ne garder que les ing\u00e9nieurs et les traders qui connaissent leur spreadsheet. Pas de formations \u00e0 99\u20ac, juste du gras technique et macro."
   }
 ]

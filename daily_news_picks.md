@@ -15506,3 +15506,48 @@ Hear from Paul Turner, Chief Product Officer of the VMware Cloud Foundation Divi
 The conventional bet for
   - https://x.com/MilkRoadAI/status/2067593741511393455
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 57).
+- **@stocksavvyshay** (753 likes, score 9/10) — $IREN initiated at Buy with a $79 PT by Jefferies.
+
+The firm says IREN’s 6GW powered land bank and vertically integrated GPU cloud model can support ~$3.1B of ARR.
+
+The note also highlights IREN’s $9.
+  - https://x.com/StockSavvyShay/status/2067564361573642414
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 817).
+- **@polynoamial** (92 likes, score 9/10) — When we announced @OpenAI o1 some researchers from other labs told me we made a strategic mistake and should have kept it secret so we could accelerate ourselves and pull farther ahead of the competit
+  - https://x.com/polynoamial/status/2067651128855232663
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 102).
+- **@jietang** (681 likes, score 8/10) — （Claude、GPT、GLM）
+GLM-5.2 Tops Artificial Analysis as the #1 Open-Source Model, Ranking Top 3 Globally
+GLM-5.2 launched and went open-source today, delivering a solid scorecard across multiple authorit
+  - https://x.com/jietang/status/2067149400829501482
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 785).
+- **@cnbc** (7 likes, score 7/10) — Federal regulators back Trump's plan to speed power to energy-hungry AI data centers
+  - https://x.com/CNBC/status/2067645423926268241
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11).
+- **@anthropicai** (276 likes, score 7/10) — New Frontier Red Team blog: Phase 2 of Project Fetch, where we test how well Claude can program a robodog.
+
+Opus 4.7, on its own, was ~20x faster than last year's best human team aided by Opus 4.1. (T
+  - https://x.com/AnthropicAI/status/2067651699486200091
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 468).
+- **@gmi_cloud** (158 likes, score 7/10) — The benchmark is true!
+
+Claude Opus 4.8 creates a slightly better visual, but GLM 5.2 has better balance: lower cost than Claude across both prompts, stronger visual output than GPT 5.5 and Gemini 3.1
+  - https://x.com/gmi_cloud/status/2067499925529846169
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 166).
+- **@omedvibecodes** (100 likes, score 7/10) — Literally the best benchmark on twitter atm that breaks every model rn
+
+GLM 5.2 vs 
+GPT 5.5 xHigh vs
+Opus 4.8 xHigh vs
+Kimi K2.7 Code
+
+genuinely brutal. nobody passed.
+  - https://x.com/OmedVibeCodes/status/2067014881656602685
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 128).
+- **@americapartyx** (10 likes, score 7/10) — ELON WARNED ABOUT AI ENERGY BOTTLENECK YEARS AGO
+
+Elon Musk warned about the coming AI energy crisis long before most people understood it.
+
+“I can’t emphasize enough - we need more electricity. Howev
+  - https://x.com/AmericaPartyX/status/2067648498284073413
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 12).
