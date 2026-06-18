@@ -666,3 +666,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 31 views: my patients keep telling me Bitcoin fixes this
   - 0 likes / 8 views: my patients who sold Nikkei before the rate hike are having a very quiet session this morning
   - 0 likes / 24 views: the 'works on my machine' era just ended
+
+## 2026-06-17
+
+**Activity** — total actions: 703
+  - by type: reply=618, quote=50, quote_gif=17, hotake=9, post=8, retweet=1
+  - top sources: SEARCH-HOT=406, FEED-SWEEP-FEED=105, FEED-SWEEP-FOLLOWING=68, QUOTE=35, GIF=20, VIP=16, BREAKING_QRT=9, HOT_QUOTE=6
+  - comedy patterns: METAPHOR=8, RENAME=5, FR_ANCHOR=4, UNDERSTATEMENT=2, DIALOGUE=1, REPETITION=1
+  - top reply targets: @TheBTCTherapist=16, @zerohedge=13, @OpenAI=13, @Graphseo=13, @Polymarket=12
+
+**Followers we follow** (running total): 254
+
+**Top-performing posts scraped today**:
+  - 40 likes / 13348 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 1 likes / 13 views: Brand manager: "we're adding AI to everything" 60% of customers: "we're leaving" Brand manager: "add
+  - 1 likes / 80 views: $CRWV after the Cramer mention:
