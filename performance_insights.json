@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-06-18T05:51:19.982691",
-  "window_7d_actions": 1436,
-  "window_24h_actions": 931,
+  "generated_at": "2026-06-18T16:53:55.366653",
+  "window_7d_actions": 2120,
+  "window_24h_actions": 1207,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 1284
+      "count": 1939
     },
     {
       "pattern": "METAPHOR",
-      "count": 74
+      "count": 89
     },
     {
       "pattern": "RENAME",
-      "count": 47
+      "count": 56
     },
     {
       "pattern": "EN_ANCHOR",
-      "count": 22
+      "count": 24
     },
     {
       "pattern": "DIALOGUE",
-      "count": 4
+      "count": 6
     }
   ],
   "worst_patterns": [
@@ -31,74 +31,74 @@
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 3
+      "count": 4
     },
     {
       "pattern": "DIALOGUE",
-      "count": 4
+      "count": 6
     }
   ],
   "best_hours_utc": [
+    {
+      "hour": 11,
+      "actions": 202
+    },
+    {
+      "hour": 10,
+      "actions": 191
+    },
     {
       "hour": 21,
       "actions": 184
     },
     {
+      "hour": 12,
+      "actions": 172
+    },
+    {
       "hour": 23,
       "actions": 125
-    },
-    {
-      "hour": 11,
-      "actions": 93
-    },
-    {
-      "hour": 4,
-      "actions": 91
-    },
-    {
-      "hour": 22,
-      "actions": 85
     }
   ],
   "best_topics_7d": [
     {
-      "topic": "Autre",
-      "count": 721
+      "topic": "IA",
+      "count": 992
     },
     {
-      "topic": "IA",
-      "count": 585
+      "topic": "Autre",
+      "count": 967
     },
     {
       "topic": "Bourse",
-      "count": 76
+      "count": 107
     },
     {
       "topic": "Crypto",
-      "count": 75
+      "count": 94
     },
     {
       "topic": "Spatial",
-      "count": 39
+      "count": 55
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1065
+      "count": 1579
     },
     {
       "type": "quote",
-      "count": 213
+      "count": 296
     },
     {
       "type": "retweet",
-      "count": 86
+      "count": 133
     },
     {
       "type": "quote_gif",
-      "count": 63
+      "count": 102
     },
     {
       "type": "METAPHOR",
@@ -111,22 +111,26 @@
     {
       "type": "CHARACTER",
       "count": 2
+    },
+    {
+      "type": "post",
+      "count": 1
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-18T05:51:06.442971",
-      "text": "Ripple invests in Flutterwave to push valuation past $3.2B.\n\nThe classic VC move: fund the narrative until the P&L catches up.\nCircle back in 18 months when the unit economics actually matter.",
+      "ts": "2026-06-18T16:50:47.805991",
+      "text": "Grok winning is just marketing. The real story? X is the new training ground. We're watching an AI learn to shitpost its way to AGI.",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-06-18T16:50:13.005285",
+      "text": "Anthropic is charging thousands for work that now costs pennies in inference.\n\nWe are witnessing the death of the billable hour.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-18T05:49:46.478517",
-      "text": "$SOL price is irrelevant. You are paying for the dopamine of @Sasuke101v’s verification checkmark.\n\nThe real product isn’t Solana. It’s LinkedIn energy on blockchain rails.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-06-18T05:49:33.927332",
-      "text": "SOL pump, 12-hour timer.\n\nStargate bought 45% of Solana's supply. This isn't a breakout, it's a liquidity test for the exchange's balance sheet.\n\nFiat gates open, spot buys. Fiat gates close, stakers get dumped on. You're not an investor, you're liquidity.",
+      "ts": "2026-06-18T16:50:01.002105",
+      "text": "170k frauds/day requires ~4 agents (1 per 40k txs).\n\nThe SaaS pitch deck has 6 months runway and a UI wrapper. The math says layoffs. Noted.",
       "type": "reply"
     }
   ]

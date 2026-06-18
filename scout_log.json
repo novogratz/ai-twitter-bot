@@ -4062,5 +4062,64 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les influenceurs TikTok de la finance pour ne garder que les ing\u00e9nieurs et les traders qui connaissent leur spreadsheet. Pas de formations \u00e0 99\u20ac, juste du gras technique et macro."
+  },
+  {
+    "ts": "2026-06-18T16:53:22.757907",
+    "raw_count": 7,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thomashoffmann",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Ex-directeur de la recherche chez Xerfi, il d\u00e9crypte l'\u00e9conomie sans en faire des tonnes mais avec une pr\u00e9cision de chirurgien."
+      },
+      {
+        "handle": "louis_mazetti",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 45000,
+        "reason": "Le mec de chez Alchemy (ex-Emergence) qui comprend l'IA mieux que les profs d'HEC. Pas de jargon, que du concret."
+      },
+      {
+        "handle": "charles_hadji",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "Bas\u00e9 aux USA mais tweete en FR sur la tech et l'entrepreneuriat. Son ton est frais, il \u00e9vite les clich\u00e9s."
+      },
+      {
+        "handle": "mickael_benaya",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "La r\u00e9f\u00e9rence sur les valeurs technologiques europ\u00e9ennes. Ses threads sur les bilans sont obligatoires avant la s\u00e9ance."
+      },
+      {
+        "handle": "antoine_gouel",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 25000,
+        "reason": "Le gars qui a fait sa r\u00e9putation dans la gestion de patrimoine en ligne. Ses conseils sur les frais de gestion sauvent des vies."
+      },
+      {
+        "handle": "julien_michon",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 20000,
+        "reason": "Ancien de chez Microsoft France, il tweete sur l'IA et la tech fran\u00e7aise avec le recul du terrain. Pas de bullshit."
+      },
+      {
+        "handle": "maximemuller",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Un des anciens de la sc\u00e8ne crypto QC. Il suit le march\u00e9 depuis la p\u00e9riode 'bitcoin \u00e0 1000$'. Pragmatique."
+      }
+    ],
+    "summary": "Le champ est moins satur\u00e9 qu'en crypto. J'ai filtr\u00e9 les guru formation et gard\u00e9 les vrais professionnels qui tweetent encore en 2026. La France gagne en maturit\u00e9, le Qu\u00e9bec reste discret mais efficace."
   }
 ]

@@ -443,7 +443,14 @@
     "MarcGuerini",
     "Arnaud_Mensh",
     "MaximePirard",
-    "JLepine_"
+    "JLepine_",
+    "thomashoffmann",
+    "louis_mazetti",
+    "charles_hadji",
+    "mickael_benaya",
+    "antoine_gouel",
+    "julien_michon",
+    "maximemuller"
   ],
   "en": [
     "blablacar",
@@ -3050,6 +3057,41 @@
     {
       "lang": "fr",
       "handle": "JLepine_",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomashoffmann",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "louis_mazetti",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "charles_hadji",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickael_benaya",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "antoine_gouel",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "julien_michon",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "maximemuller",
       "added": "2026-06-18"
     }
   ]
