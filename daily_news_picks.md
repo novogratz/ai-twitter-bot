@@ -15345,3 +15345,84 @@ Our goal is to build a fleet of 50,000 of these scanners capable together of doi
 Enough to bring full body imaging to everyon
   - https://x.com/nickfloats/status/2067423587540123853
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 3492).
+- **@cyber_razz** (169 likes, score 9/10) — Microsoft invested $13 billion in OpenAI.
+
+Invested $8 billion in Anthropic.
+
+Banned its own employees from using Claude Fable 5.
+
+Built Copilot Cowork on top of Claude.
+
+Now wants to replace Claude w
+  - https://x.com/cyber_razz/status/2067172855867973791
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 185).
+- **@scaling01** (2957 likes, score 9/10) — Cursor just announced a new 1.5+ trillion parameter model pre-trained on over 100k GPUs.
+
+According to Cursor CEO it is:
+"as big as Opus and GPT"
+
+Yes, the cat is out of the bag and I can spoil the pa
+  - https://x.com/scaling01/status/2067017700384125238
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 3223).
+- **@xiaohu** (257 likes, score 8/10) — Midjourney's hardware device that's been teased for days
+
+Turns out it's actually a medical hardware device
+
+They released a full-body ultrasound computed tomography scanner
+
+The device uses 8,960 ind
+  - https://x.com/xiaohu/status/2067435552631394364
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 373).
+- **@tomhfh** (277 likes, score 8/10) — This is so cool. A full-body ultrasound using no radiation and no magnets.
+
+Thanks to AI, Midjourney has found a way to scan patients in just 60 seconds, using only sound and water.
+
+We are at the foo
+  - https://x.com/tomhfh/status/2067550047483437079
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 299).
+- **@techvoicenet** (287 likes, score 8/10) — Weirdest news of the day 
+
+Midjourney, the company that makes images with AI,
+has launched a device that does scans like MRI in just 60 seconds!
+
+ They submerge you in water
+ They use sound waves inst
+  - https://x.com/TechVoicenet/status/2067573036556181960
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 297).
+- **@arena** (720 likes, score 7/10) — GLM-5.2 (Max) by @Zai_org ranks #10 on the new Agent Arena leaderboard, closely matching Claude-Opus-4.8 (non-thinking) and is the #1 open model by a wide margin!
+
+In Agent Arena, we measure models on
+  - https://x.com/arena/status/2066943450914943025
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 770).
+- **@fortunemagazine** (36 likes, score 7/10) — Top AI leaders like OpenAI's Sam Altman, Anthropic's Dario Amodei, and Google DeepMind's Demis Hassabis joined world leaders at the annual G7 summit in France on Wednesday as artificial intelligence t
+  - https://x.com/FortuneMagazine/status/2067347167832866838
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 50).
+- **@kimmonismus** (574 likes, score 7/10) — Although Trump says that developments regarding Anthropic are going well, the seating arrangement alone is remarkable. Via WSJ 
+
+"At the lunch, OpenAI Chief Executive Sam Altman and Demis Hassabis, th
+  - https://x.com/kimmonismus/status/2067288896690413895
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 662).
+- **@0xnoncesense** (82 likes, score 7/10) — THIS AI BUBBLE IS ABOUT TO BREAK
+
+But it will break for a reason almost nobody is pricing in.
+
+Open models.
+
+Everyone thinks the AI trade is simple:
+
+Pay OpenAI.
+
+Pay Anthropic.
+
+Pay Google.
+
+Rent int
+  - https://x.com/0xNonceSense/status/2067272981899055121
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 108).
+- **@kirubaakaran** (38 likes, score 7/10) — Midjourney is planning a billion scans every month. 
+100x faster. No MRI, no radiation.
+Healthcare is the one industry AI is going to transform beyond recognition.
+
+AI is the biggest turning point of
+  - https://x.com/kirubaakaran/status/2067585024615227819
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 46).
