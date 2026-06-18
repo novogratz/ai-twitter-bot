@@ -1,40 +1,43 @@
-# YouTube brief — 2026-06-17
+# YouTube brief — 2026-06-18
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **606**
-- reply: **562**
-- quote: **27**
+- Total actions logged: **735**
+- reply: **646**
+- quote: **53**
+- quote_gif: **17**
+- hotake: **9**
 - post: **8**
-- quote_gif: **7**
-- hotake: **1**
-- retweet: **1**
+- retweet: **2**
+
+## 🎥 VIDEO CANDIDATES — these popped, make a video on them
+
+*Posts with ≥ 10 likes. This is your shortlist of stories the audience already validated. Each one is a ready-to-shoot video angle.*
+
+- 🎥 **40 likes / 13348 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 
 ## 🥇 Top own posts (by likes)
 
 ### AI
 
+- **40 likes / 13348 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 - **1 likes / 23 views** — Anthropic’s top models now open source. @OpenAI is about to look like they’re selling water at a drowning pool
-- **0 likes / 24 views** — The "AI Winter" hype train is just the engineers taking a smoke break. Relax.
-- **0 likes / 26 views** — Anthropic writes security docs; @OpenAI writes invoices. One is a warning label, the other is the receipt. Does "trust me" scale better than "audit me"?
-
-### Crypto
-
-- **0 likes / 21 views** — Bears screaming 'crypto is dead' are ignoring the house edge. The casino is open, you're just looking at the carpet.
+- **1 likes / 13 views** — Brand manager: "we're adding AI to everything" 60% of customers: "we're leaving" Brand manager: "adding that to our AI-powered insights dashboard"
+- **0 likes / 33 views** — Fomo isn't an investment thesis. It's a receipt for future regret. $SPCX isn't a stock. It's a waiting room ticket.  https://x.com/Gemini/status/2063980615905472924…
 
 ### Bourse
 
 - **1 likes / 37 views** — The timeline treating a four-letter expletive like an earnings beat  https://x.com/TheBTCTherapist/status/2065740784666562681…
+- **0 likes / 9 views** — A $2.17T IPO isn't an exit. It’s the final lesson in a 20-year finance class. You didn’t miss the boat; you just forgot the tuition.  https://x.com/PolymarketMoney/status/2063999699632193658…
 
 ### Other
 
-- **1 likes / 18 views** — Waiting for a flip is just hesitation in a fancy coat. The chart doesn't care about your comfort zone.
 - **1 likes / 7 views** — The herd is just people who forgot how to look at the chart themselves
 - **1 likes / 50 views** — my patients have never cared this much about world peace
 - **1 likes / 108 views** — so Fable 5 wasn't a product launch. it was a response
-- **0 likes / 46 views** — $147B monthly. You’re paying for your own future rent. The cloud isn’t a place, it’s a subscription.
+- **1 likes / 80 views** — $CRWV after the Cramer mention:
 
 ## 📡 Today's news picks (from retweet_bot)
 
@@ -50,22 +53,34 @@ Literally Huang pumping and eating friend chicken isn't enough to stop the crash
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[TechCrunch]** Pinterest launches an experimental AI shopping app called ‘Ask Pinterest’
-  - https://techcrunch.com/2026/06/17/pinterest-launches-an-experimental-ai-shopping-app-called-ask-pinterest/
-- **[Yahoo Finance]** Gold prices today, Wednesday, June 17: Prices hold ahead of Fed decision day
-  - https://finance.yahoo.com/personal-finance/investing/article/gold-prices-today-wednesday-june-17-prices-hold-ahead-of-fed-decision-day-105627164.html
-- **[Yahoo Finance]** This Unstoppable Growth Stock Soared 500% in the Last 12 Months, but Wall Street Expects Limited Upside From Here
-  - https://finance.yahoo.com/markets/stocks/articles/unstoppable-growth-stock-soared-500-104500486.html
-- **[Yahoo Finance]** CarMax Stock Rises. Used-Car Retailer Tops Earnings Estimates.
-  - https://www.barrons.com/articles/carmax-earnings-stock-price-ce6d3235?siteid=yhoof2&yptr=yahoo
-- **[Yahoo Finance]** La-Z-Boy Stock Jumps 17%. How It Weathered Earnings Headwinds.
-  - https://www.barrons.com/articles/la-z-boy-earnings-stock-price-cb6929d2?siteid=yhoof2&yptr=yahoo
-- **[CoinDesk]** UNI token surges while rest of crypto market looks to Fed's Warsh for guidance
-  - https://www.coindesk.com/markets/2026/06/17/uni-token-surges-while-rest-of-crypto-market-looks-to-fed-s-warsh-for-guidance
-- **[Yahoo Finance]** Nasdaq Futures Rising as Iran Peace Deal Boosts the Market Ahead of Fed Decision
-  - https://www.barrons.com/livecoverage/stock-market-news-today-061726/card/dow-builds-on-record-high-as-iran-peace-deal-boosts-the-market-xWNq03V7bbKKCeVBehhY?siteid=yhoof2&yptr=yahoo
-- **[Yahoo Finance]** 2 Trillion-Dollar Stocks Define This Rally—SpaceX Isn’t One of Them.
-  - https://www.barrons.com/articles/stock-market-rally-things-to-know-today-1e00de7a?siteid=yhoof2&yptr=yahoo
+- **[X_FOLLOWING/Crypto Rover]** BREAKING:  BlackRock sells $30,770,000 worth of Bitcoin.
+  - https://x.com/cryptorover/status/2067470344546402476
+- **[X_HOME/BITCOINLFG®]** JUST IN  
+
+BLACKROCK JUST BOUGHT $16.3 MILLION WORTH OF $BITCOIN.
+
+WALL STREET’S ACCUMULATION CONTINUES.
+  - https://x.com/bitcoinlfgo/status/2067468849931485432
+- **[X_HOME/The Bitcoin Historian]** WHILE YOU'RE SCARED, THE UAE ROYAL FAMILY NOW OWNS OVER $740,000,000 WORTH OF #BITCOIN
+
+OIL MONEY IS BUYING THE DIP
+  - https://x.com/pete_rizzo_/status/2067469101522424063
+- **[X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Abhi]** One of the more obvious new themes is robotics and automation. (Replies ) 
+
+However, it’s still extremely early in its evolution.
+
+So far many investors are foc
+  - https://x.com/KryptonCEO/status/2067470483755311375
+- **[X_HOME/Midnight Capital]** Search has been accelerating past 3 quarters on a YoY basis, there’s growing evidence that AI is enhancing Search monetization not hurting it - YT is growing ni
+  - https://x.com/Midnight_Captl/status/2067454162900754870
+- **[X_FOLLOWING/Midnight Capital]** Search has been accelerating past 3 quarters on a YoY basis, there’s growing evidence that AI is enhancing Search monetization not hurting it - YT is growing ni
+  - https://x.com/Midnight_Captl/status/2067454162900754870
+- **[X_SEARCH/live/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Tao Outsider]** $TAO Bittensor Subnet 22 - Desearch
+
+This is the kind of subnet build I like to see: useful products, updated tooling, a clear developer surface, experiments ou
+  - https://x.com/TaoOutsider/status/2067470925566517524
+- **[X_HOME/The AI Therapist]** Google cloud is growing 22% YoY but still only 6% of revenue. alts are betting on the moat while gogles is quietly building the pipes
+  - https://x.com/TheAIShrink/status/2067469805314068802
 
 ## 🎬 Suggested video angles
 
@@ -76,4 +91,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-17T07:06:23*
+*Generated 2026-06-18T00:55:09*
