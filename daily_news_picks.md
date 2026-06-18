@@ -15313,3 +15313,35 @@ What looked cutting-edge a few years ago now feels like a relic from ano
 - **@cgtnofficial** (10 likes, score 7/10) — Ahead of the Dragon Boat Festival, Unitree's G1 humanoid robots wowed residents in Hangzhou with martial arts moves. Earlier this year, the G1 robots went viral after appearing at China Media Group Sp
   - https://x.com/CGTNOfficial/status/2067547870870360425
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 14).
+- **@spacex** (5747 likes, score 9/10) — Dragon’s trunk has been jettisoned and its nosecone is closed. Splashdown in ~35 minutes
+  - https://x.com/SpaceX/status/2067209954931413399
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 6185).
+- **@getviture** (104 likes, score 8/10) — Introducing VITURE Helix — in collaboration with @nvidia.
+
+The first AI safety glasses built on NVIDIA's XR AI solution.
+
+Sees what you see. Hears what you hear.
+
+The AI you wear to work.
+
+→ http://vi
+  - https://x.com/getVITURE/status/2066917428219490465
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 112).
+- **@marcusyul** (132 likes, score 8/10) — JANE STREET has just spent $6 billion on computing.
+
+one of the world's most powerful trading firms.
+
+and they've just revealed exactly how it works inside.
+
+what they said is hard to forget:
+
+→ their
+  - https://x.com/marcusyul/status/2066983059040403621
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 162).
+- **@nickfloats** (3284 likes, score 7/10) — Full body ultrasonic computational tomography
+
+Our goal is to build a fleet of 50,000 of these scanners capable together of doing a billion scans a month.
+
+Enough to bring full body imaging to everyon
+  - https://x.com/nickfloats/status/2067423587540123853
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 3492).
