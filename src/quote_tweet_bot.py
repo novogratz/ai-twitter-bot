@@ -463,14 +463,18 @@ def _generate_quote(author: str, tweet_text: str):
         out = unwrap_text(result.stdout)
         if not out:
             return None
-        if _looks_like_skip_or_rationale(out):
-            log.info(f"[QUOTE] SKIP-or-rationale detected, refusing to post: {out[:120]!r}")
-            return None
-        if out.startswith('"') and out.endswith('"'):
-            out = out[1:-1]
-        return out
     except Exception:
         return None
+    # SKIP-check OUTSIDE the try so we can raise DeliberateSkip without it
+    # being swallowed — a confident refusal must short-circuit the 3-attempt
+    # retry loop (audit 2026-06-18: ~29 quote SKIPs/day × 3 Sonnet calls).
+    if _looks_like_skip_or_rationale(out):
+        from .content_guard import DeliberateSkip
+        log.info(f"[QUOTE] SKIP-or-rationale detected, refusing to post: {out[:120]!r}")
+        raise DeliberateSkip("model returned SKIP")
+    if out.startswith('"') and out.endswith('"'):
+        out = out[1:-1]
+    return out
 
 
 def _handle_from_url(url: str) -> str:

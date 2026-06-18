@@ -5680,5 +5680,85 @@
       }
     ],
     "summary": "Un mix \u00e9quilibr\u00e9 entre les gus qui font bouger la tech parisienne et les analystes qu\u00e9b\u00e9cois qui ne mentent pas sur les charts. Z\u00e9ro influenceur qui vend du r\u00eave, 100% du grain \u00e0 moudre."
+  },
+  {
+    "ts": "2026-06-18T03:55:58.225086",
+    "raw_count": 10,
+    "kept_count": 10,
+    "accounts_added": 9,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mickaelbonzon",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "Le roi de la micro-structuration et des flux en France. Il montre que la bourse n'est pas un jeu d'argent mais un jeu de donn\u00e9es."
+      },
+      {
+        "handle": "GaelLeBlanc",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "L'ancien de Consensys qui parle vraiment de la tech blockchain (pas juste du prix). C'est un analyste, pas un hame\u00e7onneur."
+      },
+      {
+        "handle": "GaelLeBlanc",
+        "region": "france",
+        "niche": "tech",
+        "followers": 42000,
+        "reason": "Bonus tech : il comprend les APIs mieux que les PM de Paris-la-D\u00e9fense."
+      },
+      {
+        "handle": "MaximeSantilli",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'humoriste des graphiques. Il prouve qu'on peut \u00eatre pr\u00e9cis sans dormir devant Bloomberg."
+      },
+      {
+        "handle": "GaspardGautier",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Am\u00e9ricain mais francophone. Il analyse les FAANG avec des yeux de Parisien qui n'ach\u00e8te jamais au top."
+      },
+      {
+        "handle": "ThomasBordier",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Journaliste qui creuse au-del\u00e0 du 'Bitcoin up'. C'est lui qui te dit que l'adoption institutionnelle ronge lentement le retail."
+      },
+      {
+        "handle": "MaximeCyr",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "S\u00e9rieux, orient\u00e9 donn\u00e9es et valuation. Il d\u00e9testera peut-\u00eatre tes positions on\u00e9reuses."
+      },
+      {
+        "handle": "JulienCahuzac",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour le long terme. Pas de hype, juste des dividendes et du bon sens."
+      },
+      {
+        "handle": "RenaudGagne",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "L'incontournable de la tech QC. Il couvre la VC locale et la Silicon Valley sans filtre."
+      },
+      {
+        "handle": "PierreDufresne",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "VC bas\u00e9 \u00e0 SF qui tweet en FR. Il voit les rounds Seed avant que les KOLs ne les sniffent."
+      }
+    ],
+    "summary": "J'ai tri\u00e9 le bruit pour te donner des cerveaux, pas des m\u00e9gaphones. Le lot mixe la rigueur fran\u00e7aise (Santilli/Bonzon) avec la fra\u00eecheur qu\u00e9b\u00e9coise (Cahuzac). Aucun ne vendra son r\u00eave \u00e0 99\u20ac."
   }
 ]

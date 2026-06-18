@@ -2694,3 +2694,57 @@ def test_engine_health_slots_elapsed_clamp():
     assert "post" not in ehb.WATCHED_TYPES and "hotake" not in ehb.WATCHED_TYPES
     assert ehb._KIND_REMAP.get("post") == "originals"
     assert ehb._KIND_REMAP.get("hotake") == "originals"
+
+
+def test_deliberate_skip_short_circuits_validation_retries():
+    """2026-06-18 audit: when the model returns 'SKIP' deliberately,
+    content_guard.generate_validated burned all 3 attempts (~30s each on
+    Claude Sonnet) before logging 'empty draft' — ~29 quote cycles/day,
+    ~43 min/day of wasted compute. Fix: gen_fn raises DeliberateSkip on
+    a confident refusal; generate_validated catches it and stops retrying.
+    """
+    from src import content_guard as cg
+
+    calls = {"n": 0}
+
+    def gen_fn():
+        calls["n"] += 1
+        raise cg.DeliberateSkip("model returned SKIP")
+
+    out = cg.generate_validated(gen_fn, kind="quote", label="TEST", attempts=3)
+    assert out is None
+    assert calls["n"] == 1, f"DeliberateSkip must not retry — got {calls['n']} calls"
+
+    # Sanity: a None-returning generator still retries (transient LLM hiccup
+    # is the legitimate retry case — only deliberate refusals short-circuit).
+    calls["n"] = 0
+
+    def gen_none():
+        calls["n"] += 1
+        return None
+
+    cg.generate_validated(gen_none, kind="quote", label="TEST", attempts=3)
+    assert calls["n"] == 3, "None must still retry up to `attempts` times"
+
+
+def test_generate_quote_raises_deliberate_skip_on_skip_rationale(monkeypatch):
+    """_generate_quote must raise DeliberateSkip (not return None) when the
+    model returns a SKIP — so the content_guard retry loop short-circuits.
+    Returning None preserved the old 3-retry waste."""
+    from src import quote_tweet_bot as qtb
+    from src import content_guard as cg
+
+    class R:
+        returncode = 0
+        stdout = "SKIP. Off-niche and not worth quoting."
+        stderr = ""
+
+    monkeypatch.setattr(qtb, "run_llm", lambda *a, **k: R())
+    monkeypatch.setattr(qtb, "unwrap_text", lambda s: s)
+
+    raised = False
+    try:
+        qtb._generate_quote("someone", "some tweet text")
+    except cg.DeliberateSkip:
+        raised = True
+    assert raised, "_generate_quote must raise DeliberateSkip on SKIP-or-rationale"
