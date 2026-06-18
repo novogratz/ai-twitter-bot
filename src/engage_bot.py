@@ -20,10 +20,18 @@ FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 
 # Compatibility shim — notify_bot and reply_agent import TARGET_ACCOUNTS.
 # Real pool is built dynamically from the feed; this satisfies the import.
-TARGET_ACCOUNTS = ["Graphseo", "XFenaux", "RodolpheSteffan", "FinTales_"]
+# Follow pool: BIG AI accounts only (operator 2026-06-17: "only follow big big
+# ai accounts, minimum 100k followers"). The follow chokepoint additionally
+# enforces MIN_FOLLOWERS_TO_FOLLOW as a hard gate, so nothing small slips in.
+TARGET_ACCOUNTS = [
+    "OpenAI", "sama", "AnthropicAI", "GoogleDeepMind", "demishassabis",
+    "elonmusk", "xai", "karpathy", "ylecun", "AndrewYNg", "GoogleAI",
+    "nvidia", "MistralAI", "perplexity_ai", "OpenAIDevs", "grok",
+    "satyanadella", "sundarpichai",
+]
 
-# Only VIP that is always in the rotation by request (operator 2026-06-06).
-VIP_ACCOUNTS = ["Graphseo"]
+# No forced small-account VIP under the big-AI mandate.
+VIP_ACCOUNTS = []
 
 
 def _load_discovered_handles() -> list:

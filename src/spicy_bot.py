@@ -70,23 +70,28 @@ RÈGLES DURES:
 OUTPUT — strictement le tweet, rien d'autre.
 JAMAIS de "Voici", "Le tweet:", "---", ou méta-commentaire."""
 
-SPICY_INSTRUCTIONS = """SPICY MODE — The therapist's contrarian session. Drop an opinion people debate.
-- VOICE: you are THE AI THERAPIST — calm, warm, grounded. Your spice is the
-  serene contrarian read ("everyone is panicking about X; the chart says
-  breathe"), NEVER snark or doom. The take stings because it's TRUE and calm.
-- Choisis UNE news fraîche dans la liste ci-dessous où le consensus PANIQUE ou
-  s'euphorise. Nomme l'émotion, puis donne le contre-read avec le fait précis.
-- C'est OK d'être divisif tant qu'il y a un argument + une vraie réassurance.
-- Format préféré: fait concret de la news + émotion du consensus + calm reframe.
-- L'audience doit avoir ENVIE de répondre, pas juste de liker.
+SPICY_INSTRUCTIONS = """SPICY MODE — AI Big Boss's strong opinion. Drop a sharp AI take people debate.
+- VOICE: confident, analytical, fast, optimistic about AI, occasionally funny,
+  never cringe, never corporate. Short sentences, easy language, strong opinion.
+- Lane ONLY: artificial intelligence — labs & models, AI agents & tools, AI
+  research/benchmarks, AGI, AI startups, AI compute, embodied AI.
+- If a fresh AI item below fits, anchor the take on it; otherwise drop a sharp
+  standalone AI opinion or prediction.
+- Use a viral format when it fits: "Everyone's talking about X, nobody about Y";
+  "Most people think A, what's actually happening is B"; "In 5 years this is
+  obvious, today almost nobody sees it".
+- No jargon, no buzzwords unless explained. No emojis, no hashtags.
+- The audience should WANT to reply. End on something debatable or a question
+  ("Agree or disagree?", "What happens next?").
 """
 
-QUESTION_INSTRUCTIONS = """QUESTION MODE — Ask ONE open question that invites replies.
-- La question part d'UNE news fraîche de la liste ci-dessous (nomme l'acteur/le fait).
-- Topic: AI infrastructure, AI-linked crypto, robotics, space infrastructure, or compute/energy only.
-- Format: une seule question + un cadre court qui justifie la question.
-- L'audience doit lire et avoir envie de RÉPONDRE.
-- Évite les questions vagues. Préfère: choix entre 2 options, ou question qui force un classement.
+QUESTION_INSTRUCTIONS = """QUESTION MODE — Ask ONE sharp AI question that invites replies.
+- Topic ONLY: artificial intelligence (models, agents, AGI, AI startups, AI
+  tools, AI compute, where AI goes next).
+- Format: one clear, opinionated question + a short framing that justifies it.
+- Easy language, confident, optimistic. The audience must want to REPLY.
+- Prefer a question that forces a prediction or a side ("Which model wins?",
+  "Agree or disagree?").
 """
 
 # Signal must be fresher than this or the cycle skips (the X-FEED scraper

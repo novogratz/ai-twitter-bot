@@ -269,10 +269,18 @@ def can_follow(handle: str) -> Tuple[bool, str]:
 
 
 def can_unfollow(handle: str) -> Tuple[bool, str]:
-    """Daily cap, anti-churn cooldown; never unfollow a tier1/tier2 account."""
+    """Daily cap, anti-churn cooldown; never unfollow a tier1/tier2 account.
+
+    MASS_UNFOLLOW_FORCE=1 (operator-triggered clean-slate wipe) bypasses the
+    whitelist protection, the anti-churn cooldown, and the daily cap so a
+    one-shot script can drain /following completely. DRY_RUN is still honored
+    downstream in twitter_client.unfollow_account.
+    """
     h = (handle or "").lower().lstrip("@")
     if not h:
         return (False, "empty handle")
+    if os.environ.get("MASS_UNFOLLOW_FORCE") == "1":
+        return (True, "")
     if is_whitelisted(h, tiers=("tier1", "tier2")):
         return (False, "protected: tier1/tier2 whitelist account")
     if within_churn_cooldown(h):

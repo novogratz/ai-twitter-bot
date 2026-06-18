@@ -40,26 +40,27 @@ MIN_LIKES_TO_CONSIDER = int(os.environ.get("BREAKOUT_MIN_LIKES", "30"))
 # Search queries that surface high-velocity English content in our niches.
 # We want the FRESH viral pulse, not yesterday's already-hot tweets.
 BREAKOUT_QUERIES = [
-    "AI datacenter OR power demand lang:en min_faves:3000",
-    "CoreWeave OR CRWV OR APLD OR IREN lang:en min_faves:2000",
-    "Nvidia OR GPU OR compute cluster lang:en min_faves:5000",
-    "TAO OR Bittensor OR decentralized compute lang:en min_faves:2000",
-    "SpaceX OR Starlink OR robotics lang:en min_faves:5000",
+    "OpenAI OR Anthropic OR xAI OR \"GPT-5\" OR DeepSeek lang:en min_faves:3000",
+    "ChatGPT OR Claude OR Gemini OR Grok lang:en min_faves:3000",
+    "\"AI agent\" OR agentic OR AGI OR superintelligence lang:en min_faves:2000",
+    "Nvidia OR GPU OR \"AI datacenter\" OR \"AI bubble\" lang:en min_faves:3000",
+    "Sora OR \"AI video\" OR \"humanoid robot\" OR robotics lang:en min_faves:2000",
+    "AI lang:en min_faves:5000",
 ]
 
 
-BREAKOUT_PROMPT = """Tu es @TheAIShrink. Une story est en train d'EXPLOSER en ce moment sur X. Tu vas la commenter, ULTRA RAPIDE, ULTRA SHARP.
+BREAKOUT_PROMPT = """You are AI Big Boss (@TheAIBoss). An AI story is EXPLODING on X right now. Comment on it, ULTRA FAST, ULTRA CLEAR.
 
 {lang_directive}
 
-Story qui prend la lumière (échantillon des tweets qui montent):
+The story taking off (sample of the tweets climbing):
 {trend_context}
 
 📅 Date: {today_date}
 
-OBJECTIF: be among the first 50 voices commenting on this story through the
-AI infrastructure & asymmetric investing lens.
-Pas de SKIP. Pas de rejection sampling. Tu shipes un take qui claque.
+OBJECTIVE: be among the first voices on this AI story with the comment that
+makes it make sense — what it means or what everyone's missing. Easy language,
+strong opinion. No SKIP. No rejection sampling. Ship a take that lands.
 
 FORMAT (≤270 chars TOTAL, screenshot-worthy):
 - 1-2 phrases sec.

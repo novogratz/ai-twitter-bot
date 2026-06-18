@@ -40,42 +40,30 @@ RSS_CACHE_FILE = os.path.join(_PROJECT_ROOT, "rss_signal_cache.json")
 # Tier 2: AI/crypto specialised press (TC, Verge, Wired, CoinDesk).
 # Tier 3: market/macro (CNBC, Axios, Yahoo Finance).
 RSS_FEEDS = [
-    # AI tech press
+    # AI-focused feeds (AI Big Boss)
     ("TechCrunch AI",     "https://techcrunch.com/category/artificial-intelligence/feed/"),
-    ("TechCrunch",        "https://techcrunch.com/feed/"),
-    ("The Verge",         "https://www.theverge.com/rss/index.xml"),
-    ("Ars Technica",      "https://feeds.arstechnica.com/arstechnica/index"),
-    ("Wired",             "https://www.wired.com/feed/rss"),
     ("VentureBeat AI",    "https://venturebeat.com/category/ai/feed/"),
+    ("The Verge AI",      "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),
     ("MIT Tech Review",   "https://www.technologyreview.com/feed/"),
-    # Crypto press
-    ("CoinDesk",          "https://www.coindesk.com/arc/outboundfeeds/rss/"),
-    ("Cointelegraph",     "https://cointelegraph.com/rss"),
-    ("The Block",         "https://www.theblock.co/rss.xml"),
-    ("Decrypt",           "https://decrypt.co/feed"),
-    # Finance / macro / business
-    ("CNBC Tech",         "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19854910"),
-    ("CNBC Top",          "https://www.cnbc.com/id/100003114/device/rss/rss.html"),
-    ("Yahoo Finance",     "https://finance.yahoo.com/news/rssindex"),
-    ("Axios Tech",        "https://api.axios.com/feed/technology/"),
-    ("Reuters Tech",      "https://www.reutersagency.com/feed/?best-sectors=technology&post_type=best"),
+    ("Ars Technica",      "https://feeds.arstechnica.com/arstechnica/index"),
+    ("The Verge",         "https://www.theverge.com/rss/index.xml"),
+    ("TechCrunch",        "https://techcrunch.com/feed/"),
+    ("Google AI Blog",    "https://blog.google/technology/ai/rss/"),
+    ("OpenAI Blog",       "https://openai.com/blog/rss.xml"),
+    ("HuggingFace Blog",  "https://huggingface.co/blog/feed.xml"),
 ]
 
-# Niche-keyword filter — tweet must hit one of these.
 NICHE_HITS = re.compile(
     r"\b("
-    r"ai|a\.i\.|artificial intelligence|machine learning|llm|"
-    r"openai|anthropic|claude|chatgpt|gpt|gemini|llama|mistral|"
-    r"nvidia|nvda|deepmind|agi|datacenter|gpu|tpu|chip|"
-    r"compute|hpc|power demand|power generation|electricity|grid|"
-    r"nuclear|megawatt|gigawatt|coreweave|crusoe|applied digital|"
-    r"iren|hive|soluna|terawulf|cipher mining|core scientific|"
-    r"hugging\s?face|perplexity|copilot|robot|robotics|humanoid|agent|"
-    r"bitcoin|btc|ethereum|eth|crypto|stablecoin|coinbase|binance|"
-    r"defi|nft|solana|tao|bittensor|decentralized compute|"
-    r"stock|nasdaq|s&p|s\&p|cac40|ipo|earnings|fed|fomc|"
-    r"tesla|apple|google|alphabet|meta|amazon|microsoft|"
-    r"valuation|billion|trillion|spacex|starlink|frontier tech"
+    r"ai|a\.i\.|artificial intelligence|machine learning|deep learning|agi|asi|"
+    r"llm|openai|anthropic|deepmind|google deepmind|xai|mistral|meta ai|deepseek|"
+    r"hugging face|perplexity|cohere|"
+    r"gpt|chatgpt|claude|gemini|grok|llama|sora|midjourney|reasoning model|"
+    r"frontier model|foundation model|multimodal|"
+    r"ai agent|agentic|copilot|cursor|windsurf|devin|ai tool|ai assistant|"
+    r"nvidia|gpu|tpu|datacenter|compute|ai chip|ai capex|coreweave|"
+    r"robot|robotics|humanoid|self-driving|autonomous|ai safety|ai alignment|"
+    r"neural|inference|fine-tune|benchmark"
     r")\b",
     re.IGNORECASE,
 )

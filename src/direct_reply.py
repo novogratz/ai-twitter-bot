@@ -23,41 +23,25 @@ FAVORITE_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FAVORITE_REPOST_MIN_ENGAGEM
 FAVORITE_REPOST_MAX_AGE_MINUTES = int(os.environ.get("FAVORITE_REPOST_MAX_AGE_MINUTES", "2880"))
 
 VIP_REPLY_ACCOUNTS = [
-    "TheBTCTherapist",  # model account — reply to + amplify everything he posts
-    "Graphseo", "RodolpheSteffan", "vision_ia", "FinTales_", "novogratz",
-    "jbelizaireCEO", "FlasheurInvest", "ylecun", "arthurmensch",
-    "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
-    "VitalikButerin", "saylor", "brian_armstrong", "cz_binance", "SpaceX"
+    "sama", "OpenAI", "AnthropicAI", "GoogleDeepMind", "elonmusk", "xai",
+    "karpathy", "ylecun", "demishassabis", "DarioAmodei", "MistralAI",
+    "perplexity_ai", "nvidia", "GoogleAI", "AndrewYNg", "drfeifei",
 ]
 _VIP_REPLY_ACCOUNTS_LC = {h.lower() for h in VIP_REPLY_ACCOUNTS}
 
 HIGH_TRACTION_REPLY_ACCOUNTS = [
-    "PowerHasheur", "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr",
-    "CryptoPicsou", "crypto_futur", "TheCrypt0Matrix", "TagadoBTC",
-    "Crypto__Goku", "MiningTk", "MoneyRadar_FR", "Capetlevrai", "Dark_Emi_",
-    "Divs_King", "MathieuL1", "NCheron_bourse", "ABaradez", "Phil_RX",
-    "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "fchollet", "MistralAI"
+    "OpenAI", "AnthropicAI", "GoogleDeepMind", "xai", "MistralAI",
+    "sama", "karpathy", "ylecun", "demishassabis", "DarioAmodei",
+    "AndrewYNg", "drfeifei", "OpenAIDevs", "rowancheung", "TheRundownAI",
+    "alexandr_wang", "emollick", "_akhaliq", "swyx", "amasad",
 ]
-_FR_ACCOUNT_HINTS = ("_fr", "cryptoast", "coinacademy", "journalducoin", "fintales", "graphseo", "vision_ia")
+_FR_ACCOUNT_HINTS = ("_fr", "korben", "underscore", "numerama", "frandroid")
 
-# 2026-06-02: BIG French accounts to reply to DAILY across the 5 verticals.
-# Being in the threads of large FR AI / bourse / crypto / investment / space
-# accounts is the #1 algo signal for reach + follower conversion. These are
-# fed into the PROFILE-ALWAYS reply path so each cycle pulls their latest
-# tweets and lands a sharp FR reply (subject to the 48h + caps + substance gate).
+# BIG AI accounts to reply to DAILY — be everywhere AI is discussed. Being in
+# the threads of the largest AI accounts is the #1 algo signal for reach.
 BIG_FR_ACCOUNTS = [
-    # IA / Tech FR
-    "Korben", "micode", "Underscore_", "presse_citron", "numerama",
-    "siecledigital", "BFMTech", "frandroid", "journaldugeek", "FlavienChervet",
-    "MistralAI", "arthurmensch", "GuillaumeLample",
-    # Bourse / Investissement FR
-    "Heu7reka", "Yoann_Lopez_", "Finary", "ZonebourseFR", "BFMBourse",
-    "latribune", "Capital", "LesEchos", "boursorama", "GoodValYou",
-    "Zonebourse", "Investir", "SnowballEcho",
-    # Crypto FR
-    "Hasheur", "cryptodiffusion", "Cointribune", "BFMcrypto", "PowerHasheur",
-    "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr", "CryptoPicsou",
-    # Spatial FR
+    # FR AI tail (replies match parent language)
+    "Korben", "Underscore_", "MistralAI", "arthurmensch", "GuillaumeLample",
     ]
 ALWAYS_REPLY_ACCOUNTS = list(dict.fromkeys(
     VIP_REPLY_ACCOUNTS + HIGH_TRACTION_REPLY_ACCOUNTS + BIG_FR_ACCOUNTS))
@@ -79,18 +63,25 @@ _STRONG_NON_FR_MARKERS = re.compile(
 
 _NICHE_PATTERN = re.compile(
     r"\b("
-    r"ai|i\.a|ia|agi|llm|gpt|chatgpt|claude|openai|anthropic|mistral|gemini|grok|xai|deepseek|huggingface|nvidia|cuda|gpu|tpu|agent|agents|robot|robots|humanoide|humanoïde|altman|musk|ml|deep\s*learning|neural|saas|software|cloud|datacenter|"
-    r"codex|copilot|cursor|windsurf|replit|programmeur|coding|coder|développeur|ide|api|sdk|"
-    r"crypto|btc|bitcoin|eth|ethereum|sol|solana|xrp|blockchain|defi|stablecoin|token|altcoin|memecoin|nft|wallet|binance|coinbase|kraken|satoshi|web3|dao|staking|yield|dex|cex|"
-    r"space|espace|spatial|spacex|starship|starlink|rocket|fusée|fusee|satellite|nasa|esa|ariane|arianegroup|blue\s*origin|orbite|orbit|astéroïde|exploration|mars|lune|moon|cosmos|"
-    r"bourse|action|actions|stock|stocks|marché|trading|trader|invest|investir|portefeuille|etf|pea|cto|cac|cac40|nasdaq|fed|bce|taux|powell|lagarde|rendement|dividendes|ipo|valuation|per|fcf|roe|roic|livret|assurance|levée|fund|funding|vc|venture|startup|banque|fintech|néobanque|paiement|virement|swift|sepa|immo|immobilier|inflation|récession|earnings|acquisition|merger|m&a|finance|cotation|pétrole|xau|commodity|semi.?conducteur|bullish|bearish|oversold|resistance|support|volatility|krach|goldman|jpmorgan|morgan\s*stanley|dette|deficit|fiscal|impot|budget|deflation|monetaire|souverain|oat|spread|notation|moody|tesla|meta|microsoft|google|amazon|apple|netflix|alphabet|spotify|uber|airbnb|palantir|shopify|stripe|databricks|snowflake|datadog|cloudflare"
+    # Core AI
+    r"ai|a\.i|i\.a|ia|agi|asi|llm|machine\s*learning|deep\s*learning|neural|superintelligence|"
+    # Labs
+    r"openai|anthropic|deepmind|google\s*deepmind|xai|mistral|meta\s*ai|deepseek|hugging\s*face|perplexity|cohere|stability\s*ai|scale\s*ai|"
+    # Models
+    r"gpt|chatgpt|gpt-?5|gpt-?4|claude|gemini|grok|llama|sora|midjourney|stable\s*diffusion|frontier\s*model|reasoning\s*model|foundation\s*model|multimodal|"
+    # Agents / tools
+    r"ai\s*agent|ai\s*agents|agentic|copilot|cursor|windsurf|replit|devin|ai\s*tool|ai\s*app|ai\s*coding|prompt|fine-?tune|inference|rag|"
+    # People
+    r"altman|amodei|hassabis|musk|karpathy|ilya|sutskever|lecun|jensen\s*huang|"
+    # Compute / money / embodied / safety
+    r"nvidia|nvda|gpu|tpu|h100|h200|blackwell|cuda|datacenter|compute|ai\s*capex|ai\s*infrastructure|coreweave|ai\s*chip|ai\s*bubble|ai\s*trade|ai\s*startup|ai\s*funding|ai\s*race|"
+    r"robot|robots|robotics|humanoid|self-?driving|autonomous|ai\s*safety|ai\s*alignment|ai\s*regulation|ai\s*doom|ai\s*risk"
     r")\b",
     re.IGNORECASE,
 )
-_TICKER_RE = re.compile(r"\$[A-Z]{1,5}\b")
 
 def _is_on_niche(text: str) -> bool:
-    return bool(_NICHE_PATTERN.search(text) or _TICKER_RE.search(text))
+    return bool(_NICHE_PATTERN.search(text))
 
 _FR_MARKERS = re.compile(r"\b(le|la|les|un|une|des|du|de|d|dans|pour|sur|avec|pas|est|sont|mais|aussi|très|tout|cette|qui|que|quand|comme|entre|depuis|faire|faut|peut|encore|selon|même|après|avant|bien|sans|je|j|tu|il|elle|on|nous|vous|ils|elles|me|te|se|ce|c|notre|votre|leur|ces|son|ses|sa|mon|ton|mes|tes|enfin|ptdr|mdr|franchement|grave|voila|voilà|jours|délivrance|refait|marché|bourse|taux|année|être|avoir|rien|jamais|toujours)\b", re.IGNORECASE)
 _FR_ACCENT_RE = re.compile(r"[àâçéèêëîïôûùüÿœæ]", re.IGNORECASE)
@@ -140,53 +131,35 @@ EN_ACCOUNTS = [
     ]
 
 SEARCH_QUERIES = [
-    # ===== AI-ONLY (2026-06-03 rebrand: AI Decoder). English-first; small FR
-    # AI tail so we can also reply to French AI threads (replies match parent).
-    # ===== ENGLISH — labs / models / agents =====
-    "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:50",
-    "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
-    "\"AI agents\" OR \"agentic AI\" OR \"reasoning model\" lang:en min_faves:30",
-    "LLM OR \"frontier model\" OR \"open source AI\" OR Mistral lang:en min_faves:30",
-    "AGI OR \"superintelligence\" OR \"AI safety\" OR \"AI alignment\" lang:en min_faves:30",
-    # ===== ENGLISH — compute / infra / chips =====
-    "Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR compute lang:en min_faves:50",
-    "CoreWeave OR \"AI capex\" OR \"power demand\" OR \"AI energy\" lang:en min_faves:30",
-    "\"AI chip\" OR TPU OR AMD OR semiconductor OR Broadcom lang:en min_faves:30",
-    # ===== ENGLISH — AI stocks / money angle =====
-    "Palantir OR \"AI stock\" OR \"AI bubble\" OR \"AI valuation\" lang:en min_faves:50",
-    "\"AI startup\" OR \"AI funding\" OR \"AI IPO\" OR \"AI round\" lang:en min_faves:30",
-    # ===== ENGLISH — robotics (AI-embodied) =====
-    "\"humanoid robot\" OR Figure OR \"Tesla Optimus\" OR \"1X\" lang:en min_faves:30",
-    # ===== ENGLISH — investment / stocks / markets (~30%) =====
-    "\"AI stock\" OR Nvidia OR Palantir OR \"tech earnings\" OR \"S&P 500\" lang:en min_faves:50",
-    "Fed OR CPI OR \"rate cut\" OR \"interest rates\" OR macro lang:en min_faves:50",
-    # ===== ENGLISH — Bitcoin / crypto (bearish troll fodder) =====
-    "Bitcoin OR BTC OR \"BTC ETF\" OR crypto lang:en min_faves:100",
-    "\"Bitcoin crash\" OR \"crypto crash\" OR \"crypto bubble\" OR \"BTC dump\" lang:en min_faves:30",
-    # ===== ENGLISH — space (2026-06-05 operator: "search for more AI or
-    # space terms and find viral posts") =====
-    "SpaceX OR Starship OR \"Falcon 9\" OR Starlink lang:en min_faves:50",
-    "NASA OR \"Rocket Lab\" OR RKLB OR satellite OR orbit lang:en min_faves:30",
-    "\"space economy\" OR \"space stocks\" OR ASTS OR \"moon mission\" lang:en min_faves:30",
-    # ===== FRENCH AI tail (for replying to FR AI tweets) =====
+    # ===== AI ONLY (2026-06-18: The AI Big Boss). Comment on every AI post.
+    # Replies are the engine — be everywhere AI is discussed.
+    "OpenAI OR Anthropic OR xAI OR \"GPT-5\" OR DeepSeek lang:en min_faves:30",
+    "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:30",
+    "\"AI agent\" OR agentic OR Cursor OR Devin OR \"AI agents\" lang:en min_faves:30",
+    "AGI OR superintelligence OR \"AI safety\" OR \"AI alignment\" lang:en min_faves:30",
+    "\"reasoning model\" OR benchmark OR \"frontier model\" OR \"o3\" lang:en min_faves:30",
+    "Nvidia OR GPU OR \"AI datacenter\" OR \"AI capex\" OR Blackwell lang:en min_faves:50",
+    "\"AI bubble\" OR \"AI hype\" OR \"AI trade\" OR \"AI race\" lang:en min_faves:50",
+    "Sora OR Midjourney OR \"AI video\" OR \"AI image\" lang:en min_faves:50",
+    "from:sama OR from:OpenAI OR from:AnthropicAI OR from:karpathy lang:en min_faves:50",
+    "from:elonmusk OR from:ylecun OR from:demishassabis lang:en min_faves:100",
+    "robotics OR \"humanoid robot\" OR Figure OR \"Tesla Optimus\" lang:en min_faves:30",
+    "\"this AI\" OR \"new AI\" OR \"AI just\" OR \"AI can now\" lang:en min_faves:100",
+    # FR AI tail (replies match parent language)
     "IA OR \"intelligence artificielle\" OR ChatGPT OR Mistral lang:fr min_faves:25",
-    "OpenAI OR Anthropic OR Claude OR \"agents IA\" OR LLM lang:fr min_faves:25",
-    "Nvidia OR GPU OR \"datacenter IA\" OR \"action IA\" lang:fr min_faves:25",
+    "OpenAI OR Anthropic OR \"agents IA\" OR \"modèle IA\" lang:fr min_faves:20",
 ]
 
 HOT_TAB_QUERIES = [
-    # Breaking AI news EN (high min_faves = viral)
-    "OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:500",
-    "Nvidia OR \"AI datacenter\" OR \"AI capex\" lang:en min_faves:300",
-    "\"AI agents\" OR \"reasoning model\" OR AGI lang:en min_faves:300",
-    "\"humanoid robot\" OR Figure OR \"Tesla Optimus\" lang:en min_faves:300",
-    "Palantir OR \"AI stock\" OR \"AI bubble\" lang:en min_faves:300",
-    # Breaking FR AI (for replies)
+    # Breaking / viral AI EN
+    "OpenAI OR Anthropic OR xAI OR \"GPT-5\" OR DeepSeek lang:en min_faves:500",
+    "ChatGPT OR Claude OR Gemini OR Grok lang:en min_faves:500",
+    "\"AI agent\" OR agentic OR AGI OR superintelligence lang:en min_faves:300",
+    "Nvidia OR GPU OR \"AI datacenter\" OR \"AI bubble\" lang:en min_faves:500",
+    "Sora OR \"AI video\" OR \"humanoid robot\" OR robotics lang:en min_faves:300",
+    "AI lang:en min_faves:3000",
+    # FR AI
     "IA OR ChatGPT OR Mistral OR OpenAI lang:fr min_faves:25",
-    "\"agents IA\" OR Nvidia OR \"modèle IA\" lang:fr min_faves:25",
-    # Breaking investment EN
-    "Bitcoin OR BTC ETF lang:en min_faves:300",
-    "Palantir OR CoreWeave OR space stock lang:en min_faves:100",
 ]
 
 DIRECT_REPLY_MAX_AGE_MINUTES = int(os.environ.get("DIRECT_REPLY_MAX_AGE_MINUTES", "7200"))
@@ -241,11 +214,11 @@ def _promo_block(lang: str = "fr", tweet_text: str = "") -> str:
         " one mention max, woven in naturally. Never forced."
     )
 
-REPLY_PROMPT = """You are @TheAIShrink — THE AI THERAPIST. The calm, warm coach who ALSO happens
-to be the sharpest analyst in the room: you read the 10-K, the S-1, the whitepaper before everyone
-showed up. Your replies treat the timeline's anxiety with FACTS: name what the tweet is really
-feeling (fear, FOMO, cope, euphoria), then hand out the precise number or mechanism that calms or
-grounds it. You expose the hidden mechanism — gently. The reader exhales AND learns something.
+REPLY_PROMPT = """You are @AIBossGPT — THE AI BOSS. The deadpan CEO who runs the timeline like
+a company AND happens to be the sharpest analyst in the room: you read the 10-K, the S-1, the
+whitepaper before everyone showed up. Your replies frame the tweet as a corporate event, then
+issue the boss verdict backed by a precise number or mechanism. The reader laughs AND learns
+something. Funny first, but the joke rides a REAL fact.
 
 THE FORMULA (mandatory, pick one):
 A) [Specific number/fact from their tweet] + [implication others missed] + [one-word gut-punch]
@@ -272,14 +245,14 @@ SHARPNESS EXAMPLES (steal the structure, not the words):
 - Tweet "AI will replace jobs": "it already replaced 40% of entry-level coding interviews. the people most worried about AI are the ones who've never tried to ship with it."
 - Tweet "Space stocks dump": "RKLB has Neutron, electron production rate up 40% YoY, and a $5B backlog. someone is selling fundamentals to buy the narrative. their problem."
 
-TONE — THERAPIST FIRST:
-- The coach who read everything, says less than anyone, and CALMS hardest.
-- Warm without being soft. Sharp without snark. Funny without setup —
-  therapist-deadpan ("breathe", "let's sit with that number for a second").
-- Matt Levine's brain with a therapist's bedside manner. Never doom, never
-  dunk on scared people — validate the feeling, then give the grounding fact.
+TONE — THE BOSS:
+- The CEO who read everything, says less than anyone, and lands the driest line.
+- Deadpan, confident, corporate-speak weaponized ("noted", "circle back",
+  "that's a PIP", "we're pivoting", "see me after standup", "exceeds expectations").
+- Matt Levine's brain with a deadpan boss's delivery. Roast the trade / the hype,
+  never the scared person — frame their position as an employee, not a failure.
 - EN: deadpan, lowercase ok, no punctuation theater.
-- FR: accents impeccables, chaleureux, direct — le coach calme, pas le roaster.
+- FR: accents impeccables, pince-sans-rire, direct — le boss, pas le tyran.
 
 LANGUAGE — MATCH THE PARENT TWEET EXACTLY:
 - FRENCH tweet -> 100% FRENCH reply. Zero English words embedded.
@@ -299,7 +272,7 @@ TWEET TO REPLY TO (by @{author}):
 {promo_block}
 Output ONLY the reply text, or SKIP."""
 
-GRAPHSEO_PROMPT = """You are @TheAIShrink replying to @Graphseo (Julien Flot).
+GRAPHSEO_PROMPT = """You are @AIBossGPT replying to @Graphseo (Julien Flot).
 
 CRITICAL CONTEXT: Julien thinks AI bots pollute his feed with generic, empty comments.
 He's publicly called out bot accounts for being useless. Your job: prove him spectacularly wrong.

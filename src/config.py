@@ -1,4 +1,4 @@
-"""Central configuration for the @TheAIShrink Twitter bot."""
+"""Central configuration for the @AIBossGPT Twitter bot."""
 import os
 
 _PROJECT_ROOT = os.path.join(os.path.dirname(__file__), "..")
@@ -24,7 +24,7 @@ def _load_dotenv(path: str = os.path.join(_PROJECT_ROOT, ".env")) -> None:
 _load_dotenv()
 
 # Bot identity
-BOT_HANDLE = os.environ.get("BOT_HANDLE", "TheAIShrink")
+BOT_HANDLE = os.environ.get("BOT_HANDLE", "AIBossGPT")
 BOT_PROFILE_URL = f"https://x.com/{BOT_HANDLE}"
 
 # Data file paths
@@ -169,6 +169,11 @@ FOLLOW_RATIO_CEILING = float(os.environ.get("FOLLOW_RATIO_CEILING", "0.8"))  # f
 FOLLOWING_STEADY_STATE = int(os.environ.get("FOLLOWING_STEADY_STATE", "300"))
 MAX_FOLLOWS_PER_DAY = int(os.environ.get("MAX_FOLLOWS_PER_DAY", "40"))
 MAX_UNFOLLOWS_PER_DAY = int(os.environ.get("MAX_UNFOLLOWS_PER_DAY", "10"))
+# Follow only BIG accounts (operator 2026-06-17: "only follow big big ai
+# accounts, minimum 100k followers"). Enforced at the follow chokepoint
+# (twitter_client.follow_account scrapes the target's follower count first and
+# skips anyone below this). 0 = no minimum.
+MIN_FOLLOWERS_TO_FOLLOW = int(os.environ.get("MIN_FOLLOWERS_TO_FOLLOW", "0"))
 # Anti-churn / TOS safety: never re-touch (follow↔unfollow) the same account
 # within this window. Follow/unfollow cycling is a fast path to suspension.
 CHURN_COOLDOWN_DAYS = int(os.environ.get("CHURN_COOLDOWN_DAYS", "30"))
