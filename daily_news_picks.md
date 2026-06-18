@@ -15426,3 +15426,83 @@ Healthcare is the one industry AI is going to transform beyond recognition.
 AI is the biggest turning point of
   - https://x.com/kirubaakaran/status/2067585024615227819
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 46).
+- **@niccruzpatane** (1005 likes, score 9/10) — Meanwhile, Tesla’s 10M/yr Optimus humanoid robot factory is well on its way.
+
+There’s a lot of talk about SpaceX these days, but don’t forget the revenue potential from Optimus.
+
+Elon has stated in th
+  - https://x.com/niccruzpatane/status/2067291928115163287
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 1063).
+- **@stocksavvyshay** (72 likes, score 9/10) — AI clusters now scale almost linearly with power and xAI’s Colossus 2 has already reached a full gigawatt.
+
+If power scales roughly one-to-one with GPU count then every announced GPU cluster becomes a
+  - https://x.com/StockSavvyShay/status/2067616706420470213
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 98).
+- **@xai** (202 likes, score 9/10) — Grok models are now available on Databricks Agent Bricks.
+
+Bring SpaceXAI's latest models to your enterprise data to power capable AI agents.
+
+https://x.ai/news/grok-databricks…
+  - https://x.com/xai/status/2067638691275907084
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 256).
+- **@rocky_bitcoin** (0 likes, score 8/10) — Brothers, AI data centers are currently in extremely short supply!
+
+Nowadays, having ready-to-use AI computing power is like being king!
+
+According to the latest interview with @baseten CEO, once B200
+  - https://x.com/Rocky_Bitcoin/status/2067511341850796075
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 44).
+- **@my_cat_can_code** (30 likes, score 8/10) — What if the biggest problem with frontier model evaluation is the benchmark itself? 
+Too many benchmarks reduce the frontier model to narrow SWE-style tasks. 
+AutoLab Benchmark is designed to be broad
+  - https://x.com/my_cat_can_code/status/2067280419259834495
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 34).
+- **@ctgptlb** (956 likes, score 8/10) — 【Breaking News】Anthropic: "Mythos and Fable 5 Expected to Resume Access Within Days"
+
+The issue in which Anthropic had blocked access to those models following instructions from the U.S. White House.
+  - https://x.com/ctgptlb/status/2067597223123210601
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 970).
+- **@0xricker** (26 likes, score 8/10) — Anthropic CEO of a $965B AI giant Dario Amodei:
+
+"the skill was never prompting harder. it's building the system of agents that runs inside."
+
+They run it end to end.
+
+in 15 minutes, Dario reveals how
+  - https://x.com/0xRicker/status/2067626969273885166
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 32).
+- **@zai_org** (10346 likes, score 7/10) — Introducing GLM-5.2: Frontier Intelligence, Open Weights
+
+- Significant improvements in coding and agentic tasks
+- Strong long-horizon capabilities with a 1M context window
+- Two levels of reasoning e
+  - https://x.com/Zai_org/status/2066938937344495629
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 11446).
+- **@valuetainment** (268 likes, score 7/10) — JUST IN: Bernie Sanders has proposed a 50% tax on the stock of AI companies including OpenAI, Anthropic, and xAI to fund a U.S. sovereign wealth fund.
+  - https://x.com/valuetainment/status/2067347530598199626
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 550).
+- **@cointelegraph** (127 likes, score 7/10) — INTERESTING: Genesis AI unveils Eno, its first general-purpose humanoid robot designed to feel capable and approachable rather than human-like, launching Q4 this year.
+  - https://x.com/Cointelegraph/status/2067135151058886683
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 203).
+- **@mcglive** (23 likes, score 7/10) — .@pabloberlangab broke down the $PEAK origin story and how he stumbled across @virtuals_io, the team that helped make this possible
+
+Every robotics company refused to give Pablo a robot when he was st
+  - https://x.com/MCGlive/status/2067601608716755217
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 33).
+- **@alibaba_cloud** (15 likes, score 7/10) — Expanding AI infrastructure for Japan's agentic AI future.
+Alibaba Cloud has launched its 5th data center in Tokyo and brought Model Studio to Japan, enabling enterprises to build next-generation AI a
+  - https://x.com/alibaba_cloud/status/2067563795136786790
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 19).
+- **@amd** (70 likes, score 7/10) — AI is reshaping the data center.
+
+Hear from Paul Turner, Chief Product Officer of the VMware Cloud Foundation Division at @Broadcom, on how Broadcom and AMD are helping organizations build AI-ready in
+  - https://x.com/AMD/status/2067608913743163769
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 74).
+- **@polynoamial** (70 likes, score 7/10) — I can think of no better person to help shape frontier AI policy than @deanwball. He has a clear understanding of where AI is headed. I look forward to working with him at @OpenAI!
+  - https://x.com/polynoamial/status/2067638167495479522
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 70).
+- **@milkroadai** (39 likes, score 7/10) — Everyone assumed Nvidia would get crushed by ASICs but the data says the opposite just happened and the reason why changes everything about how you think about the chip war.
+
+The conventional bet for
+  - https://x.com/MilkRoadAI/status/2067593741511393455
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 57).
