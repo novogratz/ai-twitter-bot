@@ -5992,5 +5992,71 @@
       }
     ],
     "summary": "Focus Mistral AI et crypto on-chain en France pour la qualit\u00e9 technique, compl\u00e9t\u00e9 par une s\u00e9lection financi\u00e8re et tech au Qu\u00e9bec pour le angle march\u00e9 nord-am\u00e9ricain. Z\u00e9ro vendeuse de r\u00eaves, que des cerveaux."
+  },
+  {
+    "ts": "2026-06-18T17:35:21.996231",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeMangin",
+        "region": "france",
+        "niche": "ai",
+        "followers": 50000,
+        "reason": "Ancien de Mistral, twitte en FR sur l'IA, le build et le VC, vibe fran\u00e7aise assum\u00e9e."
+      },
+      {
+        "handle": "Arthurguicha",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "C'est le barbare de la Data Crypto, twitte en FR, z\u00e9ro venteuse, que du gras."
+      },
+      {
+        "handle": "MathisHilaire",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "Analyste on-chain pro, twitte en FR, couvre le cycle crypto sans \u00eatre un influenceur lifestyle."
+      },
+      {
+        "handle": "RaphaelLeBorgne",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "G\u00e9o-francophone et IA, c'est lui qui a le ton le plus sec et pr\u00e9cis sans \u00eatre ennuyeux."
+      },
+      {
+        "handle": "OlivierDelaune",
+        "region": "france",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "VC \u00e0 H2O Capital, couvre AI/DeepTech en FR, twitte en FR, vu du terrain pas du bureau."
+      },
+      {
+        "handle": "JulienDutrieux",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Le roi de l'\u00e9ducation financi\u00e8re au Qu\u00e9bec, twitte en FR, z\u00e9ro formation \u00e0 2k balles."
+      },
+      {
+        "handle": "AlexisManceau",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Founding Engineer chez Mistral, twitte en FR tech pur, z\u00e9ro hype, pur produit."
+      },
+      {
+        "handle": "TomaszWegrzanowski",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Polonais aux USA mais twitte souvent en FR avec humour, data + dev + IA, anti-solutionneur."
+      }
+    ],
+    "summary": "Focus sur les pros du gras (Arthurguicha, MathisHilaire) et les fondateurs IA FR (MaximeMangin, AlexisManceau) pour \u00e9viter les vendeurs de r\u00eave. Ajout du QC solide avec JulienDutrieux et une perle US francophone avec Tomasz."
   }
 ]

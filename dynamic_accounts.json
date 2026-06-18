@@ -652,7 +652,14 @@
     "AlexisLaRue",
     "MonsieurDeLaR",
     "SylvainLaurens",
-    "JulienBouchard"
+    "JulienBouchard",
+    "MaximeMangin",
+    "Arthurguicha",
+    "MathisHilaire",
+    "RaphaelLeBorgne",
+    "OlivierDelaune",
+    "JulienDutrieux",
+    "AlexisManceau"
   ],
   "en": [
     "blablacar",
@@ -5288,6 +5295,41 @@
     {
       "lang": "fr",
       "handle": "JulienBouchard",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMangin",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "Arthurguicha",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathisHilaire",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelLeBorgne",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierDelaune",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDutrieux",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisManceau",
       "added": "2026-06-18"
     }
   ]
