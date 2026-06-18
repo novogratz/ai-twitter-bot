@@ -15171,3 +15171,17 @@ Satya Nadella (CEO of Microsoft) said that at a Hard Fork live interview
 and it explains why the Microsoft AI certification path hits harder th
   - https://x.com/Blum_OG/status/2067343970351579155
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 28).
+- **@coindesk** (652 likes, score 9/10) — LATEST: Fed Chair Warsh claims the central bank has "missed for 5 years and we're going to fix that."
+  - https://x.com/CoinDesk/status/2067324497930113326
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 730).
+- **@aderemi_haruna** (1729 likes, score 8/10) — The husband is white. The baby was born with darker skin.
+
+Instead of celebrating a new life, his parents rejected their own grandchild. 
+
+How does skin color still matter more than family in 2026?
+  - https://x.com/aderemi_haruna/status/2067263139167556018
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 7827).
+- **@coindesk** (45 likes, score 8/10) — TODAY: 10 years ago, an attacker drained 3.6M $ETH (current value=$6.26B) from The DAO in a single reentrancy exploit. 
+The vulnerability had been flagged weeks earlier but fixes were still awaiting c
+  - https://x.com/CoinDesk/status/2067372716626243952
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 79).
