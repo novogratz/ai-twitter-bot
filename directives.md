@@ -1,19 +1,18 @@
-# Growth Directives — 2026-06-04
+# Growth Directives — 2026-06-18
 
-**Synthesis:** Named actor + exact number + consequence is 10–40× any abstract take — but external links in the tweet body cut reach to near-zero since March 2026, and quote execution is at 9% of cap (28/day actual vs 300).
+**Synthesis:** METAPHOR and RENAME dominate; replies are 83% of output but algo weights first-60-min engagement velocity 15× vs likes — every post must earn an interaction before the hour is up or it dies unseen.
 
-## Apply to every tweet/reply/hot take:
+## Apply to every tweet/reply/hot-take:
 
-- **Actor + number + consequence, or skip.** "Anthropic files S-1 at $965M run-rate — Nvidia's $10B stake is now exit liquidity for Jensen" beats "AI valuations are insane." No named actor + no verifiable figure = don't post.
-- **No links in the tweet body. Ever.** Since March 2026, external links collapse reach by 50–70%. Drop the URL in the first reply immediately after posting. Main tweet gets full distribution; reply carries the source. Zero exceptions on standalones.
-- **Never post the same story twice the same day.** If a hotake on a URL/story already fired in the last 6h, skip. One sharp take beats eight mediocre variations. The Berkeley/Amazon story is dead — move on.
-- **METAPHOR first.** Map news onto a recognizable absurd situation: 401k Dave, LinkedIn Liam, a dentist opening a steakhouse, a casino dealer who won't let you fold. One image. No explanation. Landed or skip.
-- **Quote everything, retweet nothing bare.** Every RT candidate gets one punchy line. No angle = no post. Target: 18+ quotes/day — this is the most underused lever at 9% of cap.
-- **RENAME to expose the real dynamic in one line.** "CoreWeave isn't a cloud company — it's a $7.5B junk bond with a GPU attached." No hedge, no context. State, move on.
-- **First 60 min is the only window that matters.** Reply velocity = 15× algo weight vs likes. On Anthropic IPO / SpaceX / Nvidia Vera catalyst tweets: be first or skip. A reply that gets a reply from the author = +75 algo points. A like = +0.5.
-- **One bookmark-worthy post per day.** A 3-point framework, a named valuation with exact comps, a numbered breakdown. Bookmarks score 5× vs likes in the algo.
-- **AI-only scope.** Standalone content = AI labs/models/agents, GPU/datacenter/compute, humanoid robots, and money-angle AI (Nvidia, Palantir, capex winners/losers). Space and bourse only through the AI lens. Replies match parent language.
+- **Therapist frame first, data second.** Name the emotional trap before the number: "This isn't a drawdown — it's a margin call on your conviction." Diagnosis → sharp fact → calm prognosis. Wry, clinical, never breathless.
+- **METAPHOR > everything.** Map the market dynamic to one absurd situation: 401k Dave, a PIP with GPU depreciation, a Series A for a business that charges by the anxiety. One image, zero explanation, zero punchline label.
+- **RENAME to strip the PR framing.** "Anthropic's $65B raise isn't a fundraise — it's Jensen Huang's exit ramp." State the honest label in one line, move on. No hedging.
+- **Actor + exact number + consequence or skip.** "SpaceX S-1: $1.25B/month in compute rented to Anthropic — that's a rocket company subsidizing a chatbot." No named actor, no verifiable figure = skip.
+- **First 60 minutes on catalyst tweets.** On SpaceX/Anthropic/OpenAI IPO moves, Nvidia earnings, Fed: be first or don't bother. Late takes are invisible.
+- **One thread or framework per day.** Threads earn 3.2× more followers than standalones. Format: hook (standalone value if never opened) → 5 punchy numbered takes → contrarian prognosis as closer. Post between 9–11 AM ET.
+- **GIF on METAPHOR posts only, ~1 in 3.** Native picker, curated queries only. Overused GIFs kill the clinical register.
+- **No links, no hashtags, no emojis in the main tweet.** Zero. The therapist doesn't wave signs. Links go in the first reply only.
 
-## Top patterns this week: METAPHOR > FR_ANCHOR > RENAME > DIALOGUE
-## Best hours: 6–8 AM ET (10–12 UTC) and 4–6 PM ET (20–22 UTC)
-## Rising topics: Anthropic IPO ($965M run-rate, Nvidia $10B stake) · SpaceX IPO June 11 ($1.75T valuation, $75B raise) · Nvidia Vera CPU Q3 (Anthropic/OpenAI/SpaceX first users) · Tokenmaxxing fading (Microsoft cancels Claude licenses → Copilot) · SoftBank/OpenAI $6% leverage crunch · Amazon engineers fired to build data centers maintained by AI
+## Top patterns this week: METAPHOR > RENAME > EN_ANCHOR
+## Best hours (UTC): 21h › 23h › 11h › 4h  (= 5PM ET › 7PM ET › 7AM ET › midnight ET)
+## Rising topics: SpaceX IPO ($1.77T debut, $2T+ intraday) · Anthropic IPO ($65B Series H, $965B val) · OpenAI IPO confidential filing ($730B) · xAI Q1 loss $2.4B on $7.7B capex · AI layoffs as margin-compression signal · GPU bubble vs real inference demand
