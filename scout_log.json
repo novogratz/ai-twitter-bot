@@ -3955,5 +3955,43 @@
       }
     ],
     "summary": "J'ai cibl\u00e9 les fondateurs fran\u00e7ais (Mistral, Qonto) et les investisseurs qu\u00e9b\u00e9cois (Shopify, Bourse Direct) pour \u00e9viter le bruit des vendeurs de r\u00eaves. Ce sont des gens qui construisent ou g\u00e8rent de l'argent, pas du hame\u00e7onnage."
+  },
+  {
+    "ts": "2026-06-18T06:15:23.861748",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MarcLamothe",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise, analyse fondamentale clean, pas de 'moon boy' dans le sang."
+      },
+      {
+        "handle": "RomainD",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Ex-Binance, focus infra/crypto, twitte en FR, \u00e9vite le bruit des influenceurs t\u00e9l\u00e9."
+      },
+      {
+        "handle": "GillesWunram",
+        "region": "quebec",
+        "niche": "tech/finance",
+        "followers": 15000,
+        "reason": "Fondateur de Montra (fintech), tweet sur l'intersection tech/finance sans dire 'ach\u00e8te mon cours'."
+      },
+      {
+        "handle": "MaximeRabilloud",
+        "region": "usa",
+        "niche": "ai/trading",
+        "followers": 8000,
+        "reason": "Quant FR vivant aux USA, mixe AI et trading, tweete en FR avec un flair sarcastique rare."
+      }
+    ],
+    "summary": "Le lot mixe les poids lourds de l'IA fran\u00e7aise (Mistral) avec des traders qu\u00e9b\u00e9cois pr\u00e9cis. On a \u00e9vit\u00e9 les 'coachs' qui crient sur Twitter pour rester entre vrais builders."
   }
 ]
