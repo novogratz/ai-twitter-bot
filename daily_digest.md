@@ -527,3 +527,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top reply targets: @nvidia=11, @LayoffAI=10, @TheRundownAI=10, @1ssve=9, @WSJ=7
 
 **Followers we follow** (running total): 3
+
+## 2026-06-17
+
+**Activity** — total actions: 997
+  - by type: reply=727, quote=149, retweet=69, quote_gif=43, METAPHOR=5, RENAME=2, CHARACTER=2
+  - top sources: SEARCH-HOT=470, RETWEET_REPLY=120, RETWEET_QT=119, RETWEET=69, GIF=43, QUOTE=28, FEED-SWEEP-FEED=15, FEED-SWEEP-FOLLOWING=12
+  - comedy patterns: METAPHOR=54, RENAME=32, EN_ANCHOR=19, UNDERSTATEMENT=3, DIALOGUE=2, OTHER=2
+  - top reply targets: @AsianXStandup=18, @user=15, @MarioNawfal=14, @YahooFinance=13, @PolymarketMoney=11
+
+**Followers we follow** (running total): 40
+
+**Top-performing posts scraped today**:
+  - 0 likes / 23 views: UK bans social media under-16s while @sama’s models chat with everyone else. Does attention economy 
+  - 0 likes / 5 views: Guardiola calls it a break. Your manager calls it a restructuring.  Same math. Less ego.
+  - 0 likes / 8 views: Leaked OpenAI financials show $38.5B loss.  The burn rate proves that "AGI is imminent" is just a lo
