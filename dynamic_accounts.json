@@ -618,7 +618,16 @@
     "GustavoMuller",
     "ThibautMugler",
     "LunaHsu",
-    "RomainHilaire"
+    "RomainHilaire",
+    "mickaelbonzon",
+    "GaelLeBlanc",
+    "MaximeSantilli",
+    "GaspardGautier",
+    "ThomasBordier",
+    "MaximeCyr",
+    "JulienCahuzac",
+    "RenaudGagne",
+    "PierreDufresne"
   ],
   "en": [
     "blablacar",
@@ -842,7 +851,9 @@
     "Lucky",
     "Aster",
     "amit",
-    "Shruti"
+    "Shruti",
+    "MARMOT",
+    "David"
   ],
   "history": [
     {
@@ -5048,6 +5059,61 @@
     {
       "lang": "fr",
       "handle": "RomainHilaire",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "MARMOT",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "David",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelbonzon",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLeBlanc",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSantilli",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaspardGautier",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBordier",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCyr",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienCahuzac",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudGagne",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDufresne",
       "added": "2026-06-18"
     }
   ]

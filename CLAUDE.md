@@ -440,6 +440,21 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 > dropped `exec` lets the trap fire. auto_improve.sh's single-flight lock
 > de-dupes against the daily launchd agent if both are active.
 
+> **2026-06-18 — short-circuit the retry loop on a deliberate SKIP:**
+> content_guard.generate_validated retried gen_fn up to 3 times on any
+> falsy return — including `_generate_quote` returning None after a model
+> SKIP. With QUOTE on Claude Sonnet (~30s/call) that's ~90s burned per
+> SKIPped cycle; audit 2026-06-18 found ~29 such "empty draft" SKIPs in
+> the visible log tail (≈43 min/day of wasted Sonnet time, ≈29 lost quote
+> slots). A confident refusal doesn't flip on retry — same prompt, same
+> SKIP. Fix: `content_guard.DeliberateSkip` exception; `_generate_quote`
+> raises it (instead of returning None) when `_looks_like_skip_or_rationale`
+> fires; `generate_validated` catches DeliberateSkip and breaks the loop
+> after one call. Transient None (LLM hiccup) still retries 3x — only
+> deliberate refusals short-circuit. Guards:
+> `test_deliberate_skip_short_circuits_validation_retries`,
+> `test_generate_quote_raises_deliberate_skip_on_skip_rationale`.
+
 > **2026-06-17 — kill the 30s QUOTE timeout (Claude Sonnet was being
 > killed mid-generation):** `quote_tweet_bot._generate_quote` passed
 > `timeout=30` to `run_llm` — an ollama-era number that was harmless when

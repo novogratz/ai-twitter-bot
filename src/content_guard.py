@@ -467,6 +467,17 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     return (True, "")
 
 
+class DeliberateSkip(Exception):
+    """The generator's model deliberately refused (e.g. returned 'SKIP').
+
+    Retrying with the same prompt won't flip a confident refusal — it just
+    burns 2 more LLM calls (~30s each on Claude Sonnet). Raise this from a
+    gen_fn to tell generate_validated to stop retrying immediately. Audit
+    2026-06-18 found ~29 quote SKIPs/day each burning 3 attempts ≈ 90s.
+    """
+    pass
+
+
 def generate_validated(
     gen_fn: Callable[[], Optional[str]],
     kind: str = "original",
@@ -477,7 +488,8 @@ def generate_validated(
 
     Returns the first valid draft, or None if every attempt is flagged
     (skip-and-log — a flagged draft is never returned). gen_fn must return a
-    draft string or None.
+    draft string or None, or raise DeliberateSkip to short-circuit the retry
+    loop when the model gave a confident refusal.
     """
     n = attempts if attempts is not None else CONTENT_VALIDATION_RETRIES
     tag = f"[{label or kind.upper()}] " if (label or kind) else ""
@@ -485,6 +497,10 @@ def generate_validated(
     for i in range(max(1, n)):
         try:
             draft = gen_fn()
+        except DeliberateSkip as e:
+            last_reason = f"deliberate skip ({e})" if str(e) else "deliberate skip"
+            log.info(f"{tag}content_guard: generator skipped deliberately — not retrying.")
+            break
         except Exception as e:  # generator blew up — treat as a failed attempt
             last_reason = f"generator error: {e}"
             continue
