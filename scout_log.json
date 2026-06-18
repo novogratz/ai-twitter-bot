@@ -5543,5 +5543,43 @@
       }
     ],
     "summary": "On a creus\u00e9 les profils actifs des fondateurs Mistral, des leaders crypto qu\u00e9b\u00e9cois et des VC francos aux USA. Priorit\u00e9 aux analystes qui tweetent du concret, pas du 'rejoins ma newsletter'."
+  },
+  {
+    "ts": "2026-06-17T22:05:09.600842",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PierrePerron",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 120000,
+        "reason": "Le Fran\u00e7ais de SF qui supervise les LLMs de chez Anthropic et OpenAI. C'est le cerveau derri\u00e8re la plupart des trucs qui font trembler la bourse."
+      },
+      {
+        "handle": "JulianMellado",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Le baron de la DeFi FR. Un vrai trader, pas un influenceur qui vends du e-book sur le mindset."
+      },
+      {
+        "handle": "CryptoNuit",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 40000,
+        "reason": "L'agenda incontournable des Qu\u00e9b\u00e9cois. \u00c7a tweet moins mais c'est du 100% qualitatif local."
+      },
+      {
+        "handle": "TanguySart",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Ex-Raisin, actuelle VC. Il tweet les coulisses de la tech FR mieux que les journalistes de Mediapart."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le sable pour garder le p\u00e9pites : Mistral pour la tech pure, Mellado pour la crypto sans blabla, et Perron pour le lien direct avec les g\u00e9ants US."
   }
 ]

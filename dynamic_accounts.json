@@ -604,7 +604,11 @@
     "MarcDionne",
     "PierreBoutin",
     "JulienLemoine",
-    "MaximeStJean"
+    "MaximeStJean",
+    "PierrePerron",
+    "JulianMellado",
+    "CryptoNuit",
+    "TanguySart"
   ],
   "en": [
     "blablacar",
@@ -822,7 +826,9 @@
     "Plasma",
     "Jeremy",
     "Solana",
-    "HeyGen"
+    "HeyGen",
+    "CharlieIntel",
+    "Midjourney"
   ],
   "history": [
     {
@@ -4928,6 +4934,36 @@
     {
       "lang": "fr",
       "handle": "MaximeStJean",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "CharlieIntel",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Midjourney",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierrePerron",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulianMellado",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoNuit",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguySart",
       "added": "2026-06-17"
     }
   ]
