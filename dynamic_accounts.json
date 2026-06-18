@@ -615,7 +615,10 @@
     "LynAldenContact",
     "StacyMits",
     "ThibautCazala",
-    "GustavoMuller"
+    "GustavoMuller",
+    "ThibautMugler",
+    "LunaHsu",
+    "RomainHilaire"
   ],
   "en": [
     "blablacar",
@@ -838,7 +841,8 @@
     "Midjourney",
     "Lucky",
     "Aster",
-    "amit"
+    "amit",
+    "Shruti"
   ],
   "history": [
     {
@@ -5025,6 +5029,26 @@
       "lang": "fr",
       "handle": "GustavoMuller",
       "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Shruti",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMugler",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "LunaHsu",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainHilaire",
+      "added": "2026-06-18"
     }
   ]
 }

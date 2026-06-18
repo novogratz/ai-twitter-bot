@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-06-17T23:55:09.077249",
-  "window_7d_actions": 4624,
-  "window_24h_actions": 702,
+  "generated_at": "2026-06-18T03:55:09.127058",
+  "window_7d_actions": 4627,
+  "window_24h_actions": 842,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4445
+      "count": 4440
     },
     {
       "pattern": "METAPHOR",
-      "count": 49
+      "count": 53
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 44
+      "count": 45
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -21,7 +21,7 @@
     },
     {
       "pattern": "DIALOGUE",
-      "count": 20
+      "count": 22
     }
   ],
   "worst_patterns": [
@@ -31,7 +31,7 @@
     },
     {
       "pattern": "OTHER",
-      "count": 10
+      "count": 11
     },
     {
       "pattern": "REPETITION",
@@ -63,15 +63,15 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1950
+      "count": 1951
     },
     {
       "topic": "Autre",
-      "count": 1758
+      "count": 1766
     },
     {
       "topic": "Crypto",
-      "count": 566
+      "count": 560
     },
     {
       "topic": "Bourse",
@@ -79,48 +79,48 @@
     },
     {
       "topic": "Spatial",
-      "count": 335
+      "count": 332
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2114
+      "count": 2122
     },
     {
       "pillar": "market_trauma",
-      "count": 1209
+      "count": 1214
     },
     {
       "pillar": "other",
-      "count": 1112
+      "count": 1111
     },
     {
       "pillar": "meme_reaction",
-      "count": 129
+      "count": 126
     },
     {
       "pillar": "reply_bait",
-      "count": 32
+      "count": 27
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 28
+      "count": 27
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 295
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 193
+      "count": 360
     },
     {
       "pillar": "other",
-      "count": 190
+      "count": 236
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 221
     },
     {
       "pillar": "meme_reaction",
@@ -128,7 +128,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -141,9 +141,9 @@
     },
     {
       "pillar": "other",
-      "posts": 64,
+      "posts": 63,
       "avg_likes": 0.05,
-      "avg_views": 28.7,
+      "avg_views": 28.9,
       "low_sample": false
     },
     {
@@ -155,7 +155,7 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 71,
+      "posts": 72,
       "avg_likes": 0.03,
       "avg_views": 29.7,
       "low_sample": false
@@ -171,23 +171,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4251
+      "count": 4252
     },
     {
       "type": "quote",
-      "count": 191
+      "count": 199
     },
     {
       "type": "quote_gif",
-      "count": 117
+      "count": 114
     },
     {
       "type": "hotake",
-      "count": 29
+      "count": 28
     },
     {
       "type": "post",
-      "count": 29
+      "count": 27
     },
     {
       "type": "retweet",
@@ -196,18 +196,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-17T23:54:03.740657",
-      "text": "Starlink connects 100k students in Malawi. OpenAI charges $20/month for GPT-4o to do the homework. The education gap just became a subscription fee.",
+      "ts": "2026-06-18T03:54:42.082976",
+      "text": "Apple design, intel fab, trumps ego.\nthe best deal of his presidency.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-17T23:53:30.061133",
-      "text": "AI agents won't need governance tokens. They need settlement rails.\nBecause they transact 100x faster than humans do.",
+      "ts": "2026-06-18T03:54:09.227366",
+      "text": "Anthropic says Claude 4 is better at coding. Great. Now I can argue with it about my own code.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-17T23:53:14.105271",
-      "text": "Nebius buying Eigen AI to add GPUs to its 200k cluster. the most expensive way to grow your datacenter is to buy the people who already have your rack space.",
+      "ts": "2026-06-18T03:53:36.506492",
+      "text": "ALRIB partnering with a leading US quantum player on ROSIE. \n\nQuantum is a $50B capex black hole currently eating VC money. \n\nYou're early. \n\nOr you're the VC.",
       "type": "reply"
     }
   ]
