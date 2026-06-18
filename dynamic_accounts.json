@@ -417,7 +417,23 @@
     "louis_fleury",
     "RomainCazes",
     "MaximeBachir",
-    "VincentBoulay"
+    "VincentBoulay",
+    "MaximeMaurice",
+    "SylvainDufour",
+    "LionelRavachol",
+    "remiduc",
+    "alexis_boutin_",
+    "gilles_d",
+    "valentin_f",
+    "pierre_louis",
+    "nathanael_l",
+    "martinkam",
+    "Pierre_Leclercq",
+    "BenjaminKlein",
+    "AdrienPerray",
+    "MaximeSt",
+    "JulienLemaire",
+    "VinceLeclerc"
   ],
   "en": [
     "blablacar",
@@ -470,7 +486,13 @@
     "OpenAI",
     "Wccftech",
     "Q",
-    "MLB"
+    "MLB",
+    "Camus",
+    "FearBuck",
+    "Claude",
+    "Cursor",
+    "CharlieIntel",
+    "Kara"
   ],
   "history": [
     {
@@ -2816,6 +2838,116 @@
     {
       "lang": "fr",
       "handle": "VincentBoulay",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMaurice",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainDufour",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelRavachol",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Camus",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "FearBuck",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "remiduc",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "alexis_boutin_",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "gilles_d",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "valentin_f",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "pierre_louis",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "nathanael_l",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "martinkam",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Claude",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Cursor",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "CharlieIntel",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Kara",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "Pierre_Leclercq",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminKlein",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienPerray",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSt",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLemaire",
+      "added": "2026-06-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "VinceLeclerc",
       "added": "2026-06-17"
     }
   ]

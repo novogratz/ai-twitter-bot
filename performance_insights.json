@@ -1,132 +1,132 @@
 {
-  "generated_at": "2026-06-17T16:41:24.633887",
-  "window_7d_actions": 909,
-  "window_24h_actions": 909,
+  "generated_at": "2026-06-18T02:08:32.949383",
+  "window_7d_actions": 1284,
+  "window_24h_actions": 906,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 819
+      "count": 1164
     },
     {
       "pattern": "METAPHOR",
-      "count": 43
+      "count": 59
     },
     {
       "pattern": "RENAME",
-      "count": 25
+      "count": 35
     },
     {
       "pattern": "EN_ANCHOR",
-      "count": 17
+      "count": 19
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 2
+      "count": 3
     }
   ],
   "worst_patterns": [
     {
       "pattern": "DIALOGUE",
-      "count": 1
-    },
-    {
-      "pattern": "UNDERSTATEMENT",
       "count": 2
     },
     {
       "pattern": "OTHER",
       "count": 2
+    },
+    {
+      "pattern": "UNDERSTATEMENT",
+      "count": 3
     }
   ],
   "best_hours_utc": [
     {
       "hour": 21,
-      "actions": 108
+      "actions": 184
     },
     {
       "hour": 23,
-      "actions": 107
+      "actions": 125
     },
     {
       "hour": 11,
       "actions": 93
     },
     {
-      "hour": 10,
-      "actions": 79
+      "hour": 22,
+      "actions": 85
     },
     {
-      "hour": 12,
-      "actions": 68
+      "hour": 20,
+      "actions": 82
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 455
+      "count": 651
     },
     {
       "topic": "IA",
-      "count": 369
-    },
-    {
-      "topic": "Crypto",
-      "count": 48
+      "count": 519
     },
     {
       "topic": "Bourse",
-      "count": 47
+      "count": 67
+    },
+    {
+      "topic": "Crypto",
+      "count": 65
     },
     {
       "topic": "Spatial",
-      "count": 25
+      "count": 36
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 658
+      "count": 930
     },
     {
       "type": "quote",
-      "count": 145
+      "count": 202
     },
     {
       "type": "retweet",
-      "count": 51
+      "count": 82
     },
     {
       "type": "quote_gif",
-      "count": 49
+      "count": 61
     },
     {
       "type": "METAPHOR",
-      "count": 3
+      "count": 5
+    },
+    {
+      "type": "RENAME",
+      "count": 2
     },
     {
       "type": "CHARACTER",
       "count": 2
-    },
-    {
-      "type": "RENAME",
-      "count": 1
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-17T16:37:03.067851",
-      "text": "Cat is dying in 120 days. you are burning $5B/year.\n\nyour runway lasts half as long as his kidneys.",
+      "ts": "2026-06-18T02:06:11.158494",
+      "text": "Cursor's \"incredible\" productivity spike isn't magic. It's 100% of engineers offloading the 40% of coding that is just glue and boilerplate. The junior dev is dead; the senior dev is now a code reviewer.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-17T16:36:41.894261",
-      "text": "Un seul owner pour payer la note de tous.\nla visibilité sur l'usage = la preuve que ton collègue est un resource hog.\nc'est la fin du stand-up de l'IA gratuit.",
+      "ts": "2026-06-18T01:42:33.700228",
+      "text": "LinkedIn Liam posted a Notion doc with 32 toggles. It has 15k followers. He's never shipped code.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-17T16:33:13.280110",
-      "text": "Le mécano du tango. il a économisé 3h de transport, mais gagné 14h de slack. productivité nette : -90%.",
+      "ts": "2026-06-18T01:42:18.655626",
+      "text": "Stanford Steve just closed his Seed round with $5M on a $50M valuation. He calls it 'pricing power'. We call it 'burning cash before product-market fit'.",
       "type": "reply"
     }
   ]

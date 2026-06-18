@@ -3813,5 +3813,36 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour garder les techniciens et les fondateurs. Pas de 'guru' crypto ici, que du concret."
+  },
+  {
+    "ts": "2026-06-17T16:59:08.681895",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeMaurice",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Ex-CTO de Coinhouse, maintenant VC et angel. Il voit le code et les \u00e9quipes avant les m\u00e9dias. Crypto FR/QC de qualit\u00e9."
+      },
+      {
+        "handle": "SylvainDufour",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 16000,
+        "reason": "Directeur de portefeuille chez Nordea Asset Management. Il poste ses id\u00e9es de valeur avec des liens vers ses analyses compl\u00e8tes, pas des graphiques bidons."
+      },
+      {
+        "handle": "LionelRavachol",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "La r\u00e9f\u00e9rence QC en analyse fondamentale. Il fouille les rapports annuels pour trouver la p\u00e9pite, pas le tip du jour sur Telegram."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des 'gurus' Telegram pour ne garder que les cerveaux : les founders de Mistral, les analysts qui lisent les rapports annuels et les VCs qui voient le code. Z\u00e9ro formation vendue, que du concret."
   }
 ]
