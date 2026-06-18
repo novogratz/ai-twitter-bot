@@ -15252,3 +15252,64 @@ The head of Rosatom is calling for a compromise. He says the IAEA needs to step 
 - **@cnbc** (4 likes, score 7/10) — Google Gemini co-lead Noam Shazeer leaves for OpenAI
   - https://x.com/CNBC/status/2067448719553814977
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 18).
+- **@cryptorover** (375 likes, score 9/10) — THE AI BUBBLE IS ENTERING ITS FINAL STAGE.  
+
+SpaceX. OpenAI. Anthropic.  
+
+Nearly $4 TRILLION in new AI IPO valuation is about to hit public markets at the exact same time.  
+
+Funds will need liquidi
+  - https://x.com/cryptorover/status/2066924261592506627
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 547).
+- **@vanquishtrader** (1615 likes, score 8/10) — BREAKING: The four Cursor co-founders are now reportedly worth ~$5.5B each after $SPCX $60B acquisition deal.
+  - https://x.com/VanquishTrader/status/2067031122249486391
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1673).
+- **@milkroadai** (294 likes, score 8/10) — The new Fed Chair just went on record saying AI is the biggest economic shift of his lifetime and markets are completely missing what that means (Save this).
+
+Kevin Warsh, the newly confirmed Fed Chai
+  - https://x.com/MilkRoadAI/status/2067373673452097984
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 326).
+- **@wired** (17 likes, score 7/10) — SCOOP: A South Korean telecom giant’s alleged links to China were reportedly at the root of tensions with the White House over export controls on Anthropic’s most powerful AI technology.
+  - https://x.com/WIRED/status/2067569169474728094
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 21).
+- **@nordin_eth** (55 likes, score 8/10) — AI and tech CEOs gathering at G7 summit in France.
+
+Big tech and world leaders in one room shaping the next phase of AI policy, power, and global competition.
+
+Good to see them talking, hopefully they
+  - https://x.com/nordin_eth/status/2067556556539924811
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 57).
+- **@itsbrutox** (5 likes, score 7/10) — Midjourney yes, the AI image company just revealed a prototype full-body imaging system.
+
+- A full scan in about 60 seconds
+- Ultrasound-based
+- Designed to make advanced imaging more accessible
+
+Imag
+  - https://x.com/Itsbrutox/status/2067598583441072479
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 15).
+- **@gauravsbuilding** (2095 likes, score 7/10) — Today we're introducing Claude for Social Media.
+
+Just enter your website and Fastlane creates thousands of viral videos promoting your product in one click.
+
+This is truly insane.
+  - https://x.com/gauravsbuilding/status/2067501867198996528
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2487).
+- **@business** (0 likes, score 7/10) — OpenAI CEO Sam Altman and Anthropic CEO Dario Amodei were among tech bosses at a G7 working lunch on AI, as the US decision to restrict access to Anthropic's most advanced models causes tension among
+  - https://x.com/business/status/2067251442943942930
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 336).
+- **@marionawfal** (163 likes, score 7/10) — ModelScope (2022)
+
+Grok Imagine 1.5 (2025)
+
+This is only a 3-year difference… The jump in AI image quality is actually insane.
+
+What looked cutting-edge a few years ago now feels like a relic from ano
+  - https://x.com/MarioNawfal/status/2067562982683353192
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 237).
+- **@squawkcnbc** (51 likes, score 7/10) — .@munster_gene discusses $AAPL raising prices due to the memory chip crunch: https://cnb.cx/4oGmbLO
+  - https://x.com/SquawkCNBC/status/2067583643430601079
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 55).
+- **@cgtnofficial** (10 likes, score 7/10) — Ahead of the Dragon Boat Festival, Unitree's G1 humanoid robots wowed residents in Hangzhou with martial arts moves. Earlier this year, the G1 robots went viral after appearing at China Media Group Sp
+  - https://x.com/CGTNOfficial/status/2067547870870360425
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 14).
