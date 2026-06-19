@@ -6058,5 +6058,116 @@
       }
     ],
     "summary": "Focus sur les pros du gras (Arthurguicha, MathisHilaire) et les fondateurs IA FR (MaximeMangin, AlexisManceau) pour \u00e9viter les vendeurs de r\u00eave. Ajout du QC solide avec JulienDutrieux et une perle US francophone avec Tomasz."
+  },
+  {
+    "ts": "2026-06-18T19:36:38.632572",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mickael_m",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Le gourou fran\u00e7ais de Mistral AI, il twitte en FR, il est actif, il ne vend pas de formation \u00e0 2000\u20ac."
+      },
+      {
+        "handle": "LucDorigny",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 70000,
+        "reason": "Journaliste financier qui d\u00e9crypte les boulets du CAC 40, style clair, audience fid\u00e8le."
+      },
+      {
+        "handle": "ThibaultDelaunay",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Ex-Coinbase, il poste des threads de qualit\u00e9 sur la crypto et la macro, pas de shilling de base."
+      },
+      {
+        "handle": "HuguesLannan",
+        "region": "france",
+        "niche": "tech",
+        "followers": 55000,
+        "reason": "VC chez Alma VC, il poste sur la deep tech et l'IA en France, r\u00e9seau solide, pas de shilling."
+      },
+      {
+        "handle": "CassidyHuchcroft",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "La reine de l'IA en FR aux US, elle poste des news critiques et des threads techniques, z\u00e9ro hype."
+      },
+      {
+        "handle": "AlexisLecorps",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Prof de l'UdeM, il vulgarise l'IA avec humour et pr\u00e9cision, pur Qc, pas de jargon inutile."
+      },
+      {
+        "handle": "ValentinToubia",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Researcher/Founder, il partage ses papers et r\u00e9sultats, tweete en FR/EN, authentique et technique."
+      },
+      {
+        "handle": "MaximePigeon",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Analyste ind\u00e9pendant, il couvre les march\u00e9s sans vendre de r\u00eave, style direct et sans fioritures."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la masse de comptes 'gurus' pour ne garder que ceux qui produisent du contenu dense ou analytique. L'IA fran\u00e7aise est port\u00e9e par les fondateurs (Mistral), la crypto par les ex-GAFAM/Exchange, et le Qu\u00e9bec par les profs universitaires qui refusent le jargon."
+  },
+  {
+    "ts": "2026-06-18T22:50:25.935727",
+    "raw_count": 11,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PierreDuponchel",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Investisseur VC dans l'AI. Il tweet en FR depuis San Francisco. Le regard ext\u00e9rieur qui vaut de l'or."
+      },
+      {
+        "handle": "0xGrimoire",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Le trader crypto QC. Il analyse les on-chain data comme un dev, pas comme un gars qui a trouv\u00e9 un scoop sur Twitter."
+      },
+      {
+        "handle": "JulesRivard",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Analogies percutantes sur les march\u00e9s. Il fait rire avec la finance, ce qui est le signe qu'il la comprend."
+      },
+      {
+        "handle": "BenjaminDabert",
+        "region": "france",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Ancien de Twitter, aujourd'hui dans la tech. Il couvre le SaaS et l'IA avec un regard business, pas juste technique."
+      },
+      {
+        "handle": "MaximeMichelet",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 9000,
+        "reason": "Founders de Tech. Il couvre les startups qu\u00e9b\u00e9coises et les tendances US en FR. Le seul qui n'ait pas l'air d'un blogueur."
+      }
+    ],
+    "summary": "Le top FR est domin\u00e9 par les vrais b\u00e2tisseurs de Mistral/HuggingFace plut\u00f4t que par les 'gourous'. Le QC est plus petit mais plus fun, et le FR/USA sert de pont international sans le jargon."
   }
 ]
