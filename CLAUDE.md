@@ -4,6 +4,23 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-18 round 4 — REPLYBACK aggregates own-skip log noise:**
+> `notify_bot.run_replyback_cycle` logged `[REPLYBACK] Own reply —
+> skipping.` once per skipped article. With the 2026-06-15 first-comment
+> self-reply feature live AND X's author-replies-first ordering on a
+> tweet's status page, the scrape consistently surfaced 7 of OUR OWN
+> articles per cycle (parent + nested self-replies in the visible thread
+> context), so the loop fired the same log line 7x every replyback
+> cycle. Live audit 2026-06-18 bot.log: **2,352** `Own reply — skipping`
+> lines = ~5% of total log volume, zero diagnostic value (the message
+> never varied). Fix: count own-skips into `own_skipped`, log ONE summary
+> line `[REPLYBACK] Skipped N own-reply article(s).` at cycle end. The
+> blocklist + no-handle skips stay per-occurrence (63 + 0 today —
+> rare-enough events whose details are useful for debugging). Guard:
+> `test_replyback_aggregates_own_skip_log`. Same family as the
+> engine_health watchdog refinements: tighten signal-to-noise on hot
+> paths so log audits scale.
+
 > **2026-06-18 round 3 — HOTAKE news pool filters the rejectlist (no more
 > burnt Sonnet hot takes on decrypt.co):** `hotake_agent.generate_hotake`
 > injected up to 15 article URLs from `external_signal.json` into the
