@@ -1,9 +1,9 @@
 {
   "ts": "2026-06-19T00:00:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 150,
-    "MAX_HOTAKES_PER_DAY": 400,
-    "MAX_QUOTES_PER_DAY": 5000,
+    "MAX_NEWS_PER_DAY": 4,
+    "MAX_HOTAKES_PER_DAY": 8,
+    "MAX_QUOTES_PER_DAY": 24,
     "MAX_RETWEETS_PER_DAY": 6000,
     "MAX_BREAKOUTS_PER_DAY": 300,
     "MAX_SPICY_PER_DAY": 300,
@@ -20,5 +20,5 @@
     "AI"
   ],
   "cadence_factor": 1.0,
-  "rationale": "AI Big Boss mandate 2026-06-18: PURELY AI content. topic_focus updated to all-AI. x10 caps retained (Safari throughput is the real ceiling). METAPHOR and RENAME are top patterns; replies remain the #1 growth surface. Best hours: 21h and 11h UTC. No Space/Investment divergence — every post is through the AI lens."
+  "rationale": "2026-06-19: operator — be SELECTIVE + impactful on own-page content (posts+quotes ~30/day combined, more views/likes), replies stay unlimited. Quote firehose (5000/day @30s, 5-like floor) cut to 24/day @30min + 200-like floor so only genuinely viral parents get quoted. AI Big Boss mandate 2026-06-18: PURELY AI content. topic_focus updated to all-AI. x10 caps retained (Safari throughput is the real ceiling). METAPHOR and RENAME are top patterns; replies remain the #1 growth surface. Best hours: 21h and 11h UTC. No Space/Investment divergence — every post is through"
 }
