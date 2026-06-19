@@ -16491,3 +16491,26 @@ Much like OpenAI did with GPT 5.5 and the upcoming GPT 5.6
 They have the data, the compute and the talent
   - https://x.com/bindureddy/status/2068023661345603899
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 35).
+- **@andrewyng** (82 likes, score 9/10) — Over the last two weeks, both the U.S. Government and Anthropic took significant actions that demonstrated their power to control access to AI by restricting what others can do with frontier models. T
+  - https://x.com/AndrewYNg/status/2068039709126017356
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 126).
+- **@cyb3rops** (32 likes, score 8/10) — US policy: this frontier model is too powerful, restrict global access 
+
+A few days later, an open-weight Chinese model gets quantized to run on a 256 GB Mac and benchmarks surprisingly close to the f
+  - https://x.com/cyb3rops/status/2067985253000417389
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 40).
+- **@bober_smart** (47 likes, score 9/10) — A 22-year-old Indian guy turned into an anime girl, and the result will shock you
+
+He made $4,370 in just 5 hours
+
+He had been an anime fan for many years. He paid $20 for a Claude subscription and cr
+  - https://x.com/Bober_smart/status/2068017820739272827
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 99).
+- **@synthwavedd** (1301 likes, score 8/10) — SCOOP: After the release of Fable 5 and with GPT-5.6 looming, the mood behind the scenes at Google DeepMind is increasingly one of frustration and broad discontent over the lab's perceived fall into a
+  - https://x.com/synthwavedd/status/2068000857757741251
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1471).
+- **@athanzxyt** (144 likes, score 8/10) — Today we're proud to announce @copperlaneai $4.1M seed.
+
+From couch-surfing and redeye flights to pitching on the sales floors of the banks we're now building for. From pivot hell to a product lenders
+  - https://x.com/athanzxyt/status/2067660560607613032
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 228).
