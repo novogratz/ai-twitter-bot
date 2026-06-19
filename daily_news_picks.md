@@ -16324,3 +16324,31 @@ Deloitte has opened up Claude to 470,
 It outscores the previous best by 3% and sets a new state-of-the-art on our long-horizon coding benchmark.
   - https://x.com/datacurve/status/2067781320013668727
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 1389).
+- **@israfill** (128 likes, score 9/10) — use glm 5.2 for free with 3 million tokens per day in zcode 
+
+zhipu just dropped their official coding ide with their new frontier model built in
+
+glm 5.2 is open weights (MIT license), 744B MoE, and
+  - https://x.com/israfill/status/2067903565516218597
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 186).
+- **@whatafactukr** (64 likes, score 8/10) — The bubble around OpenAI and Anthropic will burst big time if they don't cut costs or raise prices - LeCun. Their services are insanely unprofitable and are only propped up by investor subsidies, beca
+  - https://x.com/whatafactukr/status/2067897835811451245
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 100).
+- **@zodchiii** (30 likes, score 8/10) — Do you understand that you're paying $60/mo for ChatGPT, Claude, and Gemini, just to use them one tab at a time??
+
+> Three logins, three memories, zero way to compare answers.
+> gap used to be "the pr
+  - https://x.com/zodchiii/status/2067897610275344706
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 38).
+- **@spaceandtech_** (142 likes, score 7/10) — Researchers have developed Humanoid-GPT, a new AI system that helps humanoid robots perform complex movements and tasks. 
+
+Tested on the Unitree G1 robot, it enables real-time whole-body control and c
+  - https://x.com/spaceandtech_/status/2067665483965563135
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 162).
+- **@anatolikopadze** (81 likes, score 7/10) — Roman Yampolskiy, AI safety researcher:
+
+"it makes no sense to hire humans for most jobs when a $20 subscription does the work of an employee"
+
+this 18 minute video says out loud what most AI builders
+  - https://x.com/AnatoliKopadze/status/2067303664763519463
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 117).
