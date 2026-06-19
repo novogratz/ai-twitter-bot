@@ -16616,3 +16616,34 @@ Best-in-class realism, stronger physics, faster generations.
 Top-tier on @arena at 1467 Elo. Proud to off
   - https://x.com/higgsfield/status/2068057227228045777
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 286).
+- **@archerlin__** (38 likes, score 8/10) — We’re open sourcing a humanoid robot for under $500. 
+
+I hated that the coolest technology of our generation was inaccessible to most builders.
+
+So we built one. Coming soon.
+
+Comment “VIBE” and I’ll
+  - https://x.com/archerlin__/status/2067994581493326186
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 72).
+- **@sahilypatel** (10 likes, score 7/10) — where google's top ai researchers went 
+
+anthropic tops the list, with openai and meta in 2nd and 3rd place
+  - https://x.com/sahilypatel/status/2068047257879146521
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 12).
+- **@eschatail** (29 likes, score 7/10) — Ash is awakened, as your desktop companion. Downloadable and always with you, right on your screen. Set it up now and work with Eschatail!
+
+Ash is powered by its own AGI model, capped in its abilities
+  - https://x.com/eschatail/status/2068080174483292370
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 45).
+- **@0xmovez** (68 likes, score 7/10) — Claude Code creator:
+
+"Loops are as big a step as move from source code to agents. Loops - step from agents to the next thing.
+
+30% of my code is fully written by loops right now."
+
+in a 40-minute fir
+  - https://x.com/0xMovez/status/2068074207687201043
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 92).
+- **@pmddomingos** (26 likes, score 7/10) — Sam Altman really maximized OpenAI’s return on luck.
+  - https://x.com/pmddomingos/status/2068060359899160981
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 32).
