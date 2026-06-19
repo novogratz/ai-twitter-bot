@@ -15971,3 +15971,10 @@ But it's not full body. You can't use ultrasound to image
 - **@yahoonewstopics** (487 likes, score 7/10) — 【ChatGPT Ad Display Set to Launch in Japan】
   - https://x.com/YahooNewsTopics/status/2067744667673002329
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 785).
+- **@mango_** (19 likes, score 8/10) — So, what's the next big IPOs coming to the world & @solana after $SPCX?
+
+> OpenAI - Q4, 2026
+
+Filed its S-1 on May 22, 2026. Valuation sits at $730-852B range, but they're targeting a public listing a
+  - https://x.com/mango_/status/2067930959270617590
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 29).
