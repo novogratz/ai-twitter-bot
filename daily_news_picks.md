@@ -16417,3 +16417,46 @@ Global defense: $3T+ est. for 2027
 AI hyperscaler capex: ~$
   - https://x.com/michaelsikand/status/2067956819570360482
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 120).
+- **@0x_fokki** (21 likes, score 9/10) — OpenAI bills you for every token, forever
+
+a 20-year-old paid $0 last month and ran a 120B model in his closet
+
+> MS-S1 MAX holds the model: 96GB on the GPU
+> llama-server pushes tokens: 56/sec
+> Herm
+  - https://x.com/0x_fokki/status/2067991121557438581
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 51).
+- **@cryptopunk7213** (141 likes, score 9/10) — SpaceX's cursor acquisition will go down as the best investment of 2026 and the thing that gives them a shot at being the #1 frontier lab
+
+on thursday Cursor announced they’re releasing a new ai model
+  - https://x.com/cryptopunk7213/status/2067814233039835485
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 147).
+- **@randgroup** (132 likes, score 9/10) — DeepSeek charges $0.42 per million tokens. Claude Opus charges $75. 
+
+The SWE-Bench scores: 80.2% vs 80.8%.
+
+Explains a lot.
+  - https://x.com/randgroup/status/2067972670021366181
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 158).
+- **@vicky_grok** (39 likes, score 8/10) — Anthropic just showed a 27-minute workshop on how to actually do prompts for Claude.
+
+Taught by the people who built it.
+
+Free. No registration. No paywall.
+
+I've seen $300 courses that don't cover wh
+  - https://x.com/vicky_grok/status/2067969990981198127
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 53).
+- **@cryptowluha** (75 likes, score 8/10) — A guy I know was paying $200 a month for AI.
+
+ChatGPT. Claude. Midjourney.
+
+Then AMD put it in a box the size of a book.
+
+He bought one.
+
+Canceled every subscription.
+
+Now everything runs on his desk.
+  - https://x.com/cryptowluha/status/2067847083776762166
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 95).
