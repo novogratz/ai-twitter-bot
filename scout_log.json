@@ -4523,5 +4523,71 @@
       }
     ],
     "summary": "Une s\u00e9lection de pros qui tweetent sans vendre du savon. De Mistral \u00e0 la fintech qu\u00e9b\u00e9coise, c'est du solide, pas du vent."
+  },
+  {
+    "ts": "2026-06-19T18:08:08.146850",
+    "raw_count": 10,
+    "kept_count": 8,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThierryTerrieur",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 48000,
+        "reason": "L'indispensable 'Thierry du Net'. Il vulgarise la fintech et la bourse sans jamais vendre de r\u00eave, un rare poisson d'or dans la rivi\u00e8re des infopreneurs."
+      },
+      {
+        "handle": "AlexDreano",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Ancien de Coinhouse, il mixe la tech blockchain avec une touche macro. Moins hype que les influenceurs, plus fondamental que la moyenne."
+      },
+      {
+        "handle": "BenjaminLefebvre",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Bas\u00e9 \u00e0 SF, mais francophone pur. Il couvre la tech US avec un \u0153il europ\u00e9en critique, \u00e9vitant le fanboyisme syst\u00e9matique."
+      },
+      {
+        "handle": "VincentBoutin",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Le chroniqueur de Bourse Direct qui donne le ton au Qu\u00e9bec. Il \u00e9vite le pi\u00e8ge du 'moon' perp\u00e9tuel et reste focalis\u00e9 sur la valorisation d'entreprise."
+      },
+      {
+        "handle": "MaximeBordet",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Founders of L'Obs et ex-PM. Il twitter sur l'IA avec une hauteur de vue rare, loin des tweets 'AGI dans 6 mois'."
+      },
+      {
+        "handle": "OlivierRigaud",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Un des rares Qu\u00e9b\u00e9cois \u00e0 twitturer sur la crypto avec une profondeur technique (DeFi, L2) plut\u00f4t qu'avec des gifs de Toad."
+      },
+      {
+        "handle": "SaraSylla",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 11000,
+        "reason": "Fondatrice de PayFit, elle twitter le business tech avec pragmatisme. Pas de vanity metrics, que du concret sur la scalabilit\u00e9."
+      },
+      {
+        "handle": "JulienRochelle",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 8000,
+        "reason": "Journaliste crypto s\u00e9rieux. Il couvre l'industrie comme un pro du journalisme d'investigation, pas comme un vendeur de signaux."
+      }
+    ],
+    "summary": "Une s\u00e9lection sans fioritures, sans les vendeurs de r\u00eaves habituels. On privil\u00e9gie les pros qui twittent leur m\u00e9tier plut\u00f4t que leur ego. Du concret, de la tech, et un souffle d'air frais dans le marais crypto."
   }
 ]

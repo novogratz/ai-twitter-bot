@@ -16586,3 +16586,33 @@ in the last 24 hrs they’ve lost 2 key staff: Noam Shazeer (vp of eng) and John
 "The feature I'm pushing hard
   - https://x.com/adiix_official/status/2068003204327944383
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 86).
+- **@stocksavvyshay** (116 likes, score 9/10) — $GOOGL is reportedly borrowing from $NVDA playbook by financing AI infrastructure that drives demand for its cloud and chips.
+
+Google provided a $3.2B guarantee for Lake Mariner where compute capacity
+  - https://x.com/StockSavvyShay/status/2068075157781090697
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 140).
+- **@0xdepressionn** (29 likes, score 8/10) — Sam Altman: "you can have 10 agents running and working for you all the time. or you want 100."
+
+that's the CEO of OpenAI describing where this goes: not one assistant you babysit, a fleet that runs o
+  - https://x.com/0xDepressionn/status/2068017384095392147
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 47).
+- **@ihtesham2005** (17 likes, score 7/10) — Jensen Huang said we are reinventing the computer for the first time since 1964, and the bill to replace it is measured in tens of trillions of dollars.
+
+He did not say upgrading. He said reinventing.
+  - https://x.com/ihtesham2005/status/2068061368494989649
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 23).
+- **@gippp69** (71 likes, score 7/10) — Anthropic Product Engineer, Jeremy:
+
+“Sonnet 4 and Opus 4 can handle 100+ tools. But the model still needs to know which tools actually matter.”
+
+In 9 minutes, he explains why agents are no longer jus
+  - https://x.com/gippp69/status/2068035091868033499
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 139).
+- **@higgsfield** (214 likes, score 7/10) — Grok Imagine Video 1.5 is now on Higgsfield.
+
+The best model to push creative vision further.
+Best-in-class realism, stronger physics, faster generations.
+
+Top-tier on @arena at 1467 Elo. Proud to off
+  - https://x.com/higgsfield/status/2068057227228045777
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 286).

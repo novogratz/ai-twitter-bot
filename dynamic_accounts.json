@@ -491,7 +491,14 @@
     "JeanFrenette",
     "LuisaLudwig",
     "BenoitBailly",
-    "MaximeLevassor"
+    "MaximeLevassor",
+    "ThierryTerrieur",
+    "AlexDreano",
+    "VincentBoutin",
+    "MaximeBordet",
+    "OlivierRigaud",
+    "SaraSylla",
+    "JulienRochelle"
   ],
   "en": [
     "blablacar",
@@ -3386,6 +3393,41 @@
     {
       "lang": "fr",
       "handle": "MaximeLevassor",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThierryTerrieur",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexDreano",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBoutin",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBordet",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierRigaud",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "SaraSylla",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienRochelle",
       "added": "2026-06-19"
     }
   ]
