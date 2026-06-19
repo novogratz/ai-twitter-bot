@@ -2857,3 +2857,47 @@ def test_hotake_news_pool_empty_when_only_rejected(tmp_path):
 
     block = hotake_agent._build_news_pool_section(str(sig))
     assert block == "", "all-rejected pool should produce no block at all"
+
+
+def test_replyback_aggregates_own_skip_log(monkeypatch):
+    """2026-06-18 — the first-comment self-reply (2026-06-15) + X's
+    author-replies-first ordering meant scrape_own_tweet_and_replies kept
+    surfacing 7 of our own articles per cycle; the per-iteration
+    'Own reply — skipping' log fired ~2,350x/day (~5% of bot.log) with
+    zero diagnostic value. Each cycle must emit at most ONE aggregated
+    own-skip line, not one per skipped article."""
+    from src import notify_bot as nb
+
+    own_replies = [
+        {"user": f"The AI Therapist @{nb._OWN_HANDLE}",
+         "text": "self chain message " + str(i),
+         "url": f"https://x.com/TheAIShrink/status/100{i}"}
+        for i in range(7)
+    ]
+    monkeypatch.setattr(
+        nb, "scrape_own_tweet_and_replies",
+        lambda: {"own_tweet": "parent post", "replies": own_replies},
+    )
+    monkeypatch.setattr(nb, "_load_replied_back", lambda: set())
+    monkeypatch.setattr(nb, "_save_replied_back", lambda s: None)
+    monkeypatch.setattr(nb, "_influencer_handles", lambda: set())
+    monkeypatch.setattr(
+        nb, "reply_to_tweet_in_thread",
+        lambda *a, **k: pytest.fail("must not reply to own posts"),
+    )
+
+    messages = []
+    monkeypatch.setattr(nb.log, "info", lambda msg, *a, **k: messages.append(msg))
+
+    nb.run_replyback_cycle()
+
+    per_iteration = [m for m in messages if "Own reply — skipping" in m]
+    summary = [m for m in messages if "Skipped" in m and "own-reply" in m]
+    assert per_iteration == [], (
+        f"per-iteration 'Own reply — skipping' must be gone "
+        f"(found {len(per_iteration)} lines)"
+    )
+    assert len(summary) == 1, (
+        f"exactly one aggregated summary line expected, got {len(summary)}: {messages!r}"
+    )
+    assert "7" in summary[0], "summary must include the skipped count"

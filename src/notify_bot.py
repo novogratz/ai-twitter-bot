@@ -120,6 +120,7 @@ def run_replyback_cycle():
         cycle_cap = 7
     log.info(f"[REPLYBACK] Parent has {incoming} replies — cap {cycle_cap} this cycle.")
 
+    own_skipped = 0
     for reply_info in replies[:cycle_cap]:
         user = reply_info.get("user", "")
         text = reply_info.get("text", "")
@@ -147,9 +148,13 @@ def run_replyback_cycle():
             log.info(f"[REPLYBACK] Blocklisted user={user!r} handle={handle!r} - skipping.")
             continue
 
-        # Skip our own replies (never reply to ourselves)
+        # Skip our own replies (never reply to ourselves). Aggregate count
+        # logged once at cycle end — the first-comment self-reply + X's
+        # author-replies-first ordering meant this fired 7x per cycle
+        # (~2,350 lines/day = ~5% of bot.log) with zero diagnostic value
+        # vs a single summary.
         if handle == _OWN_HANDLE or _OWN_HANDLE in user.lower():
-            log.info(f"[REPLYBACK] Own reply — skipping.")
+            own_skipped += 1
             continue
 
         # Skip very short or empty replies
@@ -193,6 +198,8 @@ def run_replyback_cycle():
             traceback.print_exc()
 
     _save_replied_back(replied_back)
+    if own_skipped:
+        log.info(f"[REPLYBACK] Skipped {own_skipped} own-reply article(s).")
     log.info(f"[REPLYBACK] Replied back to {count} people.")
 
     # Reciprocity loop: for non-influencer engagers, visit their profile and
