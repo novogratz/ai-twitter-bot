@@ -16190,3 +16190,44 @@ Writing and exe
 - **@lluciano_btc** (602 likes, score 7/10) — Saylor : AI is sucking capital, but it will rotate back to Bitcoin.
   - https://x.com/LLuciano_BTC/status/2067902960664039540
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 684).
+- **@0x_fokki** (1468 likes, score 9/10) — Tom and Jerry cost $50,000 per episode in 1945
+
+that runs near $870,000 today
+
+a 19-year-old spent $124 last month and made $12,345
+
+> Claude writes each scene: 10 minutes
+> Midjourney draws every fra
+  - https://x.com/0x_fokki/status/2067568652396720432
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1620).
+- **@marionawfal** (10 likes, score 8/10) — Israeli Minister Amichai Chikli:
+
+"The Trump administration is giving Erdogan enormous power, and when they give Erdogan a tailwind, his aggressiveness increases.
+
+At the end of the day, in 2, 5, or 1
+  - https://x.com/MarioNawfal/status/2067949523305889997
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 32).
+- **@rvaniaaaa** (22 likes, score 7/10) — The next billion-dollar company may look less like 100 employees and more like one founder with 10,000 GPUs.
+
+Sam Altman recently suggested that some of the most valuable companies of the future could
+  - https://x.com/rvaniaaaa/status/2067915670151463306
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 24).
+- **@zixuanli_** (670 likes, score 7/10) — GLM-5.2 delivers a substantial leap in app development capabilities, which also represent demanding long-horizon tasks.
+
+Results:
+- GLM-5.1: 21/70
+- GLM-5.2: 48/70
+- Claude Fable 5: 56/70
+
+That's more
+  - https://x.com/ZixuanLi_/status/2067803136283005393
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 782).
+- **@marionawfal** (30 likes, score 7/10) — Israeli Minister Katz:
+
+"We have flattened the entire first line of villages in southern Lebanon, all the houses have been destroyed.
+
+The residents will never see them standing ever again."
+
+This guy
+  - https://x.com/MarioNawfal/status/2067948234962538633
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 72).
