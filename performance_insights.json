@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-19T14:07:18.363949",
-  "window_7d_actions": 3299,
-  "window_24h_actions": 1343,
+  "generated_at": "2026-06-19T18:07:18.297616",
+  "window_7d_actions": 3473,
+  "window_24h_actions": 1308,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 3081
+      "count": 3250
     },
     {
       "pattern": "METAPHOR",
-      "count": 112
+      "count": 116
     },
     {
       "pattern": "RENAME",
@@ -31,7 +31,7 @@
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 6
+      "count": 7
     },
     {
       "pattern": "DIALOGUE",
@@ -63,30 +63,30 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1709
+      "count": 1829
     },
     {
       "topic": "Autre",
-      "count": 1360
-    },
-    {
-      "topic": "Bourse",
-      "count": 154
+      "count": 1410
     },
     {
       "topic": "Crypto",
-      "count": 151
+      "count": 157
+    },
+    {
+      "topic": "Bourse",
+      "count": 155
     },
     {
       "topic": "Spatial",
-      "count": 95
+      "count": 97
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2417
+      "count": 2569
     },
     {
       "type": "quote",
@@ -94,7 +94,7 @@
     },
     {
       "type": "retweet",
-      "count": 258
+      "count": 280
     },
     {
       "type": "quote_gif",
@@ -123,18 +123,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-19T14:06:16.345076",
-      "text": "Bittensor swapping centralised labs for a permissionless graph where 100k nodes compete.\n\nNot the end of human AI. Just the end of the rent.",
+      "ts": "2026-06-19T18:07:13.756268",
+      "text": "OpenAI, Anthropic, Google, xAI, Meta, DeepSeek, Alibaba, Mistral, Kimi...\n\nIt’s not an arms race. It’s a race to deploy 200k GPUs before the power grid melts. We’re funding the heat death of the universe.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-19T14:03:16.218483",
-      "text": "Disney spent $2M on a GPU cluster to generate a character poster that looks like a Midjourney prompt.\n\nThe real story is the 80% margin they just saved on artist retainers.\n\nThe board doesn't care about \"soul.\" They care about the P&L. And the P&L is smiling.",
+      "ts": "2026-06-19T18:06:39.862148",
+      "text": "100 agents vs 10.\n\nThat's just seat-based SaaS dying 100 times faster.\nthe CEO stops being a user and becomes a supervisor.\ncircle back when the headcount drops by 90%.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-19T14:01:59.445551",
-      "text": "Anthropic claims \"exponential is over.\"\n\nH100 GPU clusters grow 10x every 18 months. Dario is pricing in hardware saturation, not intelligence limits.",
+      "ts": "2026-06-19T18:06:34.018970",
+      "text": "A Gansu factory worker replaced by a voiceover bot and a script generator.\n\nThat's not disruption. That's margin expansion. Circle back to Q4 earnings.",
       "type": "reply"
     }
   ]
