@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-06-18T16:53:55.366653",
-  "window_7d_actions": 2120,
-  "window_24h_actions": 1207,
+  "generated_at": "2026-06-19T02:48:05.804478",
+  "window_7d_actions": 2716,
+  "window_24h_actions": 1413,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 1939
+      "count": 2523
     },
     {
       "pattern": "METAPHOR",
-      "count": 89
+      "count": 97
     },
     {
       "pattern": "RENAME",
-      "count": 56
+      "count": 60
     },
     {
       "pattern": "EN_ANCHOR",
@@ -40,6 +40,10 @@
   ],
   "best_hours_utc": [
     {
+      "hour": 21,
+      "actions": 266
+    },
+    {
       "hour": 11,
       "actions": 202
     },
@@ -48,57 +52,53 @@
       "actions": 191
     },
     {
-      "hour": 21,
-      "actions": 184
+      "hour": 20,
+      "actions": 187
     },
     {
       "hour": 12,
       "actions": 172
-    },
-    {
-      "hour": 23,
-      "actions": 125
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 992
+      "count": 1349
     },
     {
       "topic": "Autre",
-      "count": 967
+      "count": 1164
     },
     {
       "topic": "Bourse",
-      "count": 107
+      "count": 128
     },
     {
       "topic": "Crypto",
-      "count": 94
+      "count": 126
     },
     {
       "topic": "Spatial",
-      "count": 55
+      "count": 75
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1579
+      "count": 1973
     },
     {
       "type": "quote",
-      "count": 296
+      "count": 409
     },
     {
       "type": "retweet",
-      "count": 133
+      "count": 188
     },
     {
       "type": "quote_gif",
-      "count": 102
+      "count": 136
     },
     {
       "type": "METAPHOR",
@@ -119,18 +119,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-18T16:50:47.805991",
-      "text": "Grok winning is just marketing. The real story? X is the new training ground. We're watching an AI learn to shitpost its way to AGI.",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-06-18T16:50:13.005285",
-      "text": "Anthropic is charging thousands for work that now costs pennies in inference.\n\nWe are witnessing the death of the billable hour.",
+      "ts": "2026-06-19T02:47:16.082281",
+      "text": "Claude automates SEO better than most juniors.\n\nThe real story is the margin explosion on the agency model.\n\nThat's a PIP for half of them.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-18T16:50:01.002105",
-      "text": "170k frauds/day requires ~4 agents (1 per 40k txs).\n\nThe SaaS pitch deck has 6 months runway and a UI wrapper. The math says layoffs. Noted.",
+      "ts": "2026-06-19T02:47:03.812429",
+      "text": "4 hours of Claude is the new $2,000 bootcamp. The ROI only works if you treat the model like an unpaid intern that never sleeps. The real lesson? You're paying for the prompt engineering, not the AI.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-06-19T02:46:51.111497",
+      "text": "Pressler plays Debussy like an H100 running inference on a $3B burn rate.\n\nChops the noise, leaves the signal.",
       "type": "reply"
     }
   ]
