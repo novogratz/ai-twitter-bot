@@ -16352,3 +16352,34 @@ Tested on the Unitree G1 robot, it enables real-time whole-body control and c
 this 18 minute video says out loud what most AI builders
   - https://x.com/AnatoliKopadze/status/2067303664763519463
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 117).
+- **@manishamishra24** (8 likes, score 7/10) — Anthropic CEO:
+
+"If my revenue is not $1 trillion, even $800 billion,
+there's no force on earth, no hedge on earth,
+that could stop me from going bankrupt."
+
+In a 3-hour podcast, Dario Amodei does the
+  - https://x.com/manishamishra24/status/2067967197222490615
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 16).
+- **@zostaff** (41 likes, score 9/10) — Jensen Huang, CEO of Nvidia:
+
+"It took us 50 years to build that 1x. We're going to take one year to build a 4x."
+
+He's talking about the chip factory behind every AI data center.
+
+What took half a ce
+  - https://x.com/zostaff/status/2067637067681608022
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 67).
+- **@brenzhills** (68 likes, score 9/10) — You can use GLM 5.2 FOR FREE: the open model that just outperformed GPT-5.5 in coding 
+
+No card needed. Just one API key, three free models.
+
+What you get for 0€:
+- GLM 5.2: the best open coding model
+  - https://x.com/brenzhills/status/2067951724766093557
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 88).
+- **@erenchenai** (86 likes, score 8/10) — Galbot just released AstraBrain-WBC 0.5, the world’s first humanoid robot cerebellum foundation model.
+
+Trained on 20,000 hours of human motion data, it validates a Scaling Law for robot motion contro
+  - https://x.com/ErenChenAI/status/2067826625622724705
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 92).
