@@ -617,3 +617,30 @@ def test_log_reply_sanitizes_leaked_action_type(monkeypatch, tmp_path):
         rows = list(csv.reader(f))[1:]  # drop header
     types = [r[1] for r in rows]
     assert types == ["reply", "quote_gif", "reply"], types
+
+
+# --- quote/direct-reply cycle NameError crashes (2026-06-19) ----------------------
+
+def test_quote_night_hour_helper_defined_and_correct():
+    """_is_us_night_hour was referenced at quote_tweet_bot.py:399 but never
+    defined -> every quote cycle crashed with NameError, taking down the whole
+    quote growth surface. Pin: it exists and flags US overnight (0..6 NY).
+    """
+    from src.quote_tweet_bot import _is_us_night_hour
+    assert _is_us_night_hour(3) is True      # 3 AM NY = night, throttle
+    assert _is_us_night_hour(0) is True       # midnight = night
+    assert _is_us_night_hour(7) is False      # 7 AM = waking hours, run
+    assert _is_us_night_hour(14) is False     # 2 PM = peak, run
+    assert _is_us_night_hour(23) is False     # 11 PM = still active, run
+
+
+def test_direct_reply_wrapper_calls_cycle_with_no_undefined_name():
+    """safe_run_direct_reply_cycle called run_direct_reply_cycle(max_replies=
+    max_replies) — max_replies was undefined AND the cycle takes no args, so
+    every direct-reply cycle crashed (the #1 growth lever). Pin the cycle's
+    zero-arg signature so the wrapper can't reintroduce a bad kwarg.
+    """
+    import inspect
+    from src import direct_reply
+    sig = inspect.signature(direct_reply.run_direct_reply_cycle)
+    assert len(sig.parameters) == 0, "run_direct_reply_cycle must take no args"

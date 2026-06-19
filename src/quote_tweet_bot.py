@@ -380,6 +380,17 @@ def _too_old_to_quote(t: dict) -> bool:
         return True  # can't determine age → treat as stale → skip
 
 
+def _is_us_night_hour(hour_ny: int) -> bool:
+    """True for US overnight hours (NY time) — midnight..6:59 AM.
+
+    Used by the night throttle so most overnight quote cycles skip (cheap,
+    before any Safari/LLM work) and the daily cap + fresh viral parents
+    concentrate on US waking hours. Was referenced but never defined, which
+    crashed every quote cycle with a NameError (2026-06-19).
+    """
+    return 0 <= hour_ny < 7
+
+
 def run_quote_tweet_cycle():
     """Pick a viral in-niche tweet and publish a quote post with a FR angle."""
     from .config import get_live_cap

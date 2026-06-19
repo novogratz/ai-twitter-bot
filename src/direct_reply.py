@@ -523,7 +523,7 @@ def run_direct_reply_cycle():
 def safe_run_direct_reply_cycle():
     from . import health
     try:
-        run_direct_reply_cycle(max_replies=max_replies)
+        run_direct_reply_cycle()
         health.record_success("direct_reply")
     except Exception:
         log.info("[DIRECT] Error during direct reply cycle:")
