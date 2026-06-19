@@ -456,7 +456,13 @@
     "MaximeFleury_",
     "JulesBorini",
     "MaximeGauvin",
-    "JulienVernier"
+    "JulienVernier",
+    "thibautmairel",
+    "mathiashb",
+    "johanneperron",
+    "gillesp",
+    "lucbouchard",
+    "joachimvialle"
   ],
   "en": [
     "blablacar",
@@ -523,7 +529,10 @@
     "Rahul",
     "bg2clips",
     "Anthropic",
-    "Shruti"
+    "Shruti",
+    "Evan",
+    "Cua",
+    "Nasdaq"
   ],
   "history": [
     {
@@ -3135,6 +3144,51 @@
       "lang": "fr",
       "handle": "JulienVernier",
       "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Evan",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Cua",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Nasdaq",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "thibautmairel",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "mathiashb",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "johanneperron",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "gillesp",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucbouchard",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "joachimvialle",
+      "added": "2026-06-19"
     }
   ]
 }

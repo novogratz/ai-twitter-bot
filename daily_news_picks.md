@@ -15945,3 +15945,29 @@ Already has the most visually stunning i
 - **@techcrunch** (8 likes, score 7/10) — Source: Elastic agrees to buy CRV-backed DeductiveAI for up to $85M
   - https://x.com/TechCrunch/status/2067772663716782439
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 10).
+- **@tszzl** (1148 likes, score 9/10) — imo it is crazy that openai, years into the heated AGI race, released o1 and described in quite a bit of detail the principles of scaling RL over CoT. I wonder how much value was dispersed to the publ
+  - https://x.com/tszzl/status/2067760588315652123
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1294).
+
+## 2026-06-19
+- **@chrissgpt** (102 likes, score 9/10) — GPT-5.6 vs GPT-5.5 on my custom spaceship prompt.
+
+I gave both models the exact same custom prompt. This is also the same prompt I previously gave to Fable 5.
+
+For context, GPT-5.6 Pro worked for 87 m
+  - https://x.com/ChrissGPT/status/2067791719689597129
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 146).
+- **@nikkei** (101 likes, score 9/10) — Even "Desired Items" Generated in Conversations: OpenAI Envisions 16 Trillion Yen in Global Advertising Revenue
+  - https://x.com/nikkei/status/2067730046085677135
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 121).
+- **@erictopol** (402 likes, score 7/10) — On the @midjourney "Full Body Scanner"
+A nice idea that could add to our imaging capabilities, especially building on the power of ultrasound.
+But it's not full body. You can't use ultrasound to image
+  - https://x.com/EricTopol/status/2067607995882799169
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 468).
+- **@bloombergtv** (88 likes, score 7/10) — Former Federal Reserve Vice Chair Lael Brainard said several of the task forces Fed Chair Kevin Warsh announced yesterday could be ways he tries to move the committee more into a direction of lowering
+  - https://x.com/BloombergTV/status/2067688225842381089
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 108).
+- **@yahoonewstopics** (487 likes, score 7/10) — 【ChatGPT Ad Display Set to Launch in Japan】
+  - https://x.com/YahooNewsTopics/status/2067744667673002329
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 785).
