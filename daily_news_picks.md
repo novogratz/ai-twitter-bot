@@ -16253,3 +16253,42 @@ This time, literally.
 - **@thr** (4 likes, score 7/10) — Luca Guadagnino's Sam Altman, OpenAI Film 'Artificial' Dropped by Amazon MGM Studios
   - https://x.com/THR/status/2067952778107142200
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 14).
+- **@stocksavvyshay** (147 likes, score 9/10) — How much profit the Mag 7 are expected to generate over the next 3 years: 
+
+• $NVDA ~$1.1T
+• $GOOGL ~$621B
+• $MSFT ~$543B
+• $AAPL ~$507B
+• $AMZN ~$406B
+• $META ~$318B
+• $TSLA ~$25B
+  - https://x.com/StockSavvyShay/status/2067953819284357341
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 187).
+- **@marionawfal** (113 likes, score 9/10) — BREAKING:
+
+ An Israeli airstrike hit Nabatieh Al-Fawqa in southern Lebanon just 5 minutes after the reported ceasefire agreement between Israel and Hezbollah. 
+
+They can't go a second without attackin
+  - https://x.com/MarioNawfal/status/2067958716515627250
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 171).
+- **@marionawfal** (52 likes, score 8/10) — Israel says it has entered a ceasefire with Hezbollah but will remain in the security zone and respond to any attacks.
+
+Idk what to believe, they just attacked southern Lebanon again…
+
+Source: Channel
+  - https://x.com/MarioNawfal/status/2067960590270918866
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 90).
+- **@marionawfal** (30 likes, score 8/10) — BREAKING:
+
+ Israel says there is no ceasefire agreement with Hezbollah.
+
+Operations in southern Lebanon will continue as normal.
+
+Israel is like that friend who says they won’t drink again, but the se
+  - https://x.com/MarioNawfal/status/2067962773305262564
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 70).
+- **@stocksavvyshay** (50 likes, score 8/10) — $NBIS understood the next AI cloud architecture better than almost anyone.
+
+Nebius built natively for a world where demand is driven by tokens and AI compute with owned racks, networking and GPU clust
+  - https://x.com/StockSavvyShay/status/2067961536531107893
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 60).
