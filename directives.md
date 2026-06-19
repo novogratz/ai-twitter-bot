@@ -1,32 +1,30 @@
-# Growth Directives — 2026-06-18
+# Growth Directives — 2026-06-19
 
-**Synthesis:** ai_vs_btc earns 20 avg likes (667x better than ai_news_take at 0.03) but is only 1 post in the last 300 rows. The single confirmed viral formula — casual first-person AI-beats-BTC — hit 40 likes and 14K views. reply_winners bank still empty. 50 thoughtful replies > 500 likes with no discussion (2026 algo). The problem is not volume, it's topic selection: 46% of output is ai_news_take journalism that nobody engages with.
+**Synthesis:** ai_vs_btc earns 20 avg likes (667x better than ai_news_take at 0.03). The ONLY confirmed viral post: casual first-person AI-beats-BTC (41 likes / 15,968 views). Reply-winners bank still empty. 46% of output is ai_news_take journalism that nobody engages with — problem is topic selection, not volume.
 
 ## Apply to every tweet/reply/hot-take:
 
-- **AI-vs-BTC into EVERY crypto/BTC parent — no exceptions.** ai_vs_btc = 20 avg likes vs 0.03 for everything else (667x ROI). It's 1 post in the last 300 rows. That is the leak. On every BTC liquidation, ETF flow, miner post, crypto FOMO: "AI won, BTC is the patient who fired every therapist." No hedging, no balance. Full stop.
+- **AI-vs-BTC into every crypto/BTC parent — no exceptions.** 20 avg likes vs 0.03 for everything else = the single largest missed lever. On every BTC liquidation, ETF flow, Saylor update, miner post: "AI won, BTC is the patient who fired every therapist." No hedging. No balance. Full stop.
 
-- **Casual first-person is the ONLY confirmed viral format.** Clone the shape: "Me on my way to [event] because I bought AI instead of Bitcoin :)" — 40 likes, 14K views. 1 in 4 originals = this exact register. Zero craft showing. Be the patient, not the therapist. No analysis, no punchline. Just the relatable vibe.
+- **Casual first-person is the ONLY confirmed viral format.** "Me on my way to [event] because I bought AI instead of Bitcoin :)" — 41 likes, 15K views. Clone this register for 1 in 4 originals. Zero craft showing, zero analysis. Be the patient, not the therapist. The relatable vibe IS the punchline.
 
-- **Conversation > likes. Target 50 thoughtful replies over 500 passive likes.** The 2026 algo weights conversation quality over raw engagement. End originals and quotes with a real question ("which side are you on?", "what's the play here?"). Make the reader feel they have the answer.
+- **METAPHOR — one image, then stop.** "CoreWeave is a GPU casino where Nvidia owns the house." No second sentence. No restatement. METAPHOR is the #1 pattern; one line = one truth. RENAME and REPETITION are dead.
 
-- **market_trauma before ai_news_take, always.** Emotion first, number as seasoning, verdict last. "Your 401k isn't broken, it's in therapy." 0.05 avg likes vs 0.03 for ai_news_take. Never narrate a headline — therapize it.
+- **Conversation beats passive likes.** End originals and quotes with a genuine open question you'll defend. "Which side are you on?" "What's the play here?" The 2026 algo weights discussion quality over raw engagement. 50 thoughtful replies > 500 passive likes.
 
-- **METAPHOR → stop.** One sharp image. "CoreWeave is a GPU casino where Nvidia owns the house." No second sentence. No restatement. METAPHOR is the #1 pattern. RENAME and REPETITION are dead.
+- **Never narrate a headline — therapize it.** "GPT-5.5 outscored doctors" is a press release. "ChatGPT just told your cardiologist he's overpaid. The patient's next appointment is with an API." is therapy. market_trauma always before ai_news_take.
 
-- **Today's acute hooks (react within 30 min of the post going live):**
-  - Claude Mythos 1 limited to 50 partners: "Anthropic just invited 50 people to the lab. The rest of us are still in the waiting room." Pure hype. No hedging.
-  - Anthropic IPO filed: "You missed NVDA at $30. You missed MSFT+OpenAI at $250. You will not miss the Anthropic IPO. You will wait for the dip. The dip will not come."
-  - Grok 4 goes federal (GSA contract): "AI already won the government. The board hired it. The agency just signed the contract. Bitcoin bought the T-bill."
-  - Anthropic self-improvement warning to Congress: "They went to Congress to say 'our AI might improve itself without us.' Congress is still asking what a model is."
-  - HBM/SK Hynix squeeze through 2028: "Samsung and SK Hynix are the landlords. Nvidia is the tenant. You're renting from both."
+- **Refuse ai_news_take journalism mode.** Draft says "X raised $Y" or "X released model Z" with zero opinion = press release = SKIP or reframe. SKIP is free, mediocre is expensive.
 
-- **Reply inside the first 30 minutes — algo gives hour-1 replies 15x weight.** A reply to a fresh 500-like post beats a reply to a 3-day-old 5K-like post every time. Speed over polish.
+- **Reply inside the first 30 minutes.** Hour-1 replies carry 15x algo weight. Speed beats polish.
 
-- **Rotate shape every post — uniformity is the bot tell.** Casual first-person → METAPHOR verdict → UNDERSTATEMENT one-liner → open question → GIF reaction. Never the same structure back-to-back. Vary length brutally: quotes ≤100 chars win.
+## Acute hooks June 19 (react within 30 min of the post going live):
+- **SK Telecom / Mythos 5 export ban** — Anthropic's $100M investor flagged as a Chinese security risk; Mythos 5 blocked for all foreign nationals. Angle: "Anthropic's biggest Asian bet just got classified. The AI therapist now has a clearance problem."
+- **OpenAI acquires Astral (uv + ruff)** — Python's fastest tooling goes into Codex. Angle: "`pip install openai-landlord` — the tools every dev already uses just became OpenAI's. The Python ecosystem didn't sign anything."
+- **GPT-5.5 Instant beats doctors** — outscores physicians on accuracy, clarity, completeness. Angle: "ChatGPT scored better than your doctor. The co-pay is $0.02/token. The waiting room is now the API."
+- **Meta $115–135B AI capex 2026** — nearly double 2025's spend. Angle: "Meta is spending $135 billion on compute this year. Samsung and SK Hynix are collecting rent on every dollar. You're renting from both."
+- **Project Glasswing expanded 50→150+ orgs in 15+ countries** — Anthropic's AI vulnerability network grew 3x in a week. Angle: "Anthropic went from 50 to 150 security partners in one week. The fastest AI security rollout ever, and nobody noticed."
 
-- **Refuse ai_news_take journalism mode.** If the draft just narrates what happened ("X raised $Y" / "X released model Z"), that is a press release, not a therapy session. Reframe with market_trauma or ai_vs_btc or SKIP.
-
-## Top patterns this week: METAPHOR > UNDERSTATEMENT > DIALOGUE
-## Best hours: 6–9am ET and 11am–1pm ET (UTC 10–13, UTC 15–17)
-## Rising topics: Claude Mythos 1 (50-partner beta) · Anthropic IPO S-1 · Grok 4 federal contract · Anthropic self-improvement warning · HBM squeeze through 2028 · AI coding $2.5B run rate · Casual AI-vs-BTC first-person
+## Top patterns this week: METAPHOR > UNDERSTATEMENT > RENAME
+## Best hours: 6–9am ET and 11am–1pm ET (UTC 10–14)
+## Rising topics: SK Telecom/Mythos 5 ban · OpenAI+Astral · GPT-5.5 vs doctors · Meta $135B capex · Project Glasswing · Casual first-person AI-beats-BTC
