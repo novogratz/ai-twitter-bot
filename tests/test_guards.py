@@ -592,3 +592,54 @@ def test_engine_health_still_alerts_on_sustained_silence(monkeypatch, tmp_path):
     assert alerts_path.exists(), (
         "sustained silence (no fire in current or previous hour) must still alert"
     )
+
+
+def test_reply_search_skipped_when_provider_has_no_websearch(monkeypatch):
+    """ollama/opencode have no tool API. REPLY_SEARCH on those providers
+    burns ~5-15s per cycle generating hallucinated tweet URLs that the
+    TOO OLD chokepoint filters out (~500/day log spam, ~50-100 min/day
+    of ollama wasted, 4% conversion to actual replies). The agent must
+    skip the LLM call entirely when no real WebSearch is available."""
+    from src import reply_agent
+
+    monkeypatch.setenv("AI_CLI", "ollama")
+    monkeypatch.delenv("LLM_FALLBACK_CLI", raising=False)
+    monkeypatch.delenv("LLM_ALLOW_REMOTE_FALLBACK", raising=False)
+    monkeypatch.delenv("REPLY_SEARCH_FORCE", raising=False)
+    monkeypatch.setattr(reply_agent, "_websearch_skip_logged", False)
+
+    def _boom(*a, **k):
+        raise AssertionError(
+            "run_llm must NOT be called when no WebSearch-capable provider "
+            "is available — the model would just hallucinate URLs."
+        )
+
+    monkeypatch.setattr(reply_agent, "run_llm", _boom)
+    assert reply_agent.generate_replies() is None
+
+
+def test_reply_search_runs_when_force_env_is_set(monkeypatch):
+    """REPLY_SEARCH_FORCE=1 is the operator escape hatch — useful when a
+    custom local model genuinely searches (e.g. via a tools-aware wrapper).
+    The agent must honor it and proceed to run_llm."""
+    from src import reply_agent
+
+    monkeypatch.setenv("AI_CLI", "ollama")
+    monkeypatch.setenv("REPLY_SEARCH_FORCE", "1")
+    monkeypatch.setattr(reply_agent, "_websearch_skip_logged", False)
+
+    called = {"n": 0}
+
+    class _FakeResult:
+        returncode = 0
+        stdout = "[]"
+        stderr = ""
+
+    def _fake_run_llm(*a, **k):
+        called["n"] += 1
+        return _FakeResult()
+
+    monkeypatch.setattr(reply_agent, "run_llm", _fake_run_llm)
+    monkeypatch.setattr(reply_agent, "unwrap_text", lambda _s: "[]")
+    reply_agent.generate_replies()
+    assert called["n"] == 1, "REPLY_SEARCH_FORCE=1 must override the skip"
