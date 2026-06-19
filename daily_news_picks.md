@@ -16011,3 +16011,106 @@ He is not a hater. He owns the AI trade.
 He underwrites these compa
   - https://x.com/ihtesham2005/status/2067291430587187308
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 114).
+- **@thedatahubx** (654 likes, score 9/10) — Only 16 Companies Are Worth Over $1 Trillion
+
+1.  NVIDIA - $5.1T
+2.  Alphabet - $4.5T
+3.  Apple - $4.4T
+4.  Microsoft - $2.9T
+5.  SpaceX - $2.8T
+6.  Amazon - $2.7T
+7.  TSMC - $2.3T
+8.  Broadcom - $1.8
+  - https://x.com/TheDataHubX/status/2067458476478001289
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 672).
+- **@milkroadai** (400 likes, score 9/10) — The market is watching xAI charge $50 billion per gigawatt and the rest of the neocloud sector run up is just getting started (Save this).
+
+According to @GavinSBaker of Atreides Management, this is th
+  - https://x.com/MilkRoadAI/status/2067309604317655260
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 450).
+- **@brianroemmele** (594 likes, score 9/10) — BOOM!
+
+Just confirmed that my first retainer client, a Fortune 500 company will move half their coding to open source GLM 5.2!
+
+They abandoned Anthropic last week and now they have a permanent replace
+  - https://x.com/BrianRoemmele/status/2067602185798680587
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 688).
+- **@cryptotice_** (157 likes, score 9/10) — BREAKING:
+
+JPMorgan Chase just cut off Hong Kong staff from accessing Claude.
+
+Following a similar move by Goldman Sachs.
+Per the Financial Times.
+
+Two of the most powerful banks on earth.
+
+Blocking t
+  - https://x.com/CryptoTice_/status/2067887610249248966
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 179).
+- **@bunt10** (11 likes, score 8/10) — Next Big Bets: Water & Sun
+
+The AI race has a physical constraint that no amount of compute can abstract away. 
+
+Power. Every GPU cluster, every inference call, every training run needs electrons and
+  - https://x.com/BUNT10/status/2067899125765734865
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 27).
+- **@artificialanlys** (662 likes, score 8/10) — A standout number in Z ai’s GLM-5.2 launch is CritPt, a benchmark of unpublished research-level physics problems where it ties with Claude Opus 4.8 and is well above other open weights models
+
+Key tak
+  - https://x.com/ArtificialAnlys/status/2067329643905253730
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 688).
+- **@iam_smx** (102 likes, score 8/10) — The anime story of a humble boy from South Africa and his journey to becoming the world’s first trillionaire
+
+100% made with Grok @imagine
+  - https://x.com/iam_smx/status/2067899026339447040
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 154).
+- **@saylordocs** (117 likes, score 7/10) — my dad in 2002 instead of buying NVIDIA or TESLA shares
+  - https://x.com/saylordocs/status/2067844324071752022
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 133).
+- **@marionawfal** (66 likes, score 7/10) — U.S. Commerce Sec. Lutnick has warned chip maker ASML that Washington is concerned one of its advanced EUV lithography machines may have reached China in violation of export controls.
+
+Lutnick raised
+  - https://x.com/MarioNawfal/status/2067922841765306494
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 118).
+- **@jackcoder0** (35 likes, score 7/10) — The CEO of Claude just told the world which jobs AI will destroy first!!
+
+Dario Amodei published a 38-page document this week and most people completely missed it.
+
+He talked about lawyers, accountant
+  - https://x.com/jackcoder0/status/2067914970126589955
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 85).
+- **@disagreebutter** (66 likes, score 7/10) — Phil Lyman correctly points out we aren't losing the AI race to China; we're losing the surveillance race to China. He mentions China has 12 cameras for every citizen, and you'll need more data center
+  - https://x.com/disagreebutter/status/2067699337719853262
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 72).
+- **@sairahul1** (35 likes, score 7/10) — Jensen Huang, CEO of Nvidia:
+
+"Every engineer is going to have and manage hundreds of agents."
+
+The most valuable engineering skill of 2026 is not taught in any university.
+
+No CS program teaches harn
+  - https://x.com/sairahul1/status/2067903254122655904
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 57).
+- **@ihtesham2005** (0 likes, score 7/10) — On stage at Stanford, Sam Altman said that by March 2028 OpenAI expects an AI that invents completely new architectures on its own. The people building AI are racing to make themselves unnecessary.
+
+H
+  - https://x.com/ihtesham2005/status/2067683896473612625
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 34).
+- **@digitaldaisyx** (0 likes, score 7/10) — Wait till Tesla drops Optimus, a humanoid robot built for real work, not sci-fi. It is designed to handle tasks like lifting, carrying, factory labor, and even helping you with everyday chores, with h
+  - https://x.com/DigitalDaisyX/status/2067211468135629027
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 242).
+- **@variety** (16 likes, score 7/10) — Luca Guadagnino's OpenAI film "Artificial" has been dropped by Amazon MGM.
+
+The film, starring Andrew Garfield as CEO Sam Altman, already had several positively-received test screenings and screened f
+  - https://x.com/Variety/status/2067923551827509464
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 20).
+- **@sci_nature0** (10 likes, score 7/10) — The first trillionaire in human history
+
+- Elon Musk
+- Born in South Africa
+- Bullied relentlessly as a kid
+- Immigrated to North America
+- Arrived with a backpack and a dream
+- Built Zip2 with his br
+  - https://x.com/Sci_Nature0/status/2067875526958846143
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
