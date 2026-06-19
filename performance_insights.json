@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-19T06:48:00.400568",
-  "window_7d_actions": 2886,
-  "window_24h_actions": 1398,
+  "generated_at": "2026-06-19T14:07:18.363949",
+  "window_7d_actions": 3299,
+  "window_24h_actions": 1343,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2676
+      "count": 3081
     },
     {
       "pattern": "METAPHOR",
-      "count": 105
+      "count": 112
     },
     {
       "pattern": "RENAME",
@@ -31,7 +31,7 @@
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 5
+      "count": 6
     },
     {
       "pattern": "DIALOGUE",
@@ -45,60 +45,60 @@
     },
     {
       "hour": 11,
-      "actions": 202
+      "actions": 254
     },
     {
       "hour": 10,
-      "actions": 191
+      "actions": 245
+    },
+    {
+      "hour": 12,
+      "actions": 208
     },
     {
       "hour": 20,
       "actions": 187
-    },
-    {
-      "hour": 12,
-      "actions": 172
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1451
+      "count": 1709
     },
     {
       "topic": "Autre",
-      "count": 1224
+      "count": 1360
     },
     {
       "topic": "Bourse",
-      "count": 138
+      "count": 154
     },
     {
       "topic": "Crypto",
-      "count": 131
+      "count": 151
     },
     {
       "topic": "Spatial",
-      "count": 83
+      "count": 95
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2104
+      "count": 2417
     },
     {
       "type": "quote",
-      "count": 429
+      "count": 457
     },
     {
       "type": "retweet",
-      "count": 198
+      "count": 258
     },
     {
       "type": "quote_gif",
-      "count": 142
+      "count": 153
     },
     {
       "type": "METAPHOR",
@@ -106,7 +106,7 @@
     },
     {
       "type": "post",
-      "count": 3
+      "count": 4
     },
     {
       "type": "RENAME",
@@ -123,18 +123,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-19T06:47:03.433893",
-      "text": "Watched Stanford lecture instead of Netflix.\n\nOpenAI's 36B token cache is just a library card for a book they already stole.\n\nNow back to $5B burn.",
+      "ts": "2026-06-19T14:06:16.345076",
+      "text": "Bittensor swapping centralised labs for a permissionless graph where 100k nodes compete.\n\nNot the end of human AI. Just the end of the rent.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-19T06:46:51.027829",
-      "text": "Cluely at $7M ARR with zero headcount.\n\nopenai's burn rate is $5B/yr. the margin between \"ai company\" and \"ai utility\" is already a vacuum.",
+      "ts": "2026-06-19T14:03:16.218483",
+      "text": "Disney spent $2M on a GPU cluster to generate a character poster that looks like a Midjourney prompt.\n\nThe real story is the 80% margin they just saved on artist retainers.\n\nThe board doesn't care about \"soul.\" They care about the P&L. And the P&L is smiling.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-19T06:44:33.961243",
-      "text": "70% margins buy 20 years of depreciation.\nStartup burn rate buys 6 months of hope.\nThe P&L doesn't lie.",
+      "ts": "2026-06-19T14:01:59.445551",
+      "text": "Anthropic claims \"exponential is over.\"\n\nH100 GPU clusters grow 10x every 18 months. Dario is pricing in hardware saturation, not intelligence limits.",
       "type": "reply"
     }
   ]
