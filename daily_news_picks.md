@@ -16460,3 +16460,34 @@ Canceled every subscription.
 Now everything runs on his desk.
   - https://x.com/cryptowluha/status/2067847083776762166
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 95).
+- **@starmexxx** (79 likes, score 9/10) — STACKING 4 OLD NVIDIA GTX 1080s GIVES YOU LOCAL AI THAT BEATS $400/MO IN CLOUD SUBSCRIPTIONS
+
+people are pulling 4 used gtx 1080s off ebay for around $400 total and stacking them in one tower to build
+  - https://x.com/starmexxx/status/2067950246815002760
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 147).
+- **@cryptogoos** (84 likes, score 9/10) — I’LL BE BLUNT: $NVDA HAS COMPLETELY LOST CHINA TO HUAWEI.
+
+China just trained a frontier AI model with zero $NVDA chips.
+
+Zhipu’s GLM-5.
+Start to finish on Huawei Ascend.
+
+No Nvidia anywhere.
+
+Zhipu’s
+  - https://x.com/cryptogoos/status/2068021662759391516
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 120).
+- **@mhdfaran** (42 likes, score 9/10) — Everyone is overpaying for AI video right now.
+
+ByteDance's Dreamina Seedance 2.0 mini delivers the same quality as the flagship at lower cost and faster speed, from just $0.02 a second.
+
+I made 5 pro
+  - https://x.com/mhdfaran/status/2067926345120927971
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 66).
+- **@bindureddy** (31 likes, score 8/10) — Google Gemini can make a come back  
+
+Much like OpenAI did with GPT 5.5 and the upcoming GPT 5.6
+
+They have the data, the compute and the talent
+  - https://x.com/bindureddy/status/2068023661345603899
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 35).

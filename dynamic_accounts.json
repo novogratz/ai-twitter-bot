@@ -477,7 +477,15 @@
     "MaximeD",
     "jpmorgan",
     "LaurentDelaigue",
-    "AdrienDelaunay_"
+    "AdrienDelaunay_",
+    "ThomasBrousse",
+    "MathieuVieira",
+    "EricSantamaria",
+    "AlexisMonsel",
+    "RomainMarsaux",
+    "MaximeGouin",
+    "PierreMougel",
+    "JulienGirard"
   ],
   "en": [
     "blablacar",
@@ -550,7 +558,8 @@
     "Nasdaq",
     "Valuetainment",
     "Inception",
-    "Luxi"
+    "Luxi",
+    "Ejaaz"
   ],
   "history": [
     {
@@ -3296,6 +3305,51 @@
     {
       "lang": "fr",
       "handle": "AdrienDelaunay_",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "en",
+      "handle": "Ejaaz",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBrousse",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuVieira",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricSantamaria",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisMonsel",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainMarsaux",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeGouin",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreMougel",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienGirard",
       "added": "2026-06-19"
     }
   ]

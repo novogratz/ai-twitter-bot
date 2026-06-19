@@ -4405,5 +4405,71 @@
       }
     ],
     "summary": "J'ai mis\u00e9 sur les valeurs s\u00fbres : les experts qui ont surv\u00e9cu aux krachs sans vendre de formation \u00e0 497\u20ac. Laurent pour la bourse pure, Pierre pour le Bitcoin stack, et Sylvain pour la DeFi qu\u00e9b\u00e9coise."
+  },
+  {
+    "ts": "2026-06-19T14:07:47.477767",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomasBrousse",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "La r\u00e9f\u00e9rence DeFi FR. Il twitte en FR, pas de formations \u00e0 2000\u20ac, juste des analyses On-chain propres."
+      },
+      {
+        "handle": "MathieuVieira",
+        "region": "france",
+        "niche": "tech",
+        "followers": 32000,
+        "reason": "Ancien de la Snipersoft, il balance des insights tech/payeux \u00e0 0.1\u20ac en mode d\u00e9contract\u00e9. Pas de pub Telegram agressive."
+      },
+      {
+        "handle": "EricSantamaria",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Franco-am\u00e9ricain (SF). Il tweete en FR/EN sur l'IA et les march\u00e9s. Pas de pub 'Rejoins mon discord' dans chaque post."
+      },
+      {
+        "handle": "AlexisMonsel",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Ex-Mistral AI. Il explique l'IA sans jargon de VC qui nous rend malades. Actif, francophone, pertinent."
+      },
+      {
+        "handle": "RomainMarsaux",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Le gars de 'La Semaine de la Bourse'. Il poste des threads techniques en FR pour les Qu\u00e9b\u00e9cois. Pas de pub Telegram."
+      },
+      {
+        "handle": "MaximeGouin",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Ex-Polkadot. Il poste en EN mais a des threads FR virales sur la tech blockchain. Vraiment actif, pas un bot."
+      },
+      {
+        "handle": "PierreMougel",
+        "region": "france",
+        "niche": "tech",
+        "followers": 9000,
+        "reason": "Ex-Deezer. Il twitte sur la tech, les startups et l'IA. Style sec, pas de blabla 'guru crypto'."
+      },
+      {
+        "handle": "JulienGirard",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 8500,
+        "reason": "Journaliste tech \u00e0 la Radio-Canada. Il couvre l'IA et les startups FR/NA en mode s\u00e9rieux. Pas de 'community manager' vibes."
+      }
+    ],
+    "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui savent de quoi ils parlent. C'est moins de voix, mais moins de bruit."
   }
 ]
