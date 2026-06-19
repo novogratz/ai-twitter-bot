@@ -81,7 +81,17 @@ REPLY_MODEL = os.environ.get("REPLY_MODEL", _default_model("gpt-5.4-mini", "clau
 PRIORITY_REPLY_MODEL = os.environ.get("PRIORITY_REPLY_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-2.0-flash"))
 HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", _default_model("gpt-5.4-mini", "claude-sonnet-4-6", "gemini-2.0-flash"))
 ROAST_MODEL = os.environ.get("ROAST_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
-QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
+QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "claude-opus-4-8", "gemini-1.5-flash"))
+
+# Profile-surface provider override (2026-06-14, operator: "barely get
+# external likes on posts + quote retweets"). Root cause: AI_CLI=ollama
+# routes EVERYTHING through qwen, which writes cryptic word-salad one-liners
+# that get 0 likes (self_winners.md was empty — zero own posts hit 3 likes
+# in 4 days). The few high-stakes posts/quotes that must EARN a like force
+# this provider with their NEWS/HOTAKE/QUOTE_MODEL (Sonnet); the reply
+# firehose (1000s/day) stays on the AI_CLI default (ollama) for cost. Set
+# to "ollama"/empty to send profile surfaces back through the local model.
+PROFILE_LLM_PROVIDER = os.environ.get("PROFILE_LLM_PROVIDER", "claude").strip() or None
 
 # No budget limits — the bot calls the LLM freely.
 

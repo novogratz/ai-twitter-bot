@@ -9,6 +9,14 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_DIR"
 
+# Load the self-improve-loop knobs from .env so it's the single control
+# surface (operator 2026-06-17: "enable the self improve in the env"). Only
+# these three keys are pulled into the shell — the bot's Python loads the
+# full .env itself. Trailing comments stripped; simple KEY=VALUE only.
+if [ -f "$REPO_DIR/.env" ]; then
+  eval "$(grep -E '^(ENABLE_SELF_IMPROVE_LOOP|SELF_IMPROVE_INTERVAL_HOURS|SELF_IMPROVE_WARMUP_SECONDS)=' "$REPO_DIR/.env" | sed 's/[[:space:]]*#.*$//' | tr -d '"')"
+fi
+
 # Make sure no other instance is already running (would race on Safari).
 if pgrep -f "python.*main.py" >/dev/null; then
   echo "[run] Another bot is already running. Stopping it first..."

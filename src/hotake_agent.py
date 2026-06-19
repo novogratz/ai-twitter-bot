@@ -12,7 +12,7 @@ import re
 from collections import Counter
 from datetime import datetime, timedelta
 from typing import Optional
-from .config import HOTAKE_MODEL
+from .config import HOTAKE_MODEL, PROFILE_LLM_PROVIDER
 from .logger import log
 from .performance import get_learnings_for_prompt
 from .history import get_recent_tweets
@@ -99,6 +99,48 @@ def _is_rejected_source(url: str) -> bool:
         if f"//{dom}/" in u or f"//www.{dom}/" in u or f".{dom}/" in u:
             return True
     return False
+
+
+def _build_news_pool_section(sig_path: Optional[str] = None) -> str:
+    """Render the 'POOL D'ARTICLES RÉELS' prompt block from external_signal.json.
+
+    Pre-filters against the content-farm rejectlist: the chokepoint
+    (`_is_rejected_source`) deterministically refuses these URLs post-
+    generation, so showing them to the LLM just burns a Sonnet call. Same
+    family as PR #55 (spacing precheck) — when a rule is enforced
+    deterministically downstream, lift it upstream of the expensive call.
+    Was firing ~15x in the recent log window (~7/30 pool items = decrypt.co).
+    """
+    import json as _json
+    import os as _os
+    if sig_path is None:
+        sig_path = _os.path.join(_os.path.dirname(_os.path.dirname(__file__)), "external_signal.json")
+    try:
+        with open(sig_path) as f:
+            sig = _json.load(f)
+    except (OSError, _json.JSONDecodeError, ValueError):
+        return ""
+    items = [
+        it for it in (sig.get("items") or [])
+        if it.get("url")
+        and "x.com" not in it.get("url", "")
+        and "twitter.com" not in it.get("url", "")
+        and not _is_rejected_source(it.get("url", ""))
+    ]
+    if not items:
+        return ""
+    lines = "\n".join(
+        f"- {it['url']} | {it.get('title','')[:80]}"
+        for it in items[:15]
+    )
+    return (
+        "\n\n==================================================\n"
+        "POOL D'ARTICLES RÉELS (fraîchement scrappés — utilise UN de ces liens)\n"
+        "==================================================\n"
+        "NE GÉNÈRE PAS D'URL TOI-MÊME. Choisis UNIQUEMENT dans cette liste.\n"
+        "Si aucun article ne convient → réponds SKIP.\n\n"
+        + lines
+    )
 
 
 # Backwards-compat alias for any external code that imported the underscore name.
@@ -560,15 +602,15 @@ def generate_hotake() -> Optional[str]:
         banned_list = ", ".join(sorted(banned))
         recent_block = "\n".join(f"  - {t[:120]}" for t in recent[-8:])
         dedup_section = f"""==================================================
-INTERDIT — sujets que tu viens de couvrir (NE PAS RÉCIDIVER)
+BANNED — topics/lines you JUST covered (DO NOT REPEAT)
 ==================================================
 
-Tu as déjà fait des hot takes sur: {banned_list}.
+You've already posted hot takes on: {banned_list}.
 
-VA AILLEURS. Pas un seul mot sur ces sujets cette fois.
-Si t'as envie d'écrire encore sur Claude/Anthropic/Bitcoin parce que c'est
-"l'actu chaude", c'est exactement le piège: ton audience a vu 5 takes là-dessus
-de toi cette semaine. PIVOT ABSOLU.
+GO SOMEWHERE ELSE. Not one word recycling those this time. If you feel the
+pull to write about Claude/Anthropic/Nvidia AGAIN because it's "the hot
+story," that IS the trap — your audience has seen 5 of your takes on it this
+week. HARD PIVOT to a fresh angle or a fresh subject.
 
 Va chercher dans les 3 piliers (jamais hors-scope):
 - IA: Nvidia/AMD/TSMC chips, agents IA, agentic, robotique humanoïde,
@@ -587,7 +629,18 @@ Va chercher dans les 3 piliers (jamais hors-scope):
 PAS DE: immobilier, CAC40 pur, macro pure sans lien, fiscalité FR,
 trading retail généraliste, non-IA/non-space/non-crypto.
 
-Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
+Stay in the 3 pillars (AI-primary; NO space content — that's off-persona):
+- AI: Nvidia/AMD/TSMC chips, AI agents/agentic, humanoid robotics,
+  open-weights vs closed, Anthropic/OpenAI/xAI/Google/Mistral, AI
+  datacenters, energy for AI (nuclear/GPU farms), AGI timelines, AI
+  regulation, AI unicorns/funding, model launches.
+- Markets through the AI lens: AI stocks (Nvidia, Palantir, CoreWeave, IREN),
+  tech earnings, AI-capex/bubble debate, IPOs, M&A, asymmetric AI bets.
+- Crypto via the AI-vs-BTC angle: Bitcoin/ETH/ETFs, Saylor/MSTR.
+NO: real estate, pure macro with no AI link, generalist retail trading,
+and NO space (SpaceX/Starship/satellites are off-persona — never).
+
+Recent posts you've ALREADY written — do not repeat their subject OR phrasing:
 {recent_block}"""
     else:
         dedup_section = ""
@@ -595,11 +648,11 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     perf = get_learnings_for_prompt()
     performance_section = ""
     if perf:
-        performance_section = f"""APPRENDS DE TES PERFORMANCES:
+        performance_section = f"""LEARN FROM YOUR PERFORMANCE:
 
 {perf}
 
-Écris plus comme tes meilleurs tweets. Évite les patterns de tes pires."""
+Write more like your best tweets. Avoid the patterns of your worst ones."""
 
     # Autonomous evolution-agent directives (regenerated every 12h)
     from .evolution_store import get_directives_block
@@ -640,6 +693,42 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     if core_identity:
         performance_section = (performance_section or "") + "\n\n" + core_identity
     performance_section = (performance_section or "") + "\n\n" + personality_store.hard_rules_block()
+    # Measured pillar priority — market_trauma one-liners win 2.3x (2026-06-07).
+    try:
+        from .pillar_tags import market_trauma_priority_block
+        performance_section += "\n\n" + market_trauma_priority_block()
+    except Exception:
+        pass
+
+    # Auto-curated joke bank — fresh exemplars from top-liked recent posts.
+    try:
+        from . import joke_bank
+        jb = joke_bank.render_joke_bank_block(sample_size=5)
+        if jb:
+            performance_section = (performance_section or "") + "\n\n" + jb
+    except Exception:
+        pass
+    # Self-winners — our own past tops.
+    try:
+        from . import self_winners
+        sw = self_winners.render_self_winners_block(sample_size=3)
+        if sw:
+            performance_section = (performance_section or "") + "\n\n" + sw
+    except Exception:
+        pass
+    # Reply-winners — our best REPLIES as the voice to imitate (operator
+    # 2026-06-15: replies get the likes, posts don't — learn from replies).
+    try:
+        from . import reply_winners
+        rw = reply_winners.render_reply_winners_block(sample_size=3)
+        if rw:
+            performance_section = (performance_section or "") + "\n\n" + rw
+    except Exception:
+        pass
+    # Inject real article URLs from the RSS pool so the LLM doesn't hallucinate.
+    news_pool_section = _build_news_pool_section()
+    if news_pool_section:
+        performance_section = (performance_section or "") + news_pool_section
 
     # Auto-curated joke bank — fresh exemplars from top-liked recent posts.
     try:
@@ -694,20 +783,20 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
         dedup_section=dedup_section,
     )
 
-    result = run_llm(prompt, HOTAKE_MODEL, label="HOTAKE")
+    result = run_llm(prompt, HOTAKE_MODEL, label="HOTAKE", force_provider=PROFILE_LLM_PROVIDER)
     # Retry once on transient CLI failure (exit 1 + empty stderr = API hiccup)
     if result.returncode != 0 and not result.stderr.strip():
         log.warning(f"[HOTAKE] CLI transient failure (exit {result.returncode}), retrying in 10s...")
         import time
         time.sleep(10)
-        result = run_llm(prompt, HOTAKE_MODEL, label="HOTAKE")
+        result = run_llm(prompt, HOTAKE_MODEL, label="HOTAKE", force_provider=PROFILE_LLM_PROVIDER)
     if result.returncode != 0:
         log.info(f"[HOTAKE] CLI stderr: {result.stderr}")
         raise RuntimeError(f"Hot take CLI failed (exit {result.returncode}): {result.stderr}")
 
     # Extract model text from --output-format json envelope
     tweet = unwrap_text(result.stdout)
-    if not tweet or tweet.upper() == "SKIP":
+    if not tweet or tweet.upper().startswith("SKIP"):
         return None
 
     # 2026-05-06: strip any rationale prose the agent leaked BEFORE the
@@ -716,7 +805,7 @@ Tweets que tu as déjà écrits récemment — NE répète PAS leur sujet:
     # one combined post.
     from .humanizer import strip_agent_preamble
     tweet = strip_agent_preamble(tweet)
-    if not tweet or tweet.upper() == "SKIP":
+    if not tweet or tweet.upper().startswith("SKIP"):
         return None
 
     # Defense against skip-rationale leaks (bug 2026-04-30 PM: quote-tweet

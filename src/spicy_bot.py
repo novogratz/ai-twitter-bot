@@ -31,7 +31,7 @@ import time
 import traceback
 from datetime import date, datetime
 
-from .config import _PROJECT_ROOT, BOT_HANDLE, HOTAKE_MODEL
+from .config import _PROJECT_ROOT, BOT_HANDLE, HOTAKE_MODEL, PROFILE_LLM_PROVIDER
 from .llm_client import run_llm, unwrap_text
 from .logger import log
 from .twitter_client import post_tweet
@@ -150,8 +150,40 @@ def _increment_count():
     today = date.today().isoformat()
     s = _load_state()
     if s.get("date") != today:
-        s = {"date": today, "count": 0}
+        # Preserve the weekly question-bait tally across the daily reset.
+        s = {"date": today, "count": 0,
+             "question_week": s.get("question_week"),
+             "question_count": s.get("question_count", 0)}
     s["count"] = int(s.get("count", 0)) + 1
+    with open(SPICY_STATE_FILE, "w") as f:
+        json.dump(s, f)
+
+
+# 2026-06-07 agent spec: reply-bait question posts are capped at 3-4/WEEK
+# (they farm replies on our own posts — more than that reads as engagement
+# farming). Tracked per ISO week in the same state file.
+REPLY_BAIT_PER_WEEK = int(os.environ.get("REPLY_BAIT_PER_WEEK", "4"))
+
+
+def _current_week() -> str:
+    y, w, _ = date.today().isocalendar()
+    return f"{y}-W{w:02d}"
+
+
+def _week_question_count() -> int:
+    s = _load_state()
+    if s.get("question_week") != _current_week():
+        return 0
+    return int(s.get("question_count", 0))
+
+
+def _increment_question_count():
+    s = _load_state()
+    week = _current_week()
+    if s.get("question_week") != week:
+        s["question_week"] = week
+        s["question_count"] = 0
+    s["question_count"] = int(s.get("question_count", 0)) + 1
     with open(SPICY_STATE_FILE, "w") as f:
         json.dump(s, f)
 
@@ -180,7 +212,14 @@ def run_spicy_cycle():
 
     # 60% spicy, 40% question. Spicy drives more replies but question is
     # more inclusive — mix is healthier than 100% spicy.
+    # Reply-bait questions are additionally capped at REPLY_BAIT_PER_WEEK
+    # (3-4/week per the 2026-06-07 spec) — over the weekly budget we fall
+    # back to SPICY.
     mode = "SPICY" if random.random() < 0.6 else "QUESTION"
+    if mode == "QUESTION" and _week_question_count() >= REPLY_BAIT_PER_WEEK:
+        log.info(f"[SPICY] Weekly reply-bait budget reached "
+                 f"({REPLY_BAIT_PER_WEEK}/week) — falling back to SPICY mode.")
+        mode = "SPICY"
     instructions = SPICY_INSTRUCTIONS if mode == "SPICY" else QUESTION_INSTRUCTIONS
 
     from . import lang_mode, personality_store
@@ -201,7 +240,7 @@ def run_spicy_cycle():
     )
 
     log.info(f"[SPICY] Generating ({mode}, lang={lang})...")
-    result = run_llm(prompt, HOTAKE_MODEL, label=f"SPICY_{mode}")
+    result = run_llm(prompt, HOTAKE_MODEL, label=f"SPICY_{mode}", force_provider=PROFILE_LLM_PROVIDER)
     if result.returncode != 0:
         log.info(f"[SPICY] LLM failed: {result.stderr[:200]}")
         return
@@ -228,6 +267,16 @@ def run_spicy_cycle():
     try:
         post_tweet(text)
         _increment_count()
+        if mode == "QUESTION":
+            _increment_question_count()
+        # Log with mode as source so pillar attribution sees reply-bait
+        # questions explicitly (QUESTION → reply_bait). spicy posts were
+        # previously invisible to the engagement log / ROI loop entirely.
+        try:
+            from .engagement_log import log_post
+            log_post(text, source=mode)
+        except Exception:
+            pass
         time.sleep(random.randint(3, 6))
         log.info(f"[SPICY] DONE. Today's count: {_today_count()}/{MAX_SPICY_PER_DAY}")
     except Exception:

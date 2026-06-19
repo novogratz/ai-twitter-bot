@@ -25,6 +25,7 @@ from typing import Optional
 from .config import _PROJECT_ROOT, BOT_HANDLE, REPLY_MODEL
 from .llm_client import run_llm, unwrap_text
 from .logger import log
+from .twitter_client import is_own_post as _is_own_post
 from .twitter_client import scrape_profile_tweets, reply_to_tweet_in_thread
 from .humanizer import humanize
 from .engagement_log import log_reply
@@ -96,7 +97,7 @@ def _generate_followup(post_text: str, likes: int, replies: int) -> Optional[str
         log.info(f"[VIRAL] LLM failed: {result.stderr[:160]}")
         return None
     text = unwrap_text(result.stdout).strip()
-    if not text or text.upper() == "SKIP":
+    if not text or text.upper().startswith("SKIP"):
         return None
     if "skip" in text.lower():
         return None
@@ -121,8 +122,10 @@ def run_viral_followup_cycle():
     candidates = []
     bot_lc = BOT_HANDLE.lower()
     for t in tweets:
-        author = (t.get("author") or "").lower().lstrip("@")
-        if author and author != bot_lc:
+        # Ownership by URL — the scraper's `author` is the DISPLAY NAME,
+        # not the handle; comparing it to BOT_HANDLE silently dropped every
+        # own post (2026-06-07 banger bug). is_own_post is ground truth.
+        if not _is_own_post(t):
             continue
         url = t.get("url") or ""
         if not url or url in followed_up:
@@ -166,7 +169,8 @@ def run_viral_followup_cycle():
         _save_followed_up(followed_up)
 
         try:
-            reply_to_tweet_in_thread(c["url"], followup)
+            if not reply_to_tweet_in_thread(c["url"], followup):
+                continue  # chokepoint skip — no phantom log
             log.info("[VIRAL]   Posted in-thread.")
             try:
                 log_reply(

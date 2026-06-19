@@ -186,3 +186,29 @@ ENABLE_CODEX_OPERATOR=0
 
 CONTENT_LANG_PRIMARY=en
 ```
+
+---
+
+## 2026-06-07 additions (viral focus / quality barbell — see CLAUDE.md CURRENT mandate)
+
+The live values are in `.env` (which overrides everything above; treat the
+older tables on this page as historical defaults).
+
+| Variable | Live value | Purpose |
+|---|---|---|
+| `MAX_QUOTE_REPOSTS_PER_DAY` / `MAX_QUOTES_PER_DAY` | `100` | QRT quality lane — the focus surface. 50-like floor, screenshot-or-SKIP gate. |
+| `MIN_SECONDS_BETWEEN_QUOTES` / `QUOTE_JITTER_SECONDS` | `300` / `180` | ~5-min jittered QRT spacing, never bursts. |
+| `QUOTE_MIN_LIKES` / `FEED_SWEEP_QUOTE_MIN_LIKES` | `50` / `100` | Mid-size analytical posts are the measured winners (not mega-virals). |
+| `MAX_REPLIES_PER_DAY` | `999999` | Replies = quantity lane, unlimited; 8s+jitter ban floor stays. |
+| `MAX_ORIGINALS_PER_DAY` | `4` | One per US-market slot cron (9:30/12:30/16:30/20:00 NY ±15min). |
+| `MAX_RETWEETS_PER_DAY` | `2` | Plain RTs: reciprocity / MUST_REPOST only. |
+| `FOLLOW_TOTAL_CAP` / `FOLLOW_LOW_PHASE_CEILING` | `300` / `150` | Hard following ceilings (spec Part 1). |
+| `MAX_FOLLOWS_PER_DAY` / `MIN_SECONDS_BETWEEN_FOLLOWS` | `20` / `600` | Follow pacing, whitelist-only. |
+| `MAX_UNFOLLOWS_PER_DAY` | `0` | Bot never unfollows — operator-manual (`bin/mass_unfollow.py`). |
+| `REPLY_BAIT_PER_WEEK` | `4` | spicy QUESTION mode weekly cap. |
+| `BOOST_RECYCLE_MIN_LIKES` | `2` | Winner bar: ≥1 external like (bot self-likes at publish). |
+| `BOOST_RECYCLE_GAP_HOURS` / `BOOST_RECYCLE_MAX_CYCLES` | `4` / `4` | un-RT→re-RT recycling pace per winner (≤48h). |
+| `CURATOR_WINDOW_DAYS` / `CURATOR_DISCOVERED_PER_DAY` / `CURATOR_DISCOVERED_MAX` | `4` / `3` / `50` | Self-curated tracked list + whitelist `discovered`-tier promotion caps. |
+| `PINNED_TRACKED_HANDLES` | `TheBTCTherapist,Graphseo` | The only operator-pinned scan targets — everything else is earned. |
+| `SELF_WINNERS_MIN_LIKES` / `SELF_WINNERS_WINDOW_DAYS` / `SELF_WINNERS_MAX_VIEWS` | `3` / `4` / `100000` | Own-wins prompt bank: floor, therapist-era window, foreign-content guard. |
+| `BESTIE_HANDLE` / `BLITZ_MAX_QUOTES_PER_CYCLE` | `TheBTCTherapist` / `2` | Bestie blitz target + per-cycle QRT offer. |

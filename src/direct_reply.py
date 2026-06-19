@@ -17,6 +17,10 @@ from .engagement_log import log_reply
 from .dynamic_strategy import get_dynamic_queries, get_dynamic_accounts
 
 _OWN_HANDLE = BOT_HANDLE.lower()
+# Parents who ALWAYS get French replies, whatever the language detector
+# says about one short post (operator 2026-06-07).
+_FR_FORCED_HANDLES = {h.strip().lstrip("@").lower() for h in os.environ.get(
+    "FR_FORCED_REPLY_HANDLES", "Graphseo").split(",") if h.strip()}
 _LLM_RATE_LIMITED = object()
 FAVORITE_REPOSTS_PER_CYCLE = int(os.environ.get("FAVORITE_REPOSTS_PER_CYCLE", "6"))
 FAVORITE_REPOST_MIN_ENGAGEMENT = int(os.environ.get("FAVORITE_REPOST_MIN_ENGAGEMENT", "2"))
@@ -519,7 +523,7 @@ def run_direct_reply_cycle():
 def safe_run_direct_reply_cycle():
     from . import health
     try:
-        run_direct_reply_cycle()
+        run_direct_reply_cycle(max_replies=max_replies)
         health.record_success("direct_reply")
     except Exception:
         log.info("[DIRECT] Error during direct reply cycle:")

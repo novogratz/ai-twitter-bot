@@ -15,6 +15,6 @@
     "FEED-SWEEP-FEED": 1,
     "FEED-SWEEP-FOLLOWING": 1
   },
-  "post_cadence_factor": 1.0,
+  "post_cadence_factor": 0.85,
   "boost_cadence_factor": 1.0
 }

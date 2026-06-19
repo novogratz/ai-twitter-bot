@@ -550,7 +550,7 @@ User-invokable slash commands live under `.claude/skills/` (mirrored at `.codex/
 
 - **Lifecycle**: `start`, `stop`, `restart`, `status`, `run-agent`
 - **Manual triggers**: `post`, `reply`, `engage`, `boost`, `hotake`, `news`, `tweet`, `thread`, `dryrun`
-- **Account ops**: `follow`, `like`, `accounts`, `history`
+- **Account ops**: `follow`, `unfollow` (mass-unfollow on /following via `bin/mass_unfollow.py` — keep-set protected, ledger-recorded), `like`, `accounts`, `history`
 - **Telemetry**: `logs`, `stats`, `config`, `reset`, `improve`
 - **Weekly strategy**: `strategy` — Claude-powered weekly review (style evolution + prompt tuning)
 

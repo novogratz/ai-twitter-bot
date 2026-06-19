@@ -1,37 +1,29 @@
 """Mass-follow blast bot — bulk-follow French AI/crypto/finance niche accounts at scale.
 
-Why: with 360 → 10k follower target, we need NET-NEW follows at maximum
-volume. engage_bot follows from a curated list (slow ramp). discover_bot
-finds new handles but only auto-follows 3/cycle. This bot just opens FR
-search results and JS-clicks every Follow button it sees.
+Operator: "it needs to search for new topics then follow the big accounts."
+The old design opened FRENCH people-searches and blind-JS-clicked every
+Follow button on the page — bypassing the follow chokepoint entirely (no
+caps, no spacing, no anti-churn, no quality gate). That was the
+trash-follow machine the operator called out.
 
-Strategy:
-  - Every 30 min, pick a FR niche search query (rotating).
-  - Open /search?q=...&f=people (people tab — direct profile cards
-    with Follow buttons), or fall back to /search?q=...&f=live with
-    in-feed Follow CTAs.
-  - JS-find all 'Follow' buttons (data-testid contains "-follow"),
-    skip "-unfollow" (already following), click first N.
-  - Persist via engage_bot's followed_accounts.json so we don't
-    spam-follow the same handle.
-
-Caps tuned for max throughput: 25-35 follows/cycle × 4 cycles/hour
-= ~100-140 net-new follows/hour. X soft-rate on follows is ~400/day —
-we're aggressive but stay below the spam threshold.
+New strategy, chokepoint-honest:
+  - Each cycle, pick one EN niche TOPIC query (AI / AI stocks / crypto /
+    markets) with a high min_faves floor on the TOP tab — big posts only.
+  - Extract the AUTHOR handles from the result URLs (URL = ground truth).
+  - Follow through twitter_client.follow_account → full chokepoint: daily
+    cap, >=10-min jittered gaps, 30-day anti-churn, and the profile
+    quality gate (>=FOLLOW_MIN_FOLLOWERS, on-niche bio). The author of a
+    500-like AI post is big by construction; the gate verifies it.
+  - The 10-min spacing means a cycle usually lands 0-1 follows — that is
+    the human pace, by design.
 """
 import json
 import os
 import random
-import subprocess
-import tempfile
-import time
 import traceback
-import urllib.parse
-import webbrowser
 
 from .config import _PROJECT_ROOT, BOT_HANDLE, get_live_cap
 from .logger import log
-from .twitter_client import _safari_lock, close_front_tab, _scroll_page
 
 FOLLOWS_PER_CYCLE = int(os.environ.get("FOLLOW_BLAST_PER_CYCLE", "60"))
 FOLLOW_BLAST_DAILY_CAP = int(os.environ.get("FOLLOW_BLAST_DAILY_CAP", "1200"))
@@ -59,52 +51,24 @@ BLAST_QUERIES = [
 ]
 
 
-def _click_follow_buttons(max_clicks: int) -> int:
-    """JS: find Follow buttons (not Unfollow) on the current page and click them."""
-    js_code = f"""
-    (function() {{
-        // Follow buttons have data-testid like "<userid>-follow"
-        // (and "<userid>-unfollow" for already-following).
-        var buttons = document.querySelectorAll('[data-testid$="-follow"]');
-        var clicked = 0;
-        for (var i = 0; i < buttons.length && clicked < {max_clicks}; i++) {{
-            try {{
-                var label = buttons[i].getAttribute('aria-label') || '';
-                if (/unfollow|ne plus suivre|cesser de suivre/i.test(label)) continue;
-                buttons[i].click();
-                clicked++;
-            }} catch (e) {{}}
-        }}
-        return clicked;
-    }})()
-    """
-    tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False)
-    tmp.write(js_code)
-    tmp.close()
-    applescript = f'''
-    tell application "Safari" to activate
-    set jsCode to (read POSIX file "{tmp.name}")
-    tell application "Safari"
-        set result to do JavaScript jsCode in current tab of front window
-    end tell
-    '''
+def _load_daily_state() -> dict:
+    from datetime import date
+    today = date.today().isoformat()
+    if not os.path.exists(FOLLOW_BLAST_STATE_FILE):
+        return {"date": today, "count": 0}
     try:
-        r = subprocess.run(
-            ["osascript", "-e", applescript],
-            capture_output=True, text=True, timeout=20,
-        )
-        os.unlink(tmp.name)
-        out = (r.stdout or "").strip()
-        try:
-            return int(out)
-        except (ValueError, TypeError):
-            return 0
-    except Exception:
-        try:
-            os.unlink(tmp.name)
-        except OSError:
-            pass
-        return 0
+        with open(FOLLOW_BLAST_STATE_FILE, "r") as f:
+            state = json.load(f) or {}
+    except (OSError, json.JSONDecodeError):
+        return {"date": today, "count": 0}
+    if state.get("date") != today:
+        return {"date": today, "count": 0}
+    return {"date": today, "count": int(state.get("count") or 0)}
+
+
+def _save_daily_state(state: dict) -> None:
+    with open(FOLLOW_BLAST_STATE_FILE, "w") as f:
+        json.dump(state, f, indent=2)
 
 
 def _load_daily_state() -> dict:
@@ -167,18 +131,21 @@ def run_follow_blast_cycle():
         log.info(f"[FOLLOW-BLAST] Daily cap reached ({FOLLOW_BLAST_DAILY_CAP}) — skipping.")
         return
     query = random.choice(BLAST_QUERIES)
-    encoded = urllib.parse.quote(query)
-    # /search?f=people = profile-card list, dense Follow CTAs.
-    url = f"https://x.com/search?q={encoded}&f=people"
+    log.info(f"[FOLLOW-BLAST] Topic search (top tab): {query}")
+    try:
+        tweets = scrape_x_search(query, max_tweets=20, tab="top")
+    except Exception:
+        log.info("[FOLLOW-BLAST] Search failed.")
+        traceback.print_exc()
+        return
 
-    with _safari_lock:
-        log.info(f"[FOLLOW-BLAST] Opening people search: {query}")
-        webbrowser.open(url)
-        time.sleep(7)
-        _scroll_page()
-        time.sleep(1)
-        _scroll_page()
-        time.sleep(1)
+    # Authors from URLs (ground truth — never the scraped display name),
+    # biggest parent post first.
+    def _likes(t):
+        try:
+            return int(t.get("likes") or 0)
+        except (TypeError, ValueError):
+            return 0
 
         # Two batches with a small pause so the action doesn't burst.
         cycle_cap = min(get_live_cap("FOLLOW_BLAST_PER_CYCLE", FOLLOWS_PER_CYCLE), remaining)
@@ -188,7 +155,15 @@ def run_follow_blast_cycle():
         time.sleep(random.uniform(2.0, 3.5))
         clicked += _click_follow_buttons(second)
 
-        close_front_tab()
+    cycle_cap = min(get_live_cap("FOLLOW_BLAST_PER_CYCLE", FOLLOWS_PER_CYCLE), remaining)
+    followed = 0
+    for handle in candidates:
+        if followed >= cycle_cap:
+            break
+        # follow_account = full chokepoint: daily cap, 10-min jittered
+        # spacing, 30-day anti-churn, profile quality gate (size + niche).
+        if follow_account(handle):
+            followed += 1
 
     state["count"] = int(state.get("count") or 0) + max(0, clicked)
     _save_daily_state(state)

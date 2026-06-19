@@ -18,7 +18,7 @@ import os
 import traceback
 from datetime import date, datetime
 
-from .config import NEWS_MODEL, _PROJECT_ROOT
+from .config import NEWS_MODEL, _PROJECT_ROOT, PROFILE_LLM_PROVIDER
 from .llm_client import run_llm, unwrap_text
 from .logger import log
 from .twitter_client import post_thread
@@ -123,6 +123,7 @@ def run_thread_cycle():
         NEWS_MODEL,
         label="THREAD",
         allowed_tools=["WebSearch"],
+        force_provider=PROFILE_LLM_PROVIDER,
     )
     if result.returncode != 0:
         log.info(f"[THREAD] LLM failed (exit {result.returncode}): {result.stderr[:200]}")

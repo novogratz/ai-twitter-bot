@@ -282,7 +282,18 @@ def humanize(text: str) -> str:
     # Strip em/en dashes
     for pat, rep in _DASH_PAIRS:
         result = result.replace(pat, rep)
-    result = result.replace("—", ",").replace("–", ",")
+    # Bare (unspaced) dashes get ", " — a bare "," produced "angle,conviction"
+    # in a live reply (2026-06-07). The double-space cleanup below normalizes.
+    result = result.replace("—", ", ").replace("–", ", ")
+
+    # 2026-05-22 PM: strip markdown bold/italic. X doesn't render
+    # markdown for most users — "**700 M$**" shows literally. Replace
+    # the wrappers with the inner text. Order matters: ** before *.
+    result = re.sub(r"\*\*([^*\n]+?)\*\*", r"\1", result)
+    result = re.sub(r"__([^_\n]+?)__", r"\1", result)
+    # Single * (italic in markdown) — only strip when surrounded by
+    # word chars on both sides, to avoid eating literal "*" elsewhere.
+    result = re.sub(r"(?<=\w)\*([^*\n]+?)\*(?=\w|\s|[.,;:!?])", r"\1", result)
 
     # 2026-05-22 PM: strip markdown bold/italic. X doesn't render
     # markdown for most users — "**700 M$**" shows literally. Replace
@@ -300,8 +311,10 @@ def humanize(text: str) -> str:
             result = stripped[0].upper() + stripped[1:] if stripped else stripped
             break
 
-    # Clean up double punctuation and extra spaces
-    result = re.sub(r'\.{2,}', '.', result)
+    # Clean up runaway punctuation and extra spaces. ".." and "..." are
+    # PRESERVED (2026-06-10 QRT playbook: the casual trailing ".." is a
+    # human tell worth keeping — only 4+ dots is an artifact).
+    result = re.sub(r'\.{4,}', '...', result)
     result = re.sub(r' {2,}', ' ', result)
     result = result.replace(' ,', ',').replace(' .', '.').strip()
 

@@ -4,7 +4,7 @@ import re
 import traceback
 from datetime import datetime, timedelta
 from typing import Optional
-from .config import NEWS_MODEL
+from .config import NEWS_MODEL, PROFILE_LLM_PROVIDER
 from .logger import log
 from .history import get_recent_tweets
 from .performance import get_learnings_for_prompt
@@ -960,7 +960,12 @@ Tu prends position. Tu signes. Tu assumes. Drôle d'abord, livré deadpan.
   ✅ Crypto (Bitcoin/crypto comme actif — le département intern volatil)
   ❌ Space, immo, macro pure FR → SKIP TOUJOURS.
 
-{lang_directive}
+    # New long-form Décode shape: 500-{body_max} chars body, multi-paragraph,
+    # blank-line breaks. Bullets optional now (prose is encouraged).
+    if has_header and has_blank_break and 500 <= compact_len <= body_max:
+        # Sanity-check no individual paragraph is over the line cap
+        # (paragraphs can be long, but no single line should be a wall).
+        return any(len(line) > _MAX_NEWS_LINE_CHARS * 3 for line in non_empty)
 
 🇬🇧 EN MODE (default since 2026-05-27 pivot): the language directive above
 is GROUND TRUTH — write in ENGLISH for a global AI / crypto / markets
@@ -1195,12 +1200,8 @@ RÈGLES:
 - Question dans la chute = invite à reply = algo lift. Format possible:
   "...Le pari [acteur]: [observation]. @[acteur] confirmera?"
 
-The TEST before posting:
-- Would this make Bloomberg's terminal-junkie audience say "huh, finally
-  someone said it"?
-- Would a 16-year-old crypto degen RT it?
-- Would Sam Altman read it and not roll his eyes?
-If the answer to any of those is "meh" → SKIP. Don't ship the post.
+# PROMPT_TEMPLATE (the old 25k French space-era template) DELETED 2026-06-09
+# — dead since the slim news prompt replaced it; English-only now.
 
 PERFORMANCE READ (2026-05-10 — logs):
 - Ce qui a marché: faits précis avec enjeu clair (AI safety / chaîne de pensée,
@@ -1783,7 +1784,8 @@ def generate_tweet() -> Optional[str]:
         dedup_section = f"""Déjà posté dans les dernières 72h - ne couvre PAS le même sujet:
 {tweets_list}{banned_block}
 
-Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
+Pick something COMPLETELY DIFFERENT — angle, entity, niche. Never repeat a
+take you've already written."""
     else:
         dedup_section = ""
 
@@ -2050,13 +2052,72 @@ Choisis quelque chose de COMPLÈTEMENT DIFFÉRENT — angle, entité, niche."""
 
     if not tweet:
         raise RuntimeError("Claude CLI returned empty output.")
-    if tweet.upper() == "SKIP":
+    if tweet.upper().startswith("SKIP"):
         return None
     # 2026-05-06: strip any rationale prose the agent leaked BEFORE the
     # actual tweet (e.g. "Parfait. Source X (≤36h)... ---\n<actual tweet>").
     from .humanizer import strip_agent_preamble
     tweet = strip_agent_preamble(tweet)
-    if not tweet or tweet.upper() == "SKIP":
+    if not tweet or tweet.upper().startswith("SKIP"):
+        return None
+    # 2026-05-22 PM: Strip Claude WebSearch "Sources: [title](url) ..."
+    # preamble lines BEFORE doing the header search. Otherwise the search
+    # finds nothing because Décode body got truncated by timeout.
+    tweet = re.sub(
+        r"^[ \t]*Sources?\s*[:：][^\n]*\n+",
+        "",
+        tweet,
+        flags=re.IGNORECASE | re.MULTILINE,
+    )
+    # Also strip standalone markdown-link lines that precede the actual body.
+    tweet = re.sub(
+        r"^\s*-?\s*\[[^\]]+\]\([^)]+\)\s*\n+",
+        "",
+        tweet,
+        flags=re.MULTILINE,
+    )
+    tweet = tweet.strip()
+
+    # 2026-05-22 PM: AUTO-FORMAT line-breaks for Décodes that ship as
+    # one long line. Model sometimes drops the \n\n separators on ollama
+    # fallback. Rather than SKIP, insert breaks at known boundaries.
+    _decode_header_with_date_re = re.compile(
+        r"(🔎?\s*(?:Le\s+D[eé]code|The\s+Decode)\s*#?\s*\d+[^\n]*?\d{4}-\d{2}-\d{2})",
+        re.IGNORECASE,
+    )
+    m_hdr = _decode_header_with_date_re.search(tweet)
+    if m_hdr and "\n\n" not in tweet:
+        head = m_hdr.group(0).strip()
+        body = tweet[m_hdr.end():].lstrip()
+        body = re.sub(r"\s+(\d\.\s)", r"\n\n\1", body)
+        body = re.sub(r"\s+(Demain[,\.]?\s+)", r"\n\n\1", body, flags=re.IGNORECASE)
+        tweet = head + "\n\n" + body
+        log.info("[NEWS] Auto-formatted Décode — inserted \\n\\n breaks at header + bullets.")
+
+    # The Decode format enforcer. Tolerate D[eé]code (model occasionally
+    # drops the accent), Daily/Weekly label optional, missing 🔎 prefix.
+    decode_match = re.search(
+        r"(?:🔎\s*)?(?:Le\s+D[eé]code|The\s+Decode)(?:\s+(?:Daily|Weekly|Monthly|Mensuel|Hebdo|Quotidien))?\s*#?\s*\d+",
+        tweet,
+        re.IGNORECASE,
+    )
+    if decode_match:
+        body = tweet[decode_match.start():].strip()
+        if not body.startswith("🔎"):
+            body = "🔎 " + body
+        tweet = body
+    elif tweet and len(re.sub(r"\s+", " ", tweet)) >= 100:
+        log.info(f"[NEWS] Décode header missing but body present ({len(tweet)} chars) — auto-injecting header.")
+        today = datetime.now().strftime("%Y-%m-%d")
+        n = globals().get("_pending_decode_num")
+        topic = globals().get("_pending_decode_topic", "")
+        format_kind = globals().get("_pending_decode_format", "daily")
+        label = "Monthly" if format_kind == "monthly" else ("Weekly" if format_kind == "weekly" else "Daily")
+        topic_label = {"IA": "AI", "AI": "AI", "Investissement": "Investment", "Crypto": "Bitcoin", "Space": "Space"}.get(topic, topic)
+        header = f"🔎 The Decode {label} #{n} — {topic_label} — {today}" if n else f"🔎 The Decode {label} — {today}"
+        tweet = f"{header}\n\n{tweet}"
+    else:
+        log.info(f"[NEWS] Décode header missing AND body too short — SKIPPING. Output preview: {tweet[:200]!r}")
         return None
     # 2026-05-22 PM: Strip Claude WebSearch "Sources: [title](url) ..."
     # preamble lines BEFORE doing the header search. Otherwise the search

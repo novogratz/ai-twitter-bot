@@ -23,7 +23,7 @@ import traceback
 import urllib.parse
 from datetime import datetime, date, timedelta
 
-from .config import _PROJECT_ROOT, BOT_HANDLE, NEWS_MODEL
+from .config import _PROJECT_ROOT, BOT_HANDLE, NEWS_MODEL, PROFILE_LLM_PROVIDER
 from .llm_client import run_llm, unwrap_text
 from .logger import log
 from .twitter_client import scrape_x_search, post_tweet
@@ -228,6 +228,7 @@ def run_breakout_cycle():
         prompt,
         NEWS_MODEL,
         label="BREAKOUT",
+        force_provider=PROFILE_LLM_PROVIDER,
         # No WebSearch — speed > research, we already have the source.
     )
     if result.returncode != 0:
@@ -264,6 +265,11 @@ def run_breakout_cycle():
     try:
         post_tweet(text)
         _increment_count()
+        try:  # was invisible to the engagement log / ROI loop before 2026-06-07
+            from .engagement_log import log_post
+            log_post(text, source="BREAKOUT")
+        except Exception:
+            pass
         time.sleep(random.randint(3, 6))
         log.info(f"[BREAKOUT] DONE. Today's count: {_today_count()}/{MAX_BREAKOUTS_PER_DAY}")
     except Exception:

@@ -14,7 +14,7 @@ import time
 import traceback
 from .logger import log
 from .config import _PROJECT_ROOT, DISCOVERED_ACCOUNTS_FILE, BLOCKLIST
-from .twitter_client import visit_profile_and_like, follow_account
+from .twitter_client import visit_profile_and_like, follow_account, _profile_visit_allowed
 
 FOLLOWED_FILE = os.path.join(_PROJECT_ROOT, "followed_accounts.json")
 

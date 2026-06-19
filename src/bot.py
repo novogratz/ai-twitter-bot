@@ -661,7 +661,28 @@ def _run_single_bot_cycle() -> bool:
         if tweet_source == "hotake":
             log_hotake(tweet, pattern_id=_news_pattern)
         else:
-            log_post(tweet, pattern_id=_news_pattern)
+            _shipped = post_tweet(post_body, image_path=img_path)
+        # ⛔ Only record/log when the post ACTUALLY shipped. post_tweet returns
+        # False on a dedup/policy/content skip; logging regardless wrote
+        # phantom rows (the same hotake "AI capex is the new rent" appeared 5x
+        # in engagement_log though dedup blocked the reposts — 2026-06-09).
+        if not _shipped:
+            log.info("[NEWS] post skipped at chokepoint (dup/policy) — not logging.")
+            return False
+        save_tweet(post_body if tweet_source == "news" else tweet)
+        # Engagement-log routing must match the actual generator so the
+        # bandit attribution stays correct. GIF posts are already logged
+        # by post_tweet_with_gif itself (action_type='post', source='GIF/<q>')
+        # — logging again here wrote a SECOND row (the 2026-06-08 duplicate:
+        # one classified as meme_reaction via the GIF/ source, one as
+        # market_trauma via the content classifier), inflating per-action
+        # counts and polluting the per-pillar attribution that drove the
+        # 29.8x market_trauma autonomous pivot.
+        if not gif_query:
+            if tweet_source == "hotake":
+                log_hotake(tweet, pattern_id=_news_pattern)
+            else:
+                log_post(tweet, pattern_id=_news_pattern)
         if img_path:
             try:
                 os.remove(img_path)

@@ -6,7 +6,7 @@ import re
 import time
 import traceback
 from datetime import datetime, date
-from .config import QUOTE_MODEL, BLOCKLIST, _PROJECT_ROOT, BOT_HANDLE, MAX_QUOTES_PER_DAY
+from .config import QUOTE_MODEL, BLOCKLIST, _PROJECT_ROOT, BOT_HANDLE, MAX_QUOTES_PER_DAY, PROFILE_LLM_PROVIDER
 from .logger import log
 from .twitter_client import scrape_x_search, quote_tweet
 from .humanizer import humanize
@@ -273,20 +273,83 @@ def _generate_quote(author: str, tweet_text: str):
                                  mnts_block=_mnts_promo_block_q(tweet_text),
                                  gif_guide=GIF_GUIDE_BLOCK)
     try:
-        result = run_llm(prompt, QUOTE_MODEL, label="QUOTE", timeout=30)
+        with open(_STOCK_PROMO_CFG) as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+def _pick_promo_ticker(cfg: dict) -> tuple:
+    """Pick one (ticker, company) from the multi-ticker campaign, weighted —
+    falls back to the legacy single ticker field. 2026-06-05: operator
+    campaign promotes $MNTS / $SPCX / $SPCE for the SpaceX IPO window."""
+    entries = [e for e in cfg.get("tickers", []) if isinstance(e, dict) and e.get("ticker")]
+    if entries:
+        weights = [max(1, int(e.get("weight", 1))) for e in entries]
+        e = random.choices(entries, weights=weights, k=1)[0]
+        return (e["ticker"], e.get("company", e["ticker"]))
+    return (cfg.get("ticker", ""), cfg.get("company", ""))
+
+
+def _mnts_promo_block_q(tweet_text: str = "") -> str:
+    cfg = _load_promo_cfg_q()
+    if cfg.get("disabled"):
+        return ""
+    ticker, company = _pick_promo_ticker(cfg)
+    end_str = cfg.get("end_date", "")
+    if not ticker or not end_str:
+        return ""
+    try:
+        end = date.fromisoformat(end_str)
+    except ValueError:
+        return ""
+    if date.today() > end:
+        return ""
+    if not _SPACE_RE_Q.search(tweet_text or ""):
+        return ""
+    return (
+        f"\n\n💡 PROMO MALIN (jusqu'au {end_str}, UNIQUEMENT si le sujet est espace/tourisme/bourse):"
+        f" Glisse ${ticker} ({company}) naturellement."
+        " ONE mention max, woven in naturally. Never forced. 100% English."
+    )
+
+def _generate_quote(author: str, tweet_text: str):
+    from .humanizer import GIF_GUIDE_BLOCK
+    prompt = QUOTE_PROMPT.format(author=author, tweet_text=tweet_text[:200],
+                                 mnts_block=_mnts_promo_block_q(tweet_text),
+                                 gif_guide=GIF_GUIDE_BLOCK)
+    # Reply-winners voice exemplars (operator 2026-06-15: quotes get views
+    # but few likes — replies get the likes; imitate the reply voice).
+    try:
+        from . import reply_winners
+        rw = reply_winners.render_reply_winners_block(sample_size=3)
+        if rw:
+            prompt = prompt + "\n\n" + rw
+    except Exception:
+        pass
+    try:
+        # No explicit timeout: PROFILE_LLM_PROVIDER (default claude) needs
+        # the 180s default — the legacy 30s here was an ollama-era number
+        # that under Claude Sonnet timed out 7+ cycles/day mid-generation,
+        # each burning ~3 min on retries + fallback. Match the other
+        # PROFILE_LLM_PROVIDER callers (NEWS, HOTAKE, SPICY, BREAKOUT).
+        result = run_llm(prompt, QUOTE_MODEL, label="QUOTE", force_provider=PROFILE_LLM_PROVIDER)
         if result.returncode != 0:
             return None
         out = unwrap_text(result.stdout)
         if not out:
             return None
-        if _looks_like_skip_or_rationale(out):
-            log.info(f"[QUOTE] SKIP-or-rationale detected, refusing to post: {out[:120]!r}")
-            return None
-        if out.startswith('"') and out.endswith('"'):
-            out = out[1:-1]
-        return out
     except Exception:
         return None
+    # SKIP-check OUTSIDE the try so we can raise DeliberateSkip without it
+    # being swallowed — a confident refusal must short-circuit the 3-attempt
+    # retry loop (audit 2026-06-18: ~29 quote SKIPs/day × 3 Sonnet calls).
+    if _looks_like_skip_or_rationale(out):
+        from .content_guard import DeliberateSkip
+        log.info(f"[QUOTE] SKIP-or-rationale detected, refusing to post: {out[:120]!r}")
+        raise DeliberateSkip("model returned SKIP")
+    if out.startswith('"') and out.endswith('"'):
+        out = out[1:-1]
+    return out
 
 
 def _handle_from_url(url: str) -> str:
@@ -324,6 +387,19 @@ def run_quote_tweet_cycle():
     if _today_count() >= cap:
         log.info(f"[QUOTE] Daily cap reached ({cap}). Skipping.")
         return
+
+    # Night throttle: overnight cycles mostly skip (cheap, before any
+    # Safari/LLM work) so the daily cap + fresh viral parents concentrate
+    # on US waking hours. ~1 in 3 cycles still runs — the lane never dies.
+    try:
+        from zoneinfo import ZoneInfo
+        _hour_ny = datetime.now(ZoneInfo("America/New_York")).hour
+    except Exception:
+        _hour_ny = datetime.now().hour
+    if _is_us_night_hour(_hour_ny):
+        if random.random() > float(os.environ.get("QUOTE_NIGHT_RUN_PROB", "0.33")):
+            log.info(f"[QUOTE] US-night throttle ({_hour_ny}h NY) — skipping this cycle.")
+            return
 
     quoted = _load_quoted()
     candidates = []
@@ -502,10 +578,15 @@ def run_quote_tweet_cycle():
         quoted.add(url)
         _save_quoted(quoted)
         _increment_count()
-        try:
-            log_reply(url, quote, action_type="quote", source=f"QUOTE/{author}")
-        except Exception:
-            pass
+        # GIF quotes are already logged by quote_tweet_with_gif itself
+        # (action_type='quote_gif', source='GIF/<q>'). Same dup-row bug as
+        # the bot.py hotake-GIF path: two rows for one ship inflated
+        # quote/quote_gif action counts AND polluted per-pillar attribution.
+        if not _gif_q:
+            try:
+                log_reply(url, quote, action_type="quote", source=f"QUOTE/{author}")
+            except Exception:
+                pass
         time.sleep(random.randint(5, 12))
         log.info("[QUOTE] Quote posted.")
     except Exception:

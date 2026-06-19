@@ -875,17 +875,19 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
         _run_applescript('''
         tell application "Safari" to activate
         ''')
-        time.sleep(1)
+        time.sleep(0.5)
 
         log.info(f"Opening tweet: {tweet_url}")
         webbrowser.open(tweet_url)
-        time.sleep(8)  # Wait longer for tweet page to fully load
+        # Sleeps trimmed 2026-06-09 (operator: "BOT REALLY SLOW... ACCELERATE"):
+        # 22s of fixed waits/reply → ~15s. Page load keeps the biggest margin.
+        time.sleep(6)
 
         # Make sure Safari is in front
         _run_applescript('''
         tell application "Safari" to activate
         ''')
-        time.sleep(1)
+        time.sleep(0.5)
 
         # Like the tweet (idempotent — won't toggle off if already liked
         # from a prior retweet/quote cycle). Bug 2026-05-18: bot was
@@ -900,12 +902,12 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
             keystroke "r"
         end tell
         ''')
-        time.sleep(4)  # Wait for reply box to open
+        time.sleep(3)  # Wait for reply box to open
 
         # Paste the reply (clipboard handles accents correctly)
         log.info("Pasting reply...")
         _paste_text(reply_text)
-        time.sleep(3)  # Wait for paste to complete
+        time.sleep(2)  # Wait for paste to complete
 
         # Submit with Cmd+Enter
         log.info("Submitting reply...")
@@ -914,10 +916,11 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
             keystroke return using command down
         end tell
         ''')
-        time.sleep(3)  # Wait for submission
+        time.sleep(2)  # Wait for submission
         log.info("Reply posted!")
         action_guard.record(action_guard.REPLY, target=tweet_url)
         close_front_tab()
+    return True
 
 
 def quote_tweet(tweet_url: str, comment: str) -> bool:
@@ -1277,7 +1280,14 @@ def follow_account(username: str) -> bool:
 
 
 def visit_profile_and_like(username: str, like_count: int = 2):
-    """Visit a user's profile and like their latest tweets for reciprocity."""
+    """Visit a user's profile and like their latest tweets for reciprocity.
+
+    Gated by `_profile_visit_allowed` (2026-06-07 home/search-only mandate):
+    reciprocity likes happen when we meet people on feeds/search, not by
+    visiting their profile."""
+    if not _profile_visit_allowed(username):
+        log.info(f"[LIKE] profile visit blocked (home/search-only mandate): @{username}")
+        return
     with _safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"Visiting profile: {profile_url}")
@@ -1475,8 +1485,45 @@ def _scroll_page():
     time.sleep(2)
 
 
+def is_own_post(tweet: dict) -> bool:
+    """Authoritative ownership check for scraped tweets (2026-06-07).
+
+    The scraper's `author` field is the DISPLAY NAME ("The AI Therapist"),
+    not the @handle — five bots compared it against BOT_HANDLE and silently
+    classified every own post as foreign (the boost engine never once picked
+    a banger; suppression_watch measured nothing). The URL is ground truth:
+    own posts and own QRTs live under /BOT_HANDLE/status/; retweets of
+    others on our profile carry the ORIGINAL author's URL and are correctly
+    excluded."""
+    from .config import BOT_HANDLE
+    url = (tweet.get("url") or "").lower()
+    return f"x.com/{BOT_HANDLE.lower()}/status/" in url
+
+
+def _profile_visit_allowed(username: str) -> bool:
+    """Operator mandate 2026-06-07 PM: NO profile visits for discovery —
+    the only scrape surfaces are @TheBTCTherapist (the main account), the
+    Home feed (For You + Following tab), and search terms. Our own profile
+    stays visitable (boost/pin/metrics/with_replies callers need it). Env
+    read at CALL time (side-effect gate — never an import-time constant)."""
+    from .config import BOT_HANDLE
+    base = (username or "").strip().lstrip("@").split("/")[0].lower()
+    if not base:
+        return False
+    if base == BOT_HANDLE.lower():
+        return True  # own profile (incl. BOT_HANDLE/with_replies callers)
+    allow = os.environ.get("PROFILE_VISIT_ALLOWLIST", "TheBTCTherapist,Graphseo")
+    return base in {h.strip().lstrip("@").lower() for h in allow.split(",") if h.strip()}
+
+
 def scrape_profile_tweets(username: str, max_tweets: int = 5):
-    """Visit a profile and scrape their recent tweet URLs and text."""
+    """Visit a profile and scrape their recent tweet URLs and text.
+
+    Gated by `_profile_visit_allowed`: non-allowlisted profiles return []
+    BEFORE any Safari work — discovery lives on home/following/search."""
+    if not _profile_visit_allowed(username):
+        log.info(f"[SCRAPE] profile visit blocked (home/search-only mandate): @{username}")
+        return []
     with _safari_lock:
         profile_url = f"https://x.com/{username}"
         log.info(f"[SCRAPE] Visiting profile: {profile_url}")
@@ -1485,6 +1532,40 @@ def scrape_profile_tweets(username: str, max_tweets: int = 5):
         _scroll_page()
 
         tweets = _scrape_tweets_from_page(f"@{username}", max_tweets)
+        close_front_tab()
+        return tweets
+
+
+def scrape_own_replies(max_tweets: int = 25):
+    """Scrape our own /with_replies tab — replies WITH their like counts.
+
+    Replies live on other people's threads, so their likes aren't visible
+    on the main profile or in engagement_log. The with_replies tab is the
+    one place X shows our replies with engagement. Used by reply_winners
+    to mine our best-performing replies as voice exemplars for posts/quotes
+    (operator 2026-06-15: "replies get crazy likes — could the bot inspire
+    itself from replies?").
+
+    Scroll depth (2026-06-18): live measurement showed two scrolls only
+    surfaced 6-9 articles per cycle on /with_replies — the bank stayed
+    empty for 3 days because that window is the freshest reply firehose
+    (~30-40 replies/hr today), all too young to have seasoned likes.
+    `OWN_REPLIES_SCROLL_DEPTH` (default 6) reads at call time; each scroll
+    costs ~4s. Six scrolls surface ~30-40 articles ≈ a 1-2h reply window
+    where the older end has had time to accumulate likes."""
+    from .config import BOT_HANDLE
+    if not _profile_visit_allowed(BOT_HANDLE):
+        return []
+    with _safari_lock:
+        url = f"https://x.com/{BOT_HANDLE}/with_replies"
+        log.info(f"[SCRAPE] Visiting own replies: {url}")
+        webbrowser.open(url)
+        time.sleep(8)
+        scrolls = max(2, int(os.environ.get("OWN_REPLIES_SCROLL_DEPTH", "6")))
+        for _ in range(scrolls):
+            _scroll_page()
+            time.sleep(1)
+        tweets = _scrape_tweets_from_page(f"@{BOT_HANDLE}/with_replies", max_tweets)
         close_front_tab()
         return tweets
 
@@ -1865,19 +1946,27 @@ def like_own_tweet_replies():
         _navigate_to_first_tweet()
         time.sleep(4)
 
-        log.info("[NOTIFY] Liking replies...")
-        _run_applescript('''
-        tell application "System Events"
-            repeat 8 times
-                keystroke "j"
-                delay 0.5
-                keystroke "l"
-                delay 0.8
-            end repeat
-        end tell
-        ''')
+        # Cooled down 8→3 (operator 2026-06-15: too many likes tripped the
+        # automation flag). Liking our own engagers is the most defensible
+        # like, but fewer is calmer. Env-tunable.
+        try:
+            _n_like = max(0, int(os.environ.get("NOTIFY_LIKE_REPLIES_COUNT", "3")))
+        except (TypeError, ValueError):
+            _n_like = 3
+        log.info(f"[NOTIFY] Liking up to {_n_like} replies...")
+        if _n_like > 0:
+            _run_applescript(f'''
+            tell application "System Events"
+                repeat {_n_like} times
+                    keystroke "j"
+                    delay 0.5
+                    keystroke "l"
+                    delay 0.8
+                end repeat
+            end tell
+            ''')
         time.sleep(2)
-        log.info("[NOTIFY] Liked up to 8 replies!")
+        log.info(f"[NOTIFY] Liked up to {_n_like} replies!")
         close_front_tab()
 
 
@@ -1962,7 +2051,7 @@ def reply_to_tweet_in_thread(reply_url: str, reply_text: str):
     pressing 'r' replies to *that* reply. Reuses reply_to_tweet's flow.
     """
     log.info(f"[REPLYBACK] Replying in-thread to: {reply_url}")
-    reply_to_tweet(reply_url, reply_text)
+    return reply_to_tweet(reply_url, reply_text)
 
 
 def reply_to_reply(reply_text: str):

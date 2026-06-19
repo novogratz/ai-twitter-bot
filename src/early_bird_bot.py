@@ -121,7 +121,7 @@ def run_early_bird_cycle():
     # Apply autonomous evolution: filter pruned + double-weight reinforced accounts
     from .evolution_store import filter_and_weight
     from .direct_reply import ALWAYS_REPLY_ACCOUNTS
-    pool = filter_and_weight(EARLY_BIRD_ACCOUNTS)
+    pool = filter_and_weight(_scan_pool())
     always_pool = filter_and_weight(ALWAYS_REPLY_ACCOUNTS)
 
     # Growth push: scan the always-reply accounts first, then fill with random
@@ -200,12 +200,14 @@ def run_early_bird_cycle():
             reply = humanize(reply)
             log.info(f"[EARLYBIRD] Reply ({len(reply)} chars): {reply}")
 
-            # Lock URL in BEFORE posting (no double-reply on retry/crash)
-            replied.add(url)
-            save_replied(replied)
+            # ⛔ NO premark — the reply_to_tweet chokepoint marks the store
+            # itself pre-post and refuses anything already in it (premark =
+            # 100% silent self-skip, 2026-06-07 post-mortem).
+            replied.add(url)  # in-memory only: no same-cycle retry
 
             try:
-                reply_to_tweet(url, reply)
+                if not reply_to_tweet(url, reply):
+                    continue  # chokepoint skip — nothing posted, no phantom log
                 try:
                     log_reply(url, reply, action_type="reply", source=f"EARLYBIRD/{username}", pattern_id=_pattern_id or "")
                 except Exception:

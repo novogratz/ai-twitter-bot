@@ -17,7 +17,7 @@ import random
 import signal
 import sys
 import traceback
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
@@ -363,7 +363,12 @@ def main():
         log.info("Startup breakout burst...")
         safe_run_breakout_cycle()
 
-    # Then warm up the engagement loop with a direct-reply cycle.
+    # REPLIES BEFORE POST BURSTS (operator 2026-06-07 PM: "do more replies
+    # ... push it"). The old order ran RT/quote/hot-quote/hotake/breakout
+    # first, so every restart spent its first ~20 min of serialized Safari
+    # time on post surfaces while the reply lane — the volume lane — sat
+    # idle (witnessed on the 11:10 restart: reply warmup only reached at
+    # 11:24, killed at 11:31 with ~8 replies on the clock).
     if not args.post_only:
         log.info("Now warming up the reply loop...")
         safe_run_direct_reply_cycle()
@@ -802,6 +807,20 @@ def main():
             safe_run_followback_cycle,
             trigger=IntervalTrigger(minutes=45),
             id="followback_job",
+        )
+
+        # Seed-priority follow bot (2026-06-07 agent spec, Part 1) — walks
+        # the whitelist.json seed list tier1→tier4 in priority order, ONE
+        # attempt per cycle. The action_guard chokepoint enforces the hard
+        # constraints (20/day, >=10-min jittered gaps, 300/150 total
+        # ceiling, whitelist-only, 30-day anti-churn) so a 15-min cadence
+        # can never burst.
+        log.info("Seed-follow bot: rebuilding the following list from the "
+                 "tiered seed list every 15 min (chokepoint-paced).")
+        scheduler.add_job(
+            safe_run_marquee_follow_cycle,
+            trigger=IntervalTrigger(minutes=15),
+            id="seed_follow_job",
         )
 
         # Pin bot — daily idempotent. Picks our highest-engagement post of
