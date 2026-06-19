@@ -16292,3 +16292,35 @@ Israel is like that friend who says they won’t drink again, but the se
 Nebius built natively for a world where demand is driven by tokens and AI compute with owned racks, networking and GPU clust
   - https://x.com/StockSavvyShay/status/2067961536531107893
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 60).
+- **@bridgebench** (81 likes, score 9/10) — GLM 5.2 is #1 on the BridgeBench Reasoning benchmark.
+
+It beat Fable 5, Nemotron 3 Ultra, GPT 5.4, Grok 4.3, Opus 4.7, and Kimi K2.7 Code on a hard benchmark with no shortcuts.
+
+GLM 5.2 still lacks th
+  - https://x.com/bridgebench/status/2067925782534455547
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 127).
+- **@bridgemindai** (49 likes, score 8/10) — Gemini 3.5 Pro is coming. 
+
+And it has a real chance to be the most intelligent model in the world when it drops.
+
+Google has not released a frontier model since Gemini 3.1 Pro in February. 
+
+In that
+  - https://x.com/bridgemindai/status/2067962678723633653
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 61).
+- **@cnbc** (7 likes, score 7/10) — This nuclear stock will benefit from AI datacenter buildout and soaring energy demand, Roth Capital says
+  - https://x.com/CNBC/status/2067953154902151277
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 15).
+- **@shedntcare_** (475 likes, score 8/10) — Anthropic has just launched its first official technical certification.
+
+And almost no one knows it exists.
+
+Accenture is already training 30,000 people using it.
+Deloitte has opened up Claude to 470,
+  - https://x.com/shedntcare_/status/2067633310579433909
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 511).
+- **@datacurve** (1217 likes, score 7/10) — Claude Fable 5 debuts at #1 on DeepSWE.
+
+It outscores the previous best by 3% and sets a new state-of-the-art on our long-horizon coding benchmark.
+  - https://x.com/datacurve/status/2067781320013668727
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1389).
