@@ -4367,5 +4367,43 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui font briller l'\u00e9cosyst\u00e8me francophone : de la recherche pure (Mensch) \u00e0 la finance de march\u00e9 (Warg, C). Pas de vendeurs de r\u00eaves, juste des technos et des traders qui savent ce qu'ils disent."
+  },
+  {
+    "ts": "2026-06-19T12:07:42.302757",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "jpmorgan",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 1200000,
+        "reason": "Le mastodonte. Moins un compte 'influencer', plus une bible de la macro globale qui d\u00e9finit le march\u00e9 FR/Qu\u00e9bec indirectement."
+      },
+      {
+        "handle": "LaurentDelaigue",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'expert en valeurs europ\u00e9ennes. Moins de bruit, plus de sens. C'est le seul gars qui fait du fond sans hurler."
+      },
+      {
+        "handle": "SylvainCharpentier_",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Le Qu\u00e9b\u00e9cois #1 en DeFi. Il balance des threads techniques lourds qui font saigner les yeux des non-initi\u00e9s et des threads simples pour les autres."
+      },
+      {
+        "handle": "AdrienDelaunay_",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "L'ex-Polymath et actuel VP chez AI. Il tweet sur le terrain, pas depuis un bureau d'admin. C'est rare, c'est pr\u00e9cieux."
+      }
+    ],
+    "summary": "J'ai mis\u00e9 sur les valeurs s\u00fbres : les experts qui ont surv\u00e9cu aux krachs sans vendre de formation \u00e0 497\u20ac. Laurent pour la bourse pure, Pierre pour le Bitcoin stack, et Sylvain pour la DeFi qu\u00e9b\u00e9coise."
   }
 ]

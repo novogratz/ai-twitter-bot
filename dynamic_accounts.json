@@ -474,7 +474,10 @@
     "AntoineGouel",
     "SofianeB",
     "JulienC",
-    "MaximeD"
+    "MaximeD",
+    "jpmorgan",
+    "LaurentDelaigue",
+    "AdrienDelaunay_"
   ],
   "en": [
     "blablacar",
@@ -544,7 +547,10 @@
     "Shruti",
     "Evan",
     "Cua",
-    "Nasdaq"
+    "Nasdaq",
+    "Valuetainment",
+    "Inception",
+    "Luxi"
   ],
   "history": [
     {
@@ -3260,6 +3266,36 @@
     {
       "lang": "fr",
       "handle": "MaximeD",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "en",
+      "handle": "Valuetainment",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "en",
+      "handle": "Inception",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "en",
+      "handle": "Luxi",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "jpmorgan",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "LaurentDelaigue",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienDelaunay_",
       "added": "2026-06-19"
     }
   ]

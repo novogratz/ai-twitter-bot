@@ -16383,3 +16383,37 @@ What you get for 0€:
 Trained on 20,000 hours of human motion data, it validates a Scaling Law for robot motion contro
   - https://x.com/ErenChenAI/status/2067826625622724705
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 92).
+- **@0x_fokki** (56 likes, score 9/10) — the clip you're watching was made for $1.20
+
+Pixar burns $200 million and 4 years per film
+
+a 19-year-old spent $124 last month and made $12,345
+
+> Claude wrote the script: 20 min
+> Midjourney built t
+  - https://x.com/0x_fokki/status/2067931675644809469
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 100).
+- **@cryptomavka** (35 likes, score 9/10) — i've been paying 200$/month for AI tools for a while now
+
+claude, chatgpt, all of it
+
+thought that was just the price of doing things properly
+
+then i read this and had to close my laptop for a second
+  - https://x.com/CryptoMavka/status/2067965271592038415
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 55).
+- **@gippp69** (39 likes, score 8/10) — Andrew Ng, on the biggest shift in AI right now:
+
+“The most important trend is agentic AI workflows.”
+
+In one slide, he showed the part most people still miss: GPT-3.5 scored 48% on a coding benchmark
+  - https://x.com/gippp69/status/2067986251831988347
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 75).
+- **@michaelsikand** (88 likes, score 7/10) — Defense bulls, get ready.
+
+Western governments are literally defense's version of AI hyperscaler capex, but the market isn't pricing it in.
+
+Global defense: $3T+ est. for 2027
+AI hyperscaler capex: ~$
+  - https://x.com/michaelsikand/status/2067956819570360482
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 120).
