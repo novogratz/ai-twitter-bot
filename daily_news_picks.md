@@ -16551,3 +16551,38 @@ Trump: Well, not now, but a week ago maybe.
 Source: Axios
   - https://x.com/clashreport/status/2068046556809298290
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 33).
+- **@roundtablespace** (104 likes, score 9/10) — Anthropic CEO:
+
+"If my revenue is not $1 trillion, even $800 billion, there's no force on earth, no hedge on earth, that could stop me from going bankrupt."
+  - https://x.com/RoundtableSpace/status/2068027279587066050
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 140).
+- **@marionawfal** (26 likes, score 9/10) — Data centers get blamed for spiking your power bill and drying up local water supplies, but is that fair?
+
+Nationally, data centers use just 3% of what American golf courses consume.
+
+And they only ac
+  - https://x.com/MarioNawfal/status/2068063770362929161
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 54).
+- **@kanikabk** (19 likes, score 7/10) — Jensen Huang, CEO of NVIDIA just explained AI agents in the simplest way…
+
+The model is the brain. 
+
+The harness is the body.
+
+THAT IS AN AI AGENT.
+
+That one sentence explains what a trillion industry
+  - https://x.com/KanikaBK/status/2068007660679754145
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 23).
+- **@cryptopunk7213** (14 likes, score 7/10) — never thought i’d say this but it looks like google’s falling behind in the ai race. 
+
+in the last 24 hrs they’ve lost 2 key staff: Noam Shazeer (vp of eng) and John Jumper (alphafold) to openai and a
+  - https://x.com/cryptopunk7213/status/2068015000933826960
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 22).
+- **@adiix_official** (52 likes, score 7/10) — Head of Product, Claude Code:
+
+"At Anthropic, our engineers ship 8x more code per person. Mercari's output is up 90% YoY. Spotify merges 1,000+ PRs to prod every month."
+
+"The feature I'm pushing hard
+  - https://x.com/adiix_official/status/2068003204327944383
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 86).
