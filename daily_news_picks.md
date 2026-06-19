@@ -15897,3 +15897,51 @@ it's the clearest explanation I've seen of why today's AI is nowhere near as sm
 "Noam was working on pre-training at Gemini… And pre-training is something that Google is viewed to be really strong at. And OpenAI is
   - https://x.com/theinformation/status/2067732080016966132
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 41).
+- **@pitdesi** (672 likes, score 9/10) — The Midjourney ultrasound is made in partnership with Butterfly Health ($BFLY), which is going to fly today
+
+Still cheap if you think this 50k unit figure is possible. 
+
+Btw they announced the partner
+  - https://x.com/pitdesi/status/2067588244812751318
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 712).
+- **@unusual_whales** (188 likes, score 8/10) — Federal regulators have agreeded to let large energy users connect more quickly to the nation’s inefficient and electric transmission system to accommodate surging demand from artificial intelligence
+  - https://x.com/unusual_whales/status/2067758760160903278
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 296).
+- **@ronald_vanloon** (35 likes, score 8/10) — NVIDIA Unveils Isaac GR00T, Its First Fully Open Humanoid #Robot Reference Design
+by @NVIDIARobotics 
+
+#Robotics #Engineering #ArtificialIntelligence #Innovation #Technology
+  - https://x.com/Ronald_vanLoon/status/2067501838899740888
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 45).
+- **@coindesk** (8 likes, score 7/10) — Billionaire @RicardoBSalinas says Mexico's banking sector has standing orders from the central bank to avoid crypto entirely.
+
+"We cannot integrate that into our bank, period, end of story."
+  - https://x.com/CoinDesk/status/2067792734073880760
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 14).
+- **@coindesk** (50 likes, score 8/10) — TODAY: The G7 has called out North Korea's crypto theft operations as a geopolitical security threat, urging coordinated international action against the regime's cyberattacks on exchanges and blockch
+  - https://x.com/CoinDesk/status/2067736110986600930
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 88).
+- **@coindesk** (42 likes, score 8/10) — ANALYSIS: @Grayscale Research says $AAVE is undervalued at $75, estimating fair value at $80-$100 with a base case price target of $175 within one year.
+  - https://x.com/CoinDesk/status/2067764548451320132
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 66).
+- **@investingaddict** (938 likes, score 7/10) — A banking app should never be unavailable. 
+
+Figure your shit out Robinhood.
+  - https://x.com/InvestingAddict/status/2067611251711307881
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1104).
+- **@yahoofinance** (227 likes, score 7/10) — OpenAI's Sam Altman, Anthropic CEO Dario Amodei, and the head of Google's DeepMind Lab, Demis Hassabis, were spotted at the G7 Summit to discuss the liability of bots and agents, and how AI presents t
+  - https://x.com/YahooFinance/status/2067261705852240254
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 273).
+- **@coindesk** (88 likes, score 7/10) — NEW: Five U.S. regulators have jointly proposed customer identification requirements for payment stablecoin issuers, modeled on existing bank rules as part of the GENIUS Act's AML framework.
+  - https://x.com/CoinDesk/status/2067781409477943584
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 116).
+- **@jamesoncamp** (394 likes, score 7/10) — Startups are lighting billions of VC dollars on fire building products that accelerate us into a hypergamblification future.
+
+Midjourney is 100% bootstrapped.
+
+Already has the most visually stunning i
+  - https://x.com/JamesonCamp/status/2067476883328172238
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 438).
+- **@techcrunch** (8 likes, score 7/10) — Source: Elastic agrees to buy CRV-backed DeductiveAI for up to $85M
+  - https://x.com/TechCrunch/status/2067772663716782439
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 10).
