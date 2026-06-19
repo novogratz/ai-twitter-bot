@@ -462,7 +462,19 @@
     "johanneperron",
     "gillesp",
     "lucbouchard",
-    "joachimvialle"
+    "joachimvialle",
+    "NicoKraus",
+    "AlexisDussart",
+    "JulienVergnaud",
+    "MarcDionne",
+    "MaximeNadeau",
+    "VincentFournier",
+    "RomainBailly",
+    "RomainWarg",
+    "AntoineGouel",
+    "SofianeB",
+    "JulienC",
+    "MaximeD"
   ],
   "en": [
     "blablacar",
@@ -3188,6 +3200,66 @@
     {
       "lang": "fr",
       "handle": "joachimvialle",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicoKraus",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDussart",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienVergnaud",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcDionne",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeNadeau",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentFournier",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBailly",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainWarg",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineGouel",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "SofianeB",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienC",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeD",
       "added": "2026-06-19"
     }
   ]

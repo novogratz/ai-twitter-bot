@@ -1,19 +1,39 @@
 {
-  "ts": "2026-06-06T06:40:50.532248",
+  "ts": "2026-06-19T05:47:59.588418",
   "window_min": 90,
-  "total_actions": 13,
+  "total_actions": 48,
   "by_type": {
-    "reply": 13,
-    "post": 1
+    "reply": 40,
+    "quote_gif": 4,
+    "quote": 9,
+    "retweet": 5
   },
   "winners": {
-    "PROFILE-ALWAYS": 11,
-    "FEED-SWEEP-FEED": 1,
-    "FEED-SWEEP-FOLLOWING": 1
+    "SEARCH-HOT": 18,
+    "RETWEET_REPLY": 8,
+    "FEED-SWEEP-FOLLOWING": 2,
+    "FEED-SWEEP-FEED": 2,
+    "GIF/math lady": 1
   },
   "losers": {
-    "FEED-SWEEP-FEED": 1,
-    "FEED-SWEEP-FOLLOWING": 1
+    "GIF/math lady": 1,
+    "RETWEET_QT/eliebakouch": 1,
+    "RETWEET/brianroemmele": 1,
+    "RETWEET_QT/alexfinn": 1,
+    "RETWEET/bamitav": 1,
+    "QUOTE/Lex": 1,
+    "RETWEET_QT/valuetainment": 1,
+    "RETWEET/ihtesham2005": 1,
+    "RETWEET/imai_eruel": 1,
+    "GIF/john cena are you sure": 1,
+    "RETWEET_QT/cointelegraph": 1,
+    "QUOTE/James Lucas": 1,
+    "RETWEET_QT/reuters": 1,
+    "GIF/michael jordan crying": 1,
+    "RETWEET_QT/haider1": 1,
+    "RETWEET/reuters": 1,
+    "GIF/mind blown": 1,
+    "RETWEET_QT/stark_nico99": 1
   },
   "post_cadence_factor": 0.85,
   "boost_cadence_factor": 1.0

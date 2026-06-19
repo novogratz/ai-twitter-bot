@@ -1,41 +1,41 @@
 {
-  "generated_at": "2026-06-19T02:48:05.804478",
-  "window_7d_actions": 2716,
-  "window_24h_actions": 1413,
+  "generated_at": "2026-06-19T06:48:00.400568",
+  "window_7d_actions": 2886,
+  "window_24h_actions": 1398,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2523
+      "count": 2676
     },
     {
       "pattern": "METAPHOR",
-      "count": 97
+      "count": 105
     },
     {
       "pattern": "RENAME",
-      "count": 60
+      "count": 64
     },
     {
       "pattern": "EN_ANCHOR",
-      "count": 24
+      "count": 25
     },
     {
       "pattern": "DIALOGUE",
-      "count": 6
+      "count": 8
     }
   ],
   "worst_patterns": [
     {
       "pattern": "OTHER",
-      "count": 2
+      "count": 3
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 4
+      "count": 5
     },
     {
       "pattern": "DIALOGUE",
-      "count": 6
+      "count": 8
     }
   ],
   "best_hours_utc": [
@@ -63,46 +63,50 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1349
+      "count": 1451
     },
     {
       "topic": "Autre",
-      "count": 1164
+      "count": 1224
     },
     {
       "topic": "Bourse",
-      "count": 128
+      "count": 138
     },
     {
       "topic": "Crypto",
-      "count": 126
+      "count": 131
     },
     {
       "topic": "Spatial",
-      "count": 75
+      "count": 83
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1973
+      "count": 2104
     },
     {
       "type": "quote",
-      "count": 409
+      "count": 429
     },
     {
       "type": "retweet",
-      "count": 188
+      "count": 198
     },
     {
       "type": "quote_gif",
-      "count": 136
+      "count": 142
     },
     {
       "type": "METAPHOR",
       "count": 5
+    },
+    {
+      "type": "post",
+      "count": 3
     },
     {
       "type": "RENAME",
@@ -113,24 +117,24 @@
       "count": 2
     },
     {
-      "type": "post",
+      "type": "hotake",
       "count": 1
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-19T02:47:16.082281",
-      "text": "Claude automates SEO better than most juniors.\n\nThe real story is the margin explosion on the agency model.\n\nThat's a PIP for half of them.",
+      "ts": "2026-06-19T06:47:03.433893",
+      "text": "Watched Stanford lecture instead of Netflix.\n\nOpenAI's 36B token cache is just a library card for a book they already stole.\n\nNow back to $5B burn.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-19T02:47:03.812429",
-      "text": "4 hours of Claude is the new $2,000 bootcamp. The ROI only works if you treat the model like an unpaid intern that never sleeps. The real lesson? You're paying for the prompt engineering, not the AI.",
+      "ts": "2026-06-19T06:46:51.027829",
+      "text": "Cluely at $7M ARR with zero headcount.\n\nopenai's burn rate is $5B/yr. the margin between \"ai company\" and \"ai utility\" is already a vacuum.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-19T02:46:51.111497",
-      "text": "Pressler plays Debussy like an H100 running inference on a $3B burn rate.\n\nChops the noise, leaves the signal.",
+      "ts": "2026-06-19T06:44:33.961243",
+      "text": "70% margins buy 20 years of depreciation.\nStartup burn rate buys 6 months of hope.\nThe P&L doesn't lie.",
       "type": "reply"
     }
   ]

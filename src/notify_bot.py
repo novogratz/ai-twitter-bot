@@ -128,7 +128,7 @@ def run_replyback_cycle():
         handle = _extract_handle(user)
         if not handle and reply_url:
             # 2026-06-05 fix: the scraper's User-Name anchor returns the
-            # DISPLAY name ("The AI Therapist"), not the @handle, so half the
+            # DISPLAY name ("The AI Boss"), not the @handle, so half the
             # engagers were skipped ("No usable handle"). The reply's status
             # URL always carries the author handle — use it as the fallback.
             try:

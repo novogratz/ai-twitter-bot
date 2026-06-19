@@ -592,3 +592,28 @@ def test_engine_health_still_alerts_on_sustained_silence(monkeypatch, tmp_path):
     assert alerts_path.exists(), (
         "sustained silence (no fire in current or previous hour) must still alert"
     )
+
+
+# --- engagement_log type-column leak (reply-bot-type-field-leak memory) ----------
+
+def test_log_reply_sanitizes_leaked_action_type(monkeypatch, tmp_path):
+    """A pattern id (METAPHOR/RENAME) or a leaked LLM JSON "type" field must
+    never land in the `type` column — the analyzer/bandit/engine-health read it
+    positionally to compute per-action ROI, so a leak invents phantom surfaces
+    and undercounts replies. log_reply coerces any unknown action back to
+    'reply' at the chokepoint. Legit non-reply actions pass through untouched.
+    """
+    import csv
+    from src import engagement_log as el
+
+    log_path = tmp_path / "engagement_log.csv"
+    monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", str(log_path))
+
+    el.log_reply("https://x.com/a/status/1", "a sharp take", action_type="METAPHOR")
+    el.log_reply("https://x.com/b/status/2", "another take", action_type="quote_gif")
+    el.log_reply("https://x.com/c/status/3", "third take")  # default reply
+
+    with open(log_path, newline="") as f:
+        rows = list(csv.reader(f))[1:]  # drop header
+    types = [r[1] for r in rows]
+    assert types == ["reply", "quote_gif", "reply"], types

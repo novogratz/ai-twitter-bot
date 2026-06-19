@@ -104,7 +104,7 @@ def _top_decodes(items: list, k: int = 5) -> list:
     return items[:k]
 
 
-THREAD_PROMPT = """You are @TheAIShrink. You will write ONE English recap thread
+THREAD_PROMPT = """You are @AIBossGPT. You will write ONE English recap thread
 of the week's Decodes. Here are the 5-6 best Decodes (by likes) this week:
 
 {decode_list}
@@ -131,7 +131,7 @@ TWEET 2 to TWEET N (one per Decode, ordered best to worst):
 
     The real bet: build the private grid that turns the public one into a backup.
 
-    https://x.com/TheAIShrink/status/...
+    https://x.com/AIBossGPT/status/...
 
 LAST TWEET (the close — invite to follow + tease next week):
   Liked this? Next week, 6 new Decodes.
@@ -143,7 +143,7 @@ LAST TWEET (the close — invite to follow + tease next week):
 RULES:
 - Each tweet ≤ 270 characters.
 - No em dashes (—). Simple hyphens or commas.
-- 100% English. AI-only (The AI Decoder).
+- 100% English. AI-only (The AI Boss).
 - No decorative emoji except 📅 in tweet 1 and 👇 in the head.
 - Output: just the tweets separated by "---", nothing else.
 """

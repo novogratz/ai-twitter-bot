@@ -4239,5 +4239,133 @@
       }
     ],
     "summary": "Focus sur les leaders de l'infrastructure IA (Mistral) et les acteurs solides de la fintech/tech qui \u00e9vitent le 'guru' pour aller au concret. Le Qu\u00e9bec est bien repr\u00e9sent\u00e9 par des profils hybrides tech/crypto."
+  },
+  {
+    "ts": "2026-06-19T02:48:21.549677",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NicoKraus",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 60000,
+        "reason": "La r\u00e9f\u00e9rence VC US. Il tweete en anglais mais ses threads sur l'infra IA sont la bible des FR qui lisent."
+      },
+      {
+        "handle": "AlexisDussart",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le roi de la data financi\u00e8re FR. Ses graphiques valent plus cher que ton abonnement Bloomberg junior."
+      },
+      {
+        "handle": "RomainDertwinkel",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "L'architecte de StarkWare en France. Twitte tech pure, z\u00e9ro hype, z\u00e9ro formation \u00e0 97\u20ac."
+      },
+      {
+        "handle": "JulienVergnaud",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Expert Deep Finance. Il explique la tech derri\u00e8re la finance sans dormir."
+      },
+      {
+        "handle": "MarcDionne",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 8000,
+        "reason": "La voix grave du crypto au Qu\u00e9bec. Pas de shill, juste de l'analyse on-chain solide."
+      }
+    ],
+    "summary": "On a fouill\u00e9 les founders de scale-ups AI parisiennes et les vieux loutres du trading qu\u00e9b\u00e9cois. Z\u00e9ro vendeur de r\u00eave, juste des gens qui construisent ou analysent."
+  },
+  {
+    "ts": "2026-06-19T04:48:28.358375",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeNadeau",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 55000,
+        "reason": "\u00c9conomiste et trader. Il passe de l'inflation qu\u00e9b\u00e9coise \u00e0 la tech US sans faire d'effort. Son style est celui de l'expert qui a vu passer deux bulles."
+      },
+      {
+        "handle": "ThomasGentilhomme",
+        "region": "france",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "Co-fondateur de Qonto. Mix parfait entre Tech, Fintech et IA applicative. Moins hype que Mistral, mais plus pragmatique sur les use-cases business."
+      },
+      {
+        "handle": "VincentFournier",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 24000,
+        "reason": "L'expert crypto qu\u00e9b\u00e9cois. Couvre les cycles on-chain et macro. Moins de bruit que les 'influencers' montr\u00e9alais, plus de fond."
+      },
+      {
+        "handle": "RomainBailly",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Diaspora FR \u00e0 SF (ex-Hopper). Il voit ce qui se passe dans la fintech am\u00e9ricaine avant qu'elle n'arrive \u00e0 Paris. Perspective angle mort."
+      }
+    ],
+    "summary": "J'ai mis\u00e9 sur la qualit\u00e9 technique et journalistique plut\u00f4t que sur le bruit marketing. Mistral domine l'IA FR, Perray et Fournier offrent la cr\u00e9dibilit\u00e9 crypto, tandis que Nadeau et Bailly apportent la perspective \u00e9conomique et fintech."
+  },
+  {
+    "ts": "2026-06-19T06:48:30.472921",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RomainWarg",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Ancien Coinbase. Il a quitt\u00e9 pour lancer sa propre structure (Coral). Twitte des vrais insights on-chain, pas des 'moon'. Le trader calme dans la temp\u00eate."
+      },
+      {
+        "handle": "AntoineGouel",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "Delegated Proof of Stake. Il a trouv\u00e9 le Bitcoin dans Ethereum. Le mec qui a compris la m\u00e9canique avant toi."
+      },
+      {
+        "handle": "SofianeB",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 22000,
+        "reason": "Bas\u00e9 \u00e0 NYC, francophone. Il poste sur la fintech US depuis l'int\u00e9rieur. Tu vois les deals avant les medias fran\u00e7ais qui traduisent 2 semaines apr\u00e8s."
+      },
+      {
+        "handle": "JulienC",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Le type qui analyse les bilans des entreprises qu\u00e9b\u00e9coises avec une pr\u00e9cision chirurgicale. Il parle ROI, pas de hype. Pour ceux qui veulent dormir sur leurs actions."
+      },
+      {
+        "handle": "MaximeD",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Data Scientist chez un gros FAI am\u00e9ricain. Il tweet en FR sur LLMs et infra GPU. Moins connu, mais plus technique que 90% des influenceurs."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui font briller l'\u00e9cosyst\u00e8me francophone : de la recherche pure (Mensch) \u00e0 la finance de march\u00e9 (Warg, C). Pas de vendeurs de r\u00eaves, juste des technos et des traders qui savent ce qu'ils disent."
   }
 ]

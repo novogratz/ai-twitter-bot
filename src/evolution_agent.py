@@ -1,4 +1,4 @@
-"""Autonomous EVOLUTION AGENT for @TheAIShrink — self-improvement of CONTENT quality.
+"""Autonomous EVOLUTION AGENT for @AIBossGPT — self-improvement of CONTENT quality.
 
 Python pre-computes all stats (pattern ROI, source ROI, top/bottom tweets)
 from engagement_log.csv + performance_log.json, then passes a compact JSON
@@ -100,7 +100,7 @@ def _compute_stats() -> dict:
 
 
 def _build_prompt(stats: dict) -> str:
-    return f"""Tu es l'EVOLUTION AGENT de @TheAIShrink (bot X IA+crypto+bourse FR).
+    return f"""Tu es l'EVOLUTION AGENT de @AIBossGPT (bot X IA+crypto+bourse FR).
 
 Voici les stats des derniers jours (pré-calculées par Python):
 

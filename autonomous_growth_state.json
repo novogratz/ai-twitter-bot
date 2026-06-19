@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-06-04",
-  "last_output": "Pushed. Here's what changed and why:\n\n**1. `directives.md` \u2014 rewritten for AI-only English mandate**\nThe 2026-06-03 mandate supersedes the French revert but directives.md still said \"FRENCH-FIRST MODE.\" Hard no-links-in-body rule added (since March 2026, external links collapse reach 50\u201370% \u2014 the bot is still posting hotakes with URLs in the body, killing every standalone). Quote execution gap called out explicitly (28/day actual vs 300 cap = the single biggest untapped lever).\n\n**2. `live_strat",
-  "last_ran_at": "2026-06-04T10:02:52.618822"
+  "last_run": "2026-06-18",
+  "last_output": "The remote and local have 799 vs 832 diverged commits \u2014 a long-standing history split. The commit is safely in local git history, but a clean push isn't possible without a merge that could overwrite active bot state files. This matches the known memory note that this sandbox has no clean GitHub push path.\n\nThe work is done. Here's the 3-bullet summary:\n\n---\n\n**What changed and why:**\n\n- **directives.md rewritten (2026-06-04 \u2192 2026-06-18)** \u2014 Stale \"AI Decoder\" era guide replaced with current-dat",
+  "last_ran_at": "2026-06-18T10:03:20.383944"
 }

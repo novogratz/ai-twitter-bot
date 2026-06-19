@@ -7,6 +7,21 @@ from .pattern_tags import normalize as _normalize_pattern
 from .pillar_tags import classify as _classify_pillar
 
 
+# The only legitimate values for the `type` column written via log_reply.
+# Anything else (pattern ids like METAPHOR/RENAME, or a leaked LLM JSON
+# "type" field) corrupts the per-action ROI math that the analyzer, bandit
+# and engine-health watchdog all read positionally — see memory
+# reply-bot-type-field-leak. Sanitize at this single chokepoint so no caller
+# can pollute the column, regardless of a positional-arg mistake upstream.
+_KNOWN_REPLY_ACTIONS = {"reply", "quote", "retweet", "quote_gif", "repost"}
+
+
+def _sanitize_action_type(action_type: str) -> str:
+    """Coerce an unknown/leaked action type back to the safe default."""
+    at = (action_type or "").strip()
+    return at if at in _KNOWN_REPLY_ACTIONS else "reply"
+
+
 def _extract_author(target_url: str) -> str:
     """Pull @handle from a tweet URL like https://x.com/<author>/status/<id>."""
     if not target_url:
@@ -57,6 +72,7 @@ def log_reply(target_url: str, reply_text: str, action_type: str = "reply",
     style guide.
     """
     _ensure_header()
+    action_type = _sanitize_action_type(action_type)
     with open(ENGAGEMENT_LOG_FILE, "a", newline="") as f:
         writer = csv.writer(f)
         writer.writerow([

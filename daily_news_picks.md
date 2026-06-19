@@ -15971,3 +15971,43 @@ But it's not full body. You can't use ultrasound to image
 - **@yahoonewstopics** (487 likes, score 7/10) — 【ChatGPT Ad Display Set to Launch in Japan】
   - https://x.com/YahooNewsTopics/status/2067744667673002329
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 785).
+- **@tautologer** (76 likes, score 9/10) — crazy reading an article about AI policy from 2.5 years ago and finding it hopelessly outdated. back then it cost $100 million to train a frontier model, there was more GPU compute for gaming than tra
+  - https://x.com/tautologer/status/2067760004422316413
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 84).
+- **@reuters** (8 likes, score 7/10) — India's RMZ to ramp up data center capacity with $35 billion push, exec says http://reut.rs/4vl2lbr
+  - https://x.com/Reuters/status/2067871291730714642
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 14).
+- **@scaling01** (873 likes, score 9/10) — new shape-rotator benchmark
+
+Fable and GPT-5.5 of course far ahead of the field
+
+but now look at GLM-5.2. it's ahead of Gemini 3.5 Flash and Opus 4.8
+
+you can't really benchmaxx a benchmark that was j
+  - https://x.com/scaling01/status/2067356872768639301
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 937).
+- **@f4micom** (689 likes, score 8/10) — midjourney i wasn’t familiar with your game
+
+tf you mean 60 second high resolution medical grade full body scan
+  - https://x.com/f4micom/status/2067548374497141016
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 727).
+- **@eliebakouch** (24 likes, score 8/10) — if we let the top 50 people at openai, anthropic, xai/cursor and google with the exact same amount of gpus for 6 months, who would produce the best model?
+
+exact condition, chinese labs and "rest of t
+  - https://x.com/eliebakouch/status/2067841808638652909
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 50).
+- **@brianroemmele** (49 likes, score 7/10) — GROK TTS CRUSHED IT!
+
+Grok TTS exploded onto the scene with a jaw-dropping 96/100 on Vapi’s Humaneness Index in blind testing snatching the #1 spot among all AI voice models and coming within a razor-
+  - https://x.com/BrianRoemmele/status/2067766099962392798
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 53).
+- **@valuetainment** (1415 likes, score 7/10) — JUST IN: OpenAI and Anthropic push customers toward token based billing as operation costs rise.
+  - https://x.com/valuetainment/status/2067638006190575700
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1609).
+- **@ihtesham2005** (100 likes, score 7/10) — Bill Ackman invested in SpaceX and xAI then turned around and said he can't figure out how OpenAI's business model actually works.
+
+He is not a hater. He owns the AI trade.
+
+He underwrites these compa
+  - https://x.com/ihtesham2005/status/2067291430587187308
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 114).

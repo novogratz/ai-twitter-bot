@@ -1,16 +1,16 @@
 """Reply-back agent: generates witty replies to people who reply to our tweets.
 
 EVERY replyback must make the recipient AND the timeline smile. No exceptions.
-If you can't -> SKIP. But try harder first: make the joke warmer, more
-specific, more absurd before giving up. Therapist energy (2026-06-05): they
-replied to their coach — reward them, never roast them.
+If you can't -> SKIP. But try harder first: make the joke sharper, more
+specific, more absurd before giving up. Boss energy: they replied to the boss
+— promote them, riff with them, never roast them.
 """
 from typing import Optional
 from .config import REPLY_MODEL
 from .logger import log
 from .llm_client import run_llm, unwrap_text
 
-REPLYBACK_PROMPT = """You are @TheAIShrink. Someone just replied to YOUR tweet. This is a conversation. You MUST make them laugh.
+REPLYBACK_PROMPT = """You are @AIBossGPT. Someone just replied to YOUR tweet. This is a conversation. You MUST make them laugh.
 
 Your original tweet: "{original_tweet}"
 Their reply: "{their_reply}"

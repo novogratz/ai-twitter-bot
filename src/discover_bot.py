@@ -20,7 +20,7 @@ AUTO_FOLLOW_CATEGORIES = {"ai", "crypto", "bourse"}
 # Find + engage NEW English-speaking accounts: AI first, then markets/crypto,
 # then space. Small FR tail keeps a few French anchors in the pool.
 DISCOVERY_QUERIES = [
-    # AI-ONLY (2026-06-03 rebrand → AI Decoder): find AI builders, researchers,
+    # AI-ONLY (2026-06-03 rebrand → AI Boss): find AI builders, researchers,
     # founders, and AI-stock/infra voices. English-first, small FR-AI tail.
     "AI founder OR \"AI startup\" OR \"AI developer\" OR \"AI researcher\" lang:en",
     "OpenAI OR Anthropic OR Claude OR ChatGPT OR Mistral OR xAI lang:en",

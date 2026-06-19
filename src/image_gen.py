@@ -1,6 +1,6 @@
 """Generate quote-card PNGs for hot takes and memes.
 
-Renders the tweet text on a clean dark background with @TheAIShrink branding —
+Renders the tweet text on a clean dark background with @AIBossGPT branding —
 the result reads like a Notes-app screenshot, which historically performs
 2-3x better than text-only posts on X.
 """
@@ -20,7 +20,7 @@ except ImportError:
 CARD_W = 1200
 CARD_H = 675
 PADDING = 80
-BRAND_HANDLE = "@TheAIShrink"
+BRAND_HANDLE = "@AIBossGPT"
 
 # Color palettes — picked at random per card so the feed doesn't look repetitive.
 PALETTES = [

@@ -38,7 +38,7 @@ SIGNAL_FILE = os.path.join(_PROJECT_ROOT, "external_signal.json")
 
 MAX_SPACE_PROMO_PER_DAY = int(os.environ.get("MAX_SPACE_PROMO_PER_DAY", "2"))
 
-PROMO_PROMPT = """You are @TheAIShrink (The AI Therapist) — supportive market-
+PROMO_PROMPT = """You are @AIBossGPT (The AI Boss) — supportive market-
 therapist voice, calm hype, hope not fear.
 
 Write ONE bullish space-stocks post for the SpaceX IPO run-up (IPO June 12).

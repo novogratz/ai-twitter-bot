@@ -27,8 +27,9 @@
     },
     "sama": {
       "replies": 1,
-      "weight": 1.0,
-      "last_ts": "2026-06-04T23:40:40.686408"
+      "weight": 1.5,
+      "last_ts": "2026-06-04T23:40:40.686408",
+      "conversions": 1
     },
     "nvidia": {
       "replies": 1,
@@ -91,6 +92,98 @@
       "conversions": 1
     },
     "coinacademy_fr": {
+      "replies": 1,
+      "weight": 1.5,
+      "conversions": 1,
+      "last_ts": "2026-06-18T08:14:10.240891"
+    },
+    "theaibigboss": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "coindesk": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "stocksavvyshay": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "business": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "klara_sjo": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "0xnoncesense": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "thekaransinghal": {
+      "replies": 1,
+      "weight": 1.0,
+      "last_ts": "2026-06-18T15:15:00.917751"
+    },
+    "andrewyng": {
+      "replies": 1,
+      "weight": 1.0,
+      "last_ts": "2026-06-18T15:20:47.985859"
+    },
+    "poolsideai": {
+      "replies": 1,
+      "weight": 1.0,
+      "last_ts": "2026-06-18T16:12:09.339143"
+    },
+    "emollick": {
+      "replies": 5,
+      "weight": 1.0,
+      "last_ts": "2026-06-19T03:45:16.560962"
+    },
+    "grok": {
+      "replies": 1,
+      "weight": 1.5,
+      "last_ts": "2026-06-18T17:45:01.369928",
+      "conversions": 1
+    },
+    "drfeifei": {
+      "replies": 1,
+      "weight": 1.0,
+      "last_ts": "2026-06-18T18:39:03.576811"
+    },
+    "xai": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "brianroemmele": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "tszzl": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "agihouse_org": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "google": {
+      "replies": 0,
+      "weight": 1.5,
+      "conversions": 1
+    },
+    "naval": {
       "replies": 0,
       "weight": 1.5,
       "conversions": 1
@@ -168,6 +261,72 @@
       "url": "https://x.com/LeJournalDuCoin/status/2062931514078204358",
       "velocity": 13.8,
       "ts": "2026-06-05T13:09:25.287656"
+    },
+    {
+      "author": "coinacademy_fr",
+      "url": "https://x.com/coinacademy_fr/status/2067557040868786420",
+      "velocity": 6.8,
+      "ts": "2026-06-18T08:14:10.240932"
+    },
+    {
+      "author": "thekaransinghal",
+      "url": "https://x.com/thekaransinghal/status/2067635005552209969",
+      "velocity": 77.7,
+      "ts": "2026-06-18T15:15:00.917760"
+    },
+    {
+      "author": "andrewyng",
+      "url": "https://x.com/AndrewYNg/status/2067653578945359898",
+      "velocity": 45.6,
+      "ts": "2026-06-18T15:20:47.985885"
+    },
+    {
+      "author": "poolsideai",
+      "url": "https://x.com/poolsideai/status/2067623353230217448",
+      "velocity": 96.3,
+      "ts": "2026-06-18T16:12:09.339169"
+    },
+    {
+      "author": "emollick",
+      "url": "https://x.com/emollick/status/2067617541762031900",
+      "velocity": 172.7,
+      "ts": "2026-06-18T17:00:48.467032"
+    },
+    {
+      "author": "grok",
+      "url": "https://x.com/grok/status/2067711154986852669",
+      "velocity": 551.5,
+      "ts": "2026-06-18T17:45:01.369936"
+    },
+    {
+      "author": "emollick",
+      "url": "https://x.com/emollick/status/2067640755846291811",
+      "velocity": 55.4,
+      "ts": "2026-06-18T17:50:25.024019"
+    },
+    {
+      "author": "drfeifei",
+      "url": "https://x.com/drfeifei/status/2067701705827848521",
+      "velocity": 22.6,
+      "ts": "2026-06-18T18:39:03.576839"
+    },
+    {
+      "author": "emollick",
+      "url": "https://x.com/emollick/status/2067839690158268923",
+      "velocity": 120.7,
+      "ts": "2026-06-19T02:56:42.136760"
+    },
+    {
+      "author": "emollick",
+      "url": "https://x.com/emollick/status/2067803678002594021",
+      "velocity": 19.6,
+      "ts": "2026-06-19T03:39:35.897638"
+    },
+    {
+      "author": "emollick",
+      "url": "https://x.com/emollick/status/2067840160234868965",
+      "velocity": 7.0,
+      "ts": "2026-06-19T03:45:16.560984"
     }
   ]
 }

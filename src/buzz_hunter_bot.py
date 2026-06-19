@@ -189,7 +189,7 @@ def _in_window() -> bool:
     return now.weekday() == 6 and 11 <= now.hour < 14
 
 
-PROMPT = """You are @TheAIShrink. It's the weekly buzz attempt — ONE
+PROMPT = """You are @AIBossGPT. It's the weekly buzz attempt — ONE
 tweet that can go viral. Different format from The Decode. Bold,
 contrarian, screenshot-worthy. On this weird/exploit/leak/hack story:
 
@@ -210,7 +210,7 @@ ref (SEC filing, a16z, CNBC, 401k, LinkedIn) only if it lands.}}
 {url}
 
 RULES:
-- 100% English. AI-only (you are The AI Decoder) — if not about AI, SKIP.
+- 100% English. AI-only (you are The AI Boss) — if not about AI, SKIP.
 - Tone: deadpan, dry, half-curious half-cynical. No "Incredible" / "Insane".
 - No decorative emoji except the 🔥 in the header.
 - No hashtags, no em dash (—). Simple hyphens.

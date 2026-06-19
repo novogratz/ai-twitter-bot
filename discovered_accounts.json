@@ -1,195 +1,5 @@
 [
   {
-    "handle": "willietrom",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "pathfinderxbt",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "shveta",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "jsr",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "techmeme",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "romstrades",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "value_investor",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "klary",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "barryguard",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "trev",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "determiner",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "rmc",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "jacob",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "yrn_cyrus",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "powerforge",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "justjerry",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "martin",
-    "category": "tech",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "kwel",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "smartmoney",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "sensei",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "casper",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "oldleaf",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "firstpost",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "vandrovka",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "bitcoinsapiens",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "jeff",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "cryptocrank",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "38twelvedaily",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "ohmohm",
-    "category": "tech",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "twin",
-    "category": "crypto",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "jodiewest",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "artemis",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "towny",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "maka",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "erwininvestiert",
-    "category": "tech",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "afolabi",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "milon",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
-    "handle": "isaac",
-    "category": "ai",
-    "added": "2026-05-28"
-  },
-  {
     "handle": "jethro",
     "category": "ai",
     "added": "2026-05-28"
@@ -2498,5 +2308,197 @@
     "handle": "afrovestor",
     "category": "ai",
     "added": "2026-06-06"
+  },
+  {
+    "handle": "valuetainment",
+    "category": "ai",
+    "added": "2026-06-18",
+    "followed": true
+  },
+  {
+    "handle": "chubby",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "cointelegraph",
+    "category": "ai",
+    "added": "2026-06-18",
+    "followed": true
+  },
+  {
+    "handle": "libertex",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "unartificial",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "numerama",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "grm",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "coreweave",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "mexc",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "laurent",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "benzinga",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "stocknewsroom",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "posttoday",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "jignesh",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "martinez",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "leonard",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "mo",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "daniel",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "rahul",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "hgs",
+    "category": "ai",
+    "added": "2026-06-18"
+  },
+  {
+    "handle": "roon",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "isra",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "inthemoneypod",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "unusual_whales",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "greatwhite",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "bybit",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "kakashii",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "sandy4ka",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "amd",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "tbpn",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "naiive",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "mike",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "rockport",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "rt",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "turtle_lair",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "dogedesigner",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "avid",
+    "category": "ai",
+    "added": "2026-06-19"
+  },
+  {
+    "handle": "hasheur",
+    "category": "ai",
+    "added": "2026-06-19"
   }
 ]
