@@ -15850,3 +15850,50 @@ This is the reality on the ground right no
 A student a
   - https://x.com/ihtesham2005/status/2067698974732271875
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 33).
+- **@cointelegraph** (91 likes, score 8/10) — TODAY: The White House and Anthropic are jointly developing a framework to assess AI security risks and guide potential government intervention, per Politico.
+  - https://x.com/Cointelegraph/status/2067755384773698031
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 143).
+- **@dexerto** (28355 likes, score 8/10) — A flip phone that blocks social media and web browsers will soon be available for $499
+
+The Commodore Callback will still have apps such as WhatsApp, Telegram, Google Maps, and Uber
+  - https://x.com/Dexerto/status/2067245839123124348
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 30715).
+- **@butterflynetinc** (483 likes, score 8/10) — Half a million sensors. 40 Butterfly chips. A new way to see your own health.
+
+@Midjourney just pulled back the curtain on their whole-body scanner prototype — embedded with our Ultrasound-on-Chip™ te
+  - https://x.com/ButterflyNetInc/status/2067613301400318198
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 505).
+- **@cyrilxbt** (288 likes, score 8/10) — Sam Altman:
+
+"We're going to see 10-person billion-dollar companies pretty soon."
+
+"If I were 22 right now, I'd feel like the luckiest kid in history."
+
+Most people will read this, feel inspired for 3
+  - https://x.com/cyrilXBT/status/2067463366055244183
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 356).
+- **@thsottiaux** (6665 likes, score 7/10) — Reminder that you can use the Codex App, CLI and SDK with any open source model, not just with OpenAI models.
+  - https://x.com/thsottiaux/status/2067181377028538431
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 7613).
+- **@anatolikopadze** (144 likes, score 7/10) — instead of an hour of Netflix tonight, watch the man who quit Meta to bet against everything Silicon Valley is building
+
+it's the clearest explanation I've seen of why today's AI is nowhere near as sm
+  - https://x.com/AnatoliKopadze/status/2067615068682932501
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 178).
+- **@testingcatalog** (156 likes, score 7/10) — OPENAI : A Realtime Voice Mode on Codex will trigger a Pet or an Orb to appear!
+
+> Users will be able to invoke them with the "Hey Chat" command.
+
+> The Orb mentioned in the Realtime Voice settings is
+  - https://x.com/testingcatalog/status/2067773423913193925
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 176).
+- **@resistthems** (66 likes, score 7/10) — Elon Musk: "How often is the most ironic outcome the most likely?"
+
+"Look at the names of AI companies. Midjourney is not mid. Stability AI is unstable. OpenAI is closed. Anthropic - misanthropic."
+  - https://x.com/ResisttheMS/status/2067683769071423828
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 66).
+- **@theinformation** (37 likes, score 7/10) — Google's star AI researcher Noam Shazeer just left for OpenAI. 
+
+"Noam was working on pre-training at Gemini… And pre-training is something that Google is viewed to be really strong at. And OpenAI is
+  - https://x.com/theinformation/status/2067732080016966132
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 41).
