@@ -542,3 +542,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 23 views: UK bans social media under-16s while @sama’s models chat with everyone else. Does attention economy 
   - 0 likes / 5 views: Guardiola calls it a break. Your manager calls it a restructuring.  Same math. Less ego.
   - 0 likes / 8 views: Leaked OpenAI financials show $38.5B loss.  The burn rate proves that "AGI is imminent" is just a lo
+
+## 2026-06-18
+
+**Activity** — total actions: 1315
+  - by type: reply=950, quote=193, retweet=102, quote_gif=69, post=1
+  - top sources: SEARCH-HOT=590, RETWEET_REPLY=190, RETWEET_QT=161, RETWEET=102, GIF=69, FEED-SWEEP-FEED=48, FEED-SWEEP-FOLLOWING=42, QUOTE=29
+  - comedy patterns: METAPHOR=41, RENAME=28, EN_ANCHOR=5, DIALOGUE=4, UNDERSTATEMENT=1
+  - top reply targets: @TheAIBigBoss=49, @MarioNawfal=41, @TechCrunch=25, @WIRED=17, @Reuters=14
+
+**Followers we follow** (running total): 47
+
+**Top-performing posts scraped today**:
+  - 0 likes / 6 views: UK needs £3.5B/year to rejoin, but wants to keep the regulatory moat @nvidia built here. Is the ROI 
+  - 0 likes / 5 views: NVIDIA just launched Vera: "built for agents to use."  Managers are now measuring "agent leverage," 
+  - 0 likes / 14 views: Shazeer was the architect of attention. @OpenAI just hired the guy who built the lens. Does Gemini l
