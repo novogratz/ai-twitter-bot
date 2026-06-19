@@ -16114,3 +16114,79 @@ The film, starring Andrew Garfield as CEO Sam Altman, already had several positi
 - Built Zip2 with his br
   - https://x.com/Sci_Nature0/status/2067875526958846143
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
+- **@shmidtqq** (460 likes, score 9/10) — Anthropic CEO:
+
+"If my revenue is not $1 trillion, even $800 billion,
+there's no force on earth, no hedge on earth,
+that could stop me from going bankrupt."
+
+In a 3-hour podcast, Dario Amodei does the
+  - https://x.com/shmidtqq/status/2067724728110854456
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 532).
+- **@mr_salio** (213 likes, score 9/10) — GPT 5.6 Soon : Noam Shazeer leaving Google for OpenAI 
+
+google paid $2.7b to acquire him in 2024
+
+For anyone wondering why he is such a big deal:
+
+> Co-authored the Transformer paper that kicked off t
+  - https://x.com/Mr_Salio/status/2067529243878138158
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 261).
+- **@chrissgpt** (101 likes, score 9/10) — OpenAI partnered with Boston Children’s and Harvard to reanalyze 376 rare disease cases that had already gone through specialist review and still had no answer.
+
+Using o3 Deep Research (1 year old+ mo
+  - https://x.com/ChrissGPT/status/2067653897024327977
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 115).
+- **@hey_madni** (1363 likes, score 9/10) — Cursor CEO 6 days ago:
+
+"I started coding when I was 12"
+
+Meanwhile today he launched a direct GitHub competitor, a 1.5T frontier model trained from scratch and an iOS app to code from anywhere.
+
+all
+  - https://x.com/hey_madni/status/2067226734077088089
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1407).
+- **@lukas_m_ziegler** (89 likes, score 9/10) — Physical AI hits production speed on automotive assembly! 
+
+@TheSanctuaryAI just achieved 99,5%+ success on a wire plugging task at a Tier 1 automotive supplier, 2.54 seconds per task, validated again
+  - https://x.com/lukas_m_ziegler/status/2067877610567184568
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 97).
+- **@mr_salio** (14 likes, score 8/10) — Mythos But open source: It will arrive before Q1 2027
+
+The founder of zAI just made a bold prediction
+
+A Mythos-class model could arrive before Q1 2027
+
+Anthropic spent billions building Mythos
+
+Now o
+  - https://x.com/Mr_Salio/status/2067918196405833801
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 32).
+- **@brianroemmele** (912 likes, score 8/10) — ZERO VC funding. 
+
+OVER $500M in revenue. 
+
+200 employees. 
+
+They reinventing medical imaging.
+
+They forever changed adorable non-radiation, non-ultra magnetic preventive medical scanning and made it
+  - https://x.com/BrianRoemmele/status/2067642856622412282
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 986).
+- **@alc2022** (315 likes, score 7/10) — biology<>AI is going to deliver most of the returns in the stock market
+
+I went long $pltr at $7, $amd at $4.2: this is way, way bigger
+
+breaks down into two buckets:
+
+read: $rxrx $naut $tem $cai $him
+  - https://x.com/alc2022/status/2067234472295113109
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 345).
+- **@vladtenev** (1132 likes, score 7/10) — In the first few weeks of agentic trading on Robinhood, over 50,000 customers have opened agentic trading accounts and are trading millions of dollars per day of equities and options.
+
+Writing and exe
+  - https://x.com/vladtenev/status/2067754874813710593
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1292).
+- **@lluciano_btc** (602 likes, score 7/10) — Saylor : AI is sucking capital, but it will rotate back to Bitcoin.
+  - https://x.com/LLuciano_BTC/status/2067902960664039540
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 684).
