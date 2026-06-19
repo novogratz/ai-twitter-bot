@@ -643,3 +643,25 @@ def test_reply_search_runs_when_force_env_is_set(monkeypatch):
     monkeypatch.setattr(reply_agent, "unwrap_text", lambda _s: "[]")
     reply_agent.generate_replies()
     assert called["n"] == 1, "REPLY_SEARCH_FORCE=1 must override the skip"
+
+
+def test_quote_night_hour_helper_defined_and_correct(monkeypatch):
+    """2026-06-19 startup crash: run_quote_tweet_cycle called _is_us_night_hour
+    which a refactor had dropped → NameError every quote cycle. Pin the helper
+    exists and the midnight-wrapping window is correct."""
+    from src.quote_tweet_bot import _is_us_night_hour
+    monkeypatch.setenv("QUOTE_NIGHT_START", "23")
+    monkeypatch.setenv("QUOTE_NIGHT_END", "7")
+    assert _is_us_night_hour(2) and _is_us_night_hour(23) and _is_us_night_hour(6)
+    assert not _is_us_night_hour(7) and not _is_us_night_hour(12)
+
+
+def test_reply_wrapper_calls_cycle_with_no_undefined_args():
+    """2026-06-19 startup crash: safe_run_direct_reply_cycle called
+    run_direct_reply_cycle(max_replies=max_replies) — an undefined name, and
+    the cycle takes no args. Pin the wrapper clean + the cycle's arity."""
+    import inspect
+    from src import direct_reply
+    assert "max_replies=max_replies" not in inspect.getsource(
+        direct_reply.safe_run_direct_reply_cycle)
+    assert len(inspect.signature(direct_reply.run_direct_reply_cycle).parameters) == 0
