@@ -16231,3 +16231,25 @@ The residents will never see them standing ever again."
 This guy
   - https://x.com/MarioNawfal/status/2067948234962538633
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 72).
+- **@ifpost47** (412 likes, score 7/10) — "America, Take Notes." 
+
+An American woman visiting India walked into an optical store, showed her prescription, and bought 3 pairs of contact lenses for just $26 - no insurance, no appointment, no en
+  - https://x.com/ifpost47/status/2067867482392760438
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 426).
+- **@marionawfal** (17 likes, score 7/10) — Iranin FM Araghchi calls Israel’s Minister Ben-Gvir a “genocidal lunatic” after Ben-Gvir posted: “For every tear of an Israeli mother, a thousand Lebanese mothers must weep. All of Lebanon must burn!”
+  - https://x.com/MarioNawfal/status/2067955558942929011
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 23).
+- **@variety** (1230 likes, score 7/10) — Luca Guadagnino's nearly finished Sam Altman movie, “Artificial,” has been dropped by Amazon MGM Studios.
+
+The film, starring Andrew Garfield as the controversial OpenAI CEO, will be shopped to other
+  - https://x.com/Variety/status/2067918817171304889
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 1268).
+- **@ta2gamesstudio** (120 likes, score 7/10) — My game has bugs... 
+This time, literally. 
+
+#O3HollowDescent #Indiegame #indiedev
+  - https://x.com/Ta2GamesStudio/status/2067646349596594255
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 130).
+- **@thr** (4 likes, score 7/10) — Luca Guadagnino's Sam Altman, OpenAI Film 'Artificial' Dropped by Amazon MGM Studios
+  - https://x.com/THR/status/2067952778107142200
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 14).
