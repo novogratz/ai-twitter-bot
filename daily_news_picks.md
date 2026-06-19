@@ -15810,3 +15810,43 @@ The top-tier model, which had been blocked due to White House directives, seems 
 In 8-minute video, Anthropic CEO explains ho
   - https://x.com/polydao/status/2067734279782883494
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 19).
+- **@cb_doge** (1345 likes, score 8/10) — BREAKING: Paraguay receives Starlink kits to connect remote schools, health centers and communities. 
+
+• 50,000+ students and teachers will benefit.
+
+• Goal: connect 1,600 locations nationwide.
+
+• Pri
+  - https://x.com/cb_doge/status/2067731626801692841
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1685).
+- **@fal** (185 likes, score 8/10) — Kling 3.0 Turbo and O3 upgrades is now live on fal!
+
+Turbo: faster generation, lower costs, superior lip-sync, stable motion
+Omni: stronger prompt and reference consistency
+Up to 15s clips with full 4
+  - https://x.com/fal/status/2067194508597440656
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 203).
+- **@bespokeinvest** (18 likes, score 8/10) — The average stock price of companies in the S&P 500 is $237.24. Ten years ago, it was $83.37.
+  - https://x.com/bespokeinvest/status/2067686787112198555
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 26).
+- **@steph_iscrypto** (163 likes, score 7/10) — MADNESS:
+
+Ripple developers warn that AI is now finding weaknesses humans may have missed inside the $XRP Ledger.
+
+Wtf is going on???
+  - https://x.com/Steph_iscrypto/status/2067140189470793765
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 233).
+- **@marionawfal** (28 likes, score 7/10) — Israeli airstrike aftermath in Al-Sharqiyah, southern Lebanon
+
+The video shows the scale of destruction left behind.
+
+Homes and buildings reduced to rubble.
+
+This is the reality on the ground right no
+  - https://x.com/MarioNawfal/status/2067774712692805957
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 40).
+- **@ihtesham2005** (21 likes, score 7/10) — The CEO of OpenAI was asked for his hottest take. His answer wasn't a prediction about a product. It was that the whole world is sleeping through the most important thing happening to it.
+
+A student a
+  - https://x.com/ihtesham2005/status/2067698974732271875
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 33).
