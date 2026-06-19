@@ -4,6 +4,24 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-19 — REPLY pipeline waits out spacing instead of burning the
+> gen (the LAST member of the spacing-precheck family):** `_reply_to_tweets`
+> (used by direct_reply AND feed_sweeper) overlaps gen N+1 with post N
+> (PM-17 pipeline). Post N completes Safari work in ~2-3s; gen N+1 finishes
+> ~15s after submission — so by the time reply N+1 is in hand, only ~12s
+> elapsed since last_reply, under the chokepoint's `8 + rand(0,7)` second
+> gap. The chokepoint then refused for "too soon since last reply" and the
+> ~15s ollama call was wasted. Audit 2026-06-17/18 bot.log.1: **801 of
+> 1843** DIRECT_REPLY calls (43%) refused this way per log rotation =
+> ~3.4h/day of ollama time burned. Unlike PR #55 (news, 1200s gap → skip
+> is cheaper than the 30-55s Sonnet wait), the reply gen is already paid
+> for and the gap is small — so we WAIT (sleep `MIN+JITTER+1 - elapsed`,
+> capped at ~16s) before calling reply_to_tweet so the chokepoint
+> deterministically passes. Both callers (direct_reply, feed_sweeper)
+> inherit via the shared pipeline. Guards:
+> `test_reply_pipeline_waits_out_spacing_instead_of_burning_gen`,
+> `test_reply_pipeline_does_not_sleep_when_spacing_clear`.
+
 > **2026-06-18 round 4 — REPLYBACK aggregates own-skip log noise:**
 > `notify_bot.run_replyback_cycle` logged `[REPLYBACK] Own reply —
 > skipping.` once per skipped article. With the 2026-06-15 first-comment

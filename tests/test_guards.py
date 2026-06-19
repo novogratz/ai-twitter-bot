@@ -818,6 +818,98 @@ def test_reply_skips_llm_when_concurrent_bot_already_replied(monkeypatch, tmp_pa
     assert racy_url in cycle_snapshot
 
 
+def test_reply_pipeline_waits_out_spacing_instead_of_burning_gen(monkeypatch, tmp_path):
+    """Pipeline (PM-17) submits gen N+1 BEFORE blocking on post N's Safari
+    work. Post N completes after ~2-3s; gen N+1 finishes ~15s after
+    submission. By the time gen N+1's reply is in hand, only ~12s elapsed
+    since last_reply — under the chokepoint's 8+rand(0,7)s gap, so the
+    chokepoint refused for spacing and the ~15s ollama call was wasted.
+    Audit 2026-06-17/18: 801 of 1843 DIRECT_REPLY calls (43%) refused this
+    way per log rotation. Sleep out the residual gap so the gen we already
+    paid for actually ships — same family as PR #55 spacing precheck, but
+    we WAIT instead of skipping since the cost is already sunk.
+    """
+    import src.direct_reply as dr
+    import src.reply_bot as rb
+
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+
+    fresh_url = "https://x.com/some_ai_account/status/2063500000000000777"
+    tweets = [
+        {"url": fresh_url, "text": "openai just raised at 500B valuation", "author": "some_ai_account"},
+    ]
+    monkeypatch.setattr(dr, "_generate_single_reply", lambda a, t, lang="fr": "calm reframe")
+    monkeypatch.setattr(dr, "reply_to_tweet", lambda url, reply: True)
+    monkeypatch.setattr(dr, "humanize", lambda t: t)
+    monkeypatch.setattr(dr, "log_reply", lambda *a, **k: None)
+    monkeypatch.setattr(dr, "_tweet_age_minutes", lambda url: 5)
+    monkeypatch.setattr(dr, "_is_on_niche", lambda text: True)
+    monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 1000, 0))
+
+    # Pin the spacing knobs deterministically so the test isn't coupled to
+    # the live .env (operator may tune REPLY_JITTER_SECONDS).
+    from src import config as _cfg
+    monkeypatch.setattr(_cfg, "MIN_SECONDS_BETWEEN_REPLIES", 8)
+    monkeypatch.setattr(_cfg, "REPLY_JITTER_SECONDS", 7)
+
+    # Simulate "another reply bot posted 2s ago": elapsed=2 means we still
+    # need to wait ~14s to safely clear the worst-case jittered gap (16).
+    monkeypatch.setattr(dr, "_ssl", None, raising=False)  # no shadow
+    from src import action_guard as _ag
+    monkeypatch.setattr(_ag, "seconds_since_last", lambda action: 2)
+
+    sleeps: list[float] = []
+    monkeypatch.setattr(dr.time, "sleep", lambda s: sleeps.append(s))
+
+    dr._reply_to_tweets(tweets, rb.load_replied(), "SEARCH-HOT", en_counter=[0])
+
+    # The pipeline must have slept at least (MIN+JITTER+1) - elapsed = 14s
+    # before handing the ready reply to the chokepoint. Without the wait,
+    # the chokepoint would refuse for "too soon" and the gen would burn.
+    assert any(s >= 14 for s in sleeps), (
+        f"expected a spacing-wait sleep of >=14s before reply_to_tweet, got {sleeps}"
+    )
+
+
+def test_reply_pipeline_does_not_sleep_when_spacing_clear(monkeypatch, tmp_path):
+    """The wait must NOT fire when spacing is already safely past — the
+    common case at steady state. Prevents a fresh-start cycle (no recent
+    last_reply) from slowing itself down for nothing.
+    """
+    import src.direct_reply as dr
+    import src.reply_bot as rb
+
+    monkeypatch.setattr(rb, "REPLIED_FILE", str(tmp_path / "replied.json"))
+
+    tweets = [{
+        "url": "https://x.com/some_ai_account/status/2063500000000000888",
+        "text": "claude shipped a new agent api today",
+        "author": "some_ai_account",
+    }]
+    monkeypatch.setattr(dr, "_generate_single_reply", lambda a, t, lang="fr": "calm reframe")
+    monkeypatch.setattr(dr, "reply_to_tweet", lambda url, reply: True)
+    monkeypatch.setattr(dr, "humanize", lambda t: t)
+    monkeypatch.setattr(dr, "log_reply", lambda *a, **k: None)
+    monkeypatch.setattr(dr, "_tweet_age_minutes", lambda url: 5)
+    monkeypatch.setattr(dr, "_is_on_niche", lambda text: True)
+    monkeypatch.setattr(dr, "llm_hourly_limit_status", lambda: (False, 0, 1000, 0))
+
+    from src import config as _cfg
+    monkeypatch.setattr(_cfg, "MIN_SECONDS_BETWEEN_REPLIES", 8)
+    monkeypatch.setattr(_cfg, "REPLY_JITTER_SECONDS", 7)
+
+    # No recent reply — `seconds_since_last` returns large value.
+    from src import action_guard as _ag
+    monkeypatch.setattr(_ag, "seconds_since_last", lambda action: 9999)
+
+    sleeps: list[float] = []
+    monkeypatch.setattr(dr.time, "sleep", lambda s: sleeps.append(s))
+
+    dr._reply_to_tweets(tweets, rb.load_replied(), "SEARCH-HOT", en_counter=[0])
+
+    assert sleeps == [], f"no spacing wait when gap is already clear, got {sleeps}"
+
+
 # --- 2026-06-07 agent spec: follow policy (Part 1 hard constraints) ---------
 
 @pytest.fixture()

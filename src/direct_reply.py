@@ -650,6 +650,25 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
                 from .pattern_tags import extract_pattern as _extract_pattern
                 reply, _pattern_id = _extract_pattern(reply)
                 reply = humanize(reply)
+                # Pre-post spacing wait (2026-06-19): the pipeline submits gen
+                # N+1 WHILE post N is in flight. Post N completes after ~2-3s
+                # of Safari work; gen N+1 finishes ~15s after submission. By
+                # the time we hand reply N+1 to reply_to_tweet, ~12-13s have
+                # elapsed since last_reply — under the 8+rand(0,7)s gap the
+                # chokepoint requires, so it refuses and the ~15s ollama call
+                # is wasted. Audit 2026-06-17/18: 801 of 1843 DIRECT_REPLY
+                # calls (43%) refused for "too soon since last reply" — same
+                # family as the news/hot_quote spacing preflights, but here we
+                # already paid for the gen, so WAIT instead of skip.
+                from .action_guard import seconds_since_last as _ssl, REPLY as _R_ACT
+                from .config import (
+                    MIN_SECONDS_BETWEEN_REPLIES as _MIN_R,
+                    REPLY_JITTER_SECONDS as _R_J,
+                )
+                _elapsed = _ssl(_R_ACT)
+                _safe_gap = _MIN_R + _R_J + 1
+                if 0 <= _elapsed < _safe_gap:
+                    time.sleep(_safe_gap - _elapsed)
                 log.info(f"[{source_name}] Replying to @{author}...")
                 try:
                     shipped = reply_to_tweet(url, reply)
