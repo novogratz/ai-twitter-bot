@@ -681,3 +681,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 40 likes / 13348 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 1 likes / 13 views: Brand manager: "we're adding AI to everything" 60% of customers: "we're leaving" Brand manager: "add
   - 1 likes / 80 views: $CRWV after the Cramer mention:
+
+## 2026-06-18
+
+**Activity** — total actions: 894
+  - by type: reply=795, quote=62, quote_gif=21, hotake=10, post=5, retweet=1
+  - top sources: SEARCH-HOT=532, FEED-SWEEP-FEED=136, FEED-SWEEP-FOLLOWING=75, QUOTE=52, GIF=23, VIP=16, BREAKING_QRT=6, HOT_QUOTE=4
+  - comedy patterns: FR_ANCHOR=14, METAPHOR=9, UNDERSTATEMENT=4, DIALOGUE=2, OTHER=1, REPETITION=1, EN_ANCHOR=1, RENAME=1
+  - top reply targets: @TheBTCTherapist=25, @OpenAI=15, @cryptorover=13, @Graphseo=10, @AshCrypto=8
+
+**Followers we follow** (running total): 256
+
+**Top-performing posts scraped today**:
+  - 0 likes / 7 views: classic avoidant attachment
+  - 0 likes / 35 views: CoreWeave breaking out while Vegas bets on FISA extensions. They’re hedging the government; you’re h
+  - 0 likes / 22 views: you already know. you just need permission
