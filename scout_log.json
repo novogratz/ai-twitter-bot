@@ -6169,5 +6169,95 @@
       }
     ],
     "summary": "Le top FR est domin\u00e9 par les vrais b\u00e2tisseurs de Mistral/HuggingFace plut\u00f4t que par les 'gourous'. Le QC est plus petit mais plus fun, et le FR/USA sert de pont international sans le jargon."
+  },
+  {
+    "ts": "2026-06-19T00:50:24.333195",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MarcFavreau",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 80000,
+        "reason": "Le patron de Bourse Direct Qu\u00e9bec. Il couvre les march\u00e9s, l'inflation et l'immobilier avec le ton direct qu'on aime chez les Qu\u00e9b\u00e9cois."
+      },
+      {
+        "handle": "OlivierScherrer",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 60000,
+        "reason": "Bas\u00e9 \u00e0 SF mais le gars est francophone. Il couvre l'IA et la Tech US avec un angle francais clair. Le pont transatlantique."
+      },
+      {
+        "handle": "BastienBouillier",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "Ex-fondateur de Qonto. Il tweete la bourse et la fintech avec un humour de comptable au bord de la crise de nerfs. Pur."
+      },
+      {
+        "handle": "LionelLecocq",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 42000,
+        "reason": "L'ancien de MoneyVox. Il reste l'un des plus s\u00e9rieux sur la bourse FR. Pas de gogo, juste des charts et de la data."
+      },
+      {
+        "handle": "YannickCron",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Un des rares QC \u00e0 twetter en FR sur la crypto sans vendre du r\u00eave \u00e0 15 ans. Analyse technique solide, pas de fanboy."
+      }
+    ],
+    "summary": "On a cibl\u00e9 les pesos lourds : Mistral pour l'IA, Olivier Scherrer pour le pont SF/FR, et les v\u00e9t\u00e9rons du trading FR/QC. Pas de 'influenceurs' qui vendent du vent."
+  },
+  {
+    "ts": "2026-06-19T02:50:18.073582",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeRipardo",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 120000,
+        "reason": "Founding Engineer chez Stripe, francophone bas\u00e9 aux US, twitte dev/tech/backend, qualit\u00e9 pure."
+      },
+      {
+        "handle": "SylvainLeClec'h",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Le roi de la macro crypto FR, threader pro, z\u00e9ro hype, z\u00e9ro formation \u00e0 vendre. Un classique."
+      },
+      {
+        "handle": "VincentLavoie_",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Trader/Investisseur QC, feed crypto/tech \u00e9pur\u00e9, z\u00e9ro 'signaux VIP', juste de l'analyse."
+      },
+      {
+        "handle": "AdrienLancon",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Prof at HEC Montr\u00e9al, sp\u00e9cialiste IA/Marketing, twitte en FR, expert reconnu sans le 'guru' status."
+      },
+      {
+        "handle": "JulienBouffard",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "PhD in AI, chercheur/francophone diaspora US, threads techniques sur la ML, moins grand public mais tr\u00e8s dense."
+      }
+    ],
+    "summary": "On balance du solide : les g\u00e9ants fran\u00e7ais de l'IA, le top tier des crypto-threads FR, et des p\u00e9pites QC/US francophones qui tweetent tech sans se payer de t\u00eate."
   }
 ]

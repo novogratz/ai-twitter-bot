@@ -670,7 +670,15 @@
     "0xGrimoire",
     "JulesRivard",
     "BenjaminDabert",
-    "MaximeMichelet"
+    "MaximeMichelet",
+    "MarcFavreau",
+    "OlivierScherrer",
+    "LionelLecocq",
+    "YannickCron",
+    "MaximeRipardo",
+    "VincentLavoie_",
+    "AdrienLancon",
+    "JulienBouffard"
   ],
   "en": [
     "blablacar",
@@ -903,7 +911,9 @@
     "Toz",
     "unknown",
     "Dan",
-    "OSINTWarfare"
+    "OSINTWarfare",
+    "SemiVision",
+    "mackenzie"
   ],
   "history": [
     {
@@ -5415,6 +5425,56 @@
       "lang": "fr",
       "handle": "MaximeMichelet",
       "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "SemiVision",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "en",
+      "handle": "mackenzie",
+      "added": "2026-06-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcFavreau",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierScherrer",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelLecocq",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "YannickCron",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeRipardo",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentLavoie_",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienLancon",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBouffard",
+      "added": "2026-06-19"
     }
   ]
 }

@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-19T00:49:33.393784",
-  "window_7d_actions": 4815,
-  "window_24h_actions": 892,
+  "generated_at": "2026-06-19T04:49:33.157730",
+  "window_7d_actions": 4854,
+  "window_24h_actions": 884,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4603
+      "count": 4640
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 59
+      "count": 61
     },
     {
       "pattern": "METAPHOR",
@@ -20,8 +20,8 @@
       "count": 26
     },
     {
-      "pattern": "DIALOGUE",
-      "count": 22
+      "pattern": "RENAME",
+      "count": 21
     }
   ],
   "worst_patterns": [
@@ -31,7 +31,7 @@
     },
     {
       "pattern": "OTHER",
-      "count": 11
+      "count": 13
     },
     {
       "pattern": "REPETITION",
@@ -67,72 +67,72 @@
     },
     {
       "topic": "Autre",
-      "count": 1861
+      "count": 1893
     },
     {
       "topic": "Crypto",
-      "count": 575
+      "count": 591
     },
     {
       "topic": "Bourse",
-      "count": 435
+      "count": 432
     },
     {
       "topic": "Spatial",
-      "count": 321
+      "count": 313
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2208
+      "count": 2218
     },
     {
       "pillar": "market_trauma",
-      "count": 1287
+      "count": 1300
     },
     {
       "pillar": "other",
-      "count": 1125
+      "count": 1141
     },
     {
       "pillar": "meme_reaction",
-      "count": 137
+      "count": 133
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 34
+      "count": 36
     },
     {
       "pillar": "reply_bait",
-      "count": 24
+      "count": 26
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 381
+      "count": 382
     },
     {
       "pillar": "market_trauma",
-      "count": 248
+      "count": 252
     },
     {
       "pillar": "other",
-      "count": 223
+      "count": 205
     },
     {
       "pillar": "meme_reaction",
-      "count": 23
+      "count": 24
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 12
+      "count": 14
     },
     {
       "pillar": "reply_bait",
-      "count": 5
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -145,23 +145,23 @@
     },
     {
       "pillar": "other",
-      "posts": 63,
+      "posts": 64,
       "avg_likes": 0.05,
-      "avg_views": 31.3,
+      "avg_views": 32.1,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 64,
+      "posts": 63,
       "avg_likes": 0.03,
-      "avg_views": 25.3,
+      "avg_views": 26.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 69,
       "avg_likes": 0.03,
-      "avg_views": 24.2,
+      "avg_views": 25.1,
       "low_sample": false
     },
     {
@@ -175,15 +175,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4386
+      "count": 4419
     },
     {
       "type": "quote",
-      "count": 232
+      "count": 242
     },
     {
       "type": "quote_gif",
-      "count": 123
+      "count": 119
     },
     {
       "type": "hotake",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-19T00:48:24.926231",
-      "text": "Trust is earned. integrity is priced. community is a marketing expense. $rcon",
+      "ts": "2026-06-19T04:49:25.744043",
+      "text": "New paper on interpretability: 40 pages proving the neuron fired because it saw a cat. The cat was a JPEG of a dog. We are close to AGI, or at least to a very expensive mirror.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-19T00:45:58.779573",
-      "text": "Ai model rankings change monthly. capital spend is locked in for years. we're paying 2023 prices for 2026 infrastructure. the margin gap is widening.",
+      "ts": "2026-06-19T04:49:05.414579",
+      "text": "Btc à 1$ en 2025 ? l'inflation allemande de 1923 était moins folle. la seule constante, c'est que tu seras le roi des courtisans en 2030.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-19T00:45:01.313151",
-      "text": "T glass margins are ~70%. Nvidia is forcing cheap glass into the mix not because of shortage, but because the bill of materials needs to bleed.",
+      "ts": "2026-06-19T04:47:18.396949",
+      "text": "The market doesn't work like that. it works like 401k dave selling at the bottom to buy back at the top. stop looking for perfection, start looking for the spread.",
       "type": "reply"
     }
   ]
