@@ -1,18 +1,18 @@
-# Growth Directives — 2026-06-18
+# Growth Directives — 2026-06-19
 
-**Synthesis:** METAPHOR and RENAME dominate; replies are 83% of output but algo weights first-60-min engagement velocity 15× vs likes — every post must earn an interaction before the hour is up or it dies unseen.
+**Synthesis:** METAPHOR and RENAME dominate; replies are 73% of output and the #1 growth lever — every reply must land one specific insight, a named actor, and an exact number, or skip it.
 
 ## Apply to every tweet/reply/hot-take:
 
-- **Therapist frame first, data second.** Name the emotional trap before the number: "This isn't a drawdown — it's a margin call on your conviction." Diagnosis → sharp fact → calm prognosis. Wry, clinical, never breathless.
-- **METAPHOR > everything.** Map the market dynamic to one absurd situation: 401k Dave, a PIP with GPU depreciation, a Series A for a business that charges by the anxiety. One image, zero explanation, zero punchline label.
-- **RENAME to strip the PR framing.** "Anthropic's $65B raise isn't a fundraise — it's Jensen Huang's exit ramp." State the honest label in one line, move on. No hedging.
-- **Actor + exact number + consequence or skip.** "SpaceX S-1: $1.25B/month in compute rented to Anthropic — that's a rocket company subsidizing a chatbot." No named actor, no verifiable figure = skip.
-- **First 60 minutes on catalyst tweets.** On SpaceX/Anthropic/OpenAI IPO moves, Nvidia earnings, Fed: be first or don't bother. Late takes are invisible.
-- **One thread or framework per day.** Threads earn 3.2× more followers than standalones. Format: hook (standalone value if never opened) → 5 punchy numbered takes → contrarian prognosis as closer. Post between 9–11 AM ET.
-- **GIF on METAPHOR posts only, ~1 in 3.** Native picker, curated queries only. Overused GIFs kill the clinical register.
-- **No links, no hashtags, no emojis in the main tweet.** Zero. The therapist doesn't wave signs. Links go in the first reply only.
+- **"The real story isn't X, it's Y."** Strip the PR framing, expose the incentive. "Anthropic's $65B raise isn't alignment — it's Jensen's exit ramp." One sentence, no hedge, never lead with the news.
+- **METAPHOR > all else.** Map the AI dynamic to a finance or ops situation: "Buying H100s for 2027 models with 2024 ARR is a margin call against hardware you don't own yet." One image, zero explanation, no punchline label.
+- **Actor + exact number + consequence, or kill the draft.** "OpenAI burns $5B/yr on compute against $3.4B ARR — that's a company that borrowed its own runway." No named actor, no figure = skip.
+- **Lead with the mechanism, not the news recap.** Don't retell what happened. Say why it matters economically. "RMZ's $35B datacenter push isn't capacity — it's a lease Nvidia already priced in."
+- **Rotate these viral formats:** "everyone's talking about X, nobody about Y" · "most people think A, actually B" · "three things happened in AI today…" · "in 5 years this looks obvious" · "the biggest AI story isn't X, it's Y."
+- **Replies: add insight, prediction, or contrarian angle only.** Never "wow/great/interesting." State the implication nobody else said. Use "See me after standup" or "That's a PIP" sparingly — max once every 3 replies or it dies.
+- **GIF on METAPHOR takes, ~1 in 3 quotes.** Native picker only. Proven queries: "this is fine", "michael jordan crying", "pablo escobar waiting", "kermit panic", "math lady".
+- **No links, no hashtags, no emojis in tweet body.** Clean text only. Links go in first reply if needed.
 
 ## Top patterns this week: METAPHOR > RENAME > EN_ANCHOR
-## Best hours (UTC): 21h › 23h › 11h › 4h  (= 5PM ET › 7PM ET › 7AM ET › midnight ET)
-## Rising topics: SpaceX IPO ($1.77T debut, $2T+ intraday) · Anthropic IPO ($65B Series H, $965B val) · OpenAI IPO confidential filing ($730B) · xAI Q1 loss $2.4B on $7.7B capex · AI layoffs as margin-compression signal · GPU bubble vs real inference demand
+## Best hours (UTC): 21h › 11h › 10h › 20h  (= 5 PM ET › 7 AM ET › 6 AM ET › 4 PM ET)
+## Rising topics: Anthropic ~$965B val · OpenAI S-1 confidential filing · Nvidia Blackwell sold out · GLM-5.2 + Deepseek V5 · humanoid robot dexterity · AI inference cost collapse · Cursor $65B acquisition · xAI Grok-4 · AI agent economy

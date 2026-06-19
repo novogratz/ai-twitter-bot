@@ -1,5 +1,5 @@
 {
-  "ts": "2026-06-06T07:00:00.000000",
+  "ts": "2026-06-19T00:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 150,
     "MAX_HOTAKES_PER_DAY": 400,
@@ -15,10 +15,10 @@
     "AI",
     "AI",
     "AI",
-    "Space",
-    "Investment",
+    "AI",
+    "AI",
     "AI"
   ],
   "cadence_factor": 1.0,
-  "rationale": "x10 TEST MODE (operator 2026-06-06: 'multiply by 10 all the limits, I want to test'). All daily caps x10 on top of unlimited mode \u2014 physical Safari throughput is now the only ceiling. Jittered min-spacing + quality gates (dedup, 48h, one-reply-per-tweet, no links/hashtags, niche, voice, blocklist) remain absolute. follow_blast stays OFF."
+  "rationale": "AI Big Boss mandate 2026-06-18: PURELY AI content. topic_focus updated to all-AI. x10 caps retained (Safari throughput is the real ceiling). METAPHOR and RENAME are top patterns; replies remain the #1 growth surface. Best hours: 21h and 11h UTC. No Space/Investment divergence — every post is through the AI lens."
 }
