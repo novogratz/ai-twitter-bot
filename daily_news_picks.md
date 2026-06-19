@@ -16514,3 +16514,40 @@ He had been an anime fan for many years. He paid $20 for a Claude subscription a
 From couch-surfing and redeye flights to pitching on the sales floors of the banks we're now building for. From pivot hell to a product lenders
   - https://x.com/athanzxyt/status/2067660560607613032
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 228).
+- **@n01ennn** (129 likes, score 9/10) — TurboQuant just made running Hermes Agent locally viable on a $300 GPU. Worth comparing to the always-on setup
+
+A 12B dense model now hits 1000+ tokens/sec prefill on an 8GB GPU, with 120k context. Wo
+  - https://x.com/N01ennn/status/2067712709945360506
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 165).
+- **@vivoplt** (55 likes, score 9/10) — Cancel weekend plans.
+
+You need to:
+
+• Learn Claude Code
+• Build 1–2 workflows in Cowork
+• Optimize Cowork (plugins + skills)
+• Set up OpenClaw
+• Test Google AI tools (Nano Banana 2, NotebookLM, etc.)
+  - https://x.com/vivoplt/status/2067997600272564408
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 113).
+- **@0xcarnagee** (18 likes, score 7/10) — Anthropic CEO Dario Amodei:
+
+"As these systems become more powerful and get applied to safety-critical settings, accidents become an increasingly important area"
+
+This is the 2016 talk that planted th
+  - https://x.com/0xCarnagee/status/2068026977378767217
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 20).
+- **@ns123abc** (67 likes, score 8/10) — BREAKING: TRUMP ON ANTHROPIC
+
+REPORTER: Do you view Anthropic and to a degree its CEO, Dario Amodei, as a threat to national security?
+
+TRUMP: "Well, not now, but a week ago, maybe. I was with him yes
+  - https://x.com/ns123abc/status/2068051762708099449
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 83).
+- **@clashreport** (29 likes, score 8/10) — Axios’ Marc Caputo: Do you view Anthropic, and to a degree its CEO Dario Amodei, as a threat to national security?
+
+Trump: Well, not now, but a week ago maybe.
+
+Source: Axios
+  - https://x.com/clashreport/status/2068046556809298290
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 33).

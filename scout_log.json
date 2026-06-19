@@ -4471,5 +4471,57 @@
       }
     ],
     "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui savent de quoi ils parlent. C'est moins de voix, mais moins de bruit."
+  },
+  {
+    "ts": "2026-06-19T16:07:50.445379",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrusHassanov",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Le trader quant FR qui transforme l'IA en argent liquide. Il twitte des threads techniques sans enfler, contrairement \u00e0 ses concurrents qui vendent du r\u00eave en 4K."
+      },
+      {
+        "handle": "MathieuMaurin",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Ex-S&P Global, il d\u00e9code la tech avec une pr\u00e9cision chirurgicale. C'est rare de trouver un analyste qui comprend les fondamentaux sans avoir besoin de 3 slides pour expliquer."
+      },
+      {
+        "handle": "JeanFrenette",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "L'homme \u00e0 la casquette de baseball qui rend la bourse accessible. Il tweete en fran\u00e7ais, vit \u00e0 Montr\u00e9al et a l'air moins \u00e9puis\u00e9 que les analystes de Wall Street."
+      },
+      {
+        "handle": "LuisaLudwig",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Bien qu'allemande, elle tweete souvent en FR sur la Silicon Valley et l'IA. Son angle 'founder/VC' est frais et elle \u00e9vite le pi\u00e8ge des 'top 10 AI tools' quotidiens."
+      },
+      {
+        "handle": "BenoitBailly",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "CTO de DeepSense AI, il balance des insights sur l'IA de A \u00e0 Z sans le jargon pompeux habituel. Le genre de compte qu'on garde parce que ses tweets sont toujours utiles, pas juste hype."
+      },
+      {
+        "handle": "MaximeLevassor",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Le pionnier de la fintech qu\u00e9b\u00e9coise (Wealthsimple). Ses threads sur le trading et l'\u00e9pargne sont des classiques du genre, moins politiques que la moyenne des comptes qu\u00e9b\u00e9cois."
+      }
+    ],
+    "summary": "Une s\u00e9lection de pros qui tweetent sans vendre du savon. De Mistral \u00e0 la fintech qu\u00e9b\u00e9coise, c'est du solide, pas du vent."
   }
 ]

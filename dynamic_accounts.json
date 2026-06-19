@@ -485,7 +485,13 @@
     "RomainMarsaux",
     "MaximeGouin",
     "PierreMougel",
-    "JulienGirard"
+    "JulienGirard",
+    "CyrusHassanov",
+    "MathieuMaurin",
+    "JeanFrenette",
+    "LuisaLudwig",
+    "BenoitBailly",
+    "MaximeLevassor"
   ],
   "en": [
     "blablacar",
@@ -3350,6 +3356,36 @@
     {
       "lang": "fr",
       "handle": "JulienGirard",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrusHassanov",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuMaurin",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanFrenette",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisaLudwig",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitBailly",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeLevassor",
       "added": "2026-06-19"
     }
   ]
