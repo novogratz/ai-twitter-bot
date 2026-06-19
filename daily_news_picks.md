@@ -15978,3 +15978,129 @@ But it's not full body. You can't use ultrasound to image
 Filed its S-1 on May 22, 2026. Valuation sits at $730-852B range, but they're targeting a public listing a
   - https://x.com/mango_/status/2067930959270617590
   - **WHY**: Source fiable + impact concret (score signal 12, engagement 29).
+- **@stockmktnewz** (5 likes, score 7/10) — The first 2x SpaceX ETFs have now crossed over $100 Million of AUM
+
+Congrats to SMN partners Leverage Shares on being the first ones to hit the milestone
+  - https://x.com/StockMKTNewz/status/2067950627410358289
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 11).
+- **@vicky_grok** (76 likes, score 9/10) — Anthropic pays $750,000+ a year for engineers who can build LLM architectures from scratch. Stanford taught the entire thing in 1 hour lecture & released it for free. 
+
+Bookmark & watch this today bef
+  - https://x.com/vicky_grok/status/2067837249912528995
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 100).
+- **@lukas_m_ziegler** (96 likes, score 9/10) — Physical AI hits production speed on automotive assembly! 
+
+@TheSanctuaryAI just achieved 99,5%+ success on a wire plugging task at a Tier 1 automotive supplier, 2.54 seconds per task, validated again
+  - https://x.com/lukas_m_ziegler/status/2067877610567184568
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 104).
+- **@andrewbolis** (26 likes, score 9/10) — Struggling to choose the right AI for each task?
+
+Use this guide to pick the right AI tool in seconds.
+
+[ remember to  bookmark this post for later ]
+
+1. ChatGPT:
+↳ If your focus is content, whether i
+  - https://x.com/AndrewBolis/status/2067929150623776870
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 58).
+- **@mr_salio** (20 likes, score 8/10) — Mythos But open source: It will arrive before Q1 2027
+
+The founder of zAI just made a bold prediction
+
+A Mythos-class model could arrive before Q1 2027
+
+Anthropic spent billions building Mythos
+
+Now o
+  - https://x.com/Mr_Salio/status/2067918196405833801
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 44).
+- **@xnxx_en** (72 likes, score 8/10) — The Kaito dashboard this week tells a different story.
+
+> Anthropic pulled 44.04% mindshare over the past 7 days.
+> OpenAI was at 16.67%.
+> SpaceX somehow landed at 17.43%.
+
+kinda wild tbh. maybe benc
+  - https://x.com/XNXX_EN/status/2067926093580108011
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 192).
+- **@maks6361** (42 likes, score 8/10) — How do I set up my first Google Ads campaign?
+
+Here's the approach I follow and it works for me:
+
+- Set your daily budget to 10-15$. 
+Google may overspend it the first few days but there's nothing to
+  - https://x.com/maks6361/status/2067896331054596556
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 58).
+- **@haleeeemahh** (26 likes, score 8/10) — claude fable 5 and mythos 5 gets suspended and chatgpt 5.6 gets leaked
+
+some pro users reportedly accessed it briefly via oauth in testing environments
+
+where it self identified as openai/gpt 5.6
+
+dev
+  - https://x.com/Haleeeemahh/status/2067934193431023720
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 58).
+- **@bunt10** (14 likes, score 8/10) — Next Big Bets: Water & Sun
+
+The AI race has a physical constraint that no amount of compute can abstract away. 
+
+Power. Every GPU cluster, every inference call, every training run needs electrons and
+  - https://x.com/BUNT10/status/2067899125765734865
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 38).
+- **@cryptofergani** (19 likes, score 8/10) — DO NOT BUY A HOUSE THIS YEAR, UNLESS YOU’RE A BILLIONAIRE!
+
+Rent for now. 
+
+Wait for a 2008 type market crash to buy your first house.
+
+I’ve seen every cycle from the 2008 crash to the 2020 blow-off t
+  - https://x.com/cryptofergani/status/2067949881298157905
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 45).
+- **@jackcoder0** (60 likes, score 7/10) — The CEO of Claude just told the world which jobs AI will destroy first!!
+
+Dario Amodei published a 38-page document this week and most people completely missed it.
+
+He talked about lawyers, accountant
+  - https://x.com/jackcoder0/status/2067914970126589955
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 128).
+- **@rahulbais136** (70 likes, score 7/10) — The CEO of Claude just told the world which jobs AI will destroy first!!
+
+Dario Amodei published a 38-page document this week and most people completely missed it.
+
+He talked about lawyers, accountant
+  - https://x.com/rahulbais136/status/2067865735528165522
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 104).
+- **@blue_beba_** (47 likes, score 7/10) — #Keep4o #OpenSource4o 
+
+ChatGPT's global market share  dropped below 50% for the first time ever. 
+(Sensor Tower, June 2026)
+ 46.4%
+This isn't bad luck. 
+This is a timeline of decisions. 
+
+May 2024: G
+  - https://x.com/Blue_Beba_/status/2067941847477968988
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 57).
+- **@explorax_** (34 likes, score 7/10) — here are 10 legit ways to access major AI models for FREE, and exactly how to use each.
+
+completely FREE & legit. no subscription. no card
+
+ github models — frontier OpenAI models without a credit car
+  - https://x.com/exploraX_/status/2067880121105514990
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 54).
+- **@bridgemindai** (38 likes, score 7/10) — Claude Fable 5 is #1 on DeepSWE at 70%.
+
+But the real gap between Fable 5 and GPT 5.5 is much bigger than 3 points.
+
+Fable 5 writes code that looks like a senior engineer wrote it. 
+
+GPT 5.5 writes co
+  - https://x.com/bridgemindai/status/2067945478180741323
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 50).
+- **@nainsidwiv50980** (20 likes, score 7/10) — Nobody talks about this enough:
+
+99% of people using ChatGPT are still writing prompts like it's 2023.
+
+The top 1%? They're using simple frameworks that turn average AI outputs into work that looks li
+  - https://x.com/NainsiDwiv50980/status/2067921200022696144
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 24).
