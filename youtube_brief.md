@@ -1,16 +1,16 @@
-# YouTube brief — 2026-06-18
+# YouTube brief — 2026-06-19
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **735**
-- reply: **646**
-- quote: **53**
-- quote_gif: **17**
-- hotake: **9**
-- post: **8**
-- retweet: **2**
+- Total actions logged: **892**
+- reply: **793**
+- quote: **62**
+- quote_gif: **21**
+- hotake: **10**
+- post: **5**
+- retweet: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -25,12 +25,11 @@
 - **40 likes / 13348 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 - **1 likes / 23 views** — Anthropic’s top models now open source. @OpenAI is about to look like they’re selling water at a drowning pool
 - **1 likes / 13 views** — Brand manager: "we're adding AI to everything" 60% of customers: "we're leaving" Brand manager: "adding that to our AI-powered insights dashboard"
-- **0 likes / 33 views** — Fomo isn't an investment thesis. It's a receipt for future regret. $SPCX isn't a stock. It's a waiting room ticket.  https://x.com/Gemini/status/2063980615905472924…
 
 ### Bourse
 
 - **1 likes / 37 views** — The timeline treating a four-letter expletive like an earnings beat  https://x.com/TheBTCTherapist/status/2065740784666562681…
-- **0 likes / 9 views** — A $2.17T IPO isn't an exit. It’s the final lesson in a 20-year finance class. You didn’t miss the boat; you just forgot the tuition.  https://x.com/PolymarketMoney/status/2063999699632193658…
+- **0 likes / 32 views** — $250B chasing one IPO. That's not greed talking, it's everyone who swore they'd "wait for the dip" quietly admitting they're terrified of being left behind. FOMO always finds you.
 
 ### Other
 
@@ -38,6 +37,7 @@
 - **1 likes / 50 views** — my patients have never cared this much about world peace
 - **1 likes / 108 views** — so Fable 5 wasn't a product launch. it was a response
 - **1 likes / 80 views** — $CRWV after the Cramer mention:
+- **0 likes / 10 views** — That +14,000% chart isn't a door slamming shut. A price that violent is just the market begging someone to go build the alternative. Someone always does.
 
 ## 📡 Today's news picks (from retweet_bot)
 
@@ -53,34 +53,38 @@ Literally Huang pumping and eating friend chicken isn't enough to stop the crash
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_FOLLOWING/Crypto Rover]** BREAKING:  BlackRock sells $30,770,000 worth of Bitcoin.
-  - https://x.com/cryptorover/status/2067470344546402476
-- **[X_HOME/BITCOINLFG®]** JUST IN  
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/JayGen 𝕏 er]** THE ALARM BELLS NEED TO BE DEAFENING !!  
 
-BLACKROCK JUST BOUGHT $16.3 MILLION WORTH OF $BITCOIN.
+Expert after expert just testified on Bill C-22:
 
-WALL STREET’S ACCUMULATION CONTINUES.
-  - https://x.com/bitcoinlfgo/status/2067468849931485432
-- **[X_HOME/The Bitcoin Historian]** WHILE YOU'RE SCARED, THE UAE ROYAL FAMILY NOW OWNS OVER $740,000,000 WORTH OF #BITCOIN
+- Canadian Civil Liberties Association  
+- OpenMedia  
+- Signal  
+-
+  - https://x.com/JayGenXer/status/2067596526495424910
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/chad.]** Will $IREN use the rising weekly Tenkan (blue) in the coming weeks to finally push through the $69 resistance?
+  - https://x.com/chad_ventures/status/2067617145614184731
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/The Tech Investor]** I have never read a bearish word when $IREN touched $80 in November 2025.
 
-OIL MONEY IS BUYING THE DIP
-  - https://x.com/pete_rizzo_/status/2067469101522424063
-- **[X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Abhi]** One of the more obvious new themes is robotics and automation. (Replies ) 
+Obviously because the majority treat companies like an ice-cream; this one tastes goo
+  - https://x.com/TheTechInvest/status/2067813801060110615
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Dan]** $IREN FUD ran its course.  The $6B ATM was scary to retail.  But by now it’s for sure less than $5B, probably closer to $4B.  That is now only 20% of their mark
+  - https://x.com/mcF_dan/status/2067799687562698776
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/investing]** $IREN : Childress Site looks massive.
 
-However, it’s still extremely early in its evolution.
+First 200 MW 
+More Underway 
 
-So far many investors are foc
-  - https://x.com/KryptonCEO/status/2067470483755311375
-- **[X_HOME/Midnight Capital]** Search has been accelerating past 3 quarters on a YoY basis, there’s growing evidence that AI is enhancing Search monetization not hurting it - YT is growing ni
-  - https://x.com/Midnight_Captl/status/2067454162900754870
-- **[X_FOLLOWING/Midnight Capital]** Search has been accelerating past 3 quarters on a YoY basis, there’s growing evidence that AI is enhancing Search monetization not hurting it - YT is growing ni
-  - https://x.com/Midnight_Captl/status/2067454162900754870
-- **[X_SEARCH/live/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Tao Outsider]** $TAO Bittensor Subnet 22 - Desearch
+Q3-Q4 : Lot of events taking place.
+  - https://x.com/DollarCostAvg/status/2067801087122293152
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Mike Kalil]** The Chinese startup MindOn says it's training robots across form factors to do logistics work with a shared AI brain.
 
-This is the kind of subnet build I like to see: useful products, updated tooling, a clear developer surface, experiments ou
-  - https://x.com/TaoOutsider/status/2067470925566517524
-- **[X_HOME/The AI Therapist]** Google cloud is growing 22% YoY but still only 6% of revenue. alts are betting on the moat while gogles is quietly building the pipes
-  - https://x.com/TheAIShrink/status/2067469805314068802
+The Shenzhen-based firm, launched in 2025
+  - https://x.com/mikekalilmfg/status/2067695667586470113
+- **[X_FOLLOWING/Jukan]** - According to the industry, due to the low yields of advanced glass fiber cloth such as T glass and Low Dk, NVIDIA has recently accepted a mixed application of
+  - https://x.com/jukan05/status/2067828569246691788
+- **[X_HOME/Jukan]** - According to the industry, due to the low yields of advanced glass fiber cloth such as T glass and Low Dk, NVIDIA has recently accepted a mixed application of
+  - https://x.com/jukan05/status/2067828569246691788
 
 ## 🎬 Suggested video angles
 
@@ -91,4 +95,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-18T00:55:09*
+*Generated 2026-06-19T00:49:33*
