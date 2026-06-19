@@ -15689,3 +15689,124 @@ Valued at $11B, @harvey is on a mission to win the entire legal category, compet
 Sustained performance. Accelerated in
   - https://x.com/CoreWeave/status/2067698869442679006
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 11).
+- **@caseyvsilver** (173 likes, score 9/10) — ANTHROPIC'S FABLE 5 & MYTHOS 5 SHUTDOWN: AI'S WAKE-UP CALL? 
+
+Just days after launching their most powerful models yet, Anthropic was forced to pull the plug on Claude Fable 5 and Mythos 5 worldwide.
+  - https://x.com/CaseyVSilver/status/2067058864197877972
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 211).
+- **@delphi_digital** (19 likes, score 8/10) — A New Episode of the Hivemind is Live!
+
+This week @Shaughnessy119 joins us to debate whether AI frontier companies can justify their valuations, the rise of open-source AI, and where enterprise spendi
+  - https://x.com/Delphi_Digital/status/2067644712220017107
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 29).
+- **@trustlessstate** (749 likes, score 8/10) — Arthur Hayes thinks the AI bubble will lead to a Credit Event worse than 2008
+
+"If we do get an AI credit event... it will be bigger than 2008.... and the Fed can't outprint Moore's Law
+
+If this thesi
+  - https://x.com/TrustlessState/status/2067297500105416860
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 989).
+- **@techcrunch** (38 likes, score 8/10) — OpenAI is bringing on some big guns in the lead-up to its IPO
+  - https://x.com/TechCrunch/status/2067700024830828982
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 50).
+- **@latentspacepod** (27 likes, score 8/10) — Long Live Outputmaxxing: AI compute grids, Anthropic’s coding takeoff, data center backlash, & frontier systems https://latent.space/p/anj
+
+@amppublic founder @AnjneyMidha explains why 95% GPU utiliza
+  - https://x.com/latentspacepod/status/2067662076986974636
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 35).
+- **@coreweave** (14 likes, score 7/10) — Agentic AI is rewriting what infrastructure has to do.
+
+On June 30 at 9:30 am PT, tune into @SiliconAngle @theCUBE as we discuss and demo @nvidia Vera Rubin NVL72.
+
+Save the date. https://utm.io/up4Eg
+  - https://x.com/CoreWeave/status/2067745422853169271
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 16).
+- **@serbianspirit_** (43 likes, score 8/10) — Serbia  to launch humanoid robot and combat robot dog production.
+
+Šabac will become Serbia’s first humanoid robot factory, with China  -backed production starting July 10–20 in three phases.
+
+The fac
+  - https://x.com/SerbianSpirit_/status/2067702656160727276
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 47).
+- **@marionawfal** (18 likes, score 8/10) — Carlos Mencia was arrested and hit with 12 felony tax evasion counts after allegedly failing to report $8.7 million in income and not filing a single tax return from 2019 to 2024.
+
+California sent him
+  - https://x.com/MarioNawfal/status/2067754230497284342
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 38).
+- **@techcrunch** (47 likes, score 7/10) — Amazon hopes to challenge Nvidia more directly by selling its AI chips
+  - https://x.com/TechCrunch/status/2067675295952593161
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 61).
+- **@resistthems** (15 likes, score 7/10) — Sam Altman: "I grew up with Elon as like a mega hero… We started OpenAI together and then at some point he like totally lost faith in OpenAI and decided to go his own way."
+
+"He really cares about bei
+  - https://x.com/ResisttheMS/status/2067739130889666681
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 27).
+- **@techcrunch** (17 likes, score 7/10) — AI inference startup Baseten reportedly raising $1.5B months after its last mega round
+  - https://x.com/TechCrunch/status/2067719825116574016
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 23).
+- **@nobu20220830** (199 likes, score 9/10) — SpaceX  
+The 5 shares I bought for $135  
+are now worth about 108,000 yen.  
+If this were to go up 3,500 times like NVIDIA...  
+It'd come out to about 380 million yen  
+The stars of the market are alw
+  - https://x.com/nobu20220830/status/2067443655468835316
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 241).
+- **@kingwilliam_** (80 likes, score 9/10) — ANTHROPIC JUST GAVE AWAY THE $500K WALL STREET WORKFLOW AS A FREE CLAUDE SKILL
+
+DCF models, LBO models, equity research, KYC checks - the work banks pay up to $500,000 a year for, just dropped on GitH
+  - https://x.com/kingwilliam_/status/2067664658199179291
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 104).
+- **@rhouseresearch** (83 likes, score 9/10) — Gerstner @altcap and Altimeter are modeling $300B of combined AI Lab ARR exiting 2027 (the large majority of which is OpenAI + Anthropic)..
+
+Have to think their forecast is as good as anyone's given A
+  - https://x.com/RHouseResearch/status/2067643302732570690
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 89).
+- **@ft** (53 likes, score 9/10) — Elon Musk’s SpaceX plots $20bn bond deal after record IPO
+  - https://x.com/FT/status/2067732113105859013
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 73).
+- **@cryptotweets** (93 likes, score 8/10) — LATEST: Amazon is exploring selling its in-house AI chips, including AWS Trainium, to external customers for the first time.
+
+These chips were originally built to power AI training inside AWS.
+
+Now th
+  - https://x.com/CryptoTweets/status/2067724073409364128
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 117).
+- **@oopsguess** (123 likes, score 8/10) — China’s elderly care robot market is not growing because robots are “cool.”
+It is growing because China needs them.
+
+China has more than 323 million people aged 60 and above.
+130 million live alone.
+  - https://x.com/OopsGuess/status/2067527429770625362
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 127).
+- **@t3chfalcon** (31 likes, score 8/10) — Yes, Midjourney. The one you use to make pictures of castles.
+
+Here's how it works: you step into a shallow pool. You are slowly lowered into water at 2 inches per second. Half a million sensors the s
+  - https://x.com/T3chFalcon/status/2067701382283464857
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 37).
+- **@steph_iscrypto** (157 likes, score 7/10) — CRAZY:
+
+Three weeks ago, Ripple developers warned that AI is now finding vulnerabilities inside the XRP Ledger protocol itself.
+
+Since then, $XRP has lost more than $29,000,000,000 in market capitaliz
+  - https://x.com/Steph_iscrypto/status/2067646017311220086
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 179).
+- **@jeremyphoward** (94 likes, score 7/10) — Wow.
+
+@Zai_org GLM 5.2 is a marvel! It is *at least* as good as Opus 4.8 and GPT 5.5. It's super fast, inexpensive, and not too verbose.
+
+It responds with nuance and judgement, & handles long context
+  - https://x.com/jeremyphoward/status/2067757468189679764
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 124).
+- **@masahirochaen** (93 likes, score 7/10) — 【Breaking News】Anthropic Executive Expresses Strong Confidence: "Claude Fable 5 Will Be Back Online Within Days."
+
+The top-tier model, which had been blocked due to White House directives, seems poise
+  - https://x.com/masahirochaen/status/2067721523780354140
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 111).
+- **@polydao** (13 likes, score 7/10) — Anthropic CEO, Dario Amodei:
+
+"Coding is going away first. AI does 95% of the task, and you become 20 times more productive. At some point, we get to 99%"
+
+In 8-minute video, Anthropic CEO explains ho
+  - https://x.com/polydao/status/2067734279782883494
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 19).
