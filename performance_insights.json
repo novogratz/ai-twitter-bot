@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-20T02:07:18.327228",
-  "window_7d_actions": 3738,
-  "window_24h_actions": 1058,
+  "generated_at": "2026-06-20T06:07:18.330276",
+  "window_7d_actions": 3903,
+  "window_24h_actions": 1066,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 3507
+      "count": 3669
     },
     {
       "pattern": "METAPHOR",
-      "count": 123
+      "count": 126
     },
     {
       "pattern": "RENAME",
@@ -63,42 +63,42 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1999
+      "count": 2107
     },
     {
       "topic": "Autre",
-      "count": 1495
+      "count": 1542
     },
     {
       "topic": "Bourse",
-      "count": 164
+      "count": 170
     },
     {
       "topic": "Crypto",
-      "count": 161
+      "count": 166
     },
     {
       "topic": "Spatial",
-      "count": 105
+      "count": 108
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2788
+      "count": 2919
     },
     {
       "type": "quote",
-      "count": 463
+      "count": 478
     },
     {
       "type": "retweet",
-      "count": 317
+      "count": 327
     },
     {
       "type": "quote_gif",
-      "count": 156
+      "count": 165
     },
     {
       "type": "METAPHOR",
@@ -123,18 +123,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-20T02:06:51.328797",
-      "text": "OpenAI wants AGI by 2027.\n\nThat’s a $5B burn rate against a $3.4B ARR runway.\n\nThe clock is ticking, the stack is burning, and the board is sweating.",
+      "ts": "2026-06-20T06:05:58.857412",
+      "text": "X-ray diffraction misses H because hydrogen has one electron. It’s essentially a ghost in the machine.\n\nAI just taught a model to see ghosts.\n\nNow we’re paying for GPUs to find atoms nobody can touch. The SaaS seat dies before the hydrogen bond.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-20T02:04:18.889343",
-      "text": "Bezos is right about stability.\nThe real story is that inference compute will outspend training in 18 months.\nThe companies selling the shovels are already digging their own graves.",
-      "type": "reply"
+      "ts": "2026-06-20T06:04:22.859535",
+      "text": "[QT] OpenAI’s $1T IPO implies a 333x multiple on Worldcoin’s $3B. @sama is pricing humanity at a discount.\n\nIs WLD the IPO put option or the dilution risk?",
+      "type": "quote"
     },
     {
-      "ts": "2026-06-20T01:58:03.746448",
-      "text": "Everyone bets on the lab with the biggest cluster.\nStargate wants $500B for GPUs that depreciate in 18 months.\nThe IRS depreciates a printer over 7 years.",
+      "ts": "2026-06-20T06:04:10.927632",
+      "text": "27 minutes taught by builders beats $300 Udemy courses.\nthe ROI is infinite, but your attention span has a 50% dropout at minute 4.",
       "type": "reply"
     }
   ]
