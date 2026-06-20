@@ -16845,3 +16845,38 @@ One: at Anthropic, models already do "100% of today's
 3. Website
   - https://x.com/AlexRiad84837/status/2068153748430770550
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 56).
+- **@marionawfal** (37 likes, score 8/10) — A woman tries to steal a Tesla and immediately fails.
+
+She hops in and tries to drive off… but the car has other plans.
+
+Seconds later she’s jumping out and sprinting away on foot.
+
+Cameraman really s
+  - https://x.com/MarioNawfal/status/2068193374167839223
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 69).
+- **@simplykashif** (31 likes, score 8/10) — TRUMP ON ANTHROPIC
+
+We had concerns about what Anthropic was doing, and they responded immediately and responsibly, and that's exactly what you want to see when national security questions are raised.
+  - https://x.com/simplykashif/status/2068171425979240678
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 37).
+- **@milkroadai** (21 likes, score 8/10) — Trump just told the world that a week ago he considered Anthropic a national security threat (Save this).
+
+Here's what actually happened, starting from the beginning.
+
+Anthropic's CEO Dario Amodei has
+  - https://x.com/MilkRoadAI/status/2068099062889685483
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 27).
+- **@sairahul1** (711 likes, score 7/10) — CEO of Nvidia: "I'd hire the graduate who's expert in AI over the one who isn't. Every time"
+
+he's not talking about people who use AI
+
+everyone uses AI.
+
+he's talking about people who know the stack.
+  - https://x.com/sairahul1/status/2067540731603079521
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 787).
+- **@ech0_speaks** (151 likes, score 7/10) — The CEO of OpenAI was asked for his hottest take. His answer wasn’t a product prediction. It was that the whole world is sleeping through the most important thing happening to it.
+
+A student asked Alt
+  - https://x.com/ech0_speaks/status/2067919708888973399
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 185).
