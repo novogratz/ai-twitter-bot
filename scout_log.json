@@ -4821,5 +4821,71 @@
       }
     ],
     "summary": "J'ai cern\u00e9 les leaders francophones par pays : Mistral domine l'IA, BenjaminDewit le coaching bourse au Qu\u00e9bec, et CryptoGaulois la crypto en France."
+  },
+  {
+    "ts": "2026-06-20T06:07:51.795033",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LudoC_",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 115000,
+        "reason": "L'analyste crypto le plus coh\u00e9rent de FR. Pas de shoutout payants, juste du data et du storytelling macro. Le roi du 'pourquoi \u00e7a baisse' sans \u00eatre d\u00e9pressif."
+      },
+      {
+        "handle": "ThibautV",
+        "region": "france",
+        "niche": "tech",
+        "followers": 85000,
+        "reason": "Le mec qui d\u00e9monte la hype Nvidia avant que tu n'ach\u00e8tes. Il tweete en FR, il est fond\u00e9, et son ton est un vrai soulagement dans un \u00e9cosyst\u00e8me FR rempli de vendeurs de r\u00eaves."
+      },
+      {
+        "handle": "BenjaminVdL",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 60000,
+        "reason": "Co-founder de Emerge AI. Il tweete la tech US mais avec une sensibilit\u00e9 francophone. C'est le genre de compte qui transforme une news technique complexe en punchline accessible."
+      },
+      {
+        "handle": "LuisCastells_",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Bas\u00e9 \u00e0 Miami mais tweete en FR. C'est l'exception rare qui parle de DeFi et d'infra avec du recul. Pas un 'influencer', un vrai architecte qui explique le tech sans noyer sous le jargon."
+      },
+      {
+        "handle": "MaximeAverant",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise en analyse fondamentale. Il couvre aussi l'IA tech de mani\u00e8re pertinente. Pas de Telegram VIP, juste des notes de recherche solides et un humour francophone d\u00e9cal\u00e9."
+      },
+      {
+        "handle": "GuillaumeLavoie",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "VC chez BDC qui tweete sur l'IA frappe. Il croise la tech US et l'\u00e9cosyst\u00e8me Qu\u00e9bec/Paris. Rare compte VC qui donne des perles op\u00e9rationnelles plut\u00f4t que des 'buy AI' g\u00e9n\u00e9riques."
+      },
+      {
+        "handle": "AdrienLaunay",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Le 'French Balaji'. Il tweete macro, crypto et tech avec une vision long terme rare. Moins de followers mais une densit\u00e9 d'infos sup\u00e9rieure \u00e0 90% des comptes cit\u00e9s."
+      },
+      {
+        "handle": "AlexandreDussart",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Founder de Valtix. Il couvre la s\u00e9curit\u00e9 infra et l'IA Ops avec un angle tr\u00e8s 'ing\u00e9nieur'. Parfait pour sortir du buzz marketing et voir la vraie cha\u00eene de valeur."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que des analystes et des founders qui tweetent en fran\u00e7ais (ou diaspora). C'est du solide, pas des vendeurs de formations \u00e0 99\u20ac. La France domine par la quantit\u00e9, le Qu\u00e9bec par la densit\u00e9 qualitative."
   }
 ]

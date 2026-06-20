@@ -521,7 +521,14 @@
     "ThalesGroup",
     "CryptoGaulois",
     "BenjaminDewit",
-    "BourseQuebec"
+    "BourseQuebec",
+    "LudoC_",
+    "ThibautV",
+    "BenjaminVdL",
+    "LuisCastells_",
+    "MaximeAverant",
+    "GuillaumeLavoie",
+    "AdrienLaunay"
   ],
   "en": [
     "blablacar",
@@ -3584,6 +3591,41 @@
     {
       "lang": "fr",
       "handle": "BourseQuebec",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoC_",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautV",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminVdL",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisCastells_",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeAverant",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "GuillaumeLavoie",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienLaunay",
       "added": "2026-06-20"
     }
   ]

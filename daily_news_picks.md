@@ -16104,3 +16104,40 @@ GPT 5.5 writes co
 The top 1%? They're using simple frameworks that turn average AI outputs into work that looks li
   - https://x.com/NainsiDwiv50980/status/2067921200022696144
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 24).
+
+## 2026-06-20
+- **@cryptotice_** (81 likes, score 9/10) — SpaceX just made the largest software acquisition in history.
+
+$60,000,000,000 for Cursor.
+The fastest growing software startup on earth.
+
+Over 1,000,000 paying customers.
+$2,000,000,000 in annualized
+  - https://x.com/CryptoTice_/status/2068249997725032783
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 95).
+- **@roundtablespace** (0 likes, score 9/10) — Anthropic CEO:
+
+"If my revenue is not $1 trillion, even $800 billion, there's no force on earth, no hedge on earth, that could stop me from going bankrupt."
+  - https://x.com/RoundtableSpace/status/2068027279587066050
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 118).
+- **@marionawfal** (40 likes, score 8/10) — PowerPoint, Word, and Excel just got Grok agents in their sidebars.
+
+A useful place to put an AI with internet access, 𝕏 data, image generation, diagrams, app connections, and MCP servers.
+
+One promp
+  - https://x.com/MarioNawfal/status/2068260063786012756
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 104).
+- **@simplykashif** (45 likes, score 8/10) — TRUMP ON ANTHROPIC
+
+We had concerns about what Anthropic was doing, and they responded immediately and responsibly, and that's exactly what you want to see when national security questions are raised.
+  - https://x.com/simplykashif/status/2068171425979240678
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 51).
+- **@wasurete0087** (155 likes, score 8/10) — 一度だけ言っておく。
+100株でいい。今動かなければ遅い。
+準備金：3万円
+三井金属・JX金属・住友金属の三社が、
+NVIDIA系アクセラレーションと連動したAIデータセンター構築プロジェクトを推進中。
+これは日本全体のAI基盤の“土台”を作る大規模投資テーマ。
+今年はマジで「億り人量産年」になるかも
+  - https://x.com/wasurete0087/status/2068226126296834292
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 209).
