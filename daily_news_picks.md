@@ -16273,3 +16273,32 @@ The one word is distractions and b2c.
 While Anthropic focussed on being the best at code and selling b2b, OpenAI tried Sora, Image Gen, Codex, etc.
   - https://x.com/Ishansharma7390/status/2068311061540061634
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 20).
+- **@0x_fokki** (29 likes, score 9/10) — Netflix spends $200,000 to animate one 22-minute episode
+
+a 20-year-old spent $124 last month and made $12,345
+
+> Claude scripts the episode: 15 min
+> Midjourney renders the frames: 40 min
+> Runway an
+  - https://x.com/0x_fokki/status/2068333437203739037
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 55).
+- **@cyb3rops** (0 likes, score 7/10) — US policy: this frontier model is too powerful, restrict global access 
+
+A few days later, an open-weight Chinese model gets quantized to run on a 256 GB Mac and benchmarks surprisingly close to the f
+  - https://x.com/cyb3rops/status/2067985253000417389
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 10).
+- **@0x_fokki** (67 likes, score 9/10) — a studio spends $200,000 on a single anime episode
+
+a 21-year-old in Japan spent $124 last month and made $12,345
+
+> Claude writes the episode and shot list: 15 min
+> Midjourney designs the character
+  - https://x.com/0x_fokki/status/2068285189113983381
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 107).
+- **@marionawfal** (140 likes, score 8/10) — Grok showing up inside Warp is a pretty big developer move.
+
+One of the fastest-growing AI-powered terminals now has native Grok integration.
+
+Developers can link their 𝕏 Premium + Grok account, swit
+  - https://x.com/MarioNawfal/status/2068200923772735673
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 188).
