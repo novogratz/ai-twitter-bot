@@ -16248,3 +16248,28 @@ Kimi K2.6 became the first open-weight model to beat GPT-5.4 on SWE-Bench Pro
 GLM-5.1 beat Claude Opus 4.6 on a key codi
   - https://x.com/Vvtentt101/status/2068314403707965475
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 26).
+- **@itsmichaelluu** (95 likes, score 9/10) — $SPY AI Infrastructure — YTD Returns & Why They will keep going higher...
+
+1. $SNDK +820.36% — Spun off from Western Digital, pure-play NAND flash exposure. AI data centers need massive storage capaci
+  - https://x.com/itsmichaelluu/status/2068281530498130314
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 139).
+- **@roundtablespace** (53 likes, score 9/10) — GLM 5.2 running 2-bit quant, 100% local on a Mac Studio, beating Opus 4.8 on results.
+
+Now powering Hermes Agent and Codex in a 24/7 coding loop. Free. Private. On the desk.
+
+LOCAL SUPERINTELLIGENCE W
+  - https://x.com/RoundtableSpace/status/2068321720071528794
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 79).
+- **@mark_k** (159 likes, score 8/10) — Do you expect GPT-5.6 to beat Claude Fable 5?
+  - https://x.com/mark_k/status/2068304336522748142
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 369).
+- **@apesznarmy** (32 likes, score 8/10) — Sam Altman, founder of Open Ai ($1 trillion - $1.5 trillion+ expected IPO value) and founder of Worldcoin ($3 billion market cap currently) talking about his startup called Worldcoin. $WLD is the most
+  - https://x.com/APESZNARMY/status/2068255072522256511
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 34).
+- **@ishansharma7390** (14 likes, score 7/10) — How OpenAI lost the AI race to Anthropic:
+
+The one word is distractions and b2c.
+
+While Anthropic focussed on being the best at code and selling b2b, OpenAI tried Sora, Image Gen, Codex, etc.
+  - https://x.com/Ishansharma7390/status/2068311061540061634
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 20).

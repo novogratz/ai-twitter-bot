@@ -537,7 +537,11 @@
     "JulienGosselin",
     "VincentLajoie",
     "BenjaminMunoz",
-    "ThomasBouteloup"
+    "ThomasBouteloup",
+    "LilRoughTrade",
+    "MarcBoulanger",
+    "MorganLambert",
+    "VincentCouture"
   ],
   "en": [
     "blablacar",
@@ -3680,6 +3684,26 @@
     {
       "lang": "fr",
       "handle": "ThomasBouteloup",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LilRoughTrade",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcBoulanger",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MorganLambert",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentCouture",
       "added": "2026-06-20"
     }
   ]

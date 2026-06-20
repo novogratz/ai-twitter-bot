@@ -4960,5 +4960,43 @@
       }
     ],
     "summary": "J'ai \u00e9limin\u00e9 les vendeurs de r\u00eaves pour te coller au cul des fondateurs (Mistral, Qonto) et des analystes de terrain (FinanceMaison, La Bourse en 5 min). Le mix France/Qu\u00e9bec/USA est \u00e9quilibr\u00e9, avec un focus IA/FinTech qui \u00e9vite la saturation de la crypto pure."
+  },
+  {
+    "ts": "2026-06-20T10:07:47.475148",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LilRoughTrade",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Le gourou frilocal de l'Altcoin, twitte en FR, z\u00e9ro formation \u00e0 vendre, juste des charts purs."
+      },
+      {
+        "handle": "MarcBoulanger",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "La voix du Qu\u00e9bec sur la tech et l'IA. Pas de jargon inutile, juste des insights concrets sur l'\u00e9cosyst\u00e8me local."
+      },
+      {
+        "handle": "MorganLambert",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Trader pro qui partage sa vie r\u00e9elle, pas ses gains fictifs. Moins de 'moon', plus de gestion de risque."
+      },
+      {
+        "handle": "VincentCouture",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "Ex-CEO de Coinsquare, il tweete la fintech qu\u00e9b\u00e9coise avec le recul d'un survivant de la temp\u00eate crypto."
+      }
+    ],
+    "summary": "Un mix de v\u00e9t\u00e9rans crypto (LilRoughTrade, PierreRochard) et d'analystes actionnariats s\u00e9rieux (AlexisGalland) qui \u00e9vitent le bruit des formations \u00e0 999\u20ac. Le Qu\u00e9bec est repr\u00e9sent\u00e9 par des profils institutionnels solides."
   }
 ]
