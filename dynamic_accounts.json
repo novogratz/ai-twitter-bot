@@ -544,7 +544,18 @@
     "VincentCouture",
     "ThomasGirard",
     "MaximeMachuel",
-    "MaximeDemeure"
+    "MaximeDemeure",
+    "Boursorama",
+    "CryptoCandidat",
+    "RomainDaveluy",
+    "JulienBouchard",
+    "NicoKrauz",
+    "PierreLaffitte",
+    "ThibaultMansion",
+    "CryptoBourrin",
+    "VincentLemoine",
+    "AlexisGarnier",
+    "RomainBoulard"
   ],
   "en": [
     "blablacar",
@@ -3722,6 +3733,61 @@
     {
       "lang": "fr",
       "handle": "MaximeDemeure",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "Boursorama",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCandidat",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDaveluy",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBouchard",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicoKrauz",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLaffitte",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultMansion",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBourrin",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentLemoine",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisGarnier",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBoulard",
       "added": "2026-06-20"
     }
   ]

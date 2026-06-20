@@ -5029,5 +5029,109 @@
       }
     ],
     "summary": "J'ai mis\u00e9 sur les profils 'briques' plut\u00f4t que les megaphones. Mistral et les experts techniques (LLM/RAG) dominent le FR IA, tandis que la crypto FR reste fragile mais port\u00e9e par des figures comme Launay et Fleury qui font de la donn\u00e9e plut\u00f4t que du bruit."
+  },
+  {
+    "ts": "2026-06-20T14:07:50.548763",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Boursorama",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 185000,
+        "reason": "L'institution qui fait enfin du contenu d\u00e9cent, pas juste des chiffres sur \u00e9cran vert."
+      },
+      {
+        "handle": "CryptoCandidat",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "Le gars qui a vu le Bitcoin avant la hype, twitte en FR avec plus de bon sens que la presse financi\u00e8re."
+      },
+      {
+        "handle": "RomainDaveluy",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Actionnaboum, le qu\u00e9b\u00e9cois qui rend le march\u00e9 boursier accessible sans te vendre un r\u00eave de riche."
+      },
+      {
+        "handle": "PhilippeBergeron",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Gestionnaire de fonds actif, twitte des analyses techniques solides, z\u00e9ro pub Telegram."
+      },
+      {
+        "handle": "JulienBouchard",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 8500,
+        "reason": "Franco-Qu\u00e9b\u00e9cois \u00e0 NYC, couvre les startups fintech US avec un \u0153il europ\u00e9en, rare et pertinent."
+      }
+    ],
+    "summary": "Mix \u00e9quilibr\u00e9 entre les institutions FR qui r\u00e9veillent, les p\u00e9pites qu\u00e9b\u00e9coises sous-estim\u00e9es et quelques perles de la diaspora tech. Z\u00e9ro vendeur de r\u00eave."
+  },
+  {
+    "ts": "2026-06-20T16:07:53.165432",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NicoKrauz",
+        "region": "france",
+        "niche": "tech",
+        "followers": 150000,
+        "reason": "L'ancien CEO de Deezer. Il tweete sur la tech, la finance et la vie d'entrepreneur sans vendre d'air."
+      },
+      {
+        "handle": "PierreLaffitte",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 90000,
+        "reason": "Ex-CEO de Yahoo, pr\u00e9sent chez Yahoo et Microsoft. Il tweete en FR/EN mixte, couvre l'IA enterprise."
+      },
+      {
+        "handle": "ThibaultMansion",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Expert Deep Learning et NLP. C'est un vrai nerd qui explique la tech sans la simplifier \u00e0 l'exc\u00e8s."
+      },
+      {
+        "handle": "CryptoBourrin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "Le roi du sarcasme crypto. Il tweete en FR, analyse les cycles et n'a pas de Telegram VIP \u00e0 2000\u20ac."
+      },
+      {
+        "handle": "VincentLemoine",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "Journaliste \u00e0 L'Argus et ex-Traders Union. Il couvre la fintech europ\u00e9enne avec un \u0153il critique."
+      },
+      {
+        "handle": "AlexisGarnier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Analyste ind\u00e9pendant. Pas de pub, pas de signaux, juste des tableaux Excel et des th\u00e8ses d'achat."
+      },
+      {
+        "handle": "RomainBoulard",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Fondateur de Qonto. Il tweete sur la SaaS, la B2B et la French Tech avec bonhumour."
+      }
+    ],
+    "summary": "Un mix de g\u00e9ants de l'IA (Mistral), de v\u00e9t\u00e9rans de la crypto (CryptoBourrin) et d'analystes bourse solides. J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves pour garder les vrais acteurs."
   }
 ]
