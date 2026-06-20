@@ -4589,5 +4589,78 @@
       }
     ],
     "summary": "Une s\u00e9lection sans fioritures, sans les vendeurs de r\u00eaves habituels. On privil\u00e9gie les pros qui twittent leur m\u00e9tier plut\u00f4t que leur ego. Du concret, de la tech, et un souffle d'air frais dans le marais crypto."
+  },
+  {
+    "ts": "2026-06-19T20:07:53.729153",
+    "raw_count": 10,
+    "kept_count": 9,
+    "accounts_added": 9,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DariusHernandez",
+        "region": "france",
+        "niche": "tech",
+        "followers": 64000,
+        "reason": "Le roi des threads techniques FR, couvre l'IA et la tech avec une densit\u00e9 d'info qu'aucun influencer de bourse ne peut \u00e9galer."
+      },
+      {
+        "handle": "CyrilleBrossay",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 36000,
+        "reason": "Le v\u00e9t\u00e9ran qui a surv\u00e9cu \u00e0 tous les cycles, ses vues sur l'adoption institutionnelle sont plus fiables que n'importe quel shiller."
+      },
+      {
+        "handle": "MathieuDuffau",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "L'ancien de Goldman Sachs qui d\u00e9crypte la macro et les march\u00e9s avec un pragmatisme rare, \u00e9vite le Buzz de comptoir."
+      },
+      {
+        "handle": "GaelLeMoing",
+        "region": "france",
+        "niche": "finance",
+        "followers": 17000,
+        "reason": "L'expert en dette et taux d'int\u00e9r\u00eat de @Boursier, il explique pourquoi ta \u00e9pargne ne dort pas sans te mettre la pression."
+      },
+      {
+        "handle": "JulienVernay",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 17000,
+        "reason": "Le pionnier du Personal Finance au Qu\u00e9bec, style direct, couvertures solides, il a surv\u00e9cu aux krashes avec son \u00e9quipe."
+      },
+      {
+        "handle": "MathieuLeblanc",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 16000,
+        "reason": "Le fondateur de Mule, il vit dans le code et l'IA g\u00e9n\u00e9rative, ses tweets tech sont des p\u00e9pites pour les makers qu\u00e9b\u00e9cois."
+      },
+      {
+        "handle": "JulienBoutin",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Directeur de @MistralAI bas\u00e9 \u00e0 NY, il partage ses vues sur l'Open Source et la souverainet\u00e9 IA depuis la Silicon Valley."
+      },
+      {
+        "handle": "ThomasRoulet",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 7500,
+        "reason": "Gestionnaire de fonds montr\u00e9alais, il balance des analyses de sector rotation pr\u00e9cises sans le jargon incompr\u00e9hensible."
+      },
+      {
+        "handle": "AlexisMauger",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 6000,
+        "reason": "Co-founder de MoonPay, ses takes sur les crypto payments sont moins hype que ceux des influenceurs mais beaucoup plus lucratifs."
+      }
+    ],
+    "summary": "Une s\u00e9lection de valeureux qui tweetent en fran\u00e7ais, couvrant l'IA, la crypto et la macro. Pas de vendeurs de r\u00eaves, que des gens qui comprennent le sujet."
   }
 ]

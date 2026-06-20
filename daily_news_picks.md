@@ -16647,3 +16647,31 @@ in a 40-minute fir
 - **@pmddomingos** (26 likes, score 7/10) — Sam Altman really maximized OpenAI’s return on luck.
   - https://x.com/pmddomingos/status/2068060359899160981
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 32).
+- **@marfinxx** (31 likes, score 8/10) — THE M4 PRO MAC MINI BEATS AMD MINI-PCS BY GENERATING 71.9 TPS TO RUN AGENTS FOR $0/MONTH
+
+in direct speed tests, the M4 Pro Mac Mini beats AMD Ryzen AI mini-PCs by generating 71.9 tokens per second on
+  - https://x.com/marfinxx/status/2068019138686066737
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 39).
+- **@coinbureau** (22 likes, score 8/10) — NEW: TRUMP SPEAKS ON ANTHROPIC
+
+Axios’ Marc Caputo: "Do you view Anthropic, and to a degree its CEO Dario Amodei, as a THREAT to national security?"  
+
+Trump: "Well, not now, but a week ago maybe."
+
+"
+  - https://x.com/coinbureau/status/2068106561717670341
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 26).
+- **@kanikabk** (141 likes, score 8/10) — READ THIS.
+
+She is 22, closed a $21 million a16z round, and her AI is live inside Fortune 100 companies while most people her age are still deciding what to build.
+
+Most people watching this will feel
+  - https://x.com/KanikaBK/status/2067594248472736161
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 165).
+- **@penguinweb3** (39 likes, score 8/10) — A $500 AI BILL COULD QUIETLY BECOME $50
+
+The new open-model race is no longer only about benchmark scores
+
+DeepSeek is pushing price to performance, GLM-5.2 is becoming serious for coding and long-for
+  - https://x.com/PenguinWeb3/status/2068052672490480101
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 77).

@@ -498,7 +498,16 @@
     "MaximeBordet",
     "OlivierRigaud",
     "SaraSylla",
-    "JulienRochelle"
+    "JulienRochelle",
+    "DariusHernandez",
+    "CyrilleBrossay",
+    "MathieuDuffau",
+    "GaelLeMoing",
+    "JulienVernay",
+    "MathieuLeblanc",
+    "JulienBoutin",
+    "ThomasRoulet",
+    "AlexisMauger"
   ],
   "en": [
     "blablacar",
@@ -572,7 +581,8 @@
     "Valuetainment",
     "Inception",
     "Luxi",
-    "Ejaaz"
+    "Ejaaz",
+    "Kanika"
   ],
   "history": [
     {
@@ -3428,6 +3438,56 @@
     {
       "lang": "fr",
       "handle": "JulienRochelle",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "en",
+      "handle": "Kanika",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "DariusHernandez",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilleBrossay",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDuffau",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLeMoing",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienVernay",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuLeblanc",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBoutin",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasRoulet",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisMauger",
       "added": "2026-06-19"
     }
   ]
