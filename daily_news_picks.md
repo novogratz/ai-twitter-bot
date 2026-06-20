@@ -16178,3 +16178,38 @@ They reinventing medical imaging.
 They forever changed adorable non-radiation, non-ultra magnetic preventive medical scanning and made it
   - https://x.com/BrianRoemmele/status/2067642856622412282
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 1070).
+- **@anoyroyc** (16 likes, score 7/10) — OpenAI charges $3,357 for tasks that cost $948 on Chinese models.. and they're about to ask investors for $850 billion..
+
+DeepSeek just dropped their reasoning model for free.. open source.. while Ope
+  - https://x.com/Anoyroyc/status/2068307409643491472
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 16).
+- **@humzaakhalid** (25 likes, score 9/10) — Sam Altman, CEO of OpenAI:
+
+"We're going to see 10-person billion-dollar companies pretty soon."
+
+If I were 22 right now, I'd feel like the luckiest kid in history.
+
+2021: you needed a team to build a
+  - https://x.com/humzaakhalid/status/2068265895148060930
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 51).
+- **@kyronis_talks** (12 likes, score 7/10) — Anthropic CEO:
+
+"If my revenue is not $1 trillion, even $800 billion,
+there's no force on earth, no hedge on earth,
+that could stop me from going bankrupt."
+
+In a 3-hour podcast, Dario Amodei does the
+  - https://x.com/kyronis_talks/status/2068305261228683694
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 18).
+- **@ns123abc** (0 likes, score 8/10) — BREAKING: TRUMP ON ANTHROPIC
+
+REPORTER: Do you view Anthropic and to a degree its CEO, Dario Amodei, as a threat to national security?
+
+TRUMP: "Well, not now, but a week ago, maybe. I was with him yes
+  - https://x.com/ns123abc/status/2068051762708099449
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 448).
+- **@huang_chao4969** (18 likes, score 7/10) — Excited to release UpSkill — a lightweight framework that continuously evolves skills, empowering your Flash Model to perform at the level of a Pro.
+
+AI Agents — Claude Code, Codex, Cursor, OpenClaw,
+  - https://x.com/huang_chao4969/status/2068213679066390748
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 22).

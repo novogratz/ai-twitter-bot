@@ -528,7 +528,16 @@
     "LuisCastells_",
     "MaximeAverant",
     "GuillaumeLavoie",
-    "AdrienLaunay"
+    "AdrienLaunay",
+    "ThibaultDelor",
+    "RomainDertoulis",
+    "MathieuDion",
+    "RomainSaxer",
+    "AlexisJouven",
+    "JulienGosselin",
+    "VincentLajoie",
+    "BenjaminMunoz",
+    "ThomasBouteloup"
   ],
   "en": [
     "blablacar",
@@ -3626,6 +3635,51 @@
     {
       "lang": "fr",
       "handle": "AdrienLaunay",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultDelor",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDertoulis",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDion",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainSaxer",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisJouven",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienGosselin",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentLajoie",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminMunoz",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBouteloup",
       "added": "2026-06-20"
     }
   ]
