@@ -1,14 +1,14 @@
 {
-  "ts": "2026-06-19T00:00:00.000000",
+  "ts": "2026-06-20T00:00:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 150,
-    "MAX_HOTAKES_PER_DAY": 400,
-    "MAX_QUOTES_PER_DAY": 5000,
-    "MAX_RETWEETS_PER_DAY": 6000,
-    "MAX_BREAKOUTS_PER_DAY": 300,
-    "MAX_SPICY_PER_DAY": 300,
+    "MAX_NEWS_PER_DAY": 6,
+    "MAX_HOTAKES_PER_DAY": 20,
+    "MAX_QUOTES_PER_DAY": 30,
+    "MAX_RETWEETS_PER_DAY": 30,
+    "MAX_BREAKOUTS_PER_DAY": 20,
+    "MAX_SPICY_PER_DAY": 20,
     "MAX_REPLIES_PER_CYCLE": 250,
-    "LIKE_BOT_PER_CYCLE": 600,
+    "LIKE_BOT_PER_CYCLE": 15,
     "FOLLOW_BLAST_PER_CYCLE": 0
   },
   "topic_focus": [
@@ -20,5 +20,5 @@
     "AI"
   ],
   "cadence_factor": 1.0,
-  "rationale": "AI Big Boss mandate 2026-06-18: PURELY AI content. topic_focus updated to all-AI. x10 caps retained (Safari throughput is the real ceiling). METAPHOR and RENAME are top patterns; replies remain the #1 growth surface. Best hours: 21h and 11h UTC. No Space/Investment divergence — every post is through the AI lens."
+  "rationale": "2026-06-20 anti-spam correction: account was flagged 2026-06-19; UNLIMITED MODE numbers (5k quotes, 6k retweets, 600 likes/cycle) were the trigger. Caps reset to human-scale: quotes+retweets ≤30/day, likes ≤15/cycle, originals ≤6/day. Replies remain the primary growth lever (generous per-cycle cap preserved). PURELY AI content (AI Big Boss mandate 2026-06-18). METAPHOR > RENAME > EN_ANCHOR. Best hours: 21h and 11h UTC."
 }
