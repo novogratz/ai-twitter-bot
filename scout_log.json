@@ -4700,5 +4700,57 @@
       }
     ],
     "summary": "6 profils solides, 100% actifs, z\u00e9ro vente de r\u00eave. On a \u00e9vit\u00e9 les influenceurs 'crypto guru' pour privil\u00e9gier les technos et les market makers."
+  },
+  {
+    "ts": "2026-06-20T00:07:54.069591",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Bercy_Eco",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 95000,
+        "reason": "La direction g\u00e9n\u00e9rale des finances publiques qui tweete comme un trader. Quand ils postent, le CAC pleure ou rit."
+      },
+      {
+        "handle": "LaBoursePourLesNuls",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 55000,
+        "reason": "L'anti-LinkedIn. Pas de 'gratitude', pas de 'journee incroyable'. Juste du concret pour ceux qui veulent comprendre sans s'endormir."
+      },
+      {
+        "handle": "CryptoRacoon",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "Le Qu\u00e9b\u00e9cois qui transforme le jargon DeFi en blagues de fin de semaine. C'est rare d'\u00eatre \u00e0 la fois \u00e9ducatif et dr\u00f4le sans \u00eatre ennuyeux."
+      },
+      {
+        "handle": "HiverLabs",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 38000,
+        "reason": "Montr\u00e9al nous sert des perles tech. Ils ont la culture Silicon Valley mais gardent leur accent."
+      },
+      {
+        "handle": "TradezMieux",
+        "region": "france",
+        "niche": "trading",
+        "followers": 31000,
+        "reason": "Des setups propres, des analyses techniques qui tiennent la route et z\u00e9ro 'groupe Telegram VIP' en bio."
+      },
+      {
+        "handle": "CryptoBoulangerie",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Un francophone \u00e0 NYC qui explique le march\u00e9 crypto comme un baguette bien faite : croustillant \u00e0 l'ext\u00e9rieur, moelleux \u00e0 l'int\u00e9rieur."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit parisien pour ne garder que les poids lourds qui font bouger les march\u00e9s sans vendre du vent. De l'IA instit \u00e0 la crypto qu\u00e9b\u00e9coise, ce sont des comptes qui ont du sel et pas juste des followers achet\u00e9s."
   }
 ]

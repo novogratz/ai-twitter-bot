@@ -16793,3 +16793,55 @@ The chip that replaces it is already being built by Google, Amazon, Meta, Micros
 Here is what that means for w
   - https://x.com/2xnmore/status/2067996449070014773
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 30).
+
+## 2026-06-20
+- **@nicos_ai** (0 likes, score 8/10) — Google has put an end to the GPU mafia 
+
+VS Code now connects directly to Google Colab.
+
+→ You get a free T4 GPU right in your editor.
+→ Your local files. Its computing power.
+  - https://x.com/nicos_ai/status/2068077177187324314
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 36).
+- **@rohanpaul_ai** (11 likes, score 7/10) — Not anymore: Trump on whether he sees Anthropic threatening national security
+
+Axios' Marc Caputo asked Trump: "Do you view Anthropic, and to a degree its CEO Dario Amodei, as a threat to national sec
+  - https://x.com/rohanpaul_ai/status/2068163592583815238
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 15).
+- **@gippp69** (0 likes, score 8/10) — HE STACKED 4 MS-S1 MAX-STYLE BOXES IN A SERVER RACK. 4 × $2,599 TO STOP PAYING $10-$20 EVERY DAY FOR AI AGENTS.
+
+each box is built around Ryzen AI Max+ 395, 128GB unified memory, and up to 96GB shared
+  - https://x.com/gippp69/status/2067581108179312761
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 102).
+- **@indutripat82427** (39 likes, score 7/10) — CEO of Anthropic, Dario Amodei:
+
+"We are near the end of the exponential."
+
+3 things he said in 2 hours.
+The third, even Dwarkesh pushed back on.
+
+One: at Anthropic, models already do "100% of today's
+  - https://x.com/InduTripat82427/status/2067660111414223119
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 61).
+- **@alexriad84837** (28 likes, score 7/10) — 120 Must-Use AI Tools. 
+120 Smart AI Tools for Work & Growth.
+
+1. Ideas
+
+- YOU
+- Claude
+- ChatGPT
+- Perplexity
+- Bing Chat
+
+2. Presentation
+
+- Prezi
+- Pitch
+- PopAi
+- Slides AI
+- Slidebean
+
+3. Website
+  - https://x.com/AlexRiad84837/status/2068153748430770550
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 56).

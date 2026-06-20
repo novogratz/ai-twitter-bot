@@ -511,7 +511,11 @@
     "thomas_lemoine",
     "MathieuDrouin_",
     "BenoitRivard",
-    "JulienDeLattre"
+    "JulienDeLattre",
+    "Bercy_Eco",
+    "CryptoRacoon",
+    "HiverLabs",
+    "TradezMieux"
   ],
   "en": [
     "blablacar",
@@ -3519,6 +3523,26 @@
       "lang": "fr",
       "handle": "JulienDeLattre",
       "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "Bercy_Eco",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoRacoon",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "HiverLabs",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "TradezMieux",
+      "added": "2026-06-20"
     }
   ]
 }
