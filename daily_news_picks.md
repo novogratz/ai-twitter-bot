@@ -16213,3 +16213,38 @@ TRUMP: "Well, not now, but a week ago, maybe. I was with him yes
 AI Agents — Claude Code, Codex, Cursor, OpenClaw,
   - https://x.com/huang_chao4969/status/2068213679066390748
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 22).
+- **@hammertime_one** (0 likes, score 8/10) — Fable 5 just CHANGED the AI race
+
+Polymarket gives Anthropic a 95% chance of having the BEST AI model in June
+
+$16M in volume on this question
+
+on June 9th, Claude Fable 5 was RELEASED
+
+Fable 5 leads
+  - https://x.com/hammertime_one/status/2068218409561858281
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 36).
+- **@kimmonismus** (115 likes, score 9/10) — Trump’s perspective on Anthropic as a possible national security risk, as well as his views on AI energy needs and regulatory policy.
+
+Let’s hope we’ll get fable 5 soon again.
+  - https://x.com/kimmonismus/status/2068304807866126371
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 149).
+- **@rohanpaul_ai** (0 likes, score 7/10) — Goldman Sachs is now saying the AI race has become a $5.3T capital-spending cycle.
+
+with that figure covering expected hyperscaler spending on AI and data centers from 2025 through 2030.
+
+AI infrastru
+  - https://x.com/rohanpaul_ai/status/2068213062218486135
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 18).
+- **@starmexxx** (47 likes, score 9/10) — A SELF-DESCRIBED "GPU POOR" DEV STILL RUNS LOCAL AI ON A 4 YEAR OLD RTX 3090 THAT KILLS $400/MO IN AI BILLS
+
+00:16 he picks up an old card and says "i'm actually really gpu poor like this is an old 6
+  - https://x.com/starmexxx/status/2068252570313785367
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 75).
+- **@vvtentt101** (22 likes, score 8/10) — Chinese AI models are no longer catching up. They're almost at the same level
+
+Kimi K2.6 became the first open-weight model to beat GPT-5.4 on SWE-Bench Pro
+
+GLM-5.1 beat Claude Opus 4.6 on a key codi
+  - https://x.com/Vvtentt101/status/2068314403707965475
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 26).
