@@ -16675,3 +16675,17 @@ The new open-model race is no longer only about benchmark scores
 DeepSeek is pushing price to performance, GLM-5.2 is becoming serious for coding and long-for
   - https://x.com/PenguinWeb3/status/2068052672490480101
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 77).
+- **@sam_badawi** (17 likes, score 7/10) — $ARM CEO Rene Haas says the AI opportunity is much bigger than just datacenters.
+
+Every new AI facility creates demand across the entire supply chain, chips from $NVDA, $AMD, and $AVGO, cooling from $
+  - https://x.com/Sam_Badawi/status/2068041259655278623
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 21).
+- **@_bdrz** (346 likes, score 8/10) — This is the wildest thing in AI history!!!
+A company that owns an image model suddenly developed a device that scans the entire body in 60 seconds using ultrasound and AI, without any radiation…. From
+  - https://x.com/_BDRz/status/2067548768182886863
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 380).
+- **@goshawktrades** (1039 likes, score 7/10) — Ken Griffin, CEO of Citadel, on how he handled the AI hype inside a $60 billion hedge fund:
+
+"i said, 'i want a list of all the GenAI-based projects that we have at Citadel.' he came back with 200 pro
+  - https://x.com/GoshawkTrades/status/2067611173986709752
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1093).
