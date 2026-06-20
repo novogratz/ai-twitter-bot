@@ -16689,3 +16689,37 @@ A company that owns an image model suddenly developed a device that scans the en
 "i said, 'i want a list of all the GenAI-based projects that we have at Citadel.' he came back with 200 pro
   - https://x.com/GoshawkTrades/status/2067611173986709752
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 1093).
+- **@adamuchigabriel** (72 likes, score 9/10) — A AMD está apostando em um futuro onde a IA roda localmente.
+
+• 235 bilhões de parâmetros
+• Sem nuvem
+• Sem data centers
+• Sem GPU alugada
+
+Mais de 3x a memória de outros modelos 
+
+A corrida pela IA a
+  - https://x.com/adamuchigabriel/status/2068016506487583055
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 76).
+- **@finance__nomad** (7 likes, score 7/10) — I genuinely believe we are currently inside an AI bubble right now, similar to the Dot Com bubble 
+
+My best guess, Anthropic and OpenAI IPOs will probably mark the top.
+
+Either a local top or a major
+  - https://x.com/Finance__Nomad/status/2068132341327843540
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 13).
+- **@wesroth** (34 likes, score 8/10) — Researchers introduced Humanoid-GPT, a new AI system for real-time whole-body control of humanoid robots.
+
+The system was tested on the 29-joint Unitree G1 and can reproduce complex movements it did n
+  - https://x.com/WesRoth/status/2068015960032678254
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 44).
+- **@marfinxx** (0 likes, score 8/10) — RUNNING AI AGENTS ON CLOUD WAS COSTING $600/MONTH. THIS $2,599 BOX RUNS A 120B MODEL OFFLINE FOR $0
+
+the operator put the always-on Minisforum MS-S1 MAX in a closet to replace a recurring $10-$20 dail
+  - https://x.com/marfinxx/status/2067956748695048518
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 34).
+- **@xkaidus** (149 likes, score 7/10) — This 22-year-old American streams as a female AI avatar that does not exist and it brings him $15,000 a month even though the viewers know it is a neural net.
+
+He got tired of watching live streamers
+  - https://x.com/xkaidus/status/2067600719687876943
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 163).
