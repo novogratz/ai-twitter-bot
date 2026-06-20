@@ -16759,3 +16759,37 @@ One: at Anthropic, models already do "100% of today's
 Cuban: “There’s two types of approaches to AI. Some people who use it so they don’t have to learn anyth
   - https://x.com/r0ck3t23/status/2068124758554620327
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 37).
+- **@marfinxx** (51 likes, score 9/10) — THIS 8x RTX 4090 GPU RIG MADE $4,000/MONTH ON OPENCLAW. REPLACING IT WITH HERMES AGENT JUMPED HIS REVENUE TO $16,000/MONTH
+
+he built a gen 5 server with dual intel xeon scalable 4th gen cpus, 1tb of r
+  - https://x.com/marfinxx/status/2067897482718118385
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 77).
+- **@sandy4kad** (89 likes, score 7/10) — A guy in China makes $1,000,000 a year while he sleeps. No employees. No code. Just AI building software for him every week.
+
+They call it vibe coding. And it's quietly making solo developers obsolete
+  - https://x.com/sandy4kad/status/2067761198037381451
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 111).
+- **@anatolikopadze** (0 likes, score 7/10) — Sam Altman:
+
+"We're going to see 10-person billion-dollar companies pretty soon"
+
+"If I were 22 right now, I'd feel like the luckiest kid in history"
+
+he's describing a reality where the limit stops b
+  - https://x.com/AnatoliKopadze/status/2067959703577956633
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 42).
+- **@networkchuck** (48 likes, score 7/10) — shadow AI is terrifying
+
+Vanta helps teams find and manage the AI tools hiding inside their company
+Get $1000 off! http://vanta.com/Chuck
+
+#sponsored @TrustVanta
+  - https://x.com/NetworkChuck/status/2068097249037476215
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 54).
+- **@2xnmore** (0 likes, score 7/10) — The GPU made Nvidia the most valuable company in history.
+
+The chip that replaces it is already being built by Google, Amazon, Meta, Microsoft and OpenAI simultaneously.
+
+Here is what that means for w
+  - https://x.com/2xnmore/status/2067996449070014773
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 30).
