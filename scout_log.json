@@ -4783,5 +4783,43 @@
       }
     ],
     "summary": "L'IA fran\u00e7aise port\u00e9e par Mistral (Mensch) domine le segment tech, tandis que la crypto/france se repose sur le s\u00e9rieux de Tranoy. Au Quebec, Rivard et Mazille \u00e9vitent le bruit politique pour le pur trading."
+  },
+  {
+    "ts": "2026-06-20T04:07:39.810044",
+    "raw_count": 5,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThalesGroup",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Le titan industriel qui a compris que l'IA ne se r\u00e9sume pas \u00e0 du code mais \u00e0 des satellites et de la d\u00e9fense. Moins hype que Mistral, plus solide."
+      },
+      {
+        "handle": "CryptoGaulois",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Le vulgarisateur qui balance les perles de la DeFi sans jargon incompr\u00e9hensible. Il a trouv\u00e9 le juste milieu entre l'info brute et le storytelling."
+      },
+      {
+        "handle": "BenjaminDewit",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Le prof de finance Qu\u00e9b\u00e9cois qui rend la macro-\u00e9co digeste sans te prendre pour un con. Le seul compte \u00e9ducatif fiable \u00e0 suivre pour les d\u00e9butants s\u00e9rieux."
+      },
+      {
+        "handle": "BourseQuebec",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "L'agence de presse locale qui couvre les mouvements du TSX et de la Bourse de Montr\u00e9al. Moins de bruit, plus de donn\u00e9es concr\u00e8tes pour les investisseurs qu\u00e9b\u00e9cois."
+      }
+    ],
+    "summary": "J'ai cern\u00e9 les leaders francophones par pays : Mistral domine l'IA, BenjaminDewit le coaching bourse au Qu\u00e9bec, et CryptoGaulois la crypto en France."
   }
 ]

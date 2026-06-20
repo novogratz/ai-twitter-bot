@@ -517,7 +517,11 @@
     "HiverLabs",
     "TradezMieux",
     "RaphaelTranoy",
-    "PierreMazille"
+    "PierreMazille",
+    "ThalesGroup",
+    "CryptoGaulois",
+    "BenjaminDewit",
+    "BourseQuebec"
   ],
   "en": [
     "blablacar",
@@ -3560,6 +3564,26 @@
     {
       "lang": "fr",
       "handle": "PierreMazille",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThalesGroup",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoGaulois",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminDewit",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourseQuebec",
       "added": "2026-06-20"
     }
   ]

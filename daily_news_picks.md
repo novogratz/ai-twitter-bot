@@ -16937,3 +16937,31 @@ So muc
 Writer: Ian
   - https://x.com/MarioNawfal/status/2068222314731209016
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 46).
+- **@rohanpaul_ai** (636 likes, score 8/10) — Midjourney's massive pivot  into the personal health and medical industries.
+
+Its first hardware project, a scanner that reads your body in 60 seconds, with 'full-body ultrasound machine'.
+
+The plan i
+  - https://x.com/rohanpaul_ai/status/2067568647946879212
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 668).
+- **@marionawfal** (46 likes, score 8/10) — Footage of another round of city-wide Israeli airstrikes on Nabatieh, Lebanon, 7 miles from the Israeli border. 
+
+Israel still regards the area as a "combat zone" and said strikes will continue for th
+  - https://x.com/MarioNawfal/status/2068232381144629559
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 70).
+- **@alan_earn** (43 likes, score 7/10) — I was wrong
+
+for months I thought open source AI was still far behind frontier models
+
+that gap is shrinking much faster than I expected GLM 5.2 is a big reason 
+
+why its performing at a level where c
+  - https://x.com/Alan_Earn/status/2068208511608340489
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 75).
+- **@marionawfal** (0 likes, score 7/10) — NVIDIA CEO Jensen Huang on the AI race:
+
+"I do not know that 'winning' AI is a thing because AI is going to last a long time. It’s a competition with no end.
+
+However, we should absolutely lead in eve
+  - https://x.com/MarioNawfal/status/2068068803691647104
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 40).
