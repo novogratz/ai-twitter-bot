@@ -16902,3 +16902,38 @@ https://ycombinator.
 Create AI videos with dynamic comic IPs, lively ads, energetic dance videos, and unique running videos in vario
   - https://x.com/Logical_Girll/status/2068051987061682299
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 47).
+- **@hammertime_one** (11 likes, score 7/10) — Fable 5 just CHANGED the AI race
+
+Polymarket gives Anthropic a 95% chance of having the BEST AI model in June
+
+$16M in volume on this question
+
+on June 9th, Claude Fable 5 was RELEASED
+
+Fable 5 leads
+  - https://x.com/hammertime_one/status/2068218409561858281
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 21).
+- **@rohanpaul_ai** (10 likes, score 7/10) — Goldman Sachs is now saying the AI race has become a $5.3T capital-spending cycle.
+
+with that figure covering expected hyperscaler spending on AI and data centers from 2025 through 2030.
+
+AI infrastru
+  - https://x.com/rohanpaul_ai/status/2068213062218486135
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 24).
+- **@alan_earn** (30 likes, score 9/10) — zhipu just dropped their official coding IDE with glm 5.2 and it's FREE with daily 3M token 
+
+glm 5.2 is open weights (mit license), 744b moe and competes with claude opus 4.8 and gpt-5.5 on coding be
+  - https://x.com/Alan_Earn/status/2068223665268006924
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 70).
+- **@marionawfal** (33 likes, score 8/10) — Fresh Israeli airstrikes are being reported in Roumane in southern Lebanon's Nabatieh region
+
+They follow other strikes on the southern Lebanese town of Arabsalim that killed at least 5 people
+
+So muc
+  - https://x.com/MarioNawfal/status/2068219799537148320
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 71).
+- **@marionawfal** (22 likes, score 7/10) — Aftermath of an Israeli airstrike on the southern Lebanese town of Al-Namirieh, in the Nabatieh region.
+
+Writer: Ian
+  - https://x.com/MarioNawfal/status/2068222314731209016
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 46).
