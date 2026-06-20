@@ -557,3 +557,13 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 6 views: UK needs £3.5B/year to rejoin, but wants to keep the regulatory moat @nvidia built here. Is the ROI 
   - 0 likes / 5 views: NVIDIA just launched Vera: "built for agents to use."  Managers are now measuring "agent leverage," 
   - 0 likes / 14 views: Shazeer was the architect of attention. @OpenAI just hired the guy who built the lens. Does Gemini l
+
+## 2026-06-19
+
+**Activity** — total actions: 1087
+  - by type: reply=868, retweet=129, quote=63, quote_gif=23, post=3, hotake=1
+  - top sources: SEARCH-HOT=671, RETWEET=129, RETWEET_REPLY=111, RETWEET_QT=49, FEED-SWEEP-FOLLOWING=29, GIF=23, FEED-SWEEP-FEED=22, QUOTE=12
+  - comedy patterns: METAPHOR=25, RENAME=5, UNDERSTATEMENT=3, DIALOGUE=2, EN_ANCHOR=1, OTHER=1
+  - top reply targets: @MarioNawfal=33, @TheAIBigBoss=31, @BrianRoemmele=14, @Reuters=12, @Cointelegraph=11
+
+**Followers we follow** (running total): 46
