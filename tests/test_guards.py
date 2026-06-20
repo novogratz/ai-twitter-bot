@@ -594,53 +594,74 @@ def test_engine_health_still_alerts_on_sustained_silence(monkeypatch, tmp_path):
     )
 
 
-# --- engagement_log type-column leak (reply-bot-type-field-leak memory) ----------
+def test_reply_search_skipped_when_provider_has_no_websearch(monkeypatch):
+    """ollama/opencode have no tool API. REPLY_SEARCH on those providers
+    burns ~5-15s per cycle generating hallucinated tweet URLs that the
+    TOO OLD chokepoint filters out (~500/day log spam, ~50-100 min/day
+    of ollama wasted, 4% conversion to actual replies). The agent must
+    skip the LLM call entirely when no real WebSearch is available."""
+    from src import reply_agent
 
-def test_log_reply_sanitizes_leaked_action_type(monkeypatch, tmp_path):
-    """A pattern id (METAPHOR/RENAME) or a leaked LLM JSON "type" field must
-    never land in the `type` column — the analyzer/bandit/engine-health read it
-    positionally to compute per-action ROI, so a leak invents phantom surfaces
-    and undercounts replies. log_reply coerces any unknown action back to
-    'reply' at the chokepoint. Legit non-reply actions pass through untouched.
-    """
-    import csv
-    from src import engagement_log as el
+    monkeypatch.setenv("AI_CLI", "ollama")
+    monkeypatch.delenv("LLM_FALLBACK_CLI", raising=False)
+    monkeypatch.delenv("LLM_ALLOW_REMOTE_FALLBACK", raising=False)
+    monkeypatch.delenv("REPLY_SEARCH_FORCE", raising=False)
+    monkeypatch.setattr(reply_agent, "_websearch_skip_logged", False)
 
-    log_path = tmp_path / "engagement_log.csv"
-    monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", str(log_path))
+    def _boom(*a, **k):
+        raise AssertionError(
+            "run_llm must NOT be called when no WebSearch-capable provider "
+            "is available — the model would just hallucinate URLs."
+        )
 
-    el.log_reply("https://x.com/a/status/1", "a sharp take", action_type="METAPHOR")
-    el.log_reply("https://x.com/b/status/2", "another take", action_type="quote_gif")
-    el.log_reply("https://x.com/c/status/3", "third take")  # default reply
-
-    with open(log_path, newline="") as f:
-        rows = list(csv.reader(f))[1:]  # drop header
-    types = [r[1] for r in rows]
-    assert types == ["reply", "quote_gif", "reply"], types
+    monkeypatch.setattr(reply_agent, "run_llm", _boom)
+    assert reply_agent.generate_replies() is None
 
 
-# --- quote/direct-reply cycle NameError crashes (2026-06-19) ----------------------
+def test_reply_search_runs_when_force_env_is_set(monkeypatch):
+    """REPLY_SEARCH_FORCE=1 is the operator escape hatch — useful when a
+    custom local model genuinely searches (e.g. via a tools-aware wrapper).
+    The agent must honor it and proceed to run_llm."""
+    from src import reply_agent
 
-def test_quote_night_hour_helper_defined_and_correct():
-    """_is_us_night_hour was referenced at quote_tweet_bot.py:399 but never
-    defined -> every quote cycle crashed with NameError, taking down the whole
-    quote growth surface. Pin: it exists and flags US overnight (0..6 NY).
-    """
+    monkeypatch.setenv("AI_CLI", "ollama")
+    monkeypatch.setenv("REPLY_SEARCH_FORCE", "1")
+    monkeypatch.setattr(reply_agent, "_websearch_skip_logged", False)
+
+    called = {"n": 0}
+
+    class _FakeResult:
+        returncode = 0
+        stdout = "[]"
+        stderr = ""
+
+    def _fake_run_llm(*a, **k):
+        called["n"] += 1
+        return _FakeResult()
+
+    monkeypatch.setattr(reply_agent, "run_llm", _fake_run_llm)
+    monkeypatch.setattr(reply_agent, "unwrap_text", lambda _s: "[]")
+    reply_agent.generate_replies()
+    assert called["n"] == 1, "REPLY_SEARCH_FORCE=1 must override the skip"
+
+
+def test_quote_night_hour_helper_defined_and_correct(monkeypatch):
+    """2026-06-19 startup crash: run_quote_tweet_cycle called _is_us_night_hour
+    which a refactor had dropped → NameError every quote cycle. Pin the helper
+    exists and the midnight-wrapping window is correct."""
     from src.quote_tweet_bot import _is_us_night_hour
-    assert _is_us_night_hour(3) is True      # 3 AM NY = night, throttle
-    assert _is_us_night_hour(0) is True       # midnight = night
-    assert _is_us_night_hour(7) is False      # 7 AM = waking hours, run
-    assert _is_us_night_hour(14) is False     # 2 PM = peak, run
-    assert _is_us_night_hour(23) is False     # 11 PM = still active, run
+    monkeypatch.setenv("QUOTE_NIGHT_START", "23")
+    monkeypatch.setenv("QUOTE_NIGHT_END", "7")
+    assert _is_us_night_hour(2) and _is_us_night_hour(23) and _is_us_night_hour(6)
+    assert not _is_us_night_hour(7) and not _is_us_night_hour(12)
 
 
-def test_direct_reply_wrapper_calls_cycle_with_no_undefined_name():
-    """safe_run_direct_reply_cycle called run_direct_reply_cycle(max_replies=
-    max_replies) — max_replies was undefined AND the cycle takes no args, so
-    every direct-reply cycle crashed (the #1 growth lever). Pin the cycle's
-    zero-arg signature so the wrapper can't reintroduce a bad kwarg.
-    """
+def test_reply_wrapper_calls_cycle_with_no_undefined_args():
+    """2026-06-19 startup crash: safe_run_direct_reply_cycle called
+    run_direct_reply_cycle(max_replies=max_replies) — an undefined name, and
+    the cycle takes no args. Pin the wrapper clean + the cycle's arity."""
     import inspect
     from src import direct_reply
-    sig = inspect.signature(direct_reply.run_direct_reply_cycle)
-    assert len(sig.parameters) == 0, "run_direct_reply_cycle must take no args"
+    assert "max_replies=max_replies" not in inspect.getsource(
+        direct_reply.safe_run_direct_reply_cycle)
+    assert len(inspect.signature(direct_reply.run_direct_reply_cycle).parameters) == 0

@@ -11,7 +11,30 @@ from datetime import datetime
 from typing import Optional
 from .logger import log
 from .config import REPLY_MODEL, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE
-from .llm_client import run_llm, unwrap_text
+from .llm_client import run_llm, unwrap_text, _provider, _fallback_provider
+
+# Logged once-per-process when the active LLM chain can't do real WebSearch
+# (ollama/opencode hallucinate plausible-looking tweet URLs). Reset by tests.
+_websearch_skip_logged = False
+
+
+def _llm_has_websearch() -> bool:
+    """True iff the active LLM chain can perform real WebSearch.
+
+    ollama / opencode hit /api/generate with no tool API, so a prompt asking
+    for "tweet URLs to reply to" comes back as plausible hallucinations
+    (~94% TOO-OLD-filtered, ~50-100 min/day of ollama burned). claude /
+    codex / gemini all have a real search path.
+    Read at call time so a live AI_CLI change takes effect without restart.
+    """
+    if os.environ.get("REPLY_SEARCH_FORCE", "0") == "1":
+        return True
+    primary = _provider()
+    if primary in {"claude", "codex", "gemini"}:
+        return True
+    fallback = _fallback_provider(primary)
+    return fallback in {"claude", "codex", "gemini"}
+
 
 # Core accounts to monitor — CEOs/execs + career/tech writers + companies.
 # The AI Boss lane: careers, management, layoffs, comp, hiring, AI at work.
@@ -166,6 +189,17 @@ def generate_replies(recent_topics=None, already_replied=None):
         today=today.isoformat(),
         since_date=since_date,
     )
+
+    if not _llm_has_websearch():
+        global _websearch_skip_logged
+        if not _websearch_skip_logged:
+            log.info(
+                "[REPLY] REPLY_SEARCH skipped — primary LLM has no WebSearch "
+                "tool (ollama/opencode); other reply paths (direct_reply, "
+                "feed_sweeper, replyback) handle discovery via Safari scraping."
+            )
+            _websearch_skip_logged = True
+        return None
 
     log.info("[REPLY] Running LLM CLI (searching X)...")
     # cwd=/tmp: when Claude CLI is invoked from inside a project dir with

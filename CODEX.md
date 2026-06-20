@@ -4,6 +4,32 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-06-19 — REPLY_SEARCH burns ollama on hallucinated URLs:**
+> `reply_agent.generate_replies` (the `reply_job` ~every 2 min) passes
+> `allowed_tools=["WebSearch"]` to `run_llm`. claude/codex/gemini honor
+> that; ollama HTTP hits `/api/generate` with no tool API, so the model
+> hallucinates plausible-looking tweet URLs (Sept-2024 snowflake IDs
+> from training memory). The downstream TOO OLD guard (>48h) correctly
+> filters them, but the ~5-15s ollama call is already paid. Audit
+> 2026-06-19 bot.log + bot.log.1: **451 REPLY_SEARCH cycles / log
+> rotation** — 60% returned None, 34% returned all-hallucinated URLs
+> (Posted 0), **only 4% shipped any reply** (≈20/day total). ~500 `TOO
+> OLD, skipping` log lines and ~50-100 min/day of ollama burned for ~20
+> accidental hits. Same family as PR #55 (spacing precheck) and PR #56
+> (hotake rejectlist): when a chokepoint deterministically refuses
+> downstream, lift the rule upstream of the expensive LLM call — here,
+> upstream of the LLM call entirely. Fix: `_llm_has_websearch()` checks
+> the active provider chain (`_provider`/`_fallback_provider`); if
+> nothing in the chain is claude/codex/gemini, return None before
+> `run_llm`. Logged once per process so a switch back to claude/codex
+> resumes silently. Escape hatch `REPLY_SEARCH_FORCE=1` for tools-aware
+> local wrappers. Other reply paths (`direct_reply`, `feed_sweeper`,
+> `replyback`, `early_bird`, `mega_watch`, `btc_blitz`,
+> `engagement_targeting`) keep discovery via Safari scraping —
+> untouched. Guards:
+> `test_reply_search_skipped_when_provider_has_no_websearch`,
+> `test_reply_search_runs_when_force_env_is_set`.
+
 > **Mandate 2026-06-05 PM (CURRENT — MONETIZATION SPEC, supersedes 2026-06-04):**
 > Goal: grow @TheAIShrink into a focused, SPONSORABLE persona account
 > (subscriptions + sponsorships; ad revenue is a bonus). Baseline: ~1.3K

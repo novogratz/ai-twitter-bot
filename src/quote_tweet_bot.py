@@ -381,14 +381,22 @@ def _too_old_to_quote(t: dict) -> bool:
 
 
 def _is_us_night_hour(hour_ny: int) -> bool:
-    """True for US overnight hours (NY time) — midnight..6:59 AM.
-
-    Used by the night throttle so most overnight quote cycles skip (cheap,
-    before any Safari/LLM work) and the daily cap + fresh viral parents
-    concentrate on US waking hours. Was referenced but never defined, which
-    crashed every quote cycle with a NameError (2026-06-19).
-    """
-    return 0 <= hour_ny < 7
+    """True when the given New-York hour is in the overnight window
+    (default 23:00-07:00). The quote cycle mostly skips during these hours
+    so the daily cap + fresh viral parents concentrate on US waking hours.
+    Window is env-overridable (QUOTE_NIGHT_START / QUOTE_NIGHT_END), read at
+    call time. Restored 2026-06-19 — the call site survived a refactor that
+    dropped the definition, NameError-crashing every quote cycle."""
+    try:
+        start = int(os.environ.get("QUOTE_NIGHT_START", "23"))
+        end = int(os.environ.get("QUOTE_NIGHT_END", "7"))
+    except (TypeError, ValueError):
+        start, end = 23, 7
+    if start == end:
+        return False
+    if start < end:  # same-day window
+        return start <= hour_ny < end
+    return hour_ny >= start or hour_ny < end  # wraps midnight (e.g. 23→7)
 
 
 def run_quote_tweet_cycle():

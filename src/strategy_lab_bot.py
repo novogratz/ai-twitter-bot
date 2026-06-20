@@ -56,7 +56,7 @@ ALLOWED_PATHS = {
     "caps.MAX_HOTAKES_PER_DAY":   (2, 5),
     "caps.MAX_BREAKOUTS_PER_DAY": (0, 20),
     "caps.MAX_SPICY_PER_DAY":     (0, 20),
-    "caps.MAX_QUOTES_PER_DAY":    (20, 120),
+    "caps.MAX_QUOTES_PER_DAY":    (10, 30),
     "caps.MAX_RETWEETS_PER_DAY":  (8, 30),
     "caps.MAX_REPLIES_PER_CYCLE": (1, 5),
     "caps.FOLLOW_BLAST_PER_CYCLE": (20, 200),
