@@ -541,7 +541,10 @@
     "LilRoughTrade",
     "MarcBoulanger",
     "MorganLambert",
-    "VincentCouture"
+    "VincentCouture",
+    "ThomasGirard",
+    "MaximeMachuel",
+    "MaximeDemeure"
   ],
   "en": [
     "blablacar",
@@ -3704,6 +3707,21 @@
     {
       "lang": "fr",
       "handle": "VincentCouture",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasGirard",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMachuel",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDemeure",
       "added": "2026-06-20"
     }
   ]

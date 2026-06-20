@@ -4998,5 +4998,36 @@
       }
     ],
     "summary": "Un mix de v\u00e9t\u00e9rans crypto (LilRoughTrade, PierreRochard) et d'analystes actionnariats s\u00e9rieux (AlexisGalland) qui \u00e9vitent le bruit des formations \u00e0 999\u20ac. Le Qu\u00e9bec est repr\u00e9sent\u00e9 par des profils institutionnels solides."
+  },
+  {
+    "ts": "2026-06-20T12:07:56.141056",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomasGirard",
+        "region": "france",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "Ex-CTO de Doctolib, maintenant investisseur angel. Il tweette sur la tech scale-up fran\u00e7aise, SaaS et AI. Un regard interne sur ce qui marche vraiment vs ce qui fait joli sur PitchBook."
+      },
+      {
+        "handle": "MaximeMachuel",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Journaliste \u00e0 La Depeche, ex-Bloomberg. Il couvre l'adoption institutionnelle en Europe avec des analyses fines, pas du hype. Il tweet en FR et EN, mais la valeur ajout\u00e9e est l\u00e0 o\u00f9 les autres racontent des conneries."
+      },
+      {
+        "handle": "MaximeDemeure",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Tech lead chez Canoo (avant) et actuel dans la Web3/IA. Il tweet en FR, couvre l'ecosystem QC et l'IA g\u00e9n\u00e9rative avec un \u0153il technique. Rare compte QC qui sort des posts 'entrepreneuriat' g\u00e9n\u00e9ralistes pour aller dans le code/archi."
+      }
+    ],
+    "summary": "J'ai mis\u00e9 sur les profils 'briques' plut\u00f4t que les megaphones. Mistral et les experts techniques (LLM/RAG) dominent le FR IA, tandis que la crypto FR reste fragile mais port\u00e9e par des figures comme Launay et Fleury qui font de la donn\u00e9e plut\u00f4t que du bruit."
   }
 ]

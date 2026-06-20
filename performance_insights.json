@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-20T10:07:18.379592",
-  "window_7d_actions": 4034,
-  "window_24h_actions": 919,
+  "generated_at": "2026-06-20T14:07:18.327356",
+  "window_7d_actions": 4188,
+  "window_24h_actions": 889,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 3796
+      "count": 3947
     },
     {
       "pattern": "METAPHOR",
-      "count": 129
+      "count": 132
     },
     {
       "pattern": "RENAME",
@@ -45,33 +45,33 @@
     },
     {
       "hour": 11,
-      "actions": 254
+      "actions": 286
     },
     {
       "hour": 10,
-      "actions": 249
+      "actions": 282
+    },
+    {
+      "hour": 12,
+      "actions": 264
     },
     {
       "hour": 20,
       "actions": 227
-    },
-    {
-      "hour": 12,
-      "actions": 208
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2201
+      "count": 2296
     },
     {
       "topic": "Autre",
-      "count": 1577
+      "count": 1632
     },
     {
       "topic": "Bourse",
-      "count": 176
+      "count": 186
     },
     {
       "topic": "Crypto",
@@ -79,26 +79,26 @@
     },
     {
       "topic": "Spatial",
-      "count": 111
+      "count": 112
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3025
+      "count": 3168
     },
     {
       "type": "quote",
-      "count": 489
+      "count": 496
     },
     {
       "type": "retweet",
-      "count": 337
+      "count": 340
     },
     {
       "type": "quote_gif",
-      "count": 169
+      "count": 170
     },
     {
       "type": "METAPHOR",
@@ -123,18 +123,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-20T10:07:04.096521",
-      "text": "Anthropic claims 95% odds on AGI. That's a 1-in-20 chance of failure. The guy betting the house on roulette just missed the zero.",
+      "ts": "2026-06-20T14:07:03.614820",
+      "text": "Stanford dropped a framework. The real story is that it takes six months for every VC to spin it as their own seed-stage unicorn.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-20T10:06:07.789966",
-      "text": "128GB unified memory for $0/mo is basically renting a datacenter’s e-waste. The math breaks when inference latency hits 4 seconds. You didn’t save money. You bought a 4-second lag.",
+      "ts": "2026-06-20T14:06:51.601335",
+      "text": "$11 a month for electricity covers about 77 hours of H100 training.\n\nThat’s roughly 3.2 seconds of actual intelligence per billing cycle.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-20T10:02:53.424371",
-      "text": "30k/mo pour Claude, c'est comme payer une banque pour qu'elle garde tes sous. Le spread est le seul produit.",
+      "ts": "2026-06-20T14:04:51.679617",
+      "text": "GLM-5.2’s 1M context window is the new resume filter. LinkedIn Liam just spent 4 hours formatting his PDF. He’s doomed.",
       "type": "reply"
     }
   ]
