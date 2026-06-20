@@ -16965,3 +16965,37 @@ why its performing at a level where c
 However, we should absolutely lead in eve
   - https://x.com/MarioNawfal/status/2068068803691647104
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 40).
+- **@cyrilxbt** (51 likes, score 9/10) — GLM-5.2 IS THE MOST IMPRESSIVE OPEN MODEL I'VE EVER SEEN  AND IT'S NOT CLOSE.
+
+- Trails Claude Opus 4.8 by roughly 1% on the hardest agentic coding benchmarks.
+- Beats GPT-5.5 on most of them.
+- Clear
+  - https://x.com/cyrilXBT/status/2068241195453862009
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 77).
+- **@khusboot14835** (81 likes, score 8/10) — Anthropic just showed a 24-minute workshop on how to actually do prompts for Claude.
+
+Taught by the people who built it.
+
+Free. No registration. No paywall.
+
+I've seen $300 courses that don't cover wh
+  - https://x.com/KhusbooT14835/status/2068164688236679378
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 109).
+- **@shedntcare_** (29 likes, score 8/10) — Anthropic just showed a 27-minute workshop on how to actually do prompts for Claude.
+
+Taught by the people who built it.
+
+Free. No registration. No paywall.
+
+I've seen $300 courses that don't cover wh
+  - https://x.com/shedntcare_/status/2068236835151847811
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 45).
+- **@chetaslua** (25 likes, score 8/10) — The Sims one shotted by GPT-5.6 Pro 
+
+this is without codex or any coding harness , one shot entire game with logic in 48 minutes, all in one .html file.
+
+cc : @mirochill for the test 
+
+@tszzl when we
+  - https://x.com/chetaslua/status/2068251724654014591
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 35).
