@@ -16141,3 +16141,40 @@ NVIDIA系アクセラレーションと連動したAIデータセンター構築
 今年はマジで「億り人量産年」になるかも
   - https://x.com/wasurete0087/status/2068226126296834292
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 209).
+- **@paulyoungx** (13 likes, score 7/10) — NVIDIA has just released a speech recognition model with only 0.6 billion parameters.
+
+It's called Nemotron-3.5-ASR.
+It supports more than 40 languages, with real-time streaming.
+It runs solely on CPU
+  - https://x.com/PaulYoungX/status/2068214313966551134
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 19).
+- **@0x_kaize** (27 likes, score 8/10) — GLM 5.2 just beat GPT-5.5 on code - and you can run it for FREE
+
+the model that everyone will be paying $20/mo for in 6 months is currently sitting on the FREE tier
+
+what GLM 5.2 actually did:
+
+- SWE-
+  - https://x.com/0x_kaize/status/2068280759371153763
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 45).
+- **@vadimstrizheus** (207 likes, score 9/10) — BREAKING: OpenAI is rumored to be testing GPT 5.6 inside Codex.
+
+Users across X are claiming ChatGPT suddenly feels smarter, with some saying OpenAI may be quietly testing GPT-5.6 Pro inside GPT-5.5 P
+  - https://x.com/VadimStrizheus/status/2068147752077304162
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 245).
+- **@alan_earn** (59 likes, score 9/10) — zhipu just dropped their official coding IDE with glm 5.2 and it's FREE with daily 3M token 
+
+glm 5.2 is open weights (mit license), 744b moe and competes with claude opus 4.8 and gpt-5.5 on coding be
+  - https://x.com/Alan_Earn/status/2068223665268006924
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 125).
+- **@brianroemmele** (986 likes, score 8/10) — ZERO VC funding. 
+
+OVER $500M in revenue. 
+
+200 employees. 
+
+They reinventing medical imaging.
+
+They forever changed adorable non-radiation, non-ultra magnetic preventive medical scanning and made it
+  - https://x.com/BrianRoemmele/status/2067642856622412282
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1070).
