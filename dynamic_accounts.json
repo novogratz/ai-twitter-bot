@@ -507,7 +507,11 @@
     "MathieuLeblanc",
     "JulienBoutin",
     "ThomasRoulet",
-    "AlexisMauger"
+    "AlexisMauger",
+    "thomas_lemoine",
+    "MathieuDrouin_",
+    "BenoitRivard",
+    "JulienDeLattre"
   ],
   "en": [
     "blablacar",
@@ -582,7 +586,8 @@
     "Inception",
     "Luxi",
     "Ejaaz",
-    "Kanika"
+    "Kanika",
+    "Kaidu"
   ],
   "history": [
     {
@@ -3488,6 +3493,31 @@
     {
       "lang": "fr",
       "handle": "AlexisMauger",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "en",
+      "handle": "Kaidu",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomas_lemoine",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDrouin_",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitRivard",
+      "added": "2026-06-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDeLattre",
       "added": "2026-06-19"
     }
   ]

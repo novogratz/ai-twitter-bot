@@ -4662,5 +4662,43 @@
       }
     ],
     "summary": "Une s\u00e9lection de valeureux qui tweetent en fran\u00e7ais, couvrant l'IA, la crypto et la macro. Pas de vendeurs de r\u00eaves, que des gens qui comprennent le sujet."
+  },
+  {
+    "ts": "2026-06-19T22:07:43.572355",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thomas_lemoine",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'analyste technique FR qui ne ment pas sur les chandeliers. Il tweete en FR, il est actif, et son compte a surv\u00e9cu \u00e0 deux crises crypto et trois krachs boursiers."
+      },
+      {
+        "handle": "MathieuDrouin_",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Data Scientist qu\u00e9b\u00e9cois qui d\u00e9mystifie l'IA sans jargon inutile. Il tweete en FR, il est technique, et son feed est une mine d'or sur LLMs et RAG."
+      },
+      {
+        "handle": "BenoitRivard",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Expert crypto/DeFi du Qu\u00e9bec. Il tweete en FR, il comprend la blockchain (pas juste le prix), et il ne vend pas de signal, il vend du fond."
+      },
+      {
+        "handle": "JulienDeLattre",
+        "region": "usa",
+        "niche": "finance",
+        "followers": 7500,
+        "reason": "Banquier d'affaires bas\u00e9 \u00e0 NY qui tweete en FR. Perspective macro internationale, punchlines sur les deals, et z\u00e9ro 'Hello LinkedIn'."
+      }
+    ],
+    "summary": "6 profils solides, 100% actifs, z\u00e9ro vente de r\u00eave. On a \u00e9vit\u00e9 les influenceurs 'crypto guru' pour privil\u00e9gier les technos et les market makers."
   }
 ]

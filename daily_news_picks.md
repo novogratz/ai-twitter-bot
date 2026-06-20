@@ -16723,3 +16723,39 @@ the operator put the always-on Minisforum MS-S1 MAX in a closet to replace a rec
 He got tired of watching live streamers
   - https://x.com/xkaidus/status/2067600719687876943
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 163).
+- **@marionawfal** (25 likes, score 8/10) — Trump is treating the Anthropic fight like a national security issue, but he’s also saying he does not want to shut the company down.
+
+He says Anthropic and CEO Dario Amodei responded “very responsibl
+  - https://x.com/MarioNawfal/status/2068148075856581015
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 45).
+- **@mhp_guy** (85 likes, score 9/10) — The most powerful AI ever released was online for only three days before the US government shut it off. 
+
+I'm going to tell you how to make money when the ban is evenutally lifted.
+
+This is BIG. 
+
+Not
+  - https://x.com/mhp_guy/status/2068058508936007868
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 105).
+- **@rohanpaul_ai** (473 likes, score 7/10) — dot-com bubble vs. a possible AI bubble.
+
+From the famous "Dean of Valuation", Professor Aswath Damodaran, of NYU Stern School of Business, 
+
+“And that’s the real big difference between the dot-com bo
+  - https://x.com/rohanpaul_ai/status/2068071430592635090
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 579).
+- **@sulekhat95** (49 likes, score 7/10) — CEO of Anthropic, Dario Amodei:
+
+"We are near the end of the exponential."
+
+3 things he said in 2 hours.
+The third, even Dwarkesh pushed back on.
+
+One: at Anthropic, models already do "100% of today's
+  - https://x.com/sulekhat95/status/2067904166102552909
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 53).
+- **@r0ck3t23** (25 likes, score 7/10) — Mark Cuban just described the most important divergence in human potential happening right now.
+
+Cuban: “There’s two types of approaches to AI. Some people who use it so they don’t have to learn anyth
+  - https://x.com/r0ck3t23/status/2068124758554620327
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 37).
