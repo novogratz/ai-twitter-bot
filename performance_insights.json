@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-20T06:07:18.330276",
-  "window_7d_actions": 3903,
-  "window_24h_actions": 1066,
+  "generated_at": "2026-06-20T10:07:18.379592",
+  "window_7d_actions": 4034,
+  "window_24h_actions": 919,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 3669
+      "count": 3796
     },
     {
       "pattern": "METAPHOR",
-      "count": 126
+      "count": 129
     },
     {
       "pattern": "RENAME",
@@ -17,7 +17,7 @@
     },
     {
       "pattern": "EN_ANCHOR",
-      "count": 25
+      "count": 26
     },
     {
       "pattern": "DIALOGUE",
@@ -49,7 +49,7 @@
     },
     {
       "hour": 10,
-      "actions": 245
+      "actions": 249
     },
     {
       "hour": 20,
@@ -63,42 +63,42 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2107
+      "count": 2201
     },
     {
       "topic": "Autre",
-      "count": 1542
+      "count": 1577
     },
     {
       "topic": "Bourse",
-      "count": 170
+      "count": 176
     },
     {
       "topic": "Crypto",
-      "count": 166
+      "count": 167
     },
     {
       "topic": "Spatial",
-      "count": 108
+      "count": 111
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2919
+      "count": 3025
     },
     {
       "type": "quote",
-      "count": 478
+      "count": 489
     },
     {
       "type": "retweet",
-      "count": 327
+      "count": 337
     },
     {
       "type": "quote_gif",
-      "count": 165
+      "count": 169
     },
     {
       "type": "METAPHOR",
@@ -123,18 +123,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-20T06:05:58.857412",
-      "text": "X-ray diffraction misses H because hydrogen has one electron. It’s essentially a ghost in the machine.\n\nAI just taught a model to see ghosts.\n\nNow we’re paying for GPUs to find atoms nobody can touch. The SaaS seat dies before the hydrogen bond.",
+      "ts": "2026-06-20T10:07:04.096521",
+      "text": "Anthropic claims 95% odds on AGI. That's a 1-in-20 chance of failure. The guy betting the house on roulette just missed the zero.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-20T06:04:22.859535",
-      "text": "[QT] OpenAI’s $1T IPO implies a 333x multiple on Worldcoin’s $3B. @sama is pricing humanity at a discount.\n\nIs WLD the IPO put option or the dilution risk?",
-      "type": "quote"
+      "ts": "2026-06-20T10:06:07.789966",
+      "text": "128GB unified memory for $0/mo is basically renting a datacenter’s e-waste. The math breaks when inference latency hits 4 seconds. You didn’t save money. You bought a 4-second lag.",
+      "type": "reply"
     },
     {
-      "ts": "2026-06-20T06:04:10.927632",
-      "text": "27 minutes taught by builders beats $300 Udemy courses.\nthe ROI is infinite, but your attention span has a 50% dropout at minute 4.",
+      "ts": "2026-06-20T10:02:53.424371",
+      "text": "30k/mo pour Claude, c'est comme payer une banque pour qu'elle garde tes sous. Le spread est le seul produit.",
       "type": "reply"
     }
   ]
