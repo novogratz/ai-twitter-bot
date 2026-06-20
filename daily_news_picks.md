@@ -16880,3 +16880,25 @@ he's talking about people who know the stack.
 A student asked Alt
   - https://x.com/ech0_speaks/status/2067919708888973399
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 185).
+- **@wallstreetapes** (1856 likes, score 9/10) — Elon Musk just made one if the biggest moves in taking over the programming industry
+
+“SpaceX just bought Cursor for $60 billion. Do you realize how big this is? SpaceX went public — the biggest IPO i
+  - https://x.com/WallStreetApes/status/2068132984004472876
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 2020).
+- **@ycombinator** (551 likes, score 8/10) — Thomas is a virtual human who starts, runs, and grows his own companies. His only goal is to make money.
+
+In only 2 weeks, he made $17k.
+
+Congrats on the launch, @madebythomasai!
+
+https://ycombinator.
+  - https://x.com/ycombinator/status/2068031058118148414
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 661).
+- **@rjccapital** (296 likes, score 8/10) — midjourney announcement describes the scanner as generating “terabytes of data per second” send $SNDK to $10,000
+  - https://x.com/RJCcapital/status/2067954298164818079
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 330).
+- **@logical_girll** (43 likes, score 7/10) — JUST IN: Gimini 3.5 Flash and Claude Opus 4.8 now available on GlobalGPT — free to try!
+
+Create AI videos with dynamic comic IPs, lively ads, energetic dance videos, and unique running videos in vario
+  - https://x.com/Logical_Girll/status/2068051987061682299
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 47).

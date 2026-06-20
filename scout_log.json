@@ -4752,5 +4752,36 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit parisien pour ne garder que les poids lourds qui font bouger les march\u00e9s sans vendre du vent. De l'IA instit \u00e0 la crypto qu\u00e9b\u00e9coise, ce sont des comptes qui ont du sel et pas juste des followers achet\u00e9s."
+  },
+  {
+    "ts": "2026-06-20T02:07:42.377717",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RaphaelTranoy",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 48000,
+        "reason": "Ancien Coinbase Europe, le roi de la data on-chain en FR. Ses threads co\u00fbtent plus cher que 99% des groupes Telegram."
+      },
+      {
+        "handle": "PierreMazille",
+        "region": "quebec",
+        "niche": "trading",
+        "followers": 28000,
+        "reason": "Le 'trader' qui montre ses pertes. Anti-hype, focus sur le prix et le risque. Moins de 'WAGMI', plus de 'Drawdown'."
+      },
+      {
+        "handle": "JulienLaharrague",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Ex-LivewELL, expert en fintech US qui twitte en FR. Il d\u00e9cortique les mod\u00e8les \u00e9conomiques, pas les chartes."
+      }
+    ],
+    "summary": "L'IA fran\u00e7aise port\u00e9e par Mistral (Mensch) domine le segment tech, tandis que la crypto/france se repose sur le s\u00e9rieux de Tranoy. Au Quebec, Rivard et Mazille \u00e9vitent le bruit politique pour le pur trading."
   }
 ]

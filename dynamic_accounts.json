@@ -515,7 +515,9 @@
     "Bercy_Eco",
     "CryptoRacoon",
     "HiverLabs",
-    "TradezMieux"
+    "TradezMieux",
+    "RaphaelTranoy",
+    "PierreMazille"
   ],
   "en": [
     "blablacar",
@@ -591,7 +593,8 @@
     "Luxi",
     "Ejaaz",
     "Kanika",
-    "Kaidu"
+    "Kaidu",
+    "Nico"
   ],
   "history": [
     {
@@ -3542,6 +3545,21 @@
     {
       "lang": "fr",
       "handle": "TradezMieux",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "en",
+      "handle": "Nico",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelTranoy",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreMazille",
       "added": "2026-06-20"
     }
   ]
