@@ -1,12 +1,12 @@
 {
-  "ts": "2026-06-20T00:00:00.000000",
+  "ts": "2026-06-21T00:00:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 4,
-    "MAX_HOTAKES_PER_DAY": 8,
+    "MAX_NEWS_PER_DAY": 5,
+    "MAX_HOTAKES_PER_DAY": 10,
     "MAX_QUOTES_PER_DAY": 24,
     "MAX_RETWEETS_PER_DAY": 30,
-    "MAX_BREAKOUTS_PER_DAY": 20,
-    "MAX_SPICY_PER_DAY": 20,
+    "MAX_BREAKOUTS_PER_DAY": 15,
+    "MAX_SPICY_PER_DAY": 15,
     "MAX_REPLIES_PER_CYCLE": 250,
     "LIKE_BOT_PER_CYCLE": 15,
     "FOLLOW_BLAST_PER_CYCLE": 0
@@ -20,5 +20,5 @@
     "AI"
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-20 anti-spam correction: account flagged 2026-06-19; UNLIMITED MODE caps (6k retweets, 300 breakouts/spicy, 600 likes/cycle) reset to human-scale. Retweets ≤30/day, breakouts ≤20, spicy ≤20, likes ≤15/cycle. Quotes already at 24/day from PR #60. Replies remain generous (primary growth lever). PURELY AI content (AI Big Boss mandate 2026-06-18). METAPHOR > RENAME > EN_ANCHOR. Best hours: 21h and 11h UTC."
+  "rationale": "2026-06-21 growth update: METAPHOR > RENAME > EN_ANCHOR confirmed by 7-day data (147 vs 65 vs 28 fires). Followers declining 417→240 — root cause is near-zero originals (4 posts in 7 days). Raised news 4→5 and hotakes 8→10 to push more original content. Breakouts + spicy trimmed 20→15 each (lower signal-to-noise). Quotes/retweets/likes held conservative post-spam-flag (memory 2026-06-19). Best hours UTC: 21h, 11h, 10h. PURELY AI content. Rising: OpenAI IPO, Anthropic $965B, GLM-5.2 beats Fable 5, Noam Shazeer → OpenAI, xAI Colossus 220K GPU, inference cost collapse."
 }

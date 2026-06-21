@@ -1,18 +1,19 @@
-# Growth Directives — 2026-06-20
+# Growth Directives — 2026-06-21
 
-**Synthesis:** METAPHOR and RENAME dominate; replies are 75% of output and the primary growth lever — quality over volume, every post must earn its impression (account was spam-flagged; bulk automation is off).
+**Synthesis:** METAPHOR dominates all patterns and financial-framed replies drive 77% of output — the X algo weights replies 13.5× vs likes — but followers are declining (417→240) because originals run near-dark (4 posts in 7 days). Fix: more original posts anchored in exact figures, tighter financial metaphors, early replies within 5 min on big accounts.
 
 ## Apply to every tweet/reply/hot-take:
 
-- **"The real story isn't X, it's Y."** Strip PR framing, expose the incentive. One sentence, no hedge, never retell the news. Lead with why it matters economically or structurally.
-- **METAPHOR > all else.** Map the AI dynamic to a finance or ops situation in one sharp image: "Buying H100s for 2027 models on 2024 ARR is a margin call against hardware you don't own yet." Zero explanation, no punchline label.
-- **Actor + exact number + consequence, or kill the draft.** "OpenAI burns $5B/yr on compute against $3.4B ARR." No named actor, no figure = skip the draft.
-- **Threads (5–7 tweets) earn 63% more impressions than single tweets.** Use for major stories: SpaceX-Cursor $60B, GLM-5.2 vs Claude Fable 5, OpenAI IPO filing, US equity stakes in AI labs. Hook line must create curiosity gap or stop the scroll.
-- **Rotate viral formats every cycle:** "everyone's talking about X, nobody about Y" · "most people think A, actually B" · "the biggest AI story isn't X, it's Y" · "in 5 years this looks obvious" · "three things happened in AI today…"
-- **Replies: insight, prediction, or contrarian angle only.** Never "wow/great/interesting." State the implication nobody else said. "That's a PIP" / "noted" sparingly — max once every 5 replies or it loses weight.
-- **GIF on METAPHOR takes, ~1 in 3 quotes.** Native picker only. Proven queries: "this is fine", "michael jordan crying", "pablo escobar waiting", "kermit panic", "math lady".
-- **No links, no hashtags, no emojis in tweet body.** Clean text only. Links go in first reply if needed.
+- **METAPHOR first, always.** One sharp image that maps AI dynamics to finance or ops: "Buying H100s for 2027 models on 2024 ARR is a margin call against hardware you don't own yet." Zero explanation, no punchline label.
+- **"The real story isn't X, it's Y."** Strip PR framing, expose the incentive. One sentence, no hedge, never retell the news.
+- **Actor + exact number + consequence, or kill the draft.** "OpenAI burns $5B/yr against $3.4B ARR — the S-1 isn't a prospectus, it's a bridge loan with better marketing." No named actor + no exact figure = skip the draft.
+- **Rotate viral formats every 3 posts:** "everyone's talking about X, nobody about Y" · "most people think A, actually B" · "in 5 years this looks obvious" · "three things happened in AI today…"
+- **Reply fast.** The X algorithm weights early replies 13.5× per engagement unit. Fire within 5 min of Sam Altman, Dario Amodei, Jensen Huang, Karpathy, Zuck, Demis Hassabis posting. First mover wins the thread.
+- **Threads (5–7 tweets) for major stories.** They earn 60%+ more impressions. Hook = curiosity gap or contrarian claim. Use for: OpenAI IPO math, Anthropic $965B valuation vs burn rate, GLM-5.2 closing the gap on Fable 5, inference cost collapse.
+- **"PIP" / "noted" as a punchline — sparingly.** Max once every 5 replies or it loses weight entirely.
+- **No links, no hashtags, no emojis.** Clean text only. Links in first reply if needed.
 
 ## Top patterns this week: METAPHOR > RENAME > EN_ANCHOR
-## Best hours (UTC): 21h › 11h › 10h › 20h  (= 5 PM ET › 7 AM ET › 6 AM ET › 4 PM ET)
-## Rising topics: SpaceX acquires Cursor $60B · OpenAI IPO S-1 filing · US gov equity stakes in AI labs · Anthropic Mythos export ban (G7 blocked) · Claude Fable 5 beats GPT-5.5 by 13pts on FrontierMath · GLM-5.2 closes gap on closed models · AI inference cost collapse · xAI federal contract · Anthropic 300K+ business customers
+## Worst patterns (avoid): DIALOGUE · UNDERSTATEMENT
+## Best hours (UTC): 21h › 11h › 10h › 12h › 20h  (= 5 PM ET › 7 AM ET › 6 AM ET › 8 AM ET › 4 PM ET)
+## Rising topics: OpenAI IPO S-1 ($852B vs $5B/yr burn) · Anthropic $965B valuation + Colossus 220K GPU deal · Noam Shazeer joins OpenAI (Attention paper author) · GLM-5.2 beats GPT-5.5 + Claude Fable 5 on PostTrainBench · Apple Siri rebuilt on Gemini 1.2T params · xAI $7B Colossus debt stack · US gov equity stakes in AI labs · inference cost collapse · AGI 2027 scenario
