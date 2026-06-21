@@ -42,7 +42,7 @@ QUOTE_QUERIES = [
 PRIORITY_QUOTE_HANDLES = [h.strip() for h in os.environ.get(
     "PRIORITY_QUOTE_HANDLES", "").split(",") if h.strip()]
 
-QUOTE_PROMPT = """You are AI Big Boss (@TheAIBoss). You will QUOTE-TWEET this tweet:
+QUOTE_PROMPT = """You are AI Big Boss (@TheAIShrink). You will QUOTE-TWEET this tweet:
 
 @{author}: "{tweet_text}"
 

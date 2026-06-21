@@ -49,7 +49,7 @@ BREAKOUT_QUERIES = [
 ]
 
 
-BREAKOUT_PROMPT = """You are AI Big Boss (@TheAIBoss). An AI story is EXPLODING on X right now. Comment on it, ULTRA FAST, ULTRA CLEAR.
+BREAKOUT_PROMPT = """You are AI Big Boss (@TheAIShrink). An AI story is EXPLODING on X right now. Comment on it, ULTRA FAST, ULTRA CLEAR.
 
 {lang_directive}
 
