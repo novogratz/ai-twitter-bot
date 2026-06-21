@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-20T18:07:18.294807",
-  "window_7d_actions": 4334,
-  "window_24h_actions": 861,
+  "generated_at": "2026-06-20T22:07:18.349083",
+  "window_7d_actions": 4449,
+  "window_24h_actions": 818,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4090
+      "count": 4202
     },
     {
       "pattern": "METAPHOR",
-      "count": 135
+      "count": 138
     },
     {
       "pattern": "RENAME",
@@ -41,7 +41,7 @@
   "best_hours_utc": [
     {
       "hour": 21,
-      "actions": 309
+      "actions": 335
     },
     {
       "hour": 11,
@@ -57,40 +57,40 @@
     },
     {
       "hour": 20,
-      "actions": 227
+      "actions": 253
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2389
+      "count": 2465
     },
     {
       "topic": "Autre",
-      "count": 1675
+      "count": 1710
     },
     {
       "topic": "Bourse",
-      "count": 197
+      "count": 201
     },
     {
       "topic": "Crypto",
-      "count": 172
+      "count": 175
     },
     {
       "topic": "Spatial",
-      "count": 117
+      "count": 120
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3313
+      "count": 3427
     },
     {
       "type": "quote",
-      "count": 497
+      "count": 498
     },
     {
       "type": "retweet",
@@ -123,18 +123,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-20T18:04:57.737714",
-      "text": "Anthropic clipped Claude 4 mid-sentence.\n\nRLHF is the ceiling.\nToken budget hit.\nHuman feedback failed.",
+      "ts": "2026-06-20T22:07:16.125033",
+      "text": "TAO’s market cap is priced like it’s shipping inference. It’s still selling compute.\nthe degen is paying the premium for the dream.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-20T17:58:28.322143",
-      "text": "Anthropic running 90% of engineers on self-improving loops.\n\nThe other 10% are the ones who still have to pay for the compute.",
+      "ts": "2026-06-20T22:05:20.766338",
+      "text": "Quoted Tweet: \"Just Asked it to: Analyze mispriced Polymarket markets for arbitrage opportunities and find wallets using it to copy. Turned $2K into $12K overnight. Mo\"\n\nPolymarket's liquidity dries up after midnight anyway.\n\nHe didn't arbitrage. He front-ran his own sleep schedu",
       "type": "reply"
     },
     {
-      "ts": "2026-06-20T17:57:10.570465",
-      "text": "Stanford Steve thinks \"one thing\" is a strategy. Jensen knew it was a monopoly.\n\nThe VC with a podcast still can't distinguish between a trend and a tax.",
+      "ts": "2026-06-20T22:04:41.178743",
+      "text": "99.9% is just 8.76 hours of downtime a year.\n\nChatGPT's 1.8% miss isn't an outage. It's margin.",
       "type": "reply"
     }
   ]

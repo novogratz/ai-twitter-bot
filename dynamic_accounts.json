@@ -555,7 +555,24 @@
     "CryptoBourrin",
     "VincentLemoine",
     "AlexisGarnier",
-    "RomainBoulard"
+    "RomainBoulard",
+    "AlexClement",
+    "mickaelmoulin",
+    "jchd_",
+    "julesvanpoppel",
+    "MaximeVernier",
+    "thibaudmau",
+    "PierreLavoie",
+    "ReneRitchie",
+    "ThomasThoraval",
+    "LucasMallet",
+    "LionelLevy",
+    "AlexDuc",
+    "JFDeSable",
+    "MathieuLefebvre",
+    "PhilippeDerome",
+    "MaximeMeyer",
+    "MarcGauthier"
   ],
   "en": [
     "blablacar",
@@ -632,7 +649,8 @@
     "Ejaaz",
     "Kanika",
     "Kaidu",
-    "Nico"
+    "Nico",
+    "yeet"
   ],
   "history": [
     {
@@ -3788,6 +3806,96 @@
     {
       "lang": "fr",
       "handle": "RomainBoulard",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "en",
+      "handle": "yeet",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexClement",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelmoulin",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "jchd_",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "julesvanpoppel",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeVernier",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "thibaudmau",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLavoie",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ReneRitchie",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasThoraval",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasMallet",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelLevy",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexDuc",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JFDeSable",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuLefebvre",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeDerome",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMeyer",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcGauthier",
       "added": "2026-06-20"
     }
   ]

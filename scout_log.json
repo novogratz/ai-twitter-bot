@@ -5133,5 +5133,144 @@
       }
     ],
     "summary": "Un mix de g\u00e9ants de l'IA (Mistral), de v\u00e9t\u00e9rans de la crypto (CryptoBourrin) et d'analystes bourse solides. J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves pour garder les vrais acteurs."
+  },
+  {
+    "ts": "2026-06-20T18:07:49.368654",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AlexClement",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 90000,
+        "reason": "Fondateur de Grit.io. Il tweet un anglais FR-centric (avec des touches de francophonie dans sa bio/audience) sur l'infrastructure IA et les 'picks & shovels'."
+      },
+      {
+        "handle": "mickaelmoulin",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Cofondateur de Kiroz et figure montante de l'IA generative en France, il mixe analyse technique et hype tech sans vendre son ombilic."
+      },
+      {
+        "handle": "jchd_",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Le patron de Zine One. Il twitte des vues macro/tech incisives et couvre la startup fr avec un ton plus cru que le reste de la presse pro."
+      },
+      {
+        "handle": "julesvanpoppel",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Fondateur de Pika et expert ML. Il poste des threads techniques sur le video-gen et l'IA g\u00e9n\u00e9rative avec une pr\u00e9cision chirurgicale."
+      },
+      {
+        "handle": "MaximeVernier",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Le pape du Bitcoin qu\u00e9b\u00e9cois. Il tweet en FR, il est fondamentaliste, et ses prises de position sur la r\u00e9gulation sont suivies par tout le secteur."
+      },
+      {
+        "handle": "thibaudmau",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Founder d'Upstage Ventures, il postmile du pur play sur l'IA SaaS europ\u00e9enne et des insights deep-tech que les influenceurs g\u00e9n\u00e9ralistes ratent."
+      },
+      {
+        "handle": "PierreLavoie",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Co-fondateur de CoinFLEX et early adopter Bitcoin. Il balance du contenu technique et macro avec un style direct, loin du hype pur."
+      }
+    ],
+    "summary": "J'ai \u00e9vit\u00e9 les influenceurs Telegram pour me concentrer sur des builders et des analystes qui ajoutent du signal au bruit. Du pur play IA en France, du Bitcoin fondamental au Qu\u00e9bec et des infrastructures IA pour la diaspora US."
+  },
+  {
+    "ts": "2026-06-20T20:07:50.340172",
+    "raw_count": 10,
+    "kept_count": 10,
+    "accounts_added": 10,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ReneRitchie",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 130000,
+        "reason": "Le mec qui analyse Apple plus finement que ses ing\u00e9nieurs, en anglais mais avec l'esprit francophone."
+      },
+      {
+        "handle": "ThomasThoraval",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 95000,
+        "reason": "Le trader de BFMTV qui a rendu le trading accessible sans te donner l'envie de sauter par la fen\u00eatre."
+      },
+      {
+        "handle": "LucasMallet",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "Le gars qui \u00e9tait chez Coinhouse et qui couvre la DeFi comme un pro."
+      },
+      {
+        "handle": "LionelLevy",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 55000,
+        "reason": "L'ancien de Boursorama qui a fait de la vulgarisation boursi\u00e8re une forme d'art."
+      },
+      {
+        "handle": "AlexDuc",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "L'info crypto fr de r\u00e9f\u00e9rence, il tweet plus vite que le march\u00e9 ne crash."
+      },
+      {
+        "handle": "JFDeSable",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 40000,
+        "reason": "Journaliste de Boursier qui d\u00e9crypte les carnets de ch\u00e8ques de la City sans se la raconter."
+      },
+      {
+        "handle": "MathieuLefebvre",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Co-founder de Qonto et passionn\u00e9 d'IA, il balance des insights B2B qui servent aussi aux devs."
+      },
+      {
+        "handle": "PhilippeDerome",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 28000,
+        "reason": "L'\u00e9conomiste qu\u00e9b\u00e9cois qui explique l'Inflation sans te endormir sur ton ortolan."
+      },
+      {
+        "handle": "MaximeMeyer",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Expert technique IA en France, ses threads sont plus denses qu'un livre de math."
+      },
+      {
+        "handle": "MarcGauthier",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Influencer tech qu\u00e9b\u00e9cois qui parle de AI et gadgets avec un accent qui r\u00e9chauffe le c\u0153ur."
+      }
+    ],
+    "summary": "Un mix \u00e9quilibr\u00e9 entre les in\u00e9vit\u00e9s de la finance FR, des p\u00e9pites crypto et des regards ext\u00e9rieurs sur Montr\u00e9al et NY qui ne se prennent pas au s\u00e9rieux."
   }
 ]
