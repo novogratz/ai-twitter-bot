@@ -16455,3 +16455,32 @@ I warned prices would explode
 I was called crazy, a hype
   - https://x.com/AlexFinn/status/2068492081522495868
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 352).
+- **@whaletwits** (0 likes, score 8/10) — THIS IS HOW THE AI BUBBLE WILL BREAK THE S&P 500
+
+Microsoft gave OpenAI $13B.
+
+OpenAI sent it back through Azure.
+
+Microsoft booked it as revenue.
+
+Google committed $40B to Anthropic.
+
+Anthropic agree
+  - https://x.com/WhaleTwits/status/2068427416524014041
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 32).
+- **@nielsrogge** (70 likes, score 9/10) — GLM-5.2 is the literal SOTA on PostTrainBench
+
+Beating GPT-5.5 and Opus 4.8
+
+Learn more here https://paperswithcode.co/benchmark/posttrainbench…
+  - https://x.com/NielsRogge/status/2068437150434025804
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 86).
+- **@imai_eruel** (1011 likes, score 8/10) — The AI2027 scenario, written by former OpenAI researchers, seriously argues that in the endgame of the US-China AI development race, AGI and superintelligent entities will emerge in 2027...
+
+It was in
+  - https://x.com/ImAI_Eruel/status/2068273186148585765
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 1057).
+- **@alinastjoh34202** (0 likes, score 7/10) — SpaceX’s Bold Vision: Moving AI Data Centers to Space 
+SpaceX isn’t just dreaming — they’re engineering a plan to take AI infrastructure entirely off-planet. Earth data centers are slamming into walls
+  - https://x.com/AlinaStJoh34202/status/2068431327498534988
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 16).
