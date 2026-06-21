@@ -251,8 +251,15 @@ def _scrub_metadata_leaks(text: str) -> str:
     # sponsor-clean timeline). Strip trailing tag runs AND inline tags.
     text = re.sub(r"(?:\s+#\w{2,50})+\s*$", "", text)
     text = re.sub(r"\s*#(\w{2,50})\b", r" \1", text)  # inline: keep the word, drop the #
+    # NO EM/EN DASHES, EVER (operator 2026-06-21: "no m dash allowed" — one
+    # leaked live in a reply). Hard kill at the universal scrubber so every
+    # surface that scrubs (post/quote/gif) is dash-free; reply_to_tweet now
+    # scrubs too. " — " -> ". ", bare "—"/"–" -> ", ".
+    text = text.replace(" — ", ". ").replace(" – ", ". ")
+    text = text.replace("—", ", ").replace("–", ", ")
     # Collapse blank-line gaps the strip may have left behind.
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
+    text = re.sub(r" {2,}", " ", text).replace(" ,", ",").replace(" .", ".")
     return text
 
 
@@ -309,6 +316,8 @@ def post_tweet(text: str, image_path: str = None):
     intent URL doesn't support media uploads.
     """
     text = _scrub_metadata_leaks(text)
+    from .humanizer import humanize as _hz, casualize as _cz
+    text = _cz(_hz(text))  # strip AI artifacts + human texture (2026-06-21)
     text = _strip_post_urls(text)  # no external links in posts (mandate)
 
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
@@ -506,6 +515,8 @@ def post_tweet_with_gif(text: str, gif_query: str, force: bool = False) -> bool:
     same-story window correctly flags but the operator explicitly wants.
     Autonomous bots must NEVER pass force=True."""
     text = _scrub_metadata_leaks(text)
+    from .humanizer import humanize as _hz, casualize as _cz
+    text = _cz(_hz(text))  # strip AI artifacts + human texture (2026-06-21)
     text = _strip_post_urls(text)  # no external links in posts (mandate)
     from .llm_client import contains_post_unsafe_leak
     if contains_post_unsafe_leak(text):
@@ -563,6 +574,8 @@ def quote_tweet_with_gif(tweet_url: str, comment: str, gif_query: str) -> bool:
     through the full /compose/post composer (the intent URL auto-submits and
     can't open the GIF picker). The pasted tweet URL renders as a quote card."""
     comment = _scrub_metadata_leaks((comment or "").strip())
+    from .humanizer import humanize as _hz, casualize as _cz
+    comment = _cz(_hz(comment))  # strip AI artifacts + human texture (2026-06-21)
     comment = _strip_post_urls(comment)
     if not tweet_url or not comment:
         return False
@@ -833,6 +846,13 @@ def reply_to_tweet(tweet_url: str, reply_text: str):
     if not ok:
         log.info(f"[REPLY] policy skip ({why}).")
         return
+    # Replies were posting RAW (2026-06-21: an em dash + a SKIP-rationale
+    # both leaked live). Run the same cleanup as posts/quotes: scrub metadata
+    # + kill em/en dashes, strip AI artifacts, add human texture — BEFORE the
+    # content_guard checks so the final text is what gets validated.
+    reply_text = _scrub_metadata_leaks(reply_text or "")
+    from .humanizer import humanize as _hz, casualize as _cz
+    reply_text = _cz(_hz(reply_text))
     ok, why = content_guard.validate(reply_text, kind="reply")
     if not ok:
         log.info(f"[REPLY] content_guard skip ({why}): {reply_text[:120]!r}")
@@ -938,6 +958,8 @@ def quote_tweet(tweet_url: str, comment: str) -> bool:
     major chunk of the 28/day-actual vs 300-cap execution gap.
     """
     comment = _scrub_metadata_leaks((comment or "").strip())
+    from .humanizer import humanize as _hz, casualize as _cz
+    comment = _cz(_hz(comment))  # strip AI artifacts + human texture (2026-06-21)
     comment = _strip_post_urls(comment)  # no external links in quote commentary
     if not tweet_url or not comment:
         raise ValueError("quote_tweet requires both tweet_url and comment")

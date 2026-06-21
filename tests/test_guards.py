@@ -731,3 +731,32 @@ def test_skip_rationale_never_posts():
         assert not ok and "SKIP" in why, f"chokepoint let through: {t!r}"
     good = "Open weights at that price changes who can ship agents. big deal."
     assert not _is_skip(good) and content_guard.validate(good, kind="reply")[0]
+
+
+def test_no_em_dash_on_any_write_path():
+    """2026-06-21 operator: 'no m dash allowed' — one leaked live in a reply.
+    The universal scrubber must kill em/en dashes (covers post/quote/gif), and
+    humanize() must too (the reply path runs both). No '—' or '–' survives."""
+    from src.twitter_client import _scrub_metadata_leaks
+    from src.humanizer import humanize
+    for s in ["OpenAI shipped a model — and the timing is wild.",
+              "this is huge – nobody is ready",
+              "SKIP — insufficient context"]:
+        assert "—" not in _scrub_metadata_leaks(s) and "–" not in _scrub_metadata_leaks(s)
+        assert "—" not in humanize(s) and "–" not in humanize(s)
+
+
+def test_casualize_is_safe_and_human():
+    """Re-added 2026-06-21 (churn deleted it). casualize drops a final period
+    / lowercases a casual opener, never mangles, never touches ?/!/proper nouns."""
+    from src.humanizer import casualize
+    class _Fire:
+        def random(self): return 0.0
+    class _Never:
+        def random(self): return 1.0
+    assert casualize("This is the wildest demo I have seen all year.", rng=_Fire()) \
+        == "this is the wildest demo I have seen all year"
+    assert casualize("Nvidia just sold out 2027 supply.", rng=_Fire()).startswith("Nvidia")
+    assert casualize("What would you automate first?", rng=_Fire()).endswith("?")
+    txt = "The market healed by lunch."
+    assert casualize(txt, rng=_Never()) == txt

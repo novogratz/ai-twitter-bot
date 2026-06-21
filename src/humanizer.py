@@ -248,6 +248,49 @@ def smart_trim(text: str, limit: int) -> str:
     return cut.strip()
 
 
+_CASUAL_OPENERS = {
+    "the", "this", "that", "these", "those", "my", "your", "our", "their",
+    "everyone", "everybody", "nobody", "people", "when", "if", "you", "we",
+    "they", "there", "what", "how", "why", "who", "just", "so", "honestly",
+    "imagine", "watching", "wait", "not", "no", "yes", "still", "half",
+    "most", "some", "every", "one", "and", "but", "love", "can", "never",
+    "always", "real", "genuinely", "okay", "ok", "feels", "turns", "look",
+    "everything", "nothing", "maybe", "kinda", "lowkey", "basically",
+}
+_SAFE_SHORT_END = {"ai", "ok", "go", "no", "so", "up", "us", "it", "is", "on",
+                   "in", "to", "of", "at", "by", "we", "be", "me", "my", "do"}
+
+
+def casualize(text: str, rng=None) -> str:
+    """Probabilistic human-texture pass for outgoing tweets (operator
+    2026-06-21: "make it more human, I don't want people to think I'm an AI").
+    Two cheap things LLM output never does:
+      - drop the final period (~55%) when the text ends in exactly one '.'
+        and the last word can't read as truncated afterward
+      - lowercase the opening letter (~35%) when the first word is a
+        title-cased common opener (never proper nouns / tickers / ALL-CAPS)
+    Deterministic under an injected rng (tests). Touches only first + last
+    char; never alters ? ! … , multi-sentence interiors, or @handles."""
+    import random as _random
+    r = rng or _random
+    t = (text or "").rstrip()
+    if len(t) < 12:
+        return text
+    # 1. drop a single trailing period
+    if t.endswith(".") and not t.endswith("..") and r.random() < 0.55:
+        body = t[:-1].rstrip()
+        last = re.split(r"\s+", body)[-1] if body else ""
+        lc = last.strip("\"'»)]").lower()
+        if lc and lc[-1].isalnum() and (len(lc) >= 3 or lc in _SAFE_SHORT_END):
+            t = body
+    # 2. lowercase a casual title-cased opener
+    first = re.split(r"\s+", t)[0] if t else ""
+    if (first.isalpha() and first.istitle() and first.lower() in _CASUAL_OPENERS
+            and r.random() < 0.35):
+        t = t[0].lower() + t[1:]
+    return t
+
+
 def humanize(text: str) -> str:
     """Deterministic cleanup: strip AI artifacts, fix punctuation.
     No LLM call — fast and free. Returns original on short/empty input."""
