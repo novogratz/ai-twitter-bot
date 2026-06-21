@@ -760,3 +760,20 @@ def test_casualize_is_safe_and_human():
     assert casualize("What would you automate first?", rng=_Fire()).endswith("?")
     txt = "The market healed by lunch."
     assert casualize(txt, rng=_Never()) == txt
+
+
+def test_deliberate_skip_defined_and_short_circuits():
+    """2026-06-21: quote_tweet_bot imports+raises content_guard.DeliberateSkip
+    to stop the retry loop on a confident SKIP, but the class was missing ->
+    ImportError crashed EVERY quote ('cannot import name DeliberateSkip').
+    Pin: the class exists, generate_validated catches it and returns None
+    WITHOUT retrying (calls gen_fn exactly once)."""
+    from src.content_guard import DeliberateSkip, generate_validated
+    calls = {"n": 0}
+    def gen():
+        calls["n"] += 1
+        raise DeliberateSkip("model said SKIP")
+    assert generate_validated(gen, kind="quote", attempts=3) is None
+    assert calls["n"] == 1, "DeliberateSkip must short-circuit, not retry"
+    # quote_tweet_bot must import cleanly (it references the class).
+    import importlib, src.quote_tweet_bot as q; importlib.reload(q)
