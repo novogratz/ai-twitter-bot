@@ -16326,3 +16326,29 @@ Imagine stepping into a shallow pool... and just one minute later, a detailed ma
 - **@kalshi** (1693 likes, score 7/10) — JUST IN: Anthropic CEO says without “hundreds of billions in revenue” AI companies face existential risk
   - https://x.com/Kalshi/status/2068427754056364465
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 2213).
+- **@web3marmot** (0 likes, score 9/10) — THIS IS NOT NORMAL
+
+Everyone is hyping the SpaceX IPO.
+
+But almost nobody understands what they're actually buying.
+
+Musk merged a profitable Starlink business with cash-burning Starship and xAI.
+
+The
+  - https://x.com/Web3Marmot/status/2068400248582463583
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 66).
+- **@0xsero** (154 likes, score 7/10) — Rejoice fellow GPU poors GLM-5.2 GGUFs coming soon dynamic 2bit, 3bit, and 4bit 
+
+- 3bit will fit on 256GB / 2 sparks
+- 2bit will fit on 196GB / 2x 6000s
+- 4bit will fit on 384GB 
+
+Read the reasoning
+  - https://x.com/0xSero/status/2068489391983804773
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 186).
+- **@mikelongterm** (29 likes, score 7/10) — $AMD's $3,000 Long Term| Reinforcement Learning
+Not Financial Advice! DYOR! Educational Purpose only!
+
+I did not want to release this thread last year, because I didn't want to cause FOMO and Agentic
+  - https://x.com/MikeLongTerm/status/2068365704642867395
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 37).
