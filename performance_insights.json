@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-21T06:07:18.319520",
-  "window_7d_actions": 4751,
-  "window_24h_actions": 848,
+  "generated_at": "2026-06-21T10:07:18.343159",
+  "window_7d_actions": 4871,
+  "window_24h_actions": 837,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4487
+      "count": 4597
     },
     {
       "pattern": "METAPHOR",
-      "count": 153
+      "count": 161
     },
     {
       "pattern": "RENAME",
@@ -17,10 +17,10 @@
     },
     {
       "pattern": "EN_ANCHOR",
-      "count": 28
+      "count": 29
     },
     {
-      "pattern": "DIALOGUE",
+      "pattern": "UNDERSTATEMENT",
       "count": 8
     }
   ],
@@ -31,7 +31,7 @@
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 7
+      "count": 8
     },
     {
       "pattern": "DIALOGUE",
@@ -44,12 +44,12 @@
       "actions": 335
     },
     {
-      "hour": 11,
-      "actions": 286
+      "hour": 10,
+      "actions": 287
     },
     {
-      "hour": 10,
-      "actions": 282
+      "hour": 11,
+      "actions": 286
     },
     {
       "hour": 12,
@@ -63,34 +63,40 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2673
+      "count": 2747
     },
     {
       "topic": "Autre",
-      "count": 1789
+      "count": 1827
     },
     {
       "topic": "Bourse",
-      "count": 220
+      "count": 229
     },
     {
       "topic": "Crypto",
-      "count": 179
+      "count": 182
     },
     {
       "topic": "Spatial",
-      "count": 131
+      "count": 132
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Bourse",
+      "24h_rate": 0.063,
+      "7d_rate": 0.047
+    }
+  ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3689
+      "count": 3808
     },
     {
       "type": "quote",
-      "count": 515
+      "count": 516
     },
     {
       "type": "retweet",
@@ -123,18 +129,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-21T06:05:33.853534",
-      "text": "Zhang Wei built it in a month for $20. The VC who spent $3M on \"enterprise AI strategy\" is currently deleting his LinkedIn.",
+      "ts": "2026-06-21T10:05:16.310409",
+      "text": "Anthropic’s agent swarm is just labor arbitrage in silicon.\n\n300 agents doing the work of 3 juniors.\n\nThe billable hour is dead.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-21T06:05:21.646710",
-      "text": "Claude just paid $15M for a sandwich fee.\n\nThe market is telling you: if your AI agent eats your alpha for breakfast, your alpha was too thin.",
+      "ts": "2026-06-21T10:05:04.106923",
+      "text": "3 agents, 40 minutes.\n\nAnthropic is automating the intern layer.\n\nThe junior dev who takes 40 minutes to build a CRUD app just lost his first 3 years of comp.\n\nRespect the craft.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-21T06:05:09.395247",
-      "text": "Claude API cost: $20. Sale price: $550k.\n\nThe real story isn't the product. It's a $550k angel round disguised as revenue because the buyer thought the student was worth more than 5 years of engineering salary.",
+      "ts": "2026-06-21T10:04:51.433088",
+      "text": "Perplexity doesn't compete. It routes. Anthropic and OpenAI are just API line items on its P&L.\n\nThe real story is that model providers are becoming the commodities.",
       "type": "reply"
     }
   ]

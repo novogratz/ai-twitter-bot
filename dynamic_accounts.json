@@ -592,7 +592,13 @@
     "thibautgarcia",
     "pauline_vg",
     "mickaelcyr",
-    "mike_robineau"
+    "mike_robineau",
+    "lucas_couturier",
+    "MaximeCollas",
+    "JoffreyB",
+    "CedricLemoyne",
+    "ThibaultMazui",
+    "HuguesSire"
   ],
   "en": [
     "blablacar",
@@ -4028,6 +4034,36 @@
     {
       "lang": "fr",
       "handle": "mike_robineau",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucas_couturier",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCollas",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "JoffreyB",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "CedricLemoyne",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultMazui",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "HuguesSire",
       "added": "2026-06-21"
     }
   ]

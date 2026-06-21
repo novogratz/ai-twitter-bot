@@ -5459,5 +5459,88 @@
       }
     ],
     "summary": "On a chass\u00e9 les vendeurs de formation, ici c'est du concret FR/Qc'. Des engineers et des managers qui twittent pour eux-m\u00eames, pas pour les algos."
+  },
+  {
+    "ts": "2026-06-21T06:07:37.874092",
+    "raw_count": 5,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "michalborodziewicz",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "CTO de Unstructured Data, il balance des threads IA pur & dur. Pas de pub, juste du code et de la prod."
+      },
+      {
+        "handle": "lucas_couturier",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Ex-Leader Engineer chez Perplexity. Il tweete en anglais mais l'esprit est fran\u00e7ais. La r\u00e9f\u00e9rence tech US francophone."
+      },
+      {
+        "handle": "MaximeCollas",
+        "region": "france",
+        "niche": "ia",
+        "followers": 15000,
+        "reason": "CTO de DeepL. Il tweete en FR, pas de pub, des insights solides sur la traduction et l'IA."
+      },
+      {
+        "handle": "MickaelGutierrez",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 10500,
+        "reason": "Journaliste BFM Bourse. Il tweete ses trades en direct, pas de groupe VIP, juste du concret."
+      },
+      {
+        "handle": "JoffreyB",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 10000,
+        "reason": "CTO de Lystic. Il parle de scaling et de culture tech qu\u00e9b\u00e9coise. Actif et sans blabla financier."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que des CTO et des journalistes de terrain. On a du pur tech USA et du concret FR/QC."
+  },
+  {
+    "ts": "2026-06-21T08:07:43.667269",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CedricLemoyne",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 50000,
+        "reason": "C\u00e9dric Lemoyne. Pas un influencer, un trader de rue qui a fait ses preuves. Son thread sur l'analyse technique est la bible des n\u00e9o-d\u00e9butants s\u00e9rieux."
+      },
+      {
+        "handle": "ThibaultMazui",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'anti-K\u00e9vin C. Il fait le boulot des pros sans le ton pompier des newsletters \u00e0 59\u20ac. Vraiment solide sur la macro et la data."
+      },
+      {
+        "handle": "HuguesSire",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Directeur de recherche chez Mistral AI. Il poste des insights techniques bruts qui valent plus que 3 ans de 'guru' LinkedIn."
+      },
+      {
+        "handle": "MarcVandermeulen",
+        "region": "france",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "VP chez Mistral AI. Moins 'viral', plus 'insider'. Il donne le ton sur l'open-source et les LLMs avant que la presse grand public ne se m\u00e9lange les pinceaux."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 les p\u00e9pites qui tiennent la route sans faire 'guru'. Les gars de Mistral (FR/US) et les traders ind\u00e9pendants solides (FR/QC) pour \u00e9viter la soupe des influenceurs."
   }
 ]
