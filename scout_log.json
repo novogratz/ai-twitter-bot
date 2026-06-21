@@ -5369,5 +5369,50 @@
       }
     ],
     "summary": "La France domine l'IA gr\u00e2ce \u00e0 l'effet Mistral, le Qu\u00e9bec se d\u00e9fend bien en crypto avec des analystes de terrain, et les fintechs fran\u00e7aises ont enfin des voix un peu moins niaisettes sur X."
+  },
+  {
+    "ts": "2026-06-21T02:07:41.931321",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeMachet",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 145000,
+        "reason": "L'ap\u00f4tre du Bitcoin FR, twitte avec l'acidit\u00e9 d'un trader qui vient de perdre son levier mais garde son style."
+      },
+      {
+        "handle": "ThomasLefort",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 62000,
+        "reason": "Le gars qui a fait N26 France, explique la tech sans dire 'synergie'. Rare."
+      },
+      {
+        "handle": "BenjamineMazuir",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 48000,
+        "reason": "Journaliste IA US qui \u00e9crit en FR (parfois) et capte la folie des startups Silicon Valley sans les aegrettes."
+      },
+      {
+        "handle": "LudovicCaillet",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Ancien de Coinhouse, fait des threads \u00e9ducatifs qui ne donnent pas envie de dormir avant une s\u00e9ance."
+      },
+      {
+        "handle": "VincentBonn",
+        "region": "quebec",
+        "niche": "ia",
+        "followers": 8500,
+        "reason": "Le type en qui on a envie de mettre sa bourse \u00e0 Montr\u00e9al pour voir ce que l'IA va faire de nous."
+      }
+    ],
+    "summary": "Le trio de fer France (Machet, Lefort, Caillet) couvre le triptyque sacr\u00e9 Crypto/Fintech/Trad. Pour le reste, on prend les meilleurs francophones bas\u00e9s \u00e0 l'\u00e9tranger ou au Qu\u00e9bec qui font le job sans vendre leur \u00e2me sur Telegram."
   }
 ]

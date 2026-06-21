@@ -16352,3 +16352,35 @@ Not Financial Advice! DYOR! Educational Purpose only!
 I did not want to release this thread last year, because I didn't want to cause FOMO and Agentic
   - https://x.com/MikeLongTerm/status/2068365704642867395
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 37).
+- **@thestreet** (11 likes, score 7/10) — SpaceX acquires Anthropic and OpenAI rival in $60B deal
+
+Read more: https://thestreet.com/investing/stocks/spacex-acquires-anthropic-and-openai-rival-in-60b-deal?taid=6a3761d3117eb200019d316c&utm_camp
+  - https://x.com/TheStreet/status/2068544523320369261
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 13).
+- **@lechmazur** (62 likes, score 9/10) — GLM-5.2 (max) takes second place behind Claude models on the LLM Debate Benchmark!
+
+This benchmark measures how well LLMs perform in adversarial, multi-turn debates across a wide range of topics.
+
+150
+  - https://x.com/LechMazur/status/2068428300460974279
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 74).
+- **@synthwavedd** (0 likes, score 8/10) — SCOOP: After the release of Fable 5 and with GPT-5.6 looming, the mood behind the scenes at Google DeepMind is increasingly one of frustration and broad discontent over the lab's perceived fall into a
+  - https://x.com/synthwavedd/status/2068000857757741251
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 378).
+- **@m4npreet006** (12 likes, score 8/10) — FAANG didn’t die.
+
+It just got upgraded.
+
+Meta owns attention.
+Anthropic owns trust.
+NVIDIA owns compute.
+Google owns distribution.
+OpenAI owns the AI narrative.
+SpaceX owns the future.
+
+“MANGOS” soun
+  - https://x.com/m4npreet006/status/2068528118995054818
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 30).
+- **@forbes** (287 likes, score 7/10) — The planet’s billionaire population just keeps growing. Forbes counted a record 3,428 ten-figure fortunes around the globe on this year’s #ForbesBillionaires ranking, spread across 80 countries and te
+  - https://x.com/Forbes/status/2068363494731505913
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 355).

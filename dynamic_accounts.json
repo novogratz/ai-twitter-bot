@@ -582,7 +582,12 @@
     "ThomasVidal",
     "RomainDervaux",
     "SachaLobstein",
-    "VincentBretelle"
+    "VincentBretelle",
+    "MaximeMachet",
+    "ThomasLefort",
+    "BenjamineMazuir",
+    "LudovicCaillet",
+    "VincentBonn"
   ],
   "en": [
     "blablacar",
@@ -3962,6 +3967,31 @@
     {
       "lang": "fr",
       "handle": "VincentBretelle",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMachet",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasLefort",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjamineMazuir",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicCaillet",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBonn",
       "added": "2026-06-21"
     }
   ]
