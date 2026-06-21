@@ -16302,3 +16302,27 @@ One of the fastest-growing AI-powered terminals now has native Grok integration.
 Developers can link their 𝕏 Premium + Grok account, swit
   - https://x.com/MarioNawfal/status/2068200923772735673
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 188).
+
+## 2026-06-21
+- **@raytar** (602 likes, score 8/10) — My friend applied to 200 tech jobs in two years. No CS degree. No callbacks.
+
+Last month Anthropic offered him $750,000.
+
+All because of one Stanford lecture. Free on YouTube. One hour.
+
+A professor e
+  - https://x.com/Raytar/status/2068462563197636624
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 616).
+- **@gippp69** (0 likes, score 8/10) — THIS GUY OPENED A TINY PC AND SHOWED HOW A $1,800 GMKTEC EVO-X2 TURNS INTO A LOCAL AI SERVER
+
+not a cloud dashboard. not another $200/mo subscription. just one box on a desk, upgraded with storage, cl
+  - https://x.com/gippp69/status/2068353536279101603
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 64).
+- **@scitechgirl** (22 likes, score 8/10) — A 60-Second Body Scan That Sounds Like Science Fiction
+
+Imagine stepping into a shallow pool... and just one minute later, a detailed map of your entire body appears. No radiation. No giant magnets. J
+  - https://x.com/scitechgirl/status/2068511913936380293
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 26).
+- **@kalshi** (1693 likes, score 7/10) — JUST IN: Anthropic CEO says without “hundreds of billions in revenue” AI companies face existential risk
+  - https://x.com/Kalshi/status/2068427754056364465
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2213).

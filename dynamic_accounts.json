@@ -578,7 +578,11 @@
     "ThomasBouchard",
     "RaphaElRou",
     "VincentDoyon",
-    "MarcGagnon"
+    "MarcGagnon",
+    "ThomasVidal",
+    "RomainDervaux",
+    "SachaLobstein",
+    "VincentBretelle"
   ],
   "en": [
     "blablacar",
@@ -656,7 +660,8 @@
     "Kanika",
     "Kaidu",
     "Nico",
-    "yeet"
+    "yeet",
+    "0xSero"
   ],
   "history": [
     {
@@ -3933,6 +3938,31 @@
       "lang": "fr",
       "handle": "MarcGagnon",
       "added": "2026-06-20"
+    },
+    {
+      "lang": "en",
+      "handle": "0xSero",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasVidal",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDervaux",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "SachaLobstein",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBretelle",
+      "added": "2026-06-21"
     }
   ]
 }

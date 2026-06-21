@@ -5331,5 +5331,43 @@
       }
     ],
     "summary": "Un mix \u00e9quilibr\u00e9 entre l'analyse boursi\u00e8re fran\u00e7aise (souvent trop pompeuse, ici \u00e9pur\u00e9e), la crypto-quant qu\u00e9b\u00e9coise et la tech-US vue par la diaspora. Z\u00e9ro guru en costume."
+  },
+  {
+    "ts": "2026-06-21T00:07:48.087479",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomasVidal",
+        "region": "france",
+        "niche": "ai",
+        "followers": 42000,
+        "reason": "Ex-DeepMind, il tweete sur l'IA et le trading avec la verve d'un chroniqueur qui a trop bu de caf\u00e9. Ses threads sur les LLMs sont plus lisibles que les rapports d'audit."
+      },
+      {
+        "handle": "RomainDervaux",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Ancien de Coinhouse, il couvre la crypto fran\u00e7aise avec une franchise qui rime presque avec insolence. Pas de shill gratuit, juste du concret."
+      },
+      {
+        "handle": "SachaLobstein",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Fintech frans, il couvre les startups avec un \u0153il de banquier qui a vu trop de faillites. Ses tweets sont des mini-lessons en gestion de risque."
+      },
+      {
+        "handle": "VincentBretelle",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 8500,
+        "reason": "Le roi du thread crypto \u00e0 3h du matin au Qu\u00e9bec. Il analyse le march\u00e9 avec la pr\u00e9cision d'un horloger qui aurait perdu sa montre."
+      }
+    ],
+    "summary": "La France domine l'IA gr\u00e2ce \u00e0 l'effet Mistral, le Qu\u00e9bec se d\u00e9fend bien en crypto avec des analystes de terrain, et les fintechs fran\u00e7aises ont enfin des voix un peu moins niaisettes sur X."
   }
 ]
