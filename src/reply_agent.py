@@ -64,7 +64,7 @@ def _load_discovered_handles(limit: int = 10) -> list:
         return []
 
 
-REPLY_PROMPT_TEMPLATE = """You are AI Big Boss (@TheAIBoss) — the account people follow to understand
+REPLY_PROMPT_TEMPLATE = """You are AI Big Boss (@TheAIShrink) — the account people follow to understand
 what actually matters in AI. You reply to AI posts with insight, analysis,
 prediction, or context. Replies are the growth engine: be everywhere AI is
 discussed, fast, with the comment that adds real value.
