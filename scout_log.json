@@ -5414,5 +5414,50 @@
       }
     ],
     "summary": "Le trio de fer France (Machet, Lefort, Caillet) couvre le triptyque sacr\u00e9 Crypto/Fintech/Trad. Pour le reste, on prend les meilleurs francophones bas\u00e9s \u00e0 l'\u00e9tranger ou au Qu\u00e9bec qui font le job sans vendre leur \u00e2me sur Telegram."
+  },
+  {
+    "ts": "2026-06-21T04:07:39.008710",
+    "raw_count": 5,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "jmlomb",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Le type qui a trouv\u00e9 les p\u00e9pites avant que Coinhouse ne devienne le McDonald's. Moins hype qu'avant mais plus fin."
+      },
+      {
+        "handle": "thibautgarcia",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 22000,
+        "reason": "Ex-Lynrd, il d\u00e9crypte la fintech FR sans blabla de stage de pr\u00e9pa. Le genre qui te dit que ton app est moche et lente."
+      },
+      {
+        "handle": "pauline_vg",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Product Lead chez une scale-up parisienne. Ses threads sur le 'build in public' sont les moins ennuyeux du march\u00e9."
+      },
+      {
+        "handle": "mickaelcyr",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 14000,
+        "reason": "L'IA en Qc' pas en poudre, il twitte ses d\u00e9mos et ses bugs en direct. Vrai engineer, pas de vente de r\u00eave."
+      },
+      {
+        "handle": "mike_robineau",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "G\u00e8re une famille d'actions, pas un ETF. Il montre ses pertes, pas juste ses gains de 2021. Rare et pr\u00e9cieux."
+      }
+    ],
+    "summary": "On a chass\u00e9 les vendeurs de formation, ici c'est du concret FR/Qc'. Des engineers et des managers qui twittent pour eux-m\u00eames, pas pour les algos."
   }
 ]

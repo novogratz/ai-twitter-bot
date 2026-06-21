@@ -587,7 +587,12 @@
     "ThomasLefort",
     "BenjamineMazuir",
     "LudovicCaillet",
-    "VincentBonn"
+    "VincentBonn",
+    "jmlomb",
+    "thibautgarcia",
+    "pauline_vg",
+    "mickaelcyr",
+    "mike_robineau"
   ],
   "en": [
     "blablacar",
@@ -666,7 +671,8 @@
     "Kaidu",
     "Nico",
     "yeet",
-    "0xSero"
+    "0xSero",
+    "TECTONE"
   ],
   "history": [
     {
@@ -3992,6 +3998,36 @@
     {
       "lang": "fr",
       "handle": "VincentBonn",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "en",
+      "handle": "TECTONE",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "jmlomb",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "thibautgarcia",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "pauline_vg",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelcyr",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "mike_robineau",
       "added": "2026-06-21"
     }
   ]

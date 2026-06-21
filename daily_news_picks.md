@@ -16423,3 +16423,35 @@ Weekend launches are the best!!
 - create 3D model
   - https://x.com/bindureddy/status/2068569320968626422
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 151).
+- **@imai_eruel** (459 likes, score 9/10) — Next week, there’s a possibility that Google’s Gemini 3.5 Pro (the June release is confirmed), OpenAI’s GPT-5.6 (it’s been a while since 5.5, and there’ve been some promising rumors lately), and the r
+  - https://x.com/ImAI_Eruel/status/2068586101867180271
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 485).
+- **@mark_k** (946 likes, score 9/10) — Thursday @OpenAI:
+
+- gpt-5.6
+- gpt-5.6 Pro
+  - https://x.com/mark_k/status/2068370725958730190
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 1068).
+- **@fammetax** (16 likes, score 8/10) — Wall Street just renamed the Magnificent 7
+
+Meet MANGOS: Meta $META, Anthropic, Nvidia $NVDA, Google $GOOGL, OpenAI, SpaceX $SPCX
+  - https://x.com/fammetaX/status/2068479889699987662
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 42).
+- **@vicky_grok** (31 likes, score 8/10) — Anthropic just showed a 24-minute workshop on how to actually do prompts for Claude.
+
+Taught by the people who built it.
+
+Free. No registration. No paywall.
+
+I've seen $300 courses that don't cover wh
+  - https://x.com/vicky_grok/status/2068553961557336236
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 43).
+- **@alexfinn** (0 likes, score 8/10) — 5 months ago I spent $30,000 on 3 Mac Studios, 2 Mac Minis, and a DGX Spark
+
+I went all in on local LLMs and encouraged others to do the same
+
+I warned prices would explode
+
+I was called crazy, a hype
+  - https://x.com/AlexFinn/status/2068492081522495868
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 352).
