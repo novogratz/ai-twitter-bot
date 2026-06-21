@@ -16384,3 +16384,42 @@ SpaceX owns the future.
 - **@forbes** (287 likes, score 7/10) — The planet’s billionaire population just keeps growing. Forbes counted a record 3,428 ten-figure fortunes around the globe on this year’s #ForbesBillionaires ranking, spread across 80 countries and te
   - https://x.com/Forbes/status/2068363494731505913
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 355).
+- **@theraymyers** (137 likes, score 9/10) — Here are 20 companies that will dominate the AI age:
+
+1. Micron
+
+While AI runs on GPUs, they are only as powerful as the memory that feeds them.
+
+Every new generation of AI models demands dramatically
+  - https://x.com/TheRayMyers/status/2068389748784103702
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 147).
+- **@valueinideas** (110 likes, score 9/10) — $RKLB
+
+Rocket Lab mentioned on Fox Business yet again:
+
+"How does Rocket Lab and Firefly benefit from SpaceX?"
+
+"The space economy has been underpriced. I don't think a lot of people give GPS the cred
+  - https://x.com/ValueInIdeas/status/2068485656465273330
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 114).
+- **@roundtablespace** (116 likes, score 9/10) — GLM 5.2 BEATS GPT-5.5 ON CODING PERFORMANCE
+
+The model is reported to outperform GPT-5.5 on multiple coding benchmarks while remaining available on a free tier for developers to test and use
+
+Benchmar
+  - https://x.com/RoundtableSpace/status/2068472714948440494
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 160).
+- **@marionawfal** (74 likes, score 9/10) — Strait of Hormuz traffic data over the last 24 hours appears to confirm the closure announced by Iran due to repeated attacks by Israel on Lebanon
+
+Writer: Ian
+  - https://x.com/MarioNawfal/status/2068587219317637307
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 114).
+- **@bindureddy** (131 likes, score 8/10) — AI Agents Can Now Embed  Any App And Create Complex Visualizations
+
+Weekend launches are the best!!
+
+- AI agents can embed and use any app
+- do detailed system and engineering design
+- create 3D model
+  - https://x.com/bindureddy/status/2068569320968626422
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 151).
