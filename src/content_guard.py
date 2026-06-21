@@ -389,6 +389,16 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     if not text or not text.strip():
         return (False, "empty")
 
+    # SKIP-rationale leak (restored 2026-06-21 — the churn dropped this guard
+    # and the bot posted "SKIP — insufficient context. The tweet is a
+    # meta-statement..." as a LIVE reply to @Graphseo). Generators check for
+    # SKIP, but a model that appends reasoning ("SKIP — ...", "SKIP.",
+    # "SKIPPING this") slips past an exact-match check. ANY text OPENING with
+    # skip* is a refusal, never content — refuse it at the chokepoint so every
+    # surface is covered. (A legit lede starting "Skipping..." is sacrificed.)
+    if re.match(r"^[\s\"'«(\[]*skip", text, re.IGNORECASE):
+        return (False, "SKIP-rationale leak (model refusal as content)")
+
     if BAN_SHORT_TERM_PRICE_TARGETS and has_near_term_price_target(text):
         return (False, "near-term price target (price + near-term timeframe)")
 

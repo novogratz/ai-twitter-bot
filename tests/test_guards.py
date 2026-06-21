@@ -714,3 +714,20 @@ def test_no_undefined_names_in_src():
     undef = [l for l in out.splitlines() if "undefined name" in l
              and "_PROJECT_ROOT" not in l]
     assert not undef, "undefined names in src/:\n" + "\n".join(undef)
+
+
+def test_skip_rationale_never_posts():
+    """2026-06-21: the bot posted 'SKIP — insufficient context. The tweet is
+    a meta-statement...' as a LIVE reply to @Graphseo. The churn had dropped
+    content_guard's skip-rationale guard, and the reply generators used exact
+    =='SKIP' checks that miss a reasoned 'SKIP — ...'. Pin BOTH layers."""
+    from src import content_guard
+    from src.direct_reply import _is_skip
+    for t in ["SKIP — insufficient context. The tweet is a meta-statement.",
+              "SKIP.", "SKIP: off-niche", "Skipping this one",
+              "skip - too vague", '"SKIP — no angle"']:
+        assert _is_skip(t), f"_is_skip missed: {t!r}"
+        ok, why = content_guard.validate(t, kind="reply")
+        assert not ok and "SKIP" in why, f"chokepoint let through: {t!r}"
+    good = "Open weights at that price changes who can ship agents. big deal."
+    assert not _is_skip(good) and content_guard.validate(good, kind="reply")[0]

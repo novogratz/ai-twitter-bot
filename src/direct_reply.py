@@ -87,6 +87,14 @@ _NICHE_PATTERN = re.compile(
 def _is_on_niche(text: str) -> bool:
     return bool(_NICHE_PATTERN.search(text))
 
+
+def _is_skip(text: str) -> bool:
+    """True when the model returned a SKIP refusal — exact 'SKIP' OR a
+    reasoned 'SKIP — ...' / 'SKIP.' / 'SKIPPING this one' (2026-06-21: the
+    bot posted 'SKIP — insufficient context...' live because the check was
+    exact == 'SKIP'). Any text opening with skip* is a refusal."""
+    return not text or bool(re.match(r"^[\s\"'«(\[]*skip", text.strip(), re.IGNORECASE))
+
 _FR_MARKERS = re.compile(r"\b(le|la|les|un|une|des|du|de|d|dans|pour|sur|avec|pas|est|sont|mais|aussi|très|tout|cette|qui|que|quand|comme|entre|depuis|faire|faut|peut|encore|selon|même|après|avant|bien|sans|je|j|tu|il|elle|on|nous|vous|ils|elles|me|te|se|ce|c|notre|votre|leur|ces|son|ses|sa|mon|ton|mes|tes|enfin|ptdr|mdr|franchement|grave|voila|voilà|jours|délivrance|refait|marché|bourse|taux|année|être|avoir|rien|jamais|toujours)\b", re.IGNORECASE)
 _FR_ACCENT_RE = re.compile(r"[àâçéèêëîïôûùüÿœæ]", re.IGNORECASE)
 _EN_MARKERS = re.compile(r"\b(the|this|that|with|from|just|was|were|are|is|you|your|market|portfolio|ride|ticket|line|bug|beta|test|rug|deliverance|original|inevitable|called|expected)\b", re.IGNORECASE)
@@ -327,7 +335,7 @@ def _generate_graphseo_reply(tweet_text: str) -> str | None:
     if result.returncode != 0 or not result.stdout:
         return None
     text = unwrap_text(result.stdout).strip()
-    if not text or text.upper() == "SKIP":
+    if _is_skip(text):
         return None
     # Sentence-aware cap — a blind [:220] slice published a mid-sentence
     # reply on 2026-06-05 and got the account publicly called out as AI.
@@ -408,7 +416,7 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
         reply = unwrap_text(result.stdout)
         if not reply: return None
         if reply.startswith('"') and reply.endswith('"'): reply = reply[1:-1]
-        if reply.upper().strip() == "SKIP": return None
+        if _is_skip(reply): return None
         return reply
     except Exception: return None
 
