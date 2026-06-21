@@ -19,6 +19,17 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_DIR"
 
+# DISABLED 2026-06-21 (operator: "remove the self improvement stuff").
+# Autonomous Claude self-improve runs repeatedly dropped helper functions
+# and crashed live cycles with NameErrors (_is_us_night_hour, max_replies,
+# _watch_pool, _scan_pool, the follow_blast merge). The loop is off. This
+# script now no-ops unless explicitly forced with AUTO_IMPROVE_FORCE=1, so a
+# stray launchd/cron invocation can never auto-edit the code again.
+if [ "${AUTO_IMPROVE_FORCE:-0}" != "1" ]; then
+  echo "[auto_improve] disabled (operator 2026-06-21). Set AUTO_IMPROVE_FORCE=1 to run manually."
+  exit 0
+fi
+
 LOG_FILE="$REPO_DIR/auto_improve.log"
 LOCK_FILE="$REPO_DIR/.auto_improve_running"
 

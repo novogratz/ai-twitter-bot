@@ -130,6 +130,7 @@ def run_follow_blast_cycle():
     if remaining <= 0:
         log.info(f"[FOLLOW-BLAST] Daily cap reached ({FOLLOW_BLAST_DAILY_CAP}) — skipping.")
         return
+    from .twitter_client import scrape_x_search, follow_account
     query = random.choice(BLAST_QUERIES)
     log.info(f"[FOLLOW-BLAST] Topic search (top tab): {query}")
     try:
@@ -140,20 +141,28 @@ def run_follow_blast_cycle():
         return
 
     # Authors from URLs (ground truth — never the scraped display name),
-    # biggest parent post first.
+    # biggest parent post first. (2026-06-21: de-mangled — a bad merge had
+    # spliced the retired blind-click path in here, leaving `candidates`
+    # never built and orphan refs to _click_follow_buttons/clicked/time.)
     def _likes(t):
         try:
             return int(t.get("likes") or 0)
         except (TypeError, ValueError):
             return 0
 
-        # Two batches with a small pause so the action doesn't burst.
-        cycle_cap = min(get_live_cap("FOLLOW_BLAST_PER_CYCLE", FOLLOWS_PER_CYCLE), remaining)
-        first = cycle_cap // 2 + cycle_cap % 2
-        second = cycle_cap - first
-        clicked = _click_follow_buttons(first)
-        time.sleep(random.uniform(2.0, 3.5))
-        clicked += _click_follow_buttons(second)
+    candidates, seen = [], set()
+    own = (BOT_HANDLE or "").lower()
+    for t in sorted(tweets or [], key=_likes, reverse=True):
+        url = t.get("url") or ""
+        try:
+            handle = url.split("x.com/")[1].split("/")[0]
+        except (IndexError, AttributeError):
+            continue
+        h = handle.lower()
+        if not handle or h in seen or h == own:
+            continue
+        seen.add(h)
+        candidates.append(handle)
 
     cycle_cap = min(get_live_cap("FOLLOW_BLAST_PER_CYCLE", FOLLOWS_PER_CYCLE), remaining)
     followed = 0
@@ -165,10 +174,10 @@ def run_follow_blast_cycle():
         if follow_account(handle):
             followed += 1
 
-    state["count"] = int(state.get("count") or 0) + max(0, clicked)
+    state["count"] = int(state.get("count") or 0) + followed
     _save_daily_state(state)
     log.info(
-        f"[FOLLOW-BLAST] Followed {clicked} accounts on '{query}' "
+        f"[FOLLOW-BLAST] Followed {followed} big account(s) on '{query}' "
         f"({state['count']}/{FOLLOW_BLAST_DAILY_CAP} today)."
     )
 
