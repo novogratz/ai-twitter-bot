@@ -397,7 +397,12 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
         author_key = (author or "").lower().lstrip("@")
         model = PRIORITY_REPLY_MODEL if author_key in _VIP_REPLY_ACCOUNTS_LC else REPLY_MODEL
         label = "DIRECT_REPLY_VIP" if author_key in _VIP_REPLY_ACCOUNTS_LC else "DIRECT_REPLY"
-        result = run_llm(prompt, model, label=label)
+        # Fast reply provider (Haiku) + tight timeout + cwd=/tmp so the
+        # claude CLI doesn't reload the repo CLAUDE.md each call (~50s->~8s).
+        # Shared by early_bird + mega_watch (they import this function).
+        from .config import REPLY_LLM_PROVIDER
+        result = run_llm(prompt, model, label=label,
+                         force_provider=REPLY_LLM_PROVIDER, timeout=60, cwd="/tmp")
         if result.returncode == LLM_RATE_LIMIT_CODE: return _LLM_RATE_LIMITED
         if result.returncode != 0: return None
         reply = unwrap_text(result.stdout)

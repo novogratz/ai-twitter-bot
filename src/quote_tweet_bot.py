@@ -332,7 +332,7 @@ def _generate_quote(author: str, tweet_text: str):
         # that under Claude Sonnet timed out 7+ cycles/day mid-generation,
         # each burning ~3 min on retries + fallback. Match the other
         # PROFILE_LLM_PROVIDER callers (NEWS, HOTAKE, SPICY, BREAKOUT).
-        result = run_llm(prompt, QUOTE_MODEL, label="QUOTE", force_provider=PROFILE_LLM_PROVIDER)
+        result = run_llm(prompt, QUOTE_MODEL, label="QUOTE", force_provider=PROFILE_LLM_PROVIDER, cwd="/tmp")
         if result.returncode != 0:
             return None
         out = unwrap_text(result.stdout)
