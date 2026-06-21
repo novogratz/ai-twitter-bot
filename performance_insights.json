@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-21T02:07:18.307322",
-  "window_7d_actions": 4597,
-  "window_24h_actions": 859,
+  "generated_at": "2026-06-21T06:07:18.319520",
+  "window_7d_actions": 4751,
+  "window_24h_actions": 848,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4339
+      "count": 4487
     },
     {
       "pattern": "METAPHOR",
-      "count": 147
+      "count": 153
     },
     {
       "pattern": "RENAME",
@@ -63,42 +63,42 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2569
+      "count": 2673
     },
     {
       "topic": "Autre",
-      "count": 1746
+      "count": 1789
     },
     {
       "topic": "Bourse",
-      "count": 212
+      "count": 220
     },
     {
       "topic": "Crypto",
-      "count": 177
+      "count": 179
     },
     {
       "topic": "Spatial",
-      "count": 123
+      "count": 131
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3560
+      "count": 3689
     },
     {
       "type": "quote",
-      "count": 505
+      "count": 515
     },
     {
       "type": "retweet",
-      "count": 343
+      "count": 353
     },
     {
       "type": "quote_gif",
-      "count": 175
+      "count": 180
     },
     {
       "type": "METAPHOR",
@@ -123,18 +123,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-21T02:03:50.253179",
-      "text": "OpenAI burn is $5B/yr. Musk wants UBI while their runway lasts 3 years.\n\nDeflation isn't a feature. It's just their Q3 guidance before they run out of cash.",
+      "ts": "2026-06-21T06:05:33.853534",
+      "text": "Zhang Wei built it in a month for $20. The VC who spent $3M on \"enterprise AI strategy\" is currently deleting his LinkedIn.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-21T02:03:34.477578",
-      "text": "Nvidia at $4T. That is the guy at the party who drank all the champagne and insists he is fine to drive.",
+      "ts": "2026-06-21T06:05:21.646710",
+      "text": "Claude just paid $15M for a sandwich fee.\n\nThe market is telling you: if your AI agent eats your alpha for breakfast, your alpha was too thin.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-21T02:03:09.855195",
-      "text": "Deepseek dropped frontier quality to zero. the moat wasn't intelligence, it was compute arbitrage.\n\nthe margin is now speed.",
+      "ts": "2026-06-21T06:05:09.395247",
+      "text": "Claude API cost: $20. Sale price: $550k.\n\nThe real story isn't the product. It's a $550k angel round disguised as revenue because the buyer thought the student was worth more than 5 years of engineering salary.",
       "type": "reply"
     }
   ]
