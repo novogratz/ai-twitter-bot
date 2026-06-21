@@ -3,6 +3,7 @@
 Strips AI artifacts (em dashes, robotic openers, double punctuation) with
 pure Python rules. Fast, free, and predictable.
 """
+import random
 import re
 
 from .logger import log
@@ -148,7 +149,7 @@ GIF_GUIDE_BLOCK = """GIF SEARCH VOCABULARY — match the emotion, pick the icon:
 - EXCEPTIONALLY GOOD / huge win → [GIF: jonah hill excited] / [GIF: vince mcmahon] / [GIF: leonardo dicaprio clapping] / [GIF: chef kiss]
 - boss move / victory lap        → [GIF: wolf of wall street] / [GIF: leonardo dicaprio cheers] / [GIF: salute]
 - market bleeding / pain         → [GIF: michael jordan crying] / [GIF: ben affleck smoking] / [GIF: this is fine]
-- unbothered boss / "noted"      → [GIF: this is fine] / [GIF: robert downey jr eye roll] / [GIF: unbothered]
+- calm in chaos (therapist core) → [GIF: this is fine] / [GIF: keep calm]
 - suspicion / "sure about that"  → [GIF: futurama fry suspicious] / [GIF: john cena are you sure]
 - waiting forever                → [GIF: pablo escobar waiting] / [GIF: skeleton waiting]
 - panic / FOMO                   → [GIF: kermit panic] / [GIF: surprised pikachu]

@@ -56,6 +56,22 @@ MAX_AGE_MIN = 4
 MAX_REPLIES_PER_CYCLE = 2
 
 
+def _watch_pool() -> list:
+    """The mega-account watch list. Restored 2026-06-21 — the helper was
+    dropped in a refactor while the call site stayed, NameError-crashing
+    every cycle. Curator-tracked handles (if available) fold in so the
+    list isn't purely static; falls back to MEGA_ACCOUNTS alone."""
+    pool = list(MEGA_ACCOUNTS)
+    try:
+        from .account_curator import tracked_handles
+        for h in tracked_handles(limit=10) or []:
+            if h and h not in pool:
+                pool.append(h)
+    except Exception:
+        pass
+    return pool
+
+
 def run_mega_watch_cycle():
     """Pick 5 mega accounts at random, reply to any fresh tweet."""
     replied = load_replied()
@@ -91,7 +107,7 @@ def run_mega_watch_cycle():
             # OUR status (because we replied to that mega tweet). Without
             # checking url_handle, the bot was replying to its own past
             # replies in the @sama thread. Confirmed in engagement_log:
-            # MEGA/sama source replying to x.com/AIBossGPT/status/...
+            # MEGA/sama source replying to x.com/TheAIShrink/status/...
             if author == _OWN_HANDLE or url_handle == _OWN_HANDLE:
                 continue
             text = (t.get("text") or "").strip()

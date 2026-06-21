@@ -665,3 +665,52 @@ def test_reply_wrapper_calls_cycle_with_no_undefined_args():
     assert "max_replies=max_replies" not in inspect.getsource(
         direct_reply.safe_run_direct_reply_cycle)
     assert len(inspect.signature(direct_reply.run_direct_reply_cycle).parameters) == 0
+
+
+def test_reply_scan_pool_helpers_defined():
+    """2026-06-21 startup crash wave: autonomous self-improve runs dropped
+    helper functions while leaving call sites — mega_watch_bot._watch_pool
+    and early_bird_bot._scan_pool both NameError-crashed every cycle (the
+    reply engines), so the bot 'barely sent replies'. Pin both helpers
+    exist and return a non-empty account pool."""
+    from src.mega_watch_bot import _watch_pool, MEGA_ACCOUNTS
+    from src.early_bird_bot import _scan_pool, EARLY_BIRD_ACCOUNTS
+    assert _watch_pool(), "mega _watch_pool empty"
+    assert _scan_pool(), "early_bird _scan_pool empty"
+    assert set(MEGA_ACCOUNTS).issubset(set(_watch_pool()))
+    assert set(EARLY_BIRD_ACCOUNTS).issubset(set(_scan_pool()))
+
+
+def test_follow_blast_cycle_has_no_undefined_helpers():
+    """2026-06-21: a bad merge spliced the retired blind-click path into
+    run_follow_blast_cycle, leaving `candidates` unbuilt and orphan refs to
+    _click_follow_buttons/clicked/time → NameError. Pin the function body
+    builds `candidates` and routes through follow_account, no dead refs."""
+    import inspect
+    from src import follow_blast_bot as fb
+    body = inspect.getsource(fb.run_follow_blast_cycle)
+    assert "candidates" in body and "follow_account(" in body
+    # the retired blind-click symbols must not be CALLED in the body
+    code_lines = [l for l in body.splitlines() if not l.strip().startswith("#")]
+    code = "\n".join(code_lines)
+    assert "_click_follow_buttons(" not in code, "blind-click path still live"
+
+
+def test_no_undefined_names_in_src():
+    """2026-06-21 meta-guard: the self-improve loop kept shipping NameError
+    regressions (dropped helpers / mangled merges). Run pyflakes over src/
+    and fail on ANY undefined name except the one known-guarded sentinel
+    (twitter_client _PROJECT_ROOT, wrapped in `if "_PROJECT_ROOT" in
+    globals()`). Catches the whole bug class at CI time."""
+    import subprocess, sys, os
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    try:
+        out = subprocess.run([sys.executable, "-m", "pyflakes",
+                              os.path.join(root, "src")],
+                             capture_output=True, text=True, timeout=120).stdout
+    except Exception:
+        import pytest
+        pytest.skip("pyflakes not installed")
+    undef = [l for l in out.splitlines() if "undefined name" in l
+             and "_PROJECT_ROOT" not in l]
+    assert not undef, "undefined names in src/:\n" + "\n".join(undef)

@@ -9,13 +9,11 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_DIR"
 
-# Load the self-improve-loop knobs from .env so it's the single control
-# surface (operator 2026-06-17: "enable the self improve in the env"). Only
-# these three keys are pulled into the shell — the bot's Python loads the
-# full .env itself. Trailing comments stripped; simple KEY=VALUE only.
-if [ -f "$REPO_DIR/.env" ]; then
-  eval "$(grep -E '^(ENABLE_SELF_IMPROVE_LOOP|SELF_IMPROVE_INTERVAL_HOURS|SELF_IMPROVE_WARMUP_SECONDS)=' "$REPO_DIR/.env" | sed 's/[[:space:]]*#.*$//' | tr -d '"')"
-fi
+# (Self-improvement loop removed 2026-06-21 — operator: "remove the self
+# improvement stuff, just keep the old stuff." The autonomous Claude
+# auto_improve runs kept dropping helper functions and crashing live cycles
+# with NameErrors. The launchd agent is disabled and auto_improve.sh is
+# gated off; this script just runs the bot, nothing else.)
 
 # Make sure no other instance is already running (would race on Safari).
 if pgrep -f "python.*main.py" >/dev/null; then

@@ -113,6 +113,22 @@ EARLY_BIRD_AGE_MAX_MIN = 18
 EARLY_BIRD_MAX_REPLIES_PER_CYCLE = 15
 
 
+def _scan_pool() -> list:
+    """The early-bird scan list. Restored 2026-06-21 — the helper was dropped
+    in a refactor while the call site stayed, NameError-crashing every cycle.
+    Curator-tracked handles (if available) fold in; falls back to the static
+    EARLY_BIRD_ACCOUNTS list alone."""
+    pool = list(EARLY_BIRD_ACCOUNTS)
+    try:
+        from .account_curator import tracked_handles
+        for h in tracked_handles(limit=20) or []:
+            if h and h not in pool:
+                pool.append(h)
+    except Exception:
+        pass
+    return pool
+
+
 def run_early_bird_cycle():
     """One scan: pick a few mega accounts, reply to ANY fresh tweet found."""
     replied = load_replied()

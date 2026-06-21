@@ -24,6 +24,7 @@ hook, the source, and a "video angle" suggestion the operator can
 hand directly to a YouTube voiceover.
 """
 import csv
+import re
 import json
 import os
 import traceback
@@ -50,7 +51,6 @@ _AI = re.compile(
     re.IGNORECASE,
 ) if False else None  # placeholder, defined below
 
-import re
 _RE_AI = re.compile(
     r"\b(ai|ia|llm|gpt|claude|chatgpt|gemini|llama|mistral|nvidia|nvda|"
     r"openai|anthropic|deepmind|hugging\s?face|datacenter|gpu|tpu|"
@@ -285,7 +285,7 @@ def _build_brief() -> str:
         "- 30s hook: the most surprising number or quote of the day.\n"
         "- 2min context: the 2-3 biggest stories in that theme.\n"
         "- 1min angle: what no other YT channel is saying about it.\n"
-        "- 30s call-to-action: comment + subscribe + the bot's @AIBossGPT handle.\n"
+        "- 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.\n"
     )
     out.append("")
     out.append(f"*Generated {datetime.now().isoformat(timespec='seconds')}*")
