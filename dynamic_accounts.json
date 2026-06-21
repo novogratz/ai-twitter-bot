@@ -603,7 +603,10 @@
     "MathieuGirard",
     "AlexDrouin_",
     "ThalesM",
-    "AlexandreDrouin"
+    "AlexandreDrouin",
+    "LionelBouissou",
+    "ThomasHernandez",
+    "DavidLussier"
   ],
   "en": [
     "blablacar",
@@ -4094,6 +4097,21 @@
     {
       "lang": "fr",
       "handle": "AlexandreDrouin",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelBouissou",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasHernandez",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "DavidLussier",
       "added": "2026-06-21"
     }
   ]

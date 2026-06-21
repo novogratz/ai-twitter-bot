@@ -5597,5 +5597,36 @@
       }
     ],
     "summary": "On a filtr\u00e9 le bruit des 'guru' pour ne garder que les architectes du march\u00e9 : les founders de Mistral, les VC de la HEC et les analystes techniques qui font bouger les lignes sans vendre de cours \u00e0 99\u20ac."
+  },
+  {
+    "ts": "2026-06-21T14:07:50.186974",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LionelBouissou",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Boursorama. Il balance l'info brute sur les actions fran\u00e7aises avec le cynisme d'un trader qui a vu trop de bulles \u00e9clater. Moins de 'coach', plus de 'pro'."
+      },
+      {
+        "handle": "ThomasHernandez",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Cr\u00e9ateur de CryptoGrowth. Il analyse la macro-crypto comme un chirurgien. Pas de vente de r\u00eave, juste des cycles et des on-chain metrics."
+      },
+      {
+        "handle": "DavidLussier",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 12000,
+        "reason": "Analyste march\u00e9 au Qu\u00e9bec. Il poste des threads sur les indices et la Fed avec une clart\u00e9 su\u00e9doise. Pour le c\u00f4t\u00e9 bourse/finance solide."
+      }
+    ],
+    "summary": "Un mix de fondateurs tech (Mistral), de pros de la bourse (Boursorama) et de la rel\u00e8ve crypto (Gouel, Derome). Z\u00e9ro vendeur de r\u00eave, que des gens qui font ou analysent. Le Qu\u00e9bec est bien repr\u00e9sent\u00e9 pour ne pas rester en France."
   }
 ]
