@@ -736,7 +736,10 @@ def main():
         log.info("Retweet bot: amplifying viral AI posts every 3 min (short cycles, cap via MAX_RETWEETS_PER_DAY).")
         scheduler.add_job(
             safe_run_retweet_cycle,
-            trigger=IntervalTrigger(minutes=2),
+            # 2026-06-21: 2min -> 15min. Bare retweets are low-value for this
+            # account; on the single-Safari pipeline that time is better spent
+            # on replies/quotes/posts. Frees the lock for the money surfaces.
+            trigger=IntervalTrigger(minutes=15),
             id="retweet_job",
             max_instances=1,
         )
