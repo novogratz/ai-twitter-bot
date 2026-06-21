@@ -28,6 +28,16 @@ from typing import Callable, Optional, Tuple
 from .config import BAN_SHORT_TERM_PRICE_TARGETS, CONTENT_VALIDATION_RETRIES, _PROJECT_ROOT
 from .logger import log
 
+
+class DeliberateSkip(Exception):
+    """Raised by a generator when the model returned a confident SKIP/refusal.
+    generate_validated catches it and stops IMMEDIATELY (no retry) — a
+    deliberate refusal won't change on a re-roll of the same prompt, so
+    burning the remaining attempts is waste. Restored 2026-06-21: the class
+    was missing while quote_tweet_bot imported+raised it -> ImportError
+    crashed EVERY quote ('cannot import name DeliberateSkip')."""
+
+
 # --- near-duplicate detection (no posting the same story twice) -----------
 # The LLM kept re-posting the same news in slightly different words (e.g. 4
 # Microsoft/OpenAI/quantum variants). URL dedup missed it because the wording
@@ -445,6 +455,10 @@ def generate_validated(
     for i in range(max(1, n)):
         try:
             draft = gen_fn()
+        except DeliberateSkip:
+            # Confident refusal — won't change on retry. Stop now.
+            log.info(f"{tag}deliberate SKIP — refusing, no retry.")
+            return None
         except Exception as e:  # generator blew up — treat as a failed attempt
             last_reason = f"generator error: {e}"
             continue
