@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-20T22:07:18.349083",
-  "window_7d_actions": 4449,
-  "window_24h_actions": 818,
+  "generated_at": "2026-06-21T02:07:18.307322",
+  "window_7d_actions": 4597,
+  "window_24h_actions": 859,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4202
+      "count": 4339
     },
     {
       "pattern": "METAPHOR",
-      "count": 138
+      "count": 147
     },
     {
       "pattern": "RENAME",
@@ -17,7 +17,7 @@
     },
     {
       "pattern": "EN_ANCHOR",
-      "count": 26
+      "count": 28
     },
     {
       "pattern": "DIALOGUE",
@@ -63,42 +63,42 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2465
+      "count": 2569
     },
     {
       "topic": "Autre",
-      "count": 1710
+      "count": 1746
     },
     {
       "topic": "Bourse",
-      "count": 201
+      "count": 212
     },
     {
       "topic": "Crypto",
-      "count": 175
+      "count": 177
     },
     {
       "topic": "Spatial",
-      "count": 120
+      "count": 123
     }
   ],
   "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3427
+      "count": 3560
     },
     {
       "type": "quote",
-      "count": 498
+      "count": 505
     },
     {
       "type": "retweet",
-      "count": 340
+      "count": 343
     },
     {
       "type": "quote_gif",
-      "count": 170
+      "count": 175
     },
     {
       "type": "METAPHOR",
@@ -123,18 +123,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-20T22:07:16.125033",
-      "text": "TAO’s market cap is priced like it’s shipping inference. It’s still selling compute.\nthe degen is paying the premium for the dream.",
+      "ts": "2026-06-21T02:03:50.253179",
+      "text": "OpenAI burn is $5B/yr. Musk wants UBI while their runway lasts 3 years.\n\nDeflation isn't a feature. It's just their Q3 guidance before they run out of cash.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-20T22:05:20.766338",
-      "text": "Quoted Tweet: \"Just Asked it to: Analyze mispriced Polymarket markets for arbitrage opportunities and find wallets using it to copy. Turned $2K into $12K overnight. Mo\"\n\nPolymarket's liquidity dries up after midnight anyway.\n\nHe didn't arbitrage. He front-ran his own sleep schedu",
+      "ts": "2026-06-21T02:03:34.477578",
+      "text": "Nvidia at $4T. That is the guy at the party who drank all the champagne and insists he is fine to drive.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-20T22:04:41.178743",
-      "text": "99.9% is just 8.76 hours of downtime a year.\n\nChatGPT's 1.8% miss isn't an outage. It's margin.",
+      "ts": "2026-06-21T02:03:09.855195",
+      "text": "Deepseek dropped frontier quality to zero. the moat wasn't intelligence, it was compute arbitrage.\n\nthe margin is now speed.",
       "type": "reply"
     }
   ]
