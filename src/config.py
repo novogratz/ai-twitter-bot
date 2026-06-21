@@ -93,6 +93,13 @@ QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "clau
 # to "ollama"/empty to send profile surfaces back through the local model.
 PROFILE_LLM_PROVIDER = os.environ.get("PROFILE_LLM_PROVIDER", "claude").strip() or None
 
+# Reply-firehose provider (2026-06-21 — operator: "bot is super slow").
+# Replies ran through the local 35B ollama model (10-180s each) with a DEAD
+# model name + a 600s timeout = the throughput killer. Force replies onto a
+# FAST cloud model (Haiku) so the highest-volume surface keeps up. Set to
+# "ollama"/empty to send replies back local.
+REPLY_LLM_PROVIDER = os.environ.get("REPLY_LLM_PROVIDER", "claude").strip() or None
+
 # No budget limits — the bot calls the LLM freely.
 
 ENABLE_AI_MAINTENANCE = True

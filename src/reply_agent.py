@@ -209,6 +209,7 @@ def generate_replies(recent_topics=None, already_replied=None):
     # between concurrent CLI sessions. Running from /tmp gives each call a
     # neutral CWD with no CLAUDE.md / git repo to leak in. Hit 7
     # hallucinations between 16:00-19:34 (2026-04-27) → escalation threshold.
+    from .config import REPLY_LLM_PROVIDER
     result = run_llm(
         prompt,
         REPLY_MODEL,
@@ -216,6 +217,8 @@ def generate_replies(recent_topics=None, already_replied=None):
         allowed_tools=["WebSearch"],
         cwd="/tmp",
         structured_output=True,
+        force_provider=REPLY_LLM_PROVIDER,
+        timeout=90,
     )
     if result.returncode != 0:
         log.info(f"[REPLY] CLI error: {result.stderr[:200]}")
