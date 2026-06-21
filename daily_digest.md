@@ -567,3 +567,13 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top reply targets: @MarioNawfal=33, @TheAIBigBoss=31, @BrianRoemmele=14, @Reuters=12, @Cointelegraph=11
 
 **Followers we follow** (running total): 46
+
+## 2026-06-20
+
+**Activity** — total actions: 829
+  - by type: reply=744, quote=41, retweet=27, quote_gif=17
+  - top sources: SEARCH-HOT=641, RETWEET_QT=37, RETWEET_REPLY=29, RETWEET=27, FEED-SWEEP-FEED=26, FEED-SWEEP-FOLLOWING=24, GIF=17, HOT_QUOTE=4
+  - comedy patterns: METAPHOR=22, EN_ANCHOR=2
+  - top reply targets: @TheAIBigBoss=36, @MarioNawfal=29, @RoundtableSpace=11, @rohanpaul_ai=10, @BrianRoemmele=10
+
+**Followers we follow** (running total): 48

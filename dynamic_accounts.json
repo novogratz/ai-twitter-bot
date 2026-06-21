@@ -572,7 +572,13 @@
     "MathieuLefebvre",
     "PhilippeDerome",
     "MaximeMeyer",
-    "MarcGauthier"
+    "MarcGauthier",
+    "ThomasLarsson",
+    "BabakNia",
+    "ThomasBouchard",
+    "RaphaElRou",
+    "VincentDoyon",
+    "MarcGagnon"
   ],
   "en": [
     "blablacar",
@@ -3896,6 +3902,36 @@
     {
       "lang": "fr",
       "handle": "MarcGauthier",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasLarsson",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "BabakNia",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBouchard",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaElRou",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDoyon",
+      "added": "2026-06-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcGagnon",
       "added": "2026-06-20"
     }
   ]

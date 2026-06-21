@@ -5272,5 +5272,64 @@
       }
     ],
     "summary": "Un mix \u00e9quilibr\u00e9 entre les in\u00e9vit\u00e9s de la finance FR, des p\u00e9pites crypto et des regards ext\u00e9rieurs sur Montr\u00e9al et NY qui ne se prennent pas au s\u00e9rieux."
+  },
+  {
+    "ts": "2026-06-20T22:07:48.283986",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomasLarsson",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'anti-Jean-Jacques. Son style direct et ses positions claires sur la croissance vs value font de lui le roi du ratio engagement/followers en France."
+      },
+      {
+        "handle": "BabakNia",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Co-fondateur de Bitvavo, il balance des analyses macro crypto brutales, sans filtre et sans 'signal' \u00e0 vendre. Un pur analyste."
+      },
+      {
+        "handle": "ThomasBouchard",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Bas\u00e9 \u00e0 NYC, il twitte en fran\u00e7ais sur la tech US. Son regard ext\u00e9rieur sur les GAFA et l'IA est \u00e0 la fois lucide et impitoyable."
+      },
+      {
+        "handle": "RaphaElRou",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour la bourse longue date. Il balance des perles de sagesse sans jargon inutile, loin des guru en formation."
+      },
+      {
+        "handle": "VincentDoyon",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 18000,
+        "reason": "Journaliste \u00e9conomique pointu au Devoir. Ses threads sur les march\u00e9s et la tech sont du renseignement civil de haut vol."
+      },
+      {
+        "handle": "NathalieBrossard",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Sp\u00e9cialiste crypto au Journal de Montr\u00e9al, elle d\u00e9m\u00eale les projets blockchain du bruit publicitaire avec un sarcasme naturel."
+      },
+      {
+        "handle": "MarcGagnon",
+        "region": "usa",
+        "niche": "trading",
+        "followers": 9000,
+        "reason": "Trader pro vivant aux States, il partage sa routine et ses setups avec une honn\u00eatet\u00e9 d\u00e9sarmante. Pas de 'guru', que du beurre."
+      }
+    ],
+    "summary": "Un mix \u00e9quilibr\u00e9 entre l'analyse boursi\u00e8re fran\u00e7aise (souvent trop pompeuse, ici \u00e9pur\u00e9e), la crypto-quant qu\u00e9b\u00e9coise et la tech-US vue par la diaspora. Z\u00e9ro guru en costume."
   }
 ]
