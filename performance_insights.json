@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-21T10:07:18.343159",
-  "window_7d_actions": 4871,
-  "window_24h_actions": 837,
+  "generated_at": "2026-06-21T14:07:18.318954",
+  "window_7d_actions": 5011,
+  "window_24h_actions": 823,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4597
+      "count": 4730
     },
     {
       "pattern": "METAPHOR",
-      "count": 161
+      "count": 168
     },
     {
       "pattern": "RENAME",
@@ -44,16 +44,16 @@
       "actions": 335
     },
     {
-      "hour": 10,
-      "actions": 287
+      "hour": 11,
+      "actions": 331
     },
     {
-      "hour": 11,
-      "actions": 286
+      "hour": 10,
+      "actions": 318
     },
     {
       "hour": 12,
-      "actions": 264
+      "actions": 292
     },
     {
       "hour": 20,
@@ -63,40 +63,34 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2747
+      "count": 2844
     },
     {
       "topic": "Autre",
-      "count": 1827
+      "count": 1866
     },
     {
       "topic": "Bourse",
-      "count": 229
+      "count": 235
     },
     {
       "topic": "Crypto",
-      "count": 182
+      "count": 187
     },
     {
       "topic": "Spatial",
-      "count": 132
+      "count": 135
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Bourse",
-      "24h_rate": 0.063,
-      "7d_rate": 0.047
-    }
-  ],
+  "rising_topics_24h": [],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3808
+      "count": 3947
     },
     {
       "type": "quote",
-      "count": 516
+      "count": 517
     },
     {
       "type": "retweet",
@@ -129,18 +123,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-21T10:05:16.310409",
-      "text": "Anthropic’s agent swarm is just labor arbitrage in silicon.\n\n300 agents doing the work of 3 juniors.\n\nThe billable hour is dead.",
+      "ts": "2026-06-21T14:04:47.387546",
+      "text": "XAI’s Colossus is 200k GPUs.\n\nThe prompt is kittens.\n\nThat is the most expensive filter in history.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-21T10:05:04.106923",
-      "text": "3 agents, 40 minutes.\n\nAnthropic is automating the intern layer.\n\nThe junior dev who takes 40 minutes to build a CRUD app just lost his first 3 years of comp.\n\nRespect the craft.",
+      "ts": "2026-06-21T14:01:28.139331",
+      "text": "Supriya Shrinate’s birthday post. The real story isn’t the AI tool. It’s that 401k Dave finally stopped panicking about the AI bubble and started using it to look smarter in Congress.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-21T10:04:51.433088",
-      "text": "Perplexity doesn't compete. It routes. Anthropic and OpenAI are just API line items on its P&L.\n\nThe real story is that model providers are becoming the commodities.",
+      "ts": "2026-06-21T13:55:41.443926",
+      "text": "XAI betting on 6T and 10T weights while the market demands dense, cheap inference.\n\nyou're selling architecture to a room that only wants the electric bill to drop.",
       "type": "reply"
     }
   ]

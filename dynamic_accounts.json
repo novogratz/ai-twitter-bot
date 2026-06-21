@@ -598,7 +598,12 @@
     "JoffreyB",
     "CedricLemoyne",
     "ThibaultMazui",
-    "HuguesSire"
+    "HuguesSire",
+    "thibaultmaury",
+    "MathieuGirard",
+    "AlexDrouin_",
+    "ThalesM",
+    "AlexandreDrouin"
   ],
   "en": [
     "blablacar",
@@ -4064,6 +4069,31 @@
     {
       "lang": "fr",
       "handle": "HuguesSire",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "thibaultmaury",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuGirard",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexDrouin_",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThalesM",
+      "added": "2026-06-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexandreDrouin",
       "added": "2026-06-21"
     }
   ]

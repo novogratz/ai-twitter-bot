@@ -5542,5 +5542,60 @@
       }
     ],
     "summary": "J'ai creus\u00e9 les p\u00e9pites qui tiennent la route sans faire 'guru'. Les gars de Mistral (FR/US) et les traders ind\u00e9pendants solides (FR/QC) pour \u00e9viter la soupe des influenceurs."
+  },
+  {
+    "ts": "2026-06-21T10:07:39.081671",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thibaultmaury",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 95000,
+        "reason": "L'ancien PDG de Coinhouse, il mixe analyse on-chain et macro avec une plume directe. Pas dans le hype, dans le fond."
+      },
+      {
+        "handle": "MathieuGirard",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 32000,
+        "reason": "G\u00e9rant de fonds, il d\u00e9cortique les cycles BTC/ETH avec un style p\u00e9dagogique mais sans piperine. Un des rares \u00e0 rester pertinent sur les micro-caps."
+      },
+      {
+        "handle": "AlexDrouin_",
+        "region": "quebec",
+        "niche": "ia",
+        "followers": 15000,
+        "reason": "Directeur IA chez Deloitte Canada, il tweete la vraie adoption entreprise. Moins 'tech bro', plus 'CEO ready'."
+      }
+    ],
+    "summary": "Le champ FR crypto/bourse est satur\u00e9 de vendeurs de r\u00eave ; ces profils ont surv\u00e9cu aux cycles en parlant de m\u00e9triques r\u00e9elles. Le Qu\u00e9bec offre des perles IA plus 'institutionnelles' que les hypes am\u00e9ricaines."
+  },
+  {
+    "ts": "2026-06-21T12:07:40.549922",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThalesM",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'incontournable de l'analyse technique et des ETF en FR. Pas vendeur de r\u00eaves, juste des donn\u00e9es."
+      },
+      {
+        "handle": "AlexandreDrouin",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 8500,
+        "reason": "Fintech & VC qu\u00e9b\u00e9coise. Twitte sur les startups s\u00e9rieuses, pas sur le prix du Bitcoin."
+      }
+    ],
+    "summary": "On a filtr\u00e9 le bruit des 'guru' pour ne garder que les architectes du march\u00e9 : les founders de Mistral, les VC de la HEC et les analystes techniques qui font bouger les lignes sans vendre de cours \u00e0 99\u20ac."
   }
 ]
