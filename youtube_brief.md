@@ -1,16 +1,15 @@
-# YouTube brief — 2026-06-18
+# YouTube brief — 2026-06-22
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **735**
-- reply: **646**
-- quote: **53**
-- quote_gif: **17**
-- hotake: **9**
-- post: **8**
-- retweet: **2**
+- Total actions logged: **1077**
+- reply: **882**
+- retweet: **136**
+- quote: **39**
+- quote_gif: **13**
+- post: **7**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -25,12 +24,14 @@
 - **40 likes / 13348 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 - **1 likes / 23 views** — Anthropic’s top models now open source. @OpenAI is about to look like they’re selling water at a drowning pool
 - **1 likes / 13 views** — Brand manager: "we're adding AI to everything" 60% of customers: "we're leaving" Brand manager: "adding that to our AI-powered insights dashboard"
-- **0 likes / 33 views** — Fomo isn't an investment thesis. It's a receipt for future regret. $SPCX isn't a stock. It's a waiting room ticket.  https://x.com/Gemini/status/2063980615905472924…
+
+### Crypto
+
+- **1 likes / 44 views** — six reasons to exit in six months and nobody left. I don't treat Bitcoin holders, I study them  https://x.com/AshCrypto/status/2067876526759063717…
 
 ### Bourse
 
 - **1 likes / 37 views** — The timeline treating a four-letter expletive like an earnings beat  https://x.com/TheBTCTherapist/status/2065740784666562681…
-- **0 likes / 9 views** — A $2.17T IPO isn't an exit. It’s the final lesson in a 20-year finance class. You didn’t miss the boat; you just forgot the tuition.  https://x.com/PolymarketMoney/status/2063999699632193658…
 
 ### Other
 
@@ -38,49 +39,64 @@
 - **1 likes / 50 views** — my patients have never cared this much about world peace
 - **1 likes / 108 views** — so Fable 5 wasn't a product launch. it was a response
 - **1 likes / 80 views** — $CRWV after the Cramer mention:
+- **0 likes / 32 views** — Public disagreement delivered with "no judgment, mistakes happen" energy. That's not drama, that's a healthy family. The labs keeping each other honest is the safety layer nobody prices in.
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-06-08
-- **@calvinfroedge** (263 likes, score 9/10) — Always a good sign when Korea's second largest stock immediately crashes 8% upon announcing an Nvidia partnership 
+## 2026-06-22
+- **@sawyermerritt** (175 likes, score 9/10) — SpaceX is set to launch its first Starfall Demo mission this Tuesday aboard its Falcon 9 rocket. 
 
-Literally Huang pumping and eating friend chicken isn't enough to stop the crash
-  - https://x.com/calvinfroedge/status/2063777153808777680
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 289).
+The mission will test a new cargo return vehicle (pictured below) designed to bring materials back to
+  - https://x.com/SawyerMerritt/status/2068897865456332807
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 201).
+- **@igus_ai** (55 likes, score 9/10) — The S&P 500 trades at 22x forward P/E
+
+Here are 10 stocks that trade cheaper than that
+
+1. Nvidia $NVDA: 21x
+  - https://x.com/igus_ai/status/2068829657089085945
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 83).
+- **@cyrilxbt** (30 likes, score 8/10) — GPT-5.6 PRO JUST GENERATED A COMPLETE 3D HOUSE INSIDE A SINGLE HTML FILE IN 30 MINUTES.
+
+No engine. No build pipeline. Pure WebGL2 in one file you open directly in a browser.
+
+The structure is coheren
+  - https://x.com/cyrilXBT/status/2068902867059233220
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 38).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_FOLLOWING/Crypto Rover]** BREAKING:  BlackRock sells $30,770,000 worth of Bitcoin.
-  - https://x.com/cryptorover/status/2067470344546402476
-- **[X_HOME/BITCOINLFG®]** JUST IN  
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/IncomeSharks]** Pay attention to multi year breakouts in industries that heavily benefit from AI that experienced their round one hype cycle already sitting at lows ready to ex
+  - https://x.com/IncomeSharks/status/2068786921409773951
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Za]** $CRWV
 
-BLACKROCK JUST BOUGHT $16.3 MILLION WORTH OF $BITCOIN.
+“The U.S. government has taken a stake in the great AMERICAN AI company CoreWeave. Incredible company, tremendous compute. 
 
-WALL STREET’S ACCUMULATION CONTINUES.
-  - https://x.com/bitcoinlfgo/status/2067468849931485432
-- **[X_HOME/The Bitcoin Historian]** WHILE YOU'RE SCARED, THE UAE ROYAL FAMILY NOW OWNS OVER $740,000,000 WORTH OF #BITCOIN
+Just like Intel, we’re going
+  - https://x.com/ZaStocks/status/2068741480882098244
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Chubby]** Lecun is back. tl;dr huge risk of bubble bursting soon
 
-OIL MONEY IS BUYING THE DIP
-  - https://x.com/pete_rizzo_/status/2067469101522424063
-- **[X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Abhi]** One of the more obvious new themes is robotics and automation. (Replies ) 
+"The prices are going up of those AI services, but the cost of running them is going down, but not nearl
+  - https://x.com/kimmonismus/status/2068785890353160226
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Esen Ermiş Ertürk]** Fusion is no longer just an energy story. It is the strategic foundation of the AI age.
 
-However, it’s still extremely early in its evolution.
+The first nation to commercialize scalable fusion power will gain far m
+  - https://x.com/EsenErmisErturk/status/2068751611951034769
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Cointelegraph]** ELON MUSK: “AI probably exceeds the sum of all human intelligence in 4 or 5 years.”
+  - https://x.com/Cointelegraph/status/2068856623578140765
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Za]** AI will have the biggest impact on healthcare.
 
-So far many investors are foc
-  - https://x.com/KryptonCEO/status/2067470483755311375
-- **[X_HOME/Midnight Capital]** Search has been accelerating past 3 quarters on a YoY basis, there’s growing evidence that AI is enhancing Search monetization not hurting it - YT is growing ni
-  - https://x.com/Midnight_Captl/status/2067454162900754870
-- **[X_FOLLOWING/Midnight Capital]** Search has been accelerating past 3 quarters on a YoY basis, there’s growing evidence that AI is enhancing Search monetization not hurting it - YT is growing ni
-  - https://x.com/Midnight_Captl/status/2067454162900754870
-- **[X_SEARCH/live/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Tao Outsider]** $TAO Bittensor Subnet 22 - Desearch
+As a result, the trading and investing opportunities in this group will be enormous.
 
-This is the kind of subnet build I like to see: useful products, updated tooling, a clear developer surface, experiments ou
-  - https://x.com/TaoOutsider/status/2067470925566517524
-- **[X_HOME/The AI Therapist]** Google cloud is growing 22% YoY but still only 6% of revenue. alts are betting on the moat while gogles is quietly building the pipes
-  - https://x.com/TheAIShrink/status/2067469805314068802
+It’s coming.
+  - https://x.com/ZaStocks/status/2068885061949145184
+- **[X_FOLLOWING/Crypto Rover]** BREAKING:  US SENATE TO FINALIZE THE #BITCOIN AND CRYPTO CLARITY ACT THIS WEEK.
+  - https://x.com/cryptorover/status/2068905917437890699
+- **[X_HOME/Crypto Rover]** BREAKING:  US SENATE TO FINALIZE THE #BITCOIN AND CRYPTO CLARITY ACT THIS WEEK.
+  - https://x.com/cryptorover/status/2068905917437890699
 
 ## 🎬 Suggested video angles
 
@@ -91,4 +107,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-18T00:55:09*
+*Generated 2026-06-22T00:08:01*
