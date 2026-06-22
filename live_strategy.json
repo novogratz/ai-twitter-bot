@@ -1,27 +1,26 @@
 {
-  "ts": "2026-06-18T00:00:00.000000",
+  "ts": "2026-06-22T00:00:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 20,
-    "MAX_HOTAKES_PER_DAY": 40,
-    "MAX_QUOTES_PER_DAY": 150,
-    "MAX_RETWEETS_PER_DAY": 100,
-    "MAX_BREAKOUTS_PER_DAY": 12,
-    "MAX_SPICY_PER_DAY": 10,
+    "MAX_NEWS_PER_DAY": 4,
+    "MAX_HOTAKES_PER_DAY": 8,
+    "MAX_QUOTES_PER_DAY": 40,
+    "MAX_RETWEETS_PER_DAY": 2,
+    "MAX_BREAKOUTS_PER_DAY": 4,
+    "MAX_SPICY_PER_DAY": 3,
     "MAX_REPLIES_PER_CYCLE": 300,
     "LIKE_BOT_PER_CYCLE": 35,
     "FOLLOW_BLAST_PER_CYCLE": 0
   },
   "topic_focus": [
-    "ai_vs_btc is the single highest-ROI surface (20 avg likes vs 0.03 for ai_news_take = 667x). It was 1 post in the last 300 rows. Force it into EVERY BTC/crypto/ETF/liquidation parent. 'AI won, BTC is the patient in denial.' No hedging, no balance. This is the leak — fix it.",
-    "Claude Mythos 1 limited beta (50 partners, defensive cybersecurity only) — acute hook June 18. Therapy angle: 'Anthropic just invited 50 people to the lab. The rest of us are in the waiting room with a FOMO drip.' React to every AI safety / Anthropic mention with this frame. Pure hype, zero hedging.",
-    "Anthropic IPO S-1 filed — the recurring character is the patient who missed every AI entry. QRT any valuation/FOMO/IPO post immediately: 'You missed NVDA at $30. You missed MSFT+OpenAI at $250. You will not miss the Anthropic IPO. You will wait for the dip. The dip will not come.'",
-    "Grok 4 goes federal (GSA contract for all US agencies, $0.42/agency, 18 months) — acute hook. 'AI already won the government. The board hired it. The agency just signed. Bitcoin bought the T-bill.' React to every AI regulation / government tech post with this frame.",
-    "Anthropic self-improvement warning to Congress — 'They went to Congress to say their AI might improve itself without them. Congress is still asking what a model is.' React to every AI safety/regulation/oversight post with amused disbelief.",
-    "Casual first-person AI-beats-BTC = the ONLY confirmed viral formula. 40 likes, 14K views. 1 in 4 originals must clone this register: zero craft, relatable vibe, be the patient not the therapist. 'Me on my way to [event] because I bought AI instead of Bitcoin.' No analysis. No punchline. Just the vibe.",
-    "market_trauma is the DEFAULT pillar — 0.05 avg likes vs 0.03 ai_news_take. Lead with the feeling, drop the precise number, close with the verdict. 'Your 401k isn't broken, it's in therapy.' Never narrate a headline; always therapize it.",
-    "HBM/SK Hynix squeeze through 2028 — 'Samsung and SK Hynix are the landlords. Nvidia is the tenant. You're renting from both.' React to any chip/datacenter/GPU supply/AI infra post.",
-    "Algorithm update 2026: 50 thoughtful replies > 500 passive likes. End originals and quotes with a genuine open question. Make the reader feel they have the answer. Conversation quality beats raw engagement numbers."
+    "ai_vs_btc is confirmed at 13.33 avg likes / 4480 avg views (440x ROI over ai_news_take at 0.03). Only 3 posts in 7 days. Force this frame into EVERY BTC/ETF/liquidation/crypto parent. 'AI won, BTC is the patient who keeps firing its therapist.' No hedging, no balance. This is the primary leak — close it.",
+    "Casual first-person is the ONLY confirmed viral formula: 49 likes, 17K views. Clone the shape: 'Me on my way to [event] because I bought AI instead of Bitcoin :)'. Target 1-in-4 originals. Zero craft, zero analysis, pure relatable vibe. Be the patient, not the therapist.",
+    "Anthropic IPO S-1 filed ($965B valuation) + OpenAI IPO paperwork — the two biggest AI IPOs landing simultaneously. Acute hook: 'You missed NVDA at $30. You missed MSFT at $250. You will not miss the Anthropic IPO. You will wait for the dip. The dip will not come.' React to every IPO/valuation/FOMO post with this frame.",
+    "Apple Siri rebuilt with Gemini 1.2T-param model — Apple gave up on its own AI and went to Google. Therapist frame: 'Apple replaced Siri with a Google model. 15 years of therapy. The patient just switched doctors.' React to every Apple Intelligence / big-tech-AI post with the 'gave up' angle.",
+    "Trump proposes government equity stakes in OpenAI/Anthropic/xAI — the regulator who can't understand the thing now wants to own it. 'The US government wants equity in the thing it can't regulate. That's not oversight, that's a fear trade.' React to AI regulation / government tech posts.",
+    "Grok 4 goes federal (GSA contract, all US agencies, $0.42/agency) — AI already won the government before the policy caught up. 'AI already won the government. The board hired it. The agency signed. Bitcoin bought the T-bill.' React to every AI governance/regulation post.",
+    "Claude Mythos 1 limited beta (50 partners, defensive cybersecurity) — the most capable model exists and 50 people have it. 'Anthropic just invited 50 people to the lab. The rest of us are still in the waiting room with a FOMO drip.' React to every AI capability / safety / Anthropic post.",
+    "2026 algo: replies weigh 27x more than likes. 50 thoughtful replies beat 500 passive likes. End every original and quote with a genuine open question. Make the reader feel they have the answer. Conversation quality IS the engagement metric."
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-21 'even more': max volume on posts/quotes/retweets/replies, tighter spacing; likes still moderate (flag vector); self-improve off so static."
+  "rationale": "2026-06-22 reset: caps brought back within HUMANIZE mandate hard bounds (NEWS 20→4, HOTAKES 40→8, QUOTES 150→40, RETWEETS 100→2). Data: ai_vs_btc 440x ROI but only 3 posts/week — topic selection is the lever, not volume. Topic focus refreshed: Anthropic IPO, Apple+Gemini Siri, Trump AI equity, Grok 4 federal, casual first-person formula."
 }
