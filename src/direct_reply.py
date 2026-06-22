@@ -89,11 +89,12 @@ def _is_on_niche(text: str) -> bool:
 
 
 def _is_skip(text: str) -> bool:
-    """True when the model returned a SKIP refusal — exact 'SKIP' OR a
-    reasoned 'SKIP — ...' / 'SKIP.' / 'SKIPPING this one' (2026-06-21: the
-    bot posted 'SKIP — insufficient context...' live because the check was
-    exact == 'SKIP'). Any text opening with skip* is a refusal."""
-    return not text or bool(re.match(r"^[\s\"'«(\[]*skip", text.strip(), re.IGNORECASE))
+    """True when the model returned a SKIP/refusal/meta-commentary instead of a
+    reply. Delegates to the canonical detector so the generator drops the same
+    things the chokepoint rejects (2026-06-21: a wave of 'I need to skip this
+    one...', 'I appreciate the brief, but...' leaked live)."""
+    from .content_guard import is_refusal_or_meta
+    return is_refusal_or_meta(text)
 
 _FR_MARKERS = re.compile(r"\b(le|la|les|un|une|des|du|de|d|dans|pour|sur|avec|pas|est|sont|mais|aussi|très|tout|cette|qui|que|quand|comme|entre|depuis|faire|faut|peut|encore|selon|même|après|avant|bien|sans|je|j|tu|il|elle|on|nous|vous|ils|elles|me|te|se|ce|c|notre|votre|leur|ces|son|ses|sa|mon|ton|mes|tes|enfin|ptdr|mdr|franchement|grave|voila|voilà|jours|délivrance|refait|marché|bourse|taux|année|être|avoir|rien|jamais|toujours)\b", re.IGNORECASE)
 _FR_ACCENT_RE = re.compile(r"[àâçéèêëîïôûùüÿœæ]", re.IGNORECASE)
@@ -272,17 +273,25 @@ LANGUAGE — MATCH THE PARENT TWEET EXACTLY:
 - NO franglais: never "je love", "c'est crazy", "trop hype".
 
 RULES:
-- NO em dashes (—). NO emojis. NO hashtags.
+- NO em dashes. NO emojis. NO hashtags.
 - Max 220 chars. Shorter is almost always better.
-- Must anchor to ONE specific detail from their tweet: a number, a name, a ticker,
-  a date, a product. Generic observations = SKIP.
-- You agree with the author's premise and ESCALATE the insight. Never attack them.
-- Off-niche (sports, politics, lifestyle): SKIP.
+- REPLY TO EVERYTHING (operator 2026-06-21: "go back to replying to
+  everything, that algo was better"). Anchor to a detail when there is one,
+  but if the tweet is short, casual, off-topic, or a shout-out, STILL reply
+  with a genuine human reaction (agree, riff, a light question, a relatable
+  one-liner). A real person replies to friends about anything. Almost
+  nothing should be skipped.
+- You agree with the author's premise and ESCALATE or riff. Never attack them.
+- DO NOT explain yourself, EVER. You are NOT an assistant. Never write "I
+  need to skip", "I appreciate the prompt", "the formula", "off-topic", "not
+  enough context", or anything about the task. Output ONLY a tweet.
+- The ONLY case to skip: the tweet is empty or unintelligible. To skip,
+  output exactly the word SKIP and nothing else. Never a sentence.
 
 TWEET TO REPLY TO (by @{author}):
 "{tweet_text}"
 {promo_block}
-Output ONLY the reply text, or SKIP."""
+Output ONLY the reply tweet text. (Or the single word SKIP if truly impossible.)"""
 
 GRAPHSEO_PROMPT = """You are @AIBossGPT replying to @Graphseo (Julien Flot).
 

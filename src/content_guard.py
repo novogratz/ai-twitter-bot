@@ -38,6 +38,55 @@ class DeliberateSkip(Exception):
     crashed EVERY quote ('cannot import name DeliberateSkip')."""
 
 
+# Refusal / meta-commentary markers — the assistant talking ABOUT the task
+# instead of producing a tweet (2026-06-21: a wave of these posted live).
+# Each substring is high-precision: it ~never appears in a genuine sharp
+# tweet, so a single hit means the whole "reply" is a leak. Lowercased match.
+_REFUSAL_MARKERS = (
+    # explicit skip / pause / can't-generate
+    "i need to skip", "i'll skip", "i will skip", "i have to skip",
+    "i'm going to skip", "i am going to skip", "skip this one",
+    "skip this reply", "skip this tweet", "skipping this",
+    "i need to pause", "pause here", "i can't generate", "i cannot generate",
+    "i can't gen", "i cannot gen", "generate this reply", "i can't create",
+    "i cannot create", "i won't generate", "i will not generate",
+    "i can't write this", "i cannot write this",
+    # appreciate-the-prompt / talking about the brief
+    "i appreciate the detailed", "i appreciate the prompt",
+    "i appreciate the brief", "the detailed brief", "this request is asking",
+    "you're asking me", "you are asking me", "i notice this",
+    "reply template", "the formula doesn't", "the formula does not",
+    "doesn't apply", "does not apply", "doesn't align", "does not align",
+    # not-enough-context / off-topic refusals
+    "enough context", "insufficient context", "context-free",
+    "without knowing what", "off-topic", "off topic", "out of scope",
+    "off scope", "genuinely off", "too minimal", "too vague to",
+    "i'd be guessing", "i would be guessing", "authentically apply",
+    "would look forced", "look forced or hollow", "would be forced",
+    # describing the parent instead of replying
+    "the tweet is", "this tweet is", "the tweet \"",
+    # internal scaffolding / self-reference leaks
+    "claude.md", "core pillars", "typo mandate", "@theaiboss",
+    "as an ai", "i'm an ai", "i am an ai", "designed to deceive",
+    "deceive someone", "ai-generated", "written by a human",
+)
+
+
+def is_refusal_or_meta(text: str) -> bool:
+    """True when `text` is the model refusing / explaining / talking about the
+    task rather than producing a tweet. Covers 'SKIP'-openers AND the broader
+    'I need to skip this one...', 'I appreciate the brief, but...', 'I don't
+    have enough context...', 'the formula doesn't apply', 'CLAUDE.md shows...'
+    family. Used by content_guard.validate (chokepoint, all surfaces) and the
+    reply generators so a refusal is dropped, never posted."""
+    if not text:
+        return True
+    low = text.lower()
+    if re.match(r"^[\s\"'«(\[]*skip", low):
+        return True
+    return any(m in low for m in _REFUSAL_MARKERS)
+
+
 # --- near-duplicate detection (no posting the same story twice) -----------
 # The LLM kept re-posting the same news in slightly different words (e.g. 4
 # Microsoft/OpenAI/quantum variants). URL dedup missed it because the wording
@@ -399,15 +448,15 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     if not text or not text.strip():
         return (False, "empty")
 
-    # SKIP-rationale leak (restored 2026-06-21 — the churn dropped this guard
-    # and the bot posted "SKIP — insufficient context. The tweet is a
-    # meta-statement..." as a LIVE reply to @Graphseo). Generators check for
-    # SKIP, but a model that appends reasoning ("SKIP — ...", "SKIP.",
-    # "SKIPPING this") slips past an exact-match check. ANY text OPENING with
-    # skip* is a refusal, never content — refuse it at the chokepoint so every
-    # surface is covered. (A legit lede starting "Skipping..." is sacrificed.)
-    if re.match(r"^[\s\"'«(\[]*skip", text, re.IGNORECASE):
-        return (False, "SKIP-rationale leak (model refusal as content)")
+    # REFUSAL / META-COMMENTARY leak (2026-06-21 — the bot repeatedly posted
+    # the model's own reasoning as live replies: "I need to skip this one...",
+    # "I appreciate the detailed brief, but I can't generate this reply",
+    # "I don't have enough context...", "the formula doesn't apply",
+    # "CLAUDE.md shows...", "designed to deceive someone..."). These are the
+    # assistant talking ABOUT the task, never a tweet. Refuse at the chokepoint
+    # so EVERY surface is covered regardless of which generator produced it.
+    if is_refusal_or_meta(text):
+        return (False, "refusal / meta-commentary leak (model talking about the task, not a tweet)")
 
     if BAN_SHORT_TERM_PRICE_TARGETS and has_near_term_price_target(text):
         return (False, "near-term price target (price + near-term timeframe)")

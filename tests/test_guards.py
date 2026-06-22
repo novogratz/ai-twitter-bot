@@ -728,7 +728,7 @@ def test_skip_rationale_never_posts():
               "skip - too vague", '"SKIP — no angle"']:
         assert _is_skip(t), f"_is_skip missed: {t!r}"
         ok, why = content_guard.validate(t, kind="reply")
-        assert not ok and "SKIP" in why, f"chokepoint let through: {t!r}"
+        assert not ok, f"chokepoint let through: {t!r}"
     good = "Open weights at that price changes who can ship agents. big deal."
     assert not _is_skip(good) and content_guard.validate(good, kind="reply")[0]
 
@@ -777,3 +777,37 @@ def test_deliberate_skip_defined_and_short_circuits():
     assert calls["n"] == 1, "DeliberateSkip must short-circuit, not retry"
     # quote_tweet_bot must import cleanly (it references the class).
     import importlib, src.quote_tweet_bot as q; importlib.reload(q)
+
+
+def test_refusal_meta_never_posts():
+    """2026-06-21: the bot posted a WAVE of model refusal/meta as live replies
+    ('I need to skip this one...', 'I appreciate the brief, but I can't
+    generate this reply', 'I don't have enough context', 'the formula doesn't
+    apply', 'CLAUDE.md shows...', 'designed to deceive...'). is_refusal_or_meta
+    + the chokepoint must catch ALL of these; real replies pass."""
+    from src import content_guard
+    from src.direct_reply import _is_skip
+    leaks = [
+        "I need to SKIP this reply. The tweet from @Graphseo is off-topic for @TheAIBoss core pillars",
+        "I appreciate the detailed prompt, but I need to pause here. This request is asking me to generate",
+        "This tweet is genuinely off-topic. just a complaint about weather.",
+        "I notice this reply template references the typo mandate, but CLAUDE.md shows",
+        "I don't have enough context to authentically apply the formula here.",
+        "I need to skip this one. The tweet is a shout-out to French engineers.",
+        "I appreciate the detailed brief, but I can't generate this reply. designed to deceive",
+        "I need to skip this one - the tweet is too context-free without knowing what Julien",
+        "SKIP.", "SKIP - off niche",
+    ]
+    for t in leaks:
+        assert content_guard.is_refusal_or_meta(t), f"detector missed: {t!r}"
+        assert _is_skip(t), f"_is_skip missed: {t!r}"
+        ok, why = content_guard.validate(t, kind="reply")
+        assert not ok, f"chokepoint let through: {t!r}"
+    real = [
+        "Open weights at that price changes who can actually ship agents. big deal",
+        "datacenter is 88% of their revenue now. an AI infra monopoly that also sells chips",
+        "the renovation ROI logic applies to AI too. do the boring work, win later",
+    ]
+    for t in real:
+        assert not content_guard.is_refusal_or_meta(t), f"false positive: {t!r}"
+        assert content_guard.validate(t, kind="reply")[0], f"rejected real reply: {t!r}"
