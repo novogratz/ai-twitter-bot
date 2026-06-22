@@ -14868,3 +14868,35 @@ it's hard for me to see even dem
 Literally Huang pumping and eating friend chicken isn't enough to stop the crash
   - https://x.com/calvinfroedge/status/2063777153808777680
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 289).
+
+## 2026-06-21
+- **@milkroadai** (60 likes, score 8/10) — The CEO of Perplexity just said Micron could surpass Meta in market value and he was being conservative (Save this).
+
+Micron's market cap sits at approximately $1.28 trillion, Meta is at roughly $1.52
+  - https://x.com/MilkRoadAI/status/2068741304629252197
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 74).
+- **@ihtesham2005** (225 likes, score 8/10) — Broadcom's CEO just told investors that one senior engineer with Claude Opus can do in one week what ten engineers earning $300,000 a year take three months to produce. Every engineering org in the wo
+  - https://x.com/ihtesham2005/status/2068740869700870302
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 279).
+- **@milkroadai** (17 likes, score 8/10) — Still missing the AI stock run?
+
+Turns out all you had to do was subscribe to Milk Road PRO for $1.
+
+And you would’ve been told months ago to buy $MU, $AMD, $AAOI, and $NBIS.
+
+Good luck solo searching
+  - https://x.com/MilkRoadAI/status/2068770949776978035
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 25).
+- **@joshtradeoption** (7 likes, score 7/10) — $AMD is a company worth knowing right now.
+
+Stock closed around $537 on June 20, 2026. Here is why this name keeps coming up in every AI conversation.
+
+Why AMD matters:
+AMD makes two things the world
+  - https://x.com/JoshTradeOption/status/2068786784587190482
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 19).
+- **@sawyermerritt** (92 likes, score 7/10) — Ro Khanna has a net worth of $200 million and yet my 𝕏 timeline is filled with how he thinks other people's money should be taxed and spent....
+
+The U.S. government brings in over $5 trillion in tax
+  - https://x.com/SawyerMerritt/status/2068885001815417278
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 110).
