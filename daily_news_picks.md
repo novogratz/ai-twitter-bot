@@ -15022,3 +15022,40 @@ y’all should have see
 9
   - https://x.com/charliebilello/status/2068670266578739592
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 42).
+- **@oguzerkan** (256 likes, score 9/10) — $MSFT, $META and $AMZN are ridiculously undervalued.
+
+Michael Mauboussin says 65% of the S&P 500 market cap has historically been from steady-state value, while 35% is from future growth.
+
+I looked at
+  - https://x.com/oguzerkan/status/2068739322870677668
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 294).
+- **@voxyz_ai** (47 likes, score 9/10) — my main coding models since february:
+
+Opus 4.6: Feb 5
+GPT-5.4: Mar 5
+Opus 4.7: Apr 16
+GPT-5.5: Apr 23
+Opus 4.8: May 28
+Fable 5: Jun 9 (rip Jun 12) 
+GLM-5.2 (open weights): Jun 16
+
+honestly, the open
+  - https://x.com/Voxyz_ai/status/2068763240478146661
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 65).
+- **@adamli1250240** (11 likes, score 7/10) — The semiconductor industry used to follow ONE route to more powerful chips: shrink the transistor.
+
+That single-path world is dead.
+
+Today there are THREE parallel routes — and which one your favorite
+  - https://x.com/AdamLi1250240/status/2068917802572902823
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 17).
+- **@shaughnessy119** (72 likes, score 8/10) — Chinese Open Source AI companies capture virtually no revenue and the ratios vs US companies is insane
+
+Zhipu / http://Z.ai, the company behind GLM 5.2, is at a $137B market cap on about $107M of FY25
+  - https://x.com/Shaughnessy119/status/2068899158442782732
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 116).
+- **@gracybitget** (27 likes, score 8/10) — Two people both want to buy NVIDIA stock.
+
+One lives onchain. Wallets, USDC, 24/7 access. Ask him to wire money to a broker and wait two days for the funds to arrive, and he will probably just laugh.
+  - https://x.com/GracyBitget/status/2068918318489014692
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 53).
