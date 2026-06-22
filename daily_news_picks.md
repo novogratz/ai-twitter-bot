@@ -14962,3 +14962,34 @@ A normal software company can survive on millions, then tens of millions, then h
 A frontier model lab c
   - https://x.com/_The_Prophet__/status/2068755067134718091
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 212).
+- **@simplifyinai** (53 likes, score 9/10) — NVIDIA just built a security scanner for AI agent skills. 100% open-source.
+
+It's called SkillSpector. 
+
+Scan any skill before installing and get a 0-100 risk score: safe, caution, or do not install.
+  - https://x.com/simplifyinAI/status/2068729682917224930
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 65).
+- **@0xchainmind** (102 likes, score 9/10) — $SPCX IS ABOUT TO TURN BUYERS INTO EXIT LIQUIDITY!
+
+SpaceX is currently up around 28% from its $135 IPO price
+
+Most people keep buying have no idea what that pump just triggered
+
+Here's why everyone w
+  - https://x.com/0xChainMind/status/2068739187331751998
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 160).
+- **@barchart** (91 likes, score 8/10) — $META is now underperforming the Nasdaq $QQQ this year by more than 32 percentage points  Horrendous!
+  - https://x.com/Barchart/status/2068906175706341716
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 117).
+- **@defileo** (15 likes, score 7/10) — This is the highest ranked repo on GitHub today, completely free, and your feed hasn't shown it to you yet.
+
+It's called Rufflow, and it does something most setups still can't.
+
+It launches over 60 AI
+  - https://x.com/defileo/status/2068805248924475565
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 23).
+- **@morganlinton** (46 likes, score 7/10) — Planning my first publishable benchmark with @vulcanbench, and I want it to test what's top of mind for everyone right now:
+
+If I code with GLM 5.2, how does it really stack up against Opus 4.8 and GP
+  - https://x.com/morganlinton/status/2068703857363071220
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 74).
