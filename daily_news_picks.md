@@ -14900,3 +14900,30 @@ AMD makes two things the world
 The U.S. government brings in over $5 trillion in tax
   - https://x.com/SawyerMerritt/status/2068885001815417278
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 110).
+- **@3orovik** (28 likes, score 8/10) — Saylor is going to keep buying Bitcoin
+
+He has put his entire reputation on this
+
+At current holdings, Strategy will have $1 TRILLION dollars worth of Bitcoin when BTC is just $1.18 million dollars a
+  - https://x.com/3orovik/status/2068880187459055960
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 46).
+- **@0xchiefy** (145 likes, score 9/10) — Bitcoin is approaching the most important zone of this cycle!
+
+Most people still think the bottom is already in.
+
+They're wrong.
+
+Scenario 1:
+$64K → $42K → New Bull Run
+
+Scenario 2:
+$64K → $32K → New
+  - https://x.com/0xChiefy/status/2068771433212264875
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 199).
+- **@jonbrooks** (167 likes, score 8/10) — 52 million Americans cannot afford a home over $200,000.  Buyers aren't stubborn.  
+
+They aren't waiting for the "perfect house." They're just broke.  
+
+And no amount of Fed rate cuts fixes that math.
+  - https://x.com/jonbrooks/status/2068816234825601524
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 233).
