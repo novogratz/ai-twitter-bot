@@ -14927,3 +14927,38 @@ They aren't waiting for the "perfect house." They're just broke.
 And no amount of Fed rate cuts fixes that math.
   - https://x.com/jonbrooks/status/2068816234825601524
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 233).
+
+## 2026-06-22
+- **@sawyermerritt** (175 likes, score 9/10) — SpaceX is set to launch its first Starfall Demo mission this Tuesday aboard its Falcon 9 rocket. 
+
+The mission will test a new cargo return vehicle (pictured below) designed to bring materials back to
+  - https://x.com/SawyerMerritt/status/2068897865456332807
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 201).
+- **@igus_ai** (55 likes, score 9/10) — The S&P 500 trades at 22x forward P/E
+
+Here are 10 stocks that trade cheaper than that
+
+1. Nvidia $NVDA: 21x
+  - https://x.com/igus_ai/status/2068829657089085945
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 83).
+- **@cyrilxbt** (30 likes, score 8/10) — GPT-5.6 PRO JUST GENERATED A COMPLETE 3D HOUSE INSIDE A SINGLE HTML FILE IN 30 MINUTES.
+
+No engine. No build pipeline. Pure WebGL2 in one file you open directly in a browser.
+
+The structure is coheren
+  - https://x.com/cyrilXBT/status/2068902867059233220
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 38).
+- **@marionawfal** (20 likes, score 8/10) — At least 3 people killed and 5 injured in a school shooting in Tacloban in the Philippines.
+
+Details are still coming in. Thoughts with the victims and their families.
+
+Source: Manila Times via WarFro
+  - https://x.com/MarioNawfal/status/2068902295585120510
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 40).
+- **@_the_prophet__** (164 likes, score 8/10) — Dario is admitting frontier AI has aircraft-carrier economics.
+
+A normal software company can survive on millions, then tens of millions, then hundreds of millions in revenue. 
+
+A frontier model lab c
+  - https://x.com/_The_Prophet__/status/2068755067134718091
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 212).
