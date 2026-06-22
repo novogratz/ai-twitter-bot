@@ -22,6 +22,15 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_DIR"
 
+# DISABLED (operator 2026-06-21: "disactivate the self improvement stuff,
+# keep it static"). Autonomous Claude self-improve runs repeatedly broke
+# live code. This script no-ops unless explicitly forced with
+# AUTO_IMPROVE_FORCE=1, so no loop / launchd / cron can auto-edit the code.
+if [ "${AUTO_IMPROVE_FORCE:-0}" != "1" ]; then
+  echo "[auto_improve] disabled (operator 2026-06-21). Set AUTO_IMPROVE_FORCE=1 to run manually."
+  exit 0
+fi
+
 LOG_FILE="$REPO_DIR/auto_improve.log"
 LOCK_FILE="$REPO_DIR/.auto_improve_running"
 

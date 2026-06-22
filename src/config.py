@@ -100,8 +100,13 @@ PROFILE_LLM_PROVIDER = os.environ.get("PROFILE_LLM_PROVIDER", "claude").strip() 
 
 # No budget limits — the bot calls the LLM freely.
 
-ENABLE_AI_MAINTENANCE = True
-ENABLE_AI_DISCOVERY = True
+# Autonomous self-modification — OFF by default (operator 2026-06-21:
+# "disactivate the self improvement stuff, keep it static"). These drive the
+# meta_strategy / evolution / reflection / scout agents that rewrite caps,
+# prompts, personality, and the tracked-account list. Static = no drift.
+# Re-enable per-flag via .env only if explicitly wanted.
+ENABLE_AI_MAINTENANCE = os.environ.get("ENABLE_AI_MAINTENANCE", "0") == "1"
+ENABLE_AI_DISCOVERY = os.environ.get("ENABLE_AI_DISCOVERY", "0") == "1"
 ENABLE_CODEX_OPERATOR = False
 
 # Growth optimization settings
