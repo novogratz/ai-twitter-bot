@@ -15083,3 +15083,27 @@ The primary drivers behind the updated outlook include:
  Jefferies notes t
   - https://x.com/tslaming/status/2068931579599376586
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 49).
+- **@techniahq** (69 likes, score 9/10) — June 2026 humanoid robot map.
+
+Figure points to a 90 minute build rhythm.
+Tesla puts Optimus behind its factory playbook.
+Unitree sells G1 from about $16K.
+Agility Digit is already working in warehous
+  - https://x.com/techniahq/status/2068777179509370973
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 73).
+- **@mubeitech** (126 likes, score 9/10) — The AI race actually ended this week.  
+Google is completely out.
+
+Come on, let’s recap these heart-pounding 5 days.
+
+5 days ago, Trump publicly warned the media: Anthropic is a national security thre
+  - https://x.com/mubeitech/status/2068772922001326219
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 174).
+- **@polymarketmoney** (6218 likes, score 8/10) — NEW IN: Anthropic has reportedly developed a more powerful model than “Mythos” which is already banned due to its advanced capabilities.
+  - https://x.com/PolymarketMoney/status/2068835199467593771
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 6736).
+- **@ashcrypto** (258 likes, score 8/10) — BREAKING:  Japan's NIKKEI just broke 72,500 for the first time in history.
+
+¥25.74 trillion added in a single day.
+  - https://x.com/AshCrypto/status/2068954471212757496
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 434).
