@@ -14993,3 +14993,32 @@ It launches over 60 AI
 If I code with GLM 5.2, how does it really stack up against Opus 4.8 and GP
   - https://x.com/morganlinton/status/2068703857363071220
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 74).
+- **@tonygewrit** (23 likes, score 8/10) — guys will watch SPCX Anthropic and OpenAI valued at a combined 5 trillion dollars but think three AI tokens on solana can not command a combined 5 billion dollars in valuation. 
+
+y’all should have see
+  - https://x.com/tonyGewrit/status/2068885398047055971
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 33).
+- **@colestrades** (39 likes, score 8/10) — The following five companies will be added to the Nasdaq-100 before the market opens on Monday, June 22:
+
+• Astera Labs, Inc. (Nasdaq: $ALAB)
+• CoreWeave, Inc. (Nasdaq: $CRWV)
+• Nebius Group N.V. (Nas
+  - https://x.com/ColesTrades/status/2068726491601395725
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 49).
+- **@filecoin** (0 likes, score 7/10) — CoreWeave is covering up to $1 million in data migration costs just to win customers from hyperscaler egress fees. 
+
+@JamesKurzFIL: "If your data isn't sovereign, you can't move it to where the GPUs a
+  - https://x.com/Filecoin/status/2068709614636372419
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 16).
+- **@charliebilello** (0 likes, score 8/10) — Top 10 stocks in S&P 500 over last 10 years
+1) Nvidia: +18,294%
+2) AMD: +10,116%
+3) Micron: +9,432%
+4) Seagate: +6,877%
+5) Comfort Systems: +6,467%
+6) Lam: +5,266%
+7) KLA: +4,086%
+8) Arista: +3,667%
+9
+  - https://x.com/charliebilello/status/2068670266578739592
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 42).
