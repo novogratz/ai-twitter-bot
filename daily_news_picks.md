@@ -15177,3 +15177,47 @@ Over the past month, the whale has made almost $6M in p
 Korean people generally eat meat, relying on HBM's real share and NVIDIA supply chain
   - https://x.com/NFT_Chen/status/2068973413100609945
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 27).
+- **@oguzerkan** (59 likes, score 9/10) — This is incredibly bullish for $CRWV.
+
+Data center supply is reportedly ramping but vacancy is still collapsing and prices remain at shortage levels.
+
+This significantly derisks $CRWV $100 billion bac
+  - https://x.com/oguzerkan/status/2068957192472969705
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 71).
+- **@cryptomichnl** (107 likes, score 9/10) — Another week, another close above the 200-Week MA for #Bitcoin.
+
+Strong signals.
+
+If this week can continue moving towards the $68K area and we're back in the range, I assume we still have a strong al
+  - https://x.com/CryptoMichNL/status/2068979302914244617
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 155).
+- **@linabca87** (0 likes, score 8/10) — Why the AI infrastructure boom might be hitting a wall in 2026 ?
+
+IBM’s CEO just called out the math — trillions in capex for data centers, but real enterprise demand & ROI still lagging. Memory chip
+  - https://x.com/linabca87/status/2068937168094216674
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 48).
+- **@gmanct1b** (59 likes, score 8/10) — TOP 10 STOCKS THAT ARE STILL CHEAP
+
+$NOW 
+$AAOI
+$ASTS 
+$IREN 
+$SIDU
+$ONDS
+$HIMS
+$MSTR
+$TE
+$HYLN
+
+These are 10 names I believe offer attractive risk/reward at current levels and have the potential to s
+  - https://x.com/Gmanct1b/status/2068979288465195116
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 63).
+- **@imjustnewatai** (30 likes, score 8/10) — Sakana Fugu is not the new king because it is “smarter” than OpenAI or Anthropic.
+
+That is the wrong frame.
+
+Fugu is important because it turns the frontier model race into an orchestration race.
+
+Ope
+  - https://x.com/imjustnewatai/status/2068926371644977525
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 42).
