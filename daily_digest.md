@@ -681,3 +681,12 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 40 likes / 13348 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 1 likes / 13 views: Brand manager: "we're adding AI to everything" 60% of customers: "we're leaving" Brand manager: "add
   - 1 likes / 80 views: $CRWV after the Cramer mention:
+
+## 2026-06-21
+
+**Activity** — total actions: 1078
+  - by type: reply=884, retweet=135, quote=39, quote_gif=13, post=7
+  - top sources: SEARCH-HOT=618, RETWEET=131, RETWEET_REPLY=95, FEED-SWEEP-FEED=91, FEED-SWEEP-FOLLOWING=51, VIP=28, RETWEET_QT=24, GIF=13
+  - top reply targets: @Graphseo=17, @TheAIShrink=15, @TheBTCTherapist=15, @rohanpaul_ai=10, @StockSavvyShay=10
+
+**Followers we follow** (running total): 260
