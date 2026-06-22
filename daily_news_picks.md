@@ -15144,3 +15144,36 @@ Has a Mean look to it.
 Test
   - https://x.com/TheProfInvestor/status/2068457340311859385
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 489).
+- **@valentin_macro** (14 likes, score 7/10) — "The Fed lowering rates is good for stocks"
+
+When did that ever happen in the last 30 years?
+
+Nobody looks!
+  - https://x.com/valentin_macro/status/2068953819040629100
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 14).
+- **@kimmonismus** (72 likes, score 8/10) — I'm really looking forward to the Sonnet 5 release.
+
+Sonnet has sometimes been stronger than older Opus models at launch, most clearly with Claude 3.5 Sonnet outperforming Claude 3 Opus in areas like
+  - https://x.com/kimmonismus/status/2068979336963625101
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 98).
+- **@altsteinn** (126 likes, score 8/10) — $three is up over 50% today alone and over 80% of CT are still sidelined
+
+in case you forgot, @trythreews is building 3D AI agents with real bodies, persistent memory, and their own wallets to trade a
+  - https://x.com/Altsteinn/status/2068979887772205114
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 130).
+- **@ashcrypto** (37 likes, score 8/10) — A whale is shorting BTC and alts right now.
+
+Today, he has opened:
+
+- $40,608,000 $BTC short
+- $30,741,000 $ETH short
+- $12,510,000 $HYPE short
+
+Over the past month, the whale has made almost $6M in p
+  - https://x.com/AshCrypto/status/2068981371519877456
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 89).
+- **@nft_chen** (15 likes, score 8/10) — Way too crazy! #海力士 has surged nearly 4x this year! Zhipu directly sees 21x, pure narrative + liquidity carnival!
+
+Korean people generally eat meat, relying on HBM's real share and NVIDIA supply chain
+  - https://x.com/NFT_Chen/status/2068973413100609945
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 27).
