@@ -1,15 +1,15 @@
 {
   "ts": "2026-06-18T00:00:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 14,
-    "MAX_HOTAKES_PER_DAY": 26,
-    "MAX_QUOTES_PER_DAY": 240,
-    "MAX_RETWEETS_PER_DAY": 1,
-    "MAX_BREAKOUTS_PER_DAY": 1,
-    "MAX_SPICY_PER_DAY": 1,
-    "MAX_REPLIES_PER_CYCLE": 30,
-    "LIKE_BOT_PER_CYCLE": 18,
-    "FOLLOW_BLAST_PER_CYCLE": 2
+    "MAX_NEWS_PER_DAY": 20,
+    "MAX_HOTAKES_PER_DAY": 40,
+    "MAX_QUOTES_PER_DAY": 150,
+    "MAX_RETWEETS_PER_DAY": 100,
+    "MAX_BREAKOUTS_PER_DAY": 12,
+    "MAX_SPICY_PER_DAY": 10,
+    "MAX_REPLIES_PER_CYCLE": 300,
+    "LIKE_BOT_PER_CYCLE": 35,
+    "FOLLOW_BLAST_PER_CYCLE": 0
   },
   "topic_focus": [
     "ai_vs_btc is the single highest-ROI surface (20 avg likes vs 0.03 for ai_news_take = 667x). It was 1 post in the last 300 rows. Force it into EVERY BTC/crypto/ETF/liquidation parent. 'AI won, BTC is the patient in denial.' No hedging, no balance. This is the leak — fix it.",
@@ -23,5 +23,5 @@
     "Algorithm update 2026: 50 thoughtful replies > 500 passive likes. End originals and quotes with a genuine open question. Make the reader feel they have the answer. Conversation quality beats raw engagement numbers."
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-18 autonomous update. Key data: ai_vs_btc = 20 avg likes vs 0.03 ai_news_take (667x gap) — only 1 post in last 300 rows, this is the biggest missed lever by far; casual first-person AI-vs-BTC hit 40 likes/14K views (only confirmed viral formula); reply_winners bank still empty (0 entries); METAPHOR #1 pattern; bot fires mostly UTC 01-05h (late night ET) while best engagement is UTC 10-13h. Caps: MAX_QUOTES_PER_DAY bumped 220→240 to hit the June-17 DO MORE mandate ceiling. Topic focus updated: Claude Mythos 1 50-partner beta (June 18 acute hook); Grok 4 GSA federal contract; Anthropic self-improvement warning to Congress; IPO FOMO anchor retained; casual first-person directive strengthened; ai_vs_btc framed as the leak to fix; algo conversation-quality insight added."
+  "rationale": "2026-06-21 'even more': max volume on posts/quotes/retweets/replies, tighter spacing; likes still moderate (flag vector); self-improve off so static."
 }
