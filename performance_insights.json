@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-06-22T03:08:01.756870",
-  "window_7d_actions": 7387,
-  "window_24h_actions": 1056,
+  "generated_at": "2026-06-22T07:08:01.872220",
+  "window_7d_actions": 7436,
+  "window_24h_actions": 1017,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 7238
+      "count": 7290
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 46
+      "count": 48
     },
     {
       "pattern": "METAPHOR",
-      "count": 38
+      "count": 35
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -21,7 +21,7 @@
     },
     {
       "pattern": "RENAME",
-      "count": 15
+      "count": 14
     }
   ],
   "worst_patterns": [
@@ -35,7 +35,7 @@
     },
     {
       "pattern": "OTHER",
-      "count": 11
+      "count": 10
     }
   ],
   "best_hours_utc": [
@@ -63,131 +63,124 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3779
+      "count": 3789
     },
     {
       "topic": "Autre",
-      "count": 2679
+      "count": 2706
     },
     {
       "topic": "Crypto",
-      "count": 632
+      "count": 639
     },
     {
       "topic": "Bourse",
-      "count": 517
+      "count": 521
     },
     {
       "topic": "Spatial",
-      "count": 327
+      "count": 326
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 4223
+      "count": 4237
     },
     {
       "pillar": "other",
-      "count": 1638
+      "count": 1648
     },
     {
       "pillar": "market_trauma",
-      "count": 1303
+      "count": 1317
     },
     {
       "pillar": "meme_reaction",
-      "count": 128
+      "count": 133
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 51
+      "count": 54
     },
     {
       "pillar": "reply_bait",
-      "count": 44
+      "count": 47
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 646
+      "count": 582
     },
     {
       "pillar": "other",
-      "count": 249
+      "count": 236
     },
     {
       "pillar": "market_trauma",
-      "count": 121
+      "count": 152
     },
     {
       "pillar": "meme_reaction",
-      "count": 19
+      "count": 25
     },
     {
       "pillar": "reply_bait",
-      "count": 15
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
-      "posts": 3,
-      "avg_likes": 13.33,
-      "avg_views": 4480.7,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 63,
-      "avg_likes": 0.05,
-      "avg_views": 27.0,
+      "posts": 4,
+      "avg_likes": 10.0,
+      "avg_views": 3362.0,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 64,
+      "posts": 65,
       "avg_likes": 0.05,
-      "avg_views": 31.5,
+      "avg_views": 31.7,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 62,
+      "avg_likes": 0.05,
+      "avg_views": 26.2,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 69,
       "avg_likes": 0.03,
-      "avg_views": 25.1,
+      "avg_views": 25.9,
       "low_sample": false
-    },
-    {
-      "pillar": "reply_bait",
-      "posts": 1,
-      "avg_likes": 0.0,
-      "avg_views": 25.0,
-      "low_sample": true
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 6264
+      "count": 6282
     },
     {
       "type": "retweet",
-      "count": 642
+      "count": 655
     },
     {
       "type": "quote",
-      "count": 305
+      "count": 318
     },
     {
       "type": "quote_gif",
-      "count": 118
+      "count": 123
     },
     {
       "type": "post",
@@ -200,18 +193,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-22T03:07:33.501705",
-      "text": "Spot etf moved $50B in 6 months after 10 years of waiting. the sEC protected investors from something that outperformed everything they were allowed to buy.",
+      "ts": "2026-06-22T07:07:28.175801",
+      "text": "Jane Street investit dans Anthropic non pour les modèles, mais pour verrouiller le prix du compute. Le vrai produit n'est pas le code, c'est l'électricité.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-22T03:05:43.353642",
-      "text": "[QT] Labor cost halving makes the robot's ROI hit faster than Nvidia's burn rate. Does @elonmusk still win if he's selling shovels to guys digging their own graves?",
-      "type": "quote"
+      "ts": "2026-06-22T07:06:59.648325",
+      "text": "Quantum resistant crypto is 15 years old.\n\nalgo just updated the font on its roadmap.",
+      "type": "reply"
     },
     {
-      "ts": "2026-06-22T03:05:25.764937",
-      "text": "BTC isn't a commodity. It's a settlement layer with zero counterparty risk.\nprice target is infinity.",
+      "ts": "2026-06-22T07:06:10.479853",
+      "text": "Japanese pension funds are hedging the dollar, not speculating on crypto.\n\nreal story = buying BTC as the hard asset the fed printed away.",
       "type": "reply"
     }
   ]
