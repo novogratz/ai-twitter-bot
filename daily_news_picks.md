@@ -15107,3 +15107,40 @@ Come on, let’s recap these heart-pounding 5 days.
 ¥25.74 trillion added in a single day.
   - https://x.com/AshCrypto/status/2068954471212757496
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 434).
+- **@ftr_investors** (0 likes, score 7/10) — The Future Investors presents the 20 largest founder-led companies where the founder is still the CEO 
+
+1. $NVDA | Nvidia - $5.10T
+2. $SPCX | SpaceX - $2.44T
+3. $META | Meta - $1.47T
+4. $TCEHY | Tence
+  - https://x.com/ftr_investors/status/2068717142464151864
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 10).
+- **@boraozkent** (78 likes, score 8/10) — You always have to be honest.
+
+When I invested in AMD, my investment thesis was that the second biggest player after Nvidia on the GPU side was too cheap.
+
+This thesis worked out.
+
+But the real surpri
+  - https://x.com/BoraOzkent/status/2068965964906111143
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 92).
+- **@testingcatalog** (57 likes, score 8/10) — BREAKING : Sakana AI announced the Sakana Fugu and Sakana Fugu Ultra systems, which perform on par with Claude Fable 5 and Mythos 5 across many benchmarks.
+
+> Sakana AI is an AI lab from Japan, and Fu
+  - https://x.com/testingcatalog/status/2068967746638131301
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 73).
+- **@theprofinvestor** (441 likes, score 7/10) — 4 setups you all will love fall in love with.
+
+$NVDA 
+
+Textbook breakout retest and more importantly holding above $200 psychological number.
+
+Forms a bull flag.
+
+$AVGO 
+
+Has a Mean look to it. 
+
+Test
+  - https://x.com/TheProfInvestor/status/2068457340311859385
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 489).
