@@ -15059,3 +15059,27 @@ Zhipu / http://Z.ai, the company behind GLM 5.2, is at a $137B market cap on abo
 One lives onchain. Wallets, USDC, 24/7 access. Ask him to wire money to a broker and wait two days for the funds to arrive, and he will probably just laugh.
   - https://x.com/GracyBitget/status/2068918318489014692
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 53).
+- **@remzztrades** (176 likes, score 9/10) — $OUST 
+
+Looks ready for its next leg higher this summer.
+
+Get through $50 and this can make a run toward $67 next.
+
+• Partnerships and connections tied to Anduril, Google, and Amazon
+• Leader in digit
+  - https://x.com/Remzztrades/status/2068833844422443036
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 206).
+- **@pequityresearch** (30 likes, score 8/10) — WilliamBlair: Race to Infinite Labor - The Humanoid Hypothesis
+
+> Cost of humanoid training data expected to fall from from $340/hour in 2024 to $9/hour in early 2030s. 
+
+> Even with major breakthroug
+  - https://x.com/pequityresearch/status/2068893764358176963
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 34).
+- **@tslaming** (41 likes, score 8/10) — GOOD NEWS  Jefferies analyst Philippe Houchois raised $TSLA price target from $350 to $375 while maintaining a Hold rating 
+
+The primary drivers behind the updated outlook include:
+
+ Jefferies notes t
+  - https://x.com/tslaming/status/2068931579599376586
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 49).
