@@ -1,100 +1,100 @@
 {
-  "generated_at": "2026-06-18T07:55:14.627834",
-  "window_7d_actions": 4679,
-  "window_24h_actions": 906,
+  "generated_at": "2026-06-22T03:08:01.756870",
+  "window_7d_actions": 7387,
+  "window_24h_actions": 1056,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4485
-    },
-    {
-      "pattern": "METAPHOR",
-      "count": 53
+      "count": 7238
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 51
+      "count": 46
+    },
+    {
+      "pattern": "METAPHOR",
+      "count": 38
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 24
+      "count": 20
     },
     {
-      "pattern": "DIALOGUE",
-      "count": 22
+      "pattern": "RENAME",
+      "count": 15
     }
   ],
   "worst_patterns": [
     {
       "pattern": "EN_ANCHOR",
-      "count": 1
+      "count": 3
+    },
+    {
+      "pattern": "REPETITION",
+      "count": 5
     },
     {
       "pattern": "OTHER",
       "count": 11
-    },
-    {
-      "pattern": "REPETITION",
-      "count": 12
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 12,
-      "actions": 237
+      "hour": 11,
+      "actions": 461
     },
     {
-      "hour": 11,
-      "actions": 233
+      "hour": 12,
+      "actions": 395
+    },
+    {
+      "hour": 10,
+      "actions": 392
+    },
+    {
+      "hour": 14,
+      "actions": 370
     },
     {
       "hour": 13,
-      "actions": 226
-    },
-    {
-      "hour": 16,
-      "actions": 223
-    },
-    {
-      "hour": 6,
-      "actions": 221
+      "actions": 358
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 1975
+      "count": 3779
     },
     {
       "topic": "Autre",
-      "count": 1778
+      "count": 2679
     },
     {
       "topic": "Crypto",
-      "count": 571
+      "count": 632
     },
     {
       "topic": "Bourse",
-      "count": 419
+      "count": 517
     },
     {
       "topic": "Spatial",
-      "count": 338
+      "count": 327
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2143
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 1240
+      "count": 4223
     },
     {
       "pillar": "other",
-      "count": 1113
+      "count": 1638
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 1303
     },
     {
       "pillar": "meme_reaction",
@@ -102,116 +102,116 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 29
+      "count": 51
     },
     {
       "pillar": "reply_bait",
-      "count": 26
+      "count": 44
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 388
+      "count": 646
     },
     {
       "pillar": "other",
-      "count": 245
+      "count": 249
     },
     {
       "pillar": "market_trauma",
-      "count": 243
+      "count": 121
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 19
     },
     {
       "pillar": "reply_bait",
-      "count": 1
+      "count": 15
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
-      "posts": 2,
-      "avg_likes": 20.0,
-      "avg_views": 6696.5,
+      "posts": 3,
+      "avg_likes": 13.33,
+      "avg_views": 4480.7,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 63,
+      "avg_likes": 0.05,
+      "avg_views": 27.0,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 64,
       "avg_likes": 0.05,
-      "avg_views": 28.6,
+      "avg_views": 31.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 72,
+      "posts": 69,
       "avg_likes": 0.03,
-      "avg_views": 28.7,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 58,
-      "avg_likes": 0.03,
-      "avg_views": 26.7,
+      "avg_views": 25.1,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 4,
+      "posts": 1,
       "avg_likes": 0.0,
-      "avg_views": 30.8,
-      "low_sample": false
+      "avg_views": 25.0,
+      "low_sample": true
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4299
-    },
-    {
-      "type": "quote",
-      "count": 201
-    },
-    {
-      "type": "quote_gif",
-      "count": 116
-    },
-    {
-      "type": "hotake",
-      "count": 29
-    },
-    {
-      "type": "post",
-      "count": 27
+      "count": 6264
     },
     {
       "type": "retweet",
-      "count": 7
+      "count": 642
+    },
+    {
+      "type": "quote",
+      "count": 305
+    },
+    {
+      "type": "quote_gif",
+      "count": 118
+    },
+    {
+      "type": "post",
+      "count": 33
+    },
+    {
+      "type": "hotake",
+      "count": 25
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-18T07:54:51.198249",
-      "text": "CoreWeave’s $7B debt stack on 18-month hardware life. It’s a casino where the house bets on margin compression.",
+      "ts": "2026-06-22T03:07:33.501705",
+      "text": "Spot etf moved $50B in 6 months after 10 years of waiting. the sEC protected investors from something that outperformed everything they were allowed to buy.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-18T07:53:49.433283",
-      "text": "ACN down 16%, runzero deal on deck.\n\nthe legacy SI is shorting its own moat to buy the new one. the old billable hour funds the agent that replaces it.\n\nyou're watching the cannibalization in real time.",
-      "type": "reply"
+      "ts": "2026-06-22T03:05:43.353642",
+      "text": "[QT] Labor cost halving makes the robot's ROI hit faster than Nvidia's burn rate. Does @elonmusk still win if he's selling shovels to guys digging their own graves?",
+      "type": "quote"
     },
     {
-      "ts": "2026-06-18T07:53:15.553784",
-      "text": "AMD targets $500B implies they’ll overtake Nvidia.\nthe datacenter share is 80/20, not 50/50.\nmath requires 10 years of beating everyone else.",
+      "ts": "2026-06-22T03:05:25.764937",
+      "text": "BTC isn't a commodity. It's a settlement layer with zero counterparty risk.\nprice target is infinity.",
       "type": "reply"
     }
   ]
