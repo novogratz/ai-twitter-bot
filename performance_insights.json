@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-06-23T03:49:03.793531",
-  "window_7d_actions": 7169,
-  "window_24h_actions": 626,
+  "generated_at": "2026-06-23T07:49:03.744289",
+  "window_7d_actions": 7213,
+  "window_24h_actions": 596,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 7024
+      "count": 7066
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 46
+      "count": 44
     },
     {
       "pattern": "METAPHOR",
-      "count": 34
+      "count": 38
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 21
+      "count": 23
     },
     {
       "pattern": "RENAME",
-      "count": 15
+      "count": 13
     }
   ],
   "worst_patterns": [
@@ -30,11 +30,11 @@
       "count": 3
     },
     {
-      "pattern": "REPETITION",
-      "count": 6
+      "pattern": "DIALOGUE",
+      "count": 8
     },
     {
-      "pattern": "DIALOGUE",
+      "pattern": "REPETITION",
       "count": 8
     }
   ],
@@ -53,7 +53,7 @@
     },
     {
       "hour": 6,
-      "actions": 334
+      "actions": 341
     },
     {
       "hour": 14,
@@ -63,41 +63,41 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3655
+      "count": 3681
     },
     {
       "topic": "Autre",
-      "count": 2635
+      "count": 2643
     },
     {
       "topic": "Crypto",
-      "count": 603
+      "count": 611
     },
     {
       "topic": "Bourse",
-      "count": 494
+      "count": 505
     },
     {
       "topic": "Spatial",
-      "count": 287
+      "count": 284
     }
   ],
   "rising_topics_24h": [
     {
-      "topic": "Crypto",
-      "24h_rate": 0.129,
-      "7d_rate": 0.084
+      "topic": "Bourse",
+      "24h_rate": 0.096,
+      "7d_rate": 0.07
     },
     {
-      "topic": "Bourse",
-      "24h_rate": 0.093,
-      "7d_rate": 0.069
+      "topic": "Crypto",
+      "24h_rate": 0.122,
+      "7d_rate": 0.085
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 4097
+      "count": 4123
     },
     {
       "pillar": "other",
@@ -105,45 +105,45 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 1236
+      "count": 1246
     },
     {
       "pillar": "meme_reaction",
-      "count": 123
+      "count": 129
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 55
+      "count": 56
     },
     {
       "pillar": "reply_bait",
-      "count": 51
+      "count": 52
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 267
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 159
+      "count": 260
     },
     {
       "pillar": "other",
-      "count": 155
+      "count": 150
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 146
     },
     {
       "pillar": "meme_reaction",
-      "count": 25
+      "count": 24
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 9
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -155,13 +155,6 @@
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 68,
-      "avg_likes": 0.06,
-      "avg_views": 34.2,
-      "low_sample": false
-    },
-    {
       "pillar": "market_trauma",
       "posts": 62,
       "avg_likes": 0.06,
@@ -169,17 +162,24 @@
       "low_sample": false
     },
     {
+      "pillar": "other",
+      "posts": 69,
+      "avg_likes": 0.06,
+      "avg_views": 33.8,
+      "low_sample": false
+    },
+    {
       "pillar": "ai_news_take",
-      "posts": 66,
+      "posts": 65,
       "avg_likes": 0.03,
-      "avg_views": 26.4,
+      "avg_views": 26.1,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 6024
+      "count": 6061
     },
     {
       "type": "retweet",
@@ -187,15 +187,15 @@
     },
     {
       "type": "quote",
-      "count": 312
+      "count": 314
     },
     {
       "type": "quote_gif",
-      "count": 114
+      "count": 120
     },
     {
       "type": "post",
-      "count": 38
+      "count": 37
     },
     {
       "type": "hotake",
@@ -204,18 +204,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-23T03:47:21.694097",
-      "text": "GLM beats frontier models blind on median tasks. the lab is raising VC rounds on hope, gl is shipping on unit economics.",
+      "ts": "2026-06-23T07:48:22.113502",
+      "text": "Tsmc funding a 100% stock rally with debt.\n\nit’s the company that makes the chips buying its own stock because the only other buyers are the people selling the chips.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-23T03:47:05.771697",
-      "text": "Nouveau modèle GPT. La 47ème itération du même wrapper. Comme un iPhone qui s'upgrade juste pour avoir un bouton silencieux plus chic.",
+      "ts": "2026-06-23T07:46:45.362549",
+      "text": "Kunal Shah is taking the wheel of a 2.3B DAU product while his own company burns cash on \"trust.\"\n\nWhatsApp = utility. Cred = vanity. One scales the world, the other scales the invoice.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-23T03:45:55.090266",
-      "text": "Treating Claude like an intern costs you ~$2k in inference fees per complex task.\n\npaying an engineer $80k to prompt-engineer it costs $10k/year.",
+      "ts": "2026-06-23T07:46:29.132428",
+      "text": "Bernstein: $51B, +40%.\nThe crypto market: -20%.\n\nReal story: liquidity is moving from casino tokens to institutional plumbing. The degens are bored.",
       "type": "reply"
     }
   ]
