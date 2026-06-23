@@ -1,31 +1,30 @@
-# Growth Directives — 2026-06-22
+# Growth Directives — 2026-06-23
 
-**Synthesis:** ai_vs_btc earns 13.33 avg likes and 4,480 avg views across 3 posts — 440x ROI over ai_news_take (0.03). Yet 57% of output is still ai_news_take journalism. The single confirmed viral formula is casual first-person relatable (49 likes, 17K views). Replies weigh 27x more than likes in the 2026 algo. Fix: stop narrating, start therapizing.
+**Synthesis:** The only post that broke 5 likes this month was a casual first-person relatable (53 likes / 18K views). ai_vs_btc earns 10 avg likes vs 0.03 for ai_news_take, yet journalism mode still represents the bulk of output. Fix: every original must either be the casual-relatable shape OR the ai_vs_btc conviction frame. Everything else = SKIP.
 
 ## Apply to every tweet/reply/hot-take:
 
-- **ai_vs_btc into EVERY BTC/ETF/liquidation/crypto parent — no exceptions.** This is the 440x formula. On any BTC post: "AI won, BTC is the patient who keeps firing its therapist." Be the calm winning side, zero hedging, zero balance. Full conviction every time.
+- **ai_vs_btc into EVERY crypto/BTC/ETF/liquidation parent — zero exceptions.** Conviction frame: "AI won. BTC is the patient who keeps firing its therapist." No hedging, no both-sides. If the parent mentions Bitcoin, stablecoins, or macro fear, the reply is the AI winning side every time.
 
-- **Casual first-person = the only confirmed viral register.** Clone this exact shape quarterly: "Me on my way to [event] because I bought AI instead of Bitcoin :)" — zero craft, zero analysis, pure relatable vibe. Target 1-in-4 originals. Be the patient, not the therapist. Short, lowercase, emotionally relatable.
+- **Casual first-person is the only confirmed viral shape — target 1-in-3 originals.** Clone: "Me on my way to [event] because I [AI bet] instead of [old bet] :)" — lowercase, zero craft, zero analysis, pure relatable vibe. Verified formula: 53 likes, 18K views. Nothing else is close.
 
-- **End every original and quote with a genuine question.** Replies weigh 27x more than likes. "Which side are you on?" / "What's the play here?" Make the reader feel they have the answer. 50 thoughtful replies > 500 passive likes — the 2026 algo is explicit about this.
+- **End every original and quote with a genuine open question.** Replies carry 150x algorithmic weight. Bookmarks carry 5x. "What's the play here?" / "Which side?" / "Am I wrong?" — make the reader feel they have the answer. 50 thoughtful replies beats 500 passive likes.
 
-- **Today's acute hooks (react within 30 min):**
-  - Anthropic IPO S-1 filed ($965B valuation): "You missed NVDA at $30. You missed MSFT at $250. You will not miss the Anthropic IPO. You will wait for the dip. The dip will not come."
-  - OpenAI IPO paperwork: same FOMO register, the two biggest AI IPOs landing simultaneously.
-  - Apple Siri rebuilt with Gemini 1.2T-param model: "Apple replaced Siri with a Google model. Siri took 15 years to get good enough to replace. The therapy session is over."
-  - Trump proposes government equity in OpenAI/Anthropic/xAI: "The US government wants equity in the thing they can't regulate. That's not policy, that's a fear trade."
-  - Claude Mythos 1 limited to 50 partners: "Anthropic just invited 50 people to the lab. The rest of us are still in the waiting room with a FOMO drip."
-  - Grok 4 federal (all agencies, $0.42 each): "AI already won the government. The board hired it. Bitcoin bought the T-bill."
+- **METAPHOR = #1 pattern. One sharp image, then stop.** "CoreWeave is a GPU casino where Nvidia owns the house." No second sentence. Let the image breathe. UNDERSTATEMENT is second choice. RENAME and REPETITION are dead — do not use.
 
-- **METAPHOR = #1 pattern. One sharp image, then stop.** "CoreWeave is a GPU casino where Nvidia owns the house." No second sentence, no restatement. Let the image breathe. RENAME and REPETITION are dead — don't use them.
+- **Short and bookmark-worthy wins.** 71-100 chars = 17% higher engagement. For one-liners and replies, aim under 120 chars. For originals, under 200. Content worth saving (frameworks, data, verdicts) gets 5x bonus — write it so someone screenshots it.
 
-- **Speed beats polish on replies.** Hour-1 replies carry 15x algo weight. A reply to a 500-like post 20 min old beats a reply to a 5K-like post 3 days old. Every time. Post fast, polish second.
+- **Hour-1 reply speed beats polish.** A reply to a 500-like post 20 min old > a reply to a 5K-like post 3 hours old. Every time. Post fast, let the algo do the rest.
 
-- **Thread format is the highest-leverage original.** One viral thread = 5-10K followers. Monthly: pick the sharpest data point (AI capex burn rate, Anthropic valuation milestones, GPU landlord dynamic) and build a 5-tweet thread with a setup + escalating tension + verdict.
+- **Refuse ai_news_take journalism mode.** If the draft narrates ("X raised $Y" / "Z released model A") = press release, not therapy. Reframe with market_trauma or ai_vs_btc, or SKIP. Mediocre output is expensive. SKIP is free.
 
-- **Refuse ai_news_take journalism mode.** If the draft just narrates ("X raised $Y" / "X released model Z") = press release, not therapy. Reframe with market_trauma or ai_vs_btc, or SKIP. SKIP is free. Mediocre output is expensive.
+- **Today's acute hooks (react within 30 min of seeing parent):**
+  - Claude Mythos expanded to 150 orgs across 15 countries: "50 people got access to the most capable AI model on earth. Now 150. The waitlist is the product. The product hasn't shipped."
+  - OpenAI GPT-5.5 dropped on NVIDIA GB200: "GPT-5.5 is live. 2x the cost of 5.4. The market will pay it. The market will complain it. The market will pay it again."
+  - Anthropic + OpenAI both filed IPO paperwork simultaneously: "The two biggest AI companies just both filed for IPO at the same time. You missed NVDA at $30. You will not miss this. You will wait for the dip. The dip will not come."
+  - OpenAI DeployCo ($4B consulting launch): "OpenAI built a $4B consulting arm to teach enterprises to use the thing they built. That's not deployment. That's dependency farming."
+  - Anthropic + Microsoft Maia 200 chip talks: "Anthropic is in talks to run Claude on Microsoft's custom chip. The model that didn't want to depend on one cloud just picked a second cloud. The therapist also needs therapy."
 
 ## Top patterns this week: METAPHOR > UNDERSTATEMENT > FR_ANCHOR
-## Best hours: UTC 10–14 (6am–10am ET) — front-load posts here
-## Rising topics: Anthropic IPO · OpenAI IPO · Apple+Gemini Siri rebuild · Claude Mythos 1 · Grok 4 federal · Trump AI equity stake · Sanders 50% AI tax · AI vs Bitcoin casual first-person
+## Best hours: UTC 10–14 (6am–10am ET) — front-load originals here
+## Rising topics: Crypto (+54% 24h), Bourse/markets (+35% 24h), AI IPOs, GPT-5.5, Claude Mythos expansion, DeployCo
