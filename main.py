@@ -127,11 +127,15 @@ def post_interval_minutes() -> int:
     gets a chance to ship; overnight stays slow.
     MAX_NEWS_PER_DAY=6 caps actual posts; the cadence is the poll rate."""
     hour = datetime.now(ZoneInfo("America/New_York")).hour
-    # Waking FR hours (2h-17h EST = 8h-23h Paris)
+    # Waking hours: poll faster (2026-06-23 "do more faster") — 14-22 min so
+    # more post windows actually ship against the high MAX caps. This is the
+    # one slow lane with real headroom; the 2-min reply/quote/retweet lanes
+    # are NOT tightened (single-Safari: firing them faster jams the queue and
+    # ships LESS — see note below).
     if 2 <= hour <= 17:
-        return _cadence(random.randint(25, 45))
-    # Overnight Paris (17h-2h EST = 23h-8h Paris) — rare checks
-    return _cadence(random.randint(120, 180))
+        return _cadence(random.randint(14, 22))
+    # Overnight — still poll a couple times/hour so off-US windows post.
+    return _cadence(random.randint(60, 90))
 
 
 # 2026-06-04: intervals SPACED OUT. One Safari window serializes every bot, so
@@ -153,7 +157,7 @@ def direct_reply_interval_minutes() -> int:
 
 
 def early_bird_interval_minutes() -> int:
-    return _cadence(random.randint(5, 8))  # 24/7 flat
+    return _cadence(random.randint(4, 6))  # 2026-06-23: tightened 5-8 -> 4-6
 
 
 def roast_interval_minutes() -> int:
