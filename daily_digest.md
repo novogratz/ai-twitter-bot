@@ -690,3 +690,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top reply targets: @Graphseo=17, @TheAIShrink=15, @TheBTCTherapist=15, @rohanpaul_ai=10, @StockSavvyShay=10
 
 **Followers we follow** (running total): 260
+
+## 2026-06-22
+
+**Activity** — total actions: 651
+  - by type: reply=527, quote=58, quote_gif=29, retweet=23, post=9, hotake=5
+  - top sources: SEARCH-HOT=312, FEED-SWEEP-FEED=76, FEED-SWEEP-FOLLOWING=50, VIP=36, GIF=29, QUOTE=25, RETWEET_QT=24, RETWEET=21
+  - comedy patterns: METAPHOR=10, FR_ANCHOR=7, UNDERSTATEMENT=7, OTHER=4, REPETITION=2, DIALOGUE=1, EN_ANCHOR=1, RENAME=1
+  - top reply targets: @Graphseo=35, @TheBTCTherapist=14, @cryptorover=9, @SemiconductorsX=8, @AshCrypto=8
+
+**Followers we follow** (running total): 260
+
+**Top-performing posts scraped today**:
+  - 1 likes / 48 views: Bitcoin holders watching BlackRock:
+  - 0 likes / 23 views: GLM 5.2 beats Opus 4.8 on code, yet NVDA still prints the hardware moat. Are we benchmarking models 
+  - 0 likes / 7 views: early always looks like wrong.. until suddenly it doesn't
