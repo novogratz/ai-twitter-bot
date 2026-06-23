@@ -41,7 +41,7 @@ SCOUT_LOG_FILE = os.path.join(_PROJECT_ROOT, "scout_log.json")
 # Minimum follower count for a recruit to be worth our time. Estimates from
 # the agent are noisy — set the bar high enough that even a 50% over-estimate
 # still leaves a real audience.
-MIN_FOLLOWERS = 3000  # 5000 → 3000 (2026-05-09 PM): wider net for FR niche.
+MIN_FOLLOWERS = 10000  # 2026-06-23: big AI accounts only (operator: 'lots of followers')
 
 # Hard cap on additions per cycle so a hallucinating run can't dump 50 fake
 # handles into the roster. Bumped 8 → 15 (user wants daily new-FR find).

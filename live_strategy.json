@@ -1,8 +1,8 @@
 {
   "ts": "2026-06-23T00:00:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 4,
-    "MAX_HOTAKES_PER_DAY": 8,
+    "MAX_NEWS_PER_DAY": 25,
+    "MAX_HOTAKES_PER_DAY": 50,
     "MAX_QUOTES_PER_DAY": 36,
     "MAX_RETWEETS_PER_DAY": 2,
     "MAX_BREAKOUTS_PER_DAY": 4,

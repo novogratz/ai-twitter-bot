@@ -133,7 +133,7 @@ def post_interval_minutes() -> int:
     # are NOT tightened (single-Safari: firing them faster jams the queue and
     # ships LESS — see note below).
     if 2 <= hour <= 17:
-        return _cadence(random.randint(14, 22))
+        return _cadence(random.randint(10, 16))
     # Overnight — still poll a couple times/hour so off-US windows post.
     return _cadence(random.randint(60, 90))
 

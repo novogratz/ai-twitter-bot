@@ -63,8 +63,31 @@ BIG_FR_ACCOUNTS = [
     "LeJournalDuCoin", "CryptoastMedia", "coinacademy_fr", "CryptoPicsou",
     # Spatial FR
     ]
+# BIG AI + HYPE accounts with large followings (operator 2026-06-23: "add
+# new accounts that talk about AI or hype stuff with lots of followers,
+# prioritize AI content"). Replying under these high-traction AI threads is
+# the #1 reach lever. English; the scout/discover bots add more over time.
+BIG_AI_HYPE_ACCOUNTS = [
+    # Lab leaders / founders (huge followings)
+    "sama", "elonmusk", "DarioAmodei", "demishassabis", "satyanadella",
+    "sundarpichai", "JensenHuang", "gdb", "miramurati", "AravSrinivas",
+    "karpathy", "ylecun", "AndrewYNg", "drfeifei", "lexfridman",
+    "ID_AA_Carmack", "fchollet", "EMostaque", "clementdelangue",
+    # Lab / company accounts
+    "OpenAI", "AnthropicAI", "GoogleDeepMind", "GoogleAI", "xai",
+    "MistralAI", "perplexity_ai", "nvidia", "Microsoft", "Meta",
+    "OpenAIDevs", "huggingface", "cursor_ai",
+    # AI news + hype engines (big, fast, AI-only)
+    "rowancheung", "TheRundownAI", "minchoi", "kimmonismus",
+    "slow_developer", "mreflow", "bentossell", "venturetwins",
+    "heybarsee", "alexandr_wang", "emollick", "swyx", "_akhaliq",
+    "GaryMarcus", "testingcatalog", "btibor91", "AISafetyMemes",
+    "amasad", "OfficialLoganK", "DrJimFan", "sytelus",
+]
+
 ALWAYS_REPLY_ACCOUNTS = list(dict.fromkeys(
-    VIP_REPLY_ACCOUNTS + HIGH_TRACTION_REPLY_ACCOUNTS + BIG_FR_ACCOUNTS))
+    VIP_REPLY_ACCOUNTS + BIG_AI_HYPE_ACCOUNTS
+    + HIGH_TRACTION_REPLY_ACCOUNTS + BIG_FR_ACCOUNTS))
 _BIG_FR_SET = {h for h in BIG_FR_ACCOUNTS}
 ALWAYS_REPLY_FR_ACCOUNTS = [
     h for h in ALWAYS_REPLY_ACCOUNTS
