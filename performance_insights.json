@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-06-22T23:49:03.642759",
-  "window_7d_actions": 7140,
-  "window_24h_actions": 652,
+  "generated_at": "2026-06-23T03:49:03.793531",
+  "window_7d_actions": 7169,
+  "window_24h_actions": 626,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 7003
+      "count": 7024
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 39
+      "count": 46
     },
     {
       "pattern": "METAPHOR",
-      "count": 35
+      "count": 34
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -31,11 +31,11 @@
     },
     {
       "pattern": "REPETITION",
-      "count": 5
+      "count": 6
     },
     {
       "pattern": "DIALOGUE",
-      "count": 7
+      "count": 8
     }
   ],
   "best_hours_utc": [
@@ -63,71 +63,71 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3650
+      "count": 3655
     },
     {
       "topic": "Autre",
-      "count": 2615
+      "count": 2635
     },
     {
       "topic": "Crypto",
-      "count": 601
+      "count": 603
     },
     {
       "topic": "Bourse",
-      "count": 492
+      "count": 494
     },
     {
       "topic": "Spatial",
-      "count": 291
+      "count": 287
     }
   ],
   "rising_topics_24h": [
     {
-      "topic": "Bourse",
-      "24h_rate": 0.095,
-      "7d_rate": 0.069
+      "topic": "Crypto",
+      "24h_rate": 0.129,
+      "7d_rate": 0.084
     },
     {
-      "topic": "Crypto",
-      "24h_rate": 0.13,
-      "7d_rate": 0.084
+      "topic": "Bourse",
+      "24h_rate": 0.093,
+      "7d_rate": 0.069
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 4085
+      "count": 4097
     },
     {
       "pillar": "other",
-      "count": 1598
+      "count": 1607
     },
     {
       "pillar": "market_trauma",
-      "count": 1233
+      "count": 1236
     },
     {
       "pillar": "meme_reaction",
-      "count": 121
+      "count": 123
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 54
+      "count": 55
     },
     {
       "pillar": "reply_bait",
-      "count": 49
+      "count": 51
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 272
+      "count": 267
     },
     {
       "pillar": "market_trauma",
-      "count": 177
+      "count": 159
     },
     {
       "pillar": "other",
@@ -135,14 +135,14 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 29
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 25
     },
     {
       "pillar": "reply_bait",
+      "count": 11
+    },
+    {
+      "pillar": "ai_vs_btc",
       "count": 9
     }
   ],
@@ -155,43 +155,43 @@
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 60,
-      "avg_likes": 0.05,
-      "avg_views": 25.7,
+      "pillar": "other",
+      "posts": 68,
+      "avg_likes": 0.06,
+      "avg_views": 34.2,
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 67,
-      "avg_likes": 0.04,
-      "avg_views": 31.3,
+      "pillar": "market_trauma",
+      "posts": 62,
+      "avg_likes": 0.06,
+      "avg_views": 29.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 69,
+      "posts": 66,
       "avg_likes": 0.03,
-      "avg_views": 25.5,
+      "avg_views": 26.4,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5999
+      "count": 6024
     },
     {
       "type": "retweet",
-      "count": 655
+      "count": 656
     },
     {
       "type": "quote",
-      "count": 311
+      "count": 312
     },
     {
       "type": "quote_gif",
-      "count": 112
+      "count": 114
     },
     {
       "type": "post",
@@ -204,18 +204,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-22T23:46:42.144073",
-      "text": "$CRM is down 3.5 years because Salesforce is the \"elevator to nowhere\" of AI: everyone rides it, no one knows which floor they’re on. the seat model is dead, long live the agent.",
+      "ts": "2026-06-23T03:47:21.694097",
+      "text": "GLM beats frontier models blind on median tasks. the lab is raising VC rounds on hope, gl is shipping on unit economics.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-22T23:46:26.155507",
-      "text": "0 profit across 7 labs is the subscription model for the next decade.\n\ncapital will eventually choose the vendor who runs out of runway last.",
+      "ts": "2026-06-23T03:47:05.771697",
+      "text": "Nouveau modèle GPT. La 47ème itération du même wrapper. Comme un iPhone qui s'upgrade juste pour avoir un bouton silencieux plus chic.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-22T23:45:53.678272",
-      "text": "Palantir's Rule of 40 is a myth built on 80% datacenter revenue. JTL's fraud grift was just the first of many.",
+      "ts": "2026-06-23T03:45:55.090266",
+      "text": "Treating Claude like an intern costs you ~$2k in inference fees per complex task.\n\npaying an engineer $80k to prompt-engineer it costs $10k/year.",
       "type": "reply"
     }
   ]
