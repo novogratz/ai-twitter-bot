@@ -18,7 +18,7 @@ reply rides the cheap REPLY_MODEL (it's a reply — the ollama firehose
 default is fine; this is not a profile-surface like the post itself)."""
 import os
 
-from .config import REPLY_MODEL
+from .config import REPLY_MODEL, PROFILE_LLM_PROVIDER
 from .logger import log
 
 FIRST_COMMENT_ENABLED = os.environ.get("FIRST_COMMENT_ENABLED", "1") == "1"
@@ -53,8 +53,16 @@ def post_first_comment(post_text: str) -> bool:
         from .humanizer import humanize
         from .twitter_client import reply_to_own_latest
 
+        # The first comment is the SECOND thing a profile visitor reads and
+        # carries the first-hour reply signal (~15x algo weight), so it must
+        # not ride the weak local-ollama firehose: with AI_CLI=ollama the
+        # passed REPLY_MODEL is ignored and the cryptic qwen writes it
+        # (self-improve #6, 2026-06-24). Force the proven profile provider
+        # (claude haiku via REPLY_MODEL) — fast + cheap at ~1 call/post, and
+        # the timeout is sized for a cloud CLI, not ollama's 180s floor.
         r = run_llm(_PROMPT.format(post=post_text[:400]), REPLY_MODEL,
-                    label="FIRST_COMMENT", output_json=False, timeout=60)
+                    label="FIRST_COMMENT", output_json=False, timeout=120,
+                    force_provider=PROFILE_LLM_PROVIDER, cwd="/tmp")
         if r.returncode != 0 or not r.stdout:
             return False
         comment = unwrap_text(r.stdout, structured_output=False).strip()
