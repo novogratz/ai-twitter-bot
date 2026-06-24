@@ -889,7 +889,9 @@
     "Heisenberg",
     "Lunix",
     "bONGO",
-    "MMCrypto"
+    "MMCrypto",
+    "river",
+    "DutchKafir"
   ],
   "history": [
     {
@@ -5330,6 +5332,16 @@
     {
       "lang": "en",
       "handle": "MMCrypto",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "river",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "DutchKafir",
       "added": "2026-06-24"
     }
   ]
