@@ -1,16 +1,16 @@
-# YouTube brief — 2026-06-23
+# YouTube brief — 2026-06-24
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **635**
-- reply: **520**
-- quote: **53**
+- Total actions logged: **673**
+- reply: **587**
+- quote: **35**
 - quote_gif: **27**
-- retweet: **21**
-- post: **9**
-- hotake: **5**
+- post: **11**
+- hotake: **11**
+- retweet: **2**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -23,24 +23,21 @@
 ### AI
 
 - **40 likes / 13348 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
-- **1 likes / 23 views** — Anthropic’s top models now open source. @OpenAI is about to look like they’re selling water at a drowning pool
 - **1 likes / 13 views** — Brand manager: "we're adding AI to everything" 60% of customers: "we're leaving" Brand manager: "adding that to our AI-powered insights dashboard"
+- **1 likes / 116 views** — everyone holding $NVDA watching Google quietly shelve another chip project
+- **0 likes / 3 views** — Visa integrating payments into OpenAI agents.  A16z's portfolio is a Whole Foods checkout line: nothing under $20, half the items expired. AI
 
 ### Crypto
 
 - **1 likes / 44 views** — six reasons to exit in six months and nobody left. I don't treat Bitcoin holders, I study them  https://x.com/AshCrypto/status/2067876526759063717…
 - **1 likes / 48 views** — Bitcoin holders watching BlackRock:
 
-### Bourse
-
-- **1 likes / 37 views** — The timeline treating a four-letter expletive like an earnings beat  https://x.com/TheBTCTherapist/status/2065740784666562681…
-
 ### Other
 
-- **1 likes / 7 views** — The herd is just people who forgot how to look at the chart themselves
 - **1 likes / 50 views** — my patients have never cared this much about world peace
 - **1 likes / 108 views** — so Fable 5 wasn't a product launch. it was a response
 - **1 likes / 80 views** — $CRWV after the Cramer mention:
+- **1 likes / 24 views** — 'Friendly or Pragmatic' — my entire intake form, now a toggle
 
 ## 📡 Today's news picks (from retweet_bot)
 
@@ -343,43 +340,44 @@ Ope
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_HOME/Ethlabs]** Announcing Ethlabs: a non-profit R&D lab for Ethereum and ETH
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Dom Kwok | EasyA]** today, @ripple received preliminary MiCA approval to offer regulated crypto payment services across europe.
 
-Our mission is to make Ethereum the settlement layer of the global economy.
+TLDR MiCA approval allows ripple to legally offer i
+  - https://x.com/dom_kwok/status/2069373308781449683
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Nic Cruz Patane]** Elon Musk just confirmed that @SpaceX AI satellites will be called "Starmind"
 
-The internet became 
-  - https://x.com/ethlabs_org/status/2069104073245159573
-- **[X_HOME/ansgar.eth]** I'm incredibly excited to share that we are launching Ethlabs.
+LOVE IT.
+  - https://x.com/niccruzpatane/status/2069567930308624607
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/The Bitcoin Historian]** JUST IN: ADAM BACK JUST WARNED THE AI BUBBLE IS ABOUT TO BURSE AND SEND BILLIONS ROTATING BACK INTO #BITCOIN
 
-The core belief: This is a unique moment for Ethereum. Adoption is here, the global economy is m
-  - https://x.com/adietrichs/status/2069112074404352061
-- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Wayne Liang]** People made millions when I called the entire AI/HPC run last year...
+"ONCE THEY TAKE THE PROFIT, THIS CAPITAL WILL FLOW
+  - https://x.com/pete_rizzo_/status/2069610210033860717
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Cointelegraph]** Need to catch up on the news? Here's our top 10 from today:
 
-$CIFR at ~$3 to now ~$30
-$IREN at ~$6 to now ~$60
-$NBIS at ~$40 to now ~$280
+ Anthropic's Mythos model identified vulnerabilities in classified US government systems within hou
+  - https://x.com/Cointelegraph/status/2069616641042706770
+- **[X_HOME/Ahmad]** GLM 5.5 > GPT 5.5 XHIGH
 
-And now I t
-  - https://x.com/wliang/status/2069109451819552782
-- **[X_HOME/Ethereum Foundation]** 0/ Realizing Ethereum’s potential takes a coalition of organizations working together in pursuit of a shared vision; a number of such organizations have come to
-  - https://x.com/ethereumfndn/status/2069138527493747139
-- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/mon]** $HIMS $IREN $ASTS $ONDS - Great buying opportunity.
-  - https://x.com/moninvestor/status/2069118437658390818
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Lisan al Gaib]** btw we know Mythos wasn't pre-trained on Nvidia by how salty Jensen was when unc Dwark mentioned it
+for Rust
+  - https://x.com/TheAhmadOsman/status/2069635025751126128
+- **[X_HOME/Bindu Reddy]** People Are Building Insanely Complex Systems On The SuperComputer
 
-"Mythos was trained on fairly mundane capacity, and a fairl
-  - https://x.com/scaling01/status/2069248348675072237
-- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Nate Endicott]** Messi is $NBIS
+Our upgraded multi-LLM AI agent now has access to a always-on SuperComputer with on-demand sc
+  - https://x.com/bindureddy/status/2069634819861119323
+- **[X_FOLLOWING/Mario Nawfal]** AI video just leveled up HARD 
 
-Ronaldo is $CRWV
+@Grok Imagine Video 1.5 is now live on Renoise and it’s cooking:
 
-Heskey is $IREN
-  - https://x.com/EndicottInvests/status/2069182613110039038
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/ib]** Water use by data centers was always a low IQ argument. Here are better things for NVIDIA and others to focus on getting right:
+Insanely realistic image-to-video  
+Physics that actually make
+  - https://x.com/MarioNawfal/status/2069635375786770653
+- **[X_HOME/Mario Nawfal]** AI video just leveled up HARD 
 
-- land use concerns
-- data cent
-  - https://x.com/Indian_Bronson/status/2069222400437227918
+@Grok Imagine Video 1.5 is now live on Renoise and it’s cooking:
+
+Insanely realistic image-to-video  
+Physics that actually make
+  - https://x.com/MarioNawfal/status/2069635375786770653
 
 ## 🎬 Suggested video angles
 
@@ -390,4 +388,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-23T00:49:03*
+*Generated 2026-06-24T00:22:42*
