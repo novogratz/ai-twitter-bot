@@ -2765,3 +2765,18 @@ def test_generate_quote_raises_deliberate_skip_on_skip_rationale(monkeypatch):
     except cg.DeliberateSkip:
         raised = True
     assert raised, "_generate_quote must raise DeliberateSkip on SKIP-or-rationale"
+
+
+def test_gif_anti_repeat_no_broken_record(tmp_path, monkeypatch):
+    """2026-06-24: the bot shipped 'michael jordan crying' as the GIF on 8+
+    market-down posts in a row (broken-record bot tell). rotate_gif_query
+    must vary it: a repeated pick rotates to a same-emotion alternate, so
+    consecutive identical requests don't ship the same GIF."""
+    from src import humanizer
+    monkeypatch.setattr(humanizer, "_GIF_RECENT_FILE", str(tmp_path / "gif_recent.json"))
+    picks = [humanizer.rotate_gif_query("michael jordan crying") for _ in range(5)]
+    assert picks[0] == "michael jordan crying"
+    assert picks.count("michael jordan crying") == 1, "GIF still repeating"
+    assert len(set(p for p in picks if p)) >= 3, "not enough variety"
+    # a never-used GIF passes through unchanged
+    assert humanizer.rotate_gif_query("wolf of wall street") == "wolf of wall street"
