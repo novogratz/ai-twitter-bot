@@ -85,8 +85,22 @@ BIG_AI_HYPE_ACCOUNTS = [
     "amasad", "OfficialLoganK", "DrJimFan", "sytelus",
 ]
 
+# MID-SIZE AI accounts (self-improve #5, 2026-06-24). Suggester's repeated #1
+# growth lever: replies under whales get buried; replies under mid-size
+# (~5k-100k) active AI builders/commentators show NEAR THE TOP -> they get
+# seen -> profile visits -> followers. Complements BIG_AI_HYPE (reach) with
+# visibility. All real, active, AI-focused; a stale handle is a harmless
+# no-op (search just returns nothing). English.
+MID_SIZE_AI_ACCOUNTS = [
+    "hwchase17", "jerryjliu0", "yoheinakajima", "mckaywrigley", "rasbt",
+    "Teknium1", "abacaj", "corbtt", "Yuchenj_UW", "nutlope", "skirano",
+    "steph_palazzolo", "saranormous", "packyM", "nearcyan", "giffmana",
+    "vikhyatk", "mattshumer_", "alexalbert__", "goodside", "simonw",
+    "karinanguyen_", "charliebholtz", "amanrsanger", "mathemagic1an",
+]
+
 ALWAYS_REPLY_ACCOUNTS = list(dict.fromkeys(
-    VIP_REPLY_ACCOUNTS + BIG_AI_HYPE_ACCOUNTS
+    VIP_REPLY_ACCOUNTS + BIG_AI_HYPE_ACCOUNTS + MID_SIZE_AI_ACCOUNTS
     + HIGH_TRACTION_REPLY_ACCOUNTS + BIG_FR_ACCOUNTS))
 _BIG_FR_SET = {h for h in BIG_FR_ACCOUNTS}
 ALWAYS_REPLY_FR_ACCOUNTS = [

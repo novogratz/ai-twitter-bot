@@ -883,7 +883,13 @@
     "SMX",
     "Reuters",
     "AdiiX",
-    "Krea"
+    "Krea",
+    "Roan",
+    "Rahul",
+    "Heisenberg",
+    "Lunix",
+    "bONGO",
+    "MMCrypto"
   ],
   "history": [
     {
@@ -5294,6 +5300,36 @@
     {
       "lang": "en",
       "handle": "Krea",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Roan",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Rahul",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Heisenberg",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Lunix",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "bONGO",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "MMCrypto",
       "added": "2026-06-24"
     }
   ]
