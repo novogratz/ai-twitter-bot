@@ -98,6 +98,14 @@ QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "clau
 # to "ollama"/empty to send profile surfaces back through the local model.
 PROFILE_LLM_PROVIDER = os.environ.get("PROFILE_LLM_PROVIDER", "claude").strip() or None
 
+# Reply firehose provider. The local ollama model (a 35b qwen) intermittently
+# 503s, and the search-reply path needs a WebSearch tool ollama HTTP can't
+# serve — both silently produced ZERO replies (operator 2026-06-24: "i dont
+# see any replies by bot"). Default to claude (haiku via REPLY_MODEL): fast,
+# reliable, cheap at reply volume. Set to "ollama"/empty to revert to the
+# local firehose for cost.
+REPLY_LLM_PROVIDER = os.environ.get("REPLY_LLM_PROVIDER", "claude").strip() or None
+
 # No budget limits — the bot calls the LLM freely.
 
 # Autonomous self-modification — OFF by default (operator 2026-06-21:

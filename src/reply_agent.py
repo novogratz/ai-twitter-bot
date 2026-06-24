@@ -10,7 +10,7 @@ import re
 from datetime import datetime
 from typing import Optional
 from .logger import log
-from .config import REPLY_MODEL, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE
+from .config import REPLY_MODEL, REPLY_LLM_PROVIDER, BLOCKLIST, DISCOVERED_ACCOUNTS_FILE
 from .llm_client import run_llm, unwrap_text
 
 # Core influencers — AI + Space + Robotics + Investment, French priority
@@ -633,6 +633,9 @@ def generate_replies(recent_topics=None, already_replied=None):
         allowed_tools=["WebSearch"],
         cwd="/tmp",
         structured_output=True,
+        # Must run on a tool-capable provider: ollama HTTP has no WebSearch
+        # tool and 503s, so this path produced zero replies (op 2026-06-24).
+        force_provider=REPLY_LLM_PROVIDER,
     )
     if result.returncode != 0:
         log.info(f"[REPLY] CLI error: {result.stderr[:200]}")

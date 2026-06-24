@@ -7,7 +7,7 @@ import time
 import traceback
 from datetime import date as _date
 from .logger import log
-from .config import PRIORITY_REPLY_MODEL, REPLY_MODEL, _PROJECT_ROOT
+from .config import PRIORITY_REPLY_MODEL, REPLY_MODEL, REPLY_LLM_PROVIDER, _PROJECT_ROOT
 from .llm_client import LLM_RATE_LIMIT_CODE, llm_hourly_limit_status, run_llm, unwrap_text
 from .twitter_client import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed, reply_to_tweet
 from .reply_bot import load_replied, save_replied, _tweet_age_minutes, _handle_from_url, _is_reply_like_tweet
@@ -528,7 +528,10 @@ def _generate_single_reply(author: str, tweet_text: str, lang: str = "fr"):
         author_key = (author or "").lower().lstrip("@")
         model = PRIORITY_REPLY_MODEL if author_key in _VIP_REPLY_ACCOUNTS_LC else REPLY_MODEL
         label = "DIRECT_REPLY_VIP" if author_key in _VIP_REPLY_ACCOUNTS_LC else "DIRECT_REPLY"
-        result = run_llm(prompt, model, label=label)
+        # Force the reliable reply provider (claude haiku): the local ollama
+        # qwen 503s and silently drops replies (operator 2026-06-24).
+        result = run_llm(prompt, model, label=label,
+                         force_provider=REPLY_LLM_PROVIDER, cwd="/tmp")
         if result.returncode == LLM_RATE_LIMIT_CODE: return _LLM_RATE_LIMITED
         if result.returncode != 0: return None
         reply = unwrap_text(result.stdout)
