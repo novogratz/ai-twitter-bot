@@ -705,3 +705,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 48 views: Bitcoin holders watching BlackRock:
   - 0 likes / 23 views: GLM 5.2 beats Opus 4.8 on code, yet NVDA still prints the hardware moat. Are we benchmarking models 
   - 0 likes / 7 views: early always looks like wrong.. until suddenly it doesn't
+
+## 2026-06-23
+
+**Activity** — total actions: 684
+  - by type: reply=599, quote=34, quote_gif=28, hotake=11, post=10, retweet=2
+  - top sources: SEARCH-HOT=394, FEED-SWEEP-FEED=95, FEED-SWEEP-FOLLOWING=59, GIF=31, QUOTE=25, VIP=13, BREAKING_QRT=6, BREAKOUT=4
+  - comedy patterns: METAPHOR=11, FR_ANCHOR=8, UNDERSTATEMENT=5, DIALOGUE=3, REPETITION=3, RENAME=2
+  - top reply targets: @TheBTCTherapist=20, @Graphseo=10, @StockMKTNewz=9, @StockSavvyShay=9, @zerohedge=9
+
+**Followers we follow** (running total): 260
+
+**Top-performing posts scraped today**:
+  - 1 likes / 116 views: everyone holding $NVDA watching Google quietly shelve another chip project
+  - 1 likes / 24 views: 'Friendly or Pragmatic' — my entire intake form, now a toggle
+  - 0 likes / 21 views: nobody warned us the AI trade ends in strong opinions about etch processes  https://x.com/SergeyCYW/
