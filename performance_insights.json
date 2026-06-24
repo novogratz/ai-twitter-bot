@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-23T23:22:42.189810",
-  "window_7d_actions": 7057,
-  "window_24h_actions": 703,
+  "generated_at": "2026-06-24T03:22:42.126891",
+  "window_7d_actions": 7080,
+  "window_24h_actions": 578,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6925
+      "count": 6947
     },
     {
       "pattern": "METAPHOR",
@@ -21,7 +21,7 @@
     },
     {
       "pattern": "RENAME",
-      "count": 9
+      "count": 10
     }
   ],
   "worst_patterns": [
@@ -63,15 +63,15 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3620
+      "count": 3624
     },
     {
       "topic": "Autre",
-      "count": 2616
+      "count": 2628
     },
     {
       "topic": "Crypto",
-      "count": 602
+      "count": 608
     },
     {
       "topic": "Bourse",
@@ -79,14 +79,14 @@
     },
     {
       "topic": "Spatial",
-      "count": 226
+      "count": 227
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Crypto",
-      "24h_rate": 0.131,
-      "7d_rate": 0.085
+      "24h_rate": 0.137,
+      "7d_rate": 0.086
     },
     {
       "topic": "Bourse",
@@ -97,19 +97,19 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 4058
+      "count": 4061
     },
     {
       "pillar": "other",
-      "count": 1583
+      "count": 1592
     },
     {
       "pillar": "market_trauma",
-      "count": 1167
+      "count": 1173
     },
     {
       "pillar": "meme_reaction",
-      "count": 137
+      "count": 141
     },
     {
       "pillar": "ai_vs_btc",
@@ -117,33 +117,33 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 54
+      "count": 55
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 301
+      "count": 232
     },
     {
       "pillar": "market_trauma",
-      "count": 182
+      "count": 154
     },
     {
       "pillar": "other",
-      "count": 173
+      "count": 148
     },
     {
       "pillar": "meme_reaction",
       "count": 30
     },
     {
-      "pillar": "reply_bait",
-      "count": 9
+      "pillar": "ai_vs_btc",
+      "count": 7
     },
     {
-      "pillar": "ai_vs_btc",
-      "count": 8
+      "pillar": "reply_bait",
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -156,23 +156,23 @@
     },
     {
       "pillar": "other",
-      "posts": 72,
+      "posts": 75,
       "avg_likes": 0.07,
-      "avg_views": 33.6,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 59,
-      "avg_likes": 0.05,
-      "avg_views": 26.9,
+      "avg_views": 34.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 65,
-      "avg_likes": 0.02,
+      "posts": 63,
+      "avg_likes": 0.03,
       "avg_views": 25.0,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 58,
+      "avg_likes": 0.03,
+      "avg_views": 26.7,
       "low_sample": false
     }
   ],
@@ -183,40 +183,40 @@
     },
     {
       "type": "retweet",
-      "count": 656
+      "count": 658
     },
     {
       "type": "quote",
-      "count": 310
+      "count": 319
     },
     {
       "type": "quote_gif",
-      "count": 129
+      "count": 133
     },
     {
       "type": "post",
-      "count": 42
+      "count": 48
     },
     {
       "type": "hotake",
-      "count": 34
+      "count": 36
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-23T23:21:08.505998",
-      "text": "Millions of AI agents for marketing.\n\nThe waiting room just added 'former CMO' to the intake form. Which title is next?\n\nhttps://techcrunch.com/2026/06/23/indias-moengage-bets-marketings-future-on-millions-of-ai-agents/",
-      "type": "hotake"
+      "ts": "2026-06-24T03:11:45.110783",
+      "text": "knowing what this means and saying nothing about it is the most bitcoin thing a person can do 😂",
+      "type": "quote"
     },
     {
-      "ts": "2026-06-23T22:10:06.523067",
-      "text": "The AI isn't replacing you. The person next to you who learned it last weekend is. The couch is open.\n\nhttps://techcrunch.com/2026/06/23/indias-moengage-bets-marketings-future-on-millions-of-ai-agents/",
-      "type": "hotake"
+      "ts": "2026-06-24T02:37:22.945471",
+      "text": "when karpathy says \"actually works\" you can finally stop stress-testing the demo",
+      "type": "quote"
     },
     {
-      "ts": "2026-06-23T20:51:51.349630",
-      "text": "Nvidia is an AI infrastructure monopoly that also sells GPUs. the cpu market is just the next room to conquer.",
-      "type": "reply"
+      "ts": "2026-06-24T02:20:12.387645",
+      "text": "Chip selloff day two. AI capex budgets: untouched. GPU waitlists: still months out. the market is scared of the thing it's building.\n\nthat's treatable. 🛋️\nhttps://www.cnbc.com/2026/06/24/asia-tech-stocks-rebound-after-global-rout.html",
+      "type": "hotake"
     }
   ]
 }

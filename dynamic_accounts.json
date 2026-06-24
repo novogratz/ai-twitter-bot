@@ -878,7 +878,8 @@
     "Grvt",
     "Billy",
     "Ferre",
-    "ethn"
+    "ethn",
+    "Injective"
   ],
   "history": [
     {
@@ -5265,6 +5266,11 @@
       "lang": "en",
       "handle": "ethn",
       "added": "2026-06-23"
+    },
+    {
+      "lang": "en",
+      "handle": "Injective",
+      "added": "2026-06-24"
     }
   ]
 }
