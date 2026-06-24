@@ -328,7 +328,7 @@ def can_unfollow(handle: str) -> Tuple[bool, str]:
     return (True, "")
 
 
-def can_post(action: str, high_value: bool = False) -> Tuple[bool, str]:
+def can_post(action: str, high_value: bool = False, urgent: bool = False) -> Tuple[bool, str]:
     """Daily cap + jittered min-spacing for originals / quotes / replies.
 
     Jitter is folded into the required gap (NOT a blocking sleep) so we never
@@ -341,6 +341,12 @@ def can_post(action: str, high_value: bool = False) -> Tuple[bool, str]:
     highest-ROI quote target, so the daily cap must never block it. Spacing
     still applies. Only the quote chokepoint passes this, and only for posts
     above QUOTE_MEGA_VIRAL_LIKES.
+
+    `urgent=True` skips ONLY the min-spacing gate (the DAILY CAP still
+    applies) — for breaking-news QRTs (self-improve #4, 2026-06-24): a real
+    signal spike must fire NOW, not wait out the ~2-3 min routine quote gap,
+    or it misses the fresh-viral window. The breaking lane is self-capped
+    (BREAKING_QRT_MAX_PER_DAY=6), so this can't burst.
     """
     if action == POST:
         cap = config.MAX_ORIGINALS_PER_DAY
@@ -357,6 +363,6 @@ def can_post(action: str, high_value: bool = False) -> Tuple[bool, str]:
         return (True, "")
     if count_today(action) >= cap:
         return (False, f"daily {action} cap reached ({cap})")
-    if not spacing_ok(action, gap):
+    if not urgent and not spacing_ok(action, gap):
         return (False, f"too soon since last {action} (need ~{int(gap)}s gap)")
     return (True, "")

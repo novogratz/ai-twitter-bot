@@ -105,7 +105,10 @@ def run_breaking_qrt_cycle() -> None:
 
     # Cheap precheck BEFORE any Safari/LLM work (the hot_quote lesson):
     # spacing/cap blocked → just wait for the next 10-min fire.
-    ok, why = can_post(QUOTE)
+    # urgent=True: breaking news must fire on the spike, not wait out the
+    # routine quote min-spacing (self-improve #4). The 6/day cap above + the
+    # QUOTE daily cap still apply; only the spacing gate is skipped.
+    ok, why = can_post(QUOTE, urgent=True)
     if not ok:
         log.info(f"[BREAKING_QRT] Quote blocked ({why}) — next cycle retries.")
         return
@@ -132,7 +135,7 @@ def run_breaking_qrt_cycle() -> None:
 
     log.info(f"[BREAKING_QRT] Quote: {quote[:120]}")
     try:
-        posted = quote_tweet(url, quote)
+        posted = quote_tweet(url, quote, urgent=True)
     except Exception:
         _mark_quoted(url)  # unknown state — never double-post
         log.info("[BREAKING_QRT] Post failed:")

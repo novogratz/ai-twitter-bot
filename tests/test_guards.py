@@ -333,14 +333,14 @@ def test_breaking_qrt_chokepoint_skip_keeps_story_armed(monkeypatch, tmp_path):
 
     state_file = tmp_path / "breaking_qrt_state.json"
     monkeypatch.setattr(bqb, "STATE_FILE", str(state_file))
-    monkeypatch.setattr(bqb, "can_post", lambda action: (True, ""))
+    monkeypatch.setattr(bqb, "can_post", lambda action, **k: (True, ""))
     monkeypatch.setattr(bqb, "_load_signal_items",
                         lambda: [{"title": "OpenAI buys AMD", "score": 30}])
     monkeypatch.setattr(bqb, "_search_best_tweet", lambda topic: {
         "author": "WatcherGuru", "text": "JUST IN: ...", "likes": 9000,
         "url": "https://x.com/WatcherGuru/status/1"})
     monkeypatch.setattr(bqb, "_generate_quote", lambda a, t, h: "sharp take")
-    monkeypatch.setattr(bqb, "quote_tweet", lambda u, c: False)
+    monkeypatch.setattr(bqb, "quote_tweet", lambda u, c, **k: False)
     monkeypatch.setattr(bqb, "_mark_quoted", lambda u: None)
 
     bqb.run_breaking_qrt_cycle()
@@ -2805,3 +2805,20 @@ def test_reciprocal_followback_bypasses_whitelist(monkeypatch):
     monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", False)
     _, why_off = action_guard.can_follow("randomstranger999", reciprocal=True)
     assert "not on whitelist" in why_off
+
+
+def test_urgent_quote_skips_spacing_keeps_cap(monkeypatch):
+    """Self-improve #4 (2026-06-24): breaking-news QRTs were blocked by the
+    routine quote min-spacing, missing the fresh-viral window. urgent=True
+    skips ONLY spacing; the daily cap still applies."""
+    from src import action_guard as ag, config
+    monkeypatch.setattr(ag, "count_today", lambda a: 0)
+    monkeypatch.setattr(ag, "spacing_ok", lambda a, g: False)  # spacing would block
+    ok_norm, why = ag.can_post(ag.QUOTE)
+    assert not ok_norm and "too soon" in why
+    ok_urg, _ = ag.can_post(ag.QUOTE, urgent=True)
+    assert ok_urg, "urgent must bypass spacing"
+    # urgent still respects the daily cap
+    monkeypatch.setattr(ag, "count_today", lambda a: 10**9)
+    ok_cap, why_cap = ag.can_post(ag.QUOTE, urgent=True)
+    assert not ok_cap and "cap" in why_cap

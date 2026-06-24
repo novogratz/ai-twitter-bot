@@ -1000,8 +1000,11 @@ def reply_to_tweet(tweet_url: str, reply_text: str) -> bool:
     return True
 
 
-def quote_tweet(tweet_url: str, comment: str, high_value: bool = False) -> bool:
+def quote_tweet(tweet_url: str, comment: str, high_value: bool = False, urgent: bool = False) -> bool:
     """Publish a quote post by composing `comment` plus the source tweet URL.
+
+    `urgent=True` skips the routine quote min-spacing (daily cap still applies)
+    for breaking-news QRTs that must fire on a spike — see action_guard.can_post.
 
     X renders a tweet URL included in a new post as a quote card. This route is
     more stable than driving the nested repost menu and keeps the same
@@ -1033,7 +1036,7 @@ def quote_tweet(tweet_url: str, comment: str, high_value: bool = False) -> bool:
     # Central write policy: quote-repost daily cap + spacing, French + no
     # near-term price target on our commentary, dry-run kill switch.
     from . import action_guard, content_guard, config as _cfg
-    ok, why = action_guard.can_post(action_guard.QUOTE, high_value=high_value)
+    ok, why = action_guard.can_post(action_guard.QUOTE, high_value=high_value, urgent=urgent)
     if not ok:
         log.info(f"[QUOTE] policy skip ({why}).")
         return False
