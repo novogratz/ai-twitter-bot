@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-06-23T17:58:31.607411",
-  "window_7d_actions": 7076,
-  "window_24h_actions": 781,
+  "generated_at": "2026-06-23T23:22:42.189810",
+  "window_7d_actions": 7057,
+  "window_24h_actions": 703,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6934
-    },
-    {
-      "pattern": "FR_ANCHOR",
-      "count": 42
+      "count": 6925
     },
     {
       "pattern": "METAPHOR",
       "count": 39
     },
     {
+      "pattern": "FR_ANCHOR",
+      "count": 38
+    },
+    {
       "pattern": "UNDERSTATEMENT",
-      "count": 22
+      "count": 20
     },
     {
       "pattern": "RENAME",
-      "count": 12
+      "count": 9
     }
   ],
   "worst_patterns": [
@@ -31,7 +31,7 @@
     },
     {
       "pattern": "OTHER",
-      "count": 8
+      "count": 7
     },
     {
       "pattern": "DIALOGUE",
@@ -52,73 +52,68 @@
       "actions": 334
     },
     {
-      "hour": 19,
+      "hour": 10,
       "actions": 330
     },
     {
-      "hour": 10,
-      "actions": 330
+      "hour": 19,
+      "actions": 328
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3631
+      "count": 3620
     },
     {
       "topic": "Autre",
-      "count": 2611
+      "count": 2616
     },
     {
       "topic": "Crypto",
-      "count": 609
+      "count": 602
     },
     {
       "topic": "Bourse",
-      "count": 493
+      "count": 489
     },
     {
       "topic": "Spatial",
-      "count": 233
+      "count": 226
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Crypto",
-      "24h_rate": 0.136,
-      "7d_rate": 0.086
+      "24h_rate": 0.131,
+      "7d_rate": 0.085
     },
     {
       "topic": "Bourse",
-      "24h_rate": 0.099,
-      "7d_rate": 0.07
-    },
-    {
-      "topic": "Spatial",
-      "24h_rate": 0.046,
-      "7d_rate": 0.033
+      "24h_rate": 0.102,
+      "7d_rate": 0.069
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 4074
+      "count": 4058
     },
     {
       "pillar": "other",
-      "count": 1588
+      "count": 1583
     },
     {
       "pillar": "market_trauma",
-      "count": 1172
+      "count": 1167
     },
     {
       "pillar": "meme_reaction",
-      "count": 129
+      "count": 137
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 59
+      "count": 58
     },
     {
       "pillar": "reply_bait",
@@ -128,27 +123,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 334
-    },
-    {
-      "pillar": "other",
-      "count": 202
+      "count": 301
     },
     {
       "pillar": "market_trauma",
-      "count": 194
+      "count": 182
+    },
+    {
+      "pillar": "other",
+      "count": 173
     },
     {
       "pillar": "meme_reaction",
-      "count": 27
+      "count": 30
     },
     {
       "pillar": "reply_bait",
-      "count": 13
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
@@ -160,31 +155,31 @@
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 59,
+      "pillar": "other",
+      "posts": 72,
       "avg_likes": 0.07,
-      "avg_views": 26.7,
+      "avg_views": 33.6,
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 72,
-      "avg_likes": 0.06,
-      "avg_views": 33.6,
+      "pillar": "market_trauma",
+      "posts": 59,
+      "avg_likes": 0.05,
+      "avg_views": 26.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 65,
-      "avg_likes": 0.03,
-      "avg_views": 25.1,
+      "avg_likes": 0.02,
+      "avg_views": 25.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5922
+      "count": 5886
     },
     {
       "type": "retweet",
@@ -192,35 +187,35 @@
     },
     {
       "type": "quote",
-      "count": 308
+      "count": 310
     },
     {
       "type": "quote_gif",
-      "count": 122
+      "count": 129
     },
     {
       "type": "post",
-      "count": 37
+      "count": 42
     },
     {
       "type": "hotake",
-      "count": 31
+      "count": 34
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-23T17:56:43.924559",
-      "text": "GOOGL joins the Dow. The market isn't celebrating diversification. It's pricing in that the index needs the only big tech co that makes money from ads, not just GPUs. rent is due.",
-      "type": "reply"
+      "ts": "2026-06-23T23:21:08.505998",
+      "text": "Millions of AI agents for marketing.\n\nThe waiting room just added 'former CMO' to the intake form. Which title is next?\n\nhttps://techcrunch.com/2026/06/23/indias-moengage-bets-marketings-future-on-millions-of-ai-agents/",
+      "type": "hotake"
     },
     {
-      "ts": "2026-06-23T17:55:51.771585",
-      "text": "SpaceX IPO at $500B is just the market pricing the fact that Starlink is the new internet backbone and everyone else is still renting servers.\n\nElon's winning.",
-      "type": "reply"
+      "ts": "2026-06-23T22:10:06.523067",
+      "text": "The AI isn't replacing you. The person next to you who learned it last weekend is. The couch is open.\n\nhttps://techcrunch.com/2026/06/23/indias-moengage-bets-marketings-future-on-millions-of-ai-agents/",
+      "type": "hotake"
     },
     {
-      "ts": "2026-06-23T17:52:39.123438",
-      "text": "Onchain agents that hang out. the first market that runs itself without human intervention.\n\nthe agent economy just went live.",
+      "ts": "2026-06-23T20:51:51.349630",
+      "text": "Nvidia is an AI infrastructure monopoly that also sells GPUs. the cpu market is just the next room to conquer.",
       "type": "reply"
     }
   ]
