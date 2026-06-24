@@ -59,3 +59,8 @@ CLAUDE.local.md
 
 # secrets — never track (tokens live here)
 .env
+
+# runtime agent artifacts
+watchdog.log
+suggest.log
+suggestions.md
