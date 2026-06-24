@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-06-24T03:22:42.126891",
-  "window_7d_actions": 7080,
-  "window_24h_actions": 578,
+  "generated_at": "2026-06-24T07:22:42.124343",
+  "window_7d_actions": 7014,
+  "window_24h_actions": 429,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6947
-    },
-    {
-      "pattern": "METAPHOR",
-      "count": 39
+      "count": 6885
     },
     {
       "pattern": "FR_ANCHOR",
       "count": 38
     },
     {
+      "pattern": "METAPHOR",
+      "count": 36
+    },
+    {
       "pattern": "UNDERSTATEMENT",
-      "count": 20
+      "count": 19
     },
     {
       "pattern": "RENAME",
@@ -44,10 +44,6 @@
       "actions": 375
     },
     {
-      "hour": 6,
-      "actions": 341
-    },
-    {
       "hour": 14,
       "actions": 334
     },
@@ -58,58 +54,62 @@
     {
       "hour": 19,
       "actions": 328
+    },
+    {
+      "hour": 12,
+      "actions": 320
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3624
+      "count": 3598
     },
     {
       "topic": "Autre",
-      "count": 2628
+      "count": 2608
     },
     {
       "topic": "Crypto",
-      "count": 608
+      "count": 591
     },
     {
       "topic": "Bourse",
-      "count": 489
+      "count": 482
     },
     {
       "topic": "Spatial",
-      "count": 227
+      "count": 222
     }
   ],
   "rising_topics_24h": [
     {
-      "topic": "Crypto",
-      "24h_rate": 0.137,
-      "7d_rate": 0.086
+      "topic": "Bourse",
+      "24h_rate": 0.096,
+      "7d_rate": 0.069
     },
     {
-      "topic": "Bourse",
-      "24h_rate": 0.102,
-      "7d_rate": 0.069
+      "topic": "Crypto",
+      "24h_rate": 0.147,
+      "7d_rate": 0.084
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 4061
+      "count": 4034
     },
     {
       "pillar": "other",
-      "count": 1592
+      "count": 1575
     },
     {
       "pillar": "market_trauma",
-      "count": 1173
+      "count": 1149
     },
     {
       "pillar": "meme_reaction",
-      "count": 141
+      "count": 143
     },
     {
       "pillar": "ai_vs_btc",
@@ -123,27 +123,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 232
+      "count": 158
     },
     {
       "pillar": "market_trauma",
-      "count": 154
+      "count": 119
     },
     {
       "pillar": "other",
-      "count": 148
+      "count": 114
     },
     {
       "pillar": "meme_reaction",
-      "count": 30
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 27
     },
     {
       "pillar": "reply_bait",
-      "count": 7
+      "count": 6
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -156,21 +156,21 @@
     },
     {
       "pillar": "other",
-      "posts": 75,
-      "avg_likes": 0.07,
-      "avg_views": 34.4,
+      "posts": 77,
+      "avg_likes": 0.06,
+      "avg_views": 33.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 63,
+      "posts": 60,
       "avg_likes": 0.03,
-      "avg_views": 25.0,
+      "avg_views": 24.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 58,
+      "posts": 59,
       "avg_likes": 0.03,
       "avg_views": 26.7,
       "low_sample": false
@@ -179,23 +179,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5886
+      "count": 5816
     },
     {
       "type": "retweet",
-      "count": 658
+      "count": 657
     },
     {
       "type": "quote",
-      "count": 319
+      "count": 324
     },
     {
       "type": "quote_gif",
-      "count": 133
+      "count": 135
     },
     {
       "type": "post",
-      "count": 48
+      "count": 46
     },
     {
       "type": "hotake",
@@ -204,19 +204,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-24T03:11:45.110783",
-      "text": "knowing what this means and saying nothing about it is the most bitcoin thing a person can do 😂",
+      "ts": "2026-06-24T07:07:22.241458",
+      "text": "my session notes are becoming searchable. I have concerns. 🛋️",
       "type": "quote"
     },
     {
-      "ts": "2026-06-24T02:37:22.945471",
-      "text": "when karpathy says \"actually works\" you can finally stop stress-testing the demo",
+      "ts": "2026-06-24T06:43:07.127721",
+      "text": "Karp just named what every $PLTR bull has been trying to explain at Thanksgiving for three years",
       "type": "quote"
     },
     {
-      "ts": "2026-06-24T02:20:12.387645",
-      "text": "Chip selloff day two. AI capex budgets: untouched. GPU waitlists: still months out. the market is scared of the thing it's building.\n\nthat's treatable. 🛋️\nhttps://www.cnbc.com/2026/06/24/asia-tech-stocks-rebound-after-global-rout.html",
-      "type": "hotake"
+      "ts": "2026-06-24T06:19:52.804192",
+      "text": "everyone's building AGI to optimize the world. elon's using it to file a bug report on the universe 😂",
+      "type": "quote"
     }
   ]
 }

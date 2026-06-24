@@ -882,7 +882,8 @@
     "Injective",
     "SMX",
     "Reuters",
-    "AdiiX"
+    "AdiiX",
+    "Krea"
   ],
   "history": [
     {
@@ -5288,6 +5289,11 @@
     {
       "lang": "en",
       "handle": "AdiiX",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Krea",
       "added": "2026-06-24"
     }
   ]
