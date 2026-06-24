@@ -433,11 +433,16 @@ def test_inject_human_typo_skips_unsafe_words():
 
 # --- GIF tag pipeline (operator 2026-06-05: funny GIFs on posts/quotes) --------
 
-def test_extract_gif_query():
-    from src.humanizer import extract_gif_query
-    clean, q = extract_gif_query("the couch is open.\n\n[GIF: this is fine]")
+def test_extract_gif_query(tmp_path, monkeypatch):
+    # Isolate the GIF anti-repeat state file (2026-06-24): extract_gif_query
+    # now runs rotate_gif_query, which reads/writes gif_recent.json — without
+    # isolation this test is non-deterministic (rotates/drops a query seen in
+    # prod state). Fresh empty recent-file => the first pick passes through.
+    from src import humanizer
+    monkeypatch.setattr(humanizer, "_GIF_RECENT_FILE", str(tmp_path / "gif_recent.json"))
+    clean, q = humanizer.extract_gif_query("the couch is open.\n\n[GIF: this is fine]")
     assert q == "this is fine" and "[GIF" not in clean and "couch" in clean
-    clean2, q2 = extract_gif_query("no tag here")
+    clean2, q2 = humanizer.extract_gif_query("no tag here")
     assert q2 == "" and clean2 == "no tag here"
 
 
