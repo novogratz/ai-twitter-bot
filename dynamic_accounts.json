@@ -879,7 +879,10 @@
     "Billy",
     "Ferre",
     "ethn",
-    "Injective"
+    "Injective",
+    "SMX",
+    "Reuters",
+    "AdiiX"
   ],
   "history": [
     {
@@ -5270,6 +5273,21 @@
     {
       "lang": "en",
       "handle": "Injective",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "SMX",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Reuters",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "AdiiX",
       "added": "2026-06-24"
     }
   ]

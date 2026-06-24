@@ -1,9 +1,9 @@
 {
-  "ts": "2026-06-23T00:00:00.000000",
+  "ts": "2026-06-24T00:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 25,
     "MAX_HOTAKES_PER_DAY": 50,
-    "MAX_QUOTES_PER_DAY": 36,
+    "MAX_QUOTES_PER_DAY": 40,
     "MAX_RETWEETS_PER_DAY": 2,
     "MAX_BREAKOUTS_PER_DAY": 4,
     "MAX_SPICY_PER_DAY": 3,
@@ -12,15 +12,15 @@
     "FOLLOW_BLAST_PER_CYCLE": 0
   },
   "topic_focus": [
-    "ai_vs_btc is the single highest-ROI frame (10 avg likes / 3362 avg views in 30d vs 0.03 avg likes for ai_news_take). Apply to EVERY BTC/ETF/liquidation/crypto parent without exception. 'AI won. BTC is the patient who keeps firing its therapist.' No hedging, full conviction every time. This frame is confirmed — execute it relentlessly.",
-    "Casual first-person relatable is the only confirmed 50-like format: 'Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)' — 53 likes, 18K views, the single outlier this month. Target 1-in-3 originals. Zero craft, pure vibe. Be the patient, not the therapist.",
-    "Claude Mythos expanded from 50 to 150 organizations across 15 countries (Project Glasswing cybersecurity). Hook: 'The waitlist is the product. The product hasn't shipped yet.' React to every Anthropic / capability / safety post with the FOMO-of-access angle.",
-    "GPT-5.5 released on NVIDIA GB200 at 2x the price of GPT-5.4. Hook: 'The market will pay it. The market will complain about it. The market will pay it again.' React to every OpenAI / pricing / capability post with the dependency-farming angle.",
-    "Anthropic + OpenAI both filed IPO paperwork simultaneously. Hook: 'You missed NVDA at $30. You will not miss this. You will wait for the dip. The dip will not come.' Apply to every AI valuation / FOMO / IPO / equity post.",
-    "OpenAI launched DeployCo — $4B consulting arm to teach enterprises to use OpenAI products. Hook: 'OpenAI built a $4B consulting arm to teach people to use the thing they built. That's not deployment. That's dependency farming.' React to every enterprise AI / consulting / adoption post.",
-    "Anthropic in talks with Microsoft for Claude inference on Maia 200 custom chips via Azure. Hook: 'The model that didn't want to depend on one cloud is negotiating with a second cloud. The therapist also needs therapy.' React to every cloud / infrastructure / partnership post.",
-    "2026 algo reality: replies weigh 150x more than likes, bookmarks weigh 5x. End every original and quote with a genuine open question. 50 thoughtful replies beats 500 passive likes. The metric is conversation quality, not raw engagement."
+    "ai_vs_btc is the single highest-ROI frame (10 avg likes / 3362 avg views vs 0.03 for ai_news_take). EVERY crypto/BTC/ETF/liquidation/macro-fear parent gets this frame without exception. Tech selloff day 2 + BTC at $62K = peak ai_vs_btc opportunity. Full conviction, no hedging: 'AI won. BTC is the patient who keeps firing its therapist.'",
+    "Casual first-person relatable is the only confirmed 50-like format: 'Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)' — 54 likes, 19K views. Selloff variant: 'Me watching $NVDA dip 8% because I bought the GPU waitlist, not the stock :)'. Target 1-in-3 originals. Zero craft, pure vibe.",
+    "Tech selloff day 2 (June 24): Nvidia, Palantir, CoreWeave all under pressure. Hook: Wall St is now demanding AI ROI proof — 'that's not a headwind, that's the therapist's opening line.' React to EVERY selloff/bear/capitulation parent with the ROI-coming angle. Capex budgets untouched, GPU waitlists months out.",
+    "Palantir down 19% YTD on 85% YoY revenue growth and 11 consecutive quarters of acceleration. Hook: 'Palantir is down 19%. Revenue grew 85%. The market is reading the wrong chart. That's not a sell signal — that's a reading comprehension problem.' Apply to every Palantir/valuation/AI-stock bear post.",
+    "CoreWeave down 50% from June peak, still +100% YTD. Hook: 'CoreWeave fell 50% from its high. It's still up 100% this year. The market is punishing the thing that's clearly winning. The couch is open.' React to every cloud/GPU/infrastructure selloff post.",
+    "Cerebras first public earnings: down 11%, margins shrinking. Hook: 'Cerebras just reported. Margins shrinking, stock down 11%. The market's deductible just kicked in. Welcome to the capex cycle — it's expensive until it isn't.' React to every AI chip/IPO/earnings parent.",
+    "Anthropic + OpenAI dual IPO filings. Hook: 'You missed NVDA at $30. You will not miss this. You will wait for the dip. The dip will not come.' React to every AI valuation/FOMO/equity post. Reinforce with: 'Both filed at the same time. The race to the public markets is the race to permanence.'",
+    "2026 algo reality: replies weigh 150x more than likes. End every original and quote with a genuine open question. Vary therapist props — 'waiting room 🛋️' is overused. Rotate: 'session notes:', 'diagnosis:', 'prescription:', 'couch is open', 'treating [X disorder]'. METAPHOR > UNDERSTATEMENT. Journalism mode (ai_news_take narration) = 0.03 avg likes. SKIP it."
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-23 update: caps adjusted (QUOTES 40→36 for quality pressure — avg likes on quotes is ~0, selectivity beats volume). Topic focus refreshed with June 23 breaking news: Claude Mythos 150 orgs, GPT-5.5, Anthropic+OpenAI dual IPO filings, OpenAI DeployCo $4B, Anthropic-Microsoft Maia chip talks. Core frame locked: ai_vs_btc (10x avg likes) + casual-first-person (53 likes outlier) are the only confirmed winners. ai_news_take journalism mode contributes 57% of volume with 0.03 avg likes — suppress it."
+  "rationale": "2026-06-24 update: quotes bumped 36→40 (quality gate holding, selloff provides more high-signal parents). All other caps unchanged. Topic focus refreshed with June 24 market context: tech selloff day 2, BTC $62K, Palantir -19%/+85% revenue paradox, CoreWeave -50% from peak, Cerebras first earnings miss, dual Anthropic+OpenAI IPO filings. Core insight locked: ai_vs_btc (10x avg likes) + casual first-person (54-like outlier) are the ONLY confirmed winners. ai_news_take journalism mode at 0.03 avg likes — suppress it. Therapist prop rotation added (🛋️ overuse detected in log)."
 }
