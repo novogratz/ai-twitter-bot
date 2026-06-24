@@ -268,15 +268,20 @@ def following_ceiling() -> int:
     return min(config.FOLLOW_TOTAL_CAP, followers)
 
 
-def can_follow(handle: str) -> Tuple[bool, str]:
+def can_follow(handle: str, reciprocal: bool = False) -> Tuple[bool, str]:
     """2026-06-07 spec follow policy — whitelist-only seed/discovery list,
     hard total-following ceiling (300 cap / ~150 while followers are low),
     20/day pacing with >=10-min randomized gaps, 30-day anti-churn.
+
+    `reciprocal=True` (a follow-back of someone who already engages with us)
+    bypasses ONLY the whitelist-only gate when FOLLOWBACK_BYPASS_WHITELIST is
+    set — every other gate (churn, daily cap, spacing, ceiling) still applies.
     """
     h = (handle or "").lower().lstrip("@")
     if not h:
         return (False, "empty handle")
-    if config.FOLLOW_WHITELIST_ONLY and not is_whitelisted(h):
+    _wl_exempt = reciprocal and config.FOLLOWBACK_BYPASS_WHITELIST
+    if config.FOLLOW_WHITELIST_ONLY and not is_whitelisted(h) and not _wl_exempt:
         return (False, "not on whitelist (whitelist-only mode; no strangers, no reciprocity)")
     if within_churn_cooldown(h):
         return (False, f"anti-churn: touched within {config.CHURN_COOLDOWN_DAYS}d")

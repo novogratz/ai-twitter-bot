@@ -156,7 +156,7 @@ def run_followback_cycle():
 
     for h in pick:
         try:
-            ok = follow_account(h)
+            ok = follow_account(h, reciprocal=True)  # follow-back: bypass whitelist gate
             if ok:
                 followed.add(h)
                 _save_followed(followed)

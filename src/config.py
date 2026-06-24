@@ -201,6 +201,13 @@ REPLY_LANGUAGE_MATCH = os.environ.get("REPLY_LANGUAGE_MATCH", "1") == "1"
 #     human approval — the bot never auto-adds.
 #   - 30-day anti-churn stays ON; no follow→unfollow cycles.
 FOLLOW_WHITELIST_ONLY = os.environ.get("FOLLOW_WHITELIST_ONLY", "1") == "1"
+# Let RECIPROCAL follow-backs (people who already engage with us) through the
+# whitelist-only gate (self-improve loop #3, 2026-06-24). Followback is the
+# safest follower-growth loop — these are pre-qualified by engaging us, not
+# random strangers — but whitelist-only was silently blocking ALL of them
+# ("not on whitelist" refusals). All other gates (anti-churn, daily cap,
+# spacing, following ceiling) still apply. Set 0 to re-block.
+FOLLOWBACK_BYPASS_WHITELIST = os.environ.get("FOLLOWBACK_BYPASS_WHITELIST", "1") == "1"
 ENABLE_FOLLOW_BLAST = os.environ.get("ENABLE_FOLLOW_BLAST", "0") == "1"
 FOLLOW_ENFORCE_RATIO = os.environ.get("FOLLOW_ENFORCE_RATIO", "0") == "1"
 FOLLOW_RATIO_CEILING = float(os.environ.get("FOLLOW_RATIO_CEILING", "0.8"))  # following < 0.8 * followers

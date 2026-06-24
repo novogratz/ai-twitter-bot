@@ -2785,3 +2785,23 @@ def test_gif_anti_repeat_no_broken_record(tmp_path, monkeypatch):
     assert len(set(p for p in picks if p)) >= 3, "not enough variety"
     # a never-used GIF passes through unchanged
     assert humanizer.rotate_gif_query("wolf of wall street") == "wolf of wall street"
+
+
+def test_reciprocal_followback_bypasses_whitelist(monkeypatch):
+    """Self-improve #3 (2026-06-24): followback was dead — whitelist-only
+    blocked following people who engage with us. reciprocal=True bypasses ONLY
+    the whitelist gate (when FOLLOWBACK_BYPASS_WHITELIST), never the other
+    gates. Pin: a non-whitelisted handle is whitelist-blocked normally but
+    NOT for a reciprocal follow-back."""
+    from src import action_guard, config
+    monkeypatch.setattr(config, "FOLLOW_WHITELIST_ONLY", True)
+    monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", True)
+    monkeypatch.setattr(action_guard, "is_whitelisted", lambda h, **k: False)
+    _, why_norm = action_guard.can_follow("randomstranger999")
+    assert "not on whitelist" in why_norm
+    _, why_recip = action_guard.can_follow("randomstranger999", reciprocal=True)
+    assert "not on whitelist" not in why_recip
+    # kill switch: bypass off => reciprocal blocked again
+    monkeypatch.setattr(config, "FOLLOWBACK_BYPASS_WHITELIST", False)
+    _, why_off = action_guard.can_follow("randomstranger999", reciprocal=True)
+    assert "not on whitelist" in why_off

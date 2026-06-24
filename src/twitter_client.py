@@ -1273,8 +1273,11 @@ def _scrape_profile_quality() -> dict:
     return {}
 
 
-def follow_account(username: str) -> bool:
+def follow_account(username: str, reciprocal: bool = False) -> bool:
     """Visit a user's profile and click the Follow button.
+
+    `reciprocal=True` marks a follow-back (someone who already engages with
+    us) so the whitelist-only gate is bypassed for it (see can_follow).
 
     Returns True only when the JS click actually fired (best-effort signal).
     Callers MUST check the return value before marking a handle as followed,
@@ -1295,7 +1298,7 @@ def follow_account(username: str) -> bool:
     # invariant (following < ceiling * followers), daily cap, 30-day
     # anti-churn cooldown, dry-run. Enforced here so every follow bot obeys.
     from . import action_guard, config as _cfg
-    ok, why = action_guard.can_follow(username)
+    ok, why = action_guard.can_follow(username, reciprocal=reciprocal)
     if not ok:
         log.info(f"[FOLLOW] policy refuses @{username} ({why}).")
         return False
