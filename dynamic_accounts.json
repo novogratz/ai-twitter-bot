@@ -654,7 +654,12 @@
     "MoulinBenoit",
     "AlexisTremblay_",
     "JordyDijck",
-    "LapinDeGarenne"
+    "LapinDeGarenne",
+    "MaximeMichelet",
+    "GaelLeclerc",
+    "AlexisKorn",
+    "SaraBoudghene",
+    "NathalieBoutin"
   ],
   "en": [
     "blablacar",
@@ -919,7 +924,8 @@
     "Art",
     "PoIiMath",
     "Knoebel",
-    "AlphaFox"
+    "AlphaFox",
+    "Diana"
   ],
   "history": [
     {
@@ -5510,6 +5516,36 @@
     {
       "lang": "fr",
       "handle": "LapinDeGarenne",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "en",
+      "handle": "Diana",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMichelet",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLeclerc",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisKorn",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "SaraBoudghene",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathalieBoutin",
       "added": "2026-06-25"
     }
   ]

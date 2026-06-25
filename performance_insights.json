@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-25T05:56:16.146151",
-  "window_7d_actions": 6636,
-  "window_24h_actions": 471,
+  "generated_at": "2026-06-25T09:56:16.105059",
+  "window_7d_actions": 6632,
+  "window_24h_actions": 599,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6537
+      "count": 6532
     },
     {
       "pattern": "FR_ANCHOR",
@@ -34,7 +34,7 @@
       "count": 5
     },
     {
-      "pattern": "RENAME",
+      "pattern": "OTHER",
       "count": 6
     }
   ],
@@ -56,85 +56,89 @@
       "actions": 298
     },
     {
-      "hour": 6,
-      "actions": 296
+      "hour": 1,
+      "actions": 292
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3446
+      "count": 3435
     },
     {
       "topic": "Autre",
-      "count": 2463
+      "count": 2479
     },
     {
       "topic": "Crypto",
-      "count": 565
+      "count": 560
     },
     {
       "topic": "Bourse",
-      "count": 439
+      "count": 431
     },
     {
       "topic": "Spatial",
-      "count": 180
+      "count": 174
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Crypto",
-      "24h_rate": 0.149,
-      "7d_rate": 0.085
+      "24h_rate": 0.142,
+      "7d_rate": 0.084
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3878
+      "count": 3880
     },
     {
       "pillar": "other",
-      "count": 1459
+      "count": 1469
     },
     {
       "pillar": "market_trauma",
-      "count": 1031
+      "count": 1016
     },
     {
       "pillar": "meme_reaction",
-      "count": 149
+      "count": 150
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 65
+      "count": 62
     },
     {
       "pillar": "reply_bait",
-      "count": 54
+      "count": 55
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 205
+      "count": 270
     },
     {
       "pillar": "other",
-      "count": 123
+      "count": 163
     },
     {
       "pillar": "market_trauma",
-      "count": 103
+      "count": 127
     },
     {
       "pillar": "meme_reaction",
-      "count": 28
+      "count": 27
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 12
+      "count": 11
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 1
     }
   ],
   "pillar_engagement_30d": [
@@ -147,30 +151,30 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 56,
-      "avg_likes": 0.07,
-      "avg_views": 27.5,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 80,
-      "avg_likes": 0.06,
-      "avg_views": 32.4,
+      "posts": 53,
+      "avg_likes": 0.08,
+      "avg_views": 28.3,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 61,
-      "avg_likes": 0.05,
+      "avg_likes": 0.07,
       "avg_views": 26.5,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 83,
+      "avg_likes": 0.06,
+      "avg_views": 33.7,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5465
+      "count": 5459
     },
     {
       "type": "retweet",
@@ -178,11 +182,11 @@
     },
     {
       "type": "quote",
-      "count": 289
+      "count": 287
     },
     {
       "type": "quote_gif",
-      "count": 141
+      "count": 142
     },
     {
       "type": "post",
@@ -190,23 +194,23 @@
     },
     {
       "type": "hotake",
-      "count": 37
+      "count": 40
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-25T05:55:27.494982",
-      "text": "Speed's the edge only if you do hft. for most traders, signal is the edge. a curated feed is just filtering noise.",
+      "ts": "2026-06-25T09:54:26.928426",
+      "text": "finally someone diagnosing the AI instead of asking it for therapy 🛋️",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-06-25T09:54:10.391873",
+      "text": "The 80% unused is the gap between smarter ChatGPT and AI that rebuilds itself.\n\nmost people never learn to ask for infrastructure.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-25T05:53:27.734658",
-      "text": "Openai's 3.4b arr grew 100% yoy. claude's real. you're watching share move, not revenue disappear. completely different.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-06-25T05:51:49.323437",
-      "text": "Free models cost time. Claude costs money. which is cheaper depends on what you're short on.",
+      "ts": "2026-06-25T09:53:25.154554",
+      "text": "210/3,000 licensed means MiCA succeeds at regulation but fails at adoption. The other 93% move to Singapore or stablecoins. That's not doom, it's geography.",
       "type": "reply"
     }
   ]

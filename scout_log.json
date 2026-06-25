@@ -6009,5 +6009,50 @@
       }
     ],
     "summary": "Mix de fondateurs (Mistral, Hugging Face) et d'actifs du terrain. Z\u00e9ro vendeur de formation, 100% contenu tech/finance en fran\u00e7ais."
+  },
+  {
+    "ts": "2026-06-25T07:57:15.261645",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeMichelet",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Trader pro qui montre ses pertes autant que ses gains. Sur X, \u00e7a vaut plus que tous les 'gourous' en chemise blanche qui te vendent un r\u00eave de YOLO."
+      },
+      {
+        "handle": "GaelLeclerc",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Ex-Coinbase. Il explique la crypto pour ceux qui n'ont pas pass\u00e9 10 ans \u00e0 d\u00e9bugger des smart contracts. Le 'Grand Fr\u00e8re' bienveillant qu'on n'avait pas."
+      },
+      {
+        "handle": "AlexisKorn",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "AI Researcher \u00e0 NYC. Il balance des threads sur le LLM game qui font moins mal aux yeux que tes threads 'Invest in AI' g\u00e9n\u00e9riques."
+      },
+      {
+        "handle": "SaraBoudghene",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Chercheuse en IA au Qu\u00e9bec. Elle balance des insights PhD accessibles. Preuve que la tech qu\u00e9b\u00e9coise ne se r\u00e9sume pas aux blagues de d\u00e9panneur."
+      },
+      {
+        "handle": "NathalieBoutin",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 10000,
+        "reason": "La voix francophone en fintech \u00e0 NYC. Elle couvre les startups qui font bouger le march\u00e9 am\u00e9ricain avec un angle europ\u00e9en chic."
+      }
+    ],
+    "summary": "J'ai tri\u00e9 le grain de l'ivraie : pas de vendeurs de r\u00eaves, juste des builders. De Paris \u00e0 NYC, ce sont les seuls qui prouvent qu'on peut twitter en fran\u00e7ais sans y laisser sa dignit\u00e9."
   }
 ]
