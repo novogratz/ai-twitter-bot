@@ -634,7 +634,16 @@
     "VillainVC",
     "HugoBourges",
     "MarcLaventure",
-    "BenoitBenoit"
+    "BenoitBenoit",
+    "ThibautMazuer",
+    "ClementGrisel",
+    "RomainMuller",
+    "MaximeMortier",
+    "mestevens_",
+    "BaptisteL",
+    "JulienDuchemin",
+    "TanguyDufour",
+    "LoicLecocq"
   ],
   "en": [
     "blablacar",
@@ -891,7 +900,11 @@
     "bONGO",
     "MMCrypto",
     "river",
-    "DutchKafir"
+    "DutchKafir",
+    "Ripple",
+    "Glider",
+    "Financelot",
+    "Aella"
   ],
   "history": [
     {
@@ -5342,6 +5355,71 @@
     {
       "lang": "en",
       "handle": "DutchKafir",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Ripple",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Glider",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMazuer",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClementGrisel",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainMuller",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMortier",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Financelot",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Aella",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "mestevens_",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "BaptisteL",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDuchemin",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguyDufour",
+      "added": "2026-06-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "LoicLecocq",
       "added": "2026-06-24"
     }
   ]
