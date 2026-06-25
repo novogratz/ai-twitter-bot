@@ -1,9 +1,9 @@
 {
-  "ts": "2026-06-24T00:00:00.000000",
+  "ts": "2026-06-25T00:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 25,
     "MAX_HOTAKES_PER_DAY": 50,
-    "MAX_QUOTES_PER_DAY": 40,
+    "MAX_QUOTES_PER_DAY": 44,
     "MAX_RETWEETS_PER_DAY": 2,
     "MAX_BREAKOUTS_PER_DAY": 4,
     "MAX_SPICY_PER_DAY": 3,
@@ -12,15 +12,14 @@
     "FOLLOW_BLAST_PER_CYCLE": 0
   },
   "topic_focus": [
-    "ai_vs_btc is the single highest-ROI frame (10 avg likes / 3362 avg views vs 0.03 for ai_news_take). EVERY crypto/BTC/ETF/liquidation/macro-fear parent gets this frame without exception. Tech selloff day 2 + BTC at $62K = peak ai_vs_btc opportunity. Full conviction, no hedging: 'AI won. BTC is the patient who keeps firing its therapist.'",
-    "Casual first-person relatable is the only confirmed 50-like format: 'Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)' — 54 likes, 19K views. Selloff variant: 'Me watching $NVDA dip 8% because I bought the GPU waitlist, not the stock :)'. Target 1-in-3 originals. Zero craft, pure vibe.",
-    "Tech selloff day 2 (June 24): Nvidia, Palantir, CoreWeave all under pressure. Hook: Wall St is now demanding AI ROI proof — 'that's not a headwind, that's the therapist's opening line.' React to EVERY selloff/bear/capitulation parent with the ROI-coming angle. Capex budgets untouched, GPU waitlists months out.",
-    "Palantir down 19% YTD on 85% YoY revenue growth and 11 consecutive quarters of acceleration. Hook: 'Palantir is down 19%. Revenue grew 85%. The market is reading the wrong chart. That's not a sell signal — that's a reading comprehension problem.' Apply to every Palantir/valuation/AI-stock bear post.",
-    "CoreWeave down 50% from June peak, still +100% YTD. Hook: 'CoreWeave fell 50% from its high. It's still up 100% this year. The market is punishing the thing that's clearly winning. The couch is open.' React to every cloud/GPU/infrastructure selloff post.",
-    "Cerebras first public earnings: down 11%, margins shrinking. Hook: 'Cerebras just reported. Margins shrinking, stock down 11%. The market's deductible just kicked in. Welcome to the capex cycle — it's expensive until it isn't.' React to every AI chip/IPO/earnings parent.",
-    "Anthropic + OpenAI dual IPO filings. Hook: 'You missed NVDA at $30. You will not miss this. You will wait for the dip. The dip will not come.' React to every AI valuation/FOMO/equity post. Reinforce with: 'Both filed at the same time. The race to the public markets is the race to permanence.'",
-    "2026 algo reality: replies weigh 150x more than likes. End every original and quote with a genuine open question. Vary therapist props — 'waiting room 🛋️' is overused. Rotate: 'session notes:', 'diagnosis:', 'prescription:', 'couch is open', 'treating [X disorder]'. METAPHOR > UNDERSTATEMENT. Journalism mode (ai_news_take narration) = 0.03 avg likes. SKIP it."
+    "ai_vs_btc is the single highest-ROI frame (13.33 avg likes / 4467 avg views vs 0.07 for ai_news_take — 190x gap). EVERY crypto/BTC/ETH/liquidation/macro-fear parent gets this frame without exception. No hedging, full conviction: 'AI won. BTC is the patient who keeps firing its therapist.'",
+    "Casual first-person relatable is the only confirmed breakout format: 'Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)' — 57 likes, 20K views. Formula: 'Me [verb-ing] [thing] because I [smart bet] instead of [old bet] :)' — lowercase, zero craft, pure vibe. Target 1-in-3 originals.",
+    "JUNE 25 LEAD STORY — Alibaba distillation attack: Anthropic accused Alibaba of running 25,000 fake accounts conducting 29 million Claude exchanges to steal model capabilities. Hook: '25,000 fake accounts. 29 million requests. Alibaba's AI strategy is my most committed patient — except they're trying to steal the prescription.' React to every AI IP/China/model-theft parent with this frame.",
+    "Claude Tag on Slack just launched (beta). Hook: 'AI finally made it into the Slack thread where decisions actually happen. my clients are about to get a second opinion mid-meeting.' React to every enterprise AI / workplace AI / productivity parent.",
+    "Export controls on Fable 5 and Mythos 5 (US Commerce Dept directive, June 12). Negotiations improved after Tom Brown replaced Dario. Hook: 'The government put Claude behind a velvet rope. the couch is very exclusive now.' React to every AI regulation / export / geopolitics parent.",
+    "Microsoft + Anthropic early talks on running Claude on Maia 200 chips via Azure. Hook: 'Microsoft and Anthropic are talking compute. The AI war is really a landlord war — and Dario just started looking at real estate.' React to every cloud/infrastructure/compute parent.",
+    "2026 algo reality: replies weigh 150x more than likes. End every original and quote with a genuine open question. Vary therapist props — rotate 'session notes:', 'diagnosis:', 'prescription:', 'new patient:', 'the deductible just kicked in', 'couch is open'. METAPHOR > UNDERSTATEMENT. Journalism mode (ai_news_take narration) = 0.07 avg likes. SKIP it or add the diagnosis."
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-24 update: quotes bumped 36→40 (quality gate holding, selloff provides more high-signal parents). All other caps unchanged. Topic focus refreshed with June 24 market context: tech selloff day 2, BTC $62K, Palantir -19%/+85% revenue paradox, CoreWeave -50% from peak, Cerebras first earnings miss, dual Anthropic+OpenAI IPO filings. Core insight locked: ai_vs_btc (10x avg likes) + casual first-person (54-like outlier) are the ONLY confirmed winners. ai_news_take journalism mode at 0.03 avg likes — suppress it. Therapist prop rotation added (🛋️ overuse detected in log)."
+  "rationale": "2026-06-25 update: quotes bumped 40→44 (quality gate holding, Alibaba/Claude story + export-control + Claude Tag provide high-signal parents today). Topic focus fully refreshed with June 25 news: Alibaba distillation attack (29M fake exchanges) is the day's biggest hook — pure ai_vs_btc absurdist therapist angle. Claude Tag on Slack, Fable 5 export controls, Microsoft+Anthropic Maia chip talks also acute. Core insight locked: ai_vs_btc (13.33 avg likes, 190x over journalism mode) + casual first-person (57-like outlier) are the ONLY confirmed winners. ai_news_take at 0.07 avg likes — suppress, diagnose, or SKIP."
 }

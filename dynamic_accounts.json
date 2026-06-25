@@ -651,7 +651,10 @@
     "VladS",
     "AlexisDroit",
     "RomainBailly",
-    "MoulinBenoit"
+    "MoulinBenoit",
+    "AlexisTremblay_",
+    "JordyDijck",
+    "LapinDeGarenne"
   ],
   "en": [
     "blablacar",
@@ -915,7 +918,8 @@
     "Aella",
     "Art",
     "PoIiMath",
-    "Knoebel"
+    "Knoebel",
+    "AlphaFox"
   ],
   "history": [
     {
@@ -5486,6 +5490,26 @@
     {
       "lang": "fr",
       "handle": "MoulinBenoit",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "en",
+      "handle": "AlphaFox",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisTremblay_",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "JordyDijck",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "LapinDeGarenne",
       "added": "2026-06-25"
     }
   ]

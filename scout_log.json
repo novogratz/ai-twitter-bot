@@ -5978,5 +5978,36 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que des b\u00e2tisseurs et des pros. La sc\u00e8ne FR IA explose (Mistral crew), mais la sc\u00e8ne QC reste discr\u00e8te et qualitative. Pas de formations \u00e0 2000\u20ac dans la liste."
+  },
+  {
+    "ts": "2026-06-25T05:57:10.878118",
+    "raw_count": 10,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AlexisTremblay_",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Gars de Bourse Direct. Il explique le march\u00e9 sans jargon obscur, parfait pour d\u00e9panner un Qu\u00e9b\u00e9cois qui panique."
+      },
+      {
+        "handle": "JordyDijck",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Fondateur de Nuna (IA). Il poste des threads sur le LLM business model en FR, concret et sans bullshit."
+      },
+      {
+        "handle": "LapinDeGarenne",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Journaliste tech pur et dur. Il pique les start-ups fran\u00e7aises et parle IA sans vendre de stage de 3 jours."
+      }
+    ],
+    "summary": "Mix de fondateurs (Mistral, Hugging Face) et d'actifs du terrain. Z\u00e9ro vendeur de formation, 100% contenu tech/finance en fran\u00e7ais."
   }
 ]
