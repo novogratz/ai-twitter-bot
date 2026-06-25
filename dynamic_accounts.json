@@ -643,7 +643,15 @@
     "BaptisteL",
     "JulienDuchemin",
     "TanguyDufour",
-    "LoicLecocq"
+    "LoicLecocq",
+    "PierreRoussille",
+    "Lamassuriere",
+    "MaximePerrin",
+    "BaptisteLecocq",
+    "VladS",
+    "AlexisDroit",
+    "RomainBailly",
+    "MoulinBenoit"
   ],
   "en": [
     "blablacar",
@@ -904,7 +912,10 @@
     "Ripple",
     "Glider",
     "Financelot",
-    "Aella"
+    "Aella",
+    "Art",
+    "PoIiMath",
+    "Knoebel"
   ],
   "history": [
     {
@@ -5421,6 +5432,61 @@
       "lang": "fr",
       "handle": "LoicLecocq",
       "added": "2026-06-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRoussille",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lamassuriere",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximePerrin",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "BaptisteLecocq",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "en",
+      "handle": "Art",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "en",
+      "handle": "PoIiMath",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "en",
+      "handle": "Knoebel",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "VladS",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDroit",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBailly",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MoulinBenoit",
+      "added": "2026-06-25"
     }
   ]
 }
