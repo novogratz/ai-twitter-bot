@@ -1,13 +1,13 @@
-# YouTube brief — 2026-06-24
+# YouTube brief — 2026-06-25
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **673**
-- reply: **587**
-- quote: **35**
-- quote_gif: **27**
+- Total actions logged: **335**
+- reply: **255**
+- quote: **32**
+- quote_gif: **24**
 - post: **11**
 - hotake: **11**
 - retweet: **2**
@@ -25,7 +25,7 @@
 - **40 likes / 13348 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 - **1 likes / 13 views** — Brand manager: "we're adding AI to everything" 60% of customers: "we're leaving" Brand manager: "adding that to our AI-powered insights dashboard"
 - **1 likes / 116 views** — everyone holding $NVDA watching Google quietly shelve another chip project
-- **0 likes / 3 views** — Visa integrating payments into OpenAI agents.  A16z's portfolio is a Whole Foods checkout line: nothing under $20, half the items expired. AI
+- **1 likes / 19 views** — every AI power trade holder just saved this, nodded seriously, and didn't sell a share
 
 ### Crypto
 
@@ -340,44 +340,50 @@ Ope
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Dom Kwok | EasyA]** today, @ripple received preliminary MiCA approval to offer regulated crypto payment services across europe.
+- **[X_HOME/Min Choi]** Holy smokes... how is this AI?
 
-TLDR MiCA approval allows ripple to legally offer i
-  - https://x.com/dom_kwok/status/2069373308781449683
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Nic Cruz Patane]** Elon Musk just confirmed that @SpaceX AI satellites will be called "Starmind"
+Seedance 2.0 can turn any character into a full K-POP music video dance moves now.
 
-LOVE IT.
-  - https://x.com/niccruzpatane/status/2069567930308624607
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/The Bitcoin Historian]** JUST IN: ADAM BACK JUST WARNED THE AI BUBBLE IS ABOUT TO BURSE AND SEND BILLIONS ROTATING BACK INTO #BITCOIN
+This is 100% AI.
 
-"ONCE THEY TAKE THE PROFIT, THIS CAPITAL WILL FLOW
-  - https://x.com/pete_rizzo_/status/2069610210033860717
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Cointelegraph]** Need to catch up on the news? Here's our top 10 from today:
+Promp in comments
+  - https://x.com/minchoi/status/2069254454164033807
+- **[X_HOME/Ash Crypto]** BREAKING :  BlackRock ETF has sold $239,270,000 worth of Bitcoin.
+  - https://x.com/AshCrypto/status/2070000684758622467
+- **[X_HOME/CyrilXBT]** ANDREW NG 
 
- Anthropic's Mythos model identified vulnerabilities in classified US government systems within hou
-  - https://x.com/Cointelegraph/status/2069616641042706770
-- **[X_HOME/Ahmad]** GLM 5.5 > GPT 5.5 XHIGH
+REPORTEDLY SAID 100% OF HIS TASKS NOW RUN THROUGH AI AGENTS.
 
-for Rust
-  - https://x.com/TheAhmadOsman/status/2069635025751126128
-- **[X_HOME/Bindu Reddy]** People Are Building Insanely Complex Systems On The SuperComputer
+The hype actually passed his expectations.
 
-Our upgraded multi-LLM AI agent now has access to a always-on SuperComputer with on-demand sc
-  - https://x.com/bindureddy/status/2069634819861119323
-- **[X_FOLLOWING/Mario Nawfal]** AI video just leveled up HARD 
+His next call. Loops are the next step. 
 
-@Grok Imagine Video 1.5 is now live on Renoise and it’s cooking:
 
-Insanely realistic image-to-video  
-Physics that actually make
-  - https://x.com/MarioNawfal/status/2069635375786770653
-- **[X_HOME/Mario Nawfal]** AI video just leveled up HARD 
+  - https://x.com/cyrilXBT/status/2070002042031296923
+- **[X_FOLLOWING/CyrilXBT]** ANDREW NG 
 
-@Grok Imagine Video 1.5 is now live on Renoise and it’s cooking:
+REPORTEDLY SAID 100% OF HIS TASKS NOW RUN THROUGH AI AGENTS.
 
-Insanely realistic image-to-video  
-Physics that actually make
-  - https://x.com/MarioNawfal/status/2069635375786770653
+The hype actually passed his expectations.
+
+His next call. Loops are the next step. 
+
+
+  - https://x.com/cyrilXBT/status/2070002042031296923
+- **[X_HOME/Min Choi]** Creator vlogs will never be the same...
+
+100% AI
+  - https://x.com/minchoi/status/2069969203352813755
+- **[X_HOME/Semiconductor Insider]** AI Server Boom Causing Sharp Price Surge in High-End MLCC Components
+
+Explosive growth in AI servers is creating big shortages for premium multilayer ceramic ca
+  - https://x.com/SemiconductorsX/status/2070005078971625596
+- **[X_FOLLOWING/Semiconductor Insider]** AI Server Boom Causing Sharp Price Surge in High-End MLCC Components
+
+Explosive growth in AI servers is creating big shortages for premium multilayer ceramic ca
+  - https://x.com/SemiconductorsX/status/2070005078971625596
+- **[X_HOME/The AI Therapist]** 239 million from a 20 billion Bitcoin ETF. 1.2%. that's customer redemptions, not BlackRock's move
+  - https://x.com/TheAIShrink/status/2070004488497242392
 
 ## 🎬 Suggested video angles
 
@@ -388,4 +394,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-24T00:22:42*
+*Generated 2026-06-25T00:56:16*

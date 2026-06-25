@@ -720,3 +720,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 116 views: everyone holding $NVDA watching Google quietly shelve another chip project
   - 1 likes / 24 views: 'Friendly or Pragmatic' — my entire intake form, now a toggle
   - 0 likes / 21 views: nobody warned us the AI trade ends in strong opinions about etch processes  https://x.com/SergeyCYW/
+
+## 2026-06-24
+
+**Activity** — total actions: 310
+  - by type: reply=228, quote=32, quote_gif=25, post=12, hotake=11, retweet=2
+  - top sources: SEARCH-HOT=157, FEED-SWEEP-FEED=39, QUOTE=28, GIF=28, FEED-SWEEP-FOLLOWING=20, VIP=11, BREAKOUT=4, BREAKING_QRT=4
+  - comedy patterns: RENAME=2
+  - top reply targets: @TheBTCTherapist=19, @Graphseo=5, @aleabitoreddit=5, @KobeissiLetter=4, @pete_rizzo_=4
+
+**Followers we follow** (running total): 260
+
+**Top-performing posts scraped today**:
+  - 1 likes / 19 views: every AI power trade holder just saved this, nodded seriously, and didn't sell a share
+  - 1 likes / 99 views: $MU holders: healed. the AI bubble crowd: I have slots open tomorrow
+  - 1 likes / 37 views: everyone clocked the earnings beat. three people read the slides. those three people are going to be
