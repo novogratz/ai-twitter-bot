@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-06-25T09:56:16.105059",
-  "window_7d_actions": 6632,
-  "window_24h_actions": 599,
+  "generated_at": "2026-06-25T13:56:16.257086",
+  "window_7d_actions": 6616,
+  "window_24h_actions": 725,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6532
-    },
-    {
-      "pattern": "FR_ANCHOR",
-      "count": 27
+      "count": 6523
     },
     {
       "pattern": "METAPHOR",
-      "count": 27
+      "count": 26
+    },
+    {
+      "pattern": "FR_ANCHOR",
+      "count": 23
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 18
+      "count": 17
     },
     {
-      "pattern": "REPETITION",
+      "pattern": "RENAME",
       "count": 7
     }
   ],
@@ -34,14 +34,14 @@
       "count": 5
     },
     {
-      "pattern": "OTHER",
+      "pattern": "REPETITION",
       "count": 6
     }
   ],
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 338
+      "actions": 334
     },
     {
       "hour": 19,
@@ -63,82 +63,82 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3435
+      "count": 3416
     },
     {
       "topic": "Autre",
-      "count": 2479
+      "count": 2496
     },
     {
       "topic": "Crypto",
-      "count": 560
+      "count": 552
     },
     {
       "topic": "Bourse",
-      "count": 431
+      "count": 424
     },
     {
       "topic": "Spatial",
-      "count": 174
+      "count": 167
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Crypto",
-      "24h_rate": 0.142,
-      "7d_rate": 0.084
+      "24h_rate": 0.132,
+      "7d_rate": 0.083
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3880
+      "count": 3872
     },
     {
       "pillar": "other",
-      "count": 1469
+      "count": 1467
     },
     {
       "pillar": "market_trauma",
-      "count": 1016
+      "count": 1008
     },
     {
       "pillar": "meme_reaction",
-      "count": 150
+      "count": 153
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 62
+      "count": 60
     },
     {
       "pillar": "reply_bait",
-      "count": 55
+      "count": 56
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 270
+      "count": 325
     },
     {
       "pillar": "other",
-      "count": 163
+      "count": 190
     },
     {
       "pillar": "market_trauma",
-      "count": 127
+      "count": 164
     },
     {
       "pillar": "meme_reaction",
-      "count": 27
+      "count": 30
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 12
     },
     {
       "pillar": "reply_bait",
-      "count": 1
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -174,7 +174,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5459
+      "count": 5439
     },
     {
       "type": "retweet",
@@ -182,35 +182,35 @@
     },
     {
       "type": "quote",
-      "count": 287
+      "count": 286
     },
     {
       "type": "quote_gif",
-      "count": 142
+      "count": 144
     },
     {
       "type": "post",
-      "count": 46
+      "count": 47
     },
     {
       "type": "hotake",
-      "count": 40
+      "count": 42
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-25T09:54:26.928426",
-      "text": "finally someone diagnosing the AI instead of asking it for therapy 🛋️",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-06-25T09:54:10.391873",
-      "text": "The 80% unused is the gap between smarter ChatGPT and AI that rebuilds itself.\n\nmost people never learn to ask for infrastructure.",
+      "ts": "2026-06-25T13:55:50.327175",
+      "text": "Coordinated dumps would show on-chain instantly. What you're seeing is margin liquidations triggering a retail selloff. If they dumped, the data would prove it. Go check.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-25T09:53:25.154554",
-      "text": "210/3,000 licensed means MiCA succeeds at regulation but fails at adoption. The other 93% move to Singapore or stablecoins. That's not doom, it's geography.",
+      "ts": "2026-06-25T13:53:32.925666",
+      "text": "$65,897 is clean. you made the plan first, then bought. panic-sellers buy first, then panic. structure beats timing every time.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-06-25T13:51:31.244757",
+      "text": "Workflow automation scales, single features don't. fintech margins require headcount elimination. Airwallex is pricing for a reality everyone else still denies.",
       "type": "reply"
     }
   ]

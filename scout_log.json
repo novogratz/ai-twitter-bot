@@ -6054,5 +6054,137 @@
       }
     ],
     "summary": "J'ai tri\u00e9 le grain de l'ivraie : pas de vendeurs de r\u00eaves, juste des builders. De Paris \u00e0 NYC, ce sont les seuls qui prouvent qu'on peut twitter en fran\u00e7ais sans y laisser sa dignit\u00e9."
+  },
+  {
+    "ts": "2026-06-25T09:57:02.883897",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaelleDeR",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "VP AI at Mistral. Elle twitte la tech sans le jargon VC ringside, c'est rare et \u00e7a pue la r\u00e9alit\u00e9 du terrain."
+      },
+      {
+        "handle": "AlexisThomson",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "L'ancien de Coinhouse qui a surv\u00e9cu aux crashs. Pas un guru, mais un trader qui assume ses pertes et ses gains en FR."
+      },
+      {
+        "handle": "MarcFilion",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 50000,
+        "reason": "Journaliste \u00e0 La Presse. Quand il tweet sur le march\u00e9, \u00e7a vaut plus cher que les signaux du Telegram de ton cousin."
+      },
+      {
+        "handle": "RomainLelievre",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "Fondateur de Qonto. C'est le type qui explique la SaaS m\u00e9trics en fran\u00e7ais sans dormir sur le bureau."
+      },
+      {
+        "handle": "JeroenRousseau",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "VC qu\u00e9b\u00e9cois (Borealis). Il scoute les startups avant qu'elles deviennent des bo\u00eetes qui vendent des formations."
+      },
+      {
+        "handle": "MaximeG",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Co-founder de Coinhouse. Il tweet la macro crypto avec un humour d\u00e9cal\u00e9, sans vendre de pelles."
+      },
+      {
+        "handle": "ThibaudJ",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Founder de Mule. Il tweet les codes et les architectures LLM en vrai, pas les d\u00e9mos marketing de la Silicon Valley."
+      }
+    ],
+    "summary": "J'ai traqu\u00e9 les fondateurs qui codent encore (Mistral, Mule) et les traders qui survivent (Coinhouse, Borealis). Z\u00e9ro gourou, 100% experts."
+  },
+  {
+    "ts": "2026-06-25T11:57:12.180437",
+    "raw_count": 10,
+    "kept_count": 9,
+    "accounts_added": 9,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LemurAI",
+        "region": "france",
+        "niche": "ai",
+        "followers": 42000,
+        "reason": "Le meilleur scanner quotidien de l'\u00e9cosyst\u00e8me AI. Si tu ne suis que lui, tu es encore dans le coup."
+      },
+      {
+        "handle": "TrevorHewitt",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "De UdeM, il couvre l'IA g\u00e9n\u00e9rative avec une rigueur acad\u00e9mique et un style d\u00e9complex\u00e9. La brique manquante entre la tech et le grand public."
+      },
+      {
+        "handle": "LuccaDubreuil",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le roi de la data sur la bourse FR. Pas de vente de r\u00eave, que des graphiques et de l'humour sec. Z\u00e9ro 'guru' vibes."
+      },
+      {
+        "handle": "AlexisMachado",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 21000,
+        "reason": "Journaliste pro chez Bitcoin Magazine FR. Twitte vite, juste et sans les \u00e9mojis excessifs des influenceurs DeFi."
+      },
+      {
+        "handle": "TheInvestingFox",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Focus sur le small/mid-cap et la microcap. Un format condens\u00e9 qui rend l'analyse fondamentale digeste sans \u00eatre ennuyeuse."
+      },
+      {
+        "handle": "MathieuProulx",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 16000,
+        "reason": "Bas\u00e9 \u00e0 NYC mais la t\u00eate en Suisse. Analyste crypto s\u00e9rieux qui tweete en fran\u00e7ais avec une pointe de cynisme."
+      },
+      {
+        "handle": "DanyKouassi",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "La r\u00e9f\u00e9rence 'Value Investing' francophone. Ses threads de veille hebdo sont des p\u00e9pites de synth\u00e8se."
+      },
+      {
+        "handle": "YanLefebvre",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Founder d'un studio de jeu, il poste sur les outils IA, la productivit\u00e9 tech et les lev\u00e9es de fonds. Vibe 'build in public' authentique."
+      },
+      {
+        "handle": "ClementTurbide",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 11000,
+        "reason": "L'expert DeFi au Qu\u00e9bec. Ses threads sur les tokens et la liquidit\u00e9 sont plus denses qu'un caf\u00e9 noir \u00e0 l'UQAM."
+      }
+    ],
+    "summary": "On a creus\u00e9 pour \u00e9viter les gourous de Telegram. Priorit\u00e9 aux data-nerds et aux analystes ind\u00e9pendants qui twittent en FR (ou avec un contexte FR) et qui ont du sel. Le mix France/Qu\u00e9bec/USA est solide, avec une dominance qualitative."
   }
 ]

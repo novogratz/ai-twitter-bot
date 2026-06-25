@@ -659,7 +659,23 @@
     "GaelLeclerc",
     "AlexisKorn",
     "SaraBoudghene",
-    "NathalieBoutin"
+    "NathalieBoutin",
+    "GaelleDeR",
+    "AlexisThomson",
+    "MarcFilion",
+    "RomainLelievre",
+    "JeroenRousseau",
+    "MaximeG",
+    "ThibaudJ",
+    "LemurAI",
+    "TrevorHewitt",
+    "LuccaDubreuil",
+    "AlexisMachado",
+    "TheInvestingFox",
+    "MathieuProulx",
+    "DanyKouassi",
+    "YanLefebvre",
+    "ClementTurbide"
   ],
   "en": [
     "blablacar",
@@ -925,7 +941,8 @@
     "PoIiMath",
     "Knoebel",
     "AlphaFox",
-    "Diana"
+    "Diana",
+    "unknown"
   ],
   "history": [
     {
@@ -5546,6 +5563,91 @@
     {
       "lang": "fr",
       "handle": "NathalieBoutin",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "en",
+      "handle": "unknown",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelleDeR",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisThomson",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcFilion",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainLelievre",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeroenRousseau",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeG",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudJ",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "LemurAI",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "TrevorHewitt",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuccaDubreuil",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisMachado",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheInvestingFox",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuProulx",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "DanyKouassi",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "YanLefebvre",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClementTurbide",
       "added": "2026-06-25"
     }
   ]
