@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-06-25T13:56:16.257086",
-  "window_7d_actions": 6616,
-  "window_24h_actions": 725,
+  "generated_at": "2026-06-25T17:56:17.119732",
+  "window_7d_actions": 6612,
+  "window_24h_actions": 836,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
       "count": 6523
     },
     {
-      "pattern": "METAPHOR",
-      "count": 26
-    },
-    {
       "pattern": "FR_ANCHOR",
       "count": 23
     },
     {
+      "pattern": "METAPHOR",
+      "count": 23
+    },
+    {
       "pattern": "UNDERSTATEMENT",
-      "count": 17
+      "count": 15
     },
     {
       "pattern": "RENAME",
@@ -30,11 +30,11 @@
       "count": 3
     },
     {
-      "pattern": "DIALOGUE",
-      "count": 5
+      "pattern": "REPETITION",
+      "count": 6
     },
     {
-      "pattern": "REPETITION",
+      "pattern": "OTHER",
       "count": 6
     }
   ],
@@ -52,85 +52,85 @@
       "actions": 301
     },
     {
-      "hour": 14,
-      "actions": 298
+      "hour": 1,
+      "actions": 292
     },
     {
-      "hour": 1,
+      "hour": 6,
       "actions": 292
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3416
+      "count": 3418
     },
     {
       "topic": "Autre",
-      "count": 2496
+      "count": 2507
     },
     {
       "topic": "Crypto",
-      "count": 552
+      "count": 545
     },
     {
       "topic": "Bourse",
-      "count": 424
+      "count": 417
     },
     {
       "topic": "Spatial",
-      "count": 167
+      "count": 158
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Crypto",
-      "24h_rate": 0.132,
-      "7d_rate": 0.083
+      "24h_rate": 0.126,
+      "7d_rate": 0.082
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3872
+      "count": 3866
     },
     {
       "pillar": "other",
-      "count": 1467
+      "count": 1492
     },
     {
       "pillar": "market_trauma",
-      "count": 1008
+      "count": 987
     },
     {
       "pillar": "meme_reaction",
-      "count": 153
+      "count": 152
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 60
+      "count": 58
     },
     {
       "pillar": "reply_bait",
-      "count": 56
+      "count": 57
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 325
+      "count": 371
     },
     {
       "pillar": "other",
-      "count": 190
+      "count": 229
     },
     {
       "pillar": "market_trauma",
-      "count": 164
+      "count": 189
     },
     {
       "pillar": "meme_reaction",
-      "count": 30
+      "count": 29
     },
     {
       "pillar": "ai_vs_btc",
@@ -138,7 +138,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 4
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -151,30 +151,37 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 53,
+      "posts": 51,
       "avg_likes": 0.08,
       "avg_views": 28.3,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 61,
+      "posts": 60,
       "avg_likes": 0.07,
-      "avg_views": 26.5,
+      "avg_views": 26.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 83,
+      "posts": 85,
       "avg_likes": 0.06,
-      "avg_views": 33.7,
+      "avg_views": 33.6,
       "low_sample": false
+    },
+    {
+      "pillar": "reply_bait",
+      "posts": 1,
+      "avg_likes": 0.0,
+      "avg_views": 59.0,
+      "low_sample": true
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5439
+      "count": 5432
     },
     {
       "type": "retweet",
@@ -182,7 +189,7 @@
     },
     {
       "type": "quote",
-      "count": 286
+      "count": 284
     },
     {
       "type": "quote_gif",
@@ -190,27 +197,27 @@
     },
     {
       "type": "post",
-      "count": 47
+      "count": 51
     },
     {
       "type": "hotake",
-      "count": 42
+      "count": 43
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-25T13:55:50.327175",
-      "text": "Coordinated dumps would show on-chain instantly. What you're seeing is margin liquidations triggering a retail selloff. If they dumped, the data would prove it. Go check.",
+      "ts": "2026-06-25T17:55:53.210375",
+      "text": "The 65k bounce is the tell. you just shared your entry point with the people you're shorting.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-25T13:53:32.925666",
-      "text": "$65,897 is clean. you made the plan first, then bought. panic-sellers buy first, then panic. structure beats timing every time.",
+      "ts": "2026-06-25T17:55:16.215318",
+      "text": "Memory costs are rising. console prices up 25% because of it. Apple has the same cost structure. hardware deflation just ended.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-25T13:51:31.244757",
-      "text": "Workflow automation scales, single features don't. fintech margins require headcount elimination. Airwallex is pricing for a reality everyone else still denies.",
+      "ts": "2026-06-25T17:54:56.822987",
+      "text": "$200/month for cloud LLMs while a laptop runs Llama 2 locally for free. the subscription model needs you not to know you have an option.",
       "type": "reply"
     }
   ]

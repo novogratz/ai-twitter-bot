@@ -675,7 +675,18 @@
     "MathieuProulx",
     "DanyKouassi",
     "YanLefebvre",
-    "ClementTurbide"
+    "ClementTurbide",
+    "GaelleCohen",
+    "MathieuGruel",
+    "PierreRoquoy",
+    "CryptoMichi",
+    "CryptoJules",
+    "YannLeCun",
+    "HugoTravers",
+    "MathDsn",
+    "PierreOlivierV",
+    "CryptoK0sh",
+    "DariusS"
   ],
   "en": [
     "blablacar",
@@ -942,7 +953,9 @@
     "Knoebel",
     "AlphaFox",
     "Diana",
-    "unknown"
+    "unknown",
+    "thebes",
+    "Parris"
   ],
   "history": [
     {
@@ -5648,6 +5661,71 @@
     {
       "lang": "fr",
       "handle": "ClementTurbide",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelleCohen",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuGruel",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRoquoy",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMichi",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoJules",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "en",
+      "handle": "thebes",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "en",
+      "handle": "Parris",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "YannLeCun",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoTravers",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathDsn",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreOlivierV",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoK0sh",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "DariusS",
       "added": "2026-06-25"
     }
   ]

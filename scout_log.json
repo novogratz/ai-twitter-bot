@@ -6186,5 +6186,102 @@
       }
     ],
     "summary": "On a creus\u00e9 pour \u00e9viter les gourous de Telegram. Priorit\u00e9 aux data-nerds et aux analystes ind\u00e9pendants qui twittent en FR (ou avec un contexte FR) et qui ont du sel. Le mix France/Qu\u00e9bec/USA est solide, avec une dominance qualitative."
+  },
+  {
+    "ts": "2026-06-25T13:57:02.091252",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaelleCohen",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 42000,
+        "reason": "L'analyste qui ne m\u00e2che pas ses mots. Ses threads sur le CAC40 et la macro font mal, mais font rire. Z\u00e9ro blabla, pur alpha boursier."
+      },
+      {
+        "handle": "MathieuGruel",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "L'immortel de la finance FR. Il tweete comme s'il avait encore des cheveux \u00e0 perdre. C'est vintage, c'est sec, c'est le grand-p\u00e8re cool du trading."
+      },
+      {
+        "handle": "PierreRoquoy",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Journaliste tech IA \u00e0 l'AFP. Il tweete les news avant tout le monde avec un ton d\u00e9tach\u00e9 qui fait mouche. C'est la source de l'info pure."
+      },
+      {
+        "handle": "CryptoMichi",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Le Qu\u00e9b\u00e9cois de r\u00e9f\u00e9rence qui parle crypto sans jargon incompr\u00e9hensible. Ses analyses on-chain sont claires et ses memes locaux donnent un c\u00f4t\u00e9 'maison'."
+      },
+      {
+        "handle": "CryptoJules",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Jules qui couvre les altcoins en qu\u00e9b\u00e9cois. C'est moins hype que les grands leaders US, mais plus authentique et moins 'influencer' que ses confr\u00e8res FR."
+      }
+    ],
+    "summary": "Un m\u00e9lange de v\u00e9t\u00e9rans boursiers fran\u00e7ais qui ont vu passer toutes les bulles, de journalistes IA de choc et de deux valeurs s\u00fbres du Qu\u00e9bec qui r\u00e9sistent au bruit am\u00e9ricain."
+  },
+  {
+    "ts": "2026-06-25T15:56:58.572684",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "YannLeCun",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 750000,
+        "reason": "Le bon p\u00e8re de l'IA francophone \u00e0 NY. Il corrige les idioties des startups et pr\u00e9dit l'AGI. C'est du concret."
+      },
+      {
+        "handle": "HugoTravers",
+        "region": "france",
+        "niche": "tech",
+        "followers": 150000,
+        "reason": "Le roi du thread technique fran\u00e7ais. Il d\u00e9crypte les infrastructures derri\u00e8re l'IA avant que les autres aient fini leur caf\u00e9."
+      },
+      {
+        "handle": "MathDsn",
+        "region": "france",
+        "niche": "ai",
+        "followers": 95000,
+        "reason": "Le patron de Mistral AI. Il ne vend pas de r\u00eave, il livre du GPU. Si tu veux savoir o\u00f9 va l'IA europ\u00e9enne, tu le suis."
+      },
+      {
+        "handle": "PierreOlivierV",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "L'\u00e9vang\u00e9liste du dividendes au Qu\u00e9bec. Pas de hype, juste des chiffres et des actions qui paient. Le calme dans la temp\u00eate."
+      },
+      {
+        "handle": "CryptoK0sh",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "Le Qu\u00e9b\u00e9cois qui parle crypto en FR avec le plus d'angle morts. Il tweete fort, il tweete juste."
+      },
+      {
+        "handle": "DariusS",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "Ex-Credit Mutuel, aujourd'hui VC. Il voit les p\u00e9pites Fintech fran\u00e7aises avant qu'elles n'aient une valise de cash."
+      }
+    ],
+    "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour garder les b\u00e2tisseurs et les analystes. De Mistral aux dividendes qu\u00e9b\u00e9cois, c'est du solide, pas du vent."
   }
 ]
