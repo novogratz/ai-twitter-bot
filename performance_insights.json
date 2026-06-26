@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-26T01:56:16.371323",
-  "window_7d_actions": 6597,
-  "window_24h_actions": 827,
+  "generated_at": "2026-06-26T05:56:16.255193",
+  "window_7d_actions": 6588,
+  "window_24h_actions": 836,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6517
+      "count": 6513
     },
     {
       "pattern": "METAPHOR",
@@ -13,14 +13,14 @@
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 18
+      "count": 16
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 15
+      "count": 13
     },
     {
-      "pattern": "DIALOGUE",
+      "pattern": "RENAME",
       "count": 6
     }
   ],
@@ -30,11 +30,11 @@
       "count": 2
     },
     {
-      "pattern": "OTHER",
+      "pattern": "REPETITION",
       "count": 5
     },
     {
-      "pattern": "REPETITION",
+      "pattern": "OTHER",
       "count": 5
     }
   ],
@@ -63,11 +63,11 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3414
+      "count": 3406
     },
     {
       "topic": "Autre",
-      "count": 2485
+      "count": 2490
     },
     {
       "topic": "Crypto",
@@ -75,70 +75,70 @@
     },
     {
       "topic": "Bourse",
-      "count": 415
+      "count": 407
     },
     {
       "topic": "Spatial",
-      "count": 163
+      "count": 162
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Crypto",
-      "24h_rate": 0.132,
+      "24h_rate": 0.135,
       "7d_rate": 0.084
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3863
+      "count": 3846
     },
     {
       "pillar": "other",
-      "count": 1483
+      "count": 1496
     },
     {
       "pillar": "market_trauma",
-      "count": 974
+      "count": 966
     },
     {
       "pillar": "meme_reaction",
-      "count": 163
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 58
+      "count": 168
     },
     {
       "pillar": "ai_vs_btc",
+      "count": 56
+    },
+    {
+      "pillar": "reply_bait",
       "count": 56
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 352
+      "count": 348
     },
     {
       "pillar": "other",
-      "count": 234
+      "count": 244
     },
     {
       "pillar": "market_trauma",
-      "count": 187
+      "count": 189
     },
     {
       "pillar": "meme_reaction",
-      "count": 40
+      "count": 41
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -151,23 +151,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 53,
+      "posts": 52,
       "avg_likes": 0.08,
-      "avg_views": 26.6,
+      "avg_views": 25.9,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 57,
+      "posts": 59,
       "avg_likes": 0.07,
-      "avg_views": 27.5,
+      "avg_views": 27.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 86,
+      "posts": 85,
       "avg_likes": 0.07,
-      "avg_views": 35.0,
+      "avg_views": 35.1,
       "low_sample": false
     },
     {
@@ -181,7 +181,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5421
+      "count": 5405
     },
     {
       "type": "retweet",
@@ -189,11 +189,11 @@
     },
     {
       "type": "quote",
-      "count": 268
+      "count": 270
     },
     {
       "type": "quote_gif",
-      "count": 151
+      "count": 156
     },
     {
       "type": "post",
@@ -206,18 +206,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-26T01:56:13.557872",
-      "text": "$8.5M to a Panama City team in this cycle means the capital knows something. Proof is shipped code over the next 18 months, not today.",
+      "ts": "2026-06-26T05:56:09.332958",
+      "text": "$5B burn, $3.4B revenue. He's not timing the market.\n\nHe's calculating the capital needed to fund the AGI race before the money runs out. $1T is the math.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-26T01:54:10.272362",
-      "text": "Nikkei -3.5k? Japan is just shorting $NVDA futures denominated in yen. While we trade chips, they trade the currency of fear. 🇯🇵💸",
+      "ts": "2026-06-26T05:55:53.229000",
+      "text": "every founder's \"second startup\" is on this list",
       "type": "quote"
     },
     {
-      "ts": "2026-06-26T01:53:52.569151",
-      "text": "No death spiral even under severe stress means Saylor didn't miscalculate when he loaded $9B of BTC. he calculated. the test just proved it.",
+      "ts": "2026-06-26T05:55:36.709086",
+      "text": "The mistake is comparing price. ask instead 'how much code do i need in context.' you're shipping full features? claude 200k tokens. quick edits? copilot. long reasoning chains? gpt-4. each wins at different things.",
       "type": "reply"
     }
   ]

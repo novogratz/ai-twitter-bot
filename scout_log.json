@@ -6491,5 +6491,102 @@
       }
     ],
     "summary": "J'ai chass\u00e9 les puristes : des profils qui tweetent leur m\u00e9tier (ing\u00e9nieurs Mistral, g\u00e9rants de fonds) plut\u00f4t que des influenceurs qui vendent du r\u00eave. Pas de formation \u00e0 197\u20ac en vue, juste des cerveaux qui travaillent."
+  },
+  {
+    "ts": "2026-06-26T01:56:54.516962",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "misterdel",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 150000,
+        "reason": "Le roi de la finance d\u00e9jant\u00e9e sur Twitter, son thread sur le bubble tech fait plus mal qu'une descente aux imp\u00f4ts."
+      },
+      {
+        "handle": "mickabro",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Ex-Coinbase, il tweet la tech crypto FR avec le sarcasme d'un trader qui a vu tous les bull runs passer."
+      },
+      {
+        "handle": "david_davidoff",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'ancien manager d'AMF qui explique pourquoi tes actions partent en sucette avec la morgue d'un prof de maths."
+      },
+      {
+        "handle": "thibaultg",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "Le patron de Criteo qui parle start-up et IA sans le jargon VC pourri qu'on entend \u00e0 San Francisco."
+      },
+      {
+        "handle": "mehdidm",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "L'architecte de Lightning Network au Qu\u00e9bec, il twitte la tech crypto comme il construit ses blocs : solide et sans fioritures."
+      },
+      {
+        "handle": "sylvainlecorchois",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 20000,
+        "reason": "VC chez Partech, il d\u00e9cortique les lev\u00e9es de fonds fintech comme un boucher qui d\u00e9sosse un veau."
+      }
+    ],
+    "summary": "Une s\u00e9lection solide qui \u00e9vite les influenceurs de cours de crypto \u00e0 200\u20ac pour privil\u00e9gier ceux qui font bouger la tech et la finance en France et au Qu\u00e9bec."
+  },
+  {
+    "ts": "2026-06-26T03:57:01.954066",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenjaminFoss\u00e9",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Le CTO de Mistral avant que ce soit cool. Son feed est un cours magistral de 280 caract\u00e8res sur le LLM engineering."
+      },
+      {
+        "handle": "MathildeCottin",
+        "region": "france",
+        "niche": "tech",
+        "followers": 28000,
+        "reason": "Ex-PayPal, ex-Rakuten. Elle cover la fintech et la tech sans le jargon lourdingue des influenceurs LinkedIn en costume."
+      },
+      {
+        "handle": "MarcRoulet",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Le roi du storytelling crypto au Qu\u00e9bec. Il transforme la volatilit\u00e9 du Bitcoin en r\u00e9cits \u00e9piques que m\u00eame les non-initi\u00e9s lisent."
+      },
+      {
+        "handle": "SergeRamos",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Bas\u00e9 \u00e0 Miami mais francophone de c\u0153ur. Il couvre les macro-tendances crypto avec la pr\u00e9cision d'un chirurgien et l'humour d'un New-Yorkais."
+      },
+      {
+        "handle": "Rapha\u00eblGautron",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Un des premiers \u00e0 avoir fait d\u00e9coller l'\u00e9cosyst\u00e8me IA FR. Son style est direct, technique et sans blabla politique."
+      }
+    ],
+    "summary": "J'ai mis\u00e9 sur les fondateurs qui codent encore (Mistral) pour la France, un conteur pour le Qu\u00e9bec et un expert macro pour la diaspora. Z\u00e9ro vente de signal, 100% de substance ou de frissons."
   }
 ]

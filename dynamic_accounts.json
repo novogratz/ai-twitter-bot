@@ -707,7 +707,15 @@
     "JFDeBoer",
     "TomasLuevanos",
     "AlexDrouin_",
-    "MaximeDau"
+    "MaximeDau",
+    "misterdel",
+    "mickabro",
+    "david_davidoff",
+    "thibaultg",
+    "mehdidm",
+    "MathildeCottin",
+    "MarcRoulet",
+    "SergeRamos"
   ],
   "en": [
     "blablacar",
@@ -5877,6 +5885,46 @@
       "lang": "fr",
       "handle": "MaximeDau",
       "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "misterdel",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickabro",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "david_davidoff",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "thibaultg",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "mehdidm",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathildeCottin",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcRoulet",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "SergeRamos",
+      "added": "2026-06-26"
     }
   ]
 }
