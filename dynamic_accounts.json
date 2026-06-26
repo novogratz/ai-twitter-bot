@@ -686,7 +686,18 @@
     "MathDsn",
     "PierreOlivierV",
     "CryptoK0sh",
-    "DariusS"
+    "DariusS",
+    "Nathan_Thomas",
+    "RazvanMihalcea",
+    "MathieuDuffort",
+    "AlexisDelaunay",
+    "JulienVdK",
+    "MaximeBouyer",
+    "PierreRozario",
+    "ArnaudMaziero",
+    "ThomasVogel",
+    "JulienDhondt",
+    "DorianSaulais"
   ],
   "en": [
     "blablacar",
@@ -955,7 +966,8 @@
     "Diana",
     "unknown",
     "thebes",
-    "Parris"
+    "Parris",
+    "BURKOV"
   ],
   "history": [
     {
@@ -5726,6 +5738,66 @@
     {
       "lang": "fr",
       "handle": "DariusS",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "en",
+      "handle": "BURKOV",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "Nathan_Thomas",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "RazvanMihalcea",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDuffort",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDelaunay",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienVdK",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBouyer",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRozario",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArnaudMaziero",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasVogel",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDhondt",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianSaulais",
       "added": "2026-06-25"
     }
   ]

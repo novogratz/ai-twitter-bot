@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-06-25T17:56:17.119732",
-  "window_7d_actions": 6612,
-  "window_24h_actions": 836,
+  "generated_at": "2026-06-25T21:56:16.224880",
+  "window_7d_actions": 6607,
+  "window_24h_actions": 832,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6523
-    },
-    {
-      "pattern": "FR_ANCHOR",
-      "count": 23
+      "count": 6520
     },
     {
       "pattern": "METAPHOR",
-      "count": 23
+      "count": 24
+    },
+    {
+      "pattern": "FR_ANCHOR",
+      "count": 21
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -27,7 +27,7 @@
   "worst_patterns": [
     {
       "pattern": "EN_ANCHOR",
-      "count": 3
+      "count": 2
     },
     {
       "pattern": "REPETITION",
@@ -45,11 +45,11 @@
     },
     {
       "hour": 19,
-      "actions": 327
+      "actions": 318
     },
     {
       "hour": 18,
-      "actions": 301
+      "actions": 298
     },
     {
       "hour": 1,
@@ -63,48 +63,48 @@
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3418
+      "count": 3416
     },
     {
       "topic": "Autre",
-      "count": 2507
+      "count": 2498
     },
     {
       "topic": "Crypto",
-      "count": 545
+      "count": 550
     },
     {
       "topic": "Bourse",
-      "count": 417
+      "count": 418
     },
     {
       "topic": "Spatial",
-      "count": 158
+      "count": 159
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Crypto",
-      "24h_rate": 0.126,
-      "7d_rate": 0.082
+      "24h_rate": 0.124,
+      "7d_rate": 0.083
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3866
+      "count": 3862
     },
     {
       "pillar": "other",
-      "count": 1492
+      "count": 1486
     },
     {
       "pillar": "market_trauma",
-      "count": 987
+      "count": 984
     },
     {
       "pillar": "meme_reaction",
-      "count": 152
+      "count": 160
     },
     {
       "pillar": "ai_vs_btc",
@@ -118,23 +118,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 371
+      "count": 360
     },
     {
       "pillar": "other",
-      "count": 229
+      "count": 230
     },
     {
       "pillar": "market_trauma",
-      "count": 189
+      "count": 188
     },
     {
       "pillar": "meme_reaction",
-      "count": 29
+      "count": 38
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 12
+      "count": 10
     },
     {
       "pillar": "reply_bait",
@@ -151,23 +151,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 51,
+      "posts": 53,
       "avg_likes": 0.08,
-      "avg_views": 28.3,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 60,
-      "avg_likes": 0.07,
-      "avg_views": 26.9,
+      "avg_views": 27.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 85,
-      "avg_likes": 0.06,
-      "avg_views": 33.6,
+      "posts": 87,
+      "avg_likes": 0.07,
+      "avg_views": 34.0,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 56,
+      "avg_likes": 0.07,
+      "avg_views": 27.3,
       "low_sample": false
     },
     {
@@ -181,7 +181,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5432
+      "count": 5427
     },
     {
       "type": "retweet",
@@ -189,35 +189,35 @@
     },
     {
       "type": "quote",
-      "count": 284
+      "count": 275
     },
     {
       "type": "quote_gif",
-      "count": 144
+      "count": 149
     },
     {
       "type": "post",
-      "count": 51
+      "count": 54
     },
     {
       "type": "hotake",
-      "count": 43
+      "count": 44
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-25T17:55:53.210375",
-      "text": "The 65k bounce is the tell. you just shared your entry point with the people you're shorting.",
+      "ts": "2026-06-25T21:55:36.529617",
+      "text": "'i put an agent on it' means you actually trust it to finish. that's the shift - confidence, not just technology.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-25T17:55:16.215318",
-      "text": "Memory costs are rising. console prices up 25% because of it. Apple has the same cost structure. hardware deflation just ended.",
+      "ts": "2026-06-25T21:55:20.391180",
+      "text": "When ai capex doesn't return revenue. nvidia 60B, openai 3.4B ARR. still waiting.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-25T17:54:56.822987",
-      "text": "$200/month for cloud LLMs while a laptop runs Llama 2 locally for free. the subscription model needs you not to know you have an option.",
+      "ts": "2026-06-25T21:54:31.075567",
+      "text": "Components > assembly is correct. $7.5T is a fundraising number. the real market: $50-100B in actuators and chips. still huge, just grounded.",
       "type": "reply"
     }
   ]
