@@ -6588,5 +6588,109 @@
       }
     ],
     "summary": "J'ai mis\u00e9 sur les fondateurs qui codent encore (Mistral) pour la France, un conteur pour le Qu\u00e9bec et un expert macro pour la diaspora. Z\u00e9ro vente de signal, 100% de substance ou de frissons."
+  },
+  {
+    "ts": "2026-06-26T09:56:48.538123",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "michael_0x",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "L'analyste crypto qu'on \u00e9coute quand tout br\u00fble. Pas de shill, que des graphiques et du bon sens."
+      },
+      {
+        "handle": "CryptoMoneypot",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "L'\u00e9ducation crypto sans les jargonismes. Parfait pour le grand public et les initi\u00e9s."
+      },
+      {
+        "handle": "ThomasVidal_",
+        "region": "france",
+        "niche": "finance",
+        "followers": 25000,
+        "reason": "Le trader qui rend la bourse digeste. Ses threads sur la psychologie des march\u00e9s valent de l'or."
+      },
+      {
+        "handle": "JulienDeLatil",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "VC qui comprend la tech mieux que les banquiers. Ses threads sur l'IA sont des mines."
+      },
+      {
+        "handle": "MaximeRivard",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Le leader incontest\u00e9 de la crypto montr\u00e9alaise. Actif, pr\u00e9cis, pas de blabla politique."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que des analystes qui ont prouv\u00e9 leur valeur. C'est du solide, pas du vent."
+  },
+  {
+    "ts": "2026-06-26T11:57:03.817280",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Ludo2405",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'analyste macro qui comprend enfin que la FED n'est pas une machine \u00e0 imprimer de l'amour mais une imprimante \u00e0 liquidit\u00e9s avec un d\u00e9faut d'encre."
+      },
+      {
+        "handle": "MaxenceDuffaud",
+        "region": "france",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "Co-founder de Koyfin. Il tweete l'info pro avant Bloomberg, mais avec l'\u00e9l\u00e9gance d'un prof de maths qui te dit que tu es nul en calcul mental."
+      },
+      {
+        "handle": "BenjaminMussard",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Le gars qui a compris que l'IA, c'est comme le sexe : tout le monde en parle, peu d'amateurs savent ce qu'ils font, et \u00e7a sert surtout \u00e0 vendre des serviettes de bain."
+      },
+      {
+        "handle": "JulienRoux",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 22000,
+        "reason": "Le journaliste fintech qui a surv\u00e9cu aux crashs, aux ICOs et aux NFTs. Il tweete l'info utilitaire que les autres copient b\u00eatement 48h plus tard."
+      },
+      {
+        "handle": "TanguyDeLapparent",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Le Qu\u00e9b\u00e9cois qui parle crypto avec la pr\u00e9cision d'un horloger suisse et la patience d'un moine bouddhiste face \u00e0 un march\u00e9 en correction de 80%."
+      },
+      {
+        "handle": "MaximeVandenberghe",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Founders qu\u00e9b\u00e9cois en IA. Il tweete des insights technique bruts, sans le 'storytelling' pompeux des CEOs californiens qui vendent du SaaS pour chatbots."
+      },
+      {
+        "handle": "VincentBoudon",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Le Francophone aux USA qui couvre les march\u00e9s avec la s\u00e9cheresse d'un d\u00e9sert et la pr\u00e9cision d'un sniper. Pas de hype, juste des chiffres qui cognent."
+      }
+    ],
+    "summary": "J'ai traqu\u00e9 les vrais cerveaux derri\u00e8re les startups qui font bouger le march\u00e9, pas les influenceurs qui vendent des formations 'Devenir riche en 30 jours'. De Mistral \u00e0 la Bourse de Qu\u00e9bec, \u00e7a pique, \u00e7a code et \u00e7a ne ment pas."
   }
 ]

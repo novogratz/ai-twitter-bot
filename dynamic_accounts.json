@@ -715,7 +715,17 @@
     "mehdidm",
     "MathildeCottin",
     "MarcRoulet",
-    "SergeRamos"
+    "SergeRamos",
+    "michael_0x",
+    "CryptoMoneypot",
+    "ThomasVidal_",
+    "JulienDeLatil",
+    "MaximeRivard",
+    "Ludo2405",
+    "MaxenceDuffaud",
+    "BenjaminMussard",
+    "JulienRoux",
+    "VincentBoudon"
   ],
   "en": [
     "blablacar",
@@ -989,7 +999,8 @@
     "Uday",
     "HackQuest",
     "sunnydecree",
-    "Elisa"
+    "Elisa",
+    "chloe"
   ],
   "history": [
     {
@@ -5930,6 +5941,61 @@
     {
       "lang": "en",
       "handle": "Elisa",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "michael_0x",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMoneypot",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasVidal_",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDeLatil",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeRivard",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "en",
+      "handle": "chloe",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "Ludo2405",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxenceDuffaud",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminMussard",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienRoux",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBoudon",
       "added": "2026-06-26"
     }
   ]

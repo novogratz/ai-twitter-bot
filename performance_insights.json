@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-26T09:56:16.506512",
-  "window_7d_actions": 6517,
-  "window_24h_actions": 829,
+  "generated_at": "2026-06-26T13:56:16.372079",
+  "window_7d_actions": 6240,
+  "window_24h_actions": 840,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6441
+      "count": 6164
     },
     {
       "pattern": "METAPHOR",
@@ -40,10 +40,6 @@
   ],
   "best_hours_utc": [
     {
-      "hour": 11,
-      "actions": 334
-    },
-    {
       "hour": 19,
       "actions": 318
     },
@@ -58,57 +54,61 @@
     {
       "hour": 6,
       "actions": 288
+    },
+    {
+      "hour": 23,
+      "actions": 285
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3361
+      "count": 3118
     },
     {
       "topic": "Autre",
-      "count": 2485
+      "count": 2449
     },
     {
       "topic": "Crypto",
-      "count": 533
+      "count": 537
     },
     {
       "topic": "Bourse",
-      "count": 394
+      "count": 378
     },
     {
       "topic": "Spatial",
-      "count": 159
+      "count": 148
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Crypto",
-      "24h_rate": 0.14,
-      "7d_rate": 0.082
+      "24h_rate": 0.144,
+      "7d_rate": 0.086
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3799
+      "count": 3535
     },
     {
       "pillar": "other",
-      "count": 1492
+      "count": 1461
     },
     {
       "pillar": "market_trauma",
-      "count": 949
+      "count": 960
     },
     {
       "pillar": "meme_reaction",
-      "count": 169
+      "count": 177
     },
     {
       "pillar": "reply_bait",
-      "count": 56
+      "count": 55
     },
     {
       "pillar": "ai_vs_btc",
@@ -118,23 +118,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 330
+      "count": 327
     },
     {
       "pillar": "other",
-      "count": 243
+      "count": 259
     },
     {
       "pillar": "market_trauma",
-      "count": 200
+      "count": 197
     },
     {
       "pillar": "meme_reaction",
-      "count": 42
+      "count": 46
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 6
     },
     {
       "pillar": "ai_vs_btc",
@@ -151,23 +151,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 50,
+      "posts": 52,
       "avg_likes": 0.08,
-      "avg_views": 25.9,
+      "avg_views": 25.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 59,
+      "posts": 57,
       "avg_likes": 0.07,
-      "avg_views": 27.2,
+      "avg_views": 27.9,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 87,
       "avg_likes": 0.07,
-      "avg_views": 33.2,
+      "avg_views": 32.8,
       "low_sample": false
     },
     {
@@ -181,43 +181,43 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5389
+      "count": 5193
     },
     {
       "type": "retweet",
-      "count": 606
+      "count": 502
     },
     {
       "type": "quote",
-      "count": 265
+      "count": 271
     },
     {
       "type": "quote_gif",
-      "count": 157
+      "count": 163
     },
     {
       "type": "post",
-      "count": 55
+      "count": 60
     },
     {
       "type": "hotake",
-      "count": 45
+      "count": 51
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-26T09:54:10.400358",
-      "text": "They do. capitulation ends them all. not time, fear. when the last panicker stops selling, the market turns.",
+      "ts": "2026-06-26T13:54:36.104898",
+      "text": "me adding Australian power utilities to my watchlist at 11pm",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-06-26T13:54:03.005202",
+      "text": "5.6 under restrictions = OpenAI chose iteration speed over feature scope. Ship small and often, not ambitious and rare.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-26T09:53:20.814844",
-      "text": "Nvidia's datacenter margins are 70%. openai said the $100B deal was optional. they're not betting on performance, they're betting on margins.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-06-26T09:51:52.125937",
-      "text": "$859M out of a larger position. mechanical rebalancing on gains. actual signal: who accumulated at those dip prices.",
+      "ts": "2026-06-26T13:52:56.240379",
+      "text": "5X growth outside developers. Codex isn't a dev tool, it's a general productivity layer. Bigger TAM, smaller moat.",
       "type": "reply"
     }
   ]
