@@ -988,7 +988,8 @@
     "BURKOV",
     "Uday",
     "HackQuest",
-    "sunnydecree"
+    "sunnydecree",
+    "Elisa"
   ],
   "history": [
     {
@@ -5924,6 +5925,11 @@
     {
       "lang": "fr",
       "handle": "SergeRamos",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "en",
+      "handle": "Elisa",
       "added": "2026-06-26"
     }
   ]
