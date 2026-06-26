@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-26T13:56:16.372079",
-  "window_7d_actions": 6240,
-  "window_24h_actions": 840,
+  "generated_at": "2026-06-26T17:56:20.245644",
+  "window_7d_actions": 6022,
+  "window_24h_actions": 830,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6164
+      "count": 5944
     },
     {
       "pattern": "METAPHOR",
-      "count": 25
+      "count": 26
     },
     {
       "pattern": "FR_ANCHOR",
@@ -20,7 +20,7 @@
       "count": 13
     },
     {
-      "pattern": "RENAME",
+      "pattern": "DIALOGUE",
       "count": 6
     }
   ],
@@ -48,81 +48,81 @@
       "actions": 298
     },
     {
-      "hour": 14,
-      "actions": 290
-    },
-    {
       "hour": 6,
       "actions": 288
     },
     {
       "hour": 23,
       "actions": 285
+    },
+    {
+      "hour": 1,
+      "actions": 281
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3118
+      "count": 2949
     },
     {
       "topic": "Autre",
-      "count": 2449
+      "count": 2400
     },
     {
       "topic": "Crypto",
-      "count": 537
+      "count": 538
     },
     {
       "topic": "Bourse",
-      "count": 378
+      "count": 367
     },
     {
       "topic": "Spatial",
-      "count": 148
+      "count": 149
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Crypto",
-      "24h_rate": 0.144,
-      "7d_rate": 0.086
+      "24h_rate": 0.148,
+      "7d_rate": 0.089
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3535
+      "count": 3347
     },
     {
       "pillar": "other",
-      "count": 1461
+      "count": 1424
     },
     {
       "pillar": "market_trauma",
-      "count": 960
+      "count": 963
     },
     {
       "pillar": "meme_reaction",
-      "count": 177
+      "count": 180
     },
     {
       "pillar": "reply_bait",
-      "count": 55
+      "count": 57
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 52
+      "count": 51
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 327
+      "count": 337
     },
     {
       "pillar": "other",
-      "count": 259
+      "count": 238
     },
     {
       "pillar": "market_trauma",
@@ -130,7 +130,7 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 46
+      "count": 47
     },
     {
       "pillar": "reply_bait",
@@ -150,24 +150,24 @@
       "low_sample": false
     },
     {
+      "pillar": "other",
+      "posts": 88,
+      "avg_likes": 0.08,
+      "avg_views": 32.3,
+      "low_sample": false
+    },
+    {
       "pillar": "ai_news_take",
       "posts": 52,
       "avg_likes": 0.08,
-      "avg_views": 25.8,
+      "avg_views": 24.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 57,
+      "posts": 56,
       "avg_likes": 0.07,
-      "avg_views": 27.9,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 87,
-      "avg_likes": 0.07,
-      "avg_views": 32.8,
+      "avg_views": 28.3,
       "low_sample": false
     },
     {
@@ -181,43 +181,43 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5193
+      "count": 4997
     },
     {
       "type": "retweet",
-      "count": 502
+      "count": 469
     },
     {
       "type": "quote",
-      "count": 271
+      "count": 273
     },
     {
       "type": "quote_gif",
-      "count": 163
+      "count": 164
     },
     {
       "type": "post",
-      "count": 60
+      "count": 62
     },
     {
       "type": "hotake",
-      "count": 51
+      "count": 57
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-26T13:54:36.104898",
-      "text": "me adding Australian power utilities to my watchlist at 11pm",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-06-26T13:54:03.005202",
-      "text": "5.6 under restrictions = OpenAI chose iteration speed over feature scope. Ship small and often, not ambitious and rare.",
+      "ts": "2026-06-26T17:55:56.276071",
+      "text": "Halos uses cameras + inference for safety. but watch what it actually does: every warehouse that adopts it makes nvidia hardware + software part of operations.\n\nthat's infrastructure.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-26T13:52:56.240379",
-      "text": "5X growth outside developers. Codex isn't a dev tool, it's a general productivity layer. Bigger TAM, smaller moat.",
+      "ts": "2026-06-26T17:54:09.858370",
+      "text": "Claude Code + Obsidian = $100k/month.\n\nOne person got there. Now selling the lesson. The person was the multiplier, not the toolstack.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-06-26T17:53:06.758974",
+      "text": "Morgan Stanley forecasts China humanoid robots because state capital + labor math works. $200k replaces $3k/year wages.\n\nUS: $200k robot, $80k developer. Different economics. Geography isn't innovation; funding is.",
       "type": "reply"
     }
   ]

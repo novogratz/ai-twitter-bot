@@ -725,7 +725,16 @@
     "MaxenceDuffaud",
     "BenjaminMussard",
     "JulienRoux",
-    "VincentBoudon"
+    "VincentBoudon",
+    "CyrilKhan",
+    "RomainDoyen",
+    "ThomasGarnier",
+    "LucasDumont",
+    "BenoitVey",
+    "LorenzoBoni",
+    "RaphaelLec",
+    "PierreCayez",
+    "JohannHerr"
   ],
   "en": [
     "blablacar",
@@ -5996,6 +6005,51 @@
     {
       "lang": "fr",
       "handle": "VincentBoudon",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilKhan",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDoyen",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasGarnier",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasDumont",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitVey",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoBoni",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelLec",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreCayez",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "JohannHerr",
       "added": "2026-06-26"
     }
   ]

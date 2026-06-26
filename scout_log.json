@@ -6692,5 +6692,88 @@
       }
     ],
     "summary": "J'ai traqu\u00e9 les vrais cerveaux derri\u00e8re les startups qui font bouger le march\u00e9, pas les influenceurs qui vendent des formations 'Devenir riche en 30 jours'. De Mistral \u00e0 la Bourse de Qu\u00e9bec, \u00e7a pique, \u00e7a code et \u00e7a ne ment pas."
+  },
+  {
+    "ts": "2026-06-26T13:56:55.543162",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilKhan",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "La r\u00e9f\u00e9rence pour l'adoption crypto en France, twitte sans filtre, z\u00e9ro formation \u00e0 vendre."
+      },
+      {
+        "handle": "RomainDoyen",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 32000,
+        "reason": "Ex-Mistral, vibe VC, parle tech et crypto avec un ton sec qui tue les fake gurus."
+      },
+      {
+        "handle": "ThomasGarnier",
+        "region": "france",
+        "niche": "tech",
+        "followers": 28000,
+        "reason": "Journaliste Tech/Crypto au Monde, la seule voix fiable qui reste ind\u00e9pendante."
+      },
+      {
+        "handle": "LucasDumont",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Focus startup/IA au Qu\u00e9bec, contenu technique rare en FR, pas de blabla."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les influenceurs formation pour ne garder que les analystes et fondateurs qui ont du grain \u00e0 moudre. De la FR \u00e0 la QBC, ces comptes sont du pur sel technique sans le blabla marketing."
+  },
+  {
+    "ts": "2026-06-26T15:56:56.777530",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenoitVey",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "L'ancien patron de Coinhouse. Il parle Bitcoin sans se vanter de ses gains et sans vendre son cours \u00e0 97\u20ac."
+      },
+      {
+        "handle": "LorenzoBoni",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Ancien Google, aujourd'hui VC \u00e0 Paris. Il tweete ce qui marche avant que les influenceurs disent \"j'ai d\u00e9couvert\"."
+      },
+      {
+        "handle": "RaphaelLec",
+        "region": "france",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Le gars derri\u00e8re l'infrastructure LLM. Moins flashy que les fondateurs, mais il fait tourner la machine."
+      },
+      {
+        "handle": "PierreCayez",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Le meilleur journaliste tech fr pour savoir qui vend du vent et qui vend du logiciel."
+      },
+      {
+        "handle": "JohannHerr",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "L'expert on-chain qu\u00e9b\u00e9cois. Ses analyses sont claires et ses positions sont claires aussi."
+      }
+    ],
+    "summary": "Focus sur les acteurs qui construisent (Mistral, Vey, Boni) plut\u00f4t que les parleurs. Le Qu\u00e9bec est sous-estim\u00e9 en crypto, les 2 comptes QC sont des p\u00e9pites de densit\u00e9."
   }
 ]
