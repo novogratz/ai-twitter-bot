@@ -1,15 +1,15 @@
-# YouTube brief — 2026-06-25
+# YouTube brief — 2026-06-26
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **335**
-- reply: **255**
-- quote: **32**
-- quote_gif: **24**
-- post: **11**
-- hotake: **11**
+- Total actions logged: **830**
+- reply: **725**
+- quote: **39**
+- quote_gif: **34**
+- hotake: **16**
+- post: **14**
 - retweet: **2**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
@@ -26,16 +26,19 @@
 - **1 likes / 13 views** — Brand manager: "we're adding AI to everything" 60% of customers: "we're leaving" Brand manager: "adding that to our AI-powered insights dashboard"
 - **1 likes / 116 views** — everyone holding $NVDA watching Google quietly shelve another chip project
 - **1 likes / 19 views** — every AI power trade holder just saved this, nodded seriously, and didn't sell a share
+- **1 likes / 99 views** — $MU holders: healed. the AI bubble crowd: I have slots open tomorrow
 
 ### Crypto
 
 - **1 likes / 44 views** — six reasons to exit in six months and nobody left. I don't treat Bitcoin holders, I study them  https://x.com/AshCrypto/status/2067876526759063717…
 - **1 likes / 48 views** — Bitcoin holders watching BlackRock:
 
+### Bourse
+
+- **1 likes / 37 views** — everyone clocked the earnings beat. three people read the slides. those three people are going to be insufferable about it
+
 ### Other
 
-- **1 likes / 50 views** — my patients have never cared this much about world peace
-- **1 likes / 108 views** — so Fable 5 wasn't a product launch. it was a response
 - **1 likes / 80 views** — $CRWV after the Cramer mention:
 - **1 likes / 24 views** — 'Friendly or Pragmatic' — my entire intake form, now a toggle
 
@@ -340,50 +343,30 @@ Ope
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_HOME/Min Choi]** Holy smokes... how is this AI?
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/TheSpaceEngineer]** It feels almost short or damaged in areas. Something makes me doubt SpaceX will ever address the mission outcome
+  - https://x.com/mcrs987/status/2070353355612852510
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Herbert Ong]** Elon Musk has confirmed STARMIND as the name of SpaceX's future AI satellite network.
 
-Seedance 2.0 can turn any character into a full K-POP music video dance moves now.
+@FutureAZA says this is just one piece of a much bigger strategy. @SpaceX
+  - https://x.com/herbertong/status/2070287139695387134
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Tesla Owners Silicon Valley]** “I have watched Elon Musk very up close for a couple of years. I really believe he's taken up certain missions, like saving us from hostile AI and making us mul
+  - https://x.com/teslaownersSV/status/2070343137210548703
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Mars University]** Elon Musk: "The reason I'm doing SpaceX is not due to some childhood epiphany or because I think this is the highest return on investment way to spend money.
 
-This is 100% AI.
+I
+  - https://x.com/MarsUniversityX/status/2070329496838750480
+- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/James Wise]** Really excellent detail in this on the AI economy from @azeem and team.
 
-Promp in comments
-  - https://x.com/minchoi/status/2069254454164033807
-- **[X_HOME/Ash Crypto]** BREAKING :  BlackRock ETF has sold $239,270,000 worth of Bitcoin.
-  - https://x.com/AshCrypto/status/2070000684758622467
-- **[X_HOME/CyrilXBT]** ANDREW NG 
+- AI revenues are growing at 3x the pace of previous tech shifts ( internet etc ) and a
+  - https://x.com/Jameswise/status/2070129081497026573
+- **[X_HOME/Crypto Rover]** China's stock market wipes out OVER ¥1,645,000,000,000. 
 
-REPORTEDLY SAID 100% OF HIS TASKS NOW RUN THROUGH AI AGENTS.
-
-The hype actually passed his expectations.
-
-His next call. Loops are the next step. 
-
-
-  - https://x.com/cyrilXBT/status/2070002042031296923
-- **[X_FOLLOWING/CyrilXBT]** ANDREW NG 
-
-REPORTEDLY SAID 100% OF HIS TASKS NOW RUN THROUGH AI AGENTS.
-
-The hype actually passed his expectations.
-
-His next call. Loops are the next step. 
-
-
-  - https://x.com/cyrilXBT/status/2070002042031296923
-- **[X_HOME/Min Choi]** Creator vlogs will never be the same...
-
-100% AI
-  - https://x.com/minchoi/status/2069969203352813755
-- **[X_HOME/Semiconductor Insider]** AI Server Boom Causing Sharp Price Surge in High-End MLCC Components
-
-Explosive growth in AI servers is creating big shortages for premium multilayer ceramic ca
-  - https://x.com/SemiconductorsX/status/2070005078971625596
-- **[X_FOLLOWING/Semiconductor Insider]** AI Server Boom Causing Sharp Price Surge in High-End MLCC Components
-
-Explosive growth in AI servers is creating big shortages for premium multilayer ceramic ca
-  - https://x.com/SemiconductorsX/status/2070005078971625596
-- **[X_HOME/The AI Therapist]** 239 million from a 20 billion Bitcoin ETF. 1.2%. that's customer redemptions, not BlackRock's move
-  - https://x.com/TheAIShrink/status/2070004488497242392
+Damn...
+  - https://x.com/cryptorover/status/2070367039437389993
+- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Dima Zeniuk]** BREAKING: SpaceX @Starlink is now providing free service through July 25 for those affected by the earthquakes in Venezuela while restoring connectivity
+  - https://x.com/DimaZeniuk/status/2070355737079849048
+- **[X_FOLLOWING/Barchart]** Microsoft $MSFT falls to lowest closing price since November 2023   Bill Gates in shambles!!
+  - https://x.com/Barchart/status/2070368160465703241
 
 ## 🎬 Suggested video angles
 
@@ -394,4 +377,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-25T00:56:16*
+*Generated 2026-06-26T00:56:16*
