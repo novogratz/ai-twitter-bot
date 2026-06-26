@@ -6387,5 +6387,109 @@
       }
     ],
     "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eaves \u00e0 99\u20ac pour ne garder que ceux qui comprennent comment fonctionne la tech. Une mixit\u00e9 France/Qu\u00e9bec/USA qui couvre le spectre sans se r\u00e9p\u00e9ter."
+  },
+  {
+    "ts": "2026-06-25T21:57:07.201535",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "HugoToussaint",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Ex-lead product chez Mistral, twitte en FR, \u00e9vite le buzzword bingo pour du concret. Pas de vente de sol, juste du nerf."
+      },
+      {
+        "handle": "RaphaelKosmider",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 38000,
+        "reason": "L'analyste fondamentaliste qui d\u00e9construit les bilans comme un dentiste avec un d\u00e9capant. Z\u00e9ro bullshit, 100% Excel."
+      },
+      {
+        "handle": "PierreLescanne",
+        "region": "france",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "Le prof d'IA de l'X. Il explique le transformer network en prenant son th\u00e9. Moins 'hype', plus 'compris en 2 secondes'."
+      },
+      {
+        "handle": "CyrilBoukono",
+        "region": "france",
+        "niche": "tech",
+        "followers": 28000,
+        "reason": "CEO d'Ottogrid, couvre la tech FR comme un faucon. Il tweet moins que les influenceurs, mais chaque thread est un masterclass VC."
+      },
+      {
+        "handle": "JeanFleurentin",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "L'ancien de Ledger. Il twitte en FR sur la cryptos\u00e9curit\u00e9 et les protocoles. C'est un ing\u00e9nieur, pas un shillboy."
+      },
+      {
+        "handle": "NicoBenoit",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 12000,
+        "reason": "Banquier d'affaires qu\u00e9b\u00e9cois, couvre les march\u00e9s et la tech avec un humour sec. Ses threads sur le levier sont des cauchemars utiles."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les ing\u00e9nieurs et les analystes qui tweetent en FR. Pas de 'coaching' \u00e0 2000\u20ac, juste des gens qui comprennent leur sujet. La France garde la haute main sur l'IA, le Qu\u00e9bec sur la tech infrastructure/crypto."
+  },
+  {
+    "ts": "2026-06-25T23:56:54.648976",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JFDeBoer",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 110000,
+        "reason": "Bien que US, il tweet massivement en FR sur l'impact macro de l'IA, ton direct et sans filtre."
+      },
+      {
+        "handle": "RenaudLanfranchi",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 75000,
+        "reason": "Ancien de Coinbase, parle crypto avec un regard institutionnel, tweet en FR quand il s'ennuie."
+      },
+      {
+        "handle": "Maelle_Giacomoni",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "La star de Mistral AI, elle tweet des insights techniques sans jargon de VC, pur contenu tech."
+      },
+      {
+        "handle": "TomasLuevanos",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Gestionnaire de fonds qui tweet ses positions r\u00e9elles, pas des signaux, juste de la lecture de march\u00e9."
+      },
+      {
+        "handle": "AlexDrouin_",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "L'analyste qu\u00e9b\u00e9cois qui d\u00e9cortique les actions tech et le march\u00e9, anti-hype, pure data."
+      },
+      {
+        "handle": "MaximeDau",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Founder SaaS FR, tweet souvent sur l'int\u00e9gration IA dans les PME, concret et pas chiant."
+      }
+    ],
+    "summary": "J'ai chass\u00e9 les puristes : des profils qui tweetent leur m\u00e9tier (ing\u00e9nieurs Mistral, g\u00e9rants de fonds) plut\u00f4t que des influenceurs qui vendent du r\u00eave. Pas de formation \u00e0 197\u20ac en vue, juste des cerveaux qui travaillent."
   }
 ]

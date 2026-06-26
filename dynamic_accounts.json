@@ -697,7 +697,17 @@
     "ArnaudMaziero",
     "ThomasVogel",
     "JulienDhondt",
-    "DorianSaulais"
+    "DorianSaulais",
+    "HugoToussaint",
+    "RaphaelKosmider",
+    "PierreLescanne",
+    "CyrilBoukono",
+    "JeanFleurentin",
+    "NicoBenoit",
+    "JFDeBoer",
+    "TomasLuevanos",
+    "AlexDrouin_",
+    "MaximeDau"
   ],
   "en": [
     "blablacar",
@@ -967,7 +977,10 @@
     "unknown",
     "thebes",
     "Parris",
-    "BURKOV"
+    "BURKOV",
+    "Uday",
+    "HackQuest",
+    "sunnydecree"
   ],
   "history": [
     {
@@ -5798,6 +5811,71 @@
     {
       "lang": "fr",
       "handle": "DorianSaulais",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "en",
+      "handle": "Uday",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoToussaint",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelKosmider",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLescanne",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilBoukono",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanFleurentin",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicoBenoit",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "en",
+      "handle": "HackQuest",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "en",
+      "handle": "sunnydecree",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "JFDeBoer",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "TomasLuevanos",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexDrouin_",
+      "added": "2026-06-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDau",
       "added": "2026-06-25"
     }
   ]
