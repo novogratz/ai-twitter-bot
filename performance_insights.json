@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-26T05:56:16.255193",
-  "window_7d_actions": 6588,
-  "window_24h_actions": 836,
+  "generated_at": "2026-06-26T09:56:16.506512",
+  "window_7d_actions": 6517,
+  "window_24h_actions": 829,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6513
+      "count": 6441
     },
     {
       "pattern": "METAPHOR",
-      "count": 23
+      "count": 25
     },
     {
       "pattern": "FR_ANCHOR",
@@ -27,7 +27,7 @@
   "worst_patterns": [
     {
       "pattern": "EN_ANCHOR",
-      "count": 2
+      "count": 1
     },
     {
       "pattern": "REPETITION",
@@ -52,85 +52,85 @@
       "actions": 298
     },
     {
-      "hour": 6,
-      "actions": 292
-    },
-    {
       "hour": 14,
       "actions": 290
+    },
+    {
+      "hour": 6,
+      "actions": 288
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3406
+      "count": 3361
     },
     {
       "topic": "Autre",
-      "count": 2490
+      "count": 2485
     },
     {
       "topic": "Crypto",
-      "count": 554
+      "count": 533
     },
     {
       "topic": "Bourse",
-      "count": 407
+      "count": 394
     },
     {
       "topic": "Spatial",
-      "count": 162
+      "count": 159
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Crypto",
-      "24h_rate": 0.135,
-      "7d_rate": 0.084
+      "24h_rate": 0.14,
+      "7d_rate": 0.082
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3846
+      "count": 3799
     },
     {
       "pillar": "other",
-      "count": 1496
+      "count": 1492
     },
     {
       "pillar": "market_trauma",
-      "count": 966
+      "count": 949
     },
     {
       "pillar": "meme_reaction",
-      "count": 168
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 56
+      "count": 169
     },
     {
       "pillar": "reply_bait",
       "count": 56
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 52
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 348
+      "count": 330
     },
     {
       "pillar": "other",
-      "count": 244
+      "count": 243
     },
     {
       "pillar": "market_trauma",
-      "count": 189
+      "count": 200
     },
     {
       "pillar": "meme_reaction",
-      "count": 41
+      "count": 42
     },
     {
       "pillar": "reply_bait",
@@ -151,7 +151,7 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 52,
+      "posts": 50,
       "avg_likes": 0.08,
       "avg_views": 25.9,
       "low_sample": false
@@ -165,9 +165,9 @@
     },
     {
       "pillar": "other",
-      "posts": 85,
+      "posts": 87,
       "avg_likes": 0.07,
-      "avg_views": 35.1,
+      "avg_views": 33.2,
       "low_sample": false
     },
     {
@@ -181,19 +181,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5405
+      "count": 5389
     },
     {
       "type": "retweet",
-      "count": 659
+      "count": 606
     },
     {
       "type": "quote",
-      "count": 270
+      "count": 265
     },
     {
       "type": "quote_gif",
-      "count": 156
+      "count": 157
     },
     {
       "type": "post",
@@ -201,23 +201,23 @@
     },
     {
       "type": "hotake",
-      "count": 43
+      "count": 45
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-26T05:56:09.332958",
-      "text": "$5B burn, $3.4B revenue. He's not timing the market.\n\nHe's calculating the capital needed to fund the AGI race before the money runs out. $1T is the math.",
+      "ts": "2026-06-26T09:54:10.400358",
+      "text": "They do. capitulation ends them all. not time, fear. when the last panicker stops selling, the market turns.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-26T05:55:53.229000",
-      "text": "every founder's \"second startup\" is on this list",
-      "type": "quote"
+      "ts": "2026-06-26T09:53:20.814844",
+      "text": "Nvidia's datacenter margins are 70%. openai said the $100B deal was optional. they're not betting on performance, they're betting on margins.",
+      "type": "reply"
     },
     {
-      "ts": "2026-06-26T05:55:36.709086",
-      "text": "The mistake is comparing price. ask instead 'how much code do i need in context.' you're shipping full features? claude 200k tokens. quick edits? copilot. long reasoning chains? gpt-4. each wins at different things.",
+      "ts": "2026-06-26T09:51:52.125937",
+      "text": "$859M out of a larger position. mechanical rebalancing on gains. actual signal: who accumulated at those dip prices.",
       "type": "reply"
     }
   ]
