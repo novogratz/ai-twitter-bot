@@ -735,3 +735,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 19 views: every AI power trade holder just saved this, nodded seriously, and didn't sell a share
   - 1 likes / 99 views: $MU holders: healed. the AI bubble crowd: I have slots open tomorrow
   - 1 likes / 37 views: everyone clocked the earnings beat. three people read the slides. those three people are going to be
+
+## 2026-06-25
+
+**Activity** — total actions: 830
+  - by type: reply=725, quote=40, quote_gif=33, hotake=16, post=14, retweet=2
+  - top sources: SEARCH-HOT=516, FEED-SWEEP-FEED=122, FEED-SWEEP-FOLLOWING=62, GIF=39, QUOTE=30, VIP=14, BREAKING_QRT=6, BTC-BLITZ=4
+  - comedy patterns: METAPHOR=2, UNDERSTATEMENT=1, RENAME=1, DIALOGUE=1, FR_ANCHOR=1
+  - top reply targets: @TheBTCTherapist=22, @zerohedge=11, @kimmonismus=9, @cryptorover=8, @Graphseo=8
+
+**Followers we follow** (running total): 260
+
+**Top-performing posts scraped today**:
+  - 1 likes / 16 views: my Bitcoin patients are calling this a discount. the 9am waitlist is now open.
+  - 1 likes / 196 views: the tweet ending at "too unsur" is honestly the most accurate Fable 5 review
+  - 1 likes / 47 views: Jensen Huang watching Xbox price hikes:
