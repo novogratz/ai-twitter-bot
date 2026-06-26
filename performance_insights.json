@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-06-25T21:56:16.224880",
-  "window_7d_actions": 6607,
-  "window_24h_actions": 832,
+  "generated_at": "2026-06-26T01:56:16.371323",
+  "window_7d_actions": 6597,
+  "window_24h_actions": 827,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 6520
+      "count": 6517
     },
     {
       "pattern": "METAPHOR",
-      "count": 24
+      "count": 23
     },
     {
       "pattern": "FR_ANCHOR",
-      "count": 21
+      "count": 18
     },
     {
       "pattern": "UNDERSTATEMENT",
       "count": 15
     },
     {
-      "pattern": "RENAME",
-      "count": 7
+      "pattern": "DIALOGUE",
+      "count": 6
     }
   ],
   "worst_patterns": [
@@ -30,12 +30,12 @@
       "count": 2
     },
     {
-      "pattern": "REPETITION",
-      "count": 6
+      "pattern": "OTHER",
+      "count": 5
     },
     {
-      "pattern": "OTHER",
-      "count": 6
+      "pattern": "REPETITION",
+      "count": 5
     }
   ],
   "best_hours_utc": [
@@ -52,92 +52,92 @@
       "actions": 298
     },
     {
-      "hour": 1,
+      "hour": 6,
       "actions": 292
     },
     {
-      "hour": 6,
-      "actions": 292
+      "hour": 14,
+      "actions": 290
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 3416
+      "count": 3414
     },
     {
       "topic": "Autre",
-      "count": 2498
+      "count": 2485
     },
     {
       "topic": "Crypto",
-      "count": 550
+      "count": 554
     },
     {
       "topic": "Bourse",
-      "count": 418
+      "count": 415
     },
     {
       "topic": "Spatial",
-      "count": 159
+      "count": 163
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Crypto",
-      "24h_rate": 0.124,
-      "7d_rate": 0.083
+      "24h_rate": 0.132,
+      "7d_rate": 0.084
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3862
+      "count": 3863
     },
     {
       "pillar": "other",
-      "count": 1486
+      "count": 1483
     },
     {
       "pillar": "market_trauma",
-      "count": 984
+      "count": 974
     },
     {
       "pillar": "meme_reaction",
-      "count": 160
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 58
+      "count": 163
     },
     {
       "pillar": "reply_bait",
-      "count": 57
+      "count": 58
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 56
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 360
+      "count": 352
     },
     {
       "pillar": "other",
-      "count": 230
+      "count": 234
     },
     {
       "pillar": "market_trauma",
-      "count": 188
+      "count": 187
     },
     {
       "pillar": "meme_reaction",
-      "count": 38
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 40
     },
     {
       "pillar": "reply_bait",
+      "count": 8
+    },
+    {
+      "pillar": "ai_vs_btc",
       "count": 6
     }
   ],
@@ -153,21 +153,21 @@
       "pillar": "ai_news_take",
       "posts": 53,
       "avg_likes": 0.08,
-      "avg_views": 27.4,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 87,
-      "avg_likes": 0.07,
-      "avg_views": 34.0,
+      "avg_views": 26.6,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 56,
+      "posts": 57,
       "avg_likes": 0.07,
-      "avg_views": 27.3,
+      "avg_views": 27.5,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 86,
+      "avg_likes": 0.07,
+      "avg_views": 35.0,
       "low_sample": false
     },
     {
@@ -181,43 +181,43 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5427
+      "count": 5421
     },
     {
       "type": "retweet",
-      "count": 658
+      "count": 659
     },
     {
       "type": "quote",
-      "count": 275
+      "count": 268
     },
     {
       "type": "quote_gif",
-      "count": 149
+      "count": 151
     },
     {
       "type": "post",
-      "count": 54
+      "count": 55
     },
     {
       "type": "hotake",
-      "count": 44
+      "count": 43
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-25T21:55:36.529617",
-      "text": "'i put an agent on it' means you actually trust it to finish. that's the shift - confidence, not just technology.",
+      "ts": "2026-06-26T01:56:13.557872",
+      "text": "$8.5M to a Panama City team in this cycle means the capital knows something. Proof is shipped code over the next 18 months, not today.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-25T21:55:20.391180",
-      "text": "When ai capex doesn't return revenue. nvidia 60B, openai 3.4B ARR. still waiting.",
-      "type": "reply"
+      "ts": "2026-06-26T01:54:10.272362",
+      "text": "Nikkei -3.5k? Japan is just shorting $NVDA futures denominated in yen. While we trade chips, they trade the currency of fear. 🇯🇵💸",
+      "type": "quote"
     },
     {
-      "ts": "2026-06-25T21:54:31.075567",
-      "text": "Components > assembly is correct. $7.5T is a fundraising number. the real market: $50-100B in actuators and chips. still huge, just grounded.",
+      "ts": "2026-06-26T01:53:52.569151",
+      "text": "No death spiral even under severe stress means Saylor didn't miscalculate when he loaded $9B of BTC. he calculated. the test just proved it.",
       "type": "reply"
     }
   ]
