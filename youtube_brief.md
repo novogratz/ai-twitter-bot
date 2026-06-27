@@ -1,37 +1,38 @@
-# YouTube brief — 2026-06-26
+# YouTube brief — 2026-06-27
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **830**
-- reply: **725**
-- quote: **39**
-- quote_gif: **34**
-- hotake: **16**
-- post: **14**
+- Total actions logged: **821**
+- reply: **715**
+- quote: **41**
+- quote_gif: **33**
+- hotake: **17**
+- post: **13**
 - retweet: **2**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
 *Posts with ≥ 10 likes. This is your shortlist of stories the audience already validated. Each one is a ready-to-shoot video angle.*
 
-- 🎥 **40 likes / 13348 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+- 🎥 **56 likes / 22831 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 
 ## 🥇 Top own posts (by likes)
 
 ### AI
 
-- **40 likes / 13348 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
-- **1 likes / 13 views** — Brand manager: "we're adding AI to everything" 60% of customers: "we're leaving" Brand manager: "adding that to our AI-powered insights dashboard"
+- **56 likes / 22831 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 - **1 likes / 116 views** — everyone holding $NVDA watching Google quietly shelve another chip project
 - **1 likes / 19 views** — every AI power trade holder just saved this, nodded seriously, and didn't sell a share
 - **1 likes / 99 views** — $MU holders: healed. the AI bubble crowd: I have slots open tomorrow
+- **1 likes / 33 views** — Micron said AI demand is healthy and $337B appeared in Tokyo. my work here is done
 
 ### Crypto
 
 - **1 likes / 44 views** — six reasons to exit in six months and nobody left. I don't treat Bitcoin holders, I study them  https://x.com/AshCrypto/status/2067876526759063717…
 - **1 likes / 48 views** — Bitcoin holders watching BlackRock:
+- **1 likes / 16 views** — my Bitcoin patients are calling this a discount. the 9am waitlist is now open.
 
 ### Bourse
 
@@ -39,7 +40,6 @@
 
 ### Other
 
-- **1 likes / 80 views** — $CRWV after the Cramer mention:
 - **1 likes / 24 views** — 'Friendly or Pragmatic' — my entire intake form, now a toggle
 
 ## 📡 Today's news picks (from retweet_bot)
@@ -343,30 +343,34 @@ Ope
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/TheSpaceEngineer]** It feels almost short or damaged in areas. Something makes me doubt SpaceX will ever address the mission outcome
-  - https://x.com/mcrs987/status/2070353355612852510
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Herbert Ong]** Elon Musk has confirmed STARMIND as the name of SpaceX's future AI satellite network.
+- **[X_HOME/MartyParty]** This is a @solana transaction ID - open the floodgates. 
 
-@FutureAZA says this is just one piece of a much bigger strategy. @SpaceX
-  - https://x.com/herbertong/status/2070287139695387134
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Tesla Owners Silicon Valley]** “I have watched Elon Musk very up close for a couple of years. I really believe he's taken up certain missions, like saving us from hostile AI and making us mul
-  - https://x.com/teslaownersSV/status/2070343137210548703
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Mars University]** Elon Musk: "The reason I'm doing SpaceX is not due to some childhood epiphany or because I think this is the highest return on investment way to spend money.
+@XMoney is on Solana. $SOL
+  - https://x.com/martypartymusic/status/2070377039094551011
+- **[X_HOME/Polymarket]** NEW POLYMARKET: Lime IPO Closing Market Cap
+  - https://x.com/Polymarket/status/2070484218925461745
+- **[X_FOLLOWING/Min Choi]** It's happening.
 
-I
-  - https://x.com/MarsUniversityX/status/2070329496838750480
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/James Wise]** Really excellent detail in this on the AI economy from @azeem and team.
+The US government just lifted its block on Anthropic’s Claude Mythos 5.
 
-- AI revenues are growing at 3x the pace of previous tech shifts ( internet etc ) and a
-  - https://x.com/Jameswise/status/2070129081497026573
-- **[X_HOME/Crypto Rover]** China's stock market wipes out OVER ¥1,645,000,000,000. 
+But only for 100+ approved US institutions.
 
-Damn...
-  - https://x.com/cryptorover/status/2070367039437389993
-- **[X_SEARCH/top/SpaceX OR Starlink OR space infrastructure lang:en min_faves:100/Dima Zeniuk]** BREAKING: SpaceX @Starlink is now providing free service through July 25 for those affected by the earthquakes in Venezuela while restoring connectivity
-  - https://x.com/DimaZeniuk/status/2070355737079849048
-- **[X_FOLLOWING/Barchart]** Microsoft $MSFT falls to lowest closing price since November 2023   Bill Gates in shambles!!
-  - https://x.com/Barchart/status/2070368160465703241
+OpenAI's GPT-5.6 also wen
+  - https://x.com/minchoi/status/2070708674134511948
+- **[X_FOLLOWING/MartyParty]** SpaceX $SPCX to join Nasdaq 100 index on July 7th.
+  - https://x.com/martypartymusic/status/2070730819644379422
+- **[X_HOME/MartyParty]** SpaceX $SPCX to join Nasdaq 100 index on July 7th.
+  - https://x.com/martypartymusic/status/2070730819644379422
+- **[X_FOLLOWING/Manisha Mishra]** Anthropic’s CEO just said software engineering could be fully automated in 12 months.
+
+Most people read that and think: “cool, AI is getting better.”
+
+That’s no
+  - https://x.com/manishamishra24/status/2070731487507567042
+- **[X_SEARCH/live/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Jays Creations]** HIVE
+  - https://x.com/JaymberAI/status/2070730187520516325
+- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Vikas Alwys]** MacBook Air M5 if your work is coding, AI, editing, battery life, and portability. ASUS ROG if gaming or GPU-heavy workloads are your priority.
+  - https://x.com/VikasAlwys/status/2070732282097471688
 
 ## 🎬 Suggested video angles
 
@@ -377,4 +381,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-26T00:56:16*
+*Generated 2026-06-27T00:56:16*
