@@ -761,7 +761,11 @@
     "VladTenev",
     "CryptoNath",
     "BenjaminDucrocq",
-    "JulesBordier"
+    "JulesBordier",
+    "PierreRoynard",
+    "AdriLeLaud",
+    "MaximeMaret",
+    "JulienLevesque"
   ],
   "en": [
     "blablacar",
@@ -6242,6 +6246,26 @@
     {
       "lang": "fr",
       "handle": "JulesBordier",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRoynard",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdriLeLaud",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMaret",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLevesque",
       "added": "2026-06-27"
     }
   ]

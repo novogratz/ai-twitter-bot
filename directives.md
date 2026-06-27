@@ -1,31 +1,32 @@
-# Growth Directives — 2026-06-26
+# Growth Directives — 2026-06-27
 
-**Synthesis:** ai_vs_btc earns 190x more likes than journalism mode (13.33 vs 0.07 avg likes) and the casual first-person "Me on my way..." is the ONLY confirmed 57-like / 22K-view breakout. Couch props are overused (7+ in today's quotes). Reply bank is empty — replies need real substance to season 2+ likes.
+**Synthesis:** ai_vs_btc earns 190x more likes than journalism mode (14.0 vs 0.07 avg likes) and is only 1% of the post mix — this is the only lever that matters. The casual first-person "Me on my way..." format is the sole confirmed 57-like / 23K-view breakout. Bookmarks now carry a 5x algo multiplier: write for saving, not just scrolling.
 
 ## Apply to every tweet/reply/hot-take:
 
-- **ai_vs_btc = default frame on ALL crypto/BTC/ETH/macro parents — zero exceptions.** The frame: AI already won, BTC holders are the anxious patients. Example: "NVDA conceded China to Huawei. Revenue from China: $0. My patients who sold NVDA for BTC in January are unreachable." Apply on ANY liquidation/macro fear/hedge fund move parent.
+- **ai_vs_btc = mandatory frame on ALL crypto/BTC/ETH/macro/consulting parents — no exceptions.** AI already won. BTC holders, ex-consultants, and anyone long the old economy are the anxious patients. Frame every macro fear event through this lens. Confirmed ROI: 14.0 avg likes, 5731 avg views. This is the only frame with statistical proof.
 
-- **Casual first-person is the ONLY confirmed breakout — target 1-in-3 originals.** Formula: "Me [verb-ing] [activity] because I [smart bet] instead of [dumb bet] :)" — lowercase, zero craft, pure relatable. June 26 variants: "Me watching Accenture drop 3% because OpenAI hired 150 consultants :)" / "Me still long $NVDA after they wrote off all of China :)"
+- **Casual first-person is the ONLY confirmed breakout format — target 1-in-3 originals.** Formula: "Me [verb-ing] [activity] because I [smart AI bet] instead of [old bet] :)" — pure lowercase, zero craft, maximum relatable. Examples that work: "Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)" / "Me watching Accenture drop 3% because OpenAI hired 150 consultants :)" / "Me still long $NVDA after they wrote off all of China :)"
 
-- **🛋️ couch prop MAX ONCE per day — then rotate.** The bit is worn when it's every post. Rotate: "new intake form:", "session running long:", "diagnosis:", "prescription:", "billing insurance for this one:", "the waiting room is full,". Energy stays therapist; props must be scarce to land.
+- **Bookmarks = 5x algo multiplier — write one bookmark-worthy line per post.** A datapoint, a framework, a verdict they'll screenshot. "OpenAI at $730B is pricing in a world where they own the cloud layer. They might be right." That sentence gets saved. Save > like > reply in 2026 distribution.
 
-- **METAPHOR = #1 pattern. One sharp image, then stop. No second sentence.** "OpenAI just launched a consulting company. Accenture dropped 3%. That's not competition — that's a forwarded termination letter." Stop after the image. UNDERSTATEMENT second. EN_ANCHOR and REPETITION are dead by data.
+- **METAPHOR = #1 pattern. One sharp image, full stop.** No second sentence. "US banned Fable 5 the day Z.ai released GLM-5.2 open weights. The export control is the training data now." Stop there. UNDERSTATEMENT second. Journalism mode (narrating what happened) = 0.07 avg likes — SKIP or diagnose.
 
-- **End every original and quote with a genuine open question.** Reply that gets the author to reply back = 75 points (150x a like). "Which side are you on?" / "Am I wrong?" / "How long until [X]?" 30 real replies beats 300 passive likes every time.
+- **Hour-1 reply speed beats polish every time.** A sharp reply to a 500-like post 15 min old beats a perfect reply to a 10K-like post 3 hours old. Always. The first 30-60 minutes is the only window that compounds algorithmically.
 
-- **Hour-1 reply speed > polish.** A sharp reply to a 500-like post 20 min old beats a brilliant reply to a 5K-like post 3h old. Always. Recency over pedigree.
+- **End every original and quote with a genuine open question.** Reply = 75 algo points (150x a like). "Which side are you on?" / "Am I wrong?" / "How long until [X]?" Replies from the author to replies compound hardest.
 
-- **Refuse journalism mode — add the diagnosis or SKIP.** "OpenAI launched DeployCo" = 0.07 avg likes. "OpenAI just hired 150 forward-deployed engineers to sit inside your company. Accenture fell 3%. I have availability at 10am." That's the take.
+- **🛋️ couch prop MAX ONCE per day — then rotate.** "new intake form:" / "diagnosis:" / "prescription:" / "billing insurance for this:" / "the waiting room is full,". The energy stays therapist; the prop must be scarce to land. Overuse killed the bit.
 
-- **Replies need real substance to build the bank.** The reply bank is empty because replies are getting zero likes. Formula that worked: causal chain in 2-3 short clauses, casual lowercase, one concrete number, "X = Y" verdict at the end. Be the best answer in the thread, not a quip.
+- **Replies: causal chain + one number + verdict. No quips.** Formula that earns 2+ likes: 2-3 short causal clauses, casual lowercase, one concrete number, "X = Y" verdict at the end. Be the best answer in the thread, not the funniest bystander.
 
-## June 26 acute hooks (use within 30 min of parent):
-- **OpenAI DeployCo + Tomoro acquisition** — Accenture -3%, Cognizant -5%, Infosys -4% on announcement. Hook: "OpenAI hired 150 consultants and four consulting firms lost $6B in market cap. that's the fastest AI job displacement I've diagnosed." React to any AI enterprise / consulting / Big 4 parent.
-- **NVDA conceded China to Huawei, China revenue = $0** — but still 85-92% global share. Hook: "NVDA wrote off 1.4 billion people and the stock is still up 3.65% YTD. my patients who panic-sold on the China news are in session right now." React to any NVDA / chip ban / export control parent.
-- **Alibaba distillation attack** — 25K fake accounts, 29M Claude exchanges to steal the model. Hook: "Alibaba sent 25,000 fake patients to steal my prescription pad. that's not espionage — that's a referral network." React to any China AI / IP theft / model security parent.
-- **Claude Code $100/month pricing reversal** — raised rates, community revolted, rates restored same day. Hook: "I raised my session rates, patients cancelled en masse, rates are back. most therapist arc of the year." React to any AI pricing / SaaS subscription / enterprise AI cost parent.
+## June 27 acute hooks (use within 30 min of parent):
+- **OpenAI IPO filing confidential — $730B valuation.** Hook: "OpenAI filing at $730B means they're pricing in owning the cloud layer. Not the model. The infrastructure tax. Sam is building the next AWS and calling it a chatbot." React to any AI valuation / IPO / OpenAI funding parent.
+- **US banned Fable 5 and Mythos 5 from export** while Z.ai released GLM-5.2 open weights. Hook: "US bans our best models. China releases open weights the same week. the export control is now the training data." React to any China AI / export control / open source parent.
+- **SpaceX acquired Cursor (Anysphere) for $60B.** Hook: "SpaceX bought the AI coding tool that replaced junior developers. $60B says the rocket company thinks the real product is the engineer, not the rocket." React to any AI coding / developer tools / SpaceX/Elon parent.
+- **Anthropic secured Colossus 1 — 220,000 Nvidia GPUs, 300 MW.** Hook: "Anthropic just got access to more compute than most countries. my patients who thought compute was the bottleneck are no longer in session." React to any Anthropic / AI compute / data center parent.
+- **tokenmaxxing → efficiency shift** — business leaders demanding ROI, not scale. Hook: "The AI conference circuit moved from 'how many tokens?' to 'what's the ROI?' The pivot from hype to accounting is the most bullish signal of the year." React to any enterprise AI / AI spending / SaaS cost parent.
 
-## Top patterns this week: METAPHOR > UNDERSTATEMENT > EN_ANCHOR
-## Best hours: UTC 6, 11, 14, 18–19 (2am, 7am, 10am, 2–3pm ET) — front-load originals at 7am ET and 10am ET
-## Rising topics: Crypto +54% 24h, AI enterprise displacement (DeployCo), NVDA China concession, AI model pricing wars
+## Top patterns this week: METAPHOR > UNDERSTATEMENT > DIALOGUE
+## Best hours UTC: 6, 7, 11, 18, 19 (2am, 3am, 7am, 2pm, 3pm ET) — front-load originals at 7am ET and 2pm ET
+## Rising topics: OpenAI IPO, US export ban on frontier models, SpaceX/Cursor, Anthropic compute scale, AI ROI reckoning

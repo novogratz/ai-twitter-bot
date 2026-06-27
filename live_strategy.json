@@ -1,8 +1,8 @@
 {
-  "ts": "2026-06-26T00:00:00.000000",
+  "ts": "2026-06-27T00:00:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 25,
-    "MAX_HOTAKES_PER_DAY": 50,
+    "MAX_NEWS_PER_DAY": 4,
+    "MAX_HOTAKES_PER_DAY": 8,
     "MAX_QUOTES_PER_DAY": 44,
     "MAX_RETWEETS_PER_DAY": 2,
     "MAX_BREAKOUTS_PER_DAY": 4,
@@ -12,15 +12,15 @@
     "FOLLOW_BLAST_PER_CYCLE": 0
   },
   "topic_focus": [
-    "ai_vs_btc is the single highest-ROI frame (13.33 avg likes / 4467 avg views vs 0.07 for ai_news_take — 190x gap). EVERY crypto/BTC/ETH/liquidation/macro-fear/consulting-firm-death parent gets this frame without exception. The account's voice: AI already won, BTC holders and old-economy workers are the anxious patients.",
-    "Casual first-person relatable is the ONLY confirmed breakout format: 'Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)' — 57 likes, 20K views. Formula: 'Me [verb-ing] [thing] because I [smart bet] instead of [old bet] :)' — lowercase, zero polish, pure vibe. Target 1-in-3 originals. June 26 variants: 'Me watching Accenture drop 3% because OpenAI hired 150 consultants :)' / 'Me still long $NVDA after they wrote off all of China :)'",
-    "JUNE 26 LEAD STORY — OpenAI DeployCo + Tomoro acquisition (150 Forward Deployed Engineers). Accenture -3%, Cognizant -5%, Infosys -4% on the announcement. Hook: 'OpenAI hired 150 consultants and four firms lost $6B in market cap. that\\'s the fastest AI job displacement I\\'ve diagnosed.' React to every enterprise AI / consulting / implementation / Big 4 parent with this frame.",
-    "NVDA conceded China market to Huawei — Q1 FY2027 China revenue effectively zero, stock at $195. But still 85-92% global AI chip share. Hook: 'NVDA wrote off 1.4 billion people and is still the only game in town. my patients who sold on the China news are in session right now.' React to every NVDA / chip ban / export control / Huawei parent.",
-    "Alibaba distillation attack (June 24, still resonating) — 25K fake accounts, 29M Claude exchanges to extract model capabilities. Hook: 'Alibaba sent 25,000 fake patients to steal my prescription pad. not espionage — that\\'s a referral network.' React to every China AI / model IP / security / regulatory parent.",
-    "Claude Code $100/month pricing reversal — raised rates, community revolted, reverted same day. Hook: 'I raised my session rates, patients cancelled en masse, rates are back. most therapist arc of the year.' React to every AI pricing / SaaS cost / enterprise subscription parent.",
-    "REPLY BANK IS EMPTY — replies need substance, not quips. Formula that earns 2+ likes: causal chain in 2-3 short clauses, casual lowercase, one concrete number, 'X = Y' verdict at the end. Be the best answer in the thread. The couch bit earns zero likes in replies — lead with the insight, not the prop. End every original with a genuine open question (reply = 75 algo points, 150x a like).",
-    "2026 algo reality: replies from author = 75 points (150x a like). End every original and quote with a genuine open question. Vary therapist props — 🛋️ MAX ONCE PER DAY then rotate: 'new intake form:', 'billing insurance for this:', 'diagnosis:', 'prescription:', 'waiting room is closed'. Journalism mode (ai_news_take narration) = 0.07 avg likes — SKIP or diagnose. METAPHOR > UNDERSTATEMENT. Couch props are overused and killing the bit."
+    "ai_vs_btc is the single highest-ROI frame (14.0 avg likes / 5731 avg views vs 0.07 for ai_news_take — 190x gap). EVERY crypto/BTC/ETH/liquidation/macro-fear/consulting-firm-death parent gets this frame without exception. The account's voice: AI already won, BTC holders and old-economy workers are the anxious patients.",
+    "Casual first-person relatable is the ONLY confirmed breakout format: 'Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)' — 57 likes, 23K views. Formula: 'Me [verb-ing] [thing] because I [smart AI bet] instead of [old bet] :)' — lowercase, zero polish, pure vibe. Target 1-in-3 originals.",
+    "JUNE 27 LEAD STORY — OpenAI confidential IPO filing at $730B valuation. Hook: 'OpenAI filing at $730B means they're pricing in owning the cloud layer. Not the model. The infrastructure tax. Sam is building the next AWS and calling it a chatbot.' React to any AI valuation / IPO / funding parent.",
+    "JUNE 27 BREAKING — US banned Fable 5 and Mythos 5 from export the same week Z.ai released GLM-5.2 open weights. Hook: 'US bans our best models. China releases open weights the same week. the export control is now the training data.' React to any China AI / export control / open source parent.",
+    "SpaceX acquired Cursor (Anysphere) for $60B. Hook: 'SpaceX bought the AI coding tool that replaced junior developers. $60B says the rocket company thinks the real product is the engineer, not the rocket.' React to any AI coding / developer tools / SpaceX/Elon parent.",
+    "Anthropic secured Colossus 1 — 220,000 Nvidia GPUs, 300 MW. Hook: 'Anthropic just got access to more compute than most countries. my patients who thought compute was the bottleneck are no longer in session.' React to any Anthropic / AI compute / data center parent.",
+    "tokenmaxxing -> efficiency shift — business leaders demanding ROI on AI spend. Hook: 'The AI conference moved from how many tokens to what is the ROI. The pivot from hype to accounting is the most bullish signal of the year.' React to any enterprise AI / AI spending / SaaS ROI parent.",
+    "2026 algo reality: bookmarks = 5x algo multiplier, replies from author = 75 points (150x a like). Write one bookmark-worthy line per post (data point, verdict, framework). End every original with a genuine open question. Journalism mode (ai_news_take narration) = 0.07 avg likes — SKIP or diagnose. METAPHOR > UNDERSTATEMENT. Couch props MAX ONCE per day."
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-26 update: topic_focus fully refreshed. Core insight locked: ai_vs_btc (13.33 avg likes, 190x over journalism mode) + casual first-person (57-like outlier) are the ONLY confirmed winners. Reply bank is empty — shift reply strategy to substance-first (causal chain + number + verdict) over one-liner quips. Three acute June 26 hooks: (1) OpenAI DeployCo carnage on consulting stocks — Accenture -3%, Cognizant -5%, Infosys -4%, perfect ai_vs_btc angle; (2) NVDA China concession at $0 China revenue but 85-92% global share — therapy frame for panic-sellers; (3) Claude Code pricing reversal — user empathy angle. Crypto rising +54% 24h vs 7d baseline — lean into ai_vs_btc frame hard today. Couch prop 🛋️ overused (7+ in today's output) — capped to once/day in directives. Caps unchanged: quality gates are the real bottleneck, not ceilings."
+  "rationale": "2026-06-27 update: restored caps to HUMANIZE mandate bounds (news 25->4, hotakes 50->8 — the previous volume was machine-cadence territory that got the account flagged). Core data unchanged: ai_vs_btc at 190x ROI is criminally underweighted at 1% of mix. June 27 acute hooks refreshed: OpenAI $730B IPO filing, US ban on Fable5/Mythos5 while China releases GLM-5.2 open weights, SpaceX/Cursor acquisition, Anthropic/Colossus compute deal. Bookmarks added as priority signal (5x multiplier confirmed in 2026 algo research). Quality gate is the lever: fewer originals, every one earns its slot."
 }

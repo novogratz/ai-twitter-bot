@@ -7031,5 +7031,50 @@
       }
     ],
     "summary": "J'ai cisel\u00e9 la s\u00e9lection pour \u00e9viter le bruit. Pas de vendeurs de formations, juste des costrucateurs (Mistral, Robinhood), des analystes macro (Ducrocq, Drouin) et des v\u00e9t\u00e9rans (Medjaoui) qui ont encore les nerfs solides."
+  },
+  {
+    "ts": "2026-06-27T05:58:14.127436",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenoitBattistella",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 120000,
+        "reason": "Le roi du 'crypto-twitter' s\u00e9rieux qui n'est pas un guru de formation \u00e0 2000\u20ac. Il couvre la macro et le march\u00e9 sans faire la pub de son Telegram VIP."
+      },
+      {
+        "handle": "PierreRoynard",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le patron de la bourse FR sur X. Il poste en FR, couvre le march\u00e9 local et global. Moins de 'guru', plus de chiffres."
+      },
+      {
+        "handle": "AdriLeLaud",
+        "region": "france",
+        "niche": "tech",
+        "followers": 28000,
+        "reason": "Le meilleur journalier tech FR actuel. Moins 'influencer', plus 'journaliste de choc'. Il couvre l'IA et la bourse tech avec un humour noir qui pique."
+      },
+      {
+        "handle": "MaximeMaret",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Un peu moins actif sur la finance pure, mais sa vision sur l'IA et la SaaS au Canada est une mine d'or. Twitte en FR avec un style direct."
+      },
+      {
+        "handle": "JulienLevesque",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "L'analyste technique qu\u00e9b\u00e9cois qui ne se prend pas au s\u00e9rieux. Couvre la bourse et la crypto avec un humour typique du sud (et du nord)."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les gourous de Telegram pour ne garder que les analystes qui postent des insights bruts. La France domine en volume, le Qu\u00e9bec a ses perles rares, et les US francophones sont souvent sous-estim\u00e9s mais plus techniques."
   }
 ]
