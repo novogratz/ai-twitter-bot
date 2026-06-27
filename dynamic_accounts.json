@@ -742,7 +742,15 @@
     "AlexRouvin",
     "JulesW",
     "VincentLeduc",
-    "MarcL"
+    "MarcL",
+    "VincentDelcroix",
+    "CryptoPascal",
+    "JulienBoudet",
+    "AlexisDrouin",
+    "0xAlexis",
+    "Pierre_robert",
+    "RomainBiscaye",
+    "SylvainLeclerc"
   ],
   "en": [
     "blablacar",
@@ -1019,7 +1027,8 @@
     "Elisa",
     "chloe",
     "katsu",
-    "WELT"
+    "WELT",
+    "TBPN"
   ],
   "history": [
     {
@@ -6110,6 +6119,51 @@
     {
       "lang": "fr",
       "handle": "MarcL",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDelcroix",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoPascal",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBoudet",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDrouin",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "en",
+      "handle": "TBPN",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xAlexis",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "Pierre_robert",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBiscaye",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLeclerc",
       "added": "2026-06-26"
     }
   ]

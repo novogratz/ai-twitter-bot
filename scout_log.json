@@ -6858,5 +6858,81 @@
       }
     ],
     "summary": "Mix \u00e9quilibr\u00e9 entre la force brute de l'IA fran\u00e7aise (Mistral), la sagesse sceptique de Taleb, et des analystes de niche au Qu\u00e9bec qui \u00e9vitent le bruit."
+  },
+  {
+    "ts": "2026-06-26T21:56:48.582867",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "VincentDelcroix",
+        "region": "france",
+        "niche": "tech",
+        "followers": 150000,
+        "reason": "L'expert hardware FR. Si tu veux comprendre les puces derri\u00e8re l'IA sans lire une paper de 40 pages."
+      },
+      {
+        "handle": "CryptoPascal",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Diaspora FR \u00e0 NYC, analyse on-chain solide et market sentiment."
+      },
+      {
+        "handle": "JulienBoudet",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Ex-PM HFT, twitte des insights traders purs, z\u00e9ro 'rejoins ma newsletter'."
+      },
+      {
+        "handle": "AlexisDrouin",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Le gars qui fait parler de la tech qu\u00e9b\u00e9coise avec des threads clairs et percutantes."
+      }
+    ],
+    "summary": "Pas de gourou de Telegram ici, que des pros qui font leur travail : Mistral domine l'IA FR, Maziero est la r\u00e9f\u00e9rence crypto, et Boudet apporte la fra\u00eecheur trading."
+  },
+  {
+    "ts": "2026-06-26T23:56:54.383376",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "0xAlexis",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Incontournable du Web3 FR. Analyse technique claire, moins le hypeur que le strate. Pas de formation \u00e0 2000\u20ac."
+      },
+      {
+        "handle": "Pierre_robert",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Ex-PM chez Amundi. Il explique la macro et la bourse avec un humour d\u00e9suet. Z\u00e9ro signal, 100% insight."
+      },
+      {
+        "handle": "RomainBiscaye",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Le tech reporter fran\u00e7ais qui bosse aux US. Il d\u00e9cortique les lev\u00e9es de fonds SaaS et IA avec une pr\u00e9cision chirurgicale."
+      },
+      {
+        "handle": "SylvainLeclerc",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "CTO de Webedia. Parle d'IA Generative et d'infra avec les mains dans le cambouis. Rarement vu, toujours pertinent."
+      }
+    ],
+    "summary": "On a filtr\u00e9 les influenceurs 'lifestyle trading' pour garder ceux qui font briller leur cerveau ou leur code. Une liste pour ceux qui veulent apprendre, pas juste scroll."
   }
 ]
