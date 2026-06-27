@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-27T15:27:02.716504",
-  "window_7d_actions": 5132,
-  "window_24h_actions": 575,
+  "generated_at": "2026-06-27T19:27:02.347767",
+  "window_7d_actions": 5010,
+  "window_24h_actions": 548,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5050
+      "count": 4928
     },
     {
       "pattern": "METAPHOR",
@@ -41,11 +41,7 @@
   "best_hours_utc": [
     {
       "hour": 19,
-      "actions": 279
-    },
-    {
-      "hour": 18,
-      "actions": 262
+      "actions": 274
     },
     {
       "hour": 23,
@@ -58,47 +54,51 @@
     {
       "hour": 1,
       "actions": 242
+    },
+    {
+      "hour": 20,
+      "actions": 240
     }
   ],
   "best_topics_7d": [
     {
-      "topic": "IA",
-      "count": 2288
+      "topic": "Autre",
+      "count": 2175
     },
     {
-      "topic": "Autre",
-      "count": 2172
+      "topic": "IA",
+      "count": 2161
     },
     {
       "topic": "Crypto",
-      "count": 547
+      "count": 553
     },
     {
       "topic": "Bourse",
-      "count": 339
+      "count": 326
     },
     {
       "topic": "Spatial",
-      "count": 131
+      "count": 128
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2567
+      "count": 2419
     },
     {
       "pillar": "other",
-      "count": 1305
+      "count": 1310
     },
     {
       "pillar": "market_trauma",
-      "count": 972
+      "count": 987
     },
     {
       "pillar": "meme_reaction",
-      "count": 189
+      "count": 194
     },
     {
       "pillar": "reply_bait",
@@ -106,33 +106,33 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 45
+      "count": 46
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 254
+      "count": 218
     },
     {
       "pillar": "other",
-      "count": 171
+      "count": 178
     },
     {
       "pillar": "market_trauma",
-      "count": 120
+      "count": 123
     },
     {
       "pillar": "meme_reaction",
-      "count": 24
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 4
+      "count": 22
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 4
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
@@ -144,24 +144,24 @@
       "low_sample": false
     },
     {
+      "pillar": "market_trauma",
+      "posts": 59,
+      "avg_likes": 0.08,
+      "avg_views": 30.4,
+      "low_sample": false
+    },
+    {
       "pillar": "other",
-      "posts": 87,
+      "posts": 86,
       "avg_likes": 0.07,
       "avg_views": 32.2,
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 57,
-      "avg_likes": 0.07,
-      "avg_views": 30.7,
-      "low_sample": false
-    },
-    {
       "pillar": "ai_news_take",
-      "posts": 51,
+      "posts": 50,
       "avg_likes": 0.06,
-      "avg_views": 26.4,
+      "avg_views": 26.7,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4292
+      "count": 4202
     },
     {
       "type": "quote",
-      "count": 269
+      "count": 275
     },
     {
       "type": "retweet",
-      "count": 262
+      "count": 218
     },
     {
       "type": "quote_gif",
-      "count": 170
+      "count": 175
     },
     {
       "type": "post",
-      "count": 74
+      "count": 75
     },
     {
       "type": "hotake",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-27T15:25:52.065113",
-      "text": "The $2.77T is riding on two bets: Copilot scales profitably and Azure stays competitive on margins. Both are possible. You're betting both happen at once. That's the trade.",
+      "ts": "2026-06-27T19:25:40.012428",
+      "text": "Still waiting for 2030 to save them. I’m just billing for the wait.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-27T15:24:50.062824",
-      "text": "Whale longs that work become the tweets. whale longs that stop out disappear. $200m is data, not destiny. join the club, breathe, this was true yesterday too",
+      "ts": "2026-06-27T19:25:24.051943",
+      "text": "Delete this? The AI index is holding steady while you check the chart every three seconds. Come by; I’ll charge you double for the therapy.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-27T15:24:33.869567",
-      "text": "Llama 3.1. meta's backing it, the ecosystem owns it, 80% performance at 5% cost. open source best = momentum and affordability, not raw smartness.",
+      "ts": "2026-06-27T19:23:51.883368",
+      "text": "SBF pardoned. Bitcoin still trapped. Your patients are still coping with red candles.",
       "type": "reply"
     }
   ]

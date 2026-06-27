@@ -774,7 +774,14 @@
     "ThomasPerrin",
     "JulesClement",
     "AlexisBessard",
-    "RomainBazire"
+    "RomainBazire",
+    "jlemasson",
+    "Thibaud_T",
+    "PierreDion",
+    "VivianeD",
+    "MathieuD",
+    "CyrilD",
+    "PierreRoussel"
   ],
   "en": [
     "blablacar",
@@ -6332,6 +6339,41 @@
     {
       "lang": "fr",
       "handle": "RomainBazire",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "jlemasson",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "Thibaud_T",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDion",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "VivianeD",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuD",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilD",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRoussel",
       "added": "2026-06-27"
     }
   ]

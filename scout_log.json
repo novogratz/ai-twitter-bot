@@ -7166,5 +7166,74 @@
       }
     ],
     "summary": "Un mix solide entre les v\u00e9t\u00e9rons (Taleb) et la nouvelle garde tech/IA (Hugging Face/DeFi). On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur ceux qui construisent ou analysent."
+  },
+  {
+    "ts": "2026-06-27T15:45:21.877112",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "jlemasson",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Gourou de Mistral AI. Il tweet sur l'IA open-source comme un moine copiste mais avec des GPU. Pas de pub, juste de la tech pure."
+      },
+      {
+        "handle": "Thibaud_T",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "L'ex-Meta qui a bascul\u00e9 dans la blockchain. Analyse solide, peu de bruit, zero signal VIP \u00e0 vendre. Il tweet en FR/EN."
+      },
+      {
+        "handle": "PierreDion",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Journaliste financier de guerre. Il est l\u00e0 quand le march\u00e9 saigne. Moins 'influencer', plus 'journaliste de terrain'."
+      },
+      {
+        "handle": "VivianeD",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Journaliste US (Bloomberg) qui tweet en FR sur les fintechs. Elle capture l'info US avant qu'elle n'arrive en FR. Pas de cours \u00e0 99\u20ac."
+      },
+      {
+        "handle": "MathieuD",
+        "region": "france",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Focus sur les startups CAC40 et la tech fran\u00e7aise. Un profil discret mais tr\u00e8s bien connect\u00e9 dans l'\u00e9cosyst\u00e8me."
+      }
+    ],
+    "summary": "On \u00e9vite les vendeurs de r\u00eave et on vise les ex-holders ou journalistes de terrain. Les Qu\u00e9b\u00e9cois sont moins satur\u00e9s que les Fran\u00e7ais, donc plus de p\u00e9pites cach\u00e9es."
+  },
+  {
+    "ts": "2026-06-27T17:37:41.670724",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilD",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'incontournable de la macro et des march\u00e9s. Analytique, pas un vendeur de r\u00eaves. Le mec qui explique pourquoi ton portfolio saigne avant que tu ne le saches."
+      },
+      {
+        "handle": "PierreRoussel",
+        "region": "usa",
+        "niche": "finance",
+        "followers": 15000,
+        "reason": "Bas\u00e9 \u00e0 NY, journalistique FR. Couvre Wall Street avec le regard de l'\u00e9tranger. Moins de 'gurus', plus de faits bruts sur la finance US."
+      }
+    ],
+    "summary": "Focus sur la cr\u00e9dibilit\u00e9 technique (Mistral, Vanta) et le journalisme financier s\u00e9rieux (Cyril D, Pierre R). Le Qu\u00e9bec est moins peupl\u00e9 en gros comptes IA, donc on vise les ing\u00e9nieurs actifs plut\u00f4t que les influenceurs."
   }
 ]
