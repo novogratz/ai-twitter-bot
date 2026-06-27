@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-27T05:56:16.188042",
-  "window_7d_actions": 5562,
-  "window_24h_actions": 718,
+  "generated_at": "2026-06-27T09:56:16.285450",
+  "window_7d_actions": 5336,
+  "window_24h_actions": 591,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5482
+      "count": 5255
     },
     {
       "pattern": "METAPHOR",
@@ -40,16 +40,8 @@
   ],
   "best_hours_utc": [
     {
-      "hour": 6,
-      "actions": 288
-    },
-    {
       "hour": 19,
       "actions": 279
-    },
-    {
-      "hour": 7,
-      "actions": 264
     },
     {
       "hour": 18,
@@ -58,77 +50,85 @@
     {
       "hour": 11,
       "actions": 260
+    },
+    {
+      "hour": 23,
+      "actions": 249
+    },
+    {
+      "hour": 0,
+      "actions": 242
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2582
+      "count": 2447
     },
     {
       "topic": "Autre",
-      "count": 2298
+      "count": 2217
     },
     {
       "topic": "Crypto",
-      "count": 545
+      "count": 536
     },
     {
       "topic": "Bourse",
-      "count": 353
+      "count": 347
     },
     {
       "topic": "Spatial",
-      "count": 144
+      "count": 139
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2916
+      "count": 2750
     },
     {
       "pillar": "other",
-      "count": 1368
+      "count": 1325
     },
     {
       "pillar": "market_trauma",
-      "count": 985
+      "count": 973
     },
     {
       "pillar": "meme_reaction",
-      "count": 187
+      "count": 186
     },
     {
       "pillar": "reply_bait",
-      "count": 56
+      "count": 54
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 50
+      "count": 48
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 305
+      "count": 261
     },
     {
       "pillar": "other",
-      "count": 208
+      "count": 167
     },
     {
       "pillar": "market_trauma",
-      "count": 165
+      "count": 129
     },
     {
       "pillar": "meme_reaction",
-      "count": 34
+      "count": 29
     },
     {
       "pillar": "reply_bait",
-      "count": 5
+      "count": 4
     },
     {
       "pillar": "ai_vs_btc",
@@ -175,44 +175,44 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4650
+      "count": 4460
     },
     {
       "type": "retweet",
-      "count": 352
+      "count": 316
     },
     {
       "type": "quote",
-      "count": 266
+      "count": 261
     },
     {
       "type": "quote_gif",
-      "count": 169
+      "count": 168
     },
     {
       "type": "post",
-      "count": 65
+      "count": 66
     },
     {
       "type": "hotake",
-      "count": 60
+      "count": 65
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-27T02:43:27.546715",
-      "text": "Frontier model every 6 weeks. At this rate, the only bottleneck is naming conventions.",
-      "type": "reply"
+      "ts": "2026-06-27T09:15:05.053994",
+      "text": "Me on my way to add to positions while CNBC runs the 'Extreme Fear' chyron for the 4th time this quarter :)\n\nhttps://finance.yahoo.com/markets/stocks/articles/stock-market-metric-just-hit-125000633.html",
+      "type": "hotake"
     },
     {
-      "ts": "2026-06-27T02:41:04.275419",
-      "text": "At the request of the U.S. government. Translation now printed on every press release.",
-      "type": "reply"
+      "ts": "2026-06-27T08:48:06.387934",
+      "text": "The memory shortage is \"shaking\" Apple and Microsoft. It's \"existential\" for smaller AI players.\n\nThis is what a moat looks like when you're standing outside it.\n\nhttps://www.cnbc.com/2026/06/27/memory-crunch-shaking-apple-and-microsoft-existential-for-small-guys.html",
+      "type": "hotake"
     },
     {
-      "ts": "2026-06-27T02:26:17.038053",
-      "text": "Let's sit with that number: $1.9B is 3% of $60B+ AUM. spot bitcoin ETF went zero to $60B+ in six months. not bleeding. stampede.",
-      "type": "reply"
+      "ts": "2026-06-27T08:33:44.703375",
+      "text": "Me on my way to research GE Vernova because apparently the hottest AI bet this week is a 130-year-old gas turbine company :)\n\nhttps://www.cnbc.com/2026/06/27/ge-vernova-gas-turbines-ai-data-centers.html",
+      "type": "hotake"
     }
   ]
 }
