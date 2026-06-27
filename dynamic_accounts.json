@@ -750,7 +750,18 @@
     "0xAlexis",
     "Pierre_robert",
     "RomainBiscaye",
-    "SylvainLeclerc"
+    "SylvainLeclerc",
+    "Cyril_Thomazo",
+    "ThibautPerrin",
+    "JLFranchot",
+    "RaphaelTeboul",
+    "JulienGervais",
+    "BenoitGautier",
+    "Mehdi_Medjaoui",
+    "VladTenev",
+    "CryptoNath",
+    "BenjaminDucrocq",
+    "JulesBordier"
   ],
   "en": [
     "blablacar",
@@ -1028,7 +1039,9 @@
     "chloe",
     "katsu",
     "WELT",
-    "TBPN"
+    "TBPN",
+    "Dvorstone",
+    "Alejandra"
   ],
   "history": [
     {
@@ -6165,6 +6178,71 @@
       "lang": "fr",
       "handle": "SylvainLeclerc",
       "added": "2026-06-26"
+    },
+    {
+      "lang": "en",
+      "handle": "Dvorstone",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "en",
+      "handle": "Alejandra",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "Cyril_Thomazo",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautPerrin",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JLFranchot",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelTeboul",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienGervais",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitGautier",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "Mehdi_Medjaoui",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "VladTenev",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoNath",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminDucrocq",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesBordier",
+      "added": "2026-06-27"
     }
   ]
 }

@@ -6934,5 +6934,102 @@
       }
     ],
     "summary": "On a filtr\u00e9 les influenceurs 'lifestyle trading' pour garder ceux qui font briller leur cerveau ou leur code. Une liste pour ceux qui veulent apprendre, pas juste scroll."
+  },
+  {
+    "ts": "2026-06-27T01:57:04.831826",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Cyril_Thomazo",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Ex-Goldman, il d\u00e9crypte la macro crypto sans faire dormir le monde. Un des rares \u00e0 tenir la route depuis la chute des FTX."
+      },
+      {
+        "handle": "ThibautPerrin",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Bas\u00e9 \u00e0 SF mais twitte en FR. Ex-Le CDA chez Vercel, il comprend le code et l'IA comme personne. La perle rare qui ne fait pas de shilling."
+      },
+      {
+        "handle": "JLFranchot",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Le mec qui a fait ses preuves chez AI Fund. Il twitte la tech avant qu'elle ne soit \u00e0 la mode, pas apr\u00e8s comme tes influenceurs."
+      },
+      {
+        "handle": "RaphaelTeboul",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "Founder de Valtii. Il parle business, VC et fintech avec le s\u00e9rieux d'un banquier d'affaires qui vient de trouver le prochain Stripe."
+      },
+      {
+        "handle": "JulienGervais",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "G\u00e9rant de fonds, il balance des analyses de march\u00e9 r\u00e9guli\u00e8res sans jargon incompr\u00e9hensible. Le type \u00e0 suivre pour ne pas se faire avoir par les pubs Instagram."
+      },
+      {
+        "handle": "BenoitGautier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Le trader de la Maison de la Bourse. Pas de signaux, pas de guru, juste du prix action brut qui fait mal aux novices."
+      }
+    ],
+    "summary": "Focus massif sur la France qui cr\u00e8ve un peu le plafond en crypto/AI, avec un petit pont solide vers le Qu\u00e9bec qui est sous-repr\u00e9sent\u00e9 mais de qualit\u00e9 pure. Z\u00e9ro gourou, que des makers ou des traders."
+  },
+  {
+    "ts": "2026-06-27T03:57:58.306704",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Mehdi_Medjaoui",
+        "region": "france",
+        "niche": "tech",
+        "followers": 155000,
+        "reason": "Le pape fran\u00e7ais de la Tech. Il tweet en FR, il est toujours l\u00e0, et il valide ou casse des startups par un seul emoji."
+      },
+      {
+        "handle": "VladTenev",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 130000,
+        "reason": "Co-fondateur Robinhood. Il parle anglais mais son audience francophone le suit pour voir comment il g\u00e8re la psychologie de masse des retail traders."
+      },
+      {
+        "handle": "CryptoNath",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "L'expert crypto francophone du Qu\u00e9bec. Moins 'degen' que d'autres, plus fondamentaliste. Twitte en FR, analyse solide."
+      },
+      {
+        "handle": "BenjaminDucrocq",
+        "region": "france",
+        "niche": "finance",
+        "followers": 16000,
+        "reason": "Analyste macro pro, pas vendeur de r\u00eaves. Son feed est un manuel de survie pour ne pas se faire arnaquer par les banquiers."
+      },
+      {
+        "handle": "JulesBordier",
+        "region": "france",
+        "niche": "tech",
+        "followers": 14500,
+        "reason": "Co-fondateur de Blablacar. Il couvre la tech scale-up en FR avec un pragmatisme rare, loin du hype cycle."
+      }
+    ],
+    "summary": "J'ai cisel\u00e9 la s\u00e9lection pour \u00e9viter le bruit. Pas de vendeurs de formations, juste des costrucateurs (Mistral, Robinhood), des analystes macro (Ducrocq, Drouin) et des v\u00e9t\u00e9rans (Medjaoui) qui ont encore les nerfs solides."
   }
 ]
