@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-26T21:56:16.250456",
-  "window_7d_actions": 5915,
-  "window_24h_actions": 835,
+  "generated_at": "2026-06-27T01:56:16.311136",
+  "window_7d_actions": 5774,
+  "window_24h_actions": 831,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5837
+      "count": 5696
     },
     {
       "pattern": "METAPHOR",
@@ -44,30 +44,30 @@
       "actions": 288
     },
     {
-      "hour": 23,
-      "actions": 285
-    },
-    {
-      "hour": 1,
-      "actions": 281
-    },
-    {
       "hour": 19,
       "actions": 279
     },
     {
       "hour": 3,
       "actions": 275
+    },
+    {
+      "hour": 2,
+      "actions": 270
+    },
+    {
+      "hour": 4,
+      "actions": 266
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2844
+      "count": 2722
     },
     {
       "topic": "Autre",
-      "count": 2386
+      "count": 2362
     },
     {
       "topic": "Crypto",
@@ -75,7 +75,7 @@
     },
     {
       "topic": "Bourse",
-      "count": 365
+      "count": 366
     },
     {
       "topic": "Spatial",
@@ -85,44 +85,44 @@
   "rising_topics_24h": [
     {
       "topic": "Crypto",
-      "24h_rate": 0.146,
-      "7d_rate": 0.093
+      "24h_rate": 0.13,
+      "7d_rate": 0.095
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 3228
+      "count": 3086
     },
     {
       "pillar": "other",
-      "count": 1415
+      "count": 1398
     },
     {
       "pillar": "market_trauma",
-      "count": 980
+      "count": 996
     },
     {
       "pillar": "meme_reaction",
-      "count": 183
+      "count": 187
     },
     {
       "pillar": "reply_bait",
-      "count": 58
+      "count": 57
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 51
+      "count": 50
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 349
+      "count": 343
     },
     {
       "pillar": "other",
-      "count": 240
+      "count": 245
     },
     {
       "pillar": "market_trauma",
@@ -134,11 +134,11 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 7
+      "count": 6
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
@@ -150,24 +150,24 @@
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 52,
-      "avg_likes": 0.08,
-      "avg_views": 24.8,
-      "low_sample": false
-    },
-    {
       "pillar": "other",
-      "posts": 89,
-      "avg_likes": 0.08,
-      "avg_views": 32.3,
+      "posts": 88,
+      "avg_likes": 0.07,
+      "avg_views": 32.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 55,
+      "posts": 54,
       "avg_likes": 0.07,
-      "avg_views": 27.6,
+      "avg_views": 31.4,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 54,
+      "avg_likes": 0.06,
+      "avg_views": 25.6,
       "low_sample": false
     },
     {
@@ -181,19 +181,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4926
+      "count": 4821
     },
     {
       "type": "retweet",
-      "count": 430
+      "count": 387
     },
     {
       "type": "quote",
-      "count": 270
+      "count": 272
     },
     {
       "type": "quote_gif",
-      "count": 165
+      "count": 169
     },
     {
       "type": "post",
@@ -201,23 +201,23 @@
     },
     {
       "type": "hotake",
-      "count": 59
+      "count": 60
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-26T21:56:06.451713",
-      "text": "Meta controls the model (Llama), the users (WhatsApp), and the infrastructure. Nvidia rents the GPUs. Full-stack operators capture inference margins. Meta owns this.",
+      "ts": "2026-06-27T01:56:03.001668",
+      "text": "$27.3M for 126k jobs: $216 per task. agents are doing work humans won't do at this price.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-26T21:55:16.225925",
-      "text": "Meta didn't neutralize its coding bottleneck. it outsourced it to anthropic. that's not a solution, it's a dependency.",
+      "ts": "2026-06-27T01:54:56.970724",
+      "text": "First plaid to a customer, not media. the product speaks for itself.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-26T21:53:55.751034",
-      "text": "Forward P/E of 22 assumes 87% growth keeps going. But that's one capex deployment wave hitting right now. Once saturated, capex flattens. The multiple follows.",
+      "ts": "2026-06-27T01:54:24.139984",
+      "text": "Entertainment's the right call. The thing nobody's pricing in: infrastructure margin. The studio's revenue is gross profit for whoever runs the model. That asymmetry.",
       "type": "reply"
     }
   ]
