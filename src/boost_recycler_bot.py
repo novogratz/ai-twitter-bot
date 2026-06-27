@@ -37,6 +37,13 @@ STATE_FILE = os.path.join(_PROJECT_ROOT, "boost_recycler_state.json")
 # someone else within an hour." The bot self-likes every own post at publish
 # time, so scraped likes >= 2 means >= 1 like from a real person.
 BOOST_RECYCLE_MIN_LIKES = int(os.environ.get("BOOST_RECYCLE_MIN_LIKES", "2"))
+# Operator 2026-06-27: "reshare more the posts where people commented on it."
+# A reply is a conversation — far stronger distribution signal than a like —
+# so a post with >= MIN_REPLIES comments qualifies as a winner even if its
+# like count is low, and replies are weighted heavily in the ranking so
+# commented posts get resurfaced first.
+BOOST_RECYCLE_MIN_REPLIES = int(os.environ.get("BOOST_RECYCLE_MIN_REPLIES", "1"))
+BOOST_RECYCLE_REPLY_WEIGHT = int(os.environ.get("BOOST_RECYCLE_REPLY_WEIGHT", "5"))
 BOOST_RECYCLE_GAP_HOURS = float(os.environ.get("BOOST_RECYCLE_GAP_HOURS", "4"))
 BOOST_RECYCLE_MAX_CYCLES = int(os.environ.get("BOOST_RECYCLE_MAX_CYCLES", "4"))
 BOOST_RECYCLE_MIN_AGE_MINUTES = int(os.environ.get("BOOST_RECYCLE_MIN_AGE_MINUTES", "60"))
@@ -70,14 +77,22 @@ def _age_minutes(url: str) -> int:
 def pick_action(winners: list, state: dict, currently_retweeted: set, now=None):
     """Pure decision: (action, url) or (None, None).
 
-    winners: [{url, likes}] own posts already filtered to >= likes floor.
+    winners: [{url, likes, replies}] own posts already filtered to the
+    likes-OR-replies floor.
     action: "boost" (first self-RT) or "recycle" (un-RT + re-RT).
     Preference: first-boost a new winner before re-cycling an old one —
     fresh winners are in their algo window; recycling is the long tail.
+    Ranking weights replies (comments) heavily so posts people actually
+    talked about get resurfaced first (operator 2026-06-27).
     """
     now = now or datetime.now()
+
+    def _score(w):
+        return (int(w.get("replies") or 0) * BOOST_RECYCLE_REPLY_WEIGHT
+                + int(w.get("likes") or 0))
+
     best_recycle = None
-    for w in sorted(winners, key=lambda x: int(x.get("likes") or 0), reverse=True):
+    for w in sorted(winners, key=_score, reverse=True):
         url = w["url"]
         age_min = _age_minutes(url)
         if age_min < BOOST_RECYCLE_MIN_AGE_MINUTES:
@@ -125,11 +140,16 @@ def run_boost_recycler_cycle() -> None:
             continue
         url = t.get("url") or ""
         likes = int(t.get("likes") or 0)
-        if url and likes >= BOOST_RECYCLE_MIN_LIKES:
-            winners.append({"url": url, "likes": likes})
+        replies = int(t.get("replies") or 0)
+        # A post qualifies if it earned likes OR comments — a commented post
+        # is a live conversation worth resurfacing even at low likes.
+        if url and (likes >= BOOST_RECYCLE_MIN_LIKES
+                    or replies >= BOOST_RECYCLE_MIN_REPLIES):
+            winners.append({"url": url, "likes": likes, "replies": replies})
     if not winners:
-        log.info(f"[RECYCLER] No winners (>= {BOOST_RECYCLE_MIN_LIKES} likes) "
-                 f"in the window — nothing to recycle.")
+        log.info(f"[RECYCLER] No winners (>= {BOOST_RECYCLE_MIN_LIKES} likes "
+                 f"or >= {BOOST_RECYCLE_MIN_REPLIES} comments) in the window "
+                 f"— nothing to recycle.")
         return
 
     state = _load_state()

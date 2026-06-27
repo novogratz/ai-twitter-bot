@@ -765,7 +765,14 @@
     "PierreRoynard",
     "AdriLeLaud",
     "MaximeMaret",
-    "JulienLevesque"
+    "JulienLevesque",
+    "ThibaudLanfract",
+    "MaximeBisson",
+    "OlivierAbadie",
+    "AdrienLeclerc",
+    "MathieuCazaux",
+    "ThomasPerrin",
+    "JulesClement"
   ],
   "en": [
     "blablacar",
@@ -6266,6 +6273,41 @@
     {
       "lang": "fr",
       "handle": "JulienLevesque",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudLanfract",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBisson",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierAbadie",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienLeclerc",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuCazaux",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasPerrin",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesClement",
       "added": "2026-06-27"
     }
   ]

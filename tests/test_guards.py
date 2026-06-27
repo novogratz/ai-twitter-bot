@@ -1258,6 +1258,33 @@ def test_boost_recycler_decision_logic(monkeypatch):
     assert action is None
 
 
+def test_boost_recycler_prefers_commented_posts(monkeypatch):
+    """Operator 2026-06-27: reshare posts people COMMENTED on first. A post
+    with comments outranks a higher-like post with no comments (replies are
+    weighted), and a low-like post still qualifies if it has comments."""
+    from datetime import datetime
+    from src import boost_recycler_bot as br
+    now = datetime.now()
+    # Both recyclable (age in window, already RT'd, no row → gap satisfied).
+    # high_likes score = 40; commented score = 10*5 + 3 = 53 → commented wins.
+    high_likes_no_comments = {"url": _url_with_age(8 * 60), "likes": 40, "replies": 0}
+    low_likes_with_comments = {"url": _url_with_age(9 * 60), "likes": 3, "replies": 10}
+    retweeted = {high_likes_no_comments["url"], low_likes_with_comments["url"]}
+    action, url = br.pick_action(
+        [high_likes_no_comments, low_likes_with_comments],
+        state={}, currently_retweeted=retweeted, now=now,
+    )
+    assert action == "recycle" and url == low_likes_with_comments["url"]
+    # A post with ONLY comments (below the like floor) must still qualify as a
+    # winner via the replies floor — pick_action returns it, not None.
+    only_comments = {"url": _url_with_age(7 * 60), "likes": 0, "replies": 4}
+    action2, url2 = br.pick_action(
+        [only_comments], state={},
+        currently_retweeted={only_comments["url"]}, now=now,
+    )
+    assert action2 == "recycle" and url2 == only_comments["url"]
+
+
 # --- 2026-06-07: engine-health warmup grace (boot false-emergency) ----------
 
 def test_engine_health_warmup_suppresses_boot_alerts(monkeypatch):

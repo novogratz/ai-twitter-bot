@@ -7076,5 +7076,71 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les gourous de Telegram pour ne garder que les analystes qui postent des insights bruts. La France domine en volume, le Qu\u00e9bec a ses perles rares, et les US francophones sont souvent sous-estim\u00e9s mais plus techniques."
+  },
+  {
+    "ts": "2026-06-27T09:57:39.442534",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibaudLanfract",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "CTO de Mistral AI, c'est le patron qui code encore. Pas de jargon VC pourri, que du technique clair en FR."
+      },
+      {
+        "handle": "MaximeBisson",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "CEO de Mistral. Il tweete la vision IA sans vendre du r\u00eave boursier, juste de la tech pure."
+      },
+      {
+        "handle": "MaximeTartagliona",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "CTO de Coinhouse. Il tweete la r\u00e9alit\u00e9 du march\u00e9 crypto, pas les shills. Gars s\u00e9rieux avec du volume."
+      },
+      {
+        "handle": "OlivierAbadie",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Investisseur VC tr\u00e8s actif en crypto FR. Il trouve les p\u00e9pites avant qu'elles ne soient sur CoinMarketCap."
+      },
+      {
+        "handle": "AdrienLeclerc",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Founding Eng chez Mistral. C'est celui qui explique comment le mod\u00e8le tourne vraiment. Moins flashy que les CEO, plus utile."
+      },
+      {
+        "handle": "MathieuCazaux",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "VC US mais twitte FR. Il couvre l'IA generative et les deeptech. Sa vision transatlantique est du pain b\u00e9ni pour les investisseurs."
+      },
+      {
+        "handle": "ThomasPerrin",
+        "region": "france",
+        "niche": "finance",
+        "followers": 15000,
+        "reason": "Analyste Macro. Il d\u00e9cortique la BCE et la Fed comme un chef. Pas de politics, juste des chiffres et du sens."
+      },
+      {
+        "handle": "JulesClement",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Pionnier tech qu\u00e9b\u00e9cois. Il tweete l'\u00e9cosyst\u00e8me startup qu\u00e9b\u00e9cois avec une vision strat\u00e9gique rare."
+      }
+    ],
+    "summary": "J'ai cibl\u00e9 les cerveaux de Mistral AI (FR) pour l'IA pure, des VC crypto actifs pour la finance d\u00e9centralis\u00e9e, et une perle VC transatlantique (USA/FR). Pas de vendeurs de r\u00eave, que du contenu tech/finance solide."
   }
 ]
