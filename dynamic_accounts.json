@@ -734,7 +734,15 @@
     "LorenzoBoni",
     "RaphaelLec",
     "PierreCayez",
-    "JohannHerr"
+    "JohannHerr",
+    "ThibautFoucault",
+    "AlexisRoch",
+    "VincentRouge",
+    "ReneeHofman",
+    "AlexRouvin",
+    "JulesW",
+    "VincentLeduc",
+    "MarcL"
   ],
   "en": [
     "blablacar",
@@ -1009,7 +1017,9 @@
     "HackQuest",
     "sunnydecree",
     "Elisa",
-    "chloe"
+    "chloe",
+    "katsu",
+    "WELT"
   ],
   "history": [
     {
@@ -6050,6 +6060,56 @@
     {
       "lang": "fr",
       "handle": "JohannHerr",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "en",
+      "handle": "katsu",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautFoucault",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisRoch",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentRouge",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ReneeHofman",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "en",
+      "handle": "WELT",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexRouvin",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesW",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentLeduc",
+      "added": "2026-06-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcL",
       "added": "2026-06-26"
     }
   ]

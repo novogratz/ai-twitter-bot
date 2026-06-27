@@ -6775,5 +6775,88 @@
       }
     ],
     "summary": "Focus sur les acteurs qui construisent (Mistral, Vey, Boni) plut\u00f4t que les parleurs. Le Qu\u00e9bec est sous-estim\u00e9 en crypto, les 2 comptes QC sont des p\u00e9pites de densit\u00e9."
+  },
+  {
+    "ts": "2026-06-26T17:56:52.624672",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibautFoucault",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 150000,
+        "reason": "Ex-Doctolib, VC. Il balance plus de realit\u00e9s sur la tech FR que tous les influenceurs crypto r\u00e9unis. Anti-hype, pro-fond."
+      },
+      {
+        "handle": "MisterMoneymoustache",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 80000,
+        "reason": "Le patron de la bourse qu\u00e9b\u00e9coise. Moins actif sur l'IA, mais sa niche bourse/finance est la r\u00e9f\u00e9rence du bloc."
+      },
+      {
+        "handle": "AlexisRoch",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "S\u00e9rieux, technique, pas de shilling de shitcoins bidons. Il explique la tech crypto au Qu\u00e9bec comme \u00e0 Paris."
+      },
+      {
+        "handle": "VincentRouge",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Cr\u00e9ateur de content IA pur. Il transforme la paperasse technique en tweets digestes. Moins de 'buzz', plus de 'wtf c'est utile'."
+      },
+      {
+        "handle": "ReneeHofman",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Analyste march\u00e9 qui a l'honneur d'exister sur FR. Elle dit ce que les pros pensent mais n'osent pas tweeter."
+      }
+    ],
+    "summary": "J'ai \u00e9vit\u00e9 les influenceurs formation \u00e0 99\u20ac pour ne garder que des pros du secteur. La France est bien couverte par le duo Foucault/Roch (VC/Tech) et la Quebec est repr\u00e9sent\u00e9e par ses leaders historiques. Aucune p\u00e9pite ne vendra de cours cet apr\u00e8s-midi."
+  },
+  {
+    "ts": "2026-06-26T19:56:56.751815",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AlexRouvin",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 22000,
+        "reason": "Fintech expert et analyste. Il parle des g\u00e9ants tech et des mouvements de march\u00e9s avec une approche 'value'. Pas de bruit, du fond."
+      },
+      {
+        "handle": "JulesW",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Chercheur et d\u00e9veloppeur AI fran\u00e7ais. Il partage ses tests de mod\u00e8les et l'actualit\u00e9 Open Source. Le type parfait pour suivre l'IA sans le hype VC."
+      },
+      {
+        "handle": "VincentLeduc",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Analyste qu\u00e9b\u00e9cois qui d\u00e9cortique les march\u00e9s avec une rigueur rare. Pas de signaux payants, juste de l'analyse de portefeuille et de la macro. Un joyau silencieux."
+      },
+      {
+        "handle": "MarcL",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Influenceur crypto qu\u00e9b\u00e9cois 'de premi\u00e8re vague'. Pas un vendeur de r\u00eaves, mais un vrai user qui commente les narratives on-chain et DeFi en fran\u00e7ais."
+      }
+    ],
+    "summary": "Mix \u00e9quilibr\u00e9 entre la force brute de l'IA fran\u00e7aise (Mistral), la sagesse sceptique de Taleb, et des analystes de niche au Qu\u00e9bec qui \u00e9vitent le bruit."
   }
 ]
