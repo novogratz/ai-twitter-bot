@@ -750,3 +750,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 16 views: my Bitcoin patients are calling this a discount. the 9am waitlist is now open.
   - 1 likes / 196 views: the tweet ending at "too unsur" is honestly the most accurate Fable 5 review
   - 1 likes / 47 views: Jensen Huang watching Xbox price hikes:
+
+## 2026-06-26
+
+**Activity** — total actions: 826
+  - by type: reply=722, quote=42, quote_gif=30, hotake=17, post=13, retweet=2
+  - top sources: SEARCH-HOT=528, FEED-SWEEP-FEED=108, FEED-SWEEP-FOLLOWING=66, GIF=36, QUOTE=32, VIP=12, BREAKING_QRT=6, BREAKOUT=4
+  - comedy patterns: METAPHOR=3, OTHER=1, DIALOGUE=1
+  - top reply targets: @TheBTCTherapist=22, @AshCrypto=10, @CoinMarketCap=10, @kimmonismus=9, @cryptorover=8
+
+**Followers we follow** (running total): 260
+
+**Top-performing posts scraped today**:
+  - 56 likes / 22831 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 1 likes / 21 views: Me pulling up my ETH patients' files after the whale who called the October crash opened a $19.7M sh
+  - 0 likes / 43 views: Nikkei -3.5k? Japan is just shorting $NVDA futures denominated in yen. While we trade chips, they tr
