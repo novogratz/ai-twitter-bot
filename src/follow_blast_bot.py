@@ -31,14 +31,17 @@ FOLLOW_BLAST_STATE_FILE = os.path.join(_PROJECT_ROOT, "follow_blast_state.json")
 
 # EN big-topic search queries (operator 2026-06-12: "search for new topics
 # then follow the big accounts"). High min_faves = the authors are big.
+# 2026-06-27 operator: "target accounts in AI industry" + "don't target
+# small accounts" — every query is AI-industry now (no pure crypto/macro/
+# finance lanes); the FOLLOW_MIN_FOLLOWERS gate filters out small ones.
 BLAST_QUERIES = [
-    "OpenAI OR Anthropic OR xAI OR Gemini lang:en min_faves:500",
-    "\"AI agents\" OR AGI OR \"reasoning model\" lang:en min_faves:500",
-    "Nvidia OR \"AI capex\" OR \"AI datacenter\" OR TSMC lang:en min_faves:500",
+    "OpenAI OR Anthropic OR xAI OR Gemini OR Mistral lang:en min_faves:500",
+    "\"AI agents\" OR AGI OR \"reasoning model\" OR LLM lang:en min_faves:500",
+    "Nvidia OR \"AI capex\" OR \"AI datacenter\" OR TSMC OR CoreWeave lang:en min_faves:500",
     "\"AI stocks\" OR Palantir OR \"AI trade\" OR \"AI bubble\" lang:en min_faves:500",
-    "Bitcoin OR BTC OR Ethereum OR crypto lang:en min_faves:1000",
-    "stocks OR \"S&P 500\" OR Fed OR macro OR earnings lang:en min_faves:800",
-    "investing OR portfolio OR \"hedge fund\" OR trader lang:en min_faves:800",
+    "ChatGPT OR Claude OR \"AI tools\" OR \"AI startup\" lang:en min_faves:500",
+    "\"machine learning\" OR \"AI research\" OR \"AI model\" OR \"open source AI\" lang:en min_faves:300",
+    "\"AI safety\" OR \"AI alignment\" OR robotics OR \"humanoid robot\" lang:en min_faves:300",
 ]
 
 
