@@ -772,7 +772,9 @@
     "AdrienLeclerc",
     "MathieuCazaux",
     "ThomasPerrin",
-    "JulesClement"
+    "JulesClement",
+    "AlexisBessard",
+    "RomainBazire"
   ],
   "en": [
     "blablacar",
@@ -1052,7 +1054,9 @@
     "WELT",
     "TBPN",
     "Dvorstone",
-    "Alejandra"
+    "Alejandra",
+    "scar",
+    "Emergent"
   ],
   "history": [
     {
@@ -6308,6 +6312,26 @@
     {
       "lang": "fr",
       "handle": "JulesClement",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "en",
+      "handle": "scar",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "en",
+      "handle": "Emergent",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBessard",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBazire",
       "added": "2026-06-27"
     }
   ]

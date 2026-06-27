@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-27T09:56:16.285450",
-  "window_7d_actions": 5336,
-  "window_24h_actions": 591,
+  "generated_at": "2026-06-27T15:27:02.716504",
+  "window_7d_actions": 5132,
+  "window_24h_actions": 575,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5255
+      "count": 5050
     },
     {
       "pattern": "METAPHOR",
-      "count": 26
+      "count": 27
     },
     {
       "pattern": "FR_ANCHOR",
@@ -48,57 +48,57 @@
       "actions": 262
     },
     {
-      "hour": 11,
-      "actions": 260
-    },
-    {
       "hour": 23,
       "actions": 249
     },
     {
       "hour": 0,
       "actions": 242
+    },
+    {
+      "hour": 1,
+      "actions": 242
     }
   ],
   "best_topics_7d": [
     {
       "topic": "IA",
-      "count": 2447
+      "count": 2288
     },
     {
       "topic": "Autre",
-      "count": 2217
+      "count": 2172
     },
     {
       "topic": "Crypto",
-      "count": 536
+      "count": 547
     },
     {
       "topic": "Bourse",
-      "count": 347
+      "count": 339
     },
     {
       "topic": "Spatial",
-      "count": 139
+      "count": 131
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2750
+      "count": 2567
     },
     {
       "pillar": "other",
-      "count": 1325
+      "count": 1305
     },
     {
       "pillar": "market_trauma",
-      "count": 973
+      "count": 972
     },
     {
       "pillar": "meme_reaction",
-      "count": 186
+      "count": 189
     },
     {
       "pillar": "reply_bait",
@@ -106,25 +106,25 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 48
+      "count": 45
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 261
+      "count": 254
     },
     {
       "pillar": "other",
-      "count": 167
+      "count": 171
     },
     {
       "pillar": "market_trauma",
-      "count": 129
+      "count": 120
     },
     {
       "pillar": "meme_reaction",
-      "count": 29
+      "count": 24
     },
     {
       "pillar": "reply_bait",
@@ -132,7 +132,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 1
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
@@ -145,23 +145,23 @@
     },
     {
       "pillar": "other",
-      "posts": 86,
+      "posts": 87,
       "avg_likes": 0.07,
       "avg_views": 32.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 55,
+      "posts": 57,
       "avg_likes": 0.07,
-      "avg_views": 31.3,
+      "avg_views": 30.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 54,
+      "posts": 51,
       "avg_likes": 0.06,
-      "avg_views": 25.9,
+      "avg_views": 26.4,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4460
-    },
-    {
-      "type": "retweet",
-      "count": 316
+      "count": 4292
     },
     {
       "type": "quote",
-      "count": 261
+      "count": 269
+    },
+    {
+      "type": "retweet",
+      "count": 262
     },
     {
       "type": "quote_gif",
-      "count": 168
+      "count": 170
     },
     {
       "type": "post",
-      "count": 66
+      "count": 74
     },
     {
       "type": "hotake",
@@ -200,19 +200,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-27T09:15:05.053994",
-      "text": "Me on my way to add to positions while CNBC runs the 'Extreme Fear' chyron for the 4th time this quarter :)\n\nhttps://finance.yahoo.com/markets/stocks/articles/stock-market-metric-just-hit-125000633.html",
-      "type": "hotake"
+      "ts": "2026-06-27T15:25:52.065113",
+      "text": "The $2.77T is riding on two bets: Copilot scales profitably and Azure stays competitive on margins. Both are possible. You're betting both happen at once. That's the trade.",
+      "type": "reply"
     },
     {
-      "ts": "2026-06-27T08:48:06.387934",
-      "text": "The memory shortage is \"shaking\" Apple and Microsoft. It's \"existential\" for smaller AI players.\n\nThis is what a moat looks like when you're standing outside it.\n\nhttps://www.cnbc.com/2026/06/27/memory-crunch-shaking-apple-and-microsoft-existential-for-small-guys.html",
-      "type": "hotake"
+      "ts": "2026-06-27T15:24:50.062824",
+      "text": "Whale longs that work become the tweets. whale longs that stop out disappear. $200m is data, not destiny. join the club, breathe, this was true yesterday too",
+      "type": "reply"
     },
     {
-      "ts": "2026-06-27T08:33:44.703375",
-      "text": "Me on my way to research GE Vernova because apparently the hottest AI bet this week is a 130-year-old gas turbine company :)\n\nhttps://www.cnbc.com/2026/06/27/ge-vernova-gas-turbines-ai-data-centers.html",
-      "type": "hotake"
+      "ts": "2026-06-27T15:24:33.869567",
+      "text": "Llama 3.1. meta's backing it, the ecosystem owns it, 80% performance at 5% cost. open source best = momentum and affordability, not raw smartness.",
+      "type": "reply"
     }
   ]
 }

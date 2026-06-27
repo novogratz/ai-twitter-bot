@@ -7142,5 +7142,29 @@
       }
     ],
     "summary": "J'ai cibl\u00e9 les cerveaux de Mistral AI (FR) pour l'IA pure, des VC crypto actifs pour la finance d\u00e9centralis\u00e9e, et une perle VC transatlantique (USA/FR). Pas de vendeurs de r\u00eave, que du contenu tech/finance solide."
+  },
+  {
+    "ts": "2026-06-27T13:35:50.764047",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AlexisBessard",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "La r\u00e9f\u00e9rence DeFi FR. Pas de hype, que du fond. Il tweet en FR/EN mixte mais l'audience cible est claire."
+      },
+      {
+        "handle": "RomainBazire",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Fondateur de Blockworks. Il couvre la crypto avec un ton d\u00e9contract\u00e9 qui casse le c\u00f4t\u00e9 guind\u00e9 du jargon technique."
+      }
+    ],
+    "summary": "Un mix solide entre les v\u00e9t\u00e9rons (Taleb) et la nouvelle garde tech/IA (Hugging Face/DeFi). On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur ceux qui construisent ou analysent."
   }
 ]
