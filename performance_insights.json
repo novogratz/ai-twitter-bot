@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-28T03:27:02.327651",
-  "window_7d_actions": 4828,
-  "window_24h_actions": 548,
+  "generated_at": "2026-06-28T07:27:02.341433",
+  "window_7d_actions": 4712,
+  "window_24h_actions": 671,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4746
+      "count": 4628
     },
     {
       "pattern": "METAPHOR",
@@ -17,11 +17,11 @@
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 14
+      "count": 15
     },
     {
-      "pattern": "DIALOGUE",
-      "count": 7
+      "pattern": "RENAME",
+      "count": 8
     }
   ],
   "worst_patterns": [
@@ -63,72 +63,72 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2151
+      "count": 2119
     },
     {
       "topic": "IA",
-      "count": 1991
+      "count": 1897
     },
     {
       "topic": "Crypto",
-      "count": 569
+      "count": 575
     },
     {
       "topic": "Bourse",
-      "count": 327
+      "count": 321
     },
     {
       "topic": "Spatial",
-      "count": 117
+      "count": 116
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2228
+      "count": 2136
     },
     {
       "pillar": "other",
-      "count": 1290
+      "count": 1259
     },
     {
       "pillar": "market_trauma",
-      "count": 1016
+      "count": 1025
     },
     {
       "pillar": "meme_reaction",
-      "count": 198
+      "count": 199
     },
     {
       "pillar": "reply_bait",
-      "count": 52
+      "count": 50
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 44
+      "count": 43
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 231
+      "count": 287
     },
     {
       "pillar": "other",
-      "count": 167
+      "count": 198
     },
     {
       "pillar": "market_trauma",
-      "count": 123
+      "count": 153
     },
     {
       "pillar": "meme_reaction",
-      "count": 18
+      "count": 22
     },
     {
       "pillar": "reply_bait",
-      "count": 5
+      "count": 7
     },
     {
       "pillar": "ai_vs_btc",
@@ -147,19 +147,19 @@
       "pillar": "market_trauma",
       "posts": 57,
       "avg_likes": 0.09,
-      "avg_views": 30.6,
+      "avg_views": 29.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 51,
+      "posts": 50,
       "avg_likes": 0.08,
-      "avg_views": 28.2,
+      "avg_views": 28.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 87,
+      "posts": 88,
       "avg_likes": 0.07,
       "avg_views": 30.5,
       "low_sample": false
@@ -175,19 +175,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4076
+      "count": 4001
     },
     {
       "type": "quote",
-      "count": 290
+      "count": 289
     },
     {
       "type": "quote_gif",
-      "count": 179
+      "count": 180
     },
     {
       "type": "retweet",
-      "count": 143
+      "count": 102
     },
     {
       "type": "post",
@@ -200,19 +200,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-28T03:26:58.411006",
-      "text": "The threat to them isn't China. It's open-weights commoditizing inference. Geopolitical framing just makes it easier to lobby for.",
+      "ts": "2026-06-28T07:26:56.341610",
+      "text": "1.5T V9 + Cursor training = learning from how elite builders ship, not code samples. SpaceX and Tesla first. that's the move.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-28T03:25:26.119187",
-      "text": "CUDA. NVIDIA's dominant because a million models already train there, not because H100 is fastest. TPU's faster on paper. rewriting's expensive in practice.",
+      "ts": "2026-06-28T07:26:39.019222",
+      "text": "Google chose not to sell meta more compute. meta went elsewhere and spent $30B. that's not scarcity, that's leverage.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-28T03:24:42.717655",
-      "text": "The Commerce Department just proved export controls on AI work. One letter, two weeks, models offline. That's genuinely impressive institutional speed.",
-      "type": "reply"
+      "ts": "2026-06-28T07:22:13.259236",
+      "text": "me reading \"no need to keep laptop open ever\" and realizing I have an attachment disorder 🛋️",
+      "type": "quote"
     }
   ]
 }
