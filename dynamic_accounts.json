@@ -801,7 +801,8 @@
     "JL_Ambs",
     "MathieuTardy",
     "GaspardD",
-    "JF_Bouchard_SF"
+    "JF_Bouchard_SF",
+    "VladT"
   ],
   "en": [
     "blablacar",
@@ -1085,7 +1086,11 @@
     "scar",
     "Emergent",
     "RT",
-    "Sekhar"
+    "Sekhar",
+    "ib",
+    "Marvin",
+    "Samooves",
+    "Shiela"
   ],
   "history": [
     {
@@ -6506,6 +6511,31 @@
     {
       "lang": "fr",
       "handle": "JF_Bouchard_SF",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "en",
+      "handle": "ib",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Marvin",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Samooves",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Shiela",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "VladT",
       "added": "2026-06-28"
     }
   ]

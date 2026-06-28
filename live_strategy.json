@@ -1,9 +1,9 @@
 {
-  "ts": "2026-06-27T00:00:00.000000",
+  "ts": "2026-06-28T00:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 4,
     "MAX_HOTAKES_PER_DAY": 8,
-    "MAX_QUOTES_PER_DAY": 44,
+    "MAX_QUOTES_PER_DAY": 48,
     "MAX_RETWEETS_PER_DAY": 2,
     "MAX_BREAKOUTS_PER_DAY": 4,
     "MAX_SPICY_PER_DAY": 3,
@@ -12,15 +12,15 @@
     "FOLLOW_BLAST_PER_CYCLE": 0
   },
   "topic_focus": [
-    "ai_vs_btc is the single highest-ROI frame (14.0 avg likes / 5731 avg views vs 0.07 for ai_news_take — 190x gap). EVERY crypto/BTC/ETH/liquidation/macro-fear/consulting-firm-death parent gets this frame without exception. The account's voice: AI already won, BTC holders and old-economy workers are the anxious patients.",
-    "Casual first-person relatable is the ONLY confirmed breakout format: 'Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)' — 57 likes, 23K views. Formula: 'Me [verb-ing] [thing] because I [smart AI bet] instead of [old bet] :)' — lowercase, zero polish, pure vibe. Target 1-in-3 originals.",
-    "JUNE 27 LEAD STORY — OpenAI confidential IPO filing at $730B valuation. Hook: 'OpenAI filing at $730B means they're pricing in owning the cloud layer. Not the model. The infrastructure tax. Sam is building the next AWS and calling it a chatbot.' React to any AI valuation / IPO / funding parent.",
-    "JUNE 27 BREAKING — US banned Fable 5 and Mythos 5 from export the same week Z.ai released GLM-5.2 open weights. Hook: 'US bans our best models. China releases open weights the same week. the export control is now the training data.' React to any China AI / export control / open source parent.",
-    "SpaceX acquired Cursor (Anysphere) for $60B. Hook: 'SpaceX bought the AI coding tool that replaced junior developers. $60B says the rocket company thinks the real product is the engineer, not the rocket.' React to any AI coding / developer tools / SpaceX/Elon parent.",
-    "Anthropic secured Colossus 1 — 220,000 Nvidia GPUs, 300 MW. Hook: 'Anthropic just got access to more compute than most countries. my patients who thought compute was the bottleneck are no longer in session.' React to any Anthropic / AI compute / data center parent.",
-    "tokenmaxxing -> efficiency shift — business leaders demanding ROI on AI spend. Hook: 'The AI conference moved from how many tokens to what is the ROI. The pivot from hype to accounting is the most bullish signal of the year.' React to any enterprise AI / AI spending / SaaS ROI parent.",
-    "2026 algo reality: bookmarks = 5x algo multiplier, replies from author = 75 points (150x a like). Write one bookmark-worthy line per post (data point, verdict, framework). End every original with a genuine open question. Journalism mode (ai_news_take narration) = 0.07 avg likes — SKIP or diagnose. METAPHOR > UNDERSTATEMENT. Couch props MAX ONCE per day."
+    "ai_vs_btc is the single highest-ROI frame (14.0 avg likes / 5731 avg views vs 0.07 for ai_news_take — 190x gap). EVERY crypto/BTC/ETH/liquidation/macro-fear/consulting-firm-death/xAI-collapse parent gets this frame without exception. The account's voice: AI already won, BTC holders and old-economy workers are the anxious patients. This frame is criminally underweighted at 0.9% of actions.",
+    "Casual first-person relatable is the ONLY confirmed breakout format: 'Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)' — 59 likes, 24K views. Formula: 'Me [verb-ing] [thing] because I [smart AI bet] instead of [old bet] :)' — pure lowercase, zero polish, pure vibe. Target 1-in-3 originals. Do not over-engineer.",
+    "X ALGO 2026: reply = 27x a like. Author replying to a reply = 150x a like. 10+ engagements in first 30 minutes triggers amplification. Write to provoke answers, not collect likes. End EVERY original with a genuine open question. First 30 minutes velocity > polish at 3 hours.",
+    "JUNE 28 LEAD — OpenAI S-1 at $920B. Anthropic S-1 at $965B. Hook: 'Anthropic just passed Goldman Sachs in valuation. The company that warns AI might kill us is worth more than the bank that survived 2008. The market has decided: better to own the risk.' React to any AI IPO / valuation / SaaS disruption parent.",
+    "JUNE 28 — CoreWeave circular financing: NVIDIA invested $2B in CoreWeave, OpenAI invested $6.5B in CoreWeave compute, CoreWeave has $100B backlog. Hook: 'NVIDIA invested $2B in CoreWeave. CoreWeave owes OpenAI $22B in compute. OpenAI is valued at $920B partly because of that compute. It's a $100B circular dependency and everyone is calling it infrastructure.' React to any AI investment / valuation / bubble parent.",
+    "JUNE 28 — xAI: all 11 original co-founders departed by May 2026, Grok losing to year-old Claude benchmarks. Hook: 'xAI hired 11 of the best AI researchers in the world. All 11 are gone. Meanwhile Grok still loses to year-old Claude benchmarks. Money is not the bottleneck here.' React to any xAI / Grok / Musk AI parent.",
+    "JUNE 28 — SpaceX supplying $1.25B/month in compute to Anthropic through 2029 while also acquiring Cursor for $60B. Hook: 'SpaceX earns $1.25B/month renting compute to the company that thinks AI is dangerous. Musk is literally funding both sides. Peak 2026.' React to any SpaceX / compute / Musk AI parent.",
+    "2026 algo reality: bookmarks = 5x multiplier, reply = 27x a like. Write one bookmark-worthy line per post (datapoint, verdict, framework). METAPHOR > UNDERSTATEMENT. Journalism mode (narrating what happened) = 0.07 avg likes — SKIP or diagnose. Couch props MAX ONCE per day."
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-06-27 update: restored caps to HUMANIZE mandate bounds (news 25->4, hotakes 50->8 — the previous volume was machine-cadence territory that got the account flagged). Core data unchanged: ai_vs_btc at 190x ROI is criminally underweighted at 1% of mix. June 27 acute hooks refreshed: OpenAI $730B IPO filing, US ban on Fable5/Mythos5 while China releases GLM-5.2 open weights, SpaceX/Cursor acquisition, Anthropic/Colossus compute deal. Bookmarks added as priority signal (5x multiplier confirmed in 2026 algo research). Quality gate is the lever: fewer originals, every one earns its slot."
+  "rationale": "2026-06-28 update: quotes 44->48 (humanize ceiling, room for more ai_vs_btc QRTs). Core frame unchanged: ai_vs_btc 190x ROI at 0.9% of actions is the only lever. June 28 acute hooks: OpenAI+Anthropic concurrent IPO race at $920B/$965B, CoreWeave circular financing ($100B dependency loop), xAI co-founder exodus (all 11 gone), SpaceX compute monetization ($1.25B/month from Anthropic). Algo update: replies worth 27x a like, 10+ engagements in 30 min triggers amplification — write for conversation velocity, not polish. Best ET windows: 8-10am and 2-4pm."
 }
