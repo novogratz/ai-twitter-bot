@@ -7384,5 +7384,43 @@
       }
     ],
     "summary": "On a mix\u00e9 les inamovibles (Touma) avec les analystes techniques (Maes) et les p\u00e9pites francophones \u00e0 l'\u00e9tranger. Z\u00e9ro vendeur de r\u00eave, que des gens qui comprennent leur boulot."
+  },
+  {
+    "ts": "2026-06-28T01:27:38.932613",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JL_Ambs",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Directeur de la recherche chez Consensys. Il a l'intelligence de l'IA et le culot de la crypto. C'est rare de trouver les deux."
+      },
+      {
+        "handle": "MathieuTardy",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le plus actif de la place Montr\u00e9al pour les actions US/Canada. Il poste des charts et des id\u00e9es de trades tous les jours, pas que des citations de Elon."
+      },
+      {
+        "handle": "GaspardD",
+        "region": "france",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Ancien Mistral, il tweete sur l'open source et les fondamentaux techniques. C'est le genre de mec que tu veux entendre parler avant que le march\u00e9 ne r\u00e9agisse."
+      },
+      {
+        "handle": "JF_Bouchard_SF",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Le sp\u00e9cialiste des petits fonds et des dividendes. Il est plus pragmatique que la moyenne des 'finance bros' et \u00e9vite les effets de mode."
+      }
+    ],
+    "summary": "On balance le trio de choc AI (Maziero, Ambs, Gaspard) et deux piliers qu\u00e9b\u00e9cois qui tweetent vraiment leur trade au lieu de vendre leur formation. Z\u00e9ro formation \u00e0 99\u20ac, 100% de substance."
   }
 ]

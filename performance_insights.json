@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-27T23:27:02.399324",
-  "window_7d_actions": 4924,
-  "window_24h_actions": 532,
+  "generated_at": "2026-06-28T03:27:02.327651",
+  "window_7d_actions": 4828,
+  "window_24h_actions": 548,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4842
+      "count": 4746
     },
     {
       "pattern": "METAPHOR",
@@ -44,75 +44,75 @@
       "actions": 253
     },
     {
-      "hour": 23,
-      "actions": 242
+      "hour": 18,
+      "actions": 237
+    },
+    {
+      "hour": 11,
+      "actions": 227
+    },
+    {
+      "hour": 20,
+      "actions": 227
     },
     {
       "hour": 0,
-      "actions": 242
-    },
-    {
-      "hour": 1,
-      "actions": 242
-    },
-    {
-      "hour": 18,
-      "actions": 237
+      "actions": 227
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2161
+      "count": 2151
     },
     {
       "topic": "IA",
-      "count": 2086
+      "count": 1991
     },
     {
       "topic": "Crypto",
-      "count": 564
+      "count": 569
     },
     {
       "topic": "Bourse",
-      "count": 325
+      "count": 327
     },
     {
       "topic": "Spatial",
-      "count": 120
+      "count": 117
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2336
+      "count": 2228
     },
     {
       "pillar": "other",
-      "count": 1291
+      "count": 1290
     },
     {
       "pillar": "market_trauma",
-      "count": 1006
+      "count": 1016
     },
     {
       "pillar": "meme_reaction",
-      "count": 196
+      "count": 198
     },
     {
       "pillar": "reply_bait",
-      "count": 50
+      "count": 52
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 45
+      "count": 44
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 213
+      "count": 231
     },
     {
       "pillar": "other",
@@ -120,19 +120,19 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 125
+      "count": 123
     },
     {
       "pillar": "meme_reaction",
-      "count": 20
+      "count": 18
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 5
     },
     {
       "pillar": "ai_vs_btc",
       "count": 4
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 3
     }
   ],
   "pillar_engagement_30d": [
@@ -145,23 +145,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 59,
-      "avg_likes": 0.08,
-      "avg_views": 30.3,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 86,
-      "avg_likes": 0.07,
-      "avg_views": 30.3,
+      "posts": 57,
+      "avg_likes": 0.09,
+      "avg_views": 30.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 50,
-      "avg_likes": 0.06,
-      "avg_views": 27.2,
+      "posts": 51,
+      "avg_likes": 0.08,
+      "avg_views": 28.2,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 87,
+      "avg_likes": 0.07,
+      "avg_views": 30.5,
       "low_sample": false
     },
     {
@@ -175,19 +175,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4146
+      "count": 4076
     },
     {
       "type": "quote",
-      "count": 284
-    },
-    {
-      "type": "retweet",
-      "count": 177
+      "count": 290
     },
     {
       "type": "quote_gif",
-      "count": 177
+      "count": 179
+    },
+    {
+      "type": "retweet",
+      "count": 143
     },
     {
       "type": "post",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-27T23:26:05.346406",
-      "text": "Nvda is margin expansion. smh is what normalizes when capex peaks. the question isn't which stock, it's whether capex stays hot.",
+      "ts": "2026-06-28T03:26:58.411006",
+      "text": "The threat to them isn't China. It's open-weights commoditizing inference. Geopolitical framing just makes it easier to lobby for.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-27T23:22:14.318410",
-      "text": "27x ETH from Kiyosaki = late-cycle signal. When the retail voice is making big forecasts, institutions already booked their profits.\n\nThe call itself is the story, not the number.",
+      "ts": "2026-06-28T03:25:26.119187",
+      "text": "CUDA. NVIDIA's dominant because a million models already train there, not because H100 is fastest. TPU's faster on paper. rewriting's expensive in practice.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-27T23:21:56.801208",
-      "text": "Clusters that do training and inference pay for themselves twice. inference-only shops pay once, forever. xai figured it out. the moat nobody sees.",
+      "ts": "2026-06-28T03:24:42.717655",
+      "text": "The Commerce Department just proved export controls on AI work. One letter, two weeks, models offline. That's genuinely impressive institutional speed.",
       "type": "reply"
     }
   ]

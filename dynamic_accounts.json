@@ -797,7 +797,11 @@
     "BenjaminMaes_",
     "MickaelG",
     "LudovicVergne",
-    "MaximilianG"
+    "MaximilianG",
+    "JL_Ambs",
+    "MathieuTardy",
+    "GaspardD",
+    "JF_Bouchard_SF"
   ],
   "en": [
     "blablacar",
@@ -1080,7 +1084,8 @@
     "Alejandra",
     "scar",
     "Emergent",
-    "RT"
+    "RT",
+    "Sekhar"
   ],
   "history": [
     {
@@ -6477,6 +6482,31 @@
       "lang": "fr",
       "handle": "MaximilianG",
       "added": "2026-06-27"
+    },
+    {
+      "lang": "en",
+      "handle": "Sekhar",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JL_Ambs",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuTardy",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaspardD",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JF_Bouchard_SF",
+      "added": "2026-06-28"
     }
   ]
 }
