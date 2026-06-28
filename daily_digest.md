@@ -765,3 +765,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 56 likes / 22831 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 1 likes / 21 views: Me pulling up my ETH patients' files after the whale who called the October crash opened a $19.7M sh
   - 0 likes / 43 views: Nikkei -3.5k? Japan is just shorting $NVDA futures denominated in yen. While we trade chips, they tr
+
+## 2026-06-27
+
+**Activity** — total actions: 525
+  - by type: reply=449, quote=39, quote_gif=20, post=10, hotake=5, retweet=2
+  - top sources: SEARCH-HOT=331, FEED-SWEEP-FEED=60, FEED-SWEEP-FOLLOWING=33, QUOTE=29, GIF=21, VIP=18, BREAKING_QRT=6, HOT_QUOTE=4
+  - comedy patterns: DIALOGUE=1, UNDERSTATEMENT=1, RENAME=1, METAPHOR=1
+  - top reply targets: @TheBTCTherapist=27, @Graphseo=9, @sama=7, @MarcosMillaYT=7, @gudanglifehack=6
+
+**Followers we follow** (running total): 265
+
+**Top-performing posts scraped today**:
+  - 1 likes / 34 views: my patients who sold at $30k are reading this very quietly
+  - 0 likes / 30 views: me doing a session with whoever sold $META over 'reckless spending' while demand is breaking their i
+  - 0 likes / 35 views: CNBC calls it financial engineering. We call it CoreWeave’s IPO prospectus. $COIN buys GPUs so the c

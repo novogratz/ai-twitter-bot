@@ -7332,5 +7332,57 @@
       }
     ],
     "summary": "5 candidats de qualit\u00e9 pure. On a \u00e9vit\u00e9 les influenceurs formations et les bots. On reste sur du vrai fond : founders, analystes et VC qui tweetent encore."
+  },
+  {
+    "ts": "2026-06-27T23:52:28.036400",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilTouma",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 340000,
+        "reason": "L'incontournable. Il twitte la merde mais on l'\u00e9coute toujours. La base de donn\u00e9es."
+      },
+      {
+        "handle": "BenjaminMaes_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "L'expert Mistral. Il explique l'IA sans vendre du r\u00eave ou des formations \u00e0 2000\u20ac."
+      },
+      {
+        "handle": "MickaelG",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 55000,
+        "reason": "Bas\u00e9 \u00e0 SF, francophone. Il couvre l'IA am\u00e9ricaine avec la perspective d'un fran\u00e7ais \u00e0 l'int\u00e9rieur."
+      },
+      {
+        "handle": "LudovicVergne",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Le patron de LVMH (les startups). Son feed tech/francophone est une p\u00e9pite VC pure."
+      },
+      {
+        "handle": "VincentCarr\u00e9",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Journaliste BFM TV mais son perso est bien plus pointu. Pas de pub, que du brut."
+      },
+      {
+        "handle": "MaximilianG",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Le pionnier Qu\u00e9b\u00e9cois de la crypto. Il couvre le march\u00e9 depuis le d\u00e9but, style calme."
+      }
+    ],
+    "summary": "On a mix\u00e9 les inamovibles (Touma) avec les analystes techniques (Maes) et les p\u00e9pites francophones \u00e0 l'\u00e9tranger. Z\u00e9ro vendeur de r\u00eave, que des gens qui comprennent leur boulot."
   }
 ]

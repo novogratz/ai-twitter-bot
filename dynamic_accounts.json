@@ -792,7 +792,12 @@
     "LuisGdelValle",
     "EricYannick",
     "Jules_Bordier",
-    "MarcAuber"
+    "MarcAuber",
+    "CyrilTouma",
+    "BenjaminMaes_",
+    "MickaelG",
+    "LudovicVergne",
+    "MaximilianG"
   ],
   "en": [
     "blablacar",
@@ -6446,6 +6451,31 @@
     {
       "lang": "fr",
       "handle": "MarcAuber",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilTouma",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminMaes_",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelG",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicVergne",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximilianG",
       "added": "2026-06-27"
     }
   ]
