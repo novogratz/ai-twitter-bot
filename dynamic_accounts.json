@@ -781,7 +781,18 @@
     "VivianeD",
     "MathieuD",
     "CyrilD",
-    "PierreRoussel"
+    "PierreRoussel",
+    "TanguyM",
+    "HugoCisneros",
+    "CoralieWong",
+    "BenjaminBoulmer",
+    "MaximeWillems",
+    "JFPlante",
+    "LudoNerolux",
+    "LuisGdelValle",
+    "EricYannick",
+    "Jules_Bordier",
+    "MarcAuber"
   ],
   "en": [
     "blablacar",
@@ -1063,7 +1074,8 @@
     "Dvorstone",
     "Alejandra",
     "scar",
-    "Emergent"
+    "Emergent",
+    "RT"
   ],
   "history": [
     {
@@ -6374,6 +6386,66 @@
     {
       "lang": "fr",
       "handle": "PierreRoussel",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguyM",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoCisneros",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "CoralieWong",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminBoulmer",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeWillems",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JFPlante",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoNerolux",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "en",
+      "handle": "RT",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisGdelValle",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricYannick",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "Jules_Bordier",
+      "added": "2026-06-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcAuber",
       "added": "2026-06-27"
     }
   ]

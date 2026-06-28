@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-27T19:27:02.347767",
-  "window_7d_actions": 5010,
-  "window_24h_actions": 548,
+  "generated_at": "2026-06-27T23:27:02.399324",
+  "window_7d_actions": 4924,
+  "window_24h_actions": 532,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4928
+      "count": 4842
     },
     {
       "pattern": "METAPHOR",
@@ -41,11 +41,11 @@
   "best_hours_utc": [
     {
       "hour": 19,
-      "actions": 274
+      "actions": 253
     },
     {
       "hour": 23,
-      "actions": 249
+      "actions": 242
     },
     {
       "hour": 0,
@@ -56,75 +56,75 @@
       "actions": 242
     },
     {
-      "hour": 20,
-      "actions": 240
+      "hour": 18,
+      "actions": 237
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2175
-    },
-    {
-      "topic": "IA",
       "count": 2161
     },
     {
+      "topic": "IA",
+      "count": 2086
+    },
+    {
       "topic": "Crypto",
-      "count": 553
+      "count": 564
     },
     {
       "topic": "Bourse",
-      "count": 326
+      "count": 325
     },
     {
       "topic": "Spatial",
-      "count": 128
+      "count": 120
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2419
+      "count": 2336
     },
     {
       "pillar": "other",
-      "count": 1310
+      "count": 1291
     },
     {
       "pillar": "market_trauma",
-      "count": 987
+      "count": 1006
     },
     {
       "pillar": "meme_reaction",
-      "count": 194
+      "count": 196
     },
     {
       "pillar": "reply_bait",
-      "count": 54
+      "count": 50
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 46
+      "count": 45
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 218
+      "count": 213
     },
     {
       "pillar": "other",
-      "count": 178
+      "count": 167
     },
     {
       "pillar": "market_trauma",
-      "count": 123
+      "count": 125
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 20
     },
     {
       "pillar": "ai_vs_btc",
@@ -147,21 +147,21 @@
       "pillar": "market_trauma",
       "posts": 59,
       "avg_likes": 0.08,
-      "avg_views": 30.4,
+      "avg_views": 30.3,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 86,
       "avg_likes": 0.07,
-      "avg_views": 32.2,
+      "avg_views": 30.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 50,
       "avg_likes": 0.06,
-      "avg_views": 26.7,
+      "avg_views": 27.2,
       "low_sample": false
     },
     {
@@ -175,19 +175,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4202
+      "count": 4146
     },
     {
       "type": "quote",
-      "count": 275
+      "count": 284
     },
     {
       "type": "retweet",
-      "count": 218
+      "count": 177
     },
     {
       "type": "quote_gif",
-      "count": 175
+      "count": 177
     },
     {
       "type": "post",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-27T19:25:40.012428",
-      "text": "Still waiting for 2030 to save them. I’m just billing for the wait.",
+      "ts": "2026-06-27T23:26:05.346406",
+      "text": "Nvda is margin expansion. smh is what normalizes when capex peaks. the question isn't which stock, it's whether capex stays hot.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-27T19:25:24.051943",
-      "text": "Delete this? The AI index is holding steady while you check the chart every three seconds. Come by; I’ll charge you double for the therapy.",
+      "ts": "2026-06-27T23:22:14.318410",
+      "text": "27x ETH from Kiyosaki = late-cycle signal. When the retail voice is making big forecasts, institutions already booked their profits.\n\nThe call itself is the story, not the number.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-27T19:23:51.883368",
-      "text": "SBF pardoned. Bitcoin still trapped. Your patients are still coping with red candles.",
+      "ts": "2026-06-27T23:21:56.801208",
+      "text": "Clusters that do training and inference pay for themselves twice. inference-only shops pay once, forever. xai figured it out. the moat nobody sees.",
       "type": "reply"
     }
   ]

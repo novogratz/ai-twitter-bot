@@ -7235,5 +7235,102 @@
       }
     ],
     "summary": "Focus sur la cr\u00e9dibilit\u00e9 technique (Mistral, Vanta) et le journalisme financier s\u00e9rieux (Cyril D, Pierre R). Le Qu\u00e9bec est moins peupl\u00e9 en gros comptes IA, donc on vise les ing\u00e9nieurs actifs plut\u00f4t que les influenceurs."
+  },
+  {
+    "ts": "2026-06-27T19:47:47.791102",
+    "raw_count": 7,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "TanguyM",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "VC chez M12, sourcereur d'IA francophone expat, feed ultra qualitatif."
+      },
+      {
+        "handle": "HugoCisneros",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Le prince de la Tech FR, couvre IA et startups avec un ton clair et pr\u00e9cis."
+      },
+      {
+        "handle": "CoralieWong",
+        "region": "france",
+        "niche": "ai",
+        "followers": 38000,
+        "reason": "IA et Data pure, twitte en FR avec une densit\u00e9 d'infos rare."
+      },
+      {
+        "handle": "BenjaminBoulmer",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Fondateur de Weaviate, voix FR sur la Vector Search et l'IA open source."
+      },
+      {
+        "handle": "MaximeWillems",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Fondateur de Viseo, d\u00e9crypte les cycles tech et l'IA sans blabla."
+      },
+      {
+        "handle": "JFPlante",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "AI Lead \u00e0 Desjardins, expert terrain qui partage des cas concrets."
+      },
+      {
+        "handle": "LudoNerolux",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise en IA, chercheur proactif et tweeteur r\u00e9gulier."
+      }
+    ],
+    "summary": "Focus IA et Tech de haut vol, on \u00e9vite le trading hype au profit d'analystes et founders qui construisent."
+  },
+  {
+    "ts": "2026-06-27T21:40:19.168949",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LuisGdelValle",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 58000,
+        "reason": "Co-fondateur de ConsenSys. Il twitte en EN mais ses insights sur l'\u00e9cosyst\u00e8me FR sont la bible pour les pro. Pas de bruit, juste du gras."
+      },
+      {
+        "handle": "EricYannick",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "Bas\u00e9 \u00e0 Miami mais Francophone. Il couvre la finance US avec un \u0153il europ\u00e9en. Son ton est direct, sans filtre, parfait pour filtrer le signal du bruit."
+      },
+      {
+        "handle": "Jules_Bordier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "L'analyste qui explique le march\u00e9 sans endormir son public. Il tweete en FR et sa plume est plus aiguis\u00e9e que la majorit\u00e9 des 'gourous' du Telegram."
+      },
+      {
+        "handle": "MarcAuber",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "La voix calme de la gestion de patrimoine qu\u00e9b\u00e9coise. Pas de 'moon boy'isme, juste une logique de long terme qui claque."
+      }
+    ],
+    "summary": "5 candidats de qualit\u00e9 pure. On a \u00e9vit\u00e9 les influenceurs formations et les bots. On reste sur du vrai fond : founders, analystes et VC qui tweetent encore."
   }
 ]
