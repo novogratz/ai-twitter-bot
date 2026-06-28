@@ -15221,3 +15221,25 @@ Fugu is important because it turns the frontier model race into an orchestration
 Ope
   - https://x.com/imjustnewatai/status/2068926371644977525
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 42).
+
+## 2026-06-28
+- **@learningeleven** (118 likes, score 9/10) — Timepass talk on Sunday
+
+1. The Next Big AI/EV Bottleneck: Power Distribution
+
+The Current Challenge (Legacy Tech): Traditional power architectures in data centers (48V/54V) and electric vehicles (400
+  - https://x.com/LearningEleven/status/2071066471590166782
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 130).
+- **@cryptocapooo** (14 likes, score 8/10) — IF THIS IS TRUE... 
+
+A wallet from the Satoshi era would have sold 13,700 BTC (≈ $1.2 billion) after 15 years without moving a single bitcoin. 
+
+It survived:
+ Mt. Gox
+ The COVID crash
+ Luna
+ FTX
+
+...a
+  - https://x.com/CryptocapoOO/status/2071069826571771964
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 30).
