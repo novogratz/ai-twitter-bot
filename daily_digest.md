@@ -780,3 +780,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 34 views: my patients who sold at $30k are reading this very quietly
   - 0 likes / 30 views: me doing a session with whoever sold $META over 'reckless spending' while demand is breaking their i
   - 0 likes / 35 views: CNBC calls it financial engineering. We call it CoreWeave’s IPO prospectus. $COIN buys GPUs so the c
+
+## 2026-06-28
+
+**Activity** — total actions: 329
+  - by type: reply=286, quote=22, quote_gif=11, post=6, hotake=3, retweet=1
+  - top sources: SEARCH-HOT=213, FEED-SWEEP-FEED=34, FEED-SWEEP-FOLLOWING=32, QUOTE=14, GIF=12, BREAKING_QRT=6, VIP=4, BREAKOUT=2
+  - comedy patterns: UNDERSTATEMENT=1, RENAME=1, EN_ANCHOR=1, REPETITION=1
+  - top reply targets: @TheBTCTherapist=6, @WhaleInsider=6, @pete_rizzo_=5, @cryptorover=5, @blknoiz06=4
+
+**Followers we follow** (running total): 268
+
+**Top-performing posts scraped today**:
+  - 1 likes / 44 views: AI is the 30-year-old frat bro who thinks he invented beer. SPY +594%? Cute. CoreWeave just bought t
+  - 0 likes / 42 views: me pretending I did my research before buying $NVDA instead of $GEV
+  - 0 likes / 52 views: Grok’s 50% share of Vercel’s video traffic. Vercel just paid to rent GPUs while OpenAI sold the hous

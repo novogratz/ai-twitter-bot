@@ -802,7 +802,20 @@
     "MathieuTardy",
     "GaspardD",
     "JF_Bouchard_SF",
-    "VladT"
+    "VladT",
+    "MaximeLamy",
+    "RaphaELelarge",
+    "VincentDelmas",
+    "LudovicLamasson",
+    "AlexisLeroy",
+    "RomainFouque",
+    "RomainBia",
+    "thibaud_de",
+    "BorisVernay",
+    "CyrilLemaitre",
+    "NathanDorville",
+    "MilaVice",
+    "MaximeBeaudoin"
   ],
   "en": [
     "blablacar",
@@ -6536,6 +6549,71 @@
     {
       "lang": "fr",
       "handle": "VladT",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeLamy",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaELelarge",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDelmas",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicLamasson",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisLeroy",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainFouque",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBia",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "thibaud_de",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisVernay",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilLemaitre",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanDorville",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MilaVice",
+      "added": "2026-06-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBeaudoin",
       "added": "2026-06-28"
     }
   ]

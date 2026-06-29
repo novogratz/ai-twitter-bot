@@ -7439,5 +7439,123 @@
       }
     ],
     "summary": "Mix \u00e9quilibr\u00e9 entre les v\u00e9t\u00e9rans crypto fran\u00e7ais, le talent tech qu\u00e9b\u00e9cois et les analystes de la diaspora US. Z\u00e9ro vendeur de r\u00eaves, que du concret."
+  },
+  {
+    "ts": "2026-06-28T07:27:41.799376",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RenaudLanfranchi",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "Le roi de l'info trading FR. Pas de blabla formation, que du concret technique et macro."
+      },
+      {
+        "handle": "MaximeLamy",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Directeur de recherche chez Exaion. Twitte sur l'IA fr et les startups, style clair et pro."
+      },
+      {
+        "handle": "RaphaELelarge",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Ex-Coinbase, fondatrice de Crypto.fr. Couvre la regu, les tokens et la tech crypto en FR."
+      },
+      {
+        "handle": "VincentDelmas",
+        "region": "france",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Venteux & IA. Couvre l'adoption IA en entreprise, tr\u00e8s pertinent pour le secteur pro."
+      },
+      {
+        "handle": "LudovicLamasson",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Fondateur d'Eclipsa. Analyse de march\u00e9 quotidienne, focus Canada/USA, tr\u00e8s solide."
+      },
+      {
+        "handle": "AlexisLeroy",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Head of Business Development chez Ledger. Donne la vision du hardware wallet et de la s\u00e9curit\u00e9."
+      },
+      {
+        "handle": "RomainFouque",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Co-founder de LLMware. Plantes sur l'IA g\u00e9n\u00e9rative et l'infrastructure, contenu technique sans pub."
+      }
+    ],
+    "summary": "Une s\u00e9lection de v\u00e9t\u00e9rans plut\u00f4t que de influenceurs du jour. De la substance technique (Lamy, Rouqu\u00e9), du trading pur (Lanfranchi, Lamasson) et du hard crypto (Rochard, Leroy)."
+  },
+  {
+    "ts": "2026-06-28T09:27:46.020709",
+    "raw_count": 7,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RomainBia",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 62000,
+        "reason": "L'analyste de la Street qui parle enfin comme un humain. Il explique les r\u00e9sultats trimestriels avec des analogies culinaires. Plus fiable que ton gars de 25 ans avec son graphique sur Twitter."
+      },
+      {
+        "handle": "thibaud_de",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 58000,
+        "reason": "CEO de Qonto, twitte la tech et la fintech sans la l\u00e8che de CEO en costume-cravate. C'est l'anti-Kilian pour ceux qui en ont marre des PDG qui racontent des salades."
+      },
+      {
+        "handle": "BorisVernay",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Journaliste crypto \u00e0 la fronde. Il creuse les dossiers de fond (Luna, FTX) avant les autres. Quand Boris twitte sur un token, \u00e7a sent la thune (ou l'arnaque)."
+      },
+      {
+        "handle": "CyrilLemaitre",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "La r\u00e9f\u00e9rence tech au Qu\u00e9bec. Il couvre les startups montr\u00e9alaises et les lev\u00e9es de fonds locales. Si tu veux savoir qui se fait racheter au coin de la rue Sainte-Catherine, c'est lui."
+      },
+      {
+        "handle": "NathanDorville",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Data scientist qui vulgarise l'IA sans te vendre un cours de 49\u20ac. Il balance des threads techniques dig\u00e9r\u00e9s par un avocat. Le meilleur pour comprendre ce que font les mod\u00e8les."
+      },
+      {
+        "handle": "MilaVice",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Le bureau de presse de Mila. Ils twittent les breakthroughs de la recherche en IA francophone (et anglophone). Moins de blabla, plus de papiers de recherche. Pour ceux qui veulent savoir ce qui se passe \u00e0 Sherbrooke et Paris."
+      },
+      {
+        "handle": "MaximeBeaudoin",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "G\u00e9rant de fonds qui twitte ses convictions. Pas de 'rendez-moi la crise de 2008', il explique pourquoi il ach\u00e8te ou vend tel titre. C'est sec, c'est brut, c'est du QCM pur."
+      }
+    ],
+    "summary": "L'IA fran\u00e7aise est moins hype que la crypto mais plus solide (Qonto, Qwanters). Le Qu\u00e9bec est une mine d'or pour la fintech francophone silencieuse. On a vir\u00e9 les influenceurs pour ne garder que ceux qui ont des titres \u00e0 g\u00e9rer."
   }
 ]
