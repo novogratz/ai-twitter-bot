@@ -1,140 +1,115 @@
 {
-  "generated_at": "2026-06-28T07:27:02.341433",
-  "window_7d_actions": 4712,
-  "window_24h_actions": 671,
+  "generated_at": "2026-07-01T04:20:35.275138",
+  "window_7d_actions": 2796,
+  "window_24h_actions": 0,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4628
+      "count": 2776
     },
     {
       "pattern": "METAPHOR",
-      "count": 27
-    },
-    {
-      "pattern": "FR_ANCHOR",
-      "count": 16
-    },
-    {
-      "pattern": "UNDERSTATEMENT",
-      "count": 15
+      "count": 6
     },
     {
       "pattern": "RENAME",
-      "count": 8
+      "count": 4
+    },
+    {
+      "pattern": "UNDERSTATEMENT",
+      "count": 3
+    },
+    {
+      "pattern": "DIALOGUE",
+      "count": 3
     }
   ],
   "worst_patterns": [
     {
-      "pattern": "EN_ANCHOR",
+      "pattern": "FR_ANCHOR",
       "count": 1
     },
     {
-      "pattern": "REPETITION",
-      "count": 5
+      "pattern": "OTHER",
+      "count": 1
     },
     {
-      "pattern": "OTHER",
-      "count": 5
+      "pattern": "EN_ANCHOR",
+      "count": 1
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 19,
-      "actions": 253
-    },
-    {
       "hour": 18,
-      "actions": 237
+      "actions": 152
     },
     {
-      "hour": 11,
-      "actions": 227
+      "hour": 23,
+      "actions": 137
+    },
+    {
+      "hour": 21,
+      "actions": 134
+    },
+    {
+      "hour": 19,
+      "actions": 133
     },
     {
       "hour": 20,
-      "actions": 227
-    },
-    {
-      "hour": 0,
-      "actions": 227
+      "actions": 131
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2119
+      "count": 1348
     },
     {
       "topic": "IA",
-      "count": 1897
+      "count": 1042
     },
     {
       "topic": "Crypto",
-      "count": 575
+      "count": 375
     },
     {
       "topic": "Bourse",
-      "count": 321
+      "count": 149
     },
     {
       "topic": "Spatial",
-      "count": 116
+      "count": 45
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2136
+      "count": 1191
     },
     {
       "pillar": "other",
-      "count": 1259
+      "count": 799
     },
     {
       "pillar": "market_trauma",
-      "count": 1025
+      "count": 631
     },
     {
       "pillar": "meme_reaction",
-      "count": 199
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 50
+      "count": 131
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 43
-    }
-  ],
-  "pillar_mix_24h": [
-    {
-      "pillar": "ai_news_take",
-      "count": 287
-    },
-    {
-      "pillar": "other",
-      "count": 198
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 153
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 22
+      "count": 23
     },
     {
       "pillar": "reply_bait",
-      "count": 7
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 21
     }
   ],
+  "pillar_mix_24h": [],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
@@ -145,23 +120,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 57,
+      "posts": 55,
       "avg_likes": 0.09,
-      "avg_views": 29.9,
+      "avg_views": 30.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 50,
       "avg_likes": 0.08,
-      "avg_views": 28.6,
+      "avg_views": 27.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 88,
+      "posts": 90,
       "avg_likes": 0.07,
-      "avg_views": 30.5,
+      "avg_views": 30.4,
       "low_sample": false
     },
     {
@@ -175,44 +150,44 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4001
+      "count": 2410
     },
     {
       "type": "quote",
-      "count": 289
+      "count": 165
     },
     {
       "type": "quote_gif",
-      "count": 180
-    },
-    {
-      "type": "retweet",
-      "count": 102
-    },
-    {
-      "type": "post",
-      "count": 75
+      "count": 114
     },
     {
       "type": "hotake",
-      "count": 65
+      "count": 51
+    },
+    {
+      "type": "post",
+      "count": 49
+    },
+    {
+      "type": "retweet",
+      "count": 7
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-28T07:26:56.341610",
-      "text": "1.5T V9 + Cursor training = learning from how elite builders ship, not code samples. SpaceX and Tesla first. that's the move.",
+      "ts": "2026-06-28T19:57:33.819339",
+      "text": "He's right. Largest buildout in history. But power becomes the constraint before compute. Nvidia wins. So do the utilities.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-28T07:26:39.019222",
-      "text": "Google chose not to sell meta more compute. meta went elsewhere and spent $30B. that's not scarcity, that's leverage.",
+      "ts": "2026-06-28T10:25:11.853499",
+      "text": "Mstr is saylor's 3x leveraged btc bet. the bears aren't fudding him, they're just measuring his margin call price. both are right.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-28T07:22:13.259236",
-      "text": "me reading \"no need to keep laptop open ever\" and realizing I have an attachment disorder 🛋️",
-      "type": "quote"
+      "ts": "2026-06-28T10:24:17.235817",
+      "text": "$50.7B on infrastructure with positive cash flow.\n\nhighways need political permission to fix potholes. different asset classes.",
+      "type": "reply"
     }
   ]
 }
