@@ -815,7 +815,15 @@
     "CyrilLemaitre",
     "NathanDorville",
     "MilaVice",
-    "MaximeBeaudoin"
+    "MaximeBeaudoin",
+    "VincentGrimault",
+    "jpdugua",
+    "ThomasLahure",
+    "LucasMuller",
+    "JL_Artaud",
+    "AlexisVannier",
+    "MaximeCormier",
+    "JF_Francheteau"
   ],
   "en": [
     "blablacar",
@@ -1103,7 +1111,10 @@
     "ib",
     "Marvin",
     "Samooves",
-    "Shiela"
+    "Shiela",
+    "ali",
+    "Chesny",
+    "NVIDIA"
   ],
   "history": [
     {
@@ -6615,6 +6626,61 @@
       "lang": "fr",
       "handle": "MaximeBeaudoin",
       "added": "2026-06-28"
+    },
+    {
+      "lang": "en",
+      "handle": "ali",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "en",
+      "handle": "Chesny",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "en",
+      "handle": "NVIDIA",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentGrimault",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "jpdugua",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasLahure",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasMuller",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "JL_Artaud",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisVannier",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCormier",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "JF_Francheteau",
+      "added": "2026-07-04"
     }
   ]
 }

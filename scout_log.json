@@ -7557,5 +7557,78 @@
       }
     ],
     "summary": "L'IA fran\u00e7aise est moins hype que la crypto mais plus solide (Qonto, Qwanters). Le Qu\u00e9bec est une mine d'or pour la fintech francophone silencieuse. On a vir\u00e9 les influenceurs pour ne garder que ceux qui ont des titres \u00e0 g\u00e9rer."
+  },
+  {
+    "ts": "2026-07-04T14:22:26.122904",
+    "raw_count": 12,
+    "kept_count": 9,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "VincentGrimault",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "La r\u00e9f\u00e9rence pour les actionnaires FR. Il tweete les r\u00e9sultats et les dividendes avec une pr\u00e9cision chirurgicale."
+      },
+      {
+        "handle": "jpdugua",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 42000,
+        "reason": "Le patron de Boursorama. Il twitte la macro comme un chef d'orchestre, sans la bouffissure acad\u00e9mique."
+      },
+      {
+        "handle": "ThomasLahure",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 32000,
+        "reason": "Hedge fund manager crypto. Il parle business et P&L, pas juste de charts et de wick."
+      },
+      {
+        "handle": "GaspardLemari\u00e9",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Journaliste IA. Il trouve les infos avant que les blogs g\u00e9n\u00e9ralistes n'aient fini leur caf\u00e9."
+      },
+      {
+        "handle": "LucasMuller",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 22000,
+        "reason": "Ex-PDG de Lydia. Il couvre la fintech FR comme personne d'autre, sans vendre de formation \u00e0 1200\u20ac."
+      },
+      {
+        "handle": "JL_Artaud",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "CEO de Mistral AI. Il balance des insights produits qui font plus de bruit que les tweets de Musk sur les memes."
+      },
+      {
+        "handle": "AlexisVannier",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Ex-PM Uber Eats France. C'est l'opium des techies FR : du deep tech sans le jargon VC \u00e0 la con."
+      },
+      {
+        "handle": "MaximeCormier",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 14000,
+        "reason": "VP Product chez Datadog. Il balance du SaaS et du Product Management qu\u00e9b\u00e9cois de qualit\u00e9."
+      },
+      {
+        "handle": "JF_Francheteau",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Ex-Leader de l'\u00e9quipe Mistral. Il tweete la tech pure, avant qu'elle ne devienne du marketing."
+      }
+    ],
+    "summary": "Pas de vendeurs de r\u00eave ici, juste des gens qui bougent le march\u00e9 ou \u00e9crivent l'histoire. Le combo Mistral/Fintech FR + Crypto QC est plus solide que jamais."
   }
 ]

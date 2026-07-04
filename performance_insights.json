@@ -1,36 +1,36 @@
 {
-  "generated_at": "2026-07-01T04:20:35.275138",
-  "window_7d_actions": 2796,
-  "window_24h_actions": 0,
+  "generated_at": "2026-07-04T16:04:59.156417",
+  "window_7d_actions": 787,
+  "window_24h_actions": 227,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2776
-    },
-    {
-      "pattern": "METAPHOR",
-      "count": 6
-    },
-    {
-      "pattern": "RENAME",
-      "count": 4
+      "count": 783
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 3
+      "count": 1
     },
     {
-      "pattern": "DIALOGUE",
-      "count": 3
+      "pattern": "RENAME",
+      "count": 1
+    },
+    {
+      "pattern": "EN_ANCHOR",
+      "count": 1
+    },
+    {
+      "pattern": "REPETITION",
+      "count": 1
     }
   ],
   "worst_patterns": [
     {
-      "pattern": "FR_ANCHOR",
+      "pattern": "UNDERSTATEMENT",
       "count": 1
     },
     {
-      "pattern": "OTHER",
+      "pattern": "RENAME",
       "count": 1
     },
     {
@@ -40,76 +40,101 @@
   ],
   "best_hours_utc": [
     {
-      "hour": 18,
-      "actions": 152
+      "hour": 9,
+      "actions": 63
     },
     {
-      "hour": 23,
-      "actions": 137
+      "hour": 8,
+      "actions": 51
     },
     {
-      "hour": 21,
-      "actions": 134
+      "hour": 10,
+      "actions": 47
     },
     {
-      "hour": 19,
-      "actions": 133
+      "hour": 6,
+      "actions": 40
     },
     {
-      "hour": 20,
-      "actions": 131
+      "hour": 12,
+      "actions": 37
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1348
+      "count": 395
     },
     {
       "topic": "IA",
-      "count": 1042
+      "count": 268
     },
     {
       "topic": "Crypto",
-      "count": 375
+      "count": 105
     },
     {
       "topic": "Bourse",
-      "count": 149
+      "count": 41
     },
     {
       "topic": "Spatial",
-      "count": 45
+      "count": 14
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1191
+      "count": 334
     },
     {
       "pillar": "other",
-      "count": 799
+      "count": 230
     },
     {
       "pillar": "market_trauma",
-      "count": 631
+      "count": 177
     },
     {
       "pillar": "meme_reaction",
-      "count": 131
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 23
+      "count": 30
     },
     {
       "pillar": "reply_bait",
-      "count": 21
+      "count": 12
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 4
     }
   ],
-  "pillar_mix_24h": [],
+  "pillar_mix_24h": [
+    {
+      "pillar": "ai_news_take",
+      "count": 84
+    },
+    {
+      "pillar": "other",
+      "count": 79
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 45
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 11
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 6
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 2
+    }
+  ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
@@ -122,21 +147,21 @@
       "pillar": "market_trauma",
       "posts": 55,
       "avg_likes": 0.09,
-      "avg_views": 30.3,
+      "avg_views": 29.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 50,
       "avg_likes": 0.08,
-      "avg_views": 27.2,
+      "avg_views": 26.9,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 90,
       "avg_likes": 0.07,
-      "avg_views": 30.4,
+      "avg_views": 30.0,
       "low_sample": false
     },
     {
@@ -150,43 +175,43 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2410
+      "count": 681
     },
     {
       "type": "quote",
-      "count": 165
+      "count": 57
     },
     {
       "type": "quote_gif",
-      "count": 114
-    },
-    {
-      "type": "hotake",
-      "count": 51
+      "count": 27
     },
     {
       "type": "post",
-      "count": 49
+      "count": 14
+    },
+    {
+      "type": "hotake",
+      "count": 5
     },
     {
       "type": "retweet",
-      "count": 7
+      "count": 3
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-06-28T19:57:33.819339",
-      "text": "He's right. Largest buildout in history. But power becomes the constraint before compute. Nvidia wins. So do the utilities.",
+      "ts": "2026-07-04T16:04:51.212677",
+      "text": "Perfectly predicted this pump. Channel patterns work perfectly until Bitcoin gaps past them overnight. $58K floor becomes a trap when vol spikes. That's the call that matters.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-28T10:25:11.853499",
-      "text": "Mstr is saylor's 3x leveraged btc bet. the bears aren't fudding him, they're just measuring his margin call price. both are right.",
+      "ts": "2026-07-04T16:04:31.813951",
+      "text": "Miners execute. Nodes validate. Holders fund. Only one moves the chain.",
       "type": "reply"
     },
     {
-      "ts": "2026-06-28T10:24:17.235817",
-      "text": "$50.7B on infrastructure with positive cash flow.\n\nhighways need political permission to fix potholes. different asset classes.",
+      "ts": "2026-07-04T16:02:54.643321",
+      "text": "Pattern confirmed. by the time alts OI flips, price already peaked. the lag itself is why it's such a reliable indicator.",
       "type": "reply"
     }
   ]
