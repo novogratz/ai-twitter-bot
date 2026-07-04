@@ -1,16 +1,16 @@
-# YouTube brief — 2026-06-28
+# YouTube brief — 2026-07-04
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **524**
-- reply: **450**
-- quote: **41**
-- quote_gif: **17**
-- post: **10**
-- hotake: **5**
-- retweet: **1**
+- Total actions logged: **72**
+- reply: **57**
+- quote_gif: **4**
+- quote: **4**
+- post: **3**
+- retweet: **2**
+- hotake: **2**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -54,42 +54,51 @@
 The Current Challenge (Legacy Tech): Traditional power architectures in data centers (48V/54V) and electric vehicles (400
   - https://x.com/LearningEleven/status/2071066471590166782
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 130).
+- **@cryptocapooo** (14 likes, score 8/10) — IF THIS IS TRUE... 
+
+A wallet from the Satoshi era would have sold 13,700 BTC (≈ $1.2 billion) after 15 years without moving a single bitcoin. 
+
+It survived:
+ Mt. Gox
+ The COVID crash
+ Luna
+ FTX
+
+...a
+  - https://x.com/CryptocapoOO/status/2071069826571771964
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 30).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/OKX]** What crypto we watching this weekend?
-  - https://x.com/okx/status/2071028579207442909
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/AYprotocols®]** A lot of hidden gems are still sitting in the $TAO subnet ecosystem  
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/FactPost]** July 23, 2025: Trump purchases up to $30 million in stock from Nvidia, Microsoft, Meta, Apple, Amazon, and Broadcom
 
-Some subnets are quietly building while the market is still catching up. Seeing low caps 
-  - https://x.com/AYprotocols/status/2070530241835966618
-- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Cantonese Cat]** I survived the day with just 3 hours of sleep.
+Later that day: The White House announces a
+  - https://x.com/factpostnews/status/2072708969479450878
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Kalshi]** JUST IN: Nvidia brings in $6 million of revenue per employee per year
+  - https://x.com/Kalshi/status/2073103129449488516
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Polymarket]** JUST IN: Sotheby’s is auctioning Nvidia CEO Jensen Huang’s signature black leather jacket, estimated at $40,000 to $60,000.
+  - https://x.com/Polymarket/status/2072754931275079791
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Ted]** $1,250,000,000,000 has now been wiped out from the US stock market in last 3 hours.
 
-So here's a bit of stream of consciousness here.
+This is more than the entire market cap of Bitcoin.
+  - https://x.com/TedPillows/status/2072729104730747279
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Jared Friedman]** Wafer made AMD GPUs competitive with NVIDIA chips for AI inference - at half the cost.
+  - https://x.com/snowmaker/status/2073206259608863012
+- **[X_FOLLOWING/Mindset for Money]** The stock I sprinkled pocket change into vs. the one I went balls deep in:
+  - https://x.com/Mindset4Money_X/status/2073128790499217435
+- **[X_FOLLOWING/Crypto with Haris ₿]** Drop $SOL wallet or $ANSEM wallet
 
-The overall market is showing resilience, with small cap and N
-  - https://x.com/cantonmeow/status/2071081519255273499
-- **[X_FOLLOWING/Beff (e/acc)]** Anthropic try to not evil-maxx challenge: Impossible
-  - https://x.com/beffjezos/status/2071084251315941707
-- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Hidden Small Caps]** This is partially why $NBIS $CRWV $IREN are all ultimately in the fullness of time bad businesses.
+Just follow insider Crypto @Ryker_Crypto 
 
-Exhibit A: Amazon raising prices 20% if customer uses NVDA c
-  - https://x.com/hiddensmallcaps/status/2071016773630263789
-- **[X_SEARCH/top/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Pumpolinsky]** $KAS and $TAO
-  - https://x.com/pumpolinsky/status/2071056309575712799
-- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/勃勃OC]** SemiAnalysis reports: Neocloud executives fear retaliation from NVIDIA for using non-NVIDIA hardware
+And check your wallet later
+  - https://x.com/Crypto__Haris/status/2073414616361951715
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/P O O J A | jaadasss]** NVIDIA’s rise from gaming chip company to the arms dealer of the AI boom
 
-SemiAnalysis reveals that Neocloud executives believe that
-  - https://x.com/bboczeng/status/2071068354799104325
-- **[X_FOLLOWING/Manisha Mishra]** Sam Altman:
+Lets read some stats i accumulated : 
 
-"We're going to see 10-person billion-dollar companies pretty soon."
-
-"If I were 22 right now, I'd feel like the luckiest kid in history."
-
-Most pe
-  - https://x.com/manishamishra24/status/2071082449745162676
+Originally built to render video game graphics 
+  - https://x.com/jaadasss/status/2073412219099037739
 
 ## 🎬 Suggested video angles
 
@@ -100,4 +109,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-06-28T00:27:02*
+*Generated 2026-07-04T10:43:45*
