@@ -40,6 +40,9 @@ ALLOWED_TICKERS = {
 _TICKER_RE = re.compile(r"\$([A-Z]{2,5})\b")
 
 WSB_API = "https://www.reddit.com/r/wallstreetbets/hot.json?limit=50"
+# Fallback when Reddit 403-blocks unauthenticated JSON (it does, since 2026-07):
+# ApeWisdom aggregates WSB ticker mentions and serves them without auth.
+APEWISDOM_API = "https://apewisdom.io/api/v1.0/filter/wallstreetbets/page/1"
 WSB_HEADERS = {
     "User-Agent": "Mozilla/5.0 TheAIShrink-bot/1.0",
 }
@@ -75,12 +78,14 @@ def _save_state(state: dict) -> None:
         json.dump(state, f, indent=2)
 
 
-def _fetch_wsb_tickers() -> list[tuple[str, int]]:
-    """Return list of (TICKER, mention_count) from WSB hot, desc order."""
-    req = urllib.request.Request(WSB_API, headers=WSB_HEADERS)
+def _fetch_json(url: str) -> dict:
+    req = urllib.request.Request(url, headers=WSB_HEADERS)
     with urllib.request.urlopen(req, timeout=15) as resp:
-        data = json.loads(resp.read().decode())
+        return json.loads(resp.read().decode())
 
+
+def _counts_from_reddit() -> dict[str, int]:
+    data = _fetch_json(WSB_API)
     posts = data.get("data", {}).get("children", [])
     counts: dict[str, int] = {}
     for post in posts:
@@ -88,6 +93,34 @@ def _fetch_wsb_tickers() -> list[tuple[str, int]]:
         blob = f"{pd.get('title', '')} {pd.get('selftext', '')}"
         for ticker in _TICKER_RE.findall(blob):
             counts[ticker] = counts.get(ticker, 0) + 1
+    return counts
+
+
+def _counts_from_apewisdom() -> dict[str, int]:
+    data = _fetch_json(APEWISDOM_API)
+    return {
+        str(row.get("ticker", "")).upper(): int(row.get("mentions") or 0)
+        for row in data.get("results", [])
+        if row.get("ticker")
+    }
+
+
+def _fetch_wsb_tickers() -> list[tuple[str, int]]:
+    """Return list of (TICKER, mention_count) from WSB hot, desc order.
+
+    Tries Reddit first, then ApeWisdom — Reddit 403-blocks unauthenticated
+    JSON from this network, so the fallback is the working path in practice.
+    A dead source logs ONE line, never a traceback.
+    """
+    counts: dict[str, int] = {}
+    for name, fetch in (("reddit", _counts_from_reddit),
+                        ("apewisdom", _counts_from_apewisdom)):
+        try:
+            counts = fetch()
+            if counts:
+                break
+        except Exception as e:
+            log.info(f"[WSB_SIGNAL] {name} source failed: {e}")
 
     qualified = [(t, c) for t, c in counts.items() if t in ALLOWED_TICKERS]
     qualified.sort(key=lambda x: x[1], reverse=True)
@@ -147,9 +180,8 @@ def run_wsb_signal_cycle() -> None:
     log.info("[WSB_SIGNAL] Fetching WSB hot tickers...")
     try:
         tickers = _fetch_wsb_tickers()
-    except Exception:
-        log.info("[WSB_SIGNAL] Failed to fetch WSB:")
-        traceback.print_exc()
+    except Exception as e:
+        log.warning(f"[WSB_SIGNAL] Failed to fetch WSB: {e}")
         return
 
     if not tickers:

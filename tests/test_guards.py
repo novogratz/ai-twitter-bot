@@ -2849,3 +2849,28 @@ def test_urgent_quote_skips_spacing_keeps_cap(monkeypatch):
     monkeypatch.setattr(ag, "count_today", lambda a: 10**9)
     ok_cap, why_cap = ag.can_post(ag.QUOTE, urgent=True)
     assert not ok_cap and "cap" in why_cap
+
+
+def test_wsb_fetch_falls_back_when_reddit_blocked(monkeypatch):
+    """2026-07-04: Reddit 403-blocks unauthenticated hot.json from this
+    network, so the weekly WSB signal fetch died with a full traceback in
+    bot.log every attempt. Pin the contract: a blocked Reddit source falls
+    through to ApeWisdom (normalized to (TICKER, mentions) and gated by
+    ALLOWED_TICKERS), and a total source failure returns [] without raising."""
+    import urllib.error
+    from src import wsb_signal_bot as wsb
+
+    def reddit_blocked():
+        raise urllib.error.HTTPError(wsb.WSB_API, 403, "Blocked", {}, None)
+
+    monkeypatch.setattr(wsb, "_counts_from_reddit", reddit_blocked)
+    monkeypatch.setattr(
+        wsb, "_counts_from_apewisdom",
+        lambda: {"NVDA": 40, "GME": 90, "RKLB": 7},
+    )
+    tickers = wsb._fetch_wsb_tickers()
+    assert tickers == [("NVDA", 40), ("RKLB", 7)], tickers  # GME not allowed
+
+    # both sources dead => empty list, no exception escapes
+    monkeypatch.setattr(wsb, "_counts_from_apewisdom", reddit_blocked)
+    assert wsb._fetch_wsb_tickers() == []

@@ -4,6 +4,19 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-07-04 — WSB signal fetch: Reddit 403-blocks unauthenticated JSON →
+> ApeWisdom fallback:** the weekly `wsb_signal_bot` cycle died every attempt
+> with `HTTP Error 403: Blocked` — Reddit blocks unauthenticated
+> `hot.json` from this network regardless of User-Agent/endpoint (www, old,
+> api.reddit.com all tested 403). Fix: `_fetch_wsb_tickers` is now a source
+> ladder — Reddit first (in case the block lifts), then ApeWisdom
+> (`apewisdom.io/api/v1.0/filter/wallstreetbets`, pre-aggregated WSB ticker
+> mentions, no auth) normalized to the same `(TICKER, mentions)` shape and
+> gated by `ALLOWED_TICKERS`. A dead source logs ONE line (no traceback
+> spam in bot.log); total failure returns [] and the cycle skips cleanly.
+> Live-verified: ApeWisdom returned META/MSFT/NVDA/AMD/ASTS. Guard:
+> `test_wsb_fetch_falls_back_when_reddit_blocked`.
+
 > **2026-06-18 — reply_winners bank empty for 3 days (scroll depth fix):**
 > `[REPLY_WINNERS] no qualifying replies scraped — bank cleared` had fired
 > every 3h cycle since the bank shipped 2026-06-15. Live log proved the
