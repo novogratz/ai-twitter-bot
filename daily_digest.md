@@ -809,3 +809,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - top sources: STUNT=1
 
 **Followers we follow** (running total): 270
+
+## 2026-07-04
+
+**Activity** — total actions: 437
+  - by type: reply=372, quote=32, quote_gif=17, post=12, retweet=2, hotake=2
+  - top sources: SEARCH-HOT=267, FEED-SWEEP-FEED=51, VIP=25, FEED-SWEEP-FOLLOWING=24, QUOTE=24, GIF=20, BREAKING_QRT=6, BREAKOUT=4
+  - comedy patterns: RENAME=1
+  - top reply targets: @Graphseo=25, @TheBTCTherapist=12, @TheCryptoSquire=6, @WhaleInsider=5, @StockSavvyShay=5
+
+**Followers we follow** (running total): 274
+
+**Top-performing posts scraped today**:
+  - 0 likes / 8 views: me in 2019 very confidently diagnosing the grid with EV anxiety
+  - 0 likes / 5 views: Me holding AI infrastructure stocks, reading "the biggest AI gains won't go to AI stocks"   you buil
+  - 0 likes / 14 views: me reading "that liquidity gets swept" and very calmly not opening coinbase
