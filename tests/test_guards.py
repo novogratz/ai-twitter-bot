@@ -2193,10 +2193,18 @@ def test_agent_bounds_allow_operator_volume_mandate():
     assert ALLOWED_PATHS["caps.MAX_NEWS_PER_DAY"][1] >= 8
     assert ALLOWED_PATHS["caps.MAX_HOTAKES_PER_DAY"][1] >= 14
     assert ALLOWED_PATHS["caps.MAX_QUOTES_PER_DAY"][1] >= 100  # 2026-06-16 crazy mode
-    # Growth mode 2026-06-11 (operator: follows + followback back ON):
-    # follow_blast allowed at a human trickle, never above 3/cycle.
-    assert ALLOWED_PATHS["caps.FOLLOW_BLAST_PER_CYCLE"][1] <= 3, \
-        "follow_blast must stay a trickle (agent ceiling <= 3/cycle)"
+    # 2026-07-05 operator "like and follow more": both agents own the
+    # like/follow keys with matching bounds. Floor 1 on follow_blast — a
+    # lab-written 0 killed ALL blast follows through early July, and
+    # meta_strategy's wholesale caps rewrite must not drop the keys either.
+    for bounds in (_BOUNDS, {k.replace("caps.", ""): v for k, v in ALLOWED_PATHS.items()}):
+        assert bounds["FOLLOW_BLAST_PER_CYCLE"][0] >= 1, \
+            "agents must never zero follow discovery again"
+        assert bounds["FOLLOW_BLAST_PER_CYCLE"][1] <= 5, \
+            "follow_blast stays human-paced (ceiling <= 5/cycle)"
+        assert bounds["LIKE_BOT_PER_CYCLE"][0] >= 1
+        assert bounds["LIKE_BOT_PER_CYCLE"][1] <= 60, \
+            "like_bot ceiling stays below automation-flag territory"
 
 
 def test_follow_blast_is_topic_search_through_chokepoint():

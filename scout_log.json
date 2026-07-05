@@ -7875,5 +7875,50 @@
       }
     ],
     "summary": "Une s\u00e9lection propre, sans les vendeurs de r\u00eaves. On y a mis les experts techniques qui ont du fond plut\u00f4t que du bruit. L'IA fran\u00e7aise bouge, les Qu\u00e9b\u00e9cois font mieux leur travail en silence."
+  },
+  {
+    "ts": "2026-07-05T07:34:22.961258",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibautMazurier",
+        "region": "france",
+        "niche": "tech",
+        "followers": 180000,
+        "reason": "Journaliste Tech/Fintech de premier plan, couvre les VC et les succ\u00e8s FR sans tabou."
+      },
+      {
+        "handle": "PierreRoche",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 60000,
+        "reason": "VC et investisseur fran\u00e7ais bas\u00e9 \u00e0 SF, couvre AI et SaaS avec un r\u00e9seau immense."
+      },
+      {
+        "handle": "SylvainDuclos",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 55000,
+        "reason": "Ex-AMF qui d\u00e9crypte la finance fran\u00e7aise avec un humour sec, pas de pub de formation \u00e0 la cl\u00e9."
+      },
+      {
+        "handle": "AlexisMazari",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Fondateur de Bitstamp France, analyse de march\u00e9 solide et tweets quotidiens."
+      },
+      {
+        "handle": "MathisBoulay",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour l'analyse de march\u00e9 et la psychologie du trader."
+      }
+    ],
+    "summary": "Une s\u00e9lection 100% active, sans les influenceurs formations de base, centr\u00e9e sur l'analyse et la tech pure."
   }
 ]

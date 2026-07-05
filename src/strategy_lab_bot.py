@@ -65,10 +65,11 @@ ALLOWED_PATHS = {
     "caps.MAX_QUOTES_PER_DAY":    (60, 240),
     "caps.MAX_RETWEETS_PER_DAY":  (0, 2),
     "caps.MAX_REPLIES_PER_CYCLE": (1, 50),
-    # Growth mode 2026-06-11: follow_blast re-enabled at a human trickle
-    # (operator: "go back on following people"). Agents may tune 0-3.
-    "caps.FOLLOW_BLAST_PER_CYCLE": (0, 3),
-    "caps.LIKE_BOT_PER_CYCLE":    (0, 25),  # 2026-06-16 r2 up (own-post lane safe)
+    # 2026-07-05 operator: "like and follow more" — floor 1 so an agent can
+    # never zero follow discovery again (a lab-written 0 killed all blast
+    # follows through early July); ceiling 5 keeps human pacing.
+    "caps.FOLLOW_BLAST_PER_CYCLE": (1, 5),
+    "caps.LIKE_BOT_PER_CYCLE":    (5, 60),  # 2026-07-05 like-more mandate
     "cadence_factor":             (0.5, 1.5),
 }
 

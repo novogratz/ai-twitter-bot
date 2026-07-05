@@ -62,6 +62,12 @@ _BOUNDS = {
     "MAX_BREAKOUTS_PER_DAY": (0,  2),
     "MAX_SPICY_PER_DAY":     (0,  2),
     "MAX_REPLIES_PER_CYCLE": (3,  50),
+    # 2026-07-05 operator "like and follow more": these two keys used to be
+    # strategy_lab-only, so this agent's wholesale caps rewrite silently
+    # DROPPED them every 4h. Owning them here keeps the two clamp sites in
+    # sync; floor 1 on follow_blast so a rewrite can't zero discovery.
+    "FOLLOW_BLAST_PER_CYCLE": (1,  5),
+    "LIKE_BOT_PER_CYCLE":    (5,  60),
 }
 
 # Safe defaults used when the LLM omits a cap key entirely.
@@ -73,6 +79,8 @@ _DEFAULTS = {
     "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY":     1,
     "MAX_REPLIES_PER_CYCLE": 25,
+    "FOLLOW_BLAST_PER_CYCLE": 4,
+    "LIKE_BOT_PER_CYCLE":    50,
 }
 
 

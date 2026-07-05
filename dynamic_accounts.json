@@ -845,7 +845,12 @@
     "AlexisDrouin_",
     "LuccaDumas",
     "RomainGiraud",
-    "ValentinGoury"
+    "ValentinGoury",
+    "ThibautMazurier",
+    "PierreRoche",
+    "SylvainDuclos",
+    "AlexisMazari",
+    "MathisBoulay"
   ],
   "en": [
     "blablacar",
@@ -1141,7 +1146,8 @@
     "Atitty",
     "Cryptic",
     "NASA",
-    "val"
+    "val",
+    "Xctober"
   ],
   "history": [
     {
@@ -6842,6 +6848,36 @@
     {
       "lang": "fr",
       "handle": "ValentinGoury",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "Xctober",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMazurier",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRoche",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainDuclos",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisMazari",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathisBoulay",
       "added": "2026-07-05"
     }
   ]

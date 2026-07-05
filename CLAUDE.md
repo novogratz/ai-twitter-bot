@@ -4,6 +4,24 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **Mandate 2026-07-05 — LIKE + FOLLOW MORE (operator: "make the bot like
+> and follow more posts / people"):** partial re-warm of the 2026-06-15
+> like cooldown + follow discovery unblocked. Root cause of low follows:
+> `live_strategy.json` carried a strategy_lab-written
+> `FOLLOW_BLAST_PER_CYCLE: 0` that overrode .env at call time — zero blast
+> follows for weeks. Changes: likes — like_bot 35→50/cycle, 500→800/day;
+> `REPLY_LIKE_PARENT_PROB` 0.12→0.3, `QUOTE_LIKE_PARENT_PROB` 0.2→0.4,
+> `NOTIFY_LIKE_REPLIES_COUNT` 3→5. Follows — blast 2→4/cycle, 25→40/day;
+> `MAX_FOLLOWS_PER_DAY` 40→60, `FOLLOWBACK_CAP` 20→30. All clamp sites
+> moved together: strategy_lab `ALLOWED_PATHS` follow_blast (0,3)→**(1,5)**
+> (floor 1 so an agent can never zero discovery again), like_bot
+> (0,25)→(5,60); meta_strategy `_BOUNDS`/`_DEFAULTS` now OWN both keys
+> (its wholesale caps rewrite silently dropped them every 4h);
+> live_strategy.json unclamped to 50/4. Unchanged guardrails: 10-min
+> jittered follow gaps, 10K+niche follow quality gate, FOLLOW_TOTAL_CAP
+> 3500. Guard: like/follow pins in
+> `test_agent_bounds_allow_operator_volume_mandate`.
+
 > **2026-07-04 — WSB signal fetch: Reddit 403-blocks unauthenticated JSON →
 > ApeWisdom fallback:** the weekly `wsb_signal_bot` cycle died every attempt
 > with `HTTP Error 403: Blocked` — Reddit blocks unauthenticated
