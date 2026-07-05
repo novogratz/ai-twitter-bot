@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-05T13:38:25.194520",
-  "window_7d_actions": 827,
-  "window_24h_actions": 669,
+  "generated_at": "2026-07-05T17:38:25.308505",
+  "window_7d_actions": 943,
+  "window_24h_actions": 671,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 824
+      "count": 940
     },
     {
       "pattern": "RENAME",
@@ -27,12 +27,16 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 824
+      "count": 940
     }
   ],
   "best_hours_utc": [
     {
       "hour": 10,
+      "actions": 66
+    },
+    {
+      "hour": 14,
       "actions": 66
     },
     {
@@ -44,30 +48,26 @@
       "actions": 61
     },
     {
-      "hour": 11,
-      "actions": 50
-    },
-    {
-      "hour": 8,
-      "actions": 49
+      "hour": 13,
+      "actions": 60
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 407
+      "count": 460
     },
     {
       "topic": "IA",
-      "count": 290
+      "count": 338
     },
     {
       "topic": "Crypto",
-      "count": 115
+      "count": 128
     },
     {
       "topic": "Bourse",
-      "count": 57
+      "count": 62
     },
     {
       "topic": "Spatial",
@@ -78,19 +78,19 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 332
+      "count": 385
     },
     {
       "pillar": "other",
-      "count": 268
+      "count": 303
     },
     {
       "pillar": "market_trauma",
-      "count": 172
+      "count": 194
     },
     {
       "pillar": "meme_reaction",
-      "count": 34
+      "count": 40
     },
     {
       "pillar": "reply_bait",
@@ -104,19 +104,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 273
+      "count": 280
     },
     {
       "pillar": "other",
-      "count": 215
+      "count": 211
     },
     {
       "pillar": "market_trauma",
-      "count": 142
+      "count": 139
     },
     {
       "pillar": "meme_reaction",
-      "count": 25
+      "count": 28
     },
     {
       "pillar": "ai_vs_btc",
@@ -124,7 +124,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 6
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -167,19 +167,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 705
+      "count": 806
     },
     {
       "type": "quote",
-      "count": 62
+      "count": 70
     },
     {
       "type": "quote_gif",
-      "count": 30
+      "count": 36
     },
     {
       "type": "post",
-      "count": 22
+      "count": 23
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-05T13:38:23.979704",
-      "text": "Adverse incident reporting works because builders ship differently when they know the incident report goes public.\n\nmoney moves before principles do.",
+      "ts": "2026-07-05T17:38:04.371695",
+      "text": "6 mois d'itération, une nuit de boucles. C'est pas plus rapide, c'est autonome.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-05T13:37:04.467444",
-      "text": "Les modèles divers c'est cool. Mais qui fournit l'électricité vraiment pas chère? C'est là que le duopole reste.",
+      "ts": "2026-07-05T17:35:12.410938",
+      "text": "A gives you chip moat (Nvidia, AMD) plus Apple's ecosystem. B gives you cloud moat (AWS) plus Tesla's energy play. B is wider, both crush if AI capex stays hot.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-05T13:35:53.228967",
-      "text": "Ripple officially on AWS Partner Network. Enterprise blockchain is now infrastructure-grade.",
+      "ts": "2026-07-05T17:34:21.750779",
+      "text": "3 to 3.5 in 3 months. when inference velocity matters most, everyone ships faster. model scale stopped being the differentiator.",
       "type": "reply"
     }
   ]
