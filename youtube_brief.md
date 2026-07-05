@@ -1,15 +1,15 @@
-# YouTube brief — 2026-07-04
+# YouTube brief — 2026-07-05
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **72**
-- reply: **57**
-- quote_gif: **4**
-- quote: **4**
-- post: **3**
-- retweet: **2**
+- Total actions logged: **449**
+- reply: **381**
+- quote: **34**
+- quote_gif: **17**
+- post: **12**
+- retweet: **3**
 - hotake: **2**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
@@ -30,7 +30,6 @@
 
 ### Crypto
 
-- **1 likes / 44 views** — six reasons to exit in six months and nobody left. I don't treat Bitcoin holders, I study them  https://x.com/AshCrypto/status/2067876526759063717…
 - **1 likes / 48 views** — Bitcoin holders watching BlackRock:
 - **1 likes / 16 views** — my Bitcoin patients are calling this a discount. the 9am waitlist is now open.
 
@@ -41,64 +40,54 @@
 ### Other
 
 - **1 likes / 24 views** — 'Friendly or Pragmatic' — my entire intake form, now a toggle
+- **1 likes / 196 views** — the tweet ending at "too unsur" is honestly the most accurate Fable 5 review
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-06-28
-- **@learningeleven** (118 likes, score 9/10) — Timepass talk on Sunday
+## 2026-07-05
+- **@gpaandy** (17 likes, score 8/10) — btc needs $1t fresh capital for the next giga pump.
 
-1. The Next Big AI/EV Bottleneck: Power Distribution
+2011: $2.8b in = 55,000% move.
 
-The Current Challenge (Legacy Tech): Traditional power architectures in data centers (48V/54V) and electric vehicles (400
-  - https://x.com/LearningEleven/status/2071066471590166782
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 130).
-- **@cryptocapooo** (14 likes, score 8/10) — IF THIS IS TRUE... 
+this cycle: $697b in = 689% move.
 
-A wallet from the Satoshi era would have sold 13,700 BTC (≈ $1.2 billion) after 15 years without moving a single bitcoin. 
+old bitcoin = rocket fuel.
 
-It survived:
- Mt. Gox
- The COVID crash
- Luna
- FTX
+new bitcoin = macro asset with gym weights.
 
-...a
-  - https://x.com/CryptocapoOO/status/2071069826571771964
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 30).
+$101b n
+  - https://x.com/GpaAndy/status/2073587668336959690
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 47).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/FactPost]** July 23, 2025: Trump purchases up to $30 million in stock from Nvidia, Microsoft, Meta, Apple, Amazon, and Broadcom
+- **[X_FOLLOWING/Trade Whisperer]** $MU $DRAM AI doesn't run out of ideas. It runs out of HBM.
 
-Later that day: The White House announces a
-  - https://x.com/factpostnews/status/2072708969479450878
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Kalshi]** JUST IN: Nvidia brings in $6 million of revenue per employee per year
-  - https://x.com/Kalshi/status/2073103129449488516
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Polymarket]** JUST IN: Sotheby’s is auctioning Nvidia CEO Jensen Huang’s signature black leather jacket, estimated at $40,000 to $60,000.
-  - https://x.com/Polymarket/status/2072754931275079791
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Ted]** $1,250,000,000,000 has now been wiped out from the US stock market in last 3 hours.
+Micron is the company that decides how much AI is allowed to think.
 
-This is more than the entire market cap of Bitcoin.
-  - https://x.com/TedPillows/status/2072729104730747279
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Jared Friedman]** Wafer made AMD GPUs competitive with NVIDIA chips for AI inference - at half the cost.
-  - https://x.com/snowmaker/status/2073206259608863012
-- **[X_FOLLOWING/Mindset for Money]** The stock I sprinkled pocket change into vs. the one I went balls deep in:
-  - https://x.com/Mindset4Money_X/status/2073128790499217435
-- **[X_FOLLOWING/Crypto with Haris ₿]** Drop $SOL wallet or $ANSEM wallet
+HBM = Cognitive Capacity. It's 
+  - https://x.com/TradexWhisperer/status/2073623508765266420
+- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Nihal]** yeah this is actually a really good point. everyone keeps screaming about nvidia but the memory chips are what’s holding everything back right now. micron’s bee
+  - https://x.com/Nihalvai332/status/2073623831210836379
+- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Zyra]** Great insight @BiyaPay 
 
-Just follow insider Crypto @Ryker_Crypto 
+Everyone talks about Nvidia, but the real AI bottleneck is HBM memory and Micron + SK Hynix are quietly dominating that space. Micron’s
+  - https://x.com/Caiden331/status/2073623462216974781
+- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Arun Trivedi, Founder & Host  AI with Arun Show]** @Google , @Microsoft  & @nvidia  just unlocked the Internet of Agents.  #ARD fixes the two biggest agent failures: context walls and invisible tools. Like searc
+  - https://x.com/aruntrivedi/status/2073623269006286879
+- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/∀rtieu - Declan Rice Shower]** @SheizanSkyline hah dia orang GPU?
+  - https://x.com/unpraditable/status/2073624116809372074
+- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Justelibre]** Científicos chinos desarrollaron un chip de memoria de 40 nanómetros con una red neuronal artificial integrada capaz de modelar estructuras cerebrales complejas
+  - https://x.com/Justelibre1/status/2073624067752575274
+- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/ふぁじだんご　フォロバ100‰【Pfizerはいってます】]** 本邦が米帝の文化的植民地であるとして、Google、Amazon、nvidia、intel、AMD、Qualcomm、VISA、Master あたりを出されると弱いんすよね
 
-And check your wallet later
-  - https://x.com/Crypto__Haris/status/2073414616361951715
-- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/P O O J A | jaadasss]** NVIDIA’s rise from gaming chip company to the arms dealer of the AI boom
-
-Lets read some stats i accumulated : 
-
-Originally built to render video game graphics 
-  - https://x.com/jaadasss/status/2073412219099037739
+一方で、小麦や大豆、トウモロコシをはじめとする農産品やエネルギー資源の売り先としての日本を考えると植民地っぽさが薄れるんですよね、体感ですけど
+  - https://x.com/fajidango/status/2073623789058064872
+- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Yan]** I mean, the GPU is 3x more powerful than a Switch 2 but you’re paying over 6x the price. I don’t think that’s pretty fucking cool tbh
+  - https://x.com/Yan_CGC/status/2073623663815880981
 
 ## 🎬 Suggested video angles
 
@@ -109,4 +98,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-07-04T10:43:45*
+*Generated 2026-07-05T00:33:33*
