@@ -7844,5 +7844,36 @@
       }
     ],
     "summary": "On reste sur les valeurs s\u00fbres : l'IA fran\u00e7aise port\u00e9e par Mistral, la crypto FR sans pub, et la fintech VC. Pas de gourou Telegram, juste des buildeurs qui postent."
+  },
+  {
+    "ts": "2026-07-05T05:47:01.606560",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LuccaDumas",
+        "region": "france",
+        "niche": "tech",
+        "followers": 85000,
+        "reason": "L'expert incontest\u00e9 de l'IA en France, postule comme un chef d'orchestre, pas comme un influenceur qui vend du r\u00eave."
+      },
+      {
+        "handle": "RomainGiraud",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Analyste actionnaro, ses threads d\u00e9cortiquent les bilans sans endormir le lecteur, le format parfait pour X."
+      },
+      {
+        "handle": "ValentinGoury",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Tech leader passionn\u00e9, ses posts sur le SaaS fran\u00e7ais sont plus utiles que 90% des threads viraux du moment."
+      }
+    ],
+    "summary": "Une s\u00e9lection propre, sans les vendeurs de r\u00eaves. On y a mis les experts techniques qui ont du fond plut\u00f4t que du bruit. L'IA fran\u00e7aise bouge, les Qu\u00e9b\u00e9cois font mieux leur travail en silence."
   }
 ]

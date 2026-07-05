@@ -842,7 +842,10 @@
     "MaelleKevin",
     "Alexis_Drouin_",
     "NathanPache",
-    "AlexisDrouin_"
+    "AlexisDrouin_",
+    "LuccaDumas",
+    "RomainGiraud",
+    "ValentinGoury"
   ],
   "en": [
     "blablacar",
@@ -6824,6 +6827,21 @@
     {
       "lang": "fr",
       "handle": "AlexisDrouin_",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuccaDumas",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainGiraud",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "ValentinGoury",
       "added": "2026-07-05"
     }
   ]
