@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-07-04T20:04:59.242657",
-  "window_7d_actions": 771,
-  "window_24h_actions": 331,
+  "generated_at": "2026-07-05T01:33:33.417659",
+  "window_7d_actions": 755,
+  "window_24h_actions": 475,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 767
-    },
-    {
-      "pattern": "UNDERSTATEMENT",
-      "count": 1
+      "count": 750
     },
     {
       "pattern": "RENAME",
+      "count": 2
+    },
+    {
+      "pattern": "UNDERSTATEMENT",
       "count": 1
     },
     {
@@ -30,11 +30,11 @@
       "count": 1
     },
     {
-      "pattern": "RENAME",
+      "pattern": "EN_ANCHOR",
       "count": 1
     },
     {
-      "pattern": "EN_ANCHOR",
+      "pattern": "REPETITION",
       "count": 1
     }
   ],
@@ -63,15 +63,15 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 380
+      "count": 370
     },
     {
       "topic": "IA",
-      "count": 269
+      "count": 257
     },
     {
       "topic": "Crypto",
-      "count": 99
+      "count": 107
     },
     {
       "topic": "Bourse",
@@ -79,89 +79,89 @@
     },
     {
       "topic": "Spatial",
-      "count": 15
+      "count": 12
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 327
+      "count": 310
     },
     {
       "pillar": "other",
-      "count": 232
+      "count": 238
     },
     {
       "pillar": "market_trauma",
-      "count": 166
+      "count": 159
     },
     {
       "pillar": "meme_reaction",
-      "count": 30
+      "count": 31
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 6
     }
   ],
   "pillar_mix_24h": [
     {
-      "pillar": "other",
-      "count": 120
+      "pillar": "ai_news_take",
+      "count": 179
     },
     {
-      "pillar": "ai_news_take",
-      "count": 119
+      "pillar": "other",
+      "count": 168
     },
     {
       "pillar": "market_trauma",
-      "count": 67
+      "count": 94
     },
     {
       "pillar": "meme_reaction",
-      "count": 15
+      "count": 21
     },
     {
       "pillar": "reply_bait",
-      "count": 7
+      "count": 8
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
-      "posts": 3,
-      "avg_likes": 18.67,
-      "avg_views": 7625.3,
+      "posts": 2,
+      "avg_likes": 28.0,
+      "avg_views": 11435.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 48,
-      "avg_likes": 0.08,
-      "avg_views": 27.2,
+      "posts": 47,
+      "avg_likes": 0.09,
+      "avg_views": 26.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 57,
+      "posts": 59,
       "avg_likes": 0.07,
-      "avg_views": 28.2,
+      "avg_views": 28.5,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 91,
       "avg_likes": 0.07,
-      "avg_views": 30.1,
+      "avg_views": 30.0,
       "low_sample": false
     },
     {
@@ -175,7 +175,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 665
+      "count": 648
     },
     {
       "type": "quote",
@@ -183,7 +183,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 26
+      "count": 27
     },
     {
       "type": "post",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-04T20:02:44.840655",
-      "text": "Ai capex is the eight-year tailwind for nvda and msft. btc cycles every four years. split if you're patient, btc if you can actually time the euphoria peak in 2025-26. most people get the timing wrong.",
+      "ts": "2026-07-05T01:32:47.666430",
+      "text": "$100B per gigawatt. nvidia doesn't build these. hyperscalers do. nvidia sells the chips. hyperscalers own the balance sheets.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-04T19:59:10.476506",
-      "text": "Privacy doesn't move tokens on solana. liquidity does. whoever has less vesting / better dex distribution wins the cap contest, regardless of tech.",
-      "type": "reply"
+      "ts": "2026-07-05T01:32:26.227536",
+      "text": "Meta’s AI is stuck in neutral. Ackman sees a dividend yield; we see a data center graveyard. While $PLTR prints, Zuckerberg is just optimizing ads with a slower model. Buy the yield, get the lag. ⚡",
+      "type": "quote"
     },
     {
-      "ts": "2026-07-04T19:55:28.013253",
-      "text": "SK Hynix and SNDK got hit harder, so furthest to recover. You're ranking by cycle leverage, not tech or dominance.",
+      "ts": "2026-07-05T01:30:00.039549",
+      "text": "2008 was real. Every apocalypse call since? The interest on that one hit.",
       "type": "reply"
     }
   ]
