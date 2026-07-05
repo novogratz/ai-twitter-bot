@@ -834,7 +834,9 @@
     "VincentDelaune",
     "ArnaudLescot",
     "ThibautNoyelle",
-    "0xMerlin"
+    "0xMerlin",
+    "CyrilDonguy",
+    "MarcLachance"
   ],
   "en": [
     "blablacar",
@@ -6764,6 +6766,16 @@
     {
       "lang": "fr",
       "handle": "0xMerlin",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDonguy",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLachance",
       "added": "2026-07-04"
     }
   ]

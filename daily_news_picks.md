@@ -15243,3 +15243,18 @@ It survived:
 ...a
   - https://x.com/CryptocapoOO/status/2071069826571771964
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 30).
+
+## 2026-07-05
+- **@gpaandy** (17 likes, score 8/10) — btc needs $1t fresh capital for the next giga pump.
+
+2011: $2.8b in = 55,000% move.
+
+this cycle: $697b in = 689% move.
+
+old bitcoin = rocket fuel.
+
+new bitcoin = macro asset with gym weights.
+
+$101b n
+  - https://x.com/GpaAndy/status/2073587668336959690
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 47).

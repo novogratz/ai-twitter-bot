@@ -7737,5 +7737,36 @@
       }
     ],
     "summary": "Une s\u00e9lection de v\u00e9t\u00e9rans et de fondus techniques qui ont \u00e9vit\u00e9 le pi\u00e8ge du 'gourou'. De l'analyse on-chain pointue (Mert, Merlin) aux narratives IA (Maziero) jusqu'\u00e0 la bourse pragmatique qu\u00e9b\u00e9coise (Noyelle)."
+  },
+  {
+    "ts": "2026-07-04T23:41:50.307172",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilDonguy",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Journaliste tech FR de r\u00e9f\u00e9rence, couvre la SaaS/IA avec un angle pro, pas des influenceurs en costard."
+      },
+      {
+        "handle": "MarcLachance",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 15000,
+        "reason": "Journaliste \u00e9conomique qu\u00e9b\u00e9cois, twitte en FR sur la BCE et les march\u00e9s, pas de blabla politique."
+      },
+      {
+        "handle": "Jean-BaptisteM",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "French-speaking AI dev at Big Tech US, twitte en FR sur le LLM stack, authentique."
+      }
+    ],
+    "summary": "J'ai tri\u00e9 le gras pour ne garder que du solide : Mert pour la crypto, Bessard pour la bourse, et des tech/finance pour le Qu\u00e9bec et la diaspora US."
   }
 ]
