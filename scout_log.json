@@ -7630,5 +7630,88 @@
       }
     ],
     "summary": "Pas de vendeurs de r\u00eave ici, juste des gens qui bougent le march\u00e9 ou \u00e9crivent l'histoire. Le combo Mistral/Fintech FR + Crypto QC est plus solide que jamais."
+  },
+  {
+    "ts": "2026-07-04T16:05:39.073761",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "HugoBonnefoi",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 55000,
+        "reason": "Ex-Quant chez Man Group, style brutal sur les indices US, z\u00e9ro blabla formation, pur trading macro."
+      },
+      {
+        "handle": "D4rkH0dler",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "V\u00e9t\u00e9ran depuis les d\u00e9buts de Bitcoin, tweete des setups techniques secs en fran\u00e7ais sans vendre de r\u00eave."
+      },
+      {
+        "handle": "GaelleH10",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Journaliste tech IA pointue, couvre les LLMs et la French Tech, plus pertinents que les influenceurs lifestyle."
+      },
+      {
+        "handle": "Tangobanana",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "Trader crypto fran\u00e7ais actif, poste des analyses de march\u00e9 quotidiennes, communaut\u00e9 engag\u00e9e sans 'guru-ism'."
+      },
+      {
+        "handle": "MathieuLeclercq",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Founders de Kinesis, focus crypto/web3, ton direct qu\u00e9b\u00e9cois qui balance des insights sur la stabilit\u00e9 coin."
+      },
+      {
+        "handle": "OlivierRochon",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Analyste fondamentaliste CFA, tweete des d\u00e9cryptages de bilans au Qu\u00e9bec, pas de hype, que des chiffres."
+      }
+    ],
+    "summary": "S\u00e9lection ax\u00e9e sur des experts terrain plut\u00f4t que des influenceurs : on a \u00e9cart\u00e9 les vendeurs de r\u00eaves pour ne garder que des traders, analystes et fondateurs qui twittent en fran\u00e7ais avec des donn\u00e9es concr\u00e8tes."
+  },
+  {
+    "ts": "2026-07-04T18:21:43.785005",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "HugoBisson",
+        "region": "france",
+        "niche": "ai",
+        "followers": 48000,
+        "reason": "CTO Mistral, il tweet la vraie tech AI et pas juste le buzz. L'expert du hardware FR, twitte EN FR et EN EN mais la substance est ultra-cibl\u00e9e."
+      },
+      {
+        "handle": "VincentDelaune",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "VC \u00e0 NY mais francophone pur jus. Il tweet sur le funding de la tech crypto et l'IA, avec un regard frais sur l'\u00e9cosyst\u00e8me US."
+      },
+      {
+        "handle": "ArnaudLescot",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Fondateur de Moneyflow, il fait un thread par jour sur le CAC40. C'est technique, c'est francophone, et il a un sens de la chute qui claque."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la soupe \u00e0 l'influencer pour garder les technocrates et les pros du terrain. Tu as l'IA fran\u00e7aise, le trading boursier concret et la crypto qu\u00e9b\u00e9coise/am\u00e9ricaine. Z\u00e9ro formation \u00e0 199\u20ac."
   }
 ]

@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-04T16:04:59.156417",
-  "window_7d_actions": 787,
-  "window_24h_actions": 227,
+  "generated_at": "2026-07-04T20:04:59.242657",
+  "window_7d_actions": 771,
+  "window_24h_actions": 331,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 783
+      "count": 767
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -63,38 +63,38 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 395
+      "count": 380
     },
     {
       "topic": "IA",
-      "count": 268
+      "count": 269
     },
     {
       "topic": "Crypto",
-      "count": 105
+      "count": 99
     },
     {
       "topic": "Bourse",
-      "count": 41
+      "count": 49
     },
     {
       "topic": "Spatial",
-      "count": 14
+      "count": 15
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 334
+      "count": 327
     },
     {
       "pillar": "other",
-      "count": 230
+      "count": 232
     },
     {
       "pillar": "market_trauma",
-      "count": 177
+      "count": 166
     },
     {
       "pillar": "meme_reaction",
@@ -111,57 +111,57 @@
   ],
   "pillar_mix_24h": [
     {
-      "pillar": "ai_news_take",
-      "count": 84
+      "pillar": "other",
+      "count": 120
     },
     {
-      "pillar": "other",
-      "count": 79
+      "pillar": "ai_news_take",
+      "count": 119
     },
     {
       "pillar": "market_trauma",
-      "count": 45
+      "count": 67
     },
     {
       "pillar": "meme_reaction",
-      "count": 11
+      "count": 15
     },
     {
       "pillar": "reply_bait",
-      "count": 6
+      "count": 7
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
-      "posts": 4,
-      "avg_likes": 14.0,
-      "avg_views": 5731.2,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 55,
-      "avg_likes": 0.09,
-      "avg_views": 29.5,
+      "posts": 3,
+      "avg_likes": 18.67,
+      "avg_views": 7625.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 50,
+      "posts": 48,
       "avg_likes": 0.08,
-      "avg_views": 26.9,
+      "avg_views": 27.2,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 57,
+      "avg_likes": 0.07,
+      "avg_views": 28.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 90,
+      "posts": 91,
       "avg_likes": 0.07,
-      "avg_views": 30.0,
+      "avg_views": 30.1,
       "low_sample": false
     },
     {
@@ -175,19 +175,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 681
+      "count": 665
     },
     {
       "type": "quote",
-      "count": 57
+      "count": 53
     },
     {
       "type": "quote_gif",
-      "count": 27
+      "count": 26
     },
     {
       "type": "post",
-      "count": 14
+      "count": 19
     },
     {
       "type": "hotake",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-04T16:04:51.212677",
-      "text": "Perfectly predicted this pump. Channel patterns work perfectly until Bitcoin gaps past them overnight. $58K floor becomes a trap when vol spikes. That's the call that matters.",
+      "ts": "2026-07-04T20:02:44.840655",
+      "text": "Ai capex is the eight-year tailwind for nvda and msft. btc cycles every four years. split if you're patient, btc if you can actually time the euphoria peak in 2025-26. most people get the timing wrong.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-04T16:04:31.813951",
-      "text": "Miners execute. Nodes validate. Holders fund. Only one moves the chain.",
+      "ts": "2026-07-04T19:59:10.476506",
+      "text": "Privacy doesn't move tokens on solana. liquidity does. whoever has less vesting / better dex distribution wins the cap contest, regardless of tech.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-04T16:02:54.643321",
-      "text": "Pattern confirmed. by the time alts OI flips, price already peaked. the lag itself is why it's such a reliable indicator.",
+      "ts": "2026-07-04T19:55:28.013253",
+      "text": "SK Hynix and SNDK got hit harder, so furthest to recover. You're ranking by cycle leverage, not tech or dominance.",
       "type": "reply"
     }
   ]

@@ -823,7 +823,16 @@
     "JL_Artaud",
     "AlexisVannier",
     "MaximeCormier",
-    "JF_Francheteau"
+    "JF_Francheteau",
+    "HugoBonnefoi",
+    "D4rkH0dler",
+    "GaelleH10",
+    "Tangobanana",
+    "MathieuLeclercq",
+    "OlivierRochon",
+    "HugoBisson",
+    "VincentDelaune",
+    "ArnaudLescot"
   ],
   "en": [
     "blablacar",
@@ -1114,7 +1123,9 @@
     "Shiela",
     "ali",
     "Chesny",
-    "NVIDIA"
+    "NVIDIA",
+    "Zynx",
+    "Atitty"
   ],
   "history": [
     {
@@ -6680,6 +6691,61 @@
     {
       "lang": "fr",
       "handle": "JF_Francheteau",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoBonnefoi",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "D4rkH0dler",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelleH10",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "Tangobanana",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuLeclercq",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierRochon",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "en",
+      "handle": "Zynx",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "en",
+      "handle": "Atitty",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoBisson",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDelaune",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArnaudLescot",
       "added": "2026-07-04"
     }
   ]
