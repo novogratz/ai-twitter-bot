@@ -2073,6 +2073,13 @@ For full operations playbook see [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
 
 ## Skills
 
+> `bin/stop_bot.sh` — arms `.bot_disabled` + SIGTERMs main.py processes
+> scoped to this repo's cwd. Wired as the operator's local Claude Code
+> Stop hook (2026-07-05, `.claude/settings.local.json`, not in git) so
+> every agentic session ends with the bot stopped; operator restarts
+> manually.
+
+
 User-invokable slash commands live under `.claude/skills/` (mirrored at `.codex/skills/`). 27 skills, each is a directory with a `SKILL.md` file:
 
 - **Lifecycle**: `start`, `stop`, `restart`, `status`, `run-agent`
