@@ -832,7 +832,9 @@
     "OlivierRochon",
     "HugoBisson",
     "VincentDelaune",
-    "ArnaudLescot"
+    "ArnaudLescot",
+    "ThibautNoyelle",
+    "0xMerlin"
   ],
   "en": [
     "blablacar",
@@ -1125,7 +1127,8 @@
     "Chesny",
     "NVIDIA",
     "Zynx",
-    "Atitty"
+    "Atitty",
+    "Cryptic"
   ],
   "history": [
     {
@@ -6746,6 +6749,21 @@
     {
       "lang": "fr",
       "handle": "ArnaudLescot",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "en",
+      "handle": "Cryptic",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautNoyelle",
+      "added": "2026-07-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xMerlin",
       "added": "2026-07-04"
     }
   ]

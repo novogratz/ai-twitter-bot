@@ -1,216 +1,251 @@
 {
-  "ts": "2026-06-14T20:40:27.134856",
-  "count": 30,
+  "ts": "2026-07-04T20:40:03.990480",
+  "count": 35,
   "items": [
     {
-      "src": "CoinDesk",
-      "title": "Bitcoin shoots higher on Iran peace deal, with Strait of Hormuz set to open",
-      "url": "https://www.coindesk.com/markets/2026/06/14/bitcoin-shoots-higher-on-iran-deal-with-strait-of-hormuz-set-to-open",
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Evan",
+      "title": "Nvidia $NVDA just announced a new business model that \n\n\"opens up compute access to the fast‑growing AI ecosystem of startups, model builders, enterprises, research organizations and regional AI playe",
+      "url": "https://x.com/StockMKTNewz/status/2072647687577522586",
+      "score": 490,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Leif | Investing",
+      "title": "10 Hot Market Themes & the Most Attractive Buy in Each Right Now \n\n Space Economy: $ASTS\n Power & Grid: $VST\n AI Semiconductors: $NVDA\n Fintech: $SOFI\n Enterprise Software: $ORCL\n Cybersecurity: $CRWD",
+      "url": "https://x.com/LeifInvests/status/2073102371773648896",
+      "score": 132,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Rich Peter",
+      "title": "$CRWV --- The sharp selloff in $CRWV triggered by Meta-related headlines has created an ideal dollar-cost averaging entry opportunity that perfectly embodies Warren Buffett’s mantra: “Be greedy when o",
+      "url": "https://x.com/peterli34923561/status/2073236261612183768",
+      "score": 119,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Winston",
+      "title": "A one-megawatt AI rack at 54 volts pushes about 18,500 amperes through its busbars, which is why a single rack can need up to 441 pounds (200 kilograms) of copper. Raise the distribution to 800 volts",
+      "url": "https://x.com/ChurchillWw/status/2073462091399503892",
+      "score": 23,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Cole’s Trades",
+      "title": "If you had to full port one stock, what would you pick?\n\n$SOFI\n\n$NOW\n\n$MU\n\n$CRWV",
+      "url": "https://x.com/ColesTrades/status/2073533595507888386",
+      "score": 22,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/Polymarket",
+      "title": "JUST IN: China issues new guidelines urging cinemas to add AI agents, karaoke, & coffee shops.",
+      "url": "https://x.com/Polymarket/status/2073565145079349320",
+      "score": 17,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/Polymarket",
+      "title": "JUST IN: China issues new guidelines urging cinemas to add AI agents, karaoke, & coffee shops.",
+      "url": "https://x.com/Polymarket/status/2073565145079349320",
+      "score": 6,
+      "ts": ""
+    },
+    {
+      "src": "X_HOME/Mario Nawfal",
+      "title": "South Korea’s chip trade is getting dangerously leveraged\n\nLeveraged & inverse ETFs tied to SK Hynix alone now hold ~$19 BILLION: over 4× the stock’s average daily trading volume.\n\nSamsung’s at ~$12.4",
+      "url": "https://x.com/MarioNawfal/status/2073565021708193959",
+      "score": 6,
+      "ts": ""
+    },
+    {
+      "src": "X_FOLLOWING/Polymarket",
+      "title": "13% chance a Chinese company has a #1 AI model by the end of the year.",
+      "url": "https://x.com/Polymarket/status/2073565515969187896",
+      "score": 1,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Szymon Machalica",
+      "title": "Meta first surged 8.8%, only to drop 4.6% the next day. The market spotted a simple truth: the idea of selling AI computing power sounds great, but its feasibility and timing are far less clear-cut.",
+      "url": "https://x.com/SzymonMachalic1/status/2072750833616249045",
       "score": 0,
-      "ts": "2026-06-15T00:08:10"
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/FreeFromMatrix",
+      "title": "$CRWV early? It's at $44B MC, bro, and $NBIS is at $51B.\n\nJust by comparing stock prices, one cannot state that Coreweave is early.",
+      "url": "https://x.com/ViralMuzik1989/status/2073539154760065171",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Manish Malhotra",
+      "title": "Stock to Watch | $NVDA\n\nJuly 3, 2026 | NVIDIA\n\nNVIDIA CEO Jensen Huang says the economics of AI infrastructure are entering a new era.\n\nAccording to Huang, a 1-gigawatt AI factory built on NVIDIA arch",
+      "url": "https://x.com/algotradingdesk/status/2073553425221161237",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Katusa Research",
+      "title": "The MegaWatt War is coming in hot. \n\nOver the last two years…\n\nthe biggest technology companies on earth quietly signed more than 12,000 megawatts of nuclear power into binding contracts.",
+      "url": "https://x.com/KatusaResearch/status/2073197975220977809",
+      "score": 0,
+      "ts": ""
+    },
+    {
+      "src": "TechCrunch AI",
+      "title": "New Google commercial imagines a Declaration of Independence written with help from AI",
+      "url": "https://techcrunch.com/2026/07/04/new-google-commercial-imagines-a-declaration-of-independence-written-with-help-from-ai/",
+      "score": 0,
+      "ts": "2026-07-04T20:55:25"
+    },
+    {
+      "src": "The Block",
+      "title": "Bitcoin ETFs log record eighth straight negative week despite large Thursday inflow",
+      "url": "https://www.theblock.co/post/407173/bitcoin-etfs-log-record-eighth-straight-negative-week-despite-large-thursday-inflow?utm_source=rss&utm_medium=rss",
+      "score": 0,
+      "ts": "2026-07-04T19:56:20"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Bitcoin jumps above $63,000, reversing end-June losses",
+      "url": "https://www.coindesk.com/markets/2026/07/04/bitcoin-jumps-above-usd63-000-reversing-end-june-losses",
+      "score": 0,
+      "ts": "2026-07-04T18:07:17"
+    },
+    {
+      "src": "TechCrunch AI",
+      "title": "Midjourney wants Hollywood studios to reveal the details of their AI usage",
+      "url": "https://techcrunch.com/2026/07/04/midjourney-wants-hollywood-studios-to-reveal-the-details-of-their-ai-usage/",
+      "score": 0,
+      "ts": "2026-07-04T18:00:05"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Bitcoin experts split over plan to freeze Satoshi's 1.1 million bitcoin as quantum threat grows",
+      "url": "https://www.coindesk.com/business/2026/07/04/bitcoin-experts-split-over-plan-to-freeze-satoshi-s-1-1-million-bitcoin-as-quantum-threat-grows",
+      "score": 0,
+      "ts": "2026-07-04T18:00:00"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "How ethical hackers with just a $3,000 server found a flaw that could've put $70 billion in crypto at risk",
+      "url": "https://www.coindesk.com/tech/2026/07/04/how-ethical-hackers-with-just-a-usd3-000-server-found-a-flaw-that-could-ve-put-usd70-billion-in-crypto-at-risk",
+      "score": 0,
+      "ts": "2026-07-04T18:00:00"
+    },
+    {
+      "src": "Decrypt",
+      "title": "Bitcoin to $53K? Exchange Deposits Jump as Analysts Warn of Increased Volatility",
+      "url": "https://decrypt.co/372744/bitcoin-53k-exchange-deposits-jump-analysts-warn-increased-volatility",
+      "score": 0,
+      "ts": "2026-07-04T16:57:08"
+    },
+    {
+      "src": "The Block",
+      "title": "Nearly 1 million wallets are down $3.81 billion on Trump’s memecoin: report",
+      "url": "https://www.theblock.co/post/407170/nearly-1-million-wallets-are-down-3-81-billion-on-trumps-memecoin-report?utm_source=rss&utm_medium=rss",
+      "score": 0,
+      "ts": "2026-07-04T16:44:18"
+    },
+    {
+      "src": "TechCrunch AI",
+      "title": "Alibaba reportedly bans employees from using Claude Code",
+      "url": "https://techcrunch.com/2026/07/04/alibaba-reportedly-bans-employees-from-using-claude-code/",
+      "score": 0,
+      "ts": "2026-07-04T16:32:08"
+    },
+    {
+      "src": "Decrypt",
+      "title": "Perplexity Co-Founder: AI Safety Is an Excuse to Lock Down Frontier",
+      "url": "https://decrypt.co/372755/perplexity-co-founder-ai-safety-excuse-lock-down-frontier",
+      "score": 0,
+      "ts": "2026-07-04T16:07:19"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Why bitcoin's disconnect from record-high stocks won't last",
+      "url": "https://www.coindesk.com/markets/2026/07/03/why-bitcoin-s-disconnect-from-record-high-stocks-won-t-last",
+      "score": 0,
+      "ts": "2026-07-04T16:00:00"
+    },
+    {
+      "src": "TechCrunch AI",
+      "title": "What is Mistral AI? Everything to know about the OpenAI competitor",
+      "url": "https://techcrunch.com/2026/07/04/what-is-mistral-ai-everything-to-know-about-the-openai-competitor/",
+      "score": 0,
+      "ts": "2026-07-04T15:51:32"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Trump's crypto token buyers are down $3.8 billion, blockchain data shows",
+      "url": "https://www.coindesk.com/business/2026/07/04/trump-s-crypto-token-buyers-are-down-usd3-8-billion-blockchain-data-shows",
+      "score": 0,
+      "ts": "2026-07-04T15:30:52"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Europe led on crypto regulation. Now implementation must match ambition",
+      "url": "https://www.coindesk.com/opinion/2026/07/04/europe-led-on-crypto-regulation-now-implementation-must-match-ambition",
+      "score": 0,
+      "ts": "2026-07-04T14:00:00"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "Bollinger Bands creator eyes Bitcoin bear-market end, 'W'-shaped reversal",
+      "url": "https://cointelegraph.com/markets/bollinger-bands-creator-eyes-bitcoin-bear-market-end-w-shaped-reversal?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-07-04T13:09:16"
     },
     {
       "src": "Cointelegraph",
       "title": "Here’s what happened in crypto today",
       "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
       "score": 0,
-      "ts": "2026-06-14T22:19:35"
+      "ts": "2026-07-04T12:04:07"
     },
     {
-      "src": "CNBC Top",
-      "title": "SpaceX market cap tops $2 trillion after shares of Elon Musk's rocket company gain 19% on debut",
-      "url": "https://www.cnbc.com/2026/06/12/spacex-stock-jumps-2-trillion.html",
+      "src": "The Verge",
+      "title": "Matic’s robot vacuum is getting a $250 price hike in September",
+      "url": "https://www.theverge.com/gadgets/960753/matic-robot-vacuum-mop-price-increase-cost-buy",
       "score": 0,
-      "ts": "2026-06-14T21:32:00"
-    },
-    {
-      "src": "CNBC Tech",
-      "title": "SpaceX market cap tops $2 trillion after shares of Elon Musk's rocket company gain 19% on debut",
-      "url": "https://www.cnbc.com/2026/06/12/spacex-stock-jumps-2-trillion.html",
-      "score": 0,
-      "ts": "2026-06-14T21:32:00"
+      "ts": "2026-07-04T12:00:00"
     },
     {
       "src": "CoinDesk",
-      "title": "Bitcoin could crash to $48,000, if this historical pattern is triggered",
-      "url": "https://www.coindesk.com/markets/2026/06/14/bitcoin-could-crash-to-usd48-000-if-this-historical-pattern-is-triggered",
+      "title": "UK's bold new crypto rules promise to unlock global trading, but huge compliance hurdles still threaten the rollout",
+      "url": "https://www.coindesk.com/policy/2026/07/04/uk-s-bold-new-crypto-rules-promise-to-unlock-global-trading-but-huge-compliance-hurdles-still-threaten-the-rollout",
       "score": 0,
-      "ts": "2026-06-14T19:17:30"
+      "ts": "2026-07-04T12:00:00"
     },
     {
-      "src": "Decrypt",
-      "title": "Reve 2.0 Review: The Best AI Image Generator for Layout Control",
-      "url": "https://decrypt.co/371033/reve-2-review-best-ai-image-generator-layout-control",
+      "src": "Wired",
+      "title": "This Buried Apple Feature Turns an iPhone Into the Perfect Kids’ Dumb Phone",
+      "url": "https://www.wired.com/story/this-buried-apple-feature-turns-an-iphone-into-the-perfect-kids-dumb-phone/",
       "score": 0,
-      "ts": "2026-06-14T19:11:33"
+      "ts": "2026-07-04T10:30:00"
     },
     {
-      "src": "Cointelegraph",
-      "title": "StanChart looks for 3 signs of BTC bottom, including Strategy’s Monday news",
-      "url": "https://cointelegraph.com/news/stanchart-looks-for-3-signs-of-btc-bottom-including-strategys-monday-news?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "src": "Wired",
+      "title": "Security Roundup: Apple’s Hide My Email Service Fails to Hide Your Email",
+      "url": "https://www.wired.com/story/security-roundup-apples-hide-my-email-service-fails-to-hide-your-email/",
       "score": 0,
-      "ts": "2026-06-14T19:05:46"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Summer of crypto (regs): State of Crypto",
-      "url": "https://www.coindesk.com/policy/2026/06/14/summer-of-crypto-regs-state-of-crypto",
-      "score": 0,
-      "ts": "2026-06-14T18:30:00"
-    },
-    {
-      "src": "The Block",
-      "title": "Zimbabwe moves to regulate crypto sector, requiring firms to register with central bank: Reuters",
-      "url": "https://www.theblock.co/post/404705/zimbabwe-moves-to-regulate-crypto-sector-requiring-firms-to-register-with-central-bank-reuters?utm_source=rss&utm_medium=rss",
-      "score": 0,
-      "ts": "2026-06-14T18:12:29"
-    },
-    {
-      "src": "The Block",
-      "title": "Bitcoin mining difficulty drops 10% in second-largest negative adjustment of 2026",
-      "url": "https://www.theblock.co/post/404702/bitcoin-mining-difficulty-drops-10-in-second-largest-negative-adjustment-of-2026?utm_source=rss&utm_medium=rss",
-      "score": 0,
-      "ts": "2026-06-14T16:42:19"
-    },
-    {
-      "src": "TechCrunch AI",
-      "title": "As AI companies race to go public, who else is along for the ride?",
-      "url": "https://techcrunch.com/2026/06/14/as-ai-companies-race-to-go-public-who-else-is-along-for-the-ride/",
-      "score": 0,
-      "ts": "2026-06-14T16:38:09"
-    },
-    {
-      "src": "TechCrunch",
-      "title": "As AI companies race to go public, who else is along for the ride?",
-      "url": "https://techcrunch.com/2026/06/14/as-ai-companies-race-to-go-public-who-else-is-along-for-the-ride/",
-      "score": 0,
-      "ts": "2026-06-14T16:38:09"
-    },
-    {
-      "src": "TechCrunch",
-      "title": "TechCrunch Mobility: SpaceX rockets past Tesla",
-      "url": "https://techcrunch.com/2026/06/14/techcrunch-mobility-spacex-rockets-past-tesla/",
-      "score": 0,
-      "ts": "2026-06-14T16:05:00"
+      "ts": "2026-07-04T10:30:00"
     },
     {
       "src": "CNBC Top",
-      "title": "A year after Meta tapped Alexandr Wang to build a new AI model, Zuckerberg has to sell it",
-      "url": "https://www.cnbc.com/2026/06/14/meta-hired-alexandr-wang-to-build-ai-its-zuckerbergs-job-to-sell-it.html",
+      "title": "From Macron to Modi, governments are rolling out the red carpet for AI giants",
+      "url": "https://www.cnbc.com/2026/07/04/macron-modi-ai-infrastructure-tech-ceos.html",
       "score": 0,
-      "ts": "2026-06-14T15:02:35"
-    },
-    {
-      "src": "CNBC Tech",
-      "title": "A year after Meta tapped Alexandr Wang to build a new AI model, Zuckerberg has to sell it",
-      "url": "https://www.cnbc.com/2026/06/14/meta-hired-alexandr-wang-to-build-ai-its-zuckerbergs-job-to-sell-it.html",
-      "score": 0,
-      "ts": "2026-06-14T15:02:35"
-    },
-    {
-      "src": "CNBC Tech",
-      "title": "One quality will be most in-demand from job-seekers in the AI era, Animoca co-founder Siu says",
-      "url": "https://www.cnbc.com/2026/06/14/ceo-of-.html",
-      "score": 0,
-      "ts": "2026-06-14T14:03:30"
+      "ts": "2026-07-04T09:33:19"
     },
     {
       "src": "Cointelegraph",
-      "title": "Ethereum can quantum-proof accounts for just 7 cents, says Ethereum's Kohaku lead",
-      "url": "https://cointelegraph.com/news/ethereum-quantum-proof-accounts-7-cents-researcher?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "title": "Tim Draper denies moving Bitcoin, reiterates $250,000 BTC prediction",
+      "url": "https://cointelegraph.com/news/tim-draper-denies-moving-bitcoin-250k-btc-prediction?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
       "score": 0,
-      "ts": "2026-06-14T13:49:48"
-    },
-    {
-      "src": "Decrypt",
-      "title": "Pokémon Card Sales Are Surging on Crypto Platforms—Just Don't Call It Gambling",
-      "url": "https://decrypt.co/370978/pokemon-cards-surging-crypto-platforms-gambling",
-      "score": 0,
-      "ts": "2026-06-14T13:01:03"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Wall Street and crypto are crashing into each other as tokenized treasury markets hit $14.6 billion",
-      "url": "https://www.coindesk.com/markets/2026/06/11/wall-street-and-crypto-are-crashing-into-each-other-as-tokenized-treasury-markets-hit-usd14-6-billion",
-      "score": 0,
-      "ts": "2026-06-14T13:00:00"
-    },
-    {
-      "src": "CNBC Top",
-      "title": "Here are the 3 big things we're watching in the stock market in the week ahead",
-      "url": "https://www.cnbc.com/2026/06/14/3-big-things-were-watching-in-the-stock-market-in-the-week-ahead.html",
-      "score": 0,
-      "ts": "2026-06-14T12:41:44"
-    },
-    {
-      "src": "The Block",
-      "title": "Trump-backed World Liberty Financial to fund UFC fighter bonuses in USD1 stablecoin at White House event",
-      "url": "https://www.theblock.co/post/404697/trump-backed-world-liberty-financial-to-fund-ufc-fighter-bonuses-in-usd1-stablecoin-at-white-house-event?utm_source=rss&utm_medium=rss",
-      "score": 0,
-      "ts": "2026-06-14T11:44:41"
-    },
-    {
-      "src": "Cointelegraph",
-      "title": "Bitcoin nears $65K as Trump says Hormuz will 'open to all' in Sunday Iran peace deal",
-      "url": "https://cointelegraph.com/markets/bitcoin-nears-65k-as-trump-says-hormuz-will-open-to-all-in-sunday-iran-peace-deal?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "score": 0,
-      "ts": "2026-06-14T10:06:04"
-    },
-    {
-      "src": "Cointelegraph",
-      "title": "Amazon warning triggered US crackdown on Anthropic AI models: Reports",
-      "url": "https://cointelegraph.com/news/amazon-warning-triggered-us-crackdown-on-anthropic-ai-models-reports?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "score": 0,
-      "ts": "2026-06-14T03:36:49"
-    },
-    {
-      "src": "TechCrunch AI",
-      "title": "As Anthropic suspends access to new models, India debates its AI future",
-      "url": "https://techcrunch.com/2026/06/13/as-anthropic-suspends-access-to-new-models-india-debates-its-ai-future/",
-      "score": 0,
-      "ts": "2026-06-14T03:00:00"
-    },
-    {
-      "src": "TechCrunch",
-      "title": "As Anthropic suspends access to new models, India debates its AI future",
-      "url": "https://techcrunch.com/2026/06/13/as-anthropic-suspends-access-to-new-models-india-debates-its-ai-future/",
-      "score": 0,
-      "ts": "2026-06-14T03:00:00"
-    },
-    {
-      "src": "TechCrunch AI",
-      "title": "Meta reportedly moves to unwind $2B Manus deal after Beijing’s demand",
-      "url": "https://techcrunch.com/2026/06/13/meta-reportedly-moves-to-unwind-2b-manus-deal-after-beijings-demand/",
-      "score": 0,
-      "ts": "2026-06-14T00:03:49"
-    },
-    {
-      "src": "TechCrunch",
-      "title": "Meta reportedly moves to unwind $2B Manus deal after Beijing’s demand",
-      "url": "https://techcrunch.com/2026/06/13/meta-reportedly-moves-to-unwind-2b-manus-deal-after-beijings-demand/",
-      "score": 0,
-      "ts": "2026-06-14T00:03:49"
-    },
-    {
-      "src": "TechCrunch AI",
-      "title": "KPMG pulls report on AI usage due to apparent hallucinations",
-      "url": "https://techcrunch.com/2026/06/13/kpmg-pulls-report-on-ai-usage-due-to-apparent-hallucinations/",
-      "score": 0,
-      "ts": "2026-06-13T20:42:31"
-    },
-    {
-      "src": "TechCrunch",
-      "title": "KPMG pulls report on AI usage due to apparent hallucinations",
-      "url": "https://techcrunch.com/2026/06/13/kpmg-pulls-report-on-ai-usage-due-to-apparent-hallucinations/",
-      "score": 0,
-      "ts": "2026-06-13T20:42:31"
-    },
-    {
-      "src": "Decrypt",
-      "title": "US Government Orders Anthropic to Pull Claude Fable, Mythos AI Models",
-      "url": "https://decrypt.co/371027/us-government-orders-anthropic-pull-claude-fable-mythos-ai-models",
-      "score": 0,
-      "ts": "2026-06-13T19:23:34"
+      "ts": "2026-07-04T08:31:02"
     }
   ]
 }

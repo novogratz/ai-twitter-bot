@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-06-14",
-  "last_output": "Pushed. Here's what changed and why:\n\n- **directives.md refreshed** \u2014 sharper rules built from today's data. The core diagnosis: 90% of output is ai_news_take (0.02 avg likes) when market_trauma (0.08) and ai_vs_btc (1239 avg views) are the growth surfaces. Rules now explicitly enforce the pillar mix, the casual first-person format at 1-in-4 rate, and the METAPHOR-over-RENAME/REPETITION pattern hierarchy.\n\n- **live_strategy.json topic_focus updated** \u2014 Bourse promoted to #2 topic (rising 24h 8.9",
-  "last_ran_at": "2026-06-14T10:02:06.856548"
+  "last_run": "2026-06-28",
+  "last_output": "Pushed. Here's the 3-bullet summary:\n\n**1. directives.md \u2014 6 fresh June 28 acute hooks + algo update baked in.**\nAdded: OpenAI at $920B vs Anthropic at $965B IPO race, CoreWeave circular financing ($100B dependency loop), xAI co-founder exodus (all 11 gone), SpaceX $1.25B/month compute deal. Reinforced the 2026 algo reality: replies = 27x a like, 10+ engagements in 30 min triggers amplification. The couch-prop scarcity rule and ai_vs_btc mandatory frame are both re-anchored prominently.\n\n**2. li",
+  "last_ran_at": "2026-06-28T10:03:05.030479"
 }
