@@ -836,7 +836,13 @@
     "ThibautNoyelle",
     "0xMerlin",
     "CyrilDonguy",
-    "MarcLachance"
+    "MarcLachance",
+    "VincentLebrun",
+    "JulienBec",
+    "MaelleKevin",
+    "Alexis_Drouin_",
+    "NathanPache",
+    "AlexisDrouin_"
   ],
   "en": [
     "blablacar",
@@ -1130,7 +1136,9 @@
     "NVIDIA",
     "Zynx",
     "Atitty",
-    "Cryptic"
+    "Cryptic",
+    "NASA",
+    "val"
   ],
   "history": [
     {
@@ -6777,6 +6785,46 @@
       "lang": "fr",
       "handle": "MarcLachance",
       "added": "2026-07-04"
+    },
+    {
+      "lang": "en",
+      "handle": "NASA",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentLebrun",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBec",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelleKevin",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alexis_Drouin_",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "val",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanPache",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDrouin_",
+      "added": "2026-07-05"
     }
   ]
 }

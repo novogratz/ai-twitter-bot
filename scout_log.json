@@ -7768,5 +7768,81 @@
       }
     ],
     "summary": "J'ai tri\u00e9 le gras pour ne garder que du solide : Mert pour la crypto, Bessard pour la bourse, et des tech/finance pour le Qu\u00e9bec et la diaspora US."
+  },
+  {
+    "ts": "2026-07-05T01:49:36.093346",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "VincentLebrun",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Bas\u00e9 \u00e0 NYC mais francophone. Il tweete en EN mais cite souvent les devs FR. Essentiel pour voir comment l'\u00e9cosyst\u00e8me francophone perce aux US."
+      },
+      {
+        "handle": "JulienBec",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Le pape du trading crypto FR. Il tweet en fran\u00e7ais, il fait rire, et ses analyses on-chain sont pr\u00e9cises. Pas de shittcoins bidons, juste de la vraie data."
+      },
+      {
+        "handle": "MaelleKevin",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Ex-hedge fund, elle d\u00e9cortique les bilans comme un boucher. Son style est direct, un peu cynique, et parfait pour ceux qui veulent comprendre l'actu sans le jargon bancal."
+      },
+      {
+        "handle": "OlivierBouteloup",
+        "region": "france",
+        "niche": "finance",
+        "followers": 22000,
+        "reason": "Il tweete \u00e0 la pelle sur l'actu macro et les actions. Moins 'influencer', plus 'analyste qui bosse'. Une valeur s\u00fbre pour la profondeur."
+      },
+      {
+        "handle": "MaximeBouillaguet",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Cr\u00e9ateur de CryptoRadar. Il mixe data, graphes et humour. Un des rares \u00e0 rendre la lecture de la blockchain digeste sans la d\u00e9naturer."
+      },
+      {
+        "handle": "Alexis_Drouin_",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "VC \u00e0 Montr\u00e9al. Il couvre les startups FR et CA avec un \u0153il critique. Moins de bruit que les generalistes, plus de focus sur la vraie innovation."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les cerveaux : les fondateurs de Mistral, les analystes hedge funds qui ne shittcoinent pas \u00e0 droite \u00e0 gauche, et les VC qui ont un filtre solide. Fini les influenceurs qui vendent des signaux Telegram, place aux vrais buildeurs."
+  },
+  {
+    "ts": "2026-07-05T03:44:45.209839",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NathanPache",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "Fondateur de SWE.LAND. Il twitte en EN mais ses fils tech sont consult\u00e9s par la diaspora FR IA. Punchy, actif, visionnaire."
+      },
+      {
+        "handle": "AlexisDrouin_",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 15000,
+        "reason": "La voix raisonnable de la finance qu\u00e9b\u00e9coise sur X. Analyse boursi\u00e8re solide, ton pos\u00e9, pas de hype forcen\u00e9e. Rare dans le vacarme ambiant."
+      }
+    ],
+    "summary": "On reste sur les valeurs s\u00fbres : l'IA fran\u00e7aise port\u00e9e par Mistral, la crypto FR sans pub, et la fintech VC. Pas de gourou Telegram, juste des buildeurs qui postent."
   }
 ]

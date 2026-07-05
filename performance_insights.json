@@ -1,40 +1,40 @@
 {
-  "generated_at": "2026-07-05T01:33:33.417659",
-  "window_7d_actions": 755,
-  "window_24h_actions": 475,
+  "generated_at": "2026-07-05T05:33:33.497791",
+  "window_7d_actions": 746,
+  "window_24h_actions": 582,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 750
+      "count": 741
     },
     {
       "pattern": "RENAME",
       "count": 2
     },
     {
-      "pattern": "UNDERSTATEMENT",
-      "count": 1
-    },
-    {
       "pattern": "EN_ANCHOR",
       "count": 1
     },
     {
       "pattern": "REPETITION",
+      "count": 1
+    },
+    {
+      "pattern": "METAPHOR",
       "count": 1
     }
   ],
   "worst_patterns": [
     {
-      "pattern": "UNDERSTATEMENT",
-      "count": 1
-    },
-    {
       "pattern": "EN_ANCHOR",
       "count": 1
     },
     {
       "pattern": "REPETITION",
+      "count": 1
+    },
+    {
+      "pattern": "METAPHOR",
       "count": 1
     }
   ],
@@ -63,15 +63,15 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 370
+      "count": 373
     },
     {
       "topic": "IA",
-      "count": 257
+      "count": 255
     },
     {
       "topic": "Crypto",
-      "count": 107
+      "count": 101
     },
     {
       "topic": "Bourse",
@@ -79,22 +79,22 @@
     },
     {
       "topic": "Spatial",
-      "count": 12
+      "count": 13
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 310
+      "count": 305
     },
     {
       "pillar": "other",
-      "count": 238
+      "count": 248
     },
     {
       "pillar": "market_trauma",
-      "count": 159
+      "count": 145
     },
     {
       "pillar": "meme_reaction",
@@ -102,37 +102,37 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 7
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 179
+      "count": 227
     },
     {
       "pillar": "other",
-      "count": 168
+      "count": 204
     },
     {
       "pillar": "market_trauma",
-      "count": 94
+      "count": 113
     },
     {
       "pillar": "meme_reaction",
-      "count": 21
+      "count": 23
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -144,24 +144,24 @@
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 47,
+      "pillar": "other",
+      "posts": 93,
       "avg_likes": 0.09,
-      "avg_views": 26.8,
+      "avg_views": 29.8,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 48,
+      "avg_likes": 0.08,
+      "avg_views": 26.9,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 59,
+      "posts": 56,
       "avg_likes": 0.07,
-      "avg_views": 28.5,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 91,
-      "avg_likes": 0.07,
-      "avg_views": 30.0,
+      "avg_views": 28.9,
       "low_sample": false
     },
     {
@@ -175,11 +175,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 648
+      "count": 636
     },
     {
       "type": "quote",
-      "count": 53
+      "count": 56
     },
     {
       "type": "quote_gif",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-05T01:32:47.666430",
-      "text": "$100B per gigawatt. nvidia doesn't build these. hyperscalers do. nvidia sells the chips. hyperscalers own the balance sheets.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-07-05T01:32:26.227536",
-      "text": "Meta’s AI is stuck in neutral. Ackman sees a dividend yield; we see a data center graveyard. While $PLTR prints, Zuckerberg is just optimizing ads with a slower model. Buy the yield, get the lag. ⚡",
+      "ts": "2026-07-05T05:32:41.945097",
+      "text": "the gap between \"I love AI\" and \"not in my backyard\" is where I do most of my work",
       "type": "quote"
     },
     {
-      "ts": "2026-07-05T01:30:00.039549",
-      "text": "2008 was real. Every apocalypse call since? The interest on that one hit.",
+      "ts": "2026-07-05T05:32:25.413294",
+      "text": "Capex only works when you have revenue to cover it. Nvidia has it (70% margins). OpenAI doesn't ($5B burn, $3.4B revenue). Most don't (zero). The market's split because we're already past the breaking point.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-07-05T05:29:56.551109",
+      "text": "200-pound robots need sub-millisecond decisions. That's compute now, not mechanics. Nvidia moved into the critical path.",
       "type": "reply"
     }
   ]
