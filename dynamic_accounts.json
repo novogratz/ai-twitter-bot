@@ -850,7 +850,10 @@
     "PierreRoche",
     "SylvainDuclos",
     "AlexisMazari",
-    "MathisBoulay"
+    "MathisBoulay",
+    "BenoitFP",
+    "Hugo_Debat",
+    "AdrienLeClaire"
   ],
   "en": [
     "blablacar",
@@ -6878,6 +6881,21 @@
     {
       "lang": "fr",
       "handle": "MathisBoulay",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitFP",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "Hugo_Debat",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienLeClaire",
       "added": "2026-07-05"
     }
   ]

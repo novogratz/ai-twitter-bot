@@ -7920,5 +7920,36 @@
       }
     ],
     "summary": "Une s\u00e9lection 100% active, sans les influenceurs formations de base, centr\u00e9e sur l'analyse et la tech pure."
+  },
+  {
+    "ts": "2026-07-05T11:47:34.638759",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenoitFP",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Le roi de la micro-cap fran\u00e7aise. Il tweette des perles boursi\u00e8res tous les matins avec un humour d\u00e9cal\u00e9."
+      },
+      {
+        "handle": "Hugo_Debat",
+        "region": "france",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "Le 'French MrBeast' des startups. Il couvre l'\u00e9cosyst\u00e8me tech fran\u00e7ais avec un ton d\u00e9complex\u00e9 et tr\u00e8s humain."
+      },
+      {
+        "handle": "AdrienLeClaire",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Ex-PayPal, patron de Monei. Il poste sur la fintech, le paiement et l'Europe. Tr\u00e8s peu de vent, beaucoup de substance."
+      }
+    ],
+    "summary": "Le panier est l\u00e9ger mais serr\u00e9 : on \u00e9vite les influenceurs qui vendent du r\u00eave pour privil\u00e9gier des ex-praticiens (BenoitFP, AdrienLeClaire) qui savent ce qu'ils racontent."
   }
 ]
