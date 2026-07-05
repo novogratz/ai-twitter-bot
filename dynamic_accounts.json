@@ -853,7 +853,22 @@
     "MathisBoulay",
     "BenoitFP",
     "Hugo_Debat",
-    "AdrienLeClaire"
+    "AdrienLeClaire",
+    "ThalesGroup",
+    "LionelBocquet",
+    "JulienSassu",
+    "MathildeMachet",
+    "MaximeRenaud",
+    "AlexisScheurer",
+    "RaphaelCohen",
+    "LouisRocart",
+    "JulesLagrange",
+    "RenaudPlanchat",
+    "ThomasCarette",
+    "HugoLallement",
+    "CryptoQC",
+    "BenoitGouin",
+    "MarcDesjardins"
   ],
   "en": [
     "blablacar",
@@ -1150,7 +1165,12 @@
     "Cryptic",
     "NASA",
     "val",
-    "Xctober"
+    "Xctober",
+    "Ru",
+    "LN1",
+    "JONATHAN",
+    "Jelle",
+    "sourcery"
   ],
   "history": [
     {
@@ -6896,6 +6916,106 @@
     {
       "lang": "fr",
       "handle": "AdrienLeClaire",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "Ru",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "LN1",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "JONATHAN",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThalesGroup",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelBocquet",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienSassu",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathildeMachet",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeRenaud",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisScheurer",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelCohen",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "LouisRocart",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "Jelle",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "sourcery",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesLagrange",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudPlanchat",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasCarette",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoLallement",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoQC",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitGouin",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcDesjardins",
       "added": "2026-07-05"
     }
   ]

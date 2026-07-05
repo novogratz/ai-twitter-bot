@@ -7951,5 +7951,137 @@
       }
     ],
     "summary": "Le panier est l\u00e9ger mais serr\u00e9 : on \u00e9vite les influenceurs qui vendent du r\u00eave pour privil\u00e9gier des ex-praticiens (BenoitFP, AdrienLeClaire) qui savent ce qu'ils racontent."
+  },
+  {
+    "ts": "2026-07-05T13:39:25.321934",
+    "raw_count": 12,
+    "kept_count": 9,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThalesGroup",
+        "region": "france",
+        "niche": "tech",
+        "followers": 85000,
+        "reason": "La bo\u00eete qui fait tourner le monde en silence. IA, d\u00e9fense, crypto. Le compte officiel qui twitte plus fort que la plupart des influenceurs."
+      },
+      {
+        "handle": "LionelBocquet",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 38000,
+        "reason": "Ex-Binance, fond\u00e9 chez Coinhouse. Le gars qui sait o\u00f9 l'argent va avant que tu aies fini ton caf\u00e9."
+      },
+      {
+        "handle": "JulienSassu",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Bas\u00e9 aux US, fran\u00e7ais de c\u0153ur. Il couvre l'\u00e9cosyst\u00e8me startup US avec des insights que les locaux passent \u00e0 c\u00f4t\u00e9."
+      },
+      {
+        "handle": "AntoineLefebvre_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "CEO Mistral AI. Il twitte ses insights techniques plus vite que ses concurrents n'envoient leurs tickets Jira."
+      },
+      {
+        "handle": "MathildeMachet",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "La boss chez Lydia. FinTech FR, growth hack et r\u00e9alit\u00e9 du terrain. Pas de filtre corporate."
+      },
+      {
+        "handle": "MaximeRenaud",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Fondateur de Giskard. Il parle du vrai probl\u00e8me de l'IA : qu'elle a tout le temps tort de mani\u00e8re convaincante."
+      },
+      {
+        "handle": "AlexisScheurer",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 14000,
+        "reason": "Ex-Consensys. Il vit entre Paris et SF et comprend mieux les deux mondes que les puristes de chaque c\u00f4t\u00e9 de l'Atlantique."
+      },
+      {
+        "handle": "RaphaelCohen",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Founder de Datagen. Il transforme les donn\u00e9es tabulaires en or liquide pour l'IA g\u00e9n\u00e9rative. Brut et efficace."
+      },
+      {
+        "handle": "LouisRocart",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 11000,
+        "reason": "Ex-JPMorgan, trader pro. Ses threads sur la microstructure du march\u00e9 font mal aux amateurs de Robinhood."
+      }
+    ],
+    "summary": "J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves Telegram. Ici, on a les cerveaux qui construisent les trucs (Mistral, Hugging Face, DeepLabs) et les traders qui comprennent la microstructure. Pas de g\u00e9n\u00e9ralistes, juste du technique ou du march\u00e9 pur."
+  },
+  {
+    "ts": "2026-07-05T15:53:39.079675",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulesLagrange",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "La reference 'value investing' en France. Ses threads sont plus denses qu'un rapport d'audit KPMG."
+      },
+      {
+        "handle": "RenaudPlanchat",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "Le prof qui rend la Deep Learning accessible sans endormir le lectorat. Un classique intemporel."
+      },
+      {
+        "handle": "ThomasCarette",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "L'ex-Darktrace qui d\u00e9monte les p\u00e9rim\u00e8tres de la s\u00e9curit\u00e9 IA avec pr\u00e9cision chirurgicale."
+      },
+      {
+        "handle": "HugoLallement",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Le CIO de Juste Avant qui rend la finance institutionnelle digeste sans la d\u00e9naturer."
+      },
+      {
+        "handle": "CryptoQC",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "La voix du Qu\u00e9bec crypto. Plus analytique, moins 'moonboi', plus pragmatique."
+      },
+      {
+        "handle": "BenoitGouin",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Le fondateur de Qover qui twitterie tech/IA avec le style d'un VC qui a vu le futur."
+      },
+      {
+        "handle": "MarcDesjardins",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "L'incontournable de la tech qu\u00e9b\u00e9coise. Covers AI et startups avec un regard local pertinent."
+      }
+    ],
+    "summary": "Un mix \u00e9quilibr\u00e9 entre les g\u00e9ants fran\u00e7ais de l'IA (Mistral, Planchat) et les analystes bourse/crypto qui sortent des sentiers battus. Le Qu\u00e9bec est repr\u00e9sent\u00e9 par ses piliers locaux plut\u00f4t que par des copies am\u00e9ricaines."
   }
 ]
