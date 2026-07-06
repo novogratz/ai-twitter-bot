@@ -8128,5 +8128,95 @@
       }
     ],
     "summary": "On a filtr\u00e9 la flotte pour ne garder que les capitaines qui naviguent sans boussole. Pas de vendeurs de r\u00eaves, juste des mecs qui g\u00e8rent le cash ou codent le futur."
+  },
+  {
+    "ts": "2026-07-05T21:39:09.284305",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeStein",
+        "region": "france",
+        "niche": "ai",
+        "followers": 150000,
+        "reason": "C'est le messie du prompt engineering en FR. Il transforme l'IA en outil de productivit\u00e9, pas en gadget de geek. Twitte sec, z\u00e9ro baratin."
+      },
+      {
+        "handle": "ThomasPoussier",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le patron de Coinhouse. Il parle on-chain avec un langage humain. Pas de sh*tcoin de mardi, juste de la macro et des fondamentaux solides."
+      },
+      {
+        "handle": "MaximeGautier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Ex-dealer CAC40, il analyse les march\u00e9s comme un trader qui a vu la crise de 2008. Pas de 'to the moon', juste du ratio de Sharpe et des dividendes."
+      },
+      {
+        "handle": "LorenzoVillani",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Franco-American bas\u00e9 \u00e0 NY. Il parle la langue de Wall Street et du blockchain. Parfait pour traduire le march\u00e9 US pour la diaspora FR sans perdre en nuance."
+      },
+      {
+        "handle": "RomainGauthier",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Data scientist chez Mistral AI. Il sort des threads techniques sur le scaling des mod\u00e8les. C'est du b\u00e9ton, pas du marketing."
+      }
+    ],
+    "summary": "Un mix \u00e9quilibr\u00e9 entre les g\u00e9ants de l'IA parisienne, les pragmatiques de la bourse qu\u00e9b\u00e9coise et les pros crypto franco-am\u00e9ricains. Z\u00e9ro vendeur de r\u00eave, 100% de contenu."
+  },
+  {
+    "ts": "2026-07-05T23:51:02.127896",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BourseDuWeb",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 80000,
+        "reason": "Site d'info boursier majeur, compte X actif, twitte en FR, analyse actions et ETF."
+      },
+      {
+        "handle": "BitcoinFR",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Communaut\u00e9 Bitcoin FR, twitte en FR, actif, communaut\u00e9 engag\u00e9e."
+      },
+      {
+        "handle": "QuantNomad",
+        "region": "france",
+        "niche": "trading",
+        "followers": 25000,
+        "reason": "Trader quant, twitte en FR, partage son code et sa strat\u00e9gie, niche pr\u00e9cise mais fid\u00e8le."
+      },
+      {
+        "handle": "BlockchainNews",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "News crypto/blockchain FR, twitte en FR, actif."
+      },
+      {
+        "handle": "CryptoBasFR",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "\u00c9ducatif crypto FR, twitte en FR, contenu d\u00e9butant mais solide, pas de formation \u00e0 999\u20ac."
+      }
+    ],
+    "summary": "Focus France dominant (IA, crypto, bourse, trading), quelques comptes Qu\u00e9b\u00e9cois/USA si disponibles. Tous actifs, FR, niche, sans formations \u00e0 2000\u20ac."
   }
 ]

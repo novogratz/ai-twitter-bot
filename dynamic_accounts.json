@@ -873,7 +873,17 @@
     "NathDev",
     "CedricP",
     "BenoitFloh",
-    "CryptoCanadien"
+    "CryptoCanadien",
+    "MaximeStein",
+    "ThomasPoussier",
+    "MaximeGautier",
+    "LorenzoVillani",
+    "RomainGauthier",
+    "BourseDuWeb",
+    "BitcoinFR",
+    "QuantNomad",
+    "BlockchainNews",
+    "CryptoBasFR"
   ],
   "en": [
     "blablacar",
@@ -1179,7 +1189,10 @@
     "Allie",
     "benz",
     "CUPCAKKEUPDATES",
-    "elie"
+    "elie",
+    "OKX",
+    "PancakeSwap",
+    "Robbyant"
   ],
   "history": [
     {
@@ -7070,6 +7083,71 @@
     {
       "lang": "en",
       "handle": "elie",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeStein",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasPoussier",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeGautier",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoVillani",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainGauthier",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "OKX",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "PancakeSwap",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "Robbyant",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourseDuWeb",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "BitcoinFR",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "QuantNomad",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "BlockchainNews",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBasFR",
       "added": "2026-07-05"
     }
   ]

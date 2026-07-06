@@ -15258,3 +15258,19 @@ new bitcoin = macro asset with gym weights.
 $101b n
   - https://x.com/GpaAndy/status/2073587668336959690
   - **WHY**: Source fiable + impact concret (score signal 12, engagement 47).
+
+## 2026-07-06
+- **@jonahlupton** (197 likes, score 8/10) — Several people (that missed the ai trade) are trying to call the top in ai stocks… which honestly makes me laugh… IMO, we’re still in the second inning of ai, maybe the first inning when you stop to t
+  - https://x.com/JonahLupton/status/2073896852009992608
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 255).
+- **@gkcs_** (81 likes, score 8/10) — Altman, Musk and Amodei are geniuses. The following are their predictions around AI.
+
+2023: AGI is imminent.
+
+2024: Jobs will soon be obsolete.
+
+2025: Data centers are essential to win the AI race!
+
+2
+  - https://x.com/gkcs_/status/2073775867994788022
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 93).
