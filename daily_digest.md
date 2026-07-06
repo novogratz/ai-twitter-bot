@@ -824,3 +824,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 8 views: me in 2019 very confidently diagnosing the grid with EV anxiety
   - 0 likes / 5 views: Me holding AI infrastructure stocks, reading "the biggest AI gains won't go to AI stocks"   you buil
   - 0 likes / 14 views: me reading "that liquidity gets swept" and very calmly not opening coinbase
+
+## 2026-07-05
+
+**Activity** — total actions: 661
+  - by type: reply=576, quote=47, quote_gif=24, post=10, hotake=3, retweet=1
+  - top sources: SEARCH-HOT=430, FEED-SWEEP-FEED=89, FEED-SWEEP-FOLLOWING=40, QUOTE=37, GIF=25, VIP=14, BREAKING_QRT=6, BREAKOUT=4
+  - comedy patterns: METAPHOR=1, RENAME=1
+  - top reply targets: @Graphseo=13, @cryptorover=12, @FerreWeb3=9, @CryptoMichNL=8, @cryptogoos=8
+
+**Followers we follow** (running total): 277
+
+**Top-performing posts scraped today**:
+  - 2 likes / 33 views: me in the corner offering 5-minute portfolio grief sessions
+  - 1 likes / 64 views: me quietly googling "how many European countries are there" after this $NBIS drop
+  - 1 likes / 13 views: updating my definition of "a lot of money" in real time
