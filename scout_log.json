@@ -8322,5 +8322,36 @@
       }
     ],
     "summary": "On a filtr\u00e9 le bruit pour te laisser que du vrai : des profils qui ont le cul sur la chaise (Mistral, CryptoCred) et des pros qui expliquent le march\u00e9 sans vendre du r\u00eave (CyrilDh). Z\u00e9ro vendeur de formations \u00e0 400 balles, que des cerveaux."
+  },
+  {
+    "ts": "2026-07-06T05:38:56.347559",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NaderDabit",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "La t\u00eate de pont francophone \u00e0 NYC. Ex-Meta, ex-Chainlink. Il balance du technique heavy mais reste tr\u00e8s accessible et dr\u00f4le."
+      },
+      {
+        "handle": "MathieuDutroy",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "La r\u00e9f\u00e9rence Qu\u00e9becoise pour la Bourse. Pas de formules magiques, juste du trading quotidien et de l'analyse technique solide."
+      },
+      {
+        "handle": "AdrienDeGaudemaris",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "CTO de La Plateforme de l'IA. Il tweet la tech pure sans le baratin VC. C'est rarement viral, mais c'est toujours pertinent."
+      }
+    ],
+    "summary": "Un mix solide entre les g\u00e9ants institutionnels (Mistral) et les experts terrain. On \u00e9vite les vendeurs de r\u00eave pour garder du gras technique et de l'analyse macro."
   }
 ]

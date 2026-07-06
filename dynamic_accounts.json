@@ -894,7 +894,9 @@
     "JLFr",
     "CyrilDh",
     "CryptoCred",
-    "BenoitPerron"
+    "BenoitPerron",
+    "NaderDabit",
+    "MathieuDutroy"
   ],
   "en": [
     "blablacar",
@@ -7226,6 +7228,16 @@
     {
       "lang": "fr",
       "handle": "BenoitPerron",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "NaderDabit",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDutroy",
       "added": "2026-07-06"
     }
   ]
