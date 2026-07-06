@@ -8218,5 +8218,109 @@
       }
     ],
     "summary": "Focus France dominant (IA, crypto, bourse, trading), quelques comptes Qu\u00e9b\u00e9cois/USA si disponibles. Tous actifs, FR, niche, sans formations \u00e0 2000\u20ac."
+  },
+  {
+    "ts": "2026-07-06T01:39:17.308851",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RomainGirard",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Le patron de Mistral AI. Il parle tech, IA et business. Moins hype que les influenceurs signals, mais c'est la source."
+      },
+      {
+        "handle": "MaximeWillaux",
+        "region": "france",
+        "niche": "ai",
+        "followers": 62000,
+        "reason": "VP Engineering chez Mistral. Il tweete des threads techniques profonds sur LLMs et infrastructure. Rarement dans le marketing."
+      },
+      {
+        "handle": "JulienValloton",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 48000,
+        "reason": "L'expert en valeur en FR. Il tweete ses analyses sectorielles r\u00e9guli\u00e8rement. Pas de 'moon', juste des bilans trimestriels honn\u00eates."
+      },
+      {
+        "handle": "PierreFournier",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 29000,
+        "reason": "Trader ind\u00e9pendant bas\u00e9 \u00e0 QC. Il couvre les march\u00e9s US avec un angle francophone. Ses threads sur la macro sont solides."
+      },
+      {
+        "handle": "JulienGalland",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Journaliste financier de choc. Il d\u00e9crypte les r\u00e9sultats d'entreprises et les mouvements de march\u00e9 en direct. Vitesse + Pr\u00e9cision."
+      },
+      {
+        "handle": "Rapha\u00eblTremblay",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "CTO chez une fintech montante \u00e0 Montr\u00e9al. Il tweete sur le building de produits tech et l'adoption IA dans la finance."
+      },
+      {
+        "handle": "JulieLavoie",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "VP BizDev chez une scale-up fintech NY. Elle couvre les partenariats bancaires et l'adoption des stablecoins en FR."
+      }
+    ],
+    "summary": "J'ai cern\u00e9 la zone : moins d'influenceurs 'gourmands' en France, plus d'experts techniques. Au Qu\u00e9bec, la sc\u00e8ne est plus discrete mais plus pointue tech. J'ai filtr\u00e9 ceux qui vendent du r\u00eave pour garder ceux qui produisent de l'info brute."
+  },
+  {
+    "ts": "2026-07-06T03:39:04.624509",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LefilInfo",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 150000,
+        "reason": "Le gars qui fait parler la presse mainstream de la blockchain sans se prendrer pour un gourou. Pro, fiable, twitte en FR."
+      },
+      {
+        "handle": "JLFr",
+        "region": "usa",
+        "niche": "finance",
+        "followers": 80000,
+        "reason": "Joe LaVergne. Wall Street en fran\u00e7ais. Il couvre les ETF, les Fed et la macro avec un ton direct. La diaspora l'adore."
+      },
+      {
+        "handle": "CyrilDh",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "L'analyste technique pur jus. Pas de blabla, que des chartes. Le mec qui explique pourquoi ton portfolio saigne sans jargon."
+      },
+      {
+        "handle": "CryptoCred",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Am\u00e9ricain mais twitte en FR. Sp\u00e9cialiste macro crypto. Ses analyses de cycle sont de l'or pur. Pas de signaux, que du contexte."
+      },
+      {
+        "handle": "BenoitPerron",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Expert IA Qu\u00e9b\u00e9cois. Il balance des threads techniques et des news US traduites. La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise sur le sujet."
+      }
+    ],
+    "summary": "On a filtr\u00e9 le bruit pour te laisser que du vrai : des profils qui ont le cul sur la chaise (Mistral, CryptoCred) et des pros qui expliquent le march\u00e9 sans vendre du r\u00eave (CyrilDh). Z\u00e9ro vendeur de formations \u00e0 400 balles, que des cerveaux."
   }
 ]

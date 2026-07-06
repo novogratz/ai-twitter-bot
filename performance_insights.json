@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-06T01:38:25.253206",
-  "window_7d_actions": 1147,
-  "window_24h_actions": 671,
+  "generated_at": "2026-07-06T05:38:25.234634",
+  "window_7d_actions": 1253,
+  "window_24h_actions": 669,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 1144
+      "count": 1250
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 1144
+      "count": 1250
     }
   ],
   "best_hours_utc": [
@@ -55,72 +55,72 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 556
+      "count": 612
     },
     {
       "topic": "IA",
-      "count": 421
+      "count": 456
     },
     {
       "topic": "Crypto",
-      "count": 149
+      "count": 163
     },
     {
       "topic": "Bourse",
-      "count": 74
+      "count": 81
     },
     {
       "topic": "Spatial",
-      "count": 15
+      "count": 16
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 480
+      "count": 521
     },
     {
       "pillar": "other",
-      "count": 371
+      "count": 409
     },
     {
       "pillar": "market_trauma",
-      "count": 227
+      "count": 250
     },
     {
       "pillar": "meme_reaction",
-      "count": 46
+      "count": 47
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 12
+      "count": 14
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 12
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 300
+      "count": 292
     },
     {
       "pillar": "other",
-      "count": 203
+      "count": 205
     },
     {
       "pillar": "market_trauma",
-      "count": 133
+      "count": 137
     },
     {
       "pillar": "meme_reaction",
-      "count": 25
+      "count": 24
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 8
     },
     {
       "pillar": "reply_bait",
@@ -139,21 +139,21 @@
       "pillar": "ai_news_take",
       "posts": 44,
       "avg_likes": 0.09,
-      "avg_views": 26.4,
+      "avg_views": 27.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 59,
-      "avg_likes": 0.08,
-      "avg_views": 24.2,
+      "posts": 58,
+      "avg_likes": 0.09,
+      "avg_views": 23.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 94,
+      "posts": 95,
       "avg_likes": 0.07,
-      "avg_views": 26.1,
+      "avg_views": 25.9,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 987
+      "count": 1085
     },
     {
       "type": "quote",
-      "count": 86
+      "count": 93
     },
     {
       "type": "quote_gif",
-      "count": 42
+      "count": 43
     },
     {
       "type": "post",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-06T01:38:03.634158",
-      "text": "LPDDR and an old node don't carry Nvidia's inference stack. if Bog Boss is beating anyone, it's at a metric that doesn't matter in production.",
+      "ts": "2026-07-06T05:38:11.701996",
+      "text": "The story isn't the Nasdaq slot. SpaceX holds Bitcoin, got indexed, and nobody even blinked. permission structure shifted.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-06T01:36:21.414062",
-      "text": "@Micro2Macr0: BTC at $63k is cute. Meanwhile @Anthropic burned $3B in compute to learn that \"context window\" means \"electricity bill.\" The real pivot isn't price; it's the grid. Hard base layer? Sure. If the lights stay on. ⚡",
-      "type": "quote"
+      "ts": "2026-07-06T05:37:55.497691",
+      "text": "Calling Google out is premature. they're not behind, they're handcuffed - can't cannibalize search to fund AI at startup speed. the moat is the cage.",
+      "type": "reply"
     },
     {
-      "ts": "2026-07-06T01:34:24.023946",
-      "text": "If today reminded you risk management matters, you don't have it yet. the people who actually do felt fine.",
+      "ts": "2026-07-06T05:34:59.373589",
+      "text": "31x training volume, but same Llama vs GPT-4 gap. the real story: you can't crawl to the frontier. architecture matters more than data volume.",
       "type": "reply"
     }
   ]

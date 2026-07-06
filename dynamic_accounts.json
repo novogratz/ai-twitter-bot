@@ -883,7 +883,18 @@
     "BitcoinFR",
     "QuantNomad",
     "BlockchainNews",
-    "CryptoBasFR"
+    "CryptoBasFR",
+    "RomainGirard",
+    "MaximeWillaux",
+    "JulienValloton",
+    "PierreFournier",
+    "JulienGalland",
+    "JulieLavoie",
+    "LefilInfo",
+    "JLFr",
+    "CyrilDh",
+    "CryptoCred",
+    "BenoitPerron"
   ],
   "en": [
     "blablacar",
@@ -1192,7 +1203,9 @@
     "elie",
     "OKX",
     "PancakeSwap",
-    "Robbyant"
+    "Robbyant",
+    "Ryker",
+    "Therese"
   ],
   "history": [
     {
@@ -7149,6 +7162,71 @@
       "lang": "fr",
       "handle": "CryptoBasFR",
       "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "Ryker",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Therese",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainGirard",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeWillaux",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienValloton",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreFournier",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienGalland",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulieLavoie",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "LefilInfo",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "JLFr",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDh",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCred",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitPerron",
+      "added": "2026-07-06"
     }
   ]
 }
