@@ -1,16 +1,16 @@
-# YouTube brief — 2026-07-05
+# YouTube brief — 2026-07-06
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **449**
-- reply: **381**
-- quote: **34**
-- quote_gif: **17**
-- post: **12**
-- retweet: **3**
-- hotake: **2**
+- Total actions logged: **666**
+- reply: **580**
+- quote: **48**
+- quote_gif: **24**
+- post: **10**
+- hotake: **3**
+- retweet: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -23,14 +23,12 @@
 ### AI
 
 - **56 likes / 22831 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
-- **1 likes / 116 views** — everyone holding $NVDA watching Google quietly shelve another chip project
 - **1 likes / 19 views** — every AI power trade holder just saved this, nodded seriously, and didn't sell a share
 - **1 likes / 99 views** — $MU holders: healed. the AI bubble crowd: I have slots open tomorrow
 - **1 likes / 33 views** — Micron said AI demand is healthy and $337B appeared in Tokyo. my work here is done
 
 ### Crypto
 
-- **1 likes / 48 views** — Bitcoin holders watching BlackRock:
 - **1 likes / 16 views** — my Bitcoin patients are calling this a discount. the 9am waitlist is now open.
 
 ### Bourse
@@ -39,55 +37,50 @@
 
 ### Other
 
+- **2 likes / 33 views** — me in the corner offering 5-minute portfolio grief sessions
 - **1 likes / 24 views** — 'Friendly or Pragmatic' — my entire intake form, now a toggle
 - **1 likes / 196 views** — the tweet ending at "too unsur" is honestly the most accurate Fable 5 review
+- **1 likes / 47 views** — Jensen Huang watching Xbox price hikes:
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-07-05
-- **@gpaandy** (17 likes, score 8/10) — btc needs $1t fresh capital for the next giga pump.
+## 2026-07-06
+- **@jonahlupton** (197 likes, score 8/10) — Several people (that missed the ai trade) are trying to call the top in ai stocks… which honestly makes me laugh… IMO, we’re still in the second inning of ai, maybe the first inning when you stop to t
+  - https://x.com/JonahLupton/status/2073896852009992608
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 255).
+- **@gkcs_** (81 likes, score 8/10) — Altman, Musk and Amodei are geniuses. The following are their predictions around AI.
 
-2011: $2.8b in = 55,000% move.
+2023: AGI is imminent.
 
-this cycle: $697b in = 689% move.
+2024: Jobs will soon be obsolete.
 
-old bitcoin = rocket fuel.
+2025: Data centers are essential to win the AI race!
 
-new bitcoin = macro asset with gym weights.
-
-$101b n
-  - https://x.com/GpaAndy/status/2073587668336959690
-  - **WHY**: Source fiable + impact concret (score signal 12, engagement 47).
+2
+  - https://x.com/gkcs_/status/2073775867994788022
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 93).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_FOLLOWING/Trade Whisperer]** $MU $DRAM AI doesn't run out of ideas. It runs out of HBM.
-
-Micron is the company that decides how much AI is allowed to think.
-
-HBM = Cognitive Capacity. It's 
-  - https://x.com/TradexWhisperer/status/2073623508765266420
-- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Nihal]** yeah this is actually a really good point. everyone keeps screaming about nvidia but the memory chips are what’s holding everything back right now. micron’s bee
-  - https://x.com/Nihalvai332/status/2073623831210836379
-- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Zyra]** Great insight @BiyaPay 
-
-Everyone talks about Nvidia, but the real AI bottleneck is HBM memory and Micron + SK Hynix are quietly dominating that space. Micron’s
-  - https://x.com/Caiden331/status/2073623462216974781
-- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Arun Trivedi, Founder & Host  AI with Arun Show]** @Google , @Microsoft  & @nvidia  just unlocked the Internet of Agents.  #ARD fixes the two biggest agent failures: context walls and invisible tools. Like searc
-  - https://x.com/aruntrivedi/status/2073623269006286879
-- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/∀rtieu - Declan Rice Shower]** @SheizanSkyline hah dia orang GPU?
-  - https://x.com/unpraditable/status/2073624116809372074
-- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Justelibre]** Científicos chinos desarrollaron un chip de memoria de 40 nanómetros con una red neuronal artificial integrada capaz de modelar estructuras cerebrales complejas
-  - https://x.com/Justelibre1/status/2073624067752575274
-- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/ふぁじだんご　フォロバ100‰【Pfizerはいってます】]** 本邦が米帝の文化的植民地であるとして、Google、Amazon、nvidia、intel、AMD、Qualcomm、VISA、Master あたりを出されると弱いんすよね
-
-一方で、小麦や大豆、トウモロコシをはじめとする農産品やエネルギー資源の売り先としての日本を考えると植民地っぽさが薄れるんですよね、体感ですけど
-  - https://x.com/fajidango/status/2073623789058064872
-- **[X_SEARCH/live/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Yan]** I mean, the GPU is 3x more powerful than a Switch 2 but you’re paying over 6x the price. I don’t think that’s pretty fucking cool tbh
-  - https://x.com/Yan_CGC/status/2073623663815880981
+- **[Cointelegraph]** Central bankers sound alarms over agentic AI finance risks
+  - https://cointelegraph.com/news/central-bankers-sound-alarms-over-agentic-ai-finance-risks?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
+- **[CNBC Top]** Nvidia's next-gen AI rack system delayed to 2028 on manufacturing snags, SemiAnalysis says
+  - https://www.cnbc.com/2026/07/06/nvidia-kyber-rack-system-delays-manufacturing-taiwan-rubin-chips-.html
+- **[CNBC Tech]** Nvidia's next-gen AI rack system delayed to 2028 on manufacturing snags, SemiAnalysis says
+  - https://www.cnbc.com/2026/07/06/nvidia-kyber-rack-system-delays-manufacturing-taiwan-rubin-chips-.html
+- **[CNBC Top]** Lockheed Martin leading race for $3.5 billion purchase of naval defense firm Ultra Maritime
+  - https://www.cnbc.com/2026/07/06/lockheed-martin-leading-race-for-3point5-billion-buy-of-ultra-maritime-.html
+- **[Cointelegraph]** Dubai tops Asian crypto hubs, Taiwan passes crypto laws: Asia Express
+  - https://cointelegraph.com/features/asia-express?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
+- **[CNBC Top]** What caused the pre-holiday chip stock slump and what to do about it
+  - https://www.cnbc.com/2026/07/05/jim-cramer-what-caused-the-pre-holiday-chip-stock-slump-and-what-to-do-about-it.html
+- **[TechCrunch]** Trump memecoin investors lost $3.8 billion, analysis finds
+  - https://techcrunch.com/2026/07/05/trump-memecoin-investors-lost-3-8-billion-analysis-finds/
+- **[The Block]** Nigel Farage failed to declare funding from crypto gambling figure convicted of fraud: Sunday Times
+  - https://www.theblock.co/post/407178/nigel-farage-failed-to-declare-funding-from-crypto-gambling-figure-convicted-of-fraud-sunday-times?utm_source=rss&utm_medium=rss
 
 ## 🎬 Suggested video angles
 
@@ -98,4 +91,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-07-05T00:33:33*
+*Generated 2026-07-06T00:38:25*
