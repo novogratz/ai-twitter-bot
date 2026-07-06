@@ -868,7 +868,12 @@
     "HugoLallement",
     "CryptoQC",
     "BenoitGouin",
-    "MarcDesjardins"
+    "MarcDesjardins",
+    "RazvanG21",
+    "NathDev",
+    "CedricP",
+    "BenoitFloh",
+    "CryptoCanadien"
   ],
   "en": [
     "blablacar",
@@ -1170,7 +1175,11 @@
     "LN1",
     "JONATHAN",
     "Jelle",
-    "sourcery"
+    "sourcery",
+    "Allie",
+    "benz",
+    "CUPCAKKEUPDATES",
+    "elie"
   ],
   "history": [
     {
@@ -7016,6 +7025,51 @@
     {
       "lang": "fr",
       "handle": "MarcDesjardins",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "Allie",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "RazvanG21",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathDev",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "CedricP",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitFloh",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCanadien",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "benz",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "CUPCAKKEUPDATES",
+      "added": "2026-07-05"
+    },
+    {
+      "lang": "en",
+      "handle": "elie",
       "added": "2026-07-05"
     }
   ]

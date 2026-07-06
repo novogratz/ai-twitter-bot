@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-05T17:38:25.308505",
-  "window_7d_actions": 943,
-  "window_24h_actions": 671,
+  "generated_at": "2026-07-05T21:38:25.262403",
+  "window_7d_actions": 1043,
+  "window_24h_actions": 672,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 940
+      "count": 1040
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 940
+      "count": 1040
     }
   ],
   "best_hours_utc": [
@@ -55,42 +55,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 460
+      "count": 506
     },
     {
       "topic": "IA",
-      "count": 338
+      "count": 382
     },
     {
       "topic": "Crypto",
-      "count": 128
+      "count": 138
     },
     {
       "topic": "Bourse",
-      "count": 62
+      "count": 64
     },
     {
       "topic": "Spatial",
-      "count": 13
+      "count": 15
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 385
+      "count": 430
     },
     {
       "pillar": "other",
-      "count": 303
+      "count": 335
     },
     {
       "pillar": "market_trauma",
-      "count": 194
+      "count": 211
     },
     {
       "pillar": "meme_reaction",
-      "count": 40
+      "count": 45
     },
     {
       "pillar": "reply_bait",
@@ -98,25 +98,25 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 11
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 280
+      "count": 302
     },
     {
       "pillar": "other",
-      "count": 211
+      "count": 199
     },
     {
       "pillar": "market_trauma",
-      "count": 139
+      "count": 132
     },
     {
       "pillar": "meme_reaction",
-      "count": 28
+      "count": 27
     },
     {
       "pillar": "ai_vs_btc",
@@ -124,7 +124,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 5
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -137,23 +137,23 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 47,
+      "posts": 46,
       "avg_likes": 0.09,
-      "avg_views": 26.4,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 95,
-      "avg_likes": 0.08,
-      "avg_views": 29.5,
+      "avg_views": 26.6,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 55,
-      "avg_likes": 0.05,
-      "avg_views": 24.5,
+      "posts": 58,
+      "avg_likes": 0.09,
+      "avg_views": 24.1,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 93,
+      "avg_likes": 0.08,
+      "avg_views": 26.3,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 806
+      "count": 894
     },
     {
       "type": "quote",
-      "count": 70
+      "count": 77
     },
     {
       "type": "quote_gif",
-      "count": 36
+      "count": 41
     },
     {
       "type": "post",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-05T17:38:04.371695",
-      "text": "6 mois d'itération, une nuit de boucles. C'est pas plus rapide, c'est autonome.",
+      "ts": "2026-07-05T21:38:11.503420",
+      "text": "$64k BTC? Cute. My AI portfolio just bought his couch, his chair, and his emotional stability.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-05T17:35:12.410938",
-      "text": "A gives you chip moat (Nvidia, AMD) plus Apple's ecosystem. B gives you cloud moat (AWS) plus Tesla's energy play. B is wider, both crush if AI capex stays hot.",
+      "ts": "2026-07-05T21:37:55.356166",
+      "text": "TSMC is 60% of Taiwan's index. this isn't a country getting rich, it's AI capex on leverage. when the cycle cools, that ratio crashes.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-05T17:34:21.750779",
-      "text": "3 to 3.5 in 3 months. when inference velocity matters most, everyone ships faster. model scale stopped being the differentiator.",
+      "ts": "2026-07-05T21:32:08.533887",
+      "text": "Embedded for 3 years locks Figure and Optimus's training loop to $VPG's hardware. competitors redesign from scratch. the supplier just became infrastructure.",
       "type": "reply"
     }
   ]

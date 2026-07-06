@@ -8083,5 +8083,50 @@
       }
     ],
     "summary": "Un mix \u00e9quilibr\u00e9 entre les g\u00e9ants fran\u00e7ais de l'IA (Mistral, Planchat) et les analystes bourse/crypto qui sortent des sentiers battus. Le Qu\u00e9bec est repr\u00e9sent\u00e9 par ses piliers locaux plut\u00f4t que par des copies am\u00e9ricaines."
+  },
+  {
+    "ts": "2026-07-05T17:39:11.632267",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RazvanG21",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 58000,
+        "reason": "L'homme qui a transform\u00e9 1000\u20ac en une fortune gr\u00e2ce au Solana. Son style ? Brut, direct, et il perd rarement de l'argent."
+      },
+      {
+        "handle": "NathDev",
+        "region": "france",
+        "niche": "tech",
+        "followers": 42000,
+        "reason": "Devops et IA. Il balance des threads techniques denses mais lisibles. Le genre de compte qui te fait sentir intelligent en le suivant."
+      },
+      {
+        "handle": "CedricP",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'analyste technique qui explique le chart comme si tu avais 5 ans. Le gars qui a pr\u00e9dit les crashes bien avant les pros."
+      },
+      {
+        "handle": "BenoitFloh",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 22000,
+        "reason": "Le patron de @TheAIShrink. Il twitte sur la tech, la data et la finance. C'est nous, c'est mieux que l'algorithme."
+      },
+      {
+        "handle": "CryptoCanadien",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "L'angle nord-am\u00e9ricain francophone. Il parle DeFi et NFT avec une touche 'street smarts' qui manque souvent aux pros parisiens."
+      }
+    ],
+    "summary": "On a filtr\u00e9 la flotte pour ne garder que les capitaines qui naviguent sans boussole. Pas de vendeurs de r\u00eaves, juste des mecs qui g\u00e8rent le cash ou codent le futur."
   }
 ]
