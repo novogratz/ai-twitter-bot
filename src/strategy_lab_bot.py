@@ -58,12 +58,12 @@ PERFORMANCE_LOG_FILE = os.path.join(_PROJECT_ROOT, "performance_log.json")
 # Humanize mandate 2026-06-10: human-plausible volume only (see
 # meta_strategy_agent._BOUNDS — keep the two sites in sync).
 ALLOWED_PATHS = {
-    "caps.MAX_NEWS_PER_DAY":      (2, 14),
-    "caps.MAX_HOTAKES_PER_DAY":   (6, 28),
+    "caps.MAX_NEWS_PER_DAY":      (6, 25),
+    "caps.MAX_HOTAKES_PER_DAY":   (12, 50),
     "caps.MAX_BREAKOUTS_PER_DAY": (0, 2),
     "caps.MAX_SPICY_PER_DAY":     (0, 2),
-    "caps.MAX_QUOTES_PER_DAY":    (60, 240),
-    "caps.MAX_RETWEETS_PER_DAY":  (0, 2),
+    "caps.MAX_QUOTES_PER_DAY":    (100, 240),
+    "caps.MAX_RETWEETS_PER_DAY":  (2, 20),
     "caps.MAX_REPLIES_PER_CYCLE": (1, 50),
     # 2026-07-05 operator: "like and follow more" — floor 1 so an agent can
     # never zero follow discovery again (a lab-written 0 killed all blast

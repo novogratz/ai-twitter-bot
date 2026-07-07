@@ -8353,5 +8353,50 @@
       }
     ],
     "summary": "Un mix solide entre les g\u00e9ants institutionnels (Mistral) et les experts terrain. On \u00e9vite les vendeurs de r\u00eave pour garder du gras technique et de l'analyse macro."
+  },
+  {
+    "ts": "2026-07-06T07:38:59.515848",
+    "raw_count": 5,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibautPeltier",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 150000,
+        "reason": "L'ancien CTO de Coinhouse, le seul qui explique la blockchain sans faire hurler les vieux de la vieille."
+      },
+      {
+        "handle": "MathieuGarcia",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 110000,
+        "reason": "Co-founder de AI Explained. Le gars rend l'IA accessible sans te faire payer 2000$ pour la masterclass."
+      },
+      {
+        "handle": "CyrilDong",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "Le trader de Paris-Montparnasse qui balance des setups cash. Pas de jargon, juste des graphiques qui saignent ou qui kiffent."
+      },
+      {
+        "handle": "Marc-AlexisCote",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 75000,
+        "reason": "CEO de Lyst, il tweete sur le e-commerce et l'IA avec le ton direct d'un Quebecois qui en a ras-le-bol du corporate US."
+      },
+      {
+        "handle": "AlexisDeGoubry",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 65000,
+        "reason": "La reference pour comprendre qui rachete qui. Il tweet sur l'industrie, pas sur le cours du jour."
+      }
+    ],
+    "summary": "Un bon mix entre les veterans crypto FR et les fondateurs tech plus internationaux. Pas de vendeurs de r\u00eave, que des gens qui construisent."
   }
 ]
