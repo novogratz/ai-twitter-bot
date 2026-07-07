@@ -15274,3 +15274,37 @@ $101b n
 2
   - https://x.com/gkcs_/status/2073775867994788022
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 93).
+- **@spacex** (6722 likes, score 9/10) — Our 17th Transporter rideshare mission is targeted to launch tomorrow from California and will deliver 81 payloads to orbit → http://spacex.com/launches/transporter17…
+  - https://x.com/SpaceX/status/2074243929273250124
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 7456).
+- **@pankajkumar_dev** (716 likes, score 9/10) — GPT-5.6 Sol Leaks: Coming Tomorrow 
+
+- OpenAI has confirmed GPT-5.6 Sol Ultra is coming to Codex, alongside Sol, Terra, and Luna.
+- GPT-5.6 Sol is also launching on Cerebras, delivering up to 750 toke
+  - https://x.com/pankajkumar_dev/status/2074135405314896383
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 800).
+- **@aleabitoreddit** (709 likes, score 9/10) — It’s interesting to witness psychology around valuation anchoring + scarcity.
+
+Retail, for example, are buying Figure, last valued at ~$39B through CEFs…
+
+At $158B, since it’s private, round 4x valuat
+  - https://x.com/aleabitoreddit/status/2074214669808717906
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1077).
+- **@venu_7_** (120 likes, score 9/10) — $ISRG - Intuitive Surgical
+
+The future of robotics extends far beyond humanoids. 
+
+Surgical robotics is one of the highest-quality secular growth themes, and $ISRG remains the clear leader.  
+
+The 200
+  - https://x.com/Venu_7_/status/2074217602671431732
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 158).
+- **@haider1** (88 likes, score 9/10) — quick reminder:
+
+around this time last year, o3, o4-mini, and gemini 2.5 pro were basically the frontier
+
+CoT models are barely two years old
+
+the rate of progress is amazing -- and i think we've just
+  - https://x.com/haider1/status/2074234430093197645
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 106).
