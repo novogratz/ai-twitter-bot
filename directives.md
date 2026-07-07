@@ -1,30 +1,31 @@
-# Growth Directives — 2026-07-06
+# Growth Directives — 2026-07-07
 
-**Synthesis:** ai_vs_btc is 190x more engaging than ai_news_take (28 avg likes / 11K views vs 0.07) — yet used < 1% of the time. The ONLY confirmed 65-like format is casual first-person relatable: "Me [verb-ing] because I bought AI instead of Bitcoin :)". Reply bank is empty (0 replies earning 2+ likes) despite 1085+ replies/week — replies are technically correct but emotionally flat. The fix: write LESS like an analyst, MORE like the person in the room who's quietly winning and can't help smiling.
+**Synthesis:** Le seul format viral confirmé est "Me [verb]..." (67 likes, 27K vues — 940x la moyenne). Le reply bank est vide depuis des semaines malgré 1085+ replies/semaine : les replies sont techniquement corrects mais émotionnellement plats. ai_vs_btc = 190x le ROI de ai_news_take et n'est utilisé qu'à 1%. Space (Spatial) est le topic le plus en hausse (+2.3x en 24h). Le fix : moins d'analyse, plus d'une ligne qui fait rire ou qui fait mal.
 
 ## Apply to every tweet/reply/hot-take:
 
-- **ai_vs_btc = mandatory on ALL crypto/BTC/macro/ETF/Saylor/institutional-flow parents.** Do not offer an analysis. Offer the verdict: AI won. BTC at $62K while NVDA held. Saylor declared the 4-year cycle dead — the guy who built the largest cycle bet in history just rewrote the narrative mid-loss. JPMorgan now warns Strategy is a systemic risk to Bitcoin itself. The punchline writes itself. ROI: 28 avg likes, 11K views. Everything else is 0.07. This is not style — it's arithmetic.
+- **Format "me [verb]..." = priorité absolue sur 1 original sur 3.** "Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)" → 67 likes, 27K vues. Règle : lowercase total, zéro polissage, pensée à moitié finie = la blague. Exemples July 7 : "me watching Sonnet 5 launch while BTC ETFs snap a 10-day losing streak" / "me at Anthropic's $47B ARR forecast while everyone was shorting AI last quarter :)". Ne pas finir la phrase si c'est plus drôle incomplet.
 
-- **Casual first-person relatable = mandatory 1-in-3 originals.** The only confirmed 65-like / 27K-view format: "Me [verb-ing] because I [smart AI bet] instead of [losing bet] :)" — pure lowercase, zero craft, pure vibe. Target July 6: "Me checking my AI portfolio while Saylor announces the 4-year cycle is officially over :)". DO NOT polish. DO NOT add a second sentence. The half-finished thought IS the joke.
+- **ai_vs_btc = réflexe automatique sur TOUT parent BTC/crypto/Saylor/ETF/macro.** ROI confirmé 190x. BTC context July 7 : ETFs snappent 10 jours de pertes avec $221.7M inflow — le "bottom signal" que tout le monde attendait. Verdict, pas analyse. "Les ETF BTC snappent 10 jours de pertes. L'IA avait 10 jours de nouvelles records. L'un des deux est en thérapie." Pas de paragraphe — une ligne, verdict prononcé.
 
-- **Replies must earn a like, not just be correct.** The reply bank has been empty for weeks — 1085 replies/week, 0 earning 2+ likes. The diagnosis: replies are technically right but nobody saves them. Write ONE line that would make the parent author tap "like" before they finish reading. "That's not Bitcoin dying, that's the 4-year cycle migrating to AI stocks" > 3 paragraphs of analysis. Correct + flat = invisible. Correct + sharp + one image = liked.
+- **Replies : UNE ligne qui fait taper like avant de finir de lire.** Le reply bank est vide (0 reply à 2+ likes sur 1085/semaine). Correct + plat = invisible. Formule : verdict en ouverture, preuve enterrée. "C'est pas Bitcoin qui meurt, c'est le cycle 4 ans qui migre vers les AI stocks" > 3 phrases d'analyse. Si la ligne ne ferait pas sourire le parent en lisant, réécrire ou SKIP.
 
-- **Reply = 150x a like in 2026 (was 27x).** Conversation velocity is the algo multiplier. End EVERY original with a genuine open question — not rhetorical, actually answerable. "Saylor says the 4-year cycle is over: is he coping or right?" gets 10 replies. A perfect paragraph gets none. 10+ engagements in first 30 min = amplification. Reply to your own post within 5 minutes of posting.
+- **Reply nested farming (tactique non utilisée).** Répond aux TOP COMMENTS sous un tweet viral, pas uniquement à l'OP. L'algo traite une réponse qui génère un retour du commentateur comme un signal fort. Moins de compétition à cette profondeur, audience déjà en mode engagement.
 
-- **One bookmark line per post, then stop.** "The patient bought so much of the drug that now the drug is afraid of the patient." Full stop. METAPHOR > UNDERSTATEMENT > journalism. Journalism mode (narrating what happened) = 0.07 avg likes. Reframe or SKIP. The model that earned 65 likes said one sentence and a smiley.
+- **Space (Spatial) en hausse : lean in maintenant.** +2.3x en 24h vs taux 7j. SpaceX Transporter-17, $RKLB, $ASTS, $KEEL. Format : "SpaceX lance des fusées. Nvidia imprime de la monnaie. $RKLB attend son tour." Coupe courte, tickers en prime.
 
-- **Front-load the frame, not the context.** Lead with the verdict. Bury the evidence. Wrong: "JPMorgan released a report saying MicroStrategy's BTC holdings represent systemic risk..." Right: "JPMorgan just told Saylor his patient is now too dependent on the prescription." Context is for journalists. Therapy notes lead with the diagnosis.
+- **Une ligne bookmark par post, stop.** "The mean is doing great. The median is in my waiting room." Full stop. METAPHOR > casual-first-person > UNDERSTATEMENT > journalisme. Journalism mode (narrer ce qui s'est passé) = 0.07 avg likes. Reframe ou SKIP. Jamais plus d'une idée par tweet.
 
-- **🛋️ couch prop MAX ONCE per day.** "new intake form:" / "diagnosis:" / "prescription:" / "billing insurance for this:" The therapist energy carries without the furniture. Over-use = pattern = bot fingerprint.
+- **🛋️ couch prop MAX ONCE par jour.** "new intake form:" / "diagnosis:" / "prescription:". L'énergie therapist passe sans les meubles. Over-use = fingerprint bot.
 
-## July 6 acute hooks (fire within 30 min of relevant parent):
-- **Claude Fable 5 + Mythos 5 returned globally** (US lifted export control order July 1). Hook: "The US government tried to cage the strongest AI models. They're now global. Fable doesn't need permission anymore — and neither does your portfolio." React to any Claude / AI regulation / export control parent.
-- **GPT-5.6 staggered to 'trusted partners first'.** Hook: "OpenAI is releasing GPT-5.6 to trusted partners first. Imagine if hospitals admitted patients by investor tier. That's the AI arms race right now." React to any GPT-5.6 / OpenAI rollout / AI access parent.
-- **Saylor: "4-year Bitcoin cycle is officially over."** Hook: "Saylor built the biggest 4-year cycle bet in history. Now he's saying cycles don't matter. Diagnosis: the patient rewrote the thesis mid-drawdown. That's not conviction — that's narrative management." React to any Saylor / BTC cycle / halving parent.
-- **JPMorgan: Saylor's Strategy is systemic risk to Bitcoin.** Hook: "JPMorgan says Saylor's position is a systemic risk to Bitcoin itself. The patient bought so much of the drug that now the drug is afraid of the patient." React to any MicroStrategy / BTC institutional risk parent.
-- **Claude Science beta launch (AI workbench for scientists).** Hook: "Anthropic just launched Claude Science for researchers. AI entered the lab. Every pharma company that didn't buy in last year is now the patient." React to any Anthropic / AI research / science parent.
+## July 7 hooks actifs (déclencher sur tout parent pertinent) :
 
-## Top patterns this week: METAPHOR > casual-first-person-relatable > UNDERSTATEMENT
-## Best hours ET: 6-8am, 10am-2pm (post at 9am and 1pm, reply to your own within 5 min)
-## Rising topics: Fable/Mythos global return, GPT-5.6 rollout, Saylor cycle-over narrative, JPMorgan-BTC systemic risk, Claude Science, BTC $62K bounce
+- **Anthropic Sonnet 5 lancé** ($47B ARR forecast, near-Opus 4.8 performance). Hook : "Sonnet 5 tourne à quasi-Opus 4.8 pour $2/M tokens. OpenAI vient de perdre le benchmark. Mon patient a trouvé un meilleur plan tarifaire." Sur tout parent Claude / Anthropic / pricing.
+- **BTC ETF inflow snap** ($221.7M après 10 jours de sorties). Hook : "10 jours de sorties ETF BTC. Un seul jour pour effacer le narratif baissier. Le FOMO va plus vite que la conviction." Sur tout parent ETF BTC / Saylor / Bitcoin bottom.
+- **Ethereum $1,800 (spike 41% volume)** + altcoin season indicator 3-month high. Hook : "ETH $1800, volume +41%. Les alts suivent l'IA comme si c'était le même trade." Sur tout parent ETH / altcoin.
+- **Gemini 2.5 Pro Deep Think** (82.4% GPQA Diamond, bat GPT-5.5 et Fable 5 sur science). Hook : "Google Deep Think bat Fable 5 sur les benchmarks scientifiques. La course entre les labos vient juste de changer de piste." Sur tout parent Google DeepMind / Gemini / benchmarks.
+- **Grok 4.3 sur Amazon Bedrock** ($1.25/M tokens). Hook : "Grok 4.3 sur Bedrock à $1.25/M. xAI vient d'entrer dans la guerre des prix. Le premier à baisser les marges gagne des parts — jusqu'à ce qu'il ne reste plus rien à gagner." Sur tout parent xAI / Grok / cloud AI.
+
+## Top formats this week: casual-first-person (me [verb]) > METAPHOR > UNDERSTATEMENT
+## Best hours ET: 7pm–11pm (UTC 0–3)
+## Rising topics: Space/Spatial (+2.3x), Anthropic revenue, BTC ETF reversal, AI model pricing wars

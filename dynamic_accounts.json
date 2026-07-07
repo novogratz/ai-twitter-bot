@@ -6,7 +6,17 @@
     "RomainLachuer",
     "MaximeBeaudoin",
     "BenjaminDeWit",
-    "AlexisKieffer"
+    "AlexisKieffer",
+    "RenaudCazals",
+    "StephaneGhali",
+    "JulieRivard",
+    "AlexisClement",
+    "MorganHousel_",
+    "moulidart",
+    "JulienHemery",
+    "ThibautDelauney",
+    "BenjaminBailly",
+    "AlexisNeron"
   ],
   "en": [
     "Chubby",
@@ -17,7 +27,14 @@
     "TALIA",
     "unusual_whales",
     "Barchart",
-    "Massimo"
+    "Massimo",
+    "eli",
+    "z4c7",
+    "Jelle",
+    "CoinMarketCap",
+    "Ahmad",
+    "Ferre",
+    "MrBanks"
   ],
   "history": [
     {
@@ -98,6 +115,91 @@
     {
       "lang": "fr",
       "handle": "AlexisKieffer",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "eli",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "z4c7",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Jelle",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudCazals",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "StephaneGhali",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulieRivard",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisClement",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "CoinMarketCap",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Ahmad",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Ferre",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "MorganHousel_",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "moulidart",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienHemery",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautDelauney",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminBailly",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisNeron",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "MrBanks",
       "added": "2026-07-07"
     }
   ]

@@ -8457,5 +8457,109 @@
       }
     ],
     "summary": "J'ai creus\u00e9 les p\u00e9pites francophones qui ne sont pas des influenceurs 'gourdes'. Le top est domin\u00e9 par des fondateurs techniques (L'Etincelle) et des analistes crypto pur jus qui ont surv\u00e9cu aux hivers. Au Qu\u00e9bec, la sc\u00e8ne est plus petite mais plus qualitative sur la tech B2B et la VC."
+  },
+  {
+    "ts": "2026-07-07T03:41:24.080332",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Marc-AndreRuest",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "Le patron de Cloudwatt. Le Qu\u00e9bec a besoin de lui sur X pour qu'on arr\u00eate de croire qu'on est invisible."
+      },
+      {
+        "handle": "RenaudCazals",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "L'ancien de BlaBlaCar qui cover tout ce qui pue ou sent le succ\u00e8s. Z\u00e9ro filtre, 100% de la r\u00e9alit\u00e9 du terrain."
+      },
+      {
+        "handle": "StephaneGhali",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "La diaspora francophone \u00e0 SF. Il couvre l'AI avec l'accent de la Silicon Valley et la frondeuse de Paris."
+      },
+      {
+        "handle": "JulieRivard",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "L'experte crypto qu\u00e9b\u00e9coise qui parle moins de moon que de la tech sous-jacente. Rare d'avoir un peu de cervelle."
+      },
+      {
+        "handle": "AlexisClement",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Ex-Revolut. Il analyse la fintech avec la rigueur d'un banquier qui a vu la crise de 2008 et n'a toujours pas confiance."
+      }
+    ],
+    "summary": "La France domine le segment IA avec Mistral et ses g\u00e9nies, tandis que le Qu\u00e9bec et les USA francophones offrent des p\u00e9pites plus niche mais plus agiles."
+  },
+  {
+    "ts": "2026-07-07T05:57:26.510498",
+    "raw_count": 7,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MorganHousel_",
+        "region": "usa",
+        "niche": "finance",
+        "followers": 150000,
+        "reason": "Psychologie de l'argent, influence massive sur les pros US, twitte en anglais mais essentiel pour le vocabulaire finance FR."
+      },
+      {
+        "handle": "moulidart",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 95000,
+        "reason": "La r\u00e9f\u00e9rence crypto FR, analyse macro solide, pas de pub Telegram, twitte en fran\u00e7ais."
+      },
+      {
+        "handle": "SylvainCharlebois",
+        "region": "usa",
+        "niche": "finance",
+        "followers": 80000,
+        "reason": "Professeur Dalhousie, expert agro-alimentaire, vues fra\u00eeches et mordantes sur les march\u00e9s food/tech."
+      },
+      {
+        "handle": "JulienHemery",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "Fondateur de MoneyMouth, analyse boursi\u00e8re FR quotidienne, style direct, audience massive."
+      },
+      {
+        "handle": "ThibautDelauney",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Ex-DeepMind, chercheur fran\u00e7ais, twitte sur l'IA avec profondeur et humour, pas un vendeur de r\u00eave."
+      },
+      {
+        "handle": "BenjaminBailly",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Le roi de l'\u00e9ducation financi\u00e8re au Qu\u00e9bec, actif, fiable, z\u00e9ro bruit politique."
+      },
+      {
+        "handle": "AlexisNeron",
+        "region": "quebec",
+        "niche": "tech/ai",
+        "followers": 25000,
+        "reason": "Influenceur tech qu\u00e9b\u00e9cois, couvre l'IA et les startups, audience locale tr\u00e8s engag\u00e9e."
+      }
+    ],
+    "summary": "On a crois\u00e9 les listes crypto et les profils chercheurs IA pour \u00e9viter les vendeurs de formations. L'IA fran\u00e7aise est mieux couverte par des profils techniques (Moulidart, Delauney) que par des influenceurs vibes. Au Qu\u00e9bec, la niche bourse/tech est mieux structur\u00e9e qu'en France."
   }
 ]
