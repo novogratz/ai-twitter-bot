@@ -15360,3 +15360,33 @@ $63K → $67
 CSPs are deploying SMRs for direct local power independent of external grids, meeting AI clusters' 24/7 demands. AI has shifted from a rigid power load to
   - https://x.com/trendforce/status/2074131945533874208
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 28).
+- **@sawyermerritt** (41 likes, score 8/10) — Morgan Stanley's Adam Jonas has just initiated coverage on @SpaceX for the first time with a $300 price target & a bull case of $600/share, which would be an $8 trillion market cap.
+
+Adam thinks Space
+  - https://x.com/SawyerMerritt/status/2074361886636732856
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 45).
+- **@rohanpaul_ai** (62 likes, score 9/10) — Grok 4.5 almost ready to drop?
+
+Some details about Grok 4.5 that have now been confirmed by various reports.
+
+- Grok 4.5 is built on xAI’s V9 foundation model with 1.5T parameters.
+
+- That makes it ab
+  - https://x.com/rohanpaul_ai/status/2074243395099427300
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 74).
+- **@hesamation** (36 likes, score 8/10) — there was something legendary about this timeframe that gave us GPT-4o, O3, Opus 4, DeepSeek, and the Llama models.
+
+no matter how good the models got afterwards, nothing really topped the magic, the
+  - https://x.com/Hesamation/status/2074143879981338955
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 44).
+- **@stevenmarkryan** (23 likes, score 8/10) — • SpaceX Joins NASDAQ 100
+• Grok Voice Agents Are CRACKED (live demo)
+• xAI now SpaceXAI
+• Tesla Stock Surges 6.69%
+  - https://x.com/stevenmarkryan/status/2074361517454065893
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 27).
+- **@koltregaskes** (8 likes, score 7/10) — 25 months from frontier AI to laptop AI.
+
+The diagram tracks the lag from when a major frontier model launches to when a broadly similar open-weight model can run locally on serious consumer hardware.
+  - https://x.com/koltregaskes/status/2074289548868432147
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 12).
