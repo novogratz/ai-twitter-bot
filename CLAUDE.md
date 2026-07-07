@@ -4,6 +4,26 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **Mandate 2026-07-06 — MORE POSTS + QUOTES + RETWEETS; Stop hook removed
+> (operator: "you didn't do enough replies nor posts today... i barely see
+> retweet quote and new posts"):** two root causes, both fixed.
+> 1. **The operator's own Stop hook killed the bot mid-day**: the
+>    2026-07-05 "stop the bot at end of each task" hook fired at 08:48 when
+>    a Claude session ended while the bot was running — 14h of downtime =
+>    most of the missing replies (uptime IS the reply lever). Hook removed
+>    from `.claude/settings.local.json`; `bin/stop_bot.sh` + /stop remain
+>    for explicit stops.
+> 2. **Agents had re-clamped live_strategy** to news 4 / hotakes 8 /
+>    quotes 48 / retweets 2 — forfeiting most post slots (Jul 5: 13
+>    originals, 71 quotes, 1 RT). live_strategy manually reset to news 14 /
+>    hotakes 28 / quotes 240 / retweets 15; .env quotes 150→240; BOTH agent
+>    clamp sites (meta_strategy `_BOUNDS` + strategy_lab `ALLOWED_PATHS`)
+>    moved to news (6,25), hotakes (12,50), quotes (100,240), retweets
+>    (2,20) — FLOORS now guarantee a visible profile so an agent can never
+>    re-starve these surfaces; META_PROMPT bounds text updated to match
+>    (it still instructed the LLM to write retweet 0-2). Guard: floor+
+>    ceiling pins in `test_agent_bounds_allow_operator_volume_mandate`.
+
 > **Mandate 2026-07-05 — LIKE + FOLLOW MORE (operator: "make the bot like
 > and follow more posts / people"):** partial re-warm of the 2026-06-15
 > like cooldown + follow discovery unblocked. Root cause of low follows:
@@ -2074,10 +2094,10 @@ For full operations playbook see [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
 ## Skills
 
 > `bin/stop_bot.sh` — arms `.bot_disabled` + SIGTERMs main.py processes
-> scoped to this repo's cwd. Wired as the operator's local Claude Code
-> Stop hook (2026-07-05, `.claude/settings.local.json`, not in git) so
-> every agentic session ends with the bot stopped; operator restarts
-> manually.
+> scoped to this repo's cwd. Was briefly wired as a Claude Code Stop hook
+> (2026-07-05) — REMOVED 2026-07-06 after it killed the operator's running
+> bot mid-day (a hook can't tell "task done" from "question while the bot
+> runs"). Use it (or /stop) explicitly.
 
 
 User-invokable slash commands live under `.claude/skills/` (mirrored at `.codex/skills/`). 27 skills, each is a directory with a `SKILL.md` file:

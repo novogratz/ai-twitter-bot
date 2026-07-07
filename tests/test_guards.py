@@ -2181,18 +2181,21 @@ def test_agent_bounds_allow_operator_volume_mandate():
     at human-plausible levels (news<=4, hotakes<=8, quotes<=48) — an agent
     must NOT be able to crank volume back to bot-fingerprint territory."""
     from src.meta_strategy_agent import _BOUNDS
-    assert _BOUNDS["MAX_NEWS_PER_DAY"][1] >= 8  # 2026-06-16 crazy mode restored
-    assert _BOUNDS["MAX_HOTAKES_PER_DAY"][1] >= 14
-    assert _BOUNDS["MAX_QUOTES_PER_DAY"][1] >= 100  # 2026-06-16 crazy mode
-    # Floors: the agent may tune DOWN but never starve a surface entirely.
-    assert _BOUNDS["MAX_HOTAKES_PER_DAY"][0] >= 1
-    assert _BOUNDS["MAX_NEWS_PER_DAY"][0] >= 1
-    assert _BOUNDS["MAX_QUOTES_PER_DAY"][0] >= 10
-
     from src.strategy_lab_bot import ALLOWED_PATHS
-    assert ALLOWED_PATHS["caps.MAX_NEWS_PER_DAY"][1] >= 8
-    assert ALLOWED_PATHS["caps.MAX_HOTAKES_PER_DAY"][1] >= 14
-    assert ALLOWED_PATHS["caps.MAX_QUOTES_PER_DAY"][1] >= 100  # 2026-06-16 crazy mode
+    # 2026-07-06 mandate ("you didn't do enough replies nor posts today...
+    # i barely see retweet quote and new posts"): agents had re-clamped
+    # live_strategy to news 4 / hotakes 8 / quotes 48 / retweets 2 —
+    # forfeiting most post slots. FLOORS now guarantee a visible profile;
+    # ceilings track the mandate. Both clamp sites pinned identically.
+    for bounds in (_BOUNDS, {k.replace("caps.", ""): v for k, v in ALLOWED_PATHS.items()}):
+        assert bounds["MAX_NEWS_PER_DAY"][0] >= 6, "agents must not starve news"
+        assert bounds["MAX_HOTAKES_PER_DAY"][0] >= 12, "agents must not starve hotakes"
+        assert bounds["MAX_QUOTES_PER_DAY"][0] >= 100, "agents must not starve quotes"
+        assert bounds["MAX_RETWEETS_PER_DAY"][0] >= 2, "agents must not zero retweets"
+        assert bounds["MAX_NEWS_PER_DAY"][1] >= 14
+        assert bounds["MAX_HOTAKES_PER_DAY"][1] >= 28
+        assert bounds["MAX_QUOTES_PER_DAY"][1] >= 240
+        assert bounds["MAX_RETWEETS_PER_DAY"][1] >= 10
     # 2026-07-05 operator "like and follow more": both agents own the
     # like/follow keys with matching bounds. Floor 1 on follow_blast — a
     # lab-written 0 killed ALL blast follows through early July, and

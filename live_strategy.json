@@ -1,10 +1,10 @@
 {
   "ts": "2026-07-06T00:00:00.000000",
   "caps": {
-    "MAX_NEWS_PER_DAY": 4,
-    "MAX_HOTAKES_PER_DAY": 8,
-    "MAX_QUOTES_PER_DAY": 48,
-    "MAX_RETWEETS_PER_DAY": 2,
+    "MAX_NEWS_PER_DAY": 14,
+    "MAX_HOTAKES_PER_DAY": 28,
+    "MAX_QUOTES_PER_DAY": 240,
+    "MAX_RETWEETS_PER_DAY": 15,
     "MAX_BREAKOUTS_PER_DAY": 4,
     "MAX_SPICY_PER_DAY": 3,
     "MAX_REPLIES_PER_CYCLE": 300,
@@ -23,5 +23,5 @@
     "BOOKMARK FORMULA: one saveable line per post, then stop. METAPHOR > casual-first-person > UNDERSTATEMENT > journalism. Journalism mode = 0.07 avg likes. The model that earned 65 likes said one sentence and a smiley. Lead with the frame, bury the evidence."
   ],
   "cadence_factor": 1.0,
-  "rationale": "2026-07-06 update: caps unchanged (at humanize bounds). Topic_focus refreshed with July 6 acute hooks: Saylor declares 4-year BTC cycle over, JPMorgan warns Strategy is systemic BTC risk, Claude Fable 5 + Mythos 5 globally returned, GPT-5.6 staggered rollout. Algorithm update: reply = 150x a like (was 27x) per X 2026 data. Critical new focus: reply bank is empty (1085 replies/week, 0 earning 2+ likes) \u2014 replies are correct but emotionally flat. Added explicit directive to lead with verdict not evidence. BTC at $62K, ai_vs_btc still 190x ROI, still < 1% of actions."
+  "rationale": "2026-07-06 operator volume mandate: 'you didn't do enough replies nor posts today... do more' \u2014 caps manually reset to ceiling (news 14, hotakes 28, quotes 240); agent floors raised so this can't be re-clamped to starvation levels."
 }

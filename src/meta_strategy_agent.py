@@ -55,10 +55,10 @@ META_LOG_FILE = os.path.join(_PROJECT_ROOT, "meta_strategy_log.json")
 # strategy_lab.ALLOWED_PATHS, the autonomous_growth prompt, and the
 # bounds guard test in the same pass.
 _BOUNDS = {
-    "MAX_NEWS_PER_DAY":      (2,  14),
-    "MAX_HOTAKES_PER_DAY":   (6,  28),
-    "MAX_QUOTES_PER_DAY":    (60, 240),
-    "MAX_RETWEETS_PER_DAY":  (0,  2),
+    "MAX_NEWS_PER_DAY":      (6, 25),
+    "MAX_HOTAKES_PER_DAY":   (12, 50),
+    "MAX_QUOTES_PER_DAY":    (100, 240),
+    "MAX_RETWEETS_PER_DAY":  (2, 20),
     "MAX_BREAKOUTS_PER_DAY": (0,  2),
     "MAX_SPICY_PER_DAY":     (0,  2),
     "MAX_REPLIES_PER_CYCLE": (3,  50),
@@ -75,7 +75,7 @@ _DEFAULTS = {
     "MAX_NEWS_PER_DAY":      14,
     "MAX_HOTAKES_PER_DAY":   26,
     "MAX_QUOTES_PER_DAY":    220,
-    "MAX_RETWEETS_PER_DAY":  1,
+    "MAX_RETWEETS_PER_DAY":  10,
     "MAX_BREAKOUTS_PER_DAY": 1,
     "MAX_SPICY_PER_DAY":     1,
     "MAX_REPLIES_PER_CYCLE": 25,
@@ -179,10 +179,11 @@ OUTPUT — UNIQUEMENT un JSON valide, ce schéma exact:
   "rationale": "<2-3 phrases en français expliquant tes choix>"
 }}
 
-BOUNDS: every cap must stay inside its allowed range (2026-06-09 volume
-mandate — the operator wants MORE posts + quotes, never starve a surface):
-  news 2-10, hotake 6-20, quote 60-200, retweet 0-2,
-  breakout 0-3, spicy 0-2, replies/cycle 3-50.
+BOUNDS: every cap must stay inside its allowed range (2026-07-06 volume
+mandate — the operator wants MORE posts + quotes + retweets visible on the
+profile, never starve a surface):
+  news 6-25, hotake 12-50, quote 100-240, retweet 2-20,
+  breakout 0-2, spicy 0-2, replies/cycle 3-50.
 
 Pas de markdown, pas de commentaire — JUSTE le JSON.
 """

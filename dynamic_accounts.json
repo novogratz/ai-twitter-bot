@@ -896,7 +896,11 @@
     "CryptoCred",
     "BenoitPerron",
     "NaderDabit",
-    "MathieuDutroy"
+    "MathieuDutroy",
+    "ThibautPeltier",
+    "MathieuGarcia",
+    "CyrilDong",
+    "AlexisDeGoubry"
   ],
   "en": [
     "blablacar",
@@ -7238,6 +7242,26 @@
     {
       "lang": "fr",
       "handle": "MathieuDutroy",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautPeltier",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuGarcia",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDong",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDeGoubry",
       "added": "2026-07-06"
     }
   ]
