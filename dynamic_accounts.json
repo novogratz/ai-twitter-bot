@@ -30,7 +30,18 @@
     "thepythonist",
     "MaximeDucay",
     "PierrePoirier_",
-    "JulieLemelin_"
+    "JulieLemelin_",
+    "TanguyMillet",
+    "JulesBordet",
+    "RomainDeltour",
+    "VincentGagnaire",
+    "AlexisLortie",
+    "PierreGirard",
+    "BenjaminLarrouy",
+    "MaximeVaspart",
+    "MaximeSeymour",
+    "alexissimonin",
+    "mickaelb12"
   ],
   "en": [
     "Chubby",
@@ -55,7 +66,15 @@
     "Polymarket",
     "Base",
     "Kalshi",
-    "Ted"
+    "Ted",
+    "Serenity",
+    "zerohedge",
+    "Tesla",
+    "MARSAULT",
+    "antra",
+    "Lucky",
+    "validate",
+    "Dexerto"
   ],
   "history": [
     {
@@ -326,6 +345,101 @@
     {
       "lang": "en",
       "handle": "Ted",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Serenity",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "zerohedge",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Tesla",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguyMillet",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesBordet",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDeltour",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentGagnaire",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisLortie",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreGirard",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminLarrouy",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeVaspart",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSeymour",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "MARSAULT",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "antra",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Lucky",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "alexissimonin",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelb12",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "validate",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Dexerto",
       "added": "2026-07-07"
     }
   ]

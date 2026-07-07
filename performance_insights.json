@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-07T15:40:43.118343",
-  "window_7d_actions": 2001,
-  "window_24h_actions": 653,
+  "generated_at": "2026-07-07T19:40:43.192672",
+  "window_7d_actions": 2134,
+  "window_24h_actions": 786,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 1995
+      "count": 2128
     },
     {
       "pattern": "RENAME",
@@ -59,104 +59,104 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 923
+      "count": 997
     },
     {
       "topic": "IA",
-      "count": 777
+      "count": 816
     },
     {
       "topic": "Crypto",
-      "count": 259
+      "count": 274
     },
     {
       "topic": "Bourse",
-      "count": 142
+      "count": 150
     },
     {
       "topic": "Spatial",
-      "count": 39
+      "count": 42
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.029,
-      "7d_rate": 0.019
+      "24h_rate": 0.028,
+      "7d_rate": 0.02
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 871
+      "count": 917
     },
     {
       "pillar": "other",
-      "count": 619
+      "count": 666
     },
     {
       "pillar": "market_trauma",
-      "count": 401
+      "count": 433
     },
     {
       "pillar": "meme_reaction",
-      "count": 72
+      "count": 76
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 22
     },
     {
       "pillar": "ai_vs_btc",
       "count": 20
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 18
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 317
+      "count": 363
     },
     {
       "pillar": "other",
-      "count": 174
+      "count": 221
     },
     {
       "pillar": "market_trauma",
-      "count": 129
+      "count": 161
     },
     {
       "pillar": "meme_reaction",
-      "count": 23
+      "count": 27
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 8
     },
     {
       "pillar": "ai_vs_btc",
       "count": 6
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 55,
+      "posts": 57,
       "avg_likes": 0.11,
-      "avg_views": 25.5,
+      "avg_views": 25.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 93,
+      "posts": 92,
       "avg_likes": 0.09,
-      "avg_views": 24.0,
+      "avg_views": 25.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 49,
-      "avg_likes": 0.04,
-      "avg_views": 26.0,
+      "posts": 48,
+      "avg_likes": 0.02,
+      "avg_views": 25.8,
       "low_sample": false
     },
     {
@@ -177,19 +177,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1711
+      "count": 1828
     },
     {
       "type": "quote",
-      "count": 153
+      "count": 161
     },
     {
       "type": "quote_gif",
-      "count": 64
+      "count": 68
     },
     {
       "type": "post",
-      "count": 38
+      "count": 40
     },
     {
       "type": "retweet",
@@ -197,23 +197,23 @@
     },
     {
       "type": "hotake",
-      "count": 15
+      "count": 17
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-07T15:40:32.753410",
-      "text": "Treasury warns AI bubble.\n\nH100 margins 70%, inference costs falling. It's capex, not speculation. Bubble forms when returns stop, not when spending starts.",
+      "ts": "2026-07-07T19:37:42.580593",
+      "text": "$456m palantir vs $187m nvidia. shorting software valuations, not ai infrastructure. different thesis. everyone's reading it wrong.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-07T15:39:26.659787",
-      "text": "Open models mean government retains sovereignty over its AI stack. Nvidia handles compute, Palantir handles integration. Both companies extend their position. Smart policy.",
+      "ts": "2026-07-07T19:37:25.158035",
+      "text": "SemiAnalysis is listening to the vendors. Goldman is modeling. The $3.5T gap is consensus lagging reality.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-07T15:38:29.918150",
-      "text": "You just taxonomized something that didn't exist as a field three years ago. Self-evolving agents are real now.",
+      "ts": "2026-07-07T19:34:32.027240",
+      "text": "Palantir estime que si tous les modèles valent la même chose, l'avantage compétitif c'est la pile entière, pas le modèle. Les autres vont probablement comprendre trop tard.",
       "type": "reply"
     }
   ]
