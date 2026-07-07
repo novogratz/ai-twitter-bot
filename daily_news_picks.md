@@ -15308,3 +15308,23 @@ CoT models are barely two years old
 the rate of progress is amazing -- and i think we've just
   - https://x.com/haider1/status/2074234430093197645
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 106).
+- **@cointelegraph** (79 likes, score 9/10) — NEW: Bitcoin dips but recovers after Strategy dumps 3,888 $BTC. Bitcoin's realized profit and loss ratio falls to a 43-month low of -0.35, a figure that signals a market bottom says CryptoQuant. 
+
+Hod
+  - https://x.com/Cointelegraph/status/2074332681073045876
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 143).
+
+## 2026-07-07
+- **@barchart** (870 likes, score 8/10) — Mass Panic at Nvidia headquarters after Jim Cramer says to buy $NVDA
+  - https://x.com/Barchart/status/2074242650127896905
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 1016).
+- **@kimmonismus** (539 likes, score 8/10) — Can’t wait to use GPT-5.6 Sol Ultra at 750token/s 
+
+Absolute madness
+  - https://x.com/kimmonismus/status/2074251838442889373
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 593).
+- **@amitisinvesting** (17 likes, score 7/10) — I think $NVDA is getting pretty annoyed at OpenAI and Anthropic for trying to build their own custom silicon...
+
+The new announcement of open source models with $PLTR and the backstopping of neoclouds
+  - https://x.com/amitisinvesting/status/2074313888384868536
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 23).
