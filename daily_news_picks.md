@@ -15328,3 +15328,35 @@ Absolute madness
 The new announcement of open source models with $PLTR and the backstopping of neoclouds
   - https://x.com/amitisinvesting/status/2074313888384868536
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 23).
+- **@ashcrypto** (282 likes, score 9/10) — BREAKING :  BlackRock ETF has bought $209,390,000 worth of Bitcoin.
+
+After 11 straight days of selling ,the fund is back into buying.
+  - https://x.com/AshCrypto/status/2074339832416117095
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 420).
+- **@bitcoinarchive** (830 likes, score 9/10) — JUST IN: Bitcoin surges over $64,000
+
+The issue of Saylor selling $BTC to fund dividends has been killed off. 
+
+The bottom is in. 
+Don’t be left behind…
+  - https://x.com/BitcoinArchive/status/2074250642512556126
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 982).
+- **@pequityresearch** (87 likes, score 9/10) — Jefferies: Data Center & Power Demand
+
+> Massive Deficit: Demand for data centers continues to heavily outpace supply. In 2025, only 8.9 GW of capacity was lit in North America against nearly 21.1 GW
+  - https://x.com/pequityresearch/status/2074289797120622641
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 89).
+- **@crypto_lens_** (25 likes, score 9/10) — Bitcoin is now hovering at the exact level where EVERY bull trap ends.
+
+Next week, another bearish rejection will send $BTC back to ~$43,000.
+
+Now here's my BTC roadmap:
+
+Scenario 1 (July):
+$63K → $67
+  - https://x.com/crypto_lens_/status/2074325955074830436
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 73).
+- **@trendforce** (22 likes, score 8/10) — Data Center Power Demand Hits 600 TWh in 2026
+CSPs are deploying SMRs for direct local power independent of external grids, meeting AI clusters' 24/7 demands. AI has shifted from a rigid power load to
+  - https://x.com/trendforce/status/2074131945533874208
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 28).
