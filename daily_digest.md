@@ -839,3 +839,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 33 views: me in the corner offering 5-minute portfolio grief sessions
   - 1 likes / 64 views: me quietly googling "how many European countries are there" after this $NBIS drop
   - 1 likes / 13 views: updating my definition of "a lot of money" in real time
+
+## 2026-07-06
+
+**Activity** — total actions: 301
+  - by type: reply=255, quote=26, retweet=9, quote_gif=6, post=4, hotake=1
+  - top sources: SEARCH-HOT=176, FEED-SWEEP-FEED=41, FEED-SWEEP-FOLLOWING=22, QUOTE=14, VIP=12, BREAKING_QRT=6, GIF=6, MUST_REPOST=5
+  - top reply targets: @Graphseo=10, @arnaudmercier=9, @TheBTCTherapist=7, @cryptorover=6, @aleabitoreddit=6
+
+**Followers we follow** (running total): 279
+
+**Top-performing posts scraped today**:
+  - 1 likes / 23 views: S&P up 2%, semis down 4%. we have a name for this in the practice
+  - 0 likes / 20 views: me pausing a Karp interview to update my $PLTR fair value
+  - 0 likes / 12 views: me at open: finally healing  90 minutes later  https://x.com/cryptorover/status/2073996860495438176…
