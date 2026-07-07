@@ -16,7 +16,12 @@
     "JulienHemery",
     "ThibautDelauney",
     "BenjaminBailly",
-    "AlexisNeron"
+    "AlexisNeron",
+    "PierreRochard",
+    "FredoBullen",
+    "0xParadigm",
+    "CryptoFutur",
+    "LeoLabruyere"
   ],
   "en": [
     "Chubby",
@@ -34,7 +39,9 @@
     "CoinMarketCap",
     "Ahmad",
     "Ferre",
-    "MrBanks"
+    "MrBanks",
+    "Arbitrum",
+    "Ryker"
   ],
   "history": [
     {
@@ -200,6 +207,41 @@
     {
       "lang": "en",
       "handle": "MrBanks",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Arbitrum",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRochard",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "FredoBullen",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Ryker",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xParadigm",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoFutur",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "LeoLabruyere",
       "added": "2026-07-07"
     }
   ]

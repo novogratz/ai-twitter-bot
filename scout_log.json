@@ -8561,5 +8561,60 @@
       }
     ],
     "summary": "On a crois\u00e9 les listes crypto et les profils chercheurs IA pour \u00e9viter les vendeurs de formations. L'IA fran\u00e7aise est mieux couverte par des profils techniques (Moulidart, Delauney) que par des influenceurs vibes. Au Qu\u00e9bec, la niche bourse/tech est mieux structur\u00e9e qu'en France."
+  },
+  {
+    "ts": "2026-07-07T07:46:54.328748",
+    "raw_count": 8,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PierreRochard",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "L'expert Bitcoin qui explique la mon\u00e9tique des blocks comme si tu avais 5 ans. Il twitte souvent en FR quand il s'ennuie aux US."
+      },
+      {
+        "handle": "FredoBullen",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "L'analyste technique le plus honn\u00eate. Pas de hype, juste des graphiques et du cynisme. Id\u00e9al pour ceux qui veulent dormir la nuit."
+      }
+    ],
+    "summary": "Une s\u00e9lection mixte entre les g\u00e9ants techniques (Rochard, Weng) et les analysts de terrain (Bullen, Hemery). On \u00e9vite les influenceurs qui vendent du r\u00eave pour privil\u00e9gier ceux qui vendent de la logique, m\u00eame si elle pique les yeux."
+  },
+  {
+    "ts": "2026-07-07T09:41:39.551791",
+    "raw_count": 10,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "0xParadigm",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Thibaut de Paradigm, le mec qui explique la macro crypto sans te faire croire que tu vas devenir riche en 3 jours. Twitte en FR, analyse profonde."
+      },
+      {
+        "handle": "CryptoFutur",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "S\u00e9bastien et l'\u00e9quipe. Le seul m\u00e9dia crypto FR qui n'est pas un blog de shillings. Couverture news + analyse r\u00e9glementaire."
+      },
+      {
+        "handle": "LeoLabruyere",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le d\u00e9cryptage de la bourse FR qui ne te dit pas de vendre tout tout de suite. Ton calme, chiffres pr\u00e9cis."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de dreams et les bots pour ne garder que ceux qui apportent de la data ou de l'analyse technique en FR. Le duo AlexisNeron/MathieuL1 couvre la tech IA, tandis que CryptoFutur/0xParadigm assurent la solidity crypto."
   }
 ]
