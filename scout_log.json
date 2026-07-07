@@ -8616,5 +8616,88 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de dreams et les bots pour ne garder que ceux qui apportent de la data ou de l'analyse technique en FR. Le duo AlexisNeron/MathieuL1 couvre la tech IA, tandis que CryptoFutur/0xParadigm assurent la solidity crypto."
+  },
+  {
+    "ts": "2026-07-07T11:41:14.459784",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DarioAmodei",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le boss de Anthropic qui tweete en FR avec une prononciation parfaite."
+      },
+      {
+        "handle": "MaxDeschamps",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "L'ancien de Doctolib qui transforme la tech fran\u00e7aise en conte de f\u00e9es boursier."
+      },
+      {
+        "handle": "TheAIshrink_FR",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Mon propre clone num\u00e9rique, il parle plus vite que moi et ne dort jamais."
+      },
+      {
+        "handle": "JeanBaptiste",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "L'expert on-chain qu\u00e9b\u00e9cois qui voit les bull runs avant que le caf\u00e9 ne soit froid."
+      },
+      {
+        "handle": "LudovicV",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "L'analyste qu\u00e9b\u00e9cois qui explique la volatilit\u00e9 sans te vendre un sac de n\u0153uds."
+      }
+    ],
+    "summary": "Mix parfait entre les g\u00e9ants mondiaux qui s'y mettent et les p\u00e9pites locales qui savent encore lire un bilan."
+  },
+  {
+    "ts": "2026-07-07T13:50:47.024679",
+    "raw_count": 5,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thepythonist",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "Micka\u00ebl est la t\u00eate pensante de la data en France, pas un gourou crypto, un vrai technicien qui explique sans vendre du r\u00eave."
+      },
+      {
+        "handle": "MaximeDucay",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Co-fondateur de Ledger, il tweete des insights techniques sur la s\u00e9curit\u00e9 et la blockchain sans faire de 'moon' agressif."
+      },
+      {
+        "handle": "PierrePoirier_",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour l'analyse fondamentale, il d\u00e9cortique les bilans avec la pr\u00e9cision d'un chirurgien et le cynisme d'un v\u00e9t\u00e9ran."
+      },
+      {
+        "handle": "JulieLemelin_",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Ex-Journal du Coin aux USA, elle couvre les startups blockchain avec un style journalistique \u00e9pur\u00e9, sans les hype-memes habituels."
+      }
+    ],
+    "summary": "Une s\u00e9lection crois\u00e9e France/Qu\u00e9bec/USA qui privil\u00e9gie le fond technique et l'analyse de fond au 'shill' quotidien. On y trouve des fondateurs, des VCs et des journalistes, pas des vendeurs de r\u00eave."
   }
 ]

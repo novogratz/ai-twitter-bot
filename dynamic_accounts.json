@@ -21,7 +21,16 @@
     "FredoBullen",
     "0xParadigm",
     "CryptoFutur",
-    "LeoLabruyere"
+    "LeoLabruyere",
+    "DarioAmodei",
+    "MaxDeschamps",
+    "TheAIshrink_FR",
+    "JeanBaptiste",
+    "LudovicV",
+    "thepythonist",
+    "MaximeDucay",
+    "PierrePoirier_",
+    "JulieLemelin_"
   ],
   "en": [
     "Chubby",
@@ -41,7 +50,12 @@
     "Ferre",
     "MrBanks",
     "Arbitrum",
-    "Ryker"
+    "Ryker",
+    "CyrilXBT",
+    "Polymarket",
+    "Base",
+    "Kalshi",
+    "Ted"
   ],
   "history": [
     {
@@ -242,6 +256,76 @@
     {
       "lang": "fr",
       "handle": "LeoLabruyere",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "CyrilXBT",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Polymarket",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Base",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "DarioAmodei",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxDeschamps",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheAIshrink_FR",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptiste",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicV",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Kalshi",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "thepythonist",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDucay",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierrePoirier_",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulieLemelin_",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Ted",
       "added": "2026-07-07"
     }
   ]
