@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-07T03:40:43.189245",
-  "window_7d_actions": 1558,
-  "window_24h_actions": 357,
+  "generated_at": "2026-07-07T07:40:43.129482",
+  "window_7d_actions": 1701,
+  "window_24h_actions": 386,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 1554
+      "count": 1697
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 1554
+      "count": 1697
     }
   ],
   "best_hours_utc": [
@@ -40,89 +40,89 @@
       "actions": 97
     },
     {
+      "hour": 6,
+      "actions": 97
+    },
+    {
+      "hour": 4,
+      "actions": 96
+    },
+    {
       "hour": 3,
-      "actions": 85
-    },
-    {
-      "hour": 2,
-      "actions": 83
-    },
-    {
-      "hour": 22,
-      "actions": 79
+      "actions": 94
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 740
+      "count": 801
     },
     {
       "topic": "IA",
-      "count": 577
+      "count": 642
     },
     {
       "topic": "Crypto",
-      "count": 207
+      "count": 223
     },
     {
       "topic": "Bourse",
-      "count": 102
+      "count": 113
     },
     {
       "topic": "Spatial",
-      "count": 32
+      "count": 35
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.048,
+      "24h_rate": 0.044,
       "7d_rate": 0.021
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 651
+      "count": 725
     },
     {
       "pillar": "other",
-      "count": 503
+      "count": 546
     },
     {
       "pillar": "market_trauma",
-      "count": 315
+      "count": 337
     },
     {
       "pillar": "meme_reaction",
-      "count": 58
+      "count": 61
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
       "count": 16
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 15
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 146
+      "count": 181
     },
     {
       "pillar": "other",
-      "count": 115
+      "count": 111
     },
     {
       "pillar": "market_trauma",
-      "count": 79
+      "count": 76
     },
     {
       "pillar": "meme_reaction",
-      "count": 11
+      "count": 12
     },
     {
       "pillar": "reply_bait",
@@ -136,23 +136,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 59,
+      "posts": 58,
       "avg_likes": 0.1,
-      "avg_views": 23.9,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 44,
-      "avg_likes": 0.07,
-      "avg_views": 29.2,
+      "avg_views": 23.8,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 94,
+      "posts": 92,
+      "avg_likes": 0.09,
+      "avg_views": 25.2,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 47,
       "avg_likes": 0.06,
-      "avg_views": 24.9,
+      "avg_views": 29.1,
       "low_sample": false
     },
     {
@@ -173,15 +173,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 1329
+      "count": 1460
     },
     {
       "type": "quote",
-      "count": 122
+      "count": 131
     },
     {
       "type": "quote_gif",
-      "count": 54
+      "count": 57
     },
     {
       "type": "post",
@@ -198,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-07T03:38:08.419537",
-      "text": "SpaceX launches rockets. Nvidia prints money. Zeta charges admission. By the time Transporter-17 lands, the \"alpha\" in $ZETA at $17 will have de-orbited into the atmosphere. Buy the hype, ride the wave, wait for the vacuum. 🚀📉",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-07-07T03:37:02.011622",
-      "text": "700b on compute that depreciates fast. this only works if you're breaking even on AI revenue. how's that going?",
+      "ts": "2026-07-07T07:37:26.264289",
+      "text": "Polymarket works: money flows to real information.\n\nopenai keeps roadmap sealed. that's the whole mechanism.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-07T03:36:37.383196",
-      "text": "That $69k break worked when you were alone. now thousands are watching the same level. crowded setups don't replay clean.",
+      "ts": "2026-07-07T07:37:10.130355",
+      "text": "Us government moving to anthropic for security\n\nthat's the vote of confidence that beats a series d memo",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-07-07T07:36:37.176283",
+      "text": "Bitcoin wins if inflation kills the dollar. the s&p wins if tech kills inflation. you're choosing your macro thesis, not your asset class.",
       "type": "reply"
     }
   ]
