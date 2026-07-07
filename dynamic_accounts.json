@@ -896,11 +896,7 @@
     "CryptoCred",
     "BenoitPerron",
     "NaderDabit",
-    "MathieuDutroy",
-    "ThibautPeltier",
-    "MathieuGarcia",
-    "CyrilDong",
-    "AlexisDeGoubry"
+    "MathieuDutroy"
   ],
   "en": [
     "blablacar",
@@ -1211,7 +1207,9 @@
     "PancakeSwap",
     "Robbyant",
     "Ryker",
-    "Therese"
+    "Therese",
+    "KJW",
+    "RonnieV"
   ],
   "history": [
     {
@@ -7243,6 +7241,8 @@
       "lang": "fr",
       "handle": "MathieuDutroy",
       "added": "2026-07-06"
+<<<<<<< Updated upstream
+=======
     },
     {
       "lang": "fr",
@@ -7263,6 +7263,17 @@
       "lang": "fr",
       "handle": "AlexisDeGoubry",
       "added": "2026-07-06"
+    },
+    {
+      "lang": "en",
+      "handle": "KJW",
+      "added": "2026-07-06"
+    },
+    {
+      "lang": "en",
+      "handle": "RonnieV",
+      "added": "2026-07-06"
+>>>>>>> Stashed changes
     }
   ]
 }

@@ -1,251 +1,216 @@
 {
-  "ts": "2026-07-04T20:40:03.990480",
-  "count": 35,
+  "ts": "2026-07-06T08:48:25.525050",
+  "count": 30,
   "items": [
     {
-      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Evan",
-      "title": "Nvidia $NVDA just announced a new business model that \n\n\"opens up compute access to the fast‑growing AI ecosystem of startups, model builders, enterprises, research organizations and regional AI playe",
-      "url": "https://x.com/StockMKTNewz/status/2072647687577522586",
-      "score": 490,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Leif | Investing",
-      "title": "10 Hot Market Themes & the Most Attractive Buy in Each Right Now \n\n Space Economy: $ASTS\n Power & Grid: $VST\n AI Semiconductors: $NVDA\n Fintech: $SOFI\n Enterprise Software: $ORCL\n Cybersecurity: $CRWD",
-      "url": "https://x.com/LeifInvests/status/2073102371773648896",
-      "score": 132,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Rich Peter",
-      "title": "$CRWV --- The sharp selloff in $CRWV triggered by Meta-related headlines has created an ideal dollar-cost averaging entry opportunity that perfectly embodies Warren Buffett’s mantra: “Be greedy when o",
-      "url": "https://x.com/peterli34923561/status/2073236261612183768",
-      "score": 119,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Winston",
-      "title": "A one-megawatt AI rack at 54 volts pushes about 18,500 amperes through its busbars, which is why a single rack can need up to 441 pounds (200 kilograms) of copper. Raise the distribution to 800 volts",
-      "url": "https://x.com/ChurchillWw/status/2073462091399503892",
-      "score": 23,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Cole’s Trades",
-      "title": "If you had to full port one stock, what would you pick?\n\n$SOFI\n\n$NOW\n\n$MU\n\n$CRWV",
-      "url": "https://x.com/ColesTrades/status/2073533595507888386",
-      "score": 22,
-      "ts": ""
-    },
-    {
-      "src": "X_FOLLOWING/Polymarket",
-      "title": "JUST IN: China issues new guidelines urging cinemas to add AI agents, karaoke, & coffee shops.",
-      "url": "https://x.com/Polymarket/status/2073565145079349320",
-      "score": 17,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Polymarket",
-      "title": "JUST IN: China issues new guidelines urging cinemas to add AI agents, karaoke, & coffee shops.",
-      "url": "https://x.com/Polymarket/status/2073565145079349320",
-      "score": 6,
-      "ts": ""
-    },
-    {
-      "src": "X_HOME/Mario Nawfal",
-      "title": "South Korea’s chip trade is getting dangerously leveraged\n\nLeveraged & inverse ETFs tied to SK Hynix alone now hold ~$19 BILLION: over 4× the stock’s average daily trading volume.\n\nSamsung’s at ~$12.4",
-      "url": "https://x.com/MarioNawfal/status/2073565021708193959",
-      "score": 6,
-      "ts": ""
-    },
-    {
-      "src": "X_FOLLOWING/Polymarket",
-      "title": "13% chance a Chinese company has a #1 AI model by the end of the year.",
-      "url": "https://x.com/Polymarket/status/2073565515969187896",
-      "score": 1,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/Szymon Machalica",
-      "title": "Meta first surged 8.8%, only to drop 4.6% the next day. The market spotted a simple truth: the idea of selling AI computing power sounds great, but its feasibility and timing are far less clear-cut.",
-      "url": "https://x.com/SzymonMachalic1/status/2072750833616249045",
+      "src": "CNBC Top",
+      "title": "TeraWulf shares soar after Anthropic leases data center in Kentucky",
+      "url": "https://www.cnbc.com/2026/07/06/anthropic-terawulf-data-center-ai.html",
       "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/FreeFromMatrix",
-      "title": "$CRWV early? It's at $44B MC, bro, and $NBIS is at $51B.\n\nJust by comparing stock prices, one cannot state that Coreweave is early.",
-      "url": "https://x.com/ViralMuzik1989/status/2073539154760065171",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Manish Malhotra",
-      "title": "Stock to Watch | $NVDA\n\nJuly 3, 2026 | NVIDIA\n\nNVIDIA CEO Jensen Huang says the economics of AI infrastructure are entering a new era.\n\nAccording to Huang, a 1-gigawatt AI factory built on NVIDIA arch",
-      "url": "https://x.com/algotradingdesk/status/2073553425221161237",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Katusa Research",
-      "title": "The MegaWatt War is coming in hot. \n\nOver the last two years…\n\nthe biggest technology companies on earth quietly signed more than 12,000 megawatts of nuclear power into binding contracts.",
-      "url": "https://x.com/KatusaResearch/status/2073197975220977809",
-      "score": 0,
-      "ts": ""
-    },
-    {
-      "src": "TechCrunch AI",
-      "title": "New Google commercial imagines a Declaration of Independence written with help from AI",
-      "url": "https://techcrunch.com/2026/07/04/new-google-commercial-imagines-a-declaration-of-independence-written-with-help-from-ai/",
-      "score": 0,
-      "ts": "2026-07-04T20:55:25"
-    },
-    {
-      "src": "The Block",
-      "title": "Bitcoin ETFs log record eighth straight negative week despite large Thursday inflow",
-      "url": "https://www.theblock.co/post/407173/bitcoin-etfs-log-record-eighth-straight-negative-week-despite-large-thursday-inflow?utm_source=rss&utm_medium=rss",
-      "score": 0,
-      "ts": "2026-07-04T19:56:20"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Bitcoin jumps above $63,000, reversing end-June losses",
-      "url": "https://www.coindesk.com/markets/2026/07/04/bitcoin-jumps-above-usd63-000-reversing-end-june-losses",
-      "score": 0,
-      "ts": "2026-07-04T18:07:17"
-    },
-    {
-      "src": "TechCrunch AI",
-      "title": "Midjourney wants Hollywood studios to reveal the details of their AI usage",
-      "url": "https://techcrunch.com/2026/07/04/midjourney-wants-hollywood-studios-to-reveal-the-details-of-their-ai-usage/",
-      "score": 0,
-      "ts": "2026-07-04T18:00:05"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Bitcoin experts split over plan to freeze Satoshi's 1.1 million bitcoin as quantum threat grows",
-      "url": "https://www.coindesk.com/business/2026/07/04/bitcoin-experts-split-over-plan-to-freeze-satoshi-s-1-1-million-bitcoin-as-quantum-threat-grows",
-      "score": 0,
-      "ts": "2026-07-04T18:00:00"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "How ethical hackers with just a $3,000 server found a flaw that could've put $70 billion in crypto at risk",
-      "url": "https://www.coindesk.com/tech/2026/07/04/how-ethical-hackers-with-just-a-usd3-000-server-found-a-flaw-that-could-ve-put-usd70-billion-in-crypto-at-risk",
-      "score": 0,
-      "ts": "2026-07-04T18:00:00"
+      "ts": "2026-07-06T12:30:48"
     },
     {
       "src": "Decrypt",
-      "title": "Bitcoin to $53K? Exchange Deposits Jump as Analysts Warn of Increased Volatility",
-      "url": "https://decrypt.co/372744/bitcoin-53k-exchange-deposits-jump-analysts-warn-increased-volatility",
+      "title": "Strategy Sells $216M in Bitcoin for Dividends Under 'BTC Monetization Program'",
+      "url": "https://decrypt.co/372797/strategy-sells-216m-in-bitcoin-for-dividends-under-btc-monetization-program",
       "score": 0,
-      "ts": "2026-07-04T16:57:08"
+      "ts": "2026-07-06T12:28:00"
     },
     {
-      "src": "The Block",
-      "title": "Nearly 1 million wallets are down $3.81 billion on Trump’s memecoin: report",
-      "url": "https://www.theblock.co/post/407170/nearly-1-million-wallets-are-down-3-81-billion-on-trumps-memecoin-report?utm_source=rss&utm_medium=rss",
+      "src": "Yahoo Finance",
+      "title": "Strategy Sells $216M in Bitcoin for Dividends Under 'BTC Monetization Program'",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/strategy-sells-216m-bitcoin-dividends-122800355.html",
       "score": 0,
-      "ts": "2026-07-04T16:44:18"
+      "ts": "2026-07-06T12:28:00"
     },
     {
-      "src": "TechCrunch AI",
-      "title": "Alibaba reportedly bans employees from using Claude Code",
-      "url": "https://techcrunch.com/2026/07/04/alibaba-reportedly-bans-employees-from-using-claude-code/",
+      "src": "Yahoo Finance",
+      "title": "Tesla robotaxi service expands to Miami from Texas",
+      "url": "https://finance.yahoo.com/technology/ai/articles/tesla-robotaxi-expands-miami-texas-122243343.html",
       "score": 0,
-      "ts": "2026-07-04T16:32:08"
+      "ts": "2026-07-06T12:22:43"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "Better Chip Stock: Intel Versus Taiwan Semiconductor",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/better-chip-stock-intel-versus-122000698.html",
+      "score": 0,
+      "ts": "2026-07-06T12:20:00"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Michael Saylor's Strategy dramatically ups pace of bitcoin sales, raising $216 million",
+      "url": "https://www.coindesk.com/markets/2026/07/06/michael-saylor-s-strategy-dramatically-ups-pace-of-bitcoin-sales-raising-usd216-million",
+      "score": 0,
+      "ts": "2026-07-06T12:16:28"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "Belgian regulator flags six unauthorized crypto providers after MiCA deadline",
+      "url": "https://cointelegraph.com/news/belgium-unauthorized-crypto-firms-mica-deadline?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-07-06T12:15:20"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "Stock Market Today: Dow Falls, Tech Futures Rally; Memory Names Micron, Sandisk Bounce Higher (Live Coverage)",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-micron-mu-stock-sandisk-sndk-stock/?src=A00220&yptr=yahoo",
+      "score": 0,
+      "ts": "2026-07-06T12:13:44"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "Dow Jones Futures: Nasdaq Set To Reclaim Key Level; Apple, SpaceX, Sandisk, Robinhood In Focus",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-apple-spacex-sandisk-robinhood/?src=A00220&yptr=yahoo",
+      "score": 0,
+      "ts": "2026-07-06T12:13:03"
     },
     {
       "src": "Decrypt",
-      "title": "Perplexity Co-Founder: AI Safety Is an Excuse to Lock Down Frontier",
-      "url": "https://decrypt.co/372755/perplexity-co-founder-ai-safety-excuse-lock-down-frontier",
+      "title": "Morning Minute: Crypto Surges Over Holiday Weekend",
+      "url": "https://decrypt.co/372798/morning-minute-crypto-surges-over-holiday-weekend",
       "score": 0,
-      "ts": "2026-07-04T16:07:19"
+      "ts": "2026-07-06T12:09:30"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "Trump vs. Pelosi: Who Made More Money in the Stock Market Last Year?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/trump-vs-pelosi-made-more-120929567.html",
+      "score": 0,
+      "ts": "2026-07-06T12:09:29"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "MicroStrategy Sold 7x More Bitcoin Than Reports Suggested",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/microstrategy-sold-7x-more-bitcoin-120834375.html",
+      "score": 0,
+      "ts": "2026-07-06T12:08:34"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "Broadcom, Apple extend chip supply deal through 2031",
+      "url": "https://finance.yahoo.com/technology/articles/broadcom-apple-extend-chip-partnership-120712484.html",
+      "score": 0,
+      "ts": "2026-07-06T12:07:12"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "SK Hynix launches $28 billion Nasdaq ADR listing",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sk-hynix-launches-28-billion-115850372.html",
+      "score": 0,
+      "ts": "2026-07-06T12:06:18"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "Musk Calls It ‘Utterly False,’ But This SpaceX Rumor Should Terrify Every Apple Investor",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/musk-calls-utterly-false-spacex-120523743.html",
+      "score": 0,
+      "ts": "2026-07-06T12:05:23"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "Trump exclusive, prediction market activity soars, AI Alexander Hamilton and more in Morning Squawk",
+      "url": "https://www.cnbc.com/2026/07/06/5-things-to-know-before-the-stock-market-opens.html",
+      "score": 0,
+      "ts": "2026-07-06T12:04:11"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "U.S. futures rise as oil weighed by supply while earnings loom",
+      "url": "https://finance.yahoo.com/news/shares-edge-higher-asia-oil-005923908.html",
+      "score": 0,
+      "ts": "2026-07-06T11:58:36"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "CRISPR Therapeutics vs. Viking Therapeutics: Which Healthcare Stock Is a Better Buy in 2026?",
+      "url": "https://finance.yahoo.com/healthcare/articles/crispr-therapeutics-vs-viking-therapeutics-115501174.html",
+      "score": 0,
+      "ts": "2026-07-06T11:55:01"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "8 Stocks' Earnings Will Grow Faster Than Everyone's Wildest Dreams",
+      "url": "https://www.investors.com/etfs-and-funds/sectors/sp500-stocks-upcoming-growth-blasts-past-everyones-wildest-dreams/?src=A00220&yptr=yahoo",
+      "score": 0,
+      "ts": "2026-07-06T11:40:35"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "Weekly Stock List",
+      "url": "https://finance.yahoo.com/research/reports/ARGUS_47521_StockPicks_1783337985000?yptr=yahoo&ncid=yahooproperties_plusresear_nm5q6ze1cei",
+      "score": 0,
+      "ts": "2026-07-06T11:39:45"
     },
     {
       "src": "CoinDesk",
-      "title": "Why bitcoin's disconnect from record-high stocks won't last",
-      "url": "https://www.coindesk.com/markets/2026/07/03/why-bitcoin-s-disconnect-from-record-high-stocks-won-t-last",
+      "title": "Russia's largest bank plans crypto wallet launch as Moscow clears market path",
+      "url": "https://www.coindesk.com/business/2026/07/06/russia-s-largest-bank-plans-crypto-wallet-launch-as-moscow-clears-market-path",
       "score": 0,
-      "ts": "2026-07-04T16:00:00"
+      "ts": "2026-07-06T11:36:05"
     },
     {
-      "src": "TechCrunch AI",
-      "title": "What is Mistral AI? Everything to know about the OpenAI competitor",
-      "url": "https://techcrunch.com/2026/07/04/what-is-mistral-ai-everything-to-know-about-the-openai-competitor/",
+      "src": "Yahoo Finance",
+      "title": "Daily Spotlight: Stock Market Valuation Reasonable",
+      "url": "https://finance.yahoo.com/research/reports/ARGUS_47517_MarketOutlook_1783337764000?yptr=yahoo&ncid=yahooproperties_plusresear_nm5q6ze1cei",
       "score": 0,
-      "ts": "2026-07-04T15:51:32"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Trump's crypto token buyers are down $3.8 billion, blockchain data shows",
-      "url": "https://www.coindesk.com/business/2026/07/04/trump-s-crypto-token-buyers-are-down-usd3-8-billion-blockchain-data-shows",
-      "score": 0,
-      "ts": "2026-07-04T15:30:52"
+      "ts": "2026-07-06T11:36:04"
     },
     {
       "src": "CoinDesk",
-      "title": "Europe led on crypto regulation. Now implementation must match ambition",
-      "url": "https://www.coindesk.com/opinion/2026/07/04/europe-led-on-crypto-regulation-now-implementation-must-match-ambition",
+      "title": "SpaceX's Nasdaq 100 inclusion comes with a historical warning",
+      "url": "https://www.coindesk.com/markets/2026/07/06/spacex-s-nasdaq-100-inclusion-comes-with-a-historical-warning",
       "score": 0,
-      "ts": "2026-07-04T14:00:00"
+      "ts": "2026-07-06T11:16:26"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "Hedge funds dumped chip stocks for a fourth week as AI shares sold off",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/hedge-funds-dumped-chip-stocks-111514085.html",
+      "score": 0,
+      "ts": "2026-07-06T11:15:14"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "U.S. inflation outlook underpins bitcoin bulls after best week since March",
+      "url": "https://www.coindesk.com/daybook-us/2026/07/06/u-s-inflation-outlook-underpins-bitcoin-bulls-after-best-week-since-march",
+      "score": 0,
+      "ts": "2026-07-06T11:15:00"
+    },
+    {
+      "src": "Yahoo Finance",
+      "title": "Britain should consider regulating AI models, FCA official says",
+      "url": "https://finance.yahoo.com/technology/ai/articles/britain-consider-regulating-ai-models-104539260.html",
+      "score": 0,
+      "ts": "2026-07-06T11:00:10"
+    },
+    {
+      "src": "CoinDesk",
+      "title": "Crypto bounces back from the brink as altcoin optimism returns despite pockets of weakness",
+      "url": "https://www.coindesk.com/markets/2026/07/06/crypto-bounces-back-from-the-brink-as-altcoin-optimism-returns-despite-pockets-of-weakness",
+      "score": 0,
+      "ts": "2026-07-06T10:44:45"
     },
     {
       "src": "Cointelegraph",
-      "title": "Bollinger Bands creator eyes Bitcoin bear-market end, 'W'-shaped reversal",
-      "url": "https://cointelegraph.com/markets/bollinger-bands-creator-eyes-bitcoin-bear-market-end-w-shaped-reversal?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "title": "$60.4K Becomes 'most important area': Five things to know in Bitcoin this week",
+      "url": "https://cointelegraph.com/markets/604k-becomes-most-important-area-five-things-to-know-in-bitcoin-this-week?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
       "score": 0,
-      "ts": "2026-07-04T13:09:16"
-    },
-    {
-      "src": "Cointelegraph",
-      "title": "Here’s what happened in crypto today",
-      "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "score": 0,
-      "ts": "2026-07-04T12:04:07"
-    },
-    {
-      "src": "The Verge",
-      "title": "Matic’s robot vacuum is getting a $250 price hike in September",
-      "url": "https://www.theverge.com/gadgets/960753/matic-robot-vacuum-mop-price-increase-cost-buy",
-      "score": 0,
-      "ts": "2026-07-04T12:00:00"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "UK's bold new crypto rules promise to unlock global trading, but huge compliance hurdles still threaten the rollout",
-      "url": "https://www.coindesk.com/policy/2026/07/04/uk-s-bold-new-crypto-rules-promise-to-unlock-global-trading-but-huge-compliance-hurdles-still-threaten-the-rollout",
-      "score": 0,
-      "ts": "2026-07-04T12:00:00"
-    },
-    {
-      "src": "Wired",
-      "title": "This Buried Apple Feature Turns an iPhone Into the Perfect Kids’ Dumb Phone",
-      "url": "https://www.wired.com/story/this-buried-apple-feature-turns-an-iphone-into-the-perfect-kids-dumb-phone/",
-      "score": 0,
-      "ts": "2026-07-04T10:30:00"
-    },
-    {
-      "src": "Wired",
-      "title": "Security Roundup: Apple’s Hide My Email Service Fails to Hide Your Email",
-      "url": "https://www.wired.com/story/security-roundup-apples-hide-my-email-service-fails-to-hide-your-email/",
-      "score": 0,
-      "ts": "2026-07-04T10:30:00"
+      "ts": "2026-07-06T10:25:20"
     },
     {
       "src": "CNBC Top",
-      "title": "From Macron to Modi, governments are rolling out the red carpet for AI giants",
-      "url": "https://www.cnbc.com/2026/07/04/macron-modi-ai-infrastructure-tech-ceos.html",
+      "title": "EasyJet shares soar 10% as budget airline agrees to $7.3 billion Castlelake takeover",
+      "url": "https://www.cnbc.com/2026/07/06/easyjet-ezj-stock-castlelake-takeover-bid.html",
       "score": 0,
-      "ts": "2026-07-04T09:33:19"
+      "ts": "2026-07-06T10:20:59"
     },
     {
-      "src": "Cointelegraph",
-      "title": "Tim Draper denies moving Bitcoin, reiterates $250,000 BTC prediction",
-      "url": "https://cointelegraph.com/news/tim-draper-denies-moving-bitcoin-250k-btc-prediction?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "src": "CoinDesk",
+      "title": "Bitcoin's Sharpe Ratio slides to lowest since 2022. Here's what it means.",
+      "url": "https://www.coindesk.com/markets/2026/07/06/bitcoin-s-sharpe-ratio-slides-to-lowest-since-2022-here-s-what-it-means",
       "score": 0,
-      "ts": "2026-07-04T08:31:02"
+      "ts": "2026-07-06T10:19:56"
     }
   ]
 }
