@@ -15425,3 +15425,29 @@ Bitcoin finally broke the downtrend line versus gold from the 2025 highs.
 It doesn't look like much right now, but this is where it begins.
   - https://x.com/SuperBitcoinBro/status/2074613608416526537
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 268).
+- **@themoneyape** (40 likes, score 9/10) — GPT-5.6 wasn't delayed because of bugs, it was delayed for national security.
+
+So, does the U.S. still want that reported 5% stake in OpenAI or is government oversight enough?
+
+According to Axios, the
+  - https://x.com/TheMoneyApe/status/2074712204050595858
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 78).
+- **@coinbureau** (39 likes, score 9/10) — LATEST: OPENAI SECURES U.S APPROVAL FOR BROAD GPT-5.6 ROLLOUT
+
+OpenAI has reportedly secured U.S. Commerce Department approval for a broad rollout of GPT-5.6, per Axios.
+
+The company is expected to pu
+  - https://x.com/coinbureau/status/2074711381614719041
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 73).
+- **@thierryborgeat** (110 likes, score 9/10) — What are YOU thinking???
+
+Seriously.
+
+Apple trades at 10.4x sales. The highest valuation in the company's history. Higher than 2000. Higher than 2007.
+
+Here's the part that should stop you: revenue ha
+  - https://x.com/ThierryBorgeat/status/2074581722751172707
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 134).
+- **@owneremeritus** (21 likes, score 7/10) — Fable gave me my latest “feel the agi” moment since o3. This should be a banger LETS GO
+  - https://x.com/OwnerEmeritus/status/2074705337060405405
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 21).
