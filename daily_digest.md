@@ -853,3 +853,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 23 views: S&P up 2%, semis down 4%. we have a name for this in the practice
   - 0 likes / 20 views: me pausing a Karp interview to update my $PLTR fair value
   - 0 likes / 12 views: me at open: finally healing  90 minutes later  https://x.com/cryptorover/status/2073996860495438176…
+
+## 2026-07-07
+
+**Activity** — total actions: 877
+  - by type: reply=751, quote=62, quote_gif=30, post=15, hotake=11, retweet=8
+  - top sources: SEARCH-HOT=538, FEED-SWEEP-FEED=116, FEED-SWEEP-FOLLOWING=76, QUOTE=45, GIF=35, RETWEET_REPLY=10, RETWEET_QT=7, RETWEET=7
+  - comedy patterns: RENAME=2, UNDERSTATEMENT=1
+  - top reply targets: @arnaudmercier=49, @rohanpaul_ai=15, @kimmonismus=15, @CoinMarketCap=15, @cryptorover=12
+
+**Followers we follow** (running total): 290
+
+**Top-performing posts scraped today**:
+  - 2 likes / 24 views: me at "two decades at one of the world's largest data center platforms": ok $KEEL I see you
+  - 1 likes / 7 views: hope is harder to sit with than fear. ask anyone who held through 9 months of it
+  - 0 likes / 8 views: $6T caps SpaceX to 100x OpenAI’s valuation. @elonmusk just bought the moon, literally. Do satellites
