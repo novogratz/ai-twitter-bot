@@ -9080,5 +9080,81 @@
       }
     ],
     "summary": "Le lot est purg\u00e9 : z\u00e9ro vendeur de r\u00eave, que des cerveaux (Mistral, Hugging Face, Anthropic) ou des analysts terrains (Quebec/US). La France tr\u00f4ne sur l'infra IA, le Qu\u00e9bec sur l'approche humaine crypto/bourse."
+  },
+  {
+    "ts": "2026-07-08T15:49:52.385415",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GautierC",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "L'incontournable de la bourse FR. Pas de pub, pas de signaux, juste des carnets de bord intelligents qui font mal aux yeux (de bonheur ou de peur)."
+      },
+      {
+        "handle": "SvenBischoff",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "La diaspora francophone en tech. Postes quotidiens sur les startups, l'IA et la Silicon Valley, \u00e9criture directe sans la sauce LinkedIn."
+      }
+    ],
+    "summary": "Un mix solide entre les veterans fran\u00e7ais (Bischoff, Varoquaux) et la rel\u00e8ve dynamique du Qu\u00e9bec (Rivard, Lortie). Aucun vendeur de r\u00eaves, juste des profils qui tweetent comme ils respirent : dans leur niche, quotidiennement."
+  },
+  {
+    "ts": "2026-07-08T17:41:17.949235",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "lucas_lamoureux",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Le prof de Finance Qu\u00e9bec qui a rendu la bourse moins douloureuse que la grippe. Twitte en FR, z\u00e9ro formation \u00e0 vendre, pure expertise."
+      },
+      {
+        "handle": "RomainLacroux",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 50000,
+        "reason": "Le roi des actions am\u00e9ricaines en France. Ses analyses sont pr\u00e9cises, pas dans le vent, et il ne vend rien sauf son g\u00e9nie (implicite)."
+      },
+      {
+        "handle": "MaximeGirard",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Analyste crypto s\u00e9rieux, moins hyst\u00e9rique que la moyenne du secteur. Il tweete en FR et couvre l'\u00e9cosyst\u00e8me DeFi/Bitcoin avec finesse."
+      },
+      {
+        "handle": "s_bocquet",
+        "region": "france",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "Le meilleur chroniqueur tech de BFMBusiness. Il tweete en FR, couvre l'IA et les GAFA sans \u00eatre un bot promotionnel."
+      },
+      {
+        "handle": "mickael_boulay",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Journaliste d'investir, couvre les march\u00e9s avec une pr\u00e9cision chirurgical. Moins de bruit que les influenceurs TikTok, plus de fond."
+      },
+      {
+        "handle": "PascalPoirier_",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Tech entrepreneur qu\u00e9b\u00e9cois qui tweete en FR sur les startups et l'IA. Vraiment utile, pas dans la course aux likes."
+      }
+    ],
+    "summary": "On a tri\u00e9 le plat de lentilles des influenceurs crypto pour ne garder que les pros. Cinq sp\u00e9cialistes (3 FR, 2 QC) qui tweetent en fran\u00e7ais, couvrent IA/Bourse/Crypto et ont \u00e9vit\u00e9 le pi\u00e8ge des formations \u00e0 999\u20ac."
   }
 ]

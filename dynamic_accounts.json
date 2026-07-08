@@ -68,7 +68,15 @@
     "MathisLePape",
     "AntoineG",
     "NicolasC",
-    "JulienRivard"
+    "JulienRivard",
+    "GautierC",
+    "SvenBischoff",
+    "lucas_lamoureux",
+    "RomainLacroux",
+    "MaximeGirard",
+    "s_bocquet",
+    "mickael_boulay",
+    "PascalPoirier_"
   ],
   "en": [
     "Chubby",
@@ -117,7 +125,12 @@
     "ChangeNOW",
     "Pirat_Nation",
     "sourcery",
-    "OpenAI"
+    "OpenAI",
+    "Robbyant",
+    "CoinGecko",
+    "world",
+    "Jeremy",
+    "KanekoaTheGreat"
   ],
   "history": [
     {
@@ -698,6 +711,71 @@
     {
       "lang": "fr",
       "handle": "JulienRivard",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Robbyant",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "CoinGecko",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "world",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "GautierC",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "SvenBischoff",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Jeremy",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "KanekoaTheGreat",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucas_lamoureux",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainLacroux",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeGirard",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "s_bocquet",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickael_boulay",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "PascalPoirier_",
       "added": "2026-07-08"
     }
   ]
