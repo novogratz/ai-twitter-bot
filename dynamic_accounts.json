@@ -51,7 +51,23 @@
     "vincent_bernard",
     "thomas_besson",
     "jameson_lepage",
-    "mathieucabane"
+    "mathieucabane",
+    "MathieuCahen",
+    "CyrilBouton",
+    "LapierreAlexis",
+    "JLCharette",
+    "BenoitV",
+    "NathanBenaich",
+    "lucaspellmeyer",
+    "paulmollard",
+    "thomaspark",
+    "jcharette",
+    "CedricBeust",
+    "MaelleS",
+    "FlorentBouchez",
+    "MathisLePape",
+    "AntoineG",
+    "NicolasC"
   ],
   "en": [
     "Chubby",
@@ -96,7 +112,8 @@
     "veizau",
     "Pyo",
     "OKX",
-    "Diabeto"
+    "Diabeto",
+    "ChangeNOW"
   ],
   "history": [
     {
@@ -572,6 +589,91 @@
     {
       "lang": "fr",
       "handle": "mathieucabane",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuCahen",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilBouton",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "LapierreAlexis",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "JLCharette",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitV",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanBenaich",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "ChangeNOW",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucaspellmeyer",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "paulmollard",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomaspark",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "jcharette",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "CedricBeust",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelleS",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "FlorentBouchez",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathisLePape",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineG",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasC",
       "added": "2026-07-08"
     }
   ]

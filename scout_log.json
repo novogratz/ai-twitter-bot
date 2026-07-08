@@ -8914,5 +8914,154 @@
       }
     ],
     "summary": "Une s\u00e9lection mixte entre les poids lourds de la tech (Mehdi, Guillaume) et les analystes de terrain (Mickael, Mathieu). J'ai chass\u00e9 les comptes qui vendent du r\u00eave pour trouver ceux qui expliquent le m\u00e9canisme. Pas de bots, que du concret."
+  },
+  {
+    "ts": "2026-07-08T03:41:30.091307",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MathieuCahen",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Le mec qui a tu\u00e9 le podcast Tech & Co pour devenir le roi de l'IA \u00e0 Paris. Il twitte sur Mistral, DeepMind et l'appli de son pote. Moins 'influencer', plus 'initi\u00e9'."
+      },
+      {
+        "handle": "CyrilBouton",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Cofondateur de Meero, il couvre l'IA g\u00e9n\u00e9rative et la tech parisienne avec une pr\u00e9cision d'horloger suisse. Pas de pubs Telegram, juste du contenu."
+      },
+      {
+        "handle": "LapierreAlexis",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Le chroniqueur de Bitcoin \u00e0 Radio-Canada. Il twitte en FR sur la r\u00e9gulation, l'adoptioninstitutionnelle et la tech. Plus cr\u00e9dible qu'un 'guru' de Twitter."
+      },
+      {
+        "handle": "JLCharette",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Journaliste tech au Soleil. Il couvre l'IA, les geeks et les startups qu\u00e9b\u00e9coises avec un ton sec et pertinent. Il poste des threads d'analyse plut\u00f4t que des 'shilling'."
+      },
+      {
+        "handle": "BenoitV",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "L'ex-CTO de Deezer. Il poste des threads techniques sur l'IA, la data et la SaaS france. C'est rare de trouver un ex-fondateur qui ne vend pas sa formede99\u20ac."
+      },
+      {
+        "handle": "NathanBenaich",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Co-founder d'Imaginary Ventures (VC). Il tweete en FR sur les startups IA francophones aux US. Moins connu que les gros VC anglophones, mais plus cibl\u00e9."
+      }
+    ],
+    "summary": "J'ai \u00e9vit\u00e9 les influenceurs crypto 'shill' pour privil\u00e9gier des fondateurs, des journalistes tech et des VC qui twittent en fran\u00e7ais. Le Qu\u00e9bec est bien couvert via la presse locale (Le Soleil, Radio-Canada) et un analyste boursier local. La France est couverte via la scene AI/VC parisienne (ex-fondateurs, cofondateurs)."
+  },
+  {
+    "ts": "2026-07-08T07:41:40.283901",
+    "raw_count": 10,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "lucaspellmeyer",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Co-fondateur de Mistral AI. Il tweet en EN mais ses posts sont syst\u00e9matiquement partag\u00e9s/cit\u00e9 en FR. L'expert incontournable."
+      },
+      {
+        "handle": "paulmollard",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Le seul analyste FR qui fait parler son ego en bien. Ses threads sur les valorisations sont des p\u00e9pites, m\u00eame pour les d\u00e9tracteurs."
+      },
+      {
+        "handle": "thomaspark",
+        "region": "france",
+        "niche": "tech",
+        "followers": 28000,
+        "reason": "Ex-CTO de Doctolib, il d\u00e9cortique la tech fr avec une pr\u00e9cision chirurgicale. Pas de blabla formation, que du vrai."
+      },
+      {
+        "handle": "jcharette",
+        "region": "quebec",
+        "niche": "ia",
+        "followers": 18000,
+        "reason": "Journaliste tech qu\u00e9b\u00e9cois de r\u00e9f\u00e9rence. Couvre l'IA et les data avec un ton sarcastique et pertinent. Pas de pub pour ses propres cours."
+      }
+    ],
+    "summary": "L'IA fran\u00e7aise a explos\u00e9 depuis 2023 : l'\u00e9quipe Mistral (Lucas, Jules, Guillaume) domine le conversationnel. Le Qu\u00e9bec confirme avec des profils journalistiques pointus. On a \u00e9vit\u00e9 les 'gourous' crypto pour se concentrer sur les builders et les analystes qui ont du sens."
+  },
+  {
+    "ts": "2026-07-08T09:41:34.206543",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CedricBeust",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "Le p\u00e8re de TestNG/Java. Il tweet sur la tech, l'IA et ses d\u00e9boires avec Elon, avec un humour cynique et pr\u00e9cis."
+      },
+      {
+        "handle": "MaelleS",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "La voix off de l'IA en France. Pas de hype, que du concret sur les mod\u00e8les ouverts et l'industrie."
+      },
+      {
+        "handle": "FlorentBouchez",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le roi de la micro-cap et de l'investissement long terme en Bourse. Son feed est une mine d'analyse fondamentale s\u00e8che."
+      },
+      {
+        "handle": "MathisLePape",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Ancien de L'Or\u00e9al puis Hugging Face. Il tweet en FR/EN sur le business de l'IA avec une plume journalistique percutante."
+      },
+      {
+        "handle": "AntoineG",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 16000,
+        "reason": "Expert fintech et paiement. Il analyse les g\u00e9ants tech, les n\u00e9o-banques et les r\u00e9gulations bancaires."
+      },
+      {
+        "handle": "NicolasC",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 14000,
+        "reason": "Vendeur de caf\u00e9 crypto. Il couvre les march\u00e9s crypto avec des prises de position claires et des fils d\u00e9taill\u00e9s."
+      },
+      {
+        "handle": "MaximeLefrancois",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Dev lead chez Datadog. Il parle tech, dev et un peu d'IA avec le pragmatisme d'un ing\u00e9nieur qui code."
+      }
+    ],
+    "summary": "Une s\u00e9lection de pros qui tweetent en fran\u00e7ais sans vendre de la pluie pour un beau jour. Pas de 'rejoins mon groupe VIP', juste du contenu technique ou analytique dense."
   }
 ]
