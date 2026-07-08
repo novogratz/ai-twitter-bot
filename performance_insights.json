@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-08T03:40:43.191463",
-  "window_7d_actions": 2409,
-  "window_24h_actions": 851,
+  "generated_at": "2026-07-08T07:40:43.135282",
+  "window_7d_actions": 2527,
+  "window_24h_actions": 826,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2403
+      "count": 2520
     },
     {
       "pattern": "RENAME",
-      "count": 4
+      "count": 5
     },
     {
       "pattern": "METAPHOR",
@@ -31,7 +31,7 @@
     },
     {
       "pattern": "RENAME",
-      "count": 4
+      "count": 5
     }
   ],
   "best_hours_utc": [
@@ -44,91 +44,91 @@
       "actions": 131
     },
     {
-      "hour": 2,
-      "actions": 123
+      "hour": 6,
+      "actions": 130
     },
     {
       "hour": 3,
-      "actions": 115
+      "actions": 128
     },
     {
-      "hour": 8,
-      "actions": 114
+      "hour": 2,
+      "actions": 123
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1136
+      "count": 1196
     },
     {
       "topic": "IA",
-      "count": 912
+      "count": 948
     },
     {
       "topic": "Crypto",
-      "count": 311
+      "count": 335
     },
     {
       "topic": "Bourse",
-      "count": 167
+      "count": 172
     },
     {
       "topic": "Spatial",
-      "count": 45
+      "count": 47
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1019
+      "count": 1063
     },
     {
       "pillar": "other",
-      "count": 754
+      "count": 789
     },
     {
       "pillar": "market_trauma",
-      "count": 493
+      "count": 522
     },
     {
       "pillar": "meme_reaction",
-      "count": 96
+      "count": 102
     },
     {
       "pillar": "reply_bait",
-      "count": 24
+      "count": 27
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 23
+      "count": 24
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 368
+      "count": 338
     },
     {
       "pillar": "other",
-      "count": 251
+      "count": 243
     },
     {
       "pillar": "market_trauma",
-      "count": 178
+      "count": 185
     },
     {
       "pillar": "meme_reaction",
-      "count": 38
+      "count": 41
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
@@ -136,21 +136,21 @@
       "pillar": "market_trauma",
       "posts": 57,
       "avg_likes": 0.09,
-      "avg_views": 25.6,
+      "avg_views": 25.2,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 89,
       "avg_likes": 0.07,
-      "avg_views": 24.8,
+      "avg_views": 23.1,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 51,
       "avg_likes": 0.02,
-      "avg_views": 23.5,
+      "avg_views": 23.9,
       "low_sample": false
     },
     {
@@ -171,19 +171,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2052
+      "count": 2158
     },
     {
       "type": "quote",
-      "count": 184
+      "count": 189
     },
     {
       "type": "quote_gif",
-      "count": 87
+      "count": 93
     },
     {
       "type": "post",
-      "count": 42
+      "count": 43
     },
     {
       "type": "retweet",
@@ -196,18 +196,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-08T03:40:24.379969",
-      "text": "Bitcoin ownership is the private key. he doesn't have 39,069 of them. the judge can't issue them. bitcoin was designed to make seizure mathematically impossible. it's working.",
+      "ts": "2026-07-08T07:38:45.177993",
+      "text": "Bitcoin exchange supply at 2017 lows.\n\nbullish or terrified? both look like hodling. price decides which.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-08T03:39:51.695039",
-      "text": "Karpathy separated vibe from engineering. Google's formalizing it.\n\nWhen the conversation shifts from \"better model\" to \"better engineering practices,\" you know the field is maturing. Here we are.",
+      "ts": "2026-07-08T07:38:12.318210",
+      "text": "$1.4B from Tether, Nvidia, Amazon. Stablecoin money just went corporeal.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-08T03:38:44.541930",
-      "text": "$21.44M inflows, three straight days. product's working. real momentum is $500M+ daily. we're still in the trickle phase.",
+      "ts": "2026-07-08T07:36:38.853573",
+      "text": "Your original thesis hit. $15-18B FCF at market multiples is $400-500B valuation. the 100x works; it just compressed into fewer years. winning faster doesn't make winning less.",
       "type": "reply"
     }
   ]
