@@ -15451,3 +15451,35 @@ Here's the part that should stop you: revenue ha
 - **@owneremeritus** (21 likes, score 7/10) — Fable gave me my latest “feel the agi” moment since o3. This should be a banger LETS GO
   - https://x.com/OwnerEmeritus/status/2074705337060405405
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 21).
+- **@dnystedt** (78 likes, score 9/10) — Nvidia Vera Rubin-based servers will enter mass production this quarter at Quanta, and are expected to lift the Taiwan giant’s full-year revenue to triple-digit-growth (100%+) year-on-year, media repo
+  - https://x.com/dnystedt/status/2074657262321443218
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 86).
+- **@hunterallen4** (21 likes, score 9/10) — $TEAM 
+
+-45% YTD.
+
+BUT 11% past week.
+
+A leader in enterprise collaboration software and AI-powered workflows.
+
+This is a $350 stock trading around $88.
+
+Another obvious opportunity to potentially dou
+  - https://x.com/HunterAllen4/status/2074675356766745049
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 85).
+- **@nordin_eth** (53 likes, score 9/10) — DeepSeek just exposed Nvidia’s biggest weakness.
+
+DeepSeek is building its own inference chip to reduce dependence on Nvidia and Huawei.
+
+One headline was enough to send $NVDA down 2%, wiping out near
+  - https://x.com/nordin_eth/status/2074631798714441733
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 59).
+- **@markflowchatter** (66 likes, score 8/10) — Turns out that Bloomberg piece was all BS as expected
+
+so game on for $CRWV 
+
+Comments within clearly state:
+
+"Meta is still hungry for even more computing power, the spokesperson said. It is still mo
+  - https://x.com/markflowchatter/status/2074616372370309252
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 78).

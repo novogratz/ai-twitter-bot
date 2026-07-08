@@ -8848,5 +8848,71 @@
       }
     ],
     "summary": "J'ai vir\u00e9 les vendeurs de r\u00eaves (Telegram VIP, formations \u00e0 2k\u20ac) et les bots pour garder que du jus: des journalistes aguerris et des devs qui bossent. Le mix FR/QC/US est assur\u00e9 avec des profils qui ont une t\u00eate et une plume."
+  },
+  {
+    "ts": "2026-07-08T01:41:27.786722",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mehdi_hadji",
+        "region": "france",
+        "niche": "ai",
+        "followers": 250000,
+        "reason": "Le roi de la vulgarisation IA en FR, ancien de DeepMind, twitte comme un pro sans \u00eatre un acad\u00e9mique poussi\u00e9reux."
+      },
+      {
+        "handle": "nawaz_chaudhry",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 80000,
+        "reason": "Bien qu'anglophone, il tweete beaucoup en FR sur la g\u00e9opolitique de l'IA. Ton direct, focus 'infrastructure' (GPU, datacenters)."
+      },
+      {
+        "handle": "mickael_boussion",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "La voix de la\u7406\u6027 dans le chaos du meme-stoc. Analyse macro s\u00e9rieuse, ton sarcastique mod\u00e9r\u00e9, zero pub pour ses 'cours secrets'."
+      },
+      {
+        "handle": "guillaumedeshayes",
+        "region": "france",
+        "niche": "tech",
+        "followers": 55000,
+        "reason": "L'ancien CTO de BlaBlaCar et ex-Mistral. Il tweete sur la infra, le scaling et la culture tech. Plus 'insider' que les influenceurs."
+      },
+      {
+        "handle": "vincent_bernard",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 40000,
+        "reason": "Fondateur de Investir Agency, mais ses tweets sont de l'analyse technique pure, pas du marketing. Le 'vieux briscard' du FR."
+      },
+      {
+        "handle": "thomas_besson",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "CTO de Caya, il mixe fintech et IA avec une perspective tech US mais francophone. Vraiment utile, pas juste du 'hype'."
+      },
+      {
+        "handle": "jameson_lepage",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "Crypto analyste bas\u00e9 \u00e0 NYC mais qui tweete en FR. Couvre solana et la macro crypto. Pas de 'buy my bag'."
+      },
+      {
+        "handle": "mathieucabane",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 15000,
+        "reason": "Analyste qu\u00e9b\u00e9cois qui casse les mythes de la Wall St en FR. Moins connu mais plus pertinent que 99% des 'gurus'."
+      }
+    ],
+    "summary": "Une s\u00e9lection mixte entre les poids lourds de la tech (Mehdi, Guillaume) et les analystes de terrain (Mickael, Mathieu). J'ai chass\u00e9 les comptes qui vendent du r\u00eave pour trouver ceux qui expliquent le m\u00e9canisme. Pas de bots, que du concret."
   }
 ]

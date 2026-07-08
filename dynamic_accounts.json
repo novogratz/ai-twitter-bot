@@ -45,7 +45,13 @@
     "TheBullMarket",
     "D3crypted",
     "PierreRoche",
-    "LucasLavoie"
+    "LucasLavoie",
+    "mehdi_hadji",
+    "nawaz_chaudhry",
+    "vincent_bernard",
+    "thomas_besson",
+    "jameson_lepage",
+    "mathieucabane"
   ],
   "en": [
     "Chubby",
@@ -89,7 +95,8 @@
     "PoIiMath",
     "veizau",
     "Pyo",
-    "OKX"
+    "OKX",
+    "Diabeto"
   ],
   "history": [
     {
@@ -531,6 +538,41 @@
       "lang": "fr",
       "handle": "LucasLavoie",
       "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Diabeto",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "mehdi_hadji",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "nawaz_chaudhry",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "vincent_bernard",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomas_besson",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "jameson_lepage",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "mathieucabane",
+      "added": "2026-07-08"
     }
   ]
 }
