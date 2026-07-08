@@ -8803,5 +8803,50 @@
       }
     ],
     "summary": "Focus sur les fondateurs techniques (Mistral, DeepL) et les analystes 'sans filtre' (Hemery, Rivard). On \u00e9vite les influenceurs formations pour garder la substance."
+  },
+  {
+    "ts": "2026-07-07T23:41:28.220660",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "TheBullMarket",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 180000,
+        "reason": "La r\u00e9f\u00e9rence absolue en FR. Analyse on-chain brute, zero bullshit, twitte en bon fran\u00e7ais sans la lourdeur des influenceurs."
+      },
+      {
+        "handle": "D3crypted",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 120000,
+        "reason": "Ex-Jeune Afrique. Journalistique, rigoureux, couvre la r\u00e9gulation et le march\u00e9. Twitte en FR, vibe professionnelle."
+      },
+      {
+        "handle": "PierreRoche",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Ex-Bloomberg. Vit aux USA mais twitte en FR. Angle macro/VC tr\u00e8s solide, moins ax\u00e9 'price action', plus 'fondamental'."
+      },
+      {
+        "handle": "MaximeDejauregui",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 35000,
+        "reason": "Ancien de Doctolib/AlloVoisins. Il parle SaaS et Fintech FR. Pas un compte 'finance' pure, mais indispensable pour l'\u00e9cosyst\u00e8me."
+      },
+      {
+        "handle": "LucasLavoie",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 25000,
+        "reason": "Analyste ind\u00e9pendant qu\u00e9b\u00e9cois. Focus actions et macro. Moins de buzz, plus de substance. Compte rarement actif mais qualit\u00e9 au top."
+      }
+    ],
+    "summary": "J'ai vir\u00e9 les vendeurs de r\u00eaves (Telegram VIP, formations \u00e0 2k\u20ac) et les bots pour garder que du jus: des journalistes aguerris et des devs qui bossent. Le mix FR/QC/US est assur\u00e9 avec des profils qui ont une t\u00eate et une plume."
   }
 ]

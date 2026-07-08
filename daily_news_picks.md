@@ -15390,3 +15390,38 @@ no matter how good the models got afterwards, nothing really topped the magic, t
 The diagram tracks the lag from when a major frontier model launches to when a broadly similar open-weight model can run locally on serious consumer hardware.
   - https://x.com/koltregaskes/status/2074289548868432147
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 12).
+
+## 2026-07-08
+- **@cryptomichnl** (44 likes, score 9/10) — SpaceX joins the Nasdaq 100 today. 
+
+A huge milestone for the recently listed company of Elon Musk.
+
+Now, the valuation of the company is currently $2.1T.
+
+Morgan Stanley, JP Morgan and others have gi
+  - https://x.com/CryptoMichNL/status/2074523837601878068
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 78).
+- **@crypto_lens_** (10 likes, score 8/10) — Bitcoin Just Confirmed the Next Dump Below $60K
+
+History is repeating itself.
+ 
+After losing $64K support, we're following the break pattern perfectly and $BTC will dump to $39,000 by September.
+ 
+$62
+  - https://x.com/crypto_lens_/status/2074704566424342936
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 48).
+- **@openai** (2403 likes, score 9/10) — GPT-5.6 Sol, along with Terra and Luna, will launch publicly this Thursday.
+
+We’re expanding preview access globally now.
+  - https://x.com/OpenAI/status/2074704958419792299
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 3013).
+- **@andrewcurran_** (474 likes, score 9/10) — Confirmed by Axios. Commerce has given GPT-5.6 full clearance for launch.
+  - https://x.com/AndrewCurran_/status/2074696571246280740
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 532).
+- **@superbitcoinbro** (244 likes, score 9/10) — $BTC vs gold
+
+Bitcoin finally broke the downtrend line versus gold from the 2025 highs.
+
+It doesn't look like much right now, but this is where it begins.
+  - https://x.com/SuperBitcoinBro/status/2074613608416526537
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 268).

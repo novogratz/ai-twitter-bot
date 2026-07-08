@@ -41,7 +41,11 @@
     "MaximeVaspart",
     "MaximeSeymour",
     "alexissimonin",
-    "mickaelb12"
+    "mickaelb12",
+    "TheBullMarket",
+    "D3crypted",
+    "PierreRoche",
+    "LucasLavoie"
   ],
   "en": [
     "Chubby",
@@ -81,7 +85,11 @@
     "Pearl",
     "Teknium",
     "leo",
-    "Zephyr"
+    "Zephyr",
+    "PoIiMath",
+    "veizau",
+    "Pyo",
+    "OKX"
   ],
   "history": [
     {
@@ -482,6 +490,46 @@
     {
       "lang": "en",
       "handle": "Zephyr",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "PoIiMath",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "veizau",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Pyo",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "OKX",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheBullMarket",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "D3crypted",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRoche",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasLavoie",
       "added": "2026-07-07"
     }
   ]
