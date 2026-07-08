@@ -9063,5 +9063,22 @@
       }
     ],
     "summary": "Une s\u00e9lection de pros qui tweetent en fran\u00e7ais sans vendre de la pluie pour un beau jour. Pas de 'rejoins mon groupe VIP', juste du contenu technique ou analytique dense."
+  },
+  {
+    "ts": "2026-07-08T13:41:35.501671",
+    "raw_count": 10,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienRivard",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Fonds de pension et dividendes, style Qu\u00e9bec, pas de shill agressif, juste des chiffres."
+      }
+    ],
+    "summary": "Le lot est purg\u00e9 : z\u00e9ro vendeur de r\u00eave, que des cerveaux (Mistral, Hugging Face, Anthropic) ou des analysts terrains (Quebec/US). La France tr\u00f4ne sur l'infra IA, le Qu\u00e9bec sur l'approche humaine crypto/bourse."
   }
 ]

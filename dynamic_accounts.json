@@ -67,7 +67,8 @@
     "FlorentBouchez",
     "MathisLePape",
     "AntoineG",
-    "NicolasC"
+    "NicolasC",
+    "JulienRivard"
   ],
   "en": [
     "Chubby",
@@ -113,7 +114,10 @@
     "Pyo",
     "OKX",
     "Diabeto",
-    "ChangeNOW"
+    "ChangeNOW",
+    "Pirat_Nation",
+    "sourcery",
+    "OpenAI"
   ],
   "history": [
     {
@@ -674,6 +678,26 @@
     {
       "lang": "fr",
       "handle": "NicolasC",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Pirat_Nation",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "sourcery",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "OpenAI",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienRivard",
       "added": "2026-07-08"
     }
   ]

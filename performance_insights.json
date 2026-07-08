@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-08T11:41:07.106036",
-  "window_7d_actions": 2678,
-  "window_24h_actions": 816,
+  "generated_at": "2026-07-08T15:40:43.193870",
+  "window_7d_actions": 2829,
+  "window_24h_actions": 828,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 2671
+      "count": 2822
     },
     {
       "pattern": "RENAME",
@@ -40,6 +40,10 @@
       "actions": 152
     },
     {
+      "hour": 12,
+      "actions": 145
+    },
+    {
       "hour": 10,
       "actions": 143
     },
@@ -50,107 +54,103 @@
     {
       "hour": 1,
       "actions": 138
-    },
-    {
-      "hour": 0,
-      "actions": 131
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1267
+      "count": 1339
     },
     {
       "topic": "IA",
-      "count": 1008
+      "count": 1071
     },
     {
       "topic": "Crypto",
-      "count": 354
+      "count": 369
     },
     {
       "topic": "Bourse",
-      "count": 177
+      "count": 183
     },
     {
       "topic": "Spatial",
-      "count": 48
+      "count": 52
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1131
+      "count": 1193
     },
     {
       "pillar": "other",
-      "count": 833
+      "count": 883
     },
     {
       "pillar": "market_trauma",
-      "count": 549
+      "count": 580
     },
     {
       "pillar": "meme_reaction",
-      "count": 110
+      "count": 114
     },
     {
       "pillar": "reply_bait",
-      "count": 28
+      "count": 31
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 27
+      "count": 28
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 335
+      "count": 322
     },
     {
       "pillar": "other",
-      "count": 250
+      "count": 264
     },
     {
       "pillar": "market_trauma",
-      "count": 169
+      "count": 179
     },
     {
       "pillar": "meme_reaction",
-      "count": 44
+      "count": 42
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 58,
+      "posts": 56,
       "avg_likes": 0.09,
-      "avg_views": 25.0,
+      "avg_views": 26.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 86,
-      "avg_likes": 0.06,
-      "avg_views": 22.4,
+      "posts": 87,
+      "avg_likes": 0.07,
+      "avg_views": 22.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 53,
+      "posts": 54,
       "avg_likes": 0.04,
-      "avg_views": 22.5,
+      "avg_views": 21.7,
       "low_sample": false
     },
     {
@@ -171,19 +171,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2290
+      "count": 2419
     },
     {
       "type": "quote",
-      "count": 194
+      "count": 204
     },
     {
       "type": "quote_gif",
-      "count": 98
+      "count": 101
     },
     {
       "type": "post",
-      "count": 49
+      "count": 53
     },
     {
       "type": "retweet",
@@ -191,23 +191,23 @@
     },
     {
       "type": "hotake",
-      "count": 20
+      "count": 25
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-08T11:40:00.936112",
-      "text": "Front-end design over gpt 5.6. but 'design' is wide and 'better' is relative. the demo has to close that gap.",
+      "ts": "2026-07-08T15:40:13.551473",
+      "text": "H200s at $40k+, core to frontier AI. China's government just publicly told Alibaba, Bytedance, and Deepseek to buy them. The export control lost.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-08T11:39:08.135586",
-      "text": "Impossible de mentir où elle pense vraiment. Anthropic transforme l'alignement en une question bête : si tu vois comment elle pense, tu la contrôles. C'est ça.",
+      "ts": "2026-07-08T15:37:49.188649",
+      "text": "Wang: the robotics race goes to whoever deploys at scale.\n\nTesla deployed millions. Faraday Future deployed announcements. Noted.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-08T11:37:31.479358",
-      "text": "Karp's right: pure compute spend without moat is unsustainable. But OpenAI, Anthropic, Meta aren't pure-compute plays. they have data, weights, customer lock-in. Different businesses, different math.",
+      "ts": "2026-07-08T15:36:58.499276",
+      "text": "Latency on gpt-live inference just crossed your typing speed. interface flips for efficiency, not humanity. you switched when the margin turned.",
       "type": "reply"
     }
   ]
