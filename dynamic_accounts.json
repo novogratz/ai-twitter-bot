@@ -74,7 +74,14 @@
     "antra",
     "Lucky",
     "validate",
-    "Dexerto"
+    "Dexerto",
+    "Toz",
+    "Claude",
+    "IncomeSharks",
+    "Pearl",
+    "Teknium",
+    "leo",
+    "Zephyr"
   ],
   "history": [
     {
@@ -440,6 +447,41 @@
     {
       "lang": "en",
       "handle": "Dexerto",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Toz",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Claude",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "IncomeSharks",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Pearl",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Teknium",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "leo",
+      "added": "2026-07-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Zephyr",
       "added": "2026-07-07"
     }
   ]
