@@ -15504,3 +15504,16 @@ The future of cheap local AI has finally arrived!
 Can't wait to have Fable-level intelligence running on my desk 24/7.
   - https://x.com/chooserich/status/2074983442949837080
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 237).
+- **@nextbigfuture** (0 likes, score 7/10) — If SPACEXAI Grok 4.5 can sell out a gigawatt of half B200 and half B300 chips in colossus 2. Then at $1.50 per task and using 20,000 tokens this would be about $140 billion per year per Gigawatt in re
+  - https://x.com/nextbigfuture/status/2074938767069372845
+  - **WHY**: Source fiable + impact concret (score signal 15, engagement 10).
+- **@milkroadai** (41 likes, score 8/10) — How could you possibly be bearish on compute right now? (Save this).
+
+Every 10 seconds in 2026, the world generates 31.7 billion tokens and by 2030, that number hits 1.27 trillion, every 10 seconds.
+  - https://x.com/MilkRoadAI/status/2075003050692145569
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 43).
+- **@interesting_ail** (177 likes, score 9/10) — Apple announces a $30 billion deal with Broadcom to push for chips made in the US
+
+Apple aims to eventually source components domestically
+  - https://x.com/interesting_aIl/status/2074925051422331231
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 197).
