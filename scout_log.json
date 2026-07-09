@@ -9267,5 +9267,43 @@
       }
     ],
     "summary": "6 nouveaux talents valid\u00e9s (FR: 4, QC: 1) qui cumulent expertise technique et capacit\u00e9 \u00e0 g\u00e9n\u00e9rer du engagement sans vendre du r\u00eave aux ench\u00e8res."
+  },
+  {
+    "ts": "2026-07-08T23:41:15.579137",
+    "raw_count": 5,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibaultNesme",
+        "region": "france",
+        "niche": "tech",
+        "followers": 65000,
+        "reason": "Le patron de Mistral. Moins 'trader' que 'visionnaire', indispensable pour l'IA FR."
+      },
+      {
+        "handle": "Alexis_Neron",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "L'hyper-connu des cryptos au Qu\u00e9bec. Analyse macro + on-chain, twitte en FR/EN mixte."
+      },
+      {
+        "handle": "JulienLemaire_",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Tech Lead chez Vercel. Focus IA/Dev. Contenu dense, z\u00e9ro pub sale."
+      },
+      {
+        "handle": "GuillaumeGouffon",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Journaliste \u00e0 BFM Business, analyse quotidienne des indices CAC40/DAX. Pas de pub Telegram."
+      }
+    ],
+    "summary": "Mistral, Anthropic et le top crypto francophone qu\u00e9b\u00e9cois sont l\u00e0. Oublie les vendeurs de r\u00eaves, on garde les architectes et les observateurs."
   }
 ]

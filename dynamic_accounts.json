@@ -89,7 +89,10 @@
     "MaximeJoly_",
     "ThomasM",
     "ThibautC",
-    "MarcLangevin"
+    "MarcLangevin",
+    "ThibaultNesme",
+    "Alexis_Neron",
+    "JulienLemaire_"
   ],
   "en": [
     "Chubby",
@@ -146,7 +149,9 @@
     "KanekoaTheGreat",
     "Tavus",
     "prinz",
-    "Anthropic"
+    "Anthropic",
+    "Coinbase",
+    "Glider"
   ],
   "history": [
     {
@@ -872,6 +877,31 @@
     {
       "lang": "fr",
       "handle": "MarcLangevin",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Coinbase",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Glider",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultNesme",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alexis_Neron",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLemaire_",
       "added": "2026-07-08"
     }
   ]
