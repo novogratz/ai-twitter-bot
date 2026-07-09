@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-09T07:40:43.237905",
-  "window_7d_actions": 3344,
-  "window_24h_actions": 817,
+  "generated_at": "2026-07-09T11:40:43.213474",
+  "window_7d_actions": 3477,
+  "window_24h_actions": 800,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 3334
+      "count": 3467
     },
     {
       "pattern": "RENAME",
@@ -36,6 +36,14 @@
   ],
   "best_hours_utc": [
     {
+      "hour": 8,
+      "actions": 185
+    },
+    {
+      "hour": 10,
+      "actions": 181
+    },
+    {
       "hour": 1,
       "actions": 173
     },
@@ -44,65 +52,63 @@
       "actions": 172
     },
     {
-      "hour": 0,
-      "actions": 162
-    },
-    {
-      "hour": 3,
-      "actions": 162
-    },
-    {
-      "hour": 2,
-      "actions": 158
+      "hour": 9,
+      "actions": 171
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1568
+      "count": 1623
     },
     {
       "topic": "IA",
-      "count": 1290
+      "count": 1347
     },
     {
       "topic": "Crypto",
-      "count": 422
+      "count": 442
     },
     {
       "topic": "Bourse",
-      "count": 214
+      "count": 221
     },
     {
       "topic": "Spatial",
-      "count": 65
+      "count": 71
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Spatial",
+      "24h_rate": 0.029,
+      "7d_rate": 0.02
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1438
+      "count": 1506
     },
     {
       "pillar": "other",
-      "count": 1031
+      "count": 1056
     },
     {
       "pillar": "market_trauma",
-      "count": 674
+      "count": 702
     },
     {
       "pillar": "meme_reaction",
-      "count": 136
+      "count": 146
     },
     {
       "pillar": "reply_bait",
-      "count": 35
+      "count": 36
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 30
+      "count": 31
     }
   ],
   "pillar_mix_24h": [
@@ -112,15 +118,15 @@
     },
     {
       "pillar": "other",
-      "count": 242
+      "count": 223
     },
     {
       "pillar": "market_trauma",
-      "count": 152
+      "count": 153
     },
     {
       "pillar": "meme_reaction",
-      "count": 34
+      "count": 37
     },
     {
       "pillar": "reply_bait",
@@ -128,7 +134,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -136,21 +142,21 @@
       "pillar": "market_trauma",
       "posts": 54,
       "avg_likes": 0.11,
-      "avg_views": 26.6,
+      "avg_views": 22.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 61,
+      "posts": 59,
       "avg_likes": 0.1,
-      "avg_views": 23.2,
+      "avg_views": 22.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 83,
+      "posts": 84,
       "avg_likes": 0.08,
-      "avg_views": 23.2,
+      "avg_views": 23.6,
       "low_sample": false
     },
     {
@@ -171,19 +177,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2862
+      "count": 2969
     },
     {
       "type": "quote",
-      "count": 244
+      "count": 250
     },
     {
       "type": "quote_gif",
-      "count": 121
+      "count": 130
     },
     {
       "type": "post",
-      "count": 57
+      "count": 64
     },
     {
       "type": "retweet",
@@ -191,23 +197,23 @@
     },
     {
       "type": "hotake",
-      "count": 26
+      "count": 30
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-09T07:40:14.265604",
-      "text": "Every tool in history waited for a human to decide what to do. AI is the first tool that decided for itself.",
+      "ts": "2026-07-09T11:38:16.984731",
+      "text": "Great trade from $4.20. the question is whether it's cheap now or you're anchored to your entry point. confusing the two is how winners become bagholders.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-09T07:38:25.918011",
-      "text": "The AI bubble is 2024-2025. robinhood and base are 2025-2027. capital flowing from hype to infrastructure. different asset class, same flow.",
+      "ts": "2026-07-09T11:36:54.394463",
+      "text": "Nvidia's already the infrastructure choke point. ai news rotates capital into alternatives, not nvidia.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-09T07:38:03.032614",
-      "text": "14GW by 2027. Meta stopped waiting for Nvidia and built its own chips. That's not strategy, that's necessity.",
+      "ts": "2026-07-09T11:36:20.273484",
+      "text": "Quantum threat to Bitcoin is real but ~10 years out. multi-sig doesn't help (ECDSA breaks uniformly). the actual fix: Bitcoin soft-forks to post-quantum crypto. banks can't. so BitGo's tools are institutional comfort-buying, not insurance.",
       "type": "reply"
     }
   ]

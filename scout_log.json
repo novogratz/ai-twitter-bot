@@ -9461,5 +9461,116 @@
       }
     ],
     "summary": "Un mix solide entre l'IA pratique (MistaMouf), le crypto on-chain (0xMaki) et la bourse fondamentale (Meyrieux/Mougeot). La sc\u00e8ne qu\u00e9b\u00e9coise est plus rare en pur finance, donc on appuie sur le g\u00e9n\u00e9raliste tech (HugoDin)."
+  },
+  {
+    "ts": "2026-07-09T08:02:29.838595",
+    "raw_count": 7,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BaptisteD",
+        "region": "france",
+        "niche": "tech",
+        "followers": 55000,
+        "reason": "CEO de Brevo (Sendinblue). L'un des rares founders FR \u00e0 avoir de l'impact sur la SaaS Europe. Vibe founder authentique, pas de 'signaux VIP'."
+      },
+      {
+        "handle": "ArthurM",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Co-fondateur de Mistral AI. Le mec qui a fait exploser le LLM fran\u00e7ais en Europe. Twitte en FR, direct au but, z\u00e9ro blabla marketing."
+      },
+      {
+        "handle": "ElianeP",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 41000,
+        "reason": "Directrice des \u00c9tudes chez Banques Populaires CIB. Elle balance les insights institutionnels les plus pointus du march\u00e9 FR. La r\u00e9f\u00e9rence macro."
+      },
+      {
+        "handle": "LiliumF",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 38000,
+        "reason": "Fondateur de Qonto. Parle business, SaaS et fintech en FR. Une p\u00e9pite de fondamentaliste tech qui n'est pas un 'guru' crypto."
+      },
+      {
+        "handle": "JulienB",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Crypto analyste QC qui balance des charts et de la macro sans verser dans le 'moonboy'. Le genre de mec qu'on tague pour comprendre un cycle bear."
+      },
+      {
+        "handle": "MaximeB",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Tech Lead bas\u00e9 \u00e0 SF, mais twitte en FR. Couvre l'IA appliqu\u00e9 et le trading algo. Le profil hybride parfait entre codeurs et traders."
+      },
+      {
+        "handle": "ValentinD",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Analyste actions FR sur X. D\u00e9cortique les bilans et la strat\u00e9gie corporate. Pas de hype, juste du business reading sec et efficace."
+      }
+    ],
+    "summary": "Un mix solide entre les leaders de la tech/AI fran\u00e7aise (Mistral, Qonto) et des analystes financiers institutionnels ou crypto de niche. Z\u00e9ro influenceur qui te vend un webinar \u00e0 49\u20ac."
+  },
+  {
+    "ts": "2026-07-09T09:41:27.569964",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "HugoBisson",
+        "region": "france",
+        "niche": "ai",
+        "followers": 95000,
+        "reason": "Dev @ Mistral AI, il balance des threads techniques qui font mal aux yeux et au KPI. Le mec code en direct sur X, pas de bla-bla."
+      },
+      {
+        "handle": "MarcLamontagne",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "Canadien francophone vivant aux USA. Il couvre la politique mon\u00e9taire am\u00e9ricaine avec un accent qui pique."
+      },
+      {
+        "handle": "CryptoColumbo",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le plus fiable du top 100 FR. Il ne vend rien, il tweete tout. L'anti-influenceur par excellence."
+      },
+      {
+        "handle": "Maelle_Cyr",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "La reine de la DeFi qu\u00e9b\u00e9coise. Elle explique les m\u00e9canismes on-chain sans vendre du r\u00eave, juste du concret. Rare."
+      },
+      {
+        "handle": "LunaSolaire1",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "Traders longue dur\u00e9e FR. Pas de signaux, pas de formations. Juste des PV et des dividendes. Le calme dans la temp\u00eate."
+      },
+      {
+        "handle": "JulienLeDroit",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Ex-fondateur @FinancesPlus, il balance des analyses macro percutantes sur le Qu\u00e9bec. Pas de pubs Telegram, juste du fond."
+      }
+    ],
+    "summary": "J'ai \u00e9vit\u00e9 les vendeurs de r\u00eave pour te coller des builders et des traders qui font leur boulot. Mistral a ses deux stars ici, et la sc\u00e8ne crypto FR/QC est moins\u6ce1\u6cab que le reste du Twitter."
   }
 ]

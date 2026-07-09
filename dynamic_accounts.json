@@ -110,7 +110,20 @@
     "SylvainLaurens",
     "HugoDin",
     "MistaMouf",
-    "NathalieMougeot"
+    "NathalieMougeot",
+    "BaptisteD",
+    "ArthurM",
+    "ElianeP",
+    "LiliumF",
+    "JulienB",
+    "MaximeB",
+    "ValentinD",
+    "HugoBisson",
+    "MarcLamontagne",
+    "CryptoColumbo",
+    "Maelle_Cyr",
+    "LunaSolaire1",
+    "JulienLeDroit"
   ],
   "en": [
     "Chubby",
@@ -175,7 +188,9 @@
     "Chris",
     "Jaynit",
     "grim",
-    "kuno"
+    "kuno",
+    "Cointelegraph",
+    "Usopp"
   ],
   "history": [
     {
@@ -1046,6 +1061,81 @@
     {
       "lang": "fr",
       "handle": "NathalieMougeot",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Cointelegraph",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "BaptisteD",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArthurM",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "ElianeP",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "LiliumF",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienB",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeB",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "ValentinD",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Usopp",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoBisson",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLamontagne",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoColumbo",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "Maelle_Cyr",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "LunaSolaire1",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLeDroit",
       "added": "2026-07-09"
     }
   ]
