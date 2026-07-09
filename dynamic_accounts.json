@@ -123,7 +123,9 @@
     "CryptoColumbo",
     "Maelle_Cyr",
     "LunaSolaire1",
-    "JulienLeDroit"
+    "JulienLeDroit",
+    "LorenzoFP",
+    "RomainMichelet"
   ],
   "en": [
     "Chubby",
@@ -190,7 +192,10 @@
     "grim",
     "kuno",
     "Cointelegraph",
-    "Usopp"
+    "Usopp",
+    "Evan",
+    "Lilith",
+    "Reve"
   ],
   "history": [
     {
@@ -1136,6 +1141,31 @@
     {
       "lang": "fr",
       "handle": "JulienLeDroit",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Evan",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Lilith",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Reve",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoFP",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainMichelet",
       "added": "2026-07-09"
     }
   ]

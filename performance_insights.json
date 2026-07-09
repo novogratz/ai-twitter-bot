@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-09T11:40:43.213474",
-  "window_7d_actions": 3477,
-  "window_24h_actions": 800,
+  "generated_at": "2026-07-09T15:40:43.177957",
+  "window_7d_actions": 3615,
+  "window_24h_actions": 786,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 3467
+      "count": 3604
     },
     {
       "pattern": "RENAME",
@@ -17,16 +17,16 @@
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 2
+      "count": 3
     }
   ],
   "worst_patterns": [
     {
-      "pattern": "UNDERSTATEMENT",
-      "count": 2
+      "pattern": "METAPHOR",
+      "count": 3
     },
     {
-      "pattern": "METAPHOR",
+      "pattern": "UNDERSTATEMENT",
       "count": 3
     },
     {
@@ -44,63 +44,63 @@
       "actions": 181
     },
     {
+      "hour": 12,
+      "actions": 180
+    },
+    {
       "hour": 1,
       "actions": 173
     },
     {
       "hour": 6,
       "actions": 172
-    },
-    {
-      "hour": 9,
-      "actions": 171
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1623
+      "count": 1679
     },
     {
       "topic": "IA",
-      "count": 1347
+      "count": 1412
     },
     {
       "topic": "Crypto",
-      "count": 442
+      "count": 456
     },
     {
       "topic": "Bourse",
-      "count": 221
+      "count": 230
     },
     {
       "topic": "Spatial",
-      "count": 71
+      "count": 73
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.029,
+      "24h_rate": 0.027,
       "7d_rate": 0.02
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1506
+      "count": 1576
     },
     {
       "pillar": "other",
-      "count": 1056
+      "count": 1087
     },
     {
       "pillar": "market_trauma",
-      "count": 702
+      "count": 732
     },
     {
       "pillar": "meme_reaction",
-      "count": 146
+      "count": 151
     },
     {
       "pillar": "reply_bait",
@@ -108,21 +108,21 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 31
+      "count": 33
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 375
+      "count": 383
     },
     {
       "pillar": "other",
-      "count": 223
+      "count": 204
     },
     {
       "pillar": "market_trauma",
-      "count": 153
+      "count": 152
     },
     {
       "pillar": "meme_reaction",
@@ -130,41 +130,34 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 5
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 54,
+      "posts": 53,
       "avg_likes": 0.11,
       "avg_views": 22.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 59,
+      "posts": 60,
       "avg_likes": 0.1,
-      "avg_views": 22.5,
+      "avg_views": 22.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 84,
+      "posts": 85,
       "avg_likes": 0.08,
-      "avg_views": 23.6,
+      "avg_views": 23.1,
       "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 1,
-      "avg_likes": 0.0,
-      "avg_views": 39.0,
-      "low_sample": true
     },
     {
       "pillar": "reply_bait",
@@ -177,43 +170,43 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2969
+      "count": 3086
     },
     {
       "type": "quote",
-      "count": 250
+      "count": 260
     },
     {
       "type": "quote_gif",
-      "count": 130
+      "count": 132
     },
     {
       "type": "post",
-      "count": 64
+      "count": 68
+    },
+    {
+      "type": "hotake",
+      "count": 35
     },
     {
       "type": "retweet",
       "count": 34
-    },
-    {
-      "type": "hotake",
-      "count": 30
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-09T11:38:16.984731",
-      "text": "Great trade from $4.20. the question is whether it's cheap now or you're anchored to your entry point. confusing the two is how winners become bagholders.",
+      "ts": "2026-07-09T15:40:10.295633",
+      "text": "Tu décris exactement le déni collectif: on sait que market cap c'est déconnecté de l'économie réelle, et on choisit d'y croire quand même. c'est psychologie pure.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-09T11:36:54.394463",
-      "text": "Nvidia's already the infrastructure choke point. ai news rotates capital into alternatives, not nvidia.",
+      "ts": "2026-07-09T15:39:54.141966",
+      "text": "Meta's all-in on ai capex with no real products yet. the candle is hype. the actual question: how long do ads hold?",
       "type": "reply"
     },
     {
-      "ts": "2026-07-09T11:36:20.273484",
-      "text": "Quantum threat to Bitcoin is real but ~10 years out. multi-sig doesn't help (ECDSA breaks uniformly). the actual fix: Bitcoin soft-forks to post-quantum crypto. banks can't. so BitGo's tools are institutional comfort-buying, not insurance.",
+      "ts": "2026-07-09T15:38:43.922894",
+      "text": "First game solved on arc-agi-3 is real. 7.8%. now the real test: do other games move. one game solved is optimization. multiple games is reasoning.",
       "type": "reply"
     }
   ]

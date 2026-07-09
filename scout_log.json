@@ -9572,5 +9572,29 @@
       }
     ],
     "summary": "J'ai \u00e9vit\u00e9 les vendeurs de r\u00eave pour te coller des builders et des traders qui font leur boulot. Mistral a ses deux stars ici, et la sc\u00e8ne crypto FR/QC est moins\u6ce1\u6cab que le reste du Twitter."
+  },
+  {
+    "ts": "2026-07-09T13:49:31.579585",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LorenzoFP",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Journaliste tech tr\u00e8s bien inform\u00e9 (ex-Canal+, ex-Automobile). Couvre Startups, IA et SaaS en France. Il sait qui est qui dans l'\u00e9cosyst\u00e8me."
+      },
+      {
+        "handle": "RomainMichelet",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "G\u00e9rant de fonds. Pas de signaux Telegram, pas de 'DGM'. Il partage ses th\u00e8ses d'investissement action fran\u00e7aises et europ\u00e9ennes avec rigueur. Rare dans ce cacahu\u00e8te g\u00e9n\u00e9raliste."
+      }
+    ],
+    "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour se concentrer sur les fondateurs et les pros du terrier de lapin. Maki est in\u00e9vitable, Varoquaux pour l'IA technique, et Michelet pour ceux qui veulent comprendre la bourse sans lire des romans."
   }
 ]
