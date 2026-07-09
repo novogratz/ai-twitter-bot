@@ -76,7 +76,20 @@
     "MaximeGirard",
     "s_bocquet",
     "mickael_boulay",
-    "PascalPoirier_"
+    "PascalPoirier_",
+    "Nakamoto21",
+    "LuisaBossek",
+    "MaximeDc",
+    "HugoDelescluse",
+    "JulienD",
+    "MaximeMulliez",
+    "AudeGarcia",
+    "LorenzoMariani",
+    "LorisSambati",
+    "MaximeJoly_",
+    "ThomasM",
+    "ThibautC",
+    "MarcLangevin"
   ],
   "en": [
     "Chubby",
@@ -130,7 +143,10 @@
     "CoinGecko",
     "world",
     "Jeremy",
-    "KanekoaTheGreat"
+    "KanekoaTheGreat",
+    "Tavus",
+    "prinz",
+    "Anthropic"
   ],
   "history": [
     {
@@ -776,6 +792,86 @@
     {
       "lang": "fr",
       "handle": "PascalPoirier_",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Tavus",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "Nakamoto21",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisaBossek",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDc",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoDelescluse",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienD",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMulliez",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "AudeGarcia",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoMariani",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "prinz",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Anthropic",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorisSambati",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeJoly_",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasM",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautC",
+      "added": "2026-07-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLangevin",
       "added": "2026-07-08"
     }
   ]

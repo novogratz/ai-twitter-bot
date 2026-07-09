@@ -9156,5 +9156,116 @@
       }
     ],
     "summary": "On a tri\u00e9 le plat de lentilles des influenceurs crypto pour ne garder que les pros. Cinq sp\u00e9cialistes (3 FR, 2 QC) qui tweetent en fran\u00e7ais, couvrent IA/Bourse/Crypto et ont \u00e9vit\u00e9 le pi\u00e8ge des formations \u00e0 999\u20ac."
+  },
+  {
+    "ts": "2026-07-08T19:41:26.830647",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Nakamoto21",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 150000,
+        "reason": "L'architecte de CryptoAst. Il twitte la macro en FR sans jargon, c'est la classe."
+      },
+      {
+        "handle": "LuisaBossek",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 110000,
+        "reason": "Vice Pr\u00e9sidente IA \u00e0 Bloomberg. Elle balance des insights techniques rares, m\u00eame si c'est en EN."
+      },
+      {
+        "handle": "MaximeDc",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 85000,
+        "reason": "CEO de PayPlug. Il raconte la vraie vie de la fintech europ\u00e9enne, pas juste du buzz."
+      },
+      {
+        "handle": "HugoDelescluse",
+        "region": "france",
+        "niche": "ai",
+        "followers": 60000,
+        "reason": "Le gars qui a fait M6 pour l'IA. Il couvre DeepMind et les startups avec un \u0153il critique."
+      },
+      {
+        "handle": "JulienD",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 55000,
+        "reason": "L'analyste qu\u00e9b\u00e9cois qui d\u00e9crypte les march\u00e9s sans vendre du r\u00eave. Direct et technique."
+      },
+      {
+        "handle": "MaximeMulliez",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "L'incontournable de la tech \u00e0 Qu\u00e9bec. Il couvre SaaS, AI et funding avec du concret."
+      },
+      {
+        "handle": "AudeGarcia",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "La r\u00e9f\u00e9rence crypto \u00e0 Paris. Elle croise l'info rapide avec l'analyse de fond."
+      },
+      {
+        "handle": "LorenzoMariani",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Fondateur de Plaid. Il poste des threads 'builders' sur la data financi\u00e8re, pur joyau technique."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le spam de 'rejoins mon Discord' pour te sortir des profils qui font travailler leur cerveau. Mix France/USA/Qu\u00e9bec avec des fondateurs et des analystes qui ont un avis tranch\u00e9."
+  },
+  {
+    "ts": "2026-07-08T21:53:45.217815",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LorisSambati",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Le patron de Loris qui couvre tech et IA avec le style tranquille d'un mec qui a d\u00e9j\u00e0 vu venir la crise."
+      },
+      {
+        "handle": "MaximeJoly_",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "Le trader retail qui balance des setups pr\u00e9cis et des charts dignes de Mondrian."
+      },
+      {
+        "handle": "ThomasM",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Le 'M' qui couvre les cycles crypto avec la pr\u00e9cision d'une montre suisse mais la vitesse d'une Ferrari."
+      },
+      {
+        "handle": "ThibautC",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le gars qui explique l'IA aux gens normaux sans dormir sur un cluster de GPUs."
+      },
+      {
+        "handle": "MarcLangevin",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "L'info crypto qu\u00e9b\u00e9coise qui fait le tri entre le bruiteur et le signal sans payer de souscription."
+      }
+    ],
+    "summary": "6 nouveaux talents valid\u00e9s (FR: 4, QC: 1) qui cumulent expertise technique et capacit\u00e9 \u00e0 g\u00e9n\u00e9rer du engagement sans vendre du r\u00eave aux ench\u00e8res."
   }
 ]
