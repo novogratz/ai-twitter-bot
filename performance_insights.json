@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-08T23:40:43.190623",
-  "window_7d_actions": 3080,
-  "window_24h_actions": 811,
+  "generated_at": "2026-07-09T03:40:43.176295",
+  "window_7d_actions": 3211,
+  "window_24h_actions": 802,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 3073
+      "count": 3204
     },
     {
       "pattern": "RENAME",
@@ -36,69 +36,69 @@
   ],
   "best_hours_utc": [
     {
+      "hour": 1,
+      "actions": 173
+    },
+    {
+      "hour": 0,
+      "actions": 162
+    },
+    {
+      "hour": 2,
+      "actions": 158
+    },
+    {
       "hour": 8,
       "actions": 152
     },
     {
-      "hour": 12,
-      "actions": 145
-    },
-    {
-      "hour": 10,
-      "actions": 143
-    },
-    {
-      "hour": 9,
-      "actions": 140
-    },
-    {
-      "hour": 1,
-      "actions": 138
+      "hour": 3,
+      "actions": 150
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1447
+      "count": 1508
     },
     {
       "topic": "IA",
-      "count": 1185
+      "count": 1239
     },
     {
       "topic": "Crypto",
-      "count": 389
+      "count": 402
     },
     {
       "topic": "Bourse",
-      "count": 198
+      "count": 203
     },
     {
       "topic": "Spatial",
-      "count": 60
+      "count": 64
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1321
+      "count": 1381
     },
     {
       "pillar": "other",
-      "count": 958
+      "count": 995
     },
     {
       "pillar": "market_trauma",
-      "count": 614
+      "count": 641
     },
     {
       "pillar": "meme_reaction",
-      "count": 126
+      "count": 132
     },
     {
       "pillar": "reply_bait",
-      "count": 33
+      "count": 34
     },
     {
       "pillar": "ai_vs_btc",
@@ -108,49 +108,49 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 358
+      "count": 362
     },
     {
       "pillar": "other",
-      "count": 246
+      "count": 241
     },
     {
       "pillar": "market_trauma",
-      "count": 149
+      "count": 148
     },
     {
       "pillar": "meme_reaction",
-      "count": 40
+      "count": 36
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 55,
+      "posts": 54,
       "avg_likes": 0.11,
-      "avg_views": 26.8,
+      "avg_views": 27.0,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 85,
-      "avg_likes": 0.08,
-      "avg_views": 22.4,
+      "posts": 83,
+      "avg_likes": 0.07,
+      "avg_views": 23.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 57,
+      "posts": 60,
       "avg_likes": 0.05,
-      "avg_views": 21.8,
+      "avg_views": 22.8,
       "low_sample": false
     },
     {
@@ -171,15 +171,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 2640
+      "count": 2741
     },
     {
       "type": "quote",
-      "count": 219
+      "count": 236
     },
     {
       "type": "quote_gif",
-      "count": 111
+      "count": 117
     },
     {
       "type": "post",
@@ -187,7 +187,7 @@
     },
     {
       "type": "retweet",
-      "count": 27
+      "count": 34
     },
     {
       "type": "hotake",
@@ -196,18 +196,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-08T23:38:56.425981",
-      "text": "KRW800 trillion says SK sees what others don't: you can't sell inference margin if you can't feed the GPU fast enough. Memory is the real race.",
+      "ts": "2026-07-09T03:39:13.149590",
+      "text": "Infrastructure conversations shift once the infrastructure works. Question is whether it has.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-08T23:38:23.605701",
-      "text": "Lyn's right. bitcoin's the only asset that doesn't require trusting a government. everything else is just a bet that politicians stay competent.",
+      "ts": "2026-07-09T03:34:29.735946",
+      "text": "High FDV means founders already got out at launch. The chart after that is just retail FOMO feeding itself.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-08T23:37:54.918829",
-      "text": "Analysts see three megacaps adjust, conclude AI boom is done.\n\nNope. Stargate $500B, xAI ramping, CoreWeave $7B debt. Boom didn't stall, it sieved. Capital's concentrating on builders, not users.",
+      "ts": "2026-07-09T03:33:11.333680",
+      "text": "TSMC 15% on the critical nodes. When you can't shop around and they know it, foundries stop negotiating and start collecting. Toll booth economics.",
       "type": "reply"
     }
   ]
