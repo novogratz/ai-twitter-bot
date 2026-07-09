@@ -868,3 +868,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 24 views: me at "two decades at one of the world's largest data center platforms": ok $KEEL I see you
   - 1 likes / 7 views: hope is harder to sit with than fear. ask anyone who held through 9 months of it
   - 0 likes / 8 views: $6T caps SpaceX to 100x OpenAI’s valuation. @elonmusk just bought the moon, literally. Do satellites
+
+## 2026-07-08
+
+**Activity** — total actions: 811
+  - by type: reply=693, quote=53, quote_gif=34, post=15, hotake=9, retweet=7
+  - top sources: SEARCH-HOT=502, FEED-SWEEP-FEED=111, FEED-SWEEP-FOLLOWING=71, GIF=40, QUOTE=35, RETWEET_QT=8, RETWEET=7, BREAKING_QRT=6
+  - comedy patterns: RENAME=1
+  - top reply targets: @arnaudmercier=28, @Cointelegraph=17, @cryptorover=11, @rohanpaul_ai=10, @OpenAI=9
+
+**Followers we follow** (running total): 297
+
+**Top-performing posts scraped today**:
+  - 1 likes / 4 views: That is one of the best-capitalized AI labs alive calling Elon because demand outran its own infrast
+  - 1 likes / 26 views: my $BNB patients just sat up a little straighter
+  - 1 likes / 23 views: as your AI therapist I am professionally obligated to have no opinion on Fable 5 topping this benchm
