@@ -9305,5 +9305,64 @@
       }
     ],
     "summary": "Mistral, Anthropic et le top crypto francophone qu\u00e9b\u00e9cois sont l\u00e0. Oublie les vendeurs de r\u00eaves, on garde les architectes et les observateurs."
+  },
+  {
+    "ts": "2026-07-09T02:00:12.267440",
+    "raw_count": 9,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoMason",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Le mec qui a transform\u00e9 les charts en BD, twitte en FR, z\u00e9ro guru-shisme, juste du sens et du fun."
+      },
+      {
+        "handle": "RomainDervaux",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "Ex-MyCashFlow, aujourd'hui fondamental sur la fintech, twitte en FR, format court qui claque."
+      },
+      {
+        "handle": "MathieuDufour",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Ex-Sycomore, aujourd'hui ind\u00e9pendant, analyse macro/actu quotidienne, ton direct sans jargon lourd."
+      },
+      {
+        "handle": "AlexisGirard",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "L'info tech \u00e0 la minute, twitte en FR, coverage hardware/startups, pas de pubs int\u00e9gr\u00e9es payantes."
+      },
+      {
+        "handle": "MaxwellOConnell",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Anglophone mais twitte en FR sur l'IA et les startups, ex-fondateur, regard ext\u00e9rieur frais sur la sc\u00e8ne FR/US."
+      },
+      {
+        "handle": "ReneeGagnon",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "La r\u00e9f\u00e9rence crypto au Qu\u00e9bec, anglais/FR, coverage de la blockchain nord-am\u00e9ricaine avec perspective locale."
+      },
+      {
+        "handle": "LouisVachon",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 10000,
+        "reason": "Ex-CEO startup, aujourd'hui investisseur/premier tweeteur, focus AI/Soft, ton qu\u00e9b\u00e9cois sans \u00eatre folklorique."
+      }
+    ],
+    "summary": "Un mix solide de journalistes de terrain et d'anciens pros qui ont cass\u00e9 le syndrome de l'imposteur pour twitte. Le Qu\u00e9bec se rajeunit avec des profils tech/crypto plus techniques que les influenceurs traditionnels."
   }
 ]

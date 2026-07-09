@@ -92,7 +92,14 @@
     "MarcLangevin",
     "ThibaultNesme",
     "Alexis_Neron",
-    "JulienLemaire_"
+    "JulienLemaire_",
+    "CryptoMason",
+    "RomainDervaux",
+    "MathieuDufour",
+    "AlexisGirard",
+    "MaxwellOConnell",
+    "ReneeGagnon",
+    "LouisVachon"
   ],
   "en": [
     "Chubby",
@@ -151,7 +158,10 @@
     "prinz",
     "Anthropic",
     "Coinbase",
-    "Glider"
+    "Glider",
+    "dax",
+    "SightBringer",
+    "Chris"
   ],
   "history": [
     {
@@ -903,6 +913,56 @@
       "lang": "fr",
       "handle": "JulienLemaire_",
       "added": "2026-07-08"
+    },
+    {
+      "lang": "en",
+      "handle": "dax",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "SightBringer",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Chris",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMason",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDervaux",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDufour",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisGirard",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxwellOConnell",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "ReneeGagnon",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "LouisVachon",
+      "added": "2026-07-09"
     }
   ]
 }

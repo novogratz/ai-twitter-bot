@@ -15517,3 +15517,20 @@ Every 10 seconds in 2026, the world generates 31.7 billion tokens and by 2030, t
 Apple aims to eventually source components domestically
   - https://x.com/interesting_aIl/status/2074925051422331231
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 197).
+- **@saboo_shubham_** (22 likes, score 8/10) — Meta LOOP is the way to go.
+
+Fable 5 as the advisor, GPT-5.5 as the orchestrator and Gemini 3.5 Flash as the worker.
+
+I converted this into an Agent skill that you can install in 10 seconds.
+  - https://x.com/Saboo_Shubham_/status/2075083780046618712
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 36).
+- **@zephyr_z9** (44 likes, score 8/10) — "What happens when OpenAI or Anthropic decides to offer smaller, cheaper, fine-tuned production models as products?"
+
+It's not like they can't offer it now, but it will reduce their revenue generated
+  - https://x.com/zephyr_z9/status/2075082100001448428
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 54).
+- **@fakepsyho** (104 likes, score 8/10) — After 3 hours, OpenAI finally managed to solve D - one of the two very hard tasks. There are still 4 hours left till the end of the contest.
+
+AI is clearly no longer in a spot, where it either quickly
+  - https://x.com/FakePsyho/status/2075082688164434268
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 108).
