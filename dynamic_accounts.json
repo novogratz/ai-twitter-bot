@@ -99,7 +99,18 @@
     "AlexisGirard",
     "MaxwellOConnell",
     "ReneeGagnon",
-    "LouisVachon"
+    "LouisVachon",
+    "cryptohopper_fr",
+    "remibensaid",
+    "maxime_lemay",
+    "louis_boulay",
+    "thomas_turq",
+    "0xMaki",
+    "MaximeMeyrieux",
+    "SylvainLaurens",
+    "HugoDin",
+    "MistaMouf",
+    "NathalieMougeot"
   ],
   "en": [
     "Chubby",
@@ -161,7 +172,10 @@
     "Glider",
     "dax",
     "SightBringer",
-    "Chris"
+    "Chris",
+    "Jaynit",
+    "grim",
+    "kuno"
   ],
   "history": [
     {
@@ -962,6 +976,76 @@
     {
       "lang": "fr",
       "handle": "LouisVachon",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Jaynit",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "grim",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptohopper_fr",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "remibensaid",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "maxime_lemay",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "louis_boulay",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomas_turq",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "kuno",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xMaki",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMeyrieux",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLaurens",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoDin",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MistaMouf",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathalieMougeot",
       "added": "2026-07-09"
     }
   ]

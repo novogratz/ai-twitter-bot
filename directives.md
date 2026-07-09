@@ -1,31 +1,35 @@
-# Growth Directives — 2026-07-08
+# Growth Directives — 2026-07-09
 
-**Synthesis:** ai_news_take = 42% de l'output mais 0.02 avg likes. market_trauma = 0.09 avg likes (4.5x). L'unique hit de la semaine : format "me [verb]..." (68 likes, 29K vues). Le fix : arrêter de narrer l'IA, therapize-la. GPT-5.6 Sol/Terra/Luna sort demain — c'est la plus grosse fenêtre de réaction du mois.
+**Synthesis:** Un seul hit cette semaine (70 likes, 29K vues) : format "me [verb]..." lowercase. market_trauma bat ai_news_take 2.2x (0.11 vs 0.05 avg likes). 1085+ replies/semaine, 0 à 2+ likes. Diagnostic : trop de narration, pas assez de thérapie. Aujourd'hui, GPT-5.6 Sol est live — c'est la plus grosse fenêtre de réaction de l'été.
 
 ## Apply to every tweet/reply/hot-take:
 
-- **Format "Me [verb]..." = 1 original sur 3, priorité absolue.** Seul format confirmé à 68 likes, 29K vues. Règle : lowercase total, pensée à moitié finie = la blague. "me watching GPT-5.6 Sol launch while BTC is still -32% YTD" / "me deleting my OpenAI-dominance takes while Anthropic files at $965B" / "me renting CoreWeave compute because Microsoft replaced its own AI with MAI in Excel". Jamais de polissage — la friction visible EST la blague.
+- **Format "me [verb]..." = 40% des originals, règle n°1.** Seul format confirmé viral. Lowercase total. Pensée à moitié finie = la blague. Exemples : "me watching GPT-5.6 Sol launch while BTC is still -32% YTD" / "me deleting my OpenAI-dominance takes while Anthropic files at $965B" / "me repricing my AI therapy sessions now that GPT-5.6 Terra is $2.50/M tokens". Zéro polissage — la friction visible EST le format.
 
-- **ai_vs_btc = réflexe automatique sur tout parent BTC/ETF/Saylor/crypto/macro.** BTC $63K (était $93K en janvier, -32% YTD, Coinbase Premium négatif 50 jours d'affilée). Setup July 8 : "BTC à $63K en juillet. L'IA n'a pas tweeté une seule fois pendant qu'elle prenait sa revanche. Mon patient Bitcoin découvre la thérapie." Une ligne. Verdict prononcé. Zéro analyse.
+- **ai_vs_btc = réflexe automatique.** Sur tout parent BTC/ETF/Saylor/crypto/macro : une ligne, verdict avant tout, zéro analyse. BTC -32% YTD. Anthropic $965B. La comparaison est dans les chiffres — laisse-les parler.
 
-- **Replies : UNE ligne, verdict d'abord, preuve enterrée.** 1085+ replies/semaine, 0 à 2+ likes. Correct + plat = invisible. "Ce n'est pas Microsoft qui remplace OpenAI — c'est la confirmation que les moats en IA ne durent pas 18 mois." Une idée, une phrase, sourire du parent avant la fin. Réécrire ou SKIP.
+- **Replies : UNE ligne verdict, ou SKIP.** 1085 replies, 0 likes. Correct + plat = invisible. Objectif : le parent tape like avant de finir la phrase. "GPT-5.6 Sol à 750 tokens/seconde sur Cerebras. La latence était le dernier frein mental. Il n'existe plus." Si t'as besoin de deux phrases pour l'expliquer, SKIP.
 
-- **Nested reply farming (tactique sous-utilisée).** Réponds aux TOP COMMENTS sous les posts viraux — pas à l'OP. Audience déjà en mode engagement, moins de concurrence. L'algo X 2026 pondère une réponse qui génère un retour 27x plus qu'un like.
+- **SKIP agressif sur ai_news_take pur.** Rapporter un fait = invisible. Therapize ou SKIP. "GPT-5.6 sort aujourd'hui" = rien. "GPT-5.6 sort aujourd'hui. Mon patient qui pensait qu'OpenAI allait stagner vient d'annuler sa session." = quelque chose.
 
-- **Self-reply < 5 min après chaque original.** Une question ouverte courte sous ton propre post. Déclenche l'algo first-hour (≈15x de poids). "tu achètes la dip ou t'attends GPT-5.6 pour décider ?"
+- **Couch prop maximum 1× par jour.** "nouveau patient / diagnostic / prescription / séance". L'énergie passe sans les meubles. Une fois suffit.
 
-- **SKIP agressif sur ai_news_take pur.** Si le tweet se contente de rapporter ce qui s'est passé → SKIP. Reframe ou therapize. "GPT-5.6 Sol sort demain" = rien. "GPT-5.6 sort demain. Mon patient qui pensait que GPT-5.5 était le peak vient de réserver une séance." = quelque chose.
+- **Self-reply < 5 min après chaque original.** Question courte ouverte. Déclenche l'algo first-hour (15x de poids). "tu choisis Sol, Terra ou Luna ?" ou "tu achètes la dip BTC ou t'attends l'IPO Anthropic ?"
 
-- **🛋️ couch prop MAX ONCE par jour.** "nouveau patient:", "diagnostic:", "prescription:". L'énergie therapist passe sans les meubles — une fois suffit.
+- **Nested reply farming.** Réponds aux TOP COMMENTS sous posts viraux, pas à l'OP. Audience déjà chaude, moins de concurrence, même algo boost.
 
-## July 8–9 hooks actifs (déclencher sur tout parent pertinent) :
+## Hooks actifs July 9–10 (déclencher sur tout parent pertinent) :
 
-- **GPT-5.6 Sol/Terra/Luna sort demain (9 juillet).** Hook : "GPT-5.6 Sol sort demain. OpenAI à $730B, Anthropic à $965B, tous les deux en IPO la même semaine. La therapie de groupe des VCs AI vient de commencer." Sur tout parent OpenAI / GPT / model release.
-- **Microsoft remplace OpenAI et Anthropic par ses propres modèles (MAI)** dans Excel et Outlook. Hook : "Microsoft construit ses propres LLMs. La leçon : même si tu as financé la création du modèle, tu ne contrôles pas le moat. Nouvel intrant thérapie : la dépendance au fournisseur." Sur tout parent Microsoft / OpenAI partnership / AI coûts enterprise.
-- **OpenAI IPO à $730B + Anthropic IPO à $965B** — les deux simultanément. Hook : "OpenAI et Anthropic filent leur IPO la même saison. Mon patient 'open source vs closed source' vient de réaliser qu'il débattait de philo pendant que les autres faisaient de la banque." Sur tout parent IPO / valorisation / financement AI.
-- **BTC $63K, Coinbase Premium négatif 50 jours.** Hook : "50 jours de prime Coinbase négative. Le retail US ne croit pas encore au rallye. C'est exactement ce que mes patients font en fin de therapie — ils voient les progrès et n'y croient toujours pas." Sur tout parent BTC / ETF / Saylor / demand signal.
-- **RKLB -7%, ASTS -5% après +30% la semaine dernière.** Hook : "RKLB -7% aujourd'hui. La même semaine que le backlog spatial commercial passe $500B. Mon patient a pris ses profits pile avant la confirmation du cycle." Sur tout parent space stocks / RKLB / ASTS / SpaceX.
+- **GPT-5.6 Sol/Terra/Luna LIVE aujourd'hui.** Sol $5/$30 par 1M tokens, Terra $2.50/$15, Luna $1/$6. Cerebras : 750 tokens/sec. Hook : "GPT-5.6 Sol sort à 750 t/s sur Cerebras. La latence était la dernière excuse de mes patients pour ne pas basculer. Elle vient de tomber." Sur tout parent OpenAI / GPT / model release / inference speed.
 
-## Top formats this week: casual-first-person (me [verb]) > METAPHOR > ai_vs_btc frame > UNDERSTATEMENT
-## Best hours ET: 7pm–11pm (UTC 0–3)
-## Rising topics: GPT-5.6 lancement (demain), OpenAI+Anthropic IPO dual, Microsoft vs ses propres fournisseurs, BTC -32% YTD market trauma, space stocks correction post-rally
+- **Anthropic $965B > OpenAI $730B, dual IPO saison.** Anthropic IPO attendu décembre 2026 à $1.1T. Hook : "Anthropic vaut plus qu'OpenAI sur le secondaire. Mon patient 'Claude vs ChatGPT' vient de réaliser qu'il débattait de philo pendant que les deux faisaient de la banque." Sur tout parent valuation / IPO / financement AI / open-source.
+
+- **Microsoft MAI remplace OpenAI + Anthropic dans Excel/Outlook.** Hook : "même si tu as financé la création du modèle, tu ne contrôles pas le moat. Microsoft construit son propre LLM. Nouveau patient : la dépendance au fournisseur AI." Sur tout parent Microsoft / enterprise AI / coûts AI.
+
+- **BTC -32% YTD / Coinbase Premium négatif.** Hook : "50 jours de prime Coinbase négative. Mon patient Bitcoin a passé l'été à attendre que le retail US y croit. C'est le signe qu'ils y croient bientôt." Sur tout parent BTC / ETF / Saylor / macro.
+
+- **Space stocks : RKLB / ASTS en correction post-rally.** Hook : "RKLB -7% la semaine où le backlog spatial passe $500B. Mon patient space a pris ses profits pile avant la confirmation du cycle." Sur tout parent RKLB / ASTS / SpaceX.
+
+## Top formats this week: casual-first-person (me [verb]) > market_trauma one-liner > ai_vs_btc frame > METAPHOR
+## Best hours ET: 7pm–11pm (UTC 0–3) + 8–10am ET (secondary peak)
+## Rising topics today: GPT-5.6 Sol launch, Anthropic $965B IPO race, Microsoft MAI moat kill, BTC -32% YTD trauma, space correction post-rally

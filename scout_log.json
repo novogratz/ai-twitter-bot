@@ -9364,5 +9364,102 @@
       }
     ],
     "summary": "Un mix solide de journalistes de terrain et d'anciens pros qui ont cass\u00e9 le syndrome de l'imposteur pour twitte. Le Qu\u00e9bec se rajeunit avec des profils tech/crypto plus techniques que les influenceurs traditionnels."
+  },
+  {
+    "ts": "2026-07-09T03:46:18.908856",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "cryptohopper_fr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Le v\u00e9t\u00e9ran qui a surv\u00e9cu \u00e0 tous les bear markets sans vendre de signal \u00e0 97\u20ac le mois."
+      },
+      {
+        "handle": "remibensaid",
+        "region": "france",
+        "niche": "tech",
+        "followers": 42000,
+        "reason": "Ex-CTO OVH, il twitte la tech pure avec la gueule de quelqu'un qui a vu son serveur exploser en direct."
+      },
+      {
+        "handle": "maxime_lemay",
+        "region": "quebec",
+        "niche": "ia",
+        "followers": 28000,
+        "reason": "Founders qu\u00e9b\u00e9cois en IA qui parle code et business, pas juste du 'prompt engineering' pour mamans."
+      },
+      {
+        "handle": "louis_boulay",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Le gars qui d\u00e9cortique les carnets d'ordres de la Bourse de Montr\u00e9al sans vendre de 'guru' status."
+      },
+      {
+        "handle": "thomas_turq",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "L\u2019entrepreneur SaaS qui explique la fintech sans le jargon VC qui fait mal aux yeux."
+      }
+    ],
+    "summary": "Un mix solide de techniciens qui codent encore et d'investisseurs qui n'ont pas besoin de crier pour \u00eatre entendus. Z\u00e9ro formation \u00e0 2k\u20ac."
+  },
+  {
+    "ts": "2026-07-09T06:01:54.664124",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "0xMaki",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 250000,
+        "reason": "Le roi de l'altseason, analyse on-chain pure, twitte en FR/EN, pas de pub, juste du alpha brut."
+      },
+      {
+        "handle": "MaximeMeyrieux",
+        "region": "france",
+        "niche": "tech",
+        "followers": 90000,
+        "reason": "CTO de La French Tech, parle code et architecture avec le ton d\u00e9cal\u00e9 qui fait mouche partout."
+      },
+      {
+        "handle": "SylvainLaurens",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 50000,
+        "reason": "L'actionnaire bon p\u00e8re de famille, analyses fondamentales claires, pas de hype, juste des bilans."
+      },
+      {
+        "handle": "HugoDin",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "L'intellectuel du web francophone, couvre IA, SaaS et tendances tech avec humour et profondeur."
+      },
+      {
+        "handle": "MistaMouf",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "G\u00e9nie du prompt engineering IA, vulgarise sans condescendre, communaut\u00e9 ultra r\u00e9active."
+      },
+      {
+        "handle": "NathalieMougeot",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "La voix des femmes en fintech, insights VC pr\u00e9cis, r\u00e9seaux solides, ton direct."
+      }
+    ],
+    "summary": "Un mix solide entre l'IA pratique (MistaMouf), le crypto on-chain (0xMaki) et la bourse fondamentale (Meyrieux/Mougeot). La sc\u00e8ne qu\u00e9b\u00e9coise est plus rare en pur finance, donc on appuie sur le g\u00e9n\u00e9raliste tech (HugoDin)."
   }
 ]
