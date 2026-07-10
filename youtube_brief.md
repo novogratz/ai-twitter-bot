@@ -1,33 +1,24 @@
-# YouTube brief — 2026-07-09
+# YouTube brief — 2026-07-10
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **810**
-- reply: **696**
-- quote: **50**
-- quote_gif: **33**
-- post: **15**
-- hotake: **9**
-- retweet: **7**
-
-## 🎥 VIDEO CANDIDATES — these popped, make a video on them
-
-*Posts with ≥ 10 likes. This is your shortlist of stories the audience already validated. Each one is a ready-to-shoot video angle.*
-
-- 🎥 **56 likes / 22831 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+- Total actions logged: **789**
+- reply: **665**
+- quote: **62**
+- quote_gif: **31**
+- post: **13**
+- hotake: **12**
+- retweet: **6**
 
 ## 🥇 Top own posts (by likes)
 
 ### AI
 
-- **56 likes / 22831 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
 - **1 likes / 44 views** — AI is the 30-year-old frat bro who thinks he invented beer. SPY +594%? Cute. CoreWeave just bought the keg.
-
-### Crypto
-
-- **1 likes / 21 views** — Me pulling up my ETH patients' files after the whale who called the October crash opened a $19.7M short  new intake forms are already printing. Crypto
+- **1 likes / 4 views** — That is one of the best-capitalized AI labs alive calling Elon because demand outran its own infrastructure. The model works. Running it at scale fast enough is the problem. That gap between "model re
+- **1 likes / 23 views** — as your AI therapist I am professionally obligated to have no opinion on Fable 5 topping this benchmark..
 
 ### Bourse
 
@@ -37,54 +28,81 @@
 
 - **2 likes / 33 views** — me in the corner offering 5-minute portfolio grief sessions
 - **2 likes / 24 views** — me at "two decades at one of the world's largest data center platforms": ok $KEEL I see you
-- **1 likes / 34 views** — my patients who sold at $30k are reading this very quietly
 - **1 likes / 64 views** — me quietly googling "how many European countries are there" after this $NBIS drop
 - **1 likes / 13 views** — updating my definition of "a lot of money" in real time
+- **1 likes / 7 views** — hope is harder to sit with than fear. ask anyone who held through 9 months of it
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-07-09
-- **@pequityresearch** (14 likes, score 7/10) — BofA: AI Power Demand
+## 2026-07-10
+- **@kobeissiletter** (513 likes, score 9/10) — Corporate insiders are buying tech stocks at a record pace:
 
-> 100+ GW Supply Gap: The US is projected to face an electricity generation shortfall of over 100 gigawatts (GW) between 2026 and 2030.
+28 executives at companies within the US technology sector ETF, $XLK, have purchased their own stock on the open market over the last 6 mon
+  - https://x.com/KobeissiLetter/status/2075385862171328997
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 653).
+- **@cryptotice_** (246 likes, score 8/10) — THE SIGNAL THAT PREDICTED EVERY MAJOR BITCOIN CRASH JUST TRIGGERED AGAIN.
 
-> Surging Demand vs. Capped Supply: Glob
-  - https://x.com/pequityresearch/status/2075064973990998315
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 18).
-- **@tegnike** (210 likes, score 8/10) — Whoa, Grok4.5—it's surpassing GPT-5.5 in that super common benchmark, that's wild!
+And the math is brutal.
 
-And right after I thought that, this happens—lol, I'm dying.
-  - https://x.com/tegnike/status/2074962736895705373
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 216).
-- **@chooserich** (163 likes, score 8/10) — I just bought two of these for < $200k
+2014: -51% from this level. 
+2018: -46% from this level. 
+2022: -55% from this level.
 
-The future of cheap local AI has finally arrived!
+2026 fib leve
+  - https://x.com/CryptoTice_/status/2075188219285577986
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 332).
+- **@poback2012** (70 likes, score 8/10) — THE SIGNAL THAT PRECEDED EVERY MAJOR BITCOIN CRASH HAS TRIGGERED AGAIN.
 
-Can't wait to have Fable-level intelligence running on my desk 24/7.
-  - https://x.com/chooserich/status/2074983442949837080
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 237).
+And the historical data is hard to ignore.
+
+Previous cycles:
+
+2014: -51% from this level
+ 2018: -46% from this level
+ 2022: -55
+  - https://x.com/Poback2012/status/2075225926854639694
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 70).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[Cointelegraph]** AI boom fuels inflation fears, complicating Fed’s next rate move
-  - https://cointelegraph.com/news/ai-boom-fuels-inflation-fears-complicating-feds-next-move?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[CNBC Tech]** OpenAI secures U.S. regulatory green light for GPT-5.6 rollout, Axios report says
-  - https://www.cnbc.com/2026/07/08/openai-gets-us-regulatory-approval-for-gpt-5point6-rollout-axios-report.html
-- **[Cointelegraph]** Crypto VC Paradigm raises $1.2B to push into AI
-  - https://cointelegraph.com/news/crypto-vc-paradigm-raises-12b-to-push-into-ai?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[Cointelegraph]** Mark Cuban-backed DeFi dashboard Zapper shutters after 7 years
-  - https://cointelegraph.com/news/defi-dashboard-zapper-to-shut-down-after-seven-years?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[Cointelegraph]** Crypto could benefit if Fed steps in to backstop US stock market: Analysts
-  - https://cointelegraph.com/news/crypto-could-benefit-if-fed-steps-in-to-backstop-us-stock-market-analysts?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[CNBC Tech]** China warns about AI risks with Anthropic's Claude Code
-  - https://www.cnbc.com/2026/07/08/china-anthropic-ai-claude-code-backdoor-security-threat.html
-- **[CNBC Top]** World Cup drives Google Search to record queries per second
-  - https://www.cnbc.com/2026/07/08/world-cup-drives-google-search-to-record-queries-per-second.html
-- **[CNBC Tech]** World Cup drives Google Search to record queries per second
-  - https://www.cnbc.com/2026/07/08/world-cup-drives-google-search-to-record-queries-per-second.html
+- **[X_FOLLOWING/The Kobeissi Letter]** Corporate insiders are buying tech stocks at a record pace:
+
+28 executives at companies within the US technology sector ETF, $XLK, have purchased their own stoc
+  - https://x.com/KobeissiLetter/status/2075385862171328997
+- **[X_FOLLOWING/Rocketesla]** Tech stock insider buying is exploding...??
+
+28 executives from the company have purchased their own shares in the open market over the past 6 months
+
+More than
+  - https://x.com/rklb_invest/status/2075392046240837753
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Nicolas Fulghum]** Solar's sharp rise continues.
+
+As of April 2026, global solar capacity now exceeds 3 terawatt.
+
+1 gigawatt → 1 terawatt: 20+ years
+1 terawatt → 2 terawatt: 33 m
+  - https://x.com/nicolasfulghum/status/2075255559729582090
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Katusa Research]** Data centers now consume 5% of US power.
+
+By 2030, that share reaches 14%
+
+Each megawatt requires 30 to 47 tonnes of copper.
+  - https://x.com/KatusaResearch/status/2075271603248832713
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/TrendingPolitics.ca]** Meta just committed $13B to build Canada's largest data centre in Sturgeon County, Alberta. 
+
+One gigawatt. 2.9 million square feet. AI-focused.
+  - https://x.com/TrendPolCa/status/2075286362513977612
+- **[X_HOME/Mario Nawfal]** The Xbox boss who cut thousands of jobs is now advising the FED on employment and productivity.
+
+Asha Sharma will help guide policy on how AI and new tech affec
+  - https://x.com/MarioNawfal/status/2075434840099262810
+- **[X_SEARCH/live/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/harkness]** eu to tao exausta de TUDO
+  - https://x.com/anyssecrets/status/2075437155984314473
+- **[X_SEARCH/live/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/𝑩𝒓𝒖𝒏𝒐⁷  𝑨𝑹𝑰𝑹𝑨𝑵𝑮 ⊙⊝⊜]** E tão achando q isso é bom só pq para a Argentina, sendo q na próxima a Argentina ja sem Messi se torna inofensiva, não tao ligados q essa França ainda vai melh
+  - https://x.com/bruhjk7/status/2075437107942686782
 
 ## 🎬 Suggested video angles
 
@@ -95,4 +113,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-07-09T00:40:43*
+*Generated 2026-07-10T00:33:52*
