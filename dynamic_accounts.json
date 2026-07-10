@@ -159,7 +159,18 @@
     "benoit_leblanc",
     "marie_marchand",
     "jean_martin",
-    "pierre_dupont"
+    "pierre_dupont",
+    "ThibaudT",
+    "Benoit_Floch",
+    "MarcBoudreau",
+    "Ludo26687",
+    "MaximeGodefroy",
+    "EricRenaud",
+    "DariusSedelman",
+    "AlexisGirardFR",
+    "MathieuFoucault",
+    "YoussefO",
+    "RaphaelTanguay"
   ],
   "en": [
     "Chubby",
@@ -237,7 +248,9 @@
     "Psyho",
     "QC",
     "James",
-    "Brez"
+    "Brez",
+    "Framer",
+    "LeRobot"
   ],
   "history": [
     {
@@ -1418,6 +1431,71 @@
     {
       "lang": "en",
       "handle": "Brez",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudT",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "Benoit_Floch",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcBoudreau",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "Ludo26687",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeGodefroy",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricRenaud",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Framer",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "LeRobot",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "DariusSedelman",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisGirardFR",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuFoucault",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "YoussefO",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelTanguay",
       "added": "2026-07-10"
     }
   ]

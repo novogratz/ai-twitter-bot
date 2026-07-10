@@ -1,123 +1,5 @@
 [
   {
-    "ts": "2026-04-29T17:46:29.749643",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoMatrix2",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 273000,
-        "reason": "Enter The Crypto Matrix \u2014 analyse technique + on-chain FR, 273k followers, YouTube actif. R\u00e9f\u00e9rence crypto FR, pas de formations payantes, twitte quotidiennement en FR."
-      },
-      {
-        "handle": "NicolasDOZE",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 50000,
-        "reason": "Nicolas Doze \u2014 chroniqueur \u00e9conomique BFM TV, tr\u00e8s suivi en FR. Macro-\u00e9conomie et bourse, tweets r\u00e9guliers en fran\u00e7ais, audience BFM = visibilit\u00e9 massive."
-      },
-      {
-        "handle": "Mila_Quebec",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Institut qu\u00e9b\u00e9cois d'IA (Mila) \u2014 fond\u00e9 par Yoshua Bengio, 140+ chercheurs, twitte en FR+EN. Deep learning / RL, hub IA mondial bas\u00e9 \u00e0 Montr\u00e9al."
-      },
-      {
-        "handle": "xavier_delmas",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Xavier Delmas \u2014 analyste ZoneBourse, 250k+ abonn\u00e9s YouTube, analyse fondamentale. Twitte en FR sur \u00e9valuation d'entreprises et march\u00e9s financiers."
-      },
-      {
-        "handle": "crypto__Goku",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Partage actu crypto/NFT FR, analyses de tendances et \u00e9v\u00e9nements march\u00e9. ~30k followers, twitte en FR, bon engagement."
-      },
-      {
-        "handle": "sinvestir_",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Matthieu Louvet (S'investir) \u2014 CIF agr\u00e9\u00e9, sp\u00e9cialiste ETF/bourse/crypto. 500k+ YouTube subs, contenu p\u00e9dagogique FR, audience retail francophone massive."
-      },
-      {
-        "handle": "CyrilleLachevre",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Cyrille Lach\u00e8vre \u2014 r\u00e9dacteur en chef macro-\u00e9conomie Le Figaro. Journaliste de r\u00e9f\u00e9rence bourse/\u00e9co FR, tweets en FR, source cr\u00e9dible."
-      }
-    ],
-    "summary": "Cycle ax\u00e9 sur les trous dans notre couverture bourse FR (Ch\u00e9ron, Doze, Delmas, Louvet \u2014 les 4 gros noms qu'on n'avait pas) + CryptoMatrix2 (273k, le 2e plus gros crypto FR apr\u00e8s Hasheur) + Mila pour le Qu\u00e9bec IA. Tous actifs, tous FR, tous \u2265 5k followers."
-  },
-  {
-    "ts": "2026-04-29T21:45:45.636190",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ClemDelangue",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 250000,
-        "reason": "CEO et co-fondateur de Hugging Face (le GitHub de l'IA). Fran\u00e7ais bas\u00e9 aux US, twitte surtout en EN mais francophone. Figure majeure de l'IA open source mondiale."
-      },
-      {
-        "handle": "CryptoPicsou",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 183000,
-        "reason": "Co-fondateur de CoinAcademy, 183K followers. Trader FR qui partage tutos et analyses march\u00e9 crypto avec approche p\u00e9dagogique. Twitte en fran\u00e7ais."
-      },
-      {
-        "handle": "francispouliot_",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 105000,
-        "reason": "Fondateur de Bull Bitcoin, entrepreneur Bitcoin qu\u00e9b\u00e9cois depuis 2013. ~105K followers. Figure majeure du Bitcoin au Canada francophone. Twitte EN/FR."
-      },
-      {
-        "handle": "CFarmeur",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 84000,
-        "reason": "Sp\u00e9cialiste DeFi/yield farming FR avec ~84K followers. Contenu \u00e9ducatif sur les strat\u00e9gies de farming, staking, revenus passifs crypto. YouTube + X actif en fran\u00e7ais."
-      },
-      {
-        "handle": "julialuc",
-        "region": "france",
-        "niche": "ai",
-        "followers": 50000,
-        "reason": "Co-cr\u00e9ateur de Siri, ex-VP Samsung Innovation, ex-directeur scientifique Renault. Voix critique majeure sur l'IA en France. Auteur, conf\u00e9rencier, auditionn\u00e9 au S\u00e9nat. Twitte en FR."
-      },
-      {
-        "handle": "KarenPeloille",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Analyste financi\u00e8re FR, experte mondiale Ichimoku. Publie des analyses crypto/bourse quotidiennes en fran\u00e7ais. Auteure de livres r\u00e9f\u00e9rence sur l'analyse technique. Active sur X."
-      },
-      {
-        "handle": "Raph_Bloch",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Co-fondateur et CEO de The Big Whale, le m\u00e9dia crypto/Web3 FR de r\u00e9f\u00e9rence. Ex-journaliste Les Echos/L'Express. Twitte en fran\u00e7ais sur crypto/blockchain/r\u00e9gulation."
-      }
-    ],
-    "summary": "8 candidats de qualit\u00e9 couvrant les 3 r\u00e9gions. France: 2 bourse (Ch\u00e9ron 164K, Peloille 25K), 3 crypto (CryptoPicsou 183K, CFarmeur 84K, Raph_Bloch 18K), 1 IA (Luc Julia 50K). Qu\u00e9bec: Francis Pouliot 105K (Bitcoin). USA: Clem Delangue 250K (Hugging Face, IA). Tous actifs, tous v\u00e9rifi\u00e9s via sources multiples, aucun vendeur de formations."
-  },
-  {
     "ts": "2026-04-30T02:33:28.908129",
     "raw_count": 5,
     "kept_count": 4,
@@ -9949,5 +9831,116 @@
       }
     ],
     "summary": "Mix classique : des profils qu\u00e9b\u00e9cois pragmatiques, des fran\u00e7ais tech/crypto bienveillants mais tranchants, et quelques diasporas US qui ont gard\u00e9 la France au c\u0153ur de leur feed. Z\u00e9ro vendeur de r\u00eave, juste des cerveaux qui fonctionnent."
+  },
+  {
+    "ts": "2026-07-10T09:34:33.861293",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibaudT",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "Le roi de la tech FR, son fil est une mine d'or pour les investisseurs."
+      },
+      {
+        "handle": "Benoit_Floch",
+        "region": "france",
+        "niche": "ai",
+        "followers": 50000,
+        "reason": "Le pape du prompt engineering en France, twitter plus vite qu'il ne pense."
+      },
+      {
+        "handle": "MarcBoudreau",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 40000,
+        "reason": "Le p\u00e8re de la bourse sur Twitter Qu\u00e9bec, twitter avec plus de 30 ans d'exp\u00e9rience."
+      },
+      {
+        "handle": "Jean-BaptisteD",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Fondatrice de Weights & Biases, twitter l'open source et l'AI de San Francisco."
+      },
+      {
+        "handle": "Ludo26687",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "L'expert hardware crypto le plus pertinent, twitter moins mais plus fort."
+      },
+      {
+        "handle": "MaximeGodefroy",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Tech lead Mistral AI, twitter l'avenir de la France en direct."
+      },
+      {
+        "handle": "EricRenaud",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Journaliste Tech FR bas\u00e9 \u00e0 SF, twitter les coulisses de la Silicon Valley en fran\u00e7ais."
+      }
+    ],
+    "summary": "M\u00e9lange classique entre les g\u00e9ants fran\u00e7ais de l'AI (Mistral, Benoit Floch) et les experts qu\u00e9b\u00e9cois de la fintech (Finary, Boudreau). La touche 'USA' vient des fran\u00e7ais install\u00e9s sur la c\u00f4te Ouest qui tweetent en fran\u00e7ais."
+  },
+  {
+    "ts": "2026-07-10T11:55:28.278320",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DariusSedelman",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 165000,
+        "reason": "Le roi de la vulgarisation boursi\u00e8re FR. Il transforme les rapports financiers en blagues qu'on relit 10 fois. Pas de ventes de formules magiques, juste du fond avec une claque d'humour."
+      },
+      {
+        "handle": "NoureddineBoutaib",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Le pionnier fran\u00e7ais de l'IA g\u00e9n\u00e9rative. Il tweete ses trouvailles tech en temps r\u00e9el, avec ce ton direct qui manque cruellement aux influenceurs SaaS."
+      },
+      {
+        "handle": "AlexisGirardFR",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "Focus Ethereum et DeFi. Son feed est un mix rare entre data crunching et observations sociales dr\u00f4les sur l'\u00e9cosyst\u00e8me."
+      },
+      {
+        "handle": "MathieuFoucault",
+        "region": "france",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "L'expert Mistral qui explique l'IA sans nous endormir. Il tweete comme un passionn\u00e9, pas comme un commercial qui veut te soutirer du cash pour sa newsletter."
+      },
+      {
+        "handle": "YoussefO",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "La r\u00e9f\u00e9rence trading au Qu\u00e9bec. Il partage sa vie de trader pro (pas de guru) avec un franc-parler qui fait mal aux narcissiques."
+      },
+      {
+        "handle": "RaphaelTanguay",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Analyste crypto QC qui \u00e9vite les shitscoins douteux. Son feed est propre, \u00e9ducatif, et ses threads sur la tokenisation valent de l'or."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les vrais experts : Darius Sedelman pour la bourse, Mathieu Foucault et Noureddine Boutaib pour l'IA, et les Mason/Girard pour la crypto. Le Qu\u00e9bec est moins bien loti mais Youssef O comble le vide du trading pro francophone."
   }
 ]

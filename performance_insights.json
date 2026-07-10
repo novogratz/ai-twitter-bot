@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-10T09:33:52.613379",
-  "window_7d_actions": 4188,
-  "window_24h_actions": 787,
+  "generated_at": "2026-07-10T13:33:52.630292",
+  "window_7d_actions": 4322,
+  "window_24h_actions": 784,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4175
+      "count": 4309
     },
     {
       "pattern": "RENAME",
@@ -36,6 +36,14 @@
   ],
   "best_hours_utc": [
     {
+      "hour": 10,
+      "actions": 219
+    },
+    {
+      "hour": 12,
+      "actions": 218
+    },
+    {
       "hour": 8,
       "actions": 217
     },
@@ -44,34 +52,26 @@
       "actions": 208
     },
     {
-      "hour": 1,
-      "actions": 206
-    },
-    {
-      "hour": 0,
-      "actions": 199
-    },
-    {
       "hour": 9,
-      "actions": 195
+      "actions": 207
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1951
+      "count": 2007
     },
     {
       "topic": "IA",
-      "count": 1626
+      "count": 1675
     },
     {
       "topic": "Crypto",
-      "count": 532
+      "count": 558
     },
     {
       "topic": "Bourse",
-      "count": 259
+      "count": 269
     },
     {
       "topic": "Spatial",
@@ -82,75 +82,75 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1839
+      "count": 1892
     },
     {
       "pillar": "other",
-      "count": 1254
+      "count": 1291
     },
     {
       "pillar": "market_trauma",
-      "count": 841
+      "count": 877
     },
     {
       "pillar": "meme_reaction",
-      "count": 174
+      "count": 178
     },
     {
       "pillar": "reply_bait",
-      "count": 43
+      "count": 45
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 37
+      "count": 39
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 371
+      "count": 353
     },
     {
       "pillar": "other",
-      "count": 212
+      "count": 223
     },
     {
       "pillar": "market_trauma",
-      "count": 154
+      "count": 163
     },
     {
       "pillar": "meme_reaction",
-      "count": 36
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 29
     },
     {
       "pillar": "reply_bait",
+      "count": 9
+    },
+    {
+      "pillar": "ai_vs_btc",
       "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 51,
-      "avg_likes": 0.1,
-      "avg_views": 22.6,
+      "posts": 53,
+      "avg_likes": 0.09,
+      "avg_views": 22.1,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 84,
       "avg_likes": 0.08,
-      "avg_views": 22.5,
+      "avg_views": 22.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 61,
+      "posts": 59,
       "avg_likes": 0.08,
-      "avg_views": 21.1,
+      "avg_views": 21.3,
       "low_sample": false
     },
     {
@@ -171,23 +171,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3568
+      "count": 3680
     },
     {
       "type": "quote",
-      "count": 313
+      "count": 322
     },
     {
       "type": "quote_gif",
-      "count": 154
+      "count": 156
     },
     {
       "type": "post",
-      "count": 72
+      "count": 77
     },
     {
       "type": "hotake",
-      "count": 41
+      "count": 47
     },
     {
       "type": "retweet",
@@ -196,19 +196,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-10T09:33:43.749707",
-      "text": "Grok 4.5 on OpenClaw. Elon ships, OpenAI ships, Claude ships. The supply chain of speed. And yet somehow the dumbest question still gets a 47-slide answer on LinkedIn.",
+      "ts": "2026-07-10T13:31:48.842262",
+      "text": "Ethereum isn't L2s, L2s run on ethereum. solana isn't consumer apps. you're missing what's actually useful: stablecoins move the volume, L2s move the speed, everything else is speculation.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-10T09:32:55.215670",
-      "text": "Defense + ai adoption in gov are multi-year. pltr just got profitable. the stock didn't run ahead of the business. still early.",
+      "ts": "2026-07-10T13:31:20.126394",
+      "text": "Previous cycles: -75 to -80 to find institutional capital. this one: -50. same volatility, higher floor. capital structure moved, not sentiment.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-10T09:31:09.398666",
-      "text": "$NVDA and $MSFT holding 7,900 hostage until they feel seen 🛋️",
-      "type": "quote"
+      "ts": "2026-07-10T13:30:45.968260",
+      "text": "Meta and nvidia up. google and apple down.\n\nthats not geopolitical, thats ai mega-cap rotation.",
+      "type": "reply"
     }
   ]
 }
