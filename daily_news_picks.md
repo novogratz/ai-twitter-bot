@@ -15596,3 +15596,22 @@ Each megawatt requires 30 to 47 tonnes of copper.
 Their bottom-up model projects ~208 GW of new capacity needed between 2026 and 2030 for AI chips alone, equivalent to adding over 200 large na
   - https://x.com/SemiconductorsX/status/2075071365326246233
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 37).
+- **@aarthir** (21 likes, score 7/10) — Grok 4.5 at $2/$6 per M tokens. 
+Meta with a paid tier on Muse Spark and openly competes on price. 
+And GLM 5.2 beating GPT-5.5 on SWE-bench Pro at 1/6 the cost open weights, MIT license.
+For founders
+  - https://x.com/aarthir/status/2075353997825716296
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 23).
+- **@cointelegraph** (52 likes, score 9/10) — BIG: Meta to start manufacturing its in-house "Iris" AI chip in September, aiming to hit 14 gigawatts of compute capacity next year and cut reliance on Nvidia and AMD, per Reuters.
+  - https://x.com/Cointelegraph/status/2075455064580170007
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 104).
+- **@ai_for_success** (24 likes, score 8/10) — GPT 5.6 Sol is a crazy model, and OpenAI absolutely cooked with this one.
+Just last week, I thought Fable 5 was the benchmark. But damn, OpenAI...
+At this price point, it's hard to justify using Fable
+  - https://x.com/ai_for_success/status/2075440107310694440
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 32).
+- **@jukan05** (19 likes, score 7/10) — CPUs have suddenly emerged as a key focus for the market this year.
+
+The main driver is that OpenAI and Anthropic have signed large-scale partnership agreements with cloud providers such as Amazon, Go
+  - https://x.com/jukan05/status/2075453663825584260
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 21).
