@@ -134,7 +134,12 @@
     "ArnaudLeLelong",
     "TheCryptoLark",
     "ArmandVernoux",
-    "MaximeMallet"
+    "MaximeMallet",
+    "Bisou2121",
+    "DimitriD",
+    "Sylvain_Levy",
+    "JulieDoyon",
+    "ValentinRioux"
   ],
   "en": [
     "Chubby",
@@ -207,7 +212,9 @@
     "Reve",
     "Tibo",
     "Kadi",
-    "Mizkif"
+    "Mizkif",
+    "TheoTrader",
+    "Psyho"
   ],
   "history": [
     {
@@ -1239,6 +1246,41 @@
       "lang": "fr",
       "handle": "MaximeMallet",
       "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "TheoTrader",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Psyho",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "Bisou2121",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "DimitriD",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "Sylvain_Levy",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulieDoyon",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "ValentinRioux",
+      "added": "2026-07-10"
     }
   ]
 }

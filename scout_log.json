@@ -9706,5 +9706,64 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le sable des influenceurs formations pour ne garder que les vrais cerveaux. Du Mistral de la tech aux analyses macro de la crypto, ces comptes sont les seuls qui valent vraiment le coup d'\u00eatre dans ton flux sans te polluer."
+  },
+  {
+    "ts": "2026-07-10T01:34:30.937444",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RomainMialoundama",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 140000,
+        "reason": "Le roi de la vulgarisation crypto. Il parle \u00e0 sa m\u00e8re tout en expliquant la DeFi."
+      },
+      {
+        "handle": "Bisou2121",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 110000,
+        "reason": "L'ironie fran\u00e7aise appliqu\u00e9e \u00e0 la blockchain. Moins 'finster' que les autres, plus fun."
+      },
+      {
+        "handle": "DimitriD",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "Ancien de Coinhouse, il couvre l'infra crypto FR avec des infos de qualit\u00e9 pro."
+      },
+      {
+        "handle": "LefebvreAlexandre",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "La voix francophone \u00e0 NY. Couvre les march\u00e9s US et la finance d\u00e9centralis\u00e9e depuis l'ext\u00e9rieur."
+      },
+      {
+        "handle": "Sylvain_Levy",
+        "region": "france",
+        "niche": "tech",
+        "followers": 28000,
+        "reason": "Le patron de Doctolib qui pousse sur l'IA sant\u00e9. Plus pertinent qu'un trader qui crie sur Bitcoin."
+      },
+      {
+        "handle": "JulieDoyon",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "L'IA \u00e9thique et appliqu\u00e9 au Qu\u00e9bec. Elle poste des insights rares sur le d\u00e9ploiement IA."
+      },
+      {
+        "handle": "ValentinRioux",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Le tech leader qu\u00e9b\u00e9cois qui fait passer l'IA dans la t\u00eate des gens sans les endormir."
+      }
+    ],
+    "summary": "Je laisse tomber les vendeurs de r\u00eave et je file les cerveaux qui font bouger la France et le Qu\u00e9bec tech. Mistral et Doctolib prouvent qu'on peut coder sans \u00eatre un nain de jardinage crypto."
   }
 ]

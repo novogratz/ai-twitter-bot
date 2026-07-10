@@ -15577,3 +15577,22 @@ It has only lost this level once during the 2022 crypto crash.
 Despite macro uncertaint
   - https://x.com/AshCrypto/status/2075256003105276177
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 1274).
+- **@semiconductorsx** (50 likes, score 9/10) — Bullish on the AI energy boom.
+
+Bank of America sees NVIDIA’s annual GPU shipments alone adding up to roughly 99 GW of data center capacity by 2030. That is NVIDIA hardware only.
+
+Layer in custom ASIC
+  - https://x.com/SemiconductorsX/status/2075105022871035958
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 50).
+- **@katusaresearch** (32 likes, score 8/10) — Data centers now consume 5% of US power.
+
+By 2030, that share reaches 14%
+
+Each megawatt requires 30 to 47 tonnes of copper.
+  - https://x.com/KatusaResearch/status/2075271603248832713
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 38).
+- **@semiconductorsx** (35 likes, score 8/10) — BofA forecasts massive power demand for AI accelerators.
+
+Their bottom-up model projects ~208 GW of new capacity needed between 2026 and 2030 for AI chips alone, equivalent to adding over 200 large na
+  - https://x.com/SemiconductorsX/status/2075071365326246233
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 37).
