@@ -15534,3 +15534,46 @@ It's not like they can't offer it now, but it will reduce their revenue generate
 AI is clearly no longer in a spot, where it either quickly
   - https://x.com/FakePsyho/status/2075082688164434268
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 108).
+
+## 2026-07-10
+- **@kobeissiletter** (513 likes, score 9/10) — Corporate insiders are buying tech stocks at a record pace:
+
+28 executives at companies within the US technology sector ETF, $XLK, have purchased their own stock on the open market over the last 6 mon
+  - https://x.com/KobeissiLetter/status/2075385862171328997
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 653).
+- **@cryptotice_** (246 likes, score 8/10) — THE SIGNAL THAT PREDICTED EVERY MAJOR BITCOIN CRASH JUST TRIGGERED AGAIN.
+
+And the math is brutal.
+
+2014: -51% from this level. 
+2018: -46% from this level. 
+2022: -55% from this level.
+
+2026 fib leve
+  - https://x.com/CryptoTice_/status/2075188219285577986
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 332).
+- **@poback2012** (70 likes, score 8/10) — THE SIGNAL THAT PRECEDED EVERY MAJOR BITCOIN CRASH HAS TRIGGERED AGAIN.
+
+And the historical data is hard to ignore.
+
+Previous cycles:
+
+2014: -51% from this level
+ 2018: -46% from this level
+ 2022: -55
+  - https://x.com/Poback2012/status/2075225926854639694
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 70).
+- **@spluscollective** (8 likes, score 7/10) — Figure Robotics is my favorite Robotics company. Apptronik and Dyna are the other interesting ones. 
+
+The problem: Figure, Apptronik, Dyna are all private. $39B+ marks. 
+
+$BOT is a closed end fund on
+  - https://x.com/spluscollective/status/2075414022376022070
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 10).
+- **@ashcrypto** (914 likes, score 7/10) — $BTC is back above the 200-week moving average, one of its most important support levels during a bear market.
+
+It has only lost this level once during the 2022 crypto crash.
+
+Despite macro uncertaint
+  - https://x.com/AshCrypto/status/2075256003105276177
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 1274).
