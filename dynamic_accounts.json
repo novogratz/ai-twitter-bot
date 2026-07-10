@@ -125,7 +125,11 @@
     "LunaSolaire1",
     "JulienLeDroit",
     "LorenzoFP",
-    "RomainMichelet"
+    "RomainMichelet",
+    "ArnaudLelong",
+    "MaelKerninon",
+    "CryptoDiplomate",
+    "ValentinDartois"
   ],
   "en": [
     "Chubby",
@@ -195,7 +199,9 @@
     "Usopp",
     "Evan",
     "Lilith",
-    "Reve"
+    "Reve",
+    "Tibo",
+    "Kadi"
   ],
   "history": [
     {
@@ -1166,6 +1172,36 @@
     {
       "lang": "fr",
       "handle": "RomainMichelet",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArnaudLelong",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelKerninon",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Tibo",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Kadi",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoDiplomate",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "ValentinDartois",
       "added": "2026-07-09"
     }
   ]

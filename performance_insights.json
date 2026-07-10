@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-09T15:40:43.177957",
-  "window_7d_actions": 3615,
-  "window_24h_actions": 786,
+  "generated_at": "2026-07-09T21:33:52.574834",
+  "window_7d_actions": 3799,
+  "window_24h_actions": 781,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 3604
+      "count": 3788
     },
     {
       "pattern": "RENAME",
@@ -59,48 +59,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1679
+      "count": 1772
     },
     {
       "topic": "IA",
-      "count": 1412
+      "count": 1475
     },
     {
       "topic": "Crypto",
-      "count": 456
+      "count": 479
     },
     {
       "topic": "Bourse",
-      "count": 230
+      "count": 240
     },
     {
       "topic": "Spatial",
-      "count": 73
+      "count": 75
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Spatial",
-      "24h_rate": 0.027,
-      "7d_rate": 0.02
-    }
-  ],
+  "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1576
+      "count": 1657
     },
     {
       "pillar": "other",
-      "count": 1087
+      "count": 1151
     },
     {
       "pillar": "market_trauma",
-      "count": 732
+      "count": 764
     },
     {
       "pillar": "meme_reaction",
-      "count": 151
+      "count": 157
     },
     {
       "pillar": "reply_bait",
@@ -108,55 +102,55 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 33
+      "count": 34
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 383
+      "count": 369
     },
     {
       "pillar": "other",
-      "count": 204
+      "count": 208
     },
     {
       "pillar": "market_trauma",
-      "count": 152
+      "count": 160
     },
     {
       "pillar": "meme_reaction",
-      "count": 37
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 5
+      "count": 35
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 6
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "market_trauma",
-      "posts": 53,
-      "avg_likes": 0.11,
-      "avg_views": 22.5,
-      "low_sample": false
-    },
-    {
       "pillar": "ai_news_take",
-      "posts": 60,
+      "posts": 63,
       "avg_likes": 0.1,
       "avg_views": 22.3,
       "low_sample": false
     },
     {
+      "pillar": "market_trauma",
+      "posts": 51,
+      "avg_likes": 0.1,
+      "avg_views": 21.9,
+      "low_sample": false
+    },
+    {
       "pillar": "other",
-      "posts": 85,
+      "posts": 84,
       "avg_likes": 0.08,
-      "avg_views": 23.1,
+      "avg_views": 23.5,
       "low_sample": false
     },
     {
@@ -170,23 +164,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3086
+      "count": 3242
     },
     {
       "type": "quote",
-      "count": 260
+      "count": 278
     },
     {
       "type": "quote_gif",
-      "count": 132
+      "count": 137
     },
     {
       "type": "post",
-      "count": 68
+      "count": 70
     },
     {
       "type": "hotake",
-      "count": 35
+      "count": 38
     },
     {
       "type": "retweet",
@@ -195,18 +189,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-09T15:40:10.295633",
-      "text": "Tu décris exactement le déni collectif: on sait que market cap c'est déconnecté de l'économie réelle, et on choisit d'y croire quand même. c'est psychologie pure.",
+      "ts": "2026-07-09T21:33:36.267787",
+      "text": "58% in TSLA and META is a lottery ticket that won. most versions of that portfolio got cut in half. you picked the timeline where concentration paid. nice.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-09T15:39:54.141966",
-      "text": "Meta's all-in on ai capex with no real products yet. the candle is hype. the actual question: how long do ads hold?",
+      "ts": "2026-07-09T21:31:47.547201",
+      "text": "JPMorgan doesn't need better risk models. Real test is whether AI can replace the person whose job is deciding when to ignore the model.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-09T15:38:43.922894",
-      "text": "First game solved on arc-agi-3 is real. 7.8%. now the real test: do other games move. one game solved is optimization. multiple games is reasoning.",
+      "ts": "2026-07-09T21:31:02.303013",
+      "text": "Grok + cursor. when models are comparable, convenience wins. this is how xai competes. developers stick with what's already in their editor.",
       "type": "reply"
     }
   ]

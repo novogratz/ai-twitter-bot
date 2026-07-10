@@ -9596,5 +9596,60 @@
       }
     ],
     "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour se concentrer sur les fondateurs et les pros du terrier de lapin. Maki est in\u00e9vitable, Varoquaux pour l'IA technique, et Michelet pour ceux qui veulent comprendre la bourse sans lire des romans."
+  },
+  {
+    "ts": "2026-07-09T15:41:47.376558",
+    "raw_count": 12,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ArnaudLelong",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'incontournable de la Macro. Il a vu la crise de 2008, la bulle tech, et il n'a pas de complexe. Analyse propre, z\u00e9ro bruit."
+      },
+      {
+        "handle": "MaxenceVanDerMeersch",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Le mec de l'IA aux USA qui parle FR. Il couvre l'\u00e9cosyst\u00e8me SF en direct. C'est la passerelle indispensable pour voir ce qui se trame \u00e0 Palo Alto."
+      },
+      {
+        "handle": "MaelKerninon",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "L'expert cloud qu\u00e9b\u00e9cois. Il twitte sur l'infra et l'IA en FR, c'est une p\u00e9pite r\u00e9gionale qu'on sous-estime trop souvent."
+      }
+    ],
+    "summary": "Le lot est propre : pas de vendeurs de r\u00eaves, que des buildeurs et des analysers. On a couvert la France (IA, Macro, Fintech), le Qu\u00e9bec (Tech, Trading) et la diaspora US. Les followers sont solides (>5k) et les comptes actifs. Z\u00e9ro formation \u00e0 999\u20ac en vue."
+  },
+  {
+    "ts": "2026-07-09T19:42:27.807912",
+    "raw_count": 10,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoDiplomate",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Le Qu\u00e9b\u00e9cois qui g\u00e9re son portfolio avec la m\u00eame d\u00e9gaine que son caf\u00e9: serr\u00e9 mais efficace."
+      },
+      {
+        "handle": "ValentinDartois",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "L'expert qui transforme le jargon technique en blagues de resto o\u00f9 personne ne rit vraiment."
+      }
+    ],
+    "summary": "Une s\u00e9lection franche d'experts qui twittent en FR, \u00e9vitent les formations \u00e0 99\u20ac et ont plus de followers que la moyenne des influenceurs LinkedIn. De Mistral AI \u00e0 la sc\u00e8ne crypto qu\u00e9b\u00e9coise, c'est du concret."
   }
 ]
