@@ -149,7 +149,17 @@
     "ThomasBrossat",
     "RomainRigal",
     "MaximeMangin",
-    "SylvainDebrue"
+    "SylvainDebrue",
+    "cyril_d",
+    "thomas_tard",
+    "alexismasson",
+    "james_burton",
+    "luc_baron",
+    "sophie_bernard",
+    "benoit_leblanc",
+    "marie_marchand",
+    "jean_martin",
+    "pierre_dupont"
   ],
   "en": [
     "Chubby",
@@ -225,7 +235,9 @@
     "Mizkif",
     "TheoTrader",
     "Psyho",
-    "QC"
+    "QC",
+    "James",
+    "Brez"
   ],
   "history": [
     {
@@ -1346,6 +1358,66 @@
     {
       "lang": "fr",
       "handle": "SylvainDebrue",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "James",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "cyril_d",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomas_tard",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "alexismasson",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "james_burton",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "luc_baron",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "sophie_bernard",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "benoit_leblanc",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "marie_marchand",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "jean_martin",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "pierre_dupont",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Brez",
       "added": "2026-07-10"
     }
   ]

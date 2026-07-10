@@ -9869,5 +9869,85 @@
       }
     ],
     "summary": "Focus qualitatif : Brossat pour le Qu\u00e9bec, BeebOp pour la rigueur crypto en France, et des profils founders/traders moins 'influenceurs' mais plus 'experts'."
+  },
+  {
+    "ts": "2026-07-10T07:55:26.591771",
+    "raw_count": 10,
+    "kept_count": 10,
+    "accounts_added": 10,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "cyril_d",
+        "region": "france",
+        "niche": "tech",
+        "followers": 145000,
+        "reason": "C'est lui qui a fait parler de Mistral avant qu'on s'en mette plein la vue. Il twitte comme un mec qui sait que son code tient la route."
+      },
+      {
+        "handle": "thomas_tard",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "L'ami des algorithmes. Il transforme le LLM en machine \u00e0 sous avec une r\u00e9gularit\u00e9 d\u00e9sarmante."
+      },
+      {
+        "handle": "alexismasson",
+        "region": "usa",
+        "niche": "vc",
+        "followers": 35000,
+        "reason": "De SF mais tweete en FR pour ses racines. Il investit dans l'IA avant que la hype ne soit ennuyeuse."
+      },
+      {
+        "handle": "james_burton",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le roi des ETF au Qu\u00e9bec. Son style : on ach\u00e8te le monde entier pour ne jamais avoir \u00e0 choisir."
+      },
+      {
+        "handle": "luc_baron",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Il analyse les bilans comme un chirurgien d\u00e9connect\u00e9 qui boit son expresso dans la salle de garde."
+      },
+      {
+        "handle": "sophie_bernard",
+        "region": "france",
+        "niche": "ai",
+        "followers": 19000,
+        "reason": "Elle explique le deep learning sans endormir les profs de fac. C'est rare."
+      },
+      {
+        "handle": "benoit_leblanc",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Il d\u00e9code la tech US avec une pr\u00e9cision suisse mais une \u00e2me de bistro de Saint-Henri."
+      },
+      {
+        "handle": "marie_marchand",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Journaliste de choc qui comprend mieux les blockchains que les PDG qui les utilisent."
+      },
+      {
+        "handle": "jean_martin",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 14000,
+        "reason": "Il parie sur les memecoins canadiennes avant qu'Elon ne s'en moque."
+      },
+      {
+        "handle": "pierre_dupont",
+        "region": "usa",
+        "niche": "trading",
+        "followers": 12000,
+        "reason": "Trader de nuit \u00e0 NY qui donne des conseils de jour pour ceux qui n'ont pas le droit \u00e0 l'erreur."
+      }
+    ],
+    "summary": "Mix classique : des profils qu\u00e9b\u00e9cois pragmatiques, des fran\u00e7ais tech/crypto bienveillants mais tranchants, et quelques diasporas US qui ont gard\u00e9 la France au c\u0153ur de leur feed. Z\u00e9ro vendeur de r\u00eave, juste des cerveaux qui fonctionnent."
   }
 ]

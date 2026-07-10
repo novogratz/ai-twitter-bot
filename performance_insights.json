@@ -1,29 +1,29 @@
 {
-  "generated_at": "2026-07-10T05:33:52.611564",
-  "window_7d_actions": 4052,
-  "window_24h_actions": 781,
+  "generated_at": "2026-07-10T09:33:52.613379",
+  "window_7d_actions": 4188,
+  "window_24h_actions": 787,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4040
+      "count": 4175
     },
     {
       "pattern": "RENAME",
       "count": 5
     },
     {
-      "pattern": "UNDERSTATEMENT",
+      "pattern": "METAPHOR",
       "count": 4
     },
     {
-      "pattern": "METAPHOR",
-      "count": 3
+      "pattern": "UNDERSTATEMENT",
+      "count": 4
     }
   ],
   "worst_patterns": [
     {
       "pattern": "METAPHOR",
-      "count": 3
+      "count": 4
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -36,6 +36,14 @@
   ],
   "best_hours_utc": [
     {
+      "hour": 8,
+      "actions": 217
+    },
+    {
+      "hour": 6,
+      "actions": 208
+    },
+    {
       "hour": 1,
       "actions": 206
     },
@@ -44,75 +52,67 @@
       "actions": 199
     },
     {
-      "hour": 2,
-      "actions": 189
-    },
-    {
-      "hour": 3,
-      "actions": 189
-    },
-    {
-      "hour": 8,
-      "actions": 185
+      "hour": 9,
+      "actions": 195
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1886
+      "count": 1951
     },
     {
       "topic": "IA",
-      "count": 1574
+      "count": 1626
     },
     {
       "topic": "Crypto",
-      "count": 516
+      "count": 532
     },
     {
       "topic": "Bourse",
-      "count": 253
+      "count": 259
     },
     {
       "topic": "Spatial",
-      "count": 79
+      "count": 81
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1771
+      "count": 1839
     },
     {
       "pillar": "other",
-      "count": 1222
+      "count": 1254
     },
     {
       "pillar": "market_trauma",
-      "count": 812
+      "count": 841
     },
     {
       "pillar": "meme_reaction",
-      "count": 169
+      "count": 174
     },
     {
       "pillar": "reply_bait",
-      "count": 42
+      "count": 43
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 36
+      "count": 37
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 370
+      "count": 371
     },
     {
       "pillar": "other",
-      "count": 208
+      "count": 212
     },
     {
       "pillar": "market_trauma",
@@ -120,7 +120,7 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 35
+      "count": 36
     },
     {
       "pillar": "ai_vs_btc",
@@ -133,24 +133,24 @@
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "ai_news_take",
-      "posts": 61,
-      "avg_likes": 0.1,
-      "avg_views": 21.7,
-      "low_sample": false
-    },
-    {
       "pillar": "market_trauma",
-      "posts": 52,
+      "posts": 51,
       "avg_likes": 0.1,
-      "avg_views": 22.0,
+      "avg_views": 22.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 83,
+      "posts": 84,
       "avg_likes": 0.08,
-      "avg_views": 22.8,
+      "avg_views": 22.5,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 61,
+      "avg_likes": 0.08,
+      "avg_views": 21.1,
       "low_sample": false
     },
     {
@@ -171,44 +171,44 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3452
+      "count": 3568
     },
     {
       "type": "quote",
-      "count": 304
+      "count": 313
     },
     {
       "type": "quote_gif",
-      "count": 149
+      "count": 154
     },
     {
       "type": "post",
-      "count": 69
+      "count": 72
+    },
+    {
+      "type": "hotake",
+      "count": 41
     },
     {
       "type": "retweet",
       "count": 40
-    },
-    {
-      "type": "hotake",
-      "count": 38
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-10T05:33:17.262998",
-      "text": "enterprise CFOs walking out of my waiting room for the first time all year",
+      "ts": "2026-07-10T09:33:43.749707",
+      "text": "Grok 4.5 on OpenClaw. Elon ships, OpenAI ships, Claude ships. The supply chain of speed. And yet somehow the dumbest question still gets a 47-slide answer on LinkedIn.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-07-10T09:32:55.215670",
+      "text": "Defense + ai adoption in gov are multi-year. pltr just got profitable. the stock didn't run ahead of the business. still early.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-07-10T09:31:09.398666",
+      "text": "$NVDA and $MSFT holding 7,900 hostage until they feel seen 🛋️",
       "type": "quote"
-    },
-    {
-      "ts": "2026-07-10T05:32:27.345963",
-      "text": "Speed matters. but 10x faster prototyping means everyone's now at that speed. when speed's table stakes, moat's elsewhere. application layer's the obvious play now, which means it's 10x more crowded.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-07-10T05:30:43.563352",
-      "text": "IDE wars are over. Zhipu's building a Claude Code companion, not a killer.",
-      "type": "reply"
     }
   ]
 }
