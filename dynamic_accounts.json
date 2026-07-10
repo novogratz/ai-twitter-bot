@@ -129,7 +129,12 @@
     "ArnaudLelong",
     "MaelKerninon",
     "CryptoDiplomate",
-    "ValentinDartois"
+    "ValentinDartois",
+    "TheAIShrink",
+    "ArnaudLeLelong",
+    "TheCryptoLark",
+    "ArmandVernoux",
+    "MaximeMallet"
   ],
   "en": [
     "Chubby",
@@ -201,7 +206,8 @@
     "Lilith",
     "Reve",
     "Tibo",
-    "Kadi"
+    "Kadi",
+    "Mizkif"
   ],
   "history": [
     {
@@ -1202,6 +1208,36 @@
     {
       "lang": "fr",
       "handle": "ValentinDartois",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheAIShrink",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArnaudLeLelong",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "en",
+      "handle": "Mizkif",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheCryptoLark",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArmandVernoux",
+      "added": "2026-07-09"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMallet",
       "added": "2026-07-09"
     }
   ]

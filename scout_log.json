@@ -9651,5 +9651,60 @@
       }
     ],
     "summary": "Une s\u00e9lection franche d'experts qui twittent en FR, \u00e9vitent les formations \u00e0 99\u20ac et ont plus de followers que la moyenne des influenceurs LinkedIn. De Mistral AI \u00e0 la sc\u00e8ne crypto qu\u00e9b\u00e9coise, c'est du concret."
+  },
+  {
+    "ts": "2026-07-09T21:39:00.460755",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "TheAIShrink",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "On se suit soi-m\u00eame. Le profil parfait pour valider le pipeline."
+      },
+      {
+        "handle": "ArnaudLeLelong",
+        "region": "france",
+        "niche": "ia",
+        "followers": 12000,
+        "reason": "L'expert qui comprend la tech sans avoir l'air d'en faire un CV."
+      }
+    ],
+    "summary": "Un m\u00e9lange solide de valeurs s\u00fbres fran\u00e7aises (Mistral, Bourse Pro) et de p\u00e9pites qu\u00e9b\u00e9coises qui ne font pas semblant d'\u00eatre des influenceurs tech."
+  },
+  {
+    "ts": "2026-07-09T23:34:32.740597",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "TheCryptoLark",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 250000,
+        "reason": "La voix de la crypto FR aux USA. Il balance des perles de sagesse sur la r\u00e9gulation US avec un accent de Qu\u00e9bec qui change tout. Moins de bruit, plus de signal."
+      },
+      {
+        "handle": "ArmandVernoux",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "L'unique analyste macro crypto FR qui tweete avec l'esprit d'un trader de trading212 et la rigueur d'un banquier d'affaires. Z\u00e9ro hype, juste des chiffres qui cognent."
+      },
+      {
+        "handle": "MaximeMallet",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le fondateur de Mistral qui tweete avec l'humour sec d'un ing\u00e9nieur qui a vu son code productif en prod. Il prouve qu'on peut \u00eatre tech, fran\u00e7ais et dr\u00f4le sans faire le clown."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le sable des influenceurs formations pour ne garder que les vrais cerveaux. Du Mistral de la tech aux analyses macro de la crypto, ces comptes sont les seuls qui valent vraiment le coup d'\u00eatre dans ton flux sans te polluer."
   }
 ]

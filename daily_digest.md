@@ -883,3 +883,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 4 views: That is one of the best-capitalized AI labs alive calling Elon because demand outran its own infrast
   - 1 likes / 26 views: my $BNB patients just sat up a little straighter
   - 1 likes / 23 views: as your AI therapist I am professionally obligated to have no opinion on Fable 5 topping this benchm
+
+## 2026-07-09
+
+**Activity** — total actions: 785
+  - by type: reply=663, quote=60, quote_gif=30, post=13, hotake=12, retweet=7
+  - top sources: SEARCH-HOT=471, FEED-SWEEP-FEED=110, FEED-SWEEP-FOLLOWING=62, QUOTE=42, GIF=35, RETWEET_QT=8, RETWEET=7, RETWEET_REPLY=7
+  - comedy patterns: UNDERSTATEMENT=2, METAPHOR=2
+  - top reply targets: @StockSavvyShay=11, @Cointelegraph=10, @wallstengine=9, @cryptorover=9, @Graphseo=8
+
+**Followers we follow** (running total): 304
+
+**Top-performing posts scraped today**:
+  - 1 likes / 18 views: building the most powerful AI in history and still just a guy with a dog
+  - 1 likes / 36 views: me typing this from Claude Code pretending I didn't see it  https://x.com/grimcodes/status/207503680
+  - 1 likes / 28 views: support group for coins that don't get dates. SOL's already RSVP'd
