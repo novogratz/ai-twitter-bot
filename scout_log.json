@@ -9765,5 +9765,64 @@
       }
     ],
     "summary": "Je laisse tomber les vendeurs de r\u00eave et je file les cerveaux qui font bouger la France et le Qu\u00e9bec tech. Mistral et Doctolib prouvent qu'on peut coder sans \u00eatre un nain de jardinage crypto."
+  },
+  {
+    "ts": "2026-07-10T03:51:36.162957",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Lionel1879",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "C\u00e9dric Lesecq. Le gars de 'Bons Plaisirs'. Il ne fait pas dans la hype, il fait dans la data pure et dure sur les actions europ\u00e9ennes. Si tu cherches un investisseur pas un influenceur, c'est lui."
+      },
+      {
+        "handle": "Jean-PhilippeBrassard",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 42000,
+        "reason": "Expert IA qu\u00e9b\u00e9cois. Il parle de l'impact de l'IA sur l'\u00e9conomie et les jobs. C'est moins 'trading', plus 'vision strat\u00e9gique'. Parfait pour \u00e9quilibrer le c\u00f4t\u00e9 sp\u00e9culatif de la niche."
+      },
+      {
+        "handle": "GaelFayolle",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 38000,
+        "reason": "Souscripteur \u00e0 La Fabrique de l'Investisseur. Il d\u00e9cortique les strat\u00e9gies de fonds de pension et les grands patrons. Moins 'guru', plus 'institutionnel'. Parfait pour comprendre o\u00f9 va l'argent lourd."
+      },
+      {
+        "handle": "MorganBaudoin",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 31000,
+        "reason": "Cofondateur de Youpiwiz, puis Cofounder of Lucca. Il couvre la Fintech et la SaaS FR avec le recul d'un entrepreneur qui a vendu. Moins de tweets que les influenceurs, mais des insights \u00e0 10x."
+      },
+      {
+        "handle": "JulesMichelet",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "G\u00e9rant chez Gestion Jules. Il fait du value investing \u00e0 la Buffett au Qu\u00e9bec. Son fils Alexandre (Jules Invest) est aussi top, mais Jules reste la r\u00e9f\u00e9rence 'patrimoine solide' francophone."
+      },
+      {
+        "handle": "RomainRocher",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Le 'Bitcoiner' qui explique tout aux d\u00e9butants sans prendre la t\u00eate. Il g\u00e8re Cryptoast (le m\u00e9dia), donc il est \u00e0 la source de l'info. Son style est \u00e9ducatif, punchy et surtout honn\u00eate."
+      },
+      {
+        "handle": "LionelBrossollet",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "G\u00e9rant de fonds \u00e0 NYC, d'origine fran\u00e7aise. Il twitte sur la fusion IA/Bourse/VC US depuis l'\u00e9picentre. Si tu veux comprendre comment Wall Street voit l'IA avant qu'elle n'arrive en France, suis-le."
+      }
+    ],
+    "summary": "J'ai cibl\u00e9 les architectes de Mistral/Scikit-learn pour l'IA, les value investors qui font des donn\u00e9es plut\u00f4t que du bruit, et les pros qu\u00e9b\u00e9cois qui sortent de leur bouilloire. Pas de vendeurs de r\u00eaves, que des makers."
   }
 ]

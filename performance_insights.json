@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-10T01:33:52.492694",
-  "window_7d_actions": 3933,
-  "window_24h_actions": 792,
+  "generated_at": "2026-07-10T05:33:52.611564",
+  "window_7d_actions": 4052,
+  "window_24h_actions": 781,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 3921
+      "count": 4040
     },
     {
       "pattern": "RENAME",
@@ -36,107 +36,107 @@
   ],
   "best_hours_utc": [
     {
+      "hour": 1,
+      "actions": 206
+    },
+    {
       "hour": 0,
       "actions": 199
     },
     {
-      "hour": 1,
-      "actions": 196
+      "hour": 2,
+      "actions": 189
+    },
+    {
+      "hour": 3,
+      "actions": 189
     },
     {
       "hour": 8,
       "actions": 185
-    },
-    {
-      "hour": 10,
-      "actions": 181
-    },
-    {
-      "hour": 12,
-      "actions": 180
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 1829
+      "count": 1886
     },
     {
       "topic": "IA",
-      "count": 1529
+      "count": 1574
     },
     {
       "topic": "Crypto",
-      "count": 499
+      "count": 516
     },
     {
       "topic": "Bourse",
-      "count": 247
+      "count": 253
     },
     {
       "topic": "Spatial",
-      "count": 78
+      "count": 79
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1721
+      "count": 1771
     },
     {
       "pillar": "other",
-      "count": 1183
+      "count": 1222
     },
     {
       "pillar": "market_trauma",
-      "count": 790
+      "count": 812
     },
     {
       "pillar": "meme_reaction",
-      "count": 164
+      "count": 169
     },
     {
       "pillar": "reply_bait",
-      "count": 40
+      "count": 42
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 35
+      "count": 36
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 377
+      "count": 370
     },
     {
       "pillar": "other",
-      "count": 206
+      "count": 208
     },
     {
       "pillar": "market_trauma",
-      "count": 161
+      "count": 154
     },
     {
       "pillar": "meme_reaction",
-      "count": 34
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 7
+      "count": 35
     },
     {
       "pillar": "ai_vs_btc",
+      "count": 7
+    },
+    {
+      "pillar": "reply_bait",
       "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 62,
+      "posts": 61,
       "avg_likes": 0.1,
-      "avg_views": 22.3,
+      "avg_views": 21.7,
       "low_sample": false
     },
     {
@@ -150,15 +150,15 @@
       "pillar": "other",
       "posts": 83,
       "avg_likes": 0.08,
-      "avg_views": 23.1,
+      "avg_views": 22.8,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 1,
+      "posts": 2,
       "avg_likes": 0.0,
-      "avg_views": 19.0,
-      "low_sample": true
+      "avg_views": 15.0,
+      "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
@@ -171,43 +171,43 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3352
+      "count": 3452
     },
     {
       "type": "quote",
-      "count": 292
+      "count": 304
     },
     {
       "type": "quote_gif",
-      "count": 144
+      "count": 149
     },
     {
       "type": "post",
-      "count": 70
+      "count": 69
+    },
+    {
+      "type": "retweet",
+      "count": 40
     },
     {
       "type": "hotake",
       "count": 38
-    },
-    {
-      "type": "retweet",
-      "count": 37
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-10T01:32:55.015458",
-      "text": "$NVDA profits funding Starlink to prove AI eats the world offline. Crypto natives are just paying tuition for a satellite-based GPU cluster. 🛰️",
+      "ts": "2026-07-10T05:33:17.262998",
+      "text": "enterprise CFOs walking out of my waiting room for the first time all year",
       "type": "quote"
     },
     {
-      "ts": "2026-07-10T01:32:21.859705",
-      "text": "[QT] 208 GW is $600B/yr in power infrastructure, leaving @elonmusk's Dojo FSD train looking like a toaster oven.\nHas the grid already priced this capex?",
-      "type": "quote"
+      "ts": "2026-07-10T05:32:27.345963",
+      "text": "Speed matters. but 10x faster prototyping means everyone's now at that speed. when speed's table stakes, moat's elsewhere. application layer's the obvious play now, which means it's 10x more crowded.",
+      "type": "reply"
     },
     {
-      "ts": "2026-07-10T01:31:25.110814",
-      "text": "Blackwell racks hit seven figures, mostly HBM. The GPU became abundant. Now memory is the bottleneck. Your infrastructure capex is a memory bet, not a compute bet.",
+      "ts": "2026-07-10T05:30:43.563352",
+      "text": "IDE wars are over. Zhipu's building a Claude Code companion, not a killer.",
       "type": "reply"
     }
   ]
