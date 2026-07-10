@@ -9824,5 +9824,50 @@
       }
     ],
     "summary": "J'ai cibl\u00e9 les architectes de Mistral/Scikit-learn pour l'IA, les value investors qui font des donn\u00e9es plut\u00f4t que du bruit, et les pros qu\u00e9b\u00e9cois qui sortent de leur bouilloire. Pas de vendeurs de r\u00eaves, que des makers."
+  },
+  {
+    "ts": "2026-07-10T05:49:24.777194",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BeebOp",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "L'architecte de l'information crypto en FR. Pas de shilling, juste de l'analyse brute et des threads \u00e9ducatifs qui font mal \u00e0 la t\u00eate (dans le bon sens)."
+      },
+      {
+        "handle": "ThomasBrossat",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "C'est le prof que tout le monde veut avoir en cours. Il d\u00e9cortique les bilans avec un humour d\u00e9cal\u00e9 et une pr\u00e9cision chirurgicale. Z\u00e9ro hype."
+      },
+      {
+        "handle": "RomainRigal",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Ex-Banque Populaire, aujourd'hui fondateur. Il parle crypto et finance classique sans filtre. Ses threads sur la banking 4.0 sont de l'or."
+      },
+      {
+        "handle": "MaximeMangin",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Founder de Qdrant (vector DBs), il vit aux US mais tweete en FR/EN. C'est le nerd tech qui explique comment l'IA change la stack applicative, pas juste ChatGPT."
+      },
+      {
+        "handle": "SylvainDebrue",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Le trader discret qui partage sa routine et ses charts. Pas de 'vive le march\u00e9 haussier' \u00e0 tout va, juste du concret sur le trading de swing."
+      }
+    ],
+    "summary": "Focus qualitatif : Brossat pour le Qu\u00e9bec, BeebOp pour la rigueur crypto en France, et des profils founders/traders moins 'influenceurs' mais plus 'experts'."
   }
 ]

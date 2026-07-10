@@ -144,7 +144,12 @@
     "GaelFayolle",
     "MorganBaudoin",
     "JulesMichelet",
-    "RomainRocher"
+    "RomainRocher",
+    "BeebOp",
+    "ThomasBrossat",
+    "RomainRigal",
+    "MaximeMangin",
+    "SylvainDebrue"
   ],
   "en": [
     "Chubby",
@@ -1316,6 +1321,31 @@
     {
       "lang": "fr",
       "handle": "RomainRocher",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "BeebOp",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBrossat",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainRigal",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMangin",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainDebrue",
       "added": "2026-07-10"
     }
   ]
