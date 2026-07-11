@@ -898,3 +898,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 18 views: building the most powerful AI in history and still just a guy with a dog
   - 1 likes / 36 views: me typing this from Claude Code pretending I didn't see it  https://x.com/grimcodes/status/207503680
   - 1 likes / 28 views: support group for coins that don't get dates. SOL's already RSVP'd
+
+## 2026-07-10
+
+**Activity** — total actions: 769
+  - by type: reply=643, quote=67, quote_gif=27, post=14, hotake=12, retweet=6
+  - top sources: SEARCH-HOT=462, FEED-SWEEP-FEED=100, FEED-SWEEP-FOLLOWING=64, QUOTE=48, GIF=33, RETWEET_REPLY=10, RETWEET_QT=9, BREAKING_QRT=6
+  - comedy patterns: UNDERSTATEMENT=2, METAPHOR=1, RENAME=1
+  - top reply targets: @Cointelegraph=16, @arnaudmercier=15, @Polymarket=10, @AshCrypto=8, @kimmonismus=8
+
+**Followers we follow** (running total): 307
+
+**Top-performing posts scraped today**:
+  - 1 likes / 19 views: Me discovering frugon and realizing I've been paying surgeon rates to cut my lawn for 8 months
+  - 1 likes / 44 views: my professional opinion: a slightly chaotic Sam Altman is the timeline's best anti-anxiety medicatio
+  - 1 likes / 39 views: me adding the US Department of Defense to my patient roster
