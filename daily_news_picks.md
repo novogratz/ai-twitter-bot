@@ -15615,3 +15615,19 @@ At this price point, it's hard to justify using Fable
 The main driver is that OpenAI and Anthropic have signed large-scale partnership agreements with cloud providers such as Amazon, Go
   - https://x.com/jukan05/status/2075453663825584260
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 21).
+
+## 2026-07-11
+- **@nehalzzzz1** (9 likes, score 7/10) — $BTC has reclaimed the 200-week moving average—one of the most important support levels in every bear market.
+
+Bitcoin has only lost this level once, during the brutal 2022 crypto crash.
+
+Despite macr
+  - https://x.com/nehalzzzz1/status/2075613204210966812
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 13).
+- **@elonmusk** (203 likes, score 9/10) — As usual, legacy media is misrepresenting the situation. 
+
+I just asked Tesla & SpaceX to try out Grok 4.5 to see if it solves their task, not use it no matter what!
+
+They should continue to use other
+  - https://x.com/elonmusk/status/2075794297631158373
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 307).
