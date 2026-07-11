@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-05-11T15:13:20.746732",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "bon_laetitia",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 62000,
-        "reason": "Analyste ind\u00e9pendante des march\u00e9s US bas\u00e9e \u00e0 Montr\u00e9al, tweets en fran\u00e7ais sur macro, taux et actions."
-      },
-      {
-        "handle": "SebGouspillou",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 38000,
-        "reason": "CEO BigBlock, angle BTC/mining/\u00e9nergie, posts FR r\u00e9cents et r\u00e9guliers, vrai profil terrain."
-      },
-      {
-        "handle": "OAK_Res",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Plateforme de research crypto FR, analyses r\u00e9guli\u00e8res et r\u00e9centes, format market intelligence plut\u00f4t que shill."
-      },
-      {
-        "handle": "profchaine",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Analyste on-chain francophone, contenu technique propre sur BTC/altcoins, actif r\u00e9cemment et sans bruit commercial."
-      }
-    ],
-    "summary": "J\u2019ai retenu surtout des profils France tr\u00e8s solides, plus une vraie option qu\u00e9b\u00e9coise qui colle au cahier des charges. Je n\u2019ai pas gard\u00e9 de compte USA assez propre et assez v\u00e9rifiable en fran\u00e7ais sans risquer un faux positif."
-  },
-  {
     "ts": "2026-05-22T23:18:16.058683",
     "raw_count": 8,
     "kept_count": 7,
@@ -9907,5 +9869,57 @@
       }
     ],
     "summary": "J'ai tri\u00e9 le grain de l'ivraie : plus de vendeurs de r\u00eave, plus de consultants en IA qui ne savent pas coder. On garde ceux qui apportent de la donn\u00e9e ou du contexte."
+  },
+  {
+    "ts": "2026-07-11T00:47:53.112180",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibaultN",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 135000,
+        "reason": "Le 'p\u00e8re' du trading en ligne FR, pas de ventes de forms \u00e0 2k\u20ac, pure data et coaching."
+      },
+      {
+        "handle": "RomainGuerin",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 95000,
+        "reason": "Actionnier et analyste pur jus, twittera moins que N, mais la qualit\u00e9 est un diamant brut."
+      },
+      {
+        "handle": "CyrilDeroussent",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "VC fran\u00e7ais \u00e0 la Techstars, tweete les p\u00e9pites SaaS/AI am\u00e9ricaines avec un angle europ\u00e9en."
+      },
+      {
+        "handle": "PierrePoulin",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Ex-Coinhouse, pur joueur crypto, \u00e9vite les signaux payants, parle tech et adoption."
+      },
+      {
+        "handle": "JulesBorile",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Directeur de l'IA qu\u00e9b\u00e9coise, tweete la tech locale et les startups frico/quebecoises s\u00e9rieuses."
+      },
+      {
+        "handle": "AlexandreVigneault",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Founder de Finominal, couvre les march\u00e9s avec le style d\u00e9cal\u00e9 qu\u00e9b\u00e9cois sans \u00eatre un influenceur de luxe."
+      }
+    ],
+    "summary": "Focus IA/tech \u00e0 Paris, trading solide \u00e0 Lyon/Paris, et fintech crypto \u00e0 Montr\u00e9al. Z\u00e9ro formation \u00e0 999\u20ac, que des vrais acteurs qui construisent."
   }
 ]

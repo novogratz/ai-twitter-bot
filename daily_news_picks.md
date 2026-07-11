@@ -15631,3 +15631,27 @@ I just asked Tesla & SpaceX to try out Grok 4.5 to see if it solves their task, 
 They should continue to use other
   - https://x.com/elonmusk/status/2075794297631158373
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 307).
+- **@uday_devops** (23 likes, score 9/10) — What a crazy week in AI:
+
+ Sonnet 5 + Fable 5 extended (Anthropic)
+ Grok 4.5 (xAI)
+ GPT-5.6 Sol, Terra, Luna (OpenAI)
+ Muse Spark 1.1 (Meta)
+ Hunyuan 3 (Tencent)
+ Nemotron-Labs-3-Puzzle-75B-A9B (Nvidi
+  - https://x.com/uday_devops/status/2075641742330568886
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 55).
+- **@alan_earn** (13 likes, score 7/10) — GPT 5.6 Sol xHigh enters Arena Code at #2
+
+It beat GLM 5.2 Max Grok 4.5 Claude Opus 4.8 thinking Claude Sonnet 5 High
+
+openAI is not slowing down
+  - https://x.com/Alan_Earn/status/2075799916140736718
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 21).
+- **@akabull_** (75 likes, score 9/10) — $ETH is starting to show some strength against Bitcoin.
+
+ETH/BTC has broken above its descending trendline after bouncing from the 0.0252 support area.
+
+Bullish for alts…
+  - https://x.com/AkaBull_/status/2075791874099761358
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 101).

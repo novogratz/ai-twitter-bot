@@ -183,7 +183,12 @@
     "MaximeMichelet",
     "RomainRoussel",
     "CryptoDoublard",
-    "RomainBecart"
+    "RomainBecart",
+    "ThibaultN",
+    "RomainGuerin",
+    "CyrilDeroussent",
+    "PierrePoulin",
+    "JulesBorile"
   ],
   "en": [
     "Chubby",
@@ -270,7 +275,9 @@
     "AK",
     "NIK",
     "frankie",
-    "Gabriel"
+    "Gabriel",
+    "Allie",
+    "BEYHIVE"
   ],
   "history": [
     {
@@ -1617,6 +1624,41 @@
       "lang": "en",
       "handle": "Gabriel",
       "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Allie",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "BEYHIVE",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultN",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainGuerin",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDeroussent",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierrePoulin",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesBorile",
+      "added": "2026-07-11"
     }
   ]
 }
