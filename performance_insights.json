@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-11T12:32:52.791312",
-  "window_7d_actions": 4865,
-  "window_24h_actions": 694,
+  "generated_at": "2026-07-11T16:32:52.864103",
+  "window_7d_actions": 4867,
+  "window_24h_actions": 686,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4849
+      "count": 4851
     },
     {
       "pattern": "RENAME",
@@ -63,46 +63,46 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2246
+      "count": 2225
     },
     {
       "topic": "IA",
-      "count": 1916
+      "count": 1938
     },
     {
       "topic": "Crypto",
-      "count": 618
+      "count": 623
     },
     {
       "topic": "Bourse",
-      "count": 292
+      "count": 291
     },
     {
       "topic": "Spatial",
-      "count": 96
+      "count": 97
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2149
+      "count": 2164
     },
     {
       "pillar": "other",
-      "count": 1449
+      "count": 1433
     },
     {
       "pillar": "market_trauma",
-      "count": 976
+      "count": 972
     },
     {
       "pillar": "meme_reaction",
-      "count": 204
+      "count": 212
     },
     {
       "pillar": "reply_bait",
-      "count": 45
+      "count": 44
     },
     {
       "pillar": "ai_vs_btc",
@@ -112,49 +112,49 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 314
+      "count": 307
     },
     {
       "pillar": "other",
-      "count": 207
+      "count": 204
     },
     {
       "pillar": "market_trauma",
-      "count": 130
+      "count": 129
     },
     {
       "pillar": "meme_reaction",
-      "count": 33
+      "count": 40
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 3
     },
     {
       "pillar": "reply_bait",
-      "count": 4
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 52,
+      "posts": 54,
       "avg_likes": 0.13,
-      "avg_views": 24.1,
+      "avg_views": 24.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 78,
+      "posts": 76,
       "avg_likes": 0.08,
-      "avg_views": 22.9,
+      "avg_views": 23.2,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 66,
       "avg_likes": 0.08,
-      "avg_views": 20.9,
+      "avg_views": 20.7,
       "low_sample": false
     },
     {
@@ -175,15 +175,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4135
+      "count": 4134
     },
     {
       "type": "quote",
-      "count": 374
+      "count": 367
     },
     {
       "type": "quote_gif",
-      "count": 172
+      "count": 181
     },
     {
       "type": "post",
@@ -191,7 +191,7 @@
     },
     {
       "type": "hotake",
-      "count": 51
+      "count": 52
     },
     {
       "type": "retweet",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-11T12:31:22.527766",
-      "text": "Showing 50 tickers that worked is transparency. showing whether those 50 work again next cycle is truth. first is useful, second is rare.",
+      "ts": "2026-07-11T16:31:26.125110",
+      "text": "Communities persist when capital evaporates. $3.1M gone, memory of $3.7M remains. that's anchoring, not resilience.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-11T12:30:13.395060",
-      "text": "$152k MRR wrapping an existing app. agents didn't build the product, they just made it visible. 6 months until everyone's doing this.",
+      "ts": "2026-07-11T16:31:09.916318",
+      "text": "Auditability is architectural, not a feature. The cost is latency and logs upfront, or you'll be explaining to regulators why your agent did something you don't understand.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-11T12:29:53.988636",
-      "text": "Both run on 'margins appear by 2027' capital and FOMO. GLP-1's clinical data is real. most AI startups' moat is 18 months.",
+      "ts": "2026-07-11T16:24:12.793177",
+      "text": "Cursor because it's claude plus full-codebase context in your editor. every other tool is missing at least one of those three things.",
       "type": "reply"
     }
   ]

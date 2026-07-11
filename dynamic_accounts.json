@@ -199,7 +199,13 @@
     "ThibautMuller",
     "Raphaelsaliba",
     "BenoitLFloch",
-    "Lefranc"
+    "Lefranc",
+    "jpmorgan",
+    "thegoodcapital",
+    "crypto_mad",
+    "cryptopaul",
+    "CryptoRomain",
+    "BenoitLeblanc"
   ],
   "en": [
     "Chubby",
@@ -294,7 +300,10 @@
     "Coinvo",
     "Killa",
     "MenchOsint",
-    "Jukan"
+    "Jukan",
+    "Sibel",
+    "LANGERIUS",
+    "Google"
   ],
   "history": [
     {
@@ -1760,6 +1769,51 @@
     {
       "lang": "fr",
       "handle": "Lefranc",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Sibel",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "LANGERIUS",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "jpmorgan",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "thegoodcapital",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "crypto_mad",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Google",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptopaul",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoRomain",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitLeblanc",
       "added": "2026-07-11"
     }
   ]
