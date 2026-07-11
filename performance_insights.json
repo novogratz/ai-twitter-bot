@@ -1,22 +1,22 @@
 {
-  "generated_at": "2026-07-10T13:33:52.630292",
-  "window_7d_actions": 4322,
-  "window_24h_actions": 784,
+  "generated_at": "2026-07-10T21:18:55.516190",
+  "window_7d_actions": 4562,
+  "window_24h_actions": 771,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4309
+      "count": 4547
     },
     {
       "pattern": "RENAME",
+      "count": 6
+    },
+    {
+      "pattern": "UNDERSTATEMENT",
       "count": 5
     },
     {
       "pattern": "METAPHOR",
-      "count": 4
-    },
-    {
-      "pattern": "UNDERSTATEMENT",
       "count": 4
     }
   ],
@@ -27,11 +27,11 @@
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 4
+      "count": 5
     },
     {
       "pattern": "RENAME",
-      "count": 5
+      "count": 6
     }
   ],
   "best_hours_utc": [
@@ -59,98 +59,98 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2007
+      "count": 2118
     },
     {
       "topic": "IA",
-      "count": 1675
+      "count": 1784
     },
     {
       "topic": "Crypto",
-      "count": 558
+      "count": 580
     },
     {
       "topic": "Bourse",
-      "count": 269
+      "count": 284
     },
     {
       "topic": "Spatial",
-      "count": 81
+      "count": 83
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1892
+      "count": 2008
     },
     {
       "pillar": "other",
-      "count": 1291
+      "count": 1354
     },
     {
       "pillar": "market_trauma",
-      "count": 877
+      "count": 918
     },
     {
       "pillar": "meme_reaction",
-      "count": 178
+      "count": 193
     },
     {
       "pillar": "reply_bait",
-      "count": 45
+      "count": 47
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 39
+      "count": 42
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 353
+      "count": 357
     },
     {
       "pillar": "other",
-      "count": 223
+      "count": 204
     },
     {
       "pillar": "market_trauma",
-      "count": 163
+      "count": 155
     },
     {
       "pillar": "meme_reaction",
-      "count": 29
+      "count": 36
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 53,
-      "avg_likes": 0.09,
-      "avg_views": 22.1,
+      "posts": 55,
+      "avg_likes": 0.11,
+      "avg_views": 23.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 84,
-      "avg_likes": 0.08,
-      "avg_views": 22.4,
+      "posts": 79,
+      "avg_likes": 0.1,
+      "avg_views": 22.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 59,
+      "posts": 62,
       "avg_likes": 0.08,
-      "avg_views": 21.3,
+      "avg_views": 21.4,
       "low_sample": false
     },
     {
@@ -171,23 +171,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3680
+      "count": 3882
     },
     {
       "type": "quote",
-      "count": 322
+      "count": 340
     },
     {
       "type": "quote_gif",
-      "count": 156
+      "count": 167
     },
     {
       "type": "post",
-      "count": 77
+      "count": 83
     },
     {
       "type": "hotake",
-      "count": 47
+      "count": 50
     },
     {
       "type": "retweet",
@@ -196,18 +196,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-10T13:31:48.842262",
-      "text": "Ethereum isn't L2s, L2s run on ethereum. solana isn't consumer apps. you're missing what's actually useful: stablecoins move the volume, L2s move the speed, everything else is speculation.",
+      "ts": "2026-07-10T21:17:39.874321",
+      "text": "Agentic AI consumes gazillions of tokens doing the work you pay it for. Meanwhile, a 401k Dave on 2% yield thinks his savings rate is a strategy.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-10T13:31:20.126394",
-      "text": "Previous cycles: -75 to -80 to find institutional capital. this one: -50. same volatility, higher floor. capital structure moved, not sentiment.",
+      "ts": "2026-07-10T21:16:47.096196",
+      "text": "Venice is faster on paper. NVDA wins in practice because Meta, Anthropic, OpenAI all run billions in CUDA inference. replatforming costs more than staying slower. not in 12 months.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-10T13:30:45.968260",
-      "text": "Meta and nvidia up. google and apple down.\n\nthats not geopolitical, thats ai mega-cap rotation.",
+      "ts": "2026-07-10T21:16:08.858653",
+      "text": "Waiting for a face ripper after the moves AI already had this year is just waiting. the best part of rallies always feels like nothing's happening. close the app.",
       "type": "reply"
     }
   ]

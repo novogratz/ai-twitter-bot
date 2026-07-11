@@ -1,133 +1,5 @@
 [
   {
-    "ts": "2026-04-30T02:33:28.908129",
-    "raw_count": 5,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienROMAN13",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 95000,
-        "reason": "Julien Roman, influenceur crypto/finance FR avec 260K YouTube + 95K Twitter. Vulgarise finance, investissement et crypto chaque semaine en fran\u00e7ais. Audience jeune et active."
-      },
-      {
-        "handle": "VincentGanne",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 81000,
-        "reason": "Analyste technique crypto/march\u00e9s avec 18 ans d'exp\u00e9rience. Contributeur Cryptoast + BFM Business. Analyses graphiques quotidiennes Bitcoin/altcoins en FR. R\u00e9f\u00e9rence de l'analyse technique francophone."
-      },
-      {
-        "handle": "GregoireFavet",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Journaliste \u00e9conomique, pr\u00e9sentateur Smart Bourse sur B SMART (ex-BFM Business). Tweete quotidiennement en FR sur march\u00e9s, CAC 40, macro. Source fiable et active pour les accrocs de la bourse."
-      },
-      {
-        "handle": "StephaneMallard",
-        "region": "france",
-        "niche": "ai",
-        "followers": 17000,
-        "reason": "Conf\u00e9rencier IA FR n\u00b01 (700+ conf\u00e9rences, 19 pays). Auteur du bestseller Disruption (2018), a pr\u00e9dit ChatGPT et les agents IA d\u00e8s 2015. Tweete en FR sur les transformations IA/entreprises. Audience pro/corporate."
-      }
-    ],
-    "summary": "5 comptes FR solides et v\u00e9rifi\u00e9s, pas encore dans les listes du bot. Forte dominance bourse/crypto avec NCheron_bourse (130K, strat\u00e9giste bourse), JulienROMAN13 (95K, vulgarisateur crypto), VincentGanne (81K, analyste technique crypto), GregoireFavet (22K, journaliste bourse B SMART), et une p\u00e9pite IA avec StephaneMallard (17K, conf\u00e9rencier IA). Tous twittent activement en fran\u00e7ais. Pas de nouveau compte Qu\u00e9bec identifi\u00e9 cette session \u2014 la couverture existante (Mila, francispouliot, cryptoqc, FI_Quebec, lesaffaires) est d\u00e9j\u00e0 dense pour ce march\u00e9 plus petit."
-  },
-  {
-    "ts": "2026-04-30T06:33:20.217239",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "crypto_futur",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 240000,
-        "reason": "Matt\u00e9o, YouTubeur crypto FR ultra-actif (~240k followers X, 125k+ YouTube). D\u00e9cortique quotidiennement projets et actus crypto. Twitte en fran\u00e7ais, tr\u00e8s engag\u00e9 avec sa communaut\u00e9."
-      },
-      {
-        "handle": "babgi",
-        "region": "france",
-        "niche": "ai",
-        "followers": 105000,
-        "reason": "Gilles Babinet, multi-entrepreneur (8 startups, 5 exits), pr\u00e9sident Caf\u00e9IA, auteur de 'GreenIA'. ~105k followers. Twitte en FR sur IA, souverainet\u00e9 num\u00e9rique, tech. Voix institutionnelle cr\u00e9dible."
-      },
-      {
-        "handle": "lemiscate",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 101000,
-        "reason": "Marc Zeller, Integration Lead chez Aave (DeFi), fondateur Aave Chan Initiative. ~101k followers. Fran\u00e7ais, tr\u00e8s actif dans la communaut\u00e9 crypto francophone. Governance DeFi de haut niveau."
-      },
-      {
-        "handle": "Nicolas_Colin",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 35000,
-        "reason": "Nicolas Colin, co-fondateur The Family (VC), Head of Research Vsquared Ventures, columnist Sifted. Newsletter European Straits. Tweete en FR sur VC, startups, \u00e9conomie num\u00e9rique. Vision macro tech/finance."
-      },
-      {
-        "handle": "tariqkrim",
-        "region": "france",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "Tariq Krim, cr\u00e9ateur de Netvibes/Jolicloud, surnomm\u00e9 'le philosophe de la tech'. ~30k followers. Publie Cybernetica.fr (newsletter FR tech/IA de r\u00e9f\u00e9rence). MIT TR35, tweete en FR sur souverainet\u00e9 num\u00e9rique et IA."
-      },
-      {
-        "handle": "Sachakin",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 8000,
-        "reason": "Sacha Pouget, analyste biotechs/bourse, fondateur Kalliste Biotech Fund, intervenant BFM Business. ~8k followers. Niche biotech/bourse FR tr\u00e8s pointue, twitte en FR. Petit mais ultra-sp\u00e9cialis\u00e9."
-      }
-    ],
-    "summary": "8 candidats v\u00e9rifi\u00e9s couvrant 2 r\u00e9gions (France + USA/diaspora). Points forts: Crypto Futur et Nicolas Ch\u00e9ron sont les deux plus gros manques du roster actuel (~240k et ~170k followers FR). Babgi et LeCun apportent une couverture IA institutionnelle absente. Lemiscate (Aave/DeFi) et Tariq Krim (philosophe tech) ajoutent des voix uniques. C\u00f4t\u00e9 Qu\u00e9bec, les comptes majeurs (Yoshua_Bengio, Mila_Quebec, cryptoqc, FI_Quebec) sont d\u00e9j\u00e0 dans la liste \u2014 pas de nouveau handle QC v\u00e9rifi\u00e9 cette session."
-  },
-  {
-    "ts": "2026-05-01T01:35:57.075785",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "roxannevarza",
-        "region": "france",
-        "niche": "tech",
-        "followers": 50000,
-        "reason": "Directrice de Station F (plus grand campus startup mondial), scout Sequoia, board AFP. Franco-am\u00e9ricaine, twitte sur l'\u00e9cosyst\u00e8me tech/IA fran\u00e7ais. Connect\u00e9e \u00e0 tout l'\u00e9cosyst\u00e8me."
-      },
-      {
-        "handle": "_pgauthier",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Pascal Gauthier, CEO de Ledger (licorne FR crypto, 7M+ wallets vendus). Twitte en FR et EN sur crypto/blockchain/Web3. Figure majeure de l'\u00e9cosyst\u00e8me crypto fran\u00e7ais."
-      },
-      {
-        "handle": "ThisIsYoann",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Yoann Lopez, fondateur de Snowball (newsletter finance #1 en France, 70k+ abonn\u00e9s). Bourse, investissement, finances perso. Twitte en FR, voix influente dans la fintech FR."
-      },
-      {
-        "handle": "Aboringdystopia",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Compte crypto FR actif, analyses DeFi et Bitcoin en fran\u00e7ais. Communaut\u00e9 engag\u00e9e de traders francophones."
-      }
-    ],
-    "summary": "6 comptes solides identifi\u00e9s: Nicolas Ch\u00e9ron (analyste bourse r\u00e9f\u00e9rence FR), Pascal Gauthier + Ledger (CEO + compte officiel de la licorne crypto FR), Yoann Lopez/Snowball (newsletter finance #1 FR), Roxanne Varza (Station F, hub tech/IA), et Mistral AI (d\u00e9cacorne IA fran\u00e7aise). Priorit\u00e9 France car les recherches Qu\u00e9bec n'ont pas r\u00e9v\u00e9l\u00e9 de nouveau compte hors ceux d\u00e9j\u00e0 suivis (Mila, francispouliot_, cryptoqc, InvestQuebec)."
-  },
-  {
     "ts": "2026-05-01T01:40:02.852790",
     "raw_count": 7,
     "kept_count": 4,
@@ -9942,5 +9814,112 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les vrais experts : Darius Sedelman pour la bourse, Mathieu Foucault et Noureddine Boutaib pour l'IA, et les Mason/Girard pour la crypto. Le Qu\u00e9bec est moins bien loti mais Youssef O comble le vide du trading pro francophone."
+  },
+  {
+    "ts": "2026-07-10T13:40:36.622193",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RomainDillet",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 85000,
+        "reason": "Crunchbase News. Il couvre la tech parisienne depuis NYC avec l'\u0153il du journaliste qui sait o\u00f9 est l'argent."
+      },
+      {
+        "handle": "MaximeCollin",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Le prince du Qu\u00e9bec boursier. Ses analyses sont propres, ses tweets sont digestes, et il n'oublie jamais de dire 'salut'."
+      }
+    ],
+    "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eave et les politiciens pour se concentrer sur des fondateurs et des analystes qui tweetent comme s'ils \u00e9taient pay\u00e9s pour le faire. C'est du concret, pas du bruit."
+  },
+  {
+    "ts": "2026-07-10T15:34:30.698147",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaelV",
+        "region": "france",
+        "niche": "tech",
+        "followers": 155000,
+        "reason": "L'oracle de la Tech. C'est lui qu'on tague pour savoir si un deal est s\u00e9rieux ou juste du vent."
+      },
+      {
+        "handle": "MaximeMaurin",
+        "region": "france",
+        "niche": "ai",
+        "followers": 110000,
+        "reason": "CTO de Kinde. Il tweet sur l'IA comme il respire : avec une expertise technique rare et un humour d\u00e9cal\u00e9."
+      },
+      {
+        "handle": "HugoB",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Le d\u00e9contract\u00e9 de la finance. Il rend l'analyse fondamentale digeste sans en faire une \u00e9ni\u00e8me fois le 'Wall Street Journal' version TikTok."
+      },
+      {
+        "handle": "RemyBret",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Le roi de l'analyse on-chain. Si il tweet, on se l\u00e8ve. S'il ne tweet pas, on s'inqui\u00e8te."
+      },
+      {
+        "handle": "MickaelBonneau",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Fintech VC. Moins connu mais son feed est une mine d'or sur les deals IA/FinTech \u00e0 suivre avant la hype."
+      }
+    ],
+    "summary": "Le top 6 est mixte mais solide : du lourd en IA (Maurin, GaelV), un must-have en crypto (RemyBret), et une touche qu\u00e9b\u00e9coise pr\u00e9cise pour couvrir l'Am\u00e9rique francophone."
+  },
+  {
+    "ts": "2026-07-10T19:19:30.760724",
+    "raw_count": 5,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaelleCohen",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "La seule qui m\u00e9lange humour dandy et analyse fondamentale sans vendre de r\u00eave. Pas de 'moon', que du gras."
+      },
+      {
+        "handle": "JesseScro",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Canadien bas en Californie, twitte en FR sur la macro US et les tech stocks. Ton cynique, focus prix/actions."
+      },
+      {
+        "handle": "MaximeMichelet",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "L'un des plus influents du Qu\u00e9bec sur le cycle crypto. Analyse on-chain et macro, pas de signaux daytrading vases clos."
+      },
+      {
+        "handle": "RomainRoussel",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Ex-VP chez Lemonway. Il cover la tech fr, la fintech et la data avec un ton terre-\u00e0-terre qui manque \u00e0 l'\u00e9cosyst\u00e8me."
+      }
+    ],
+    "summary": "5 comptes de poids, zero 'guru du weekend'. On a la France tech, la France finance, le Qu\u00e9bec crypto et un pont vers la macro US."
   }
 ]

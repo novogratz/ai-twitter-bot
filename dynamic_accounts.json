@@ -170,7 +170,18 @@
     "AlexisGirardFR",
     "MathieuFoucault",
     "YoussefO",
-    "RaphaelTanguay"
+    "RaphaelTanguay",
+    "RomainDillet",
+    "MaximeCollin",
+    "GaelV",
+    "MaximeMaurin",
+    "HugoB",
+    "RemyBret",
+    "MickaelBonneau",
+    "GaelleCohen",
+    "JesseScro",
+    "MaximeMichelet",
+    "RomainRoussel"
   ],
   "en": [
     "Chubby",
@@ -250,7 +261,8 @@
     "James",
     "Brez",
     "Framer",
-    "LeRobot"
+    "LeRobot",
+    "Baby"
   ],
   "history": [
     {
@@ -1496,6 +1508,66 @@
     {
       "lang": "fr",
       "handle": "RaphaelTanguay",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDillet",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCollin",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelV",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMaurin",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoB",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "RemyBret",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelBonneau",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Baby",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelleCohen",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "JesseScro",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMichelet",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainRoussel",
       "added": "2026-07-10"
     }
   ]
