@@ -197,7 +197,9 @@
     "alexistanguay",
     "jules_guillot",
     "ThibautMuller",
-    "Raphaelsaliba"
+    "Raphaelsaliba",
+    "BenoitLFloch",
+    "Lefranc"
   ],
   "en": [
     "Chubby",
@@ -289,7 +291,10 @@
     "BEYHIVE",
     "jason",
     "justine",
-    "Coinvo"
+    "Coinvo",
+    "Killa",
+    "MenchOsint",
+    "Jukan"
   ],
   "history": [
     {
@@ -1730,6 +1735,31 @@
     {
       "lang": "fr",
       "handle": "Raphaelsaliba",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Killa",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "MenchOsint",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Jukan",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitLFloch",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lefranc",
       "added": "2026-07-11"
     }
   ]

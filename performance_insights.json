@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-11T02:47:12.667558",
-  "window_7d_actions": 4736,
-  "window_24h_actions": 767,
+  "generated_at": "2026-07-11T12:32:52.791312",
+  "window_7d_actions": 4865,
+  "window_24h_actions": 694,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4721
+      "count": 4849
     },
     {
       "pattern": "RENAME",
@@ -18,20 +18,24 @@
     {
       "pattern": "METAPHOR",
       "count": 4
+    },
+    {
+      "pattern": "REPETITION",
+      "count": 1
     }
   ],
   "worst_patterns": [
     {
+      "pattern": "REPETITION",
+      "count": 1
+    },
+    {
       "pattern": "METAPHOR",
       "count": 4
     },
     {
       "pattern": "UNDERSTATEMENT",
       "count": 5
-    },
-    {
-      "pattern": "RENAME",
-      "count": 6
     }
   ],
   "best_hours_utc": [
@@ -45,90 +49,90 @@
     },
     {
       "hour": 10,
-      "actions": 219
+      "actions": 222
     },
     {
-      "hour": 12,
-      "actions": 218
+      "hour": 2,
+      "actions": 220
     },
     {
       "hour": 8,
-      "actions": 217
+      "actions": 219
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2185
+      "count": 2246
     },
     {
       "topic": "IA",
-      "count": 1865
+      "count": 1916
     },
     {
       "topic": "Crypto",
-      "count": 607
+      "count": 618
     },
     {
       "topic": "Bourse",
-      "count": 290
+      "count": 292
     },
     {
       "topic": "Spatial",
-      "count": 90
+      "count": 96
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2094
+      "count": 2149
     },
     {
       "pillar": "other",
-      "count": 1404
+      "count": 1449
     },
     {
       "pillar": "market_trauma",
-      "count": 948
+      "count": 976
     },
     {
       "pillar": "meme_reaction",
-      "count": 197
+      "count": 204
     },
     {
       "pillar": "reply_bait",
-      "count": 49
+      "count": 45
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 44
+      "count": 42
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 355
+      "count": 314
     },
     {
       "pillar": "other",
-      "count": 212
+      "count": 207
     },
     {
       "pillar": "market_trauma",
-      "count": 151
+      "count": 130
     },
     {
       "pillar": "meme_reaction",
       "count": 33
     },
     {
-      "pillar": "reply_bait",
-      "count": 8
+      "pillar": "ai_vs_btc",
+      "count": 6
     },
     {
-      "pillar": "ai_vs_btc",
-      "count": 8
+      "pillar": "reply_bait",
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -136,21 +140,21 @@
       "pillar": "market_trauma",
       "posts": 52,
       "avg_likes": 0.13,
-      "avg_views": 23.7,
+      "avg_views": 24.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 79,
-      "avg_likes": 0.09,
-      "avg_views": 21.7,
+      "posts": 78,
+      "avg_likes": 0.08,
+      "avg_views": 22.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 65,
+      "posts": 66,
       "avg_likes": 0.08,
-      "avg_views": 21.0,
+      "avg_views": 20.9,
       "low_sample": false
     },
     {
@@ -171,43 +175,43 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4022
+      "count": 4135
     },
     {
       "type": "quote",
-      "count": 364
+      "count": 374
     },
     {
       "type": "quote_gif",
-      "count": 171
+      "count": 172
     },
     {
       "type": "post",
-      "count": 83
+      "count": 89
     },
     {
       "type": "hotake",
-      "count": 50
+      "count": 51
     },
     {
       "type": "retweet",
-      "count": 46
+      "count": 44
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-11T02:47:06.713099",
-      "text": "HBM supply is the actual AI capex constraint. NVIDIA gets the valuation. SK Hynix gets the margin. One makes the headlines, the other controls the cycle.",
+      "ts": "2026-07-11T12:31:22.527766",
+      "text": "Showing 50 tickers that worked is transparency. showing whether those 50 work again next cycle is truth. first is useful, second is rare.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-11T02:46:09.030305",
-      "text": "Apple securing tariff exemption by manufacturing iPhones at Intel isn't about tariffs. It's Apple betting chip independence matters more than quarterly margin.",
+      "ts": "2026-07-11T12:30:13.395060",
+      "text": "$152k MRR wrapping an existing app. agents didn't build the product, they just made it visible. 6 months until everyone's doing this.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-11T02:45:36.159420",
-      "text": "Google's Search: $200B/yr revenue. OpenAI's burn: $5B/yr with $3.4B revenue. You move slow when revenue's at stake. You iterate fast when there's nothing to break.",
+      "ts": "2026-07-11T12:29:53.988636",
+      "text": "Both run on 'margins appear by 2027' capital and FOMO. GLP-1's clinical data is real. most AI startups' moat is 18 months.",
       "type": "reply"
     }
   ]
