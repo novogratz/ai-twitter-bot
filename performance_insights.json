@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-10T21:18:55.516190",
-  "window_7d_actions": 4562,
-  "window_24h_actions": 771,
+  "generated_at": "2026-07-11T02:47:12.667558",
+  "window_7d_actions": 4736,
+  "window_24h_actions": 767,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4547
+      "count": 4721
     },
     {
       "pattern": "RENAME",
@@ -36,6 +36,14 @@
   ],
   "best_hours_utc": [
     {
+      "hour": 1,
+      "actions": 240
+    },
+    {
+      "hour": 0,
+      "actions": 234
+    },
+    {
       "hour": 10,
       "actions": 219
     },
@@ -46,85 +54,77 @@
     {
       "hour": 8,
       "actions": 217
-    },
-    {
-      "hour": 6,
-      "actions": 208
-    },
-    {
-      "hour": 9,
-      "actions": 207
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2118
+      "count": 2185
     },
     {
       "topic": "IA",
-      "count": 1784
+      "count": 1865
     },
     {
       "topic": "Crypto",
-      "count": 580
+      "count": 607
     },
     {
       "topic": "Bourse",
-      "count": 284
+      "count": 290
     },
     {
       "topic": "Spatial",
-      "count": 83
+      "count": 90
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2008
+      "count": 2094
     },
     {
       "pillar": "other",
-      "count": 1354
+      "count": 1404
     },
     {
       "pillar": "market_trauma",
-      "count": 918
+      "count": 948
     },
     {
       "pillar": "meme_reaction",
-      "count": 193
+      "count": 197
     },
     {
       "pillar": "reply_bait",
-      "count": 47
+      "count": 49
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 42
+      "count": 44
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 357
+      "count": 355
     },
     {
       "pillar": "other",
-      "count": 204
+      "count": 212
     },
     {
       "pillar": "market_trauma",
-      "count": 155
+      "count": 151
     },
     {
       "pillar": "meme_reaction",
-      "count": 36
+      "count": 33
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 8
     },
     {
       "pillar": "ai_vs_btc",
@@ -134,23 +134,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 55,
-      "avg_likes": 0.11,
-      "avg_views": 23.6,
+      "posts": 52,
+      "avg_likes": 0.13,
+      "avg_views": 23.7,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 79,
-      "avg_likes": 0.1,
-      "avg_views": 22.3,
+      "avg_likes": 0.09,
+      "avg_views": 21.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 62,
+      "posts": 65,
       "avg_likes": 0.08,
-      "avg_views": 21.4,
+      "avg_views": 21.0,
       "low_sample": false
     },
     {
@@ -171,15 +171,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3882
+      "count": 4022
     },
     {
       "type": "quote",
-      "count": 340
+      "count": 364
     },
     {
       "type": "quote_gif",
-      "count": 167
+      "count": 171
     },
     {
       "type": "post",
@@ -191,23 +191,23 @@
     },
     {
       "type": "retweet",
-      "count": 40
+      "count": 46
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-10T21:17:39.874321",
-      "text": "Agentic AI consumes gazillions of tokens doing the work you pay it for. Meanwhile, a 401k Dave on 2% yield thinks his savings rate is a strategy.",
+      "ts": "2026-07-11T02:47:06.713099",
+      "text": "HBM supply is the actual AI capex constraint. NVIDIA gets the valuation. SK Hynix gets the margin. One makes the headlines, the other controls the cycle.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-10T21:16:47.096196",
-      "text": "Venice is faster on paper. NVDA wins in practice because Meta, Anthropic, OpenAI all run billions in CUDA inference. replatforming costs more than staying slower. not in 12 months.",
+      "ts": "2026-07-11T02:46:09.030305",
+      "text": "Apple securing tariff exemption by manufacturing iPhones at Intel isn't about tariffs. It's Apple betting chip independence matters more than quarterly margin.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-10T21:16:08.858653",
-      "text": "Waiting for a face ripper after the moves AI already had this year is just waiting. the best part of rallies always feels like nothing's happening. close the app.",
+      "ts": "2026-07-11T02:45:36.159420",
+      "text": "Google's Search: $200B/yr revenue. OpenAI's burn: $5B/yr with $3.4B revenue. You move slow when revenue's at stake. You iterate fast when there's nothing to break.",
       "type": "reply"
     }
   ]
