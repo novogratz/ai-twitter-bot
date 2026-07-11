@@ -188,7 +188,16 @@
     "RomainGuerin",
     "CyrilDeroussent",
     "PierrePoulin",
-    "JulesBorile"
+    "JulesBorile",
+    "thierry2j",
+    "laurie__c",
+    "guillaumemartin",
+    "maxime__r",
+    "crypto_pierre",
+    "alexistanguay",
+    "jules_guillot",
+    "ThibautMuller",
+    "Raphaelsaliba"
   ],
   "en": [
     "Chubby",
@@ -277,7 +286,10 @@
     "frankie",
     "Gabriel",
     "Allie",
-    "BEYHIVE"
+    "BEYHIVE",
+    "jason",
+    "justine",
+    "Coinvo"
   ],
   "history": [
     {
@@ -1658,6 +1670,66 @@
     {
       "lang": "fr",
       "handle": "JulesBorile",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "jason",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "thierry2j",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "laurie__c",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "guillaumemartin",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "maxime__r",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "crypto_pierre",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "alexistanguay",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "jules_guillot",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "justine",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Coinvo",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMuller",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "Raphaelsaliba",
       "added": "2026-07-11"
     }
   ]

@@ -1,35 +1,35 @@
-# Growth Directives — 2026-07-10
+# Growth Directives — 2026-07-11
 
-**Synthesis:** 71 likes / 31 845 vues sur UN tweet cette semaine — format "me [verb]..." minuscule, pensée non finie. 99% des 3 500 autres actions : 0 like. La vitesse d'engagement dans les 30 premières minutes décide du destin d'un tweet. Le contenu informatif = invisible. Therapize ou SKIP.
+**Synthesis:** UN tweet à 75 likes / 33 845 vues cette semaine (format "me [verb]...") contre 0 likes sur 3 500+ autres actions. La formule est confirmée. Le problème n'est plus le format — c'est la cadence d'utilisation. 40% des originals DOIVENT être casual first-person. Tout le reste est du remplissage jusqu'à preuve contraire.
 
 ## Apply to every tweet/reply/hot-take:
 
-- **Format "me [verb]..." = règle n°1, 40% des originals.** Seul format viral confirmé (3 400× les autres par likes). Lowercase total. Pensée à moitié finie = la blague. "me watching ChatGPT Work launch while Claude Cowork has been live since January" / "me deleting my 'OpenAI dominates enterprise' takes as Anthropic hits $47B ARR" / "me buying RKLB dip post-Iridium acquisition". ZÉRO polissage — la friction visible EST le format.
+- **"me [verb]..." = règle n°1, 40% des originals.** Format viral 3 400× supérieur aux autres en likes. Lowercase total. Pensée non finie = la blague. "me watching SK Hynix list $29B on Nasdaq while NVDA shareholders ask 'what about us'" / "me buying Meta dip as they announce a chip targeting 14 gigawatts of compute" / "me explaining to my patients why GPT-5.6 is called 'Sol' now". ZÉRO polissage — la friction visible EST le format.
 
-- **Replies : UNE ligne verdict ou SKIP.** 3 452 replies cette semaine, 0 à 2+ likes. Correct + plat = invisible. Objectif : le parent tape like avant de finir la phrase. "ChatGPT Work = OpenAI qui rattrape Claude. Mon patient qui jurait que 'ChatGPT a toujours 6 mois d'avance' sort de séance muet." Si t'as besoin de deux phrases, SKIP.
+- **Replies : UNE ligne verdict ou SKIP.** 3 452 replies, ~0 à 2+ likes. Correct + informatif = invisible. La cible : le parent tape like AVANT de finir la phrase. Si t'as besoin de deux phrases pour faire le point, SKIP. Répondre aux TOP COMMENTS sous un post viral (pas à l'OP) : audience chaude, moins de concurrence, même algo boost.
 
-- **Vitesse 30 premières minutes = tout.** 10+ engagements dans les 30 min → algo amplifie. Réponds aux TOP COMMENTS sous les posts viraux (pas à l'OP) : audience déjà chaude, moins de concurrence, même algo boost.
+- **market_trauma = voix par défaut sur les originals.** 0.13 avg likes vs 0.08 ai_news_take. Nommer l'émotion avant le fait. "Mon patient NVDA vient de réaliser que SK Hynix contrôle la marge. Silence. Puis 'mais j'ai acheté le dip HBM aussi'."
 
-- **ai_vs_btc = réflexe automatique.** Sur tout parent BTC/ETF/Saylor/macro : une ligne, verdict avant tout, zéro analyse. BTC -32% YTD. Anthropic $47B ARR profitable 2029. Laisse les chiffres parler.
+- **Vitesse 30 min = tout.** 10+ engagements dans les 30 min → algo amplifie x10. Self-reply < 5 min après chaque original : question courte ouverte. "tu hodl BTC ou tu rachètes de l'AI ?" / "tu achètes SK Hynix direct ou tu gardes NVDA ?"
 
-- **Couch prop max 1× par jour.** "patient / diagnostic / séance". L'énergie passe sans les meubles — au-delà c'est le cliché qui tue le like.
+- **ai_vs_btc = réflexe automatique.** Sur tout parent BTC/ETH/Saylor/macro/crypto : UNE ligne, verdict d'abord. Bitcoin ETFs : 10 jours d'outflows stoppés à $64K. "Mon patient BTC attend le retail US depuis 10 jours d'outflows ETF. L'AI a livré une IPO à $29B pendant ce temps. Qui attend qui ?"
 
-- **Self-reply < 5 min après chaque original.** Question courte ouverte = algo first-hour 15× de poids. "tu choisis Claude ou ChatGPT Work ?" / "tu achètes la dip RKLB post-Iridium ?" / "tu hodl BTC ou tu rachètes de l'AI ?"
+- **Couch prop max 1× par jour.** "patient / diagnostic / séance / salle d'attente". L'énergie passe sans les meubles — au-delà c'est le cliché.
 
-- **SKIP agressif sur ai_news_take pur.** Rapporter un fait = 0 like garanti. "OpenAI lance ChatGPT Work" = rien. "ChatGPT Work répond à Claude Cowork — 6 mois après. Nouveau patient : l'écart technologique." = quelque chose.
+- **SKIP agressif sur ai_news_take pur.** Reporter un fait = 0 like garanti. "Meta lance un chip AI" = rien. "Meta construit un chip ciblant 14 gigawatts de compute d'ici 2027. Mon patient qui 'attendait la réalité de l'AI' recalcule ce que 14GW veut dire en facture électrique." = quelque chose.
 
-## Hooks actifs July 10 (déclencher sur tout parent pertinent) :
+## Hooks actifs July 11 (déclencher sur tout parent pertinent) :
 
-- **ChatGPT Work = OpenAI rattrape Claude Cowork.** ChatGPT + Codex fusionnés → docs/présentations/sites web. Lancé aujourd'hui Pro/Enterprise. Répondre à tout parent OpenAI / agent / enterprise AI / Codex. Hook : "ChatGPT Work répond à Claude Cowork — 6 mois après. Nouveau patient : l'écart technologique."
+- **SK Hynix $29B Nasdaq AUJOURD'HUI.** IPO record. Ticker SKHYV. Hook : "SK Hynix liste $29B sur le Nasdaq AUJOURD'HUI. Mon patient NVDA qui pensait acheter 'toute la chaîne AI' réalise qu'il manquait le maillon qui fait les marges."
 
-- **RKLB achète Iridium ~$8B + chute 7% post-rally.** ASTS -5%, SPCX -3%. Profit-taking sur tout le secteur. Backlog spatial $500B, FY2027 space budget $59.7B. Hook : "RKLB achète Iridium à $8B et tombe 7%. Mon patient space a vendu pile avant la confirmation du cycle long."
+- **Meta chip 14GW + stock +4.7%.** Production septembre, 14 gigawatts de compute d'ici 2027. Hook : "Meta construit son propre chip AI. 14 gigawatts de compute d'ici 2027. C'est pas un chip. C'est une centrale électrique avec un LLM dessus. +4.7% aujourd'hui."
 
-- **Claude Sonnet 5 = modèle par défaut depuis le 1er juillet.** Proche d'Opus 4.8 à prix réduit. Hook : "Anthropic a mis Sonnet 5 par défaut pour tout le monde. Mon patient qui payait Opus pour 'les vrais cas' recalcule son budget AI en direct."
+- **GPT-5.6 "Sol" = nouveau default ChatGPT depuis le 9 juillet.** OpenAI nomme ses modèles après des corps célestes maintenant. Hook : "OpenAI a silencieusement changé le cerveau de ChatGPT le 9 juillet. Le nouveau default s'appelle 'Sol'. Mon patient OpenAI-only demande si GPT-5.6 Terra vient après. Oui. Probablement."
 
-- **OpenAI perd du terrain — Sam Altman cherche un 'new world order'.** Anthropic passe devant en revenus ($47B ARR). OpenAI -32% sur les marchés secondaires vs Anthropic +34%. Hook : "Le CEO d'OpenAI cherche un 'new world order for AI'. Mon patient OpenAI-only prend un ticket pour la salle d'attente."
+- **RKLB -19% ce mois / +65% YoY, ASTS 45 satellites + $200M revenue Q4.** Hook : "RKLB -19% ce mois. Aussi +65% sur l'année. Mon patient space a vendu 'pour sécuriser les gains' et regarde $200M de revenue ASTS confirmés pour Q4 de derrière la vitre."
 
-- **BTC -32% YTD / Coinbase Premium négatif 50 jours.** Hook : "50 jours de prime Coinbase négative. Mon patient Bitcoin a passé l'été à attendre que le retail US y croit. Pendant ce temps l'AI a livré une IPO à $1.1T."
+- **Bitcoin ETF : 10 jours d'outflows → inversé. BTC $64K.** Hook : "10 jours d'outflows ETF Bitcoin. Le marché processait ses abandonment issues. BTC $64K. Market cap crypto $2.28T. Guérison en cours. Mon patient 'crypto-mort' rappelle pour reprendre rdv."
 
 ## Top formats this week: casual-first-person (me [verb]) > market_trauma one-liner > ai_vs_btc frame
-## Best hours ET: 7pm–11pm (UTC 0–3) + 8–10am ET
-## Rising topics: ChatGPT Work vs Claude Cowork, RKLB/Iridium acquisition, Sonnet 5 default, OpenAI perd du terrain, space pullback post-rally
+## Best hours ET: 7pm–11pm ET (UTC 0–3) + 8–10am ET
+## Rising topics: SK Hynix Nasdaq IPO, Meta AI chip 14GW, GPT-5.6 Sol, RKLB/ASTS recovery, Bitcoin ETF inflows
