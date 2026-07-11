@@ -4,6 +4,21 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-07-10 — REPLY THROUGHPUT (operator: "you used to be around 900
+> per day now only 600... fix it"):** uptime was already 24h/day, so this
+> was PACE: ~27 replies/hr. Log analysis (15:00-15:59 sample): ~400 scrape
+> lines vs 32 replies posted — `direct_reply` scanned ALL ~26 search
+> queries EVERY 1-2 min cycle, so the same query was scraped 4x/hour
+> (churn is slower than that; re-scans mostly dedup-skip) and search
+> scrapes ate the Safari time posting needed. Fix:
+> `_queries_for_cycle` — each cycle scans a rotating slice of
+> `DIRECT_REPLY_QUERIES_PER_CYCLE` (default 8, call-time env) queries;
+> full coverage still lands every ~3 cycles (~5 min), and the freed
+> Safari time flows to POSTING replies. Expected ~35-40/hr ≈ 850-950/day.
+> Engage/retweet/likes were checked and are NOT the burn (chokepoint
+> refusals are instant; retweet skips cheap at cap). Guard:
+> `test_direct_reply_scans_rotating_query_subset`.
+
 > **Mandate 2026-07-06 — MORE POSTS + QUOTES + RETWEETS; Stop hook removed
 > (operator: "you didn't do enough replies nor posts today... i barely see
 > retweet quote and new posts"):** two root causes, both fixed.

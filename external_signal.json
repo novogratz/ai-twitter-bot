@@ -1,216 +1,216 @@
 {
-  "ts": "2026-07-06T08:48:25.525050",
+  "ts": "2026-07-10T21:48:55.519536",
   "count": 30,
   "items": [
     {
+      "src": "Wired",
+      "title": "OpenAI’s Head of Safety Is Leaving the Company",
+      "url": "https://www.wired.com/story/openai-head-of-safety-leaving/",
+      "score": 0,
+      "ts": "2026-07-11T01:07:26"
+    },
+    {
       "src": "CNBC Top",
-      "title": "TeraWulf shares soar after Anthropic leases data center in Kentucky",
-      "url": "https://www.cnbc.com/2026/07/06/anthropic-terawulf-data-center-ai.html",
+      "title": "Apple sues OpenAI alleging trade secret theft, says scheme was 'at every level'",
+      "url": "https://www.cnbc.com/2026/07/10/apple-openai-lawsuit-trade-secrets.html",
       "score": 0,
-      "ts": "2026-07-06T12:30:48"
-    },
-    {
-      "src": "Decrypt",
-      "title": "Strategy Sells $216M in Bitcoin for Dividends Under 'BTC Monetization Program'",
-      "url": "https://decrypt.co/372797/strategy-sells-216m-in-bitcoin-for-dividends-under-btc-monetization-program",
-      "score": 0,
-      "ts": "2026-07-06T12:28:00"
-    },
-    {
-      "src": "Yahoo Finance",
-      "title": "Strategy Sells $216M in Bitcoin for Dividends Under 'BTC Monetization Program'",
-      "url": "https://finance.yahoo.com/markets/crypto/articles/strategy-sells-216m-bitcoin-dividends-122800355.html",
-      "score": 0,
-      "ts": "2026-07-06T12:28:00"
-    },
-    {
-      "src": "Yahoo Finance",
-      "title": "Tesla robotaxi service expands to Miami from Texas",
-      "url": "https://finance.yahoo.com/technology/ai/articles/tesla-robotaxi-expands-miami-texas-122243343.html",
-      "score": 0,
-      "ts": "2026-07-06T12:22:43"
-    },
-    {
-      "src": "Yahoo Finance",
-      "title": "Better Chip Stock: Intel Versus Taiwan Semiconductor",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/better-chip-stock-intel-versus-122000698.html",
-      "score": 0,
-      "ts": "2026-07-06T12:20:00"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Michael Saylor's Strategy dramatically ups pace of bitcoin sales, raising $216 million",
-      "url": "https://www.coindesk.com/markets/2026/07/06/michael-saylor-s-strategy-dramatically-ups-pace-of-bitcoin-sales-raising-usd216-million",
-      "score": 0,
-      "ts": "2026-07-06T12:16:28"
-    },
-    {
-      "src": "Cointelegraph",
-      "title": "Belgian regulator flags six unauthorized crypto providers after MiCA deadline",
-      "url": "https://cointelegraph.com/news/belgium-unauthorized-crypto-firms-mica-deadline?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "score": 0,
-      "ts": "2026-07-06T12:15:20"
-    },
-    {
-      "src": "Yahoo Finance",
-      "title": "Stock Market Today: Dow Falls, Tech Futures Rally; Memory Names Micron, Sandisk Bounce Higher (Live Coverage)",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-micron-mu-stock-sandisk-sndk-stock/?src=A00220&yptr=yahoo",
-      "score": 0,
-      "ts": "2026-07-06T12:13:44"
-    },
-    {
-      "src": "Yahoo Finance",
-      "title": "Dow Jones Futures: Nasdaq Set To Reclaim Key Level; Apple, SpaceX, Sandisk, Robinhood In Focus",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-apple-spacex-sandisk-robinhood/?src=A00220&yptr=yahoo",
-      "score": 0,
-      "ts": "2026-07-06T12:13:03"
-    },
-    {
-      "src": "Decrypt",
-      "title": "Morning Minute: Crypto Surges Over Holiday Weekend",
-      "url": "https://decrypt.co/372798/morning-minute-crypto-surges-over-holiday-weekend",
-      "score": 0,
-      "ts": "2026-07-06T12:09:30"
-    },
-    {
-      "src": "Yahoo Finance",
-      "title": "Trump vs. Pelosi: Who Made More Money in the Stock Market Last Year?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/trump-vs-pelosi-made-more-120929567.html",
-      "score": 0,
-      "ts": "2026-07-06T12:09:29"
-    },
-    {
-      "src": "Yahoo Finance",
-      "title": "MicroStrategy Sold 7x More Bitcoin Than Reports Suggested",
-      "url": "https://finance.yahoo.com/markets/crypto/articles/microstrategy-sold-7x-more-bitcoin-120834375.html",
-      "score": 0,
-      "ts": "2026-07-06T12:08:34"
-    },
-    {
-      "src": "Yahoo Finance",
-      "title": "Broadcom, Apple extend chip supply deal through 2031",
-      "url": "https://finance.yahoo.com/technology/articles/broadcom-apple-extend-chip-partnership-120712484.html",
-      "score": 0,
-      "ts": "2026-07-06T12:07:12"
-    },
-    {
-      "src": "Yahoo Finance",
-      "title": "SK Hynix launches $28 billion Nasdaq ADR listing",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/sk-hynix-launches-28-billion-115850372.html",
-      "score": 0,
-      "ts": "2026-07-06T12:06:18"
-    },
-    {
-      "src": "Yahoo Finance",
-      "title": "Musk Calls It ‘Utterly False,’ But This SpaceX Rumor Should Terrify Every Apple Investor",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/musk-calls-utterly-false-spacex-120523743.html",
-      "score": 0,
-      "ts": "2026-07-06T12:05:23"
+      "ts": "2026-07-11T00:08:23"
     },
     {
       "src": "CNBC Tech",
-      "title": "Trump exclusive, prediction market activity soars, AI Alexander Hamilton and more in Morning Squawk",
-      "url": "https://www.cnbc.com/2026/07/06/5-things-to-know-before-the-stock-market-opens.html",
+      "title": "Apple sues OpenAI alleging trade secret theft, says scheme was 'at every level'",
+      "url": "https://www.cnbc.com/2026/07/10/apple-openai-lawsuit-trade-secrets.html",
       "score": 0,
-      "ts": "2026-07-06T12:04:11"
+      "ts": "2026-07-11T00:08:23"
     },
     {
-      "src": "Yahoo Finance",
-      "title": "U.S. futures rise as oil weighed by supply while earnings loom",
-      "url": "https://finance.yahoo.com/news/shares-edge-higher-asia-oil-005923908.html",
+      "src": "TechCrunch",
+      "title": "Meta removes controversial AI feature on Instagram after backlash",
+      "url": "https://techcrunch.com/2026/07/10/meta-removes-controversial-ai-feature-on-instagram-after-backlash/",
       "score": 0,
-      "ts": "2026-07-06T11:58:36"
+      "ts": "2026-07-10T23:55:07"
     },
     {
-      "src": "Yahoo Finance",
-      "title": "CRISPR Therapeutics vs. Viking Therapeutics: Which Healthcare Stock Is a Better Buy in 2026?",
-      "url": "https://finance.yahoo.com/healthcare/articles/crispr-therapeutics-vs-viking-therapeutics-115501174.html",
+      "src": "TechCrunch AI",
+      "title": "Meta removes controversial AI feature on Instagram after backlash",
+      "url": "https://techcrunch.com/2026/07/10/meta-removes-controversial-ai-feature-on-instagram-after-backlash/",
       "score": 0,
-      "ts": "2026-07-06T11:55:01"
+      "ts": "2026-07-10T23:55:07"
     },
     {
-      "src": "Yahoo Finance",
-      "title": "8 Stocks' Earnings Will Grow Faster Than Everyone's Wildest Dreams",
-      "url": "https://www.investors.com/etfs-and-funds/sectors/sp500-stocks-upcoming-growth-blasts-past-everyones-wildest-dreams/?src=A00220&yptr=yahoo",
+      "src": "Wired",
+      "title": "Microsoft Reports a Massive 25 Percent Jump in Emissions",
+      "url": "https://www.wired.com/story/microsoft-25-percent-jump-in-carbon-emissions/",
       "score": 0,
-      "ts": "2026-07-06T11:40:35"
+      "ts": "2026-07-10T23:16:56"
     },
     {
-      "src": "Yahoo Finance",
-      "title": "Weekly Stock List",
-      "url": "https://finance.yahoo.com/research/reports/ARGUS_47521_StockPicks_1783337985000?yptr=yahoo&ncid=yahooproperties_plusresear_nm5q6ze1cei",
+      "src": "Decrypt",
+      "title": "Apple Sues OpenAI, Claims Former Employees Stole Trade Secrets",
+      "url": "https://decrypt.co/373339/apple-sues-openai-claims-former-employees-stole-trade-secrets",
       "score": 0,
-      "ts": "2026-07-06T11:39:45"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Russia's largest bank plans crypto wallet launch as Moscow clears market path",
-      "url": "https://www.coindesk.com/business/2026/07/06/russia-s-largest-bank-plans-crypto-wallet-launch-as-moscow-clears-market-path",
-      "score": 0,
-      "ts": "2026-07-06T11:36:05"
-    },
-    {
-      "src": "Yahoo Finance",
-      "title": "Daily Spotlight: Stock Market Valuation Reasonable",
-      "url": "https://finance.yahoo.com/research/reports/ARGUS_47517_MarketOutlook_1783337764000?yptr=yahoo&ncid=yahooproperties_plusresear_nm5q6ze1cei",
-      "score": 0,
-      "ts": "2026-07-06T11:36:04"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "SpaceX's Nasdaq 100 inclusion comes with a historical warning",
-      "url": "https://www.coindesk.com/markets/2026/07/06/spacex-s-nasdaq-100-inclusion-comes-with-a-historical-warning",
-      "score": 0,
-      "ts": "2026-07-06T11:16:26"
-    },
-    {
-      "src": "Yahoo Finance",
-      "title": "Hedge funds dumped chip stocks for a fourth week as AI shares sold off",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/hedge-funds-dumped-chip-stocks-111514085.html",
-      "score": 0,
-      "ts": "2026-07-06T11:15:14"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "U.S. inflation outlook underpins bitcoin bulls after best week since March",
-      "url": "https://www.coindesk.com/daybook-us/2026/07/06/u-s-inflation-outlook-underpins-bitcoin-bulls-after-best-week-since-march",
-      "score": 0,
-      "ts": "2026-07-06T11:15:00"
-    },
-    {
-      "src": "Yahoo Finance",
-      "title": "Britain should consider regulating AI models, FCA official says",
-      "url": "https://finance.yahoo.com/technology/ai/articles/britain-consider-regulating-ai-models-104539260.html",
-      "score": 0,
-      "ts": "2026-07-06T11:00:10"
-    },
-    {
-      "src": "CoinDesk",
-      "title": "Crypto bounces back from the brink as altcoin optimism returns despite pockets of weakness",
-      "url": "https://www.coindesk.com/markets/2026/07/06/crypto-bounces-back-from-the-brink-as-altcoin-optimism-returns-despite-pockets-of-weakness",
-      "score": 0,
-      "ts": "2026-07-06T10:44:45"
-    },
-    {
-      "src": "Cointelegraph",
-      "title": "$60.4K Becomes 'most important area': Five things to know in Bitcoin this week",
-      "url": "https://cointelegraph.com/markets/604k-becomes-most-important-area-five-things-to-know-in-bitcoin-this-week?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "score": 0,
-      "ts": "2026-07-06T10:25:20"
+      "ts": "2026-07-10T21:50:30"
     },
     {
       "src": "CNBC Top",
-      "title": "EasyJet shares soar 10% as budget airline agrees to $7.3 billion Castlelake takeover",
-      "url": "https://www.cnbc.com/2026/07/06/easyjet-ezj-stock-castlelake-takeover-bid.html",
+      "title": "The AI race is shifting from bigger models to cheaper, smarter systems",
+      "url": "https://www.cnbc.com/2026/07/10/the-ai-race-is-shifting-from-bigger-models-to-cheaper-smarter-systems.html",
       "score": 0,
-      "ts": "2026-07-06T10:20:59"
+      "ts": "2026-07-10T21:27:18"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "The AI race is shifting from bigger models to cheaper, smarter systems",
+      "url": "https://www.cnbc.com/2026/07/10/the-ai-race-is-shifting-from-bigger-models-to-cheaper-smarter-systems.html",
+      "score": 0,
+      "ts": "2026-07-10T21:27:18"
     },
     {
       "src": "CoinDesk",
-      "title": "Bitcoin's Sharpe Ratio slides to lowest since 2022. Here's what it means.",
-      "url": "https://www.coindesk.com/markets/2026/07/06/bitcoin-s-sharpe-ratio-slides-to-lowest-since-2022-here-s-what-it-means",
+      "title": "Meta's Chief Data Officer Says Agentic Commerce is the \"Next Tier of Business\"",
+      "url": "https://www.coindesk.com/coindesk-news/2026/07/10/meta-s-chief-data-officer-says-agentic-commerce-is-the-next-tier-of-business",
       "score": 0,
-      "ts": "2026-07-06T10:19:56"
+      "ts": "2026-07-10T21:26:55"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "Kraken to overhaul app with AI investing assistant",
+      "url": "https://cointelegraph.com/news/kraken-to-rebuild-app-around-ai-powered-trading-agents-report?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-07-10T21:07:39"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "Senate Democrats call for hearings into Trump’s ties to crypto amid CLARITY Act discussions",
+      "url": "https://cointelegraph.com/news/senate-democrats-hearings-donald-trump-crypto-clarity-act?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-07-10T21:03:57"
+    },
+    {
+      "src": "TechCrunch",
+      "title": "Apple sues OpenAI over alleged trade secret theft",
+      "url": "https://techcrunch.com/2026/07/10/apple-sues-openai-over-alleged-trade-secret-theft/",
+      "score": 0,
+      "ts": "2026-07-10T21:00:29"
+    },
+    {
+      "src": "TechCrunch AI",
+      "title": "Apple sues OpenAI over alleged trade secret theft",
+      "url": "https://techcrunch.com/2026/07/10/apple-sues-openai-over-alleged-trade-secret-theft/",
+      "score": 0,
+      "ts": "2026-07-10T21:00:29"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "OpenAI power consolidates under co-founder Greg Brockman ahead of prospective IPO",
+      "url": "https://www.cnbc.com/2026/07/10/openai-power-consolidates-under-co-founder-greg-brockman-ahead-of-ipo.html",
+      "score": 0,
+      "ts": "2026-07-10T20:51:09"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "OpenAI power consolidates under co-founder Greg Brockman ahead of prospective IPO",
+      "url": "https://www.cnbc.com/2026/07/10/openai-power-consolidates-under-co-founder-greg-brockman-ahead-of-ipo.html",
+      "score": 0,
+      "ts": "2026-07-10T20:51:09"
+    },
+    {
+      "src": "Wired",
+      "title": "Apple Is Suing OpenAI for Allegedly Stealing Hardware Secrets",
+      "url": "https://www.wired.com/story/apple-sues-openai-allegedly-stealing-ip-hardware/",
+      "score": 0,
+      "ts": "2026-07-10T20:44:05"
+    },
+    {
+      "src": "Decrypt",
+      "title": "Democrats Call for Senate Hearings on Trump's Massive Crypto Profits",
+      "url": "https://decrypt.co/373289/democrats-senate-hearings-trump-massive-crypto-profits",
+      "score": 0,
+      "ts": "2026-07-10T20:35:44"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "SK Hynix rises 13% in Nasdaq debut. Chairman tells CNBC 'demand is enormous'",
+      "url": "https://www.cnbc.com/2026/07/10/sk-hynix-skhy-stock-nasdaq.html",
+      "score": 0,
+      "ts": "2026-07-10T20:34:32"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "SK Hynix rises 13% in Nasdaq debut. Chairman tells CNBC 'demand is enormous'",
+      "url": "https://www.cnbc.com/2026/07/10/sk-hynix-skhy-stock-nasdaq.html",
+      "score": 0,
+      "ts": "2026-07-10T20:34:32"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "How Apple stock rode the AI rollercoaster to record highs in 1 chart",
+      "url": "https://www.cnbc.com/2026/07/10/how-apple-stock-rode-the-ai-rollercoaster-to-record-highs-in-1-chart.html",
+      "score": 0,
+      "ts": "2026-07-10T20:25:11"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "How Apple stock rode the AI rollercoaster to record highs in 1 chart",
+      "url": "https://www.cnbc.com/2026/07/10/how-apple-stock-rode-the-ai-rollercoaster-to-record-highs-in-1-chart.html",
+      "score": 0,
+      "ts": "2026-07-10T20:25:11"
+    },
+    {
+      "src": "Cointelegraph",
+      "title": "Here’s what happened in crypto today",
+      "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "score": 0,
+      "ts": "2026-07-10T20:14:39"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Meta's stock has best week since early 2024 as optimism builds around AI strategy",
+      "url": "https://www.cnbc.com/2026/07/10/meta-shares-surge-6percent-as-optimism-grows-on-it.html",
+      "score": 0,
+      "ts": "2026-07-10T20:06:19"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "Meta's stock has best week since early 2024 as optimism builds around AI strategy",
+      "url": "https://www.cnbc.com/2026/07/10/meta-shares-surge-6percent-as-optimism-grows-on-it.html",
+      "score": 0,
+      "ts": "2026-07-10T20:06:19"
+    },
+    {
+      "src": "CNBC Top",
+      "title": "Stablecoin issuer Circle just got the greenlight to operate as a bank. The shares are up 5%",
+      "url": "https://www.cnbc.com/2026/07/10/circle-gets-an-occ-bank-charter-as-stablecoin-competition-heats-up-shares-surge-14percent.html",
+      "score": 0,
+      "ts": "2026-07-10T20:01:29"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "Stablecoin issuer Circle just got the greenlight to operate as a bank. The shares are up 5%",
+      "url": "https://www.cnbc.com/2026/07/10/circle-gets-an-occ-bank-charter-as-stablecoin-competition-heats-up-shares-surge-14percent.html",
+      "score": 0,
+      "ts": "2026-07-10T20:01:29"
+    },
+    {
+      "src": "The Verge",
+      "title": "Meta turns off the Instagram feature that let users make AI deepfakes of public accounts",
+      "url": "https://www.theverge.com/tech/964416/meta-instagram-ai-muse-image-deepfakes",
+      "score": 0,
+      "ts": "2026-07-10T19:49:50"
+    },
+    {
+      "src": "CNBC Tech",
+      "title": "Meta stock got the 18% pop Jim Cramer said it could on cloud news. What's next?",
+      "url": "https://www.cnbc.com/2026/07/10/meta-got-18percent-pop-jim-cramer-said-it-could-on-cloud-news-what-is-next.html",
+      "score": 0,
+      "ts": "2026-07-10T19:39:24"
+    },
+    {
+      "src": "TechCrunch AI",
+      "title": "Open source AI matters more than ever, according to Hugging Face’s Clem Delangue",
+      "url": "https://techcrunch.com/podcast/open-source-ai-matters-more-than-ever-according-to-hugging-faces-clem-delangue/",
+      "score": 0,
+      "ts": "2026-07-10T19:00:00"
     }
   ]
 }

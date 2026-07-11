@@ -1,32 +1,35 @@
 {
-  "ts": "2026-07-06T08:38:24.859155",
+  "ts": "2026-07-10T21:48:54.976232",
   "window_min": 90,
-  "total_actions": 47,
+  "total_actions": 41,
   "by_type": {
-    "reply": 40,
-    "quote_gif": 1,
+    "reply": 35,
     "quote": 4,
-    "post": 2
+    "quote_gif": 3
   },
   "winners": {
-    "FEED-SWEEP-FEED": 7,
-    "FEED-SWEEP-FOLLOWING": 5,
-    "SEARCH-HOT/Nvidia OR NVDA OR GPU OR \"AI datacenter\" OR \"AI capex\" lang:": 5,
-    "SEARCH-HOT/CoreWeave OR Nebius OR \"Applied Digital\" OR \"data center\" OR": 3,
-    "SEARCH-HOT/Bitcoin OR BTC OR \"crypto crash\" OR \"BTC ETF\" lang:en min_fa": 3
+    "FEED-SWEEP-FEED": 8,
+    "SEARCH-HOT/\"AI agents\" OR \"agentic AI\" OR \"reasoning model\" OR AGI lang": 4,
+    "SEARCH-HOT/Nvidia OR \"AI datacenter\" OR \"AI capex\" lang:en min_faves:30": 2,
+    "SEARCH-HOT/Bitcoin OR BTC OR \"crypto crash\" OR \"BTC ETF\" lang:en min_fa": 2,
+    "SEARCH-HOT/TSMC OR AMD OR Broadcom OR \"AI chips\" OR \"AI power\" OR \"AI e": 2
   },
   "losers": {
-    "SEARCH-HOT/from:Mindset4Money_X min_faves:2": 1,
-    "GIF/kermit panic": 1,
-    "QUOTE/BridgeMind": 1,
-    "QUESTION": 1,
-    "SEARCH-HOT/\"AI crypto\" OR \"AI token\" OR \"decentralized AI\" OR \"AI agent": 1,
-    "SEARCH-HOT/\"AI startup\" OR \"AI funding\" OR \"AI layoffs\" OR \"AI jobs\" OR": 1,
-    "QUOTE/Frigg": 1,
-    "SPICY": 1,
     "SEARCH-HOT/\"market crash\" OR \"sell off\" OR \"sell-off\" OR VIX lang:en mi": 1,
-    "HOT_QUOTE/Serenity": 1,
-    "QUOTE/The \u20bfitcoin Therapist": 1
+    "HOT_QUOTE/Dexerto": 1,
+    "SEARCH-HOT/Palantir OR \"AI stock\" OR \"AI bubble\" lang:en min_faves:300": 1,
+    "QUOTE/amit": 1,
+    "GIF/michael jordan crying": 1,
+    "SEARCH-HOT/ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_fav": 1,
+    "GIF/ben affleck smoking": 1,
+    "SEARCH-HOT/CoreWeave OR Nebius OR \"Applied Digital\" OR \"data center\" OR": 1,
+    "SEARCH-HOT/Palantir OR \"AI stock\" OR \"AI bubble\" OR \"AI valuation\" lang": 1,
+    "SEARCH-HOT/OpenAI OR Anthropic OR xAI OR \"GPT-5\" lang:en min_faves:50": 1,
+    "QUOTE/Daniel": 1,
+    "GIF/skeleton waiting": 1,
+    "SEARCH-HOT/\"panic sold\" OR \"bought the top\" OR \"portfolio is down\" OR d": 1,
+    "QUOTE/Yann LeCun": 1,
+    "SEARCH-HOT/\"Claude Code\" OR Cursor OR Copilot OR \"AI coding\" lang:en mi": 1
   },
   "post_cadence_factor": 0.85,
   "boost_cadence_factor": 1.0

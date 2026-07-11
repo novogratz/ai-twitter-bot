@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-05-01T01:40:02.852790",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MarcTouati",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 63000,
-        "reason": "\u00c9conomiste, chroniqueur BFM Business, 8 best-sellers. Analyses macro FR quotidiennes, ton direct et engageant."
-      },
-      {
-        "handle": "LucJulia",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Co-cr\u00e9ateur de Siri, directeur scientifique Renault, auteur 'L'IA n'existe pas'. Vulgarisateur IA en FR, prises de position fortes."
-      },
-      {
-        "handle": "TrendFrance",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 10000,
-        "reason": "Cr\u00e9ateur PRT Bands & ExtraTrend, sp\u00e9cialiste trend following. Analyses techniques FR r\u00e9guli\u00e8res sur indices."
-      },
-      {
-        "handle": "sachapouget",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 8000,
-        "reason": "Analyste financier sp\u00e9cialiste biotechs et innovation. Twitte quotidiennement en FR sur small/mid caps et biotech."
-      }
-    ],
-    "summary": "7 comptes FR de qualit\u00e9 non encore suivis: LeCun (monstre IA mondial, fran\u00e7ais d'origine), MarcTouati + NCheron_bourse (analystes bourse BFM-tier), LesEchos (source news \u00e9co #1 FR), LucJulia (co-cr\u00e9ateur Siri, vulgarisateur IA), sachapouget + TrendFrance (analystes techniques sp\u00e9cialis\u00e9s). Focus France car le Qu\u00e9bec est d\u00e9j\u00e0 bien couvert avec francispouliot_, cryptoqc et Mila_Quebec."
-  },
-  {
     "ts": "2026-05-11T15:13:20.746732",
     "raw_count": 7,
     "kept_count": 4,
@@ -9921,5 +9883,29 @@
       }
     ],
     "summary": "5 comptes de poids, zero 'guru du weekend'. On a la France tech, la France finance, le Qu\u00e9bec crypto et un pont vers la macro US."
+  },
+  {
+    "ts": "2026-07-10T21:28:30.872270",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoDoublard",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "L'expert en on-chain. Il ne crie pas sur le mur, il montre les donn\u00e9es. Moins de 'moon', plus de 'truth'."
+      },
+      {
+        "handle": "RomainBecart",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Journaliste bourse chez IEG/BFM. Il est sur le terrain, pas derri\u00e8re son \u00e9cran \u00e0 r\u00eaver d'immobilier. Constats secs."
+      }
+    ],
+    "summary": "J'ai tri\u00e9 le grain de l'ivraie : plus de vendeurs de r\u00eave, plus de consultants en IA qui ne savent pas coder. On garde ceux qui apportent de la donn\u00e9e ou du contexte."
   }
 ]

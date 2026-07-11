@@ -2885,3 +2885,30 @@ def test_wsb_fetch_falls_back_when_reddit_blocked(monkeypatch):
     # both sources dead => empty list, no exception escapes
     monkeypatch.setattr(wsb, "_counts_from_apewisdom", reddit_blocked)
     assert wsb._fetch_wsb_tickers() == []
+
+
+def test_direct_reply_scans_rotating_query_subset(monkeypatch):
+    """2026-07-10 reply throughput ("you used to be around 900/day now only
+    600"): direct_reply scanned ALL ~26 search queries EVERY 1-2 min cycle —
+    the same query scraped 4x/hour mostly yields dedup-skips, and search
+    scrapes ate the Safari time replies needed for POSTING (~27/hr). Pin the
+    contract: each cycle scans a bounded rotating slice, consecutive cycles
+    rotate (no slice starvation), full coverage lands within ceil(N/K)
+    cycles, and the K env is read at call time."""
+    from src import direct_reply as dr
+    monkeypatch.setenv("DIRECT_REPLY_QUERIES_PER_CYCLE", "8")
+    qs = [f"q{i}" for i in range(26)]
+    dr._QUERY_ROTATION_OFFSET[0] = 0
+    slices = [dr._queries_for_cycle(qs) for _ in range(4)]
+    assert all(len(s) == 8 for s in slices), "cycle must pay for K scrapes only"
+    assert slices[0] != slices[1], "consecutive cycles must rotate"
+    assert set().union(*(set(s) for s in slices)) == set(qs), \
+        "rotation must cover every query within ceil(N/K) cycles"
+    # K >= N degrades to scan-everything; env read at call time
+    monkeypatch.setenv("DIRECT_REPLY_QUERIES_PER_CYCLE", "99")
+    assert dr._queries_for_cycle(qs) == qs
+    # the live cycle actually routes through the rotation
+    import inspect
+    src = inspect.getsource(dr.run_direct_reply_cycle)
+    assert "_queries_for_cycle" in src, \
+        "run_direct_reply_cycle must scan the rotating slice, not all queries"

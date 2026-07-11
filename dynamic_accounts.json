@@ -181,7 +181,9 @@
     "GaelleCohen",
     "JesseScro",
     "MaximeMichelet",
-    "RomainRoussel"
+    "RomainRoussel",
+    "CryptoDoublard",
+    "RomainBecart"
   ],
   "en": [
     "Chubby",
@@ -262,7 +264,13 @@
     "Brez",
     "Framer",
     "LeRobot",
-    "Baby"
+    "Baby",
+    "DrSadek",
+    "GONOGO",
+    "AK",
+    "NIK",
+    "frankie",
+    "Gabriel"
   ],
   "history": [
     {
@@ -1568,6 +1576,46 @@
     {
       "lang": "fr",
       "handle": "RomainRoussel",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "DrSadek",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "GONOGO",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "AK",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoDoublard",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBecart",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "NIK",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "frankie",
+      "added": "2026-07-10"
+    },
+    {
+      "lang": "en",
+      "handle": "Gabriel",
       "added": "2026-07-10"
     }
   ]

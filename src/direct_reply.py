@@ -708,6 +708,28 @@ def _reply_to_tweets(tweets, replied, source_name, source_detail="", remaining=N
             pending = nxt
     return posted
 
+# Rotation cursor for the per-cycle query slice. Process-lifetime state:
+# a restart just restarts the rotation, which is harmless (the slice is
+# shuffled downstream and every query recurs within ~3 cycles).
+_QUERY_ROTATION_OFFSET = [0]
+
+
+def _queries_for_cycle(all_queries: list) -> list:
+    """Return this cycle's rotating slice of the reply search queries.
+
+    DIRECT_REPLY_QUERIES_PER_CYCLE (default 8, read at call time) bounds
+    how many Safari search scrapes one cycle pays for. K >= N degrades to
+    the old scan-everything behavior."""
+    k = max(1, int(os.environ.get("DIRECT_REPLY_QUERIES_PER_CYCLE", "8")))
+    n = len(all_queries)
+    if n == 0 or k >= n:
+        return list(all_queries)
+    start = _QUERY_ROTATION_OFFSET[0] % n
+    picked = [all_queries[(start + i) % n] for i in range(k)]
+    _QUERY_ROTATION_OFFSET[0] = (start + k) % n
+    return picked
+
+
 def run_direct_reply_cycle(max_replies=None):
     """Reply cycle — feed-first, no profile visits.
 
@@ -732,10 +754,17 @@ def run_direct_reply_cycle(max_replies=None):
     # 2. SEARCH — primary reply engine for direct_reply.
     #    Feed sweeper owns For You / Following; this cycle owns search so
     #    the two engines don't waste time deduping the same feed tweets.
-    #    Run ALL queries every cycle (shuffle for variety).
+    #    Scan a ROTATING SLICE of the queries per cycle (2026-07-10): the
+    #    old scan-ALL-26-queries-every-cycle burned most of each cycle's
+    #    Safari time re-scraping pools that churn slower than the 1-2 min
+    #    cycle interval (same query hit 4x/hour, mostly dedup-skips) —
+    #    replies/hr sagged to ~27 while search scrapes dominated. Full
+    #    coverage still lands every ceil(N/K) cycles (~5 min); the freed
+    #    Safari time goes to POSTING replies.
     all_queries = SEARCH_QUERIES + HOT_TAB_QUERIES
-    random.shuffle(all_queries)
-    for query in all_queries:
+    cycle_queries = _queries_for_cycle(all_queries)
+    random.shuffle(cycle_queries)
+    for query in cycle_queries:
         if remaining is not None and remaining <= 0:
             log.info(f"[DIRECT] Startup budget reached ({max_replies}) — yielding "
                      f"Safari so the scheduler + quote lane can start.")

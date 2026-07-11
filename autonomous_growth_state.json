@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-07-06",
-  "last_output": "Pushed. Here's the 3-bullet summary:\n\n**1. Directives rewritten around the empty reply bank.** 1085 replies/week earning 0 likes is the critical failure mode \u2014 the replies are analytically correct but emotionally flat. New directive: lead with the verdict (one sharp image), bury the evidence. Added the explicit rule that the parent author must want to tap like before finishing the sentence.\n\n**2. Topic_focus refreshed with July 6 hooks.** Replaced stale July 5 entries with: Saylor declaring the ",
-  "last_ran_at": "2026-07-06T10:03:10.098136"
+  "last_run": "2026-07-10",
+  "last_output": "Pushed. Here's what changed and why:\n\n**directives.md** \u2014 Refreshed hooks and rules for July 10:\n- \"Me [verb]...\" remains rule #1 with concrete July 10 examples (ChatGPT Work, RKLB/Iridium, Sonnet 5)\n- Added the **30-minute velocity rule** (10+ engagements \u2192 algo amplifies) as an explicit directive \u2014 the engagement_log shows 3,452 replies with near-zero likes; first-hour weight matters more than volume\n- New hook blocks: ChatGPT Work vs Claude Cowork (the story of the day), RKLB/Iridium acquisit",
+  "last_ran_at": "2026-07-10T10:03:47.021897"
 }
