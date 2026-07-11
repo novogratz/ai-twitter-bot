@@ -15655,3 +15655,20 @@ ETH/BTC has broken above its descending trendline after bouncing from the 0.0252
 Bullish for alts…
   - https://x.com/AkaBull_/status/2075791874099761358
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 101).
+- **@thuytrang108** (19 likes, score 8/10) — Ethereum is using AI to hunt down hackers before they can strike.
+
+Instead of relying solely on manual checks by security experts, the Ethereum Foundation has deployed numerous AI agents to continuous
+  - https://x.com/ThuyTrang108/status/2075804777829806405
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 55).
+- **@bindureddy** (8 likes, score 7/10) — Gemini 3.5 has been delayed till the end of the month 
+
+The goal is to catch up with Fable 
+
+The problem is that Fable 5.1 and GPT 6 are supposed to launch in the same time frame
+  - https://x.com/bindureddy/status/2075815752213712959
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
+- **@simpleswap_io** (6 likes, score 7/10) — "Is a crypto crash coming?" For most altcoins, it already came
+
+While $BTC held the low-$60Ks, the damage underneath was brutal. Altcoins outside $ETH shed 22.84% of their value in H1 2026, and 84% of
+  - https://x.com/SimpleSwap_io/status/2075632100515143888
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 10).
