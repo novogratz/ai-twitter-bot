@@ -210,7 +210,9 @@
     "ArnaudVernoux",
     "PhilippeDion",
     "DylanMoulinet",
-    "LudovicBochet"
+    "LudovicBochet",
+    "CyrilDh",
+    "MonaMou"
   ],
   "en": [
     "Chubby",
@@ -310,7 +312,10 @@
     "LANGERIUS",
     "Google",
     "Damnang",
-    "khoiracle"
+    "khoiracle",
+    "unknown",
+    "Superpower",
+    "BitcoinHabebe"
   ],
   "history": [
     {
@@ -1856,6 +1861,31 @@
     {
       "lang": "fr",
       "handle": "LudovicBochet",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "unknown",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Superpower",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDh",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "MonaMou",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "BitcoinHabebe",
       "added": "2026-07-11"
     }
   ]

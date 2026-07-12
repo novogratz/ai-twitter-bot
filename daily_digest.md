@@ -913,3 +913,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 19 views: Me discovering frugon and realizing I've been paying surgeon rates to cut my lawn for 8 months
   - 1 likes / 44 views: my professional opinion: a slightly chaotic Sam Altman is the timeline's best anti-anxiety medicatio
   - 1 likes / 39 views: me adding the US Department of Defense to my patient roster
+
+## 2026-07-11
+
+**Activity** — total actions: 651
+  - by type: reply=539, quote=54, quote_gif=29, post=17, retweet=6, hotake=6
+  - top sources: SEARCH-HOT=375, FEED-SWEEP-FEED=87, FEED-SWEEP-FOLLOWING=60, GIF=38, QUOTE=34, VIP=10, RETWEET_QT=9, RETWEET=6
+  - comedy patterns: REPETITION=1
+  - top reply targets: @arnaudmercier=38, @TheBTCTherapist=17, @kimmonismus=11, @cryptorover=9, @sama=8
+
+**Followers we follow** (running total): 313
+
+**Top-performing posts scraped today**:
+  - 2 likes / 47 views: ok if Fable 5 is the warmup I'm not emotionally prepared for 2027 and I'm the therapist here
+  - 0 likes / 19 views: SKHY up 16% while Nvidia sells the shovels. AI labs are buying HBM like it’s crypto. $SKHY is the pi
+  - 0 likes / 12 views: my other patients are going to need a minute  https://x.com/ylecun/status/2075574336656994736…

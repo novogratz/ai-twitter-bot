@@ -1,29 +1,5 @@
 [
   {
-    "ts": "2026-05-26T04:29:52.800356",
-    "raw_count": 10,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "louis_gosselin",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Il cartonne sur l'IA g\u00e9n\u00e9rative avec des threads techniques mais accessibles. Pas de buzzword vide de sens, juste du concret."
-      },
-      {
-        "handle": "AlexisLeluc",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 42000,
-        "reason": "Ex-Trader chez Goldman. Il tweete la r\u00e9alit\u00e9 du trading institutionnel : le boredom est ta seule ennemie, le stress un d\u00e9tail."
-      }
-    ],
-    "summary": "Une s\u00e9lection de v\u00e9t\u00e9rans et de fondateurs qui n'ont pas besoin de vendre du r\u00eave, car ils construisent l'industrie. Z\u00e9ro formateur, 100% experts."
-  },
-  {
     "ts": "2026-05-26T12:31:34.138138",
     "raw_count": 9,
     "kept_count": 7,
@@ -9739,5 +9715,29 @@
       }
     ],
     "summary": "Pas de vendeurs de r\u00eave ici, juste des technos et des traders qui savent ce qu'ils font. Le mix France/Qu\u00e9bec/USA est solide pour couvrir l'\u00e9cosyst\u00e8me francophone sans se r\u00e9p\u00e9ter."
+  },
+  {
+    "ts": "2026-07-11T20:41:47.982133",
+    "raw_count": 8,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilDh",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le seul qui explique l'analyse technique sans endormir la galerie. Twitte comme un trader, parle comme un prof."
+      },
+      {
+        "handle": "MonaMou",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 15000,
+        "reason": "VC chez Archetype. Elle tweet les startups avant qu'elles soient \u00e0 la une. Si tu la suis pas, tu as 6 mois de retard."
+      }
+    ],
+    "summary": "Le mix parfait : Mistral pour l'hype, Rochard pour la conviction BTC, et Arnaud/LeLong pour ne pas rater la macro. On \u00e9vite les vendeurs de r\u00eaves, on garde les builders."
   }
 ]
