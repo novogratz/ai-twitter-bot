@@ -1,71 +1,5 @@
 [
   {
-    "ts": "2026-05-26T18:26:39.402106",
-    "raw_count": 10,
-    "kept_count": 8,
-    "accounts_added": 8,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "0x_ritz",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "Le trader de rue qui analyse la vola comme un mec qui a vu \u00e7a en 2017, pas un analyste de salon."
-      },
-      {
-        "handle": "CryptoFrenchy",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Bas\u00e9 aux US mais twitte en FR, donne un oeil ext\u00e9rieur sur le march\u00e9 avec des insights globaux."
-      },
-      {
-        "handle": "Lefilaire",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Le journal qui couvre les startups et la tech sans s'endormir, source fiable pour les deals VC."
-      },
-      {
-        "handle": "CryptoKoolaid",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "L'ancien de CoinAcademy qui reste pertinent sur le cycle on-chain, moins 'influencer' plus 'data'."
-      },
-      {
-        "handle": "ThalesBorghi",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "La t\u00eate bien dans le LLM, explique la tech sans vendre du r\u00eave pourrie, parfait pour le d\u00e9codeur."
-      },
-      {
-        "handle": "MarcLambron",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 14000,
-        "reason": "La voix du Qu\u00e9bec tech, couvre IA et cybers\u00e9curit\u00e9, parfait pour ne pas ignorer la belle province."
-      },
-      {
-        "handle": "CryptoVince",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 11000,
-        "reason": "Vince fait de l'\u00e9ducation crypto s\u00e9rieuse au Qu\u00e9bec, twitte en FR avec une pointe d'humour local."
-      },
-      {
-        "handle": "CryptoThibault",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 9000,
-        "reason": "Le desk trader qui partage ses setups r\u00e9els, moins de blabla plus de charts, id\u00e9al pour les traders."
-      }
-    ],
-    "summary": "10 comptes frais qui \u00e9vitent les gros vendeurs de r\u00eave. On mixe les pros des donn\u00e9es (Ritz, Perron) avec les observateurs de terrain (Goku, Lambron) pour couvrir l'IA, la crypto et la tech sur les trois zones cibles."
-  },
-  {
     "ts": "2026-05-27T23:58:12.798256",
     "raw_count": 10,
     "kept_count": 7,
@@ -9676,5 +9610,29 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les influenceurs formations pour ne garder que les builders et les traders qui tweetent vraiment en FR. Le mix FR/QC/USA est coh\u00e9rent, avec un focus lourd sur l'IA qui est la niche porteuse du moment."
+  },
+  {
+    "ts": "2026-07-12T04:38:30.397822",
+    "raw_count": 10,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoGoku",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 32000,
+        "reason": "Il a surv\u00e9cu aux bears sans vendre de formation VIP. Un peu plus fun que les analystes en costume-cravate."
+      },
+      {
+        "handle": "MathieuDuffie",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Le prof de finance qui rend le march\u00e9 moins douloureux pour les non-initi\u00e9s. Pas de vente de r\u00eave, juste des chiffres et du sens commun."
+      }
+    ],
+    "summary": "Le march\u00e9 FR est satur\u00e9 de vendeurs de r\u00eaves, j'ai filtr\u00e9 pour ne garder que ceux qui ont encore les mains dans le cambouis ou le code. Le Qu\u00e9bec offre une p\u00e9pite de sens commun avec Duffie, et l'USA garde ses fondateurs francophones (Hugging Face) plus authentiques que les influenceurs parisiens."
   }
 ]

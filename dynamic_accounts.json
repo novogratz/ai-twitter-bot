@@ -219,7 +219,9 @@
     "eric_dr",
     "jules_c",
     "OlivierBourgain",
-    "MathieuGagne"
+    "MathieuGagne",
+    "CryptoGoku",
+    "MathieuDuffie"
   ],
   "en": [
     "Chubby",
@@ -1946,6 +1948,16 @@
     {
       "lang": "fr",
       "handle": "MathieuGagne",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoGoku",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDuffie",
       "added": "2026-07-12"
     }
   ]
