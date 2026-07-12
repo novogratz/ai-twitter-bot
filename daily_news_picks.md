@@ -15719,3 +15719,38 @@ I've seen $300 courses that don't cover wh
 - **@sama** (4462 likes, score 8/10) — "physicians found fewer flaws in GPT-5.6 responses than physician-written responses."
   - https://x.com/sama/status/2075985056846451123
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 5166).
+- **@tedpillows** (450 likes, score 9/10) — Bitcoin Treasury firm Empery Digital sold $89,000,000 in $BTC and reduced its Bitcoin holdings by 48%.
+
+They now plan to shift their capital towards AI infrastructure.
+  - https://x.com/TedPillows/status/2075634153375338849
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 644).
+- **@aravsrinivas** (14 likes, score 7/10) — Humans are pretty good at tool use. Especially using tools like frontier models that are far more power hungry and intelligent than humans in specific dimensions. This suggests that local models will
+  - https://x.com/AravSrinivas/status/2076179190198812831
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 18).
+- **@colestrades** (1 likes, score 7/10) — $NVDA will be a $275 stock
+
+$NOW will be a $150 stock
+
+$SOFI will be a $25 stock
+
+$CRWV will be a $185 stock 
+
+$META will be a $750 stock
+
+$PLTR will be a $180 stock
+
+$QCOM will be a $280 stock
+
+Plan
+  - https://x.com/ColesTrades/status/2076156732129042678
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 15).
+- **@cb_doge** (695 likes, score 8/10) — Scam Altman keeps saying he owns no OpenAI shares and is not doing it for money. But this is exactly how the scam allegedly works: he does not need OpenAI shares to make billions.
+
+> Altman gets OpenA
+  - https://x.com/cb_doge/status/2076157809021137194
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 945).
+- **@polarislog** (8 likes, score 7/10) — SK Hynix Drops a Dollar Bomb on the Forex Market Equivalent to a Currency Swap
+
+- SK Hynix raised $26.5 billion, approximately 40 trillion won, through the listing of American Depositary Receipts (ADR
+  - https://x.com/PolarisLog/status/2076174404309127499
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
