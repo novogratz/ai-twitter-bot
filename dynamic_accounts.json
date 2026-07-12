@@ -205,7 +205,12 @@
     "crypto_mad",
     "cryptopaul",
     "CryptoRomain",
-    "BenoitLeblanc"
+    "BenoitLeblanc",
+    "EricRenoud",
+    "ArnaudVernoux",
+    "PhilippeDion",
+    "DylanMoulinet",
+    "LudovicBochet"
   ],
   "en": [
     "Chubby",
@@ -303,7 +308,9 @@
     "Jukan",
     "Sibel",
     "LANGERIUS",
-    "Google"
+    "Google",
+    "Damnang",
+    "khoiracle"
   ],
   "history": [
     {
@@ -1814,6 +1821,41 @@
     {
       "lang": "fr",
       "handle": "BenoitLeblanc",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "Damnang",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricRenoud",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "en",
+      "handle": "khoiracle",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArnaudVernoux",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeDion",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "DylanMoulinet",
+      "added": "2026-07-11"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicBochet",
       "added": "2026-07-11"
     }
   ]

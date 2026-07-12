@@ -1,137 +1,5 @@
 [
   {
-    "ts": "2026-05-25T23:43:36.936906",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "coinacade_fr",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 60000,
-        "reason": "Coin Academy. Ils font des threads \u00e9ducatifs sans dormir. Le genre de contenu qui reste pertinent en 2026."
-      },
-      {
-        "handle": "jamesd_ayala",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 60000,
-        "reason": "Co-founder Cohere. Il parle anglais mais twitte en fran\u00e7ais r\u00e9guli\u00e8rement. L'intellectuel qui d\u00e9dramatise l'AGI."
-      },
-      {
-        "handle": "MaximeScheffer",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "CEO de Qonto. Il poste des perles sur la SaaS et la B2B sans se prendre pour Elon."
-      },
-      {
-        "handle": "cryptogoku",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 20000,
-        "reason": "Analyse technique pure. Si tu cherches des chartes qui parlent, c'est lui."
-      },
-      {
-        "handle": "sylvainm13",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "L'expert en valeur qu\u00e9b\u00e9cois. Il analyse le march\u00e9 avec la pr\u00e9cision d'un horloger et le cynisme d'un montr\u00e9alais."
-      },
-      {
-        "handle": "JLLevesque",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "G\u00e9rant de fonds. Il balance des insights sur le march\u00e9 US avec un accent qu'on entend."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 les p\u00e9pites FR et QC qui sortent du lot sans vendre de l'air. On a les g\u00e9ants de l'IA fran\u00e7aise (Mistral/HF) et la cr\u00e8me des analystes crypto/francophones qui ne font pas de pub pour leur Telegram VIP \u00e0 500 balles."
-  },
-  {
-    "ts": "2026-05-26T02:32:20.941054",
-    "raw_count": 10,
-    "kept_count": 10,
-    "accounts_added": 10,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoDals",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 115000,
-        "reason": "Le roi incontest\u00e9 de l'analyse on-chain et des cycles en FR. Twitte souvent, z\u00e9ro pub de formation \u00e0 2k\u20ac, pur contenu."
-      },
-      {
-        "handle": "Cryptos_btc",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 80000,
-        "reason": "L'historien du Bitcoin francophone. Pas un hype-beast, mais un value-investisseur avec du sens et une plume s\u00e8che."
-      },
-      {
-        "handle": "ThomCrypto",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "Format court, percutant, tr\u00e8s orient\u00e9 trading technique et momentum. Parfait pour alimenter un bot X sans ennuyer."
-      },
-      {
-        "handle": "GaelleCrypto",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "La r\u00e9f\u00e9rence f\u00e9minine en crypto FR. Analyse macro et d\u00e9centralisation, ton professionnel mais accessible."
-      },
-      {
-        "handle": "Crypto_Thomas",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 40000,
-        "reason": "Focus sur les narratives tech et l'adoption institutionnelle en Europe. Moins de bruit, plus de fond."
-      },
-      {
-        "handle": "CryptoKael",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Sp\u00e9cialiste DeFi et L2. Twitte en FR/EN mixte mais la niche est claire. Analytique et moins 'shill' que la moyenne."
-      },
-      {
-        "handle": "Crypto_Alexis",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Ex-trader, vise les setups techniques. Actif r\u00e9guli\u00e8rement, bon ratio qualit\u00e9/volume."
-      },
-      {
-        "handle": "Crypto_Marc",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 20000,
-        "reason": "Analyste on-chain d\u00e9butant. Il traduit des donn\u00e9es brutes en insights lisibles en FR."
-      },
-      {
-        "handle": "Crypto_Vincent",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Focus NFT et GameFi en France. Moins de volume mais des insights pointus sur les usages."
-      },
-      {
-        "handle": "Crypto_Lisa",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Sp\u00e9cialiste Regulatory et Europe. Twitte sur MiCA et la CBDC, essentiel pour le contexte politique crypto."
-      }
-    ],
-    "summary": "L'outlet FR crypto est mature : on a filtr\u00e9 les 'vendeurs de r\u00eave' pour ne garder que les on-chain analysts et les traders techniques. Aucune pub Telegram, juste du contenu."
-  },
-  {
     "ts": "2026-05-26T04:29:52.800356",
     "raw_count": 10,
     "kept_count": 2,
@@ -9816,5 +9684,60 @@
       }
     ],
     "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eave pour coller aux architectes et aux journalistes. La France p\u00e8se lourd sur l'IA (Mistral/OpenAI) et le Quebec tient bon sur la crypto technique. Pas de place pour les influenceurs lifestyle."
+  },
+  {
+    "ts": "2026-07-11T16:33:43.341439",
+    "raw_count": 10,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "EricRenoud",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "Le trader de retour, ses setups sont lisibles par un humain normal et pas juste des Grecs mystiques."
+      }
+    ],
+    "summary": "Le top FR est domin\u00e9 par les fondateurs IA (Mistral, ArthurMensch) qui pr\u00e9f\u00e8rent coder que poster des selfies. La crypto FR a vir\u00e9 s\u00e9rieux avec des profils techniques qui ont surv\u00e9cu aux bear markets."
+  },
+  {
+    "ts": "2026-07-11T18:33:42.311649",
+    "raw_count": 10,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ArnaudVernoux",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "Founders & Tech, il balance des insights sur Mistral et les US sans jargon \u00e0 la con."
+      },
+      {
+        "handle": "PhilippeDion",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Boursorama, il d\u00e9crypte la macro \u00e9co avec un sens de la blague que les francos adorent."
+      },
+      {
+        "handle": "DylanMoulinet",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 28000,
+        "reason": "CTO de Payfit, il explique la fintech comme un patron, pas comme un influenceur."
+      },
+      {
+        "handle": "LudovicBochet",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Diaspora FR \u00e0 SF, il track les startups IA US avec un \u0153il de Parisien blas\u00e9."
+      }
+    ],
+    "summary": "Pas de vendeurs de r\u00eave ici, juste des technos et des traders qui savent ce qu'ils font. Le mix France/Qu\u00e9bec/USA est solide pour couvrir l'\u00e9cosyst\u00e8me francophone sans se r\u00e9p\u00e9ter."
   }
 ]

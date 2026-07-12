@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-11T16:32:52.864103",
-  "window_7d_actions": 4867,
-  "window_24h_actions": 686,
+  "generated_at": "2026-07-11T20:32:52.779370",
+  "window_7d_actions": 4876,
+  "window_24h_actions": 674,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4851
+      "count": 4860
     },
     {
       "pattern": "RENAME",
@@ -63,38 +63,44 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2225
+      "count": 2236
     },
     {
       "topic": "IA",
-      "count": 1938
+      "count": 1936
     },
     {
       "topic": "Crypto",
-      "count": 623
+      "count": 628
     },
     {
       "topic": "Bourse",
-      "count": 291
+      "count": 284
     },
     {
       "topic": "Spatial",
-      "count": 97
+      "count": 99
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Spatial",
+      "24h_rate": 0.028,
+      "7d_rate": 0.02
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2164
+      "count": 2173
     },
     {
       "pillar": "other",
-      "count": 1433
+      "count": 1427
     },
     {
       "pillar": "market_trauma",
-      "count": 972
+      "count": 978
     },
     {
       "pillar": "meme_reaction",
@@ -112,49 +118,49 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 307
+      "count": 298
     },
     {
       "pillar": "other",
-      "count": 204
+      "count": 202
     },
     {
       "pillar": "market_trauma",
-      "count": 129
+      "count": 130
     },
     {
       "pillar": "meme_reaction",
-      "count": 40
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 37
     },
     {
       "pillar": "reply_bait",
+      "count": 4
+    },
+    {
+      "pillar": "ai_vs_btc",
       "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 54,
+      "posts": 53,
       "avg_likes": 0.13,
       "avg_views": 24.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 76,
+      "posts": 73,
       "avg_likes": 0.08,
       "avg_views": 23.2,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 66,
-      "avg_likes": 0.08,
-      "avg_views": 20.7,
+      "posts": 70,
+      "avg_likes": 0.07,
+      "avg_views": 21.6,
       "low_sample": false
     },
     {
@@ -175,23 +181,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4134
+      "count": 4141
     },
     {
       "type": "quote",
-      "count": 367
+      "count": 370
     },
     {
       "type": "quote_gif",
-      "count": 181
+      "count": 180
     },
     {
       "type": "post",
-      "count": 89
+      "count": 88
     },
     {
       "type": "hotake",
-      "count": 52
+      "count": 53
     },
     {
       "type": "retweet",
@@ -200,19 +206,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-11T16:31:26.125110",
-      "text": "Communities persist when capital evaporates. $3.1M gone, memory of $3.7M remains. that's anchoring, not resilience.",
+      "ts": "2026-07-11T20:32:49.671397",
+      "text": "Top 7 stocks are 33% of spy and all betting on ai capex + nvidia margins holding. that's not breadth, that's leverage on one narrative. near ath on this concentration is just correlation risk waiting to matter.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-11T16:31:09.916318",
-      "text": "Auditability is architectural, not a feature. The cost is latency and logs upfront, or you'll be explaining to regulators why your agent did something you don't understand.",
+      "ts": "2026-07-11T20:32:04.380369",
+      "text": "Grok 4.5 on the pareto frontier because x owns the infrastructure. musk built compute directly while others bought from cloud providers. margins follow.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-11T16:24:12.793177",
-      "text": "Cursor because it's claude plus full-codebase context in your editor. every other tool is missing at least one of those three things.",
-      "type": "reply"
+      "ts": "2026-07-11T20:29:39.343229",
+      "text": "every patient says \"not afraid\" first. we get to Apple in session three",
+      "type": "quote"
     }
   ]
 }
