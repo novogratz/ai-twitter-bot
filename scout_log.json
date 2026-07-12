@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-05-26T12:31:34.138138",
-    "raw_count": 9,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoVince_",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 75000,
-        "reason": "Style direct, pas de blabla, focus sur les cycles et les narratives IA/Web3."
-      },
-      {
-        "handle": "AlexisPerron_",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "De Mistral, twitte souvent sur l'IA open source et les tendances tech globales."
-      },
-      {
-        "handle": "Jean_Pierre_P",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 40000,
-        "reason": "Analyste bas\u00e9 \u00e0 NY, tweets en FR sur les march\u00e9s US avec une vision europ\u00e9enne."
-      },
-      {
-        "handle": "LorisTillet",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Expert infrastructure IA et GPU, tweets techniques mais accessibles."
-      },
-      {
-        "handle": "MaximeDion_",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "Fondeur de startup IA \u00e0 Montr\u00e9al, couvre l'\u00e9cosyst\u00e8me tech francophone."
-      },
-      {
-        "handle": "CryptoDion",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Analyse on-chain et macro, moins hype que les autres mais plus solide."
-      },
-      {
-        "handle": "CryptoLuc_75",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Diaspora fr \u00e0 NYC, focus sur l'adoption institutionnelle et les ETF."
-      }
-    ],
-    "summary": "J'ai mis\u00e9 sur la substance plut\u00f4t que le bruit : des profils qui tweetent leur boulot (Mistral, fondeurs) ou des v\u00e9t\u00e9rans crypto qui ont surv\u00e9cu aux bear markets. Z\u00e9ro vendeur de r\u00eaves, que des experts."
-  },
-  {
     "ts": "2026-05-26T14:36:09.910109",
     "raw_count": 14,
     "kept_count": 9,
@@ -9739,5 +9680,50 @@
       }
     ],
     "summary": "Le mix parfait : Mistral pour l'hype, Rochard pour la conviction BTC, et Arnaud/LeLong pour ne pas rater la macro. On \u00e9vite les vendeurs de r\u00eaves, on garde les builders."
+  },
+  {
+    "ts": "2026-07-12T00:48:51.971504",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "benjaminl_ou",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le 'p\u00e8re No\u00ebl' de la bourse en FR. Analytique, s\u00e9rieux, mais pas chiant."
+      },
+      {
+        "handle": "arthur_mensch",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "CEO Mistral AI. Le mec qui fait parler l'IA fran\u00e7aise, twitte technique mais accessible."
+      },
+      {
+        "handle": "maximegeeraerts",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 22000,
+        "reason": "Ex-Revolut, maintenant chez Revolut. Le gars qui a v\u00e9cu la scaling fever, twitte bourse/fintech."
+      },
+      {
+        "handle": "eric_dr",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Eric Dr (ex-AI at Google, now indie). Diaspora FR aux US, twitte AI en FR/EN mixte."
+      },
+      {
+        "handle": "jules_c",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Analyste crypto Qu\u00e9b\u00e9cois. Pas de guru attitude, juste des charts et du sens."
+      }
+    ],
+    "summary": "On a filtr\u00e9 les guru en surv\u00eatement pour ne garder que les pros qui font bouger le march\u00e9 ou l'IA. Mix FR/QC/US, 100% qualitatif, 0% formation \u00e0 99\u20ac."
   }
 ]

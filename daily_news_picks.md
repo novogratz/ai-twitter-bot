@@ -15672,3 +15672,26 @@ The problem is that Fable 5.1 and GPT 6 are supposed to launch in the same time 
 While $BTC held the low-$60Ks, the damage underneath was brutal. Altcoins outside $ETH shed 22.84% of their value in H1 2026, and 84% of
   - https://x.com/SimpleSwap_io/status/2075632100515143888
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 10).
+
+## 2026-07-12
+- **@caseyvsilver** (136 likes, score 9/10) — $AAPL vs OpenAI – AI War Hits Wall Street 
+
+Apple just filed a blockbuster lawsuit against OpenAI, accusing the ChatGPT maker of stealing trade secrets to build its own AI hardware and products. The c
+  - https://x.com/CaseyVSilver/status/2075988562634211622
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 170).
+- **@mobymedia** (0 likes, score 8/10) — JUST IN
+
+CoreWeave has secured $20 billion in new financing, intensifying the competition between AI infrastructure and Bitcoin for speculative capital and macro liquidity.
+  - https://x.com/mobymedia/status/2075932235061248076
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 30).
+- **@stagedhappen** (0 likes, score 7/10) — Over the past 2 weeks, we’ve committed $40,000 toward physical H200 server infrastructure to reduce dependency on external inference providers and bring more of Dot’s AI stack under our own control.
+  - https://x.com/stagedhappen/status/2075980930632622200
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 22).
+- **@ryanmarketedge** (0 likes, score 7/10) — I'll say it once. My strategy after the July 11 pullback is simple:
+
+Everyone wanted:
+$CRWV at $165 and is hesitating at $88.
+$NBIS at $360 and is hesitating at $219.
+$IREN at $100 and is hesitating a
+  - https://x.com/RyanMarketEdge/status/2075928071211786672
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 16).
