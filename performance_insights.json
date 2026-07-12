@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-07-12T04:32:52.720236",
-  "window_7d_actions": 4874,
-  "window_24h_actions": 646,
+  "generated_at": "2026-07-12T08:32:52.701460",
+  "window_7d_actions": 4883,
+  "window_24h_actions": 689,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4860
-    },
-    {
-      "pattern": "RENAME",
-      "count": 5
+      "count": 4870
     },
     {
       "pattern": "UNDERSTATEMENT",
       "count": 5
+    },
+    {
+      "pattern": "RENAME",
+      "count": 4
     },
     {
       "pattern": "METAPHOR",
@@ -35,7 +35,7 @@
     },
     {
       "pattern": "RENAME",
-      "count": 5
+      "count": 4
     }
   ],
   "best_hours_utc": [
@@ -52,57 +52,57 @@
       "actions": 230
     },
     {
-      "hour": 10,
-      "actions": 222
+      "hour": 8,
+      "actions": 227
     },
     {
-      "hour": 8,
-      "actions": 219
+      "hour": 10,
+      "actions": 222
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2236
+      "count": 2251
     },
     {
       "topic": "IA",
-      "count": 1940
+      "count": 1945
     },
     {
       "topic": "Crypto",
-      "count": 634
+      "count": 625
     },
     {
       "topic": "Bourse",
-      "count": 278
+      "count": 276
     },
     {
       "topic": "Spatial",
-      "count": 98
+      "count": 97
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2168
+      "count": 2159
     },
     {
       "pillar": "other",
-      "count": 1411
+      "count": 1436
     },
     {
       "pillar": "market_trauma",
-      "count": 980
+      "count": 972
     },
     {
       "pillar": "meme_reaction",
-      "count": 218
+      "count": 220
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 49
+      "count": 48
     },
     {
       "pillar": "reply_bait",
@@ -112,49 +112,49 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 269
+      "count": 279
     },
     {
       "pillar": "other",
-      "count": 191
+      "count": 218
     },
     {
       "pillar": "market_trauma",
-      "count": 125
+      "count": 129
     },
     {
       "pillar": "meme_reaction",
-      "count": 43
+      "count": 42
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 12
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 9
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 52,
-      "avg_likes": 0.12,
-      "avg_views": 24.7,
+      "posts": 54,
+      "avg_likes": 0.11,
+      "avg_views": 24.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 71,
-      "avg_likes": 0.08,
-      "avg_views": 23.4,
+      "posts": 70,
+      "avg_likes": 0.09,
+      "avg_views": 23.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 71,
+      "posts": 70,
       "avg_likes": 0.07,
-      "avg_views": 20.7,
+      "avg_views": 20.4,
       "low_sample": false
     },
     {
@@ -175,19 +175,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4121
+      "count": 4130
     },
     {
       "type": "quote",
-      "count": 375
+      "count": 374
     },
     {
       "type": "quote_gif",
-      "count": 186
+      "count": 188
     },
     {
       "type": "post",
-      "count": 88
+      "count": 87
     },
     {
       "type": "hotake",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-12T04:32:36.260691",
-      "text": "Everyone's celebrating UBS blessing crypto. The real story: the bank that nearly broke the system is admitting the system needs to break.",
+      "ts": "2026-07-12T08:32:18.305171",
+      "text": "Sam doesn't have rockets. elon does. the disagreement is about infrastructure control, not feasibility.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-12T04:32:20.096193",
-      "text": "You're hoping AI trades better. The real gift: it won't panic-sell at -20% like you do.",
+      "ts": "2026-07-12T08:31:45.486748",
+      "text": "$253B semiconductors topping dot-com. GPU clusters stay productive for years. Dot-com servers became obsolete in eighteen months. Structural, not cyclical.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-12T04:31:28.452487",
-      "text": "Two months down, one week green on $197M buying. that's not smart money returning, that's 401k Dave's surrender. and surrender builds floors.",
+      "ts": "2026-07-12T08:30:54.803242",
+      "text": "$56B in leveraged Nasdaq. concentration is real. but every sideways month, these lose 30% to decay. focus on leverage, not the index.",
       "type": "reply"
     }
   ]

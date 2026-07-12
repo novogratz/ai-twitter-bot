@@ -221,7 +221,14 @@
     "OlivierBourgain",
     "MathieuGagne",
     "CryptoGoku",
-    "MathieuDuffie"
+    "MathieuDuffie",
+    "CryptoPierre",
+    "Dimitri_Dr",
+    "CryptoDub",
+    "ThibaudLemouton",
+    "MickaelMaffre",
+    "RomainCazabet",
+    "JeanLucB"
   ],
   "en": [
     "Chubby",
@@ -327,7 +334,8 @@
     "BitcoinHabebe",
     "pieverse",
     "RJC",
-    "davey"
+    "davey",
+    "CryptoWala"
   ],
   "history": [
     {
@@ -1958,6 +1966,46 @@
     {
       "lang": "fr",
       "handle": "MathieuDuffie",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "CryptoWala",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoPierre",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "Dimitri_Dr",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoDub",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudLemouton",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelMaffre",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainCazabet",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanLucB",
       "added": "2026-07-12"
     }
   ]
