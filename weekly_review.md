@@ -1,39 +1,43 @@
-# Weekly review — 2026-W27
+# Weekly review — 2026-W28
 
-Generated 2026-07-05T17:38 (deterministic, from engagement_log + follower_history).
+Generated 2026-07-12T17:32 (deterministic, from engagement_log + follower_history).
 
 ## Account
-- Followers: **1855** (+1 this week)
-- Following: **2675** ⚠️ OVER the 300 cap by 2375
+- Followers: **2041** (+183 this week)
+- Following: **2983** ⚠️ OVER the 300 cap by 2683
 
 ## Action mix (7 days)
-- reply: 806 (85%)
-- quote: 70 (7%)
-- quote_gif: 36 (3%)
-- post: 23 (2%)
-- hotake: 5 (0%)
-- retweet: 3 (0%)
+- reply: 4126 (84%)
+- quote: 372 (7%)
+- quote_gif: 183 (3%)
+- post: 91 (1%)
+- hotake: 60 (1%)
+- retweet: 50 (1%)
 
 ## Pillar mix (7 days) — shift toward winners
-- ai_news_take: 385 (40%)
-- other: 303 (32%)
-- market_trauma: 194 (20%)
-- meme_reaction: 40 (4%)
-- reply_bait: 11 (1%)
-- ai_vs_btc: 10 (1%)
+- ai_news_take: 2162 (44%)
+- other: 1438 (29%)
+- market_trauma: 965 (19%)
+- meme_reaction: 220 (4%)
+- reply_bait: 50 (1%)
+- ai_vs_btc: 47 (0%)
 
 ## Volume by day
-- 2026-06-28: 1 actions
-- 2026-07-03: 1 actions
-- 2026-07-04: 437 actions
-- 2026-07-05: 504 actions
+- 2026-07-05: 160 actions
+- 2026-07-06: 301 actions
+- 2026-07-07: 877 actions
+- 2026-07-08: 811 actions
+- 2026-07-09: 785 actions
+- 2026-07-10: 769 actions
+- 2026-07-11: 651 actions
+- 2026-07-12: 528 actions
 
 ## Top posts (7 days, by likes — scraped metrics)
-- ❤️1 👁64, 1.6% eng [other] me quietly googling "how many European countries are there" after this $NBIS drop
-- ❤️1 👁13, 7.7% eng [other] updating my definition of "a lot of money" in real time
-- ❤️0 👁76, 0.0% eng [market_trauma] forwarding this to every client who sold XRP over 'regulatory uncertainty'
-- ❤️0 👁38, 0.0% eng [other] me typing "Sonnet 5" while three others are open in other tabs
-- ❤️0 👁33, 0.0% eng [other] $NVDA already cashed that check. now we wait for the class to catch up
+- ❤️2 👁47, 4.3% eng [market_trauma] ok if Fable 5 is the warmup I'm not emotionally prepared for 2027 and I'm the therapist here
+- ❤️1 👁44, 2.3% eng [market_trauma] my professional opinion: a slightly chaotic Sam Altman is the timeline's best anti-anxiety medication
+- ❤️1 👁39, 2.6% eng [market_trauma] me adding the US Department of Defense to my patient roster
+- ❤️1 👁36, 2.8% eng [ai_news_take] me typing this from Claude Code pretending I didn't see it  https://x.com/grimcodes/status/2075036803023909196
+- ❤️1 👁33, 3.0% eng [ai_news_take] Me watching AppLovin quietly build the AI that's now eating e-commerce ad budgets while I was busy ranking mod
 
 ## Spec targets (2026-06-07 quality barbell)
 - QUANTITY: replies unlimited (the reach engine) · reply-bait 3-4/week

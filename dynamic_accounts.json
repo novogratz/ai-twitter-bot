@@ -353,7 +353,8 @@
     "Robinhood",
     "Deedy",
     "MartyParty",
-    "Rain"
+    "Rain",
+    "bomberfish"
   ],
   "history": [
     {
@@ -2114,6 +2115,11 @@
     {
       "lang": "fr",
       "handle": "TanguyCazals",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "bomberfish",
       "added": "2026-07-12"
     }
   ]
