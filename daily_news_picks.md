@@ -15695,3 +15695,27 @@ $NBIS at $360 and is hesitating at $219.
 $IREN at $100 and is hesitating a
   - https://x.com/RyanMarketEdge/status/2075928071211786672
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 16).
+- **@stockmom** (199 likes, score 9/10) — Tuesday is going to be a double whammy. We get CPI at 8:30 a.m. before the Market opens and then BIG BANKS are dropping their Q2 earnings. 
+
+Buckle up buttercups. Tuesday is going to be a wild ride.
+  - https://x.com/stockmom/status/2075997312648708132
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 263).
+- **@bindureddy** (8 likes, score 7/10) — Create Your Own Custom Coding Agent - Mix Fable 5,  GPT 5.6 sol and Grok 4.5!
+
+Our newest feature allows you to mix and match your favorite LLMs  and create your custom coding agent
+
+Create your favor
+  - https://x.com/bindureddy/status/2076165296977858836
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 12).
+- **@ai_rohitt** (8 likes, score 7/10) — Anthropic just showed a 27-minute workshop on how to actually do prompts for Claude.
+
+Taught by the people who built it.
+
+Free. No registration. No paywall.
+
+I've seen $300 courses that don't cover wh
+  - https://x.com/ai_rohitt/status/2076153107550232855
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 14).
+- **@sama** (4462 likes, score 8/10) — "physicians found fewer flaws in GPT-5.6 responses than physician-written responses."
+  - https://x.com/sama/status/2075985056846451123
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 5166).
