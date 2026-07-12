@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-12T12:32:52.792298",
-  "window_7d_actions": 4883,
-  "window_24h_actions": 692,
+  "generated_at": "2026-07-12T16:32:52.855288",
+  "window_7d_actions": 4879,
+  "window_24h_actions": 683,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4870
+      "count": 4866
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -63,46 +63,46 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2251
+      "count": 2254
     },
     {
       "topic": "IA",
-      "count": 1944
+      "count": 1942
     },
     {
       "topic": "Crypto",
-      "count": 623
+      "count": 618
     },
     {
       "topic": "Bourse",
-      "count": 277
+      "count": 279
     },
     {
       "topic": "Spatial",
-      "count": 96
+      "count": 95
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2164
+      "count": 2157
     },
     {
       "pillar": "other",
-      "count": 1432
+      "count": 1436
     },
     {
       "pillar": "market_trauma",
-      "count": 971
+      "count": 970
     },
     {
       "pillar": "meme_reaction",
-      "count": 220
+      "count": 219
     },
     {
       "pillar": "reply_bait",
-      "count": 49
+      "count": 50
     },
     {
       "pillar": "ai_vs_btc",
@@ -112,19 +112,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 290
+      "count": 276
     },
     {
       "pillar": "other",
-      "count": 201
+      "count": 215
     },
     {
       "pillar": "market_trauma",
-      "count": 136
+      "count": 133
     },
     {
       "pillar": "meme_reaction",
-      "count": 41
+      "count": 35
     },
     {
       "pillar": "ai_vs_btc",
@@ -138,23 +138,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 53,
-      "avg_likes": 0.11,
-      "avg_views": 24.8,
+      "posts": 52,
+      "avg_likes": 0.1,
+      "avg_views": 25.2,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 69,
-      "avg_likes": 0.07,
-      "avg_views": 20.3,
+      "posts": 71,
+      "avg_likes": 0.08,
+      "avg_views": 20.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 71,
-      "avg_likes": 0.06,
-      "avg_views": 36.9,
+      "posts": 70,
+      "avg_likes": 0.07,
+      "avg_views": 37.3,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4129
+      "count": 4126
     },
     {
       "type": "quote",
-      "count": 375
+      "count": 372
     },
     {
       "type": "quote_gif",
-      "count": 187
+      "count": 182
     },
     {
       "type": "post",
-      "count": 86
+      "count": 89
     },
     {
       "type": "hotake",
-      "count": 56
+      "count": 60
     },
     {
       "type": "retweet",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-12T12:32:07.248861",
-      "text": "RouteLLM: one algorithm picks your model. you save $0.0001/token, lose latency and control. call it routing, not convenience.",
+      "ts": "2026-07-12T16:32:44.066107",
+      "text": "Sol + removing limits says: inference costs are the constraint now. openai's not racing capability, they're racing unit economics. you're right about the phase shift.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-12T12:31:34.443106",
-      "text": "Routing works until latency costs exceed the value of the right answer. users prefer fast wrong over slow right.",
+      "ts": "2026-07-12T16:32:27.866312",
+      "text": "You nailed Sandisk. The other Sandisks are memory, the ones you didn't call. That's survivor bias, not wisdom.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-12T12:29:35.338848",
-      "text": "You'll benchmark these three on your tasks and find the ranking changes. routing doesn't solve that. it just guesses faster.",
+      "ts": "2026-07-12T16:31:13.526292",
+      "text": "Research costs money. open-sourcing the answer means the next person pays zero. citadel's edge was IP. now it's on github. that's the game.",
       "type": "reply"
     }
   ]

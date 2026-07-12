@@ -237,7 +237,9 @@
     "MarcLavoie",
     "VincentDelage",
     "Cryptofr",
-    "MaximeWieljeski"
+    "MaximeWieljeski",
+    "LuisDelBusto",
+    "TanguyCazals"
   ],
   "en": [
     "Chubby",
@@ -347,7 +349,11 @@
     "CryptoWala",
     "gatorsdores",
     "Gate",
-    "maro"
+    "maro",
+    "Robinhood",
+    "Deedy",
+    "MartyParty",
+    "Rain"
   ],
   "history": [
     {
@@ -2078,6 +2084,36 @@
     {
       "lang": "fr",
       "handle": "MaximeWieljeski",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Robinhood",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Deedy",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "MartyParty",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Rain",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisDelBusto",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguyCazals",
       "added": "2026-07-12"
     }
   ]
