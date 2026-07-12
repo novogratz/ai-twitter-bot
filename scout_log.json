@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-05-28T01:58:01.046747",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JL_Bourgeois",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "L'incontournable de la bourse FR. Pas de signaux VIP, juste des analyses macro et sectorielles solides. L'anti-'moonboy' par excellence."
-      },
-      {
-        "handle": "MaxMaurin",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Fondateur de Replit. Il tweet sur l'IA dev et le SaaS avec l'\u00e9nergie typique de la SV mais en fran\u00e7ais. Le bridge parfait entre les deux rives."
-      },
-      {
-        "handle": "Ludovic_M",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Le V\u00e9t\u00e9ran du Quebec. Il couvre le march\u00e9 crypto avec une perspective nord-am\u00e9ricaine mais une plume francophone. Actif et pertinent."
-      },
-      {
-        "handle": "PhilippeCyr",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Journaliste boursier qu\u00e9b\u00e9cois. Il couvre la tech et la fintech (notamment les ETF) sans se vendre \u00e0 vie. C'est calme, c'est bien."
-      },
-      {
-        "handle": "PierreBourque",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Directeur de recherche chez Coinhouse. Il balance des threads technique sur la DeFi et le Bitcoin. Pas de 'DAGOBERT', du vrai savoir."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les cerveaux derri\u00e8re le code (Mistral/Replit) et les pros du march\u00e9 (Bourgeois/Yomoni). Z\u00e9ro vendeur de r\u00eave, 100% contenu technique ou analyse fine."
-  },
-  {
-    "ts": "2026-05-28T03:45:11.348531",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Cl\u00e9mentDelangue",
-        "region": "france",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Cofondateur Hugging Face, il explique l'open source AI comme s'il parlait \u00e0 ses potes, sans jargon pesant."
-      },
-      {
-        "handle": "MarcFeldman",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Le v\u00e9t\u00e9ran du web qu\u00e9b\u00e9cois, couvre IA et Startups avec une vision \u00e0 30 ans, rare dans ce secteur."
-      },
-      {
-        "handle": "JulienBouchard_",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Le roi de la micro-cap au Qu\u00e9bec, analyse visuelle parfaite, twitte en fran\u00e7ais avec l'accent qui tue."
-      },
-      {
-        "handle": "ThomasBourdonnet",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Franco-am\u00e9ricain, il d\u00e9crypte la Wall Street frangine avec un humour corrosif, pas dans le 'LinkedIn influencer'."
-      }
-    ],
-    "summary": "Un m\u00e9lange solide de fondateurs d'IA fran\u00e7ais et de v\u00e9t\u00e9rans du trading qu\u00e9b\u00e9cois, loin des vendeurs de r\u00eave habituels."
-  },
-  {
     "ts": "2026-05-28T11:19:26.772863",
     "raw_count": 7,
     "kept_count": 7,
@@ -9634,5 +9551,88 @@
       }
     ],
     "summary": "J'ai tri\u00e9 dans le bruit pour ne garder que ceux qui produisent de l'alpha ou du contexte r\u00e9el. Pas de vendeurs de dreams, juste des gens qui comprennent leur m\u00e9tier. C'est la diff\u00e9rence entre suivre un influenceur et suivre un expert."
+  },
+  {
+    "ts": "2026-07-12T08:45:52.639330",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Laurae_",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 75000,
+        "reason": "Ancien de Coinhouse, actuel consultant. Il explique la blockchain sans te prendre pour un con, pas de shilling agressif."
+      },
+      {
+        "handle": "MathieuDufour_",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Journaliste/crypto-native, couverture \u00e9quilibr\u00e9e entre DeFi, NFT et Macro. Pas de 'Buy Bitcoin NOW' en majuscules."
+      },
+      {
+        "handle": "JulienDessart",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Ex-Hackernoon, couvreur tech fran\u00e7ais. Il parle d'IA, de SaaS et de startups. Contenu qualitatif, pas de pub pour sa formation \u00e0 99\u20ac."
+      },
+      {
+        "handle": "BenoitDubreuil",
+        "region": "france",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Fondateur de Devoteam Cloud. Il parle infra, cloud et IA applicative. Le genre de tweet qui fait gagner 2h de lectures."
+      },
+      {
+        "handle": "SylvainRoux",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Prof \u00e0 Polytechnique Montr\u00e9al. Il d\u00e9crypte les mod\u00e8les d'IA avec du concret. Le prof qu'on voudrait avoir en cours."
+      },
+      {
+        "handle": "MarcLavoie",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Macro-\u00e9conomiste qu\u00e9b\u00e9cois. Il explique l'inflation et les taux directeurs avec le sarcasme typique du Qu\u00e9bec."
+      },
+      {
+        "handle": "VincentDelage",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 14000,
+        "reason": "Ex-Raisin, couvreur fintech. Il suit les p\u00e9pins des brokers et des n\u00e9o-banques. Utile pour \u00e9viter les frais cach\u00e9s."
+      }
+    ],
+    "summary": "Mix parfait entre les piliers fran\u00e7ais de l'IA (Mistral) et la sc\u00e8ne crypto/tech plus traditionnelle. Le Qu\u00e9bec est repr\u00e9sent\u00e9 par de la macro-concr\u00e8te et de l'IA acad\u00e9mique, \u00e9vitant les influenceurs TikTok."
+  },
+  {
+    "ts": "2026-07-12T10:39:12.599115",
+    "raw_count": 10,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Cryptofr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "L'institutionnel qui arrive. Moins de hype, plus de fond. Le genre de compte qui fait monter la tension du march\u00e9."
+      },
+      {
+        "handle": "MaximeWieljeski",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "L'ex-CEO de PayFit. Il tweet sur la SaaS, la croissance et la tech fran\u00e7aise avec un \u0153il de patron qui a fait ses classes."
+      }
+    ],
+    "summary": "Une s\u00e9lection de lourds du secteur : des fondateurs d'IA (Mistral, Anthropic), des institutionnels crypto (Cryptofr, Rochard) et des traders qu\u00e9b\u00e9cois solides (DeWit, Mauvais). Z\u00e9ro vendeurs de dreams, que des experts qui font avancer le d\u00e9bat."
   }
 ]

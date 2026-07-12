@@ -228,7 +228,16 @@
     "ThibaudLemouton",
     "MickaelMaffre",
     "RomainCazabet",
-    "JeanLucB"
+    "JeanLucB",
+    "Laurae_",
+    "MathieuDufour_",
+    "JulienDessart",
+    "BenoitDubreuil",
+    "SylvainRoux",
+    "MarcLavoie",
+    "VincentDelage",
+    "Cryptofr",
+    "MaximeWieljeski"
   ],
   "en": [
     "Chubby",
@@ -335,7 +344,10 @@
     "pieverse",
     "RJC",
     "davey",
-    "CryptoWala"
+    "CryptoWala",
+    "gatorsdores",
+    "Gate",
+    "maro"
   ],
   "history": [
     {
@@ -2006,6 +2018,66 @@
     {
       "lang": "fr",
       "handle": "JeanLucB",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "Laurae_",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDufour_",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDessart",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitDubreuil",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainRoux",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLavoie",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDelage",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "gatorsdores",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Gate",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "maro",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "Cryptofr",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeWieljeski",
       "added": "2026-07-12"
     }
   ]

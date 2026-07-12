@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-07-12T08:32:52.701460",
+  "generated_at": "2026-07-12T12:32:52.792298",
   "window_7d_actions": 4883,
-  "window_24h_actions": 689,
+  "window_24h_actions": 692,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
@@ -53,11 +53,11 @@
     },
     {
       "hour": 8,
-      "actions": 227
+      "actions": 222
     },
     {
       "hour": 10,
-      "actions": 222
+      "actions": 218
     }
   ],
   "best_topics_7d": [
@@ -67,94 +67,94 @@
     },
     {
       "topic": "IA",
-      "count": 1945
+      "count": 1944
     },
     {
       "topic": "Crypto",
-      "count": 625
+      "count": 623
     },
     {
       "topic": "Bourse",
-      "count": 276
+      "count": 277
     },
     {
       "topic": "Spatial",
-      "count": 97
+      "count": 96
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2159
+      "count": 2164
     },
     {
       "pillar": "other",
-      "count": 1436
+      "count": 1432
     },
     {
       "pillar": "market_trauma",
-      "count": 972
+      "count": 971
     },
     {
       "pillar": "meme_reaction",
       "count": 220
     },
     {
-      "pillar": "ai_vs_btc",
-      "count": 48
+      "pillar": "reply_bait",
+      "count": 49
     },
     {
-      "pillar": "reply_bait",
-      "count": 48
+      "pillar": "ai_vs_btc",
+      "count": 47
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 279
+      "count": 290
     },
     {
       "pillar": "other",
-      "count": 218
+      "count": 201
     },
     {
       "pillar": "market_trauma",
-      "count": 129
+      "count": 136
     },
     {
       "pillar": "meme_reaction",
-      "count": 42
+      "count": 41
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 12
+      "count": 13
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 11
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 54,
+      "posts": 53,
       "avg_likes": 0.11,
-      "avg_views": 24.5,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 70,
-      "avg_likes": 0.09,
-      "avg_views": 23.9,
+      "avg_views": 24.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 70,
+      "posts": 69,
       "avg_likes": 0.07,
-      "avg_views": 20.4,
+      "avg_views": 20.3,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 71,
+      "avg_likes": 0.06,
+      "avg_views": 36.9,
       "low_sample": false
     },
     {
@@ -166,32 +166,32 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 2,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 22.5,
+      "avg_views": 19.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4130
+      "count": 4129
     },
     {
       "type": "quote",
-      "count": 374
+      "count": 375
     },
     {
       "type": "quote_gif",
-      "count": 188
+      "count": 187
     },
     {
       "type": "post",
-      "count": 87
+      "count": 86
     },
     {
       "type": "hotake",
-      "count": 54
+      "count": 56
     },
     {
       "type": "retweet",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-12T08:32:18.305171",
-      "text": "Sam doesn't have rockets. elon does. the disagreement is about infrastructure control, not feasibility.",
+      "ts": "2026-07-12T12:32:07.248861",
+      "text": "RouteLLM: one algorithm picks your model. you save $0.0001/token, lose latency and control. call it routing, not convenience.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-12T08:31:45.486748",
-      "text": "$253B semiconductors topping dot-com. GPU clusters stay productive for years. Dot-com servers became obsolete in eighteen months. Structural, not cyclical.",
+      "ts": "2026-07-12T12:31:34.443106",
+      "text": "Routing works until latency costs exceed the value of the right answer. users prefer fast wrong over slow right.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-12T08:30:54.803242",
-      "text": "$56B in leveraged Nasdaq. concentration is real. but every sideways month, these lose 30% to decay. focus on leverage, not the index.",
+      "ts": "2026-07-12T12:29:35.338848",
+      "text": "You'll benchmark these three on your tasks and find the ranking changes. routing doesn't solve that. it just guesses faster.",
       "type": "reply"
     }
   ]
