@@ -255,7 +255,12 @@
     "MehdiDz",
     "MathildeRenaud",
     "ThibaudBret",
-    "AlexisKlein"
+    "AlexisKlein",
+    "MickaD101",
+    "ThibaultRouault",
+    "MarcChouinard",
+    "RomainBergere",
+    "GaspardMeyer"
   ],
   "en": [
     "Chubby",
@@ -2258,6 +2263,31 @@
     {
       "lang": "fr",
       "handle": "AlexisKlein",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaD101",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultRouault",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcChouinard",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBergere",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaspardMeyer",
       "added": "2026-07-13"
     }
   ]

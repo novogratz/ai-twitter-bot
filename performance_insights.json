@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-13T00:32:53.162038",
-  "window_7d_actions": 4905,
-  "window_24h_actions": 709,
+  "generated_at": "2026-07-13T04:32:52.714456",
+  "window_7d_actions": 4932,
+  "window_24h_actions": 725,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4891
+      "count": 4918
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -40,16 +40,16 @@
   ],
   "best_hours_utc": [
     {
-      "hour": 1,
-      "actions": 248
+      "hour": 0,
+      "actions": 249
     },
     {
-      "hour": 0,
+      "hour": 1,
       "actions": 247
     },
     {
       "hour": 2,
-      "actions": 230
+      "actions": 239
     },
     {
       "hour": 8,
@@ -63,34 +63,34 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2257
+      "count": 2269
     },
     {
       "topic": "IA",
-      "count": 1965
+      "count": 1975
     },
     {
       "topic": "Crypto",
-      "count": 623
+      "count": 633
     },
     {
       "topic": "Bourse",
-      "count": 281
+      "count": 279
     },
     {
       "topic": "Spatial",
-      "count": 95
+      "count": 97
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2166
+      "count": 2175
     },
     {
       "pillar": "other",
-      "count": 1445
+      "count": 1454
     },
     {
       "pillar": "market_trauma",
@@ -98,11 +98,11 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 227
+      "count": 235
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 52
+      "count": 53
     },
     {
       "pillar": "reply_bait",
@@ -112,35 +112,42 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 292
+      "count": 307
     },
     {
       "pillar": "other",
-      "count": 222
+      "count": 242
     },
     {
       "pillar": "market_trauma",
-      "count": 131
+      "count": 116
     },
     {
       "pillar": "meme_reaction",
-      "count": 38
+      "count": 41
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 16
+      "count": 13
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
+      "pillar": "ai_vs_btc",
+      "posts": 5,
+      "avg_likes": 0.2,
+      "avg_views": 24.0,
+      "low_sample": false
+    },
+    {
       "pillar": "ai_news_take",
-      "posts": 70,
-      "avg_likes": 0.09,
-      "avg_views": 21.3,
+      "posts": 72,
+      "avg_likes": 0.1,
+      "avg_views": 21.8,
       "low_sample": false
     },
     {
@@ -152,8 +159,8 @@
     },
     {
       "pillar": "other",
-      "posts": 69,
-      "avg_likes": 0.07,
+      "posts": 65,
+      "avg_likes": 0.08,
       "avg_views": 35.3,
       "low_sample": false
     },
@@ -163,27 +170,20 @@
       "avg_likes": 0.0,
       "avg_views": 12.3,
       "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 3,
-      "avg_likes": 0.0,
-      "avg_views": 19.0,
-      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4138
+      "count": 4147
     },
     {
       "type": "quote",
-      "count": 376
+      "count": 379
     },
     {
       "type": "quote_gif",
-      "count": 187
+      "count": 195
     },
     {
       "type": "post",
@@ -195,24 +195,24 @@
     },
     {
       "type": "retweet",
-      "count": 50
+      "count": 57
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-13T00:32:49.195834",
-      "text": "The real lock-in isn't the OS - it's the 2M app ecosystem built on google infrastructure.\n\nOwnerOS works because those are already separable. just needed someone to build it.",
+      "ts": "2026-07-13T04:32:30.100885",
+      "text": "Crypto was built for banking customers. Nettu for the 1.4B without. That's not localization. That's the actual product.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-13T00:32:31.701672",
-      "text": "The agent doesn't need training. you do. 'prompt engineer' was a job title for 'person who tried until they got it.' that's just thinking.",
+      "ts": "2026-07-13T04:32:13.775852",
+      "text": "Grok at $2/$6 with 2x token efficiency. That's 80-90% cheaper for coding.\n\nAnthropic's developer moat: broken.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-13T00:32:15.498514",
-      "text": "Blackwell rates up 20%. $IREN isn’t mining Bitcoin; it’s gambling on AI arbitrage before the power grid screams. One brownout and HIVE eats their lunch. ⚡",
-      "type": "quote"
+      "ts": "2026-07-13T04:31:43.882874",
+      "text": "Eight weeks of exits = panic. $197.4M inflow = panic ending. a trend shift happens when inflows continue while new capital actually enters. until then, it's scared money returning.",
+      "type": "reply"
     }
   ]
 }

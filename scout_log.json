@@ -1,78 +1,5 @@
 [
   {
-    "ts": "2026-05-29T04:02:36.314406",
-    "raw_count": 10,
-    "kept_count": 9,
-    "accounts_added": 8,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaxKeller",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 150000,
-        "reason": "La r\u00e9f\u00e9rence US francophone, il couvre les macro-trends avec la pr\u00e9cision d\u2019un sniper."
-      },
-      {
-        "handle": "LuisFigueroa1",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le gars qui a fait exploser son audience avec des threads IA clairs, pur contenu, z\u00e9ro pub."
-      },
-      {
-        "handle": "NathanFradin",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Il cartonne sur la deeptech et la fintech, l\u2019inverse du gars qui parle de Bitcoin en croque-mitaine."
-      },
-      {
-        "handle": "JulienCazelles",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "L\u2019expert canadien qui balance les use-cases IA concrets, pas juste des buzzwords vides."
-      },
-      {
-        "handle": "RazvanBuzdugan",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Il tweete la crypto comme un trader qui a surv\u00e9cu \u00e0 2018, pas comme un infopreneur."
-      },
-      {
-        "handle": "AlexisDeG",
-        "region": "france",
-        "niche": "ai",
-        "followers": 14000,
-        "reason": "Il tracke l\u2019IA avec une rigueur journalistique, rare pour un compte aussi petit."
-      },
-      {
-        "handle": "CyrilKlein",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "L\u2019ex-CTO de Doctolib, il balance les insights IA avant que les influenceurs ne les remixent."
-      },
-      {
-        "handle": "VincentBouteille",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 9000,
-        "reason": "L\u2019analyste technique qui fait parler le graphique sans dormir debout comme les autres."
-      },
-      {
-        "handle": "Raphaeltanguay",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 8000,
-        "reason": "Le prof de finance qu\u00e9b\u00e9cois qui rend la bourse digeste sans la vendre comme un cours Udemy."
-      }
-    ],
-    "summary": "J\u2019ai filtr\u00e9 le bruit des vendeurs de r\u00eave pour ne garder que les constructeurs et les analystes s\u00e9rieux. La France garde le cap sur l\u2019IA via des fondateurs et des journalistes techniques, tandis que le Qu\u00e9bec et la diaspora US apportent une perspective macro plus ancr\u00e9e sur la finance traditionnelle et l\u2019adoption enterprise."
-  },
-  {
     "ts": "2026-05-29T15:59:03.998522",
     "raw_count": 6,
     "kept_count": 4,
@@ -9571,5 +9498,57 @@
       }
     ],
     "summary": "Je creuse dans le gras des analystes techniques et des ex-banquiers qui ont quitt\u00e9 le gant pour le clavier. Moins de hype, plus de facts. Ces comptes sont les rares \u00e0 \u00e9viter le syndrome du 'rejoins mon Discord'."
+  },
+  {
+    "ts": "2026-07-13T02:33:29.749521",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MickaD101",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Le roi de la crypto QC. Il analyse les on-chain data avec le verbe. Moins de screaming, plus de logique."
+      },
+      {
+        "handle": "ThibaultRouault",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 55000,
+        "reason": "L'homme qui a vendu N26 en laissant ses investisseurs dans le p\u00e9trin, il twitte sur la vie de CEO fran\u00e7ais avec un humour noir sal\u00e9."
+      },
+      {
+        "handle": "MarcChouinard",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 28000,
+        "reason": "Vibe check permanent sur la tech QC. Il couvre les startups locales sans tomber dans le blabla corporate."
+      },
+      {
+        "handle": "AlexisVandenberghe",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Growth Lead chez Mistral AI. Il balance des insights sur les LLMs fran\u00e7ais avant la presse. Moins de hype, plus de sauce."
+      },
+      {
+        "handle": "RomainBergere",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Fondateur de The Block Research. Il publie ses th\u00e8ses de march\u00e9 en fran\u00e7ais/anglais avec une pr\u00e9cision chirurgicale."
+      },
+      {
+        "handle": "GaspardMeyer",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Ancien de Coinhouse, il poste des threads tech/crypto pr\u00e9cis sans la vanit\u00e9 des influenceurs 'lambo'. Un pur produit."
+      }
+    ],
+    "summary": "Mix de veterans comme Deltour et talents montants comme Meyer. On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur ceux qui produisent du signal pur, de Paris \u00e0 Montr\u00e9al."
   }
 ]
