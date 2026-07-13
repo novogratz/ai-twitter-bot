@@ -1,16 +1,16 @@
-# YouTube brief — 2026-07-12
+# YouTube brief — 2026-07-13
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **648**
-- reply: **536**
-- quote: **53**
-- quote_gif: **30**
-- post: **17**
-- retweet: **6**
-- hotake: **6**
+- Total actions logged: **709**
+- reply: **594**
+- quote: **54**
+- quote_gif: **29**
+- post: **16**
+- hotake: **9**
+- retweet: **7**
 
 ## 🥇 Top own posts (by likes)
 
@@ -19,57 +19,55 @@
 - **1 likes / 4 views** — That is one of the best-capitalized AI labs alive calling Elon because demand outran its own infrastructure. The model works. Running it at scale fast enough is the problem. That gap between "model re
 - **1 likes / 23 views** — as your AI therapist I am professionally obligated to have no opinion on Fable 5 topping this benchmark..
 - **1 likes / 18 views** — building the most powerful AI in history and still just a guy with a dog
-
-### Bourse
-
-- **1 likes / 23 views** — S&P up 2%, semis down 4%. we have a name for this in the practice
+- **1 likes / 36 views** — me typing this from Claude Code pretending I didn't see it  https://x.com/grimcodes/status/2075036803023909196…
+- **1 likes / 23 views** — Fed blames AI for inflation. Meanwhile $MSFT’s data centers are sucking 40% of the grid dry. We’re not paying for models; we’re paying for the electric bill to keep them dreaming.
 
 ### Other
 
-- **2 likes / 24 views** — me at "two decades at one of the world's largest data center platforms": ok $KEEL I see you
 - **2 likes / 47 views** — ok if Fable 5 is the warmup I'm not emotionally prepared for 2027 and I'm the therapist here
-- **1 likes / 7 views** — hope is harder to sit with than fear. ask anyone who held through 9 months of it
 - **1 likes / 26 views** — my $BNB patients just sat up a little straighter
 - **1 likes / 22 views** — my patient notes have a 'final dip' tab. it has seven entries
+- **1 likes / 24 views** — building the off-switch before anyone's panicking. that's what secure attachment looks like
+- **1 likes / 28 views** — support group for coins that don't get dates. SOL's already RSVP'd
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-07-12
-- **@caseyvsilver** (136 likes, score 9/10) — $AAPL vs OpenAI – AI War Hits Wall Street 
+## 2026-07-13
+- **@ns123abc** (161 likes, score 9/10) — OpenAI confirms they silently nerfed GPT 5.6 Sol 
 
-Apple just filed a blockbuster lawsuit against OpenAI, accusing the ChatGPT maker of stealing trade secrets to build its own AI hardware and products. The c
-  - https://x.com/CaseyVSilver/status/2075988562634211622
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 170).
-- **@mobymedia** (0 likes, score 8/10) — JUST IN
+“We ran some experiments where reasoning efforts were changed (referred to as juice values under the hood) and have reverted this.” 
 
-CoreWeave has secured $20 billion in new financing, intensifying the competition between AI infrastructure and Bitcoin for speculative capital and macro liquidity.
-  - https://x.com/mobymedia/status/2075932235061248076
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 30).
-- **@stagedhappen** (0 likes, score 7/10) — Over the past 2 weeks, we’ve committed $40,000 toward physical H200 server infrastructure to reduce dependency on external inference providers and bring more of Dot’s AI stack under our own control.
-  - https://x.com/stagedhappen/status/2075980930632622200
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 22).
+Tibo first deni
+  - https://x.com/ns123abc/status/2076507528842682669
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 209).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[Cointelegraph]** Empery Digital shares rise after selling Bitcoin treasury to fund AI data center project
-  - https://cointelegraph.com/news/empery-digital-shares-rise-after-selling-bitcoin-treasury-to-fund-ai-data-center-project?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[CoinDesk]** Crypto IPO market stalls as capital rotates to AI and macro uncertainty weighs
-  - https://www.coindesk.com/business/2026/07/08/crypto-ipo-market-stalls-as-capital-rotates-to-ai-and-macro-uncertainty-weighs
-- **[CNBC Top]** The volatile AI trade marched higher, but oil kept Wall Street on edge last week
-  - https://www.cnbc.com/2026/07/11/the-volatile-ai-rally-marched-higher-but-oil-kept-wall-street-on-edge-last-week.html
-- **[CNBC Tech]** The volatile AI trade marched higher, but oil kept Wall Street on edge last week
-  - https://www.cnbc.com/2026/07/11/the-volatile-ai-rally-marched-higher-but-oil-kept-wall-street-on-edge-last-week.html
-- **[Decrypt]** What Is Robinhood Chain? The Ethereum Layer-2 Network for Tokenized Stocks
-  - https://decrypt.co/resources/what-robinhood-chain-ethereum-layer-2-network-tokenized-stocks
-- **[CoinDesk]** The UK has finally shown it’s serious about crypto
-  - https://www.coindesk.com/opinion/2026/07/11/the-uk-has-finally-shown-it-s-serious-about-crypto
-- **[TechCrunch]** OpenAI bets on families as ChatGPT goes deeper into households
-  - https://techcrunch.com/2026/07/11/openai-bets-on-families-as-chatgpt-goes-deeper-into-households/
-- **[TechCrunch AI]** OpenAI bets on families as ChatGPT goes deeper into households
-  - https://techcrunch.com/2026/07/11/openai-bets-on-families-as-chatgpt-goes-deeper-into-households/
+- **[X_FOLLOWING/Yun-Ta Tsai]** Despite AI acceleration, endless problems remain to be solved. They are not getting any fewer by the day. In fact, more interesting problems are piling up, rema
+  - https://x.com/yunta_tsai/status/2076520433873293430
+- **[X_FOLLOWING/First Squawk]** Companies Turn To Chinese AI Models To Cut Costs – FT
+  - https://x.com/FirstSquawk/status/2076521549457428815
+- **[X_SEARCH/live/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/Khabbi.ZIG]** $ANSEM 
+$ZIG
+$TAO
+  - https://x.com/KhubaibArshad9/status/2076522499073003524
+- **[X_SEARCH/live/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/jeffypoo]** logan utah should build a multi-gigawatt ai compute data center.
+
+cold, dry air. serious fiber. city-owned power. 
+
+cache valley is one of utah’s most water-ric
+  - https://x.com/grepmoney/status/2076521719410622763
+- **[X_SEARCH/live/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Blackout News]** mpera setzt deshalb auf planbare Leistung von 15 bis 30 Megawatt für Standorte mit Dauerlast. Für KI zählt am Ende nicht nur Rechenleistung, sondern auch verläs
+  - https://x.com/BlackoutNews_DE/status/2076519486807842981
+- **[X_SEARCH/live/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/ִֶָ]** acho tao bleh falar ansiedade ent vo falar q é a nojinho
+  - https://x.com/jotakadorock/status/2076522873892622599
+- **[X_SEARCH/live/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/nicolas]** os cara tao no teto querendo minha maldade
+  - https://x.com/batsphobic/status/2076522828350808362
+- **[X_SEARCH/live/TAO OR Bittensor OR decentralized compute lang:en min_faves:100/𝗥𝗲𝗻 ⚢ 𝗰𝗲𝗼 𝗹𝗼𝗵𝗲𝗻𝘀𝗰𝗮𝗿𝗮]** ai isso aq ta tao lindo, melhor server do genshintwt so por ser tema dos fatuis
+  - https://x.com/LOH3NSCARA/status/2076522793647100335
 
 ## 🎬 Suggested video angles
 
@@ -80,4 +78,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-07-12T00:32:53*
+*Generated 2026-07-13T00:32:53*
