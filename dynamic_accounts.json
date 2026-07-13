@@ -271,7 +271,16 @@
     "david_dang",
     "LorenzoCassani",
     "DorianAbadal",
-    "MaxMuller"
+    "MaxMuller",
+    "Alexis_Girard",
+    "0xCyril",
+    "CryptoQuebec",
+    "LudoCTF",
+    "Alexis_Baudoin",
+    "JulienVidal",
+    "ThibaudH",
+    "BenjaminCahuzac",
+    "YvesMauduit"
   ],
   "en": [
     "Chubby",
@@ -397,7 +406,9 @@
     "Shruti",
     "CELIA",
     "Aave",
-    "Chainlink"
+    "Chainlink",
+    "Ren",
+    "Nana"
   ],
   "history": [
     {
@@ -2378,6 +2389,61 @@
     {
       "lang": "fr",
       "handle": "MaxMuller",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alexis_Girard",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xCyril",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoQuebec",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoCTF",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Ren",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Nana",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alexis_Baudoin",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienVidal",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudH",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminCahuzac",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "YvesMauduit",
       "added": "2026-07-13"
     }
   ]

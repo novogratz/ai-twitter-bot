@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-05-31T02:15:22.492613",
-    "raw_count": 6,
-    "kept_count": 6,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Loup_Capital",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Thibault Nivon d\u00e9cortique l'IA avec une pr\u00e9cision chirurgicale, zero hype, 100% fond. C'est la r\u00e9f\u00e9rence tech FR."
-      },
-      {
-        "handle": "GaspardLemarchand",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "L'ex-Hedge Fund guy qui a su rendre l'analyse technique digeste et dr\u00f4le. Pas dans le selling, dans l'analyse."
-      },
-      {
-        "handle": "MarcDionne_",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "L'expert AI qu\u00e9b\u00e9cois qui passe le test de la r\u00e9alit\u00e9 aux start-ups. Vraiment tech, pas juste business."
-      },
-      {
-        "handle": "MathieuBourguignon",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "L'ancien de Coinhouse (VC) qui tweete les perles sur le cycle crypto sans vendre de signal \u00e0 99\u20ac."
-      },
-      {
-        "handle": "S\u00e9bastienBachand",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 9000,
-        "reason": "Le prof de Bourse qui rend les concepts financiers moins douloureux qu'un examen de math. Vocabulaire simple, impact fort."
-      },
-      {
-        "handle": "JulienLefebvre",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 8500,
-        "reason": "L'IA Lead chez AWS (USA) qui tweete en FR sur l'infra IA. Rare mix cloud/AI francophone Stateside."
-      }
-    ],
-    "summary": "Mix \u00e9quilibr\u00e9 entre le fond technique pur (Loup Capital, Bachand) et l'accessibilit\u00e9 boursi\u00e8re (Lemarchand). Pas de vendeurs de r\u00eave, que des profils qui font briller leurs yeux quand ils parlent de P/E ratio ou de transformers."
-  },
-  {
-    "ts": "2026-05-31T04:21:23.788860",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "OphelieD",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Journaliste tech (Ex-AI / Les Echos). Elle couvre la deeptech fran\u00e7aise avec une pertinence rare. Pas de 'moon', du concret."
-      },
-      {
-        "handle": "MaximeMares",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Fondateur de la Banque du Net. Il d\u00e9fend la bourse FR contre les anglosaxons avec humour et rigueur. La r\u00e9f\u00e9rence retail premium."
-      },
-      {
-        "handle": "PierreDuc",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Fondateur de Lysk / ancien de Lydia. Il parle paiement, fintech et tech avec l'\u00e9nergie d'un startupper qui a encore des cheveux."
-      },
-      {
-        "handle": "VivekRanade",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 8500,
-        "reason": "Fondateur de AI Space (USA, mais tr\u00e8s actif en FR sur les threads IA). Il d\u00e9cortique les mod\u00e8les de langage comme un horloger."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour garder les constructeurs : les fondateurs de Mistral et la Banque du Net, plus les journalistes qui font le job sans se la raconter."
-  },
-  {
     "ts": "2026-05-31T06:32:49.369181",
     "raw_count": 8,
     "kept_count": 7,
@@ -9501,5 +9411,95 @@
       }
     ],
     "summary": "J'ai tri\u00e9 le sable pour ne garder que les perles : Mistral pour l'IA pure, Cassani pour le chartisme et Abadal pour la crypto pro. Le Qu\u00e9bec est mieux repr\u00e9sent\u00e9 par les founders tech que par les crypto-bro classiques."
+  },
+  {
+    "ts": "2026-07-13T12:33:27.238677",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Alexis_Girard",
+        "region": "france",
+        "niche": "tech",
+        "followers": 42000,
+        "reason": "Journaliste tech de r\u00e9f\u00e9rence, couvre SaaS et IA avec un \u0153il critique, pas de blabla VC."
+      },
+      {
+        "handle": "0xCyril",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "L'indispensable pour le trading technique, twitte en direct des setups, pas de bruit."
+      },
+      {
+        "handle": "BenjaminMoussallam",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Quant francophone qui code ses propres strat\u00e9gies, pur produit, z\u00e9ro influenceur."
+      },
+      {
+        "handle": "CryptoQuebec",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Le hub qu\u00e9b\u00e9cois, couvre l'adoption institutionnelle nord-am\u00e9ricaine avec un accent francophone."
+      },
+      {
+        "handle": "LudoCTF",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Expert PayFit, d\u00e9construit les business models fintech avec humour et pr\u00e9cision."
+      }
+    ],
+    "summary": "Un mix de valeurs s\u00fbres institutionnelles et de traders qui codent plut\u00f4t qu'ils ne vendent du r\u00eave."
+  },
+  {
+    "ts": "2026-07-13T14:33:47.917720",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Alexis_Baudoin",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 40000,
+        "reason": "Ex-CEO de Qonto. Il parle micro-saaS, bootstrapping et SaaS FR. Le genre de contenu qui fait avancer les fondateurs, pas juste les 'gurus'."
+      },
+      {
+        "handle": "JulienVidal",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "CTO de Doctolib. C'est la preuve qu'un tech fran\u00e7ais peut twittter en FR sans vendre de masterclass \u00e0 999\u20ac sur la productivit\u00e9."
+      },
+      {
+        "handle": "ThibaudH",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Co-fondateur de Hugging Face. Il fait le lien entre la communaut\u00e9 open-source FR et l'IA mondiale. Twitte en FR quand l'inspiration vient."
+      },
+      {
+        "handle": "BenjaminCahuzac",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Directeur de l'IA chez RBC. Il montre comment les grandes banques qu\u00e9b\u00e9coises embarquent dans le train de l'IA. Pas un 'AI Bro' de plus."
+      },
+      {
+        "handle": "YvesMauduit",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "L'analyste en chef de iDealers. Il d\u00e9vore le march\u00e9 US et Canada en expliquant la macro en FR. Rigoureux, pas dans la pol\u00e9mique."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour te laisser du solide : les fondateurs et ex-CEOs qui construisent la French Tech et la Quebec Tech, plus des pros crypto qui ont surv\u00e9cu au march\u00e9. Pas de 'gurus', juste des buildeurs et des analystes qui font leur taf."
   }
 ]

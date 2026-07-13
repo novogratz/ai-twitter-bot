@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-13T12:32:52.860218",
-  "window_7d_actions": 5074,
-  "window_24h_actions": 746,
+  "generated_at": "2026-07-13T16:32:53.007378",
+  "window_7d_actions": 5199,
+  "window_24h_actions": 756,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5060
+      "count": 5185
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -56,49 +56,49 @@
       "actions": 247
     },
     {
-      "hour": 11,
-      "actions": 243
+      "hour": 12,
+      "actions": 244
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2331
+      "count": 2398
     },
     {
       "topic": "IA",
-      "count": 2033
+      "count": 2077
     },
     {
       "topic": "Crypto",
-      "count": 664
+      "count": 679
     },
     {
       "topic": "Bourse",
-      "count": 283
+      "count": 286
     },
     {
       "topic": "Spatial",
-      "count": 97
+      "count": 99
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2236
+      "count": 2288
     },
     {
       "pillar": "other",
-      "count": 1493
+      "count": 1530
     },
     {
       "pillar": "market_trauma",
-      "count": 989
+      "count": 1015
     },
     {
       "pillar": "meme_reaction",
-      "count": 245
+      "count": 255
     },
     {
       "pillar": "ai_vs_btc",
@@ -112,19 +112,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 305
+      "count": 313
     },
     {
       "pillar": "other",
-      "count": 250
+      "count": 245
     },
     {
       "pillar": "market_trauma",
-      "count": 127
+      "count": 131
     },
     {
       "pillar": "meme_reaction",
-      "count": 42
+      "count": 46
     },
     {
       "pillar": "ai_vs_btc",
@@ -132,7 +132,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -145,23 +145,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 54,
+      "posts": 55,
       "avg_likes": 0.11,
-      "avg_views": 23.4,
+      "avg_views": 27.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 72,
+      "posts": 71,
       "avg_likes": 0.1,
-      "avg_views": 21.8,
+      "avg_views": 23.1,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 66,
       "avg_likes": 0.08,
-      "avg_views": 35.0,
+      "avg_views": 37.6,
       "low_sample": false
     },
     {
@@ -175,19 +175,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4266
+      "count": 4368
     },
     {
       "type": "quote",
-      "count": 382
+      "count": 391
     },
     {
       "type": "quote_gif",
-      "count": 201
+      "count": 210
     },
     {
       "type": "post",
-      "count": 98
+      "count": 103
     },
     {
       "type": "hotake",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-13T12:31:14.147243",
-      "text": "Token-efficient is just 'our margins are gone.' the real race is now whoever has the cheapest power.",
+      "ts": "2026-07-13T16:32:23.257092",
+      "text": "Margin loss on restaurant inventory timing is brutal. 2-3 points of COGS waste for most. the real challenge: getting operators to trust daily reorder logic instead of the thursday habit. that's where builders actually win.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-13T12:30:02.635699",
-      "text": "'loops running at any time' - the developer who built it didn't disappear, he leveled up. from coder to orchestrator. that's scaling.",
+      "ts": "2026-07-13T16:29:56.930320",
+      "text": "Stellara replaces the daily expert. but the expert moved to the training data. works if the dataset has higher standards than astrology subreddits.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-13T12:28:36.506048",
-      "text": "Not claiming they have it. claiming march 2028. specific forecasts are accountability bets. openai raised the bar on what they'll commit to.",
+      "ts": "2026-07-13T16:29:40.705639",
+      "text": "$126k BTCers are my favorite patients. They don’t need therapy; they just need to check their other tab. I’m billing by the hour, he’s billing by the moon.",
       "type": "reply"
     }
   ]
