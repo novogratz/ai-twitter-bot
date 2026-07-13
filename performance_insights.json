@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-13T04:32:52.714456",
-  "window_7d_actions": 4932,
-  "window_24h_actions": 725,
+  "generated_at": "2026-07-13T08:32:53.030348",
+  "window_7d_actions": 4938,
+  "window_24h_actions": 730,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4918
+      "count": 4924
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -53,74 +53,74 @@
     },
     {
       "hour": 8,
-      "actions": 222
+      "actions": 227
     },
     {
-      "hour": 10,
-      "actions": 218
+      "hour": 6,
+      "actions": 222
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2269
+      "count": 2262
     },
     {
       "topic": "IA",
-      "count": 1975
+      "count": 1989
     },
     {
       "topic": "Crypto",
-      "count": 633
+      "count": 638
     },
     {
       "topic": "Bourse",
-      "count": 279
+      "count": 280
     },
     {
       "topic": "Spatial",
-      "count": 97
+      "count": 95
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2175
+      "count": 2185
     },
     {
       "pillar": "other",
-      "count": 1454
+      "count": 1455
     },
     {
       "pillar": "market_trauma",
-      "count": 963
+      "count": 954
     },
     {
       "pillar": "meme_reaction",
-      "count": 235
+      "count": 238
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 53
+      "count": 56
     },
     {
       "pillar": "reply_bait",
-      "count": 52
+      "count": 50
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 307
+      "count": 309
     },
     {
       "pillar": "other",
-      "count": 242
+      "count": 241
     },
     {
       "pillar": "market_trauma",
-      "count": 116
+      "count": 119
     },
     {
       "pillar": "meme_reaction",
@@ -128,7 +128,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 13
+      "count": 14
     },
     {
       "pillar": "reply_bait",
@@ -145,7 +145,7 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 72,
+      "posts": 71,
       "avg_likes": 0.1,
       "avg_views": 21.8,
       "low_sample": false
@@ -154,14 +154,14 @@
       "pillar": "market_trauma",
       "posts": 54,
       "avg_likes": 0.09,
-      "avg_views": 22.1,
+      "avg_views": 23.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 65,
+      "posts": 66,
       "avg_likes": 0.08,
-      "avg_views": 35.3,
+      "avg_views": 34.8,
       "low_sample": false
     },
     {
@@ -175,15 +175,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4147
+      "count": 4151
     },
     {
       "type": "quote",
-      "count": 379
+      "count": 377
     },
     {
       "type": "quote_gif",
-      "count": 195
+      "count": 197
     },
     {
       "type": "post",
@@ -191,7 +191,7 @@
     },
     {
       "type": "hotake",
-      "count": 60
+      "count": 62
     },
     {
       "type": "retweet",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-13T04:32:30.100885",
-      "text": "Crypto was built for banking customers. Nettu for the 1.4B without. That's not localization. That's the actual product.",
+      "ts": "2026-07-13T08:32:21.756310",
+      "text": "Les modèles plus gros c'était cool. Mais les clients paient ce qui tourne, pas ce qui s'entraîne. Les leaders remarquent enfin le vrai score.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-13T04:32:13.775852",
-      "text": "Grok at $2/$6 with 2x token efficiency. That's 80-90% cheaper for coding.\n\nAnthropic's developer moat: broken.",
+      "ts": "2026-07-13T08:30:03.704892",
+      "text": "Anthropic led with token pricing. OpenAI doesn't need to (capability edge). xAI is a feature, not an experiment. Real race: inference margin at scale.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-13T04:31:43.882874",
-      "text": "Eight weeks of exits = panic. $197.4M inflow = panic ending. a trend shift happens when inflows continue while new capital actually enters. until then, it's scared money returning.",
+      "ts": "2026-07-13T08:28:20.476073",
+      "text": "$500M for Lyzr, $100M Series B, the AI answered investor questions. The capital came from a demo that proved the product works. Showing beats claiming. Always. This time it was an agent.",
       "type": "reply"
     }
   ]

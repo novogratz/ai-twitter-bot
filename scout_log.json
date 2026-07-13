@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-05-29T15:59:03.998522",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "GillesMauris",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "L'anti-Kerviel. Il tweete sa vie de trader de mani\u00e8re humaine et humoristique. C'est de la bourse, pas du marketing."
-      },
-      {
-        "handle": "ThibaudMoulin",
-        "region": "france",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "Co-fondateur de Doctolib. Il couvre le startup/tech fran\u00e7ais avec finesse. Moins hype que les autres, plus de fond."
-      },
-      {
-        "handle": "AlexisDuchemin",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "L'expert en actions qu\u00e9b\u00e9cois. Analyse fondamentale solide, pas de hype, juste des chiffres. Un vrai pro."
-      },
-      {
-        "handle": "CryptoGilles",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Gilles analyse la macro crypto avec le sourire. Il tweete en FR et \u00e9vite les \u00e9cosyst\u00e8mes toxiques."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les influenceurs 'lifestyle' pour garder les ing\u00e9nieurs et les traders. La France reste leader en analyse fondamentale, le Qu\u00e9bec en valeurs locales. Aucun vendeur de r\u00eave."
-  },
-  {
     "ts": "2026-05-29T18:06:10.888907",
     "raw_count": 8,
     "kept_count": 8,
@@ -9550,5 +9512,57 @@
       }
     ],
     "summary": "Mix de veterans comme Deltour et talents montants comme Meyer. On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur ceux qui produisent du signal pur, de Paris \u00e0 Montr\u00e9al."
+  },
+  {
+    "ts": "2026-07-13T06:33:39.506383",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Tobylamontagne",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Founders de Mistral AI. Twitte en EN mais ses threads sur l'IA en France dominent le feed FR. Indispensable."
+      },
+      {
+        "handle": "GaelleA",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "La r\u00e9f\u00e9rence absolue de la presse crypto FR. Pas de hype, que du concret. Twitte en FR, audience massive."
+      },
+      {
+        "handle": "LudovicD",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Le roi de l'\u00e9ducation boursi\u00e8re au Qu\u00e9bec. Pas de formation \u00e0 1000\u20ac, juste des threads clairs en fran\u00e7ais."
+      },
+      {
+        "handle": "MaximeDeblois",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Data Scientist / AI Engineer. Threads techniques mais accessibles sur LLMs et agents. Le profil 'maker' rare."
+      },
+      {
+        "handle": "SylvainRivard",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "VP chez Canoo (ex), maintenant VC. Couvre tech/crypto avec un \u0153il qu\u00e9b\u00e9cois. Actif et pertinent."
+      },
+      {
+        "handle": "CryptoNicoFr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Trader crypto FR qui tweet ses setups r\u00e9els. Pas de courbe de la mort, juste du trading."
+      }
+    ],
+    "summary": "On reste sur du solide : la presse crypto mature (GaelleA), les fondateurs IA (Tobylamontagne), et les traders/VC qu\u00e9b\u00e9cois qui ne vendent pas du r\u00eave (LudovicD). Z\u00e9ro formation \u00e0 99\u20ac, z\u00e9ro politique."
   }
 ]

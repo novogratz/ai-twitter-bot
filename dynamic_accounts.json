@@ -260,7 +260,13 @@
     "ThibaultRouault",
     "MarcChouinard",
     "RomainBergere",
-    "GaspardMeyer"
+    "GaspardMeyer",
+    "Tobylamontagne",
+    "GaelleA",
+    "LudovicD",
+    "MaximeDeblois",
+    "SylvainRivard",
+    "CryptoNicoFr"
   ],
   "en": [
     "Chubby",
@@ -384,7 +390,8 @@
     "Lentils",
     "Rex",
     "Shruti",
-    "CELIA"
+    "CELIA",
+    "Aave"
   ],
   "history": [
     {
@@ -2300,6 +2307,41 @@
     {
       "lang": "en",
       "handle": "CELIA",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Aave",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "Tobylamontagne",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelleA",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicD",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDeblois",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainRivard",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoNicoFr",
       "added": "2026-07-13"
     }
   ]
