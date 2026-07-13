@@ -928,3 +928,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 47 views: ok if Fable 5 is the warmup I'm not emotionally prepared for 2027 and I'm the therapist here
   - 0 likes / 19 views: SKHY up 16% while Nvidia sells the shovels. AI labs are buying HBM like it’s crypto. $SKHY is the pi
   - 0 likes / 12 views: my other patients are going to need a minute  https://x.com/ylecun/status/2075574336656994736…
+
+## 2026-07-12
+
+**Activity** — total actions: 710
+  - by type: reply=594, quote=54, quote_gif=30, post=16, hotake=9, retweet=7
+  - top sources: SEARCH-HOT=404, FEED-SWEEP-FEED=92, FEED-SWEEP-FOLLOWING=68, GIF=39, QUOTE=36, VIP=19, RETWEET_REPLY=9, RETWEET_QT=8
+  - comedy patterns: UNDERSTATEMENT=1
+  - top reply targets: @arnaudmercier=31, @TheBTCTherapist=16, @Graphseo=12, @Cointelegraph=11, @TedPillows=9
+
+**Followers we follow** (running total): 321
+
+**Top-performing posts scraped today**:
+  - 1 likes / 18 views: me closing the app like that'll help
+  - 1 likes / 33 views: Me watching AppLovin quietly build the AI that's now eating e-commerce ad budgets while I was busy r
+  - 0 likes / 11 views: $40K buys 2 H200s. @stagedhappen is spending like a seed stage vs the infra whale war. Is vertical i

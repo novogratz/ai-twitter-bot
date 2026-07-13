@@ -242,7 +242,13 @@
     "TanguyCazals",
     "MihaiStefan",
     "AdrienVd",
-    "LucBiel"
+    "LucBiel",
+    "PierreRossel",
+    "NathanLeScal",
+    "PierreFouchier",
+    "DavyBoschet",
+    "JulienTremoy",
+    "RomainCoyne"
   ],
   "en": [
     "Chubby",
@@ -360,7 +366,10 @@
     "bomberfish",
     "mae",
     "UnveiledChina",
-    "Za"
+    "Za",
+    "GURGAVIN",
+    "Pukerainbow",
+    "Lentils"
   ],
   "history": [
     {
@@ -2156,6 +2165,51 @@
     {
       "lang": "fr",
       "handle": "LucBiel",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "GURGAVIN",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRossel",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanLeScal",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Pukerainbow",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Lentils",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreFouchier",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "DavyBoschet",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienTremoy",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainCoyne",
       "added": "2026-07-12"
     }
   ]
