@@ -239,7 +239,10 @@
     "Cryptofr",
     "MaximeWieljeski",
     "LuisDelBusto",
-    "TanguyCazals"
+    "TanguyCazals",
+    "MihaiStefan",
+    "AdrienVd",
+    "LucBiel"
   ],
   "en": [
     "Chubby",
@@ -354,7 +357,10 @@
     "Deedy",
     "MartyParty",
     "Rain",
-    "bomberfish"
+    "bomberfish",
+    "mae",
+    "UnveiledChina",
+    "Za"
   ],
   "history": [
     {
@@ -2120,6 +2126,36 @@
     {
       "lang": "en",
       "handle": "bomberfish",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "mae",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "UnveiledChina",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Za",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "MihaiStefan",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienVd",
+      "added": "2026-07-12"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucBiel",
       "added": "2026-07-12"
     }
   ]

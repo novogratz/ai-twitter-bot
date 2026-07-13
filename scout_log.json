@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-05-28T13:29:26.633092",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MarcGueury",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "Fondateur de JustETF. Il explique la bourse passivement en FR sans vendre de sperme de formation \u00e0 2000\u20ac."
-      },
-      {
-        "handle": "RaphaElie1",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "V\u00e9t\u00e9ran tech QC. Couvre AI, SaaS, bourse tech. Ton direct, audience solide, pas de groupe Telegram VIP."
-      },
-      {
-        "handle": "PierreMounier",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Analyste crypto FR de r\u00e9f\u00e9rence. Pas de 'groupe VIP', juste des threads techniques et du market timing. Follow\u00e9 par les pros."
-      },
-      {
-        "handle": "LouisPoussin",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 20000,
-        "reason": "La voix crypto du Qu\u00e9bec. Couvre Bitcoin/DeFi avec une touche qu\u00e9b\u00e9coise. Actif, francophone, pas de shilling constant."
-      },
-      {
-        "handle": "JoffroyB",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Ancien de Payfit, tr\u00e8s actif sur la fintech/scaleup FR. Vues pr\u00e9cises, pas de blabla politique."
-      },
-      {
-        "handle": "VincentLefebvre",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Rechercheur/Acad\u00e9micien AI au Qu\u00e9bec. Twitte les paper updates et insights IA en fran\u00e7ais. Niche mais qualit\u00e9 pure."
-      }
-    ],
-    "summary": "Focus sur les fondateurs Mistral/Hugging Face pour l'IA FR, et des analystes crypto ind\u00e9pendants (pas vendeurs de r\u00eaves) pour la finance. Le Qu\u00e9bec est moins peupl\u00e9 en 'gros' comptes crypto, donc on vise les profils tech/crypto hybrides solides."
-  },
-  {
     "ts": "2026-05-28T15:26:24.267090",
     "raw_count": 10,
     "kept_count": 8,
@@ -9606,5 +9554,50 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le brouillard des 'guru' qui vendent du r\u00eave : ces comptes livrent de l'info brute, une analyse technique ou une insight produit. De l'IA \u00e0 la bourse, c'est du concret."
+  },
+  {
+    "ts": "2026-07-12T18:44:53.679862",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MihaiStefan",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "Ancien de Coinhouse, il sort des threads macro/crypto percutantes. Moins hype que Cryptoast, plus qualitatif."
+      },
+      {
+        "handle": "AdrienVd",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "G\u00e9rant de Kima Ventures. Il track les startups AI FR avec une pr\u00e9cision de sniper. Le mec est la r\u00e9f\u00e9rence VC IA \u00e0 Paris."
+      },
+      {
+        "handle": "Marc-Andre",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Influenceur IA qu\u00e9b\u00e9cois qui parle tech sans jargon pompier. Le seul qui mixe humour qu\u00e9b\u00e9cois et insights LLM."
+      },
+      {
+        "handle": "LucBiel",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "L'expert Bitcoin qu\u00e9b\u00e9cois. Il twitte rarement mais chaque tweet vaut 10 pages d'analyse. Z\u00e9ro bruit."
+      },
+      {
+        "handle": "Jean-BaptisteM",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le roi des threads 'Deep Dive' sur les valeurs tech/fran\u00e7aises. Il lit les rapports annuels comme d'autres lisent des tweets."
+      }
+    ],
+    "summary": "On balance des pros, pas des influenceurs LinkedIn. Mistral et Kima Ventures pour la tech FR, des VC et builders qui ont l'ADN du produit. Quebec covered avec des sp\u00e9cialistes niche, pas des generalistes."
   }
 ]
