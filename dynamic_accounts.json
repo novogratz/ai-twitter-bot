@@ -266,7 +266,12 @@
     "LudovicD",
     "MaximeDeblois",
     "SylvainRivard",
-    "CryptoNicoFr"
+    "CryptoNicoFr",
+    "0xMaci",
+    "david_dang",
+    "LorenzoCassani",
+    "DorianAbadal",
+    "MaxMuller"
   ],
   "en": [
     "Chubby",
@@ -391,7 +396,8 @@
     "Rex",
     "Shruti",
     "CELIA",
-    "Aave"
+    "Aave",
+    "Chainlink"
   ],
   "history": [
     {
@@ -2342,6 +2348,36 @@
     {
       "lang": "fr",
       "handle": "CryptoNicoFr",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xMaci",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "david_dang",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Chainlink",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoCassani",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianAbadal",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxMuller",
       "added": "2026-07-13"
     }
   ]
