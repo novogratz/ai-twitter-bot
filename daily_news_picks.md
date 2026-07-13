@@ -15789,3 +15789,31 @@ Geopolitics? Yeah we know
 The first model to learn complex reasoning, physical dynamics, and long-term planning directly from visual demonstrations — no text chains needed.
   - https://x.com/HuggingPapers/status/2076513044340097501
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).
+- **@jesseolson** (75 likes, score 9/10) — $BTC and the NASDAQ are crashing before tomorrow's stock market open.
+
+If the indices drop 30%+in 2026, then expect Bitcoin to drop as well.
+  - https://x.com/JesseOlson/status/2076518838280327643
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 107).
+- **@cryptorover** (376 likes, score 8/10) — INSANE CRASH IN JAPAN 
+
+Nikkei is down -2.60% today, wiping out ¥27 trillion from its market cap.
+
+In total, ¥82 trillion has been wiped out from the Japanese stock market in the last 21 days.
+  - https://x.com/cryptorover/status/2076516498466644147
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 478).
+- **@aiwithmatthew** (18 likes, score 8/10) — 18 Powerful AI Websites Worth Bookmarking
+
+If you're serious about working smarter with AI, these websites can help you create faster, automate tasks, design better, and boost productivity.
+
+ Must-Try
+  - https://x.com/Aiwithmatthew/status/2076382585597640893
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 42).
+- **@cryptorover** (150 likes, score 7/10) — US Markets are opening to a war.
+
+US futures are crashing as oil jumps over 4% after the US launched a new wave of attacks on Iran.
+
+Nasdaq 100 futures are down 1.24%
+S&P 500 futures down 0.56%
+Russel
+  - https://x.com/cryptorover/status/2076524771915813094
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 234).
