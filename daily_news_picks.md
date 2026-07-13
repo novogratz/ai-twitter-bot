@@ -15817,3 +15817,8 @@ S&P 500 futures down 0.56%
 Russel
   - https://x.com/cryptorover/status/2076524771915813094
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 234).
+- **@jessalanfields** (87 likes, score 9/10) — SpaceXAI is a far better steward of frontier technology than others, and they have proven it time and time again
+
+You don't become a trillionaire by ripping people off
+  - https://x.com/jessalanfields/status/2076475640941830521
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 95).
