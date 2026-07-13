@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-12T20:32:52.829044",
-  "window_7d_actions": 4893,
-  "window_24h_actions": 686,
+  "generated_at": "2026-07-13T00:32:53.162038",
+  "window_7d_actions": 4905,
+  "window_24h_actions": 709,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4880
+      "count": 4891
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 5
+      "count": 6
     },
     {
       "pattern": "RENAME",
@@ -45,7 +45,7 @@
     },
     {
       "hour": 0,
-      "actions": 246
+      "actions": 247
     },
     {
       "hour": 2,
@@ -63,98 +63,98 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2254
+      "count": 2257
     },
     {
       "topic": "IA",
-      "count": 1957
+      "count": 1965
     },
     {
       "topic": "Crypto",
-      "count": 620
+      "count": 623
     },
     {
       "topic": "Bourse",
-      "count": 283
+      "count": 281
     },
     {
       "topic": "Spatial",
-      "count": 93
+      "count": 95
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2170
+      "count": 2166
     },
     {
       "pillar": "other",
-      "count": 1435
+      "count": 1445
     },
     {
       "pillar": "market_trauma",
-      "count": 967
+      "count": 963
     },
     {
       "pillar": "meme_reaction",
-      "count": 221
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 51
+      "count": 227
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 49
+      "count": 52
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 52
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 286
+      "count": 292
     },
     {
       "pillar": "other",
-      "count": 215
+      "count": 222
     },
     {
       "pillar": "market_trauma",
-      "count": 125
+      "count": 131
     },
     {
       "pillar": "meme_reaction",
-      "count": 35
+      "count": 38
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 14
+      "count": 16
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 10
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "market_trauma",
-      "posts": 53,
+      "pillar": "ai_news_take",
+      "posts": 70,
       "avg_likes": 0.09,
-      "avg_views": 22.5,
+      "avg_views": 21.3,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 72,
-      "avg_likes": 0.08,
-      "avg_views": 21.4,
+      "pillar": "market_trauma",
+      "posts": 54,
+      "avg_likes": 0.09,
+      "avg_views": 22.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 68,
+      "posts": 69,
       "avg_likes": 0.07,
-      "avg_views": 34.9,
+      "avg_views": 35.3,
       "low_sample": false
     },
     {
@@ -175,15 +175,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4134
+      "count": 4138
     },
     {
       "type": "quote",
-      "count": 374
+      "count": 376
     },
     {
       "type": "quote_gif",
-      "count": 181
+      "count": 187
     },
     {
       "type": "post",
@@ -200,19 +200,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-12T20:32:49.445024",
-      "text": "Strive's buying $1B in a bear market. The market's fear is institutional shopping season.\n\nThat's the signal nobody's trained to read.",
+      "ts": "2026-07-13T00:32:49.195834",
+      "text": "The real lock-in isn't the OS - it's the 2M app ecosystem built on google infrastructure.\n\nOwnerOS works because those are already separable. just needed someone to build it.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-12T20:29:25.046073",
-      "text": "$20 in value for $100 paid. Your P&L is doing a backflip. I’m prescribing a 10% loss and a nap.",
+      "ts": "2026-07-13T00:32:31.701672",
+      "text": "The agent doesn't need training. you do. 'prompt engineer' was a job title for 'person who tried until they got it.' that's just thinking.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-12T20:28:50.906799",
-      "text": "Soft landing needs training roi to work before h100 capex spirals. companies aren't there yet. not trump's fault, but this isn't a policy fix.",
-      "type": "reply"
+      "ts": "2026-07-13T00:32:15.498514",
+      "text": "Blackwell rates up 20%. $IREN isn’t mining Bitcoin; it’s gambling on AI arbitrage before the power grid screams. One brownout and HIVE eats their lunch. ⚡",
+      "type": "quote"
     }
   ]
 }
