@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-05-29T01:47:21.345284",
-    "raw_count": 10,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LeComptoirFin",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "Le meilleur condens\u00e9 de news boursi\u00e8res francophones. Moins hype que les influenceurs actionnaires, plus utile."
-      },
-      {
-        "handle": "MathieuDussart",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 14000,
-        "reason": "Le v\u00e9t\u00e9ran du Bitcoin QC. Pas de flashy 'to the moon', juste de la conviction et des cycles bien lus."
-      },
-      {
-        "handle": "PierreDartaud",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Un des rares \u00e0 faire de l'analyse fondamentale pure en FR sans vendre sa \u00e2me \u00e0 un courtier en ligne douteux."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des influenceurs 'finance libre' pour garder les artisans : founders de Mistral/Hugging Face, un VC transatlantique et le top de l'analyse crypto QC. C'est moins de bruit, plus de substance."
-  },
-  {
     "ts": "2026-05-29T04:02:36.314406",
     "raw_count": 10,
     "kept_count": 9,
@@ -9536,5 +9505,71 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les influenceurs 'signaux bourse' pour garder les vrais b\u00e2tisseurs (Mistral, DeepL, Doctolib) et les analystes tech pur-sang. L'\u00e9cosyst\u00e8me Qu\u00e9bec est moins visible en crypto FR pur mais fort en Tech/IA g\u00e9n\u00e9rale."
+  },
+  {
+    "ts": "2026-07-13T00:33:34.764555",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MarcCeddia",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Franco-am\u00e9ricain bas\u00e9 \u00e0 SF. Il tweet en FR sur la Silicon Valley avec un ton 'insider' qui fait mal."
+      },
+      {
+        "handle": "HugoBorne",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 52000,
+        "reason": "Le type qui transforme les news crypto en threads lisibles sans endormir le chat. Z\u00e9ro formation \u00e0 vendre, pur flux d'info."
+      },
+      {
+        "handle": "EugeneYap",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "VC et analyste. Il tweet en FR sur la fintech globale. C'est sec, c'est net, c'est cher (en valeur)."
+      },
+      {
+        "handle": "MehdiDz",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Journaliste tech de choc, couverture IA solide. Il tweet avant que le reste de la presse ne se r\u00e9veille."
+      },
+      {
+        "handle": "MathildeRenaud",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Ancienne Binance, elle tweet sur le march\u00e9 spot et\u884d\u751f\u54c1 avec un \u0153il de trader pro."
+      },
+      {
+        "handle": "ThibaudBret",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Expert LLMs. Quand il parle de la pile technique, c'est concret, pas du blabla VC."
+      },
+      {
+        "handle": "AlexisKlein",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "G\u00e9rant de fonds, il tweet ses prises de position. On suit pour savoir o\u00f9 il met l'argent, pas pour ses memes."
+      },
+      {
+        "handle": "JulienBouillenne",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "L'analyste qu\u00e9b\u00e9cois qui d\u00e9cortique les march\u00e9s avec humour. \u00c9vite le jargon pour rester pertinent."
+      }
+    ],
+    "summary": "Je creuse dans le gras des analystes techniques et des ex-banquiers qui ont quitt\u00e9 le gant pour le clavier. Moins de hype, plus de facts. Ces comptes sont les rares \u00e0 \u00e9viter le syndrome du 'rejoins mon Discord'."
   }
 ]

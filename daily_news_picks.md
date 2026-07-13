@@ -15754,3 +15754,38 @@ Plan
 - SK Hynix raised $26.5 billion, approximately 40 trillion won, through the listing of American Depositary Receipts (ADR
   - https://x.com/PolarisLog/status/2076174404309127499
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
+
+## 2026-07-13
+- **@ns123abc** (161 likes, score 9/10) — OpenAI confirms they silently nerfed GPT 5.6 Sol 
+
+“We ran some experiments where reasoning efforts were changed (referred to as juice values under the hood) and have reverted this.” 
+
+Tibo first deni
+  - https://x.com/ns123abc/status/2076507528842682669
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 209).
+- **@cyberrobooo** (25 likes, score 8/10) — While Anthropic and OpenAI race on AI Agents/LLMs, Mistral continues expanding its footprint in physical AI.
+
+They just released Robostral Navigate (8B VLA model). It shows strong potential in deliver
+  - https://x.com/CyberRobooo/status/2076493642089496721
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 29).
+- **@kkawsb** (3 likes, score 7/10) — If I could only attend one AI conference this year, I'd choose AGI Summit SF 2026.
+
+OpenAI, Anthropic, Microsoft, Stanford, Recursive, Greptile… 200+ speakers, 15,000+ attendees, coming together to di
+  - https://x.com/KKaWSB/status/2076495088876925323
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 13).
+- **@rationalaussie** (65 likes, score 7/10) — I pretty much only watch UFO podcasts now.
+
+Every other podcast genre is uninteresting to me.
+
+Bitcoin podcast? Yeah we've heard it all.
+
+AI? Yeah we know AGI is on the way.
+
+Geopolitics? Yeah we know
+  - https://x.com/rationalaussie/status/2076464833118273755
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 89).
+- **@huggingpapers** (12 likes, score 7/10) — ByteDance just released UniVR-34B on Hugging Face
+
+The first model to learn complex reasoning, physical dynamics, and long-term planning directly from visual demonstrations — no text chains needed.
+  - https://x.com/HuggingPapers/status/2076513044340097501
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 16).

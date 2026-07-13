@@ -248,7 +248,14 @@
     "PierreFouchier",
     "DavyBoschet",
     "JulienTremoy",
-    "RomainCoyne"
+    "RomainCoyne",
+    "MarcCeddia",
+    "HugoBorne",
+    "EugeneYap",
+    "MehdiDz",
+    "MathildeRenaud",
+    "ThibaudBret",
+    "AlexisKlein"
   ],
   "en": [
     "Chubby",
@@ -369,7 +376,8 @@
     "Za",
     "GURGAVIN",
     "Pukerainbow",
-    "Lentils"
+    "Lentils",
+    "Rex"
   ],
   "history": [
     {
@@ -2211,6 +2219,46 @@
       "lang": "fr",
       "handle": "RomainCoyne",
       "added": "2026-07-12"
+    },
+    {
+      "lang": "en",
+      "handle": "Rex",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcCeddia",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoBorne",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "EugeneYap",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MehdiDz",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathildeRenaud",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudBret",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisKlein",
+      "added": "2026-07-13"
     }
   ]
 }
