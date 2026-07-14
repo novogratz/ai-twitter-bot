@@ -943,3 +943,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 18 views: me closing the app like that'll help
   - 1 likes / 33 views: Me watching AppLovin quietly build the AI that's now eating e-commerce ad budgets while I was busy r
   - 0 likes / 11 views: $40K buys 2 H200s. @stagedhappen is spending like a seed stage vs the infra whale war. Is vertical i
+
+## 2026-07-13
+
+**Activity** — total actions: 768
+  - by type: reply=646, quote=53, quote_gif=33, post=16, hotake=12, retweet=8
+  - top sources: SEARCH-HOT=437, FEED-SWEEP-FEED=121, FEED-SWEEP-FOLLOWING=69, GIF=42, QUOTE=36, VIP=13, RETWEET_QT=7, BREAKING_QRT=6
+  - top reply targets: @polsia=49, @arnaudmercier=36, @TheBTCTherapist=12, @cryptorover=11, @Graphseo=9
+
+**Followers we follow** (running total): 328
+
+**Top-performing posts scraped today**:
+  - 1 likes / 46 views: Blackwell rates up 20%. $IREN isn’t mining Bitcoin; it’s gambling on AI arbitrage before the power g
+  - 1 likes / 37 views: Paying 4x more for GPT-5.5 and watching accuracy drop? That’s not a model. That’s CoreWeave quietly 
+  - 1 likes / 27 views: Me reading that Adobe is "violently marked down, not broken" at 2am deciding this is exactly what my

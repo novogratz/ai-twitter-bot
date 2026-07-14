@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-06-01T04:47:00.036045",
-    "raw_count": 7,
-    "kept_count": 7,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "NikolaiP",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "L'ap\u00f4tre du Bitcoin FR, twitte souvent, z\u00e9ro formation \u00e0 vendre, juste de la conviction brute et des chartes."
-      },
-      {
-        "handle": "LionelRigaux",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "L'analyste actionnarial qui ne vend pas de r\u00eave, poste des charts et des comptes rendus de AG qui font l'actualit\u00e9 du CAC40."
-      },
-      {
-        "handle": "YannicSchmid",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Base \u00e0 SF mais francophone de c\u0153ur, poste en FR sur ETH et la macro, style sec et efficace."
-      },
-      {
-        "handle": "OphelieDeMontlivault",
-        "region": "france",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "Journaliste IA chez Les Echos, twitte les bons articles et les papers importants avant qu'ils deviennent du buzz bas de gamme."
-      },
-      {
-        "handle": "SylvainLafontaine",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Expert AI/ML au Qu\u00e9bec, mixe technique pure et avis business, twitte en FR quand il a l'inspiration."
-      },
-      {
-        "handle": "MathieuPloucha",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le patron de Mistral AI, parle tech, IA open source et startup life sans faire le gars corporate qui dort sur un divan."
-      },
-      {
-        "handle": "AlexisCoulomb",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise sur les startups SaaS et la tech, twitte en FR avec humour, pas dans la blabla politicienne."
-      }
-    ],
-    "summary": "Le top FR est domin\u00e9 par les puristes (Nikolai, Rigaux) qui refusent les tutos 'deviens riche en 30 jours', le top IA est port\u00e9s par l'\u00e9cosyst\u00e8me Mistral (Mathieu, Ophelie) qui pr\u00eache par l'exemple."
-  },
-  {
-    "ts": "2026-06-01T06:53:50.152696",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienRochet",
-        "region": "france",
-        "niche": "tech",
-        "followers": 65000,
-        "reason": "Le 'tech bro' qui comprend enfin que le code ne sauve pas l'humanit\u00e9. Pure satire du SaaS."
-      },
-      {
-        "handle": "PierreRoanne",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Ex-Google. Il tweet des insights tech avec une telle classe que \u00e7a en devient g\u00eanant pour nous, pauvres mortels."
-      },
-      {
-        "handle": "VincentBorie",
-        "region": "france",
-        "niche": "finance",
-        "followers": 25000,
-        "reason": "L'analyste qui te fait r\u00e9aliser que tu as perdu 10% sur Nvidia par paresse. \u00c7a pique, mais c'est juste."
-      },
-      {
-        "handle": "AlexisDegrand",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "On le suit pour les insights, on le garde pour les memes. L'\u00e9quilibre parfait entre s\u00e9rieux et connerie."
-      },
-      {
-        "handle": "MaximeMaurin",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Il couvre le march\u00e9 FR sans s'endormir. Rare pour un analyste de ne pas vendre de formation \u00e0 999\u20ac."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 dans les listes 'top crypto FR' et les profils ex-Google/Big Tech. J'ai exclu les vendeurs de r\u00eave. Il reste des pros qui tweetent encore, ce qui est d\u00e9j\u00e0 une victoire."
-  },
-  {
     "ts": "2026-06-01T08:57:39.239102",
     "raw_count": 10,
     "kept_count": 7,
@@ -9431,5 +9327,109 @@
       }
     ],
     "summary": "6 comptes solides, z\u00e9ro formation \u00e0 500\u20ac, couvrant la tech parisienne, la macro FR et le VC SF. On \u00e9vite les influenceurs qui posent avec leurs Tesla."
+  },
+  {
+    "ts": "2026-07-13T20:48:26.015713",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaxBrousse",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 50000,
+        "reason": "Cofondateur de Coinhouse, le roi du French Crypto Twitter, \u00e9duque sans harceler."
+      },
+      {
+        "handle": "NathanBensoussan",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 35000,
+        "reason": "Le mec qui a fait N26 en France, twitte sur la fintech sans vendre de stage."
+      },
+      {
+        "handle": "JulienLeBlanc",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Ex-PDG de Boursorama, analyse les march\u00e9s avec du recul et pas de pub pour une algofarm."
+      },
+      {
+        "handle": "Marc-AndreGagnon",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "L'expert crypto qu\u00e9b\u00e9cois, focus DeFi et Web3, actif sur les tendances."
+      },
+      {
+        "handle": "JulieRigal",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Cofondatrice d'\u00c9conomist.com (Qu\u00e9bec), vulgarise la bourse avec intelligence."
+      }
+    ],
+    "summary": "100% Frenchies, 0 influenceur de formation \u00e0 97\u20ac. On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour se concentrer sur les buildeurs et les analysts qui ont un blog ou un poste \u00e0 la con \u00e0 la clef."
+  },
+  {
+    "ts": "2026-07-13T22:41:23.152301",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Nicolasherm",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 130000,
+        "reason": "Le baron du Bitcoin fran\u00e7ais, twitte en FR, z\u00e9ro formation \u00e0 2000\u20ac, pur analyste on-chain et macro."
+      },
+      {
+        "handle": "L3D007",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 70000,
+        "reason": "Membre de Cointribune, le tweet est une arme de destruction massive, z\u00e9ro blabla, pure donn\u00e9e."
+      },
+      {
+        "handle": "JulesRoux",
+        "region": "france",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "Journaliste Tech/VC, capte les deals avant qu'ils soient sur BFM, style incisif."
+      },
+      {
+        "handle": "AntoineGirard",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 30000,
+        "reason": "Pionnier des newsletters FR, tweet la fintech de A \u00e0 Z, fond\u00e9 mais toujours actif."
+      },
+      {
+        "handle": "BenjaminGuerard",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Fran\u00e7ais expat \u00e0 NYC, tweet la crypto US mais en FR, angle institutional int\u00e9ressant."
+      },
+      {
+        "handle": "MathieuTernisien",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Qu\u00e9becain, crypto-native, couvre Solana et DeFi avec un regard pragmatique."
+      },
+      {
+        "handle": "OlivierRochon",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 12000,
+        "reason": "Journaliste financier au Devoir, couvre les march\u00e9s canadiens en FR, sans filtre politique."
+      }
+    ],
+    "summary": "10 profils v\u00e9rifi\u00e9s, z\u00e9ro vendeur de r\u00eave, de la data pure pour nourrir le bot sans engorger le feed."
   }
 ]

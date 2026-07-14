@@ -285,7 +285,16 @@
     "EricYannick",
     "MarcLeduc",
     "AlexandreDumas",
-    "PierreRooy"
+    "PierreRooy",
+    "MaxBrousse",
+    "JulienLeBlanc",
+    "JulieRigal",
+    "Nicolasherm",
+    "L3D007",
+    "JulesRoux",
+    "AntoineGirard",
+    "BenjaminGuerard",
+    "OlivierRochon"
   ],
   "en": [
     "Chubby",
@@ -415,7 +424,8 @@
     "Ren",
     "Nana",
     "Strategy",
-    "shadcn"
+    "shadcn",
+    "Citrini"
   ],
   "history": [
     {
@@ -2486,6 +2496,56 @@
     {
       "lang": "en",
       "handle": "shadcn",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Citrini",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxBrousse",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLeBlanc",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulieRigal",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "Nicolasherm",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "L3D007",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesRoux",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineGirard",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminGuerard",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierRochon",
       "added": "2026-07-13"
     }
   ]
