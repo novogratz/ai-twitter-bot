@@ -303,7 +303,15 @@
     "ThibautAutin",
     "JorisLallement",
     "TheAICollectiv",
-    "VladT"
+    "VladT",
+    "CyrilTissot",
+    "LefortG",
+    "JohannDumas",
+    "JesseSolorio",
+    "DavidBouley",
+    "CryptoCabin",
+    "MarcCormier",
+    "MaxenceDantou"
   ],
   "en": [
     "Chubby",
@@ -444,7 +452,14 @@
     "Baki",
     "tenso",
     "beyonceprotect",
-    "SixSigmaCapital"
+    "SixSigmaCapital",
+    "Binance",
+    "Him",
+    "elvis",
+    "fal",
+    "EthSystems",
+    "oskarth",
+    "Kemi"
   ],
   "history": [
     {
@@ -2660,6 +2675,81 @@
     {
       "lang": "fr",
       "handle": "VladT",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Binance",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Him",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "elvis",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "fal",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilTissot",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LefortG",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JohannDumas",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "EthSystems",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "oskarth",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JesseSolorio",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "DavidBouley",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCabin",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcCormier",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxenceDantou",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Kemi",
       "added": "2026-07-14"
     }
   ]
