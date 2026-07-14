@@ -280,7 +280,12 @@
     "JulienVidal",
     "ThibaudH",
     "BenjaminCahuzac",
-    "YvesMauduit"
+    "YvesMauduit",
+    "SylvainLaplante",
+    "EricYannick",
+    "MarcLeduc",
+    "AlexandreDumas",
+    "PierreRooy"
   ],
   "en": [
     "Chubby",
@@ -408,7 +413,9 @@
     "Aave",
     "Chainlink",
     "Ren",
-    "Nana"
+    "Nana",
+    "Strategy",
+    "shadcn"
   ],
   "history": [
     {
@@ -2444,6 +2451,41 @@
     {
       "lang": "fr",
       "handle": "YvesMauduit",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLaplante",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricYannick",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Strategy",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLeduc",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexandreDumas",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRooy",
+      "added": "2026-07-13"
+    },
+    {
+      "lang": "en",
+      "handle": "shadcn",
       "added": "2026-07-13"
     }
   ]

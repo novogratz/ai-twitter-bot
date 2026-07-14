@@ -1,137 +1,5 @@
 [
   {
-    "ts": "2026-05-31T06:32:49.369181",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RaphaelLeBihan",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Ex-DigitalOcean, il couvre le SaaS et la tech infra avec une pr\u00e9cision chirurgicale. Pas de gaga sur l'IA, juste des fondamentaux qui font des euros. Le genre de compte qui \u00e9vite de perdre de l'argent en bourse tech."
-      },
-      {
-        "handle": "CryptoMasse",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "La voix de la crypto francophone au Canada. Pas de shillage agressif, une analyse macro solide. Il couvre le Bitcoin comme un actif et les altcoins comme des loteries. \u00c9quilibre parfait pour ne pas se prendre la t\u00eate."
-      },
-      {
-        "handle": "JulienManceau",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 20000,
-        "reason": "Le roi de la bourse qu\u00e9b\u00e9coise. Il d\u00e9cortique les rapports trimestriels sans assommer. Quand il tweet, le flux ne se remplit pas d'emojis fus\u00e9es, mais de chiffres. Rare et pr\u00e9cieux."
-      },
-      {
-        "handle": "0xFelix",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Diaspora FR aux USA, il mixe les tendances Silicon Valley avec l'esprit critique europ\u00e9en. Covere le DeFi et l'Infra sans utiliser de mots anglais compliqu\u00e9s sans les expliquer. Trop rare."
-      },
-      {
-        "handle": "MaximilienB",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Co-founder chez Mistral, il explique l'IA comme si on avait 5 ans et un cerveau intact. Moins hype que les GAFAM, plus relevant que ton oncle qui croit que l'IA va tuer le pain."
-      },
-      {
-        "handle": "AlphacoinFR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Newsletter et Twitter taillent dans le m\u00eame bois : concis, direct, utile. Pas de 'DM for collab', juste des insights sur les tokenomics et les protocoles. Un oasis de s\u00e9r\u00e9nit\u00e9 dans la jungle des influenceurs."
-      },
-      {
-        "handle": "PierreBouchardBTC",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 8000,
-        "reason": "Le Bitcoin pur-and-dur qu\u00e9b\u00e9cois. Il tweet peu mais juste. Quand il parle de halving ou d'halving, c'est que \u00e7a va bouger. Pas de bruit, juste du signal. Pour ceux qui ont la patience de lire."
-      }
-    ],
-    "summary": "On a creus\u00e9 l\u00e0 o\u00f9 \u00e7a fait mal : Mistral et la tech infra fran\u00e7aise, le Bitcoin qu\u00e9b\u00e9cois pragmatique, et les analystes on-chain fran\u00e7ais qui ne vendent pas de vent. Z\u00e9ro influenceur formation, juste des profils qui comprennent leur m\u00e9tier."
-  },
-  {
-    "ts": "2026-06-01T02:54:23.328226",
-    "raw_count": 10,
-    "kept_count": 9,
-    "accounts_added": 8,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JohannDecaux",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "Le 'S&P 500 guy' de la French Tech. Cynique, pr\u00e9cis, z\u00e9ro bullshit."
-      },
-      {
-        "handle": "JulienD",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 50000,
-        "reason": "Bas\u00e9 \u00e0 SF mais francophone. Il mixe les news US avant qu'elles n'arrivent en France."
-      },
-      {
-        "handle": "MaximeBoutier",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "L'ancien de Binance France, toujours pertinent, vibe plus chill que les analystes en tailleur."
-      },
-      {
-        "handle": "LucasP",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "VC \u00e0 NYC. Il sent les opportunit\u00e9s avant qu'elles ne soient sur la une."
-      },
-      {
-        "handle": "ThibautD",
-        "region": "france",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Ex-Google, chercheur LLM. Ses threads tech sont des mines d'or sans jargon inutile."
-      },
-      {
-        "handle": "PhilippeB",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "Journaliste @BFMBourse. Il comprend la machine mieux que les patrons de banques."
-      },
-      {
-        "handle": "AlexisMoussallem",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 20000,
-        "reason": "La voix du e-commerce qu\u00e9b\u00e9cois. Moins 'crypto', plus 'business r\u00e9el'. Indispensable pour voir la tech servir."
-      },
-      {
-        "handle": "MaximeB",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Trader option \u00e0 NYC. Ses setups sont clairs, ses pertes aussi."
-      },
-      {
-        "handle": "SimonLaprise",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Founding engineer au Qu\u00e9bec. Il traduit la hype US en r\u00e9alit\u00e9 locale sans chichi."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les architectes et les observateurs. De Mistral \u00e0 la Street NY, c'est le top 10% de la francophonie tech qui ne vend pas de stage."
-  },
-  {
     "ts": "2026-06-01T04:47:00.036045",
     "raw_count": 7,
     "kept_count": 7,
@@ -9501,5 +9369,67 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit pour te laisser du solide : les fondateurs et ex-CEOs qui construisent la French Tech et la Quebec Tech, plus des pros crypto qui ont surv\u00e9cu au march\u00e9. Pas de 'gurus', juste des buildeurs et des analystes qui font leur taf."
+  },
+  {
+    "ts": "2026-07-13T16:33:32.592140",
+    "raw_count": 5,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "SylvainLaplante",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Analyste qu\u00e9b\u00e9cois de renom. Twitte en fran\u00e7ais, couvre l'\u00e9conomie et les march\u00e9s avec une lucidit\u00e9 rare. Pas dans la hype, dans le fond. Pour ceux qui pr\u00e9f\u00e8rent lire un rapport annuel \u00e0 20h qu'un tweet \u00e0 8h."
+      },
+      {
+        "handle": "EricYannick",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Vieillissant avec gr\u00e2ce dans le finTech. Ancien de chez Shopify, il balance des perles sur la SaaS et la fintech US depuis la c\u00f4te Est. Son anglais est parfait, mais son \u00e2me est francophone. C'est la passerelle culturelle."
+      }
+    ],
+    "summary": "Un m\u00e9lange de g\u00e9ants techniques (Hugging Face), de p\u00e8res fondateurs (Benoit) et de voix r\u00e9gionales fortes. Pas de vendeurs de r\u00eaves, juste des builders qui twittent en FR ou avec une \u00e2me FR."
+  },
+  {
+    "ts": "2026-07-13T18:43:29.568067",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilDerkinderen",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'ancien de la City qui a pris la t\u00eate du Capital FR. Il balance des perles macro brutales, zero blabla de n\u00e9o-r\u00e9to."
+      },
+      {
+        "handle": "MarcLeduc",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "L'analyste qu\u00e9b\u00e9cois qui fait le job. Pas de 'rejoins mon club VIP', juste des charts propres et des prises de position claires sur le TSX."
+      },
+      {
+        "handle": "AlexandreDumas",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Founders & VCs de SF qui twittent en FR. Couvre l'IA et le VC californien avec un regard europ\u00e9en. Pas du contenu g\u00e9n\u00e9r\u00e9 par IA."
+      },
+      {
+        "handle": "PierreRooy",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Journaliste crypto pro, pas un 'crypto bro' qui crie sur les titres. Il fetch les bonnes sources et les tweet vite. fiable."
+      }
+    ],
+    "summary": "6 comptes solides, z\u00e9ro formation \u00e0 500\u20ac, couvrant la tech parisienne, la macro FR et le VC SF. On \u00e9vite les influenceurs qui posent avec leurs Tesla."
   }
 ]
