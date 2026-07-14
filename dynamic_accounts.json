@@ -294,7 +294,8 @@
     "JulesRoux",
     "AntoineGirard",
     "BenjaminGuerard",
-    "OlivierRochon"
+    "OlivierRochon",
+    "MaxBoussemart"
   ],
   "en": [
     "Chubby",
@@ -425,7 +426,10 @@
     "Nana",
     "Strategy",
     "shadcn",
-    "Citrini"
+    "Citrini",
+    "Rothmus",
+    "Michael",
+    "CryptoGoos"
   ],
   "history": [
     {
@@ -2547,6 +2551,26 @@
       "lang": "fr",
       "handle": "OlivierRochon",
       "added": "2026-07-13"
+    },
+    {
+      "lang": "en",
+      "handle": "Rothmus",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Michael",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "CryptoGoos",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxBoussemart",
+      "added": "2026-07-14"
     }
   ]
 }

@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-14T00:32:54.083782",
-  "window_7d_actions": 5372,
-  "window_24h_actions": 777,
+  "generated_at": "2026-07-14T04:32:52.874524",
+  "window_7d_actions": 5298,
+  "window_24h_actions": 729,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5358
+      "count": 5285
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -13,7 +13,7 @@
     },
     {
       "pattern": "RENAME",
-      "count": 4
+      "count": 3
     },
     {
       "pattern": "METAPHOR",
@@ -30,12 +30,12 @@
       "count": 1
     },
     {
-      "pattern": "METAPHOR",
+      "pattern": "RENAME",
       "count": 3
     },
     {
-      "pattern": "RENAME",
-      "count": 4
+      "pattern": "METAPHOR",
+      "count": 3
     }
   ],
   "best_hours_utc": [
@@ -44,61 +44,61 @@
       "actions": 255
     },
     {
-      "hour": 0,
-      "actions": 250
-    },
-    {
       "hour": 10,
       "actions": 250
     },
     {
-      "hour": 1,
+      "hour": 0,
       "actions": 247
     },
     {
       "hour": 12,
       "actions": 244
+    },
+    {
+      "hour": 11,
+      "actions": 243
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2498
+      "count": 2475
     },
     {
       "topic": "IA",
-      "count": 2135
+      "count": 2094
     },
     {
       "topic": "Crypto",
-      "count": 692
+      "count": 684
     },
     {
       "topic": "Bourse",
-      "count": 291
+      "count": 282
     },
     {
       "topic": "Spatial",
-      "count": 99
+      "count": 92
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2361
+      "count": 2317
     },
     {
       "pillar": "other",
-      "count": 1588
+      "count": 1569
     },
     {
       "pillar": "market_trauma",
-      "count": 1049
+      "count": 1036
     },
     {
       "pillar": "meme_reaction",
-      "count": 261
+      "count": 262
     },
     {
       "pillar": "ai_vs_btc",
@@ -106,33 +106,33 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 54
+      "count": 55
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 317
+      "count": 291
     },
     {
       "pillar": "other",
-      "count": 253
+      "count": 230
     },
     {
       "pillar": "market_trauma",
-      "count": 150
+      "count": 154
     },
     {
       "pillar": "meme_reaction",
-      "count": 41
+      "count": 39
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 8
     },
     {
       "pillar": "reply_bait",
-      "count": 5
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -145,23 +145,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 56,
-      "avg_likes": 0.14,
-      "avg_views": 30.9,
+      "posts": 54,
+      "avg_likes": 0.13,
+      "avg_views": 31.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 70,
-      "avg_likes": 0.13,
-      "avg_views": 27.4,
+      "avg_likes": 0.11,
+      "avg_views": 27.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 65,
-      "avg_likes": 0.08,
-      "avg_views": 40.6,
+      "posts": 67,
+      "avg_likes": 0.07,
+      "avg_views": 39.3,
       "low_sample": false
     },
     {
@@ -175,15 +175,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4532
+      "count": 4462
     },
     {
       "type": "quote",
-      "count": 401
+      "count": 398
     },
     {
       "type": "quote_gif",
-      "count": 212
+      "count": 213
     },
     {
       "type": "post",
@@ -195,23 +195,23 @@
     },
     {
       "type": "retweet",
-      "count": 50
+      "count": 48
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-14T00:32:23.390686",
-      "text": "me putting down my clipboard at \"generational wealth\" AND \"quite obvious\" in the same sentence 🛋️",
+      "ts": "2026-07-14T04:31:22.029241",
+      "text": "$200k is too low. Sure. Valar Atomics just powered $NVDA with uranium. Scaramucci’s still praying to the GPU gods while the real alpha eats nuclear. 🥩⚛️",
       "type": "quote"
     },
     {
-      "ts": "2026-07-14T00:30:57.701628",
-      "text": "9 years is when most exchanges crumbled. That's your actual moat. The 90-year projection hinges on whether the regulatory environment stabilizes faster than competition ships.",
-      "type": "reply"
+      "ts": "2026-07-14T03:22:46.801370",
+      "text": "$NVDA needs oil. Trump’s getting paid in HBM to hold the choke point. We aren't buying chips, we're buying geopolitics with 14nm memory. ⛽🤖",
+      "type": "quote"
     },
     {
-      "ts": "2026-07-14T00:30:41.616086",
-      "text": "20-100x cheaper means inference stays on-site. cloud SaaS is now the expensive option.",
+      "ts": "2026-07-14T02:51:51.471574",
+      "text": "Nvidia's managing regulators, not supply. Cutting Asia buyers creates visible compliance while the silicon still gets there through channels harder to trace.",
       "type": "reply"
     }
   ]
