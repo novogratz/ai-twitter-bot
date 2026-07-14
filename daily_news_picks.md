@@ -15822,3 +15822,25 @@ Russel
 You don't become a trillionaire by ripping people off
   - https://x.com/jessalanfields/status/2076475640941830521
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 95).
+
+## 2026-07-14
+- **@oilandenergy** (19 likes, score 7/10) — Next-generation geothermal is gaining momentum. Fervo cut drilling time by 70% at its Utah project, while Quaise raised $134M to advance superhot geothermal. As AI drives power demand higher, 24/7 car
+  - https://x.com/OilandEnergy/status/2076760038702465224
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 23).
+- **@aipandax** (16 likes, score 7/10) — Wait... 20-100x lower cost while matching frontier model performance?
+
+That's the number that changes real deployment decisions.
+
+Healthcare organizations can actually own this, deploy it securely, an
+  - https://x.com/AIPandaX/status/2076740276950102395
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 16).
+- **@alphaowltrading** (35 likes, score 8/10) — US DATA CENTRE POWER DEMAND EXPECTED TO 4x BY 2030!!
+
+Which stock are you buying to benefit from this power boom???
+
+$CEG $VST $NRG $GEV $ETN $PWR $VRT $BE
+  - https://x.com/AlphaOwlTrading/status/2076261635790930382
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 81).
+- **@uranium2035** (9 likes, score 7/10) — On March 4, seven companies (Amazon, Google, Meta, Microsoft, OpenAI, Oracle and xAI) signed a document at the White House containing a critical clause: they committed to "build, bring, or buy" all th
+  - https://x.com/Uranium2035/status/2076729088534823297
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 11).
