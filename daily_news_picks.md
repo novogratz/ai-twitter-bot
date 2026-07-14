@@ -15844,3 +15844,21 @@ $CEG $VST $NRG $GEV $ETN $PWR $VRT $BE
 - **@uranium2035** (9 likes, score 7/10) — On March 4, seven companies (Amazon, Google, Meta, Microsoft, OpenAI, Oracle and xAI) signed a document at the White House containing a critical clause: they committed to "build, bring, or buy" all th
   - https://x.com/Uranium2035/status/2076729088534823297
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 11).
+- **@adamkhootrader** (110 likes, score 9/10) — SpaceX ($SPCX)  is one of those 99% of stocks that is impossible to accurately value because it’s largely built on narrative of castles in the sky and not real cash flow or earnings . 
+
+Buffett calls
+  - https://x.com/adamkhootrader/status/2076840550083518645
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 138).
+- **@reuters** (16 likes, score 8/10) — Nvidia halves Asia AI chip customer list, FT reports http://reut.rs/4pmwtRs
+  - https://x.com/Reuters/status/2076876890627883368
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 30).
+- **@bdinvestingg** (48 likes, score 8/10) — Are there any bulls left on the timeline ? Everyone acting like S&P is down -30%
+
+I remain bullish 
+Memory $MU $DRAM 
+Neoclouds $NBIS 
+Chips $AMD $CRDO $ASML 
+Photonics $AAOI $LITE 
+Space $RKLB $ASTS
+  - https://x.com/bdinvestingg/status/2076857400921878968
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 56).
