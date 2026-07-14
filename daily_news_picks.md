@@ -15862,3 +15862,19 @@ Photonics $AAOI $LITE
 Space $RKLB $ASTS
   - https://x.com/bdinvestingg/status/2076857400921878968
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 56).
+- **@1umonp0tr14e8fi** (214 likes, score 9/10) — Next week, the strongest Japanese stock will be born. 500 shares will do. Reserve funds: 120,000 yen Current price: 240 yen (Taiyo Yuden × JX Metals × NVIDIA) For data centers, "liquid cooling pipes"
+  - https://x.com/1umONp0tr14e8Fi/status/2076870561880531123
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 264).
+- **@pltr_dog** (36 likes, score 8/10) — To Our Para Friends
+
+Good morning.
+
+The Q2 earnings announcement date has been set for August 3, 2026 (Monday)  
+If you have time, please take a look  
+*Original text is in the reply section  
+$PLTR #
+  - https://x.com/PLTR_Dog/status/2076791774169932092
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 40).
+- **@whaleinsider** (0 likes, score 8/10) — JUST IN:  Nvidia $NVDA cuts Asia authorized AI chip buyers by half to block gray market leaks to China and slash regulatory risks.
+  - https://x.com/WhaleInsider/status/2076897885535216069
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 88).
