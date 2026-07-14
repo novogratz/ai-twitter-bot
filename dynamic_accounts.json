@@ -311,7 +311,22 @@
     "DavidBouley",
     "CryptoCabin",
     "MarcCormier",
-    "MaxenceDantou"
+    "MaxenceDantou",
+    "TimotheeGonin",
+    "AlexisBessac",
+    "MathisGinon",
+    "RochPomer",
+    "ArmaelM",
+    "FelixTremblay",
+    "GaspardCavali",
+    "LudovicHure",
+    "CathieDWood",
+    "NicoM29",
+    "MickaelD",
+    "MaximeD",
+    "RomainBesson",
+    "ThomK",
+    "L3v1athan"
   ],
   "en": [
     "Chubby",
@@ -459,7 +474,11 @@
     "fal",
     "EthSystems",
     "oskarth",
-    "Kemi"
+    "Kemi",
+    "Priyansh",
+    "Lochie",
+    "sporsho",
+    "Avii"
   ],
   "history": [
     {
@@ -2750,6 +2769,101 @@
     {
       "lang": "en",
       "handle": "Kemi",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Priyansh",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Lochie",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "TimotheeGonin",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBessac",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathisGinon",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "RochPomer",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArmaelM",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "FelixTremblay",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaspardCavali",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicHure",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "sporsho",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Avii",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "CathieDWood",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicoM29",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelD",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeD",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBesson",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomK",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "L3v1athan",
       "added": "2026-07-14"
     }
   ]

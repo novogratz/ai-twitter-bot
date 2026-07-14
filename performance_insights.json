@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-07-14T12:32:52.885526",
-  "window_7d_actions": 4997,
-  "window_24h_actions": 468,
+  "generated_at": "2026-07-14T16:32:52.796407",
+  "window_7d_actions": 4864,
+  "window_24h_actions": 348,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4985
+      "count": 4853
     },
     {
       "pattern": "UNDERSTATEMENT",
       "count": 5
     },
     {
-      "pattern": "RENAME",
+      "pattern": "METAPHOR",
       "count": 3
     },
     {
-      "pattern": "METAPHOR",
-      "count": 3
+      "pattern": "RENAME",
+      "count": 2
     },
     {
       "pattern": "REPETITION",
@@ -31,7 +31,7 @@
     },
     {
       "pattern": "RENAME",
-      "count": 3
+      "count": 2
     },
     {
       "pattern": "METAPHOR",
@@ -52,53 +52,53 @@
       "actions": 233
     },
     {
-      "hour": 13,
-      "actions": 231
+      "hour": 17,
+      "actions": 224
     },
     {
-      "hour": 15,
-      "actions": 230
+      "hour": 9,
+      "actions": 216
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2353
+      "count": 2295
     },
     {
       "topic": "IA",
-      "count": 1965
+      "count": 1902
     },
     {
       "topic": "Crypto",
-      "count": 642
+      "count": 633
     },
     {
       "topic": "Bourse",
-      "count": 251
+      "count": 241
     },
     {
       "topic": "Spatial",
-      "count": 87
+      "count": 86
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2175
+      "count": 2106
     },
     {
       "pillar": "other",
-      "count": 1493
+      "count": 1451
     },
     {
       "pillar": "market_trauma",
-      "count": 967
+      "count": 948
     },
     {
       "pillar": "meme_reaction",
-      "count": 255
+      "count": 253
     },
     {
       "pillar": "ai_vs_btc",
@@ -106,25 +106,25 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 52
+      "count": 51
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 194
-    },
-    {
-      "pillar": "other",
       "count": 144
     },
     {
+      "pillar": "other",
+      "count": 107
+    },
+    {
       "pillar": "market_trauma",
-      "count": 96
+      "count": 70
     },
     {
       "pillar": "meme_reaction",
-      "count": 28
+      "count": 21
     },
     {
       "pillar": "ai_vs_btc",
@@ -154,7 +154,7 @@
       "pillar": "ai_news_take",
       "posts": 72,
       "avg_likes": 0.11,
-      "avg_views": 27.9,
+      "avg_views": 28.9,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4192
+      "count": 4081
     },
     {
       "type": "quote",
-      "count": 383
+      "count": 371
     },
     {
       "type": "quote_gif",
-      "count": 207
+      "count": 205
     },
     {
       "type": "post",
-      "count": 100
+      "count": 98
     },
     {
       "type": "hotake",
-      "count": 67
+      "count": 61
     },
     {
       "type": "retweet",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-14T12:14:38.231522",
-      "text": "99% it passes. The 1% is hoping crypto actually survives.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-07-14T12:11:01.288796",
-      "text": "Nvidia just bought your digital soul. You’ll use the avatar to scream “Buy $NVDA” while it sleeps in your place. The ultimate delegation. 🤖⚡",
+      "ts": "2026-07-14T16:23:25.661017",
+      "text": "IBM’s “25% crash” includes every company charging >2% for inference. The bubble isn’t AI; it’s legacy consulting fees. AGI renders their slide decks obsolete. 🤖",
       "type": "quote"
     },
     {
-      "ts": "2026-07-14T09:28:09.208733",
-      "text": "Your 50% is my 50% margin. You’re having feelings; I’m having earnings.",
+      "ts": "2026-07-14T13:00:27.469795",
+      "text": "Nvidia just paid his rent. He thinks it’s a bonus.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-07-14T12:14:38.231522",
+      "text": "99% it passes. The 1% is hoping crypto actually survives.",
       "type": "reply"
     }
   ]
