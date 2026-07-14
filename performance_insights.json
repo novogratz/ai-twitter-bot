@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-13T20:32:52.820192",
-  "window_7d_actions": 5329,
-  "window_24h_actions": 773,
+  "generated_at": "2026-07-14T00:32:54.083782",
+  "window_7d_actions": 5372,
+  "window_24h_actions": 777,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5315
+      "count": 5358
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -44,12 +44,12 @@
       "actions": 255
     },
     {
-      "hour": 10,
+      "hour": 0,
       "actions": 250
     },
     {
-      "hour": 0,
-      "actions": 249
+      "hour": 10,
+      "actions": 250
     },
     {
       "hour": 1,
@@ -63,46 +63,46 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2464
+      "count": 2498
     },
     {
       "topic": "IA",
-      "count": 2124
+      "count": 2135
     },
     {
       "topic": "Crypto",
-      "count": 695
+      "count": 692
     },
     {
       "topic": "Bourse",
-      "count": 292
+      "count": 291
     },
     {
       "topic": "Spatial",
-      "count": 100
+      "count": 99
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2344
+      "count": 2361
     },
     {
       "pillar": "other",
-      "count": 1567
+      "count": 1588
     },
     {
       "pillar": "market_trauma",
-      "count": 1044
+      "count": 1049
     },
     {
       "pillar": "meme_reaction",
-      "count": 262
+      "count": 261
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 58
+      "count": 59
     },
     {
       "pillar": "reply_bait",
@@ -112,56 +112,56 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 314
+      "count": 317
     },
     {
       "pillar": "other",
-      "count": 248
+      "count": 253
     },
     {
       "pillar": "market_trauma",
-      "count": 144
+      "count": 150
     },
     {
       "pillar": "meme_reaction",
-      "count": 48
+      "count": 41
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 13
+      "count": 11
     },
     {
       "pillar": "reply_bait",
-      "count": 6
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
-      "posts": 5,
-      "avg_likes": 0.2,
-      "avg_views": 24.0,
+      "posts": 6,
+      "avg_likes": 0.17,
+      "avg_views": 27.3,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 58,
+      "posts": 56,
       "avg_likes": 0.14,
-      "avg_views": 31.6,
+      "avg_views": 30.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 69,
-      "avg_likes": 0.12,
-      "avg_views": 25.0,
+      "posts": 70,
+      "avg_likes": 0.13,
+      "avg_views": 27.4,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 65,
-      "avg_likes": 0.06,
-      "avg_views": 38.8,
+      "avg_likes": 0.08,
+      "avg_views": 40.6,
       "low_sample": false
     },
     {
@@ -175,7 +175,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4479
+      "count": 4532
     },
     {
       "type": "quote",
@@ -183,35 +183,35 @@
     },
     {
       "type": "quote_gif",
-      "count": 213
+      "count": 212
     },
     {
       "type": "post",
-      "count": 107
+      "count": 106
     },
     {
       "type": "hotake",
-      "count": 72
+      "count": 71
     },
     {
       "type": "retweet",
-      "count": 57
+      "count": 50
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-13T20:32:11.665078",
-      "text": "67.9% YoY: TSMC is saying the actual AI bottleneck isn't GPUs, it's wafer capacity. money can't fix physics.",
+      "ts": "2026-07-14T00:32:23.390686",
+      "text": "me putting down my clipboard at \"generational wealth\" AND \"quite obvious\" in the same sentence 🛋️",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-07-14T00:30:57.701628",
+      "text": "9 years is when most exchanges crumbled. That's your actual moat. The 90-year projection hinges on whether the regulatory environment stabilizes faster than competition ships.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-13T20:30:08.432335",
-      "text": "DeepSeek scaled to frontier without $100B training budgets. China's $102B investment matters, but allocation beats volume. efficiency > capex.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-07-13T20:27:48.452091",
-      "text": "The 'for their cost' qualifier is the real story. inference commoditizes, frontier pricing follows. not a model ranking. a cost curve race.",
+      "ts": "2026-07-14T00:30:41.616086",
+      "text": "20-100x cheaper means inference stays on-site. cloud SaaS is now the expensive option.",
       "type": "reply"
     }
   ]
