@@ -295,7 +295,15 @@
     "AntoineGirard",
     "BenjaminGuerard",
     "OlivierRochon",
-    "MaxBoussemart"
+    "MaxBoussemart",
+    "NathanNemeth",
+    "CedricBeyssen",
+    "MathiasDavy",
+    "RomainHuet",
+    "ThibautAutin",
+    "JorisLallement",
+    "TheAICollectiv",
+    "VladT"
   ],
   "en": [
     "Chubby",
@@ -429,7 +437,14 @@
     "Citrini",
     "Rothmus",
     "Michael",
-    "CryptoGoos"
+    "CryptoGoos",
+    "rob",
+    "Digi",
+    "xsovich",
+    "Baki",
+    "tenso",
+    "beyonceprotect",
+    "SixSigmaCapital"
   ],
   "history": [
     {
@@ -2570,6 +2585,81 @@
     {
       "lang": "fr",
       "handle": "MaxBoussemart",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "rob",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Digi",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "xsovich",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Baki",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanNemeth",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "CedricBeyssen",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathiasDavy",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainHuet",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautAutin",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JorisLallement",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "tenso",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "beyonceprotect",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "SixSigmaCapital",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheAICollectiv",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "VladT",
       "added": "2026-07-14"
     }
   ]

@@ -1,123 +1,5 @@
 [
   {
-    "ts": "2026-06-01T14:25:31.471112",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienCahen",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "Directeur Investissement chez Lyxor. La voix calme qui donne du sens aux march\u00e9s, pas du bruit."
-      },
-      {
-        "handle": "PierreVogel",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "VP Product chez Doctolib. Penseux profond, couvre le SaaS et la tech fran\u00e7aise avec un style clair."
-      },
-      {
-        "handle": "RomainVigouroux",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Founding Partner chez Coinbase Ventures (bas\u00e9 SF). La vue fran\u00e7aise de la DeFi et des infrastructures crypto."
-      },
-      {
-        "handle": "MaximeRigot",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "L'expert blockchain qu\u00e9b\u00e9cois. Analyse technique et on-chain pr\u00e9cise, twitte en FR naturel."
-      },
-      {
-        "handle": "MaelleGB",
-        "region": "france",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "VP chez Hugging Face. La femme de l'IA open source, twitte entre code et strat\u00e9gie produit."
-      },
-      {
-        "handle": "ThomasLeclerc",
-        "region": "france",
-        "niche": "finance",
-        "followers": 18000,
-        "reason": "Journaliste financements \u00e0 Paris. Il sait o\u00f9 l'argent va avant tout le monde, style sec."
-      },
-      {
-        "handle": "Jean-PhilippeBC",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Analyste et coach boursier qu\u00e9b\u00e9cois. Constats directs sur les indices, moins pompeux que ses confr\u00e8res."
-      }
-    ],
-    "summary": "Un mix \u00e9quilibr\u00e9 entre la hype AI (Mistral/Hugging Face) et la gravit\u00e9 des march\u00e9s (Lyxor/Coinbase Ventures). Des profils qui twittent encore, pas juste des influenceurs de formation \u00e0 97\u20ac."
-  },
-  {
-    "ts": "2026-06-01T16:23:14.911736",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyprienPoulet",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "Le roi du trading FR. Il analyse les options et le prix du p\u00e9trole comme un mec qui vient de sortir du trading desk de Goldman."
-      },
-      {
-        "handle": "0xRomain",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Ex-Square Crypto, il a transform\u00e9 la crypto FR en un journal d'info actionnable. Pas de shill de memecoins, juste des chains-on-chain solides."
-      },
-      {
-        "handle": "PierreAndrieu",
-        "region": "usa",
-        "niche": "finance",
-        "followers": 40000,
-        "reason": "Le trader franco-am\u00e9ricain de Chicago. Il tweete ses setups day-trading en fran\u00e7ais. C'est du pur instinct de march\u00e9, pas du LinkedIn."
-      },
-      {
-        "handle": "JeanGillesG",
-        "region": "france",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "Journaliste chez TheRegister/InfoWorld. Il pille les docs des g\u00e9ants US avant que personne d'autre ne les ait lues. C'est l'info brute."
-      },
-      {
-        "handle": "AlexisGiraudet",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "Ex-coinhouse, il tweete des threads 'Deep Dive' sur la tech blockchain. C'est rare de trouver quelqu'un qui explique le consensus sans endormir le public."
-      },
-      {
-        "handle": "MaximeBoutin",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "L'expert qu\u00e9b\u00e9cois de la fintech. Il couvre les n\u00e9o-banques et l'embedded finance avec une pr\u00e9cision de chirurgien, sans le jargon pompier."
-      },
-      {
-        "handle": "ThomasDufour",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Fond\u00e9 de NeuralMind, il balance des analyses comparatives LLM open source vs ferm\u00e9. C'est sec, c'est technique, c'est sans pub."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les influenceurs 'lifestyle' pour garder les technocrates qui tweetent. On a la t\u00eate pensante de Mistral, le trader instagrameur de classe A, et l'info crypto qui vient du terrain. Pas de formations \u00e0 500\u20ac ici, juste du m\u00e9tier."
-  },
-  {
     "ts": "2026-06-02T00:45:13.095229",
     "raw_count": 10,
     "kept_count": 5,
@@ -9389,5 +9271,81 @@
       }
     ],
     "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour garder les architectes. De Mistral \u00e0 Paradigm, c'est de l'intel pur, pas du bruit."
+  },
+  {
+    "ts": "2026-07-14T05:02:06.927685",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NathanNemeth",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Le prof de IA qui a transform\u00e9 l'Epitech en start-up school. Il twitte les fondamentaux sans le jargon VC, c'est de la tech brute."
+      },
+      {
+        "handle": "CedricBeyssen",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "Vrai chercheur de chez Mistral. Moins hype que les commerciaux, plus pertinent que les influenceurs qui vendent du r\u00eave sur le multimodal."
+      },
+      {
+        "handle": "MathiasDavy",
+        "region": "france",
+        "niche": "ai",
+        "followers": 55000,
+        "reason": "Ex-DeepMind, actuel VC/Advisor. Il tweet sur la construction des mod\u00e8les, pas juste sur les news. Rare de trouver un pro qui twitte en FR avec ce niveau d'expertise."
+      },
+      {
+        "handle": "RomainHuet",
+        "region": "france",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Ex-Polytech, actuel CTO/Data. Il tweet code, architecture et IA de terrain. Pas de blabla, des posts qui servent \u00e0 bosser."
+      },
+      {
+        "handle": "ThibautAutin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Ancien de la Crypto-Club et de Coinhouse. Il couvre le march\u00e9 FR avec un \u0153il de trader, pas un fanboy. Actif et pertinent."
+      },
+      {
+        "handle": "JorisLallement",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "La diaspora FR \u00e0 SF qui couvre AI/VC. Il tweet en FR sur les boums am\u00e9ricains. Id\u00e9al pour capter le hype US avec une perspective FR."
+      }
+    ],
+    "summary": "J'ai mis\u00e9 sur des profils 'builders' et chercheurs qui ont surv\u00e9cu au crash de 2022 : Nathan Nemeth pour l'IA pure, Cedric Beyssen pour la rigueur Mistral, et Alexis Neron pour le p\u00f4le qu\u00e9b\u00e9cois. Z\u00e9ro vendeur de formation, juste du contenu qui fait avancer le truc."
+  },
+  {
+    "ts": "2026-07-14T06:33:30.380874",
+    "raw_count": 6,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "TheAICollectiv",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "Gourou des 'Prompt Engineering' et des outils IA, son ton p\u00e9dagogique mais sarcastique sur le Hype fait mal."
+      },
+      {
+        "handle": "VladT",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Trader qu\u00e9b\u00e9cois, focus Bitcoin/ETH. Moins hype que les influencers 'degen', plus solide que la moyenne."
+      }
+    ],
+    "summary": "Focus sur des analysts 'sans blabla' : 4 en France, 1 au Qu\u00e9bec, 1 aux USA. Pas de vendeurs de r\u00eaves, juste des profils qui savent lire les charts et les papers."
   }
 ]

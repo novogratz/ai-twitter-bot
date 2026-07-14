@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-14T04:32:52.874524",
-  "window_7d_actions": 5298,
-  "window_24h_actions": 729,
+  "generated_at": "2026-07-14T08:32:53.363001",
+  "window_7d_actions": 5152,
+  "window_24h_actions": 607,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5285
+      "count": 5139
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -63,76 +63,76 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2475
+      "count": 2419
     },
     {
       "topic": "IA",
-      "count": 2094
+      "count": 2025
     },
     {
       "topic": "Crypto",
-      "count": 684
+      "count": 666
     },
     {
       "topic": "Bourse",
-      "count": 282
+      "count": 269
     },
     {
       "topic": "Spatial",
-      "count": 92
+      "count": 90
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2317
+      "count": 2242
     },
     {
       "pillar": "other",
-      "count": 1569
+      "count": 1528
     },
     {
       "pillar": "market_trauma",
-      "count": 1036
+      "count": 1011
     },
     {
       "pillar": "meme_reaction",
-      "count": 262
+      "count": 259
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 59
+      "count": 58
     },
     {
       "pillar": "reply_bait",
-      "count": 55
+      "count": 54
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 291
+      "count": 248
     },
     {
       "pillar": "other",
-      "count": 230
+      "count": 182
     },
     {
       "pillar": "market_trauma",
-      "count": 154
+      "count": 132
     },
     {
       "pillar": "meme_reaction",
-      "count": 39
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 34
     },
     {
       "pillar": "reply_bait",
-      "count": 7
+      "count": 6
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -152,16 +152,16 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 70,
+      "posts": 71,
       "avg_likes": 0.11,
-      "avg_views": 27.1,
+      "avg_views": 27.8,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 67,
-      "avg_likes": 0.07,
-      "avg_views": 39.3,
+      "posts": 66,
+      "avg_likes": 0.06,
+      "avg_views": 41.7,
       "low_sample": false
     },
     {
@@ -175,19 +175,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4462
+      "count": 4328
     },
     {
       "type": "quote",
-      "count": 398
+      "count": 391
     },
     {
       "type": "quote_gif",
-      "count": 213
+      "count": 210
     },
     {
       "type": "post",
-      "count": 106
+      "count": 104
     },
     {
       "type": "hotake",
@@ -200,19 +200,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-14T04:31:22.029241",
-      "text": "$200k is too low. Sure. Valar Atomics just powered $NVDA with uranium. Scaramucci’s still praying to the GPU gods while the real alpha eats nuclear. 🥩⚛️",
+      "ts": "2026-07-14T08:13:54.207785",
+      "text": "S&P at ATH. Nvidia’s margin is holding, but the AI bill is due. We’re funding OpenAI’s datacenter sprawl with retail hope. The real play? Betting on the electricity, not the code. ⚡",
       "type": "quote"
     },
     {
-      "ts": "2026-07-14T03:22:46.801370",
-      "text": "$NVDA needs oil. Trump’s getting paid in HBM to hold the choke point. We aren't buying chips, we're buying geopolitics with 14nm memory. ⛽🤖",
+      "ts": "2026-07-14T06:03:18.371907",
+      "text": "$IREN’s “Fib bottom” is just the dip before the next rate hike melts their GPU margins. While you pray for a technical rebound, @CoreWeave is quietly pricing the power grid into 2026. Your chart is flat; their utility bill is vertical. ⚡",
       "type": "quote"
     },
     {
-      "ts": "2026-07-14T02:51:51.471574",
-      "text": "Nvidia's managing regulators, not supply. Cutting Asia buyers creates visible compliance while the silicon still gets there through channels harder to trace.",
-      "type": "reply"
+      "ts": "2026-07-14T04:46:49.545922",
+      "text": "That M7 Ultra isn’t a CPU. It’s a $2.5k local Inferentia killing 70B models while $NVDA sells you the cloud tax for inference. 🤖⚡",
+      "type": "quote"
     }
   ]
 }
