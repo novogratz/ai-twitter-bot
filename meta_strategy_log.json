@@ -36,5 +36,26 @@
     ],
     "cadence_factor": 1.2,
     "rationale": "Le bot est en veilleuse depuis mai, il faut réactiver la sauce sans faire mal au client. On joue la carte de l'opiniâtre cynique : beaucoup de retweets pour réchauffer l'algorithme, quelques hotakes pour rappeler qu'on est toujours là et un peu plus piquant. Le marché IA est en phase de digestion post-euphorie, parfait pour des piques sur la réalité du cash-flow."
+  },
+  {
+    "ts": "2026-07-14T08:32:53.112488",
+    "caps": {
+      "MAX_NEWS_PER_DAY": 14,
+      "MAX_HOTAKES_PER_DAY": 28,
+      "MAX_QUOTES_PER_DAY": 240,
+      "MAX_RETWEETS_PER_DAY": 15,
+      "MAX_BREAKOUTS_PER_DAY": 2,
+      "MAX_SPICY_PER_DAY": 2,
+      "MAX_REPLIES_PER_CYCLE": 50,
+      "FOLLOW_BLAST_PER_CYCLE": 4,
+      "LIKE_BOT_PER_CYCLE": 50
+    },
+    "topic_focus": [
+      "xAI/Grok dominance in government contrac",
+      "Mistral AI's valuation vs cash burn",
+      "Nvidia's P/E ratio in a flat market"
+    ],
+    "cadence_factor": 1.4,
+    "rationale": "Suppression inactive, on reprend les caps agressifs pour maximiser la surface. Focus sur xAI pour capter l'engouement actuel et Nvidia pour le cynisme boursier."
   }
 ]

@@ -1,25 +1,21 @@
 {
-  "ts": "2026-07-13T00:00:00.000000",
+  "ts": "2026-07-14T08:32:53.112488",
   "caps": {
     "MAX_NEWS_PER_DAY": 14,
     "MAX_HOTAKES_PER_DAY": 28,
     "MAX_QUOTES_PER_DAY": 240,
     "MAX_RETWEETS_PER_DAY": 15,
-    "MAX_BREAKOUTS_PER_DAY": 4,
-    "MAX_SPICY_PER_DAY": 3,
-    "MAX_REPLIES_PER_CYCLE": 300,
-    "LIKE_BOT_PER_CYCLE": 50,
-    "FOLLOW_BLAST_PER_CYCLE": 4
+    "MAX_BREAKOUTS_PER_DAY": 2,
+    "MAX_SPICY_PER_DAY": 2,
+    "MAX_REPLIES_PER_CYCLE": 50,
+    "FOLLOW_BLAST_PER_CYCLE": 4,
+    "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "CASUAL FIRST-PERSON = ONLY CONFIRMED VIRAL FORMAT. 79 likes, 35 920 views: 'Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)' Formula: 'Me [verb] because [AI bet] / [losing bet]' — lowercase, zero polish, half-finished thought IS the joke. TARGET 40% of originals. July 13 examples: 'me watching Grok get a $200M DoD contract while OpenAI's still restructuring' / 'me checking RKLB after William Blair calls it SpaceX's best rival at -28% from peak' / 'me buying ASTS dip knowing 60 operators + 3B subscribers is still the pitch'. NEVER polish these.",
-    "REPLY ALGO EDGE: X weights reply = +75 vs like = +0.5. Every reply bait = 150 likes of algo equivalent. Reply to TOP COMMENTS under viral posts (not OP) — warm audience, less competition, same boost. ONE line verdict or SKIP. If you need two sentences, SKIP. reply_winners bank is EMPTY — analytical replies are not getting likes; pivot to emotion + one-liner verdict.",
-    "JULY 13 — Grok DoD $200M + Tesla v2025.26. xAI signed $200M 'Grok for Government' with the Pentagon (alongside Anthropic, Google, OpenAI). Grok 4 / Grok 4 Heavy now inside Tesla dashboards (software v2025.26), no vehicle control. Hook: 'Mon patient Anthropic-first vient d apprendre que Grok gère les réunions du Pentagone ET répond aux passagers Tesla. Long pause. Claude écrit mieux. Oui. Et ?' React to ANY xAI / Grok / Elon Musk / Pentagon / Tesla AI / DoD / defense AI parent today.",
-    "JULY 13 — SpaceX SPCX analyst targets. Raymond James: Strong Buy PT $800. Morgan Stanley: Overweight PT $300. SpaceX holds 90%+ launch market share. Public since June 29. Hook: 'SpaceX public depuis le 29 juin. PT à $800 chez Raymond James. Mon patient qui attendait depuis 2020 peut enfin acheter. Il attend encore.' React to any SpaceX / SPCX / launch market / Elon space parent.",
-    "JULY 13 — RKLB best SpaceX rival per William Blair. -28% one month, +112% YoY, Neutron launch Q4 2026. ASTS -19% one month, +65% YoY, 60 mobile operators, 3B subscribers, direct-to-smartphone. Hook RKLB: 'William Blair appelle RKLB le rival le plus capable de SpaceX. -28% en 1 mois. Mon patient space a vendu pour sécuriser. Neutron Q4 2026. On se retrouve là.' Hook ASTS: 'AST SpaceMobile : 60 opérateurs, 3 milliards d abonnés, 0 fibre à creuser. -19% en 1 mois. Mon patient trop-risqué reconsidère la définition du risque.' React to any RKLB / ASTS / space stocks / satellite parent.",
-    "JULY 13 CARRY — Anthropic $47B ARR vs OpenAI $25-33B still active. Claude Code $1B → $2.5B ARR since end-2025. OpenAI confidential IPO filing Goldman + Morgan Stanley, target September 2026, $730B valuation. Gemini 3.5 Pro launching July 17, rebuilt from scratch, 2M context window. React to ANY Anthropic / OpenAI / Claude / ChatGPT / Gemini / AI revenue / enterprise AI / AI valuation parent.",
-    "VELOCITY RULE: 10+ engagements in first 30 minutes = algo amplifies x10. Self-reply within 5 min of every original with one short open question. 'tu vends RKLB ici ou tu tiens ?' / 'Grok ou Claude — t as changé de camp ?' / 'Anthropic ou OpenAI — tu fais tourner quoi en production aujourd hui ?'"
+    "xAI/Grok dominance in government contrac",
+    "Mistral AI's valuation vs cash burn",
+    "Nvidia's P/E ratio in a flat market"
   ],
-  "cadence_factor": 1.0,
-  "rationale": "2026-07-13 autonomous growth update: caps preserved from operator July 6 mandate (news 14, hotakes 28, quotes 240, retweets 15). topic_focus refreshed for July 13: Grok DoD $200M contract (Grok for Government, Pentagon) + Grok 4 in Tesla v2025.26 dashboards — new dominant hook. SpaceX SPCX analyst initiations: Raymond James $800 PT, Morgan Stanley $300 PT, 90% launch market share. RKLB called SpaceX's best rival by William Blair (-28% 1m, +112% YoY, Neutron Q4). ASTS -19% 1m, +65% YoY, 60 operators 3B subs. Carries from July 12: Anthropic $47B ARR > OpenAI revenue, OpenAI IPO $730B, Gemini 3.5 Pro July 17. KEY DIAGNOSIS: reply_winners bank EMPTY — analytical multi-sentence replies not earning likes. Directives pivot to one-liner verdict OR SKIP + casual 'me [verb]' format for originals (79 likes / 35 920 views, the only confirmed viral hit). ai_vs_btc pillar highest avg likes (0.20) despite low sample — reinforce."
+  "cadence_factor": 1.4,
+  "rationale": "Suppression inactive, on reprend les caps agressifs pour maximiser la surface. Focus sur xAI pour capter l'engouement actuel et Nvidia pour le cynisme boursier."
 }
