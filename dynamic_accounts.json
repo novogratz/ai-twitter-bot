@@ -359,7 +359,12 @@
     "LudovicLemoine",
     "CryptoBastide",
     "MaelanB",
-    "ThomasBouy"
+    "ThomasBouy",
+    "LionelMeyer",
+    "EricWyatt",
+    "JulesCavailhes",
+    "PierrePaturel",
+    "JulesBoutin"
   ],
   "en": [
     "Chubby",
@@ -521,7 +526,10 @@
     "Teslaconomics",
     "adi",
     "Dan",
-    "bia"
+    "bia",
+    "aether",
+    "Tether",
+    "ChatGPT"
   ],
   "history": [
     {
@@ -3122,6 +3130,46 @@
     {
       "lang": "fr",
       "handle": "ThomasBouy",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "en",
+      "handle": "aether",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Tether",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "en",
+      "handle": "ChatGPT",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelMeyer",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricWyatt",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesCavailhes",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierrePaturel",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesBoutin",
       "added": "2026-07-15"
     }
   ]

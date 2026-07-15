@@ -1,71 +1,5 @@
 [
   {
-    "ts": "2026-06-03T17:33:59.153472",
-    "raw_count": 8,
-    "kept_count": 8,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThomasBoulanger_",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "CTO de Mistral AI, il balance du lourd sur l'open source sans payer de caisse de r\u00e9sonance."
-      },
-      {
-        "handle": "MaximePuech",
-        "region": "france",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "Deux fois fondateur, il decrypte les p\u00e9pites SaaS et AI fran\u00e7aises avant qu'elles ne soient sur BFM."
-      },
-      {
-        "handle": "jamescromwell",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Journaliste crypto FR, ses threads sur les cycles de march\u00e9 sont de purs classiques."
-      },
-      {
-        "handle": "oliviergotteland",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Bas\u00e9 aux USA mais twitte en FR, il a le nez sur le VC crypto sans le jargon qui endort."
-      },
-      {
-        "handle": "mickael_benayoun",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "L'incontournable qu\u00e9b\u00e9cois pour comprendre les march\u00e9s, m\u00eame quand ils p\u00e8tent un plomb."
-      },
-      {
-        "handle": "lucashenry",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 14000,
-        "reason": "CTO de OpenAI en 2022, il twitte maintenant dans la space AI SF avec une perspective francophone."
-      },
-      {
-        "handle": "sophielavallee",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Foundress de AI North, elle connecte la tech IA qu\u00e9b\u00e9coise au reste du monde avec du sens."
-      },
-      {
-        "handle": "gaelmuller",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 8000,
-        "reason": "Fintech fr en pleine croissance, son compte est une mine d'or sur l'avenir de la banque sans banque."
-      }
-    ],
-    "summary": "Le lot est mixte : on a les g\u00e9ants de l'IA fr (Mistral, Lucas Henry) qui d\u00e9fient les US, les v\u00e9t\u00e9rans crypto (James Cromwell) et la p\u00e9pite fintech/VC FR. Z\u00e9ro blabla, juste du contenu qui vaut son pesant de stablecoins."
-  },
-  {
     "ts": "2026-06-04T02:51:50.141224",
     "raw_count": 10,
     "kept_count": 9,
@@ -9228,5 +9162,50 @@
       }
     ],
     "summary": "Focus sur des profils 'fond' plut\u00f4t que 'viral' pour \u00e9viter le bruit des groupes Telegram. Le mix France/Qu\u00e9bec/USA est \u00e9quilibr\u00e9 entre IA, crypto et bourse traditionnelle."
+  },
+  {
+    "ts": "2026-07-15T06:33:49.078696",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LionelMeyer",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 100000,
+        "reason": "Founders First, mais sa communaut\u00e9 francophone est huge. Il balance des news crypto et tech rapides, avec un ton un peu plus d\u00e9contract\u00e9 que la SEC."
+      },
+      {
+        "handle": "EricWyatt",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 80000,
+        "reason": "Bien qu'am\u00e9ricain, il twitte en fran\u00e7ais r\u00e9guli\u00e8rement sur l'IA et la tech. C'est un v\u00e9t\u00e9ran qui voit venir les cycles avant que les autres ne trouvent le prompt magique."
+      },
+      {
+        "handle": "JulesCavailhes",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "Journaliste tech/IA chez Numerama. Il couvre l'actu comme un pro, intervient chez les grands et twitte en FR. L'anti-gourou, pro-donn\u00e9es."
+      },
+      {
+        "handle": "PierrePaturel",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "La r\u00e9f\u00e9rence crypto au Qu\u00e9bec. Il couvre les march\u00e9s, la DeFi et les projets locaux. Le gars qui te dit 'ach\u00e8te le dip' avec un graphique \u00e0 l'appui."
+      },
+      {
+        "handle": "JulesBoutin",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Investisseur qu\u00e9b\u00e9cois, focus bourse et valeur. Il balance des analyses de bilan et de secteur. Pas de hype, juste du chiffre et du bon sens financier."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 les profils fondateurs de Mistral et Sirene pour l'IA FR, et les analystes locaux pour le Qu\u00e9bec. Le top 3 est solide : Arthur Mensch pour la tech pure, Cedric Beyssen pour la crypto mature, et Pierre Paturel pour le Qu\u00e9bec. Z\u00e9ro vendeur de r\u00eave, que du concret."
   }
 ]

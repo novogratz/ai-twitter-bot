@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-15T04:32:52.691020",
-  "window_7d_actions": 4619,
-  "window_24h_actions": 171,
+  "generated_at": "2026-07-15T08:32:52.808285",
+  "window_7d_actions": 4597,
+  "window_24h_actions": 269,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4608
+      "count": 4587
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -17,7 +17,7 @@
     },
     {
       "pattern": "RENAME",
-      "count": 2
+      "count": 1
     },
     {
       "pattern": "REPETITION",
@@ -26,12 +26,12 @@
   ],
   "worst_patterns": [
     {
-      "pattern": "REPETITION",
+      "pattern": "RENAME",
       "count": 1
     },
     {
-      "pattern": "RENAME",
-      "count": 2
+      "pattern": "REPETITION",
+      "count": 1
     },
     {
       "pattern": "METAPHOR",
@@ -63,34 +63,34 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2154
+      "count": 2147
     },
     {
       "topic": "IA",
-      "count": 1836
+      "count": 1825
     },
     {
       "topic": "Crypto",
-      "count": 601
+      "count": 591
     },
     {
       "topic": "Bourse",
-      "count": 227
+      "count": 230
     },
     {
       "topic": "Spatial",
-      "count": 80
+      "count": 78
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2021
+      "count": 2013
     },
     {
       "pillar": "other",
-      "count": 1371
+      "count": 1364
     },
     {
       "pillar": "market_trauma",
@@ -98,33 +98,33 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 234
+      "count": 233
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 53
+      "count": 50
     },
     {
       "pillar": "reply_bait",
-      "count": 48
+      "count": 45
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 70
+      "count": 108
     },
     {
       "pillar": "other",
-      "count": 54
+      "count": 80
     },
     {
       "pillar": "market_trauma",
-      "count": 34
+      "count": 62
     },
     {
       "pillar": "meme_reaction",
-      "count": 10
+      "count": 16
     },
     {
       "pillar": "reply_bait",
@@ -145,23 +145,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 55,
-      "avg_likes": 0.13,
-      "avg_views": 32.8,
+      "posts": 53,
+      "avg_likes": 0.15,
+      "avg_views": 33.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 70,
+      "posts": 71,
       "avg_likes": 0.07,
-      "avg_views": 32.3,
+      "avg_views": 32.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 66,
-      "avg_likes": 0.05,
-      "avg_views": 41.4,
+      "posts": 67,
+      "avg_likes": 0.06,
+      "avg_views": 41.7,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3871
+      "count": 3846
     },
     {
       "type": "quote",
-      "count": 358
+      "count": 362
     },
     {
       "type": "quote_gif",
-      "count": 187
+      "count": 184
     },
     {
       "type": "post",
-      "count": 94
+      "count": 95
     },
     {
       "type": "hotake",
-      "count": 60
+      "count": 61
     },
     {
       "type": "retweet",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-15T04:32:41.922443",
-      "text": "Tout le monde parle du jacobian lens. La vraie histoire, c'est qu'on sait maintenant lire l'esprit de Claude.",
+      "ts": "2026-07-15T08:32:49.212848",
+      "text": "8-stock baskets work great until three need the same GPU allocation and two get diluted. then it's 1 in 3 odds, not 10 in 1 math.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-15T04:32:03.711406",
-      "text": "Trillion in cap lost. Nvidia's revenue, margins, and datacenter moat got tighter. The market's repricing hope back to reality. Breathe.",
+      "ts": "2026-07-15T08:31:59.716428",
+      "text": "Nvidia does 4.8x more revenue per employee than palantir. that's not efficiency, that's scale.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-15T04:30:58.448154",
-      "text": "Kalshi traders betting $68k. two weeks is leverage and sentiment noise, not forecast. the signal is real, the certainty you'll add isn't.",
+      "ts": "2026-07-15T08:29:39.225739",
+      "text": "Hyperscaler debt stress at highest since launch. Thesis: H100s pay back in 24 months. Five months in: the bond market doesn't see it.",
       "type": "reply"
     }
   ]
