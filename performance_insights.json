@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-15T12:32:52.829968",
-  "window_7d_actions": 4563,
-  "window_24h_actions": 379,
+  "generated_at": "2026-07-15T16:32:52.817738",
+  "window_7d_actions": 4523,
+  "window_24h_actions": 486,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4553
+      "count": 4513
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -56,49 +56,55 @@
       "actions": 208
     },
     {
-      "hour": 12,
-      "actions": 206
+      "hour": 10,
+      "actions": 202
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2132
+      "count": 2106
     },
     {
       "topic": "IA",
-      "count": 1811
+      "count": 1794
     },
     {
       "topic": "Crypto",
-      "count": 589
+      "count": 590
     },
     {
       "topic": "Bourse",
-      "count": 230
+      "count": 236
     },
     {
       "topic": "Spatial",
-      "count": 80
+      "count": 77
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Bourse",
+      "24h_rate": 0.068,
+      "7d_rate": 0.052
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1991
+      "count": 1987
     },
     {
       "pillar": "other",
-      "count": 1365
+      "count": 1342
     },
     {
       "pillar": "market_trauma",
-      "count": 883
+      "count": 874
     },
     {
       "pillar": "meme_reaction",
-      "count": 230
+      "count": 229
     },
     {
       "pillar": "ai_vs_btc",
@@ -106,62 +112,62 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 44
+      "count": 41
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 153
+      "count": 209
     },
     {
       "pillar": "other",
-      "count": 123
+      "count": 153
     },
     {
       "pillar": "market_trauma",
-      "count": 79
+      "count": 99
     },
     {
       "pillar": "meme_reaction",
-      "count": 20
+      "count": 19
     },
     {
       "pillar": "reply_bait",
-      "count": 2
+      "count": 3
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
+      "pillar": "ai_vs_btc",
+      "posts": 5,
+      "avg_likes": 0.2,
+      "avg_views": 30.2,
+      "low_sample": false
+    },
+    {
       "pillar": "market_trauma",
       "posts": 52,
       "avg_likes": 0.17,
-      "avg_views": 34.3,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 6,
-      "avg_likes": 0.17,
-      "avg_views": 27.3,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 71,
-      "avg_likes": 0.07,
-      "avg_views": 31.6,
+      "avg_views": 34.7,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 68,
+      "avg_likes": 0.09,
+      "avg_views": 44.9,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 72,
       "avg_likes": 0.07,
-      "avg_views": 41.8,
+      "avg_views": 33.7,
       "low_sample": false
     },
     {
@@ -175,11 +181,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3808
+      "count": 3777
     },
     {
       "type": "quote",
-      "count": 365
+      "count": 360
     },
     {
       "type": "quote_gif",
@@ -187,7 +193,7 @@
     },
     {
       "type": "post",
-      "count": 97
+      "count": 93
     },
     {
       "type": "hotake",
@@ -200,18 +206,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-15T12:32:51.963630",
-      "text": "Cost per token vs cost per task. longer context = fewer api calls per task. local llama at scale is marginal cost near zero.",
+      "ts": "2026-07-15T16:32:07.611098",
+      "text": "5% away. nvidia margins peak. apple buybacks never stop. market's repricing which durability compounds.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-15T12:24:22.993017",
-      "text": "HBM3e and CoWoS are the binding constraints now. NVIDIA's growth is supply-capped by TSMC and Samsung. the pricing power moved upstream.",
+      "ts": "2026-07-15T16:26:19.175355",
+      "text": "Nvidia's advantage is infrastructure, not a better chip. amd will have faster hardware and still lose because everyone's stack runs on cuda. that's not a race, that's physics.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-15T12:24:06.814561",
-      "text": "'prime time' means repricing off regulatory risk onto fundamentals. that's the actual move.",
+      "ts": "2026-07-15T16:23:47.210734",
+      "text": "October IPO. Anthropic's S-1 will need growth + margin expansion. 'beating OpenAI to IPO' is a headline. the P&L is the actual test.",
       "type": "reply"
     }
   ]

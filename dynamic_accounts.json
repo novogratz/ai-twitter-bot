@@ -379,7 +379,10 @@
     "AlexisDreyer",
     "BenoitTessier",
     "JulienTheron",
-    "MaximeMigeon"
+    "MaximeMigeon",
+    "MaximeFouilland",
+    "AxelDauchet",
+    "Agnostiq"
   ],
   "en": [
     "Chubby",
@@ -545,7 +548,8 @@
     "aether",
     "Tether",
     "ChatGPT",
-    "Gordon"
+    "Gordon",
+    "Clemente"
   ],
   "history": [
     {
@@ -3266,6 +3270,26 @@
     {
       "lang": "fr",
       "handle": "MaximeMigeon",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Clemente",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeFouilland",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "AxelDauchet",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "Agnostiq",
       "added": "2026-07-15"
     }
   ]

@@ -1,144 +1,5 @@
 [
   {
-    "ts": "2026-06-04T06:53:31.165578",
-    "raw_count": 12,
-    "kept_count": 10,
-    "accounts_added": 9,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "YassineBoutayeb",
-        "region": "france",
-        "niche": "tech",
-        "followers": 210000,
-        "reason": "Fondateur de Meero (exit). Il tweet sur le futur du travail/IA. Le mec qui a r\u00e9ussi, pas celui qui vend le r\u00eave."
-      },
-      {
-        "handle": "BenjaminFleury",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 125000,
-        "reason": "Le grand bonhomme du coin. Ancien de BNP, il couvre crypto/DeFi avec un ton pos\u00e9, pas de shiitcoinerie toxique."
-      },
-      {
-        "handle": "RomainMarty",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "La r\u00e9f\u00e9rence bourse pro \u00e0 la fran\u00e7aise. Actionnariat, macro, r\u00e9sultats entreprises. Z\u00e9ro bla bla, que du concret."
-      },
-      {
-        "handle": "LouisGachet",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 75000,
-        "reason": "L'ancien de Boursorama qui a fait un carton en\u72ec\u7acb. Style direct, focus croissance/tech, audience fid\u00e8le."
-      },
-      {
-        "handle": "ThibaudGaudon",
-        "region": "france",
-        "niche": "tech",
-        "followers": 65000,
-        "reason": "Le fondateur d'Artisan Labs. Il raconte la vraie vie des startups/france, pas les le\u00e7ons de morale LinkedIn."
-      },
-      {
-        "handle": "MorganTulot",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "Journaliste \u00e0 La Tribune, il balance les infos crypto rapides et fiables. Moins hype que les 'gods', plus utile."
-      },
-      {
-        "handle": "SimonCormier",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le plus s\u00e9rieux du coin QC. Analyse fondamentale stricte. Si tu veux dormir tranquille, c'est ici."
-      },
-      {
-        "handle": "MicheleLewandowski",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Journaliste pro bas\u00e9e \u00e0 NY. Elle couvre les march\u00e9s avec une plume fran\u00e7aise. L'info avant le bruit."
-      },
-      {
-        "handle": "AlexisBoutin",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "Influenceur tech/solopreneur. Il teste des produits IA et parle business. Contenu visuel, pas de 'signals'."
-      },
-      {
-        "handle": "PierreCoulombe",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "L'incontournable de la diaspora QC aux USA. Il couvre la tech wall street depuis l'int\u00e9rieur. Perspective unique."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la sauce : z\u00e9ro vendeur de r\u00eave, z\u00e9ro politicien. On reste sur des profils qui tweetent du solide, de la tech pure (Mistral) ou des vrais analystes (Romain Marty, Louis Gachet). Le QC est plus discret, d'o\u00f9 la s\u00e9lection s\u00e9v\u00e8re."
-  },
-  {
-    "ts": "2026-06-04T12:53:29.189707",
-    "raw_count": 7,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "TiboInShape",
-        "region": "france",
-        "niche": "tech",
-        "followers": 300000,
-        "reason": "Oui, c'est le g\u00e9ant du fitness, mais sa section 'Vos questions' sur X est un bureau d'\u00e9tude IA inattendu. Il teste les outils de prod, de montage et de data en direct. C'est le barom\u00e8tre de l'adoption grand public qui nous int\u00e9resse."
-      },
-      {
-        "handle": "LaurieFrappart",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "La star de l'\u00e9cosyst\u00e8me crypto qu\u00e9b\u00e9cois. Elle balance des insights techniques et macro sans la bouclette de l'influenceuse lambda. C'est rare de trouver ce niveau de substance sans le blabla de la 'grindset'."
-      },
-      {
-        "handle": "Rapha\u00eblRouet",
-        "region": "france",
-        "niche": "ai",
-        "followers": 40000,
-        "reason": "Cr\u00e9ateur de 'IA in French'. Il couvre l'actu US en fran\u00e7ais avec une v\u00e9locit\u00e9 d'as. Le gars lit plus de paper AI par semaine que la moyenne des DSI. C'est l'anti-influenceur qui se prend pour un guru."
-      },
-      {
-        "handle": "MathieuMauclair",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "L'analyste technique qui fait parler de lui (et ses positions publiques sur Boursorama). Il mixe chartisme classique et humour d\u00e9cal\u00e9. Si tu cherches un trader qui n'a pas peur de dire qu'il a perdu sur Nvidia, c'est lui."
-      },
-      {
-        "handle": "JeroenDeDauw",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Bien que souvent en anglais, ses posts sur l'architecture SaaS et l'infra fracent la cible tech francophone. C'est le genre de mec qui explique le cloud sans utiliser les mots 'synergie' ou 'disruptif'. Rare, pr\u00e9cieux, efficace."
-      },
-      {
-        "handle": "BaptisteN",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Fondateur d'IA Pioneers. Il court derri\u00e8re les startups fran\u00e7aises plus vite que le march\u00e9. Sa timeline est une mine d'or pour les deals early-stage, bien plus utile que les threads LinkedIn de CAC40 qui sentent le caf\u00e9 p\u00e9rim\u00e9."
-      },
-      {
-        "handle": "AlexisV",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Cr\u00e9ateur de The Money Lab, il vit entre Paris et NYC mais twitte en FR sur la fintech am\u00e9ricaine. Il decode les earnings de la Fed mieux que les analystes de Boursorama qui confondent taux directeurs et taux du Loto."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la soupe \u00e0 l'influenceurs pour te sortir des vrais pros : Laurie Frappart pour le crypto QC, Rapha\u00ebl Rouet pour l'actu AI FR, et Baptiste N pour les deals. Pas de formations \u00e0 299\u20ac au menu, juste du contenu qui se lit \u00e0 la vitesse d'un thread."
-  },
-  {
     "ts": "2026-06-04T14:46:34.496605",
     "raw_count": 8,
     "kept_count": 6,
@@ -9200,5 +9061,46 @@
       }
     ],
     "summary": "Le mix est solide : on a les insiders de l'IA fran\u00e7aise (Mistral), des pros de la crypto qui ne vendent pas d'air, et un bon mix Qu\u00e9bec/USA pour l'angle onshore."
+  },
+  {
+    "ts": "2026-07-15T12:33:38.890907",
+    "raw_count": 9,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeFouilland",
+        "region": "france",
+        "niche": "tech",
+        "followers": 14000,
+        "reason": "Fintech founder (Lydia). Il tweet sur la productivit\u00e9 IA et le SaaS avec un angle pragmatique tr\u00e8s rare."
+      },
+      {
+        "handle": "AxelDauchet",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "VC \u00e0 La French Tech Invest. Il balance les deals B2B avant que les m\u00e9dias grand public ne les d\u00e9couvrent."
+      }
+    ],
+    "summary": "Je p\u00e8se le jeu des fondateurs Mistral (FR) contre le duo dynamite Quebec (Benoit/Alexis) et les analystes crypto pro (Benoit, Boris). Z\u00e9ro vendeurs de r\u00eave, que des gens qui construisent ou analysent le secteur."
+  },
+  {
+    "ts": "2026-07-15T14:40:31.235537",
+    "raw_count": 6,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Agnostiq",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Pionnier du quantique au Qu\u00e9bec. Le compte offre une perspective tech/r&D rare sur le march\u00e9 francophone, loin du trading day-trader."
+      }
+    ],
+    "summary": "Focus lourd sur l'IA fran\u00e7aise (Mistral) qui domine le tweet fr tech, avec un pont solide vers le Qu\u00e9bec et les US francophones pour \u00e9viter l'entre-soi parisien."
   }
 ]
