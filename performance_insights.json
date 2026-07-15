@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-14T20:32:52.826243",
-  "window_7d_actions": 4735,
-  "window_24h_actions": 221,
+  "generated_at": "2026-07-15T00:32:53.298350",
+  "window_7d_actions": 4646,
+  "window_24h_actions": 145,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4724
+      "count": 4635
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -41,7 +41,7 @@
   "best_hours_utc": [
     {
       "hour": 0,
-      "actions": 247
+      "actions": 244
     },
     {
       "hour": 1,
@@ -56,83 +56,83 @@
       "actions": 216
     },
     {
-      "hour": 21,
-      "actions": 212
+      "hour": 10,
+      "actions": 210
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2218
+      "count": 2180
     },
     {
       "topic": "IA",
-      "count": 1867
+      "count": 1837
     },
     {
       "topic": "Crypto",
-      "count": 620
+      "count": 599
     },
     {
       "topic": "Bourse",
-      "count": 235
+      "count": 230
     },
     {
       "topic": "Spatial",
-      "count": 83
+      "count": 80
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2059
+      "count": 2030
     },
     {
       "pillar": "other",
-      "count": 1405
+      "count": 1384
     },
     {
       "pillar": "market_trauma",
-      "count": 920
+      "count": 892
     },
     {
       "pillar": "meme_reaction",
-      "count": 248
+      "count": 239
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 55
+      "count": 54
     },
     {
       "pillar": "reply_bait",
-      "count": 48
+      "count": 47
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 89
+      "count": 57
     },
     {
       "pillar": "other",
-      "count": 71
+      "count": 46
     },
     {
       "pillar": "market_trauma",
-      "count": 42
+      "count": 25
     },
     {
       "pillar": "meme_reaction",
       "count": 14
     },
     {
-      "pillar": "ai_vs_btc",
-      "count": 3
-    },
-    {
       "pillar": "reply_bait",
       "count": 2
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 1
     }
   ],
   "pillar_engagement_30d": [
@@ -145,16 +145,16 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 54,
+      "posts": 55,
       "avg_likes": 0.13,
-      "avg_views": 31.6,
+      "avg_views": 32.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 72,
-      "avg_likes": 0.11,
-      "avg_views": 32.2,
+      "posts": 71,
+      "avg_likes": 0.1,
+      "avg_views": 32.5,
       "low_sample": false
     },
     {
@@ -175,19 +175,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3965
+      "count": 3891
     },
     {
       "type": "quote",
-      "count": 366
+      "count": 359
     },
     {
       "type": "quote_gif",
-      "count": 200
+      "count": 192
     },
     {
       "type": "post",
-      "count": 96
+      "count": 94
     },
     {
       "type": "hotake",
@@ -195,23 +195,23 @@
     },
     {
       "type": "retweet",
-      "count": 48
+      "count": 50
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-14T20:12:27.999216",
-      "text": "Lorde claims AI glasses ain’t sexy. Meanwhile, $NVDA burns cash hotter than a K-Pop concert to power the visual feed of every stan’s AR reality. 🤖⚡",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-07-14T19:19:51.260535",
-      "text": "Super Cycle? Sounds like the room temp is finally comfortable. You just got lucky Raoul.\nSKIP",
+      "ts": "2026-07-15T00:32:42.909461",
+      "text": "The $244B is just price discovery on inference margins. Liang won because he solved cost, not because he raised first.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-14T19:02:07.373536",
-      "text": "Strategy buys dips. I sell dreams. He’s buying the dip; I’m monetizing the hangover.",
+      "ts": "2026-07-15T00:31:58.137196",
+      "text": "Hype is stupid. 40% of entry-level coding interviews are already gone. hard to hate what works.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-07-15T00:28:37.501439",
+      "text": "Looks like panic. it's actually clever: put claude in front of 3M teachers and their kids learn it as default. lock in a generation before they finish high school. openai has enterprise, anthropic gets the pipeline.",
       "type": "reply"
     }
   ]
