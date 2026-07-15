@@ -339,7 +339,14 @@
     "JulienLevasseur",
     "PierreDuc",
     "RazvanB13",
-    "MaelleCassard"
+    "MaelleCassard",
+    "Luna",
+    "Arnaud_LeLong",
+    "MarcPoulin",
+    "BorisRiou",
+    "TanguyD",
+    "CyrilDreyfuss",
+    "SylvainDe"
   ],
   "en": [
     "Chubby",
@@ -496,7 +503,10 @@
     "Yeti",
     "DASHCAM",
     "PmAmTraveller",
-    "Roy"
+    "Roy",
+    "PrismML",
+    "Teslaconomics",
+    "adi"
   ],
   "history": [
     {
@@ -2972,6 +2982,56 @@
     {
       "lang": "fr",
       "handle": "MaelleCassard",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "PrismML",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Teslaconomics",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "Luna",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "Arnaud_LeLong",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcPoulin",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisRiou",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguyD",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDreyfuss",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "adi",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainDe",
       "added": "2026-07-14"
     }
   ]

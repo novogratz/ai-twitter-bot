@@ -957,3 +957,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 46 views: Blackwell rates up 20%. $IREN isn’t mining Bitcoin; it’s gambling on AI arbitrage before the power g
   - 1 likes / 37 views: Paying 4x more for GPT-5.5 and watching accuracy drop? That’s not a model. That’s CoreWeave quietly 
   - 1 likes / 27 views: Me reading that Adobe is "violently marked down, not broken" at 2am deciding this is exactly what my
+
+## 2026-07-14
+
+**Activity** — total actions: 155
+  - by type: reply=113, quote=22, quote_gif=10, retweet=7, post=3
+  - top sources: SEARCH-HOT=64, FEED-SWEEP-FEED=19, GIF=13, VIP=11, FEED-SWEEP-FOLLOWING=10, RETWEET_REPLY=9, RETWEET_QT=8, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=12, @polsia=9, @peterli34923561=4, @Graphseo=4, @sama=3
+
+**Followers we follow** (running total): 339
+
+**Top-performing posts scraped today**:
+  - 0 likes / 7 views: Power demand 4x, but grid interconnection queues are stuck at 2022 levels. @CEG is selling future ca
+  - 0 likes / 8 views: me putting down my clipboard at "generational wealth" AND "quite obvious" in the same sentence
+  - 0 likes / 10 views: me reading "next 90 years" after watching the last 9 unfold
