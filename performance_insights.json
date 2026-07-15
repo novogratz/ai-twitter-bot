@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-15T08:32:52.808285",
-  "window_7d_actions": 4597,
-  "window_24h_actions": 269,
+  "generated_at": "2026-07-15T12:32:52.829968",
+  "window_7d_actions": 4563,
+  "window_24h_actions": 379,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4587
+      "count": 4553
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -53,25 +53,25 @@
     },
     {
       "hour": 9,
-      "actions": 216
+      "actions": 208
     },
     {
-      "hour": 10,
-      "actions": 210
+      "hour": 12,
+      "actions": 206
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2147
+      "count": 2132
     },
     {
       "topic": "IA",
-      "count": 1825
+      "count": 1811
     },
     {
       "topic": "Crypto",
-      "count": 591
+      "count": 589
     },
     {
       "topic": "Bourse",
@@ -79,26 +79,26 @@
     },
     {
       "topic": "Spatial",
-      "count": 78
+      "count": 80
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2013
+      "count": 1991
     },
     {
       "pillar": "other",
-      "count": 1364
+      "count": 1365
     },
     {
       "pillar": "market_trauma",
-      "count": 892
+      "count": 883
     },
     {
       "pillar": "meme_reaction",
-      "count": 233
+      "count": 230
     },
     {
       "pillar": "ai_vs_btc",
@@ -106,25 +106,25 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 45
+      "count": 44
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 108
+      "count": 153
     },
     {
       "pillar": "other",
-      "count": 80
+      "count": 123
     },
     {
       "pillar": "market_trauma",
-      "count": 62
+      "count": 79
     },
     {
       "pillar": "meme_reaction",
-      "count": 16
+      "count": 20
     },
     {
       "pillar": "reply_bait",
@@ -132,10 +132,17 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 1
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
+    {
+      "pillar": "market_trauma",
+      "posts": 52,
+      "avg_likes": 0.17,
+      "avg_views": 34.3,
+      "low_sample": false
+    },
     {
       "pillar": "ai_vs_btc",
       "posts": 6,
@@ -144,24 +151,17 @@
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 53,
-      "avg_likes": 0.15,
-      "avg_views": 33.8,
-      "low_sample": false
-    },
-    {
       "pillar": "ai_news_take",
       "posts": 71,
       "avg_likes": 0.07,
-      "avg_views": 32.2,
+      "avg_views": 31.6,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 67,
-      "avg_likes": 0.06,
-      "avg_views": 41.7,
+      "posts": 68,
+      "avg_likes": 0.07,
+      "avg_views": 41.8,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3846
+      "count": 3808
     },
     {
       "type": "quote",
-      "count": 362
+      "count": 365
     },
     {
       "type": "quote_gif",
-      "count": 184
+      "count": 180
     },
     {
       "type": "post",
-      "count": 95
+      "count": 97
     },
     {
       "type": "hotake",
-      "count": 61
+      "count": 64
     },
     {
       "type": "retweet",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-15T08:32:49.212848",
-      "text": "8-stock baskets work great until three need the same GPU allocation and two get diluted. then it's 1 in 3 odds, not 10 in 1 math.",
+      "ts": "2026-07-15T12:32:51.963630",
+      "text": "Cost per token vs cost per task. longer context = fewer api calls per task. local llama at scale is marginal cost near zero.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-15T08:31:59.716428",
-      "text": "Nvidia does 4.8x more revenue per employee than palantir. that's not efficiency, that's scale.",
+      "ts": "2026-07-15T12:24:22.993017",
+      "text": "HBM3e and CoWoS are the binding constraints now. NVIDIA's growth is supply-capped by TSMC and Samsung. the pricing power moved upstream.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-15T08:29:39.225739",
-      "text": "Hyperscaler debt stress at highest since launch. Thesis: H100s pay back in 24 months. Five months in: the bond market doesn't see it.",
+      "ts": "2026-07-15T12:24:06.814561",
+      "text": "'prime time' means repricing off regulatory risk onto fundamentals. that's the actual move.",
       "type": "reply"
     }
   ]

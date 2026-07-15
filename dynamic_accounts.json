@@ -364,7 +364,22 @@
     "EricWyatt",
     "JulesCavailhes",
     "PierrePaturel",
-    "JulesBoutin"
+    "JulesBoutin",
+    "CryptoCamer",
+    "AI_France",
+    "CryptoDbl",
+    "BenjaminSavary",
+    "ThibaudM",
+    "JLFrere",
+    "MarcL",
+    "CryptoMontreal",
+    "RomainDuteil",
+    "MaximeRipardo",
+    "PierreCazaux",
+    "AlexisDreyer",
+    "BenoitTessier",
+    "JulienTheron",
+    "MaximeMigeon"
   ],
   "en": [
     "Chubby",
@@ -529,7 +544,8 @@
     "bia",
     "aether",
     "Tether",
-    "ChatGPT"
+    "ChatGPT",
+    "Gordon"
   ],
   "history": [
     {
@@ -3170,6 +3186,86 @@
     {
       "lang": "fr",
       "handle": "JulesBoutin",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Gordon",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCamer",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "AI_France",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoDbl",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminSavary",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudM",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JLFrere",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcL",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMontreal",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDuteil",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeRipardo",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreCazaux",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDreyer",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitTessier",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienTheron",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMigeon",
       "added": "2026-07-15"
     }
   ]
