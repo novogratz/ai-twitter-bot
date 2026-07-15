@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-15T00:32:53.298350",
-  "window_7d_actions": 4646,
-  "window_24h_actions": 145,
+  "generated_at": "2026-07-15T04:32:52.691020",
+  "window_7d_actions": 4619,
+  "window_24h_actions": 171,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4635
+      "count": 4608
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -41,15 +41,15 @@
   "best_hours_utc": [
     {
       "hour": 0,
-      "actions": 244
+      "actions": 243
     },
     {
       "hour": 1,
-      "actions": 238
+      "actions": 231
     },
     {
       "hour": 2,
-      "actions": 233
+      "actions": 217
     },
     {
       "hour": 9,
@@ -63,19 +63,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2180
+      "count": 2154
     },
     {
       "topic": "IA",
-      "count": 1837
+      "count": 1836
     },
     {
       "topic": "Crypto",
-      "count": 599
+      "count": 601
     },
     {
       "topic": "Bourse",
-      "count": 230
+      "count": 227
     },
     {
       "topic": "Spatial",
@@ -86,11 +86,11 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2030
+      "count": 2021
     },
     {
       "pillar": "other",
-      "count": 1384
+      "count": 1371
     },
     {
       "pillar": "market_trauma",
@@ -98,33 +98,33 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 239
+      "count": 234
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 54
+      "count": 53
     },
     {
       "pillar": "reply_bait",
-      "count": 47
+      "count": 48
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 57
+      "count": 70
     },
     {
       "pillar": "other",
-      "count": 46
+      "count": 54
     },
     {
       "pillar": "market_trauma",
-      "count": 25
+      "count": 34
     },
     {
       "pillar": "meme_reaction",
-      "count": 14
+      "count": 10
     },
     {
       "pillar": "reply_bait",
@@ -152,16 +152,16 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 71,
-      "avg_likes": 0.1,
-      "avg_views": 32.5,
+      "posts": 70,
+      "avg_likes": 0.07,
+      "avg_views": 32.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 65,
-      "avg_likes": 0.06,
-      "avg_views": 42.0,
+      "posts": 66,
+      "avg_likes": 0.05,
+      "avg_views": 41.4,
       "low_sample": false
     },
     {
@@ -175,15 +175,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3891
+      "count": 3871
     },
     {
       "type": "quote",
-      "count": 359
+      "count": 358
     },
     {
       "type": "quote_gif",
-      "count": 192
+      "count": 187
     },
     {
       "type": "post",
@@ -195,23 +195,23 @@
     },
     {
       "type": "retweet",
-      "count": 50
+      "count": 49
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-15T00:32:42.909461",
-      "text": "The $244B is just price discovery on inference margins. Liang won because he solved cost, not because he raised first.",
+      "ts": "2026-07-15T04:32:41.922443",
+      "text": "Tout le monde parle du jacobian lens. La vraie histoire, c'est qu'on sait maintenant lire l'esprit de Claude.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-15T00:31:58.137196",
-      "text": "Hype is stupid. 40% of entry-level coding interviews are already gone. hard to hate what works.",
+      "ts": "2026-07-15T04:32:03.711406",
+      "text": "Trillion in cap lost. Nvidia's revenue, margins, and datacenter moat got tighter. The market's repricing hope back to reality. Breathe.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-15T00:28:37.501439",
-      "text": "Looks like panic. it's actually clever: put claude in front of 3M teachers and their kids learn it as default. lock in a generation before they finish high school. openai has enterprise, anthropic gets the pipeline.",
+      "ts": "2026-07-15T04:30:58.448154",
+      "text": "Kalshi traders betting $68k. two weeks is leverage and sentiment noise, not forecast. the signal is real, the certainty you'll add isn't.",
       "type": "reply"
     }
   ]

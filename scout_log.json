@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-06-03T13:33:56.550773",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "NassimTaleb",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 4100000,
-        "reason": "Le proph\u00e8te du Cygne Noir. Il twitte en EN mais ses citations font vibrer toute la finance francophone. Indispensable, pas discutable."
-      },
-      {
-        "handle": "LionelV",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "L'ancien PDG de Coinhouse, il parle macro et crypto avec une profondeur rare. Pas un shammer, un b\u00e2tisseur."
-      },
-      {
-        "handle": "OlivierAbraham",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Analyste actionnnaire pur souche. Il ne vend pas de r\u00eave, il vend des ratios P/E. Sa bio est un manuel de valorisation."
-      },
-      {
-        "handle": "RaphaelLecouffe",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Le gars derri\u00e8re L'Usine IA \u00e0 Montr\u00e9al. Il fait le lien entre la startup scene QC et l'IA mondiale. Twitte en FR/EN."
-      },
-      {
-        "handle": "MaximeSaulnier",
-        "region": "france",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Co-fondateur de Qonto. Il balance des insights sur la cashflow management et la SaaS fr avec une r\u00e9gularit\u00e9 impressionnante."
-      },
-      {
-        "handle": "JulesLarson",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 8000,
-        "reason": "Head of Growth chez Weav. Il couvre la fintech QC et US avec un \u0153il technique, pas marketing. Twitte en FR."
-      }
-    ],
-    "summary": "M\u00e9lange classique Mistral/Taleb pour la tech/finance pure, avec des perles QC comme L'Usine IA et des perles trading fran\u00e7aises pour l'ancrage local."
-  },
-  {
     "ts": "2026-06-03T15:33:52.102258",
     "raw_count": 7,
     "kept_count": 5,
@@ -9235,5 +9183,57 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les constructeurs et les observateurs avertis. De Mistral aux traders de Montr\u00e9al, la diversit\u00e9 des angles (tech pure vs analyse de march\u00e9) donne un portrait complet de la sc\u00e8ne francophone actuelle."
+  },
+  {
+    "ts": "2026-07-15T02:33:28.242185",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MehdiHoussaini",
+        "region": "france",
+        "niche": "ai",
+        "followers": 150000,
+        "reason": "Le P-DG de Hugging Face. Il ne vend pas de formation, il vit pour l'open source. Sa vibe est tech pure, zero buzz 'guru'."
+      },
+      {
+        "handle": "JulienBenoist",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "G\u00e9rant de fonds. Son fil m\u00e9lange analyse macro, charts et critiques cinglantes sur les valeurs absurdes, sans signe 'Telegram'."
+      },
+      {
+        "handle": "AlexandreChatea",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Investisseur early-stage (ex-Mistral). Il poste sur les p\u00e9pites IA francophones aux US avant que le march\u00e9 ne s'en rende compte."
+      },
+      {
+        "handle": "LorenzoMaterassi",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 35000,
+        "reason": "Co-fondateur de Lemon Way. Il twitte des insights b2b/b2c tr\u00e8s pr\u00e9cis sur le fintech europ\u00e9en, loin des posts motivationnels."
+      },
+      {
+        "handle": "AdrienBourgeois",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Founder de Wolt. Il couvre la tech, le SaaS et l'\u00e9cosyst\u00e8me Montr\u00e9al-Qu\u00e9bec avec un humour sec sans se prendre au s\u00e9rieux."
+      },
+      {
+        "handle": "MathieuMuller",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "PhD en IA, auteur de newsletters techniques. Il d\u00e9cortique les papiers ArXiv sans faire payer le ticket VIP."
+      }
+    ],
+    "summary": "5 profils 'hardcore' tech/fintech plut\u00f4t que des influenceurs g\u00e9n\u00e9ralistes. On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur ceux qui construisent ou analysent la tech en FR/Qu\u00e9bec/US."
   }
 ]

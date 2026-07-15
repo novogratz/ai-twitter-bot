@@ -350,7 +350,12 @@
     "LionelLevrel",
     "MaximeGuitton",
     "ThibaudGarcin",
-    "AlexisThomson"
+    "AlexisThomson",
+    "MehdiHoussaini",
+    "JulienBenoist",
+    "AlexandreChatea",
+    "AdrienBourgeois",
+    "MathieuMuller"
   ],
   "en": [
     "Chubby",
@@ -511,7 +516,8 @@
     "PrismML",
     "Teslaconomics",
     "adi",
-    "Dan"
+    "Dan",
+    "bia"
   ],
   "history": [
     {
@@ -3062,6 +3068,36 @@
     {
       "lang": "fr",
       "handle": "AlexisThomson",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "en",
+      "handle": "bia",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MehdiHoussaini",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBenoist",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexandreChatea",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienBourgeois",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuMuller",
       "added": "2026-07-15"
     }
   ]
