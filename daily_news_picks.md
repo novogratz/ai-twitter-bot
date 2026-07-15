@@ -15923,3 +15923,11 @@ Its 40 members include AWS, Google, Visa, Mastercard, Stripe, Coi
 KOSPI up 6.2%, KOSDAQ up 4.5%. Foreign investors are showing over 1 trillion won in net buying today. The number of rising stocks is more than 5 times the number of fallin
   - https://x.com/blazingbees/status/2077214941829103810
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 131).
+- **@hypersharkk** (42 likes, score 8/10) — Sam Altman บอก ตอนนี้ I ference คือตึงมือสุดๆ มีปัญหา (นิดหน่อย) และคำพูดนี้ทำให้ผม Bullish $CBRS 
+
+เพราะ $CBRS เก่งเรื่อง Inference โดยตรงเลย พวกโมเดลใหญ่ๆ อย่าง GPT-5.6 Sol มันต้องการ conpute infere
+  - https://x.com/HyperSharkk/status/2077223950304854214
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 44).
+- **@bradshannon** (55 likes, score 8/10) — Grok 4.5 is still the fastest and cheapest frontier model that I use. Can't wait to see the next model
+  - https://x.com/bradshannon/status/2077175978971857393
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 81).
