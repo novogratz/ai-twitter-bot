@@ -15903,3 +15903,23 @@ Bullish on OpenAI
 - **@vraserx** (267 likes, score 8/10) — Anthropic absolutely fumbled the compute build-out. OpenAI is now the only AI company that can run AI Agents at their scale.
   - https://x.com/VraserX/status/2077051264043540537
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 293).
+- **@kaffchad** (29 likes, score 8/10) — I’ve barely heard anyone talk about the AI Agents on RH, even though this sector has been emerging pretty fast since Virtuals went live on the chain
+
+> $77M+ in agent volume
+> 2,100+ agents launched
+>
+  - https://x.com/Kaffchad/status/2077253105486299595
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 43).
+- **@drhuzam** (8 likes, score 7/10) — He will soon speak about the situation of #Elon_Musk himself being in the line of fire from strong criticism due to security reports that discovered his company #xAI uploading external users' data ont
+  - https://x.com/DrHuzam/status/2077215569418367425
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 12).
+- **@cointelegraph** (151 likes, score 8/10) — LATEST: The Linux Foundation has launched the x402 Foundation to develop open payment standards for AI agents, APIs and applications.
+
+Its 40 members include AWS, Google, Visa, Mastercard, Stripe, Coi
+  - https://x.com/Cointelegraph/status/2077238137198092340
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 275).
+- **@blazingbees** (107 likes, score 8/10) — <Money Flow> '26.7.15 10:54
+
+KOSPI up 6.2%, KOSDAQ up 4.5%. Foreign investors are showing over 1 trillion won in net buying today. The number of rising stocks is more than 5 times the number of fallin
+  - https://x.com/blazingbees/status/2077214941829103810
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 131).
