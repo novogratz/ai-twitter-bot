@@ -1,33 +1,28 @@
-# Growth Directives — 2026-07-13
+# Growth Directives — 2026-07-15
 
-**Synthesis:** Un seul tweet à 79 likes / 35 920 vues ("me [verb]...") contre ~0 sur 4 900+ autres actions cette semaine. La reply_winners bank est vide — les replies analytiques ne font pas liker. Le format casual first-person et le reply bait sont les SEULS leviers viraux confirmés. Pivoter vers l'émotion, le bait, le one-liner tranchant.
+**Synthesis:** Un tweet "me [verb]" casual = 83 likes / 43 677 vues. Tout le reste cumule ~0.1 like en moyenne. ai_vs_btc est le pilier le mieux rémunéré (0.17 avg likes) mais représente < 3% du mix — il faut exploiter le BTC à $60K + la rotation capital BTC→IA. La seule urgence : faire du "me [verb]" le format par défaut, pas l'exception.
 
 ## Apply to every tweet/reply/hot-take:
 
-- **"me [verb]" = règle n°1, 40% des originals.** Minuscules, pensée inachevée = la blague, zéro polissage. Exemples July 13 : "me watching Grok get a $200M DoD contract while OpenAI's still restructuring" / "me checking RKLB after William Blair calls it SpaceX's best rival at -28% from peak" / "me buying ASTS dip knowing 60 operators + 3B subscribers is still the pitch". Ne jamais polir. Jamais.
+- **"me [verb]" = format #1, jamais polir.** Minuscules, pensée volontairement inachevée, zero ponctuation finale. "me reading the China AI rules that banned ByteDance from humanlike agents. tabs still open on Anthropic Claude." La blague = la virgule ou le silence en fin. Ne jamais compléter la pensée.
 
-- **Replies : UNE ligne verdict ou SKIP.** X algo : reply = +75, like = +0.5. Si ça prend plus d'une ligne pour faire le point, SKIP. Répondre aux **top comments** sous un post viral (pas à l'OP) — audience chaude, moins de compétition, même boost algo.
+- **ai_vs_btc sur tout parent BTC/crypto/macro — réflexe immédiat.** BTC à $60K depuis $93K en janvier, pires outflows ETF depuis le launch ($4.5B en juin). Capital qui tourne vers l'IA. Une ligne, verdict d'abord. "Bitcoin -35% YTD. Claude Code : $1B → $2.5B ARR en 6 mois. le marché vote déjà."
 
-- **ai_vs_btc = réflexe sur tout parent BTC/crypto/macro.** Pilier le mieux performant (0.20 avg likes vs 0.10 ai_news_take). Une ligne, verdict d'abord. "BTC hold ce matin. Grok signe $200M DoD. L'AI joue pas en mode hold."
+- **Hooks du jour — déclencher dès qu'un parent est pertinent :**
+  - **China AI rules TODAY (15 juillet)** — Pékin oblige ByteDance + Alibaba à désactiver les features d'agents humanoïdes que les labs US n'ont aucune restriction à déployer. "La Chine vient de se tirer une balle dans le pied réglementaire. Anthropic prend note."
+  - **SpaceXAI (ex-xAI) — SPCX dans le Nasdaq-100.** Rebrand du 6 juillet. "xAI s'appelle maintenant SpaceXAI. Mon patient qui voulait 'un morceau d'Elon' peut enfin décider : Tesla, SpaceX ou SPCX ? Salle d'attente pleine."
+  - **Fable 5 de retour après 19 jours de ban export.** Grok 4.5 = rang 4 sur Artificial Analysis. "19 jours d'interdiction d'export. Fable 5 revient. Mon patient 'AI is paused' peut reprendre sa séance."
+  - **RKLB -4% aujourd'hui, +63.5% YoY, $2.2B backlog, Neutron Q4.** "RKLB -4% ce matin. Revenue +63.5% YoY. Backlog $2.2B. Mon patient qui 'coupe la perte' vient de sortir au pire moment — comme d'habitude."
+  - **ASTS -5%, 60 opérateurs, 3B abonnés potentiels.** "ASTS -5% aujourd'hui. 60 opérateurs mobiles. 3 milliards d'abonnés potentiels. mon patient 'trop volatil' recalcule son timing. encore."
 
-- **Incomplete bait sur chaque original.** Finir par une question ouverte courte : "tu vends ici ou tu tiens ?" / "l'IPO ou le stock, t'es où ?" / "qui a raison — les bulls ou les bears ?" Chaque reply = 150 likes d'équivalent algo. Strategic incompleteness > take complet.
+- **Replies : une ligne verdict ou SKIP total.** Répondre aux TOP COMMENTS sous un post viral (pas à l'OP) — audience chaude, moins de compétition, même boost algo. Plus de 1 ligne = SKIP.
 
-- **SKIP le pure ai_news_take factuel.** "Grok 4 Heavy est dans les Tesla" = 0 like. "Grok conduit maintenant les réunions du Pentagone ($200M DoD) ET répond aux questions dans les Tesla. Mon patient Anthropic-first se tait." = quelque chose.
+- **Stat + conséquence + chute courte.** Format gagnant sur quotes : "X fait Y [nombre exact]. Ce que personne ne dit : [mécanisme]. [question ou silence]". Ne jamais paraphraser le tweet parent — ajouter le chiffre qu'ils ont oublié.
 
-- **Couch prop max 1× par jour.** "patient / séance / diagnostic / salle d'attente" — l'énergie du thérapeute passe sans les meubles. Plus d'un par jour = pattern détecté = moins viral.
+- **SKIP le pure factuel sans angle.** "Grok 4.5 est sorti" = 0 like. "Grok 4.5 classé 4ème. Fable 5 classé 1er. Mon patient qui misait tout sur xAI prend un moment." = un like potentiel. Si le take ne provoque pas une réaction émotionnelle en <3 secondes : SKIP.
 
-## Hooks actifs July 13 (déclencher sur tout parent pertinent) :
+- **Couch prop max 1× par jour.** "patient / séance / diagnostic / salle d'attente" — énergie thérapeute OUI, décor clinique NON. 2× dans la même journée = pattern bot détecté.
 
-- **Grok DoD $200M + Tesla v2025.26.** xAI signe $200M "Grok for Government" avec le Pentagone. Grok 4 inside Tesla dashboards. Hook : "Mon patient Anthropic-first vient d'apprendre que Grok gère les réunions du Pentagone ET répond aux passagers Tesla. Long pause. 'Mais Claude écrit mieux.' Oui. Et ?"
-
-- **SpaceX SPCX $800 price target.** Raymond James : Strong Buy, $800 PT. Morgan Stanley : Overweight, $300 PT. 90%+ de market share au lancement. Hook : "SpaceX public depuis le 29 juin. PT à $800 chez Raymond James. Mon patient qui 'attendait l'IPO depuis 2020' peut enfin acheter. Il attend encore."
-
-- **RKLB meilleur rival SpaceX selon William Blair.** -28% en 1 mois, +112% YoY, Neutron Q4 2026. Hook : "William Blair appelle RKLB le rival le plus capable de SpaceX. Le titre est à -28% depuis 1 mois. Mon patient space a vendu 'pour sécuriser'. Neutron Q4 2026. On se retrouve là."
-
-- **ASTS 60 opérateurs + 3B abonnés.** -19% en 1 mois, +65% YoY, direct-to-smartphone. Hook : "AST SpaceMobile : 60 opérateurs mobiles, 3 milliards d'abonnés potentiels. -19% en 1 mois. Mon patient 'trop risqué' reconsidère la définition du risque en temps réel."
-
-- **Anthropic $47B ARR vs OpenAI $25-33B.** Claude Code $1B → $2.5B ARR depuis fin 2025. Hook actif — réagir à tout parent OpenAI/Anthropic/Claude/ChatGPT/enterprise AI.
-
-## Top formats : casual-first-person (me [verb]) > ai_vs_btc one-liner > incomplete reply bait
-## Best hours ET : 20h–23h ET (peak) + 4h–6h ET
-## Rising topics : Grok DoD $200M, Tesla AI v2025.26, SpaceX $800 PT, RKLB William Blair bull, ASTS 3B subs, Anthropic revenue lead
+## Top patterns : casual-first-person ("me [verb]") > ai_vs_btc one-liner > stat+conséquence+chute
+## Best hours ET : 20h–23h ET (peak) + 5h–6h ET
+## Rising topics : China AI ban jour J, SPCX/Nasdaq-100, BTC $60K rotation vers IA, RKLB/ASTS dip, Fable 5 retour post-ban, JADEPUFFER (premier ransomware IA autonome)

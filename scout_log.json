@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-06-03T15:33:52.102258",
-    "raw_count": 7,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Coinhouse",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "L'acteur historique qui a surv\u00e9cu aux crashs et ne vend pas juste des r\u00eaves."
-      },
-      {
-        "handle": "Myl\u00e8neG",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 20000,
-        "reason": "La voix qu\u00e9b\u00e9coise qui d\u00e9crypte les march\u00e9s avec plus de sang-froid que nos politiques."
-      },
-      {
-        "handle": "AlexisToups",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le gars qui transforme l'infographie de Mistral en contenu viral et intelligible."
-      },
-      {
-        "handle": "CryptoCanal",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Le m\u00e9dia qui couvre la tech et la crypto sans vendre de formation \u00e0 999\u20ac."
-      },
-      {
-        "handle": "JulienRochon",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 8000,
-        "reason": "Un Qu\u00e9b\u00e9cois qui parle crypto avec une clart\u00e9 d\u00e9sarmante."
-      }
-    ],
-    "summary": "L'IA fran\u00e7aise (Mistral) et la crypto (Coinhouse) dominent avec une audience massive et un contenu pertinent. Pour le Qu\u00e9bec, les voix sont plus petites mais bien plus cibl\u00e9es et authentiques que les g\u00e9n\u00e9ralistes."
-  },
-  {
     "ts": "2026-06-03T17:33:59.153472",
     "raw_count": 8,
     "kept_count": 8,
@@ -9235,5 +9190,43 @@
       }
     ],
     "summary": "5 profils 'hardcore' tech/fintech plut\u00f4t que des influenceurs g\u00e9n\u00e9ralistes. On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur ceux qui construisent ou analysent la tech en FR/Qu\u00e9bec/US."
+  },
+  {
+    "ts": "2026-07-15T04:39:04.807717",
+    "raw_count": 10,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LudovicLemoine",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Journaliste Tech/AI, interviews exclusives, regard critique sur l'industrie."
+      },
+      {
+        "handle": "CryptoBastide",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Diaspora FR aux USA, view macro crypto, style direct sans fioritures."
+      },
+      {
+        "handle": "MaelanB",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "La voix qu\u00e9b\u00e9coise pour l'\u00e9pargne et la bourse, vulgarisation pr\u00e9cise, aucun blabla."
+      },
+      {
+        "handle": "ThomasBouy",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Analyste bourse FR, style sec, couvre la tech et les march\u00e9s, audience engag\u00e9e."
+      }
+    ],
+    "summary": "Focus sur des profils 'fond' plut\u00f4t que 'viral' pour \u00e9viter le bruit des groupes Telegram. Le mix France/Qu\u00e9bec/USA est \u00e9quilibr\u00e9 entre IA, crypto et bourse traditionnelle."
   }
 ]

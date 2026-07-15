@@ -355,7 +355,11 @@
     "JulienBenoist",
     "AlexandreChatea",
     "AdrienBourgeois",
-    "MathieuMuller"
+    "MathieuMuller",
+    "LudovicLemoine",
+    "CryptoBastide",
+    "MaelanB",
+    "ThomasBouy"
   ],
   "en": [
     "Chubby",
@@ -3098,6 +3102,26 @@
     {
       "lang": "fr",
       "handle": "MathieuMuller",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicLemoine",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBastide",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelanB",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBouy",
       "added": "2026-07-15"
     }
   ]

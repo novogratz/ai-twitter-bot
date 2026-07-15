@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-14T08:32:53.112488",
+  "ts": "2026-07-15T00:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 14,
     "MAX_HOTAKES_PER_DAY": 28,
@@ -12,10 +12,10 @@
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "xAI/Grok dominance in government contrac",
-    "Mistral AI's valuation vs cash burn",
-    "Nvidia's P/E ratio in a flat market"
+    "China AI rules jour J — ByteDance + Alibaba forcés à désactiver agents humanoïdes (avantage structurel US)",
+    "SpaceXAI (ex-xAI) SPCX Nasdaq-100 rebrand — patient Elon confus mais bullish",
+    "BTC $60K vs Claude Code $2.5B ARR — rotation capital BTC→IA en cours"
   ],
   "cadence_factor": 1.4,
-  "rationale": "Suppression inactive, on reprend les caps agressifs pour maximiser la surface. Focus sur xAI pour capter l'engouement actuel et Nvidia pour le cynisme boursier."
+  "rationale": "Données 30d : ai_vs_btc 0.17 avg likes > market_trauma 0.13 > ai_news_take 0.07. Mix actuel trop lourd en ai_news_take (44% du volume, pire ROI). Pivot vers 'me [verb]' casual + ai_vs_btc one-liners. Hooks du jour : China AI ban effectif, SPCX rebrand, BTC→IA rotation, RKLB/ASTS dip sur backlog fort."
 }
