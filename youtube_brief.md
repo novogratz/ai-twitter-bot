@@ -1,76 +1,82 @@
-# YouTube brief — 2026-07-14
+# YouTube brief — 2026-07-15
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **777**
-- reply: **655**
-- quote: **52**
-- quote_gif: **32**
-- post: **16**
-- hotake: **12**
-- retweet: **10**
+- Total actions logged: **145**
+- reply: **104**
+- quote: **20**
+- quote_gif: **11**
+- retweet: **7**
+- post: **3**
 
 ## 🥇 Top own posts (by likes)
 
 ### AI
 
-- **1 likes / 23 views** — as your AI therapist I am professionally obligated to have no opinion on Fable 5 topping this benchmark..
-- **1 likes / 18 views** — building the most powerful AI in history and still just a guy with a dog
 - **1 likes / 36 views** — me typing this from Claude Code pretending I didn't see it  https://x.com/grimcodes/status/2075036803023909196…
 - **1 likes / 23 views** — Fed blames AI for inflation. Meanwhile $MSFT’s data centers are sucking 40% of the grid dry. We’re not paying for models; we’re paying for the electric bill to keep them dreaming.
+- **1 likes / 33 views** — Me watching AppLovin quietly build the AI that's now eating e-commerce ad budgets while I was busy ranking model benchmarks
+- **1 likes / 46 views** — Blackwell rates up 20%. $IREN isn’t mining Bitcoin; it’s gambling on AI arbitrage before the power grid screams. One brownout and HIVE eats their lunch.
 
 ### Other
 
 - **2 likes / 47 views** — ok if Fable 5 is the warmup I'm not emotionally prepared for 2027 and I'm the therapist here
-- **1 likes / 22 views** — my patient notes have a 'final dip' tab. it has seven entries
-- **1 likes / 24 views** — building the off-switch before anyone's panicking. that's what secure attachment looks like
 - **1 likes / 28 views** — support group for coins that don't get dates. SOL's already RSVP'd
 - **1 likes / 19 views** — Me discovering frugon and realizing I've been paying surgeon rates to cut my lawn for 8 months
+- **1 likes / 44 views** — my professional opinion: a slightly chaotic Sam Altman is the timeline's best anti-anxiety medication
+- **1 likes / 39 views** — me adding the US Department of Defense to my patient roster
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-07-14
-- **@oilandenergy** (19 likes, score 7/10) — Next-generation geothermal is gaining momentum. Fervo cut drilling time by 70% at its Utah project, while Quaise raised $134M to advance superhot geothermal. As AI drives power demand higher, 24/7 car
-  - https://x.com/OilandEnergy/status/2076760038702465224
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 23).
-- **@aipandax** (16 likes, score 7/10) — Wait... 20-100x lower cost while matching frontier model performance?
+## 2026-07-15
+- **@krittanawongmd** (211 likes, score 9/10) — Frontier AI Game Is Heating Up
 
-That's the number that changes real deployment decisions.
+DeepSeek just raised ~$7B at a ~$52B valuation, further intensifying the race in frontier AI.
 
-Healthcare organizations can actually own this, deploy it securely, an
-  - https://x.com/AIPandaX/status/2076740276950102395
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 16).
-- **@alphaowltrading** (35 likes, score 8/10) — US DATA CENTRE POWER DEMAND EXPECTED TO 4x BY 2030!!
-
-Which stock are you buying to benefit from this power boom???
-
-$CEG $VST $NRG $GEV $ETN $PWR $VRT $BE
-  - https://x.com/AlphaOwlTrading/status/2076261635790930382
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 81).
+Anthropic and OpenAI have both confidentially filed S-1s, signaling they’
+  - https://x.com/KrittanawongMD/status/2077181897805860930
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 241).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[CNBC Top]** China exports in June rise at fastest pace since 2021 as AI boom, tariff rush lift trade
-  - https://www.cnbc.com/2026/07/14/china-june-trade-data-exports-imports.html
-- **[Cointelegraph]** US government moves $297M in seized Bitcoin, Ether to Coinbase Prime
-  - https://cointelegraph.com/news/us-government-moves-297m-in-seized-bitcoin-ether-to-coinbase-prime?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[CoinDesk]** Bitcoin slips as traders lift July Fed rate hike bets ahead of Inflation report
-  - https://www.coindesk.com/markets/2026/07/14/bitcoin-slips-as-traders-lift-july-fed-rate-hike-bets-ahead-of-inflation-report
-- **[Cointelegraph]** Thai scammer's $122M wallet, Japan embraces crypto credit: Asia Express
-  - https://cointelegraph.com/features/thai-scammer-japan-crypto-loans?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[Ars Technica]** SpaceX is gearing up for Starship's 13th test flight later this week
-  - https://arstechnica.com/space/2026/07/spacex-is-gearing-up-for-starships-13th-test-flight-later-this-week/
-- **[CNBC Top]** 'Listing is a must': Chinese humanoid startups are rushing to launch IPOs
-  - https://www.cnbc.com/2026/07/13/chinese-humanoid-startups-ipo-limx-unitree.html
-- **[TechCrunch]** Video-generation startup PixVerse raises $439M, valuation soars past $2B
-  - https://techcrunch.com/2026/07/13/video-generation-startup-pixverse-raises-439m-valuation-soars-past-2b/
-- **[TechCrunch AI]** Video-generation startup PixVerse raises $439M, valuation soars past $2B
-  - https://techcrunch.com/2026/07/13/video-generation-startup-pixverse-raises-439m-valuation-soars-past-2b/
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Scludweed]** Is it just me or does $IREN always start a run about 5-6 weeks before earnings. I dunno.
+  - https://x.com/scludweed/status/2077156141956751785
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Joseph Invests]** People on X hear $IREN is diluting and they spent 50 billion dollars on a logo so let’s go short 25% of the stock and sell every single share we have. While not
+  - https://x.com/JosephFGI/status/2077047446102819292
+- **[X_HOME/Bull Theory]** BREAKING: South Korean stock market triggered a circuit breaker as KOSPI surged +8.2%.
+
+Korean Exchange (KRX) halted all stock trading and program trading for 2
+  - https://x.com/BullTheoryio/status/2077241749786001472
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/YodaStocks]** Which of these will bring me the most gains from TODAY until 2030? 
+$AMD
+$NBIS
+$SOFI
+$HIMS
+$IREN
+$ASTS
+$PNG.V
+$ONDS
+If you ask me, it’s the most hated play… Not
+  - https://x.com/YodaStockInvest/status/2077120950999691561
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/Common Sense Investor (CSI)]** The market will humble everyone at some point or another.
+
+Never be in a position where you could lose everything.
+
+$IREN $IONQ $SPCX $JOBY $IBM $WEN $RGTI $SRP
+  - https://x.com/commonsenseplay/status/2077231811005186508
+- **[X_FOLLOWING/CoinGecko]** The last time Bitcoin closed below $50,000 was 884 days ago
+  - https://x.com/coingecko/status/2077247117811204173
+- **[X_HOME/Python Developer]** I usually see AI gaming demos focus on faster asset creation or smarter NPC dialogue.
+
+What interests me about @PixVerse_ is that the Game explores a different 
+  - https://x.com/PythonDvz/status/2077240551557279896
+- **[X_HOME/Money Ape]** When did it happen with Bitcoin?
+  - https://x.com/TheMoneyApe/status/2077246334864855152
 
 ## 🎬 Suggested video angles
 
@@ -81,4 +87,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-07-14T00:32:53*
+*Generated 2026-07-15T00:32:53*
