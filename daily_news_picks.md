@@ -15878,3 +15878,28 @@ $PLTR #
 - **@whaleinsider** (0 likes, score 8/10) — JUST IN:  Nvidia $NVDA cuts Asia authorized AI chip buyers by half to block gray market leaks to China and slash regulatory risks.
   - https://x.com/WhaleInsider/status/2076897885535216069
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 88).
+
+## 2026-07-15
+- **@krittanawongmd** (211 likes, score 9/10) — Frontier AI Game Is Heating Up
+
+DeepSeek just raised ~$7B at a ~$52B valuation, further intensifying the race in frontier AI.
+
+Anthropic and OpenAI have both confidentially filed S-1s, signaling they’
+  - https://x.com/KrittanawongMD/status/2077181897805860930
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 241).
+- **@zerohedge** (13 likes, score 7/10) — Today PJM failed to secure 7GW in energy to ensure system stability into 2028 (due to price caps, without which electricity prices would be 70% higher). PJM is already below the critical reliability t
+  - https://x.com/zerohedge/status/2077245032138973555
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 19).
+- **@theahmadosman** (0 likes, score 9/10) — Know why Anthropic hates Opensource AI?
+
+GLM 5.2 being free and available to download made their $1 Trillion valuation make no sense
+  - https://x.com/TheAhmadOsman/status/2077195435345629478
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 56).
+- **@synthwavedd** (1551 likes, score 9/10) — More excited for GPT-6 than I have been for any model, ever
+
+Bullish on OpenAI
+  - https://x.com/synthwavedd/status/2077032869697057139
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1685).
+- **@vraserx** (267 likes, score 8/10) — Anthropic absolutely fumbled the compute build-out. OpenAI is now the only AI company that can run AI Agents at their scale.
+  - https://x.com/VraserX/status/2077051264043540537
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 293).

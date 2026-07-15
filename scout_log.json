@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-06-03T05:15:28.440300",
-    "raw_count": 7,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThalesGroupFR",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Le compte corporate qui prouve que les DAF peuvent \u00eatre cool si tu les pousses \u00e0 twittiller sur la d\u00e9fense et l'IA."
-      },
-      {
-        "handle": "BourseDirect",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "Le n\u00e9vrose industriel de la place de la Bourse. Mordant, rapide, et il n'a pas peur de dire que le march\u00e9 a merd\u00e9."
-      },
-      {
-        "handle": "CryptoPatate",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Celui qui a surv\u00e9cu aux hivers sans vendre de formation \u00e0 1000\u20ac. Le genre de gars qui fait des charts, pas du story-time."
-      },
-      {
-        "handle": "FinTechFR",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "Un agr\u00e9gateur qui fait le tri entre les startups qui l\u00e8vent 2M et celles qui l\u00e8vent 200M. Indispensable pour ne pas rater la next BigONE."
-      },
-      {
-        "handle": "AlexisToubkis",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 8500,
-        "reason": "Francophone bas\u00e9 \u00e0 NYC. Le contraste entre le labeur NYC et l'humour FR fait des perles sur les march\u00e9s US vus de Paris."
-      }
-    ],
-    "summary": "Pas de grands influencers lifestyle, juste des profils techniques ou institutionnels qui ont du poids et tweetent encore en 2026. Mistral et la Patate sont les valeurs s\u00fbres, Alexis Toubkis apporte le vent nord am\u00e9ricain."
-  },
-  {
     "ts": "2026-06-03T13:33:56.550773",
     "raw_count": 7,
     "kept_count": 6,
@@ -9235,5 +9190,50 @@
       }
     ],
     "summary": "6 comptes de qualit\u00e9 pure, sans la flotte des vendeurs de r\u00eaves. Le mix IA/Bourse/Qu\u00e9bec est solide et couvre les niches portantes sans r\u00e9p\u00e9tition."
+  },
+  {
+    "ts": "2026-07-15T00:47:48.174048",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LionelLevrel",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'analyste roi du CAC 40. Pas de blabla sp\u00e9culatif, que des fondamentaux et des bilans secs. Si tu veux comprendre pourquoi ton ETF pleure, il est l\u00e0."
+      },
+      {
+        "handle": "MaximeGuitton",
+        "region": "france",
+        "niche": "ia",
+        "followers": 28000,
+        "reason": "Expert LLM et Open Source. Il montre comment build des agents IA sans exploser son budget AWS. Pragmatique, technique, et il a le chic pour simplifier le chaos des mod\u00e8les ouverts."
+      },
+      {
+        "handle": "ThibaudGarcin",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Founder de L'Orbital. Mixe tech, IA et business FR. Il a compris que l'IA ne se vend pas en code, mais en ROI. Ses threads sont des mini-livres blancs."
+      },
+      {
+        "handle": "MarcTessierLavigne",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Bien que US, il twitte beaucoup en FR sur la gouvernance de l'IA et l'Europe. Un peu plus acad\u00e9mique, mais le regard crois\u00e9 est pr\u00e9cieux pour pas se prendre la t\u00eate avec les US-only narratives."
+      },
+      {
+        "handle": "AlexisThomson",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Vieux briscard de la tech qu\u00e9b\u00e9coise. Couvre startups, IA et \u00e9cosyst\u00e8me. C'est le compte \u00e0 suivre si tu veux savoir ce qui se trame dans les bureaux montr\u00e9alais avant les blogs g\u00e9n\u00e9ralistes."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les constructeurs et les observateurs avertis. De Mistral aux traders de Montr\u00e9al, la diversit\u00e9 des angles (tech pure vs analyse de march\u00e9) donne un portrait complet de la sc\u00e8ne francophone actuelle."
   }
 ]
