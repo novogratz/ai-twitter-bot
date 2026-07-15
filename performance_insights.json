@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-14T16:32:52.796407",
-  "window_7d_actions": 4864,
-  "window_24h_actions": 348,
+  "generated_at": "2026-07-14T20:32:52.826243",
+  "window_7d_actions": 4735,
+  "window_24h_actions": 221,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4853
+      "count": 4724
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -52,53 +52,53 @@
       "actions": 233
     },
     {
-      "hour": 17,
-      "actions": 224
-    },
-    {
       "hour": 9,
       "actions": 216
+    },
+    {
+      "hour": 21,
+      "actions": 212
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2295
+      "count": 2218
     },
     {
       "topic": "IA",
-      "count": 1902
+      "count": 1867
     },
     {
       "topic": "Crypto",
-      "count": 633
+      "count": 620
     },
     {
       "topic": "Bourse",
-      "count": 241
+      "count": 235
     },
     {
       "topic": "Spatial",
-      "count": 86
+      "count": 83
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2106
+      "count": 2059
     },
     {
       "pillar": "other",
-      "count": 1451
+      "count": 1405
     },
     {
       "pillar": "market_trauma",
-      "count": 948
+      "count": 920
     },
     {
       "pillar": "meme_reaction",
-      "count": 253
+      "count": 248
     },
     {
       "pillar": "ai_vs_btc",
@@ -106,29 +106,29 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 51
+      "count": 48
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 144
+      "count": 89
     },
     {
       "pillar": "other",
-      "count": 107
+      "count": 71
     },
     {
       "pillar": "market_trauma",
-      "count": 70
+      "count": 42
     },
     {
       "pillar": "meme_reaction",
-      "count": 21
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 3
     },
     {
       "pillar": "reply_bait",
@@ -154,7 +154,7 @@
       "pillar": "ai_news_take",
       "posts": 72,
       "avg_likes": 0.11,
-      "avg_views": 28.9,
+      "avg_views": 32.2,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4081
+      "count": 3965
     },
     {
       "type": "quote",
-      "count": 371
+      "count": 366
     },
     {
       "type": "quote_gif",
-      "count": 205
+      "count": 200
     },
     {
       "type": "post",
-      "count": 98
+      "count": 96
     },
     {
       "type": "hotake",
-      "count": 61
+      "count": 60
     },
     {
       "type": "retweet",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-14T16:23:25.661017",
-      "text": "IBM’s “25% crash” includes every company charging >2% for inference. The bubble isn’t AI; it’s legacy consulting fees. AGI renders their slide decks obsolete. 🤖",
+      "ts": "2026-07-14T20:12:27.999216",
+      "text": "Lorde claims AI glasses ain’t sexy. Meanwhile, $NVDA burns cash hotter than a K-Pop concert to power the visual feed of every stan’s AR reality. 🤖⚡",
       "type": "quote"
     },
     {
-      "ts": "2026-07-14T13:00:27.469795",
-      "text": "Nvidia just paid his rent. He thinks it’s a bonus.",
+      "ts": "2026-07-14T19:19:51.260535",
+      "text": "Super Cycle? Sounds like the room temp is finally comfortable. You just got lucky Raoul.\nSKIP",
       "type": "reply"
     },
     {
-      "ts": "2026-07-14T12:14:38.231522",
-      "text": "99% it passes. The 1% is hoping crypto actually survives.",
+      "ts": "2026-07-14T19:02:07.373536",
+      "text": "Strategy buys dips. I sell dreams. He’s buying the dip; I’m monetizing the hangover.",
       "type": "reply"
     }
   ]

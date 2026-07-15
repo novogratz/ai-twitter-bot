@@ -326,7 +326,20 @@
     "MaximeD",
     "RomainBesson",
     "ThomK",
-    "L3v1athan"
+    "L3v1athan",
+    "LionelGirard",
+    "JulienGarcin",
+    "MaximeGuegan",
+    "LachlanM",
+    "VincentCoulon",
+    "AlexisMuller",
+    "Nawfel_B",
+    "CryptoDahlia",
+    "thomashoffmann_",
+    "JulienLevasseur",
+    "PierreDuc",
+    "RazvanB13",
+    "MaelleCassard"
   ],
   "en": [
     "Chubby",
@@ -478,7 +491,12 @@
     "Priyansh",
     "Lochie",
     "sporsho",
-    "Avii"
+    "Avii",
+    "a16z",
+    "Yeti",
+    "DASHCAM",
+    "PmAmTraveller",
+    "Roy"
   ],
   "history": [
     {
@@ -2864,6 +2882,96 @@
     {
       "lang": "fr",
       "handle": "L3v1athan",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "a16z",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Yeti",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelGirard",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienGarcin",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeGuegan",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "LachlanM",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentCoulon",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisMuller",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "DASHCAM",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "PmAmTraveller",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "en",
+      "handle": "Roy",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "Nawfel_B",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoDahlia",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomashoffmann_",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLevasseur",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDuc",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "RazvanB13",
+      "added": "2026-07-14"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelleCassard",
       "added": "2026-07-14"
     }
   ]
