@@ -15974,3 +15974,11 @@ The company is shifting most production to its own 18A process instead.
 Earlier plans called for TSMC to handle 60-7
   - https://x.com/SemiconductorsX/status/2077607338832548242
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 13).
+- **@gdb** (127 likes, score 8/10) — GPT-5.6 Sol Pro for resolving an important open question in statistics:
+  - https://x.com/gdb/status/2077622035984105848
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 149).
+- **@elaina43114880** (22 likes, score 7/10) — OpenAI and Anthropic just reset everyone’s limits almost at the same time! 
+
+Codex and ChatGPT Work users are getting their full weekly usage back, while Claude reset both the 5-hour and weekly limits
+  - https://x.com/Elaina43114880/status/2077616987560403267
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 38).
