@@ -15948,3 +15948,29 @@ The Blackwell-powered systems are already being used across robotics partners, i
 These are the various reasons cited by the family of 4 in line behind me at Safewa
   - https://x.com/BergerPosts/status/2077481996985516038
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 55).
+- **@kobeissiletter** (542 likes, score 9/10) — Investors are demanding more protection against Big Tech credit risk:
+
+5-year credit default swap (CDS) spreads on Oracle, $ORCL, Amazon, $AMZN, Google, $GOOGL, and Microsoft, $MSFT, are up to ~75 bas
+  - https://x.com/KobeissiLetter/status/2077568146958139791
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 662).
+- **@pequityresearch** (134 likes, score 9/10) — Morgan Stanley: HBM & NAND Supply/Demand
+
+HBM (High Bandwidth Memory) Market & Supply
+
+> Market Size Expansion: The total HBM market value is projected to explode from US$3 billion in 2023 to US$94 bi
+  - https://x.com/pequityresearch/status/2077473070097236402
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 140).
+- **@oluwaphilemon1** (4 likes, score 7/10) — Do you think AI should belong to everyone, not just Big Tech?
+
+What if the GPUs sitting idle in homes and offices around the world could power the next generation of AI?
+
+@crynuxio $CNX is building ex
+  - https://x.com/Oluwaphilemon1/status/2077569137505710555
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 14).
+- **@semiconductorsx** (9 likes, score 7/10) — Intel is reportedly slashing its TSMC 2nm orders by over 60% for Nova Lake chips.
+
+The company is shifting most production to its own 18A process instead.
+
+Earlier plans called for TSMC to handle 60-7
+  - https://x.com/SemiconductorsX/status/2077607338832548242
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 13).
