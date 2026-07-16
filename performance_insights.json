@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-15T20:32:52.778841",
-  "window_7d_actions": 4497,
-  "window_24h_actions": 585,
+  "generated_at": "2026-07-16T02:34:38.066884",
+  "window_7d_actions": 4484,
+  "window_24h_actions": 662,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4486
+      "count": 4473
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -41,7 +41,7 @@
   "best_hours_utc": [
     {
       "hour": 0,
-      "actions": 243
+      "actions": 245
     },
     {
       "hour": 1,
@@ -49,7 +49,7 @@
     },
     {
       "hour": 2,
-      "actions": 217
+      "actions": 213
     },
     {
       "hour": 9,
@@ -63,75 +63,75 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2095
+      "count": 2106
     },
     {
       "topic": "IA",
-      "count": 1779
+      "count": 1762
     },
     {
       "topic": "Crypto",
-      "count": 593
+      "count": 594
     },
     {
       "topic": "Bourse",
-      "count": 237
+      "count": 226
     },
     {
       "topic": "Spatial",
-      "count": 75
+      "count": 70
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1967
+      "count": 1951
     },
     {
       "pillar": "other",
-      "count": 1335
+      "count": 1343
     },
     {
       "pillar": "market_trauma",
-      "count": 875
+      "count": 870
     },
     {
       "pillar": "meme_reaction",
-      "count": 229
+      "count": 226
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 50
+      "count": 52
     },
     {
       "pillar": "reply_bait",
-      "count": 41
+      "count": 42
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 250
+      "count": 281
     },
     {
       "pillar": "other",
-      "count": 186
+      "count": 215
     },
     {
       "pillar": "market_trauma",
-      "count": 118
+      "count": 131
     },
     {
       "pillar": "meme_reaction",
-      "count": 24
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 4
+      "count": 27
     },
     {
       "pillar": "ai_vs_btc",
+      "count": 5
+    },
+    {
+      "pillar": "reply_bait",
       "count": 3
     }
   ],
@@ -145,23 +145,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 52,
-      "avg_likes": 0.17,
-      "avg_views": 34.7,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 73,
-      "avg_likes": 0.1,
-      "avg_views": 34.4,
+      "posts": 51,
+      "avg_likes": 0.18,
+      "avg_views": 34.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 68,
+      "posts": 70,
       "avg_likes": 0.1,
-      "avg_views": 45.2,
+      "avg_views": 44.5,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 72,
+      "avg_likes": 0.1,
+      "avg_views": 34.9,
       "low_sample": false
     },
     {
@@ -175,15 +175,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3754
+      "count": 3736
     },
     {
       "type": "quote",
-      "count": 358
+      "count": 366
     },
     {
       "type": "quote_gif",
-      "count": 180
+      "count": 177
     },
     {
       "type": "post",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-15T20:31:22.393914",
-      "text": "using AI to red-team AI is either the bravest or funniest call in safety research, and I genuinely can't tell which",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-07-15T20:28:52.088905",
-      "text": "Reasoning is expensive because it reasons. ticket classification doesn't reason. you paid for overhead, not capability.",
+      "ts": "2026-07-16T02:33:51.835630",
+      "text": "Zachxbt's right that hardware wallets fail. he's wrong that an iphone fixes it. the failure isn't the device. it's the person holding it.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-15T20:25:50.833276",
-      "text": "Injective at the enterprise table now. big milestone actually means something when it's Google + AWS + Visa asking you to be there. this is where blockchain stops being theoretical.",
+      "ts": "2026-07-16T02:33:19.097896",
+      "text": "30K $CASHCAT holders. CoreWeave owns the power, $NVDA owns the GPU, you own the gas fee for the dance. Utility is the new shib. 📉",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-07-16T02:32:26.712917",
+      "text": "Palantir went from 'what does it even do' to 'every AI infrastructure company needs this.' that transition is rarer than the stock price.",
       "type": "reply"
     }
   ]
