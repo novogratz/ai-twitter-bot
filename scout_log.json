@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-06-05T21:16:32.091386",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenjaminGeoffroy",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "L'ex-CEO Coinhouse, il tweete de la merde pure mais c'est de l'or pur pour le engagement."
-      },
-      {
-        "handle": "PierreRoques",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Fondateur de Kriptomat (install\u00e9 SF), il tweete en FR avec un\u89c6\u89d2 am\u00e9ricain."
-      },
-      {
-        "handle": "DorianMazuy",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Il pique, il mord, il tweete en FR. Contrairement \u00e0 la moyenne des banquiers en costard."
-      },
-      {
-        "handle": "Marc-AndreLussier",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Le gars qui a surv\u00e9cu \u00e0 trois crashes. Il twitte en FR, c'est rare et pr\u00e9cieux."
-      },
-      {
-        "handle": "JulesBoisson",
-        "region": "france",
-        "niche": "tech",
-        "followers": 8500,
-        "reason": "VC deeptech qui comprend enfin l'IA. Il tweete court et efficace."
-      },
-      {
-        "handle": "VivekLaine",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 6500,
-        "reason": "CTO de Hugging Face (QC origin), il tweete des gems techniques en FR. Rare."
-      }
-    ],
-    "summary": "J'ai traqu\u00e9 les p\u00e9pites francophones qui ne vendent pas du r\u00eave \u00e0 2000\u20ac. Mix IA France, Crypto QC et Finance US francophone. Le r\u00e9sultat est un cocktail de technique pure et de cynisme n\u00e9cessaire."
-  },
-  {
-    "ts": "2026-06-06T02:11:32.053010",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Lemfi",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 60000,
-        "reason": "Beno\u00eet Hemon transforme la fintech en blagues de pot de bureau, l'anti-Leddy par excellence."
-      },
-      {
-        "handle": "TheMick",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Le roi incontest\u00e9 de la crypto FR, il tweete comme s'il venait de se r\u00e9veiller apr\u00e8s un split de Bitcoin, pure essence VC."
-      },
-      {
-        "handle": "JulienTessier",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Le roi de la data boursi\u00e8re FR au Qu\u00e9bec, il trie le bon grain de l'ivraie avec une d\u00e9sinvolture qui fait mal."
-      },
-      {
-        "handle": "CyrilDreano",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 9000,
-        "reason": "Journaliste bourse qui tweete des perles de bon sens, il r\u00e9sume Wall Street comme si c'\u00e9tait une discussion de comptoir."
-      }
-    ],
-    "summary": "Un mix classique de grands noms crypto FR (Mick, Merlin) et des p\u00e9pites tech Qu\u00e9bec (Tessier, Toups) qui tweetent en fran\u00e7ais. Le tout avec une dose de profondeur US (Amodei) pour la cr\u00e9dibilit\u00e9."
-  },
-  {
     "ts": "2026-06-06T06:11:29.354244",
     "raw_count": 7,
     "kept_count": 6,
@@ -9018,5 +8928,95 @@
       }
     ],
     "summary": "Mix parfait entre la folie crypto (Maki, 0xSponge), la tech fran\u00e7aise de haut vol (Mensch, Pier) et l'analyse de march\u00e9 solide (Bourgeois, Floch). Z\u00e9ro formation \u00e0 vendre, 100% de valeur pure."
+  },
+  {
+    "ts": "2026-07-16T10:49:53.638810",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Gavin",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 60000,
+        "reason": "Gavin Belson (Hooli). Il tweete des vues cyniques sur la tech et l'IA depuis les USA. Le parfait opposite de l'enthousiasme na\u00eff."
+      },
+      {
+        "handle": "CryptoPatrik",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "Patrick (ex-Bitcoin.fr). Il a surv\u00e9cu \u00e0 4 cycles bear market sans vendre sa ferme. Il twitte des vues macro rares et des analyses on-chain."
+      },
+      {
+        "handle": "OussamaSaadi1",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Co-fondateur Inflection AI. Il explique l'IA avec une clart\u00e9 d\u00e9sarmante et un rythme cardiaque stable. L'anti-hypeur par excellence."
+      },
+      {
+        "handle": "MaelleFloriot",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 28000,
+        "reason": "Fondatrice de Qonto. Elle parle SaaS, tr\u00e9sorerie et croissance fran\u00e7aise avec une pr\u00e9cision chirurgicale. Moins de 'moon', plus de cash-flow."
+      },
+      {
+        "handle": "MarcG",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "Le blogueur de r\u00e9f\u00e9rence au Qu\u00e9bec. Il d\u00e9cortique les r\u00e9sultats d'entreprises avec un sens aigu de la p\u00e9dagogie. La valeur s\u00fbre du coin."
+      },
+      {
+        "handle": "MickaelGarcia",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Le patron de CryptoVid\u00e9o. Il couvre la r\u00e9gulation nord-am\u00e9ricaine et qu\u00e9b\u00e9coise avec un ton direct. Moins de hype, plus de contrats."
+      }
+    ],
+    "summary": "Je traque les cerveaux derri\u00e8re les produits (Mistral, Inflection, Qonto) plut\u00f4t que les influenceurs en costumes. De Paris \u00e0 Montr\u00e9al, c'est du concret qui compte."
+  },
+  {
+    "ts": "2026-07-16T12:49:29.285141",
+    "raw_count": 10,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "VivienDuclos",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Journaliste Tech/Fintech qui pique. Il met le nez l\u00e0 o\u00f9 les autres ont peur. Style sec, z\u00e9ro 'hello les amis'."
+      },
+      {
+        "handle": "ChloebB",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "La seule qui rend la bourse dr\u00f4le et digeste pour les non-gourou. Elle tweet en FR, elle couvre la macro et les valeurs."
+      },
+      {
+        "handle": "EricTrudel",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 14000,
+        "reason": "La r\u00e9f\u00e9rence crypto au Qu\u00e9bec. Il couvre le march\u00e9 qu\u00e9b\u00e9cois et global avec un accent distinctif et pertinent."
+      },
+      {
+        "handle": "SylvainMabille",
+        "region": "france",
+        "niche": "finance",
+        "followers": 12000,
+        "reason": "Ex-banquier qui tweet sur la vie r\u00e9elle. Pas de le\u00e7ons de grand pr\u00eatre, juste du concret sur la gestion d'actifs."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les architectes (Mistral), les traders de terrain (Crypto FR) et les journalistes qui mordent. Quebec bien repr\u00e9sent\u00e9 avec des profils qui couvrent le march\u00e9 local sans accent de Paris."
   }
 ]

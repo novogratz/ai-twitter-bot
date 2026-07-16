@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-16T10:34:38.011484",
-  "window_7d_actions": 4486,
-  "window_24h_actions": 713,
+  "generated_at": "2026-07-16T14:34:38.041053",
+  "window_7d_actions": 4475,
+  "window_24h_actions": 726,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4477
+      "count": 4467
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 4
+      "count": 3
     },
     {
       "pattern": "METAPHOR",
@@ -56,18 +56,18 @@
       "actions": 212
     },
     {
-      "hour": 10,
-      "actions": 202
+      "hour": 23,
+      "actions": 199
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2120
+      "count": 2124
     },
     {
       "topic": "IA",
-      "count": 1764
+      "count": 1748
     },
     {
       "topic": "Crypto",
@@ -75,30 +75,30 @@
     },
     {
       "topic": "Bourse",
-      "count": 227
+      "count": 225
     },
     {
       "topic": "Spatial",
-      "count": 71
+      "count": 70
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1940
+      "count": 1926
     },
     {
       "pillar": "other",
-      "count": 1375
+      "count": 1388
     },
     {
       "pillar": "market_trauma",
-      "count": 858
+      "count": 852
     },
     {
       "pillar": "meme_reaction",
-      "count": 224
+      "count": 219
     },
     {
       "pillar": "ai_vs_btc",
@@ -106,21 +106,21 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 39
+      "count": 40
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 314
+      "count": 321
     },
     {
       "pillar": "other",
-      "count": 242
+      "count": 245
     },
     {
       "pillar": "market_trauma",
-      "count": 122
+      "count": 124
     },
     {
       "pillar": "meme_reaction",
@@ -132,15 +132,15 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 3
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 44,
-      "avg_likes": 0.2,
-      "avg_views": 37.3,
+      "posts": 42,
+      "avg_likes": 0.21,
+      "avg_views": 37.9,
       "low_sample": false
     },
     {
@@ -151,17 +151,17 @@
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 73,
-      "avg_likes": 0.1,
-      "avg_views": 44.2,
+      "pillar": "ai_news_take",
+      "posts": 75,
+      "avg_likes": 0.09,
+      "avg_views": 34.9,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
+      "pillar": "other",
       "posts": 76,
       "avg_likes": 0.09,
-      "avg_views": 34.6,
+      "avg_views": 42.9,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3743
+      "count": 3735
     },
     {
       "type": "quote",
-      "count": 364
+      "count": 363
     },
     {
       "type": "quote_gif",
-      "count": 174
+      "count": 171
     },
     {
       "type": "post",
-      "count": 91
+      "count": 90
     },
     {
       "type": "hotake",
-      "count": 65
+      "count": 67
     },
     {
       "type": "retweet",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-16T10:34:32.797873",
-      "text": "Meta's building its own infrastructure.\n\nwhen the buyer becomes the manufacturer, the infrastructure margin play dies.",
+      "ts": "2026-07-16T14:33:32.306830",
+      "text": "Factory first, gen 3 by august. that's the right order, labs teach you theory, real work teaches you what breaks. feedback at scale beats everything.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-16T10:32:49.541465",
-      "text": "Apple intelligence cleared for china. 5T with the only megacap shipping ai there. banned everywhere else. that's your moat.",
+      "ts": "2026-07-16T14:30:47.709699",
+      "text": "Trop gros c'est juste trop tôt. La capacité que ces producteurs construisent maintenant, le marché la supplie dans 18 mois. Stratégie.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-16T10:31:06.005774",
-      "text": "Meta doesn't get liability relief because an algorithm picked. if the system discriminated, meta did. you can't fire people through code and avoid consequences.",
+      "ts": "2026-07-16T14:29:21.548161",
+      "text": "Agents refactoring 24/7 sounds great. reviewing 50 PRs daily instead of writing code is the fine print. bottleneck moves, doesn't vanish.",
       "type": "reply"
     }
   ]

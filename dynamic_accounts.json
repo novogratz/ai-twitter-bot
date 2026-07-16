@@ -413,7 +413,17 @@
     "JulienRioux",
     "MaxBazile",
     "CyrilPier",
-    "0xSponge"
+    "0xSponge",
+    "Gavin",
+    "CryptoPatrik",
+    "OussamaSaadi1",
+    "MaelleFloriot",
+    "MarcG",
+    "MickaelGarcia",
+    "VivienDuclos",
+    "ChloebB",
+    "EricTrudel",
+    "SylvainMabille"
   ],
   "en": [
     "Chubby",
@@ -589,7 +599,8 @@
     "AB",
     "Counselor",
     "Babyfolio",
-    "Chetaslua"
+    "Chetaslua",
+    "IBM"
   ],
   "history": [
     {
@@ -3530,6 +3541,61 @@
     {
       "lang": "en",
       "handle": "Chetaslua",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "en",
+      "handle": "IBM",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Gavin",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoPatrik",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "OussamaSaadi1",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelleFloriot",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcG",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelGarcia",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "VivienDuclos",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "ChloebB",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricTrudel",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainMabille",
       "added": "2026-07-16"
     }
   ]
