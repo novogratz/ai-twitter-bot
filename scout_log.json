@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-06-04T23:48:41.909583",
-    "raw_count": 5,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "R011Y",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "Crypto-fr qui fait du fond, pas du bruit. Moins de hype, plus de sens."
-      },
-      {
-        "handle": "BenjaminRM",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Le roi du trading au Qu\u00e9bec. Actionniste passionn\u00e9, style direct sans la sauce coach."
-      },
-      {
-        "handle": "Nadine_Levy",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Journaliste fintech hyper bien branch\u00e9e, couvre la tech financi\u00e8re comme une pro."
-      },
-      {
-        "handle": "MaximeMallet",
-        "region": "france",
-        "niche": "ai",
-        "followers": 8000,
-        "reason": "Fondateur de GPT Engineer. Le genre de founder qui code et twitte, pas juste ceux qui postent des memes."
-      }
-    ],
-    "summary": "Le lot est mixte : des g\u00e9ants de l'IA (Mistral), des valeurs s\u00fbres crypto et du trading Qu\u00e9b\u00e9cois. On \u00e9vite les vendeurs de r\u00eaves pour rester dans l'expertise pure."
-  },
-  {
     "ts": "2026-06-05T01:50:46.458944",
     "raw_count": 8,
     "kept_count": 4,
@@ -9053,5 +9015,43 @@
       }
     ],
     "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eave pour cibler les vrais architectes et traders. Vernoux pour la vision macro, Peltier pour le fondamentaux boursiers, et Rochard/Vogt pour la data crypto pure."
+  },
+  {
+    "ts": "2026-07-16T00:44:32.716190",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MickaelGarnier",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Le patron de Viseo. Parle tech, IA et startup avec un ton sec, sans le jargon VC ringard."
+      },
+      {
+        "handle": "PierreMaurice",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "L'ex-DPO de Netflix en France. Parle data et AI avec pr\u00e9cision, jamais dans le blabla."
+      },
+      {
+        "handle": "MathieuMamert",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "JesuisleCEO. Fondeur de Webedia, il mixe actu bourse et tech avec une vision terrain rare."
+      },
+      {
+        "handle": "LucasBenoit",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "CTO de la Tech Comm. Il couvre l'IA et l'innovation QA au Qu\u00e9bec. Moins connu mais qualit\u00e9 pure."
+      }
+    ],
+    "summary": "Fini la parade des fake founders. J'ai filtr\u00e9 pour trouver ceux qui codent ou analysent, pas ceux qui vendent leur \u00e2me sur Telegram."
   }
 ]

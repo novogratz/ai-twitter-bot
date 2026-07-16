@@ -15931,3 +15931,20 @@ KOSPI up 6.2%, KOSDAQ up 4.5%. Foreign investors are showing over 1 trillion won
 - **@bradshannon** (55 likes, score 8/10) — Grok 4.5 is still the fastest and cheapest frontier model that I use. Can't wait to see the next model
   - https://x.com/bradshannon/status/2077175978971857393
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 81).
+
+## 2026-07-16
+- **@cantonmeow** (135 likes, score 9/10) — I just posted multiple Mag 7 charts with very little likes and minimum engagement.
+You guys still want to see #Bitcoin #Ethereum $DOGE $PLTR $TSLA and $COIN charts.
+That's why we can't have anything n
+  - https://x.com/cantonmeow/status/2077575465892467147
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 177).
+- **@sam_badawi** (30 likes, score 8/10) — $NVDA introduced new Jetson Thor T3000 and T2000 modules for robotics, edge AI, and autonomous machines.
+
+The Blackwell-powered systems are already being used across robotics partners, including Amazo
+  - https://x.com/Sam_Badawi/status/2077539647627145665
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 46).
+- **@bergerposts** (47 likes, score 7/10) — Data centers, War with Iran, more government contracts for Palantir and Raytheon, and Patriot missiles for Ukraine. 
+
+These are the various reasons cited by the family of 4 in line behind me at Safewa
+  - https://x.com/BergerPosts/status/2077481996985516038
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 55).

@@ -393,7 +393,11 @@
     "paul_guitton",
     "LuisaVogt",
     "RomainPeltier",
-    "MaximePerrin"
+    "MaximePerrin",
+    "MickaelGarnier",
+    "PierreMaurice",
+    "MathieuMamert",
+    "LucasBenoit"
   ],
   "en": [
     "Chubby",
@@ -560,7 +564,9 @@
     "Tether",
     "ChatGPT",
     "Gordon",
-    "Clemente"
+    "Clemente",
+    "Heisenberg",
+    "Andy"
   ],
   "history": [
     {
@@ -3357,6 +3363,36 @@
       "lang": "fr",
       "handle": "MaximePerrin",
       "added": "2026-07-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Heisenberg",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "en",
+      "handle": "Andy",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelGarnier",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreMaurice",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuMamert",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasBenoit",
+      "added": "2026-07-16"
     }
   ]
 }
