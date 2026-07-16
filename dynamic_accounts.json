@@ -397,7 +397,17 @@
     "MickaelGarnier",
     "PierreMaurice",
     "MathieuMamert",
-    "LucasBenoit"
+    "LucasBenoit",
+    "JulienDutheil",
+    "0xBagget",
+    "Antoine_Boivin",
+    "CyrilPerrissin",
+    "AlainDumas",
+    "RomainBouix",
+    "AlexisBourgeois",
+    "AmandineDumas",
+    "LorenzoL",
+    "DavidRivron"
   ],
   "en": [
     "Chubby",
@@ -566,7 +576,9 @@
     "Gordon",
     "Clemente",
     "Heisenberg",
-    "Andy"
+    "Andy",
+    "JayTakes",
+    "Hydraze"
   ],
   "history": [
     {
@@ -3392,6 +3404,66 @@
     {
       "lang": "fr",
       "handle": "LucasBenoit",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "en",
+      "handle": "JayTakes",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Hydraze",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDutheil",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xBagget",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Antoine_Boivin",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilPerrissin",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlainDumas",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBouix",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBourgeois",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "AmandineDumas",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoL",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "DavidRivron",
       "added": "2026-07-16"
     }
   ]
