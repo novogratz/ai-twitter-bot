@@ -971,3 +971,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 7 views: Power demand 4x, but grid interconnection queues are stuck at 2022 levels. @CEG is selling future ca
   - 0 likes / 8 views: me putting down my clipboard at "generational wealth" AND "quite obvious" in the same sentence
   - 0 likes / 10 views: me reading "next 90 years" after watching the last 9 unfold
+
+## 2026-07-15
+
+**Activity** — total actions: 648
+  - by type: reply=546, quote=51, quote_gif=17, post=13, hotake=13, retweet=8
+  - top sources: SEARCH-HOT=377, FEED-SWEEP-FEED=93, FEED-SWEEP-FOLLOWING=64, QUOTE=34, GIF=25, RETWEET_QT=7, VIP=6, BREAKING_QRT=6
+  - comedy patterns: METAPHOR=1
+  - top reply targets: @polsia=22, @TheBTCTherapist=17, @zerohedge=8, @cryptorover=6, @Cointelegraph=5
+
+**Followers we follow** (running total): 346
+
+**Top-performing posts scraped today**:
+  - 84 likes / 43857 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 1 likes / 31 views: drew a perfect channel. $BTC chose chaos. closed the tab.
+  - 1 likes / 65 views: my $AEHR patients graduated today

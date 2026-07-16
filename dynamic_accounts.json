@@ -390,7 +390,10 @@
     "jordanz",
     "marc_fleury",
     "lucas_nicolas",
-    "paul_guitton"
+    "paul_guitton",
+    "LuisaVogt",
+    "RomainPeltier",
+    "MaximePerrin"
   ],
   "en": [
     "Chubby",
@@ -3338,6 +3341,21 @@
     {
       "lang": "fr",
       "handle": "paul_guitton",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisaVogt",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainPeltier",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximePerrin",
       "added": "2026-07-15"
     }
   ]
