@@ -423,7 +423,17 @@
     "VivienDuclos",
     "ChloebB",
     "EricTrudel",
-    "SylvainMabille"
+    "SylvainMabille",
+    "BullBearFR",
+    "MaxKs1992",
+    "CryptoGueule",
+    "Alexis_Chen",
+    "TradingWithPipo",
+    "Jean_Baptiste",
+    "VivekWanders",
+    "PierreDuretz",
+    "CyrilDelhaize",
+    "LenaGuerin"
   ],
   "en": [
     "Chubby",
@@ -600,7 +610,8 @@
     "Counselor",
     "Babyfolio",
     "Chetaslua",
-    "IBM"
+    "IBM",
+    "Hedgeye"
   ],
   "history": [
     {
@@ -3596,6 +3607,61 @@
     {
       "lang": "fr",
       "handle": "SylvainMabille",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Hedgeye",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "BullBearFR",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxKs1992",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoGueule",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alexis_Chen",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "TradingWithPipo",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Jean_Baptiste",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "VivekWanders",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDuretz",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDelhaize",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LenaGuerin",
       "added": "2026-07-16"
     }
   ]

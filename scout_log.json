@@ -1,92 +1,5 @@
 [
   {
-    "ts": "2026-06-06T06:11:29.354244",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "DorianBaboul",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "La r\u00e9f\u00e9rence absolue pour d\u00e9crypter les news crypto en FR sans verser dans l'hyst\u00e9rie ou le shill de bas \u00e9tage."
-      },
-      {
-        "handle": "LudovicSobry",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Founder de Lightricks (PhotoRoom). Il parle tech et IA en FR/EN depuis la c\u00f4te Est, avec une vue sur les startups US qui compte."
-      },
-      {
-        "handle": "PierreViallon",
-        "region": "france",
-        "niche": "tech",
-        "followers": 20000,
-        "reason": "SVP le PDG, c'est celui qui comprend mieux que quiconque le SaaS fran\u00e7ais. Moins hype que les autres, mais la valeur est dans le fond."
-      },
-      {
-        "handle": "JulienTran",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Tech lead chez Mistral, il balance l'info brute sur l'IA avec la rigueur d'un ing\u00e9nieur et le style d'un humain."
-      },
-      {
-        "handle": "BenoitPoirier",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 12000,
-        "reason": "Fonds de pension qu\u00e9b\u00e9cois, twitte sur la macro et les march\u00e9s. Le style est sec, pr\u00e9cis, et il n'a pas besoin de vendre des signaux Telegram."
-      },
-      {
-        "handle": "AlexisBoutin_",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 8000,
-        "reason": "L'analyste tech qu\u00e9b\u00e9cois qui parle de SaaS et d'infra. Pas dans le bubble, juste dans la r\u00e9alit\u00e9 du terrain."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour garder ceux qui ont le culotte (ou le cerveau) pour parler technique ou march\u00e9 sans vendre du r\u00eave. Une bonne dose de fran\u00e7ais, un peu de qu\u00e9b\u00e9cois solide et des anglophones francophones qui ont encore leur carte de visite \u00e0 Paris ou Montreal."
-  },
-  {
-    "ts": "2026-06-07T05:19:25.733602",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [
-      "b0rnis",
-      "0xb10c",
-      "lucgagnon"
-    ],
-    "keepers": [
-      {
-        "handle": "B0rnis",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "La r\u00e9f\u00e9rence absolue pour l'analyse technique et le trading en FR. Pas de promesses de richesse facile, juste du charting solide."
-      },
-      {
-        "handle": "0xb10c",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Thibault est un institutionnaliste dans l'\u00e2me. Ses threads DeFi sont plus clairs que la plupart des prospectus bancaires."
-      },
-      {
-        "handle": "lucgagnon",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Analyste et consultant tech. Il d\u00e9crypte l'IA et la transformation digitale qu\u00e9b\u00e9coise avec un ton sarcastique mais juste."
-      }
-    ],
-    "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour coller aux cerveaux techniques (Mistral, Sequoia) et aux traders de terrain. Le mix FR/QC/USA est dense en valeur."
-  },
-  {
     "ts": "2026-06-12T01:18:17.084177",
     "raw_count": 10,
     "kept_count": 10,
@@ -9018,5 +8931,95 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les architectes (Mistral), les traders de terrain (Crypto FR) et les journalistes qui mordent. Quebec bien repr\u00e9sent\u00e9 avec des profils qui couvrent le march\u00e9 local sans accent de Paris."
+  },
+  {
+    "ts": "2026-07-16T14:44:34.352539",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BullBearFR",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le roi de la micro-cap en France. Ses threads sur la tech fran\u00e7aise sont plus pr\u00e9cis que les notes de banque."
+      },
+      {
+        "handle": "MaxKs1992",
+        "region": "france",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "Ex-Goldman, ex-French Tech. Il tweete l'IA comme s'il avait le code source de la Matrix, sans jargon inutile."
+      },
+      {
+        "handle": "CryptoGueule",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Analyse technique FR pure. Pas de shill, juste des graphiques et des cycles. Le seul \u00e0 survivre aux bear markets."
+      },
+      {
+        "handle": "Alexis_Chen",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Ing\u00e9nieur ML \u00e0 SF qui twitte en fran\u00e7ais. Ses threads sur les LLMs sont plus denses qu'un bouquin de 400 pages."
+      },
+      {
+        "handle": "TradingWithPipo",
+        "region": "france",
+        "niche": "trading",
+        "followers": 18000,
+        "reason": "Le pro du price action. Pas de formations VIP, juste du live trading francophone de qualit\u00e9."
+      },
+      {
+        "handle": "Jean_Baptiste",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Le voix du VC qu\u00e9b\u00e9cois. Il cover l'IA et la fintech avec le bon sens du march\u00e9 nord-am\u00e9ricain mais l'\u00e2me fran\u00e7aise."
+      }
+    ],
+    "summary": "6 profils solides, z\u00e9ro vendeur de r\u00eave. On a du solide FR, un peu de QC et une p\u00e9pite tech US. C'est du s\u00e9rieux, pas du bruit."
+  },
+  {
+    "ts": "2026-07-16T16:35:19.520246",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "VivekWanders",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 215000,
+        "reason": "Le gars qui tweet en anglais mais est la r\u00e9f\u00e9rence pour les francophones. Pas de formation \u00e0 vendre, juste du savoir pur."
+      },
+      {
+        "handle": "PierreDuretz",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'institutionnel qui parle aux particuliers sans les enculer. Son style est sec, efficace et d\u00e9nu\u00e9 de jargon superflu."
+      },
+      {
+        "handle": "CyrilDelhaize",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "L'expert macro crypto du Qu\u00e9bec. Moins hype que les influenceurs US, plus rigoureux que tes cousins boursicoteurs."
+      },
+      {
+        "handle": "LenaGuerin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Journaliste crypto qui a vu passer tous les cycles. Elle ne vend pas de r\u00eave, elle raconte la vraie vie du march\u00e9."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la flotte pour garder les vrais analystes et \u00e9viter les vendeurs de r\u00eave. Le mix France/Qu\u00e9bec/USA est solide, centr\u00e9 sur l'investissement s\u00e9rieux plut\u00f4t que le hype."
   }
 ]
