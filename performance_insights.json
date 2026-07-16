@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-16T06:34:37.968352",
-  "window_7d_actions": 4482,
-  "window_24h_actions": 686,
+  "generated_at": "2026-07-16T10:34:38.011484",
+  "window_7d_actions": 4486,
+  "window_24h_actions": 713,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4474
+      "count": 4477
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -17,7 +17,7 @@
     },
     {
       "pattern": "RENAME",
-      "count": 1
+      "count": 2
     },
     {
       "pattern": "REPETITION",
@@ -26,15 +26,15 @@
   ],
   "worst_patterns": [
     {
-      "pattern": "RENAME",
-      "count": 1
-    },
-    {
       "pattern": "REPETITION",
       "count": 1
     },
     {
       "pattern": "METAPHOR",
+      "count": 2
+    },
+    {
+      "pattern": "RENAME",
       "count": 2
     }
   ],
@@ -53,7 +53,7 @@
     },
     {
       "hour": 9,
-      "actions": 208
+      "actions": 212
     },
     {
       "hour": 10,
@@ -63,19 +63,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2112
+      "count": 2120
     },
     {
       "topic": "IA",
-      "count": 1768
+      "count": 1764
     },
     {
       "topic": "Crypto",
-      "count": 584
+      "count": 575
     },
     {
       "topic": "Bourse",
-      "count": 224
+      "count": 227
     },
     {
       "topic": "Spatial",
@@ -86,45 +86,45 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1954
+      "count": 1940
     },
     {
       "pillar": "other",
-      "count": 1355
+      "count": 1375
     },
     {
       "pillar": "market_trauma",
-      "count": 855
+      "count": 858
     },
     {
       "pillar": "meme_reaction",
-      "count": 227
+      "count": 224
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 51
+      "count": 50
     },
     {
       "pillar": "reply_bait",
-      "count": 40
+      "count": 39
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 301
+      "count": 314
     },
     {
       "pillar": "other",
-      "count": 232
+      "count": 242
     },
     {
       "pillar": "market_trauma",
-      "count": 117
+      "count": 122
     },
     {
       "pillar": "meme_reaction",
-      "count": 28
+      "count": 27
     },
     {
       "pillar": "ai_vs_btc",
@@ -137,6 +137,13 @@
   ],
   "pillar_engagement_30d": [
     {
+      "pillar": "market_trauma",
+      "posts": 44,
+      "avg_likes": 0.2,
+      "avg_views": 37.3,
+      "low_sample": false
+    },
+    {
       "pillar": "ai_vs_btc",
       "posts": 5,
       "avg_likes": 0.2,
@@ -144,24 +151,17 @@
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 50,
-      "avg_likes": 0.18,
-      "avg_views": 35.2,
-      "low_sample": false
-    },
-    {
       "pillar": "other",
-      "posts": 69,
+      "posts": 73,
       "avg_likes": 0.1,
-      "avg_views": 45.4,
+      "avg_views": 44.2,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 74,
+      "posts": 76,
       "avg_likes": 0.09,
-      "avg_views": 34.9,
+      "avg_views": 34.6,
       "low_sample": false
     },
     {
@@ -175,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3737
+      "count": 3743
     },
     {
       "type": "quote",
-      "count": 362
+      "count": 364
     },
     {
       "type": "quote_gif",
-      "count": 178
+      "count": 174
     },
     {
       "type": "post",
-      "count": 92
+      "count": 91
     },
     {
       "type": "hotake",
-      "count": 64
+      "count": 65
     },
     {
       "type": "retweet",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-16T06:32:05.678787",
-      "text": "Microsoft training salespeople to talk down openai and anthropic.\n\nwhen your product is strong, you sell the product. when it's weak, you sell against theirs.",
+      "ts": "2026-07-16T10:34:32.797873",
+      "text": "Meta's building its own infrastructure.\n\nwhen the buyer becomes the manufacturer, the infrastructure margin play dies.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-16T06:31:42.855709",
-      "text": "you don't break the ice with Jensen Huang. the leather jacket does it for you.",
-      "type": "quote"
+      "ts": "2026-07-16T10:32:49.541465",
+      "text": "Apple intelligence cleared for china. 5T with the only megacap shipping ai there. banned everywhere else. that's your moat.",
+      "type": "reply"
     },
     {
-      "ts": "2026-07-16T06:28:42.473666",
-      "text": "DeepSeek trained competitive models on a fraction of US capex. Shanghai listing signals the bet: efficiency over horsepower. China's playing a different game.",
+      "ts": "2026-07-16T10:31:06.005774",
+      "text": "Meta doesn't get liability relief because an algorithm picked. if the system discriminated, meta did. you can't fire people through code and avoid consequences.",
       "type": "reply"
     }
   ]

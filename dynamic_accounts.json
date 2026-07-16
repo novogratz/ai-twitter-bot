@@ -407,7 +407,13 @@
     "AlexisBourgeois",
     "AmandineDumas",
     "LorenzoL",
-    "DavidRivron"
+    "DavidRivron",
+    "RomainMarty",
+    "MaelleGiannini",
+    "JulienRioux",
+    "MaxBazile",
+    "CyrilPier",
+    "0xSponge"
   ],
   "en": [
     "Chubby",
@@ -578,7 +584,12 @@
     "Heisenberg",
     "Andy",
     "JayTakes",
-    "Hydraze"
+    "Hydraze",
+    "OpenArt",
+    "AB",
+    "Counselor",
+    "Babyfolio",
+    "Chetaslua"
   ],
   "history": [
     {
@@ -3464,6 +3475,61 @@
     {
       "lang": "fr",
       "handle": "DavidRivron",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "en",
+      "handle": "OpenArt",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "en",
+      "handle": "AB",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainMarty",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelleGiannini",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienRioux",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxBazile",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Counselor",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Babyfolio",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilPier",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xSponge",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Chetaslua",
       "added": "2026-07-16"
     }
   ]
