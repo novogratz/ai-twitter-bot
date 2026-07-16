@@ -382,7 +382,15 @@
     "MaximeMigeon",
     "MaximeFouilland",
     "AxelDauchet",
-    "Agnostiq"
+    "Agnostiq",
+    "RenaudLaplante",
+    "ThibaudLambert",
+    "NabilBenAmmar",
+    "lauradec",
+    "jordanz",
+    "marc_fleury",
+    "lucas_nicolas",
+    "paul_guitton"
   ],
   "en": [
     "Chubby",
@@ -3290,6 +3298,46 @@
     {
       "lang": "fr",
       "handle": "Agnostiq",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudLaplante",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudLambert",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "NabilBenAmmar",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "lauradec",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "jordanz",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "marc_fleury",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucas_nicolas",
+      "added": "2026-07-15"
+    },
+    {
+      "lang": "fr",
+      "handle": "paul_guitton",
       "added": "2026-07-15"
     }
   ]

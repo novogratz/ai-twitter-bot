@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-15T16:32:52.817738",
-  "window_7d_actions": 4523,
-  "window_24h_actions": 486,
+  "generated_at": "2026-07-15T20:32:52.778841",
+  "window_7d_actions": 4497,
+  "window_24h_actions": 585,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4513
+      "count": 4486
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -13,7 +13,7 @@
     },
     {
       "pattern": "METAPHOR",
-      "count": 3
+      "count": 4
     },
     {
       "pattern": "RENAME",
@@ -35,7 +35,7 @@
     },
     {
       "pattern": "METAPHOR",
-      "count": 3
+      "count": 4
     }
   ],
   "best_hours_utc": [
@@ -63,44 +63,38 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2106
+      "count": 2095
     },
     {
       "topic": "IA",
-      "count": 1794
+      "count": 1779
     },
     {
       "topic": "Crypto",
-      "count": 590
+      "count": 593
     },
     {
       "topic": "Bourse",
-      "count": 236
+      "count": 237
     },
     {
       "topic": "Spatial",
-      "count": 77
+      "count": 75
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Bourse",
-      "24h_rate": 0.068,
-      "7d_rate": 0.052
-    }
-  ],
+  "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1987
+      "count": 1967
     },
     {
       "pillar": "other",
-      "count": 1342
+      "count": 1335
     },
     {
       "pillar": "market_trauma",
-      "count": 874
+      "count": 875
     },
     {
       "pillar": "meme_reaction",
@@ -118,23 +112,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 209
+      "count": 250
     },
     {
       "pillar": "other",
-      "count": 153
+      "count": 186
     },
     {
       "pillar": "market_trauma",
-      "count": 99
+      "count": 118
     },
     {
       "pillar": "meme_reaction",
-      "count": 19
+      "count": 24
     },
     {
       "pillar": "reply_bait",
-      "count": 3
+      "count": 4
     },
     {
       "pillar": "ai_vs_btc",
@@ -157,35 +151,35 @@
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 68,
-      "avg_likes": 0.09,
-      "avg_views": 44.9,
+      "pillar": "ai_news_take",
+      "posts": 73,
+      "avg_likes": 0.1,
+      "avg_views": 34.4,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 72,
-      "avg_likes": 0.07,
-      "avg_views": 33.7,
+      "pillar": "other",
+      "posts": 68,
+      "avg_likes": 0.1,
+      "avg_views": 45.2,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 2,
+      "posts": 1,
       "avg_likes": 0.0,
-      "avg_views": 9.0,
-      "low_sample": false
+      "avg_views": 7.0,
+      "low_sample": true
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3777
+      "count": 3754
     },
     {
       "type": "quote",
-      "count": 360
+      "count": 358
     },
     {
       "type": "quote_gif",
@@ -193,7 +187,7 @@
     },
     {
       "type": "post",
-      "count": 93
+      "count": 92
     },
     {
       "type": "hotake",
@@ -206,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-15T16:32:07.611098",
-      "text": "5% away. nvidia margins peak. apple buybacks never stop. market's repricing which durability compounds.",
+      "ts": "2026-07-15T20:31:22.393914",
+      "text": "using AI to red-team AI is either the bravest or funniest call in safety research, and I genuinely can't tell which",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-07-15T20:28:52.088905",
+      "text": "Reasoning is expensive because it reasons. ticket classification doesn't reason. you paid for overhead, not capability.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-15T16:26:19.175355",
-      "text": "Nvidia's advantage is infrastructure, not a better chip. amd will have faster hardware and still lose because everyone's stack runs on cuda. that's not a race, that's physics.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-07-15T16:23:47.210734",
-      "text": "October IPO. Anthropic's S-1 will need growth + margin expansion. 'beating OpenAI to IPO' is a headline. the P&L is the actual test.",
+      "ts": "2026-07-15T20:25:50.833276",
+      "text": "Injective at the enterprise table now. big milestone actually means something when it's Google + AWS + Visa asking you to be there. this is where blockchain stops being theoretical.",
       "type": "reply"
     }
   ]
