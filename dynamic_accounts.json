@@ -433,7 +433,19 @@
     "VivekWanders",
     "PierreDuretz",
     "CyrilDelhaize",
-    "LenaGuerin"
+    "LenaGuerin",
+    "B00945420",
+    "JulienBenoit_",
+    "LilianPuech",
+    "Raphaelpass",
+    "DylanGauvin",
+    "AlexBoscher",
+    "MarcBoucher_",
+    "TanguySartre",
+    "MaximeBour",
+    "JulienCahuzac",
+    "VincentFerre",
+    "ThibautMoutet"
   ],
   "en": [
     "Chubby",
@@ -611,7 +623,9 @@
     "Babyfolio",
     "Chetaslua",
     "IBM",
-    "Hedgeye"
+    "Hedgeye",
+    "Da7em",
+    "Katoo"
   ],
   "history": [
     {
@@ -3662,6 +3676,76 @@
     {
       "lang": "fr",
       "handle": "LenaGuerin",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "B00945420",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBenoit_",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LilianPuech",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Raphaelpass",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "DylanGauvin",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexBoscher",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcBoucher_",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguySartre",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBour",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Da7em",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "en",
+      "handle": "Katoo",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienCahuzac",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentFerre",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMoutet",
       "added": "2026-07-16"
     }
   ]

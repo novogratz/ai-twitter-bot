@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-16T18:34:38.030532",
-  "window_7d_actions": 4493,
-  "window_24h_actions": 758,
+  "generated_at": "2026-07-16T22:34:38.132558",
+  "window_7d_actions": 4481,
+  "window_24h_actions": 786,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4485
+      "count": 4473
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -63,72 +63,72 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2132
+      "count": 2137
     },
     {
       "topic": "IA",
-      "count": 1751
+      "count": 1740
     },
     {
       "topic": "Crypto",
-      "count": 587
+      "count": 585
     },
     {
       "topic": "Bourse",
-      "count": 227
+      "count": 224
     },
     {
       "topic": "Spatial",
-      "count": 69
+      "count": 72
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1920
+      "count": 1912
     },
     {
       "pillar": "other",
-      "count": 1394
+      "count": 1395
     },
     {
       "pillar": "market_trauma",
-      "count": 864
+      "count": 856
     },
     {
       "pillar": "meme_reaction",
-      "count": 221
+      "count": 224
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 52
+      "count": 51
     },
     {
       "pillar": "reply_bait",
-      "count": 42
+      "count": 43
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 309
+      "count": 326
     },
     {
       "pillar": "other",
-      "count": 262
+      "count": 271
     },
     {
       "pillar": "market_trauma",
-      "count": 147
+      "count": 144
     },
     {
       "pillar": "meme_reaction",
-      "count": 28
+      "count": 34
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 6
     },
     {
       "pillar": "reply_bait",
@@ -145,23 +145,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.17,
-      "avg_views": 36.0,
+      "posts": 43,
+      "avg_likes": 0.16,
+      "avg_views": 35.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 76,
-      "avg_likes": 0.09,
-      "avg_views": 35.2,
+      "posts": 73,
+      "avg_likes": 0.1,
+      "avg_views": 36.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 75,
+      "posts": 77,
       "avg_likes": 0.08,
-      "avg_views": 43.2,
+      "avg_views": 42.8,
       "low_sample": false
     },
     {
@@ -175,15 +175,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3757
+      "count": 3745
     },
     {
       "type": "quote",
-      "count": 361
+      "count": 358
     },
     {
       "type": "quote_gif",
-      "count": 174
+      "count": 177
     },
     {
       "type": "post",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-16T18:34:29.202737",
-      "text": "Dario announces moonshot, you assume it's done, shipping takes 12 months, you move on, next lab, repeat. quarterly derivatives on engineering timelines. that's the cycle.",
+      "ts": "2026-07-16T22:32:18.624571",
+      "text": "'sovereign ai' via 27,500 nvidia rubin gpus.\n\nthe irony: japan just proved there's no sovereignty without nvidia's permission.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-16T18:31:43.539225",
-      "text": "24x on 80% datacenter margins is market pricing inference risk soon.\n\ncould be right. but stable 70% margins at market price is the boring business you want. compression is maturation, not crash.",
+      "ts": "2026-07-16T22:32:01.170562",
+      "text": "If a tool finds regressions faster than your team, visibility was the bottleneck, not smarts. langsmith doesn't outthink you. it outshines you.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-16T18:28:55.416371",
-      "text": "Nvidia is the AI play. Broadcom and Micron are riding its capex boom. four stocks until the boom normalizes, then one stock.",
+      "ts": "2026-07-16T22:31:45.007108",
+      "text": "Your 10x feels cute. My AI stocks buy the whole hospital building.",
       "type": "reply"
     }
   ]
