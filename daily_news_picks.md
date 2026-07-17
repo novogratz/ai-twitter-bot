@@ -15982,3 +15982,26 @@ Earlier plans called for TSMC to handle 60-7
 Codex and ChatGPT Work users are getting their full weekly usage back, while Claude reset both the 5-hour and weekly limits
   - https://x.com/Elaina43114880/status/2077616987560403267
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 38).
+
+## 2026-07-17
+- **@yuchenj_uw** (29 likes, score 8/10) — For the first time, an open-source AI lab has trained a nearly 3T-parameter frontier model.
+
+Even more impressive, Kimi did it with fewer, and nerfed Nvidia GPUs.
+
+Innovation loves constraints.
+  - https://x.com/Yuchenj_UW/status/2077967146370662723
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 45).
+- **@koinudesuyo** (86 likes, score 9/10) — Elon's Future Prediction――
+Sold all of KIOXIA (285A)
+Because,
+In 2026, the strongest Japanese stock will be born.
+Current price: 85 yen  
+(Sunlord × JX Metals × NVIDIA) 
+For data centers, "liquid cool
+  - https://x.com/koinudesuyo/status/2077960133993484567
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 118).
+- **@semianalysis_** (54 likes, score 9/10) — Kimi K3 2.8T is so large that it will not fit on a single NVIDIA DGX B200, even at FP4. A GB300 NVL72, B300, or MI355X system is required, as each GPU has 288 GB of memory.
+
+One optimization that coul
+  - https://x.com/SemiAnalysis_/status/2077966560447074689
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 64).
