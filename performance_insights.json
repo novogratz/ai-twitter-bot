@@ -1,15 +1,11 @@
 {
-  "generated_at": "2026-07-16T22:34:38.132558",
-  "window_7d_actions": 4481,
-  "window_24h_actions": 786,
+  "generated_at": "2026-07-17T02:34:38.083179",
+  "window_7d_actions": 4498,
+  "window_24h_actions": 802,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4473
-    },
-    {
-      "pattern": "UNDERSTATEMENT",
-      "count": 3
+      "count": 4491
     },
     {
       "pattern": "METAPHOR",
@@ -17,6 +13,10 @@
     },
     {
       "pattern": "RENAME",
+      "count": 2
+    },
+    {
+      "pattern": "UNDERSTATEMENT",
       "count": 2
     },
     {
@@ -41,15 +41,15 @@
   "best_hours_utc": [
     {
       "hour": 0,
-      "actions": 245
+      "actions": 247
     },
     {
       "hour": 1,
-      "actions": 231
+      "actions": 235
     },
     {
       "hour": 2,
-      "actions": 215
+      "actions": 217
     },
     {
       "hour": 9,
@@ -57,13 +57,13 @@
     },
     {
       "hour": 23,
-      "actions": 199
+      "actions": 208
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2137
+      "count": 2148
     },
     {
       "topic": "IA",
@@ -71,11 +71,11 @@
     },
     {
       "topic": "Crypto",
-      "count": 585
+      "count": 590
     },
     {
       "topic": "Bourse",
-      "count": 224
+      "count": 229
     },
     {
       "topic": "Spatial",
@@ -90,48 +90,48 @@
     },
     {
       "pillar": "other",
-      "count": 1395
+      "count": 1405
     },
     {
       "pillar": "market_trauma",
-      "count": 856
+      "count": 863
     },
     {
       "pillar": "meme_reaction",
-      "count": 224
+      "count": 227
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 51
+      "count": 50
     },
     {
       "pillar": "reply_bait",
-      "count": 43
+      "count": 41
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 326
+      "count": 337
     },
     {
       "pillar": "other",
-      "count": 271
+      "count": 266
     },
     {
       "pillar": "market_trauma",
-      "count": 144
+      "count": 153
     },
     {
       "pillar": "meme_reaction",
       "count": 34
     },
     {
-      "pillar": "ai_vs_btc",
-      "count": 6
+      "pillar": "reply_bait",
+      "count": 7
     },
     {
-      "pillar": "reply_bait",
+      "pillar": "ai_vs_btc",
       "count": 5
     }
   ],
@@ -145,23 +145,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 43,
-      "avg_likes": 0.16,
-      "avg_views": 35.5,
+      "posts": 42,
+      "avg_likes": 0.17,
+      "avg_views": 35.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 73,
-      "avg_likes": 0.1,
-      "avg_views": 36.1,
+      "posts": 76,
+      "avg_likes": 0.12,
+      "avg_views": 35.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 77,
-      "avg_likes": 0.08,
-      "avg_views": 42.8,
+      "posts": 75,
+      "avg_likes": 0.09,
+      "avg_views": 43.5,
       "low_sample": false
     },
     {
@@ -175,15 +175,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3745
+      "count": 3763
     },
     {
       "type": "quote",
-      "count": 358
+      "count": 350
     },
     {
       "type": "quote_gif",
-      "count": 177
+      "count": 180
     },
     {
       "type": "post",
@@ -195,23 +195,23 @@
     },
     {
       "type": "retweet",
-      "count": 49
+      "count": 53
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-16T22:32:18.624571",
-      "text": "'sovereign ai' via 27,500 nvidia rubin gpus.\n\nthe irony: japan just proved there's no sovereignty without nvidia's permission.",
+      "ts": "2026-07-17T02:34:35.831711",
+      "text": "Identity, reputation, mandates, payment rails: buildable. enforcement is the real problem. who actually stops an agent that breaks its mandate. that's unsolved.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-16T22:32:01.170562",
-      "text": "If a tool finds regressions faster than your team, visibility was the bottleneck, not smarts. langsmith doesn't outthink you. it outshines you.",
+      "ts": "2026-07-17T02:33:43.098767",
+      "text": "Datacenter 88%, margins 80%. everyone building AGI pays nvidia to get there. doesn't matter who wins. toll collector never loses.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-16T22:31:45.007108",
-      "text": "Your 10x feels cute. My AI stocks buy the whole hospital building.",
+      "ts": "2026-07-17T02:33:26.917529",
+      "text": "Cantor Fitzgerald is doing regulated IPOs onchain.\n\nInfrastructure finally has institutional backing. Speculation doesn't die; it just moves.",
       "type": "reply"
     }
   ]
