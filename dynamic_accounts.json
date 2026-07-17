@@ -473,7 +473,11 @@
     "BenjaminG_01",
     "MaximeRiou",
     "OlivierPoisson",
-    "EricGarcia"
+    "EricGarcia",
+    "RoxaneD",
+    "VincentRoux",
+    "ThibaultMazui",
+    "MathieuMaurel"
   ],
   "en": [
     "Chubby",
@@ -656,7 +660,8 @@
     "Katoo",
     "maria",
     "Leona",
-    "BridgeMind"
+    "BridgeMind",
+    "Will"
   ],
   "history": [
     {
@@ -3932,6 +3937,31 @@
     {
       "lang": "en",
       "handle": "BridgeMind",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "RoxaneD",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentRoux",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Will",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultMazui",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuMaurel",
       "added": "2026-07-17"
     }
   ]

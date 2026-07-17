@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-17T10:34:38.603253",
-  "window_7d_actions": 4522,
-  "window_24h_actions": 825,
+  "generated_at": "2026-07-17T14:34:37.936485",
+  "window_7d_actions": 4518,
+  "window_24h_actions": 821,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4515
+      "count": 4511
     },
     {
       "pattern": "RENAME",
@@ -63,15 +63,15 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2156
+      "count": 2149
     },
     {
       "topic": "IA",
-      "count": 1753
+      "count": 1765
     },
     {
       "topic": "Crypto",
-      "count": 587
+      "count": 577
     },
     {
       "topic": "Bourse",
@@ -79,22 +79,28 @@
     },
     {
       "topic": "Spatial",
-      "count": 71
+      "count": 73
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Bourse",
+      "24h_rate": 0.071,
+      "7d_rate": 0.052
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1916
+      "count": 1930
     },
     {
       "pillar": "other",
-      "count": 1418
+      "count": 1415
     },
     {
       "pillar": "market_trauma",
-      "count": 870
+      "count": 858
     },
     {
       "pillar": "meme_reaction",
@@ -102,37 +108,37 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 49
+      "count": 47
     },
     {
       "pillar": "reply_bait",
-      "count": 40
+      "count": 39
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 343
+      "count": 352
     },
     {
       "pillar": "other",
-      "count": 257
+      "count": 244
     },
     {
       "pillar": "market_trauma",
-      "count": 171
+      "count": 172
     },
     {
       "pillar": "meme_reaction",
-      "count": 39
+      "count": 40
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 8
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -145,23 +151,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 42,
+      "posts": 41,
       "avg_likes": 0.12,
-      "avg_views": 35.6,
+      "avg_views": 36.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 79,
+      "posts": 80,
       "avg_likes": 0.11,
-      "avg_views": 35.5,
+      "avg_views": 35.3,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 72,
       "avg_likes": 0.1,
-      "avg_views": 44.0,
+      "avg_views": 44.2,
       "low_sample": false
     },
     {
@@ -175,19 +181,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3788
+      "count": 3787
     },
     {
       "type": "quote",
-      "count": 350
+      "count": 349
     },
     {
       "type": "quote_gif",
-      "count": 180
+      "count": 181
     },
     {
       "type": "post",
-      "count": 90
+      "count": 87
     },
     {
       "type": "hotake",
@@ -200,18 +206,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-17T10:33:08.869603",
-      "text": "Bubble had two parts: hype and spend. hype's cooling. capex's not. the sorting: model prices fell 40% in 18 months. gpu spend's up year-over-year. margin compression, not collapse. yet.",
+      "ts": "2026-07-17T14:33:47.101810",
+      "text": "Uber scaled Claude to 5,000 engineers. not a budget cut, infrastructure consolidation. Anthropic won adoption, not API pricing. market's watching the wrong metric.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-17T10:32:51.214802",
-      "text": "in the AI era, the phone company just edged the chip company. nvidia, tuesdays are open 🛋️",
-      "type": "quote"
+      "ts": "2026-07-17T14:33:30.908890",
+      "text": "Tripled bills means most teams never did roi math before spinning it up. you can automate shutdowns. you can't automate judgment.",
+      "type": "reply"
     },
     {
-      "ts": "2026-07-17T10:32:12.624349",
-      "text": "Nvidia proved context scaling works in embodied ai. robot models train short-horizon because you can't generate robot data the way you generate text tokens. whoever solves that scaling problem wins.",
+      "ts": "2026-07-17T14:32:24.827975",
+      "text": "The mindset. fortunes burn. the mechanism that rebuilds them can't. there's only one renewable resource here.",
       "type": "reply"
     }
   ]
