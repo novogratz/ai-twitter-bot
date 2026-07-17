@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-16T00:00:00.000000",
+  "ts": "2026-07-17T00:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 14,
     "MAX_HOTAKES_PER_DAY": 28,
@@ -12,10 +12,10 @@
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "Anthropic $47B revenue overtakes OpenAI + Samsung chip deal + Claude Sonnet 5 ($2/M input) — thérapeute angle : 'mon patient OpenAI ouvre un deuxième onglet'",
-    "RKLB acquiert Iridium $8B + Neutron Q4 / ASTS $1B Japan Rakuten + BlueBird août — dip = moment d'entrée pour patient qui 'attend la profitabilité'",
-    "Gemini 3.5 Pro demain (17 juil) + Xi à Shanghai WAIC en personne — course IA accélère sur deux fronts simultanément"
+    "Gemini 3.5 Pro LIVE aujourd'hui (17 juil) — 2M tokens, Deep Think, zéro restriction gouvernementale vs GPT-5.6 Sol bloqué par le gouvernement US — angle patient : 'le modèle le plus puissant du monde est en liste d'attente chez des bureaucrates'",
+    "Xi Jinping en personne au WAIC Shanghai aujourd'hui (premier fois 2018) + RKLB -34% / ASTS -38% juillet (Goldman : espace 5× plus volatil que S&P) — dip = diagnostic thérapeute, Piper Sandler ASTS overweight $100",
+    "SpaceX rachète Cursor $60B — Musk propriétaire de l'IDE des devs IA + Anthropic C+ / Meta D+ AI Safety Index 2026 + Anthropic IPO S-1 prévu octobre 2026 — format 'me [verb]' sur chaque hook"
   ],
   "cadence_factor": 1.4,
-  "rationale": "Données 30d : ai_vs_btc 0.20 avg likes > market_trauma 0.18 > other 0.10 = ai_news_take 0.10. Mix actuel : ai_news_take 44% du volume avec pire ROI — gaspillage massif. 'me [verb]' casual = seul format à 84 likes (45K vues). Priorité : doubler ai_vs_btc + market_trauma sur chaque parent pertinent, réduire le factuel sec ai_news_take. Caps inchangés (mandat 2026-07-06). Hooks frais : Anthropic overtake, Claude Sonnet 5 price cut, RKLB Iridium $8B, ASTS Japan, Gemini 3.5 demain, JADEPUFFER ransomware IA."
+  "rationale": "Données 30d : seul tweet >1 like = 'me [verb]' casual (86 likes, 46K vues — 500× mieux que tout le reste). Pillar ROI : ai_vs_btc 0.20 > market_trauma 0.17 > ai_news_take 0.12 > other 0.09. Problème : ai_news_take = 44% du volume au pire ROI, ai_vs_btc < 2% au meilleur ROI. Algo X 2026 : une réponse pèse 150× un like — reply-bait format prioritaire. Hooks du jour : Gemini 3.5 Pro GA, GPT-5.6 permission slip, Xi à WAIC Shanghai, RKLB/ASTS -35% juillet, SpaceX-Cursor $60B, Anthropic C+ safety grade. Caps inchangés (mandat 2026-07-06). Urgence : convertir le volume ai_news_take vers ai_vs_btc + 'me [verb]' + reply-bait verdicts sans explication."
 }

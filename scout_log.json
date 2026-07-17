@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-06-13T12:15:54.311042",
-    "raw_count": 5,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "GaelleLaffon",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "La patronne de Coinhouse, elle ne fait pas dans la dentelle, elle tweete des v\u00e9rit\u00e9s crypto et des coups de gueule boursi\u00e8re."
-      },
-      {
-        "handle": "RaphaLelarge",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "Le patron de Qonto, il couvre la fintech et la tech fran\u00e7aise avec un c\u00f4t\u00e9 'insider' qui fait rare."
-      }
-    ],
-    "summary": "Un mix de fondateurs tech fran\u00e7ais, d'experts crypto institutionnels et d'une p\u00e9pite qu\u00e9b\u00e9coise qui \u00e9vite le bruit des r\u00e9seaux sociaux."
-  },
-  {
-    "ts": "2026-06-13T14:16:44.752296",
-    "raw_count": 10,
-    "kept_count": 8,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienPoncelet",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Directeur de recherche chez Mistral. Il twitte en fran\u00e7ais sur l'Open Source, la compute et les LLMs. Technique sans \u00eatre barbant."
-      },
-      {
-        "handle": "Sylvestre",
-        "region": "france",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "Le roi des blogs FR (HFRSS). Il couvre tout: IA, Startups, Cloud. Le fil est une mine d'or pour voir ce qui compte vraiment en France."
-      },
-      {
-        "handle": "CryptoJ",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Le barom\u00e8tre du Bitcoin en France. Analyse technique et macrocrypto, twitte surtout en fran\u00e7ais. Pas de sh*itcoins douteux, juste du solide."
-      },
-      {
-        "handle": "ValentinMulliez",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Frenchy \u00e0 SF, co-fondateur de Mew. Il twitte en anglais et fran\u00e7ais sur l'IA et les startups. C'est le profil 'founder' parfait."
-      },
-      {
-        "handle": "MaximeLavoie",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Analyste qu\u00e9b\u00e9cois. Il parle de Bourse et de macro en fran\u00e7ais. Le style est direct, un peu pessimiste souvent, ce qui est rafra\u00eechissant sur X."
-      },
-      {
-        "handle": "AdrienToubkiss",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Frenchy bas\u00e9 \u00e0 NYC, chercheur en IA (ex-Meta). Il poste des threads techniques en FR et des insights rapides en EN. La double casquette rare."
-      },
-      {
-        "handle": "GillesHainaut",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Gars du milieu qu\u00e9b\u00e9cois qui twitte en FR sur l'IA et la Data. Pas le genre \u00e0 faire des threads 'comment gagner 1M en 30 jours'. Vrai contenu."
-      },
-      {
-        "handle": "ThomasHach\u00e9",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 9000,
-        "reason": "G\u00e9rant de fonds qu\u00e9b\u00e9cois qui twitte en fran\u00e7ais. Pas un influenceur, un gars qui g\u00e8re du cash. Ses posts sont ceux qu'on envoie \u00e0 son oncle aviateur."
-      }
-    ],
-    "summary": "Du Mistral (la r\u00e9f\u00e9rence IA FR) \u00e0 la Bourse de l'argent de ma femme en passant par les Qu\u00e9b\u00e9cois qui ne font pas de 'bro-marketing'. On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour garder les gens qui comprennent vraiment la tech."
-  },
-  {
     "ts": "2026-06-13T16:16:14.717246",
     "raw_count": 8,
     "kept_count": 5,
@@ -9014,5 +8924,116 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 pour \u00e9viter les vendeurs de r\u00eaves et les influenceurs lifestyle. Ici, ce sont des builders, des traders de m\u00e9tier et des journalistes qui comprennent leur sujet. Z\u00e9ro 'Telegram VIP', 100% contenu brut."
+  },
+  {
+    "ts": "2026-07-17T02:44:12.715236",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PabloMolina_fr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 120000,
+        "reason": "L'oracle fran\u00e7ais du Web3. Il twitte entre deux appels de board, analyse macro crypto pr\u00e9cise et couvre les grands projets (Aave, Maker) avec une vision institutionnelle."
+      },
+      {
+        "handle": "MorganMallet",
+        "region": "france",
+        "niche": "tech",
+        "followers": 85000,
+        "reason": "Le roi des threads sur la tech fran\u00e7aise (BlaBlaCar, Deezer, etc.). Il explique le business model derri\u00e8re les apps qu'on utilise tous les jours sans s'endormir."
+      },
+      {
+        "handle": "JulienCayla",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Fundamental analyste de qualit\u00e9. Il d\u00e9cortique les bilans et les strat\u00e9gies des PME/PMI fran\u00e7aises avec une rigueur qui ferait pleurer les banquiers d'affaires parisiens."
+      },
+      {
+        "handle": "BabylonCapitalfr",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "L'investisseur francophone qui a mis\u00e9 sur Mistral avant qu'ils ne deviennent des rockstars. Il tweete l'actualit\u00e9 fran\u00e7aise de l'IA avec un \u0153il de VC averti."
+      },
+      {
+        "handle": "JulienCayla",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Journaliste \u00e0 la WSJ bas\u00e9 aux USA, il couvre l'IA et les g\u00e9ants tech avec la m\u00eame plume pointue, m\u00e9langeant perspective US et regard ext\u00e9rieur \u00e9clair\u00e9."
+      }
+    ],
+    "summary": "On a traqu\u00e9 les vrais experts techniques en France (Mistral, Babylon) et les analystes fondamentaux qui ne vendent pas du r\u00eave. Au Qu\u00e9bec, on reste pragmatique avec la bourse. Aux USA, on capte l'IA via les journalistes qui la traitent au scalpel."
+  },
+  {
+    "ts": "2026-07-17T04:35:21.274213",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LefebvreL",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "L'analyste qui transforme les bilans en \u00e9pop\u00e9es \u00e9piques, un peu comme Hom\u00e8re mais avec des ratios P/E."
+      },
+      {
+        "handle": "Adrien_Bourgeois",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Le patron de Qwant qui parle IA avec la pr\u00e9cision d'un horloger suisse, mais sans la lourdeur."
+      },
+      {
+        "handle": "MaximeGoussu",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Copro-pilote de 'La Bourse', il d\u00e9crypte le march\u00e9 avec l'humour d'un tueur \u00e0 gages qui aime les maths."
+      },
+      {
+        "handle": "Cassidy_Hill",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Le New-Yorkais francophone qui explique la DeFi sans te donner mal \u00e0 la t\u00eate, ou alors c'est qu'il te ment."
+      },
+      {
+        "handle": "RaphaelGrosz",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "Il fait des threads de bourse qui se lisent comme des thrillers polici\u00e8res, le coupable ? Le march\u00e9 haussier."
+      },
+      {
+        "handle": "ThomasBouton",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Journaliste qui couvre les start-ups avec un scepticisme rafra\u00eechissant, comme un docteur qui refuse de prescrire du Viagra."
+      },
+      {
+        "handle": "JohanLevavasseur",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Ex-Kotobank, il parle fintech avec la passion d'un homme qui a vu trop de fraudes bancaires en 1998."
+      },
+      {
+        "handle": "MounaDhaouadi",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Directrice de l'offre de trading Boursorama, elle explique les ordres limites avec la douceur d'une m\u00e8re qui dit non."
+      }
+    ],
+    "summary": "Une s\u00e9lection de francophones qui prouvent qu'on peut \u00eatre comp\u00e9tent sans avoir l'air d'un livre de comptabilit\u00e9. Aucun ne vend de la fum\u00e9e, juste de l'analyse pure et dure."
   }
 ]

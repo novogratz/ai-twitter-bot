@@ -456,7 +456,16 @@
     "RomainGouez",
     "JulienLech",
     "OlivierT",
-    "SophieB"
+    "SophieB",
+    "PabloMolina_fr",
+    "MorganMallet",
+    "JulienCayla",
+    "LefebvreL",
+    "MaximeGoussu",
+    "Cassidy_Hill",
+    "RaphaelGrosz",
+    "ThomasBouton",
+    "MounaDhaouadi"
   ],
   "en": [
     "Chubby",
@@ -3818,6 +3827,51 @@
     {
       "lang": "fr",
       "handle": "SophieB",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "PabloMolina_fr",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MorganMallet",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienCayla",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "LefebvreL",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeGoussu",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "Cassidy_Hill",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelGrosz",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBouton",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MounaDhaouadi",
       "added": "2026-07-17"
     }
   ]

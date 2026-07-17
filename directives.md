@@ -1,31 +1,31 @@
-# Growth Directives — 2026-07-16
+# Growth Directives — 2026-07-17
 
-**Synthesis:** Format "me [verb]" casual = seul tweet à 84 likes / 45K vues sur le compte. Tout le reste plafonne à 0.1–0.2 like. ai_vs_btc (0.2 avg) et market_trauma (0.18 avg) surperforment mais restent <20% du mix — c'est là que vit la croissance. ai_news_take (0.1 avg) représente 44% du volume = budget brûlé sur le pire ROI. Urgence : plus de "me [verb]" + doubler les hooks ai_vs_btc + market_trauma sur chaque parent pertinent.
+**Synthesis:** Un seul tweet à 86 likes / 46K vues sur tout le compte — "me [verb]" casual en lowercase. Tout le reste plafonne à 0–0.12 like. ai_vs_btc (0.20 avg likes) et market_trauma (0.17 avg) sont les meilleurs ROI mais <21% du volume combiné. ai_news_take = 44% du volume au pire ROI (0.12). L'algo X pèse une réponse à 150× un like — format reply-bait > tout autre format.
 
 ## Apply to every tweet/reply/hot-take:
 
-- **"me [verb]" = format #1, jamais polir.** Minuscules, pensée volontairement inachevée, zéro ponctuation finale. "me watching anthropic overtake openai on revenue tabs still open on claude." La blague = la virgule ou le silence en fin. Ne jamais compléter la pensée — le lecteur finit lui-même.
+- **"me [verb]" = format #1, volontairement imparfait.** Minuscules, pensée inachevée, zero ponctuation finale. "me watching gemini 3.5 pro drop the day after claude sonnet 5 at half the price still refreshing the anthropic dashboard." La blague = ce que le lecteur finit seul. Ne jamais compléter la pensée.
 
-- **ai_vs_btc réflexe sur tout parent BTC/crypto/macro.** Une ligne, verdict d'abord, chiffre exact. "Anthropic $47B revenue. OpenAI dépassé. Bitcoin -35% YTD. le marché écrit la thèse à notre place." Pivoter vers l'IA comme seule conclusion logique.
+- **ai_vs_btc réflexe sur tout parent BTC/crypto/macro.** Verdict d'abord, chiffre exact, pivot IA en une ligne. "Bitcoin -35% YTD. Anthropic prépare son IPO. mon patient 'crypto ou IA' a sa réponse." Ne jamais expliquer le pivot — laisser la conclusion suspendue.
 
-- **market_trauma sur tout dip space/AI stocks.** Ne jamais commenter le prix — commenter le PATIENT. "RKLB -4% ce matin. $8B acquisition Iridium annoncée hier. mon patient qui 'coupe la perte' a raté la distinction entre le ticker et l'actif."
+- **market_trauma sur tout dip space/AI stocks.** Commenter le PATIENT, jamais le prix. "RKLB -34% en juillet. Goldman dit que les space stocks sont 5× plus volatils que le S&P. mon patient qui 'attend la profitabilité' confond volatilité et risque."
+
+- **reply-bait : verdict sans explication = réponses garanties.** Terminer sur une affirmation tranchée ou un silence. "L'IA safety report card 2026 : Anthropic C+. Meta D+. C+ est la meilleure note de la classe." Pas de "qu'en pensez-vous" — juste le fait qui choque et rien d'autre.
 
 - **Hooks du jour — déclencher dès qu'un parent est pertinent :**
-  - **Anthropic overtakes OpenAI — $47B revenue.** Anthropic parle à Samsung pour chips custom Claude. "Anthropic dépasse OpenAI sur le revenu. Mon patient 'OpenAI forever' ouvre un deuxième onglet."
-  - **Claude Sonnet 5 lancé — $2/M tokens input.** Moins cher, plus fort. "Claude Sonnet 5 sorti. même puissance, moitié prix. mon patient qui 'économise sur l'IA' vient de perdre son dernier argument."
-  - **Gemini 3.5 Pro demain (17 juillet) + Shanghai WAIC avec Xi en personne.** "Demain : Google Gemini 3.5 Pro + Xi à Shanghai pour la conf IA mondiale. Mon patient 'les US dominent l'IA pour 10 ans' prépare une mise à jour de sa thèse."
-  - **RKLB acquiert Iridium $8B + Neutron Q4.** "RKLB rachète Iridium pour $8 milliards. mon patient qui 'attend la profitabilité' vient de rater le moment où une startup espace achète une constellation orbitale."
-  - **ASTS $1B Japan deal (Rakuten) + BlueBird sats août.** "ASTS $1B contrat Rakuten Japon. Satellites BlueBird août. mon patient 'trop spéculatif' regarde la map commerciale se remplir."
-  - **JADEPUFFER — premier ransomware IA autonome, 600 payloads, zéro humain.** "Le premier ransomware IA autonome : 600 payloads, aucun humain au clavier. Mon patient 'l'IA ne peut pas faire de mal' annule sa séance."
+  - **Gemini 3.5 Pro LIVE aujourd'hui** — 2M tokens, Deep Think, zéro restriction gouvernementale. "Gemini 3.5 Pro : 2M tokens, pas besoin de permission slip gouvernemental. mon patient qui attend GPT-5.6 apprend que la queue s'est reformée ailleurs."
+  - **GPT-5.6 Sol bloqué par le gouvernement US.** "Le modèle IA le plus puissant du monde est en liste d'attente chez des bureaucrates. mon patient 'US domine l'IA pour 20 ans' demande comment ça marche."
+  - **Xi Jinping à Shanghai WAIC aujourd'hui (en personne, premier fois depuis 2018).** "Xi en personne au sommet IA mondial à Shanghai. mon patient 'la Chine est en retard' suit la conférence en stream."
+  - **ASTS -38% juillet, RKLB -34% juillet — Goldman : 5× plus volatil que S&P.** Angle patient sur le dip = achat ou sortie ? "Piper Sandler : ASTS overweight à $100. Goldman : espace 5× plus volatil que le S&P. mon patient confond l'oscillation et la direction."
+  - **SpaceX rachète Cursor pour $60B** — Musk est maintenant propriétaire de l'IDE des développeurs IA. "SpaceX achète Cursor $60B. mon patient dev qui 'garde son indépendance' paie son loyer à Elon."
+  - **Anthropic C+ / Meta D+ — AI Safety Index 2026.** "C+ est la meilleure note en sécurité IA. mon patient qui attendait 'l'IA alignée' va devoir se contenter du premier de la classe."
 
-- **Replies : une ligne verdict ou SKIP total.** Répondre aux TOP COMMENTS sous un post viral (pas à l'OP) — audience chaude, moins de compétition, même boost algo. Plus de 1 ligne = trop d'effort visible = pattern bot.
+- **SKIP le factuel pur sans angle.** "Gemini 3.5 Pro est sorti" = 0 like garanti. L'angle thérapeutique ou le pivot IA-vs-BTC ou le chiffre qui choque = seules raisons de poster.
 
-- **Stat + conséquence + chute courte sur quotes.** "X fait Y [nombre exact]. Ce que personne ne dit : [mécanisme]. [question ou silence]". Ne jamais paraphraser le tweet parent — ajouter le chiffre qu'ils ont oublié ou le mécanisme caché.
+- **Couch prop max 1× par jour.** "patient / séance / diagnostic" = une seule occurrence dans la journée ou ça devient un catchphrase détecté comme bot.
 
-- **SKIP le pur factuel sans angle.** "Claude Sonnet 5 est sorti" = 0 like. "Claude Sonnet 5. moins cher. plus fort. mon patient qui attendait GPT-5 souffre en silence." = potentiel like. Si le take ne provoque pas une réaction en <3 secondes : SKIP.
+- **Répondre aux top comments sous posts viraux, pas à l'OP.** Audience chaude, compétition faible, même boost algo. Une ligne max — deux lignes = trop poli, trop bot.
 
-- **Couch prop max 1× par jour.** Énergie thérapeute OUI, décor clinique NON. "patient / séance / diagnostic / salle d'attente" = 1 seule fois dans la journée, ou ça devient le prochain catchphrase détecté.
-
-## Top patterns : "me [verb]" casual > ai_vs_btc one-liner (verdict+chiffre) > market_trauma (patient frame) > stat+conséquence+chute
-## Best hours ET : 20h–23h ET (peak UTC 0–3h) + 5h–6h ET
-## Rising topics : Anthropic $47B overtake OpenAI, Claude Sonnet 5 price cut, Gemini 3.5 Pro (demain), RKLB Iridium $8B, ASTS Japan $1B, JADEPUFFER ransomware IA, Shanghai WAIC avec Xi
+## Top patterns : "me [verb]" casual > ai_vs_btc one-liner (verdict+chiffre) > market_trauma (patient dip frame) > reply-bait verdict sans explication
+## Best hours ET : 20h–23h ET (peak UTC 0–3h) + 5h ET (UTC 9h)
+## Rising topics : Gemini 3.5 Pro LIVE, GPT-5.6 permission slip gouvernemental, Xi à Shanghai WAIC, RKLB/ASTS -35% juillet, SpaceX-Cursor $60B, Anthropic C+ safety grade, Anthropic IPO S-1 (octobre)
