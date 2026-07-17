@@ -16032,3 +16032,14 @@ They claim markets are excessively misunderstanding the situation with semis. An
 - **@_forab** (30 likes, score 7/10) — It seems Kimi's this wave really isn't just marketing— even the most conservative ranking for Chinese AI, Artificial Analysis, has given it a very high ranking, just 2-3 points shy of GPT 5.6 SOL and
   - https://x.com/_FORAB/status/2077978150806704576
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 54).
+- **@maiuspartners** (26 likes, score 8/10) — At $133.HK June 30 mark, the implied market valuation of Kimi Moonshot is only around ~$10bn, while investors get another 40% discount buying through the listco. Paying $6bn to have a seat at the tabl
+  - https://x.com/MaiusPartners/status/2077882892856992246
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 34).
+- **@kyrannio** (39 likes, score 8/10) — every time someone ships a frontier model another lab crashes through the wall like the Kool-Aid Man carrying 400 billion more parameters.
+  - https://x.com/Kyrannio/status/2077920939745132984
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 53).
+- **@gnoble79** (29 likes, score 8/10) — Paid subscribers to the Noble Update Substack received this:
+
+June 24. $107 $CRWV
+  - https://x.com/gnoble79/status/2077877182555173062
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 35).
