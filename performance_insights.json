@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-17T02:34:38.083179",
-  "window_7d_actions": 4498,
-  "window_24h_actions": 802,
+  "generated_at": "2026-07-17T06:34:38.028178",
+  "window_7d_actions": 4519,
+  "window_24h_actions": 811,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4491
+      "count": 4512
     },
     {
       "pattern": "METAPHOR",
@@ -49,7 +49,7 @@
     },
     {
       "hour": 2,
-      "actions": 217
+      "actions": 225
     },
     {
       "hour": 9,
@@ -63,50 +63,50 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2148
+      "count": 2161
     },
     {
       "topic": "IA",
-      "count": 1740
+      "count": 1749
     },
     {
       "topic": "Crypto",
-      "count": 590
+      "count": 589
     },
     {
       "topic": "Bourse",
-      "count": 229
+      "count": 230
     },
     {
       "topic": "Spatial",
-      "count": 72
+      "count": 70
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1912
+      "count": 1918
     },
     {
       "pillar": "other",
-      "count": 1405
+      "count": 1410
     },
     {
       "pillar": "market_trauma",
-      "count": 863
+      "count": 872
     },
     {
       "pillar": "meme_reaction",
-      "count": 227
+      "count": 228
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 50
+      "count": 49
     },
     {
       "pillar": "reply_bait",
-      "count": 41
+      "count": 42
     }
   ],
   "pillar_mix_24h": [
@@ -116,23 +116,23 @@
     },
     {
       "pillar": "other",
-      "count": 266
+      "count": 258
     },
     {
       "pillar": "market_trauma",
-      "count": 153
+      "count": 167
     },
     {
       "pillar": "meme_reaction",
-      "count": 34
+      "count": 36
     },
     {
       "pillar": "reply_bait",
-      "count": 7
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -145,23 +145,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.17,
-      "avg_views": 35.7,
+      "posts": 43,
+      "avg_likes": 0.16,
+      "avg_views": 35.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 76,
+      "posts": 78,
       "avg_likes": 0.12,
-      "avg_views": 35.1,
+      "avg_views": 35.0,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 75,
-      "avg_likes": 0.09,
-      "avg_views": 43.5,
+      "posts": 72,
+      "avg_likes": 0.1,
+      "avg_views": 44.2,
       "low_sample": false
     },
     {
@@ -175,7 +175,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3763
+      "count": 3783
     },
     {
       "type": "quote",
@@ -183,7 +183,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 180
+      "count": 181
     },
     {
       "type": "post",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-17T02:34:35.831711",
-      "text": "Identity, reputation, mandates, payment rails: buildable. enforcement is the real problem. who actually stops an agent that breaks its mandate. that's unsolved.",
+      "ts": "2026-07-17T06:33:11.169582",
+      "text": "$195B FDV on zero liquidity is a thesis, not a market cap. the moment that thesis hit real exchanges with real supply, the math corrected itself.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-17T02:33:43.098767",
-      "text": "Datacenter 88%, margins 80%. everyone building AGI pays nvidia to get there. doesn't matter who wins. toll collector never loses.",
+      "ts": "2026-07-17T06:31:12.043152",
+      "text": "Semis and eth aren't correlated. they're both priced on $500B+ annual AI capex forever. crack that assumption, both crack.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-17T02:33:26.917529",
-      "text": "Cantor Fitzgerald is doing regulated IPOs onchain.\n\nInfrastructure finally has institutional backing. Speculation doesn't die; it just moves.",
+      "ts": "2026-07-17T06:30:35.104367",
+      "text": "You're right. here's the catch: if your org doesn't already have good data, people, and processes, no tool fixes that.\n\nChatGPT is a multiplier. great multiplier. but you can't multiply zero.",
       "type": "reply"
     }
   ]
