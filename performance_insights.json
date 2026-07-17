@@ -1,19 +1,15 @@
 {
-  "generated_at": "2026-07-17T06:34:38.028178",
-  "window_7d_actions": 4519,
-  "window_24h_actions": 811,
+  "generated_at": "2026-07-17T10:34:38.603253",
+  "window_7d_actions": 4522,
+  "window_24h_actions": 825,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4512
-    },
-    {
-      "pattern": "METAPHOR",
-      "count": 2
+      "count": 4515
     },
     {
       "pattern": "RENAME",
-      "count": 2
+      "count": 3
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -21,6 +17,10 @@
     },
     {
       "pattern": "REPETITION",
+      "count": 1
+    },
+    {
+      "pattern": "METAPHOR",
       "count": 1
     }
   ],
@@ -31,10 +31,10 @@
     },
     {
       "pattern": "METAPHOR",
-      "count": 2
+      "count": 1
     },
     {
-      "pattern": "RENAME",
+      "pattern": "UNDERSTATEMENT",
       "count": 2
     }
   ],
@@ -53,7 +53,7 @@
     },
     {
       "hour": 9,
-      "actions": 212
+      "actions": 211
     },
     {
       "hour": 23,
@@ -63,42 +63,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2161
+      "count": 2156
     },
     {
       "topic": "IA",
-      "count": 1749
+      "count": 1753
     },
     {
       "topic": "Crypto",
-      "count": 589
+      "count": 587
     },
     {
       "topic": "Bourse",
-      "count": 230
+      "count": 237
     },
     {
       "topic": "Spatial",
-      "count": 70
+      "count": 71
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1918
+      "count": 1916
     },
     {
       "pillar": "other",
-      "count": 1410
+      "count": 1418
     },
     {
       "pillar": "market_trauma",
-      "count": 872
+      "count": 870
     },
     {
       "pillar": "meme_reaction",
-      "count": 228
+      "count": 229
     },
     {
       "pillar": "ai_vs_btc",
@@ -106,25 +106,25 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 42
+      "count": 40
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 337
+      "count": 343
     },
     {
       "pillar": "other",
-      "count": 258
+      "count": 257
     },
     {
       "pillar": "market_trauma",
-      "count": 167
+      "count": 171
     },
     {
       "pillar": "meme_reaction",
-      "count": 36
+      "count": 39
     },
     {
       "pillar": "reply_bait",
@@ -132,7 +132,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -145,23 +145,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 43,
-      "avg_likes": 0.16,
-      "avg_views": 35.3,
+      "posts": 42,
+      "avg_likes": 0.12,
+      "avg_views": 35.6,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 78,
-      "avg_likes": 0.12,
-      "avg_views": 35.0,
+      "posts": 79,
+      "avg_likes": 0.11,
+      "avg_views": 35.5,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 72,
       "avg_likes": 0.1,
-      "avg_views": 44.2,
+      "avg_views": 44.0,
       "low_sample": false
     },
     {
@@ -175,7 +175,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3783
+      "count": 3788
     },
     {
       "type": "quote",
@@ -183,15 +183,15 @@
     },
     {
       "type": "quote_gif",
-      "count": 181
+      "count": 180
     },
     {
       "type": "post",
-      "count": 88
+      "count": 90
     },
     {
       "type": "hotake",
-      "count": 64
+      "count": 61
     },
     {
       "type": "retweet",
@@ -200,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-17T06:33:11.169582",
-      "text": "$195B FDV on zero liquidity is a thesis, not a market cap. the moment that thesis hit real exchanges with real supply, the math corrected itself.",
+      "ts": "2026-07-17T10:33:08.869603",
+      "text": "Bubble had two parts: hype and spend. hype's cooling. capex's not. the sorting: model prices fell 40% in 18 months. gpu spend's up year-over-year. margin compression, not collapse. yet.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-17T06:31:12.043152",
-      "text": "Semis and eth aren't correlated. they're both priced on $500B+ annual AI capex forever. crack that assumption, both crack.",
-      "type": "reply"
+      "ts": "2026-07-17T10:32:51.214802",
+      "text": "in the AI era, the phone company just edged the chip company. nvidia, tuesdays are open 🛋️",
+      "type": "quote"
     },
     {
-      "ts": "2026-07-17T06:30:35.104367",
-      "text": "You're right. here's the catch: if your org doesn't already have good data, people, and processes, no tool fixes that.\n\nChatGPT is a multiplier. great multiplier. but you can't multiply zero.",
+      "ts": "2026-07-17T10:32:12.624349",
+      "text": "Nvidia proved context scaling works in embodied ai. robot models train short-horizon because you can't generate robot data the way you generate text tokens. whoever solves that scaling problem wins.",
       "type": "reply"
     }
   ]

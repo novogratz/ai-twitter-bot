@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-06-13T16:16:14.717246",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoKub",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "Le meme lord s\u00e9rieux. Il explique l'infra technique (L2s, ZK) avec un humour de comptoir et une pr\u00e9cision de dev."
-      },
-      {
-        "handle": "NathBourse",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "La reine de la microstructure \u00e0 Paris. Elle rend la bourse intelligible sans vendre du r\u00eave, z\u00e9ro hype, pur m\u00e9tier."
-      },
-      {
-        "handle": "V_CryptoFR",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "VC \u00e0 NY qui tweet en FR. Il fait le pont entre le capital am\u00e9ricain et les projets europ\u00e9ens avec du recul."
-      },
-      {
-        "handle": "Fr_Quants",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Le c\u00f4t\u00e9 sombre et math\u00e9matique du trading FR. Python, stats, pricing. Pour ceux qui aiment quand \u00e7a pique au clavier."
-      },
-      {
-        "handle": "Sylvain_Le",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 9000,
-        "reason": "Prof \u00e0 Poly. Il tweet l'IA qu\u00e9b\u00e9coise avec une profondeur technique rare, loin du buzzwordisme vide."
-      }
-    ],
-    "summary": "Mix de v\u00e9t\u00e9rans (NathBourse) et de nouveaux talents tech (Mistral, Alexi Boutin). J'ai banni les vendeurs de r\u00eaves pour ne garder que ceux qui ont un \u00e9cran de code ou un terminal derri\u00e8re."
-  },
-  {
-    "ts": "2026-06-13T18:17:10.356094",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MathieuDuffaut",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Ex-Google, il transforme le jargon en tweets qu'un humain lambda peut lire sans y laisser sa r\u00e9tine."
-      },
-      {
-        "handle": "AlphaInvestFR",
-        "region": "france",
-        "niche": "finance",
-        "followers": 30000,
-        "reason": "Des analyses macro aussi claires qu'une bouteille de vin \u00e0 10\u20ac et aussi profondes qu'un verre d'eau."
-      },
-      {
-        "handle": "TradingVie",
-        "region": "france",
-        "niche": "trading",
-        "followers": 18000,
-        "reason": "Pas un guru en chemise blanche. Plut\u00f4t un type qui a perdu plus que toi et qui explique pourquoi."
-      }
-    ],
-    "summary": "Du MistralAI qui domine le secteur tech FR \u00e0 des p\u00e9pites qu\u00e9b\u00e9coises qui prouvent que le march\u00e9 est mondial, peu importe l'accent. Z\u00e9ro gourou en polo, que du concret."
-  },
-  {
     "ts": "2026-06-14T00:21:51.865508",
     "raw_count": 9,
     "kept_count": 6,
@@ -9035,5 +8959,95 @@
       }
     ],
     "summary": "Une s\u00e9lection de francophones qui prouvent qu'on peut \u00eatre comp\u00e9tent sans avoir l'air d'un livre de comptabilit\u00e9. Aucun ne vend de la fum\u00e9e, juste de l'analyse pure et dure."
+  },
+  {
+    "ts": "2026-07-17T06:41:39.378955",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "VentureFr",
+        "region": "france",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "VC francophone, deals startup FR, r\u00e9seau dense."
+      },
+      {
+        "handle": "BourgeoisFinance",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Analyste US qui twitte souvent en FR sur les macro-tendances."
+      },
+      {
+        "handle": "mickaelg10",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 32000,
+        "reason": "Trader pro, punchlines quotidiennes sur les indices, pas de pub Telegram."
+      },
+      {
+        "handle": "JulienVeyssier",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Ancien de Coinhouse, analyse on-chain solide, twitte en FR."
+      },
+      {
+        "handle": "AlexDufresne_01",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Tech entrepreneur, veille hardware/silicon Valley, francophone."
+      },
+      {
+        "handle": "BenjaminG_01",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "Fintech QC, couvertures tech/VC, style tr\u00e8s terre-\u00e0-terre."
+      }
+    ],
+    "summary": "On a fouill\u00e9 les listes US, les blogs QC et les trenches FR. Focus sur ceux qui tweetent en FR, ont >10k followers et n'ont pas un lien Bitly dans la bio. Le mix IA/Crypto/Traditionnel est \u00e9quilibr\u00e9."
+  },
+  {
+    "ts": "2026-07-17T08:42:22.662001",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeRiou",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Cofondateur de La French Tech. Il couvre les startups et l'\u00e9cosyst\u00e8me FR avec un regard utile sur le fundraising et l'IA."
+      },
+      {
+        "handle": "JeanBenoitRheaume",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Investisseur VC (Canadien bas\u00e9 aux USA) qui tweet en fran\u00e7ais sur les deep tech et l'IA. Pointu et direct."
+      },
+      {
+        "handle": "OlivierPoisson",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Directeur de recherche, il partage ses th\u00e8ses de march\u00e9 sur la Bourse de Montr\u00e9al et les secteurs tech/\u00e9nergie."
+      },
+      {
+        "handle": "EricGarcia",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Journaliste crypto FR historique. Il couvre l'actualit\u00e9 r\u00e9glementaire et technique avec un oeil neuf."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 les fondateurs de Deep Tech fran\u00e7ais (Mistral, Antra), les analystes boursiers qu\u00e9b\u00e9cois rigoureux (Bailly, Poisson) et quelques VC/JS US francophones. Z\u00e9ro vendeur de r\u00eave, que des profils qui produisent du contenu ou de l'analyse."
   }
 ]

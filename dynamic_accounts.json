@@ -465,7 +465,15 @@
     "Cassidy_Hill",
     "RaphaelGrosz",
     "ThomasBouton",
-    "MounaDhaouadi"
+    "MounaDhaouadi",
+    "VentureFr",
+    "mickaelg10",
+    "JulienVeyssier",
+    "AlexDufresne_01",
+    "BenjaminG_01",
+    "MaximeRiou",
+    "OlivierPoisson",
+    "EricGarcia"
   ],
   "en": [
     "Chubby",
@@ -646,7 +654,9 @@
     "Hedgeye",
     "Da7em",
     "Katoo",
-    "maria"
+    "maria",
+    "Leona",
+    "BridgeMind"
   ],
   "history": [
     {
@@ -3872,6 +3882,56 @@
     {
       "lang": "fr",
       "handle": "MounaDhaouadi",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "VentureFr",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelg10",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienVeyssier",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexDufresne_01",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminG_01",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Leona",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeRiou",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierPoisson",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricGarcia",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "en",
+      "handle": "BridgeMind",
       "added": "2026-07-17"
     }
   ]
