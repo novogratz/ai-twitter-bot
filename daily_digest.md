@@ -986,3 +986,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 84 likes / 43857 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 1 likes / 31 views: drew a perfect channel. $BTC chose chaos. closed the tab.
   - 1 likes / 65 views: my $AEHR patients graduated today
+
+## 2026-07-16
+
+**Activity** — total actions: 789
+  - by type: reply=671, quote=57, quote_gif=33, hotake=12, post=9, retweet=7
+  - top sources: SEARCH-HOT=460, FEED-SWEEP-FEED=101, FEED-SWEEP-FOLLOWING=92, QUOTE=39, GIF=36, VIP=12, RETWEET_QT=8, RETWEET=7
+  - comedy patterns: RENAME=1
+  - top reply targets: @arnaudmercier=34, @polsia=23, @TheBTCTherapist=15, @StockSavvyShay=13, @Oluwaphilemon1=7
+
+**Followers we follow** (running total): 355
+
+**Top-performing posts scraped today**:
+  - 1 likes / 14 views: my patients ask which model to choose. I say: yes.
+  - 1 likes / 14 views: my sessions are 50 minutes. robots just made it to 5. see you in the waiting room
+  - 1 likes / 33 views: me quietly canceling the "semis are cooked" support group I opened in January

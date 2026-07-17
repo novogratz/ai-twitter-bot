@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-06-13T08:16:05.553944",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "jpmorganfr",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "L'official account du JP Morgan fran\u00e7ais. Macro, tech et fintech dans le m\u00eame tweet."
-      },
-      {
-        "handle": "maxime_maurin",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "Ancien de Coinhouse, il twitte la crypto comme un humain, pas comme un bot de marketing."
-      },
-      {
-        "handle": "boursequebec",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 8500,
-        "reason": "L'info boursi\u00e8re qu\u00e9b\u00e9coise. Essentiel pour comprendre la sp\u00e9cificit\u00e9 du march\u00e9 TSX vs NYSE."
-      }
-    ],
-    "summary": "Le top FR est domin\u00e9 par la Tech/AI (Mistral) et la crypto mature, le Qu\u00e9bec joue la carte niche locale, et la diaspora FR aux USA mixe les deux. Z\u00e9ro gourou de formation \u00e0 2000\u20ac."
-  },
-  {
     "ts": "2026-06-13T10:26:22.056846",
     "raw_count": 8,
     "kept_count": 5,
@@ -8993,5 +8962,57 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le gras pour ne garder que les cerveaux : des experts Mistral/DeepMind, des journalistes BFM qui ont surv\u00e9cu aux r\u00e9seaux, et les veterans crypto QC qui ont vu passer trois march\u00e9s baissiers sans vendre de formation \u00e0 999\u20ac."
+  },
+  {
+    "ts": "2026-07-16T22:47:03.745833",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Thalesgroup",
+        "region": "france",
+        "niche": "tech",
+        "followers": 120000,
+        "reason": "Le mastodonte industriel qui fait des tweets IA aussi pertinents que leur bilan annuel, mais en plus court."
+      },
+      {
+        "handle": "Dorianmad",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "L\u2019expert Mistral qui parle tech sans endormir les morts, parfait pour comprendre LLM sans lire 300 pages de paper."
+      },
+      {
+        "handle": "JulesBourgeois",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 38000,
+        "reason": "L\u2019analyste qui transforme la microcap fran\u00e7aise en thriller financier, sans promettre la lune tous les matins."
+      },
+      {
+        "handle": "LachaudThomas",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 31000,
+        "reason": "Le fondateur de Qonto qui twitte sur la SaaSification de la banque fran\u00e7aise, avec un ton sec qui tue les buzzwords."
+      },
+      {
+        "handle": "BenoitBailly",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Le VC ex-Facebook qui investit dans l\u2019IA US, mais qui garde une plume fran\u00e7aise pr\u00e9cise et sans gras."
+      },
+      {
+        "handle": "MaximeBonnay",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Le gars derri\u00e8re l\u2019IA qu\u00e9b\u00e9coise qui vulgarise sans jamais devenir ce type ennuyeux qui explique le code \u00e0 sa m\u00e8re."
+      }
+    ],
+    "summary": "Je sors le meilleur de la vague post-fintech fran\u00e7aise et du p\u00f4le AI qu\u00e9b\u00e9cois, en \u00e9vitant les influenceurs crypto qui vendent du r\u00eave en Telegram. C\u2019est dense, technique, et \u00e7a ne vend pas de cours \u00e0 199\u20ac."
   }
 ]

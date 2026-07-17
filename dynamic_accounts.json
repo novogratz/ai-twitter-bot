@@ -445,7 +445,13 @@
     "MaximeBour",
     "JulienCahuzac",
     "VincentFerre",
-    "ThibautMoutet"
+    "ThibautMoutet",
+    "Thalesgroup",
+    "Dorianmad",
+    "JulesBourgeois",
+    "LachaudThomas",
+    "BenoitBailly",
+    "MaximeBonnay"
   ],
   "en": [
     "Chubby",
@@ -625,7 +631,8 @@
     "IBM",
     "Hedgeye",
     "Da7em",
-    "Katoo"
+    "Katoo",
+    "maria"
   ],
   "history": [
     {
@@ -3746,6 +3753,41 @@
     {
       "lang": "fr",
       "handle": "ThibautMoutet",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "en",
+      "handle": "maria",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Thalesgroup",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "Dorianmad",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesBourgeois",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "LachaudThomas",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitBailly",
+      "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBonnay",
       "added": "2026-07-16"
     }
   ]
