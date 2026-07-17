@@ -477,7 +477,18 @@
     "RoxaneD",
     "VincentRoux",
     "ThibaultMazui",
-    "MathieuMaurel"
+    "MathieuMaurel",
+    "0xCryptoF",
+    "CryptoKong",
+    "JulienDutrie",
+    "BenjaminRouen",
+    "TechVFR",
+    "JL_Aubert",
+    "AdrienG",
+    "MaximeVinson",
+    "RomainVialard",
+    "AlexisD",
+    "OlivierSchmitt"
   ],
   "en": [
     "Chubby",
@@ -661,7 +672,8 @@
     "maria",
     "Leona",
     "BridgeMind",
-    "Will"
+    "Will",
+    "Stefano"
   ],
   "history": [
     {
@@ -3962,6 +3974,66 @@
     {
       "lang": "fr",
       "handle": "MathieuMaurel",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xCryptoF",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKong",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDutrie",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminRouen",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "TechVFR",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "en",
+      "handle": "Stefano",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JL_Aubert",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienG",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeVinson",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainVialard",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisD",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierSchmitt",
       "added": "2026-07-17"
     }
   ]

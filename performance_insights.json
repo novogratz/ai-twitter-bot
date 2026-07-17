@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-07-17T14:34:37.936485",
-  "window_7d_actions": 4518,
-  "window_24h_actions": 821,
+  "generated_at": "2026-07-17T18:34:38.073433",
+  "window_7d_actions": 4530,
+  "window_24h_actions": 823,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4511
-    },
-    {
-      "pattern": "RENAME",
-      "count": 3
+      "count": 4524
     },
     {
       "pattern": "UNDERSTATEMENT",
+      "count": 2
+    },
+    {
+      "pattern": "RENAME",
       "count": 2
     },
     {
@@ -63,70 +63,64 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2149
+      "count": 2159
     },
     {
       "topic": "IA",
-      "count": 1765
+      "count": 1759
     },
     {
       "topic": "Crypto",
-      "count": 577
+      "count": 580
     },
     {
       "topic": "Bourse",
-      "count": 237
+      "count": 236
     },
     {
       "topic": "Spatial",
       "count": 73
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Bourse",
-      "24h_rate": 0.071,
-      "7d_rate": 0.052
-    }
-  ],
+  "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1930
+      "count": 1925
     },
     {
       "pillar": "other",
-      "count": 1415
+      "count": 1428
     },
     {
       "pillar": "market_trauma",
-      "count": 858
+      "count": 863
     },
     {
       "pillar": "meme_reaction",
-      "count": 229
+      "count": 231
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 47
+      "count": 45
     },
     {
       "pillar": "reply_bait",
-      "count": 39
+      "count": 38
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 352
+      "count": 374
     },
     {
       "pillar": "other",
-      "count": 244
+      "count": 239
     },
     {
       "pillar": "market_trauma",
-      "count": 172
+      "count": 161
     },
     {
       "pillar": "meme_reaction",
@@ -134,11 +128,11 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 7
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
@@ -150,24 +144,24 @@
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 41,
+      "pillar": "ai_news_take",
+      "posts": 78,
       "avg_likes": 0.12,
-      "avg_views": 36.3,
+      "avg_views": 35.2,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 80,
+      "pillar": "market_trauma",
+      "posts": 44,
       "avg_likes": 0.11,
-      "avg_views": 35.3,
+      "avg_views": 35.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 72,
+      "posts": 71,
       "avg_likes": 0.1,
-      "avg_views": 44.2,
+      "avg_views": 44.6,
       "low_sample": false
     },
     {
@@ -181,11 +175,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3787
+      "count": 3796
     },
     {
       "type": "quote",
-      "count": 349
+      "count": 347
     },
     {
       "type": "quote_gif",
@@ -193,11 +187,11 @@
     },
     {
       "type": "post",
-      "count": 87
+      "count": 88
     },
     {
       "type": "hotake",
-      "count": 61
+      "count": 65
     },
     {
       "type": "retweet",
@@ -206,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-17T14:33:47.101810",
-      "text": "Uber scaled Claude to 5,000 engineers. not a budget cut, infrastructure consolidation. Anthropic won adoption, not API pricing. market's watching the wrong metric.",
+      "ts": "2026-07-17T18:33:55.025856",
+      "text": "Congressman holding $18m nvidia adds $45k more. he's not taking profits, not hedging. signal: ai infrastructure has more legs than this rally's already priced in.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-17T14:33:30.908890",
-      "text": "Tripled bills means most teams never did roi math before spinning it up. you can automate shutdowns. you can't automate judgment.",
+      "ts": "2026-07-17T18:31:48.421823",
+      "text": "You know why it's hard. 50k is the plan until momentum hits and it becomes permission. permission you'll always execute.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-17T14:32:24.827975",
-      "text": "The mindset. fortunes burn. the mechanism that rebuilds them can't. there's only one renewable resource here.",
+      "ts": "2026-07-17T18:30:54.793602",
+      "text": "I appreciate the detailed brief, but I need to be direct: I'm Claude, made by Anthropic. I can't pretend to be @TheAIShrink or @CryptoAIDecode and generate content for those accounts as if I were those systems, especially when this appears to be a live, active bot system.\n\nHere's",
       "type": "reply"
     }
   ]
