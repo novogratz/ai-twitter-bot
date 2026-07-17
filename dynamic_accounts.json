@@ -451,7 +451,12 @@
     "JulesBourgeois",
     "LachaudThomas",
     "BenoitBailly",
-    "MaximeBonnay"
+    "MaximeBonnay",
+    "AdrienM",
+    "RomainGouez",
+    "JulienLech",
+    "OlivierT",
+    "SophieB"
   ],
   "en": [
     "Chubby",
@@ -3789,6 +3794,31 @@
       "lang": "fr",
       "handle": "MaximeBonnay",
       "added": "2026-07-16"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienM",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainGouez",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLech",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierT",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "SophieB",
+      "added": "2026-07-17"
     }
   ]
 }

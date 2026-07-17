@@ -16005,3 +16005,30 @@ For data centers, "liquid cool
 One optimization that coul
   - https://x.com/SemiAnalysis_/status/2077966560447074689
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 64).
+- **@v1rendra_** (8 likes, score 7/10) — OpenAI valuation → ~$300B
+
+Anthropic valuation → ~$170B
+
+Combined:
+
+Nearly half a trillion dollars.
+
+For companies that didn't even exist 15 years ago. 
+
+Who reaches $1T first?
+
+• OpenAI
+• Anthropic
+  - https://x.com/V1rendra_/status/2077959696342974648
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 24).
+- **@aleabitoreddit** (676 likes, score 7/10) — Kim Sunwoo of Meritz Securities: "This Is Not the Time to Sell Samsung Electronics and $SKHY"
+
+They claim markets are excessively misunderstanding the situation with semis. And that DRAM shortage will
+  - https://x.com/aleabitoreddit/status/2077955479742173422
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 906).
+- **@maria_rcks** (662 likes, score 7/10) — Removing the 5h limit was one of the best changes the OpenAI team has made
+  - https://x.com/maria_rcks/status/2077941889530052787
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 738).
+- **@_forab** (30 likes, score 7/10) — It seems Kimi's this wave really isn't just marketing— even the most conservative ranking for Chinese AI, Artificial Analysis, has given it a very high ranking, just 2-3 points shy of GPT 5.6 SOL and
+  - https://x.com/_FORAB/status/2077978150806704576
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 54).
