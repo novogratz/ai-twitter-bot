@@ -16043,3 +16043,19 @@ They claim markets are excessively misunderstanding the situation with semis. An
 June 24. $107 $CRWV
   - https://x.com/gnoble79/status/2077877182555173062
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 35).
+
+## 2026-07-18
+- **@coinbureau** (35 likes, score 9/10) — APPLE OUSTS NVIDIA FROM THE TOP SPOT WITH A $4.88T VALUATION
+
+Apple has reclaimed its position as the world’s most valuable company, overtaking Nvidia with a market capitalization of $4.88 TRILLION, p
+  - https://x.com/coinbureau/status/2078325731894165650
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 57).
+- **@sourceryy** (17 likes, score 7/10) — "Harnessing was the bane of everyone's existence" at SpaceX.
+
+Senra Systems CEO @jordan__black saw the problem firsthand:
+
+"It wasn't getting better, it was just getting worse."
+
+"Companies like Space
+  - https://x.com/sourceryy/status/2078110470930661458
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 19).

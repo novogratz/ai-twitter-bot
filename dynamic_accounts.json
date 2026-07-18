@@ -501,7 +501,10 @@
     "LudoLemaire",
     "AntoineBoivin",
     "MaxBazot",
-    "MaximeDuclos"
+    "MaximeDuclos",
+    "ParisCrypto",
+    "MarcLavoie_",
+    "LouisGagnonQC"
   ],
   "en": [
     "Chubby",
@@ -689,7 +692,8 @@
     "Stefano",
     "SemiAnalysis",
     "JAKE",
-    "rahul"
+    "rahul",
+    "RonnieV"
   ],
   "history": [
     {
@@ -4131,6 +4135,26 @@
       "lang": "fr",
       "handle": "MaximeDuclos",
       "added": "2026-07-17"
+    },
+    {
+      "lang": "en",
+      "handle": "RonnieV",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ParisCrypto",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLavoie_",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "LouisGagnonQC",
+      "added": "2026-07-18"
     }
   ]
 }

@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-06-14T14:16:06.541317",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilToufani",
-        "region": "france",
-        "niche": "tech",
-        "followers": 60000,
-        "reason": "Tech lead passionn\u00e9, couvre IA/Dev de mani\u00e8re tr\u00e8s technique et r\u00e9guli\u00e8re, pas juste du hype."
-      },
-      {
-        "handle": "Benoit_Levet",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Le trader crypto qui tient la route depuis 2017, analyse macro + crypto sans vendre de formation \u00e0 2000\u20ac."
-      },
-      {
-        "handle": "VincentLemoine",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Expert IA \u00e0 l'INRIA, twitte en FR, rigoureux et actif. Le profil 'cerveau' plut\u00f4t que 'influenceur'."
-      },
-      {
-        "handle": "MaximeBoutin_",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "Fondateur/CTO, couvre tech web3 et IA au Qu\u00e9bec. Vrai profil tech, pas un vendeur de signaux."
-      },
-      {
-        "handle": "OlivierMuller",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Diaspora francophone \u00e0 NYC. Ex-banker, twitte en FR sur les march\u00e9s US avec un \u0153il europ\u00e9en."
-      }
-    ],
-    "summary": "Du pur gras technique et trading, sans la soupe\u4e00\u822ciste des influenceurs formations. Mistral, le trader pro, et le Qu\u00e9b\u00e9cois crypto : c'est du concret."
-  },
-  {
     "ts": "2026-06-14T18:16:40.628962",
     "raw_count": 6,
     "kept_count": 3,
@@ -8993,5 +8948,43 @@
       }
     ],
     "summary": "Le lot est propre : Z\u00e9ro vendeur de r\u00eave, juste des makers et des investisseurs. Du Mistral \u00e0 BFM, en passant par les traders du Qu\u00e9bec, c'est du concret."
+  },
+  {
+    "ts": "2026-07-18T00:35:22.178166",
+    "raw_count": 10,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ParisCrypto",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Diaspora francophone \u00e0 NYC, couvre crypto & VC, vibe plus business que meme."
+      },
+      {
+        "handle": "MarcLavoie_",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "\u00c9conomiste QC, analyse macro qu\u00e9b\u00e9coise, le seul \u00e0 d\u00e9crypter la BCE en bon fran\u00e7ais."
+      },
+      {
+        "handle": "AlexisBourgeois_",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Trader ind\u00e9pendant, style direct, pas de pub, juste du chart."
+      },
+      {
+        "handle": "LouisGagnonQC",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Data scientist qu\u00e9b\u00e9cois, threads IA techniques, sous-estim\u00e9 par rapport \u00e0 son contenu."
+      }
+    ],
+    "summary": "Pas de vendeurs de r\u00eave, que des pros qui font leur job. La France domine la qualit\u00e9 \u00e9ditoriale, le Qu\u00e9bec apporte une dose utile d'analyse macro locale."
   }
 ]
