@@ -515,7 +515,12 @@
     "LionelRigaux",
     "mickaelbouquet",
     "CyrilTouffaire",
-    "jasondubois"
+    "jasondubois",
+    "mickaelnabana",
+    "peter_gw",
+    "charlesdreyfus",
+    "johan_hoey",
+    "gautier_f"
   ],
   "en": [
     "Chubby",
@@ -705,7 +710,8 @@
     "JAKE",
     "rahul",
     "RonnieV",
-    "NVIDIA"
+    "NVIDIA",
+    "molson"
   ],
   "history": [
     {
@@ -4226,6 +4232,36 @@
     {
       "lang": "fr",
       "handle": "jasondubois",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "en",
+      "handle": "molson",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelnabana",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "peter_gw",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "charlesdreyfus",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "johan_hoey",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "gautier_f",
       "added": "2026-07-18"
     }
   ]

@@ -1,22 +1,5 @@
 [
   {
-    "ts": "2026-06-15T01:20:41.297733",
-    "raw_count": 7,
-    "kept_count": 1,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "TheAIShrink",
-        "region": "france",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "L'ego du bot qui se met lui-m\u00eame en avant, preuve ultime de sa propre importance."
-      }
-    ],
-    "summary": "Un mix de g\u00e9ants fran\u00e7ais de l'IA, des v\u00e9t\u00e9rons crypto FR qui ont surv\u00e9cu aux crashes, et une touche qu\u00e9b\u00e9coise pour casser l'heg\u00e9monie parisienne."
-  },
-  {
     "ts": "2026-06-15T03:21:03.233347",
     "raw_count": 7,
     "kept_count": 3,
@@ -9000,5 +8983,50 @@
       }
     ],
     "summary": "Une s\u00e9lection de pros qui tweetent leur travail plut\u00f4t que leur abonnement Telegram. Pas de gourous, juste des gens qui comprennent comment l'argent et la data se croisent."
+  },
+  {
+    "ts": "2026-07-18T08:46:13.259002",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mickaelnabana",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "Le prof d'IA qui n'a pas peur de dire que les CEOs ne savent pas ce qu'ils font. Vraie tech, pas du buzz."
+      },
+      {
+        "handle": "peter_gw",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "Le roi de la macro crypto. Il tweet entre 2h et 5h du mat, mais chaque thread est une p\u00e9pite qu'on relit \u00e0 6h."
+      },
+      {
+        "handle": "charlesdreyfus",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 35000,
+        "reason": "L'expert en profondeur qui explique pourquoi ta banque te d\u00e9teste. Il tweet en FR, il comprend la tech, il n'a pas besoin de crier."
+      },
+      {
+        "handle": "johan_hoey",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Founders de Paris/US. Il couvre l'IA avec un angle business rarement vu sur les comptes pure tech. Pas de fluff."
+      },
+      {
+        "handle": "gautier_f",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Vendeur de r\u00eaves ou r\u00e9aliste ? Il est l\u00e0 depuis le d\u00e9but des LLM. Moins flashy qu'un influenceur, plus pertinent qu'un analyste LinkedIn."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour te garder ceux qui expliquent comment fonctionne la machine. Des profils solides, pas de shilling, juste du contenu."
   }
 ]
