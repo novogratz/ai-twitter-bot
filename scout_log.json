@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-06-15T03:21:03.233347",
-    "raw_count": 7,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "VincentB",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Fondateur fran\u00e7ais install\u00e9 \u00e0 SF. Il fait le pont entre la tech europ\u00e9enne et les mecs de Silicon Valley qui croient encore que les LLMs vont tout r\u00e9soudre."
-      },
-      {
-        "handle": "CryptoCabin",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Communaut\u00e9 active et newsletters de qualit\u00e9. Ils couvrent les perles du march\u00e9 local que Paris ignore royalement."
-      },
-      {
-        "handle": "MehdiR",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 14000,
-        "reason": "L'insider des fintechs. Ses threads sur les lev\u00e9es de fonds font plus mal que nos imp\u00f4ts."
-      }
-    ],
-    "summary": "On a filtr\u00e9 les vendeurs de r\u00eave pour ne garder que ceux qui comprennent leur boulot. Mistral domine l'IA, et le Qu\u00e9bec crypto se porte bien sans crier partout. C'est du solide, pas du vent."
-  },
-  {
     "ts": "2026-06-15T05:38:03.909383",
     "raw_count": 5,
     "kept_count": 5,
@@ -9028,5 +8997,50 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour te garder ceux qui expliquent comment fonctionne la machine. Des profils solides, pas de shilling, juste du contenu."
+  },
+  {
+    "ts": "2026-07-18T12:52:23.751207",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JL_Audet",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "J\u00e9r\u00f4me-Louis Audet. Tech journalist bas\u00e9 \u00e0 SF, tweet en FR sur les GAFAM et l'AI infra. Vues mondiales, style FR."
+      },
+      {
+        "handle": "OlivierLeNoble",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "L'homme de r\u00e9f\u00e9rence crypto au Qu\u00e9bec. Analyse macro, trading et adoption institutionnelle. Tr\u00e8s pro."
+      },
+      {
+        "handle": "NicolasCollin",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "PDG de Doctolib. Il couvre la tech de sant\u00e9 et la SaaS avec une lucidit\u00e9 qui tranche avec le buzz habituel."
+      },
+      {
+        "handle": "MickaelCarrere",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Co-founder d'Alten. Il documente l'histoire de la tech FR (IA 70s, CNRS) et supervise l'actuel boom. Un mix info/histoire."
+      },
+      {
+        "handle": "ThomasSartore",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 11000,
+        "reason": "Journaliste chez MoneyMags, mais son feed est une mine de deals fintech et de VC en France. Moins connu, plus dense."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des influenceurs formations pour ne garder que les b\u00e2tisseurs (Mistral, Hugging Face) et les pros actifs (crypto QC, trad SF). On couvre la tech de fond plut\u00f4t que la hype de surface."
   }
 ]

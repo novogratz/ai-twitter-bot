@@ -520,7 +520,12 @@
     "peter_gw",
     "charlesdreyfus",
     "johan_hoey",
-    "gautier_f"
+    "gautier_f",
+    "JL_Audet",
+    "OlivierLeNoble",
+    "NicolasCollin",
+    "MickaelCarrere",
+    "ThomasSartore"
   ],
   "en": [
     "Chubby",
@@ -711,7 +716,9 @@
     "rahul",
     "RonnieV",
     "NVIDIA",
-    "molson"
+    "molson",
+    "Cobie",
+    "sunnydecree"
   ],
   "history": [
     {
@@ -4262,6 +4269,41 @@
     {
       "lang": "fr",
       "handle": "gautier_f",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Cobie",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "en",
+      "handle": "sunnydecree",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JL_Audet",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierLeNoble",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasCollin",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelCarrere",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasSartore",
       "added": "2026-07-18"
     }
   ]

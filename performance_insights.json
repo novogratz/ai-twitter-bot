@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-18T10:34:38.023181",
-  "window_7d_actions": 4563,
-  "window_24h_actions": 738,
+  "generated_at": "2026-07-18T14:34:37.962513",
+  "window_7d_actions": 4565,
+  "window_24h_actions": 741,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4558
+      "count": 4560
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -59,7 +59,7 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2190
+      "count": 2192
     },
     {
       "topic": "IA",
@@ -67,30 +67,30 @@
     },
     {
       "topic": "Crypto",
-      "count": 569
+      "count": 567
     },
     {
       "topic": "Bourse",
-      "count": 251
+      "count": 256
     },
     {
       "topic": "Spatial",
-      "count": 68
+      "count": 65
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1963
+      "count": 1957
     },
     {
       "pillar": "other",
-      "count": 1414
+      "count": 1406
     },
     {
       "pillar": "market_trauma",
-      "count": 864
+      "count": 880
     },
     {
       "pillar": "meme_reaction",
@@ -98,29 +98,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 47
+      "count": 48
     },
     {
       "pillar": "reply_bait",
-      "count": 43
+      "count": 42
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 360
+      "count": 348
     },
     {
       "pillar": "other",
-      "count": 195
+      "count": 196
     },
     {
       "pillar": "market_trauma",
-      "count": 135
+      "count": 144
     },
     {
       "pillar": "meme_reaction",
-      "count": 36
+      "count": 40
     },
     {
       "pillar": "reply_bait",
@@ -128,7 +128,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -141,16 +141,16 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 44,
-      "avg_likes": 0.16,
-      "avg_views": 35.8,
+      "posts": 43,
+      "avg_likes": 0.19,
+      "avg_views": 37.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 80,
+      "posts": 81,
       "avg_likes": 0.14,
-      "avg_views": 35.8,
+      "avg_views": 35.0,
       "low_sample": false
     },
     {
@@ -164,23 +164,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3823
+      "count": 3824
     },
     {
       "type": "quote",
-      "count": 349
+      "count": 351
     },
     {
       "type": "quote_gif",
-      "count": 184
+      "count": 182
     },
     {
       "type": "post",
-      "count": 87
+      "count": 85
     },
     {
       "type": "hotake",
-      "count": 65
+      "count": 68
     },
     {
       "type": "retweet",
@@ -189,18 +189,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-18T10:30:17.186398",
-      "text": "Misusing it is the whole thing. Claude's fine, spend an hour actually learning it and this problem disappears.",
+      "ts": "2026-07-18T14:34:26.551312",
+      "text": "Me sitting with my patient who sold AI 'to be disciplined' just in time for the AI rotation to steal the entire earnings narrative 😭\n\nhttps://www.cnbc.com/2026/07/18/the-ai-rotation-stole-the-spotlight-from-a-strong-start-to-earnings-season-.html",
+      "type": "hotake"
+    },
+    {
+      "ts": "2026-07-18T14:33:24.263158",
+      "text": "Ai displaces jobs faster than it creates them. gaming's 18-month cycles mean destruction and creation overlap. everywhere else, destruction happens now, creation happens in 5 years. it's the timeline math.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-18T10:29:40.161001",
-      "text": "Chatgpt and claude don't fail from an ai crash. they're past startup risk - too critical now. acquisition or regulation becomes the risk, not bankruptcy.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-07-18T10:27:51.272565",
-      "text": "The market prices AGI plays on two things: first to ship, or first to own the infrastructure. if you're targeting AGI and not billions-valued, the market says you'll be neither. it's not wrong.",
+      "ts": "2026-07-18T14:30:12.882757",
+      "text": "Per-seat SaaS dies when an agent does it once and costs less forever. Salesforce's problem was always the model.",
       "type": "reply"
     }
   ]
