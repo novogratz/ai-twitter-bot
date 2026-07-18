@@ -16059,3 +16059,25 @@ Senra Systems CEO @jordan__black saw the problem firsthand:
 "Companies like Space
   - https://x.com/sourceryy/status/2078110470930661458
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 19).
+- **@adambliv** (18 likes, score 8/10) — Metaplanet vs. Bitcoin on the road back to the $126,000 BTC ATH:
+
+Metaplanet currently trades around 0.83× CEBE mNAV, which looks substantially derisked to me.
+
+In this projection, Metaplanet buys zer
+  - https://x.com/AdamBLiv/status/2078331615743299738
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 26).
+- **@andreacapellin4** (8 likes, score 7/10) — $BTC - countdown starting: 
+
+If BTC goes to 72-75k next week , the WHOLE CRYPTO SPACE IS TOTALLY RIGGED!
+
+#bitcoin #crypto #altcoins
+  - https://x.com/AndreaCapellin4/status/2078335416797941768
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 12).
+- **@cyrilxbt** (82 likes, score 9/10) — MARC ANDREESSEN WENT ON ROGAN FOR OVER 3 HOURS. HERE ARE THE 17 THINGS WORTH YOUR ATTENTION.
+
+1. AGI is already here, in his view. He says the line got crossed about 3 months ago with GPT-5.5, Claude
+  - https://x.com/cyrilXBT/status/2078308274399834157
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 106).
+- **@valerijatrades1** (6 likes, score 7/10) — This is why I buy Bitcoin every day $BTC
+  - https://x.com/valerijatrades1/status/2078332432344846685
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 10).
