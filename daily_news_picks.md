@@ -16081,3 +16081,20 @@ If BTC goes to 72-75k next week , the WHOLE CRYPTO SPACE IS TOTALLY RIGGED!
 - **@valerijatrades1** (6 likes, score 7/10) — This is why I buy Bitcoin every day $BTC
   - https://x.com/valerijatrades1/status/2078332432344846685
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 10).
+- **@riiii__622jm** (186 likes, score 9/10) — "The Year of Mass-Producing Billionaires"
+It's already shaping up to be another "second Kioxia," isn't it?
+500 shares will do.
+With NVIDIA's technology at the core,
+FANUC, Yaskawa Electric, and Kawasa
+  - https://x.com/riiii__622jm/status/2078331701638619159
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 232).
+- **@mapago9** (0 likes, score 8/10) — At what point do $IREN $ORCL $CRWV $NBIS become generational buys? 
+
+These 4 big names all down over 30% in the past month just seems crazy...
+  - https://x.com/Mapago9/status/2078194199883575671
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 38).
+- **@zsdcxa13** (83 likes, score 8/10) — China's Moonshot AI created Kimi K3, which recently showed performance similar to frontier models like GPT or Claude in benchmarks.
+
+So, people are saying, “China has way fewer GPUs and fewer data cen
+  - https://x.com/zsdcxa13/status/2078095833736863898
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 103).
