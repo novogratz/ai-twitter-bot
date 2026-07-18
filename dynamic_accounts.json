@@ -525,7 +525,20 @@
     "OlivierLeNoble",
     "NicolasCollin",
     "MickaelCarrere",
-    "ThomasSartore"
+    "ThomasSartore",
+    "ThibaudGautier",
+    "BenjaminNolot",
+    "LouisViala",
+    "PierreBabin",
+    "MaximeDoyon",
+    "JeanFleurent",
+    "VincentLemire",
+    "BenoitFloch",
+    "MarcBisson",
+    "VinzDemos",
+    "CryptoCdn",
+    "SylvainPigeard",
+    "JulienBonn"
   ],
   "en": [
     "Chubby",
@@ -718,7 +731,8 @@
     "NVIDIA",
     "molson",
     "Cobie",
-    "sunnydecree"
+    "sunnydecree",
+    "Tenobrus"
   ],
   "history": [
     {
@@ -4304,6 +4318,76 @@
     {
       "lang": "fr",
       "handle": "ThomasSartore",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudGautier",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminNolot",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "LouisViala",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreBabin",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDoyon",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanFleurent",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentLemire",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Tenobrus",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitFloch",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcBisson",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "VinzDemos",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCdn",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainPigeard",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBonn",
       "added": "2026-07-18"
     }
   ]

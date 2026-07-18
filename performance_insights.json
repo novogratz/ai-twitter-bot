@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-18T14:34:37.962513",
-  "window_7d_actions": 4565,
-  "window_24h_actions": 741,
+  "generated_at": "2026-07-18T18:34:37.987170",
+  "window_7d_actions": 4582,
+  "window_24h_actions": 728,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4560
+      "count": 4577
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -59,42 +59,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2192
+      "count": 2209
     },
     {
       "topic": "IA",
-      "count": 1766
+      "count": 1774
     },
     {
       "topic": "Crypto",
-      "count": 567
+      "count": 564
     },
     {
       "topic": "Bourse",
-      "count": 256
+      "count": 251
     },
     {
       "topic": "Spatial",
-      "count": 65
+      "count": 63
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1957
+      "count": 1967
     },
     {
       "pillar": "other",
-      "count": 1406
+      "count": 1419
     },
     {
       "pillar": "market_trauma",
-      "count": 880
+      "count": 878
     },
     {
       "pillar": "meme_reaction",
-      "count": 232
+      "count": 228
     },
     {
       "pillar": "ai_vs_btc",
@@ -108,19 +108,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 348
+      "count": 338
     },
     {
       "pillar": "other",
-      "count": 196
+      "count": 200
     },
     {
       "pillar": "market_trauma",
-      "count": 144
+      "count": 141
     },
     {
       "pillar": "meme_reaction",
-      "count": 40
+      "count": 35
     },
     {
       "pillar": "reply_bait",
@@ -128,51 +128,51 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "ai_vs_btc",
-      "posts": 4,
-      "avg_likes": 0.25,
-      "avg_views": 31.2,
-      "low_sample": false
-    },
-    {
       "pillar": "market_trauma",
       "posts": 43,
-      "avg_likes": 0.19,
-      "avg_views": 37.0,
+      "avg_likes": 0.21,
+      "avg_views": 36.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 81,
-      "avg_likes": 0.14,
-      "avg_views": 35.0,
+      "posts": 82,
+      "avg_likes": 0.2,
+      "avg_views": 35.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 71,
-      "avg_likes": 0.08,
-      "avg_views": 32.3,
+      "posts": 72,
+      "avg_likes": 0.11,
+      "avg_views": 31.9,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "posts": 2,
+      "avg_likes": 0.0,
+      "avg_views": 31.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3824
+      "count": 3841
     },
     {
       "type": "quote",
-      "count": 351
+      "count": 355
     },
     {
       "type": "quote_gif",
-      "count": 182
+      "count": 178
     },
     {
       "type": "post",
@@ -189,18 +189,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-18T14:34:26.551312",
-      "text": "Me sitting with my patient who sold AI 'to be disciplined' just in time for the AI rotation to steal the entire earnings narrative 😭\n\nhttps://www.cnbc.com/2026/07/18/the-ai-rotation-stole-the-spotlight-from-a-strong-start-to-earnings-season-.html",
-      "type": "hotake"
-    },
-    {
-      "ts": "2026-07-18T14:33:24.263158",
-      "text": "Ai displaces jobs faster than it creates them. gaming's 18-month cycles mean destruction and creation overlap. everywhere else, destruction happens now, creation happens in 5 years. it's the timeline math.",
+      "ts": "2026-07-18T18:34:02.187790",
+      "text": "Every trader sets stops at the 50-month ema.\n\nso when it breaks, it's not august being red. it's 50k stop orders executing at one price. the forecast becomes the event.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-18T14:30:12.882757",
-      "text": "Per-seat SaaS dies when an agent does it once and costs less forever. Salesforce's problem was always the model.",
+      "ts": "2026-07-18T18:33:45.920426",
+      "text": "7B open-source doing natural voice with real interrupts. inference speed and architecture won. the field's obsession with scaling parameters was wrong.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-07-18T18:31:32.947205",
+      "text": "Copilot's model is competent. The product layer is a mess. You're right it damages the category. You're wrong about what caused it. One bad integration made millions distrust the entire field. That's the actual loss.",
       "type": "reply"
     }
   ]
