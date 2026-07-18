@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-17T22:34:37.910442",
-  "window_7d_actions": 4540,
-  "window_24h_actions": 821,
+  "generated_at": "2026-07-18T02:34:38.045194",
+  "window_7d_actions": 4518,
+  "window_24h_actions": 781,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4535
+      "count": 4513
     },
     {
       "pattern": "RENAME",
@@ -41,7 +41,7 @@
   "best_hours_utc": [
     {
       "hour": 0,
-      "actions": 247
+      "actions": 239
     },
     {
       "hour": 1,
@@ -49,7 +49,7 @@
     },
     {
       "hour": 2,
-      "actions": 225
+      "actions": 223
     },
     {
       "hour": 9,
@@ -57,70 +57,70 @@
     },
     {
       "hour": 23,
-      "actions": 208
+      "actions": 204
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2162
+      "count": 2161
     },
     {
       "topic": "IA",
-      "count": 1758
+      "count": 1751
     },
     {
       "topic": "Crypto",
-      "count": 588
+      "count": 569
     },
     {
       "topic": "Bourse",
-      "count": 234
+      "count": 237
     },
     {
       "topic": "Spatial",
-      "count": 74
+      "count": 70
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1938
+      "count": 1934
     },
     {
       "pillar": "other",
-      "count": 1411
+      "count": 1397
     },
     {
       "pillar": "market_trauma",
-      "count": 876
+      "count": 869
     },
     {
       "pillar": "meme_reaction",
-      "count": 228
+      "count": 232
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 47
+      "count": 45
     },
     {
       "pillar": "reply_bait",
-      "count": 40
+      "count": 41
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 379
+      "count": 372
     },
     {
       "pillar": "other",
-      "count": 227
+      "count": 202
     },
     {
       "pillar": "market_trauma",
-      "count": 165
+      "count": 157
     },
     {
       "pillar": "meme_reaction",
@@ -145,38 +145,38 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 44,
-      "avg_likes": 0.16,
-      "avg_views": 35.7,
+      "posts": 42,
+      "avg_likes": 0.17,
+      "avg_views": 36.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 80,
+      "posts": 81,
       "avg_likes": 0.14,
-      "avg_views": 34.2,
+      "avg_views": 34.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 71,
+      "posts": 72,
       "avg_likes": 0.1,
-      "avg_views": 44.7,
+      "avg_views": 44.2,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3809
+      "count": 3786
     },
     {
       "type": "quote",
-      "count": 348
+      "count": 343
     },
     {
       "type": "quote_gif",
-      "count": 179
+      "count": 183
     },
     {
       "type": "post",
@@ -188,23 +188,23 @@
     },
     {
       "type": "retweet",
-      "count": 53
+      "count": 55
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-17T22:33:15.404035",
-      "text": "Agencies priced time. AI priced it at zero. Design commodified.",
+      "ts": "2026-07-18T02:33:48.606827",
+      "text": "The real squeeze for gigging musicians isn't inbox chaos, it's not having enough offers to say no to. automate the response time, the gig still needs to exist first.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-17T22:30:55.151427",
-      "text": "me after letting the AI write the whole codebase: oh interesting there's a security plugin 😂",
-      "type": "quote"
+      "ts": "2026-07-18T02:31:29.399136",
+      "text": "Institutions accumulate bitcoin not from belief, but from necessity. bonds broke, real estate crowded. not a bull on crypto, a bear on having no option.",
+      "type": "reply"
     },
     {
-      "ts": "2026-07-17T22:27:27.718577",
-      "text": "Bittensor is the only one actually built for ai inference. the rest are layer ones hoping developers pick them.",
+      "ts": "2026-07-18T02:27:57.139118",
+      "text": "Gemini v3 was good. Every update since, it got worse. You paid $160 to learn why Claude costs $100.",
       "type": "reply"
     }
   ]
