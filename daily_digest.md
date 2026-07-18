@@ -1001,3 +1001,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 14 views: my patients ask which model to choose. I say: yes.
   - 1 likes / 14 views: my sessions are 50 minutes. robots just made it to 5. see you in the waiting room
   - 1 likes / 33 views: me quietly canceling the "semis are cooked" support group I opened in January
+
+## 2026-07-17
+
+**Activity** — total actions: 807
+  - by type: reply=687, quote=56, quote_gif=29, post=13, hotake=12, retweet=10
+  - top sources: SEARCH-HOT=477, FEED-SWEEP-FEED=125, FEED-SWEEP-FOLLOWING=71, QUOTE=41, GIF=37, RETWEET=8, VIP=8, RETWEET_REPLY=6
+  - comedy patterns: RENAME=1
+  - top reply targets: @polsia=37, @arnaudmercier=22, @TheBTCTherapist=17, @Cointelegraph=11, @kimmonismus=9
+
+**Followers we follow** (running total): 360
+
+**Top-performing posts scraped today**:
+  - 2 likes / 38 views: Nuclear startup. $6B valuation. sole purpose: keeping your AI running.  my patient who called the AI
+  - 1 likes / 20 views: My patient who said 'robots won't be a real thing until 2030' just sent me the Agility Robotics anno
+  - 1 likes / 19 views: Me treating patients for AI anxiety while my scheduling bot, my note-taking tool, and my billing sof

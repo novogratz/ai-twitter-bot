@@ -1,22 +1,5 @@
 [
   {
-    "ts": "2026-06-14T12:16:22.927981",
-    "raw_count": 8,
-    "kept_count": 1,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "AdrienLelaunay",
-        "region": "france",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "L'expert Deep Learning qui balance des pearls en FR quand tout le monde parle encore de ChatGPT comme d'un nouveau TikTok. C'est technique, c'est vrai, c'est frais."
-      }
-    ],
-    "summary": "Le top FR est domin\u00e9 par les fondateurs de la prochaine vague IA (Mistral) et les pros on-chain discrets. Le QC apporte une rigueur boursi\u00e8re sans l'humour gras de la FR, et la diaspora USA ram\u00e8ne la tech pure."
-  },
-  {
     "ts": "2026-06-14T14:16:06.541317",
     "raw_count": 8,
     "kept_count": 5,
@@ -8972,5 +8955,43 @@
       }
     ],
     "summary": "Une s\u00e9lection mixte entre les v\u00e9t\u00e9rans de la bourse (Hugo, Michele) qui comprennent le march\u00e9, et les nouveaux visages de l'IA (Arthur, Alexis B.) qui comprennent la tech. Z\u00e9ro formation \u00e0 999\u20ac, juste des gens qui font leur job."
+  },
+  {
+    "ts": "2026-07-17T22:55:33.993332",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LudoLemaire",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 95000,
+        "reason": "L'incontournable de BFM Bourse. Twitte vite, frappe fort, z\u00e9ro jargon incompr\u00e9hensible, parfait pour le feed."
+      },
+      {
+        "handle": "AntoineBoivin",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Le roi du trading Qubec. Son style est sec, ses analyses sont solides, il fuit les pubs de formations \u00e0 2000\u20ac."
+      },
+      {
+        "handle": "MaxBazot",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "VC chez Partech. Le meilleur regard ext\u00e9rieur sur les startups FR, twitte souvent en FR avec un ton direct."
+      },
+      {
+        "handle": "MaximeDuclos",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "De l'Estrie. Il couvre l'\u00e9cosyst\u00e8me crypto FR/CA avec un \u0153il de trader, pas de blogueur."
+      }
+    ],
+    "summary": "Le lot est propre : Z\u00e9ro vendeur de r\u00eave, juste des makers et des investisseurs. Du Mistral \u00e0 BFM, en passant par les traders du Qu\u00e9bec, c'est du concret."
   }
 ]

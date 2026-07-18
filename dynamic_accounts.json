@@ -497,7 +497,11 @@
     "MicheleSobelman",
     "RomainBousmar",
     "VincentRouille",
-    "OlivierLeclerc"
+    "OlivierLeclerc",
+    "LudoLemaire",
+    "AntoineBoivin",
+    "MaxBazot",
+    "MaximeDuclos"
   ],
   "en": [
     "Chubby",
@@ -684,7 +688,8 @@
     "Will",
     "Stefano",
     "SemiAnalysis",
-    "JAKE"
+    "JAKE",
+    "rahul"
   ],
   "history": [
     {
@@ -4100,6 +4105,31 @@
     {
       "lang": "fr",
       "handle": "OlivierLeclerc",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "en",
+      "handle": "rahul",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoLemaire",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineBoivin",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxBazot",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDuclos",
       "added": "2026-07-17"
     }
   ]
