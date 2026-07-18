@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-17T00:00:00.000000",
+  "ts": "2026-07-18T00:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 14,
     "MAX_HOTAKES_PER_DAY": 28,
@@ -12,10 +12,10 @@
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "Gemini 3.5 Pro LIVE aujourd'hui (17 juil) — 2M tokens, Deep Think, zéro restriction gouvernementale vs GPT-5.6 Sol bloqué par le gouvernement US — angle patient : 'le modèle le plus puissant du monde est en liste d'attente chez des bureaucrates'",
-    "Xi Jinping en personne au WAIC Shanghai aujourd'hui (premier fois 2018) + RKLB -34% / ASTS -38% juillet (Goldman : espace 5× plus volatil que S&P) — dip = diagnostic thérapeute, Piper Sandler ASTS overweight $100",
-    "SpaceX rachète Cursor $60B — Musk propriétaire de l'IDE des devs IA + Anthropic C+ / Meta D+ AI Safety Index 2026 + Anthropic IPO S-1 prévu octobre 2026 — format 'me [verb]' sur chaque hook"
+    "SpaceX Starship tentative lundi 20 juillet + ASTS B. Riley upgrade Buy $85 après -38% juillet + Goldman : space stocks 5× plus volatils que S&P — angle thérapeute sur le dip, pas sur le prix",
+    "OpenAI Jalapeno chip (puce interne conçue par leur propre IA pour réduire dépendance Nvidia) + Claude Sonnet 5 war shifts chat→agents + Claude Tag permanent dans Slack — format 'me [verb]' sur chaque",
+    "Anthropic IPO S-1 prévu octobre 2026 — angle patient 'crypto ou IA equity'. Pillar shift : ai_vs_btc 1% du volume → cible 10-15%. Moins de factuel, plus de verdict patient + 'me [verb]' inachevé."
   ],
   "cadence_factor": 1.4,
-  "rationale": "Données 30d : seul tweet >1 like = 'me [verb]' casual (86 likes, 46K vues — 500× mieux que tout le reste). Pillar ROI : ai_vs_btc 0.20 > market_trauma 0.17 > ai_news_take 0.12 > other 0.09. Problème : ai_news_take = 44% du volume au pire ROI, ai_vs_btc < 2% au meilleur ROI. Algo X 2026 : une réponse pèse 150× un like — reply-bait format prioritaire. Hooks du jour : Gemini 3.5 Pro GA, GPT-5.6 permission slip, Xi à WAIC Shanghai, RKLB/ASTS -35% juillet, SpaceX-Cursor $60B, Anthropic C+ safety grade. Caps inchangés (mandat 2026-07-06). Urgence : convertir le volume ai_news_take vers ai_vs_btc + 'me [verb]' + reply-bait verdicts sans explication."
+  "rationale": "Données 30d : 'me [verb]' casual = 90 likes / 47K vues (500× le reste). Pillar ROI : ai_vs_btc 0.25 > market_trauma 0.17 > ai_news_take 0.14 > other 0.10. Problème persistant : ai_news_take = 43% du volume au plus mauvais ROI ; ai_vs_btc = 1% au meilleur ROI. Caps inchangés (mandat 2026-07-06). Hooks du jour : Starship lundi, ASTS Buy upgrade, OpenAI Jalapeno chip, Claude Sonnet 5 agents, Anthropic IPO octobre. Urgence : convertir le volume factuel vers ai_vs_btc + 'me [verb]' inachevé + reply-bait verdict seul."
 }

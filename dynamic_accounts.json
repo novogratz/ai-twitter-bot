@@ -504,7 +504,18 @@
     "MaximeDuclos",
     "ParisCrypto",
     "MarcLavoie_",
-    "LouisGagnonQC"
+    "LouisGagnonQC",
+    "TechCrunchFR",
+    "BabyloneFR",
+    "JeanBaptisteM",
+    "MaellePascal",
+    "CryptoJLQ",
+    "VinzTheViper",
+    "RaphaBouyer",
+    "LionelRigaux",
+    "mickaelbouquet",
+    "CyrilTouffaire",
+    "jasondubois"
   ],
   "en": [
     "Chubby",
@@ -693,7 +704,8 @@
     "SemiAnalysis",
     "JAKE",
     "rahul",
-    "RonnieV"
+    "RonnieV",
+    "NVIDIA"
   ],
   "history": [
     {
@@ -4154,6 +4166,66 @@
     {
       "lang": "fr",
       "handle": "LouisGagnonQC",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "en",
+      "handle": "NVIDIA",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "TechCrunchFR",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "BabyloneFR",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptisteM",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaellePascal",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoJLQ",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "VinzTheViper",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaBouyer",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelRigaux",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelbouquet",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilTouffaire",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "jasondubois",
       "added": "2026-07-18"
     }
   ]
