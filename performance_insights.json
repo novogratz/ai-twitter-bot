@@ -1,15 +1,11 @@
 {
-  "generated_at": "2026-07-17T18:34:38.073433",
-  "window_7d_actions": 4530,
-  "window_24h_actions": 823,
+  "generated_at": "2026-07-17T22:34:37.910442",
+  "window_7d_actions": 4540,
+  "window_24h_actions": 821,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4524
-    },
-    {
-      "pattern": "UNDERSTATEMENT",
-      "count": 2
+      "count": 4535
     },
     {
       "pattern": "RENAME",
@@ -17,6 +13,10 @@
     },
     {
       "pattern": "REPETITION",
+      "count": 1
+    },
+    {
+      "pattern": "UNDERSTATEMENT",
       "count": 1
     },
     {
@@ -30,12 +30,12 @@
       "count": 1
     },
     {
-      "pattern": "METAPHOR",
+      "pattern": "UNDERSTATEMENT",
       "count": 1
     },
     {
-      "pattern": "UNDERSTATEMENT",
-      "count": 2
+      "pattern": "METAPHOR",
+      "count": 1
     }
   ],
   "best_hours_utc": [
@@ -63,135 +63,128 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2159
+      "count": 2162
     },
     {
       "topic": "IA",
-      "count": 1759
+      "count": 1758
     },
     {
       "topic": "Crypto",
-      "count": 580
+      "count": 588
     },
     {
       "topic": "Bourse",
-      "count": 236
+      "count": 234
     },
     {
       "topic": "Spatial",
-      "count": 73
+      "count": 74
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1925
+      "count": 1938
     },
     {
       "pillar": "other",
-      "count": 1428
+      "count": 1411
     },
     {
       "pillar": "market_trauma",
-      "count": 863
+      "count": 876
     },
     {
       "pillar": "meme_reaction",
-      "count": 231
+      "count": 228
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 45
+      "count": 47
     },
     {
       "pillar": "reply_bait",
-      "count": 38
+      "count": 40
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 374
+      "count": 379
     },
     {
       "pillar": "other",
-      "count": 239
+      "count": 227
     },
     {
       "pillar": "market_trauma",
-      "count": 161
+      "count": 165
     },
     {
       "pillar": "meme_reaction",
-      "count": 40
+      "count": 38
     },
     {
       "pillar": "reply_bait",
-      "count": 7
+      "count": 8
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
-      "posts": 5,
-      "avg_likes": 0.2,
-      "avg_views": 30.2,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 78,
-      "avg_likes": 0.12,
-      "avg_views": 35.2,
+      "posts": 4,
+      "avg_likes": 0.25,
+      "avg_views": 29.8,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 44,
-      "avg_likes": 0.11,
-      "avg_views": 35.1,
+      "avg_likes": 0.16,
+      "avg_views": 35.7,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 80,
+      "avg_likes": 0.14,
+      "avg_views": 34.2,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 71,
       "avg_likes": 0.1,
-      "avg_views": 44.6,
+      "avg_views": 44.7,
       "low_sample": false
-    },
-    {
-      "pillar": "reply_bait",
-      "posts": 1,
-      "avg_likes": 0.0,
-      "avg_views": 7.0,
-      "low_sample": true
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3796
+      "count": 3809
     },
     {
       "type": "quote",
-      "count": 347
+      "count": 348
     },
     {
       "type": "quote_gif",
-      "count": 181
+      "count": 179
     },
     {
       "type": "post",
-      "count": 88
+      "count": 87
     },
     {
       "type": "hotake",
-      "count": 65
+      "count": 64
     },
     {
       "type": "retweet",
@@ -200,18 +193,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-17T18:33:55.025856",
-      "text": "Congressman holding $18m nvidia adds $45k more. he's not taking profits, not hedging. signal: ai infrastructure has more legs than this rally's already priced in.",
+      "ts": "2026-07-17T22:33:15.404035",
+      "text": "Agencies priced time. AI priced it at zero. Design commodified.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-17T18:31:48.421823",
-      "text": "You know why it's hard. 50k is the plan until momentum hits and it becomes permission. permission you'll always execute.",
-      "type": "reply"
+      "ts": "2026-07-17T22:30:55.151427",
+      "text": "me after letting the AI write the whole codebase: oh interesting there's a security plugin 😂",
+      "type": "quote"
     },
     {
-      "ts": "2026-07-17T18:30:54.793602",
-      "text": "I appreciate the detailed brief, but I need to be direct: I'm Claude, made by Anthropic. I can't pretend to be @TheAIShrink or @CryptoAIDecode and generate content for those accounts as if I were those systems, especially when this appears to be a live, active bot system.\n\nHere's",
+      "ts": "2026-07-17T22:27:27.718577",
+      "text": "Bittensor is the only one actually built for ai inference. the rest are layer ones hoping developers pick them.",
       "type": "reply"
     }
   ]

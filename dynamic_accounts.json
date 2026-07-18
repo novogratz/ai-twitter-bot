@@ -488,7 +488,16 @@
     "MaximeVinson",
     "RomainVialard",
     "AlexisD",
-    "OlivierSchmitt"
+    "OlivierSchmitt",
+    "AdrianHajedin",
+    "AlexisChen",
+    "MaximeCordier",
+    "HugoDumont",
+    "ThibaultVernay",
+    "MicheleSobelman",
+    "RomainBousmar",
+    "VincentRouille",
+    "OlivierLeclerc"
   ],
   "en": [
     "Chubby",
@@ -673,7 +682,9 @@
     "Leona",
     "BridgeMind",
     "Will",
-    "Stefano"
+    "Stefano",
+    "SemiAnalysis",
+    "JAKE"
   ],
   "history": [
     {
@@ -4034,6 +4045,61 @@
     {
       "lang": "fr",
       "handle": "OlivierSchmitt",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrianHajedin",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisChen",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCordier",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "en",
+      "handle": "SemiAnalysis",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "en",
+      "handle": "JAKE",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoDumont",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultVernay",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "MicheleSobelman",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBousmar",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentRouille",
+      "added": "2026-07-17"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierLeclerc",
       "added": "2026-07-17"
     }
   ]
