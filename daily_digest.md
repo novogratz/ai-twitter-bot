@@ -1016,3 +1016,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 38 views: Nuclear startup. $6B valuation. sole purpose: keeping your AI running.  my patient who called the AI
   - 1 likes / 20 views: My patient who said 'robots won't be a real thing until 2030' just sent me the Agility Robotics anno
   - 1 likes / 19 views: Me treating patients for AI anxiety while my scheduling bot, my note-taking tool, and my billing sof
+
+## 2026-07-18
+
+**Activity** — total actions: 714
+  - by type: reply=601, quote=59, quote_gif=24, post=14, retweet=8, hotake=8
+  - top sources: SEARCH-HOT=414, FEED-SWEEP-FEED=105, FEED-SWEEP-FOLLOWING=64, QUOTE=41, GIF=33, VIP=13, RETWEET=8, RETWEET_QT=7
+  - comedy patterns: UNDERSTATEMENT=1
+  - top reply targets: @polsia=31, @arnaudmercier=13, @Graphseo=9, @TheBTCTherapist=7, @kimmonismus=6
+
+**Followers we follow** (running total): 366
+
+**Top-performing posts scraped today**:
+  - 3 likes / 53 views: Asked the AI barista for a black coffee. It printed a latte with a side of existential dread and cha
+  - 2 likes / 24 views: me reading the Kimi K3 benchmark: . me reading "it's over for Anthropic":
+  - 2 likes / 52 views: me looking broke while doing the work of three people
