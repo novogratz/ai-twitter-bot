@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-19T06:34:37.865781",
-  "window_7d_actions": 4588,
-  "window_24h_actions": 705,
+  "generated_at": "2026-07-19T13:52:20.789923",
+  "window_7d_actions": 4591,
+  "window_24h_actions": 708,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4583
+      "count": 4585
     },
     {
       "pattern": "UNDERSTATEMENT",
-      "count": 2
+      "count": 3
     },
     {
       "pattern": "RENAME",
@@ -26,12 +26,12 @@
       "count": 1
     },
     {
-      "pattern": "UNDERSTATEMENT",
+      "pattern": "RENAME",
       "count": 2
     },
     {
-      "pattern": "RENAME",
-      "count": 2
+      "pattern": "UNDERSTATEMENT",
+      "count": 3
     }
   ],
   "best_hours_utc": [
@@ -48,53 +48,53 @@
       "actions": 216
     },
     {
-      "hour": 9,
-      "actions": 211
+      "hour": 11,
+      "actions": 216
     },
     {
-      "hour": 23,
-      "actions": 208
+      "hour": 9,
+      "actions": 210
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2208
+      "count": 2200
     },
     {
       "topic": "IA",
-      "count": 1769
+      "count": 1778
     },
     {
       "topic": "Crypto",
-      "count": 557
+      "count": 548
     },
     {
       "topic": "Bourse",
-      "count": 255
+      "count": 259
     },
     {
       "topic": "Spatial",
-      "count": 63
+      "count": 65
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1986
+      "count": 1992
     },
     {
       "pillar": "other",
-      "count": 1422
+      "count": 1417
     },
     {
       "pillar": "market_trauma",
-      "count": 884
+      "count": 882
     },
     {
       "pillar": "meme_reaction",
-      "count": 218
+      "count": 221
     },
     {
       "pillar": "ai_vs_btc",
@@ -102,55 +102,55 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 38
+      "count": 39
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 307
+      "count": 318
     },
     {
       "pillar": "other",
-      "count": 215
+      "count": 210
     },
     {
       "pillar": "market_trauma",
-      "count": 144
+      "count": 142
     },
     {
       "pillar": "meme_reaction",
-      "count": 29
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 26
     },
     {
       "pillar": "reply_bait",
-      "count": 4
+      "count": 7
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 79,
-      "avg_likes": 0.24,
-      "avg_views": 35.9,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 41,
-      "avg_likes": 0.2,
-      "avg_views": 37.0,
+      "posts": 78,
+      "avg_likes": 0.22,
+      "avg_views": 34.0,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 77,
       "avg_likes": 0.19,
-      "avg_views": 33.1,
+      "avg_views": 30.6,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 42,
+      "avg_likes": 0.17,
+      "avg_views": 29.2,
       "low_sample": false
     },
     {
@@ -164,15 +164,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3866
+      "count": 3870
     },
     {
       "type": "quote",
-      "count": 350
+      "count": 348
     },
     {
       "type": "quote_gif",
-      "count": 169
+      "count": 172
     },
     {
       "type": "post",
@@ -180,7 +180,7 @@
     },
     {
       "type": "hotake",
-      "count": 66
+      "count": 64
     },
     {
       "type": "retweet",
@@ -189,18 +189,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-19T06:34:36.570721",
-      "text": "Optimus mines on the moon, Colossus plans the operations, Starship delivers the robots. Elon's not building a space program, he's building the supply chain that makes it inevitable.",
+      "ts": "2026-07-19T13:50:04.291194",
+      "text": "Le schéma wyckoff c'est juste le dessin d'une courbe en dents de scie. phase d'accumulation = le marché dort. phase d'acquisition = le marché ronfle.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-19T06:33:11.193560",
-      "text": "Chinese models are sharp. Thinking Machines are faster. OpenAI at $5B burn isn't rust-belt, that's consolidation. The game is tightening, not flipping.",
+      "ts": "2026-07-19T13:48:59.706840",
+      "text": "The S&P is up 30% because seven companies did the work.\n\nThe other 493 are just background noise waiting to get deleted by AI.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-19T06:32:54.856988",
-      "text": "Most 'AI companies' are OpenAI resellers with better UI. The second a cheaper alternative ships, you find out you built a feature, not a company.",
+      "ts": "2026-07-19T13:47:09.444484",
+      "text": "CI/CD for humans is \"try, crash, retry.\" For AI it's \"hallucinate, deploy, monitor until the CEO sees it.\" day 53 is just the start of the 90% refactor cycle.",
       "type": "reply"
     }
   ]

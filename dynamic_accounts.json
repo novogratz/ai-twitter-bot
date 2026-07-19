@@ -557,7 +557,11 @@
     "MathieuLarose",
     "TanguyHerve",
     "RomainLemoine_",
-    "SylvainLapierre"
+    "SylvainLapierre",
+    "Nassau777",
+    "MaximeMiche",
+    "MarcDesmarais",
+    "SergeYegoroff"
   ],
   "en": [
     "Chubby",
@@ -754,7 +758,10 @@
     "Tenobrus",
     "EtherBubu",
     "God",
-    "Markos"
+    "Markos",
+    "codila",
+    "JackTheRippler",
+    "Addyyy"
   ],
   "history": [
     {
@@ -4520,6 +4527,41 @@
     {
       "lang": "fr",
       "handle": "SylvainLapierre",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "en",
+      "handle": "codila",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "en",
+      "handle": "JackTheRippler",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "en",
+      "handle": "Addyyy",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "Nassau777",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMiche",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcDesmarais",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "SergeYegoroff",
       "added": "2026-07-19"
     }
   ]

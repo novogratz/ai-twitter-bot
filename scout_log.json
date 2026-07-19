@@ -1,71 +1,5 @@
 [
   {
-    "ts": "2026-06-16T01:27:49.367996",
-    "raw_count": 8,
-    "kept_count": 8,
-    "accounts_added": 8,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ArnaudMensah_",
-        "region": "france",
-        "niche": "tech",
-        "followers": 145000,
-        "reason": "L'ancien de H1Z1 et du Metaverse. Il passe de la tech \u00e0 la finance d\u00e9centralis\u00e9e sans cligner des yeux, avec une franchise rare."
-      },
-      {
-        "handle": "MaxRiesgo",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "Le roi de la macro en FR. Il analyse les march\u00e9s sans se voiler la face, ses tweets sont des le\u00e7ons d'\u00e9conomie gratuites."
-      },
-      {
-        "handle": "DessaintS",
-        "region": "france",
-        "niche": "ai",
-        "followers": 62000,
-        "reason": "Fondateur de Hugging Face. Il diffuse la culture Open Source avec une \u00e9nergie contagieuse, souvent en FR."
-      },
-      {
-        "handle": "LuisRojas",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "Journaliste crypto bas\u00e9 \u00e0 NYC mais qui twitte en FR. Il a l'\u0153il pour les projets \u00e9mergents avant qu'ils ne soient mainstream."
-      },
-      {
-        "handle": "JeanBaptisteP",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 45000,
-        "reason": "Le d\u00e9l\u00e9gu\u00e9 de la CMM au Qu\u00e9bec. Il couvre la fintech et l'innovation financi\u00e8re qu\u00e9b\u00e9coise avec une pr\u00e9cision chirurgical."
-      },
-      {
-        "handle": "ClementMoulin_",
-        "region": "france",
-        "niche": "ai",
-        "followers": 32000,
-        "reason": "Co-founder de Mistral AI. Twitte technique, pas de hype, et explique l'IA comme si tu avais 5 ans mais avec un niveau ing\u00e9nieur."
-      },
-      {
-        "handle": "MaximeTremblay_",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Data scientist et chercheur. Il d\u00e9cortique les derniers papiers d'IA en fran\u00e7ais clair, sans jargon incompr\u00e9hensible."
-      },
-      {
-        "handle": "RomainBoulanger",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "Ex-banquier devenu investisseur angel. Il critique les startups fintech sans piti\u00e9, ses threads sont des p\u00e9pites."
-      }
-    ],
-    "summary": "Un mix solide de fondateurs tech (Mistral, HF) et d'analystes march\u00e9 (Macro, Fintech). Pas de vendeurs de r\u00eaves, que des gens qui construisent ou analysent le secteur."
-  },
-  {
     "ts": "2026-06-16T05:32:48.612922",
     "raw_count": 8,
     "kept_count": 3,
@@ -8874,5 +8808,50 @@
       }
     ],
     "summary": "J'ai fouill\u00e9 dans les profils des founders et des analystes qui ne vendent pas de 'guru' status. Des vrais techniciens qui tweetent pour partager, pas pour enfler leur ego LinkedIn."
+  },
+  {
+    "ts": "2026-07-19T12:00:48.610245",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Nassau777",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Le roi du storytelling crypto en FR, tweete avec une plume de blogueur et non de trader de day."
+      },
+      {
+        "handle": "MaximeMiche",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Founders FR aux USA, tweete l'actu IA et startups tech, mix parfait US/FR."
+      },
+      {
+        "handle": "MarcDesmarais",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 25000,
+        "reason": "Le gars de Desjardins qui explique la bourse sans endormir le troupeau, pur Qu\u00e9bec."
+      },
+      {
+        "handle": "BenjaminDebuysere",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Ex-BNP, pur jargon fintech/VC, tweete des insights sur le financement de la deep tech en FR."
+      },
+      {
+        "handle": "SergeYegoroff",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Le Qu\u00e9b\u00e9cois qui d\u00e9cortique les cycles altcoin avec une pr\u00e9cision chirurgicale."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le gras pour garder les cerveaux qui tweetent, pas les influenceurs qui vendent du r\u00eave. Le lot couvre les 3 zones avec une pr\u00e9dominance technique."
   }
 ]
