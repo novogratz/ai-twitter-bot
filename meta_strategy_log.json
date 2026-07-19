@@ -57,5 +57,26 @@
     ],
     "cadence_factor": 1.4,
     "rationale": "Suppression inactive, on reprend les caps agressifs pour maximiser la surface. Focus sur xAI pour capter l'engouement actuel et Nvidia pour le cynisme boursier."
+  },
+  {
+    "ts": "2026-07-18T22:34:37.807000",
+    "caps": {
+      "MAX_NEWS_PER_DAY": 12,
+      "MAX_HOTAKES_PER_DAY": 25,
+      "MAX_QUOTES_PER_DAY": 180,
+      "MAX_RETWEETS_PER_DAY": 10,
+      "MAX_BREAKOUTS_PER_DAY": 2,
+      "MAX_SPICY_PER_DAY": 2,
+      "MAX_REPLIES_PER_CYCLE": 40,
+      "FOLLOW_BLAST_PER_CYCLE": 4,
+      "LIKE_BOT_PER_CYCLE": 50
+    },
+    "topic_focus": [
+      "OpenAI Jalapeno chip : la puce interne q",
+      "Claude Sonnet 5 & Agentic AI : on passe ",
+      "Anthropic IPO S-1 : l'opportunité de sor"
+    ],
+    "cadence_factor": 1.3,
+    "rationale": "Les hotakes sur 'AI agents' sont des losers relatifs (-1 like), on pivote donc vers Jalapeno et Agentic AI qui ont plus de traction. On garde les quotes élevées pour l'exposition mais on coupe le bruit factuel (news 12/jour) au profit de l'angle 'pacte social du travail'. L'IPO Anthropic sert de pivot pour capturer les traders qui fuient le S&P trop concentré."
   }
 ]
