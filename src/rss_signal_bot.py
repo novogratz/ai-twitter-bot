@@ -47,6 +47,14 @@ RSS_FEEDS = [
     ("Ars Technica",      "https://feeds.arstechnica.com/arstechnica/index"),
     ("Wired",             "https://www.wired.com/feed/rss"),
     ("VentureBeat AI",    "https://venturebeat.com/category/ai/feed/"),
+    # AI-primary sources (operator 2026-07-19: "bring more external news
+    # with updates on AI") — lab blogs are the fastest first-party signal.
+    ("OpenAI Blog",       "https://openai.com/news/rss.xml"),
+    ("Google AI Blog",    "https://blog.google/technology/ai/rss/"),
+    ("DeepMind Blog",     "https://deepmind.google/blog/rss.xml"),
+    ("HuggingFace Blog",  "https://huggingface.co/blog/feed.xml"),
+    ("NVIDIA Blog",       "https://blogs.nvidia.com/feed/"),
+    ("Simon Willison",    "https://simonwillison.net/atom/everything/"),
     ("MIT Tech Review",   "https://www.technologyreview.com/feed/"),
     # Crypto press
     ("CoinDesk",          "https://www.coindesk.com/arc/outboundfeeds/rss/"),
