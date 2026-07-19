@@ -4,6 +4,29 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-07-19 round 4 — LIKES+FOLLOWS PUSH (operator: "do all of them";
+> profile makeover done manually by operator):** four data-backed levers.
+> 1. **"me [verb]" winner format productized** — our single biggest measured
+>    hit (92 likes / 49K views vs 0-3 baseline, from live_strategy's own
+>    analyzer rationale) is now a named format in the hotake + quote
+>    prompts, RATIONED ~1 in 5 / never twice in a row (anti-bot-tell).
+> 2. **`src/follow_engagers_bot.py` — follow your engagers** (~50 min, 2/
+>    cycle, 10/day): follows the people who replied to us — the highest
+>    follow-back-probability follows — sourced FREE from replied_back.json
+>    (no new Safari). `follow_account(engager=True)`: quality gate skips
+>    size/niche (behavior proves both), KEEPS the English gate + all caps/
+>    spacing/churn; big-media handles skipped; attempted-once-ever memory.
+> 3. **`src/self_quote_bot.py` — quote-yourself recycler** (pending since
+>    06-07): 1/day evening QRT of our own 20-48h winner (>=3 likes) with
+>    the update/second-take/aged-check angle. Ship-gated state (hot_quote
+>    slot-burn family); model may SKIP (hollow self-quote reads desperate).
+> 4. **Best-hours slot weighting**: analyzer says 20:00-23:00 ET is where
+>    engagement lives; grid ended at 22:00 — added 20:15 / 21:15 / 22:30 /
+>    23:00 slots to densify the proven window.
+> Guards: `test_follow_engagers_lane_and_gate_bypass`,
+> `test_self_quote_recycles_own_winner_ship_gated`,
+> `test_winner_format_in_prompts_and_evening_slots`.
+
 > **2026-07-19 round 3 — MORE NEWS + SAVVY TECH MOM (operator: "bring more
 > external news with updates on AI and also comment and post more... be less
 > a troll and more a savvy tech mom"):**

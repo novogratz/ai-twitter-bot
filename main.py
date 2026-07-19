@@ -30,6 +30,8 @@ from src.engage_bot import safe_run_engage_cycle
 from src.notify_bot import safe_run_notify_cycle, safe_run_boost_cycle, safe_run_replyback_cycle
 from src.direct_reply import safe_run_direct_reply_cycle
 from src.debate_bot import safe_run_debate_cycle
+from src.follow_engagers_bot import safe_run_follow_engagers_cycle
+from src.self_quote_bot import safe_run_self_quote_cycle
 from src.engagement_targeting import safe_run_engagement_targeting_cycle
 from src.discover_bot import safe_run_discovery_cycle
 from src.roast_pgm_bot import safe_run_roast_pgm_cycle
@@ -549,6 +551,9 @@ def main():
             (17, 30, False), (18, 0, False), (18, 30, False), (19, 0, False),
             (19, 30, False), (20, 0, False), (20, 30, False), (21, 0, False),
             (21, 30, False), (22, 0, False),
+            # 2026-07-19: analyzer's measured best hours are 20:00-23:00 ET
+            # — densify the proven window instead of spreading evenly.
+            (20, 15, False), (21, 15, False), (22, 30, False), (23, 0, False),
         ):
             _label = f"{_slot_hour:02d}:{_slot_min:02d}ET"
             scheduler.add_job(
@@ -631,6 +636,29 @@ def main():
             safe_run_debate_cycle,
             trigger=IntervalTrigger(minutes=12),
             id="debate_job",
+        )
+
+        # Follow-your-engagers (2026-07-19): a small daily trickle following
+        # the people who replied to us — the highest follow-back-probability
+        # follows on the platform. Data source is replied_back.json (free);
+        # every follow goes through the chokepoint (engager=True skips only
+        # the size/niche gates).
+        log.info("Follow-engagers bot: following recent repliers every ~50 min (2/cycle, 10/day).")
+        scheduler.add_job(
+            safe_run_follow_engagers_cycle,
+            trigger=IntervalTrigger(minutes=50),
+            id="follow_engagers_job",
+        )
+
+        # Self-quote recycler (2026-07-19, pending since 06-07): 1/day QRT
+        # of our own 20-48h winner with the follow-up angle, tried during
+        # the analyzer's measured best hours (evening ET).
+        log.info("Self-quote recycler: 1/day evening QRT of own winner.")
+        scheduler.add_job(
+            safe_run_self_quote_cycle,
+            trigger=CronTrigger(hour="19-22", minute=40,
+                                timezone="America/New_York", jitter=600),
+            id="self_quote_job",
         )
 
         # Boost bot — validated growth lever (200 views / 6 likes per cycle).
