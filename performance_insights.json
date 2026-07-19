@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-18T22:34:38.606234",
-  "window_7d_actions": 4586,
-  "window_24h_actions": 720,
+  "generated_at": "2026-07-19T02:34:37.978474",
+  "window_7d_actions": 4578,
+  "window_24h_actions": 714,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4581
+      "count": 4573
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -37,15 +37,15 @@
   "best_hours_utc": [
     {
       "hour": 0,
-      "actions": 239
+      "actions": 237
     },
     {
       "hour": 1,
-      "actions": 235
+      "actions": 230
     },
     {
       "hour": 2,
-      "actions": 222
+      "actions": 216
     },
     {
       "hour": 9,
@@ -53,21 +53,21 @@
     },
     {
       "hour": 23,
-      "actions": 204
+      "actions": 208
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2206
+      "count": 2197
     },
     {
       "topic": "IA",
-      "count": 1771
+      "count": 1770
     },
     {
       "topic": "Crypto",
-      "count": 567
+      "count": 559
     },
     {
       "topic": "Bourse",
@@ -75,68 +75,68 @@
     },
     {
       "topic": "Spatial",
-      "count": 62
+      "count": 63
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1965
+      "count": 1973
     },
     {
       "pillar": "other",
-      "count": 1418
+      "count": 1422
     },
     {
       "pillar": "market_trauma",
-      "count": 888
+      "count": 882
     },
     {
       "pillar": "meme_reaction",
-      "count": 226
+      "count": 221
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 48
+      "count": 41
     },
     {
       "pillar": "reply_bait",
-      "count": 41
+      "count": 39
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 324
+      "count": 311
     },
     {
       "pillar": "other",
-      "count": 206
+      "count": 218
     },
     {
       "pillar": "market_trauma",
-      "count": 145
+      "count": 144
     },
     {
       "pillar": "meme_reaction",
-      "count": 35
+      "count": 31
     },
     {
       "pillar": "reply_bait",
-      "count": 6
+      "count": 5
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 80,
+      "posts": 78,
       "avg_likes": 0.23,
-      "avg_views": 35.5,
+      "avg_views": 36.3,
       "low_sample": false
     },
     {
@@ -148,9 +148,9 @@
     },
     {
       "pillar": "other",
-      "posts": 73,
+      "posts": 75,
       "avg_likes": 0.16,
-      "avg_views": 32.7,
+      "avg_views": 33.0,
       "low_sample": false
     },
     {
@@ -164,15 +164,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3850
+      "count": 3854
     },
     {
       "type": "quote",
-      "count": 354
+      "count": 349
     },
     {
       "type": "quote_gif",
-      "count": 177
+      "count": 172
     },
     {
       "type": "post",
@@ -184,23 +184,23 @@
     },
     {
       "type": "retweet",
-      "count": 55
+      "count": 53
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-18T22:34:18.685009",
-      "text": "The thesis is sound but inverted. VST's capacity doesn't scale with AI demand, it gets rationed. when hyperscalers bid up power, margins expand on fixed assets. that's a yield play on scarcity, not growth. different math entirely.",
+      "ts": "2026-07-19T02:34:25.974744",
+      "text": "Not a sector rotation. ai hype plays get ditched, ai infrastructure gets reinvested. nvidia datacenter 70% margin vs defensive yielding 5%. one has a pulse, one doesn't",
       "type": "reply"
     },
     {
-      "ts": "2026-07-18T22:33:44.493160",
-      "text": "Audits prevent lawsuits, yes. companies usually learn their AI hallucinates after the lawsuit though, not before.",
+      "ts": "2026-07-19T02:31:43.004858",
+      "text": "DRAM up 300% because builders need it, suppliers know it, there's no substitute.\n\nThat's rent extraction.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-18T22:32:59.088632",
-      "text": "He's right about corporate adoption and he holds $50B of Bitcoin. Both can be true. Both probably are.",
+      "ts": "2026-07-19T02:26:56.725250",
+      "text": "Yang didn't see an information gap. He saw that China's labs could execute while the West debated whether to build safe or smart.",
       "type": "reply"
     }
   ]
