@@ -546,7 +546,9 @@
     "JulienHoffman",
     "MickaelPerot",
     "PierreAndrieux",
-    "MarcRavon"
+    "MarcRavon",
+    "AdrienHajedin",
+    "JulienNepveu"
   ],
   "en": [
     "Chubby",
@@ -742,7 +744,8 @@
     "sunnydecree",
     "Tenobrus",
     "EtherBubu",
-    "God"
+    "God",
+    "Markos"
   ],
   "history": [
     {
@@ -4448,6 +4451,21 @@
     {
       "lang": "fr",
       "handle": "MarcRavon",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "en",
+      "handle": "Markos",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienHajedin",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienNepveu",
       "added": "2026-07-18"
     }
   ]

@@ -1,78 +1,5 @@
 [
   {
-    "ts": "2026-06-15T14:58:12.222212",
-    "raw_count": 10,
-    "kept_count": 9,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThomasBaudel",
-        "region": "france",
-        "niche": "tech",
-        "followers": 52000,
-        "reason": "CEO de Gorgias. Il parle SaaS, IA et product avec une clart\u00e9 chirurgicale. Z\u00e9ro blabla."
-      },
-      {
-        "handle": "GauthierBretelle",
-        "region": "france",
-        "niche": "ai",
-        "followers": 48000,
-        "reason": "Directeur d'IA chez Doctolib. Il d\u00e9cortique le LLM sans jargon inutile. C'est rare, c'est du solide."
-      },
-      {
-        "handle": "PierreOlivier",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 38000,
-        "reason": "Le roi de la micro-influence crypto FR. Il twitte peu mais juste. Si Pierre tweet, \u00e7a bouge."
-      },
-      {
-        "handle": "MarcLemay",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 28000,
-        "reason": "Le barde du march\u00e9 qu\u00e9b\u00e9cois. Il rend la finance accessible sans \u00eatre condescendant. Une r\u00e9f\u00e9rence \u00e0 Qu\u00e9bec."
-      },
-      {
-        "handle": "FrenchTechSF",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Le hub des francos \u00e0 SF. On y trouve les startups qui recrutent en France mais paient en USD. L'info bubble FR-US."
-      },
-      {
-        "handle": "AlexisDroin",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 22000,
-        "reason": "CEO de Qonto. Il couvre la fintech, la SaaS et l'\u00e9co. Son thread sur les lev\u00e9es de fonds est une mine d'or."
-      },
-      {
-        "handle": "VincentVezina",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Venteur. Il couvre le march\u00e9 tech qu\u00e9b\u00e9cois avec finesse. Pas de hype, que du concret sur les lev\u00e9es."
-      },
-      {
-        "handle": "RomainBoullenger",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Ex-fonds d'investissement. Il analyse les bilans avec humour. Pas un guru, un mec qui comprend la math."
-      },
-      {
-        "handle": "JeanPhilippeBrouillette",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Crypto Quebec. Il fait le pont entre la hype nord-am\u00e9ricaine et la r\u00e9alit\u00e9 r\u00e9gulatrice qu\u00e9b\u00e9coise. Essentiel."
-      }
-    ],
-    "summary": "La France domine sur l'IA (Mistral) et la Fintech, le Qu\u00e9bec est une mine d'or pour le trading pur et dur. SF reste le meilleur filtre pour voir ce que la diaspora fran\u00e7aise fait aux US. Pas de vendeurs de r\u00eave, que du gras."
-  },
-  {
     "ts": "2026-06-15T16:46:05.645113",
     "raw_count": 13,
     "kept_count": 13,
@@ -9042,5 +8969,29 @@
       }
     ],
     "summary": "Le mix est solide : des pros du trading technique qui font des charts (Ravon, Ravon), des macro-crypto sans blabla (Perot, Pellerin) et un focus IA/Founders pro (Benedetti, Bessac). On \u00e9vite les vendeurs de r\u00eaves pour coller \u00e0 l'actu."
+  },
+  {
+    "ts": "2026-07-18T22:47:39.040400",
+    "raw_count": 10,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AdrienHajedin",
+        "region": "france",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Tutoriels LLM en vid\u00e9o. Il montre comment build, pas juste parler. Sa communaut\u00e9 est active, il r\u00e9pond, et il balance des projets open source qui marchent."
+      },
+      {
+        "handle": "JulienNepveu",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Analyste ind\u00e9pendant au Qu\u00e9bec. Il couvre le march\u00e9 US avec un d\u00e9calage francophone. Moins de blabla, plus de chartes et de setups."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des 'gourous' Telegram pour ne garder que des b\u00e2tisseurs, des analystes de terrain et des fondateurs. C'est une liste pour ceux qui pr\u00e9f\u00e8rent comprendre comment l'argent bouge plut\u00f4t que de regarder des chandeliers avec des lunettes de soleil."
   }
 ]
