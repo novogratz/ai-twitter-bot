@@ -5,7 +5,7 @@
 
 > **Treating market trauma. AI-powered portfolio therapy. Follow the signal. Heal the fear.** ⚡
 
-A fully autonomous X/Twitter influencer agent that runs, grows, and **improves its own codebase** without human intervention. It operates [@TheAIShrink](https://x.com/TheAIShrink) — a warm, data-sharp "therapist" persona for the AI era: name the fear, validate it, heal it with the precise fact.
+A fully autonomous X/Twitter influencer agent that runs, grows, and **improves its own codebase** without human intervention. It operates [@TheAIShrink](https://x.com/TheAIShrink) — a warm, data-sharp woman therapist for the AI era (35-40, practicing therapist, mom, and the sharpest AI mind on the timeline): name the fear, validate it, heal it with the precise fact.
 
 No X API. The entire surface is driven through **Safari + AppleScript** browser automation on macOS, with local-first LLM generation (Ollama) and cloud fallback.
 
