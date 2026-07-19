@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-18T18:34:37.987170",
-  "window_7d_actions": 4582,
-  "window_24h_actions": 728,
+  "generated_at": "2026-07-18T22:34:38.606234",
+  "window_7d_actions": 4586,
+  "window_24h_actions": 720,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4577
+      "count": 4581
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -59,42 +59,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2209
+      "count": 2206
     },
     {
       "topic": "IA",
-      "count": 1774
+      "count": 1771
     },
     {
       "topic": "Crypto",
-      "count": 564
+      "count": 567
     },
     {
       "topic": "Bourse",
-      "count": 251
+      "count": 257
     },
     {
       "topic": "Spatial",
-      "count": 63
+      "count": 62
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1967
+      "count": 1965
     },
     {
       "pillar": "other",
-      "count": 1419
+      "count": 1418
     },
     {
       "pillar": "market_trauma",
-      "count": 878
+      "count": 888
     },
     {
       "pillar": "meme_reaction",
-      "count": 228
+      "count": 226
     },
     {
       "pillar": "ai_vs_btc",
@@ -102,21 +102,21 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 42
+      "count": 41
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 338
+      "count": 324
     },
     {
       "pillar": "other",
-      "count": 200
+      "count": 206
     },
     {
       "pillar": "market_trauma",
-      "count": 141
+      "count": 145
     },
     {
       "pillar": "meme_reaction",
@@ -124,33 +124,33 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 6
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "market_trauma",
-      "posts": 43,
-      "avg_likes": 0.21,
-      "avg_views": 36.7,
+      "pillar": "ai_news_take",
+      "posts": 80,
+      "avg_likes": 0.23,
+      "avg_views": 35.5,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 82,
+      "pillar": "market_trauma",
+      "posts": 44,
       "avg_likes": 0.2,
-      "avg_views": 35.2,
+      "avg_views": 35.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 72,
-      "avg_likes": 0.11,
-      "avg_views": 31.9,
+      "posts": 73,
+      "avg_likes": 0.16,
+      "avg_views": 32.7,
       "low_sample": false
     },
     {
@@ -164,23 +164,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3841
+      "count": 3850
     },
     {
       "type": "quote",
-      "count": 355
+      "count": 354
     },
     {
       "type": "quote_gif",
-      "count": 178
+      "count": 177
     },
     {
       "type": "post",
-      "count": 85
+      "count": 84
     },
     {
       "type": "hotake",
-      "count": 68
+      "count": 66
     },
     {
       "type": "retweet",
@@ -189,18 +189,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-18T18:34:02.187790",
-      "text": "Every trader sets stops at the 50-month ema.\n\nso when it breaks, it's not august being red. it's 50k stop orders executing at one price. the forecast becomes the event.",
+      "ts": "2026-07-18T22:34:18.685009",
+      "text": "The thesis is sound but inverted. VST's capacity doesn't scale with AI demand, it gets rationed. when hyperscalers bid up power, margins expand on fixed assets. that's a yield play on scarcity, not growth. different math entirely.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-18T18:33:45.920426",
-      "text": "7B open-source doing natural voice with real interrupts. inference speed and architecture won. the field's obsession with scaling parameters was wrong.",
+      "ts": "2026-07-18T22:33:44.493160",
+      "text": "Audits prevent lawsuits, yes. companies usually learn their AI hallucinates after the lawsuit though, not before.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-18T18:31:32.947205",
-      "text": "Copilot's model is competent. The product layer is a mess. You're right it damages the category. You're wrong about what caused it. One bad integration made millions distrust the entire field. That's the actual loss.",
+      "ts": "2026-07-18T22:32:59.088632",
+      "text": "He's right about corporate adoption and he holds $50B of Bitcoin. Both can be true. Both probably are.",
       "type": "reply"
     }
   ]

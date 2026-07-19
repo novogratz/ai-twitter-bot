@@ -538,7 +538,15 @@
     "VinzDemos",
     "CryptoCdn",
     "SylvainPigeard",
-    "JulienBonn"
+    "JulienBonn",
+    "JulienDessing",
+    "ThomasBouche",
+    "AlexisDeBourgon",
+    "MathieuDussault",
+    "JulienHoffman",
+    "MickaelPerot",
+    "PierreAndrieux",
+    "MarcRavon"
   ],
   "en": [
     "Chubby",
@@ -732,7 +740,9 @@
     "molson",
     "Cobie",
     "sunnydecree",
-    "Tenobrus"
+    "Tenobrus",
+    "EtherBubu",
+    "God"
   ],
   "history": [
     {
@@ -4388,6 +4398,56 @@
     {
       "lang": "fr",
       "handle": "JulienBonn",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDessing",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBouche",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDeBourgon",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDussault",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienHoffman",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "en",
+      "handle": "EtherBubu",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "en",
+      "handle": "God",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelPerot",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreAndrieux",
+      "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcRavon",
       "added": "2026-07-18"
     }
   ]
