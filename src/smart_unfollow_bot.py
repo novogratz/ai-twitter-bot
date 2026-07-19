@@ -159,14 +159,31 @@ def _build_keep_set() -> set:
     return keep
 
 
+def _follow_target_max() -> int:
+    """Operator 2026-07-19: 'periodically unfollow some accounts — not too
+    many but still do it so we keep around 600-700 following max.' The bot
+    trickle-unfollows ONLY while following > this target, then holds.
+    Read at call time (side-effect-env rule)."""
+    return int(os.environ.get("FOLLOW_TARGET_MAX", "700"))
+
+
 def run_unfollow_cycle():
-    # 2026-06-07 operator: "don't unfollow in this bot, I'll be the one doing
-    # unfollow myself." Cap 0 = unfollowing fully OFF — bail before any
-    # Safari work so the cycle costs nothing. Read at call time so a live
-    # config edit takes effect without restart.
+    # Cap 0 = unfollowing fully OFF — bail before any Safari work so the
+    # cycle costs nothing. Read at call time so a live config edit takes
+    # effect without restart. (2026-07-19: operator re-enabled a trickle —
+    # supersedes the 2026-06-07 operator-only rule.)
     from . import config as _cfg
-    if _cfg.MAX_UNFOLLOWS_PER_DAY <= 0 or UNFOLLOW_CAP_PER_CYCLE <= 0:
+    per_cycle = int(os.environ.get("UNFOLLOW_CAP_PER_CYCLE", "15"))
+    if _cfg.MAX_UNFOLLOWS_PER_DAY <= 0 or per_cycle <= 0:
         log.info("[UNFOLLOW] Disabled (cap 0 — operator unfollows manually). Skipping.")
+        return
+    # Target hold: at/below FOLLOW_TARGET_MAX the account is where the
+    # operator wants it — no pruning, no Safari work this cycle.
+    from .action_guard import current_counts
+    _, following_count = current_counts()
+    target = _follow_target_max()
+    if following_count is not None and following_count <= target:
+        log.info(f"[UNFOLLOW] Following {following_count} <= target {target} — holding, no prune.")
         return
     log.info("[UNFOLLOW] Scraping /following and /followers...")
     following = _scrape_handle_list(f"https://x.com/{BOT_HANDLE}/following", 200)
@@ -197,7 +214,7 @@ def run_unfollow_cycle():
 
     # Cap. Random sample so we don't unfollow alphabetically.
     random.shuffle(candidates)
-    targets = candidates[:UNFOLLOW_CAP_PER_CYCLE]
+    targets = candidates[:per_cycle]
     log.info(f"[UNFOLLOW] Unfollowing {len(targets)}: {targets}")
 
     # Also maintain followed_accounts.json so we don't try to re-follow

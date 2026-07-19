@@ -1192,6 +1192,43 @@ def _parse_follower_count(text: str) -> int:
     return int(n * (1_000_000 if suffix == "m" else 1_000 if suffix == "k" else 1))
 
 
+# Operator 2026-07-19: "follow US / english accounts not foreigner langage
+# follows". Non-Latin scripts (CJK, Cyrillic, Arabic, Hangul, Thai, Hebrew,
+# Devanagari) — accented Latin (José, Müller) intentionally NOT matched.
+_NON_LATIN_SCRIPT_RE = re.compile(
+    "["
+    "Ѐ-ӿ"   # Cyrillic
+    "֐-׿"   # Hebrew
+    "؀-ۿ"   # Arabic
+    "ऀ-ॿ"   # Devanagari
+    "฀-๿"   # Thai
+    "぀-ヿ"   # Hiragana + Katakana
+    "㄰-㆏"   # Hangul compat jamo
+    "一-鿿"   # CJK unified
+    "가-힯"   # Hangul syllables
+    "]"
+)
+# Common function words of major Latin-script languages that are rare in
+# English bios. ≥3 hits = the bio is written in that language, not just
+# quoting a name. Kept short on purpose — precision over recall.
+_NON_EN_WORDS_RE = re.compile(
+    r"\b(les|des|une|avec|pour|dans|vous|nous|los|las|para|desde|und|der|"
+    r"nicht|für|gli|sono|anche|não|você|uma|bir|için|"
+    r"değil|yang|dan|untuk)\b",
+    re.IGNORECASE,
+)
+
+
+def _looks_non_english_profile(name: str, bio: str) -> str:
+    """Return a reject reason if the profile reads non-English, else ''."""
+    blob = f"{name or ''} {bio or ''}"
+    if len(_NON_LATIN_SCRIPT_RE.findall(blob)) >= 3:
+        return "non-English profile (non-Latin script)"
+    if len(_NON_EN_WORDS_RE.findall(blob)) >= 3:
+        return "non-English profile (foreign-language bio)"
+    return ""
+
+
 def _follow_quality_decision(followers: int, bio: str, name: str,
                              whitelisted: bool) -> tuple:
     """Pure gate logic → (ok, reason). Env read at call time."""
@@ -1202,6 +1239,10 @@ def _follow_quality_decision(followers: int, bio: str, name: str,
         return (False, "followers count unreadable — won't follow blind")
     if followers < min_followers:
         return (False, f"too small ({followers} followers < {min_followers})")
+    if os.environ.get("FOLLOW_REQUIRE_ENGLISH", "1") == "1":
+        why = _looks_non_english_profile(name, bio)
+        if why:
+            return (False, why)
     if os.environ.get("FOLLOW_REQUIRE_NICHE", "1") == "1":
         blob = f"{name or ''} {bio or ''}"
         if not _NICHE_BIO_RE.search(blob):
