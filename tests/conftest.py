@@ -103,4 +103,9 @@ def _no_prod_state(monkeypatch, tmp_path):
     monkeypatch.setattr(_cg, "_HISTORY_FILE", hist)
     from src import reply_bot as _rb
     monkeypatch.setattr(_rb, "REPLIED_FILE", _cfg.REPLIED_FILE)
+    # personality.json: log_reply -> personality_store.record_interaction
+    # writes dossiers — a test author leaked into prod 2026-07-19 (same
+    # family as the 2026-06-09 fixture pollution).
+    from src import personality_store as _ps
+    monkeypatch.setattr(_ps, "PERSONALITY_FILE", str(tmp_path / "personality.json"))
     yield
