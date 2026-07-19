@@ -1,106 +1,5 @@
 [
   {
-    "ts": "2026-06-15T16:46:05.645113",
-    "raw_count": 13,
-    "kept_count": 13,
-    "accounts_added": 11,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "sylvain_leveque",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "Le patron de Coinhouse. Il a surv\u00e9cu aux bear markets, tweet en FR, et sa niche crypto/finance est pure. Pas de formation \u00e0 97\u20ac dans sa bio, juste des posts d'industriel."
-      },
-      {
-        "handle": "sylvain_leveque",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "D\u00e9j\u00e0 cit\u00e9 pour la crypto, on le garde car il est incontournable en FR."
-      },
-      {
-        "handle": "thomasbosc",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 75000,
-        "reason": "L'anti-roi de l'analyse macro. Il tweet en fran\u00e7ais, il est clair, et ses posts sur l'inflation et les taux sont les seuls qui ne dorment pas sur place."
-      },
-      {
-        "handle": "maxime_gd",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Le fondateur de Qonto. Il couvre la fintech FR avec pr\u00e9cision, tweet en fran\u00e7ais, et balance des insights B2B qui valent plus que tes 50 abonnements Bloomberg."
-      },
-      {
-        "handle": "jlmichel",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "L'homme le plus lu sur les valeurs fran\u00e7aises chez les particuliers. Il tweet souvent en FR, il est pragmatique, et il n'est pas encore devenu un influenceur TikTok en costard."
-      },
-      {
-        "handle": "louis_arnal",
-        "region": "france",
-        "niche": "ia",
-        "followers": 22000,
-        "reason": "Head of AI chez Hugging Face. Il tweet en FR, il est technique mais accessible, et il couvre l'\u00e9cosyst\u00e8me open source bien mieux que les vendeurs de r\u00eaves."
-      },
-      {
-        "handle": "alexandre_d",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 20000,
-        "reason": "L'expert crypto qu\u00e9b\u00e9cois. Il tweet en fran\u00e7ais, il analyse les tokens avec une logique de trader plut\u00f4t qu'un fan de coinflip, et il \u00e9vite les groupes Telegram \u00e0 49\u20ac/mois."
-      },
-      {
-        "handle": "benjamin_dabert",
-        "region": "france",
-        "niche": "ia",
-        "followers": 18000,
-        "reason": "CTO de Hugging Face. Il tweet en anglais majoritairement mais ses threads IA sont une r\u00e9f\u00e9rence pour la communaut\u00e9 tech FR. Moins de hype, plus de code."
-      },
-      {
-        "handle": "pauline_de",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "La r\u00e9f\u00e9rence VC \u00e0 Paris. Elle tweet en FR sur les start-ups tech/francophones, son r\u00e9seau est son portfolio, et elle suit tout ce qui bouge dans la Deep Tech."
-      },
-      {
-        "handle": "jules_tremblay",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 14000,
-        "reason": "Fondateur bas\u00e9 \u00e0 San Francisco mais qui tweet en fran\u00e7ais sur l'\u00e9cosyst\u00e8me US. Il donne la perspective des VC am\u00e9ricains depuis l'int\u00e9rieur, sans la barri\u00e8re de la langue."
-      },
-      {
-        "handle": "mathieu_tremblay",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Fondateur qu\u00e9b\u00e9cois dans la tech. Il tweet en FR sur les start-ups montr\u00e9alaises, l'IA appliqu\u00e9e et la fintech. C'est dense, c'est local, et c'est authentique."
-      },
-      {
-        "handle": "david_gauthier",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 8000,
-        "reason": "Ange qu\u00e9b\u00e9cois qui tweet en fran\u00e7ais. Il couvre les IPO tech et la venture capital FR/QC. Moins de bruit que les 'gourous' de la Bourse de Montr\u00e9al."
-      },
-      {
-        "handle": "marie_duval",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 6000,
-        "reason": "Crypto analyste bas\u00e9e \u00e0 NYC qui tweet en fran\u00e7ais. Elle couvre les ETF crypto et la r\u00e9gulation SEC avec une approche journalistique. Petit mais dense."
-      }
-    ],
-    "summary": "On a creus\u00e9 du c\u00f4t\u00e9 des fondateurs et des VC qui tweetent du concret plut\u00f4t que des citations LinkedIn. Pas de vendeurs de r\u00eaves, juste des gens qui construisent ou analysent la tech FR/QC/US. La s\u00e9lection est chirurgicale : peu de bruit, beaucoup de signal."
-  },
-  {
     "ts": "2026-06-15T18:45:37.269586",
     "raw_count": 8,
     "kept_count": 6,
@@ -8993,5 +8892,36 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit des 'gourous' Telegram pour ne garder que des b\u00e2tisseurs, des analystes de terrain et des fondateurs. C'est une liste pour ceux qui pr\u00e9f\u00e8rent comprendre comment l'argent bouge plut\u00f4t que de regarder des chandeliers avec des lunettes de soleil."
+  },
+  {
+    "ts": "2026-07-19T00:35:11.668498",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AdrianHD",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 140000,
+        "reason": "Bien qu'am\u00e9ricain, il tweete beaucoup en anglais sur l'IA avec un style p\u00e9dagogique francophone dans l'\u00e2me. Top tier pour les threads \u00e9ducatifs."
+      },
+      {
+        "handle": "MarcDesjardins",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Journaliste crypto de renom au Qu\u00e9bec. Couvre le march\u00e9 FR et US, twitte souvent, pas de 'rejoins mon Discord'."
+      },
+      {
+        "handle": "BenoitL Floch",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Fondateur de TheAIShrink. Twitte tech et IA en FR, profil tr\u00e8s qualifi\u00e9, pas un gourou crypto, juste un builder qui partage."
+      }
+    ],
+    "summary": "Focus IA fran\u00e7aise (Mistral) et Trading qu\u00e9b\u00e9cois (Bessac), avec un profil crypto qu\u00e9b\u00e9cois solide (Desjardins). Z\u00e9ro gourou formation, que du hard skills ou journalisme de qualit\u00e9."
   }
 ]

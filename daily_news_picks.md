@@ -16098,3 +16098,28 @@ These 4 big names all down over 30% in the past month just seems crazy...
 So, people are saying, “China has way fewer GPUs and fewer data cen
   - https://x.com/zsdcxa13/status/2078095833736863898
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 103).
+
+## 2026-07-19
+- **@zynxbtc** (540 likes, score 9/10) — The Bitcoin bear market is over.
+
+$BTC will never go below $57k ever again.
+
+Those waiting for $40-50k are going to regret it. 
+
+You had your chance.
+
+The next bull market has begun.
+  - https://x.com/ZynxBTC/status/2078555438623183003
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 732).
+- **@unotheinvestor** (0 likes, score 7/10) — $NBIS $CRWV
+
+Everyone is comparing Nebius’s $775M debt raise with CoreWeave’s $8.5B facility.
+
+That comparison makes Nebius look terrible. It is also incomplete.
+
+CoreWeave clearly has the superior fi
+  - https://x.com/UnotheInvestor/status/2078527067071865089
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 20).
+- **@simonw** (20 likes, score 7/10) — If you have Claude Code installed you're running software that uses the new (unreleased) version of Bun that's been rewritten in Rust - here are two commands you can run to see that for yourself
+  - https://x.com/simonw/status/2078692298301587758
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 42).

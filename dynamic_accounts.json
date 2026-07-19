@@ -548,7 +548,9 @@
     "PierreAndrieux",
     "MarcRavon",
     "AdrienHajedin",
-    "JulienNepveu"
+    "JulienNepveu",
+    "AdrianHD",
+    "MarcDesjardins"
   ],
   "en": [
     "Chubby",
@@ -4467,6 +4469,16 @@
       "lang": "fr",
       "handle": "JulienNepveu",
       "added": "2026-07-18"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrianHD",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcDesjardins",
+      "added": "2026-07-19"
     }
   ]
 }
