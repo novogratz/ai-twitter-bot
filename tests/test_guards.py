@@ -3162,3 +3162,108 @@ def test_savvy_tech_mom_register_and_ai_primary_news_sources():
     for required in ("OpenAI Blog", "Google AI Blog", "DeepMind Blog",
                      "HuggingFace Blog", "NVIDIA Blog"):
         assert required in names, f"AI-primary source missing: {required}"
+
+
+def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
+    """2026-07-19 likes+follows push: (1) the engager quality path skips
+    size/niche (behavior proves both; small engagers follow back at the
+    highest rate) but KEEPS the English gate; (2) follow_engagers_bot pulls
+    handles from replied_back.json (newest first), never retries an
+    attempted handle, respects caps, and routes through follow_account
+    with engager=True."""
+    from src.twitter_client import _follow_quality_decision
+    monkeypatch.setenv("FOLLOW_MIN_FOLLOWERS", "10000")
+    monkeypatch.setenv("FOLLOW_REQUIRE_NICHE", "1")
+    monkeypatch.setenv("FOLLOW_REQUIRE_ENGLISH", "1")
+    ok, _ = _follow_quality_decision(42, "just a person who likes computers", "Sam", False, engager=True)
+    assert ok, "engager must bypass min-followers and niche gates"
+    ok, why = _follow_quality_decision(42, "Analyse crypto et IA pour les investisseurs. Avec vous dans les marchés.", "Jean", False, engager=True)
+    assert not ok and "non-English" in why, "engager must NOT bypass the English gate"
+    ok, _ = _follow_quality_decision(42, "just a person", "Sam", False)
+    assert not ok, "non-engager path keeps the size gate"
+
+    import json
+    from src import follow_engagers_bot as fe
+    rb = tmp_path / "replied_back.json"
+    rb.write_text(json.dumps([
+        "https://x.com/oldguy/status/111",
+        "https://x.com/business/status/222",       # big-media skip
+        "https://x.com/freshfan/status/333",
+    ]))
+    monkeypatch.setattr(fe, "REPLIED_BACK_FILE", str(rb))
+    monkeypatch.setattr(fe, "STATE_FILE", str(tmp_path / "fe_state.json"))
+    followed = []
+    monkeypatch.setattr("src.twitter_client.follow_account",
+                        lambda h, engager=False: followed.append((h, engager)) or True)
+    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
+    monkeypatch.setenv("FOLLOW_ENGAGERS_PER_CYCLE", "1")
+    monkeypatch.setenv("FOLLOW_ENGAGERS_PER_DAY", "10")
+    fe.run_follow_engagers_cycle()
+    assert followed == [("freshfan", True)], "newest engager first, media skipped, engager flag set"
+    fe.run_follow_engagers_cycle()
+    assert [h for h, _ in followed] == ["freshfan", "oldguy"], \
+        "attempted handles never retried; next cycle takes the next engager"
+
+
+def test_self_quote_recycles_own_winner_ship_gated(monkeypatch, tmp_path):
+    """2026-07-19 (pending since 06-07 'quote-yourself'): the recycler must
+    pick OUR 20-48h post above the likes floor, ship through the
+    quote_tweet chokepoint, and mark the day/URL consumed ONLY on a
+    confirmed ship (hot_quote slot-burn family)."""
+    import json, time as _time
+    from src import self_quote_bot as sq
+    monkeypatch.setattr(sq, "STATE_FILE", str(tmp_path / "sq_state.json"))
+
+    def _mk_url(age_hours, author="theaishrink"):
+        ts = int(_time.time() * 1000) - int(age_hours * 3600 * 1000)
+        return f"https://x.com/{author}/status/{(ts - sq._TWITTER_EPOCH) << 22}"
+
+    winner = _mk_url(30)
+    tweets = [
+        {"url": _mk_url(2), "text": "too fresh", "likes": 9},
+        {"url": winner, "text": "the winner", "likes": 5},
+        {"url": _mk_url(30, "someoneelse"), "text": "not ours", "likes": 50},
+    ]
+    monkeypatch.setattr("src.twitter_client.scrape_profile_tweets", lambda *a, **k: tweets)
+    shipped = []
+
+    class _R:
+        returncode = 0
+        stdout = "update: it aged well"
+        stderr = ""
+    monkeypatch.setattr(sq, "run_llm", lambda *a, **k: _R())
+    monkeypatch.setattr(sq, "humanize", lambda t: t)
+    monkeypatch.setenv("SELF_QUOTE_MIN_LIKES", "3")
+
+    # Chokepoint refusal -> nothing consumed, day not marked
+    monkeypatch.setattr("src.twitter_client.quote_tweet",
+                        lambda url, c, **k: shipped.append(("refused", url)) and False)
+    sq.run_self_quote_cycle()
+    st = sq._load_state()
+    assert st.get("date") == "" and st.get("quoted") == [], \
+        "chokepoint refusal must preserve the slot and the candidate"
+
+    # Confirmed ship -> winner consumed, daily state marked
+    monkeypatch.setattr("src.twitter_client.quote_tweet",
+                        lambda url, c, **k: shipped.append(("ok", url)) or True)
+    sq.run_self_quote_cycle()
+    st = sq._load_state()
+    assert st.get("quoted") == [winner], "must quote OUR 20-48h winner only"
+    sq.run_self_quote_cycle()  # same day -> no second attempt
+    assert len([s for s in shipped if s[0] == "ok"]) == 1, "max 1/day"
+
+
+def test_winner_format_in_prompts_and_evening_slots():
+    """2026-07-19: (1) the measured 'me [verb]' winner format (92 likes /
+    49K views vs 0-3 baseline) is productized into the hotake + quote
+    prompts WITH rationing language (a stamped-on winner is the next bot
+    tell); (2) the post-slot grid covers the analyzer's measured best
+    hours through 23:00 ET."""
+    from src import hotake_agent, quote_tweet_bot
+    for prompt in (hotake_agent.HOTAKE_PROMPT, quote_tweet_bot.QUOTE_PROMPT):
+        low = prompt.lower()
+        assert 'me [verb]' in low, "measured winner format must be in the prompt"
+        assert "1 in 5" in low, "winner format must be rationed"
+    src = open("main.py").read()
+    assert "(23, 0, False)" in src and "(22, 30, False)" in src, \
+        "slot grid must cover the measured 20:00-23:00 ET window"

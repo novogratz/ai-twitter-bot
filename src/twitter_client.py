@@ -1258,20 +1258,27 @@ def _looks_non_english_profile(name: str, bio: str) -> str:
 
 
 def _follow_quality_decision(followers: int, bio: str, name: str,
-                             whitelisted: bool) -> tuple:
-    """Pure gate logic → (ok, reason). Env read at call time."""
+                             whitelisted: bool, engager: bool = False) -> tuple:
+    """Pure gate logic → (ok, reason). Env read at call time.
+
+    `engager=True` (2026-07-19 follow-your-engagers lane): the candidate
+    already replied to/engaged US, which is the highest follow-back-
+    probability signal there is AND proves the niche by behavior — so the
+    min-followers and bio-niche gates are skipped. The English gate,
+    blocklist, caps, spacing and churn cooldown still apply."""
     if whitelisted:
         return (True, "whitelisted seed (gate exempt)")
     min_followers = int(os.environ.get("FOLLOW_MIN_FOLLOWERS", "2000"))
-    if followers < 0:
-        return (False, "followers count unreadable — won't follow blind")
-    if followers < min_followers:
-        return (False, f"too small ({followers} followers < {min_followers})")
+    if not engager:
+        if followers < 0:
+            return (False, "followers count unreadable — won't follow blind")
+        if followers < min_followers:
+            return (False, f"too small ({followers} followers < {min_followers})")
     if os.environ.get("FOLLOW_REQUIRE_ENGLISH", "1") == "1":
         why = _looks_non_english_profile(name, bio)
         if why:
             return (False, why)
-    if os.environ.get("FOLLOW_REQUIRE_NICHE", "1") == "1":
+    if not engager and os.environ.get("FOLLOW_REQUIRE_NICHE", "1") == "1":
         blob = f"{name or ''} {bio or ''}"
         if not _NICHE_BIO_RE.search(blob):
             return (False, "off-niche bio (no AI/markets/crypto signal)")
@@ -1345,11 +1352,15 @@ def _scrape_profile_quality() -> dict:
     return {}
 
 
-def follow_account(username: str, reciprocal: bool = False) -> bool:
+def follow_account(username: str, reciprocal: bool = False,
+                   engager: bool = False) -> bool:
     """Visit a user's profile and click the Follow button.
 
     `reciprocal=True` marks a follow-back (someone who already engages with
     us) so the whitelist-only gate is bypassed for it (see can_follow).
+    `engager=True` (2026-07-19): the candidate replied to our content —
+    the quality gate skips its size/niche checks (behavior proves both)
+    while keeping the English gate + every cap/spacing/churn rule.
 
     Returns True only when the JS click actually fired (best-effort signal).
     Callers MUST check the return value before marking a handle as followed,
@@ -1370,7 +1381,7 @@ def follow_account(username: str, reciprocal: bool = False) -> bool:
     # invariant (following < ceiling * followers), daily cap, 30-day
     # anti-churn cooldown, dry-run. Enforced here so every follow bot obeys.
     from . import action_guard, config as _cfg
-    ok, why = action_guard.can_follow(username, reciprocal=reciprocal)
+    ok, why = action_guard.can_follow(username, reciprocal=reciprocal or engager)
     if not ok:
         log.info(f"[FOLLOW] policy refuses @{username} ({why}).")
         return False
@@ -1398,6 +1409,7 @@ def follow_account(username: str, reciprocal: bool = False) -> bool:
             _parse_follower_count(q.get("followers", "")),
             q.get("bio", ""), q.get("name", ""),
             whitelisted=is_whitelisted(username),
+            engager=engager,
         )
         if not ok:
             log.info(f"[FOLLOW] quality gate refuses @{username} ({why}).")
