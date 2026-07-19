@@ -2943,3 +2943,74 @@ def test_reply_search_surface_disabled_by_default(monkeypatch):
     monkeypatch.setattr(rb, "MAX_REPLIES_PER_CYCLE", 5)
     rb.run_reply_cycle()
     assert calls == ["safari", "llm"], "ENABLE_REPLY_SEARCH=1 must re-arm the surface"
+
+
+def test_persona_is_woman_mom_therapist_across_surfaces():
+    """Operator 2026-07-19: 'she is a mom, a 35-40yo therapist... make her
+    sound like a woman' + 'the sharpest AI therapist that knows AI more than
+    anyone else'. The persona must be pinned in the spine (core_identity,
+    injected into every prompt) AND in the per-surface prompt openers that
+    define their own identity — so no surface drifts back to the neutral/
+    male voice. Also pins that the bestie bit moved big brother -> sister."""
+    import os
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    spine = open(os.path.join(root, "core_identity.md")).read().lower()
+    assert "woman" in spine and "mom" in spine and "35-40" in spine
+    assert "sharpest ai mind" in spine
+    assert "bro" in spine  # the no-bro-speak rule is stated
+
+    from src import direct_reply, quote_tweet_bot, hotake_agent, agent, btc_blitz
+    assert "a woman, 35-40" in direct_reply.REPLY_PROMPT.lower()
+    assert "mom" in direct_reply.REPLY_PROMPT.lower()
+    assert "a woman, 35-40" in quote_tweet_bot.QUOTE_PROMPT.lower()
+    assert "therapist mom" in hotake_agent.HOTAKE_PROMPT.lower()
+    import inspect
+    agent_src = inspect.getsource(agent)
+    assert "practicing\ntherapist and mom" in agent_src or "therapist and mom" in agent_src
+    blitz_src = inspect.getsource(btc_blitz).lower()
+    assert "big sister" in blitz_src and "big brother" not in blitz_src
+
+
+def test_follow_gate_english_only_and_unfollow_target_hold(monkeypatch):
+    """Operator 2026-07-19: (1) 'follow US / english accounts not foreigner
+    langage follows' — the quality gate (rides EVERY follow path via the
+    follow_account chokepoint) must reject non-Latin-script and foreign-
+    language bios; (2) 'periodically unfollow some accounts — not too many —
+    keep around 600-700 following max' — smart_unfollow prunes a trickle
+    ONLY while following > FOLLOW_TARGET_MAX, and holds (zero Safari work)
+    at/below target."""
+    from src.twitter_client import _follow_quality_decision
+    monkeypatch.setenv("FOLLOW_REQUIRE_ENGLISH", "1")
+    monkeypatch.setenv("FOLLOW_REQUIRE_NICHE", "1")
+    monkeypatch.setenv("FOLLOW_MIN_FOLLOWERS", "2000")
+
+    ok, _ = _follow_quality_decision(
+        50000, "AI investor. Building agents, GPUs and datacenter plays.",
+        "Jane Doe", False)
+    assert ok, "big EN on-niche account must pass"
+    ok, why = _follow_quality_decision(
+        50000, "AIと暗号資産の最新情報を毎日配信します。株式投資も。", "田中太郎", False)
+    assert not ok and "non-English" in why, "Japanese bio must be rejected"
+    ok, why = _follow_quality_decision(
+        50000, "Analyse crypto et IA pour les investisseurs. Avec vous dans les marchés.",
+        "Jean Dupont", False)
+    assert not ok and "non-English" in why, "French bio must be rejected"
+    # Whitelisted seeds stay exempt (Graphseo's FR bio is by design)
+    ok, _ = _follow_quality_decision(500, "SEO et croissance pour les startups", "Julien", True)
+    assert ok, "whitelisted seed must bypass the language gate"
+
+    # Unfollow target hold
+    from src import smart_unfollow_bot as su
+    scraped = []
+    monkeypatch.setattr(su, "_scrape_handle_list", lambda *a, **k: scraped.append(a) or [])
+    monkeypatch.setattr("src.config.MAX_UNFOLLOWS_PER_DAY", 60)
+    monkeypatch.setenv("UNFOLLOW_CAP_PER_CYCLE", "5")
+    monkeypatch.setenv("FOLLOW_TARGET_MAX", "700")
+    # At/below target -> hold, no Safari
+    monkeypatch.setattr("src.action_guard.current_counts", lambda: (1500, 650))
+    su.run_unfollow_cycle()
+    assert scraped == [], "at/below target the cycle must not touch Safari"
+    # Above target -> the prune path proceeds (scrape gets called)
+    monkeypatch.setattr("src.action_guard.current_counts", lambda: (1500, 3305))
+    su.run_unfollow_cycle()
+    assert len(scraped) >= 1, "above target the trickle prune must run"

@@ -4,6 +4,43 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **Mandate 2026-07-19 — SHE IS THE ACCOUNT + follow hygiene + all-ollama
+> (operator, four asks in one session):**
+> 1. **PERSONA: the woman AI therapist.** "She is a mom, a 35-40yo
+>    therapist... make her sound like a woman... the sharpest AI therapist
+>    that knows AI more than anyone else... be the woman AI therapist
+>    everyone wants to communicate and follow." Persona moved across EVERY
+>    surface in one pass (fix-the-family): core_identity.md (new WHO YOU ARE
+>    block: real therapist + real mom + sharpest AI mind + zero bro-speak;
+>    mom-life x AI added to the humor pillar as the like machine), bot_self_
+>    en/fr.json, direct_reply REPLY_PROMPT, agent.py news, hotake_agent,
+>    quote_tweet_bot, hot_quote_bot (was still "AI & Space Decoder" — museum
+>    piece cleaned), lang_mode EN block, replyback_agent, btc_blitz (big
+>    brother -> big SISTER, bestie bit intact), self_evolution anchor (so
+>    the 4h agent can never drift her back male/neutral). Growth logic: the
+>    therapist-mom who knows CoreWeave's cost of compute is a differentiated,
+>    relatable archetype — the surprise is the brand. Guard:
+>    `test_persona_is_woman_mom_therapist_across_surfaces`.
+> 2. **FOLLOW HYGIENE:** "follow US / english accounts not foreigner langage
+>    follows" — `FOLLOW_REQUIRE_ENGLISH=1` (default on) in the follow quality
+>    gate: rejects non-Latin-script or foreign-function-word bios at the
+>    chokepoint (all follow paths). "periodically unfollow some accounts —
+>    not too many — keep around 600-700 following max" (supersedes the
+>    2026-06-07 operator-only-unfollows rule): smart_unfollow re-armed as a
+>    trickle (.env MAX_UNFOLLOWS_PER_DAY=60, UNFOLLOW_CAP_PER_CYCLE=5, every
+>    4h) that ONLY prunes while following > `FOLLOW_TARGET_MAX` (700), then
+>    holds with zero Safari work. NOTE: following is ~3305 and bot follows
+>    run ~40-60/day, so the trickle alone is roughly net-flat — reaching 600-
+>    700 needs the operator's manual /unfollow purge; the bot then HOLDS the
+>    target. Guard: `test_follow_gate_english_only_and_unfollow_target_hold`.
+> 3. **ALL MESSAGES ON OLLAMA:** "go back to use the local AI model ollama
+>    instead of the Claude for all messages" — .env PROFILE_LLM_PROVIDER
+>    claude->ollama, REPLY_LLM_PROVIDER claude->ollama (AI_CLI was already
+>    ollama; claude remains the automatic fallback ladder). Honest caveat on
+>    file: the 2026-06-14 zero-likes episode was ollama-qwen writing cryptic
+>    salad on profile surfaces — watch likes on posts/quotes; one .env line
+>    reverts.
+
 > **2026-07-19 — LLM-web-search reply surface retired (ENABLE_REPLY_SEARCH,
 > default 0):** the legacy `reply_job` (reply_bot -> reply_agent) asked the
 > LLM to WEB-SEARCH for fresh tweets and return JSON. Two fatal flaws, both
