@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-19T13:52:20.789923",
-  "window_7d_actions": 4591,
-  "window_24h_actions": 708,
+  "generated_at": "2026-07-19T17:52:20.976918",
+  "window_7d_actions": 4609,
+  "window_24h_actions": 717,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4585
+      "count": 4603
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -59,42 +59,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2200
+      "count": 2215
     },
     {
       "topic": "IA",
-      "count": 1778
+      "count": 1772
     },
     {
       "topic": "Crypto",
-      "count": 548
+      "count": 554
     },
     {
       "topic": "Bourse",
-      "count": 259
+      "count": 260
     },
     {
       "topic": "Spatial",
-      "count": 65
+      "count": 67
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1992
+      "count": 1991
     },
     {
       "pillar": "other",
-      "count": 1417
+      "count": 1410
     },
     {
       "pillar": "market_trauma",
-      "count": 882
+      "count": 914
     },
     {
       "pillar": "meme_reaction",
-      "count": 221
+      "count": 216
     },
     {
       "pillar": "ai_vs_btc",
@@ -102,85 +102,85 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 39
+      "count": 38
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 318
+      "count": 304
     },
     {
       "pillar": "other",
-      "count": 210
+      "count": 209
     },
     {
       "pillar": "market_trauma",
-      "count": 142
+      "count": 169
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
+      "count": 25
     },
     {
       "pillar": "reply_bait",
-      "count": 7
+      "count": 6
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
       "posts": 78,
-      "avg_likes": 0.22,
-      "avg_views": 34.0,
+      "avg_likes": 0.21,
+      "avg_views": 33.8,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 77,
-      "avg_likes": 0.19,
-      "avg_views": 30.6,
+      "posts": 81,
+      "avg_likes": 0.17,
+      "avg_views": 29.0,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 42,
-      "avg_likes": 0.17,
-      "avg_views": 29.2,
+      "posts": 39,
+      "avg_likes": 0.15,
+      "avg_views": 25.3,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 2,
+      "posts": 1,
       "avg_likes": 0.0,
-      "avg_views": 31.0,
-      "low_sample": false
+      "avg_views": 18.0,
+      "low_sample": true
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3870
+      "count": 3886
     },
     {
       "type": "quote",
-      "count": 348
+      "count": 354
     },
     {
       "type": "quote_gif",
-      "count": 172
+      "count": 170
     },
     {
       "type": "post",
-      "count": 84
+      "count": 79
     },
     {
       "type": "hotake",
-      "count": 64
+      "count": 67
     },
     {
       "type": "retweet",
@@ -189,18 +189,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-19T13:50:04.291194",
-      "text": "Le schéma wyckoff c'est juste le dessin d'une courbe en dents de scie. phase d'accumulation = le marché dort. phase d'acquisition = le marché ronfle.",
+      "ts": "2026-07-19T17:52:03.823920",
+      "text": "Anthropic raised $4.5B at $56B last month. claude is now the luxury brand that charges premium pricing for the illusion of reliability.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-19T13:48:59.706840",
-      "text": "The S&P is up 30% because seven companies did the work.\n\nThe other 493 are just background noise waiting to get deleted by AI.",
+      "ts": "2026-07-19T17:51:09.327486",
+      "text": "Jonas il a mal aux jambes. toi aussi, quand tu tiens la route à 45km/h.\nla différence ? il a un prothésiste pour son pied. toi t’as juste un compte netflix.\ntu es plus bien loti, mon cher.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-19T13:47:09.444484",
-      "text": "CI/CD for humans is \"try, crash, retry.\" For AI it's \"hallucinate, deploy, monitor until the CEO sees it.\" day 53 is just the start of the 90% refactor cycle.",
+      "ts": "2026-07-19T17:49:20.788722",
+      "text": "Neoclouds sell compute at cost. hyperscalers sell compute at margin. the cloud is the hardware.",
       "type": "reply"
     }
   ]
