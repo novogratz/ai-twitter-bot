@@ -2912,3 +2912,34 @@ def test_direct_reply_scans_rotating_query_subset(monkeypatch):
     src = inspect.getsource(dr.run_direct_reply_cycle)
     assert "_queries_for_cycle" in src, \
         "run_direct_reply_cycle must scan the rotating slice, not all queries"
+
+
+def test_reply_search_surface_disabled_by_default(monkeypatch):
+    """2026-07-19: the LLM-web-search reply surface (reply_bot -> reply_agent)
+    is retired by default. Web search cannot index <=24h x.com tweets, so the
+    path either hallucinated URLs (PR #59) or answered conversationally to its
+    own stale FR-era persona prompt — 388 failed Claude CLI calls for 1 reply
+    over 35h, plus a refresh_feed() Safari touch every ~3 min. Pin: with
+    ENABLE_REPLY_SEARCH unset/0 the cycle returns before ANY side effect
+    (no Safari, no LLM); =1 re-arms the path. Env read at call time."""
+    from src import reply_bot as rb
+
+    calls = []
+    monkeypatch.setattr(rb, "refresh_feed", lambda: calls.append("safari"))
+    monkeypatch.setattr(rb, "generate_replies", lambda **kw: calls.append("llm") or None)
+
+    # Default (unset) -> disabled, zero side effects
+    monkeypatch.delenv("ENABLE_REPLY_SEARCH", raising=False)
+    rb.run_reply_cycle()
+    assert calls == [], "disabled surface must not touch Safari or the LLM"
+
+    # Explicit 0 -> same
+    monkeypatch.setenv("ENABLE_REPLY_SEARCH", "0")
+    rb.run_reply_cycle()
+    assert calls == [], "ENABLE_REPLY_SEARCH=0 must short-circuit the cycle"
+
+    # =1 -> the path runs again (env read at call time, no restart needed)
+    monkeypatch.setenv("ENABLE_REPLY_SEARCH", "1")
+    monkeypatch.setattr(rb, "MAX_REPLIES_PER_CYCLE", 5)
+    rb.run_reply_cycle()
+    assert calls == ["safari", "llm"], "ENABLE_REPLY_SEARCH=1 must re-arm the surface"

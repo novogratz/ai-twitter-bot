@@ -150,8 +150,26 @@ def save_replied(urls: set):
         json.dump(existing_list, f, indent=2)
 
 
+def _reply_search_enabled() -> bool:
+    """Read at call time (side-effect-env rule) so a live .env edit takes
+    effect without code changes at the next cycle.
+
+    Default OFF (2026-07-19): the LLM-web-search discovery path cannot find
+    fresh tweets — web search doesn't index ≤24h x.com content — so the model
+    either hallucinated URLs (PR #59) or, with the stale FR-era persona prompt,
+    answered conversationally ("tu veux que je fasse quoi?"). Measured over
+    35h of logs: 388 failed Claude CLI calls, 1 reply shipped, vs ~880 replies
+    from the Safari-scrape direct_reply pipeline in the same window. Each
+    cycle also burned a refresh_feed() Safari touch every ~3 min.
+    """
+    return os.environ.get("ENABLE_REPLY_SEARCH", "0") == "1"
+
+
 def run_reply_cycle():
     """Search for popular AI tweets and reply with a sharp one-liner."""
+    if not _reply_search_enabled():
+        log.info("[REPLY] LLM-search reply surface disabled (ENABLE_REPLY_SEARCH=0) — direct_reply carries reply volume.")
+        return
     if MAX_REPLIES_PER_CYCLE <= 0:
         log.info("[REPLY] Reply cap is 0. No search/model call this cycle.")
         return

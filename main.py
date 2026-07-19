@@ -562,13 +562,20 @@ def main():
                 max_instances=1,
             )
     if not args.post_only:
-        first_reply = reply_interval_minutes()
-        log.info(f"Reply bot: next scan in {first_reply} minutes.")
-        scheduler.add_job(
-            reschedule_and_reply,
-            trigger=IntervalTrigger(minutes=first_reply),
-            id="reply_job",
-        )
+        # LLM-web-search reply surface — default OFF since 2026-07-19 (388
+        # failed CLI calls per 35h for 1 reply; direct_reply is the engine).
+        # Boot-time read is fine here: the call-time gate in run_reply_cycle
+        # is the authoritative one.
+        if os.environ.get("ENABLE_REPLY_SEARCH", "0") == "1":
+            first_reply = reply_interval_minutes()
+            log.info(f"Reply bot: next scan in {first_reply} minutes.")
+            scheduler.add_job(
+                reschedule_and_reply,
+                trigger=IntervalTrigger(minutes=first_reply),
+                id="reply_job",
+            )
+        else:
+            log.info("Reply bot (LLM-search): disabled (ENABLE_REPLY_SEARCH=0) — direct_reply carries replies.")
 
     if not args.post_only and not args.reply_only:
         # Engage bot - follow and like AI accounts for reciprocity.

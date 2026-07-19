@@ -4,6 +4,21 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-07-19 — LLM-web-search reply surface retired (ENABLE_REPLY_SEARCH,
+> default 0):** the legacy `reply_job` (reply_bot -> reply_agent) asked the
+> LLM to WEB-SEARCH for fresh tweets and return JSON. Two fatal flaws, both
+> measured in 35h of logs: (1) web search can't index <=24h x.com content, so
+> even "working" cycles returned hallucinated/stale URLs (the PR #59 family);
+> (2) the prompt was a stale FR-era persona museum ("AI & Space Decoder",
+> Coluche/Desproges, FERAL mode, 2026-05-29 mandate) so Claude answered it
+> conversationally ("tu m'as copie la config — tu veux que je fasse quoi?")
+> or refused it as a jailbreak: 388 failed Claude CLI calls -> 1 reply
+> shipped, while direct_reply (Safari scrape) shipped ~880 in the same
+> window. Each cycle also burned a refresh_feed() Safari touch every ~3 min.
+> Fix: env-gated OFF at call time in run_reply_cycle + job not registered at
+> boot; direct_reply is THE reply engine. Set ENABLE_REPLY_SEARCH=1 to
+> resurrect. Guard: `test_reply_search_surface_disabled_by_default`.
+
 > **2026-07-10 — REPLY THROUGHPUT (operator: "you used to be around 900
 > per day now only 600... fix it"):** uptime was already 24h/day, so this
 > was PACE: ~27 replies/hr. Log analysis (15:00-15:59 sample): ~400 scrape
