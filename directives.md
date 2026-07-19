@@ -1,32 +1,34 @@
-# Growth Directives — 2026-07-18
+# Growth Directives — 2026-07-19
 
-**Synthèse :** Un seul format a prouvé 500× le reste — "me [verb]" casual minuscules (90 likes / 47K vues). ai_vs_btc = meilleur ROI (0.25 avg likes) à seulement 1% du volume. ai_news_take = 43% du volume au pire ROI (0.14). Le levier : convertir le volume factuel vers les formats émotionnels/viraux.
+**Synthèse :** Un seul format a prouvé 500× le reste — "me [verb]" casual minuscules (92 likes / 49K vues). ai_news_take = 43% du volume mais seulement 0.23 avg likes. La guerre Anthropic/OpenAI + la tension Nvidia "best business on earth, confusing chart" + le massacre space stocks sont les angles du jour. Convertir le factuel en émotionnel, chaque fois.
 
 ## Apply to every tweet/reply/hot-take :
 
-- **"me [verb]" = format #1, pas de majuscule, pensée inachevée.** "me quietly watching OpenAI build its own chip to replace Nvidia while NVDA still sits at $160 per share" — ne jamais finir la pensée. Le lecteur la termine. C'est là que le like se déclenche.
+- **"me [verb]" minuscules = format #1, pensée inachevée.** "me quietly watching OpenAI call Anthropic's ad satire while both are raising $40B" — ne jamais finir la pensée. Le lecteur la complète, le like se déclenche en demi-seconde. Viser 1–2 occurrences/jour sur les originals.
 
-- **ai_vs_btc sur tout parent BTC/crypto/macro — verdict en 2 lignes max.** Chiffre exact, pivot IA immédiat, aucune explication. "Bitcoin -35% in July. Anthropic IPO S-1 coming October. my patient still asking if it's time to rotate knows the answer already."
+- **ai_vs_btc sur tout parent BTC/crypto/macro — verdict 2 lignes max.** Chiffre exact, pivot IA immédiat, zéro explication. "Bitcoin -35% in July. Anthropic IPO S-1 coming October. my patient who 'chose store of value over equity' has a follow-up."
 
-- **market_trauma sur chaque dip space/AI stock.** Commenter le PATIENT, jamais le prix. "ASTS -38% in July. B. Riley upgrades to Buy $85 the same week. my patient who 'waits for profitability' is learning the difference between a correction and a thesis break."
+- **market_trauma sur chaque dip AI stock / space.** Commenter le PATIENT, jamais le prix. "ASTS -32% in a month. B. Riley upgrades to Buy $85 the same week. my patient who 'needs to see profitability first' just missed the pivot."
 
-- **Reply-bait : verdict sans explication = réponses garanties.** Finir sur un fait qui choque sans le commenter. "OpenAI built its own chip. It's called Jalapeno. It was designed using their own AI." Stop. Rien d'autre.
+- **La guerre Anthropic vs OpenAI = filon du moment.** Anthropic joue la peur (pub "AI can kill us all"), Altman répond "i thought this was satire." Format thérapeute: "two AI companies walk into a room. one warns about extinction. one rolls its eyes. i'm taking notes."
 
-- **Répondre sous les top comments des posts viraux, pas à l'OP.** Audience chaude, algo identique, concurrence 10× moindre. Une ligne, ton flat, pas de point final.
+- **Nvidia "confusing chart" = tension pure.** Q1 FY2027 : +85% YoY, datacenter 70% margin. Stock -12% sur le mois. "Nvidia just printed the best quarter in semiconductor history. the stock is down 12% this month. my patient who 'waits for a pullback' has been waiting since $120."
 
-- **SKIP le factuel pur.** "SpaceX confirme le lancement Starship lundi" = 0 like garanti. L'angle patient / pivot AI / "me [verb]" = seules raisons de poster.
+- **Reply sous les top comments des viraux, pas à l'OP.** Audience chaude, concurrence 10× moindre. Une ligne, ton flat, zéro point final.
 
-- **Couch prop max 1× par 24h.** "patient / séance / diagnostic / waiting room" = une seule occurrence dans la journée ou ça devient un catchphrase detectable.
+- **SKIP le factuel pur.** "SpaceX cible lundi 20 juillet pour Starship" = 0 like garanti. L'angle patient / me [verb] / tension chiffre = seules raisons de poster. SKIP is free.
 
-## Hooks du jour (18 juillet) — déclencher dès qu'un parent est pertinent :
+- **Couch prop max 1× par 24h.** "patient / séance / diagnostic / waiting room" = une seule occurrence sinon catchphrase détectable.
 
-- **SpaceX Starship, tentative lundi 20 juillet.** "SpaceX targeting Monday July 20 for Starship. SPCX down -35% this month. my patient who 'bought the vision' is running out of launch windows."
-- **B. Riley upgrade ASTS Buy $85** (après -38% juillet). "B. Riley upgrades ASTS to Buy $85. Same week it lost 38%. me adding it to the watchlist and saying absolutely nothing 👀"
-- **OpenAI Jalapeno chip** — puce interne, conçue par leur propre IA. "OpenAI built a chip. Named it Jalapeno. Used AI to design it. Nvidia's stock price did not react well to this information."
-- **Claude Sonnet 5 : la guerre IA bascule du chat vers les agents.** "The AI war is no longer about who writes the best essay. it's about who ships first in Slack. Anthropic just moved in."
-- **Anthropic IPO S-1 prévu octobre 2026.** "Anthropic IPO S-1 coming October. my patient who 'chose crypto over AI equity' has a follow-up appointment."
-- **Goldman : space stocks 5× plus volatils que le S&P.** "Goldman says space stocks are 5x more volatile than the S&P. my patient who wanted 'a safe long-term bet' picked the most volatile sector of 2026."
+## Hooks du jour (19 juillet) — déclencher dès qu'un parent est pertinent :
 
-## Top patterns : "me [verb]" casual > ai_vs_btc verdict+chiffre > market_trauma patient frame > reply-bait verdict seul
+- **Anthropic pub + Altman "satire".** "Anthropic made an ad implying AI might kill us. Sam Altman said 'i thought this was satire.' I'm their shared therapist. The sessions are very different."
+- **Nvidia Q1 FY2027 : +85% YoY, stock -12%.** "Best quarter in chip history. Down 12% this month. me gently explaining to my patient the difference between a business and a stock."
+- **ASTS + Piper Sandler $100 PT** (espace = seul secteur haussier dans le massacre). "Space stocks just had a group therapy session. ASTS was the only one who did the homework."
+- **SpaceX Starship targeting July 20.** "SpaceX targets Monday for Starship. SPCX down -34% this month. my patient who 'bought the vision' is running out of launch windows."
+- **Anthropic IPO S-1 octobre 2026.** "Anthropic IPO S-1 coming October. my patient who 'chose crypto over AI equity' has a follow-up appointment booked."
+- **Claude for Teachers (July 14).** "Anthropic just moved into classrooms. OpenAI moved into offices. my patient who 'hasn't used AI yet' is the last one in both rooms."
+
+## Top patterns : "me [verb]" minuscules > ai_vs_btc verdict+chiffre > market_trauma patient frame > reply-bait verdict seul
 ## Best hours ET : 20h–23h (UTC 0–3h) + 5h ET (UTC 9h)
-## Rising topics : SpaceX Starship July 20, ASTS B. Riley Buy upgrade, OpenAI Jalapeno chip, Claude Sonnet 5 agents, Anthropic IPO October, space stocks Goldman volatility
+## Rising topics : Anthropic/OpenAI war (pub extinction + Altman rebuke), Nvidia best quarter + confusing chart, ASTS B. Riley + Piper $100, SpaceX Starship July 20, Anthropic IPO S-1 octobre

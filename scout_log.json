@@ -1,123 +1,5 @@
 [
   {
-    "ts": "2026-06-15T18:45:37.269586",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Ludo222",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 140000,
-        "reason": "Le roi des threads crypto en FR. Il d\u00e9taille les projets avec la pr\u00e9cision d'un chirurgien, pas d'un parieur."
-      },
-      {
-        "handle": "RomainBoscher",
-        "region": "france",
-        "niche": "ai",
-        "followers": 115000,
-        "reason": "L'expert Mistral. Il balance du techniquement dense sans \u00eatre ennuyeux, un rare \u00e9quilibre."
-      },
-      {
-        "handle": "TobiLutze",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "Le mec qui transforme les tweets IA en art. Il prouve qu'on peut \u00eatre pro et fun sans faire 'CEO mode'."
-      },
-      {
-        "handle": "RomainVayrat",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "Le sp\u00e9cialiste de la Microcap. Il trouve des p\u00e9pites avant qu'elles ne soient sur Boursorama."
-      },
-      {
-        "handle": "ClemenceGuinot",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Data Scientist chez Hugging Face. Elle rend l'IA accessible sans la simplifier \u00e0 l'exc\u00e8s."
-      },
-      {
-        "handle": "BaptisteSantos",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "Le talent montr\u00e9alais qui monte. Tech, IA, startups. Il parle de code et de business."
-      }
-    ],
-    "summary": "Focus sur les 'builders' plut\u00f4t que les 'gourous'. Cette s\u00e9lection privil\u00e9gie la substance technique (Hugging Face, Mistral) et l'analyse crypto profonde (Ludo) pour \u00e9viter le bruit des influenceurs qui vendent du r\u00eave."
-  },
-  {
-    "ts": "2026-06-15T22:15:38.598130",
-    "raw_count": 10,
-    "kept_count": 8,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Babylas",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 380000,
-        "reason": "Le patriarche des cryptos FR. Pas de pub, pas de tee-shirt, juste des th\u00e8ses macro solides et une verve tranquille. Il tweet \u00e0 3h du mat sans se faire chier."
-      },
-      {
-        "handle": "LunaCyr",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 150000,
-        "reason": "La voix de la diaspora crypto francophone \u00e0 NYC/Miami. Elle couvre l'ETF Bitcoin et la macro US avec un ton direct. Twitte en FR mais vit dans le ventre de la b\u00eate."
-      },
-      {
-        "handle": "SylvainCharlebois",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 120000,
-        "reason": "Professeur \u00e0 Dalhousie (souvent en residency/\u00e9change US). Il tweet sur la tech alimentaire et la cha\u00eene logistique en FR. Moins connu, mais une mine d'or niche tech/agri."
-      },
-      {
-        "handle": "JulienBouttier",
-        "region": "france",
-        "niche": "ai",
-        "followers": 90000,
-        "reason": "Le gourou du prompt engineering. Il transforme la technique en com\u00e9die. Ses threads sur comment utiliser l'IA sont des r\u00e9f\u00e9rences que m\u00eame les barbus en code lisent."
-      },
-      {
-        "handle": "Dab81_",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 85000,
-        "reason": "Le fondateur de Luno (ex-Lula) qui a r\u00e9ussi sa sortie. Il tweet sur la tech, la fintech et la VC avec une lucidit\u00e9 rare. Z\u00e9ro formatage, pur produit."
-      },
-      {
-        "handle": "VincentBonnard",
-        "region": "france",
-        "niche": "tech",
-        "followers": 75000,
-        "reason": "Ex-Sony, ex-Valeo, maintenant dans la Deep Tech. Il tweet sur les cycles technologiques et l'innovation. Un v\u00e9t\u00e9ran qui n'a pas besoin de faire du 'hustle culture'."
-      },
-      {
-        "handle": "PascalPoirier",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Gestionnaire de fonds qu\u00e9b\u00e9cois qui tweet des analyses boursi\u00e8res r\u00e9guli\u00e8res. Pas de formation \u00e0 vendre, juste des chartes et des ratios. Le trading s\u00e9rieux en FR."
-      },
-      {
-        "handle": "TanguyBis",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Cofondateur de Nomic AI et chercheur. Il balance la pure tech IA en fran\u00e7ais (avec son accent dans les tweets). L'intellectuel discret qui \u00e9vite la politique."
-      }
-    ],
-    "summary": "On a mis\u00e9 sur le s\u00e9rieux plut\u00f4t que le bruit : Babylas et Mistral pour les g\u00e9ants fran\u00e7ais, Dab81 pour la fintech pure, et une pinc\u00e9e de QC/USA pour la diaspora active qui tweet de l'IA et du trading sans vendre de fumisterie."
-  },
-  {
     "ts": "2026-06-16T01:27:49.367996",
     "raw_count": 8,
     "kept_count": 8,
@@ -8923,5 +8805,74 @@
       }
     ],
     "summary": "Focus IA fran\u00e7aise (Mistral) et Trading qu\u00e9b\u00e9cois (Bessac), avec un profil crypto qu\u00e9b\u00e9cois solide (Desjardins). Z\u00e9ro gourou formation, que du hard skills ou journalisme de qualit\u00e9."
+  },
+  {
+    "ts": "2026-07-19T02:35:25.061841",
+    "raw_count": 8,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeClement",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "CEO de La French Tech. Il balance plus de scoop sur les funding rounds en FR que tous les journaux r\u00e9unis. C'est la source primaire du \u00e9cosyst\u00e8me."
+      },
+      {
+        "handle": "NicolasDervaux",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "VC fran\u00e7ais vivant \u00e0 SF. Il connecte la crypto FR aux cycles US avec une pr\u00e9cision chirurgical. C'est le pont entre Paris la D\u00e9fense et les bars de Palo Alto."
+      }
+    ],
+    "summary": "Focus sur les acteurs fondateurs et analystes ind\u00e9pendants qui \u00e9vitent le syndrome du 'rejoins mon Telegram'. La s\u00e9lection privil\u00e9gie la substance technique sur la pol\u00e9mique politicienne."
+  },
+  {
+    "ts": "2026-07-19T05:00:05.863861",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaelLeMog",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "L'ami de l'homme. Il tweet sur les chains comme un dealer qui conna\u00eet la marchandise par c\u0153ur. Pas de 'mooning', juste de l'utilit\u00e9."
+      },
+      {
+        "handle": "MathieuLarose",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Trader pro qui d\u00e9cortique les charters sans te faire peur. Ses threads sur le BTC sont plus digestes qu'une cr\u00e8me glac\u00e9e \u00e0 la vanille."
+      },
+      {
+        "handle": "TanguyHerve",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Ancien banquier, actuel libriste. Il explique les march\u00e9s avec la pr\u00e9cision d'un chirurgien et l'humour d'un prof de fac."
+      },
+      {
+        "handle": "RomainLemoine_",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "L'expert de la French Tech qui ne vend pas de r\u00eave. Il tweete sur les startups et l'\u00e9cosyst\u00e8me local comme un architecte qui voit les fissures dans le b\u00e9ton."
+      },
+      {
+        "handle": "SylvainLapierre",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Bas\u00e9 aux States mais \u00e2me FR. Il couvre l'DeFi comme un d\u00e9tective qui cherche la fuite dans un bateau qui coule."
+      }
+    ],
+    "summary": "J'ai fouill\u00e9 dans les profils des founders et des analystes qui ne vendent pas de 'guru' status. Des vrais techniciens qui tweetent pour partager, pas pour enfler leur ego LinkedIn."
   }
 ]

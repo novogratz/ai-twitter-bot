@@ -550,7 +550,14 @@
     "AdrienHajedin",
     "JulienNepveu",
     "AdrianHD",
-    "MarcDesjardins"
+    "MarcDesjardins",
+    "MaximeClement",
+    "NicolasDervaux",
+    "GaelLeMog",
+    "MathieuLarose",
+    "TanguyHerve",
+    "RomainLemoine_",
+    "SylvainLapierre"
   ],
   "en": [
     "Chubby",
@@ -4478,6 +4485,41 @@
     {
       "lang": "fr",
       "handle": "MarcDesjardins",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeClement",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasDervaux",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLeMog",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuLarose",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguyHerve",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainLemoine_",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLapierre",
       "added": "2026-07-19"
     }
   ]
