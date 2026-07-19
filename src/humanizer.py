@@ -145,17 +145,25 @@ def _strip_multiple_alternatives(text: str) -> str:
 # Shared viral-GIF vocabulary (operator 2026-06-05: "use all the most viral
 # GIFs and memes... people should LOVE IT"). One block injected into every
 # GIF-capable prompt so the model searches terms that actually return bangers.
-GIF_GUIDE_BLOCK = """GIF SEARCH VOCABULARY — match the emotion, pick the icon:
-- EXCEPTIONALLY GOOD / huge win → [GIF: jonah hill excited] / [GIF: vince mcmahon] / [GIF: leonardo dicaprio clapping] / [GIF: chef kiss]
-- boss move / victory lap        → [GIF: wolf of wall street] / [GIF: leonardo dicaprio cheers] / [GIF: salute]
-- market bleeding / pain         → [GIF: michael jordan crying] / [GIF: ben affleck smoking] / [GIF: this is fine]
-- calm in chaos (therapist core) → [GIF: this is fine] / [GIF: keep calm]
-- suspicion / "sure about that"  → [GIF: futurama fry suspicious] / [GIF: john cena are you sure]
-- waiting forever                → [GIF: pablo escobar waiting] / [GIF: skeleton waiting]
-- panic / FOMO                   → [GIF: kermit panic] / [GIF: surprised pikachu]
-- mind blown / big reveal        → [GIF: mind blown] / [GIF: math lady]
-- shots fired / mic drop         → [GIF: mic drop] / [GIF: michael jackson popcorn]
-Rule: ONE GIF max, only when it AMPLIFIES the punchline. Iconic beats obscure."""
+GIF_GUIDE_BLOCK = """GIF SEARCH VOCABULARY — match the emotion, pick the icon
+(operator 2026-07-19: "use new GIFs, it's always the same" — VARY them; if
+you used one of these recently, pick a DIFFERENT row or a fresh search of
+your own. Her persona is a therapist mom — sitcom/reaction-queen energy
+lands better than finance-bro memes):
+- EXCEPTIONALLY GOOD / huge win → [GIF: jonah hill excited] / [GIF: leonardo dicaprio clapping] / [GIF: chef kiss] / [GIF: oprah celebration] / [GIF: happy dance]
+- boss move / victory lap        → [GIF: wolf of wall street] / [GIF: salute] / [GIF: beyonce flawless] / [GIF: nailed it]
+- market bleeding / pain         → [GIF: michael jordan crying] / [GIF: this is fine] / [GIF: moira rose scream] / [GIF: grabbing wine]
+- calm in chaos (therapist core) → [GIF: this is fine] / [GIF: keep calm] / [GIF: deep breath] / [GIF: sipping tea calmly]
+- deadpan / unimpressed          → [GIF: tina fey eye roll] / [GIF: blinking guy] / [GIF: jim halpert look] / [GIF: judge judy eye roll]
+- suspicion / "sure about that"  → [GIF: futurama fry suspicious] / [GIF: john cena are you sure] / [GIF: side eye chloe]
+- waiting forever                → [GIF: pablo escobar waiting] / [GIF: skeleton waiting] / [GIF: judge judy tapping watch]
+- panic / FOMO                   → [GIF: kermit panic] / [GIF: surprised pikachu] / [GIF: kevin hart panic]
+- mind blown / big reveal        → [GIF: mind blown] / [GIF: math lady] / [GIF: shocked will smith]
+- shots fired / mic drop         → [GIF: mic drop] / [GIF: michael jackson popcorn] / [GIF: sipping tea kermit]
+- proud mom energy / warm        → [GIF: proud mom] / [GIF: slow clap] / [GIF: you did it]
+- "I told you so" (gentle)       → [GIF: told you so] / [GIF: knowing smile]
+Rule: ONE GIF max, only when it AMPLIFIES the punchline. Iconic beats
+obscure. NEVER the same GIF twice in the same day — rotate rows."""
 
 _GIF_TAG_RE = re.compile(r"\[\s*GIF\s*:\s*([^\]\n\r]{2,60})\]", re.IGNORECASE)
 
@@ -166,25 +174,37 @@ _GIF_TAG_RE = re.compile(r"\[\s*GIF\s*:\s*([^\]\n\r]{2,60})\]", re.IGNORECASE)
 # fresh-but-fitting GIF; recent picks tracked on disk so it varies across
 # cycles/restarts.
 _GIF_ALTERNATES = {
-    "michael jordan crying": ["this is fine", "ben affleck smoking",
+    "michael jordan crying": ["moira rose scream", "grabbing wine",
         "spongebob crying", "kermit panic", "math lady", "skeleton waiting"],
-    "this is fine": ["michael jordan crying", "ben affleck smoking",
-        "keep calm", "spongebob crying"],
+    "this is fine": ["deep breath", "sipping tea calmly",
+        "keep calm", "grabbing wine", "moira rose scream"],
     "ben affleck smoking": ["michael jordan crying", "this is fine",
-        "spongebob crying"],
-    "leonardo dicaprio cheers": ["wolf of wall street", "leonardo dicaprio clapping",
-        "salute", "jonah hill excited"],
-    "wolf of wall street": ["leonardo dicaprio cheers", "salute", "vince mcmahon"],
-    "mind blown": ["math lady", "surprised pikachu", "vince mcmahon"],
-    "surprised pikachu": ["mind blown", "math lady", "futurama fry suspicious"],
-    "futurama fry suspicious": ["john cena are you sure", "surprised pikachu",
-        "math lady"],
-    "pablo escobar waiting": ["skeleton waiting", "kermit panic"],
-    "kermit panic": ["surprised pikachu", "this is fine", "pablo escobar waiting"],
+        "spongebob crying", "grabbing wine"],
+    "leonardo dicaprio cheers": ["oprah celebration", "leonardo dicaprio clapping",
+        "salute", "jonah hill excited", "happy dance"],
+    "wolf of wall street": ["beyonce flawless", "salute", "nailed it",
+        "oprah celebration"],
+    "jonah hill excited": ["oprah celebration", "happy dance", "chef kiss",
+        "leonardo dicaprio clapping"],
+    "mind blown": ["math lady", "surprised pikachu", "shocked will smith"],
+    "surprised pikachu": ["mind blown", "math lady", "shocked will smith",
+        "side eye chloe"],
+    "futurama fry suspicious": ["john cena are you sure", "side eye chloe",
+        "math lady", "jim halpert look"],
+    "pablo escobar waiting": ["skeleton waiting", "judge judy tapping watch",
+        "blinking guy"],
+    "kermit panic": ["kevin hart panic", "surprised pikachu", "deep breath",
+        "pablo escobar waiting"],
+    "mic drop": ["sipping tea kermit", "michael jackson popcorn",
+        "knowing smile"],
+    "keep calm": ["deep breath", "sipping tea calmly", "this is fine"],
+    "chef kiss": ["nailed it", "oprah celebration", "proud mom"],
 }
 _GIF_RECENT_FILE = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "gif_recent.json")
-_GIF_RECENT_KEEP = int(os.environ.get("GIF_RECENT_KEEP", "8"))
+# 16 (was 8, operator 2026-07-19 "always the same GIF... get better"): with
+# a ~30-query bank a memory of 8 let favorites lap every few hours.
+_GIF_RECENT_KEEP = int(os.environ.get("GIF_RECENT_KEEP", "16"))
 
 
 def _gif_recent() -> list:

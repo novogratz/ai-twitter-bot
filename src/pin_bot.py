@@ -21,14 +21,16 @@ from datetime import date
 
 from .config import _PROJECT_ROOT, BOT_HANDLE
 from .logger import log
-from .twitter_client import scrape_profile_tweets, pin_own_tweet
+from .twitter_client import scrape_profile_tweets, pin_own_tweet, is_own_post
 
 PIN_HISTORY_FILE = os.path.join(_PROJECT_ROOT, "pin_history.json")
 PIN_STATE_FILE = os.path.join(_PROJECT_ROOT, "pin_daily_state.json")
 
 # Minimum likes to bother pinning. If the best post of the week didn't
 # clear this floor, the pinned slot is more honest staying empty.
-MIN_LIKES_TO_PIN = int(os.environ.get("PIN_MIN_LIKES", "5"))
+# 2 (was 5, 2026-07-19): we self-like at publish, so 2 = 1 external like.
+# A floor of 5 froze the slot for weeks at this account size.
+MIN_LIKES_TO_PIN = int(os.environ.get("PIN_MIN_LIKES", "2"))
 
 
 def _load_history() -> dict:
@@ -86,13 +88,16 @@ def run_pin_cycle():
         return
 
     # Filter: must be authored by us, not already-pinned, has minimum likes.
+    # 2026-07-19 (4th hit of the display-name-vs-handle family): the scraper's
+    # `author` is the DISPLAY NAME ("The AI Therapist"), never the @handle, so
+    # comparing it to BOT_HANDLE filtered EVERY candidate — the pin could
+    # never rotate. URL is ground truth: is_own_post().
     own = []
     for t in tweets:
-        author = (t.get("author") or "").lower().lstrip("@")
-        if author and author != BOT_HANDLE.lower():
-            continue
         url = t.get("url") or ""
-        if not url or url in pinned_urls:
+        if not url or not is_own_post(t):
+            continue
+        if url in pinned_urls:
             continue
         likes = int(t.get("likes") or 0)
         if likes < MIN_LIKES_TO_PIN:
@@ -121,7 +126,18 @@ def run_pin_cycle():
     best = max(own, key=lambda c: (c["likes"], c["replies"]))
     last = history.get("last_pin", {})
     last_likes = int(last.get("likes") or 0)
-    if last_likes and best["likes"] < max(MIN_LIKES_TO_PIN, int(last_likes * 1.3)):
+    # Staleness override (2026-07-19): a pin older than PIN_MAX_AGE_DAYS no
+    # longer defends its slot with the 1.3x beat rule — a fresh good post
+    # converts profile visits better than a stale banger.
+    max_age_days = int(os.environ.get("PIN_MAX_AGE_DAYS", "7"))
+    pinned_at = last.get("pinned_at") or ""
+    pin_is_stale = True
+    if pinned_at:
+        try:
+            pin_is_stale = (date.today() - date.fromisoformat(pinned_at[:10])).days >= max_age_days
+        except ValueError:
+            pin_is_stale = True
+    if last_likes and not pin_is_stale and             best["likes"] < max(MIN_LIKES_TO_PIN, int(last_likes * 1.3)):
         log.info(
             f"[PIN] Best candidate ({best['likes']} likes) doesn't beat the "
             f"current pin ({last_likes} likes x1.3) — keeping the existing pin."
@@ -145,7 +161,8 @@ def run_pin_cycle():
 
     if ok:
         history.setdefault("pinned", []).append(best["url"])
-        history["last_pin"] = {"url": best["url"], "likes": best["likes"]}
+        history["last_pin"] = {"url": best["url"], "likes": best["likes"],
+                               "pinned_at": date.today().isoformat()}
         _save_history(history)
         log.info(f"[PIN] Pinned: {best['url']}")
         time.sleep(2)

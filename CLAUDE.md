@@ -4,6 +4,52 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-07-19 round 2 — GROWTH BATCH (operator: "implement all of them" +
+> "more debates... get her on a roll" + "use new GIFs"):** six changes, one PR.
+> 1. **Safari blank-page storm fix** (7 reactive restarts in 2.2h, ~85-135/
+>    day): (a) post-restart GRACE — blanks within
+>    `BLANK_GRACE_AFTER_RESTART_SECONDS` (120) of a hygiene restart are
+>    expected cold-Safari noise and don't count toward the threshold (the
+>    old counter self-perpetuated a ~15-min restart loop); (b) LABEL
+>    DIVERSITY — a true wedge blanks EVERY page, so the restart now needs
+>    >=2 distinct page labels among the consecutive blanks; one page
+>    looping empty (a quiet Following tab) holds instead of bouncing
+>    Safari. Guard: `test_blank_page_storm_post_restart_grace_and_label_diversity`.
+> 2. **Pin rotation fixed — 4th hit of the display-name-vs-handle family:**
+>    pin_bot compared scraper `author` (display name) to BOT_HANDLE and
+>    filtered EVERY own post, so the pin never rotated. Now `is_own_post`
+>    (URL ground truth) + stale-pin override (`PIN_MAX_AGE_DAYS`=7: an old
+>    pin stops defending its slot via the 1.3x rule) + `PIN_MIN_LIKES`
+>    default 5→2 (self-like + 1 external — 5 froze the slot at this account
+>    size). Guard: `test_pin_rotation_url_ground_truth_and_stale_override`.
+> 3. **engagement_log column 8 = provider** (config-level, read at call
+>    time): profile surfaces tag PROFILE_LLM_PROVIDER, replies tag AI_CLI —
+>    so the all-ollama switch (and any future one) is judged on
+>    likes-per-post data. Guard: `test_engagement_log_records_provider_column`.
+> 4. **`src/debate_bot.py` — the debate engine** (operator: "make her do
+>    more debates with people and reply to other people replies and get her
+>    on a roll"): every 12 min, scrapes the MENTIONS tab (new
+>    `twitter_client.scrape_mentions` — responses to our replies anywhere
+>    on X, which replyback's own-latest-tweet scan never sees) and argues
+>    back warm + factual (concede with charm, land one number, end on a
+>    question that keeps the rally going). Each counter-response is a new
+>    mention → the rally continues naturally. Caps: 3/cycle, 40/day, 4
+>    turns/author/day (`DEBATE_*` envs, `ENABLE_DEBATES` kill switch).
+>    Chokepoint-honest: no premark, ship-gated logging. Guard:
+>    `test_debate_bot_engages_fresh_mentions_through_chokepoint`.
+> 5. **GIF variety** (operator: "always the same... get better"): bank
+>    widened ~2x with persona-fit reaction GIFs (oprah celebration, moira
+>    rose scream, tina fey eye roll, side eye chloe, grabbing wine, proud
+>    mom...), `GIF_RECENT_KEEP` 8→16, alternates map extended, prompt block
+>    now explicitly orders rotation + never-same-GIF-in-a-day.
+> 6. **Voice banks cleared** (reply_winners.md + self_winners.md): they
+>    injected pre-pivot male-neutral-voice exemplars as the gold standard,
+>    actively fighting the new woman-therapist persona. They rebuild
+>    automatically from her fresh winners (backups in /tmp).
+> NOTE on "make her read news / bring new topics": already live — the RSS
+> ladder writes 30 merged items/cycle to external_signal.json and feeds the
+> news/hotake/spicy surfaces (verified in today's log).
+
 > **Mandate 2026-07-19 — SHE IS THE ACCOUNT + follow hygiene + all-ollama
 > (operator, four asks in one session):**
 > 1. **PERSONA: the woman AI therapist.** "She is a mom, a 35-40yo
