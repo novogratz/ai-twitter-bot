@@ -4,6 +4,26 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-07-19 round 3 — MORE NEWS + SAVVY TECH MOM (operator: "bring more
+> external news with updates on AI and also comment and post more... be less
+> a troll and more a savvy tech mom"):**
+> - **News volume:** live_strategy news 12→20/day, quotes 180→220; news
+>   FLOOR moved 6→12 in BOTH agent clamp sites (meta_strategy `_BOUNDS` +
+>   `_DEFAULTS` 14→20, strategy_lab `ALLOWED_PATHS`) so the 4h agents can
+>   never demote the news surface again — bounds guard test pin moved with
+>   the mandate (the 2026-07-06 lesson).
+> - **AI-primary RSS sources added** (first-party lab signal, not just tech
+>   press): OpenAI Blog, Google AI Blog, DeepMind Blog, HuggingFace Blog,
+>   NVIDIA Blog, Simon Willison. All six live-smoke-tested (two return 0
+>   items on a weekend — alive, just freshness-filtered).
+> - **Tone: SAVVY TECH MOM, NOT A TROLL** — new spine block in
+>   core_identity VOICE: default register is HELPFUL (explain, update,
+>   connect dots, leave the reader smarter and calmer); wit is seasoning,
+>   snark ≤1 in 5 and only at ideas; dunks/ratio-bait off-brand;
+>   disagreement goes through the warm debate rules. Residual "troll the
+>   idea" wording softened in hotake + spicy prompts. Guard:
+>   `test_savvy_tech_mom_register_and_ai_primary_news_sources`.
+
 > **2026-07-19 round 2 — GROWTH BATCH (operator: "implement all of them" +
 > "more debates... get her on a roll" + "use new GIFs"):** six changes, one PR.
 > 1. **Safari blank-page storm fix** (7 reactive restarts in 2.2h, ~85-135/

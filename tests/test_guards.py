@@ -2188,7 +2188,10 @@ def test_agent_bounds_allow_operator_volume_mandate():
     # forfeiting most post slots. FLOORS now guarantee a visible profile;
     # ceilings track the mandate. Both clamp sites pinned identically.
     for bounds in (_BOUNDS, {k.replace("caps.", ""): v for k, v in ALLOWED_PATHS.items()}):
-        assert bounds["MAX_NEWS_PER_DAY"][0] >= 6, "agents must not starve news"
+        # 2026-07-19 operator: "bring more external news with updates on AI
+        # ... comment and post more" — news floor 6->12 so agents can never
+        # demote the news surface below a visible daily presence.
+        assert bounds["MAX_NEWS_PER_DAY"][0] >= 12, "agents must not starve news"
         assert bounds["MAX_HOTAKES_PER_DAY"][0] >= 12, "agents must not starve hotakes"
         assert bounds["MAX_QUOTES_PER_DAY"][0] >= 100, "agents must not starve quotes"
         assert bounds["MAX_RETWEETS_PER_DAY"][0] >= 2, "agents must not zero retweets"
@@ -3138,3 +3141,24 @@ def test_debate_bot_engages_fresh_mentions_through_chokepoint(monkeypatch, tmp_p
     monkeypatch.setenv("ENABLE_DEBATES", "0")
     db.run_debate_cycle()
     assert scraped == [], "ENABLE_DEBATES=0 must skip before any Safari work"
+
+
+def test_savvy_tech_mom_register_and_ai_primary_news_sources():
+    """Operator 2026-07-19: 'bring more external news with updates on AI...
+    comment and post more... be less a troll and more a savvy tech mom.'
+    Pins: (1) the spine carries the savvy-tech-mom-not-a-troll register so
+    every surface inherits it; (2) the RSS ladder includes AI-primary
+    first-party sources (lab blogs), not just tech press; (3) the news
+    volume floor moved in BOTH agent clamp sites (covered in the bounds
+    test) and the .env ceiling allows the mandate."""
+    import os
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    spine = open(os.path.join(root, "core_identity.md")).read().lower()
+    assert "savvy tech mom" in spine and "not a troll" in spine
+    assert "smarter and calmer" in spine, "helpful register must be stated"
+
+    from src.rss_signal_bot import RSS_FEEDS
+    names = {n for n, _ in RSS_FEEDS}
+    for required in ("OpenAI Blog", "Google AI Blog", "DeepMind Blog",
+                     "HuggingFace Blog", "NVIDIA Blog"):
+        assert required in names, f"AI-primary source missing: {required}"
