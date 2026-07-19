@@ -16123,3 +16123,17 @@ CoreWeave clearly has the superior fi
 - **@simonw** (20 likes, score 7/10) — If you have Claude Code installed you're running software that uses the new (unreleased) version of Bun that's been rewritten in Rust - here are two commands you can run to see that for yourself
   - https://x.com/simonw/status/2078692298301587758
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 42).
+- **@pete_rizzo_** (33 likes, score 8/10) — 12 years of #bitcoin development in 60 seconds
+
+This says the quiet part out loud
+
+The absolute best coders on the planet are out there somewhere protecting YOUR money 
+
+This does not happen in a bank
+  - https://x.com/pete_rizzo_/status/2078692807628210586
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 49).
+- **@thienthien1305** (16 likes, score 9/10) — Another Bitcoin whale continues to move a large amount of $BTC after 8 years of holding.
+
+A whale wallet just transferred 583.23 BTC (approximately $37.57 million) to a new wallet address, according t
+  - https://x.com/Thienthien1305/status/2078673040792236142
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 58).
