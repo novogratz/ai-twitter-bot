@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-19T02:34:37.978474",
-  "window_7d_actions": 4578,
-  "window_24h_actions": 714,
+  "generated_at": "2026-07-19T06:34:37.865781",
+  "window_7d_actions": 4588,
+  "window_24h_actions": 705,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4573
+      "count": 4583
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -59,19 +59,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2197
+      "count": 2208
     },
     {
       "topic": "IA",
-      "count": 1770
+      "count": 1769
     },
     {
       "topic": "Crypto",
-      "count": 559
+      "count": 557
     },
     {
       "topic": "Bourse",
-      "count": 257
+      "count": 255
     },
     {
       "topic": "Spatial",
@@ -82,7 +82,7 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 1973
+      "count": 1986
     },
     {
       "pillar": "other",
@@ -90,29 +90,29 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 882
+      "count": 884
     },
     {
       "pillar": "meme_reaction",
-      "count": 221
+      "count": 218
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 41
+      "count": 40
     },
     {
       "pillar": "reply_bait",
-      "count": 39
+      "count": 38
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 311
+      "count": 307
     },
     {
       "pillar": "other",
-      "count": 218
+      "count": 215
     },
     {
       "pillar": "market_trauma",
@@ -120,37 +120,37 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 31
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 5
+      "count": 29
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 6
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 78,
-      "avg_likes": 0.23,
-      "avg_views": 36.3,
+      "posts": 79,
+      "avg_likes": 0.24,
+      "avg_views": 35.9,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 44,
+      "posts": 41,
       "avg_likes": 0.2,
-      "avg_views": 35.3,
+      "avg_views": 37.0,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 75,
-      "avg_likes": 0.16,
-      "avg_views": 33.0,
+      "posts": 77,
+      "avg_likes": 0.19,
+      "avg_views": 33.1,
       "low_sample": false
     },
     {
@@ -164,15 +164,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3854
+      "count": 3866
     },
     {
       "type": "quote",
-      "count": 349
+      "count": 350
     },
     {
       "type": "quote_gif",
-      "count": 172
+      "count": 169
     },
     {
       "type": "post",
@@ -189,18 +189,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-19T02:34:25.974744",
-      "text": "Not a sector rotation. ai hype plays get ditched, ai infrastructure gets reinvested. nvidia datacenter 70% margin vs defensive yielding 5%. one has a pulse, one doesn't",
+      "ts": "2026-07-19T06:34:36.570721",
+      "text": "Optimus mines on the moon, Colossus plans the operations, Starship delivers the robots. Elon's not building a space program, he's building the supply chain that makes it inevitable.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-19T02:31:43.004858",
-      "text": "DRAM up 300% because builders need it, suppliers know it, there's no substitute.\n\nThat's rent extraction.",
+      "ts": "2026-07-19T06:33:11.193560",
+      "text": "Chinese models are sharp. Thinking Machines are faster. OpenAI at $5B burn isn't rust-belt, that's consolidation. The game is tightening, not flipping.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-19T02:26:56.725250",
-      "text": "Yang didn't see an information gap. He saw that China's labs could execute while the West debated whether to build safe or smart.",
+      "ts": "2026-07-19T06:32:54.856988",
+      "text": "Most 'AI companies' are OpenAI resellers with better UI. The second a cheaper alternative ships, you find out you built a feature, not a company.",
       "type": "reply"
     }
   ]
