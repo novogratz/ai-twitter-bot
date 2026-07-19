@@ -561,7 +561,16 @@
     "Nassau777",
     "MaximeMiche",
     "MarcDesmarais",
-    "SergeYegoroff"
+    "SergeYegoroff",
+    "DavidLachapelle",
+    "MorganeMallet",
+    "VincentDussort",
+    "0xdeneb",
+    "cryptomathice",
+    "julian_golay",
+    "david_poirier",
+    "marc_bouvier",
+    "vincent_douard"
   ],
   "en": [
     "Chubby",
@@ -761,7 +770,8 @@
     "Markos",
     "codila",
     "JackTheRippler",
-    "Addyyy"
+    "Addyyy",
+    "clem"
   ],
   "history": [
     {
@@ -4562,6 +4572,56 @@
     {
       "lang": "fr",
       "handle": "SergeYegoroff",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "DavidLachapelle",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MorganeMallet",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDussort",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "en",
+      "handle": "clem",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xdeneb",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptomathice",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "julian_golay",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "david_poirier",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "marc_bouvier",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "vincent_douard",
       "added": "2026-07-19"
     }
   ]

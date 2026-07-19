@@ -1,116 +1,5 @@
 [
   {
-    "ts": "2026-06-16T05:32:48.612922",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LefebvreAntoine",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Le roi de l'analyse on-chain en FR, twitte souvent, zero hype, pur data."
-      },
-      {
-        "handle": "SachaMauri",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Analyste qu\u00e9b\u00e9cois, focus march\u00e9 US en FR, style direct et sans blabla."
-      },
-      {
-        "handle": "RaphaelLeclercq",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 8000,
-        "reason": "Diaspora FR aux US, chercheur IA, twitte tech en FR, pur et dur."
-      }
-    ],
-    "summary": "Mix solide entre les g\u00e9ants IA (Mistral) et les experts niche (on-chain, Qu\u00e9bec, Fintech). Z\u00e9ro influencer formation, juste des comptes qui font avancer le sujet."
-  },
-  {
-    "ts": "2026-06-16T11:59:55.623143",
-    "raw_count": 10,
-    "kept_count": 10,
-    "accounts_added": 9,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "thomashenry",
-        "region": "france",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "CEO de Mistral AI, twitte en FR/EN, le visage de l'IA fran\u00e7aise, pas de pub Telegram."
-      },
-      {
-        "handle": "maximegabor",
-        "region": "france",
-        "niche": "ai",
-        "followers": 52000,
-        "reason": "Fintech/IA, th\u00e8se de march\u00e9 solides, twitte en FR, vibe pro pas 'guru'. "
-      },
-      {
-        "handle": "maxime_poncelet",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 48000,
-        "reason": "Fondamentaliste pur jus, thread deep dives, ton sec et pr\u00e9cis."
-      },
-      {
-        "handle": "leolouan",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "L'analyste bourse FR de r\u00e9f\u00e9rence sur X, fils techniques, z\u00e9ro hype vide."
-      },
-      {
-        "handle": "mehdiboukhanouf",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Co-founder Mistral, ton plus technique et moins 'marketing', pur produit."
-      },
-      {
-        "handle": "louisfrydman",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Fondateur Aider (IA sant\u00e9), ex-UBS, twitte en FR/EN, visionnaire tech."
-      },
-      {
-        "handle": "jmboucard",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Ex-Goldman, VC crypto, twitte la macro et l'infra, pas de signaux \u00e0 99\u20ac."
-      },
-      {
-        "handle": "mihai_cristea",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Professeur HEC Montr\u00e9al, IA appliqu\u00e9e, twitte en FR, acad\u00e9mique mais accessible."
-      },
-      {
-        "handle": "francoisbelanger",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "VC qu\u00e9b\u00e9cois, couvre startups IA/Fintech, r\u00e9seau dense, pas de pubs."
-      },
-      {
-        "handle": "clementguillou",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "CTO Revolut (ex), couvre infra bancaire et crypto, tr\u00e8s technique."
-      }
-    ],
-    "summary": "Purge des guru Telegram, focus sur les cerveaux (Mistral, HEC, Goldman). Du solide, du technique, z\u00e9ro blabla. Le mix France/Qu\u00e9bec/USA diaspora est couvert."
-  },
-  {
     "ts": "2026-06-16T13:44:44.255145",
     "raw_count": 10,
     "kept_count": 9,
@@ -8853,5 +8742,88 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le gras pour garder les cerveaux qui tweetent, pas les influenceurs qui vendent du r\u00eave. Le lot couvre les 3 zones avec une pr\u00e9dominance technique."
+  },
+  {
+    "ts": "2026-07-19T13:53:05.488882",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DavidLachapelle",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Expert Bitcoin qu\u00e9b\u00e9cois. Twitte fr, style direct, z\u00e9ro jargon inutile. Le bitcoiner qu\u00e9b\u00e9cois par excellence."
+      },
+      {
+        "handle": "MorganeMallet",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Journaliste fin-tech bas\u00e9e \u00e0 NYC, twitte FR sur les m\u00e9chas am\u00e9ricains. L'interface entre Wall St et la diaspora FR."
+      },
+      {
+        "handle": "VincentDussort",
+        "region": "france",
+        "niche": "trading",
+        "followers": 12000,
+        "reason": "Day trader FR reconnu. Pas de vente de formation \u00e0 999\u20ac, juste des P&L et des setups. Le plus honn\u00eate du lot."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les influenceurs 'lifestyle' pour garder les pros du coin. Tu as Mistral pour l'IA, Coinhouse pour la crypto historique, et des traders qu\u00e9b\u00e9cois qui ne mentent pas sur leur performance."
+  },
+  {
+    "ts": "2026-07-19T15:52:59.252485",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "0xdeneb",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Diarist de la blockchain. Couvre L2, ZK et micro-caps avec une pr\u00e9cision chirurgical."
+      },
+      {
+        "handle": "cryptomathice",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Crypto-\u00e9rudit. Tu l'entends jamais crier sur le BTC, mais ses threads sur la DeFi font mal."
+      },
+      {
+        "handle": "julian_golay",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Franchouillard install\u00e9 aux US, cover le deep tech et le SaaS. Ton sec, z\u00e9ro hype."
+      },
+      {
+        "handle": "david_poirier",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Analyste ind\u00e9pendant. Pas de formation \u00e0 1000\u20ac, juste des charts et de la lisibilit\u00e9."
+      },
+      {
+        "handle": "marc_bouvier",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Gestionnaire de portefeuille. Le mec qui explique pourquoi ton ETF ne bat pas l'inflation."
+      },
+      {
+        "handle": "vincent_douard",
+        "region": "france",
+        "niche": "tech",
+        "followers": 11000,
+        "reason": "VP Product chez Doctolib. Parle scale, tech et culture startup sans le jargon VC."
+      }
+    ],
+    "summary": "Mix solide entre la puissance technique fran\u00e7aise (Mistral), la rigueur qu\u00e9b\u00e9coise en Bourse et les perles crypto US. Z\u00e9ro influenceur qui crie sur ses abonn\u00e9s."
   }
 ]
