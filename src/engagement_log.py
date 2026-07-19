@@ -16,21 +16,36 @@ def _extract_author(target_url: str) -> str:
 
 
 def _ensure_header():
-    """Create CSV with 7-column header if it doesn't exist.
+    """Create CSV with 8-column header if it doesn't exist.
 
-    Existing 4-, 5- or 6-column files are left as-is; analysis code reads
+    Existing 4- to 7-column files are left as-is; analysis code reads
     positionally and treats missing trailing columns as empty strings
     (backwards compatible).
     Column 6 = pattern_id (REPETITION / DIALOGUE / METAPHOR / RENAME /
     FR_ANCHOR / UNDERSTATEMENT / OTHER) — drives the evolution agent's
     bandit loop. Column 7 = pillar (2026-06-07 spec content pillars, see
-    pillar_tags.py) — drives the weekly mix review.
+    pillar_tags.py) — drives the weekly mix review. Column 8 = provider
+    (2026-07-19): the LLM provider configured for that surface at write
+    time, so provider switches (e.g. the all-ollama move) can be judged on
+    likes-per-post data instead of vibes.
     """
     if not os.path.exists(ENGAGEMENT_LOG_FILE):
         with open(ENGAGEMENT_LOG_FILE, "w", newline="") as f:
             writer = csv.writer(f)
             writer.writerow(["timestamp", "type", "text", "target_url",
-                             "source", "pattern_id", "pillar"])
+                             "source", "pattern_id", "pillar", "provider"])
+
+
+def _provider_for(action_type: str) -> str:
+    """Best-effort provider tag, read from env at call time (the same
+    call-time contract as every side-effect env). Profile surfaces run on
+    PROFILE_LLM_PROVIDER; replies and everything else on the AI_CLI default.
+    Config-level, not per-call — sufficient to compare eras around a switch.
+    """
+    profile_kinds = {"post", "hotake", "quote", "quote_gif", "breakout", "spicy"}
+    if action_type in profile_kinds:
+        return os.environ.get("PROFILE_LLM_PROVIDER", "claude").strip()
+    return os.environ.get("AI_CLI", "ollama").strip()
 
 
 def log_post(text: str, source: str = "", pattern_id: str = ""):
@@ -42,6 +57,7 @@ def log_post(text: str, source: str = "", pattern_id: str = ""):
             datetime.now().isoformat(), "post", text[:280], "",
             source, _normalize_pattern(pattern_id),
             _classify_pillar(text, "post", source),
+            _provider_for("post"),
         ])
 
 
@@ -63,6 +79,7 @@ def log_reply(target_url: str, reply_text: str, action_type: str = "reply",
             datetime.now().isoformat(), action_type, reply_text[:280],
             target_url, source, _normalize_pattern(pattern_id),
             _classify_pillar(reply_text, action_type, source),
+            _provider_for(action_type),
         ])
 
     # Bump personality dossier so the bot grows a relationship with each
@@ -85,4 +102,5 @@ def log_hotake(text: str, source: str = "", pattern_id: str = ""):
             datetime.now().isoformat(), "hotake", text[:280], "",
             source, _normalize_pattern(pattern_id),
             _classify_pillar(text, "hotake", source),
+            _provider_for("hotake"),
         ])

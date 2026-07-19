@@ -29,6 +29,7 @@ from src.reply_bot import safe_run_reply_cycle
 from src.engage_bot import safe_run_engage_cycle
 from src.notify_bot import safe_run_notify_cycle, safe_run_boost_cycle, safe_run_replyback_cycle
 from src.direct_reply import safe_run_direct_reply_cycle
+from src.debate_bot import safe_run_debate_cycle
 from src.engagement_targeting import safe_run_engagement_targeting_cycle
 from src.discover_bot import safe_run_discovery_cycle
 from src.roast_pgm_bot import safe_run_roast_pgm_cycle
@@ -617,6 +618,19 @@ def main():
             quiet_safe_replyback,
             trigger=IntervalTrigger(minutes=8),
             id="replyback_job",
+        )
+
+        # Debate bot (operator 2026-07-19: "more debates... reply to other
+        # people replies and get her on a roll") — scans the MENTIONS tab
+        # (responses to our replies anywhere on X, which replyback's
+        # own-latest-tweet scan never sees) and argues back warmly with one
+        # hard fact + a question that keeps the rally alive. Caps:
+        # 3/cycle, 40/day, 4 turns/author/day.
+        log.info("Debate bot: answering mentions every 12 min (3/cycle, 40/day).")
+        scheduler.add_job(
+            safe_run_debate_cycle,
+            trigger=IntervalTrigger(minutes=12),
+            id="debate_job",
         )
 
         # Boost bot — validated growth lever (200 views / 6 likes per cycle).

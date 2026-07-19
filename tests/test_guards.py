@@ -3014,3 +3014,127 @@ def test_follow_gate_english_only_and_unfollow_target_hold(monkeypatch):
     monkeypatch.setattr("src.action_guard.current_counts", lambda: (1500, 3305))
     su.run_unfollow_cycle()
     assert len(scraped) >= 1, "above target the trickle prune must run"
+
+
+def test_blank_page_storm_post_restart_grace_and_label_diversity(monkeypatch):
+    """2026-07-19: 7 reactive Safari restarts in 2.2h. Two structural causes:
+    (1) scrapes queued behind a hygiene restart hit the cold Safari, blank,
+    and re-trip the threshold — a self-perpetuating ~15-min loop. Blanks
+    within the post-restart grace window must not count. (2) one page
+    legitimately empty in a loop (e.g. a quiet Following tab) is NOT a
+    wedged Safari — a true wedge blanks EVERY page, so the restart needs
+    >=2 distinct labels among the consecutive blanks."""
+    import time as _time
+    from src import twitter_client as tc
+    from src import safari_hygiene as sh
+
+    restarts = []
+    monkeypatch.setattr(sh, "restart_safari", lambda reason="": restarts.append(reason) or True)
+
+    # (1) grace: blanks right after a restart don't count
+    tc._reset_blank_page_count()
+    monkeypatch.setattr(sh, "_last_run_ts", lambda: _time.time())
+    for _ in range(5):
+        tc._record_blank_page(label="search 'x'")
+    assert restarts == [], "blanks during post-restart grace must not restart Safari"
+
+    # (2) out of grace: same-label loop holds, diverse labels restart
+    monkeypatch.setattr(sh, "_last_run_ts", lambda: _time.time() - 3600)
+    tc._reset_blank_page_count()
+    for _ in range(4):
+        tc._record_blank_page(label="following feed")
+    assert restarts == [], "single-page empty loop is not a wedge — no restart"
+    tc._reset_blank_page_count()
+    tc._record_blank_page(label="following feed")
+    tc._record_blank_page(label="search 'ai'")
+    tc._record_blank_page(label="@TheAIShrink")
+    assert restarts == ["black_screen_recovery"], "diverse-label blanks = wedge = restart"
+    tc._reset_blank_page_count()
+
+
+def test_pin_rotation_url_ground_truth_and_stale_override():
+    """2026-07-19: the pin never rotated. Root cause = 4th hit of the
+    display-name-vs-handle family: pin_bot compared scraper `author` (the
+    DISPLAY NAME) to BOT_HANDLE, filtering every own post. Pin: ownership
+    must come from is_own_post (URL ground truth), and a pin older than
+    PIN_MAX_AGE_DAYS must stop defending its slot via the 1.3x beat rule."""
+    import inspect
+    from src import pin_bot
+    src = inspect.getsource(pin_bot.run_pin_cycle)
+    assert "is_own_post" in src, "pin candidates must be filtered by URL ground truth"
+    assert 'author != BOT_HANDLE' not in src and 'author and author !=' not in src, \
+        "display-name-vs-handle compare must be gone"
+    assert "PIN_MAX_AGE_DAYS" in src and "pin_is_stale" in src, \
+        "a stale pin must rotate instead of defending with the 1.3x rule"
+    assert pin_bot.MIN_LIKES_TO_PIN <= 2 or "PIN_MIN_LIKES" in inspect.getsource(pin_bot), \
+        "likes floor must be reachable at this account size"
+
+
+def test_engagement_log_records_provider_column(monkeypatch, tmp_path):
+    """2026-07-19 (all-ollama switch): every engagement_log row must carry
+    the provider configured for its surface at write time, so provider
+    switches are judged on likes-per-post data instead of vibes. Profile
+    surfaces tag PROFILE_LLM_PROVIDER; replies tag the AI_CLI default."""
+    import csv
+    from src import engagement_log as el
+    p = tmp_path / "engagement_log.csv"
+    monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", str(p))
+    monkeypatch.setenv("PROFILE_LLM_PROVIDER", "ollama")
+    monkeypatch.setenv("AI_CLI", "claude")
+    el.log_post("test post", source="TEST")
+    el.log_reply("https://x.com/someone/status/123", "test reply", "reply", source="TEST")
+    rows = list(csv.reader(open(p)))
+    assert rows[0][-1] == "provider"
+    post_row = next(r for r in rows[1:] if r[1] == "post")
+    reply_row = next(r for r in rows[1:] if r[1] == "reply")
+    assert post_row[7] == "ollama", "profile surface must tag PROFILE_LLM_PROVIDER"
+    assert reply_row[7] == "claude", "reply surface must tag the AI_CLI default"
+
+
+def test_debate_bot_engages_fresh_mentions_through_chokepoint(monkeypatch, tmp_path):
+    """Operator 2026-07-19: 'more debates... reply to other people replies
+    and get her on a roll.' Pin the contracts: mentions flow through the
+    reply chokepoint (no caller premark), per-author daily turn cap holds,
+    own/blocklisted mentions are skipped, ship-gated logging only, and
+    ENABLE_DEBATES=0 short-circuits before any Safari work."""
+    import time as _time
+    from src import debate_bot as db
+
+    monkeypatch.setattr(db, "DEBATE_STATE_FILE", str(tmp_path / "debate_state.json"))
+    fresh_id = (int(_time.time() * 1000) - db._TWITTER_EPOCH - 60_000) << 22
+    mentions = [
+        {"url": f"https://x.com/challenger/status/{fresh_id}", "text": "you're wrong about inference costs", "author": "Challenger"},
+        {"url": f"https://x.com/{'theaishrink'}/status/{fresh_id + 1}", "text": "own reply", "author": "The AI Therapist"},
+    ]
+    shipped = []
+    monkeypatch.setattr("src.twitter_client.scrape_mentions", lambda max_tweets=20: list(mentions))
+    monkeypatch.setattr("src.twitter_client.reply_to_tweet", lambda url, txt: shipped.append(url) or True)
+    monkeypatch.setattr("src.reply_bot.load_replied", lambda: set())
+    logged = []
+    monkeypatch.setattr("src.engagement_log.log_reply", lambda *a, **k: logged.append(a))
+
+    class _R:
+        returncode = 0
+        stdout = "the H100 math says otherwise: 70% margins. what's your counter?"
+        stderr = ""
+    monkeypatch.setattr(db, "run_llm", lambda *a, **k: _R())
+    monkeypatch.setattr(db, "humanize", lambda t: t)
+    monkeypatch.setattr(db.time, "sleep", lambda s: None)
+
+    monkeypatch.setenv("ENABLE_DEBATES", "1")
+    monkeypatch.setenv("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "1")
+    db.run_debate_cycle()
+    assert shipped == [mentions[0]["url"]], "fresh non-own mention must ship via chokepoint"
+    assert len(logged) == 1, "log only on confirmed ship"
+
+    # Turn cap: same author again today -> skipped
+    shipped.clear()
+    db.run_debate_cycle()
+    assert shipped == [], "per-author daily turn cap must hold"
+
+    # Kill switch read at call time
+    scraped = []
+    monkeypatch.setattr("src.twitter_client.scrape_mentions", lambda max_tweets=20: scraped.append(1) or [])
+    monkeypatch.setenv("ENABLE_DEBATES", "0")
+    db.run_debate_cycle()
+    assert scraped == [], "ENABLE_DEBATES=0 must skip before any Safari work"

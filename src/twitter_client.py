@@ -23,26 +23,45 @@ _safari_lock = threading.Lock()
 _blank_page_lock = threading.Lock()
 _blank_page_count = 0
 _home_feed_blank_count = 0
+_blank_page_labels: list = []  # labels of the current consecutive-blank run
 _BLANK_PAGE_RESTART_THRESHOLD = 3  # lowered 5→3 (2026-06-02): recover from the
                                    # black-screen / stale-page state faster so
                                    # scrapes don't keep returning empty/old data
 _HOME_FEED_BLANK_RESTART_THRESHOLD = 2  # home feed fails 2× in a row → restart
 
 
-def _record_blank_page(is_home_feed: bool = False):
+def _in_post_restart_grace() -> bool:
+    """2026-07-19 storm fix (7 reactive restarts in 2.2h): scrapes queued
+    behind a hygiene restart hit a cold, still-warming Safari, go blank, and
+    re-trip the threshold ~15 min later — a self-perpetuating restart loop.
+    Blanks within BLANK_GRACE_AFTER_RESTART_SECONDS of the last restart are
+    EXPECTED and must not count. Env read at call time."""
+    grace = int(os.environ.get("BLANK_GRACE_AFTER_RESTART_SECONDS", "120"))
+    try:
+        from . import safari_hygiene
+        return (time.time() - safari_hygiene._last_run_ts()) < grace
+    except Exception:
+        return False
+
+
+def _record_blank_page(is_home_feed: bool = False, label: str = ""):
     global _blank_page_count, _home_feed_blank_count
+    if _in_post_restart_grace():
+        log.info("[SCRAPE] Blank page within post-restart grace — not counting toward restart threshold.")
+        return
     with _blank_page_lock:
         _blank_page_count += 1
         count = _blank_page_count
+        _blank_page_labels.append(label or ("home feed" if is_home_feed else "?"))
+        del _blank_page_labels[:-_BLANK_PAGE_RESTART_THRESHOLD]
+        distinct = len(set(_blank_page_labels))
         if is_home_feed:
             _home_feed_blank_count += 1
             hf_count = _home_feed_blank_count
         else:
             hf_count = 0
     if hf_count >= _HOME_FEED_BLANK_RESTART_THRESHOLD:
-        with _blank_page_lock:
-            _home_feed_blank_count = 0
-            _blank_page_count = 0
+        _reset_blank_page_count()
         log.warning(f"[SCRAPE] Home feed blank {hf_count}× in a row — triggering reactive Safari restart.")
         try:
             from . import safari_hygiene
@@ -50,6 +69,14 @@ def _record_blank_page(is_home_feed: bool = False):
         except Exception:
             pass
     elif count >= _BLANK_PAGE_RESTART_THRESHOLD:
+        # A wedged Safari (stale service-worker shell) blanks EVERY page, so
+        # a true wedge shows ≥2 distinct labels fast. One page blanking in a
+        # loop is that page being legitimately empty — not a reason to bounce
+        # Safari (2026-07-19: storms counted mixed legit-empties as wedges).
+        if distinct < 2:
+            log.info(f"[SCRAPE] {count} consecutive blanks but all on '{_blank_page_labels[-1]}' — "
+                     "single-page empty, not a Safari wedge. Holding restart.")
+            return
         _reset_blank_page_count()
         log.warning(f"[SCRAPE] {count} consecutive blank pages — triggering reactive Safari restart.")
         try:
@@ -64,6 +91,7 @@ def _reset_blank_page_count():
     with _blank_page_lock:
         _blank_page_count = 0
         _home_feed_blank_count = 0
+        del _blank_page_labels[:]
 
 
 def _run_applescript(script: str, retries: int = 1) -> bool:
@@ -1607,11 +1635,11 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10):
             return []
         if not raw or raw == 'NO_ARTICLES':
             log.info(f"[SCRAPE] No articles on {label} (page not loaded?)")
-            _record_blank_page(is_home_feed="home feed" in label)
+            _record_blank_page(is_home_feed="home feed" in label, label=label)
             return []
         if raw.startswith('ARTICLES_'):
             log.info(f"[SCRAPE] {label}: {raw}")
-            _record_blank_page(is_home_feed="home feed" in label)
+            _record_blank_page(is_home_feed="home feed" in label, label=label)
             return []
 
         data = _json.loads(raw)
@@ -1736,6 +1764,23 @@ def scrape_own_replies(max_tweets: int = 25):
             _scroll_page()
             time.sleep(1)
         tweets = _scrape_tweets_from_page(f"@{BOT_HANDLE}/with_replies", max_tweets)
+        close_front_tab()
+        return tweets
+
+
+def scrape_mentions(max_tweets: int = 20):
+    """Scrape the mentions notifications tab — tweets that mention/reply to
+    us anywhere on X. Feeds the debate engine (operator 2026-07-19: 'more
+    debates... reply to other people replies and get her on a roll'). The
+    mentions tab renders standard tweet articles, so the shared page scraper
+    applies; best-effort [] on any failure."""
+    with _safari_lock:
+        log.info("[SCRAPE] Opening mentions notifications...")
+        webbrowser.open("https://x.com/notifications/mentions")
+        time.sleep(8)
+        for _ in range(2):
+            _scroll_page()
+        tweets = _scrape_tweets_from_page("mentions", max_tweets)
         close_front_tab()
         return tweets
 
