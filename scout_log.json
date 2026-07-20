@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-06-17T08:07:21.851600",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MathieuLeMeteur",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "L'oracle. Il tweet en FR, il analyse sans vendre de r\u00eave et a surv\u00e9cu \u00e0 4 hivers crypto."
-      },
-      {
-        "handle": "ThomasPh",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Trader bas\u00e9 \u00e0 NY qui tweet en FR avec un humour caustique. La bourse vue par un d\u00e9cal\u00e9."
-      },
-      {
-        "handle": "JulesDumoulin",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Le Vibe Coiner qu\u00e9b\u00e9cois. Il rend la complexit\u00e9 simple sans vendre de formation \u00e0 500\u20ac."
-      },
-      {
-        "handle": "AlexisDegrane",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Ex-Huobi, ex-OKX, le roi des march\u00e9s crypto d\u00e9riv\u00e9s en France. Z\u00e9ro bullshit."
-      },
-      {
-        "handle": "CryptoKleber",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Analyse on-chain technique. Pas de news juteuses, juste des graphiques qui disent la v\u00e9rit\u00e9."
-      },
-      {
-        "handle": "AlexisRozencwajg",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 9000,
-        "reason": "Un des cerveaux derri\u00e8re Weelth. Il parle fintech et investissement avec un ton Qu\u00e9beco-fran\u00e7ais rare."
-      }
-    ],
-    "summary": "Je te sors de la masse de comptoirs qui vendent du Dream11. Ici on a des gens qui comprennent la tech ou la macro, pas juste le mot 'Moon'. Le QC est mieux d\u00e9fendu que pr\u00e9vu."
-  },
-  {
     "ts": "2026-06-17T12:29:24.896600",
     "raw_count": 8,
     "kept_count": 8,
@@ -8825,5 +8773,43 @@
       }
     ],
     "summary": "Le top FR en IA se joue entre Mistral et les fondateurs indie, tandis que la Bourse est trop pollu\u00e9e par les formateurs : j'ai filtr\u00e9 pour ne garder que ceux qui vendent leur expertise, pas leur ego."
+  },
+  {
+    "ts": "2026-07-20T01:52:58.582412",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilDenez",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 48000,
+        "reason": "Le prof de maternelle qui t'explique que la Bourse c'est comme un jeu de L\u00e9go, mais avec des actions qui puent l'arnaque."
+      },
+      {
+        "handle": "HugoDelmas",
+        "region": "france",
+        "niche": "tech/ia",
+        "followers": 32000,
+        "reason": "Cofondateur de DeepMind Paris qui parle IA comme si c'\u00e9tait du culinaire, mais avec des maths pour accompagner."
+      },
+      {
+        "handle": "MathieuVogel",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 24000,
+        "reason": "Ex-BNP Paribas qui a p\u00e9t\u00e9 un c\u00e2ble en criant que les crypto n'ont pas de valeur, maintenant il fait l'oracle des degens."
+      },
+      {
+        "handle": "MaximeMansuy",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Ex-Director chez Revolut, il balance des p\u00e9pites sur la fintech europ\u00e9enne sans dormir sur la planche de l'UC Berkeley."
+      }
+    ],
+    "summary": "Pas de vendeurs de r\u00eave ici, juste des gars qui font le job. Cyril Denez pour la frappe fran\u00e7aise traditionnelle, Pierre Rochard pour le bitecoin global, et quelques jeunes pousses tech qui savent encore \u00e9crire des phrases compl\u00e8tes."
   }
 ]

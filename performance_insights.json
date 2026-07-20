@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-20T01:52:21.064132",
-  "window_7d_actions": 4656,
-  "window_24h_actions": 776,
+  "generated_at": "2026-07-20T05:52:20.959546",
+  "window_7d_actions": 4674,
+  "window_24h_actions": 819,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4651
+      "count": 4669
     },
     {
       "pattern": "RENAME",
@@ -41,11 +41,11 @@
     },
     {
       "hour": 1,
-      "actions": 238
+      "actions": 236
     },
     {
       "hour": 2,
-      "actions": 216
+      "actions": 219
     },
     {
       "hour": 11,
@@ -59,36 +59,36 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2242
+      "count": 2258
     },
     {
       "topic": "IA",
-      "count": 1783
+      "count": 1777
     },
     {
       "topic": "Crypto",
-      "count": 554
+      "count": 546
     },
     {
       "topic": "Bourse",
-      "count": 261
+      "count": 274
     },
     {
       "topic": "Spatial",
-      "count": 74
+      "count": 78
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.023,
-      "7d_rate": 0.016
+      "24h_rate": 0.029,
+      "7d_rate": 0.017
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2026
+      "count": 2029
     },
     {
       "pillar": "other",
@@ -96,37 +96,37 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 933
+      "count": 956
     },
     {
       "pillar": "meme_reaction",
-      "count": 212
+      "count": 209
     },
     {
       "pillar": "reply_bait",
-      "count": 37
+      "count": 36
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 33
+      "count": 29
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 349
+      "count": 359
     },
     {
       "pillar": "other",
-      "count": 220
+      "count": 235
     },
     {
       "pillar": "market_trauma",
-      "count": 170
+      "count": 187
     },
     {
       "pillar": "meme_reaction",
-      "count": 29
+      "count": 31
     },
     {
       "pillar": "reply_bait",
@@ -134,7 +134,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
@@ -142,14 +142,14 @@
       "pillar": "ai_news_take",
       "posts": 77,
       "avg_likes": 0.21,
-      "avg_views": 32.1,
+      "avg_views": 31.9,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 81,
       "avg_likes": 0.17,
-      "avg_views": 29.0,
+      "avg_views": 27.3,
       "low_sample": false
     },
     {
@@ -170,15 +170,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3936
+      "count": 3957
     },
     {
       "type": "quote",
-      "count": 356
+      "count": 357
     },
     {
       "type": "quote_gif",
-      "count": 166
+      "count": 163
     },
     {
       "type": "post",
@@ -190,23 +190,23 @@
     },
     {
       "type": "retweet",
-      "count": 51
+      "count": 50
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-20T01:52:20.828298",
-      "text": "Open ai just raised at 157b valuation. the burn rate is 5b/yr. it's a race between model performance and cash runway. no pressure.",
+      "ts": "2026-07-20T05:50:12.277392",
+      "text": "100k wafers a month. samsung is the only one who can actually scale nand without begging tsmc. the real bottleneck isn't compute. it's where the weights sit.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-20T01:50:13.043340",
-      "text": "Databricks isn't an AI stock. it's a plumbing company with a valuation of 60x revenue. the water is AI. you buy the tap, not the flood.",
+      "ts": "2026-07-20T05:49:26.880363",
+      "text": "Vingegaard abandonne. C'est la leçon AI de la semaine : même le meilleur moteur crache si le contexte fait défaut.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-20T01:49:55.761582",
-      "text": "IBM is a $200B company acting like a penny stock because the market pays for growth, not legacy.\nwe bought a museum.",
+      "ts": "2026-07-20T05:48:06.423722",
+      "text": "Open-source models are 80% of the inference load but 0% of the capex. US hyperscalers are burning cash to build the race track; Chinese firms are driving the cars. one wins the infrastructure, the other wins the margin.",
       "type": "reply"
     }
   ]

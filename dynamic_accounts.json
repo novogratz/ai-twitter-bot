@@ -586,7 +586,11 @@
     "MaximeDejean",
     "CryptoMascotte",
     "BenjaminDeMotte",
-    "LucasMourand"
+    "LucasMourand",
+    "CyrilDenez",
+    "HugoDelmas",
+    "MathieuVogel",
+    "MaximeMansuy"
   ],
   "en": [
     "Chubby",
@@ -787,7 +791,8 @@
     "codila",
     "JackTheRippler",
     "Addyyy",
-    "clem"
+    "clem",
+    "BabylonBibi"
   ],
   "history": [
     {
@@ -4719,6 +4724,31 @@
       "lang": "fr",
       "handle": "LucasMourand",
       "added": "2026-07-19"
+    },
+    {
+      "lang": "en",
+      "handle": "BabylonBibi",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDenez",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoDelmas",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuVogel",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMansuy",
+      "added": "2026-07-20"
     }
   ]
 }
