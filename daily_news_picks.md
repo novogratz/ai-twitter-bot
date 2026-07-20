@@ -16161,3 +16161,29 @@ In 2026, the strongest Japanese stock will be born.
 Expansion of qua
   - https://x.com/chankimi7/status/2079032810032259129
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 125).
+- **@metacriticcap** (13 likes, score 7/10) — Great post, must read.
+
+Two points.
+
+1- I read some months ago someone saying “AGI is a superpower they give us after we beat the game”. There's some truth in that. If we had Claude Fable 5 in 1926, i
+  - https://x.com/MetacriticCap/status/2079015548097311033
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 17).
+- **@nonzena1218** (274 likes, score 9/10) — Elon's Future Prediction――
+Sold all of KIOXIA (285A)
+Because,
+in 2026, the strongest Japanese stock will be born.
+Current price: 58 yen  
+(Taiyo Yuden × JX Metals × NVIDIA) 
+For data centers, "liquid
+  - https://x.com/nonzena1218/status/2079044693544046952
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 356).
+- **@spaceinvestor_d** (54 likes, score 9/10) — If you ever wondered why Elon took SpaceX public...
+
+This $52B AI infrastructure order is part of the answer.
+
+The roadmap to Kardashev II is loading and the faster you can raise capital, the faster y
+  - https://x.com/SpaceInvestor_D/status/2079027482737479818
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 62).
+- **@teortaxestex** (48 likes, score 9/10) — Fable predicts the LLM-powered disproof of the Jacobian conjecture by 2029–2032, 1-3 years before AGI, 2-6 before singularity. Faced with its success, it copes about "fabricated scenario from July 202
+  - https://x.com/teortaxesTex/status/2079048125423992901
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 52).
