@@ -590,7 +590,15 @@
     "CyrilDenez",
     "HugoDelmas",
     "MathieuVogel",
-    "MaximeMansuy"
+    "MaximeMansuy",
+    "LucasGonze",
+    "ThomasMourey",
+    "ClemB",
+    "AlexisDuchemin",
+    "BenLerman",
+    "CassiusLauJ",
+    "MullerBenjamin",
+    "MarcLamothe"
   ],
   "en": [
     "Chubby",
@@ -792,7 +800,9 @@
     "JackTheRippler",
     "Addyyy",
     "clem",
-    "BabylonBibi"
+    "BabylonBibi",
+    "e",
+    "invoker"
   ],
   "history": [
     {
@@ -4748,6 +4758,56 @@
     {
       "lang": "fr",
       "handle": "MaximeMansuy",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasGonze",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasMourey",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClemB",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDuchemin",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "en",
+      "handle": "e",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "en",
+      "handle": "invoker",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenLerman",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "CassiusLauJ",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MullerBenjamin",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLamothe",
       "added": "2026-07-20"
     }
   ]

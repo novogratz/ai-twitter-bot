@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-20T05:52:20.959546",
-  "window_7d_actions": 4674,
-  "window_24h_actions": 819,
+  "generated_at": "2026-07-20T09:52:21.885561",
+  "window_7d_actions": 4690,
+  "window_24h_actions": 882,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4669
+      "count": 4684
     },
     {
       "pattern": "RENAME",
-      "count": 2
+      "count": 3
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -26,12 +26,12 @@
       "count": 1
     },
     {
-      "pattern": "RENAME",
+      "pattern": "UNDERSTATEMENT",
       "count": 2
     },
     {
-      "pattern": "UNDERSTATEMENT",
-      "count": 2
+      "pattern": "RENAME",
+      "count": 3
     }
   ],
   "best_hours_utc": [
@@ -59,40 +59,45 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2258
+      "count": 2259
     },
     {
       "topic": "IA",
-      "count": 1777
+      "count": 1789
     },
     {
       "topic": "Crypto",
-      "count": 546
+      "count": 536
     },
     {
       "topic": "Bourse",
-      "count": 274
+      "count": 281
     },
     {
       "topic": "Spatial",
-      "count": 78
+      "count": 82
     }
   ],
   "rising_topics_24h": [
     {
+      "topic": "Bourse",
+      "24h_rate": 0.079,
+      "7d_rate": 0.06
+    },
+    {
       "topic": "Spatial",
-      "24h_rate": 0.029,
+      "24h_rate": 0.031,
       "7d_rate": 0.017
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2029
+      "count": 2055
     },
     {
       "pillar": "other",
-      "count": 1415
+      "count": 1408
     },
     {
       "pillar": "market_trauma",
@@ -100,7 +105,7 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 209
+      "count": 206
     },
     {
       "pillar": "reply_bait",
@@ -114,19 +119,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 359
+      "count": 389
     },
     {
       "pillar": "other",
-      "count": 235
+      "count": 249
     },
     {
       "pillar": "market_trauma",
-      "count": 187
+      "count": 203
     },
     {
       "pillar": "meme_reaction",
-      "count": 31
+      "count": 33
     },
     {
       "pillar": "reply_bait",
@@ -134,29 +139,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 77,
-      "avg_likes": 0.21,
-      "avg_views": 31.9,
+      "posts": 74,
+      "avg_likes": 0.22,
+      "avg_views": 26.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 81,
+      "posts": 83,
       "avg_likes": 0.17,
-      "avg_views": 27.3,
+      "avg_views": 27.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 40,
+      "posts": 41,
       "avg_likes": 0.15,
-      "avg_views": 25.9,
+      "avg_views": 25.7,
       "low_sample": false
     },
     {
@@ -170,23 +175,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3957
+      "count": 3975
     },
     {
       "type": "quote",
-      "count": 357
+      "count": 359
     },
     {
       "type": "quote_gif",
-      "count": 163
+      "count": 162
     },
     {
       "type": "post",
-      "count": 79
+      "count": 78
     },
     {
       "type": "hotake",
-      "count": 68
+      "count": 66
     },
     {
       "type": "retweet",
@@ -195,18 +200,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-20T05:50:12.277392",
-      "text": "100k wafers a month. samsung is the only one who can actually scale nand without begging tsmc. the real bottleneck isn't compute. it's where the weights sit.",
+      "ts": "2026-07-20T09:52:05.480237",
+      "text": "Open source caught up in 18 months. the frontier lab moat isn't the model anymore, it's the data flywheel they're burning cash to feed.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-20T05:49:26.880363",
-      "text": "Vingegaard abandonne. C'est la leçon AI de la semaine : même le meilleur moteur crache si le contexte fait défaut.",
+      "ts": "2026-07-20T09:51:12.274604",
+      "text": "The 10-K shows datacenter capex is ~70% of ttm fcf. google isn't saving money, it's retiring capex to the balance sheet.\n\nmargin expansion disguised as hardware efficiency.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-20T05:48:06.423722",
-      "text": "Open-source models are 80% of the inference load but 0% of the capex. US hyperscalers are burning cash to build the race track; Chinese firms are driving the cars. one wins the infrastructure, the other wins the margin.",
+      "ts": "2026-07-20T09:50:56.157217",
+      "text": "Trump's portfolio is 38% DJT, 24% AI infra. he's not diversifying. he's leveraged on the very trend he's trying to regulate.",
       "type": "reply"
     }
   ]
