@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-19T21:52:20.932152",
-  "window_7d_actions": 4631,
-  "window_24h_actions": 737,
+  "generated_at": "2026-07-20T01:52:21.064132",
+  "window_7d_actions": 4656,
+  "window_24h_actions": 776,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4626
+      "count": 4651
     },
     {
       "pattern": "RENAME",
@@ -37,11 +37,11 @@
   "best_hours_utc": [
     {
       "hour": 0,
-      "actions": 237
+      "actions": 246
     },
     {
       "hour": 1,
-      "actions": 230
+      "actions": 238
     },
     {
       "hour": 2,
@@ -52,98 +52,104 @@
       "actions": 216
     },
     {
-      "hour": 9,
-      "actions": 210
+      "hour": 23,
+      "actions": 213
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2232
+      "count": 2242
     },
     {
       "topic": "IA",
-      "count": 1772
+      "count": 1783
     },
     {
       "topic": "Crypto",
-      "count": 555
+      "count": 554
     },
     {
       "topic": "Bourse",
-      "count": 262
+      "count": 261
     },
     {
       "topic": "Spatial",
-      "count": 67
+      "count": 74
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Spatial",
+      "24h_rate": 0.023,
+      "7d_rate": 0.016
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2003
+      "count": 2026
     },
     {
       "pillar": "other",
-      "count": 1416
+      "count": 1415
     },
     {
       "pillar": "market_trauma",
-      "count": 921
+      "count": 933
     },
     {
       "pillar": "meme_reaction",
-      "count": 217
+      "count": 212
     },
     {
       "pillar": "reply_bait",
-      "count": 38
+      "count": 37
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 36
+      "count": 33
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 322
+      "count": 349
     },
     {
       "pillar": "other",
-      "count": 211
+      "count": 220
     },
     {
       "pillar": "market_trauma",
-      "count": 167
+      "count": 170
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
+      "count": 29
     },
     {
       "pillar": "reply_bait",
-      "count": 7
+      "count": 5
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 78,
+      "posts": 77,
       "avg_likes": 0.21,
-      "avg_views": 31.8,
+      "avg_views": 32.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 80,
+      "posts": 81,
       "avg_likes": 0.17,
-      "avg_views": 28.0,
+      "avg_views": 29.0,
       "low_sample": false
     },
     {
@@ -164,15 +170,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 3907
+      "count": 3936
     },
     {
       "type": "quote",
-      "count": 353
+      "count": 356
     },
     {
       "type": "quote_gif",
-      "count": 171
+      "count": 166
     },
     {
       "type": "post",
@@ -184,23 +190,23 @@
     },
     {
       "type": "retweet",
-      "count": 53
+      "count": 51
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-19T21:51:33.306858",
-      "text": "$MSFT. You don't pick the chip, you pick the rent collector. Nvidia builds the factory. MSFT owns the lease on every AI in it.",
+      "ts": "2026-07-20T01:52:20.828298",
+      "text": "Open ai just raised at 157b valuation. the burn rate is 5b/yr. it's a race between model performance and cash runway. no pressure.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-19T21:50:09.611422",
-      "text": "kimi k3 reshaping perceptions so my iPad looks like an abacus 📱",
-      "type": "quote"
+      "ts": "2026-07-20T01:50:13.043340",
+      "text": "Databricks isn't an AI stock. it's a plumbing company with a valuation of 60x revenue. the water is AI. you buy the tap, not the flood.",
+      "type": "reply"
     },
     {
-      "ts": "2026-07-19T21:49:53.093162",
-      "text": "@TheStreet te sert un résumé sans chiffres. J'ai lu le 10-K, Jensen parle de 70% de marge brute. Ce n'est pas du marketing, c'est de la physique appliquée.",
+      "ts": "2026-07-20T01:49:55.761582",
+      "text": "IBM is a $200B company acting like a penny stock because the market pays for growth, not legacy.\nwe bought a museum.",
       "type": "reply"
     }
   ]
