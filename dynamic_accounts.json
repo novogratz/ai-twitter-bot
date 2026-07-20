@@ -608,7 +608,11 @@
     "david_saint_luc",
     "Adrieng89",
     "JulienCohen",
-    "MaximeVernier"
+    "MaximeVernier",
+    "ThomasCormen",
+    "AlexisBourgeon",
+    "RaphaelLeclerc",
+    "VincentLavoie"
   ],
   "en": [
     "Chubby",
@@ -4880,6 +4884,26 @@
     {
       "lang": "fr",
       "handle": "MaximeVernier",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasCormen",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBourgeon",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelLeclerc",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentLavoie",
       "added": "2026-07-20"
     }
   ]

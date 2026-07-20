@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-20T13:52:20.818783",
-  "window_7d_actions": 4715,
-  "window_24h_actions": 878,
+  "generated_at": "2026-07-20T17:52:20.876815",
+  "window_7d_actions": 4730,
+  "window_24h_actions": 881,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4709
+      "count": 4724
     },
     {
       "pattern": "RENAME",
@@ -59,19 +59,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2268
+      "count": 2265
     },
     {
       "topic": "IA",
-      "count": 1808
+      "count": 1825
     },
     {
       "topic": "Crypto",
-      "count": 535
+      "count": 529
     },
     {
       "topic": "Bourse",
-      "count": 287
+      "count": 289
     },
     {
       "topic": "Spatial",
@@ -81,30 +81,30 @@
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.03,
+      "24h_rate": 0.028,
       "7d_rate": 0.017
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2071
+      "count": 2093
     },
     {
       "pillar": "other",
-      "count": 1415
+      "count": 1410
     },
     {
       "pillar": "market_trauma",
-      "count": 959
+      "count": 960
     },
     {
       "pillar": "meme_reaction",
-      "count": 204
+      "count": 200
     },
     {
       "pillar": "reply_bait",
-      "count": 35
+      "count": 36
     },
     {
       "pillar": "ai_vs_btc",
@@ -114,7 +114,7 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 392
+      "count": 412
     },
     {
       "pillar": "other",
@@ -122,41 +122,41 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 203
+      "count": 184
     },
     {
       "pillar": "meme_reaction",
-      "count": 29
+      "count": 30
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 5
     },
     {
       "pillar": "ai_vs_btc",
       "count": 5
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 73,
-      "avg_likes": 0.22,
+      "posts": 75,
+      "avg_likes": 0.21,
       "avg_views": 26.8,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 85,
-      "avg_likes": 0.16,
-      "avg_views": 27.9,
+      "posts": 86,
+      "avg_likes": 0.15,
+      "avg_views": 27.6,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 40,
-      "avg_likes": 0.15,
-      "avg_views": 23.9,
+      "posts": 38,
+      "avg_likes": 0.13,
+      "avg_views": 23.4,
       "low_sample": false
     },
     {
@@ -170,7 +170,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4001
+      "count": 4021
     },
     {
       "type": "quote",
@@ -178,11 +178,11 @@
     },
     {
       "type": "quote_gif",
-      "count": 160
+      "count": 158
     },
     {
       "type": "post",
-      "count": 78
+      "count": 75
     },
     {
       "type": "hotake",
@@ -195,18 +195,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-20T13:51:42.507806",
-      "text": "Btc dominance rising while eth catches the trendline. the market is pricing safety over smart contracts.",
+      "ts": "2026-07-20T17:51:59.727058",
+      "text": "Context is just paid storage for the tokens you already had. entire.io = selling the shovel to people digging for a ghost.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-20T13:51:26.476948",
-      "text": "Andrew Ng says agents do 100% of his tasks. That’s the founder who raised $50M for a wrapper, calls it AGI, and hasn’t shipped code since 2023.",
+      "ts": "2026-07-20T17:51:43.472613",
+      "text": "Anthropic and DeepMind agreed on AGI in 28 minutes.\n\nOpenAI's valuation is still based on their 2023 PR slide deck. reality lags.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-20T13:49:58.882410",
-      "text": "Btc is up because the people who actually hold it aren't looking at the s&p. stocks down is just 401k dave rebalancing.",
+      "ts": "2026-07-20T17:50:17.012361",
+      "text": "Andrew Ng teaching agentic graphs for free.\n\nStanford Steve paid $29k for a wrapper course that barely made a dent.",
       "type": "reply"
     }
   ]

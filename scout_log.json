@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-06-18T02:11:02.170384",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibautMugler",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le roi de la data boursi\u00e8re FR. Charts impecs, analyse quantitative, pas de vente de r\u00eave."
-      },
-      {
-        "handle": "Marc-AndreCote",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 32000,
-        "reason": "Actionniste depuis 20 ans, le 'grand fr\u00e8re' s\u00e9rieux de la Bourse de Montr\u00e9al. Twitte en FR, z\u00e9ro hype."
-      },
-      {
-        "handle": "LunaHsu",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "VC chez a16z, focus AI/Health. Le tweet parfait sur le cycle tech actuel. Parle FR quand \u00e7a tombe bien."
-      },
-      {
-        "handle": "RomainHilaire",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Ex-BNP Paribas, aujourd'hui VC chez Partech. Comprend les r\u00e9gulations bancaires mieux que personne."
-      }
-    ],
-    "summary": "Un mix \u00e9quilibr\u00e9 entre les gus qui font bouger la tech parisienne et les analystes qu\u00e9b\u00e9cois qui ne mentent pas sur les charts. Z\u00e9ro influenceur qui vend du r\u00eave, 100% du grain \u00e0 moudre."
-  },
-  {
     "ts": "2026-06-18T03:55:58.225086",
     "raw_count": 10,
     "kept_count": 10,
@@ -8788,5 +8750,43 @@
       }
     ],
     "summary": "Cette s\u00e9lection privil\u00e9gie les architects et ing\u00e9nieurs aux influenceurs 'guru'. On a mis\u00e9 sur le fond technique (Mistral, Hugging Face, Lilian Weng) plut\u00f4t que sur la forme m\u00e9diatique, pour garantir un feed qui donne des id\u00e9es concr\u00e8tes et pas juste du bruit."
+  },
+  {
+    "ts": "2026-07-20T14:03:02.022340",
+    "raw_count": 11,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomasCormen",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Journaliste crypto fran\u00e7ais de r\u00e9f\u00e9rence. Il couvre la r\u00e9gulation EU et les grands mouvements on-chain avec un \u0153il de lynx. Moins hype, plus vrai."
+      },
+      {
+        "handle": "AlexisBourgeon",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Co-fondateur de Mistral. Il twitte avec le rythme cardiaque d'un trader crypto et l'\u00e9rudition d'un prof de fac. Rarement vu, toujours pertinent."
+      },
+      {
+        "handle": "RaphaelLeclerc",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Fondateur de DeepML. C'est l'un des rares fran\u00e7ais \u00e0 expliquer le LLM stack technique sans se prendre pour un guru crypto. Du concret."
+      },
+      {
+        "handle": "VincentLavoie",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 10000,
+        "reason": "Analyste ind\u00e9pendant QCA. Il fait des threads techniques sur les march\u00e9s US et CAN en FR. Pas de formation \u00e0 vendre, juste du graphisme propre."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les influenceurs crypto FR qui vendent du r\u00eave pour garder les vrais b\u00e2tisseurs (Mistral, DeepML) et les analysts techniques. Pour le Qu\u00e9bec, j'ai vis\u00e9 les ind\u00e9pendants qui font des threads techniques plut\u00f4t que des quotes \u00e0 chaque tweet de Musk."
   }
 ]
