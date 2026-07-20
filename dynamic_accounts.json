@@ -570,7 +570,19 @@
     "julian_golay",
     "david_poirier",
     "marc_bouvier",
-    "vincent_douard"
+    "vincent_douard",
+    "pierre_robert1",
+    "CryptoDuchesse",
+    "JulienDelannoy",
+    "L30N",
+    "PierreLacerte",
+    "AdrienTixier",
+    "OlivierScherrer",
+    "ThibautMoulin",
+    "MaximeRagot",
+    "CryptoKoch",
+    "JulienMallet",
+    "JeanBaptisteD"
   ],
   "en": [
     "Chubby",
@@ -4622,6 +4634,66 @@
     {
       "lang": "fr",
       "handle": "vincent_douard",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "pierre_robert1",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoDuchesse",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDelannoy",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "L30N",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLacerte",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienTixier",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierScherrer",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMoulin",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeRagot",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKoch",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienMallet",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptisteD",
       "added": "2026-07-19"
     }
   ]
