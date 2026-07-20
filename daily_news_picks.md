@@ -16137,3 +16137,27 @@ This does not happen in a bank
 A whale wallet just transferred 583.23 BTC (approximately $37.57 million) to a new wallet address, according t
   - https://x.com/Thienthien1305/status/2078673040792236142
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 58).
+
+## 2026-07-20
+- **@smallcapsnipa** (35 likes, score 8/10) — $SPCX reportedly placed a $52 BILLION order for 13,000 NVIDIA GB300 server racks totaling nearly 1 million GPUs
+
+Cherry on top for one of the wilder AI weekends this year
+  - https://x.com/SmallCapSnipa/status/2079032742218477980
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 45).
+- **@pequityresearch** (14 likes, score 8/10) — Huge order from SpaceX $SPCX for Foxconn to build over 13,000 racks of AI servers equipped with Nvidia GB300 chips. Total cost? Estimated to be $52B! 
+
+Hon Hai Precision aka Foxconn, holds the most ma
+  - https://x.com/pequityresearch/status/2079046262880444465
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 28).
+- **@tradexwhisperer** (0 likes, score 7/10) — "SpaceX has just awarded Foxconn a $52 billion order for around 13,000 racks of NVIDIA GB300 AI servers, with shipments expected to begin in Q4 2026 and continuing until Q1 2027, and where each rack c
+  - https://x.com/TradexWhisperer/status/2079050058394472684
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 22).
+- **@chankimi7** (101 likes, score 8/10) — Here it comes, here it comes—!
+Elon's future prediction—
+500 shares will do.
+Current price: 101 yen 
+(Sunlord × JX Metals × NVIDIA)
+In 2026, the strongest Japanese stock will be born.
+Expansion of qua
+  - https://x.com/chankimi7/status/2079032810032259129
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 125).

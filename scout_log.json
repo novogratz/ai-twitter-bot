@@ -1,22 +1,5 @@
 [
   {
-    "ts": "2026-06-16T17:44:21.257825",
-    "raw_count": 6,
-    "kept_count": 1,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Pierre_Paquette",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Tech Lead chez Shopify, couvre IA et dev FR avec humour, audience engag\u00e9e."
-      }
-    ],
-    "summary": "Focus sur les experts de fond plut\u00f4t que les influenceurs de statut. On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour garder les architectes du secteur."
-  },
-  {
     "ts": "2026-06-17T08:07:21.851600",
     "raw_count": 8,
     "kept_count": 6,
@@ -8804,5 +8787,43 @@
       }
     ],
     "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour cibler les b\u00e2tisseurs (Mistral, HF) et les vrais traders (Marmont, Mallet). Une s\u00e9lection 'z\u00e9ro bruit, signal max' pour ne pas noyer @TheAIShrink dans le spam."
+  },
+  {
+    "ts": "2026-07-19T22:03:36.034960",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeDejean",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "G\u00e9rant de fonds et analyste technique. Il balance des charts et des analyses macro sans vendre de r\u00eave, contrairement \u00e0 la pl\u00e9iade de 'gourous' du trading."
+      },
+      {
+        "handle": "CryptoMascotte",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Le mieux pour la news crypto FR rapide. Pas de signaux payants, juste un feed filtr\u00e9 pour ceux qui ont la flemme de traquer les annonces sur Dune."
+      },
+      {
+        "handle": "BenjaminDeMotte",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Fondateur de Luno. Il couvre la fintech FR avec un regard de b\u00e2tisseur, pas un regard de vendeur de formation. C'est rare et rafra\u00eechissant."
+      },
+      {
+        "handle": "LucasMourand",
+        "region": "france",
+        "niche": "tech",
+        "followers": 11000,
+        "reason": "Journaliste tech qui creuse le sujet IA/SaaS. Pas dans l'\u00e9v\u00e9nementiel, mais dans les chiffres. Un concentr\u00e9 de rigueur sans dormir sur le clavier."
+      }
+    ],
+    "summary": "Le top FR en IA se joue entre Mistral et les fondateurs indie, tandis que la Bourse est trop pollu\u00e9e par les formateurs : j'ai filtr\u00e9 pour ne garder que ceux qui vendent leur expertise, pas leur ego."
   }
 ]

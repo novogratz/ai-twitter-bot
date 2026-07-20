@@ -582,7 +582,11 @@
     "MaximeRagot",
     "CryptoKoch",
     "JulienMallet",
-    "JeanBaptisteD"
+    "JeanBaptisteD",
+    "MaximeDejean",
+    "CryptoMascotte",
+    "BenjaminDeMotte",
+    "LucasMourand"
   ],
   "en": [
     "Chubby",
@@ -4694,6 +4698,26 @@
     {
       "lang": "fr",
       "handle": "JeanBaptisteD",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDejean",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMascotte",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminDeMotte",
+      "added": "2026-07-19"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasMourand",
       "added": "2026-07-19"
     }
   ]
