@@ -598,7 +598,17 @@
     "BenLerman",
     "CassiusLauJ",
     "MullerBenjamin",
-    "MarcLamothe"
+    "MarcLamothe",
+    "thierry_girard",
+    "louis_hocde",
+    "m_bourdin",
+    "antoine_b",
+    "j_marc",
+    "remi_m",
+    "david_saint_luc",
+    "Adrieng89",
+    "JulienCohen",
+    "MaximeVernier"
   ],
   "en": [
     "Chubby",
@@ -802,7 +812,9 @@
     "clem",
     "BabylonBibi",
     "e",
-    "invoker"
+    "invoker",
+    "Zama",
+    "levent"
   ],
   "history": [
     {
@@ -4808,6 +4820,66 @@
     {
       "lang": "fr",
       "handle": "MarcLamothe",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "en",
+      "handle": "Zama",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "en",
+      "handle": "levent",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "thierry_girard",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "louis_hocde",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "m_bourdin",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "antoine_b",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "j_marc",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "remi_m",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "david_saint_luc",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "Adrieng89",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienCohen",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeVernier",
       "added": "2026-07-20"
     }
   ]
