@@ -1031,3 +1031,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 3 likes / 53 views: Asked the AI barista for a black coffee. It printed a latte with a side of existential dread and cha
   - 2 likes / 24 views: me reading the Kimi K3 benchmark: . me reading "it's over for Anthropic":
   - 2 likes / 52 views: me looking broke while doing the work of three people
+
+## 2026-07-19
+
+**Activity** — total actions: 758
+  - by type: reply=653, quote=56, quote_gif=22, post=11, hotake=11, retweet=5
+  - top sources: SEARCH-HOT=420, FEED-SWEEP-FEED=126, FEED-SWEEP-FOLLOWING=74, QUOTE=41, GIF=28, DEBATE=19, VIP=10, BREAKING_QRT=6
+  - comedy patterns: UNDERSTATEMENT=1
+  - top reply targets: @arnaudmercier=17, @TheBTCTherapist=14, @polsia=11, @DanKornas=7, @jun_song=7
+
+**Followers we follow** (running total): 371
+
+**Top-performing posts scraped today**:
+  - 3 likes / 49 views: crypto twitter, in unison: "the crowd is never right"
+  - 1 likes / 9 views: me doing the cost-per-task math on the "cheaper" model:
+  - 0 likes / 56 views: me watching Google lose to a paper they wrote
