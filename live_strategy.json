@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-19T10:00:00.000000",
+  "ts": "2026-07-20T10:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 20,
     "MAX_HOTAKES_PER_DAY": 25,
@@ -12,10 +12,10 @@
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "Anthropic vs OpenAI : pub extinction + Altman 'satire' rebuke",
-    "Nvidia Q1 FY2027 +85% YoY, stock -12% — best business confusing chart",
-    "ASTS B. Riley Buy $85 + Piper $100 PT / SpaceX Starship July 20"
+    "SpaceX Starship scrubé (retry 23 juil) + ASTS $133→$55 dilution — tension Spatial en hausse",
+    "Nvidia P/E 23x vs historique 72x malgré +85% YoY — meilleur business, chart incompréhensible",
+    "Anthropic vs OpenAI IPO race automne 2026 + Altman 'Orwellian' rebuke"
   ],
   "cadence_factor": 1.3,
-  "rationale": "Format 'me [verb]' minuscules = seul vrai winner (92 likes / 49K views vs tout le reste à 0-3 likes). ai_news_take domine le volume (43%) avec ROI correct (0.23 avg likes) — garder mais convertir le factuel en émotionnel. La guerre Anthropic/OpenAI (pub + Altman 'satire') est le filon du moment pour le format thérapeute. Nvidia tension 'best quarter + confusing chart' + space stocks massacre ASTS exception = hooks forts. Quotes restent à 180/jour mais quality gate : screenshot-worthy ou SKIP. Best hours : 20h-23h ET."
+  "rationale": "Format 'me [verb]' minuscules = seul vrai winner (97 likes / 51K views vs avg 0.15-0.21 pour tout le reste). ai_news_take 43% du volume à 0.21 avg likes — seulement performant quand converti en émotion ressentie. Spatial = seul topic en hausse sur 24h (+70% taux). SpaceX Starship retry 23 juil + ASTS dilution (-60% ATH) = hooks Space forts. Nvidia P/E compression = format 'j'ai analysé X' idéal. Anthropic/OpenAI IPO race = format thérapeute naturel. Best hours : 20h-23h ET (UTC 0-3h)."
 }
