@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-20T17:52:20.876815",
-  "window_7d_actions": 4730,
-  "window_24h_actions": 881,
+  "generated_at": "2026-07-20T21:52:22.191522",
+  "window_7d_actions": 4757,
+  "window_24h_actions": 904,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 4724
+      "count": 4751
     },
     {
       "pattern": "RENAME",
@@ -59,11 +59,11 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2265
+      "count": 2259
     },
     {
       "topic": "IA",
-      "count": 1825
+      "count": 1854
     },
     {
       "topic": "Crypto",
@@ -71,92 +71,92 @@
     },
     {
       "topic": "Bourse",
-      "count": 289
+      "count": 292
     },
     {
       "topic": "Spatial",
-      "count": 81
+      "count": 84
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.028,
-      "7d_rate": 0.017
+      "24h_rate": 0.03,
+      "7d_rate": 0.018
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2093
+      "count": 2118
     },
     {
       "pillar": "other",
-      "count": 1410
+      "count": 1407
     },
     {
       "pillar": "market_trauma",
-      "count": 960
+      "count": 962
     },
     {
       "pillar": "meme_reaction",
-      "count": 200
+      "count": 201
     },
     {
       "pillar": "reply_bait",
-      "count": 36
+      "count": 37
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 31
+      "count": 32
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 412
+      "count": 432
     },
     {
       "pillar": "other",
-      "count": 245
+      "count": 244
     },
     {
       "pillar": "market_trauma",
-      "count": 184
+      "count": 186
     },
     {
       "pillar": "meme_reaction",
       "count": 30
     },
     {
-      "pillar": "reply_bait",
-      "count": 5
+      "pillar": "ai_vs_btc",
+      "count": 7
     },
     {
-      "pillar": "ai_vs_btc",
+      "pillar": "reply_bait",
       "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 75,
-      "avg_likes": 0.21,
-      "avg_views": 26.8,
+      "posts": 73,
+      "avg_likes": 0.22,
+      "avg_views": 27.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 86,
-      "avg_likes": 0.15,
-      "avg_views": 27.6,
+      "posts": 85,
+      "avg_likes": 0.19,
+      "avg_views": 27.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 38,
-      "avg_likes": 0.13,
-      "avg_views": 23.4,
+      "posts": 40,
+      "avg_likes": 0.12,
+      "avg_views": 22.6,
       "low_sample": false
     },
     {
@@ -170,15 +170,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4021
+      "count": 4050
     },
     {
       "type": "quote",
-      "count": 361
+      "count": 358
     },
     {
       "type": "quote_gif",
-      "count": 158
+      "count": 160
     },
     {
       "type": "post",
@@ -186,7 +186,7 @@
     },
     {
       "type": "hotake",
-      "count": 65
+      "count": 64
     },
     {
       "type": "retweet",
@@ -195,18 +195,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-20T17:51:59.727058",
-      "text": "Context is just paid storage for the tokens you already had. entire.io = selling the shovel to people digging for a ghost.",
+      "ts": "2026-07-20T21:51:22.884337",
+      "text": "Arbitrum shilling VEX with SOL and VIR while Robinhood goes full agent.\n\nthe chain becomes the broker's database. arb's alpha is just latency arbitrage for rh's API.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-20T17:51:43.472613",
-      "text": "Anthropic and DeepMind agreed on AGI in 28 minutes.\n\nOpenAI's valuation is still based on their 2023 PR slide deck. reality lags.",
+      "ts": "2026-07-20T21:47:37.250699",
+      "text": "HFT on GitHub is like LinkedIn Liam posting a Notion doc about \"full-stack AI.\"\n\nIt looks complex until you realize the alpha was in the readme.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-20T17:50:17.012361",
-      "text": "Andrew Ng teaching agentic graphs for free.\n\nStanford Steve paid $29k for a wrapper course that barely made a dent.",
+      "ts": "2026-07-20T21:46:24.646231",
+      "text": "$700B capex for 200k GPUs.\nThe real story isn't the build-out. it's the depreciation schedule.\nthe IRS writes off a printer over 7 years. these chips expire in 18 months.",
       "type": "reply"
     }
   ]

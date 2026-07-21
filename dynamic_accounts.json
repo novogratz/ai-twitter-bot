@@ -612,7 +612,17 @@
     "ThomasCormen",
     "AlexisBourgeon",
     "RaphaelLeclerc",
-    "VincentLavoie"
+    "VincentLavoie",
+    "JoffreyH",
+    "ThibaudL",
+    "AntoineB",
+    "MaximeG",
+    "LouisG",
+    "mickaelbocquet",
+    "RaphaelSavitz",
+    "AdrienChen",
+    "LucasBailly",
+    "MaximeSchoen"
   ],
   "en": [
     "Chubby",
@@ -818,7 +828,13 @@
     "e",
     "invoker",
     "Zama",
-    "levent"
+    "levent",
+    "Hylo",
+    "eliezel",
+    "KaizenInvestor",
+    "DutchKafir",
+    "Starlink",
+    "Fernando"
   ],
   "history": [
     {
@@ -4904,6 +4920,86 @@
     {
       "lang": "fr",
       "handle": "VincentLavoie",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "en",
+      "handle": "Hylo",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "en",
+      "handle": "eliezel",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "en",
+      "handle": "KaizenInvestor",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JoffreyH",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudL",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineB",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeG",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LouisG",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "en",
+      "handle": "DutchKafir",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "en",
+      "handle": "Starlink",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "en",
+      "handle": "Fernando",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelbocquet",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelSavitz",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienChen",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasBailly",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSchoen",
       "added": "2026-07-20"
     }
   ]
