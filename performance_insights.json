@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-21T09:52:21.947233",
-  "window_7d_actions": 5021,
-  "window_24h_actions": 893,
+  "generated_at": "2026-07-21T17:42:59.149199",
+  "window_7d_actions": 5339,
+  "window_24h_actions": 924,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5015
+      "count": 5332
     },
     {
       "pattern": "RENAME",
-      "count": 3
+      "count": 4
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -31,126 +31,132 @@
     },
     {
       "pattern": "RENAME",
-      "count": 3
+      "count": 4
     }
   ],
   "best_hours_utc": [
     {
-      "hour": 0,
-      "actions": 243
+      "hour": 11,
+      "actions": 266
+    },
+    {
+      "hour": 12,
+      "actions": 254
+    },
+    {
+      "hour": 10,
+      "actions": 253
     },
     {
       "hour": 9,
-      "actions": 242
+      "actions": 246
     },
     {
-      "hour": 1,
-      "actions": 240
-    },
-    {
-      "hour": 7,
-      "actions": 226
-    },
-    {
-      "hour": 5,
-      "actions": 225
+      "hour": 0,
+      "actions": 243
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2362
+      "count": 2524
     },
     {
       "topic": "IA",
-      "count": 1975
+      "count": 2097
     },
     {
       "topic": "Crypto",
-      "count": 560
+      "count": 585
     },
     {
       "topic": "Bourse",
-      "count": 325
+      "count": 342
     },
     {
       "topic": "Spatial",
-      "count": 87
+      "count": 97
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Spatial",
+      "24h_rate": 0.024,
+      "7d_rate": 0.018
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2253
+      "count": 2402
     },
     {
       "pillar": "other",
-      "count": 1470
+      "count": 1561
     },
     {
       "pillar": "market_trauma",
-      "count": 1029
+      "count": 1091
     },
     {
       "pillar": "meme_reaction",
-      "count": 202
+      "count": 209
     },
     {
       "pillar": "reply_bait",
-      "count": 37
+      "count": 44
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 30
+      "count": 32
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 431
+      "count": 443
     },
     {
       "pillar": "other",
-      "count": 230
+      "count": 249
     },
     {
       "pillar": "market_trauma",
-      "count": 194
+      "count": 190
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 27
     },
     {
       "pillar": "reply_bait",
-      "count": 6
+      "count": 10
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 70,
-      "avg_likes": 0.21,
-      "avg_views": 25.9,
+      "posts": 69,
+      "avg_likes": 0.22,
+      "avg_views": 25.0,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 87,
-      "avg_likes": 0.17,
-      "avg_views": 25.6,
+      "avg_likes": 0.2,
+      "avg_views": 25.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 39,
+      "posts": 40,
       "avg_likes": 0.1,
-      "avg_views": 21.3,
+      "avg_views": 21.4,
       "low_sample": false
     },
     {
@@ -171,23 +177,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4300
+      "count": 4582
     },
     {
       "type": "quote",
-      "count": 367
+      "count": 385
     },
     {
       "type": "quote_gif",
-      "count": 162
+      "count": 169
     },
     {
       "type": "post",
-      "count": 76
+      "count": 80
     },
     {
       "type": "hotake",
-      "count": 68
+      "count": 75
     },
     {
       "type": "retweet",
@@ -196,19 +202,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-21T09:52:21.273958",
-      "text": "IREN bought GPUs, not dreams. VR200s don't pay the gas bill. hope Horizon signs the contract, not the invoice.",
+      "ts": "2026-07-21T17:42:32.486709",
+      "text": "Robinhood is pushing crypto on retail who treat it like a slot machine.\n\nthe \"AI x Crypto\" trade is just a story for guys who bought GPT-4 tokens in beta.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-21T09:49:08.403403",
-      "text": "Claude is 20 bucks. An agency is $10k + overhead. one person + prompts is not an agency, it's a junior dev with expensive taste.",
+      "ts": "2026-07-21T17:41:59.895199",
+      "text": "Nokia's P/E is 8, which means the market prices it as a dying brickmaker.\nReal story: it's a patent tollbooth on 5G infrastructure.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-21T09:48:52.355092",
-      "text": "OpenAI ships it Q3, announces it Q4 to justify the burn.\nThe gap between engineering velocity and PR inflation is the only thing keeping the valuation intact.",
-      "type": "reply"
+      "ts": "2026-07-21T17:41:43.827319",
+      "text": "me telling my portfolio that yes, specialization is a 'strategy' and no, i don't need to own the whole bakery 😭",
+      "type": "quote"
     }
   ]
 }

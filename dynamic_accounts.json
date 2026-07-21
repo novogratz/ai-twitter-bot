@@ -645,7 +645,16 @@
     "JeanBouchard",
     "PhilippeBoulay",
     "LudovicTeyssier",
-    "LouisCliche"
+    "LouisCliche",
+    "PierreDumonceau",
+    "JulienCoulon",
+    "ThomasBocquaert",
+    "RemyRiem",
+    "AlexBoulay",
+    "PierreRossi",
+    "HugoGrimaud",
+    "ThibaudLionnet",
+    "JLeray"
   ],
   "en": [
     "Chubby",
@@ -862,7 +871,8 @@
     "Ansem",
     "Rand",
     "Rocketesla",
-    "onii"
+    "onii",
+    "Germaan"
   ],
   "history": [
     {
@@ -5168,6 +5178,56 @@
     {
       "lang": "fr",
       "handle": "LouisCliche",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDumonceau",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienCoulon",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBocquaert",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "RemyRiem",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "en",
+      "handle": "Germaan",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexBoulay",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRossi",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoGrimaud",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudLionnet",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "JLeray",
       "added": "2026-07-21"
     }
   ]
