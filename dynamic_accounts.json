@@ -638,7 +638,9 @@
     "BilboM",
     "JulesC",
     "MarcP",
-    "Cyril"
+    "Cyril",
+    "mister_marchal",
+    "cyril_b"
   ],
   "en": [
     "Chubby",
@@ -5114,6 +5116,16 @@
     {
       "lang": "fr",
       "handle": "Cyril",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "mister_marchal",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "cyril_b",
       "added": "2026-07-21"
     }
   ]

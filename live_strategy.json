@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-20T10:00:00.000000",
+  "ts": "2026-07-21T10:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 20,
     "MAX_HOTAKES_PER_DAY": 25,
@@ -12,10 +12,10 @@
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "SpaceX Starship scrubé (retry 23 juil) + ASTS $133→$55 dilution — tension Spatial en hausse",
-    "Nvidia P/E 23x vs historique 72x malgré +85% YoY — meilleur business, chart incompréhensible",
-    "Anthropic vs OpenAI IPO race automne 2026 + Altman 'Orwellian' rebuke"
+    "Kimi K3 (Beijing open-weight) tops Arena.ai over Claude Fable 5 + GPT-5.6 — pire semaine chip stocks depuis avril, $725B capex narrative retourné",
+    "ASTS +10% sur B. Riley Buy upgrade ($85 target, +40% upside) — SPCX record low -34%/mois — Starship retry jeudi 23 juil",
+    "Sonnet 5 intro pricing $2/$10 per-million vs GPT-5.6 Sol — Anthropic/OpenAI IPO race automne 2026"
   ],
   "cadence_factor": 1.3,
-  "rationale": "Format 'me [verb]' minuscules = seul vrai winner (97 likes / 51K views vs avg 0.15-0.21 pour tout le reste). ai_news_take 43% du volume à 0.21 avg likes — seulement performant quand converti en émotion ressentie. Spatial = seul topic en hausse sur 24h (+70% taux). SpaceX Starship retry 23 juil + ASTS dilution (-60% ATH) = hooks Space forts. Nvidia P/E compression = format 'j'ai analysé X' idéal. Anthropic/OpenAI IPO race = format thérapeute naturel. Best hours : 20h-23h ET (UTC 0-3h)."
+  "rationale": "Format 'Me [verb]' avec DEUX CAMPS CLAIRS = seul winner mesuré (103 likes / 54K views). Clones sans enjeu = 0 like, zéro exception. Reply_winners bank vide — aucune reply n'a atteint 2 likes récemment : priorité hooks avec stakes humaines concrètes. ai_news_take 0.22 avg likes lead mais UNIQUEMENT quand traduit en émotion. Kimi K3 bat Claude+GPT = hook chip capex parfait. ASTS +10% vs SPCX record low = asymétrie space parfaite. Starship retry jeudi = hook narratif fort. Best hours : 20h-23h ET (UTC 0-3h)."
 }

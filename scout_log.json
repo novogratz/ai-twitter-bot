@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-06-25T05:57:10.878118",
-    "raw_count": 10,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "AlexisTremblay_",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Gars de Bourse Direct. Il explique le march\u00e9 sans jargon obscur, parfait pour d\u00e9panner un Qu\u00e9b\u00e9cois qui panique."
-      },
-      {
-        "handle": "JordyDijck",
-        "region": "france",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Fondateur de Nuna (IA). Il poste des threads sur le LLM business model en FR, concret et sans bullshit."
-      },
-      {
-        "handle": "LapinDeGarenne",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Journaliste tech pur et dur. Il pique les start-ups fran\u00e7aises et parle IA sans vendre de stage de 3 jours."
-      }
-    ],
-    "summary": "Mix de fondateurs (Mistral, Hugging Face) et d'actifs du terrain. Z\u00e9ro vendeur de formation, 100% contenu tech/finance en fran\u00e7ais."
-  },
-  {
     "ts": "2026-06-25T07:57:15.261645",
     "raw_count": 8,
     "kept_count": 5,
@@ -8739,5 +8708,36 @@
       }
     ],
     "summary": "On balance du lourd avec les fondateurs de Mistral et DeepL pour la cr\u00e9dibilit\u00e9 technique, et on compl\u00e8te avec les v\u00e9t\u00e9rans comme 0xMaci et AdrianHD qui garantissent la r\u00e9gularit\u00e9 et l'angle FR. Z\u00e9ro gourou formation, juste du hard skills et des insights."
+  },
+  {
+    "ts": "2026-07-21T05:58:03.584915",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mister_marchal",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "La voix rationnelle dans un d\u00e9sert de fous du CAC40 qui crient au loup chaque matin."
+      },
+      {
+        "handle": "santiagotrombetta",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "L'expert Mistral qui explique l'IA profonde sans vendre de soupe."
+      },
+      {
+        "handle": "cyril_b",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "La diaspora FR qui domine l'infra AI aux USA, twitte sec et efficace."
+      }
+    ],
+    "summary": "Un mix parfait entre les v\u00e9t\u00e9rans de la crypto FR, les profils IA puristes et la p\u00e9pite qu\u00e9b\u00e9coise qui en fait un rayon."
   }
 ]
