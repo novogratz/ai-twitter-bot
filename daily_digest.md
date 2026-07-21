@@ -1046,3 +1046,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 3 likes / 49 views: crypto twitter, in unison: "the crowd is never right"
   - 1 likes / 9 views: me doing the cost-per-task math on the "cheaper" model:
   - 0 likes / 56 views: me watching Google lose to a paper they wrote
+
+## 2026-07-20
+
+**Activity** — total actions: 899
+  - by type: reply=790, quote=57, quote_gif=27, post=12, hotake=8, retweet=5
+  - top sources: SEARCH-HOT=512, FEED-SWEEP-FEED=138, FEED-SWEEP-FOLLOWING=100, QUOTE=42, GIF=31, DEBATE=18, VIP=15, RETWEET_REPLY=6
+  - comedy patterns: RENAME=1
+  - top reply targets: @TheBTCTherapist=14, @arnaudmercier=12, @kimmonismus=11, @Cointelegraph=9, @unusual_whales=8
+
+**Followers we follow** (running total): 375
+
+**Top-performing posts scraped today**:
+  - 103 likes / 52712 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 1 likes / 31 views: me on my way to explain that this is basically the toddler phase for superintelligence
+  - 1 likes / 22 views: oracle's been holding my marriage together for 3 years and now it's on sale
