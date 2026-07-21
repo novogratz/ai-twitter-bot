@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-06-25T01:57:01.600868",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "PierreRoussille",
-        "region": "france",
-        "niche": "finance",
-        "followers": 105000,
-        "reason": "L'homme qui a rendu la bourse fran\u00e7aise diggable. Ex-PM chez Goldman, pr\u00e9sent sur les march\u00e9s et la tech financi\u00e8re. Twitte en FR, audience massive."
-      },
-      {
-        "handle": "Lamassuriere",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Ancien directeur de recherche chez ConsenSys. Le type parfait pour d\u00e9crypter la DeFi sans jargon incompr\u00e9hensible. Vraiment actif."
-      },
-      {
-        "handle": "MaximePerrin",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Founder de 4e42 et figure montante de la tech qu\u00e9b\u00e9coise. Couvre IA, data et startups avec une vision pragmatique. Le genre de compte qui \u00e9vite le buzz."
-      },
-      {
-        "handle": "BaptisteLecocq",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Expert en strat\u00e9gie IA et data. Il ne vend pas de r\u00eave, il explique comment les entreprises l'int\u00e8grent r\u00e9ellement. Pas de 'community Telegram', que du contenu pro."
-      }
-    ],
-    "summary": "J'ai mis\u00e9 sur les cerveaux derri\u00e8re Mistral pour l'IA, un ancien GM pour la finance 'luxe', et des analystes tech qui font du contenu long format plut\u00f4t que des tweets \u00e9ph\u00e9m\u00e8res. Z\u00e9ro influenceur TikTok, que des pros."
-  },
-  {
-    "ts": "2026-06-25T03:57:04.705648",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "VladS",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 32000,
-        "reason": "Founders / VC francophone aux US. Twitte anglais majoritairement mais mix FR/EN. Vue macro crypto institutionnelle."
-      },
-      {
-        "handle": "AlexisDroit",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Journaliste tech IA. Couvre les US et la France. Pas de vues artificielles, juste du concret sur les startups qui bougent."
-      },
-      {
-        "handle": "RomainBailly",
-        "region": "france",
-        "niche": "trading",
-        "followers": 15000,
-        "reason": "Trader pro. Pas de 'rendez-vous moi riche'. Postes sur la psychologie et le risk management, pas sur le prix du Bitcoin."
-      },
-      {
-        "handle": "MoulinBenoit",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Investisseur crypto long terme. Pas de signaux daily, pas de 'moon boy' hype. Analyse structurelle propre."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que des b\u00e2tisseurs et des pros. La sc\u00e8ne FR IA explose (Mistral crew), mais la sc\u00e8ne QC reste discr\u00e8te et qualitative. Pas de formations \u00e0 2000\u20ac dans la liste."
-  },
-  {
     "ts": "2026-06-25T05:57:10.878118",
     "raw_count": 10,
     "kept_count": 3,
@@ -8746,5 +8670,74 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui produisent du contenu sans vendre leur \u00e2me (ou leur Telegram VIP). Une bonne dose de trading solide et d'analyse tech qui ne dort pas sur ses lauriers."
+  },
+  {
+    "ts": "2026-07-21T02:13:51.638549",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PierrePerrin",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 110000,
+        "reason": "L'ami de la famille sur les march\u00e9s. Pas de formules \u00e0 2000\u20ac, juste un trader de fond qui explique pourquoi ton ETF p\u00e9rit lentement."
+      },
+      {
+        "handle": "ThibaultV",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "Le mec qui a fait de la macro-\u00e9co un sport de combat. Il tweete en FR, analyse les donn\u00e9es brutes et ne vend pas de r\u00eave, juste de la volatilit\u00e9."
+      },
+      {
+        "handle": "AlexandreA",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "La diaspora crypto fran\u00e7aise \u00e0 NYC. Il mixe l'analyse on-chain avec la culture fran\u00e7aise, parfait pour suivre les cycles sans le d\u00e9calage horaire."
+      },
+      {
+        "handle": "BilboM",
+        "region": "france",
+        "niche": "ia",
+        "followers": 45000,
+        "reason": "Journaliste IA \u00e0 4D. Il couvre le franglais technique sans s'endormir et fait le tri entre les papers et le hype produit par les startups."
+      },
+      {
+        "handle": "JulesC",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 35000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour comprendre les march\u00e9s sans avoir besoin d'un CFA. Il vulgarise la complexit\u00e9 sans la simplifier \u00e0 mort."
+      },
+      {
+        "handle": "MarcP",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Ancien gestionnaire qui a vu des krachs. Il tweete sur la psychologie de march\u00e9 en fran\u00e7ais qu\u00e9b\u00e9cois, ce qui change des tweets US trop anglophones."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des influenceurs TikTok pour te sortir des profils qui font vraiment le travail d'analyse : Jules C. et Marc P. pour le Qu\u00e9bec, Thibault V. et Pierre Perrin pour la France, et un pont USA pour la crypto."
+  },
+  {
+    "ts": "2026-07-21T03:53:05.310435",
+    "raw_count": 8,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Cyril",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Vieux de la tech qui couvre maintenant l'impact de l'IA sur le SaaS. Son r\u00e9seau est immense et il croise souvent des info-flux VIP."
+      }
+    ],
+    "summary": "On balance du lourd avec les fondateurs de Mistral et DeepL pour la cr\u00e9dibilit\u00e9 technique, et on compl\u00e8te avec les v\u00e9t\u00e9rans comme 0xMaci et AdrianHD qui garantissent la r\u00e9gularit\u00e9 et l'angle FR. Z\u00e9ro gourou formation, juste du hard skills et des insights."
   }
 ]

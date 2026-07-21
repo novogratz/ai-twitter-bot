@@ -631,7 +631,14 @@
     "JulienTremblay",
     "RomainMazurier",
     "AlexisBoulay",
-    "LucasDepeur"
+    "LucasDepeur",
+    "PierrePerrin",
+    "ThibaultV",
+    "AlexandreA",
+    "BilboM",
+    "JulesC",
+    "MarcP",
+    "Cyril"
   ],
   "en": [
     "Chubby",
@@ -843,7 +850,10 @@
     "KaizenInvestor",
     "DutchKafir",
     "Starlink",
-    "Fernando"
+    "Fernando",
+    "Solana",
+    "Ansem",
+    "Rand"
   ],
   "history": [
     {
@@ -5055,6 +5065,56 @@
       "lang": "fr",
       "handle": "LucasDepeur",
       "added": "2026-07-20"
+    },
+    {
+      "lang": "en",
+      "handle": "Solana",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "en",
+      "handle": "Ansem",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "en",
+      "handle": "Rand",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierrePerrin",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultV",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexandreA",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "BilboM",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesC",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcP",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "Cyril",
+      "added": "2026-07-21"
     }
   ]
 }
