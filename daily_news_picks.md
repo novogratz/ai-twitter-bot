@@ -16202,3 +16202,20 @@ In today’s Cloud Wars Minute, I preview the coming wave of Q2 earnings while h
 TCS has bought 200 acres in Vizag (Anakapalli, near Google-Adani campus) and 88 acres in Pune for ₹641 crore. These lands will host OpenAI’s first data centers in In
   - https://x.com/iamrakeshbansal/status/2079384557607129249
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 84).
+- **@caspr_exe** (101 likes, score 9/10) — Ilya Sutskever, co-founder of OpenAI, now founder of Safe Superintelligence: 
+
+"The whole problem is the power. When the power is really big, what's going to happen?"
+
+The man who co-built modern AI n
+  - https://x.com/caspr_exe/status/2079324231708619199
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 123).
+- **@moneyacademyke** (68 likes, score 8/10) — The Trump administration is considering restricting the use of Chinese AI models in the U.S. over security concerns. 
+
+The move could benefit OpenAI and Anthropic by reducing competition
+  - https://x.com/moneyacademyKE/status/2079416076316635480
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 78).
+- **@coinbureau** (74 likes, score 8/10) — BREAKING: A 90-year-old math conjecture was just disproven using Claude Fable.
+
+The Jacobian Conjecture, first proposed in 1939 and long regarded as one of algebraic geometry’s most important open pro
+  - https://x.com/coinbureau/status/2079395599649243214
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 110).
