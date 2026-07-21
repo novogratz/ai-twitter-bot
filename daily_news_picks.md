@@ -16187,3 +16187,18 @@ The roadmap to Kardashev II is loading and the faster you can raise capital, the
 - **@teortaxestex** (48 likes, score 9/10) — Fable predicts the LLM-powered disproof of the Jacobian conjecture by 2029–2032, 1-3 years before AGI, 2-6 before singularity. Faced with its success, it copes about "fabricated scenario from July 202
   - https://x.com/teortaxesTex/status/2079048125423992901
   - **WHY**: Source fiable + impact concret (score signal 8, engagement 52).
+
+## 2026-07-21
+- **@deredleritt3r** (45 likes, score 9/10) — Things we know about OpenAI's unreleased internal model:
+
+- When given enough compute, the model can solve the unit distance problem 48% of the time, fully autonomously, in one shot, without using Lea
+  - https://x.com/deredleritt3r/status/2079411857484353894
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 53).
+- **@palantirog** (39 likes, score 8/10) — $PLTR Hottest Vendors: #1 Palantir, #2 Google Cloud, #3 Oracle 
+In today’s Cloud Wars Minute, I preview the coming wave of Q2 earnings while highlighting the extraordinary growth reshaping cloud compu
+  - https://x.com/PalantirOg/status/2079296433656914328
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 43).
+- **@iamrakeshbansal** (66 likes, score 9/10) — TCS Makes Big Move for AI Future! 
+TCS has bought 200 acres in Vizag (Anakapalli, near Google-Adani campus) and 88 acres in Pune for ₹641 crore. These lands will host OpenAI’s first data centers in In
+  - https://x.com/iamrakeshbansal/status/2079384557607129249
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 84).

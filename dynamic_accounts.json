@@ -622,7 +622,16 @@
     "RaphaelSavitz",
     "AdrienChen",
     "LucasBailly",
-    "MaximeSchoen"
+    "MaximeSchoen",
+    "RomainSoubeyran",
+    "PierreGrenier",
+    "AlexandreBoulay",
+    "thomas_hamann",
+    "mickaelguy",
+    "JulienTremblay",
+    "RomainMazurier",
+    "AlexisBoulay",
+    "LucasDepeur"
   ],
   "en": [
     "Chubby",
@@ -5000,6 +5009,51 @@
     {
       "lang": "fr",
       "handle": "MaximeSchoen",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainSoubeyran",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreGrenier",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexandreBoulay",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomas_hamann",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelguy",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienTremblay",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainMazurier",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBoulay",
+      "added": "2026-07-20"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasDepeur",
       "added": "2026-07-20"
     }
   ]
