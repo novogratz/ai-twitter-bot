@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-06-25T07:57:15.261645",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaximeMichelet",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Trader pro qui montre ses pertes autant que ses gains. Sur X, \u00e7a vaut plus que tous les 'gourous' en chemise blanche qui te vendent un r\u00eave de YOLO."
-      },
-      {
-        "handle": "GaelLeclerc",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Ex-Coinbase. Il explique la crypto pour ceux qui n'ont pas pass\u00e9 10 ans \u00e0 d\u00e9bugger des smart contracts. Le 'Grand Fr\u00e8re' bienveillant qu'on n'avait pas."
-      },
-      {
-        "handle": "AlexisKorn",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "AI Researcher \u00e0 NYC. Il balance des threads sur le LLM game qui font moins mal aux yeux que tes threads 'Invest in AI' g\u00e9n\u00e9riques."
-      },
-      {
-        "handle": "SaraBoudghene",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Chercheuse en IA au Qu\u00e9bec. Elle balance des insights PhD accessibles. Preuve que la tech qu\u00e9b\u00e9coise ne se r\u00e9sume pas aux blagues de d\u00e9panneur."
-      },
-      {
-        "handle": "NathalieBoutin",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 10000,
-        "reason": "La voix francophone en fintech \u00e0 NYC. Elle couvre les startups qui font bouger le march\u00e9 am\u00e9ricain avec un angle europ\u00e9en chic."
-      }
-    ],
-    "summary": "J'ai tri\u00e9 le grain de l'ivraie : pas de vendeurs de r\u00eaves, juste des builders. De Paris \u00e0 NYC, ce sont les seuls qui prouvent qu'on peut twitter en fran\u00e7ais sans y laisser sa dignit\u00e9."
-  },
-  {
     "ts": "2026-06-25T09:57:02.883897",
     "raw_count": 8,
     "kept_count": 7,
@@ -8739,5 +8694,50 @@
       }
     ],
     "summary": "Un mix parfait entre les v\u00e9t\u00e9rans de la crypto FR, les profils IA puristes et la p\u00e9pite qu\u00e9b\u00e9coise qui en fait un rayon."
+  },
+  {
+    "ts": "2026-07-21T07:53:13.442499",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NicolasBoutin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Ancien de Coinhouse, actif sur le trading et la macro crypto. Il balance des setups plus vite qu'il ne met son pantalon."
+      },
+      {
+        "handle": "JeanBouchard",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Bas\u00e9 \u00e0 New York mais c\u0153ur qu\u00e9b\u00e9cois. Il ram\u00e8ne l'info crypto institutionnelle US en fran\u00e7ais. Parfait pour ceux qui n'ont pas de VPN."
+      },
+      {
+        "handle": "PhilippeBoulay",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "V\u00e9t\u00e9ran. Il a vu passer les bulles, il sait qu'en 2026 on est probablement d\u00e9j\u00e0 en correction. Il tweete avec cette assurance tranquille."
+      },
+      {
+        "handle": "LudovicTeyssier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Ex-AMF. Il d\u00e9cortique le march\u00e9 FR sans payer de pot-de-vin aux courtiers. C'est sec, c'est net, c'est pas du marketing."
+      },
+      {
+        "handle": "LouisCliche",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Le gars qui a fait des tours du monde en Bitcoin. Il couvre la tech crypto et les DeFi avec un regard l\u00e9ger mais technique."
+      }
+    ],
+    "summary": "J'ai mis\u00e9 sur les fondateurs de Mistral pour l'IA FR (puisque 01net est d\u00e9j\u00e0 list\u00e9) et des traders v\u00e9t\u00e9rants plut\u00f4t que des 'gurus' en formation. Pour le Qu\u00e9bec, on reste sur des classiques solides qui survivent aux cycles sans vendre de r\u00eave."
   }
 ]

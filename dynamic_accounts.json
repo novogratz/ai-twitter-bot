@@ -640,7 +640,12 @@
     "MarcP",
     "Cyril",
     "mister_marchal",
-    "cyril_b"
+    "cyril_b",
+    "NicolasBoutin",
+    "JeanBouchard",
+    "PhilippeBoulay",
+    "LudovicTeyssier",
+    "LouisCliche"
   ],
   "en": [
     "Chubby",
@@ -855,7 +860,9 @@
     "Fernando",
     "Solana",
     "Ansem",
-    "Rand"
+    "Rand",
+    "Rocketesla",
+    "onii"
   ],
   "history": [
     {
@@ -5126,6 +5133,41 @@
     {
       "lang": "fr",
       "handle": "cyril_b",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "en",
+      "handle": "Rocketesla",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "en",
+      "handle": "onii",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasBoutin",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBouchard",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeBoulay",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicTeyssier",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "LouisCliche",
       "added": "2026-07-21"
     }
   ]
