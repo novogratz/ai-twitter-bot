@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-21T17:42:59.149199",
-  "window_7d_actions": 5339,
-  "window_24h_actions": 924,
+  "generated_at": "2026-07-21T21:55:45.799814",
+  "window_7d_actions": 5412,
+  "window_24h_actions": 837,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5332
+      "count": 5405
     },
     {
       "pattern": "RENAME",
@@ -59,48 +59,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2524
+      "count": 2558
     },
     {
       "topic": "IA",
-      "count": 2097
+      "count": 2129
     },
     {
       "topic": "Crypto",
-      "count": 585
+      "count": 591
     },
     {
       "topic": "Bourse",
-      "count": 342
+      "count": 344
     },
     {
       "topic": "Spatial",
-      "count": 97
+      "count": 98
     }
   ],
-  "rising_topics_24h": [
-    {
-      "topic": "Spatial",
-      "24h_rate": 0.024,
-      "7d_rate": 0.018
-    }
-  ],
+  "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2402
+      "count": 2435
     },
     {
       "pillar": "other",
-      "count": 1561
+      "count": 1581
     },
     {
       "pillar": "market_trauma",
-      "count": 1091
+      "count": 1109
     },
     {
       "pillar": "meme_reaction",
-      "count": 209
+      "count": 210
     },
     {
       "pillar": "reply_bait",
@@ -108,55 +102,55 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 32
+      "count": 33
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 443
+      "count": 391
     },
     {
       "pillar": "other",
-      "count": 249
+      "count": 230
     },
     {
       "pillar": "market_trauma",
-      "count": 190
+      "count": 179
     },
     {
       "pillar": "meme_reaction",
-      "count": 27
+      "count": 24
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 69,
+      "posts": 68,
       "avg_likes": 0.22,
-      "avg_views": 25.0,
+      "avg_views": 24.8,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 87,
-      "avg_likes": 0.2,
-      "avg_views": 25.2,
+      "posts": 86,
+      "avg_likes": 0.21,
+      "avg_views": 25.6,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 40,
+      "posts": 42,
       "avg_likes": 0.1,
-      "avg_views": 21.4,
+      "avg_views": 21.0,
       "low_sample": false
     },
     {
@@ -177,11 +171,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4582
+      "count": 4648
     },
     {
       "type": "quote",
-      "count": 385
+      "count": 390
     },
     {
       "type": "quote_gif",
@@ -189,7 +183,7 @@
     },
     {
       "type": "post",
-      "count": 80
+      "count": 82
     },
     {
       "type": "hotake",
@@ -202,19 +196,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-21T17:42:32.486709",
-      "text": "Robinhood is pushing crypto on retail who treat it like a slot machine.\n\nthe \"AI x Crypto\" trade is just a story for guys who bought GPT-4 tokens in beta.",
+      "ts": "2026-07-21T20:39:21.204277",
+      "text": "Blomkamp writing the definition?\nDatacenters are already writing it. They just don't have a director's chair.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-21T17:41:59.895199",
-      "text": "Nokia's P/E is 8, which means the market prices it as a dying brickmaker.\nReal story: it's a patent tollbooth on 5G infrastructure.",
+      "ts": "2026-07-21T20:09:16.887526",
+      "text": "$NOW trades at 50x forward revenue.\n\nthey're not sleeping, they're dissociating.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-21T17:41:43.827319",
-      "text": "me telling my portfolio that yes, specialization is a 'strategy' and no, i don't need to own the whole bakery 😭",
-      "type": "quote"
+      "ts": "2026-07-21T19:43:05.556849",
+      "text": "Oat isn't a ticker, it's a mood.\nyour P&L is +$5.9k, your drawdown is 0, and your dopamine is currently higher than your IRR.\ncongrats.",
+      "type": "reply"
     }
   ]
 }

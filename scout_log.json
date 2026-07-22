@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-06-25T15:56:58.572684",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "YannLeCun",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 750000,
-        "reason": "Le bon p\u00e8re de l'IA francophone \u00e0 NY. Il corrige les idioties des startups et pr\u00e9dit l'AGI. C'est du concret."
-      },
-      {
-        "handle": "HugoTravers",
-        "region": "france",
-        "niche": "tech",
-        "followers": 150000,
-        "reason": "Le roi du thread technique fran\u00e7ais. Il d\u00e9crypte les infrastructures derri\u00e8re l'IA avant que les autres aient fini leur caf\u00e9."
-      },
-      {
-        "handle": "MathDsn",
-        "region": "france",
-        "niche": "ai",
-        "followers": 95000,
-        "reason": "Le patron de Mistral AI. Il ne vend pas de r\u00eave, il livre du GPU. Si tu veux savoir o\u00f9 va l'IA europ\u00e9enne, tu le suis."
-      },
-      {
-        "handle": "PierreOlivierV",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "L'\u00e9vang\u00e9liste du dividendes au Qu\u00e9bec. Pas de hype, juste des chiffres et des actions qui paient. Le calme dans la temp\u00eate."
-      },
-      {
-        "handle": "CryptoK0sh",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "Le Qu\u00e9b\u00e9cois qui parle crypto en FR avec le plus d'angle morts. Il tweete fort, il tweete juste."
-      },
-      {
-        "handle": "DariusS",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 45000,
-        "reason": "Ex-Credit Mutuel, aujourd'hui VC. Il voit les p\u00e9pites Fintech fran\u00e7aises avant qu'elles n'aient une valise de cash."
-      }
-    ],
-    "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour garder les b\u00e2tisseurs et les analystes. De Mistral aux dividendes qu\u00e9b\u00e9cois, c'est du solide, pas du vent."
-  },
-  {
     "ts": "2026-06-25T17:57:09.161684",
     "raw_count": 8,
     "kept_count": 7,
@@ -8662,5 +8610,50 @@
       }
     ],
     "summary": "Le top tier FR est domin\u00e9 par la crypto/macro et les fond\u00e9s de Mistral. Le Qu\u00e9bec offre des perles acad\u00e9miques/tech plus discr\u00e8tes mais ultra-cibl\u00e9es."
+  },
+  {
+    "ts": "2026-07-21T17:43:44.850860",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibautMazuir",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Ex-DeepMind, le prof qui rend l'IA compr\u00e9hensible sans vendre du r\u00eave. Twitte en FR, pas de pub Telegram."
+      },
+      {
+        "handle": "DylanSquinn",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "CryptoFR, les fondamentaux plus le fun. Pas de signaux, juste de l'\u00e9ducation et du d\u00e9cryptage."
+      },
+      {
+        "handle": "LudovicVignato",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Ex-Hugging Face, now independent. Le best-in-class pour comprendre l'\u00e9cosyst\u00e8me open source FR sans buzzwords."
+      },
+      {
+        "handle": "MaxLavoillotte",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "L'analyste qu\u00e9b\u00e9cois qui parle comme un pote au bar. Filtre \u00e0 hype efficace, z\u00e9ro formation \u00e0 99\u20ac."
+      },
+      {
+        "handle": "RaphaelPoirier",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 11000,
+        "reason": "AI Researcher aux US mais tweete en FR. Couvre l'agentic AI avec un \u0153il technique, pas marketing."
+      }
+    ],
+    "summary": "Le mix parfait entre les grands patrons de la Tech FR et les analysts qu\u00e9b\u00e9cois qui comprennent l'Am\u00e9rique sans en jaser trop."
   }
 ]

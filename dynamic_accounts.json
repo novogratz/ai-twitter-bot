@@ -654,7 +654,12 @@
     "PierreRossi",
     "HugoGrimaud",
     "ThibaudLionnet",
-    "JLeray"
+    "JLeray",
+    "ThibautMazuir",
+    "DylanSquinn",
+    "LudovicVignato",
+    "MaxLavoillotte",
+    "RaphaelPoirier"
   ],
   "en": [
     "Chubby",
@@ -5228,6 +5233,31 @@
     {
       "lang": "fr",
       "handle": "JLeray",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMazuir",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "DylanSquinn",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicVignato",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxLavoillotte",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelPoirier",
       "added": "2026-07-21"
     }
   ]
