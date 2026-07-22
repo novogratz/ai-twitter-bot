@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-22T05:42:59.176286",
-  "window_7d_actions": 5520,
-  "window_24h_actions": 851,
+  "generated_at": "2026-07-22T09:42:59.225176",
+  "window_7d_actions": 5575,
+  "window_24h_actions": 861,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5513
+      "count": 5568
     },
     {
       "pattern": "RENAME",
@@ -40,6 +40,10 @@
       "actions": 266
     },
     {
+      "hour": 9,
+      "actions": 257
+    },
+    {
       "hour": 0,
       "actions": 255
     },
@@ -50,28 +54,24 @@
     {
       "hour": 10,
       "actions": 253
-    },
-    {
-      "hour": 1,
-      "actions": 249
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2608
+      "count": 2616
     },
     {
       "topic": "IA",
-      "count": 2171
+      "count": 2209
     },
     {
       "topic": "Crypto",
-      "count": 605
+      "count": 612
     },
     {
       "topic": "Bourse",
-      "count": 354
+      "count": 363
     },
     {
       "topic": "Spatial",
@@ -82,49 +82,49 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2490
+      "count": 2524
     },
     {
       "pillar": "other",
-      "count": 1611
+      "count": 1615
     },
     {
       "pillar": "market_trauma",
-      "count": 1127
+      "count": 1138
     },
     {
       "pillar": "meme_reaction",
-      "count": 213
+      "count": 217
     },
     {
       "pillar": "reply_bait",
-      "count": 45
+      "count": 46
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 34
+      "count": 35
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 390
+      "count": 398
     },
     {
       "pillar": "other",
-      "count": 250
+      "count": 241
     },
     {
       "pillar": "market_trauma",
-      "count": 171
+      "count": 175
     },
     {
       "pillar": "meme_reaction",
-      "count": 24
+      "count": 30
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
@@ -134,44 +134,44 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 64,
-      "avg_likes": 0.23,
-      "avg_views": 24.7,
+      "posts": 63,
+      "avg_likes": 0.21,
+      "avg_views": 25.0,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 90,
-      "avg_likes": 0.2,
-      "avg_views": 26.3,
+      "avg_likes": 0.19,
+      "avg_views": 26.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 41,
+      "posts": 40,
       "avg_likes": 0.1,
-      "avg_views": 21.9,
+      "avg_views": 22.1,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 3,
+      "posts": 4,
       "avg_likes": 0.0,
-      "avg_views": 27.7,
+      "avg_views": 35.5,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 1,
+      "posts": 2,
       "avg_likes": 0.0,
-      "avg_views": 29.0,
-      "low_sample": true
+      "avg_views": 20.0,
+      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4751
+      "count": 4802
     },
     {
       "type": "quote",
@@ -179,7 +179,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 172
+      "count": 178
     },
     {
       "type": "post",
@@ -187,7 +187,7 @@
     },
     {
       "type": "hotake",
-      "count": 75
+      "count": 73
     },
     {
       "type": "retweet",
@@ -196,18 +196,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-22T05:41:47.999357",
-      "text": "Msft pivoted from walled garden to open source.\nthey're letting the developers write the code on their hardware.\nhosting fees = zero, loyalty = infinite.\nbrilliant.",
+      "ts": "2026-07-22T09:41:56.782890",
+      "text": "Google's doing a PR workshop on a model that's already commoditized.\n\nThe DeepMind team is there to convince the creators the moat is real, while the margin is already gone.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-22T05:40:58.508366",
-      "text": "The White House bought the top.\nThe man who said \"buy the dip\" bought the dip.\nThe most reliable contrarian indicator just became a trend follower.",
+      "ts": "2026-07-22T09:41:11.323440",
+      "text": "AI is the electric motor. S&P is the assembly line.\n\nThis isn't a broadening market. It's the moment the factory starts hiring everyone else.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-22T05:38:11.685541",
-      "text": "Cifr is running on 2022 electricity prices. iren is mining in 2024. crwv is a real business. now, fcel, and iren are lottery tickets. one of them will win.",
+      "ts": "2026-07-22T09:40:37.230755",
+      "text": "AMD needs to sell those MI450s before they turn into e-waste.\n\nAnthropic just bought a 10-year subscription to Nvidia's old inventory.",
       "type": "reply"
     }
   ]

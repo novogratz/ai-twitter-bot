@@ -679,7 +679,16 @@
     "mickael_martin",
     "thomas_schmitz",
     "m4rce",
-    "lucas_park"
+    "lucas_park",
+    "ThibautM",
+    "LionelT",
+    "FabiMousset",
+    "MaximeAguilera",
+    "TiboInshape",
+    "MouadDerradji",
+    "PierreLacroix",
+    "BenoitPoulin_",
+    "SylvainMabire"
   ],
   "en": [
     "Chubby",
@@ -899,7 +908,10 @@
     "onii",
     "Germaan",
     "BingX",
-    "Dibs"
+    "Dibs",
+    "rockycat",
+    "B1",
+    "Injective"
   ],
   "history": [
     {
@@ -5390,6 +5402,66 @@
     {
       "lang": "fr",
       "handle": "lucas_park",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "en",
+      "handle": "rockycat",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "en",
+      "handle": "B1",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautM",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelT",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "FabiMousset",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeAguilera",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "en",
+      "handle": "Injective",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "TiboInshape",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "MouadDerradji",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLacroix",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitPoulin_",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainMabire",
       "added": "2026-07-22"
     }
   ]
