@@ -16219,3 +16219,30 @@ The move could benefit OpenAI and Anthropic by reducing competition
 The Jacobian Conjecture, first proposed in 1939 and long regarded as one of algebraic geometry’s most important open pro
   - https://x.com/coinbureau/status/2079395599649243214
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 110).
+
+## 2026-07-22
+- **@financelancelot** (0 likes, score 8/10) — Nasdaq $NDX has jumped almost 2% as the rebound accelerates led by semiconductors
+
+$SOXL +17%
+$MU +13%
+$AMD +9%
+$INTC +9%
+$ORCL +5%
+$NVDA +2%
+  - https://x.com/FinanceLancelot/status/2079639878225031326
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 48).
+- **@bitcoinnewscom** (55 likes, score 8/10) — LIGHTNING LABS LAUNCHES WAVELENGTH, AN ARK-STYLE BITCOIN PAYMENTS PLATFORM
+
+Lightning Labs has announced Wavelength, a new self-custodial payments toolkit designed to make integrating Bitcoin as simpl
+  - https://x.com/BitcoinNewsCom/status/2079654926548951487
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 65).
+- **@jun_song** (12 likes, score 7/10) — My prediction for what happens after this recent GPT HF hack:
+
+Anthropic and OpenAI release "cybersecurity models" with reduced guardrails, lock them behind API-only access, and charge a fortune for t
+  - https://x.com/jun_song/status/2079776059059536375
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 20).
+- **@drjstrategy** (55 likes, score 8/10) — The 2031 Hot-Run Scenario
+
+The hot-run thesis for 2031 posits a 1990s-style expansion: nominal GDP near 7 percent, AI-led productivity, and policy incentives drive S&P 500 earnings growth at 1.5–2 tim
+  - https://x.com/DrJStrategy/status/2079724208263704778
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 63).
