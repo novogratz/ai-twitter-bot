@@ -688,7 +688,15 @@
     "MouadDerradji",
     "PierreLacroix",
     "BenoitPoulin_",
-    "SylvainMabire"
+    "SylvainMabire",
+    "LouisCoutanceau",
+    "JulienDutillieu",
+    "BorjaMunoz",
+    "ThomasPerrin",
+    "BaptistePoujol",
+    "PierreBarrault",
+    "MickaelBouyer",
+    "RaphaelFournier"
   ],
   "en": [
     "Chubby",
@@ -5462,6 +5470,46 @@
     {
       "lang": "fr",
       "handle": "SylvainMabire",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "LouisCoutanceau",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDutillieu",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorjaMunoz",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasPerrin",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "BaptistePoujol",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreBarrault",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelBouyer",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelFournier",
       "added": "2026-07-22"
     }
   ]

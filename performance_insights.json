@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-22T09:42:59.225176",
-  "window_7d_actions": 5575,
+  "generated_at": "2026-07-22T13:43:00.085974",
+  "window_7d_actions": 5628,
   "window_24h_actions": 861,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5568
+      "count": 5621
     },
     {
       "pattern": "RENAME",
@@ -37,37 +37,37 @@
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 266
+      "actions": 287
+    },
+    {
+      "hour": 10,
+      "actions": 269
+    },
+    {
+      "hour": 12,
+      "actions": 262
     },
     {
       "hour": 9,
-      "actions": 257
+      "actions": 258
     },
     {
       "hour": 0,
       "actions": 255
-    },
-    {
-      "hour": 12,
-      "actions": 254
-    },
-    {
-      "hour": 10,
-      "actions": 253
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2616
+      "count": 2640
     },
     {
       "topic": "IA",
-      "count": 2209
+      "count": 2237
     },
     {
       "topic": "Crypto",
-      "count": 612
+      "count": 609
     },
     {
       "topic": "Bourse",
@@ -75,75 +75,75 @@
     },
     {
       "topic": "Spatial",
-      "count": 100
+      "count": 99
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2524
+      "count": 2558
     },
     {
       "pillar": "other",
-      "count": 1615
+      "count": 1612
     },
     {
       "pillar": "market_trauma",
-      "count": 1138
+      "count": 1157
     },
     {
       "pillar": "meme_reaction",
-      "count": 217
+      "count": 218
     },
     {
       "pillar": "reply_bait",
-      "count": 46
+      "count": 49
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 35
+      "count": 34
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 398
+      "count": 403
     },
     {
       "pillar": "other",
-      "count": 241
+      "count": 229
     },
     {
       "pillar": "market_trauma",
-      "count": 175
+      "count": 185
     },
     {
       "pillar": "meme_reaction",
-      "count": 30
+      "count": 31
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 63,
+      "posts": 61,
       "avg_likes": 0.21,
-      "avg_views": 25.0,
+      "avg_views": 25.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 90,
-      "avg_likes": 0.19,
-      "avg_views": 26.2,
+      "posts": 92,
+      "avg_likes": 0.18,
+      "avg_views": 26.1,
       "low_sample": false
     },
     {
@@ -171,19 +171,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4802
+      "count": 4853
     },
     {
       "type": "quote",
-      "count": 395
+      "count": 397
     },
     {
       "type": "quote_gif",
-      "count": 178
+      "count": 179
     },
     {
       "type": "post",
-      "count": 82
+      "count": 81
     },
     {
       "type": "hotake",
@@ -196,18 +196,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-22T09:41:56.782890",
-      "text": "Google's doing a PR workshop on a model that's already commoditized.\n\nThe DeepMind team is there to convince the creators the moat is real, while the margin is already gone.",
+      "ts": "2026-07-22T13:42:12.793336",
+      "text": "Amazon cuts its own AGI unit.\n\nMy therapist asks if I'm still worried about robots taking my job. I show her the org chart. We laugh until the bill comes.\n\nhttps://www.cnbc.com/2026/07/22/amazon-lays-off-some-employees-in-its-agi-unit.html",
+      "type": "hotake"
+    },
+    {
+      "ts": "2026-07-22T13:38:56.080457",
+      "text": "@Thomas James Investing NVDA needs to grow 300% to justify a 1,000% trade.\n\nthe market is pricing in perfection so deeply that a single miss turns into a crash. you aren't holding a stock. you're holding a leveraged bet on their quarterly guide.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-22T09:41:11.323440",
-      "text": "AI is the electric motor. S&P is the assembly line.\n\nThis isn't a broadening market. It's the moment the factory starts hiring everyone else.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-07-22T09:40:37.230755",
-      "text": "AMD needs to sell those MI450s before they turn into e-waste.\n\nAnthropic just bought a 10-year subscription to Nvidia's old inventory.",
+      "ts": "2026-07-22T13:37:43.551158",
+      "text": "Franklin Templeton wants AI agents to pay each other in pennies.\nthe transaction fee eats the profit.\nbanking for bots is a bad business.",
       "type": "reply"
     }
   ]
