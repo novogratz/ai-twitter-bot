@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-06-25T17:57:09.161684",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Nathan_Thomas",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le gars qui a rendu la Deep Learning compr\u00e9hensible. Il twitte en EN mais ses threads FR sont des p\u00e9pites et il interagit avec la sc\u00e8ne FR. Pas de pub, juste du skill."
-      },
-      {
-        "handle": "RazvanMihalcea",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "VP chez Mistral AI. C'est la source pure pour l'IA fran\u00e7aise. Twitte en EN/FR, z\u00e9ro blabla, direct dans le dur tech."
-      },
-      {
-        "handle": "MathieuDuffort",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Bas\u00e9 \u00e0 SF mais FR. Il couvre l'intersection entre les US et la French Tech IA. Vraiment bien renseign\u00e9, moins de buzz, plus de fond."
-      },
-      {
-        "handle": "AlexisDelaunay",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Cr\u00e9ateur de Value Investing FR. Il ne vend pas de r\u00eave, il vend de la patience. Le profil parfait pour ceux qui veulent arr\u00eater de scroller et commencer \u00e0 investir."
-      },
-      {
-        "handle": "JulienVdK",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Le gars de chez Coinhouse. Couvre crypto et tech qu\u00e9b\u00e9coise. Twitte en FR, ton d\u00e9contract\u00e9, pas sectaire."
-      },
-      {
-        "handle": "MaximeBouyer",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Fondateur de Wealthsimple FR (ou close). Il parle finance personnelle et tech \u00e0 la sauce qu\u00e9b\u00e9coise. Accessible mais pas 'guru'. "
-      },
-      {
-        "handle": "PierreRozario",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Ancien de la Bourse, vir\u00e9 en 2008, il passe maintenant son temps \u00e0 d\u00e9cortiquer la DeFi et les tokens. Ton caustique, pas de 'shill' gratuit."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la cr\u00e8me des comptes francophones : Mistral et Arthur Mensch (via Nathan Thomas) pour l'IA, Value Investing pour la bourse, et un mix Qu\u00e9bec/USA pour la diversit\u00e9. Z\u00e9ro guru crypto qui vend du Telegram, juste des experts qui bossent."
-  },
-  {
-    "ts": "2026-06-25T19:56:54.810623",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ArnaudMaziero",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le trader de l'ASM qui transforme le CAC 40 en soap opera quotidien. Moins cher que la plupart des consultants."
-      },
-      {
-        "handle": "ThomasVogel",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "L'ancien de Coinhouse qui twitte en FR. Il balance l'actu crypto avec un humour corrosif qui fait moins mal que le red."
-      },
-      {
-        "handle": "JulienDhondt",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "La voix de la crypto francophone sur X. Il vit aux USA mais twitte en FR. Moins de bruit, plus de signal."
-      },
-      {
-        "handle": "DorianSaulais",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Le cerveau derri\u00e8re Lyst. C'est le genre de VC qu\u00e9b\u00e9cois qui voit le futur avant qu'il ne co\u00fbte cher."
-      },
-      {
-        "handle": "Marc-AndreLemay",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 10000,
-        "reason": "Ancien de Google/Uber, il cover la tech et l'IA au Canada avec plus de substance que les influenceurs TikTok."
-      }
-    ],
-    "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eaves \u00e0 99\u20ac pour ne garder que ceux qui comprennent comment fonctionne la tech. Une mixit\u00e9 France/Qu\u00e9bec/USA qui couvre le spectre sans se r\u00e9p\u00e9ter."
-  },
-  {
     "ts": "2026-06-25T21:57:07.201535",
     "raw_count": 8,
     "kept_count": 6,
@@ -8655,5 +8551,95 @@
       }
     ],
     "summary": "Le mix parfait entre les grands patrons de la Tech FR et les analysts qu\u00e9b\u00e9cois qui comprennent l'Am\u00e9rique sans en jaser trop."
+  },
+  {
+    "ts": "2026-07-21T22:23:39.075285",
+    "raw_count": 6,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thomaslepinard",
+        "region": "france",
+        "niche": "ai",
+        "followers": 150000,
+        "reason": "Le prince de Mistral AI, twitte en FR, mixe technique et hype sans se prendre au s\u00e9rieux."
+      },
+      {
+        "handle": "jamesgallagher",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 80000,
+        "reason": "Journaliste crypto US qui twitte en FR quand il veut, focus DeFi/Web3 pur."
+      },
+      {
+        "handle": "marielaborde",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Analyste macro fran\u00e7aise rare qui d\u00e9cortique la Fed et le CAC 40 sans endormir le monde."
+      },
+      {
+        "handle": "victor_tanguay",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Investisseur qu\u00e9b\u00e9cois s\u00e9rieux, analyse financi\u00e8re longue vue, pas de sh*tcoin hype."
+      },
+      {
+        "handle": "louis_guillou",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 30000,
+        "reason": "Ex-Fintech expert, analyse les startups EU/FR sans vendre de formation \u00e0 2k\u20ac."
+      },
+      {
+        "handle": "maxime_dh",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Founding Engineer chez Hugging Face, Quebecois, tweet tech/IA en FR/EN."
+      }
+    ],
+    "summary": "Focus sur des pros reconnus (Hugging Face, Mistral, Analia) plut\u00f4t que des influenceurs formations. Un mix France/Quebec/USA anglophone en FR."
+  },
+  {
+    "ts": "2026-07-21T23:51:35.332729",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenjaminFloc",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 52000,
+        "reason": "Journaliste crypto l\u00e9gendaire. Ses threads sur les cycles et les altcoins sont la r\u00e9f\u00e9rence qualitative. Pas de pub Telegram, juste du gras pur."
+      },
+      {
+        "handle": "CryptoNathalie",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Bas\u00e9e \u00e0 NYC mais tweete en FR. Elle balance des gems on-chain et des analyses DeFi. Le compte 'influencer' qui a encore des donn\u00e9es derri\u00e8re."
+      },
+      {
+        "handle": "Lil2Shrimp",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Le Qu\u00e9b\u00e9cois qui fait le lien entre l'Europe et les US. Analyse technique et macro, twitte avec une pointe d'humour d\u00e9cal\u00e9. Rare de trouver du contenu pro dans cette r\u00e9gion."
+      },
+      {
+        "handle": "OlivierMarti",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Founding Engineer chez Mistral. Il tweet des 'threads' techniques tr\u00e8s pointus sur les LLMs. Si tu veux comprendre ce qui se passe sous le capot sans dormir."
+      }
+    ],
+    "summary": "J'ai mis\u00e9 sur les fondateurs et les anciens journalistes qui tiennent encore le haut du pav\u00e9. On est loin des vendeurs de r\u00eaves, ici on parle code, cycles et march\u00e9. C'est qualitatif comme un bon whisky, pas comme de l'eau plate de LinkedIn."
   }
 ]

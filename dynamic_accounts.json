@@ -659,7 +659,17 @@
     "DylanSquinn",
     "LudovicVignato",
     "MaxLavoillotte",
-    "RaphaelPoirier"
+    "RaphaelPoirier",
+    "thomaslepinard",
+    "jamesgallagher",
+    "marielaborde",
+    "victor_tanguay",
+    "louis_guillou",
+    "maxime_dh",
+    "BenjaminFloc",
+    "CryptoNathalie",
+    "Lil2Shrimp",
+    "OlivierMarti"
   ],
   "en": [
     "Chubby",
@@ -5258,6 +5268,56 @@
     {
       "lang": "fr",
       "handle": "RaphaelPoirier",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomaslepinard",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "jamesgallagher",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "marielaborde",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "victor_tanguay",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "louis_guillou",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "maxime_dh",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminFloc",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoNathalie",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lil2Shrimp",
+      "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierMarti",
       "added": "2026-07-21"
     }
   ]
