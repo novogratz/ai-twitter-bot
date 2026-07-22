@@ -1061,3 +1061,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 103 likes / 52712 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 1 likes / 31 views: me on my way to explain that this is basically the toddler phase for superintelligence
   - 1 likes / 22 views: oracle's been holding my marriage together for 3 years and now it's on sale
+
+## 2026-07-21
+
+**Activity** — total actions: 848
+  - by type: reply=746, quote=56, quote_gif=20, hotake=11, post=10, retweet=5
+  - top sources: SEARCH-HOT=471, FEED-SWEEP-FEED=141, FEED-SWEEP-FOLLOWING=84, QUOTE=41, DEBATE=33, GIF=23, VIP=10, BREAKING_QRT=6
+  - comedy patterns: RENAME=1
+  - top reply targets: @TheBTCTherapist=13, @FirstSquawk=9, @Polymarket=9, @Cointelegraph=9, @WhaleInsider=7
+
+**Followers we follow** (running total): 379
+
+**Top-performing posts scraped today**:
+  - 1 likes / 16 views: me at 3am checking if my $58k bag is finally doing what my student loans refused to
+  - 1 likes / 13 views: Deezer confirms more than half of uploads are AI-generated. We are the AI era's first parents, expla
+  - 1 likes / 13 views: me refreshing the terminal like “please tell me 4 is enough to fix my attention span”
