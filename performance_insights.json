@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-22T13:43:00.085974",
-  "window_7d_actions": 5628,
-  "window_24h_actions": 861,
+  "generated_at": "2026-07-22T17:42:59.182072",
+  "window_7d_actions": 5672,
+  "window_24h_actions": 846,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5621
+      "count": 5666
     },
     {
       "pattern": "RENAME",
@@ -14,24 +14,20 @@
     {
       "pattern": "UNDERSTATEMENT",
       "count": 2
-    },
-    {
-      "pattern": "METAPHOR",
-      "count": 1
     }
   ],
   "worst_patterns": [
     {
-      "pattern": "METAPHOR",
-      "count": 1
-    },
-    {
       "pattern": "UNDERSTATEMENT",
       "count": 2
     },
     {
       "pattern": "RENAME",
       "count": 4
+    },
+    {
+      "pattern": "UNKNOWN",
+      "count": 5666
     }
   ],
   "best_hours_utc": [
@@ -52,49 +48,49 @@
       "actions": 258
     },
     {
-      "hour": 0,
-      "actions": 255
+      "hour": 15,
+      "actions": 258
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2640
+      "count": 2659
     },
     {
       "topic": "IA",
-      "count": 2237
+      "count": 2258
     },
     {
       "topic": "Crypto",
-      "count": 609
+      "count": 610
     },
     {
       "topic": "Bourse",
-      "count": 363
+      "count": 362
     },
     {
       "topic": "Spatial",
-      "count": 99
+      "count": 102
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2558
+      "count": 2568
     },
     {
       "pillar": "other",
-      "count": 1612
+      "count": 1616
     },
     {
       "pillar": "market_trauma",
-      "count": 1157
+      "count": 1182
     },
     {
       "pillar": "meme_reaction",
-      "count": 218
+      "count": 223
     },
     {
       "pillar": "reply_bait",
@@ -108,27 +104,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 403
+      "count": 388
     },
     {
       "pillar": "other",
-      "count": 229
+      "count": 216
     },
     {
       "pillar": "market_trauma",
-      "count": 185
+      "count": 192
     },
     {
       "pillar": "meme_reaction",
-      "count": 31
+      "count": 37
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 8
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -136,21 +132,21 @@
       "pillar": "ai_news_take",
       "posts": 61,
       "avg_likes": 0.21,
-      "avg_views": 25.4,
+      "avg_views": 25.0,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 92,
+      "posts": 94,
       "avg_likes": 0.18,
-      "avg_views": 26.1,
+      "avg_views": 26.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 40,
-      "avg_likes": 0.1,
-      "avg_views": 22.1,
+      "posts": 38,
+      "avg_likes": 0.13,
+      "avg_views": 21.7,
       "low_sample": false
     },
     {
@@ -171,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4853
+      "count": 4890
     },
     {
       "type": "quote",
-      "count": 397
+      "count": 401
     },
     {
       "type": "quote_gif",
-      "count": 179
+      "count": 182
     },
     {
       "type": "post",
-      "count": 81
+      "count": 83
     },
     {
       "type": "hotake",
-      "count": 73
+      "count": 71
     },
     {
       "type": "retweet",
@@ -196,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-22T13:42:12.793336",
-      "text": "Amazon cuts its own AGI unit.\n\nMy therapist asks if I'm still worried about robots taking my job. I show her the org chart. We laugh until the bill comes.\n\nhttps://www.cnbc.com/2026/07/22/amazon-lays-off-some-employees-in-its-agi-unit.html",
-      "type": "hotake"
-    },
-    {
-      "ts": "2026-07-22T13:38:56.080457",
-      "text": "@Thomas James Investing NVDA needs to grow 300% to justify a 1,000% trade.\n\nthe market is pricing in perfection so deeply that a single miss turns into a crash. you aren't holding a stock. you're holding a leveraged bet on their quarterly guide.",
+      "ts": "2026-07-22T17:39:57.822670",
+      "text": "$4.16 in crypto is the \"appetizer\" equivalent in Stockholm.\nyou paid for the vibe, not the volume.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-22T13:37:43.551158",
-      "text": "Franklin Templeton wants AI agents to pay each other in pennies.\nthe transaction fee eats the profit.\nbanking for bots is a bad business.",
+      "ts": "2026-07-22T17:37:51.439656",
+      "text": "SPCX down 49% is just the market pricing in the 400 billion dollars of debt Musky isn't paying back.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-07-22T17:36:28.989414",
+      "text": "@David Gokhshtein\n0.5 BTC is the threshold where you stop checking the price every hour and start looking at it every quarter. the anxiety drops, the sleep improves, the thesis holds.",
       "type": "reply"
     }
   ]

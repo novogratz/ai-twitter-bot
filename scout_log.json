@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-06-26T13:56:55.543162",
-    "raw_count": 8,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilKhan",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "La r\u00e9f\u00e9rence pour l'adoption crypto en France, twitte sans filtre, z\u00e9ro formation \u00e0 vendre."
-      },
-      {
-        "handle": "RomainDoyen",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 32000,
-        "reason": "Ex-Mistral, vibe VC, parle tech et crypto avec un ton sec qui tue les fake gurus."
-      },
-      {
-        "handle": "ThomasGarnier",
-        "region": "france",
-        "niche": "tech",
-        "followers": 28000,
-        "reason": "Journaliste Tech/Crypto au Monde, la seule voix fiable qui reste ind\u00e9pendante."
-      },
-      {
-        "handle": "LucasDumont",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Focus startup/IA au Qu\u00e9bec, contenu technique rare en FR, pas de blabla."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les influenceurs formation pour ne garder que les analystes et fondateurs qui ont du grain \u00e0 moudre. De la FR \u00e0 la QBC, ces comptes sont du pur sel technique sans le blabla marketing."
-  },
-  {
     "ts": "2026-06-26T15:56:56.777530",
     "raw_count": 8,
     "kept_count": 5,
@@ -8613,5 +8575,50 @@
       }
     ],
     "summary": "On \u00e9vite les influenceurs TikTok bourse pour se concentrer sur des insiders qui twittent ce qu'ils font : des founders de Scale-ups (Meltwater, Hugging Face), des profs d'universit\u00e9s et des journalistes de terrain. Au Qu\u00e9bec, on reste pragmatique avec des profils locaux actifs sur le BTC et la bourse traditionnelle."
+  },
+  {
+    "ts": "2026-07-22T15:58:49.431686",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilBourque",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 62000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour la macro et les actions. Analyse fine, anglais/fran\u00e7ais, format court et percutant."
+      },
+      {
+        "handle": "ThibaultBoullier",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Ancien de Parafin, maintenant solo. Twitte des threads deep-dive sur la tech blockchain sans vendre de r\u00eave."
+      },
+      {
+        "handle": "RomainDong",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Fond\u00e9 sur l'analyse technique et le trading de crypto. Plus orient\u00e9 price action que narrative, mais tr\u00e8s solide."
+      },
+      {
+        "handle": "LilianBoulard",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Ex-Hugging Face, expert Vector DB. Il explique l'IA de prod pour ceux qui veulent la faire tourner, pas juste la regarder."
+      },
+      {
+        "handle": "GillesArduzzo",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 11000,
+        "reason": "Bas\u00e9 \u00e0 San Francisco, twitte en FR. Focus sur les startups tech et les lev\u00e9es de fonds. Regard ext\u00e9rieur pertinent."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les influenceurs 'gourmands' pour ne garder que les b\u00e2tisseurs et les traders qui postent encore. On passe des grands patrons de l'IA (Mistral) aux sp\u00e9cialistes de la micro-structure (Qu\u00e9bec/SF). Pas de vendeurs de r\u00eave, que du concret."
   }
 ]

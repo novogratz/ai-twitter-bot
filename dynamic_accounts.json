@@ -696,7 +696,11 @@
     "BaptistePoujol",
     "PierreBarrault",
     "MickaelBouyer",
-    "RaphaelFournier"
+    "RaphaelFournier",
+    "CyrilBourque",
+    "RomainDong",
+    "LilianBoulard",
+    "GillesArduzzo"
   ],
   "en": [
     "Chubby",
@@ -5510,6 +5514,26 @@
     {
       "lang": "fr",
       "handle": "RaphaelFournier",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilBourque",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDong",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "LilianBoulard",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "GillesArduzzo",
       "added": "2026-07-22"
     }
   ]
