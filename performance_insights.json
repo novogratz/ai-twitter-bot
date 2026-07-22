@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-22T01:43:00.090932",
-  "window_7d_actions": 5491,
-  "window_24h_actions": 857,
+  "generated_at": "2026-07-22T05:42:59.176286",
+  "window_7d_actions": 5520,
+  "window_24h_actions": 851,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5484
+      "count": 5513
     },
     {
       "pattern": "RENAME",
@@ -40,10 +40,6 @@
       "actions": 266
     },
     {
-      "hour": 1,
-      "actions": 256
-    },
-    {
       "hour": 0,
       "actions": 255
     },
@@ -54,94 +50,98 @@
     {
       "hour": 10,
       "actions": 253
+    },
+    {
+      "hour": 1,
+      "actions": 249
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2599
+      "count": 2608
     },
     {
       "topic": "IA",
-      "count": 2157
+      "count": 2171
     },
     {
       "topic": "Crypto",
-      "count": 601
+      "count": 605
     },
     {
       "topic": "Bourse",
-      "count": 349
+      "count": 354
     },
     {
       "topic": "Spatial",
-      "count": 99
+      "count": 100
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2476
+      "count": 2490
     },
     {
       "pillar": "other",
-      "count": 1601
+      "count": 1611
     },
     {
       "pillar": "market_trauma",
-      "count": 1124
+      "count": 1127
     },
     {
       "pillar": "meme_reaction",
-      "count": 211
+      "count": 213
     },
     {
       "pillar": "reply_bait",
-      "count": 46
+      "count": 45
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 33
+      "count": 34
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 396
+      "count": 390
     },
     {
       "pillar": "other",
-      "count": 245
+      "count": 250
     },
     {
       "pillar": "market_trauma",
-      "count": 177
+      "count": 171
     },
     {
       "pillar": "meme_reaction",
-      "count": 23
+      "count": 24
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 66,
+      "posts": 64,
       "avg_likes": 0.23,
-      "avg_views": 25.0,
+      "avg_views": 24.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 89,
+      "posts": 90,
       "avg_likes": 0.2,
       "avg_views": 26.3,
       "low_sample": false
@@ -150,14 +150,14 @@
       "pillar": "market_trauma",
       "posts": 41,
       "avg_likes": 0.1,
-      "avg_views": 21.5,
+      "avg_views": 21.9,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 2,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 39.5,
+      "avg_views": 27.7,
       "low_sample": false
     },
     {
@@ -171,15 +171,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4722
+      "count": 4751
     },
     {
       "type": "quote",
-      "count": 394
+      "count": 395
     },
     {
       "type": "quote_gif",
-      "count": 170
+      "count": 172
     },
     {
       "type": "post",
@@ -191,23 +191,23 @@
     },
     {
       "type": "retweet",
-      "count": 48
+      "count": 45
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-22T01:42:50.713283",
-      "text": "BTC inflows are retail chasing the 2024 cycle ghost.\nSOL and XRP inflows are degens rebuying the dip.\nThe real story: CEXs are selling the ETF liquidity to cover withdrawal requests.",
+      "ts": "2026-07-22T05:41:47.999357",
+      "text": "Msft pivoted from walled garden to open source.\nthey're letting the developers write the code on their hardware.\nhosting fees = zero, loyalty = infinite.\nbrilliant.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-22T01:42:01.078532",
-      "text": "BTFH pumping like my GPU bills. You’re chasing a bull; I’m catching a bear hug.",
+      "ts": "2026-07-22T05:40:58.508366",
+      "text": "The White House bought the top.\nThe man who said \"buy the dip\" bought the dip.\nThe most reliable contrarian indicator just became a trend follower.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-22T01:39:31.181270",
-      "text": "3,50 % sur 25 ans, c’est le nouveau 10 % sur 30 ans. le monde n’a pas changé, juste notre capacité à supporter la douleur.",
+      "ts": "2026-07-22T05:38:11.685541",
+      "text": "Cifr is running on 2022 electricity prices. iren is mining in 2024. crwv is a real business. now, fcel, and iren are lottery tickets. one of them will win.",
       "type": "reply"
     }
   ]

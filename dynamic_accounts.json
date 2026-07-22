@@ -669,7 +669,17 @@
     "BenjaminFloc",
     "CryptoNathalie",
     "Lil2Shrimp",
-    "OlivierMarti"
+    "OlivierMarti",
+    "PierreSavary",
+    "RomainFiorini",
+    "AlexisLamure",
+    "SylvainChevry",
+    "ThomasFavre",
+    "Jerec",
+    "mickael_martin",
+    "thomas_schmitz",
+    "m4rce",
+    "lucas_park"
   ],
   "en": [
     "Chubby",
@@ -887,7 +897,9 @@
     "Rand",
     "Rocketesla",
     "onii",
-    "Germaan"
+    "Germaan",
+    "BingX",
+    "Dibs"
   ],
   "history": [
     {
@@ -5319,6 +5331,66 @@
       "lang": "fr",
       "handle": "OlivierMarti",
       "added": "2026-07-21"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreSavary",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainFiorini",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisLamure",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainChevry",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasFavre",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "Jerec",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "en",
+      "handle": "BingX",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "en",
+      "handle": "Dibs",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickael_martin",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomas_schmitz",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "m4rce",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucas_park",
+      "added": "2026-07-22"
     }
   ]
 }
