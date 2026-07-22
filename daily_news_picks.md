@@ -16246,3 +16246,15 @@ Anthropic and OpenAI release "cybersecurity models" with reduced guardrails, loc
 The hot-run thesis for 2031 posits a 1990s-style expansion: nominal GDP near 7 percent, AI-led productivity, and policy incentives drive S&P 500 earnings growth at 1.5–2 tim
   - https://x.com/DrJStrategy/status/2079724208263704778
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 63).
+- **@kylereidhead** (12 likes, score 7/10) — Nvidia will become the first $10T company, mark my words
+
+Vera Rubin just hit production and at full tilt it can build $630 billion of racks a quarter
+
+each running 10x the tokens per megawatt of Blac
+  - https://x.com/KyleReidhead/status/2079696240217108547
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 14).
+- **@epochtimes** (11 likes, score 7/10) — Data centers are projected to consume nearly 20 percent of all U.S. electricity by 2035, up sharply from 5.9 percent today.
+
+BloombergNEF forecasts power demand reaching 194 gigawatts—equivalent to ou
+  - https://x.com/EpochTimes/status/2079763407595569160
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 17).
