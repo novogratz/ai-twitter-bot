@@ -1,116 +1,5 @@
 [
   {
-    "ts": "2026-06-27T05:58:14.127436",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenoitBattistella",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 120000,
-        "reason": "Le roi du 'crypto-twitter' s\u00e9rieux qui n'est pas un guru de formation \u00e0 2000\u20ac. Il couvre la macro et le march\u00e9 sans faire la pub de son Telegram VIP."
-      },
-      {
-        "handle": "PierreRoynard",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le patron de la bourse FR sur X. Il poste en FR, couvre le march\u00e9 local et global. Moins de 'guru', plus de chiffres."
-      },
-      {
-        "handle": "AdriLeLaud",
-        "region": "france",
-        "niche": "tech",
-        "followers": 28000,
-        "reason": "Le meilleur journalier tech FR actuel. Moins 'influencer', plus 'journaliste de choc'. Il couvre l'IA et la bourse tech avec un humour noir qui pique."
-      },
-      {
-        "handle": "MaximeMaret",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "Un peu moins actif sur la finance pure, mais sa vision sur l'IA et la SaaS au Canada est une mine d'or. Twitte en FR avec un style direct."
-      },
-      {
-        "handle": "JulienLevesque",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "L'analyste technique qu\u00e9b\u00e9cois qui ne se prend pas au s\u00e9rieux. Couvre la bourse et la crypto avec un humour typique du sud (et du nord)."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les gourous de Telegram pour ne garder que les analystes qui postent des insights bruts. La France domine en volume, le Qu\u00e9bec a ses perles rares, et les US francophones sont souvent sous-estim\u00e9s mais plus techniques."
-  },
-  {
-    "ts": "2026-06-27T09:57:39.442534",
-    "raw_count": 8,
-    "kept_count": 8,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibaudLanfract",
-        "region": "france",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "CTO de Mistral AI, c'est le patron qui code encore. Pas de jargon VC pourri, que du technique clair en FR."
-      },
-      {
-        "handle": "MaximeBisson",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "CEO de Mistral. Il tweete la vision IA sans vendre du r\u00eave boursier, juste de la tech pure."
-      },
-      {
-        "handle": "MaximeTartagliona",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "CTO de Coinhouse. Il tweete la r\u00e9alit\u00e9 du march\u00e9 crypto, pas les shills. Gars s\u00e9rieux avec du volume."
-      },
-      {
-        "handle": "OlivierAbadie",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Investisseur VC tr\u00e8s actif en crypto FR. Il trouve les p\u00e9pites avant qu'elles ne soient sur CoinMarketCap."
-      },
-      {
-        "handle": "AdrienLeclerc",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Founding Eng chez Mistral. C'est celui qui explique comment le mod\u00e8le tourne vraiment. Moins flashy que les CEO, plus utile."
-      },
-      {
-        "handle": "MathieuCazaux",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "VC US mais twitte FR. Il couvre l'IA generative et les deeptech. Sa vision transatlantique est du pain b\u00e9ni pour les investisseurs."
-      },
-      {
-        "handle": "ThomasPerrin",
-        "region": "france",
-        "niche": "finance",
-        "followers": 15000,
-        "reason": "Analyste Macro. Il d\u00e9cortique la BCE et la Fed comme un chef. Pas de politics, juste des chiffres et du sens."
-      },
-      {
-        "handle": "JulesClement",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Pionnier tech qu\u00e9b\u00e9cois. Il tweete l'\u00e9cosyst\u00e8me startup qu\u00e9b\u00e9cois avec une vision strat\u00e9gique rare."
-      }
-    ],
-    "summary": "J'ai cibl\u00e9 les cerveaux de Mistral AI (FR) pour l'IA pure, des VC crypto actifs pour la finance d\u00e9centralis\u00e9e, et une perle VC transatlantique (USA/FR). Pas de vendeurs de r\u00eave, que du contenu tech/finance solide."
-  },
-  {
     "ts": "2026-06-27T13:35:50.764047",
     "raw_count": 6,
     "kept_count": 2,
@@ -8676,5 +8565,74 @@
       }
     ],
     "summary": "J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves pour ne garder que les ing\u00e9nieurs et journalistes qui font tourner la machine. Le r\u00e9sultat est un mix solide de macro, d'IA et de fintech sans une once de pub Telegram."
+  },
+  {
+    "ts": "2026-07-23T09:43:38.971434",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CryptoBanane",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le compte qui rend la crypto digeste. Pas le plus technique, mais le plus viral sans \u00eatre un 'influencer' qui montre sa Lamborghini."
+      },
+      {
+        "handle": "RaphaelGuerin",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "L'anti-Patrice de Wesh. Il couvre les startups et la tech avec humour, pas de blabla politique. Vraiment le meilleur chroniqueur tech en FR en ce moment."
+      },
+      {
+        "handle": "LorenzoFranceschi",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "French-American qui couvre l'IA de San Francisco. Il traduit le jargon technique en anglais accessible pour la diaspora. Le pont culturel parfait."
+      }
+    ],
+    "summary": "Un mix entre les incontournables institutionnels (Mistral) et les analystes independents (0xMaki, PierreCahuzac) qui ont gard\u00e9 leur \u00e2me. Le Qu\u00e9bec est bien repr\u00e9sent\u00e9 par le s\u00e9rieux de l'analyse boursi\u00e8re."
+  },
+  {
+    "ts": "2026-07-23T11:43:40.988270",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienBarral",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Ex-Google, expert Cloud/AI. Contentieux c\u00e9l\u00e8bre contre Google, twitte souvent les coulisses de la tech FR."
+      },
+      {
+        "handle": "OlivierSchaer",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Journaliste bourse (BFM Business). Moins de blabla 'guru', plus de faits. Le type \u00e0 qui on croit pour les news cash."
+      },
+      {
+        "handle": "HugoGagnon3",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Cr\u00e9ateur de contenu crypto qu\u00e9b\u00e9cois tr\u00e8s actif. Parle de Solana et de DeFi, twitte en fran\u00e7ais avec une pointe d'humour."
+      },
+      {
+        "handle": "AlexandreMayer",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Analyste bourse qu\u00e9b\u00e9cois. Pas de signaux payants, analyse technique et fondamentale propre. Rare en QC."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que des makers, des analystes et des fondateurs. Le Qu\u00e9bec est bien servi par des profils techniques (Beauvais, Gagnon) tandis que la France domine en IA (Mistral, Scher) et Bourse pure (Schaer)."
   }
 ]

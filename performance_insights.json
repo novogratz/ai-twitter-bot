@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-23T09:42:59.433919",
-  "window_7d_actions": 5782,
-  "window_24h_actions": 913,
+  "generated_at": "2026-07-23T13:42:59.234670",
+  "window_7d_actions": 5821,
+  "window_24h_actions": 918,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5776
+      "count": 5815
     },
     {
       "pattern": "RENAME",
@@ -37,19 +37,19 @@
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 287
+      "actions": 299
     },
     {
       "hour": 10,
+      "actions": 286
+    },
+    {
+      "hour": 12,
       "actions": 269
     },
     {
       "hour": 9,
-      "actions": 266
-    },
-    {
-      "hour": 12,
-      "actions": 262
+      "actions": 265
     },
     {
       "hour": 15,
@@ -59,72 +59,72 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2700
+      "count": 2728
     },
     {
       "topic": "IA",
-      "count": 2304
+      "count": 2303
     },
     {
       "topic": "Crypto",
-      "count": 614
+      "count": 618
     },
     {
       "topic": "Bourse",
-      "count": 384
+      "count": 393
     },
     {
       "topic": "Spatial",
-      "count": 103
+      "count": 106
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2626
+      "count": 2635
     },
     {
       "pillar": "other",
-      "count": 1597
+      "count": 1607
     },
     {
       "pillar": "market_trauma",
-      "count": 1235
+      "count": 1254
     },
     {
       "pillar": "meme_reaction",
-      "count": 235
+      "count": 236
     },
     {
       "pillar": "reply_bait",
-      "count": 56
+      "count": 57
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 33
+      "count": 32
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 411
+      "count": 398
     },
     {
       "pillar": "other",
-      "count": 223
+      "count": 238
     },
     {
       "pillar": "market_trauma",
-      "count": 219
+      "count": 222
     },
     {
       "pillar": "meme_reaction",
-      "count": 44
+      "count": 45
     },
     {
       "pillar": "reply_bait",
-      "count": 13
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
@@ -134,23 +134,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 58,
+      "posts": 57,
       "avg_likes": 0.21,
-      "avg_views": 24.9,
-      "low_sample": false
-    },
-    {
-      "pillar": "market_trauma",
-      "posts": 36,
-      "avg_likes": 0.17,
-      "avg_views": 25.2,
+      "avg_views": 25.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 99,
+      "posts": 98,
       "avg_likes": 0.17,
-      "avg_views": 27.7,
+      "avg_views": 28.1,
+      "low_sample": false
+    },
+    {
+      "pillar": "market_trauma",
+      "posts": 38,
+      "avg_likes": 0.11,
+      "avg_views": 23.7,
       "low_sample": false
     },
     {
@@ -171,23 +171,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4999
+      "count": 5040
     },
     {
       "type": "quote",
-      "count": 396
+      "count": 395
     },
     {
       "type": "quote_gif",
-      "count": 192
+      "count": 193
     },
     {
       "type": "post",
-      "count": 86
+      "count": 83
     },
     {
       "type": "hotake",
-      "count": 68
+      "count": 69
     },
     {
       "type": "retweet",
@@ -196,18 +196,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-23T09:41:54.449676",
-      "text": "Opus 4.8 is the dog that bit the hand that fed it. Anthropic forgot that speed isn't a feature, it's the feature.",
+      "ts": "2026-07-23T13:42:21.164730",
+      "text": "$57K was the low because that’s where the miners who bought at $69k finally stopped panic-selling.\n\n$75K isn’t a target, it’s their breakeven.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-23T09:41:21.594544",
-      "text": "138M shares at $212 isn’t a pullback. it’s liquidity evaporation for anyone who didn’t buy the dip.\nthe average investor lags their own funds by 4%, and it’s all days like this one.\nclose the app, not the position.",
+      "ts": "2026-07-23T13:40:28.965275",
+      "text": "ChatGPT Health connects medical records to your AI model.\n\nthe real story isn't smarter triage. it's OpenAI becoming the operating system for your physical health.\n\ninsurance companies are already sweating.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-23T09:39:12.094689",
-      "text": "Vera Rubin ships when H100 is already legacy hardware. Nebius isn't a hyperscaler. it's a glorified datacenter that just forgot to build a product.",
+      "ts": "2026-07-23T13:39:56.349257",
+      "text": "BTC +11% on oil +25%? The correlation is lagging 3 weeks, not leading. Your entry is yesterday's news.",
       "type": "reply"
     }
   ]

@@ -736,7 +736,13 @@
     "MathisB",
     "DavidH",
     "LudovicB",
-    "JulienS"
+    "JulienS",
+    "CryptoBanane",
+    "RaphaelGuerin",
+    "JulienBarral",
+    "OlivierSchaer",
+    "HugoGagnon3",
+    "AlexandreMayer"
   ],
   "en": [
     "Chubby",
@@ -5774,6 +5780,36 @@
     {
       "lang": "en",
       "handle": "NoLimit",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBanane",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelGuerin",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBarral",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierSchaer",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoGagnon3",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexandreMayer",
       "added": "2026-07-23"
     }
   ]
