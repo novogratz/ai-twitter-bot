@@ -16290,3 +16290,30 @@ $900k -> $1MM, shockingly fast.
 This is how compound works:
   - https://x.com/BrianFeroldi/status/2080050854304899130
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 79).
+- **@stealthqe4** (42 likes, score 9/10) — So let me get this straight.  
+
+The Fed Funds Rate(interest rates) always follow the 2 year bond yield.  
+
+So the FFR is 3.50-3.75% as the 2 year slides over 4.3%. 
+
+So basically the Fed needs to hike
+  - https://x.com/StealthQE4/status/2080125117846139230
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 56).
+- **@haochihaochiaaa** (110 likes, score 9/10) — Google Earnings Report: Congrats everyone, the biggest landmine has been cleared  
+It also mentioned in the earnings report that computing power is extremely scarce this quarter.  
+Nbis 250  
+mrvl 250
+  - https://x.com/haochihaochiaaa/status/2080071607675150386
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 222).
+- **@cointelegraph** (111 likes, score 8/10) — INSIGHT: Grayscale's Head of Research Zach Pandl says Bitcoin's bottom may already be in if the Fed holds off on rate hikes.
+
+He pushes back on the "four-year cycle" theory, which points to a lower bo
+  - https://x.com/Cointelegraph/status/2080135993089257700
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 177).
+- **@kimsbinvesting** (40 likes, score 8/10) — <July 22 Trading Record>
+
+New Position: Palantir $PLTR 
+- Purchase Price: $123.98
+- Started 3% position investment.
+  - https://x.com/kimsbinvesting/status/2080114234483261946
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 48).
