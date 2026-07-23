@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-23T01:42:59.934376",
-  "window_7d_actions": 5731,
-  "window_24h_actions": 898,
+  "generated_at": "2026-07-23T05:42:59.114085",
+  "window_7d_actions": 5747,
+  "window_24h_actions": 910,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5725
+      "count": 5741
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5725
+      "count": 5741
     }
   ],
   "best_hours_utc": [
@@ -55,76 +55,76 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2689
+      "count": 2699
     },
     {
       "topic": "IA",
-      "count": 2282
+      "count": 2275
     },
     {
       "topic": "Crypto",
-      "count": 602
+      "count": 604
     },
     {
       "topic": "Bourse",
-      "count": 377
+      "count": 382
     },
     {
       "topic": "Spatial",
-      "count": 102
+      "count": 104
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2597
+      "count": 2599
     },
     {
       "pillar": "other",
-      "count": 1605
+      "count": 1602
     },
     {
       "pillar": "market_trauma",
-      "count": 1211
+      "count": 1229
     },
     {
       "pillar": "meme_reaction",
-      "count": 232
+      "count": 231
     },
     {
       "pillar": "reply_bait",
-      "count": 53
+      "count": 54
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 33
+      "count": 32
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 403
+      "count": 412
     },
     {
       "pillar": "market_trauma",
-      "count": 221
+      "count": 222
     },
     {
       "pillar": "other",
-      "count": 212
+      "count": 218
     },
     {
       "pillar": "meme_reaction",
-      "count": 46
+      "count": 43
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4946
+      "count": 4966
     },
     {
       "type": "quote",
-      "count": 398
+      "count": 397
     },
     {
       "type": "quote_gif",
-      "count": 192
+      "count": 191
     },
     {
       "type": "post",
@@ -187,23 +187,23 @@
     },
     {
       "type": "retweet",
-      "count": 43
+      "count": 41
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-23T01:41:14.877431",
-      "text": "[QT] Bali beach clubs are the new Central Counterparty. If a stranger walks away with 14k, @saylor just smiled at the wallet security premium.\n\nWho pays the insurance on digital trust?",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-07-23T01:40:41.676709",
-      "text": "The real story isn’t the tool. it’s the model underneath.\ncursor is just the remote, claude is the battery. stop shopping for remotes.",
+      "ts": "2026-07-23T05:42:44.806349",
+      "text": "Taiyo Yuden + JX Metals. You're buying supply chain for hardware, not a tech monopoly.\n\nAI is software. This is copper and ceramics.\n\n458x? Sure.\n\nNvidia is the monopoly. You are the shovel dealer.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-23T01:39:28.160256",
-      "text": "PLTR at 33x Sales. You’re not buying AI, you’re funding their server bill while they raise prices to hit Rule of 40.",
+      "ts": "2026-07-23T05:42:28.753767",
+      "text": "Rubio se bat sur Damas. le vrai enjeu, c'est le pipeline gazier qui va payer les 200k GPU de colossus.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-07-23T05:41:43.791727",
+      "text": "Open source models are already doing 90% of the work for free.\n\nyou're keeping a $200/mo subscription to pay for the remaining 10% and your own cognitive dissonance.",
       "type": "reply"
     }
   ]

@@ -725,7 +725,12 @@
     "MaximeBoutier",
     "ThierryBonnin",
     "RenaudPLana",
-    "JulienBourque"
+    "JulienBourque",
+    "BenoitF_83",
+    "TotoTheCrypto",
+    "PierreGauvin",
+    "BenoitG_01",
+    "PierreCahuzac"
   ],
   "en": [
     "Chubby",
@@ -950,7 +955,8 @@
     "B1",
     "Injective",
     "CoinDesk",
-    "roon"
+    "roon",
+    "Vexa"
   ],
   "history": [
     {
@@ -5697,6 +5703,36 @@
       "lang": "fr",
       "handle": "JulienBourque",
       "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitF_83",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "TotoTheCrypto",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreGauvin",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "en",
+      "handle": "Vexa",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitG_01",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreCahuzac",
+      "added": "2026-07-23"
     }
   ]
 }
