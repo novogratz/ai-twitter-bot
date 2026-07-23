@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-22T21:42:59.030464",
-  "window_7d_actions": 5722,
-  "window_24h_actions": 914,
+  "generated_at": "2026-07-23T01:42:59.934376",
+  "window_7d_actions": 5731,
+  "window_24h_actions": 898,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5716
+      "count": 5725
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5716
+      "count": 5725
     }
   ],
   "best_hours_utc": [
@@ -55,46 +55,46 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2694
+      "count": 2689
     },
     {
       "topic": "IA",
-      "count": 2276
+      "count": 2282
     },
     {
       "topic": "Crypto",
-      "count": 603
+      "count": 602
     },
     {
       "topic": "Bourse",
-      "count": 368
+      "count": 377
     },
     {
       "topic": "Spatial",
-      "count": 99
+      "count": 102
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2598
+      "count": 2597
     },
     {
       "pillar": "other",
-      "count": 1615
+      "count": 1605
     },
     {
       "pillar": "market_trauma",
-      "count": 1196
+      "count": 1211
     },
     {
       "pillar": "meme_reaction",
-      "count": 229
+      "count": 232
     },
     {
       "pillar": "reply_bait",
-      "count": 51
+      "count": 53
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,19 +104,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 420
-    },
-    {
-      "pillar": "other",
-      "count": 228
+      "count": 403
     },
     {
       "pillar": "market_trauma",
-      "count": 208
+      "count": 221
+    },
+    {
+      "pillar": "other",
+      "count": 212
     },
     {
       "pillar": "meme_reaction",
-      "count": 43
+      "count": 46
     },
     {
       "pillar": "reply_bait",
@@ -124,29 +124,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 59,
+      "posts": 60,
       "avg_likes": 0.22,
-      "avg_views": 24.9,
+      "avg_views": 24.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 95,
+      "posts": 96,
       "avg_likes": 0.18,
-      "avg_views": 26.6,
+      "avg_views": 27.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 39,
-      "avg_likes": 0.15,
-      "avg_views": 24.5,
+      "posts": 37,
+      "avg_likes": 0.16,
+      "avg_views": 25.2,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4934
+      "count": 4946
     },
     {
       "type": "quote",
-      "count": 402
+      "count": 398
     },
     {
       "type": "quote_gif",
-      "count": 189
+      "count": 192
     },
     {
       "type": "post",
@@ -187,23 +187,23 @@
     },
     {
       "type": "retweet",
-      "count": 45
+      "count": 43
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-22T21:40:59.602281",
-      "text": "Low trust eyebrows. the micro-expression of a founder who just realized the $50M raise only covers 14 months of runway. panic.",
+      "ts": "2026-07-23T01:41:14.877431",
+      "text": "[QT] Bali beach clubs are the new Central Counterparty. If a stranger walks away with 14k, @saylor just smiled at the wallet security premium.\n\nWho pays the insurance on digital trust?",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-07-23T01:40:41.676709",
+      "text": "The real story isn’t the tool. it’s the model underneath.\ncursor is just the remote, claude is the battery. stop shopping for remotes.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-22T21:39:59.405361",
-      "text": "Banning politicians forces them to trade like retail.\n\nsuddenly the insiders start buying dips instead of selling news. the best hedge is a forced margin call on Congress.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-07-22T21:38:20.533951",
-      "text": "Openai's governance structure is a capped-profit circus.\nthey don't need a mythos moment, they need a balance sheet that doesn't look like a startup pitch deck from 2022.",
+      "ts": "2026-07-23T01:39:28.160256",
+      "text": "PLTR at 33x Sales. You’re not buying AI, you’re funding their server bill while they raise prices to hit Rule of 40.",
       "type": "reply"
     }
   ]
