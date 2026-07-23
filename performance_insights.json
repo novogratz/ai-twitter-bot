@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-23T13:42:59.234670",
-  "window_7d_actions": 5821,
-  "window_24h_actions": 918,
+  "generated_at": "2026-07-23T17:42:59.028566",
+  "window_7d_actions": 5774,
+  "window_24h_actions": 858,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5815
+      "count": 5768
     },
     {
       "pattern": "RENAME",
@@ -52,26 +52,26 @@
       "actions": 265
     },
     {
-      "hour": 15,
-      "actions": 258
+      "hour": 0,
+      "actions": 256
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2728
+      "count": 2698
     },
     {
       "topic": "IA",
-      "count": 2303
+      "count": 2295
     },
     {
       "topic": "Crypto",
-      "count": 618
+      "count": 602
     },
     {
       "topic": "Bourse",
-      "count": 393
+      "count": 399
     },
     {
       "topic": "Spatial",
@@ -82,15 +82,15 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2635
+      "count": 2625
     },
     {
       "pillar": "other",
-      "count": 1607
+      "count": 1588
     },
     {
       "pillar": "market_trauma",
-      "count": 1254
+      "count": 1233
     },
     {
       "pillar": "meme_reaction",
@@ -98,7 +98,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 57
+      "count": 60
     },
     {
       "pillar": "ai_vs_btc",
@@ -108,23 +108,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 398
+      "count": 369
     },
     {
       "pillar": "other",
-      "count": 238
+      "count": 233
     },
     {
       "pillar": "market_trauma",
-      "count": 222
+      "count": 197
     },
     {
       "pillar": "meme_reaction",
-      "count": 45
+      "count": 40
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
@@ -134,23 +134,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 57,
+      "posts": 58,
       "avg_likes": 0.21,
-      "avg_views": 25.5,
+      "avg_views": 24.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 98,
-      "avg_likes": 0.17,
-      "avg_views": 28.1,
+      "posts": 96,
+      "avg_likes": 0.18,
+      "avg_views": 28.5,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 38,
-      "avg_likes": 0.11,
-      "avg_views": 23.7,
+      "posts": 39,
+      "avg_likes": 0.1,
+      "avg_views": 28.0,
       "low_sample": false
     },
     {
@@ -171,19 +171,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5040
+      "count": 4997
     },
     {
       "type": "quote",
-      "count": 395
+      "count": 390
     },
     {
       "type": "quote_gif",
-      "count": 193
+      "count": 192
     },
     {
       "type": "post",
-      "count": 83
+      "count": 85
     },
     {
       "type": "hotake",
@@ -196,18 +196,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-23T13:42:21.164730",
-      "text": "$57K was the low because that’s where the miners who bought at $69k finally stopped panic-selling.\n\n$75K isn’t a target, it’s their breakeven.",
+      "ts": "2026-07-23T17:41:30.500250",
+      "text": "Spot ETF inflows are outpacing miner supply by 3x. the \"bearish macro\" is just 401k Dave buying back in at breakeven. liquidity > headlines.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-23T13:40:28.965275",
-      "text": "ChatGPT Health connects medical records to your AI model.\n\nthe real story isn't smarter triage. it's OpenAI becoming the operating system for your physical health.\n\ninsurance companies are already sweating.",
+      "ts": "2026-07-23T17:40:53.270322",
+      "text": "OpenAI just turned its models into employees.\n\nThe billing cycle finally starts when the models start sending invoices.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-23T13:39:56.349257",
-      "text": "BTC +11% on oil +25%? The correlation is lagging 3 weeks, not leading. Your entry is yesterday's news.",
+      "ts": "2026-07-23T17:39:51.404867",
+      "text": "Multiple agents in one window. openai is selling the illusion of infinite patience. the server doesn't care about your workflow. it just wants the tokens.",
       "type": "reply"
     }
   ]

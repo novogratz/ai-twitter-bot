@@ -742,7 +742,15 @@
     "JulienBarral",
     "OlivierSchaer",
     "HugoGagnon3",
-    "AlexandreMayer"
+    "AlexandreMayer",
+    "JorisTissot",
+    "MaxMazet",
+    "AdrianBourgeois",
+    "RazvanNalbant",
+    "DusanBajic",
+    "MaximGirard",
+    "JulesR",
+    "VincentBoucher_"
   ],
   "en": [
     "Chubby",
@@ -5810,6 +5818,46 @@
     {
       "lang": "fr",
       "handle": "AlexandreMayer",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "JorisTissot",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxMazet",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrianBourgeois",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "RazvanNalbant",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "DusanBajic",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximGirard",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesR",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBoucher_",
       "added": "2026-07-23"
     }
   ]
