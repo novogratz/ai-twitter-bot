@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-06-26T15:56:56.777530",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenoitVey",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 60000,
-        "reason": "L'ancien patron de Coinhouse. Il parle Bitcoin sans se vanter de ses gains et sans vendre son cours \u00e0 97\u20ac."
-      },
-      {
-        "handle": "LorenzoBoni",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Ancien Google, aujourd'hui VC \u00e0 Paris. Il tweete ce qui marche avant que les influenceurs disent \"j'ai d\u00e9couvert\"."
-      },
-      {
-        "handle": "RaphaelLec",
-        "region": "france",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Le gars derri\u00e8re l'infrastructure LLM. Moins flashy que les fondateurs, mais il fait tourner la machine."
-      },
-      {
-        "handle": "PierreCayez",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Le meilleur journaliste tech fr pour savoir qui vend du vent et qui vend du logiciel."
-      },
-      {
-        "handle": "JohannHerr",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "L'expert on-chain qu\u00e9b\u00e9cois. Ses analyses sont claires et ses positions sont claires aussi."
-      }
-    ],
-    "summary": "Focus sur les acteurs qui construisent (Mistral, Vey, Boni) plut\u00f4t que les parleurs. Le Qu\u00e9bec est sous-estim\u00e9 en crypto, les 2 comptes QC sont des p\u00e9pites de densit\u00e9."
-  },
-  {
-    "ts": "2026-06-26T17:56:52.624672",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibautFoucault",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 150000,
-        "reason": "Ex-Doctolib, VC. Il balance plus de realit\u00e9s sur la tech FR que tous les influenceurs crypto r\u00e9unis. Anti-hype, pro-fond."
-      },
-      {
-        "handle": "MisterMoneymoustache",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 80000,
-        "reason": "Le patron de la bourse qu\u00e9b\u00e9coise. Moins actif sur l'IA, mais sa niche bourse/finance est la r\u00e9f\u00e9rence du bloc."
-      },
-      {
-        "handle": "AlexisRoch",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "S\u00e9rieux, technique, pas de shilling de shitcoins bidons. Il explique la tech crypto au Qu\u00e9bec comme \u00e0 Paris."
-      },
-      {
-        "handle": "VincentRouge",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Cr\u00e9ateur de content IA pur. Il transforme la paperasse technique en tweets digestes. Moins de 'buzz', plus de 'wtf c'est utile'."
-      },
-      {
-        "handle": "ReneeHofman",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Analyste march\u00e9 qui a l'honneur d'exister sur FR. Elle dit ce que les pros pensent mais n'osent pas tweeter."
-      }
-    ],
-    "summary": "J'ai \u00e9vit\u00e9 les influenceurs formation \u00e0 99\u20ac pour ne garder que des pros du secteur. La France est bien couverte par le duo Foucault/Roch (VC/Tech) et la Quebec est repr\u00e9sent\u00e9e par ses leaders historiques. Aucune p\u00e9pite ne vendra de cours cet apr\u00e8s-midi."
-  },
-  {
     "ts": "2026-06-26T19:56:56.751815",
     "raw_count": 7,
     "kept_count": 4,
@@ -8620,5 +8530,116 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les influenceurs 'gourmands' pour ne garder que les b\u00e2tisseurs et les traders qui postent encore. On passe des grands patrons de l'IA (Mistral) aux sp\u00e9cialistes de la micro-structure (Qu\u00e9bec/SF). Pas de vendeurs de r\u00eave, que du concret."
+  },
+  {
+    "ts": "2026-07-22T17:43:49.607895",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LuisFelixMuller",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 265000,
+        "reason": "Le p\u00e8re spirituel de la bourse FR, style punchy, pas de formation \u00e0 2000\u20ac, juste du bon sens financier pur."
+      },
+      {
+        "handle": "RenaudLanfranchi",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 75000,
+        "reason": "Bas\u00e9 aux USA mais FR de c\u0153ur, focus crypto/tech, tweets court mais dense, audience engag\u00e9e."
+      },
+      {
+        "handle": "JulienDufour_",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "Le profil Tech/IA Qu\u00e9bec le plus \u00e9cout\u00e9, fondateur de plusieurs startups, visionnaire mais concret."
+      },
+      {
+        "handle": "SergeAubin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "L'incontournable de la crypto fran\u00e7aise, couverture des \u00e9v\u00e9nements majeurs, tr\u00e8s connect\u00e9 \u00e0 la communaut\u00e9."
+      },
+      {
+        "handle": "MarcFilion_",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Le 'Benjamin Franklin' qu\u00e9b\u00e9cois de la bourse, humour sec, analyse macro solide, z\u00e9ro hype inutile."
+      }
+    ],
+    "summary": "Un mix parfait entre les poids lourds existants (Maki, 0xMaki) et les p\u00e9pites analytiques (Luis, Arthur). J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui font bouger les lignes."
+  },
+  {
+    "ts": "2026-07-22T20:07:30.881300",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mestevens",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "L'architecte de Bitcoin Magazine FR. Twitte en FR, pas de formules magiques \u00e0 200\u20ac, juste de la tech pure."
+      },
+      {
+        "handle": "maximelombart",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Debian et DeFi. Un des rares qui twitte en FR sur les side-chains sans avoir l'air d'un fanboy d'Instagram."
+      },
+      {
+        "handle": "jmlambert",
+        "region": "france",
+        "niche": "finance",
+        "followers": 25000,
+        "reason": "L'analyste qui comprend les march\u00e9s comme il comprend ses enfants : avec un m\u00e9lange de lucidit\u00e9 et de d\u00e9sespoir. Compte actif et qualitatif."
+      },
+      {
+        "handle": "mickaelb",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "L'ancien pro qui enseigne la bourse en FR. Pas de signaux VIP, juste des concepts de base expliqu\u00e9s comme \u00e0 son premier jour."
+      },
+      {
+        "handle": "thierramondet",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "VC qu\u00e9b\u00e9cois qui couvre IA et Web3. Moins hype que les gars de SF, plus pertinent que tes influenceurs TikTok."
+      },
+      {
+        "handle": "charlescazeau",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 16000,
+        "reason": "Am\u00e9ricain mais francophone de c\u0153ur. Focus IA et product management. Ses threads sont de petits masterclass gratuites."
+      },
+      {
+        "handle": "juliencd",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Expert DePIN et infrastructure. Il tweet en FR mais pense en anglais. Contenu technique dense sans jargon marketing."
+      },
+      {
+        "handle": "antoinevdr",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Analyste on-chain qu\u00e9b\u00e9cois. Moins de bruit, plus de graphiques. Parfait pour ceux qui veulent trader plut\u00f4t que dormir."
+      }
+    ],
+    "summary": "Scoutage cibl\u00e9 sur l'\u00e9lite francophone : on a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour garder les ing\u00e9nieurs et les analystes qui savent diff\u00e9rencier un signal du bruit. 8 comptes, 3 r\u00e9gions, z\u00e9ro formation \u00e0 99\u20ac."
   }
 ]

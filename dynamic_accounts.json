@@ -700,7 +700,19 @@
     "CyrilBourque",
     "RomainDong",
     "LilianBoulard",
-    "GillesArduzzo"
+    "GillesArduzzo",
+    "LuisFelixMuller",
+    "JulienDufour_",
+    "SergeAubin",
+    "MarcFilion_",
+    "mestevens",
+    "maximelombart",
+    "jmlambert",
+    "mickaelb",
+    "thierramondet",
+    "charlescazeau",
+    "juliencd",
+    "antoinevdr"
   ],
   "en": [
     "Chubby",
@@ -923,7 +935,8 @@
     "Dibs",
     "rockycat",
     "B1",
-    "Injective"
+    "Injective",
+    "CoinDesk"
   ],
   "history": [
     {
@@ -5534,6 +5547,71 @@
     {
       "lang": "fr",
       "handle": "GillesArduzzo",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "en",
+      "handle": "CoinDesk",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisFelixMuller",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDufour_",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "SergeAubin",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcFilion_",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "mestevens",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "maximelombart",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "jmlambert",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelb",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "thierramondet",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "charlescazeau",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "juliencd",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "antoinevdr",
       "added": "2026-07-22"
     }
   ]
