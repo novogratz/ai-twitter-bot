@@ -730,7 +730,13 @@
     "TotoTheCrypto",
     "PierreGauvin",
     "BenoitG_01",
-    "PierreCahuzac"
+    "PierreCahuzac",
+    "mickabook",
+    "PierreBertaux",
+    "MathisB",
+    "DavidH",
+    "LudovicB",
+    "JulienS"
   ],
   "en": [
     "Chubby",
@@ -5732,6 +5738,36 @@
     {
       "lang": "fr",
       "handle": "PierreCahuzac",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickabook",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreBertaux",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathisB",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "DavidH",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicB",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienS",
       "added": "2026-07-23"
     }
   ]

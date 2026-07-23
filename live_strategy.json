@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-22T06:00:00.000000",
+  "ts": "2026-07-23T06:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 20,
     "MAX_HOTAKES_PER_DAY": 25,
@@ -12,10 +12,10 @@
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "Anthropic/Physical Intelligence acquisition rumor viral sur AI Twitter — IPO race Anthropic+OpenAI automne 2026, Pentagon exige autonomous weapons comme condition de contrat (Anthropic a refusé)",
-    "Space stocks brutalement dumpés : ASTS -38%, RKLB -34%, SPCX -35% en juillet — Goldman : 5× plus volatile que S&P 500 — B. Riley Buy $85 sur ASTS = asymétrie narrative parfaite",
-    "Kimi K3 (Beijing open-weight) bat Claude Fable 5 + GPT-5.6 sur Arena.ai — $725B US capex vs un modèle open-weight = the moat was never the model"
+    "Kimi K3 (Beijing open-weight) bat Claude Fable 5 + GPT-5.6 sur Arena.ai — $725B US capex vs un modèle Beijing = the moat was never the model — angle : la course aux brevets ne gagne pas l'Arena",
+    "Space stocks crash : ASTS -38%, RKLB -34%, SPCX -35% en juillet — Goldman 5× plus volatile S&P — B. Riley Buy $85 ASTS = asymétrie bullish/bearish parfaite pour le format chiffre+verdict",
+    "Pentagon exige autonomous weapons comme condition contrat Anthropic — Anthropic a refusé — GPT-5.6 n'a rien dit — angle : le moat c'est le refus, pas le modèle"
   ],
   "cadence_factor": 1.3,
-  "rationale": "ai_news_take mène avg_likes (0.23) MAIS uniquement quand traduit en enjeu humain concret. market_trauma glisse à 0.10 — ton par défaut seulement, max 1 prop clinique/24h. Un seul vrai winner 'me [verb]' à 108 likes/56K views — tous les clones sans enjeu clair = 0 like sans exception. Nouvelle règle : chiffre + verdict 3 lignes = format #2 prouvé. Best hours : 7-8h ET (UTC 11-12h) et 20-21h ET (UTC 0-1h). Reply sous top comments viraux > 5 posts originaux pour conversions. Caps inchangés per mandate 2026-07-19."
+  "rationale": "RENAME one-liner = format #2 prouvé dans les replies (TSMC toll booth, Grok tax write-off) — à pousser dans les hotakes/posts. 'me [verb]' winner unique (109 likes/58K views) mais 8+ clones à 0 ce cycle : gate STRICT — contraste nommé + enjeu réel sinon SKIP absolu. ai_news_take mène avg_likes (0.22) vs market_trauma (0.16). ai_vs_btc = 35.5 avg views (plus haut!) sur 4 posts — sous-exploité. Reply sous top COMMENTS viraux (pas l'OP) = conversion 10× meilleure. Best hours UTC 11-12h (ET 7-8h) + UTC 0-1h (ET 20-21h). Caps inchangés per mandate 2026-07-19."
 }

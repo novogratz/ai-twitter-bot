@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-06-27T03:57:58.306704",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Mehdi_Medjaoui",
-        "region": "france",
-        "niche": "tech",
-        "followers": 155000,
-        "reason": "Le pape fran\u00e7ais de la Tech. Il tweet en FR, il est toujours l\u00e0, et il valide ou casse des startups par un seul emoji."
-      },
-      {
-        "handle": "VladTenev",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 130000,
-        "reason": "Co-fondateur Robinhood. Il parle anglais mais son audience francophone le suit pour voir comment il g\u00e8re la psychologie de masse des retail traders."
-      },
-      {
-        "handle": "CryptoNath",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "L'expert crypto francophone du Qu\u00e9bec. Moins 'degen' que d'autres, plus fondamentaliste. Twitte en FR, analyse solide."
-      },
-      {
-        "handle": "BenjaminDucrocq",
-        "region": "france",
-        "niche": "finance",
-        "followers": 16000,
-        "reason": "Analyste macro pro, pas vendeur de r\u00eaves. Son feed est un manuel de survie pour ne pas se faire arnaquer par les banquiers."
-      },
-      {
-        "handle": "JulesBordier",
-        "region": "france",
-        "niche": "tech",
-        "followers": 14500,
-        "reason": "Co-fondateur de Blablacar. Il couvre la tech scale-up en FR avec un pragmatisme rare, loin du hype cycle."
-      }
-    ],
-    "summary": "J'ai cisel\u00e9 la s\u00e9lection pour \u00e9viter le bruit. Pas de vendeurs de formations, juste des costrucateurs (Mistral, Robinhood), des analystes macro (Ducrocq, Drouin) et des v\u00e9t\u00e9rans (Medjaoui) qui ont encore les nerfs solides."
-  },
-  {
     "ts": "2026-06-27T05:58:14.127436",
     "raw_count": 10,
     "kept_count": 5,
@@ -8655,5 +8610,71 @@
       }
     ],
     "summary": "Focus sur les vrais builders (Mistral) et les analystes techniques (ex-Goldman, Value). Z\u00e9ro vendeur de r\u00eaves, juste du contenu qui passe pour du bon caf\u00e9."
+  },
+  {
+    "ts": "2026-07-23T05:44:18.213742",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mickabook",
+        "region": "france",
+        "niche": "tech",
+        "followers": 85000,
+        "reason": "Le roi de l'IA fr. Il tweete, il analyse, il ne vend pas de vent mais des insights sur Mistral et la French Tech."
+      },
+      {
+        "handle": "PierreBertaux",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Journaliste crypto de r\u00e9f\u00e9rence. Si Pierre tweet, \u00e7a m\u00e9rite le clic. Pas de fluff, que du concret."
+      },
+      {
+        "handle": "MathisB",
+        "region": "france",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "Product leader. Ses threads sur le SaaS et la product-led growth sont la cr\u00e8me de la cr\u00e8me."
+      },
+      {
+        "handle": "AlexandreFleisch",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'analyse de la Bourse de Paris qui ne se prend pas pour Goldman Sachs. Humour, pertinence, z\u00e9ro signal Telegram."
+      },
+      {
+        "handle": "DavidH",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 30000,
+        "reason": "French-speaking diaspora \u00e0 SF. Covers AI agents and deep tech with a Parisian touch."
+      },
+      {
+        "handle": "LudovicB",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Expert fintech/paiement. Il comprend la tech mieux que les banquiers de 60 ans."
+      },
+      {
+        "handle": "LudovicB",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "Qu\u00e9b\u00e9cor de la finance. Couvre le march\u00e9 QP avec une pointe d'humour qu\u00e9b\u00e9cois bien sentie."
+      },
+      {
+        "handle": "JulienS",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "La reference crypto \u00e0 Montr\u00e9al. Il tweet en FR, couvre Solana et l'infra, sans se la jouer guru."
+      }
+    ],
+    "summary": "J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves pour ne garder que les ing\u00e9nieurs et journalistes qui font tourner la machine. Le r\u00e9sultat est un mix solide de macro, d'IA et de fintech sans une once de pub Telegram."
   }
 ]
