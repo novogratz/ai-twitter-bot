@@ -16258,3 +16258,35 @@ each running 10x the tokens per megawatt of Blac
 BloombergNEF forecasts power demand reaching 194 gigawatts—equivalent to ou
   - https://x.com/EpochTimes/status/2079763407595569160
   - **WHY**: Source fiable + impact concret (score signal 10, engagement 17).
+
+## 2026-07-23
+- **@cointelegraph** (48 likes, score 9/10) — LATEST: OpenAI plans to spend over $30B on a massive new data center in Georgia, securing 3.2 gigawatts of power with capacity expected online starting in 2028.
+  - https://x.com/Cointelegraph/status/2080130960327102470
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 90).
+- **@tickerplus** (16 likes, score 7/10) — Anthropic remains well ahead in ARR, but OpenAI has recently accelerated.
+
+TickerTrends is now tracking Anthropic at $74.1B versus OpenAI at $41.3B, with OpenAI’s run rate rising from $33.0B in May to
+  - https://x.com/tickerplus/status/2080123562560504240
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 16).
+- **@kshaughnessy2** (40 likes, score 9/10) — More proof Regulators and Nasdaq protect Wall Street and not small public companies
+
+“Nasdaq to kick off tiny companies faster after SEC approves rule”
+
+“…A Nasdaq-listed company worth less than US$5
+  - https://x.com/kshaughnessy2/status/2080125883428344233
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 54).
+- **@jordankirs97407** (29 likes, score 8/10) — Nasdaq... at valuations like these, the market doesn’t need terrible news to fall; it just needs good news that isn’t good enough. 
+
+Hypothetical crash roadmap into early 2027:
+
+8/7/26 - 25.5K
+10/5/26
+  - https://x.com/JordanKirs97407/status/2080071187833782537
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 33).
+- **@brianferoldi** (67 likes, score 8/10) — $0 -> $100k, painfully slow
+
+$900k -> $1MM, shockingly fast.
+
+This is how compound works:
+  - https://x.com/BrianFeroldi/status/2080050854304899130
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 79).
