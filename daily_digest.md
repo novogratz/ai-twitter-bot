@@ -1076,3 +1076,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 16 views: me at 3am checking if my $58k bag is finally doing what my student loans refused to
   - 1 likes / 13 views: Deezer confirms more than half of uploads are AI-generated. We are the AI era's first parents, expla
   - 1 likes / 13 views: me refreshing the terminal like “please tell me 4 is enough to fix my attention span”
+
+## 2026-07-22
+
+**Activity** — total actions: 912
+  - by type: reply=790, quote=58, quote_gif=38, post=12, hotake=9, retweet=5
+  - top sources: SEARCH-HOT=511, FEED-SWEEP-FEED=156, FEED-SWEEP-FOLLOWING=95, GIF=45, QUOTE=43, DEBATE=18, BREAKING_QRT=6, VIP=6
+  - top reply targets: @arnaudmercier=30, @TheBTCTherapist=15, @Polymarket=10, @Cointelegraph=9, @StockSavvyShay=9
+
+**Followers we follow** (running total): 383
+
+**Top-performing posts scraped today**:
+  - 1 likes / 18 views: me refreshing my portfolio so hard I’m developing carpal tunnel
+  - 1 likes / 128 views: my portfolio watching $GOOGL report $9.11 EPS like it just aced the SATs without opening the book  h
+  - 0 likes / 15 views: me refreshing my LSE app to check if XRP is up while it’s technically market hours lol
