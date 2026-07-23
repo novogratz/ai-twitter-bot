@@ -712,7 +712,20 @@
     "thierramondet",
     "charlescazeau",
     "juliencd",
-    "antoinevdr"
+    "antoinevdr",
+    "mickael_caban",
+    "samy_cohen",
+    "jg_rousseauu",
+    "nolanmss",
+    "alexiscle",
+    "dubocq_tanguy",
+    "lucas_michon",
+    "maxime_garand",
+    "EricWinogradoff",
+    "MaximeBoutier",
+    "ThierryBonnin",
+    "RenaudPLana",
+    "JulienBourque"
   ],
   "en": [
     "Chubby",
@@ -936,7 +949,8 @@
     "rockycat",
     "B1",
     "Injective",
-    "CoinDesk"
+    "CoinDesk",
+    "roon"
   ],
   "history": [
     {
@@ -5612,6 +5626,76 @@
     {
       "lang": "fr",
       "handle": "antoinevdr",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "en",
+      "handle": "roon",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickael_caban",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "samy_cohen",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "jg_rousseauu",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "nolanmss",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "alexiscle",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "dubocq_tanguy",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "lucas_michon",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "maxime_garand",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricWinogradoff",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBoutier",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThierryBonnin",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudPLana",
+      "added": "2026-07-22"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBourque",
       "added": "2026-07-22"
     }
   ]
