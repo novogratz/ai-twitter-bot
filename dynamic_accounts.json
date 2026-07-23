@@ -962,7 +962,8 @@
     "Injective",
     "CoinDesk",
     "roon",
-    "Vexa"
+    "Vexa",
+    "NoLimit"
   ],
   "history": [
     {
@@ -5768,6 +5769,11 @@
     {
       "lang": "fr",
       "handle": "JulienS",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "en",
+      "handle": "NoLimit",
       "added": "2026-07-23"
     }
   ]

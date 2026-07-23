@@ -1,33 +1,37 @@
 {
-  "generated_at": "2026-07-23T05:42:59.114085",
-  "window_7d_actions": 5747,
-  "window_24h_actions": 910,
+  "generated_at": "2026-07-23T09:42:59.433919",
+  "window_7d_actions": 5782,
+  "window_24h_actions": 913,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5741
+      "count": 5776
     },
     {
       "pattern": "RENAME",
-      "count": 4
+      "count": 3
     },
     {
       "pattern": "UNDERSTATEMENT",
       "count": 2
+    },
+    {
+      "pattern": "METAPHOR",
+      "count": 1
     }
   ],
   "worst_patterns": [
     {
+      "pattern": "METAPHOR",
+      "count": 1
+    },
+    {
       "pattern": "UNDERSTATEMENT",
       "count": 2
     },
     {
       "pattern": "RENAME",
-      "count": 4
-    },
-    {
-      "pattern": "UNKNOWN",
-      "count": 5741
+      "count": 3
     }
   ],
   "best_hours_utc": [
@@ -40,12 +44,12 @@
       "actions": 269
     },
     {
-      "hour": 12,
-      "actions": 262
+      "hour": 9,
+      "actions": 266
     },
     {
-      "hour": 9,
-      "actions": 258
+      "hour": 12,
+      "actions": 262
     },
     {
       "hour": 15,
@@ -55,72 +59,72 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2699
+      "count": 2700
     },
     {
       "topic": "IA",
-      "count": 2275
+      "count": 2304
     },
     {
       "topic": "Crypto",
-      "count": 604
+      "count": 614
     },
     {
       "topic": "Bourse",
-      "count": 382
+      "count": 384
     },
     {
       "topic": "Spatial",
-      "count": 104
+      "count": 103
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2599
+      "count": 2626
     },
     {
       "pillar": "other",
-      "count": 1602
+      "count": 1597
     },
     {
       "pillar": "market_trauma",
-      "count": 1229
+      "count": 1235
     },
     {
       "pillar": "meme_reaction",
-      "count": 231
+      "count": 235
     },
     {
       "pillar": "reply_bait",
-      "count": 54
+      "count": 56
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 32
+      "count": 33
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 412
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 222
+      "count": 411
     },
     {
       "pillar": "other",
-      "count": 218
+      "count": 223
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 219
     },
     {
       "pillar": "meme_reaction",
-      "count": 43
+      "count": 44
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
@@ -130,23 +134,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 60,
-      "avg_likes": 0.22,
-      "avg_views": 24.7,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 96,
-      "avg_likes": 0.18,
-      "avg_views": 27.7,
+      "posts": 58,
+      "avg_likes": 0.21,
+      "avg_views": 24.9,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 37,
-      "avg_likes": 0.16,
+      "posts": 36,
+      "avg_likes": 0.17,
       "avg_views": 25.2,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 99,
+      "avg_likes": 0.17,
+      "avg_views": 27.7,
       "low_sample": false
     },
     {
@@ -167,23 +171,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4966
+      "count": 4999
     },
     {
       "type": "quote",
-      "count": 397
+      "count": 396
     },
     {
       "type": "quote_gif",
-      "count": 191
+      "count": 192
     },
     {
       "type": "post",
-      "count": 81
+      "count": 86
     },
     {
       "type": "hotake",
-      "count": 71
+      "count": 68
     },
     {
       "type": "retweet",
@@ -192,18 +196,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-23T05:42:44.806349",
-      "text": "Taiyo Yuden + JX Metals. You're buying supply chain for hardware, not a tech monopoly.\n\nAI is software. This is copper and ceramics.\n\n458x? Sure.\n\nNvidia is the monopoly. You are the shovel dealer.",
+      "ts": "2026-07-23T09:41:54.449676",
+      "text": "Opus 4.8 is the dog that bit the hand that fed it. Anthropic forgot that speed isn't a feature, it's the feature.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-23T05:42:28.753767",
-      "text": "Rubio se bat sur Damas. le vrai enjeu, c'est le pipeline gazier qui va payer les 200k GPU de colossus.",
+      "ts": "2026-07-23T09:41:21.594544",
+      "text": "138M shares at $212 isn’t a pullback. it’s liquidity evaporation for anyone who didn’t buy the dip.\nthe average investor lags their own funds by 4%, and it’s all days like this one.\nclose the app, not the position.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-23T05:41:43.791727",
-      "text": "Open source models are already doing 90% of the work for free.\n\nyou're keeping a $200/mo subscription to pay for the remaining 10% and your own cognitive dissonance.",
+      "ts": "2026-07-23T09:39:12.094689",
+      "text": "Vera Rubin ships when H100 is already legacy hardware. Nebius isn't a hyperscaler. it's a glorified datacenter that just forgot to build a product.",
       "type": "reply"
     }
   ]
