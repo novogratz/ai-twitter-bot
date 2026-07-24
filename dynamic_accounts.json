@@ -772,7 +772,16 @@
     "thomasjardel",
     "JulienMoinard",
     "BenjaminLortie",
-    "BenjaminLorant"
+    "BenjaminLorant",
+    "ThomasMaurice",
+    "Alexis_Mons",
+    "MaximeMoulin",
+    "JeanLucD",
+    "GaelDeR",
+    "RenaudTornade",
+    "MaximeMaresca",
+    "ThomasBouvier",
+    "BenoitBoullay"
   ],
   "en": [
     "Chubby",
@@ -1004,7 +1013,8 @@
     "JUMPERZ",
     "BATMAN",
     "Banana3",
-    "RR"
+    "RR",
+    "Noah"
   ],
   "history": [
     {
@@ -6020,6 +6030,56 @@
     {
       "lang": "fr",
       "handle": "BenjaminLorant",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Noah",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasMaurice",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alexis_Mons",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMoulin",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanLucD",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelDeR",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudTornade",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMaresca",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBouvier",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitBoullay",
       "added": "2026-07-24"
     }
   ]

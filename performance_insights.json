@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-24T09:42:59.144498",
-  "window_7d_actions": 5744,
-  "window_24h_actions": 785,
+  "generated_at": "2026-07-24T13:43:00.003751",
+  "window_7d_actions": 5776,
+  "window_24h_actions": 775,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5739
+      "count": 5771
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -37,19 +37,19 @@
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 299
+      "actions": 311
     },
     {
       "hour": 10,
-      "actions": 286
+      "actions": 294
     },
     {
       "hour": 12,
-      "actions": 269
+      "actions": 272
     },
     {
       "hour": 9,
-      "actions": 267
+      "actions": 265
     },
     {
       "hour": 6,
@@ -59,46 +59,46 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2683
+      "count": 2718
     },
     {
       "topic": "IA",
-      "count": 2303
+      "count": 2295
     },
     {
       "topic": "Crypto",
-      "count": 582
+      "count": 580
     },
     {
       "topic": "Bourse",
-      "count": 397
+      "count": 404
     },
     {
       "topic": "Spatial",
-      "count": 105
+      "count": 104
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2613
+      "count": 2614
     },
     {
       "pillar": "other",
-      "count": 1587
+      "count": 1598
     },
     {
       "pillar": "market_trauma",
-      "count": 1226
+      "count": 1244
     },
     {
       "pillar": "meme_reaction",
-      "count": 225
+      "count": 224
     },
     {
       "pillar": "reply_bait",
-      "count": 62
+      "count": 65
     },
     {
       "pillar": "ai_vs_btc",
@@ -108,23 +108,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 329
+      "count": 328
     },
     {
       "pillar": "other",
-      "count": 241
+      "count": 240
     },
     {
       "pillar": "market_trauma",
-      "count": 166
+      "count": 160
     },
     {
       "pillar": "meme_reaction",
-      "count": 30
+      "count": 27
     },
     {
       "pillar": "reply_bait",
-      "count": 15
+      "count": 16
     },
     {
       "pillar": "ai_vs_btc",
@@ -135,22 +135,22 @@
     {
       "pillar": "ai_news_take",
       "posts": 53,
-      "avg_likes": 0.21,
-      "avg_views": 25.3,
+      "avg_likes": 0.19,
+      "avg_views": 25.8,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 101,
-      "avg_likes": 0.17,
-      "avg_views": 31.1,
+      "posts": 100,
+      "avg_likes": 0.16,
+      "avg_views": 31.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 37,
+      "posts": 38,
       "avg_likes": 0.05,
-      "avg_views": 29.7,
+      "avg_views": 30.0,
       "low_sample": false
     },
     {
@@ -171,15 +171,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4982
+      "count": 5014
     },
     {
       "type": "quote",
-      "count": 389
+      "count": 392
     },
     {
       "type": "quote_gif",
-      "count": 182
+      "count": 179
     },
     {
       "type": "post",
@@ -196,19 +196,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-24T09:39:37.738394",
-      "text": "Jensen on x. nvidia goes from selling to everyone to selling to itself. the cycle just closed.",
+      "ts": "2026-07-24T13:42:23.792567",
+      "text": "Opus-5 is 40% more parameter dense than opus-4. it’s not an upgrade. it’s a margin squeeze.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-24T09:38:56.597466",
-      "text": "Satya nadella says \"all economic opportunity\" for knowledge workers is gone.\nnvidia is up 250% since he said it.\nhe sells shovels, you sell sweat.",
+      "ts": "2026-07-24T13:42:07.713891",
+      "text": "Openai hasn’t burned $5B in a year just to release GPT6 with worse math.\n\nthe real capex is on the training run that happens *after* the launch keynotes end.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-24T09:38:22.372054",
-      "text": "Google is paying investors to borrow the cash for their buyback. the market isn't selling ai, it's selling the cost of carry.",
-      "type": "reply"
+      "ts": "2026-07-24T13:41:35.056274",
+      "text": "me adding Claude to my “digital clutter” folder for the third time this year 🛋️",
+      "type": "quote"
     }
   ]
 }
