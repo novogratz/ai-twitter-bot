@@ -761,7 +761,14 @@
     "BenjaminD",
     "LucD",
     "PierreLalonde",
-    "NathanBoudreaux"
+    "NathanBoudreaux",
+    "JulienGirard",
+    "EthanCarter",
+    "OlivierBoutin",
+    "BorisFeld",
+    "AlexCohen",
+    "LilianWoltz",
+    "PierreBouchard"
   ],
   "en": [
     "Chubby",
@@ -992,7 +999,8 @@
     "Day",
     "JUMPERZ",
     "BATMAN",
-    "Banana3"
+    "Banana3",
+    "RR"
   ],
   "history": [
     {
@@ -5949,6 +5957,46 @@
       "lang": "fr",
       "handle": "NathanBoudreaux",
       "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienGirard",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "en",
+      "handle": "RR",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "EthanCarter",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierBoutin",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisFeld",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexCohen",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "LilianWoltz",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreBouchard",
+      "added": "2026-07-24"
     }
   ]
 }

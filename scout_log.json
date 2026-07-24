@@ -1,112 +1,5 @@
 [
   {
-    "ts": "2026-06-27T23:52:28.036400",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilTouma",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 340000,
-        "reason": "L'incontournable. Il twitte la merde mais on l'\u00e9coute toujours. La base de donn\u00e9es."
-      },
-      {
-        "handle": "BenjaminMaes_",
-        "region": "france",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "L'expert Mistral. Il explique l'IA sans vendre du r\u00eave ou des formations \u00e0 2000\u20ac."
-      },
-      {
-        "handle": "MickaelG",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 55000,
-        "reason": "Bas\u00e9 \u00e0 SF, francophone. Il couvre l'IA am\u00e9ricaine avec la perspective d'un fran\u00e7ais \u00e0 l'int\u00e9rieur."
-      },
-      {
-        "handle": "LudovicVergne",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Le patron de LVMH (les startups). Son feed tech/francophone est une p\u00e9pite VC pure."
-      },
-      {
-        "handle": "VincentCarr\u00e9",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Journaliste BFM TV mais son perso est bien plus pointu. Pas de pub, que du brut."
-      },
-      {
-        "handle": "MaximilianG",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Le pionnier Qu\u00e9b\u00e9cois de la crypto. Il couvre le march\u00e9 depuis le d\u00e9but, style calme."
-      }
-    ],
-    "summary": "On a mix\u00e9 les inamovibles (Touma) avec les analystes techniques (Maes) et les p\u00e9pites francophones \u00e0 l'\u00e9tranger. Z\u00e9ro vendeur de r\u00eave, que des gens qui comprennent leur boulot."
-  },
-  {
-    "ts": "2026-06-28T01:27:38.932613",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JL_Ambs",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Directeur de la recherche chez Consensys. Il a l'intelligence de l'IA et le culot de la crypto. C'est rare de trouver les deux."
-      },
-      {
-        "handle": "MathieuTardy",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Le plus actif de la place Montr\u00e9al pour les actions US/Canada. Il poste des charts et des id\u00e9es de trades tous les jours, pas que des citations de Elon."
-      },
-      {
-        "handle": "GaspardD",
-        "region": "france",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "Ancien Mistral, il tweete sur l'open source et les fondamentaux techniques. C'est le genre de mec que tu veux entendre parler avant que le march\u00e9 ne r\u00e9agisse."
-      },
-      {
-        "handle": "JF_Bouchard_SF",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Le sp\u00e9cialiste des petits fonds et des dividendes. Il est plus pragmatique que la moyenne des 'finance bros' et \u00e9vite les effets de mode."
-      }
-    ],
-    "summary": "On balance le trio de choc AI (Maziero, Ambs, Gaspard) et deux piliers qu\u00e9b\u00e9cois qui tweetent vraiment leur trade au lieu de vendre leur formation. Z\u00e9ro formation \u00e0 99\u20ac, 100% de substance."
-  },
-  {
-    "ts": "2026-06-28T05:27:28.390044",
-    "raw_count": 5,
-    "kept_count": 1,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "VladT",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "Ancien de Coinbase, diaspora FR aux USA, twitte sur les cycles crypto et la r\u00e9gulation."
-      }
-    ],
-    "summary": "Mix \u00e9quilibr\u00e9 entre les v\u00e9t\u00e9rans crypto fran\u00e7ais, le talent tech qu\u00e9b\u00e9cois et les analystes de la diaspora US. Z\u00e9ro vendeur de r\u00eaves, que du concret."
-  },
-  {
     "ts": "2026-06-28T07:27:41.799376",
     "raw_count": 8,
     "kept_count": 7,
@@ -8641,5 +8534,105 @@
       }
     ],
     "summary": "On a filtr\u00e9 le bruit pour ne garder que les cerveaux qui construisent ou analysent la tech en fran\u00e7ais. De Mistral aux traders qu\u00e9b\u00e9cois, c'est du concret, pas des blablas."
+  },
+  {
+    "ts": "2026-07-24T01:43:39.056569",
+    "raw_count": 8,
+    "kept_count": 2,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienGirard",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 55000,
+        "reason": "G\u00e9rant de fonds. Il poste ses analyses macro et sectorielles avec une honn\u00eatet\u00e9 intellectuelle rafra\u00eechissante."
+      },
+      {
+        "handle": "OlivierLeGoarnig",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 32000,
+        "reason": "Fondamentale sur Ethereum. Il explique les mises \u00e0 jour de protocol et la staking avec une clart\u00e9 d\u00e9sarmante."
+      }
+    ],
+    "summary": "Ce batch cible les grands patrons et les influenceurs de fond en France et au Qu\u00e9bec. On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour ne garder que des b\u00e2tisseurs et des analystes qui nourrissent le feed avec du vrai contenu."
+  },
+  {
+    "ts": "2026-07-24T03:43:49.683685",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaelleTeyssandier",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Journaliste crypto ultra fiable, ex-Bloomberg. Elle couvre l'infra et la macrocrypto sans vendredi des cours \u00e0 2000 balles."
+      },
+      {
+        "handle": "EthanCarter",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 28000,
+        "reason": "Tech VC fran\u00e7ais vivant \u00e0 SF. Il twitte en FR sur les startups US. Le pont parfait entre la French Tech et la Silicon Valley."
+      },
+      {
+        "handle": "OlivierBoutin",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Directeur de fonds qu\u00e9b\u00e9cois. Il poste des analyses techniques et fondamentales s\u00e8ches, exactement ce qu'on veut pour la bourse."
+      }
+    ],
+    "summary": "On couvre Mistral et la data bourse pour la France, le trading concret pour le Qu\u00e9bec, et le view from SF pour la diaspora. Z\u00e9ro vend-de-cours, que du fond."
+  },
+  {
+    "ts": "2026-07-24T05:43:40.567177",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BorisFeld",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Le patron de Lucca. La techno FR vue par celui qui sait o\u00f9 est le fric, pas juste dans les cours."
+      },
+      {
+        "handle": "AlexCohen",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 40000,
+        "reason": "VC de LA qui twitte en FR. Le pont entre le Valley et la Sorbonne, sans le filtre des agences."
+      },
+      {
+        "handle": "LilianWoltz",
+        "region": "france",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Deep Learning Masterclass. Il rend la complexit\u00e9 simple sans te faire payer 2000\u20ac pour."
+      },
+      {
+        "handle": "CryptoBoulonnais",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "L'analyse technique qui sent le caf\u00e9 noir. Moins \u00e9ducatif qu'un guru, plus dr\u00f4le qu'un rapport Bloomberg."
+      },
+      {
+        "handle": "PierreBouchard",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "L'actionnaire Qu\u00e9b\u00e9cois. Du concret, du long terme, et des memes qui passent mieux que tes analysts de Paris."
+      }
+    ],
+    "summary": "Un m\u00e9lange de Founders et d'Analgues. Le Qu\u00e9bec apporte le pragmatisme actionnarial, la France l'IA et la Fintech, la diaspora US la perspective globale. Pas de vendeurs de r\u00eaves, que du contenu."
   }
 ]
