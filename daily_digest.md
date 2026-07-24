@@ -1090,3 +1090,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 18 views: me refreshing my portfolio so hard I’m developing carpal tunnel
   - 1 likes / 128 views: my portfolio watching $GOOGL report $9.11 EPS like it just aced the SATs without opening the book  h
   - 0 likes / 15 views: me refreshing my LSE app to check if XRP is up while it’s technically market hours lol
+
+## 2026-07-23
+
+**Activity** — total actions: 857
+  - by type: reply=750, quote=50, quote_gif=31, post=13, hotake=10, retweet=3
+  - top sources: SEARCH-HOT=453, FEED-SWEEP-FEED=165, FEED-SWEEP-FOLLOWING=89, GIF=38, QUOTE=33, DEBATE=28, VIP=8, RETWEET_QT=7
+  - comedy patterns: METAPHOR=1
+  - top reply targets: @arnaudmercier=46, @StockSavvyShay=14, @Cointelegraph=12, @TheBTCTherapist=8, @kimmonismus=6
+
+**Followers we follow** (running total): 385
+
+**Top-performing posts scraped today**:
+  - 1 likes / 30 views: Google Cloud customers are spending 50% more per seat and the SaaS model is having a nervous breakdo
+  - 1 likes / 214 views: me watching $INTC $AMD $NVDA nod along like we’re in a group chat that stopped typing two hours ago 
+  - 0 likes / 13 views: me trying to explain to my kids that "multichain simplicity" is basically just digital tupperware fo
