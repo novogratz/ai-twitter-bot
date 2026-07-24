@@ -750,7 +750,16 @@
     "DusanBajic",
     "MaximGirard",
     "JulesR",
-    "VincentBoucher_"
+    "VincentBoucher_",
+    "CyrilPDJ",
+    "TontonCrypto",
+    "HugoLeclerq_",
+    "NabilMounir",
+    "ThibaultG",
+    "MounirSaidani",
+    "MaximeCollot",
+    "BenjaminD",
+    "LucD"
   ],
   "en": [
     "Chubby",
@@ -977,7 +986,10 @@
     "CoinDesk",
     "roon",
     "Vexa",
-    "NoLimit"
+    "NoLimit",
+    "Day",
+    "JUMPERZ",
+    "BATMAN"
   ],
   "history": [
     {
@@ -5858,6 +5870,66 @@
     {
       "lang": "fr",
       "handle": "VincentBoucher_",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "en",
+      "handle": "Day",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "en",
+      "handle": "JUMPERZ",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilPDJ",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "TontonCrypto",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoLeclerq_",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "en",
+      "handle": "BATMAN",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "NabilMounir",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultG",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "MounirSaidani",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCollot",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminD",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucD",
       "added": "2026-07-23"
     }
   ]

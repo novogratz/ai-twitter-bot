@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-23T17:42:59.028566",
-  "window_7d_actions": 5774,
-  "window_24h_actions": 858,
+  "generated_at": "2026-07-23T21:42:59.250275",
+  "window_7d_actions": 5800,
+  "window_24h_actions": 856,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5768
+      "count": 5794
     },
     {
       "pattern": "RENAME",
@@ -59,72 +59,72 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2698
+      "count": 2714
     },
     {
       "topic": "IA",
-      "count": 2295
+      "count": 2312
     },
     {
       "topic": "Crypto",
-      "count": 602
+      "count": 596
     },
     {
       "topic": "Bourse",
-      "count": 399
+      "count": 395
     },
     {
       "topic": "Spatial",
-      "count": 106
+      "count": 104
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2625
+      "count": 2638
     },
     {
       "pillar": "other",
-      "count": 1588
+      "count": 1587
     },
     {
       "pillar": "market_trauma",
-      "count": 1233
+      "count": 1244
     },
     {
       "pillar": "meme_reaction",
-      "count": 236
+      "count": 239
     },
     {
       "pillar": "reply_bait",
-      "count": 60
+      "count": 62
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 32
+      "count": 30
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 369
+      "count": 365
     },
     {
       "pillar": "other",
-      "count": 233
+      "count": 237
     },
     {
       "pillar": "market_trauma",
-      "count": 197
+      "count": 194
     },
     {
       "pillar": "meme_reaction",
-      "count": 40
+      "count": 42
     },
     {
       "pillar": "reply_bait",
-      "count": 16
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
@@ -141,23 +141,16 @@
     },
     {
       "pillar": "other",
-      "posts": 96,
-      "avg_likes": 0.18,
-      "avg_views": 28.5,
+      "posts": 97,
+      "avg_likes": 0.19,
+      "avg_views": 29.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
       "posts": 39,
       "avg_likes": 0.1,
-      "avg_views": 28.0,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 4,
-      "avg_likes": 0.0,
-      "avg_views": 35.5,
+      "avg_views": 28.2,
       "low_sample": false
     },
     {
@@ -166,20 +159,27 @@
       "avg_likes": 0.0,
       "avg_views": 20.0,
       "low_sample": false
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "posts": 3,
+      "avg_likes": 0.0,
+      "avg_views": 41.3,
+      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4997
+      "count": 5019
     },
     {
       "type": "quote",
-      "count": 390
+      "count": 391
     },
     {
       "type": "quote_gif",
-      "count": 192
+      "count": 195
     },
     {
       "type": "post",
@@ -196,19 +196,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-23T17:41:30.500250",
-      "text": "Spot ETF inflows are outpacing miner supply by 3x. the \"bearish macro\" is just 401k Dave buying back in at breakeven. liquidity > headlines.",
+      "ts": "2026-07-23T21:41:42.415914",
+      "text": "AI agents trade at machine speed. Robinhood’s margin is trust, the one asset algorithms don’t generate.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-23T17:40:53.270322",
-      "text": "OpenAI just turned its models into employees.\n\nThe billing cycle finally starts when the models start sending invoices.",
+      "ts": "2026-07-23T21:41:24.872066",
+      "text": "\"teams whole\" vs \"individuals faster\". the unit of value shifted. stop paying seat subscriptions for tasks an agent already did.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-23T17:39:51.404867",
-      "text": "Multiple agents in one window. openai is selling the illusion of infinite patience. the server doesn't care about your workflow. it just wants the tokens.",
-      "type": "reply"
+      "ts": "2026-07-23T21:40:35.435803",
+      "text": "me refreshing the terminal at 2pm like it’s the group chat that’s been silent since lunch 🛋️",
+      "type": "quote"
     }
   ]
 }

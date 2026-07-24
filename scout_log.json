@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-06-27T17:37:41.670724",
-    "raw_count": 6,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilD",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "L'incontournable de la macro et des march\u00e9s. Analytique, pas un vendeur de r\u00eaves. Le mec qui explique pourquoi ton portfolio saigne avant que tu ne le saches."
-      },
-      {
-        "handle": "PierreRoussel",
-        "region": "usa",
-        "niche": "finance",
-        "followers": 15000,
-        "reason": "Bas\u00e9 \u00e0 NY, journalistique FR. Couvre Wall Street avec le regard de l'\u00e9tranger. Moins de 'gurus', plus de faits bruts sur la finance US."
-      }
-    ],
-    "summary": "Focus sur la cr\u00e9dibilit\u00e9 technique (Mistral, Vanta) et le journalisme financier s\u00e9rieux (Cyril D, Pierre R). Le Qu\u00e9bec est moins peupl\u00e9 en gros comptes IA, donc on vise les ing\u00e9nieurs actifs plut\u00f4t que les influenceurs."
-  },
-  {
-    "ts": "2026-06-27T19:47:47.791102",
-    "raw_count": 7,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "TanguyM",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "VC chez M12, sourcereur d'IA francophone expat, feed ultra qualitatif."
-      },
-      {
-        "handle": "HugoCisneros",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Le prince de la Tech FR, couvre IA et startups avec un ton clair et pr\u00e9cis."
-      },
-      {
-        "handle": "CoralieWong",
-        "region": "france",
-        "niche": "ai",
-        "followers": 38000,
-        "reason": "IA et Data pure, twitte en FR avec une densit\u00e9 d'infos rare."
-      },
-      {
-        "handle": "BenjaminBoulmer",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Fondateur de Weaviate, voix FR sur la Vector Search et l'IA open source."
-      },
-      {
-        "handle": "MaximeWillems",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Fondateur de Viseo, d\u00e9crypte les cycles tech et l'IA sans blabla."
-      },
-      {
-        "handle": "JFPlante",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "AI Lead \u00e0 Desjardins, expert terrain qui partage des cas concrets."
-      },
-      {
-        "handle": "LudoNerolux",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise en IA, chercheur proactif et tweeteur r\u00e9gulier."
-      }
-    ],
-    "summary": "Focus IA et Tech de haut vol, on \u00e9vite le trading hype au profit d'analystes et founders qui construisent."
-  },
-  {
     "ts": "2026-06-27T21:40:19.168949",
     "raw_count": 6,
     "kept_count": 4,
@@ -8641,5 +8558,102 @@
       }
     ],
     "summary": "J'ai creus\u00e9 les silos Mistral/AI et les veterams Crypto FR/Qu\u00e9bec. J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les experts techniques et les anciens fondateurs. Aucun n'est un bot."
+  },
+  {
+    "ts": "2026-07-23T17:43:31.858214",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilPDJ",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 95000,
+        "reason": "Le roi du 'crypto Twitter' fran\u00e7ais, humour sec, analyse fondamentale, 100% FR. Pas de formation \u00e0 vendre, juste du talent."
+      },
+      {
+        "handle": "TontonCrypto",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "Plus ax\u00e9 trading/technique que Cyril. Cha\u00eene YouTube en FR, tweets tr\u00e8s qualitatifs sur le march\u00e9 crypto. Communaut\u00e9 fid\u00e8le."
+      },
+      {
+        "handle": "HugoLeclerq_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Journaliste tech IA, couvre Mistral et l'\u00e9cosyst\u00e8me fran\u00e7ais. Moins 'influencer', plus 'insider'. Qualit\u00e9 brute."
+      },
+      {
+        "handle": "JulienLeCorguilleroy",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Cr\u00e9ateur de contenu qu\u00e9b\u00e9cois sur la finance personnelle et l'investissement. Ton d\u00e9contract\u00e9, contenu \u00e9ducatif solide en FR."
+      }
+    ],
+    "summary": "Un mix de v\u00e9t\u00e9rons (Cyril, Benj) et de sp\u00e9cialistes tech (Hugo). Z\u00e9ro formation \u00e0 99\u20ac, uniquement des analystes qui bossent."
+  },
+  {
+    "ts": "2026-07-23T19:43:50.693657",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NabilMounir",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Nabil Mounir, bas\u00e9 aux US mais francophone. Il connecte la tech US au march\u00e9 FR. Des posts VC et IA tr\u00e8s pertinents."
+      },
+      {
+        "handle": "ThibaultG",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 42000,
+        "reason": "Thibault Gallouin. Il d\u00e9cortique les bilans avec la pr\u00e9cision d'un chirurgien et le sarcasme d'un ex. 100% action fran\u00e7ais, z\u00e9ro blabla."
+      },
+      {
+        "handle": "MounirSaidani",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Co-founder de Mistral. Plus pointu que les autres. Il explique la tech en vrai, pas comme un commercial qui te vend un stage."
+      },
+      {
+        "handle": "MaximeCollot",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Hacker chez Mistral. Il tweete sur le code, les benchmarks et les p\u00e9rip\u00e9ties du training. C'est du concret, pas du vague."
+      },
+      {
+        "handle": "BenjaminD",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Un des rares \u00e0 garder un ton sec sur les march\u00e9s FR. Pas de 'achetez du CAC40', juste de l'analyse financi\u00e8re propre."
+      },
+      {
+        "handle": "CoralieLevasseur",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Strat\u00e8ge IA chez Mistral. Elle balance des insights tech/business plus fins que tes deux meilleurs analystes. Elle tweet en FR et EN."
+      },
+      {
+        "handle": "LucD",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Luc De Blois. Plus ancien que toi. Il couvre la macro et la bourse qu\u00e9b\u00e9coise avec un style classique qui ne se prend pas la t\u00eate."
+      }
+    ],
+    "summary": "On a filtr\u00e9 le vent pour ne garder que du gras. Mistral est en pilote, les gars de la bourse qu\u00e9b\u00e9coise sont l\u00e0, et on a gliss\u00e9 deux p\u00e9pites bas\u00e9es aux US. Le tout sans vendeur de formation."
   }
 ]
