@@ -759,7 +759,9 @@
     "MounirSaidani",
     "MaximeCollot",
     "BenjaminD",
-    "LucD"
+    "LucD",
+    "PierreLalonde",
+    "NathanBoudreaux"
   ],
   "en": [
     "Chubby",
@@ -989,7 +991,8 @@
     "NoLimit",
     "Day",
     "JUMPERZ",
-    "BATMAN"
+    "BATMAN",
+    "Banana3"
   ],
   "history": [
     {
@@ -5930,6 +5933,21 @@
     {
       "lang": "fr",
       "handle": "LucD",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "en",
+      "handle": "Banana3",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLalonde",
+      "added": "2026-07-23"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanBoudreaux",
       "added": "2026-07-23"
     }
   ]

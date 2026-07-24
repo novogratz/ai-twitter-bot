@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-06-27T21:40:19.168949",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LuisGdelValle",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 58000,
-        "reason": "Co-fondateur de ConsenSys. Il twitte en EN mais ses insights sur l'\u00e9cosyst\u00e8me FR sont la bible pour les pro. Pas de bruit, juste du gras."
-      },
-      {
-        "handle": "EricYannick",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "Bas\u00e9 \u00e0 Miami mais Francophone. Il couvre la finance US avec un \u0153il europ\u00e9en. Son ton est direct, sans filtre, parfait pour filtrer le signal du bruit."
-      },
-      {
-        "handle": "Jules_Bordier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 28000,
-        "reason": "L'analyste qui explique le march\u00e9 sans endormir son public. Il tweete en FR et sa plume est plus aiguis\u00e9e que la majorit\u00e9 des 'gourous' du Telegram."
-      },
-      {
-        "handle": "MarcAuber",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "La voix calme de la gestion de patrimoine qu\u00e9b\u00e9coise. Pas de 'moon boy'isme, juste une logique de long terme qui claque."
-      }
-    ],
-    "summary": "5 candidats de qualit\u00e9 pure. On a \u00e9vit\u00e9 les influenceurs formations et les bots. On reste sur du vrai fond : founders, analystes et VC qui tweetent encore."
-  },
-  {
     "ts": "2026-06-27T23:52:28.036400",
     "raw_count": 7,
     "kept_count": 6,
@@ -8655,5 +8617,29 @@
       }
     ],
     "summary": "On a filtr\u00e9 le vent pour ne garder que du gras. Mistral est en pilote, les gars de la bourse qu\u00e9b\u00e9coise sont l\u00e0, et on a gliss\u00e9 deux p\u00e9pites bas\u00e9es aux US. Le tout sans vendeur de formation."
+  },
+  {
+    "ts": "2026-07-23T23:51:54.010858",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PierreLalonde",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 55000,
+        "reason": "Ex-CEO de Wirecard (non, attendez, c'est Blaise), non c'est l'homme derri\u00e8re le design de produits tech. Qu\u00e9b\u00e9cois bas\u00e9 aux USA, il tweete sur le produit et la culture startup avec une pointe d'humour froid."
+      },
+      {
+        "handle": "NathanBoudreaux",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Founders qui parle tech et IA au Qu\u00e9bec. Il montre que Montr\u00e9al n'est pas juste un hub de gaming mais un vrai brasier cr\u00e9atif en IA g\u00e9n\u00e9rative."
+      }
+    ],
+    "summary": "On a filtr\u00e9 le bruit pour ne garder que les cerveaux qui construisent ou analysent la tech en fran\u00e7ais. De Mistral aux traders qu\u00e9b\u00e9cois, c'est du concret, pas des blablas."
   }
 ]
