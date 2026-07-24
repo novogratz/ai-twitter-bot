@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-23T21:42:59.250275",
-  "window_7d_actions": 5800,
-  "window_24h_actions": 856,
+  "generated_at": "2026-07-24T01:43:02.488242",
+  "window_7d_actions": 5799,
+  "window_24h_actions": 864,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5794
+      "count": 5793
     },
     {
       "pattern": "RENAME",
@@ -52,22 +52,22 @@
       "actions": 265
     },
     {
-      "hour": 0,
-      "actions": 256
+      "hour": 1,
+      "actions": 258
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2714
+      "count": 2717
     },
     {
       "topic": "IA",
-      "count": 2312
+      "count": 2314
     },
     {
       "topic": "Crypto",
-      "count": 596
+      "count": 590
     },
     {
       "topic": "Bourse",
@@ -82,7 +82,7 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2638
+      "count": 2633
     },
     {
       "pillar": "other",
@@ -90,15 +90,15 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 1244
+      "count": 1255
     },
     {
       "pillar": "meme_reaction",
-      "count": 239
+      "count": 233
     },
     {
       "pillar": "reply_bait",
-      "count": 62
+      "count": 61
     },
     {
       "pillar": "ai_vs_btc",
@@ -108,19 +108,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 365
+      "count": 373
     },
     {
       "pillar": "other",
-      "count": 237
+      "count": 247
     },
     {
       "pillar": "market_trauma",
-      "count": 194
+      "count": 190
     },
     {
       "pillar": "meme_reaction",
-      "count": 42
+      "count": 37
     },
     {
       "pillar": "reply_bait",
@@ -128,29 +128,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 58,
-      "avg_likes": 0.21,
-      "avg_views": 24.3,
+      "posts": 55,
+      "avg_likes": 0.2,
+      "avg_views": 24.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 97,
-      "avg_likes": 0.19,
-      "avg_views": 29.7,
+      "posts": 99,
+      "avg_likes": 0.18,
+      "avg_views": 30.6,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 39,
-      "avg_likes": 0.1,
-      "avg_views": 28.2,
+      "posts": 40,
+      "avg_likes": 0.07,
+      "avg_views": 28.9,
       "low_sample": false
     },
     {
@@ -171,15 +171,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5019
+      "count": 5023
     },
     {
       "type": "quote",
-      "count": 391
+      "count": 395
     },
     {
       "type": "quote_gif",
-      "count": 195
+      "count": 189
     },
     {
       "type": "post",
@@ -191,24 +191,24 @@
     },
     {
       "type": "retweet",
-      "count": 41
+      "count": 38
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-23T21:41:42.415914",
-      "text": "AI agents trade at machine speed. Robinhood’s margin is trust, the one asset algorithms don’t generate.",
+      "ts": "2026-07-24T01:43:00.299030",
+      "text": "Stress trading kills more portfolios than bear markets. 401k Dave buys at 69k, sells at 20k, panics. the market doesn't care you need rent money.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-23T21:41:24.872066",
-      "text": "\"teams whole\" vs \"individuals faster\". the unit of value shifted. stop paying seat subscriptions for tasks an agent already did.",
+      "ts": "2026-07-24T01:41:13.748547",
+      "text": "ETH flows beat BTC. ETFs bought the dip, degens sold the narrative. reality check.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-23T21:40:35.435803",
-      "text": "me refreshing the terminal at 2pm like it’s the group chat that’s been silent since lunch 🛋️",
-      "type": "quote"
+      "ts": "2026-07-24T01:40:12.261669",
+      "text": "The S&P 500 is already 24/7 because Bitcoin moves while your broker sleeps.\n\nthe SEC is reviewing a feature that exists for the asset it supposedly regulates.",
+      "type": "reply"
     }
   ]
 }
