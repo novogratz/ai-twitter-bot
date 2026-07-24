@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-07-24T05:49:15.667450",
-  "window_7d_actions": 5720,
-  "window_24h_actions": 786,
+  "generated_at": "2026-07-24T09:42:59.144498",
+  "window_7d_actions": 5744,
+  "window_24h_actions": 785,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5714
-    },
-    {
-      "pattern": "RENAME",
-      "count": 3
+      "count": 5739
     },
     {
       "pattern": "UNDERSTATEMENT",
+      "count": 2
+    },
+    {
+      "pattern": "RENAME",
       "count": 2
     },
     {
@@ -31,7 +31,7 @@
     },
     {
       "pattern": "RENAME",
-      "count": 3
+      "count": 2
     }
   ],
   "best_hours_utc": [
@@ -49,115 +49,115 @@
     },
     {
       "hour": 9,
-      "actions": 265
+      "actions": 267
     },
     {
-      "hour": 1,
-      "actions": 254
+      "hour": 6,
+      "actions": 257
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2669
+      "count": 2683
     },
     {
       "topic": "IA",
-      "count": 2288
+      "count": 2303
     },
     {
       "topic": "Crypto",
-      "count": 584
+      "count": 582
     },
     {
       "topic": "Bourse",
-      "count": 398
+      "count": 397
     },
     {
       "topic": "Spatial",
-      "count": 106
+      "count": 105
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2600
+      "count": 2613
     },
     {
       "pillar": "other",
-      "count": 1558
+      "count": 1587
     },
     {
       "pillar": "market_trauma",
-      "count": 1243
+      "count": 1226
     },
     {
       "pillar": "meme_reaction",
-      "count": 227
+      "count": 225
     },
     {
       "pillar": "reply_bait",
-      "count": 59
+      "count": 62
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 33
+      "count": 31
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 343
+      "count": 329
     },
     {
       "pillar": "other",
-      "count": 216
+      "count": 241
     },
     {
       "pillar": "market_trauma",
-      "count": 173
+      "count": 166
     },
     {
       "pillar": "meme_reaction",
-      "count": 35
+      "count": 30
     },
     {
       "pillar": "reply_bait",
-      "count": 14
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 55,
-      "avg_likes": 0.2,
-      "avg_views": 24.6,
+      "posts": 53,
+      "avg_likes": 0.21,
+      "avg_views": 25.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 100,
-      "avg_likes": 0.18,
-      "avg_views": 30.5,
+      "posts": 101,
+      "avg_likes": 0.17,
+      "avg_views": 31.1,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 38,
-      "avg_likes": 0.08,
-      "avg_views": 29.1,
+      "posts": 37,
+      "avg_likes": 0.05,
+      "avg_views": 29.7,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 3,
+      "posts": 5,
       "avg_likes": 0.0,
-      "avg_views": 18.7,
+      "avg_views": 32.2,
       "low_sample": false
     },
     {
@@ -171,23 +171,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4955
+      "count": 4982
     },
     {
       "type": "quote",
-      "count": 391
+      "count": 389
     },
     {
       "type": "quote_gif",
-      "count": 183
+      "count": 182
     },
     {
       "type": "post",
-      "count": 85
+      "count": 87
     },
     {
       "type": "hotake",
-      "count": 69
+      "count": 67
     },
     {
       "type": "retweet",
@@ -196,19 +196,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-24T04:00:59.599719",
-      "text": "Cloud VPC means the agent is paying rent while you sleep.\n\nYou aren't building a tool. You're funding a digital ghost that burns cash 24/7.",
+      "ts": "2026-07-24T09:39:37.738394",
+      "text": "Jensen on x. nvidia goes from selling to everyone to selling to itself. the cycle just closed.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-24T03:43:48.538600",
-      "text": "Paul Seixas 4ème. L'IA a remplacé les analysts, pas les rouleurs.",
+      "ts": "2026-07-24T09:38:56.597466",
+      "text": "Satya nadella says \"all economic opportunity\" for knowledge workers is gone.\nnvidia is up 250% since he said it.\nhe sells shovels, you sell sweat.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-24T03:43:32.514460",
-      "text": "me watching \"literally 3 clicks\" and quietly opening my laptop to type 40 lines of yaml. 👀",
-      "type": "quote"
+      "ts": "2026-07-24T09:38:22.372054",
+      "text": "Google is paying investors to borrow the cash for their buyback. the market isn't selling ai, it's selling the cost of carry.",
+      "type": "reply"
     }
   ]
 }

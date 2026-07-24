@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-06-28T07:27:41.799376",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RenaudLanfranchi",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "Le roi de l'info trading FR. Pas de blabla formation, que du concret technique et macro."
-      },
-      {
-        "handle": "MaximeLamy",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Directeur de recherche chez Exaion. Twitte sur l'IA fr et les startups, style clair et pro."
-      },
-      {
-        "handle": "RaphaELelarge",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Ex-Coinbase, fondatrice de Crypto.fr. Couvre la regu, les tokens et la tech crypto en FR."
-      },
-      {
-        "handle": "VincentDelmas",
-        "region": "france",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Venteux & IA. Couvre l'adoption IA en entreprise, tr\u00e8s pertinent pour le secteur pro."
-      },
-      {
-        "handle": "LudovicLamasson",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Fondateur d'Eclipsa. Analyse de march\u00e9 quotidienne, focus Canada/USA, tr\u00e8s solide."
-      },
-      {
-        "handle": "AlexisLeroy",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Head of Business Development chez Ledger. Donne la vision du hardware wallet et de la s\u00e9curit\u00e9."
-      },
-      {
-        "handle": "RomainFouque",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Co-founder de LLMware. Plantes sur l'IA g\u00e9n\u00e9rative et l'infrastructure, contenu technique sans pub."
-      }
-    ],
-    "summary": "Une s\u00e9lection de v\u00e9t\u00e9rans plut\u00f4t que de influenceurs du jour. De la substance technique (Lamy, Rouqu\u00e9), du trading pur (Lanfranchi, Lamasson) et du hard crypto (Rochard, Leroy)."
-  },
-  {
     "ts": "2026-06-28T09:27:46.020709",
     "raw_count": 7,
     "kept_count": 7,
@@ -8634,5 +8575,57 @@
       }
     ],
     "summary": "Un m\u00e9lange de Founders et d'Analgues. Le Qu\u00e9bec apporte le pragmatisme actionnarial, la France l'IA et la Fintech, la diaspora US la perspective globale. Pas de vendeurs de r\u00eaves, que du contenu."
+  },
+  {
+    "ts": "2026-07-24T07:43:35.531290",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thomasjardel",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Le patron de Coinhouse. Twitte en FR, vibe VC, z\u00e9ro formation \u00e0 999\u20ac."
+      },
+      {
+        "handle": "JulienMoinard",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 40000,
+        "reason": "La r\u00e9f\u00e9rence trading francophone. Pas de blabla, que du setup."
+      },
+      {
+        "handle": "BenjaminLortie",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "L'expert fintech qu\u00e9b\u00e9cois. Il comprend la tech mieux que ton banquier."
+      },
+      {
+        "handle": "AlexandreCoutant",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Diaspora FR \u00e0 NYC. Il cover les US cryptos avec un accent fran\u00e7ais."
+      },
+      {
+        "handle": "BenjaminLorant",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Le banquier en jogg. Il parle de macro sans te endormir."
+      },
+      {
+        "handle": "ValentinDeneumez",
+        "region": "france",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "SVP, le groupe de la French Tech. Du pur pipeline VC."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la cr\u00e8me : des pros qui twittent en fran\u00e7ais, avec une audience r\u00e9elle et sans pubs de cours. Le mix Mistral, Coinhouse et les traders solo est le gold standard actuel."
   }
 ]

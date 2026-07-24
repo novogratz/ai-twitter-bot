@@ -768,7 +768,11 @@
     "BorisFeld",
     "AlexCohen",
     "LilianWoltz",
-    "PierreBouchard"
+    "PierreBouchard",
+    "thomasjardel",
+    "JulienMoinard",
+    "BenjaminLortie",
+    "BenjaminLorant"
   ],
   "en": [
     "Chubby",
@@ -5996,6 +6000,26 @@
     {
       "lang": "fr",
       "handle": "PierreBouchard",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomasjardel",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienMoinard",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminLortie",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminLorant",
       "added": "2026-07-24"
     }
   ]
