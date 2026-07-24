@@ -781,7 +781,9 @@
     "RenaudTornade",
     "MaximeMaresca",
     "ThomasBouvier",
-    "BenoitBoullay"
+    "BenoitBoullay",
+    "MaximilienMars",
+    "ThomasPetitFR"
   ],
   "en": [
     "Chubby",
@@ -6080,6 +6082,16 @@
     {
       "lang": "fr",
       "handle": "BenoitBoullay",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximilienMars",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasPetitFR",
       "added": "2026-07-24"
     }
   ]

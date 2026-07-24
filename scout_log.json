@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-07-04T16:05:39.073761",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "HugoBonnefoi",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 55000,
-        "reason": "Ex-Quant chez Man Group, style brutal sur les indices US, z\u00e9ro blabla formation, pur trading macro."
-      },
-      {
-        "handle": "D4rkH0dler",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "V\u00e9t\u00e9ran depuis les d\u00e9buts de Bitcoin, tweete des setups techniques secs en fran\u00e7ais sans vendre de r\u00eave."
-      },
-      {
-        "handle": "GaelleH10",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Journaliste tech IA pointue, couvre les LLMs et la French Tech, plus pertinents que les influenceurs lifestyle."
-      },
-      {
-        "handle": "Tangobanana",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 20000,
-        "reason": "Trader crypto fran\u00e7ais actif, poste des analyses de march\u00e9 quotidiennes, communaut\u00e9 engag\u00e9e sans 'guru-ism'."
-      },
-      {
-        "handle": "MathieuLeclercq",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Founders de Kinesis, focus crypto/web3, ton direct qu\u00e9b\u00e9cois qui balance des insights sur la stabilit\u00e9 coin."
-      },
-      {
-        "handle": "OlivierRochon",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Analyste fondamentaliste CFA, tweete des d\u00e9cryptages de bilans au Qu\u00e9bec, pas de hype, que des chiffres."
-      }
-    ],
-    "summary": "S\u00e9lection ax\u00e9e sur des experts terrain plut\u00f4t que des influenceurs : on a \u00e9cart\u00e9 les vendeurs de r\u00eaves pour ne garder que des traders, analystes et fondateurs qui twittent en fran\u00e7ais avec des donn\u00e9es concr\u00e8tes."
-  },
-  {
     "ts": "2026-07-04T18:21:43.785005",
     "raw_count": 5,
     "kept_count": 3,
@@ -8585,5 +8533,36 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les influenceurs 'lifestyle' pour ne garder que les profils techniques et les analystes actifs. Pas de vendeurs de r\u00eave, juste du concret en fran\u00e7ais de France et du Qu\u00e9bec."
+  },
+  {
+    "ts": "2026-07-24T13:43:53.662273",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximilienMars",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 22000,
+        "reason": "Le patron de Rapyd en France. Twitte sur la finance de bout en bout, style direct."
+      },
+      {
+        "handle": "ThomasPetitFR",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Journaliste bourse, twitte les facts avant les m\u00e9dias. Pas de pub, que du concret."
+      },
+      {
+        "handle": "Jean-PhilippeDuclos",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Ancien fondateur, aujourd'hui investisseur. Twitte en FR, regarde ce qui se passe aux US mais pense local."
+      }
+    ],
+    "summary": "Mix de puristes (Mistral), d'analyse on-chain (Bourgeois) et de finance classique (Duclos/Petit). Z\u00e9ro vendeur de r\u00eave, que des gens qui font bouger la tech ou le prix des actifs."
   }
 ]
