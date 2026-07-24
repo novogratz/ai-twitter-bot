@@ -16358,3 +16358,39 @@ First Stop  $220
 “Weekly Morning Star Reversal Pattern ”
   - https://x.com/Banana3Stocks/status/2080297022545129565
   - **WHY**: Source fiable + impact concret (score signal 4, engagement 202).
+- **@antibearthesis** (135 likes, score 9/10) — WARNING: MOST INVESTORS HAVEN’T REALIZED THIS YET…
+
+Google went public at a $23B valuation.
+
+Anthropic is reportedly eyeing $965B.
+
+That’s 42× higher…
+
+Before retail investors can even buy a single sh
+  - https://x.com/antibearthesis/status/2080337790709964996
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 217).
+- **@gamann77** (33 likes, score 8/10) — Breaking News: Grok 4.5 Surpasses GPT-5.6 Sol and Fable 5 in Token Usage on OpenRouter.
+
+At last, it has broken into the world's top 10 closed models. Grok's momentum shows no signs of stopping.
+  - https://x.com/gamann77/status/2080499834797330910
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 43).
+- **@thomas_james_1** (77 likes, score 9/10) — Nvidia $NVDA has a really nice setup here, top of my watchlist for tomorrow. 
+
+After the $INTC & $GOOGL earnings both increasing capex, we could see an Nvidia Friday.
+
+Break over $214 and this goes to
+  - https://x.com/Thomas_james_1/status/2080429539981767107
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 113).
+- **@grfokrp56** (257 likes, score 8/10) — 今年は「未来の成長株」が動くかもしれない。
+
+過去、億を築いた人は――
+
+2012年：ビットコイン
+2018年：テスラ
+2022年：NVIDIA
+2023年：Palantir
+2025年：半導体関連
+
+次の成長テーマは
+  - https://x.com/grfokrp56/status/2080514050983915727
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 303).
