@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-24T13:43:00.003751",
-  "window_7d_actions": 5776,
-  "window_24h_actions": 775,
+  "generated_at": "2026-07-24T17:42:59.259149",
+  "window_7d_actions": 5792,
+  "window_24h_actions": 836,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5771
+      "count": 5787
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -59,72 +59,72 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2718
+      "count": 2731
     },
     {
       "topic": "IA",
-      "count": 2295
+      "count": 2297
     },
     {
       "topic": "Crypto",
-      "count": 580
+      "count": 581
     },
     {
       "topic": "Bourse",
-      "count": 404
+      "count": 410
     },
     {
       "topic": "Spatial",
-      "count": 104
+      "count": 105
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2614
+      "count": 2609
     },
     {
       "pillar": "other",
-      "count": 1598
+      "count": 1617
     },
     {
       "pillar": "market_trauma",
-      "count": 1244
+      "count": 1249
     },
     {
       "pillar": "meme_reaction",
-      "count": 224
+      "count": 221
     },
     {
       "pillar": "reply_bait",
-      "count": 65
+      "count": 64
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 31
+      "count": 32
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 328
+      "count": 351
     },
     {
       "pillar": "other",
-      "count": 240
+      "count": 268
     },
     {
       "pillar": "market_trauma",
-      "count": 160
+      "count": 177
     },
     {
       "pillar": "meme_reaction",
-      "count": 27
+      "count": 25
     },
     {
       "pillar": "reply_bait",
-      "count": 16
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
@@ -134,23 +134,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 53,
-      "avg_likes": 0.19,
-      "avg_views": 25.8,
+      "posts": 55,
+      "avg_likes": 0.15,
+      "avg_views": 25.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 100,
-      "avg_likes": 0.16,
-      "avg_views": 31.2,
+      "posts": 99,
+      "avg_likes": 0.14,
+      "avg_views": 31.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 38,
+      "posts": 37,
       "avg_likes": 0.05,
-      "avg_views": 30.0,
+      "avg_views": 29.8,
       "low_sample": false
     },
     {
@@ -171,23 +171,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5014
+      "count": 5033
     },
     {
       "type": "quote",
-      "count": 392
+      "count": 393
     },
     {
       "type": "quote_gif",
-      "count": 179
+      "count": 177
     },
     {
       "type": "post",
-      "count": 87
+      "count": 86
     },
     {
       "type": "hotake",
-      "count": 67
+      "count": 66
     },
     {
       "type": "retweet",
@@ -196,19 +196,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-24T13:42:23.792567",
-      "text": "Opus-5 is 40% more parameter dense than opus-4. it’s not an upgrade. it’s a margin squeeze.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-07-24T13:42:07.713891",
-      "text": "Openai hasn’t burned $5B in a year just to release GPT6 with worse math.\n\nthe real capex is on the training run that happens *after* the launch keynotes end.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-07-24T13:41:35.056274",
-      "text": "me adding Claude to my “digital clutter” folder for the third time this year 🛋️",
+      "ts": "2026-07-24T17:42:17.790114",
+      "text": "me watching $JHH go from 3 figures to a trillion like it’s my kid’s report card 🥲",
       "type": "quote"
+    },
+    {
+      "ts": "2026-07-24T17:41:44.608677",
+      "text": "Google's TTM P/E hit 16x because AI capex is eating margins faster than search revenue can cover them.\n\nThe market isn't pricing in cheapness. It's pricing in an infrastructure bill that hasn't hit the P&L yet.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-07-24T17:41:27.057979",
+      "text": "Obsidian vaults hold human memory. AI agents hold state. He didn't hire an ops team, he just stopped bleeding context window costs.",
+      "type": "reply"
     }
   ]
 }

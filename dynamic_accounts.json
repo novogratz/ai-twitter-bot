@@ -1016,7 +1016,8 @@
     "BATMAN",
     "Banana3",
     "RR",
-    "Noah"
+    "Noah",
+    "GameStop"
   ],
   "history": [
     {
@@ -6092,6 +6093,11 @@
     {
       "lang": "fr",
       "handle": "ThomasPetitFR",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "en",
+      "handle": "GameStop",
       "added": "2026-07-24"
     }
   ]
