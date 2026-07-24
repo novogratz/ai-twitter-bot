@@ -16317,3 +16317,44 @@ New Position: Palantir $PLTR
 - Started 3% position investment.
   - https://x.com/kimsbinvesting/status/2080114234483261946
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 48).
+
+## 2026-07-24
+- **@w1nklerr** (34 likes, score 9/10) — I told you, this dump pattern works every time
+
+And now it's happening on $SPCX.
+
+IPO → massive pump → retail buys → crash → institutional accumulation → new ATH
+
+Here's how it played out:
+
+NVIDIA: $0
+  - https://x.com/w1nklerr/status/2080438867602072005
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 60).
+- **@thuytrang108** (11 likes, score 8/10) — Nearly $1 Trillion in Market Capitalization Evaporates in a Single Trading Session
+
+The US stock market experienced a sharp correction, with the Nasdaq 100 falling more than 2.5%, triggering a widespr
+  - https://x.com/ThuyTrang108/status/2080503740855922949
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 37).
+- **@zastocks** (0 likes, score 8/10) — $INTC has become the quarterly reminder that the next time the government + biggest and most important company on earth (Nvidia) invest heavily into a company, buy no matter what.
+  - https://x.com/ZaStocks/status/2080385852694286450
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 56).
+- **@brianroemmele** (74 likes, score 7/10) — WOW! The $8 AI Machine!
+
+Something extraordinary just happened and it changes what “local AI” can mean.
+
+I am testing it tonight. Thus far it shows many possibilities…
+
+So what it this $8 AI device?
+  - https://x.com/BrianRoemmele/status/2080501012935434357
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 100).
+- **@banana3stocks** (164 likes, score 7/10) — $NVDA
+
+WEEKLY CHART 
+
+ALL TIME HIGHS INCOMING  
+
+First Stop  $220
+
+“Weekly Morning Star Reversal Pattern ”
+  - https://x.com/Banana3Stocks/status/2080297022545129565
+  - **WHY**: Source fiable + impact concret (score signal 4, engagement 202).
