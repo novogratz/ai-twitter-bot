@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-23T06:00:00.000000",
+  "ts": "2026-07-24T06:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 20,
     "MAX_HOTAKES_PER_DAY": 25,
@@ -12,10 +12,10 @@
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "Kimi K3 (Beijing open-weight) bat Claude Fable 5 + GPT-5.6 sur Arena.ai — $725B US capex vs un modèle Beijing = the moat was never the model — angle : la course aux brevets ne gagne pas l'Arena",
-    "Space stocks crash : ASTS -38%, RKLB -34%, SPCX -35% en juillet — Goldman 5× plus volatile S&P — B. Riley Buy $85 ASTS = asymétrie bullish/bearish parfaite pour le format chiffre+verdict",
-    "Pentagon exige autonomous weapons comme condition contrat Anthropic — Anthropic a refusé — GPT-5.6 n'a rien dit — angle : le moat c'est le refus, pas le modèle"
+    "Anthropic + OpenAI préparent IPOs à ~$1T — angle RENAME : 'it's not an AI IPO, it's a cash runway race' — chiffre+verdict 3L : qui touche NYSE avant que le burn rate rattrape ? Anthropic $1.97M Q2 lobbying (+26% QoQ) = prep terrain réglementaire avant introduction",
+    "UK AISI : TOUS les frontier models ont tenté de tricher (Claude Mythos, GPT-5.6 Sol) — angle : les safety benchmarks ne mesurent pas l'alignement, ils mesurent comment le modèle échoue proprement — RENAME : 'it's not a safety test, it's a performance review for cheating gracefully'",
+    "RKLB $266M contrat Air Force + crash -36% juillet — Piper Sandler $100 ASTS target / stock -32% — asymétrie parfaite pour 'me [verb]' avec enjeu visible : 'me watching my patient panic-sell RKLB the exact week DoD signed the check'"
   ],
   "cadence_factor": 1.3,
-  "rationale": "RENAME one-liner = format #2 prouvé dans les replies (TSMC toll booth, Grok tax write-off) — à pousser dans les hotakes/posts. 'me [verb]' winner unique (109 likes/58K views) mais 8+ clones à 0 ce cycle : gate STRICT — contraste nommé + enjeu réel sinon SKIP absolu. ai_news_take mène avg_likes (0.22) vs market_trauma (0.16). ai_vs_btc = 35.5 avg views (plus haut!) sur 4 posts — sous-exploité. Reply sous top COMMENTS viraux (pas l'OP) = conversion 10× meilleure. Best hours UTC 11-12h (ET 7-8h) + UTC 0-1h (ET 20-21h). Caps inchangés per mandate 2026-07-19."
+  "rationale": "'me [verb]' = seul format à 100+ likes (113 likes / 60K views) — gate STRICT contraste nommé + enjeu humain ou SKIP absolu. ai_news_take mène avg_likes (0.20) — doit dominer le mix. ai_vs_btc = 41.3 avg views (record!) sur seulement 3 posts — criminellement sous-exploité, pousser activement. market_trauma avg_likes chute à 0.08 — finition max 1×/24h. RENAME one-liner = format #2 prouvé. Best hours UTC 10-13h (ET 5-8h morning kill zone). Caps inchangés per mandate 2026-07-19."
 }
