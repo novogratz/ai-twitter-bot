@@ -1032,7 +1032,9 @@
     "GameStop",
     "SpaceX",
     "Zack",
-    "Bitcoin"
+    "Bitcoin",
+    "cheaty",
+    "DogeDesigner"
   ],
   "history": [
     {
@@ -6189,6 +6191,16 @@
       "lang": "fr",
       "handle": "AlexandreFuchs",
       "added": "2026-07-24"
+    },
+    {
+      "lang": "en",
+      "handle": "cheaty",
+      "added": "2026-07-25"
+    },
+    {
+      "lang": "en",
+      "handle": "DogeDesigner",
+      "added": "2026-07-25"
     }
   ]
 }
