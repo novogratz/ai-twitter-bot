@@ -1105,3 +1105,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 30 views: Google Cloud customers are spending 50% more per seat and the SaaS model is having a nervous breakdo
   - 1 likes / 214 views: me watching $INTC $AMD $NVDA nod along like we’re in a group chat that stopped typing two hours ago 
   - 0 likes / 13 views: me trying to explain to my kids that "multichain simplicity" is basically just digital tupperware fo
+
+## 2026-07-24
+
+**Activity** — total actions: 801
+  - by type: reply=702, quote=57, quote_gif=16, post=13, hotake=7, retweet=6
+  - top sources: SEARCH-HOT=433, FEED-SWEEP-FEED=140, FEED-SWEEP-FOLLOWING=92, QUOTE=43, GIF=23, DEBATE=23, VIP=11, BREAKING_QRT=6
+  - top reply targets: @arnaudmercier=42, @electnomics=12, @Graphseo=11, @DanKornas=10, @TheBTCTherapist=8
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 3 likes / 233 views: me watching the super heavy return and my portfolio drop simultaneously, finding the balance
+  - 1 likes / 16 views: the most asymmetric move this week:  1.  AMD Helios secures Microsoft: @AMD Helios rack ships this m
+  - 1 likes / 52 views: My AI nanny asked if the toddler wanted milk or play. I said milk. It ordered a $400 crate of formul
