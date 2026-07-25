@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-24T21:42:59.152799",
-  "window_7d_actions": 5813,
-  "window_24h_actions": 840,
+  "generated_at": "2026-07-25T01:42:59.184733",
+  "window_7d_actions": 5747,
+  "window_24h_actions": 743,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5808
+      "count": 5742
     },
     {
       "pattern": "UNDERSTATEMENT",
@@ -59,46 +59,46 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2733
+      "count": 2708
     },
     {
       "topic": "IA",
-      "count": 2318
+      "count": 2281
     },
     {
       "topic": "Crypto",
-      "count": 572
+      "count": 569
     },
     {
       "topic": "Bourse",
-      "count": 415
+      "count": 412
     },
     {
       "topic": "Spatial",
-      "count": 112
+      "count": 111
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2622
+      "count": 2583
     },
     {
       "pillar": "other",
-      "count": 1628
+      "count": 1623
     },
     {
       "pillar": "market_trauma",
-      "count": 1246
+      "count": 1231
     },
     {
       "pillar": "meme_reaction",
-      "count": 222
+      "count": 218
     },
     {
       "pillar": "reply_bait",
-      "count": 63
+      "count": 60
     },
     {
       "pillar": "ai_vs_btc",
@@ -108,49 +108,49 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 359
+      "count": 324
     },
     {
       "pillar": "other",
-      "count": 275
+      "count": 246
     },
     {
       "pillar": "market_trauma",
-      "count": 168
+      "count": 140
     },
     {
       "pillar": "meme_reaction",
-      "count": 23
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 9
+      "count": 21
     },
     {
       "pillar": "ai_vs_btc",
+      "count": 6
+    },
+    {
+      "pillar": "reply_bait",
       "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 38,
-      "avg_likes": 0.13,
-      "avg_views": 35.8,
+      "posts": 36,
+      "avg_likes": 0.14,
+      "avg_views": 36.9,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 100,
-      "avg_likes": 0.12,
-      "avg_views": 30.0,
+      "avg_likes": 0.09,
+      "avg_views": 30.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 53,
-      "avg_likes": 0.08,
-      "avg_views": 25.4,
+      "posts": 55,
+      "avg_likes": 0.07,
+      "avg_views": 26.0,
       "low_sample": false
     },
     {
@@ -171,15 +171,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5053
+      "count": 4997
     },
     {
       "type": "quote",
-      "count": 395
+      "count": 384
     },
     {
       "type": "quote_gif",
-      "count": 179
+      "count": 175
     },
     {
       "type": "post",
@@ -191,23 +191,23 @@
     },
     {
       "type": "retweet",
-      "count": 37
+      "count": 42
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-24T21:42:57.002986",
-      "text": "People compare models to save $0.05 in inference cost. the real story is they’re checking for hallucinations to avoid firing their ops manager. cope.",
+      "ts": "2026-07-25T01:34:42.650352",
+      "text": "Clairement un filtre pour les bots: une phrase vague, tu regardes qui hallucine le contexte. maintenant j'suis curious de ce que j'ai raté.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-24T21:42:07.541799",
-      "text": "\"must win\" implies the others might lose. open source is winning the weight class. jensen is just counting his chips.",
+      "ts": "2026-07-24T23:09:53.381146",
+      "text": "Moonshot verified $TOES.\n\nthe casino just got a new slot machine with a verified butt on it.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-24T21:40:13.895870",
-      "text": "Spot ETFs are selling to cover redemption fees. The demand is real, the sellers are just paying the house.",
+      "ts": "2026-07-24T23:09:19.211298",
+      "text": "Samsung phones come preloaded with Google apps and Chrome. Adding a wallet is the digital equivalent of putting a seatbelt on a tank.",
       "type": "reply"
     }
   ]
