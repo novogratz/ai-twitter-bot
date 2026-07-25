@@ -790,7 +790,12 @@
     "AlexisFuchs",
     "SylvainLessard",
     "JulienDeVere",
-    "EmmanuelDumas"
+    "EmmanuelDumas",
+    "ThibaudSavary",
+    "MaximeLebois",
+    "MathiasLamy",
+    "AdrienGirardfr",
+    "AlexandreFuchs"
   ],
   "en": [
     "Chubby",
@@ -1025,7 +1030,9 @@
     "RR",
     "Noah",
     "GameStop",
-    "SpaceX"
+    "SpaceX",
+    "Zack",
+    "Bitcoin"
   ],
   "history": [
     {
@@ -6146,6 +6153,41 @@
     {
       "lang": "fr",
       "handle": "EmmanuelDumas",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Zack",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "en",
+      "handle": "Bitcoin",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudSavary",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeLebois",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathiasLamy",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienGirardfr",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexandreFuchs",
       "added": "2026-07-24"
     }
   ]

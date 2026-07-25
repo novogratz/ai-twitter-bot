@@ -16394,3 +16394,33 @@ Break over $214 and this goes to
 次の成長テーマは
   - https://x.com/grfokrp56/status/2080514050983915727
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 303).
+
+## 2026-07-25
+- **@adambliv** (87 likes, score 9/10) — STRATEGY’S S&P 500 CHECKLIST AT A $125K BITCOIN QUARTER-END
+
+U.S. company: CHECK
+
+Nasdaq common stock: CHECK
+
+$22.7B minimum market cap: CHECK
+
+Public float: CHECK
+
+Liquidity: CHECK. MSTR trades like
+  - https://x.com/AdamBLiv/status/2080818311927837174
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 105).
+- **@codingnoobie** (14 likes, score 7/10) — DAILY TECH NEWS ROUNDUP 
+
+Everything important that happened in tech during the last 24 hours:
+
+• AMD and Anthropic announced a landmark AI infrastructure partnership. Anthropic will deploy up to 2 gi
+  - https://x.com/CodingNoobie/status/2080359819475837364
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 22).
+- **@southernvalue95** (52 likes, score 8/10) — Everyone frets 4-5x a quarter that AVGO might "lose" the TPU to MTK or MRVL. In 2Q $AVGO signed an extended agreement w/ GOOG through 2031 which was rumored to have committed minimum volumes that rise
+  - https://x.com/SouthernValue95/status/2080727986035425363
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 68).
+- **@cerebras** (2166 likes, score 7/10) — Today, @AMD and Cerebras introduced a powerful disaggregated inference solution, pairing the right engine to each phase of the inference pipeline.
+
+This is what agentic AI has been waiting for: the fa
+  - https://x.com/cerebras/status/2080349251318530263
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2254).

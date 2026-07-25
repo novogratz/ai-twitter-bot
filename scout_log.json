@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-07-04T23:41:50.307172",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilDonguy",
-        "region": "france",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "Journaliste tech FR de r\u00e9f\u00e9rence, couvre la SaaS/IA avec un angle pro, pas des influenceurs en costard."
-      },
-      {
-        "handle": "MarcLachance",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 15000,
-        "reason": "Journaliste \u00e9conomique qu\u00e9b\u00e9cois, twitte en FR sur la BCE et les march\u00e9s, pas de blabla politique."
-      },
-      {
-        "handle": "Jean-BaptisteM",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "French-speaking AI dev at Big Tech US, twitte en FR sur le LLM stack, authentique."
-      }
-    ],
-    "summary": "J'ai tri\u00e9 le gras pour ne garder que du solide : Mert pour la crypto, Bessard pour la bourse, et des tech/finance pour le Qu\u00e9bec et la diaspora US."
-  },
-  {
     "ts": "2026-07-05T01:49:36.093346",
     "raw_count": 7,
     "kept_count": 6,
@@ -8578,5 +8547,50 @@
       }
     ],
     "summary": "J'ai creus\u00e9 pour \u00e9viter les vendeurs de r\u00eave : Mistral AI pour la tech pure, Sylvain Lessard pour la finance Qu\u00e9bec sans chichi, et Pierre Rochard pour le bitcoin aux US. C'est du solide, pas du vent."
+  },
+  {
+    "ts": "2026-07-24T21:43:46.910274",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibaudSavary",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Le prince de l'IA FR, postule des threads techniques dignes d'un engineer Google sans le salaire."
+      },
+      {
+        "handle": "MaximeLebois",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "L'analyste qu\u00e9b\u00e9cois qui fait le pont entre Wall St et Paris sans se prendre pour un gourou."
+      },
+      {
+        "handle": "MathiasLamy",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Ex-DocuSign qui d\u00e9montre l'IA en FR depuis SF. Moins de hype, plus de code."
+      },
+      {
+        "handle": "AdrienGirardfr",
+        "region": "france",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "SVP, le gars qui explique le code et l'IA sans te faire miroiter un Bitcoin \u00e0 1M. Rare."
+      },
+      {
+        "handle": "AlexandreFuchs",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 11000,
+        "reason": "CTO de Kraken en FR. Twitte rarement mais chaque thread est un mini-masterclass DeFi."
+      }
+    ],
+    "summary": "La s\u00e9lection se concentre sur les 'craftsmen' : ceux qui postent du contenu technique ou data-driven plut\u00f4t que des tirades philosophiques. On \u00e9vite les influenceurs qui vendent des formations \u00e0 990\u20ac pour d\u00e9couvrir que l'IA c'est juste du chatbot."
   }
 ]
