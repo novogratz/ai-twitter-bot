@@ -16424,3 +16424,28 @@ Everything important that happened in tech during the last 24 hours:
 This is what agentic AI has been waiting for: the fa
   - https://x.com/cerebras/status/2080349251318530263
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 2254).
+- **@murtuza_merc** (25 likes, score 8/10) — Nvidia invested $1 billion in Naver to build South Korea's largest AI data center. Seoul wants to become Asia's compute hub. Whether Korea's infrastructure bet beats China's chip ban workaround is the
+  - https://x.com/murtuza_merc/status/2080873467881070966
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 39).
+- **@amasad** (330 likes, score 8/10) — Will Anthropic sign? 
+
+If you work at Anthropic worth asking your leadership to sign or make their position clear: Are they for banning open weight models?
+  - https://x.com/amasad/status/2080850075358826871
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 414).
+- **@semianalysis_** (108 likes, score 8/10) — Can AMD break the CUDA Moat?
+AMD Advancing AI 2026,
+Up to 105% Equity Rebate Discounts for OpenAI,
+Agentic Kernel Generation, Improvement in Software Quality,
+Unstable Internal Development Clusters,
+H
+  - https://x.com/SemiAnalysis_/status/2080814338642694484
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 112).
+- **@hypetrip** (44 likes, score 8/10) — We are going LIVE Sunday w/ @quipgg!
+
+Challenge the Founder or @fresholami in 1v1s & compete for a $1,000 USDC prize pool + 1M $PHYS
+
+ The best players are walking away w/ rewards
+
+BE THERE 7/26 • 5 P
+  - https://x.com/HypeTrip/status/2080757929456857477
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 76).
