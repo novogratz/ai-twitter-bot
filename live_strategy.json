@@ -1,10 +1,10 @@
 {
-  "ts": "2026-07-24T13:42:59.017399",
+  "ts": "2026-07-25T00:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 15,
     "MAX_HOTAKES_PER_DAY": 20,
     "MAX_QUOTES_PER_DAY": 200,
-    "MAX_RETWEETS_PER_DAY": 10,
+    "MAX_RETWEETS_PER_DAY": 8,
     "MAX_BREAKOUTS_PER_DAY": 2,
     "MAX_SPICY_PER_DAY": 2,
     "MAX_REPLIES_PER_CYCLE": 40,
@@ -12,10 +12,10 @@
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "Anthropic IPO : Le grand bond dans le vi",
-    "RKLB $266M vs Crash -36% : La preuve que",
-    "UK AISI Cheating Benchmarks : Ils ne tes"
+    "Anthropic $47B ARR dépasse OpenAI : la course IPO est réelle",
+    "Anthropic acquiert Physical Intelligence : robots + modèles = ?",
+    "GPT-5.6 + Grok 4.5 en 24h : qui gagne le benchmarks sprint ?"
   ],
   "cadence_factor": 1.3,
-  "rationale": "L'historique valide l'angle 'performance vs innocence' et les contrats gouvernementaux asymétriques. On garde la cadence agressive car les sources de bruit (FEED-SWEEP) fonctionnent bien."
+  "rationale": "Format 'me [verb]' est le seul format validé à 114 likes vs 0 sur tout le reste. Priorité absolue : anti-répétition (phrases brûlées) + 'me [verb]' strict avec contraste nommé. Retweets réduits 10→8 pour éliminer les RTs basse qualité (gaming, ETF leveragés). Topics du jour : course IPO Anthropic/OpenAI, acquisition Physical Intelligence, sprint GPT-5.6 vs Grok 4.5."
 }

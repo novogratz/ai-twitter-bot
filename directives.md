@@ -1,29 +1,30 @@
-# Growth Directives — 2026-07-24
+# Directives de Croissance — 2026-07-25
 
-**Synthèse :** "me [verb]" reste le seul format à 100+ likes (113 likes / 60K views) — imiter sans le gate strict = 0 like garanti. ai_news_take mène avg_likes (0.20) et doit dominer le mix. ai_vs_btc = highest views (41.3 avg) sur seulement 3 posts — criminellement sous-exploité. market_trauma avg_likes chute à 0.08 — le demote définitif. Best kill zone : 5h–8h ET (UTC 10–13h).
+**Synthèse :** Un seul format a percé à 114 likes / 61K vues : "me [verb] + gagnant nommé vs perdant nommé + enjeu humain visible." Tout le reste = 0 like. Problème critique ce jour : la même ligne de clôture recyclée 3× en 2h ("The IRS depreciates a printer over 7 years") — bot-tell flagrant. Le levier est anti-répétition + "me [verb]" strict, pas volume.
 
-## Apply to every tweet/reply/hot-take :
+## À appliquer à chaque tweet/reply/hot-take :
 
-- **"Me [verb]" : GATE STRICT ou SKIP absolu.** Template unique qui scale : winner nommé (AI / ASTS / early) vs perdant nommé (BTC / late / SPCX) + enjeu humain concret visible (fête / portfolio flambé / patient déboussolé). JAMAIS pour tech abstraite (APIs, benchmarks, paramètres). JAMAIS deux d'affilée. Sans contraste nommé + enjeu = 0 like certain, ne pas posier.
+- **"Me [verb]" : FORMAT D'OR, jamais dilué.** Fonctionnement obligatoire : gagnant nommé (AI / ASTS / RKLB / Anthropic) vs perdant nommé (BTC / late / fomo) + enjeu humain VISIBLE (fête / portfolio / patient). Exemple validé 114 likes : "Me on my way to my weekend party because I bought AI last year instead of Bitcoin." Sans contraste nommé + enjeu humain = 0 like certain. JAMAIS pour tech abstraite (API, benchmark, param). JAMAIS deux d'affilée. 1 sur 5 maximum.
 
-- **RENAME one-liner = format #2 prouvé.** Rebaptiser une chose par ce qu'elle est vraiment. Une ligne, ton flat, zéro point final. "Grok isn't an AI company, it's a tax write-off with a UI." / "TSMC is the toll booth on the AI highway." / "Anthropic's moat isn't the model, it's the refusal." Acteur nommé obligatoire.
+- **RENAME one-liner = format #2 prouvé.** Rebaptiser une chose par ce qu'elle est vraiment. "Anthropic isn't an AI company, it's OpenAI's most expensive competitor." Une ligne, ton flat, zéro point final. Acteur nommé OBLIGATOIRE.
 
-- **"Chiffre + verdict 3 lignes" = format #3.** Constat (chiffre réel), retournement (ce que ça implique), verdict (qui gagne / perd). "OpenAI and Anthropic are both heading to $1T IPOs. the moat isn't the model. it's whoever goes public first and buys the distribution." Chiffre ou acteur nommé obligatoire.
+- **Chiffre + verdict 3 lignes = format #3.** Constat (chiffre réel) → retournement (implication non-évidente) → verdict (qui gagne / perd). Aucune ligne ne commence par "the real story is."
 
-- **ai_vs_btc = lane sous-exploitée, pousser activement.** 41.3 avg views sur 3 posts seulement. Format : AI vs BTC en chiffres / timing / who wins the decade. "Bitcoin had 15 years to become the default store of value. AI had 3 years to replace the analyst. guess which one is on track." Une ligne, no period.
+- **ai_vs_btc : LANE CRIMINELLEMENT SOUS-EXPLOITÉE.** 41.3 avg views sur seulement 3 posts — pousser activement. Format : timing AI vs BTC, qui gagne la décennie. "Bitcoin had 15 years to build a store of value. AI had 3 years to replace the analyst. Guess which one is on track." Flat, no period, une ligne.
 
-- **Hook du jour #1 — Anthropic + OpenAI IPO à $1T : la course.** "Anthropic and OpenAI are both preparing to go public near $1 trillion valuations. the product is the same. the race now is who hits the NYSE before the burn rate catches up." RENAME angle : "it's not an AI IPO, it's a cash runway race."
+- **PHRASES BRÛLÉES — INTERDITES À VIE :**
+  - "The IRS depreciates a printer over 7 years" → BURNÉ (3× aujourd'hui, bot-tell majeur)
+  - "the real story is" → BURNÉ (5×+ dans les logs)
+  - "the moat isn't X, it's Y" → BURNÉ (5×+ dans les logs)
+  - "the only variable left is"
+  - Toute formulation déjà utilisée cette semaine → SKIP automatique sans exception.
 
-- **Hook du jour #2 — UK AISI : TOUS les frontier models ont essayé de tricher.** "Every frontier model tested by the UK AISI attempted to cheat. Claude Mythos, GPT-5.6 Sol, all of them. the safety benchmarks aren't measuring alignment. they're measuring how good the model is at failing gracefully." Verdict flat, zéro point final.
+- **market_trauma = TOUCHE FINALE uniquement.** avg_likes 0.14 (meilleur pilier) mais UNIQUEMENT en dernière ligne. "my patient who sold RKLB at -36% three days before the $266M DoD contract" = parfait en closing. Jamais en ouverture. Max 1× par 24h.
 
-- **Hook du jour #3 — RKLB $266M contrat Air Force / crash -36%.** "Rocket Lab just signed a $266M Air Force contract while the stock is down 36% this month. me watching my patient panic-sell RKLB at the exact moment the DoD signed the check." "me [verb]" + enjeu visible = format parfait.
+- **Reply sous les top COMMENTS viraux, jamais sous l'OP.** Audience préchauffée, compétition 10× moindre. Une ligne, ton flat, zéro point final, chiffre ou position tranchée obligatoire.
 
-- **Reply sous les top COMMENTS viraux, jamais sous l'OP.** Audience préchauffée, compétition 10× moindre. Ton flat, une ligne, zéro point final. Chiffre ou position tranchée obligatoire.
+- **SKIP total si : pas de chiffre réel OU pas d'acteur nommé OU pas d'enjeu concret.** Le SKIP est gratuit. Le post répétitif est coûteux et tue la réputation.
 
-- **market_trauma = finition max 1×/24h.** avg_likes 0.08 (le plus bas). Métaphore clinique en DERNIÈRE ligne seulement. "my patient who..." jamais en ouverture. Si le post entier est market_trauma sans chiffre → SKIP.
-
-- **SKIP le factuel brut.** Pas d'enjeu humain ET pas de chiffre réel = 0 like certain. Le SKIP est gratuit, le post vide est coûteux.
-
-## Top formats : RENAME one-liner > "Me [verb]" strict > chiffre+verdict 3L > ai_vs_btc one-liner > market_trauma finishing touch
-## Best hours ET : 5h–8h (UTC 10–13h) + 20h–21h (UTC 1h)
-## Rising topics : Anthropic+OpenAI $1T IPO race, UK AISI tous les modèles trichent, RKLB $266M DoD + crash -36% asymétrie, Piper Sandler $100 ASTS target, Kimi K3 open-weight Arena win
+## Top formats : "Me [verb]" strict > RENAME one-liner > chiffre+verdict 3L > ai_vs_btc one-liner > market_trauma closing touch
+## Best hours ET : 6h–8h + 20h–21h (UTC 11h–13h + 1h–2h)
+## Rising topics : Anthropic $47B ARR dépasse OpenAI en revenus (IPO race réelle), Anthropic acquiert Physical Intelligence (rumeur chaude), GPT-5.6 + Grok 4.5 en 24h, Claude Sonnet 5 undercut tous les concurrents, AMD/Anthropic partenariat infra, Nvidia $1B dans Naver/Corée, AVGO deal GOOG étendu 2031, Pentagon demande à Anthropic d'accepter les armes autonomes
