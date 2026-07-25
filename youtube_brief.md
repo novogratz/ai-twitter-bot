@@ -1,16 +1,16 @@
-# YouTube brief — 2026-07-24
+# YouTube brief — 2026-07-25
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **860**
-- reply: **751**
-- quote: **50**
-- quote_gif: **31**
+- Total actions logged: **781**
+- reply: **684**
+- quote: **53**
+- quote_gif: **15**
 - post: **13**
-- hotake: **10**
-- retweet: **5**
+- retweet: **9**
+- hotake: **7**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -23,84 +23,96 @@
 ### AI
 
 - **103 likes / 52712 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
-- **3 likes / 53 views** — Asked the AI barista for a black coffee. It printed a latte with a side of existential dread and charged me in Solana.  My barista is an LLM. My wallet is a casino.
-- **2 likes / 24 views** — me reading the Kimi K3 benchmark: . me reading "it's over for Anthropic":
-- **1 likes / 6 views** — Me sitting with my patient who sold AI 'to be disciplined' just in time for the AI rotation to steal the entire earnings narrative
-- **1 likes / 18 views** — Me explaining to my patient why the http://C3.ai CEO selling $4.2M in shares is called "diversification" but when they do it it's called "panic selling"
-
-### Crypto
-
-- **3 likes / 49 views** — crypto twitter, in unison: "the crowd is never right"
+- **1 likes / 13 views** — Deezer confirms more than half of uploads are AI-generated. We are the AI era's first parents, explaining that the song on the radio isn't just bad, it's synthetic.
 
 ### Other
 
-- **2 likes / 52 views** — me looking broke while doing the work of three people
-- **1 likes / 16 views** — half my patients' losses come from being right about everything except price
+- **3 likes / 233 views** — me watching the super heavy return and my portfolio drop simultaneously, finding the balance
+- **1 likes / 31 views** — me on my way to explain that this is basically the toddler phase for superintelligence
+- **1 likes / 22 views** — oracle's been holding my marriage together for 3 years and now it's on sale
+- **1 likes / 27 views** — me watching my 24-year-old intern look at his paycheck like it just aged 5 years
+- **1 likes / 36 views** — $79B ARR and still climbing? I'm watching it like it's my toddler finally eating peas.
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-07-24
-- **@w1nklerr** (34 likes, score 9/10) — I told you, this dump pattern works every time
+## 2026-07-25
+- **@adambliv** (87 likes, score 9/10) — STRATEGY’S S&P 500 CHECKLIST AT A $125K BITCOIN QUARTER-END
 
-And now it's happening on $SPCX.
+U.S. company: CHECK
 
-IPO → massive pump → retail buys → crash → institutional accumulation → new ATH
+Nasdaq common stock: CHECK
 
-Here's how it played out:
+$22.7B minimum market cap: CHECK
 
-NVIDIA: $0
-  - https://x.com/w1nklerr/status/2080438867602072005
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 60).
-- **@thuytrang108** (11 likes, score 8/10) — Nearly $1 Trillion in Market Capitalization Evaporates in a Single Trading Session
+Public float: CHECK
 
-The US stock market experienced a sharp correction, with the Nasdaq 100 falling more than 2.5%, triggering a widespr
-  - https://x.com/ThuyTrang108/status/2080503740855922949
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 37).
-- **@zastocks** (0 likes, score 8/10) — $INTC has become the quarterly reminder that the next time the government + biggest and most important company on earth (Nvidia) invest heavily into a company, buy no matter what.
-  - https://x.com/ZaStocks/status/2080385852694286450
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 56).
-- **@brianroemmele** (74 likes, score 7/10) — WOW! The $8 AI Machine!
+Liquidity: CHECK. MSTR trades like
+  - https://x.com/AdamBLiv/status/2080818311927837174
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 105).
+- **@codingnoobie** (14 likes, score 7/10) — DAILY TECH NEWS ROUNDUP 
 
-Something extraordinary just happened and it changes what “local AI” can mean.
+Everything important that happened in tech during the last 24 hours:
 
-I am testing it tonight. Thus far it shows many possibilities…
+• AMD and Anthropic announced a landmark AI infrastructure partnership. Anthropic will deploy up to 2 gi
+  - https://x.com/CodingNoobie/status/2080359819475837364
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 22).
+- **@southernvalue95** (52 likes, score 8/10) — Everyone frets 4-5x a quarter that AVGO might "lose" the TPU to MTK or MRVL. In 2Q $AVGO signed an extended agreement w/ GOOG through 2031 which was rumored to have committed minimum volumes that rise
+  - https://x.com/SouthernValue95/status/2080727986035425363
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 68).
+- **@cerebras** (2166 likes, score 7/10) — Today, @AMD and Cerebras introduced a powerful disaggregated inference solution, pairing the right engine to each phase of the inference pipeline.
 
-So what it this $8 AI device?
-  - https://x.com/BrianRoemmele/status/2080501012935434357
-  - **WHY**: Source fiable + impact concret (score signal 5, engagement 100).
-- **@banana3stocks** (164 likes, score 7/10) — $NVDA
-
-WEEKLY CHART 
-
-ALL TIME HIGHS INCOMING  
-
-First Stop  $220
-
-“Weekly Morning Star Reversal Pattern ”
-  - https://x.com/Banana3Stocks/status/2080297022545129565
-  - **WHY**: Source fiable + impact concret (score signal 4, engagement 202).
+This is what agentic AI has been waiting for: the fa
+  - https://x.com/cerebras/status/2080349251318530263
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2254).
+- **@murtuza_merc** (25 likes, score 8/10) — Nvidia invested $1 billion in Naver to build South Korea's largest AI data center. Seoul wants to become Asia's compute hub. Whether Korea's infrastructure bet beats China's chip ban workaround is the
+  - https://x.com/murtuza_merc/status/2080873467881070966
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 39).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[NVIDIA Blog]** At AI Summit, South Korea Outlines Its AI Future With NVIDIA and Partners
-  - https://blogs.nvidia.com/blog/ai-summit-korea-partners-and-nvidia/
-- **[CNBC Top]** U.S., other nations back open-source AI with 'strong security' at China summit
-  - https://www.cnbc.com/2026/07/24/china-ai-open-source-apec.html
-- **[CNBC Tech]** U.S., other nations back open-source AI with 'strong security' at China summit
-  - https://www.cnbc.com/2026/07/24/china-ai-open-source-apec.html
-- **[Cointelegraph]** SEC sets September talks on move toward 24-hour stock trading
-  - https://cointelegraph.com/news/sec-to-host-roundtable-on-24-hour-trading-in-us-equities?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[TechCrunch AI]** How AI guardrails are impeding the work of offensive cybersecurity researchers
-  - https://techcrunch.com/2026/07/23/how-ai-guardrails-are-impeding-the-work-of-offensive-cybersecurity-researchers/
-- **[TechCrunch]** How AI guardrails are impeding the work of offensive cybersecurity researchers
-  - https://techcrunch.com/2026/07/23/how-ai-guardrails-are-impeding-the-work-of-offensive-cybersecurity-researchers/
-- **[CNBC Top]** Amazon cracks down on use of AI images by sellers after New York law
-  - https://www.cnbc.com/2026/07/23/amazon-makes-sellers-label-ai-generated-people-in-images-after-ny-law.html
-- **[CNBC Tech]** Amazon cracks down on use of AI images by sellers after New York law
-  - https://www.cnbc.com/2026/07/23/amazon-makes-sellers-label-ai-generated-people-in-images-after-ny-law.html
+- **[X_FOLLOWING/Elon Musk]** A quarter century of work by an incredible team @SpaceX
+  - https://x.com/elonmusk/status/2080874307492729195
+- **[X_HOME/Michael | Hypermarkets]** $GOOG: first negative FCF since 2004.
+$TSLA: first negative FCF in two years.
+
+Next week, $META $AAPL $AMZN $MSFT will report its capex and cash position.
+
+Four
+  - https://x.com/itsmichaelluu/status/2080812950206796000
+- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/The Data of Everything]** Largest AI Companies by Market Capitalization (as of July 2026)
+
+1.  NVIDIA - $5.009 T
+2.  Apple - $4.891 T
+3.  Alphabet (Google) - $3.902 T
+4.  Microsoft - $2.
+  - https://x.com/TheDataHubX/status/2080812460374999354
+- **[X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/WAREMAT EXPO]** 5 Days to Go!
+
+Don't just watch the industry grow—be part of it!
+
+Only 5 days left until South India's leading B2B exhibition for Warehousing, Material Handling
+  - https://x.com/warematexpo/status/2080874359217062304
+- **[X_HOME/Global Markets Investor]** Korean retail BUBBLE IS BURSTING:
+
+Margin debt in South Korea is down to ~$22.6 billion, the lowest in 3 months.
+
+Debt has declined -$3.5 billion since the June
+  - https://x.com/GlobalMktObserv/status/2080873929053245932
+- **[X_FOLLOWING/That Martini Guy ₿]** BLACKROCK'S BITCOIN ETF JUST RECORDED $212M IN NET OUTFLOWS.
+
+After weeks of strong institutional demand, we're finally seeing some selling pressure return.
+  - https://x.com/MartiniGuyYT/status/2080874370432729136
+- **[X_FOLLOWING/Mario Nawfal]** A $2 billion radar was wiped out by two $20,000 drones.
+
+Fmr. U.S. Navy intel officer Malcolm Nance walks through the systematic blinding: the Qatari radar cont
+  - https://x.com/MarioNawfal/status/2080874433120497999
+- **[X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/NationPress]** Nvidia Partners Korea on AI Chips, Robotics and AI Factories
+
+Nvidia announced on 25 July 2026 it is partnering with Korean government and industry to build AI 
+  - https://x.com/np_nationpress/status/2080874794980094463
 
 ## 🎬 Suggested video angles
 
@@ -111,4 +123,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-07-24T00:42:59*
+*Generated 2026-07-25T00:42:59*
