@@ -1035,7 +1035,12 @@
     "Bitcoin",
     "cheaty",
     "DogeDesigner",
-    "jack"
+    "jack",
+    "reactor",
+    "SerdarLab",
+    "dnap",
+    "MARMOT",
+    "MacLesggy"
   ],
   "history": [
     {
@@ -6206,6 +6211,31 @@
     {
       "lang": "en",
       "handle": "jack",
+      "added": "2026-07-25"
+    },
+    {
+      "lang": "en",
+      "handle": "reactor",
+      "added": "2026-07-25"
+    },
+    {
+      "lang": "en",
+      "handle": "SerdarLab",
+      "added": "2026-07-25"
+    },
+    {
+      "lang": "en",
+      "handle": "dnap",
+      "added": "2026-07-25"
+    },
+    {
+      "lang": "en",
+      "handle": "MARMOT",
+      "added": "2026-07-25"
+    },
+    {
+      "lang": "en",
+      "handle": "MacLesggy",
       "added": "2026-07-25"
     }
   ]
