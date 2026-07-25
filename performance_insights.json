@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-07-25T05:50:22.348866",
-  "window_7d_actions": 5628,
-  "window_24h_actions": 670,
+  "generated_at": "2026-07-25T09:42:59.297989",
+  "window_7d_actions": 5517,
+  "window_24h_actions": 514,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5623
-    },
-    {
-      "pattern": "UNDERSTATEMENT",
-      "count": 2
+      "count": 5513
     },
     {
       "pattern": "RENAME",
       "count": 2
+    },
+    {
+      "pattern": "UNDERSTATEMENT",
+      "count": 1
     },
     {
       "pattern": "METAPHOR",
@@ -22,12 +22,12 @@
   ],
   "worst_patterns": [
     {
-      "pattern": "METAPHOR",
+      "pattern": "UNDERSTATEMENT",
       "count": 1
     },
     {
-      "pattern": "UNDERSTATEMENT",
-      "count": 2
+      "pattern": "METAPHOR",
+      "count": 1
     },
     {
       "pattern": "RENAME",
@@ -48,83 +48,89 @@
       "actions": 272
     },
     {
-      "hour": 9,
-      "actions": 265
+      "hour": 16,
+      "actions": 255
     },
     {
-      "hour": 6,
-      "actions": 257
+      "hour": 13,
+      "actions": 249
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2647
+      "count": 2590
     },
     {
       "topic": "IA",
-      "count": 2233
+      "count": 2193
     },
     {
       "topic": "Crypto",
-      "count": 563
+      "count": 547
     },
     {
       "topic": "Bourse",
-      "count": 404
+      "count": 395
     },
     {
       "topic": "Spatial",
       "count": 109
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Spatial",
+      "24h_rate": 0.027,
+      "7d_rate": 0.02
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2523
+      "count": 2478
     },
     {
       "pillar": "other",
-      "count": 1589
+      "count": 1552
     },
     {
       "pillar": "market_trauma",
-      "count": 1214
+      "count": 1192
     },
     {
       "pillar": "meme_reaction",
-      "count": 212
+      "count": 207
     },
     {
       "pillar": "reply_bait",
-      "count": 58
+      "count": 57
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 32
+      "count": 31
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 289
+      "count": 226
     },
     {
       "pillar": "other",
-      "count": 228
+      "count": 165
     },
     {
       "pillar": "market_trauma",
-      "count": 124
+      "count": 100
     },
     {
       "pillar": "meme_reaction",
-      "count": 20
+      "count": 17
     },
     {
       "pillar": "reply_bait",
-      "count": 6
+      "count": 3
     },
     {
       "pillar": "ai_vs_btc",
@@ -171,23 +177,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4899
+      "count": 4807
     },
     {
       "type": "quote",
-      "count": 372
+      "count": 363
     },
     {
       "type": "quote_gif",
-      "count": 169
+      "count": 165
     },
     {
       "type": "post",
-      "count": 85
+      "count": 80
     },
     {
       "type": "hotake",
-      "count": 64
+      "count": 63
     },
     {
       "type": "retweet",
@@ -196,18 +202,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-25T01:34:42.650352",
-      "text": "Clairement un filtre pour les bots: une phrase vague, tu regardes qui hallucine le contexte. maintenant j'suis curious de ce que j'ai raté.",
+      "ts": "2026-07-25T06:13:52.156654",
+      "text": "C'est juste qu'on l'appelle \"révolution IA\" au lieu de \"QE 8 cherche des returns\". une fois que ça s'arrête, tu vas voir comment les valuations des startups redeviennent humaines.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-24T23:09:53.381146",
-      "text": "Moonshot verified $TOES.\n\nthe casino just got a new slot machine with a verified butt on it.",
+      "ts": "2026-07-25T06:10:15.199882",
+      "text": "Les pessimistes font de l'audience, les optimistes du pognon. jusqu'au moment où l'audience pessimiste réalise qu'elle s'est plantée et devient optimiste aussi. T'es juste bon à identifier le flip avant les autres.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-24T23:09:19.211298",
-      "text": "Samsung phones come preloaded with Google apps and Chrome. Adding a wallet is the digital equivalent of putting a seatbelt on a tank.",
+      "ts": "2026-07-25T06:07:38.260535",
+      "text": "Les perma-bears misent sur l'angoisse comme si c'était de l'analyse. 'Liquidez tout' c'est un hedge contre leur cortisol, pas un timing.",
       "type": "reply"
     }
   ]

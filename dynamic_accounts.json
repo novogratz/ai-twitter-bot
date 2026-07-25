@@ -1034,7 +1034,8 @@
     "Zack",
     "Bitcoin",
     "cheaty",
-    "DogeDesigner"
+    "DogeDesigner",
+    "jack"
   ],
   "history": [
     {
@@ -6200,6 +6201,11 @@
     {
       "lang": "en",
       "handle": "DogeDesigner",
+      "added": "2026-07-25"
+    },
+    {
+      "lang": "en",
+      "handle": "jack",
       "added": "2026-07-25"
     }
   ]
