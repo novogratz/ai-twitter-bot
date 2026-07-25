@@ -783,7 +783,14 @@
     "ThomasBouvier",
     "BenoitBoullay",
     "MaximilienMars",
-    "ThomasPetitFR"
+    "ThomasPetitFR",
+    "ArxivScout",
+    "BenoitGirard",
+    "MaelleGiannotti",
+    "AlexisFuchs",
+    "SylvainLessard",
+    "JulienDeVere",
+    "EmmanuelDumas"
   ],
   "en": [
     "Chubby",
@@ -1017,7 +1024,8 @@
     "Banana3",
     "RR",
     "Noah",
-    "GameStop"
+    "GameStop",
+    "SpaceX"
   ],
   "history": [
     {
@@ -6098,6 +6106,46 @@
     {
       "lang": "en",
       "handle": "GameStop",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "ArxivScout",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitGirard",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelleGiannotti",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "en",
+      "handle": "SpaceX",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisFuchs",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLessard",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDeVere",
+      "added": "2026-07-24"
+    },
+    {
+      "lang": "fr",
+      "handle": "EmmanuelDumas",
       "added": "2026-07-24"
     }
   ]

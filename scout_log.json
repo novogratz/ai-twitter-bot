@@ -1,60 +1,5 @@
 [
   {
-    "ts": "2026-07-04T18:21:43.785005",
-    "raw_count": 5,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "HugoBisson",
-        "region": "france",
-        "niche": "ai",
-        "followers": 48000,
-        "reason": "CTO Mistral, il tweet la vraie tech AI et pas juste le buzz. L'expert du hardware FR, twitte EN FR et EN EN mais la substance est ultra-cibl\u00e9e."
-      },
-      {
-        "handle": "VincentDelaune",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "VC \u00e0 NY mais francophone pur jus. Il tweet sur le funding de la tech crypto et l'IA, avec un regard frais sur l'\u00e9cosyst\u00e8me US."
-      },
-      {
-        "handle": "ArnaudLescot",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Fondateur de Moneyflow, il fait un thread par jour sur le CAC40. C'est technique, c'est francophone, et il a un sens de la chute qui claque."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la soupe \u00e0 l'influencer pour garder les technocrates et les pros du terrain. Tu as l'IA fran\u00e7aise, le trading boursier concret et la crypto qu\u00e9b\u00e9coise/am\u00e9ricaine. Z\u00e9ro formation \u00e0 199\u20ac."
-  },
-  {
-    "ts": "2026-07-04T20:15:27.989584",
-    "raw_count": 8,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibautNoyelle",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "Une institution qu\u00e9b\u00e9coise. Il couvre la macro et la bourse avec une honn\u00eatet\u00e9 rare. Pas de formation VIP \u00e0 vendre, juste du bon sens boursier."
-      },
-      {
-        "handle": "0xMerlin",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Analyste DeFi de haut vol. Moins hulu, plus technique. Quand il tweeter, le march\u00e9 \u00e9coute."
-      }
-    ],
-    "summary": "Une s\u00e9lection de v\u00e9t\u00e9rans et de fondus techniques qui ont \u00e9vit\u00e9 le pi\u00e8ge du 'gourou'. De l'analyse on-chain pointue (Mert, Merlin) aux narratives IA (Maziero) jusqu'\u00e0 la bourse pragmatique qu\u00e9b\u00e9coise (Noyelle)."
-  },
-  {
     "ts": "2026-07-04T23:41:50.307172",
     "raw_count": 8,
     "kept_count": 3,
@@ -8564,5 +8509,74 @@
       }
     ],
     "summary": "Mix de puristes (Mistral), d'analyse on-chain (Bourgeois) et de finance classique (Duclos/Petit). Z\u00e9ro vendeur de r\u00eave, que des gens qui font bouger la tech ou le prix des actifs."
+  },
+  {
+    "ts": "2026-07-24T17:43:29.096766",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ArxivScout",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "La bible technique en FR pour les chercheurs et devs qui veulent suivre l'IA sans les bulles info. Moins hype que Mistral officiel, mais plus utile."
+      },
+      {
+        "handle": "BenoitGirard",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 15000,
+        "reason": "Cofondateur de Coinhouse au Qu\u00e9bec, il balance du concret sur la r\u00e9gulation et l'adoption crypto, sans vendre du r\u00eave en Telegram."
+      },
+      {
+        "handle": "MaelleGiannotti",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Directrice g\u00e9n\u00e9rale de Mistral AI. Ses threads sur la short-termism de l'IA sont les meilleures antidotes aux discours 'IA nous sauvera tout'."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des influenceurs formations pour ne garder que les techniciens qui font avancer le sujet. Rochard est l'exception anglophone indispensable car sa qualit\u00e9 d\u00e9passe largement la plupart des comptes 100% FR."
+  },
+  {
+    "ts": "2026-07-24T19:43:42.800979",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AlexisFuchs",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 35000,
+        "reason": "L'ancien de N26 qui a compris que la fintech, c'est pas que des apps, c'est des humains. Il balance des insights sur la banque, le paiement et l'IA, twitte r\u00e9guli\u00e8rement en FR. Pas de bruit, du contenu de founder qui a vu les trucs derri\u00e8re le rideau."
+      },
+      {
+        "handle": "SylvainLessard",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 25000,
+        "reason": "Le prof qui rend la bourse digeste comme un bon curry \u00e0 l'\u00e9picerie. Pas de jargon pour vendre du vent, juste des analyses solides sur les march\u00e9s canadiens et am\u00e9ricains. Il twitte en FR, il a une vraie audience, et il n'a pas l'air de vouloir te vendre son Telegram VIP."
+      },
+      {
+        "handle": "JulienDeVere",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Le gars qui couvre le cycle crypto qu\u00e9b\u00e9cois avec plus d'humour que la plupart des influenceurs NY. Il mixe analyse on-chain et culture locale, pas de signaux payants, juste des takes coh\u00e9rents sur les altcoins et les macro."
+      },
+      {
+        "handle": "EmmanuelDumas",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le Parisien expatri\u00e9 \u00e0 SF qui raconte l'IA comme si tu prenais un caf\u00e9 aux Halles. Il couvre l'appli de l'IA, pas juste le hype des LLMs. Il twitte en FR pour la diaspora et en EN pour le reste, mais ses meilleures punchlines sont toujours en fran\u00e7ais."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 pour \u00e9viter les vendeurs de r\u00eave : Mistral AI pour la tech pure, Sylvain Lessard pour la finance Qu\u00e9bec sans chichi, et Pierre Rochard pour le bitcoin aux US. C'est du solide, pas du vent."
   }
 ]
