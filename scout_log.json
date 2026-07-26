@@ -1,60 +1,5 @@
 [
   {
-    "ts": "2026-07-05T03:44:45.209839",
-    "raw_count": 7,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "NathanPache",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 32000,
-        "reason": "Fondateur de SWE.LAND. Il twitte en EN mais ses fils tech sont consult\u00e9s par la diaspora FR IA. Punchy, actif, visionnaire."
-      },
-      {
-        "handle": "AlexisDrouin_",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 15000,
-        "reason": "La voix raisonnable de la finance qu\u00e9b\u00e9coise sur X. Analyse boursi\u00e8re solide, ton pos\u00e9, pas de hype forcen\u00e9e. Rare dans le vacarme ambiant."
-      }
-    ],
-    "summary": "On reste sur les valeurs s\u00fbres : l'IA fran\u00e7aise port\u00e9e par Mistral, la crypto FR sans pub, et la fintech VC. Pas de gourou Telegram, juste des buildeurs qui postent."
-  },
-  {
-    "ts": "2026-07-05T05:47:01.606560",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LuccaDumas",
-        "region": "france",
-        "niche": "tech",
-        "followers": 85000,
-        "reason": "L'expert incontest\u00e9 de l'IA en France, postule comme un chef d'orchestre, pas comme un influenceur qui vend du r\u00eave."
-      },
-      {
-        "handle": "RomainGiraud",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Analyste actionnaro, ses threads d\u00e9cortiquent les bilans sans endormir le lecteur, le format parfait pour X."
-      },
-      {
-        "handle": "ValentinGoury",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Tech leader passionn\u00e9, ses posts sur le SaaS fran\u00e7ais sont plus utiles que 90% des threads viraux du moment."
-      }
-    ],
-    "summary": "Une s\u00e9lection propre, sans les vendeurs de r\u00eaves. On y a mis les experts techniques qui ont du fond plut\u00f4t que du bruit. L'IA fran\u00e7aise bouge, les Qu\u00e9b\u00e9cois font mieux leur travail en silence."
-  },
-  {
     "ts": "2026-07-05T07:34:22.961258",
     "raw_count": 10,
     "kept_count": 5,
@@ -8564,5 +8509,102 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour te donner des constructeurs et des analystes. La France domine sur l'IA (Mistral/HF), le Qu\u00e9bec est plus discret mais pointu sur la recherche, et la diaspora US apporte la vision march\u00e9. Z\u00e9ro formation \u00e0 999\u20ac dans la corbeille."
+  },
+  {
+    "ts": "2026-07-26T01:43:51.014855",
+    "raw_count": 7,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mickaelm",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Le prof de crypto de la Sorbonne, il twitte comme il cours : sans piti\u00e9 pour les fake Gurus et la th\u00e9orie du chaos."
+      },
+      {
+        "handle": "Rapha3lS",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Un des seuls qui explique le LLM sans vendre du r\u00eave, mais la r\u00e9alit\u00e9 brute du hardware et du code."
+      },
+      {
+        "handle": "ThomasMaillard",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'analyste technique qui a surv\u00e9cu \u00e0 2008, il ne donne pas de signal, il donne des r\u00e8gles."
+      },
+      {
+        "handle": "BenjaminDebove",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "FR expat aux USA, il compare le silence des Big Tech avec le bruit des startups IA en zone de guerre."
+      },
+      {
+        "handle": "LunaSquid",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "Elle tweete la volatilit\u00e9 crypto comme un match de rugby : sanglant, rapide, et sans piti\u00e9 pour les d\u00e9butants."
+      },
+      {
+        "handle": "JulesGuerard",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Le roi du fil X qu\u00e9b\u00e9cois, il transforme la complexit\u00e9 on-chain en blagues de bar \u00e0 Montr\u00e9al."
+      },
+      {
+        "handle": "AlexandreLavoie",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Trader \u00e0 temps plein, il tweete le chaos du march\u00e9 avec l'humour noir d'un Qu\u00e9b\u00e9cois qui a vu le Nasdaq pleurer."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui tweetent l'envers du d\u00e9cor : des profils techniques, des traders de terrain et des chercheurs qui supportent pas le buzz vide. De la Sorbonne \u00e0 Montr\u00e9al, c'est du concret qui tape."
+  },
+  {
+    "ts": "2026-07-26T03:43:35.107677",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "AlexisDeVos",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Investisseur vrac, style sec, z\u00e9ro formation \u00e0 97\u20ac."
+      },
+      {
+        "handle": "ThomasBourles",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Ancien Hachette, focus Web3, qualit\u00e9 \u00e9ditoriale rare."
+      },
+      {
+        "handle": "BenjaminChassany",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Co-fondateur de Weaviate, deep tech sans jargon, engagement r\u00e9el."
+      },
+      {
+        "handle": "MaximeRenaud",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Data cruncher, less hype more charts, francophone pur."
+      }
+    ],
+    "summary": "Mix \u00e9quilibr\u00e9 entre les g\u00e9ants du code (Mistral) et les b\u00e2tisseurs de produits, plus deux p\u00e9pites qu\u00e9b\u00e9coises pour couvrir le nord. Z\u00e9ro influenceur 'guru' \u00e0 l'huile de coude."
   }
 ]

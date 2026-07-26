@@ -797,7 +797,17 @@
     "AdrienGirardfr",
     "AlexandreFuchs",
     "OlivierBordet",
-    "LucFonfara"
+    "LucFonfara",
+    "mickaelm",
+    "Rapha3lS",
+    "ThomasMaillard",
+    "BenjaminDebove",
+    "LunaSquid",
+    "JulesGuerard",
+    "AlexandreLavoie",
+    "AlexisDeVos",
+    "ThomasBourles",
+    "MaximeRenaud"
   ],
   "en": [
     "Chubby",
@@ -1047,7 +1057,8 @@
     "Suhail",
     "wealthmoose",
     "Shen",
-    "Pumpolinsky"
+    "Pumpolinsky",
+    "1win"
   ],
   "history": [
     {
@@ -6279,6 +6290,61 @@
       "lang": "fr",
       "handle": "LucFonfara",
       "added": "2026-07-25"
+    },
+    {
+      "lang": "en",
+      "handle": "1win",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelm",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "Rapha3lS",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasMaillard",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminDebove",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "LunaSquid",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesGuerard",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexandreLavoie",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDeVos",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasBourles",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeRenaud",
+      "added": "2026-07-26"
     }
   ]
 }
