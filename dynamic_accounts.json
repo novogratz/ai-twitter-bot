@@ -826,7 +826,21 @@
     "JadeCapuano",
     "RenaudDelaunay",
     "LouisGagnon",
-    "BenoitF"
+    "BenoitF",
+    "mickaweb",
+    "MaximeAmarillo",
+    "jloic_m",
+    "JulieLagathu",
+    "MaximeCouture",
+    "JulienRougieux",
+    "AlexisVivien",
+    "MarcRoussel",
+    "mickaelboulay",
+    "ThomasDucasse",
+    "MaximeRoussel",
+    "RomainGrenet",
+    "CryptoGibet",
+    "JulienDubois"
   ],
   "en": [
     "Chubby",
@@ -1078,7 +1092,9 @@
     "Shen",
     "Pumpolinsky",
     "1win",
-    "antirez"
+    "antirez",
+    "Tangem",
+    "InvestAnswers"
   ],
   "history": [
     {
@@ -6464,6 +6480,86 @@
     {
       "lang": "fr",
       "handle": "BenoitF",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaweb",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeAmarillo",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "jloic_m",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulieLagathu",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCouture",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienRougieux",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisVivien",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "en",
+      "handle": "Tangem",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "en",
+      "handle": "InvestAnswers",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcRoussel",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaelboulay",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasDucasse",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeRoussel",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainGrenet",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoGibet",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDubois",
       "added": "2026-07-26"
     }
   ]

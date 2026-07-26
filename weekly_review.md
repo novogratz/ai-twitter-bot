@@ -1,43 +1,43 @@
-# Weekly review — 2026-W29
+# Weekly review — 2026-W30
 
-Generated 2026-07-19T17:52 (deterministic, from engagement_log + follower_history).
+Generated 2026-07-26T17:42 (deterministic, from engagement_log + follower_history).
 
 ## Account
-- Followers: **2206** (+165 this week)
-- Following: **3320** ⚠️ OVER the 300 cap by 3020
+- Followers: **2581** (+374 this week)
+- Following: **3500** ⚠️ OVER the 300 cap by 3200
 
 ## Action mix (7 days)
-- reply: 3886 (84%)
-- quote: 354 (7%)
-- quote_gif: 170 (3%)
-- post: 79 (1%)
-- hotake: 67 (1%)
-- retweet: 53 (1%)
+- reply: 4587 (87%)
+- quote: 340 (6%)
+- quote_gif: 160 (3%)
+- post: 72 (1%)
+- hotake: 56 (1%)
+- retweet: 40 (0%)
 
 ## Pillar mix (7 days) — shift toward winners
-- ai_news_take: 1991 (43%)
-- other: 1410 (30%)
-- market_trauma: 914 (19%)
-- meme_reaction: 216 (4%)
-- ai_vs_btc: 40 (0%)
-- reply_bait: 38 (0%)
+- ai_news_take: 2370 (45%)
+- other: 1486 (28%)
+- market_trauma: 1120 (21%)
+- meme_reaction: 194 (3%)
+- reply_bait: 59 (1%)
+- ai_vs_btc: 26 (0%)
 
 ## Volume by day
-- 2026-07-12: 174 actions
-- 2026-07-13: 768 actions
-- 2026-07-14: 155 actions
-- 2026-07-15: 648 actions
-- 2026-07-16: 789 actions
-- 2026-07-17: 807 actions
-- 2026-07-18: 714 actions
-- 2026-07-19: 554 actions
+- 2026-07-19: 209 actions
+- 2026-07-20: 899 actions
+- 2026-07-21: 848 actions
+- 2026-07-22: 912 actions
+- 2026-07-23: 857 actions
+- 2026-07-24: 801 actions
+- 2026-07-25: 45 actions
+- 2026-07-26: 684 actions
 
 ## Top posts (7 days, by likes — scraped metrics)
-- ❤️3 👁53, 5.7% eng [ai_news_take] Asked the AI barista for a black coffee. It printed a latte with a side of existential dread and charged me in
-- ❤️3 👁49, 6.1% eng [other] crypto twitter, in unison: "the crowd is never right"
-- ❤️2 👁52, 3.8% eng [other] me looking broke while doing the work of three people
-- ❤️2 👁38, 5.3% eng [market_trauma] Nuclear startup. $6B valuation. sole purpose: keeping your AI running.  my patient who called the AI boom 'tem
-- ❤️2 👁24, 8.3% eng [ai_news_take] me reading the Kimi K3 benchmark: . me reading "it's over for Anthropic":
+- ❤️3 👁233, 1.3% eng [market_trauma] me watching the super heavy return and my portfolio drop simultaneously, finding the balance
+- ❤️1 👁214, 0.5% eng [other] me watching $INTC $AMD $NVDA nod along like we’re in a group chat that stopped typing two hours ago  https://x
+- ❤️1 👁128, 0.8% eng [market_trauma] my portfolio watching $GOOGL report $9.11 EPS like it just aced the SATs without opening the book  https://x.c
+- ❤️1 👁95, 1.1% eng [ai_news_take] me looking at these charts and realizing I paid $8k for a GPU while he pays $8k in margin calls
+- ❤️1 👁80, 1.2% eng [other] me refreshing the tab like it’s a toddler asking "are we there yet?"
 
 ## Spec targets (2026-06-07 quality barbell)
 - QUANTITY: replies unlimited (the reach engine) · reply-bait 3-4/week
