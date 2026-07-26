@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-07-05T11:47:34.638759",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenoitFP",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "Le roi de la micro-cap fran\u00e7aise. Il tweette des perles boursi\u00e8res tous les matins avec un humour d\u00e9cal\u00e9."
-      },
-      {
-        "handle": "Hugo_Debat",
-        "region": "france",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "Le 'French MrBeast' des startups. Il couvre l'\u00e9cosyst\u00e8me tech fran\u00e7ais avec un ton d\u00e9complex\u00e9 et tr\u00e8s humain."
-      },
-      {
-        "handle": "AdrienLeClaire",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "Ex-PayPal, patron de Monei. Il poste sur la fintech, le paiement et l'Europe. Tr\u00e8s peu de vent, beaucoup de substance."
-      }
-    ],
-    "summary": "Le panier est l\u00e9ger mais serr\u00e9 : on \u00e9vite les influenceurs qui vendent du r\u00eave pour privil\u00e9gier des ex-praticiens (BenoitFP, AdrienLeClaire) qui savent ce qu'ils racontent."
-  },
-  {
     "ts": "2026-07-05T13:39:25.321934",
     "raw_count": 12,
     "kept_count": 9,
@@ -8606,5 +8575,64 @@
       }
     ],
     "summary": "Une s\u00e9lection de pros qui twittent, pas des influenceurs qui vendent du vent. On a touch\u00e9 la France tech/crypto, le Qu\u00e9bec trading/bourse et l'IA transversale."
+  },
+  {
+    "ts": "2026-07-26T07:44:26.241035",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Maxime_Bo",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 55000,
+        "reason": "L'incontournable. Ses threads sur le march\u00e9 FR sont clairs, sans blabla, et il a la r\u00e9putation de ne pas vendre de lait vert."
+      },
+      {
+        "handle": "RaphaeltG",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Le trader pro qui assume ses pertes. Moins de 'to the moon' plus de charts et de risk management concret."
+      },
+      {
+        "handle": "GauthierBretelle",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "L'analyste technique qui fait oublier les formations \u00e0 2000\u20ac. Un pur technicien, pas un vendeur de r\u00eaves."
+      },
+      {
+        "handle": "ThomasP92",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Le roi de l'ETF Bitcoin en FR. Il explique la macro crypto sans faire dormir le lecteur, contrairement aux threads de 50 tweets."
+      },
+      {
+        "handle": "AlexisDeL",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "La voix qu\u00e9b\u00e9coise la plus fiable. Il couvre DeFi et NFTs avec un ton pos\u00e9, loin du hype bruyant."
+      },
+      {
+        "handle": "VincentProulx",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "G\u00e9rant de fonds qui partage sa pens\u00e9e. Pas de signaux, juste de l'analyse fondamentale solide en bon fran\u00e7ais."
+      },
+      {
+        "handle": "ClaraM",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 11000,
+        "reason": "Journaliste fintech qui a vu passer toutes les bulles. Elle sait o\u00f9 est le vrai business et o\u00f9 est le bluff."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les pros qui font vivre leur compte avec du fond, pas des banni\u00e8res Telegram. De la macro \u00e0 la tech, il y a de quoi se nourrir sans se prendre la t\u00eate."
   }
 ]

@@ -1,19 +1,15 @@
 {
-  "generated_at": "2026-07-26T05:42:59.090512",
-  "window_7d_actions": 5182,
-  "window_24h_actions": 253,
+  "generated_at": "2026-07-26T09:42:59.198666",
+  "window_7d_actions": 5247,
+  "window_24h_actions": 399,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5178
+      "count": 5244
     },
     {
       "pattern": "RENAME",
       "count": 2
-    },
-    {
-      "pattern": "UNDERSTATEMENT",
-      "count": 1
     },
     {
       "pattern": "METAPHOR",
@@ -22,16 +18,16 @@
   ],
   "worst_patterns": [
     {
-      "pattern": "UNDERSTATEMENT",
-      "count": 1
-    },
-    {
       "pattern": "METAPHOR",
       "count": 1
     },
     {
       "pattern": "RENAME",
       "count": 2
+    },
+    {
+      "pattern": "UNKNOWN",
+      "count": 5244
     }
   ],
   "best_hours_utc": [
@@ -48,57 +44,57 @@
       "actions": 247
     },
     {
-      "hour": 12,
-      "actions": 240
+      "hour": 6,
+      "actions": 241
     },
     {
-      "hour": 9,
-      "actions": 232
+      "hour": 12,
+      "actions": 240
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2411
+      "count": 2440
     },
     {
       "topic": "IA",
-      "count": 2081
+      "count": 2111
     },
     {
       "topic": "Crypto",
-      "count": 504
+      "count": 514
     },
     {
       "topic": "Bourse",
-      "count": 385
+      "count": 387
     },
     {
       "topic": "Spatial",
-      "count": 112
+      "count": 111
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2335
+      "count": 2364
     },
     {
       "pillar": "other",
-      "count": 1452
+      "count": 1470
     },
     {
       "pillar": "market_trauma",
-      "count": 1115
+      "count": 1133
     },
     {
       "pillar": "meme_reaction",
-      "count": 196
+      "count": 197
     },
     {
       "pillar": "reply_bait",
-      "count": 57
+      "count": 56
     },
     {
       "pillar": "ai_vs_btc",
@@ -108,19 +104,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 112
+      "count": 180
     },
     {
       "pillar": "other",
-      "count": 78
+      "count": 121
     },
     {
       "pillar": "market_trauma",
-      "count": 47
+      "count": 76
     },
     {
       "pillar": "meme_reaction",
-      "count": 12
+      "count": 17
     },
     {
       "pillar": "reply_bait",
@@ -128,7 +124,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 1
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
@@ -136,21 +132,21 @@
       "pillar": "market_trauma",
       "posts": 35,
       "avg_likes": 0.14,
-      "avg_views": 36.8,
+      "avg_views": 35.8,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 101,
-      "avg_likes": 0.09,
-      "avg_views": 30.3,
+      "avg_likes": 0.11,
+      "avg_views": 31.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 55,
-      "avg_likes": 0.07,
-      "avg_views": 27.1,
+      "avg_likes": 0.09,
+      "avg_views": 27.4,
       "low_sample": false
     },
     {
@@ -171,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4517
+      "count": 4576
     },
     {
       "type": "quote",
-      "count": 335
+      "count": 340
     },
     {
       "type": "quote_gif",
-      "count": 161
+      "count": 162
     },
     {
       "type": "post",
-      "count": 72
+      "count": 68
     },
     {
       "type": "hotake",
-      "count": 57
+      "count": 61
     },
     {
       "type": "retweet",
@@ -196,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-26T05:42:24.042595",
-      "text": "The 1000x holder didn't sell because he forgot the password.\nyou're holding because you believe in the thesis.",
+      "ts": "2026-07-26T09:42:38.722622",
+      "text": "Anthropic's free course went from \"intro to API\" to \"9 lessons, 4 sections, final exam\" in one update.\n\nThe SaaS seat model was always renting a brain. The course is the moment the brain decides to rent itself out for $0.\n\nAnthropic isn't just training models anymore. They're bui",
       "type": "reply"
     },
     {
-      "ts": "2026-07-26T05:41:33.515656",
-      "text": "Le sud-ouest brûle, @ElonMusk pleure, on fait la sieste.",
+      "ts": "2026-07-26T09:42:04.874882",
+      "text": "CDS on Nvidia and Alphabet spiking.\nthe market is pricing in a 30% capex cut before the AI utility curve bends.\npanic is just liquidity leaving a party where the host is out of cash.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-26T05:41:16.203246",
-      "text": "BitMEX died in 2020. The rest of this thread is just the ghost of 401k Dave haunting the graveyard.",
+      "ts": "2026-07-26T09:39:57.045600",
+      "text": "Microsoft’s in-house models have zero edge over OpenAI’s GPT-4o.\nthey’re swapping providers to save on API fees, not because they found a better engine.\nbroke up with the expensive lover.",
       "type": "reply"
     }
   ]

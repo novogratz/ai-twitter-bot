@@ -811,7 +811,13 @@
     "OlivierLePape",
     "JulienBourget",
     "EricViguier",
-    "MaximeSylla"
+    "MaximeSylla",
+    "Maxime_Bo",
+    "RaphaeltG",
+    "ThomasP92",
+    "AlexisDeL",
+    "VincentProulx",
+    "ClaraM"
   ],
   "en": [
     "Chubby",
@@ -1062,7 +1068,8 @@
     "wealthmoose",
     "Shen",
     "Pumpolinsky",
-    "1win"
+    "1win",
+    "antirez"
   ],
   "history": [
     {
@@ -6368,6 +6375,41 @@
     {
       "lang": "fr",
       "handle": "MaximeSylla",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "en",
+      "handle": "antirez",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "Maxime_Bo",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaeltG",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasP92",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDeL",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentProulx",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClaraM",
       "added": "2026-07-26"
     }
   ]
