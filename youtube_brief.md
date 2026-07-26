@@ -1,16 +1,16 @@
-# YouTube brief — 2026-07-25
+# YouTube brief — 2026-07-26
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **781**
-- reply: **684**
-- quote: **53**
-- quote_gif: **15**
-- post: **13**
+- Total actions logged: **68**
+- reply: **46**
 - retweet: **9**
-- hotake: **7**
+- quote: **7**
+- quote_gif: **4**
+- post: **1**
+- hotake: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -37,82 +37,79 @@
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-07-25
-- **@adambliv** (87 likes, score 9/10) — STRATEGY’S S&P 500 CHECKLIST AT A $125K BITCOIN QUARTER-END
+## 2026-07-26
+- **@charliebilello** (2251 likes, score 9/10) — % Below All-Time High...
+JPMorgan: 0%
+Apple: -1%
+S&P 500: -3%
+Nvidia: -13%
+Amazon: -17%
+Google: -22%
+Meta: -25%
+Gold: -28%
+Microsoft: -31%
+Tesla: -37%
+Palantir: -42%
+Netflix: -48%
+SpaceX: -49%
+Bitcoin
+  - https://x.com/charliebilello/status/2080748589794427322
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2561).
+- **@imjustnewatai** (74 likes, score 9/10) — openai is hiring a “researcher, recursive self-improvement safety.”
 
-U.S. company: CHECK
+salary: $295,000–$445,000.
 
-Nasdaq common stock: CHECK
+the responsibilities are even crazier than the title.
 
-$22.7B minimum market cap: CHECK
+this person will help prepare for:
 
-Public float: CHECK
+• oversight
+  - https://x.com/imjustnewatai/status/2081209162252345436
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 86).
+- **@coinmarketcap** (342 likes, score 8/10) — LATEST:  Nvidia CEO Jensen Huang predicts OpenAI and Anthropic will be "the most successful IPOs in human history."
+  - https://x.com/CoinMarketCap/status/2081048145589309611
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 506).
+- **@imjustnewatai** (108 likes, score 8/10) — sam altman just described the most important ai scaling loop nobody is talking about:
 
-Liquidity: CHECK. MSTR trades like
-  - https://x.com/AdamBLiv/status/2080818311927837174
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 105).
-- **@codingnoobie** (14 likes, score 7/10) — DAILY TECH NEWS ROUNDUP 
+a data center uses its thinking power to direct robot fleets that build more data centers.
 
-Everything important that happened in tech during the last 24 hours:
-
-• AMD and Anthropic announced a landmark AI infrastructure partnership. Anthropic will deploy up to 2 gi
-  - https://x.com/CodingNoobie/status/2080359819475837364
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 22).
-- **@southernvalue95** (52 likes, score 8/10) — Everyone frets 4-5x a quarter that AVGO might "lose" the TPU to MTK or MRVL. In 2Q $AVGO signed an extended agreement w/ GOOG through 2031 which was rumored to have committed minimum volumes that rise
-  - https://x.com/SouthernValue95/status/2080727986035425363
-  - **WHY**: Source fiable + impact concret (score signal 6, engagement 68).
-- **@cerebras** (2166 likes, score 7/10) — Today, @AMD and Cerebras introduced a powerful disaggregated inference solution, pairing the right engine to each phase of the inference pipeline.
-
-This is what agentic AI has been waiting for: the fa
-  - https://x.com/cerebras/status/2080349251318530263
-  - **WHY**: Source fiable + impact concret (score signal 5, engagement 2254).
-- **@murtuza_merc** (25 likes, score 8/10) — Nvidia invested $1 billion in Naver to build South Korea's largest AI data center. Seoul wants to become Asia's compute hub. Whether Korea's infrastructure bet beats China's chip ban workaround is the
-  - https://x.com/murtuza_merc/status/2080873467881070966
-  - **WHY**: Source fiable + impact concret (score signal 10, engagement 39).
+the singularity clip
+  - https://x.com/imjustnewatai/status/2081134740623560853
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 136).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_FOLLOWING/Elon Musk]** A quarter century of work by an incredible team @SpaceX
-  - https://x.com/elonmusk/status/2080874307492729195
-- **[X_HOME/Michael | Hypermarkets]** $GOOG: first negative FCF since 2004.
-$TSLA: first negative FCF in two years.
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Brian Roemmele]** Anthropic employees go nuclear on the popularity of open source AI.
 
-Next week, $META $AAPL $AMZN $MSFT will report its capex and cash position.
+It is getting really ugly as they realize that Anthropic is now isolated like a virus.
 
-Four
-  - https://x.com/itsmichaelluu/status/2080812950206796000
-- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/The Data of Everything]** Largest AI Companies by Market Capitalization (as of July 2026)
+It 
+  - https://x.com/BrianRoemmele/status/2081061312570994977
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Dinesh D'Souza]** Check out this Chinese robot, ready to be weaponized. One reason I like robotics and AI is I don’t want to have to put on my running shoes to try and get away f
+  - https://x.com/DineshDSouza/status/2081093940673937566
+- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/U.S. Department of Energy]** The Genesis Mission is advancing @POTUS' American Nuclear Renaissance! 
 
-1.  NVIDIA - $5.009 T
-2.  Apple - $4.891 T
-3.  Alphabet (Google) - $3.902 T
-4.  Microsoft - $2.
-  - https://x.com/TheDataHubX/status/2080812460374999354
-- **[X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/WAREMAT EXPO]** 5 Days to Go!
+ICYMI: The Energy Department selected 278 projects to unleash the power of our nation’s
+  - https://x.com/ENERGY/status/2081147209395867922
+- **[X_HOME/India Plus]** Former GitHub CEO Thomas Dohmke has launched his AI coding platform "Entire" in India with local Git hosting to give developers faster access and lower latency.
+  - https://x.com/india_plus_/status/2081069469196050918
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/SMB Attorney]** The clickbait is missing the actual point.
 
-Don't just watch the industry grow—be part of it!
+Musk isn’t just saying “money dies in 2036.” He’s saying AI (smarter than all humans combined in ~5 years) + million
+  - https://x.com/SMB_Attorney/status/2081169961595093473
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Loong of the east]** Japanese Experts: China’s Robotics Capabilities Are Highly Advanced; Japan Unlikely to Catch Up Soon
 
-Only 5 days left until South India's leading B2B exhibition for Warehousing, Material Handling
-  - https://x.com/warematexpo/status/2080874359217062304
-- **[X_HOME/Global Markets Investor]** Korean retail BUBBLE IS BURSTING:
+On July 23, the Nikkei xTECH website released a video show
+  - https://x.com/loong_of/status/2081193364826054667
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Shining Science]** A Silicon Valley startup backed by Eric Trump is developing humanoid robot supersoldiers with lethal 'kinetic' capabilities for the battlefield.
 
-Margin debt in South Korea is down to ~$22.6 billion, the lowest in 3 months.
+While most rob
+  - https://x.com/ShiningScience/status/2081163823155925021
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Eren Chen]** A Chinese robotics team showed how they brutalize humanoid robots.
 
-Debt has declined -$3.5 billion since the June
-  - https://x.com/GlobalMktObserv/status/2080873929053245932
-- **[X_FOLLOWING/That Martini Guy ₿]** BLACKROCK'S BITCOIN ETF JUST RECORDED $212M IN NET OUTFLOWS.
-
-After weeks of strong institutional demand, we're finally seeing some selling pressure return.
-  - https://x.com/MartiniGuyYT/status/2080874370432729136
-- **[X_FOLLOWING/Mario Nawfal]** A $2 billion radar was wiped out by two $20,000 drones.
-
-Fmr. U.S. Navy intel officer Malcolm Nance walks through the systematic blinding: the Qatari radar cont
-  - https://x.com/MarioNawfal/status/2080874433120497999
-- **[X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/NationPress]** Nvidia Partners Korea on AI Chips, Robotics and AI Factories
-
-Nvidia announced on 25 July 2026 it is partnering with Korean government and industry to build AI 
-  - https://x.com/np_nationpress/status/2080874794980094463
+Kicks, pushes, repeated knockdowns, and recovery training—all to build more robust locomotio
+  - https://x.com/ErenChenAI/status/2081211715899867283
 
 ## 🎬 Suggested video angles
 
@@ -123,4 +120,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-07-25T00:42:59*
+*Generated 2026-07-26T00:42:59*
