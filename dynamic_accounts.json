@@ -795,7 +795,9 @@
     "MaximeLebois",
     "MathiasLamy",
     "AdrienGirardfr",
-    "AlexandreFuchs"
+    "AlexandreFuchs",
+    "OlivierBordet",
+    "LucFonfara"
   ],
   "en": [
     "Chubby",
@@ -1043,7 +1045,9 @@
     "MacLesggy",
     "Dustin",
     "Suhail",
-    "wealthmoose"
+    "wealthmoose",
+    "Shen",
+    "Pumpolinsky"
   ],
   "history": [
     {
@@ -6254,6 +6258,26 @@
     {
       "lang": "en",
       "handle": "wealthmoose",
+      "added": "2026-07-25"
+    },
+    {
+      "lang": "en",
+      "handle": "Shen",
+      "added": "2026-07-25"
+    },
+    {
+      "lang": "en",
+      "handle": "Pumpolinsky",
+      "added": "2026-07-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierBordet",
+      "added": "2026-07-25"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucFonfara",
       "added": "2026-07-25"
     }
   ]

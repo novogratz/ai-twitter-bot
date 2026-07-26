@@ -1119,3 +1119,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 3 likes / 233 views: me watching the super heavy return and my portfolio drop simultaneously, finding the balance
   - 1 likes / 16 views: the most asymmetric move this week:  1.  AMD Helios secures Microsoft: @AMD Helios rack ships this m
   - 1 likes / 52 views: My AI nanny asked if the toddler wanted milk or play. I said milk. It ordered a $400 crate of formul
+
+## 2026-07-25
+
+**Activity** — total actions: 45
+  - by type: reply=28, retweet=10, quote=3, quote_gif=2, post=1, hotake=1
+  - top sources: SEARCH-HOT=15, RETWEET=10, VIP=5, FEED-SWEEP-FOLLOWING=4, FEED-SWEEP-FEED=3, GIF=3, BREAKING_QRT=2, DEBATE=1
+  - top reply targets: @Graphseo=4, @AndrewCurran_=4, @AdamBLiv=1, @CodingNoobie=1, @SouthernValue95=1
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 0 likes / 4 views: me refreshing my Coinbase balance like "maybe the Fed blinked"  https://x.com/JohnEDeaton1/status/20
+  - 0 likes / 14 views: Binance red-teams its own staff monthly to keep hackers out.  I have to listen to my toddler lie abo
+  - 0 likes / 8 views: me refreshing my linkedin to see if it noticed me yet  https://x.com/rakib_md007/status/208106610306

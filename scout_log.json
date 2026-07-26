@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-07-05T01:49:36.093346",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "VincentLebrun",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Bas\u00e9 \u00e0 NYC mais francophone. Il tweete en EN mais cite souvent les devs FR. Essentiel pour voir comment l'\u00e9cosyst\u00e8me francophone perce aux US."
-      },
-      {
-        "handle": "JulienBec",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Le pape du trading crypto FR. Il tweet en fran\u00e7ais, il fait rire, et ses analyses on-chain sont pr\u00e9cises. Pas de shittcoins bidons, juste de la vraie data."
-      },
-      {
-        "handle": "MaelleKevin",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 28000,
-        "reason": "Ex-hedge fund, elle d\u00e9cortique les bilans comme un boucher. Son style est direct, un peu cynique, et parfait pour ceux qui veulent comprendre l'actu sans le jargon bancal."
-      },
-      {
-        "handle": "OlivierBouteloup",
-        "region": "france",
-        "niche": "finance",
-        "followers": 22000,
-        "reason": "Il tweete \u00e0 la pelle sur l'actu macro et les actions. Moins 'influencer', plus 'analyste qui bosse'. Une valeur s\u00fbre pour la profondeur."
-      },
-      {
-        "handle": "MaximeBouillaguet",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Cr\u00e9ateur de CryptoRadar. Il mixe data, graphes et humour. Un des rares \u00e0 rendre la lecture de la blockchain digeste sans la d\u00e9naturer."
-      },
-      {
-        "handle": "Alexis_Drouin_",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "VC \u00e0 Montr\u00e9al. Il couvre les startups FR et CA avec un \u0153il critique. Moins de bruit que les generalistes, plus de focus sur la vraie innovation."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les cerveaux : les fondateurs de Mistral, les analystes hedge funds qui ne shittcoinent pas \u00e0 droite \u00e0 gauche, et les VC qui ont un filtre solide. Fini les influenceurs qui vendent des signaux Telegram, place aux vrais buildeurs."
-  },
-  {
     "ts": "2026-07-05T03:44:45.209839",
     "raw_count": 7,
     "kept_count": 2,
@@ -8592,5 +8540,29 @@
       }
     ],
     "summary": "La s\u00e9lection se concentre sur les 'craftsmen' : ceux qui postent du contenu technique ou data-driven plut\u00f4t que des tirades philosophiques. On \u00e9vite les influenceurs qui vendent des formations \u00e0 990\u20ac pour d\u00e9couvrir que l'IA c'est juste du chatbot."
+  },
+  {
+    "ts": "2026-07-25T23:43:40.544288",
+    "raw_count": 8,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "OlivierBordet",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Bas\u00e9 \u00e0 SF mais francophone. Ex-CTO, parle de product-market fit en IA et de strat\u00e9gie tech US vue de l'int\u00e9rieur."
+      },
+      {
+        "handle": "LucFonfara",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Journaliste crypto \u00e0 Montr\u00e9al. Couvre l'industrie avec du recul, pas juste des shills."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour te donner des constructeurs et des analystes. La France domine sur l'IA (Mistral/HF), le Qu\u00e9bec est plus discret mais pointu sur la recherche, et la diaspora US apporte la vision march\u00e9. Z\u00e9ro formation \u00e0 999\u20ac dans la corbeille."
   }
 ]
