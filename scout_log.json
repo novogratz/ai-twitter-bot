@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-07-05T07:34:22.961258",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibautMazurier",
-        "region": "france",
-        "niche": "tech",
-        "followers": 180000,
-        "reason": "Journaliste Tech/Fintech de premier plan, couvre les VC et les succ\u00e8s FR sans tabou."
-      },
-      {
-        "handle": "PierreRoche",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 60000,
-        "reason": "VC et investisseur fran\u00e7ais bas\u00e9 \u00e0 SF, couvre AI et SaaS avec un r\u00e9seau immense."
-      },
-      {
-        "handle": "SylvainDuclos",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 55000,
-        "reason": "Ex-AMF qui d\u00e9crypte la finance fran\u00e7aise avec un humour sec, pas de pub de formation \u00e0 la cl\u00e9."
-      },
-      {
-        "handle": "AlexisMazari",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Fondateur de Bitstamp France, analyse de march\u00e9 solide et tweets quotidiens."
-      },
-      {
-        "handle": "MathisBoulay",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour l'analyse de march\u00e9 et la psychologie du trader."
-      }
-    ],
-    "summary": "Une s\u00e9lection 100% active, sans les influenceurs formations de base, centr\u00e9e sur l'analyse et la tech pure."
-  },
-  {
     "ts": "2026-07-05T11:47:34.638759",
     "raw_count": 6,
     "kept_count": 3,
@@ -8606,5 +8561,50 @@
       }
     ],
     "summary": "Mix \u00e9quilibr\u00e9 entre les g\u00e9ants du code (Mistral) et les b\u00e2tisseurs de produits, plus deux p\u00e9pites qu\u00e9b\u00e9coises pour couvrir le nord. Z\u00e9ro influenceur 'guru' \u00e0 l'huile de coude."
+  },
+  {
+    "ts": "2026-07-26T05:43:36.696114",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "OlivierLePape",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "L'expert macro FR qui ne vend pas de r\u00eave. Ses threads sur la politique mon\u00e9taire sont les seuls \u00e0 faire moins mal que l'IRI."
+      },
+      {
+        "handle": "JulienBourget",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "La r\u00e9f\u00e9rence crypto qu\u00e9b\u00e9coise. Moins de bruit que ses confr\u00e8res, plus de fond. Il distingue les p\u00e9pites des arnaques \u00e0 la tire."
+      },
+      {
+        "handle": "EricViguier",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Ancien de Coinhouse, il couvre le march\u00e9 FR avec une honn\u00eatet\u00e9 rare. Il n'a pas peur de pointer les conneries des L2."
+      },
+      {
+        "handle": "MaximeSylla",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Le gars derri\u00e8re La French Tech. Il sait o\u00f9 l'argent va avant que la SEC ne s'en rende compte. Actif et pertinent."
+      },
+      {
+        "handle": "PhilippeBourgault",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Le trader ind\u00e9pendant qu\u00e9b\u00e9cois. Pas de formations \u00e0 2000\u20ac, juste des charts et du bon sens qu\u00e9b\u00e9cois bien senti."
+      }
+    ],
+    "summary": "Une s\u00e9lection de pros qui twittent, pas des influenceurs qui vendent du vent. On a touch\u00e9 la France tech/crypto, le Qu\u00e9bec trading/bourse et l'IA transversale."
   }
 ]

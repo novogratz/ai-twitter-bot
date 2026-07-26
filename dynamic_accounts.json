@@ -807,7 +807,11 @@
     "AlexandreLavoie",
     "AlexisDeVos",
     "ThomasBourles",
-    "MaximeRenaud"
+    "MaximeRenaud",
+    "OlivierLePape",
+    "JulienBourget",
+    "EricViguier",
+    "MaximeSylla"
   ],
   "en": [
     "Chubby",
@@ -6344,6 +6348,26 @@
     {
       "lang": "fr",
       "handle": "MaximeRenaud",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierLePape",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBourget",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricViguier",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSylla",
       "added": "2026-07-26"
     }
   ]
