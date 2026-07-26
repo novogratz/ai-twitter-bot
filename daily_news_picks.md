@@ -16449,3 +16449,43 @@ Challenge the Founder or @fresholami in 1v1s & compete for a $1,000 USDC prize p
 BE THERE 7/26 • 5 P
   - https://x.com/HypeTrip/status/2080757929456857477
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 76).
+
+## 2026-07-26
+- **@charliebilello** (2251 likes, score 9/10) — % Below All-Time High...
+JPMorgan: 0%
+Apple: -1%
+S&P 500: -3%
+Nvidia: -13%
+Amazon: -17%
+Google: -22%
+Meta: -25%
+Gold: -28%
+Microsoft: -31%
+Tesla: -37%
+Palantir: -42%
+Netflix: -48%
+SpaceX: -49%
+Bitcoin
+  - https://x.com/charliebilello/status/2080748589794427322
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2561).
+- **@imjustnewatai** (74 likes, score 9/10) — openai is hiring a “researcher, recursive self-improvement safety.”
+
+salary: $295,000–$445,000.
+
+the responsibilities are even crazier than the title.
+
+this person will help prepare for:
+
+• oversight
+  - https://x.com/imjustnewatai/status/2081209162252345436
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 86).
+- **@coinmarketcap** (342 likes, score 8/10) — LATEST:  Nvidia CEO Jensen Huang predicts OpenAI and Anthropic will be "the most successful IPOs in human history."
+  - https://x.com/CoinMarketCap/status/2081048145589309611
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 506).
+- **@imjustnewatai** (108 likes, score 8/10) — sam altman just described the most important ai scaling loop nobody is talking about:
+
+a data center uses its thinking power to direct robot fleets that build more data centers.
+
+the singularity clip
+  - https://x.com/imjustnewatai/status/2081134740623560853
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 136).
