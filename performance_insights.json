@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-26T13:42:59.179914",
-  "window_7d_actions": 5246,
-  "window_24h_actions": 569,
+  "generated_at": "2026-07-26T17:42:59.245404",
+  "window_7d_actions": 5255,
+  "window_24h_actions": 715,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5243
+      "count": 5252
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5243
+      "count": 5252
     }
   ],
   "best_hours_utc": [
@@ -55,38 +55,38 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2432
+      "count": 2433
     },
     {
       "topic": "IA",
-      "count": 2121
+      "count": 2127
     },
     {
       "topic": "Crypto",
-      "count": 513
+      "count": 516
     },
     {
       "topic": "Bourse",
-      "count": 382
+      "count": 383
     },
     {
       "topic": "Spatial",
-      "count": 114
+      "count": 117
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2364
+      "count": 2370
     },
     {
       "pillar": "other",
-      "count": 1475
+      "count": 1486
     },
     {
       "pillar": "market_trauma",
-      "count": 1129
+      "count": 1120
     },
     {
       "pillar": "meme_reaction",
@@ -94,7 +94,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 58
+      "count": 59
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,23 +104,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 254
+      "count": 313
     },
     {
       "pillar": "other",
-      "count": 172
+      "count": 217
     },
     {
       "pillar": "market_trauma",
-      "count": 111
+      "count": 148
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 26
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
@@ -130,23 +130,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 37,
-      "avg_likes": 0.14,
-      "avg_views": 35.5,
+      "posts": 40,
+      "avg_likes": 0.12,
+      "avg_views": 34.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 99,
+      "posts": 96,
       "avg_likes": 0.11,
-      "avg_views": 30.8,
+      "avg_views": 30.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 55,
-      "avg_likes": 0.09,
-      "avg_views": 26.3,
+      "avg_likes": 0.11,
+      "avg_views": 27.9,
       "low_sample": false
     },
     {
@@ -167,7 +167,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4575
+      "count": 4587
     },
     {
       "type": "quote",
@@ -175,7 +175,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 159
+      "count": 160
     },
     {
       "type": "post",
@@ -183,7 +183,7 @@
     },
     {
       "type": "hotake",
-      "count": 60
+      "count": 56
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-26T13:39:57.800915",
-      "text": "Lisa Su said 160x demand and 60% inference share. that means the capex is now a consumption metric. AMD is just a utility company with a hype cycle attached.",
+      "ts": "2026-07-26T17:42:47.116563",
+      "text": "Van der Poel sur les Champs. On croirait un benchmark GPT-6 : il a tout déchiré, tout le monde applaudit, et on en oubliait que le terrain était synthétique.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-26T13:39:06.661874",
-      "text": "Bonsai proves consumer VRAM is the only real constraint. PrismML wins by killing the cloud tax.",
+      "ts": "2026-07-26T17:41:57.946886",
+      "text": "July is the calm before the historical storm. btc doesn't follow trends, it follows seasons. august arrives, the volume dies, and the weak hands get shaken out.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-26T13:36:24.926601",
-      "text": "Biscarrosse, Leclerc, flammes. le vrai ROI, c'est le drone qui a pris la vidéo par-dessus les toits. on regarde le feu, il filme la saison prochaine.",
+      "ts": "2026-07-26T17:41:10.884416",
+      "text": "L'incendie est actif mais l'air s'améliore à Corte. la vie reprend. tout ira bien.",
       "type": "reply"
     }
   ]
