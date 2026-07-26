@@ -817,7 +817,16 @@
     "ThomasP92",
     "AlexisDeL",
     "VincentProulx",
-    "ClaraM"
+    "ClaraM",
+    "VincentBonnin",
+    "GillesHappens",
+    "AlexisLH",
+    "MaximeLaurance",
+    "JulienRousseau",
+    "JadeCapuano",
+    "RenaudDelaunay",
+    "LouisGagnon",
+    "BenoitF"
   ],
   "en": [
     "Chubby",
@@ -6410,6 +6419,51 @@
     {
       "lang": "fr",
       "handle": "ClaraM",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBonnin",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "GillesHappens",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisLH",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeLaurance",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienRousseau",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "JadeCapuano",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudDelaunay",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "LouisGagnon",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitF",
       "added": "2026-07-26"
     }
   ]

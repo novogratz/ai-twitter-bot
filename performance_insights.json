@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-26T09:42:59.198666",
-  "window_7d_actions": 5247,
-  "window_24h_actions": 399,
+  "generated_at": "2026-07-26T13:42:59.179914",
+  "window_7d_actions": 5246,
+  "window_24h_actions": 569,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5244
+      "count": 5243
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5244
+      "count": 5243
     }
   ],
   "best_hours_utc": [
@@ -37,41 +37,41 @@
     },
     {
       "hour": 10,
-      "actions": 262
+      "actions": 261
     },
     {
       "hour": 0,
       "actions": 247
     },
     {
-      "hour": 6,
-      "actions": 241
+      "hour": 12,
+      "actions": 243
     },
     {
-      "hour": 12,
-      "actions": 240
+      "hour": 6,
+      "actions": 241
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2440
+      "count": 2432
     },
     {
       "topic": "IA",
-      "count": 2111
+      "count": 2121
     },
     {
       "topic": "Crypto",
-      "count": 514
+      "count": 513
     },
     {
       "topic": "Bourse",
-      "count": 387
+      "count": 382
     },
     {
       "topic": "Spatial",
-      "count": 111
+      "count": 114
     }
   ],
   "rising_topics_24h": [],
@@ -82,45 +82,45 @@
     },
     {
       "pillar": "other",
-      "count": 1470
+      "count": 1475
     },
     {
       "pillar": "market_trauma",
-      "count": 1133
+      "count": 1129
     },
     {
       "pillar": "meme_reaction",
-      "count": 197
+      "count": 194
     },
     {
       "pillar": "reply_bait",
-      "count": 56
+      "count": 58
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 27
+      "count": 26
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 180
+      "count": 254
     },
     {
       "pillar": "other",
-      "count": 121
+      "count": 172
     },
     {
       "pillar": "market_trauma",
-      "count": 76
+      "count": 111
     },
     {
       "pillar": "meme_reaction",
-      "count": 17
+      "count": 22
     },
     {
       "pillar": "reply_bait",
-      "count": 3
+      "count": 8
     },
     {
       "pillar": "ai_vs_btc",
@@ -130,23 +130,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 35,
+      "posts": 37,
       "avg_likes": 0.14,
-      "avg_views": 35.8,
+      "avg_views": 35.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 101,
+      "posts": 99,
       "avg_likes": 0.11,
-      "avg_views": 31.3,
+      "avg_views": 30.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 55,
       "avg_likes": 0.09,
-      "avg_views": 27.4,
+      "avg_views": 26.3,
       "low_sample": false
     },
     {
@@ -167,7 +167,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4576
+      "count": 4575
     },
     {
       "type": "quote",
@@ -175,15 +175,15 @@
     },
     {
       "type": "quote_gif",
-      "count": 162
+      "count": 159
     },
     {
       "type": "post",
-      "count": 68
+      "count": 72
     },
     {
       "type": "hotake",
-      "count": 61
+      "count": 60
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-26T09:42:38.722622",
-      "text": "Anthropic's free course went from \"intro to API\" to \"9 lessons, 4 sections, final exam\" in one update.\n\nThe SaaS seat model was always renting a brain. The course is the moment the brain decides to rent itself out for $0.\n\nAnthropic isn't just training models anymore. They're bui",
+      "ts": "2026-07-26T13:39:57.800915",
+      "text": "Lisa Su said 160x demand and 60% inference share. that means the capex is now a consumption metric. AMD is just a utility company with a hype cycle attached.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-26T09:42:04.874882",
-      "text": "CDS on Nvidia and Alphabet spiking.\nthe market is pricing in a 30% capex cut before the AI utility curve bends.\npanic is just liquidity leaving a party where the host is out of cash.",
+      "ts": "2026-07-26T13:39:06.661874",
+      "text": "Bonsai proves consumer VRAM is the only real constraint. PrismML wins by killing the cloud tax.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-26T09:39:57.045600",
-      "text": "Microsoft’s in-house models have zero edge over OpenAI’s GPT-4o.\nthey’re swapping providers to save on API fees, not because they found a better engine.\nbroke up with the expensive lover.",
+      "ts": "2026-07-26T13:36:24.926601",
+      "text": "Biscarrosse, Leclerc, flammes. le vrai ROI, c'est le drone qui a pris la vidéo par-dessus les toits. on regarde le feu, il filme la saison prochaine.",
       "type": "reply"
     }
   ]
