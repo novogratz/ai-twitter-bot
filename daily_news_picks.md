@@ -16489,3 +16489,31 @@ a data center uses its thinking power to direct robot fleets that build more dat
 the singularity clip
   - https://x.com/imjustnewatai/status/2081134740623560853
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 136).
+
+## 2026-07-27
+- **@si_yokohama0101** (7 likes, score 7/10) — Wait, 2028 just for the first 800MW to go online?! 
+
+#IREN could literally pull that off at Sweetwater by next year!
+
+Can’t wait to see if Anthropic tries to grab that Sweetwater 1 power to keep up wi
+  - https://x.com/si_yokohama0101/status/2081581624987423126
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 13).
+- **@cryptrin_bit** (52 likes, score 9/10) — #Bitcoin Technical Analysis
+
+BTC is trading around $64,000. Bullish and bearish views are divided, and the market is facing a crucial turning point.
+
+Entry points you can aim for with a small amount a
+  - https://x.com/CryptRin_bit/status/2081573532669263942
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 76).
+- **@sena_bitcoin** (32 likes, score 8/10) — Life changes with Bitcoin.
+
+The 2023-2025 cycle
+has unfolded almost exactly as anticipated
+
+And now,
+the 2026-2028 period is beginning to sketch out the same scenario.
+
+If history repeats itself,
+the
+  - https://x.com/Sena_bitcoin/status/2081573065629261960
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 46).

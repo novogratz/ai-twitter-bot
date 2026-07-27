@@ -852,7 +852,17 @@
     "MathieuRocher",
     "AlexisClemencot",
     "BenjaminCharron",
-    "MaximeCayre"
+    "MaximeCayre",
+    "EricVigouroux",
+    "BorisBaboun",
+    "AlexisVogt",
+    "MaximeGouin",
+    "CryptoPatate",
+    "AlexisBernard",
+    "CryptoRaul",
+    "MaximeStein",
+    "ThibautLefebvre",
+    "PhilippeTessier"
   ],
   "en": [
     "Chubby",
@@ -6644,6 +6654,56 @@
     {
       "lang": "fr",
       "handle": "MaximeCayre",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricVigouroux",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisBaboun",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisVogt",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeGouin",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoPatate",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBernard",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoRaul",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeStein",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautLefebvre",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeTessier",
       "added": "2026-07-26"
     }
   ]
