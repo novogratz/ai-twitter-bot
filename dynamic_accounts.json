@@ -864,7 +864,13 @@
     "ThibautLefebvre",
     "PhilippeTessier",
     "LuisCahart",
-    "JFJoli"
+    "JFJoli",
+    "CyprienA",
+    "LuisaVogel",
+    "RomainBock",
+    "ThomasLemaire",
+    "JulienHerve",
+    "AlexisBoutin"
   ],
   "en": [
     "Chubby",
@@ -6722,6 +6728,36 @@
     {
       "lang": "fr",
       "handle": "JFJoli",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyprienA",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisaVogel",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBock",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasLemaire",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienHerve",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBoutin",
       "added": "2026-07-27"
     }
   ]

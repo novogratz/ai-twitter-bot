@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-07-07T01:41:27.947657",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaelStrass",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "L'oracle. Il analyse le march\u00e9 crypto comme un g\u00e9n\u00e9ral qui a vu la guerre du Golfe trois fois. Ton direct, z\u00e9ro jargon inutile."
-      },
-      {
-        "handle": "PierrePerron",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 75000,
-        "reason": "L'expert Bitcoin \u00e0 New York. Il tweete en fran\u00e7ais pour la diaspora. Ses threads sur l'adoption institutionnelle sont des p\u00e9pites."
-      },
-      {
-        "handle": "MaelLeBihan",
-        "region": "france",
-        "niche": "tech",
-        "followers": 55000,
-        "reason": "Le CTO de L'Etincelle. Il d\u00e9construit la hype IA avec des arguments techniques solides. Moins de buzz, plus de substance."
-      },
-      {
-        "handle": "RomainLachuer",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 42000,
-        "reason": "Ancien de YNAB et Head of Product \u00e0 N26. Il tweete sur la psychologie de l'argent et la fintech avec humour et pr\u00e9cision."
-      },
-      {
-        "handle": "MaximeBeaudoin",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 35000,
-        "reason": "Analyste et strat\u00e8ge. Il mixe analyse macro, crypto et bourse avec une touche qu\u00e9b\u00e9coise terre-\u00e0-terre. Pas de blabla, des chiffres."
-      },
-      {
-        "handle": "BenjaminDeWit",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 28000,
-        "reason": "Le roi de la tech montr\u00e9alaise. Il couvre les startups, l'IA et la VC au Qu\u00e9bec. Contenu francophone dense et rare."
-      },
-      {
-        "handle": "AlexisKieffer",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Le 'DeFi King' fran\u00e7ais. Il est l\u00e0 avant les pumps, analyse les smart contracts et les protocoles avec une rigueur de dev."
-      }
-    ],
-    "summary": "J'ai creus\u00e9 les p\u00e9pites francophones qui ne sont pas des influenceurs 'gourdes'. Le top est domin\u00e9 par des fondateurs techniques (L'Etincelle) et des analistes crypto pur jus qui ont surv\u00e9cu aux hivers. Au Qu\u00e9bec, la sc\u00e8ne est plus petite mais plus qualitative sur la tech B2B et la VC."
-  },
-  {
     "ts": "2026-07-07T03:41:24.080332",
     "raw_count": 8,
     "kept_count": 5,
@@ -8648,5 +8589,57 @@
       }
     ],
     "summary": "Le mix Mistral/Maki assure la domination tech-crypto FR. Le Qu\u00e9bec se d\u00e9fend bien avec Boivin et Joli pour \u00e9quilibrer la sauce. On a filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les artisans."
+  },
+  {
+    "ts": "2026-07-27T05:43:40.778262",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyprienA",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 95000,
+        "reason": "La r\u00e9f\u00e9rence macro crypto en FR, pas de formation \u00e0 99\u20ac, juste du lourd."
+      },
+      {
+        "handle": "LuisaVogel",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 65000,
+        "reason": "Ancienne de Coinbase, couvre crypto/tech en FR depuis NYC, vue globale et rare."
+      },
+      {
+        "handle": "RomainBock",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 35000,
+        "reason": "Co-fondateur de Luno, couvre VC et crypto avec des punchlines qui claque."
+      },
+      {
+        "handle": "ThomasLemaire",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Le trader retail le plus coh\u00e9rent, pas de signaux payants, juste du charabia boursier traduit."
+      },
+      {
+        "handle": "JulienHerve",
+        "region": "france",
+        "niche": "ia",
+        "followers": 15000,
+        "reason": "Deeplearning.ai, twitte l'IA pro, pas le 'prompt engineering' \u00e0 la mode."
+      },
+      {
+        "handle": "AlexisBoutin",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Le roi de la micro-cap au Qu\u00e9bec, twittering en FR avec une touche caustique."
+      }
+    ],
+    "summary": "Le top fran\u00e7ais crypto est mature (CyprienBock), le Qu\u00e9bec se r\u00e9v\u00e8le avec des perles boursi\u00e8res rares (Boutin/Dufour), et la diaspora US apporte un\u89c6\u89d2 institutionnel (Vogel)."
   }
 ]

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-26T00:00:00.000000",
+  "ts": "2026-07-27T00:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 15,
     "MAX_HOTAKES_PER_DAY": 20,
@@ -12,10 +12,10 @@
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "SpaceX S-1 révèle deal compute Anthropic $1.25B/mois : l'infra IA a un prix",
-    "GPT-5.6 Luna/Terra/Sol vs Claude Sonnet 5 : guerre des prix, qui survit ?",
-    "Anthropic global workspace : 25 concepts actifs = conscience IA ?"
+    "IPO OpenAI $730B valuation — burn rate $5B/an, AGI doit livrer avant la fin de runway",
+    "Anthropic dépasse OpenAI en revenue pour la première fois — le score change",
+    "SpaceXAI capex $7.7B Q1, pertes $2.4B — qui paie la course à l'AGI ?"
   ],
   "cadence_factor": 1.3,
-  "rationale": "Format 'me [verb]' validé 119 likes / 63K views — seul format qui performe. Nouveau bot-tell critique : 'me nodding' brûlé 4× en 3h. ai_vs_btc criminellement sous-exploitée (41.3 avg views, 3 posts) — pousser 1× par jour minimum. Topics frais : SpaceX S-1 + deal Anthropic $1.25B/mois (mega-story infra), GPT-5.6 pricing war, Anthropic consciousness research. Caps inchangés — pas de déséquilibre clair sur les surfaces."
+  "rationale": "Format 'me [verb]' confirmé 120 likes / 65K views MAIS dilution critique : 'toddler'/'portfolio refreshing'/'UK growth' font 0 like car ils manquent le contraste AI-gagne/traditionnel-perd. ai_vs_btc 41.3 avg_views, 3 posts — sous-exploitée, push 1/jour. Nouvelle méga-story : IPO OpenAI $730B (sept. 2026) + Anthropic dépasse OpenAI revenue = ai_vs_btc parfait. Phrases brûlées toujours dans les logs : 'the real story is' (05:29 aujourd'hui), 'toddler' (3×), 'open-source costume' (2×). Caps inchangés — surfaces équilibrées, qualité avant volume."
 }
