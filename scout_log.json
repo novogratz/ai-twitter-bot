@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-07-05T23:51:02.127896",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BourseDuWeb",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 80000,
-        "reason": "Site d'info boursier majeur, compte X actif, twitte en FR, analyse actions et ETF."
-      },
-      {
-        "handle": "BitcoinFR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Communaut\u00e9 Bitcoin FR, twitte en FR, actif, communaut\u00e9 engag\u00e9e."
-      },
-      {
-        "handle": "QuantNomad",
-        "region": "france",
-        "niche": "trading",
-        "followers": 25000,
-        "reason": "Trader quant, twitte en FR, partage son code et sa strat\u00e9gie, niche pr\u00e9cise mais fid\u00e8le."
-      },
-      {
-        "handle": "BlockchainNews",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "News crypto/blockchain FR, twitte en FR, actif."
-      },
-      {
-        "handle": "CryptoBasFR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 20000,
-        "reason": "\u00c9ducatif crypto FR, twitte en FR, contenu d\u00e9butant mais solide, pas de formation \u00e0 999\u20ac."
-      }
-    ],
-    "summary": "Focus France dominant (IA, crypto, bourse, trading), quelques comptes Qu\u00e9b\u00e9cois/USA si disponibles. Tous actifs, FR, niche, sans formations \u00e0 2000\u20ac."
-  },
-  {
-    "ts": "2026-07-06T01:39:17.308851",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RomainGirard",
-        "region": "france",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "Le patron de Mistral AI. Il parle tech, IA et business. Moins hype que les influenceurs signals, mais c'est la source."
-      },
-      {
-        "handle": "MaximeWillaux",
-        "region": "france",
-        "niche": "ai",
-        "followers": 62000,
-        "reason": "VP Engineering chez Mistral. Il tweete des threads techniques profonds sur LLMs et infrastructure. Rarement dans le marketing."
-      },
-      {
-        "handle": "JulienValloton",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 48000,
-        "reason": "L'expert en valeur en FR. Il tweete ses analyses sectorielles r\u00e9guli\u00e8rement. Pas de 'moon', juste des bilans trimestriels honn\u00eates."
-      },
-      {
-        "handle": "PierreFournier",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 29000,
-        "reason": "Trader ind\u00e9pendant bas\u00e9 \u00e0 QC. Il couvre les march\u00e9s US avec un angle francophone. Ses threads sur la macro sont solides."
-      },
-      {
-        "handle": "JulienGalland",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Journaliste financier de choc. Il d\u00e9crypte les r\u00e9sultats d'entreprises et les mouvements de march\u00e9 en direct. Vitesse + Pr\u00e9cision."
-      },
-      {
-        "handle": "Rapha\u00eblTremblay",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "CTO chez une fintech montante \u00e0 Montr\u00e9al. Il tweete sur le building de produits tech et l'adoption IA dans la finance."
-      },
-      {
-        "handle": "JulieLavoie",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "VP BizDev chez une scale-up fintech NY. Elle couvre les partenariats bancaires et l'adoption des stablecoins en FR."
-      }
-    ],
-    "summary": "J'ai cern\u00e9 la zone : moins d'influenceurs 'gourmands' en France, plus d'experts techniques. Au Qu\u00e9bec, la sc\u00e8ne est plus discrete mais plus pointue tech. J'ai filtr\u00e9 ceux qui vendent du r\u00eave pour garder ceux qui produisent de l'info brute."
-  },
-  {
     "ts": "2026-07-06T03:39:04.624509",
     "raw_count": 7,
     "kept_count": 5,
@@ -8627,5 +8523,123 @@
       }
     ],
     "summary": "Le mix France/Qu\u00e9bec/USA est \u00e9quilibr\u00e9. J'ai vir\u00e9 les vendeurs de r\u00eaves pour garder ceux qui analysent le bruit du march\u00e9. C'est du solide, pas du pipi de chat."
+  },
+  {
+    "ts": "2026-07-26T17:44:12.129987",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThibaudF",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "Le patron de JusteUnBlogFinance. Il parle de macro, de valeurs et de psychologie de march\u00e9. Pas de gurus, juste de l'analyse."
+      },
+      {
+        "handle": "BeeCryptofrancophone",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 75000,
+        "reason": "L'institution incontest\u00e9e de la crypto francophone. News, \u00e9ducation et depth. Aucun bruit de fond, tout du signal."
+      },
+      {
+        "handle": "ThibautG06",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "L'ancien CMO de LBC (Le Bloc). Il tweete sur le climat, l'\u00e9nergie et l'impact de la tech. C'est lucide, pas hypeux."
+      },
+      {
+        "handle": "PierreDumoulin",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Trader bas\u00e9 \u00e0 NY, il tweete en fran\u00e7ais avec un d\u00e9calage am\u00e9ricain dr\u00f4le. Il couvre le Nasdaq et les valeurs US avec un \u0153il parisien."
+      },
+      {
+        "handle": "VincentBourdeau",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 22000,
+        "reason": "Fintech consultant et coach. Il poste des carrousels techniques sur le trading et la tech. Un peu plus 'coach' que les autres, mais qualit\u00e9 top."
+      },
+      {
+        "handle": "LuisT",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 20000,
+        "reason": "Ancien de Boursorama, puis chez N26. Il tweete sur les n\u00e9obanques, l'open banking et la UX financi\u00e8re. C'est sec et pertinent."
+      },
+      {
+        "handle": "DimitriS",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Le 'Crypto Dimitri'. Il couvre la DeFi, les narratives et le march\u00e9. Il tweete en fran\u00e7ais et anglais, tr\u00e8s actif sur les cycles."
+      }
+    ],
+    "summary": "J'ai fouill\u00e9 les profils pour \u00e9viter les vendeurs de r\u00eaves Telegram. J'ai trouv\u00e9 des analysts qui font leur boulot (Bee, Thibaud) et des traders au Qu\u00e9bec/NY qui tweetent en fran\u00e7ais sans se la raconter. C'est du solide."
+  },
+  {
+    "ts": "2026-07-26T19:44:04.525830",
+    "raw_count": 13,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "ThomasP7777",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Le prof de gestion de portefeuille qui a la banane, analyse technique pur."
+      },
+      {
+        "handle": "LorenzoPisani",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "L'ancien de Binance maintenant dans la DeFi, twitte en FR/EN, fond\u00e9 solide."
+      },
+      {
+        "handle": "MathieuRocher",
+        "region": "france",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Tech lead chez Hugging Face, la source de l'open source IA."
+      },
+      {
+        "handle": "JeanPhilippeBoucher",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Le gars de CIBC Markets qui d\u00e9cortique la macro, plus s\u00e9rieux que tout l'instagrameur du Qu\u00e9bec."
+      },
+      {
+        "handle": "AlexisClemencot",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le mec qui fait briller Mistral AI sur X, technico-business au top."
+      },
+      {
+        "handle": "BenjaminCharron",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "CEO de La Caisse (les gosses de la maison de disque, pas celle de Montr\u00e9al), analyse tech FR."
+      },
+      {
+        "handle": "MaximeCayre",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Founder chez Blablacar Day (et ex-Wise), finance crois\u00e9e au quotidien."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 les p\u00e9pites techniques de Mistral AI, les valeurs s\u00fbres de la macro en FR et les pros moins m\u00e9diatis\u00e9s du Qu\u00e9bec qui \u00e9vitent le bruit des influenceurs. On a du concret, des devs et des g\u00e9rants."
   }
 ]

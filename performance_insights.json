@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-26T17:42:59.245404",
-  "window_7d_actions": 5255,
-  "window_24h_actions": 715,
+  "generated_at": "2026-07-26T21:42:59.250062",
+  "window_7d_actions": 5282,
+  "window_24h_actions": 870,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5252
+      "count": 5279
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5252
+      "count": 5279
     }
   ],
   "best_hours_utc": [
@@ -55,98 +55,98 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2433
+      "count": 2449
     },
     {
       "topic": "IA",
-      "count": 2127
+      "count": 2146
     },
     {
       "topic": "Crypto",
-      "count": 516
+      "count": 517
     },
     {
       "topic": "Bourse",
-      "count": 383
+      "count": 377
     },
     {
       "topic": "Spatial",
-      "count": 117
+      "count": 115
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2370
+      "count": 2372
     },
     {
       "pillar": "other",
-      "count": 1486
+      "count": 1499
     },
     {
       "pillar": "market_trauma",
-      "count": 1120
+      "count": 1129
     },
     {
       "pillar": "meme_reaction",
-      "count": 194
+      "count": 193
     },
     {
       "pillar": "reply_bait",
-      "count": 59
+      "count": 60
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 26
+      "count": 29
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 313
+      "count": 372
     },
     {
       "pillar": "other",
-      "count": 217
+      "count": 267
     },
     {
       "pillar": "market_trauma",
-      "count": 148
+      "count": 185
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
+      "count": 30
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "market_trauma",
-      "posts": 40,
-      "avg_likes": 0.12,
-      "avg_views": 34.2,
+      "pillar": "ai_news_take",
+      "posts": 55,
+      "avg_likes": 0.13,
+      "avg_views": 28.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 96,
-      "avg_likes": 0.11,
+      "posts": 93,
+      "avg_likes": 0.12,
       "avg_views": 30.9,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 55,
-      "avg_likes": 0.11,
-      "avg_views": 27.9,
+      "pillar": "market_trauma",
+      "posts": 43,
+      "avg_likes": 0.12,
+      "avg_views": 33.3,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4587
+      "count": 4614
     },
     {
       "type": "quote",
-      "count": 340
+      "count": 342
     },
     {
       "type": "quote_gif",
-      "count": 160
+      "count": 161
     },
     {
       "type": "post",
-      "count": 72
+      "count": 70
     },
     {
       "type": "hotake",
-      "count": 56
+      "count": 55
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-26T17:42:47.116563",
-      "text": "Van der Poel sur les Champs. On croirait un benchmark GPT-6 : il a tout déchiré, tout le monde applaudit, et on en oubliait que le terrain était synthétique.",
+      "ts": "2026-07-26T21:41:16.317426",
+      "text": "TAO is trading at 196 on a network that burns more GPU hours on inference than training.\n\nThe \"decentralized\" label is marketing. The revenue model is latency arbitrage.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-26T17:41:57.946886",
-      "text": "July is the calm before the historical storm. btc doesn't follow trends, it follows seasons. august arrives, the volume dies, and the weak hands get shaken out.",
+      "ts": "2026-07-26T21:40:42.161389",
+      "text": "4% pre-market is just noise trying to wear a suit.\n\nSKHY is a mid-cap AI name with zero revenue traction. the move is liquidity chasing a narrative. buy the rumor, sell the fact, or get rekt.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-26T17:41:10.884416",
-      "text": "L'incendie est actif mais l'air s'améliore à Corte. la vie reprend. tout ira bien.",
+      "ts": "2026-07-26T21:39:52.921636",
+      "text": "@DongPham thinks ETH is the new AI infrastructure.\n\nit’s just the casino chip you bet on when the house stops paying out on the table.",
       "type": "reply"
     }
   ]

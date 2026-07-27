@@ -840,7 +840,19 @@
     "MaximeRoussel",
     "RomainGrenet",
     "CryptoGibet",
-    "JulienDubois"
+    "JulienDubois",
+    "ThibaudF",
+    "ThibautG06",
+    "PierreDumoulin",
+    "VincentBourdeau",
+    "LuisT",
+    "DimitriS",
+    "ThomasP7777",
+    "LorenzoPisani",
+    "MathieuRocher",
+    "AlexisClemencot",
+    "BenjaminCharron",
+    "MaximeCayre"
   ],
   "en": [
     "Chubby",
@@ -1094,7 +1106,9 @@
     "1win",
     "antirez",
     "Tangem",
-    "InvestAnswers"
+    "InvestAnswers",
+    "eppy",
+    "tphuang"
   ],
   "history": [
     {
@@ -6560,6 +6574,76 @@
     {
       "lang": "fr",
       "handle": "JulienDubois",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "en",
+      "handle": "eppy",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudF",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautG06",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDumoulin",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBourdeau",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisT",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "DimitriS",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "en",
+      "handle": "tphuang",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasP7777",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoPisani",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuRocher",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisClemencot",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminCharron",
+      "added": "2026-07-26"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCayre",
       "added": "2026-07-26"
     }
   ]
