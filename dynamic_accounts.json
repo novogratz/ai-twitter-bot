@@ -884,7 +884,9 @@
     "BenoitGrosjean",
     "MaximeTremblay",
     "LudovicLepoivre",
-    "SachaSchoenbaum"
+    "SachaSchoenbaum",
+    "m4704",
+    "SofianeD"
   ],
   "en": [
     "Chubby",
@@ -6848,6 +6850,16 @@
     {
       "lang": "fr",
       "handle": "SachaSchoenbaum",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "m4704",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "SofianeD",
       "added": "2026-07-27"
     }
   ]

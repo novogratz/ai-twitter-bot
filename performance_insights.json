@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-27T13:43:30.108898",
-  "window_7d_actions": 5293,
-  "window_24h_actions": 925,
+  "generated_at": "2026-07-27T17:42:59.353229",
+  "window_7d_actions": 5308,
+  "window_24h_actions": 930,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5291
+      "count": 5306
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5291
+      "count": 5306
     }
   ],
   "best_hours_utc": [
@@ -55,42 +55,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2437
+      "count": 2441
     },
     {
       "topic": "IA",
-      "count": 2158
+      "count": 2162
     },
     {
       "topic": "Crypto",
-      "count": 515
+      "count": 523
     },
     {
       "topic": "Bourse",
-      "count": 399
+      "count": 401
     },
     {
       "topic": "Spatial",
-      "count": 104
+      "count": 109
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2382
+      "count": 2378
     },
     {
       "pillar": "other",
-      "count": 1482
+      "count": 1483
     },
     {
       "pillar": "market_trauma",
-      "count": 1153
+      "count": 1168
     },
     {
       "pillar": "meme_reaction",
-      "count": 184
+      "count": 185
     },
     {
       "pillar": "reply_bait",
@@ -98,25 +98,25 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 25
+      "count": 27
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 411
+      "count": 416
     },
     {
       "pillar": "other",
-      "count": 253
+      "count": 240
     },
     {
       "pillar": "market_trauma",
-      "count": 225
+      "count": 234
     },
     {
       "pillar": "meme_reaction",
-      "count": 19
+      "count": 21
     },
     {
       "pillar": "reply_bait",
@@ -124,36 +124,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "ai_news_take",
-      "posts": 52,
-      "avg_likes": 0.13,
-      "avg_views": 27.7,
+      "pillar": "market_trauma",
+      "posts": 46,
+      "avg_likes": 0.17,
+      "avg_views": 34.5,
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 45,
-      "avg_likes": 0.11,
-      "avg_views": 34.6,
+      "pillar": "ai_news_take",
+      "posts": 53,
+      "avg_likes": 0.13,
+      "avg_views": 27.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 93,
+      "posts": 92,
       "avg_likes": 0.08,
-      "avg_views": 31.1,
-      "low_sample": false
-    },
-    {
-      "pillar": "reply_bait",
-      "posts": 6,
-      "avg_likes": 0.0,
-      "avg_views": 35.0,
+      "avg_views": 31.6,
       "low_sample": false
     },
     {
@@ -162,16 +155,23 @@
       "avg_likes": 0.0,
       "avg_views": 41.3,
       "low_sample": false
+    },
+    {
+      "pillar": "reply_bait",
+      "posts": 5,
+      "avg_likes": 0.0,
+      "avg_views": 36.2,
+      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4634
+      "count": 4648
     },
     {
       "type": "quote",
-      "count": 346
+      "count": 347
     },
     {
       "type": "quote_gif",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-27T13:40:29.667945",
-      "text": "28,000 isn't resistance. It's a vacuum. The sellers aren't defending a line, they're hunting liquidity below it. stop trying to catch the knife, start timing the bounce.",
+      "ts": "2026-07-27T17:41:52.716067",
+      "text": "Apple’s steady ascent while Musk’s empire sheds $1.2T in July proves the market finally prefers boring profits over chaotic rockets.\n\nThe quiet compounding winner vs the volatile growth myth, settled.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-27T13:39:05.864706",
-      "text": "OpenAI raising capital via Oracle CapEx means they aren't buying GPUs, they're renting liability. The cap table eats the margin.",
+      "ts": "2026-07-27T17:41:19.880086",
+      "text": "Copilot saved a year of work. the hidden math is that the year of work was mostly 2018-era email drafts and mediocre pivot tables.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-27T13:38:11.389693",
-      "text": "Union Pacific threatening churn for silence. The market loves a monopoly that can price in loyalty and force disclosure.",
+      "ts": "2026-07-27T17:40:08.345940",
+      "text": "Forward deployed engineers are just sales teams with terminals. you're paying OpEx for what should be a license. the margin flip only happens when the product ships. until then: expensive consulting.",
       "type": "reply"
     }
   ]

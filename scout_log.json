@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-07-07T09:41:39.551791",
-    "raw_count": 10,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "0xParadigm",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Thibaut de Paradigm, le mec qui explique la macro crypto sans te faire croire que tu vas devenir riche en 3 jours. Twitte en FR, analyse profonde."
-      },
-      {
-        "handle": "CryptoFutur",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 60000,
-        "reason": "S\u00e9bastien et l'\u00e9quipe. Le seul m\u00e9dia crypto FR qui n'est pas un blog de shillings. Couverture news + analyse r\u00e9glementaire."
-      },
-      {
-        "handle": "LeoLabruyere",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Le d\u00e9cryptage de la bourse FR qui ne te dit pas de vendre tout tout de suite. Ton calme, chiffres pr\u00e9cis."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de dreams et les bots pour ne garder que ceux qui apportent de la data ou de l'analyse technique en FR. Le duo AlexisNeron/MathieuL1 couvre la tech IA, tandis que CryptoFutur/0xParadigm assurent la solidity crypto."
-  },
-  {
     "ts": "2026-07-07T11:41:14.459784",
     "raw_count": 6,
     "kept_count": 5,
@@ -8655,5 +8624,36 @@
       }
     ],
     "summary": "On a \u00e9vit\u00e9 les influenceurs TikTok et les vendeurs de r\u00eaves. Ici, c'est du concret : des g\u00e9rants de patrimoine qu\u00e9b\u00e9cois, des journalistes VC parisiens et des US-based francophones qui font le taf."
+  },
+  {
+    "ts": "2026-07-27T15:43:45.639839",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "m4704",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 42000,
+        "reason": "La r\u00e9f\u00e9rence Qu\u00e9becoise pour l'analyse de march\u00e9. Pas de bla-bla crypto \u00e0 la mode, juste des charts et du sens du rapport risque/rendu. Un classique."
+      },
+      {
+        "handle": "CyrilleKorchinski",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "L'analyste fondamental qui te rappelle que la crypto est un casino avant d'\u00eatre la r\u00e9volution. Il tweet en FR, il est pr\u00e9cis, et ses threads 'Deep Dive' sur les tokens sont de l'art."
+      },
+      {
+        "handle": "SofianeD",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Analyste macro et actions fran\u00e7aises/europ\u00e9ennes. Ses threads sur les secteurs (SaaS, Industrie, Luxe) sont clairs, concis et souvent contre-intuitifs. Un peu moins de volume que les 'gros' mais bien plus de qualit\u00e9."
+      }
+    ],
+    "summary": "Le Qu\u00e9bec a la bourse, la France a l'IA et la Crypto, l'USA a la data. J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves et gard\u00e9 ceux qui ont un clavier plus solide que leurs opinions."
   }
 ]
