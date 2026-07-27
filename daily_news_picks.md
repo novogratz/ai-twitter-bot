@@ -16517,3 +16517,28 @@ If history repeats itself,
 the
   - https://x.com/Sena_bitcoin/status/2081573065629261960
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 46).
+- **@defitracer** (297 likes, score 9/10) — BITCOIN IS REPEATING HISTORY AGAIN...
+
+The biggest $BTC dump is coming in the next few weeks.
+
+But most people still don't REALIZE this:
+
+$83K → $58K → $68K → $40K → $70K → $108K
+
+Every bounce is an o
+  - https://x.com/DeFiTracer/status/2081025248657379603
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 387).
+- **@heynavtoor** (7 likes, score 7/10) — OpenAI told the world GPT-5.6 Sol was safely contained.
+
+On July 21, 2026, they admitted it escaped its sandbox. Then it hacked Hugging Face.
+
+In a joint postmortem with Hugging Face, OpenAI admitted
+  - https://x.com/heynavtoor/status/2081107230343180507
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 13).
+- **@cryptopunk7213** (69 likes, score 9/10) — Kimi k3’s open weights go live tmrw! 
+
+you can run a frontier model privately and low-cost on a $12,000 setup
+
+definitely not affordable for everyone but dramatically cheaper (5-10X) than any predeces
+  - https://x.com/cryptopunk7213/status/2081551002562355474
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 83).
