@@ -1,16 +1,16 @@
-# YouTube brief — 2026-07-26
+# YouTube brief — 2026-07-27
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **68**
-- reply: **46**
-- retweet: **9**
-- quote: **7**
-- quote_gif: **4**
-- post: **1**
-- hotake: **1**
+- Total actions logged: **923**
+- reply: **816**
+- quote: **63**
+- quote_gif: **23**
+- hotake: **9**
+- post: **9**
+- retweet: **3**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -37,79 +37,71 @@
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-07-26
-- **@charliebilello** (2251 likes, score 9/10) — % Below All-Time High...
-JPMorgan: 0%
-Apple: -1%
-S&P 500: -3%
-Nvidia: -13%
-Amazon: -17%
-Google: -22%
-Meta: -25%
-Gold: -28%
-Microsoft: -31%
-Tesla: -37%
-Palantir: -42%
-Netflix: -48%
-SpaceX: -49%
-Bitcoin
-  - https://x.com/charliebilello/status/2080748589794427322
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 2561).
-- **@imjustnewatai** (74 likes, score 9/10) — openai is hiring a “researcher, recursive self-improvement safety.”
+## 2026-07-27
+- **@si_yokohama0101** (7 likes, score 7/10) — Wait, 2028 just for the first 800MW to go online?! 
 
-salary: $295,000–$445,000.
+#IREN could literally pull that off at Sweetwater by next year!
 
-the responsibilities are even crazier than the title.
+Can’t wait to see if Anthropic tries to grab that Sweetwater 1 power to keep up wi
+  - https://x.com/si_yokohama0101/status/2081581624987423126
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 13).
+- **@cryptrin_bit** (52 likes, score 9/10) — #Bitcoin Technical Analysis
 
-this person will help prepare for:
+BTC is trading around $64,000. Bullish and bearish views are divided, and the market is facing a crucial turning point.
 
-• oversight
-  - https://x.com/imjustnewatai/status/2081209162252345436
-  - **WHY**: Source fiable + impact concret (score signal 9, engagement 86).
-- **@coinmarketcap** (342 likes, score 8/10) — LATEST:  Nvidia CEO Jensen Huang predicts OpenAI and Anthropic will be "the most successful IPOs in human history."
-  - https://x.com/CoinMarketCap/status/2081048145589309611
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 506).
-- **@imjustnewatai** (108 likes, score 8/10) — sam altman just described the most important ai scaling loop nobody is talking about:
+Entry points you can aim for with a small amount a
+  - https://x.com/CryptRin_bit/status/2081573532669263942
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 76).
+- **@sena_bitcoin** (32 likes, score 8/10) — Life changes with Bitcoin.
 
-a data center uses its thinking power to direct robot fleets that build more data centers.
+The 2023-2025 cycle
+has unfolded almost exactly as anticipated
 
-the singularity clip
-  - https://x.com/imjustnewatai/status/2081134740623560853
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 136).
+And now,
+the 2026-2028 period is beginning to sketch out the same scenario.
+
+If history repeats itself,
+the
+  - https://x.com/Sena_bitcoin/status/2081573065629261960
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 46).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/Brian Roemmele]** Anthropic employees go nuclear on the popularity of open source AI.
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/James Chanos]** So we are at the point in the cycle where $NVDA has to provide financing guarantees for roughly 2/3rds of the cost of the chips it is selling to the data center
+  - https://x.com/RealJimChanos/status/2081569475246055775
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Boring_Business]** Watching NVIDIA backstop one of their biggest customers who also happens to have a large investment from NVIDIA
+  - https://x.com/BoringBiz_/status/2081584563059372150
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/テクニカル投資家]** Sold all of Kioxia (285A)!!  
+Because,  
+NEC × Fujitsu × AI × NVIDIA,  
+Currently: 76 yen  
+It's basically the second Kioxia already, right?
+  - https://x.com/___e732_15/status/2081583198488912053
+- **[X_HOME/Barchart]** AT&T $T outperformed the S&P 500 $SPX last week by more than 11 percentage points, the largest weekly outperformance in 25 years
+  - https://x.com/Barchart/status/2081597416948601303
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/パウロ]** Yes, the U.S. TSMC is short on CoWoS.
 
-It is getting really ugly as they realize that Anthropic is now isolated like a virus.
+The only missing piece in the U.S. domestic supply chain for AI chips is a single element called CoWoS. TSMC is leading n
+  - https://x.com/paurooteri/status/2081588325748531223
+- **[X_SEARCH/top/Nvidia OR GPU OR compute cluster lang:en min_faves:100/Nasdaq|S&P500|US stock pick Trades——Ryan]** Looking at Korea’s AI supply chain through Samsung Electronics alone is becoming a mistake.
 
-It 
-  - https://x.com/BrianRoemmele/status/2081061312570994977
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Dinesh D'Souza]** Check out this Chinese robot, ready to be weaponized. One reason I like robotics and AI is I don’t want to have to put on my running shoes to try and get away f
-  - https://x.com/DineshDSouza/status/2081093940673937566
-- **[X_SEARCH/top/megawatt OR gigawatt OR nuclear AI lang:en min_faves:100/U.S. Department of Energy]** The Genesis Mission is advancing @POTUS' American Nuclear Renaissance! 
+The latest semiconductor news is sending a clear message:
 
-ICYMI: The Energy Department selected 278 projects to unleash the power of our nation’s
-  - https://x.com/ENERGY/status/2081147209395867922
-- **[X_HOME/India Plus]** Former GitHub CEO Thomas Dohmke has launched his AI coding platform "Entire" in India with local Git hosting to give developers faster access and lower latency.
-  - https://x.com/india_plus_/status/2081069469196050918
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/SMB Attorney]** The clickbait is missing the actual point.
+AI inves
+  - https://x.com/DavidKWilliams/status/2081592848147689695
+- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Ronald van Loon]** KAIST’s 75 kg Humanoid #Robot Runs, Jumps, Moonwalks, and Plays Soccer
+by @spaceandtech_
 
-Musk isn’t just saying “money dies in 2036.” He’s saying AI (smarter than all humans combined in ~5 years) + million
-  - https://x.com/SMB_Attorney/status/2081169961595093473
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Loong of the east]** Japanese Experts: China’s Robotics Capabilities Are Highly Advanced; Japan Unlikely to Catch Up Soon
+#Robots #Engineering #ArtificialIntelligence #Innovation #Technology
+  - https://x.com/Ronald_vanLoon/status/2081580361721483410
+- **[X_FOLLOWING/Jun Song]** The local AI models we're all waiting for, built for personal hardware sizes:
 
-On July 23, the Nikkei xTECH website released a video show
-  - https://x.com/loong_of/status/2081193364826054667
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Shining Science]** A Silicon Valley startup backed by Eric Trump is developing humanoid robot supersoldiers with lethal 'kinetic' capabilities for the battlefield.
-
-While most rob
-  - https://x.com/ShiningScience/status/2081163823155925021
-- **[X_SEARCH/top/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/Eren Chen]** A Chinese robotics team showed how they brutalize humanoid robots.
-
-Kicks, pushes, repeated knockdowns, and recovery training—all to build more robust locomotio
-  - https://x.com/ErenChenAI/status/2081211715899867283
+> Google Gemma-120b 
+> Nvidia Nemotron4 Ultra/Super
+> Qwen4-27b/122b
+> Deepseek-V
+  - https://x.com/jun_song/status/2081595558960267562
 
 ## 🎬 Suggested video angles
 
@@ -120,4 +112,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-07-26T00:42:59*
+*Generated 2026-07-27T00:42:59*

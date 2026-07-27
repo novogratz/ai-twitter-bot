@@ -1133,3 +1133,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 0 likes / 4 views: me refreshing my Coinbase balance like "maybe the Fed blinked"  https://x.com/JohnEDeaton1/status/20
   - 0 likes / 14 views: Binance red-teams its own staff monthly to keep hackers out.  I have to listen to my toddler lie abo
   - 0 likes / 8 views: me refreshing my linkedin to see if it noticed me yet  https://x.com/rakib_md007/status/208106610306
+
+## 2026-07-26
+
+**Activity** — total actions: 922
+  - by type: reply=811, quote=62, quote_gif=25, hotake=9, post=9, retweet=6
+  - top sources: SEARCH-HOT=518, FEED-SWEEP-FEED=169, FEED-SWEEP-FOLLOWING=103, QUOTE=50, GIF=28, DEBATE=16, BREAKING_QRT=6, HOT_QUOTE=4
+  - top reply targets: @arnaudmercier=89, @DanKornas=11, @imjustnewatai=9, @WhaleInsider=9, @TheBTCTherapist=8
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 1 likes / 80 views: me refreshing the tab like it’s a toddler asking "are we there yet?"
+  - 1 likes / 46 views: me nodding enthusiastically while quietly wondering who’s actually feeding the servers
+  - 1 likes / 21 views: Me explaining to my portfolio that AI layoffs are the tuition payment for the rest of our lives whil
