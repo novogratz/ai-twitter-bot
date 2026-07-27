@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-07-06T07:38:59.515848",
-    "raw_count": 5,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibautPeltier",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 150000,
-        "reason": "L'ancien CTO de Coinhouse, le seul qui explique la blockchain sans faire hurler les vieux de la vieille."
-      },
-      {
-        "handle": "MathieuGarcia",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 110000,
-        "reason": "Co-founder de AI Explained. Le gars rend l'IA accessible sans te faire payer 2000$ pour la masterclass."
-      },
-      {
-        "handle": "CyrilDong",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "Le trader de Paris-Montparnasse qui balance des setups cash. Pas de jargon, juste des graphiques qui saignent ou qui kiffent."
-      },
-      {
-        "handle": "Marc-AlexisCote",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 75000,
-        "reason": "CEO de Lyst, il tweete sur le e-commerce et l'IA avec le ton direct d'un Quebecois qui en a ras-le-bol du corporate US."
-      },
-      {
-        "handle": "AlexisDeGoubry",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 65000,
-        "reason": "La reference pour comprendre qui rachete qui. Il tweet sur l'industrie, pas sur le cours du jour."
-      }
-    ],
-    "summary": "Un bon mix entre les veterans crypto FR et les fondateurs tech plus internationaux. Pas de vendeurs de r\u00eave, que des gens qui construisent."
-  },
-  {
     "ts": "2026-07-07T01:41:27.947657",
     "raw_count": 8,
     "kept_count": 7,
@@ -8669,5 +8624,29 @@
       }
     ],
     "summary": "Mix \u00e9quilibr\u00e9 entre les 'gros noms' de l'IA fran\u00e7aise (Mistral) et des analaystes bourse/crypto moins satur\u00e9s. On \u00e9vite les vendeurs de r\u00eaves pour privil\u00e9gier les ing\u00e9nieurs et traders qui postent sans pub."
+  },
+  {
+    "ts": "2026-07-27T03:43:34.081055",
+    "raw_count": 7,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LuisCahart",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "L'analyste de chez Coinhouse qui explique la techno sans endormir tes grands-m\u00e8res."
+      },
+      {
+        "handle": "JFJoli",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Le roi du trading sur Twitter FR-CA, il donne des conseils que tu peux enfin comprendre sans avoir un DEA."
+      }
+    ],
+    "summary": "Le mix Mistral/Maki assure la domination tech-crypto FR. Le Qu\u00e9bec se d\u00e9fend bien avec Boivin et Joli pour \u00e9quilibrer la sauce. On a filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les artisans."
   }
 ]

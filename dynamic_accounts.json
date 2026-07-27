@@ -862,7 +862,9 @@
     "CryptoRaul",
     "MaximeStein",
     "ThibautLefebvre",
-    "PhilippeTessier"
+    "PhilippeTessier",
+    "LuisCahart",
+    "JFJoli"
   ],
   "en": [
     "Chubby",
@@ -1118,7 +1120,8 @@
     "Tangem",
     "InvestAnswers",
     "eppy",
-    "tphuang"
+    "tphuang",
+    "Jeffar_AI"
   ],
   "history": [
     {
@@ -6705,6 +6708,21 @@
       "lang": "fr",
       "handle": "PhilippeTessier",
       "added": "2026-07-26"
+    },
+    {
+      "lang": "en",
+      "handle": "Jeffar_AI",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisCahart",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JFJoli",
+      "added": "2026-07-27"
     }
   ]
 }
