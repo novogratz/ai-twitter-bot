@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-07-07T05:57:26.510498",
-    "raw_count": 7,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MorganHousel_",
-        "region": "usa",
-        "niche": "finance",
-        "followers": 150000,
-        "reason": "Psychologie de l'argent, influence massive sur les pros US, twitte en anglais mais essentiel pour le vocabulaire finance FR."
-      },
-      {
-        "handle": "moulidart",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 95000,
-        "reason": "La r\u00e9f\u00e9rence crypto FR, analyse macro solide, pas de pub Telegram, twitte en fran\u00e7ais."
-      },
-      {
-        "handle": "SylvainCharlebois",
-        "region": "usa",
-        "niche": "finance",
-        "followers": 80000,
-        "reason": "Professeur Dalhousie, expert agro-alimentaire, vues fra\u00eeches et mordantes sur les march\u00e9s food/tech."
-      },
-      {
-        "handle": "JulienHemery",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "Fondateur de MoneyMouth, analyse boursi\u00e8re FR quotidienne, style direct, audience massive."
-      },
-      {
-        "handle": "ThibautDelauney",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Ex-DeepMind, chercheur fran\u00e7ais, twitte sur l'IA avec profondeur et humour, pas un vendeur de r\u00eave."
-      },
-      {
-        "handle": "BenjaminBailly",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Le roi de l'\u00e9ducation financi\u00e8re au Qu\u00e9bec, actif, fiable, z\u00e9ro bruit politique."
-      },
-      {
-        "handle": "AlexisNeron",
-        "region": "quebec",
-        "niche": "tech/ai",
-        "followers": 25000,
-        "reason": "Influenceur tech qu\u00e9b\u00e9cois, couvre l'IA et les startups, audience locale tr\u00e8s engag\u00e9e."
-      }
-    ],
-    "summary": "On a crois\u00e9 les listes crypto et les profils chercheurs IA pour \u00e9viter les vendeurs de formations. L'IA fran\u00e7aise est mieux couverte par des profils techniques (Moulidart, Delauney) que par des influenceurs vibes. Au Qu\u00e9bec, la niche bourse/tech est mieux structur\u00e9e qu'en France."
-  },
-  {
-    "ts": "2026-07-07T07:46:54.328748",
-    "raw_count": 8,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "PierreRochard",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "L'expert Bitcoin qui explique la mon\u00e9tique des blocks comme si tu avais 5 ans. Il twitte souvent en FR quand il s'ennuie aux US."
-      },
-      {
-        "handle": "FredoBullen",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "L'analyste technique le plus honn\u00eate. Pas de hype, juste des graphiques et du cynisme. Id\u00e9al pour ceux qui veulent dormir la nuit."
-      }
-    ],
-    "summary": "Une s\u00e9lection mixte entre les g\u00e9ants techniques (Rochard, Weng) et les analysts de terrain (Bullen, Hemery). On \u00e9vite les influenceurs qui vendent du r\u00eave pour privil\u00e9gier ceux qui vendent de la logique, m\u00eame si elle pique les yeux."
-  },
-  {
     "ts": "2026-07-07T09:41:39.551791",
     "raw_count": 10,
     "kept_count": 3,
@@ -8627,5 +8544,116 @@
       }
     ],
     "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les pros : Mistral domine le champ AI FR, Pierre Rochard est le seul US francophone de qualit\u00e9, et Lionel Perrin est la r\u00e9f\u00e9rence crypto FR sans blabla."
+  },
+  {
+    "ts": "2026-07-27T09:44:20.848793",
+    "raw_count": 9,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NassimTalik",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Ex-French.ai, expert LLM & RAG. Ses threads sur l'architecture technique des mod\u00e8les font autorit\u00e9. Twitte en FR."
+      },
+      {
+        "handle": "TanguyBournez",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 40000,
+        "reason": "Ex-Hedge Fund \u00e0 NY, twitte en FR sur la macro et les march\u00e9s. Il y a la fra\u00eecheur du terrain am\u00e9ricain avec l'accent de l'hexagone."
+      },
+      {
+        "handle": "AlexisMons",
+        "region": "france",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "AI Engineer, ex-Databricks. Il d\u00e9cortique les architectures vectorielles et le d\u00e9ploiement. Pour les technos qui savent lire."
+      },
+      {
+        "handle": "Jean-LouisGaulin",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Directeur de recherche en IA. Il couvre l'\u00e9cosyst\u00e8me tech qu\u00e9b\u00e9cois avec des analyses macro. Le prof cool de la fac."
+      },
+      {
+        "handle": "NikolaiBorov",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Analyste on-chain bas\u00e9 \u00e0 Montr\u00e9al. Ses alerts sont pr\u00e9cises et ses threads sur les cycles de march\u00e9 sont top."
+      },
+      {
+        "handle": "JulienDrouet",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Bas\u00e9 aux States, couvre les startups fintech et crypto. Il mixe les tendances US et les acteurs fran\u00e7ais. L'informateur id\u00e9al."
+      }
+    ],
+    "summary": "L'IA fran\u00e7aise est port\u00e9e par les g\u00e9ants techniques (Mistral, French.ai) et l'IA qu\u00e9b\u00e9coise par les chercheurs acad\u00e9miques et les founders de scale-ups. En crypto, l'analyse on-chain francophone est moins satur\u00e9e mais plus qualitative que le shill boursier."
+  },
+  {
+    "ts": "2026-07-27T11:43:44.967653",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "michel4364",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'anti-Koolaid. Il a surv\u00e9cu aux bulles internet, dot-com et crypto en parlant avec un ton sec et cynique, z\u00e9ro hype, 100% pragmatisme."
+      },
+      {
+        "handle": "MihaiStifunel",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 62000,
+        "reason": "VC chez Polychain bas\u00e9 \u00e0 NYC. Il twitte en anglais mais sa prose est tellement francophone par l'esprit qu'on s'y retrouve. Deep dives techniques, z\u00e9ro shilling."
+      },
+      {
+        "handle": "BenoitGrosjean",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Gourou de l'IA pr\u00e9dictive chez CapitalIQ. Il twitte des insights institutions qui valent leur pesant d'or, sans jamais vendre de stage de 97\u20ac."
+      },
+      {
+        "handle": "MaximeTremblay",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 38000,
+        "reason": "G\u00e9rant \u00e0 BourseDirect. Il explique la finance comme \u00e0 un gamin de 15 ans sans \u00eatre condescendant. Le Qu\u00e9bec est sous-repr\u00e9sent\u00e9, lui comble le vide."
+      },
+      {
+        "handle": "JeanPhilippeGouin",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Gestionnaire de portefeuille ind\u00e9pendant \u00e0 Montr\u00e9al. Son fil est un mix rare de macro-\u00e9conomie US et de titres canadiens, souvent ignor\u00e9s par la FR."
+      },
+      {
+        "handle": "LudovicLepoivre",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Journaliste \u00e0 The Information (et ex-Pocket). Il traque les deals VC et les fuites produits FR avec une pr\u00e9cision chirurgicale avant que Bloomberg ne le dise."
+      },
+      {
+        "handle": "SachaSchoenbaum",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Journaliste AI \u00e0 The Information (San Francisco). Il couvre les labs US comme un insider fran\u00e7ais. Id\u00e9al pour ceux qui lisent vite en anglais mais veulent l'angle tech."
+      }
+    ],
+    "summary": "On a \u00e9vit\u00e9 les influenceurs TikTok et les vendeurs de r\u00eaves. Ici, c'est du concret : des g\u00e9rants de patrimoine qu\u00e9b\u00e9cois, des journalistes VC parisiens et des US-based francophones qui font le taf."
   }
 ]

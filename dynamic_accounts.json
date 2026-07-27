@@ -873,7 +873,18 @@
     "AlexisBoutin",
     "SylvainCahen",
     "LionelPerrin",
-    "MaximeMarty"
+    "MaximeMarty",
+    "NassimTalik",
+    "TanguyBournez",
+    "AlexisMons",
+    "NikolaiBorov",
+    "JulienDrouet",
+    "michel4364",
+    "MihaiStifunel",
+    "BenoitGrosjean",
+    "MaximeTremblay",
+    "LudovicLepoivre",
+    "SachaSchoenbaum"
   ],
   "en": [
     "Chubby",
@@ -6782,6 +6793,61 @@
     {
       "lang": "fr",
       "handle": "MaximeMarty",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "NassimTalik",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguyBournez",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisMons",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "NikolaiBorov",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDrouet",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "michel4364",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MihaiStifunel",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitGrosjean",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeTremblay",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicLepoivre",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "SachaSchoenbaum",
       "added": "2026-07-27"
     }
   ]

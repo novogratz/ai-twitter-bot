@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-27T09:42:59.338340",
-  "window_7d_actions": 5283,
-  "window_24h_actions": 919,
+  "generated_at": "2026-07-27T13:43:30.108898",
+  "window_7d_actions": 5293,
+  "window_24h_actions": 925,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5281
+      "count": 5291
     },
     {
       "pattern": "RENAME",
@@ -27,100 +27,100 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5281
+      "count": 5291
     }
   ],
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 276
+      "actions": 279
     },
     {
       "hour": 10,
-      "actions": 261
-    },
-    {
-      "hour": 9,
-      "actions": 243
+      "actions": 263
     },
     {
       "hour": 12,
-      "actions": 243
+      "actions": 247
     },
     {
       "hour": 0,
+      "actions": 242
+    },
+    {
+      "hour": 9,
       "actions": 242
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2426
+      "count": 2437
     },
     {
       "topic": "IA",
-      "count": 2166
+      "count": 2158
     },
     {
       "topic": "Crypto",
-      "count": 520
+      "count": 515
     },
     {
       "topic": "Bourse",
-      "count": 390
+      "count": 399
     },
     {
       "topic": "Spatial",
-      "count": 102
+      "count": 104
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2380
+      "count": 2382
     },
     {
       "pillar": "other",
-      "count": 1484
+      "count": 1482
     },
     {
       "pillar": "market_trauma",
-      "count": 1144
+      "count": 1153
     },
     {
       "pillar": "meme_reaction",
-      "count": 185
+      "count": 184
     },
     {
       "pillar": "reply_bait",
-      "count": 62
+      "count": 67
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 28
+      "count": 25
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 404
+      "count": 411
     },
     {
       "pillar": "other",
-      "count": 263
+      "count": 253
     },
     {
       "pillar": "market_trauma",
-      "count": 216
+      "count": 225
     },
     {
       "pillar": "meme_reaction",
-      "count": 21
+      "count": 19
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
@@ -130,23 +130,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_news_take",
-      "posts": 54,
+      "posts": 52,
       "avg_likes": 0.13,
-      "avg_views": 28.2,
+      "avg_views": 27.7,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 43,
-      "avg_likes": 0.12,
-      "avg_views": 34.0,
+      "posts": 45,
+      "avg_likes": 0.11,
+      "avg_views": 34.6,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 93,
-      "avg_likes": 0.1,
-      "avg_views": 31.4,
+      "avg_likes": 0.08,
+      "avg_views": 31.1,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4622
+      "count": 4634
     },
     {
       "type": "quote",
-      "count": 344
+      "count": 346
     },
     {
       "type": "quote_gif",
-      "count": 153
+      "count": 152
     },
     {
       "type": "post",
-      "count": 71
+      "count": 69
     },
     {
       "type": "hotake",
-      "count": 55
+      "count": 54
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-27T09:42:25.986003",
-      "text": "OpenAI is burning $5B a year on training that takes 6 months to finish.\n\nThey needed $NVDA cash so they could buy $NVDA chips.",
+      "ts": "2026-07-27T13:40:29.667945",
+      "text": "28,000 isn't resistance. It's a vacuum. The sellers aren't defending a line, they're hunting liquidity below it. stop trying to catch the knife, start timing the bounce.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-27T09:41:53.360583",
-      "text": "Anthropic bills per token, not per month. you're paying for a slot machine, not a subscription.",
+      "ts": "2026-07-27T13:39:05.864706",
+      "text": "OpenAI raising capital via Oracle CapEx means they aren't buying GPUs, they're renting liability. The cap table eats the margin.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-27T09:41:08.229790",
-      "text": "Hyperscalers are burning $120B a year on power that doesn't exist yet.\n\nthis isn't earnings week. it's a power rationing audition.",
+      "ts": "2026-07-27T13:38:11.389693",
+      "text": "Union Pacific threatening churn for silence. The market loves a monopoly that can price in loyalty and force disclosure.",
       "type": "reply"
     }
   ]
