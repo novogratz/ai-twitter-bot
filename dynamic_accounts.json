@@ -870,7 +870,10 @@
     "RomainBock",
     "ThomasLemaire",
     "JulienHerve",
-    "AlexisBoutin"
+    "AlexisBoutin",
+    "SylvainCahen",
+    "LionelPerrin",
+    "MaximeMarty"
   ],
   "en": [
     "Chubby",
@@ -1127,7 +1130,8 @@
     "InvestAnswers",
     "eppy",
     "tphuang",
-    "Jeffar_AI"
+    "Jeffar_AI",
+    "ImagineArt"
   ],
   "history": [
     {
@@ -6758,6 +6762,26 @@
     {
       "lang": "fr",
       "handle": "AlexisBoutin",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "en",
+      "handle": "ImagineArt",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainCahen",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelPerrin",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMarty",
       "added": "2026-07-27"
     }
   ]

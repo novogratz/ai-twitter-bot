@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-07-07T03:41:24.080332",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Marc-AndreRuest",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 40000,
-        "reason": "Le patron de Cloudwatt. Le Qu\u00e9bec a besoin de lui sur X pour qu'on arr\u00eate de croire qu'on est invisible."
-      },
-      {
-        "handle": "RenaudCazals",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "L'ancien de BlaBlaCar qui cover tout ce qui pue ou sent le succ\u00e8s. Z\u00e9ro filtre, 100% de la r\u00e9alit\u00e9 du terrain."
-      },
-      {
-        "handle": "StephaneGhali",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "La diaspora francophone \u00e0 SF. Il couvre l'AI avec l'accent de la Silicon Valley et la frondeuse de Paris."
-      },
-      {
-        "handle": "JulieRivard",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "L'experte crypto qu\u00e9b\u00e9coise qui parle moins de moon que de la tech sous-jacente. Rare d'avoir un peu de cervelle."
-      },
-      {
-        "handle": "AlexisClement",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Ex-Revolut. Il analyse la fintech avec la rigueur d'un banquier qui a vu la crise de 2008 et n'a toujours pas confiance."
-      }
-    ],
-    "summary": "La France domine le segment IA avec Mistral et ses g\u00e9nies, tandis que le Qu\u00e9bec et les USA francophones offrent des p\u00e9pites plus niche mais plus agiles."
-  },
-  {
     "ts": "2026-07-07T05:57:26.510498",
     "raw_count": 7,
     "kept_count": 7,
@@ -8641,5 +8596,36 @@
       }
     ],
     "summary": "Le top fran\u00e7ais crypto est mature (CyprienBock), le Qu\u00e9bec se r\u00e9v\u00e8le avec des perles boursi\u00e8res rares (Boutin/Dufour), et la diaspora US apporte un\u89c6\u89d2 institutionnel (Vogel)."
+  },
+  {
+    "ts": "2026-07-27T07:44:17.223384",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "SylvainCahen",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "L'ancien PDG de PayFit, maintenant VC. Il balance des p\u00e9pites sur le march\u00e9 FR et l'IA sans faire dans le 'guru'. Pas de groupe Telegram VIP pourri."
+      },
+      {
+        "handle": "LionelPerrin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Cr\u00e9ateur de CryptoMania. Il analyse le march\u00e9 crypto avec une bonne dose d'ironie, sans vendre de la fum\u00e9e. Le mec est un vrai trader, pas un community manager."
+      },
+      {
+        "handle": "MaximeMarty",
+        "region": "france",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "CEO de Vanta (acqui fran\u00e7ais). Il twitte sur SaaS, IA et la culture tech FR avec un ton direct. Pas de jargon inutile."
+      }
+    ],
+    "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les pros : Mistral domine le champ AI FR, Pierre Rochard est le seul US francophone de qualit\u00e9, et Lionel Perrin est la r\u00e9f\u00e9rence crypto FR sans blabla."
   }
 ]
