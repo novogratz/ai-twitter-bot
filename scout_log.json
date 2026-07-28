@@ -1,74 +1,5 @@
 [
   {
-    "ts": "2026-07-07T17:50:54.649601",
-    "raw_count": 6,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "alexissimonin",
-        "region": "france",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Foundeur de DeepL et ex-Google. Il twitte des insights IA profonds en FR, pas des memes."
-      },
-      {
-        "handle": "mickaelb12",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Le 'meme stock trader' de France. Divertissant, suit la tech/IA de pr\u00e8s, audience fid\u00e8le."
-      }
-    ],
-    "summary": "Focus sur les fondateurs techniques (Mistral, DeepL) et les analystes 'sans filtre' (Hemery, Rivard). On \u00e9vite les influenceurs formations pour garder la substance."
-  },
-  {
-    "ts": "2026-07-07T23:41:28.220660",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "TheBullMarket",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 180000,
-        "reason": "La r\u00e9f\u00e9rence absolue en FR. Analyse on-chain brute, zero bullshit, twitte en bon fran\u00e7ais sans la lourdeur des influenceurs."
-      },
-      {
-        "handle": "D3crypted",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 120000,
-        "reason": "Ex-Jeune Afrique. Journalistique, rigoureux, couvre la r\u00e9gulation et le march\u00e9. Twitte en FR, vibe professionnelle."
-      },
-      {
-        "handle": "PierreRoche",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Ex-Bloomberg. Vit aux USA mais twitte en FR. Angle macro/VC tr\u00e8s solide, moins ax\u00e9 'price action', plus 'fondamental'."
-      },
-      {
-        "handle": "MaximeDejauregui",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 35000,
-        "reason": "Ancien de Doctolib/AlloVoisins. Il parle SaaS et Fintech FR. Pas un compte 'finance' pure, mais indispensable pour l'\u00e9cosyst\u00e8me."
-      },
-      {
-        "handle": "LucasLavoie",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 25000,
-        "reason": "Analyste ind\u00e9pendant qu\u00e9b\u00e9cois. Focus actions et macro. Moins de buzz, plus de substance. Compte rarement actif mais qualit\u00e9 au top."
-      }
-    ],
-    "summary": "J'ai vir\u00e9 les vendeurs de r\u00eaves (Telegram VIP, formations \u00e0 2k\u20ac) et les bots pour garder que du jus: des journalistes aguerris et des devs qui bossent. Le mix FR/QC/US est assur\u00e9 avec des profils qui ont une t\u00eate et une plume."
-  },
-  {
     "ts": "2026-07-08T01:41:27.786722",
     "raw_count": 8,
     "kept_count": 8,
@@ -8648,5 +8579,81 @@
       }
     ],
     "summary": "Un mix solide entre les g\u00e9ants institutionnels fran\u00e7ais (Mistral, Dassault) et les influenceurs tech/crypto qu\u00e9b\u00e9cois et US francophones. Pas de vendeurs de r\u00eave, juste des makers et des analystes qui font bouger la ligne droite."
+  },
+  {
+    "ts": "2026-07-28T01:43:29.454892",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NicolasTrenda",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'anti-fake-news du trading. Il p\u00f4le, il cite ses sources, il n'a pas de Telegram."
+      },
+      {
+        "handle": "MathiasPerraud",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Tech lead chez Mistral. Le genre de mec qui tweete des d\u00e9tails techniques qui font mal au cr\u00e2ne mais sont g\u00e9niales."
+      },
+      {
+        "handle": "AntoineBouvier",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Analyste qu\u00e9b\u00e9cois solide. Il parle cash flow et valorisation sans jargon inutil."
+      },
+      {
+        "handle": "OlivierSibille",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 11000,
+        "reason": "Expert Bitcoin/Blockchain qu\u00e9b\u00e9cois. Il explique la tech plus bien que les influenceurs TikTok."
+      }
+    ],
+    "summary": "6 comptes de guerre s\u00e9lectionn\u00e9s. On a mis\u00e9 sur les experts (Mistral, Trenda) plut\u00f4t que les bateleurs de man\u00e8ge."
+  },
+  {
+    "ts": "2026-07-28T03:43:34.677896",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RomainDessertine",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "CEO de Lydia, tweet sur la fintech, la data et l'\u00e9cosyst\u00e8me startup FR sans vendre de formation \u00e0 99\u20ac."
+      },
+      {
+        "handle": "JulienDucros",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Trader ind\u00e9pendant, tweet des setups et de la macro, style direct, peu de blabla politique."
+      },
+      {
+        "handle": "AntoineB01",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Journaliste AI, interview les g\u00e9ants du secteur, contenu dense et source directe pour comprendre le march\u00e9 fran\u00e7ais."
+      },
+      {
+        "handle": "PierreLannoy",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Influenceur crypto qu\u00e9b\u00e9cois, couvre Bitcoin et DeFi, tr\u00e8s actif dans la communaut\u00e9 nord-am\u00e9ricaine francophone."
+      }
+    ],
+    "summary": "Mix parfait entre la l\u00e9gende vivante Maki (USA/QC), l'expert technique Mistral (FR) et des traders/fintechers locaux qui tiennent la route sans \u00eatre des vendeurs de r\u00eaves."
   }
 ]

@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-28T01:42:59.314900",
-  "window_7d_actions": 5313,
-  "window_24h_actions": 922,
+  "generated_at": "2026-07-28T05:42:59.225492",
+  "window_7d_actions": 5315,
+  "window_24h_actions": 923,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5311
+      "count": 5313
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5311
+      "count": 5313
     }
   ],
   "best_hours_utc": [
@@ -44,30 +44,30 @@
       "actions": 247
     },
     {
-      "hour": 1,
-      "actions": 243
-    },
-    {
       "hour": 9,
       "actions": 242
+    },
+    {
+      "hour": 8,
+      "actions": 240
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2463
+      "count": 2469
     },
     {
       "topic": "IA",
-      "count": 2158
+      "count": 2157
     },
     {
       "topic": "Crypto",
-      "count": 514
+      "count": 512
     },
     {
       "topic": "Bourse",
-      "count": 399
+      "count": 401
     },
     {
       "topic": "Spatial",
@@ -78,37 +78,37 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2373
+      "count": 2376
     },
     {
       "pillar": "other",
-      "count": 1477
+      "count": 1479
     },
     {
       "pillar": "market_trauma",
-      "count": 1183
+      "count": 1182
     },
     {
       "pillar": "meme_reaction",
-      "count": 182
+      "count": 181
     },
     {
       "pillar": "reply_bait",
-      "count": 71
+      "count": 69
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 27
+      "count": 28
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 430
+      "count": 424
     },
     {
       "pillar": "market_trauma",
-      "count": 228
+      "count": 232
     },
     {
       "pillar": "other",
@@ -116,7 +116,7 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 24
+      "count": 26
     },
     {
       "pillar": "reply_bait",
@@ -124,29 +124,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 48,
-      "avg_likes": 0.17,
-      "avg_views": 35.1,
+      "posts": 46,
+      "avg_likes": 0.2,
+      "avg_views": 35.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 55,
-      "avg_likes": 0.13,
-      "avg_views": 29.7,
+      "posts": 58,
+      "avg_likes": 0.12,
+      "avg_views": 28.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 88,
+      "posts": 87,
       "avg_likes": 0.06,
-      "avg_views": 32.8,
+      "avg_views": 32.0,
       "low_sample": false
     },
     {
@@ -167,7 +167,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4655
+      "count": 4658
     },
     {
       "type": "quote",
@@ -175,7 +175,7 @@
     },
     {
       "type": "quote_gif",
-      "count": 150
+      "count": 149
     },
     {
       "type": "post",
@@ -192,19 +192,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-28T01:42:24.632694",
-      "text": "BTC open interest is liquidating faster than spot demand is filling.\n\nthis isn't capitulation. it's deleveraging.\n\nreal price discovery hasn't started yet.",
+      "ts": "2026-07-28T05:42:46.890573",
+      "text": "Palantir’s Rule of 40 is finally clean.\n\nAlex Karp isn’t selling software. He’s selling the US government’s insurance policy against China, priced at a premium that only a monopoly can command. sovereign AI = sticky govt contracts. buy the fear, hold the moat.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-28T01:41:19.051849",
-      "text": "SK Hynix ADR down 12% while Nvidia’s datacenter margin holds at 70%.\n\nthe hardware buyers are hedging. the GPU seller is just collecting rent.",
+      "ts": "2026-07-28T05:40:24.101557",
+      "text": "九州に半導体の未来。\n\nTSMCの熊本工場は2nmの最先端を生産する。\n日本にNVIDIAは来なかった。日本にTSMCが来た。\n違いがわかる人だけが勝つ。",
       "type": "reply"
     },
     {
-      "ts": "2026-07-28T01:40:46.430343",
-      "text": "me refreshing my 401k every time someone says \"biggest spender\" like the chart owes me an apology 🛋️",
-      "type": "quote"
+      "ts": "2026-07-28T05:39:55.531164",
+      "text": "Palantir’s Rule of 40 is broken. Karp sells strategy. PLTR sells SaaS. Europe is just a line item in his US-centric burn rate.",
+      "type": "reply"
     }
   ]
 }

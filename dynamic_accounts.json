@@ -903,7 +903,14 @@
     "LucLacroix",
     "RemyFougerouse",
     "MathildeMougeot",
-    "VincentBerthier"
+    "VincentBerthier",
+    "NicolasTrenda",
+    "MathiasPerraud",
+    "AntoineBouvier",
+    "OlivierSibille",
+    "JulienDucros",
+    "AntoineB01",
+    "PierreLannoy"
   ],
   "en": [
     "Chubby",
@@ -6993,6 +7000,41 @@
       "lang": "fr",
       "handle": "VincentBerthier",
       "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasTrenda",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathiasPerraud",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineBouvier",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierSibille",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDucros",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineB01",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLannoy",
+      "added": "2026-07-28"
     }
   ]
 }
