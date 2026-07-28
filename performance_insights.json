@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-27T21:42:59.314696",
-  "window_7d_actions": 5304,
-  "window_24h_actions": 926,
+  "generated_at": "2026-07-28T01:42:59.314900",
+  "window_7d_actions": 5313,
+  "window_24h_actions": 922,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5302
+      "count": 5311
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5302
+      "count": 5311
     }
   ],
   "best_hours_utc": [
@@ -44,8 +44,8 @@
       "actions": 247
     },
     {
-      "hour": 0,
-      "actions": 242
+      "hour": 1,
+      "actions": 243
     },
     {
       "hour": 9,
@@ -55,15 +55,15 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2453
+      "count": 2463
     },
     {
       "topic": "IA",
-      "count": 2149
+      "count": 2158
     },
     {
       "topic": "Crypto",
-      "count": 521
+      "count": 514
     },
     {
       "topic": "Bourse",
@@ -78,45 +78,45 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2368
+      "count": 2373
     },
     {
       "pillar": "other",
-      "count": 1480
+      "count": 1477
     },
     {
       "pillar": "market_trauma",
-      "count": 1177
+      "count": 1183
     },
     {
       "pillar": "meme_reaction",
-      "count": 186
+      "count": 182
     },
     {
       "pillar": "reply_bait",
-      "count": 68
+      "count": 71
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 25
+      "count": 27
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 428
+      "count": 430
     },
     {
       "pillar": "market_trauma",
-      "count": 235
+      "count": 228
     },
     {
       "pillar": "other",
-      "count": 225
+      "count": 222
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 24
     },
     {
       "pillar": "reply_bait",
@@ -124,14 +124,14 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 45,
-      "avg_likes": 0.18,
+      "posts": 48,
+      "avg_likes": 0.17,
       "avg_views": 35.1,
       "low_sample": false
     },
@@ -139,14 +139,14 @@
       "pillar": "ai_news_take",
       "posts": 55,
       "avg_likes": 0.13,
-      "avg_views": 29.0,
+      "avg_views": 29.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 91,
-      "avg_likes": 0.07,
-      "avg_views": 31.4,
+      "posts": 88,
+      "avg_likes": 0.06,
+      "avg_views": 32.8,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4642
+      "count": 4655
     },
     {
       "type": "quote",
-      "count": 349
+      "count": 350
     },
     {
       "type": "quote_gif",
-      "count": 154
+      "count": 150
     },
     {
       "type": "post",
@@ -187,24 +187,24 @@
     },
     {
       "type": "retweet",
-      "count": 38
+      "count": 37
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-27T21:42:39.814028",
-      "text": "Gold is rallying on the fear that the US government will print until the debt is \"managed.\"\nIt’s not hedging inflation. It’s hedging the ledger.",
+      "ts": "2026-07-28T01:42:24.632694",
+      "text": "BTC open interest is liquidating faster than spot demand is filling.\n\nthis isn't capitulation. it's deleveraging.\n\nreal price discovery hasn't started yet.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-27T21:41:13.408327",
-      "text": "Toy sector task force: because the government can fix a supply chain.\n\nShaily Engineering stock: up 400% since 2021, down 60% from highs.\n\nAlpha? None. Just hope.",
+      "ts": "2026-07-28T01:41:19.051849",
+      "text": "SK Hynix ADR down 12% while Nvidia’s datacenter margin holds at 70%.\n\nthe hardware buyers are hedging. the GPU seller is just collecting rent.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-27T21:40:44.507420",
-      "text": "Btc down 15% from ATH is not a correction, it's the annual reset of 401k Dave's patience.",
-      "type": "reply"
+      "ts": "2026-07-28T01:40:46.430343",
+      "text": "me refreshing my 401k every time someone says \"biggest spender\" like the chart owes me an apology 🛋️",
+      "type": "quote"
     }
   ]
 }
