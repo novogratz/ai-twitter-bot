@@ -650,6 +650,17 @@ def main():
             id="follow_engagers_job",
         )
 
+        # Pin bot (2026-07-28: dead-import family strikes again — imported
+        # since the 06-06 auto-pin mandate and listed in the hot-reload map,
+        # but scheduler.add_job was NEVER called; zero [PIN] lines in any
+        # log). Hourly; run_pin_cycle self-caps to one attempt/day.
+        log.info("Pin bot: rotating the pinned post, checked hourly (1 attempt/day).")
+        scheduler.add_job(
+            safe_run_pin_cycle,
+            trigger=IntervalTrigger(minutes=60),
+            id="pin_job",
+        )
+
         # Self-quote recycler (2026-07-19, pending since 06-07): 1/day QRT
         # of our own 20-48h winner with the follow-up angle, tried during
         # the analyzer's measured best hours (evening ET).
