@@ -16566,3 +16566,13 @@ WITH SOME BIG ‘BUTS’:
 - **@deryatr_** (13 likes, score 7/10) — First Anthropic hero with the courage to openly disagree with Dario Amodei, who is mostly arguing against open-weight AI models! Apparently there are other heroes within Anthropic. I do hope @karpathy
   - https://x.com/DeryaTR_/status/2081955476883845370
   - **WHY**: Source fiable + impact concret (score signal 5, engagement 23).
+- **@ishansharma7390** (307 likes, score 9/10) — We live in 2 worlds.
+
+1st is people who are paying for Claude, ChatGPT, and using the world's most powerful models, fable and gpt5.6, making ai agents.
+
+and the 2nd which still survives on the free ch
+  - https://x.com/Ishansharma7390/status/2081676219540717703
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 385).
+- **@pitdesi** (224 likes, score 8/10) — Dario says Anthropic has never advocated for banning open-weight models... They didn’t sign the letter because the letter claimed open weights generally improve safety, by making safeguards easier to
+  - https://x.com/pitdesi/status/2081898767733977184
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 264).
