@@ -3195,6 +3195,8 @@ def test_follow_engagers_lane_and_gate_bypass(monkeypatch, tmp_path):
     followed = []
     monkeypatch.setattr("src.twitter_client.follow_account",
                         lambda h, engager=False: followed.append((h, engager)) or True)
+    monkeypatch.setattr("src.action_guard.can_follow",
+                        lambda h, reciprocal=False: (True, ""))
     monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
     monkeypatch.setenv("FOLLOW_ENGAGERS_PER_CYCLE", "1")
     monkeypatch.setenv("FOLLOW_ENGAGERS_PER_DAY", "10")
@@ -3290,3 +3292,40 @@ def test_spicy_dial_suggestive_never_explicit():
         low = prompt.lower()
         assert "flirt" in low and "never explicit" in low, \
             "surface prompts must carry the dial WITH its guardrail"
+
+
+def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch, tmp_path):
+    """2026-07-28 nine-day health read — three shipped features were dead:
+    (1) pin_bot was the DEAD-IMPORT family again (imported + in the
+    hot-reload map, scheduler.add_job never called, zero [PIN] lines ever)
+    — pin that main.py registers pin_job; (2) follow_engagers burned 262
+    candidates into its attempted-forever set via TRANSIENT policy
+    refusals (the 3500 total-following ceiling) — a transient refusal must
+    end the cycle WITHOUT burning candidates; (3) self-quote floor was
+    unreachable (0 quotes in 9 days) — default must be <=2."""
+    src = open("main.py").read()
+    assert 'id="pin_job"' in src and "safe_run_pin_cycle," in src, \
+        "pin_job must be REGISTERED, not just imported (dead-import family)"
+
+    import json
+    from src import follow_engagers_bot as fe
+    rb = tmp_path / "replied_back.json"
+    rb.write_text(json.dumps(["https://x.com/somefan/status/111"]))
+    monkeypatch.setattr(fe, "REPLIED_BACK_FILE", str(rb))
+    monkeypatch.setattr(fe, "STATE_FILE", str(tmp_path / "fe_state.json"))
+    called = []
+    monkeypatch.setattr("src.twitter_client.follow_account",
+                        lambda h, engager=False: called.append(h) or True)
+    monkeypatch.setattr("src.action_guard.can_follow",
+                        lambda h, reciprocal=False: (False, "total following ceiling reached (3500 >= 3500)"))
+    monkeypatch.setenv("ENABLE_FOLLOW_ENGAGERS", "1")
+    fe.run_follow_engagers_cycle()
+    assert called == [], "transient refusal must not reach follow_account"
+    st = fe._load_state()
+    assert st.get("attempted", []) == [], \
+        "transient policy refusal must NOT burn the candidate"
+
+    import inspect
+    from src import self_quote_bot
+    assert '"SELF_QUOTE_MIN_LIKES", "2"' in inspect.getsource(self_quote_bot), \
+        "self-quote floor must be reachable (2 = self-like + 1 external)"

@@ -4,6 +4,27 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-07-28 round 2 — NINE-DAY HEALTH READ: three dead features fixed
+> (found by reading the logs, not by guessing):** followers +45/day
+> (2473→2652), debates shipping ~25/day, blank restarts down ~100→~40/day
+> — but pin/self-quote/engager-follows had ZERO output. Root causes:
+> 1. **pin_bot was never scheduled** — the DEAD-IMPORT family again
+>    (imported since 06-06, listed in the hot-reload map, `add_job` never
+>    called, zero [PIN] lines in any log ever). Now registered hourly
+>    (self-caps 1 attempt/day).
+> 2. **Following hit FOLLOW_TOTAL_CAP (3500/3500) → every follow path
+>    dead**, and follow_engagers burned 262 candidates into its
+>    attempted-forever set via those TRANSIENT refusals. Fix: cheap
+>    `can_follow` pre-check — transient refusals (spacing/cap/ceiling) end
+>    the cycle WITHOUT burning candidates; state reset once. Unfollow
+>    glide accelerated (.env): 60→120/day, 5→12/cycle — at ~-100 net/day
+>    the 600-700 target is ~1 month out, and follows resume automatically
+>    once under the ceiling.
+> 3. **Self-quote floor unreachable** (0 quotes in 9 days): default
+>    SELF_QUOTE_MIN_LIKES 3→2 (self-like + 1 external), same logic as the
+>    pin floor. Guard:
+>    `test_pin_job_actually_scheduled_and_transient_refusals_dont_burn`.
+
 > **Mandate 2026-07-28 — THE SPICY DIAL (operator: "make the bot be more
 > sexy and spicy so people want to follow it more... like a milf ai
 > therapist :) still she needs to be the sharpest of all folks on AI"):**

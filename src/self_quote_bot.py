@@ -79,7 +79,9 @@ def run_self_quote_cycle():
     if os.environ.get("ENABLE_SELF_QUOTE", "1") != "1":
         log.info("[SELF-QUOTE] Disabled. Skipping.")
         return
-    min_likes = int(os.environ.get("SELF_QUOTE_MIN_LIKES", "3"))
+    # 2 (was 3, 2026-07-28): 9 days live produced ZERO self-quotes — no
+    # 20-48h post cleared 3 scraped likes. 2 = self-like + 1 external.
+    min_likes = int(os.environ.get("SELF_QUOTE_MIN_LIKES", "2"))
 
     st = _load_state()
     today = date.today().isoformat()
