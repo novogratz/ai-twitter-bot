@@ -4,6 +4,27 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-07-28 round 4 — APPOINTMENT CONTENT + PROVEN-CONTENT PROMOTION
+> (operator: "do everything you think we should do"):**
+> 1. **"Today in AI" daily rundown thread** — thread_bot retooled (it was
+>    ANOTHER museum piece: French-era "Radar Infra IA" prompt + an LLM-
+>    WebSearch dependency, the reply_agent lesson). Now: her voice, 5
+>    tweets (opener + 3 stories + closer), anchored to external_signal.json
+>    (deterministic input), SKIPs without fresh signal, fires ~19:30 ET
+>    (measured best hours, was 13:30). Appointment content = the follow
+>    habit loop.
+> 2. **`src/reply_promoter_bot.py`** — 1/day, the reply_winners bank's top
+>    audience-tested reply (>= REPLY_PROMOTE_MIN_LIKES=4) is REWRITTEN as a
+>    standalone profile post (our biggest measured win ever was a reply
+>    buried in someone else's thread). Each winner promoted once ever;
+>    thread-bound winners burned on model SKIP; ship-gated through the
+>    post_tweet chokepoint. ~15:30 ET.
+> 3. **Self-improve loop re-armed** (.env ENABLE_SELF_IMPROVE_LOOP=1): the
+>    daily diagnose-from-logs -> one tested fix -> PR session. This week's
+>    dead-feature finds came from finally reading the logs; now it happens
+>    every morning. Guard:
+>    `test_daily_rundown_thread_signal_anchored_and_promoter_contracts`.
+
 > **2026-07-28 round 3 — DATA VERDICTS (operator: "do everything you think
 > we should do"):** three log/data-driven fixes.
 > 1. **Winner shape enforced in CODE:** the "me [verb]ing" format shipped

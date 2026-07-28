@@ -32,6 +32,7 @@ from src.direct_reply import safe_run_direct_reply_cycle
 from src.debate_bot import safe_run_debate_cycle
 from src.follow_engagers_bot import safe_run_follow_engagers_cycle
 from src.self_quote_bot import safe_run_self_quote_cycle
+from src.reply_promoter_bot import safe_run_reply_promoter_cycle
 from src.engagement_targeting import safe_run_engagement_targeting_cycle
 from src.discover_bot import safe_run_discovery_cycle
 from src.roast_pgm_bot import safe_run_roast_pgm_cycle
@@ -490,10 +491,12 @@ def main():
         # "1 long-form thread/day"). run_thread_cycle self-caps via
         # _already_posted_today(), so a single daily cron suffices; fire at
         # ~13:30 ET (midday US, peak). digest/recap stay off (not in V2 mix).
-        log.info("Long-form thread: 1/day at ~13:30 ET (V2 mix).")
+        # 2026-07-28: retooled into the "Today in AI" evening rundown —
+        # appointment content in the analyzer's measured best hours.
+        log.info("Daily thread: 'Today in AI' rundown at ~19:30 ET.")
         scheduler.add_job(
             safe_run_thread_cycle,
-            trigger=CronTrigger(hour=13, minute=30, timezone="America/New_York", jitter=1800),
+            trigger=CronTrigger(hour=19, minute=30, timezone="America/New_York", jitter=1200),
             id="thread_job",
             max_instances=1,
         )
@@ -659,6 +662,16 @@ def main():
             safe_run_pin_cycle,
             trigger=IntervalTrigger(minutes=60),
             id="pin_job",
+        )
+
+        # Reply-winner promoter (2026-07-28): 1/day, graduates the bank's
+        # top audience-tested reply into a standalone profile post.
+        log.info("Reply promoter: 1/day, best reply-winner becomes a post (~15:30 ET).")
+        scheduler.add_job(
+            safe_run_reply_promoter_cycle,
+            trigger=CronTrigger(hour=15, minute=30, timezone="America/New_York", jitter=1200),
+            id="reply_promoter_job",
+            max_instances=1,
         )
 
         # Self-quote recycler (2026-07-19, pending since 06-07): 1/day QRT
