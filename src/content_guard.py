@@ -404,6 +404,37 @@ _BURNED_PATTERNS = (
                re.IGNORECASE),
 )
 
+# RATIONED winner shapes (2026-07-28): prompts say "~1 in 5, never twice in
+# a row" but ollama ignores rationing instructions — the "me [verb]ing"
+# self-snapshot shipped in 7 of 15 posts (three near-identical "me
+# refreshing my portfolio" variants) and became the new broken record.
+# Same family as banned catchphrases -> banned structures: the ration is
+# enforced HERE, where model discipline can't fail. A draft using a
+# rationed shape is refused when any post in the recent window already
+# used it (window sized so the shape lands ~1 in 5-7 posts/day).
+_RATIONED_OPENER_SHAPES = (
+    re.compile(r"^\s*[\"'«]?me\s+\w+ing\b", re.IGNORECASE),  # "me refreshing…"
+)
+
+
+def _rationed_shape_overused(text: str) -> bool:
+    """True when `text` uses a rationed opener shape that already appeared
+    in the last RATIONED_SHAPE_WINDOW_HOURS of posted content."""
+    matched = [p for p in _RATIONED_OPENER_SHAPES if p.match(text or "")]
+    if not matched:
+        return False
+    window_h = int(os.environ.get("RATIONED_SHAPE_WINDOW_HOURS", "6"))
+    try:
+        from .history import get_recent_tweets
+        recent = get_recent_tweets(hours=window_h)
+    except Exception:
+        return False
+    for prior in recent:
+        for p in matched:
+            if p.match(prior or ""):
+                return True
+    return False
+
 
 def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     """Validate a draft. kind ∈ {"original", "quote", "reply"}.
@@ -455,6 +486,8 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         for pat in _BURNED_PATTERNS:
             if pat.search(text):
                 return (False, "burned structure (contrast-reframe \"that's not X, that's Y\") — bot-tell, rewrite fresh")
+        if _rationed_shape_overused(text):
+            return (False, "rationed shape overused (\"me [verb]ing…\" already posted in window) — vary the opener")
 
     if kind in ("reply", "quote"):
         # Hard X limit for these surfaces — an over-limit draft gets cut by

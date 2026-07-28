@@ -4,6 +4,25 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-07-28 round 3 — DATA VERDICTS (operator: "do everything you think
+> we should do"):** three log/data-driven fixes.
+> 1. **Winner shape enforced in CODE:** the "me [verb]ing" format shipped
+>    in 7 of 15 recent posts incl. three near-identical "me refreshing my
+>    portfolio" variants — ollama ignores prompt-level rationing, so the
+>    winner became the broken record. content_guard now refuses a
+>    rationed-shape draft when the last `RATIONED_SHAPE_WINDOW_HOURS` (6)
+>    already posted one (catchphrases→structures family: enforce rations
+>    where model discipline can't fail). Guard:
+>    `test_rationed_winner_shape_enforced_at_chokepoint`.
+> 2. **PROFILE_LLM_PROVIDER back to claude (.env; adjusts the 07-19
+>    all-ollama call ON DATA, which is what the provider column was built
+>    for):** 199 ollama-era profile posts = 0.12 avg likes, 90% zero-like,
+>    ZERO breakouts; the claude era produced the 92-like breakout. Replies
+>    STAY on ollama (they convert fine and carry the volume/cost).
+> 3. **Mentions tab exempt from blank-page counting** (`_LEGIT_EMPTY_
+>    LABELS`): an empty mentions tab is "nobody mentioned us", not a
+>    Safari wedge — it was contributing to the residual ~40 restarts/day.
+
 > **2026-07-28 round 2 — NINE-DAY HEALTH READ: three dead features fixed
 > (found by reading the logs, not by guessing):** followers +45/day
 > (2473→2652), debates shipping ~25/day, blank restarts down ~100→~40/day

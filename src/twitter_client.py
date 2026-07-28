@@ -44,8 +44,15 @@ def _in_post_restart_grace() -> bool:
         return False
 
 
+# Pages that can be LEGITIMATELY empty (no new mentions = a blank mentions
+# tab). Their blanks say nothing about Safari's health — never count them.
+_LEGIT_EMPTY_LABELS = {"mentions"}
+
+
 def _record_blank_page(is_home_feed: bool = False, label: str = ""):
     global _blank_page_count, _home_feed_blank_count
+    if label in _LEGIT_EMPTY_LABELS:
+        return
     if _in_post_restart_grace():
         log.info("[SCRAPE] Blank page within post-restart grace — not counting toward restart threshold.")
         return

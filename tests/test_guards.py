@@ -3329,3 +3329,51 @@ def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch
     from src import self_quote_bot
     assert '"SELF_QUOTE_MIN_LIKES", "2"' in inspect.getsource(self_quote_bot), \
         "self-quote floor must be reachable (2 = self-like + 1 external)"
+
+
+def test_rationed_winner_shape_enforced_at_chokepoint(monkeypatch, tmp_path):
+    """2026-07-28: the 'me [verb]ing' winner format shipped in 7 of 15
+    posts (ollama ignores prompt-level rationing) — the winner became the
+    broken record. Same family as catchphrases -> structures: the ration
+    is enforced at the content_guard chokepoint. A 'me [verb]ing' draft is
+    refused when the recent window already posted one; fresh windows and
+    non-matching openers pass. Also: the mentions tab (legitimately empty
+    when nobody mentioned us) must never count toward blank-page restarts."""
+    import json
+    from src import content_guard as cg
+    from src import history as hist
+    from datetime import datetime
+
+    hfile = tmp_path / "tweet_history.json"
+    monkeypatch.setattr(hist, "HISTORY_FILE", str(hfile))
+
+    # Empty window -> the shape passes
+    hfile.write_text("[]")
+    ok, why = cg.validate("me refreshing my 401k like a loading screen", kind="original")
+    assert ok, f"first use in window must pass: {why}"
+
+    # Window already has one -> refused
+    hfile.write_text(json.dumps([
+        {"text": "me watching nvidia earnings like a season finale",
+         "timestamp": datetime.now().isoformat()},
+    ]))
+    ok, why = cg.validate("me refreshing my portfolio again", kind="original")
+    assert not ok and "rationed shape" in why, "second same-shape in window must be refused"
+
+    # Different opener -> passes regardless
+    ok, why = cg.validate("Nvidia down 4%. my clients are doing breathing exercises", kind="original")
+    assert ok, f"non-rationed opener must pass: {why}"
+
+    # Mentions never count toward blank-page restarts
+    from src import twitter_client as tc
+    from src import safari_hygiene as sh
+    import time as _time
+    restarts = []
+    monkeypatch.setattr(sh, "restart_safari", lambda reason="": restarts.append(reason) or True)
+    monkeypatch.setattr(sh, "_last_run_ts", lambda: _time.time() - 3600)
+    tc._reset_blank_page_count()
+    for _ in range(6):
+        tc._record_blank_page(label="mentions")
+    assert restarts == [] and tc._blank_page_count == 0, \
+        "legit-empty mentions tab must never count as a blank page"
+    tc._reset_blank_page_count()
