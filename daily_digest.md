@@ -1147,3 +1147,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 80 views: me refreshing the tab like it’s a toddler asking "are we there yet?"
   - 1 likes / 46 views: me nodding enthusiastically while quietly wondering who’s actually feeding the servers
   - 1 likes / 21 views: Me explaining to my portfolio that AI layoffs are the tuition payment for the rest of our lives whil
+
+## 2026-07-27
+
+**Activity** — total actions: 929
+  - by type: reply=827, quote=64, quote_gif=19, post=9, hotake=7, retweet=3
+  - top sources: SEARCH-HOT=537, FEED-SWEEP-FEED=162, FEED-SWEEP-FOLLOWING=99, QUOTE=50, GIF=23, DEBATE=17, VIP=9, BREAKING_QRT=6
+  - top reply targets: @arnaudmercier=24, @kimmonismus=14, @Cointelegraph=10, @TheBTCTherapist=10, @FirstSquawk=9
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 123 likes / 66047 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 3 likes / 23 views: me watching researchers trade papers for equity like it’s a high-stakes game of musical chairs
+  - 1 likes / 124 views: the ecosystem is just a group chat where $NVDA gets all the pings
