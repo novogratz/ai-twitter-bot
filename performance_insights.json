@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-27T17:42:59.353229",
-  "window_7d_actions": 5308,
-  "window_24h_actions": 930,
+  "generated_at": "2026-07-27T21:42:59.314696",
+  "window_7d_actions": 5304,
+  "window_24h_actions": 926,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5306
+      "count": 5302
     },
     {
       "pattern": "RENAME",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5306
+      "count": 5302
     }
   ],
   "best_hours_utc": [
@@ -55,68 +55,68 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2441
+      "count": 2453
     },
     {
       "topic": "IA",
-      "count": 2162
+      "count": 2149
     },
     {
       "topic": "Crypto",
-      "count": 523
+      "count": 521
     },
     {
       "topic": "Bourse",
-      "count": 401
+      "count": 399
     },
     {
       "topic": "Spatial",
-      "count": 109
+      "count": 108
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2378
+      "count": 2368
     },
     {
       "pillar": "other",
-      "count": 1483
+      "count": 1480
     },
     {
       "pillar": "market_trauma",
-      "count": 1168
+      "count": 1177
     },
     {
       "pillar": "meme_reaction",
-      "count": 185
+      "count": 186
     },
     {
       "pillar": "reply_bait",
-      "count": 67
+      "count": 68
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 27
+      "count": 25
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 416
-    },
-    {
-      "pillar": "other",
-      "count": 240
+      "count": 428
     },
     {
       "pillar": "market_trauma",
-      "count": 234
+      "count": 235
+    },
+    {
+      "pillar": "other",
+      "count": 225
     },
     {
       "pillar": "meme_reaction",
-      "count": 21
+      "count": 22
     },
     {
       "pillar": "reply_bait",
@@ -124,36 +124,36 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 3
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 46,
-      "avg_likes": 0.17,
-      "avg_views": 34.5,
+      "posts": 45,
+      "avg_likes": 0.18,
+      "avg_views": 35.1,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 53,
+      "posts": 55,
       "avg_likes": 0.13,
-      "avg_views": 27.9,
+      "avg_views": 29.0,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 92,
-      "avg_likes": 0.08,
-      "avg_views": 31.6,
+      "posts": 91,
+      "avg_likes": 0.07,
+      "avg_views": 31.4,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
       "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 41.3,
+      "avg_views": 37.3,
       "low_sample": false
     },
     {
@@ -167,19 +167,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4648
+      "count": 4642
     },
     {
       "type": "quote",
-      "count": 347
+      "count": 349
     },
     {
       "type": "quote_gif",
-      "count": 152
+      "count": 154
     },
     {
       "type": "post",
-      "count": 69
+      "count": 67
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-27T17:41:52.716067",
-      "text": "Apple’s steady ascent while Musk’s empire sheds $1.2T in July proves the market finally prefers boring profits over chaotic rockets.\n\nThe quiet compounding winner vs the volatile growth myth, settled.",
+      "ts": "2026-07-27T21:42:39.814028",
+      "text": "Gold is rallying on the fear that the US government will print until the debt is \"managed.\"\nIt’s not hedging inflation. It’s hedging the ledger.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-27T17:41:19.880086",
-      "text": "Copilot saved a year of work. the hidden math is that the year of work was mostly 2018-era email drafts and mediocre pivot tables.",
+      "ts": "2026-07-27T21:41:13.408327",
+      "text": "Toy sector task force: because the government can fix a supply chain.\n\nShaily Engineering stock: up 400% since 2021, down 60% from highs.\n\nAlpha? None. Just hope.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-27T17:40:08.345940",
-      "text": "Forward deployed engineers are just sales teams with terminals. you're paying OpEx for what should be a license. the margin flip only happens when the product ships. until then: expensive consulting.",
+      "ts": "2026-07-27T21:40:44.507420",
+      "text": "Btc down 15% from ATH is not a correction, it's the annual reset of 401k Dave's patience.",
       "type": "reply"
     }
   ]

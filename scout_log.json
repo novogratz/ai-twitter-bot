@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-07-07T11:41:14.459784",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "DarioAmodei",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le boss de Anthropic qui tweete en FR avec une prononciation parfaite."
-      },
-      {
-        "handle": "MaxDeschamps",
-        "region": "france",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "L'ancien de Doctolib qui transforme la tech fran\u00e7aise en conte de f\u00e9es boursier."
-      },
-      {
-        "handle": "TheAIshrink_FR",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Mon propre clone num\u00e9rique, il parle plus vite que moi et ne dort jamais."
-      },
-      {
-        "handle": "JeanBaptiste",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "L'expert on-chain qu\u00e9b\u00e9cois qui voit les bull runs avant que le caf\u00e9 ne soit froid."
-      },
-      {
-        "handle": "LudovicV",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "L'analyste qu\u00e9b\u00e9cois qui explique la volatilit\u00e9 sans te vendre un sac de n\u0153uds."
-      }
-    ],
-    "summary": "Mix parfait entre les g\u00e9ants mondiaux qui s'y mettent et les p\u00e9pites locales qui savent encore lire un bilan."
-  },
-  {
     "ts": "2026-07-07T13:50:47.024679",
     "raw_count": 5,
     "kept_count": 4,
@@ -8655,5 +8610,36 @@
       }
     ],
     "summary": "Le Qu\u00e9bec a la bourse, la France a l'IA et la Crypto, l'USA a la data. J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves et gard\u00e9 ceux qui ont un clavier plus solide que leurs opinions."
+  },
+  {
+    "ts": "2026-07-27T19:43:42.346731",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JeroenBoersma",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 55000,
+        "reason": "Ex-Google, il track les jobs et les mod\u00e8les IA. Ses threads sont des p\u00e9pites data. Il twitte en anglais mais est constamment cit\u00e9 dans l'\u00e9cosyst\u00e8me FR."
+      },
+      {
+        "handle": "Gaspard0x",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Anthony Gagnaire est un trader quant qui twitte des insights que les 'gurus' de TikTok devraient payer 500\u20ac pour avoir. Pas de liens d'affiliation, juste de la logique."
+      },
+      {
+        "handle": "MaximeMaurice",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le roi de l'analyse fondamentale au Qu\u00e9bec. Il explique les bilans de fa\u00e7on \u00e0 ce que m\u00eame ta tante Jeanne comprenne pourquoi on vend le p\u00e9trole. Simple et efficace."
+      }
+    ],
+    "summary": "Un mix de puissance brute (Mistral), de profondeur analytique (Gaspard, Maxime) et de vision macro (PierreRochard). On \u00e9vite les vendeurs de r\u00eave pour ne garder que les architectes."
   }
 ]

@@ -886,7 +886,10 @@
     "LudovicLepoivre",
     "SachaSchoenbaum",
     "m4704",
-    "SofianeD"
+    "SofianeD",
+    "JeroenBoersma",
+    "Gaspard0x",
+    "MaximeMaurice"
   ],
   "en": [
     "Chubby",
@@ -1144,7 +1147,10 @@
     "eppy",
     "tphuang",
     "Jeffar_AI",
-    "ImagineArt"
+    "ImagineArt",
+    "lithos",
+    "AISatoshi",
+    "Cognition"
   ],
   "history": [
     {
@@ -6860,6 +6866,36 @@
     {
       "lang": "fr",
       "handle": "SofianeD",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "en",
+      "handle": "lithos",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "en",
+      "handle": "AISatoshi",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "en",
+      "handle": "Cognition",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeroenBoersma",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "Gaspard0x",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMaurice",
       "added": "2026-07-27"
     }
   ]
