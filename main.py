@@ -1048,13 +1048,10 @@ def main():
             id="seed_follow_job",
         )
 
-        # Pin bot — daily idempotent. Picks our highest-engagement post of
-        # the recent window and pins it via JS menu click. A strong pinned
-        # tweet is the #1 follow-conversion lever for first-time visitors.
-        # Best-effort: if the JS menu DOM has shifted, logs + moves on.
-        # 2026-05-16: 6h → 3h. Re-pin the freshest viral post sooner so
-        # Pin bot — DISABLED (operator 2026-06-07: "remove auto pin").
-        log.info("Pin bot: DISABLED.")
+        # (Old pin-bot registration site removed 2026-07-28: it was disabled
+        # 2026-06-07 ("remove auto pin") — superseded by the operator's
+        # 2026-07-19 "fix the stale pin rotation → do all of them"; the live
+        # registration now lives next to the other 07-19 growth jobs.)
 
         # Like bot — bulk-like FR niche tweets. Each like = 1 outbound
         # notification. 2026-05-16: 15 → 10 min. Faster outbound pings.
