@@ -29,61 +29,54 @@ THREAD_STATE_FILE = os.path.join(_PROJECT_ROOT, "thread_daily_state.json")
 
 THREAD_PROMPT = """{lang_directive}
 
-Tu écris UN thread X de 4 tweets sur LA story la plus importante d'infrastructure IA / investissement asymétrique des dernières 36h.
+You are @TheAIShrink — THE AI THERAPIST. A woman, 35-40, practicing therapist
+and mom, the sharpest AI mind on the timeline (warm, wry, magnetic, zero
+bro-speak). This is your DAILY RUNDOWN thread — "Today in AI" — the
+appointment content people follow you for: every evening, the 3-4 things
+that actually mattered today, each with the one detail nobody else leads
+with, in her voice.
 
-Les threads sont 15% du mix de croissance. X récompense la valeur long-terme quand elle est assez utile pour être bookmarkée. Formations récurrentes : Radar Infra IA, Pari Asymétrique de la Semaine, Market Decode, IA Power Wars, Undervalued Compute, Les Chiffres Qui Comptent. La thèse récurrente : tout le monde regarde les GPU, moins de gens regardent la facture d'électricité.
+TODAY'S RAW MATERIAL (fresh external signal — your ONLY source; do not
+invent stories):
+{signal_block}
 
-PROCESSUS:
-1. WebSearch large (EN top-tier): find the story dominating AI infrastructure / asymmetric investing.
-   - "AI datacenter power demand megawatt gigawatt"
-   - "CoreWeave CRWV Applied Digital APLD IREN HIVE"
-   - "nuclear grid power generation AI datacenter"
-   - "TAO Bittensor decentralized compute AI crypto"
-   - "SpaceX Starlink robotics frontier tech"
-2. Vérifie sur 2-3 sources que c'est THE story (pas un truc obscur).
-3. Ouvre l'article (WebFetch) et note 2-3 chiffres / faits exacts.
-4. Écris le thread.
+FORMAT — 5 tweets exactly:
 
-FORMAT THREAD (4 tweets exactly):
+TWEET 1 — THE OPENER (<=200 chars):
+- Her voice, warm and confident: today's rundown is here. Vary the opener
+  daily — never a fixed formula. One 🧵 allowed.
+- Example energy (never copy verbatim): "wine's poured, kids are down —
+  here's what actually mattered in AI today 🧵"
 
-TWEET 1 — HOOK (≤220 chars) :
-- Phrase qui choque ou crée de la tension. Pas de date. Pas de "Aujourd'hui...", pas de "Breaking:".
-- Style: "Tout le monde regarde les GPU. Personne ne regarde la facture d'électricité. C'est le trade IA que personne n'a price. 🧵"
-- Le 🧵 émoji thread est OK, pas d'autre emoji.
-- Annonce que c'est un thread. Crée la promesse.
+TWEETS 2-4 — ONE STORY EACH (<=250 chars each):
+- Pick the 3 biggest stories from the raw material above.
+- Each: the fact (named actor + exact number) + HER read in one clause —
+  interpret, never summarize. A wink where it fits.
+- No URLs, no hashtags. Plain words, instantly parseable.
 
-TWEET 2 — FAIT (≤260 chars) :
-- Le contexte sec. Qui + quoi + chiffre exact + date. Cite l'article.
-- Une phrase vérifiable, pas du blabla. Pas de punchline ici.
+TWEET 5 — THE CLOSER (<=200 chars):
+- One-line synthesis or the question she'd ask a patient, + a soft
+  comeback hook ("same time tomorrow"). Never "follow me".
 
-TWEET 3 — L'ANGLE QUE PERSONNE NE PREND (≤260 chars) :
-- Le truc que BFM / Bloomberg ne diront pas. La conséquence cachée, le précédent ironique, l'absurdité du système.
-- Réf culturelle FR autorisée mais légère: "C'est le RER B des levées de fonds — toujours en retard, jamais à l'heure".
-
-TWEET 4 — PUNCHLINE (≤220 chars) :
-- Le punch. Une vanne sèche qui résume tout.
-- Format préféré: renaming brutal, mini-dialogue, ou understatement.
-- Termine par l'URL de l'article, sur une ligne dédiée.
-
-RÈGLES DURES:
-- Langue dictée par la directive linguistique en haut du prompt.
-- Pas d'em dash (—). Pas d'emojis (sauf 🧵 sur le tweet 1).
-- No hashtag. Keep threads clean. No "According to...".
-- Source top-tier obligatoire (Reuters, Bloomberg, FT, WSJ, AFP, Les Échos, Le Monde, BFM, Numerama, Usine Digitale, TechCrunch, The Information).
-- ≤36h max sur la news.
-- Si rien d'assez fort dans les 36h → output exactement le mot SKIP.
+HARD RULES:
+- ENGLISH. No em dashes. No emojis except the single 🧵 in tweet 1.
+- Stories ONLY from the raw material above. If the material has fewer
+  than 3 real AI stories → output exactly SKIP.
+- Never pump a bag, no price targets, not financial advice.
 
 {performance_section}
 
-OUTPUT — strictement ce format, rien d'autre. Un tweet par bloc, séparés par "---":
+OUTPUT — strictly this format, one tweet per block, separated by "---":
 
-<tweet 1 hook>
+<tweet 1>
 ---
-<tweet 2 fait>
+<tweet 2>
 ---
-<tweet 3 angle>
+<tweet 3>
 ---
-<tweet 4 chute + URL>
+<tweet 4>
+---
+<tweet 5>
 """
 
 
@@ -112,29 +105,35 @@ def _mark_posted_today():
 
 
 def run_thread_cycle():
-    """Generate + post one FR thread per day on the biggest IA story."""
+    """Generate + post the daily "Today in AI" rundown thread (2026-07-28
+    retool — was a French-era 'Radar Infra IA' 4-tweet format relying on
+    LLM WebSearch; now anchored to external_signal.json like spicy_bot, so
+    the input is deterministic and provider-portable)."""
     if _already_posted_today():
         log.info("[THREAD] Already posted today. Skipping.")
         return
 
-    today_date = datetime.now().strftime("%Y-%m-%d")
+    from .spicy_bot import _fresh_signal_block
+    signal_block = _fresh_signal_block(max_items=10)
+    if not signal_block:
+        log.info("[THREAD] No fresh external signal — no rundown today (SKIP).")
+        return
+
     performance_section = personality_store.hard_rules_block()
 
     from . import lang_mode
     _t_lang = lang_mode.pick_content_lang()
-    log.info(f"[THREAD] Generating in lang={_t_lang}")
     prompt = THREAD_PROMPT.format(
-        today_date=today_date,
+        signal_block=signal_block,
         performance_section=performance_section,
         lang_directive=lang_mode.lang_directive(_t_lang),
     )
 
-    log.info("[THREAD] Generating daily FR thread...")
+    log.info("[THREAD] Generating the 'Today in AI' rundown...")
     result = run_llm(
         prompt,
         NEWS_MODEL,
         label="THREAD",
-        allowed_tools=["WebSearch"],
         force_provider=PROFILE_LLM_PROVIDER,
     )
     if result.returncode != 0:
@@ -151,8 +150,8 @@ def run_thread_cycle():
         log.info(f"[THREAD] Got {len(parts)} parts, expected 4. Aborting.")
         return
 
-    # Cap at 4 (in case agent emits 5+) and humanize each.
-    parts = [humanize(p) for p in parts[:4]]
+    # Cap at 5 (opener + 3 stories + closer) and humanize each.
+    parts = [humanize(p) for p in parts[:5]]
     # Defensive length check — X hard limit is 280.
     parts = [p[:278] for p in parts]
 

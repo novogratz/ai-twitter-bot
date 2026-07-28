@@ -3377,3 +3377,50 @@ def test_rationed_winner_shape_enforced_at_chokepoint(monkeypatch, tmp_path):
     assert restarts == [] and tc._blank_page_count == 0, \
         "legit-empty mentions tab must never count as a blank page"
     tc._reset_blank_page_count()
+
+
+def test_daily_rundown_thread_signal_anchored_and_promoter_contracts(monkeypatch, tmp_path):
+    """2026-07-28 ('do everything you think we should do'): (1) the daily
+    thread is now the 'Today in AI' rundown — HER voice, anchored to
+    external_signal.json (no LLM-WebSearch dependency, the reply_agent
+    lesson), SKIPs without fresh signal, evening cron; (2) the reply
+    promoter graduates the bank's top winner into a standalone post at
+    most once/day, each winner once ever, ship-gated."""
+    import inspect, json
+    from src import thread_bot
+    src = inspect.getsource(thread_bot)
+    assert "_fresh_signal_block" in src, "thread must be signal-anchored"
+    assert "allowed_tools" not in src, "no LLM-WebSearch dependency (reply_agent lesson)"
+    assert "Today in AI" in thread_bot.THREAD_PROMPT or "rundown" in thread_bot.THREAD_PROMPT
+    assert "woman" in thread_bot.THREAD_PROMPT.lower(), "her voice in the thread prompt"
+    main_src = open("main.py").read()
+    assert 'hour=19' in main_src.split('id="thread_job"')[0].rsplit("scheduler.add_job", 1)[1], \
+        "rundown fires in the evening best-hours window"
+
+    # Promoter
+    from src import reply_promoter_bot as rp
+    monkeypatch.setattr(rp, "STATE_FILE", str(tmp_path / "rp_state.json"))
+    bank = tmp_path / "reply_winners.md"
+    bank.write_text('# header\n- (7 likes) "the sharpest thing we said all week"\n- (2 likes) "meh"\n')
+    monkeypatch.setattr(rp, "WINNERS_FILE", str(bank))
+
+    class _R:
+        returncode = 0
+        stdout = "standalone version of the sharpest thing"
+        stderr = ""
+    monkeypatch.setattr(rp, "run_llm", lambda *a, **k: _R())
+    monkeypatch.setattr(rp, "humanize", lambda t: t)
+    shipped, logged = [], []
+    monkeypatch.setattr("src.twitter_client.post_tweet", lambda t, **k: shipped.append(t) or True)
+    monkeypatch.setattr("src.engagement_log.log_post", lambda *a, **k: logged.append(a))
+    monkeypatch.setenv("REPLY_PROMOTE_MIN_LIKES", "4")
+
+    rp.run_reply_promoter_cycle()
+    assert shipped == ["standalone version of the sharpest thing"], \
+        "top winner above the floor must be promoted"
+    assert len(logged) == 1, "log only on confirmed ship"
+    rp.run_reply_promoter_cycle()
+    assert len(shipped) == 1, "max 1 promotion/day"
+    st = rp._load_state()
+    assert "the sharpest thing we said all week" in st["promoted"], \
+        "a promoted winner is consumed forever"
