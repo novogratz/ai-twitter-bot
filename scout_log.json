@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-07-08T07:41:40.283901",
-    "raw_count": 10,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "lucaspellmeyer",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Co-fondateur de Mistral AI. Il tweet en EN mais ses posts sont syst\u00e9matiquement partag\u00e9s/cit\u00e9 en FR. L'expert incontournable."
-      },
-      {
-        "handle": "paulmollard",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Le seul analyste FR qui fait parler son ego en bien. Ses threads sur les valorisations sont des p\u00e9pites, m\u00eame pour les d\u00e9tracteurs."
-      },
-      {
-        "handle": "thomaspark",
-        "region": "france",
-        "niche": "tech",
-        "followers": 28000,
-        "reason": "Ex-CTO de Doctolib, il d\u00e9cortique la tech fr avec une pr\u00e9cision chirurgicale. Pas de blabla formation, que du vrai."
-      },
-      {
-        "handle": "jcharette",
-        "region": "quebec",
-        "niche": "ia",
-        "followers": 18000,
-        "reason": "Journaliste tech qu\u00e9b\u00e9cois de r\u00e9f\u00e9rence. Couvre l'IA et les data avec un ton sarcastique et pertinent. Pas de pub pour ses propres cours."
-      }
-    ],
-    "summary": "L'IA fran\u00e7aise a explos\u00e9 depuis 2023 : l'\u00e9quipe Mistral (Lucas, Jules, Guillaume) domine le conversationnel. Le Qu\u00e9bec confirme avec des profils journalistiques pointus. On a \u00e9vit\u00e9 les 'gourous' crypto pour se concentrer sur les builders et les analystes qui ont du sens."
-  },
-  {
     "ts": "2026-07-08T09:41:34.206543",
     "raw_count": 10,
     "kept_count": 7,
@@ -8655,5 +8617,43 @@
       }
     ],
     "summary": "Une s\u00e9lection sans gras. On a filtr\u00e9 les influenceurs de stage et les vendeurs de r\u00eaves pour ne garder que ceux qui lisent les logs de production et les flux on-chain."
+  },
+  {
+    "ts": "2026-07-28T15:30:25.776364",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LaurieVilleneuve",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "CEO de Kira Systems (acquis), prof \u00e0 Polytechnique. Elle twitte l'IA appliqu\u00e9e sans le jargon VC qui pue le vieux."
+      },
+      {
+        "handle": "MaximeCassan",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Founder de Deepmap. Il balance des insights tech/conso plus frais que l'actu boursi\u00e8re de La Tribune."
+      },
+      {
+        "handle": "JmSicard",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "L'analyste technique qui a surv\u00e9cu \u00e0 4 crises. Pas de pub de formation \u00e0 999\u20ac, juste du graph propre et du sens du rapport risque/rendement."
+      },
+      {
+        "handle": "AdrienVanderhaegen",
+        "region": "france",
+        "niche": "ai",
+        "followers": 10000,
+        "reason": "Fintech/AI, il twitte r\u00e9guli\u00e8rement sur les use-cases business de l'IA. Pas un 'thought leader' vide, mais un constructeur."
+      }
+    ],
+    "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les b\u00e2tisseurs et les analystes qui comprennent leur m\u00e9tier. Le Qu\u00e9bec brille en IA appliqu\u00e9e, la France domine en tech et bourse technique."
   }
 ]

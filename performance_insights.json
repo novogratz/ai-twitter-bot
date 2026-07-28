@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-28T13:29:43.702448",
-  "window_7d_actions": 5302,
-  "window_24h_actions": 902,
+  "generated_at": "2026-07-28T17:29:43.644508",
+  "window_7d_actions": 5292,
+  "window_24h_actions": 909,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5301
+      "count": 5291
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5301
+      "count": 5291
     }
   ],
   "best_hours_utc": [
@@ -40,53 +40,53 @@
       "actions": 242
     },
     {
-      "hour": 9,
-      "actions": 239
+      "hour": 16,
+      "actions": 241
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2452
+      "count": 2445
     },
     {
       "topic": "IA",
-      "count": 2150
+      "count": 2142
     },
     {
       "topic": "Crypto",
-      "count": 518
+      "count": 519
     },
     {
       "topic": "Bourse",
-      "count": 406
+      "count": 410
     },
     {
       "topic": "Spatial",
-      "count": 103
+      "count": 104
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2358
+      "count": 2351
     },
     {
       "pillar": "other",
-      "count": 1457
+      "count": 1450
     },
     {
       "pillar": "market_trauma",
-      "count": 1206
+      "count": 1214
     },
     {
       "pillar": "meme_reaction",
-      "count": 188
+      "count": 186
     },
     {
       "pillar": "reply_bait",
-      "count": 65
+      "count": 63
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,27 +96,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 402
+      "count": 414
     },
     {
       "pillar": "market_trauma",
-      "count": 240
+      "count": 234
     },
     {
       "pillar": "other",
-      "count": 213
+      "count": 221
     },
     {
       "pillar": "meme_reaction",
-      "count": 32
+      "count": 28
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 6
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -159,23 +159,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4644
+      "count": 4638
     },
     {
       "type": "quote",
-      "count": 348
+      "count": 345
     },
     {
       "type": "quote_gif",
-      "count": 157
+      "count": 156
     },
     {
       "type": "post",
-      "count": 64
+      "count": 65
     },
     {
       "type": "hotake",
-      "count": 52
+      "count": 51
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-28T13:29:33.461260",
-      "text": "Saylor’s avg cost basis is ~$67k.\nthe subsidy isn’t funding operations, it’s buying the option to not die in winter.",
+      "ts": "2026-07-28T17:29:06.508459",
+      "text": "Tene fait son pitch, on imagine les slides. La vraie question est juste : l'IA fait-elle enfin grossir Robinhood plus vite qu'elle ne lui coûte en serveurs ?",
       "type": "reply"
     },
     {
-      "ts": "2026-07-28T13:28:03.091211",
-      "text": "Saylor is the 401k dave who refuses to sell. hard money > soft rules, every time.",
-      "type": "reply"
+      "ts": "2026-07-28T17:28:49.069696",
+      "text": "the 'at some point in the future' is the tell. my 3pm Tuesday just opened up, @OpenAI",
+      "type": "quote"
     },
     {
-      "ts": "2026-07-28T13:27:01.313843",
-      "text": "TAO n'a qu'une seule marge : le prix du compute qui descend. engy l'a compris, le marché non.",
+      "ts": "2026-07-28T17:28:14.680447",
+      "text": "Microsoft m365 admin is just the new \"i know where the bodies are buried\" certification. linkedin liam already posted it.",
       "type": "reply"
     }
   ]

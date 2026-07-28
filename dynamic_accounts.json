@@ -924,7 +924,9 @@
     "RaphaElieM",
     "AlexCyr",
     "JohanLemieux",
-    "ParisAI"
+    "ParisAI",
+    "MaximeCassan",
+    "JmSicard"
   ],
   "en": [
     "Chubby",
@@ -1188,7 +1190,9 @@
     "Cognition",
     "Melvin",
     "JustDario",
-    "Taylor"
+    "Taylor",
+    "strictrope",
+    "Autopilot"
   ],
   "history": [
     {
@@ -7124,6 +7128,26 @@
     {
       "lang": "fr",
       "handle": "ParisAI",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "en",
+      "handle": "strictrope",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Autopilot",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCassan",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JmSicard",
       "added": "2026-07-28"
     }
   ]
