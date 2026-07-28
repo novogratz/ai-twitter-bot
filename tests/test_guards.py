@@ -3424,3 +3424,22 @@ def test_daily_rundown_thread_signal_anchored_and_promoter_contracts(monkeypatch
     st = rp._load_state()
     assert "the sharpest thing we said all week" in st["promoted"], \
         "a promoted winner is consumed forever"
+
+
+def test_startup_warmup_has_wall_clock_budget():
+    """2026-07-28: the 08:43 boot spent 46 minutes in warmup before
+    scheduler.start() — every phase is bounded (the PM-17 lesson) but the
+    SUM was not, so all interval jobs sat dark for ~3/4h after each
+    restart. Pin: a wall-clock budget helper exists, and every expensive
+    post-warmup phase (retweet/quote bursts, hot-quote, originals, blitz,
+    burst rounds) is gated on it, with the env knob read at call time."""
+    src = open("main.py").read()
+    assert "_warmup_over_budget" in src and "STARTUP_WARMUP_BUDGET_MINUTES" in src
+    # Every expensive phase gated: count the gate uses (def + >= 6 call sites)
+    assert src.count("_warmup_over_budget()") >= 6, \
+        "all startup phases after the reply warmup must respect the budget"
+    # The budget must be checked INSIDE the multi-round loops, not just once
+    for marker in ("Startup quote burst", "Startup burst round"):
+        block = src[src.index(marker) - 400:src.index(marker)]
+        assert "_warmup_over_budget()" in block, \
+            f"loop containing {marker!r} must check the budget per iteration"

@@ -4,6 +4,22 @@ Project context for **Claude Code** sessions. Mirror of [`CLAUDE.md`](CLAUDE.md)
 
 > **You'll hate me until I'm right.**
 
+> **2026-07-28 round 5 — BOOT WALL-CLOCK BUDGET (observed live on the
+> 08:43 boot Claude ran itself):** startup spent 46 minutes in warmup
+> before `scheduler.start()` — every phase is bounded (PM-17 lesson) but
+> the SUM was not, so debates/quotes/RT/pin/engage sat dark for ~3/4h
+> after every restart. New `STARTUP_WARMUP_BUDGET_MINUTES` (15, call-time
+> env): once spent, remaining startup phases are skipped and the scheduler
+> takes over (steady-state jobs cover whatever a skipped phase would have
+> done). Reply warmup + feed sweep always run (they fit the budget).
+> Takes effect next restart. Also: the "Pin bot: DISABLED" stale log from
+> the superseded 06-07 "remove auto pin" site was removed (the 07-19 "do
+> all of them" pin mandate supersedes it). Guard:
+> `test_startup_warmup_has_wall_clock_budget`.
+> **Lifecycle (operator 2026-07-28): "actually run it yourself and auto
+> improve bro" — Claude owns start/stop again AND the daily improve agent
+> (com.kzer.ai-twitter-bot-improve, 07:17) is re-enabled + loaded.**
+
 > **2026-07-28 round 4 — APPOINTMENT CONTENT + PROVEN-CONTENT PROMOTION
 > (operator: "do everything you think we should do"):**
 > 1. **"Today in AI" daily rundown thread** — thread_bot retooled (it was

@@ -11,6 +11,7 @@ Usage:
 """
 import argparse
 import fcntl
+import time
 import json
 import os
 import random
@@ -347,6 +348,22 @@ def main():
         if not _quiet_skip("REPLYBACK"):
             safe_run_replyback_cycle()
 
+    # WALL-CLOCK WARMUP BUDGET (2026-07-28): every startup PHASE is bounded
+    # (the PM-17 lesson) but the SUM was not — the 08:43 boot spent 46 min
+    # in warmup, leaving every interval job (debates/quotes/RT/pin/engage)
+    # dark for ~3/4 of an hour after each restart. Once the budget is spent,
+    # remaining phases are skipped and the scheduler takes over; the
+    # steady-state jobs cover everything a skipped phase would have done.
+    _boot_t0 = time.time()
+
+    def _warmup_over_budget() -> bool:
+        budget_min = float(os.environ.get("STARTUP_WARMUP_BUDGET_MINUTES", "15"))
+        if (time.time() - _boot_t0) / 60.0 > budget_min:
+            log.info(f"[BOOT] Warmup budget ({budget_min:.0f} min) spent — "
+                     "skipping remaining startup phases; scheduler takes over.")
+            return True
+        return False
+
     # Startup: Monthly catch-up only (idempotent, guards its own state).
     # Daily/weekly news fire on their cron schedule (7AM EST) — NOT on restart,
     # to avoid duplicate posts when the bot is restarted during the day.
@@ -383,7 +400,7 @@ def main():
         log.info("Warming up replyback (reply to people who replied to us)...")
         quiet_safe_replyback()
 
-    if not args.reply_only:
+    if not args.reply_only and not _warmup_over_budget():
         # Post-surface bursts AFTER the reply lane is warm.
         log.info("Startup retweet burst...")
         safe_run_retweet_cycle()
@@ -391,10 +408,13 @@ def main():
         # (operator 2026-06-09: "more quote retweet", "I don't see it doing
         # anything"). Each round picks the best AI viral; spacing paces them.
         for _i in range(3):
+            if _warmup_over_budget():
+                break
             log.info(f"Startup quote burst {_i+1}/3...")
             safe_run_quote_tweet_cycle()
-        log.info("Startup hot-quote burst...")
-        safe_run_hot_quote_cycle()
+        if not _warmup_over_budget():
+            log.info("Startup hot-quote burst...")
+            safe_run_hot_quote_cycle()
         # ORIGINALS burst — land a few fresh posts on boot instead of waiting
         # up to ~2h for the next cron slot (operator: "do more posts", booting
         # mid-slot must not leave the profile idle). Tries each surface; the
@@ -402,6 +422,8 @@ def main():
         from src import action_guard as _ag
         _orig_target = int(os.environ.get("STARTUP_ORIGINALS", "3"))
         for _i in range(_orig_target):
+            if _warmup_over_budget():
+                break
             _before = _ag.count_today(_ag.POST)
             log.info(f"Startup originals burst {_i+1}/{_orig_target} "
                      f"(today={_before})...")
@@ -429,7 +451,7 @@ def main():
     # with the AI-side inversion bit + GIF. Runs BEFORE the reply burst so
     # the day's 2 QRT slots go to the bestie bit first.
     from src.btc_blitz import safe_run_btc_blitz_cycle
-    if not args.reply_only:
+    if not args.reply_only and not _warmup_over_budget():
         safe_run_btc_blitz_cycle()
 
     # Startup catchup — replies + QRTs (2026-06-07 PM-2 QRT surge: quotes
@@ -443,6 +465,8 @@ def main():
     # lanes; the scheduler (live within minutes now) does the rest.
     _burst_rounds = int(os.environ.get("STARTUP_BURST_ROUNDS", "1"))
     for _round in range(1, _burst_rounds + 1):
+        if _warmup_over_budget():
+            break
         log.info(f"Startup burst round {_round}/{_burst_rounds}: sweep -> quote -> reply...")
         if not args.reply_only:
             safe_run_feed_sweep_cycle()
