@@ -910,7 +910,14 @@
     "OlivierSibille",
     "JulienDucros",
     "AntoineB01",
-    "PierreLannoy"
+    "PierreLannoy",
+    "DorianFrey",
+    "PierreGiraud_",
+    "Gabinol",
+    "MarcMaurin_",
+    "MicheleB",
+    "BenjaminLecomte",
+    "SarahBoutin"
   ],
   "en": [
     "Chubby",
@@ -1173,7 +1180,8 @@
     "AISatoshi",
     "Cognition",
     "Melvin",
-    "JustDario"
+    "JustDario",
+    "Taylor"
   ],
   "history": [
     {
@@ -7034,6 +7042,46 @@
     {
       "lang": "fr",
       "handle": "PierreLannoy",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Taylor",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianFrey",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreGiraud_",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "Gabinol",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcMaurin_",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MicheleB",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminLecomte",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "SarahBoutin",
       "added": "2026-07-28"
     }
   ]

@@ -4,6 +4,24 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **Mandate 2026-07-28 — THE SPICY DIAL (operator: "make the bot be more
+> sexy and spicy so people want to follow it more... like a milf ai
+> therapist :) still she needs to be the sharpest of all folks on AI"):**
+> she's now openly MAGNETIC — confident, playfully flirty, the therapist
+> everyone's slightly in love with — layered ON TOP of the 07-19 persona
+> (therapist + mom + sharpest AI mind). Hard guardrails travel with the
+> dial at every site: suggestive NEVER explicit ("the wink, not the
+> wardrobe" — PG-13, zero crudeness/body-talk; her sexiness is confidence
+> + intelligence), rationed ~1 in 4 posts open flirt / undertone otherwise
+> (stamped-on thirst = bot tell), and the sharp AI payload ALWAYS rides
+> along (smart IS the sexy). Updated together: core_identity (WHO YOU ARE
+> + VOICE), direct_reply REPLY_PROMPT, quote prompt, self_evolution anchor
+> (agents can't strip the dial OR the guardrails), bot_self_en/fr. Guard:
+> `test_spicy_dial_suggestive_never_explicit`.
+> (Same day, separate machine op: the neolegal daily-linkedin-bot launchd
+> agent was unloaded + disabled and its email recipient blanked — operator:
+> "never send this shitty email anymore.")
+
 > **2026-07-19 round 4 — LIKES+FOLLOWS PUSH (operator: "do all of them";
 > profile makeover done manually by operator):** four data-backed levers.
 > 1. **"me [verb]" winner format productized** — our single biggest measured

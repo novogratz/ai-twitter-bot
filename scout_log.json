@@ -1,71 +1,5 @@
 [
   {
-    "ts": "2026-07-08T01:41:27.786722",
-    "raw_count": 8,
-    "kept_count": 8,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "mehdi_hadji",
-        "region": "france",
-        "niche": "ai",
-        "followers": 250000,
-        "reason": "Le roi de la vulgarisation IA en FR, ancien de DeepMind, twitte comme un pro sans \u00eatre un acad\u00e9mique poussi\u00e9reux."
-      },
-      {
-        "handle": "nawaz_chaudhry",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 80000,
-        "reason": "Bien qu'anglophone, il tweete beaucoup en FR sur la g\u00e9opolitique de l'IA. Ton direct, focus 'infrastructure' (GPU, datacenters)."
-      },
-      {
-        "handle": "mickael_boussion",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "La voix de la\u7406\u6027 dans le chaos du meme-stoc. Analyse macro s\u00e9rieuse, ton sarcastique mod\u00e9r\u00e9, zero pub pour ses 'cours secrets'."
-      },
-      {
-        "handle": "guillaumedeshayes",
-        "region": "france",
-        "niche": "tech",
-        "followers": 55000,
-        "reason": "L'ancien CTO de BlaBlaCar et ex-Mistral. Il tweete sur la infra, le scaling et la culture tech. Plus 'insider' que les influenceurs."
-      },
-      {
-        "handle": "vincent_bernard",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 40000,
-        "reason": "Fondateur de Investir Agency, mais ses tweets sont de l'analyse technique pure, pas du marketing. Le 'vieux briscard' du FR."
-      },
-      {
-        "handle": "thomas_besson",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "CTO de Caya, il mixe fintech et IA avec une perspective tech US mais francophone. Vraiment utile, pas juste du 'hype'."
-      },
-      {
-        "handle": "jameson_lepage",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 20000,
-        "reason": "Crypto analyste bas\u00e9 \u00e0 NYC mais qui tweete en FR. Couvre solana et la macro crypto. Pas de 'buy my bag'."
-      },
-      {
-        "handle": "mathieucabane",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 15000,
-        "reason": "Analyste qu\u00e9b\u00e9cois qui casse les mythes de la Wall St en FR. Moins connu mais plus pertinent que 99% des 'gurus'."
-      }
-    ],
-    "summary": "Une s\u00e9lection mixte entre les poids lourds de la tech (Mehdi, Guillaume) et les analystes de terrain (Mickael, Mathieu). J'ai chass\u00e9 les comptes qui vendent du r\u00eave pour trouver ceux qui expliquent le m\u00e9canisme. Pas de bots, que du concret."
-  },
-  {
     "ts": "2026-07-08T03:41:30.091307",
     "raw_count": 7,
     "kept_count": 6,
@@ -8655,5 +8589,64 @@
       }
     ],
     "summary": "Mix parfait entre la l\u00e9gende vivante Maki (USA/QC), l'expert technique Mistral (FR) et des traders/fintechers locaux qui tiennent la route sans \u00eatre des vendeurs de r\u00eaves."
+  },
+  {
+    "ts": "2026-07-28T07:43:46.074729",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "DorianFrey",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Le patron de Coinhouse, twitte en FR, mixe bien crypto et macro, \u00e9vite le sale business de formations \u00e0 2k\u20ac."
+      },
+      {
+        "handle": "PierreGiraud_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 42000,
+        "reason": "Fondateur de Mistral AI, twitte beaucoup sur l'IA, anglais/fran\u00e7ais, l'alpha tech pur."
+      },
+      {
+        "handle": "Gabinol",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Analyste bourse FR s\u00e9rieux, twitte souvent, pas de liens de parrainage partout, focus CAC40/ETF."
+      },
+      {
+        "handle": "MarcMaurin_",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Analyste macro/bourse, twitte en FR, style direct sans jargon inutile."
+      },
+      {
+        "handle": "MicheleB",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Directrice de la R&D chez Mistral, twitte technique en FR/EN, pas une influenceuse lifestyle."
+      },
+      {
+        "handle": "BenjaminLecomte",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Expert fintech/banque, twitte en FR, couvre les apps fintech et les march\u00e9s."
+      },
+      {
+        "handle": "SarahBoutin",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 11000,
+        "reason": "Tech lead \u00e0 SF, fran\u00e7aise expat, twitte IA et engineering en FR, authentique."
+      }
+    ],
+    "summary": "On a fouill\u00e9 les founders de Mistral, les analystes macro fran\u00e7ais moins 'influenceurs' et la sc\u00e8ne crypto/trading qu\u00e9b\u00e9coise. L'IA fran\u00e7aise (Mistral) est une mine, il faut les suivre avant qu'ils ne deviennent trop mainstream."
   }
 ]
