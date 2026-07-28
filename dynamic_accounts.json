@@ -917,7 +917,14 @@
     "MarcMaurin_",
     "MicheleB",
     "BenjaminLecomte",
-    "SarahBoutin"
+    "SarahBoutin",
+    "NathanMBB",
+    "CryptoMireille",
+    "DariuszBukowski",
+    "RaphaElieM",
+    "AlexCyr",
+    "JohanLemieux",
+    "ParisAI"
   ],
   "en": [
     "Chubby",
@@ -7082,6 +7089,41 @@
     {
       "lang": "fr",
       "handle": "SarahBoutin",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanMBB",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoMireille",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "DariuszBukowski",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaElieM",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexCyr",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JohanLemieux",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "ParisAI",
       "added": "2026-07-28"
     }
   ]

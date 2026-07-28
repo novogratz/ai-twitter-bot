@@ -1,15 +1,11 @@
 {
-  "generated_at": "2026-07-28T05:42:59.225492",
-  "window_7d_actions": 5315,
-  "window_24h_actions": 923,
+  "generated_at": "2026-07-28T13:29:43.702448",
+  "window_7d_actions": 5302,
+  "window_24h_actions": 902,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5313
-    },
-    {
-      "pattern": "RENAME",
-      "count": 1
+      "count": 5301
     },
     {
       "pattern": "METAPHOR",
@@ -18,83 +14,79 @@
   ],
   "worst_patterns": [
     {
-      "pattern": "RENAME",
-      "count": 1
-    },
-    {
       "pattern": "METAPHOR",
       "count": 1
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5313
+      "count": 5301
     }
   ],
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 279
+      "actions": 280
     },
     {
       "hour": 10,
-      "actions": 263
+      "actions": 261
     },
     {
       "hour": 12,
-      "actions": 247
+      "actions": 243
     },
     {
-      "hour": 9,
+      "hour": 6,
       "actions": 242
     },
     {
-      "hour": 8,
-      "actions": 240
+      "hour": 9,
+      "actions": 239
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2469
+      "count": 2452
     },
     {
       "topic": "IA",
-      "count": 2157
+      "count": 2150
     },
     {
       "topic": "Crypto",
-      "count": 512
+      "count": 518
     },
     {
       "topic": "Bourse",
-      "count": 401
+      "count": 406
     },
     {
       "topic": "Spatial",
-      "count": 108
+      "count": 103
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2376
+      "count": 2358
     },
     {
       "pillar": "other",
-      "count": 1479
+      "count": 1457
     },
     {
       "pillar": "market_trauma",
-      "count": 1182
+      "count": 1206
     },
     {
       "pillar": "meme_reaction",
-      "count": 181
+      "count": 188
     },
     {
       "pillar": "reply_bait",
-      "count": 69
+      "count": 65
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,48 +96,48 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 424
+      "count": 402
     },
     {
       "pillar": "market_trauma",
-      "count": 232
+      "count": 240
     },
     {
       "pillar": "other",
-      "count": 222
+      "count": 213
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
+      "count": 32
     },
     {
       "pillar": "reply_bait",
-      "count": 13
+      "count": 8
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 46,
-      "avg_likes": 0.2,
-      "avg_views": 35.7,
+      "posts": 48,
+      "avg_likes": 0.21,
+      "avg_views": 35.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 58,
       "avg_likes": 0.12,
-      "avg_views": 28.9,
+      "avg_views": 28.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 87,
-      "avg_likes": 0.06,
+      "posts": 85,
+      "avg_likes": 0.08,
       "avg_views": 32.0,
       "low_sample": false
     },
@@ -167,23 +159,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4658
+      "count": 4644
     },
     {
       "type": "quote",
-      "count": 350
+      "count": 348
     },
     {
       "type": "quote_gif",
-      "count": 149
+      "count": 157
     },
     {
       "type": "post",
-      "count": 67
+      "count": 64
     },
     {
       "type": "hotake",
-      "count": 54
+      "count": 52
     },
     {
       "type": "retweet",
@@ -192,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-28T05:42:46.890573",
-      "text": "Palantir’s Rule of 40 is finally clean.\n\nAlex Karp isn’t selling software. He’s selling the US government’s insurance policy against China, priced at a premium that only a monopoly can command. sovereign AI = sticky govt contracts. buy the fear, hold the moat.",
+      "ts": "2026-07-28T13:29:33.461260",
+      "text": "Saylor’s avg cost basis is ~$67k.\nthe subsidy isn’t funding operations, it’s buying the option to not die in winter.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-28T05:40:24.101557",
-      "text": "九州に半導体の未来。\n\nTSMCの熊本工場は2nmの最先端を生産する。\n日本にNVIDIAは来なかった。日本にTSMCが来た。\n違いがわかる人だけが勝つ。",
+      "ts": "2026-07-28T13:28:03.091211",
+      "text": "Saylor is the 401k dave who refuses to sell. hard money > soft rules, every time.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-28T05:39:55.531164",
-      "text": "Palantir’s Rule of 40 is broken. Karp sells strategy. PLTR sells SaaS. Europe is just a line item in his US-centric burn rate.",
+      "ts": "2026-07-28T13:27:01.313843",
+      "text": "TAO n'a qu'une seule marge : le prix du compute qui descend. engy l'a compris, le marché non.",
       "type": "reply"
     }
   ]

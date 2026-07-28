@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-07-08T03:41:30.091307",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MathieuCahen",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Le mec qui a tu\u00e9 le podcast Tech & Co pour devenir le roi de l'IA \u00e0 Paris. Il twitte sur Mistral, DeepMind et l'appli de son pote. Moins 'influencer', plus 'initi\u00e9'."
-      },
-      {
-        "handle": "CyrilBouton",
-        "region": "france",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "Cofondateur de Meero, il couvre l'IA g\u00e9n\u00e9rative et la tech parisienne avec une pr\u00e9cision d'horloger suisse. Pas de pubs Telegram, juste du contenu."
-      },
-      {
-        "handle": "LapierreAlexis",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Le chroniqueur de Bitcoin \u00e0 Radio-Canada. Il twitte en FR sur la r\u00e9gulation, l'adoptioninstitutionnelle et la tech. Plus cr\u00e9dible qu'un 'guru' de Twitter."
-      },
-      {
-        "handle": "JLCharette",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Journaliste tech au Soleil. Il couvre l'IA, les geeks et les startups qu\u00e9b\u00e9coises avec un ton sec et pertinent. Il poste des threads d'analyse plut\u00f4t que des 'shilling'."
-      },
-      {
-        "handle": "BenoitV",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "L'ex-CTO de Deezer. Il poste des threads techniques sur l'IA, la data et la SaaS france. C'est rare de trouver un ex-fondateur qui ne vend pas sa formede99\u20ac."
-      },
-      {
-        "handle": "NathanBenaich",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Co-founder d'Imaginary Ventures (VC). Il tweete en FR sur les startups IA francophones aux US. Moins connu que les gros VC anglophones, mais plus cibl\u00e9."
-      }
-    ],
-    "summary": "J'ai \u00e9vit\u00e9 les influenceurs crypto 'shill' pour privil\u00e9gier des fondateurs, des journalistes tech et des VC qui twittent en fran\u00e7ais. Le Qu\u00e9bec est bien couvert via la presse locale (Le Soleil, Radio-Canada) et un analyste boursier local. La France est couverte via la scene AI/VC parisienne (ex-fondateurs, cofondateurs)."
-  },
-  {
     "ts": "2026-07-08T07:41:40.283901",
     "raw_count": 10,
     "kept_count": 4,
@@ -8648,5 +8596,64 @@
       }
     ],
     "summary": "On a fouill\u00e9 les founders de Mistral, les analystes macro fran\u00e7ais moins 'influenceurs' et la sc\u00e8ne crypto/trading qu\u00e9b\u00e9coise. L'IA fran\u00e7aise (Mistral) est une mine, il faut les suivre avant qu'ils ne deviennent trop mainstream."
+  },
+  {
+    "ts": "2026-07-28T11:30:38.304349",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NathanMBB",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'analyste technique qui a du sang aux mains. Ses threads sur les cycles de march\u00e9 sont plus pr\u00e9cis que les rapports de nos analystes en costume."
+      },
+      {
+        "handle": "CryptoMireille",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 40000,
+        "reason": "La gauloise de la c\u00f4te Ouest. Elle relie la macro US aux cycles crypto avec une vivacit\u00e9 d'esprit qui devrait embarrasser plus d'un hedge fund."
+      },
+      {
+        "handle": "DariuszBukowski",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Ex-consul de l'espace crypto, il p\u00e8se des tonnes en macro et on-chain. Z\u00e9ro hype, juste des facts qui font mal aux shorters."
+      },
+      {
+        "handle": "RaphaElieM",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le barom\u00e8tre du march\u00e9 qu\u00e9b\u00e9cois. Il couvre les min\u00e9s et les tech locales avec un humour acide qui fait passer l'apoplexie \u00e0 l'envie."
+      },
+      {
+        "handle": "AlexCyr",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "La r\u00e9f\u00e9rence web3 au Qu\u00e9bec. Il balance des insights sur les infrastructures blockchain avant m\u00eame que les am\u00e9ricains ne commencent \u00e0 en parler."
+      },
+      {
+        "handle": "JohanLemieux",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Founders et tech \u00e0 Montr\u00e9al. Il d\u00e9crypte les startups IA qui font bouger les lignes sans se noyer dans le jargon VC pompeux."
+      },
+      {
+        "handle": "ParisAI",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Communaut\u00e9 de chercheurs IA francophones \u00e0 SF/Silicon Valley. Le r\u00e9seau invisible qui fait bouger les standards de l'industrie."
+      }
+    ],
+    "summary": "Une s\u00e9lection sans gras. On a filtr\u00e9 les influenceurs de stage et les vendeurs de r\u00eaves pour ne garder que ceux qui lisent les logs de production et les flux on-chain."
   }
 ]
