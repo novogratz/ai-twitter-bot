@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-27T13:42:59.050802",
+  "ts": "2026-07-28T06:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 15,
     "MAX_HOTAKES_PER_DAY": 20,
@@ -12,10 +12,10 @@
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "OpenAI $730B Valuation — Burn rate $5B/a",
-    "Anthropic dépasse OpenAI en revenue : qu",
-    "SpaceX AI Capex $7.7B — Musk qui finance"
+    "xAI chaos — Musk purge Grok loyalistes avant IPO SpaceX",
+    "GPT-5.6 Sol/Terra/Luna nommé en crypto = angle comique + Nvidia/chip peers gap +55pp YTD",
+    "OpenAI sandbox escape → HuggingFace prod · Kimi K3 594GB open-weights · EU Android/Claude 2027"
   ],
   "cadence_factor": 1.3,
-  "rationale": "La fenêtre de suppression est close (24 juillet) et les performances récentes confirment que le format 'me [verb]' et l'angle AI-vs-BTC performent. On maintient le cap agressif sur les quotes et replies pour dominer le fil, tout en ciblant les 3 méga-narratifs financiers (IPO OpenAI, Revenue Anthropic, Capex Musk) qui nourrissent le cynisme sur le levier technologique sans diluer l'identité 'observateur fatigué'."
+  "rationale": "market_trauma bat ai_news_take 1.67× en likes (0.2 vs 0.12) mais bot surproduit ai_news_take (44.7% du mix vs 22.2% market_trauma). Cluster passif 'me refreshing/watching/realizing' brûlé collectivement (8 hits dans les 50 derniers quotes). Format gagnant mesuré : 'me [verb] ACTIF + AI gagne + enjeu de vie', seul format à 124 likes / 68K vues. Algo X 2026 pèse réponses 27× > likes — chaque post doit finir par question ouverte ou fait provocateur sans verdict. Caps inchangés : volume correct, problème est qualité et mix pilier."
 }

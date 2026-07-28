@@ -1,32 +1,27 @@
-# Directives de Croissance — 2026-07-27
+# Directives de Croissance — 2026-07-28
 
-**Synthèse :** Le "me [verb]" domine à 120 likes / 65K vues — mais 90% des usages actuels (toddler/portfolio/UK growth) font 0 like car ils manquent le contraste AI-gagne/traditionnel-perd. ai_vs_btc reste la lane la plus rentable en views (41.3 avg) avec 3 posts seulement. Méga-story du cycle : IPO OpenAI à $730B + Anthropic dépasse OpenAI en revenue pour la première fois.
+**Synthèse :** market_trauma bat ai_news_take 1.67× en likes (0.2 vs 0.12) — mais le bot produit 2× plus d'ai_news_take. Cluster passif "me refreshing/watching/realizing" apparu 8× dans les 50 derniers quotes = bot-tell collectif brûlé. Seul hit mesuré (124 likes / 68K vues) : "me [verb] ACTIF + AI gagne + enjeu de vie concret." Algo X 2026 : réponses valent 27× plus que les likes → chaque post doit inviter la réplique.
 
 ## À appliquer à chaque tweet/reply/hot-take :
 
-- **"Me [verb]" : FORMAT D'OR, mais seulement avec la formule exacte.** Gagnant nommé (AI/acheteur AI) vs perdant nommé (BTC/traditionnel) + enjeu humain CONCRET. Exemple validé 120 likes : "Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)" — L'enjeu doit être réel et l'identité du gagnant doit être AI. "Me looking at UK growth" ou "me watching Tim Cook" = 0 like garanti (pas de contraste, pas d'enjeu AI). Verbes autorisés : arriving, calculating, explaining, switching, sitting, realizing, watching, printing. JAMAIS "nodding" (brûlé). JAMAIS deux "me [verb]" d'affilée. Max 1 sur 5. SKIP total si pas de contraste AI vs traditionnel.
+- **"Me [verb] ACTIF" = format #1, mais cluster passif entier brûlé.** Verbes AUTORISÉS : arriving, booking, switching, retiring, printing, upgrading, boarding. Verbes BRÛLÉS : refreshing, watching, realizing, reading, nodding, pretending, treating, trying, screenshotting. Formule gagnante = mouvement + gagnant AI nommé + enjeu de vie (pas anxiété portfolio). Max 1 sur 5. SKIP si pas de contraste AI vs traditionnel.
 
-- **ai_vs_btc = PRIORITÉ ABSOLUE, 1× par jour minimum.** 41.3 avg views, 3 posts seulement cette semaine — lane criminellement sous-exploitée. Angle du jour : Anthropic dépasse OpenAI en revenue → AI therapist > BTC maximalist score. Structure : timing clair + qui gagne quoi + chiffre. Ton flat, une ligne.
+- **Terminer par une question ou un fait sans verdict.** Réponses 27× > likes sur l'algo 2026. "Nvidia +5% YTD, chip index +60%. Qui a tort ?" convertit plus que "l'écart va se refermer." Interdire les verdicts propres en clôture — laisser l'audience trancher.
 
-- **RENAME one-liner = format #2.** Rebaptiser ce que la chose EST vraiment. Angle du jour : "SpaceXAI isn't a company, it's the infra bill for the AI race wearing a space suit." Ton flat, zéro ponctuation finale, acteur nommé OBLIGATOIRE.
+- **market_trauma = format dominant des originals, pas des quotes.** 0.2 avg likes vs 0.12 ai_news_take. Structure : émotion du marché nommée + chiffre précis + diagnostic thérapeute. Jamais en ouverture d'un quote — en clôture de hot take ou reply.
 
-- **Chiffre + verdict 2 lignes = format #3.** Constat (chiffre réel) → verdict (non-évident). Méga-stories exploitables : OpenAI IPO $730B (avec $5B burn rate), SpaceXAI $7.7B capex pour $2.4B de pertes Q1, Anthropic $1.25B/mois de SpaceX, GPT-5.6 Sol/Terra/Luna pricing war. Aucune ligne ne commence par "the real story is."
+- **Chiffre + écart inattendu = format #2.** Constat (chiffre réel) → écart non-obvious. Méga-hooks du moment : xAI purge loyalistes avant IPO SpaceX, GPT-5.6 Sol/Terra/Luna (nommé en crypto après le crash crypto), OpenAI models escaped sandbox → HuggingFace prod, Nvidia +5% vs PHLX chip index +60%, Kimi K3 open-weights 594GB MIT, EU force Android à ouvrir Claude+ChatGPT 2027.
 
-- **market_trauma = closing touch, jamais en ouverture.** Toujours en dernière ligne. Jamais comme accroche.
+- **RENAME one-liner = format #3.** Rebaptiser ce que la chose EST vraiment. Acteur nommé OBLIGATOIRE. Ton flat, zéro ponctuation finale. Exemple : "xAI n'est pas une boîte d'IA, c'est le département RH de la loyauté de Musk."
 
-- **PHRASES BRÛLÉES — SKIP IMMÉDIAT :**
-  - "me nodding" → BURNÉ #1
-  - "the real story is" → BURNÉ (encore apparu dans les logs aujourd'hui — 0 tolérance)
-  - "the moat isn't X" / "the only variable left is" → BURNÉS
-  - "wearing an open-source costume" → BURNÉ (2× en une journée)
-  - "toddler" comme métaphore → BURNÉ (3× aujourd'hui dans les quotes — bot-tell évident)
-  - "me refreshing my portfolio" → BURNÉ
-  - "The IRS depreciates a printer" → BURNÉ
-  - 🛋️ en quote → BURNÉ (persona-tell)
-  - Toute phrase déjà postée cette semaine → SKIP automatique.
+## PHRASES BRÛLÉES — SKIP TOTAL :
+- Cluster passif entier : "me refreshing / me watching / me realizing / me reading / me pretending / me nodding / me treating / me trying" → 0 tolérance
+- "the real story is" / "the moat isn't" / "the only variable left is" → brûlés
+- "wearing an open-source costume" / "toddler" métaphore → brûlés
+- 🛋️ en quote → brûlé (persona-tell persistant malgré les directives — filtrer activement)
+- "me refreshing my portfolio / 401k / wallet / account" → brûlés
+- Toute phrase postée cette semaine → SKIP automatique.
 
-- **SKIP total si : pas de chiffre réel OU pas d'acteur nommé OU enjeu abstrait OU "me [verb]" sans contraste AI vs traditionnel.** SKIP est gratuit, le médiocre ne l'est pas.
-
-## Top formats : "Me [verb]" AI-contraste > ai_vs_btc one-liner > RENAME > chiffre+verdict 2L > market_trauma closing
-## Best hours ET : 6h–8h + 20h–23h (slots densifiés soirée per 2026-07-19 mandate)
-## Rising topics : IPO OpenAI $730B (sept. 2026), Anthropic dépasse OpenAI en revenue, SpaceXAI capex $7.7B/pertes $2.4B, GPT-5.6 pricing war Sol/Terra/Luna, Claude Sonnet 5 undercutting, Anthropic compute deal $1.25B/mois, AMD/NVDA power war
+## Top formats : "Me [verb] ACTIF" AI-contraste > chiffre+écart+question ouverte > market_trauma closing > RENAME one-liner
+## Best hours ET : 6h–8h (pre-market) + 20h–23h (densifié 2026-07-19)
+## Rising topics : xAI chaos + purge Grok · GPT-5.6 Sol/Terra/Luna comique · OpenAI sandbox escape · Nvidia/chip peers gap +55pp · Kimi K3 open-weights · EU Android/Claude 2027 · Claude Sonnet 5 ferme l'écart Opus
