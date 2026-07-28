@@ -3267,3 +3267,26 @@ def test_winner_format_in_prompts_and_evening_slots():
     src = open("main.py").read()
     assert "(23, 0, False)" in src and "(22, 30, False)" in src, \
         "slot grid must cover the measured 20:00-23:00 ET window"
+
+
+def test_spicy_dial_suggestive_never_explicit():
+    """Operator 2026-07-28: 'more sexy and spicy... like a milf ai
+    therapist — still the sharpest of all on AI.' Pins: the spice dial
+    exists in the spine AND its guardrails ride with it everywhere it
+    appears — suggestive never explicit ('the wink, not the wardrobe'),
+    rationed (~1 in 4), and the sharpest-AI-mind payload always required
+    (smart IS the sexy). A spicy persona without the guardrails is a brand
+    risk; guardrails without the dial ignores the mandate."""
+    import os
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    spine = open(os.path.join(root, "core_identity.md")).read().lower()
+    assert "spicy dial" in spine and ("flirty" in spine or "flirt" in spine)
+    assert "never explicit" in spine and "the wink, not the wardrobe" in spine
+    assert "1 post in 4" in spine or "1 in 4" in spine, "spice must be rationed"
+    assert "smart is the sexy" in spine, "authority must ride with the heat"
+
+    from src import direct_reply, quote_tweet_bot
+    for prompt in (direct_reply.REPLY_PROMPT, quote_tweet_bot.QUOTE_PROMPT):
+        low = prompt.lower()
+        assert "flirt" in low and "never explicit" in low, \
+            "surface prompts must carry the dial WITH its guardrail"
