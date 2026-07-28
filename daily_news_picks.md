@@ -16542,3 +16542,27 @@ you can run a frontier model privately and low-cost on a $12,000 setup
 definitely not affordable for everyone but dramatically cheaper (5-10X) than any predeces
   - https://x.com/cryptopunk7213/status/2081551002562355474
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 83).
+
+## 2026-07-28
+- **@raysp500** (25 likes, score 8/10) — 昨晚美股开盘前，半导体本来是要暴涨的。
+
+伊朗局势缓和，油价暴跌8%。
+
+英伟达被曝正在为OpenAI的数据中心项目担保$2500亿融资。
+
+两个利好叠在一起，ASML盘前涨2%，芯片股全线高开。
+
+然后突然跳出一个光刻机，所有涨幅在几分钟内蒸发。
+
+中国开始量产自主研发的浸没式ArF
+  - https://x.com/raysp500/status/2081943516134220097
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 33).
+- **@sophiacai99** (74 likes, score 8/10) — Anddddd Dario Amodei comes out with a long post saying Anthropic never advocated for a ban on open-weight models.
+
+WITH SOME BIG ‘BUTS’:  
+- he’s not signing the pro open weight letter everyone and th
+  - https://x.com/SophiaCai99/status/2081871087793827845
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 114).
+- **@deryatr_** (13 likes, score 7/10) — First Anthropic hero with the courage to openly disagree with Dario Amodei, who is mostly arguing against open-weight AI models! Apparently there are other heroes within Anthropic. I do hope @karpathy
+  - https://x.com/DeryaTR_/status/2081955476883845370
+  - **WHY**: Source fiable + impact concret (score signal 5, engagement 23).
