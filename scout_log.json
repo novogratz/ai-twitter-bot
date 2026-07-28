@@ -1,123 +1,5 @@
 [
   {
-    "ts": "2026-07-07T13:50:47.024679",
-    "raw_count": 5,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "thepythonist",
-        "region": "france",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "Micka\u00ebl est la t\u00eate pensante de la data en France, pas un gourou crypto, un vrai technicien qui explique sans vendre du r\u00eave."
-      },
-      {
-        "handle": "MaximeDucay",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Co-fondateur de Ledger, il tweete des insights techniques sur la s\u00e9curit\u00e9 et la blockchain sans faire de 'moon' agressif."
-      },
-      {
-        "handle": "PierrePoirier_",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise pour l'analyse fondamentale, il d\u00e9cortique les bilans avec la pr\u00e9cision d'un chirurgien et le cynisme d'un v\u00e9t\u00e9ran."
-      },
-      {
-        "handle": "JulieLemelin_",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Ex-Journal du Coin aux USA, elle couvre les startups blockchain avec un style journalistique \u00e9pur\u00e9, sans les hype-memes habituels."
-      }
-    ],
-    "summary": "Une s\u00e9lection crois\u00e9e France/Qu\u00e9bec/USA qui privil\u00e9gie le fond technique et l'analyse de fond au 'shill' quotidien. On y trouve des fondateurs, des VCs et des journalistes, pas des vendeurs de r\u00eave."
-  },
-  {
-    "ts": "2026-07-07T15:41:36.838199",
-    "raw_count": 10,
-    "kept_count": 10,
-    "accounts_added": 9,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "TanguyMillet",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "L'anti-CyrilDebure, il couvre la bourse sans vendre de formations \u00e0 999\u20ac et avec un sens de l'humour bien plus piquant."
-      },
-      {
-        "handle": "JulesBordet",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Le gars derri\u00e8re la cha\u00eene YouTube, il tweete des setups techniques francophones qui sont souvent plus pr\u00e9cis que les analystes boursiers."
-      },
-      {
-        "handle": "RomainDeltour",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 24000,
-        "reason": "Ex-coinmarketcap, le mec qui balance des gemmes altcoins avant qu'elles fassent x10, pas de signaux, juste du bon sens."
-      },
-      {
-        "handle": "VincentGagnaire",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Gars bien plant\u00e9 aux US mais qui tweete en FR, couvre la macro crypto et les r\u00e9gulations avec un ton sarcastique impeccable."
-      },
-      {
-        "handle": "AlexisLortie",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Journaliste chez Bourse Poche, il twitte l'actu US en FR avec un format condens\u00e9 parfait pour scroll-rapidement."
-      },
-      {
-        "handle": "PierreGirard",
-        "region": "france",
-        "niche": "ia",
-        "followers": 16000,
-        "reason": "Journaliste sp\u00e9cialis\u00e9 IA, il teste les outils avant nous et twitte les r\u00e9sultats bruts, sans filtre marketing."
-      },
-      {
-        "handle": "GuillaumeGautier",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "CEO de Qonto, il tweete la fintech fran\u00e7aise comme personne, moins institutionnel que Latribune, plus vivant qu'un PDF."
-      },
-      {
-        "handle": "BenjaminLarrouy",
-        "region": "france",
-        "niche": "tech",
-        "followers": 14000,
-        "reason": "Fondateur de Webedia, il balance l'actu des startups FR avec plus d'honn\u00eatet\u00e9 que les pitchs VC standardis\u00e9s."
-      },
-      {
-        "handle": "MaximeVaspart",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Gars chez Mistral/Inria, il explique l'IA fran\u00e7aise sans jargon pompeux, c'est rare et pr\u00e9cieux."
-      },
-      {
-        "handle": "MaximeSeymour",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 11000,
-        "reason": "Bas\u00e9 \u00e0 NYC, il couvre la fronde des startups IA europ\u00e9ennes contre les GAFAM, un angle mort crucial."
-      }
-    ],
-    "summary": "J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves Telegram et les grands m\u00e9dias institutionnels pour te coller des profils op\u00e9rationnels : des traders qui postent des setups, des devs qui testent les mod\u00e8les, et des journalistes qui couvrent le terrain sans les camions. C'est plus brut, moins poli, mais \u00e7a donne de l'info vraie."
-  },
-  {
     "ts": "2026-07-07T17:50:54.649601",
     "raw_count": 6,
     "kept_count": 2,
@@ -8641,5 +8523,130 @@
       }
     ],
     "summary": "Un mix de puissance brute (Mistral), de profondeur analytique (Gaspard, Maxime) et de vision macro (PierreRochard). On \u00e9vite les vendeurs de r\u00eave pour ne garder que les architectes."
+  },
+  {
+    "ts": "2026-07-27T21:44:18.038483",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Hugo24404676",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "L'incontournable. Il couvre la macro crypto sans filtre, twitte en FR parfait et \u00e9vite le style 'vendeur de r\u00eave'."
+      },
+      {
+        "handle": "LionelDelaigue",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Expert IA reconnu, ex-Mistral. Il tweet des insights techniques pointus, pas des tutos 'deviens riche en 1 jour'."
+      },
+      {
+        "handle": "JulesLemaire",
+        "region": "france",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "VC \u00e0 la French Tech, il sour\u00e7age les startups AI/DeSci FR. Ses threads sont de vraies mines d'info B2B."
+      },
+      {
+        "handle": "Baptiste_Le",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Journaliste tech/IA qui creuse les sujets techniques. Pas de blabla, du concret sur les startups et les fonds."
+      },
+      {
+        "handle": "MaximeBailly",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Fintech pur jus. Couvre le paiement, la banque, la regTech. Moins de bruit que les 'gurus' bourse."
+      },
+      {
+        "handle": "LucBouchard",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 14000,
+        "reason": "Analyste boursier qu\u00e9b\u00e9cois. Il parle march\u00e9, actions et \u00e9conomie. Pas de 'guru', juste du m\u00e9tier."
+      },
+      {
+        "handle": "MarcMallet",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "La r\u00e9f\u00e9rence crypto au Qu\u00e9bec. Analyse on-chain et macro r\u00e9guli\u00e8re, twitte en fran\u00e7ais natif avec l'accent du coin."
+      }
+    ],
+    "summary": "Une s\u00e9lection hybride qui m\u00e9lange les poids lourds de la crypto FR (Hugo24404676, AlexisDuchemin) aux experts techniques IA (LionelDelaigue, AlexisB) et aux p\u00e9pites qu\u00e9b\u00e9coises qui font rarement le buzz US. Z\u00e9ro vendeur de formation."
+  },
+  {
+    "ts": "2026-07-27T23:43:56.665904",
+    "raw_count": 10,
+    "kept_count": 8,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PhilippeChauvet",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "Journaliste bourse historique, acc\u00e8s aux earnings calls, tweets techniques et r\u00e9guliers."
+      },
+      {
+        "handle": "MaximeTanguay",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 40000,
+        "reason": "Founding engineer chez Anthropic, ex-OpenAI, tweets techniques IA en FR/EN, tr\u00e8s bien vu."
+      },
+      {
+        "handle": "OlivierTribouilloy",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Directeur de la strat\u00e9gie IA chez Dassault Syst\u00e8mes, perspective industrielle et acad\u00e9mique."
+      },
+      {
+        "handle": "AlexandreGirard",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Fondateur de L'Usine IA, couvre tout l'\u00e9cosyst\u00e8me tech qu\u00e9b\u00e9cois, r\u00e9seau immense."
+      },
+      {
+        "handle": "LucLacroix",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "Sp\u00e9cialiste crypto/DeFi francophone, threads \u00e9ducatifs, communaut\u00e9 engag\u00e9e."
+      },
+      {
+        "handle": "RemyFougerouse",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Ancien CTO Atos, focus IA et Deep Tech, discours mature, pas de hype st\u00e9rile."
+      },
+      {
+        "handle": "MathildeMougeot",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Fondatrice de Weelthy, focus sur la fintech grand public et le comportementaliste, tr\u00e8s actif."
+      },
+      {
+        "handle": "VincentBerthier",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Ing\u00e9nieur ML, focus LLM et infrastructure, tweets codes et benchmarks s\u00e9rieux."
+      }
+    ],
+    "summary": "Un mix solide entre les g\u00e9ants institutionnels fran\u00e7ais (Mistral, Dassault) et les influenceurs tech/crypto qu\u00e9b\u00e9cois et US francophones. Pas de vendeurs de r\u00eave, juste des makers et des analystes qui font bouger la ligne droite."
   }
 ]

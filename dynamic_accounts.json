@@ -889,7 +889,21 @@
     "SofianeD",
     "JeroenBoersma",
     "Gaspard0x",
-    "MaximeMaurice"
+    "MaximeMaurice",
+    "Hugo24404676",
+    "LionelDelaigue",
+    "JulesLemaire",
+    "Baptiste_Le",
+    "MaximeBailly",
+    "LucBouchard",
+    "MarcMallet",
+    "PhilippeChauvet",
+    "MaximeTanguay",
+    "AlexandreGirard",
+    "LucLacroix",
+    "RemyFougerouse",
+    "MathildeMougeot",
+    "VincentBerthier"
   ],
   "en": [
     "Chubby",
@@ -1150,7 +1164,9 @@
     "ImagineArt",
     "lithos",
     "AISatoshi",
-    "Cognition"
+    "Cognition",
+    "Melvin",
+    "JustDario"
   ],
   "history": [
     {
@@ -6896,6 +6912,86 @@
     {
       "lang": "fr",
       "handle": "MaximeMaurice",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "en",
+      "handle": "Melvin",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "en",
+      "handle": "JustDario",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "Hugo24404676",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelDelaigue",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesLemaire",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "Baptiste_Le",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBailly",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucBouchard",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcMallet",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeChauvet",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeTanguay",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexandreGirard",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucLacroix",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "RemyFougerouse",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathildeMougeot",
+      "added": "2026-07-27"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBerthier",
       "added": "2026-07-27"
     }
   ]
