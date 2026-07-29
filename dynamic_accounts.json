@@ -926,7 +926,16 @@
     "JohanLemieux",
     "ParisAI",
     "MaximeCassan",
-    "JmSicard"
+    "JmSicard",
+    "Pierre_Rochard",
+    "Morgan_Hall",
+    "thibautberr",
+    "RomainTornare",
+    "MaximeMasse",
+    "ValentinVio",
+    "jasonbouffard",
+    "JulienHamel",
+    "CedricMuller"
   ],
   "en": [
     "Chubby",
@@ -1192,7 +1201,8 @@
     "JustDario",
     "Taylor",
     "strictrope",
-    "Autopilot"
+    "Autopilot",
+    "Grok"
   ],
   "history": [
     {
@@ -7148,6 +7158,56 @@
     {
       "lang": "fr",
       "handle": "JmSicard",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "en",
+      "handle": "Grok",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "Pierre_Rochard",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "Morgan_Hall",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "thibautberr",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainTornare",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMasse",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "ValentinVio",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "jasonbouffard",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienHamel",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "CedricMuller",
       "added": "2026-07-28"
     }
   ]

@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-28T17:29:43.644508",
-  "window_7d_actions": 5292,
-  "window_24h_actions": 909,
+  "generated_at": "2026-07-28T21:29:43.572573",
+  "window_7d_actions": 5359,
+  "window_24h_actions": 914,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5291
+      "count": 5358
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5291
+      "count": 5358
     }
   ],
   "best_hours_utc": [
@@ -47,56 +47,56 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2445
+      "count": 2474
     },
     {
       "topic": "IA",
-      "count": 2142
+      "count": 2170
     },
     {
       "topic": "Crypto",
-      "count": 519
+      "count": 525
     },
     {
       "topic": "Bourse",
-      "count": 410
+      "count": 416
     },
     {
       "topic": "Spatial",
-      "count": 104
+      "count": 103
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2351
+      "count": 2384
     },
     {
       "pillar": "other",
-      "count": 1450
+      "count": 1474
     },
     {
       "pillar": "market_trauma",
-      "count": 1214
+      "count": 1225
     },
     {
       "pillar": "meme_reaction",
-      "count": 186
+      "count": 185
     },
     {
       "pillar": "reply_bait",
-      "count": 63
+      "count": 64
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 28
+      "count": 27
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 414
+      "count": 418
     },
     {
       "pillar": "market_trauma",
@@ -104,11 +104,11 @@
     },
     {
       "pillar": "other",
-      "count": 221
+      "count": 226
     },
     {
       "pillar": "meme_reaction",
-      "count": 28
+      "count": 24
     },
     {
       "pillar": "reply_bait",
@@ -124,46 +124,46 @@
       "pillar": "market_trauma",
       "posts": 48,
       "avg_likes": 0.21,
-      "avg_views": 35.4,
+      "avg_views": 35.1,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 58,
-      "avg_likes": 0.12,
-      "avg_views": 28.7,
+      "posts": 62,
+      "avg_likes": 0.11,
+      "avg_views": 28.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 85,
-      "avg_likes": 0.08,
-      "avg_views": 32.0,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 3,
-      "avg_likes": 0.0,
-      "avg_views": 37.3,
+      "posts": 82,
+      "avg_likes": 0.09,
+      "avg_views": 32.3,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 5,
+      "posts": 6,
       "avg_likes": 0.0,
-      "avg_views": 36.2,
+      "avg_views": 35.7,
       "low_sample": false
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "posts": 1,
+      "avg_likes": 0.0,
+      "avg_views": 49.0,
+      "low_sample": true
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4638
+      "count": 4701
     },
     {
       "type": "quote",
-      "count": 345
+      "count": 349
     },
     {
       "type": "quote_gif",
@@ -171,11 +171,11 @@
     },
     {
       "type": "post",
-      "count": 65
+      "count": 63
     },
     {
       "type": "hotake",
-      "count": 51
+      "count": 53
     },
     {
       "type": "retweet",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-28T17:29:06.508459",
-      "text": "Tene fait son pitch, on imagine les slides. La vraie question est juste : l'IA fait-elle enfin grossir Robinhood plus vite qu'elle ne lui coûte en serveurs ?",
+      "ts": "2026-07-28T21:28:57.373999",
+      "text": "The 3:1 ratio between openai and anthropic proves the market pays for benchmarks but demands utility. openai is the star student. anthropic is the one actually doing the homework.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-28T17:28:49.069696",
-      "text": "the 'at some point in the future' is the tell. my 3pm Tuesday just opened up, @OpenAI",
-      "type": "quote"
+      "ts": "2026-07-28T21:27:00.553515",
+      "text": "Anthropic's $2B ARR from azure.\n\nthey'll monopolize 'trust' while the datacenters are rented from the competition. monopoly by subcontractor",
+      "type": "reply"
     },
     {
-      "ts": "2026-07-28T17:28:14.680447",
-      "text": "Microsoft m365 admin is just the new \"i know where the bodies are buried\" certification. linkedin liam already posted it.",
+      "ts": "2026-07-28T21:26:27.684009",
+      "text": "Nvidia is an infrastructure monopoly that also sells GPUs. The hardware cycle is the tollbooth; the software is the traffic jam.",
       "type": "reply"
     }
   ]

@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-07-08T09:41:34.206543",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CedricBeust",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 40000,
-        "reason": "Le p\u00e8re de TestNG/Java. Il tweet sur la tech, l'IA et ses d\u00e9boires avec Elon, avec un humour cynique et pr\u00e9cis."
-      },
-      {
-        "handle": "MaelleS",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "La voix off de l'IA en France. Pas de hype, que du concret sur les mod\u00e8les ouverts et l'industrie."
-      },
-      {
-        "handle": "FlorentBouchez",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Le roi de la micro-cap et de l'investissement long terme en Bourse. Son feed est une mine d'analyse fondamentale s\u00e8che."
-      },
-      {
-        "handle": "MathisLePape",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Ancien de L'Or\u00e9al puis Hugging Face. Il tweet en FR/EN sur le business de l'IA avec une plume journalistique percutante."
-      },
-      {
-        "handle": "AntoineG",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 16000,
-        "reason": "Expert fintech et paiement. Il analyse les g\u00e9ants tech, les n\u00e9o-banques et les r\u00e9gulations bancaires."
-      },
-      {
-        "handle": "NicolasC",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 14000,
-        "reason": "Vendeur de caf\u00e9 crypto. Il couvre les march\u00e9s crypto avec des prises de position claires et des fils d\u00e9taill\u00e9s."
-      },
-      {
-        "handle": "MaximeLefrancois",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Dev lead chez Datadog. Il parle tech, dev et un peu d'IA avec le pragmatisme d'un ing\u00e9nieur qui code."
-      }
-    ],
-    "summary": "Une s\u00e9lection de pros qui tweetent en fran\u00e7ais sans vendre de la pluie pour un beau jour. Pas de 'rejoins mon groupe VIP', juste du contenu technique ou analytique dense."
-  },
-  {
     "ts": "2026-07-08T13:41:35.501671",
     "raw_count": 10,
     "kept_count": 1,
@@ -8655,5 +8596,78 @@
       }
     ],
     "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les b\u00e2tisseurs et les analystes qui comprennent leur m\u00e9tier. Le Qu\u00e9bec brille en IA appliqu\u00e9e, la France domine en tech et bourse technique."
+  },
+  {
+    "ts": "2026-07-28T19:30:55.634168",
+    "raw_count": 10,
+    "kept_count": 9,
+    "accounts_added": 9,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Pierre_Rochard",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 110000,
+        "reason": "Bien qu'am\u00e9ricain, il est un g\u00e9ant de la Bitcoin L2 et de la finance d\u00e9centralis\u00e9e. Il twitte en FR de temps en temps et ses threads techniques sont des r\u00e9f\u00e9rences pour les pros."
+      },
+      {
+        "handle": "Morgan_Hall",
+        "region": "usa",
+        "niche": "finance",
+        "followers": 65000,
+        "reason": "Bien qu'am\u00e9ricain, il est la r\u00e9f\u00e9rence 'Finance Twitter' en langue fran\u00e7aise depuis des ann\u00e9es. Ses threads sont des cours de finance d'\u00e9tat-major. Indispensable pour comprendre les march\u00e9s FR."
+      },
+      {
+        "handle": "thibautberr",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Cofondateur de Mistral AI. Il twitte en FR, en EN et mixe les deux. C'est la r\u00e9f\u00e9rence tech/IA de Paris, pas un vendeur de r\u00eaves, un vrai engineer-founder."
+      },
+      {
+        "handle": "RomainTornare",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 32000,
+        "reason": "Journaliste crypto fran\u00e7ais qui a compris que le web3 c'est pas que des memes. Il couvre les fondamentaux, les r\u00e9gulations et les business models. Sombre pas dans la pol\u00e9mique facile."
+      },
+      {
+        "handle": "MaximeMasse",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Ex-SafeGraph, actuellement dans l'IA g\u00e9n\u00e9rique. Il explique le 'comment' et le 'pourquoi' des LLMs avec une clart\u00e9 rafra\u00eechissante. Moins hype que les influenceurs, plus dense."
+      },
+      {
+        "handle": "ValentinVio",
+        "region": "france",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Ancien chez Doctolib/HelloAsso, maintenant dans le SaaS/IA. Il tweet sur la growth et la tech fran\u00e7aise avec un ton sec mais pertinent. Pas de blabla, que du concret."
+      },
+      {
+        "handle": "jasonbouffard",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Le roi de la bourse qu\u00e9b\u00e9coise sur Twitter. Il couvre les petites caps, le march\u00e9 local et donne des analyses actionnaires solides. C'est du solide, pas du flash."
+      },
+      {
+        "handle": "JulienHamel",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Tech lead qu\u00e9b\u00e9cois qui couvre l'IA et le dev. Il a un regard int\u00e9ressant sur l'\u00e9cosyst\u00e8me tech qu\u00e9b\u00e9cois et international. Son ton est direct, sans langue de bois."
+      },
+      {
+        "handle": "CedricMuller",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Directeur de la recherche chez M6. Il mixe data science, IA et industrie. Moins connu que les gurus, mais plus authentique. Il montre ce que l'IA fait vraiment en entreprise."
+      }
+    ],
+    "summary": "Une s\u00e9lection hybride : des fondateurs Mistral et des analystes on-chain pour la tech/IA, plus des boursiers qu\u00e9b\u00e9cois et la r\u00e9f\u00e9rence finance FR de Morgan Hall. Pas de vendeurs de formation, que des buildeurs et des journalistes."
   }
 ]
