@@ -4,6 +4,20 @@ Project context for **Claude Code** sessions. Mirror of [`CODEX.md`](CODEX.md). 
 
 > **You'll hate me until I'm right.**
 
+> **2026-07-29 — VIOLENCE/CRUELTY GATE (operator pasted a live reply:
+> "Killing the right terrorist = higher ROI on every contract" on a PLTR
+> parent, shipped 2026-07-28 15:29):** the persona's "never cruel" rule is
+> prompt-level and the reply lane runs an uncensored local model that
+> ignores it — the model borrowed the REPLY_PROMPT sharpness-example SHAPE
+> ("an AI monopoly that also sells GPUs") and filled it with war-profit
+> content. Fix at the chokepoint (the only place model discipline can't
+> fail): `content_guard._violence_content` refuses violence/cruelty
+> content on EVERY surface — war/violence nouns (terrorist, casualties,
+> drone strike, body count...) and kill-verbs near human targets — while
+> idioms stay allowed ("killer app", "made a killing", "AI killed my
+> job"). Operator deletes the live reply manually (bot doesn't log its own
+> reply URLs). Guard: `test_violence_cruelty_gate_blocks_at_every_surface`.
+
 > **2026-07-28 round 5 — BOOT WALL-CLOCK BUDGET (observed live on the
 > 08:43 boot Claude ran itself):** startup spent 46 minutes in warmup
 > before `scheduler.start()` — every phase is bounded (PM-17 lesson) but

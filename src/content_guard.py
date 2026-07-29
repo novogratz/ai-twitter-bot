@@ -404,6 +404,32 @@ _BURNED_PATTERNS = (
                re.IGNORECASE),
 )
 
+# VIOLENCE / CRUELTY GATE (2026-07-29 — SHIPPED LIVE: "Killing the right
+# terrorist = higher ROI on every contract" as a PLTR reply, 2026-07-28
+# 15:29). The persona's "never cruel" rule is prompt-level; the reply lane
+# runs on an uncensored local model that ignores it. The account has ZERO
+# need to tweet about killing people — glib violence torches the warm-
+# therapist brand in one screenshot. Refused at the chokepoint for EVERY
+# surface. Idioms stay allowed ("killer app", "made a killing", "AI killed
+# my job" — no human target).
+_VIOLENCE_TERMS_RE = re.compile(
+    r"\b(terrorists?|terrorism|casualt(?:y|ies)|body ?count|drone strikes?|"
+    r"airstrikes?|kill chain|warheads?|bloodshed|war crimes?)\b",
+    re.IGNORECASE,
+)
+_KILL_PERSON_RE = re.compile(
+    r"\bkill(?:ing|ed|s)?\b[^.!?\n]{0,40}\b(terrorists?|civilians?|people|"
+    r"enemies|enemy|soldiers?|humans?|someone|anyone)\b"
+    r"|\b(terrorists?|civilians?|people|enemies|enemy|soldiers?|humans?)\b"
+    r"[^.!?\n]{0,40}\bkill(?:ing|ed|s)?\b",
+    re.IGNORECASE,
+)
+
+
+def _violence_content(text: str) -> bool:
+    return bool(_VIOLENCE_TERMS_RE.search(text) or _KILL_PERSON_RE.search(text))
+
+
 # RATIONED winner shapes (2026-07-28): prompts say "~1 in 5, never twice in
 # a row" but ollama ignores rationing instructions — the "me [verb]ing"
 # self-snapshot shipped in 7 of 15 posts (three near-identical "me
@@ -458,6 +484,10 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
 
     if BAN_SHORT_TERM_PRICE_TARGETS and has_near_term_price_target(text):
         return (False, "near-term price target (price + near-term timeframe)")
+
+    # ALL surfaces — replies included (the 2026-07-29 leak WAS a reply).
+    if _violence_content(text):
+        return (False, "violence/cruelty content (killing, terrorism, casualties) — never on-brand, SKIP")
 
     if kind in ("original", "quote"):
         # Enforce the CONFIGURED primary language (not hardcoded). Bug 2026-06-04:
