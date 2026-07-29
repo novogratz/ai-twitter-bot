@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-28T21:29:43.572573",
-  "window_7d_actions": 5359,
-  "window_24h_actions": 914,
+  "generated_at": "2026-07-29T01:29:45.629873",
+  "window_7d_actions": 5355,
+  "window_24h_actions": 898,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5358
+      "count": 5354
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5358
+      "count": 5354
     }
   ],
   "best_hours_utc": [
@@ -47,42 +47,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2474
+      "count": 2469
     },
     {
       "topic": "IA",
-      "count": 2170
+      "count": 2168
     },
     {
       "topic": "Crypto",
-      "count": 525
+      "count": 524
     },
     {
       "topic": "Bourse",
-      "count": 416
+      "count": 427
     },
     {
       "topic": "Spatial",
-      "count": 103
+      "count": 102
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2384
+      "count": 2379
     },
     {
       "pillar": "other",
-      "count": 1474
+      "count": 1466
     },
     {
       "pillar": "market_trauma",
-      "count": 1225
+      "count": 1234
     },
     {
       "pillar": "meme_reaction",
-      "count": 185
+      "count": 183
     },
     {
       "pillar": "reply_bait",
@@ -90,62 +90,62 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 27
+      "count": 29
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 418
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 234
+      "count": 401
     },
     {
       "pillar": "other",
-      "count": 226
+      "count": 231
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 231
     },
     {
       "pillar": "meme_reaction",
       "count": 24
     },
     {
-      "pillar": "reply_bait",
+      "pillar": "ai_vs_btc",
       "count": 6
     },
     {
-      "pillar": "ai_vs_btc",
-      "count": 6
+      "pillar": "reply_bait",
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 48,
-      "avg_likes": 0.21,
-      "avg_views": 35.1,
+      "posts": 49,
+      "avg_likes": 0.2,
+      "avg_views": 35.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 62,
+      "posts": 63,
       "avg_likes": 0.11,
-      "avg_views": 28.4,
+      "avg_views": 28.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 82,
+      "posts": 81,
       "avg_likes": 0.09,
-      "avg_views": 32.3,
+      "avg_views": 32.9,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 6,
+      "posts": 5,
       "avg_likes": 0.0,
-      "avg_views": 35.7,
+      "avg_views": 40.6,
       "low_sample": false
     },
     {
@@ -159,15 +159,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4701
+      "count": 4697
     },
     {
       "type": "quote",
-      "count": 349
+      "count": 353
     },
     {
       "type": "quote_gif",
-      "count": 156
+      "count": 154
     },
     {
       "type": "post",
@@ -179,23 +179,23 @@
     },
     {
       "type": "retweet",
-      "count": 37
+      "count": 35
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-28T21:28:57.373999",
-      "text": "The 3:1 ratio between openai and anthropic proves the market pays for benchmarks but demands utility. openai is the star student. anthropic is the one actually doing the homework.",
+      "ts": "2026-07-29T01:29:38.549241",
+      "text": "OpenAI's $5B burn is a fire sale.\nEvery week another model drops. The ones paying the bills? The ones selling the shovels.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-28T21:27:00.553515",
-      "text": "Anthropic's $2B ARR from azure.\n\nthey'll monopolize 'trust' while the datacenters are rented from the competition. monopoly by subcontractor",
+      "ts": "2026-07-29T01:26:37.222409",
+      "text": "Nvda cdfs at par means the market pays zero to hedge against default.\n\nthey've priced the \"too big to fail\" moat into the equity, leaving nothing for credit.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-28T21:26:27.684009",
-      "text": "Nvidia is an infrastructure monopoly that also sells GPUs. The hardware cycle is the tollbooth; the software is the traffic jam.",
+      "ts": "2026-07-29T01:26:21.184046",
+      "text": "@Zincky mentions a \"connected system\" of AI agents. That's not a product. it's a datacenter with a social life. good luck",
       "type": "reply"
     }
   ]
