@@ -935,7 +935,22 @@
     "ValentinVio",
     "jasonbouffard",
     "JulienHamel",
-    "CedricMuller"
+    "CedricMuller",
+    "ThibaudDeM",
+    "GaelLeBihan",
+    "Alexis_Boulay",
+    "Marc_A_A",
+    "ThibautMiche",
+    "JulienTruffaut",
+    "MaximeSawaya",
+    "GaspardBonnay",
+    "RomainBoschero",
+    "JorisHerman",
+    "MarcLafontaine",
+    "MickaelBonnin",
+    "JulesSanguinet",
+    "MathisBoucard",
+    "JuliePoulin"
   ],
   "en": [
     "Chubby",
@@ -1202,7 +1217,8 @@
     "Taylor",
     "strictrope",
     "Autopilot",
-    "Grok"
+    "Grok",
+    "ryan"
   ],
   "history": [
     {
@@ -7208,6 +7224,86 @@
     {
       "lang": "fr",
       "handle": "CedricMuller",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "en",
+      "handle": "ryan",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudDeM",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLeBihan",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alexis_Boulay",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "Marc_A_A",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMiche",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienTruffaut",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSawaya",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaspardBonnay",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBoschero",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JorisHerman",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLafontaine",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelBonnin",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesSanguinet",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathisBoucard",
+      "added": "2026-07-28"
+    },
+    {
+      "lang": "fr",
+      "handle": "JuliePoulin",
       "added": "2026-07-28"
     }
   ]
