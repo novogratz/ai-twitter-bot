@@ -958,7 +958,10 @@
     "AlexDionne",
     "JulienDhombres",
     "OlivierD",
-    "VincentGagnon"
+    "VincentGagnon",
+    "AlainDumasFR",
+    "JulienDeLatour",
+    "PatrickLavoie"
   ],
   "en": [
     "Chubby",
@@ -7364,6 +7367,21 @@
     {
       "lang": "fr",
       "handle": "VincentGagnon",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlainDumasFR",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDeLatour",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "PatrickLavoie",
       "added": "2026-07-29"
     }
   ]

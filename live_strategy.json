@@ -1,10 +1,10 @@
 {
-  "ts": "2026-07-28T06:00:00.000000",
+  "ts": "2026-07-29T06:00:00.000000",
   "caps": {
     "MAX_NEWS_PER_DAY": 15,
     "MAX_HOTAKES_PER_DAY": 20,
     "MAX_QUOTES_PER_DAY": 200,
-    "MAX_RETWEETS_PER_DAY": 8,
+    "MAX_RETWEETS_PER_DAY": 5,
     "MAX_BREAKOUTS_PER_DAY": 2,
     "MAX_SPICY_PER_DAY": 2,
     "MAX_REPLIES_PER_CYCLE": 40,
@@ -12,10 +12,10 @@
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "xAI chaos — Musk purge Grok loyalistes avant IPO SpaceX",
-    "GPT-5.6 Sol/Terra/Luna nommé en crypto = angle comique + Nvidia/chip peers gap +55pp YTD",
-    "OpenAI sandbox escape → HuggingFace prod · Kimi K3 594GB open-weights · EU Android/Claude 2027"
+    "Anthropic Opus 5 + acquisition Coefficient Bio $400M — thérapeute qui se fait acquérir pendant la séance",
+    "Thinking Machines Mira Murati $2B seed Inkling 975B — clause de non-concurrence matérialisée en startup",
+    "Kimi K3 2.8T open-weights MIT · FLI safety index Anthropic C+ / OpenAI C — qui surveille le surveillant"
   ],
   "cadence_factor": 1.3,
-  "rationale": "market_trauma bat ai_news_take 1.67× en likes (0.2 vs 0.12) mais bot surproduit ai_news_take (44.7% du mix vs 22.2% market_trauma). Cluster passif 'me refreshing/watching/realizing' brûlé collectivement (8 hits dans les 50 derniers quotes). Format gagnant mesuré : 'me [verb] ACTIF + AI gagne + enjeu de vie', seul format à 124 likes / 68K vues. Algo X 2026 pèse réponses 27× > likes — chaque post doit finir par question ouverte ou fait provocateur sans verdict. Caps inchangés : volume correct, problème est qualité et mix pilier."
+  "rationale": "Un seul post à 126 likes / 69K vues cette semaine (format: relatable first-person + contraste AI/BTC, zéro props clinique). market_trauma bat ai_news_take 1.69× (0.22 vs 0.13 avg likes) mais sous-représenté (22% vs 44% du mix). 🛋️ apparu 5+ fois/jour malgré interdiction — reinforcement maximal dans directives. MAX_RETWEETS 8→5 (usage réel ~5/jour, retweets < valeur que quotes). Algo X 2026 : back-and-forth reply 150× > like, first 30min fixe le plafond. Caps originals/quotes inchangés : volume correct, problème est qualité du format et surutilisation des props clinique."
 }

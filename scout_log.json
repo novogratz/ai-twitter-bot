@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-07-08T21:53:45.217815",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LorisSambati",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Le patron de Loris qui couvre tech et IA avec le style tranquille d'un mec qui a d\u00e9j\u00e0 vu venir la crise."
-      },
-      {
-        "handle": "MaximeJoly_",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 20000,
-        "reason": "Le trader retail qui balance des setups pr\u00e9cis et des charts dignes de Mondrian."
-      },
-      {
-        "handle": "ThomasM",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Le 'M' qui couvre les cycles crypto avec la pr\u00e9cision d'une montre suisse mais la vitesse d'une Ferrari."
-      },
-      {
-        "handle": "ThibautC",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Le gars qui explique l'IA aux gens normaux sans dormir sur un cluster de GPUs."
-      },
-      {
-        "handle": "MarcLangevin",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "L'info crypto qu\u00e9b\u00e9coise qui fait le tri entre le bruiteur et le signal sans payer de souscription."
-      }
-    ],
-    "summary": "6 nouveaux talents valid\u00e9s (FR: 4, QC: 1) qui cumulent expertise technique et capacit\u00e9 \u00e0 g\u00e9n\u00e9rer du engagement sans vendre du r\u00eave aux ench\u00e8res."
-  },
-  {
     "ts": "2026-07-08T23:41:15.579137",
     "raw_count": 5,
     "kept_count": 4,
@@ -8718,5 +8673,43 @@
       }
     ],
     "summary": "Mix parfait entre le hype Mistral, la sagesse qu\u00e9b\u00e9coise de Duffie et Gagnon, et l'approche visuelle de Dhombres. Z\u00e9ro vendeur de r\u00eave."
+  },
+  {
+    "ts": "2026-07-29T05:30:37.714875",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LeoLarivi\u00e8re",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Ancien de Coinhouse maintenant aux US, il mixe l'analyse on-chain avec la macro US, twitte en FR pour les francos expats."
+      },
+      {
+        "handle": "AlainDumasFR",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "V\u00e9t\u00e9ran du secteur, ses analyses sur l'immobilier et les obligations en France sont plus solides que la plupart des 'gurus' Instagram."
+      },
+      {
+        "handle": "JulienDeLatour",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Journaliste crypto FR, il a un \u0153il sur les startups et le march\u00e9, twitte assez r\u00e9guli\u00e8rement sans \u00eatre dans la bulle des influenceurs."
+      },
+      {
+        "handle": "PatrickLavoie",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 10000,
+        "reason": "G\u00e9rant de fonds qu\u00e9b\u00e9cois, son feed est une mine d'or sur les march\u00e9s nord-am\u00e9ricains en fran\u00e7ais, z\u00e9ro langue de bois."
+      }
+    ],
+    "summary": "J'ai fouill\u00e9 les listes 'top crypto FR' et les profils des startups IA fran\u00e7aises. Le paysage FR crypto est domin\u00e9 par des acteurs 'institutionnels' (Coinhouse, Paris Blockchain) qui sont plus fiables que les influenceurs trading. Au Qu\u00e9bec, la sc\u00e8ne est plus petite mais plus nich\u00e9e (finance pure). Aux US, la diaspora FR est invisible sur les recherches g\u00e9n\u00e9riques mais bien presente sur les profils techniques."
   }
 ]
