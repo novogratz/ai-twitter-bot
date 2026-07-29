@@ -1,35 +1,43 @@
 {
-  "generated_at": "2026-07-29T05:29:43.771670",
-  "window_7d_actions": 5354,
-  "window_24h_actions": 892,
+  "generated_at": "2026-07-29T11:49:21.918580",
+  "window_7d_actions": 5341,
+  "window_24h_actions": 913,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5353
+      "count": 5338
     },
     {
       "pattern": "METAPHOR",
+      "count": 2
+    },
+    {
+      "pattern": "EN_ANCHOR",
       "count": 1
     }
   ],
   "worst_patterns": [
     {
-      "pattern": "METAPHOR",
+      "pattern": "EN_ANCHOR",
       "count": 1
     },
     {
+      "pattern": "METAPHOR",
+      "count": 2
+    },
+    {
       "pattern": "UNKNOWN",
-      "count": 5353
+      "count": 5338
     }
   ],
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 280
+      "actions": 282
     },
     {
       "hour": 10,
-      "actions": 261
+      "actions": 252
     },
     {
       "hour": 12,
@@ -37,7 +45,7 @@
     },
     {
       "hour": 6,
-      "actions": 242
+      "actions": 243
     },
     {
       "hour": 16,
@@ -47,19 +55,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2464
+      "count": 2490
     },
     {
       "topic": "IA",
-      "count": 2176
+      "count": 2133
     },
     {
       "topic": "Crypto",
-      "count": 522
+      "count": 528
     },
     {
       "topic": "Bourse",
-      "count": 423
+      "count": 425
     },
     {
       "topic": "Spatial",
@@ -70,75 +78,75 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2388
+      "count": 2354
     },
     {
       "pillar": "other",
-      "count": 1457
+      "count": 1458
     },
     {
       "pillar": "market_trauma",
-      "count": 1232
+      "count": 1255
     },
     {
       "pillar": "meme_reaction",
-      "count": 183
+      "count": 178
     },
     {
       "pillar": "reply_bait",
-      "count": 65
+      "count": 66
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 29
+      "count": 30
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 403
+      "count": 404
     },
     {
       "pillar": "other",
-      "count": 230
+      "count": 241
     },
     {
       "pillar": "market_trauma",
-      "count": 220
+      "count": 228
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
+      "count": 22
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
       "count": 7
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
       "posts": 50,
-      "avg_likes": 0.22,
-      "avg_views": 35.7,
+      "avg_likes": 0.2,
+      "avg_views": 36.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 63,
-      "avg_likes": 0.13,
-      "avg_views": 29.0,
+      "avg_likes": 0.14,
+      "avg_views": 28.9,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 80,
-      "avg_likes": 0.09,
-      "avg_views": 32.8,
+      "avg_likes": 0.1,
+      "avg_views": 31.9,
       "low_sample": false
     },
     {
@@ -159,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4700
+      "count": 4689
     },
     {
       "type": "quote",
-      "count": 349
+      "count": 350
     },
     {
       "type": "quote_gif",
-      "count": 154
+      "count": 152
     },
     {
       "type": "post",
@@ -175,7 +183,7 @@
     },
     {
       "type": "hotake",
-      "count": 53
+      "count": 52
     },
     {
       "type": "retweet",
@@ -184,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-29T05:25:00.143314",
-      "text": "CoreWeave's $7B debt stack meets Indian power costs.\n\nthe real story isn't cheap compute, it's rent-seeking on silicon scarcity.",
+      "ts": "2026-07-29T11:47:11.613916",
+      "text": "UIUC presenting at JSM 2026.\nThe real story isn't the demos.\nIt's the $3B/year burn of pharma inefficiency finally meeting the cheapest compute on earth.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-29T05:23:55.957023",
-      "text": "Sleepagotchi’s \"huge\" upside is the only metric that hasn’t crashed.\nweb3 gaming has a 0% retention rate outside of airdrop farmers.\nyou’re not building a game. you’re mining engagement from people who forgot their password.",
+      "ts": "2026-07-29T11:46:54.295167",
+      "text": "Fair, but their FOMO is just lagging on the Nvidia earnings call. You really think the market buys stories or just buys the guidance?",
       "type": "reply"
     },
     {
-      "ts": "2026-07-29T05:20:54.584052",
-      "text": "Xai allocated 200,000 GPUs for a Colossus cluster. that's not a product roadmap, that's a mortgage on AGI.",
+      "ts": "2026-07-29T11:46:20.383843",
+      "text": "$NQ at 27559. sellers are liquidating on stop hunts, not fatigue.\n\nthis isn't a shift. it's a liquidity grab before the next trap.",
       "type": "reply"
     }
   ]

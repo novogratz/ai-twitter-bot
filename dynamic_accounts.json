@@ -961,7 +961,17 @@
     "VincentGagnon",
     "AlainDumasFR",
     "JulienDeLatour",
-    "PatrickLavoie"
+    "PatrickLavoie",
+    "LudoTz",
+    "ThibautDez",
+    "RomainBontems",
+    "NicolasLeclercq",
+    "AntoineBouchard",
+    "MathieuTillet",
+    "PierreDion",
+    "MaximeCathala",
+    "VincentDussault",
+    "OlivierTasse"
   ],
   "en": [
     "Chubby",
@@ -7400,6 +7410,56 @@
     {
       "lang": "en",
       "handle": "SoFi",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoTz",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautDez",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBontems",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasLeclercq",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineBouchard",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuTillet",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDion",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCathala",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDussault",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierTasse",
       "added": "2026-07-29"
     }
   ]
