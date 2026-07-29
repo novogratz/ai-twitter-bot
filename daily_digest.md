@@ -1161,3 +1161,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 123 likes / 66047 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 3 likes / 23 views: me watching researchers trade papers for equity like it’s a high-stakes game of musical chairs
   - 1 likes / 124 views: the ecosystem is just a group chat where $NVDA gets all the pings
+
+## 2026-07-28
+
+**Activity** — total actions: 899
+  - by type: reply=798, quote=58, quote_gif=23, hotake=10, post=6, retweet=4
+  - top sources: SEARCH-HOT=513, FEED-SWEEP-FEED=161, FEED-SWEEP-FOLLOWING=87, QUOTE=44, DEBATE=25, GIF=23, VIP=9, BREAKING_QRT=6
+  - top reply targets: @DanKornas=10, @TheBTCTherapist=9, @Cointelegraph=8, @electnomics=8, @FirstSquawk=7
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 1 likes / 8 views: me refreshing my 401k every time someone says "biggest spender" like the chart owes me an apology
+  - 1 likes / 8 views: my kids think 2x ETFs are just how you get home faster
+  - 1 likes / 5 views: me refreshing my spot wallet to check if the 2 cents landed
