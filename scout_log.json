@@ -1,116 +1,5 @@
 [
   {
-    "ts": "2026-07-09T06:01:54.664124",
-    "raw_count": 6,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "0xMaki",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 250000,
-        "reason": "Le roi de l'altseason, analyse on-chain pure, twitte en FR/EN, pas de pub, juste du alpha brut."
-      },
-      {
-        "handle": "MaximeMeyrieux",
-        "region": "france",
-        "niche": "tech",
-        "followers": 90000,
-        "reason": "CTO de La French Tech, parle code et architecture avec le ton d\u00e9cal\u00e9 qui fait mouche partout."
-      },
-      {
-        "handle": "SylvainLaurens",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 50000,
-        "reason": "L'actionnaire bon p\u00e8re de famille, analyses fondamentales claires, pas de hype, juste des bilans."
-      },
-      {
-        "handle": "HugoDin",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 40000,
-        "reason": "L'intellectuel du web francophone, couvre IA, SaaS et tendances tech avec humour et profondeur."
-      },
-      {
-        "handle": "MistaMouf",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "G\u00e9nie du prompt engineering IA, vulgarise sans condescendre, communaut\u00e9 ultra r\u00e9active."
-      },
-      {
-        "handle": "NathalieMougeot",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "La voix des femmes en fintech, insights VC pr\u00e9cis, r\u00e9seaux solides, ton direct."
-      }
-    ],
-    "summary": "Un mix solide entre l'IA pratique (MistaMouf), le crypto on-chain (0xMaki) et la bourse fondamentale (Meyrieux/Mougeot). La sc\u00e8ne qu\u00e9b\u00e9coise est plus rare en pur finance, donc on appuie sur le g\u00e9n\u00e9raliste tech (HugoDin)."
-  },
-  {
-    "ts": "2026-07-09T08:02:29.838595",
-    "raw_count": 7,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BaptisteD",
-        "region": "france",
-        "niche": "tech",
-        "followers": 55000,
-        "reason": "CEO de Brevo (Sendinblue). L'un des rares founders FR \u00e0 avoir de l'impact sur la SaaS Europe. Vibe founder authentique, pas de 'signaux VIP'."
-      },
-      {
-        "handle": "ArthurM",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Co-fondateur de Mistral AI. Le mec qui a fait exploser le LLM fran\u00e7ais en Europe. Twitte en FR, direct au but, z\u00e9ro blabla marketing."
-      },
-      {
-        "handle": "ElianeP",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 41000,
-        "reason": "Directrice des \u00c9tudes chez Banques Populaires CIB. Elle balance les insights institutionnels les plus pointus du march\u00e9 FR. La r\u00e9f\u00e9rence macro."
-      },
-      {
-        "handle": "LiliumF",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 38000,
-        "reason": "Fondateur de Qonto. Parle business, SaaS et fintech en FR. Une p\u00e9pite de fondamentaliste tech qui n'est pas un 'guru' crypto."
-      },
-      {
-        "handle": "JulienB",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Crypto analyste QC qui balance des charts et de la macro sans verser dans le 'moonboy'. Le genre de mec qu'on tague pour comprendre un cycle bear."
-      },
-      {
-        "handle": "MaximeB",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Tech Lead bas\u00e9 \u00e0 SF, mais twitte en FR. Couvre l'IA appliqu\u00e9 et le trading algo. Le profil hybride parfait entre codeurs et traders."
-      },
-      {
-        "handle": "ValentinD",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Analyste actions FR sur X. D\u00e9cortique les bilans et la strat\u00e9gie corporate. Pas de hype, juste du business reading sec et efficace."
-      }
-    ],
-    "summary": "Un mix solide entre les leaders de la tech/AI fran\u00e7aise (Mistral, Qonto) et des analystes financiers institutionnels ou crypto de niche. Z\u00e9ro influenceur qui te vend un webinar \u00e0 49\u20ac."
-  },
-  {
     "ts": "2026-07-09T09:41:27.569964",
     "raw_count": 8,
     "kept_count": 6,
@@ -8753,5 +8642,88 @@
       }
     ],
     "summary": "Mix solide IA/Bourse FR + le indispensable MilkRoad US. Z\u00e9ro formateur, juste de l'info."
+  },
+  {
+    "ts": "2026-07-29T15:50:00.261576",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Lilicoin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le seul streamer crypto FR qui parle encore aux humains sans vendre de signal. Vieux briscard, twitte en FR."
+      },
+      {
+        "handle": "MaximeDg",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le trader de retour. Il twitte en FR, analyse le march\u00e9 quotidien, pas de Telegram VIP."
+      },
+      {
+        "handle": "Sylvestrer",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Journaliste IA chez Numerama. Il reste pertinent, pas dans le buzz, mais dans les faits. Un classique FR."
+      },
+      {
+        "handle": "TheCryptocowboy",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "L'\u00e9nergie pure du trading crypto. Qu\u00e9bec, twitte en FR, pas de vente de cours."
+      },
+      {
+        "handle": "PascalPardigon",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "L'expert actionnariat fran\u00e7ais. Moins sexy que les gars des CAC40, mais il a la v\u00e9rit\u00e9 sur les entreprises."
+      }
+    ],
+    "summary": "6 profils solides, z\u00e9ro vendeur de r\u00eave. Une dose \u00e9quilibr\u00e9e entre le s\u00e9rieux financier et la culture crypto FR/QC."
+  },
+  {
+    "ts": "2026-07-29T17:50:03.481151",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeHeintz",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "L'ex-Polytechnicien qui a fait de Crypto.fr un media incontournable. Il balance des threads tech/crypto sans jargon pourri."
+      },
+      {
+        "handle": "BenjaminPerrin",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Pote de @TheAIShrink, il couvre la fintech et la deeptech avec une pr\u00e9cision d'horloger. Twitte en FR, vit en FR."
+      },
+      {
+        "handle": "HuguesMerlet",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Fondateur de Investir, le blog de r\u00e9f\u00e9rence pour les particuliers. Il balance des analyses macro et actions sans vendre de la soupe."
+      },
+      {
+        "handle": "JeanFilion",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Qu\u00e9b\u00e9cois expatri\u00e9 \u00e0 NYC. Il couvre le march\u00e9 crypto US avec un regard francophone aiguis\u00e9. Pas de formations, du pur march\u00e9."
+      }
+    ],
+    "summary": "L'IA fran\u00e7aise s'invite enfin en t\u00eate de liste avec Mistral, tandis que la crypto FR reste domin\u00e9e par des m\u00e9dias s\u00e9rieux. Le Qu\u00e9bec et la diaspora US apportent cette touche trading plus brute."
   }
 ]

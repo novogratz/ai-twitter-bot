@@ -982,7 +982,16 @@
     "ConsenSys",
     "Finviz",
     "Investir",
-    "BourseDirect"
+    "BourseDirect",
+    "Lilicoin",
+    "MaximeDg",
+    "Sylvestrer",
+    "TheCryptocowboy",
+    "PascalPardigon",
+    "MaximeHeintz",
+    "BenjaminPerrin",
+    "HuguesMerlet",
+    "JeanFilion"
   ],
   "en": [
     "Chubby",
@@ -1255,7 +1264,9 @@
     "TONY",
     "Caesar",
     "Astraia",
-    "SoFi"
+    "SoFi",
+    "bankrbot",
+    "Kyle"
   ],
   "history": [
     {
@@ -7526,6 +7537,61 @@
     {
       "lang": "fr",
       "handle": "BourseDirect",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "en",
+      "handle": "bankrbot",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lilicoin",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDg",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Sylvestrer",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheCryptocowboy",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "PascalPardigon",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "en",
+      "handle": "Kyle",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeHeintz",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminPerrin",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "HuguesMerlet",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanFilion",
       "added": "2026-07-29"
     }
   ]
