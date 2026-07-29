@@ -950,7 +950,15 @@
     "MickaelBonnin",
     "JulesSanguinet",
     "MathisBoucard",
-    "JuliePoulin"
+    "JuliePoulin",
+    "MathieuTravade",
+    "GautierVdV",
+    "ThibaultCaz",
+    "AlexDionne_",
+    "AlexDionne",
+    "JulienDhombres",
+    "OlivierD",
+    "VincentGagnon"
   ],
   "en": [
     "Chubby",
@@ -1218,7 +1226,9 @@
     "strictrope",
     "Autopilot",
     "Grok",
-    "ryan"
+    "ryan",
+    "NotKennyRogers",
+    "TONY"
   ],
   "history": [
     {
@@ -7305,6 +7315,56 @@
       "lang": "fr",
       "handle": "JuliePoulin",
       "added": "2026-07-28"
+    },
+    {
+      "lang": "en",
+      "handle": "NotKennyRogers",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuTravade",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "GautierVdV",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultCaz",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexDionne_",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexDionne",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "en",
+      "handle": "TONY",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDhombres",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierD",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentGagnon",
+      "added": "2026-07-29"
     }
   ]
 }

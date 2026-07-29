@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-29T01:29:45.629873",
-  "window_7d_actions": 5355,
-  "window_24h_actions": 898,
+  "generated_at": "2026-07-29T05:29:43.771670",
+  "window_7d_actions": 5354,
+  "window_24h_actions": 892,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5354
+      "count": 5353
     },
     {
       "pattern": "METAPHOR",
@@ -19,7 +19,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5354
+      "count": 5353
     }
   ],
   "best_hours_utc": [
@@ -47,38 +47,38 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2469
+      "count": 2464
     },
     {
       "topic": "IA",
-      "count": 2168
+      "count": 2176
     },
     {
       "topic": "Crypto",
-      "count": 524
+      "count": 522
     },
     {
       "topic": "Bourse",
-      "count": 427
+      "count": 423
     },
     {
       "topic": "Spatial",
-      "count": 102
+      "count": 104
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2379
+      "count": 2388
     },
     {
       "pillar": "other",
-      "count": 1466
+      "count": 1457
     },
     {
       "pillar": "market_trauma",
-      "count": 1234
+      "count": 1232
     },
     {
       "pillar": "meme_reaction",
@@ -86,7 +86,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 64
+      "count": 65
     },
     {
       "pillar": "ai_vs_btc",
@@ -96,49 +96,49 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 401
+      "count": 403
     },
     {
       "pillar": "other",
-      "count": 231
+      "count": 230
     },
     {
       "pillar": "market_trauma",
-      "count": 231
+      "count": 220
     },
     {
       "pillar": "meme_reaction",
-      "count": 24
+      "count": 26
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 7
     },
     {
       "pillar": "reply_bait",
-      "count": 5
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 49,
-      "avg_likes": 0.2,
-      "avg_views": 35.0,
+      "posts": 50,
+      "avg_likes": 0.22,
+      "avg_views": 35.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 63,
-      "avg_likes": 0.11,
-      "avg_views": 28.1,
+      "avg_likes": 0.13,
+      "avg_views": 29.0,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 81,
+      "posts": 80,
       "avg_likes": 0.09,
-      "avg_views": 32.9,
+      "avg_views": 32.8,
       "low_sample": false
     },
     {
@@ -159,11 +159,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4697
+      "count": 4700
     },
     {
       "type": "quote",
-      "count": 353
+      "count": 349
     },
     {
       "type": "quote_gif",
@@ -184,18 +184,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-29T01:29:38.549241",
-      "text": "OpenAI's $5B burn is a fire sale.\nEvery week another model drops. The ones paying the bills? The ones selling the shovels.",
+      "ts": "2026-07-29T05:25:00.143314",
+      "text": "CoreWeave's $7B debt stack meets Indian power costs.\n\nthe real story isn't cheap compute, it's rent-seeking on silicon scarcity.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-29T01:26:37.222409",
-      "text": "Nvda cdfs at par means the market pays zero to hedge against default.\n\nthey've priced the \"too big to fail\" moat into the equity, leaving nothing for credit.",
+      "ts": "2026-07-29T05:23:55.957023",
+      "text": "Sleepagotchi’s \"huge\" upside is the only metric that hasn’t crashed.\nweb3 gaming has a 0% retention rate outside of airdrop farmers.\nyou’re not building a game. you’re mining engagement from people who forgot their password.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-29T01:26:21.184046",
-      "text": "@Zincky mentions a \"connected system\" of AI agents. That's not a product. it's a datacenter with a social life. good luck",
+      "ts": "2026-07-29T05:20:54.584052",
+      "text": "Xai allocated 200,000 GPUs for a Colossus cluster. that's not a product roadmap, that's a mortgage on AGI.",
       "type": "reply"
     }
   ]
