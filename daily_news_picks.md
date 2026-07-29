@@ -16576,3 +16576,26 @@ and the 2nd which still survives on the free ch
 - **@pitdesi** (224 likes, score 8/10) — Dario says Anthropic has never advocated for banning open-weight models... They didn’t sign the letter because the letter claimed open weights generally improve safety, by making safeguards easier to
   - https://x.com/pitdesi/status/2081898767733977184
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 264).
+
+## 2026-07-29
+- **@xaif_crypto** (127 likes, score 9/10) — BREAKING:   Clear Creek Financial Management disclosed a Bitwise $XRP ETF position 11,621 shares valued at $135,501, as of the June 30 reporting period.
+  - https://x.com/Xaif_Crypto/status/2082068482502578376
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 143).
+- **@ananth7e** (119 likes, score 9/10) — SCOOP: GPT-5.7 details
+
+- since GPT-6 is delayed to september openai is releasing a new model in the meantime, targeting an august launch. 
+built on a new pre-training foundation, rumored ~10T-scale t
+  - https://x.com/Ananth7e/status/2082288586595139667
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 135).
+- **@martiniguyyt** (17 likes, score 8/10) — Bitcoin is sitting at a very important level right now.
+
+$64,000 is the battleground.
+
+This level has acted as both support and resistance recently, and the next move likely depends on what happens he
+  - https://x.com/MartiniGuyYT/status/2082300882692215195
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 33).
+- **@thsottiaux** (1755 likes, score 8/10) — Hello people of Sol! I've reset usage limits for all ChatGPT Work and Codex users. Together with that, a quick update on GPT-5.6 Sol usage limits.
+
+Over the past few weeks, many of you have told us th
+  - https://x.com/thsottiaux/status/2082317452755751098
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 2675).
