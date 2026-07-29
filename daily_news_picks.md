@@ -16599,3 +16599,15 @@ This level has acted as both support and resistance recently, and the next move 
 Over the past few weeks, many of you have told us th
   - https://x.com/thsottiaux/status/2082317452755751098
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 2675).
+- **@ashcrypto** (184 likes, score 9/10) — BREAKING :  BlackRock ETF has sold $54,800,000 worth of Bitcoin.
+  - https://x.com/AshCrypto/status/2082325596508725460
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 316).
+- **@eyewhales** (15 likes, score 8/10) — BREAKING:  BlackRock’s Bitcoin ETF dumps $54.8 million worth of BTC.
+  - https://x.com/EyeWhales/status/2082326413231923636
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 25).
+- **@aiwithiqra** (74 likes, score 9/10) — BREAKING: Claude Opus 5 can help you build a profitable app—for free.
+
+No coding experience required.
+Here are 8 prompts to launch your first app.
+  - https://x.com/AiWithIqra/status/2082273512698568730
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 108).
