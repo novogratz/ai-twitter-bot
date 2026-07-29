@@ -1231,7 +1231,10 @@
     "Grok",
     "ryan",
     "NotKennyRogers",
-    "TONY"
+    "TONY",
+    "Caesar",
+    "Astraia",
+    "SoFi"
   ],
   "history": [
     {
@@ -7382,6 +7385,21 @@
     {
       "lang": "fr",
       "handle": "PatrickLavoie",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "en",
+      "handle": "Caesar",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "en",
+      "handle": "Astraia",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "en",
+      "handle": "SoFi",
       "added": "2026-07-29"
     }
   ]

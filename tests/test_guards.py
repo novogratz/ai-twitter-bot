@@ -3443,3 +3443,25 @@ def test_startup_warmup_has_wall_clock_budget():
         block = src[src.index(marker) - 400:src.index(marker)]
         assert "_warmup_over_budget()" in block, \
             f"loop containing {marker!r} must check the budget per iteration"
+
+
+def test_violence_cruelty_gate_blocks_at_every_surface():
+    """2026-07-29 — SHIPPED LIVE: 'Killing the right terrorist = higher ROI
+    on every contract' as a PLTR reply (2026-07-28 15:29, uncensored local
+    reply model; the persona's never-cruel rule is prompt-level only). The
+    chokepoint must refuse violence/cruelty content on EVERY surface —
+    replies included — while common idioms (killer app, made a killing,
+    AI killed my job) still pass."""
+    from src.content_guard import validate
+    live_leak = ("Palantir was built for pattern recognition. Killing the "
+                 "right terrorist = higher ROI on every contract.")
+    for kind in ("original", "quote", "reply"):
+        ok, why = validate(live_leak, kind=kind)
+        assert not ok and "violence" in why, f"{kind} must refuse the live leak"
+    ok, _ = validate("drone strikes are basically a subscription business", kind="reply")
+    assert not ok, "monetized-violence framing must be refused"
+    for benign in ("AI didn't kill your job. It took Kevin's job.",
+                   "made a killing on NVDA earnings today",
+                   "this is the killer app for AI agents"):
+        ok, why = validate(benign, kind="reply")
+        assert ok, f"idiom must pass: {benign!r} ({why})"
