@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-07-09T02:00:12.267440",
-    "raw_count": 9,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoMason",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "Le mec qui a transform\u00e9 les charts en BD, twitte en FR, z\u00e9ro guru-shisme, juste du sens et du fun."
-      },
-      {
-        "handle": "RomainDervaux",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 45000,
-        "reason": "Ex-MyCashFlow, aujourd'hui fondamental sur la fintech, twitte en FR, format court qui claque."
-      },
-      {
-        "handle": "MathieuDufour",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "Ex-Sycomore, aujourd'hui ind\u00e9pendant, analyse macro/actu quotidienne, ton direct sans jargon lourd."
-      },
-      {
-        "handle": "AlexisGirard",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "L'info tech \u00e0 la minute, twitte en FR, coverage hardware/startups, pas de pubs int\u00e9gr\u00e9es payantes."
-      },
-      {
-        "handle": "MaxwellOConnell",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Anglophone mais twitte en FR sur l'IA et les startups, ex-fondateur, regard ext\u00e9rieur frais sur la sc\u00e8ne FR/US."
-      },
-      {
-        "handle": "ReneeGagnon",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "La r\u00e9f\u00e9rence crypto au Qu\u00e9bec, anglais/FR, coverage de la blockchain nord-am\u00e9ricaine avec perspective locale."
-      },
-      {
-        "handle": "LouisVachon",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 10000,
-        "reason": "Ex-CEO startup, aujourd'hui investisseur/premier tweeteur, focus AI/Soft, ton qu\u00e9b\u00e9cois sans \u00eatre folklorique."
-      }
-    ],
-    "summary": "Un mix solide de journalistes de terrain et d'anciens pros qui ont cass\u00e9 le syndrome de l'imposteur pour twitte. Le Qu\u00e9bec se rajeunit avec des profils tech/crypto plus techniques que les influenceurs traditionnels."
-  },
-  {
-    "ts": "2026-07-09T03:46:18.908856",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "cryptohopper_fr",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "Le v\u00e9t\u00e9ran qui a surv\u00e9cu \u00e0 tous les bear markets sans vendre de signal \u00e0 97\u20ac le mois."
-      },
-      {
-        "handle": "remibensaid",
-        "region": "france",
-        "niche": "tech",
-        "followers": 42000,
-        "reason": "Ex-CTO OVH, il twitte la tech pure avec la gueule de quelqu'un qui a vu son serveur exploser en direct."
-      },
-      {
-        "handle": "maxime_lemay",
-        "region": "quebec",
-        "niche": "ia",
-        "followers": 28000,
-        "reason": "Founders qu\u00e9b\u00e9cois en IA qui parle code et business, pas juste du 'prompt engineering' pour mamans."
-      },
-      {
-        "handle": "louis_boulay",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Le gars qui d\u00e9cortique les carnets d'ordres de la Bourse de Montr\u00e9al sans vendre de 'guru' status."
-      },
-      {
-        "handle": "thomas_turq",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "L\u2019entrepreneur SaaS qui explique la fintech sans le jargon VC qui fait mal aux yeux."
-      }
-    ],
-    "summary": "Un mix solide de techniciens qui codent encore et d'investisseurs qui n'ont pas besoin de crier pour \u00eatre entendus. Z\u00e9ro formation \u00e0 2k\u20ac."
-  },
-  {
     "ts": "2026-07-09T06:01:54.664124",
     "raw_count": 6,
     "kept_count": 6,
@@ -8753,5 +8649,109 @@
       }
     ],
     "summary": "Un mix de v\u00e9t\u00e9rans comme Thibaut Delez pour la macro et Ludo Tillet pour l'IA, compl\u00e9t\u00e9 par les p\u00e9pites qu\u00e9b\u00e9coises comme Antoine Bouchard qui assurent la couverture crypto hors hexagone."
+  },
+  {
+    "ts": "2026-07-29T11:50:30.874650",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "R0B_Satoshi",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 205000,
+        "reason": "Le roi du franglais financier. Il explique la macro crypto comme un mec qui vous explique comment sa femme l'a quitt\u00e9e : avec trop de d\u00e9tails et un peu de cynisme."
+      },
+      {
+        "handle": "SarkisSalibian",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Le mec qui a vu venir tout et son contraire. Il twitte en anglais avec des touches de fran\u00e7ais, comme un chef \u00e9toil\u00e9 qui vous dit que la sauce a rat\u00e9 mais que c'est bon quand m\u00eame."
+      },
+      {
+        "handle": "BourgeoisAdrien",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Le type qui transforme 'J'ai boss\u00e9 sur un script Python' en carri\u00e8re internationale. Il prouve qu'on peut \u00eatre fran\u00e7ais et avoir un accent 'Silicon Valley' tout en restant cultiv\u00e9."
+      },
+      {
+        "handle": "LefebvreMaxime",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 15000,
+        "reason": "Le prof qu\u00e9b\u00e9cois qui rend la bourse digestible sans \u00eatre fade. Il a le don de faire croire aux n\u00e9ophytes qu'ils comprennent le march\u00e9 alors qu'ils font juste du 'feel-good investing'."
+      }
+    ],
+    "summary": "Un mix parfait entre la rigueur technique fran\u00e7aise, l'humour d\u00e9cal\u00e9 qu\u00e9b\u00e9cois et l'ambition US des francophones de l'\u00e9tranger. Pas de vendeurs de r\u00eave \u00e0 997\u20ac, juste des vrais profils qui font avancer le d\u00e9bat."
+  },
+  {
+    "ts": "2026-07-29T13:50:02.542699",
+    "raw_count": 10,
+    "kept_count": 8,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MilkRoad",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 550000,
+        "reason": "Le 'Daily Upside' US. L'indispensable pour la Tech/AI."
+      },
+      {
+        "handle": "Boursorama",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 450000,
+        "reason": "L'info fluide, sans prise de t\u00eate. Le flux d'eau potable."
+      },
+      {
+        "handle": "L'Obs",
+        "region": "france",
+        "niche": "tech",
+        "followers": 300000,
+        "reason": "Le meilleur r\u00e9sum\u00e9 hebdo tech. Moins de clics, plus de sens."
+      },
+      {
+        "handle": "LeDevoir",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 280000,
+        "reason": "La bourse qu\u00e9b\u00e9coise en direct. Plus s\u00e9rieux que Twitter moyenne."
+      },
+      {
+        "handle": "ConsenSys",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 250000,
+        "reason": "M\u00e9tropole Ethereum FR/US. Fondamental sans \u00eatre une pub."
+      },
+      {
+        "handle": "Finviz",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 200000,
+        "reason": "Screener bourse. Le nerf de la guerre data."
+      },
+      {
+        "handle": "Investir",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 150000,
+        "reason": "La r\u00e9f\u00e9rence actionnariat FR. Pour les qui veulent des vrais chiffres."
+      },
+      {
+        "handle": "BourseDirect",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "L'alternative directe \u00e0 Boursorama. Actifs sur les valeurs tech."
+      }
+    ],
+    "summary": "Mix solide IA/Bourse FR + le indispensable MilkRoad US. Z\u00e9ro formateur, juste de l'info."
   }
 ]

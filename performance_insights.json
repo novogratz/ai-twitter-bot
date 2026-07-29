@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-29T11:49:21.918580",
-  "window_7d_actions": 5341,
-  "window_24h_actions": 913,
+  "generated_at": "2026-07-29T15:49:21.903591",
+  "window_7d_actions": 5353,
+  "window_24h_actions": 912,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5338
+      "count": 5350
     },
     {
       "pattern": "METAPHOR",
@@ -27,13 +27,13 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5338
+      "count": 5350
     }
   ],
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 282
+      "actions": 283
     },
     {
       "hour": 10,
@@ -41,7 +41,7 @@
     },
     {
       "hour": 12,
-      "actions": 243
+      "actions": 244
     },
     {
       "hour": 6,
@@ -55,19 +55,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2490
+      "count": 2507
     },
     {
       "topic": "IA",
-      "count": 2133
+      "count": 2134
     },
     {
       "topic": "Crypto",
-      "count": 528
+      "count": 526
     },
     {
       "topic": "Bourse",
-      "count": 425
+      "count": 427
     },
     {
       "topic": "Spatial",
@@ -78,75 +78,75 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2354
+      "count": 2360
     },
     {
       "pillar": "other",
-      "count": 1458
+      "count": 1471
     },
     {
       "pillar": "market_trauma",
-      "count": 1255
+      "count": 1250
     },
     {
       "pillar": "meme_reaction",
-      "count": 178
+      "count": 176
     },
     {
       "pillar": "reply_bait",
-      "count": 66
+      "count": 65
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 30
+      "count": 31
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 404
+      "count": 400
     },
     {
       "pillar": "other",
-      "count": 241
+      "count": 240
     },
     {
       "pillar": "market_trauma",
-      "count": 228
+      "count": 231
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 23
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 50,
-      "avg_likes": 0.2,
-      "avg_views": 36.0,
+      "posts": 52,
+      "avg_likes": 0.19,
+      "avg_views": 33.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 63,
+      "posts": 64,
       "avg_likes": 0.14,
-      "avg_views": 28.9,
+      "avg_views": 29.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 80,
+      "posts": 77,
       "avg_likes": 0.1,
-      "avg_views": 31.9,
+      "avg_views": 30.6,
       "low_sample": false
     },
     {
@@ -167,11 +167,11 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4689
+      "count": 4706
     },
     {
       "type": "quote",
-      "count": 350
+      "count": 346
     },
     {
       "type": "quote_gif",
@@ -179,11 +179,11 @@
     },
     {
       "type": "post",
-      "count": 63
+      "count": 59
     },
     {
       "type": "hotake",
-      "count": 52
+      "count": 55
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-29T11:47:11.613916",
-      "text": "UIUC presenting at JSM 2026.\nThe real story isn't the demos.\nIt's the $3B/year burn of pharma inefficiency finally meeting the cheapest compute on earth.",
+      "ts": "2026-07-29T15:49:10.001539",
+      "text": "Blackjack pays 3:2. the house edge is ~0.5%. you play 500 hands an hour, spend $50k/year in vig, and still lose to the variance.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-29T11:46:54.295167",
-      "text": "Fair, but their FOMO is just lagging on the Nvidia earnings call. You really think the market buys stories or just buys the guidance?",
+      "ts": "2026-07-29T15:47:26.056149",
+      "text": "Trump hosting Jensen and Kirby. The real merger isn't the meeting, it's the regulatory moat. The US finally has a tech lobby that speaks two languages: code and congress.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-29T11:46:20.383843",
-      "text": "$NQ at 27559. sellers are liquidating on stop hunts, not fatigue.\n\nthis isn't a shift. it's a liquidity grab before the next trap.",
+      "ts": "2026-07-29T15:45:26.478538",
+      "text": "The list is 80% hardware and 20% hope. smh and nvda are the engine, the rest are just toll roads on the highway.\nbuy the road or the car, not the toll booth.",
       "type": "reply"
     }
   ]

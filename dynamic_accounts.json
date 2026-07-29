@@ -971,7 +971,18 @@
     "PierreDion",
     "MaximeCathala",
     "VincentDussault",
-    "OlivierTasse"
+    "OlivierTasse",
+    "R0B_Satoshi",
+    "SarkisSalibian",
+    "BourgeoisAdrien",
+    "LefebvreMaxime",
+    "MilkRoad",
+    "Boursorama",
+    "LeDevoir",
+    "ConsenSys",
+    "Finviz",
+    "Investir",
+    "BourseDirect"
   ],
   "en": [
     "Chubby",
@@ -7460,6 +7471,61 @@
     {
       "lang": "fr",
       "handle": "OlivierTasse",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "R0B_Satoshi",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "SarkisSalibian",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourgeoisAdrien",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "LefebvreMaxime",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MilkRoad",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Boursorama",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "LeDevoir",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "ConsenSys",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Finviz",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Investir",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourseDirect",
       "added": "2026-07-29"
     }
   ]
