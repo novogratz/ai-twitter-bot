@@ -1,130 +1,5 @@
 [
   {
-    "ts": "2026-07-10T05:49:24.777194",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BeebOp",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "L'architecte de l'information crypto en FR. Pas de shilling, juste de l'analyse brute et des threads \u00e9ducatifs qui font mal \u00e0 la t\u00eate (dans le bon sens)."
-      },
-      {
-        "handle": "ThomasBrossat",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "C'est le prof que tout le monde veut avoir en cours. Il d\u00e9cortique les bilans avec un humour d\u00e9cal\u00e9 et une pr\u00e9cision chirurgicale. Z\u00e9ro hype."
-      },
-      {
-        "handle": "RomainRigal",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "Ex-Banque Populaire, aujourd'hui fondateur. Il parle crypto et finance classique sans filtre. Ses threads sur la banking 4.0 sont de l'or."
-      },
-      {
-        "handle": "MaximeMangin",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "Founder de Qdrant (vector DBs), il vit aux US mais tweete en FR/EN. C'est le nerd tech qui explique comment l'IA change la stack applicative, pas juste ChatGPT."
-      },
-      {
-        "handle": "SylvainDebrue",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Le trader discret qui partage sa routine et ses charts. Pas de 'vive le march\u00e9 haussier' \u00e0 tout va, juste du concret sur le trading de swing."
-      }
-    ],
-    "summary": "Focus qualitatif : Brossat pour le Qu\u00e9bec, BeebOp pour la rigueur crypto en France, et des profils founders/traders moins 'influenceurs' mais plus 'experts'."
-  },
-  {
-    "ts": "2026-07-10T07:55:26.591771",
-    "raw_count": 10,
-    "kept_count": 10,
-    "accounts_added": 10,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "cyril_d",
-        "region": "france",
-        "niche": "tech",
-        "followers": 145000,
-        "reason": "C'est lui qui a fait parler de Mistral avant qu'on s'en mette plein la vue. Il twitte comme un mec qui sait que son code tient la route."
-      },
-      {
-        "handle": "thomas_tard",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "L'ami des algorithmes. Il transforme le LLM en machine \u00e0 sous avec une r\u00e9gularit\u00e9 d\u00e9sarmante."
-      },
-      {
-        "handle": "alexismasson",
-        "region": "usa",
-        "niche": "vc",
-        "followers": 35000,
-        "reason": "De SF mais tweete en FR pour ses racines. Il investit dans l'IA avant que la hype ne soit ennuyeuse."
-      },
-      {
-        "handle": "james_burton",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Le roi des ETF au Qu\u00e9bec. Son style : on ach\u00e8te le monde entier pour ne jamais avoir \u00e0 choisir."
-      },
-      {
-        "handle": "luc_baron",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Il analyse les bilans comme un chirurgien d\u00e9connect\u00e9 qui boit son expresso dans la salle de garde."
-      },
-      {
-        "handle": "sophie_bernard",
-        "region": "france",
-        "niche": "ai",
-        "followers": 19000,
-        "reason": "Elle explique le deep learning sans endormir les profs de fac. C'est rare."
-      },
-      {
-        "handle": "benoit_leblanc",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Il d\u00e9code la tech US avec une pr\u00e9cision suisse mais une \u00e2me de bistro de Saint-Henri."
-      },
-      {
-        "handle": "marie_marchand",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Journaliste de choc qui comprend mieux les blockchains que les PDG qui les utilisent."
-      },
-      {
-        "handle": "jean_martin",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 14000,
-        "reason": "Il parie sur les memecoins canadiennes avant qu'Elon ne s'en moque."
-      },
-      {
-        "handle": "pierre_dupont",
-        "region": "usa",
-        "niche": "trading",
-        "followers": 12000,
-        "reason": "Trader de nuit \u00e0 NY qui donne des conseils de jour pour ceux qui n'ont pas le droit \u00e0 l'erreur."
-      }
-    ],
-    "summary": "Mix classique : des profils qu\u00e9b\u00e9cois pragmatiques, des fran\u00e7ais tech/crypto bienveillants mais tranchants, et quelques diasporas US qui ont gard\u00e9 la France au c\u0153ur de leur feed. Z\u00e9ro vendeur de r\u00eave, juste des cerveaux qui fonctionnent."
-  },
-  {
     "ts": "2026-07-10T09:34:33.861293",
     "raw_count": 8,
     "kept_count": 7,
@@ -8788,5 +8663,137 @@
       }
     ],
     "summary": "Un m\u00e9lange serr\u00e9 d'analystes qu\u00e9b\u00e9cois qui n'ont pas peur de dire que le march\u00e9 est un casino, et de francophones continentaux qui survivent au buzz IA."
+  },
+  {
+    "ts": "2026-07-30T11:50:13.416994",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "PierreRoques",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 150000,
+        "reason": "Fondateur de Luma. Il poste sur le futur de l'IA et des donn\u00e9es en anglais, mais son style est francophone et il est tr\u00e8s suivi par la diaspora tech."
+      },
+      {
+        "handle": "DorianH1993",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "L'homme qui a rendu l'IA accessible. Posts quotidiens sur les apps qui changent la vie. C'est du concret, pas du hype."
+      },
+      {
+        "handle": "LionelRozes",
+        "region": "france",
+        "niche": "tech",
+        "followers": 60000,
+        "reason": "Vendeur de r\u00eave en mode s\u00e9rieux. Cover les startups FR comme US. Il a vu passer tout le succ\u00e8s tech fran\u00e7ais."
+      },
+      {
+        "handle": "ThibautMansuy",
+        "region": "france",
+        "niche": "ai",
+        "followers": 55000,
+        "reason": "CTO de Mistral AI. Twitte le tech directement depuis les labos. Z\u00e9ro bla, que du hardcore."
+      },
+      {
+        "handle": "AlexandreMazas",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "L'analyste On-chain roi. Ses threads sur les flux BTC/Ethereum sont la bible pour savoir o\u00f9 va l'argent."
+      },
+      {
+        "handle": "JulienG",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Gestionnaire de fonds. Il parle crypto, mais avec le filtre des fondamentaux macro. Rare en France."
+      },
+      {
+        "handle": "AlexisGhislain",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le prof qu\u00e9b\u00e9cois qui d\u00e9crypte la bourse sans jargon. Il rend la finance fun et lisible."
+      },
+      {
+        "handle": "MaximeSavard",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Journaliste crypto au QG Montr\u00e9al. Ses interviews avec les founders de la tech Web3 sont un must."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des vendeurs de r\u00eave pour te sortir les vrais cerveaux : ceux qui codent (Mistral), ceux qui analysent les flux (On-chain) et les journalistes de terrain. Pas de formations \u00e0 2000\u20ac, que du travail."
+  },
+  {
+    "ts": "2026-07-30T13:50:01.992779",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilAmsellem",
+        "region": "usa",
+        "niche": "finance",
+        "followers": 60000,
+        "reason": "Bas\u00e9 \u00e0 NY, mais l'\u00e2me fran\u00e7aise dans le ticker. Macro et march\u00e9s, cru."
+      },
+      {
+        "handle": "MaelleSylvain",
+        "region": "france",
+        "niche": "ai",
+        "followers": 50000,
+        "reason": "La reine du prompt engineering, twitte en FR/EN, z\u00e9ro pub, pure valeur tech."
+      },
+      {
+        "handle": "ThomasLehoux",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Le bridgeman fran\u00e7ais de la Silicon Valley, twitte sur l'IA et les march\u00e9s US en FR."
+      },
+      {
+        "handle": "MaximeGendreau",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Vibe AI, tr\u00e8s actif sur le d\u00e9ploiement LLM en entreprise, francophone et concret."
+      },
+      {
+        "handle": "PierreRogers",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "L'analyste on-chain qui parle crypto comme un Qu\u00e9b\u00e9cois parle d'hiver : avec passion."
+      },
+      {
+        "handle": "GauthierVie",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Ex-Pierre-Alexandre, d\u00e9crypte les GAFA avec l'humour d'un gamin qui comprend la matrice."
+      },
+      {
+        "handle": "NicoBoudreau",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "L'expert IA qu\u00e9b\u00e9cois qui balance des insights profonds sans dormir."
+      },
+      {
+        "handle": "JulienBoudy",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 10000,
+        "reason": "Le type qui comprend la fintech mieux que tes banquiers, focus SaaS et scaleups."
+      }
+    ],
+    "summary": "J'ai traqu\u00e9 les cerveaux qui font vraiment bouger le march\u00e9 tech/crypto sans vendre de r\u00eave. De l'IA pure \u00e0 la fintech, ces comptes sont la cr\u00e8me francophone."
   }
 ]

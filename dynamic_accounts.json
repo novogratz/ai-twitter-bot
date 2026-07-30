@@ -1029,7 +1029,23 @@
     "FelixGingras",
     "TheBoussy",
     "LionelGosselin",
-    "MaelLeCun"
+    "MaelLeCun",
+    "PierreRoques",
+    "DorianH1993",
+    "LionelRozes",
+    "ThibautMansuy",
+    "AlexandreMazas",
+    "JulienG",
+    "AlexisGhislain",
+    "MaximeSavard",
+    "CyrilAmsellem",
+    "MaelleSylvain",
+    "ThomasLehoux",
+    "MaximeGendreau",
+    "PierreRogers",
+    "GauthierVie",
+    "NicoBoudreau",
+    "JulienBoudy"
   ],
   "en": [
     "Chubby",
@@ -1309,7 +1325,9 @@
     "amit",
     "USDC",
     "Goku",
-    "BrenzGarage"
+    "BrenzGarage",
+    "Glyde",
+    "Abdul"
   ],
   "history": [
     {
@@ -7850,6 +7868,96 @@
     {
       "lang": "fr",
       "handle": "MaelLeCun",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "en",
+      "handle": "Glyde",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRoques",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianH1993",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelRozes",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMansuy",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexandreMazas",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienG",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisGhislain",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSavard",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "en",
+      "handle": "Abdul",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilAmsellem",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelleSylvain",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasLehoux",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeGendreau",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRogers",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "GauthierVie",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicoBoudreau",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBoudy",
       "added": "2026-07-30"
     }
   ]
