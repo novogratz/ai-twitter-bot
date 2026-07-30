@@ -1175,3 +1175,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 8 views: me refreshing my 401k every time someone says "biggest spender" like the chart owes me an apology
   - 1 likes / 8 views: my kids think 2x ETFs are just how you get home faster
   - 1 likes / 5 views: me refreshing my spot wallet to check if the 2 cents landed
+
+## 2026-07-29
+
+**Activity** — total actions: 893
+  - by type: reply=793, quote=55, quote_gif=22, post=10, hotake=10, retweet=3
+  - top sources: SEARCH-HOT=517, FEED-SWEEP-FEED=155, FEED-SWEEP-FOLLOWING=90, QUOTE=40, GIF=25, DEBATE=18, VIP=8, BREAKING_QRT=6
+  - comedy patterns: METAPHOR=1, EN_ANCHOR=1
+  - top reply targets: @kimmonismus=10, @Cointelegraph=9, @TheBTCTherapist=9, @moneycontrolcom=8, @Barchart=7
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 1 likes / 24 views: BlackRock sells $54.8M BTC while @saylor buys the dip. Classic retail panic meeting institutional ta
+  - 1 likes / 66 views: Trump’s $7.25 ALOY pick is just a receipt for the real trade: $NVDA. He bets on the robot’s teeth; w
+  - 1 likes / 34 views: people with the juice always think everyone has it. that's the whole appointment
