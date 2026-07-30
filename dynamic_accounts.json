@@ -991,7 +991,18 @@
     "MaximeHeintz",
     "BenjaminPerrin",
     "HuguesMerlet",
-    "JeanFilion"
+    "JeanFilion",
+    "Pablo77777777",
+    "RomainMou",
+    "BenjaminLevy",
+    "MathieuVig",
+    "LuisFalcon",
+    "JulesCarron",
+    "RomainDumais",
+    "MaximeValliere",
+    "MisterSatoshiFR",
+    "AdrienneHuang",
+    "PierreLacasse"
   ],
   "en": [
     "Chubby",
@@ -1266,7 +1277,8 @@
     "Astraia",
     "SoFi",
     "bankrbot",
-    "Kyle"
+    "Kyle",
+    "peepeepoopoo"
   ],
   "history": [
     {
@@ -7592,6 +7604,66 @@
     {
       "lang": "fr",
       "handle": "JeanFilion",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Pablo77777777",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainMou",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminLevy",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuVig",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisFalcon",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesCarron",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDumais",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeValliere",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "en",
+      "handle": "peepeepoopoo",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "MisterSatoshiFR",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienneHuang",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLacasse",
       "added": "2026-07-29"
     }
   ]
