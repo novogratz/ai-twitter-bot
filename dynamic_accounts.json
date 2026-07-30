@@ -1045,7 +1045,15 @@
     "PierreRogers",
     "GauthierVie",
     "NicoBoudreau",
-    "JulienBoudy"
+    "JulienBoudy",
+    "NicolasColin",
+    "Arnaud_Mouquet",
+    "MaximeCordray",
+    "JulienDutrisac",
+    "BenoitG_10",
+    "RomainH",
+    "BenoitD",
+    "EvanS"
   ],
   "en": [
     "Chubby",
@@ -1327,7 +1335,9 @@
     "Goku",
     "BrenzGarage",
     "Glyde",
-    "Abdul"
+    "Abdul",
+    "MoonPay",
+    "Breaking911"
   ],
   "history": [
     {
@@ -7958,6 +7968,56 @@
     {
       "lang": "fr",
       "handle": "JulienBoudy",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "en",
+      "handle": "MoonPay",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "en",
+      "handle": "Breaking911",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasColin",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "Arnaud_Mouquet",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCordray",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDutrisac",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitG_10",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainH",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitD",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "EvanS",
       "added": "2026-07-30"
     }
   ]

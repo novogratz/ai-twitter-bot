@@ -1,116 +1,5 @@
 [
   {
-    "ts": "2026-07-10T09:34:33.861293",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibaudT",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "Le roi de la tech FR, son fil est une mine d'or pour les investisseurs."
-      },
-      {
-        "handle": "Benoit_Floch",
-        "region": "france",
-        "niche": "ai",
-        "followers": 50000,
-        "reason": "Le pape du prompt engineering en France, twitter plus vite qu'il ne pense."
-      },
-      {
-        "handle": "MarcBoudreau",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 40000,
-        "reason": "Le p\u00e8re de la bourse sur Twitter Qu\u00e9bec, twitter avec plus de 30 ans d'exp\u00e9rience."
-      },
-      {
-        "handle": "Jean-BaptisteD",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Fondatrice de Weights & Biases, twitter l'open source et l'AI de San Francisco."
-      },
-      {
-        "handle": "Ludo26687",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "L'expert hardware crypto le plus pertinent, twitter moins mais plus fort."
-      },
-      {
-        "handle": "MaximeGodefroy",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Tech lead Mistral AI, twitter l'avenir de la France en direct."
-      },
-      {
-        "handle": "EricRenaud",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "Journaliste Tech FR bas\u00e9 \u00e0 SF, twitter les coulisses de la Silicon Valley en fran\u00e7ais."
-      }
-    ],
-    "summary": "M\u00e9lange classique entre les g\u00e9ants fran\u00e7ais de l'AI (Mistral, Benoit Floch) et les experts qu\u00e9b\u00e9cois de la fintech (Finary, Boudreau). La touche 'USA' vient des fran\u00e7ais install\u00e9s sur la c\u00f4te Ouest qui tweetent en fran\u00e7ais."
-  },
-  {
-    "ts": "2026-07-10T11:55:28.278320",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "DariusSedelman",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 165000,
-        "reason": "Le roi de la vulgarisation boursi\u00e8re FR. Il transforme les rapports financiers en blagues qu'on relit 10 fois. Pas de ventes de formules magiques, juste du fond avec une claque d'humour."
-      },
-      {
-        "handle": "NoureddineBoutaib",
-        "region": "france",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "Le pionnier fran\u00e7ais de l'IA g\u00e9n\u00e9rative. Il tweete ses trouvailles tech en temps r\u00e9el, avec ce ton direct qui manque cruellement aux influenceurs SaaS."
-      },
-      {
-        "handle": "AlexisGirardFR",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "Focus Ethereum et DeFi. Son feed est un mix rare entre data crunching et observations sociales dr\u00f4les sur l'\u00e9cosyst\u00e8me."
-      },
-      {
-        "handle": "MathieuFoucault",
-        "region": "france",
-        "niche": "ai",
-        "followers": 32000,
-        "reason": "L'expert Mistral qui explique l'IA sans nous endormir. Il tweete comme un passionn\u00e9, pas comme un commercial qui veut te soutirer du cash pour sa newsletter."
-      },
-      {
-        "handle": "YoussefO",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "La r\u00e9f\u00e9rence trading au Qu\u00e9bec. Il partage sa vie de trader pro (pas de guru) avec un franc-parler qui fait mal aux narcissiques."
-      },
-      {
-        "handle": "RaphaelTanguay",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Analyste crypto QC qui \u00e9vite les shitscoins douteux. Son feed est propre, \u00e9ducatif, et ses threads sur la tokenisation valent de l'or."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que les vrais experts : Darius Sedelman pour la bourse, Mathieu Foucault et Noureddine Boutaib pour l'IA, et les Mason/Girard pour la crypto. Le Qu\u00e9bec est moins bien loti mais Youssef O comble le vide du trading pro francophone."
-  },
-  {
     "ts": "2026-07-10T13:40:36.622193",
     "raw_count": 7,
     "kept_count": 2,
@@ -8795,5 +8684,88 @@
       }
     ],
     "summary": "J'ai traqu\u00e9 les cerveaux qui font vraiment bouger le march\u00e9 tech/crypto sans vendre de r\u00eave. De l'IA pure \u00e0 la fintech, ces comptes sont la cr\u00e8me francophone."
+  },
+  {
+    "ts": "2026-07-30T15:50:00.210678",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NicolasColin",
+        "region": "france",
+        "niche": "tech",
+        "followers": 150000,
+        "reason": "L'historien de la tech qui comprend la finance. Il explique la disruption comme un patron de VC, pas comme un prof en fac."
+      },
+      {
+        "handle": "Arnaud_Mouquet",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "Le baron du capital-risque fran\u00e7ais qui tweete des perles sur les startups. Il est l\u00e0 depuis que Twitter existe, il a vu passer toutes les bulles."
+      },
+      {
+        "handle": "MaximeCordray",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Le roi des tweets techniques qu\u00e9b\u00e9cois. Il d\u00e9monte les IA hype avec des math\u00e9matiques simples. Si il tweete dessus, c'est que c'est bon."
+      },
+      {
+        "handle": "OlivierVandenberghe",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Le gars derri\u00e8re AI News qui couvre l'US depuis la diaspora FR. Il a l'info avant les m\u00e9dias, son feed est une mine d'or sur les mod\u00e8les open source."
+      },
+      {
+        "handle": "JulienDutrisac",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "L'analyste crypto QC qui survit aux bear markets. Il balance des setups sans se la raconter, c'est rare au Qu\u00e9bec."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des vendeurs de r\u00eaves pour ne garder que les cerveaux qui font bouger les lignes. De Mistral \u00e0 Colin, ce sont des comptes qu'on lit pour apprendre, pas pour dormir."
+  },
+  {
+    "ts": "2026-07-30T17:50:05.527045",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BenoitG_10",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Le roi de la d\u00e9contraction financi\u00e8re \u00e0 la fran\u00e7aise. Il prouve qu'on peut \u00eatre pro (ex-Immobili\u00e8re de Saint-Paul) sans avoir le syndrome du prof de maths. M\u00e8me machine, Z-score quotidien."
+      },
+      {
+        "handle": "RomainH",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 33000,
+        "reason": "Fintech VC bas\u00e9 \u00e0 NY mais qui parle le fran\u00e7ais des affaires. Il balance des insights sur la lev\u00e9e de fonds et le SaaS fr qui fait le job sans les chichis de la Valley."
+      },
+      {
+        "handle": "BenoitD",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "CTO de 100Labs. Il twitte la tech avec la candeur d\u2019un ing\u00e9nieur qui vient de d\u00e9couvrir que les prompts co\u00fbtent plus cher que l\u2019eau min\u00e9rale. Pure, sans filtre 'growth hacking'."
+      },
+      {
+        "handle": "EvanS",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 21000,
+        "reason": "Le gars qui fait parler de lui \u00e0 la t\u00eate de l'AI Lab d'Hydrow. Il twitte en anglais mais ses threads IA francophones (ou ses apparitions chez les francos) sont les seules infos 'real tech' \u00e0 Montr\u00e9al."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui construisent ou analysent vraiment. De Beno\u00eet G au top des m\u00e8mes boursiers \u00e0 Alex Clemencot sur l'IA agente, on couvre l'excellence technique avec un bon sens de l'humour. Z\u00e9ro vente de r\u00eave, 100% contenu."
   }
 ]
