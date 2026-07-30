@@ -1,123 +1,5 @@
 [
   {
-    "ts": "2026-07-10T01:34:30.937444",
-    "raw_count": 8,
-    "kept_count": 7,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RomainMialoundama",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 140000,
-        "reason": "Le roi de la vulgarisation crypto. Il parle \u00e0 sa m\u00e8re tout en expliquant la DeFi."
-      },
-      {
-        "handle": "Bisou2121",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 110000,
-        "reason": "L'ironie fran\u00e7aise appliqu\u00e9e \u00e0 la blockchain. Moins 'finster' que les autres, plus fun."
-      },
-      {
-        "handle": "DimitriD",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "Ancien de Coinhouse, il couvre l'infra crypto FR avec des infos de qualit\u00e9 pro."
-      },
-      {
-        "handle": "LefebvreAlexandre",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "La voix francophone \u00e0 NY. Couvre les march\u00e9s US et la finance d\u00e9centralis\u00e9e depuis l'ext\u00e9rieur."
-      },
-      {
-        "handle": "Sylvain_Levy",
-        "region": "france",
-        "niche": "tech",
-        "followers": 28000,
-        "reason": "Le patron de Doctolib qui pousse sur l'IA sant\u00e9. Plus pertinent qu'un trader qui crie sur Bitcoin."
-      },
-      {
-        "handle": "JulieDoyon",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "L'IA \u00e9thique et appliqu\u00e9 au Qu\u00e9bec. Elle poste des insights rares sur le d\u00e9ploiement IA."
-      },
-      {
-        "handle": "ValentinRioux",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Le tech leader qu\u00e9b\u00e9cois qui fait passer l'IA dans la t\u00eate des gens sans les endormir."
-      }
-    ],
-    "summary": "Je laisse tomber les vendeurs de r\u00eave et je file les cerveaux qui font bouger la France et le Qu\u00e9bec tech. Mistral et Doctolib prouvent qu'on peut coder sans \u00eatre un nain de jardinage crypto."
-  },
-  {
-    "ts": "2026-07-10T03:51:36.162957",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Lionel1879",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "C\u00e9dric Lesecq. Le gars de 'Bons Plaisirs'. Il ne fait pas dans la hype, il fait dans la data pure et dure sur les actions europ\u00e9ennes. Si tu cherches un investisseur pas un influenceur, c'est lui."
-      },
-      {
-        "handle": "Jean-PhilippeBrassard",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 42000,
-        "reason": "Expert IA qu\u00e9b\u00e9cois. Il parle de l'impact de l'IA sur l'\u00e9conomie et les jobs. C'est moins 'trading', plus 'vision strat\u00e9gique'. Parfait pour \u00e9quilibrer le c\u00f4t\u00e9 sp\u00e9culatif de la niche."
-      },
-      {
-        "handle": "GaelFayolle",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 38000,
-        "reason": "Souscripteur \u00e0 La Fabrique de l'Investisseur. Il d\u00e9cortique les strat\u00e9gies de fonds de pension et les grands patrons. Moins 'guru', plus 'institutionnel'. Parfait pour comprendre o\u00f9 va l'argent lourd."
-      },
-      {
-        "handle": "MorganBaudoin",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 31000,
-        "reason": "Cofondateur de Youpiwiz, puis Cofounder of Lucca. Il couvre la Fintech et la SaaS FR avec le recul d'un entrepreneur qui a vendu. Moins de tweets que les influenceurs, mais des insights \u00e0 10x."
-      },
-      {
-        "handle": "JulesMichelet",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "G\u00e9rant chez Gestion Jules. Il fait du value investing \u00e0 la Buffett au Qu\u00e9bec. Son fils Alexandre (Jules Invest) est aussi top, mais Jules reste la r\u00e9f\u00e9rence 'patrimoine solide' francophone."
-      },
-      {
-        "handle": "RomainRocher",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Le 'Bitcoiner' qui explique tout aux d\u00e9butants sans prendre la t\u00eate. Il g\u00e8re Cryptoast (le m\u00e9dia), donc il est \u00e0 la source de l'info. Son style est \u00e9ducatif, punchy et surtout honn\u00eate."
-      },
-      {
-        "handle": "LionelBrossollet",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "G\u00e9rant de fonds \u00e0 NYC, d'origine fran\u00e7aise. Il twitte sur la fusion IA/Bourse/VC US depuis l'\u00e9picentre. Si tu veux comprendre comment Wall Street voit l'IA avant qu'elle n'arrive en France, suis-le."
-      }
-    ],
-    "summary": "J'ai cibl\u00e9 les architectes de Mistral/Scikit-learn pour l'IA, les value investors qui font des donn\u00e9es plut\u00f4t que du bruit, et les pros qu\u00e9b\u00e9cois qui sortent de leur bouilloire. Pas de vendeurs de r\u00eaves, que des makers."
-  },
-  {
     "ts": "2026-07-10T05:49:24.777194",
     "raw_count": 6,
     "kept_count": 5,
@@ -8823,5 +8705,88 @@
       }
     ],
     "summary": "L'IA fran\u00e7aise p\u00e8se lourd (Mistral), la crypto reste domin\u00e9e par les pros historiques (Biscain/Rossel) et le Qu\u00e9bec offre la p\u00e9pite trading de Lahaye."
+  },
+  {
+    "ts": "2026-07-30T07:50:10.734847",
+    "raw_count": 8,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "NathanaelB",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 90000,
+        "reason": "Co-fondateur de Lido Finance. Il twitte en anglais mais avec une \u00e2me fran\u00e7aise (ex-Inria). Ses threads sur le staking et la liquidit\u00e9 sont devenus des r\u00e9f\u00e9rences. Il passe son temps \u00e0 NY mais garde le style FR."
+      },
+      {
+        "handle": "ThomSart",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "La t\u00eate pensante de la tech FR. Il a quitt\u00e9 M6 pour \u00eatre le mec qui explique vraiment comment on va \u00eatre remplac\u00e9 par des LLMs. Pas de formations \u00e0 2000\u20ac, juste du contenu dense."
+      },
+      {
+        "handle": "MaximeBiel",
+        "region": "france",
+        "niche": "ai",
+        "followers": 38000,
+        "reason": "Cofondateur de Qdrant (vector DB). Il twitte sur l'infra derri\u00e8re l'IA avec une pr\u00e9cision chirurgicale. C'est rare de voir un founder technique qui sait vulgariser sans noyer l'audience dans le jargon."
+      },
+      {
+        "handle": "DavidPoirier",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Analyste \u00e0 La Caisse. Il poutine r\u00e9guli\u00e8rement sur les march\u00e9s avec humour. C'est l'un des rares qui m\u00e9lange macro \u00e9conomique et analyse de valeur sans dormir son aud audience."
+      },
+      {
+        "handle": "BenMansfield",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Bas\u00e9 \u00e0 SF, mais fran\u00e7ais. Il poste sur la croissance, les SAAS et l'IA avec un esprit fran\u00e7ais pragmatique. Pas de 'move fast and break things', mais du 'build solid and scale'."
+      },
+      {
+        "handle": "FelixGingras",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Directeur chez Kineo, mais surtout un early adopteur compulsif de l'IA pro. Il montre comment l'utiliser en entreprise sans se prendre pour un guru. Son ton est celui de la pratique, pas de la th\u00e9orie."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 les p\u00e9pites techniques et les analystes s\u00e9rieux pour \u00e9viter les influenceurs 'formation 97\u20ac'. La France domine sur l'IA infrastructurelle (Mistral, Qdrant) tandis que le Qu\u00e9bec apporte une vision bourse/macro moins boursoufl\u00e9e."
+  },
+  {
+    "ts": "2026-07-30T09:50:10.066717",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "TheBoussy",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Ex-CEO d'Ethereum France, il parle crypto comme un patron qui a vu passer 4 cycles et n'a pas encore tout perdu."
+      },
+      {
+        "handle": "LionelGosselin",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Gars de CoinRockets, twitte en FR, m\u00e9lange l'info rapide avec un humour noir qui fait mal aux dents."
+      },
+      {
+        "handle": "MaelLeCun",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Le type qui d\u00e9crypte les papiers arXiv comme d'autres lisent les horaires de RER. Sans se prendre au s\u00e9rieux."
+      }
+    ],
+    "summary": "Un m\u00e9lange serr\u00e9 d'analystes qu\u00e9b\u00e9cois qui n'ont pas peur de dire que le march\u00e9 est un casino, et de francophones continentaux qui survivent au buzz IA."
   }
 ]

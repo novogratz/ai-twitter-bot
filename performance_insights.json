@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-30T07:49:22.693297",
-  "window_7d_actions": 5331,
-  "window_24h_actions": 894,
+  "generated_at": "2026-07-30T11:49:21.988872",
+  "window_7d_actions": 5312,
+  "window_24h_actions": 882,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5329
+      "count": 5310
     },
     {
       "pattern": "METAPHOR",
@@ -27,17 +27,17 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5329
+      "count": 5310
     }
   ],
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 283
+      "actions": 281
     },
     {
       "hour": 10,
-      "actions": 252
+      "actions": 250
     },
     {
       "hour": 16,
@@ -55,11 +55,11 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2463
+      "count": 2459
     },
     {
       "topic": "IA",
-      "count": 2145
+      "count": 2127
     },
     {
       "topic": "Crypto",
@@ -67,48 +67,48 @@
     },
     {
       "topic": "Bourse",
-      "count": 443
+      "count": 444
     },
     {
       "topic": "Spatial",
-      "count": 100
+      "count": 96
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2361
+      "count": 2341
     },
     {
       "pillar": "other",
-      "count": 1455
+      "count": 1450
     },
     {
       "pillar": "market_trauma",
-      "count": 1270
+      "count": 1283
     },
     {
       "pillar": "meme_reaction",
-      "count": 154
+      "count": 144
     },
     {
       "pillar": "reply_bait",
-      "count": 59
+      "count": 63
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 32
+      "count": 31
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 394
+      "count": 391
     },
     {
       "pillar": "market_trauma",
-      "count": 256
+      "count": 249
     },
     {
       "pillar": "other",
@@ -116,14 +116,14 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 15
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 11
     },
     {
       "pillar": "reply_bait",
+      "count": 8
+    },
+    {
+      "pillar": "ai_vs_btc",
       "count": 4
     }
   ],
@@ -137,16 +137,16 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 65,
+      "posts": 66,
       "avg_likes": 0.14,
-      "avg_views": 32.4,
+      "avg_views": 33.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 78,
+      "posts": 77,
       "avg_likes": 0.1,
-      "avg_views": 29.8,
+      "avg_views": 30.1,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4718
+      "count": 4722
     },
     {
       "type": "quote",
-      "count": 334
+      "count": 327
     },
     {
       "type": "quote_gif",
-      "count": 129
+      "count": 123
     },
     {
       "type": "post",
-      "count": 60
+      "count": 54
     },
     {
       "type": "hotake",
-      "count": 54
+      "count": 50
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-30T07:49:06.398357",
-      "text": "Meta’s capex is already peaking. the real story isn’t that they spend less, it’s that their ad margins are wide enough to absorb the bill without blinking.",
+      "ts": "2026-07-30T11:45:53.608106",
+      "text": "Fair. Competition looks pretty on paper, until you read the SEC filing. $16B in cash buys you patience, not just noise. Does Nvidia actually need to compete to win?",
       "type": "reply"
     },
     {
-      "ts": "2026-07-30T07:47:56.236249",
-      "text": "ZEC’s supply is capped at 21 million.\n\n16.8M is 80%.\nThe SEC has spent $3B enforcing compliance on a token that was fully circulating before they filed their first complaint.",
+      "ts": "2026-07-30T11:42:25.418373",
+      "text": "Fair enough. Just remember, at 30% compute share, you're betting on a horse that’s currently busy running the S&P 500. Are you hedging with AMD or going all-in on the Nvidia casino?",
       "type": "reply"
     },
     {
-      "ts": "2026-07-30T07:47:07.152603",
-      "text": "Meta and google burning cash for relevance proves the capex cliff is real. the trade is no longer the builders. it’s the utility companies keeping the lights on.",
+      "ts": "2026-07-30T11:41:09.183737",
+      "text": "Citadel said rates would hike. rates didn’t. citadel said ai would drop. ai doubled.\n\nthe market didn’t miss the signal. it just laughed at the forecast.",
       "type": "reply"
     }
   ]

@@ -1020,7 +1020,16 @@
     "JulienDeRosnay",
     "ThomasLahaye",
     "JulesCoutant",
-    "NathanHediger"
+    "NathanHediger",
+    "NathanaelB",
+    "ThomSart",
+    "MaximeBiel",
+    "DavidPoirier",
+    "BenMansfield",
+    "FelixGingras",
+    "TheBoussy",
+    "LionelGosselin",
+    "MaelLeCun"
   ],
   "en": [
     "Chubby",
@@ -1299,7 +1308,8 @@
     "peepeepoopoo",
     "amit",
     "USDC",
-    "Goku"
+    "Goku",
+    "BrenzGarage"
   ],
   "history": [
     {
@@ -7790,6 +7800,56 @@
     {
       "lang": "fr",
       "handle": "NathanHediger",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanaelB",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomSart",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeBiel",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "DavidPoirier",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenMansfield",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "FelixGingras",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "en",
+      "handle": "BrenzGarage",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheBoussy",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelGosselin",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelLeCun",
       "added": "2026-07-30"
     }
   ]
