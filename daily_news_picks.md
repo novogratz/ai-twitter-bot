@@ -16611,3 +16611,24 @@ No coding experience required.
 Here are 8 prompts to launch your first app.
   - https://x.com/AiWithIqra/status/2082273512698568730
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 108).
+
+## 2026-07-30
+- **@itsolelehmann** (30 likes, score 8/10) — should be obvious by now, but OpenAI and Anthropic are just gonna keep cannibalizing all their biggest customers.
+
+it’s simply too profitable for them to resist. and it’s already happening:
+
+1. Figma
+  - https://x.com/itsolelehmann/status/2082644674981089564
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 42).
+- **@marionawfal** (4 likes, score 7/10) — Wall Street went through some shit.
+
+In a single Fed day the S&P 500 swung through a staggering $2.9 trillion in market value.
+
+Here’s the play-by-play:
+
+Morning: plunged 85 points, vaporizing $770 bi
+  - https://x.com/MarioNawfal/status/2082680855940481076
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 16).
+- **@chetanp** (151 likes, score 8/10) — This implies that OpenAI has potentially caught up with Anthropic in terms of run rate revenue. If so, it will serve as yet another case study in the history of software that platforms that compete wi
+  - https://x.com/chetanp/status/2082645488311079255
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 193).

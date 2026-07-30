@@ -1002,7 +1002,13 @@
     "MaximeValliere",
     "MisterSatoshiFR",
     "AdrienneHuang",
-    "PierreLacasse"
+    "PierreLacasse",
+    "RenaudCraipeau",
+    "0xcrypt0m0nk",
+    "DylanLeGoff",
+    "Mister_Macro",
+    "BenjaminMaurice",
+    "HugoDeR"
   ],
   "en": [
     "Chubby",
@@ -1278,7 +1284,8 @@
     "SoFi",
     "bankrbot",
     "Kyle",
-    "peepeepoopoo"
+    "peepeepoopoo",
+    "amit"
   ],
   "history": [
     {
@@ -7664,6 +7671,41 @@
     {
       "lang": "fr",
       "handle": "PierreLacasse",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "en",
+      "handle": "amit",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudCraipeau",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xcrypt0m0nk",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "DylanLeGoff",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "Mister_Macro",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminMaurice",
+      "added": "2026-07-29"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoDeR",
       "added": "2026-07-29"
     }
   ]

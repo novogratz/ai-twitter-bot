@@ -1,36 +1,5 @@
 [
   {
-    "ts": "2026-07-09T15:41:47.376558",
-    "raw_count": 12,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ArnaudLelong",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "L'incontournable de la Macro. Il a vu la crise de 2008, la bulle tech, et il n'a pas de complexe. Analyse propre, z\u00e9ro bruit."
-      },
-      {
-        "handle": "MaxenceVanDerMeersch",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Le mec de l'IA aux USA qui parle FR. Il couvre l'\u00e9cosyst\u00e8me SF en direct. C'est la passerelle indispensable pour voir ce qui se trame \u00e0 Palo Alto."
-      },
-      {
-        "handle": "MaelKerninon",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "L'expert cloud qu\u00e9b\u00e9cois. Il twitte sur l'infra et l'IA en FR, c'est une p\u00e9pite r\u00e9gionale qu'on sous-estime trop souvent."
-      }
-    ],
-    "summary": "Le lot est propre : pas de vendeurs de r\u00eaves, que des buildeurs et des analysers. On a couvert la France (IA, Macro, Fintech), le Qu\u00e9bec (Tech, Trading) et la diaspora US. Les followers sont solides (>5k) et les comptes actifs. Z\u00e9ro formation \u00e0 999\u20ac en vue."
-  },
-  {
     "ts": "2026-07-09T19:42:27.807912",
     "raw_count": 10,
     "kept_count": 2,
@@ -8760,5 +8729,57 @@
       }
     ],
     "summary": "Cinq comptes solides qui \u00e9vitent le bruit pour le signal. Ils ne te promettent pas la richesse rapide, ils te disent juste o\u00f9 est l'argent, en fran\u00e7ais."
+  },
+  {
+    "ts": "2026-07-29T23:50:02.012170",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RenaudCraipeau",
+        "region": "france",
+        "niche": "tech",
+        "followers": 40000,
+        "reason": "Ancien de L'Express, il d\u00e9crypte la Tech fran\u00e7aise et l'IA sans la vanne habituelle. Un vrai observateur de l'\u00e9cosyst\u00e8me startup/VC."
+      },
+      {
+        "handle": "0xcrypt0m0nk",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Chercheur en titre. Quand il parle DeFi ou Rollups, c'est technique mais accessible. \u00c9vite le trading de scalping pour se concentrer sur l'infra."
+      },
+      {
+        "handle": "DylanLeGoff",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "La r\u00e9f\u00e9rence qu\u00e9b\u00e9coise en crypto. Journaliste pro, pas un 'guru', il couvre les regs et les tech chain. Twitte en FR pur avec une pointe d'accent dans le style."
+      },
+      {
+        "handle": "Mister_Macro",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Pour comprendre pourquoi ton CAC 40 pleure alors que le dollar rit. Il transforme les rapports de la FED en langage humain sans noyer le lecteur sous le jargon."
+      },
+      {
+        "handle": "BenjaminMaurice",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Le trader pro qui avoue ses pertes. Moins de blabla, plus de graphiques r\u00e9els. Parfait pour ceux qui veulent voir le march\u00e9 sans le filtre du marketing."
+      },
+      {
+        "handle": "HugoDeR",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Couvre la fin-tech qu\u00e9b\u00e9coise et internationale. Int\u00e9ressant pour voir comment les banques traditionnelles tentent (souvent mal) de copier les startups."
+      }
+    ],
+    "summary": "Une s\u00e9lection de pros qui twittent en fran\u00e7ais sur l'IA, la crypto et la macro. On laisse tomber les vendeurs de r\u00eaves pour se concentrer sur ceux qui analysent le gras."
   }
 ]
