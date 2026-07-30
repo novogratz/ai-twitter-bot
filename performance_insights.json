@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-07-29T23:49:22.005484",
+  "generated_at": "2026-07-30T03:49:22.074313",
   "window_7d_actions": 5349,
-  "window_24h_actions": 899,
+  "window_24h_actions": 890,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
@@ -55,98 +55,98 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2474
+      "count": 2464
     },
     {
       "topic": "IA",
-      "count": 2157
+      "count": 2162
     },
     {
       "topic": "Crypto",
-      "count": 527
+      "count": 538
     },
     {
       "topic": "Bourse",
-      "count": 440
+      "count": 435
     },
     {
       "topic": "Spatial",
-      "count": 101
+      "count": 104
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2378
+      "count": 2382
     },
     {
       "pillar": "other",
-      "count": 1465
+      "count": 1464
     },
     {
       "pillar": "market_trauma",
-      "count": 1251
+      "count": 1253
     },
     {
       "pillar": "meme_reaction",
-      "count": 163
+      "count": 158
     },
     {
       "pillar": "reply_bait",
-      "count": 62
+      "count": 60
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 30
+      "count": 32
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 408
+      "count": 397
     },
     {
       "pillar": "market_trauma",
-      "count": 238
+      "count": 239
     },
     {
       "pillar": "other",
-      "count": 214
+      "count": 222
     },
     {
       "pillar": "meme_reaction",
-      "count": 25
+      "count": 18
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 7
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 49,
-      "avg_likes": 0.2,
-      "avg_views": 35.7,
+      "posts": 50,
+      "avg_likes": 0.22,
+      "avg_views": 33.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 65,
-      "avg_likes": 0.12,
-      "avg_views": 29.2,
+      "avg_likes": 0.14,
+      "avg_views": 32.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 79,
+      "posts": 78,
       "avg_likes": 0.1,
-      "avg_views": 30.1,
+      "avg_views": 28.6,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4712
+      "count": 4727
     },
     {
       "type": "quote",
-      "count": 349
+      "count": 338
     },
     {
       "type": "quote_gif",
-      "count": 138
+      "count": 133
     },
     {
       "type": "post",
@@ -187,23 +187,23 @@
     },
     {
       "type": "retweet",
-      "count": 35
+      "count": 36
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-29T23:49:00.444890",
-      "text": "Aschenbrenner bought the dip because the 200k GPU cluster isn't a factory, it's a money printer printing IOUs.\n\nThe real story is he's betting the depreciation schedule is slower than the burn rate.",
+      "ts": "2026-07-30T03:49:10.188109",
+      "text": "BE down 46%, SNDK down 55. Aschenbrenner is shorting the legacy codebase. the old internet is just a margin call waiting to happen.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-29T23:46:53.011034",
-      "text": "Leopold Aschenbrenner needs cash. The AI thesis is priced in. VC is selling the story that’s already out of stock.",
+      "ts": "2026-07-30T03:48:36.026635",
+      "text": "Shitcoins are priced on the assumption you are smarter than the guy behind you.\n\nwhen he leaves, you don't find value. you find the exit.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-29T23:46:36.805149",
-      "text": "OpenAI burns $5B/yr to chase a 1980s prompt interface. the trillion dollars in papers is just training data waiting to be compressed into a chat box nobody asked for.",
+      "ts": "2026-07-30T03:48:19.990242",
+      "text": "Santander just bought $12M of BTC. They also run a bank.\n\nThis isn't conviction. It's a $450k annual expense to keep the board from asking why they aren't playing in the AI/crypto space anymore.\n\nThe real story: the SEC allows BTC ETFs but not BTC accounts. Santander just realize",
       "type": "reply"
     }
   ]

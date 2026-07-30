@@ -1,29 +1,5 @@
 [
   {
-    "ts": "2026-07-09T19:42:27.807912",
-    "raw_count": 10,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoDiplomate",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Le Qu\u00e9b\u00e9cois qui g\u00e9re son portfolio avec la m\u00eame d\u00e9gaine que son caf\u00e9: serr\u00e9 mais efficace."
-      },
-      {
-        "handle": "ValentinDartois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "L'expert qui transforme le jargon technique en blagues de resto o\u00f9 personne ne rit vraiment."
-      }
-    ],
-    "summary": "Une s\u00e9lection franche d'experts qui twittent en FR, \u00e9vitent les formations \u00e0 99\u20ac et ont plus de followers que la moyenne des influenceurs LinkedIn. De Mistral AI \u00e0 la sc\u00e8ne crypto qu\u00e9b\u00e9coise, c'est du concret."
-  },
-  {
     "ts": "2026-07-09T21:39:00.460755",
     "raw_count": 7,
     "kept_count": 2,
@@ -8781,5 +8757,50 @@
       }
     ],
     "summary": "Une s\u00e9lection de pros qui twittent en fran\u00e7ais sur l'IA, la crypto et la macro. On laisse tomber les vendeurs de r\u00eaves pour se concentrer sur ceux qui analysent le gras."
+  },
+  {
+    "ts": "2026-07-30T01:50:12.868742",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienPigeolet",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 80000,
+        "reason": "Le p\u00e8re de la 'value investing' FR sur X. Il tweet rarement mais chaque tweet p\u00e8se 3kg. Z\u00e9ro bruit, juste du fond et des positions longues."
+      },
+      {
+        "handle": "NathanParadise0",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "L'indispensable crypto-francophone. Il balance des insights techniques sans vendre du r\u00eave, et ses threads sur l'infra sont souvent meilleures que les newsletters payantes."
+      },
+      {
+        "handle": "MathieuNargeot",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Ex-banker, il d\u00e9crypte les rapports annuels avec un cynisme rafra\u00eechissant. On aime sa lucidit\u00e9 sur les multiples et sa haine sinc\u00e8re des SPACs."
+      },
+      {
+        "handle": "SamiAbdallah1",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 42000,
+        "reason": "Ex-PM chez Anthropic. Il poste en anglais mais ses threads FR sur les mod\u00e8les de langage sont souvent cit\u00e9es par la diaspora. L'analyste le plus coh\u00e9rent du coin."
+      },
+      {
+        "handle": "PierreGaudreault",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 20000,
+        "reason": "La r\u00e9f\u00e9rence DeFi au Qu\u00e9bec. Il couvre les protocoles on-chain avec une pr\u00e9cision chirurgicale et twitte en FR sans accent qui pique aux oreilles."
+      }
+    ],
+    "summary": "Le mix parfait : la rigueur value de Pierre/Mathiou, l'infra AI d'AlexCyr et le terrain crypto de Nathan/Pierre G. Z\u00e9ro formateur \u00e0 999\u20ac, que des cerveaux qui ont cod\u00e9 ou g\u00e9r\u00e9 de l'argent."
   }
 ]

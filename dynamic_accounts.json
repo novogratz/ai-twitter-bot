@@ -1008,7 +1008,11 @@
     "DylanLeGoff",
     "Mister_Macro",
     "BenjaminMaurice",
-    "HugoDeR"
+    "HugoDeR",
+    "JulienPigeolet",
+    "NathanParadise0",
+    "MathieuNargeot",
+    "SamiAbdallah1"
   ],
   "en": [
     "Chubby",
@@ -1285,7 +1289,8 @@
     "bankrbot",
     "Kyle",
     "peepeepoopoo",
-    "amit"
+    "amit",
+    "USDC"
   ],
   "history": [
     {
@@ -7707,6 +7712,31 @@
       "lang": "fr",
       "handle": "HugoDeR",
       "added": "2026-07-29"
+    },
+    {
+      "lang": "en",
+      "handle": "USDC",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienPigeolet",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanParadise0",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuNargeot",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "SamiAbdallah1",
+      "added": "2026-07-30"
     }
   ]
 }
