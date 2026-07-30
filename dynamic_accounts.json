@@ -1012,7 +1012,15 @@
     "JulienPigeolet",
     "NathanParadise0",
     "MathieuNargeot",
-    "SamiAbdallah1"
+    "SamiAbdallah1",
+    "RomainDartigue",
+    "MarcBouchard",
+    "JulienPascal",
+    "MaxBiscain",
+    "JulienDeRosnay",
+    "ThomasLahaye",
+    "JulesCoutant",
+    "NathanHediger"
   ],
   "en": [
     "Chubby",
@@ -1290,7 +1298,8 @@
     "Kyle",
     "peepeepoopoo",
     "amit",
-    "USDC"
+    "USDC",
+    "Goku"
   ],
   "history": [
     {
@@ -7736,6 +7745,51 @@
     {
       "lang": "fr",
       "handle": "SamiAbdallah1",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDartigue",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcBouchard",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienPascal",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "en",
+      "handle": "Goku",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxBiscain",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDeRosnay",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasLahaye",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesCoutant",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanHediger",
       "added": "2026-07-30"
     }
   ]

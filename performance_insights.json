@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-30T03:49:22.074313",
-  "window_7d_actions": 5349,
-  "window_24h_actions": 890,
+  "generated_at": "2026-07-30T07:49:22.693297",
+  "window_7d_actions": 5331,
+  "window_24h_actions": 894,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5346
+      "count": 5329
     },
     {
       "pattern": "METAPHOR",
-      "count": 2
+      "count": 1
     },
     {
       "pattern": "EN_ANCHOR",
@@ -18,16 +18,16 @@
   ],
   "worst_patterns": [
     {
+      "pattern": "METAPHOR",
+      "count": 1
+    },
+    {
       "pattern": "EN_ANCHOR",
       "count": 1
     },
     {
-      "pattern": "METAPHOR",
-      "count": 2
-    },
-    {
       "pattern": "UNKNOWN",
-      "count": 5346
+      "count": 5329
     }
   ],
   "best_hours_utc": [
@@ -49,52 +49,52 @@
     },
     {
       "hour": 6,
-      "actions": 243
+      "actions": 244
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2464
+      "count": 2463
     },
     {
       "topic": "IA",
-      "count": 2162
+      "count": 2145
     },
     {
       "topic": "Crypto",
-      "count": 538
+      "count": 533
     },
     {
       "topic": "Bourse",
-      "count": 435
+      "count": 443
     },
     {
       "topic": "Spatial",
-      "count": 104
+      "count": 100
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2382
+      "count": 2361
     },
     {
       "pillar": "other",
-      "count": 1464
+      "count": 1455
     },
     {
       "pillar": "market_trauma",
-      "count": 1253
+      "count": 1270
     },
     {
       "pillar": "meme_reaction",
-      "count": 158
+      "count": 154
     },
     {
       "pillar": "reply_bait",
-      "count": 60
+      "count": 59
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,27 +104,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 397
+      "count": 394
     },
     {
       "pillar": "market_trauma",
-      "count": 239
+      "count": 256
     },
     {
       "pillar": "other",
-      "count": 222
+      "count": 219
     },
     {
       "pillar": "meme_reaction",
-      "count": 18
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 7
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 6
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -132,7 +132,7 @@
       "pillar": "market_trauma",
       "posts": 50,
       "avg_likes": 0.22,
-      "avg_views": 33.8,
+      "avg_views": 35.3,
       "low_sample": false
     },
     {
@@ -146,7 +146,7 @@
       "pillar": "other",
       "posts": 78,
       "avg_likes": 0.1,
-      "avg_views": 28.6,
+      "avg_views": 29.8,
       "low_sample": false
     },
     {
@@ -167,19 +167,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4727
+      "count": 4718
     },
     {
       "type": "quote",
-      "count": 338
+      "count": 334
     },
     {
       "type": "quote_gif",
-      "count": 133
+      "count": 129
     },
     {
       "type": "post",
-      "count": 61
+      "count": 60
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-30T03:49:10.188109",
-      "text": "BE down 46%, SNDK down 55. Aschenbrenner is shorting the legacy codebase. the old internet is just a margin call waiting to happen.",
+      "ts": "2026-07-30T07:49:06.398357",
+      "text": "Meta’s capex is already peaking. the real story isn’t that they spend less, it’s that their ad margins are wide enough to absorb the bill without blinking.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-30T03:48:36.026635",
-      "text": "Shitcoins are priced on the assumption you are smarter than the guy behind you.\n\nwhen he leaves, you don't find value. you find the exit.",
+      "ts": "2026-07-30T07:47:56.236249",
+      "text": "ZEC’s supply is capped at 21 million.\n\n16.8M is 80%.\nThe SEC has spent $3B enforcing compliance on a token that was fully circulating before they filed their first complaint.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-30T03:48:19.990242",
-      "text": "Santander just bought $12M of BTC. They also run a bank.\n\nThis isn't conviction. It's a $450k annual expense to keep the board from asking why they aren't playing in the AI/crypto space anymore.\n\nThe real story: the SEC allows BTC ETFs but not BTC accounts. Santander just realize",
+      "ts": "2026-07-30T07:47:07.152603",
+      "text": "Meta and google burning cash for relevance proves the capex cliff is real. the trade is no longer the builders. it’s the utility companies keeping the lights on.",
       "type": "reply"
     }
   ]

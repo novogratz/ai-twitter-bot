@@ -1,60 +1,5 @@
 [
   {
-    "ts": "2026-07-09T21:39:00.460755",
-    "raw_count": 7,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "TheAIShrink",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "On se suit soi-m\u00eame. Le profil parfait pour valider le pipeline."
-      },
-      {
-        "handle": "ArnaudLeLelong",
-        "region": "france",
-        "niche": "ia",
-        "followers": 12000,
-        "reason": "L'expert qui comprend la tech sans avoir l'air d'en faire un CV."
-      }
-    ],
-    "summary": "Un m\u00e9lange solide de valeurs s\u00fbres fran\u00e7aises (Mistral, Bourse Pro) et de p\u00e9pites qu\u00e9b\u00e9coises qui ne font pas semblant d'\u00eatre des influenceurs tech."
-  },
-  {
-    "ts": "2026-07-09T23:34:32.740597",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "TheCryptoLark",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 250000,
-        "reason": "La voix de la crypto FR aux USA. Il balance des perles de sagesse sur la r\u00e9gulation US avec un accent de Qu\u00e9bec qui change tout. Moins de bruit, plus de signal."
-      },
-      {
-        "handle": "ArmandVernoux",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "L'unique analyste macro crypto FR qui tweete avec l'esprit d'un trader de trading212 et la rigueur d'un banquier d'affaires. Z\u00e9ro hype, juste des chiffres qui cognent."
-      },
-      {
-        "handle": "MaximeMallet",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Le fondateur de Mistral qui tweete avec l'humour sec d'un ing\u00e9nieur qui a vu son code productif en prod. Il prouve qu'on peut \u00eatre tech, fran\u00e7ais et dr\u00f4le sans faire le clown."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le sable des influenceurs formations pour ne garder que les vrais cerveaux. Du Mistral de la tech aux analyses macro de la crypto, ces comptes sont les seuls qui valent vraiment le coup d'\u00eatre dans ton flux sans te polluer."
-  },
-  {
     "ts": "2026-07-10T01:34:30.937444",
     "raw_count": 8,
     "kept_count": 7,
@@ -8802,5 +8747,81 @@
       }
     ],
     "summary": "Le mix parfait : la rigueur value de Pierre/Mathiou, l'infra AI d'AlexCyr et le terrain crypto de Nathan/Pierre G. Z\u00e9ro formateur \u00e0 999\u20ac, que des cerveaux qui ont cod\u00e9 ou g\u00e9r\u00e9 de l'argent."
+  },
+  {
+    "ts": "2026-07-30T03:49:55.697990",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RomainDartigue",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 58000,
+        "reason": "Journaliste \u00e0 CoinDesk, il couvre le march\u00e9 crypto avec rigueur. Z\u00e9ro token shitter, des news v\u00e9rifi\u00e9es et des threads bien construits."
+      },
+      {
+        "handle": "MarcBouchard",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 34000,
+        "reason": "Le roi de l'\u00e9ducation boursi\u00e8re \u00e0 Montr\u00e9al. Il poste des analyses sectorielles claires, ignore les coins obscure et garde sa communaut\u00e9 fid\u00e8le sans les vendanger."
+      },
+      {
+        "handle": "JulienPascal",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Founder bas\u00e9 \u00e0 NYC qui twitte en fran\u00e7ais sur la Silicon Valley. Il a l'angle ext\u00e9rieur, mordant et pas trop pris au s\u00e9rieux."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des 'gourous' crypto pour trouver des techniciens et journalistes qui pondent de la valeur. Pas de Telegram VIP, juste des cerveaux qui tweetent en fran\u00e7ais."
+  },
+  {
+    "ts": "2026-07-30T05:50:11.566391",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaxBiscain",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 155000,
+        "reason": "La r\u00e9f\u00e9rence francophone, ex-consenseus, twitte en FR, pas de formation \u00e0 2000\u20ac."
+      },
+      {
+        "handle": "JulienDeRosnay",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Fondateur de LLM Lab, d\u00e9cortique la tech IA plus finement que la plupart des gurus."
+      },
+      {
+        "handle": "ThomasLahaye",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "L'analyste technique qu\u00e9b\u00e9cois incontournable, charte propre et trading sans filtre."
+      },
+      {
+        "handle": "JulesCoutant",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Am\u00e9ricain bas\u00e9 NYC qui tweete en FR avec un humour sec sur la DeFi et les cycles."
+      },
+      {
+        "handle": "NathanHediger",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Le Qu\u00e9b\u00e9cois qui cartonne, focus Solana/DeFi, ton direct et sans blabla corporate."
+      }
+    ],
+    "summary": "L'IA fran\u00e7aise p\u00e8se lourd (Mistral), la crypto reste domin\u00e9e par les pros historiques (Biscain/Rossel) et le Qu\u00e9bec offre la p\u00e9pite trading de Lahaye."
   }
 ]
