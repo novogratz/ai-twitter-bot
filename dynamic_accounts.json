@@ -1085,7 +1085,10 @@
     "RomainDrouet",
     "AdrienChauvenne",
     "ThomasGuerin",
-    "MathisLacroix"
+    "MathisLacroix",
+    "LoupMakdessi",
+    "MathieuDuffaut",
+    "JohanMazenc"
   ],
   "en": [
     "Chubby",
@@ -1374,7 +1377,9 @@
     "Bespoke",
     "Santiago",
     "WeRateDogs",
-    "PhotonBull"
+    "PhotonBull",
+    "ZenMux",
+    "BytePlus"
   ],
   "history": [
     {
@@ -8240,6 +8245,31 @@
     {
       "lang": "fr",
       "handle": "MathisLacroix",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "en",
+      "handle": "ZenMux",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "en",
+      "handle": "BytePlus",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "LoupMakdessi",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDuffaut",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "JohanMazenc",
       "added": "2026-07-31"
     }
   ]

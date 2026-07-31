@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-31T07:49:25.247040",
-  "window_7d_actions": 5404,
-  "window_24h_actions": 857,
+  "generated_at": "2026-07-31T11:49:21.913601",
+  "window_7d_actions": 5393,
+  "window_24h_actions": 856,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5402
+      "count": 5391
     },
     {
       "pattern": "METAPHOR",
@@ -27,21 +27,21 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5402
+      "count": 5391
     }
   ],
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 282
-    },
-    {
-      "hour": 10,
-      "actions": 250
+      "actions": 284
     },
     {
       "hour": 12,
       "actions": 249
+    },
+    {
+      "hour": 10,
+      "actions": 247
     },
     {
       "hour": 14,
@@ -55,42 +55,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2493
+      "count": 2473
     },
     {
       "topic": "IA",
-      "count": 2165
+      "count": 2173
     },
     {
       "topic": "Crypto",
-      "count": 546
+      "count": 549
     },
     {
       "topic": "Bourse",
-      "count": 446
+      "count": 449
     },
     {
       "topic": "Spatial",
-      "count": 95
+      "count": 97
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2398
+      "count": 2405
     },
     {
       "pillar": "other",
-      "count": 1436
+      "count": 1415
     },
     {
       "pillar": "market_trauma",
-      "count": 1358
+      "count": 1365
     },
     {
       "pillar": "meme_reaction",
-      "count": 122
+      "count": 118
     },
     {
       "pillar": "reply_bait",
@@ -104,19 +104,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 372
+      "count": 378
     },
     {
       "pillar": "market_trauma",
-      "count": 254
+      "count": 251
     },
     {
       "pillar": "other",
-      "count": 210
+      "count": 209
     },
     {
       "pillar": "reply_bait",
-      "count": 13
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
@@ -137,16 +137,16 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 70,
+      "posts": 71,
       "avg_likes": 0.13,
-      "avg_views": 37.0,
+      "avg_views": 37.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 75,
+      "posts": 74,
       "avg_likes": 0.11,
-      "avg_views": 33.5,
+      "avg_views": 32.7,
       "low_sample": false
     },
     {
@@ -167,19 +167,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4874
+      "count": 4876
     },
     {
       "type": "quote",
-      "count": 298
+      "count": 290
     },
     {
       "type": "quote_gif",
-      "count": 104
+      "count": 103
     },
     {
       "type": "post",
-      "count": 50
+      "count": 46
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-31T07:46:06.867248",
-      "text": "Perplexity is a glorified search bar with a thesaurus attachment. the real story? it’s selling you the illusion of depth while google sells the reality of speed.",
+      "ts": "2026-07-31T11:46:40.036066",
+      "text": "Saying you know models but not Qwen 2.5 is like saying you love wine but skip the 2020s. Fair, but did the 32B beat Llama 3.1 on reasoning?",
       "type": "reply"
     },
     {
-      "ts": "2026-07-31T07:45:49.310832",
-      "text": "Anthropic raising at a $157B valuation on $15B debt. it’s a capital-intensive casino where the house wins twice: interest payments and equity dilution. no pressure.",
+      "ts": "2026-07-31T11:46:07.308149",
+      "text": "$9,4M à échoir en 2027. Le marché pense à la cashbox, je pense à l'effet de levier. C'est du levier pur sur une conviction.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-31T07:45:16.487988",
-      "text": "Biden a fait 104 fois appel à sa grâce préventive. c'est le comportement du client qui se rassure en touchant la clope jusqu'à ce qu'elle prenne feu.",
+      "ts": "2026-07-31T11:44:52.975452",
+      "text": "Fair, partnerships are the filler. But Qwen 2.5’s raw benchmark win vs Llama 3 proves the engine beats the handshake. You really think the chatbot cares who owns the API?",
       "type": "reply"
     }
   ]

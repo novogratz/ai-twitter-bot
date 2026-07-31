@@ -1,29 +1,5 @@
 [
   {
-    "ts": "2026-07-11T04:57:41.103025",
-    "raw_count": 5,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibautMuller",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Bas\u00e9 \u00e0 SF mais FR. Couvre l'IA appliquee et les startups avec une vision terrain, rare d'avoir ce genre de veille FR sur la Sillicon Valley."
-      },
-      {
-        "handle": "Raphaelsaliba",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Analyste qu\u00e9b\u00e9cois qui d\u00e9cortique les r\u00e9sultats trimestriels avec humour. Le contre-poids s\u00e9rieux aux vendeurs de r\u00eaves US."
-      }
-    ],
-    "summary": "Mix de founders IA (Mistral), d'analystes crypto matures et de veilleurs tech/VC. On \u00e9vite les gros influenceurs formations pour du concret."
-  },
-  {
     "ts": "2026-07-11T10:41:03.028733",
     "raw_count": 8,
     "kept_count": 3,
@@ -8823,5 +8799,36 @@
       }
     ],
     "summary": "Un mix de traders de rue s\u00e9rieux (MickaelCordon), de founders fintech (RomainDrouet, NicolasColin) et de techniciens IA/Cloud (AdrienChauvenne, AlexisDuchemin). Z\u00e9ro influenceur lifestyle, que des gens qui construisent ou analysent."
+  },
+  {
+    "ts": "2026-07-31T07:49:58.820251",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LoupMakdessi",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 78000,
+        "reason": "L'incontournable. Ex-consensus, il balance des threads macro/crypto denses sans jamais vendouiller son coaching."
+      },
+      {
+        "handle": "MathieuDuffaut",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Fondateur de Mindverse, il twitte l'IA g\u00e9n\u00e9rative comme personne. Moins hype, plus fondamental."
+      },
+      {
+        "handle": "JohanMazenc",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Co-founder de Mistral AI. Il partage les coulisses du LLM fran\u00e7ais avec humeur et tech."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 la flotte pour garder les pros qui twittent encore (pas les influenceurs TikTok). Le top FR est dominated par les v\u00e9t\u00e9rans crypto (Makdessi, Bailly) qui ont surv\u00e9cu aux bears. Le Qu\u00e9bec est moins peupl\u00e9 mais Mazenc est une mine d'or."
   }
 ]
