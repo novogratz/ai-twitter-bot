@@ -1088,7 +1088,15 @@
     "MathisLacroix",
     "LoupMakdessi",
     "MathieuDuffaut",
-    "JohanMazenc"
+    "JohanMazenc",
+    "MaximeCorry",
+    "RaphB",
+    "AlexisPigeon",
+    "CryptoBoulot",
+    "MarcGirard",
+    "MathieuLecocq",
+    "RoxanneMaurice",
+    "BenjaminLemay"
   ],
   "en": [
     "Chubby",
@@ -1379,7 +1387,8 @@
     "WeRateDogs",
     "PhotonBull",
     "ZenMux",
-    "BytePlus"
+    "BytePlus",
+    "DeepSeek"
   ],
   "history": [
     {
@@ -8270,6 +8279,51 @@
     {
       "lang": "fr",
       "handle": "JohanMazenc",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCorry",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphB",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisPigeon",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBoulot",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcGirard",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "en",
+      "handle": "DeepSeek",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuLecocq",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "RoxanneMaurice",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminLemay",
       "added": "2026-07-31"
     }
   ]

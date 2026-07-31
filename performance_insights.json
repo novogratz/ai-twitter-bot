@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-31T11:49:21.913601",
-  "window_7d_actions": 5393,
-  "window_24h_actions": 856,
+  "generated_at": "2026-07-31T15:49:22.090734",
+  "window_7d_actions": 5384,
+  "window_24h_actions": 853,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5391
+      "count": 5382
     },
     {
       "pattern": "METAPHOR",
@@ -27,74 +27,74 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5391
+      "count": 5382
     }
   ],
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 284
-    },
-    {
-      "hour": 12,
-      "actions": 249
+      "actions": 283
     },
     {
       "hour": 10,
       "actions": 247
     },
     {
-      "hour": 14,
-      "actions": 237
+      "hour": 12,
+      "actions": 247
     },
     {
       "hour": 17,
+      "actions": 234
+    },
+    {
+      "hour": 0,
       "actions": 234
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2473
+      "count": 2468
     },
     {
       "topic": "IA",
-      "count": 2173
+      "count": 2164
     },
     {
       "topic": "Crypto",
-      "count": 549
+      "count": 558
     },
     {
       "topic": "Bourse",
-      "count": 449
+      "count": 448
     },
     {
       "topic": "Spatial",
-      "count": 97
+      "count": 98
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2405
+      "count": 2389
     },
     {
       "pillar": "other",
-      "count": 1415
+      "count": 1408
     },
     {
       "pillar": "market_trauma",
-      "count": 1365
+      "count": 1381
     },
     {
       "pillar": "meme_reaction",
-      "count": 118
+      "count": 114
     },
     {
       "pillar": "reply_bait",
-      "count": 56
+      "count": 58
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,23 +104,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 378
+      "count": 368
     },
     {
       "pillar": "market_trauma",
-      "count": 251
+      "count": 248
     },
     {
       "pillar": "other",
-      "count": 209
+      "count": 219
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 5
     },
     {
       "pillar": "meme_reaction",
@@ -137,9 +137,9 @@
     },
     {
       "pillar": "ai_news_take",
-      "posts": 71,
-      "avg_likes": 0.13,
-      "avg_views": 37.7,
+      "posts": 72,
+      "avg_likes": 0.12,
+      "avg_views": 38.4,
       "low_sample": false
     },
     {
@@ -151,9 +151,9 @@
     },
     {
       "pillar": "reply_bait",
-      "posts": 4,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 46.8,
+      "avg_views": 40.3,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4876
+      "count": 4885
     },
     {
       "type": "quote",
-      "count": 290
+      "count": 282
     },
     {
       "type": "quote_gif",
-      "count": 103
+      "count": 102
     },
     {
       "type": "post",
-      "count": 46
+      "count": 42
     },
     {
       "type": "hotake",
-      "count": 44
+      "count": 39
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-31T11:46:40.036066",
-      "text": "Saying you know models but not Qwen 2.5 is like saying you love wine but skip the 2020s. Fair, but did the 32B beat Llama 3.1 on reasoning?",
+      "ts": "2026-07-31T15:49:18.349604",
+      "text": "@Bird says market cap is the last price.\n\nXRP at $100 needs a $5.3T market cap.\n\nThat’s bigger than Apple.\n\nThe SEC is sleeping with the fishes.\nThe math doesn’t.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-31T11:46:07.308149",
-      "text": "$9,4M à échoir en 2027. Le marché pense à la cashbox, je pense à l'effet de levier. C'est du levier pur sur une conviction.",
+      "ts": "2026-07-31T15:47:02.933799",
+      "text": "80% growth is the baseline, not the outlier. the real story is the $5B+ run rate multiplying against a 0% churn enterprise base. palantir isn't growing revenue, it's compounding government sticky-ness.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-31T11:44:52.975452",
-      "text": "Fair, partnerships are the filler. But Qwen 2.5’s raw benchmark win vs Llama 3 proves the engine beats the handshake. You really think the chatbot cares who owns the API?",
+      "ts": "2026-07-31T15:45:56.866807",
+      "text": "Cloudflare infra is the new rails. the real cost isn't the server, it's the auth tax every other builder bleeds. efficiency.",
       "type": "reply"
     }
   ]

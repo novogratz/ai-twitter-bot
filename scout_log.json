@@ -1,67 +1,5 @@
 [
   {
-    "ts": "2026-07-11T10:41:03.028733",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenoitLFloch",
-        "region": "france",
-        "niche": "tech",
-        "followers": 55000,
-        "reason": "Le v\u00e9t\u00e9ran qui a vu passer toutes les bulles. Il poste sur le cycle des march\u00e9s tech avec une pr\u00e9cision chirurgicale, souvent avant que \u00e7a explose."
-      },
-      {
-        "handle": "Lefranc",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le seul qui arrive \u00e0 rendre la macro-\u00e9co aussi digeste qu'un thread sur les memes, avec une plume s\u00e8che qui pique."
-      },
-      {
-        "handle": "Marc-AndreC",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "VC qu\u00e9b\u00e9cois de l'IA. Il connecte les points entre la tech pure et le business r\u00e9el, avec une vue unique sur l'\u00e9cosyst\u00e8me nord-am\u00e9ricain."
-      }
-    ],
-    "summary": "On a filtr\u00e9 le bruit pour ne garder que ceux qui ont le\u5b9e\u52a1 dans la peau. Mistral et l'\u00e9cosyst\u00e8me AI fran\u00e7ais dominent, avec un focus sur les VC qu\u00e9b\u00e9cois pour \u00e9quilibrer la balance atlantique."
-  },
-  {
-    "ts": "2026-07-11T12:46:52.246600",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "jpmorgan",
-        "region": "usa",
-        "niche": "finance",
-        "followers": 500000,
-        "reason": "La banque qui tweete plus vite que tes ordres d'achat et gagne plus que ton patron."
-      },
-      {
-        "handle": "thegoodcapital",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 150000,
-        "reason": "Le prof de Stanford en version thread: moins acad\u00e9mique, plus piment\u00e9 sur l'IA g\u00e9n\u00e9rative."
-      },
-      {
-        "handle": "crypto_mad",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "La voix qu\u00e9b\u00e9coise qui d\u00e9crypte le march\u00e9 sans faire saigner les n\u00e9vros\u00e9s."
-      }
-    ],
-    "summary": "Un mix de g\u00e9ants industriels (Mistral, JPM) pour la cr\u00e9dibilit\u00e9 et de specialists agiles (Good Capital, Larrouy) pour le sel. Z\u00e9ro influenceur Telegram, juste des experts qui font leur boulot."
-  },
-  {
     "ts": "2026-07-11T14:44:19.372941",
     "raw_count": 8,
     "kept_count": 3,
@@ -8830,5 +8768,81 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 la flotte pour garder les pros qui twittent encore (pas les influenceurs TikTok). Le top FR est dominated par les v\u00e9t\u00e9rans crypto (Makdessi, Bailly) qui ont surv\u00e9cu aux bears. Le Qu\u00e9bec est moins peupl\u00e9 mais Mazenc est une mine d'or."
+  },
+  {
+    "ts": "2026-07-31T11:50:02.822043",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeCorry",
+        "region": "france",
+        "niche": "ai",
+        "followers": 42000,
+        "reason": "L'ing\u00e9nieur chez Mistral qui d\u00e9code le chaos de l'open source sans se la raconter. Plus utile qu'un gourou."
+      },
+      {
+        "handle": "RaphB",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Le fondateur de Mistral qui parle business et tech. C'est rare de voir un CEO FR qui ne vend pas que du vent."
+      },
+      {
+        "handle": "AlexisPigeon",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Analyste technique au Havre. Moins hype que les parisiens, mais ses setups valent plus que 90% des tweets."
+      },
+      {
+        "handle": "CryptoBoulot",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "La seule newsletter FR qui parle de crypto sans faire peur. Du concret pour ceux qui veulent bosser dans le secteur."
+      },
+      {
+        "handle": "MarcGirard",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "L'\u00e9ducatif qu\u00e9b\u00e9cois qui \u00e9vite le charabia financier. Le gars qui explique la bourse comme \u00e0 son neveu."
+      }
+    ],
+    "summary": "J'ai \u00e9vit\u00e9 les vendeurs de r\u00eaves pour te donner des cerveaux : deux g\u00e9ants de l'IA fran\u00e7aise qui ont enfin de la substance, un technicien bourse qui fait du vrai travail, et du Qu\u00e9bec qui d\u00e9montre que l'IA francophone d\u00e9passe Paris."
+  },
+  {
+    "ts": "2026-07-31T13:50:25.500300",
+    "raw_count": 6,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MathieuLecocq",
+        "region": "france",
+        "niche": "tech/ai",
+        "followers": 25000,
+        "reason": "PDG de Marmot Invest, il mixe tech et finance avec une honn\u00eatet\u00e9 rare sur le march\u00e9."
+      },
+      {
+        "handle": "RoxanneMaurice",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Journaliste crypto qui ose dire du mal d'Ethereum et du NFT, pas dans le 'to the moon' syst\u00e9matique."
+      },
+      {
+        "handle": "BenjaminLemay",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Co-fondateur de Coinhouse, il couvre le march\u00e9 crypto qu\u00e9b\u00e9cois avec un regard pragmatique."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des influenceurs 'lifestyle' pour ne garder que des pros qui tweetent sur leur boulot. La France a ses gourous de la bourse, le Qu\u00e9bec ses fondateurs IA, et la diaspora US fait le lien entre les deux mondes crypto."
   }
 ]
