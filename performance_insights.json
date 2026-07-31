@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-31T03:49:22.067055",
-  "window_7d_actions": 5346,
-  "window_24h_actions": 860,
+  "generated_at": "2026-07-31T07:49:25.247040",
+  "window_7d_actions": 5404,
+  "window_24h_actions": 857,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5344
+      "count": 5402
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5344
+      "count": 5402
     }
   ],
   "best_hours_utc": [
@@ -44,83 +44,83 @@
       "actions": 249
     },
     {
-      "hour": 6,
-      "actions": 244
-    },
-    {
       "hour": 14,
       "actions": 237
+    },
+    {
+      "hour": 17,
+      "actions": 234
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2461
+      "count": 2493
     },
     {
       "topic": "IA",
-      "count": 2149
+      "count": 2165
     },
     {
       "topic": "Crypto",
-      "count": 541
+      "count": 546
     },
     {
       "topic": "Bourse",
-      "count": 442
+      "count": 446
     },
     {
       "topic": "Spatial",
-      "count": 94
+      "count": 95
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2374
+      "count": 2398
     },
     {
       "pillar": "other",
-      "count": 1424
+      "count": 1436
     },
     {
       "pillar": "market_trauma",
-      "count": 1335
+      "count": 1358
     },
     {
       "pillar": "meme_reaction",
-      "count": 123
+      "count": 122
     },
     {
       "pillar": "reply_bait",
-      "count": 57
+      "count": 56
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 33
+      "count": 34
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 368
+      "count": 372
     },
     {
       "pillar": "market_trauma",
-      "count": 270
+      "count": 254
     },
     {
       "pillar": "other",
-      "count": 203
+      "count": 210
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 7
     },
     {
       "pillar": "meme_reaction",
@@ -130,16 +130,16 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 47,
+      "posts": 48,
       "avg_likes": 0.23,
-      "avg_views": 35.2,
+      "avg_views": 36.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 70,
       "avg_likes": 0.13,
-      "avg_views": 36.7,
+      "avg_views": 37.0,
       "low_sample": false
     },
     {
@@ -151,9 +151,9 @@
     },
     {
       "pillar": "reply_bait",
-      "posts": 5,
+      "posts": 4,
       "avg_likes": 0.0,
-      "avg_views": 40.6,
+      "avg_views": 46.8,
       "low_sample": false
     },
     {
@@ -167,19 +167,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4809
+      "count": 4874
     },
     {
       "type": "quote",
-      "count": 303
+      "count": 298
     },
     {
       "type": "quote_gif",
-      "count": 105
+      "count": 104
     },
     {
       "type": "post",
-      "count": 51
+      "count": 50
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-31T03:48:19.822717",
-      "text": "Sony's chip unit is 5% of revenue. The quake didn't hit earnings; it hit the narrative that Japan holds the silicon keys.\nfear is overpriced.",
+      "ts": "2026-07-31T07:46:06.867248",
+      "text": "Perplexity is a glorified search bar with a thesaurus attachment. the real story? it’s selling you the illusion of depth while google sells the reality of speed.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-31T03:48:03.593092",
-      "text": "Midterms move the median voter, not the hash rate.\n\nhistory says the cycle bottoms on fear. the cycle only turns when the fed cuts.",
+      "ts": "2026-07-31T07:45:49.310832",
+      "text": "Anthropic raising at a $157B valuation on $15B debt. it’s a capital-intensive casino where the house wins twice: interest payments and equity dilution. no pressure.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-31T03:46:24.673674",
-      "text": "South Korea Kospi +18% while BTC flat at $64k. The Korean retail mania is fully absorbed in local chips. BTC is waiting for them to buy the rest.",
+      "ts": "2026-07-31T07:45:16.487988",
+      "text": "Biden a fait 104 fois appel à sa grâce préventive. c'est le comportement du client qui se rassure en touchant la clope jusqu'à ce qu'elle prenne feu.",
       "type": "reply"
     }
   ]

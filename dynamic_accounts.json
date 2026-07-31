@@ -1073,7 +1073,19 @@
     "OlivierMachart",
     "MorganSellers",
     "RomainPoulain",
-    "CryptoRoi"
+    "CryptoRoi",
+    "pmarca",
+    "LorenzoMangani",
+    "CyrilMozuch",
+    "BenoitGuerou",
+    "AlexisDionne",
+    "JulienChateau",
+    "DianeBouchard",
+    "MickaelCordon",
+    "RomainDrouet",
+    "AdrienChauvenne",
+    "ThomasGuerin",
+    "MathisLacroix"
   ],
   "en": [
     "Chubby",
@@ -1359,7 +1371,10 @@
     "MoonPay",
     "Breaking911",
     "ClaudeDevs",
-    "Bespoke"
+    "Bespoke",
+    "Santiago",
+    "WeRateDogs",
+    "PhotonBull"
   ],
   "history": [
     {
@@ -8150,6 +8165,81 @@
     {
       "lang": "fr",
       "handle": "CryptoRoi",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "en",
+      "handle": "Santiago",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "en",
+      "handle": "WeRateDogs",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "pmarca",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoMangani",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilMozuch",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitGuerou",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDionne",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienChateau",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "DianeBouchard",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "en",
+      "handle": "PhotonBull",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelCordon",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainDrouet",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienChauvenne",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasGuerin",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathisLacroix",
       "added": "2026-07-31"
     }
   ]
