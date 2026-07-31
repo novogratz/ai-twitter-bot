@@ -1,16 +1,15 @@
-# YouTube brief — 2026-07-30
+# YouTube brief — 2026-07-31
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **895**
-- reply: **797**
-- quote: **52**
-- quote_gif: **20**
-- post: **10**
-- hotake: **10**
-- retweet: **6**
+- Total actions logged: **862**
+- reply: **843**
+- quote: **11**
+- retweet: **4**
+- post: **3**
+- quote_gif: **1**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -23,10 +22,10 @@
 ### AI
 
 - **123 likes / 66047 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
-- **1 likes / 214 views** — me watching $INTC $AMD $NVDA nod along like we’re in a group chat that stopped typing two hours ago  https://x.com/Mr_Derivatives/status/2080390376821829685…
 - **1 likes / 16 views** — the most asymmetric move this week:  1.  AMD Helios secures Microsoft: @AMD Helios rack ships this month, taking inference share from @nvidia as Microsoft signs on alongside @OpenAI and Meta 2.  The o
 - **1 likes / 52 views** — My AI nanny asked if the toddler wanted milk or play. I said milk. It ordered a $400 crate of formula from Amazon. The baby is fed. My wallet is crying.
 - **1 likes / 21 views** — Me explaining to my portfolio that AI layoffs are the tuition payment for the rest of our lives while BitMart crashes 58%
+- **1 likes / 95 views** — me looking at these charts and realizing I paid $8k for a GPU while he pays $8k in margin calls
 
 ### Other
 
@@ -39,56 +38,33 @@
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-07-30
-- **@itsolelehmann** (30 likes, score 8/10) — should be obvious by now, but OpenAI and Anthropic are just gonna keep cannibalizing all their biggest customers.
+## 2026-07-31
+- **@runecrypto_** (26 likes, score 9/10) — this is my first time holding tokenized stocks onchain and i probably never would’ve discovered them without memecoins
 
-it’s simply too profitable for them to resist. and it’s already happening:
-
-1. Figma
-  - https://x.com/itsolelehmann/status/2082644674981089564
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 42).
-- **@marionawfal** (4 likes, score 7/10) — Wall Street went through some shit.
-
-In a single Fed day the S&P 500 swung through a staggering $2.9 trillion in market value.
-
-Here’s the play-by-play:
-
-Morning: plunged 85 points, vaporizing $770 bi
-  - https://x.com/MarioNawfal/status/2082680855940481076
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 16).
-- **@chetanp** (151 likes, score 8/10) — This implies that OpenAI has potentially caught up with Anthropic in terms of run rate revenue. If so, it will serve as yet another case study in the history of software that platforms that compete wi
-  - https://x.com/chetanp/status/2082645488311079255
-  - **WHY**: Source fiable + impact concret (score signal 7, engagement 193).
+bought $69,000 of $MARSCOIN → earned $273 in $SPCX (tokenized SpaceX stock) 
+bou
+  - https://x.com/RuneCrypto_/status/2083042929593942206
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 54).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_FOLLOWING/Watcher.Guru]** JUST IN:  $15 trillion BlackRock calls for US Senate to pass the Crypto Clarity Act.
-  - https://x.com/WatcherGuru/status/2082483813037244825
-- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/fintechgirl]** Leopold Aschenbrenner’s Situational Awareness LP (SALP) hedge fund has taken sharp paper losses recently on its concentrated AI-infrastructure longs amid a sect
-  - https://x.com/fintergirl/status/2082671069853593838
-- **[X_FOLLOWING/Cointelegraph]** NOW: $20 billion hedge fund Situational Awareness, founded by ex-OpenAI employee Leopold Aschenbrenner, seeks fresh capital from investors after heavy losses in
-  - https://x.com/Cointelegraph/status/2082687978288078985
-- **[X_FOLLOWING/TheStreet]** Jim Cramer reveals exactly when to buy SpaceX dip
-
-Read more: https://thestreet.com/investing/stocks/spcx-spacex-jim-cramer-urges-investors-to-wait-spacex-locku
-  - https://x.com/TheStreet/status/2082685163406831827
-- **[X_FOLLOWING/The AI Therapist]** Cramer says wait for the lockup.
-
-SpaceX raised $800M at a $180B valuation. The cap table is a list of people who don't need to sell.
-  - https://x.com/TheAIShrink/status/2082688119082496043
-- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/investing]** Where are my AI Compute Bros At ? ￼￼
-
-$NBIS $CRWV $IREN
-  - https://x.com/DollarCostAvg/status/2082555008483004522
-- **[X_SEARCH/top/CoreWeave OR CRWV OR APLD lang:en min_faves:100/m0xt]** CoreWeave will burn through roughly $110 billion in cash before this business funds itself
-
-That's not a typo. It's the whole story in one number
-
-Everyone scre
-  - https://x.com/m0xt_/status/2082073843989196989
-- **[X_SEARCH/live/robotics OR humanoid robots OR frontier tech lang:en min_faves:100/chamark]** Interesting perspective blending pop culture with modern geopolitical strategy. As robotics become more integrated into daily infrastructure, vetting both softw
-  - https://x.com/Chamark33/status/2082689538221330520
+- **[CNBC Top]** South Korea's 'bipolar' stock market: meltdowns, a record rally and what's to come
+  - https://www.cnbc.com/2026/07/31/south-korea-kospi-samsung-sk-hynix-meltdown-record-rebound.html
+- **[CNBC Tech]** South Korea's 'bipolar' stock market: meltdowns, a record rally and what's to come
+  - https://www.cnbc.com/2026/07/31/south-korea-kospi-samsung-sk-hynix-meltdown-record-rebound.html
+- **[Cointelegraph]** Coldcard issues Mk3 warning as experts examine $38M Bitcoin wallet drain
+  - https://cointelegraph.com/news/coldcard-mk3-warning-594-btc-sweep?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
+- **[Wired]** Anthropic Says Claude Hacked 3 Organizations During Cybersecurity Tests
+  - https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/
+- **[CNBC Top]** Anthropic says its Claude models 'gained unauthorized access' to other organizations' systems
+  - https://www.cnbc.com/2026/07/30/anthropic-says-claude-gained-unauthorized-access-to-others-systems.html
+- **[CNBC Tech]** Anthropic says its Claude models 'gained unauthorized access' to other organizations' systems
+  - https://www.cnbc.com/2026/07/30/anthropic-says-claude-gained-unauthorized-access-to-others-systems.html
+- **[TechCrunch AI]** Anthropic says its own AI models breached three companies during security tests
+  - https://techcrunch.com/2026/07/30/anthropic-says-its-own-ai-models-breached-three-companies-during-security-tests/
+- **[TechCrunch]** Anthropic says its own AI models breached three companies during security tests
+  - https://techcrunch.com/2026/07/30/anthropic-says-its-own-ai-models-breached-three-companies-during-security-tests/
 
 ## 🎬 Suggested video angles
 
@@ -99,4 +75,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-07-30T00:49:21*
+*Generated 2026-07-31T00:49:22*
