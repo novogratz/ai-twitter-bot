@@ -1069,7 +1069,11 @@
     "LorenzoFrasca1",
     "BorisFrost",
     "AlexisDenis1",
-    "CedricGagnon"
+    "CedricGagnon",
+    "OlivierMachart",
+    "MorganSellers",
+    "RomainPoulain",
+    "CryptoRoi"
   ],
   "en": [
     "Chubby",
@@ -8127,6 +8131,26 @@
       "lang": "fr",
       "handle": "CedricGagnon",
       "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierMachart",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MorganSellers",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainPoulain",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoRoi",
+      "added": "2026-07-31"
     }
   ]
 }

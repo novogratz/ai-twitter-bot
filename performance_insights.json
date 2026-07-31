@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-30T23:49:22.164841",
-  "window_7d_actions": 5352,
+  "generated_at": "2026-07-31T03:49:22.067055",
+  "window_7d_actions": 5346,
   "window_24h_actions": 860,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5350
+      "count": 5344
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5350
+      "count": 5344
     }
   ],
   "best_hours_utc": [
@@ -55,19 +55,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2473
+      "count": 2461
     },
     {
       "topic": "IA",
-      "count": 2152
+      "count": 2149
     },
     {
       "topic": "Crypto",
-      "count": 542
+      "count": 541
     },
     {
       "topic": "Bourse",
-      "count": 440
+      "count": 442
     },
     {
       "topic": "Spatial",
@@ -78,37 +78,37 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2379
+      "count": 2374
     },
     {
       "pillar": "other",
-      "count": 1426
+      "count": 1424
     },
     {
       "pillar": "market_trauma",
-      "count": 1328
+      "count": 1335
     },
     {
       "pillar": "meme_reaction",
-      "count": 126
+      "count": 123
     },
     {
       "pillar": "reply_bait",
-      "count": 58
+      "count": 57
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 35
+      "count": 33
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 370
+      "count": 368
     },
     {
       "pillar": "market_trauma",
-      "count": 267
+      "count": 270
     },
     {
       "pillar": "other",
@@ -116,11 +116,11 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 6
     },
     {
       "pillar": "meme_reaction",
@@ -130,23 +130,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 48,
+      "posts": 47,
       "avg_likes": 0.23,
-      "avg_views": 35.5,
+      "avg_views": 35.2,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 69,
+      "posts": 70,
       "avg_likes": 0.13,
-      "avg_views": 35.6,
+      "avg_views": 36.7,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 76,
+      "posts": 75,
       "avg_likes": 0.11,
-      "avg_views": 29.2,
+      "avg_views": 33.5,
       "low_sample": false
     },
     {
@@ -158,24 +158,24 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 1,
+      "posts": 2,
       "avg_likes": 0.0,
-      "avg_views": 49.0,
-      "low_sample": true
+      "avg_views": 38.0,
+      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4803
+      "count": 4809
     },
     {
       "type": "quote",
-      "count": 310
+      "count": 303
     },
     {
       "type": "quote_gif",
-      "count": 108
+      "count": 105
     },
     {
       "type": "post",
@@ -187,23 +187,23 @@
     },
     {
       "type": "retweet",
-      "count": 36
+      "count": 34
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-30T23:48:49.831881",
-      "text": "Zuck resurrects 2009. Jensen posts evergreen.\nThe real metric isn’t reach, it’s retention. X finally earned its seat at the AI table.",
+      "ts": "2026-07-31T03:48:19.822717",
+      "text": "Sony's chip unit is 5% of revenue. The quake didn't hit earnings; it hit the narrative that Japan holds the silicon keys.\nfear is overpriced.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-30T23:47:48.038297",
-      "text": "DeepSeek on Spark: 400 tok/s inference.\nThe GPU cluster finally got cheap enough to write code faster than the average SaaS founder can pitch it.",
+      "ts": "2026-07-31T03:48:03.593092",
+      "text": "Midterms move the median voter, not the hash rate.\n\nhistory says the cycle bottoms on fear. the cycle only turns when the fed cuts.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-30T23:44:42.633446",
-      "text": "McDonald’s makes more money on the land than the fries.\n\nit’s a real estate company that happens to sell burgers.",
+      "ts": "2026-07-31T03:46:24.673674",
+      "text": "South Korea Kospi +18% while BTC flat at $64k. The Korean retail mania is fully absorbed in local chips. BTC is waiting for them to buy the rest.",
       "type": "reply"
     }
   ]

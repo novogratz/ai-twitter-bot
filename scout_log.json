@@ -1,29 +1,5 @@
 [
   {
-    "ts": "2026-07-10T21:28:30.872270",
-    "raw_count": 7,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoDoublard",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "L'expert en on-chain. Il ne crie pas sur le mur, il montre les donn\u00e9es. Moins de 'moon', plus de 'truth'."
-      },
-      {
-        "handle": "RomainBecart",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Journaliste bourse chez IEG/BFM. Il est sur le terrain, pas derri\u00e8re son \u00e9cran \u00e0 r\u00eaver d'immobilier. Constats secs."
-      }
-    ],
-    "summary": "J'ai tri\u00e9 le grain de l'ivraie : plus de vendeurs de r\u00eave, plus de consultants en IA qui ne savent pas coder. On garde ceux qui apportent de la donn\u00e9e ou du contexte."
-  },
-  {
     "ts": "2026-07-11T00:47:53.112180",
     "raw_count": 8,
     "kept_count": 6,
@@ -8802,5 +8778,50 @@
       }
     ],
     "summary": "La sc\u00e8ne IA fran\u00e7aise est domin\u00e9e par les fondateurs de Mistral, plus techniques que les influenceurs g\u00e9n\u00e9ralistes. Au Qu\u00e9bec, on creuse les profils fintech/tech locaux moins expos\u00e9s aux hype cycles de la c\u00f4te Est."
+  },
+  {
+    "ts": "2026-07-31T01:50:15.498752",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LaBoursePourLesNuls",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "Le compte qui vulgarise sans enculer. Comptes comme celui-ci prouvent que la finance ne doit pas \u00eatre snob."
+      },
+      {
+        "handle": "OlivierMachart",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "La r\u00e9f\u00e9rence crypto qu\u00e9b\u00e9coise. Il couvre le march\u00e9 FR/CA avec un \u0153il de trader, pas de marketing."
+      },
+      {
+        "handle": "MorganSellers",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Trader ind\u00e9pendant, streamer. Il montre ses trades en direct, gains comme pertes. L'honn\u00eatet\u00e9 rare."
+      },
+      {
+        "handle": "RomainPoulain",
+        "region": "france",
+        "niche": "ai",
+        "followers": 14000,
+        "reason": "Hacker du code \u00e0 la base, devenu VC/Founder. Il track les vrais builders IA en France, pas les influenceurs 'gurus'."
+      },
+      {
+        "handle": "CryptoRoi",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 11000,
+        "reason": "L'analyse technique brute en fran\u00e7ais. Moins de hype, plus de chiffres. Il tweete ce qui bouge, pas ce qu'on veut entendre."
+      }
+    ],
+    "summary": "Un mix entre les g\u00e9ants institutionnels (Mistral) et les traders fond de tiroir qui ont du sens. On \u00e9vite les vendeurs de r\u00eave pour des gens qui tweetent ce qu'ils font."
   }
 ]
