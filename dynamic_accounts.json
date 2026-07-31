@@ -1064,7 +1064,12 @@
     "SiliconCite",
     "AI_Brunch",
     "CryptoCoyote",
-    "LemieuxCrypto"
+    "LemieuxCrypto",
+    "NathanaelS",
+    "LorenzoFrasca1",
+    "BorisFrost",
+    "AlexisDenis1",
+    "CedricGagnon"
   ],
   "en": [
     "Chubby",
@@ -8096,6 +8101,31 @@
     {
       "lang": "fr",
       "handle": "LemieuxCrypto",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanaelS",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoFrasca1",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisFrost",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDenis1",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "CedricGagnon",
       "added": "2026-07-30"
     }
   ]

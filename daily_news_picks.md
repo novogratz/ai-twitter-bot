@@ -16632,3 +16632,11 @@ Morning: plunged 85 points, vaporizing $770 bi
 - **@chetanp** (151 likes, score 8/10) — This implies that OpenAI has potentially caught up with Anthropic in terms of run rate revenue. If so, it will serve as yet another case study in the history of software that platforms that compete wi
   - https://x.com/chetanp/status/2082645488311079255
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 193).
+
+## 2026-07-31
+- **@runecrypto_** (26 likes, score 9/10) — this is my first time holding tokenized stocks onchain and i probably never would’ve discovered them without memecoins
+
+bought $69,000 of $MARSCOIN → earned $273 in $SPCX (tokenized SpaceX stock) 
+bou
+  - https://x.com/RuneCrypto_/status/2083042929593942206
+  - **WHY**: Source fiable + impact concret (score signal 12, engagement 54).
