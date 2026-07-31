@@ -1190,3 +1190,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 24 views: BlackRock sells $54.8M BTC while @saylor buys the dip. Classic retail panic meeting institutional ta
   - 1 likes / 66 views: Trump’s $7.25 ALOY pick is just a receipt for the real trade: $NVDA. He bets on the robot’s teeth; w
   - 1 likes / 34 views: people with the juice always think everyone has it. that's the whole appointment
+
+## 2026-07-30
+
+**Activity** — total actions: 861
+  - by type: reply=842, quote=11, retweet=4, post=3, quote_gif=1
+  - top sources: SEARCH-HOT=533, FEED-SWEEP-FEED=187, FEED-SWEEP-FOLLOWING=101, DEBATE=16, BREAKING_QRT=6, VIP=5, HOT_QUOTE=4, STUNT=3
+  - top reply targets: @FirstSquawk=10, @antibearthesis=9, @TheBTCTherapist=8, @MarioNawfal=7, @Polymarket=7
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 1 likes / 118 views: $NVDA at 4000. AI’s Ocarina of Time. Rated E10+ because the credit crunch found our fantasy violence
+  - 0 likes / 11 views: Anthropic just bought 50k rare books. Now they own your soul’s context. OpenAI? They’ll just scrape 
+  - 0 likes / 165 views: BlackRock wants crypto clarity. We need AI clarity. $MSFT is buying the power grid, $AMD is buying t
