@@ -1053,7 +1053,18 @@
     "BenoitG_10",
     "RomainH",
     "BenoitD",
-    "EvanS"
+    "EvanS",
+    "HugoMounier",
+    "JulesDh",
+    "0xMerlin",
+    "MaelleRivet",
+    "AdrianGirardFR",
+    "BourseRapide",
+    "The_AI_Shark",
+    "SiliconCite",
+    "AI_Brunch",
+    "CryptoCoyote",
+    "LemieuxCrypto"
   ],
   "en": [
     "Chubby",
@@ -1337,7 +1348,9 @@
     "Glyde",
     "Abdul",
     "MoonPay",
-    "Breaking911"
+    "Breaking911",
+    "ClaudeDevs",
+    "Bespoke"
   ],
   "history": [
     {
@@ -8018,6 +8031,71 @@
     {
       "lang": "fr",
       "handle": "EvanS",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoMounier",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesDh",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xMerlin",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelleRivet",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrianGirardFR",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "en",
+      "handle": "ClaudeDevs",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "en",
+      "handle": "Bespoke",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourseRapide",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "The_AI_Shark",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "SiliconCite",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "AI_Brunch",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCoyote",
+      "added": "2026-07-30"
+    },
+    {
+      "lang": "fr",
+      "handle": "LemieuxCrypto",
       "added": "2026-07-30"
     }
   ]

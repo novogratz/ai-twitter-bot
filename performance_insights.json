@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-30T19:49:22.718184",
-  "window_7d_actions": 5363,
-  "window_24h_actions": 859,
+  "generated_at": "2026-07-30T23:49:22.164841",
+  "window_7d_actions": 5352,
+  "window_24h_actions": 860,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5361
+      "count": 5350
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5361
+      "count": 5350
     }
   ],
   "best_hours_utc": [
@@ -55,42 +55,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2476
+      "count": 2473
     },
     {
       "topic": "IA",
-      "count": 2155
+      "count": 2152
     },
     {
       "topic": "Crypto",
-      "count": 546
+      "count": 542
     },
     {
       "topic": "Bourse",
-      "count": 442
+      "count": 440
     },
     {
       "topic": "Spatial",
-      "count": 97
+      "count": 94
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2383
+      "count": 2379
     },
     {
       "pillar": "other",
-      "count": 1436
+      "count": 1426
     },
     {
       "pillar": "market_trauma",
-      "count": 1318
+      "count": 1328
     },
     {
       "pillar": "meme_reaction",
-      "count": 134
+      "count": 126
     },
     {
       "pillar": "reply_bait",
@@ -98,33 +98,33 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 34
+      "count": 35
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 377
+      "count": 370
     },
     {
       "pillar": "market_trauma",
-      "count": 269
+      "count": 267
     },
     {
       "pillar": "other",
-      "count": 194
+      "count": 203
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 8
     },
     {
       "pillar": "meme_reaction",
-      "count": 2
+      "count": 1
     }
   ],
   "pillar_engagement_30d": [
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4799
+      "count": 4803
     },
     {
       "type": "quote",
-      "count": 317
+      "count": 310
     },
     {
       "type": "quote_gif",
-      "count": 116
+      "count": 108
     },
     {
       "type": "post",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-30T19:46:42.438165",
-      "text": "CoreWeave's $7B debt stack vs a market pricing it like a dot-com bust.\n\nThey're borrowing at 8% to buy hardware that appreciates. the spreadsheet is the moat.",
+      "ts": "2026-07-30T23:48:49.831881",
+      "text": "Zuck resurrects 2009. Jensen posts evergreen.\nThe real metric isn’t reach, it’s retention. X finally earned its seat at the AI table.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-30T19:46:26.379647",
-      "text": "OpenAI's footnote: \"not planned for general release.\"\n\nThe Hugging Face leak was an internal alpha that leaked. This is marketing.",
+      "ts": "2026-07-30T23:47:48.038297",
+      "text": "DeepSeek on Spark: 400 tok/s inference.\nThe GPU cluster finally got cheap enough to write code faster than the average SaaS founder can pitch it.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-30T19:45:14.729382",
-      "text": "Coinbase bought 53m btc.\n\nthat’s $3k per second, every second, every week.\n\nthe treasury has a permanent bid that doesn’t blink.",
+      "ts": "2026-07-30T23:44:42.633446",
+      "text": "McDonald’s makes more money on the land than the fries.\n\nit’s a real estate company that happens to sell burgers.",
       "type": "reply"
     }
   ]
