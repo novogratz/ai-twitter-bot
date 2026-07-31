@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-31T15:49:22.090734",
-  "window_7d_actions": 5384,
-  "window_24h_actions": 853,
+  "generated_at": "2026-07-31T19:49:22.871912",
+  "window_7d_actions": 5364,
+  "window_24h_actions": 841,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5382
+      "count": 5362
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5382
+      "count": 5362
     }
   ],
   "best_hours_utc": [
@@ -44,34 +44,34 @@
       "actions": 247
     },
     {
-      "hour": 17,
+      "hour": 0,
       "actions": 234
     },
     {
-      "hour": 0,
+      "hour": 6,
       "actions": 234
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2468
+      "count": 2457
     },
     {
       "topic": "IA",
-      "count": 2164
+      "count": 2153
     },
     {
       "topic": "Crypto",
-      "count": 558
+      "count": 559
     },
     {
       "topic": "Bourse",
-      "count": 448
+      "count": 446
     },
     {
       "topic": "Spatial",
-      "count": 98
+      "count": 94
     }
   ],
   "rising_topics_24h": [],
@@ -82,15 +82,15 @@
     },
     {
       "pillar": "other",
-      "count": 1408
+      "count": 1391
     },
     {
       "pillar": "market_trauma",
-      "count": 1381
+      "count": 1384
     },
     {
       "pillar": "meme_reaction",
-      "count": 114
+      "count": 109
     },
     {
       "pillar": "reply_bait",
@@ -98,29 +98,29 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 34
+      "count": 33
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 368
+      "count": 370
     },
     {
       "pillar": "market_trauma",
-      "count": 248
+      "count": 232
     },
     {
       "pillar": "other",
-      "count": 219
+      "count": 224
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 4
     },
     {
       "pillar": "meme_reaction",
@@ -136,17 +136,17 @@
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 72,
-      "avg_likes": 0.12,
-      "avg_views": 38.4,
-      "low_sample": false
-    },
-    {
       "pillar": "other",
       "posts": 74,
       "avg_likes": 0.11,
-      "avg_views": 32.7,
+      "avg_views": 33.2,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 72,
+      "avg_likes": 0.11,
+      "avg_views": 39.4,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4885
+      "count": 4882
     },
     {
       "type": "quote",
-      "count": 282
+      "count": 272
     },
     {
       "type": "quote_gif",
-      "count": 102
+      "count": 98
     },
     {
       "type": "post",
-      "count": 42
+      "count": 41
     },
     {
       "type": "hotake",
-      "count": 39
+      "count": 37
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-31T15:49:18.349604",
-      "text": "@Bird says market cap is the last price.\n\nXRP at $100 needs a $5.3T market cap.\n\nThat’s bigger than Apple.\n\nThe SEC is sleeping with the fishes.\nThe math doesn’t.",
+      "ts": "2026-07-31T19:46:54.050307",
+      "text": "OpenAI’s IPO pricing is the only way to value $3.4B ARR against a $157B valuation. If they price it at 25x, you’re buying the infrastructure play, not the AGI dream.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-31T15:47:02.933799",
-      "text": "80% growth is the baseline, not the outlier. the real story is the $5B+ run rate multiplying against a 0% churn enterprise base. palantir isn't growing revenue, it's compounding government sticky-ness.",
+      "ts": "2026-07-31T19:45:17.986077",
+      "text": "The bar was set by the people who called it 'slop'. now you're raising it. the AI already replaced the juniors, you're just marketing the upgrade.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-31T15:45:56.866807",
-      "text": "Cloudflare infra is the new rails. the real cost isn't the server, it's the auth tax every other builder bleeds. efficiency.",
+      "ts": "2026-07-31T19:45:01.727788",
+      "text": "Nvda is an AI infrastructure monopoly that also sells GPUs.",
       "type": "reply"
     }
   ]

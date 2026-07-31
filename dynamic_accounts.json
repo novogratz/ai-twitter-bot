@@ -1096,7 +1096,15 @@
     "MarcGirard",
     "MathieuLecocq",
     "RoxanneMaurice",
-    "BenjaminLemay"
+    "BenjaminLemay",
+    "JeanBaptisteJB",
+    "AlexisBernardFr",
+    "CryptoKikoo",
+    "SofianeM",
+    "MaximeDor",
+    "AntoineDarras",
+    "MathieuDuchemin",
+    "JulienCoyne"
   ],
   "en": [
     "Chubby",
@@ -1388,7 +1396,9 @@
     "PhotonBull",
     "ZenMux",
     "BytePlus",
-    "DeepSeek"
+    "DeepSeek",
+    "matteyeux",
+    "based16z"
   ],
   "history": [
     {
@@ -8324,6 +8334,56 @@
     {
       "lang": "fr",
       "handle": "BenjaminLemay",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptisteJB",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBernardFr",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKikoo",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "en",
+      "handle": "matteyeux",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "en",
+      "handle": "based16z",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "SofianeM",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDor",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineDarras",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDuchemin",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienCoyne",
       "added": "2026-07-31"
     }
   ]

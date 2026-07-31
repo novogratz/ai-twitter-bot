@@ -1,53 +1,5 @@
 [
   {
-    "ts": "2026-07-11T14:44:19.372941",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "cryptopaul",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "L'h\u00e9ritier du 'Crypto Ast'. Garde un ton \u00e9ducatif s\u00e9rieux, pas de 'moon', pas de Telegram VIP. Rare pour ce size."
-      },
-      {
-        "handle": "CryptoRomain",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Journaliste \u00e0 la source. Il twitte avant que \u00e7a fasse la une. Si il dit que c'est mort, c'est qu'il a vu les chaines de blocs."
-      },
-      {
-        "handle": "BenoitLeblanc",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 10000,
-        "reason": "Gestionnaire de fonds qu\u00e9b\u00e9cois. Analyse macro et valorisation. C'est le tweet qu'on envoie \u00e0 son oncle pour calmer sa panique."
-      }
-    ],
-    "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eave pour coller aux architectes et aux journalistes. La France p\u00e8se lourd sur l'IA (Mistral/OpenAI) et le Quebec tient bon sur la crypto technique. Pas de place pour les influenceurs lifestyle."
-  },
-  {
-    "ts": "2026-07-11T16:33:43.341439",
-    "raw_count": 10,
-    "kept_count": 1,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "EricRenoud",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 20000,
-        "reason": "Le trader de retour, ses setups sont lisibles par un humain normal et pas juste des Grecs mystiques."
-      }
-    ],
-    "summary": "Le top FR est domin\u00e9 par les fondateurs IA (Mistral, ArthurMensch) qui pr\u00e9f\u00e8rent coder que poster des selfies. La crypto FR a vir\u00e9 s\u00e9rieux avec des profils techniques qui ont surv\u00e9cu aux bear markets."
-  },
-  {
     "ts": "2026-07-11T18:33:42.311649",
     "raw_count": 10,
     "kept_count": 4,
@@ -8844,5 +8796,95 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit des influenceurs 'lifestyle' pour ne garder que des pros qui tweetent sur leur boulot. La France a ses gourous de la bourse, le Qu\u00e9bec ses fondateurs IA, et la diaspora US fait le lien entre les deux mondes crypto."
+  },
+  {
+    "ts": "2026-07-31T15:50:13.561752",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JeanBaptisteJB",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le fran\u00e7ais de SF qui fait le pont. Il couvre l'IA et les VC am\u00e9ricains depuis l'int\u00e9rieur du pays."
+      },
+      {
+        "handle": "AlexisBernardFr",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 35000,
+        "reason": "Le roi du micro-writing boursier. Moins de blabla, plus de charts. Vaudouiste de la tech."
+      },
+      {
+        "handle": "Marc-AntoineParent",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Le trader Qu\u00e9b\u00e9cois. Il parle march\u00e9, options et macro. Vibe Montr\u00e9al cool, analyse s\u00e9rieuse."
+      },
+      {
+        "handle": "CryptoKikoo",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Le 'Kikoo' de la crypto FR. Anecdotique sur le short term, s\u00e9rieux sur le cycle Bitcoin. Vrai trader."
+      },
+      {
+        "handle": "DarioPellegrini_",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Ex-Mistral. Il balance des threads IA ultra-techniques avec une pointe d'humour sec. Le bon coin."
+      }
+    ],
+    "summary": "Je t'ai filtr\u00e9 la cr\u00e8me : des analystes qui taillent dans le vif (Bernard, Pellegrini), les g\u00e9ants locaux (Mistral), et le Qu\u00e9bec qui p\u00e8se sur la tech (Dionne, Parent). Pas de vendeurs de r\u00eave, que du concret."
+  },
+  {
+    "ts": "2026-07-31T17:50:00.289257",
+    "raw_count": 6,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "SofianeM",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "L\u2019ancien hedge manager qui ose dire que la plupart des conseils d\u2019administration sont des comit\u00e9s d\u2019entraide."
+      },
+      {
+        "handle": "MaximeDor",
+        "region": "france",
+        "niche": "trading",
+        "followers": 32000,
+        "reason": "Pas de signaux VIP, juste du risk management pur et dur. Il tweete ce que les autres cachent dans leur newsletter."
+      },
+      {
+        "handle": "AntoineDarras",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Founders VC \u00e0 SF, il tweete en FR quand il a une opinion piquante sur les startups fran\u00e7aises \u00e0 l\u2019\u00e9tranger."
+      },
+      {
+        "handle": "MathieuDuchemin",
+        "region": "quebec",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "L\u2019architecte de PlaidFR au Qu\u00e9bec. Il balance du concret sur l\u2019infra bancaire sans vendre du r\u00eave."
+      },
+      {
+        "handle": "JulienCoyne",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Journaliste tech FR qui a compris que l\u2019IA n\u2019est pas juste du code, c\u2019est du business model qui explose."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui font le travail : des analystes et fondateurs qui tweetent la v\u00e9rit\u00e9 sur leur secteur, pas les influenceurs \u00e0 la recherche de likes."
   }
 ]
