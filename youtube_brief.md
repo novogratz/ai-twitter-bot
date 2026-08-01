@@ -1,15 +1,15 @@
-# YouTube brief — 2026-07-31
+# YouTube brief — 2026-08-01
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **862**
-- reply: **843**
-- quote: **11**
-- retweet: **4**
+- Total actions logged: **697**
+- reply: **678**
+- quote: **9**
+- retweet: **5**
 - post: **3**
-- quote_gif: **1**
+- quote_gif: **2**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -22,10 +22,10 @@
 ### AI
 
 - **123 likes / 66047 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
-- **1 likes / 16 views** — the most asymmetric move this week:  1.  AMD Helios secures Microsoft: @AMD Helios rack ships this month, taking inference share from @nvidia as Microsoft signs on alongside @OpenAI and Meta 2.  The o
 - **1 likes / 52 views** — My AI nanny asked if the toddler wanted milk or play. I said milk. It ordered a $400 crate of formula from Amazon. The baby is fed. My wallet is crying.
 - **1 likes / 21 views** — Me explaining to my portfolio that AI layoffs are the tuition payment for the rest of our lives while BitMart crashes 58%
 - **1 likes / 95 views** — me looking at these charts and realizing I paid $8k for a GPU while he pays $8k in margin calls
+- **1 likes / 54 views** — Anthropic's independence is just the landlord pretending he doesn't own the building. https://x.com/edzitron/status/2081461159031673258…
 
 ### Other
 
@@ -49,22 +49,38 @@ bou
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[CNBC Top]** South Korea's 'bipolar' stock market: meltdowns, a record rally and what's to come
-  - https://www.cnbc.com/2026/07/31/south-korea-kospi-samsung-sk-hynix-meltdown-record-rebound.html
-- **[CNBC Tech]** South Korea's 'bipolar' stock market: meltdowns, a record rally and what's to come
-  - https://www.cnbc.com/2026/07/31/south-korea-kospi-samsung-sk-hynix-meltdown-record-rebound.html
-- **[Cointelegraph]** Coldcard issues Mk3 warning as experts examine $38M Bitcoin wallet drain
-  - https://cointelegraph.com/news/coldcard-mk3-warning-594-btc-sweep?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound
-- **[Wired]** Anthropic Says Claude Hacked 3 Organizations During Cybersecurity Tests
-  - https://www.wired.com/story/anthropic-says-claude-hacked-real-systems-during-cybersecurity-tests/
-- **[CNBC Top]** Anthropic says its Claude models 'gained unauthorized access' to other organizations' systems
-  - https://www.cnbc.com/2026/07/30/anthropic-says-claude-gained-unauthorized-access-to-others-systems.html
-- **[CNBC Tech]** Anthropic says its Claude models 'gained unauthorized access' to other organizations' systems
-  - https://www.cnbc.com/2026/07/30/anthropic-says-claude-gained-unauthorized-access-to-others-systems.html
-- **[TechCrunch AI]** Anthropic says its own AI models breached three companies during security tests
-  - https://techcrunch.com/2026/07/30/anthropic-says-its-own-ai-models-breached-three-companies-during-security-tests/
-- **[TechCrunch]** Anthropic says its own AI models breached three companies during security tests
-  - https://techcrunch.com/2026/07/30/anthropic-says-its-own-ai-models-breached-three-companies-during-security-tests/
+- **[X_FOLLOWING/Crypto Rover]** BREAKING:  BlackRock ETF sells $122,700,000 worth of Bitcoin...
+  - https://x.com/cryptorover/status/2083412858658763047
+- **[X_FOLLOWING/Cointelegraph]** TODAY: Starting today, Minnesota has officially banned crypto kiosks.
+
+The reason came after scammers stole nearly $1 million from residents.
+  - https://x.com/Cointelegraph/status/2083412425613697371
+- **[X_HOME/Crypto Rover]** BREAKING:  BlackRock ETF sells $122,700,000 worth of Bitcoin...
+  - https://x.com/cryptorover/status/2083412858658763047
+- **[X_HOME/Cointelegraph]** TODAY: Starting today, Minnesota has officially banned crypto kiosks.
+
+The reason came after scammers stole nearly $1 million from residents.
+  - https://x.com/Cointelegraph/status/2083412425613697371
+- **[X_HOME/Xavier FENAUX]** J’ai voulu faire un  différent ce matin,
+Parce que je m’en fiche qui est meilleur que moi,
+Je suis en compétition avec moi même,
+J’apprends, je m’améliore, et j
+  - https://x.com/XFenaux/status/2083412183833051285
+- **[X_FOLLOWING/Xavier FENAUX]** J’ai voulu faire un  différent ce matin,
+Parce que je m’en fiche qui est meilleur que moi,
+Je suis en compétition avec moi même,
+J’apprends, je m’améliore, et j
+  - https://x.com/XFenaux/status/2083412183833051285
+- **[X_SEARCH/live/CoreWeave OR CRWV OR APLD lang:en min_faves:100/The Applied Analyst]** $CRWV — the receipt.
+
+July 29, 12:14 PM: an $8.9M sweep into Sep-18 $45 calls at the ask — 4,640 contracts dropped on a strike holding just 69. Stock at $60.85.
+  - https://x.com/AppliedAnalyst/status/2083412956172177707
+- **[X_HOME/Rohan Paul]** New Meta Paper.
+
+Code optimization looks like an easy extension of reinforcement learning: reward correct programs, then give extra credit to the faster ones.
+
+
+  - https://x.com/rohanpaul_ai/status/2083412110374215893
 
 ## 🎬 Suggested video angles
 
@@ -75,4 +91,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-07-31T00:49:22*
+*Generated 2026-08-01T00:49:22*
