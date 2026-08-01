@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-01T03:49:22.043220",
-  "window_7d_actions": 5268,
-  "window_24h_actions": 593,
+  "generated_at": "2026-08-01T07:49:22.790564",
+  "window_7d_actions": 5265,
+  "window_24h_actions": 451,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5266
+      "count": 5263
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5266
+      "count": 5263
     }
   ],
   "best_hours_utc": [
@@ -44,18 +44,18 @@
       "actions": 247
     },
     {
-      "hour": 6,
-      "actions": 234
-    },
-    {
       "hour": 13,
       "actions": 232
+    },
+    {
+      "hour": 1,
+      "actions": 231
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2411
+      "count": 2408
     },
     {
       "topic": "IA",
@@ -86,7 +86,7 @@
     },
     {
       "pillar": "other",
-      "count": 1363
+      "count": 1360
     },
     {
       "pillar": "meme_reaction",
@@ -104,27 +104,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 253
-    },
-    {
-      "pillar": "other",
-      "count": 167
+      "count": 193
     },
     {
       "pillar": "market_trauma",
-      "count": 162
+      "count": 128
+    },
+    {
+      "pillar": "other",
+      "count": 121
     },
     {
       "pillar": "reply_bait",
-      "count": 7
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 6
     },
     {
       "pillar": "meme_reaction",
       "count": 2
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 1
     }
   ],
   "pillar_engagement_30d": [
@@ -167,7 +167,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4803
+      "count": 4800
     },
     {
       "type": "quote",

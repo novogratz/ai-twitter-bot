@@ -1407,7 +1407,10 @@
     "based16z",
     "TRIP",
     "Kiri",
-    "levelsio"
+    "levelsio",
+    "Hodlorado",
+    "mari",
+    "L"
   ],
   "history": [
     {
@@ -8438,6 +8441,21 @@
     {
       "lang": "en",
       "handle": "levelsio",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "en",
+      "handle": "Hodlorado",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "en",
+      "handle": "mari",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "en",
+      "handle": "L",
       "added": "2026-08-01"
     }
   ]
