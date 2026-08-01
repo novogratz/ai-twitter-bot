@@ -61,19 +61,23 @@ BLOCKLIST = {
 # Discovered accounts file (autonomous influencer discovery)
 DISCOVERED_ACCOUNTS_FILE = os.path.join(_PROJECT_ROOT, "discovered_accounts.json")
 
-# CLI/provider selection. Default is local Ollama; set AI_CLI=codex / claude /
-# gemini / opencode at the env level to switch. Claude stays supported but is
-# never reached by default.
+# CLI/provider selection. Default is local Ollama; set AI_CLI=codex / gemini /
+# opencode at the env level to switch. Claude is no longer a default route.
 AI_CLI = os.environ.get("AI_CLI", "ollama").strip().lower()
 
-def _default_model(codex_model: str, claude_model: str, gemini_model: str = "gemini-2.0-flash", opencode_model: str = "opencode/big-pickle") -> str:
+def _default_model(
+    codex_model: str,
+    claude_model: str,
+    gemini_model: str = "gemini-2.0-flash",
+    opencode_model: str = "opencode/big-pickle",
+) -> str:
     if AI_CLI == "codex":
         return codex_model
     if AI_CLI == "gemini":
         return gemini_model
     if AI_CLI in {"ollama", "opencode"}:
         return opencode_model
-    return claude_model
+    return codex_model
 
 # Haiku for all reply surfaces (volume, speed) — Sonnet for content creation.
 # 2026-06-08 (operator): the PROFILE surfaces — new posts + quote-RTs —
@@ -88,23 +92,10 @@ HOTAKE_MODEL = os.environ.get("HOTAKE_MODEL", _default_model("gpt-5.4-mini", "cl
 ROAST_MODEL = os.environ.get("ROAST_MODEL", _default_model("gpt-5.4-mini", "claude-haiku-4-5-20251001", "gemini-1.5-flash"))
 QUOTE_MODEL = os.environ.get("QUOTE_MODEL", _default_model("gpt-5.4-mini", "claude-opus-4-8", "gemini-1.5-flash"))
 
-# Profile-surface provider override (2026-06-14, operator: "barely get
-# external likes on posts + quote retweets"). Root cause: AI_CLI=ollama
-# routes EVERYTHING through qwen, which writes cryptic word-salad one-liners
-# that get 0 likes (self_winners.md was empty — zero own posts hit 3 likes
-# in 4 days). The few high-stakes posts/quotes that must EARN a like force
-# this provider with their NEWS/HOTAKE/QUOTE_MODEL (Sonnet); the reply
-# firehose (1000s/day) stays on the AI_CLI default (ollama) for cost. Set
-# to "ollama"/empty to send profile surfaces back through the local model.
-PROFILE_LLM_PROVIDER = os.environ.get("PROFILE_LLM_PROVIDER", "claude").strip() or None
-
-# Reply firehose provider. The local ollama model (a 35b qwen) intermittently
-# 503s, and the search-reply path needs a WebSearch tool ollama HTTP can't
-# serve — both silently produced ZERO replies (operator 2026-06-24: "i dont
-# see any replies by bot"). Default to claude (haiku via REPLY_MODEL): fast,
-# reliable, cheap at reply volume. Set to "ollama"/empty to revert to the
-# local firehose for cost.
-REPLY_LLM_PROVIDER = os.environ.get("REPLY_LLM_PROVIDER", "claude").strip() or None
+# Profile and reply provider overrides. Default both to Ollama; Codex is the
+# cloud fallback when explicitly enabled. Claude is not used by default.
+PROFILE_LLM_PROVIDER = os.environ.get("PROFILE_LLM_PROVIDER", "ollama").strip() or None
+REPLY_LLM_PROVIDER = os.environ.get("REPLY_LLM_PROVIDER", "ollama").strip() or None
 
 # No budget limits — the bot calls the LLM freely.
 

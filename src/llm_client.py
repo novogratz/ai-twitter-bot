@@ -477,8 +477,6 @@ def _provider() -> str:
         return "codex"
     if shutil.which("gemini"):
         return "gemini"
-    if shutil.which("claude"):
-        return "claude"
     return "ollama"
 
 
@@ -544,18 +542,7 @@ def _build_cmd(
 
 
 def _fallback_provider(primary_provider: str) -> Optional[str]:
-    env_fallback = os.environ.get("LLM_FALLBACK_CLI", "").strip().lower()
-    # Local-first content generation: when Ollama is the configured provider,
-    # do not route failed generations to Codex/Claude/Gemini unless explicitly
-    # allowed. This also protects older .env files with LLM_FALLBACK_CLI=codex.
-    if (
-        primary_provider == "ollama"
-        and env_fallback not in {"", "ollama", "opencode"}
-        and os.environ.get("LLM_ALLOW_REMOTE_FALLBACK", "0") != "1"
-    ):
-        return None
-    if primary_provider == "ollama" and not env_fallback:
-        return None
+    env_fallback = os.environ.get("LLM_FALLBACK_CLI", "codex").strip().lower()
     default_fallback = "ollama" if primary_provider == "codex" else "codex"
     fallback = env_fallback or default_fallback
     if os.environ.get("LLM_DISABLE_FALLBACK", "0") == "1":
@@ -564,7 +551,7 @@ def _fallback_provider(primary_provider: str) -> Optional[str]:
         return None
     if fallback == "opencode":
         fallback = "ollama"
-    if fallback not in {"ollama", "claude", "codex", "gemini"}:
+    if fallback not in {"ollama", "codex", "gemini"}:
         return None
     if fallback != "ollama" and not shutil.which(fallback):
         return None
@@ -585,8 +572,6 @@ def _fallback_model(primary_model: str, fallback_provider: str) -> str:
         return os.environ.get("CODEX_FALLBACK_MODEL", "").strip() or "gpt-5.4-mini"
     if fallback_provider == "gemini":
         return os.environ.get("GEMINI_FALLBACK_MODEL", "").strip() or "gemini-2.0-flash"
-    if fallback_provider == "claude":
-        return os.environ.get("CLAUDE_FALLBACK_MODEL", "").strip() or "claude-sonnet-4-6"
     if fallback_provider in {"ollama", "opencode"}:
         return os.environ.get("OPENCODE_FALLBACK_MODEL", "").strip() or "opencode/big-pickle"
     return primary_model

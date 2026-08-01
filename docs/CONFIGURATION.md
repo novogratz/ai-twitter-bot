@@ -16,7 +16,7 @@ Every knob is an environment variable, settable in `.env` (loaded by `src/config
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `AI_CLI` | `ollama` | `ollama` / `codex` / `opencode` / `claude` / `gemini`. `ollama` uses the direct local HTTP path. |
+| `AI_CLI` | `ollama` | `ollama` / `codex` / `opencode` / `gemini`. `ollama` uses the direct local HTTP path. |
 | `LLM_FALLBACK_CLI` | `codex` | Fallback provider used when the primary LLM fails, times out, is missing, or returns empty output. |
 | `LLM_FALLBACK_MODEL` | (unset) | Optional universal model for fallback calls. Overrides provider-specific fallback defaults. |
 | `OPENCODE_FALLBACK_MODEL` | `opencode/big-pickle` | Legacy model label for the direct Ollama fallback path when `LLM_FALLBACK_MODEL` is unset. |

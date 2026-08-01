@@ -2410,11 +2410,8 @@ def test_uppercase_metadata_tag_stripped_at_chokepoint():
 
 
 def test_profile_surfaces_force_capable_provider():
-    """2026-06-14 (operator: 'barely get likes on posts + quote retweets').
-    AI_CLI=ollama was routing posts/quotes through qwen (cryptic salad, 0
-    likes). The profile-surface generators must pass
-    force_provider=PROFILE_LLM_PROVIDER so they use the Sonnet models even
-    when the firehose default is ollama; replies must NOT (they stay cheap)."""
+    """Profile generators must pass force_provider=PROFILE_LLM_PROVIDER so
+    profile/reply routing can be changed independently from AI_CLI."""
     import inspect
     from src import hotake_agent, agent, quote_tweet_bot, breakout_bot, spicy_bot
 
@@ -2424,15 +2421,15 @@ def test_profile_surfaces_force_capable_provider():
             f"{mod.__name__} must force the profile provider on its generation call"
 
     from src import config
-    # Default is the capable provider, env-overridable back to ollama.
-    assert config.PROFILE_LLM_PROVIDER in ("claude", "ollama", None) or \
+    # Default is Ollama, env-overridable to Codex/Gemini when needed.
+    assert config.PROFILE_LLM_PROVIDER in ("ollama", "codex", "gemini", None) or \
         isinstance(config.PROFILE_LLM_PROVIDER, str)
 
 
 def test_generate_quote_no_artificial_timeout_clipping_cloud_provider():
     """2026-06-17 — quote_tweet_bot._generate_quote used to pass timeout=30
     to run_llm, an ollama-era number. Since 2026-06-14 the QUOTE lane runs
-    through PROFILE_LLM_PROVIDER (Claude Sonnet), where the CLI spawn +
+    through PROFILE_LLM_PROVIDER, where a cloud CLI spawn +
     generation regularly exceed 30s. Result: 7 'all 3 attempts failed
     (empty draft)' SKIPs in a single day, each burning ~3 min on the
     timeout + ollama-fallback retry ladder. Other PROFILE_LLM_PROVIDER
@@ -2449,15 +2446,15 @@ def test_generate_quote_no_artificial_timeout_clipping_cloud_provider():
         "(otherwise QUOTE drops back to the ollama firehose model)"
     )
     # And it must NOT clip the call to a sub-default timeout that would
-    # truncate Claude mid-generation. timeout=60 is the minimum survivable
-    # for cloud Sonnet on this prompt; anything stricter is the old bug.
+    # truncate cloud generation mid-flight. timeout=60 is the minimum
+    # survivable for this prompt; anything stricter is the old bug.
     import re
     m = re.search(r"run_llm\([^)]*timeout\s*=\s*(\d+)[^)]*label=\"QUOTE\"", src) or \
         re.search(r"run_llm\([^)]*label=\"QUOTE\"[^)]*timeout\s*=\s*(\d+)", src)
     if m:
         assert int(m.group(1)) >= 60, (
             f"_generate_quote run_llm timeout={m.group(1)}s is too short for "
-            "PROFILE_LLM_PROVIDER (Claude Sonnet); use >=60s or omit "
+            "PROFILE_LLM_PROVIDER; use >=60s or omit "
             "(defaults to 180s)."
         )
 
@@ -3083,7 +3080,7 @@ def test_engagement_log_records_provider_column(monkeypatch, tmp_path):
     p = tmp_path / "engagement_log.csv"
     monkeypatch.setattr(el, "ENGAGEMENT_LOG_FILE", str(p))
     monkeypatch.setenv("PROFILE_LLM_PROVIDER", "ollama")
-    monkeypatch.setenv("AI_CLI", "claude")
+    monkeypatch.setenv("AI_CLI", "codex")
     el.log_post("test post", source="TEST")
     el.log_reply("https://x.com/someone/status/123", "test reply", "reply", source="TEST")
     rows = list(csv.reader(open(p)))
@@ -3091,7 +3088,7 @@ def test_engagement_log_records_provider_column(monkeypatch, tmp_path):
     post_row = next(r for r in rows[1:] if r[1] == "post")
     reply_row = next(r for r in rows[1:] if r[1] == "reply")
     assert post_row[7] == "ollama", "profile surface must tag PROFILE_LLM_PROVIDER"
-    assert reply_row[7] == "claude", "reply surface must tag the AI_CLI default"
+    assert reply_row[7] == "codex", "reply surface must tag the AI_CLI default"
 
 
 def test_debate_bot_engages_fresh_mentions_through_chokepoint(monkeypatch, tmp_path):

@@ -16,7 +16,7 @@ cp .env.example .env
 Edit `.env`:
 
 - Set `BOT_HANDLE` to your X username (without `@`)
-- Set `AI_CLI` to `ollama` for the local default, with `LLM_FALLBACK_CLI=codex`
+- Set `AI_CLI=ollama` and `LLM_FALLBACK_CLI=codex`
 - Set the model defaults if you explicitly switch away from Ollama
 - Adjust caps to match your tier
 
