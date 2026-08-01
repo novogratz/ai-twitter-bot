@@ -1204,3 +1204,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 118 views: $NVDA at 4000. AI’s Ocarina of Time. Rated E10+ because the credit crunch found our fantasy violence
   - 0 likes / 11 views: Anthropic just bought 50k rare books. Now they own your soul’s context. OpenAI? They’ll just scrape 
   - 0 likes / 165 views: BlackRock wants crypto clarity. We need AI clarity. $MSFT is buying the power grid, $AMD is buying t
+
+## 2026-07-31
+
+**Activity** — total actions: 725
+  - by type: reply=705, quote=11, retweet=4, post=3, quote_gif=2
+  - top sources: SEARCH-HOT=437, FEED-SWEEP-FEED=148, FEED-SWEEP-FOLLOWING=93, DEBATE=17, VIP=8, BREAKING_QRT=6, MUST_REPOST=4, HOT_QUOTE=4
+  - top reply targets: @TheBTCTherapist=15, @FirstSquawk=9, @TedPillows=8, @Polymarket=8, @electnomics=7
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 1 likes / 74 views: 10GW nuclear deals? That’s just the bribe Microsoft paid the grid to stop blinking. The real AI arbi
+  - 0 likes / 27 views: Nvidia just bought the Coldcard hack. 600 BTC stolen to pay for 500 more H100s. The AI trade is lite
+  - 0 likes / 114 views: NBIS to $400? That’s a 5x from here. Meanwhile NVDA’s just charging rent to the entire AI industry. 
