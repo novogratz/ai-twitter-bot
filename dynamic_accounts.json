@@ -1406,7 +1406,8 @@
     "matteyeux",
     "based16z",
     "TRIP",
-    "Kiri"
+    "Kiri",
+    "levelsio"
   ],
   "history": [
     {
@@ -8433,6 +8434,11 @@
       "lang": "en",
       "handle": "Kiri",
       "added": "2026-07-31"
+    },
+    {
+      "lang": "en",
+      "handle": "levelsio",
+      "added": "2026-08-01"
     }
   ]
 }

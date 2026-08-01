@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-31T23:49:21.955552",
-  "window_7d_actions": 5274,
-  "window_24h_actions": 729,
+  "generated_at": "2026-08-01T03:49:22.043220",
+  "window_7d_actions": 5268,
+  "window_24h_actions": 593,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5272
+      "count": 5266
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5272
+      "count": 5266
     }
   ],
   "best_hours_utc": [
@@ -44,30 +44,30 @@
       "actions": 247
     },
     {
-      "hour": 0,
+      "hour": 6,
       "actions": 234
     },
     {
-      "hour": 6,
-      "actions": 234
+      "hour": 13,
+      "actions": 232
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2412
+      "count": 2411
     },
     {
       "topic": "IA",
-      "count": 2120
+      "count": 2113
     },
     {
       "topic": "Crypto",
-      "count": 553
+      "count": 554
     },
     {
       "topic": "Bourse",
-      "count": 442
+      "count": 441
     },
     {
       "topic": "Spatial",
@@ -78,7 +78,7 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2344
+      "count": 2337
     },
     {
       "pillar": "market_trauma",
@@ -86,7 +86,7 @@
     },
     {
       "pillar": "other",
-      "count": 1362
+      "count": 1363
     },
     {
       "pillar": "meme_reaction",
@@ -104,23 +104,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 316
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 201
+      "count": 253
     },
     {
       "pillar": "other",
-      "count": 198
+      "count": 167
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 162
     },
     {
       "pillar": "reply_bait",
-      "count": 9
+      "count": 7
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 2
     },
     {
       "pillar": "meme_reaction",
@@ -167,7 +167,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4804
+      "count": 4803
     },
     {
       "type": "quote",
@@ -187,7 +187,7 @@
     },
     {
       "type": "retweet",
-      "count": 34
+      "count": 29
     }
   ],
   "viral_examples": [
