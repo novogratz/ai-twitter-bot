@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-31T19:49:22.871912",
-  "window_7d_actions": 5364,
-  "window_24h_actions": 841,
+  "generated_at": "2026-07-31T23:49:21.955552",
+  "window_7d_actions": 5274,
+  "window_24h_actions": 729,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5362
+      "count": 5272
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5362
+      "count": 5272
     }
   ],
   "best_hours_utc": [
@@ -55,42 +55,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2457
+      "count": 2412
     },
     {
       "topic": "IA",
-      "count": 2153
+      "count": 2120
     },
     {
       "topic": "Crypto",
-      "count": 559
+      "count": 553
     },
     {
       "topic": "Bourse",
-      "count": 446
+      "count": 442
     },
     {
       "topic": "Spatial",
-      "count": 94
+      "count": 89
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2389
-    },
-    {
-      "pillar": "other",
-      "count": 1391
+      "count": 2344
     },
     {
       "pillar": "market_trauma",
-      "count": 1384
+      "count": 1373
+    },
+    {
+      "pillar": "other",
+      "count": 1362
     },
     {
       "pillar": "meme_reaction",
-      "count": 109
+      "count": 105
     },
     {
       "pillar": "reply_bait",
@@ -98,33 +98,33 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 33
+      "count": 32
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 370
+      "count": 316
     },
     {
       "pillar": "market_trauma",
-      "count": 232
+      "count": 201
     },
     {
       "pillar": "other",
-      "count": 224
+      "count": 198
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 3
     },
     {
       "pillar": "meme_reaction",
-      "count": 1
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
@@ -136,46 +136,46 @@
       "low_sample": false
     },
     {
-      "pillar": "other",
-      "posts": 74,
-      "avg_likes": 0.11,
-      "avg_views": 33.2,
+      "pillar": "ai_news_take",
+      "posts": 73,
+      "avg_likes": 0.12,
+      "avg_views": 39.9,
       "low_sample": false
     },
     {
-      "pillar": "ai_news_take",
-      "posts": 72,
+      "pillar": "other",
+      "posts": 73,
       "avg_likes": 0.11,
-      "avg_views": 39.4,
+      "avg_views": 33.1,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 3,
+      "posts": 2,
       "avg_likes": 0.0,
-      "avg_views": 40.3,
+      "avg_views": 41.0,
       "low_sample": false
     },
     {
       "pillar": "ai_vs_btc",
-      "posts": 2,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 38.0,
+      "avg_views": 58.3,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4882
+      "count": 4804
     },
     {
       "type": "quote",
-      "count": 272
+      "count": 264
     },
     {
       "type": "quote_gif",
-      "count": 98
+      "count": 94
     },
     {
       "type": "post",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-31T19:46:54.050307",
-      "text": "OpenAI’s IPO pricing is the only way to value $3.4B ARR against a $157B valuation. If they price it at 25x, you’re buying the infrastructure play, not the AGI dream.",
+      "ts": "2026-07-31T20:37:30.805139",
+      "text": "Google just killed its own satellite data moat because the model hallucinated a pool in the desert.\n\nthe real moat isn't the images, it's the ability to spot when the model is lying.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-31T19:45:17.986077",
-      "text": "The bar was set by the people who called it 'slop'. now you're raising it. the AI already replaced the juniors, you're just marketing the upgrade.",
+      "ts": "2026-07-31T20:30:05.131563",
+      "text": "Anthropic burned $5B on colossus to learn it needs guardrails. claude is the golden retriever of llms: loves you, trips over the rug, and needs a leash.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-31T19:45:01.727788",
-      "text": "Nvda is an AI infrastructure monopoly that also sells GPUs.",
+      "ts": "2026-07-31T20:29:48.874913",
+      "text": "STRC is the casino chip, BTC is the vault. 12% yield on a token that doesn't mine is just delayed appreciation disguised as interest. buy the payout.",
       "type": "reply"
     }
   ]

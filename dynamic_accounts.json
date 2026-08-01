@@ -1104,7 +1104,13 @@
     "MaximeDor",
     "AntoineDarras",
     "MathieuDuchemin",
-    "JulienCoyne"
+    "JulienCoyne",
+    "mickaeldietrich",
+    "PierreVannier",
+    "AdrienMauger",
+    "JulienCahen",
+    "SylvainLaforge",
+    "MariusLemay"
   ],
   "en": [
     "Chubby",
@@ -1398,7 +1404,9 @@
     "BytePlus",
     "DeepSeek",
     "matteyeux",
-    "based16z"
+    "based16z",
+    "TRIP",
+    "Kiri"
   ],
   "history": [
     {
@@ -8384,6 +8392,46 @@
     {
       "lang": "fr",
       "handle": "JulienCoyne",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickaeldietrich",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreVannier",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienMauger",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienCahen",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLaforge",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "fr",
+      "handle": "MariusLemay",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "en",
+      "handle": "TRIP",
+      "added": "2026-07-31"
+    },
+    {
+      "lang": "en",
+      "handle": "Kiri",
       "added": "2026-07-31"
     }
   ]

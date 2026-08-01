@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-07-11T18:33:42.311649",
-    "raw_count": 10,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ArnaudVernoux",
-        "region": "france",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "Founders & Tech, il balance des insights sur Mistral et les US sans jargon \u00e0 la con."
-      },
-      {
-        "handle": "PhilippeDion",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Boursorama, il d\u00e9crypte la macro \u00e9co avec un sens de la blague que les francos adorent."
-      },
-      {
-        "handle": "DylanMoulinet",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 28000,
-        "reason": "CTO de Payfit, il explique la fintech comme un patron, pas comme un influenceur."
-      },
-      {
-        "handle": "LudovicBochet",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Diaspora FR \u00e0 SF, il track les startups IA US avec un \u0153il de Parisien blas\u00e9."
-      }
-    ],
-    "summary": "Pas de vendeurs de r\u00eave ici, juste des technos et des traders qui savent ce qu'ils font. Le mix France/Qu\u00e9bec/USA est solide pour couvrir l'\u00e9cosyst\u00e8me francophone sans se r\u00e9p\u00e9ter."
-  },
-  {
     "ts": "2026-07-11T20:41:47.982133",
     "raw_count": 8,
     "kept_count": 2,
@@ -8886,5 +8848,57 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui font le travail : des analystes et fondateurs qui tweetent la v\u00e9rit\u00e9 sur leur secteur, pas les influenceurs \u00e0 la recherche de likes."
+  },
+  {
+    "ts": "2026-07-31T19:50:08.595196",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mickaeldietrich",
+        "region": "france",
+        "niche": "ai",
+        "followers": 135000,
+        "reason": "Le Vieux Con de la Tech. Si il tweet en FR, c'est que l'IA a un avenir."
+      },
+      {
+        "handle": "PierreVannier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Journaliste BFM Business. Il a le fil des CEOs. Mordant quand il faut."
+      },
+      {
+        "handle": "AdrienMauger",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 32000,
+        "reason": "Ex-Crypto de Boursorama. Il tweet ce que les autres ne voient pas dans la fintech."
+      },
+      {
+        "handle": "JulienCahen",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Le gars le plus malin de l'\u00e9cosyst\u00e8me crypto fr. Il twitte, le march\u00e9 bouge."
+      },
+      {
+        "handle": "SylvainLaforge",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le pape de l'IA au Qu\u00e9bec. Il tweet en FR, il comprend l'US. Un pont vital."
+      },
+      {
+        "handle": "MariusLemay",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Analyste DeFi qu\u00e9b\u00e9cois. Ses threads sur les tokenomics valent plus cher que ma vie."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui font bouger les lignes ou les prix. La France domine sur la fintech/crypto, le Qu\u00e9bec sur l'IA pure. L'Am\u00e9rique francophone, c'est du gold pur."
   }
 ]
