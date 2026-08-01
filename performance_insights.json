@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-01T12:40:33.123908",
-  "window_7d_actions": 5464,
-  "window_24h_actions": 468,
+  "generated_at": "2026-08-01T16:40:33.369518",
+  "window_7d_actions": 5616,
+  "window_24h_actions": 479,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5460
+      "count": 5612
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5460
+      "count": 5612
     }
   ],
   "best_hours_utc": [
@@ -36,69 +36,69 @@
       "actions": 326
     },
     {
-      "hour": 10,
-      "actions": 289
+      "hour": 12,
+      "actions": 292
     },
     {
-      "hour": 12,
-      "actions": 278
+      "hour": 10,
+      "actions": 289
     },
     {
       "hour": 9,
       "actions": 273
     },
     {
-      "hour": 8,
-      "actions": 245
+      "hour": 13,
+      "actions": 271
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2497
+      "count": 2572
     },
     {
       "topic": "IA",
-      "count": 2187
+      "count": 2233
     },
     {
       "topic": "Crypto",
-      "count": 576
+      "count": 600
     },
     {
       "topic": "Bourse",
-      "count": 465
+      "count": 479
     },
     {
       "topic": "Spatial",
-      "count": 92
+      "count": 96
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2421
+      "count": 2474
     },
     {
       "pillar": "other",
-      "count": 1421
+      "count": 1472
     },
     {
       "pillar": "market_trauma",
-      "count": 1415
+      "count": 1451
     },
     {
       "pillar": "meme_reaction",
-      "count": 107
+      "count": 113
     },
     {
       "pillar": "reply_bait",
-      "count": 67
+      "count": 69
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 33
+      "count": 37
     }
   ],
   "pillar_mix_24h": [
@@ -108,45 +108,45 @@
     },
     {
       "pillar": "other",
-      "count": 133
+      "count": 147
     },
     {
       "pillar": "market_trauma",
-      "count": 120
+      "count": 108
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 11
     },
     {
       "pillar": "meme_reaction",
-      "count": 4
+      "count": 9
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 2
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 47,
-      "avg_likes": 0.23,
-      "avg_views": 36.2,
+      "posts": 49,
+      "avg_likes": 0.27,
+      "avg_views": 36.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 75,
+      "posts": 76,
       "avg_likes": 0.13,
-      "avg_views": 32.7,
+      "avg_views": 32.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 72,
-      "avg_likes": 0.11,
-      "avg_views": 39.9,
+      "posts": 69,
+      "avg_likes": 0.12,
+      "avg_views": 40.3,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4975
+      "count": 5107
     },
     {
       "type": "quote",
-      "count": 278
+      "count": 288
     },
     {
       "type": "quote_gif",
-      "count": 96
+      "count": 100
     },
     {
       "type": "post",
-      "count": 47
+      "count": 50
     },
     {
       "type": "hotake",
-      "count": 39
+      "count": 42
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-01T12:39:04.605469",
-      "text": "Nvidia’s brute forcing through resistance like a toddler demanding snacks. Your wallet’s finally taking a nap.",
+      "ts": "2026-08-01T16:37:21.579169",
+      "text": "Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)\n\nhttps://finance.yahoo.com/technology/articles/apple-ceo-sends-strong-warning-200700035.html",
+      "type": "hotake"
+    },
+    {
+      "ts": "2026-08-01T16:37:04.859977",
+      "text": "BTC is just gold that learned to send itself over TCP/IP.\n\n401k Dave’s summer vacation.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-01T12:38:32.006701",
-      "text": "OpenAI's burn is ~$5B/yr. Amazon needs $5B in Q3 to offset AWS margin pressure. The IPO isn't a listing. It's an earnings management tool for Jeff's Q3.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-01T12:38:14.563223",
-      "text": "T3 is 1863.30.\n\nfour pips. the S&P moves 40 points in lunch hour.",
+      "ts": "2026-08-01T16:34:47.913179",
+      "text": "16x H100s is about $128M. Kimi K3 is training on a fraction of that cost.\n\nChina is building the infrastructure to ship open-weights faster than the US can lock them down.",
       "type": "reply"
     }
   ]

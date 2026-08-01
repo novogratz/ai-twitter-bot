@@ -1,74 +1,5 @@
 [
   {
-    "ts": "2026-07-12T00:48:51.971504",
-    "raw_count": 10,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "benjaminl_ou",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le 'p\u00e8re No\u00ebl' de la bourse en FR. Analytique, s\u00e9rieux, mais pas chiant."
-      },
-      {
-        "handle": "arthur_mensch",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "CEO Mistral AI. Le mec qui fait parler l'IA fran\u00e7aise, twitte technique mais accessible."
-      },
-      {
-        "handle": "maximegeeraerts",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 22000,
-        "reason": "Ex-Revolut, maintenant chez Revolut. Le gars qui a v\u00e9cu la scaling fever, twitte bourse/fintech."
-      },
-      {
-        "handle": "eric_dr",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Eric Dr (ex-AI at Google, now indie). Diaspora FR aux US, twitte AI en FR/EN mixte."
-      },
-      {
-        "handle": "jules_c",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Analyste crypto Qu\u00e9b\u00e9cois. Pas de guru attitude, juste des charts et du sens."
-      }
-    ],
-    "summary": "On a filtr\u00e9 les guru en surv\u00eatement pour ne garder que les pros qui font bouger le march\u00e9 ou l'IA. Mix FR/QC/US, 100% qualitatif, 0% formation \u00e0 99\u20ac."
-  },
-  {
-    "ts": "2026-07-12T02:43:31.426800",
-    "raw_count": 8,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "OlivierBourgain",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "CEO de 13h. Il poste souvent sur la data, l'IA et les tendances tech fran\u00e7aises. Vraiment actif."
-      },
-      {
-        "handle": "MathieuGagne",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Directeur de produits chez Shopify. Il tweet sur le commerce, l'IA et la tech qu\u00e9b\u00e9coise sans pompe."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les influenceurs formations pour ne garder que les builders et les traders qui tweetent vraiment en FR. Le mix FR/QC/USA est coh\u00e9rent, avec un focus lourd sur l'IA qui est la niche porteuse du moment."
-  },
-  {
     "ts": "2026-07-12T04:38:30.397822",
     "raw_count": 10,
     "kept_count": 2,
@@ -8893,5 +8824,151 @@
       }
     ],
     "summary": "Une s\u00e9lection chirurgicale : des experts fran\u00e7ais qui font parler (Bourgeois, Dormoy), un crack qu\u00e9b\u00e9cois (MaximeG) et deux valeurs s\u00fbres de la fintech/trading. Z\u00e9ro vendeur de r\u00eaves, juste du gras."
+  },
+  {
+    "ts": "2026-08-01T12:41:20.510753",
+    "raw_count": 8,
+    "kept_count": 8,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "mehdi_ayari",
+        "region": "france",
+        "niche": "tech",
+        "followers": 145000,
+        "reason": "L'oracle des startups. Moins 'IA pure', plus 'ecosyst\u00e8me'. Il tweet des infos tech/finance avant les march\u00e9s, indispensable pour voir venir les deals avant le crowd."
+      },
+      {
+        "handle": "cyrilmagnin",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 55000,
+        "reason": "La r\u00e9f\u00e9rence absolue sur X pour l'IA. Bas\u00e9 \u00e0 SF mais FR de c\u0153ur. Il compile les papers et les news tech en 140 caract\u00e8res. Si tu ne le suis pas, tu es en retard de 48h."
+      },
+      {
+        "handle": "joshuam13",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "Ex-VC, maintenant solo degen. Il tweet des threads de deepe-diving sur les tokens et les infra. C'est l'\u00e9quivalent d'un Morning Brew mais \u00e9crit par un trader qui a vu des crashs."
+      },
+      {
+        "handle": "joffrey_sclafani",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 38000,
+        "reason": "Le roi de l'analyse on-chain \u00e0 la fran\u00e7aise. Il balance des gems techniques sur Solana/Base sans le jargon pompeux de la finance US. Direct et factuel."
+      },
+      {
+        "handle": "maximebeauchesne",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 30000,
+        "reason": "Ex-associ\u00e9 chez VC, il tweet des analyses macro et des le\u00e7ons d'investissement. Sa prose est claire et sans gras. C'est le 'finance twitter' propre, sans les influenceurs de trading en Yatch."
+      },
+      {
+        "handle": "dorianmasse",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Le CTO de Mistral AI. Tweet code et architecture. C'est pas du marketing, c'est le mec qui fait la sauce. Si tu veux savoir o\u00f9 va l'IA en France, suis sa feed."
+      },
+      {
+        "handle": "alexander_duval",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Le gars qui couvre les mini-caps et le growth au Qu\u00e9bec. Pas de blabla politique, juste du P/E, des bilans et des opportunites sous-estim\u00e9es. Le plus utile pour un portefeuille CA."
+      },
+      {
+        "handle": "alexandre_delvaux",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Fondateur de Sift AI. Il documente sa croissance ('build in public') avec des m\u00e9triques concr\u00e8tes. Mieux qu'un analyste qui pr\u00e9dit, c'est un fondateur qui montre les chiffres."
+      }
+    ],
+    "summary": "Un mix \u00e9quilibr\u00e9 entre les geeks de Mistral, les degen on-chain et les value investors qu\u00e9b\u00e9cois. J'ai \u00e9limin\u00e9 les vendeurs de r\u00eaves pour ne garder que ceux qui ont un produit ou un tableau de bord \u00e0 montrer."
+  },
+  {
+    "ts": "2026-08-01T14:41:38.293661",
+    "raw_count": 10,
+    "kept_count": 10,
+    "accounts_added": 10,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Clem213",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 130000,
+        "reason": "Le roi des memes crypto FR. Il twitte en franglais, rigole, et son audience est massive. Z\u00e9ro formation \u00e0 99\u20ac, pur divertissement crypto."
+      },
+      {
+        "handle": "AlexisLeClecio",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "Cr\u00e9ateur de 'Boursier'. Il d\u00e9cortique les actions, les ETF et l'\u00e9conomie. Le ton est p\u00e9dagogique mais mordant sur les bulles."
+      },
+      {
+        "handle": "BenoitDeneux",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "CEO de Qonto. Twitte beaucoup sur la fintech, la tech et la vie de founder. Plus authentique que les influenceurs bourse classiques."
+      },
+      {
+        "handle": "GaelleBert",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Ex-PayPal, maintenant Investisseur. Elle mixe IA, fintech et bourse avec un ton direct. Pas une vendeuse de r\u00eaves."
+      },
+      {
+        "handle": "MathieuBourcier",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Le roi de la finance perso au Qu\u00e9bec. Il couvre l'investissement, la crypto et l'\u00e9conomie avec humour. Tr\u00e8s actif."
+      },
+      {
+        "handle": "MaximeGM",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Gestionnaire de fonds (Maelstr\u00f6m). Il fait des threads sur l'analyse fondamentale et la macro, sans vendre de signaux."
+      },
+      {
+        "handle": "YvanLussier",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 25000,
+        "reason": "Analyste macro\u00e9conomique. Ses prises de position sur les taux et la tech sont percutantes. Pas de blabla politique."
+      },
+      {
+        "handle": "PierreLavoie",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 20000,
+        "reason": "Investisseur angel et fondateur. Il tweet sur l'IA, la SaaS et les startups qu\u00e9b\u00e9coises. R\u00e9seau tech dense."
+      },
+      {
+        "handle": "LucasLecocq_",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Journaliste tech (ex-Nextinpact/Owni) tr\u00e8s bien connect\u00e9. Il couvre l'IA, la bourse tech et les lev\u00e9es de fonds avec du contexte."
+      },
+      {
+        "handle": "SylvainDumas",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Co-founder de MoonPay. Il tweet en FR sur la crypto infrastructure et l'adoption. Moins 'degen' que Clem, plus pro."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des 'gurus' formations pour te donner des pros : des fondateurs, des analystes macro et des cr\u00e9ateurs de contenu pur. La France a l'avantage du volume (Clem), le Qu\u00e9bec a une sc\u00e8ne fintech/bourse tr\u00e8s vivante (Mathieu B.), et les US-francophones restent discrets mais solides (Sylvain)."
   }
 ]

@@ -1111,7 +1111,22 @@
     "JulienCahen",
     "SylvainLaforge",
     "MariusLemay",
-    "JulesDormoy"
+    "JulesDormoy",
+    "mehdi_ayari",
+    "cyrilmagnin",
+    "joshuam13",
+    "dorianmasse",
+    "alexander_duval",
+    "Clem213",
+    "AlexisLeClecio",
+    "BenoitDeneux",
+    "GaelleBert",
+    "MathieuBourcier",
+    "MaximeGM",
+    "YvanLussier",
+    "PierreLavoie",
+    "LucasLecocq_",
+    "SylvainDumas"
   ],
   "en": [
     "Chubby",
@@ -1415,7 +1430,10 @@
     "Car",
     "snav",
     "ZaraAI",
-    "Vivi"
+    "Vivi",
+    "Lina",
+    "Uday",
+    "KawzInvests"
   ],
   "history": [
     {
@@ -8486,6 +8504,96 @@
     {
       "lang": "fr",
       "handle": "JulesDormoy",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "mehdi_ayari",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "cyrilmagnin",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "joshuam13",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "dorianmasse",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "alexander_duval",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "en",
+      "handle": "Lina",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "en",
+      "handle": "Uday",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "en",
+      "handle": "KawzInvests",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "Clem213",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisLeClecio",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitDeneux",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelleBert",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuBourcier",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeGM",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "YvanLussier",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLavoie",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasLecocq_",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainDumas",
       "added": "2026-08-01"
     }
   ]
