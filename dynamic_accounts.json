@@ -1110,7 +1110,8 @@
     "AdrienMauger",
     "JulienCahen",
     "SylvainLaforge",
-    "MariusLemay"
+    "MariusLemay",
+    "JulesDormoy"
   ],
   "en": [
     "Chubby",
@@ -1410,7 +1411,11 @@
     "levelsio",
     "Hodlorado",
     "mari",
-    "L"
+    "L",
+    "Car",
+    "snav",
+    "ZaraAI",
+    "Vivi"
   ],
   "history": [
     {
@@ -8456,6 +8461,31 @@
     {
       "lang": "en",
       "handle": "L",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "en",
+      "handle": "Car",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "en",
+      "handle": "snav",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "en",
+      "handle": "ZaraAI",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "en",
+      "handle": "Vivi",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesDormoy",
       "added": "2026-08-01"
     }
   ]

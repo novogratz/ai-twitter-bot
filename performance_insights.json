@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-08-01T07:49:22.790564",
-  "window_7d_actions": 5265,
-  "window_24h_actions": 451,
+  "generated_at": "2026-08-01T12:40:33.123908",
+  "window_7d_actions": 5464,
+  "window_24h_actions": 468,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5263
+      "count": 5460
     },
     {
       "pattern": "METAPHOR",
-      "count": 1
+      "count": 3
     },
     {
       "pattern": "EN_ANCHOR",
@@ -18,135 +18,135 @@
   ],
   "worst_patterns": [
     {
-      "pattern": "METAPHOR",
-      "count": 1
-    },
-    {
       "pattern": "EN_ANCHOR",
       "count": 1
     },
     {
+      "pattern": "METAPHOR",
+      "count": 3
+    },
+    {
       "pattern": "UNKNOWN",
-      "count": 5263
+      "count": 5460
     }
   ],
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 283
+      "actions": 326
     },
     {
       "hour": 10,
-      "actions": 247
+      "actions": 289
     },
     {
       "hour": 12,
-      "actions": 247
+      "actions": 278
     },
     {
-      "hour": 13,
-      "actions": 232
+      "hour": 9,
+      "actions": 273
     },
     {
-      "hour": 1,
-      "actions": 231
+      "hour": 8,
+      "actions": 245
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2408
+      "count": 2497
     },
     {
       "topic": "IA",
-      "count": 2113
+      "count": 2187
     },
     {
       "topic": "Crypto",
-      "count": 554
+      "count": 576
     },
     {
       "topic": "Bourse",
-      "count": 441
+      "count": 465
     },
     {
       "topic": "Spatial",
-      "count": 89
+      "count": 92
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2337
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 1373
+      "count": 2421
     },
     {
       "pillar": "other",
-      "count": 1360
+      "count": 1421
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 1415
     },
     {
       "pillar": "meme_reaction",
-      "count": 105
+      "count": 107
     },
     {
       "pillar": "reply_bait",
-      "count": 58
+      "count": 67
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 32
+      "count": 33
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 193
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 128
+      "count": 199
     },
     {
       "pillar": "other",
-      "count": 121
+      "count": 133
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 120
     },
     {
       "pillar": "reply_bait",
-      "count": 6
+      "count": 10
     },
     {
       "pillar": "meme_reaction",
-      "count": 2
+      "count": 4
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 1
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 48,
+      "posts": 47,
       "avg_likes": 0.23,
-      "avg_views": 36.3,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 73,
-      "avg_likes": 0.12,
-      "avg_views": 39.9,
+      "avg_views": 36.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 73,
+      "posts": 75,
+      "avg_likes": 0.13,
+      "avg_views": 32.7,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 72,
       "avg_likes": 0.11,
-      "avg_views": 33.1,
+      "avg_views": 39.9,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4800
+      "count": 4975
     },
     {
       "type": "quote",
-      "count": 264
+      "count": 278
     },
     {
       "type": "quote_gif",
-      "count": 94
+      "count": 96
     },
     {
       "type": "post",
-      "count": 41
+      "count": 47
     },
     {
       "type": "hotake",
-      "count": 37
+      "count": 39
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-07-31T20:37:30.805139",
-      "text": "Google just killed its own satellite data moat because the model hallucinated a pool in the desert.\n\nthe real moat isn't the images, it's the ability to spot when the model is lying.",
+      "ts": "2026-08-01T12:39:04.605469",
+      "text": "Nvidia’s brute forcing through resistance like a toddler demanding snacks. Your wallet’s finally taking a nap.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-31T20:30:05.131563",
-      "text": "Anthropic burned $5B on colossus to learn it needs guardrails. claude is the golden retriever of llms: loves you, trips over the rug, and needs a leash.",
+      "ts": "2026-08-01T12:38:32.006701",
+      "text": "OpenAI's burn is ~$5B/yr. Amazon needs $5B in Q3 to offset AWS margin pressure. The IPO isn't a listing. It's an earnings management tool for Jeff's Q3.",
       "type": "reply"
     },
     {
-      "ts": "2026-07-31T20:29:48.874913",
-      "text": "STRC is the casino chip, BTC is the vault. 12% yield on a token that doesn't mine is just delayed appreciation disguised as interest. buy the payout.",
+      "ts": "2026-08-01T12:38:14.563223",
+      "text": "T3 is 1863.30.\n\nfour pips. the S&P moves 40 points in lunch hour.",
       "type": "reply"
     }
   ]

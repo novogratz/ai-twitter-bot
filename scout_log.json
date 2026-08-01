@@ -1,29 +1,5 @@
 [
   {
-    "ts": "2026-07-11T20:41:47.982133",
-    "raw_count": 8,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilDh",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Le seul qui explique l'analyse technique sans endormir la galerie. Twitte comme un trader, parle comme un prof."
-      },
-      {
-        "handle": "MonaMou",
-        "region": "france",
-        "niche": "tech/ai",
-        "followers": 15000,
-        "reason": "VC chez Archetype. Elle tweet les startups avant qu'elles soient \u00e0 la une. Si tu la suis pas, tu as 6 mois de retard."
-      }
-    ],
-    "summary": "Le mix parfait : Mistral pour l'hype, Rochard pour la conviction BTC, et Arnaud/LeLong pour ne pas rater la macro. On \u00e9vite les vendeurs de r\u00eaves, on garde les builders."
-  },
-  {
     "ts": "2026-07-12T00:48:51.971504",
     "raw_count": 10,
     "kept_count": 5,
@@ -8900,5 +8876,22 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit pour ne garder que ceux qui font bouger les lignes ou les prix. La France domine sur la fintech/crypto, le Qu\u00e9bec sur l'IA pure. L'Am\u00e9rique francophone, c'est du gold pur."
+  },
+  {
+    "ts": "2026-08-01T10:41:53.733759",
+    "raw_count": 8,
+    "kept_count": 1,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulesDormoy",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Directeur de recherche chez Deepmind France. Il rend l'IA accessible sans te faire croire que tu peux juste 'copier-coller' Python pour gagner un million."
+      }
+    ],
+    "summary": "Une s\u00e9lection chirurgicale : des experts fran\u00e7ais qui font parler (Bourgeois, Dormoy), un crack qu\u00e9b\u00e9cois (MaximeG) et deux valeurs s\u00fbres de la fintech/trading. Z\u00e9ro vendeur de r\u00eaves, juste du gras."
   }
 ]
