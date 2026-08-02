@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-01T16:40:33.369518",
-  "window_7d_actions": 5616,
-  "window_24h_actions": 479,
+  "generated_at": "2026-08-01T20:40:33.902664",
+  "window_7d_actions": 5756,
+  "window_24h_actions": 496,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5612
+      "count": 5752
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5612
+      "count": 5752
     }
   ],
   "best_hours_utc": [
@@ -55,98 +55,98 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2572
+      "count": 2643
     },
     {
       "topic": "IA",
-      "count": 2233
+      "count": 2284
     },
     {
       "topic": "Crypto",
-      "count": 600
+      "count": 615
     },
     {
       "topic": "Bourse",
-      "count": 479
+      "count": 485
     },
     {
       "topic": "Spatial",
-      "count": 96
+      "count": 99
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2474
+      "count": 2527
     },
     {
       "pillar": "other",
-      "count": 1472
+      "count": 1518
     },
     {
       "pillar": "market_trauma",
-      "count": 1451
+      "count": 1485
     },
     {
       "pillar": "meme_reaction",
-      "count": 113
+      "count": 118
     },
     {
       "pillar": "reply_bait",
-      "count": 69
+      "count": 70
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 37
+      "count": 38
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 199
+      "count": 190
     },
     {
       "pillar": "other",
-      "count": 147
+      "count": 161
     },
     {
       "pillar": "market_trauma",
-      "count": 108
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 11
+      "count": 114
     },
     {
       "pillar": "meme_reaction",
-      "count": 9
+      "count": 13
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 49,
-      "avg_likes": 0.27,
-      "avg_views": 36.5,
+      "posts": 51,
+      "avg_likes": 0.25,
+      "avg_views": 35.8,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 76,
-      "avg_likes": 0.13,
-      "avg_views": 32.8,
+      "posts": 74,
+      "avg_likes": 0.14,
+      "avg_views": 32.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 69,
       "avg_likes": 0.12,
-      "avg_views": 40.3,
+      "avg_views": 40.6,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5107
+      "count": 5228
     },
     {
       "type": "quote",
-      "count": 288
+      "count": 298
     },
     {
       "type": "quote_gif",
-      "count": 100
+      "count": 104
     },
     {
       "type": "post",
-      "count": 50
+      "count": 52
     },
     {
       "type": "hotake",
-      "count": 42
+      "count": 45
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-01T16:37:21.579169",
-      "text": "Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)\n\nhttps://finance.yahoo.com/technology/articles/apple-ceo-sends-strong-warning-200700035.html",
-      "type": "hotake"
-    },
-    {
-      "ts": "2026-08-01T16:37:04.859977",
-      "text": "BTC is just gold that learned to send itself over TCP/IP.\n\n401k Dave’s summer vacation.",
+      "ts": "2026-08-01T20:39:50.633811",
+      "text": "Open weights cut inference costs by 60%. the moat is no longer the model, it's the distribution. finally.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-01T16:34:47.913179",
-      "text": "16x H100s is about $128M. Kimi K3 is training on a fraction of that cost.\n\nChina is building the infrastructure to ship open-weights faster than the US can lock them down.",
+      "ts": "2026-08-01T20:37:41.299512",
+      "text": "\"Who?\" The clients paying 5k for advice on how to ask ChatGPT to write their resignation letters.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-01T20:37:25.246498",
+      "text": "Grok is now a first-class citizen in Elves.\n\nThat means every startup selling \"Claude wrappers\" is about to become an integration layer for the model that reads your browser like it owes it money.\n\nThe wrapper economy just got an existential crisis.",
       "type": "reply"
     }
   ]

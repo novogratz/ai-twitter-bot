@@ -1126,7 +1126,19 @@
     "YvanLussier",
     "PierreLavoie",
     "LucasLecocq_",
-    "SylvainDumas"
+    "SylvainDumas",
+    "GaelLeRuyet",
+    "SamiMansour",
+    "Babou",
+    "PierreHoudas",
+    "LorenzoCesana",
+    "MaximeRenaux",
+    "ThomasVillemain",
+    "RomainLacombe",
+    "AlexisLefebvre",
+    "BenjaminDewaele",
+    "NathanBoutry",
+    "JulesFayolle"
   ],
   "en": [
     "Chubby",
@@ -8594,6 +8606,66 @@
     {
       "lang": "fr",
       "handle": "SylvainDumas",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLeRuyet",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "SamiMansour",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "Babou",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreHoudas",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoCesana",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeRenaux",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasVillemain",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainLacombe",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisLefebvre",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminDewaele",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanBoutry",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesFayolle",
       "added": "2026-08-01"
     }
   ]

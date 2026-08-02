@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-07-12T04:38:30.397822",
-    "raw_count": 10,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoGoku",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 32000,
-        "reason": "Il a surv\u00e9cu aux bears sans vendre de formation VIP. Un peu plus fun que les analystes en costume-cravate."
-      },
-      {
-        "handle": "MathieuDuffie",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 28000,
-        "reason": "Le prof de finance qui rend le march\u00e9 moins douloureux pour les non-initi\u00e9s. Pas de vente de r\u00eave, juste des chiffres et du sens commun."
-      }
-    ],
-    "summary": "Le march\u00e9 FR est satur\u00e9 de vendeurs de r\u00eaves, j'ai filtr\u00e9 pour ne garder que ceux qui ont encore les mains dans le cambouis ou le code. Le Qu\u00e9bec offre une p\u00e9pite de sens commun avec Duffie, et l'USA garde ses fondateurs francophones (Hugging Face) plus authentiques que les influenceurs parisiens."
-  },
-  {
-    "ts": "2026-07-12T06:50:29.842254",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CryptoPierre",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 120000,
-        "reason": "Pas de Telegram VIP \u00e0 2000\u20ac. Il balance ses trades en direct, prend ses pertes publiquement. Le mec a plus de sang-froid qu'un trader HFT."
-      },
-      {
-        "handle": "Dimitri_Dr",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "Le roi du Twitter FinFR. Il analyse la macro et les charts avec un humour cynique qui tue. C'est du s\u00e9rieux, pas du storytelling LinkedIn."
-      },
-      {
-        "handle": "CryptoDub",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Sp\u00e9cialiste DeFi et\u94fe\u4e0a data. Il trouve les perles avant qu'elles ne soient mainstream. Le genre de compte qu'on active en push."
-      },
-      {
-        "handle": "ThibaudLemouton",
-        "region": "france",
-        "niche": "ai",
-        "followers": 32000,
-        "reason": "Data Scientist qui a vu passer tous les buzz. Il d\u00e9crypte la techno sans la l\u00e8che VC. Franchement rafra\u00eechissant."
-      },
-      {
-        "handle": "MickaelMaffre",
-        "region": "france",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Le prof d'IA de chez 01net, twitte des insights techniques solides sans vendre du r\u00eave. Rare de voir un jurno tech qui code encore."
-      },
-      {
-        "handle": "RomainCazabet",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Franco-am\u00e9ricain, il couvre l'IA aux US avec un angle FR. Il a les infos de Silicon Valley avant que les m\u00e9dias fran\u00e7ais n'en parlent."
-      },
-      {
-        "handle": "JeanLucB",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "G\u00e8re un portefeuille long terme et tweete la r\u00e9alit\u00e9 du march\u00e9 qu\u00e9b\u00e9cois (TSX). Moins de bruit US, plus de fonds."
-      }
-    ],
-    "summary": "J'ai tri\u00e9 dans le bruit pour ne garder que ceux qui produisent de l'alpha ou du contexte r\u00e9el. Pas de vendeurs de dreams, juste des gens qui comprennent leur m\u00e9tier. C'est la diff\u00e9rence entre suivre un influenceur et suivre un expert."
-  },
-  {
     "ts": "2026-07-12T08:45:52.639330",
     "raw_count": 10,
     "kept_count": 7,
@@ -8970,5 +8887,123 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit des 'gurus' formations pour te donner des pros : des fondateurs, des analystes macro et des cr\u00e9ateurs de contenu pur. La France a l'avantage du volume (Clem), le Qu\u00e9bec a une sc\u00e8ne fintech/bourse tr\u00e8s vivante (Mathieu B.), et les US-francophones restent discrets mais solides (Sylvain)."
+  },
+  {
+    "ts": "2026-08-01T16:41:07.026232",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeBergamaschi",
+        "region": "france",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "CEO chez Mistral. Il tweete des insights techniques bruts, pas du storytelling LinkedIn."
+      },
+      {
+        "handle": "GaelLeRuyet",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 25000,
+        "reason": "Ancien CTO de Ledger. Il tweete la tech crypto sans les buzzwords."
+      },
+      {
+        "handle": "SamiMansour",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Ex-membre d'Abyss/Scale AI, il tweete l'actu data de mani\u00e8re percutante."
+      },
+      {
+        "handle": "Babou",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le type de chez La French Tech qui tweete sur le terrain, pas depuis une tour en verre."
+      },
+      {
+        "handle": "PierreHoudas",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Journaliste tech IA, il d\u00e9crypte les annonces produits avant que le grand public ne les comprend."
+      }
+    ],
+    "summary": "Focus lourd sur l'IA fran\u00e7aise qui domine la sc\u00e8ne actuelle, avec un mix de founders, de journalistes et d'un profil qu\u00e9b\u00e9cois pertinent."
+  },
+  {
+    "ts": "2026-08-01T18:41:21.184142",
+    "raw_count": 10,
+    "kept_count": 9,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LorenzoCesana",
+        "region": "france",
+        "niche": "ai",
+        "followers": 85000,
+        "reason": "La r\u00e9f\u00e9rence absolue pour le prompt engineering en France, twitte souvent et avec humour sur l'impact IA."
+      },
+      {
+        "handle": "MaximeRenaux",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Cr\u00e9ateur de L'Investisseur, ses analyses macro sont percutantes et ses charts sont limpides."
+      },
+      {
+        "handle": "ThibautMieusement",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Ex-BNP, il d\u00e9crypte la DeFi avec une logique de bankeur qui fait mal, sans jargon incompr\u00e9hensible."
+      },
+      {
+        "handle": "ThomasVillemain",
+        "region": "france",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "Ex-CTO, il parle de tech et d'IA avec une vision terrain qui manque cruellement aux comptes corporate."
+      },
+      {
+        "handle": "RomainLacombe",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 20000,
+        "reason": "Francophone bas\u00e9 \u00e0 SF, il mixe le regard europ\u00e9en sur les US AI stocks avec des insights internes solides."
+      },
+      {
+        "handle": "AlexisLefebvre",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Gros acteur du crypto FR au Qu\u00e9bec, ses analyses de march\u00e9 sont directes et sans filtre."
+      },
+      {
+        "handle": "BenjaminDewaele",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Co-fondateur de Qonto, il parle business et fintech avec un pragmatisme d\u00e9capant qui \u00e9vite le buzzword."
+      },
+      {
+        "handle": "NathanBoutry",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Fondateur de Aily, il poste des threads techniques de qualit\u00e9 sur l'IA g\u00e9n\u00e9rative sans vendre du vent."
+      },
+      {
+        "handle": "JulesFayolle",
+        "region": "france",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Journaliste IA chez Les Echos, ses threads sont des mines d'info sourc\u00e9es avant que le reste du march\u00e9 ne r\u00e9agisse."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que des profils qui nourrissent le r\u00e9seau sans vendre de formation. La s\u00e9lection m\u00e9lange la rigueur des journalistes sp\u00e9cialis\u00e9s (Lecomte, Poussier) et l'exp\u00e9rience terrain des founders (Boutry, Dewaele)."
   }
 ]
