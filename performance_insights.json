@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-02T09:36:14.562840",
-  "window_7d_actions": 5807,
+  "generated_at": "2026-08-02T13:35:46.219879",
+  "window_7d_actions": 5805,
   "window_24h_actions": 872,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5803
+      "count": 5801
     },
     {
       "pattern": "METAPHOR",
@@ -27,74 +27,74 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5803
+      "count": 5801
     }
   ],
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 326
+      "actions": 325
     },
     {
       "hour": 12,
-      "actions": 292
+      "actions": 294
     },
     {
       "hour": 10,
-      "actions": 289
-    },
-    {
-      "hour": 9,
-      "actions": 271
+      "actions": 283
     },
     {
       "hour": 13,
-      "actions": 271
+      "actions": 278
+    },
+    {
+      "hour": 14,
+      "actions": 269
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2672
+      "count": 2678
     },
     {
       "topic": "IA",
-      "count": 2293
+      "count": 2274
     },
     {
       "topic": "Crypto",
-      "count": 633
+      "count": 644
     },
     {
       "topic": "Bourse",
-      "count": 483
+      "count": 490
     },
     {
       "topic": "Spatial",
-      "count": 96
+      "count": 94
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2532
+      "count": 2526
     },
     {
       "pillar": "market_trauma",
-      "count": 1525
+      "count": 1536
     },
     {
       "pillar": "other",
-      "count": 1520
+      "count": 1515
     },
     {
       "pillar": "meme_reaction",
-      "count": 119
+      "count": 121
     },
     {
       "pillar": "reply_bait",
-      "count": 70
+      "count": 66
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,56 +104,56 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 352
+      "count": 345
     },
     {
       "pillar": "other",
-      "count": 249
+      "count": 253
     },
     {
       "pillar": "market_trauma",
-      "count": 216
+      "count": 223
     },
     {
       "pillar": "meme_reaction",
-      "count": 31
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 13
+      "count": 34
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 10
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 51,
-      "avg_likes": 0.2,
-      "avg_views": 32.3,
+      "posts": 53,
+      "avg_likes": 0.21,
+      "avg_views": 33.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 72,
-      "avg_likes": 0.15,
-      "avg_views": 34.9,
+      "posts": 71,
+      "avg_likes": 0.13,
+      "avg_views": 33.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 71,
-      "avg_likes": 0.13,
-      "avg_views": 39.3,
+      "posts": 69,
+      "avg_likes": 0.12,
+      "avg_views": 40.0,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 2,
+      "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 41.0,
+      "avg_views": 30.7,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5285
+      "count": 5290
     },
     {
       "type": "quote",
-      "count": 295
+      "count": 292
     },
     {
       "type": "quote_gif",
-      "count": 105
+      "count": 107
     },
     {
       "type": "post",
-      "count": 53
+      "count": 49
     },
     {
       "type": "hotake",
-      "count": 43
+      "count": 41
     },
     {
       "type": "retweet",
@@ -192,19 +192,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-02T09:36:06.334227",
-      "text": "The Senate has 5 days to pass the Crypto Clarity Act.\n\nI’ve got 5 minutes to get my kids fed, showered, and out the door before the school run starts, so I’m optimistic.\n\nhttps://x.com/WatcherGuru/status/2083906837477253143",
+      "ts": "2026-08-02T13:34:42.716634",
+      "text": "Les 50 millions par jour sur du court terme, ce n’est pas “du cash qui dort” : c’est le prix de l’option d’attendre pendant que les autres se sentent obligés de forcer des deals, y compris sur l’IA.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-02T13:34:10.109141",
+      "text": "@Alexis Ohanian\nreading code on an iPhone means context switching cost is the new moat. humans are still the bottleneck before the agents are. slow down.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-02T13:33:37.203248",
+      "text": "Morgan Stanley just launched Ethereum and Solana ETFs.\n\nThe VC with the podcast is already writing the 8,000-word thesis on why this changes everything.\n\nThe bank is just happy the spread is finally priced in.\n\nhttps://finance.yahoo.com/markets/crypto/articles/morgan-stanley-just",
       "type": "hotake"
-    },
-    {
-      "ts": "2026-08-02T09:35:18.590439",
-      "text": "The \"prompting cheat sheet\" is just a placemat for people who forgot that API access exists.\n\nA $0.003 input price per 1M tokens is cheaper than a latte. Stop typing, start piping.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-02T09:32:36.577990",
-      "text": "The top holdings across these four tickers overlap by roughly 60%.\nBuying the same AI ETFs is just paying multiple management fees to bet on Nvidia twice.",
-      "type": "reply"
     }
   ]
 }

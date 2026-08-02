@@ -1165,7 +1165,20 @@
     "BenjaminDumont",
     "ThomasHaine",
     "ThibautDeBey",
-    "MaximeWillemin"
+    "MaximeWillemin",
+    "SylvainDollat",
+    "DimitriPerrin",
+    "CyrilleMuller",
+    "MarcLambert",
+    "BenjaminAB",
+    "JulesDelaune",
+    "AntoineLeMeur",
+    "RaphaelArdois",
+    "MathieuSenechal",
+    "MaximePigeon",
+    "OlivierPerron",
+    "AlexisDenis",
+    "LorisMarty"
   ],
   "en": [
     "Chubby",
@@ -1475,7 +1488,8 @@
     "KawzInvests",
     "vittorio",
     "Venu",
-    "COLDCARD"
+    "COLDCARD",
+    "Philip"
   ],
   "history": [
     {
@@ -8846,6 +8860,76 @@
     {
       "lang": "fr",
       "handle": "MaximeWillemin",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainDollat",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "DimitriPerrin",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilleMuller",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLambert",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "en",
+      "handle": "Philip",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminAB",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesDelaune",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineLeMeur",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelArdois",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuSenechal",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximePigeon",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierPerron",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDenis",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorisMarty",
       "added": "2026-08-02"
     }
   ]
