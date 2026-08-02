@@ -13,14 +13,17 @@ from .config import BOT_PROFILE_URL, MAX_RETRIES, RETRY_DELAY_SECONDS
 from .logger import log
 
 # Global lock: only one bot can use Safari at a time.
-# Without this, the reply bot and engage bot type over each other.
-_safari_lock = threading.Lock()
+# Without this, the reply bot and engage bot type over each other. RLock is
+# intentional: blank-page recovery can be triggered from inside a scrape that
+# already owns the lock, and it must restart Safari before releasing control.
+_safari_lock = threading.RLock()
 
 # Reactive black-screen recovery: track consecutive blank pages.
 # When Safari renders an empty app shell (service worker stale state), every
 # scrape returns NO_ARTICLES. After N consecutive blanks, trigger a hygiene
 # restart without waiting for the scheduled 2h cycle.
 _blank_page_lock = threading.Lock()
+_blank_recovery_lock = threading.Lock()
 _blank_page_count = 0
 _home_feed_blank_count = 0
 _blank_page_labels: list = []  # labels of the current consecutive-blank run
@@ -49,6 +52,31 @@ def _in_post_restart_grace() -> bool:
 _LEGIT_EMPTY_LABELS = {"mentions"}
 
 
+def _trigger_black_screen_recovery(reason_detail: str) -> None:
+    """Serialize reactive dark-screen recovery.
+
+    Called from scrape code that often already holds _safari_lock. The RLock
+    lets that owner restart Safari immediately; other threads block until the
+    recovered x.com page has been warmed and verified.
+    """
+    if not _blank_recovery_lock.acquire(blocking=False):
+        log.info("[SCRAPE] Black-screen recovery already in progress; skipping duplicate trigger.")
+        return
+    try:
+        with _safari_lock:
+            try:
+                from . import safari_hygiene
+                ok = safari_hygiene.restart_safari(reason="black_screen_recovery")
+                if ok:
+                    log.info(f"[SCRAPE] Black-screen recovery completed ({reason_detail}).")
+                else:
+                    log.warning(f"[SCRAPE] Black-screen recovery skipped/failed ({reason_detail}).")
+            except Exception as e:
+                log.warning(f"[SCRAPE] Black-screen recovery crashed ({reason_detail}): {e}")
+    finally:
+        _blank_recovery_lock.release()
+
+
 def _record_blank_page(is_home_feed: bool = False, label: str = ""):
     global _blank_page_count, _home_feed_blank_count
     if label in _LEGIT_EMPTY_LABELS:
@@ -70,11 +98,7 @@ def _record_blank_page(is_home_feed: bool = False, label: str = ""):
     if hf_count >= _HOME_FEED_BLANK_RESTART_THRESHOLD:
         _reset_blank_page_count()
         log.warning(f"[SCRAPE] Home feed blank {hf_count}× in a row — triggering reactive Safari restart.")
-        try:
-            from . import safari_hygiene
-            safari_hygiene.restart_safari(reason="black_screen_recovery")
-        except Exception:
-            pass
+        _trigger_black_screen_recovery(f"home_feed_blank_{hf_count}")
     elif count >= _BLANK_PAGE_RESTART_THRESHOLD:
         # A wedged Safari (stale service-worker shell) blanks EVERY page, so
         # a true wedge shows ≥2 distinct labels fast. One page blanking in a
@@ -86,11 +110,7 @@ def _record_blank_page(is_home_feed: bool = False, label: str = ""):
             return
         _reset_blank_page_count()
         log.warning(f"[SCRAPE] {count} consecutive blank pages — triggering reactive Safari restart.")
-        try:
-            from . import safari_hygiene
-            safari_hygiene.restart_safari(reason="black_screen_recovery")
-        except Exception:
-            pass
+        _trigger_black_screen_recovery(f"diverse_blank_pages_{count}")
 
 
 def _reset_blank_page_count():

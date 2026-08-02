@@ -3052,6 +3052,39 @@ def test_blank_page_storm_post_restart_grace_and_label_diversity(monkeypatch):
     tc._reset_blank_page_count()
 
 
+def test_safari_warmup_verifies_render_and_retries_blank(monkeypatch):
+    """Dark-screen recovery must verify x.com rendered after restart.
+    A blank app shell should trigger cache-busted retries and return False if
+    Safari never reaches a usable page."""
+    from src import safari_hygiene as sh
+
+    commands = []
+    statuses = iter([
+        (True, "BLANK:0:https://x.com/home"),
+        (True, "BLANK:0:https://x.com/home?bot_recover=1"),
+        (True, "READY:shell:500"),
+    ])
+
+    class _R:
+        returncode = 0
+        stdout = ""
+        stderr = ""
+
+    monkeypatch.setattr(sh.subprocess, "run", lambda *a, **k: commands.append(a) or _R())
+    monkeypatch.setattr(sh.time, "sleep", lambda *_: None)
+
+    def fake_js(js_code, timeout=30):
+        if "serviceWorker" in js_code:
+            return True, ""
+        return next(statuses)
+
+    monkeypatch.setattr(sh, "_run_safari_js", fake_js)
+
+    assert sh._warm_up_xcom()
+    joined = "\n".join(str(c) for c in commands)
+    assert "bot_recover=" in joined, "blank render must trigger cache-busted retry"
+
+
 def test_pin_rotation_url_ground_truth_and_stale_override():
     """2026-07-19: the pin never rotated. Root cause = 4th hit of the
     display-name-vs-handle family: pin_bot compared scraper `author` (the

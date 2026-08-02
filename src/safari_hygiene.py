@@ -29,6 +29,7 @@ import os
 import subprocess
 import time
 import traceback
+import tempfile
 from datetime import datetime
 
 from .config import _PROJECT_ROOT
@@ -106,6 +107,50 @@ _CLEAR_SW_AND_RELOAD_JS = """
 })();
 """.strip()
 
+_RENDER_CHECK_JS = """
+(() => {
+  const articles = document.querySelectorAll('article[data-testid="tweet"]').length;
+  const main = document.querySelector('main');
+  const bodyText = (document.body && document.body.innerText || '').trim();
+  const url = location.href;
+  if (articles > 0) return 'READY:articles:' + articles;
+  if (main && bodyText.length > 300 && /Home|Following|For you|Accueil|Abonnements|Notifications|Search|Recherche/i.test(bodyText)) {
+    return 'READY:shell:' + bodyText.length;
+  }
+  if (/login|i\\/flow\\/login/i.test(url) || /Sign in|Log in|Se connecter/i.test(bodyText)) {
+    return 'LOGIN_REQUIRED';
+  }
+  return 'BLANK:' + bodyText.length + ':' + url;
+})();
+""".strip()
+
+
+def _run_safari_js(js_code: str, timeout: int = 30) -> tuple[bool, str]:
+    """Run JS in Safari's current tab without AppleScript quote hazards."""
+    tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".js", delete=False)
+    tmp.write(js_code)
+    tmp.close()
+    script = f'''
+tell application "Safari" to activate
+set jsCode to (read POSIX file "{tmp.name}")
+tell application "Safari"
+  set result to do JavaScript jsCode in current tab of front window
+end tell
+'''
+    try:
+        res = subprocess.run(
+            ["osascript", "-e", script],
+            capture_output=True, text=True, timeout=timeout,
+        )
+        return res.returncode == 0, (res.stdout or res.stderr or "").strip()
+    except Exception as e:
+        return False, str(e)
+    finally:
+        try:
+            os.unlink(tmp.name)
+        except OSError:
+            pass
+
 
 def _warm_up_xcom() -> bool:
     """Navigate to x.com, clear service workers/caches, hard reload.
@@ -113,24 +158,52 @@ def _warm_up_xcom() -> bool:
     Prevents the 'black screen' where Safari restarts with stale SW cache
     and renders an empty app shell. Must run after Safari is fully up.
     """
-    script = f'''
+    try:
+        subprocess.run(
+            ["osascript", "-e", '''
+tell application "Safari"
+  activate
+  if (count of windows) = 0 then make new document
+  tell window 1
+    set URL of current tab to "https://x.com/home"
+  end tell
+end tell
+'''],
+            capture_output=True, text=True, timeout=20,
+        )
+        time.sleep(8)
+
+        ok, out = _run_safari_js(_CLEAR_SW_AND_RELOAD_JS, timeout=45)
+        if not ok:
+            log.warning(f"[HYGIENE] x.com SW clear JS failed: {out[:200]}")
+        time.sleep(12)
+
+        for attempt in range(3):
+            ok, status = _run_safari_js(_RENDER_CHECK_JS, timeout=20)
+            if ok and status.startswith("READY:"):
+                log.info(f"[HYGIENE] x.com warmed up — service workers cleared, render verified ({status}).")
+                return True
+            if ok and status == "LOGIN_REQUIRED":
+                log.warning("[HYGIENE] x.com warm-up reached login page; manual login may be required.")
+                return False
+
+            log.warning(f"[HYGIENE] x.com still blank after warm-up attempt {attempt + 1}/3: {status[:200]}")
+            cache_bust = int(time.time())
+            subprocess.run(
+                ["osascript", "-e", f'''
 tell application "Safari"
   activate
   tell window 1
-    set URL of current tab to "https://x.com/home"
-    delay 8
-    do JavaScript "{_CLEAR_SW_AND_RELOAD_JS.replace(chr(10), " ").replace('"', '\\"')}" in current tab
-    delay 12
+    set URL of current tab to "https://x.com/home?bot_recover={cache_bust}"
   end tell
 end tell
-'''
-    try:
-        subprocess.run(
-            ["osascript", "-e", script],
-            capture_output=True, text=True, timeout=60,
-        )
-        log.info("[HYGIENE] x.com warmed up — service workers cleared, hard reload done.")
-        return True
+'''],
+                capture_output=True, text=True, timeout=20,
+            )
+            time.sleep(10)
+
+        log.warning("[HYGIENE] x.com warm-up failed render verification after 3 attempts.")
+        return False
     except Exception as e:
         log.warning(f"[HYGIENE] x.com warm-up failed (non-fatal): {e}")
         return False
@@ -152,8 +225,7 @@ def _launch_safari() -> bool:
         time.sleep(2)
         # Clear stale service workers and warm up x.com so the first scrape
         # hits a rendered page, not a black-screen app shell.
-        _warm_up_xcom()
-        return True
+        return _warm_up_xcom()
     except Exception as e:
         log.warning(f"[HYGIENE] Safari launch failed: {e}")
         return False
