@@ -1178,7 +1178,17 @@
     "MaximePigeon",
     "OlivierPerron",
     "AlexisDenis",
-    "LorisMarty"
+    "LorisMarty",
+    "MathieuDutour",
+    "MounirKacir",
+    "BenjaminDemeur",
+    "RomainGautier",
+    "AlexisDionne_",
+    "MaximeSerraz",
+    "GautierBailly",
+    "ClementColomb",
+    "AlexDeBries",
+    "AntoineLefebvre"
   ],
   "en": [
     "Chubby",
@@ -1489,7 +1499,8 @@
     "vittorio",
     "Venu",
     "COLDCARD",
-    "Philip"
+    "Philip",
+    "France"
   ],
   "history": [
     {
@@ -8930,6 +8941,61 @@
     {
       "lang": "fr",
       "handle": "LorisMarty",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "en",
+      "handle": "France",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDutour",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MounirKacir",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminDemeur",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainGautier",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisDionne_",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSerraz",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "GautierBailly",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClementColomb",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexDeBries",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineLefebvre",
       "added": "2026-08-02"
     }
   ]

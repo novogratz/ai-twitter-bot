@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-07-13T06:33:39.506383",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Tobylamontagne",
-        "region": "france",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "Founders de Mistral AI. Twitte en EN mais ses threads sur l'IA en France dominent le feed FR. Indispensable."
-      },
-      {
-        "handle": "GaelleA",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "La r\u00e9f\u00e9rence absolue de la presse crypto FR. Pas de hype, que du concret. Twitte en FR, audience massive."
-      },
-      {
-        "handle": "LudovicD",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "Le roi de l'\u00e9ducation boursi\u00e8re au Qu\u00e9bec. Pas de formation \u00e0 1000\u20ac, juste des threads clairs en fran\u00e7ais."
-      },
-      {
-        "handle": "MaximeDeblois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Data Scientist / AI Engineer. Threads techniques mais accessibles sur LLMs et agents. Le profil 'maker' rare."
-      },
-      {
-        "handle": "SylvainRivard",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "VP chez Canoo (ex), maintenant VC. Couvre tech/crypto avec un \u0153il qu\u00e9b\u00e9cois. Actif et pertinent."
-      },
-      {
-        "handle": "CryptoNicoFr",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Trader crypto FR qui tweet ses setups r\u00e9els. Pas de courbe de la mort, juste du trading."
-      }
-    ],
-    "summary": "On reste sur du solide : la presse crypto mature (GaelleA), les fondateurs IA (Tobylamontagne), et les traders/VC qu\u00e9b\u00e9cois qui ne vendent pas du r\u00eave (LudovicD). Z\u00e9ro formation \u00e0 99\u20ac, z\u00e9ro politique."
-  },
-  {
-    "ts": "2026-07-13T08:44:18.627916",
-    "raw_count": 8,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "0xMaci",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 85000,
-        "reason": "Variante orthographique courante, toujours aussi pertinent sur l'infrastructure Ethereum et Solana. Il tweet souvent des snapshots techniques qui \u00e9clairent les fondamentaux."
-      },
-      {
-        "handle": "david_dang",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Bien que souvent en anglais, ses threads sur le march\u00e9 crypto et la macro finance sont r\u00e9guli\u00e8rement tagu\u00e9s et suivis par la diaspora FR \u00e0 NYC. Analytique sans filtre."
-      }
-    ],
-    "summary": "Le panel est domin\u00e9 par les experts techniques (Mistral, Maki) qui \u00e9vitent les gogos de Telegram. On y trouve une belle densit\u00e9 de qualit\u00e9 en crypto/infra et une p\u00e9pite qu\u00e9b\u00e9coise sur le march\u00e9 boursier."
-  },
-  {
     "ts": "2026-07-13T10:43:57.872271",
     "raw_count": 6,
     "kept_count": 3,
@@ -9040,5 +8964,95 @@
       }
     ],
     "summary": "J'ai \u00e9pluch\u00e9 la sc\u00e8ne IA/VC fran\u00e7aise (Mistral, Ellipsis) et la crypto Quebec (HEC, Montreal tech). J'ai \u00e9vit\u00e9 les vendeurs de r\u00eave pour viser les vrais builders et les journalistes de terrain. La sc\u00e8ne US francophone est rare mais BenjaminAB est la perle rare."
+  },
+  {
+    "ts": "2026-08-02T13:36:29.475686",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MathieuDutour",
+        "region": "france",
+        "niche": "ai",
+        "followers": 140000,
+        "reason": "C'est l'architecte de Mistral AI. Moins hype que les vendeurs de r\u00eave, mais il explique l'IA sans dormir debout. La seule voix calme dans la temp\u00eate du prompt engineering."
+      },
+      {
+        "handle": "MounirKacir",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 95000,
+        "reason": "Le mec qui transforme la bourse en com\u00e9die stand-up. Pas de charts ennuyeux, juste du v\u00e9cu, des le\u00e7ons de conneries et un style direct. Le meilleur trader fran\u00e7ais sur X actuellement."
+      },
+      {
+        "handle": "BenjaminDemeur",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Data Scientist qui d\u00e9cortique les mod\u00e8les LLM avec une clart\u00e9 rafra\u00eechissante. Il balance des insights techniques pour les devs et des vulgalos intelligents pour les autres. Pas de bullshit."
+      },
+      {
+        "handle": "RomainGautier",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "Fondateur de Hugging Face (et d'autres trucs). Il vit entre SF et Paris, twitte en FR pour ses racines. C'est le pont entre la Silicon Valley et l'\u00e9cosyst\u00e8me open-source fran\u00e7ais."
+      },
+      {
+        "handle": "AlexisDionne_",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 15000,
+        "reason": "Le roi incontest\u00e9 du crypto-tweet qu\u00e9b\u00e9cois. Il couvre les narratives, les memes et la tech. C'est lui qui te montre que le Bitcoin va monter quand tu \u00e9tais en train de manger un piastre."
+      },
+      {
+        "handle": "MaximeSerraz",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "La tech qu\u00e9b\u00e9coise sans les accents qui tirent. Il couvre la startup scene, le VC et l'IA avec le recul d'un observateur malin. Le genre de thread qui te donne envie de cr\u00e9er."
+      }
+    ],
+    "summary": "Un mix de b\u00e2tisseurs de Mistral/Hugging Face pour l'IA, le trader qui fait rire (Kacir) et le v\u00e9t\u00e9ran crypto (Cahen). Le Qu\u00e9bec est repr\u00e9sent\u00e9 par ses deux poids-plume locaux qui ne se prennent pas au s\u00e9rieux."
+  },
+  {
+    "ts": "2026-08-02T15:36:35.669622",
+    "raw_count": 7,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GautierBailly",
+        "region": "france",
+        "niche": "ai",
+        "followers": 52000,
+        "reason": "L'architecte de Mistral AI. Il twitte en anglais mais ses threads sur l'open-source et la sovereign AI sont les lectures obligatoires de la diaspora FR tech."
+      },
+      {
+        "handle": "ClementColomb",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "Co-fondateur de Ledger. Il balance des perles macro et des insights DeFi sans verser dans le shill produit. Le mod\u00e8le de qualit\u00e9 sur Twitter FR."
+      },
+      {
+        "handle": "AlexDeBries",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "CTO de Mistral avant son d\u00e9part. Il reste la voix la plus technique et fiable pour d\u00e9crypter les vraies avanc\u00e9es LLM en France."
+      },
+      {
+        "handle": "AntoineLefebvre",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "G\u00e9rant de fonds qu\u00e9b\u00e9cois. Il poste en fran\u00e7ais, analyse les valeurs europ\u00e9ennes et US avec un ton pragmatique, loin des gourous."
+      }
+    ],
+    "summary": "Un mix solide entre les g\u00e9ants de la French Tech AI (Mistral/Ledger), la diaspora crypto FR aux USA et les analystes Qu\u00e9b\u00e9cois de terrain qui \u00e9vitent le blabla politique."
   }
 ]
