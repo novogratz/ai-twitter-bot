@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-02T01:35:46.325782",
-  "window_7d_actions": 5835,
-  "window_24h_actions": 663,
+  "generated_at": "2026-08-02T05:35:46.415322",
+  "window_7d_actions": 5821,
+  "window_24h_actions": 797,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5831
+      "count": 5817
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5831
+      "count": 5817
     }
   ],
   "best_hours_utc": [
@@ -55,42 +55,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2687
+      "count": 2680
     },
     {
       "topic": "IA",
-      "count": 2311
+      "count": 2308
     },
     {
       "topic": "Crypto",
-      "count": 629
+      "count": 627
     },
     {
       "topic": "Bourse",
-      "count": 483
+      "count": 481
     },
     {
       "topic": "Spatial",
-      "count": 96
+      "count": 95
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2566
+      "count": 2555
     },
     {
       "pillar": "other",
-      "count": 1535
+      "count": 1526
     },
     {
       "pillar": "market_trauma",
-      "count": 1502
+      "count": 1511
     },
     {
       "pillar": "meme_reaction",
-      "count": 122
+      "count": 119
     },
     {
       "pillar": "reply_bait",
@@ -104,23 +104,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 271
+      "count": 326
     },
     {
       "pillar": "other",
-      "count": 197
+      "count": 238
     },
     {
       "pillar": "market_trauma",
-      "count": 150
+      "count": 183
     },
     {
       "pillar": "meme_reaction",
-      "count": 23
+      "count": 26
     },
     {
       "pillar": "reply_bait",
-      "count": 13
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
@@ -130,23 +130,23 @@
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 50,
+      "posts": 51,
       "avg_likes": 0.2,
-      "avg_views": 31.9,
+      "avg_views": 31.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 75,
+      "posts": 73,
       "avg_likes": 0.15,
-      "avg_views": 32.9,
+      "avg_views": 33.2,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 69,
-      "avg_likes": 0.12,
-      "avg_views": 40.4,
+      "posts": 70,
+      "avg_likes": 0.13,
+      "avg_views": 39.5,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5305
+      "count": 5295
     },
     {
       "type": "quote",
-      "count": 300
+      "count": 299
     },
     {
       "type": "quote_gif",
-      "count": 109
+      "count": 106
     },
     {
       "type": "post",
@@ -192,19 +192,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-02T01:34:51.467418",
-      "text": "Chamath calls it a moat. The SEC filing calls it a $7.2B debt stack maturing in 2029.\n\nThe market loves a founder with vision more than a balance sheet with teeth.",
+      "ts": "2026-08-02T05:35:38.646242",
+      "text": "Roborock is selling a $1200 Roomba that climbs stairs.\n\nit is solving the 15% of houses with a staircase to justify the 85% of houses that are flat and already have a robot that works.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-02T01:34:03.111469",
-      "text": "@BURKOV just saw Netflix and is hauntingly empty?\n\nhe trains models that fit infinite context windows to human chaos.\n\nthis was an overfit week.",
+      "ts": "2026-08-02T05:35:01.970717",
+      "text": "Mark Zuckerberg’s P/E is 23. He’s buying Meta’s own AI failures at a discount. That’s not a moat, that’s a liquidation sale.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-02T01:32:48.907929",
-      "text": "70,000 to 1 chance. OpenAI hires a clone. You hire a prompt engineer. One builds AGI, the other builds slides. The alpha is in the 0.01% who can actually code. 🤖",
-      "type": "quote"
+      "ts": "2026-08-02T05:32:00.701835",
+      "text": "1,500 ETH to col = $2.8M for storage. you paid the full retail price for a service that costs ~$0.002/GB elsewhere. you are the liquidity",
+      "type": "reply"
     }
   ]
 }

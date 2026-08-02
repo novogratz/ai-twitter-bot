@@ -1144,7 +1144,17 @@
     "ThibautMazurier",
     "MarcAmand",
     "PierreLachance",
-    "MaximeM"
+    "MaximeM",
+    "MarcSassier",
+    "OlivierPierlot",
+    "JulienTalon",
+    "JeanBaptisteB",
+    "SylvainLeFloch",
+    "CryptoKera",
+    "MathieuBouchard",
+    "AdilBenmoussa",
+    "PierreDagenais",
+    "VincentDubreuil"
   ],
   "en": [
     "Chubby",
@@ -1452,7 +1462,8 @@
     "Lina",
     "Uday",
     "KawzInvests",
-    "vittorio"
+    "vittorio",
+    "Venu"
   ],
   "history": [
     {
@@ -8709,6 +8720,61 @@
       "lang": "fr",
       "handle": "MaximeM",
       "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcSassier",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "OlivierPierlot",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienTalon",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "en",
+      "handle": "Venu",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptisteB",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLeFloch",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKera",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuBouchard",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdilBenmoussa",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDagenais",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDubreuil",
+      "added": "2026-08-02"
     }
   ]
 }
