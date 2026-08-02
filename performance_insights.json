@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-02T05:35:46.415322",
-  "window_7d_actions": 5821,
-  "window_24h_actions": 797,
+  "generated_at": "2026-08-02T09:36:14.562840",
+  "window_7d_actions": 5807,
+  "window_24h_actions": 872,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5817
+      "count": 5803
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5817
+      "count": 5803
     }
   ],
   "best_hours_utc": [
@@ -45,7 +45,7 @@
     },
     {
       "hour": 9,
-      "actions": 273
+      "actions": 271
     },
     {
       "hour": 13,
@@ -55,38 +55,38 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2680
+      "count": 2672
     },
     {
       "topic": "IA",
-      "count": 2308
+      "count": 2293
     },
     {
       "topic": "Crypto",
-      "count": 627
+      "count": 633
     },
     {
       "topic": "Bourse",
-      "count": 481
+      "count": 483
     },
     {
       "topic": "Spatial",
-      "count": 95
+      "count": 96
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2555
-    },
-    {
-      "pillar": "other",
-      "count": 1526
+      "count": 2532
     },
     {
       "pillar": "market_trauma",
-      "count": 1511
+      "count": 1525
+    },
+    {
+      "pillar": "other",
+      "count": 1520
     },
     {
       "pillar": "meme_reaction",
@@ -98,33 +98,33 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 40
+      "count": 41
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 326
+      "count": 352
     },
     {
       "pillar": "other",
-      "count": 238
+      "count": 249
     },
     {
       "pillar": "market_trauma",
-      "count": 183
+      "count": 216
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
+      "count": 31
     },
     {
       "pillar": "reply_bait",
-      "count": 15
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 9
+      "count": 11
     }
   ],
   "pillar_engagement_30d": [
@@ -132,21 +132,21 @@
       "pillar": "market_trauma",
       "posts": 51,
       "avg_likes": 0.2,
-      "avg_views": 31.5,
+      "avg_views": 32.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 73,
+      "posts": 72,
       "avg_likes": 0.15,
-      "avg_views": 33.2,
+      "avg_views": 34.9,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 70,
+      "posts": 71,
       "avg_likes": 0.13,
-      "avg_views": 39.5,
+      "avg_views": 39.3,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5295
+      "count": 5285
     },
     {
       "type": "quote",
-      "count": 299
+      "count": 295
     },
     {
       "type": "quote_gif",
-      "count": 106
+      "count": 105
     },
     {
       "type": "post",
-      "count": 51
+      "count": 53
     },
     {
       "type": "hotake",
-      "count": 44
+      "count": 43
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-02T05:35:38.646242",
-      "text": "Roborock is selling a $1200 Roomba that climbs stairs.\n\nit is solving the 15% of houses with a staircase to justify the 85% of houses that are flat and already have a robot that works.",
+      "ts": "2026-08-02T09:36:06.334227",
+      "text": "The Senate has 5 days to pass the Crypto Clarity Act.\n\nI’ve got 5 minutes to get my kids fed, showered, and out the door before the school run starts, so I’m optimistic.\n\nhttps://x.com/WatcherGuru/status/2083906837477253143",
+      "type": "hotake"
+    },
+    {
+      "ts": "2026-08-02T09:35:18.590439",
+      "text": "The \"prompting cheat sheet\" is just a placemat for people who forgot that API access exists.\n\nA $0.003 input price per 1M tokens is cheaper than a latte. Stop typing, start piping.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-02T05:35:01.970717",
-      "text": "Mark Zuckerberg’s P/E is 23. He’s buying Meta’s own AI failures at a discount. That’s not a moat, that’s a liquidation sale.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-02T05:32:00.701835",
-      "text": "1,500 ETH to col = $2.8M for storage. you paid the full retail price for a service that costs ~$0.002/GB elsewhere. you are the liquidity",
+      "ts": "2026-08-02T09:32:36.577990",
+      "text": "The top holdings across these four tickers overlap by roughly 60%.\nBuying the same AI ETFs is just paying multiple management fees to bet on Nvidia twice.",
       "type": "reply"
     }
   ]

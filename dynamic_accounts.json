@@ -1154,7 +1154,18 @@
     "MathieuBouchard",
     "AdilBenmoussa",
     "PierreDagenais",
-    "VincentDubreuil"
+    "VincentDubreuil",
+    "Bourgeon",
+    "CryptoKana",
+    "RomainBoulay",
+    "JulienBosc",
+    "BastienRiviere",
+    "Beeple",
+    "LucasDuponcheel",
+    "BenjaminDumont",
+    "ThomasHaine",
+    "ThibautDeBey",
+    "MaximeWillemin"
   ],
   "en": [
     "Chubby",
@@ -1463,7 +1474,8 @@
     "Uday",
     "KawzInvests",
     "vittorio",
-    "Venu"
+    "Venu",
+    "COLDCARD"
   ],
   "history": [
     {
@@ -8774,6 +8786,66 @@
     {
       "lang": "fr",
       "handle": "VincentDubreuil",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "Bourgeon",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKana",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBoulay",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBosc",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "BastienRiviere",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "en",
+      "handle": "COLDCARD",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "Beeple",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasDuponcheel",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminDumont",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasHaine",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautDeBey",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeWillemin",
       "added": "2026-08-02"
     }
   ]
