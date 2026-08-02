@@ -1138,7 +1138,13 @@
     "AlexisLefebvre",
     "BenjaminDewaele",
     "NathanBoutry",
-    "JulesFayolle"
+    "JulesFayolle",
+    "EvanCarmichael",
+    "JulienBocquet",
+    "ThibautMazurier",
+    "MarcAmand",
+    "PierreLachance",
+    "MaximeM"
   ],
   "en": [
     "Chubby",
@@ -1445,7 +1451,8 @@
     "Vivi",
     "Lina",
     "Uday",
-    "KawzInvests"
+    "KawzInvests",
+    "vittorio"
   ],
   "history": [
     {
@@ -8666,6 +8673,41 @@
     {
       "lang": "fr",
       "handle": "JulesFayolle",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "EvanCarmichael",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBocquet",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMazurier",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcAmand",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "en",
+      "handle": "vittorio",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLachance",
+      "added": "2026-08-01"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeM",
       "added": "2026-08-01"
     }
   ]

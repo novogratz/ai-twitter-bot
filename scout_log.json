@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-07-12T08:45:52.639330",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Laurae_",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 75000,
-        "reason": "Ancien de Coinhouse, actuel consultant. Il explique la blockchain sans te prendre pour un con, pas de shilling agressif."
-      },
-      {
-        "handle": "MathieuDufour_",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Journaliste/crypto-native, couverture \u00e9quilibr\u00e9e entre DeFi, NFT et Macro. Pas de 'Buy Bitcoin NOW' en majuscules."
-      },
-      {
-        "handle": "JulienDessart",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Ex-Hackernoon, couvreur tech fran\u00e7ais. Il parle d'IA, de SaaS et de startups. Contenu qualitatif, pas de pub pour sa formation \u00e0 99\u20ac."
-      },
-      {
-        "handle": "BenoitDubreuil",
-        "region": "france",
-        "niche": "tech",
-        "followers": 22000,
-        "reason": "Fondateur de Devoteam Cloud. Il parle infra, cloud et IA applicative. Le genre de tweet qui fait gagner 2h de lectures."
-      },
-      {
-        "handle": "SylvainRoux",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "Prof \u00e0 Polytechnique Montr\u00e9al. Il d\u00e9crypte les mod\u00e8les d'IA avec du concret. Le prof qu'on voudrait avoir en cours."
-      },
-      {
-        "handle": "MarcLavoie",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Macro-\u00e9conomiste qu\u00e9b\u00e9cois. Il explique l'inflation et les taux directeurs avec le sarcasme typique du Qu\u00e9bec."
-      },
-      {
-        "handle": "VincentDelage",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 14000,
-        "reason": "Ex-Raisin, couvreur fintech. Il suit les p\u00e9pins des brokers et des n\u00e9o-banques. Utile pour \u00e9viter les frais cach\u00e9s."
-      }
-    ],
-    "summary": "Mix parfait entre les piliers fran\u00e7ais de l'IA (Mistral) et la sc\u00e8ne crypto/tech plus traditionnelle. Le Qu\u00e9bec est repr\u00e9sent\u00e9 par de la macro-concr\u00e8te et de l'IA acad\u00e9mique, \u00e9vitant les influenceurs TikTok."
-  },
-  {
-    "ts": "2026-07-12T10:39:12.599115",
-    "raw_count": 10,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Cryptofr",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 60000,
-        "reason": "L'institutionnel qui arrive. Moins de hype, plus de fond. Le genre de compte qui fait monter la tension du march\u00e9."
-      },
-      {
-        "handle": "MaximeWieljeski",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "L'ex-CEO de PayFit. Il tweet sur la SaaS, la croissance et la tech fran\u00e7aise avec un \u0153il de patron qui a fait ses classes."
-      }
-    ],
-    "summary": "Une s\u00e9lection de lourds du secteur : des fondateurs d'IA (Mistral, Anthropic), des institutionnels crypto (Cryptofr, Rochard) et des traders qu\u00e9b\u00e9cois solides (DeWit, Mauvais). Z\u00e9ro vendeurs de dreams, que des experts qui font avancer le d\u00e9bat."
-  },
-  {
     "ts": "2026-07-12T14:45:21.544536",
     "raw_count": 5,
     "kept_count": 3,
@@ -9005,5 +8922,81 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit pour ne garder que des profils qui nourrissent le r\u00e9seau sans vendre de formation. La s\u00e9lection m\u00e9lange la rigueur des journalistes sp\u00e9cialis\u00e9s (Lecomte, Poussier) et l'exp\u00e9rience terrain des founders (Boutry, Dewaele)."
+  },
+  {
+    "ts": "2026-08-01T20:41:11.161943",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Pierre-Rochard",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 250000,
+        "reason": "Parisien \u00e0 NY, il fait le pont parfait. C'est le gars qui explique la Lightning Network sans endormir les profs de fac."
+      },
+      {
+        "handle": "EvanCarmichael",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 80000,
+        "reason": "Canadien (diaspora FR/EN), il interview les founders. C'est de l'info brute, pas de la pub d\u00e9guis\u00e9e."
+      },
+      {
+        "handle": "JulienBocquet",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 60000,
+        "reason": "Fondateur de Bitpanda France, il tweet des insights macro/crypto en fran\u00e7ais. Pas un 'gourou', un vrai pro qui assume ses trades."
+      },
+      {
+        "handle": "ThibautMazurier",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Ex-Coinhouse, le mec qui a su vendre le Bitcoin aux Fran\u00e7ais sans leur soutirer une fortune en frais de garde. Actif et pertinent."
+      },
+      {
+        "handle": "MarcAmand",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "Le 'M. Bourse' de Twitter FR. Il d\u00e9cortique la paperasse des entreprises fran\u00e7aises avec une pr\u00e9cision de chirurgien et un humour sec."
+      }
+    ],
+    "summary": "Un focus sur la 'French Tech' qui a enfin des cred IA (Mistral), le pont Francophone/US (Pierre-Rochard), et la p\u00e9pite qu\u00e9b\u00e9coise tech (Dionne)."
+  },
+  {
+    "ts": "2026-08-01T23:36:52.914285",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "VincentLemercier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "L'analyste macro qui parle comme un trader. Pas de charts illisibles, juste des th\u00e8ses claires sur la dette et l'inflation."
+      },
+      {
+        "handle": "PierreLachance",
+        "region": "usa",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Bas\u00e9 \u00e0 NYC, twitte en FR sur les march\u00e9s US. L'angora qui comprend Wall Street sans le jargon bancal."
+      },
+      {
+        "handle": "MaximeM",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Trading crypto Qu\u00e9bec, focus Bitcoin/Ethereum. Pas de leverage fou, des analyses techniques solides en fran\u00e7ais pur."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que des profils qui produisent de l'intelligence brute : Mistral pour l'IA hype, Bessac pour la crypto technique, et les qu\u00e9b\u00e9cois pour l'angle francophone rare. Z\u00e9ro vendeur de r\u00eave, que des artisans du market."
   }
 ]

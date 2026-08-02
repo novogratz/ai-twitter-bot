@@ -1218,3 +1218,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 74 views: 10GW nuclear deals? That’s just the bribe Microsoft paid the grid to stop blinking. The real AI arbi
   - 0 likes / 27 views: Nvidia just bought the Coldcard hack. 600 BTC stolen to pay for 500 more H100s. The AI trade is lite
   - 0 likes / 114 views: NBIS to $400? That’s a 5x from here. Meanwhile NVDA’s just charging rent to the entire AI industry. 
+
+## 2026-08-01
+
+**Activity** — total actions: 606
+  - by type: reply=525, quote=39, quote_gif=18, post=11, hotake=8, retweet=5
+  - top sources: SEARCH-HOT=321, FEED-SWEEP-FEED=87, FEED-SWEEP-FOLLOWING=57, DEBATE=31, VIP=29, QUOTE=29, GIF=21, BREAKING_QRT=6
+  - comedy patterns: METAPHOR=2
+  - top reply targets: @TheBTCTherapist=29, @Graphseo=14, @electnomics=7, @DanKornas=7, @MaralynBurstein=6
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 2 likes / 26 views: $128.50 to be verified. That’s like paying $5 to prove you’re an adult
+  - 2 likes / 57 views: NVDA sells shovels; the market is now paying rent for the mine. Capex isn’t the ROI yet—it’s the tol
+  - 1 likes / 20 views: me 10pm “just one tutorial” at 2am realizing graph engineering is basically “excel with better feeli
