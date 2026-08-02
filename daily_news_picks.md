@@ -16640,3 +16640,22 @@ bought $69,000 of $MARSCOIN → earned $273 in $SPCX (tokenized SpaceX stock)
 bou
   - https://x.com/RuneCrypto_/status/2083042929593942206
   - **WHY**: Source fiable + impact concret (score signal 12, engagement 54).
+
+## 2026-08-02
+- **@oluwaphilemon1** (5 likes, score 7/10) — AI Agents Weekly: Kimi K3, DeepSeek-V4-Flash API, GPT-5.6 Price Cuts, Inkling-Small, YC's QM Harness, Gemini Robotics 2, Codex Security CLI, and More
+
+Kimi K3, DeepSeek-V4-Flash API, GPT-5.6 Price Cut
+  - https://x.com/Oluwaphilemon1/status/2083729001869156368
+  - **WHY**: Source fiable + impact concret (score signal 15, engagement 11).
+- **@rohanpaul_ai** (19 likes, score 8/10) — Some really cool news for the world of Math in AI.
+
+OpenAI's unreleased Astra model solved 10 math problems that had stayed open for decades.
+
+Finding all 10 cost roughly $2,000 in tokens at Sol API r
+  - https://x.com/rohanpaul_ai/status/2083495692992139601
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 35).
+- **@alexgetmancom** (34 likes, score 8/10) — OpenAI announced a new frontier model — Astra
+
+In internal tests, Astra made ten major breakthroughs in mathematics and theoretical computer science. Among them are a disproof of Connes rigidity conje
+  - https://x.com/alexgetmancom/status/2083625881071718431
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 38).
