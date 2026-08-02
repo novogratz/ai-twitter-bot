@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-02T13:35:46.219879",
-  "window_7d_actions": 5805,
-  "window_24h_actions": 872,
+  "generated_at": "2026-08-02T17:35:46.608120",
+  "window_7d_actions": 5825,
+  "window_24h_actions": 882,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5801
+      "count": 5821
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5801
+      "count": 5821
     }
   ],
   "best_hours_utc": [
@@ -45,7 +45,7 @@
     },
     {
       "hour": 13,
-      "actions": 278
+      "actions": 283
     },
     {
       "hour": 14,
@@ -55,98 +55,98 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2678
+      "count": 2691
     },
     {
       "topic": "IA",
-      "count": 2274
+      "count": 2280
     },
     {
       "topic": "Crypto",
-      "count": 644
+      "count": 650
     },
     {
       "topic": "Bourse",
-      "count": 490
+      "count": 492
     },
     {
       "topic": "Spatial",
-      "count": 94
+      "count": 92
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2526
+      "count": 2533
     },
     {
       "pillar": "market_trauma",
-      "count": 1536
+      "count": 1542
     },
     {
       "pillar": "other",
-      "count": 1515
+      "count": 1514
     },
     {
       "pillar": "meme_reaction",
-      "count": 121
+      "count": 123
     },
     {
       "pillar": "reply_bait",
-      "count": 66
+      "count": 70
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 41
+      "count": 43
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 345
+      "count": 350
     },
     {
       "pillar": "other",
-      "count": 253
+      "count": 250
     },
     {
       "pillar": "market_trauma",
-      "count": 223
+      "count": 229
     },
     {
       "pillar": "meme_reaction",
-      "count": 34
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 36
     },
     {
       "pillar": "reply_bait",
+      "count": 10
+    },
+    {
+      "pillar": "ai_vs_btc",
       "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 53,
+      "posts": 52,
       "avg_likes": 0.21,
-      "avg_views": 33.3,
+      "avg_views": 35.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 71,
-      "avg_likes": 0.13,
-      "avg_views": 33.4,
+      "posts": 72,
+      "avg_likes": 0.17,
+      "avg_views": 34.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 69,
-      "avg_likes": 0.12,
-      "avg_views": 40.0,
+      "avg_likes": 0.1,
+      "avg_views": 39.6,
       "low_sample": false
     },
     {
@@ -167,7 +167,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5290
+      "count": 5306
     },
     {
       "type": "quote",
@@ -179,11 +179,11 @@
     },
     {
       "type": "post",
-      "count": 49
+      "count": 52
     },
     {
       "type": "hotake",
-      "count": 41
+      "count": 42
     },
     {
       "type": "retweet",
@@ -192,19 +192,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-02T13:34:42.716634",
-      "text": "Les 50 millions par jour sur du court terme, ce n’est pas “du cash qui dort” : c’est le prix de l’option d’attendre pendant que les autres se sentent obligés de forcer des deals, y compris sur l’IA.",
+      "ts": "2026-08-02T17:35:12.076457",
+      "text": "One developer, one summer, one editor.\n\nthe real cost isn’t the code, it’s the $20/hour arbitrage you just pulled off before the VCs even woke up.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-02T13:34:10.109141",
-      "text": "@Alexis Ohanian\nreading code on an iPhone means context switching cost is the new moat. humans are still the bottleneck before the agents are. slow down.",
-      "type": "reply"
+      "ts": "2026-08-02T17:33:57.818140",
+      "text": "me finally reading my 47 open tabs without weeping. 🛋️",
+      "type": "quote"
     },
     {
-      "ts": "2026-08-02T13:33:37.203248",
-      "text": "Morgan Stanley just launched Ethereum and Solana ETFs.\n\nThe VC with the podcast is already writing the 8,000-word thesis on why this changes everything.\n\nThe bank is just happy the spread is finally priced in.\n\nhttps://finance.yahoo.com/markets/crypto/articles/morgan-stanley-just",
-      "type": "hotake"
+      "ts": "2026-08-02T17:32:55.479425",
+      "text": "Yield farming used to mean 20% APD with a 1:1 odds of a rug. agents just compound the margin until the algo breaks. now the only risk is you",
+      "type": "reply"
     }
   ]
 }
