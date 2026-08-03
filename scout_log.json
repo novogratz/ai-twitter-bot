@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-07-13T18:43:29.568067",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilDerkinderen",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 85000,
-        "reason": "L'ancien de la City qui a pris la t\u00eate du Capital FR. Il balance des perles macro brutales, zero blabla de n\u00e9o-r\u00e9to."
-      },
-      {
-        "handle": "MarcLeduc",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 30000,
-        "reason": "L'analyste qu\u00e9b\u00e9cois qui fait le job. Pas de 'rejoins mon club VIP', juste des charts propres et des prises de position claires sur le TSX."
-      },
-      {
-        "handle": "AlexandreDumas",
-        "region": "usa",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Founders & VCs de SF qui twittent en FR. Couvre l'IA et le VC californien avec un regard europ\u00e9en. Pas du contenu g\u00e9n\u00e9r\u00e9 par IA."
-      },
-      {
-        "handle": "PierreRooy",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Journaliste crypto pro, pas un 'crypto bro' qui crie sur les titres. Il fetch les bonnes sources et les tweet vite. fiable."
-      }
-    ],
-    "summary": "6 comptes solides, z\u00e9ro formation \u00e0 500\u20ac, couvrant la tech parisienne, la macro FR et le VC SF. On \u00e9vite les influenceurs qui posent avec leurs Tesla."
-  },
-  {
-    "ts": "2026-07-13T20:48:26.015713",
-    "raw_count": 7,
-    "kept_count": 5,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaxBrousse",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 50000,
-        "reason": "Cofondateur de Coinhouse, le roi du French Crypto Twitter, \u00e9duque sans harceler."
-      },
-      {
-        "handle": "NathanBensoussan",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 35000,
-        "reason": "Le mec qui a fait N26 en France, twitte sur la fintech sans vendre de stage."
-      },
-      {
-        "handle": "JulienLeBlanc",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Ex-PDG de Boursorama, analyse les march\u00e9s avec du recul et pas de pub pour une algofarm."
-      },
-      {
-        "handle": "Marc-AndreGagnon",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 20000,
-        "reason": "L'expert crypto qu\u00e9b\u00e9cois, focus DeFi et Web3, actif sur les tendances."
-      },
-      {
-        "handle": "JulieRigal",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Cofondatrice d'\u00c9conomist.com (Qu\u00e9bec), vulgarise la bourse avec intelligence."
-      }
-    ],
-    "summary": "100% Frenchies, 0 influenceur de formation \u00e0 97\u20ac. On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour se concentrer sur les buildeurs et les analysts qui ont un blog ou un poste \u00e0 la con \u00e0 la clef."
-  },
-  {
     "ts": "2026-07-13T22:41:23.152301",
     "raw_count": 10,
     "kept_count": 7,
@@ -9124,5 +9041,102 @@
       }
     ],
     "summary": "J'ai tri\u00e9 le sable pour trouver des vrais analystes pas des vendeurs de r\u00eaves. Le mix USA/FR/Qu\u00e9bec est solide, sans le traditionnel bloat des influenceurs crypto g\u00e9n\u00e9ralistes."
+  },
+  {
+    "ts": "2026-08-03T01:36:27.690384",
+    "raw_count": 7,
+    "kept_count": 6,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thibaultmrg",
+        "region": "france",
+        "niche": "ai",
+        "followers": 95000,
+        "reason": "Thibault Margerie. La r\u00e9f\u00e9rence 'French AI'. Il ne vend pas de cours, il poste des threads techniques et du hardware. Pure substance."
+      },
+      {
+        "handle": "MaximeVandenberghe",
+        "region": "france",
+        "niche": "ai",
+        "followers": 72000,
+        "reason": "CEO de Mistral. Pas besoin de se pr\u00e9senter. Son compte est une mine d'or sur l'\u00e9cosyst\u00e8me fran\u00e7ais et la souverainet\u00e9 IA. Moins hype que certains, plus pertinent."
+      },
+      {
+        "handle": "RaphaelMoulin",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Cofondateur de Dymension. Le roi du ZK-rollups en France. Twitte des insights deep-tech, pas des shillings. Respect\u00e9 par les devs."
+      },
+      {
+        "handle": "RomainLeduc_",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 55000,
+        "reason": "L'expert qu\u00e9b\u00e9cois incontest\u00e9 sur l'adoption des crypto-actifs et la fintech. Vibe calme, contenu dense. La paix au Qu\u00e9bec (et ailleurs)."
+      },
+      {
+        "handle": "julien_grenier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'anti-Blablaresearch. Journaliste fond, analyse les r\u00e9sultats trimestriels avec un humour noir corrosif. Le 'merci Maxime' permanent."
+      },
+      {
+        "handle": "AmineSahbani",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Hype-free AI. Il d\u00e9cortique les LLMs avec une pr\u00e9cision chirurgicale. Le genre de thread qui te fait dire 'waouh' en lisant le feed de tes potes tech."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit pour ne garder que les cerveaux qui font avancer la nasse, pas juste les influenceurs qui vendent des webinaires de 49\u20ac. Mistral et Dymension montrent que la France sort des IA d'\u00e9lite, pas juste des consultants."
+  },
+  {
+    "ts": "2026-08-03T03:36:25.729229",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "HugoPoussin",
+        "region": "france",
+        "niche": "ai",
+        "followers": 70000,
+        "reason": "Ex-Mistral, couvre l'IA de l'int\u00e9rieur, twitte en FR/EN, vibeFounder plus que prof de LinkedIn."
+      },
+      {
+        "handle": "LorenzoFragaglie",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Journaliste crypto de r\u00e9f\u00e9rence (Bitcoin Mag FR), twitte direct, couvre la tech plus que les memecoins."
+      },
+      {
+        "handle": "MickaelFavre",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Analyste actions fran\u00e7aise, tweete des setups concrets, pas de 'rejoins mon telegram' \u00e0 chaque post."
+      },
+      {
+        "handle": "JeanPhilippeBriere",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 25000,
+        "reason": "La voix de la tech qu\u00e9b\u00e9coise, couvre startups et IA, r\u00e9seau VC solide, tr\u00e8s actif."
+      },
+      {
+        "handle": "LucBoudrias",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 20000,
+        "reason": "Investisseur angel actif, tweete sur SaaS et IA, pas de guru-ism, du pragmatisme nordique."
+      }
+    ],
+    "summary": "Une s\u00e9lection pure-platre : des experts qui font bouger les lignes (Mistral, Bitcoin on-chain) plut\u00f4t que des influenceurs qui vendent du r\u00eave. Mix France/QC/USA US francophone."
   }
 ]

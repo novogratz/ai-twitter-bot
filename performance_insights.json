@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-03T01:35:46.295011",
-  "window_7d_actions": 5788,
-  "window_24h_actions": 879,
+  "generated_at": "2026-08-03T05:35:46.301960",
+  "window_7d_actions": 5781,
+  "window_24h_actions": 884,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5784
+      "count": 5777
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5784
+      "count": 5777
     }
   ],
   "best_hours_utc": [
@@ -55,38 +55,38 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2683
+      "count": 2684
     },
     {
       "topic": "IA",
-      "count": 2252
+      "count": 2234
     },
     {
       "topic": "Crypto",
-      "count": 642
+      "count": 654
     },
     {
       "topic": "Bourse",
-      "count": 493
+      "count": 489
     },
     {
       "topic": "Spatial",
-      "count": 93
+      "count": 96
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2517
+      "count": 2501
     },
     {
       "pillar": "market_trauma",
-      "count": 1522
+      "count": 1534
     },
     {
       "pillar": "other",
-      "count": 1515
+      "count": 1510
     },
     {
       "pillar": "meme_reaction",
@@ -94,7 +94,7 @@
     },
     {
       "pillar": "reply_bait",
-      "count": 68
+      "count": 70
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,19 +104,19 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 353
+      "count": 354
     },
     {
       "pillar": "other",
-      "count": 257
+      "count": 249
     },
     {
       "pillar": "market_trauma",
-      "count": 225
+      "count": 238
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
+      "count": 25
     },
     {
       "pillar": "reply_bait",
@@ -139,39 +139,39 @@
       "pillar": "market_trauma",
       "posts": 48,
       "avg_likes": 0.23,
-      "avg_views": 36.5,
+      "avg_views": 36.9,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 75,
-      "avg_likes": 0.17,
-      "avg_views": 34.5,
+      "posts": 73,
+      "avg_likes": 0.18,
+      "avg_views": 35.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 69,
+      "posts": 71,
       "avg_likes": 0.1,
-      "avg_views": 40.3,
+      "avg_views": 40.9,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 3,
+      "posts": 4,
       "avg_likes": 0.0,
-      "avg_views": 26.0,
+      "avg_views": 37.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5275
+      "count": 5269
     },
     {
       "type": "quote",
-      "count": 287
+      "count": 286
     },
     {
       "type": "quote_gif",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-03T01:35:27.876001",
-      "text": "Meta's operating margin dip is just the cost of buying a 400k GPU cluster. You're not worried about margins. You're watching a monopolist burn cash to widen the moat. buy.",
+      "ts": "2026-08-03T05:35:23.272217",
+      "text": "Tradfi rails are a toll booth. btc is the highway.\n\nyou pay them for access, you hold them for freedom.\n\none is a subscription. the other is a deed.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-03T01:34:26.041018",
-      "text": "Apple is the #1 customer for nvidia's data center revenue right now. you didn't hold a stock, you held a receipt.",
+      "ts": "2026-08-03T05:34:26.014892",
+      "text": "Leopold Aschenbrenner at 23 is just the human equivalent of a pre-seed deck with no product.\n\n2001 genius. 20B fund. 67% drawdown.\n\nthe math is simple: he’s not a hedge fund, he’s a long-dated call option on AI theory.\n\nand right now, the market is pricing him as a put option on ",
       "type": "reply"
     },
     {
-      "ts": "2026-08-03T01:34:09.813370",
-      "text": "Livret A qui roule, immobilier qui attend. Le seul risque c'est d'avoir trop d'argent et pas assez de courage.",
+      "ts": "2026-08-03T05:33:53.416758",
+      "text": "Coinbase bought 5,535 btc over 12 months while you panic-sold at $60k. they’re accumulating while you’re depreciating.",
       "type": "reply"
     }
   ]

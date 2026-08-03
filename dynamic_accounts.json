@@ -1213,7 +1213,15 @@
     "JesseSokolov",
     "AlexisRozes",
     "JulienDahon",
-    "MarcFavreau"
+    "MarcFavreau",
+    "thibaultmrg",
+    "RaphaelMoulin",
+    "RomainLeduc_",
+    "julien_grenier",
+    "AmineSahbani",
+    "HugoPoussin",
+    "MickaelFavre",
+    "LucBoudrias"
   ],
   "en": [
     "Chubby",
@@ -1531,7 +1539,10 @@
     "Tommy",
     "Qwen",
     "Con",
-    "PostAGI"
+    "PostAGI",
+    "Star_OKX",
+    "qinbafrank",
+    "Patterns"
   ],
   "history": [
     {
@@ -9183,6 +9194,61 @@
       "lang": "fr",
       "handle": "MarcFavreau",
       "added": "2026-08-02"
+    },
+    {
+      "lang": "en",
+      "handle": "Star_OKX",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "en",
+      "handle": "qinbafrank",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "thibaultmrg",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelMoulin",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainLeduc_",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "julien_grenier",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "AmineSahbani",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "en",
+      "handle": "Patterns",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoPoussin",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelFavre",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucBoudrias",
+      "added": "2026-08-03"
     }
   ]
 }
