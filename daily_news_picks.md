@@ -16659,3 +16659,20 @@ Finding all 10 cost roughly $2,000 in tokens at Sol API r
 In internal tests, Astra made ten major breakthroughs in mathematics and theoretical computer science. Among them are a disproof of Connes rigidity conje
   - https://x.com/alexgetmancom/status/2083625881071718431
   - **WHY**: Source fiable + impact concret (score signal 9, engagement 38).
+
+## 2026-08-03
+- **@real_robn** (114 likes, score 8/10) — US Fed Report: The Biden-Harris terrorist administration paid $1 billion to American media to promote COVID-19 vaccines.
+
+CNN: “What we were doing, what we were doing during COVID—and still with regar
+  - https://x.com/Real_RobN/status/2084123102057734167
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 122).
+- **@tom_winter** (713 likes, score 8/10) — The answer to this question is mathmatic.
+
+ Japan owns $1.143 Trillion in US debt, according to the US Treasury.
+
+So if Japan needed to defend its currency without the US buying Yen it would almost ce
+  - https://x.com/Tom_Winter/status/2084075546665701463
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 763).
+- **@cryptohayes** (69 likes, score 8/10) — We need to monitor this weeks Fed H.4.1 release to confirm whether the JP MOF repo’d their TSY for $ then sold them to buy Yen. If Bessent can get the counterparty limit increased then the Fed can cre
+  - https://x.com/CryptoHayes/status/2084099323772690719
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 123).
