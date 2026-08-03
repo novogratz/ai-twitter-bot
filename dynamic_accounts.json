@@ -1188,7 +1188,22 @@
     "GautierBailly",
     "ClementColomb",
     "AlexDeBries",
-    "AntoineLefebvre"
+    "AntoineLefebvre",
+    "Mistral",
+    "AdrienDumas",
+    "LefortThibault",
+    "CryptoBourseFR",
+    "MarcLaporte",
+    "Boursier",
+    "ValentinG",
+    "CryptoBernie",
+    "m_arnautu",
+    "SvenM",
+    "ThibaultD",
+    "BenoitGouin",
+    "AntoineBoudet",
+    "PierreRosental",
+    "JohanneMasse"
   ],
   "en": [
     "Chubby",
@@ -1500,7 +1515,9 @@
     "Venu",
     "COLDCARD",
     "Philip",
-    "France"
+    "France",
+    "OpenCode",
+    "Casper"
   ],
   "history": [
     {
@@ -8996,6 +9013,91 @@
     {
       "lang": "fr",
       "handle": "AntoineLefebvre",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "en",
+      "handle": "OpenCode",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "Mistral",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienDumas",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "LefortThibault",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBourseFR",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLaporte",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "Boursier",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ValentinG",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "en",
+      "handle": "Casper",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBernie",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "m_arnautu",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "SvenM",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultD",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitGouin",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineBoudet",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreRosental",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "JohanneMasse",
       "added": "2026-08-02"
     }
   ]

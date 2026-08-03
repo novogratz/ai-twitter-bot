@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-02T17:35:46.608120",
-  "window_7d_actions": 5825,
-  "window_24h_actions": 882,
+  "generated_at": "2026-08-02T21:35:46.994671",
+  "window_7d_actions": 5804,
+  "window_24h_actions": 887,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5821
+      "count": 5800
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5821
+      "count": 5800
     }
   ],
   "best_hours_utc": [
@@ -55,23 +55,23 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2691
+      "count": 2683
     },
     {
       "topic": "IA",
-      "count": 2280
+      "count": 2264
     },
     {
       "topic": "Crypto",
-      "count": 650
+      "count": 644
     },
     {
       "topic": "Bourse",
-      "count": 492
+      "count": 503
     },
     {
       "topic": "Spatial",
-      "count": 92
+      "count": 94
     }
   ],
   "rising_topics_24h": [],
@@ -82,33 +82,33 @@
     },
     {
       "pillar": "market_trauma",
-      "count": 1542
+      "count": 1535
     },
     {
       "pillar": "other",
-      "count": 1514
+      "count": 1504
     },
     {
       "pillar": "meme_reaction",
-      "count": 123
+      "count": 122
     },
     {
       "pillar": "reply_bait",
-      "count": 70
+      "count": 69
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 43
+      "count": 41
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 350
+      "count": 362
     },
     {
       "pillar": "other",
-      "count": 250
+      "count": 248
     },
     {
       "pillar": "market_trauma",
@@ -116,7 +116,7 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 36
+      "count": 30
     },
     {
       "pillar": "reply_bait",
@@ -124,29 +124,36 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 8
     }
   ],
   "pillar_engagement_30d": [
     {
+      "pillar": "ai_vs_btc",
+      "posts": 4,
+      "avg_likes": 0.25,
+      "avg_views": 58.8,
+      "low_sample": false
+    },
+    {
       "pillar": "market_trauma",
-      "posts": 52,
-      "avg_likes": 0.21,
-      "avg_views": 35.1,
+      "posts": 50,
+      "avg_likes": 0.22,
+      "avg_views": 35.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 72,
-      "avg_likes": 0.17,
-      "avg_views": 34.5,
+      "posts": 73,
+      "avg_likes": 0.18,
+      "avg_views": 34.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 69,
-      "avg_likes": 0.1,
-      "avg_views": 39.6,
+      "avg_likes": 0.12,
+      "avg_views": 40.3,
       "low_sample": false
     },
     {
@@ -155,31 +162,24 @@
       "avg_likes": 0.0,
       "avg_views": 30.7,
       "low_sample": false
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "posts": 3,
-      "avg_likes": 0.0,
-      "avg_views": 58.3,
-      "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5306
+      "count": 5288
     },
     {
       "type": "quote",
-      "count": 292
+      "count": 290
     },
     {
       "type": "quote_gif",
-      "count": 107
+      "count": 105
     },
     {
       "type": "post",
-      "count": 52
+      "count": 53
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-02T17:35:12.076457",
-      "text": "One developer, one summer, one editor.\n\nthe real cost isn’t the code, it’s the $20/hour arbitrage you just pulled off before the VCs even woke up.",
+      "ts": "2026-08-02T21:35:25.018815",
+      "text": "Get your bags off coldcards now. I’m buying the dip with the interest I earned sleeping.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-02T17:33:57.818140",
-      "text": "me finally reading my 47 open tabs without weeping. 🛋️",
-      "type": "quote"
+      "ts": "2026-08-02T21:34:02.791645",
+      "text": "Binance takes 35% of perp volume. that’s the rent a monopoly charges for being the only casino open at 3am.",
+      "type": "reply"
     },
     {
-      "ts": "2026-08-02T17:32:55.479425",
-      "text": "Yield farming used to mean 20% APD with a 1:1 odds of a rug. agents just compound the margin until the algo breaks. now the only risk is you",
+      "ts": "2026-08-02T21:29:18.721339",
+      "text": "Anthropic says action beats raw intelligence.\n\nthe market says openai's valuation beats anthropic's revenue by 40x.\n\ni'll believe the agent era when it replaces a ceo, not just a copilot.",
       "type": "reply"
     }
   ]
