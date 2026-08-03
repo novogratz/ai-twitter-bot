@@ -1203,7 +1203,17 @@
     "BenoitGouin",
     "AntoineBoudet",
     "PierreRosental",
-    "JohanneMasse"
+    "JohanneMasse",
+    "HugoDeligne",
+    "BenFradet",
+    "RaphaelMun",
+    "MarcLemay",
+    "HaseebQureshi",
+    "ThibaudPoyet",
+    "JesseSokolov",
+    "AlexisRozes",
+    "JulienDahon",
+    "MarcFavreau"
   ],
   "en": [
     "Chubby",
@@ -1517,7 +1527,11 @@
     "Philip",
     "France",
     "OpenCode",
-    "Casper"
+    "Casper",
+    "Tommy",
+    "Qwen",
+    "Con",
+    "PostAGI"
   ],
   "history": [
     {
@@ -9098,6 +9112,76 @@
     {
       "lang": "fr",
       "handle": "JohanneMasse",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoDeligne",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenFradet",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelMun",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLemay",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "en",
+      "handle": "Tommy",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "en",
+      "handle": "Qwen",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "en",
+      "handle": "Con",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "en",
+      "handle": "PostAGI",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "HaseebQureshi",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudPoyet",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "JesseSokolov",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisRozes",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDahon",
+      "added": "2026-08-02"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcFavreau",
       "added": "2026-08-02"
     }
   ]

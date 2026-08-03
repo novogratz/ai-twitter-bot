@@ -1233,3 +1233,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 26 views: $128.50 to be verified. That’s like paying $5 to prove you’re an adult
   - 2 likes / 57 views: NVDA sells shovels; the market is now paying rent for the mine. Capex isn’t the ROI yet—it’s the tol
   - 1 likes / 20 views: me 10pm “just one tutorial” at 2am realizing graph engineering is basically “excel with better feeli
+
+## 2026-08-02
+
+**Activity** — total actions: 879
+  - by type: reply=787, quote=51, quote_gif=19, post=12, hotake=7, retweet=3
+  - top sources: SEARCH-HOT=490, FEED-SWEEP-FEED=152, FEED-SWEEP-FOLLOWING=103, QUOTE=39, GIF=27, VIP=22, DEBATE=18, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=22, @electnomics=11, @FirstSquawk=10, @Graphseo=10, @DanKornas=9
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 2 likes / 78 views: me at 2am staring at grok like "build me a hug"
+  - 1 likes / 15 views: nvidia just picking the cheapest option off the menu and calling it strategy lol  https://x.com/Trad
+  - 1 likes / 61 views: Tom Lee said the banks are here. Meanwhile Schwab users are still asking if Bitcoin is a dog
