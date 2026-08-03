@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-02T21:35:46.994671",
-  "window_7d_actions": 5804,
-  "window_24h_actions": 887,
+  "generated_at": "2026-08-03T01:35:46.295011",
+  "window_7d_actions": 5788,
+  "window_24h_actions": 879,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5800
+      "count": 5784
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5800
+      "count": 5784
     }
   ],
   "best_hours_utc": [
@@ -59,72 +59,72 @@
     },
     {
       "topic": "IA",
-      "count": 2264
+      "count": 2252
     },
     {
       "topic": "Crypto",
-      "count": 644
+      "count": 642
     },
     {
       "topic": "Bourse",
-      "count": 503
+      "count": 493
     },
     {
       "topic": "Spatial",
-      "count": 94
+      "count": 93
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2533
+      "count": 2517
     },
     {
       "pillar": "market_trauma",
-      "count": 1535
+      "count": 1522
     },
     {
       "pillar": "other",
-      "count": 1504
+      "count": 1515
     },
     {
       "pillar": "meme_reaction",
-      "count": 122
+      "count": 123
     },
     {
       "pillar": "reply_bait",
-      "count": 69
+      "count": 68
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 41
+      "count": 43
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 362
+      "count": 353
     },
     {
       "pillar": "other",
-      "count": 248
+      "count": 257
     },
     {
       "pillar": "market_trauma",
-      "count": 229
+      "count": 225
     },
     {
       "pillar": "meme_reaction",
-      "count": 30
+      "count": 26
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 8
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
@@ -137,22 +137,22 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 50,
-      "avg_likes": 0.22,
-      "avg_views": 35.3,
+      "posts": 48,
+      "avg_likes": 0.23,
+      "avg_views": 36.5,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 73,
-      "avg_likes": 0.18,
-      "avg_views": 34.7,
+      "posts": 75,
+      "avg_likes": 0.17,
+      "avg_views": 34.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 69,
-      "avg_likes": 0.12,
+      "avg_likes": 0.1,
       "avg_views": 40.3,
       "low_sample": false
     },
@@ -160,18 +160,18 @@
       "pillar": "reply_bait",
       "posts": 3,
       "avg_likes": 0.0,
-      "avg_views": 30.7,
+      "avg_views": 26.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5288
+      "count": 5275
     },
     {
       "type": "quote",
-      "count": 290
+      "count": 287
     },
     {
       "type": "quote_gif",
@@ -179,7 +179,7 @@
     },
     {
       "type": "post",
-      "count": 53
+      "count": 54
     },
     {
       "type": "hotake",
@@ -187,23 +187,23 @@
     },
     {
       "type": "retweet",
-      "count": 26
+      "count": 25
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-02T21:35:25.018815",
-      "text": "Get your bags off coldcards now. I’m buying the dip with the interest I earned sleeping.",
+      "ts": "2026-08-03T01:35:27.876001",
+      "text": "Meta's operating margin dip is just the cost of buying a 400k GPU cluster. You're not worried about margins. You're watching a monopolist burn cash to widen the moat. buy.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-02T21:34:02.791645",
-      "text": "Binance takes 35% of perp volume. that’s the rent a monopoly charges for being the only casino open at 3am.",
+      "ts": "2026-08-03T01:34:26.041018",
+      "text": "Apple is the #1 customer for nvidia's data center revenue right now. you didn't hold a stock, you held a receipt.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-02T21:29:18.721339",
-      "text": "Anthropic says action beats raw intelligence.\n\nthe market says openai's valuation beats anthropic's revenue by 40x.\n\ni'll believe the agent era when it replaces a ceo, not just a copilot.",
+      "ts": "2026-08-03T01:34:09.813370",
+      "text": "Livret A qui roule, immobilier qui attend. Le seul risque c'est d'avoir trop d'argent et pas assez de courage.",
       "type": "reply"
     }
   ]
