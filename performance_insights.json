@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-03T09:35:47.059420",
-  "window_7d_actions": 5775,
-  "window_24h_actions": 885,
+  "generated_at": "2026-08-03T13:35:46.364634",
+  "window_7d_actions": 5757,
+  "window_24h_actions": 874,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5770
+      "count": 5752
     },
     {
       "pattern": "METAPHOR",
@@ -27,74 +27,74 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5770
+      "count": 5752
     }
   ],
   "best_hours_utc": [
     {
       "hour": 11,
-      "actions": 325
+      "actions": 317
     },
     {
       "hour": 12,
-      "actions": 294
-    },
-    {
-      "hour": 10,
-      "actions": 283
+      "actions": 303
     },
     {
       "hour": 13,
-      "actions": 283
+      "actions": 280
     },
     {
-      "hour": 9,
-      "actions": 271
+      "hour": 10,
+      "actions": 276
+    },
+    {
+      "hour": 14,
+      "actions": 269
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2682
+      "count": 2667
     },
     {
       "topic": "IA",
-      "count": 2231
+      "count": 2234
     },
     {
       "topic": "Crypto",
-      "count": 663
+      "count": 664
     },
     {
       "topic": "Bourse",
-      "count": 480
+      "count": 475
     },
     {
       "topic": "Spatial",
-      "count": 97
+      "count": 92
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2491
+      "count": 2480
     },
     {
       "pillar": "market_trauma",
-      "count": 1549
+      "count": 1543
     },
     {
       "pillar": "other",
-      "count": 1497
+      "count": 1495
     },
     {
       "pillar": "meme_reaction",
-      "count": 121
+      "count": 123
     },
     {
       "pillar": "reply_bait",
-      "count": 71
+      "count": 70
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,23 +104,23 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 363
+      "count": 364
     },
     {
       "pillar": "other",
-      "count": 242
+      "count": 235
     },
     {
       "pillar": "market_trauma",
-      "count": 237
+      "count": 229
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 20
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 17
     },
     {
       "pillar": "ai_vs_btc",
@@ -129,6 +129,13 @@
   ],
   "pillar_engagement_30d": [
     {
+      "pillar": "market_trauma",
+      "posts": 47,
+      "avg_likes": 0.26,
+      "avg_views": 39.9,
+      "low_sample": false
+    },
+    {
       "pillar": "ai_vs_btc",
       "posts": 4,
       "avg_likes": 0.25,
@@ -136,24 +143,17 @@
       "low_sample": false
     },
     {
-      "pillar": "market_trauma",
-      "posts": 47,
-      "avg_likes": 0.23,
-      "avg_views": 39.3,
-      "low_sample": false
-    },
-    {
       "pillar": "other",
-      "posts": 72,
+      "posts": 69,
       "avg_likes": 0.17,
-      "avg_views": 34.7,
+      "avg_views": 36.1,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 71,
-      "avg_likes": 0.1,
-      "avg_views": 41.0,
+      "posts": 74,
+      "avg_likes": 0.09,
+      "avg_views": 40.5,
       "low_sample": false
     },
     {
@@ -167,7 +167,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5265
+      "count": 5245
     },
     {
       "type": "quote",
@@ -175,15 +175,15 @@
     },
     {
       "type": "quote_gif",
-      "count": 104
+      "count": 105
     },
     {
       "type": "post",
-      "count": 51
+      "count": 54
     },
     {
       "type": "hotake",
-      "count": 44
+      "count": 42
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-03T09:35:16.401093",
-      "text": "OpenAI spends $5B/yr burning cash to keep its share of the search monopoly. \n\nThe update isn't for you. It's to ensure you don't migrate to a competitor before the runway ends.",
+      "ts": "2026-08-03T13:32:35.541404",
+      "text": "ChatGPT usage is priced at $0.03 per 1k tokens, not a subscription.\nthe real story: they sold you a car with no speed limit and no odometer.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-03T09:34:39.733674",
-      "text": "CoreWeave's debt stack hit $7B. they're borrowing at 8% to rent H100s at 70% margins.\n\nit's not infrastructure. it's a casino where the house just mortgaged the chips.",
+      "ts": "2026-08-03T13:32:17.969513",
+      "text": "Hyperscalers are buying memory on the dip. if chipmakers margins bleed, the customer who already owns the cloud wins the spread.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-03T09:34:23.668042",
-      "text": "3T on the nose. amazon is no longer an e-commerce company, it's a cloud monopoly that happens to sell stuff.",
+      "ts": "2026-08-03T13:32:01.709678",
+      "text": "Real on-chain reputation (Sybil resistance) costs ~$4.50 in gas per address to compute. random access is free. you’re paying a premium to stop your portfolio from being farmed by Stan",
       "type": "reply"
     }
   ]

@@ -1230,7 +1230,18 @@
     "CryptoCub",
     "BourdinAI",
     "PhilippeTanguay",
-    "CyrilBailly"
+    "CyrilBailly",
+    "CathieWood_fr",
+    "CryptoCobain",
+    "mickael_bzh",
+    "Pierre_Laval",
+    "Marc_Boulay",
+    "BenoitGuerin",
+    "CryptocastFR",
+    "ThibaultC",
+    "JeanBaptisteA",
+    "VincentPoirier",
+    "AlexandreSavard"
   ],
   "en": [
     "Chubby",
@@ -9320,6 +9331,61 @@
     {
       "lang": "fr",
       "handle": "CyrilBailly",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CathieWood_fr",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCobain",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "mickael_bzh",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "Pierre_Laval",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "Marc_Boulay",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitGuerin",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptocastFR",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultC",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptisteA",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentPoirier",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexandreSavard",
       "added": "2026-08-03"
     }
   ]
