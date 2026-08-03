@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-07-13T22:41:23.152301",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Nicolasherm",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 130000,
-        "reason": "Le baron du Bitcoin fran\u00e7ais, twitte en FR, z\u00e9ro formation \u00e0 2000\u20ac, pur analyste on-chain et macro."
-      },
-      {
-        "handle": "L3D007",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 70000,
-        "reason": "Membre de Cointribune, le tweet est une arme de destruction massive, z\u00e9ro blabla, pure donn\u00e9e."
-      },
-      {
-        "handle": "JulesRoux",
-        "region": "france",
-        "niche": "tech",
-        "followers": 40000,
-        "reason": "Journaliste Tech/VC, capte les deals avant qu'ils soient sur BFM, style incisif."
-      },
-      {
-        "handle": "AntoineGirard",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 30000,
-        "reason": "Pionnier des newsletters FR, tweet la fintech de A \u00e0 Z, fond\u00e9 mais toujours actif."
-      },
-      {
-        "handle": "BenjaminGuerard",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "Fran\u00e7ais expat \u00e0 NYC, tweet la crypto US mais en FR, angle institutional int\u00e9ressant."
-      },
-      {
-        "handle": "MathieuTernisien",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Qu\u00e9becain, crypto-native, couvre Solana et DeFi avec un regard pragmatique."
-      },
-      {
-        "handle": "OlivierRochon",
-        "region": "quebec",
-        "niche": "finance",
-        "followers": 12000,
-        "reason": "Journaliste financier au Devoir, couvre les march\u00e9s canadiens en FR, sans filtre politique."
-      }
-    ],
-    "summary": "10 profils v\u00e9rifi\u00e9s, z\u00e9ro vendeur de r\u00eave, de la data pure pour nourrir le bot sans engorger le feed."
-  },
-  {
-    "ts": "2026-07-14T02:33:37.235620",
-    "raw_count": 9,
-    "kept_count": 1,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaxBoussemart",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "CTO de MoonPay. Il cover la fintech FR et l'adoption crypto c\u00f4t\u00e9 grand public sans pub pour ses propres cours."
-      }
-    ],
-    "summary": "On a filtr\u00e9 les vendeurs de r\u00eaves pour garder les architectes. De Mistral \u00e0 Paradigm, c'est de l'intel pur, pas du bruit."
-  },
-  {
     "ts": "2026-07-14T05:02:06.927685",
     "raw_count": 7,
     "kept_count": 6,
@@ -9138,5 +9062,95 @@
       }
     ],
     "summary": "Une s\u00e9lection pure-platre : des experts qui font bouger les lignes (Mistral, Bitcoin on-chain) plut\u00f4t que des influenceurs qui vendent du r\u00eave. Mix France/QC/USA US francophone."
+  },
+  {
+    "ts": "2026-08-03T05:36:55.477893",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilAmon",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Ex-Databricks, expert technique qui explique l'IA sans vendre du r\u00eave. Le genre de pote qui a raison."
+      },
+      {
+        "handle": "RaphaelMeyer",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "G\u00e9rant de fonds qu\u00e9b\u00e9cois, twitte en FR, focus long terme et analyse fondamentale. Le contre-poids s\u00e9rieux aux shillers."
+      },
+      {
+        "handle": "LudovicMarty",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Cr\u00e9ateur de MoneyMastery, twitte souvent sur la macro et les cryptos. L'\u00e9quilibre rare entre \u00e9ducatif et trading."
+      },
+      {
+        "handle": "BenjaminChazallon",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "L'analyste technique FR le plus lu. Pas de signaux payants, juste du charting sec et pertinent."
+      },
+      {
+        "handle": "RomainBailly",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Fondateur fran\u00e7ais vivant aux US. Twitte sur l'IA SaaS et les startups tech. Le bridge utile Paris-SF."
+      }
+    ],
+    "summary": "Mix \u00e9quilibr\u00e9 entre les g\u00e9ants IA fran\u00e7ais (Mistral, Amon) et les ind\u00e9pendants bourse/crypto. Le Qu\u00e9bec est mal couvert mais j'ai isol\u00e9 les rares comptes actifs non-politiques. Z\u00e9ro vendeur de r\u00eave, que des producteurs de contenu."
+  },
+  {
+    "ts": "2026-08-03T07:36:28.631880",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "L0bomy",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "L'IA qui rend l'informatique accessible sans vendre du r\u00eave \u00e0 2000 balles."
+      },
+      {
+        "handle": "CryptoCub",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Le prof de crypto qui explique les cycles sans te donner envie de vendre \u00e0 tout va."
+      },
+      {
+        "handle": "BourdinAI",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Ex-WSJ, il d\u00e9cortique l'IA en FR avec la pr\u00e9cision d'un scalpel et le ton d'un \u00e9ditorialiste."
+      },
+      {
+        "handle": "PhilippeTanguay",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "L'\u00e9conomiste qu\u00e9b\u00e9cois qui rend les march\u00e9s compr\u00e9hensibles sans \u00eatre ennuyeux."
+      },
+      {
+        "handle": "CyrilBailly",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "S\u00e9rieux, chiffr\u00e9, z\u00e9ro buzzword. Il tweete ce que les autres tweetent dans deux semaines."
+      }
+    ],
+    "summary": "Un mix solide entre les grands noms fran\u00e7ais bienveillants (L0bomy, BourdinAI) et les profils plus pointus comme Philippe Tanguay pour le Qu\u00e9bec. Z\u00e9ro vendeur de r\u00eave, 100% contenu."
   }
 ]

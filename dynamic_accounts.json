@@ -1221,7 +1221,16 @@
     "AmineSahbani",
     "HugoPoussin",
     "MickaelFavre",
-    "LucBoudrias"
+    "LucBoudrias",
+    "CyrilAmon",
+    "RaphaelMeyer",
+    "LudovicMarty",
+    "RomainBailly",
+    "L0bomy",
+    "CryptoCub",
+    "BourdinAI",
+    "PhilippeTanguay",
+    "CyrilBailly"
   ],
   "en": [
     "Chubby",
@@ -1542,7 +1551,10 @@
     "PostAGI",
     "Star_OKX",
     "qinbafrank",
-    "Patterns"
+    "Patterns",
+    "Jorge",
+    "Castor",
+    "Olivier92"
   ],
   "history": [
     {
@@ -9248,6 +9260,66 @@
     {
       "lang": "fr",
       "handle": "LucBoudrias",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "en",
+      "handle": "Jorge",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "en",
+      "handle": "Castor",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "en",
+      "handle": "Olivier92",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilAmon",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelMeyer",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicMarty",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBailly",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "L0bomy",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoCub",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "BourdinAI",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeTanguay",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilBailly",
       "added": "2026-08-03"
     }
   ]

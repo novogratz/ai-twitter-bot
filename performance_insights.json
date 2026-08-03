@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-03T05:35:46.301960",
-  "window_7d_actions": 5781,
-  "window_24h_actions": 884,
+  "generated_at": "2026-08-03T09:35:47.059420",
+  "window_7d_actions": 5775,
+  "window_24h_actions": 885,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5777
+      "count": 5770
     },
     {
       "pattern": "METAPHOR",
@@ -13,13 +13,13 @@
     },
     {
       "pattern": "EN_ANCHOR",
-      "count": 1
+      "count": 2
     }
   ],
   "worst_patterns": [
     {
       "pattern": "EN_ANCHOR",
-      "count": 1
+      "count": 2
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5777
+      "count": 5770
     }
   ],
   "best_hours_utc": [
@@ -48,83 +48,83 @@
       "actions": 283
     },
     {
-      "hour": 14,
-      "actions": 269
+      "hour": 9,
+      "actions": 271
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2684
+      "count": 2682
     },
     {
       "topic": "IA",
-      "count": 2234
+      "count": 2231
     },
     {
       "topic": "Crypto",
-      "count": 654
+      "count": 663
     },
     {
       "topic": "Bourse",
-      "count": 489
+      "count": 480
     },
     {
       "topic": "Spatial",
-      "count": 96
+      "count": 97
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2501
+      "count": 2491
     },
     {
       "pillar": "market_trauma",
-      "count": 1534
+      "count": 1549
     },
     {
       "pillar": "other",
-      "count": 1510
+      "count": 1497
     },
     {
       "pillar": "meme_reaction",
-      "count": 123
+      "count": 121
     },
     {
       "pillar": "reply_bait",
-      "count": 70
+      "count": 71
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 43
+      "count": 46
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 354
+      "count": 363
     },
     {
       "pillar": "other",
-      "count": 249
+      "count": 242
     },
     {
       "pillar": "market_trauma",
-      "count": 238
+      "count": 237
     },
     {
       "pillar": "meme_reaction",
-      "count": 25
+      "count": 22
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 9
     }
   ],
   "pillar_engagement_30d": [
@@ -137,37 +137,37 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 48,
+      "posts": 47,
       "avg_likes": 0.23,
-      "avg_views": 36.9,
+      "avg_views": 39.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 73,
-      "avg_likes": 0.18,
-      "avg_views": 35.3,
+      "posts": 72,
+      "avg_likes": 0.17,
+      "avg_views": 34.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 71,
       "avg_likes": 0.1,
-      "avg_views": 40.9,
+      "avg_views": 41.0,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 4,
+      "posts": 5,
       "avg_likes": 0.0,
-      "avg_views": 37.0,
+      "avg_views": 39.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5269
+      "count": 5265
     },
     {
       "type": "quote",
@@ -175,15 +175,15 @@
     },
     {
       "type": "quote_gif",
-      "count": 105
+      "count": 104
     },
     {
       "type": "post",
-      "count": 54
+      "count": 51
     },
     {
       "type": "hotake",
-      "count": 42
+      "count": 44
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-03T05:35:23.272217",
-      "text": "Tradfi rails are a toll booth. btc is the highway.\n\nyou pay them for access, you hold them for freedom.\n\none is a subscription. the other is a deed.",
+      "ts": "2026-08-03T09:35:16.401093",
+      "text": "OpenAI spends $5B/yr burning cash to keep its share of the search monopoly. \n\nThe update isn't for you. It's to ensure you don't migrate to a competitor before the runway ends.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-03T05:34:26.014892",
-      "text": "Leopold Aschenbrenner at 23 is just the human equivalent of a pre-seed deck with no product.\n\n2001 genius. 20B fund. 67% drawdown.\n\nthe math is simple: he’s not a hedge fund, he’s a long-dated call option on AI theory.\n\nand right now, the market is pricing him as a put option on ",
+      "ts": "2026-08-03T09:34:39.733674",
+      "text": "CoreWeave's debt stack hit $7B. they're borrowing at 8% to rent H100s at 70% margins.\n\nit's not infrastructure. it's a casino where the house just mortgaged the chips.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-03T05:33:53.416758",
-      "text": "Coinbase bought 5,535 btc over 12 months while you panic-sold at $60k. they’re accumulating while you’re depreciating.",
+      "ts": "2026-08-03T09:34:23.668042",
+      "text": "3T on the nose. amazon is no longer an e-commerce company, it's a cloud monopoly that happens to sell stuff.",
       "type": "reply"
     }
   ]
