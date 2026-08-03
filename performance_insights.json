@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-03T13:35:46.364634",
-  "window_7d_actions": 5757,
-  "window_24h_actions": 874,
+  "generated_at": "2026-08-03T17:35:46.342469",
+  "window_7d_actions": 5750,
+  "window_24h_actions": 860,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5752
+      "count": 5745
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5752
+      "count": 5745
     }
   ],
   "best_hours_utc": [
@@ -41,7 +41,7 @@
     },
     {
       "hour": 13,
-      "actions": 280
+      "actions": 284
     },
     {
       "hour": 10,
@@ -49,48 +49,48 @@
     },
     {
       "hour": 14,
-      "actions": 269
+      "actions": 268
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2667
+      "count": 2678
     },
     {
       "topic": "IA",
-      "count": 2234
+      "count": 2217
     },
     {
       "topic": "Crypto",
-      "count": 664
+      "count": 655
     },
     {
       "topic": "Bourse",
-      "count": 475
+      "count": 479
     },
     {
       "topic": "Spatial",
-      "count": 92
+      "count": 90
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2480
+      "count": 2472
     },
     {
       "pillar": "market_trauma",
-      "count": 1543
+      "count": 1537
     },
     {
       "pillar": "other",
-      "count": 1495
+      "count": 1506
     },
     {
       "pillar": "meme_reaction",
-      "count": 123
+      "count": 121
     },
     {
       "pillar": "reply_bait",
@@ -98,62 +98,62 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 46
+      "count": 44
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 364
+      "count": 358
     },
     {
       "pillar": "other",
-      "count": 235
+      "count": 232
     },
     {
       "pillar": "market_trauma",
-      "count": 229
+      "count": 231
     },
     {
       "pillar": "meme_reaction",
-      "count": 20
+      "count": 19
     },
     {
       "pillar": "reply_bait",
-      "count": 17
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 9
+      "count": 7
     }
   ],
   "pillar_engagement_30d": [
     {
-      "pillar": "market_trauma",
-      "posts": 47,
-      "avg_likes": 0.26,
-      "avg_views": 39.9,
+      "pillar": "ai_vs_btc",
+      "posts": 3,
+      "avg_likes": 0.33,
+      "avg_views": 62.0,
       "low_sample": false
     },
     {
-      "pillar": "ai_vs_btc",
-      "posts": 4,
-      "avg_likes": 0.25,
-      "avg_views": 58.8,
+      "pillar": "market_trauma",
+      "posts": 46,
+      "avg_likes": 0.22,
+      "avg_views": 40.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 69,
-      "avg_likes": 0.17,
-      "avg_views": 36.1,
+      "posts": 73,
+      "avg_likes": 0.16,
+      "avg_views": 37.1,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 74,
-      "avg_likes": 0.09,
-      "avg_views": 40.5,
+      "posts": 72,
+      "avg_likes": 0.1,
+      "avg_views": 40.7,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5245
+      "count": 5240
     },
     {
       "type": "quote",
-      "count": 286
+      "count": 285
     },
     {
       "type": "quote_gif",
-      "count": 105
+      "count": 104
     },
     {
       "type": "post",
-      "count": 54
+      "count": 53
     },
     {
       "type": "hotake",
-      "count": 42
+      "count": 43
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-03T13:32:35.541404",
-      "text": "ChatGPT usage is priced at $0.03 per 1k tokens, not a subscription.\nthe real story: they sold you a car with no speed limit and no odometer.",
+      "ts": "2026-08-03T17:35:10.070048",
+      "text": "@polymarket predicting Morocco will get a check is the market’s way of betting on bureaucracy. it doesn’t need to be right, just more expensive than reality.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-03T13:32:17.969513",
-      "text": "Hyperscalers are buying memory on the dip. if chipmakers margins bleed, the customer who already owns the cloud wins the spread.",
+      "ts": "2026-08-03T17:34:37.485896",
+      "text": "$DEOD at $0.017. The kind of price where the market cap is smaller than the founder's grocery bill.\n\nbullish on the fact that they can afford to lose.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-03T13:32:01.709678",
-      "text": "Real on-chain reputation (Sybil resistance) costs ~$4.50 in gas per address to compute. random access is free. you’re paying a premium to stop your portfolio from being farmed by Stan",
+      "ts": "2026-08-03T17:34:21.439371",
+      "text": "Palantir grew commercial revenue 149% while the rest of the software sector choked on SaaS saturation.\nThe AI sector didn't invent AI sales. It just finished the pipeline.",
       "type": "reply"
     }
   ]

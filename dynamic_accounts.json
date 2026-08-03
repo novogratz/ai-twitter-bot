@@ -1241,7 +1241,16 @@
     "ThibaultC",
     "JeanBaptisteA",
     "VincentPoirier",
-    "AlexandreSavard"
+    "AlexandreSavard",
+    "MarcAndreessen",
+    "Alexis_Bachety",
+    "RaphaElie",
+    "Luisa_Morana",
+    "GuillaumeRocher",
+    "YannJoly",
+    "BenoitMuller",
+    "MylseChoueifaty",
+    "NicoDumoulin"
   ],
   "en": [
     "Chubby",
@@ -1565,7 +1574,10 @@
     "Patterns",
     "Jorge",
     "Castor",
-    "Olivier92"
+    "Olivier92",
+    "Rick",
+    "wafer",
+    "skyte"
   ],
   "history": [
     {
@@ -9386,6 +9398,66 @@
     {
       "lang": "fr",
       "handle": "AlexandreSavard",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "en",
+      "handle": "Rick",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "en",
+      "handle": "wafer",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "en",
+      "handle": "skyte",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcAndreessen",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alexis_Bachety",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaElie",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "Luisa_Morana",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "GuillaumeRocher",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "YannJoly",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitMuller",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "MylseChoueifaty",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicoDumoulin",
       "added": "2026-08-03"
     }
   ]

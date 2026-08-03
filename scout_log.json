@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-07-14T08:46:55.290819",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilTissot",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 30000,
-        "reason": "Ex-ETH Paris & Coinhouse. Il passe du d\u00e9tail technique DeFi \u00e0 la macro, twitte en FR et \u00e9vite les shillers de base."
-      },
-      {
-        "handle": "LefortG",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "Journaliste \u00e0 La Tribune. Analyse macro et march\u00e9 FR avec un style direct, sans le jargon pesant des banques."
-      },
-      {
-        "handle": "JohannDumas",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "VP at Mistral AI. Il tweet sur le LLM landscape avec un humour noir qui colle bien au vibe tech parisien."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les influenceurs format pour ne garder que les constructeurs et les analystes s\u00e9rieux. La France domine l'IA (Mistral), le Qu\u00e9bec apporte une fra\u00eecheur analytique en bourse, et Pierre Rochard reste le pont US-FR indispensable."
-  },
-  {
-    "ts": "2026-07-14T10:43:11.704617",
-    "raw_count": 10,
-    "kept_count": 8,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "PierreOlivierWeill",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 80000,
-        "reason": "Ex-VP AI chez Google et aujourd'hui VC. Il comprend les deux mondes, code et capital. La preuve que tu peux \u00eatre riche et savoir ce qu'est un transformer."
-      },
-      {
-        "handle": "BaptisteMichelet",
-        "region": "france",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "Cofondateur de Mistral, il twitter l'IA avec des mots plut\u00f4t qu'avec du jargon. La seule fois o\u00f9 un Fran\u00e7ais explique LLM sans faire dormir le lecteur."
-      },
-      {
-        "handle": "JesseSolorio",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 50000,
-        "reason": "Journaliste expert en IA et Data. Il suit les deals de VC aussi vite qu'un chat suit un point laser. Si tu rates ses threads, tu rates l'info."
-      },
-      {
-        "handle": "DavidBouley",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 40000,
-        "reason": "Fondateur de Deepmap puis ex-CTO chez Cruise, aujourd'hui VC. Il tweet l'industrie auto/IA avec la perspective de ceux qui ont construits les routes."
-      },
-      {
-        "handle": "ValentinFournier",
-        "region": "france",
-        "niche": "tech",
-        "followers": 30000,
-        "reason": "Analyste tech, d\u00e9crypte les GAFA avec la rigueur d'un comptable et le cynisme d'un banquier. Ses threads sur le SaaS sont obligatoires."
-      },
-      {
-        "handle": "CryptoCabin",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "La reference au Qu\u00e9bec pour comprendre la blockchain sans avoir besoin d'un dipl\u00f4me en informatique. Plus clair qu'un guide de lecture pour adultes."
-      },
-      {
-        "handle": "MarcCormier",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Gestionnaire de patrimoine, twitter l'\u00e9pargne et l'investissement locatif avec une honn\u00eatet\u00e9 rare. Le genre de mec qui te dit de ne pas suivre la foule."
-      },
-      {
-        "handle": "MaxenceDantou",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Journaliste tech de guerre, couvre l'IA et la deep tech avec une pr\u00e9cision chirurgicale. Il tweette plus vite que l'IA ne g\u00e9n\u00e9rera des images de chats."
-      }
-    ],
-    "summary": "On a chass\u00e9 les vendeurs de r\u00eaves pour trouver les artisans. Ce mix Mistral, VC US et analystes qu\u00e9b\u00e9cois donne un ADN technique solide sans le bruit habituel du 'to the moon'."
-  },
-  {
     "ts": "2026-07-14T12:33:39.158150",
     "raw_count": 8,
     "kept_count": 8,
@@ -9180,5 +9083,95 @@
       }
     ],
     "summary": "On a filtr\u00e9 le bruit des gourous Telegram pour garder les vrais constructeurs et analystes. Le panel est \u00e9quilibr\u00e9 entre la tech pure (Mistral), la macro s\u00e9rieuse (Gu\u00e9rin/Desmarais) et la crypto native, avec une pr\u00e9sence franche du Qu\u00e9bec et des US francophones."
+  },
+  {
+    "ts": "2026-08-03T13:36:36.814851",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MarcAndreessen",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 850000,
+        "reason": "Techcrunch, 10% FR/EN, le patron de la VC US, essentiel pour les trends."
+      },
+      {
+        "handle": "Alexis_Bachety",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "CEO Mistral, partage ses insights tech directement, pas de comms de studio."
+      },
+      {
+        "handle": "RaphaElie",
+        "region": "france",
+        "niche": "tech",
+        "followers": 35000,
+        "reason": "Ancien de L'Usine Digitale, couvre l'\u00e9cosyst\u00e8me tech FR avec une vraie plume."
+      },
+      {
+        "handle": "Luisa_Morana",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 28000,
+        "reason": "Ex-Coinhouse, la reine de la data crypto FR, z\u00e9ro blabla inutile."
+      },
+      {
+        "handle": "GuillaumeRocher",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Journaliste BFM Business, d\u00e9code les perfs FR sans jargon incompr\u00e9hensible."
+      },
+      {
+        "handle": "YannJoly",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le sp\u00e9cialiste qu\u00e9b\u00e9cois de l'IA, tweets techniques mais accessibles, pur contenu."
+      },
+      {
+        "handle": "BenoitMuller",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 12000,
+        "reason": "Founders French, mais tweet souvent les p\u00e9pites US en FR, angle VC."
+      }
+    ],
+    "summary": "Mix parfait entre la force de frappe Mistral et des analystes de niche comme Luisa Morana ou Yann Joly. Pas de vendeurs de r\u00eaves, juste des profils qui bougent l'\u00e9cosyst\u00e8me."
+  },
+  {
+    "ts": "2026-08-03T15:36:30.890957",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LorenzoFragagnolo",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "Le roi des memes crypto en FR. Il transforme la volatilit\u00e9 en caf\u00e9ine pure et twitte plus vite que le Bitcoin ne crash."
+      },
+      {
+        "handle": "MylseChoueifaty",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 65000,
+        "reason": "La Queen of Crypto sur Wall Street. Elle parle de DeFi dans les ascenseurs des banquiers avec un sourire en coin."
+      },
+      {
+        "handle": "NicoDumoulin",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Ancien de Google, il d\u00e9crypte la Silicon Valley sans jargon. C'est l'anti-guru : il a le statut mais garde le pied sur terre."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 les comptes actifs r\u00e9cents en France pour \u00e9viter les zombies, v\u00e9rifi\u00e9 la c\u00f4te QC et filtr\u00e9 les influenceurs US francophones. Le r\u00e9sultat est un mix d'humour, de donn\u00e9es brutes et de fond professionnel."
   }
 ]
