@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-03T21:35:47.060302",
-  "window_7d_actions": 5745,
-  "window_24h_actions": 867,
+  "generated_at": "2026-08-04T01:35:46.364359",
+  "window_7d_actions": 5731,
+  "window_24h_actions": 868,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5740
+      "count": 5726
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5740
+      "count": 5726
     }
   ],
   "best_hours_utc": [
@@ -55,76 +55,76 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2680
+      "count": 2678
     },
     {
       "topic": "IA",
-      "count": 2211
+      "count": 2199
     },
     {
       "topic": "Crypto",
-      "count": 663
+      "count": 661
     },
     {
       "topic": "Bourse",
-      "count": 482
+      "count": 476
     },
     {
       "topic": "Spatial",
-      "count": 90
+      "count": 91
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2461
+      "count": 2450
     },
     {
       "pillar": "market_trauma",
-      "count": 1535
+      "count": 1529
     },
     {
       "pillar": "other",
-      "count": 1509
+      "count": 1513
     },
     {
       "pillar": "meme_reaction",
-      "count": 125
+      "count": 127
     },
     {
       "pillar": "reply_bait",
-      "count": 71
+      "count": 70
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 44
+      "count": 42
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 358
+      "count": 365
     },
     {
       "pillar": "market_trauma",
-      "count": 232
+      "count": 234
     },
     {
       "pillar": "other",
-      "count": 232
+      "count": 222
     },
     {
       "pillar": "meme_reaction",
-      "count": 25
+      "count": 28
     },
     {
       "pillar": "reply_bait",
-      "count": 14
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -137,23 +137,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 48,
-      "avg_likes": 0.23,
-      "avg_views": 41.2,
+      "posts": 45,
+      "avg_likes": 0.22,
+      "avg_views": 43.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 72,
-      "avg_likes": 0.17,
-      "avg_views": 36.1,
+      "posts": 73,
+      "avg_likes": 0.16,
+      "avg_views": 37.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 71,
+      "posts": 73,
       "avg_likes": 0.1,
-      "avg_views": 40.7,
+      "avg_views": 40.0,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5237
+      "count": 5223
     },
     {
       "type": "quote",
-      "count": 279
+      "count": 278
     },
     {
       "type": "quote_gif",
-      "count": 106
+      "count": 108
     },
     {
       "type": "post",
@@ -187,23 +187,23 @@
     },
     {
       "type": "retweet",
-      "count": 25
+      "count": 24
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-03T21:34:43.433503",
-      "text": "Indian midcaps at P/E 60 while Nvidia runs at 20. You’re not diversified; you’re leveraged on a rumor in a sector that hasn’t posted revenue yet.",
+      "ts": "2026-08-04T01:35:33.802810",
+      "text": "me on my way to explain to my husband that the \"stunt\" lasted longer than our marriage\n😭",
+      "type": "quote"
+    },
+    {
+      "ts": "2026-08-04T01:33:20.305721",
+      "text": "FXRP as collateral is a bond proxy for a token that hasn't secured its own ledger.\nthe math works until the bridge breaks.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-03T21:28:36.172892",
-      "text": "Reddit is a media company with a content engine. Snap is a content engine with a media business model.",
-      "type": "reply"
-    },
-    {
-      "ts": "2026-08-03T21:26:42.442921",
-      "text": "Senate funding through midterms is a two year runway for everything that doesn't have a p&l.\n\nthe real story is that capital will only survive the next eighteen months if it prints money faster than the government spends it.\n\nsurvival of the fittest burn rate.",
+      "ts": "2026-08-04T01:32:05.812554",
+      "text": "100 senior sales leaders at Series A/B SF AI startups.\nyou need a list of people who sell the vision before the product exists.\nthe real product is the pitch deck.",
       "type": "reply"
     }
   ]
