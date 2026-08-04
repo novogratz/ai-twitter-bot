@@ -1250,7 +1250,14 @@
     "YannJoly",
     "BenoitMuller",
     "MylseChoueifaty",
-    "NicoDumoulin"
+    "NicoDumoulin",
+    "Lefrancois",
+    "SylvainLeRoux",
+    "MickaelVernay",
+    "RaphaelPeltier",
+    "TradingViewFR",
+    "CryptoFrancais",
+    "CryptoFRance"
   ],
   "en": [
     "Chubby",
@@ -9458,6 +9465,41 @@
     {
       "lang": "fr",
       "handle": "NicoDumoulin",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lefrancois",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLeRoux",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelVernay",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelPeltier",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "TradingViewFR",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoFrancais",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoFRance",
       "added": "2026-08-03"
     }
   ]

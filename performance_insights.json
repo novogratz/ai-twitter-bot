@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-03T17:35:46.342469",
-  "window_7d_actions": 5750,
-  "window_24h_actions": 860,
+  "generated_at": "2026-08-03T21:35:47.060302",
+  "window_7d_actions": 5745,
+  "window_24h_actions": 867,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5745
+      "count": 5740
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5745
+      "count": 5740
     }
   ],
   "best_hours_utc": [
@@ -55,19 +55,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2678
+      "count": 2680
     },
     {
       "topic": "IA",
-      "count": 2217
+      "count": 2211
     },
     {
       "topic": "Crypto",
-      "count": 655
+      "count": 663
     },
     {
       "topic": "Bourse",
-      "count": 479
+      "count": 482
     },
     {
       "topic": "Spatial",
@@ -78,23 +78,23 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2472
+      "count": 2461
     },
     {
       "pillar": "market_trauma",
-      "count": 1537
+      "count": 1535
     },
     {
       "pillar": "other",
-      "count": 1506
+      "count": 1509
     },
     {
       "pillar": "meme_reaction",
-      "count": 121
+      "count": 125
     },
     {
       "pillar": "reply_bait",
-      "count": 70
+      "count": 71
     },
     {
       "pillar": "ai_vs_btc",
@@ -107,24 +107,24 @@
       "count": 358
     },
     {
+      "pillar": "market_trauma",
+      "count": 232
+    },
+    {
       "pillar": "other",
       "count": 232
     },
     {
-      "pillar": "market_trauma",
-      "count": 231
-    },
-    {
       "pillar": "meme_reaction",
-      "count": 19
+      "count": 25
     },
     {
       "pillar": "reply_bait",
-      "count": 13
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 7
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
@@ -137,21 +137,21 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 46,
-      "avg_likes": 0.22,
-      "avg_views": 40.1,
+      "posts": 48,
+      "avg_likes": 0.23,
+      "avg_views": 41.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 73,
-      "avg_likes": 0.16,
-      "avg_views": 37.1,
+      "posts": 72,
+      "avg_likes": 0.17,
+      "avg_views": 36.1,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 72,
+      "posts": 71,
       "avg_likes": 0.1,
       "avg_views": 40.7,
       "low_sample": false
@@ -167,19 +167,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5240
+      "count": 5237
     },
     {
       "type": "quote",
-      "count": 285
+      "count": 279
     },
     {
       "type": "quote_gif",
-      "count": 104
+      "count": 106
     },
     {
       "type": "post",
-      "count": 53
+      "count": 55
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-03T17:35:10.070048",
-      "text": "@polymarket predicting Morocco will get a check is the market’s way of betting on bureaucracy. it doesn’t need to be right, just more expensive than reality.",
+      "ts": "2026-08-03T21:34:43.433503",
+      "text": "Indian midcaps at P/E 60 while Nvidia runs at 20. You’re not diversified; you’re leveraged on a rumor in a sector that hasn’t posted revenue yet.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-03T17:34:37.485896",
-      "text": "$DEOD at $0.017. The kind of price where the market cap is smaller than the founder's grocery bill.\n\nbullish on the fact that they can afford to lose.",
+      "ts": "2026-08-03T21:28:36.172892",
+      "text": "Reddit is a media company with a content engine. Snap is a content engine with a media business model.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-03T17:34:21.439371",
-      "text": "Palantir grew commercial revenue 149% while the rest of the software sector choked on SaaS saturation.\nThe AI sector didn't invent AI sales. It just finished the pipeline.",
+      "ts": "2026-08-03T21:26:42.442921",
+      "text": "Senate funding through midterms is a two year runway for everything that doesn't have a p&l.\n\nthe real story is that capital will only survive the next eighteen months if it prints money faster than the government spends it.\n\nsurvival of the fittest burn rate.",
       "type": "reply"
     }
   ]
