@@ -1247,3 +1247,18 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 78 views: me at 2am staring at grok like "build me a hug"
   - 1 likes / 15 views: nvidia just picking the cheapest option off the menu and calling it strategy lol  https://x.com/Trad
   - 1 likes / 61 views: Tom Lee said the banks are here. Meanwhile Schwab users are still asking if Bitcoin is a dog
+
+## 2026-08-03
+
+**Activity** — total actions: 872
+  - by type: reply=776, quote=54, quote_gif=22, post=10, hotake=8, retweet=2
+  - top sources: SEARCH-HOT=492, FEED-SWEEP-FEED=141, FEED-SWEEP-FOLLOWING=106, QUOTE=41, GIF=27, DEBATE=20, VIP=13, BREAKING_QRT=6
+  - comedy patterns: EN_ANCHOR=1
+  - top reply targets: @Graphseo=12, @Cointelegraph=9, @TheBTCTherapist=8, @StockSavvyShay=8, @kimmonismus=8
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 154 likes / 81042 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
+  - 1 likes / 34 views: Amazon breaks $3 trillion. The market cap is up, but the margin is down.  You aren't buying a store.
+  - 1 likes / 32 views: Michael Saylor never sold his Bitcoin. I sold mine in 2018 to buy a Dyson vacuum. Priorities.
