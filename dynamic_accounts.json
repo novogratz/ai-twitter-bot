@@ -1264,7 +1264,15 @@
     "SergioLuchessi",
     "NathanaelTeboul",
     "DarioCrea",
-    "AlexisLarcher"
+    "AlexisLarcher",
+    "HassanBoukhari",
+    "NicoTremblay",
+    "ThibautMansion",
+    "VincentBourget",
+    "LucRochon",
+    "DariusLecarpent",
+    "TanguyLeLutun",
+    "AdrienCouturier"
   ],
   "en": [
     "Chubby",
@@ -1591,7 +1599,9 @@
     "Olivier92",
     "Rick",
     "wafer",
-    "skyte"
+    "skyte",
+    "ICYESTTWAT",
+    "k"
   ],
   "history": [
     {
@@ -9543,6 +9553,56 @@
       "lang": "fr",
       "handle": "AlexisLarcher",
       "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "HassanBoukhari",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicoTremblay",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautMansion",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentBourget",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucRochon",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "en",
+      "handle": "ICYESTTWAT",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "en",
+      "handle": "k",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "DariusLecarpent",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "TanguyLeLutun",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienCouturier",
+      "added": "2026-08-04"
     }
   ]
 }

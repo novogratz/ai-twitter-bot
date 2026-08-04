@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-04T01:35:46.364359",
-  "window_7d_actions": 5731,
-  "window_24h_actions": 868,
+  "generated_at": "2026-08-04T05:35:46.355515",
+  "window_7d_actions": 5723,
+  "window_24h_actions": 865,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5726
+      "count": 5718
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5726
+      "count": 5718
     }
   ],
   "best_hours_utc": [
@@ -55,19 +55,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2678
+      "count": 2679
     },
     {
       "topic": "IA",
-      "count": 2199
+      "count": 2190
     },
     {
       "topic": "Crypto",
-      "count": 661
+      "count": 659
     },
     {
       "topic": "Bourse",
-      "count": 476
+      "count": 471
     },
     {
       "topic": "Spatial",
@@ -78,19 +78,19 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2450
+      "count": 2441
     },
     {
       "pillar": "market_trauma",
-      "count": 1529
+      "count": 1525
     },
     {
       "pillar": "other",
-      "count": 1513
+      "count": 1520
     },
     {
       "pillar": "meme_reaction",
-      "count": 127
+      "count": 126
     },
     {
       "pillar": "reply_bait",
@@ -98,7 +98,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 42
+      "count": 41
     }
   ],
   "pillar_mix_24h": [
@@ -107,20 +107,20 @@
       "count": 365
     },
     {
-      "pillar": "market_trauma",
-      "count": 234
+      "pillar": "other",
+      "count": 232
     },
     {
-      "pillar": "other",
+      "pillar": "market_trauma",
       "count": 222
     },
     {
       "pillar": "meme_reaction",
-      "count": 28
+      "count": 29
     },
     {
       "pillar": "reply_bait",
-      "count": 15
+      "count": 13
     },
     {
       "pillar": "ai_vs_btc",
@@ -146,14 +146,14 @@
       "pillar": "other",
       "posts": 73,
       "avg_likes": 0.16,
-      "avg_views": 37.3,
+      "avg_views": 37.0,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 73,
       "avg_likes": 0.1,
-      "avg_views": 40.0,
+      "avg_views": 41.3,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5223
+      "count": 5217
     },
     {
       "type": "quote",
-      "count": 278
+      "count": 277
     },
     {
       "type": "quote_gif",
-      "count": 108
+      "count": 107
     },
     {
       "type": "post",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-04T01:35:33.802810",
-      "text": "me on my way to explain to my husband that the \"stunt\" lasted longer than our marriage\n😭",
-      "type": "quote"
-    },
-    {
-      "ts": "2026-08-04T01:33:20.305721",
-      "text": "FXRP as collateral is a bond proxy for a token that hasn't secured its own ledger.\nthe math works until the bridge breaks.",
+      "ts": "2026-08-04T05:35:43.532833",
+      "text": "VRAM costs are up because Nvidia is rationing bandwidth, not just chips.\n\nthe real story isn't hardware. it's a toll booth.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-04T01:32:05.812554",
-      "text": "100 senior sales leaders at Series A/B SF AI startups.\nyou need a list of people who sell the vision before the product exists.\nthe real product is the pitch deck.",
+      "ts": "2026-08-04T05:34:37.744421",
+      "text": "Claude Code plans. Cursor builds. Loops sleep.\nit's not a stack. it's a 1m/mo solopreneur's excuse not to learn git.",
+      "type": "reply"
+    },
+    {
+      "ts": "2026-08-04T05:34:05.168402",
+      "text": "Permacast is the bridge. the real play is selling the shovels to the guys who just realized they can't build one.",
       "type": "reply"
     }
   ]
