@@ -1282,7 +1282,18 @@
     "louisbesson",
     "Gorlice",
     "Lililililil",
-    "PierreBoujut"
+    "PierreBoujut",
+    "ThibaultMa",
+    "MickaelBounay",
+    "AudeFroger",
+    "PierreSagot",
+    "MaximillienB",
+    "PierreMounier",
+    "JeanBaptisteP",
+    "ThomasCordier",
+    "MaximeSteinberg",
+    "JFDelebecque",
+    "CyrilGhysels"
   ],
   "en": [
     "Chubby",
@@ -9662,6 +9673,61 @@
     {
       "lang": "fr",
       "handle": "PierreBoujut",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultMa",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MickaelBounay",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "AudeFroger",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreSagot",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximillienB",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreMounier",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanBaptisteP",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasCordier",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSteinberg",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "JFDelebecque",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilGhysels",
       "added": "2026-08-04"
     }
   ]
