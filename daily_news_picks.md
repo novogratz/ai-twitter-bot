@@ -16676,3 +16676,13 @@ So if Japan needed to defend its currency without the US buying Yen it would alm
 - **@cryptohayes** (69 likes, score 8/10) — We need to monitor this weeks Fed H.4.1 release to confirm whether the JP MOF repo’d their TSY for $ then sold them to buy Yen. If Bessent can get the counterparty limit increased then the Fed can cre
   - https://x.com/CryptoHayes/status/2084099323772690719
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 123).
+
+## 2026-08-04
+- **@ashcrypto** (56 likes, score 9/10) — BREAKING :  BlackRock and other ETFs bought $170,100,000 worth of Bitcoin.
+  - https://x.com/AshCrypto/status/2084491811326923153
+  - **WHY**: Source fiable + impact concret (score signal 11, engagement 86).
+- **@jefetrades** (44 likes, score 8/10) — HIGH RISK HIGHER REWARD?!
+
+$CRWV our top dog is up over 18% and climbing, earnings for this are going to be the real determining factor. $NBIS + $IREN fantastic bounces so far, then $ORCL almost +30%
+  - https://x.com/JEFETRADES/status/2084428247287099832
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 68).

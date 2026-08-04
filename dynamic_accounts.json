@@ -1257,7 +1257,14 @@
     "RaphaelPeltier",
     "TradingViewFR",
     "CryptoFrancais",
-    "CryptoFRance"
+    "CryptoFRance",
+    "Cryptobubbles",
+    "TheAIShrinkAI",
+    "NicolasBourbaki",
+    "SergioLuchessi",
+    "NathanaelTeboul",
+    "DarioCrea",
+    "AlexisLarcher"
   ],
   "en": [
     "Chubby",
@@ -9500,6 +9507,41 @@
     {
       "lang": "fr",
       "handle": "CryptoFRance",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "Cryptobubbles",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheAIShrinkAI",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasBourbaki",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "SergioLuchessi",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanaelTeboul",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "DarioCrea",
+      "added": "2026-08-03"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisLarcher",
       "added": "2026-08-03"
     }
   ]
