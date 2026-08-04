@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-04T05:35:46.355515",
-  "window_7d_actions": 5723,
-  "window_24h_actions": 865,
+  "generated_at": "2026-08-04T09:35:47.199484",
+  "window_7d_actions": 5753,
+  "window_24h_actions": 878,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5718
+      "count": 5748
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5718
+      "count": 5748
     }
   ],
   "best_hours_utc": [
@@ -48,75 +48,75 @@
       "actions": 276
     },
     {
-      "hour": 14,
-      "actions": 268
+      "hour": 9,
+      "actions": 272
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2679
+      "count": 2695
     },
     {
       "topic": "IA",
-      "count": 2190
+      "count": 2196
     },
     {
       "topic": "Crypto",
-      "count": 659
+      "count": 667
     },
     {
       "topic": "Bourse",
-      "count": 471
+      "count": 473
     },
     {
       "topic": "Spatial",
-      "count": 91
+      "count": 92
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2441
+      "count": 2448
     },
     {
       "pillar": "market_trauma",
-      "count": 1525
+      "count": 1536
     },
     {
       "pillar": "other",
-      "count": 1520
+      "count": 1531
     },
     {
       "pillar": "meme_reaction",
-      "count": 126
+      "count": 125
     },
     {
       "pillar": "reply_bait",
-      "count": 70
+      "count": 71
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 41
+      "count": 42
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 365
+      "count": 364
     },
     {
       "pillar": "other",
-      "count": 232
+      "count": 241
     },
     {
       "pillar": "market_trauma",
-      "count": 222
+      "count": 227
     },
     {
       "pillar": "meme_reaction",
-      "count": 29
+      "count": 31
     },
     {
       "pillar": "reply_bait",
@@ -124,7 +124,7 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
@@ -137,22 +137,22 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 45,
-      "avg_likes": 0.22,
-      "avg_views": 43.4,
+      "posts": 43,
+      "avg_likes": 0.21,
+      "avg_views": 44.3,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 73,
-      "avg_likes": 0.16,
-      "avg_views": 37.0,
+      "posts": 74,
+      "avg_likes": 0.15,
+      "avg_views": 38.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 73,
-      "avg_likes": 0.1,
+      "posts": 74,
+      "avg_likes": 0.09,
       "avg_views": 41.3,
       "low_sample": false
     },
@@ -167,7 +167,7 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5217
+      "count": 5248
     },
     {
       "type": "quote",
@@ -175,11 +175,11 @@
     },
     {
       "type": "quote_gif",
-      "count": 107
+      "count": 105
     },
     {
       "type": "post",
-      "count": 55
+      "count": 56
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-04T05:35:43.532833",
-      "text": "VRAM costs are up because Nvidia is rationing bandwidth, not just chips.\n\nthe real story isn't hardware. it's a toll booth.",
+      "ts": "2026-08-04T09:35:20.486478",
+      "text": "Microsoft open sourcing 21 lessons.\n\nreal story: they want you to build on azure when the models go commoditized. free adoption, paid scale.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-04T05:34:37.744421",
-      "text": "Claude Code plans. Cursor builds. Loops sleep.\nit's not a stack. it's a 1m/mo solopreneur's excuse not to learn git.",
+      "ts": "2026-08-04T09:34:47.711877",
+      "text": "META is up 17.2%, SPY up 77.9%.\nThe index is up 33% because of 7 companies. SPY is a concentration game.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-04T05:34:05.168402",
-      "text": "Permacast is the bridge. the real play is selling the shovels to the guys who just realized they can't build one.",
+      "ts": "2026-08-04T09:32:52.856808",
+      "text": "Anthropic's training cost per token dropped 15x in 2024 while their gross margins expanded. open source didn't kill their moat, it just forced them to stop charging startup prices for enterprise sleep.",
       "type": "reply"
     }
   ]

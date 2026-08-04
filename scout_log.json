@@ -1,102 +1,5 @@
 [
   {
-    "ts": "2026-07-15T00:47:48.174048",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LionelLevrel",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "L'analyste roi du CAC 40. Pas de blabla sp\u00e9culatif, que des fondamentaux et des bilans secs. Si tu veux comprendre pourquoi ton ETF pleure, il est l\u00e0."
-      },
-      {
-        "handle": "MaximeGuitton",
-        "region": "france",
-        "niche": "ia",
-        "followers": 28000,
-        "reason": "Expert LLM et Open Source. Il montre comment build des agents IA sans exploser son budget AWS. Pragmatique, technique, et il a le chic pour simplifier le chaos des mod\u00e8les ouverts."
-      },
-      {
-        "handle": "ThibaudGarcin",
-        "region": "france",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Founder de L'Orbital. Mixe tech, IA et business FR. Il a compris que l'IA ne se vend pas en code, mais en ROI. Ses threads sont des mini-livres blancs."
-      },
-      {
-        "handle": "MarcTessierLavigne",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Bien que US, il twitte beaucoup en FR sur la gouvernance de l'IA et l'Europe. Un peu plus acad\u00e9mique, mais le regard crois\u00e9 est pr\u00e9cieux pour pas se prendre la t\u00eate avec les US-only narratives."
-      },
-      {
-        "handle": "AlexisThomson",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 12000,
-        "reason": "Vieux briscard de la tech qu\u00e9b\u00e9coise. Couvre startups, IA et \u00e9cosyst\u00e8me. C'est le compte \u00e0 suivre si tu veux savoir ce qui se trame dans les bureaux montr\u00e9alais avant les blogs g\u00e9n\u00e9ralistes."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour ne garder que les constructeurs et les observateurs avertis. De Mistral aux traders de Montr\u00e9al, la diversit\u00e9 des angles (tech pure vs analyse de march\u00e9) donne un portrait complet de la sc\u00e8ne francophone actuelle."
-  },
-  {
-    "ts": "2026-07-15T02:33:28.242185",
-    "raw_count": 6,
-    "kept_count": 6,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MehdiHoussaini",
-        "region": "france",
-        "niche": "ai",
-        "followers": 150000,
-        "reason": "Le P-DG de Hugging Face. Il ne vend pas de formation, il vit pour l'open source. Sa vibe est tech pure, zero buzz 'guru'."
-      },
-      {
-        "handle": "JulienBenoist",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "G\u00e9rant de fonds. Son fil m\u00e9lange analyse macro, charts et critiques cinglantes sur les valeurs absurdes, sans signe 'Telegram'."
-      },
-      {
-        "handle": "AlexandreChatea",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "Investisseur early-stage (ex-Mistral). Il poste sur les p\u00e9pites IA francophones aux US avant que le march\u00e9 ne s'en rende compte."
-      },
-      {
-        "handle": "LorenzoMaterassi",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 35000,
-        "reason": "Co-fondateur de Lemon Way. Il twitte des insights b2b/b2c tr\u00e8s pr\u00e9cis sur le fintech europ\u00e9en, loin des posts motivationnels."
-      },
-      {
-        "handle": "AdrienBourgeois",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Founder de Wolt. Il couvre la tech, le SaaS et l'\u00e9cosyst\u00e8me Montr\u00e9al-Qu\u00e9bec avec un humour sec sans se prendre au s\u00e9rieux."
-      },
-      {
-        "handle": "MathieuMuller",
-        "region": "france",
-        "niche": "ai",
-        "followers": 18000,
-        "reason": "PhD en IA, auteur de newsletters techniques. Il d\u00e9cortique les papiers ArXiv sans faire payer le ticket VIP."
-      }
-    ],
-    "summary": "5 profils 'hardcore' tech/fintech plut\u00f4t que des influenceurs g\u00e9n\u00e9ralistes. On \u00e9vite les vendeurs de r\u00eaves pour se concentrer sur ceux qui construisent ou analysent la tech en FR/Qu\u00e9bec/US."
-  },
-  {
     "ts": "2026-07-15T04:39:04.807717",
     "raw_count": 10,
     "kept_count": 4,
@@ -9103,5 +9006,95 @@
       }
     ],
     "summary": "Un mix de traders hardcore, de profs sympas et de technos. Z\u00e9ro vendeur de r\u00eave, juste du m\u00e9tier."
+  },
+  {
+    "ts": "2026-08-04T05:36:43.840434",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 7,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "thierrm",
+        "region": "france",
+        "niche": "ai",
+        "followers": 120000,
+        "reason": "Cofondateur de Mistral AI, il explique le LLM sans endormir le lecteur. C'est rare un gars qui comprend la techno ET les business models sans vendre du r\u00eave."
+      },
+      {
+        "handle": "alexisgarnier_",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 30000,
+        "reason": "Trader professionnel, pas influenceur. Ses threads sur la lecture de flux et les patterns sont plus utiles que 90% des newsletters payantes."
+      },
+      {
+        "handle": "mariocaz",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Diaspora FR aux USA. Il poste sur l'IA, la SaaS et le VC am\u00e9ricain mais en fran\u00e7ais. Unique en son genre pour voir l'\u00e9cosyst\u00e8me SF sans barri\u00e8re de langue."
+      },
+      {
+        "handle": "cryptobonhomme",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Annonceur officiel de la crypto au Qu\u00e9bec. Il mixe news blockchain, adoption institutionnelle et humour local. L'audience est engag\u00e9e et pas juste l\u00e0 pour les memes."
+      },
+      {
+        "handle": "jgarrigues",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Ex-Mistral, ex-DeepMind. Il poste sur l'IA, la data et les startups tech fr. Ton sec, z\u00e9ro bullshit, exactement ce qu'on cherche."
+      },
+      {
+        "handle": "julesbonnassoux",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le pionnier fr du Prompt Engineering. Il twitte que dalle de temps en temps, mais chaque tweet est une p\u00e9pite que les autres r\u00e9utilisent 3 mois plus tard."
+      },
+      {
+        "handle": "louisbesson",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 11000,
+        "reason": "Ex-Lemmy, ex-Podverse. Il parle tech, produits et startup life depuis l'\u00e9tranger. Son style est \u00e9pur\u00e9, intelligent et tr\u00e8s 'product-led'."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit parisien pour ne garder que ceux qui ont du grain \u00e0 moudre. On a une belle base entre la France (Mistral, trading pro) et le Qu\u00e9bec (fintech, adoption locale), avec une touche diaspora US. Z\u00e9ro vendeur de r\u00eaves, que des profils qui construisent ou analysent."
+  },
+  {
+    "ts": "2026-08-04T07:36:38.285755",
+    "raw_count": 7,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Gorlice",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 85000,
+        "reason": "L'anti-LinkedIn par excellence, d\u00e9crypte la finance sans jargon, followers engag\u00e9s mais pas hypnotis\u00e9s."
+      },
+      {
+        "handle": "Lililililil",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Le roi du Qu\u00e9bec pour les actions US, style direct, communaut\u00e9 loyale."
+      },
+      {
+        "handle": "PierreBoujut",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "Expert CBDC et monnaie, tweets rares mais incisifs, z\u00e9ro 'buy now'."
+      }
+    ],
+    "summary": "Mix \u00e9quilibr\u00e9 entre l'analyse boursi\u00e8re fran\u00e7aise 'anti-fluff', l'IA tech locale et les traders qu\u00e9b\u00e9cois qui savent parler."
   }
 ]

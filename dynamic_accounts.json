@@ -1272,7 +1272,17 @@
     "LucRochon",
     "DariusLecarpent",
     "TanguyLeLutun",
-    "AdrienCouturier"
+    "AdrienCouturier",
+    "thierrm",
+    "alexisgarnier_",
+    "mariocaz",
+    "cryptobonhomme",
+    "jgarrigues",
+    "julesbonnassoux",
+    "louisbesson",
+    "Gorlice",
+    "Lililililil",
+    "PierreBoujut"
   ],
   "en": [
     "Chubby",
@@ -9602,6 +9612,56 @@
     {
       "lang": "fr",
       "handle": "AdrienCouturier",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "thierrm",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "alexisgarnier_",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "mariocaz",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptobonhomme",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "jgarrigues",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "julesbonnassoux",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "louisbesson",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "Gorlice",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lililililil",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreBoujut",
       "added": "2026-08-04"
     }
   ]
