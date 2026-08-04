@@ -1293,7 +1293,18 @@
     "ThomasCordier",
     "MaximeSteinberg",
     "JFDelebecque",
-    "CyrilGhysels"
+    "CyrilGhysels",
+    "DinoB01",
+    "AlexisBachety",
+    "MaximeSylvain",
+    "JeanDeneuve1",
+    "SylvainLeCorre",
+    "JulienPecquet",
+    "GorazdMihel",
+    "CyrilDonguy",
+    "RomainPiel",
+    "NathalieBessone",
+    "MarcLeblanc"
   ],
   "en": [
     "Chubby",
@@ -1622,7 +1633,8 @@
     "wafer",
     "skyte",
     "ICYESTTWAT",
-    "k"
+    "k",
+    "Axultan"
   ],
   "history": [
     {
@@ -9728,6 +9740,66 @@
     {
       "lang": "fr",
       "handle": "CyrilGhysels",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "en",
+      "handle": "Axultan",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "DinoB01",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBachety",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSylvain",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanDeneuve1",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainLeCorre",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienPecquet",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "GorazdMihel",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDonguy",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainPiel",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathalieBessone",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLeblanc",
       "added": "2026-08-04"
     }
   ]
