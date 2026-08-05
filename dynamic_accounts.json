@@ -1304,7 +1304,16 @@
     "CyrilDonguy",
     "RomainPiel",
     "NathalieBessone",
-    "MarcLeblanc"
+    "MarcLeblanc",
+    "GaelKoenig",
+    "JulienR",
+    "MarcGagnon_",
+    "CamilleD",
+    "VincentR",
+    "MaximeLeboeuf",
+    "HervetX",
+    "Raphaelyss",
+    "JulienVialon"
   ],
   "en": [
     "Chubby",
@@ -9800,6 +9809,51 @@
     {
       "lang": "fr",
       "handle": "MarcLeblanc",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelKoenig",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienR",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcGagnon_",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "CamilleD",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentR",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeLeboeuf",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "HervetX",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "Raphaelyss",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienVialon",
       "added": "2026-08-04"
     }
   ]

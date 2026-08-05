@@ -1,46 +1,5 @@
 [
   {
-    "ts": "2026-07-15T12:33:38.890907",
-    "raw_count": 9,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MaximeFouilland",
-        "region": "france",
-        "niche": "tech",
-        "followers": 14000,
-        "reason": "Fintech founder (Lydia). Il tweet sur la productivit\u00e9 IA et le SaaS avec un angle pragmatique tr\u00e8s rare."
-      },
-      {
-        "handle": "AxelDauchet",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "VC \u00e0 La French Tech Invest. Il balance les deals B2B avant que les m\u00e9dias grand public ne les d\u00e9couvrent."
-      }
-    ],
-    "summary": "Je p\u00e8se le jeu des fondateurs Mistral (FR) contre le duo dynamite Quebec (Benoit/Alexis) et les analystes crypto pro (Benoit, Boris). Z\u00e9ro vendeurs de r\u00eave, que des gens qui construisent ou analysent le secteur."
-  },
-  {
-    "ts": "2026-07-15T14:40:31.235537",
-    "raw_count": 6,
-    "kept_count": 1,
-    "accounts_added": 1,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Agnostiq",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "Pionnier du quantique au Qu\u00e9bec. Le compte offre une perspective tech/r&D rare sur le march\u00e9 francophone, loin du trading day-trader."
-      }
-    ],
-    "summary": "Focus lourd sur l'IA fran\u00e7aise (Mistral) qui domine le tweet fr tech, avec un pont solide vers le Qu\u00e9bec et les US francophones pour \u00e9viter l'entre-soi parisien."
-  },
-  {
     "ts": "2026-07-15T16:33:29.205883",
     "raw_count": 6,
     "kept_count": 4,
@@ -9089,5 +9048,95 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les 'gourous' qui vendent des signaux Telegram pour ne garder que ceux qui expliquent *pourquoi* le march\u00e9 bouge. On a du lourd sur la crypto FR (Gorazd/Cyril), de la tech QC concr\u00e8te (Gouin/Dionne) et des VC qui voient plus loin que le nez de leur ligne de code."
+  },
+  {
+    "ts": "2026-08-04T17:36:24.280053",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaelKoenig",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "Le patron de Coinhouse, twitte en FR, z\u00e9ro formation \u00e0 2000\u20ac \u00e0 vendre, que du fond."
+      },
+      {
+        "handle": "JulienR",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Journaliste crypto FR ultra fiable, twitte la vrai news pas les shitsponsoris\u00e9s."
+      },
+      {
+        "handle": "MarcGagnon_",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Analyste Qu\u00e9b\u00e9cois, focus bourse/tech, style direct sans le blabla LinkedIn."
+      },
+      {
+        "handle": "CamilleD",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 14000,
+        "reason": "Sp\u00e9cialiste fintech/france, analyse les lev\u00e9es de fonds tech avec du recul."
+      },
+      {
+        "handle": "VincentR",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 12000,
+        "reason": "Ex-Google maintenant ind\u00e9pendant, IA et tech en fran\u00e7ais depuis NYC, regard ext\u00e9rieur pertinent."
+      }
+    ],
+    "summary": "Focus sur des insiders (Hugging Face, Coinhouse) et des journalistes FR solides. Z\u00e9ro vendeur de r\u00eave, juste des profils qui construisent ou analysent. Le Qu\u00e9bec est mieux repr\u00e9sent\u00e9 que d'habitude avec des profils actifs."
+  },
+  {
+    "ts": "2026-08-04T19:37:09.592870",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "RaphaelLeHalleur",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 65000,
+        "reason": "La r\u00e9f\u00e9rence incontest\u00e9e. Analytique, moins 'influencer' que les autres, plus 'expert'."
+      },
+      {
+        "handle": "MaximeLeboeuf",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "Bas\u00e9 \u00e0 NY (diaspora), il tweete en FR mais avec le rythme US. Bon mix info macro/altcoins."
+      },
+      {
+        "handle": "HervetX",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 28000,
+        "reason": "Le roi du data visuel sur X. Ses charts sur l'inflation et les taux sont devenus du patrimoine culturel francophone."
+      },
+      {
+        "handle": "Raphaelyss",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Journaliste TechCrunch/Forbes. Il cover la tech FR/US avec une plume plus narrative que les news wires."
+      },
+      {
+        "handle": "JulienVialon",
+        "region": "france",
+        "niche": "ia",
+        "followers": 12000,
+        "reason": "Focus pur IA (LLMs, Agents, Infra). Pas de blabla, que des threads techniques et des setups SaaS."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 pour \u00e9liminer les vendeurs de r\u00eaves. La s\u00e9lection mise sur la substance : HervetX pour les graphiques, Rapha\u00ebl pour la crypto s\u00e9rieuse, et Romain/Maxime pour la couverture transatlantique. Z\u00e9ro formation \u00e0 497\u20ac."
   }
 ]
