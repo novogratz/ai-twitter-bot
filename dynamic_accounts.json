@@ -1322,7 +1322,17 @@
     "MathieuGimenez",
     "CryptoBabesFR",
     "JLepretre",
-    "AlexandreDionne"
+    "AlexandreDionne",
+    "BorjaLizarralde",
+    "DorianMazaux",
+    "Alexis_Ba",
+    "SylvainMalka",
+    "JohanSedoy",
+    "GhislainAI",
+    "MathisR",
+    "MaximeCollard",
+    "AlexisBoulayFR",
+    "MarcLapointe"
   ],
   "en": [
     "Chubby",
@@ -1653,7 +1663,8 @@
     "ICYESTTWAT",
     "k",
     "Axultan",
-    "PEPPERS"
+    "PEPPERS",
+    "Testlabor"
   ],
   "history": [
     {
@@ -9915,6 +9926,61 @@
       "lang": "fr",
       "handle": "AlexandreDionne",
       "added": "2026-08-04"
+    },
+    {
+      "lang": "en",
+      "handle": "Testlabor",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorjaLizarralde",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianMazaux",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alexis_Ba",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "SylvainMalka",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JohanSedoy",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "GhislainAI",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathisR",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeCollard",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBoulayFR",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLapointe",
+      "added": "2026-08-05"
     }
   ]
 }

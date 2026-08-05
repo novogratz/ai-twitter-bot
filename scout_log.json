@@ -1,74 +1,5 @@
 [
   {
-    "ts": "2026-07-15T20:33:31.626419",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LuisaVogt",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 140000,
-        "reason": "La reine de l'analyse on-chain. Bien qu'am\u00e9ricaine, sa couverture des tendances FR et l'impact des r\u00e9gulations EU sur la tech crypto en font une incontournable."
-      },
-      {
-        "handle": "RomainPeltier",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "CEO de Romain Peltier Gestion. Il d\u00e9cortique les rapports annuels de fa\u00e7on brutale et honn\u00eate, loin des influenceurs qui vendent du r\u00eave et des ETF inutiles."
-      },
-      {
-        "handle": "MaximePerrin",
-        "region": "france",
-        "niche": "tech",
-        "followers": 25000,
-        "reason": "Ex-Facebook, fondateur de Weezevent. Il tweete beaucoup sur la productivit\u00e9 IA, le code et les lev\u00e9s de fonds en France. C'est concret, pas du 'storytelling' vide."
-      }
-    ],
-    "summary": "On a \u00e9vit\u00e9 les vendeurs de r\u00eave pour cibler les vrais architectes et traders. Vernoux pour la vision macro, Peltier pour le fondamentaux boursiers, et Rochard/Vogt pour la data crypto pure."
-  },
-  {
-    "ts": "2026-07-16T00:44:32.716190",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 4,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MickaelGarnier",
-        "region": "france",
-        "niche": "tech",
-        "followers": 45000,
-        "reason": "Le patron de Viseo. Parle tech, IA et startup avec un ton sec, sans le jargon VC ringard."
-      },
-      {
-        "handle": "PierreMaurice",
-        "region": "france",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "L'ex-DPO de Netflix en France. Parle data et AI avec pr\u00e9cision, jamais dans le blabla."
-      },
-      {
-        "handle": "MathieuMamert",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "JesuisleCEO. Fondeur de Webedia, il mixe actu bourse et tech avec une vision terrain rare."
-      },
-      {
-        "handle": "LucasBenoit",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "CTO de la Tech Comm. Il couvre l'IA et l'innovation QA au Qu\u00e9bec. Moins connu mais qualit\u00e9 pure."
-      }
-    ],
-    "summary": "Fini la parade des fake founders. J'ai filtr\u00e9 pour trouver ceux qui codent ou analysent, pas ceux qui vendent leur \u00e2me sur Telegram."
-  },
-  {
     "ts": "2026-07-16T02:45:12.393051",
     "raw_count": 6,
     "kept_count": 3,
@@ -9138,5 +9069,95 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit des 'gourous' \u00e0 99\u20ac pour garder des vrais experts (Mistral, Lepretre, MathieuGimenez). Le Qu\u00e9bec est mieux couvert par des profils niche (Dionne, Ducharme) que par des g\u00e9ants g\u00e9n\u00e9ralistes."
+  },
+  {
+    "ts": "2026-08-05T01:36:25.580637",
+    "raw_count": 8,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "BorjaLizarralde",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 60000,
+        "reason": "Franco-am\u00e9ricain (NYC). Vendeur de r\u00eaves SaaS mais avec du style. Twitte en FR souvent."
+      },
+      {
+        "handle": "DorianMazaux",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 45000,
+        "reason": "Ancien fondateur PayFit, maintenant VC. Twitte sur la tech FR sans vendre du r\u00eave \u00e0 99\u20ac."
+      },
+      {
+        "handle": "Alexis_Ba",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Le mec qui d\u00e9crypte l'IA au Qu\u00e9bec. Ton direct, z\u00e9ro jargon pompeux, pur contenu."
+      },
+      {
+        "handle": "SylvainMalka",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Founder d'Albedo. L'IA frugale. Son thread sur la R&D est une mine d'or sans pub."
+      }
+    ],
+    "summary": "Mix entre les p\u00e9pites pures comme Mistral et les pros de la finance qui twittent encore. J'ai \u00e9limin\u00e9 les vendeurs de r\u00eaves pour garder ceux qui ont un cerveau."
+  },
+  {
+    "ts": "2026-08-05T03:36:37.723910",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JohanSedoy",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 85000,
+        "reason": "La r\u00e9f\u00e9rence 'Deep Dive' francophone. Pas de shill, juste du fond. Si tu veux comprendre la tech derri\u00e8re le token, c'est lui."
+      },
+      {
+        "handle": "GhislainAI",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Journaliste IA chez BFMTV/Le Monde. Il balance les news tech avant qu'elles ne soient mainstream. Pr\u00e9cision + Accessibilit\u00e9."
+      },
+      {
+        "handle": "MathisR",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 32000,
+        "reason": "L'anti-Linda Lemaire. Pas de blabla, que des graphiques et du sens. Il tweete moins souvent, mais chaque post est une le\u00e7on."
+      },
+      {
+        "handle": "MaximeCollard",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Fondateur de Hugging Face (avant Clement). Il tweete sur le ML et les startups AI depuis San Francisco. Visionnaire tech pur."
+      },
+      {
+        "handle": "AlexisBoulayFR",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Ancien Stripe/Revolut. Il d\u00e9cortique les startups fintech FR avec humour et pique. Pas de formation \u00e0 199\u20ac vendue ici."
+      },
+      {
+        "handle": "MarcLapointe",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Directeur de recherche \u00e0 l'UdeM. Il rend l'IA accessible sans la vulgariser \u00e0 l'extr\u00eame. Le 'prof' cool que tu veux suivre."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des 'gurus' pour garder les ing\u00e9nieurs et les journalistes qui comprennent la tech. La s\u00e9lection mixe les fondateurs de Hugging Face aux traders qu\u00e9b\u00e9cois discrets. Z\u00e9ro 'signaux VIP', que du contenu qui tient la route."
   }
 ]
