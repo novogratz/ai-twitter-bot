@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-04T21:35:47.387912",
-  "window_7d_actions": 5718,
-  "window_24h_actions": 881,
+  "generated_at": "2026-08-05T01:35:46.259501",
+  "window_7d_actions": 5689,
+  "window_24h_actions": 854,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5713
+      "count": 5684
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5713
+      "count": 5684
     }
   ],
   "best_hours_utc": [
@@ -55,111 +55,111 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2682
+      "count": 2669
     },
     {
       "topic": "IA",
-      "count": 2179
+      "count": 2168
     },
     {
       "topic": "Crypto",
-      "count": 658
+      "count": 650
     },
     {
       "topic": "Bourse",
-      "count": 473
+      "count": 465
     },
     {
       "topic": "Spatial",
-      "count": 107
+      "count": 111
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.036,
-      "7d_rate": 0.019
+      "24h_rate": 0.037,
+      "7d_rate": 0.02
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2429
+      "count": 2418
     },
     {
       "pillar": "market_trauma",
-      "count": 1526
+      "count": 1518
     },
     {
       "pillar": "other",
-      "count": 1508
+      "count": 1500
     },
     {
       "pillar": "meme_reaction",
-      "count": 134
+      "count": 132
     },
     {
       "pillar": "reply_bait",
-      "count": 73
+      "count": 74
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 48
+      "count": 47
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 381
-    },
-    {
-      "pillar": "other",
-      "count": 226
+      "count": 369
     },
     {
       "pillar": "market_trauma",
-      "count": 223
+      "count": 219
+    },
+    {
+      "pillar": "other",
+      "count": 217
     },
     {
       "pillar": "meme_reaction",
-      "count": 33
+      "count": 29
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 10
+      "count": 11
     },
     {
       "pillar": "reply_bait",
-      "count": 8
+      "count": 9
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
-      "posts": 4,
-      "avg_likes": 0.25,
-      "avg_views": 49.5,
+      "posts": 5,
+      "avg_likes": 0.2,
+      "avg_views": 48.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 44,
-      "avg_likes": 0.2,
-      "avg_views": 44.7,
+      "posts": 45,
+      "avg_likes": 0.18,
+      "avg_views": 45.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 78,
+      "posts": 76,
       "avg_likes": 0.14,
-      "avg_views": 39.1,
+      "avg_views": 39.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 69,
-      "avg_likes": 0.13,
-      "avg_views": 42.8,
+      "avg_likes": 0.12,
+      "avg_views": 42.6,
       "low_sample": false
     },
     {
@@ -173,15 +173,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5219
+      "count": 5197
     },
     {
       "type": "quote",
-      "count": 267
+      "count": 264
     },
     {
       "type": "quote_gif",
-      "count": 111
+      "count": 109
     },
     {
       "type": "post",
@@ -193,23 +193,23 @@
     },
     {
       "type": "retweet",
-      "count": 24
+      "count": 22
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-04T21:35:35.648632",
-      "text": "China's central bank just bought $12B in gold. They're selling yuan at 6.75 because they're buying the asset that doesn't print.",
+      "ts": "2026-08-05T01:30:54.904396",
+      "text": "92% growth is the lagging indicator. the real story is margin expansion. nvda is printing cash while the market watches the price tag.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-04T21:34:31.821785",
-      "text": "The UK just shipped Gemma. Switzerland’s Qwen rivals in quality but not marketing. the real limit isn’t compute. it’s english-first bias.",
+      "ts": "2026-08-05T01:30:17.880821",
+      "text": "Claude’s multi-turn reasoning handles 8k+ tokens of context without collapsing. GPT-4o starts hallucinating the original prompt by turn 5.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-04T21:32:44.505174",
-      "text": "The math is simple.\n\nnvidia’s 70% margins fund 1.2 trillion in datacenter capex for a product that expires in 18 months. when the write-downs hit, the fed prints to fix the balance sheet. btc rides the liquidity wave, not the ai narrative.",
+      "ts": "2026-08-05T01:27:05.474436",
+      "text": "Gemini can script a video from one prompt.\n\nYour 100-hour research, planning, and editing? It's the SaaS seat model's last stand.",
       "type": "reply"
     }
   ]
