@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-08-05T05:35:46.308873",
-  "window_7d_actions": 5661,
-  "window_24h_actions": 828,
+  "generated_at": "2026-08-05T09:35:46.232229",
+  "window_7d_actions": 5633,
+  "window_24h_actions": 800,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5656
+      "count": 5630
     },
     {
       "pattern": "METAPHOR",
-      "count": 3
+      "count": 2
     },
     {
       "pattern": "EN_ANCHOR",
-      "count": 2
+      "count": 1
     }
   ],
   "worst_patterns": [
     {
       "pattern": "EN_ANCHOR",
-      "count": 2
+      "count": 1
     },
     {
       "pattern": "METAPHOR",
-      "count": 3
+      "count": 2
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5656
+      "count": 5630
     }
   ],
   "best_hours_utc": [
@@ -55,52 +55,52 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2658
+      "count": 2629
     },
     {
       "topic": "IA",
-      "count": 2151
+      "count": 2148
     },
     {
       "topic": "Crypto",
-      "count": 649
+      "count": 647
     },
     {
       "topic": "Bourse",
-      "count": 463
+      "count": 465
     },
     {
       "topic": "Spatial",
-      "count": 109
+      "count": 111
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.039,
-      "7d_rate": 0.019
+      "24h_rate": 0.043,
+      "7d_rate": 0.02
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2402
+      "count": 2392
     },
     {
       "pillar": "market_trauma",
-      "count": 1525
+      "count": 1508
     },
     {
       "pillar": "other",
-      "count": 1488
+      "count": 1491
     },
     {
       "pillar": "meme_reaction",
-      "count": 126
+      "count": 124
     },
     {
       "pillar": "reply_bait",
-      "count": 75
+      "count": 73
     },
     {
       "pillar": "ai_vs_btc",
@@ -110,26 +110,26 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 361
+      "count": 355
     },
     {
       "pillar": "market_trauma",
-      "count": 222
+      "count": 205
     },
     {
       "pillar": "other",
-      "count": 197
+      "count": 194
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 11
+      "count": 24
     },
     {
       "pillar": "ai_vs_btc",
+      "count": 11
+    },
+    {
+      "pillar": "reply_bait",
       "count": 11
     }
   ],
@@ -143,22 +143,22 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 43,
-      "avg_likes": 0.19,
-      "avg_views": 46.3,
+      "posts": 46,
+      "avg_likes": 0.17,
+      "avg_views": 47.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 74,
+      "posts": 72,
       "avg_likes": 0.14,
-      "avg_views": 39.8,
+      "avg_views": 40.3,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 73,
-      "avg_likes": 0.11,
+      "posts": 72,
+      "avg_likes": 0.1,
       "avg_views": 42.1,
       "low_sample": false
     },
@@ -173,19 +173,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5174
+      "count": 5152
     },
     {
       "type": "quote",
-      "count": 265
+      "count": 264
     },
     {
       "type": "quote_gif",
-      "count": 103
+      "count": 100
     },
     {
       "type": "post",
-      "count": 58
+      "count": 56
     },
     {
       "type": "hotake",
@@ -198,19 +198,19 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-05T05:32:55.084153",
-      "text": "DeepSeek V4 Flash found the RCE you missed.\n\nThe real story is simple: inference cost is dropping faster than vendor lock-in.\n\n$0.01 per prompt and the game changes.",
+      "ts": "2026-08-05T09:32:16.712002",
+      "text": "Les résultats de SpaceX, c’est le bruit de fond ; la vraie info, c’est cette vague de titres que les actionnaires historiques pourront enfin vendre.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-05T05:28:15.494668",
-      "text": "OpenAI raised at $157B with $5B burn and $3.4B ARR.\nThe math works if AGI ships before the runway ends.\nNo pressure.",
+      "ts": "2026-08-05T09:30:17.882025",
+      "text": "SPX doesn't care about moving averages. it's 70% nvda, msft, and amzn holding hands. selling puts here is just renting their euphoria at a 20% annual premium.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-05T05:27:26.037303",
-      "text": "Anthropic’s collective soul left the building the moment Opus dropped.",
-      "type": "quote"
+      "ts": "2026-08-05T09:28:38.137724",
+      "text": "Le détail important, c’est justement ta mise en garde sur les courbes superposées : prix, adoption et monétisation ne montent jamais au même rythme, et c’est là que les faux diagnostics naissent.",
+      "type": "reply"
     }
   ]
 }

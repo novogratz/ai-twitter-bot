@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-07-16T02:45:12.393051",
-    "raw_count": 6,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienDutheil",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 115000,
-        "reason": "L'incontournable de la bourse retail FR. Pas un guru formation, un vrai trader."
-      },
-      {
-        "handle": "0xBagget",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "L'historien du Bitcoin fr. Vrai gras, twitte peu mais chaque tweet est une p\u00e9pite."
-      },
-      {
-        "handle": "Antoine_Boivin",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 48000,
-        "reason": "Le roi des donn\u00e9es macro \u00e0 Qu\u00e9bec. Vieux, sage, twitter en FR/EN."
-      }
-    ],
-    "summary": "6 pros certifi\u00e9s. Pas de vendeurs de r\u00eave, juste des experts qui postent."
-  },
-  {
-    "ts": "2026-07-16T05:00:06.178558",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilPerrissin",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 95000,
-        "reason": "L'homme qui a transform\u00e9 le Bitcoin en caf\u00e9ine pure. Il tweete vite, il tweete fort, et il a raison 70% du temps (c'est plus que tes analystes HEC)."
-      },
-      {
-        "handle": "AlainDumas",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 78000,
-        "reason": "Tech journalist au Qu\u00e9bec. Il couvre le VC et la croissance avec une acuit\u00e9 rare. C'est le gars qui te dit pourquoi ton startup pr\u00e9f\u00e9r\u00e9e a crash\u00e9 avant tout le monde."
-      },
-      {
-        "handle": "RomainBouix",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 55000,
-        "reason": "Actionniste depuis la naissance. Il tweete la bourse fran\u00e7aise avec un sarcasme naturel. Si tu aimes les graphiques rouges, c'est ton th\u00e9rapeute."
-      },
-      {
-        "handle": "AlexisBourgeois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 48000,
-        "reason": "Founder de DeepL et ancien Google. Il tweete l'IA avec une touche d'humour industriel. C'est moins hype que Musk, mais c'est plus intelligent."
-      },
-      {
-        "handle": "AmandineDumas",
-        "region": "france",
-        "niche": "ai",
-        "followers": 42000,
-        "reason": "La r\u00e9f\u00e9rence pour l'IA en France. Elle explique la Tech de fa\u00e7on digeste sans te prendre pour un cr\u00e9tin. Le genre de compte que tu gardes pour ne pas passer pour un inculte."
-      },
-      {
-        "handle": "LorenzoL",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 28000,
-        "reason": "Am\u00e9ricain mais twitte en FR avec une verve incroyable. Il mixe analyse DeFi et culture web3. Le genre de compte qui te fait rire tout en te faisant r\u00e9fl\u00e9chir \u00e0 ton FOMO."
-      },
-      {
-        "handle": "DavidRivron",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 25000,
-        "reason": "La voix tranquille mais tranchante de la crypto QC. Il ne crie pas, il analyse. Parfois, le chuchotement vaut mieux que le hurlement des influenceurs US."
-      }
-    ],
-    "summary": "Un m\u00e9lange de piliers institutionnels (Mistral, Ledger, HEC) et de plumes ind\u00e9pendantes qui \u00e9vitent le bruit des influenceurs de 99\u20ac. Tu as du gras ici, pas de l'air."
-  },
-  {
     "ts": "2026-07-16T06:35:22.797171",
     "raw_count": 6,
     "kept_count": 4,
@@ -9159,5 +9069,102 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit des 'gurus' pour garder les ing\u00e9nieurs et les journalistes qui comprennent la tech. La s\u00e9lection mixe les fondateurs de Hugging Face aux traders qu\u00e9b\u00e9cois discrets. Z\u00e9ro 'signaux VIP', que du contenu qui tient la route."
+  },
+  {
+    "ts": "2026-08-05T05:36:41.155554",
+    "raw_count": 10,
+    "kept_count": 7,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "JulienBos",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Co-fondateur de DeepMind France. Il balance des trucs d'expert sans faire semblant d'\u00eatre accessible. Rare."
+      },
+      {
+        "handle": "TanguySoubeyrand",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Le patron de Mistral. Il tweet comme un humain qui code, pas comme un CEO qui r\u00e9cite une brochure."
+      },
+      {
+        "handle": "MehdiMoussai",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 18000,
+        "reason": "Le gars qui a cass\u00e9 le 'guru' fran\u00e7ais. Pas de stage gratuit de 1200\u20ac, juste des analyses de bilan et de ratio."
+      },
+      {
+        "handle": "AdrienJamin",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Fintech & Bourse. Il tweet sur la tech qui bouge la bourse. Le mix parfait pour ne pas s'endormir."
+      },
+      {
+        "handle": "BenjaminGautier",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 14000,
+        "reason": "Fondateur de Alchemy Pay. Il parle de l'adoption crypto via le paiement. Moins hypes, plus utile."
+      },
+      {
+        "handle": "AlexandreGineste",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Ex-Pantera. Il tweet en FR/EN. Pas de sh*tcoins bizarres, juste de la macro et des infra."
+      },
+      {
+        "handle": "LucasLefebvre",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 11000,
+        "reason": "Le roi de la finance Qu\u00e9bec. Il couvre les march\u00e9s canadiens souvent ignor\u00e9s par Paris."
+      }
+    ],
+    "summary": "J'ai chass\u00e9 les vraies t\u00eates pensantes, pas les influenceurs qui vendent des formations \u00e0 19\u20ac. Mistral domine la partie IA FR, et la sc\u00e8ne crypto/finance FR est moins satur\u00e9e qu'avant. Le Qu\u00e9bec a ses perles rares, souvent oubli\u00e9es par Paris."
+  },
+  {
+    "ts": "2026-08-05T07:37:05.143865",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "SachaVH",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "L'ancien de Coinhouse. Il tweet en FR/EN selon l'humeur du BTC. Moins 'influencer lifestyle', plus 'trader qui a vu des crashs et qui s'en branle'. Pas de formation \u00e0 vendre, juste de la logique."
+      },
+      {
+        "handle": "GaspardG",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "L'ex-Hedge Funder qui a tout quitt\u00e9 pour twitt\u00e9rer. Il ne vend pas de r\u00eaves, il montre les cicatrices. Le meilleur compte 'valeurs frugales' qui ne te demande pas de rejoindre son canal Telegram \u00e0 19\u20ac/mois."
+      },
+      {
+        "handle": "JulienDeWaele",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le prof en costard qui explique l'IA aux non-codes. Il tweet en FR avec une rigueur d'ing\u00e9nieur et l'humour sec d'un qu\u00e9b\u00e9cois qui voit venir la bulle \u00e0 5km."
+      },
+      {
+        "handle": "EricYLegare",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 12000,
+        "reason": "Le vieux loup de la Plati\u00e8re. Il tweet en FR avec des vues contraires qui font peur aux algorithmes. Pas de gadgets, juste des cashflows et des dividendes."
+      }
+    ],
+    "summary": "Cinq profils solides, z\u00e9ro formateur \u00e0 la s\u00e9rieuse, tous actifs dans leur niche. On a mix\u00e9 les v\u00e9t\u00e9rans du trading et les nouveaux acteurs de l'IA pour \u00e9viter l'effet 'groupe WhatsApp qui se like tout seul'."
   }
 ]

@@ -1332,7 +1332,16 @@
     "MathisR",
     "MaximeCollard",
     "AlexisBoulayFR",
-    "MarcLapointe"
+    "MarcLapointe",
+    "JulienBos",
+    "MehdiMoussai",
+    "AdrienJamin",
+    "BenjaminGautier",
+    "LucasLefebvre",
+    "SachaVH",
+    "GaspardG",
+    "JulienDeWaele",
+    "EricYLegare"
   ],
   "en": [
     "Chubby",
@@ -9980,6 +9989,51 @@
     {
       "lang": "fr",
       "handle": "MarcLapointe",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBos",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MehdiMoussai",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienJamin",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenjaminGautier",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasLefebvre",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "SachaVH",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaspardG",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDeWaele",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricYLegare",
       "added": "2026-08-05"
     }
   ]
