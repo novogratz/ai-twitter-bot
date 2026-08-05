@@ -1,50 +1,5 @@
 [
   {
-    "ts": "2026-07-15T18:33:34.902437",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "lauradec",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 35000,
-        "reason": "Analyste actions, twitte en FR, couvre les valeurs tech et croissance sans vendre du vent."
-      },
-      {
-        "handle": "jordanz",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 25000,
-        "reason": "Journaliste tech AI francophone vivant aux US, couvre le VC et les fonds, twitte en FR."
-      },
-      {
-        "handle": "marc_fleury",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Acad\u00e9micien IA au Qu\u00e9bec, couvre la recherche et l'appli, voix mod\u00e9r\u00e9e mais influente."
-      },
-      {
-        "handle": "lucas_nicolas",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 18000,
-        "reason": "Fintech QC qui balance des insights concrets, pas des signaux, pas de groupe Telegram VIP."
-      },
-      {
-        "handle": "paul_guitton",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Analyste on-chain crypto, moins hype que les vendeurs de r\u00eaves mais plus pr\u00e9cis sur les flux."
-      }
-    ],
-    "summary": "On \u00e9vite les influenceurs TikTok de la finance et les 'gurus' crypto. Ici, on garde les fondateurs, les chercheurs et les analystes qui ont encore leur poste et qui twittent en fran\u00e7ais."
-  },
-  {
     "ts": "2026-07-15T20:33:31.626419",
     "raw_count": 6,
     "kept_count": 3,
@@ -9131,5 +9086,57 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que ceux qui produisent de la mati\u00e8re sans vendre de cours en dessous. La France domine en IA, le Qu\u00e9bec en crypto, et une niche US francophone appara\u00eet pour couvrir le march\u00e9 am\u00e9ricain."
+  },
+  {
+    "ts": "2026-08-04T23:36:35.280870",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaelLeMignot",
+        "region": "france",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "Co-founder Mistral. Moins hype que le CEO mais plus de profondeur technique. Twitte FR/EN."
+      },
+      {
+        "handle": "PierreChanel",
+        "region": "france",
+        "niche": "ai",
+        "followers": 28000,
+        "reason": "Cr\u00e9ateur de contenu IA fr, tr\u00e8s orient\u00e9 pro/tech. Pas dans la vente de formations \u00e0 99\u20ac, reste technique."
+      },
+      {
+        "handle": "MathieuGimenez",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Analyste on-chain l\u00e9gendaire. Parle peu mais quand il parle, \u00e7a fait bouger le march\u00e9. Style sec, pas de 'Telegram VIP'."
+      },
+      {
+        "handle": "CryptoBabesFR",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Communaut\u00e9 crypto fr de qualit\u00e9. Pas du hype pur, des analyses solides et des threads \u00e9ducatifs bien foutus."
+      },
+      {
+        "handle": "JLepretre",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "Journaliste bourse/finance tech. Fait du reporting solide, pas du blabla politique. Vraie source pro."
+      },
+      {
+        "handle": "AlexandreDionne",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Cr\u00e9ateur de contenu crypto qu\u00e9b\u00e9cois. Couvre l'actualit\u00e9 DeFi et NFT avec un ton accessible mais pr\u00e9cis."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des 'gourous' \u00e0 99\u20ac pour garder des vrais experts (Mistral, Lepretre, MathieuGimenez). Le Qu\u00e9bec est mieux couvert par des profils niche (Dionne, Ducharme) que par des g\u00e9ants g\u00e9n\u00e9ralistes."
   }
 ]

@@ -1316,7 +1316,13 @@
     "JulienVialon",
     "MaximeFougeirol",
     "ElsaGarcia",
-    "LucasBouchot"
+    "LucasBouchot",
+    "GaelLeMignot",
+    "PierreChanel",
+    "MathieuGimenez",
+    "CryptoBabesFR",
+    "JLepretre",
+    "AlexandreDionne"
   ],
   "en": [
     "Chubby",
@@ -9878,6 +9884,36 @@
     {
       "lang": "fr",
       "handle": "LucasBouchot",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLeMignot",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreChanel",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuGimenez",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoBabesFR",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "JLepretre",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexandreDionne",
       "added": "2026-08-04"
     }
   ]

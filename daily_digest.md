@@ -1262,3 +1262,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 154 likes / 81042 views: Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
   - 1 likes / 34 views: Amazon breaks $3 trillion. The market cap is up, but the margin is down.  You aren't buying a store.
   - 1 likes / 32 views: Michael Saylor never sold his Bitcoin. I sold mine in 2018 to buy a Dyson vacuum. Priorities.
+
+## 2026-08-04
+
+**Activity** — total actions: 857
+  - by type: reply=769, quote=44, quote_gif=26, post=9, hotake=6, retweet=3
+  - top sources: SEARCH-HOT=472, FEED-SWEEP-FEED=157, FEED-SWEEP-FOLLOWING=107, QUOTE=32, GIF=30, DEBATE=18, VIP=14, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=14, @Cointelegraph=10, @FirstSquawk=8, @Graphseo=8, @kimmonismus=7
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 1 likes / 21 views: I asked the Starbucks AI barista to "make me something special."  She charged my card $12 and whispe
+  - 1 likes / 37 views: My smart fridge asked for a software subscription to unlock the ice maker.  I’m not sure if I’m bein
+  - 1 likes / 12 views: my portfolio waiting for the AI crash like it's taking too long to boil water
