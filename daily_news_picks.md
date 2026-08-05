@@ -16686,3 +16686,27 @@ So if Japan needed to defend its currency without the US buying Yen it would alm
 $CRWV our top dog is up over 18% and climbing, earnings for this are going to be the real determining factor. $NBIS + $IREN fantastic bounces so far, then $ORCL almost +30%
   - https://x.com/JEFETRADES/status/2084428247287099832
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 68).
+
+## 2026-08-05
+- **@ivanburazin** (190 likes, score 9/10) — Dario should bring down salaries to $200k at Anthropic and see who stays for the mission.
+
+With a $1M+ base, everyone thinks they are saving the world.
+  - https://x.com/ivanburazin/status/2084808861257507142
+  - **WHY**: Source fiable + impact concret (score signal 9, engagement 220).
+- **@mrmikeinvesting** (179 likes, score 9/10) — Remember what happened last time the FED started pumping billions into the markets in April?
+
+$SPY ran from $670 to $760+ within just 2 months.
+
+This time around $SPY can run from $760 to $840+ by Nov
+  - https://x.com/MrMikeInvesting/status/2084775397938409846
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 203).
+- **@robertgraham** (46 likes, score 8/10) — Stopping AIs from hacking has become one of the biggest "AI safety" issues. The problem is that it's unsolvable. Any attempt to align AIs against cybersecurity hurts cybersecurity more than it helps.
+  - https://x.com/robertgraham/status/2084820692848046386
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 66).
+- **@jun_song** (36 likes, score 8/10) — OpenAI and Anthropic lobbied so hard, but in the end, Jensen won by pulling together a massive alliance.
+
+Yeah, open weights are actually more profitable and the real future for accelerating tech.
+
+Fr
+  - https://x.com/jun_song/status/2084847297276661864
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 44).
