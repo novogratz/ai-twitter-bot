@@ -1341,7 +1341,14 @@
     "SachaVH",
     "GaspardG",
     "JulienDeWaele",
-    "EricYLegare"
+    "EricYLegare",
+    "BinanceFR",
+    "CryptoKoin",
+    "c0re100",
+    "TechCulte",
+    "thomazet",
+    "cryptomarketfr",
+    "LeBit"
   ],
   "en": [
     "Chubby",
@@ -10034,6 +10041,41 @@
     {
       "lang": "fr",
       "handle": "EricYLegare",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "BinanceFR",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKoin",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "c0re100",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "TechCulte",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "thomazet",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "cryptomarketfr",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "LeBit",
       "added": "2026-08-05"
     }
   ]

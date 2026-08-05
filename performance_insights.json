@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-05T09:35:46.232229",
-  "window_7d_actions": 5633,
-  "window_24h_actions": 800,
+  "generated_at": "2026-08-05T13:35:46.197917",
+  "window_7d_actions": 5603,
+  "window_24h_actions": 769,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5630
+      "count": 5600
     },
     {
       "pattern": "METAPHOR",
@@ -27,25 +27,25 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5630
+      "count": 5600
     }
   ],
   "best_hours_utc": [
     {
       "hour": 12,
-      "actions": 315
-    },
-    {
-      "hour": 11,
       "actions": 310
     },
     {
+      "hour": 11,
+      "actions": 288
+    },
+    {
       "hour": 13,
-      "actions": 278
+      "actions": 283
     },
     {
       "hour": 10,
-      "actions": 272
+      "actions": 269
     },
     {
       "hour": 14,
@@ -55,82 +55,82 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2629
+      "count": 2608
     },
     {
       "topic": "IA",
-      "count": 2148
+      "count": 2145
     },
     {
       "topic": "Crypto",
-      "count": 647
+      "count": 643
     },
     {
       "topic": "Bourse",
-      "count": 465
+      "count": 464
     },
     {
       "topic": "Spatial",
-      "count": 111
+      "count": 112
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.043,
+      "24h_rate": 0.046,
       "7d_rate": 0.02
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2392
+      "count": 2382
     },
     {
       "pillar": "market_trauma",
-      "count": 1508
+      "count": 1503
     },
     {
       "pillar": "other",
-      "count": 1491
+      "count": 1472
     },
     {
       "pillar": "meme_reaction",
-      "count": 124
+      "count": 121
     },
     {
       "pillar": "reply_bait",
-      "count": 73
+      "count": 78
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 45
+      "count": 47
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 355
+      "count": 341
     },
     {
       "pillar": "market_trauma",
-      "count": 205
+      "count": 206
     },
     {
       "pillar": "other",
-      "count": 194
+      "count": 178
     },
     {
       "pillar": "meme_reaction",
-      "count": 24
-    },
-    {
-      "pillar": "ai_vs_btc",
-      "count": 11
+      "count": 18
     },
     {
       "pillar": "reply_bait",
-      "count": 11
+      "count": 16
+    },
+    {
+      "pillar": "ai_vs_btc",
+      "count": 10
     }
   ],
   "pillar_engagement_30d": [
@@ -143,23 +143,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 46,
-      "avg_likes": 0.17,
-      "avg_views": 47.1,
+      "posts": 45,
+      "avg_likes": 0.16,
+      "avg_views": 50.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 72,
+      "posts": 74,
       "avg_likes": 0.14,
-      "avg_views": 40.3,
+      "avg_views": 40.4,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 72,
+      "posts": 71,
       "avg_likes": 0.1,
-      "avg_views": 42.1,
+      "avg_views": 42.3,
       "low_sample": false
     },
     {
@@ -173,23 +173,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5152
+      "count": 5128
     },
     {
       "type": "quote",
-      "count": 264
+      "count": 263
     },
     {
       "type": "quote_gif",
-      "count": 100
+      "count": 96
     },
     {
       "type": "post",
-      "count": 56
+      "count": 57
     },
     {
       "type": "hotake",
-      "count": 39
+      "count": 37
     },
     {
       "type": "retweet",
@@ -198,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-05T09:32:16.712002",
-      "text": "Les résultats de SpaceX, c’est le bruit de fond ; la vraie info, c’est cette vague de titres que les actionnaires historiques pourront enfin vendre.",
+      "ts": "2026-08-05T13:34:36.775083",
+      "text": "BTC’s four-year cycle has a 90% win rate. buying the edge isn’t a trade, it’s just showing up.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-05T09:30:17.882025",
-      "text": "SPX doesn't care about moving averages. it's 70% nvda, msft, and amzn holding hands. selling puts here is just renting their euphoria at a 20% annual premium.",
+      "ts": "2026-08-05T13:33:53.663534",
+      "text": "ByteDance is refusing model distillation. They’d rather pay for H100s than buy OpenAI’s homework. expensive. stubborn.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-05T09:28:38.137724",
-      "text": "Le détail important, c’est justement ta mise en garde sur les courbes superposées : prix, adoption et monétisation ne montent jamais au même rythme, et c’est là que les faux diagnostics naissent.",
+      "ts": "2026-08-05T13:32:58.682102",
+      "text": "Musk tanked $AMD with a tweet. $NVDA ate the datacenter margin.\n\n$SPCX rotating into the only supplier left that can actually ship.\n\nNo competition. Just capacity.",
       "type": "reply"
     }
   ]
