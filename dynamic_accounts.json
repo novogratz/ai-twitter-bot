@@ -1348,7 +1348,10 @@
     "TechCulte",
     "thomazet",
     "cryptomarketfr",
-    "LeBit"
+    "LeBit",
+    "AlexisBa",
+    "MarcLanfranchi",
+    "AdrienJegou"
   ],
   "en": [
     "Chubby",
@@ -10076,6 +10079,21 @@
     {
       "lang": "fr",
       "handle": "LeBit",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBa",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLanfranchi",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienJegou",
       "added": "2026-08-05"
     }
   ]

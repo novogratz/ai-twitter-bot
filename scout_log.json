@@ -1,81 +1,5 @@
 [
   {
-    "ts": "2026-07-16T08:42:46.427249",
-    "raw_count": 6,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "CyrilPier",
-        "region": "france",
-        "niche": "tech",
-        "followers": 145000,
-        "reason": "L'expert incontournable de la French Tech. Il d\u00e9crypte les lev\u00e9es de fonds mieux que ta m\u00e8re d\u00e9crypte ta vie amoureuse."
-      },
-      {
-        "handle": "0xSponge",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 38000,
-        "reason": "L'analyste technique qui rend les chandeliers japonais excitants. Ses setups sont pr\u00e9cis, ses punchlines assassin."
-      }
-    ],
-    "summary": "Mix parfait entre la folie crypto (Maki, 0xSponge), la tech fran\u00e7aise de haut vol (Mensch, Pier) et l'analyse de march\u00e9 solide (Bourgeois, Floch). Z\u00e9ro formation \u00e0 vendre, 100% de valeur pure."
-  },
-  {
-    "ts": "2026-07-16T10:49:53.638810",
-    "raw_count": 10,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Gavin",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 60000,
-        "reason": "Gavin Belson (Hooli). Il tweete des vues cyniques sur la tech et l'IA depuis les USA. Le parfait opposite de l'enthousiasme na\u00eff."
-      },
-      {
-        "handle": "CryptoPatrik",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 55000,
-        "reason": "Patrick (ex-Bitcoin.fr). Il a surv\u00e9cu \u00e0 4 cycles bear market sans vendre sa ferme. Il twitte des vues macro rares et des analyses on-chain."
-      },
-      {
-        "handle": "OussamaSaadi1",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Co-fondateur Inflection AI. Il explique l'IA avec une clart\u00e9 d\u00e9sarmante et un rythme cardiaque stable. L'anti-hypeur par excellence."
-      },
-      {
-        "handle": "MaelleFloriot",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 28000,
-        "reason": "Fondatrice de Qonto. Elle parle SaaS, tr\u00e9sorerie et croissance fran\u00e7aise avec une pr\u00e9cision chirurgicale. Moins de 'moon', plus de cash-flow."
-      },
-      {
-        "handle": "MarcG",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 20000,
-        "reason": "Le blogueur de r\u00e9f\u00e9rence au Qu\u00e9bec. Il d\u00e9cortique les r\u00e9sultats d'entreprises avec un sens aigu de la p\u00e9dagogie. La valeur s\u00fbre du coin."
-      },
-      {
-        "handle": "MickaelGarcia",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 18000,
-        "reason": "Le patron de CryptoVid\u00e9o. Il couvre la r\u00e9gulation nord-am\u00e9ricaine et qu\u00e9b\u00e9coise avec un ton direct. Moins de hype, plus de contrats."
-      }
-    ],
-    "summary": "Je traque les cerveaux derri\u00e8re les produits (Mistral, Inflection, Qonto) plut\u00f4t que les influenceurs en costumes. De Paris \u00e0 Montr\u00e9al, c'est du concret qui compte."
-  },
-  {
     "ts": "2026-07-16T12:49:29.285141",
     "raw_count": 10,
     "kept_count": 4,
@@ -9187,5 +9111,60 @@
       }
     ],
     "summary": "J'ai creus\u00e9 les trenches IA FR (Mistral, c0re100), les crypto non-gurus (BinanceFR, LeBit) et une perle qu\u00e9b\u00e9coise (AlexisDionne_). Z\u00e9ro vente de r\u00eave, 100% tweet\u00e9 en fran\u00e7ais."
+  },
+  {
+    "ts": "2026-08-05T13:36:45.827463",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 1,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Adrian_Bourgeois",
+        "region": "france",
+        "niche": "ai",
+        "followers": 65000,
+        "reason": "L'ancien de Mistral qui transforme le LLM en blague de caf\u00e9. Il twitte l'IA comme un patron de bar qui conna\u00eet tout le monde."
+      },
+      {
+        "handle": "AlexisBa",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "L'humoriste geek qui explique la tech sans dormir. Ses threads sur les startups sont aussi pointus que ses punchlines sont acides."
+      },
+      {
+        "handle": "AntoineBourgeois",
+        "region": "france",
+        "niche": "tech",
+        "followers": 18000,
+        "reason": "Le sp\u00e9cialiste du SaaS qui donne des conseils actionnables sans vendre du r\u00eave. Moins de 'toxic hustle', plus de r\u00e9sultats concrets."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour trouver ceux qui ont du sel en plus de leurs followers. Une s\u00e9lection mixant l'humour fran\u00e7ais et la rigueur qu\u00e9b\u00e9coise."
+  },
+  {
+    "ts": "2026-08-05T15:36:23.888955",
+    "raw_count": 8,
+    "kept_count": 2,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MarcLanfranchi",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Ex-Polytechnique, il balance des analyses macro/crypto sans jargon de comptoir. Rare."
+      },
+      {
+        "handle": "AdrienJegou",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "La p\u00e9pite de Mistral. Il twitte la tech pure, pas les pubs de la newsletter. Un vrai ing\u00e9nieur."
+      }
+    ],
+    "summary": "Focus IA et Crypto pur, sans les vendeurs de r\u00eave. Tu as Mistral pour la tech, Dionne pour le Qu\u00e9bec, et Floch pour le filtrage de qualit\u00e9."
   }
 ]
