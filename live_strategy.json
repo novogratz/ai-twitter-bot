@@ -1,9 +1,9 @@
 {
-  "ts": "2026-07-29T06:00:00.000000",
+  "ts": "2026-08-04T21:35:46.125396",
   "caps": {
-    "MAX_NEWS_PER_DAY": 15,
-    "MAX_HOTAKES_PER_DAY": 20,
-    "MAX_QUOTES_PER_DAY": 200,
+    "MAX_NEWS_PER_DAY": 12,
+    "MAX_HOTAKES_PER_DAY": 15,
+    "MAX_QUOTES_PER_DAY": 180,
     "MAX_RETWEETS_PER_DAY": 5,
     "MAX_BREAKOUTS_PER_DAY": 2,
     "MAX_SPICY_PER_DAY": 2,
@@ -12,10 +12,10 @@
     "LIKE_BOT_PER_CYCLE": 50
   },
   "topic_focus": [
-    "Anthropic Opus 5 + acquisition Coefficient Bio $400M — thérapeute qui se fait acquérir pendant la séance",
-    "Thinking Machines Mira Murati $2B seed Inkling 975B — clause de non-concurrence matérialisée en startup",
-    "Kimi K3 2.8T open-weights MIT · FLI safety index Anthropic C+ / OpenAI C — qui surveille le surveillant"
+    "Nvidia Blackwell Ultra : le datacenter q",
+    "Palantir AIP : la startup qui transforme",
+    "ETH ETF : les institutionnels qui adopte"
   ],
-  "cadence_factor": 1.3,
-  "rationale": "Un seul post à 126 likes / 69K vues cette semaine (format: relatable first-person + contraste AI/BTC, zéro props clinique). market_trauma bat ai_news_take 1.69× (0.22 vs 0.13 avg likes) mais sous-représenté (22% vs 44% du mix). 🛋️ apparu 5+ fois/jour malgré interdiction — reinforcement maximal dans directives. MAX_RETWEETS 8→5 (usage réel ~5/jour, retweets < valeur que quotes). Algo X 2026 : back-and-forth reply 150× > like, first 30min fixe le plafond. Caps originals/quotes inchangés : volume correct, problème est qualité du format et surutilisation des props clinique."
+  "cadence_factor": 1.2,
+  "rationale": "L'activité brute est massive (5718 actions), donc on ne sacrifie pas le volume, mais on affine la cadence (1.2) pour éviter le bruit. Les 'losers' (GIFs, agentic AI générique, Palantir valuation classique) sont évités. On mise sur 3 sujets qui permettent des punchlines visuelles et financières fortes, alignées avec la voix 'observateur fatigué'. Le focus News/Hotake/Quote est équilibré pour maximiser l'engagement sans spam."
 }

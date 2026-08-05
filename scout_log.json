@@ -1,43 +1,5 @@
 [
   {
-    "ts": "2026-07-15T16:33:29.205883",
-    "raw_count": 6,
-    "kept_count": 4,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RenaudLaplante",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 60000,
-        "reason": "L'homme le plus honn\u00eate du Qu\u00e9bec finance. Il couvre la bourse et la macro avec un ton sarcastique mais des chiffres impeccables."
-      },
-      {
-        "handle": "ThibaudLambert",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Le 'gourou' qui a surv\u00e9cu aux cycles. Ses threads sur le cycle Bitcoin sont la bible, twitte en FR, z\u00e9ro formation \u00e0 99\u20ac."
-      },
-      {
-        "handle": "NabilBenAmmar",
-        "region": "france",
-        "niche": "ai",
-        "followers": 30000,
-        "reason": "Co-fondateur de Mistral AI. Il twitte ses visions sur l'IA open source en FR avant les g\u00e9ants US."
-      },
-      {
-        "handle": "GaspardFouilhoux",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 25000,
-        "reason": "Cr\u00e9ateur de MoneyMania (ex-FranceInfo). C'est la r\u00e9f\u00e9rence 'grand public' pour comprendre la fintech sans s'endormir."
-      }
-    ],
-    "summary": "Mix parfait entre la sagesse crypto (Thibaud), l'honn\u00eatet\u00e9 boursi\u00e8re qu\u00e9b\u00e9coise (Renaud) et la tech fran\u00e7aise montante (Mistral/Hugging Face). Pas de vendeurs de r\u00eaves, que des constructeurs."
-  },
-  {
     "ts": "2026-07-15T18:33:34.902437",
     "raw_count": 8,
     "kept_count": 5,
@@ -9138,5 +9100,36 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 pour \u00e9liminer les vendeurs de r\u00eaves. La s\u00e9lection mise sur la substance : HervetX pour les graphiques, Rapha\u00ebl pour la crypto s\u00e9rieuse, et Romain/Maxime pour la couverture transatlantique. Z\u00e9ro formation \u00e0 497\u20ac."
+  },
+  {
+    "ts": "2026-08-04T21:37:10.351827",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeFougeirol",
+        "region": "france",
+        "niche": "tech",
+        "followers": 20000,
+        "reason": "Le trader qui sait coder et le dev qui sait trader. Il tweet sur les deux mondes sans faire de pub pour sa formation."
+      },
+      {
+        "handle": "ElsaGarcia",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Bas\u00e9e \u00e0 NYC mais twitte en FR. Elle couvre le march\u00e9 US avec un \u0153il europ\u00e9en. Style direct, z\u00e9ro blabla corporate."
+      },
+      {
+        "handle": "LucasBouchot",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Le type des threads 'Comment j'ai fait X en Python'. Pas de vente au comptant, juste de la valeur brute."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eave pour ne garder que ceux qui produisent de la mati\u00e8re sans vendre de cours en dessous. La France domine en IA, le Qu\u00e9bec en crypto, et une niche US francophone appara\u00eet pour couvrir le march\u00e9 am\u00e9ricain."
   }
 ]

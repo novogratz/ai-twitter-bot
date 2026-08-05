@@ -120,5 +120,26 @@
     ],
     "cadence_factor": 1.3,
     "rationale": "La fenêtre de suppression est close (24 juillet) et les performances récentes confirment que le format 'me [verb]' et l'angle AI-vs-BTC performent. On maintient le cap agressif sur les quotes et replies pour dominer le fil, tout en ciblant les 3 méga-narratifs financiers (IPO OpenAI, Revenue Anthropic, Capex Musk) qui nourrissent le cynisme sur le levier technologique sans diluer l'identité 'observateur fatigué'."
+  },
+  {
+    "ts": "2026-08-04T21:35:46.125396",
+    "caps": {
+      "MAX_NEWS_PER_DAY": 12,
+      "MAX_HOTAKES_PER_DAY": 15,
+      "MAX_QUOTES_PER_DAY": 180,
+      "MAX_RETWEETS_PER_DAY": 5,
+      "MAX_BREAKOUTS_PER_DAY": 2,
+      "MAX_SPICY_PER_DAY": 2,
+      "MAX_REPLIES_PER_CYCLE": 40,
+      "FOLLOW_BLAST_PER_CYCLE": 4,
+      "LIKE_BOT_PER_CYCLE": 50
+    },
+    "topic_focus": [
+      "Nvidia Blackwell Ultra : le datacenter q",
+      "Palantir AIP : la startup qui transforme",
+      "ETH ETF : les institutionnels qui adopte"
+    ],
+    "cadence_factor": 1.2,
+    "rationale": "L'activité brute est massive (5718 actions), donc on ne sacrifie pas le volume, mais on affine la cadence (1.2) pour éviter le bruit. Les 'losers' (GIFs, agentic AI générique, Palantir valuation classique) sont évités. On mise sur 3 sujets qui permettent des punchlines visuelles et financières fortes, alignées avec la voix 'observateur fatigué'. Le focus News/Hotake/Quote est équilibré pour maximiser l'engagement sans spam."
   }
 ]

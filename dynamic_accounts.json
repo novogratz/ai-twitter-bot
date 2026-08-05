@@ -1313,7 +1313,10 @@
     "MaximeLeboeuf",
     "HervetX",
     "Raphaelyss",
-    "JulienVialon"
+    "JulienVialon",
+    "MaximeFougeirol",
+    "ElsaGarcia",
+    "LucasBouchot"
   ],
   "en": [
     "Chubby",
@@ -1643,7 +1646,8 @@
     "skyte",
     "ICYESTTWAT",
     "k",
-    "Axultan"
+    "Axultan",
+    "PEPPERS"
   ],
   "history": [
     {
@@ -9854,6 +9858,26 @@
     {
       "lang": "fr",
       "handle": "JulienVialon",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "en",
+      "handle": "PEPPERS",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeFougeirol",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "ElsaGarcia",
+      "added": "2026-08-04"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucasBouchot",
       "added": "2026-08-04"
     }
   ]
