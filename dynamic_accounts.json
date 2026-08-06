@@ -1360,7 +1360,19 @@
     "ThibautDelor",
     "AntoineBailly_",
     "ValentinLemoyne",
-    "JorisDutartre"
+    "JorisDutartre",
+    "thibaut_delarue",
+    "Maelle_Maiz",
+    "Jules_Brueyre",
+    "LucieBourgeois_",
+    "BenoitGrimaud",
+    "LunaLevy",
+    "JulienBourdin",
+    "PierreLeduc",
+    "JulesCottereau",
+    "AlexisLevay",
+    "HugoBourdin",
+    "MathieuDufresne"
   ],
   "en": [
     "Chubby",
@@ -10154,6 +10166,66 @@
     {
       "lang": "fr",
       "handle": "JorisDutartre",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "thibaut_delarue",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "Maelle_Maiz",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "Jules_Brueyre",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "LucieBourgeois_",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitGrimaud",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "LunaLevy",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBourdin",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreLeduc",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulesCottereau",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisLevay",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoBourdin",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDufresne",
       "added": "2026-08-05"
     }
   ]
