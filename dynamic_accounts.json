@@ -1396,7 +1396,20 @@
     "HuguesLabarre",
     "NouR",
     "MaximeDessart",
-    "EricGervais"
+    "EricGervais",
+    "NassimTaleb",
+    "AdiDassa",
+    "AlexBessac",
+    "CyprienLevieux",
+    "LionelCohen",
+    "JulienBoutier",
+    "JulienDumaine",
+    "MathieuBrousse",
+    "PierreCahen",
+    "MaximeSteffan",
+    "MaxBorsen",
+    "EricBalzamo",
+    "JulienAston"
   ],
   "en": [
     "Chubby",
@@ -1734,7 +1747,8 @@
     "Jenny",
     "Moonshot",
     "Arkham",
-    "Bloomberg"
+    "Bloomberg",
+    "Hadrian"
   ],
   "history": [
     {
@@ -10400,6 +10414,76 @@
     {
       "lang": "en",
       "handle": "Bloomberg",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Hadrian",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "NassimTaleb",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdiDassa",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexBessac",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyprienLevieux",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelCohen",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienBoutier",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDumaine",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuBrousse",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreCahen",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeSteffan",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxBorsen",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricBalzamo",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienAston",
       "added": "2026-08-06"
     }
   ]
