@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-05T21:35:46.247702",
-  "window_7d_actions": 5554,
-  "window_24h_actions": 731,
+  "generated_at": "2026-08-06T01:35:46.399646",
+  "window_7d_actions": 5531,
+  "window_24h_actions": 735,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5551
+      "count": 5528
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5551
+      "count": 5528
     }
   ],
   "best_hours_utc": [
@@ -55,90 +55,90 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2591
+      "count": 2594
     },
     {
       "topic": "IA",
-      "count": 2109
+      "count": 2088
     },
     {
       "topic": "Crypto",
-      "count": 647
+      "count": 640
     },
     {
       "topic": "Bourse",
-      "count": 458
+      "count": 454
     },
     {
       "topic": "Spatial",
-      "count": 119
+      "count": 120
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.03,
-      "7d_rate": 0.021
+      "24h_rate": 0.029,
+      "7d_rate": 0.022
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2348
+      "count": 2343
     },
     {
       "pillar": "market_trauma",
-      "count": 1488
+      "count": 1474
     },
     {
       "pillar": "other",
-      "count": 1464
+      "count": 1457
     },
     {
       "pillar": "meme_reaction",
-      "count": 124
+      "count": 126
     },
     {
       "pillar": "reply_bait",
-      "count": 83
+      "count": 85
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 47
+      "count": 46
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 316
+      "count": 323
     },
     {
       "pillar": "market_trauma",
-      "count": 194
+      "count": 195
     },
     {
       "pillar": "other",
-      "count": 181
+      "count": 177
     },
     {
       "pillar": "reply_bait",
-      "count": 19
+      "count": 18
     },
     {
       "pillar": "meme_reaction",
-      "count": 15
+      "count": 17
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 46,
-      "avg_likes": 0.22,
-      "avg_views": 49.7,
+      "posts": 45,
+      "avg_likes": 0.2,
+      "avg_views": 50.2,
       "low_sample": false
     },
     {
@@ -150,16 +150,16 @@
     },
     {
       "pillar": "other",
-      "posts": 74,
-      "avg_likes": 0.15,
-      "avg_views": 42.1,
+      "posts": 76,
+      "avg_likes": 0.13,
+      "avg_views": 41.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 70,
+      "posts": 69,
       "avg_likes": 0.1,
-      "avg_views": 45.2,
+      "avg_views": 45.7,
       "low_sample": false
     },
     {
@@ -173,15 +173,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5086
+      "count": 5061
     },
     {
       "type": "quote",
-      "count": 256
+      "count": 258
     },
     {
       "type": "quote_gif",
-      "count": 100
+      "count": 102
     },
     {
       "type": "post",
@@ -193,23 +193,23 @@
     },
     {
       "type": "retweet",
-      "count": 22
+      "count": 20
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-05T21:32:39.469173",
-      "text": "Context window economics: humans write in pages, agents write in streams.\n\nthe code isn't being created. it's being dissolved.",
+      "ts": "2026-08-06T01:35:29.886023",
+      "text": "ETH is a bond.\nevery RSI dip is the market repricing the yield you’re ignoring.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-05T21:30:01.662279",
-      "text": "Compute is the new oil, memecoins are the gasoline. you just bought the drill and sold the gas station.",
+      "ts": "2026-08-06T01:34:32.057580",
+      "text": "On-chain reputation is just social graph data.\nthe hard part is the oracle that stops an AI from lying to another AI about the same wallet.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-05T21:29:18.352659",
-      "text": "AGI in polynomial time? 10B parameters compressing the entire internet's cringe into a laugh.\n\nhumans are the outlier model.",
+      "ts": "2026-08-06T01:29:39.041055",
+      "text": "SanDisk is the last legacy play in a flash class that’s already commoditized.\n\nMomentum doesn’t matter when you’re selling shovels during the digital gold rush.",
       "type": "reply"
     }
   ]
