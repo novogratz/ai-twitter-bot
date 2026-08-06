@@ -1,71 +1,5 @@
 [
   {
-    "ts": "2026-07-17T04:35:21.274213",
-    "raw_count": 8,
-    "kept_count": 8,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "LefebvreL",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "L'analyste qui transforme les bilans en \u00e9pop\u00e9es \u00e9piques, un peu comme Hom\u00e8re mais avec des ratios P/E."
-      },
-      {
-        "handle": "Adrien_Bourgeois",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Le patron de Qwant qui parle IA avec la pr\u00e9cision d'un horloger suisse, mais sans la lourdeur."
-      },
-      {
-        "handle": "MaximeGoussu",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Copro-pilote de 'La Bourse', il d\u00e9crypte le march\u00e9 avec l'humour d'un tueur \u00e0 gages qui aime les maths."
-      },
-      {
-        "handle": "Cassidy_Hill",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Le New-Yorkais francophone qui explique la DeFi sans te donner mal \u00e0 la t\u00eate, ou alors c'est qu'il te ment."
-      },
-      {
-        "handle": "RaphaelGrosz",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 20000,
-        "reason": "Il fait des threads de bourse qui se lisent comme des thrillers polici\u00e8res, le coupable ? Le march\u00e9 haussier."
-      },
-      {
-        "handle": "ThomasBouton",
-        "region": "france",
-        "niche": "tech",
-        "followers": 18000,
-        "reason": "Journaliste qui couvre les start-ups avec un scepticisme rafra\u00eechissant, comme un docteur qui refuse de prescrire du Viagra."
-      },
-      {
-        "handle": "JohanLevavasseur",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "Ex-Kotobank, il parle fintech avec la passion d'un homme qui a vu trop de fraudes bancaires en 1998."
-      },
-      {
-        "handle": "MounaDhaouadi",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Directrice de l'offre de trading Boursorama, elle explique les ordres limites avec la douceur d'une m\u00e8re qui dit non."
-      }
-    ],
-    "summary": "Une s\u00e9lection de francophones qui prouvent qu'on peut \u00eatre comp\u00e9tent sans avoir l'air d'un livre de comptabilit\u00e9. Aucun ne vend de la fum\u00e9e, juste de l'analyse pure et dure."
-  },
-  {
     "ts": "2026-07-17T06:41:39.378955",
     "raw_count": 10,
     "kept_count": 6,
@@ -9173,5 +9107,71 @@
       }
     ],
     "summary": "Un mix solide entre les v\u00e9t\u00e9rans de la bourse fran\u00e7aise (Dormoy) et les nouveaux patrons de l'IA (Mistral/Dionne). On \u00e9vite les vendeurs de r\u00eave pour se concentrer sur ceux qui ont construit du code ou de l'argent."
+  },
+  {
+    "ts": "2026-08-06T09:36:36.599638",
+    "raw_count": 10,
+    "kept_count": 8,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CaiusDuran",
+        "region": "france",
+        "niche": "ai",
+        "followers": 45000,
+        "reason": "Le baron de la SaaS AI. Il twitte la tech comme personne, mixe data et business sans vendre du vent."
+      },
+      {
+        "handle": "MathieuNuss",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Founders en herbe. Il d\u00e9cortique l'IA appliqu\u00e9e avec une pr\u00e9cision chirurgical et un humor tr\u00e8s fran\u00e7ais."
+      },
+      {
+        "handle": "HuguesLabarre",
+        "region": "france",
+        "niche": "ai",
+        "followers": 32000,
+        "reason": "L'expert DeepLearning.fr. Il balance des insights IA profonds sans le jargon pesant des universit\u00e9s."
+      },
+      {
+        "handle": "NouR",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "L'expert AI en Californie. Il tweet en FR mais pense 'Silicon Valley'. Le contraste est hilarant et utile."
+      },
+      {
+        "handle": "MaximeDessart",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 22000,
+        "reason": "Le roi du trading au Qu\u00e9bec. Il analyse les charts avec le m\u00eame humour que ses potes au bar."
+      },
+      {
+        "handle": "PhilippeDurocher",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 16000,
+        "reason": "Le 'Bourse' qu\u00e9b\u00e9cois. Il couvre la macro et les march\u00e9s avec une touche acide qui fait mouche."
+      },
+      {
+        "handle": "JulienVilleneuve",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Journaliste Tech. Il sent le trend avant qu'il arrive sur les charts, style court et percutant."
+      },
+      {
+        "handle": "EricGervais",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 14000,
+        "reason": "Diaspora francophone aux US. Il regarde ce qui se passe sur Wall Street avec des yeux de francophone avis\u00e9."
+      }
+    ],
+    "summary": "L'IA fran\u00e7aise a quitt\u00e9 le stade de la blague pour devenir une machine de guerre narrative. Ces comptes sont les seuls \u00e0 tenir le fil entre fondamental s\u00e9rieux et punchline qui te r\u00e9veille. Le Qu\u00e9bec se rattrape en direct avec des traders qui ont encore le sens de l'humour."
   }
 ]

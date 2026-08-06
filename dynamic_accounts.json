@@ -1390,7 +1390,13 @@
     "MaxDormoy",
     "VincentRoulez",
     "ThibaudDeC",
-    "AlexisBoscher"
+    "AlexisBoscher",
+    "CaiusDuran",
+    "MathieuNuss",
+    "HuguesLabarre",
+    "NouR",
+    "MaximeDessart",
+    "EricGervais"
   ],
   "en": [
     "Chubby",
@@ -1727,7 +1733,8 @@
     "BOSS",
     "Jenny",
     "Moonshot",
-    "Arkham"
+    "Arkham",
+    "Bloomberg"
   ],
   "history": [
     {
@@ -10358,6 +10365,41 @@
     {
       "lang": "fr",
       "handle": "AlexisBoscher",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "CaiusDuran",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuNuss",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "HuguesLabarre",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "NouR",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDessart",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricGervais",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Bloomberg",
       "added": "2026-08-06"
     }
   ]

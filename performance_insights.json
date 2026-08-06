@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-06T09:35:46.202627",
-  "window_7d_actions": 5499,
-  "window_24h_actions": 749,
+  "generated_at": "2026-08-06T13:35:46.176984",
+  "window_7d_actions": 5471,
+  "window_24h_actions": 753,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5496
+      "count": 5468
     },
     {
       "pattern": "METAPHOR",
@@ -27,80 +27,80 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5496
+      "count": 5468
     }
   ],
   "best_hours_utc": [
     {
       "hour": 12,
-      "actions": 310
-    },
-    {
-      "hour": 11,
-      "actions": 288
+      "actions": 306
     },
     {
       "hour": 13,
-      "actions": 276
+      "actions": 283
     },
     {
-      "hour": 10,
-      "actions": 269
+      "hour": 11,
+      "actions": 274
     },
     {
       "hour": 15,
       "actions": 262
+    },
+    {
+      "hour": 10,
+      "actions": 257
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2585
+      "count": 2571
     },
     {
       "topic": "IA",
-      "count": 2072
+      "count": 2064
     },
     {
       "topic": "Crypto",
-      "count": 636
+      "count": 631
     },
     {
       "topic": "Bourse",
-      "count": 446
+      "count": 442
     },
     {
       "topic": "Spatial",
-      "count": 124
+      "count": 127
     }
   ],
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.033,
+      "24h_rate": 0.035,
       "7d_rate": 0.023
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2334
-    },
-    {
-      "pillar": "market_trauma",
-      "count": 1453
+      "count": 2315
     },
     {
       "pillar": "other",
-      "count": 1451
+      "count": 1448
+    },
+    {
+      "pillar": "market_trauma",
+      "count": 1447
     },
     {
       "pillar": "meme_reaction",
-      "count": 129
+      "count": 132
     },
     {
       "pillar": "reply_bait",
-      "count": 88
+      "count": 85
     },
     {
       "pillar": "ai_vs_btc",
@@ -110,27 +110,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 336
+      "count": 332
     },
     {
       "pillar": "market_trauma",
-      "count": 194
+      "count": 199
     },
     {
       "pillar": "other",
-      "count": 180
-    },
-    {
-      "pillar": "reply_bait",
-      "count": 18
+      "count": 185
     },
     {
       "pillar": "meme_reaction",
-      "count": 18
+      "count": 20
+    },
+    {
+      "pillar": "reply_bait",
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 2
     }
   ],
   "pillar_engagement_30d": [
@@ -173,23 +173,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5010
+      "count": 4969
     },
     {
       "type": "quote",
-      "count": 269
+      "count": 277
     },
     {
       "type": "quote_gif",
-      "count": 105
+      "count": 107
     },
     {
       "type": "post",
-      "count": 60
+      "count": 59
     },
     {
       "type": "hotake",
-      "count": 35
+      "count": 39
     },
     {
       "type": "retweet",
@@ -198,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-06T09:32:07.488913",
-      "text": "Sf startup risk is 95%. faang risk is 2% salary stagnation.\npick the volatility.",
+      "ts": "2026-08-06T13:33:49.118528",
+      "text": "Fair, Sky’s the outlier. But the “Masonic” bit is just the UK’s favorite conspiracy for when the box glitches. You sure it’s not just Freeview’s ancient infrastructure sweating?",
       "type": "reply"
     },
     {
-      "ts": "2026-08-06T09:30:34.021994",
-      "text": "OpenAI raised $5B at $157B valuation with $3.4B ARR.\nthe math only works if AGI ships before the runway ends.\nno pressure.",
+      "ts": "2026-08-06T13:32:24.890627",
+      "text": "Microsoft subsidizing OpenAI's burn rate isn't AI. It's a toll road.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-06T09:30:01.132195",
-      "text": "$5.5m for robotics. in AI land that buys ~50 H100s or ~1.5M lines of code. solinas bought the deck. the margin is in the deployment.",
+      "ts": "2026-08-06T13:30:34.588429",
+      "text": "7734 is the new 6000.\nAggressive buyers getting absorbed just means the liquidity providers are enjoying the spread.\nThis isn't a trend reversal, it's a tax event.",
       "type": "reply"
     }
   ]
