@@ -1372,7 +1372,16 @@
     "JulesCottereau",
     "AlexisLevay",
     "HugoBourdin",
-    "MathieuDufresne"
+    "MathieuDufresne",
+    "Lenny_Recette",
+    "TheSatoshiShot",
+    "CryptoKedves",
+    "NicoVernay",
+    "BorisGrimaud",
+    "DorianPereira",
+    "MaximeNicolle",
+    "AntoineG14",
+    "LudoM27"
   ],
   "en": [
     "Chubby",
@@ -1705,7 +1714,10 @@
     "Axultan",
     "PEPPERS",
     "Testlabor",
-    "sedrul"
+    "sedrul",
+    "BOSS",
+    "Jenny",
+    "Moonshot"
   ],
   "history": [
     {
@@ -10227,6 +10239,66 @@
       "lang": "fr",
       "handle": "MathieuDufresne",
       "added": "2026-08-05"
+    },
+    {
+      "lang": "en",
+      "handle": "BOSS",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lenny_Recette",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "TheSatoshiShot",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKedves",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicoVernay",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Jenny",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Moonshot",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "BorisGrimaud",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "DorianPereira",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeNicolle",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineG14",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoM27",
+      "added": "2026-08-06"
     }
   ]
 }

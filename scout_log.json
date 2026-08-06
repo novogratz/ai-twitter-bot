@@ -1,88 +1,5 @@
 [
   {
-    "ts": "2026-07-16T20:43:20.052371",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JulienCahuzac",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Fr\u00e8re de Benj, plus trading pur. Twitte en FR, fait du concret sur les flux et les chart, pas de 'VIP Telegram'."
-      },
-      {
-        "handle": "VincentFerre",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Bas\u00e9 aux US mais QC francophone. VC et chercheur, il couvre l'IA et la SaaS avec un angle profond, pas superficiel."
-      },
-      {
-        "handle": "ThibautMoutet",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Fondateur de FinTech/Trading, il twitte en FR sur les march\u00e9s et la tech financi\u00e8re. Actif, pro, pas de pub intempestive."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le gras pour ne garder que les cerveaux : des experts Mistral/DeepMind, des journalistes BFM qui ont surv\u00e9cu aux r\u00e9seaux, et les veterans crypto QC qui ont vu passer trois march\u00e9s baissiers sans vendre de formation \u00e0 999\u20ac."
-  },
-  {
-    "ts": "2026-07-16T22:47:03.745833",
-    "raw_count": 7,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "Thalesgroup",
-        "region": "france",
-        "niche": "tech",
-        "followers": 120000,
-        "reason": "Le mastodonte industriel qui fait des tweets IA aussi pertinents que leur bilan annuel, mais en plus court."
-      },
-      {
-        "handle": "Dorianmad",
-        "region": "france",
-        "niche": "ai",
-        "followers": 45000,
-        "reason": "L\u2019expert Mistral qui parle tech sans endormir les morts, parfait pour comprendre LLM sans lire 300 pages de paper."
-      },
-      {
-        "handle": "JulesBourgeois",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 38000,
-        "reason": "L\u2019analyste qui transforme la microcap fran\u00e7aise en thriller financier, sans promettre la lune tous les matins."
-      },
-      {
-        "handle": "LachaudThomas",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 31000,
-        "reason": "Le fondateur de Qonto qui twitte sur la SaaSification de la banque fran\u00e7aise, avec un ton sec qui tue les buzzwords."
-      },
-      {
-        "handle": "BenoitBailly",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Le VC ex-Facebook qui investit dans l\u2019IA US, mais qui garde une plume fran\u00e7aise pr\u00e9cise et sans gras."
-      },
-      {
-        "handle": "MaximeBonnay",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Le gars derri\u00e8re l\u2019IA qu\u00e9b\u00e9coise qui vulgarise sans jamais devenir ce type ennuyeux qui explique le code \u00e0 sa m\u00e8re."
-      }
-    ],
-    "summary": "Je sors le meilleur de la vague post-fintech fran\u00e7aise et du p\u00f4le AI qu\u00e9b\u00e9cois, en \u00e9vitant les influenceurs crypto qui vendent du r\u00eave en Telegram. C\u2019est dense, technique, et \u00e7a ne vend pas de cours \u00e0 199\u20ac."
-  },
-  {
     "ts": "2026-07-17T00:45:10.136745",
     "raw_count": 8,
     "kept_count": 5,
@@ -9166,5 +9083,102 @@
       }
     ],
     "summary": "J'ai creus\u00e9 les profils ind\u00e9pendants et les analystes 'fond', \u00e9vitant les gros comptes institutionnels satur\u00e9s. La France domine en volume crypto, le Qu\u00e9bec a une sc\u00e8ne IA/tech surprenante, et la diaspora USA apporte un view externe pr\u00e9cieux."
+  },
+  {
+    "ts": "2026-08-06T01:36:16.838029",
+    "raw_count": 5,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Lenny_Recette",
+        "region": "france",
+        "niche": "ai",
+        "followers": 120000,
+        "reason": "La bible de l'IA en FR. Il d\u00e9terre les papers US et les traduit en 30 secondes. Plus utile qu'un MBA."
+      },
+      {
+        "handle": "TheSatoshiShot",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 45000,
+        "reason": "Le roi du thread fr sur BTC/ETH. Pas de signaux, juste du prix brut et des charts propres. Il tweet quand il veut, souvent le soir avec un verre."
+      },
+      {
+        "handle": "CryptoKedves",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 30000,
+        "reason": "Canadien bas\u00e9 \u00e0 NYC, twitte en FR/EN. Le sp\u00e9cialiste DeFi. Si lui il a peur, tu cours."
+      },
+      {
+        "handle": "NicoVernay",
+        "region": "quebec",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Le tech bro qu\u00e9b\u00e9cois. Couvre SaaS, AI et startups. Son feed, c'est un mix parfait entre infos durs et m\u00e9chancet\u00e9s bien senties."
+      }
+    ],
+    "summary": "J'ai \u00e9vit\u00e9 les influenceurs 'lambo' pour ne garder que les analystes qui font travailler les m\u00e9ninges. TheSatoshiShot et Lenny_Recette sont les incontournables FR, compl\u00e9t\u00e9s par des profils plus nich\u00e9s au Qu\u00e9bec et aux USA."
+  },
+  {
+    "ts": "2026-08-06T03:36:29.429942",
+    "raw_count": 8,
+    "kept_count": 7,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "SylvainDessailly",
+        "region": "france",
+        "niche": "ai",
+        "followers": 50000,
+        "reason": "Le prof qui fait que tu comprends enfin l'IA sans avoir besoin d'un MBA. C'est rare, il twitte en FR et \u00e7a ne pue pas la pub pour sa formation."
+      },
+      {
+        "handle": "BorisGrimaud",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "C'est le trader pro qui n'a pas peur de se louper en direct. Pas de signaux VIP, juste du trading pur et dur sur le BTC et l'ETH."
+      },
+      {
+        "handle": "DorianPereira",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Co-fondateur de Malt et pro-IA. Il twitte sur l'\u00e9conomie fran\u00e7aise et l'IA sans faire dans le pur acad\u00e9mique."
+      },
+      {
+        "handle": "MaximeNicolle",
+        "region": "usa",
+        "niche": "tech",
+        "followers": 20000,
+        "reason": "Le fondateur de YNAB qui vit \u00e0 NY mais garde le style francophone. C'est la finance personnelle pour ceux qui d\u00e9testent la finance."
+      },
+      {
+        "handle": "AntoineG14",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "C'est l'analyste qu\u00e9b\u00e9cois qui te sort les fondamentaux sans jargon incompr\u00e9hensible. Le seul qui fait du contenu long format fiable en FR."
+      },
+      {
+        "handle": "VincentCouture14",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 15000,
+        "reason": "C'est le fils de Pierre Lassonde, mais il a sa propre t\u00eate. Il twitte l'or et la mining en FR sans faire dans le bling-bling."
+      },
+      {
+        "handle": "LudoM27",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 10000,
+        "reason": "Le trader qui ne vend que du savoir. Pas de groupe VIP \u00e0 50\u20ac/mois, juste des setups BTC/ETH propres en FR."
+      }
+    ],
+    "summary": "Le panel est mixte : les Fran\u00e7ais dominent l'IA et la crypto pure, tandis que le Qu\u00e9bec offre une p\u00e9pite de bourse/value investing en fran\u00e7ais. Aux USA, on reste sur la fintech accessible."
   }
 ]
