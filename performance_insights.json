@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-05T17:35:46.349572",
-  "window_7d_actions": 5566,
-  "window_24h_actions": 740,
+  "generated_at": "2026-08-05T21:35:46.247702",
+  "window_7d_actions": 5554,
+  "window_24h_actions": 731,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5563
+      "count": 5551
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5563
+      "count": 5551
     }
   ],
   "best_hours_utc": [
@@ -55,19 +55,19 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2588
+      "count": 2591
     },
     {
       "topic": "IA",
-      "count": 2116
+      "count": 2109
     },
     {
       "topic": "Crypto",
-      "count": 650
+      "count": 647
     },
     {
       "topic": "Bourse",
-      "count": 462
+      "count": 458
     },
     {
       "topic": "Spatial",
@@ -77,18 +77,18 @@
   "rising_topics_24h": [
     {
       "topic": "Spatial",
-      "24h_rate": 0.039,
+      "24h_rate": 0.03,
       "7d_rate": 0.021
     }
   ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2356
+      "count": 2348
     },
     {
       "pillar": "market_trauma",
-      "count": 1496
+      "count": 1488
     },
     {
       "pillar": "other",
@@ -96,11 +96,11 @@
     },
     {
       "pillar": "meme_reaction",
-      "count": 123
+      "count": 124
     },
     {
       "pillar": "reply_bait",
-      "count": 80
+      "count": 83
     },
     {
       "pillar": "ai_vs_btc",
@@ -110,35 +110,35 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 324
+      "count": 316
     },
     {
       "pillar": "market_trauma",
-      "count": 192
+      "count": 194
     },
     {
       "pillar": "other",
-      "count": 179
-    },
-    {
-      "pillar": "meme_reaction",
-      "count": 19
+      "count": 181
     },
     {
       "pillar": "reply_bait",
-      "count": 17
+      "count": 19
+    },
+    {
+      "pillar": "meme_reaction",
+      "count": 15
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 9
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "market_trauma",
-      "posts": 45,
-      "avg_likes": 0.2,
-      "avg_views": 50.8,
+      "posts": 46,
+      "avg_likes": 0.22,
+      "avg_views": 49.7,
       "low_sample": false
     },
     {
@@ -150,16 +150,16 @@
     },
     {
       "pillar": "other",
-      "posts": 73,
-      "avg_likes": 0.14,
-      "avg_views": 41.7,
+      "posts": 74,
+      "avg_likes": 0.15,
+      "avg_views": 42.1,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 72,
+      "posts": 70,
       "avg_likes": 0.1,
-      "avg_views": 44.5,
+      "avg_views": 45.2,
       "low_sample": false
     },
     {
@@ -173,19 +173,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 5095
+      "count": 5086
     },
     {
       "type": "quote",
-      "count": 259
+      "count": 256
     },
     {
       "type": "quote_gif",
-      "count": 98
+      "count": 100
     },
     {
       "type": "post",
-      "count": 58
+      "count": 56
     },
     {
       "type": "hotake",
@@ -198,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-05T17:34:52.370528",
-      "text": "Margin brute à 45%, ça sent le produit SaaS qui a enfin arrêté de brûler du cash pour de vrai. je prends mon verre de vin et j'écoute la suite",
+      "ts": "2026-08-05T21:32:39.469173",
+      "text": "Context window economics: humans write in pages, agents write in streams.\n\nthe code isn't being created. it's being dissolved.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-05T17:33:26.342406",
-      "text": "South Carolina is a red state. Passing crypto legislation there isn't regulation, it's tax collection. Congress waits for states to draft the code while Washington drafts the press release.",
+      "ts": "2026-08-05T21:30:01.662279",
+      "text": "Compute is the new oil, memecoins are the gasoline. you just bought the drill and sold the gas station.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-05T17:32:28.365517",
-      "text": "Command Code GOAT is $3/month. that’s 24 cents a month in GPU time. the margin isn’t in the code, it’s in the subscription fee covering the idle VRAM.",
+      "ts": "2026-08-05T21:29:18.352659",
+      "text": "AGI in polynomial time? 10B parameters compressing the entire internet's cringe into a laugh.\n\nhumans are the outlier model.",
       "type": "reply"
     }
   ]

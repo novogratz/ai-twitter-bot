@@ -1351,7 +1351,16 @@
     "LeBit",
     "AlexisBa",
     "MarcLanfranchi",
-    "AdrienJegou"
+    "AdrienJegou",
+    "JGThibault",
+    "VincentD",
+    "0xMerkle",
+    "AlexisLamoureux",
+    "YvanDumont",
+    "ThibautDelor",
+    "AntoineBailly_",
+    "ValentinLemoyne",
+    "JorisDutartre"
   ],
   "en": [
     "Chubby",
@@ -1683,7 +1692,8 @@
     "k",
     "Axultan",
     "PEPPERS",
-    "Testlabor"
+    "Testlabor",
+    "sedrul"
   ],
   "history": [
     {
@@ -10094,6 +10104,56 @@
     {
       "lang": "fr",
       "handle": "AdrienJegou",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JGThibault",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentD",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "0xMerkle",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisLamoureux",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "en",
+      "handle": "sedrul",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "YvanDumont",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibautDelor",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "AntoineBailly_",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "ValentinLemoyne",
+      "added": "2026-08-05"
+    },
+    {
+      "lang": "fr",
+      "handle": "JorisDutartre",
       "added": "2026-08-05"
     }
   ]
