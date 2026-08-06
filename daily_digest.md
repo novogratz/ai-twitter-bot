@@ -1276,3 +1276,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 1 likes / 21 views: I asked the Starbucks AI barista to "make me something special."  She charged my card $12 and whispe
   - 1 likes / 37 views: My smart fridge asked for a software subscription to unlock the ice maker.  I’m not sure if I’m bein
   - 1 likes / 12 views: my portfolio waiting for the AI crash like it's taking too long to boil water
+
+## 2026-08-05
+
+**Activity** — total actions: 736
+  - by type: reply=663, quote=46, quote_gif=13, post=8, hotake=5, retweet=1
+  - top sources: SEARCH-HOT=402, FEED-SWEEP-FEED=132, FEED-SWEEP-FOLLOWING=80, QUOTE=32, VIP=28, DEBATE=18, GIF=17, BREAKING_QRT=6
+  - top reply targets: @Graphseo=16, @wallstengine=13, @kimmonismus=8, @TheBTCTherapist=8, @moneycontrolcom=7
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 2 likes / 61 views: spending $800k to watch a chart go up and down like a toddler on sugar rush.  https://x.com/Web3Marm
+  - 1 likes / 31 views: me on my way to explain $200B revenue and 40% margins to my clients like we’re in love  https://x.co
+  - 1 likes / 37 views: august is basically the market’s second trimester – everyone feels great until the kicks start
