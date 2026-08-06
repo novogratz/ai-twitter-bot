@@ -1381,7 +1381,16 @@
     "DorianPereira",
     "MaximeNicolle",
     "AntoineG14",
-    "LudoM27"
+    "LudoM27",
+    "GaspardB",
+    "JulienRoussel",
+    "MaelleBenoit",
+    "RomainTixier",
+    "ClementC",
+    "MaxDormoy",
+    "VincentRoulez",
+    "ThibaudDeC",
+    "AlexisBoscher"
   ],
   "en": [
     "Chubby",
@@ -1717,7 +1726,8 @@
     "sedrul",
     "BOSS",
     "Jenny",
-    "Moonshot"
+    "Moonshot",
+    "Arkham"
   ],
   "history": [
     {
@@ -10298,6 +10308,56 @@
     {
       "lang": "fr",
       "handle": "LudoM27",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Arkham",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaspardB",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienRoussel",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelleBenoit",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainTixier",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "ClementC",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaxDormoy",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentRoulez",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaudDeC",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexisBoscher",
       "added": "2026-08-06"
     }
   ]

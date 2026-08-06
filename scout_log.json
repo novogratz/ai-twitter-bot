@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-07-17T00:45:10.136745",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "AdrienM",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Journaliste crypto FR de r\u00e9f\u00e9rence. Pas un shill de coin, mais un vrai pro qui couvre les deals VC et la r\u00e9gulation. Moins de bruit, plus de sens."
-      },
-      {
-        "handle": "RomainGouez",
-        "region": "france",
-        "niche": "ai",
-        "followers": 22000,
-        "reason": "Co-founder Mistral. Plus technique qu'Arthur, twitte sur LLMs et infra. C'est lui qui balance les insights techniques avant que la presse ne commence \u00e0 baragouiner."
-      },
-      {
-        "handle": "JulienLech",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Trader pro, pas un guru qui vend des signaux. Il parle volatilit\u00e9, options et macro. Son feed est une claque de r\u00e9alisme pour les 'moonboy'."
-      },
-      {
-        "handle": "OlivierT",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "Le roi de la bourse au Qu\u00e9bec. Pas de formations \u00e0 2000\u20ac, juste des analyses de valeur solides et un ton assez direct. C'est rare de trouver \u00e7a sans bruit."
-      },
-      {
-        "handle": "SophieB",
-        "region": "usa",
-        "niche": "fintech",
-        "followers": 11000,
-        "reason": "Ex-banque, maintenant VC \u00e0 San Francisco. Elle twitte en FR sur les startups fintech US avant qu'elles ne soient connues en France. Coup d'avance garanti."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 pour \u00e9viter les vendeurs de r\u00eaves et les influenceurs lifestyle. Ici, ce sont des builders, des traders de m\u00e9tier et des journalistes qui comprennent leur sujet. Z\u00e9ro 'Telegram VIP', 100% contenu brut."
-  },
-  {
-    "ts": "2026-07-17T02:44:12.715236",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "PabloMolina_fr",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 120000,
-        "reason": "L'oracle fran\u00e7ais du Web3. Il twitte entre deux appels de board, analyse macro crypto pr\u00e9cise et couvre les grands projets (Aave, Maker) avec une vision institutionnelle."
-      },
-      {
-        "handle": "MorganMallet",
-        "region": "france",
-        "niche": "tech",
-        "followers": 85000,
-        "reason": "Le roi des threads sur la tech fran\u00e7aise (BlaBlaCar, Deezer, etc.). Il explique le business model derri\u00e8re les apps qu'on utilise tous les jours sans s'endormir."
-      },
-      {
-        "handle": "JulienCayla",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 45000,
-        "reason": "Fundamental analyste de qualit\u00e9. Il d\u00e9cortique les bilans et les strat\u00e9gies des PME/PMI fran\u00e7aises avec une rigueur qui ferait pleurer les banquiers d'affaires parisiens."
-      },
-      {
-        "handle": "BabylonCapitalfr",
-        "region": "france",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "L'investisseur francophone qui a mis\u00e9 sur Mistral avant qu'ils ne deviennent des rockstars. Il tweete l'actualit\u00e9 fran\u00e7aise de l'IA avec un \u0153il de VC averti."
-      },
-      {
-        "handle": "JulienCayla",
-        "region": "usa",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "Journaliste \u00e0 la WSJ bas\u00e9 aux USA, il couvre l'IA et les g\u00e9ants tech avec la m\u00eame plume pointue, m\u00e9langeant perspective US et regard ext\u00e9rieur \u00e9clair\u00e9."
-      }
-    ],
-    "summary": "On a traqu\u00e9 les vrais experts techniques en France (Mistral, Babylon) et les analystes fondamentaux qui ne vendent pas du r\u00eave. Au Qu\u00e9bec, on reste pragmatique avec la bourse. Aux USA, on capte l'IA via les journalistes qui la traitent au scalpel."
-  },
-  {
     "ts": "2026-07-17T04:35:21.274213",
     "raw_count": 8,
     "kept_count": 8,
@@ -9180,5 +9090,88 @@
       }
     ],
     "summary": "Le panel est mixte : les Fran\u00e7ais dominent l'IA et la crypto pure, tandis que le Qu\u00e9bec offre une p\u00e9pite de bourse/value investing en fran\u00e7ais. Aux USA, on reste sur la fintech accessible."
+  },
+  {
+    "ts": "2026-08-06T05:36:27.794026",
+    "raw_count": 8,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "GaspardB",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 95000,
+        "reason": "Le seul qui fait de la micro-\u00e9conomie sans dormir. Twitte en FR, z\u00e9ro pub, z\u00e9ro formation \u00e0 1000\u20ac, juste des id\u00e9es claires sur le march\u00e9 fran\u00e7ais et US."
+      },
+      {
+        "handle": "JulienRoussel",
+        "region": "france",
+        "niche": "ia",
+        "followers": 22000,
+        "reason": "Le type qui transforme les papers arXiv en tweets qu'on comprend \u00e0 2h du mat' au bar. Pur, efficace, utile."
+      },
+      {
+        "handle": "MaelleBenoit",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "Ex-VP Revolut, elle d\u00e9cortique la banque du futur sans jargon incompr\u00e9hensible. Un classique du 'follow' durable."
+      },
+      {
+        "handle": "RomainTixier",
+        "region": "france",
+        "niche": "tech",
+        "followers": 14000,
+        "reason": "Ancien de Klarna/Bolt, il couvre la deep tech et les startups europ\u00e9ennes avec un recul critique qui fait du bien."
+      },
+      {
+        "handle": "ClementC",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 11000,
+        "reason": "Le 'grand fr\u00e8re' calme de la crypto FR. Pas de hype, pas de Moon, juste de la tech et du cycle. Un pilier."
+      }
+    ],
+    "summary": "Une s\u00e9lection de 8 comptes qui \u00e9vitent le bruit des influenceurs formation. On a privil\u00e9gia la qualit\u00e9 analytique (Bourse, Fintech, IA) sur les trois bassins FR, QC et diaspora USA."
+  },
+  {
+    "ts": "2026-08-06T07:36:29.855495",
+    "raw_count": 6,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaxDormoy",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'ancien banquier d'affaires qui a rendu la macro \u00e9conomiquement digeste. Twitte avec une plume rare, zero formatage, pur intellectuel du march\u00e9."
+      },
+      {
+        "handle": "VincentRoulez",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Fondateur de Systran, p\u00e8re de la traduction automatique. Il tweet l'histoire de l'IA, les vieux conflits et la tech moderne en anglais, avec une pointe de culture fran\u00e7aise."
+      },
+      {
+        "handle": "ThibaudDeC",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Le grand seigneur du Bitcoin FR. Il tweet ses positions, ses id\u00e9es et ses voyages. Pas de 'Buy Now', juste de l'analyse profonde sans jargon inutile."
+      },
+      {
+        "handle": "AlexisBoscher",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "Founder de MooltaRoof (rachet\u00e9) puis de Deepomatic. Il couvre la deeptech et l'IA appliqu\u00e9e avec une lucidit\u00e9 rare sur le paysage startup fran\u00e7ais."
+      }
+    ],
+    "summary": "Un mix solide entre les v\u00e9t\u00e9rans de la bourse fran\u00e7aise (Dormoy) et les nouveaux patrons de l'IA (Mistral/Dionne). On \u00e9vite les vendeurs de r\u00eave pour se concentrer sur ceux qui ont construit du code ou de l'argent."
   }
 ]
