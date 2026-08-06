@@ -16710,3 +16710,25 @@ Yeah, open weights are actually more profitable and the real future for accelera
 Fr
   - https://x.com/jun_song/status/2084847297276661864
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 44).
+
+## 2026-08-06
+- **@xaif_crypto** (32 likes, score 8/10) — Fifth Third Bancorp (NASDAQ: FITB)  the 9th-largest U.S. bank with nearly $300B in assets, has disclosed a position in the Grayscale $XRP Trust ETF in its latest SEC 13F filing.
+  - https://x.com/Xaif_Crypto/status/2085039213112893858
+  - **WHY**: Source fiable + impact concret (score signal 10, engagement 46).
+- **@southernvalue95** (117 likes, score 9/10) — In the past year, the AI inference market has seen two massive accelerations, the 1st was Claude Code in Jan-Mar, and we're seeing the second one right now with Fable/Codex this summer (ironically as
+  - https://x.com/SouthernValue95/status/2085137285192757383
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 141).
+- **@cryptotweets** (82 likes, score 8/10) — JUST IN: Meta $META has launched its first AI coding agent, Muse Code, taking on Anthropic's Claude Code and OpenAI's Codex.
+
+The platform allows developers to build applications and manage fleets of
+  - https://x.com/CryptoTweets/status/2085129628574974381
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 102).
+- **@vinayjain404** (534 likes, score 8/10) — Notch MCP just launched for Claude.
+
+Claude could always tell you why your ads win. 
+
+It could never do anything about it.
+
+Today it read 184 of our Meta ads, pulled the 5 patterns that outperform, bu
+  - https://x.com/vinayjain404/status/2085046962777121180
+  - **WHY**: Source fiable + impact concret (score signal 6, engagement 696).
