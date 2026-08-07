@@ -1440,7 +1440,18 @@
     "Lachambre",
     "MaximeMachado",
     "BenoitGarcia",
-    "JulienMoinet"
+    "JulienMoinet",
+    "Baptistech",
+    "TrentMcBing",
+    "G0u2",
+    "Laurae2",
+    "CyrilDelmas",
+    "BertG",
+    "RemySagot",
+    "ThibaultDelfour",
+    "RaphaelTissaint",
+    "MathieuDesbiens",
+    "YvesPichon"
   ],
   "en": [
     "Chubby",
@@ -1783,7 +1794,8 @@
     "Kaveri",
     "Evon",
     "Anonymous",
-    "Lana"
+    "Lana",
+    "Ricardo"
   ],
   "history": [
     {
@@ -10694,6 +10706,66 @@
     {
       "lang": "fr",
       "handle": "JulienMoinet",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Ricardo",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "Baptistech",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "TrentMcBing",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "G0u2",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "Laurae2",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilDelmas",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "BertG",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "RemySagot",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultDelfour",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelTissaint",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "MathieuDesbiens",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "YvesPichon",
       "added": "2026-08-07"
     }
   ]
