@@ -1451,7 +1451,12 @@
     "ThibaultDelfour",
     "RaphaelTissaint",
     "MathieuDesbiens",
-    "YvesPichon"
+    "YvesPichon",
+    "LorenzoSavelli",
+    "Marc_Audet_",
+    "NathanGrimaud",
+    "JeanFournier",
+    "AdrienLarcher"
   ],
   "en": [
     "Chubby",
@@ -10766,6 +10771,31 @@
     {
       "lang": "fr",
       "handle": "YvesPichon",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "LorenzoSavelli",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "Marc_Audet_",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "NathanGrimaud",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "JeanFournier",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienLarcher",
       "added": "2026-08-07"
     }
   ]

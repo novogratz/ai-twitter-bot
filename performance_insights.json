@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-07T09:35:46.037222",
-  "window_7d_actions": 5349,
-  "window_24h_actions": 714,
+  "generated_at": "2026-08-07T13:35:46.237253",
+  "window_7d_actions": 5326,
+  "window_24h_actions": 702,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5346
+      "count": 5323
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5346
+      "count": 5323
     }
   ],
   "best_hours_utc": [
@@ -37,29 +37,29 @@
     },
     {
       "hour": 13,
-      "actions": 281
-    },
-    {
-      "hour": 11,
-      "actions": 274
+      "actions": 280
     },
     {
       "hour": 15,
       "actions": 261
     },
     {
+      "hour": 11,
+      "actions": 258
+    },
+    {
       "hour": 10,
-      "actions": 257
+      "actions": 252
     }
   ],
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2514
+      "count": 2501
     },
     {
       "topic": "IA",
-      "count": 2009
+      "count": 2001
     },
     {
       "topic": "Crypto",
@@ -67,34 +67,34 @@
     },
     {
       "topic": "Bourse",
-      "count": 432
+      "count": 426
     },
     {
       "topic": "Spatial",
-      "count": 130
+      "count": 132
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2274
+      "count": 2255
     },
     {
       "pillar": "other",
-      "count": 1426
+      "count": 1419
     },
     {
       "pillar": "market_trauma",
-      "count": 1374
+      "count": 1367
     },
     {
       "pillar": "meme_reaction",
-      "count": 150
+      "count": 157
     },
     {
       "pillar": "reply_bait",
-      "count": 83
+      "count": 86
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,27 +104,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 314
+      "count": 307
     },
     {
       "pillar": "other",
-      "count": 189
+      "count": 186
     },
     {
       "pillar": "market_trauma",
-      "count": 174
+      "count": 167
     },
     {
       "pillar": "meme_reaction",
-      "count": 22
+      "count": 26
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 12
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 5
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -137,23 +137,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 49,
+      "posts": 50,
       "avg_likes": 0.18,
-      "avg_views": 48.9,
-      "low_sample": false
-    },
-    {
-      "pillar": "other",
-      "posts": 74,
-      "avg_likes": 0.12,
-      "avg_views": 41.9,
+      "avg_views": 48.7,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
       "posts": 66,
-      "avg_likes": 0.09,
-      "avg_views": 37.0,
+      "avg_likes": 0.12,
+      "avg_views": 37.8,
+      "low_sample": false
+    },
+    {
+      "pillar": "other",
+      "posts": 73,
+      "avg_likes": 0.12,
+      "avg_views": 42.6,
       "low_sample": false
     },
     {
@@ -167,23 +167,23 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4803
+      "count": 4763
     },
     {
       "type": "quote",
-      "count": 301
+      "count": 306
     },
     {
       "type": "quote_gif",
-      "count": 124
+      "count": 129
     },
     {
       "type": "post",
-      "count": 61
+      "count": 64
     },
     {
       "type": "hotake",
-      "count": 42
+      "count": 46
     },
     {
       "type": "retweet",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-07T09:35:03.677581",
-      "text": "$WOJAK is the market’s favorite emotional support asset. when the bag disappears, you don’t buy back the pixel, you buy back the hope that he’ll finally pump.",
+      "ts": "2026-08-07T13:34:03.880562",
+      "text": "Fair, but raw benchmarks are just specs sheets. UX is the test drive. Try asking o1 to summarize your browser history and tell me if the model actually matters or if the interface did the heavy lifting.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-07T09:34:35.142247",
-      "text": "@vitalik.eth said it. claude made it.\nwe're just the high-dimensional noise they're trying to compress.",
+      "ts": "2026-08-07T13:33:35.829819",
+      "text": "Centaines de milliers de messages, des schémas de nommage, des workflows.\nc'est pas un forum. c'est un open space où personne ne porte de chaussures.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-07T09:29:27.200648",
-      "text": "China's frontier models run on 1/10th the compute and cost.\n\nthe us won't ban them. we'll just pay more for the same intelligence.",
+      "ts": "2026-08-07T13:33:19.462374",
+      "text": "The \"bug\" affects ~150 wallets. avg loss $40k.\n\nfor most of us, that’s the price of admission.",
       "type": "reply"
     }
   ]

@@ -1,57 +1,5 @@
 [
   {
-    "ts": "2026-07-18T02:44:46.781965",
-    "raw_count": 8,
-    "kept_count": 6,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "TechCrunchFR",
-        "region": "france",
-        "niche": "tech",
-        "followers": 85000,
-        "reason": "Accroche la tech fran\u00e7aise, couvre start-ups et finance, tweet en FR, tr\u00e8s actif."
-      },
-      {
-        "handle": "BabyloneFR",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 25000,
-        "reason": "Le @babylone_fr est l\u00e0 mais BabyloneFR est un pur analyste technique bourse, tweet en FR, pas de pub Telegram. Vrai pro."
-      },
-      {
-        "handle": "JeanBaptisteM",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Analyste qu\u00e9b\u00e9cois, couvre march\u00e9s et macro, tweet en FR, style direct sans jargon de vendeur de r\u00eave."
-      },
-      {
-        "handle": "MaellePascal",
-        "region": "france",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Directrice de l'innovation IA \u00e0 la Banque de France. Twitte sur l'impact de l'IA sur la banque, pas de vanity metrics."
-      },
-      {
-        "handle": "CryptoJLQ",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Jean-Louis Qu\u00e9villon. Vieux de la vieille crypto, bas\u00e9 aux US, tweet en FR, z\u00e9ro pub Telegram, juste de l'analyse pure."
-      },
-      {
-        "handle": "VinzTheViper",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 10000,
-        "reason": "Un des pionniers crypto FR, twitte sur Bitcoin et march\u00e9, pas de vente de formation, juste du contenu."
-      }
-    ],
-    "summary": "J'ai mis\u00e9 sur les profils 'b\u00e2tisseurs' et analystes pro (Mistral, Qonto, Banque de France) plut\u00f4t que les influenceurs de trading. Pour le Qu\u00e9bec et les US, deux valeurs s\u00fbres en FR qui ont travers\u00e9 les cycles sans vendre de poudre d'escargot."
-  },
-  {
     "ts": "2026-07-18T04:35:20.257688",
     "raw_count": 7,
     "kept_count": 5,
@@ -9285,5 +9233,50 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 la graisse pour ne garder que les pros qui tweetent encore. De BERTG (le trader) \u00e0 Alexis Bachety (l'IA), on couvre la tech, la finance et le trading sans les vendeurs de r\u00eave habituels."
+  },
+  {
+    "ts": "2026-08-07T11:36:39.502435",
+    "raw_count": 10,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LorenzoSavelli",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 185000,
+        "reason": "L'incontournable de la macro crypto \u00e0 Paris. Il ne vend rien, juste de l'analyse pure. Son feed est une mine d'or pour comprendre les cycles sans s'endormir."
+      },
+      {
+        "handle": "Marc_Audet_",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "La r\u00e9f\u00e9rence absolue au Qu\u00e9bec pour la bourse. Pas de bla-bla, des chiffres, des graphiques, une voix grave qui calme les nerfs quand le march\u00e9 tremble."
+      },
+      {
+        "handle": "NathanGrimaud",
+        "region": "france",
+        "niche": "ai",
+        "followers": 35000,
+        "reason": "Journaliste tech qui couvre l'IA en profondeur depuis longtemps. Il a le nez sur les startups qui font vraiment bouger le gras, pas juste les buzzwords."
+      },
+      {
+        "handle": "JeanFournier",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 25000,
+        "reason": "V\u00e9t\u00e9ran des march\u00e9s. Il twitte des conseils de sagesse financi\u00e8re qui font mal parce qu'ils sont vrais. Le genre de compteur de r\u00e9alit\u00e9s qu'il nous faut."
+      },
+      {
+        "handle": "AdrienLarcher",
+        "region": "france",
+        "niche": "tech",
+        "followers": 22000,
+        "reason": "Founding engineer chez Hugging Face. Il explique l'IA comme si c'\u00e9tait un mec qui essaie de comprendre un IKEA. Moins hype que les 'AI bros', plus fiable."
+      }
+    ],
+    "summary": "J'ai filtr\u00e9 le bruit des influenceurs formations pour ne garder que les pros qui twittent encore. La France domine sur l'IA et la Crypto, le Qu\u00e9bec est roi sur la Bourse pure. Pas de bot, que des humains qui bossent."
   }
 ]
