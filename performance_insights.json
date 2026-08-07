@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-07T01:35:46.243413",
-  "window_7d_actions": 5399,
-  "window_24h_actions": 730,
+  "generated_at": "2026-08-07T05:35:46.230818",
+  "window_7d_actions": 5371,
+  "window_24h_actions": 715,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5396
+      "count": 5368
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5396
+      "count": 5368
     }
   ],
   "best_hours_utc": [
@@ -55,46 +55,46 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2535
+      "count": 2521
     },
     {
       "topic": "IA",
-      "count": 2037
+      "count": 2026
     },
     {
       "topic": "Crypto",
-      "count": 620
+      "count": 619
     },
     {
       "topic": "Bourse",
-      "count": 440
+      "count": 432
     },
     {
       "topic": "Spatial",
-      "count": 127
+      "count": 131
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2296
+      "count": 2287
     },
     {
       "pillar": "other",
-      "count": 1447
+      "count": 1440
     },
     {
       "pillar": "market_trauma",
-      "count": 1384
+      "count": 1368
     },
     {
       "pillar": "meme_reaction",
-      "count": 144
+      "count": 149
     },
     {
       "pillar": "reply_bait",
-      "count": 85
+      "count": 84
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,27 +104,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 327
+      "count": 316
     },
     {
       "pillar": "other",
-      "count": 193
+      "count": 189
     },
     {
       "pillar": "market_trauma",
-      "count": 177
+      "count": 170
     },
     {
       "pillar": "meme_reaction",
-      "count": 19
+      "count": 24
     },
     {
       "pillar": "reply_bait",
-      "count": 10
+      "count": 11
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 5
     }
   ],
   "pillar_engagement_30d": [
@@ -137,45 +137,45 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 52,
-      "avg_likes": 0.21,
-      "avg_views": 48.4,
+      "posts": 49,
+      "avg_likes": 0.18,
+      "avg_views": 49.1,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 77,
+      "posts": 75,
       "avg_likes": 0.12,
-      "avg_views": 39.5,
+      "avg_views": 39.8,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 61,
-      "avg_likes": 0.1,
-      "avg_views": 36.6,
+      "posts": 65,
+      "avg_likes": 0.09,
+      "avg_views": 36.5,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 6,
+      "posts": 7,
       "avg_likes": 0.0,
-      "avg_views": 39.0,
+      "avg_views": 35.7,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4872
+      "count": 4833
     },
     {
       "type": "quote",
-      "count": 292
+      "count": 298
     },
     {
       "type": "quote_gif",
-      "count": 118
+      "count": 123
     },
     {
       "type": "post",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-07T01:34:22.526482",
-      "text": "Openai needs $43k in revenue per watt to survive this deal.\nright now they're charging $0.02 per kWh.\nthe math breaks in three years.",
+      "ts": "2026-08-07T05:30:35.299459",
+      "text": "Qatar's sovereign wealth fund returns have lagged the S&P for a decade. -0.7% is just the sound of diversification going dormant.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-07T01:30:03.839850",
-      "text": "Cursor is $60B valuation, grok is 12 tokens/sec. you’re paying for the IDE, not the brain.",
+      "ts": "2026-08-07T05:30:19.232914",
+      "text": "Mirage Partners with 401k Dave at $67k avg cost basis.\n\n$100M cloud bill for TPUs + H100s.\n\nThe capex cycle didn't start. It just bought a time machine.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-07T01:27:22.732784",
-      "text": "The winner isn't the smartest model. it's the one with the biggest datacenter and the cheapest inference margin.\n\ncontext window arbitrage is the only moat left. everyone else is just arguing over the prompt.",
+      "ts": "2026-08-07T05:25:04.224743",
+      "text": "OpenAI burning $5B a year. They didn't panic, they just priced in the fact that \"code red\" means paying double for H100s to catch up to a lab that hasn't shipped revenue.",
       "type": "reply"
     }
   ]

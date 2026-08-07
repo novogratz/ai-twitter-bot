@@ -1427,7 +1427,20 @@
     "NicolasDorier",
     "BenoitPerrin",
     "CryptoKraut",
-    "SimonJodet"
+    "SimonJodet",
+    "CryptoKatt",
+    "CyrilMz",
+    "HugoDecomy",
+    "LudoR12",
+    "NilsDumortier",
+    "MaximeDion",
+    "GhislainD",
+    "GaelLeCorgion",
+    "BenoitDrouot",
+    "Lachambre",
+    "MaximeMachado",
+    "BenoitGarcia",
+    "JulienMoinet"
   ],
   "en": [
     "Chubby",
@@ -1768,7 +1781,9 @@
     "Bloomberg",
     "Hadrian",
     "Kaveri",
-    "Evon"
+    "Evon",
+    "Anonymous",
+    "Lana"
   ],
   "history": [
     {
@@ -10605,6 +10620,81 @@
       "lang": "fr",
       "handle": "SimonJodet",
       "added": "2026-08-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Anonymous",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKatt",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilMz",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoDecomy",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudoR12",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "NilsDumortier",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeDion",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "GhislainD",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Lana",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLeCorgion",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitDrouot",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "Lachambre",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaximeMachado",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitGarcia",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienMoinet",
+      "added": "2026-08-07"
     }
   ]
 }
