@@ -1418,7 +1418,16 @@
     "EricSerra",
     "RaphaelLejeune",
     "MarcLapierre",
-    "LudovicBoyer"
+    "LudovicBoyer",
+    "DarioOttaviani",
+    "LionelLambert",
+    "MaelanLeBihan",
+    "BenoitBoulnois",
+    "GaelLeMerrer",
+    "NicolasDorier",
+    "BenoitPerrin",
+    "CryptoKraut",
+    "SimonJodet"
   ],
   "en": [
     "Chubby",
@@ -10550,6 +10559,51 @@
     {
       "lang": "fr",
       "handle": "LudovicBoyer",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "DarioOttaviani",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelLambert",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MaelanLeBihan",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitBoulnois",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "GaelLeMerrer",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasDorier",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitPerrin",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoKraut",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "SimonJodet",
       "added": "2026-08-06"
     }
   ]

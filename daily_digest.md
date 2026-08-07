@@ -1290,3 +1290,17 @@ Auto-generated rollup of bot activity. One section per day. Use this for the 2-w
   - 2 likes / 61 views: spending $800k to watch a chart go up and down like a toddler on sugar rush.  https://x.com/Web3Marm
   - 1 likes / 31 views: me on my way to explain $200B revenue and 40% margins to my clients like we’re in love  https://x.co
   - 1 likes / 37 views: august is basically the market’s second trimester – everyone feels great until the kicks start
+
+## 2026-08-06
+
+**Activity** — total actions: 736
+  - by type: reply=660, quote=45, quote_gif=17, post=7, hotake=5, retweet=2
+  - top sources: SEARCH-HOT=404, FEED-SWEEP-FEED=121, FEED-SWEEP-FOLLOWING=81, QUOTE=32, DEBATE=30, VIP=21, GIF=19, BREAKING_QRT=6
+  - top reply targets: @TheBTCTherapist=16, @Graphseo=11, @FirstSquawk=7, @kimmonismus=7, @CoinMarketCap=6
+
+**Followers we follow** (running total): 386
+
+**Top-performing posts scraped today**:
+  - 2 likes / 58 views: Asked my bank’s AI to review my mortgage. It suggested I buy a crypto wallet with my down payment fo
+  - 1 likes / 69 views: Muse Spark 1.2? Cute. OpenAI is still picking Huggingface’s pockets. The real winner isn't the model
+  - 1 likes / 46 views: me on the phone trying to explain this raise to my husband’s 401k like it’s a miracle
