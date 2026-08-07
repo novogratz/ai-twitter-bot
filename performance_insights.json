@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-07T13:35:46.237253",
-  "window_7d_actions": 5326,
+  "generated_at": "2026-08-07T17:35:46.389433",
+  "window_7d_actions": 5311,
   "window_24h_actions": 702,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5323
+      "count": 5308
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5323
+      "count": 5308
     }
   ],
   "best_hours_utc": [
@@ -37,11 +37,11 @@
     },
     {
       "hour": 13,
-      "actions": 280
+      "actions": 275
     },
     {
       "hour": 15,
-      "actions": 261
+      "actions": 259
     },
     {
       "hour": 11,
@@ -55,64 +55,64 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2501
+      "count": 2497
     },
     {
       "topic": "IA",
-      "count": 2001
+      "count": 1995
     },
     {
       "topic": "Crypto",
-      "count": 623
+      "count": 620
     },
     {
       "topic": "Bourse",
-      "count": 426
+      "count": 420
     },
     {
       "topic": "Spatial",
-      "count": 132
+      "count": 134
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2255
+      "count": 2252
     },
     {
       "pillar": "other",
-      "count": 1419
+      "count": 1422
     },
     {
       "pillar": "market_trauma",
-      "count": 1367
+      "count": 1347
     },
     {
       "pillar": "meme_reaction",
-      "count": 157
+      "count": 160
     },
     {
       "pillar": "reply_bait",
-      "count": 86
+      "count": 87
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 42
+      "count": 43
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 307
+      "count": 296
     },
     {
       "pillar": "other",
-      "count": 186
+      "count": 192
     },
     {
       "pillar": "market_trauma",
-      "count": 167
+      "count": 170
     },
     {
       "pillar": "meme_reaction",
@@ -124,36 +124,36 @@
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 4
+      "count": 6
     }
   ],
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
-      "posts": 3,
-      "avg_likes": 0.33,
-      "avg_views": 38.3,
+      "posts": 4,
+      "avg_likes": 0.5,
+      "avg_views": 45.2,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 50,
+      "posts": 51,
       "avg_likes": 0.18,
-      "avg_views": 48.7,
-      "low_sample": false
-    },
-    {
-      "pillar": "ai_news_take",
-      "posts": 66,
-      "avg_likes": 0.12,
-      "avg_views": 37.8,
+      "avg_views": 48.4,
       "low_sample": false
     },
     {
       "pillar": "other",
       "posts": 73,
+      "avg_likes": 0.14,
+      "avg_views": 43.5,
+      "low_sample": false
+    },
+    {
+      "pillar": "ai_news_take",
+      "posts": 64,
       "avg_likes": 0.12,
-      "avg_views": 42.6,
+      "avg_views": 37.6,
       "low_sample": false
     },
     {
@@ -167,19 +167,19 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4763
+      "count": 4740
     },
     {
       "type": "quote",
-      "count": 306
+      "count": 311
     },
     {
       "type": "quote_gif",
-      "count": 129
+      "count": 131
     },
     {
       "type": "post",
-      "count": 64
+      "count": 65
     },
     {
       "type": "hotake",
@@ -192,18 +192,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-07T13:34:03.880562",
-      "text": "Fair, but raw benchmarks are just specs sheets. UX is the test drive. Try asking o1 to summarize your browser history and tell me if the model actually matters or if the interface did the heavy lifting.",
+      "ts": "2026-08-07T17:32:06.051380",
+      "text": "OpenAI, Anthropic, Google. The crawl wars are over. The real cost isn't the query, it's the 70% margin erosion from inference load. it's over.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-07T13:33:35.829819",
-      "text": "Centaines de milliers de messages, des schémas de nommage, des workflows.\nc'est pas un forum. c'est un open space où personne ne porte de chaussures.",
+      "ts": "2026-08-07T17:31:48.654127",
+      "text": "Amd just bought a second toronto team in a year.\n\nthe real story isn't acquisition. it's talent arbitrage: hiring whole teams at startup prices before the big labs realize they need to pay enterprise salaries for the same code.\n\nbuy low, sell high, ship faster.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-07T13:33:19.462374",
-      "text": "The \"bug\" affects ~150 wallets. avg loss $40k.\n\nfor most of us, that’s the price of admission.",
+      "ts": "2026-08-07T17:29:37.413711",
+      "text": "Zeta posted 20 straight beat-and-raises.\n\n20 quarters of discipline in AI infra is a moat, not a streak. The market prices the last miss, not the last win.",
       "type": "reply"
     }
   ]

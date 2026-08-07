@@ -1456,7 +1456,15 @@
     "Marc_Audet_",
     "NathanGrimaud",
     "JeanFournier",
-    "AdrienLarcher"
+    "AdrienLarcher",
+    "LionelMaurel",
+    "RomainBazire",
+    "JulienLeduc",
+    "ThomasMaire",
+    "CyrilMizrahi",
+    "PhilippeCharron",
+    "LuisVieira_",
+    "CryptoM0nk"
   ],
   "en": [
     "Chubby",
@@ -1800,7 +1808,8 @@
     "Evon",
     "Anonymous",
     "Lana",
-    "Ricardo"
+    "Ricardo",
+    "Sleepagotchi"
   ],
   "history": [
     {
@@ -10796,6 +10805,51 @@
     {
       "lang": "fr",
       "handle": "AdrienLarcher",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Sleepagotchi",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "LionelMaurel",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainBazire",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienLeduc",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThomasMaire",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilMizrahi",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "PhilippeCharron",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "LuisVieira_",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "CryptoM0nk",
       "added": "2026-08-07"
     }
   ]

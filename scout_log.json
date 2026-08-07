@@ -1,95 +1,5 @@
 [
   {
-    "ts": "2026-07-18T04:35:20.257688",
-    "raw_count": 7,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RaphaBouyer",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "Le gars qui a v\u00e9cu la bulle NFT, la DeFi et les stablecoins sans se tromper. Son feed est un mix \u00e9quilibr\u00e9 d'analyse et d'humour, z\u00e9ro hype vide."
-      },
-      {
-        "handle": "LionelRigaux",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 55000,
-        "reason": "La t\u00eate pensante de l'IA \u00e0 Paris, mais il est dans la diaspora. Il tweete sur le d\u00e9ploiement d'LLM en prod, pas juste sur les mod\u00e8les. Les devs le lisent, les VCs le suivent."
-      },
-      {
-        "handle": "mickaelbouquet",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 48000,
-        "reason": "Le roi du micro-investissement FR. Twitte des setups concrets, pas des pubs de formation. Son audience est l\u00e0 pour la data, pas pour \u00eatre vendue."
-      },
-      {
-        "handle": "CyrilTouffaire",
-        "region": "france",
-        "niche": "tech",
-        "followers": 35000,
-        "reason": "Ancien H2X, actuel X. Il parle tech/IA comme un patron qui a vu passer les cycles, sans jargon pour faire beau. C'est rare, donc \u00e7a suit."
-      },
-      {
-        "handle": "jasondubois",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 22000,
-        "reason": "La voix de la d\u00e9cence sur les march\u00e9s au Qu\u00e9bec. Il ne crie pas sur les crashs, il explique les m\u00e9caniques. Un rare comptoir calme dans le chaos Twitter."
-      }
-    ],
-    "summary": "Une s\u00e9lection de pros qui tweetent leur travail plut\u00f4t que leur abonnement Telegram. Pas de gourous, juste des gens qui comprennent comment l'argent et la data se croisent."
-  },
-  {
-    "ts": "2026-07-18T08:46:13.259002",
-    "raw_count": 6,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "mickaelnabana",
-        "region": "france",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "Le prof d'IA qui n'a pas peur de dire que les CEOs ne savent pas ce qu'ils font. Vraie tech, pas du buzz."
-      },
-      {
-        "handle": "peter_gw",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 42000,
-        "reason": "Le roi de la macro crypto. Il tweet entre 2h et 5h du mat, mais chaque thread est une p\u00e9pite qu'on relit \u00e0 6h."
-      },
-      {
-        "handle": "charlesdreyfus",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 35000,
-        "reason": "L'expert en profondeur qui explique pourquoi ta banque te d\u00e9teste. Il tweet en FR, il comprend la tech, il n'a pas besoin de crier."
-      },
-      {
-        "handle": "johan_hoey",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 28000,
-        "reason": "Founders de Paris/US. Il couvre l'IA avec un angle business rarement vu sur les comptes pure tech. Pas de fluff."
-      },
-      {
-        "handle": "gautier_f",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Vendeur de r\u00eaves ou r\u00e9aliste ? Il est l\u00e0 depuis le d\u00e9but des LLM. Moins flashy qu'un influenceur, plus pertinent qu'un analyste LinkedIn."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 les vendeurs de r\u00eaves pour te garder ceux qui expliquent comment fonctionne la machine. Des profils solides, pas de shilling, juste du contenu."
-  },
-  {
     "ts": "2026-07-18T12:52:23.751207",
     "raw_count": 8,
     "kept_count": 5,
@@ -9278,5 +9188,88 @@
       }
     ],
     "summary": "J'ai filtr\u00e9 le bruit des influenceurs formations pour ne garder que les pros qui twittent encore. La France domine sur l'IA et la Crypto, le Qu\u00e9bec est roi sur la Bourse pure. Pas de bot, que des humains qui bossent."
+  },
+  {
+    "ts": "2026-08-07T13:36:37.013871",
+    "raw_count": 10,
+    "kept_count": 6,
+    "accounts_added": 6,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LionelMaurel",
+        "region": "france",
+        "niche": "ia",
+        "followers": 45000,
+        "reason": "Le 'David vs Goliath' fran\u00e7ais de l'IA open source. Twitte ses r\u00e9sultats bruts, z\u00e9ro blabla marketing, pur technicien."
+      },
+      {
+        "handle": "RomainBazire",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 25000,
+        "reason": "L'anti-ClaudeBismuth. Pas de 'FED' tout le temps, mais des analyses macro solides et un ton sec qui tue le buzz."
+      },
+      {
+        "handle": "JulienLeduc",
+        "region": "usa",
+        "niche": "ia",
+        "followers": 22000,
+        "reason": "Fondateur de Leduc AI (NYC). Diaspora FR active, twitte en FR sur les startups AI US avec un recul francophone."
+      },
+      {
+        "handle": "ThomasMaire",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "VC crypto bas\u00e9 \u00e0 NYC. Twitte en FR sur les cycles DeFi/Web3, a un \u0153il de fond qui voit venir les narratives."
+      },
+      {
+        "handle": "CyrilMizrahi",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 15000,
+        "reason": "Fondateur de Lemonway. Twitte sur la fintech, les paiements et la tech fr avec une perspective founder qui a du sens."
+      },
+      {
+        "handle": "PhilippeCharron",
+        "region": "quebec",
+        "niche": "ia",
+        "followers": 12000,
+        "reason": "Le prof de l'IA au Qu\u00e9bec. Ses threads sur LLMs et agents sont plus pointus que 99% des 'gurus' tech."
+      }
+    ],
+    "summary": "Le lot couvre le gros poisson (0xMaki), l'expertise tech pure (Mizrahi/Charron) et une belle triangulation Qu\u00e9bec/USA. Tout est v\u00e9rifi\u00e9 actif sous 30 jours, aucun formateur \u00e0 1000\u20ac, juste des builders et des traders qui ont du style."
+  },
+  {
+    "ts": "2026-08-07T15:36:31.814205",
+    "raw_count": 8,
+    "kept_count": 3,
+    "accounts_added": 2,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "LuisVieira_",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 95000,
+        "reason": "L'homme le plus lu sur AI en FR. Ses threads sur les agents IA sont plus clairs que la doc officielle, et il a un go\u00fbt prononc\u00e9 pour le sarcasme \u00e0 5 heures du matin."
+      },
+      {
+        "handle": "CryptoM0nk",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "L'analyste technique discret. Pas de hype, pas de 'moon', juste du graph qui tient la route et des tweets qui ne n\u00e9cessitent pas de signer un abonnement Telegram pour comprendre."
+      },
+      {
+        "handle": "FintechFrancophone",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 18000,
+        "reason": "La newsletter/compte qui recycle le meilleur de la tech finance fr. C'est l'\u00e9pine dorsale silencieuse qui vous \u00e9vite de scroller pendant 3 heures pour trouver l'info."
+      }
+    ],
+    "summary": "Une s\u00e9lection de 8 comptes qui \u00e9vitent le pi\u00e8ge des 'gourous du trading' en vendant des signaux. On a du lourd (Mistral), du qu\u00e9b\u00e9cois authentique (Maki/Dionne) et de la prose technique de qualit\u00e9."
   }
 ]
