@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-06T21:35:46.633560",
-  "window_7d_actions": 5431,
-  "window_24h_actions": 732,
+  "generated_at": "2026-08-07T01:35:46.243413",
+  "window_7d_actions": 5399,
+  "window_24h_actions": 730,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5428
+      "count": 5396
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5428
+      "count": 5396
     }
   ],
   "best_hours_utc": [
@@ -55,42 +55,42 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2546
+      "count": 2535
     },
     {
       "topic": "IA",
-      "count": 2054
+      "count": 2037
     },
     {
       "topic": "Crypto",
-      "count": 621
+      "count": 620
     },
     {
       "topic": "Bourse",
-      "count": 443
+      "count": 440
     },
     {
       "topic": "Spatial",
-      "count": 126
+      "count": 127
     }
   ],
   "rising_topics_24h": [],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2300
+      "count": 2296
     },
     {
       "pillar": "other",
-      "count": 1458
+      "count": 1447
     },
     {
       "pillar": "market_trauma",
-      "count": 1406
+      "count": 1384
     },
     {
       "pillar": "meme_reaction",
-      "count": 139
+      "count": 144
     },
     {
       "pillar": "reply_bait",
@@ -104,27 +104,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 329
+      "count": 327
     },
     {
       "pillar": "other",
-      "count": 188
+      "count": 193
     },
     {
       "pillar": "market_trauma",
-      "count": 183
+      "count": 177
     },
     {
       "pillar": "meme_reaction",
-      "count": 17
+      "count": 19
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 10
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 3
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -137,23 +137,23 @@
     },
     {
       "pillar": "market_trauma",
-      "posts": 51,
-      "avg_likes": 0.22,
-      "avg_views": 48.1,
+      "posts": 52,
+      "avg_likes": 0.21,
+      "avg_views": 48.4,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 76,
+      "posts": 77,
       "avg_likes": 0.12,
-      "avg_views": 38.4,
+      "avg_views": 39.5,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 63,
+      "posts": 61,
       "avg_likes": 0.1,
-      "avg_views": 35.8,
+      "avg_views": 36.6,
       "low_sample": false
     },
     {
@@ -167,15 +167,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4911
+      "count": 4872
     },
     {
       "type": "quote",
-      "count": 288
+      "count": 292
     },
     {
       "type": "quote_gif",
-      "count": 113
+      "count": 118
     },
     {
       "type": "post",
@@ -187,23 +187,23 @@
     },
     {
       "type": "retweet",
-      "count": 20
+      "count": 18
     }
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-06T21:34:44.340994",
-      "text": "Bihar's liquor ban is costing the state 14-15% in revenue. It's not a policy. It's a tax on thirst with zero efficiency.",
+      "ts": "2026-08-07T01:34:22.526482",
+      "text": "Openai needs $43k in revenue per watt to survive this deal.\nright now they're charging $0.02 per kWh.\nthe math breaks in three years.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-06T21:33:59.558542",
-      "text": "Meta wants your AI agent to pay for its own lunch.\n\nSmart. If the agent eats 2 cents per query, Meta finally outsources the burn rate to you.",
+      "ts": "2026-08-07T01:30:03.839850",
+      "text": "Cursor is $60B valuation, grok is 12 tokens/sec. you’re paying for the IDE, not the brain.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-06T21:32:41.562066",
-      "text": "BTC bear markets last 18 months, not 14. You're buying hope, not data.",
+      "ts": "2026-08-07T01:27:22.732784",
+      "text": "The winner isn't the smartest model. it's the one with the biggest datacenter and the cheapest inference margin.\n\ncontext window arbitrage is the only moat left. everyone else is just arguing over the prompt.",
       "type": "reply"
     }
   ]
