@@ -16732,3 +16732,28 @@ It could never do anything about it.
 Today it read 184 of our Meta ads, pulled the 5 patterns that outperform, bu
   - https://x.com/vinayjain404/status/2085046962777121180
   - **WHY**: Source fiable + impact concret (score signal 6, engagement 696).
+
+## 2026-08-07
+- **@peterschiff** (1143 likes, score 9/10) — Copper is trading above $6.70 a pound, hitting a new all-time high. This does not bode well, given the Fed’s decisions not to raise interest rates and to open up the monetary spigots even more to keep
+  - https://x.com/PeterSchiff/status/2085363002614698037
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1303).
+- **@lunarresearcher** (148 likes, score 9/10) — Google just released a free 2-hour course on full Graph Engineering.
+
+How to go from one prompt to 100 agents running inside one graph:
+
+17:44 - Build your first AI agent
+39:30 - Run agents with loop
+  - https://x.com/LunarResearcher/status/2085468711167615253
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 168).
+- **@theapplehub** (110 likes, score 9/10) — OpenAI is significantly expanding the access on free ChatGPT.
+
+GPT-5.6 Luna will become the default model for Free and Go users this week. Starting next week, text chats will be unlimited with a new "
+  - https://x.com/theapplehub/status/2085570465377198591
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 128).
+- **@itsvishaltwt** (36 likes, score 8/10) — Which one would you choose??
+
+GPT-5.6
+Claude Fable
+Gemini 3.5 Pro
+  - https://x.com/itsvishaltwt/status/2085557802563776669
+  - **WHY**: Source fiable + impact concret (score signal 7, engagement 96).
