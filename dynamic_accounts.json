@@ -1409,7 +1409,16 @@
     "MaximeSteffan",
     "MaxBorsen",
     "EricBalzamo",
-    "JulienAston"
+    "JulienAston",
+    "Bultra_",
+    "LelouchFr",
+    "MarcBoutin",
+    "TomasPerrin",
+    "JulienDuc",
+    "EricSerra",
+    "RaphaelLejeune",
+    "MarcLapierre",
+    "LudovicBoyer"
   ],
   "en": [
     "Chubby",
@@ -1748,7 +1757,9 @@
     "Moonshot",
     "Arkham",
     "Bloomberg",
-    "Hadrian"
+    "Hadrian",
+    "Kaveri",
+    "Evon"
   ],
   "history": [
     {
@@ -10484,6 +10495,61 @@
     {
       "lang": "fr",
       "handle": "JulienAston",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Kaveri",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "Bultra_",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "LelouchFr",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcBoutin",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "TomasPerrin",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienDuc",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "en",
+      "handle": "Evon",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "EricSerra",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphaelLejeune",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLapierre",
+      "added": "2026-08-06"
+    },
+    {
+      "lang": "fr",
+      "handle": "LudovicBoyer",
       "added": "2026-08-06"
     }
   ]

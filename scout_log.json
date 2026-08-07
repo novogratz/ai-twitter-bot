@@ -1,60 +1,5 @@
 [
   {
-    "ts": "2026-07-17T10:45:47.555019",
-    "raw_count": 8,
-    "kept_count": 3,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "RoxaneD",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "Journaliste AI US qui \u00e9crit souvent en FR, couvre les startups fran\u00e7aises depuis l'\u00e9tranger."
-      },
-      {
-        "handle": "OlivierSantaniello",
-        "region": "quebec",
-        "niche": "fintech",
-        "followers": 15000,
-        "reason": "La t\u00eate pensante de l'innovation financi\u00e8re au Qu\u00e9bec, twitte en FR."
-      },
-      {
-        "handle": "VincentRoux",
-        "region": "usa",
-        "niche": "crypto",
-        "followers": 12000,
-        "reason": "Diaspora FR \u00e0 NY, coverage crypto/tech d\u00e9cal\u00e9e, twitte en FR."
-      }
-    ],
-    "summary": "J'ai fouill\u00e9 les p\u00e9pites francophones pour \u00e9viter les vendeurs de r\u00eave. Ce sont des analystes et des fondateurs qui twittent pour eux-m\u00eames, pas pour vendre leur formation Telegram \u00e0 99\u20ac."
-  },
-  {
-    "ts": "2026-07-17T12:42:41.459497",
-    "raw_count": 8,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibaultMazui",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 65000,
-        "reason": "L'ex-banquier qui a fait de la crypto son religion, ton sec, analyse macro solide, jamais dans le hype vide."
-      },
-      {
-        "handle": "MathieuMaurel",
-        "region": "france",
-        "niche": "ai",
-        "followers": 14000,
-        "reason": "Fondatrice d'AI France, feed ultra technique sur LLM et genAI, le top du nerdy en fran\u00e7ais."
-      }
-    ],
-    "summary": "Une s\u00e9lection cibl\u00e9e : des pros de la France (Mazui, Bailly), des perles rares du Qu\u00e9bec (Baudoin, Cahuzac) et un profil US diaspora. Z\u00e9ro vendeurs de r\u00eaves, que des cerveaux qui twittent."
-  },
-  {
     "ts": "2026-07-17T14:35:16.197862",
     "raw_count": 6,
     "kept_count": 5,
@@ -9194,5 +9139,88 @@
       }
     ],
     "summary": "J'ai cibl\u00e9 les piliers de l'\u00e9cosyst\u00e8me FR (Mistral, HuggingFace alumni) et les pros du Qu\u00e9bec qui \u00e9vitent le buzz. Pour les USA, des profils bilingues apportent une vue externe sans \u00eatre anglophones purs."
+  },
+  {
+    "ts": "2026-08-06T17:36:16.411529",
+    "raw_count": 5,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Bultra_",
+        "region": "france",
+        "niche": "tech",
+        "followers": 115000,
+        "reason": "L'anti-Benjamin Dewaele. Il parle d'IA et de SaaS sans vendre de formation \u00e0 2000\u20ac, avec un style sec et des insights tech solides."
+      },
+      {
+        "handle": "LelouchFr",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 55000,
+        "reason": "Incontournable. Pas un influenceur 'lambo', un vrai analyste on-chain qui d\u00e9crypte les narratives avant qu'elles ne deviennent mainstream."
+      },
+      {
+        "handle": "MarcBoutin",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 42000,
+        "reason": "La r\u00e9f\u00e9rence crypto qu\u00e9b\u00e9coise. Il couvre l'\u00e9cosyst\u00e8me local sans flatterie et donne des insights globaux avec un ton direct et d\u00e9cal\u00e9."
+      },
+      {
+        "handle": "TomasPerrin",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 32000,
+        "reason": "Ex-PM qui ne se prend pas au s\u00e9rieux. Ses threads sur la gestion de produit tech sont aussi bons que ses analyses macro, z\u00e9ro jargon inutile."
+      },
+      {
+        "handle": "JulienDuc",
+        "region": "france",
+        "niche": "fintech",
+        "followers": 28000,
+        "reason": "Journaliste fintech pointu. Il tweet sur les r\u00e9gulations et les deals VC avec pr\u00e9cision, \u00e9vitant les grands discours vides sur l'IA."
+      }
+    ],
+    "summary": "Mix \u00e9quilibr\u00e9 entre l'analyse crypto s\u00e9rieuse (Lelouch, MarcBoutin) et le view sur la tech/business pragmatique (Bultra, Perrin). Z\u00e9ro vendeur de r\u00eave, juste du contenu qui passe le test du temps."
+  },
+  {
+    "ts": "2026-08-06T19:36:36.253545",
+    "raw_count": 10,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "EricSerra",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Le trader fran\u00e7ais bas\u00e9 \u00e0 Miami/NYC qui couvre le march\u00e9 US depuis une \u00e9poque o\u00f9 ETH valait 10$. Il voit les cycles avant qu'ils n'arrivent."
+      },
+      {
+        "handle": "RaphaelLejeune",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 20000,
+        "reason": "G\u00e9rant de fond qui balance des analyses macro brutales. Il ne cherche pas \u00e0 te plaire, il cherche \u00e0 te faire comprendre la dette."
+      },
+      {
+        "handle": "MarcLapierre",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 18000,
+        "reason": "Investisseur VC qu\u00e9b\u00e9cois qui voit plus loin que la bougie du jour. Moins de 'moon', plus de 'fundamentals'."
+      },
+      {
+        "handle": "LudovicBoyer",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "Le patron de M51 (ex-Superanalytics) qui explique l'IA g\u00e9n\u00e9rative sans verser dans la techno-culture hype."
+      }
+    ],
+    "summary": "J'ai creus\u00e9 les p\u00e9pites solides : Mistral pour l'IA pure, BenMoussa pour la crypto hardcore, et des founders VC qu\u00e9b\u00e9cois/fran\u00e7ais qui ne vendent pas de r\u00eave."
   }
 ]
