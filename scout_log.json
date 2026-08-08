@@ -1,109 +1,5 @@
 [
   {
-    "ts": "2026-07-18T12:52:23.751207",
-    "raw_count": 8,
-    "kept_count": 5,
-    "accounts_added": 5,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "JL_Audet",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "J\u00e9r\u00f4me-Louis Audet. Tech journalist bas\u00e9 \u00e0 SF, tweet en FR sur les GAFAM et l'AI infra. Vues mondiales, style FR."
-      },
-      {
-        "handle": "OlivierLeNoble",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "L'homme de r\u00e9f\u00e9rence crypto au Qu\u00e9bec. Analyse macro, trading et adoption institutionnelle. Tr\u00e8s pro."
-      },
-      {
-        "handle": "NicolasCollin",
-        "region": "france",
-        "niche": "tech",
-        "followers": 15000,
-        "reason": "PDG de Doctolib. Il couvre la tech de sant\u00e9 et la SaaS avec une lucidit\u00e9 qui tranche avec le buzz habituel."
-      },
-      {
-        "handle": "MickaelCarrere",
-        "region": "france",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Co-founder d'Alten. Il documente l'histoire de la tech FR (IA 70s, CNRS) et supervise l'actuel boom. Un mix info/histoire."
-      },
-      {
-        "handle": "ThomasSartore",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 11000,
-        "reason": "Journaliste chez MoneyMags, mais son feed est une mine de deals fintech et de VC en France. Moins connu, plus dense."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des influenceurs formations pour ne garder que les b\u00e2tisseurs (Mistral, Hugging Face) et les pros actifs (crypto QC, trad SF). On couvre la tech de fond plut\u00f4t que la hype de surface."
-  },
-  {
-    "ts": "2026-07-18T14:54:41.849551",
-    "raw_count": 12,
-    "kept_count": 7,
-    "accounts_added": 7,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "ThibaudGautier",
-        "region": "france",
-        "niche": "ai",
-        "followers": 85000,
-        "reason": "Expert vision par ordinateur, ex-Scale AI. Il tweete des insights profonds sur l'IA g\u00e9n\u00e9rative sans jargon incompr\u00e9hensible. Le gars qui comprend mieux tes photos que toi."
-      },
-      {
-        "handle": "BenjaminNolot",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 65000,
-        "reason": "Le grand m\u00e9chant loup de la bourse fran\u00e7aise. Il couvre les valeurs europ\u00e9ennes et US avec mordant. Son style ? Direct, parfois sec, toujours pertinent."
-      },
-      {
-        "handle": "LouisViala",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 55000,
-        "reason": "Le roi des tweets bourse sur Twitter/X FR. Il analyse les r\u00e9sultats trimestriels et la macro en quelques lignes cinglantes. Moins lourd que BFMBourse, plus fun."
-      },
-      {
-        "handle": "PierreBabin",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 45000,
-        "reason": "Le baron du crypto fran\u00e7ais. Il couvre Bitcoin, DeFi et Macro avec une pr\u00e9cision chirurgicale. Pas de shills \u00e0 la con, juste des cycles et des charts."
-      },
-      {
-        "handle": "MaximeDoyon",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 35000,
-        "reason": "Journaliste tech US, mais il tweete souvent en FR et couvre l'IA fran\u00e7aise (Mistral, Hugging Face). Le pont entre la SF et Paris. Il t'explique pourquoi tu devrais investir dans l'IA ou mourir."
-      },
-      {
-        "handle": "JeanFleurent",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 18000,
-        "reason": "Un des profils bourse les plus suivis au Qu\u00e9bec. Il couvre les march\u00e9s, l'IEP et la tech avec un ton direct. Le gars qui t'explique pourquoi tes ETF ne font pas ce que tu crois."
-      },
-      {
-        "handle": "VincentLemire",
-        "region": "quebec",
-        "niche": "ai",
-        "followers": 12000,
-        "reason": "Le gars de Mistral au Qu\u00e9bec. Il tweete sur l'IA, la tech et la vie startup \u00e0 Montr\u00e9al. Il repr\u00e9sente la facette francophone de la sc\u00e8ne AI nord-am\u00e9ricaine."
-      }
-    ],
-    "summary": "Une s\u00e9lection solide qui m\u00e9lange les valeurs s\u00fbres de la tech fran\u00e7aise (Mistral, Dillet) avec des profils bourse/crypto plus pointus (Nolot, Babin). Le Qu\u00e9bec est repr\u00e9sent\u00e9 par ses grands patrons du secteur (Viala, Fleurent) et la diaspora US par des journalistes et founders qui comprennent les deux march\u00e9s. Z\u00e9ro vendeur de r\u00eave, juste du concret."
-  },
-  {
     "ts": "2026-07-18T16:53:07.215308",
     "raw_count": 10,
     "kept_count": 7,
@@ -9271,5 +9167,88 @@
       }
     ],
     "summary": "Une s\u00e9lection de 8 comptes qui \u00e9vitent le pi\u00e8ge des 'gourous du trading' en vendant des signaux. On a du lourd (Mistral), du qu\u00e9b\u00e9cois authentique (Maki/Dionne) et de la prose technique de qualit\u00e9."
+  },
+  {
+    "ts": "2026-08-07T17:36:54.117927",
+    "raw_count": 10,
+    "kept_count": 4,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilDongier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "L'analyste technique qui ne fait pas dans la dentelle. Ses carnets de bord valent plus que les signaux VIP de ton cousin crypto."
+      },
+      {
+        "handle": "JesseLedoux",
+        "region": "quebec",
+        "niche": "crypto",
+        "followers": 22000,
+        "reason": "Journaliste crypto au Qu\u00e9bec, couvert par les grands m\u00e9dias. Il twitte en FR, il est \u00e0 jour, et il a pas de code promo \u00e0 99\u20ac."
+      },
+      {
+        "handle": "RomainMuller",
+        "region": "france",
+        "niche": "tech",
+        "followers": 15000,
+        "reason": "CTO d'OVHcloud, il poutne sur l'infog\u00e9rance et le cloud souverain. C'est sec, c'est technique, c'est pas du storytelling LinkedIn."
+      },
+      {
+        "handle": "ValentinGautier",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 10000,
+        "reason": "Gestionnaire de patrimoine qui d\u00e9cortique les bilans. Il trouve les perles et les bombes avant que les influenceurs \u00e0 casquette ne s'en rendent compte."
+      }
+    ],
+    "summary": "Un mix solide entre les g\u00e9ants fran\u00e7ais de la tech (Mistral, OVH) et les traders/analystes\u72ec\u7acb qui refusent de vendre des formations \u00e0 3 semaines. Le Quebec est mieux couvert qu'avant avec Ledoux et Denis, et le panel USA ajoute la perspective Pierre Rochard indispensable."
+  },
+  {
+    "ts": "2026-08-07T19:36:22.977351",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 5,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "MaximeMory",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 60000,
+        "reason": "Cr\u00e9ateur de MarketScreener. Il fait des analyses de valeurs concr\u00e8tes, pas du storytelling abstrait."
+      },
+      {
+        "handle": "LudovicMichelet",
+        "region": "france",
+        "niche": "tech",
+        "followers": 50000,
+        "reason": "Le patron de Lucca. Il twitte sur la tech fran\u00e7aise avec un humour d\u00e9cal\u00e9 qui passe mieux que les analyses de la Monnaie Parisienne."
+      },
+      {
+        "handle": "JulienSalaun",
+        "region": "france",
+        "niche": "crypto",
+        "followers": 35000,
+        "reason": "CEO de Coinhouse. Le genre de compte qui donne des infos de march\u00e9 r\u00e9elles sans vendre son \u00e2me \u00e0 un coach en trading TikTok."
+      },
+      {
+        "handle": "DavidLavoie",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 15000,
+        "reason": "Analyste qu\u00e9b\u00e9cois qui d\u00e9crypte les march\u00e9s avec un bon sens de l'analyse fondamentale, loin du bruit g\u00e9n\u00e9raliste."
+      },
+      {
+        "handle": "CyrilKhan",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 12000,
+        "reason": "Bas\u00e9 \u00e0 NYC mais twitte en fran\u00e7ais. Il couvre l'intersection Web3/AI avec un ton direct, sans le blabla institutionnel."
+      }
+    ],
+    "summary": "On laisse tomber les influenceurs TikTok qui vendent du r\u00eave pour aller voir ceux qui construisent la tech ou l'argent : Mistral, Lucca et les pros de Coinhouse/MarketScreener."
   }
 ]

@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-07T17:35:46.389433",
-  "window_7d_actions": 5311,
-  "window_24h_actions": 702,
+  "generated_at": "2026-08-07T21:35:46.452939",
+  "window_7d_actions": 5319,
+  "window_24h_actions": 700,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5308
+      "count": 5316
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5308
+      "count": 5316
     }
   ],
   "best_hours_utc": [
@@ -59,42 +59,48 @@
     },
     {
       "topic": "IA",
-      "count": 1995
+      "count": 1993
     },
     {
       "topic": "Crypto",
-      "count": 620
+      "count": 619
     },
     {
       "topic": "Bourse",
-      "count": 420
+      "count": 424
     },
     {
       "topic": "Spatial",
-      "count": 134
+      "count": 137
     }
   ],
-  "rising_topics_24h": [],
+  "rising_topics_24h": [
+    {
+      "topic": "Spatial",
+      "24h_rate": 0.034,
+      "7d_rate": 0.026
+    }
+  ],
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2252
+      "count": 2248
     },
     {
       "pillar": "other",
-      "count": 1422
+      "count": 1423
     },
     {
       "pillar": "market_trauma",
-      "count": 1347
+      "count": 1355
     },
     {
       "pillar": "meme_reaction",
-      "count": 160
+      "count": 161
     },
     {
       "pillar": "reply_bait",
-      "count": 87
+      "count": 89
     },
     {
       "pillar": "ai_vs_btc",
@@ -104,27 +110,27 @@
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 296
+      "count": 299
     },
     {
       "pillar": "other",
-      "count": 192
+      "count": 184
     },
     {
       "pillar": "market_trauma",
-      "count": 170
+      "count": 175
     },
     {
       "pillar": "meme_reaction",
-      "count": 26
+      "count": 24
     },
     {
       "pillar": "reply_bait",
-      "count": 12
+      "count": 14
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 6
+      "count": 4
     }
   ],
   "pillar_engagement_30d": [
@@ -167,15 +173,15 @@
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4740
+      "count": 4743
     },
     {
       "type": "quote",
-      "count": 311
+      "count": 315
     },
     {
       "type": "quote_gif",
-      "count": 131
+      "count": 132
     },
     {
       "type": "post",
@@ -192,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-07T17:32:06.051380",
-      "text": "OpenAI, Anthropic, Google. The crawl wars are over. The real cost isn't the query, it's the 70% margin erosion from inference load. it's over.",
+      "ts": "2026-08-07T21:35:04.888791",
+      "text": "Nvidia putting $3B into Blackstone's power firm is just AI capex becoming an energy utility.\ndatacenter demand is now an asset class.\nthe grid is the new moat.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-07T17:31:48.654127",
-      "text": "Amd just bought a second toronto team in a year.\n\nthe real story isn't acquisition. it's talent arbitrage: hiring whole teams at startup prices before the big labs realize they need to pay enterprise salaries for the same code.\n\nbuy low, sell high, ship faster.",
+      "ts": "2026-08-07T21:34:48.576236",
+      "text": "AMD at 150% gross margin after years of burning cash.\nNVDA at 70% and prints money.\nchallenger buys market share, leader buys the world.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-07T17:29:37.413711",
-      "text": "Zeta posted 20 straight beat-and-raises.\n\n20 quarters of discipline in AI infra is a moat, not a streak. The market prices the last miss, not the last win.",
+      "ts": "2026-08-07T21:28:27.673277",
+      "text": "Network effects were always there. we just didn't have the agents to feel them. the cost of intelligence dropped below the cost of coordination.",
       "type": "reply"
     }
   ]
