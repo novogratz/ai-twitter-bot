@@ -16757,3 +16757,18 @@ Claude Fable
 Gemini 3.5 Pro
   - https://x.com/itsvishaltwt/status/2085557802563776669
   - **WHY**: Source fiable + impact concret (score signal 7, engagement 96).
+
+## 2026-08-08
+- **@cdgalpha** (16 likes, score 8/10) — nvidia put a 1M-context frontier reasoning model on the FREE tier and almost nobody is using it 
+
+nemotron 3 ultra: 550b moe, 55b active, 1M token context, $0
+
+what you get for $0:
+> agent orchestrati
+  - https://x.com/CDGalpha/status/2085753634256798114
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 36).
+- **@fchollet** (401 likes, score 9/10) — In the era of base LLM scaling (2022-2024), I believed the LLM line of research would reach a capability plateau (as later seen with base LLMs).
+
+In late 2024, after the o3 test-time compute demo, I c
+  - https://x.com/fchollet/status/2085796727362052241
+  - **WHY**: Source fiable + impact concret (score signal 8, engagement 477).
