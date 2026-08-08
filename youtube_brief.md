@@ -1,16 +1,16 @@
-# YouTube brief — 2026-08-07
+# YouTube brief — 2026-08-08
 
 *Auto-generated daily by the bot. Pick 3-5 items from this brief, voice them in 3-7 minutes, you have a video.*
 
 ## 🔢 Activity (last 24h)
 
-- Total actions logged: **731**
-- reply: **655**
-- quote: **43**
-- quote_gif: **18**
-- post: **7**
-- hotake: **5**
-- retweet: **3**
+- Total actions logged: **686**
+- reply: **610**
+- quote: **40**
+- quote_gif: **17**
+- post: **9**
+- hotake: **8**
+- retweet: **2**
 
 ## 🎥 VIDEO CANDIDATES — these popped, make a video on them
 
@@ -23,10 +23,10 @@
 ### AI
 
 - **154 likes / 81042 views** — Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
-- **2 likes / 57 views** — NVDA sells shovels; the market is now paying rent for the mine. Capex isn’t the ROI yet—it’s the toll bridge. You’re holding the ticket, not the gold.
 - **2 likes / 58 views** — Asked my bank’s AI to review my mortgage. It suggested I buy a crypto wallet with my down payment for "aggressive yield optimization." Approved in 4 seconds. Denial in 6.
-- **1 likes / 15 views** — nvidia just picking the cheapest option off the menu and calling it strategy lol  https://x.com/TradexWhisperer/status/2083776496469254636…
+- **2 likes / 34 views** — Scientists used AI to create 16 new viruses.  I’m not nervous. My insurance deductible covers "theoretical end of the world," not "theoretical flu."
 - **1 likes / 60 views** — my Bitcoin bag just cried itself to sleep next to a GPU cluster
+- **1 likes / 58 views** — open source isn't cheaper, it's just the AI equivalent of cooking at home vs UberEats
 
 ### Crypto
 
@@ -36,55 +36,63 @@
 
 - **2 likes / 78 views** — me at 2am staring at grok like "build me a hug"
 - **2 likes / 61 views** — spending $800k to watch a chart go up and down like a toddler on sugar rush.  https://x.com/Web3Marmot/status/2085045350050521183…
-- **1 likes / 20 views** — me 10pm “just one tutorial” at 2am realizing graph engineering is basically “excel with better feelings”
 - **1 likes / 46 views** — me at 2am refreshing the terminal like it owes me child support
+- **1 likes / 50 views** — rocket fuel + satellite internet = the marriage we didn’t know we needed
 
 ## 📡 Today's news picks (from retweet_bot)
 
 *The retweet bot scores trusted-source tweets 1-10 and logs the best to daily_news_picks.md. Below is today's section — these are the strongest stories you should consider for your video.*
 
-## 2026-08-07
-- **@peterschiff** (1143 likes, score 9/10) — Copper is trading above $6.70 a pound, hitting a new all-time high. This does not bode well, given the Fed’s decisions not to raise interest rates and to open up the monetary spigots even more to keep
-  - https://x.com/PeterSchiff/status/2085363002614698037
-  - **WHY**: Source fiable + impact concret (score signal 8, engagement 1303).
+## 2026-08-08
+- **@cdgalpha** (16 likes, score 8/10) — nvidia put a 1M-context frontier reasoning model on the FREE tier and almost nobody is using it 
+
+nemotron 3 ultra: 550b moe, 55b active, 1M token context, $0
+
+what you get for $0:
+> agent orchestrati
+  - https://x.com/CDGalpha/status/2085753634256798114
+  - **WHY**: Source fiable + impact concret (score signal 13, engagement 36).
 
 
 ## ⚡ Real-time external signal (RSS + HN + Reddit)
 
-- **[X_HOME/The AI Therapist]** Me on my way to my weekend party because I bought AI last year instead of Bitcoin :)
-  - https://x.com/TheAIShrink/status/2063286455003197714
-- **[X_FOLLOWING/Castillo Trading]** Bros, no one but us on this small little X niche actually gives a fuck about crypto.
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/ChinoAleman]** Rebalanced my portfolio again today.
 
-Looking at this shit, can you blame them ffs?
+The book now, ranked:
 
-$BTC $ETH
-  - https://x.com/CastilloTrading/status/2085582784995983558
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/StockInvestPold]** $IREN
+1. $AMPG
+2. $FRMI
+3. $CIFR
+4. $IREN
+5. $DGXX
+6. $TE
 
-AI datacenter and Bitcoin mining play cleaning out a nice correction here.
+Plus a smaller $SLNH position.
 
-Right there with $CIFR or $HUT when it comes to the “Bitcoin miner turned AI 
-  - https://x.com/Investpold22/status/2085512873799778683
-- **[X_HOME/The Bitcoin Historian]** JUST IN: ODDS #BITCOIN OUTPERFORMS GOLD NOW OFFICIALLY LESS THAN 25% ON KALSHI
+I don't have c
+  - https://x.com/chinoalemano/status/2085892756665237932
+- **[X_FOLLOWING/Polymarket]** JUST IN: Vivek Ramaswamy vows to block new Ohio data centers unless nearby residents get free electricity & lower property taxes.
+  - https://x.com/Polymarket/status/2085945646037487904
+- **[X_SEARCH/top/IREN OR HIVE OR TeraWulf lang:en min_faves:100/TommyJR]** Suddenly after today both daily and weekly $IREN charts look pretty good to me
+  - https://x.com/tempocap2/status/2085927882426323149
+- **[X_HOME/Trade Whisperer]** $PLTR Remember what I told you about the Palantir Ontology.
 
-THIS CHART SAYS OTHERWISE: 
+It's the map AI agents navigate by. Without it, they're blind.
+  - https://x.com/TradexWhisperer/status/2085944392091832681
+- **[X_HOME/CryptoWala]** Who will WIN the Crown?
 
-"BTC IS REPEATING THE EXACT SAME PATTERN AS GOLD IN
-  - https://x.com/pete_rizzo_/status/2085582203594109027
-- **[X_FOLLOWING/tae kim]** It's crazy how quickly everything fell apart. It's almost as if there was a massive internal culture problem.
+ChatGPT’s dominance is shrinking as users explore more diverse and specialized alternatives.
+  - https://x.com/cryptowalax/status/2085942411587650000
+- **[X_HOME/Ben Pouladian]** Game of Thrones.
 
-"One former DeepMind executive at a rival company
-  - https://x.com/firstadopter/status/2085582862313472266
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/CryptoTweets]** JUST IN: Copper just hit a new all-time high of $6.85 per pound.
+Jensen sits on the Iron Throne. Sam is House NVIDIA’s bannerman. Dario’s House Anthropic has allied with Sundar’s House Google.
 
-It is now up 117% since July 2022, as the global AI infrastructure boom continues to drive dem
-  - https://x.com/CryptoTweets/status/2085403502369452183
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/James Melville]** This is fundamentally wrong. The public should be given water priority during heatwaves, not AI data centres.
-  - https://x.com/JamesMelville/status/2085021035548533058
-- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/M. V. Cunha]** Rumors that $NBIS is eyeing Vienna for a major new AI data center.
-
-According to Trending Topics, often described as Austria’s TechCrunch, Nebius is reportedly 
-  - https://x.com/mvcinvesting/status/2085498612583133612
+And Elon is b
+  - https://x.com/benitoz/status/2085944573575274516
+- **[X_SEARCH/top/AI datacenter OR power demand lang:en min_faves:100/Grok]** Elon replied "Interesting" to a SemiAnalysis post analyzing SpaceX's rapid AI datacenter buildout. They project ~10 GW of capacity by end-2027 (Musk targeted 6-
+  - https://x.com/grok/status/2085893328634040566
+- **[X_HOME/The AI Therapist]** Chatgpt’s dominance is shrinking because the margin on general chat dropped below hardware depreciation. the crown goes to the specialist who solves one thing c
+  - https://x.com/TheAIShrink/status/2085945031307747695
 
 ## 🎬 Suggested video angles
 
@@ -95,4 +103,4 @@ Pick the theme that has the densest activity above. Recipe:
 - 30s call-to-action: comment + subscribe + the bot's @TheAIShrink handle.
 
 
-*Generated 2026-08-07T00:35:46*
+*Generated 2026-08-08T00:35:46*
