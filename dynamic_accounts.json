@@ -1502,7 +1502,17 @@
     "TobiasGuerbeur",
     "MaxBismuth",
     "PierreMoulin",
-    "JulienGervais"
+    "JulienGervais",
+    "VincentDionne",
+    "JulienMuller",
+    "MarcLeger",
+    "RaphVillain",
+    "SophieBouchard",
+    "PierreDubois",
+    "CyrilHedrick",
+    "NicolasVieille",
+    "RomainGuedj",
+    "JulienGagnon"
   ],
   "en": [
     "Chubby",
@@ -1854,7 +1864,8 @@
     "FELIX",
     "Enisco",
     "Insta360",
-    "nico"
+    "nico",
+    "ollama"
   ],
   "history": [
     {
@@ -11120,6 +11131,61 @@
     {
       "lang": "fr",
       "handle": "JulienGervais",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "VincentDionne",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienMuller",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "MarcLeger",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "RaphVillain",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "SophieBouchard",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "en",
+      "handle": "ollama",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDubois",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilHedrick",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasVieille",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "RomainGuedj",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "JulienGagnon",
       "added": "2026-08-08"
     }
   ]
