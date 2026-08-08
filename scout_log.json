@@ -1,64 +1,5 @@
 [
   {
-    "ts": "2026-07-18T16:53:07.215308",
-    "raw_count": 10,
-    "kept_count": 7,
-    "accounts_added": 6,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "BenoitFloch",
-        "region": "france",
-        "niche": "ai",
-        "followers": 65000,
-        "reason": "Le patron de TheAIShrink. Il mixe crypto et IA avec une logique de trader. Il tweet tous les jours, pas de bla-bla, juste des insights. Si tu suis juste lui, tu as d\u00e9j\u00e0 la cr\u00e8me."
-      },
-      {
-        "handle": "MarcBisson",
-        "region": "quebec",
-        "niche": "tech",
-        "followers": 42000,
-        "reason": "Le grand old man de la tech au Qu\u00e9bec. Il couvre l'IA, les startups et les march\u00e9s. Ses threads sont denses, sans jargon inutile. C'est la r\u00e9f\u00e9rence qu\u00e9b\u00e9coise qui ne se prend pas la t\u00eate avec les influenceurs."
-      },
-      {
-        "handle": "CryptoC@nary",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 35000,
-        "reason": "Fr\u00e9d\u00e9ric est un institutionnel qui a surv\u00e9cu aux crashs. Il tweet des analyses macro crypto en FR qui t'\u00e9vite de vendre au pire moment. Moins de 'moon', plus de 'liquidity'. Le type fiable."
-      },
-      {
-        "handle": "VinzDemos",
-        "region": "france",
-        "niche": "trading",
-        "followers": 28000,
-        "reason": "Le meilleur trader retail francophone en termes de r\u00e9gularit\u00e9. Il partage ses setups et ses erreurs en direct. Pas de formation VIP \u00e0 1500\u20ac, juste de la r\u00e9alit\u00e9 brute. C'est \u00e7a qu'on cherche."
-      },
-      {
-        "handle": "CryptoCdn",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "Un analyste on-chain fran\u00e7ais qui ne fait pas dans la \u00e9motion. Il montre les flux, les wallets whales. C'est froid, pr\u00e9cis, et \u00e7a paye plus que les signaux Telegram."
-      },
-      {
-        "handle": "SylvainPigeard",
-        "region": "usa",
-        "niche": "ai",
-        "followers": 15000,
-        "reason": "Ex-ML chez Google/Apple, il twitte sur l'IA aux USA mais reste tr\u00e8s connect\u00e9 \u00e0 la sc\u00e8ne fran\u00e7aise. Ses tweets techniques sont chirurgicaux. Il est l\u00e0-bas, mais il reste dans le coin."
-      },
-      {
-        "handle": "JulienBonn",
-        "region": "france",
-        "niche": "fintech",
-        "followers": 12000,
-        "reason": "Founders de fintechs fran\u00e7aises qui twittent leurs battles. Pas de courbettes, juste des m\u00e9triques. C'est du contenu pour ceux qui construisent, pas pour ceux qui sp\u00e9culent."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 la soupe \u00e0 la hype pour te sortir des pros : des fondateurs (Mistral, Shopify) et des traders on-chain qui twittent leur quotidien. On a \u00e9vit\u00e9 les vendeurs de r\u00eaves pour viser ceux qui font avancer le march\u00e9. Le Qu\u00e9bec est bien repr\u00e9sent\u00e9 par des g\u00e9ants locaux, et la France byge par des techniciens pur jus."
-  },
-  {
     "ts": "2026-07-18T18:53:17.041169",
     "raw_count": 10,
     "kept_count": 6,
@@ -9250,5 +9191,71 @@
       }
     ],
     "summary": "On laisse tomber les influenceurs TikTok qui vendent du r\u00eave pour aller voir ceux qui construisent la tech ou l'argent : Mistral, Lucca et les pros de Coinhouse/MarketScreener."
+  },
+  {
+    "ts": "2026-08-07T21:36:36.268435",
+    "raw_count": 10,
+    "kept_count": 8,
+    "accounts_added": 8,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "CyrilBorocco",
+        "region": "france",
+        "niche": "tech",
+        "followers": 200000,
+        "reason": "Le patron de La French Tech, twitte tout le temps en FR, z\u00e9ro vente de r\u00eave, juste de l'info brute sur l'\u00e9cosyst\u00e8me IA."
+      },
+      {
+        "handle": "RenaudLaplanche",
+        "region": "usa",
+        "niche": "fintech",
+        "followers": 150000,
+        "reason": "Ancien r\u00e9gulateur US, vie \u00e0 NYC mais twitte souvent en FR. Ex-censeur de l'innovation, maintenant l'appr\u00e9cie. Perspective rare."
+      },
+      {
+        "handle": "GuerinThibault",
+        "region": "france",
+        "niche": "tech",
+        "followers": 90000,
+        "reason": "Le roi du format court, focus Startups/IA/Tech. Moins finance pure, plus 'vibe' march\u00e9. Z\u00e9ro community Telegram."
+      },
+      {
+        "handle": "AlexMazas",
+        "region": "france",
+        "niche": "ai",
+        "followers": 60000,
+        "reason": "Ex-Airbus, expert IA, format court percutant. Il tweete pas pour se faire remarquer, mais parce qu'il faut que \u00e7a sorte."
+      },
+      {
+        "handle": "ThibaultMoulin",
+        "region": "france",
+        "niche": "tech",
+        "followers": 45000,
+        "reason": "Journaliste techno de choc, coverage IA/Web3. Un \u0153il clinique sur ce qui sort de chez nous."
+      },
+      {
+        "handle": "NicolasSerge",
+        "region": "usa",
+        "niche": "crypto",
+        "followers": 25000,
+        "reason": "Journaliste crypto US (Cointelegraph) bas\u00e9 aux states, mais sa communaut\u00e9 FR est active. Il parle la langue."
+      },
+      {
+        "handle": "BenoitThomasset",
+        "region": "france",
+        "niche": "ai",
+        "followers": 15000,
+        "reason": "CTO de Vantage, chercheur IA. Il poste des threads techniques denses mais lisibles. Rare, pr\u00e9cieux, pas 'influenceur'."
+      },
+      {
+        "handle": "PierreDussault",
+        "region": "quebec",
+        "niche": "finance",
+        "followers": 12000,
+        "reason": "G\u00e9rant de fonds, focus macro/tech. Pas des signaux, mais des th\u00e8ses. Quebecois, twitte en FR."
+      }
+    ],
+    "summary": "Pas de vendeurs de r\u00eaves ici. J'ai filtr\u00e9 pour ne garder que ceux qui ont le r\u00e9seau neural (ou la t\u00eate) bien faits : chercheurs, journalistes et pros de la tech. Du solide, du FR, pas de 'VIP Telegram'."
   }
 ]

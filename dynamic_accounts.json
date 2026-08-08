@@ -1473,7 +1473,15 @@
     "LudovicMichelet",
     "JulienSalaun",
     "DavidLavoie",
-    "CyrilKhan"
+    "CyrilKhan",
+    "CyrilBorocco",
+    "RenaudLaplanche",
+    "GuerinThibault",
+    "AlexMazas",
+    "ThibaultMoulin",
+    "NicolasSerge",
+    "BenoitThomasset",
+    "PierreDussault"
   ],
   "en": [
     "Chubby",
@@ -10916,6 +10924,46 @@
     {
       "lang": "fr",
       "handle": "CyrilKhan",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "CyrilBorocco",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "RenaudLaplanche",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "GuerinThibault",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "AlexMazas",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "ThibaultMoulin",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "NicolasSerge",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "BenoitThomasset",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "PierreDussault",
       "added": "2026-08-07"
     }
   ]

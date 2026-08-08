@@ -141,5 +141,26 @@
     ],
     "cadence_factor": 1.2,
     "rationale": "L'activité brute est massive (5718 actions), donc on ne sacrifie pas le volume, mais on affine la cadence (1.2) pour éviter le bruit. Les 'losers' (GIFs, agentic AI générique, Palantir valuation classique) sont évités. On mise sur 3 sujets qui permettent des punchlines visuelles et financières fortes, alignées avec la voix 'observateur fatigué'. Le focus News/Hotake/Quote est équilibré pour maximiser l'engagement sans spam."
+  },
+  {
+    "ts": "2026-08-07T21:35:46.126815",
+    "caps": {
+      "MAX_NEWS_PER_DAY": 12,
+      "MAX_HOTAKES_PER_DAY": 18,
+      "MAX_QUOTES_PER_DAY": 160,
+      "MAX_RETWEETS_PER_DAY": 4,
+      "MAX_BREAKOUTS_PER_DAY": 1,
+      "MAX_SPICY_PER_DAY": 1,
+      "MAX_REPLIES_PER_CYCLE": 35,
+      "FOLLOW_BLAST_PER_CYCLE": 4,
+      "LIKE_BOT_PER_CYCLE": 50
+    },
+    "topic_focus": [
+      "Nvidia Hopper/Blackwell Supply Chain",
+      "Mistral AI Seed Round Valuation",
+      "BTC Spot ETF Inflows vs Outflows"
+    ],
+    "cadence_factor": 1.1,
+    "rationale": "Le bot est sain (5319 actions), donc on maintient la pression mais on équilibre la forme. On garde la cadence élevée car les caps quotidiens sont basés mais le volume total est solide. Les sujets sélectionnés offrent le meilleur ratio cynisme/preuve factuelle : Nvidia pour l'infrastructure incontournable, Mistral pour le 'French Touch' survaluée, et BTC pour le débat retail vs institutionnel."
   }
 ]
