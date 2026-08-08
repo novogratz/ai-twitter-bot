@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-08T01:35:46.243895",
-  "window_7d_actions": 5410,
-  "window_24h_actions": 681,
+  "generated_at": "2026-08-08T05:35:46.275873",
+  "window_7d_actions": 5511,
+  "window_24h_actions": 673,
   "top_patterns": [
     {
       "pattern": "UNKNOWN",
-      "count": 5407
+      "count": 5508
     },
     {
       "pattern": "METAPHOR",
@@ -27,7 +27,7 @@
     },
     {
       "pattern": "UNKNOWN",
-      "count": 5407
+      "count": 5508
     }
   ],
   "best_hours_utc": [
@@ -55,23 +55,23 @@
   "best_topics_7d": [
     {
       "topic": "Autre",
-      "count": 2531
+      "count": 2575
     },
     {
       "topic": "IA",
-      "count": 2036
+      "count": 2072
     },
     {
       "topic": "Crypto",
-      "count": 629
+      "count": 645
     },
     {
       "topic": "Bourse",
-      "count": 430
+      "count": 444
     },
     {
       "topic": "Spatial",
-      "count": 142
+      "count": 146
     }
   ],
   "rising_topics_24h": [
@@ -84,45 +84,45 @@
   "pillar_mix_7d": [
     {
       "pillar": "ai_news_take",
-      "count": 2292
+      "count": 2328
     },
     {
       "pillar": "other",
-      "count": 1442
+      "count": 1471
     },
     {
       "pillar": "market_trauma",
-      "count": 1375
+      "count": 1405
     },
     {
       "pillar": "meme_reaction",
-      "count": 165
+      "count": 169
     },
     {
       "pillar": "reply_bait",
-      "count": 91
+      "count": 92
     },
     {
       "pillar": "ai_vs_btc",
-      "count": 45
+      "count": 46
     }
   ],
   "pillar_mix_24h": [
     {
       "pillar": "ai_news_take",
-      "count": 284
+      "count": 272
     },
     {
       "pillar": "other",
-      "count": 179
+      "count": 180
     },
     {
       "pillar": "market_trauma",
-      "count": 175
+      "count": 179
     },
     {
       "pillar": "meme_reaction",
-      "count": 23
+      "count": 22
     },
     {
       "pillar": "reply_bait",
@@ -136,52 +136,52 @@
   "pillar_engagement_30d": [
     {
       "pillar": "ai_vs_btc",
-      "posts": 4,
-      "avg_likes": 0.5,
-      "avg_views": 45.2,
+      "posts": 5,
+      "avg_likes": 0.4,
+      "avg_views": 47.4,
       "low_sample": false
     },
     {
       "pillar": "market_trauma",
-      "posts": 52,
+      "posts": 48,
       "avg_likes": 0.17,
-      "avg_views": 47.0,
+      "avg_views": 47.2,
       "low_sample": false
     },
     {
       "pillar": "other",
-      "posts": 74,
-      "avg_likes": 0.15,
-      "avg_views": 45.4,
+      "posts": 76,
+      "avg_likes": 0.14,
+      "avg_views": 45.1,
       "low_sample": false
     },
     {
       "pillar": "ai_news_take",
-      "posts": 62,
-      "avg_likes": 0.13,
-      "avg_views": 38.4,
+      "posts": 64,
+      "avg_likes": 0.12,
+      "avg_views": 38.5,
       "low_sample": false
     },
     {
       "pillar": "reply_bait",
-      "posts": 7,
+      "posts": 6,
       "avg_likes": 0.0,
-      "avg_views": 35.7,
+      "avg_views": 40.0,
       "low_sample": false
     }
   ],
   "content_surface_mix": [
     {
       "type": "reply",
-      "count": 4826
+      "count": 4916
     },
     {
       "type": "quote",
-      "count": 321
+      "count": 328
     },
     {
       "type": "quote_gif",
-      "count": 135
+      "count": 139
     },
     {
       "type": "post",
@@ -198,18 +198,18 @@
   ],
   "viral_examples": [
     {
-      "ts": "2026-08-08T01:34:59.285394",
-      "text": "4 raisons.\n1. Zéro frais cachés.\n2. 5x plus rapide.\n3. Le conseiller qui a l'air occupé (c'est un bot).\n4. Tu ne croises jamais ton mari dans l'agence.\nOn fait ça dès demain ?",
+      "ts": "2026-08-08T05:33:48.194052",
+      "text": "X402 turns the API into a payment rail. Cloudflare isn't a proxy, it's a merchant processor for bots.\nbilling",
       "type": "reply"
     },
     {
-      "ts": "2026-08-08T01:30:37.525702",
-      "text": "Anthropic raised $5B. Claude is the only lab with a cash runway longer than its hype cycle. the smart money is betting on solvency.",
+      "ts": "2026-08-08T05:31:38.268166",
+      "text": "Spot ETFs bought $101M while the market watched charts.\n\nsaylor's cost basis is $67k. you're buying at retail markup.",
       "type": "reply"
     },
     {
-      "ts": "2026-08-08T01:27:52.189218",
-      "text": "ZETA's \"soft\" forward guidance ignores the Palantir/OpenAI upside.\nSurface = weak growth. Real story = the market is pricing ZETA as a legacy software company instead of an AI data flywheel.",
+      "ts": "2026-08-08T05:30:05.409752",
+      "text": "NASDQ up 0.1% and gold up 0.5%.\n\nthe market is holding its breath while the vix sleeps.",
       "type": "reply"
     }
   ]

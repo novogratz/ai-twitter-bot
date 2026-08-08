@@ -1487,7 +1487,14 @@
     "CryptoBulle",
     "CryptoRoxane",
     "VincentLavoie_",
-    "ThibaudBoulais"
+    "ThibaudBoulais",
+    "HugoDenis",
+    "AdrienBoulay",
+    "SergeMiche",
+    "Mona_Mamdouh",
+    "HassanBachiri",
+    "Adil_Benmoussa",
+    "Alexis_Sol"
   ],
   "en": [
     "Chubby",
@@ -1836,7 +1843,9 @@
     "Stayone",
     "Davido",
     "GRITCULT",
-    "FELIX"
+    "FELIX",
+    "Enisco",
+    "Insta360"
   ],
   "history": [
     {
@@ -11013,6 +11022,51 @@
       "lang": "fr",
       "handle": "ThibaudBoulais",
       "added": "2026-08-07"
+    },
+    {
+      "lang": "en",
+      "handle": "Enisco",
+      "added": "2026-08-07"
+    },
+    {
+      "lang": "fr",
+      "handle": "HugoDenis",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "AdrienBoulay",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "SergeMiche",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "en",
+      "handle": "Insta360",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "Mona_Mamdouh",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "HassanBachiri",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "Adil_Benmoussa",
+      "added": "2026-08-08"
+    },
+    {
+      "lang": "fr",
+      "handle": "Alexis_Sol",
+      "added": "2026-08-08"
     }
   ]
 }

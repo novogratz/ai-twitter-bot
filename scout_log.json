@@ -1,67 +1,5 @@
 [
   {
-    "ts": "2026-07-18T20:46:23.132425",
-    "raw_count": 7,
-    "kept_count": 4,
-    "accounts_added": 3,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "MickaelPerot",
-        "region": "france",
-        "niche": "crypto",
-        "followers": 22000,
-        "reason": "L'ancien de Bitstamp qui parle vraiment de march\u00e9 crypto sans vendre du r\u00eave en formation. Twitte en FR, z\u00e9ro blabla politique."
-      },
-      {
-        "handle": "LorenzoBenedetti",
-        "region": "france",
-        "niche": "ai",
-        "followers": 16000,
-        "reason": "Journaliste IA de renom. Ses insights sur les GAFAM et l'IA g\u00e9n\u00e9rative en fran\u00e7ais sont souvent avant l'heure. Pas de formation."
-      },
-      {
-        "handle": "PierreAndrieux",
-        "region": "france",
-        "niche": "bourse",
-        "followers": 15000,
-        "reason": "L'analyste technique de r\u00e9f\u00e9rence. Ses charts en fran\u00e7ais sur X sont une mine d'or pour le trading quotidien, pas de formation \u00e0 2k\u20ac."
-      },
-      {
-        "handle": "MarcRavon",
-        "region": "quebec",
-        "niche": "bourse",
-        "followers": 12000,
-        "reason": "La star du trading qu\u00e9b\u00e9cois. Il est direct, il poste des setups concrets et il twitte en fran\u00e7ais. Pas de bla-bla politique."
-      }
-    ],
-    "summary": "Le mix est solide : des pros du trading technique qui font des charts (Ravon, Ravon), des macro-crypto sans blabla (Perot, Pellerin) et un focus IA/Founders pro (Benedetti, Bessac). On \u00e9vite les vendeurs de r\u00eaves pour coller \u00e0 l'actu."
-  },
-  {
-    "ts": "2026-07-18T22:47:39.040400",
-    "raw_count": 10,
-    "kept_count": 2,
-    "accounts_added": 2,
-    "auto_followed": [],
-    "keepers": [
-      {
-        "handle": "AdrienHajedin",
-        "region": "france",
-        "niche": "ai",
-        "followers": 20000,
-        "reason": "Tutoriels LLM en vid\u00e9o. Il montre comment build, pas juste parler. Sa communaut\u00e9 est active, il r\u00e9pond, et il balance des projets open source qui marchent."
-      },
-      {
-        "handle": "JulienNepveu",
-        "region": "quebec",
-        "niche": "crypto",
-        "followers": 15000,
-        "reason": "Analyste ind\u00e9pendant au Qu\u00e9bec. Il couvre le march\u00e9 US avec un d\u00e9calage francophone. Moins de blabla, plus de chartes et de setups."
-      }
-    ],
-    "summary": "J'ai filtr\u00e9 le bruit des 'gourous' Telegram pour ne garder que des b\u00e2tisseurs, des analystes de terrain et des fondateurs. C'est une liste pour ceux qui pr\u00e9f\u00e8rent comprendre comment l'argent bouge plut\u00f4t que de regarder des chandeliers avec des lunettes de soleil."
-  },
-  {
     "ts": "2026-07-19T00:35:11.668498",
     "raw_count": 6,
     "kept_count": 3,
@@ -9264,5 +9202,81 @@
       }
     ],
     "summary": "Un mix entre les g\u00e9ants institutionnels (Mistral) et les analystes solo qui ont encore leur cerveau connect\u00e9. Pas de vendeurs de r\u00eave, que des gens qui travaillent dans le coin."
+  },
+  {
+    "ts": "2026-08-08T01:36:11.093655",
+    "raw_count": 5,
+    "kept_count": 3,
+    "accounts_added": 3,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "HugoDenis",
+        "region": "france",
+        "niche": "ai",
+        "followers": 120000,
+        "reason": "CTO Mistral AI, twitte en FR, c'est la bible du LLM local."
+      },
+      {
+        "handle": "AdrienBoulay",
+        "region": "france",
+        "niche": "bourse",
+        "followers": 65000,
+        "reason": "L'analyste qui rend la macro digestible sans endormir le audience."
+      },
+      {
+        "handle": "SergeMiche",
+        "region": "quebec",
+        "niche": "bourse",
+        "followers": 45000,
+        "reason": "Le roi de la newsletter et du trading long terme au Qu\u00e9bec."
+      }
+    ],
+    "summary": "5 comptes actifs, \u00e0 forte audience et \u00e0 haute densit\u00e9 d'info. Pas de vendeurs de r\u00eave, que du contenu."
+  },
+  {
+    "ts": "2026-08-08T03:36:34.179737",
+    "raw_count": 7,
+    "kept_count": 5,
+    "accounts_added": 4,
+    "auto_followed": [],
+    "keepers": [
+      {
+        "handle": "Mona_Mamdouh",
+        "region": "usa",
+        "niche": "ai",
+        "followers": 30000,
+        "reason": "La voix francophone de l'IA aux USA. Elle couvre les tendances, les jobs et les startups tech d'un \u0153il global."
+      },
+      {
+        "handle": "HassanBachiri",
+        "region": "france",
+        "niche": "ai",
+        "followers": 25000,
+        "reason": "Directeur de la Data & IA chez OVHcloud. Il tweete sec sur l'infra IA et les LLMs sans vendre du r\u00eave, juste du tangible."
+      },
+      {
+        "handle": "Adil_Benmoussa",
+        "region": "france",
+        "niche": "ai",
+        "followers": 22000,
+        "reason": "Expert IA francophone tr\u00e8s actif sur le march\u00e9 du travail tech et les nouveaux outils. Ses threads sur l'IA pratique valent de l'or."
+      },
+      {
+        "handle": "Noureddine_Boutaib",
+        "region": "france",
+        "niche": "ai",
+        "followers": 18000,
+        "reason": "Le mec qui a fait briller Mistral avant de se lancer. Il mixe IA, \u00e9thique et impact business avec un style francophone rare."
+      },
+      {
+        "handle": "Alexis_Sol",
+        "region": "quebec",
+        "niche": "ai",
+        "followers": 12000,
+        "reason": "Consultant IA qu\u00e9b\u00e9cois actif. Il d\u00e9crypte l'IA generative et l'adoption enterprise avec une touche pragmatique, loin du hype pur."
+      }
+    ],
+    "summary": "Un mix solide de profils fran\u00e7ais (infrastructure/recherche), qu\u00e9b\u00e9cois (acad\u00e9mique/startup) et diaspora US. Tous tweetent en fran\u00e7ais, tous ont >5k abonn\u00e9s et \u00e9vitent la vente de formations \u00e0 1000 balles."
   }
 ]
